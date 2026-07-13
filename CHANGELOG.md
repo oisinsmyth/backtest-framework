@@ -13,6 +13,9 @@ until the first tagged version (likely at the Phase C "first real number" milest
 ### Added
 - Full documentation suite: per-decision ADR records under `docs/decisions/`, standing rules
   in `docs/RULES.md`, this changelog, `AITODO.md`, top-level `README.md`, `.gitignore`.
+- `PHILOSOPHY.md` — five guiding pillars extracted from the pattern across the existing 49
+  decisions, sitting above `docs/RULES.md` and `docs/decisions/` as the reference point for
+  any future decision.
 - Local git repository initialized.
 
 <!--

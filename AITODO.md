@@ -10,7 +10,9 @@ none.
 
 - [x] Set up the full doc suite (ADR records, RULES.md, CHANGELOG.md, this file, README.md)
 - [x] Initialize local git repo + `.gitignore`
-- [ ] First commit of the doc suite
+- [x] First commit of the doc suite
+- [x] Write `PHILOSOPHY.md` — the guiding design philosophy, wired into README.md and RULES.md
+- [ ] Commit `PHILOSOPHY.md` + the doc-suite cross-links
 - [ ] Scaffold the Python project structure (package layout, dependency management, test runner)
 - [ ] Start Step 1 of `VERIFICATION_SCHEME.md`: TrialRegistry + stop-gap bug fix (D10) +
       calendar accrual fix (D33) — see Phase A of the timetable
@@ -34,3 +36,8 @@ none.
   `docs/RULES.md` + R5 added, `CHANGELOG.md`/`README.md`/`AITODO.md` created, git initialized).
   Old `DESIGN_DECISIONS.md` and `MASTER_PROJECT_DOC.md` marked as frozen historical snapshots.
   Implementation not yet started.
+- **2026-07-13** — `PHILOSOPHY.md` added: five pillars (structural trust, honesty over
+  comfort, anti-self-deception, composability, scope discipline) extracted from the pattern
+  across the existing 49 decisions, not written fresh. Sits above `docs/RULES.md` and
+  `docs/decisions/` as the thing new decisions get checked against. Requested explicitly
+  before starting Step 1, so it's settled before any code exists.

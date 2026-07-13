@@ -7,6 +7,11 @@ individually-tested component. Research output is the product; the framework is 
 
 Implementation has not started yet. This repo currently holds the full planning doc suite.
 
+**Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
+above everything else — the small set of values (trust by structure, honesty over comfort,
+anti-self-deception, composability, scope discipline) that generated every decision below,
+and the first thing any new decision should be checked against.
+
 ## Doc suite
 
 **Planning (frozen, pre-implementation snapshots — 2026-07-13):**
@@ -16,6 +21,7 @@ Implementation has not started yet. This repo currently holds the full planning 
 - [`DEVELOPMENT_TIMETABLE.md`](DEVELOPMENT_TIMETABLE.md) — phased schedule (weeks 1–24) and pre-committed kill criteria.
 
 **Live (kept current as implementation proceeds):**
+- [`PHILOSOPHY.md`](PHILOSOPHY.md) — the guiding design philosophy; changes rarely and deliberately
 - [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1–D49 migrated + D50 onward as they're made
 - [`docs/RULES.md`](docs/RULES.md) — standing scope/sequencing rules (R1–R5), apply continuously rather than once
 - [`CHANGELOG.md`](CHANGELOG.md) — what shipped and when, Keep a Changelog format. Rationale lives in the decision records, not here.
