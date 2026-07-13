@@ -50,6 +50,18 @@ version (likely at the Phase C "first real number" milestone, see
   (D53) and satisfied with a new hand-computed 3-bar golden-master scenario
   (`test_step3_refactor_regression.py`), now the frozen baseline for future refactors of
   CostStack/Instrument/pipeline.
+- `backtest_framework.engine.dataview` — `DataView`, `LookAheadError`,
+  `build_data_view()`: a structural look-ahead guard (D32) built so future bars are
+  never stored in the object at all, not merely access-gated (D56).
+- `backtest_framework.engine.risk` — `RiskLimits`, `RiskViolation`, `RiskMonitor`,
+  `gross_exposure()`: per-bar portfolio-level risk checks plus a pre-trade gate sharing
+  the same limit logic (D30, D57).
+- `backtest_framework.engine.allocator` — `Allocator` protocol, `ConstantSplitAllocator`:
+  a bare-bones capital-allocation stand-in (D31), wired into `pipeline.sizing.Sizer`'s
+  `capital_by_strategy` input (D58).
+- Step 4 of `VERIFICATION_SCHEME.md` — gate passed (78/78 tests total, 18 new). **Phase B
+  complete** (`DEVELOPMENT_TIMETABLE.md`) — both Step 3 and Step 4 gates pass without
+  needing the pre-committed slip rule.
 
 ### Changed
 - `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the

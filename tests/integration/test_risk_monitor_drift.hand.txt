@@ -1,0 +1,37 @@
+Hand-worked scenario for D30's headline claim: risk checks run per-bar at the portfolio
+level, so a position can drift into violation via price movement alone, with no order
+ever submitted. Companion to test_risk_monitor_drift.py.
+
+Setup: a pairs position, long XLE / short XOP, opened once and never touched again —
+no order is submitted on any of the four bars below. Both legs are Equity instruments
+(notional = quantity * price).
+
+  positions = {"XLE": +700, "XOP": -700}
+  limit     = RiskLimits(max_gross_exposure=150000)
+
+gross_exposure(positions, prices) = |700 * price_XLE| + |-700 * price_XOP|
+                                   = 700 * (price_XLE + price_XOP)
+  (both legs' magnitudes add — a short doesn't offset a long's exposure, it's separate
+  risk, per D30's framing: "controls-engineering... safety interlocks run continuously")
+
+--------------------------------------------------------------------------------
+Bar 0: XLE=90.00, XOP=90.00
+  exposure = 700 * (90 + 90) = 700 * 180 = 126000
+  126000 <= 150000 -> no violation
+
+Bar 1: XLE=95.00, XOP=95.00
+  exposure = 700 * (95 + 95) = 700 * 190 = 133000
+  133000 <= 150000 -> no violation
+
+Bar 2: XLE=105.00, XOP=105.00
+  exposure = 700 * (105 + 105) = 700 * 210 = 147000
+  147000 <= 150000 -> no violation (close, but still under)
+
+Bar 3: XLE=110.00, XOP=110.00
+  exposure = 700 * (110 + 110) = 700 * 220 = 154000
+  154000 > 150000 -> VIOLATION, flagged on bar_index=3
+
+--------------------------------------------------------------------------------
+Expected: RiskMonitor.evaluate() returns None on bars 0, 1, 2, and returns
+RiskViolation(rule="max_gross_exposure", limit=150000, observed=154000, bar_index=3)
+on bar 3 — with no order ever having been submitted on any of the four bars.

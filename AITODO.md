@@ -29,30 +29,44 @@ none.
       choices logged as D54 (CostStack/Instrument) and D55 (pipeline sizing). 60/60 tests
       green (25 new). Migrated Step 2's `CarryModel` demo into
       `costs.bricks.FlatRateCarry`, exactly as its docstring always said would happen.
-- [ ] Commit Step 3 code + D53/D54/D55 decision records
+- [x] Commit Step 3 code + D53/D54/D55 decision records
+- [x] **Step 4 of `VERIFICATION_SCHEME.md` — gate passed.** DataView look-ahead guard
+      (D32), per-bar RiskMonitor (D30), Allocator stand-in (D31). DataView built so
+      future bars are never stored at all, not merely access-gated (D56) — genuinely
+      immune to reflection tricks, not just underscore-prefixed. RiskMonitor's exposure
+      formula and simulate-then-check pretrade design logged as D57. Allocator wired
+      into `Sizer.capital_by_strategy` with a test proving the connection (D58), closing
+      the loop D55 (Step 3) left open on purpose. 78/78 tests green (18 new).
+- [ ] Commit Step 4 code + D56/D57/D58 decision records
+- [x] **Phase B complete.** Both Step 3 and Step 4 gates pass — the whale is done,
+      without needing the pre-committed slip rule (refactor regression gate has been
+      green since Step 3, no need to split D27 out to Phase D).
 
 ## Next (queued, not started)
 
-- [ ] Phase B continues: Step 4 — structural guards (DataView look-ahead guard, D32),
-      per-bar RiskMonitor (D30), Allocator stand-in (D31). D31's Allocator is what
-      `pipeline.sizing.Sizer` currently takes `capital_by_strategy` *from* as an
-      external input (D55) — build that connection when Step 4 lands, don't let Step 3's
-      harness quietly become the answer.
-- [ ] R2 timebox check: Phase B (Steps 3+4) is budgeted ~2 weeks of real time; Step 3
-      alone was substantial ("the whale" was well-named). Worth a deliberate go/no-go
-      read of remaining Phase B scope before starting Step 4, per the slip rule (split
-      D27 out to Phase D if the refactor regression gate isn't passing by end of week 5
-      — it already is, but re-check this if Step 4 balloons similarly).
+- [ ] Phase C kickoff: Step 5 — real equity cost bricks (D3 sqrt impact, D4 IBKR
+      commission schedule, D5 margin interest), replacing Step 3's toy bricks
+      (`FlatCommission`, `PercentOfNotionalSpread`, `FlatRateCarry`) against the same
+      `TradeCostBrick`/`CarryCostBrick` interfaces.
+- [ ] Step 6 — cost-multiplier sweep (D8) → run the XLE/XOP walk-forward end-to-end.
+      **This is Phase C's milestone and R1's existence-justification gate: the first
+      real number.** Target week ~8 per `DEVELOPMENT_TIMETABLE.md`; kill criterion at
+      week 10 if not produced by then.
+- [ ] When Step 5 lands: re-run `test_step3_refactor_regression.py` and update its
+      golden numbers deliberately (not silently) — D53 designated it the frozen
+      baseline, so any change to its expected values needs to be a visible, explained
+      diff, not a quiet drift.
+- [ ] Step 6 needs an actual data source and something resembling a real engine loop to
+      run XLE/XOP through — neither exists yet (Step 3's `run_mini_backtest` is
+      deliberately test-only, Step 7's data layer is later in the build order). Worth
+      scoping this gap explicitly before diving into Step 5, since Step 6's gate can't
+      pass without it.
 
 ## Watch list (not urgent, don't forget)
 
 - R1: no framework scope creep beyond the current build order until the XLE/XOP walk-forward
   produces a first real number (Phase C milestone, week ~8, kill criterion at week 10).
-- Step 5 (D3/D4/D5 equity cost bricks) will replace Step 3's toy bricks
-  (`FlatCommission`, `PercentOfNotionalSpread`, `FlatRateCarry`) with real ones against
-  the same `TradeCostBrick`/`CarryCostBrick` interfaces — when that happens, re-run
-  `test_step3_refactor_regression.py` and update its golden numbers deliberately (not
-  silently), since D53 designated it the frozen baseline.
+  This is the next real gate — Phase C is where R1 actually bites.
 
 ## Log
 
@@ -104,3 +118,16 @@ none.
   60 tests total, all green (25 new). Did not build a Portfolio/broker class — the mini-
   backtest harness proving Step 3's components compose stays test-only, explicitly not
   promoted to src/, since general portfolio/engine state is Step 4+'s job.
+- **2026-07-13** — Step 4 implemented and gate passed; Phase B complete. Built
+  `engine.dataview.DataView` (D32) using a "never store what you can't see" design
+  rather than access-gating a full series — future bars aren't reachable by any means,
+  including direct access to the "private" field, because the object never holds them
+  (D56). Built `engine.risk.RiskMonitor` (D30): gross exposure sums absolute notional
+  (longs and shorts both count, matching the pairs-trading framing in D5), with
+  `pretrade_check()` reusing `evaluate()`'s exact logic via a simulate-then-check
+  pattern (D57). Built `engine.allocator.ConstantSplitAllocator` (D31) and a test
+  proving its output feeds `Sizer.capital_by_strategy` unmodified (D58) — actually
+  closing the gap D55 flagged rather than leaving it as an unverified intention. 78
+  tests total, all green (18 new), including a hand-computed integration scenario
+  proving a pairs position drifts into a risk violation via price movement alone with
+  no order ever submitted, flagged on exactly the correct bar.

@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D56**.
+New decisions are added here going forward — next number is **D59**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -67,3 +67,6 @@ written rationale for *why not now*, per R3.
 | [D53](D53-refactor-regression-gate-reinterpreted-greenfield.md) | "Refactor regression" gate reinterpreted for greenfield conditions (no legacy engine to reconcile against) | Committed | Backtest engine |
 | [D54](D54-coststack-instrument-interface-design.md) | CostStack + Instrument interface shapes, and toy bricks now vs. real bricks in Step 5 | Committed | Backtest engine |
 | [D55](D55-pipeline-sizing-design.md) | Pipeline sizing design: stateless Sizer, capital-by-strategy as an external input | Committed | Signals & strategy interface |
+| [D56](D56-dataview-never-stores-future-data.md) | DataView is constructed holding only visible bars, never given future ones | Committed | Backtest engine |
+| [D57](D57-risk-monitor-gross-exposure-formula.md) | RiskMonitor's exposure formula and simulate-then-check pre-trade design | Committed | Portfolio layer |
+| [D58](D58-allocator-wired-into-sizer.md) | Allocator interface, and wiring ConstantSplitAllocator into Sizer | Committed | Portfolio layer |
