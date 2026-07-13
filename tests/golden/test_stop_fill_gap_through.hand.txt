@@ -1,0 +1,57 @@
+Golden-master hand-worked cases for stop_fill_price (D10, D42-adjacent).
+Companion to test_stop_fill_gap_through.py — every case here has a matching assertion there.
+
+Rule being tested (D10): a stop that the bar has gapped through fills at the bar's OPEN,
+never at the stop price. A stop that is merely touched intrabar (no gap) fills at the
+stop price itself. Filling a gapped stop at the stop price would be free money — the bug
+this decision exists to kill.
+
+--------------------------------------------------------------------------------
+Case 1 — SELL_STOP (long-position stop-loss), gap down through the stop
+  stop_price = 45
+  bar        = open 38, high 39, low 37, close 38
+  Reasoning:  bar.open (38) <= stop_price (45) -> gapped through at the open.
+  Expected fill: 38  (the open, NOT 45)
+
+Case 2 — SELL_STOP, intrabar touch, no gap
+  stop_price = 45
+  bar        = open 46, high 47, low 44, close 44.5
+  Reasoning:  bar.open (46) > stop_price (45) -> no gap.
+              bar.low (44) <= stop_price (45) -> touched intrabar.
+  Expected fill: 45  (the stop price)
+
+Case 3 — SELL_STOP, not touched at all
+  stop_price = 45
+  bar        = open 50, high 51, low 48, close 49
+  Reasoning:  bar.open (50) > stop_price (45); bar.low (48) > stop_price (45).
+              Stop never reached.
+  Expected fill: None
+
+Case 4 — BUY_STOP (short-position stop-loss), gap up through the stop (mirror of Case 1)
+  stop_price = 45
+  bar        = open 52, high 53, low 51, close 52
+  Reasoning:  bar.open (52) >= stop_price (45) -> gapped through at the open.
+  Expected fill: 52  (the open, NOT 45)
+
+Case 5 — BUY_STOP, intrabar touch, no gap (mirror of Case 2)
+  stop_price = 45
+  bar        = open 44, high 46, low 43, close 45.5
+  Reasoning:  bar.open (44) < stop_price (45) -> no gap.
+              bar.high (46) >= stop_price (45) -> touched intrabar.
+  Expected fill: 45  (the stop price)
+
+Case 6 — BUY_STOP, not touched at all (mirror of Case 3)
+  stop_price = 45
+  bar        = open 40, high 42, low 39, close 41
+  Reasoning:  bar.open (40) < stop_price (45); bar.high (42) < stop_price (45).
+              Stop never reached.
+  Expected fill: None
+
+--------------------------------------------------------------------------------
+Case 7 — SELL_STOP, open exactly at the stop price (boundary)
+  stop_price = 45
+  bar        = open 45, high 45.5, low 44.8, close 45.2
+  Reasoning:  bar.open (45) <= stop_price (45) -> takes the "gapped" branch (no gap in
+              the mathematical sense, but the branch condition is <=, and open == stop
+              means the fill price is 45 either way this is resolved).
+  Expected fill: 45

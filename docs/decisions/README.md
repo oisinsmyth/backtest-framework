@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D50**.
+New decisions are added here going forward — next number is **D52**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -61,3 +61,5 @@ written rationale for *why not now*, per R3.
 | [D47](D47-money-is-float64-with-a-stated.md) | Money is float64 with a stated reconciliation tolerance (default 1e-6), used by every "... | Committed | Testing |
 | [D48](D48-no-false-affordances-enum-values-and.md) | No false affordances: enum values and flags for unimplemented behaviour are removed or ... | Committed | Testing |
 | [D49](D49-sharpe-sortino-take-an-explicit-risk.md) | Sharpe/Sortino take an explicit risk-free rate input, consistent with the D37 benchmark... | Committed | Analytics |
+| [D50](D50-project-scaffolding-uv-src-layout-pytest.md) | Project scaffolding: uv package manager, src-layout, pytest + hypothesis | Committed | Tooling |
+| [D51](D51-carry-accrual-day-count-convention-act365.md) | Carry accrual day-count convention: ACT/365 as a single stated default | Committed / Deferred | Backtest engine |

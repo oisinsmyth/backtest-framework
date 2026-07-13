@@ -1,0 +1,23 @@
+[project]
+name = "backtest-framework"
+version = "0.1.0"
+description = "Lego-brick-modular quant backtesting framework — see PHILOSOPHY.md"
+readme = "README.md"
+authors = [
+    { name = "Oisin Smyth", email = "oisin.smyth132@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.156.6",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

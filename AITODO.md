@@ -10,18 +10,23 @@ none.
 
 - [x] Set up the full doc suite (ADR records, RULES.md, CHANGELOG.md, this file, README.md)
 - [x] Initialize local git repo + `.gitignore`
-- [x] First commit of the doc suite
-- [x] Write `PHILOSOPHY.md` — the guiding design philosophy, wired into README.md and RULES.md
-- [ ] Commit `PHILOSOPHY.md` + the doc-suite cross-links
-- [ ] Scaffold the Python project structure (package layout, dependency management, test runner)
-- [ ] Start Step 1 of `VERIFICATION_SCHEME.md`: TrialRegistry + stop-gap bug fix (D10) +
-      calendar accrual fix (D33) — see Phase A of the timetable
+- [x] Write `PHILOSOPHY.md`, wired into README.md and RULES.md
+- [x] Scaffold the Python project (`uv`, src-layout, pytest + hypothesis — logged as D50)
+- [x] **Step 1 of `VERIFICATION_SCHEME.md` — gate passed.** TrialRegistry (D20), stop-gap
+      fill fix (D10), calendar-day carry accrual (D33, + day-count convention D51). 20/20
+      tests green: 7 golden (stop fills), 4 golden + 1 property (carry accrual), 8 unit
+      (registry).
+- [ ] Commit Step 1 code + D50/D51 decision records
+- [ ] Decide Step 1 vs Step 2 sequencing: start declarative config (Step 2) next, per the
+      build order in `MASTER_PROJECT_DOC.md`
 
 ## Next (queued, not started)
 
-- [ ] Declarative config + factories (Step 2 / D35)
-- [ ] Decide project scaffolding conventions (test framework, linting, package manager) — not
-      yet recorded as a decision anywhere; needs a D50 once chosen
+- [ ] Step 2: declarative config + factories (D35) — SimConfig/strategy configs as plain
+      dicts, hashable, prerequisite for the registry's config hash to mean anything beyond
+      Step 1's toy dict configs
+- [ ] Phase A milestone check: "reproducibility loop closes" — once Step 2 lands, confirm a
+      trial can be logged, reloaded, and re-run identically end-to-end
 
 ## Watch list (not urgent, don't forget)
 
@@ -41,3 +46,13 @@ none.
   across the existing 49 decisions, not written fresh. Sits above `docs/RULES.md` and
   `docs/decisions/` as the thing new decisions get checked against. Requested explicitly
   before starting Step 1, so it's settled before any code exists.
+- **2026-07-13** — Step 1 implemented and gate passed. Scaffolded with `uv` (src-layout,
+  pytest + hypothesis — D50). Built `backtest_framework.simulator.fills.stop_fill_price`
+  (D10: gap-through-stop fills at the bar open) and
+  `backtest_framework.simulator.carry.accrue_carry*` (D33: calendar-day accrual; day-count
+  convention ACT/365 logged separately as D51 since D33 never specified one). Built
+  `backtest_framework.registry.trial_registry.TrialRegistry` (D20: SQLite-backed,
+  append-only via primary key, deterministic canonical-JSON hash over
+  config+snapshot_id+seed). 20 tests, all green — golden-master hand-arithmetic files sit
+  next to their test files per D39. No portfolio/broker/engine built yet; Step 1 stayed
+  deliberately narrow (pure functions + registry), full integration is Step 3's job.

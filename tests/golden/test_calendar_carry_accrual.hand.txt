@@ -1,0 +1,71 @@
+Golden-master hand-worked cases for accrue_carry / accrue_carry_between_bars (D33, D51).
+Companion to test_calendar_carry_accrual.py — every case here has a matching assertion there.
+
+Rule being tested (D33): carry accrues on the CALENDAR-DAY gap between consecutive bar
+timestamps, never on bar count. A Friday->Monday hold is one bar but three calendar days
+of borrow/margin interest. Day-count convention is ACT/365 (D51): accrued = base_amount *
+annual_rate * calendar_days / 365.
+
+--------------------------------------------------------------------------------
+Case 1 — short held Friday close to Monday close (3 calendar days)
+  prev_timestamp = 2026-07-10 16:00  (Friday)
+  curr_timestamp = 2026-07-13 16:00  (Monday)
+  calendar_days  = 3.0  (exactly 72 hours)
+  annual_rate    = 0.06   (6%/yr, e.g. margin interest + borrow combined)
+  base_amount    = 100000
+
+  Hand arithmetic:
+    100000 * 0.06 = 6000              (annualised carry on the base amount)
+    6000 * 3 / 365 = 18000 / 365
+                   = 49.31506849315068...
+
+  Expected accrual: 49.31506849315068  (NOT 6000 * 1 / 365 = 16.4383..., which is what a
+  buggy per-bar-duration=1.0 accrual would wrongly produce — this is exactly the bug D33
+  exists to prevent)
+
+--------------------------------------------------------------------------------
+Case 2 — held across a market holiday (Thursday close to Monday close, 4 calendar days)
+  Scenario: Thu Jul 2 2026 is the last trading day before the Jul 3 (Fri) Independence
+  Day observance; the next bar is Monday Jul 6. No bar exists for Fri/Sat/Sun, but the
+  calendar-day gap still spans all of them.
+  prev_timestamp = 2026-07-02 16:00  (Thursday)
+  curr_timestamp = 2026-07-06 16:00  (Monday)
+  calendar_days  = 4.0  (Thu->Fri->Sat->Sun->Mon = 96 hours)
+  annual_rate    = 0.05
+  base_amount    = 80000
+
+  Hand arithmetic:
+    80000 * 0.05 = 4000
+    4000 * 4 / 365 = 16000 / 365
+                   = 43.83561643835616...
+
+  Expected accrual: 43.83561643835616  (the holiday must be included in the gap even
+  though no bar was ever generated for it)
+
+--------------------------------------------------------------------------------
+Case 3 — hourly bars over a weekend gap accrue the full gap, not one bar-duration
+  Scenario: hourly bars trade normally Mon-Fri; the last bar of the week closes Friday
+  21:00, the first bar of the next week closes Monday 09:00. The gap between those two
+  specific bars is 60 hours (2.5 days), not "1 hour" (what a naive per-bar-duration
+  accrual keyed off the bar's own timeframe would charge).
+  prev_timestamp = 2026-07-10 21:00  (Friday)
+  curr_timestamp = 2026-07-13 09:00  (Monday)
+  calendar_days  = 2.5
+    (Fri 21:00 -> Sat 21:00 = 24h -> Sun 21:00 = 48h -> Mon 21:00 = 72h;
+     Mon 09:00 is 12h earlier than Mon 21:00, so 72 - 12 = 60h = 2.5 days)
+  annual_rate    = 0.06
+  base_amount    = 100000
+
+  Hand arithmetic:
+    100000 * 0.06 = 6000
+    6000 * 2.5 / 365 = 15000 / 365
+                      = 41.0958904109589...
+
+  Expected accrual: 41.0958904109589  (NOT 6000 * (1/24) / 365 = 0.6849..., which is what
+  a per-bar-duration accrual keyed off "1 hour" would wrongly produce)
+
+--------------------------------------------------------------------------------
+Case 4 — zero-gap sanity check (same timestamp twice accrues nothing)
+  prev_timestamp = curr_timestamp = 2026-07-13 16:00
+  calendar_days  = 0.0
+  Expected accrual: 0.0
