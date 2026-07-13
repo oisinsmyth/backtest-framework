@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D53**.
+New decisions are added here going forward — next number is **D56**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -64,3 +64,6 @@ written rationale for *why not now*, per R3.
 | [D50](D50-project-scaffolding-uv-src-layout-pytest.md) | Project scaffolding: uv package manager, src-layout, pytest + hypothesis | Committed | Tooling |
 | [D51](D51-carry-accrual-day-count-convention-act365.md) | Carry accrual day-count convention: ACT/365 as a single stated default | Committed / Deferred | Backtest engine |
 | [D52](D52-declarative-config-type-key-factory-registry.md) | Declarative config shape: `{"type": ..., ...params}` + a generic FactoryRegistry | Committed | Backtest engine |
+| [D53](D53-refactor-regression-gate-reinterpreted-greenfield.md) | "Refactor regression" gate reinterpreted for greenfield conditions (no legacy engine to reconcile against) | Committed | Backtest engine |
+| [D54](D54-coststack-instrument-interface-design.md) | CostStack + Instrument interface shapes, and toy bricks now vs. real bricks in Step 5 | Committed | Backtest engine |
+| [D55](D55-pipeline-sizing-design.md) | Pipeline sizing design: stateless Sizer, capital-by-strategy as an external input | Committed | Signals & strategy interface |

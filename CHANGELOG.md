@@ -36,6 +36,25 @@ version (likely at the Phase C "first real number" milestone, see
 - Step 2 of `VERIFICATION_SCHEME.md` — gate passed (35/35 tests total, 15 new), including
   the full reproducibility loop (config → hash → registry → reload → re-run). This closes
   the Phase A milestone in `DEVELOPMENT_TIMETABLE.md`.
+- `backtest_framework.instruments` — `Instrument` protocol, `Equity`, `OptionStub` (D12,
+  D16). `docs/options_extension.md` added as a stub so `OptionStub`'s
+  `NotImplementedError` points at a real path.
+- `backtest_framework.costs` — `CostStack` (D1) plus `TradeCostBrick`/`CarryCostBrick`
+  protocols (D2) and three toy bricks: `FlatCommission`, `PercentOfNotionalSpread`,
+  `FlatRateCarry`.
+- `backtest_framework.pipeline.sizing` — `Sizer`, `TargetWeight`, `Order`, `net_orders`,
+  `apply_virtual_orders`: the signal → target weight → orders pipeline (D27), with
+  cross-strategy netting and per-strategy virtual books (D46).
+- Step 3 of `VERIFICATION_SCHEME.md` — gate passed (60/60 tests total, 25 new). The
+  "refactor regression" gate was reinterpreted for this project's greenfield conditions
+  (D53) and satisfied with a new hand-computed 3-bar golden-master scenario
+  (`test_step3_refactor_regression.py`), now the frozen baseline for future refactors of
+  CostStack/Instrument/pipeline.
+
+### Changed
+- `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the
+  retired `CarryModel` demonstration class, per that class's own docstring (D54). No
+  change to `SimConfig`'s shape or to Step 2's four passing gates.
 
 <!--
 Template for future entries:

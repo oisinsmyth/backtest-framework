@@ -10,10 +10,11 @@ from datetime import datetime
 
 import pytest
 
-from backtest_framework.config.carry_model import CARRY_MODEL_REGISTRY, CarryModel
+from backtest_framework.config.carry_model import CARRY_MODEL_REGISTRY
 from backtest_framework.config.errors import ConfigError
 from backtest_framework.config.fill_model import FILL_MODEL_REGISTRY, FillModel
 from backtest_framework.config.sim_config import build_sim_objects, validate_sim_config
+from backtest_framework.costs.bricks import FlatRateCarry
 from backtest_framework.registry.trial_registry import compute_trial_hash
 from backtest_framework.simulator.fills import Bar, StopSide
 
@@ -55,10 +56,10 @@ def test_semantically_different_nested_config_changes_hash():
 
 def test_factory_built_carry_model_matches_hand_constructed():
     factory_built = CARRY_MODEL_REGISTRY.build({"type": "act365", "annual_rate": 0.06})
-    hand_built = CarryModel(annual_rate=0.06, day_count=365.0)
+    hand_built = FlatRateCarry(annual_rate=0.06, day_count=365.0)
 
     prev, curr = datetime(2026, 7, 10, 16, 0), datetime(2026, 7, 13, 16, 0)
-    assert factory_built.accrue(100_000, prev, curr) == hand_built.accrue(100_000, prev, curr)
+    assert factory_built.cost(100_000, prev, curr) == hand_built.cost(100_000, prev, curr)
 
 
 def test_factory_built_fill_model_matches_hand_constructed():
@@ -71,12 +72,12 @@ def test_factory_built_fill_model_matches_hand_constructed():
 
 def test_build_sim_objects_matches_hand_constructed_pair():
     objs = build_sim_objects(VALID_CONFIG)
-    hand_carry = CarryModel(annual_rate=0.06, day_count=365.0)
+    hand_carry = FlatRateCarry(annual_rate=0.06, day_count=365.0)
     hand_fill = FillModel(stop_side=StopSide.SELL_STOP)
 
     prev, curr = datetime(2026, 7, 10, 16, 0), datetime(2026, 7, 13, 16, 0)
     bar = Bar(open=38, high=39, low=37, close=38)
-    assert objs.carry_model.accrue(100_000, prev, curr) == hand_carry.accrue(100_000, prev, curr)
+    assert objs.carry_model.cost(100_000, prev, curr) == hand_carry.cost(100_000, prev, curr)
     assert objs.fill_model.fill(45, bar) == hand_fill.fill(45, bar)
 
 

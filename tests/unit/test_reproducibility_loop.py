@@ -26,7 +26,7 @@ def _run(config: dict) -> dict:
     against a fixed scenario, return the results as if they were headline metrics."""
     objs = build_sim_objects(config)
     return {
-        "carry_accrued": objs.carry_model.accrue(100_000, PREV, CURR),
+        "carry_accrued": objs.carry_model.cost(100_000, PREV, CURR),
         "stop_fill_price": objs.fill_model.fill(45, BAR),
     }
 

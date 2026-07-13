@@ -1,0 +1,106 @@
+Golden-master hand-worked scenario for Step 3's "refactor regression" gate (D39-style).
+
+IMPORTANT CONTEXT: VERIFICATION_SCHEME.md's Step 3 gate reads "a pre-refactor golden
+backtest (frozen snapshot, old cost assumptions expressed as bricks) reproduces its
+equity curve through the new architecture." That assumes a pre-refactor engine existed
+to reconcile against. This project is greenfield — there is no pre-refactor engine, so
+there is nothing to regress against. Per D53, this gate is reinterpreted for that
+reality: this scenario becomes the *first* golden master for the new architecture, the
+frozen baseline any *future* refactor of CostStack/Instrument/pipeline must reproduce.
+
+Scenario: one strategy ("s1"), one instrument (Equity "AAPL", whole shares), constant
+capital of $100,000 (capital allocation itself is D31/Step 4's job — Step 3 just takes a
+capital figure as an input), constant price of $100.00 throughout (price movement is
+deliberately excluded so every dollar of NAV change is attributable to costs alone —
+see the cross-check at the bottom).
+
+CostStack:
+  trade_bricks = FlatCommission(1.00), PercentOfNotionalSpread(5.0 bps)
+  carry_bricks = FlatRateCarry(annual_rate=0.06)   [ACT/365, per D51]
+
+--------------------------------------------------------------------------------
+Bar 0 — 2026-07-10 16:00 (Friday). Target weight 0.5 (from flat).
+  desired_notional = 0.5 * 100000 = 50000
+  raw_qty = 50000 / 100.00 = 500.0 -> tradeable_quantity (whole shares) = 500
+  current_qty = 0 -> delta = +500 -> BUY 500 @ 100.00
+
+  Trade cost:
+    notional = 500 * 100.00 = 50000
+    commission = 1.00
+    spread = |50000| * 5.0 / 10000 = 25.00
+    fee0 = 1.00 + 25.00 = 26.00
+
+  Cash:
+    cash_t0 = 100000 - 50000 (cost of shares bought) - 26.00 (fees) = 49974.00
+
+  Position after bar 0: 500 shares AAPL.
+
+--------------------------------------------------------------------------------
+Bar 1 — 2026-07-13 16:00 (Monday, +3 calendar days from bar 0). Target weight
+  unchanged (0.5), price unchanged (100.00).
+  desired_qty = 0.5 * 100000 / 100.00 = 500 = current_qty -> delta = 0 -> NO TRADE
+  (this bar exercises "already at target -> zero orders", D27, inside the integrated
+  scenario, not just in isolation)
+
+  Carry cost (accrues for the 3-day gap, on the notional held during that gap — the
+  position as marked at the start of the gap, i.e. bar 0's 500 @ 100.00 = 50000):
+    carry1 = 50000 * 0.06 * 3 / 365 = 3000 * 3 / 365 = 9000 / 365
+           = 24.657534246575342...
+
+  Cash:
+    cash_t1 = 49974.00 - 24.657534246575342 = 49949.342465753425...
+
+  NAV at bar 1 = cash_t1 + position_notional (500 * 100.00 = 50000)
+               = 49949.342465753425 + 50000
+               = 99949.342465753425...
+
+  Position after bar 1: still 500 shares AAPL (unchanged).
+
+--------------------------------------------------------------------------------
+Bar 2 — 2026-07-14 16:00 (Tuesday, +1 calendar day from bar 1). Target weight -> 0.0
+  (full exit), price still 100.00.
+  desired_qty = 0.0 -> delta = 0 - 500 = -500 -> SELL 500 @ 100.00
+
+  Carry accrues FIRST, for the 1-day gap since bar 1, on the notional held during that
+  gap (position as marked at bar 1: 500 @ 100.00 = 50000) — the position was open for
+  this gap before the exit trade closes it on this same bar:
+    carry2 = 50000 * 0.06 * 1 / 365 = 3000 / 365 = 8.219178082191781...
+
+  cash_after_carry = 49949.342465753425 - 8.219178082191781 = 49941.123287671244...
+  (note: this reference implementation carries slightly more float precision through
+  than a naive recomputation from rounded intermediates would; see TOLERANCE in the
+  test file, D47)
+
+  Then the exit trade:
+    notional_exit = 500 * 100.00 = 50000
+    commission = 1.00
+    spread = |50000| * 5.0 / 10000 = 25.00
+    fee2 = 1.00 + 25.00 = 26.00
+
+  Cash:
+    cash_t2 = cash_after_carry + 50000 (proceeds from selling) - 26.00 (fees)
+            = 49941.123287671244 + 50000 - 26.00
+            = 99915.123287671244...
+
+  Position after bar 2: 0 shares.
+  NAV at bar 2 = cash_t2 + 0 = 99915.123287671244...
+
+--------------------------------------------------------------------------------
+Cross-check (independent of the step-by-step arithmetic above): price never moved
+across the whole scenario, so every dollar of NAV change must equal exactly minus the
+sum of every cost incurred — a clean sanity check that doesn't rely on getting the
+bar-by-bar bookkeeping right.
+
+  total_costs = fee0 + carry1 + carry2 + fee2
+              = 26.00 + 24.657534246575342 + 8.219178082191781 + 26.00
+              = 84.876712328767123...
+
+  NAV change = NAV_bar2 - initial_capital = 99915.123287671244 - 100000
+             = -84.876712328756...   (matches total_costs to within float tolerance,
+               D47's 1e-6 relative tolerance)
+
+Expected final values (asserted in test_step3_refactor_regression.py):
+  NAV at bar 0 (immediately after the buy, before any carry) = cash_t0 + 500*100.00
+    = 49974.00 + 50000 = 99974.00
+  NAV at bar 1 = 99949.342465753425
+  NAV at bar 2 = 99915.123287671244

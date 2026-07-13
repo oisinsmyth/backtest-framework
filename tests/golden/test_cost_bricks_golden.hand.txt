@@ -1,0 +1,48 @@
+Golden-master hand-worked cases for the Step 3 cost bricks (D1, D2), one scenario per
+brick. Companion to test_cost_bricks_golden.py, per D39.
+
+These are the toy demonstration bricks (FlatCommission, PercentOfNotionalSpread,
+FlatRateCarry), not D3/D4/D5's real sqrt-impact / IBKR-schedule / margin-interest bricks
+— this proves the CostStack brick interface and composition are correct, not that any
+particular cost model is realistic (that's Step 5's job).
+
+--------------------------------------------------------------------------------
+Brick 1 — FlatCommission
+  amount = 1.50
+  Any (instrument, quantity, price) input is ignored; the brick always returns the flat
+  amount.
+  Inputs used in the test: AAPL, quantity=500, price=100.0
+  Expected cost: 1.50
+
+--------------------------------------------------------------------------------
+Brick 2 — PercentOfNotionalSpread
+  bps = 5.0
+  instrument = Equity("AAPL"), quantity = 500, price = 100.0
+
+  Hand arithmetic:
+    notional = quantity * price = 500 * 100.0 = 50000.0
+    cost = |notional| * bps / 10000 = 50000.0 * 5.0 / 10000 = 250000 / 10000 = 25.0
+
+  Expected cost: 25.0
+
+--------------------------------------------------------------------------------
+Brick 3 — FlatRateCarry
+  annual_rate = 0.06, day_count = 365.0 (default, D51)
+  base_amount = 50000, prev_timestamp = 2026-07-10 16:00 (Friday),
+  curr_timestamp = 2026-07-13 16:00 (Monday) -> 3.0 calendar days (D33)
+
+  Hand arithmetic (identical formula to the Step 1/2 carry tests, now exercised through
+  the CostStack brick interface rather than called directly):
+    50000 * 0.06 = 3000
+    3000 * 3 / 365 = 9000 / 365 = 24.657534246575342...
+
+  Expected cost: 24.657534246575342
+
+--------------------------------------------------------------------------------
+Brick 4 — combined stack (commission + spread), for cross-checking stack summation
+  FlatCommission(1.50) + PercentOfNotionalSpread(5.0 bps), same inputs as Brick 1/2.
+
+  Hand arithmetic:
+    1.50 + 25.0 = 26.50
+
+  Expected total trade_cost: 26.50

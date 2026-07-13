@@ -10,7 +10,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from .carry_model import CARRY_MODEL_REGISTRY, CarryModel
+from ..costs.bricks import FlatRateCarry
+from .carry_model import CARRY_MODEL_REGISTRY
 from .errors import ConfigError
 from .fill_model import FILL_MODEL_REGISTRY, FillModel
 
@@ -22,7 +23,7 @@ class SimObjects:
     """The live objects built from a SimConfig dict. Never itself stored or hashed —
     rebuilt fresh from the config every time (D35)."""
 
-    carry_model: CarryModel
+    carry_model: FlatRateCarry
     fill_model: FillModel
 
 
