@@ -16,17 +16,22 @@ none.
       fill fix (D10), calendar-day carry accrual (D33, + day-count convention D51). 20/20
       tests green: 7 golden (stop fills), 4 golden + 1 property (carry accrual), 8 unit
       (registry).
-- [ ] Commit Step 1 code + D50/D51 decision records
-- [ ] Decide Step 1 vs Step 2 sequencing: start declarative config (Step 2) next, per the
-      build order in `MASTER_PROJECT_DOC.md`
+- [x] Commit Step 1 code + D50/D51 decision records
+- [x] **Step 2 of `VERIFICATION_SCHEME.md` — gate passed.** Declarative config + factories
+      (D35), config schema convention logged as D52. 35/35 tests green (15 new).
+- [x] **Phase A milestone reached: the reproducibility loop closes** — a trial can be
+      logged, reloaded, and re-run identically (`test_reproducibility_loop.py`).
+- [ ] Commit Step 2 code + D52 decision record
 
 ## Next (queued, not started)
 
-- [ ] Step 2: declarative config + factories (D35) — SimConfig/strategy configs as plain
-      dicts, hashable, prerequisite for the registry's config hash to mean anything beyond
-      Step 1's toy dict configs
-- [ ] Phase A milestone check: "reproducibility loop closes" — once Step 2 lands, confirm a
-      trial can be logged, reloaded, and re-run identically end-to-end
+- [ ] Phase B kickoff: Step 3 — CostStack + Instrument + signal→target→order pipeline
+      (D1, D2, D12, D27), timeboxed to ~2 weeks per R2. This is "the whale" — the
+      slip rule (split D27 out if the refactor regression gate isn't passing by end of
+      week 5) applies once this starts.
+- [ ] Before starting Step 3: re-read D1/D2/D12/D27 together, since D52's config-schema
+      convention was chosen anticipating CostStack bricks reusing it — confirm that
+      still fits once the real bricks are designed, don't just assume.
 
 ## Watch list (not urgent, don't forget)
 
@@ -56,3 +61,14 @@ none.
   config+snapshot_id+seed). 20 tests, all green — golden-master hand-arithmetic files sit
   next to their test files per D39. No portfolio/broker/engine built yet; Step 1 stayed
   deliberately narrow (pure functions + registry), full integration is Step 3's job.
+- **2026-07-13** — Step 2 implemented and gate passed. Built a generic
+  `FactoryRegistry`/`ConfigError` pair (`backtest_framework.config.factory`) plus a
+  `SimConfig` validator (`config.sim_config`) and two demonstration model configs,
+  `CarryModel`/`FillModel`, that wrap Step 1's `accrue_carry_between_bars` and
+  `stop_fill_price` behind the `{"type": ..., ...params}` schema — logged as D52.
+  Deliberately did *not* pull Step 3's CostStack/Instrument refactor forward just because
+  the verification scheme's Step 2 test language ("mini-backtest", "equity curves")
+  implied richer objects than currently exist; built the mechanism generically instead and
+  proved it against what's real. All four Step 2 gates pass, including the full
+  reproducibility loop (config → hash → registry → reload → re-run), which is also the
+  Phase A milestone. 35 tests total, all green.

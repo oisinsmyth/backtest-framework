@@ -28,6 +28,14 @@ version (likely at the Phase C "first real number" milestone, see
   trial log with a deterministic config+snapshot+seed hash (D20).
 - Step 1 of `VERIFICATION_SCHEME.md` — gate passed (20/20 tests: golden-master, property,
   unit).
+- `backtest_framework.config.factory.FactoryRegistry`/`ConfigError` — generic type-keyed
+  declarative-config factory pattern, fails loudly naming the bad key (D35, D52).
+- `backtest_framework.config.sim_config.SimConfig` validator/builder, plus two
+  demonstration model configs (`carry_model.CarryModel`, `fill_model.FillModel`) wrapping
+  Step 1's carry accrual and stop-fill behaviour behind the factory pattern.
+- Step 2 of `VERIFICATION_SCHEME.md` — gate passed (35/35 tests total, 15 new), including
+  the full reproducibility loop (config → hash → registry → reload → re-run). This closes
+  the Phase A milestone in `DEVELOPMENT_TIMETABLE.md`.
 
 <!--
 Template for future entries:

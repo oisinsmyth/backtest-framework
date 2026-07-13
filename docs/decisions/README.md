@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D52**.
+New decisions are added here going forward — next number is **D53**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -63,3 +63,4 @@ written rationale for *why not now*, per R3.
 | [D49](D49-sharpe-sortino-take-an-explicit-risk.md) | Sharpe/Sortino take an explicit risk-free rate input, consistent with the D37 benchmark... | Committed | Analytics |
 | [D50](D50-project-scaffolding-uv-src-layout-pytest.md) | Project scaffolding: uv package manager, src-layout, pytest + hypothesis | Committed | Tooling |
 | [D51](D51-carry-accrual-day-count-convention-act365.md) | Carry accrual day-count convention: ACT/365 as a single stated default | Committed / Deferred | Backtest engine |
+| [D52](D52-declarative-config-type-key-factory-registry.md) | Declarative config shape: `{"type": ..., ...params}` + a generic FactoryRegistry | Committed | Backtest engine |
