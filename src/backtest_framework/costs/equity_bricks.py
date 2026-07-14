@@ -115,6 +115,25 @@ class SqrtImpact:
 
 
 @dataclass(frozen=True)
+class BorrowFee:
+    """Stock borrow fee (D71): a per-leg carry brick — shorts pay, longs pay nothing.
+    The engine hands per-leg carry bricks each leg's own SIGNED notional as
+    base_amount, so max(−base, 0) isolates short exposure: a −100,000 short leg pays
+    on 100,000; a long leg pays zero. Default rate is general-collateral territory
+    for liquid ETFs (~0.25%/yr) — the shape (shorts-only) matters more than the rate
+    for the cost sweep; hard-to-borrow rates are a config change."""
+
+    annual_rate: float = 0.0025
+    day_count: float = DEFAULT_DAY_COUNT
+
+    def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
+        short_notional = max(-base_amount, 0.0)
+        return accrue_carry_between_bars(
+            self.annual_rate, short_notional, prev_timestamp, curr_timestamp, day_count=self.day_count
+        )
+
+
+@dataclass(frozen=True)
 class MarginInterest:
     """Margin interest (D5): the caller's base_amount must be
     max(gross exposure − capital, 0) — the borrowed portion of the book. That's a

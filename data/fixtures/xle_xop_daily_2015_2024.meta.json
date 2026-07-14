@@ -1,0 +1,11 @@
+{
+  "symbols": [
+    "XLE",
+    "XOP"
+  ],
+  "start": "2015-01-01",
+  "end": "2024-12-31",
+  "interval": "1d",
+  "fetched_at_utc": "2026-07-14T01:27:21.920230+00:00",
+  "source": "yfinance Ticker.history (auto_adjust=True default: prices are dividend/split adjusted - see D70's caveat; raw prices + dividend flows are Step 7 / D6)"
+}

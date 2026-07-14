@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D68**.
+New decisions are added here going forward — next number is **D72**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -79,3 +79,7 @@ written rationale for *why not now*, per R3.
 | [D65](D65-ibkr-fixed-schedule-modeled.md) | IBKR Fixed US-equity schedule modeled; cap overrides minimum; pass-throughs deferred | Committed / Deferred | Cost architecture |
 | [D66](D66-sqrt-impact-functional-form.md) | Sqrt impact: fraction ∝ √Q, dollars ∝ Q^1.5; static σ/ADV params for now | Committed / Deferred | Cost architecture |
 | [D67](D67-portfolio-carry-slot-snapshot-semantics.md) | Portfolio-level carry slot on CostStack; start-of-bar snapshot semantics | Committed | Backtest engine |
+| [D68](D68-cost-sweep-harness-design.md) | Cost sweep harness: per-brick scaling wrappers, strategy factories, minimal markdown tearsheet | Committed | Cost architecture |
+| [D69](D69-zscore-pairs-first-number-strategy.md) | Z-score pairs as the first-number strategy; "walk-forward" read as trailing-only simulation | Committed | Signals & strategy interface |
+| [D70](D70-committed-csv-fixture-as-frozen-snapshot.md) | Committed CSV fixture as the pre-Step-7 frozen snapshot; calibration and adjusted-price caveats | Committed / Deferred | Data layer |
+| [D71](D71-borrow-fee-brick.md) | BorrowFee brick: shorts pay, longs free | Committed | Cost architecture |

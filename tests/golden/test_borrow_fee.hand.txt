@@ -1,0 +1,21 @@
+Golden-master hand-worked cases for BorrowFee (D71). Companion to test_borrow_fee.py.
+
+Rule: shorts pay borrow, longs pay nothing. The engine hands per-leg carry bricks each
+leg's own SIGNED notional; BorrowFee charges on max(-base, 0) — the short exposure —
+over the calendar-day gap (D33), ACT/365 (D51).
+
+Case 1 — short leg over a weekend
+  base_amount = -100,000 (a short: -1,000 shares at $100, say)
+  annual_rate = 0.0025 (25 bps, general-collateral ETF territory)
+  gap = Friday 2026-07-10 16:00 -> Monday 2026-07-13 16:00 = 3.0 calendar days
+
+  short_notional = max(-(-100,000), 0) = 100,000
+  fee = 100,000 x 0.0025 x 3 / 365 = 250 x 3 / 365 = 750 / 365
+      = 2.0547945205479454...
+
+Case 2 — long leg, same magnitude, same gap
+  base_amount = +100,000
+  short_notional = max(-100,000, 0) = 0 -> fee = 0.00 (longs never pay borrow)
+
+Case 3 — flat
+  base_amount = 0 -> fee = 0.00

@@ -106,6 +106,25 @@ version (likely at the Phase C "first real number" milestone, see
   tracked in `AITODO.md`), G (margin interest weekend case tied to D33's arithmetic +
   only-when-positive + engine integration run), U (sqrt impact √2/2√2 scalings +
   loud-error paths).
+- `backtest_framework.costs.scaling.scaled_cost_stack` — per-brick cost-multiplier
+  scaling across all three CostStack slots (D8, D68).
+- `backtest_framework.engine.sweep` — `run_cost_sweep` (strategy-factory API, optional
+  per-multiplier TrialRegistry logging), `render_sweep_table`, `max_drawdown` (D68).
+- `backtest_framework.strategies.zscore_pairs.ZScorePairsStrategy` — the first
+  non-toy strategy: fixed 1:1 log-spread z-score mean reversion with hysteresis,
+  previous-bar estimation windows, warm-up/zero-std self-guards (D69).
+- `backtest_framework.costs.equity_bricks.BorrowFee` — per-leg carry, shorts pay /
+  longs free (D71).
+- `backtest_framework.data.csv_fixture` — save/load committed CSV fixtures;
+  `data/fixtures/xle_xop_daily_2015_2024.csv` + `.meta.json` committed as the
+  pre-Step-7 frozen snapshot (D70). `scripts/fetch_fixture.py` (one-time network),
+  `scripts/run_first_result.py` (offline, deterministic).
+- **`docs/results/first_real_number.md` — THE FIRST REAL NUMBER (Phase C milestone,
+  R1's gate):** XLE/XOP z-score pairs 2015–2024, full real cost stack, sweep
+  +13.21% at 0× → −22.70% at 1× → −76.43% at 4×, monotonic; caveats stated.
+- Step 6 of `VERIFICATION_SCHEME.md` — gate passed (163/163 tests total, 29 new):
+  0× ≡ zero-cost and monotonicity asserted on both a penny-exact synthetic scenario
+  and the real fixture, offline and repeatable.
 
 ### Changed
 - `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the

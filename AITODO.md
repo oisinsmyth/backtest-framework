@@ -69,20 +69,30 @@ none.
       `CostStack.portfolio_carry_bricks` slot + start-of-bar snapshot in the engine).
       Frozen D53/pairs baselines re-run and confirmed byte-identical (new slot defaults
       empty). 134/134 tests green (30 new).
-- [ ] Commit Step 5 code + D65/D66/D67 decision records
+- [x] Commit Step 5 code + D65/D66/D67 decision records
+- [x] **Step 6 of `VERIFICATION_SCHEME.md` — gate passed. THE FIRST REAL NUMBER
+      EXISTS (Phase C milestone, R1's existence-justification gate).**
+      `docs/results/first_real_number.md`: XLE/XOP z-score pairs, 2015–2024 frozen
+      fixture, full real cost stack, 0×/0.5×/1×/2×/4× sweep. **+13.2% gross at 0×
+      costs; −22.7% at 1× real costs** — perfectly monotonic, the (weak) gross edge
+      is entirely destroyed by real frictions. Ugly, produced, logged, framed. Built:
+      sweep harness (D8/D68), `ZScorePairsStrategy` (D69), committed CSV fixture as
+      pre-Step-7 snapshot (D70), `BorrowFee` brick (D71). 163/163 tests green (29
+      new), both D8 gates asserted on synthetic AND real data, offline.
+- [ ] Commit Step 6 code + D68–D71 records + the results doc
 
 ## Next (queued, not started)
 
-- [ ] Step 6 — cost-multiplier sweep harness (D8: 0.5×/1×/2×/4×, monotonicity + 0× ==
-      zero-cost gates) → run the XLE/XOP walk-forward end-to-end. **This is Phase C's
-      milestone and R1's existence-justification gate: the first real number.** Target
-      week ~8 per `DEVELOPMENT_TIMETABLE.md`; kill criterion at week 10. Still needed:
-      the sweep harness itself, and a decision on what strategy the first real number
-      runs — `ScheduledWeightStrategy` is a toy; a minimal z-score pairs signal may be
-      the honest minimum (walk-forward pair *selection* stays Step 12/Phase G).
-- [ ] Step 6 will also want config factories for the new bricks (D52's convention) so
-      sweep trials hash properly in the TrialRegistry — deferred out of Step 5
-      deliberately, belongs with the sweep.
+- [ ] **Phase D — trust hardening.** Step 7: data layer (immutable snapshots D24,
+      cleaner + CleaningReport D25, sanity gate D26, raw prices + dividend flows
+      D6/D18). The fixture's XOP 2018-10-24 epsilon artifact and the auto-adjusted-
+      price caveat are now *concrete, observed* motivations for exactly this work —
+      R1's "observed defects motivate better fixes than theorised ones" played out.
+- [ ] Step 8: golden master (D39), property invariants (D40), cross-engine
+      reconciliation (D41).
+- [ ] Config factories for the real bricks + strategy (D52 convention) so logged
+      trials can be re-run from config alone — the sweep logs honest config dicts,
+      but the full factory-rebuild loop for these types doesn't exist yet.
 
 ## Watch list (not urgent, don't forget)
 
@@ -220,3 +230,20 @@ none.
   403-blocked, so the caveat is written into the hand file and a manual check is on
   the watch list rather than quietly claiming the X-gate fully discharged. Frozen
   baselines re-run and confirmed unchanged. 134 tests, all green (30 new).
+- **2026-07-14** — **Step 6: THE FIRST REAL NUMBER (Phase C milestone, R1 satisfied).**
+  Planned via `EnterPlanMode` (three gate terms needed pre-Step-7/9/12 readings, all
+  logged: "frozen snapshot" → committed CSV fixture D70; "tearsheet" → minimal
+  markdown sweep table D68; "walk-forward" → trailing-only forward simulation, no
+  fitted parameters exist to walk forward from, D69). Built `costs/scaling.py` (per-
+  brick multiplier wrappers), `engine/sweep.py` (strategy-*factory* API so stateful
+  strategies can't leak across multiplier runs), `strategies/zscore_pairs.py` (fixed
+  1:1 log-hedge, hysteresis, D44-honoring previous-bar windows), `BorrowFee` (D71),
+  `data/csv_fixture.py` + fetched/committed the 2015–2024 XLE/XOP fixture (2,515
+  bars/leg, σ/ADV printed for impact params). Result: **+13.21% at 0× / −6.35% at
+  0.5× / −22.70% at 1× / −47.31% at 2× / −76.43% at 4×** — monotonic, gross edge
+  fully consumed by real costs; caveats (famous-pair bias per D22, adjusted prices
+  per D6, full-sample σ/ADV calibration) stated in the results doc, not hidden.
+  Bonus finding: the fixture surfaced a real OHLC epsilon artifact (XOP 2018-10-24,
+  close < low by 1.2e-16) — a concrete preview of D26's sanity-gate work, handled
+  with a stated tolerance per D47. 163 tests, all green (29 new); the e2e run is an
+  offline repeatable test, not a one-off.
