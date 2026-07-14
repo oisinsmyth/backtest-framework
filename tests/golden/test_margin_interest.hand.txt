@@ -1,0 +1,67 @@
+G-gate worked cases for MarginInterest (D5, D67) — Step 5 of VERIFICATION_SCHEME.md.
+Companion to test_margin_interest.py (brick-level) and
+tests/integration/test_margin_interest_in_backtest.py (engine wiring).
+
+Rule under test: margin interest accrues only on max(gross exposure − capital, 0) —
+the borrowed portion of the book — over the calendar-day gap between bars (D33),
+ACT/365 (D51). The gate requires the weekend case to tie to D33's arithmetic, so the
+numbers below deliberately reuse Step 1's calendar-accrual golden values.
+
+-------------------------------------------------------------------------------------
+Case 1 — market-neutral pairs book at 200% gross, held over a weekend
+  capital (NAV)   = 100,000
+  gross exposure  = 200,000   (e.g. +100,000 long leg, -100,000 short leg — D5's own
+                               "market-neutral pairs run ~200% gross" rationale)
+  margin base     = max(200,000 − 100,000, 0) = 100,000
+  annual_rate     = 0.06
+  gap             = Friday 2026-07-10 16:00 → Monday 2026-07-13 16:00 = 3.0 calendar days
+
+  accrual = 100,000 × 0.06 × 3 / 365 = 6,000 × 3 / 365 = 18,000 / 365
+          = 49.315068493150684...
+
+  (Identical arithmetic to Step 1's D33 golden — same base, rate, and gap — which is
+  exactly the tie the gate asks for.)
+
+Case 2 — under-leveraged book: charged NOTHING, not a negative rebate
+  capital (NAV)   = 100,000
+  gross exposure  = 80,000    (long-only, partially in cash)
+  margin base     = max(80,000 − 100,000, 0) = max(−20,000, 0) = 0
+  accrual         = 0.00      (the "only when positive" branch — a cash surplus does
+                               not earn interest through THIS brick; that would be a
+                               different brick with its own decision)
+
+Case 3 — boundary: gross exactly equals capital
+  margin base     = max(100,000 − 100,000, 0) = 0 → accrual = 0.00
+
+-------------------------------------------------------------------------------------
+Integration scenario (test_margin_interest_in_backtest.py) — the engine computes the
+base itself, from a start-of-bar snapshot (D67):
+
+  Two legs: A at 100.00, B at 50.00 (prices constant throughout — every dollar of NAV
+  drift is attributable to the margin charge). One strategy, weights {A: +1.0, B: −1.0},
+  ConstantSplitAllocator (one strategy → 100% of NAV), NO trade bricks, NO per-leg
+  carry bricks — MarginInterest(0.06) in portfolio_carry_bricks is the only cost in
+  the run.
+
+  Bar 0 (Friday 16:00): capital = NAV = 100,000.
+    Leg A: +1.0 × 100,000 / 100.00 = +1,000 shares → buy, no fee
+    Leg B: −1.0 × 100,000 / 50.00  = −2,000 shares → sell short, no fee
+    cash = 100,000 − (1,000×100.00) − (−2,000×50.00) = 100,000 − 100,000 + 100,000
+         = 100,000
+    NAV  = 100,000 + 100,000 (A) − 100,000 (B) = 100,000
+    gross = |100,000| + |−100,000| = 200,000. No carry on the first bar (no gap yet).
+
+  Bar 1 (Monday 16:00, +3 calendar days): start-of-bar snapshot BEFORE deductions:
+    snapshot NAV = 100,000; snapshot gross = 200,000
+    margin base  = max(200,000 − 100,000, 0) = 100,000
+    charge       = 100,000 × 0.06 × 3/365 = 49.315068493150684  (Case 1's number)
+    cash         = 100,000 − 49.315068493150684 = 99,950.684931506849
+    NAV          = 99,950.684931506849
+
+    (Re-sizing against the now-slightly-smaller NAV nudges leg B's target from −2,000
+    to −1,999 shares — a 1-share cover trade at zero cost, which leaves NAV unchanged.
+    The asserted quantity is the NAV, which isolates the margin charge exactly.)
+
+  Control run: identical setup but with an empty portfolio_carry_bricks slot →
+  NAV stays exactly 100,000 on both bars. The difference between the two runs is
+  precisely the margin charge and nothing else.

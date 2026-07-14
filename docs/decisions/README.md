@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D65**.
+New decisions are added here going forward — next number is **D68**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -76,3 +76,6 @@ written rationale for *why not now*, per R3.
 | [D62](D62-risk-violations-recorded-not-enforced.md) | RiskMonitor violations are recorded, not enforced, in run_backtest | Committed / Deferred | Portfolio layer |
 | [D63](D63-bar-alignment-inner-join-exact-timestamp.md) | Bar alignment: inner join on exact timestamp equality | Committed | Data layer |
 | [D64](D64-strategy-run-backtest-multi-instrument.md) | Strategy and run_backtest generalized to multi-instrument, single is the N=1 case | Committed | Backtest engine |
+| [D65](D65-ibkr-fixed-schedule-modeled.md) | IBKR Fixed US-equity schedule modeled; cap overrides minimum; pass-throughs deferred | Committed / Deferred | Cost architecture |
+| [D66](D66-sqrt-impact-functional-form.md) | Sqrt impact: fraction ∝ √Q, dollars ∝ Q^1.5; static σ/ADV params for now | Committed / Deferred | Cost architecture |
+| [D67](D67-portfolio-carry-slot-snapshot-semantics.md) | Portfolio-level carry slot on CostStack; start-of-bar snapshot semantics | Committed | Backtest engine |

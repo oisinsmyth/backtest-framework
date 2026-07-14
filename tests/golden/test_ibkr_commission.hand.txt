@@ -1,0 +1,47 @@
+X-gate worked table for IBKRCommission (D4, D65) — Step 5 of VERIFICATION_SCHEME.md.
+Companion to test_ibkr_commission.py; every row below is asserted there.
+
+Schedule modeled: IBKR Fixed pricing, US stocks/ETFs.
+  per_share             = USD 0.005
+  min_per_order         = USD 1.00
+  max_pct_of_trade_value = 1% (the cap OVERRIDES the minimum)
+
+Formula: commission = min( max(0.005 × |shares|, 1.00), 0.01 × |shares| × price )
+
+ANCHORING CAVEAT (honesty over comfort): the X-test is supposed to check against a
+reference we didn't write. IBKR's pricing pages 403-block automated fetches (verified
+during planning — both interactivebrokers.com URL forms refused). The constants above
+are IBKR's long-published, widely-documented Fixed schedule, but they have NOT been
+re-verified against the live page by this project. One-time manual check against
+https://www.interactivebrokers.com/en/pricing/commissions-stocks.php is still owed —
+tracked in AITODO.md. Regulatory pass-throughs (SEC/FINRA fees on sells) are NOT
+modeled; deferred per D65.
+
+-------------------------------------------------------------------------------------
+Row | Shares    | Price    | per-share = .005×q | floor→max(·,1.00) | cap = .01×q×p | commission (min of cols 4,5) | regime
+  1 |      100  |    50.00 |   0.50             |  1.00             |     50.00     |  1.00     | min floor
+  2 |      200  |    50.00 |   1.00             |  1.00             |    100.00     |  1.00     | boundary: per-share == min exactly
+  3 |    1,000  |    50.00 |   5.00             |  5.00             |    500.00     |  5.00     | per-share
+  4 |   10,000  |    25.00 |  50.00             | 50.00             |  2,500.00     | 50.00     | per-share, large order
+  5 |    1,000  |     0.30 |   5.00             |  5.00             |      3.00     |  3.00     | 1% cap (low-price stock)
+  6 |       10  |     0.50 |   0.05             |  1.00             |      0.05     |  0.05     | cap OVERRIDES min (tiny penny-stock order)
+  7 |      100  | 2,000.00 |   0.50             |  1.00             |  2,000.00     |  1.00     | min floor on a high-price stock
+  8 |        1  |   150.00 |   0.005            |  1.00             |      1.50     |  1.00     | single share
+  9 |      500  |     1.00 |   2.50             |  2.50             |      5.00     |  2.50     | per-share on a $1 stock
+ 10 |      500  |     0.40 |   2.50             |  2.50             |      2.00     |  2.00     | 1% cap
+ 11 |      200  |     0.50 |   1.00             |  1.00             |      1.00     |  1.00     | triple boundary: per-share == min == cap
+ 12 |   -1,000  |    50.00 |   5.00             |  5.00             |    500.00     |  5.00     | sell side — sign-independent (|q|)
+ 13 | 2,000,000 |    10.00 | 10,000.00          | 10,000.00         | 200,000.00    | 10,000.00 | jumbo order, per-share
+
+Spot-checks of the interesting rows:
+  Row 6:  max(0.005×10, 1.00) = max(0.05, 1.00) = 1.00; cap = 0.01×10×0.50 = 0.05;
+          min(1.00, 0.05) = 0.05. The published "maximum 1% of trade value" applies
+          even below the $1 minimum — this is the row that distinguishes the correct
+          min/cap ordering from the tempting-but-wrong max(min(...), 1.00) form.
+  Row 7:  per-share pricing on a $200,000 notional order costs $1.00 — a flat-5bps
+          model would charge $100. This is D4's "~70× divergence" rationale made
+          concrete.
+  Row 11: 0.005×200 = 1.00 = min = 0.01×200×0.50 — all three regimes coincide; any
+          off-by-one in the formula's comparisons shows up here.
+
+Also asserted: zero shares → zero commission (no minimum charged on a non-trade).

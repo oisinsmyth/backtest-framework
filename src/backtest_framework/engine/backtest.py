@@ -33,7 +33,7 @@ from ..registry.trial_registry import TrialRegistry
 from .allocator import Allocator
 from .dataview import DataView, build_data_view
 from .portfolio import PortfolioState
-from .risk import RiskLimits, RiskMonitor, RiskViolation
+from .risk import RiskLimits, RiskMonitor, RiskViolation, gross_exposure
 from .strategy import Strategy
 
 
@@ -90,12 +90,25 @@ def run_backtest(
         # 1. Carry accrues on every currently-held instrument (D33), on the calendar-
         #    day gap since the previous ALIGNED bar — this correctly spans any bar
         #    dropped by D45 alignment, since it's driven by timestamps, not bar count.
+        #    All base amounts come from one start-of-bar snapshot taken BEFORE any
+        #    carry is deducted (D67) — otherwise per-leg deductions would shrink NAV
+        #    and change the portfolio-level margin base mid-step, making the result
+        #    depend on application order.
         if prev_timestamp is not None:
-            for instrument_id, quantity in list(portfolio.positions.items()):
+            snapshot_positions = dict(portfolio.positions)
+            snapshot_nav = portfolio.nav(prices, instruments)
+            for instrument_id, quantity in snapshot_positions.items():
                 if quantity != 0:
                     base_amount = quantity * prices[instrument_id]
                     carry = cost_stack.carry_cost(base_amount, prev_timestamp, ab.timestamp)
                     portfolio.accrue_carry(carry)
+            # Portfolio-level carry (D5, D67): margin interest accrues only on the
+            # borrowed portion of the book — gross exposure beyond the equity backing it.
+            margin_base = max(gross_exposure(snapshot_positions, prices, instruments) - snapshot_nav, 0.0)
+            if margin_base > 0:
+                portfolio.accrue_carry(
+                    cost_stack.portfolio_carry_cost(margin_base, prev_timestamp, ab.timestamp)
+                )
 
         # 2. Build this bar's DataView per instrument (D32, D56) from each
         #    instrument's own ALIGNED series, and let every strategy see all of them.

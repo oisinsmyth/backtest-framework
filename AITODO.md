@@ -60,32 +60,41 @@ none.
       test to the new signature and re-ran it — identical numbers, not assumed.
       104/104 tests green (9 new + migrations), offline by default. Real XLE/XOP pair
       confirmed running end-to-end via a `live_fetch`-marked smoke test.
-- [ ] Commit this chunk's code + D63/D64 decision records
+- [x] Commit this chunk's code + D63/D64 decision records
+- [x] **Step 5 of `VERIFICATION_SCHEME.md` — gate passed.** Real equity cost bricks in
+      `costs/equity_bricks.py`: `IBKRCommission` (D4/D65, 13-row X-table incl. the
+      cap-overrides-min penny-stock case), `SqrtImpact` (D3/D66, fraction ∝ √Q and
+      dollars ∝ Q^1.5 both asserted; loud errors on missing/zero ADV), `MarginInterest`
+      (D5/D67, portfolio-level base max(gross − NAV, 0) via a new
+      `CostStack.portfolio_carry_bricks` slot + start-of-bar snapshot in the engine).
+      Frozen D53/pairs baselines re-run and confirmed byte-identical (new slot defaults
+      empty). 134/134 tests green (30 new).
+- [ ] Commit Step 5 code + D65/D66/D67 decision records
 
 ## Next (queued, not started)
 
-- [ ] Phase C kickoff: Step 5 — real equity cost bricks (D3 sqrt impact, D4 IBKR
-      commission schedule, D5 margin interest), replacing Step 3's toy bricks
-      (`FlatCommission`, `PercentOfNotionalSpread`, `FlatRateCarry`) against the same
-      `TradeCostBrick`/`CarryCostBrick` interfaces. `run_backtest` can now drive real
-      bricks through a real multi-instrument loop once they exist — XLE/XOP alignment
-      is no longer a blocker for Step 6.
-- [ ] Step 6 — cost-multiplier sweep (D8) → run the XLE/XOP walk-forward end-to-end.
-      **This is Phase C's milestone and R1's existence-justification gate: the first
-      real number.** Target week ~8 per `DEVELOPMENT_TIMETABLE.md`; kill criterion at
-      week 10 if not produced by then. Still needed before Step 6 can actually run: a
-      real pair-selection/signal strategy (still Phase G territory, `ScheduledWeightStrategy`
-      is a toy) and the cost-multiplier sweep harness itself (D8) don't exist yet.
-- [ ] When Step 5 lands: re-run `test_step3_refactor_regression.py` and update its
-      golden numbers deliberately (not silently) — D53 designated it the frozen
-      baseline, so any change to its expected values needs to be a visible, explained
-      diff, not a quiet drift.
+- [ ] Step 6 — cost-multiplier sweep harness (D8: 0.5×/1×/2×/4×, monotonicity + 0× ==
+      zero-cost gates) → run the XLE/XOP walk-forward end-to-end. **This is Phase C's
+      milestone and R1's existence-justification gate: the first real number.** Target
+      week ~8 per `DEVELOPMENT_TIMETABLE.md`; kill criterion at week 10. Still needed:
+      the sweep harness itself, and a decision on what strategy the first real number
+      runs — `ScheduledWeightStrategy` is a toy; a minimal z-score pairs signal may be
+      the honest minimum (walk-forward pair *selection* stays Step 12/Phase G).
+- [ ] Step 6 will also want config factories for the new bricks (D52's convention) so
+      sweep trials hash properly in the TrialRegistry — deferred out of Step 5
+      deliberately, belongs with the sweep.
 
 ## Watch list (not urgent, don't forget)
 
 - R1: no framework scope creep beyond the current build order until the XLE/XOP walk-forward
   produces a first real number (Phase C milestone, week ~8, kill criterion at week 10).
   This is the next real gate — Phase C is where R1 actually bites.
+- **IBKR schedule manual check owed (D65):** pricing pages 403-block automated fetches,
+  so the brick's constants ($0.005/sh, $1 min, 1% cap) are anchored to the well-known
+  published schedule but not re-verified against the live page. One-time human eyeball
+  of interactivebrokers.com discharges this.
+- D66: `SqrtImpact` σ/ADV are static config params — estimation from data belongs with
+  Step 7 snapshots (and must obey D44's no-same-bar-lookahead rule when built).
 - D62: `RiskMonitor` violations are recorded but not enforced in `run_backtest` — no
   corrective orders, no halt. Revisit once there's a validated strategy to inform what
   "corrective" should actually mean (same reasoning D31 used to defer real allocation).
@@ -196,3 +205,18 @@ none.
   (`test_pairs_backtest.hand.txt`), plus a `live_fetch`-marked test running a real
   long-XLE/short-XOP pair through `run_backtest` end-to-end. 104 tests total, all
   green (9 new plus in-place migrations).
+- **2026-07-13** — Step 5 implemented and gate passed. New `costs/equity_bricks.py`
+  alongside (not replacing) the toys: `IBKRCommission` (Fixed schedule, min/cap
+  ordering pinned by a 13-row hand table — the cap-overrides-min penny-stock row is
+  the one that catches the tempting-but-wrong formula), `SqrtImpact` (the U-gate's
+  "√2 on doubling" clarified in D66 to apply to the impact *fraction*, with total
+  dollars asserted at 2√2 — implementing dollars ∝ √Q literally would be the wrong
+  model and D3's "industry-standard" rationale controls), `MarginInterest` (needed a
+  genuinely new engine concept: a `portfolio_carry_bricks` slot on CostStack, charged
+  once per bar on max(gross − NAV, 0) from a start-of-bar snapshot so per-leg carry
+  deductions can't perturb the margin base mid-step — D67; reuses
+  `engine.risk.gross_exposure`, one exposure formula everywhere per D57's argument).
+  Tried to anchor the IBKR constants against the live pricing page during planning;
+  403-blocked, so the caveat is written into the hand file and a manual check is on
+  the watch list rather than quietly claiming the X-gate fully discharged. Frozen
+  baselines re-run and confirmed unchanged. 134 tests, all green (30 new).

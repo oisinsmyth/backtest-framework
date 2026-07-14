@@ -91,6 +91,21 @@ version (likely at the Phase C "first real number" milestone, see
 - Multi-instrument alignment chunk (D45) — gate: a real long-XLE/short-XOP pair runs
   end-to-end through `run_backtest` (104/104 tests total, 9 new, offline by default;
   the XLE/XOP run is `live_fetch`-marked).
+- `backtest_framework.costs.equity_bricks` — the real equity cost bricks (Step 5):
+  `IBKRCommission` (Fixed schedule: $0.005/sh, $1 min, 1% cap, cap overrides min —
+  D4/D65), `SqrtImpact` (square-root impact law, fraction ∝ √Q / dollars ∝ Q^1.5,
+  static per-symbol σ/ADV params, loud errors on missing/zero ADV — D3/D66),
+  `MarginInterest` (accrues on max(gross exposure − NAV, 0) — D5/D67). Toy bricks
+  remain alongside as simple/sensitivity bricks.
+- `CostStack.portfolio_carry_bricks` — a third slot for portfolio-level carry, charged
+  once per bar on an engine-computed base, with start-of-bar snapshot semantics in
+  `run_backtest` (D67). Additive; existing stacks and the frozen D53 baseline are
+  unchanged (re-run and confirmed).
+- Step 5 of `VERIFICATION_SCHEME.md` — gate passed (134/134 tests total, 30 new):
+  X (13-row IBKR schedule table; live-page anchoring 403-blocked, manual check
+  tracked in `AITODO.md`), G (margin interest weekend case tied to D33's arithmetic +
+  only-when-positive + engine integration run), U (sqrt impact √2/2√2 scalings +
+  loud-error paths).
 
 ### Changed
 - `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the
