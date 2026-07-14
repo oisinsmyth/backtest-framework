@@ -102,6 +102,7 @@ def run_backtest(
     starting_cash: float,
     risk_limits: RiskLimits | None = None,
     enforce_pretrade: bool = False,
+    fill_timing: str = "close",
     trial_registry: TrialRegistry | None = None,
     trial_id: str | None = None,
     config: dict | None = None,
@@ -120,7 +121,18 @@ def run_backtest(
     on each netted order before it fills: a rejected order does not execute, the
     corresponding strategies' virtual orders for that instrument are dropped too
     (so virtual books stay reconciled with the broker book and the strategies
-    re-attempt next bar), and the violation is recorded. Requires `risk_limits`."""
+    re-attempt next bar), and the violation is recorded. Requires `risk_limits`.
+
+    `fill_timing` (D103): "close" (default) fills orders at the close of the bar
+    that generated the signal — the historical convention, matched to vectorbt in
+    the D79 reconciliation, optimistic for mean reversion because the entry always
+    catches exactly the close that triggered it. "next_open" fills each bar's
+    decisions at the NEXT bar's open: the strategy never trades at the price that
+    produced its signal. In next_open mode, orders decided on the final bar never
+    fill, carry still accrues close-to-close on positions held at the previous
+    close (fills land at the open, one calendar-instant into the gap — a stated
+    approximation), and the pre-trade gate is evaluated at decision time against
+    decision-bar closes."""
     if trial_registry is not None and (trial_id is None or config is None):
         raise ValueError(
             "trial_registry was given but trial_id and/or config was not — "
@@ -128,6 +140,8 @@ def run_backtest(
         )
     if enforce_pretrade and risk_limits is None:
         raise ValueError("enforce_pretrade=True requires risk_limits — there is no gate without limits (D101)")
+    if fill_timing not in ("close", "next_open"):
+        raise ValueError(f"fill_timing must be 'close' or 'next_open', got {fill_timing!r} (D103)")
 
     aligned = align_bars(bars_by_instrument)  # D45
     if not aligned:
@@ -167,6 +181,7 @@ def run_backtest(
 
     portfolio = PortfolioState(cash=starting_cash)
     virtual_positions: dict[tuple[str, str], float] = {}
+    pending_virtual: dict[tuple[str, str], Order] = {}  # next_open mode only (D103)
     strategy_ids = [s.strategy_id for s in strategies]
 
     result = BacktestResult()
@@ -198,6 +213,11 @@ def run_backtest(
                     for key in list(virtual_positions):
                         if key[1] == instrument_id:
                             virtual_positions[key] *= ratio
+                    # Pending next_open orders were sized in pre-split share terms;
+                    # they scale with everything else (D103).
+                    for key, pending_order in list(pending_virtual.items()):
+                        if key[1] == instrument_id:
+                            pending_virtual[key] = Order(instrument_id, pending_order.quantity * ratio)
 
         # 1. Carry accrues on every currently-held instrument (D33), on the calendar-
         #    day gap since the previous ALIGNED bar — this correctly spans any bar
@@ -239,6 +259,28 @@ def run_backtest(
                 portfolio.accrue_carry(
                     cost_stack.portfolio_carry_cost(margin_base, prev_timestamp, ab.timestamp)
                 )
+
+        # 1b. next_open fill timing (D103): orders decided at the PREVIOUS bar's
+        #     close fill now, at THIS bar's open — the strategy never trades at the
+        #     price that generated its signal. Fills precede this bar's signal step,
+        #     so today's sizing sees the updated books.
+        if fill_timing == "next_open" and pending_virtual:
+            opens = {instrument_id: bar.open for instrument_id, bar in ab.bars.items()}
+            for instrument_id, order in net_orders(pending_virtual).items():
+                if order.quantity != 0:
+                    trade_cost = cost_stack.trade_cost(
+                        instruments[instrument_id], order.quantity, opens[instrument_id]
+                    )
+                    portfolio.apply_fill(instrument_id, order.quantity, opens[instrument_id], trade_cost)
+                    result.fills.append(
+                        (ab.timestamp, instrument_id, order.quantity, opens[instrument_id], trade_cost)
+                    )
+            virtual_positions = apply_virtual_orders(virtual_positions, pending_virtual)
+            for (strategy_id, instrument_id), order in pending_virtual.items():
+                result.virtual_fills.append(
+                    (ab.timestamp, strategy_id, instrument_id, order.quantity, opens[instrument_id])
+                )
+            pending_virtual = {}
 
         # 2. Build this bar's DataView per instrument (D32, D56) from each
         #    instrument's own ALIGNED series — the VIEW series when one was supplied
@@ -293,20 +335,25 @@ def run_backtest(
                     }
             external_orders = approved
 
-        virtual_positions = apply_virtual_orders(virtual_positions, virtual_orders)
-        for (strategy_id, instrument_id), order in virtual_orders.items():
-            result.virtual_fills.append(
-                (ab.timestamp, strategy_id, instrument_id, order.quantity, prices[instrument_id])
-            )
-
-        # 5. Apply every netted (broker-facing) fill with its trade cost.
-        for instrument_id, order in external_orders.items():
-            if order.quantity != 0:
-                trade_cost = cost_stack.trade_cost(instruments[instrument_id], order.quantity, prices[instrument_id])
-                portfolio.apply_fill(instrument_id, order.quantity, prices[instrument_id], trade_cost)
-                result.fills.append(
-                    (ab.timestamp, instrument_id, order.quantity, prices[instrument_id], trade_cost)
+        if fill_timing == "next_open":
+            # 5. (D103) Decisions become pending orders; they fill at the NEXT
+            #    bar's open (step 1b). Orders decided on the final bar never fill.
+            pending_virtual = virtual_orders
+        else:
+            virtual_positions = apply_virtual_orders(virtual_positions, virtual_orders)
+            for (strategy_id, instrument_id), order in virtual_orders.items():
+                result.virtual_fills.append(
+                    (ab.timestamp, strategy_id, instrument_id, order.quantity, prices[instrument_id])
                 )
+
+            # 5. Apply every netted (broker-facing) fill with its trade cost.
+            for instrument_id, order in external_orders.items():
+                if order.quantity != 0:
+                    trade_cost = cost_stack.trade_cost(instruments[instrument_id], order.quantity, prices[instrument_id])
+                    portfolio.apply_fill(instrument_id, order.quantity, prices[instrument_id], trade_cost)
+                    result.fills.append(
+                        (ab.timestamp, instrument_id, order.quantity, prices[instrument_id], trade_cost)
+                    )
 
         # 6. Per-bar risk check across every instrument (D30), regardless of whether
         #    an order fired this bar.

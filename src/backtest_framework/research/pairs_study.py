@@ -67,6 +67,9 @@ class StudyConfig:
     """How SqrtImpact's σ/ADV are estimated (D102): "full_sample" is the original,
     documented look-ahead in cost parameters (D66/D70); "train_window" recalibrates
     per walk-forward window from that window's TRAIN slice only (D44-compliant)."""
+    fill_timing: str = "close"
+    """Engine fill timing (D103): "close" is the historical same-bar convention;
+    "next_open" fills each decision at the next bar's open."""
 
     def cost_stack_config(self) -> dict:
         """The declarative description of the study's real cost stack (D102) — the
@@ -105,6 +108,7 @@ class StudyConfig:
             "mc_seed": self.mc_seed,
             "benchmark_symbol": self.benchmark_symbol,
             "impact_calibration": self.impact_calibration,
+            "fill_timing": self.fill_timing,
             "cost_stack": self.cost_stack_config(),
         }
 
@@ -118,7 +122,7 @@ class StudyConfig:
         field_names = (
             "train_size", "test_size", "step", "top_n", "lookback", "entry_z", "exit_z",
             "leg_weight", "starting_cash", "rf_annual", "periods_per_year", "mc_seed",
-            "benchmark_symbol", "impact_calibration",
+            "benchmark_symbol", "impact_calibration", "fill_timing",
         )
         kwargs = {name: config[name] for name in field_names if name in config}
         if "multipliers" in config:
@@ -354,6 +358,7 @@ def run_pairs_study(
                 cost_stack=scaled_cost_stack(window_stack, m),
                 allocator=ConstantSplitAllocator(),
                 starting_cash=capital[m],
+                fill_timing=config.fill_timing,  # D103
                 splits_by_instrument=splits,
                 view_bars_by_instrument=run_views,
             )

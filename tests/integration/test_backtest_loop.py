@@ -221,3 +221,54 @@ def test_virtual_fills_are_strategy_tagged_even_when_netting_cancels():
     assert result.final_virtual_positions == {("A", "AAPL"): 500.0, ("B", "AAPL"): -500.0}
     # Sleeve books sum to the broker book exactly.
     assert sum(result.final_virtual_positions.values()) == result.final_positions.get("AAPL", 0.0)
+
+
+def test_next_open_fill_timing_hand_computed():
+    # D103 (audit F3): decisions at bar t fill at bar t+1's OPEN. Hand arithmetic:
+    #   bar0: no pending; size 0.5 x 100,000 / close 102 = 490.2 -> 490 pending.
+    #   bar1: fill +490 @ open 104 -> cash 49,040; NAV @ close 101 = 98,530;
+    #         re-size: 0.5 x 98,530 / 101 = 487.8 -> 488 -> delta -2 pending.
+    #   bar2: fill -2 @ open 99 -> cash 49,238, position 488; NAV @ close 100 =
+    #         98,038; target weight 0 -> exit order pending, never fills (last bar).
+    t0, t1, t2 = (datetime(2026, 7, d, 16, 0) for d in (10, 13, 14))
+    bars = [
+        TimestampedBar(t0, Bar(open=100.0, high=103.0, low=99.0, close=102.0)),
+        TimestampedBar(t1, Bar(open=104.0, high=105.0, low=100.0, close=101.0)),
+        TimestampedBar(t2, Bar(open=99.0, high=101.0, low=98.0, close=100.0)),
+    ]
+    strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [0.5, 0.5, 0.0]})
+
+    result = run_backtest(
+        bars_by_instrument={"AAPL": bars},
+        instruments=INSTRUMENTS,
+        strategies=[strategy],
+        cost_stack=CostStack(),
+        allocator=ConstantSplitAllocator(),
+        starting_cash=100_000.0,
+        fill_timing="next_open",
+    )
+
+    assert result.fills == [
+        (t1, "AAPL", 490.0, 104.0, 0.0),
+        (t2, "AAPL", -2.0, 99.0, 0.0),
+    ]
+    navs = [nav for _, nav in result.equity_curve]
+    assert navs[0] == pytest.approx(100_000.0, rel=TOLERANCE)
+    assert navs[1] == pytest.approx(98_530.0, rel=TOLERANCE)
+    assert navs[2] == pytest.approx(98_038.0, rel=TOLERANCE)
+    # The final bar's exit decision never fills — documented D103 semantics.
+    assert result.final_positions["AAPL"] == 488.0
+
+
+def test_fill_timing_rejects_unknown_mode():
+    bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
+    with pytest.raises(ValueError, match="fill_timing"):
+        run_backtest(
+            bars_by_instrument={"AAPL": bars},
+            instruments=INSTRUMENTS,
+            strategies=[],
+            cost_stack=CostStack(),
+            allocator=ConstantSplitAllocator(),
+            starting_cash=100_000.0,
+            fill_timing="vwap",
+        )
