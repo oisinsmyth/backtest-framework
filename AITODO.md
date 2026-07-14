@@ -202,21 +202,33 @@ none.
       on idle cash (a ≤100%-gross book is mostly idle cash — recorded in D96);
       five-study multiplicity makes any thin positive indistinguishable from
       zero anyway. 299 tests (4 new).
-- [ ] Commit gross exposure study + D96
+- [x] Commit gross exposure study + D96
+- [x] **The Phase G writeup skeleton — the portfolio document exists (D97).**
+      `docs/writeup.md`: ten sections + appendices, methodology-first (the
+      trust story leads), every headline number final and quoted from a
+      committed artifact; `[TODO prose]` marks narrative polish only — a
+      tested rule (numbers are never TODO). Anchor test
+      (`tests/unit/test_writeup.py`): 24 (number, source-artifact) pairs must
+      appear in BOTH documents, so a re-run study that moves a headline fails
+      CI instead of letting the writeup lie. Records the pre-registration
+      correction ("clears at £X AUM" → what was actually measured) and the
+      evidence-based Kalman cut (v3's estimation-error result). README updated:
+      writeup is now the lead link; stale "pre-implementation" status fixed.
+      326 tests (27 new).
+- [ ] Commit writeup skeleton + D97
 
-## Next (queued, not started) — Phase G research proper
+## Next (queued, not started) — Phase G closing
 
-- [ ] **The Phase G writeup skeleton** — five exhibits now form a complete arc:
-      v1→v2 selection matters; v2→v3 estimation error is real; capacity → no
-      size clears at 200% gross; gross sweep → low gross clears implementation
-      costs but not the capital hurdle. The methodology story (one variable per
-      study, every number from gate-tested machinery) is the portfolio piece.
-      Reviewer outreach in parallel.
-- [ ] Remaining study candidates: per-window σ/ADV calibration (closes D66);
-      parameter sensitivity (every variant logged → honest DSR); an idle-cash
-      interest brick (the gross sweep showed low-gross books are mostly cash —
-      modeling cash yield would move absolute numbers materially and is a real
-      cost-model gap, not a strategy tweak).
+- [ ] **Writeup polish**: expand the `[TODO prose]` sections (pairs-trading
+      motivation ¶, gate-discipline ¶, DSR intuition ¶, institutional-scenario
+      arithmetic, universe appendix table). Then freeze v1 of the writeup.
+- [ ] **Reviewer outreach** (timetable: parallel task, human-led) — QuantNet/
+      Wilmott, LinkedIn, meetups; the writeup attaches as-is since its numbers
+      are final.
+- [ ] Study candidates if research resumes: per-window σ/ADV calibration
+      (closes D66); parameter sensitivity (every variant logged → honest DSR);
+      an idle-cash interest brick (the material cost-model gap the gross sweep
+      exposed).
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
 - [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
 
@@ -540,3 +552,18 @@ none.
   capital hurdle) with the idle-cash-interest caveat cutting the other way.
   Regenerated deterministically (registry deleted + rerun, same as v3/capacity
   precedent). 299 tests green (4 new).
+- **2026-07-14** — **Phase G writeup skeleton (D97).** `docs/writeup.md` — the
+  document the timetable's kill criterion and reviewer-outreach plan both point
+  at, started well inside the week-20 deadline. Methodology-first ordering (for
+  this audience the trust story IS the product); skeleton = final numbers +
+  draft prose (`[TODO prose]` markers only — a tested rule rejects any
+  non-prose TODO); the pre-registered capacity claim and its data-driven
+  correction stated in the document; the planned Kalman stage recorded as an
+  evidence-based cut (v3: static β estimation error already out-costs its
+  benefit; a dynamic hedge re-estimates that same parameter continuously).
+  Anti-rot: 24 anchor pairs assert each headline number appears in both the
+  writeup and its source artifact (unicode-minus normalized); one anchor
+  failure during development was the writeup rounding 143.33% → "143%" —
+  exactly the class of drift the test exists to catch. README brought current
+  (was still claiming "pre-implementation"); writeup is now its lead link.
+  326 tests green (27 new).

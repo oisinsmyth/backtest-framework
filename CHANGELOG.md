@@ -271,6 +271,14 @@ version (likely at the Phase C "first real number" milestone, see
   hurdle** (best cell Sharpe −1.61; idle-cash-interest caveat stated both
   ways). The two-sided headline: at low gross the edge pays for its own
   implementation, not for the capital it occupies. (299/299 tests, 4 new.)
+- **`docs/writeup.md` — the Phase G writeup skeleton (D97)**: the portfolio
+  document; methodology-first, ten sections + appendices, all five studies'
+  headline numbers final and quoted from committed artifacts, `[TODO prose]`
+  markers for narrative polish only. `tests/unit/test_writeup.py` anchors 24
+  (number, source-artifact) pairs so a re-run study that moves a headline
+  fails CI, asserts required sections, enforces the prose-only-TODO rule, and
+  checks the README link. README brought current (stale "pre-implementation"
+  status replaced; writeup is the lead link). (326/326 tests, 27 new.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

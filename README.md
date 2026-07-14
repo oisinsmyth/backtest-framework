@@ -5,7 +5,12 @@ A Lego-brick-modular backtesting framework built to run a market-neutral pairs-t
 by structure, not convention — every friction, instrument, and validation check is a swappable,
 individually-tested component. Research output is the product; the framework is the instrument.
 
-Implementation has not started yet. This repo currently holds the full planning doc suite.
+The framework is complete (all in-scope verification gates passed) and the Phase G
+research program has published five studies from it.
+
+**The research output is [`docs/writeup.md`](docs/writeup.md)** — the five-study
+measurement of whether ETF pairs trading clears real frictions (draft skeleton; every
+headline number final and cross-checked against its source artifact by the test suite).
 
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
@@ -40,6 +45,9 @@ cannot rot.
 
 ## Status
 
-Pre-implementation. Next up: Step 1 of the verification scheme — TrialRegistry + the two
-un-retrofittable bug fixes (D10 gap-through-stop, D33 calendar-day carry accrual). See
-[`AITODO.md`](AITODO.md) for the live task list.
+**Framework complete; research program published.** All in-scope verification-scheme steps
+(1–9, 11, 12) passed their gates; the simulator is anchored to hand-computed golden masters
+and reconciled penny-exact against vectorbt. Phase G has produced five one-variable-per-step
+studies (selection → hedging → capacity → gross exposure) on a frozen 57-ETF universe, all
+collected in [`docs/writeup.md`](docs/writeup.md) — draft prose, final numbers. Next:
+writeup polish and reviewer outreach. See [`AITODO.md`](AITODO.md) for the live task list.
