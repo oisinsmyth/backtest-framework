@@ -7,7 +7,10 @@ authors = [
     { name = "Oisin Smyth", email = "oisin.smyth132@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "pandas>=3.0.3",
+    "yfinance>=1.5.1",
+]
 
 [build-system]
 requires = ["uv_build>=0.11.7,<0.12.0"]
@@ -21,3 +24,7 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "live_fetch: hits a real network data source; excluded from default runs (D24 cross-cutting gate: CI runs offline). Run explicitly with `pytest -m live_fetch`.",
+]
+addopts = "-m \"not live_fetch\""

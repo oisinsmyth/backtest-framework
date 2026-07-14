@@ -62,6 +62,28 @@ version (likely at the Phase C "first real number" milestone, see
 - Step 4 of `VERIFICATION_SCHEME.md` — gate passed (78/78 tests total, 18 new). **Phase B
   complete** (`DEVELOPMENT_TIMETABLE.md`) — both Step 3 and Step 4 gates pass without
   needing the pre-committed slip rule.
+- First production dependencies: `yfinance`, `pandas` (`pyproject.toml` was
+  `dependencies = []` until now).
+- `backtest_framework.data` — `TimestampedBar` (D60), `DataSource` protocol (D18),
+  `EquityDataSource` (a deliberately unhardened yfinance passthrough — no snapshotting
+  D24, cleaning D25, or sanity gate D26 yet; see D59).
+- `backtest_framework.engine.portfolio.PortfolioState` — broker-facing cash/positions
+  and NAV (D43's short-sale accounting falls out naturally from signed notional, no
+  special-casing needed).
+- `backtest_framework.engine.strategy` — `Strategy` protocol, `ScheduledWeightStrategy`
+  (a toy reference strategy, analogous to Step 3's toy cost bricks).
+- `backtest_framework.engine.backtest.run_backtest` — the production loop generalizing
+  Step 3's test-only `run_mini_backtest`: wires DataView, Strategy, Allocator, Sizer,
+  CostStack, PortfolioState, and (optionally) RiskMonitor and TrialRegistry together
+  per bar. Capital is reallocated from current NAV every bar (D61). Risk violations are
+  recorded, not enforced (D62). Single-instrument only for now (D59).
+- `pytest` marker `live_fetch`, excluded by default via `addopts` — matches
+  `VERIFICATION_SCHEME.md`'s own cross-cutting gate ("CI runs everything offline...
+  live-fetch tests are excluded by marker").
+- Minimal data-source + engine-loop chunk (not a numbered `VERIFICATION_SCHEME.md`
+  step; inserted ahead of Step 5 to unblock it — D59) — gate: a `ScheduledWeightStrategy`
+  run through `run_backtest` reproduces Step 3's frozen golden-master NAV curve exactly
+  (95/95 tests total, 17 new, offline by default).
 
 ### Changed
 - `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the

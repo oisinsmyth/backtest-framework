@@ -1,0 +1,58 @@
+Why the production run_backtest() reproduces test_step3_golden_master_equity_curve's
+numbers exactly, despite a real behavioural difference (D61: capital is reallocated
+from current NAV every bar, not fixed at starting_cash as Step 3's test-only harness
+did). This isn't a coincidence to wave away — traced bar by bar below, independent of
+the implementation, using a standalone calculator (not the production code itself).
+
+Scenario (identical to test_step3_golden_master_equity_curve): single strategy "s1",
+AAPL, starting_cash=100000, price constant at 100.0 throughout, weights [0.5, 0.5, 0.0]
+across three bars (Fri, Mon +3d, Tue +1d). CostStack: FlatCommission(1.00) +
+PercentOfNotionalSpread(5.0 bps) trade bricks, FlatRateCarry(0.06) carry brick.
+ConstantSplitAllocator with exactly one strategy gives that strategy 100% of current NAV.
+
+--------------------------------------------------------------------------------
+Bar 0: no prior bar, so no carry accrual yet; NAV before this bar's trade is
+computed from a still-untouched portfolio: cash=100000, positions empty -> NAV=100000.
+capital = NAV = 100000 -- IDENTICAL to Step 3's fixed capital=starting_cash on this
+bar, because nothing has happened yet to make NAV diverge from starting_cash. This
+holds generally for any bar-0-from-flat scenario, not just this one.
+
+  desired_notional = 0.5 * 100000 = 50000; raw_qty = 500.0 -> desired_qty = 500
+  Same trade as Step 3's golden master: buy 500 @ 100, fee 26.00.
+  cash = 100000 - 50000 - 26.00 = 49974.00; NAV = 49974.00 + 50000 = 99974.00
+
+--------------------------------------------------------------------------------
+Bar 1: carry accrues first (3-day gap, base 500*100=50000): 24.657534246575342.
+  cash = 49974.00 - 24.657534246575342 = 49949.342465753425
+  NAV before this bar's trade = 49949.342465753425 + 50000 = 99949.342465753425
+  capital = NAV = 99949.342465753425 -- NOT 100000 this time (D61's real effect).
+
+  desired_notional = 0.5 * 99949.342465753425 = 49974.671232876712
+  raw_qty = 499.74671232876712 -> round() -> 500 (within 0.5 of 500, rounds up)
+  desired_qty = 500 = current_qty -> delta = 0 -> NO TRADE, same as Step 3's bar 1.
+
+  This is the one place the capital difference could plausibly have changed the
+  outcome (a different capital could round to 499 or 501 instead) -- verified by
+  direct calculation above that it doesn't, for these specific numbers. It is not a
+  general guarantee; it's true for this scenario, which is exactly what a golden
+  master is for.
+
+--------------------------------------------------------------------------------
+Bar 2: carry accrues (1-day gap, base 500*100=50000): 8.219178082191781.
+  cash = 49949.342465753425 - 8.219178082191781 = 49941.123287671244
+  NAV before this bar's trade = 49941.123287671244 + 50000 = 99941.123287671244
+  capital = NAV = 99941.123287671244 -- again differs from Step 3's fixed 100000.
+
+  desired_notional = 0.0 * capital = 0, regardless of what capital actually is --
+  weight 0 makes the capital figure irrelevant entirely. raw_qty = 0 -> desired_qty=0.
+  delta = 0 - 500 = -500 -> SELL 500 @ 100, fee 26.00. This step is capital-invariant
+  by construction, so it matches Step 3's bar 2 unconditionally, not by coincidence.
+
+  cash = 49941.123287671244 + 50000 - 26.00 = 99915.123287671244
+  NAV = 99915.123287671244 + 0 = 99915.123287671244
+
+--------------------------------------------------------------------------------
+Conclusion: bar0's NAV==starting_cash identity, bar1's rounding coincidence (verified
+above), and bar2's weight-zero capital-invariance together mean run_backtest()
+reproduces 99974.00 / 99949.342465753425 / 99915.123287671244 exactly, matching
+test_step3_golden_master_equity_curve's asserted values despite D61.

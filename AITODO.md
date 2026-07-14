@@ -37,36 +37,47 @@ none.
       formula and simulate-then-check pretrade design logged as D57. Allocator wired
       into `Sizer.capital_by_strategy` with a test proving the connection (D58), closing
       the loop D55 (Step 3) left open on purpose. 78/78 tests green (18 new).
-- [ ] Commit Step 4 code + D56/D57/D58 decision records
+- [x] Commit Step 4 code + D56/D57/D58 decision records
 - [x] **Phase B complete.** Both Step 3 and Step 4 gates pass — the whale is done,
       without needing the pre-committed slip rule (refactor regression gate has been
       green since Step 3, no need to split D27 out to Phase D).
+- [x] **Minimal data source + production engine loop, planned and built.** Not a
+      numbered `VERIFICATION_SCHEME.md` step — inserted infrastructure to unblock
+      Step 5/6, scoped via `EnterPlanMode` before writing code (first time this
+      session; new architectural ground warranted it). Built `data.yfinance_source
+      .EquityDataSource` (unhardened D18-lite, D59) and `engine.backtest.run_backtest`
+      generalizing Step 3's test-only harness into a real, multi-strategy-capable loop.
+      95/95 tests green (17 new), offline by default — one `@pytest.mark.live_fetch`
+      test hits real yfinance and is excluded from normal runs per
+      `VERIFICATION_SCHEME.md`'s own cross-cutting gate.
+- [ ] Commit this chunk's code + D59-D62 decision records
 
 ## Next (queued, not started)
 
 - [ ] Phase C kickoff: Step 5 — real equity cost bricks (D3 sqrt impact, D4 IBKR
       commission schedule, D5 margin interest), replacing Step 3's toy bricks
       (`FlatCommission`, `PercentOfNotionalSpread`, `FlatRateCarry`) against the same
-      `TradeCostBrick`/`CarryCostBrick` interfaces.
+      `TradeCostBrick`/`CarryCostBrick` interfaces. `run_backtest` (`engine/backtest.py`)
+      is now ready to drive real bricks through a real loop once they exist.
 - [ ] Step 6 — cost-multiplier sweep (D8) → run the XLE/XOP walk-forward end-to-end.
       **This is Phase C's milestone and R1's existence-justification gate: the first
       real number.** Target week ~8 per `DEVELOPMENT_TIMETABLE.md`; kill criterion at
-      week 10 if not produced by then.
+      week 10 if not produced by then. Still blocked on: `run_backtest` is
+      single-instrument only (D59) — a real pairs walk-forward needs XLE+XOP aligned
+      (D45), which this chunk deliberately didn't build.
 - [ ] When Step 5 lands: re-run `test_step3_refactor_regression.py` and update its
       golden numbers deliberately (not silently) — D53 designated it the frozen
       baseline, so any change to its expected values needs to be a visible, explained
       diff, not a quiet drift.
-- [ ] Step 6 needs an actual data source and something resembling a real engine loop to
-      run XLE/XOP through — neither exists yet (Step 3's `run_mini_backtest` is
-      deliberately test-only, Step 7's data layer is later in the build order). Worth
-      scoping this gap explicitly before diving into Step 5, since Step 6's gate can't
-      pass without it.
 
 ## Watch list (not urgent, don't forget)
 
 - R1: no framework scope creep beyond the current build order until the XLE/XOP walk-forward
   produces a first real number (Phase C milestone, week ~8, kill criterion at week 10).
   This is the next real gate — Phase C is where R1 actually bites.
+- D62: `RiskMonitor` violations are recorded but not enforced in `run_backtest` — no
+  corrective orders, no halt. Revisit once there's a validated strategy to inform what
+  "corrective" should actually mean (same reasoning D31 used to defer real allocation).
 
 ## Log
 
@@ -131,3 +142,25 @@ none.
   tests total, all green (18 new), including a hand-computed integration scenario
   proving a pairs position drifts into a risk violation via price movement alone with
   no order ever submitted, flagged on exactly the correct bar.
+- **2026-07-13** — Data source + production engine loop chunk implemented. Planned via
+  `EnterPlanMode` first (user asked to scope this explicitly) since it crossed real
+  architectural thresholds Steps 1-4 hadn't: first production dependency (`yfinance`
+  + `pandas`, `pyproject.toml` was `dependencies = []` until now), first stateful
+  portfolio class, first strategy interface. Built `data.bars.TimestampedBar` (wraps
+  `Bar` rather than extending its schema — D60), `data.source.DataSource` +
+  `data.yfinance_source.EquityDataSource` (D18-lite, explicitly unhardened — no D24
+  snapshotting, D25 cleaning, D26 sanity gate; no volume/ADV field), and
+  `engine.portfolio.PortfolioState`, `engine.strategy.Strategy` +
+  `ScheduledWeightStrategy`, `engine.backtest.run_backtest` — the production
+  generalization of Step 3's test-only `run_mini_backtest`. Registered a `live_fetch`
+  pytest marker excluded by default, matching `VERIFICATION_SCHEME.md`'s own
+  cross-cutting gate language exactly. Caught a plan-vs-reality mismatch before it
+  became a bug: the plan called the reference strategy "FixedWeightStrategy," but the
+  regression-anchor test needs a *changing* weight schedule (0.5→0.5→0.0) — corrected
+  to `ScheduledWeightStrategy` during implementation. Verified independently (not
+  assumed) that `run_backtest`'s per-bar NAV-based capital allocation (D61) still
+  reproduces Step 3's frozen golden numbers exactly, via a standalone bar-by-bar trace
+  in `test_backtest_loop.hand.txt`. RiskMonitor violations are recorded but not
+  enforced in the loop (D62), tested explicitly rather than left implicit. 95 tests
+  total, all green (17 new, one `live_fetch`-marked test excluded from the default
+  count and confirmed to pass separately against real yfinance data).

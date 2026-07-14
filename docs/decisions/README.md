@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D59**.
+New decisions are added here going forward — next number is **D63**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -70,3 +70,7 @@ written rationale for *why not now*, per R3.
 | [D56](D56-dataview-never-stores-future-data.md) | DataView is constructed holding only visible bars, never given future ones | Committed | Backtest engine |
 | [D57](D57-risk-monitor-gross-exposure-formula.md) | RiskMonitor's exposure formula and simulate-then-check pre-trade design | Committed | Portfolio layer |
 | [D58](D58-allocator-wired-into-sizer.md) | Allocator interface, and wiring ConstantSplitAllocator into Sizer | Committed | Portfolio layer |
+| [D59](D59-data-source-engine-loop-chunk-inserted.md) | Insert a minimal data-source + production-engine-loop chunk ahead of Step 5 | Committed | Data & portfolio layers |
+| [D60](D60-timestampedbar-wraps-bar.md) | TimestampedBar wraps Bar rather than extending Bar's schema | Committed | Data & portfolio layers |
+| [D61](D61-capital-reallocated-every-bar-from-nav.md) | Capital is reallocated every bar from current NAV, not fixed at the start | Committed | Portfolio layer |
+| [D62](D62-risk-violations-recorded-not-enforced.md) | RiskMonitor violations are recorded, not enforced, in run_backtest | Committed / Deferred | Portfolio layer |
