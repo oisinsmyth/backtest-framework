@@ -204,6 +204,21 @@ version (likely at the Phase C "first real number" milestone, see
 - Step 12 of `VERIFICATION_SCHEME.md` — gate passed (260/260 tests total, 13 new).
   **All in-scope verification-scheme steps are complete. The framework can say
   "no edge" and be believed** (`DEVELOPMENT_TIMETABLE.md` Phase F milestone).
+- Transparent `.gz` support in `data.csv_fixture` (D88);
+  `data/fixtures/universe_daily_2015_2024_raw.csv.gz` committed — 57 ETFs, 2015–2024
+  raw + 2,285 dividends + 14 splits (`scripts/fetch_universe.py`).
+- `costs.calibration.calibrate_impact_params` — automated σ/ADV for SqrtImpact
+  (full-sample, D66 caveat carried).
+- `backtest_framework.research` — the Phase G study package (framework frozen;
+  research versions per study): `pairs_study.run_pairs_study` — walk-forward Gatev
+  top-N selection, one multi-strategy netted run per (window, multiplier), warm-up
+  prefixes, NAV-chained windows, per-trial registry logging, registry-fed DSR
+  (D89/D90). `scripts/run_pairs_study.py` produces the artifact offline.
+- **`docs/results/pairs_study_v1.md` — THE FIRST PHASE G RESEARCH RESULT**: 57-ETF
+  universe, 35 OOS windows, 1,596 pairs scored per window; gross +3.45%, −13.01% at
+  real costs, monotone sweep, **DSR = 0.0000** with the multiplicity caveat stated.
+  The framework's milestone claim — saying "no edge" believably — exercised on real
+  data. (273/273 tests total, 13 new.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

@@ -132,21 +132,31 @@ none.
       N=100→0.9004), synthetic random-walk-spread nulls earning ≈0 at zero cost
       (D87 — "if this profits, stop everything": it didn't), and the quantified
       shuffle-vs-block demonstration. 260/260 tests green (13 new).
-- [ ] Commit Step 12 code + D85–D87 records
+- [x] Commit Step 12 code + D85–D87 records
+- [x] **PHASE G HAS BEGUN: pairs study v1 produced — the first research artifact.**
+      Universe fetcher (57 ETFs, zero exclusions/failures, 14 splits + 2,285
+      dividends as events, 2.5MB gzipped fixture — D88), automated σ/ADV calibration
+      (`costs/calibration.py`), and the study runner (`research/pairs_study.py` —
+      D89: one multi-strategy run per window with netted shared legs, warm-up
+      prefix, window chaining). **Result (`docs/results/pairs_study_v1.md`): gross
+      +3.45% over 35 OOS windows (~0.4%/yr — essentially nothing pre-cost), −13.01%
+      at real costs, monotone to −49.91% at 4×, DSR = 0.0000 with the multiplicity
+      caveat stated (D90). The framework said "no edge" on real data and can be
+      believed — the milestone claim, exercised.** 273/273 tests green (13 new).
+- [ ] Commit Phase G kickoff: fixture, calibration, study runner, artifact, D88–D90
 
-## Next (queued, not started) — Phase G prep, no framework steps remain
+## Next (queued, not started) — Phase G research proper
 
-- [ ] Wire `analytics.tearsheet.render_metrics_table` into the v1/v2 results scripts
-      (adds Sharpe/beta/VaR rows to the published docs — its own diff, since it
-      changes committed results artifacts).
-- [ ] Config factories for the real bricks + strategy (D52 convention) so logged
-      trials can be re-run from config alone.
-- [ ] **Phase G — the actual research** (framework frozen except bug fixes, per the
-      timetable): broad ETF universe fixture → walk-forward pair selection (D85
-      machinery) → z-score/cointegration/Kalman study → full cost sweeps → DSR-
-      adjusted results via the registry → the writeup, including negative results
-      and the "clears costs at £X AUM" analysis. Reviewer outreach runs in parallel
+- [ ] **Study v2 candidates** (each a new study version, framework untouched):
+      cointegration-filtered selection (Engle-Granger on train windows), per-window
+      σ/ADV calibration (closes the D66 caveat), parameter sensitivity across
+      lookback/entry/exit (every variant logged → registry-N grows → honest DSR),
+      the "clears costs at £X AUM" capacity analysis from the sweep slope.
+- [ ] The Phase G writeup skeleton — methodology, negative results included; this
+      study v1 artifact is its first exhibit. Reviewer outreach runs in parallel
       per the timetable.
+- [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
+- [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
 
 ## Watch list additions
 
@@ -391,3 +401,19 @@ none.
   ≈0 has teeth (leverage-invariance makes it calibration, not result shopping).
   Shuffle-vs-block quantified: AR(1) ρ=0.6 → shuffled acf₁ < 0.05, block > 0.35.
   260 tests, all green (13 new). No framework steps remain; Phase G begins.
+- **2026-07-14** — **Phase G kickoff: universe + study runner + THE FIRST RESEARCH
+  RESULT.** Fetched 57 liquid ETFs (2015–2024 raw + events; coverage policy excluded
+  nothing; OIH 1-for-20 and USO 1-for-8 reverse splits deliberately in-universe as
+  D75 stress tests; XLF's odd 1.231 "split" is the XLRE spin-off encoding — noted).
+  gz fixture support added (2.5MB committed vs 17MB raw). `costs/calibration.py`
+  automates σ/ADV (D66 caveat carried). `research/pairs_study.py` (new research/
+  package = Phase G boundary; framework stays frozen): per window, top-5 of 1,596
+  Gatev-scored pairs trade as 5 strategies in ONE portfolio (D27 netting on shared
+  legs), warm-up prefix from train tails, NAV-chained windows — the headline test is
+  the identity "stitched returns compound starting cash to final NAV exactly."
+  Study v1 verdict: the naive Gatev/z-score approach on this universe has ~no gross
+  edge (+3.45%/9yr) and is decisively unprofitable at real costs (−13.01%);
+  DSR = 0.0000, with D90's multiplicity caveat making the reading conservative in
+  the safe direction only. This is a *good* result: it's the honest negative that
+  the Phase G writeup builds from, produced by the exact machinery the framework
+  spent twelve steps making trustworthy. 273 tests green.

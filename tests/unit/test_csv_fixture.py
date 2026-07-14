@@ -40,6 +40,25 @@ def test_load_sorts_by_timestamp(tmp_path):
     assert timestamps == sorted(timestamps)
 
 
+def test_gzipped_fixture_roundtrip(tmp_path):
+    # D88: a .gz suffix means transparent compression — same format, smaller repo.
+    bars = {
+        "XLE": [
+            TimestampedBar(datetime(2026, 7, 10), Bar(open=90.0, high=91.5, low=89.5, close=91.0)),
+        ]
+    }
+    path = tmp_path / "fixture.csv.gz"
+    save_fixture_csv(path, bars, volumes_by_symbol={"XLE": [1e6]})
+
+    assert path.read_bytes()[:2] == b"\x1f\x8b"  # actually gzip on disk
+    assert load_fixture_csv(path) == bars
+    loaded_bars, loaded_volumes = __import__(
+        "backtest_framework.data.csv_fixture", fromlist=["load_fixture_csv_with_volumes"]
+    ).load_fixture_csv_with_volumes(path)
+    assert loaded_bars == bars
+    assert loaded_volumes == {"XLE": [1e6]}
+
+
 def test_wrong_columns_fail_loudly(tmp_path):
     path = tmp_path / "bad.csv"
     path.write_text("date,ticker,price\n2026-07-10,XLE,90.0\n", encoding="utf-8")

@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D88**.
+New decisions are added here going forward — next number is **D91**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -99,3 +99,6 @@ written rationale for *why not now*, per R3.
 | [D85](D85-walk-forward-guarded-fitting.md) | Walk-forward with structurally-guarded fitting; Gatev top-N selection with logged multiplicity | Committed | Validation & research integrity |
 | [D86](D86-dsr-implementation.md) | DSR: stdlib normal functions, registry-fed N and V, checkpoint-recovery of the paper's example | Committed | Validation & research integrity |
 | [D87](D87-synthetic-null-construction.md) | Synthetic nulls: random-walk spread, not OU; test calibration; block-paths exposure | Committed | Validation & research integrity |
+| [D88](D88-universe-fixture.md) | The 57-ETF universe fixture: composition, coverage policy, gzip | Committed | Data layer |
+| [D89](D89-pairs-study-runner-design.md) | Study runner design: one multi-strategy run per window, warm-up prefix, chaining, research boundary | Committed | Validation & research integrity |
+| [D90](D90-study-dsr-methodology.md) | Study DSR methodology: registry-fed N and V; pair-level multiplicity as an explicit optimism caveat | Committed | Validation & research integrity |

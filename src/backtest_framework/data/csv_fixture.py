@@ -15,6 +15,7 @@ false affordance (D48).
 from __future__ import annotations
 
 import csv
+import gzip
 from datetime import datetime
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -25,6 +26,15 @@ from .bars import TimestampedBar
 _COLUMNS = ["timestamp", "symbol", "open", "high", "low", "close", "volume"]
 
 
+def _open_text(path: Path, mode: str):
+    """Transparent gzip (D88): a '.gz' suffix means the fixture is compressed —
+    broad-universe fixtures are ~17MB raw, ~4MB gzipped, and the repo commits the
+    compressed form. Everything else about the format is identical."""
+    if path.suffix == ".gz":
+        return gzip.open(path, mode + "t", encoding="utf-8", newline="")
+    return open(path, mode, encoding="utf-8", newline="")
+
+
 def save_fixture_csv(
     path: str | Path,
     bars_by_symbol: Mapping[str, Sequence[TimestampedBar]],
@@ -32,7 +42,7 @@ def save_fixture_csv(
 ) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w", newline="", encoding="utf-8") as f:
+    with _open_text(path, "w") as f:
         writer = csv.writer(f)
         writer.writerow(_COLUMNS)
         for symbol in sorted(bars_by_symbol):
@@ -51,8 +61,9 @@ def load_fixture_csv_with_volumes(
     """Like load_fixture_csv, but also returns per-symbol volume series (aligned with
     the bar lists after sorting). Added for the cleaner/validator (D25/D26), which
     need volumes; TimestampedBar itself still carries none (D48/D60)."""
+    path = Path(path)
     rows_by_symbol: dict[str, list[tuple[TimestampedBar, float]]] = {}
-    with open(path, newline="", encoding="utf-8") as f:
+    with _open_text(path, "r") as f:
         reader = csv.DictReader(f)
         if reader.fieldnames is None or reader.fieldnames[: len(_COLUMNS)] != _COLUMNS:
             raise ValueError(
@@ -80,8 +91,9 @@ def load_fixture_csv_with_volumes(
 
 
 def load_fixture_csv(path: str | Path) -> dict[str, list[TimestampedBar]]:
+    path = Path(path)
     bars_by_symbol: dict[str, list[TimestampedBar]] = {}
-    with open(path, newline="", encoding="utf-8") as f:
+    with _open_text(path, "r") as f:
         reader = csv.DictReader(f)
         if reader.fieldnames is None or reader.fieldnames[: len(_COLUMNS)] != _COLUMNS:
             raise ValueError(
