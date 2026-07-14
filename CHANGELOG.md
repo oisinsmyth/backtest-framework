@@ -219,6 +219,9 @@ version (likely at the Phase C "first real number" milestone, see
   real costs, monotone sweep, **DSR = 0.0000** with the multiplicity caveat stated.
   The framework's milestone claim — saying "no edge" believably — exercised on real
   data. (273/273 tests total, 13 new.)
+- `docs/TUTORIAL.md` — the start-to-output usage guide; every `# runnable` example
+  block is executed verbatim by `tests/integration/test_tutorial.py` (D91), so the
+  tutorial breaks CI rather than rotting. Linked from README. (275/275 tests.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

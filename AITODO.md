@@ -143,7 +143,14 @@ none.
       at real costs, monotone to −49.91% at 4×, DSR = 0.0000 with the multiplicity
       caveat stated (D90). The framework said "no edge" on real data and can be
       believed — the milestone claim, exercised.** 273/273 tests green (13 new).
-- [ ] Commit Phase G kickoff: fixture, calibration, study runner, artifact, D88–D90
+- [x] Commit Phase G kickoff: fixture, calibration, study runner, artifact, D88–D90
+- [x] **`docs/TUTORIAL.md` — the full usage guide, executable (D91).** Nine
+      `# runnable` blocks covering setup → hello-world → real cost stack → custom
+      strategy → clean/validate/snapshot (incl. a live quarantine refusal) → sweep →
+      registry → analytics → walk-forward/DSR → a mini end-to-end study; all
+      extracted and exec'd verbatim by `tests/integration/test_tutorial.py`, so the
+      tutorial fails CI instead of rotting. Linked from README.
+- [ ] Commit the tutorial + D91
 
 ## Next (queued, not started) — Phase G research proper
 
