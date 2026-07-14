@@ -1,0 +1,22 @@
+G-gate worked case for commission-on-as-traded-prices (D6, D65, D75) — Step 7 of
+VERIFICATION_SCHEME.md: "commission on a pre-split historical bar computed on raw
+price, not adjusted — assert the difference vs the adjusted-price calculation is
+nonzero and equals hand arithmetic." Companion to test_split_commission.py.
+
+The pre-split bar, from the committed raw fixture:
+  XOP 2020-03-27 (last trading day before the 1-for-4 reverse split of 2020-03-30)
+  adjusted-frame close (as yfinance serves it) = 32.12
+  TRUE as-traded close = 32.12 x 0.25 = 8.03   (as_traded_from_adjusted, D75)
+
+Deploying $32,120 into XOP on that day:
+  In TRUE terms:      32,120 / 8.03  = 4,000 real shares actually traded
+  In adjusted terms:  32,120 / 32.12 = 1,000 phantom shares
+
+IBKR Fixed commission (D65: $0.005/share, $1 min, 1% cap):
+  TRUE:      max(0.005 x 4,000, 1.00) = 20.00 ; cap 0.01 x 4,000 x 8.03  = 321.20 -> 20.00
+  adjusted:  max(0.005 x 1,000, 1.00) =  5.00 ; cap 0.01 x 1,000 x 32.12 = 321.20 ->  5.00
+
+  Difference = 20.00 - 5.00 = 15.00  (nonzero; exactly the 4x share-count factor the
+  reverse split hides). Same notional, same day, same broker — a 4x commission error
+  from silently using adjusted prices. This is D4's per-share-vs-bps divergence and
+  D6's adjusted-price corruption, jointly, made concrete on our own data.

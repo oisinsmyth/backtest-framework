@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D72**.
+New decisions are added here going forward — next number is **D77**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -83,3 +83,8 @@ written rationale for *why not now*, per R3.
 | [D69](D69-zscore-pairs-first-number-strategy.md) | Z-score pairs as the first-number strategy; "walk-forward" read as trailing-only simulation | Committed | Signals & strategy interface |
 | [D70](D70-committed-csv-fixture-as-frozen-snapshot.md) | Committed CSV fixture as the pre-Step-7 frozen snapshot; calibration and adjusted-price caveats | Committed / Deferred | Data layer |
 | [D71](D71-borrow-fee-brick.md) | BorrowFee brick: shorts pay, longs free | Committed | Cost architecture |
+| [D72](D72-content-addressed-snapshot-store.md) | Content-addressed SnapshotStore; quarantine semantics; meta refreshes on re-freeze | Committed | Data layer |
+| [D73](D73-cleaner-ruleset-v1.md) | Cleaner ruleset clean-v1: drop-and-report, never rewrite; permanence discriminates prints from crashes | Committed | Data layer |
+| [D74](D74-validator-thresholds-frame-robust.md) | Validator thresholds calibrated to observed data; frame-robust split awareness | Committed | Data layer |
+| [D75](D75-corporate-actions-two-frames.md) | Corporate actions: two price frames, event-flow brick slot, split scaling, naive timestamps | Committed | Data layer |
+| [D76](D76-v2-result-alongside-v1.md) | v2 first-number published alongside v1; v1 preserved as the milestone | Committed | Data layer |

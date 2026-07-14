@@ -62,7 +62,14 @@ def run_backtest(
     config: dict | None = None,
     snapshot_id: str = "unspecified",
     seed: int = 0,
+    splits_by_instrument: Mapping[str, Sequence[tuple[datetime, float]]] | None = None,
+    view_bars_by_instrument: Mapping[str, Sequence[TimestampedBar]] | None = None,
 ) -> BacktestResult:
+    """`bars_by_instrument` is the EXECUTION series (raw prices — fills, commissions,
+    carry, NAV all use it, per D6). `view_bars_by_instrument`, when given, is what
+    strategies see instead (e.g. split-adjusted for signal continuity, D75); it must
+    cover every aligned execution timestamp. `splits_by_instrument` scales broker and
+    virtual positions on ex-dates (D75)."""
     if trial_registry is not None and (trial_id is None or config is None):
         raise ValueError(
             "trial_registry was given but trial_id and/or config was not — "
@@ -73,6 +80,28 @@ def run_backtest(
     aligned_bar_series = {
         instrument_id: tuple(ab.bars[instrument_id] for ab in aligned) for instrument_id in bars_by_instrument
     }
+
+    # Strategy views come from the view series when given (split-adjusted signals),
+    # aligned 1:1 with execution timestamps — a missing timestamp is a loud error,
+    # never a silently substituted raw bar (D75).
+    if view_bars_by_instrument is not None:
+        view_lookup = {
+            instrument_id: {tb.timestamp: tb.bar for tb in series}
+            for instrument_id, series in view_bars_by_instrument.items()
+        }
+        try:
+            view_bar_series = {
+                instrument_id: tuple(view_lookup[instrument_id][ab.timestamp] for ab in aligned)
+                for instrument_id in bars_by_instrument
+            }
+        except KeyError as exc:
+            raise ValueError(
+                f"view_bars_by_instrument is missing a bar for an aligned execution timestamp: {exc}"
+            ) from exc
+    else:
+        view_bar_series = aligned_bar_series
+
+    splits_by_instrument = splits_by_instrument or {}
 
     sizer = Sizer()
     risk_monitor = RiskMonitor(risk_limits) if risk_limits is not None else None
@@ -87,13 +116,26 @@ def run_backtest(
     for i, ab in enumerate(aligned):
         prices = {instrument_id: bar.close for instrument_id, bar in ab.bars.items()}
 
+        # 0. Splits with an ex-date in the gap scale positions FIRST (D75): this
+        #    bar's raw price is post-split, so the share count must be too before
+        #    anything marks NAV — broker book and every strategy's virtual book alike.
+        if prev_timestamp is not None:
+            for instrument_id, splits in splits_by_instrument.items():
+                for ex_date, ratio in splits:
+                    if prev_timestamp < ex_date <= ab.timestamp:
+                        portfolio.apply_split(instrument_id, ratio)
+                        for key in list(virtual_positions):
+                            if key[1] == instrument_id:
+                                virtual_positions[key] *= ratio
+
         # 1. Carry accrues on every currently-held instrument (D33), on the calendar-
         #    day gap since the previous ALIGNED bar — this correctly spans any bar
         #    dropped by D45 alignment, since it's driven by timestamps, not bar count.
         #    All base amounts come from one start-of-bar snapshot taken BEFORE any
         #    carry is deducted (D67) — otherwise per-leg deductions would shrink NAV
         #    and change the portfolio-level margin base mid-step, making the result
-        #    depend on application order.
+        #    depend on application order. Event flows (dividends, D6/D75) land in the
+        #    same snapshot step, on post-split quantities.
         if prev_timestamp is not None:
             snapshot_positions = dict(portfolio.positions)
             snapshot_nav = portfolio.nav(prices, instruments)
@@ -102,6 +144,11 @@ def run_backtest(
                     base_amount = quantity * prices[instrument_id]
                     carry = cost_stack.carry_cost(base_amount, prev_timestamp, ab.timestamp)
                     portfolio.accrue_carry(carry)
+                    flow = cost_stack.event_flow(
+                        instruments[instrument_id], quantity, prev_timestamp, ab.timestamp
+                    )
+                    if flow != 0:
+                        portfolio.apply_cash_flow(flow)
             # Portfolio-level carry (D5, D67): margin interest accrues only on the
             # borrowed portion of the book — gross exposure beyond the equity backing it.
             margin_base = max(gross_exposure(snapshot_positions, prices, instruments) - snapshot_nav, 0.0)
@@ -111,9 +158,10 @@ def run_backtest(
                 )
 
         # 2. Build this bar's DataView per instrument (D32, D56) from each
-        #    instrument's own ALIGNED series, and let every strategy see all of them.
+        #    instrument's own ALIGNED series — the VIEW series when one was supplied
+        #    (split-adjusted signals, D75), never the raw frame either way.
         views: dict[str, DataView] = {
-            instrument_id: build_data_view(aligned_bar_series[instrument_id], i)
+            instrument_id: build_data_view(view_bar_series[instrument_id], i)
             for instrument_id in bars_by_instrument
         }
         targets: list[TargetWeight] = []

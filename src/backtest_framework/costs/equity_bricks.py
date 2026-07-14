@@ -115,6 +115,33 @@ class SqrtImpact:
 
 
 @dataclass(frozen=True)
+class DividendFlow:
+    """Dividend cash flows (D6, D75): longs credited, shorts debited, on the ex-date,
+    at raw per-share amounts — dividend economics as explicit cash instead of price
+    rewrites. The sign falls out of the signed quantity: +500 shares × $0.87 credits
+    $435; −500 shares debits it (shorts pay the dividend they owe the lender). This
+    is why XLE's ~3% yield is first-order for a pairs book that shorts it (D6)."""
+
+    dividends_by_symbol: Mapping[str, tuple[tuple[datetime, float], ...]]
+    """Per symbol: (ex-date, dividend per share), raw amounts."""
+
+    def flow(
+        self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
+    ) -> float:
+        symbol = getattr(instrument, "symbol", None)
+        if symbol is None:
+            raise ValueError(
+                f"DividendFlow needs a 'symbol' attribute to look up dividends, but "
+                f"{type(instrument).__name__} has none"
+            )
+        total = 0.0
+        for ex_date, amount in self.dividends_by_symbol.get(symbol, ()):
+            if prev_timestamp < ex_date <= curr_timestamp:
+                total += quantity * amount
+        return total
+
+
+@dataclass(frozen=True)
 class BorrowFee:
     """Stock borrow fee (D71): a per-leg carry brick — shorts pay, longs pay nothing.
     The engine hands per-leg carry bricks each leg's own SIGNED notional as

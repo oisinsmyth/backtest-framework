@@ -45,6 +45,40 @@ def save_fixture_csv(
                 )
 
 
+def load_fixture_csv_with_volumes(
+    path: str | Path,
+) -> tuple[dict[str, list[TimestampedBar]], dict[str, list[float]]]:
+    """Like load_fixture_csv, but also returns per-symbol volume series (aligned with
+    the bar lists after sorting). Added for the cleaner/validator (D25/D26), which
+    need volumes; TimestampedBar itself still carries none (D48/D60)."""
+    rows_by_symbol: dict[str, list[tuple[TimestampedBar, float]]] = {}
+    with open(path, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        if reader.fieldnames is None or reader.fieldnames[: len(_COLUMNS)] != _COLUMNS:
+            raise ValueError(
+                f"fixture {path} does not have the expected columns {_COLUMNS}, got {reader.fieldnames}"
+            )
+        for row in reader:
+            tb = TimestampedBar(
+                timestamp=datetime.fromisoformat(row["timestamp"]).replace(tzinfo=None),
+                bar=Bar(
+                    open=float(row["open"]),
+                    high=float(row["high"]),
+                    low=float(row["low"]),
+                    close=float(row["close"]),
+                ),
+            )
+            volume = float(row["volume"]) if row.get("volume") not in (None, "") else float("nan")
+            rows_by_symbol.setdefault(row["symbol"], []).append((tb, volume))
+    bars_by_symbol: dict[str, list[TimestampedBar]] = {}
+    volumes_by_symbol: dict[str, list[float]] = {}
+    for symbol, rows in rows_by_symbol.items():
+        rows.sort(key=lambda pair: pair[0].timestamp)
+        bars_by_symbol[symbol] = [tb for tb, _ in rows]
+        volumes_by_symbol[symbol] = [volume for _, volume in rows]
+    return bars_by_symbol, volumes_by_symbol
+
+
 def load_fixture_csv(path: str | Path) -> dict[str, list[TimestampedBar]]:
     bars_by_symbol: dict[str, list[TimestampedBar]] = {}
     with open(path, newline="", encoding="utf-8") as f:
@@ -55,7 +89,7 @@ def load_fixture_csv(path: str | Path) -> dict[str, list[TimestampedBar]]:
             )
         for row in reader:
             tb = TimestampedBar(
-                timestamp=datetime.fromisoformat(row["timestamp"]),
+                timestamp=datetime.fromisoformat(row["timestamp"]).replace(tzinfo=None),
                 bar=Bar(
                     open=float(row["open"]),
                     high=float(row["high"]),

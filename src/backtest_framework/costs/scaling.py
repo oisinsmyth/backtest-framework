@@ -37,6 +37,11 @@ class _ScaledCarryBrick:
 
 
 def scaled_cost_stack(stack: CostStack, multiplier: float) -> CostStack:
+    """Scale the FRICTION slots. event_flow_bricks pass through unscaled (D75): a
+    dividend is an economic transfer, not a friction — a 4× sweep asks "what if
+    trading were 4× more expensive," not "what if XLE quadrupled its dividend."
+    Consequence for the 0× gate: a 0× sweep equals a run whose stack has zero
+    frictions but the SAME event flows, not an entirely empty CostStack."""
     if multiplier < 0:
         raise ValueError(f"cost multiplier must be non-negative, got {multiplier}")
     return CostStack(
@@ -45,4 +50,5 @@ def scaled_cost_stack(stack: CostStack, multiplier: float) -> CostStack:
         portfolio_carry_bricks=tuple(
             _ScaledCarryBrick(brick, multiplier) for brick in stack.portfolio_carry_bricks
         ),
+        event_flow_bricks=stack.event_flow_bricks,
     )

@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from ..instruments.base import Instrument
-from .bricks import CarryCostBrick, TradeCostBrick
+from .bricks import CarryCostBrick, EventFlowBrick, TradeCostBrick
 
 
 @dataclass(frozen=True)
@@ -28,6 +28,10 @@ class CostStack:
     trade_bricks: tuple[TradeCostBrick, ...] = ()
     carry_bricks: tuple[CarryCostBrick, ...] = ()
     portfolio_carry_bricks: tuple[CarryCostBrick, ...] = ()
+    event_flow_bricks: tuple[EventFlowBrick, ...] = ()
+    """Event-driven SIGNED cash flows (dividends: credit longs, debit shorts — D6,
+    D75). Applied per held leg; NOT scaled by the D8 cost sweep, because a dividend
+    is an economic transfer, not a friction (see costs/scaling.py)."""
 
     def trade_cost(self, instrument: Instrument, quantity: float, price: float) -> float:
         return sum(brick.cost(instrument, quantity, price) for brick in self.trade_bricks)
@@ -43,4 +47,12 @@ class CostStack:
         return sum(
             brick.cost(base_amount, prev_timestamp, curr_timestamp)
             for brick in self.portfolio_carry_bricks
+        )
+
+    def event_flow(
+        self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
+    ) -> float:
+        return sum(
+            brick.flow(instrument, quantity, prev_timestamp, curr_timestamp)
+            for brick in self.event_flow_bricks
         )

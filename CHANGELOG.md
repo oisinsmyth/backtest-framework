@@ -125,8 +125,36 @@ version (likely at the Phase C "first real number" milestone, see
 - Step 6 of `VERIFICATION_SCHEME.md` — gate passed (163/163 tests total, 29 new):
   0× ≡ zero-cost and monotonicity asserted on both a penny-exact synthetic scenario
   and the real fixture, offline and repeatable.
+- `backtest_framework.data.snapshot_store.SnapshotStore` — content-addressed frozen
+  snapshots (sha256 payload ids), checksum-verified loads, quarantine refusal (D24,
+  D72).
+- `backtest_framework.data.cleaner` — drop-and-report ruleset `clean-v1` with
+  `CleaningReport` attached to snapshot meta (D25, D73).
+- `backtest_framework.data.validator` — sanity gate with hard-vs-warning findings,
+  observed-data-calibrated move thresholds, frame-robust split awareness (D26, D74).
+- `backtest_framework.data.corporate_actions` — dividends/splits tables, two-frame
+  conversions (`as_traded_from_adjusted`, `as_declared_dividends`, `split_adjusted`),
+  events JSON persistence (D6, D75).
+- `EventFlowBrick` protocol + `DividendFlow` brick + `CostStack.event_flow_bricks`
+  (4th slot, unscaled by the D8 sweep — flows are transfers, not frictions);
+  `run_backtest` gains `splits_by_instrument` (position scaling on ex-dates) and
+  `view_bars_by_instrument` (signal/execution series separation) (D75).
+- `EquityDataSource.get_raw_history` (additive); committed raw fixture
+  `data/fixtures/xle_xop_daily_2015_2024_raw.csv` + events JSON;
+  `scripts/fetch_fixture_v2.py`, `scripts/run_first_result_v2.py`.
+- **`docs/results/first_real_number_v2.md`** — the first number re-run through the
+  hardened path (+21.74% at 0× / −18.56% at 1× / −76.55% at 4×; conclusion
+  unchanged); v1 preserved as the historical milestone (D76).
+- Step 7 of `VERIFICATION_SCHEME.md` — gate passed (205/205 tests total, 42 new):
+  snapshot checksum/restatement/quarantine U-gates, cleaner defect-injection gate,
+  validator gate, XLE ex-date dividend G-gate (long credited/short debited, exact),
+  pre-split XOP commission G-gate (as-traded vs adjusted differs by hand-computed
+  $15.00 on a $32k order), split NAV-continuity, D45 no-fills assertion.
 
 ### Changed
+- Bar/event timestamps are normalized to naive exchange-local wall time at the data
+  boundary (D75) — daily-bar identity is the exchange-local date, and D33's
+  calendar-day carry must not be DST-sensitive.
 - `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the
   retired `CarryModel` demonstration class, per that class's own docstring (D54). No
   change to `SimConfig`'s shape or to Step 2's four passing gates.

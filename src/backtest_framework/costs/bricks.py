@@ -30,6 +30,20 @@ class CarryCostBrick(Protocol):
     def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float: ...
 
 
+class EventFlowBrick(Protocol):
+    """Event-driven cash flows (D6, D75) — dividends today, other distributions later.
+
+    Unlike carry (time-accrued, always a cost), an event flow is SIGNED CASH TO THE
+    PORTFOLIO on specific dates: a dividend credits a long and debits a short. flow()
+    returns the total for ex-dates in (prev_timestamp, curr_timestamp], given the
+    signed quantity held across that gap. Not scaled by the D8 cost sweep — flows are
+    economic transfers, not frictions."""
+
+    def flow(
+        self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
+    ) -> float: ...
+
+
 @dataclass(frozen=True)
 class FlatCommission:
     """A fixed fee per trade, regardless of size."""

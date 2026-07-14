@@ -79,17 +79,26 @@ none.
       sweep harness (D8/D68), `ZScorePairsStrategy` (D69), committed CSV fixture as
       pre-Step-7 snapshot (D70), `BorrowFee` brick (D71). 163/163 tests green (29
       new), both D8 gates asserted on synthetic AND real data, offline.
-- [ ] Commit Step 6 code + D68–D71 records + the results doc
+- [x] Commit Step 6 code + D68–D71 records + the results doc
+- [x] **Step 7 of `VERIFICATION_SCHEME.md` — gate passed; v2 first number produced.**
+      Full hardened data path: content-addressed SnapshotStore (D72), drop-and-report
+      cleaner (D73 — zero changes needed on the real fixture, reported as zero),
+      sanity gate with observed-data-calibrated thresholds (D74), corporate actions
+      with two price frames + dividend flows + split scaling (D75), and
+      `docs/results/first_real_number_v2.md` alongside the preserved v1 (D76):
+      **+21.74% at 0× / −18.56% at 1× / −76.55% at 4×** — conclusion unchanged, the
+      edge doesn't survive real costs, but the number now rests on a validated,
+      frozen, reproducible-by-hash data path. 205/205 tests green (42 new).
+- [ ] Commit Step 7 code + D72–D76 records + the v2 results doc
 
 ## Next (queued, not started)
 
-- [ ] **Phase D — trust hardening.** Step 7: data layer (immutable snapshots D24,
-      cleaner + CleaningReport D25, sanity gate D26, raw prices + dividend flows
-      D6/D18). The fixture's XOP 2018-10-24 epsilon artifact and the auto-adjusted-
-      price caveat are now *concrete, observed* motivations for exactly this work —
-      R1's "observed defects motivate better fixes than theorised ones" played out.
-- [ ] Step 8: golden master (D39), property invariants (D40), cross-engine
-      reconciliation (D41).
+- [ ] Step 8: testing hardening — THE golden master (D39: ~5 bars, 2 trades, weekend,
+      dividend, gap-through-stop, hand-computed line by line), property invariants
+      (D40, hypothesis), cross-engine reconciliation (D41, backtesting.py/vectorbt).
+- [ ] Step 9: analytics honesty — sample-size gating + n≥10k Monte Carlo (D36), beta
+      + rf benchmark (D37), momentum labelling (D38), explicit rf Sharpe (D49), seeds
+      (D34).
 - [ ] Config factories for the real bricks + strategy (D52 convention) so logged
       trials can be re-run from config alone — the sweep logs honest config dicts,
       but the full factory-rebuild loop for these types doesn't exist yet.
@@ -247,3 +256,23 @@ none.
   close < low by 1.2e-16) — a concrete preview of D26's sanity-gate work, handled
   with a stated tolerance per D47. 163 tests, all green (29 new); the e2e run is an
   offline repeatable test, not a one-off.
+- **2026-07-14** — **Step 7: data layer hardening + v2 first number (Phase D core).**
+  Planned via `EnterPlanMode`; user approved including the v2 re-run. Built the full
+  D24/D25/D26 pipeline (`snapshot_store`, `cleaner`, `validator`) plus D6's corporate
+  actions (`corporate_actions`, `DividendFlow` event brick + 4th CostStack slot,
+  split position scaling + view/execution series split in `run_backtest`). **The data
+  taught us three things the plan had wrong**: (1) yfinance `auto_adjust=False` is
+  ALREADY split-adjusted — prices AND dividends — so the true as-traded frame is
+  *reconstructed*, not fetched (verified via frame-continuity on XOP's split, D75);
+  (2) my remembered XOP split date (June 2020) was wrong — it's 2020-03-30, read from
+  the data; (3) the validator's first split-aware check judged only the as-traded
+  frame and QUARANTINED our own clean provider-frame snapshot with a fabricated −75%
+  violation — the gate structurally refused bad validation logic, the bug was fixed
+  (frame-robust: explained if small in either frame, D74), and the store needed
+  meta-refresh-on-refreeze so a fixed validator can un-quarantine (D72). Thresholds
+  calibrated to observed genuine data: XOP's real −37% crash day warns, doesn't
+  block. Also normalized timestamps to naive exchange-local at the data boundary —
+  aware timestamps would have made D33's carry DST-sensitive. Cleaner made zero
+  changes on the real fixture (reported as zero). v2 result: +21.74%/−18.56%/−76.55%
+  at 0×/1×/4× — same conclusion as v1, now on a reproducible-by-content-hash path.
+  205 tests, all green (42 new). v1 doc untouched (D76).

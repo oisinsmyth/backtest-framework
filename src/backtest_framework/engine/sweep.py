@@ -79,6 +79,8 @@ def run_cost_sweep(
     config: dict | None = None,
     snapshot_id: str = "unspecified",
     seed: int = 0,
+    splits_by_instrument=None,
+    view_bars_by_instrument=None,
 ) -> SweepResult:
     runs: list[SweepRun] = []
     for multiplier in multipliers:
@@ -94,6 +96,8 @@ def run_cost_sweep(
             config={**config, "cost_multiplier": multiplier} if config is not None else None,
             snapshot_id=snapshot_id,
             seed=seed,
+            splits_by_instrument=splits_by_instrument,
+            view_bars_by_instrument=view_bars_by_instrument,
         )
         runs.append(SweepRun(multiplier=multiplier, result=result))
     return SweepResult(starting_cash=starting_cash, runs=tuple(runs))

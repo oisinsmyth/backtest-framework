@@ -28,6 +28,18 @@ class PortfolioState:
     def accrue_carry(self, carry_cost: float) -> None:
         self.cash -= carry_cost
 
+    def apply_cash_flow(self, amount: float) -> None:
+        """Signed event cash flow (D6/D75): positive credits (long receives a
+        dividend), negative debits (short pays it)."""
+        self.cash += amount
+
+    def apply_split(self, instrument_id: str, ratio: float) -> None:
+        """Scale a position for a split ex-date (D75): yfinance convention — 4.0 =
+        4-for-1 forward (shares ×4), 0.25 = 1-for-4 reverse (shares ×0.25). Cash is
+        untouched; NAV continuity comes from price moving by 1/ratio."""
+        if instrument_id in self.positions:
+            self.positions[instrument_id] *= ratio
+
     def nav(self, prices: Mapping[str, float], instruments: Mapping[str, Instrument]) -> float:
         # notional() is signed (quantity * price), so a short position's negative
         # quantity already contributes a negative notional here — this sum gives

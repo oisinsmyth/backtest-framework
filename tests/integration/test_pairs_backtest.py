@@ -64,10 +64,13 @@ def test_dropped_bar_on_one_leg_drops_it_for_both_and_carry_spans_the_real_gap()
         starting_cash=100_000.0,
     )
 
-    # Only 2 aligned bars ran (Tuesday dropped), not 3.
+    # Only 2 aligned bars ran (Tuesday dropped), not 3 — which IS the D45 "no trading
+    # that bar" guarantee: the engine never sees the dropped timestamp, so no fill can
+    # occur on it for EITHER leg (Step 7 U-gate, made explicit).
     assert len(result.equity_curve) == 2
     assert result.equity_curve[0][0] == monday
     assert result.equity_curve[1][0] == wednesday  # not tuesday
+    assert all(ts != tuesday for ts, _ in result.equity_curve)
 
     navs = [nav for _, nav in result.equity_curve]
     assert navs[0] == pytest.approx(99_968.00, rel=TOLERANCE)

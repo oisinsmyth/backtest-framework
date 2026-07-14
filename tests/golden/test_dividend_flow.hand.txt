@@ -1,0 +1,35 @@
+G-gate worked cases for DividendFlow (D6, D75) — Step 7 of VERIFICATION_SCHEME.md.
+Companion to test_dividend_flow.py (brick golden + engine integration).
+
+The known historical dividend, straight from the committed raw fixture's events file
+(data/fixtures/xle_xop_daily_2015_2024_raw_events.json):
+
+  XLE ex-date 2015-03-20, dividend 0.2575 per share
+  (XLE has no splits over 2015-2024, so adjusted frame == declared frame here.)
+
+--------------------------------------------------------------------------------
+Case 1 — long is credited on the ex-date
+  quantity = +500 shares held across the gap containing the ex-date
+  flow = +500 x 0.2575 = +128.75  (cash credit)
+
+Case 2 — short is debited the identical amount
+  quantity = -500 shares
+  flow = -500 x 0.2575 = -128.75  (cash debit — the short pays the dividend it owes
+  the share lender; this is why XLE's yield is first-order for a pairs book that
+  shorts it, D6)
+
+Case 3 — no ex-date in the window -> zero
+  Window (2015-03-20, 2015-03-25]: the ex-date is NOT in the half-open window
+  (prev < ex <= curr requires ex > prev), so a position opened ON the ex-date
+  receives nothing — you must have held it coming in.
+
+--------------------------------------------------------------------------------
+Engine integration (constant price, zero frictions, so every penny of NAV change is
+the dividend flow):
+
+  Price pinned at 80.00 both bars; capital 100,000; weight +0.4 -> +500 shares
+  (0.4 x 100,000 / 80 = 500). Ex-date falls between bar 0 and bar 1.
+
+  Long run:  NAV(bar 1) = 100,000 + 128.75 = 100,128.75
+  Short run (weight -0.4 -> -500 shares): NAV(bar 1) = 100,000 - 128.75 = 99,871.25
+  Control run (no DividendFlow brick): NAV(bar 1) = 100,000.00 exactly
