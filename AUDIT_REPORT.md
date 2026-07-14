@@ -206,3 +206,48 @@ Sequenced per the build order and R2's timeboxing (registry/reproducibility firs
 ---
 
 *Method note: layers read in data → instruments/costs → simulator/engine → config/registry/pipeline → analytics/validation/research order; all 97 decision records read; suspected bugs reproduced with throwaway scripts in the session scratchpad (not added to the repo): DSR unit mismatch (observed SR0 inflation exactly √252; verdict flip 0.000→0.9996), fixture timestamp-set identity (57/57 identical), duplicate-timestamp silent dedup, zero-overlap silent-empty backtest, and a by-hand re-derivation of the golden master's THU/FRI fills (match). No code, test, or doc in the repo was modified.*
+
+
+---
+
+## 7. Remediation status (appended post-audit, 2026-07-14)
+
+All 31 findings were dispositioned in the same session, in the fix order above
+(commits `4fdc818`..`cf3f283`; decision records D98–D107). Suite after
+remediation: **360 passed** (was 326), mypy **0 errors** (was 6). All five study
+artifacts regenerated with **byte-identical headline numbers**; only DSR-section
+descriptions changed.
+
+| Finding | Disposition |
+|---|---|
+| F1 🔴 DSR units | **Fixed** (D98): daily-unit logging, units contract + regression test pinning the metric to the observed-SR units at 1e-12. Published DSRs re-confirmed 0.0000 under correct units. |
+| F2 🟠 config-hash fidelity | **Fixed** (D102): real stack config-built from the logged dict; `to_dict` covers every determining field (starting_cash/multipliers were missing); `from_dict` closes the study-level reproducibility loop, tested. |
+| F3 🟠 same-bar-close fills | **Fixed + measured** (D103/D105): `fill_timing="next_open"` mode, golden + property tested; sensitivity artifact — gross edge survives (+16.79% vs +19.03% at 0×), conclusion not a fill-timing artifact. |
+| F4 🟠 full-sample calibration / D44 | **Fixed + measured** (D102/D105): `impact_calibration="train_window"` (leak-free, tested); worth ~0.15pp at 1× — immaterial. Engine-level warm-up remains strategy-side (unchanged; D44 gap now measured and bounded). |
+| F5 🟠 sleeve attribution | **Fixed** (D101): `virtual_fills` + `final_virtual_positions` on BacktestResult; cost attribution to sleeves deferred with rationale. |
+| F6 🟠 optional logging / untracked registries | **Recorded** (D107.5): binds structurally at the study runner; registries stay regenerable local artifacts, reproduction commands in every artifact. |
+| F7 🟠 margin lock absent | **Deferred with record** (D107.1): observable (D30) + rejectable (D101) + priced (D5); lock awaits a policy a validated strategy motivates. |
+| F8 🟠 trial-pool semantics | **Fixed** (D98): 1×-only pool via include-predicate; undefined Sharpes omitted, loud at 1×. |
+| F9 🟡 per-level capacity DSR | **Fixed** (D98): `compute_dsr=False` for capacity/gross; `StudyResult.dsr` honestly None. |
+| F10 🟡 duplicate timestamps | **Fixed** (D99): align_bars raises; validator hard-quarantines. |
+| F11 🟡 silently-empty backtest | **Fixed** (D99): run_backtest raises on zero aligned bars. |
+| F12 🟡 pretrade never wired | **Fixed** (D101): opt-in enforcement with virtual-order rollback. |
+| F13 🟡 unreachable stop machinery / D9/D11/D42 | **Recorded** (D107.2): D11 moot; D9/D42-multi-exit deferred until stops become an engine feature. |
+| F14 🟡 property-test scope | **Fixed** (D104): signed weights, real OHLC bars, unconditional commission/carry accountants, next-open invariants. |
+| F15 🟡 rounding + no cash check | **Pinned** (D106.1): round-half-even tested; negative cash = implicit margin posture recorded; changing it is a study-version bump. |
+| F16 🟡 validator docstring rot | **Fixed**: thresholds and split date match code/D74/D75. |
+| F17 🟡 cleaner volume indexing | **Fixed** (D99): bounds-guarded. |
+| F18 🟡 study grid assumption | **Fixed** (D99): per-window loud assertion (grids verified identical on committed fixtures). |
+| F19 🟡 dividend/split gap ordering | **Fixed** (D99): gap segmented at split ex-dates; three-case test incl. same-date convention. |
+| F20 🟡 mypy errors | **Fixed**: 0 errors across src (typed recorders, protocol property, annotations). |
+| F21 🟡 duplicate CSV loaders | **Fixed**: bare loader delegates. |
+| F22 🟡 comment rot | **Fixed**: Kalman line, test counts, gzip size. |
+| F23 🔵 `hello()` | **Fixed**: removed. |
+| F24 🔵 decorative `carry_components` | **Fixed** (D100): engine consults it; bricks declare components; wrappers forward. |
+| F25 🔵 carry mark timing | **Pinned** (D106.2 + D104 property test). |
+| F26 🔵 D12 letter (string ids) | **Accepted**: the abstraction is real (all math through the Instrument protocol, now enforced further by D100); re-keying positions by object identity would be churn without behavioural gain. |
+| F27 🔵 D7 brick / D21 ratio absent | **Deferred with records** (D107.3/D107.4). |
+| F28 🔵 registries gitignored | **Recorded** (D107.5). |
+| F29 🔵 block length unjustified | **Recorded** (D106.3). |
+| F30 🔵 tearsheet silent subsetting | **Fixed**: refuses incomplete benchmark coverage. |
+| F31 🔵 dependency hygiene | **No action needed** (already clean; noted for the record). |
