@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D77**.
+New decisions are added here going forward — next number is **D80**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -88,3 +88,6 @@ written rationale for *why not now*, per R3.
 | [D74](D74-validator-thresholds-frame-robust.md) | Validator thresholds calibrated to observed data; frame-robust split awareness | Committed | Data layer |
 | [D75](D75-corporate-actions-two-frames.md) | Corporate actions: two price frames, event-flow brick slot, split scaling, naive timestamps | Committed | Data layer |
 | [D76](D76-v2-result-alongside-v1.md) | v2 first-number published alongside v1; v1 preserved as the milestone | Committed | Data layer |
+| [D77](D77-golden-master-scope-instrumentation.md) | THE golden master covers the engine as built; BacktestResult gains fills/cash instrumentation | Committed | Testing |
+| [D78](D78-property-test-conventions.md) | Property-test conventions: derandomized hypothesis, shadow accountant, reset-guarantee reinterpretation | Committed | Testing |
+| [D79](D79-cross-engine-vectorbt.md) | Cross-engine reconciliation via vectorbt target-percent; precomputed-weights design | Committed | Testing |

@@ -43,6 +43,12 @@ class BacktestResult:
     violations: list[RiskViolation] = field(default_factory=list)
     final_positions: dict[str, float] = field(default_factory=dict)
     final_cash: float = 0.0
+    fills: list[tuple[datetime, str, float, float, float]] = field(default_factory=list)
+    """(timestamp, instrument_id, signed quantity, fill price, trade cost) per
+    broker-facing fill (D77) — what THE golden master asserts line-by-line and the
+    D40 invariants reconcile against positions."""
+    cash_curve: list[tuple[datetime, float]] = field(default_factory=list)
+    """(timestamp, cash) at each bar close, after all carry/flows/fills (D77)."""
 
     @property
     def final_nav(self) -> float:
@@ -188,6 +194,9 @@ def run_backtest(
             if order.quantity != 0:
                 trade_cost = cost_stack.trade_cost(instruments[instrument_id], order.quantity, prices[instrument_id])
                 portfolio.apply_fill(instrument_id, order.quantity, prices[instrument_id], trade_cost)
+                result.fills.append(
+                    (ab.timestamp, instrument_id, order.quantity, prices[instrument_id], trade_cost)
+                )
 
         # 6. Per-bar risk check across every instrument (D30), regardless of whether
         #    an order fired this bar.
@@ -197,6 +206,7 @@ def run_backtest(
                 result.violations.append(violation)
 
         result.equity_curve.append((ab.timestamp, portfolio.nav(prices, instruments)))
+        result.cash_curve.append((ab.timestamp, portfolio.cash))
         prev_timestamp = ab.timestamp
 
     result.final_positions = dict(portfolio.positions)

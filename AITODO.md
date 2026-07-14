@@ -89,19 +89,36 @@ none.
       **+21.74% at 0× / −18.56% at 1× / −76.55% at 4×** — conclusion unchanged, the
       edge doesn't survive real costs, but the number now rests on a validated,
       frozen, reproducible-by-hash data path. 205/205 tests green (42 new).
-- [ ] Commit Step 7 code + D72–D76 records + the v2 results doc
+- [x] Commit Step 7 code + D72–D76 records + the v2 results doc
+- [x] **Step 8 of `VERIFICATION_SCHEME.md` — gate passed. The simulator is anchored
+      to references we didn't write (Phase D milestone).** THE golden master (D77:
+      5-bar short-side scenario, every fill/carry/flow/cash/NAV line asserted against
+      an independent calculator — the $1 IBKR minimum, the dividend debit on the
+      short, drifting margin bases all fire), 8 property invariants (D78,
+      derandomized hypothesis incl. the shadow-accountant leak test), and
+      cross-engine reconciliation vs vectorbt 1.1.0 (D79): **penny-exact — 1,370
+      trades in both engines, identical final value $159,233.023491, max curve
+      divergence 1.3e-12 relative, divergence table empty**
+      (`docs/verification/cross_engine_reconciliation.md`). 218/218 tests green.
+- [ ] Commit Step 8 code + D77–D79 records + the reconciliation doc
 
 ## Next (queued, not started)
 
-- [ ] Step 8: testing hardening — THE golden master (D39: ~5 bars, 2 trades, weekend,
-      dividend, gap-through-stop, hand-computed line by line), property invariants
-      (D40, hypothesis), cross-engine reconciliation (D41, backtesting.py/vectorbt).
 - [ ] Step 9: analytics honesty — sample-size gating + n≥10k Monte Carlo (D36), beta
       + rf benchmark (D37), momentum labelling (D38), explicit rf Sharpe (D49), seeds
-      (D34).
+      (D34). X-gate: metrics vs quantstats (check pandas 3.0.3 compatibility early —
+      same risk vectorbt just dodged).
+- [ ] Step 11 (cheap, high signal): options stub already exists (D16) — the remaining
+      work is the real docs/options_extension.md write-up.
 - [ ] Config factories for the real bricks + strategy (D52 convention) so logged
       trials can be re-run from config alone — the sweep logs honest config dicts,
       but the full factory-rebuild loop for these types doesn't exist yet.
+
+## Watch list additions
+
+- D79: at target weight ≈ 1.0, vectorbt reserves fees from the purchase while we
+  charge fees to cash — a real convention difference, documented, deliberately below
+  the comparison's 0.6 weight. Revisit if any strategy ever runs at full investment.
 
 ## Watch list (not urgent, don't forget)
 
@@ -276,3 +293,21 @@ none.
   changes on the real fixture (reported as zero). v2 result: +21.74%/−18.56%/−76.55%
   at 0×/1×/4× — same conclusion as v1, now on a reproducible-by-content-hash path.
   205 tests, all green (42 new). v1 doc untouched (D76).
+- **2026-07-14** — **Step 8: testing hardening; the simulator is anchored to
+  references we didn't write.** Two gate clauses reinterpreted openly (D77/D78, D53
+  discipline): no stop orders exist in the engine so THE golden master covers the
+  engine as built (gap-through-stop keeps its Step 1 unit-level golden), and there's
+  no broker class to reset so the fresh-state guarantee is asserted as
+  identical-runs-identical. Added fills/cash_curve instrumentation to BacktestResult
+  (additive; baselines unchanged). THE golden master: independent calculator (never
+  imports the framework) → hand file → line-by-line assertions; the short-side
+  scenario fires every brick at once, including the $1 IBKR minimum on a 53-share
+  re-size and the −$626.50 dividend debit. Property suite: 8 derandomized hypothesis
+  invariants; the shadow accountant (zero costs → NAV change ≡ position × Δprice) is
+  the strongest leak detector short of duplicating the engine. Cross-engine (D79):
+  fed vectorbt the identical precomputed MA-cross weight schedule — its
+  target-percent sizing matches our D27/D61 convention — and got penny-exact
+  agreement across 2,515 bars and 1,370 trades (1.3e-12 max relative divergence,
+  empty divergence table). Real finding: vectorbt reserves fees from the purchase at
+  ~full investment while we charge cash — documented boundary, comparison runs at
+  0.6 weight. 218 tests, all green (13 new).

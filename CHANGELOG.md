@@ -151,6 +151,24 @@ version (likely at the Phase C "first real number" milestone, see
   pre-split XOP commission G-gate (as-traded vs adjusted differs by hand-computed
   $15.00 on a $32k order), split NAV-continuity, D45 no-fills assertion.
 
+- `BacktestResult.fills` and `.cash_curve` — per-fill and per-bar-cash
+  instrumentation (D77, additive).
+- **THE golden master** (`tests/golden/test_the_golden_master.py` + `.hand.txt`, D39/
+  D77): five-bar short-side scenario asserting every fill, commission, carry accrual,
+  the dividend debit, and cash/NAV per bar against an independent calculator.
+- Property invariant suite (`tests/property/test_simulator_invariants.py`, D40/D78):
+  8 derandomized hypothesis invariants — cash ≥ 0 absent margin, fills within bar
+  range, exact fill/position reconciliation, shadow-accountant leak tests,
+  fresh-state guarantee, determinism hash.
+- Cross-engine reconciliation (`tests/integration/test_cross_engine.py` +
+  `docs/verification/cross_engine_reconciliation.md`, D41/D79): our engine vs
+  vectorbt 1.1.0 on identical inputs — **penny-exact** (1,370 trades both sides,
+  identical final value, 1.3e-12 max relative curve divergence). New dev dependency:
+  `vectorbt`.
+- Step 8 of `VERIFICATION_SCHEME.md` — gate passed (218/218 tests total, 13 new).
+  **The simulator is anchored to references we didn't write** (Phase D milestone,
+  `DEVELOPMENT_TIMETABLE.md`).
+
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data
   boundary (D75) — daily-bar identity is the exchange-local date, and D33's

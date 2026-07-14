@@ -1,0 +1,77 @@
+THE GOLDEN MASTER (D39, D77) — Step 8 of VERIFICATION_SCHEME.md.
+Companion to test_the_golden_master.py; every number below is asserted there.
+
+Produced by an INDEPENDENT bar-by-bar calculator (a standalone script that never
+imports backtest_framework), with bar 0 and bar 2 written out by hand below. Scope
+per D77: the engine as built — target weights filled at close (D27), re-sized against
+current NAV each bar (D61), start-of-bar carry/flow snapshot (D67). Gap-through-stop
+is deliberately NOT here: the engine places no stop orders; that behaviour has its
+own golden gate at unit level (test_stop_fill_gap_through, Step 1/D10).
+
+Scenario — SHORT-side so every brick genuinely fires:
+  Bars (daily, 16:00): Thu 2026-01-08, Fri 01-09, Mon 01-12 (weekend = 3 calendar
+  days, D33), Tue 01-13, Wed 01-14. Closes: 100, 98, 101, 99, 99.
+  Weights: [-1.2, -1.2, -1.2, 0, 0]  (~120% gross short -> margin interest is live)
+  Instrument: TEST equity, whole shares. Starting cash 100,000.
+  CostStack: IBKRCommission($0.005/sh, $1 min, 1% cap) + PercentOfNotionalSpread(5bps)
+             + BorrowFee(2%/yr, shorts only) + MarginInterest(6%/yr on
+             max(gross - NAV, 0)) + DividendFlow(TEST: ex Mon 01-12, $0.50/sh).
+
+Engine order per bar: [splits: none] -> snapshot (positions, NAV at THIS close) ->
+per-leg borrow + dividend flows -> portfolio margin -> re-size at post-carry NAV ->
+fill at close -> record cash/NAV.
+
+--------------------------------------------------------------------------------
+BAR 0 — Thu 01-08, close 100.00 (hand arithmetic, in full)
+  No prior bar -> no carry. NAV = 100,000.
+  desired = round(-1.2 x 100,000 / 100) = -1,200 -> SELL SHORT 1,200 @ 100.00
+  commission = min(max(0.005 x 1200, 1.00), 0.01 x 120,000) = min(max(6,1), 1200) = 6.00
+  spread    = 0.0005 x 120,000 = 60.00          trade_cost = 66.00
+  cash = 100,000 + 120,000 - 66.00 = 219,934.00
+  NAV  = 219,934 - 1,200 x 100 = 99,934.00
+
+BAR 1 — Fri 01-09, close 98.00 (1 calendar day)
+  snapshot: qty -1,200 @ 98 -> short notional 117,600 ; NAV_snap = 219,934 - 117,600 = 102,334
+  borrow = 0.02 x 117,600 x 1/365 = 6.4438356164
+  margin base = max(117,600 - 102,334, 0) = 15,266 -> 0.06 x 15,266 x 1/365 = 2.5094794521
+  NAV(post-carry) = 102,325.0466849315
+  desired = round(-1.2 x 102,325.0466849315 / 98) = -1,253 -> delta -53 -> SELL 53 @ 98
+  commission = max(0.005 x 53, 1.00) = 1.00   <- the $1 minimum FIRES on a small re-size
+  spread = 0.0005 x 5,194 = 2.597             trade_cost = 3.597
+  cash = 225,115.4496849315 ; qty -1,253 ; NAV = 102,321.4496849315
+
+BAR 2 — Mon 01-12, close 101.00 (weekend: 3 calendar days — hand arithmetic, in full)
+  snapshot: qty -1,253 @ 101 -> short notional 126,553
+            NAV_snap = 225,115.4496849315 - 126,553 = 98,562.4496849315
+  borrow  = 0.02 x 126,553 x 3/365 = 759,318/36,500 = 20.8032328767
+  DIVIDEND (ex-date Mon, in (Fri, Mon]): flow = -1,253 x 0.50 = -626.50
+            <- the SHORT PAYS the dividend it owes the lender (D6's marquee case)
+  margin base = max(126,553 - 98,562.4496849315, 0) = 27,990.5503150685
+  margin  = 0.06 x 27,990.5503150685 x 3/365 = 13.8035590595
+  NAV(post-carry) = 98,562.4496849315 - 20.8032328767 - 626.50 - 13.8035590595
+                  = 97,901.3428929953
+  desired = round(-1.2 x 97,901.3428929953 / 101) = -1,163 -> delta +90 -> BUY 90 @ 101
+  commission = max(0.005 x 90, 1.00) = 1.00 ; spread = 0.0005 x 9,090 = 4.545
+  trade_cost = 5.545
+  cash = 215,358.7978929953 ; qty -1,163 ; NAV = 97,895.7978929953
+
+BAR 3 — Tue 01-13, close 99.00 (1 day)
+  borrow = 0.02 x 115,137 x 1/365 = 6.3088767123
+  margin base = max(115,137 - 100,221.7978929953, 0) = 14,915.2021070047 -> 2.4518140450
+  NAV(post-carry) = 100,213.0372022380
+  desired = 0 -> delta +1,163 -> BUY (cover) 1,163 @ 99
+  commission = max(0.005 x 1163, 1.00) = 5.815 ; spread = 0.0005 x 115,137 = 57.5685
+  trade_cost = 63.3835
+  cash = 100,149.6537022380 ; qty 0 ; NAV = 100,149.6537022380
+
+BAR 4 — Wed 01-14, close 99.00
+  Flat -> no carry, no trade. cash = NAV = 100,149.6537022380
+
+--------------------------------------------------------------------------------
+FILLS (timestamp, qty, price, trade_cost):
+  Bar 0: -1,200 @ 100.00, cost 66.0000
+  Bar 1:    -53 @  98.00, cost  3.5970
+  Bar 2:    +90 @ 101.00, cost  5.5450
+  Bar 3: +1,163 @  99.00, cost 63.3835
+FINAL NAV = 100,149.6537022380 (the short netted +149.65 after every friction and the
+dividend debit — price went 100 -> 99 net, in its favour).
