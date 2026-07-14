@@ -67,3 +67,22 @@ def test_option_stub_margin_requirement_raises_pointing_at_design_doc():
     option = _sample_option()
     with pytest.raises(NotImplementedError, match="docs/options_extension.md"):
         option.margin_requirement(quantity=2, price=3.50)
+
+
+def test_options_extension_doc_is_the_real_scoping_decision_not_a_stub():
+    # Step 11's deliverable is the written scoping rationale (D16, D84). Same
+    # doc-rot discipline as the D38/D82 label test: docs decay unless a test greps.
+    from pathlib import Path
+
+    doc = (Path(__file__).resolve().parent.parent.parent / "docs" / "options_extension.md").read_text(
+        encoding="utf-8"
+    )
+    assert "Status: stub" not in doc  # the placeholder banner is gone
+    for required_section in (
+        "deliberately deferred",
+        "What exists today",
+        "six hard problems",
+        "Trigger conditions",
+        "What \"done\" would mean",
+    ):
+        assert required_section in doc, f"options_extension.md lost its '{required_section}' section"

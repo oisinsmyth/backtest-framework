@@ -182,6 +182,11 @@ version (likely at the Phase C "first real number" milestone, see
 - D38's label gate reinterpreted (D82): grep-test enforces honest thesis labels on
   the strategies that exist and fails on unregistered strategy modules.
 - Step 9 of `VERIFICATION_SCHEME.md` — gate passed (248/248 tests total, 30 new).
+- `docs/options_extension.md` rewritten from placeholder to the real scoping decision
+  (D16, D84): six hard problems, Lego audit, verification gates if built, trigger
+  conditions. Doc-rot grep-test added alongside the existing OptionStub gates.
+- Step 11 of `VERIFICATION_SCHEME.md` — gate passed (the stub's U-gate has been green
+  since Step 3; the write-up was the remaining deliverable). 249/249 tests.
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

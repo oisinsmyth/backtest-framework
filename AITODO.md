@@ -111,19 +111,27 @@ none.
       momentum exists to label; the grep-test enforces honest labels on existing
       strategies and fails on any unregistered new strategy module. 248/248 tests
       green (30 new).
-- [ ] Commit Step 9 code + D80–D83 records
+- [x] Commit Step 9 code + D80–D83 records
+- [x] **Step 11 of `VERIFICATION_SCHEME.md` — gate passed (U-gate green since
+      Step 3; the deliverable was the write-up).** `docs/options_extension.md` is now
+      the real scoping decision (D84): six hard problems (data is the blocker;
+      expiry/assignment lifecycle is the deepest engine gap — finite-lived
+      instruments break D45's alignment assumption), the Lego audit (what bolts on
+      vs what's engine surgery), verification gates if ever built, and explicit
+      trigger conditions (pairs writeup first, per R1). Doc-rot grep-test added.
+- [ ] Commit Step 11 doc + D84 record
 
 ## Next (queued, not started)
 
-- [ ] Wire `analytics.tearsheet.render_metrics_table` into the v1/v2 results scripts
-      (adds Sharpe/beta/VaR rows to the published docs — its own diff, since it
-      changes committed results artifacts).
-- [ ] Step 11 (cheap, high signal): options stub already exists (D16) — the remaining
-      work is the real docs/options_extension.md write-up.
 - [ ] Step 12: validation science — pair selection in walk-forward + multiplicity
       (D22/D29), regime fitting rule (D28), DSR reproducing the Bailey/de Prado
       worked example fed by the TrialRegistry (D21/D20), synthetic nulls (D23 —
-      reuses D81's block bootstrap).
+      reuses D81's block bootstrap). **The last verification-scheme step in scope**
+      (Step 10 crypto/FX is the timetable's pre-committed cut) — after this, the
+      framework is done and Phase G research begins.
+- [ ] Wire `analytics.tearsheet.render_metrics_table` into the v1/v2 results scripts
+      (adds Sharpe/beta/VaR rows to the published docs — its own diff, since it
+      changes committed results artifacts).
 - [ ] Config factories for the real bricks + strategy (D52 convention) so logged
       trials can be re-run from config alone — the sweep logs honest config dicts,
       but the full factory-rebuild loop for these types doesn't exist yet.
@@ -343,3 +351,15 @@ none.
   max_drawdown relocated engine/sweep → analytics/metrics (pure move, baselines
   re-run). numpy promoted to an explicit production dependency. 248 tests, all
   green (30 new).
+- **2026-07-14** — **Step 11: options scoping write-up.** The stub and its U-gate
+  have been green since Step 3; the deliverable was `docs/options_extension.md` as a
+  real scoping decision (D84) replacing the placeholder: six hard problems (paid
+  historical chain data as the blocker; pricing/marking; per-contract cost bricks;
+  Reg-T margin; expiry/assignment lifecycle; delta-aware risk), the Lego audit
+  separating bolt-on work from engine surgery, framework-style verification gates if
+  ever built, and trigger conditions gated on the pairs writeup per R1. Honest
+  scoping finding: the expiry-lifecycle problem is bigger than D16's original list
+  implied — a time-varying instrument universe breaks D45's inner-join alignment
+  assumption (the whole portfolio would silently truncate at the shortest contract's
+  expiry), which is exactly the kind of thing only surfaced by scoping properly.
+  Doc-rot grep-test added (same discipline as D82's labels). 249 tests green.
