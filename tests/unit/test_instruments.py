@@ -86,3 +86,16 @@ def test_options_extension_doc_is_the_real_scoping_decision_not_a_stub():
         "What \"done\" would mean",
     ):
         assert required_section in doc, f"options_extension.md lost its '{required_section}' section"
+
+
+def test_whole_share_rounding_convention_is_pinned_round_half_even():
+    # D106 (audit F15): tradeable_quantity uses Python round() — banker's rounding
+    # to the NEAREST whole share. This is a stated convention: changing it (e.g. to
+    # floor-toward-zero) would silently move every fill in every committed artifact,
+    # so any change must arrive as a deliberate study-version bump, not a refactor.
+    equity = Equity(symbol="TEST")
+    assert equity.tradeable_quantity(1252.96) == 1253.0  # rounds UP past the target
+    assert equity.tradeable_quantity(0.5) == 0.0  # half-to-even
+    assert equity.tradeable_quantity(1.5) == 2.0
+    assert equity.tradeable_quantity(2.5) == 2.0
+    assert equity.tradeable_quantity(-1252.96) == -1253.0  # symmetric for shorts
