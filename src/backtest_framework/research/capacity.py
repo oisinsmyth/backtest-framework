@@ -145,11 +145,15 @@ def run_capacity_study(
     config: StudyConfig,
     selector_factory: Callable[[], object],
     adv_by_symbol: Mapping[str, float],
+    trial_prefix: str = "capacity",
 ) -> CapacityResult:
     """One v2-configuration study per AUM level, real unscaled costs, recorded.
     `selector_factory` builds a FRESH selector per level (same reasoning as D68's
     strategy factories); `adv_by_symbol` is the same ADV the impact brick uses, so
-    reported participation is self-consistent with the cost model."""
+    reported participation is self-consistent with the cost model. `trial_prefix`
+    disambiguates trial ids when several sweeps share one registry (D96 — the
+    gross sweep passes one prefix per leg_weight); the default preserves the D95
+    capacity artifact's ids byte-for-byte."""
     levels: list[CapacityLevel] = []
     for aum in aum_levels:
         label = _format_aum(aum)
@@ -163,7 +167,7 @@ def run_capacity_study(
             registry=registry,
             snapshot_id=snapshot_id,
             config=replace(config, starting_cash=aum, multipliers=(1.0,)),
-            trial_id_prefix=f"capacity-{label}",
+            trial_id_prefix=f"{trial_prefix}-{label}",
             selector=selector_factory(),
             base_stack=recorded_stack,
         )

@@ -259,6 +259,18 @@ version (likely at the Phase C "first real number" milestone, see
   half of it the scale-invariant floor of a ~200% gross book. Cross-checks: the
   $100k row reproduces v2's −6.43% exactly; $100M gross +19.04% vs v2's +19.03%.
   (295/295 tests, 7 new.)
+- `research/gross_sweep.py` (D96): `run_gross_sweep` — one capacity study per
+  leg_weight (thin composition), with net-return / margin-drag / total-drag
+  matrix renderers; `run_capacity_study` gains `trial_prefix` (default
+  "capacity" preserves the D95 artifact's trial ids).
+- **`docs/results/gross_exposure_study.md` — the gross exposure study**:
+  leg_weight {0.25, 0.5, 0.75, 1.0} × AUM {$100k…$10M}, real unscaled costs.
+  The margin threshold collapses as predicted (0.866%/yr at lw 1 → 0 below
+  gross ≤ NAV) and **five low-gross cells clear absolute costs** (best lw 0.5 @
+  $300k, +0.12%/yr vs +1.03%/yr gross) — **but none clear the 4% risk-free
+  hurdle** (best cell Sharpe −1.61; idle-cash-interest caveat stated both
+  ways). The two-sided headline: at low gross the edge pays for its own
+  implementation, not for the capital it occupies. (299/299 tests, 4 new.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

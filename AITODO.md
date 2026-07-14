@@ -188,19 +188,35 @@ none.
       (margin 0.87% + spread 0.38% + borrow 0.11%). Even free margin funding only
       lifts the optimum to ≈+0.19%/yr. Cross-checks: $100k row reproduces v2's
       −6.43% exactly; $100M gross +19.04% vs v2's +19.03%.** 295 tests (7 new).
-- [ ] Commit capacity analysis + D95
+- [x] Commit capacity analysis + D95
+- [x] **Gross exposure study: five low-gross cells clear absolute costs — but
+      none clear the risk-free hurdle (D96).** One variable: leg_weight
+      (book gross = 2·lw·NAV), grid {0.25, 0.5, 0.75, 1.0} × {$100k…$10M}. The
+      margin threshold (max(gross − NAV, 0)) collapsed exactly as predicted:
+      0.866%/yr drag at lw 1 → 0.220% at lw 0.75 → 0.000% at lw ≤ 0.5. **Result
+      (`docs/results/gross_exposure_study.md`): best cell lw 0.5 @ $300k at
+      +0.12%/yr net vs +1.03%/yr gross — positive absolute net, but Sharpe −1.61
+      vs the 4% rf: underperforms T-bills by ≈3.9%/yr. The two-sided headline:
+      at low gross the edge can just pay for its own implementation; it cannot
+      pay for the capital it occupies.** Honest notes: sim credits no interest
+      on idle cash (a ≤100%-gross book is mostly idle cash — recorded in D96);
+      five-study multiplicity makes any thin positive indistinguishable from
+      zero anyway. 299 tests (4 new).
+- [ ] Commit gross exposure study + D96
 
 ## Next (queued, not started) — Phase G research proper
 
-- [ ] **The Phase G writeup skeleton** — now four exhibits: v1→v2 shows selection
-      matters; v2→v3 shows estimation error is real; the capacity analysis shows
-      the edge doesn't clear real frictions at ANY size and names the binding
-      constraint (the ~200% gross cost floor). Reviewer outreach in parallel.
+- [ ] **The Phase G writeup skeleton** — five exhibits now form a complete arc:
+      v1→v2 selection matters; v2→v3 estimation error is real; capacity → no
+      size clears at 200% gross; gross sweep → low gross clears implementation
+      costs but not the capital hurdle. The methodology story (one variable per
+      study, every number from gate-tested machinery) is the portfolio piece.
+      Reviewer outreach in parallel.
 - [ ] Remaining study candidates: per-window σ/ADV calibration (closes D66);
-      parameter sensitivity (every variant logged → honest DSR); lower-gross
-      variants (the capacity finding suggests the cost floor, not the signal, is
-      the binding constraint — a half-gross book halves the floor but also the
-      edge; measuring that trade-off is a legitimate next study).
+      parameter sensitivity (every variant logged → honest DSR); an idle-cash
+      interest brick (the gross sweep showed low-gross books are mostly cash —
+      modeling cash yield would move absolute numbers materially and is a real
+      cost-model gap, not a strategy tweak).
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
 - [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
 
@@ -506,3 +522,21 @@ none.
   Participation reported per level as the √-law validity boundary ($100M trades
   143% of EWL's ADV — extrapolation, flagged). Cross-checks: $100k row ≡ v2's
   −6.43%; $100M gross +19.04% vs v2's +19.03%. 295 tests green (7 new).
+- **2026-07-14** — **Gross exposure study: the margin threshold pays, the rf
+  hurdle doesn't (D96).** Thin composition — `research/gross_sweep.py` runs one
+  D95 capacity study per leg_weight (`trial_prefix` param added to
+  `run_capacity_study`, default preserves D95 ids). Grid lw {0.25,0.5,0.75,1.0}
+  × AUM {$100k…$10M} + per-lw 0× gross references at $100M (edge scales ≈∝ lw:
+  +0.52/+1.03/+1.53/+2.01%/yr). Margin drag collapsed at the threshold exactly
+  as the piecewise arithmetic predicts (0.866→0.220→0.000→0.000%/yr across
+  falling lw); five cells turned absolutely net-positive (best lw 0.5 @ $300k,
+  +0.12%/yr). Two honesty corrections made during the run: (1) the tests
+  discovered that AT the threshold (lw 0.5) rounding/NAV drift produce trace
+  margin on scattered bars — "exactly zero" needs gross strictly below NAV;
+  test and doc state the collapse (orders of magnitude), not false zero.
+  (2) First artifact draft called the best cell's Sharpe −1.61 "statistically
+  indistinguishable from zero" — wrong: it is decisively NEGATIVE vs the 4% rf;
+  corrected to the two-sided finding (clears implementation costs, not the
+  capital hurdle) with the idle-cash-interest caveat cutting the other way.
+  Regenerated deterministically (registry deleted + rerun, same as v3/capacity
+  precedent). 299 tests green (4 new).
