@@ -149,6 +149,7 @@ def run_pairs_study(
     trial_id_prefix: str = "pairs-study-v1",
     selector=None,
     strategy_factory=None,
+    base_stack: CostStack | None = None,
 ) -> StudyResult:
     """`selector`, when given, replaces the default Gatev top-N selection (D92): any
     callable `(views, top_n) -> PairSelection`. None preserves study v1's behavior
@@ -160,7 +161,11 @@ def run_pairs_study(
     Strategy`, called once per (window, multiplier, pair) so each run gets fresh
     instances (D68 — strategies hold mutable state). `details` is the pair's entry
     from the selector's `last_details` (e.g. its fitted β), or None when the
-    selector publishes none. None preserves v1/v2 behavior exactly."""
+    selector publishes none. None preserves v1/v2 behavior exactly.
+
+    `base_stack`, when given, replaces the internally built real cost stack (D95 —
+    the capacity study injects a recording wrapper here). None builds
+    `build_base_cost_stack` exactly as before; v1/v2/v3 stay byte-reproducible."""
     if 1.0 not in config.multipliers:
         raise ValueError("multipliers must include 1.0 — the tearsheet and DSR are computed at real costs")
 
@@ -171,7 +176,8 @@ def run_pairs_study(
     view_index = {
         symbol: {tb.timestamp: i for i, tb in enumerate(series)} for symbol, series in bars_by_symbol.items()
     }
-    base_stack = build_base_cost_stack(bars_by_symbol, volumes_by_symbol, actions)
+    if base_stack is None:
+        base_stack = build_base_cost_stack(bars_by_symbol, volumes_by_symbol, actions)
     splits = {s: list(v) for s, v in actions.splits_by_symbol.items() if v}
     instruments = {symbol: Equity(symbol=symbol) for symbol in bars_by_symbol}
 

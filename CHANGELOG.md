@@ -245,6 +245,20 @@ version (likely at the Phase C "first real number" milestone, see
   **−16.53%**, DSR = 0.0000. Train-window β carried out-of-sample imports more
   estimation noise than hedge benefit on a selector-coherent (β ≈ 1) universe; the
   1:1 hedge stands. (288/288 tests, 7 new.)
+- `research/capacity.py` (D95): recording cost-stack wrappers (D68 delegation
+  pattern, accumulate instead of multiply) feeding a `CostLedger` — per-brick
+  friction attribution plus per-symbol max |Q| for participation reporting; the
+  recorder returns inner values unchanged (transparency is a tested whole-study
+  identity). `run_capacity_study` runs the v2 study per AUM level at real
+  unscaled costs; `run_pairs_study` gains an optional `base_stack` hook
+  (None-default, v1/v2/v3 byte-identical).
+- **`docs/results/capacity_analysis.md` — the capacity analysis**: v2's study at
+  nine AUM levels, $10k–$100M. **No level clears real costs**: the hump lands as
+  predicted (commission minimums small, √-impact large; optimum $300k at
+  −5.77%/9yr) but ≈+2.01%/yr of gross edge faces 2.68%/yr of drag at the optimum,
+  half of it the scale-invariant floor of a ~200% gross book. Cross-checks: the
+  $100k row reproduces v2's −6.43% exactly; $100M gross +19.04% vs v2's +19.03%.
+  (295/295 tests, 7 new.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

@@ -172,18 +172,35 @@ none.
       OOS imports more estimation noise than hedge benefit — the selector's [0.7,1.3]
       coherence window already leaves the hedge little room to help. The 1:1 hedge
       wins; the writeup gains a genuine estimation-error exhibit.** 288 tests (7 new).
-- [ ] Commit study v3 + D94
+- [x] Commit study v3 + D94
+- [x] **Capacity analysis: NO account size clears real costs — the hump measured
+      (D95).** The v2 study run at 9 log-spaced AUM levels ($10k–$100M) with the
+      real UNSCALED stack — the bricks themselves produce the size dependence
+      (multiplier sweep can't see size). New `research/capacity.py`: recording
+      wrappers (D68 delegation pattern, accumulate not multiply) → CostLedger
+      per-brick attribution + per-symbol max |Q|; `base_stack=None` hook in the
+      study runner (v1/v2/v3 byte-identical); recorder transparency is a tested
+      identity. **Result (`docs/results/capacity_analysis.md`): the hump lands
+      where theory predicts — $10k −20.06% (commission minimums), optimum $300k
+      −5.77%, $100M −59.05% (impact, at 143% of ADV = deep extrapolation) — but
+      the whole curve is below zero. At the optimum: gross ≈+2.01%/yr vs 2.68%/yr
+      total drag, half of it the scale-invariant floor of a ~200% gross book
+      (margin 0.87% + spread 0.38% + borrow 0.11%). Even free margin funding only
+      lifts the optimum to ≈+0.19%/yr. Cross-checks: $100k row reproduces v2's
+      −6.43% exactly; $100M gross +19.04% vs v2's +19.03%.** 295 tests (7 new).
+- [ ] Commit capacity analysis + D95
 
 ## Next (queued, not started) — Phase G research proper
 
-- [ ] **Study v4 candidates**: per-window σ/ADV calibration (closes D66); parameter
-      sensitivity (every variant logged → honest DSR); **the capacity analysis** —
-      v2's cost-sweep slope now supports the "clears at £X AUM" calculation directly
-      (v2 profitable at 0.5×, the commission minimums and impact terms shrink with
-      size; v3 settled that the 1:1 hedge is the configuration to take forward).
-- [ ] The Phase G writeup skeleton — v1/v2/v3 are its first three exhibits: the
-      v1→v2 delta shows selection matters, the v2→v3 delta shows estimation error
-      is real. Reviewer outreach in parallel.
+- [ ] **The Phase G writeup skeleton** — now four exhibits: v1→v2 shows selection
+      matters; v2→v3 shows estimation error is real; the capacity analysis shows
+      the edge doesn't clear real frictions at ANY size and names the binding
+      constraint (the ~200% gross cost floor). Reviewer outreach in parallel.
+- [ ] Remaining study candidates: per-window σ/ADV calibration (closes D66);
+      parameter sensitivity (every variant logged → honest DSR); lower-gross
+      variants (the capacity finding suggests the cost floor, not the signal, is
+      the binding constraint — a half-gross book halves the floor but also the
+      edge; measuring that trade-off is a legitimate next study).
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
 - [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
 
@@ -469,3 +486,23 @@ none.
   DSR 0.0000 — estimation noise in a train-window β out-costs its hedge benefit on
   a universe whose selector already demands β ≈ 1. The 1:1 hedge stands. 288 tests
   green (7 new).
+- **2026-07-14** — **Capacity analysis: no account size clears real costs (D95).**
+  Method: the D8 multiplier sweep can't see account size, but the real bricks can
+  (IBKR $1/order minimum binds small, √-impact binds large, spread/borrow/margin
+  are scale-invariant rates) — so run the byte-identical v2 study at 9 log-spaced
+  `starting_cash` levels with the real UNSCALED stack and let the bricks produce
+  the size dependence. Selection depends only on train views → every level trades
+  the same pairs; levels differ only through costs (and whole-share rounding).
+  Built `research/capacity.py` (recording wrappers → CostLedger attribution;
+  transparency = tested identity: recorded run ≡ default run to the penny, unit
+  AND whole-study) + `base_stack=None` hook in `run_pairs_study` (third
+  None-default hook after D92's selector and D94's factory). Ledger-validity
+  rule: capacity runs are 1×-only — a 0× pass through a recorder would record a
+  different trade path's costs; the gross reference is a separate plain-stack
+  sanity run. Result: hump confirmed ($10k −20.06% → $300k −5.77% → $100M
+  −59.05%), all below zero; at the optimum, 2.68%/yr drag vs ≈+2.01%/yr gross
+  edge, and even free margin funding lifts it only to ≈+0.19%/yr — the binding
+  constraint is the ~200%-gross cost floor, not any size-dependent friction.
+  Participation reported per level as the √-law validity boundary ($100M trades
+  143% of EWL's ADV — extrapolation, flagged). Cross-checks: $100k row ≡ v2's
+  −6.43%; $100M gross +19.04% vs v2's +19.03%. 295 tests green (7 new).
