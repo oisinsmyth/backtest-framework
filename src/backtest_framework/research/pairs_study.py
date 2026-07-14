@@ -32,13 +32,11 @@ import numpy as np
 
 from ..analytics.metrics import max_drawdown, sharpe
 from ..analytics.tearsheet import render_metrics_table
-from ..costs.calibration import calibrate_impact_params
-from ..costs.bricks import PercentOfNotionalSpread
-from ..costs.equity_bricks import BorrowFee, DividendFlow, IBKRCommission, MarginInterest, SqrtImpact
+from ..config.cost_stack import StackDataContext, build_cost_stack
 from ..costs.scaling import scaled_cost_stack
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
-from ..data.corporate_actions import CorporateActions, as_declared_dividends, as_traded_from_adjusted
+from ..data.corporate_actions import CorporateActions, as_traded_from_adjusted
 from ..engine.allocator import ConstantSplitAllocator
 from ..engine.backtest import run_backtest
 from ..instruments.equity import Equity
@@ -65,8 +63,30 @@ class StudyConfig:
     periods_per_year: float = 252.0
     mc_seed: int = 0
     benchmark_symbol: str = "SPY"
+    impact_calibration: str = "full_sample"
+    """How SqrtImpact's σ/ADV are estimated (D102): "full_sample" is the original,
+    documented look-ahead in cost parameters (D66/D70); "train_window" recalibrates
+    per walk-forward window from that window's TRAIN slice only (D44-compliant)."""
+
+    def cost_stack_config(self) -> dict:
+        """The declarative description of the study's real cost stack (D102) — the
+        SAME dict `build_cost_stack` consumes, so what the registry hashes is what
+        ran, not a free-hand description."""
+        return {
+            "trade_bricks": [
+                {"type": "ibkr_commission"},
+                {"type": "sqrt_impact", "coefficient": 1.0, "calibration": self.impact_calibration},
+                {"type": "percent_spread", "bps": 1.0},
+            ],
+            "carry_bricks": [{"type": "borrow_fee", "annual_rate": 0.0025}],
+            "portfolio_carry_bricks": [{"type": "margin_interest", "annual_rate": 0.06}],
+            "event_flow_bricks": [{"type": "dividend_flow", "source": "snapshot_declared"}],
+        }
 
     def to_dict(self) -> dict:
+        """EVERY field that determines the result (D102 — the audit found
+        starting_cash and multipliers missing, so two different experiments could
+        hash identically), plus the declarative stack description."""
         return {
             "study": "pairs_study_v1",
             "signal": "zscore_pairs (fixed 1:1 log-hedge - study v1; cointegration/Kalman are future versions)",
@@ -78,8 +98,38 @@ class StudyConfig:
             "entry_z": self.entry_z,
             "exit_z": self.exit_z,
             "leg_weight": self.leg_weight,
+            "multipliers": list(self.multipliers),
+            "starting_cash": self.starting_cash,
             "rf_annual": self.rf_annual,
+            "periods_per_year": self.periods_per_year,
+            "mc_seed": self.mc_seed,
+            "benchmark_symbol": self.benchmark_symbol,
+            "impact_calibration": self.impact_calibration,
+            "cost_stack": self.cost_stack_config(),
         }
+
+    @classmethod
+    def from_dict(cls, config: dict) -> "StudyConfig":
+        """Rebuild a StudyConfig from a logged trial's config dict — the study-level
+        reproducibility loop (D35/D102): config → registry → reload → re-run.
+        Extra keys the study logs per trial (cost_multiplier, window, selector,
+        pairs, ...) are ignored; a logged cost_stack that does not match what this
+        config would rebuild is a loud error, never silently overridden."""
+        field_names = (
+            "train_size", "test_size", "step", "top_n", "lookback", "entry_z", "exit_z",
+            "leg_weight", "starting_cash", "rf_annual", "periods_per_year", "mc_seed",
+            "benchmark_symbol", "impact_calibration",
+        )
+        kwargs = {name: config[name] for name in field_names if name in config}
+        if "multipliers" in config:
+            kwargs["multipliers"] = tuple(config["multipliers"])
+        rebuilt = cls(**kwargs)
+        if "cost_stack" in config and config["cost_stack"] != rebuilt.cost_stack_config():
+            raise ValueError(
+                "logged cost_stack config does not match what this StudyConfig rebuilds — "
+                "the trial was run with a non-default stack this loader cannot reproduce (D102)"
+            )
+        return rebuilt
 
 
 @dataclass
@@ -126,19 +176,11 @@ def build_base_cost_stack(
     volumes_by_symbol: Mapping[str, Sequence[float]],
     actions: CorporateActions,
 ) -> CostStack:
-    declared = {
-        symbol: tuple(as_declared_dividends(divs, actions.splits_by_symbol.get(symbol, ())))
-        for symbol, divs in actions.dividends_by_symbol.items()
-    }
-    return CostStack(
-        trade_bricks=(
-            IBKRCommission(),
-            SqrtImpact(params_by_symbol=calibrate_impact_params(bars_by_symbol, volumes_by_symbol)),
-            PercentOfNotionalSpread(bps=1.0),
-        ),
-        carry_bricks=(BorrowFee(annual_rate=0.0025),),
-        portfolio_carry_bricks=(MarginInterest(annual_rate=0.06),),
-        event_flow_bricks=(DividendFlow(dividends_by_symbol=declared),),
+    """The study's real cost stack, built from its own declarative description
+    (D102) — construction and the logged config dict share one source of truth."""
+    return build_cost_stack(
+        StudyConfig().cost_stack_config(),
+        StackDataContext(bars_by_symbol=bars_by_symbol, volumes_by_symbol=volumes_by_symbol, actions=actions),
     )
 
 
@@ -193,8 +235,20 @@ def run_pairs_study(
     view_index = {
         symbol: {tb.timestamp: i for i, tb in enumerate(series)} for symbol, series in bars_by_symbol.items()
     }
-    if base_stack is None:
-        base_stack = build_base_cost_stack(bars_by_symbol, volumes_by_symbol, actions)
+    per_window_stack = config.impact_calibration == "train_window"
+    if per_window_stack and base_stack is not None:
+        raise ValueError(
+            "impact_calibration='train_window' cannot be combined with an injected "
+            "base_stack — recorder/scaling wrappers wrap one stack instance, and the "
+            "per-window rebuild would bypass them (D102)"
+        )
+    if base_stack is None and not per_window_stack:
+        base_stack = build_cost_stack(
+            config.cost_stack_config(),
+            StackDataContext(
+                bars_by_symbol=bars_by_symbol, volumes_by_symbol=volumes_by_symbol, actions=actions
+            ),
+        )
     splits = {s: list(v) for s, v in actions.splits_by_symbol.items() if v}
     instruments = {symbol: Equity(symbol=symbol) for symbol in bars_by_symbol}
 
@@ -253,6 +307,27 @@ def run_pairs_study(
                     f"{window.index} — the legs would inner-join to a shorter warm-up (D99)"
                 )
 
+        if per_window_stack:
+            # D102: rebuild the stack from THIS window's train slice only, through
+            # the same declarative config path — sqrt-impact σ/ADV estimation obeys
+            # D44's no-test-window-data rule instead of D66's full-sample look-ahead.
+            train_slice_bars, train_slice_volumes = {}, {}
+            for symbol in legs:
+                first_test_i = view_index[symbol][test_ts[0]]
+                train_lo = first_test_i - config.train_size
+                train_slice_bars[symbol] = list(bars_by_symbol[symbol][train_lo:first_test_i])
+                train_slice_volumes[symbol] = list(volumes_by_symbol[symbol][train_lo:first_test_i])
+            window_stack = build_cost_stack(
+                config.cost_stack_config(),
+                StackDataContext(
+                    bars_by_symbol=train_slice_bars,
+                    volumes_by_symbol=train_slice_volumes,
+                    actions=actions,
+                ),
+            )
+        else:
+            window_stack = base_stack
+
         for m in config.multipliers:
             if strategy_factory is not None:
                 strategies = [
@@ -276,7 +351,7 @@ def run_pairs_study(
                 bars_by_instrument=run_bars,
                 instruments=instruments,
                 strategies=strategies,
-                cost_stack=scaled_cost_stack(base_stack, m),
+                cost_stack=scaled_cost_stack(window_stack, m),
                 allocator=ConstantSplitAllocator(),
                 starting_cash=capital[m],
                 splits_by_instrument=splits,

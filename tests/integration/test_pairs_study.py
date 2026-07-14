@@ -314,3 +314,86 @@ def test_bounded_run_on_the_real_universe_fixture(tmp_path):
     assert result.n_pairs_tested_per_window == 57 * 56 // 2  # C(57,2) = 1,596
     assert 0.0 <= result.dsr <= 1.0
     assert len(result.curves[1.0].equity) == result.n_windows * 63
+
+
+def test_study_reproducibility_loop_from_logged_config(study, tmp_path):
+    # D102 (audit F2): the FULL study-level loop — a logged trial's config dict is
+    # reloaded from the registry, rebuilt into a StudyConfig, and a fresh run
+    # reproduces the stitched curves exactly. This is the Step 2 gate on the real
+    # study path, not the Step-2 demo models.
+    result, registry, bars = study
+    record = registry.get_trial("test-study-1.0x-w00")
+
+    from backtest_framework.research.pairs_study import StudyConfig as SC
+
+    rebuilt_config = SC.from_dict(record.config)
+    assert rebuilt_config == CONFIG  # every determining field survived the round trip
+
+    rerun = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol={s: [5e6] * 400 for s in bars},
+        actions=CorporateActions(),
+        registry=TrialRegistry(tmp_path / "rerun.sqlite"),
+        snapshot_id="synthetic-universe",
+        config=rebuilt_config,
+        trial_id_prefix="test-study",
+    )
+    for m in CONFIG.multipliers:
+        assert rerun.curves[m].equity == result.curves[m].equity
+    assert rerun.dsr == result.dsr
+
+
+def test_train_window_calibration_is_leak_free_and_changes_only_costs(tmp_path):
+    # D102 (audit F4): per-window sqrt-impact calibration uses each window's TRAIN
+    # slice only (D44). Signals and selection are calibration-independent, so the
+    # 0x (frictionless) curves must be IDENTICAL across calibration modes; only
+    # cost-bearing curves may differ.
+    bars, volumes = _synthetic_universe()
+    from dataclasses import replace
+
+    full = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol=volumes,
+        actions=CorporateActions(),
+        registry=TrialRegistry(tmp_path / "full.sqlite"),
+        snapshot_id="synthetic-universe",
+        config=CONFIG,
+        trial_id_prefix="cal-full",
+    )
+    train = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol=volumes,
+        actions=CorporateActions(),
+        registry=TrialRegistry(tmp_path / "train.sqlite"),
+        snapshot_id="synthetic-universe",
+        config=replace(CONFIG, impact_calibration="train_window"),
+        trial_id_prefix="cal-train",
+    )
+
+    assert train.curves[0.0].equity == full.curves[0.0].equity  # no signal change
+    assert train.curves[1.0].equity != full.curves[1.0].equity  # costs recalibrated
+
+    # The two regimes hash differently — they can never be confused in a registry.
+    full_record = TrialRegistry(tmp_path / "full.sqlite").get_trial("cal-full-1.0x-w00")
+    train_record = TrialRegistry(tmp_path / "train.sqlite").get_trial("cal-train-1.0x-w00")
+    assert full_record.trial_hash != train_record.trial_hash
+    assert full_record.config["impact_calibration"] == "full_sample"
+    assert train_record.config["impact_calibration"] == "train_window"
+
+
+def test_train_window_calibration_refuses_injected_base_stack(tmp_path):
+    bars, volumes = _synthetic_universe()
+    from dataclasses import replace
+
+    from backtest_framework.research.pairs_study import build_base_cost_stack
+
+    with pytest.raises(ValueError, match="train_window"):
+        run_pairs_study(
+            bars_by_symbol=bars,
+            volumes_by_symbol=volumes,
+            actions=CorporateActions(),
+            registry=TrialRegistry(tmp_path / "trials.sqlite"),
+            snapshot_id="synthetic-universe",
+            config=replace(CONFIG, impact_calibration="train_window"),
+            base_stack=build_base_cost_stack(bars, volumes, CorporateActions()),
+        )
