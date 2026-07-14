@@ -1,12 +1,16 @@
 """run_backtest: the production loop generalizing Step 3's test-only mini-backtest.
 
-Wires together, per bar: carry accrual (D33) -> a DataView per strategy (D32) ->
-signal -> target weight -> orders (D27, pipeline.sizing) -> cost application
-(CostStack, D1/D2) -> PortfolioState updates -> a per-bar risk check (D30) -> an
-equity-curve point.
+Wires together, per aligned bar: carry accrual on every held position (D33) -> a
+DataView per instrument per strategy (D32) -> signal -> target weight -> orders (D27,
+pipeline.sizing) -> cost application (CostStack, D1/D2) -> PortfolioState updates -> a
+per-bar risk check (D30) -> an equity-curve point.
 
-Single instrument only for now — bars is one price series. Multi-instrument alignment
-(D45, e.g. a real XLE/XOP pair) is bigger scope than this chunk covers; see D59.
+Multi-instrument via inner-join alignment (D45, data.alignment.align_bars) — one
+instrument is the N=1 case (D64), same as Strategy. A bar missing on one leg means no
+trading for any leg that step; carry still accrues across the real calendar gap,
+because it's driven by consecutive aligned timestamps, not bar count. Carry accrues
+per instrument independently (each leg's own notional as its own base amount) — not
+netted against aggregate gross exposure; that's D5's job in Step 5, not this chunk.
 
 Capital is reallocated from current NAV every bar (D61), not fixed at the start.
 RiskMonitor violations are recorded in the result, not acted on — no corrective orders
@@ -21,12 +25,13 @@ from datetime import datetime
 from typing import Mapping, Sequence
 
 from ..costs.stack import CostStack
+from ..data.alignment import align_bars
 from ..data.bars import TimestampedBar
 from ..instruments.base import Instrument
 from ..pipeline.sizing import Sizer, TargetWeight, apply_virtual_orders, net_orders
 from ..registry.trial_registry import TrialRegistry
 from .allocator import Allocator
-from .dataview import build_data_view
+from .dataview import DataView, build_data_view
 from .portfolio import PortfolioState
 from .risk import RiskLimits, RiskMonitor, RiskViolation
 from .strategy import Strategy
@@ -45,8 +50,7 @@ class BacktestResult:
 
 
 def run_backtest(
-    bars: Sequence[TimestampedBar],
-    instrument_id: str,
+    bars_by_instrument: Mapping[str, Sequence[TimestampedBar]],
     instruments: Mapping[str, Instrument],
     strategies: list[Strategy],
     cost_stack: CostStack,
@@ -65,7 +69,11 @@ def run_backtest(
             "pass both, or omit trial_registry if you don't want this run logged."
         )
 
-    all_bars = tuple(tb.bar for tb in bars)
+    aligned = align_bars(bars_by_instrument)  # D45
+    aligned_bar_series = {
+        instrument_id: tuple(ab.bars[instrument_id] for ab in aligned) for instrument_id in bars_by_instrument
+    }
+
     sizer = Sizer()
     risk_monitor = RiskMonitor(risk_limits) if risk_limits is not None else None
 
@@ -76,24 +84,28 @@ def run_backtest(
     result = BacktestResult()
     prev_timestamp: datetime | None = None
 
-    for i, tb in enumerate(bars):
-        price = tb.bar.close
-        prices = {instrument_id: price}
+    for i, ab in enumerate(aligned):
+        prices = {instrument_id: bar.close for instrument_id, bar in ab.bars.items()}
 
-        # 1. Carry accrues on the position held coming into this bar (D33), on the
-        #    calendar-day gap since the previous bar, before any trade this bar.
-        current_qty = portfolio.positions.get(instrument_id, 0.0)
-        if prev_timestamp is not None and current_qty != 0:
-            base_amount = current_qty * price
-            carry = cost_stack.carry_cost(base_amount, prev_timestamp, tb.timestamp)
-            portfolio.accrue_carry(carry)
+        # 1. Carry accrues on every currently-held instrument (D33), on the calendar-
+        #    day gap since the previous ALIGNED bar — this correctly spans any bar
+        #    dropped by D45 alignment, since it's driven by timestamps, not bar count.
+        if prev_timestamp is not None:
+            for instrument_id, quantity in list(portfolio.positions.items()):
+                if quantity != 0:
+                    base_amount = quantity * prices[instrument_id]
+                    carry = cost_stack.carry_cost(base_amount, prev_timestamp, ab.timestamp)
+                    portfolio.accrue_carry(carry)
 
-        # 2. Build this bar's DataView (D32, D56) and let every strategy see it —
-        #    never the raw bar series.
-        view = build_data_view(all_bars, i)
+        # 2. Build this bar's DataView per instrument (D32, D56) from each
+        #    instrument's own ALIGNED series, and let every strategy see all of them.
+        views: dict[str, DataView] = {
+            instrument_id: build_data_view(aligned_bar_series[instrument_id], i)
+            for instrument_id in bars_by_instrument
+        }
         targets: list[TargetWeight] = []
         for strategy in strategies:
-            targets.extend(strategy.generate_targets(view))
+            targets.extend(strategy.generate_targets(views))
 
         # 3. Capital is reallocated from current NAV every bar (D61).
         current_nav = portfolio.nav(prices, instruments)
@@ -110,20 +122,21 @@ def run_backtest(
         external_orders = net_orders(virtual_orders)
         virtual_positions = apply_virtual_orders(virtual_positions, virtual_orders)
 
-        # 5. Apply the broker-facing (netted) fill, if any, with its trade cost.
-        order = external_orders.get(instrument_id)
-        if order is not None and order.quantity != 0:
-            trade_cost = cost_stack.trade_cost(instruments[instrument_id], order.quantity, price)
-            portfolio.apply_fill(instrument_id, order.quantity, price, trade_cost)
+        # 5. Apply every netted (broker-facing) fill with its trade cost.
+        for instrument_id, order in external_orders.items():
+            if order.quantity != 0:
+                trade_cost = cost_stack.trade_cost(instruments[instrument_id], order.quantity, prices[instrument_id])
+                portfolio.apply_fill(instrument_id, order.quantity, prices[instrument_id], trade_cost)
 
-        # 6. Per-bar risk check (D30), regardless of whether an order fired this bar.
+        # 6. Per-bar risk check across every instrument (D30), regardless of whether
+        #    an order fired this bar.
         if risk_monitor is not None:
             violation = risk_monitor.evaluate(portfolio.positions, prices, instruments, bar_index=i)
             if violation is not None:
                 result.violations.append(violation)
 
-        result.equity_curve.append((tb.timestamp, portfolio.nav(prices, instruments)))
-        prev_timestamp = tb.timestamp
+        result.equity_curve.append((ab.timestamp, portfolio.nav(prices, instruments)))
+        prev_timestamp = ab.timestamp
 
     result.final_positions = dict(portfolio.positions)
     result.final_cash = portfolio.cash
@@ -132,7 +145,8 @@ def run_backtest(
         metrics = {
             "final_nav": result.final_nav,
             "total_return": result.final_nav - starting_cash,
-            "num_bars": len(bars),
+            "num_bars": len(aligned),
+            "num_instruments": len(bars_by_instrument),
             "num_violations": len(result.violations),
         }
         trial_registry.add_trial(

@@ -50,21 +50,32 @@ none.
       95/95 tests green (17 new), offline by default — one `@pytest.mark.live_fetch`
       test hits real yfinance and is excluded from normal runs per
       `VERIFICATION_SCHEME.md`'s own cross-cutting gate.
-- [ ] Commit this chunk's code + D59-D62 decision records
+- [x] Commit this chunk's code + D59-D62 decision records
+- [x] **Multi-instrument bar alignment for pairs, planned and built (D45).** Second
+      `EnterPlanMode` pass this session — the Strategy/run_backtest interface change
+      was breaking, not additive, and worth aligning on before touching well-tested
+      code. Built `data.alignment.align_bars` (D63, inner join) and generalized
+      `Strategy`/`ScheduledWeightStrategy`/`run_backtest` to multi-instrument, with
+      single-instrument as the N=1 case (D64). Migrated the Step 3/D53 golden-master
+      test to the new signature and re-ran it — identical numbers, not assumed.
+      104/104 tests green (9 new + migrations), offline by default. Real XLE/XOP pair
+      confirmed running end-to-end via a `live_fetch`-marked smoke test.
+- [ ] Commit this chunk's code + D63/D64 decision records
 
 ## Next (queued, not started)
 
 - [ ] Phase C kickoff: Step 5 — real equity cost bricks (D3 sqrt impact, D4 IBKR
       commission schedule, D5 margin interest), replacing Step 3's toy bricks
       (`FlatCommission`, `PercentOfNotionalSpread`, `FlatRateCarry`) against the same
-      `TradeCostBrick`/`CarryCostBrick` interfaces. `run_backtest` (`engine/backtest.py`)
-      is now ready to drive real bricks through a real loop once they exist.
+      `TradeCostBrick`/`CarryCostBrick` interfaces. `run_backtest` can now drive real
+      bricks through a real multi-instrument loop once they exist — XLE/XOP alignment
+      is no longer a blocker for Step 6.
 - [ ] Step 6 — cost-multiplier sweep (D8) → run the XLE/XOP walk-forward end-to-end.
       **This is Phase C's milestone and R1's existence-justification gate: the first
       real number.** Target week ~8 per `DEVELOPMENT_TIMETABLE.md`; kill criterion at
-      week 10 if not produced by then. Still blocked on: `run_backtest` is
-      single-instrument only (D59) — a real pairs walk-forward needs XLE+XOP aligned
-      (D45), which this chunk deliberately didn't build.
+      week 10 if not produced by then. Still needed before Step 6 can actually run: a
+      real pair-selection/signal strategy (still Phase G territory, `ScheduledWeightStrategy`
+      is a toy) and the cost-multiplier sweep harness itself (D8) don't exist yet.
 - [ ] When Step 5 lands: re-run `test_step3_refactor_regression.py` and update its
       golden numbers deliberately (not silently) — D53 designated it the frozen
       baseline, so any change to its expected values needs to be a visible, explained
@@ -78,6 +89,9 @@ none.
 - D62: `RiskMonitor` violations are recorded but not enforced in `run_backtest` — no
   corrective orders, no halt. Revisit once there's a validated strategy to inform what
   "corrective" should actually mean (same reasoning D31 used to defer real allocation).
+- D63: alignment uses exact-timestamp matching, no tolerance window — fine for one
+  `DataSource` fetching both legs the same way; revisit if a future data source
+  produces genuinely offset timestamps for the same session.
 
 ## Log
 
@@ -164,3 +178,21 @@ none.
   enforced in the loop (D62), tested explicitly rather than left implicit. 95 tests
   total, all green (17 new, one `live_fetch`-marked test excluded from the default
   count and confirmed to pass separately against real yfinance data).
+- **2026-07-13** — Multi-instrument bar alignment (D45) implemented, unblocking a real
+  XLE/XOP pair. Planned via `EnterPlanMode` again since the change was breaking:
+  `Strategy.generate_targets` moved from one `DataView` to `Mapping[str, DataView]`,
+  `ScheduledWeightStrategy` from `(instrument_id, weight)` to `weights_by_instrument`,
+  `run_backtest` from `(bars, instrument_id)` to `bars_by_instrument` — single
+  instrument is now the N=1 case throughout, mirroring the precedent D55/D58 already
+  set (D64). Built `data.alignment.align_bars` (D63): inner join on exact timestamp
+  equality: a bar missing on one leg drops that timestamp for every leg, and carry
+  accrues correctly across the resulting gap with no special-case code, since it's
+  already driven by consecutive timestamps rather than bar count (same mechanism D33
+  uses for weekends). Migrated `test_strategy.py` and `test_backtest_loop.py`
+  (including the Step 3/D53 golden-master reproduction test) to the new signatures and
+  re-ran them — identical numbers confirmed, not assumed, same discipline as the
+  Step 2→3 `CarryModel` migration. New: a hand-computed synthetic scenario proving a
+  dropped bar on one leg drops it for both and carry spans the real 2-day gap
+  (`test_pairs_backtest.hand.txt`), plus a `live_fetch`-marked test running a real
+  long-XLE/short-XOP pair through `run_backtest` end-to-end. 104 tests total, all
+  green (9 new plus in-place migrations).

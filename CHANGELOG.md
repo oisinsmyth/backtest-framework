@@ -76,7 +76,7 @@ version (likely at the Phase C "first real number" milestone, see
   Step 3's test-only `run_mini_backtest`: wires DataView, Strategy, Allocator, Sizer,
   CostStack, PortfolioState, and (optionally) RiskMonitor and TrialRegistry together
   per bar. Capital is reallocated from current NAV every bar (D61). Risk violations are
-  recorded, not enforced (D62). Single-instrument only for now (D59).
+  recorded, not enforced (D62).
 - `pytest` marker `live_fetch`, excluded by default via `addopts` — matches
   `VERIFICATION_SCHEME.md`'s own cross-cutting gate ("CI runs everything offline...
   live-fetch tests are excluded by marker").
@@ -84,11 +84,24 @@ version (likely at the Phase C "first real number" milestone, see
   step; inserted ahead of Step 5 to unblock it — D59) — gate: a `ScheduledWeightStrategy`
   run through `run_backtest` reproduces Step 3's frozen golden-master NAV curve exactly
   (95/95 tests total, 17 new, offline by default).
+- `backtest_framework.data.alignment` — `AlignedBar`, `align_bars()`: inner-join
+  multi-instrument bar alignment (D45, D63). A bar missing on one leg drops that
+  timestamp for every leg; carry accrues correctly across the resulting gap with no
+  special-case code.
+- Multi-instrument alignment chunk (D45) — gate: a real long-XLE/short-XOP pair runs
+  end-to-end through `run_backtest` (104/104 tests total, 9 new, offline by default;
+  the XLE/XOP run is `live_fetch`-marked).
 
 ### Changed
 - `config.carry_model`'s factory now builds `costs.bricks.FlatRateCarry` instead of the
   retired `CarryModel` demonstration class, per that class's own docstring (D54). No
   change to `SimConfig`'s shape or to Step 2's four passing gates.
+- **Breaking**: `Strategy.generate_targets` now takes `Mapping[str, DataView]` instead
+  of a single `DataView`; `ScheduledWeightStrategy` now takes `weights_by_instrument`
+  instead of `instrument_id`/`weight`; `run_backtest` now takes `bars_by_instrument`
+  instead of `bars`/`instrument_id`. Single-instrument is the N=1 case throughout
+  (D64). The Step 3/D53 golden-master reproduction test was migrated and re-verified
+  to produce identical numbers under the new signatures.
 
 <!--
 Template for future entries:

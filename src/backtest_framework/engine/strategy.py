@@ -1,16 +1,22 @@
 """Strategy: the signal-generation side of D27's pipeline.
 
-Strategies receive a DataView (D32) — never the raw bar series — and return the
-target weights the engine should size and net (pipeline.sizing). This module doesn't
-implement any real trading idea; ScheduledWeightStrategy exists only so run_backtest
-is testable without one, the same role Step 3's toy cost bricks played for CostStack.
-The actual pairs strategy (Gatev distance -> cointegration -> Kalman) is Phase G work.
+Strategies receive one DataView per instrument they might trade (D32) — never the raw
+bar series — and return the target weights the engine should size and net
+(pipeline.sizing). One instrument is just the N=1 case of this interface (D64), the
+same pattern D55/D58 already established for capital_by_strategy: a pairs strategy
+gets {"XLE": DataView(...), "XOP": DataView(...)}; a single-instrument strategy gets a
+one-entry mapping.
+
+This module doesn't implement any real trading idea; ScheduledWeightStrategy exists
+only so run_backtest is testable without one, the same role Step 3's toy cost bricks
+played for CostStack. The actual pairs strategy (Gatev distance -> cointegration ->
+Kalman) is Phase G work.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol, Sequence
+from typing import Mapping, Protocol, Sequence
 
 from ..engine.dataview import DataView
 from ..pipeline.sizing import TargetWeight
@@ -19,21 +25,27 @@ from ..pipeline.sizing import TargetWeight
 class Strategy(Protocol):
     strategy_id: str
 
-    def generate_targets(self, view: DataView) -> list[TargetWeight]: ...
+    def generate_targets(self, views: Mapping[str, DataView]) -> list[TargetWeight]: ...
 
 
 @dataclass(frozen=True)
 class ScheduledWeightStrategy:
-    """Targets weights[view.current_index] on each bar (holding the last value once
-    the schedule runs out). A constant weight is just a schedule of one repeated value
-    — this single class covers both the "always the same weight" and "a scripted
-    weight path" reference-strategy cases without needing two separate toy classes."""
+    """Targets weights_by_instrument[instrument][view.current_index] on each bar for
+    every instrument in the mapping (holding the last scheduled value once a
+    particular instrument's schedule runs out). A single-instrument constant weight is
+    just a one-entry mapping with a schedule of one repeated value; a pairs scenario is
+    a two-entry mapping with opposite-signed schedules — this one class covers both
+    without needing separate toy classes."""
 
     strategy_id: str
-    instrument_id: str
-    weights: Sequence[float]
+    weights_by_instrument: Mapping[str, Sequence[float]]
 
-    def generate_targets(self, view: DataView) -> list[TargetWeight]:
-        index = min(view.current_index, len(self.weights) - 1)
-        weight = self.weights[index]
-        return [TargetWeight(strategy_id=self.strategy_id, instrument_id=self.instrument_id, weight=weight)]
+    def generate_targets(self, views: Mapping[str, DataView]) -> list[TargetWeight]:
+        targets: list[TargetWeight] = []
+        for instrument_id, weights in self.weights_by_instrument.items():
+            view = views[instrument_id]
+            index = min(view.current_index, len(weights) - 1)
+            targets.append(
+                TargetWeight(strategy_id=self.strategy_id, instrument_id=instrument_id, weight=weights[index])
+            )
+        return targets

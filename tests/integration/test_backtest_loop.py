@@ -3,7 +3,9 @@ generalizing Step 3's test-only mini-backtest harness.
 
 The regression-anchor test's reasoning (why it reproduces Step 3's golden numbers
 despite D61's per-bar NAV-based capital) lives in test_backtest_loop.hand.txt, next to
-this file.
+this file. These tests are all single-instrument (a one-entry bars_by_instrument
+mapping, D64's N=1 case) — multi-instrument/pairs scenarios live in
+tests/integration/test_pairs_backtest.py.
 """
 
 from datetime import datetime
@@ -40,11 +42,10 @@ def test_run_backtest_reproduces_step3_golden_master_exactly():
         TimestampedBar(datetime(2026, 7, 13, 16, 0), _bar(100.0)),
         TimestampedBar(datetime(2026, 7, 14, 16, 0), _bar(100.0)),
     ]
-    strategy = ScheduledWeightStrategy(strategy_id="s1", instrument_id="AAPL", weights=[0.5, 0.5, 0.0])
+    strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [0.5, 0.5, 0.0]})
 
     result = run_backtest(
-        bars=bars,
-        instrument_id="AAPL",
+        bars_by_instrument={"AAPL": bars},
         instruments=INSTRUMENTS,
         strategies=[strategy],
         cost_stack=COST_STACK,
@@ -64,12 +65,11 @@ def test_run_backtest_nets_offsetting_strategies_avoiding_double_costs():
     # With an even split they cancel exactly -> zero external order, zero trade cost,
     # even though both strategies "traded" in their own virtual books.
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
-    strategy_a = ScheduledWeightStrategy(strategy_id="A", instrument_id="AAPL", weights=[1.0])
-    strategy_b = ScheduledWeightStrategy(strategy_id="B", instrument_id="AAPL", weights=[-1.0])
+    strategy_a = ScheduledWeightStrategy(strategy_id="A", weights_by_instrument={"AAPL": [1.0]})
+    strategy_b = ScheduledWeightStrategy(strategy_id="B", weights_by_instrument={"AAPL": [-1.0]})
 
     result = run_backtest(
-        bars=bars,
-        instrument_id="AAPL",
+        bars_by_instrument={"AAPL": bars},
         instruments=INSTRUMENTS,
         strategies=[strategy_a, strategy_b],
         cost_stack=COST_STACK,
@@ -86,11 +86,10 @@ def test_run_backtest_records_risk_violation_without_halting():
     # weight=1.0 against the full starting capital produces roughly 1000 shares @
     # ~100 = ~100,000 notional, comfortably over a deliberately low 50,000 limit.
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
-    strategy = ScheduledWeightStrategy(strategy_id="s1", instrument_id="AAPL", weights=[1.0])
+    strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [1.0]})
 
     result = run_backtest(
-        bars=bars,
-        instrument_id="AAPL",
+        bars_by_instrument={"AAPL": bars},
         instruments=INSTRUMENTS,
         strategies=[strategy],
         cost_stack=CostStack(),  # zero-cost, isolates the risk check from cost arithmetic
@@ -111,12 +110,11 @@ def test_run_backtest_records_risk_violation_without_halting():
 
 def test_run_backtest_logs_a_real_trial_to_the_registry(tmp_path):
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
-    strategy = ScheduledWeightStrategy(strategy_id="s1", instrument_id="AAPL", weights=[0.5])
+    strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [0.5]})
     registry = TrialRegistry(tmp_path / "trials.sqlite")
 
     result = run_backtest(
-        bars=bars,
-        instrument_id="AAPL",
+        bars_by_instrument={"AAPL": bars},
         instruments=INSTRUMENTS,
         strategies=[strategy],
         cost_stack=COST_STACK,
@@ -132,19 +130,19 @@ def test_run_backtest_logs_a_real_trial_to_the_registry(tmp_path):
     record = registry.get_trial("trial-001")
     assert record.metrics["final_nav"] == pytest.approx(result.final_nav, rel=TOLERANCE)
     assert record.metrics["num_bars"] == 1
+    assert record.metrics["num_instruments"] == 1
     assert record.snapshot_id == "snap-test"
     assert record.seed == 7
 
 
 def test_run_backtest_requires_trial_id_and_config_when_registry_given(tmp_path):
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
-    strategy = ScheduledWeightStrategy(strategy_id="s1", instrument_id="AAPL", weights=[0.5])
+    strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [0.5]})
     registry = TrialRegistry(tmp_path / "trials.sqlite")
 
     with pytest.raises(ValueError, match="trial_id"):
         run_backtest(
-            bars=bars,
-            instrument_id="AAPL",
+            bars_by_instrument={"AAPL": bars},
             instruments=INSTRUMENTS,
             strategies=[strategy],
             cost_stack=COST_STACK,

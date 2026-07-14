@@ -1,0 +1,76 @@
+Hand-worked scenario proving D45: a bar missing on one leg drops that timestamp for
+BOTH legs, and carry still accrues across the real calendar gap that creates — not
+the "1 aligned step" the trading calendar would otherwise suggest.
+
+Setup: two instruments, A (price constant 100.00) and B (price constant 50.00) — price
+is held constant so every dollar of drift is attributable to costs, same technique as
+test_step3_refactor_regression.hand.txt. Single strategy "pairs", constant weights
+0.4 (long A) / -0.2 (short B). CostStack: FlatCommission(1.00) + PercentOfNotionalSpread
+(5.0 bps) trade bricks, FlatRateCarry(0.06) carry brick (applied to each leg's own
+notional independently — this is D54's toy-brick boundary, not D5's real netted-
+exposure margin interest).
+
+Raw data BEFORE alignment:
+  A has bars: Monday, Tuesday, Wednesday
+  B has bars: Monday,          Wednesday   <- missing Tuesday (e.g. a halt)
+
+Inner join (D45): only Monday and Wednesday survive for EITHER instrument — Tuesday is
+dropped for A too, even though A actually had data there.
+
+--------------------------------------------------------------------------------
+Aligned bar 0 — Monday. Capital = NAV before any trade = starting_cash = 100000
+(true for any flat-start scenario, same identity used in test_step3_refactor_
+regression.hand.txt).
+
+  Leg A: desired_notional = 0.4 * 100000 = 40000; raw_qty = 40000/100.00 = 400.0
+         -> qtyA = 400 (whole shares). delta = +400 -> BUY 400 A @ 100.00
+         fee_A = 1.00 + |400*100.00|*5/10000 = 1.00 + 20.00 = 21.00
+
+  Leg B: desired_notional = -0.2 * 100000 = -20000; raw_qty = -20000/50.00 = -400.0
+         -> qtyB = -400 (whole shares, short). delta = -400 -> SELL 400 B @ 50.00
+         fee_B = 1.00 + |-400*50.00|*5/10000 = 1.00 + 10.00 = 11.00
+
+  cash = 100000 - (400*100.00) - 21.00 - (-400*50.00) - 11.00
+       = 100000 - 40000 - 21.00 + 20000 - 11.00
+       = 79968.00
+
+  NAV(bar 0) = cash + qtyA*priceA + qtyB*priceB
+             = 79968.00 + 40000 - 20000 = 99968.00
+
+--------------------------------------------------------------------------------
+Aligned bar 1 — Wednesday. Gap since bar 0 = 2 CALENDAR days (Mon -> Wed), even
+though this is only the 2nd ALIGNED step — Tuesday's dropped bar doesn't shrink the
+gap. This is the property under test.
+
+  Carry accrues on each held leg FIRST, before this bar's sizing, using its own
+  signed notional as the base amount:
+    carry_A = (qtyA * priceA) * 0.06 * 2 / 365 = 40000 * 0.06 * 2/365
+            = 4800 * 2/365 = 9600/365 = 13.150684931506849...
+    carry_B = (qtyB * priceB) * 0.06 * 2 / 365 = -20000 * 0.06 * 2/365
+            = -2400/365... = -1200*2/365 = -2400/365 = -6.575342465753424...
+    (carry_B is negative because qtyB itself is negative — this toy brick applies the
+    same rate to each leg's own SIGNED notional independently; it is not D5's real
+    netted margin-interest formula. See D64.)
+
+  cash_after_carry = 79968.00 - 13.150684931506849 - (-6.575342465753424)
+                    = 79968.00 - 13.150684931506849 + 6.575342465753424
+                    = 79961.424657534253...
+
+  current_nav (this bar's sizing capital) = cash_after_carry + 40000 - 20000
+                                           = 99961.424657534253...
+
+  Leg A: raw_qty = 0.4 * 99961.424657534253 / 100.00 = 399.845698630137...
+         round() -> 400 = current qtyA -> delta = 0 -> NO TRADE
+  Leg B: raw_qty = -0.2 * 99961.424657534253 / 50.00 = -399.845698630137...
+         round() -> -400 = current qtyB -> delta = 0 -> NO TRADE
+
+  Both legs round back to their existing size (the NAV drift from two bars' worth of
+  carry is too small to move either leg by a full share) — no churn on either leg,
+  so NAV(bar 1) = current_nav computed above, unchanged by any trade:
+
+  NAV(bar 1) = 99961.424657534253...
+
+Expected final values (asserted in test_pairs_backtest.py):
+  equity_curve[0] == 99968.00
+  equity_curve[1] == 99961.424657534253  (within D47's 1e-6 relative tolerance)
+  final_positions == {"A": 400.0, "B": -400.0}
