@@ -100,16 +100,30 @@ none.
       trades in both engines, identical final value $159,233.023491, max curve
       divergence 1.3e-12 relative, divergence table empty**
       (`docs/verification/cross_engine_reconciliation.md`). 218/218 tests green.
-- [ ] Commit Step 8 code + D77–D79 records + the reconciliation doc
+- [x] Commit Step 8 code + D77–D79 records + the reconciliation doc
+- [x] **Step 9 of `VERIFICATION_SCHEME.md` — gate passed.** The analytics layer
+      exists and is honest by construction: `analytics/` (metrics with REQUIRED
+      rf/periods args and geometric rf — D80; VaR/CVaR gated at ≥30 tail
+      observations, so n≥600 at 95% — D81; seeded block-bootstrap MC, n=10k default,
+      seed required — D81; tearsheet that literally prints "insufficient data
+      (n=X, need ≥Y)"). X-gate vs quantstats 0.0.81: EXACT ties on Sharpe (rf=0 and
+      rf=4%), Sortino, max drawdown (D83). D38 reinterpreted (D82): no sector
+      momentum exists to label; the grep-test enforces honest labels on existing
+      strategies and fails on any unregistered new strategy module. 248/248 tests
+      green (30 new).
+- [ ] Commit Step 9 code + D80–D83 records
 
 ## Next (queued, not started)
 
-- [ ] Step 9: analytics honesty — sample-size gating + n≥10k Monte Carlo (D36), beta
-      + rf benchmark (D37), momentum labelling (D38), explicit rf Sharpe (D49), seeds
-      (D34). X-gate: metrics vs quantstats (check pandas 3.0.3 compatibility early —
-      same risk vectorbt just dodged).
+- [ ] Wire `analytics.tearsheet.render_metrics_table` into the v1/v2 results scripts
+      (adds Sharpe/beta/VaR rows to the published docs — its own diff, since it
+      changes committed results artifacts).
 - [ ] Step 11 (cheap, high signal): options stub already exists (D16) — the remaining
       work is the real docs/options_extension.md write-up.
+- [ ] Step 12: validation science — pair selection in walk-forward + multiplicity
+      (D22/D29), regime fitting rule (D28), DSR reproducing the Bailey/de Prado
+      worked example fed by the TrialRegistry (D21/D20), synthetic nulls (D23 —
+      reuses D81's block bootstrap).
 - [ ] Config factories for the real bricks + strategy (D52 convention) so logged
       trials can be re-run from config alone — the sweep logs honest config dicts,
       but the full factory-rebuild loop for these types doesn't exist yet.
@@ -311,3 +325,21 @@ none.
   empty divergence table). Real finding: vectorbt reserves fees from the purchase at
   ~full investment while we charge cash — documented boundary, comparison runs at
   0.6 weight. 218 tests, all green (13 new).
+- **2026-07-14** — **Step 9: analytics honesty.** Greenfield `analytics/` package —
+  no analytics existed at all, so the honesty rules are constructed-in, not
+  retrofitted: `metrics.py` makes rf_annual and periods_per_year REQUIRED args (a
+  default rf=0 is D49's exact target; a default 252 is D17's), adopts quantstats'
+  geometric rf and RMS-downside conventions deliberately so the X-gate demands
+  EXACT agreement rather than explaining deltas (same argument as D79), and states
+  ±inf conventions for zero-variance series; `tail_risk.py` gates VaR/CVaR on ≥30
+  tail observations (n≥600 at 95% — stricter than the gate's 100-bar case, and D36's
+  own 500-point complaint case fails too, tested); `monte_carlo.py` is a seeded
+  block bootstrap (D23's retained tool, Step 12 reuses it), n=10k default, seed
+  required positionally; `tearsheet.py` prints the literal insufficient-data string
+  with the minimum-n arithmetic. quantstats 0.0.81 works on pandas 3.0.3 (fallback
+  unneeded); one quirk documented — its nonzero-rf path needs a DatetimeIndex. D38
+  reinterpreted (D82): no sector momentum strategy exists to label; the grep-test
+  enforces labels on existing strategies and trips on unregistered new modules.
+  max_drawdown relocated engine/sweep → analytics/metrics (pure move, baselines
+  re-run). numpy promoted to an explicit production dependency. 248 tests, all
+  green (30 new).

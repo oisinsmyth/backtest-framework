@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D80**.
+New decisions are added here going forward — next number is **D84**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -91,3 +91,7 @@ written rationale for *why not now*, per R3.
 | [D77](D77-golden-master-scope-instrumentation.md) | THE golden master covers the engine as built; BacktestResult gains fills/cash instrumentation | Committed | Testing |
 | [D78](D78-property-test-conventions.md) | Property-test conventions: derandomized hypothesis, shadow accountant, reset-guarantee reinterpretation | Committed | Testing |
 | [D79](D79-cross-engine-vectorbt.md) | Cross-engine reconciliation via vectorbt target-percent; precomputed-weights design | Committed | Testing |
+| [D80](D80-metrics-conventions.md) | Metrics conventions: required rf/periods args, geometric rf, ±inf on zero variance | Committed | Analytics |
+| [D81](D81-tail-gating-monte-carlo.md) | Tail gating: ≥30 tail observations; Monte Carlo: seeded block bootstrap, n=10k | Committed | Analytics |
+| [D82](D82-d38-label-reinterpretation.md) | D38 reinterpreted: no sector momentum exists; the label convention is enforced on what does | Committed | Analytics |
+| [D83](D83-quantstats-xgate.md) | Step 9's X-gate reference is quantstats; exact ties, one API quirk documented | Committed | Analytics |

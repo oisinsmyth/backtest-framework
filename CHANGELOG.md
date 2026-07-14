@@ -168,6 +168,20 @@ version (likely at the Phase C "first real number" milestone, see
 - Step 8 of `VERIFICATION_SCHEME.md` — gate passed (218/218 tests total, 13 new).
   **The simulator is anchored to references we didn't write** (Phase D milestone,
   `DEVELOPMENT_TIMETABLE.md`).
+- `backtest_framework.analytics` — the analytics layer, honest by construction:
+  `metrics` (Sharpe/Sortino with REQUIRED rf and periods args, geometric rf, stated
+  ±inf conventions; `realised_beta`; `max_drawdown` relocated from `engine.sweep` —
+  D80), `tail_risk` (VaR/CVaR gated on ≥30 tail observations, explicit
+  insufficient-data results — D36/D81), `monte_carlo` (seeded block bootstrap,
+  n=10,000 default, required seed — D34/D81), `tearsheet` (renders the literal
+  "insufficient data (n=X, need ≥Y)" string, rf stated in the Sharpe row, D37's ≈0
+  beta note).
+- Step 9 X-gate: exact agreement with quantstats 0.0.81 on Sharpe (rf=0 and rf=4%),
+  Sortino, and max drawdown (D83). New dev dependency: `quantstats`; `numpy`
+  promoted to an explicit production dependency.
+- D38's label gate reinterpreted (D82): grep-test enforces honest thesis labels on
+  the strategies that exist and fails on unregistered strategy modules.
+- Step 9 of `VERIFICATION_SCHEME.md` — gate passed (248/248 tests total, 30 new).
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

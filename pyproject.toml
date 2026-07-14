@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "numpy>=2.4.6",
     "pandas>=3.0.3",
     "yfinance>=1.5.1",
 ]
@@ -20,6 +21,7 @@ build-backend = "uv_build"
 dev = [
     "hypothesis>=6.156.6",
     "pytest>=9.1.1",
+    "quantstats>=0.0.81",
     "vectorbt>=1.1.0",
 ]
 

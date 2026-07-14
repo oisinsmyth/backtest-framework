@@ -22,6 +22,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable, Mapping, Sequence
 
+from ..analytics.metrics import max_drawdown
 from ..costs.scaling import scaled_cost_stack
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
@@ -30,6 +31,8 @@ from ..registry.trial_registry import TrialRegistry
 from .allocator import Allocator
 from .backtest import BacktestResult, run_backtest
 from .strategy import Strategy
+
+__all__ = ["run_cost_sweep", "render_sweep_table", "max_drawdown", "SweepResult", "SweepRun"]
 
 DEFAULT_MULTIPLIERS = (0.0, 0.5, 1.0, 2.0, 4.0)
 
@@ -52,18 +55,6 @@ class SweepResult:
         """[(multiplier, net P&L)], in the order the sweep ran (ascending multiplier
         if the caller passed them sorted — the default is)."""
         return [(run.multiplier, run.net_pnl(self.starting_cash)) for run in self.runs]
-
-
-def max_drawdown(equity_curve: Sequence[tuple[object, float]]) -> float:
-    """Largest peak-to-trough decline as a positive fraction of the peak. Plain
-    arithmetic on the equity curve — not a Step 9 statistic."""
-    peak = float("-inf")
-    worst = 0.0
-    for _, nav in equity_curve:
-        peak = max(peak, nav)
-        if peak > 0:
-            worst = max(worst, (peak - nav) / peak)
-    return worst
 
 
 def run_cost_sweep(
