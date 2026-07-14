@@ -151,3 +151,73 @@ def test_run_backtest_requires_trial_id_and_config_when_registry_given(tmp_path)
             trial_registry=registry,
             # trial_id and config both omitted
         )
+
+
+def test_enforce_pretrade_rejects_breaching_order_and_keeps_books_reconciled():
+    # D101 (audit F12): with enforcement on, the same breaching order is REJECTED —
+    # never fills, virtual books drop it too (broker and sleeves stay reconciled),
+    # and the violation is recorded with its bar index.
+    bars = [
+        TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0)),
+        TimestampedBar(datetime(2026, 7, 13, 16, 0), _bar(100.0)),
+    ]
+    strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [1.0, 1.0]})
+
+    result = run_backtest(
+        bars_by_instrument={"AAPL": bars},
+        instruments=INSTRUMENTS,
+        strategies=[strategy],
+        cost_stack=CostStack(),
+        allocator=ConstantSplitAllocator(),
+        starting_cash=100_000.0,
+        risk_limits=RiskLimits(max_gross_exposure=50_000.0),
+        enforce_pretrade=True,
+    )
+
+    assert result.final_positions.get("AAPL", 0.0) == 0.0  # nothing filled
+    assert result.final_cash == 100_000.0
+    assert result.fills == [] and result.virtual_fills == []
+    assert result.final_virtual_positions == {}  # sleeves reconciled with broker
+    # Rejected on BOTH bars — the strategy re-attempts and is re-rejected.
+    assert [v.bar_index for v in result.violations] == [0, 1]
+    assert all(v.rule == "max_gross_exposure" for v in result.violations)
+
+
+def test_enforce_pretrade_requires_risk_limits():
+    bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
+    with pytest.raises(ValueError, match="requires risk_limits"):
+        run_backtest(
+            bars_by_instrument={"AAPL": bars},
+            instruments=INSTRUMENTS,
+            strategies=[],
+            cost_stack=CostStack(),
+            allocator=ConstantSplitAllocator(),
+            starting_cash=100_000.0,
+            enforce_pretrade=True,
+        )
+
+
+def test_virtual_fills_are_strategy_tagged_even_when_netting_cancels():
+    # D101 (audit F5): the netting scenario keeps the broker book flat, but the
+    # sleeve-level record must show both strategies' orders — this is the
+    # strategy-tagged fill stream D46 promised.
+    bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
+    strategy_a = ScheduledWeightStrategy(strategy_id="A", weights_by_instrument={"AAPL": [1.0]})
+    strategy_b = ScheduledWeightStrategy(strategy_id="B", weights_by_instrument={"AAPL": [-1.0]})
+
+    result = run_backtest(
+        bars_by_instrument={"AAPL": bars},
+        instruments=INSTRUMENTS,
+        strategies=[strategy_a, strategy_b],
+        cost_stack=COST_STACK,
+        allocator=ConstantSplitAllocator(),
+        starting_cash=100_000.0,
+    )
+
+    assert result.fills == []  # broker saw nothing (netted away)
+    assert len(result.virtual_fills) == 2
+    by_strategy = {sid: qty for _, sid, _, qty, _ in result.virtual_fills}
+    assert by_strategy["A"] == 500.0 and by_strategy["B"] == -500.0  # 50k each @ 100
+    assert result.final_virtual_positions == {("A", "AAPL"): 500.0, ("B", "AAPL"): -500.0}
+    # Sleeve books sum to the broker book exactly.
+    assert sum(result.final_virtual_positions.values()) == result.final_positions.get("AAPL", 0.0)

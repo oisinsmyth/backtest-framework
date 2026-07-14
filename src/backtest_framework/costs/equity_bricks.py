@@ -18,7 +18,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Mapping
+from typing import ClassVar, Mapping
 
 from ..instruments.base import Instrument
 from ..simulator.carry import DEFAULT_DAY_COUNT, accrue_carry_between_bars
@@ -125,6 +125,10 @@ class DividendFlow:
     dividends_by_symbol: Mapping[str, tuple[tuple[datetime, float], ...]]
     """Per symbol: (ex-date, dividend per share), raw amounts."""
 
+    component: ClassVar[str] = "dividend"
+    """Carry component this brick models (D100): only applied to instruments whose
+    carry_components() declares it."""
+
     def flow(
         self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
     ) -> float:
@@ -152,6 +156,10 @@ class BorrowFee:
 
     annual_rate: float = 0.0025
     day_count: float = DEFAULT_DAY_COUNT
+
+    component: ClassVar[str] = "borrow"
+    """Carry component this brick models (D100): only applied to instruments whose
+    carry_components() declares it."""
 
     def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
         short_notional = max(-base_amount, 0.0)

@@ -36,9 +36,21 @@ class CostStack:
     def trade_cost(self, instrument: Instrument, quantity: float, price: float) -> float:
         return sum(brick.cost(instrument, quantity, price) for brick in self.trade_bricks)
 
-    def carry_cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
+    def carry_cost(
+        self,
+        base_amount: float,
+        prev_timestamp: datetime,
+        curr_timestamp: datetime,
+        components: tuple[str, ...] | None = None,
+    ) -> float:
+        """Per-leg carry. When `components` is given (the engine passes the held
+        instrument's `carry_components()`, D100), bricks declaring a `component`
+        outside that set are skipped — an instrument declaring no borrow exposure
+        is not charged borrow. Bricks declaring no `component` always apply."""
         return sum(
-            brick.cost(base_amount, prev_timestamp, curr_timestamp) for brick in self.carry_bricks
+            brick.cost(base_amount, prev_timestamp, curr_timestamp)
+            for brick in self.carry_bricks
+            if _applies(brick, components)
         )
 
     def portfolio_carry_cost(
@@ -52,7 +64,18 @@ class CostStack:
     def event_flow(
         self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
     ) -> float:
+        components = instrument.carry_components()
         return sum(
             brick.flow(instrument, quantity, prev_timestamp, curr_timestamp)
             for brick in self.event_flow_bricks
+            if _applies(brick, components)
         )
+
+
+def _applies(brick: object, components: tuple[str, ...] | None) -> bool:
+    """D100 (audit F24): a brick that declares which carry component it models is
+    consulted against the instrument's own carry_components() declaration; a brick
+    declaring none is generic and always applies. `components=None` means the caller
+    supplied no instrument context — apply everything (pre-D100 behaviour)."""
+    component = getattr(brick, "component", None)
+    return component is None or components is None or component in components

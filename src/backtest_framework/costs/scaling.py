@@ -32,6 +32,12 @@ class _ScaledCarryBrick:
     inner: CarryCostBrick
     multiplier: float
 
+    @property
+    def component(self) -> str | None:
+        # Forward the inner brick's carry-component declaration (D100) so a scaled
+        # stack filters per-instrument exactly like the unscaled one.
+        return getattr(self.inner, "component", None)
+
     def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
         return self.multiplier * self.inner.cost(base_amount, prev_timestamp, curr_timestamp)
 

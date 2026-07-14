@@ -69,6 +69,12 @@ class _RecordingCarryBrick:
     inner: object
     ledger: CostLedger
 
+    @property
+    def component(self) -> str | None:
+        # Forward the inner brick's carry-component declaration (D100) so a
+        # recording stack filters per-instrument exactly like the plain one.
+        return getattr(self.inner, "component", None)
+
     def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
         amount = self.inner.cost(base_amount, prev_timestamp, curr_timestamp)
         self.ledger.record(type(self.inner).__name__, amount)

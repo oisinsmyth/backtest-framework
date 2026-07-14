@@ -28,7 +28,7 @@ from ..costs.stack import CostStack
 from ..data.alignment import align_bars
 from ..data.bars import TimestampedBar
 from ..instruments.base import Instrument
-from ..pipeline.sizing import Sizer, TargetWeight, apply_virtual_orders, net_orders
+from ..pipeline.sizing import Order, Sizer, TargetWeight, apply_virtual_orders, net_orders
 from ..registry.trial_registry import TrialRegistry
 from .allocator import Allocator
 from .dataview import DataView, build_data_view
@@ -49,6 +49,16 @@ class BacktestResult:
     D40 invariants reconcile against positions."""
     cash_curve: list[tuple[datetime, float]] = field(default_factory=list)
     """(timestamp, cash) at each bar close, after all carry/flows/fills (D77)."""
+    virtual_fills: list[tuple[datetime, str, str, float, float]] = field(default_factory=list)
+    """(timestamp, strategy_id, instrument_id, signed quantity, price) per
+    strategy-level virtual order (D46/D101): each strategy's own order as if filled
+    in full at that bar's price, regardless of netting — the strategy-tagged fill
+    stream sleeve-level attribution is built from. Trade costs are charged on the
+    NETTED broker fills only (D27) and are deliberately not attributed here."""
+    final_virtual_positions: dict[tuple[str, str], float] = field(default_factory=dict)
+    """(strategy_id, instrument_id) -> quantity: each strategy's virtual book at the
+    end of the run (D46/D101). Sums across strategies to final_positions exactly
+    when no orders were rejected."""
 
     @property
     def final_nav(self) -> float:
@@ -91,6 +101,7 @@ def run_backtest(
     allocator: Allocator,
     starting_cash: float,
     risk_limits: RiskLimits | None = None,
+    enforce_pretrade: bool = False,
     trial_registry: TrialRegistry | None = None,
     trial_id: str | None = None,
     config: dict | None = None,
@@ -103,12 +114,20 @@ def run_backtest(
     carry, NAV all use it, per D6). `view_bars_by_instrument`, when given, is what
     strategies see instead (e.g. split-adjusted for signal continuity, D75); it must
     cover every aligned execution timestamp. `splits_by_instrument` scales broker and
-    virtual positions on ex-dates (D75)."""
+    virtual positions on ex-dates (D75).
+
+    `enforce_pretrade=True` (D101, off by default) runs RiskMonitor.pretrade_check
+    on each netted order before it fills: a rejected order does not execute, the
+    corresponding strategies' virtual orders for that instrument are dropped too
+    (so virtual books stay reconciled with the broker book and the strategies
+    re-attempt next bar), and the violation is recorded. Requires `risk_limits`."""
     if trial_registry is not None and (trial_id is None or config is None):
         raise ValueError(
             "trial_registry was given but trial_id and/or config was not — "
             "pass both, or omit trial_registry if you don't want this run logged."
         )
+    if enforce_pretrade and risk_limits is None:
+        raise ValueError("enforce_pretrade=True requires risk_limits — there is no gate without limits (D101)")
 
     aligned = align_bars(bars_by_instrument)  # D45
     if not aligned:
@@ -196,7 +215,12 @@ def run_backtest(
                     # Carry base is split-invariant (qty x price is the same notional in
                     # either frame), so the post-split snapshot is correct here.
                     base_amount = quantity * prices[instrument_id]
-                    carry = cost_stack.carry_cost(base_amount, prev_timestamp, ab.timestamp)
+                    carry = cost_stack.carry_cost(
+                        base_amount,
+                        prev_timestamp,
+                        ab.timestamp,
+                        components=instruments[instrument_id].carry_components(),  # D100
+                    )
                     portfolio.accrue_carry(carry)
                     flow = _event_flow_with_splits(
                         cost_stack,
@@ -240,7 +264,40 @@ def run_backtest(
             instruments=instruments,
         )
         external_orders = net_orders(virtual_orders)
+
+        # 4b. Optional pre-trade gate (D101, audit F12): reject a netted order that
+        #     would breach limits BEFORE it fills. The rejected instrument's virtual
+        #     orders are dropped too, so virtual books stay reconciled with the
+        #     broker book and the strategies simply re-attempt next bar.
+        if enforce_pretrade and risk_monitor is not None and external_orders:
+            simulated = dict(portfolio.positions)
+            approved: dict[str, Order] = {}
+            for instrument_id, order in external_orders.items():
+                violation = risk_monitor.pretrade_check(
+                    simulated, prices, instruments, instrument_id, order.quantity
+                )
+                if violation is None:
+                    approved[instrument_id] = order
+                    simulated[instrument_id] = simulated.get(instrument_id, 0.0) + order.quantity
+                else:
+                    result.violations.append(
+                        RiskViolation(
+                            rule=violation.rule,
+                            limit=violation.limit,
+                            observed=violation.observed,
+                            bar_index=i,
+                        )
+                    )
+                    virtual_orders = {
+                        key: vo for key, vo in virtual_orders.items() if key[1] != instrument_id
+                    }
+            external_orders = approved
+
         virtual_positions = apply_virtual_orders(virtual_positions, virtual_orders)
+        for (strategy_id, instrument_id), order in virtual_orders.items():
+            result.virtual_fills.append(
+                (ab.timestamp, strategy_id, instrument_id, order.quantity, prices[instrument_id])
+            )
 
         # 5. Apply every netted (broker-facing) fill with its trade cost.
         for instrument_id, order in external_orders.items():
@@ -264,6 +321,7 @@ def run_backtest(
 
     result.final_positions = dict(portfolio.positions)
     result.final_cash = portfolio.cash
+    result.final_virtual_positions = dict(virtual_positions)
 
     if trial_registry is not None:
         metrics = {
