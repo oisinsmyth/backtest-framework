@@ -44,6 +44,9 @@ ANCHORS = [
     ("-1.61", DOCS / "results" / "gross_exposure_study.md"),
     ("0.866%", DOCS / "results" / "gross_exposure_study.md"),
     ("+1.03%", DOCS / "results" / "gross_exposure_study.md"),
+    # convention sensitivity (D105)
+    ("+16.79%", DOCS / "results" / "convention_sensitivity.md"),
+    ("-7.90%", DOCS / "results" / "convention_sensitivity.md"),
     # cross-engine reconciliation
     ("1,370", DOCS / "verification" / "cross_engine_reconciliation.md"),
     ("159,233.023491", DOCS / "verification" / "cross_engine_reconciliation.md"),

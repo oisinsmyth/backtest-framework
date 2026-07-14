@@ -50,7 +50,10 @@ Block bootstrap (n=10,000, block=20, seed=0 — D34/D36):
 - Observed stitched Sharpe (daily, rf 4%): -0.0616
   over T = 2,205 OOS bars; skew 0.41,
   kurtosis 13.51.
-- **DSR = 0.0000** — N and V pulled from this study's TrialRegistry.
+- **DSR = 0.0000** — N and V pulled from this study's TrialRegistry:
+  N = 35 one-per-window 1×-cost trials (scaled-cost
+  re-runs are sensitivity points, not extra trials — D98); V in daily units,
+  matching the observed SR.
 - **Program-level multiplicity (D90, extended):** the research program has now run
   two studies of 175 logged trials each, every window scoring
   1,596 candidates. Registry-N per study understates

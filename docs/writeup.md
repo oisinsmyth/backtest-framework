@@ -68,11 +68,21 @@ the trustworthiness of the measurement *is* the product.
   universe and reported zero); validation gates quarantine data rather than
   papering over it.
 - **Every trial is logged, append-only.** A SQLite registry records every
-  (config, window, cost-multiplier) run under a deterministic hash — 1,890
-  trials across the five studies — and the Deflated Sharpe Ratio pulls its
-  trial count N and variance V from the registry, never from a typed-in
-  number. Our DSR implementation reproduces the Bailey–López de Prado worked
-  example (N=46 → 0.9505; N=100 → 0.9004).
+  (config, window, cost-multiplier) run under a deterministic hash — 2,170
+  trials across the six study artifacts — and the Deflated Sharpe Ratio pulls
+  its trial count N and variance V from the registry, never from a typed-in
+  number: N counts each study's one-per-window real-cost trials (a
+  cost-multiplier re-run is a sensitivity point, not an extra trial) and V is
+  in the same per-period units as the observed Sharpe (D98). Our DSR
+  implementation reproduces the Bailey–López de Prado worked example
+  (N=46 → 0.9505; N=100 → 0.9004).
+- **The result survives its own conventions.** Same-bar-close fills and
+  full-sample impact calibration are the two optimistic conventions the
+  studies inherit; re-running the strongest configuration (v2) with
+  next-bar-open fills and train-window calibration retains most of the gross
+  edge (+16.79% vs +19.03% at 0×) and deepens the real-cost loss slightly
+  (-7.90% vs -6.43% at 1×) — the headline conclusion is not a fill-timing
+  artifact ([artifact](results/convention_sensitivity.md), D103/D105).
 - **One variable per study version.** Each study changes exactly one thing and
   holds everything else byte-identical (`None`-default hooks in the study
   runner preserve prior behavior exactly; the β=1 special case of study 3's
@@ -194,7 +204,8 @@ pay for its own implementation; it cannot pay for the capital it occupies.
 ## 7. Statistical honesty
 
 Every study's real-cost Deflated Sharpe Ratio is 0.0000, with N and V pulled
-from the trial registry (1,890 logged trials program-wide). Beyond the
+from the trial registry (2,170 logged trials program-wide; per-study N counts
+one real-cost trial per window in daily units, D98). Beyond the
 registry count, each window scores 1,596 candidate pairs, and the program has
 now run five studies on the same snapshot — so even the registry-fed DSR is
 optimistic, and we treat it as one-directional: DSR < 0.95 means "no
@@ -208,8 +219,11 @@ non-specialist reader through DSR intuition.]`
 
 - **Single data source** (yfinance), validated but not cross-checked against a
   second provider.
-- **Full-sample σ/ADV calibration** for the impact brick — a mild look-ahead in
-  cost parameters, never in signal; per-window calibration is future work.
+- **Full-sample σ/ADV calibration** in the v1–v3/capacity/gross artifacts — a
+  mild look-ahead in cost parameters, never in signal. Now measured rather than
+  assumed: per-window train-slice calibration (D102) moves the v2 real-cost
+  result by ~0.15pp ([artifact](results/convention_sensitivity.md)) —
+  immaterial to every conclusion.
 - **No interest on idle cash.** Material for the low-gross studies: a ≤100%
   gross book is mostly idle cash, so real absolute returns would sit closer to
   the risk-free rate — but that return belongs to rf, not to the strategy; the

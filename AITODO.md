@@ -225,12 +225,27 @@ none.
 - [ ] **Reviewer outreach** (timetable: parallel task, human-led) — QuantNet/
       Wilmott, LinkedIn, meetups; the writeup attaches as-is since its numbers
       are final.
-- [ ] Study candidates if research resumes: per-window σ/ADV calibration
-      (closes D66); parameter sensitivity (every variant logged → honest DSR);
-      an idle-cash interest brick (the material cost-model gap the gross sweep
-      exposed).
+- [ ] Study candidates if research resumes: parameter sensitivity (every
+      variant logged → honest DSR); an idle-cash interest brick (the material
+      cost-model gap the gross sweep exposed).
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
-- [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
+- [x] Config factories for real bricks + strategy (D52) for full re-run-from-config
+      — done as D102 (audit remediation): the study stack is config-built, the
+      trial config covers every determining field, and `StudyConfig.from_dict`
+      closes the study-level reproducibility loop.
+- [x] Per-window σ/ADV calibration (closes D66's deferral) — done as D102
+      (`impact_calibration="train_window"`); priced against full-sample in the
+      convention-sensitivity artifact (D105).
+- [x] **Audit remediation (AUDIT_REPORT.md, all 31 findings dispositioned).**
+      Fixed: DSR units + trial pool (D98 — the one result-corrupting finding),
+      duplicate/empty/grid/event-ordering guards (D99), carry_components
+      enforcement (D100), pretrade gate + sleeve fills (D101), declarative stack
+      config + train-window calibration (D102), next-open fill mode (D103),
+      property-suite scope (D104), convention-sensitivity study (D105), plus the
+      hygiene sweep (mypy clean, doc rot, dead code). Pinned-not-changed: share
+      rounding, carry mark timing, MC block length (D106). Deferred with written
+      rationale per R3: margin lock, stop/limit fill menu, FX brick, IS/OOS
+      ratio, registry artifact policy (D107).
 
 ## Watch list additions
 

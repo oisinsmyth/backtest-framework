@@ -10,6 +10,47 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (audit remediation, 2026-07-14 — see AUDIT_REPORT.md and D98–D107)
+- **DSR wiring (D98, the audit's one result-corrupting finding):** per-window Sharpes are
+  now logged in daily (per-period) units matching the observed SR — the old code logged
+  annualized values under the same name, inflating SR0 by √252 and forcing DSR toward 0
+  regardless of the strategy; the trial pool is the study's 1×-cost rows only, undefined
+  window Sharpes are omitted (loud at 1×), and capacity/gross levels skip the per-level
+  DSR entirely (`compute_dsr=False`).
+- **Silent failure modes made loud (D99):** duplicate bar timestamps raise in `align_bars`
+  and hard-quarantine in the validator (was last-wins collapse); zero-overlap alignment
+  raises in `run_backtest` (was a silently-empty result at starting cash); the pairs study
+  asserts per-symbol bar grids match the aligned universe; dividends in a gap containing a
+  split now pay on the share count held on their ex-date; cleaner volume indexing is
+  bounds-guarded.
+- Doc rot: validator docstring matched to its actual thresholds and the real XOP split
+  date; strategy-module Kalman promise removed (cut per D97); loader duplication collapsed;
+  `hello()` scaffolding removed; mypy 7 → 0 across `src/`.
+
+### Added (audit remediation)
+- `config/cost_stack.py` (D102) — the study's real cost stack is built from the same
+  declarative dict logged to the TrialRegistry; `StudyConfig.to_dict()` covers every
+  determining field (starting_cash and multipliers were missing) and `from_dict()` closes
+  the study-level reproducibility loop, tested end to end.
+- `StudyConfig.impact_calibration="train_window"` (D102) — per-window σ/ADV estimation from
+  the train slice only (D44-compliant), alongside the documented full-sample default.
+- `run_backtest(fill_timing="next_open")` (D103) — decisions fill at the next bar's open;
+  hand-computed golden + property invariants; default "close" preserves every baseline.
+- `run_backtest(enforce_pretrade=True)` (D101) — the previously-unwired pre-trade gate
+  rejects breaching netted orders and rolls back the instrument's virtual orders.
+- `BacktestResult.virtual_fills` / `final_virtual_positions` (D101) — D46's strategy-tagged
+  fill stream at the result surface.
+- Carry/event bricks declare their carry component and the engine consults
+  `Instrument.carry_components()` (D100) — no behaviour change for equities.
+- `deflated_sharpe_from_trials(include=...)` predicate with a stated units contract (D98).
+- Property suite: signed positions, real OHLC bars, unconditional commission/carry shadow
+  accountants, next-open invariants (D104).
+- `scripts/run_convention_sensitivity.py` → `docs/results/convention_sensitivity.md`
+  (D105) — the v2 configuration across {close, next-open} × {full-sample, train-window}.
+- Conventions pinned by test/record: round-half-even share rounding, current-close carry
+  marks, MC block length rationale (D106); written R3 deferrals for the margin lock,
+  stop/limit fill menu, FX brick, IS/OOS ratio, and registry artifact policy (D107).
+
 ### Added
 - Full documentation suite: per-decision ADR records under `docs/decisions/`, standing rules
   in `docs/RULES.md`, this changelog, `AITODO.md`, top-level `README.md`, `.gitignore`.

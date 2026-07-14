@@ -54,8 +54,11 @@ Block bootstrap (n=10,000, block=20, seed=0 — D34/D36):
 - Observed stitched Sharpe (daily, rf 4%): -0.1908
   over T = 2,205 OOS bars; skew -0.07,
   kurtosis 30.13.
-- **DSR = 0.0000** — N and V[{SRn}] pulled from this study's TrialRegistry
-  (175 logged backtests), never typed in.
+- **DSR = 0.0000** — N and V[{SRn}] pulled from this study's TrialRegistry,
+  never typed in. N = 35 one-per-window 1×-cost trials
+  (a window re-run at a scaled cost multiplier is a sensitivity point, not an extra
+  trial — D98); V is in daily units, matching the observed SR. All
+  175 logged backtests stay in the registry.
 - **Multiplicity caveat (D90):** registry-N counts logged backtests, but each window
   *scored 1,596 candidate pairs* to pick its top
   5 — selection breadth the registry-N does not capture, so even this

@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D98**.
+New decisions are added here going forward — next number is **D108**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -109,3 +109,13 @@ written rationale for *why not now*, per R3.
 | [D95](D95-capacity-analysis-methodology.md) | Capacity analysis: direct AUM sweep with size-aware bricks, recorder-wrapper attribution | Committed | Validation & research integrity |
 | [D96](D96-gross-exposure-study.md) | Gross exposure study: leg_weight as the single variable, the margin threshold as the mechanism | Committed | Validation & research integrity |
 | [D97](D97-phase-g-writeup-structure.md) | Phase G writeup: methodology-first structure, skeleton-with-real-numbers, anchor-tested consistency | Committed | Validation & research integrity |
+| [D98](D98-dsr-units-and-trial-pool.md) | DSR units contract and trial-pool semantics (audit F1/F8/F9) | Committed | Validation & research integrity |
+| [D99](D99-loud-guards-duplicates-empty-runs-event-ordering.md) | Loud guards: duplicate timestamps, empty runs, grid drift, event ordering (audit) | Committed | Data layer |
+| [D100](D100-carry-components-consulted.md) | carry_components() is consulted, not decorative (audit F24) | Committed | Instruments |
+| [D101](D101-pretrade-enforcement-and-sleeve-instrumentation.md) | Opt-in pre-trade enforcement; sleeve-level fill instrumentation (audit F5/F12) | Committed | Portfolio layer |
+| [D102](D102-declarative-stack-config-and-train-window-calibration.md) | Declarative config for the real cost stack; train-window impact calibration (audit F2/F4) | Committed | Backtest engine |
+| [D103](D103-fill-timing-next-open.md) | Fill timing: next-bar-open mode alongside same-bar-close (audit F3) | Committed | Execution / fill logic |
+| [D104](D104-property-suite-scope-extension.md) | Property-suite scope: signed positions, real OHLC bars, unconditional accountants (audit F14) | Committed | Testing |
+| [D105](D105-convention-sensitivity-study.md) | Convention-sensitivity study: fill timing x impact calibration on the v2 configuration | Committed | Validation & research integrity |
+| [D106](D106-conventions-pinned.md) | Conventions pinned: share rounding, carry mark timing, bootstrap block length (audit) | Committed | Backtest engine |
+| [D107](D107-deferrals-recorded.md) | Deferrals recorded per R3: margin lock, fill menu, FX brick, IS/OOS ratio, registry artifacts | Committed / Deferred | Scope & sequencing |
