@@ -147,7 +147,12 @@ def run_pairs_study(
     snapshot_id: str,
     config: StudyConfig = StudyConfig(),
     trial_id_prefix: str = "pairs-study-v1",
+    selector=None,
 ) -> StudyResult:
+    """`selector`, when given, replaces the default Gatev top-N selection (D92): any
+    callable `(views, top_n) -> PairSelection`. None preserves study v1's behavior
+    exactly — v1 stays byte-reproducible. If the selector exposes `.name` /
+    `.last_details`, they're logged into each trial's config."""
     if 1.0 not in config.multipliers:
         raise ValueError("multipliers must include 1.0 — the tearsheet and DSR are computed at real costs")
 
@@ -173,8 +178,12 @@ def run_pairs_study(
     curves = {m: StitchedCurve(multiplier=m) for m in config.multipliers}
     capital = {m: config.starting_cash for m in config.multipliers}
 
+    select = selector if selector is not None else select_pairs
+    selector_name = getattr(selector, "name", "gatev_top_n")
+
     for window in windows:
-        selection = select_pairs(window.train_views, top_n=config.top_n)
+        selection = select(window.train_views, config.top_n)
+        selection_details = list(getattr(selector, "last_details", []) or [])
         n_tested = selection.n_pairs_tested
         selected_by_window.append((window.index, selection.ranked_pairs))
         legs = sorted({s for pair in selection.ranked_pairs for s in pair})
@@ -230,6 +239,8 @@ def run_pairs_study(
             registry.add_trial(
                 trial_id=f"{trial_id_prefix}-{m}x-w{window.index:02d}",
                 config={**config.to_dict(), "cost_multiplier": m, "window": window.index,
+                        "selector": selector_name,
+                        "selection_details": selection_details,
                         "pairs": [list(p) for p in selection.ranked_pairs]},
                 params={"n_pairs_tested": selection.n_pairs_tested},
                 metrics={

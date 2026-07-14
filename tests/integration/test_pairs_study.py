@@ -134,6 +134,35 @@ def test_tearsheet_renders_with_benchmark(study):
     assert "seed=7" in sheet
 
 
+def test_study_accepts_a_custom_selector_and_logs_its_details(tmp_path):
+    # Study v2's hook (D92): a selector callable replaces Gatev top-N; its name and
+    # per-pair details land in every trial's config. v1's default path is untouched
+    # (the module-scoped `study` fixture above runs with selector=None).
+    from backtest_framework.research.cointegration import CointegrationSelector
+
+    bars, volumes = _synthetic_universe()
+    registry = TrialRegistry(tmp_path / "trials.sqlite")
+    selector = CointegrationSelector(gatev_prefilter=15, beta_window=(0.7, 1.3))
+
+    result = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol=volumes,
+        actions=CorporateActions(),
+        registry=registry,
+        snapshot_id="synthetic-universe-v2",
+        config=CONFIG,
+        trial_id_prefix="test-study-v2",
+        selector=selector,
+    )
+
+    assert result.n_windows == 5
+    trial = registry.get_trial("test-study-v2-1.0x-w00")
+    assert trial.config["selector"] == "gatev_prefilter->engle_granger->adf_rank"
+    assert trial.params["n_pairs_tested"] == 45  # still the FULL C(10,2) count
+    for detail in trial.config["selection_details"]:
+        assert 0.7 <= detail["beta"] <= 1.3  # the coherence filter held
+
+
 def test_bounded_run_on_the_real_universe_fixture(tmp_path):
     # The real data path, bounded to ~2 windows so the suite stays fast: slice the
     # committed fixture's first 500 bars and run one multiplier pair.

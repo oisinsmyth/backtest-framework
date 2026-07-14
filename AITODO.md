@@ -150,18 +150,28 @@ none.
       registry → analytics → walk-forward/DSR → a mini end-to-end study; all
       extracted and exec'd verbatim by `tests/integration/test_tutorial.py`, so the
       tutorial fails CI instead of rotting. Linked from README.
-- [ ] Commit the tutorial + D91
+- [x] Commit the tutorial + D91
+- [x] **Study v2: cointegration-filtered selection — the filter works, the
+      conclusion holds (D92/D93).** One variable changed from v1 (selection: Gatev
+      prefilter → EG β with [0.7,1.3] coherence window → ADF rank; β logged, not
+      traded). Own 40-line ADF statistic tied to statsmodels at 1e-9 (dev-dep
+      X-anchor). **Result (`docs/results/pairs_study_v2.md`): gross +3.45% → +19.03%
+      — a real selection edge; PROFITABLE at 0.5× costs (+5.70%); still −6.43% at
+      full retail costs; DSR = 0.0000.** The cleanest possible evidence for the
+      "edge exists but doesn't clear retail frictions" thesis — v2 turned the
+      writeup's central claim from assertion into measurement. 281/281 tests (8 new).
+- [ ] Commit study v2 + D92/D93
 
 ## Next (queued, not started) — Phase G research proper
 
-- [ ] **Study v2 candidates** (each a new study version, framework untouched):
-      cointegration-filtered selection (Engle-Granger on train windows), per-window
-      σ/ADV calibration (closes the D66 caveat), parameter sensitivity across
-      lookback/entry/exit (every variant logged → registry-N grows → honest DSR),
-      the "clears costs at £X AUM" capacity analysis from the sweep slope.
-- [ ] The Phase G writeup skeleton — methodology, negative results included; this
-      study v1 artifact is its first exhibit. Reviewer outreach runs in parallel
-      per the timetable.
+- [ ] **Study v3 candidates**: β-hedged trading (the logged βs are waiting — needs a
+      hedge-ratio-aware strategy, discussed vs framework freeze in D92); per-window
+      σ/ADV calibration (closes D66); parameter sensitivity (every variant logged →
+      honest DSR); **the capacity analysis** — v2's cost-sweep slope now supports
+      the "clears at £X AUM" calculation directly (profitable at 0.5×, the
+      commission minimums and impact terms shrink with size).
+- [ ] The Phase G writeup skeleton — v1 and v2 are its first two exhibits, and the
+      v1→v2 delta is its methodology showcase. Reviewer outreach in parallel.
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
 - [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
 

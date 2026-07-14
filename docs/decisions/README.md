@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D92**.
+New decisions are added here going forward — next number is **D94**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -103,3 +103,5 @@ written rationale for *why not now*, per R3.
 | [D89](D89-pairs-study-runner-design.md) | Study runner design: one multi-strategy run per window, warm-up prefix, chaining, research boundary | Committed | Validation & research integrity |
 | [D90](D90-study-dsr-methodology.md) | Study DSR methodology: registry-fed N and V; pair-level multiplicity as an explicit optimism caveat | Committed | Validation & research integrity |
 | [D91](D91-executable-tutorial.md) | The tutorial's code is executed by the test suite, not merely written | Committed | Testing |
+| [D92](D92-cointegration-selection-v2.md) | Study v2 selection: Gatev prefilter → EG β coherence window → ADF rank; one variable per version | Committed | Validation & research integrity |
+| [D93](D93-adf-implementation.md) | Own ADF implementation, statistic only, anchored against statsmodels | Committed | Validation & research integrity |

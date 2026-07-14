@@ -222,6 +222,16 @@ version (likely at the Phase C "first real number" milestone, see
 - `docs/TUTORIAL.md` — the start-to-output usage guide; every `# runnable` example
   block is executed verbatim by `tests/integration/test_tutorial.py` (D91), so the
   tutorial breaks CI rather than rotting. Linked from README. (275/275 tests.)
+- `research/cointegration.py` — Engle-Granger β + residuals, ADF t-statistic
+  (statistic only, rank-don't-threshold per D29; tied to statsmodels at 1e-9 as a
+  dev-dep X-anchor, D93), and `CointegrationSelector` (Gatev prefilter → β coherence
+  window → ADF rank, D92). `run_pairs_study` gains an optional `selector` (v1
+  default preserved). New dev dependency: `statsmodels`.
+- **`docs/results/pairs_study_v2.md` — study v2**: selection is the only change from
+  v1; gross +3.45% → **+19.03%**, profitable at 0.5× costs (+5.70%), still −6.43%
+  at full retail costs, DSR = 0.0000 with the program-level multiplicity note. The
+  "edge exists but doesn't clear retail frictions" thesis, measured. (281/281
+  tests, 8 new.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data
