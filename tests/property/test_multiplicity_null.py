@@ -95,8 +95,8 @@ def test_multiplicity_top_n_on_pure_noise_has_no_oos_edge(tmp_path):
     # The gate can't pass vacuously: the selected pairs really traded OOS.
     assert total_fills > 20
 
-    # OOS edge ~ 0 within CI: 20 pair-returns, mean within 2.5 standard errors of 0,
-    # plus an absolute sanity bound.
+    # OOS edge ~ 0 within CI: 30 pair-returns (3 seeds x top 10), mean within 2.5
+    # standard errors of 0, plus an absolute sanity bound.
     mean = float(np.mean(oos_returns))
     stderr = float(np.std(oos_returns, ddof=1)) / math.sqrt(len(oos_returns))
     assert abs(mean) <= 2.5 * stderr, f"selected noise pairs 'found' OOS edge: {mean:+.4%} ± {stderr:.4%}"

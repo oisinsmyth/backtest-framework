@@ -9,8 +9,9 @@ one-entry mapping.
 
 This module doesn't implement any real trading idea; ScheduledWeightStrategy exists
 only so run_backtest is testable without one, the same role Step 3's toy cost bricks
-played for CostStack. The actual pairs strategy (Gatev distance -> cointegration ->
-Kalman) is Phase G work.
+played for CostStack. The real strategies live in strategies/ (z-score pairs, D69)
+and research/ (the Phase G study strategies; the originally planned Kalman stage was
+cut on study-v3 evidence, D97).
 """
 
 from __future__ import annotations

@@ -28,8 +28,8 @@ _COLUMNS = ["timestamp", "symbol", "open", "high", "low", "close", "volume"]
 
 def _open_text(path: Path, mode: str):
     """Transparent gzip (D88): a '.gz' suffix means the fixture is compressed —
-    broad-universe fixtures are ~17MB raw, ~4MB gzipped, and the repo commits the
-    compressed form. Everything else about the format is identical."""
+    the 57-ETF universe fixture is ~17MB raw, ~2.5MB gzipped, and the repo commits
+    the compressed form. Everything else about the format is identical."""
     if path.suffix == ".gz":
         return gzip.open(path, mode + "t", encoding="utf-8", newline="")
     return open(path, mode, encoding="utf-8", newline="")
@@ -91,25 +91,7 @@ def load_fixture_csv_with_volumes(
 
 
 def load_fixture_csv(path: str | Path) -> dict[str, list[TimestampedBar]]:
-    path = Path(path)
-    bars_by_symbol: dict[str, list[TimestampedBar]] = {}
-    with _open_text(path, "r") as f:
-        reader = csv.DictReader(f)
-        if reader.fieldnames is None or reader.fieldnames[: len(_COLUMNS)] != _COLUMNS:
-            raise ValueError(
-                f"fixture {path} does not have the expected columns {_COLUMNS}, got {reader.fieldnames}"
-            )
-        for row in reader:
-            tb = TimestampedBar(
-                timestamp=datetime.fromisoformat(row["timestamp"]).replace(tzinfo=None),
-                bar=Bar(
-                    open=float(row["open"]),
-                    high=float(row["high"]),
-                    low=float(row["low"]),
-                    close=float(row["close"]),
-                ),
-            )
-            bars_by_symbol.setdefault(row["symbol"], []).append(tb)
-    for series in bars_by_symbol.values():
-        series.sort(key=lambda tb: tb.timestamp)
+    """Bars only — delegates to the full loader and drops volumes (audit F21: the
+    two loaders used to duplicate the whole parse loop)."""
+    bars_by_symbol, _ = load_fixture_csv_with_volumes(path)
     return bars_by_symbol

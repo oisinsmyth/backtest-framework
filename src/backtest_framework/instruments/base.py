@@ -15,7 +15,12 @@ from typing import Protocol, runtime_checkable
 
 @runtime_checkable
 class Instrument(Protocol):
-    quote_currency: str
+    @property
+    def quote_currency(self) -> str:
+        """Read-only by declaration: every concrete instrument is a frozen
+        dataclass, and a settable protocol attribute would mark them all
+        non-conforming (audit F20)."""
+        ...
 
     def notional(self, quantity: float, price: float) -> float:
         """Market value of `quantity` units at `price`, in quote_currency."""

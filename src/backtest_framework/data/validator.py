@@ -7,9 +7,11 @@ WARNINGS (D26 calls them "volume anomaly flags") are recorded in the snapshot's
 metadata without blocking.
 
 The bar-to-bar move check is split-aware: a raw price series legitimately jumps ~4x
-on a reverse-split ex-date (XOP, 2020-06-22, in our own data). The splits table is
-consulted before crying foul — an unexplained >25% close-to-close move is a hard
-violation; the same move on a split date, scaled by the split ratio, is expected.
+on a reverse-split ex-date (XOP, 2020-03-30, in our own data — D75). The splits table
+is consulted before crying foul; after split adjustment, an unexplained move in
+25-60% is a WARNING and only >60% is a hard quarantine (thresholds calibrated to
+observed genuine data, D74 — a 25% hard threshold would have quarantined the real
+2020 COVID crash days).
 
 Second-source cross-checking stays deferred, per D26's own scoping.
 """

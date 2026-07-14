@@ -23,7 +23,7 @@ from typing import Callable, Mapping, Sequence
 from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions
 from ..registry.trial_registry import TrialRegistry
-from .capacity import CapacityResult, run_capacity_study
+from .capacity import CapacityLevel, CapacityResult, run_capacity_study
 from .pairs_study import StudyConfig
 
 
@@ -72,7 +72,7 @@ def run_gross_sweep(
     return GrossSweepResult(by_leg_weight=by_leg_weight, config=config, snapshot_id=snapshot_id)
 
 
-def _matrix(result: GrossSweepResult, cell: Callable[[object], float], fmt: str) -> str:
+def _matrix(result: GrossSweepResult, cell: Callable[[CapacityLevel], float], fmt: str) -> str:
     lws = result.leg_weights
     header = " | ".join(f"lw {lw:g} (gross {2 * lw:.0%})" for lw in lws)
     lines = [f"| AUM | {header} |", "|---|" + "---|" * len(lws)]

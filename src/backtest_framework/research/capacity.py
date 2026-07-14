@@ -26,6 +26,7 @@ from datetime import datetime
 from typing import Callable, Mapping, Sequence
 
 from ..analytics.metrics import max_drawdown
+from ..costs.bricks import CarryCostBrick, TradeCostBrick
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions
@@ -52,7 +53,7 @@ class CostLedger:
 
 @dataclass(frozen=True)
 class _RecordingTradeBrick:
-    inner: object
+    inner: TradeCostBrick
     ledger: CostLedger
 
     def cost(self, instrument: Instrument, quantity: float, price: float) -> float:
@@ -66,7 +67,7 @@ class _RecordingTradeBrick:
 
 @dataclass(frozen=True)
 class _RecordingCarryBrick:
-    inner: object
+    inner: CarryCostBrick
     ledger: CostLedger
 
     @property

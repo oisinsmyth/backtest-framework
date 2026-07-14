@@ -39,6 +39,7 @@ from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions, as_traded_from_adjusted
 from ..engine.allocator import ConstantSplitAllocator
 from ..engine.backtest import run_backtest
+from ..instruments.base import Instrument
 from ..instruments.equity import Equity
 from ..registry.trial_registry import TrialRegistry
 from ..strategies.zscore_pairs import ZScorePairsStrategy
@@ -254,7 +255,7 @@ def run_pairs_study(
             ),
         )
     splits = {s: list(v) for s, v in actions.splits_by_symbol.items() if v}
-    instruments = {symbol: Equity(symbol=symbol) for symbol in bars_by_symbol}
+    instruments: dict[str, Instrument] = {symbol: Equity(symbol=symbol) for symbol in bars_by_symbol}
 
     windows = list(
         walk_forward_windows(bars_by_symbol, config.train_size, config.test_size, config.step)
@@ -330,6 +331,7 @@ def run_pairs_study(
                 ),
             )
         else:
+            assert base_stack is not None  # built above whenever not per-window
             window_stack = base_stack
 
         for m in config.multipliers:
@@ -467,8 +469,16 @@ def render_study_tearsheet(
     result: StudyResult, benchmark_returns_by_date: Mapping[datetime, float]
 ) -> str:
     curve = result.curves[1.0]
-    benchmark = [benchmark_returns_by_date[ts] for ts, _ in curve.equity if ts in benchmark_returns_by_date]
-    returns = [r for (ts, _), r in zip(curve.equity, curve.returns) if ts in benchmark_returns_by_date]
+    missing = [ts for ts, _ in curve.equity if ts not in benchmark_returns_by_date]
+    if missing:
+        # Silently subsetting would compute Sharpe/beta on a quietly different
+        # sample than the equity curve (audit F30) — refuse instead.
+        raise ValueError(
+            f"benchmark series is missing {len(missing)} of {len(curve.equity)} stitched "
+            f"curve dates (first: {missing[0].isoformat()}) — supply full coverage"
+        )
+    benchmark = [benchmark_returns_by_date[ts] for ts, _ in curve.equity]
+    returns = list(curve.returns)
     return render_metrics_table(
         returns,
         rf_annual=result.config.rf_annual,

@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from backtest-framework!"
+"""Lego-brick-modular quant backtesting framework - see PHILOSOPHY.md."""
