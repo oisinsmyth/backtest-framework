@@ -232,6 +232,19 @@ version (likely at the Phase C "first real number" milestone, see
   at full retail costs, DSR = 0.0000 with the program-level multiplicity note. The
   "edge exists but doesn't clear retail frictions" thesis, measured. (281/281
   tests, 8 new.)
+- `research/beta_zscore.py` — `BetaHedgedZScoreStrategy` (D94): trades the
+  train-window Engle-Granger β (spread = ln A − β·ln B, legs in the β ratio),
+  weights normalized to constant gross (w_A = 2w/(1+β), w_B = 2wβ/(1+β)); β = 1
+  reduces exactly to `ZScorePairsStrategy` — tested as a target-level identity AND
+  a whole-study equity-curve identity. `run_pairs_study` gains an optional
+  `strategy_factory(pair, strategy_id, config, details)` hook (v1/v2 default
+  preserved; called per window/multiplier/pair; receives the pair's
+  selector-details entry carrying its fitted β).
+- **`docs/results/pairs_study_v3.md` — study v3**: trading is the only change from
+  v2; the β hedge **hurt** — gross +19.03% → **+6.12%**, 1× costs −6.43% →
+  **−16.53%**, DSR = 0.0000. Train-window β carried out-of-sample imports more
+  estimation noise than hedge benefit on a selector-coherent (β ≈ 1) universe; the
+  1:1 hedge stands. (288/288 tests, 7 new.)
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

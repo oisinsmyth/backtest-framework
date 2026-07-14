@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D94**.
+New decisions are added here going forward — next number is **D95**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -105,3 +105,4 @@ written rationale for *why not now*, per R3.
 | [D91](D91-executable-tutorial.md) | The tutorial's code is executed by the test suite, not merely written | Committed | Testing |
 | [D92](D92-cointegration-selection-v2.md) | Study v2 selection: Gatev prefilter → EG β coherence window → ADF rank; one variable per version | Committed | Validation & research integrity |
 | [D93](D93-adf-implementation.md) | Own ADF implementation, statistic only, anchored against statsmodels | Committed | Validation & research integrity |
+| [D94](D94-beta-hedged-trading-v3.md) | Study v3 β-hedged trading: constant-gross normalization, factory hook, β=1 equivalence | Committed | Validation & research integrity |

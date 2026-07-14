@@ -160,18 +160,30 @@ none.
       full retail costs; DSR = 0.0000.** The cleanest possible evidence for the
       "edge exists but doesn't clear retail frictions" thesis — v2 turned the
       writeup's central claim from assertion into measurement. 281/281 tests (8 new).
-- [ ] Commit study v2 + D92/D93
+- [x] Commit study v2 + D92/D93
+- [x] **Study v3: β-hedged trading — the hedge HURT, and that's the finding (D94).**
+      One variable changed from v2 (trading: each pair trades its train-window EG β,
+      spread = ln A − β·ln B, legs in the β ratio, weights normalized to constant
+      gross 2w so risk matches v1/v2 exactly). New `research/beta_zscore.py` +
+      `strategy_factory` hook in the study runner (`None` = v1/v2 byte-identical);
+      β=1 provably reduces to the old strategy — tested at target level AND as a
+      whole-study equity-curve identity. **Result (`docs/results/pairs_study_v3.md`):
+      gross +19.03% → +6.12%; 1× costs −6.43% → −16.53%. A train-window β carried
+      OOS imports more estimation noise than hedge benefit — the selector's [0.7,1.3]
+      coherence window already leaves the hedge little room to help. The 1:1 hedge
+      wins; the writeup gains a genuine estimation-error exhibit.** 288 tests (7 new).
+- [ ] Commit study v3 + D94
 
 ## Next (queued, not started) — Phase G research proper
 
-- [ ] **Study v3 candidates**: β-hedged trading (the logged βs are waiting — needs a
-      hedge-ratio-aware strategy, discussed vs framework freeze in D92); per-window
-      σ/ADV calibration (closes D66); parameter sensitivity (every variant logged →
-      honest DSR); **the capacity analysis** — v2's cost-sweep slope now supports
-      the "clears at £X AUM" calculation directly (profitable at 0.5×, the
-      commission minimums and impact terms shrink with size).
-- [ ] The Phase G writeup skeleton — v1 and v2 are its first two exhibits, and the
-      v1→v2 delta is its methodology showcase. Reviewer outreach in parallel.
+- [ ] **Study v4 candidates**: per-window σ/ADV calibration (closes D66); parameter
+      sensitivity (every variant logged → honest DSR); **the capacity analysis** —
+      v2's cost-sweep slope now supports the "clears at £X AUM" calculation directly
+      (v2 profitable at 0.5×, the commission minimums and impact terms shrink with
+      size; v3 settled that the 1:1 hedge is the configuration to take forward).
+- [ ] The Phase G writeup skeleton — v1/v2/v3 are its first three exhibits: the
+      v1→v2 delta shows selection matters, the v2→v3 delta shows estimation error
+      is real. Reviewer outreach in parallel.
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
 - [ ] Config factories for real bricks + strategy (D52) for full re-run-from-config.
 
@@ -434,3 +446,26 @@ none.
   the safe direction only. This is a *good* result: it's the honest negative that
   the Phase G writeup builds from, produced by the exact machinery the framework
   spent twelve steps making trustworthy. 273 tests green.
+- **2026-07-14** — **Study v2: the selection filter works.** CointegrationSelector
+  (Gatev prefilter 50 → EG β coherence window [0.7,1.3] → ADF rank) via the new
+  `selector` hook (`None` = v1 byte-identical, D92). Own 40-line ADF statistic tied
+  to statsmodels at 1e-9 (D93). Gross +3.45% → +19.03%; profitable at 0.5× costs;
+  −6.43% at 1×. The "edge exists but doesn't clear retail frictions" thesis is now
+  a measurement. 281 tests green.
+- **2026-07-14** — **Study v3: β-hedged trading — the hedge hurt, cleanly measured
+  (D94).** `research/beta_zscore.py::BetaHedgedZScoreStrategy` trades the
+  train-window β that v2 only logged (spread = ln A − β·ln B), with weights
+  normalized to constant gross (w_A = 2w/(1+β), w_B = 2wβ/(1+β)) so gross is 2w for
+  every pair — risk comparability with v1/v2 held fixed by construction. New
+  `strategy_factory` hook in `run_pairs_study` (per window/multiplier/pair, fresh
+  instances per D68, receives the pair's selector-details entry carrying its β;
+  `None` = v1/v2 byte-identical). The β=1 equivalence is tested twice: target-level
+  identity vs `ZScorePairsStrategy`, and a whole-study equity-curve identity via a
+  β=1-forcing factory — the v3 machinery provably contains v2 as a special case.
+  First rerun of the script tripped the registry's append-only UNIQUE constraint
+  (regenerating the artifact re-adds identical trials) — resolved by deleting the
+  local gitignored registry and rerunning, keeping one copy of each trial, which is
+  the honest count. Result: gross +6.12% (v2: +19.03%), −16.53% at 1× (v2: −6.43%),
+  DSR 0.0000 — estimation noise in a train-window β out-costs its hedge benefit on
+  a universe whose selector already demands β ≈ 1. The 1:1 hedge stands. 288 tests
+  green (7 new).

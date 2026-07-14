@@ -148,11 +148,19 @@ def run_pairs_study(
     config: StudyConfig = StudyConfig(),
     trial_id_prefix: str = "pairs-study-v1",
     selector=None,
+    strategy_factory=None,
 ) -> StudyResult:
     """`selector`, when given, replaces the default Gatev top-N selection (D92): any
     callable `(views, top_n) -> PairSelection`. None preserves study v1's behavior
     exactly — v1 stays byte-reproducible. If the selector exposes `.name` /
-    `.last_details`, they're logged into each trial's config."""
+    `.last_details`, they're logged into each trial's config.
+
+    `strategy_factory`, when given, replaces the default ZScorePairsStrategy
+    construction (D94): any callable `(pair, strategy_id, config, details) ->
+    Strategy`, called once per (window, multiplier, pair) so each run gets fresh
+    instances (D68 — strategies hold mutable state). `details` is the pair's entry
+    from the selector's `last_details` (e.g. its fitted β), or None when the
+    selector publishes none. None preserves v1/v2 behavior exactly."""
     if 1.0 not in config.multipliers:
         raise ValueError("multipliers must include 1.0 — the tearsheet and DSR are computed at real costs")
 
@@ -184,6 +192,7 @@ def run_pairs_study(
     for window in windows:
         selection = select(window.train_views, config.top_n)
         selection_details = list(getattr(selector, "last_details", []) or [])
+        details_by_pair = {tuple(d["pair"]): d for d in selection_details if "pair" in d}
         n_tested = selection.n_pairs_tested
         selected_by_window.append((window.index, selection.ranked_pairs))
         legs = sorted({s for pair in selection.ranked_pairs for s in pair})
@@ -199,18 +208,24 @@ def run_pairs_study(
             run_bars[symbol] = list(execution_frame[symbol][lo:hi])
 
         for m in config.multipliers:
-            strategies = [
-                ZScorePairsStrategy(
-                    strategy_id=f"pair-{a}-{b}",
-                    instrument_a=a,
-                    instrument_b=b,
-                    lookback=config.lookback,
-                    entry_z=config.entry_z,
-                    exit_z=config.exit_z,
-                    leg_weight=config.leg_weight,
-                )
-                for a, b in selection.ranked_pairs
-            ]
+            if strategy_factory is not None:
+                strategies = [
+                    strategy_factory((a, b), f"pair-{a}-{b}", config, details_by_pair.get((a, b)))
+                    for a, b in selection.ranked_pairs
+                ]
+            else:
+                strategies = [
+                    ZScorePairsStrategy(
+                        strategy_id=f"pair-{a}-{b}",
+                        instrument_a=a,
+                        instrument_b=b,
+                        lookback=config.lookback,
+                        entry_z=config.entry_z,
+                        exit_z=config.exit_z,
+                        leg_weight=config.leg_weight,
+                    )
+                    for a, b in selection.ranked_pairs
+                ]
             result = run_backtest(
                 bars_by_instrument=run_bars,
                 instruments=instruments,

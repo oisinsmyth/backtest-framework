@@ -163,6 +163,86 @@ def test_study_accepts_a_custom_selector_and_logs_its_details(tmp_path):
         assert 0.7 <= detail["beta"] <= 1.3  # the coherence filter held
 
 
+def test_strategy_factory_receives_selector_details(tmp_path):
+    # Study v3's hook (D94): a factory replaces the default ZScorePairsStrategy
+    # construction and receives each pair's selector-details entry (carrying its
+    # fitted beta) — the wiring that lets v3 trade the hedge v2 only logged.
+    from backtest_framework.research.beta_zscore import BetaHedgedZScoreStrategy
+    from backtest_framework.research.cointegration import CointegrationSelector
+
+    bars, volumes = _synthetic_universe()
+    registry = TrialRegistry(tmp_path / "trials.sqlite")
+    selector = CointegrationSelector(gatev_prefilter=15, beta_window=(0.7, 1.3))
+    betas_seen = []
+
+    def factory(pair, strategy_id, config, details):
+        assert tuple(details["pair"]) == pair  # each pair got ITS OWN details entry
+        betas_seen.append(details["beta"])
+        return BetaHedgedZScoreStrategy(
+            strategy_id=strategy_id,
+            instrument_a=pair[0],
+            instrument_b=pair[1],
+            hedge_beta=details["beta"],
+            lookback=config.lookback,
+            entry_z=config.entry_z,
+            exit_z=config.exit_z,
+            leg_weight=config.leg_weight,
+        )
+
+    result = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol=volumes,
+        actions=CorporateActions(),
+        registry=registry,
+        snapshot_id="synthetic-universe-v3",
+        config=CONFIG,
+        trial_id_prefix="test-study-v3",
+        selector=selector,
+        strategy_factory=factory,
+    )
+
+    assert result.n_windows == 5
+    assert betas_seen and all(0.7 <= b <= 1.3 for b in betas_seen)
+    assert 0.0 <= result.dsr <= 1.0
+
+
+def test_beta_one_factory_reproduces_the_default_path_exactly(study, tmp_path):
+    # The strong regression (D94): a factory that forces beta=1 must produce a
+    # stitched equity curve IDENTICAL to the default ZScorePairsStrategy path on the
+    # same universe — the v3 machinery provably contains v2 as its beta=1 case.
+    from backtest_framework.research.beta_zscore import BetaHedgedZScoreStrategy
+
+    default_result, _, bars = study
+    volumes = {s: [5e6] * len(series) for s, series in bars.items()}
+
+    def beta_one_factory(pair, strategy_id, config, details):
+        return BetaHedgedZScoreStrategy(
+            strategy_id=strategy_id,
+            instrument_a=pair[0],
+            instrument_b=pair[1],
+            hedge_beta=1.0,
+            lookback=config.lookback,
+            entry_z=config.entry_z,
+            exit_z=config.exit_z,
+            leg_weight=config.leg_weight,
+        )
+
+    registry = TrialRegistry(tmp_path / "trials.sqlite")
+    hedged_result = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol=volumes,
+        actions=CorporateActions(),
+        registry=registry,
+        snapshot_id="synthetic-universe",
+        config=CONFIG,
+        trial_id_prefix="test-study-beta1",
+        strategy_factory=beta_one_factory,
+    )
+
+    for m in CONFIG.multipliers:
+        assert hedged_result.curves[m].equity == default_result.curves[m].equity
+
+
 def test_bounded_run_on_the_real_universe_fixture(tmp_path):
     # The real data path, bounded to ~2 windows so the suite stays fast: slice the
     # committed fixture's first 500 bars and run one multiplier pair.
