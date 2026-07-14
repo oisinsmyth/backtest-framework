@@ -187,6 +187,23 @@ version (likely at the Phase C "first real number" milestone, see
   conditions. Doc-rot grep-test added alongside the existing OptionStub gates.
 - Step 11 of `VERIFICATION_SCHEME.md` — gate passed (the stub's U-gate has been green
   since Step 3; the write-up was the remaining deliverable). 249/249 tests.
+- `backtest_framework.validation` — the research-integrity layer:
+  `walk_forward` (fitters receive DataViews built from training slices only — the
+  D22/D28 guarded accessor, D85), `pair_selection` (Gatev-distance top-N with the
+  multiplicity count returned for registry logging, D29), `dsr` (PSR/SR0/DSR with N
+  and V[{SRn}] pulled from the TrialRegistry, stdlib normal functions, D86),
+  `synthetic` (random-walk-spread null pairs, D87).
+- `analytics.monte_carlo.block_bootstrap_paths` exposed (additive; seeded output
+  byte-identical).
+- Step 12 gates: DSR reproduces the Bailey & López de Prado worked example
+  (N=100 → 0.9004, N=46 → 0.9505, N=88-normal → the 95% boundary; parameter recovery
+  method in D86); inverting-pair walk-forward I-gate; 200-series noise-universe
+  multiplicity P-gate (n_pairs_tested = 19,900 logged and read back); zero-edge
+  synthetic nulls earn ≈ 0 ("stop everything" not triggered); shuffle-vs-block
+  autocorrelation demonstration.
+- Step 12 of `VERIFICATION_SCHEME.md` — gate passed (260/260 tests total, 13 new).
+  **All in-scope verification-scheme steps are complete. The framework can say
+  "no edge" and be believed** (`DEVELOPMENT_TIMETABLE.md` Phase F milestone).
 
 ### Changed
 - Bar/event timestamps are normalized to naive exchange-local wall time at the data

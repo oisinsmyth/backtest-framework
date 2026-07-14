@@ -119,22 +119,34 @@ none.
       instruments break D45's alignment assumption), the Lego audit (what bolts on
       vs what's engine surgery), verification gates if ever built, and explicit
       trigger conditions (pairs writeup first, per R1). Doc-rot grep-test added.
-- [ ] Commit Step 11 doc + D84 record
+- [x] Commit Step 11 doc + D84 record
+- [x] **Step 12 of `VERIFICATION_SCHEME.md` — gate passed. THE FRAMEWORK IS
+      COMPLETE.** All in-scope verification-scheme steps (1–9, 11, 12; Step 10 is
+      the timetable's pre-committed cut) are done. Milestone: *the framework can now
+      say "no edge" and be believed.* Walk-forward with structurally-guarded fitting
+      (D85 — fitters receive DataViews built from training slices only; the same
+      socket enforces D28 for future regime models), Gatev top-N selection returning
+      its multiplicity count for registry logging (D29), DSR reproducing the
+      Bailey/López de Prado worked example with N and V pulled from the
+      TrialRegistry (D86 — paper checkpoints N=46→0.9505, N=88-normal→boundary,
+      N=100→0.9004), synthetic random-walk-spread nulls earning ≈0 at zero cost
+      (D87 — "if this profits, stop everything": it didn't), and the quantified
+      shuffle-vs-block demonstration. 260/260 tests green (13 new).
+- [ ] Commit Step 12 code + D85–D87 records
 
-## Next (queued, not started)
+## Next (queued, not started) — Phase G prep, no framework steps remain
 
-- [ ] Step 12: validation science — pair selection in walk-forward + multiplicity
-      (D22/D29), regime fitting rule (D28), DSR reproducing the Bailey/de Prado
-      worked example fed by the TrialRegistry (D21/D20), synthetic nulls (D23 —
-      reuses D81's block bootstrap). **The last verification-scheme step in scope**
-      (Step 10 crypto/FX is the timetable's pre-committed cut) — after this, the
-      framework is done and Phase G research begins.
 - [ ] Wire `analytics.tearsheet.render_metrics_table` into the v1/v2 results scripts
       (adds Sharpe/beta/VaR rows to the published docs — its own diff, since it
       changes committed results artifacts).
 - [ ] Config factories for the real bricks + strategy (D52 convention) so logged
-      trials can be re-run from config alone — the sweep logs honest config dicts,
-      but the full factory-rebuild loop for these types doesn't exist yet.
+      trials can be re-run from config alone.
+- [ ] **Phase G — the actual research** (framework frozen except bug fixes, per the
+      timetable): broad ETF universe fixture → walk-forward pair selection (D85
+      machinery) → z-score/cointegration/Kalman study → full cost sweeps → DSR-
+      adjusted results via the registry → the writeup, including negative results
+      and the "clears costs at £X AUM" analysis. Reviewer outreach runs in parallel
+      per the timetable.
 
 ## Watch list additions
 
@@ -363,3 +375,19 @@ none.
   assumption (the whole portfolio would silently truncate at the shortest contract's
   expiry), which is exactly the kind of thing only surfaced by scoping properly.
   Doc-rot grep-test added (same discipline as D82's labels). 249 tests green.
+- **2026-07-14** — **Step 12: validation science. The framework is complete.**
+  DSR X-gate solved a real evidence problem during planning: the paper PDF's
+  equation glyphs don't survive text extraction, so the worked example's parameters
+  were recovered from its surviving PROSE — two plain-text checkpoints (N=46 →
+  0.9505; N=88 under normality → the 95% boundary) overdetermine the one unknown,
+  back-solving V[{SRn}]=0.002 exactly and confirming the remembered skew/kurt
+  (−3/10) simultaneously; headline N=100 → 0.9004 reproduces. N and V are pulled
+  from the TrialRegistry, never typed in — Step 1's registry investment paying off
+  as designed. Walk-forward fitting reuses DataView as THE guarded accessor (one
+  look-ahead guard in the codebase, not two). Synthetic nulls: random-walk spread,
+  NOT OU — an OU spread has real edge and would be the wrong null. One honest test
+  recalibration recorded in D87: the multiplicity gate first "failed" with a −4.3%
+  mean that was ~1σ of noise at 200% gross — bounds recalibrated at 50% gross where
+  ≈0 has teeth (leverage-invariance makes it calibration, not result shopping).
+  Shuffle-vs-block quantified: AR(1) ρ=0.6 → shuffled acf₁ < 0.05, block > 0.35.
+  260 tests, all green (13 new). No framework steps remain; Phase G begins.

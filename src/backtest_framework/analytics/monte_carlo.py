@@ -33,13 +33,16 @@ class BootstrapPercentiles:
     max_drawdown: dict[int, float]
 
 
-def block_bootstrap_percentiles(
+def block_bootstrap_paths(
     returns: Sequence[float],
     seed: int,
     n_sims: int = DEFAULT_N_SIMS,
     block_size: int = DEFAULT_BLOCK_SIZE,
-    percentiles: Sequence[int] = DEFAULT_PERCENTILES,
-) -> BootstrapPercentiles:
+) -> np.ndarray:
+    """The resampled return paths themselves, shape (n_sims, len(returns)) — exposed
+    (D87) so Step 12's shuffle-vs-block demonstration can measure autocorrelation on
+    the paths, and Step-12-style nulls can reuse the generator. Contiguous blocks
+    preserve local dependence; that is the entire point vs a shuffle (D23)."""
     r = np.asarray(returns, dtype=float)
     n = r.size
     if n < block_size:
@@ -51,7 +54,17 @@ def block_bootstrap_percentiles(
     # Assemble each simulated path from contiguous blocks, trimmed to length n.
     block_offsets = np.arange(block_size)
     indices = (starts[:, :, None] + block_offsets[None, None, :]).reshape(n_sims, -1)[:, :n]
-    paths = r[indices]  # (n_sims, n)
+    return r[indices]  # (n_sims, n)
+
+
+def block_bootstrap_percentiles(
+    returns: Sequence[float],
+    seed: int,
+    n_sims: int = DEFAULT_N_SIMS,
+    block_size: int = DEFAULT_BLOCK_SIZE,
+    percentiles: Sequence[int] = DEFAULT_PERCENTILES,
+) -> BootstrapPercentiles:
+    paths = block_bootstrap_paths(returns, seed=seed, n_sims=n_sims, block_size=block_size)
 
     growth = np.cumprod(1.0 + paths, axis=1)
     terminal = growth[:, -1] - 1.0
