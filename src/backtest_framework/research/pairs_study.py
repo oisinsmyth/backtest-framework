@@ -101,7 +101,10 @@ class StudyResult:
     n_pairs_tested_per_window: int
     curves: dict[float, StitchedCurve]
     selected_by_window: list[tuple[int, tuple[tuple[str, str], ...]]]
-    dsr: float
+    dsr: float | None
+    """None when the run was executed with compute_dsr=False (D98) — e.g. capacity
+    levels sharing a registry, where a per-level DSR over the mixed pool would be
+    meaningless (audit F9)."""
     dsr_inputs: dict
 
 
@@ -150,6 +153,7 @@ def run_pairs_study(
     selector=None,
     strategy_factory=None,
     base_stack: CostStack | None = None,
+    compute_dsr: bool = True,
 ) -> StudyResult:
     """`selector`, when given, replaces the default Gatev top-N selection (D92): any
     callable `(views, top_n) -> PairSelection`. None preserves study v1's behavior
@@ -165,7 +169,20 @@ def run_pairs_study(
 
     `base_stack`, when given, replaces the internally built real cost stack (D95 —
     the capacity study injects a recording wrapper here). None builds
-    `build_base_cost_stack` exactly as before; v1/v2/v3 stay byte-reproducible."""
+    `build_base_cost_stack` exactly as before; v1/v2/v3 stay byte-reproducible.
+
+    `compute_dsr=False` skips the registry-fed DSR and returns `dsr=None` (D98):
+    capacity/gross-sweep levels share one registry, so a per-level DSR over the
+    accumulated pool would be meaningless. `dsr_inputs` (the observed stitched SR,
+    T, skew, kurtosis) is still populated — it's pure arithmetic on this run.
+
+    DSR trial pool and units (D98, fixing audit F1/F8): every trial logs
+    `window_sharpe_daily` in per-period (DAILY, non-annualized) units — the same
+    units as the observed SR handed to the PSR — and the DSR pool is this study's
+    1× trials only: the same window re-run at a scaled cost multiplier is a
+    sensitivity point, not an additional independent trial. A 1× window with no
+    return variation has no defined Sharpe estimate; rather than impute one (the
+    old code logged 0.0), the study fails loudly."""
     if 1.0 not in config.multipliers:
         raise ValueError("multipliers must include 1.0 — the tearsheet and DSR are computed at real costs")
 
@@ -252,11 +269,28 @@ def run_pairs_study(
             curves[m].returns.extend(window_returns)
             capital[m] = result.final_nav
 
-            window_sharpe = (
-                sharpe(window_returns, config.rf_annual, config.periods_per_year)
-                if len(set(window_returns)) > 1
-                else 0.0
-            )
+            # D98 (audit F1/F8): the logged Sharpe is DAILY (per-period), the same
+            # units as the observed SR the PSR consumes — sharpe() annualizes, so
+            # divide the √periods factor back out. A window with no return
+            # variation has no defined Sharpe estimate; imputing 0.0 (the old
+            # behaviour) silently distorted V[{SRn}], so the metric is omitted —
+            # and if that happens on a 1× trial the DSR pool would be quietly
+            # short, which is a loud error instead.
+            metrics = {
+                "final_nav": result.final_nav,
+                "num_fills": len(result.fills),
+                "window_traded": bool(result.fills),
+            }
+            if len(set(window_returns)) > 1:
+                metrics["window_sharpe_daily"] = sharpe(
+                    window_returns, config.rf_annual, config.periods_per_year
+                ) / np.sqrt(config.periods_per_year)
+            elif m == 1.0 and compute_dsr:
+                raise ValueError(
+                    f"window {window.index} produced no return variation at 1× costs — "
+                    "its Sharpe estimate is undefined, so the DSR pool cannot be built "
+                    "honestly. Re-run with compute_dsr=False or adjust the config (D98)."
+                )
             registry.add_trial(
                 trial_id=f"{trial_id_prefix}-{m}x-w{window.index:02d}",
                 config={**config.to_dict(), "cost_multiplier": m, "window": window.index,
@@ -264,11 +298,7 @@ def run_pairs_study(
                         "selection_details": selection_details,
                         "pairs": [list(p) for p in selection.ranked_pairs]},
                 params={"n_pairs_tested": selection.n_pairs_tested},
-                metrics={
-                    "final_nav": result.final_nav,
-                    "window_sharpe_daily": window_sharpe if np.isfinite(window_sharpe) else 0.0,
-                    "num_fills": len(result.fills),
-                },
+                metrics=metrics,
                 snapshot_id=snapshot_id,
                 seed=config.mc_seed,
             )
@@ -281,14 +311,29 @@ def run_pairs_study(
         "skew": _skewness(stitched_1x.returns),
         "kurt": _kurtosis(stitched_1x.returns),
     }
-    dsr = deflated_sharpe_from_trials(
-        registry,
-        "window_sharpe_daily",
-        sr=dsr_inputs["observed_sr_daily"],
-        t=dsr_inputs["t"],
-        skew=dsr_inputs["skew"],
-        kurt=dsr_inputs["kurt"],
-    )
+    if compute_dsr:
+        # D98: the DSR pool is THIS study's 1× trials — identity/config-based
+        # selection, never presence-of-metric (that would silently shrink N).
+        def _in_pool(trial) -> bool:
+            return (
+                trial.trial_id.startswith(f"{trial_id_prefix}-")
+                and trial.config.get("cost_multiplier") == 1.0
+            )
+
+        pool = [t.metrics["window_sharpe_daily"] for t in registry.all_trials() if _in_pool(t)]
+        dsr_inputs["n_trials"] = len(pool)
+        dsr_inputs["var_trials_daily"] = float(np.var(pool, ddof=1)) if len(pool) > 1 else float("nan")
+        dsr = deflated_sharpe_from_trials(
+            registry,
+            "window_sharpe_daily",
+            sr=dsr_inputs["observed_sr_daily"],
+            t=dsr_inputs["t"],
+            skew=dsr_inputs["skew"],
+            kurt=dsr_inputs["kurt"],
+            include=_in_pool,
+        )
+    else:
+        dsr = None
 
     return StudyResult(
         config=config,

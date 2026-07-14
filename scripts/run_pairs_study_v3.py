@@ -132,7 +132,10 @@ finding for the Phase G writeup, not a failure of the study.
 - Observed stitched Sharpe (daily, rf {CONFIG.rf_annual:.0%}): {result.dsr_inputs["observed_sr_daily"]:.4f}
   over T = {result.dsr_inputs["t"]:,} OOS bars; skew {result.dsr_inputs["skew"]:.2f},
   kurtosis {result.dsr_inputs["kurt"]:.2f}.
-- **DSR = {result.dsr:.4f}** — N and V pulled from this study's TrialRegistry.
+- **DSR = {result.dsr:.4f}** — N and V pulled from this study's TrialRegistry:
+  N = {result.dsr_inputs["n_trials"]} one-per-window 1×-cost trials (scaled-cost
+  re-runs are sensitivity points, not extra trials — D98); V in daily units,
+  matching the observed SR.
 - **Program-level multiplicity (D90, extended):** the research program has now run
   THREE studies of {n_trials} logged trials each, every window scoring
   {result.n_pairs_tested_per_window:,} candidates. Registry-N per study understates

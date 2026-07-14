@@ -102,8 +102,11 @@ versions, deliberately not v1.
 - Observed stitched Sharpe (daily, rf {CONFIG.rf_annual:.0%}): {result.dsr_inputs["observed_sr_daily"]:.4f}
   over T = {result.dsr_inputs["t"]:,} OOS bars; skew {result.dsr_inputs["skew"]:.2f},
   kurtosis {result.dsr_inputs["kurt"]:.2f}.
-- **DSR = {result.dsr:.4f}** — N and V[{{SRn}}] pulled from this study's TrialRegistry
-  ({result.n_windows * len(CONFIG.multipliers)} logged backtests), never typed in.
+- **DSR = {result.dsr:.4f}** — N and V[{{SRn}}] pulled from this study's TrialRegistry,
+  never typed in. N = {result.dsr_inputs["n_trials"]} one-per-window 1×-cost trials
+  (a window re-run at a scaled cost multiplier is a sensitivity point, not an extra
+  trial — D98); V is in daily units, matching the observed SR. All
+  {result.n_windows * len(CONFIG.multipliers)} logged backtests stay in the registry.
 - **Multiplicity caveat (D90):** registry-N counts logged backtests, but each window
   *scored {result.n_pairs_tested_per_window:,} candidate pairs* to pick its top
   {CONFIG.top_n} — selection breadth the registry-N does not capture, so even this

@@ -23,8 +23,9 @@ from __future__ import annotations
 import math
 import statistics as _stats
 from statistics import NormalDist
+from typing import Callable
 
-from ..registry.trial_registry import TrialRegistry
+from ..registry.trial_registry import TrialRecord, TrialRegistry
 
 EULER_MASCHERONI = 0.5772156649015329
 _NORMAL = NormalDist()
@@ -61,21 +62,42 @@ def deflated_sharpe_ratio(
 
 
 def deflated_sharpe_from_trials(
-    registry: TrialRegistry, sharpe_metric_key: str, sr: float, t: int, skew: float, kurt: float
+    registry: TrialRegistry,
+    sharpe_metric_key: str,
+    sr: float,
+    t: int,
+    skew: float,
+    kurt: float,
+    include: Callable[[TrialRecord], bool] | None = None,
 ) -> float:
     """DSR with N and V[{SRn}] pulled from the TrialRegistry (D20/D21's whole point:
     the trial count is logged evidence, not a self-reported number). N = trials in
-    the registry; V = sample variance of the named Sharpe metric across them. Trials
-    missing the metric fail loudly — silently skipping them would understate N."""
-    trials = registry.all_trials()
+    the registry (after the optional `include` filter); V = sample variance of the
+    named Sharpe metric across them. Included trials missing the metric fail loudly
+    — silently skipping them would understate N.
+
+    UNITS CONTRACT (D98 — this is where the audit's F1 bug lived): the logged metric,
+    `sr`, and `t` must all be in the SAME per-period (non-annualized) units. Feeding
+    annualized trial Sharpes against a per-period `sr` inflates SR0 by √periods_per_year
+    (≈15.9× for daily data) and forces DSR toward 0 regardless of the strategy.
+
+    `include` selects which registry rows constitute the trial pool {SRn} — e.g. a
+    study that logs one row per (window, cost multiplier) passes a predicate keeping
+    only the real-cost (1×) rows, because the same window re-run at scaled costs is
+    not an additional independent trial (D98). The predicate must select on
+    config/identity fields, never on presence of the metric itself — that would
+    silently shrink N, which the loud failure below exists to prevent."""
+    trials = [trial for trial in registry.all_trials() if include is None or include(trial)]
     if len(trials) < 2:
-        raise ValueError(f"registry holds {len(trials)} trial(s); DSR needs at least 2")
+        raise ValueError(
+            f"registry holds {len(trials)} trial(s) after filtering; DSR needs at least 2"
+        )
     sharpes = []
     for trial in trials:
         if sharpe_metric_key not in trial.metrics:
             raise ValueError(
                 f"trial {trial.trial_id!r} has no metric {sharpe_metric_key!r} — every trial "
-                "must report it, or the trial count N would silently exclude it (D20)"
+                "in the pool must report it, or the trial count N would silently exclude it (D20)"
             )
         sharpes.append(float(trial.metrics[sharpe_metric_key]))
     return deflated_sharpe_ratio(

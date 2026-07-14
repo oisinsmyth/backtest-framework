@@ -170,6 +170,10 @@ def run_capacity_study(
             trial_id_prefix=f"{trial_prefix}-{label}",
             selector=selector_factory(),
             base_stack=recorded_stack,
+            # D98 (audit F9): levels share one registry; a per-level DSR over the
+            # accumulated mixed pool would be meaningless. These runs are cost
+            # diagnostics, not signal trials (D95) — no DSR is computed or reported.
+            compute_dsr=False,
         )
         curve = study.curves[1.0]
         avg_nav = sum(nav for _, nav in curve.equity) / len(curve.equity)

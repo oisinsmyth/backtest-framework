@@ -97,3 +97,53 @@ def test_trial_missing_the_sharpe_metric_fails_loudly(tmp_path):
 
     with pytest.raises(ValueError, match="no metric"):
         deflated_sharpe_from_trials(registry, "sharpe_daily", sr=SR, t=T, skew=SKEW, kurt=KURT)
+
+
+def test_include_predicate_scopes_the_trial_pool(tmp_path):
+    # D98 (audit F8): a study logging one row per (window, multiplier) passes a
+    # config-based predicate so N counts real trials, not cost-sensitivity re-runs.
+    # 100 predicate-matching trials reproduce the paper's N=100 headline even with
+    # 300 non-matching rows (different multipliers) interleaved in the registry —
+    # including rows that lack the metric entirely, which must NOT fail as long as
+    # the predicate excludes them.
+    registry = TrialRegistry(tmp_path / "trials.sqlite")
+    d = math.sqrt(0.00198)
+    for i in range(100):
+        registry.add_trial(
+            f"study-1.0x-{i:03d}",
+            {"cost_multiplier": 1.0},
+            {},
+            {"sharpe_daily": d if i % 2 == 0 else -d},
+            "snap-x",
+            i,
+        )
+        registry.add_trial(
+            f"study-2.0x-{i:03d}", {"cost_multiplier": 2.0}, {}, {"sharpe_daily": 99.0}, "snap-x", i
+        )
+        registry.add_trial(
+            f"study-0.0x-{i:03d}", {"cost_multiplier": 0.0}, {}, {}, "snap-x", i  # metric absent
+        )
+
+    dsr = deflated_sharpe_from_trials(
+        registry,
+        "sharpe_daily",
+        sr=SR,
+        t=T,
+        skew=SKEW,
+        kurt=KURT,
+        include=lambda trial: trial.config.get("cost_multiplier") == 1.0,
+    )
+    assert dsr == pytest.approx(0.9004, abs=1e-4)
+
+    # A predicate-matching trial missing the metric still fails loudly (D20).
+    registry.add_trial("study-1.0x-100", {"cost_multiplier": 1.0}, {}, {}, "snap-x", 100)
+    with pytest.raises(ValueError, match="no metric"):
+        deflated_sharpe_from_trials(
+            registry,
+            "sharpe_daily",
+            sr=SR,
+            t=T,
+            skew=SKEW,
+            kurt=KURT,
+            include=lambda trial: trial.config.get("cost_multiplier") == 1.0,
+        )

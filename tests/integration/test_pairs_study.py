@@ -102,7 +102,8 @@ def test_trials_logged_per_window_and_multiplier_with_multiplicity(study):
     assert len(trials) == 5 * len(CONFIG.multipliers)  # windows x multipliers
     for trial in trials:
         assert trial.params["n_pairs_tested"] == 45  # C(10,2) - D29's logged count
-        assert "window_sharpe_daily" in trial.metrics  # feeds DSR's V (D90)
+        assert "window_traded" in trial.metrics
+        assert "window_sharpe_daily" in trial.metrics  # feeds DSR's V (D90/D98)
         assert trial.snapshot_id == "synthetic-universe"
     assert result.n_pairs_tested_per_window == 45
 
@@ -111,6 +112,46 @@ def test_dsr_computed_from_registry_and_finite(study):
     result, _, _ = study
     assert 0.0 <= result.dsr <= 1.0
     assert result.dsr_inputs["t"] == 5 * CONFIG.test_size
+    # D98: the trial pool is the 1x rows only — one per window, not windows x multipliers.
+    assert result.dsr_inputs["n_trials"] == 5
+
+
+def test_logged_window_sharpe_is_daily_units(study):
+    # D98 regression for audit F1: the logged per-window Sharpe must be in the SAME
+    # per-period (daily) units as dsr_inputs["observed_sr_daily"] — i.e. equal to
+    # the annualized sharpe() of that window's stitched returns divided by
+    # sqrt(periods_per_year). The old code logged the annualized value, inflating
+    # SR0 by sqrt(252) and forcing DSR toward 0 regardless of the strategy.
+    from backtest_framework.analytics.metrics import sharpe
+
+    result, registry, _ = study
+    for w in range(result.n_windows):
+        window_returns = result.curves[1.0].returns[w * CONFIG.test_size : (w + 1) * CONFIG.test_size]
+        expected_daily = sharpe(
+            window_returns, CONFIG.rf_annual, CONFIG.periods_per_year
+        ) / np.sqrt(CONFIG.periods_per_year)
+        logged = registry.get_trial(f"test-study-1.0x-w{w:02d}").metrics["window_sharpe_daily"]
+        assert logged == pytest.approx(expected_daily, rel=1e-12)
+
+
+def test_compute_dsr_false_skips_registry_dsr(tmp_path):
+    # D98 (audit F9): capacity-style runs share a registry across levels, so the
+    # per-level registry DSR is skipped entirely rather than computed over a
+    # meaningless mixed pool. dsr_inputs stays (pure arithmetic on this run).
+    bars, volumes = _synthetic_universe()
+    result = run_pairs_study(
+        bars_by_symbol=bars,
+        volumes_by_symbol=volumes,
+        actions=CorporateActions(),
+        registry=TrialRegistry(tmp_path / "trials.sqlite"),
+        snapshot_id="synthetic-universe",
+        config=CONFIG,
+        trial_id_prefix="no-dsr",
+        compute_dsr=False,
+    )
+    assert result.dsr is None
+    assert "observed_sr_daily" in result.dsr_inputs
+    assert "n_trials" not in result.dsr_inputs
 
 
 def test_sweep_is_monotone_and_renders(study):
