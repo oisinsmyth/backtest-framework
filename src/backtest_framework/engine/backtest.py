@@ -21,7 +21,7 @@ the only enforcement that exists right now.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Mapping, Sequence
 
 from ..costs.stack import CostStack
@@ -55,6 +55,34 @@ class BacktestResult:
         return self.equity_curve[-1][1] if self.equity_curve else self.final_cash
 
 
+def _event_flow_with_splits(
+    cost_stack: CostStack,
+    instrument: Instrument,
+    pre_split_quantity: float,
+    splits_in_gap: Sequence[tuple[datetime, float]],
+    prev_timestamp: datetime,
+    curr_timestamp: datetime,
+) -> float:
+    """Event flows across a gap that may contain split ex-dates (D99): the gap is
+    segmented at each split so a dividend pays on the share count actually held on
+    its ex-date. A dividend exactly ON a split's ex-date pays the POST-split count —
+    its per-share amount is already in the post-split frame (as_declared_dividends
+    scales only by splits with ex-date strictly after the dividend, D75) — so each
+    segment boundary sits a microsecond before the split's ex-date, putting that
+    ex-date in the post-split segment."""
+    if not splits_in_gap:
+        return cost_stack.event_flow(instrument, pre_split_quantity, prev_timestamp, curr_timestamp)
+    total, quantity, segment_start = 0.0, pre_split_quantity, prev_timestamp
+    for ex_date, ratio in splits_in_gap:
+        boundary = ex_date - timedelta(microseconds=1)
+        if boundary > segment_start:
+            total += cost_stack.event_flow(instrument, quantity, segment_start, boundary)
+        quantity *= ratio
+        segment_start = max(segment_start, boundary)
+    total += cost_stack.event_flow(instrument, quantity, segment_start, curr_timestamp)
+    return total
+
+
 def run_backtest(
     bars_by_instrument: Mapping[str, Sequence[TimestampedBar]],
     instruments: Mapping[str, Instrument],
@@ -83,6 +111,12 @@ def run_backtest(
         )
 
     aligned = align_bars(bars_by_instrument)  # D45
+    if not aligned:
+        raise ValueError(
+            "alignment produced zero common bars — the instruments share no timestamps "
+            "(or no bars were provided). Refusing to return a silently-empty backtest "
+            "whose final NAV would equal starting cash (D99)."
+        )
     aligned_bar_series = {
         instrument_id: tuple(ab.bars[instrument_id] for ab in aligned) for instrument_id in bars_by_instrument
     }
@@ -125,14 +159,26 @@ def run_backtest(
         # 0. Splits with an ex-date in the gap scale positions FIRST (D75): this
         #    bar's raw price is post-split, so the share count must be too before
         #    anything marks NAV — broker book and every strategy's virtual book alike.
+        #    Pre-split quantities are captured before scaling, because event flows
+        #    inside the same gap must pay on the share count actually held on their
+        #    ex-date (D99): a dividend BEFORE the split pays pre-split shares; one
+        #    on/after it pays post-split shares.
         if prev_timestamp is not None:
+            pre_split_positions = dict(portfolio.positions)
+            splits_in_gap: dict[str, list[tuple[datetime, float]]] = {}
             for instrument_id, splits in splits_by_instrument.items():
-                for ex_date, ratio in splits:
-                    if prev_timestamp < ex_date <= ab.timestamp:
-                        portfolio.apply_split(instrument_id, ratio)
-                        for key in list(virtual_positions):
-                            if key[1] == instrument_id:
-                                virtual_positions[key] *= ratio
+                in_gap = sorted(
+                    (ex_date, ratio)
+                    for ex_date, ratio in splits
+                    if prev_timestamp < ex_date <= ab.timestamp
+                )
+                if in_gap:
+                    splits_in_gap[instrument_id] = in_gap
+                for ex_date, ratio in in_gap:
+                    portfolio.apply_split(instrument_id, ratio)
+                    for key in list(virtual_positions):
+                        if key[1] == instrument_id:
+                            virtual_positions[key] *= ratio
 
         # 1. Carry accrues on every currently-held instrument (D33), on the calendar-
         #    day gap since the previous ALIGNED bar — this correctly spans any bar
@@ -147,11 +193,18 @@ def run_backtest(
             snapshot_nav = portfolio.nav(prices, instruments)
             for instrument_id, quantity in snapshot_positions.items():
                 if quantity != 0:
+                    # Carry base is split-invariant (qty x price is the same notional in
+                    # either frame), so the post-split snapshot is correct here.
                     base_amount = quantity * prices[instrument_id]
                     carry = cost_stack.carry_cost(base_amount, prev_timestamp, ab.timestamp)
                     portfolio.accrue_carry(carry)
-                    flow = cost_stack.event_flow(
-                        instruments[instrument_id], quantity, prev_timestamp, ab.timestamp
+                    flow = _event_flow_with_splits(
+                        cost_stack,
+                        instruments[instrument_id],
+                        pre_split_positions.get(instrument_id, 0.0),
+                        splits_in_gap.get(instrument_id, []),
+                        prev_timestamp,
+                        ab.timestamp,
                     )
                     if flow != 0:
                         portfolio.apply_cash_flow(flow)

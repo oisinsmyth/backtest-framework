@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import math
 import statistics
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Mapping, Sequence
@@ -102,6 +103,16 @@ def validate(
 
     for symbol, series in bars_by_symbol.items():
         volumes = volumes_by_symbol.get(symbol) if volumes_by_symbol else None
+
+        # Duplicate timestamps are a hard violation (D99): downstream alignment
+        # keys bars by timestamp, so a duplicate silently drops a bar last-wins —
+        # data that can do that must be quarantined, not passed through.
+        timestamp_counts = Counter(tb.timestamp for tb in series)
+        for ts, count in sorted(timestamp_counts.items()):
+            if count > 1:
+                violations.append(
+                    Violation(symbol, ts, "duplicate_timestamp", f"{count} bars share this timestamp", hard=True)
+                )
 
         for i, tb in enumerate(series):
             bar = tb.bar

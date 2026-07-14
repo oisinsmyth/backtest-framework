@@ -221,14 +221,37 @@ def run_pairs_study(
         legs = sorted({s for pair in selection.ranked_pairs for s in pair})
 
         # Warm-up prefix (D89): last `lookback` TRAIN bars prepended, both frames.
+        # The slicing below indexes each symbol's OWN series and assumes it carries
+        # the same bar grid as the aligned universe inside the window's span — a
+        # symbol with extra or missing bars there would silently shorten the run
+        # through the engine's inner join. Assert the assumption loudly (D99).
         test_ts = [tb.timestamp for tb in next(iter(window.test_bars_by_instrument.values()))]
         run_bars, run_views = {}, {}
+        reference_ts: list | None = None
         for symbol in legs:
             first_test_i = view_index[symbol][test_ts[0]]
             lo = first_test_i - config.lookback
+            if lo < 0:
+                raise ValueError(
+                    f"warm-up prefix needs {config.lookback} bars before window "
+                    f"{window.index}'s first test bar, but {symbol} has only {first_test_i}"
+                )
             hi = first_test_i + len(test_ts)
             run_views[symbol] = list(bars_by_symbol[symbol][lo:hi])
             run_bars[symbol] = list(execution_frame[symbol][lo:hi])
+            sliced_ts = [tb.timestamp for tb in run_views[symbol]]
+            if sliced_ts[config.lookback :] != test_ts:
+                raise ValueError(
+                    f"{symbol} carries a different bar grid inside window {window.index}'s "
+                    "test span than the aligned universe — clean/align the fixture first (D99)"
+                )
+            if reference_ts is None:
+                reference_ts = sliced_ts
+            elif sliced_ts != reference_ts:
+                raise ValueError(
+                    f"{symbol}'s warm-up prefix timestamps differ from {legs[0]}'s in window "
+                    f"{window.index} — the legs would inner-join to a shorter warm-up (D99)"
+                )
 
         for m in config.multipliers:
             if strategy_factory is not None:

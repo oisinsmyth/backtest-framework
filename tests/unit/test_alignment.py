@@ -77,3 +77,13 @@ def test_no_common_timestamps_returns_empty_list():
 
 def test_empty_input_returns_empty_list():
     assert align_bars({}) == []
+
+
+def test_duplicate_timestamps_are_refused_loudly():
+    # D99 (audit F10): keying bars by timestamp would silently collapse a duplicate
+    # last-wins — a real yfinance failure mode after joins/re-fetches.
+    import pytest
+
+    a = _series((MON, 10.0), (TUE, 11.0), (TUE, 999.0))
+    with pytest.raises(ValueError, match="duplicate bar timestamps"):
+        align_bars({"A": a})

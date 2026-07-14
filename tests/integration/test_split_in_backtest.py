@@ -80,3 +80,73 @@ def test_view_execution_separation_feeds_strategies_the_view_series():
             starting_cash=10_000.0,
             view_bars_by_instrument={"XOP": [TimestampedBar(day1, _bar(32.0))]},  # day2 missing
         )
+
+
+def test_zero_overlap_alignment_raises_instead_of_empty_backtest():
+    # D99 (audit F11): disjoint timestamps used to return an empty result whose
+    # final NAV equalled starting cash — a silently-empty backtest.
+    bars = {
+        "A": [TimestampedBar(datetime(2026, 1, 5), _bar(10.0))],
+        "B": [TimestampedBar(datetime(2026, 1, 6), _bar(10.0))],
+    }
+    with pytest.raises(ValueError, match="zero common bars"):
+        run_backtest(
+            bars_by_instrument=bars,
+            instruments={"A": Equity(symbol="A"), "B": Equity(symbol="B")},
+            strategies=[],
+            cost_stack=CostStack(),
+            allocator=ConstantSplitAllocator(),
+            starting_cash=100_000.0,
+        )
+
+
+def _dividend_split_gap_run(div_date, split_date):
+    """100 shares held into a Fri->Mon gap containing a dividend and a 4:1 split
+    (in either order) — returns the dividend cash actually credited (D99)."""
+    from backtest_framework.costs.equity_bricks import DividendFlow
+
+    fri, mon = datetime(2026, 1, 9, 16), datetime(2026, 1, 12, 16)
+    bars = {
+        "X": [
+            TimestampedBar(fri, _bar(100.0)),
+            TimestampedBar(mon, _bar(25.0)),  # post-split as-traded price
+        ]
+    }
+    stack = CostStack(event_flow_bricks=(DividendFlow(dividends_by_symbol={"X": ((div_date, 1.0),)}),))
+    result = run_backtest(
+        bars_by_instrument=bars,
+        instruments={"X": Equity(symbol="X")},
+        strategies=[ScheduledWeightStrategy(strategy_id="s", weights_by_instrument={"X": [0.1, 0.1]})],
+        cost_stack=stack,
+        allocator=ConstantSplitAllocator(),
+        starting_cash=100_000.0,
+        splits_by_instrument={"X": [(split_date, 4.0)]},
+    )
+    # Fill on Friday: 0.1 x 100k / 100 = 100 shares. Dividend cash = final cash
+    # minus (cash after the Friday fill), with Monday's NAV-driven re-size fill
+    # (D61) backed out so only the event flow remains.
+    cash_after_friday_fill = 100_000.0 - 100 * 100.0
+    monday_fill_cash = sum(-qty * price - cost for ts, _, qty, price, cost in result.fills if ts != fri)
+    return result.cash_curve[-1][1] - cash_after_friday_fill - monday_fill_cash
+
+
+def test_dividend_before_split_in_same_gap_pays_pre_split_shares():
+    # D99 (audit F19): the old code scaled positions for the split BEFORE computing
+    # flows, so a dividend earlier in the same gap paid on 4x the shares held.
+    sat, sun = datetime(2026, 1, 10, 16), datetime(2026, 1, 11, 16)
+    dividend_cash = _dividend_split_gap_run(div_date=sat, split_date=sun)
+    assert dividend_cash == pytest.approx(100 * 1.0, rel=TOLERANCE)  # NOT 400
+
+
+def test_dividend_after_split_in_same_gap_pays_post_split_shares():
+    sat, sun = datetime(2026, 1, 10, 16), datetime(2026, 1, 11, 16)
+    dividend_cash = _dividend_split_gap_run(div_date=sun, split_date=sat)
+    assert dividend_cash == pytest.approx(400 * 1.0, rel=TOLERANCE)
+
+
+def test_dividend_on_the_split_ex_date_pays_post_split_shares():
+    # A dividend exactly ON the split ex-date is already post-split-frame per share
+    # (as_declared_dividends scales only by splits strictly after it, D75).
+    sun = datetime(2026, 1, 11, 16)
+    dividend_cash = _dividend_split_gap_run(div_date=sun, split_date=sun)
+    assert dividend_cash == pytest.approx(400 * 1.0, rel=TOLERANCE)

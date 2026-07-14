@@ -108,3 +108,19 @@ def test_volume_anomalies_are_warnings():
     assert result.passed  # warnings never quarantine
     checks = {v.check for v in result.warnings}
     assert checks == {"zero_volume", "volume_spike"}
+
+
+def test_duplicate_timestamps_are_a_hard_violation():
+    # D99 (audit F10): duplicates would be silently collapsed by alignment, so the
+    # sanity gate quarantines them before they can reach the engine.
+    from datetime import datetime
+
+    from backtest_framework.data.bars import TimestampedBar
+    from backtest_framework.simulator.fills import Bar
+
+    ts = datetime(2026, 7, 13)
+    bar = Bar(open=10.0, high=10.0, low=10.0, close=10.0)
+    result = validate({"DUP": [TimestampedBar(ts, bar), TimestampedBar(ts, bar)]})
+
+    assert not result.passed
+    assert any(v.check == "duplicate_timestamp" and v.hard for v in result.violations)

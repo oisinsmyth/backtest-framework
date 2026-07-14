@@ -86,7 +86,7 @@ def clean(
                 )
                 continue
 
-            if volumes is not None and not math.isnan(volumes[i]) and volumes[i] <= 0:
+            if volumes is not None and i < len(volumes) and not math.isnan(volumes[i]) and volumes[i] <= 0:
                 changes.append(
                     CleaningChange(symbol, tb.timestamp, "non_positive_volume", f"volume={volumes[i]}")
                 )
