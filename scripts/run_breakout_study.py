@@ -10,6 +10,7 @@ Run: uv run python scripts/run_breakout_study.py
 from __future__ import annotations
 
 import json
+import statistics
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,6 +22,7 @@ from backtest_framework.data.snapshot_store import SnapshotStore
 from backtest_framework.data.validator import validate
 from backtest_framework.registry.trial_registry import TrialRegistry
 from backtest_framework.research import breakout_study as bs
+from backtest_framework.research import feature_analysis as fa
 
 REPO = Path(__file__).resolve().parent.parent
 FIXTURE = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
@@ -110,6 +112,16 @@ def summary_payload(result: bs.StudyResult, gate: dict) -> dict:
         "n_train_evaluations": result.n_train_evaluations,
         "sanity_gate": gate,
         "filter_verdicts": filter_verdicts(result),
+        "feature_verdicts": fa.summarise_features(
+            fa.analyse_all(
+                [
+                    e
+                    for symbol in result.by_symbol
+                    for e in result.by_symbol[symbol].variants[(BASELINE, bs.REFERENCE_TIER)].episodes
+                ],
+                whipsaw_bars=result.config.whipsaw_bars,
+            )
+        ),
         "symbols": {},
     }
     for symbol, sr in result.by_symbol.items():
@@ -221,6 +233,8 @@ immediate neighbours average {spread_ref['neighbour_mean_sharpe']:.3f}; the whol
 **{spread_ref['best_minus_neighbours_over_spread']:.2f} of the surface's own spread**.
 {_spike_verdict(spread_ref, _monotone_note(result, symbol, ref))}
 
+{_sweep_edge(result, symbol, ref)}
+
 ## Benchmarks: three ways to be long
 
 {_benchmark_block(result, symbol, ref)}
@@ -254,11 +268,110 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
     sections.append(_filter_decision(result))
     sections.append(_selection_section(result))
+    sections.append(_feature_section(result))
     sections.append(_multiplicity(result))
     sections.append(_verdict(result))
     sections.append(_caveats(result))
     return "\n\n".join(section.strip() + "\n" for section in sections)
 
+
+
+def _sweep_edge(result: bs.StudyResult, symbol: str, tier_name: str) -> str:
+    """The sweep-edge rule the brief mandates, and which v1 simply did not report.
+
+    The brief's rule is one-sided: it anticipates performance still IMPROVING at
+    N_entry=55 (the published time-series-momentum evidence puts trend persistence at
+    1-12 MONTH lookbacks, so the stated sweep sits at the fast end of that range) and
+    requires the boundary gradient be recorded plus a follow-up extension flagged,
+    WITHOUT extending the sweep in this session.
+
+    It is reported symmetrically here because the data demanded it: one symbol's
+    surface improves toward the slow edge and the other's toward the fast edge. The
+    fast-edge case is not a rule violation - the brief did not write a rule for it -
+    but it is the same phenomenon and hiding it would be reporting to the letter of the
+    brief against its point."""
+    sr = result.by_symbol[symbol]
+    study = result.config
+    sharpes = {
+        (n_entry, n_exit): sr.variants[(f"plateau_{n_entry}_{n_exit}", tier_name)].sharpe_annual(study)
+        for n_entry in bs.PLATEAU_N_ENTRY
+        for n_exit in bs.PLATEAU_N_EXIT
+        if (f"plateau_{n_entry}_{n_exit}", tier_name) in sr.variants
+    }
+    entries = list(bs.PLATEAU_N_ENTRY)
+    lo, hi = entries[0], entries[-1]
+
+    # Row means across the exit windows, so the edge question is about N_entry alone.
+    row_mean = {
+        n_entry: statistics.fmean([v for (ne, _), v in sharpes.items() if ne == n_entry])
+        for n_entry in entries
+    }
+    best_entry = max(row_mean, key=lambda k: row_mean[k])
+    best_cell = max(sharpes, key=lambda k: sharpes[k])
+    slow_gradient = row_mean[hi] - row_mean[entries[-2]]
+    fast_gradient = row_mean[lo] - row_mean[entries[1]]
+
+    rows = "\n".join(
+        f"| {n_entry}{' (sweep edge)' if n_entry in (lo, hi) else ''} | {row_mean[n_entry]:.3f} |"
+        for n_entry in entries
+    )
+    table = f"| N_entry | Mean Sharpe across N_exit |\n|---|---|\n{rows}"
+
+    # The brief's rule keys on the GRADIENT AT THE BOUNDARY — "performance still
+    # improving at N_entry=55" — not on where the global maximum happens to sit. An
+    # earlier cut of this section tested the row-mean argmax instead, and on ETH that
+    # printed "the optimum is interior" directly above a positive slow-edge gradient
+    # and a best cell sitting ON the boundary. Both edges are therefore reported on
+    # their own gradient, and the best single cell is named in every branch.
+    slow_rising = slow_gradient > 0
+    fast_rising = fast_gradient > 0
+    at_edge = best_cell[0] in (lo, hi)
+    cell_note = (
+        f"The best single cell is {best_cell[0]}/{best_cell[1]} at Sharpe "
+        f"{sharpes[best_cell]:.3f}, which **is** on a sweep boundary."
+        if at_edge
+        else f"The best single cell is {best_cell[0]}/{best_cell[1]} at Sharpe "
+        f"{sharpes[best_cell]:.3f}, which is not on a boundary."
+    )
+
+    parts = [cell_note]
+    if slow_rising:
+        parts.append(
+            f"**Performance is still improving at the SLOW edge**: mean Sharpe "
+            f"{row_mean[hi]:.3f} at N_entry={hi} against {row_mean[entries[-2]]:.3f} at "
+            f"N_entry={entries[-2]}, a boundary gradient of {slow_gradient:+.3f}. This is the "
+            f"case the brief's sweep-edge rule anticipates, and the rule is followed to the "
+            f"letter: **the sweep is NOT extended in this session.** Recorded instead as a "
+            f"recommendation — **extend N_entry toward {{100, 150, 250}} in a follow-up "
+            f"session**, as a new trial series with its own multiplicity accounting. The "
+            f"published time-series-momentum persistence range (1-12 months) sits almost "
+            f"entirely beyond this sweep's boundary, so a rising slow edge is what the "
+            f"literature would predict rather than a surprise."
+        )
+    if fast_rising:
+        parts.append(
+            f"**Performance is also still improving at the FAST edge**: mean Sharpe "
+            f"{row_mean[lo]:.3f} at N_entry={lo} against {row_mean[entries[1]]:.3f} at "
+            f"N_entry={entries[1]}, a boundary gradient of {fast_gradient:+.3f}. The brief "
+            f"writes no rule for this edge — it anticipated the slow one — so nothing is "
+            f"mandated and the sweep is not extended downward either. It is recorded because "
+            f"it is the same phenomenon, and because the direction runs AGAINST the published "
+            f"persistence range, which is a reason to discount it rather than chase it."
+        )
+    if not slow_rising and not fast_rising:
+        parts.append(
+            f"**Neither edge is rising.** Slow-edge gradient {slow_gradient:+.3f}, fast-edge "
+            f"gradient {fast_gradient:+.3f}: the surface falls away at both boundaries, so it "
+            f"contains its own optimum and no extension is indicated in either direction."
+        )
+    verdict = " ".join(parts)
+
+    return f"""**Sweep-edge check.** A best cell sitting against a boundary means the sweep has not
+bracketed its own optimum — the surface is still pointing somewhere the study did not look.
+
+{table}
+
+{verdict}"""
 
 
 def _benchmark_block(result: bs.StudyResult, symbol: str, tier_name: str) -> str:
@@ -355,14 +468,24 @@ def _era_block(result: bs.StudyResult, symbol: str, tier_name: str) -> str:
     cagr_range = [row["strategy_cagr"] for row in starts]
     sharpe_flips = sum(1 for row in starts if row["strategy_sharpe"] < row["benchmark_sharpe"])
     dd_gaps = [row["benchmark_maxdd"] - row["strategy_maxdd"] for row in starts]
+
+    # Both of these used to be hardcoded to BTC's shape ("that decade", "a four-figure
+    # percentage return"), which was simply false on ETH's 7-year, three-figure sample.
+    # Derive them from the symbol's own span and its own headline number instead.
+    span_years = sr.n_oos_bars / study.periods_per_year
+    span_phrase = "that decade" if span_years >= 9.5 else f"those {span_years:.0f} years"
+    digits = len(f"{abs(hold.total_return) * 100:.0f}".lstrip("-"))
+    magnitude = {
+        1: "A single-digit", 2: "A two-figure", 3: "A three-figure", 4: "A four-figure",
+    }.get(digits, "A five-figure")
     dd_summary = (
         f"the strategy's max drawdown is lower at every start date, by "
         f"{min(dd_gaps) * 100:.0f} to {max(dd_gaps) * 100:.0f} percentage points"
     )
     return f"""**Yes, the absolute numbers are the era.** {symbol} closed at ${first:,.0f} on the
 first out-of-sample bar and ${last:,.0f} on the last — **{last / first:.0f}× the price**.
-Any long-biased rule applied to that decade produces a number with too many digits in it.
-A four-figure percentage return here is a fact about the instrument, not about the
+Any long-biased rule applied to {span_phrase} produces a number with too many digits in it.
+{magnitude} percentage return here is a fact about the instrument, not about the
 breakout rule, and it should never be quoted on its own.
 
 What the rule contributed is only visible year by year.
@@ -654,9 +777,221 @@ def _dsr_block(result: bs.StudyResult, symbol: str) -> str:
     return "\n".join(lines)
 
 
+NL = "\n"
+"""Newline, named so the report builders can concatenate multi-line blocks without
+burying escapes inside f-strings that already use braces heavily."""
+
+FEATURE_TITLES = {
+    "F1": "Extension at trigger — (close − SMA(50)) / ATR(20)",
+    "F2": "Trigger volume ratio — volume / 20-day average volume",
+    "F3": "Close location value — (close − low) / (high − low) on the trigger bar",
+    "F4": "Cross-sectional breadth — fraction of the universe above its own 20-day high or 50-day SMA",
+    "F5": "Leverage decomposition — ΔOI/Δprice and funding percentile",
+    "F6": "Known-flow proximity — hours to the next Deribit monthly options expiry",
+}
+
+FEATURE_PRIORS = {
+    "F1": "predicted the strongest survivor: high extension = late-stage breakout = worse outcomes",
+    "F2": "predicted a BAND rather than a floor — healthy roughly 1.5-3x, climax above ~5x",
+    "F3": "predicted CLV below ~0.3 (new high, close in the bottom third) = level probed and sold",
+    "F4": "predicted weak at this universe size, and logged anyway so the prediction is testable",
+    "F5": "predicted the most valuable of the set if the data existed",
+    "F6": "genuinely open — weak prior in either direction",
+}
+
+
+FEATURE_PRIOR_SIGN = {
+    "F1": -1,   # high extension = late-stage breakout = WORSE outcomes
+    "F3": +1,   # low close-location = probed and sold = worse; so higher CLV = better
+    "F4": +1,   # breadth confirmation = better
+    "F6": 0,    # genuinely open, no directional prior recorded
+}
+"""The SIGN each prior predicts for the feature's rank correlation with MFE. Recorded so
+the analysis can report "absent" and "present but backwards" as the different findings
+they are — a prior that comes out reversed is more interesting than one that comes out
+flat, and averaging them into "no relationship" would hide that."""
+
+
+def _feature_observation(name: str, verdict) -> str:
+    """Data-derived commentary beyond the verdict: whether the prior's SIGN survived,
+    and whether the feature's realised range made the hypothesis testable at all.
+
+    The second question is the one a rank correlation cannot answer. A hypothesis about
+    a region the trigger population never visits has not been falsified — it has not
+    been tested, and saying so is different from saying it failed."""
+    if not verdict.buckets or verdict.rho_mfe is None:
+        return ""
+    notes = []
+    prior = FEATURE_PRIOR_SIGN.get(name, 0)
+    if prior:
+        observed = 1 if verdict.rho_mfe > 0 else -1
+        if abs(verdict.rho_mfe) < 0.1:
+            notes.append(
+                "Against the prior: the relationship is flat rather than merely weak — "
+                "the prior is unsupported, not reversed."
+            )
+        elif observed != prior:
+            notes.append(
+                f"**Against the prior: the sign is BACKWARDS.** The prior predicted a "
+                f"{'negative' if prior < 0 else 'positive'} relationship with MFE and the sample "
+                f"gives {verdict.rho_mfe:+.2f}. Too weak to act on in either direction, but it is "
+                f"the opposite of what was predicted, not a smaller version of it."
+            )
+        else:
+            notes.append(
+                f"Against the prior: the sign is as predicted ({verdict.rho_mfe:+.2f}), but the "
+                f"magnitude does not clear the bar."
+            )
+
+    lo = min(b.lo for b in verdict.buckets)
+    hi = max(b.hi for b in verdict.buckets)
+    if name == "F3" and lo > 0.3:
+        notes.append(
+            f"**The hypothesis was untestable on this trigger population.** The prior names "
+            f"CLV < 0.3 (a new high that closes in the bottom third of its own bar) as the "
+            f"danger zone; the lowest CLV any trigger actually printed is {lo:.2f}. A bar whose "
+            f"close exceeds a 40-day high can hardly close near its own low, so the region the "
+            f"hypothesis is about is empty **by construction**. F3 as specified cannot be "
+            f"tested on breakout triggers — that is a finding about the feature's definition, "
+            f"not evidence against the idea."
+        )
+    if name == "F4":
+        flat = sum(1 for b in verdict.buckets if b.lo == b.hi)
+        if flat >= len(verdict.buckets) - 2:
+            notes.append(
+                f"**The measure is degenerate here, and worse than the doc predicted.** "
+                f"{flat} of {len(verdict.buckets)} quintiles have zero width, and the range is "
+                f"{lo:.2f}-{hi:.2f}. Two causes compound: a two-instrument universe admits only "
+                f"the values 0, 0.5 and 1; and the breadth measure **includes the instrument "
+                f"that is triggering**, which is above its own 20-day high by definition at that "
+                f"moment. Breadth can therefore never read below 0.5 at a trigger. The fix is a "
+                f"leave-one-out definition, not more instruments alone."
+            )
+    return " ".join(notes)
+
+
+def _feature_section(result: bs.StudyResult) -> str:
+    """The feature-analysis pass the companion doc specifies and v1 never ran.
+
+    Pooled across symbols on the BASELINE variant at the reference tier. Pooling is the
+    honest choice here rather than a convenience: the per-symbol trade counts are in the
+    dozens, the configuration is identical across symbols, and F4's hypothesis is
+    cross-sectional to begin with. It is still a thin sample and the tables say so."""
+    ref = bs.REFERENCE_TIER
+    episodes: list = []
+    per_symbol = {}
+    for symbol in result.by_symbol:
+        symbol_episodes = result.by_symbol[symbol].variants[(BASELINE, ref)].episodes
+        per_symbol[symbol] = sum(1 for e in symbol_episodes if not e.is_open)
+        episodes.extend(symbol_episodes)
+
+    verdicts = fa.analyse_all(episodes, whipsaw_bars=result.config.whipsaw_bars)
+    closed = sum(per_symbol.values())
+    counts = ", ".join(f"{sym} {n}" for sym, n in per_symbol.items())
+    candidates = [name for name, v in verdicts.items() if v.verdict == "CANDIDATE"]
+
+    blocks = []
+    for name in fa.FEATURE_NAMES:
+        v = verdicts[name]
+        head = f"### {name} — {FEATURE_TITLES[name]}" + NL + NL
+        head += f"*Prior on record: {FEATURE_PRIORS[name]}.*" + NL + NL
+        if not v.buckets:
+            blocks.append(head + f"**{v.verdict}.** {v.note}")
+            continue
+        rows = NL.join(
+            f"| {b.index} | {b.n} | {b.lo:+.2f} | {b.hi:+.2f} | {b.mean_mfe * 100:+.1f}% | "
+            f"{b.mean_mae * 100:+.1f}% | {b.win_rate * 100:.0f}% | {b.whipsaw_rate * 100:.0f}% |"
+            for b in v.buckets
+        )
+        observation = _feature_observation(name, v)
+        table = (
+            "| Quintile | Trades | Feature low | Feature high | Mean MFE | Mean MAE | Win rate | Whipsaw |"
+            + NL + "|---|---|---|---|---|---|---|---|" + NL + rows
+        )
+        blocks.append(
+            head + table + NL + NL
+            + f"Rank correlation with MFE **{v.rho_mfe:+.2f}**, with MAE {v.rho_mae:+.2f}; "
+            + f"by sample half {v.rho_first_half:+.2f} then {v.rho_second_half:+.2f} "
+            + f"({v.n_available} of {v.n_total} closed trades carry a value)." + NL + NL
+            + f"**{v.verdict}.** {v.note}"
+            + ((NL + NL + observation) if observation else "")
+        )
+
+    if candidates:
+        shortlist = (
+            f"**Ranked shortlist: {', '.join(candidates)}.** Each meets the logged-feature bar "
+            "(usable rank correlation, sign stable across both halves of the sample, monotone "
+            "quintile means). None is promoted here: promotion needs a plateau test over the "
+            "feature's own threshold and a live-filter increment with its own TrialRegistry "
+            "entries, which is a separate session by the companion doc's own protocol."
+        )
+    else:
+        shortlist = (
+            "**Ranked shortlist: empty. No feature met the promotion bar.** That is a clean "
+            "negative result and it is reported as one — the companion doc asks explicitly for "
+            "falsified hypotheses to be stated rather than buried, and the priors recorded above "
+            "were written down in advance precisely so they could be embarrassed."
+        )
+
+    return f"""---
+
+# Feature analysis: what separates a breakout from an exhaustion print
+
+**These are features, not filters.** Nothing in this section changed a fill, a weight or
+a cost, and nothing here enters the DSR trial pool — logging carries no multiplicity
+cost, which is the whole reason the companion doc insists the features be logged before
+any of them is allowed to become a gate. A feature earns promotion only by showing a
+monotonic relationship with outcomes, stability across the sample, and a plateau over
+its own threshold; the third test and the promotion itself are a later session.
+
+**The trigger bar is not the entry bar.** Fills are next-open (D103), so a trade whose
+entry fill lands on bar t+1 was triggered by bar t's close. Every value below is read
+off bar t, from data at or before t — the information the strategy actually had. Reading
+them off the entry bar would be a one-bar look-ahead hiding inside the diagnostics.
+
+**Sample.** The {BASELINE} baseline at `{ref}`, pooled across symbols
+({counts}) for {closed} closed trades. Pooled because the configuration is identical
+across symbols and the per-symbol counts are in the dozens; a quintile split still
+leaves single-digit-to-low-teens trades per bucket. **Rank statistics on that many
+points are noisy, and only a strong, consistent relationship should be believed.** Every
+table below prints its own bucket counts rather than making the reader infer the
+thinness.
+
+{(NL + NL).join(blocks)}
+
+## Verdict on the feature set
+
+{shortlist}
+
+**Two of the six could not be computed at all**, and are reported as blocked rather than
+quietly dropped. F2 needs trigger-bar volume, which stops at the data layer — the same
+D111 blocker that prevents the volume-confirmation filter, surfacing a second time in a
+second place, which is the clearest evidence yet that the `Bar` schema gap is worth
+closing. F5 needs perpetual-futures open interest and funding; the exchange-native
+sources are identified and free, but the plumbing does not exist.
+
+**F6 is half-built and the report says which half.** On daily bars with a 00:00 UTC
+boundary, every bar close sits exactly on a perp funding timestamp (00/08/16 UTC), so
+the funding-proximity component is identically zero and carries no information at this
+frequency — a real limitation of the bar clock, not of the idea. Only the options-expiry
+component varies, and that is what is logged."""
+
+
 def _multiplicity(result: bs.StudyResult) -> str:
     study = result.config
     per_symbol = len(result.variant_names) * len(result.tiers)
+
+    # v1 printed a breakdown whose sub-rows summed to 19 against a stated total of 23
+    # (the vol-target sensitivities had no row), and the verdict prose then quoted the
+    # 19. A multiplicity table that does not add up is the one table in this report
+    # that must never be wrong, so it is asserted rather than eyeballed.
+    subtotal = len(PLATEAU_NAMES) + len(FILTER_NAMES) + len(SIZING_NAMES) + len(VOL_TARGET_NAMES) + 1
+    if subtotal != len(result.variant_names):
+        raise AssertionError(
+            f"multiplicity breakdown does not sum: rows total {subtotal} but the study ran "
+            f"{len(result.variant_names)} variants ({', '.join(result.variant_names)}). Add the "
+            "missing group to the table rather than adjusting the total."
+        )
     return f"""---
 
 # Multiplicity: everything that was evaluated
@@ -670,6 +1005,7 @@ turned, whether or not it appears in a table above.
 | — of which parameter-grid cells (N_entry × N_exit) | {len(PLATEAU_NAMES)} |
 | — of which filter increments | {len(FILTER_NAMES)} |
 | — of which sizing sensitivities | {len(SIZING_NAMES)} |
+| — of which vol-target sensitivities | {len(VOL_TARGET_NAMES)} |
 | — of which in-training-window selection | 1 |
 | Cost tiers | {len(result.tiers)} |
 | Symbols | {len(result.by_symbol)} |
@@ -976,10 +1312,11 @@ that are not fees are.**
 
 3. **The selection bias above this study is larger than anything inside it.** The DSR
    numbers are near 1.0 at every tier, and the mechanical reason is that the plateau is
-   flat: 19 variants whose Sharpes cluster tightly give a tiny V[{{SRn}}], so the noise
-   floor SR0 barely rises and almost nothing is deflated away. That is DSR working
-   correctly on the multiplicity it was given, and it is also why those numbers should
-   not be read as vindication. The trial pool counts 19 configurations. It does not count
+   flat: {len(result.variant_names)} variants whose Sharpes cluster tightly give a tiny
+   V[{{SRn}}], so the noise floor SR0 barely rises and almost nothing is deflated away.
+   That is DSR working correctly on the multiplicity it was given, and it is also why
+   those numbers should not be read as vindication. The trial pool counts
+   {len(result.variant_names)} configurations. It does not count
    the {result.n_train_evaluations:,} training-window fits, the two-symbol choice, or the
    decision — made in 2026, with a decade of crypto trend visible — to test a trend
    follower on the two crypto assets that survived. **Treat DSR ≈ 1.0 here as "the

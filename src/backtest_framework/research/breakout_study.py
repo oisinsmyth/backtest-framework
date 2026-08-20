@@ -67,7 +67,14 @@ from ..registry.trial_registry import TrialRegistry
 from ..strategies.breakout import BreakoutStrategy, build_breakout_strategy
 from ..validation.dsr import deflated_sharpe_from_trials
 from ..validation.walk_forward import walk_forward_windows
-from .trade_diagnostics import DiagnosticsSummary, TradeEpisode, extract_episodes, summarise
+from .trade_diagnostics import (
+    DiagnosticsSummary,
+    TradeEpisode,
+    breadth_series,
+    extract_episodes,
+    summarise,
+    trigger_features,
+)
 
 CRYPTO_QUANTITY_PRECISION = 8
 """BTC/ETH are traded as `Equity(quantity_precision=8)` (D108): spot crypto, long only,
@@ -208,7 +215,7 @@ class ScheduledBreakout:
                 # Carry the open position across the parameter swap — the whole point
                 # of running continuously (D113). A rebuilt strategy that forgot it was
                 # long would silently flatten the book at every window boundary.
-                rebuilt._in_position = self._inner._in_position
+                rebuilt._state = self._inner._state
                 rebuilt._held_weight = self._inner._held_weight
             self._inner, self._active_from = rebuilt, start
         # The inner strategy's own warm-up guard is keyed on its own requirement; this
@@ -528,7 +535,11 @@ def run_variant(
     variant: Variant,
     tier: CostTier,
     study: BreakoutStudyConfig,
+    breadth: Mapping[datetime, float] | None = None,
 ) -> VariantResult:
+    """`breadth` is F4's cross-sectional input, built once across the whole universe by
+    `run_breakout_study`. None simply leaves F4 unavailable — features are diagnostics
+    and never gate a run."""
     spans = _window_spans(bars, study)
     if not spans:
         raise ValueError("no walk-forward windows fit the series — check sizes vs series length")
@@ -614,7 +625,12 @@ def run_variant(
                 segment, study.rf_annual, study.periods_per_year
             ) / math.sqrt(study.periods_per_year)
 
-    episodes = extract_episodes(result, symbol, run_bars)
+    episodes = extract_episodes(
+        result,
+        symbol,
+        run_bars,
+        features_at=lambda i: trigger_features(run_bars, i, breadth=breadth),
+    )
     oos_episodes = [e for e in episodes if e.entry_index >= warm_up]
     if len(oos_episodes) != len(episodes):
         raise ValueError("an episode opened inside the warm-up prefix — see the leak check above")
@@ -781,6 +797,12 @@ def run_breakout_study(
     by_symbol: dict[str, SymbolResult] = {}
     variant_names: tuple[str, ...] = ()
 
+    # F4 is the one feature that needs more than the instrument's own bars, so it is
+    # built once over the whole universe before any variant runs. Two instruments is
+    # thin and known to be thin — BREAKOUT_REVERSAL_FEATURES.md predicts F4 is
+    # underpowered until the universe grows, and the report says so.
+    breadth = breadth_series(bars_by_symbol)
+
     for symbol, bars in bars_by_symbol.items():
         variants, selector = default_variants(symbol, study)
         variant_names = tuple(v.name for v in variants)
@@ -794,7 +816,7 @@ def run_breakout_study(
             for variant in variants:
                 if progress:
                     progress(f"{symbol} {tier.name} {variant.name}")
-                result = run_variant(bars, symbol, variant, tier, study)
+                result = run_variant(bars, symbol, variant, tier, study, breadth=breadth)
                 results[(variant.name, tier.name)] = result
                 _log_trials(registry, result, study, snapshot_id, trial_id_prefix, spans, bars)
 

@@ -10,6 +10,277 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (breakout Phase 1.1, 2026-08-21 — see `BREAKOUT_RESULTS.md`, D166–D167)
+- **`Direction` / `PositionState` on the breakout brick (D166)** — the strategy is now
+  sign-parameterized: one `_channel_extreme` / `_beyond` pair serves both sides, the
+  boolean `_in_position` flag is replaced by a three-state enum whose value IS the sign of
+  the exposure, and `TrendGateFilter` gates longs above its SMA and shorts below it. These
+  are the forward-compatibility requirements `BREAKDOWN_SHORT_STRATEGY.md` places on the
+  long-side session; Phase 1 shipped without them. Behaviour-preserving for a long book,
+  and `direction` is omitted from `config()` at its LONG default so every v1 trial hash
+  survives unchanged.
+- **`TradeEpisode.features` open map + `research/feature_analysis.py` (D167)** — the
+  at-trigger feature pass from `BREAKOUT_REVERSAL_FEATURES.md`, which Phase 1 never ran.
+  F1/F3/F4/F6 computed, F2 and F5 logged as blocked with reasons, quintile tables and a
+  monotonicity/stability verdict per feature. Features are read off the TRIGGER bar
+  (`entry_index - 1`), not the entry bar — reading the entry bar would be a one-bar
+  look-ahead living inside the diagnostics. Logged only: nothing here gates a run or
+  enters the DSR pool.
+- **Sweep-edge section in the report** — the brief's sweep-edge rule mandated recording
+  the boundary gradient and flagging an N_entry extension when performance is still
+  improving at the sweep boundary. v1 did not report it at all, despite one symbol's best
+  cell sitting exactly on the boundary. Now reported symmetrically, since the two symbols
+  point at opposite edges.
+
+### Fixed (breakout report, 2026-08-21)
+- **The multiplicity breakdown did not sum.** Sub-rows totalled 19 against a stated 23
+  variants — the four vol-target sensitivities had no row — and the verdict prose then
+  quoted the wrong 19 in two places while the DSR tables correctly said 23. The row is
+  added, the prose is computed rather than hardcoded, and the builder now raises if the
+  breakdown ever disagrees with the variant count again.
+- **The era section was hardcoded to BTC's shape.** "that decade" and "a four-figure
+  percentage return" were emitted verbatim for ETH, whose out-of-sample span is 7.4 years
+  and whose returns are three-figure. Both are now derived from the symbol's own span and
+  its own headline number.
+
+
+### Added (breakout cost–frequency frontier, 2026-08-19 — see `docs/results/breakout_intraday.md` and D160–D165)
+- **`scripts/fetch_crypto_intraday.py` + `data/fixtures/crypto_intraday_{1h,30m,15m}_raw*`
+  (D160)** — BTC-USD/ETH-USD intraday fixtures. yfinance serves 730 days of 1h, 60 days of
+  15m/30m, no 4h over a usable span and **no 6h interval at all**, so 1h is the study base
+  and 2h/4h/6h/12h/1d are resampled from it. One-time manual fetch; the only step that
+  touches the network. A `live_fetch`-marked test pins the assumption the offline pipeline
+  cannot check for itself — that the provider stamps intraday crypto bars in UTC, on the
+  hour.
+- **`research/breakout_intraday.py` (D161/D162)** — the resampling contract (exact OHLCV
+  aggregation on 00:00-UTC-anchored buckets, incomplete buckets raise), the two frequency
+  designs, calendar-scaled walk-forward, calendar-unit trade diagnostics, and the frontier
+  renderers. Every number comes from `research.breakout_study` imported unmodified
+  (`run_variant`, `run_benchmark`, `run_constant_fraction_benchmark`, `breakout_config`,
+  `CostTier`, `DEFAULT_TIERS`). No existing interface changed.
+- **Equal walk-forward windows across frequencies as a theorem, not a check (D161).** A UTC
+  day the provider does not serve in full is dropped at *every* frequency, so each rung
+  holds exactly `complete_days × bars_per_day` bars and the window count
+  `floor((days − 315)/63) + 1` is frequency-independent by construction. `window_count`
+  takes no frequency argument; `run_frontier` asserts the equality against every run anyway.
+  7 windows over 441 out-of-sample days at every rung, both symbols.
+- **`periods_per_year` consistency enforced at runtime (D162).** It lives in two places —
+  the argument `analytics.metrics` requires (D17) and the field inside the
+  `inverse_vol_weight` config (D110) — and `assert_periods_per_year_agree` refuses any cell
+  where they disagree. Both copies are logged with every trial so the check is auditable
+  after the fact.
+- **The headline (D165).** Design B (40-bar/10-bar at every frequency) crosses at **2h on
+  both symbols independently**, with **4h the finest bar that still clears its own gross
+  edge**; annualised turnover runs 10.5× → 188.7× and fee drag 4.2% → 75.5% of capital a
+  year from 1d to 1h on BTC. Design A (constant 40-day/10-day calendar horizon) **never
+  crosses** at any rung down to 1h — turnover rises only 10.5× → 11.5×. So
+  `BREAKOUT_RESULTS.md`'s "fees are not the binding constraint" **survives for the 40-day
+  signal at any sampling rate and fails decisively for the shortened-horizon rule below
+  roughly 4-hourly bars.**
+- **`data/breakout_intraday_registry.sqlite`** — 112 rows (96 out-of-sample trials +
+  16 sub-hourly measurement rows), all distinct hashes, config and snapshot id logged per
+  D20. DSR pooled in per-calendar-day units after collapsing every equity curve to
+  end-of-day NAV (D164), because pooling per-bar Sharpes across frequencies is exactly the
+  units bug D98 exists to prevent.
+- **Two data-layer findings, reported rather than absorbed.** (1) `clean-v1`'s
+  `non_positive_volume` rule would have deleted **17,520 of 34,923** hourly bars — yfinance
+  reports Volume = 0 on roughly half of them — so the intraday fixture is cleaned on prices
+  only, with the volume column still written to the snapshot and the artifact surfacing as
+  non-blocking warnings (D160). (2) The 1h → 1d resample **does not** reconcile with the
+  committed daily fixture: opens and closes differ ~2 bp with no sign bias, but the
+  resampled high is at or below the provider's daily high on 99.8% of days and the low at
+  or above on ~90% — yfinance's daily crypto bar is not the aggregate of its own hourly
+  bars, and the bias tilts toward *more* trading (D161). A test pins the negative so a
+  future reconciliation cannot pass silently.
+- **Tests** — `tests/unit/test_breakout_intraday.py` (21) and
+  `tests/integration/test_breakout_intraday_study.py` (15, + 1 `live_fetch`): exact OHLCV
+  aggregation, loud incomplete buckets, 00:00-UTC anchoring, frequency-independent window
+  counts, `periods_per_year` agreement in both places, fixture and snapshot round-trips,
+  cost monotonicity across tiers *at every frequency*, registry hash uniqueness, and the
+  derived-vs-measured cost-wedge cross-check.
+
+### Added (crypto breakout universe cross-section, 2026-08-18 — see `docs/results/breakout_universe.md` and D140–D144)
+- **`scripts/fetch_crypto_universe.py` + `data/fixtures/crypto_universe_2015_2025_raw*` (D140)** —
+  a 63-symbol crypto fixture built to contain the assets that **died**. 77 tickers attempted
+  across three cohorts chosen for *point-in-time* prominence (the 2018 top-30, the 2021 peak,
+  and a cohort sought out because it failed: Terra/LUNA under both provider tickers, TerraUSD,
+  FTT, Celsius, Serum, with OKB/LEO as the surviving exchange-token control). Outcome:
+  **20 survived, 41 collapsed, 2 delisted**; 13 excluded by the pre-stated policy and 1
+  (`MIOTA-USD`) the provider would not serve, every one named in the meta with the statistic
+  that rejected it. The one-time fetch is the only step that touches the network.
+- **`research/breakout_universe.py` (D140/D141)** — selection policy, cross-sectional
+  aggregation and rendering, and *nothing else*. Every number comes from
+  `research.breakout_study` imported unmodified (`run_variant`, `run_benchmark`,
+  `run_constant_fraction_benchmark`, `breakout_config`, `CostTier`, `DEFAULT_TIERS`,
+  `annual_breakdown`, `start_date_sensitivity`, `sharpe_difference_bootstrap`); an
+  integration test pins that every logged config is byte-identical to
+  `breakout_config(40, 10)`. `apply_policy` is the single implementation of the screen,
+  run at fetch time and re-run by the study on the committed fixture so a rejected symbol
+  cannot reach the engine — tested by feeding the study a symbol that fails the coverage
+  rule and asserting it appears in neither the results nor the registry.
+- **The headline (D140).** Across 63 coins at `taker_40bp` the fixed baseline beat 100%
+  buy-and-hold in **51/63 (81%)**, beat the matched-exposure benchmark (D119, the fair
+  test) in **38/63 (60%)**, and reduced max drawdown in **63/63 (100%)**. Split by
+  outcome: against buy-and-hold it wins **45%** of survivors and **98%** of the wrecks;
+  at matched exposure **45%** vs **67%**. **The timing claim generalises only to the
+  assets that fell apart, and fails on the ones that survived** — the standing prior for
+  a trend follower, measured for the first time here. BTC and ETH rank 1st and 8th of 63
+  on total return and 2nd and 13th on Sharpe: the original study's caveat 3 answered with
+  a number.
+- **DSR pool = the cross-section (D142)** — one row per symbol per tier, N = 63, selected
+  on identity fields (`row_kind == "symbol"`), never on presence of a metric (D98). New
+  registry `data/breakout_universe_registry.sqlite`: 252 out-of-sample trials, 756
+  benchmark rows, 9,552 per-window rows, all hashed with the snapshot id. DSR ≈ 0.96 at
+  every tier, and the best symbol is `LUNA1-USD` — a delisted token over 881 bars, printed
+  next to that fact rather than in a headline.
+- **D120's bootstrap, counted instead of described** — a per-coin paired block bootstrap
+  (20-bar blocks, 4,000 sims, seed 0) puts the Sharpe difference's 90% interval clear of
+  zero in **3 of 63** coins against buy-and-hold and **4 of 63** against matched exposure,
+  where ~6 would be expected by chance at that confidence level. No Sharpe comparison in
+  the document is a measurement.
+- **`SnapshotStore` quarantine overridden, loudly (D143)** — the validator's ETF-calibrated
+  >60% move threshold (D74) fires 143 times across 41 of 63 crypto symbols, concentrated in
+  the collapsed cohort. Respecting it mechanically would delete the failed assets and
+  restore the very survivorship bias the study measures, so the run loads with
+  `allow_quarantined=True` in one visible place and the report carries the full violation
+  census. The validator is not modified; recalibration is deferred per R3.
+- **Peg screen added post-hoc and recorded as such (D144)** — the policy's first run raised
+  on `UST-USD` (a stablecoin never prints a 40-bar high, so its Sharpe is −∞ rather than
+  bad). Fixed in the universe policy rather than by imputing or by selecting the DSR pool
+  around it. The threshold sits in an order-of-magnitude-wide empty gap (peg 0.14%/day vs
+  BTC 1.42%/day), and the amendment is dated and explained in D144 rather than folded in.
+- `tests/unit/test_breakout_universe.py` (25) and
+  `tests/integration/test_breakout_universe_study.py` (19, one `live_fetch`-marked) — policy exclusions and their
+  reasons, "the screen never looks at a return", fixture round-trip and 00:00 stamping,
+  empty events sidecar, cost monotonicity across tiers, registry id/hash uniqueness, DSR
+  pool composition, cross-study reconciliation of the BTC/ETH rows against
+  `BREAKOUT_RESULTS.md`, and determinism. 644 tests green (44 new), mypy clean.
+
+### Added (BTC/ETH z-score pairs study, 2026-08-18 — see `docs/results/crypto_pairs_btc_eth.md` and D122–D127)
+- **`research/crypto_pairs_study.py` (D122)** — the study harness for the repo's
+  market-neutral thesis strategy on crypto. `strategies/zscore_pairs.py` is reused
+  **unmodified** (D69): no new strategy was needed, so none was written. The harness
+  imports `breakout_study.CostTier` / `run_benchmark` (D114/D115), `capacity`'s
+  `recording_cost_stack` (D95) and `cointegration`'s Engle–Granger/ADF machinery
+  (D92/D93) rather than reimplementing any of them. It does **not** reuse
+  `run_pairs_study`, whose `StudyConfig` hard-codes the ETF cost stack and logs it
+  verbatim — running it here would have produced trials whose logged `cost_stack`
+  described bricks that did not run, the exact drift D102 closed.
+- **Continuous stitching, with the chained seam priced (D123)** — one continuous OOS
+  backtest per (variant, tier), the breakout study's pattern. The chained alternative
+  ships as a sensitivity row: −96.7% vs −98.0% at the reference tier, 52 round trips vs
+  40. Two seams motivate the choice for a pairs book, not one — the free liquidation
+  D113 already named, plus the silent reset of `ZScorePairsStrategy._side`, which
+  discards the hysteresis band at every boundary and is a *signal* artifact.
+- **A pairs cost stack that charges what a pairs book pays (D124)** — the tier fee brick
+  byte-identical to the breakout study's, plus `BorrowFee` at a stated, swept, non-zero
+  10%/yr on the short leg and `MarginInterest` at 10%/yr on `max(gross − NAV, 0)`. All
+  built through `build_cost_stack` (D102). `leg_weight` swept {1.0, 0.5, 0.25}; the D96
+  margin-threshold collapse reproduces exactly (6,129 → 318 → 0).
+- **Cointegration tested rather than assumed (D125)** — `cointegration_report` runs the
+  ADF on each *training* window only, on both the traded 1:1 log spread (Dickey–Fuller
+  τ_μ) and the Engle–Granger residual, with critical values anchored against
+  `statsmodels.tsa.stattools.adfuller` in the unit suite. Positive and negative controls
+  (a synthetic AR(1) spread; two independent random walks) ship with it.
+- **Per-brick cost attribution and pair-level diagnostics (D127)** — fees / borrow /
+  margin from a recording stack, plus round trips, exposure and annual turnover computed
+  locally rather than by extending `trade_diagnostics.py`, whose "trade = long-flat
+  position episode" definition (D112) does not describe a pairs book.
+- **`tests/golden/test_crypto_pairs_golden.py` + `.hand.txt`** — a six-bar scenario
+  hand-computed to the cent, pinning the axes the breakout golden master cannot reach:
+  two legs filling per decision, borrow charged on the short leg *and only* the short
+  leg, margin charged on gross above NAV, and the constant-gross re-normalization that
+  produces interior fills as NAV moves. Reconciles exactly on first run.
+- `tests/unit/test_crypto_pairs.py` (24), `tests/property/test_zscore_pairs_invariants.py`
+  (9 — headline: perturbing bars after the decision bar cannot change a target, at signal
+  level and through the full engine with carry), `tests/integration/test_crypto_pairs_study.py`
+  (22), `tests/golden/test_crypto_pairs_golden.py` (8). 453 → 516 tests green.
+
+### Added (breakout study review, 2026-08-18 — see D118–D121)
+- **Era decomposition (D121)** — `annual_breakdown`, `exposure_by_year` and
+  `start_date_sensitivity` in `research/breakout_study.py`, with a mandatory
+  "Is this the strategy, or is it the era?" report section. Answers the question a
+  four-figure crypto return always raises: BTC rose 426× over the OOS span, the strategy
+  lost to buy-and-hold in every up year and beat it in 5 of 6 down years, and its CAGR
+  ranges +11% to +49% purely on start date.
+- **Risk-equalised benchmark (D119)** — `run_constant_fraction_benchmark` holds a constant
+  fraction of capital (set to the strategy's own average exposure) through the same engine
+  and tier, so the benchmark's average exposure matches the strategy's and the only
+  remaining difference is *when* exposure was taken.
+- **Paired block bootstrap on Sharpe differences (D120)** —
+  `sharpe_difference_bootstrap`, seeded, resampling one index vector applied to BOTH return
+  series so their correlation is preserved.
+- **Vol-target sweep (D118)** — `voltarget_*` variants at 20/30/60/80% alongside the 40%
+  baseline, registered as trials. DSR pool per (symbol, tier) grows 19 → 23 configurations.
+- `tests/unit/test_breakout_era_analysis.py` (15 tests): bootstrap-against-itself is
+  degenerate at zero (which fails if the pairing breaks), determinism under seed,
+  constant-fraction at f=1 matching engine buy-and-hold, exposure-by-year computed from
+  timestamps rather than run-relative indices, and the vol sweep varying exactly one key.
+  438 → 453 tests green.
+
+### Fixed (breakout study review)
+- **`BREAKOUT_RESULTS.md`'s risk-adjusted claim retracted (D120).** The first version
+  concluded "the entire case for this strategy is a risk-adjusted one" from Sharpe gaps of
+  +0.04 (BTC) and +0.11 (ETH). Those are a tenth and a quarter of one standard error;
+  P(strategy > benchmark) is 55% and 59%. Replaced with the narrower claim that survives:
+  a drawdown-shape result, not an alpha result.
+- **The 100%-invested benchmark was doing unfair work in both directions (D119).** A
+  ~35%-exposed strategy was being judged against a 100%-exposed alternative; the
+  matched-exposure row shows the strategy earning several times the terminal wealth of
+  constant exposure at comparable drawdown.
+- An up-year/down-year claim in the verdict was hardcoded and wrong for ETH (it has a down
+  year, 2019, in which the strategy lost to holding). Now counted from the data.
+- `exposure_by_year` originally indexed the OOS calendar with run-relative episode indices,
+  misattributing time-in-market across years; now computed from episode timestamps, pinned
+  by a test.
+
+### Added (breakout study, 2026-08-18 — see BREAKOUT_RESULTS.md and D108–D117)
+- **`strategies/breakout.py` (D109)** — long-flat Donchian breakout, the repo's second
+  research strategy and its first directional one. Entry on an N_entry-bar high, exit on a
+  faster N_exit-bar low, both extrema computed over completed bars strictly before the
+  current one. Filters (`ConsecutiveCloseFilter`, `VolatilityContractionFilter`,
+  `TrendGateFilter`) and sizing (`FixedWeight`, `InverseVolatilityWeight`) are separate
+  toggleable bricks behind `Protocol`s with declarative configs and factory registries, so
+  a strategy rebuilds from the exact dict the registry hashes (D102). `n_exit > n_entry` is
+  refused: the nesting is what makes entry/exit mutually exclusive on any bar.
+- **`research/breakout_study.py` (D113, D114, D116)** — walk-forward harness
+  (train 252 / test 63 / step 63) running each (symbol, variant, tier) as ONE continuous
+  OOS backtest with a per-window parameter schedule (`ScheduledBreakout`) rather than
+  chained windows; four crypto fee tiers built through the declarative cost-stack path;
+  plateau surface, in-training-window grid selection, per-(symbol, tier) DSR whose pool is
+  configurations rather than windows; report renderers.
+- **`research/trade_diagnostics.py` (D112)** — position-episode reconstruction from engine
+  fills: MFE/MAE, time-in-trade distribution, time-to-stop-out for losers, whipsaw rate,
+  capture ratios, round-trip cost as a share of gross P&L, and rebalance-vs-signal cost
+  split.
+- **`data/fixtures/crypto_daily_2015_2025_raw.csv.gz` (D108)** + fetch script — BTC-USD and
+  ETH-USD daily bars at a fixed 00:00 UTC boundary; 0 cleaning changes and 0 hard
+  validation violations through the Step-7 pipeline.
+- **`scripts/run_breakout_study.py`** → `BREAKOUT_RESULTS.md` + `data/breakout_study_summary.json`
+  (offline, deterministic; 152 out-of-sample trials, 7,904 registry rows).
+- **Tests:** `tests/golden/test_breakout_golden.py` (+ `.hand.txt`) — 9-bar scenario
+  asserted line by line against hand arithmetic; `tests/property/test_breakout_invariants.py`
+  — no-look-ahead under arbitrary future-bar perturbation (signal level and through the
+  engine), hysteresis, cost application, fee monotonicity; `tests/unit/test_breakout.py`,
+  `tests/unit/test_trade_diagnostics.py`, `tests/integration/test_breakout_study.py`.
+  361 → 438 tests green (77 new).
+
+### Changed
+- `tests/unit/test_strategy_labels.py` (D117) — D38's label gate fired for the first time
+  when `breakout.py` landed, exactly as D82 designed it to. The breakout module now carries
+  an explicit directional / not-market-neutral / benchmarked-against-buy-and-hold label, and
+  the gate greps for all three.
+- `strategies/breakout.py`'s `EntryFilter` / `WeightSource` protocols declare `name` and
+  `rebalance` as read-only properties, so frozen brick dataclasses type-conform — the same
+  variance fix audit F20 applied to `Instrument.quote_currency`.
+
+### Deferred
+- **Volume-confirmation filter (D111)** — not built. `Bar` carries no volume and
+  `DataView` hands strategies `Bar` objects; adding volume to the bar schema is a framework
+  change with its own gate, and smuggling a volume series past `DataView` would open the
+  look-ahead hole D32 exists to close. Recorded rather than worked around; no class exists
+  claiming the capability.
+
 ### Fixed (audit remediation, 2026-07-14 — see AUDIT_REPORT.md and D98–D107)
 - **DSR wiring (D98, the audit's one result-corrupting finding):** per-window Sharpes are
   now logged in daily (per-period) units matching the observed SR — the old code logged

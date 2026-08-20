@@ -1,6 +1,6 @@
 # Long-flat breakout: does trend following on BTC/ETH survive exchange fees?
 
-**Produced:** 2026-08-18 ·
+**Produced:** 2026-08-20 ·
 **Snapshot:** `a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032` ·
 **Registry:** `data/breakout_study_registry.sqlite` ·
 **Reproduce:** `uv run python scripts/run_breakout_study.py` (offline, deterministic)
@@ -239,6 +239,18 @@ immediate neighbours average 1.143; the whole
 **0.34 of the surface's own spread**.
 **Borderline.** The top cell sits meaningfully above its immediate neighbours: not a clean plateau, and the best cell should not be quoted as the strategy's performance. Every N_entry row ranks the exit windows identically (N_exit=10 best, N_exit=5 worst), so the surface has consistent structure rather than scattered high cells — the neighbour gap here comes from one systematically weaker column, not from one lucky cell.
 
+**Sweep-edge check.** A best cell sitting against a boundary means the sweep has not
+bracketed its own optimum — the surface is still pointing somewhere the study did not look.
+
+| N_entry | Mean Sharpe across N_exit |
+|---|---|
+| 20 (sweep edge) | 1.182 |
+| 30 | 1.143 |
+| 40 | 1.126 |
+| 55 (sweep edge) | 1.079 |
+
+The best single cell is 20/10 at Sharpe 1.262, which **is** on a sweep boundary. **Performance is also still improving at the FAST edge**: mean Sharpe 1.182 at N_entry=20 against 1.143 at N_entry=30, a boundary gradient of +0.039. The brief writes no rule for this edge — it anticipated the slow one — so nothing is mandated and the sweep is not extended downward either. It is recorded because it is the same phenomenon, and because the direction runs AGAINST the published persistence range, which is a reason to discount it rather than chase it.
+
 ## Benchmarks: three ways to be long
 
 Comparing a strategy that is in the market 37% of the time against a
@@ -282,7 +294,7 @@ leans on a Sharpe gap of a few hundredths should be read as arithmetic, not evid
 **Yes, the absolute numbers are the era.** BTC-USD closed at $238 on the
 first out-of-sample bar and $101,663 on the last — **426× the price**.
 Any long-biased rule applied to that decade produces a number with too many digits in it.
-A four-figure percentage return here is a fact about the instrument, not about the
+A five-figure percentage return here is a fact about the instrument, not about the
 breakout rule, and it should never be quoted on its own.
 
 What the rule contributed is only visible year by year.
@@ -545,6 +557,18 @@ immediate neighbours average 0.840; the whole
 **0.49 of the surface's own spread**.
 **Borderline.** The top cell sits meaningfully above its immediate neighbours: not a clean plateau, and the best cell should not be quoted as the strategy's performance. The N_entry rows do NOT agree on how to rank the exit windows, which is what an unstructured surface looks like: the parameter is not doing anything consistent, and differences between cells are correspondingly harder to distinguish from noise.
 
+**Sweep-edge check.** A best cell sitting against a boundary means the sweep has not
+bracketed its own optimum — the surface is still pointing somewhere the study did not look.
+
+| N_entry | Mean Sharpe across N_exit |
+|---|---|
+| 20 (sweep edge) | 0.783 |
+| 30 | 0.928 |
+| 40 | 0.825 |
+| 55 (sweep edge) | 0.920 |
+
+The best single cell is 55/5 at Sharpe 0.971, which **is** on a sweep boundary. **Performance is still improving at the SLOW edge**: mean Sharpe 0.920 at N_entry=55 against 0.825 at N_entry=40, a boundary gradient of +0.095. This is the case the brief's sweep-edge rule anticipates, and the rule is followed to the letter: **the sweep is NOT extended in this session.** Recorded instead as a recommendation — **extend N_entry toward {100, 150, 250} in a follow-up session**, as a new trial series with its own multiplicity accounting. The published time-series-momentum persistence range (1-12 months) sits almost entirely beyond this sweep's boundary, so a rising slow edge is what the literature would predict rather than a surprise.
+
 ## Benchmarks: three ways to be long
 
 Comparing a strategy that is in the market 33% of the time against a
@@ -587,8 +611,8 @@ leans on a Sharpe gap of a few hundredths should be read as arithmetic, not evid
 
 **Yes, the absolute numbers are the era.** ETH-USD closed at $470 on the
 first out-of-sample bar and $2,831 on the last — **6× the price**.
-Any long-biased rule applied to that decade produces a number with too many digits in it.
-A four-figure percentage return here is a fact about the instrument, not about the
+Any long-biased rule applied to those 7 years produces a number with too many digits in it.
+A three-figure percentage return here is a fact about the instrument, not about the
 breakout rule, and it should never be quoted on its own.
 
 What the rule contributed is only visible year by year.
@@ -821,6 +845,130 @@ conclusion is only available because the plateau surface was computed first.
 
 ---
 
+# Feature analysis: what separates a breakout from an exhaustion print
+
+**These are features, not filters.** Nothing in this section changed a fill, a weight or
+a cost, and nothing here enters the DSR trial pool — logging carries no multiplicity
+cost, which is the whole reason the companion doc insists the features be logged before
+any of them is allowed to become a gate. A feature earns promotion only by showing a
+monotonic relationship with outcomes, stability across the sample, and a plateau over
+its own threshold; the third test and the promotion itself are a later session.
+
+**The trigger bar is not the entry bar.** Fills are next-open (D103), so a trade whose
+entry fill lands on bar t+1 was triggered by bar t's close. Every value below is read
+off bar t, from data at or before t — the information the strategy actually had. Reading
+them off the entry bar would be a one-bar look-ahead hiding inside the diagnostics.
+
+**Sample.** The plateau_40_10 baseline at `taker_40bp`, pooled across symbols
+(BTC-USD 38, ETH-USD 28) for 66 closed trades. Pooled because the configuration is identical
+across symbols and the per-symbol counts are in the dozens; a quintile split still
+leaves single-digit-to-low-teens trades per bucket. **Rank statistics on that many
+points are noisy, and only a strong, consistent relationship should be believed.** Every
+table below prints its own bucket counts rather than making the reader infer the
+thinness.
+
+### F1 — Extension at trigger — (close − SMA(50)) / ATR(20)
+
+*Prior on record: predicted the strongest survivor: high extension = late-stage breakout = worse outcomes.*
+
+| Quintile | Trades | Feature low | Feature high | Mean MFE | Mean MAE | Win rate | Whipsaw |
+|---|---|---|---|---|---|---|---|
+| 1 | 13 | +1.81 | +3.11 | +18.2% | -6.2% | 54% | 0% |
+| 2 | 13 | +3.17 | +3.71 | +53.6% | -5.3% | 62% | 0% |
+| 3 | 13 | +3.74 | +4.20 | +56.9% | -9.2% | 38% | 0% |
+| 4 | 13 | +4.24 | +5.27 | +43.4% | -5.7% | 54% | 0% |
+| 5 | 14 | +5.39 | +13.79 | +39.1% | -5.2% | 71% | 0% |
+
+Rank correlation with MFE **+0.19**, with MAE +0.03; by sample half +0.02 then +0.28 (66 of 66 closed trades carry a value).
+
+**NO.** rank correlation with MFE is +0.19 — no usable relationship
+
+**Against the prior: the sign is BACKWARDS.** The prior predicted a negative relationship with MFE and the sample gives +0.19. Too weak to act on in either direction, but it is the opposite of what was predicted, not a smaller version of it.
+
+### F2 — Trigger volume ratio — volume / 20-day average volume
+
+*Prior on record: predicted a BAND rather than a floor — healthy roughly 1.5-3x, climax above ~5x.*
+
+**UNAVAILABLE.** blocked: no volume on TimestampedBar/DataView (D111) — the same blocker that stops the volume-confirmation filter; F2 is a ratio of the field that does not reach strategy code
+
+### F3 — Close location value — (close − low) / (high − low) on the trigger bar
+
+*Prior on record: predicted CLV below ~0.3 (new high, close in the bottom third) = level probed and sold.*
+
+| Quintile | Trades | Feature low | Feature high | Mean MFE | Mean MAE | Win rate | Whipsaw |
+|---|---|---|---|---|---|---|---|
+| 1 | 13 | +0.60 | +0.80 | +62.4% | -4.6% | 62% | 0% |
+| 2 | 13 | +0.81 | +0.88 | +67.4% | -4.2% | 69% | 0% |
+| 3 | 13 | +0.88 | +0.94 | +26.3% | -9.2% | 38% | 0% |
+| 4 | 13 | +0.95 | +0.96 | +34.8% | -4.5% | 69% | 0% |
+| 5 | 14 | +0.97 | +1.00 | +21.8% | -8.8% | 43% | 0% |
+
+Rank correlation with MFE **-0.19**, with MAE -0.29; by sample half -0.11 then -0.33 (66 of 66 closed trades carry a value).
+
+**NO.** rank correlation with MFE is -0.19 — no usable relationship
+
+**Against the prior: the sign is BACKWARDS.** The prior predicted a positive relationship with MFE and the sample gives -0.19. Too weak to act on in either direction, but it is the opposite of what was predicted, not a smaller version of it. **The hypothesis was untestable on this trigger population.** The prior names CLV < 0.3 (a new high that closes in the bottom third of its own bar) as the danger zone; the lowest CLV any trigger actually printed is 0.60. A bar whose close exceeds a 40-day high can hardly close near its own low, so the region the hypothesis is about is empty **by construction**. F3 as specified cannot be tested on breakout triggers — that is a finding about the feature's definition, not evidence against the idea.
+
+### F4 — Cross-sectional breadth — fraction of the universe above its own 20-day high or 50-day SMA
+
+*Prior on record: predicted weak at this universe size, and logged anyway so the prediction is testable.*
+
+| Quintile | Trades | Feature low | Feature high | Mean MFE | Mean MAE | Win rate | Whipsaw |
+|---|---|---|---|---|---|---|---|
+| 1 | 13 | +0.50 | +1.00 | +46.3% | -5.2% | 69% | 0% |
+| 2 | 13 | +1.00 | +1.00 | +40.1% | -7.3% | 54% | 0% |
+| 3 | 13 | +1.00 | +1.00 | +89.7% | -7.2% | 69% | 0% |
+| 4 | 13 | +1.00 | +1.00 | +14.4% | -7.0% | 31% | 0% |
+| 5 | 14 | +1.00 | +1.00 | +22.0% | -4.9% | 57% | 0% |
+
+Rank correlation with MFE **+0.09**, with MAE +0.09; by sample half +0.29 then -0.18 (66 of 66 closed trades carry a value).
+
+**NO.** rank correlation with MFE is +0.09 — no usable relationship
+
+Against the prior: the relationship is flat rather than merely weak — the prior is unsupported, not reversed. **The measure is degenerate here, and worse than the doc predicted.** 4 of 5 quintiles have zero width, and the range is 0.50-1.00. Two causes compound: a two-instrument universe admits only the values 0, 0.5 and 1; and the breadth measure **includes the instrument that is triggering**, which is above its own 20-day high by definition at that moment. Breadth can therefore never read below 0.5 at a trigger. The fix is a leave-one-out definition, not more instruments alone.
+
+### F5 — Leverage decomposition — ΔOI/Δprice and funding percentile
+
+*Prior on record: predicted the most valuable of the set if the data existed.*
+
+**UNAVAILABLE.** blocked: no perpetual-futures open-interest or funding plumbing in the data layer; exchange-native APIs are identified but unbuilt
+
+### F6 — Known-flow proximity — hours to the next Deribit monthly options expiry
+
+*Prior on record: genuinely open — weak prior in either direction.*
+
+| Quintile | Trades | Feature low | Feature high | Mean MFE | Mean MAE | Win rate | Whipsaw |
+|---|---|---|---|---|---|---|---|
+| 1 | 13 | +8.00 | +80.00 | +30.4% | -6.9% | 38% | 0% |
+| 2 | 13 | +80.00 | +224.00 | +63.8% | -6.8% | 62% | 0% |
+| 3 | 13 | +224.00 | +368.00 | +64.8% | -3.2% | 69% | 0% |
+| 4 | 13 | +368.00 | +488.00 | +27.8% | -7.1% | 62% | 0% |
+| 5 | 14 | +512.00 | +824.00 | +25.5% | -7.4% | 50% | 0% |
+
+Rank correlation with MFE **-0.10**, with MAE -0.15; by sample half -0.14 then +0.09 (66 of 66 closed trades carry a value).
+
+**NO.** rank correlation with MFE is -0.10 — no usable relationship
+
+## Verdict on the feature set
+
+**Ranked shortlist: empty. No feature met the promotion bar.** That is a clean negative result and it is reported as one — the companion doc asks explicitly for falsified hypotheses to be stated rather than buried, and the priors recorded above were written down in advance precisely so they could be embarrassed.
+
+**Two of the six could not be computed at all**, and are reported as blocked rather than
+quietly dropped. F2 needs trigger-bar volume, which stops at the data layer — the same
+D111 blocker that prevents the volume-confirmation filter, surfacing a second time in a
+second place, which is the clearest evidence yet that the `Bar` schema gap is worth
+closing. F5 needs perpetual-futures open interest and funding; the exchange-native
+sources are identified and free, but the plumbing does not exist.
+
+**F6 is half-built and the report says which half.** On daily bars with a 00:00 UTC
+boundary, every bar close sits exactly on a perp funding timestamp (00/08/16 UTC), so
+the funding-proximity component is identically zero and carries no information at this
+frequency — a real limitation of the bar clock, not of the idea. Only the options-expiry
+component varies, and that is what is logged.
+
+
+---
+
 # Multiplicity: everything that was evaluated
 
 Counting honestly matters more than the count itself, so here is every knob that was
@@ -832,6 +980,7 @@ turned, whether or not it appears in a table above.
 | — of which parameter-grid cells (N_entry × N_exit) | 12 |
 | — of which filter increments | 4 |
 | — of which sizing sensitivities | 2 |
+| — of which vol-target sensitivities | 4 |
 | — of which in-training-window selection | 1 |
 | Cost tiers | 4 |
 | Symbols | 2 |
@@ -943,10 +1092,11 @@ that are not fees are.**
 
 3. **The selection bias above this study is larger than anything inside it.** The DSR
    numbers are near 1.0 at every tier, and the mechanical reason is that the plateau is
-   flat: 19 variants whose Sharpes cluster tightly give a tiny V[{SRn}], so the noise
-   floor SR0 barely rises and almost nothing is deflated away. That is DSR working
-   correctly on the multiplicity it was given, and it is also why those numbers should
-   not be read as vindication. The trial pool counts 19 configurations. It does not count
+   flat: 23 variants whose Sharpes cluster tightly give a tiny
+   V[{SRn}], so the noise floor SR0 barely rises and almost nothing is deflated away.
+   That is DSR working correctly on the multiplicity it was given, and it is also why
+   those numbers should not be read as vindication. The trial pool counts
+   23 configurations. It does not count
    the 4,896 training-window fits, the two-symbol choice, or the
    decision — made in 2026, with a decade of crypto trend visible — to test a trend
    follower on the two crypto assets that survived. **Treat DSR ≈ 1.0 here as "the

@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D108**.
+New decisions are added here going forward — next number is **D168**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -119,3 +119,40 @@ written rationale for *why not now*, per R3.
 | [D105](D105-convention-sensitivity-study.md) | Convention-sensitivity study: fill timing x impact calibration on the v2 configuration | Committed | Validation & research integrity |
 | [D106](D106-conventions-pinned.md) | Conventions pinned: share rounding, carry mark timing, bootstrap block length (audit) | Committed | Backtest engine |
 | [D107](D107-deferrals-recorded.md) | Deferrals recorded per R3: margin lock, fill menu, FX brick, IS/OOS ratio, registry artifacts | Committed / Deferred | Scope & sequencing |
+| [D108](D108-crypto-as-equity-instrument.md) | BTC/ETH modelled as `Equity(quantity_precision=8)`, not a new crypto instrument | Committed | Instruments |
+| [D109](D109-breakout-strategy-design.md) | Long-flat breakout: filters and sizing as bricks, hysteresis enforced structurally | Committed | Signals & strategy interface |
+| [D110](D110-vol-target-sizing-lives-in-the-weight.md) | Inverse-volatility sizing lives in the signal→target-weight stage, not the portfolio layer | Committed | Signals & strategy interface |
+| [D111](D111-volume-filter-blocked-on-bar-schema.md) | Volume-confirmation filter NOT built: `Bar` carries no volume, and neither workaround is acceptable | Deferred | Signals & strategy interface |
+| [D112](D112-trade-episode-diagnostics.md) | A "trade" is a position episode, and the diagnostics say so once | Committed | Analytics |
+| [D113](D113-continuous-oos-run-with-parameter-schedule.md) | Walk-forward as one continuous OOS run with a parameter schedule, not chained windows | Committed | Validation & research integrity |
+| [D114](D114-crypto-fee-tiers-are-fees-only.md) | Crypto cost tiers model an exchange fee and nothing else, stated loudly | Committed | Cost architecture |
+| [D115](D115-buy-and-hold-benchmark-is-a-fixed-quantity.md) | The buy-and-hold benchmark holds a fixed quantity, not a fixed weight | Committed | Analytics |
+| [D116](D116-dsr-trial-pool-is-configurations.md) | For a parameter-swept study the DSR trial pool is configurations, not windows | Committed | Validation & research integrity |
+| [D117](D117-d38-label-gate-binds-on-the-breakout-strategy.md) | D38's label gate binds for the first time: the breakout strategy is labelled directional | Committed | Analytics |
+| [D118](D118-vol-target-swept-not-assumed.md) | The vol target is swept, and it is a risk dial rather than a Sharpe improvement | Committed | Signals & strategy interface |
+| [D119](D119-risk-equalised-constant-fraction-benchmark.md) | A constant-fraction benchmark at the strategy's own average exposure | Committed | Analytics |
+| [D120](D120-paired-bootstrap-on-sharpe-differences.md) | Sharpe differences get a paired block bootstrap, and the risk-adjusted claim is retracted | Committed | Validation & research integrity |
+| [D121](D121-era-decomposition-answers-the-crypto-question.md) | Every crypto backtest reports its era decomposition: annual breakdown + start-date sensitivity | Committed | Validation & research integrity |
+| [D122](D122-crypto-pairs-study-is-its-own-harness.md) | The BTC/ETH pairs study gets its own harness; `ZScorePairsStrategy` is reused unmodified | Committed | Validation & research integrity |
+| [D123](D123-continuous-stitching-for-the-pairs-book.md) | The pairs study runs continuously too, and the chained seam is priced rather than argued about | Committed | Validation & research integrity |
+| [D124](D124-pairs-costs-borrow-is-not-zero.md) | A pairs book pays borrow and margin; the rates are stated, swept, and never silently zero | Committed | Cost architecture |
+| [D125](D125-cointegration-is-tested-with-thresholds.md) | Cointegration is a tested premise here, not an assumption; and this is where the ADF gets critical values | Committed | Validation & research integrity |
+| [D126](D126-dsr-pool-excludes-convention-and-cost-sensitivities.md) | The DSR pool is strategy configurations; convention and cost sensitivities are re-pricings, not trials | Committed | Validation & research integrity |
+| [D127](D127-pair-diagnostics-and-the-d45-truncation.md) | Pair diagnostics are computed locally, and D45's truncation to ETH's inception is reported as the sample definition | Committed | Analytics |
+| [D130](D130-bar-shape-resampling-null.md) | The serial-dependence null resamples BAR SHAPES, by segmented permutation, not the block bootstrap | Committed | Validation & research integrity |
+| [D131](D131-block-ladder-measures-the-dependence-horizon.md) | The block ladder is a ruler for the dependence horizon, and its sign is inverted from D23 | Committed | Validation & research integrity |
+| [D132](D132-d36-honoured-by-parallelism-not-deviation.md) | D36's n ≥ 10,000 honoured by parallelising rather than deviating; every p-value carries its Monte Carlo SE | Committed | Analytics |
+| [D133](D133-trade-concentration-and-the-drawdown-sampling-distribution.md) | Trade concentration in two units, and the drawdown claim bootstrapped against BOTH benchmarks | Committed | Analytics |
+| [D140](D140-crypto-universe-selection-policy.md) | The crypto-universe fixture: a pre-stated selection policy that deliberately admits assets that died | Committed | Data layer |
+| [D141](D141-one-configuration-across-the-cross-section.md) | One fixed configuration across the whole cross-section; the universe is the only variable | Committed | Validation & research integrity |
+| [D142](D142-dsr-pool-is-the-cross-section.md) | For a fixed-rule cross-sectional study the DSR trial pool is the symbols | Committed | Validation & research integrity |
+| [D143](D143-sanity-gate-overridden-for-crypto-cross-section.md) | The D26/D74 sanity gate is ETF-calibrated; the crypto cross-section overrides it explicitly and reports every violation | Committed / Deferred | Data layer |
+| [D144](D144-peg-screen-added-after-first-run.md) | A peg screen was added to the universe policy after its first run, and the amendment is recorded rather than hidden | Committed | Data layer |
+| [D160](D160-intraday-data-reality-and-the-1h-study-base.md) | Intraday data reality: 1h is the study base, coarser bars are resampled, and the cleaner is called on prices only | Committed | Data layer |
+| [D161](D161-the-resampling-contract.md) | The resampling contract: exact OHLCV on 00:00-UTC buckets, day-level drop policy, and the daily-fixture reconciliation finding | Committed | Data layer |
+| [D162](D162-two-designs-calendar-horizon-and-bar-count.md) | Two frequency designs — constant calendar horizon and constant bar count — never conflated | Committed | Validation & research integrity |
+| [D163](D163-sub-hourly-is-a-turnover-measurement-not-a-result.md) | 15m/30m are a turnover-and-cost measurement, not a performance result, and the walk-forward is not shrunk to make them one | Committed | Validation & research integrity |
+| [D164](D164-dsr-units-for-a-multi-frequency-pool.md) | For a multi-frequency trial pool, D98's shared period is the calendar day, not the bar | Committed | Validation & research integrity |
+| [D165](D165-the-crossover-rule-and-the-spliced-gross-edge.md) | The crossover is read three ways, and the load-bearing reading splices a measured cost curve onto a ten-year gross edge | Committed | Analytics |
+| [D166](D166-direction-is-omitted-from-config-at-its-default.md) | The breakout brick is sign-parameterized ({long, flat, short} state enum, direction-aware gate) and `direction` is omitted from `config()` at its LONG default so v1 trial hashes survive | Committed | Signals & strategy interface |
+| [D167](D167-at-trigger-features-are-logged-on-an-open-map.md) | At-trigger features live on an open F-numbered map, are computed at the trigger bar (not the entry bar), and unavailable never means imputed | Committed | Diagnostics & reporting |

@@ -61,6 +61,7 @@ from __future__ import annotations
 import math
 import statistics
 from dataclasses import dataclass, field
+from enum import IntEnum
 from typing import Any, Callable, Mapping, Protocol, Sequence
 
 from ..config.errors import ConfigError
@@ -72,6 +73,48 @@ EntryCondition = Callable[[int], bool]
 """Absolute bar index -> "did the raw breakout condition hold on that bar?". Handed to
 filters so a debounce filter can look at the condition's own history without
 re-deriving it (and without any filter being able to reach past the DataView)."""
+
+
+class Direction(IntEnum):
+    """Which way a breakout brick trades. The value IS the sign, so channel logic can
+    be written once and parameterized rather than duplicated per side.
+
+    Phase 1 only ever constructs LONG. SHORT exists because the breakdown addon
+    specifies that the channel logic must be sign-parameterizable *before* the short
+    side is built, so that adding it is a configuration change rather than a rewrite
+    of the strategy brick."""
+
+    LONG = 1
+    SHORT = -1
+
+
+class PositionState(IntEnum):
+    """What the book currently holds. The value is the sign of the exposure, so
+    `state * weight` is the signed target weight with no branching.
+
+    This replaces the boolean `_in_position` flag that Phase 1 shipped with. A bool
+    cannot express {long, flat, short}, and the breakdown addon requires the state
+    machine to admit all three before the short book is written — retrofitting a
+    third state onto a bool later means touching every read of it."""
+
+    SHORT = -1
+    FLAT = 0
+    LONG = 1
+
+
+def _channel_extreme(view: DataView, start: int, end: int, sign: int) -> float:
+    """The channel boundary over bars [start, end) in the `sign` direction: the
+    highest high looking up, the lowest low looking down. One function for both
+    sides — the sign selects the field and the extremum together."""
+    if sign > 0:
+        return max(view[j].high for j in range(start, end))
+    return min(view[j].low for j in range(start, end))
+
+
+def _beyond(price: float, level: float, sign: int) -> bool:
+    """Has `price` breached `level` in the `sign` direction? Strict, so a touch is
+    not a breach — the same convention Phase 1's `>` / `<` comparisons used."""
+    return sign * (price - level) > 0.0
 
 
 class EntryFilter(Protocol):
@@ -292,12 +335,18 @@ class VolatilityContractionFilter:
 
 @dataclass(frozen=True)
 class TrendGateFilter:
-    """Higher-timeframe gate: take entries only when close(t) is above the trailing
-    `sma_window`-bar simple moving average of closes. The SMA window ends at t−1
-    (D44); the comparison uses today's close, which is the same completed-bar quantity
-    the breakout condition itself uses."""
+    """Higher-timeframe gate: take entries only when close(t) sits on the trading side
+    of the trailing `sma_window`-bar simple moving average of closes. The SMA window
+    ends at t−1 (D44); the comparison uses today's close, which is the same
+    completed-bar quantity the breakout condition itself uses.
+
+    Direction-aware by construction: LONG admits entries above the average, SHORT
+    admits them below it. The breakdown addon specifies the short book activates on
+    the inverse of the long book's gate — that is this brick with `direction=SHORT`,
+    not a second class."""
 
     sma_window: int = 200
+    direction: Direction = Direction.LONG
     name: str = field(default="trend_gate", init=False)
 
     def __post_init__(self) -> None:
@@ -310,10 +359,13 @@ class TrendGateFilter:
     def accepts(self, view: DataView, entry_condition: EntryCondition) -> bool:
         i = view.current_index
         sma = statistics.fmean(view[j].close for j in range(i - self.sma_window, i))
-        return view[i].close > sma
+        return _beyond(view[i].close, sma, self.direction)
 
     def config(self) -> dict[str, Any]:
-        return {"type": "trend_gate", "sma_window": self.sma_window}
+        config: dict[str, Any] = {"type": "trend_gate", "sma_window": self.sma_window}
+        if self.direction is not Direction.LONG:
+            config["direction"] = self.direction.name.lower()
+        return config
 
 
 def _mean_true_range(view: DataView, start: int, end: int) -> float:
@@ -331,18 +383,23 @@ def _mean_true_range(view: DataView, start: int, end: int) -> float:
 
 @dataclass
 class BreakoutStrategy:
-    """Long-flat Donchian breakout. Holds per-run mutable state (`_in_position`,
-    `_held_weight`) — construct a fresh instance per backtest run, the same contract
-    ZScorePairsStrategy carries (D68)."""
+    """Donchian breakout, one direction at a time. Holds per-run mutable state
+    (`_state`, `_held_weight`) — construct a fresh instance per backtest run, the same
+    contract ZScorePairsStrategy carries (D68).
+
+    `direction` selects the side. Phase 1 constructs only LONG, and a LONG instance
+    behaves exactly as the original long-flat brick did — the sign parameterization is
+    forward compatibility for the breakdown addon, not a behaviour change."""
 
     strategy_id: str
     instrument_id: str
     n_entry: int = 40
     n_exit: int = 10
+    direction: Direction = Direction.LONG
     weight_source: WeightSource = field(default_factory=lambda: FixedWeight(1.0))
     filters: tuple[EntryFilter, ...] = ()
 
-    _in_position: bool = field(default=False, init=False, repr=False)
+    _state: PositionState = field(default=PositionState.FLAT, init=False, repr=False)
     _held_weight: float = field(default=0.0, init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -361,19 +418,21 @@ class BreakoutStrategy:
     # ---- signal primitives, both strictly over COMPLETED bars before the current one
 
     def entry_level(self, view: DataView, index: int) -> float:
-        """max(high) over index−n_entry … index−1. Today's own high is excluded, so a
-        bar can never trigger on itself."""
-        return max(view[j].high for j in range(index - self.n_entry, index))
+        """The entry channel boundary over index−n_entry … index−1, taken IN the trade
+        direction: max(high) for a long, min(low) for a short. Today's own bar is
+        excluded, so a bar can never trigger on itself."""
+        return _channel_extreme(view, index - self.n_entry, index, self.direction)
 
     def exit_level(self, view: DataView, index: int) -> float:
-        """min(low) over index−n_exit … index−1."""
-        return min(view[j].low for j in range(index - self.n_exit, index))
+        """The exit channel boundary over index−n_exit … index−1, taken AGAINST the
+        trade direction: min(low) for a long, max(high) for a short."""
+        return _channel_extreme(view, index - self.n_exit, index, -self.direction)
 
     def entry_condition(self, view: DataView, index: int) -> bool:
-        return view[index].close > self.entry_level(view, index)
+        return _beyond(view[index].close, self.entry_level(view, index), self.direction)
 
     def exit_condition(self, view: DataView, index: int) -> bool:
-        return view[index].close < self.exit_level(view, index)
+        return _beyond(view[index].close, self.exit_level(view, index), -self.direction)
 
     def warm_up_bars(self) -> int:
         """Minimum `current_index` at which every component can be evaluated."""
@@ -394,9 +453,9 @@ class BreakoutStrategy:
             # aside until every component has the history it needs.
             return self._targets(0.0)
 
-        if self._in_position:
+        if self._state is not PositionState.FLAT:
             if self.exit_condition(view, i):
-                self._in_position, self._held_weight = False, 0.0
+                self._state, self._held_weight = PositionState.FLAT, 0.0
             elif self.weight_source.rebalance == "every_bar":
                 w = self.weight_source.weight(view)
                 if w is not None:
@@ -406,9 +465,12 @@ class BreakoutStrategy:
         ):
             w = self.weight_source.weight(view)
             if w is not None and w > 0.0:
-                self._in_position, self._held_weight = True, w
+                self._state = PositionState(int(self.direction))
+                self._held_weight = w
 
-        return self._targets(self._held_weight)
+        # The state IS the sign, so a short book emits a negative target weight with
+        # no branch here. `_held_weight` stays a magnitude in every state.
+        return self._targets(self._state * self._held_weight)
 
     def _targets(self, weight: float) -> list[TargetWeight]:
         return [
@@ -420,13 +482,20 @@ class BreakoutStrategy:
     def config(self) -> dict[str, Any]:
         """Declarative description of the whole strategy (D52/D102) — what the
         registry hashes, and what `build_breakout_strategy` rebuilds."""
-        return {
+        config: dict[str, Any] = {
             "type": "breakout_long_flat",
             "n_entry": self.n_entry,
             "n_exit": self.n_exit,
             "weight_source": self.weight_source.config(),
             "filters": [f.config() for f in self.filters],
         }
+        # `direction` is emitted only when it is not the LONG default, so every
+        # config a long-flat run produces hashes exactly as it did before the sign
+        # parameterization existed and the v1 trial registry stays comparable
+        # (D166). Absence still determines the run: the default is pinned here.
+        if self.direction is not Direction.LONG:
+            config["direction"] = self.direction.name.lower()
+        return config
 
 
 # ------------------------------------------------------------------------ factories
@@ -450,6 +519,21 @@ def _optional_number(config: dict, key: str, default: float, kind: str) -> float
     return float(value)
 
 
+def _direction(config: dict, kind: str) -> Direction:
+    """Parse the optional `direction` key. Absent means LONG — the default is pinned
+    here and in `config()`, so an omitted key is unambiguous rather than merely
+    unspecified (D166)."""
+    if "direction" not in config:
+        return Direction.LONG
+    value = config["direction"]
+    if not isinstance(value, str) or value.upper() not in Direction.__members__:
+        raise ConfigError(
+            f"{kind} config key 'direction' must be one of "
+            f"{sorted(n.lower() for n in Direction.__members__)}, got {value!r}"
+        )
+    return Direction[value.upper()]
+
+
 ENTRY_FILTER_REGISTRY = FactoryRegistry(kind="entry_filter")
 ENTRY_FILTER_REGISTRY.register(
     "consecutive_close", lambda c: ConsecutiveCloseFilter(m=_required_int(c, "m", "consecutive_close"))
@@ -464,7 +548,10 @@ ENTRY_FILTER_REGISTRY.register(
 )
 ENTRY_FILTER_REGISTRY.register(
     "trend_gate",
-    lambda c: TrendGateFilter(sma_window=int(_optional_number(c, "sma_window", 200, "trend_gate"))),
+    lambda c: TrendGateFilter(
+        sma_window=int(_optional_number(c, "sma_window", 200, "trend_gate")),
+        direction=_direction(c, "trend_gate"),
+    ),
 )
 
 WEIGHT_SOURCE_REGISTRY = FactoryRegistry(kind="weight_source")
@@ -506,6 +593,7 @@ def build_breakout_strategy(
         instrument_id=instrument_id,
         n_entry=_required_int(config, "n_entry", "breakout_long_flat"),
         n_exit=_required_int(config, "n_exit", "breakout_long_flat"),
+        direction=_direction(config, "breakout_long_flat"),
         weight_source=build_weight_source(config["weight_source"]),
         filters=tuple(build_entry_filter(f) for f in filters),
     )

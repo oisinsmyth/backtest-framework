@@ -27,9 +27,9 @@ from __future__ import annotations
 
 import math
 import statistics
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Sequence
+from dataclasses import dataclass, field
+from datetime import date, datetime, timedelta
+from typing import Callable, Mapping, Sequence
 
 from ..analytics.metrics import max_drawdown
 from ..data.bars import TimestampedBar
@@ -38,6 +38,22 @@ from ..engine.backtest import BacktestResult
 FLAT_TOLERANCE = 1e-9
 """Position sizes are crypto-precision (8 dp) floats; anything smaller than this is
 flat, not a residual holding (D47's stated-epsilon policy, applied to quantities)."""
+
+
+FEATURE_NAMES = ("F1", "F2", "F3", "F4", "F5", "F6")
+"""At-trigger features, numbered per BREAKOUT_REVERSAL_FEATURES.md. The numbering is
+open-ended by design — the terrain addon continues it at F7 — so this tuple and the
+`TradeEpisode.features` map both grow without a schema migration."""
+
+FEATURE_UNAVAILABLE = {
+    "F2": "no volume on TimestampedBar/DataView (D111) — the same blocker that stops "
+          "the volume-confirmation filter; F2 is a ratio of the field that does not reach "
+          "strategy code",
+    "F5": "no perpetual-futures open-interest or funding plumbing in the data layer; "
+          "exchange-native APIs are identified but unbuilt",
+}
+"""Why a feature is None everywhere, for the features that are blocked rather than
+merely degenerate. Logged as an honest stub instead of being silently omitted."""
 
 
 @dataclass(frozen=True)
@@ -72,6 +88,19 @@ class TradeEpisode:
     mae: float
     """Max adverse excursion as a fraction of the entry price."""
 
+    features: Mapping[str, float | None] = field(default_factory=dict)
+    """At-trigger feature values, keyed by F-number (BREAKOUT_REVERSAL_FEATURES.md).
+
+    Open by construction: new features are new keys, never new columns, so the
+    terrain addon's F7/F8/F9 can be logged onto the same episodes without a schema
+    migration. `None` means UNAVAILABLE at this trigger — a blocked data source, or a
+    window that does not reach back far enough — and is never imputed. Absent keys
+    mean the feature was not computed for this run at all, which is a different
+    statement from `None`.
+
+    Populated once at construction; the dataclass is frozen but this mapping is not
+    deep-frozen, so treat it as read-only by convention."""
+
     @property
     def net_pnl(self) -> float:
         return self.gross_pnl - self.costs
@@ -79,7 +108,6 @@ class TradeEpisode:
     @property
     def is_open(self) -> bool:
         return self.exit_index is None
-
 
 @dataclass(frozen=True)
 class DiagnosticsSummary:
@@ -125,9 +153,15 @@ def extract_episodes(
     result: BacktestResult,
     instrument_id: str,
     bars: Sequence[TimestampedBar],
+    features_at: Callable[[int], Mapping[str, float | None]] | None = None,
 ) -> list[TradeEpisode]:
     """`bars` must be the EXECUTION series the backtest ran on, in the same order —
-    excursions are read off it by timestamp."""
+    excursions are read off it by timestamp.
+
+    `features_at` is called with the TRIGGER index (the bar before the entry fill, see
+    the at-trigger features section) and returns that episode's feature map. Omitted
+    means no features are logged, which leaves `TradeEpisode.features` empty — a
+    different statement from a feature present but None."""
     index_by_timestamp = {tb.timestamp: i for i, tb in enumerate(bars)}
     fills = [f for f in result.fills if f[1] == instrument_id]
 
@@ -171,6 +205,7 @@ def extract_episodes(
                     n_fills=len(episode_fills),
                     mfe=mfe,
                     mae=mae,
+                    features=dict(features_at(open_state["entry_index"] - 1)) if features_at else {},
                 )
             )
             open_state = None
@@ -200,6 +235,7 @@ def extract_episodes(
                 n_fills=len(episode_fills),
                 mfe=mfe,
                 mae=mae,
+                features=dict(features_at(open_state["entry_index"] - 1)) if features_at else {},
             )
         )
     return episodes
@@ -310,3 +346,126 @@ def _percentile(values: Sequence[float], q: float) -> float:
     ordered = sorted(values)
     rank = max(1, math.ceil(q * len(ordered)))
     return float(ordered[rank - 1])
+
+
+# ------------------------------------------------------------------ at-trigger features
+#
+# These are LOGGED, never acted on. BREAKOUT_REVERSAL_FEATURES.md is explicit that
+# logging carries no multiplicity cost and that promotion to a live filter is a
+# separate, later exercise with its own TrialRegistry accounting. Nothing in this
+# section can change a fill, a weight, or a cost.
+#
+# THE TRIGGER BAR IS NOT THE ENTRY BAR. Fills are next-open (D103): the decision is
+# taken on bar t's close and filled at bar t+1's open, so an episode whose
+# `entry_index` is t+1 was triggered on bar t. Every feature below is computed at
+# t = entry_index - 1, from bars at or before t, which is exactly the information the
+# strategy had when it decided. Reading them off the entry bar instead would be a
+# one-bar look-ahead in the diagnostics.
+
+
+def _true_range(bars: Sequence[TimestampedBar], index: int) -> float:
+    bar, prev_close = bars[index].bar, bars[index - 1].bar.close
+    return max(bar.high - bar.low, abs(bar.high - prev_close), abs(bar.low - prev_close))
+
+
+def _atr(bars: Sequence[TimestampedBar], end: int, window: int) -> float | None:
+    """Mean true range over the `window` bars ENDING AT end-1 (D44). Plain mean, not
+    Wilder's — the same estimator VolatilityContractionFilter uses, so F1 and the
+    volatility-contraction filter speak the same units."""
+    start = end - window
+    if start < 1:
+        return None
+    return sum(_true_range(bars, j) for j in range(start, end)) / window
+
+
+def last_friday(year: int, month: int) -> date:
+    """Last Friday of the month — the Deribit monthly options expiry date."""
+    first_of_next = date(year + 1, 1, 1) if month == 12 else date(year, month + 1, 1)
+    last_day = first_of_next - timedelta(days=1)
+    return last_day - timedelta(days=(last_day.weekday() - 4) % 7)
+
+
+def hours_to_next_expiry(timestamp: datetime) -> float:
+    """Hours from `timestamp` to the next Deribit monthly options expiry (last Friday
+    of the month, 08:00 UTC). Pure calendar arithmetic — zero data dependencies, which
+    is why F6's expiry half is computable now while its funding half is not.
+
+    Timestamps in this project's fixtures are naive UTC; treated as such here."""
+    for year, month in ((timestamp.year, timestamp.month),
+                        (timestamp.year + (timestamp.month == 12), timestamp.month % 12 + 1)):
+        expiry = datetime.combine(last_friday(year, month), datetime.min.time()) + timedelta(hours=8)
+        if expiry >= timestamp:
+            return (expiry - timestamp).total_seconds() / 3600.0
+    raise AssertionError("next expiry is always within two months")
+
+
+def breadth_series(
+    bars_by_symbol: Mapping[str, Sequence[TimestampedBar]],
+    *,
+    high_window: int = 20,
+    sma_window: int = 50,
+) -> dict[datetime, float]:
+    """F4's cross-sectional input: per timestamp, the fraction of the universe whose
+    close is above its own `high_window`-bar high OR its own `sma_window`-bar SMA.
+
+    Look-ahead discipline matches the strategy's: both windows END AT THE PREVIOUS BAR
+    and only the current close is compared against them, so the value at timestamp t
+    uses nothing after t. Symbols without enough history at t are excluded from the
+    denominator rather than counted as False — "not yet measurable" is not "not
+    participating".
+
+    Low power is expected and was predicted: with a two-instrument universe the
+    fraction can only take the values 0, 0.5 and 1."""
+    participating: dict[datetime, list[bool]] = {}
+    warm_up = max(high_window, sma_window)
+    for bars in bars_by_symbol.values():
+        for i in range(warm_up, len(bars)):
+            close = bars[i].bar.close
+            above_high = close > max(bars[j].bar.high for j in range(i - high_window, i))
+            above_sma = close > statistics.fmean(bars[j].bar.close for j in range(i - sma_window, i))
+            participating.setdefault(bars[i].timestamp, []).append(above_high or above_sma)
+    return {ts: sum(flags) / len(flags) for ts, flags in participating.items() if flags}
+
+
+def trigger_features(
+    bars: Sequence[TimestampedBar],
+    trigger_index: int,
+    *,
+    breadth: Mapping[datetime, float] | None = None,
+) -> dict[str, float | None]:
+    """The at-trigger feature vector for a decision taken on `bars[trigger_index]`.
+
+    Every key in FEATURE_NAMES is always present. `None` means unavailable at this
+    trigger — either blocked at the data layer (F2, F5; see FEATURE_UNAVAILABLE) or
+    short of warm-up — and is never imputed."""
+    features: dict[str, float | None] = {name: None for name in FEATURE_NAMES}
+    if trigger_index < 0 or trigger_index >= len(bars):
+        return features
+    bar = bars[trigger_index].bar
+
+    # F1 — extension at trigger: (close − SMA(50)) / ATR(20), windows ending at t−1.
+    atr = _atr(bars, trigger_index, 20)
+    if atr is not None and atr > 0.0 and trigger_index >= 50:
+        sma50 = statistics.fmean(bars[j].bar.close for j in range(trigger_index - 50, trigger_index))
+        features["F1"] = (bar.close - sma50) / atr
+
+    # F2 — trigger volume ratio: blocked at the data layer (D111).
+
+    # F3 — close location value: where in the bar's own range the close landed.
+    span = bar.high - bar.low
+    if span > 0.0:
+        features["F3"] = (bar.close - bar.low) / span
+
+    # F4 — cross-sectional breadth at the trigger timestamp.
+    if breadth is not None:
+        features["F4"] = breadth.get(bars[trigger_index].timestamp)
+
+    # F5 — leverage decomposition: blocked, no derivatives plumbing.
+
+    # F6 — known-flow proximity. Only the options-expiry half is computable: on daily
+    # bars with a 00:00 UTC boundary every close sits exactly on a perp funding stamp
+    # (00/08/16 UTC), so the funding half is identically zero and carries no
+    # information at this frequency. Logging the expiry distance alone, and saying so.
+    features["F6"] = hours_to_next_expiry(bars[trigger_index].timestamp)
+
+    return features
