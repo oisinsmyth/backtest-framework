@@ -216,6 +216,89 @@ none.
       writeup is now the lead link; stale "pre-implementation" status fixed.
       326 tests (27 new).
 - [ ] Commit writeup skeleton + D97
+- [x] **Long-flat breakout study on BTC/ETH — the second research strategy, and the
+      first directional one (D108–D117).** `strategies/breakout.py` (Donchian
+      long-flat with toggleable filter and sizing bricks), `research/breakout_study.py`
+      (walk-forward 252/63, four fee tiers, plateau surface, in-train grid selection,
+      configuration-pool DSR), `research/trade_diagnostics.py` (position episodes:
+      MFE/MAE, time-in-trade, whipsaw, capture, cost share).
+      `BREAKOUT_RESULTS.md` + `data/breakout_study_summary.json`; 152 OOS trials,
+      7,904 registry rows, offline and deterministic. Three things worth remembering:
+      (1) the volume-confirmation filter is BLOCKED — `Bar` carries no volume and both
+      workarounds are worse than the gap (D111); (2) the pairs study's chained-window
+      pattern would have distorted a trend follower, so this study runs one continuous
+      OOS backtest with a per-window parameter schedule (D113); (3) D38's label gate
+      fired the moment `breakout.py` landed, exactly as D82 designed it to (D117).
+      Headline: survives fees easily (10–11% of gross P&L at 0.40% taker, 0% whipsaw,
+      ~26–29 day median hold) but loses badly to buy-and-hold on BTC and beats it
+      modestly on ETH — the case is risk-adjusted only. 438 tests (77 new).
+- [ ] Commit breakout study + D108–D117
+- [x] **Breakout study review — three claims corrected, one question answered
+      (D118–D121).** Prompted by "these results seem crazy — is that just the crypto
+      hype?", which was the right question. (1) **Era decomposition** (D121): BTC rose
+      426× over the OOS span, so the absolute returns are the instrument's; year by year
+      the strategy lost to buy-and-hold in every up year and beat it in 5 of 6 down years,
+      and its CAGR swings +11% to +49% on start date alone. It is insurance bought with
+      bull-market underperformance, and the case rests on five observations. (2) **The
+      Sharpe claim was retracted** (D120): +0.04/+0.11 gaps are a fraction of a standard
+      error, P(>0) = 55%/59% under a paired block bootstrap. (3) **The benchmark was
+      unfair in the other direction** (D119): at matched average exposure the strategy
+      earns ~4× the terminal wealth of constant exposure at similar drawdown. (4) **The
+      vol target was swept** (D118) and turns out to be a risk dial, not a Sharpe
+      improvement. 453 tests (15 new).
+- [ ] Commit breakout review + D118–D121
+- [x] **BTC/ETH z-score pairs study — an honest negative, and the premise is what
+      failed (D122–D127).** `research/crypto_pairs_study.py` +
+      `scripts/run_crypto_pairs_study.py` → `docs/results/crypto_pairs_btc_eth.md` +
+      `data/crypto_pairs_registry.sqlite`; 76 OOS trials, 3,344 registry rows, offline
+      and deterministic on the same frozen snapshot as the breakout study.
+      `ZScorePairsStrategy` reused UNMODIFIED (D69) — no new strategy was needed or
+      written. Five things worth remembering:
+      (1) **there is no edge to cost.** Zero fees AND zero carry still returns −88.7%
+      over 2,709 OOS bars (Sharpe −0.67). Every cost number in the artifact describes
+      how much faster a losing strategy loses, so the report leads with that rather
+      than burying it under a cost table.
+      (2) **the pair is not cointegrated** (D125): the traded 1:1 log spread is
+      stationary in 6 of 43 *training* windows (14% — roughly what a 5% test fires at on
+      noise), and the Engle–Granger β has median 0.74, so even the relationship the data
+      supports is not the one being traded. Critical values are anchored against
+      statsmodels rather than typed in.
+      (3) **market neutrality is the one claim that survives**: realised β −0.011 /
+      +0.022 / −0.006 against BTC / ETH / a 50/50 basket, against D37's ≈0 expectation.
+      The engineering works; the thesis does not.
+      (4) **borrow was not assumed to be zero** (D124): 10%/yr on the short leg, swept
+      0–25%. A silent zero would have shown 1.47× the terminal wealth. The verdict does
+      not move at 0%/yr either, which is what makes it robust.
+      (5) **the D45 inner join truncates the study to ETH's inception** (2017-11-09,
+      1,043 BTC bars discarded) — correct for a pairs trade, and it means no number here
+      shares a span with `BREAKOUT_RESULTS.md`'s BTC rows (D127). 516 tests (63 new),
+      mypy clean.
+- [ ] Commit crypto pairs study + D122–D127
+
+- [x] **Crypto breakout universe cross-section (D140–D144)** — `docs/results/breakout_universe.md`.
+      Answers `BREAKOUT_RESULTS.md`'s own caveat 3 ("BTC and ETH are the two crypto assets
+      that survived… the single largest un-deflatable bias in this document") by running the
+      *identical, unmodified* machinery over 63 coins deliberately including ones that died.
+      **Result: the timing claim generalises only to the assets that fell apart.** At
+      `taker_40bp` the fixed baseline beats matched-exposure (D119) in 45% of survivors and
+      67% of collapsed/delisted names; against 100% buy-and-hold, 45% vs 98%. Max drawdown
+      is reduced in 63/63. BTC and ETH rank 1st/8th of 63 on return and 2nd/13th on Sharpe —
+      the original study *was* substantially measuring its instrument choice, and now there
+      is a number for it. Five things worth remembering:
+      (1) **the universe policy is the deliverable as much as the numbers are** — pre-stated,
+      mechanical, screening cleaned bars, applied once at fetch and again at study time so a
+      rejected symbol cannot reach the engine, with every exclusion named (D140);
+      (2) **the sanity gate had to be overridden** — D74's >60% move threshold is an *ETF*
+      calibration and fires 143 times here, concentrated in the collapsed cohort, so obeying
+      it would have restored the exact bias being measured (D143). Recalibration deferred;
+      (3) **the policy was amended once, post-hoc, for a stablecoin** whose Sharpe was −∞,
+      and D144 records the amendment rather than hiding it;
+      (4) **no Sharpe difference is measurable** — a per-coin paired bootstrap clears zero in
+      3/63 and 4/63, against ~6 expected by chance;
+      (5) **the roster is still hindsight-assembled** and provider survivorship is unfixed
+      (`MIOTA-USD` is missing, not omitted). Less biased than BTC/ETH; not unbiased.
+      644 tests (44 new), mypy clean.
+- [ ] Commit breakout universe study + D140–D144
 
 ## Next (queued, not started) — Phase G closing
 
@@ -228,6 +311,23 @@ none.
 - [ ] Study candidates if research resumes: parameter sensitivity (every
       variant logged → honest DSR); an idle-cash interest brick (the material
       cost-model gap the gross sweep exposed).
+- [ ] **β-hedged crypto pairs (v2 of D122's study).** The obvious next experiment the
+      cointegration section points at: BTC/ETH's Engle–Granger β has median 0.74, not
+      ≈1, so D94's finding (a fitted β costs more in estimation noise than it buys) does
+      not transfer from a universe whose selector already demanded β ≈ 1.
+      `research/beta_zscore.py` already exists. One variable per version (D92).
+- [ ] **A crypto pair chosen inside the training window, from a universe.** D22's rule,
+      which the BTC/ETH study structurally cannot satisfy — and the only thing that would
+      give its DSR something honest to deflate (D126).
+- [ ] **Volume on `TimestampedBar` (D111)** — the one interface change the breakout
+      study wanted and could not make. Needs: a decision record accepting the schema
+      change, a golden master covering a volume-gated entry, and a re-run of the D79
+      cross-engine reconciliation. Unblocks the volume-confirmation filter (~40 lines
+      against the existing `EntryFilter` protocol) and D3's ADV work shares the plumbing.
+- [ ] **Execution realism for the breakout study** — the honest next experiment per
+      BREAKOUT_RESULTS.md: intraday bars, a spread/impact model for crossing into a
+      breakout, and fill-probability modelling for resting maker orders. The report's own
+      finding is that this moves the numbers by more than the entire 0–40 bp fee range.
 - [ ] Wire `analytics.tearsheet` into the v1/v2 first-number scripts (own diff).
 - [x] Config factories for real bricks + strategy (D52) for full re-run-from-config
       — done as D102 (audit remediation): the study stack is config-built, the
@@ -252,6 +352,16 @@ none.
 - D79: at target weight ≈ 1.0, vectorbt reserves fees from the purchase while we
   charge fees to cash — a real convention difference, documented, deliberately below
   the comparison's 0.6 weight. Revisit if any strategy ever runs at full investment.
+- **`Strategy` protocol variance (breakout session):** `engine/strategy.py` declares
+  `strategy_id` as a settable attribute, so the frozen `ScheduledWeightStrategy` does not
+  type-conform — the same trap audit F20 fixed on `Instrument.quote_currency` by making it
+  a read-only property. Left alone (existing interface, not this study's to change) with a
+  narrow `type: ignore` in `research/breakout_study.py`. Fix it the next time
+  `engine/strategy.py` is opened for another reason.
+- **Two studies now use different walk-forward stitching (D113).** The pairs studies chain
+  per-window backtests; the breakout study runs continuously with a parameter schedule.
+  Both are correct for their strategy's holding period, and neither is being rewritten —
+  but any future cross-study comparison has to account for it.
 
 ## Watch list (not urgent, don't forget)
 
@@ -582,3 +692,40 @@ none.
   exactly the class of drift the test exists to catch. README brought current
   (was still claiming "pre-implementation"); writeup is now its lead link.
   326 tests green (27 new).
+- **2026-08-18** — Crypto breakout **universe cross-section** shipped (D140–D144,
+  `docs/results/breakout_universe.md`). Built to attack `BREAKOUT_RESULTS.md`'s own
+  stated worst bias rather than restate it: 77 tickers attempted across cohorts chosen
+  for *past* prominence plus a cohort chosen *because it failed*, 63 admitted (20
+  survived / 41 collapsed / 2 delisted), every exclusion and the one fetch failure named
+  with its statistic. One fixed configuration everywhere (D141) so the cross-section is
+  the only variable; every computation imported unmodified from `breakout_study`. The
+  answer: **the strategy's value is concentrated in the assets that died** — 67% of the
+  wrecks beat matched exposure against 45% of the survivors, and 98% vs 45% against
+  buy-and-hold — while drawdown reduction holds in 63/63. BTC and ETH sit in the top
+  quartile of their own cross-section. Two integrity notes worth more than the numbers:
+  the ETF-calibrated sanity gate had to be explicitly overridden because obeying it would
+  have deleted the failed cohort (D143), and the selection policy was amended once,
+  post-hoc, when a stablecoin produced an undefined Sharpe — recorded in D144 with its
+  reason rather than folded in silently. 644 tests green (44 new), mypy clean.
+- **2026-08-19** — Breakout **cost–frequency frontier** shipped (D160–D165,
+  `docs/results/breakout_intraday.md`). Tests `BREAKOUT_RESULTS.md`'s "fees are not the
+  binding constraint" rather than restating it: the identical rule from 1h to 1d on
+  BTC/ETH, 1h fetched once and resampled upward so every frequency spans the identical
+  730 days (D161), walk-forward scaled to equal *calendar* duration so all six rungs get
+  7 windows over the same 441 out-of-sample days. Two designs, deliberately not conflated
+  (D162): **A** holds the 40-day/10-day horizon fixed and **never crosses** — turnover
+  rises only 10.5× → 11.5× from 1d to 1h, so the original conclusion survives intact for
+  the 40-day signal at any sampling rate. **B** holds the bar count fixed and **crosses at
+  2h on both symbols independently** (4h the finest bar that clears), with turnover
+  10.5× → 188.7× and fee drag 4.2% → 75.5% of capital a year. At 15m, reported as a
+  turnover measurement with no return claim because 60 days cannot hold a 252-day training
+  window (D163), the rule turns over ~790×/yr and pays ~315% of capital annually in fees.
+  The methodological work is where the value is: the window this provider serves
+  (2024-08 → 2026-08) contains **no trend edge at any frequency**, so the obvious
+  net-Sharpe crossover reading returns "1d" everywhere and says nothing — the study
+  therefore splices a precisely-measured cost curve onto the ten-year gross edge and
+  states the assumption's direction (D165), and the answer is a bound: the true crossover
+  is coarser than 2h, never finer. Two data-layer findings reported rather than absorbed:
+  the shared cleaner's volume rule would have deleted half the hourly bars (D160), and the
+  1h→1d resample does *not* reconcile with the committed daily fixture (D161) — pinned by
+  a test on the negative. 643 tests green (36 new), mypy clean.
