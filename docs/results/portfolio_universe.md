@@ -1,7 +1,7 @@
 # A cross-sectional long/short portfolio across 62 coins
 
 **Produced:** 2026-08-21 ·
-**Snapshot:** `75e1bbbfb10d70b64cb87a9ada00937e4bc00817340e9e671fc554237b847b5f` ·
+**Snapshot:** `318edab51866d81986f1426abf9ab275908b27f2c6b0b8330a6529263c89b957` ·
 **Reproduce:** `uv run python scripts/run_portfolio_universe.py` (offline, deterministic)
 
 ## What this is

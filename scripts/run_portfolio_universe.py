@@ -36,7 +36,7 @@ from pathlib import Path
 from typing import Any
 
 from backtest_framework.data.cleaner import clean
-from backtest_framework.data.corporate_actions import CorporateActions
+from backtest_framework.data.corporate_actions import load_events_json
 from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
 from backtest_framework.data.snapshot_store import SnapshotStore
 from backtest_framework.registry.trial_registry import TrialRegistry
@@ -47,6 +47,7 @@ from backtest_framework.research import breakout_universe as bu
 REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "data" / "fixtures" / "crypto_universe_2015_2025_raw.csv.gz"
 META = REPO / "data" / "fixtures" / "crypto_universe_2015_2025_raw.meta.json"
+EVENTS = REPO / "data" / "fixtures" / "crypto_universe_2015_2025_raw_events.json"
 REGISTRY_PATH = REPO / "data" / "portfolio_universe_registry.sqlite"
 RESULTS = REPO / "docs" / "results" / "portfolio_universe.md"
 SUMMARY_JSON = REPO / "data" / "portfolio_universe_summary.json"
@@ -112,7 +113,10 @@ def main() -> int:
     store = SnapshotStore(REPO / "data" / "snapshots")
     snapshot_id = store.create(
         cleaned,
-        CorporateActions(),
+        # The events file, rather than an empty corporate-actions object (D184). The file
+        # is empty today, so this moves no number — it closes the silent failure for
+        # the day it is not.
+        load_events_json(EVENTS),
         volumes_by_symbol=raw_volumes,
         cleaning_report=cleaning_report,
         validation=None,

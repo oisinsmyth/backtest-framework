@@ -242,3 +242,76 @@ this project's evidence in which it earns its place.
 **The next test is the rebalancing cost**, not another rule. A +0.928 that survives realistic
 turnover costs is worth deflating and testing out of sample; one that does not is a
 measurement artifact of free trading, and no amount of further rule search would matter.
+
+---
+
+# BENCHMARKS — appended 2026-08-21. Nothing above this line was edited.
+
+The result section above compares the portfolio only against the median single coin, which
+answers "does diversifying help?" and not "is the outcome worth having?". Benchmarks,
+computed over the matched spans.
+
+## The conservative span (≥5 coins live, 2018-07-20 →, 2,712 bars)
+
+| | Sharpe | Total return | Max DD |
+|---|---|---|---|
+| **LONG portfolio (strategy)** | **+0.927** | +316.1% | **22.9%** |
+| BTC buy & hold | +0.786 | **+1,086.9%** | 76.6% |
+| Equal-weight universe, daily rebalanced | +0.733 | +813.3% | 81.4% |
+| Equal-weight universe, true buy & hold (38 coins) | +0.651 | +437.8% | 87.7% |
+| Equal-weight universe, monthly rebalanced | +0.562 | +235.7% | 85.9% |
+
+## The full span (2016-05-20 →, 3,510 bars)
+
+| | Sharpe | Total return | Max DD |
+|---|---|---|---|
+| **LONG portfolio (strategy)** | **+1.275** | +2,912.7% | **28.8%** |
+| Equal-weight universe, daily rebalanced | +1.191 | +70,139.2% | 88.7% |
+| BTC buy & hold | +1.095 | **+19,921.2%** | 83.4% |
+| Equal-weight universe, monthly rebalanced | +0.978 | +11,948.0% | 89.5% |
+| Equal-weight universe, true buy & hold (2 coins) | +0.975 | +10,936.2% | 90.1% |
+
+All equal-weight rows have the two unrecorded corporate actions neutralised — see D184,
+without which the daily-rebalanced row reads +102,682,123%.
+
+## The comparison that actually matters
+
+**BTC is the wrong benchmark for this strategy and the equal-weight universe is the right
+one**, because the strategy is itself an equal-weight basket of 62 coins rebalanced daily.
+Comparing it to BTC compares two different bets; comparing it to the equal-weight universe
+isolates what the breakout rule contributes.
+
+And the rebalancing frequency has to match, because **daily rebalancing is worth a lot on
+its own**: the equal-weight universe scores +1.191 daily-rebalanced against +0.978
+monthly, a free +0.21 Sharpe from volatility harvesting alone, charged nothing.
+
+Like for like — daily-rebalanced strategy against daily-rebalanced benchmark:
+
+| Span | Strategy | Benchmark | **Edge** |
+|---|---|---|---|
+| Full | +1.275 | +1.191 | **+0.084** |
+| ≥5 coins live | +0.927 | +0.733 | **+0.194** |
+
+**The breakout rule's contribution is +0.08 to +0.19 Sharpe, not the +0.49 the naive
+single-coin comparison suggested.** Most of the portfolio's Sharpe is diversification and
+daily rebalancing, both of which are available without any strategy at all.
+
+## What survives
+
+**The drawdown result is the real one, and it is large.** 22.9% against 76.6–87.7% for every
+benchmark — a third to a quarter. That is not a marginal effect and it is not explained by
+diversification alone: the equal-weight universe is equally diversified and draws down 81%.
+Being flat about half the time is what does it.
+
+**The return result is unfavourable.** +316% against BTC's +1,087% on the conservative span,
+and +2,913% against +19,921% over the full span — 15% of buy-and-hold's return. Against the
+equal-weight universe it sits between monthly (+236%) and true buy-and-hold (+438%).
+
+**So this is a risk-reduction result, not an alpha result** — the same shape the long study
+and D179 landed on. The correct summary is: *roughly the return of an equal-weight crypto
+basket, at a quarter of its drawdown, with a small Sharpe edge over the same basket
+rebalanced identically.* Whether that small edge survives the rebalancing cost this study
+does not charge is unknown, and it is now the whole question.
+
+**The +0.084 on the full span is inside the range a turnover charge could erase.** That
+makes the un-modelled rebalancing cost not a caveat on this result but the test of it.

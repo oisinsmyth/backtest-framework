@@ -10,6 +10,46 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (unrecorded corporate actions, 2026-08-21 — D184)
+- **A benchmark returned +102,682,123%, and it came from ONE bar.** `HT-USD` printed
+  **+3,398,300%** on 2025-03-12 (close 0.0000150 -> 0.5098, then flat at ~0.50): a
+  price-scale defect, not a market move. Neutralising that single bar takes the benchmark
+  to +70,139% — a factor of **1,464x** from one day, because daily rebalancing compounds
+  it forward.
+- **`AAVE-USD` +10,189% on 2020-10-03 is the LEND->AAVE 100:1 token migration** — a genuine
+  redenomination that no split adjustment handles. The preceding bar also carries a zero
+  open and zero low.
+- **The events file is empty.** `crypto_universe_2015_2025_raw_events.json` has `dividends`
+  and `splits` for all 63 symbols and every list is `[]`. The machinery is wired and has
+  nothing to apply.
+- **Four scripts passed an empty corporate-actions object rather than loading it** —
+  `run_swing_universe`, `run_e1_universe`, `run_combined_universe`, `run_portfolio_universe`.
+  Now fixed. Verified a genuine no-op: every field of the portfolio payload is identical
+  after the change, and only the content-addressed snapshot id moves.
+- **The strategy results are NOT contaminated.** Long portfolio return on 2025-03-12:
+  **+0.0127%**; on 2020-10-03: **+0.0860%**. D103's next-open fill means a one-bar gap
+  cannot be entered — the strategy arrives after the jump while buy-and-hold holds through
+  it. The defect inflates the BENCHMARK far more than the strategy.
+- **D143's validator override is now costed.** Its reasoning stands (the >60% gate deletes
+  the failed assets and hands back survivorship bias), but an override with no follow-up
+  inspection accepts unknown defects, and the follow-up had never been done.
+
+### Added (benchmarks for D183, appended to that record)
+- **Like for like, daily-rebalanced strategy vs daily-rebalanced equal-weight universe, the
+  breakout rule is worth +0.084 Sharpe (full span) and +0.194 (>=5 coins live)** — not the
+  +0.49 the naive single-coin comparison suggested. Daily rebalancing alone is worth +0.21
+  Sharpe on the benchmark (+1.191 daily vs +0.978 monthly), charged nothing.
+- Conservative span: strategy +0.927 Sharpe / +316% / **22.9% max DD**, against BTC buy &
+  hold +0.786 / +1,087% / 76.6%, equal-weight true buy & hold +0.651 / +438% / 87.7%.
+- **The drawdown result is the real one** — a quarter to a third of every benchmark, and
+  not explained by diversification, since the equal-weight universe is equally diversified
+  and draws down 81%. Being flat about half the time is what does it.
+- **The return result is unfavourable**: 15% of buy-and-hold BTC over the full span.
+- Correct summary: roughly the return of an equal-weight crypto basket, at a quarter of its
+  drawdown, with a small Sharpe edge over that basket rebalanced identically — and the
+  +0.084 sits inside the range an un-charged turnover cost could erase.
+
+
 ### Added (cross-sectional portfolio, pre-registered, 2026-08-21 — D183)
 - `scripts/run_portfolio_universe.py` — a long/short portfolio ACROSS the 62-coin
   universe. Each date, the long portfolio earns the equal-weighted mean of every live long

@@ -1,6 +1,6 @@
 {
-  "snapshot_id": "75e1bbbfb10d70b64cb87a9ada00937e4bc00817340e9e671fc554237b847b5f",
-  "generated_utc": "2026-08-21T21:24:33.708605+00:00",
+  "snapshot_id": "318edab51866d81986f1426abf9ab275908b27f2c6b0b8330a6529263c89b957",
+  "generated_utc": "2026-08-21T21:59:09.186942+00:00",
   "reference_tier": "taker_40bp",
   "min_bars": 252,
   "borrow_annual_rate": 0.1,
