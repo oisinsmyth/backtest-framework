@@ -10,6 +10,40 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (combined book on the D140 universe, pre-registered, 2026-08-21 — D182)
+- `scripts/run_combined_universe.py` — the long+short combined book across 62 coins,
+  per-symbol, no rule attached. The baseline that had never been measured. Own registry,
+  no multiplicity added; the long arm is `breakout_universe.baseline_variant()` itself.
+
+### Findings — predictions committed first (b75e2e3), then scored
+- **H1 CONFIRMED on both clauses.** The combination scores a LOWER Sharpe than the long
+  book alone on **57 of 62 coins** (8% win rate, mean Δ -0.382) and a SMALLER max drawdown
+  on 68% (mean -4.7pp). On the 19 survivors it is worse on every single one.
+- **Absolute P&L is the headline.** Median total return: long **+123.2%**, combined
+  **+5.7%**. Profitable symbols 51/62 -> 34/62. Mean Sharpe +0.392 -> **+0.010**.
+  Combining destroys ~118pp of median return and 17 profitable symbols to buy 4.7pp of
+  drawdown. BTC alone: +4,672% long vs +197% combined.
+- **H2 CONFIRMED more strongly than predicted.** Correlation is within +/-0.2 on **62 of
+  62** coins, and the largest absolute correlation anywhere is **0.0023** — three orders of
+  magnitude inside the brief's ~0.2 target. And combining still costs 0.38 Sharpe on 92% of
+  coins. The correlation is MECHANICAL (the short book is flat ~85% of bars, so the legs
+  rarely have simultaneous exposure) and **the ~0.2 target is retired as evidence**.
+- **The drawdown benefit is real, scales correctly, and inverts in the tail.** By long-book
+  drawdown quartile the mean Δ runs +1.0pp (Q1) -> -8.3pp (Q4), monotone. But drawdown got
+  WORSE on 20/62, led by `LUNA1-USD` at 21.2% -> **74.5%** (+53.3pp): the long book
+  returned +1,298% there and the combination -5%. The hedge smooths ordinary drawdowns and
+  amplifies the one that would end the account.
+- **D181's weighting flaw, now measured.** Median long-leg weight 0.456; the long leg holds
+  a MINORITY of the risk budget on 47/62 coins. corr(long weight, Δ Sharpe) = **+0.604**
+  while corr(long weight, short-leg Sharpe) = **-0.043** — the allocator sizes on how often
+  a book trades, not on how good it is. On LUNA1 it gave 81% of the budget to the leg about
+  to lose more than the account.
+- Weighting fell back to 50/50 on **0.8%** of bars, against 75% for the 63-bar trailing
+  window D181 rejected.
+- Not a portfolio result: per-symbol combination asks whether pairing one coin's two books
+  helps, not whether a cross-sectional long/short book works.
+
+
 ### Fixed (ensemble weighting look-ahead, 2026-08-21 — D181)
 - **`combine_books`/`combined_series` set their inverse-vol weights from WHOLE-SAMPLE
   volatility and applied them from bar 0.** The calmer leg got exactly the right weight in
