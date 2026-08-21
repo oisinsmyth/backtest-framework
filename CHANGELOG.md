@@ -10,6 +10,39 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (Phase 1.5 exit signatures, 2026-08-21 — D177)
+- **`FailedBreakoutExit(k)` (E1)** — exits when the close falls back INSIDE the channel
+  the entry broke, within k bars. Never built before, despite the doc calling it
+  "highest priority" and a predicted survivor. `OpenPosition` gains
+  `entry_channel_level`: the boundary that was BROKEN, distinct from `stop_level` (the
+  opposite boundary) and `entry_reference` (the trigger close).
+- **`TimeStopExit.mfe_atr` (E2)** — at 0.0 the rule is unchanged (the short book's "not
+  in profit"); above 0.0 it is E2 as specified, MFE >= mfe_atr x ATR since entry. New
+  keys emitted only when non-default, so short-book config hashes are untouched (D166).
+- **`mfe_by_bar()`** — E2's stated prerequisite, the baseline's MFE-vs-time distribution,
+  which did not exist: `TradeEpisode` carried only a terminal MFE.
+- **`TradeEpisode.trajectories` + `impulse_trajectories()` (E3)** — post-entry range and
+  volume per trade, logged and gating nothing, per the doc's explicit instruction. A
+  sibling field rather than an extension of `features`, which D167 pinned as scalars.
+
+### Findings
+- **E1 KEEPS on both symbols** (+0.058/+0.177 at k=2, +0.101/+0.177 at k=3) — the first
+  prediction in `BREAKOUT_REVERSAL_FEATURES.md` to hold. Unlike every other trade-touching
+  device tested here, it RAISES the trade count (38->44 BTC, 28->30 ETH): it cuts a failed
+  trade early and the strategy re-enters on a fresh trigger.
+- **E2 DROPS at both n**, and its own prerequisite explains why: only 26% (BTC) / 43%
+  (ETH) of trades reach 1 ATR by bar 5, so E2 cuts most of the book including the trends
+  that pay. The validation the doc demanded would have predicted this before the run.
+- Long-study DSR pool grew 24 -> 28 and every DSR moved; all 5,568 pre-existing variant
+  metrics are byte-identical.
+
+### Fixed
+- **The MFE-vs-time table printed an impossibility** — ETH at 43% by bar 5 and 39% by bar
+  7, when the rate cannot fall as the window grows. Trades closing before bar n were
+  excluded from bar n's numerator while sharing bar 5's denominator. Fixed, and the report
+  now raises if the rate ever falls again.
+
+
 ### Added (Phase 2's two missing diagnostics, 2026-08-21 — D176)
 - **Squeeze events** — adverse excursions beyond 2 ATR against an open short, with share
   of trades, P&L carried, and how many the stop caught. The function existed as DEAD CODE

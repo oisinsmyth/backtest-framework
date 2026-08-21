@@ -98,6 +98,17 @@ class TradeEpisode:
     Populated once at construction; the dataclass is frozen but this mapping is not
     deep-frozen, so treat it as read-only by convention."""
 
+    trajectories: Mapping[str, tuple[float, ...]] = field(default_factory=dict)
+    """Per-bar SEQUENCES over the life of the trade, as opposed to the scalars in
+    `features` (D177).
+
+    E3 (impulse decay) asks for post-entry range and volume trajectories to be logged so
+    the pattern can be studied later — explicitly WITHOUT an exit rule in this phase. A
+    slope or a summary statistic would fit the scalar map, and would throw away the shape
+    the doc is asking to preserve, so sequences get their own field.
+
+    Nothing gates on this. It exists to be read."""
+
     @property
     def net_pnl(self) -> float:
         return self.gross_pnl - self.costs
@@ -151,6 +162,7 @@ def extract_episodes(
     instrument_id: str,
     bars: Sequence[TimestampedBar],
     features_at: Callable[[int], Mapping[str, float | None]] | None = None,
+    trajectories_at: Callable[[int, int | None], Mapping[str, tuple[float, ...]]] | None = None,
 ) -> list[TradeEpisode]:
     """`bars` must be the EXECUTION series the backtest ran on, in the same order —
     excursions are read off it by timestamp.
@@ -203,6 +215,10 @@ def extract_episodes(
                     mfe=mfe,
                     mae=mae,
                     features=dict(features_at(open_state["entry_index"] - 1)) if features_at else {},
+                    trajectories=(
+                        dict(trajectories_at(open_state["entry_index"], bar_index))
+                        if trajectories_at else {}
+                    ),
                 )
             )
             open_state = None
@@ -233,6 +249,10 @@ def extract_episodes(
                 mfe=mfe,
                 mae=mae,
                 features=dict(features_at(open_state["entry_index"] - 1)) if features_at else {},
+                trajectories=(
+                    dict(trajectories_at(open_state["entry_index"], None))
+                    if trajectories_at else {}
+                ),
             )
         )
     return episodes
@@ -422,6 +442,65 @@ def breadth_series(
             above_sma = close > statistics.fmean(bars[j].bar.close for j in range(i - sma_window, i))
             participating.setdefault(bars[i].timestamp, []).append(above_high or above_sma)
     return {ts: sum(flags) / len(flags) for ts, flags in participating.items() if flags}
+
+
+def mfe_by_bar(
+    bars: Sequence[TimestampedBar],
+    entry_index: int,
+    exit_index: int | None,
+    entry_price: float,
+    direction: int = 1,
+    max_bars: int = 10,
+) -> tuple[float, ...]:
+    """Best favourable excursion achieved BY each bar of the trade, as a fraction of the
+    entry price. Monotone non-decreasing by construction.
+
+    E2's stated prerequisite: `BREAKOUT_REVERSAL_FEATURES.md` requires that n be validated
+    against "the baseline's own MFE-vs-time distribution" before the two candidate values
+    are used. `TradeEpisode` carries a single TERMINAL mfe and a holding period, which
+    cannot answer "had this trade reached 1 ATR by bar 5?" — this can."""
+    end = min(exit_index if exit_index is not None else len(bars), len(bars))
+    out: list[float] = []
+    best = -1e18
+    for j in range(entry_index, min(entry_index + max_bars, end)):
+        bar = bars[j].bar
+        reached = bar.high if direction > 0 else bar.low
+        best = max(best, direction * (reached - entry_price))
+        out.append(best / entry_price)
+    return tuple(out)
+
+
+def impulse_trajectories(
+    bars: Sequence[TimestampedBar],
+    entry_index: int,
+    exit_index: int | None,
+    volumes: Sequence[float | None] | None = None,
+    max_bars: int = 10,
+) -> dict[str, tuple[float, ...]]:
+    """E3's raw material: post-entry bar RANGE and VOLUME, per bar, logged and not acted on.
+
+    The hypothesis the doc describes — declining range and volume while price grinds
+    marginally higher — is explicitly called fuzzy there, and explicitly NOT to be turned
+    into a rule in this phase. So this logs the two series and stops.
+
+    Range is normalised by the entry price so it is comparable across instruments; volume
+    is raw, because a cross-instrument volume normalisation is a modelling choice this
+    phase has no reason to make."""
+    end = min(exit_index if exit_index is not None else len(bars), len(bars))
+    ranges: list[float] = []
+    vols: list[float] = []
+    entry_price = bars[entry_index].bar.close if entry_index < len(bars) else 0.0
+    for j in range(entry_index, min(entry_index + max_bars, end)):
+        bar = bars[j].bar
+        ranges.append((bar.high - bar.low) / entry_price if entry_price else 0.0)
+        if volumes is not None and j < len(volumes):
+            volume = volumes[j]
+            if volume is not None:
+                vols.append(float(volume))
+    out = {"E3_range": tuple(ranges)}
+    if vols:
+        out["E3_volume"] = tuple(vols)
+    return out
 
 
 def trigger_features(

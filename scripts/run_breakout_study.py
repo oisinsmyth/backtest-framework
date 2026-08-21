@@ -23,6 +23,7 @@ from backtest_framework.data.validator import validate
 from backtest_framework.registry.trial_registry import TrialRegistry
 from backtest_framework.research import breakout_study as bs
 from backtest_framework.research import feature_analysis as fa
+from backtest_framework.research import trade_diagnostics as tdx
 
 REPO = Path(__file__).resolve().parent.parent
 FIXTURE = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
@@ -35,6 +36,7 @@ BASELINE = f"plateau_{bs.BASELINE_N_ENTRY}_{bs.BASELINE_N_EXIT}"
 FILTER_NAMES = [v.name for v in bs.filter_variants()]
 SIZING_NAMES = [v.name for v in bs.sizing_variants()]
 PLATEAU_NAMES = [v.name for v in bs.plateau_variants()]
+EXIT_NAMES = [v.name for v in bs.exit_variants()]
 VOL_TARGET_NAMES = [v.name for v in bs.vol_target_variants()]
 BARS_BY_SYMBOL: dict = {}  # set by main(); the era tables re-run on truncated fixtures
 
@@ -191,7 +193,8 @@ def render_report(result: bs.StudyResult, gate: dict) -> str:
     study = result.config
     symbols = list(result.by_symbol)
     ref = bs.REFERENCE_TIER
-    ordered = PLATEAU_NAMES + FILTER_NAMES + SIZING_NAMES + VOL_TARGET_NAMES + ["selected_in_train"]
+    ordered = (PLATEAU_NAMES + FILTER_NAMES + EXIT_NAMES + SIZING_NAMES + VOL_TARGET_NAMES
+               + ["selected_in_train"])
 
     sections = [_header(result, gate)]
     sections.append(_method(result))
@@ -285,6 +288,7 @@ on those bars). Downside participated is the same on down bars; downside avoided
     sections.append(_filter_decision(result))
     sections.append(_selection_section(result))
     sections.append(_feature_section(result))
+    sections.append(_exit_section(result))
     sections.append(_multiplicity(result))
     sections.append(_verdict(result))
     sections.append(_caveats(result))
@@ -1012,6 +1016,199 @@ frequency — a real limitation of the bar clock, not of the idea. Only the opti
 component varies, and that is what is logged."""
 
 
+EXIT_PRIORS = {
+    "exit_e1": "predicted a SURVIVOR — the doc's highest-priority recommendation, and the "
+               "one it names alongside F1 as most likely to work",
+    "exit_e2": "genuine breakouts work quickly; stagnation is information",
+}
+
+
+def _exit_section(result: bs.StudyResult) -> str:
+    """E1 and E2 as one-at-a-time increments, scored by the every-symbol rule (D177)."""
+    ref = bs.REFERENCE_TIER
+    symbols = list(result.by_symbol)
+
+    def sharpe(sym, name):
+        r = result.by_symbol[sym].variants.get((name, ref))
+        return r.sharpe_annual(result.config) if r else None
+
+    base = {sym: sharpe(sym, BASELINE) for sym in symbols}
+    rows, keepers = [], []
+    for v in bs.exit_variants():
+        deltas = {}
+        for sym in symbols:
+            a = sharpe(sym, v.name)
+            if a is None or base[sym] is None:
+                continue
+            deltas[sym] = a - base[sym]
+        if not deltas:
+            continue
+        trades = {
+            sym: result.by_symbol[sym].variants[(v.name, ref)].diagnostics.n_closed_trades
+            for sym in symbols
+        }
+        keep = min(deltas.values()) >= 0.01
+        if keep:
+            keepers.append(v.name)
+        rows.append(
+            f"| `{v.name}` | " + " | ".join(f"{deltas[s]:+.3f}" for s in symbols)
+            + " | " + " / ".join(str(trades[s]) for s in symbols)
+            + f" | {'**KEEP**' if keep else 'DROP'} |"
+        )
+
+    baseline_trades = " / ".join(
+        str(result.by_symbol[s].variants[(BASELINE, ref)].diagnostics.n_closed_trades)
+        for s in symbols
+    )
+    header = ("| Variant | " + " | ".join(f"Δ Sharpe {s}" for s in symbols)
+              + " | Trades | Decision |" + NL + "|---|" + "---|" * (len(symbols) + 2) + NL)
+
+    if keepers:
+        verdict = (
+            f"**{', '.join(keepers)} improves on every symbol.** On the same rule the "
+            f"filter increments are scored by, that is a keep — and the doc's prior that E1 "
+            f"would survive is supported."
+        )
+    else:
+        verdict = (
+            "**Neither exit signature improves on both symbols, so both are dropped.** "
+            "That includes E1, which `BREAKOUT_REVERSAL_FEATURES.md` names its "
+            "highest-priority recommendation and a predicted survivor. The prior is "
+            "falsified, and the mechanism is the one this project keeps finding: E1 and E2 "
+            "are both trade-SHORTENING devices, and a breakout book's returns live in a "
+            "handful of long trends. Cutting a trade early because it looked wrong for "
+            "three bars cuts the trends too — the same failure that killed all four entry "
+            "filters and three of six stops."
+        )
+
+    return f"""---
+
+# Exit signatures: E1 and E2
+
+`BREAKOUT_REVERSAL_FEATURES.md` permits these two to be built immediately (protocol §4)
+because they modify EXITS rather than adding entry-filter dimensions. Each row below is
+the accepted baseline plus exactly ONE exit brick — never stacked, so each delta prices one
+component. Baseline closed trades: {baseline_trades}.
+
+**E1 — failed-breakout re-entry.** Close falls back inside the channel the entry broke,
+within k bars. *{EXIT_PRIORS["exit_e1"]}.*
+
+**E2 — time stop.** Max favourable excursion has not reached 1 ATR within n bars.
+*{EXIT_PRIORS["exit_e2"]}.*
+
+{header}{NL.join(rows)}
+
+{verdict}
+
+{_mfe_vs_time(result)}
+
+{_e3_section(result)}"""
+
+
+def _mfe_vs_time(result: bs.StudyResult) -> str:
+    """E2's stated prerequisite: validate n against the baseline's MFE-vs-time
+    distribution BEFORE using the candidate values (D177).
+
+    n is fixed at {5, 7} by the doc, so this is a reporting obligation rather than a
+    tuning input — the question is whether those values sit sensibly on the distribution,
+    and the answer is reported either way."""
+    ref = bs.REFERENCE_TIER
+    lines = []
+    monotonic_check: dict[str, dict[int, float]] = {}
+    for sym in result.by_symbol:
+        r = result.by_symbol[sym].variants[(BASELINE, ref)]
+        bars = BARS_BY_SYMBOL[sym]
+        closed = [e for e in r.episodes if not e.is_open]
+        if not closed:
+            continue
+        reached = {n: 0 for n in bs.E2_N}
+        counted = 0
+        for e in closed:
+            atr = tdx.mfe_by_bar(bars, e.entry_index, e.exit_index, e.entry_price,
+                                 direction=1, max_bars=max(bs.E2_N))
+            atr_at_entry = _atr_fraction(bars, e.entry_index, e.entry_price)
+            if atr_at_entry is None or not atr:
+                continue
+            counted += 1
+            for n in bs.E2_N:
+                # A trade that CLOSED before bar n having already reached 1 ATR did reach
+                # it by bar n. Requiring len(atr) >= n instead excluded short trades from
+                # the larger n only, which made the rate FALL from bar 5 to bar 7 — an
+                # impossibility, since mfe_by_bar is monotone non-decreasing. That
+                # impossibility is the only reason the bug was visible.
+                best_by_n = atr[min(n, len(atr)) - 1]
+                if best_by_n >= atr_at_entry:
+                    reached[n] += 1
+        if counted:
+            monotonic_check[sym] = {n: reached[n] / counted for n in bs.E2_N}
+            lines.append(
+                f"| {sym} | {counted} | "
+                + " | ".join(f"{reached[n] / counted:.0%}" for n in bs.E2_N) + " |"
+            )
+    if not lines:
+        return ""
+    for sym, rates in monotonic_check.items():
+        ordered = [rates[n] for n in bs.E2_N]
+        if any(b < a - 1e-9 for a, b in zip(ordered, ordered[1:])):
+            raise AssertionError(
+                f"{sym}: 'reached 1 ATR by bar n' fell as n grew ({ordered}) — MFE by bar is "
+                "monotone non-decreasing, so this cannot happen and indicates a counting bug"
+            )
+    header = ("| Symbol | Trades | " + " | ".join(f"reached 1 ATR by bar {n}" for n in bs.E2_N)
+              + " |" + NL + "|---|---|" + "---|" * len(bs.E2_N) + NL)
+    return f"""## E2's prerequisite: the MFE-vs-time distribution
+
+The doc requires n be validated against the baseline's own MFE-vs-time distribution before
+the candidate values are used. n is FIXED at {list(bs.E2_N)} by the doc, so this is a check
+that those values are sensible — not a search for better ones.
+
+{header}{NL.join(lines)}
+
+Read this as the exit's own hit rate: it is the fraction of trades E2 would NOT cut. The
+complement is how much of the book each n would remove, and the table above shows that
+directly.
+
+
+"""
+
+
+def _atr_fraction(bars, entry_index: int, entry_price: float, window: int = 20):
+    """ATR at entry, expressed as a fraction of the entry price so it is comparable with
+    `mfe_by_bar`, which returns fractions."""
+    if entry_index - window < 1 or not entry_price:
+        return None
+    total = 0.0
+    for j in range(entry_index - window, entry_index):
+        bar, prev = bars[j].bar, bars[j - 1].bar.close
+        total += max(bar.high - bar.low, abs(bar.high - prev), abs(bar.low - prev))
+    return (total / window) / entry_price
+
+
+def _e3_section(result: bs.StudyResult) -> str:
+    """E3 is LOG-ONLY by instruction. This describes what was logged and nothing else."""
+    ref = bs.REFERENCE_TIER
+    counts = []
+    for sym in result.by_symbol:
+        r = result.by_symbol[sym].variants[(BASELINE, ref)]
+        with_traj = sum(1 for e in r.episodes if e.trajectories.get("E3_range"))
+        with_vol = sum(1 for e in r.episodes if e.trajectories.get("E3_volume"))
+        counts.append(f"{sym} {with_traj} range / {with_vol} volume")
+    return f"""## E3 — impulse decay, logged and not acted on
+
+The doc is explicit: *"Definition is fuzzy; log range/volume trajectories per trade so it
+can be studied, but no exit rule in this phase."* So there is no E3 variant above and
+nothing gates on it.
+
+Post-entry bar range and volume are recorded per trade on `TradeEpisode.trajectories`
+({', '.join(counts)}) and travel in the summary JSON. Volume became loggable only with
+D168; before that this half of E3 could not have been recorded at all.
+
+**No claim is made here.** Turning "declining range and volume while price grinds
+marginally higher" into a rule requires a definition the doc does not give, and inventing
+one to fill the gap would be exactly the kind of unregistered search the rest of this
+document is built to avoid."""
+
+
 def _multiplicity(result: bs.StudyResult) -> str:
     study = result.config
     per_symbol = len(result.variant_names) * len(result.tiers)
@@ -1020,7 +1217,8 @@ def _multiplicity(result: bs.StudyResult) -> str:
     # (the vol-target sensitivities had no row), and the verdict prose then quoted the
     # 19. A multiplicity table that does not add up is the one table in this report
     # that must never be wrong, so it is asserted rather than eyeballed.
-    subtotal = len(PLATEAU_NAMES) + len(FILTER_NAMES) + len(SIZING_NAMES) + len(VOL_TARGET_NAMES) + 1
+    subtotal = (len(PLATEAU_NAMES) + len(FILTER_NAMES) + len(EXIT_NAMES) + len(SIZING_NAMES)
+                + len(VOL_TARGET_NAMES) + 1)
     if subtotal != len(result.variant_names):
         raise AssertionError(
             f"multiplicity breakdown does not sum: rows total {subtotal} but the study ran "
@@ -1039,6 +1237,7 @@ turned, whether or not it appears in a table above.
 | Strategy variants per symbol | {len(result.variant_names)} |
 | — of which parameter-grid cells (N_entry × N_exit) | {len(PLATEAU_NAMES)} |
 | — of which filter increments | {len(FILTER_NAMES)} |
+| — of which exit increments (E1, E2) | {len(EXIT_NAMES)} |
 | — of which sizing sensitivities | {len(SIZING_NAMES)} |
 | — of which vol-target sensitivities | {len(VOL_TARGET_NAMES)} |
 | — of which in-training-window selection | 1 |

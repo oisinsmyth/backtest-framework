@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D177**.
+New decisions are added here going forward — next number is **D178**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -165,3 +165,4 @@ written rationale for *why not now*, per R3.
 | [D174](D174-swing-k2-on-the-universe.md) | `swing_k2` beats `trail_10` on 69% of 62 coins including the ones that died, but the book loses ~50% on the median coin — the stop is real, the strategy is not | Committed | Validation & research integrity |
 | [D175](D175-no-margin-call-or-liquidation-model.md) | The engine has no margin call, liquidation or borrow recall; three short accounts passed -100% (worst -1106%) with stops active | Deferred | Backtest engine |
 | [D176](D176-phase-2-diagnostic-gaps-closed.md) | Phase 2's squeeze-event and per-window correlation diagnostics built and wired; the dead squeeze function had the adverse direction backwards for shorts | Committed | Diagnostics & reporting |
+| [D177](D177-phase-1-5-exit-signatures.md) | Phase 1.5's exit signatures: E1 built for the first time and KEEPS on both symbols, E2 had been built to the wrong spec and fails, E3 logged only | Committed | Signals & strategy interface |

@@ -73,6 +73,7 @@ from .trade_diagnostics import (
     breadth_series,
     extract_episodes,
     summarise,
+    impulse_trajectories,
     trigger_features,
 )
 
@@ -390,6 +391,46 @@ def filter_variants() -> list[Variant]:
     ]
 
 
+E1_K: tuple[int, ...] = (2, 3)
+"""E1's two candidate windows, fixed by the doc and not swept beyond them."""
+
+E2_N: tuple[int, ...] = (5, 7)
+"""E2's two candidate bar counts, likewise fixed. The doc requires they be VALIDATED
+against the baseline's MFE-vs-time distribution, which the report does — validation here
+means "shown to be sensible", not "chosen by search"."""
+
+E2_MFE_ATR = 1.0
+"""E2's threshold as specified: max favourable excursion of at least 1 ATR."""
+
+
+def exit_variants() -> list[Variant]:
+    """E1 and E2 as one-at-a-time increments on the accepted baseline (D177).
+
+    Never stacked, exactly as the filter increments are presented — each row prices one
+    component. `BREAKOUT_REVERSAL_FEATURES.md` protocol §4 permits these to be built
+    immediately, unlike the entry-side features, because they modify exits rather than
+    adding entry-filter dimensions."""
+    def baseline_plus(rule: dict[str, Any]) -> dict[str, Any]:
+        return breakout_config(
+            n_entry=BASELINE_N_ENTRY, n_exit=BASELINE_N_EXIT, exit_rules=[rule]
+        )
+
+    variants = [
+        Variant(f"exit_e1_k{k}", "exit",
+                fixed_config=baseline_plus({"type": "failed_breakout", "k": k}))
+        for k in E1_K
+    ]
+    variants += [
+        Variant(f"exit_e2_n{n}", "exit",
+                fixed_config=baseline_plus({
+                    "type": "time_stop", "n_bars": n,
+                    "mfe_atr": E2_MFE_ATR, "atr_window": 20,
+                }))
+        for n in E2_N
+    ]
+    return variants
+
+
 def sizing_variants() -> list[Variant]:
     def baseline_sized(weight_source: dict[str, Any]) -> dict[str, Any]:
         return breakout_config(
@@ -695,6 +736,10 @@ def run_variant(
         features_at=lambda i: trigger_features(
             run_bars, i, breadth=breadth, volumes=run_volumes
         ),
+        # E3 (D177): post-entry range and volume per trade, logged only.
+        trajectories_at=lambda entry, exit_: impulse_trajectories(
+            run_bars, entry, exit_, volumes=run_volumes
+        ),
     )
     oos_episodes = [e for e in episodes if e.entry_index >= warm_up]
     if len(oos_episodes) != len(episodes):
@@ -837,7 +882,7 @@ def default_variants(symbol: str, study: BreakoutStudyConfig) -> tuple[list[Vari
         },
     )
     return (
-        plateau_variants() + filter_variants() + sizing_variants() + vol_target_variants() + [selected]
+        plateau_variants() + filter_variants() + exit_variants() + sizing_variants() + vol_target_variants() + [selected]
     ), selector
 
 

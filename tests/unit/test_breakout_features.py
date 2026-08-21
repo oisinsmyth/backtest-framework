@@ -36,6 +36,7 @@ from backtest_framework.strategies.breakout import (
     BreakoutStrategy,
     ChannelStopExit,
     Direction,
+    OpenPosition,
     PositionState,
     TrendGateFilter,
     build_breakout_strategy,
@@ -318,3 +319,107 @@ def test_open_episodes_are_excluded_from_the_outcome_tables():
         features={"F1": 0.0},
     )
     assert analyse_feature(closed + [still_open], "F1").n_total == len(closed)
+
+
+# ------------------------------------------------- D177: the exit signatures E1/E2/E3
+
+
+def test_mfe_by_bar_is_monotone_non_decreasing():
+    """The property that exposed a counting bug in the E2 validation table: a 'reached
+    1 ATR by bar n' rate can never fall as n grows, because this series never falls."""
+    from backtest_framework.research.trade_diagnostics import mfe_by_bar
+
+    bars = [
+        TimestampedBar(EPOCH + timedelta(days=i), Bar(open=100, high=h, low=90, close=100))
+        for i, h in enumerate([105, 103, 120, 101, 130])
+    ]
+    series = mfe_by_bar(bars, entry_index=0, exit_index=5, entry_price=100.0, direction=1)
+    assert list(series) == sorted(series), series
+
+
+def test_failed_breakout_fires_inside_its_window_and_not_outside():
+    from backtest_framework.strategies.breakout import FailedBreakoutExit
+
+    rule = FailedBreakoutExit(k=2)
+    position = OpenPosition(PositionState.LONG, entry_index=0, entry_reference=110.0,
+                            stop_level=90.0, entry_channel_level=105.0)
+    back_inside = _View(bars_from([100, 100, 100, 100]), 2)   # close 100 < 105
+    assert rule.exits(back_inside, position) is True
+    # bar 3 is outside the k=2 window: the trailing channel owns the trade from here.
+    assert rule.exits(_View(bars_from([100] * 5), 3), position) is False
+    # and never on the decision bar itself
+    assert rule.exits(_View(bars_from([100] * 5), 0), position) is False
+
+
+def test_failed_breakout_holds_while_price_stays_above_the_broken_level():
+    from backtest_framework.strategies.breakout import FailedBreakoutExit
+
+    position = OpenPosition(PositionState.LONG, 0, 110.0, 90.0, entry_channel_level=105.0)
+    holding = _View(bars_from([100, 108, 107]), 2)  # close 107 > 105
+    assert FailedBreakoutExit(k=2).exits(holding, position) is False
+
+
+def test_failed_breakout_mirrors_for_a_short():
+    from backtest_framework.strategies.breakout import FailedBreakoutExit
+
+    position = OpenPosition(PositionState.SHORT, 0, 90.0, 110.0, entry_channel_level=95.0)
+    # A short broke BELOW 95; closing back above it is the failure.
+    assert FailedBreakoutExit(k=2).exits(_View(bars_from([100, 100, 100]), 2), position) is True
+    assert FailedBreakoutExit(k=2).exits(_View(bars_from([90, 90, 90]), 2), position) is False
+
+
+def test_e2_at_zero_threshold_is_exactly_the_short_books_rule():
+    """The compatibility guarantee: mfe_atr=0 must not change what the short book does,
+    and must not appear in the config that gets hashed."""
+    from backtest_framework.strategies.breakout import TimeStopExit
+
+    rule = TimeStopExit(n_bars=3)
+    assert rule.config() == {"type": "time_stop", "n_bars": 3}
+    position = OpenPosition(PositionState.LONG, 0, 100.0, 0.0)
+    flat = _View(bars_from([100, 100, 100, 100]), 3)
+    assert rule.exits(flat, position) is True          # not in profit at n bars
+    rising = _View(bars_from([100, 101, 102, 103]), 3)
+    assert rule.exits(rising, position) is False
+
+
+def test_e2_with_an_atr_threshold_keeps_a_trade_that_reached_it():
+    """The distinction that makes this E2 rather than the short book's approximation: a
+    trade that SPIKED to 1 ATR and came back is retained, where 'not in profit' cuts it."""
+    from backtest_framework.strategies.breakout import TimeStopExit
+
+    rule = TimeStopExit(n_bars=3, mfe_atr=1.0, atr_window=20)
+    # 30 flat bars give a small, well-defined ATR; entry at bar 25.
+    closes = [100.0] * 26 + [100.0, 100.0, 100.0, 100.0]
+    spiked = bars_from(closes)
+    spiked[27] = TimestampedBar(spiked[27].timestamp,
+                                Bar(open=100, high=140, low=99, close=100))
+    position = OpenPosition(PositionState.LONG, entry_index=26, entry_reference=100.0,
+                            stop_level=0.0)
+    assert rule.exits(_View(spiked, 29), position) is False, "a trade that reached 1 ATR is kept"
+
+    never = bars_from(closes)
+    assert rule.exits(_View(never, 29), position) is True, "a trade that never did is cut"
+
+
+def test_e3_trajectories_are_logged_and_gate_nothing():
+    from backtest_framework.research.trade_diagnostics import impulse_trajectories
+
+    bars = [
+        TimestampedBar(EPOCH + timedelta(days=i), Bar(open=100, high=100 + i, low=90, close=100))
+        for i in range(6)
+    ]
+    out = impulse_trajectories(bars, 0, 4, volumes=[10.0, 20.0, 30.0, 40.0, 50.0, 60.0])
+    assert len(out["E3_range"]) == 4
+    assert out["E3_volume"] == (10.0, 20.0, 30.0, 40.0)
+
+
+def test_e3_omits_volume_when_none_is_supplied():
+    """A missing series is absent, never zero-filled — the D167 convention."""
+    from backtest_framework.research.trade_diagnostics import impulse_trajectories
+
+    bars = [
+        TimestampedBar(EPOCH + timedelta(days=i), Bar(open=100, high=110, low=90, close=100))
+        for i in range(4)
+    ]
+    out = impulse_trajectories(bars, 0, 3, volumes=None)
+    assert "E3_volume" not in out and len(out["E3_range"]) == 3

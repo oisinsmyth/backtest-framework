@@ -409,6 +409,14 @@ class OpenPosition:
     entry_index: int
     entry_reference: float
     stop_level: float
+    entry_channel_level: float = 0.0
+    """The channel boundary the entry BROKE — the N_entry-bar high for a long.
+
+    Distinct from `stop_level`, which is the channel's OPPOSITE boundary, and from
+    `entry_reference`, which is the trigger bar's close. E1 asks whether price has fallen
+    back INSIDE the channel it just escaped, so it needs the boundary that was escaped;
+    neither of the other two is that. Retained at entry rather than recomputed, because
+    the level that mattered is the one live at the trigger bar."""
 
     @property
     def direction(self) -> int:
@@ -747,6 +755,47 @@ class ChandelierStop:
 
 
 @dataclass(frozen=True)
+class FailedBreakoutExit:
+    """E1 — the failed-breakout re-entry exit, and the highest-priority recommendation in
+    `BREAKOUT_REVERSAL_FEATURES.md` (D177).
+
+    Fires when, within `k` bars of entry, the close falls back INSIDE the channel the
+    entry broke: below the N_entry-bar high for a long, above the N_entry-bar low for a
+    short. Action is an immediate exit, overriding the slower trailing channel.
+
+    The rationale in the doc is a claim about market structure, not about statistics:
+    trapped-longs-overhead is the classic reversal setup, this book cannot short it, and
+    so the least it can do is not sit inside it. It deepens the hysteresis asymmetry on
+    purpose — entry stays slow, this makes one particular exit very fast.
+
+    Only within `k` bars. After that the trade is no longer a *failed breakout*; it is
+    just a trade going badly, and the trailing channel is the rule that owns that case."""
+
+    k: int = 3
+    name: str = field(default="failed_breakout", init=False)
+
+    def __post_init__(self) -> None:
+        if self.k < 1:
+            raise ValueError(f"k must be at least 1, got {self.k}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return 0
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        i = view.current_index
+        if i <= position.entry_index or i - position.entry_index > self.k:
+            return False  # never on the decision bar, and only inside the k-bar window
+        if not position.entry_channel_level:
+            return False
+        # Back inside the channel = the close is on the far side of the broken boundary,
+        # which is the direction AGAINST the trade.
+        return _beyond(view[i].close, position.entry_channel_level, -position.direction)
+
+    def config(self) -> dict[str, Any]:
+        return {"type": "failed_breakout", "k": self.k}
+
+
+@dataclass(frozen=True)
 class TimeStopExit:
     """Exit a position that has not moved in its favour within `n_bars` of entry.
 
@@ -756,24 +805,60 @@ class TimeStopExit:
     rather than a fill price."""
 
     n_bars: int = 5
+    mfe_atr: float = 0.0
+    """The bar the two specifications differ on (D177).
+
+    At 0.0 the test is "is the position in profit right now" — the SHORT book's wording
+    ("a short not in profit within 3-5 bars"), and what this rule has always done.
+
+    Above 0.0 the test is E2 as `BREAKOUT_REVERSAL_FEATURES.md` states it: has the trade
+    achieved MAX FAVOURABLE EXCURSION of at least `mfe_atr` x ATR at any point since
+    entry. These are materially different — a trade that spiked +1.5 ATR and came back to
+    flat is exited by the first and retained by the second — so the long book gets its own
+    specified rule instead of the short book's approximation of it."""
+
+    atr_window: int = 20
     name: str = field(default="time_stop", init=False)
 
     def __post_init__(self) -> None:
         if self.n_bars < 1:
             raise ValueError(f"n_bars must be at least 1, got {self.n_bars}")
+        if self.mfe_atr < 0:
+            raise ValueError(f"mfe_atr must not be negative, got {self.mfe_atr}")
+        if self.atr_window < 1:
+            raise ValueError(f"atr_window must be at least 1, got {self.atr_window}")
 
     def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
-        return 0
+        return self.atr_window + 1 if self.mfe_atr > 0 else 0
 
     def exits(self, view: DataView, position: OpenPosition) -> bool:
         i = view.current_index
         if i - position.entry_index < self.n_bars:
             return False
-        # "In profit" means the price has moved IN the trade's direction since entry.
-        return not _beyond(view[i].close, position.entry_reference, position.direction)
+        if self.mfe_atr <= 0.0:
+            # "In profit" means the price has moved IN the trade's direction since entry.
+            return not _beyond(view[i].close, position.entry_reference, position.direction)
+
+        entry = position.entry_index
+        if entry - self.atr_window < 1:
+            return False  # cannot measure the yardstick; do not guess
+        atr = _mean_true_range(view, entry - self.atr_window, entry)
+        if atr <= 0.0:
+            return False
+        # MFE since entry: the best price reached in the trade's OWN direction, against
+        # the entry reference. No new state — the channel helper already does this.
+        best = _channel_extreme(view, entry, i + 1, position.direction)
+        excursion = position.direction * (best - position.entry_reference)
+        return excursion < self.mfe_atr * atr
 
     def config(self) -> dict[str, Any]:
-        return {"type": "time_stop", "n_bars": self.n_bars}
+        config: dict[str, Any] = {"type": "time_stop", "n_bars": self.n_bars}
+        # Emitted only when non-default, so every short-book config written before E2
+        # existed hashes exactly as it did (the D166 rule, a fourth time).
+        if self.mfe_atr:
+            config["mfe_atr"] = self.mfe_atr
+            config["atr_window"] = self.atr_window
+        return config
 
 
 @dataclass(frozen=True)
@@ -878,6 +963,7 @@ class BreakoutStrategy:
     _entry_index: int = field(default=-1, init=False, repr=False)
     _entry_reference: float = field(default=0.0, init=False, repr=False)
     _stop_level: float = field(default=0.0, init=False, repr=False)
+    _entry_channel_level: float = field(default=0.0, init=False, repr=False)
 
     def __post_init__(self) -> None:
         if self.n_entry < 1 or self.n_exit < 1:
@@ -970,6 +1056,7 @@ class BreakoutStrategy:
                 entry_index=self._entry_index,
                 entry_reference=self._entry_reference,
                 stop_level=self._stop_level,
+                entry_channel_level=self._entry_channel_level,
             )
             self._ratchet_stop(view, position)
             position = OpenPosition(
@@ -977,6 +1064,7 @@ class BreakoutStrategy:
                 entry_index=self._entry_index,
                 entry_reference=self._entry_reference,
                 stop_level=self._stop_level,
+                entry_channel_level=self._entry_channel_level,
             )
             # The trailing channel remains the safety net UNDERNEATH every added rule:
             # any one of them firing closes the trade, so a rule can only ever make the
@@ -1002,6 +1090,8 @@ class BreakoutStrategy:
                 self._held_weight = w
                 self._entry_index = i
                 self._entry_reference = view[i].close
+                # The boundary this entry broke, retained for E1 (D177).
+                self._entry_channel_level = self.entry_level(view, i)
                 # Seed from the entry channel's opposite boundary when a ChannelStopExit
                 # is configured — max(high) over the entry window for a short, min(low)
                 # for a long. Other stop rules propose their own levels from the next
@@ -1220,7 +1310,16 @@ EXIT_RULE_REGISTRY.register(
     ),
 )
 EXIT_RULE_REGISTRY.register(
-    "time_stop", lambda c: TimeStopExit(n_bars=_required_int(c, "n_bars", "time_stop"))
+    "time_stop",
+    lambda c: TimeStopExit(
+        n_bars=_required_int(c, "n_bars", "time_stop"),
+        mfe_atr=_optional_number(c, "mfe_atr", 0.0, "time_stop"),
+        atr_window=int(_optional_number(c, "atr_window", 20, "time_stop")),
+    ),
+)
+EXIT_RULE_REGISTRY.register(
+    "failed_breakout",
+    lambda c: FailedBreakoutExit(k=_required_int(c, "k", "failed_breakout")),
 )
 
 WEIGHT_SOURCE_REGISTRY = FactoryRegistry(kind="weight_source")

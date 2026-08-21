@@ -20,8 +20,8 @@ through the Step-7 pipeline. The sanity gate (D25/D26) reported
 violation(s)**, with 7 warning(s) — all of them genuine large crypto
 moves (2017-12, 2020-03, 2021-01, 2021-05), none of them quarantining.
 
-**Scale.** 192 out-of-sample trials logged
-(24 strategy variants × 4 cost tiers ×
+**Scale.** 224 out-of-sample trials logged
+(28 strategy variants × 4 cost tiers ×
 2 symbols) plus 4,896 in-training-window
 parameter evaluations, all counted in the multiplicity section. Risk-free rate
 4%; annualisation on 365 days (crypto trades
@@ -160,6 +160,10 @@ bars across 59 walk-forward windows (train 252, test
 | `filter_volcontract_1.0` | +4103.67% | +44.36% | 1.15 | 39.1% | 31 | 31.6% | 9.6% |
 | `filter_trend_gate_200` | +5962.27% | +49.64% | 1.24 | 38.9% | 33 | 34.0% | 10.2% |
 | `filter_volume_1.5x` | +1745.24% | +33.14% | 0.96 | 32.7% | 27 | 28.9% | 8.1% |
+| `exit_e1_k2` | +6603.90% | +51.13% | 1.26 | 38.5% | 44 | 33.9% | 11.3% |
+| `exit_e1_k3` | +7618.88% | +53.23% | 1.30 | 29.2% | 44 | 33.7% | 11.1% |
+| `exit_e2_n5` | +5324.61% | +48.02% | 1.19 | 41.6% | 47 | 34.6% | 13.9% |
+| `exit_e2_n7` | +5660.81% | +48.89% | 1.21 | 41.2% | 45 | 35.4% | 12.7% |
 | `sizing_fixed_1.0` | +8019.21% | +54.00% | 1.16 | 48.2% | 38 | 36.7% | 12.5% |
 | `sizing_invvol_daily` | +2958.68% | +39.92% | 1.18 | 42.6% | 38 | 36.7% | 16.9% |
 | `voltarget_020` | +3022.17% | +40.20% | 1.23 | 30.3% | 38 | 36.7% | 8.8% |
@@ -403,6 +407,10 @@ single target without the ladder beside it.
 | `filter_volcontract_1.0` | 58.1% | +42.91% | -5.73% | 30 | 87 | 10 | 0.0% | 2.6% | 6.17x |
 | `filter_trend_gate_200` | 57.6% | +47.30% | -4.53% | 30 | 87 | 21 | 0.0% | 3.2% | 6.48x |
 | `filter_volume_1.5x` | 55.6% | +40.81% | -5.85% | 30 | 90 | 22 | 0.0% | 5.1% | 4.82x |
+| `exit_e1_k2` | 47.7% | +36.83% | -3.74% | 25 | 76 | 2 | 31.8% | 2.5% | 7.80x |
+| `exit_e1_k3` | 47.7% | +36.83% | -3.40% | 25 | 76 | 2 | 34.1% | 2.5% | 7.83x |
+| `exit_e2_n5` | 46.8% | +33.72% | -4.51% | 22 | 76 | 5 | 0.0% | 2.0% | 8.79x |
+| `exit_e2_n7` | 53.3% | +35.43% | -4.80% | 24 | 76 | 7 | 0.0% | 2.2% | 8.26x |
 | `sizing_fixed_1.0` | 57.9% | +43.03% | -5.34% | 29 | 87 | 12 | 0.0% | 0.2% | 8.02x |
 | `sizing_invvol_daily` | 55.3% | +43.03% | -5.34% | 29 | 87 | 13 | 0.0% | 32.0% | 9.56x |
 | `voltarget_020` | 57.9% | +43.03% | -5.34% | 29 | 87 | 12 | 0.0% | 11.1% | 4.79x |
@@ -436,6 +444,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 | `filter_volcontract_1.0` | 30.7% | 26.3% | 73.7% | 53.2% |
 | `filter_trend_gate_200` | 32.8% | 27.8% | 72.2% | 53.3% |
 | `filter_volume_1.5x` | 26.5% | 23.6% | 76.4% | 60.8% |
+| `exit_e1_k2` | 33.2% | 28.0% | 72.0% | 53.8% |
+| `exit_e1_k3` | 33.2% | 27.6% | 72.4% | 64.9% |
+| `exit_e2_n5` | 33.6% | 29.1% | 70.9% | 50.1% |
+| `exit_e2_n7` | 34.0% | 29.3% | 70.7% | 50.6% |
 | `sizing_fixed_1.0` | 40.6% | 35.9% | 64.1% | 42.2% |
 | `sizing_invvol_daily` | 28.4% | 24.7% | 75.3% | 48.9% |
 | `voltarget_020` | 25.3% | 21.0% | 79.0% | 63.6% |
@@ -448,10 +460,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `plateau_20_10` | 0.0711 | 3,716 | 24 | 0.000023 | **0.9999** |
-| `maker_10bp` | `plateau_20_10` | 0.0698 | 3,716 | 24 | 0.000024 | **0.9999** |
-| `maker_25bp` | `plateau_20_10` | 0.0679 | 3,716 | 24 | 0.000025 | **0.9999** |
-| `taker_40bp` | `plateau_20_10` | 0.0660 | 3,716 | 24 | 0.000027 | **0.9998** |
+| `maker_0bp` | `exit_e1_k3` | 0.0726 | 3,716 | 28 | 0.000025 | **1.0000** |
+| `maker_10bp` | `exit_e1_k3` | 0.0715 | 3,716 | 28 | 0.000025 | **0.9999** |
+| `maker_25bp` | `exit_e1_k3` | 0.0699 | 3,716 | 28 | 0.000026 | **0.9999** |
+| `taker_40bp` | `exit_e1_k3` | 0.0682 | 3,716 | 28 | 0.000027 | **0.9998** |
 
 
 ---
@@ -483,6 +495,10 @@ bars across 43 walk-forward windows (train 252, test
 | `filter_volcontract_1.0` | +454.59% | +25.96% | 0.73 | 35.3% | 24 | 27.9% | 10.7% |
 | `filter_trend_gate_200` | +548.54% | +28.65% | 0.80 | 34.7% | 23 | 28.5% | 8.6% |
 | `filter_volume_1.5x` | +145.84% | +12.88% | 0.42 | 40.6% | 22 | 25.2% | 14.5% |
+| `exit_e1_k2` | +906.09% | +36.49% | 0.95 | 34.7% | 30 | 29.9% | 9.5% |
+| `exit_e1_k3` | +906.09% | +36.49% | 0.95 | 34.7% | 30 | 29.9% | 9.5% |
+| `exit_e2_n5` | +305.57% | +20.76% | 0.61 | 42.4% | 34 | 30.2% | 14.7% |
+| `exit_e2_n7` | +291.61% | +20.19% | 0.59 | 42.8% | 34 | 30.9% | 15.1% |
 | `sizing_fixed_1.0` | +662.74% | +31.49% | 0.73 | 47.0% | 28 | 32.8% | 12.0% |
 | `sizing_invvol_daily` | +251.22% | +18.44% | 0.62 | 31.5% | 28 | 32.8% | 17.6% |
 | `voltarget_020` | +206.68% | +16.30% | 0.68 | 19.1% | 28 | 32.8% | 9.3% |
@@ -723,6 +739,10 @@ single target without the ladder beside it.
 | `filter_volcontract_1.0` | 50.0% | +43.40% | -7.74% | 26 | 52 | 14 | 0.0% | 8.1% | 5.37x |
 | `filter_trend_gate_200` | 60.9% | +45.89% | -6.67% | 27 | 52 | 17 | 0.0% | 9.9% | 4.70x |
 | `filter_volume_1.5x` | 50.0% | +36.05% | -8.40% | 24 | 46 | 15 | 0.0% | 9.6% | 4.82x |
+| `exit_e1_k2` | 46.7% | +38.10% | -4.90% | 22 | 45 | 8 | 26.7% | 8.0% | 6.30x |
+| `exit_e1_k3` | 46.7% | +38.10% | -4.90% | 22 | 45 | 8 | 26.7% | 8.0% | 6.30x |
+| `exit_e2_n5` | 41.2% | +31.89% | -7.16% | 17 | 45 | 5 | 0.0% | 7.7% | 6.90x |
+| `exit_e2_n7` | 44.1% | +31.91% | -7.30% | 17 | 45 | 7 | 0.0% | 7.8% | 6.92x |
 | `sizing_fixed_1.0` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 0.2% | 7.35x |
 | `sizing_invvol_daily` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 37.2% | 8.09x |
 | `voltarget_020` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 20.4% | 3.50x |
@@ -756,6 +776,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 | `filter_volcontract_1.0` | 23.2% | 20.2% | 79.8% | 57.2% |
 | `filter_trend_gate_200` | 23.7% | 20.4% | 79.6% | 58.0% |
 | `filter_volume_1.5x` | 19.1% | 18.0% | 82.0% | 50.8% |
+| `exit_e1_k2` | 25.7% | 21.3% | 78.7% | 58.0% |
+| `exit_e1_k3` | 25.7% | 21.3% | 78.7% | 58.0% |
+| `exit_e2_n5` | 24.2% | 22.2% | 77.8% | 48.5% |
+| `exit_e2_n7` | 24.5% | 22.5% | 77.5% | 48.0% |
 | `sizing_fixed_1.0` | 35.2% | 31.8% | 68.2% | 42.9% |
 | `sizing_invvol_daily` | 20.1% | 18.4% | 81.6% | 61.8% |
 | `voltarget_020` | 14.0% | 12.3% | 87.7% | 76.8% |
@@ -768,10 +792,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `plateau_55_5` | 0.0555 | 2,708 | 24 | 0.000048 | **0.9881** |
-| `maker_10bp` | `plateau_55_5` | 0.0543 | 2,708 | 24 | 0.000047 | **0.9862** |
-| `maker_25bp` | `plateau_55_5` | 0.0526 | 2,708 | 24 | 0.000046 | **0.9829** |
-| `taker_40bp` | `plateau_55_5` | 0.0508 | 2,708 | 24 | 0.000045 | **0.9786** |
+| `maker_0bp` | `plateau_55_5` | 0.0555 | 2,708 | 28 | 0.000053 | **0.9861** |
+| `maker_10bp` | `plateau_55_5` | 0.0543 | 2,708 | 28 | 0.000052 | **0.9838** |
+| `maker_25bp` | `plateau_55_5` | 0.0526 | 2,708 | 28 | 0.000051 | **0.9798** |
+| `taker_40bp` | `plateau_55_5` | 0.0508 | 2,708 | 28 | 0.000051 | **0.9748** |
 
 
 ---
@@ -993,6 +1017,64 @@ component varies, and that is what is logged.
 
 ---
 
+# Exit signatures: E1 and E2
+
+`BREAKOUT_REVERSAL_FEATURES.md` permits these two to be built immediately (protocol §4)
+because they modify EXITS rather than adding entry-filter dimensions. Each row below is
+the accepted baseline plus exactly ONE exit brick — never stacked, so each delta prices one
+component. Baseline closed trades: 38 / 28.
+
+**E1 — failed-breakout re-entry.** Close falls back inside the channel the entry broke,
+within k bars. *predicted a SURVIVOR — the doc's highest-priority recommendation, and the one it names alongside F1 as most likely to work.*
+
+**E2 — time stop.** Max favourable excursion has not reached 1 ATR within n bars.
+*genuine breakouts work quickly; stagnation is information.*
+
+| Variant | Δ Sharpe BTC-USD | Δ Sharpe ETH-USD | Trades | Decision |
+|---|---|---|---|---|
+| `exit_e1_k2` | +0.058 | +0.177 | 44 / 30 | **KEEP** |
+| `exit_e1_k3` | +0.101 | +0.177 | 44 / 30 | **KEEP** |
+| `exit_e2_n5` | -0.010 | -0.167 | 47 / 34 | DROP |
+| `exit_e2_n7` | +0.005 | -0.182 | 45 / 34 | DROP |
+
+**exit_e1_k2, exit_e1_k3 improves on every symbol.** On the same rule the filter increments are scored by, that is a keep — and the doc's prior that E1 would survive is supported.
+
+## E2's prerequisite: the MFE-vs-time distribution
+
+The doc requires n be validated against the baseline's own MFE-vs-time distribution before
+the candidate values are used. n is FIXED at [5, 7] by the doc, so this is a check
+that those values are sensible — not a search for better ones.
+
+| Symbol | Trades | reached 1 ATR by bar 5 | reached 1 ATR by bar 7 |
+|---|---|---|---|
+| BTC-USD | 38 | 26% | 29% |
+| ETH-USD | 28 | 43% | 43% |
+
+Read this as the exit's own hit rate: it is the fraction of trades E2 would NOT cut. The
+complement is how much of the book each n would remove, and the table above shows that
+directly.
+
+
+
+
+## E3 — impulse decay, logged and not acted on
+
+The doc is explicit: *"Definition is fuzzy; log range/volume trajectories per trade so it
+can be studied, but no exit rule in this phase."* So there is no E3 variant above and
+nothing gates on it.
+
+Post-entry bar range and volume are recorded per trade on `TradeEpisode.trajectories`
+(BTC-USD 38 range / 38 volume, ETH-USD 28 range / 28 volume) and travel in the summary JSON. Volume became loggable only with
+D168; before that this half of E3 could not have been recorded at all.
+
+**No claim is made here.** Turning "declining range and volume while price grinds
+marginally higher" into a rule requires a definition the doc does not give, and inventing
+one to fill the gap would be exactly the kind of unregistered search the rest of this
+document is built to avoid.
+
+
+---
+
 # Multiplicity: everything that was evaluated
 
 Counting honestly matters more than the count itself, so here is every knob that was
@@ -1000,21 +1082,22 @@ turned, whether or not it appears in a table above.
 
 | What | Count |
 |---|---|
-| Strategy variants per symbol | 24 |
+| Strategy variants per symbol | 28 |
 | — of which parameter-grid cells (N_entry × N_exit) | 12 |
 | — of which filter increments | 5 |
+| — of which exit increments (E1, E2) | 4 |
 | — of which sizing sensitivities | 2 |
 | — of which vol-target sensitivities | 4 |
 | — of which in-training-window selection | 1 |
 | Cost tiers | 4 |
 | Symbols | 2 |
-| **Out-of-sample trials logged** | **192** (96 per symbol) |
-| Per-window trial rows logged | 9,792 |
+| **Out-of-sample trials logged** | **224** (112 per symbol) |
+| Per-window trial rows logged | 11,424 |
 | In-training-window parameter evaluations (fitting, not trials) | 4,896 |
 
 **What the DSR trial pool is, and is not.** Bailey & López de Prado's N is the number of
 *configurations* tried. This study has many, so the pool is every variant's out-of-sample
-daily Sharpe at one (symbol, tier) — 24 per cell, selected on
+daily Sharpe at one (symbol, tier) — 28 per cell, selected on
 identity fields in the logged config, never on the presence of a metric (D98). Per-window
 rows carry `row_kind="window"` and are excluded by that same predicate. This is a
 different pool from the pairs studies' one-row-per-window, deliberately: those studies
@@ -1116,11 +1199,11 @@ that are not fees are.**
 
 3. **The selection bias above this study is larger than anything inside it.** The DSR
    numbers are near 1.0 at every tier, and the mechanical reason is that the plateau is
-   flat: 24 variants whose Sharpes cluster tightly give a tiny
+   flat: 28 variants whose Sharpes cluster tightly give a tiny
    V[{SRn}], so the noise floor SR0 barely rises and almost nothing is deflated away.
    That is DSR working correctly on the multiplicity it was given, and it is also why
    those numbers should not be read as vindication. The trial pool counts
-   24 configurations. It does not count
+   28 configurations. It does not count
    the 4,896 training-window fits, the two-symbol choice, or the
    decision — made in 2026, with a decade of crypto trend visible — to test a trend
    follower on the two crypto assets that survived. **Treat DSR ≈ 1.0 here as "the
