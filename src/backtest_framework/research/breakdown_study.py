@@ -56,6 +56,26 @@ SHORT_N_EXIT: tuple[int, ...] = (3, 5, 10)
 """Faster than the long book's (5, 10, 20). Bear-market rallies are violent and a short
 that waits for a 20-bar high to confirm has already given the move back."""
 
+ENSEMBLE_MIN_BARS = 252
+"""Warm-up before the long/short ensemble will weight anything (D181).
+
+The weights use an EXPANDING window — every return from the start of the out-of-sample
+period up to the previous bar — rather than a fixed trailing one, and this constant is only
+the minimum history required before the first weight is produced. 252 is
+`BreakoutStudyConfig.train_size`, an already-pinned constant.
+
+**Why expanding rather than trailing.** The short book is regime-gated and sits flat on
+~85% of bars, so it is routinely flat for an entire fixed window and has no volatility to
+invert. A 63-bar window fell back to equal weight on 75% of BTC's bars — an "equal-vol"
+book that was equal-CAPITAL three times out of four, which is precisely what `EnsembleResult`
+says the construction exists to avoid. Any fixed window shorter than the short book's flat
+spells has the same problem, and the length of those spells is not something to guess.
+
+Choosing the window by which value produced the best combined Sharpe would be a search, and
+the ensemble has no multiplicity budget. The expanding window is chosen on the stated
+principle that an allocator sizes strategies by their long-run risk, not last quarter's —
+especially when one of them is intermittent by design."""
+
 SHORT_BASELINE_N_ENTRY, SHORT_BASELINE_N_EXIT = 20, 5
 
 TIME_STOP_BARS: tuple[int, ...] = (3, 5)
@@ -325,22 +345,47 @@ class EnsembleResult:
     both happen to be trading", which is not the diversification question — the whole
     point is that the short book wakes when the long book sleeps."""
     n_bars: int
+    """Bars actually SCORED — the out-of-sample span less the weighting warm-up."""
+    n_warmup_bars: int
+    """Leading bars dropped because no trailing window existed to weight them (D181)."""
+    n_fallback_bars: int
+    """Scored bars where a leg was flat for its entire history to that point, so inverse
+    vol was undefined and the pair fell back to 50/50. Reported rather than hidden: if this
+    is a large share of the span, the weighting is not doing what its name says. A 63-bar
+    trailing window hit 75% here, which is how the scheme came to be changed (D181)."""
+    mean_long_weight: float
+    """Average share of the combined book carried by the LONG leg.
+
+    Below 0.5 means the majority of the risk budget sits on the short leg — a book that is
+    flat on ~85% of bars and loses money. Inverse-vol weighting reads a flat book as
+    low-risk, when what it actually is, is absent. This is a known flaw in the equal-vol
+    construction (D181) and it is surfaced on every result so it cannot be read past."""
     long_sharpe: float
     short_sharpe: float
     combined_sharpe: float
     """Equal VOL weight, not equal capital: the two books have very different
-    volatilities, so equal capital would just be the long book with noise added."""
+    volatilities, so equal capital would just be the long book with noise added. The vol
+    is TRAILING, measured on a window ending at the previous bar (D44/D181) — an earlier
+    version used whole-sample vol, which knew each leg's future."""
     long_max_drawdown: float
+    short_max_drawdown: float
+    """Carried so all three arms can be quoted on the SAME span. The drawdown comparison
+    is the one D172 found disagrees with the Sharpe comparison, so leaving one arm out of
+    it invites the reader to fill the gap with a number measured over a different span."""
     combined_max_drawdown: float
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "correlation": self.correlation,
             "n_bars": self.n_bars,
+            "n_warmup_bars": self.n_warmup_bars,
+            "n_fallback_bars": self.n_fallback_bars,
+            "mean_long_weight": self.mean_long_weight,
             "long_sharpe": self.long_sharpe,
             "short_sharpe": self.short_sharpe,
             "combined_sharpe": self.combined_sharpe,
             "long_max_drawdown": self.long_max_drawdown,
+            "short_max_drawdown": self.short_max_drawdown,
             "combined_max_drawdown": self.combined_max_drawdown,
         }
 
@@ -354,25 +399,135 @@ def _max_drawdown(returns: Sequence[float]) -> float:
     return worst
 
 
+class _RunningVol:
+    """Welford's online variance, so an EXPANDING-window standard deviation costs O(1) per
+    bar instead of O(n).
+
+    The naive version — re-running `statistics.stdev` over a growing slice — is O(n²) and
+    turns the 62-symbol universe run into hundreds of millions of operations. Welford is
+    also the numerically stable formulation, which the sum-of-squares shortcut is not."""
+
+    __slots__ = ("n", "_mean", "_m2", "_first", "_all_same")
+
+    def __init__(self) -> None:
+        self.n = 0
+        self._mean = 0.0
+        self._m2 = 0.0
+        self._first: float | None = None
+        self._all_same = True
+
+    def add(self, x: float) -> None:
+        if self._first is None:
+            self._first = x
+        elif x != self._first:
+            self._all_same = False
+        self.n += 1
+        delta = x - self._mean
+        self._mean += delta / self.n
+        self._m2 += delta * (x - self._mean)
+
+    @property
+    def sd(self) -> float:
+        # A book flat for its entire history has no volatility to invert, and floating
+        # point on a constant series can leave m2 at a tiny non-zero value. The identity
+        # check is exact where the arithmetic is not.
+        if self._all_same or self.n < 2:
+            return 0.0
+        return math.sqrt(self._m2 / (self.n - 1))
+
+
+def _check_pair(
+    long_returns: Sequence[float], short_returns: Sequence[float], min_bars: int
+) -> None:
+    """Both legs must cover the SAME bars, and there must be enough history to weight.
+
+    The previous implementation took `min(len(a), len(b))` and sliced from the end. Today
+    both books produce identical out-of-sample spans, so that was a no-op — and a silent
+    one, which would have quietly misaligned dates the first time it stopped being true.
+    Raising is the whole value of the check."""
+    if min_bars < 2:
+        raise ValueError(f"min_bars must be at least 2, got {min_bars}")
+    if len(long_returns) != len(short_returns):
+        raise ValueError(
+            f"the two books cover different spans — long has {len(long_returns)} returns "
+            f"and short has {len(short_returns)}. They must be aligned bar-for-bar before "
+            "they can be combined; truncating one to fit the other would silently shift "
+            "the pair out of alignment."
+        )
+    if len(long_returns) <= min_bars:
+        raise ValueError(
+            f"{len(long_returns)} returns is not enough to weight after a {min_bars}-bar "
+            f"warm-up — at least {min_bars + 1} are needed. Falling back to whole-sample "
+            "volatility here is what made the weights look-ahead in the first place, so "
+            "this raises instead."
+        )
+
+
+def _inverse_vol_weights(
+    long_returns: Sequence[float], short_returns: Sequence[float], min_bars: int
+) -> tuple[list[tuple[float, float]], int]:
+    """Per-bar inverse-volatility weights using only information available BEFORE the bar.
+
+    At bar `t` the weights come from each leg's realized vol over `[0, t)` — everything up
+    to and EXCLUDING the current bar, so the window ends at the previous bar in the sense
+    D44 pins and `InverseVolatilityWeight` already applies for strategy-level sizing. The
+    ensemble layer used to compute one pair of weights from the WHOLE out-of-sample series
+    and apply them from the first bar, which handed the calmer leg exactly the right weight
+    in advance (D181).
+
+    Expanding rather than fixed-width: see `ENSEMBLE_MIN_BARS`. The short book is flat on
+    ~85% of bars, so a fixed window short enough to be responsive is routinely all-flat and
+    has no volatility to invert.
+
+    The first `min_bars` bars are dropped rather than given a placeholder weight — equal
+    weight for a warm-up year is a number nobody chose, and it would sit in the series
+    looking like a measurement.
+
+    Returns the weights for bars `min_bars..n-1` and a count of the bars that still had to
+    fall back to 50/50 because a leg was flat for its entire history to that point."""
+    weights: list[tuple[float, float]] = []
+    fallback = 0
+    vol_a, vol_b = _RunningVol(), _RunningVol()
+    for t in range(min_bars):
+        vol_a.add(long_returns[t])
+        vol_b.add(short_returns[t])
+    for t in range(min_bars, len(long_returns)):
+        sd_a, sd_b = vol_a.sd, vol_b.sd  # state covers [0, t) — bar t not yet added
+        if sd_a > 0.0 and sd_b > 0.0:
+            # Normalised so the pair sums to 1 and the combined book is comparable in
+            # scale to each component rather than quietly levered.
+            wa, wb = 1.0 / sd_a, 1.0 / sd_b
+            total = wa + wb
+            weights.append((wa / total, wb / total))
+        else:
+            # A book flat for its whole history has no volatility to invert. Equal weight
+            # is the only choice that does not divide by zero, and it is counted so the
+            # report can say how often it happened rather than hiding it.
+            fallback += 1
+            weights.append((0.5, 0.5))
+        vol_a.add(long_returns[t])
+        vol_b.add(short_returns[t])
+    return weights, fallback
+
+
 def combined_series(
-    long_returns: Sequence[float], short_returns: Sequence[float]
+    long_returns: Sequence[float],
+    short_returns: Sequence[float],
+    min_bars: int = ENSEMBLE_MIN_BARS,
 ) -> list[float]:
-    """The equal-VOL-weighted combined book's return series.
+    """The inverse-vol-weighted combined book's return series, warm-up excluded.
 
     Split out from `combine_books` so the same series that produces the reported
     combined Sharpe can also be fed to the paired bootstrap — otherwise the interval
     would be computed on a differently-weighted book than the point estimate, which is
-    the kind of quiet mismatch that makes an interval meaningless."""
-    n = min(len(long_returns), len(short_returns))
-    a, b = list(long_returns[-n:]), list(short_returns[-n:])
-    sd_a = statistics.stdev(a) if len(set(a)) > 1 else 0.0
-    sd_b = statistics.stdev(b) if len(set(b)) > 1 else 0.0
-    if sd_a > 0 and sd_b > 0:
-        wa, wb = 1.0 / sd_a, 1.0 / sd_b
-        wa, wb = wa / (wa + wb), wb / (wa + wb)
-    else:
-        wa = wb = 0.5
-    return [wa * x + wb * y for x, y in zip(a, b)]
+    the kind of quiet mismatch that makes an interval meaningless. Both now go through
+    `_inverse_vol_weights`, so they cannot drift apart."""
+    _check_pair(long_returns, short_returns, min_bars)
+    weights, _ = _inverse_vol_weights(long_returns, short_returns, min_bars)
+    return [
+        wa * long_returns[min_bars + i] + wb * short_returns[min_bars + i]
+        for i, (wa, wb) in enumerate(weights)
+    ]
 
 
 def combine_books(
@@ -380,31 +535,35 @@ def combine_books(
     short_returns: Sequence[float],
     rf_annual: float,
     periods_per_year: float,
+    min_bars: int = ENSEMBLE_MIN_BARS,
 ) -> EnsembleResult:
-    n = min(len(long_returns), len(short_returns))
-    a, b = list(long_returns[-n:]), list(short_returns[-n:])
-    sd_a = statistics.stdev(a) if len(set(a)) > 1 else 0.0
-    sd_b = statistics.stdev(b) if len(set(b)) > 1 else 0.0
+    """Every figure here is measured over the POST-WARM-UP span, legs included.
 
-    if sd_a > 0 and sd_b > 0:
-        correlation = float(np.corrcoef(a, b)[0, 1])
-        # Equal vol weight, normalised so the pair sums to 1 and the combined book is
-        # comparable in scale to each component rather than quietly levered.
-        wa, wb = (1.0 / sd_a), (1.0 / sd_b)
-        wa, wb = wa / (wa + wb), wb / (wa + wb)
-    else:
-        correlation = 0.0
-        wa = wb = 0.5
-    combined = [wa * x + wb * y for x, y in zip(a, b)]
+    Scoring the legs on the full series while the combination starts `min_bars` bars
+    later would compare three books over three different periods and present the
+    difference as an effect of combining them."""
+    _check_pair(long_returns, short_returns, min_bars)
+    weights, fallback = _inverse_vol_weights(long_returns, short_returns, min_bars)
+    a = list(long_returns[min_bars:])
+    b = list(short_returns[min_bars:])
+    combined = [wa * x + wb * y for (wa, wb), x, y in zip(weights, a, b)]
     return EnsembleResult(
-        correlation=correlation,
-        n_bars=n,
+        correlation=(
+            float(np.corrcoef(a, b)[0, 1])
+            if len(set(a)) > 1 and len(set(b)) > 1
+            else 0.0
+        ),
+        n_bars=len(combined),
+        n_warmup_bars=min_bars,
+        n_fallback_bars=fallback,
+        mean_long_weight=statistics.fmean([w[0] for w in weights]) if weights else 0.5,
         long_sharpe=sharpe(a, rf_annual, periods_per_year) if len(set(a)) > 1 else 0.0,
         short_sharpe=sharpe(b, rf_annual, periods_per_year) if len(set(b)) > 1 else 0.0,
         combined_sharpe=(
             sharpe(combined, rf_annual, periods_per_year) if len(set(combined)) > 1 else 0.0
         ),
         long_max_drawdown=_max_drawdown(a),
+        short_max_drawdown=_max_drawdown(b),
         combined_max_drawdown=_max_drawdown(combined),
     )
 

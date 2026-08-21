@@ -113,3 +113,45 @@ appearance of a delivered requirement) and of the one that recurs throughout thi
 missing section that was *supposed* to be there reads the same way, which is the problem —
 absence is indistinguishable from not-yet-attempted unless something shouts. The guard is
 the shout.
+
+---
+
+# CORRECTION — appended 2026-08-21. Nothing above this line was edited.
+
+**The headline claim of this record does not survive. Its title is now wrong.**
+
+D181 found that the ensemble set its inverse-volatility weights from **whole-sample**
+volatility and applied them from the first bar — look-ahead. Every number above was
+computed that way. Recomputed with expanding-window weights (252-bar warm-up):
+
+| | As published | Corrected | |
+|---|---|---|---|
+| BTC combined, no E1 | 0.412 | 0.462 | |
+| BTC combined, + E1 | 0.526 | 0.580 | |
+| **BTC Δ, 90% interval** | **[+0.002, +0.219]** | **[−0.008, +0.231]** | **now spans zero** |
+| BTC P(helps) | 95.4% | 93.7% | |
+| ETH combined, no E1 | 0.649 | 0.570 | |
+| ETH combined, + E1 | 0.845 | 0.838 | |
+| ETH Δ, 90% interval | [+0.063, +0.362] | [+0.085, +0.490] | still excludes zero |
+| ETH P(helps) | 99.5% | 99.8% | |
+
+**BTC's interval now spans zero.** This record's title — *the first ensemble gain whose
+interval excludes zero* — rested on **both** intervals excluding it. One does. That is an
+ordinary one-of-two result, which this project's own every-symbol rule treats as a coin
+flip, and it is not what was claimed.
+
+**The effect survives on ETH and is not established on BTC.** Read together with D180 —
+where E1 failed outright across 62 coins on both books — the honest summary of E1's record
+is: it improves BTC and ETH, it does not improve the sixty coins it was not developed on,
+and its one combined-book result that cleared a stated bar clears it on a single symbol.
+
+**Two claims above are unaffected and remain true.** The correlation barely moves whether or
+not E1 is applied, so the gain does not come from the diversification channel. And no new
+multiplicity was introduced — both legs were already in their pools, which is a fact about
+the trial registry and not about the weighting.
+
+**One further caveat this record should have carried and could not.** The mean weight on
+the long leg is **0.389 on BTC**: the majority of the combined book's risk budget sits on
+the short leg, because inverse-vol weighting reads a book that is flat 88% of the time as
+low-risk rather than as absent (D181). Every combined figure in this record is a
+measurement of a book weighted that way.

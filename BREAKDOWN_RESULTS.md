@@ -162,11 +162,11 @@ long book sleeps.
 |---|---|
 | Long-vs-short daily return correlation | **+0.001** |
 | Target from the brief | ≤ ~0.2 |
-| Long book Sharpe (alone) | 1.20 |
-| Short book Sharpe (alone) | -0.62 |
-| Combined, equal VOL weight | 0.41 |
+| Long book Sharpe (alone) | 1.22 |
+| Short book Sharpe (alone) | -0.63 |
+| Combined, equal VOL weight | 0.46 |
 | Long book max drawdown | 43.0% |
-| Combined max drawdown | 34.0% |
+| Combined max drawdown | 35.0% |
 
 **And now with an interval rather than a point estimate.** Paired block bootstrap of
 (combined − long-only) annualised Sharpe, 20-bar blocks, 4,000 sims,
@@ -177,8 +177,8 @@ which answers the same question without assuming normality.
 
 | | Δ Sharpe (combined − long-only) |
 |---|---|
-| Observed | **-0.790** |
-| 90% interval | [-1.125, -0.442] |
+| Observed | **-0.761** |
+| 90% interval | [-1.132, -0.371] |
 | P(adding the short book helps) | **0%** |
 
 **The entire interval is negative.** Adding this short book to the long one does not fail to help; it measurably hurts, and the sample is large enough to say so. This is not the 'inside the noise' verdict the long study reached on its own Sharpe gap — it is a decisive negative.
@@ -235,18 +235,18 @@ D178, so it is the consistent choice rather than one tuned per leg.
 
 | | Without E1 | With E1 on both legs | Δ |
 |---|---|---|---|
-| Long leg Sharpe | +1.202 | +1.303 | +0.101 |
-| Short leg Sharpe | -0.619 | -0.558 | +0.061 |
+| Long leg Sharpe | +1.223 | +1.303 | +0.080 |
+| Short leg Sharpe | -0.629 | -0.558 | +0.071 |
 | Long/short correlation | +0.001 | +0.002 | +0.001 |
-| **Combined Sharpe** | +0.412 | +0.526 | +0.114 |
-| **Combined max drawdown** | 34.0% | 29.5% | -4.5 pp |
+| **Combined Sharpe** | +0.462 | +0.580 | +0.118 |
+| **Combined max drawdown** | 35.0% | 35.1% | +0.2 pp |
 
 Paired block bootstrap of the combined-Sharpe difference (4,000 sims,
-seed 0, D120): observed **+0.114**, 90% interval
-[+0.002, +0.219], P(E1 helps the combination) =
-**95%**.
+seed 0, D120): observed **+0.118**, 90% interval
+[-0.008, +0.231], P(E1 helps the combination) =
+**94%**.
 
-**The whole interval is positive.** Adding E1 to both legs improves the combined book measurably, not just on the point estimate.
+**The interval spans zero**, so the combined effect is not measurable at this sample size, whatever the point estimate shows. That is the absence of evidence, not evidence of no effect.
 
 **No new configurations were introduced for this comparison.** Both legs already exist and
 are already in their DSR pools, so the combined test costs no additional multiplicity — it
@@ -385,13 +385,13 @@ long book sleeps.
 
 | | Value |
 |---|---|
-| Long-vs-short daily return correlation | **-0.001** |
+| Long-vs-short daily return correlation | **+0.000** |
 | Target from the brief | ≤ ~0.2 |
-| Long book Sharpe (alone) | 0.78 |
-| Short book Sharpe (alone) | 0.14 |
-| Combined, equal VOL weight | 0.65 |
+| Long book Sharpe (alone) | 0.87 |
+| Short book Sharpe (alone) | -0.23 |
+| Combined, equal VOL weight | 0.57 |
 | Long book max drawdown | 35.2% |
-| Combined max drawdown | 29.5% |
+| Combined max drawdown | 27.9% |
 
 **And now with an interval rather than a point estimate.** Paired block bootstrap of
 (combined − long-only) annualised Sharpe, 20-bar blocks, 4,000 sims,
@@ -402,9 +402,9 @@ which answers the same question without assuming normality.
 
 | | Δ Sharpe (combined − long-only) |
 |---|---|
-| Observed | **-0.126** |
-| 90% interval | [-0.572, +0.315] |
-| P(adding the short book helps) | **31%** |
+| Observed | **-0.299** |
+| 90% interval | [-0.639, +0.066] |
+| P(adding the short book helps) | **9%** |
 
 **The interval spans zero**, so the ensemble effect is not measurable at this sample size. That is not evidence of neutrality — it is the absence of evidence either way, and it should not be reported as 'the short book is roughly neutral'.
 
@@ -460,15 +460,15 @@ D178, so it is the consistent choice rather than one tuned per leg.
 
 | | Without E1 | With E1 on both legs | Δ |
 |---|---|---|---|
-| Long leg Sharpe | +0.775 | +0.952 | +0.177 |
-| Short leg Sharpe | +0.142 | +0.243 | +0.101 |
-| Long/short correlation | -0.001 | -0.001 | -0.001 |
-| **Combined Sharpe** | +0.649 | +0.845 | +0.197 |
-| **Combined max drawdown** | 29.5% | 24.4% | -5.1 pp |
+| Long leg Sharpe | +0.870 | +0.952 | +0.083 |
+| Short leg Sharpe | -0.228 | +0.243 | +0.470 |
+| Long/short correlation | +0.000 | -0.000 | -0.000 |
+| **Combined Sharpe** | +0.570 | +0.838 | +0.268 |
+| **Combined max drawdown** | 27.9% | 24.4% | -3.6 pp |
 
 Paired block bootstrap of the combined-Sharpe difference (4,000 sims,
-seed 0, D120): observed **+0.197**, 90% interval
-[+0.063, +0.362], P(E1 helps the combination) =
+seed 0, D120): observed **+0.268**, 90% interval
+[+0.085, +0.490], P(E1 helps the combination) =
 **100%**.
 
 **The whole interval is positive.** Adding E1 to both legs improves the combined book measurably, not just on the point estimate.
@@ -503,8 +503,8 @@ claim, and it was wrong: most of those exits were not stop exits at all.
 
 # Verdict
 
-- **BTC-USD**: null percentile 51%, long/short correlation +0.00, combined Sharpe 0.41 against 1.20 long-only (max drawdown 34% against 43%).
-- **ETH-USD**: null percentile 96%, long/short correlation -0.00, combined Sharpe 0.65 against 0.78 long-only (max drawdown 30% against 35%).
+- **BTC-USD**: null percentile 51%, long/short correlation +0.00, combined Sharpe 0.46 against 1.22 long-only (max drawdown 35% against 43%).
+- **ETH-USD**: null percentile 96%, long/short correlation +0.00, combined Sharpe 0.57 against 0.87 long-only (max drawdown 28% against 35%).
 
 **The null verdict is SPLIT and must not be read as a pass.** ETH-USD clears the 95% bar; BTC-USD does not. The long study fixed the rule for exactly this situation before looking — a filter is kept only if it improves on EVERY symbol, because one symbol out of two is a coin flip. The same discipline applies here, and by it the entry rule is not demonstrated. Reporting the winner alone would be the single most misleading thing available in this document.
 

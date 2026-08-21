@@ -10,6 +10,46 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (ensemble weighting look-ahead, 2026-08-21 — D181)
+- **`combine_books`/`combined_series` set their inverse-vol weights from WHOLE-SAMPLE
+  volatility and applied them from bar 0.** The calmer leg got exactly the right weight in
+  advance. Mild - two scalars, no per-bar leakage, no effect on either leg's trades - but
+  every published combined Sharpe was inflated by it, and it was undocumented.
+- D44 already required vol to be measured on a window ending at the PREVIOUS bar. The
+  structural guard (D32/D56) never applied because the ensemble operates on return series
+  rather than a `DataView`: **the guard makes look-ahead impossible for strategies and
+  does nothing for analytics built on their output.**
+- Now an EXPANDING window with a 252-bar warm-up (`ENSEMBLE_MIN_BARS` = `train_size`),
+  using Welford's online variance so it stays O(n) - the naive version is O(n^2) and would
+  make the 62-symbol universe run intractable.
+- A 63-bar TRAILING window was tried first and rejected by its own diagnostics: the short
+  book is flat on 88% of BTC bars, so the window was entirely flat and fell back to 50/50
+  on **75%** of bars - an "equal-vol" book that was equal-CAPITAL three times in four.
+  That also explains why removing the look-ahead first appeared to RAISE BTC's combined
+  Sharpe 0.412 -> 0.685; the fallback was flattering it.
+- `combine_books` no longer takes `min(len(a), len(b))` and slices from the end - it
+  raises on unequal spans. A no-op today (both books produce identical spans) and a silent
+  misalignment the first time that stopped being true.
+- All three arms are now scored over the same post-warm-up span; `EnsembleResult` gains
+  `short_max_drawdown`, `n_warmup_bars`, `n_fallback_bars` and `mean_long_weight`.
+- New test: the weight applied at bar t is unaffected by returns at bar t or later. That
+  single property is the definition of the bug and nothing asserted it.
+
+### Findings
+- Corrected combined Sharpe: BTC 0.412 -> **0.462**, ETH 0.649 -> **0.570**.
+- **D179's conclusion is downgraded** (CORRECTION appended there): BTC's bootstrap
+  interval now SPANS ZERO, [-0.008, +0.231]. "Both intervals exclude zero" was that
+  record's load-bearing claim; one does.
+- **ETH's short leg reads +0.142 over the full span and -0.228 once the first 252 bars are
+  dropped.** Its positive Sharpe lived entirely in the 2018 bear market.
+- **NOT fixed, now reported instead:** mean weight on the long leg is 0.389 (BTC) / 0.453
+  (ETH) - the majority of the risk budget sits on the leg that is flat ~85% of the time
+  and loses money, BECAUSE it is flat. Inverse-vol reads a flat book as low-risk when what
+  it is, is absent. Surfaced via `mean_long_weight` on every combined result.
+- `data/breakout_study_summary.json` byte-identical - the long book has no ensemble, so
+  that was the decisive regression check.
+
+
 ### Added (E1 on the D140 universe, pre-registered, 2026-08-21 — D180)
 - `scripts/run_e1_universe.py` — E1 vs no-E1 on BOTH books across the 62-coin D140
   cross-section, k=3 fixed, four runs, own registry so no published DSR moves. The long

@@ -9,6 +9,7 @@ turning the enforcement into a default.
 
 from __future__ import annotations
 
+import random
 from datetime import datetime, timedelta
 
 import pytest
@@ -274,21 +275,108 @@ def test_the_null_degrades_gracefully_with_no_trades():
 
 def test_correlation_is_computed_including_flat_bars():
     """Half the point of the short book is that it trades when the long book does not,
-    so dropping the flat bars would measure the wrong thing entirely."""
-    long_r = [0.01, 0.01, 0.0, 0.0]
-    short_r = [0.0, 0.0, 0.01, 0.01]
-    out = ds.combine_books(long_r, short_r, rf_annual=0.0, periods_per_year=365.0)
-    assert out.n_bars == 4
+    so dropping the flat bars would measure the wrong thing entirely.
+
+    `min_bars=2` keeps the fixture readable; the property under test is about which
+    bars enter the correlation, not about how the weights are set."""
+    long_r = [0.01, 0.01, 0.0, 0.0, 0.01, 0.01]
+    short_r = [0.0, 0.0, 0.01, 0.01, 0.0, 0.0]
+    out = ds.combine_books(
+        long_r, short_r, rf_annual=0.0, periods_per_year=365.0, min_bars=2
+    )
+    assert out.n_bars == 4  # 6 returns less the 2-bar warm-up
+    assert out.n_warmup_bars == 2
     assert out.correlation == pytest.approx(-1.0, abs=0.01)
 
 
 def test_combining_uses_equal_vol_not_equal_capital():
     """A quiet book and a wild one at equal CAPITAL is just the wild one with noise."""
-    calm = [0.001, -0.001] * 50
-    wild = [0.05, -0.05] * 50
+    calm = [0.001, -0.001] * 200
+    wild = [0.05, -0.05] * 200
     out = ds.combine_books(calm, wild, rf_annual=0.0, periods_per_year=365.0)
     assert -1.0 <= out.correlation <= 1.0
-    assert out.n_bars == 100
+    assert out.n_bars == 400 - ds.ENSEMBLE_MIN_BARS
+
+
+# ------------------------------------------------- the ensemble weights are causal (D181)
+
+
+def _noise(n: int, sd: float, seed: int) -> list[float]:
+    rng = random.Random(seed)
+    return [rng.gauss(0.0, sd) for _ in range(n)]
+
+
+def test_ensemble_weight_at_a_bar_ignores_that_bar_and_every_later_one():
+    """THE test whose absence let the look-ahead through (D181).
+
+    The weights used to come from whole-sample volatility, so a spike in the last year
+    changed the weight applied in the first. Mutating the tail must leave every earlier
+    bar of the combined series untouched."""
+    n, cut = 1200, 800
+    calm, wild = _noise(n, 0.005, 1), _noise(n, 0.02, 2)
+    mutated = wild[:cut] + [x * 25 for x in wild[cut:]]
+
+    before = ds.combined_series(calm, wild)
+    after = ds.combined_series(calm, mutated)
+
+    shared = cut - ds.ENSEMBLE_MIN_BARS
+    assert before[:shared] == after[:shared]
+    assert before[shared:] != after[shared:]  # the mutation must actually reach the series
+
+
+def test_a_leg_that_turns_wild_is_down_weighted_only_afterwards():
+    """The weight must respond to volatility that has already happened, and not before.
+
+    The switch is placed well past the warm-up so there are weighted bars on both sides of
+    it — with an expanding window the first weight does not exist until bar
+    `ENSEMBLE_MIN_BARS`, so a switch inside the warm-up would test nothing."""
+    n, switch, calm_sd, wild_sd = 1200, 600, 0.005, 0.05
+    long_r = _noise(n, calm_sd, 3)
+    short_r = _noise(switch, calm_sd, 4) + _noise(n - switch, wild_sd, 5)
+
+    weights, _ = ds._inverse_vol_weights(long_r, short_r, ds.ENSEMBLE_MIN_BARS)
+    # index i of `weights` is bar i + ENSEMBLE_MIN_BARS; [1] is the SHORT leg's share
+    at = lambda bar: weights[bar - ds.ENSEMBLE_MIN_BARS][1]
+
+    # Both legs still calm on the last pre-switch bar, so the split is near even.
+    assert 0.4 < at(switch - 1) < 0.6
+    # By the end the short leg's history is half wild, and it is cut down hard.
+    assert at(n - 1) < 0.2
+
+
+def test_unequal_length_books_raise_rather_than_being_truncated():
+    """The old code took min(len(a), len(b)) and sliced from the end, which would have
+    silently shifted the pair out of alignment."""
+    with pytest.raises(ValueError, match="different spans"):
+        ds.combined_series(_noise(300, 0.01, 6), _noise(299, 0.01, 7))
+
+
+def test_a_series_shorter_than_the_window_raises_instead_of_falling_back():
+    """Falling back to whole-sample vol here is exactly the bug — quietly, on short
+    inputs, in a function whose contract says the weights are trailing."""
+    with pytest.raises(ValueError, match="not enough to weight"):
+        ds.combined_series(_noise(20, 0.01, 8), _noise(20, 0.01, 9))
+
+
+def test_a_flat_leg_falls_back_to_equal_weight_and_is_counted():
+    """A book flat for its whole window has no volatility to invert. Equal weight is the
+    only non-dividing-by-zero choice, and it is counted so the report can say so."""
+    n = 400
+    flat = [0.0] * n
+    out = ds.combine_books(flat, _noise(n, 0.02, 10), rf_annual=0.0, periods_per_year=365.0)
+    assert out.n_fallback_bars == out.n_bars
+    assert out.n_bars == n - ds.ENSEMBLE_MIN_BARS
+
+
+def test_point_estimate_and_bootstrap_series_are_the_same_book():
+    """D172 split these two apart precisely so they could not diverge; D181 rewired both
+    onto one helper. If they ever disagree, every published interval is on a different
+    book than its point estimate."""
+    calm, wild = _noise(400, 0.006, 11), _noise(400, 0.03, 12)
+    out = ds.combine_books(calm, wild, rf_annual=0.0, periods_per_year=365.0)
+    series = ds.combined_series(calm, wild)
+    assert len(series) == out.n_bars
+    assert ds.sharpe(series, 0.0, 365.0) == pytest.approx(out.combined_sharpe)
 
 
 # ------------------------------------------------------------------ the borrow cost

@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T19:26:41.902005+00:00",
+  "generated_utc": "2026-08-21T20:45:23.675603+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -10075,10 +10075,10 @@
   "baseline_detail": {
     "BTC-USD": {
       "ensemble_test": {
-        "observed": -0.7899286139851961,
-        "p05": -1.1250249006918425,
-        "p95": -0.44215429962187586,
-        "prob_positive": 0.0,
+        "observed": -0.7607303175534308,
+        "p05": -1.1319560029277975,
+        "p95": -0.3706079426775585,
+        "prob_positive": 0.00125,
         "n_sims": 4000.0,
         "block_size": 20.0,
         "seed": 0.0
@@ -10459,13 +10459,17 @@
         "percentile": 0.507
       },
       "ensemble": {
-        "correlation": 0.0010686938516597144,
-        "n_bars": 3716,
-        "long_sharpe": 1.2016261981079577,
-        "short_sharpe": -0.6190868622157594,
-        "combined_sharpe": 0.4116975841227616,
-        "long_max_drawdown": 0.43010607965284864,
-        "combined_max_drawdown": 0.34024416834531024
+        "correlation": 0.0011361816346805438,
+        "n_bars": 3464,
+        "n_warmup_bars": 252,
+        "n_fallback_bars": 628,
+        "mean_long_weight": 0.38853989133454586,
+        "long_sharpe": 1.2231111675163968,
+        "short_sharpe": -0.6288841639400914,
+        "combined_sharpe": 0.462380849962966,
+        "long_max_drawdown": 0.43010607965284897,
+        "short_max_drawdown": 0.7241911276665034,
+        "combined_max_drawdown": 0.3495089418696187
       },
       "stop_gaps": {
         "n_stop_exits": 1,
@@ -10479,21 +10483,25 @@
       "long_baseline_total_return": 56.57037792647125,
       "combined_e1": {
         "ensemble": {
-          "correlation": 0.0016083786177350772,
-          "n_bars": 3716,
-          "long_sharpe": 1.302774186725204,
-          "short_sharpe": -0.5582954266532487,
-          "combined_sharpe": 0.5260031435436111,
-          "long_max_drawdown": 0.2924235188745894,
-          "combined_max_drawdown": 0.29526601247605977
+          "correlation": 0.0017038147655508685,
+          "n_bars": 3464,
+          "n_warmup_bars": 252,
+          "n_fallback_bars": 628,
+          "mean_long_weight": 0.38528127528379014,
+          "long_sharpe": 1.3393152377454665,
+          "short_sharpe": -0.5655155810711078,
+          "combined_sharpe": 0.5799272087853984,
+          "long_max_drawdown": 0.29242351887458984,
+          "short_max_drawdown": 0.6654615128448979,
+          "combined_max_drawdown": 0.35101884770951985
         },
         "long_e1_sharpe": 1.302774186725204,
         "short_e1_sharpe": -0.5582954266532487,
         "vs_plain": {
-          "observed": 0.11430555942084952,
-          "p05": 0.002163765611998585,
-          "p95": 0.2187940320464213,
-          "prob_positive": 0.9535,
+          "observed": 0.11754635882243236,
+          "p05": -0.00780828378801544,
+          "p95": 0.23086318843532716,
+          "prob_positive": 0.93725,
           "n_sims": 4000.0,
           "block_size": 20.0,
           "seed": 0.0
@@ -10502,10 +10510,10 @@
     },
     "ETH-USD": {
       "ensemble_test": {
-        "observed": -0.1264664358145825,
-        "p05": -0.5722616570300242,
-        "p95": 0.31454761860086483,
-        "prob_positive": 0.3095,
+        "observed": -0.29937409613495236,
+        "p05": -0.639079843012291,
+        "p95": 0.06589984215909875,
+        "prob_positive": 0.087,
         "n_sims": 4000.0,
         "block_size": 20.0,
         "seed": 0.0
@@ -10790,13 +10798,17 @@
         "percentile": 0.955
       },
       "ensemble": {
-        "correlation": -0.0006316594896388892,
-        "n_bars": 2708,
-        "long_sharpe": 0.7751172902971348,
-        "short_sharpe": 0.1419237792276387,
-        "combined_sharpe": 0.6486508544825523,
-        "long_max_drawdown": 0.3517580966259004,
-        "combined_max_drawdown": 0.29502434215379647
+        "correlation": 0.0002370047349081797,
+        "n_bars": 2456,
+        "n_warmup_bars": 252,
+        "n_fallback_bars": 0,
+        "mean_long_weight": 0.4532740405596219,
+        "long_sharpe": 0.8696657345565634,
+        "short_sharpe": -0.2278042880592796,
+        "combined_sharpe": 0.570291638421611,
+        "long_max_drawdown": 0.35175809662590063,
+        "short_max_drawdown": 0.5412144637636367,
+        "combined_max_drawdown": 0.27949393380161247
       },
       "stop_gaps": {
         "n_stop_exits": 0,
@@ -10810,21 +10822,25 @@
       "long_baseline_total_return": 5.522072405483212,
       "combined_e1": {
         "ensemble": {
-          "correlation": -0.001162310594817816,
-          "n_bars": 2708,
-          "long_sharpe": 0.9522820726804373,
-          "short_sharpe": 0.24259323584742581,
-          "combined_sharpe": 0.8453958824735831,
-          "long_max_drawdown": 0.3465163567992716,
-          "combined_max_drawdown": 0.24425414285753266
+          "correlation": -0.0002189134431099471,
+          "n_bars": 2456,
+          "n_warmup_bars": 252,
+          "n_fallback_bars": 0,
+          "mean_long_weight": 0.45911786693283274,
+          "long_sharpe": 1.0457089547121567,
+          "short_sharpe": -0.11418671273406159,
+          "combined_sharpe": 0.8380687844547745,
+          "long_max_drawdown": 0.34651635679927195,
+          "short_max_drawdown": 0.44044246533090126,
+          "combined_max_drawdown": 0.24378529781248426
         },
         "long_e1_sharpe": 0.9522820726804373,
         "short_e1_sharpe": 0.24259323584742581,
         "vs_plain": {
-          "observed": 0.19674502799103077,
-          "p05": 0.06348491044431828,
-          "p95": 0.3616472192070302,
-          "prob_positive": 0.99525,
+          "observed": 0.2677771460331635,
+          "p05": 0.08518478482596342,
+          "p95": 0.4895701904751439,
+          "prob_positive": 0.99825,
           "n_sims": 4000.0,
           "block_size": 20.0,
           "seed": 0.0
