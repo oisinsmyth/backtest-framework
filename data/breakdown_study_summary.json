@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T18:06:29.058695+00:00",
+  "generated_utc": "2026-08-21T19:14:17.719205+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -19,14 +19,14 @@
     "hard_violations": 0,
     "warnings": 7
   },
-  "n_variants": 25,
+  "n_variants": 27,
   "symbols": {
     "BTC-USD": {
       "dsr_by_tier": {
-        "maker_0bp": 0.08834790749885763,
-        "maker_10bp": 0.07242072895981688,
-        "maker_25bp": 0.05256224722703923,
-        "taker_40bp": 0.03713567522851707
+        "maker_0bp": 0.09062232700308165,
+        "maker_10bp": 0.07433095638063286,
+        "maker_25bp": 0.05399861128122596,
+        "taker_40bp": 0.038186472365301316
       },
       "dsr_inputs_by_tier": {
         "maker_0bp": {
@@ -35,8 +35,8 @@
           "t": 3716,
           "skew": 5.586265306745383,
           "kurt": 182.20492812147475,
-          "n_trials": 25,
-          "var_trials_daily": 3.6779540096273574e-05
+          "n_trials": 27,
+          "var_trials_daily": 3.4225796053875194e-05
         },
         "maker_10bp": {
           "observed_sr_daily": -0.012534984327049784,
@@ -44,8 +44,8 @@
           "t": 3716,
           "skew": 5.496666090974192,
           "kurt": 181.24121373913798,
-          "n_trials": 25,
-          "var_trials_daily": 3.779509711308992e-05
+          "n_trials": 27,
+          "var_trials_daily": 3.521721735501152e-05
         },
         "maker_25bp": {
           "observed_sr_daily": -0.015174809457741738,
@@ -53,8 +53,8 @@
           "t": 3716,
           "skew": 5.3586442715320155,
           "kurt": 179.69068849016674,
-          "n_trials": 25,
-          "var_trials_daily": 3.98241770227323e-05
+          "n_trials": 27,
+          "var_trials_daily": 3.718445995692618e-05
         },
         "taker_40bp": {
           "observed_sr_daily": -0.017797919804099203,
@@ -62,8 +62,8 @@
           "t": 3716,
           "skew": 5.216459853901328,
           "kurt": 178.02037949425545,
-          "n_trials": 25,
-          "var_trials_daily": 4.244877955397885e-05
+          "n_trials": 27,
+          "var_trials_daily": 3.971740736454931e-05
         }
       },
       "oos_start": "2015-09-10",
@@ -1226,6 +1226,98 @@
             }
           ]
         },
+        "exit_e1_k2@maker_0bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 365,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.5758266454941988,
+          "cagr": -0.08076679831609113,
+          "sharpe_annual": -0.46003878700638673,
+          "max_drawdown": 0.6015875273657425,
+          "n_closed_trades": 39,
+          "exposure": 0.09819747107882701,
+          "cost_share_of_gross": 0.0,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.3214264803485537,
+              "mean_daily_return": -0.0001624786380870524,
+              "sharpe_daily": -0.052878856572711914,
+              "exposure": 0.005613126079447323
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.19216601858911764,
+              "mean_daily_return": 0.0004316579549968963,
+              "sharpe_daily": 0.020378709447775853,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.47566392681494607,
+              "mean_daily_return": -0.001025701148446589,
+              "sharpe_daily": -0.08102453328097466,
+              "exposure": 0.25773195876288657
+            }
+          ]
+        },
+        "exit_e1_k3@maker_0bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 353,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.5311886560767746,
+          "cagr": -0.07169038947555928,
+          "sharpe_annual": -0.4193436693258878,
+          "max_drawdown": 0.5799838040133686,
+          "n_closed_trades": 39,
+          "exposure": 0.09496906107075599,
+          "cost_share_of_gross": 0.0,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.2885923603422651,
+              "mean_daily_return": -0.00014264589123258922,
+              "sharpe_daily": -0.04944354338833874,
+              "exposure": 0.0030224525043177895
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.19216601977627734,
+              "mean_daily_return": 0.0004316579563340113,
+              "sharpe_daily": 0.020378709504306456,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.44723205779771136,
+              "mean_daily_return": -0.0009385535414324825,
+              "sharpe_daily": -0.07579417401363389,
+              "exposure": 0.24742268041237114
+            }
+          ]
+        },
         "short_10_3@maker_10bp": {
           "stops": {
             "n_stop_exits": 3,
@@ -2373,6 +2465,98 @@
               "mean_daily_return": -0.0003509651714749997,
               "sharpe_daily": -0.06080440279243957,
               "exposure": 0.070446735395189
+            }
+          ]
+        },
+        "exit_e1_k2@maker_10bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 365,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.6073494986086176,
+          "cagr": -0.08771101485787769,
+          "sharpe_annual": -0.49481124637755364,
+          "max_drawdown": 0.623685531302429,
+          "n_closed_trades": 39,
+          "exposure": 0.09819747107882701,
+          "cost_share_of_gross": 0.10357446430187199,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.3243714052207316,
+              "mean_daily_return": -0.000164342724800019,
+              "sharpe_daily": -0.053412156559152726,
+              "exposure": 0.005613126079447323
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.14330881538901252,
+              "mean_daily_return": 0.0003806154002032755,
+              "sharpe_daily": 0.017966674227468594,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.4916830610135362,
+              "mean_daily_return": -0.0010790373659076693,
+              "sharpe_daily": -0.08528941742866941,
+              "exposure": 0.25773195876288657
+            }
+          ]
+        },
+        "exit_e1_k3@maker_10bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 353,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.5658554817633371,
+          "cagr": -0.07866704257397183,
+          "sharpe_annual": -0.45417921356038626,
+          "max_drawdown": 0.6031798161867991,
+          "n_closed_trades": 39,
+          "exposure": 0.09496906107075599,
+          "cost_share_of_gross": 0.1190315371866505,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.29157586241851374,
+              "mean_daily_return": -0.00014444705605607812,
+              "sharpe_daily": -0.04999208439010641,
+              "exposure": 0.0030224525043177895
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.14330881481890945,
+              "mean_daily_return": 0.0003806153995097971,
+              "sharpe_daily": 0.017966674198493543,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.46398441198790574,
+              "mean_daily_return": -0.0009914556744067644,
+              "sharpe_daily": -0.08011402684135924,
+              "exposure": 0.24742268041237114
             }
           ]
         },
@@ -3526,6 +3710,98 @@
             }
           ]
         },
+        "exit_e1_k2@maker_25bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 365,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.6503416115990238,
+          "cagr": -0.0980405977264388,
+          "sharpe_annual": -0.5468534295401223,
+          "max_drawdown": 0.654588158114858,
+          "n_closed_trades": 39,
+          "exposure": 0.09819747107882701,
+          "cost_share_of_gross": 0.2591112007825924,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.3287700375934157,
+              "mean_daily_return": -0.00016713889132282766,
+              "sharpe_daily": -0.05419093763840099,
+              "exposure": 0.005613126079447323
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.0736727582622605,
+              "mean_daily_return": 0.00030403334327703114,
+              "sharpe_daily": 0.014346811480713309,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.5148224656428391,
+              "mean_daily_return": -0.0011590517567257887,
+              "sharpe_daily": -0.09165787825875786,
+              "exposure": 0.25773195876288657
+            }
+          ]
+        },
+        "exit_e1_k3@maker_25bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 353,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.6131593281416745,
+          "cagr": -0.08904547354417347,
+          "sharpe_annual": -0.5063221083940584,
+          "max_drawdown": 0.63562842435919,
+          "n_closed_trades": 39,
+          "exposure": 0.09496906107075599,
+          "cost_share_of_gross": 0.29859030520422286,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.29603309367834196,
+              "mean_daily_return": -0.00014714883274052242,
+              "sharpe_daily": -0.05079225983475741,
+              "exposure": 0.0030224525043177895
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.07367275774847926,
+              "mean_daily_return": 0.00030403334257022397,
+              "sharpe_daily": 0.014346811451933995,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.4881909609801921,
+              "mean_daily_return": -0.001070818533832432,
+              "sharpe_daily": -0.08656476096356293,
+              "exposure": 0.24742268041237114
+            }
+          ]
+        },
         "short_10_3@taker_40bp": {
           "stops": {
             "n_stop_exits": 3,
@@ -4675,15 +4951,107 @@
               "exposure": 0.070446735395189
             }
           ]
+        },
+        "exit_e1_k2@taker_40bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 365,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.6886750523030771,
+          "cagr": -0.10826689683915525,
+          "sharpe_annual": -0.5987195298321965,
+          "max_drawdown": 0.6886750523030771,
+          "n_closed_trades": 39,
+          "exposure": 0.09819747107882701,
+          "cost_share_of_gross": 0.4144430597947889,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.33314622022923945,
+              "mean_daily_return": -0.00016993508811456718,
+              "sharpe_daily": -0.05494377422430815,
+              "exposure": 0.005613126079447323
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.008189050339191706,
+              "mean_daily_return": 0.00022742933066613002,
+              "sharpe_daily": 0.010726475213692724,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.5369356680018356,
+              "mean_daily_return": -0.001239078144253114,
+              "sharpe_daily": -0.0979828056542895,
+              "exposure": 0.25773195876288657
+            }
+          ]
+        },
+        "exit_e1_k3@taker_40bp": {
+          "stops": {
+            "n_stop_exits": 1,
+            "n_gapped": 0,
+            "n_armings": 353,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": -0.6553629684545247,
+          "cagr": -0.09932084318968637,
+          "sharpe_annual": -0.5582954266532487,
+          "max_drawdown": 0.6654615128448977,
+          "n_closed_trades": 39,
+          "exposure": 0.09496906107075599,
+          "cost_share_of_gross": 0.47894906173196977,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 2316,
+              "share_of_sample": 0.6232508073196986,
+              "total_return": -0.3004687421731952,
+              "mean_daily_return": -0.00014985062981848476,
+              "sharpe_daily": -0.0515646497189294,
+              "exposure": 0.0030224525043177895
+            },
+            {
+              "regime": "bear",
+              "n_bars": 818,
+              "share_of_sample": 0.2201291711517761,
+              "total_return": 0.008189048763905138,
+              "mean_daily_return": 0.00022742932857548818,
+              "sharpe_daily": 0.010726475120217849,
+              "exposure": 0.2469437652811736
+            },
+            {
+              "regime": "chop",
+              "n_bars": 582,
+              "share_of_sample": 0.1566200215285253,
+              "total_return": -0.5113331933665599,
+              "mean_daily_return": -0.0011501928960062937,
+              "sharpe_daily": -0.09297109260963649,
+              "exposure": 0.24742268041237114
+            }
+          ]
         }
       }
     },
     "ETH-USD": {
       "dsr_by_tier": {
-        "maker_0bp": 0.5376842991493489,
-        "maker_10bp": 0.5005791802864502,
-        "maker_25bp": 0.4447254200524645,
-        "taker_40bp": 0.391742441264701
+        "maker_0bp": 0.5376706004990043,
+        "maker_10bp": 0.5008106727966358,
+        "maker_25bp": 0.4453381186903413,
+        "taker_40bp": 0.39273131565884173
       },
       "dsr_inputs_by_tier": {
         "maker_0bp": {
@@ -4692,8 +5060,8 @@
           "t": 2708,
           "skew": 1.2664610905003633,
           "kurt": 37.7839000183966,
-          "n_trials": 25,
-          "var_trials_daily": 0.00010294309372106335
+          "n_trials": 27,
+          "var_trials_daily": 9.968399497346638e-05
         },
         "maker_10bp": {
           "observed_sr_daily": 0.020502444388191304,
@@ -4701,8 +5069,8 @@
           "t": 2708,
           "skew": 1.245004988519334,
           "kurt": 37.697742254290894,
-          "n_trials": 25,
-          "var_trials_daily": 0.00010510416264447711
+          "n_trials": 27,
+          "var_trials_daily": 0.00010166043328744817
         },
         "maker_25bp": {
           "observed_sr_daily": 0.018167258260318335,
@@ -4710,8 +5078,8 @@
           "t": 2708,
           "skew": 1.2120411401919298,
           "kurt": 37.555485287612534,
-          "n_trials": 25,
-          "var_trials_daily": 0.00010860800876062662
+          "n_trials": 27,
+          "var_trials_daily": 0.00010486469372436852
         },
         "taker_40bp": {
           "observed_sr_daily": 0.015941458828428352,
@@ -4719,8 +5087,8 @@
           "t": 2708,
           "skew": 1.2752583668285555,
           "kurt": 39.15571894785916,
-          "n_trials": 25,
-          "var_trials_daily": 0.00011241824227538944
+          "n_trials": 27,
+          "var_trials_daily": 0.00010834881284801187
         }
       },
       "oos_start": "2018-07-19",
@@ -5883,6 +6251,98 @@
             }
           ]
         },
+        "exit_e1_k2@maker_0bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 442,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.9247005586977513,
+          "cagr": 0.09222968273972554,
+          "sharpe_annual": 0.31967345614662995,
+          "max_drawdown": 0.4302704490688807,
+          "n_closed_trades": 28,
+          "exposure": 0.16315983757844224,
+          "cost_share_of_gross": 0.0,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.1564616612690205,
+              "mean_daily_return": -0.0001239992283305332,
+              "sharpe_daily": -0.06364515185674706,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.558137119348989,
+              "mean_daily_return": 0.0006966673394833256,
+              "sharpe_daily": 0.033941248880511345,
+              "exposure": 0.3600439077936334
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.46437623604280187,
+              "mean_daily_return": 0.000947859127611308,
+              "sharpe_daily": 0.06906976407823573,
+              "exposure": 0.23542600896860988
+            }
+          ]
+        },
+        "exit_e1_k3@maker_0bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 427,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 1.080543588649388,
+          "cagr": 0.10374790573458137,
+          "sharpe_annual": 0.36155579720247727,
+          "max_drawdown": 0.38413943972320486,
+          "n_closed_trades": 28,
+          "exposure": 0.15762273901808785,
+          "cost_share_of_gross": 0.0,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.15646166127551742,
+              "mean_daily_return": -0.000123999228336066,
+              "sharpe_daily": -0.06364515185687936,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.6842995027424303,
+              "mean_daily_return": 0.0007806582157989687,
+              "sharpe_daily": 0.038171706407744636,
+              "exposure": 0.34357848518111966
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.4643762360339643,
+              "mean_daily_return": 0.0009478591275985522,
+              "sharpe_daily": 0.06906976407702436,
+              "exposure": 0.23542600896860988
+            }
+          ]
+        },
         "short_10_3@maker_10bp": {
           "stops": {
             "n_stop_exits": 1,
@@ -7030,6 +7490,98 @@
               "mean_daily_return": 0.00013167737107000626,
               "sharpe_daily": 0.01387585102644335,
               "exposure": 0.11659192825112108
+            }
+          ]
+        },
+        "exit_e1_k2@maker_10bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 442,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.8202540903871136,
+          "cagr": 0.08404962654943948,
+          "sharpe_annual": 0.28990402224841516,
+          "max_drawdown": 0.4438964103432487,
+          "n_closed_trades": 28,
+          "exposure": 0.16315983757844224,
+          "cost_share_of_gross": 0.09426755639663206,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.15823046350498748,
+              "mean_daily_return": -0.00012553169896541163,
+              "sharpe_daily": -0.0640872056777736,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.5026917516015466,
+              "mean_daily_return": 0.0006569273658670999,
+              "sharpe_daily": 0.032003029628492,
+              "exposure": 0.3600439077936334
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.4390268870887257,
+              "mean_daily_return": 0.0009085165458291008,
+              "sharpe_daily": 0.06626075401094404,
+              "exposure": 0.23542600896860988
+            }
+          ]
+        },
+        "exit_e1_k3@maker_10bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 427,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.9681633119788118,
+          "cagr": 0.09552083056632599,
+          "sharpe_annual": 0.3318457694617041,
+          "max_drawdown": 0.3987088458664921,
+          "n_closed_trades": 28,
+          "exposure": 0.15762273901808785,
+          "cost_share_of_gross": 0.08475022146146152,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.15823046351091663,
+              "mean_daily_return": -0.00012553169897049055,
+              "sharpe_daily": -0.06408720567819463,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.6247966645732348,
+              "mean_daily_return": 0.0007412094841659373,
+              "sharpe_daily": 0.036240160991598415,
+              "exposure": 0.34357848518111966
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.43902688708843485,
+              "mean_daily_return": 0.0009085165458294272,
+              "sharpe_daily": 0.06626075401066699,
+              "exposure": 0.23542600896860988
             }
           ]
         },
@@ -8183,6 +8735,98 @@
             }
           ]
         },
+        "exit_e1_k2@maker_25bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 442,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.6740190751825685,
+          "cagr": 0.0718859938688603,
+          "sharpe_annual": 0.2452112363282191,
+          "max_drawdown": 0.46374507751046445,
+          "n_closed_trades": 28,
+          "exposure": 0.16315983757844224,
+          "cost_share_of_gross": 0.22794859708892015,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.160879366441967,
+              "mean_daily_return": -0.00012783040774919931,
+              "sharpe_daily": -0.06470710855755242,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.4231453257759321,
+              "mean_daily_return": 0.0005973135414251015,
+              "sharpe_daily": 0.029093511992441524,
+              "exposure": 0.3600439077936334
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.4018022456338757,
+              "mean_daily_return": 0.000849521225739545,
+              "sharpe_daily": 0.06202297506516757,
+              "exposure": 0.23542600896860988
+            }
+          ]
+        },
+        "exit_e1_k3@maker_25bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 427,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.8107678681062584,
+          "cagr": 0.08328671258589049,
+          "sharpe_annual": 0.2872368217432429,
+          "max_drawdown": 0.41993899762245107,
+          "n_closed_trades": 28,
+          "exposure": 0.15762273901808785,
+          "cost_share_of_gross": 0.20593219655427886,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.16087936644254264,
+              "mean_daily_return": -0.00012783040774958434,
+              "sharpe_daily": -0.06470710855579394,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.539400515647124,
+              "mean_daily_return": 0.0006820326826236742,
+              "sharpe_daily": 0.03334031987528187,
+              "exposure": 0.34357848518111966
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.4018022456465302,
+              "mean_daily_return": 0.0008495212257603621,
+              "sharpe_daily": 0.06202297506648089,
+              "exposure": 0.23542600896860988
+            }
+          ]
+        },
         "short_10_3@taker_40bp": {
           "stops": {
             "n_stop_exits": 1,
@@ -9330,6 +9974,98 @@
               "mean_daily_return": 7.55791419318014e-05,
               "sharpe_daily": 0.007993550425328757,
               "exposure": 0.11659192825112108
+            }
+          ]
+        },
+        "exit_e1_k2@taker_40bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 442,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.5394258166537023,
+          "cagr": 0.05984897175584214,
+          "sharpe_annual": 0.20049006158511085,
+          "max_drawdown": 0.48290654188084,
+          "n_closed_trades": 28,
+          "exposure": 0.16315983757844224,
+          "cost_share_of_gross": 0.35300177342827455,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.1635231059393797,
+              "mean_daily_return": -0.00013012911300372288,
+              "sharpe_daily": -0.06527625220936718,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.34774593691082645,
+              "mean_daily_return": 0.0005376948001752234,
+              "sharpe_daily": 0.02618214654259714,
+              "exposure": 0.3600439077936334
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.3655159752357864,
+              "mean_daily_return": 0.000790548359626976,
+              "sharpe_daily": 0.05775954551118409,
+              "exposure": 0.23542600896860988
+            }
+          ]
+        },
+        "exit_e1_k3@taker_40bp": {
+          "stops": {
+            "n_stop_exits": 0,
+            "n_gapped": 0,
+            "n_armings": 427,
+            "worst_gap_pct": 0.0,
+            "mean_gap_pct": 0.0,
+            "total_gap_cost_pct_of_nav": 0.0
+          },
+          "total_return": 0.665844541718233,
+          "cagr": 0.07117926253021833,
+          "sharpe_annual": 0.24259323584742581,
+          "max_drawdown": 0.4404424653309006,
+          "n_closed_trades": 28,
+          "exposure": 0.15762273901808785,
+          "cost_share_of_gross": 0.3203851683245203,
+          "regimes": [
+            {
+              "regime": "bull",
+              "n_bars": 1351,
+              "share_of_sample": 0.4988921713441654,
+              "total_return": -0.16352310594531771,
+              "mean_daily_return": -0.0001301291130087848,
+              "sharpe_daily": -0.06527625220888185,
+              "exposure": 0.006661732050333087
+            },
+            {
+              "regime": "bear",
+              "n_bars": 911,
+              "share_of_sample": 0.336410635155096,
+              "total_return": 0.45842377615810914,
+              "mean_daily_return": 0.0006228511558160002,
+              "sharpe_daily": 0.03043823423013752,
+              "exposure": 0.34357848518111966
+            },
+            {
+              "regime": "chop",
+              "n_bars": 446,
+              "share_of_sample": 0.16469719350073855,
+              "total_return": 0.3655159752372408,
+              "mean_daily_return": 0.0007905483596304871,
+              "sharpe_daily": 0.05775954551107891,
+              "exposure": 0.23542600896860988
             }
           ]
         }

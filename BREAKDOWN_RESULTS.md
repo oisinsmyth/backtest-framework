@@ -104,6 +104,8 @@ Baseline `short_20_5` at `taker_40bp`:
 | `stop_swing_k3` | -57.0% | -8.0% | -0.47 | 62.7% | 35 | 10.6% |
 | `gate_swing_k2` | -38.9% | -4.7% | -0.69 | 41.4% | 14 | 4.4% |
 | `gate_swing_k3` | -26.4% | -3.0% | -0.45 | 34.4% | 10 | 3.0% |
+| `exit_e1_k2` | -68.9% | -10.8% | -0.60 | 68.9% | 39 | 9.8% |
+| `exit_e1_k3` | -65.5% | -9.9% | -0.56 | 66.5% | 39 | 9.5% |
 
 ## The stop sweep: which stops actually bind, and what they cost
 
@@ -125,10 +127,10 @@ Baseline `short_20_5` at `taker_40bp`:
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `stop_trail_5` | -0.0108 | 3,716 | 25 | 0.000037 | **0.0883** |
-| `maker_10bp` | `stop_trail_5` | -0.0125 | 3,716 | 25 | 0.000038 | **0.0724** |
-| `maker_25bp` | `stop_trail_5` | -0.0152 | 3,716 | 25 | 0.000040 | **0.0526** |
-| `taker_40bp` | `stop_trail_5` | -0.0178 | 3,716 | 25 | 0.000042 | **0.0371** |
+| `maker_0bp` | `stop_trail_5` | -0.0108 | 3,716 | 27 | 0.000034 | **0.0906** |
+| `maker_10bp` | `stop_trail_5` | -0.0125 | 3,716 | 27 | 0.000035 | **0.0743** |
+| `maker_25bp` | `stop_trail_5` | -0.0152 | 3,716 | 27 | 0.000037 | **0.0540** |
+| `taker_40bp` | `stop_trail_5` | -0.0178 | 3,716 | 27 | 0.000040 | **0.0382** |
 
 **Every tier lands between 0.04 and 0.09, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
 
@@ -298,6 +300,8 @@ Baseline `short_20_5` at `taker_40bp`:
 | `stop_swing_k3` | +67.8% | +7.2% | 0.25 | 48.7% | 28 | 17.0% |
 | `gate_swing_k2` | +42.1% | +4.8% | 0.14 | 39.8% | 13 | 8.8% |
 | `gate_swing_k3` | +16.0% | +2.0% | -0.02 | 36.6% | 13 | 8.3% |
+| `exit_e1_k2` | +53.9% | +6.0% | 0.20 | 48.3% | 28 | 16.3% |
+| `exit_e1_k3` | +66.6% | +7.1% | 0.24 | 44.0% | 28 | 15.8% |
 
 ## The stop sweep: which stops actually bind, and what they cost
 
@@ -319,10 +323,10 @@ Baseline `short_20_5` at `taker_40bp`:
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `stop_swing_k2` | 0.0221 | 2,708 | 25 | 0.000103 | **0.5377** |
-| `maker_10bp` | `stop_swing_k2` | 0.0205 | 2,708 | 25 | 0.000105 | **0.5006** |
-| `maker_25bp` | `stop_swing_k2` | 0.0182 | 2,708 | 25 | 0.000109 | **0.4447** |
-| `taker_40bp` | `short_40_5` | 0.0159 | 2,708 | 25 | 0.000112 | **0.3917** |
+| `maker_0bp` | `stop_swing_k2` | 0.0221 | 2,708 | 27 | 0.000100 | **0.5377** |
+| `maker_10bp` | `stop_swing_k2` | 0.0205 | 2,708 | 27 | 0.000102 | **0.5008** |
+| `maker_25bp` | `stop_swing_k2` | 0.0182 | 2,708 | 27 | 0.000105 | **0.4453** |
+| `taker_40bp` | `short_40_5` | 0.0159 | 2,708 | 27 | 0.000108 | **0.3927** |
 
 **Every tier lands between 0.39 and 0.54, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
 
@@ -514,21 +518,21 @@ out not to be the thing that was limiting this book.
 
 | What | Count |
 |---|---|
-| Strategy variants per symbol | 25 |
+| Strategy variants per symbol | 27 |
 | — of which entry/exit grid cells | 12 |
-| — of which time-stop variants | 2 |
+| — of which time-stop variants | 4 |
 | — of which stop families | 8 |
 | — of which structure gates | 2 |
 | — of which gate counterfactuals | 1 |
 | Cost tiers | 4 |
 | Symbols | 2 |
-| **Out-of-sample trials logged** | **200** |
-| Per-window trial rows logged | 2550 |
+| **Out-of-sample trials logged** | **216** |
+| Per-window trial rows logged | 2754 |
 
 Every one is registered in `data/breakdown_study_registry.sqlite` and every variant row
 is in the DSR pool for its (symbol, tier) cell. One of the stop families (`trail_20`) is
-inert — mechanically the incumbent under another name — so 24 of the
-25 are distinct configurations, and the pool is not reduced for it: a
+inert — mechanically the incumbent under another name — so 26 of the
+27 are distinct configurations, and the pool is not reduced for it: a
 configuration you tried and learned nothing from still cost you a look.
 ### The pre-registered predictions, scored
 
@@ -557,20 +561,20 @@ SHARPE_EPS = 0.01.
 **H3 — deflated Sharpe will not reach 0.95 on either symbol.** **H3 holds.** The best DSR anywhere is 0.538, nowhere near 0.95.
 ### What deflation does to all of it — and this is the section that matters
 
-Deflated Sharpe by symbol across all four tiers: **BTC-USD 0.037–0.088 · ETH-USD 0.392–0.538**. Not one cell reaches the
+Deflated Sharpe by symbol across all four tiers: **BTC-USD 0.038–0.091 · ETH-USD 0.393–0.538**. Not one cell reaches the
 0.95 bar, and the weaker symbol does not reach 0.10 at any tier.
 
 **This reframes every positive number above.** ETH's 96th-percentile null result and its
 clean sweep of the three success criteria were the strongest things in this document.
-Both were computed on the best of 25 configurations, and once that search
+Both were computed on the best of 27 configurations, and once that search
 is priced in, the evidence for skill is gone. The same applies to the stop sweep: the
 variant that most improved BTC (`stop_trail_5`, −71.6% → −40.6%) is precisely the one
-DSR selects as the best-of-25 and deflates to near zero. That is not DSR
+DSR selects as the best-of-27 and deflates to near zero. That is not DSR
 being harsh — it is DSR doing the exact job it exists for, on a search this study
 performed and then reported.
 
 The honest one-line summary of the short book is now: **a rule with no demonstrated edge,
-whose apparent successes are consistent with having looked 25 times.**
+whose apparent successes are consistent with having looked 27 times.**
 
 # Standing caveats
 

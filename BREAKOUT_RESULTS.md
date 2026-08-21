@@ -20,8 +20,8 @@ through the Step-7 pipeline. The sanity gate (D25/D26) reported
 violation(s)**, with 7 warning(s) — all of them genuine large crypto
 moves (2017-12, 2020-03, 2021-01, 2021-05), none of them quarantining.
 
-**Scale.** 224 out-of-sample trials logged
-(28 strategy variants × 4 cost tiers ×
+**Scale.** 240 out-of-sample trials logged
+(30 strategy variants × 4 cost tiers ×
 2 symbols) plus 4,896 in-training-window
 parameter evaluations, all counted in the multiplicity section. Risk-free rate
 4%; annualisation on 365 days (crypto trades
@@ -162,6 +162,8 @@ bars across 59 walk-forward windows (train 252, test
 | `filter_volume_1.5x` | +1745.24% | +33.14% | 0.96 | 32.7% | 27 | 28.9% | 8.1% |
 | `exit_e1_k2` | +6603.90% | +51.13% | 1.26 | 38.5% | 44 | 33.9% | 11.3% |
 | `exit_e1_k3` | +7618.88% | +53.23% | 1.30 | 29.2% | 44 | 33.7% | 11.1% |
+| `exit_swing_k2` | +4617.45% | +46.00% | 1.30 | 34.5% | 47 | 28.0% | 13.0% |
+| `exit_swing_k3` | +4520.30% | +45.70% | 1.22 | 44.7% | 42 | 30.5% | 12.6% |
 | `exit_e2_n5` | +5324.61% | +48.02% | 1.19 | 41.6% | 47 | 34.6% | 13.9% |
 | `exit_e2_n7` | +5660.81% | +48.89% | 1.21 | 41.2% | 45 | 35.4% | 12.7% |
 | `sizing_fixed_1.0` | +8019.21% | +54.00% | 1.16 | 48.2% | 38 | 36.7% | 12.5% |
@@ -409,6 +411,8 @@ single target without the ladder beside it.
 | `filter_volume_1.5x` | 55.6% | +40.81% | -5.85% | 30 | 90 | 22 | 0.0% | 5.1% | 4.82x |
 | `exit_e1_k2` | 47.7% | +36.83% | -3.74% | 25 | 76 | 2 | 31.8% | 2.5% | 7.80x |
 | `exit_e1_k3` | 47.7% | +36.83% | -3.40% | 25 | 76 | 2 | 34.1% | 2.5% | 7.83x |
+| `exit_swing_k2` | 55.3% | +29.26% | -4.03% | 16 | 47 | 9 | 4.3% | 3.0% | 8.58x |
+| `exit_swing_k3` | 54.8% | +35.30% | -4.54% | 19 | 65 | 9 | 0.0% | 2.7% | 7.76x |
 | `exit_e2_n5` | 46.8% | +33.72% | -4.51% | 22 | 76 | 5 | 0.0% | 2.0% | 8.79x |
 | `exit_e2_n7` | 53.3% | +35.43% | -4.80% | 24 | 76 | 7 | 0.0% | 2.2% | 8.26x |
 | `sizing_fixed_1.0` | 57.9% | +43.03% | -5.34% | 29 | 87 | 12 | 0.0% | 0.2% | 8.02x |
@@ -446,6 +450,8 @@ on those bars). Downside participated is the same on down bars; downside avoided
 | `filter_volume_1.5x` | 26.5% | 23.6% | 76.4% | 60.8% |
 | `exit_e1_k2` | 33.2% | 28.0% | 72.0% | 53.8% |
 | `exit_e1_k3` | 33.2% | 27.6% | 72.4% | 64.9% |
+| `exit_swing_k2` | 26.6% | 21.3% | 78.7% | 58.6% |
+| `exit_swing_k3` | 29.5% | 24.7% | 75.3% | 46.4% |
 | `exit_e2_n5` | 33.6% | 29.1% | 70.9% | 50.1% |
 | `exit_e2_n7` | 34.0% | 29.3% | 70.7% | 50.6% |
 | `sizing_fixed_1.0` | 40.6% | 35.9% | 64.1% | 42.2% |
@@ -460,10 +466,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `exit_e1_k3` | 0.0726 | 3,716 | 28 | 0.000025 | **1.0000** |
-| `maker_10bp` | `exit_e1_k3` | 0.0715 | 3,716 | 28 | 0.000025 | **0.9999** |
-| `maker_25bp` | `exit_e1_k3` | 0.0699 | 3,716 | 28 | 0.000026 | **0.9999** |
-| `taker_40bp` | `exit_e1_k3` | 0.0682 | 3,716 | 28 | 0.000027 | **0.9998** |
+| `maker_0bp` | `exit_swing_k2` | 0.0738 | 3,716 | 30 | 0.000027 | **1.0000** |
+| `maker_10bp` | `exit_swing_k2` | 0.0724 | 3,716 | 30 | 0.000026 | **0.9999** |
+| `maker_25bp` | `exit_swing_k2` | 0.0703 | 3,716 | 30 | 0.000027 | **0.9999** |
+| `taker_40bp` | `exit_e1_k3` | 0.0682 | 3,716 | 30 | 0.000028 | **0.9998** |
 
 
 ---
@@ -497,6 +503,8 @@ bars across 43 walk-forward windows (train 252, test
 | `filter_volume_1.5x` | +145.84% | +12.88% | 0.42 | 40.6% | 22 | 25.2% | 14.5% |
 | `exit_e1_k2` | +906.09% | +36.49% | 0.95 | 34.7% | 30 | 29.9% | 9.5% |
 | `exit_e1_k3` | +906.09% | +36.49% | 0.95 | 34.7% | 30 | 29.9% | 9.5% |
+| `exit_swing_k2` | +311.78% | +21.01% | 0.70 | 30.9% | 38 | 24.5% | 14.3% |
+| `exit_swing_k3` | +698.81% | +32.31% | 0.92 | 29.9% | 31 | 29.5% | 10.2% |
 | `exit_e2_n5` | +305.57% | +20.76% | 0.61 | 42.4% | 34 | 30.2% | 14.7% |
 | `exit_e2_n7` | +291.61% | +20.19% | 0.59 | 42.8% | 34 | 30.9% | 15.1% |
 | `sizing_fixed_1.0` | +662.74% | +31.49% | 0.73 | 47.0% | 28 | 32.8% | 12.0% |
@@ -741,6 +749,8 @@ single target without the ladder beside it.
 | `filter_volume_1.5x` | 50.0% | +36.05% | -8.40% | 24 | 46 | 15 | 0.0% | 9.6% | 4.82x |
 | `exit_e1_k2` | 46.7% | +38.10% | -4.90% | 22 | 45 | 8 | 26.7% | 8.0% | 6.30x |
 | `exit_e1_k3` | 46.7% | +38.10% | -4.90% | 22 | 45 | 8 | 26.7% | 8.0% | 6.30x |
+| `exit_swing_k2` | 44.7% | +25.09% | -6.12% | 15 | 31 | 9 | 2.6% | 6.5% | 7.31x |
+| `exit_swing_k3` | 54.8% | +34.80% | -6.15% | 21 | 45 | 11 | 0.0% | 8.4% | 6.26x |
 | `exit_e2_n5` | 41.2% | +31.89% | -7.16% | 17 | 45 | 5 | 0.0% | 7.7% | 6.90x |
 | `exit_e2_n7` | 44.1% | +31.91% | -7.30% | 17 | 45 | 7 | 0.0% | 7.8% | 6.92x |
 | `sizing_fixed_1.0` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 0.2% | 7.35x |
@@ -778,6 +788,8 @@ on those bars). Downside participated is the same on down bars; downside avoided
 | `filter_volume_1.5x` | 19.1% | 18.0% | 82.0% | 50.8% |
 | `exit_e1_k2` | 25.7% | 21.3% | 78.7% | 58.0% |
 | `exit_e1_k3` | 25.7% | 21.3% | 78.7% | 58.0% |
+| `exit_swing_k2` | 18.1% | 15.8% | 84.2% | 62.5% |
+| `exit_swing_k3` | 23.2% | 19.4% | 80.6% | 63.7% |
 | `exit_e2_n5` | 24.2% | 22.2% | 77.8% | 48.5% |
 | `exit_e2_n7` | 24.5% | 22.5% | 77.5% | 48.0% |
 | `sizing_fixed_1.0` | 35.2% | 31.8% | 68.2% | 42.9% |
@@ -792,10 +804,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `plateau_55_5` | 0.0555 | 2,708 | 28 | 0.000053 | **0.9861** |
-| `maker_10bp` | `plateau_55_5` | 0.0543 | 2,708 | 28 | 0.000052 | **0.9838** |
-| `maker_25bp` | `plateau_55_5` | 0.0526 | 2,708 | 28 | 0.000051 | **0.9798** |
-| `taker_40bp` | `plateau_55_5` | 0.0508 | 2,708 | 28 | 0.000051 | **0.9748** |
+| `maker_0bp` | `plateau_55_5` | 0.0555 | 2,708 | 30 | 0.000051 | **0.9860** |
+| `maker_10bp` | `plateau_55_5` | 0.0543 | 2,708 | 30 | 0.000051 | **0.9838** |
+| `maker_25bp` | `plateau_55_5` | 0.0526 | 2,708 | 30 | 0.000050 | **0.9797** |
+| `taker_40bp` | `plateau_55_5` | 0.0508 | 2,708 | 30 | 0.000050 | **0.9746** |
 
 
 ---
@@ -1034,10 +1046,12 @@ within k bars. *predicted a SURVIVOR — the doc's highest-priority recommendati
 |---|---|---|---|---|
 | `exit_e1_k2` | +0.058 | +0.177 | 44 / 30 | **KEEP** |
 | `exit_e1_k3` | +0.101 | +0.177 | 44 / 30 | **KEEP** |
+| `exit_swing_k2` | +0.100 | -0.075 | 47 / 38 | DROP |
+| `exit_swing_k3` | +0.015 | +0.148 | 42 / 31 | **KEEP** |
 | `exit_e2_n5` | -0.010 | -0.167 | 47 / 34 | DROP |
 | `exit_e2_n7` | +0.005 | -0.182 | 45 / 34 | DROP |
 
-**exit_e1_k2, exit_e1_k3 improves on every symbol.** On the same rule the filter increments are scored by, that is a keep — and the doc's prior that E1 would survive is supported.
+**exit_e1_k2, exit_e1_k3, exit_swing_k3 improves on every symbol.** On the same rule the filter increments are scored by, that is a keep — and the doc's prior that E1 would survive is supported.
 
 ## E2's prerequisite: the MFE-vs-time distribution
 
@@ -1082,22 +1096,22 @@ turned, whether or not it appears in a table above.
 
 | What | Count |
 |---|---|
-| Strategy variants per symbol | 28 |
+| Strategy variants per symbol | 30 |
 | — of which parameter-grid cells (N_entry × N_exit) | 12 |
 | — of which filter increments | 5 |
-| — of which exit increments (E1, E2) | 4 |
+| — of which exit increments (E1, E2) | 6 |
 | — of which sizing sensitivities | 2 |
 | — of which vol-target sensitivities | 4 |
 | — of which in-training-window selection | 1 |
 | Cost tiers | 4 |
 | Symbols | 2 |
-| **Out-of-sample trials logged** | **224** (112 per symbol) |
-| Per-window trial rows logged | 11,424 |
+| **Out-of-sample trials logged** | **240** (120 per symbol) |
+| Per-window trial rows logged | 12,240 |
 | In-training-window parameter evaluations (fitting, not trials) | 4,896 |
 
 **What the DSR trial pool is, and is not.** Bailey & López de Prado's N is the number of
 *configurations* tried. This study has many, so the pool is every variant's out-of-sample
-daily Sharpe at one (symbol, tier) — 28 per cell, selected on
+daily Sharpe at one (symbol, tier) — 30 per cell, selected on
 identity fields in the logged config, never on the presence of a metric (D98). Per-window
 rows carry `row_kind="window"` and are excluded by that same predicate. This is a
 different pool from the pairs studies' one-row-per-window, deliberately: those studies
@@ -1199,11 +1213,11 @@ that are not fees are.**
 
 3. **The selection bias above this study is larger than anything inside it.** The DSR
    numbers are near 1.0 at every tier, and the mechanical reason is that the plateau is
-   flat: 28 variants whose Sharpes cluster tightly give a tiny
+   flat: 30 variants whose Sharpes cluster tightly give a tiny
    V[{SRn}], so the noise floor SR0 barely rises and almost nothing is deflated away.
    That is DSR working correctly on the multiplicity it was given, and it is also why
    those numbers should not be read as vindication. The trial pool counts
-   28 configurations. It does not count
+   30 configurations. It does not count
    the 4,896 training-window fits, the two-symbol choice, or the
    decision — made in 2026, with a decade of crypto trend visible — to test a trend
    follower on the two crypto assets that survived. **Treat DSR ≈ 1.0 here as "the

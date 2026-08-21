@@ -10,6 +10,31 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (cross-book test, pre-registered, 2026-08-21 — D178)
+- `exit_swing_k2` / `exit_swing_k3` on the LONG book, and `exit_e1_k2` / `exit_e1_k3` on
+  the SHORT book — each rule on the side it was NOT developed on. Both k tested on both
+  sides, because testing only the winning k would repeat D173's actual error. E1 is not a
+  stop, so on a short it rides alongside the incumbent channel stop the baseline carries
+  and the delta prices E1 alone.
+
+### Findings — predictions committed first (80dab52), then scored
+- **H1 holds literally and is misleading if left there.** `swing_k2` fails the long book
+  (+0.100 BTC, **-0.075** ETH) as predicted — but `swing_k3` CLEARS it (+0.015 / +0.148).
+  The family transfers; the parameter does not.
+- **The k FLIPS between books.** Short book: k2 wins, k3 does not (D173). Long book: k3
+  wins, k2 does not. The pivot lookback is a property of the BOOK; the rule family is a
+  property of the RULE. Carrying the number across is what fails.
+- **H2 FALSIFIED.** E1 clears the every-symbol bar on the short book at BOTH k (+0.020 /
+  +0.059 at k=2, +0.061 / +0.101 at k=3). H2 rested on attributing E1's long-book benefit
+  to RE-ENTRY; trade counts say otherwise (35->39 BTC, 27->28 ETH). **E1's benefit is not
+  re-entry, it is not sitting in a failed trade** — a real secondary mechanism mistaken
+  for the primary one, the same class of error as D173.
+- **E1 is now the strongest rule in this project**: four independent every-symbol passes,
+  both books, both k, direction-agnostic by construction. Not adopted — pools grew to 30
+  (long) and 27 (short) and both DSRs moved to pay for it. The honest next test is the
+  D140 universe, as D174 did for the swing stop.
+
+
 ### Added (Phase 1.5 exit signatures, 2026-08-21 — D177)
 - **`FailedBreakoutExit(k)` (E1)** — exits when the close falls back INSIDE the channel
   the entry broke, within k bars. Never built before, despite the doc calling it

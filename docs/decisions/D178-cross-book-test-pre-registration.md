@@ -69,3 +69,75 @@ Long book 28 → 30 configurations; short book 25 → 27. Every one registered a
 pool for its cell. Both books' deflated Sharpe will move as a result, and neither has an
 edge to lose: the long book sits near 1.0 only because its plateau is flat, and the short
 book is at 0.04–0.54.
+
+---
+
+# RESULT — appended 2026-08-21, after both runs. Nothing above this line was edited.
+
+**Status: H1 confirmed as literally stated but misleading if left there. H2 FALSIFIED.**
+
+## H1 — `swing_k2` on the long book
+
+| | Δ Sharpe BTC | Δ Sharpe ETH | Every-symbol rule |
+|---|---|---|---|
+| `exit_swing_k2` | +0.100 | **−0.075** | fails |
+| `exit_swing_k3` | +0.015 | +0.148 | **clears it** |
+
+The literal prediction — *`swing_k2` will not clear the bar on the long book* — **holds**.
+It fails on ETH, decisively.
+
+**But the family transfers; only the parameter does not.** `swing_k3` clears the bar on
+both symbols. Reporting H1 as "confirmed" and stopping there would be true and misleading,
+which is exactly the failure this record exists to prevent.
+
+**And the k FLIPS between books.** On the short book `swing_k2` won and `k3` did not
+(D173); on the long book `k3` wins and `k2` does not. That is the sharpest structural
+finding here: **the pivot lookback that works is a property of the book, while the rule
+family is a property of the rule.** A book's swing-stop parameter is fitted to its own
+trade cadence, and carrying the number across is precisely what does not survive.
+
+The pre-registration flagged this exact failure mode in advance — *"if H1 fails again it
+will most likely fail the same way, on one k and not the other"* — which is some evidence
+the mechanism-first reasoning is sound even where its conclusions are not.
+
+## H2 — E1 on the short book: FALSIFIED
+
+| | Δ Sharpe BTC | Δ Sharpe ETH | Every-symbol rule |
+|---|---|---|---|
+| `exit_e1_k2` | +0.020 | +0.059 | **clears it** |
+| `exit_e1_k3` | +0.061 | +0.101 | **clears it** |
+
+E1 clears the bar on the short book at **both** k. The prediction that it would not is
+wrong.
+
+**Why the reasoning failed, and it is the same class of error as D173's.** H2 rested on
+attributing E1's long-book benefit chiefly to RE-ENTRY, and then arguing that re-entry is a
+liability on a negative-expectancy book. The trade counts say that attribution was wrong:
+E1 raises the short book's trades only 35 → 39 on BTC and 27 → 28 on ETH, and it improves
+returns anyway. **E1's benefit is not re-entry — it is not sitting in a failed trade.** I
+identified a real secondary mechanism on the long book and mistook it for the primary one.
+
+## What this means, taken together
+
+**E1 is the strongest rule this project has found.** It now clears the every-symbol bar on
+BOTH books at BOTH k — four independent passes — and its mechanism is direction-agnostic by
+construction. Nothing else tested here has that profile: the entry filters failed
+everywhere, the stops split by symbol, and the swing stop transfers only as a family.
+
+**The swing stop is weaker than D173/D174 suggested.** It survives cross-book only if you
+are permitted to re-pick k per book, and re-picking per book is a search, not a transfer.
+D174's 69% universe win rate was `swing_k2` against `trail_10` on the SHORT book; nothing
+here contradicts it, and nothing here extends it to the long side at that k.
+
+**Neither is adopted.** Long book now 30 configurations, short book 27, and both DSRs moved
+to pay for it: long BTC ~1.0 / ETH 0.975–0.986 (the long book's DSR sits near 1.0 because
+its plateau is flat, which its own report is explicit is *not* vindication), short 0.038–0.538.
+A rule passing four independent every-symbol tests is a reason to keep testing it, not a
+reason to believe it.
+
+## The honest next test for E1
+
+Not another sweep on these two symbols. The D140 universe, exactly as D174 did for the
+swing stop: E1 versus no-E1, one configuration each, on 62 coins including the ones that
+died. That is the test that would distinguish a real effect from four correlated passes on
+two instruments.
