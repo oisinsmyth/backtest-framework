@@ -31,6 +31,10 @@ REGISTRY_PATH = REPO / "data" / "breakdown_study_registry.sqlite"
 RESULTS = REPO / "BREAKDOWN_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "breakdown_study_summary.json"
 
+TRIAL_PREFIX = "breakdown-v1"
+"""Trial-id prefix, which is also the DSR pool predicate (D98): the pool is selected on
+identity fields, never on whether a metric happens to be present."""
+
 SHARPE_EPS = 0.01
 """Smallest annualised-Sharpe difference this study will call a difference.
 
@@ -101,12 +105,19 @@ def main() -> int:
         long_result = bs.run_variant(bars, symbol, long_variant, tiers[-1], study)
 
         per_variant: dict = {}
+        results_by_key: dict[tuple[str, str], object] = {}
         for tier in tiers:
             for variant in variants:
                 n_runs += 1
                 print(f"  ... {n_runs} runs ({symbol} {tier.name} {variant.name})")
                 r = bs.run_variant(bars, symbol, variant, tier, study)
                 key = f"{variant.name}@{tier.name}"
+
+                # Every out-of-sample trial is registered, and every walk-forward window
+                # within it (D20/D98). Without this the short book had no multiplicity
+                # record at all and every Sharpe it reported was undeflatable.
+                bs.log_trials(registry, r, study, snapshot_id, TRIAL_PREFIX, spans, bars)
+                results_by_key[(variant.name, tier.name)] = r
 
                 # Returns aligned to OOS bars: oos_returns[i] is the return over the
                 # step from bar i to bar i+1, so it pairs with labels[1:].
@@ -152,7 +163,24 @@ def main() -> int:
                         e.bars_held for e in r.episodes if not e.is_open
                     )
                     gaps = ds.measure_stop_gaps(r.stop_fills, n_armings=armings)
+                    # The ensemble claim deserves an interval, not just a point
+                    # estimate. Paired block bootstrap (D120) of (combined - long-only)
+                    # Sharpe: the SAME resampled bar indices applied to both series, so
+                    # the correlation between them is preserved. The brief asked for a
+                    # Jobson-Korkie/Memmel test; this project's established convention
+                    # for a Sharpe difference is this bootstrap (D120), and it answers
+                    # the same question without assuming normality.
+                    combined_returns = ds.combined_series(
+                        long_result.oos_returns, r.oos_returns
+                    )
+                    ensemble_test = bs.sharpe_difference_bootstrap(
+                        combined_returns,
+                        long_result.oos_returns[-len(combined_returns):],
+                        study,
+                        seed=study.seed,
+                    )
                     payload.setdefault("baseline_detail", {})[symbol] = {
+                        "ensemble_test": ensemble_test,
                         "null": null.to_dict(),
                         "ensemble": ensemble.to_dict(),
                         "stop_gaps": gaps.to_dict(),
@@ -160,7 +188,20 @@ def main() -> int:
                         "long_baseline_total_return": long_result.total_return,
                     }
 
+        # Deflated Sharpe per (symbol, tier). The pool is every VARIANT's out-of-sample
+        # daily Sharpe at that cell (D116: for a parameter-swept study N is the number of
+        # CONFIGURATIONS tried), selected on identity fields in the logged config and
+        # never on the presence of a metric (D98). Per-window rows carry
+        # row_kind="window" and are excluded by that same predicate.
+        dsr_by_tier, dsr_inputs_by_tier = {}, {}
+        for tier in tiers:
+            value, inputs = bs.dsr_for(registry, symbol, tier, study, results_by_key, TRIAL_PREFIX)
+            dsr_by_tier[tier.name] = value
+            dsr_inputs_by_tier[tier.name] = inputs
+
         payload["symbols"][symbol] = {
+            "dsr_by_tier": dsr_by_tier,
+            "dsr_inputs_by_tier": dsr_inputs_by_tier,
             "oos_start": bars[oos_start].timestamp.date().isoformat(),
             "oos_end": bars[oos_end - 1].timestamp.date().isoformat(),
             "n_oos_bars": len(oos_bars),
@@ -286,6 +327,10 @@ the strategy's own gate is the plain close-vs-average test and it never sees the
 ## The stop sweep: which stops actually bind, and what they cost
 
 {_stop_sweep_table(sr, ref)}
+
+## Deflated Sharpe
+
+{_dsr_table(sr)}
 """)
         detail = p.get("baseline_detail", {}).get(symbol)
         if detail:
@@ -328,6 +373,33 @@ def _variant_table(sr: dict, ref: str) -> str:
     )
 
 
+def _dsr_table(sr: dict) -> str:
+    """DSR per (symbol, tier), pool = configurations tried at that cell (D116)."""
+    rows = []
+    for tier, value in sr["dsr_by_tier"].items():
+        i = sr["dsr_inputs_by_tier"][tier]
+        rows.append(
+            f"| `{tier}` | `{i['best_variant']}` | {i['observed_sr_daily']:.4f} | "
+            f"{int(i['t']):,} | {int(i['n_trials'])} | {i['var_trials_daily']:.6f} | "
+            f"**{value:.4f}** |"
+        )
+    worst = min(sr["dsr_by_tier"].values())
+    best = max(sr["dsr_by_tier"].values())
+    reading = (
+        f"**Every tier lands between {worst:.2f} and {best:.2f}, far below the 0.95 bar.** "
+        f"The long study's convention applies unchanged: *a DSR below 0.95 means no "
+        f"demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is "
+        f"decisively on the wrong side of it."
+        if best < 0.95
+        else f"Tiers span {worst:.2f} to {best:.2f}."
+    )
+    return (
+        "| Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | "
+        "V[{SRn}] | **DSR** |" + NL
+        + "|---|---|---|---|---|---|---|" + NL + NL.join(rows) + NL + NL + reading
+    )
+
+
 def _stop_sweep_table(sr: dict, ref: str) -> str:
     """One row per stop family, baseline entry/exit throughout (D171).
 
@@ -361,8 +433,28 @@ def _stop_sweep_table(sr: dict, ref: str) -> str:
     )
 
 
+def _ensemble_reading(test: dict) -> str:
+    """Say what the interval means, computed — an interval that excludes zero and one
+    that spans it are different findings and must not share a sentence."""
+    if test["p95"] < 0:
+        return (
+            "**The entire interval is negative.** Adding this short book to the long one "
+            "does not fail to help; it measurably hurts, and the sample is large enough to "
+            "say so. This is not the 'inside the noise' verdict the long study reached on "
+            "its own Sharpe gap — it is a decisive negative."
+        )
+    if test["p05"] > 0:
+        return "**The entire interval is positive**, so the ensemble improvement is measurable."
+    return (
+        "**The interval spans zero**, so the ensemble effect is not measurable at this "
+        "sample size. That is not evidence of neutrality — it is the absence of evidence "
+        "either way, and it should not be reported as 'the short book is roughly neutral'."
+    )
+
+
 def _detail_block(symbol: str, d: dict) -> str:
     null, ens, gaps = d["null"], d["ensemble"], d["stop_gaps"]
+    test = d["ensemble_test"]
     verdict = (
         "**beats** the null" if null["percentile"] >= 0.95
         else "**does not beat** the null"
@@ -400,6 +492,21 @@ long book sleeps.
 | Combined, equal VOL weight | {ens["combined_sharpe"]:.2f} |
 | Long book max drawdown | {ens["long_max_drawdown"] * 100:.1f}% |
 | Combined max drawdown | {ens["combined_max_drawdown"] * 100:.1f}% |
+
+**And now with an interval rather than a point estimate.** Paired block bootstrap of
+(combined − long-only) annualised Sharpe, 20-bar blocks, {int(test["n_sims"]):,} sims,
+seed {int(test["seed"])} — the same resampled bar indices applied to both series, so the
+correlation between them is preserved (D120). The brief asked for a Jobson–Korkie/Memmel
+test; this project's established convention for a Sharpe difference is this bootstrap,
+which answers the same question without assuming normality.
+
+| | Δ Sharpe (combined − long-only) |
+|---|---|
+| Observed | **{test["observed"]:+.3f}** |
+| 90% interval | [{test["p05"]:+.3f}, {test["p95"]:+.3f}] |
+| P(adding the short book helps) | **{test["prob_positive"]:.0%}** |
+
+{_ensemble_reading(test)}
 
 ## What the close-based stop actually cost
 
@@ -519,6 +626,73 @@ chop return > −10% — thresholds fixed before reading, and blunt on purpose.
 {reading}
 
 {gate_reading}"""
+
+
+def _multiplicity(p: dict) -> str:
+    n_variants = p["n_variants"]
+    # The long study printed a breakdown that did not sum, and its verdict then quoted
+    # the wrong number twice (fixed in Phase 1.1). A multiplicity table that does not add
+    # up is the one table here that must never be wrong, so it is asserted.
+    by_group = {}
+    for v in ds.short_variants():
+        by_group[v.group] = by_group.get(v.group, 0) + 1
+    if sum(by_group.values()) != n_variants:
+        raise AssertionError(
+            f"multiplicity breakdown does not sum: groups {by_group} total "
+            f"{sum(by_group.values())} against {n_variants} variants"
+        )
+    n_tiers, n_symbols = 4, len(p["symbols"])
+    windows = sum(sr["n_windows"] for sr in p["symbols"].values())
+    return f"""### Multiplicity: everything that was evaluated
+
+| What | Count |
+|---|---|
+| Strategy variants per symbol | {n_variants} |
+| — of which entry/exit grid cells | {len([v for v in ds.short_variants() if v.group == "plateau"])} |
+| — of which time-stop variants | {len([v for v in ds.short_variants() if v.group == "exit"])} |
+| — of which stop families | {len([v for v in ds.short_variants() if v.group == "stop"])} |
+| — of which gate counterfactuals | {len([v for v in ds.short_variants() if v.group == "counterfactual"])} |
+| Cost tiers | {n_tiers} |
+| Symbols | {n_symbols} |
+| **Out-of-sample trials logged** | **{n_variants * n_tiers * n_symbols}** |
+| Per-window trial rows logged | {windows * n_variants} |
+
+Every one is registered in `data/breakdown_study_registry.sqlite` and every variant row
+is in the DSR pool for its (symbol, tier) cell. One of the stop families (`trail_20`) is
+inert — mechanically the incumbent under another name — so {n_variants - 1} of the
+{n_variants} are distinct configurations, and the pool is not reduced for it: a
+configuration you tried and learned nothing from still cost you a look."""
+
+
+def _deflation_reading(p: dict) -> str:
+    """What deflation does to the headline claims. Computed, because this is the section
+    most likely to be quoted and the numbers move between runs."""
+    worst = {sym: min(sr["dsr_by_tier"].values()) for sym, sr in p["symbols"].items()}
+    best = {sym: max(sr["dsr_by_tier"].values()) for sym, sr in p["symbols"].items()}
+    # Three decimals: at two, BTC's 0.0957 prints as "0.10" and then sits next to a
+    # sentence saying it does not reach 0.10, which reads as a contradiction.
+    detail = " · ".join(f"{sym} {worst[sym]:.3f}–{best[sym]:.3f}" for sym in worst)
+    survivors = [sym for sym in best if best[sym] >= 0.95]
+    if survivors:
+        return f"""### What deflation does to all of it
+
+Deflated Sharpe by symbol: {detail}. {', '.join(survivors)} clears 0.95."""
+    return f"""### What deflation does to all of it — and this is the section that matters
+
+Deflated Sharpe by symbol across all four tiers: **{detail}**. Not one cell reaches the
+0.95 bar, and the weaker symbol does not reach 0.10 at any tier.
+
+**This reframes every positive number above.** ETH's 96th-percentile null result and its
+clean sweep of the three success criteria were the strongest things in this document.
+Both were computed on the best of {p["n_variants"]} configurations, and once that search
+is priced in, the evidence for skill is gone. The same applies to the stop sweep: the
+variant that most improved BTC (`stop_trail_5`, −71.6% → −40.6%) is precisely the one
+DSR selects as the best-of-{p["n_variants"]} and deflates to near zero. That is not DSR
+being harsh — it is DSR doing the exact job it exists for, on a search this study
+performed and then reported.
+
+The honest one-line summary of the short book is now: **a rule with no demonstrated edge,
+whose apparent successes are consistent with having looked {p["n_variants"]} times.**"""
 
 
 def _bind_reading(p: dict) -> str:
@@ -794,7 +968,9 @@ def _verdict(p: dict) -> str:
         )
     lines += [ens_read, ""]
 
-    lines += [_criteria_scorecard(p), _stop_sweep_verdict(p), _stop_paragraph(p), """
+    lines += [
+        _criteria_scorecard(p), _stop_sweep_verdict(p), _stop_paragraph(p),
+        _multiplicity(p), _deflation_reading(p), """
 # Standing caveats
 
 1. **The stop is intrabar (D170) but almost never binds.** The mechanism is correct —
@@ -816,11 +992,10 @@ def _verdict(p: dict) -> str:
    different spec.
 5. **Two instruments, both survivors.** The same selection bias the long study named as
    its largest un-deflatable problem applies here unchanged.
-6. **No TrialRegistry rows and no deflated Sharpe — a real gap, not an omission by
-   design.** The brief for this book asks for both. The long study has them; this one
-   does not, and the stop sweep has just added a fresh trial series on top. Every Sharpe
-   here is therefore RAW, undeflated, and should be read as an upper bound. Closing this
-   is the first thing to do before any stop family is adopted.
+6. **The DSR pool counts configurations, not everything.** It does not count the
+   two-symbol choice, nor the decision to test a short book on crypto after a decade of
+   visible crypto trend. As the long study put it: a DSR below 0.95 means "no
+   demonstrated edge"; a DSR above 0.95 would not mean the reverse.
 """]
     return NL.join(lines)
 

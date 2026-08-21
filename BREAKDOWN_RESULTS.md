@@ -115,6 +115,17 @@ Baseline `short_20_5` at `taker_40bp`:
 
 **Bind rate first.** A stop that never fires is not being tested — that row is the strategy without a stop, whatever else it shows. **Gapped** counts exits that filled past the level because the bar opened beyond it, which is the residue no intrabar stop can remove on daily bars.
 
+## Deflated Sharpe
+
+| Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
+|---|---|---|---|---|---|---|
+| `maker_0bp` | `stop_trail_5` | -0.0108 | 3,716 | 21 | 0.000035 | **0.0957** |
+| `maker_10bp` | `stop_trail_5` | -0.0125 | 3,716 | 21 | 0.000037 | **0.0779** |
+| `maker_25bp` | `stop_trail_5` | -0.0152 | 3,716 | 21 | 0.000039 | **0.0560** |
+| `taker_40bp` | `stop_trail_5` | -0.0178 | 3,716 | 21 | 0.000043 | **0.0392** |
+
+**Every tier lands between 0.04 and 0.10, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
+
 ## The primary verdict: exposure-matched random SHORT entries
 
 Any short rule shows a profit in a sample containing 2018 and 2022, because the
@@ -148,6 +159,21 @@ long book sleeps.
 | Combined, equal VOL weight | 0.41 |
 | Long book max drawdown | 43.0% |
 | Combined max drawdown | 34.0% |
+
+**And now with an interval rather than a point estimate.** Paired block bootstrap of
+(combined − long-only) annualised Sharpe, 20-bar blocks, 4,000 sims,
+seed 0 — the same resampled bar indices applied to both series, so the
+correlation between them is preserved (D120). The brief asked for a Jobson–Korkie/Memmel
+test; this project's established convention for a Sharpe difference is this bootstrap,
+which answers the same question without assuming normality.
+
+| | Δ Sharpe (combined − long-only) |
+|---|---|
+| Observed | **-0.790** |
+| 90% interval | [-1.125, -0.442] |
+| P(adding the short book helps) | **0%** |
+
+**The entire interval is negative.** Adding this short book to the long one does not fail to help; it measurably hurts, and the sample is large enough to say so. This is not the 'inside the noise' verdict the long study reached on its own Sharpe gap — it is a decisive negative.
 
 ## What the close-based stop actually cost
 
@@ -237,6 +263,17 @@ Baseline `short_20_5` at `taker_40bp`:
 
 **Bind rate first.** A stop that never fires is not being tested — that row is the strategy without a stop, whatever else it shows. **Gapped** counts exits that filled past the level because the bar opened beyond it, which is the residue no intrabar stop can remove on daily bars.
 
+## Deflated Sharpe
+
+| Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
+|---|---|---|---|---|---|---|
+| `maker_0bp` | `short_40_5` | 0.0208 | 2,708 | 21 | 0.000109 | **0.5153** |
+| `maker_10bp` | `short_40_5` | 0.0196 | 2,708 | 21 | 0.000111 | **0.4846** |
+| `maker_25bp` | `short_40_5` | 0.0178 | 2,708 | 21 | 0.000116 | **0.4387** |
+| `taker_40bp` | `short_40_5` | 0.0159 | 2,708 | 21 | 0.000120 | **0.3933** |
+
+**Every tier lands between 0.39 and 0.52, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
+
 ## The primary verdict: exposure-matched random SHORT entries
 
 Any short rule shows a profit in a sample containing 2018 and 2022, because the
@@ -270,6 +307,21 @@ long book sleeps.
 | Combined, equal VOL weight | 0.65 |
 | Long book max drawdown | 35.2% |
 | Combined max drawdown | 29.5% |
+
+**And now with an interval rather than a point estimate.** Paired block bootstrap of
+(combined − long-only) annualised Sharpe, 20-bar blocks, 4,000 sims,
+seed 0 — the same resampled bar indices applied to both series, so the
+correlation between them is preserved (D120). The brief asked for a Jobson–Korkie/Memmel
+test; this project's established convention for a Sharpe difference is this bootstrap,
+which answers the same question without assuming normality.
+
+| | Δ Sharpe (combined − long-only) |
+|---|---|
+| Observed | **-0.126** |
+| 90% interval | [-0.572, +0.315] |
+| P(adding the short book helps) | **31%** |
+
+**The interval spans zero**, so the ensemble effect is not measurable at this sample size. That is not evidence of neutrality — it is the absence of evidence either way, and it should not be reported as 'the short book is roughly neutral'.
 
 ## What the close-based stop actually cost
 
@@ -364,6 +416,41 @@ the entry channel, which is a very long way from a breakdown entry, so the trail
 gets there first almost every time. The brief's premise — that short expectancy becomes
 calculable once the squeeze tail is truncated — is now satisfied mechanically, and turns
 out not to be the thing that was limiting this book.
+### Multiplicity: everything that was evaluated
+
+| What | Count |
+|---|---|
+| Strategy variants per symbol | 21 |
+| — of which entry/exit grid cells | 12 |
+| — of which time-stop variants | 2 |
+| — of which stop families | 6 |
+| — of which gate counterfactuals | 1 |
+| Cost tiers | 4 |
+| Symbols | 2 |
+| **Out-of-sample trials logged** | **168** |
+| Per-window trial rows logged | 2142 |
+
+Every one is registered in `data/breakdown_study_registry.sqlite` and every variant row
+is in the DSR pool for its (symbol, tier) cell. One of the stop families (`trail_20`) is
+inert — mechanically the incumbent under another name — so 20 of the
+21 are distinct configurations, and the pool is not reduced for it: a
+configuration you tried and learned nothing from still cost you a look.
+### What deflation does to all of it — and this is the section that matters
+
+Deflated Sharpe by symbol across all four tiers: **BTC-USD 0.039–0.096 · ETH-USD 0.393–0.515**. Not one cell reaches the
+0.95 bar, and the weaker symbol does not reach 0.10 at any tier.
+
+**This reframes every positive number above.** ETH's 96th-percentile null result and its
+clean sweep of the three success criteria were the strongest things in this document.
+Both were computed on the best of 21 configurations, and once that search
+is priced in, the evidence for skill is gone. The same applies to the stop sweep: the
+variant that most improved BTC (`stop_trail_5`, −71.6% → −40.6%) is precisely the one
+DSR selects as the best-of-21 and deflates to near zero. That is not DSR
+being harsh — it is DSR doing the exact job it exists for, on a search this study
+performed and then reported.
+
+The honest one-line summary of the short book is now: **a rule with no demonstrated edge,
+whose apparent successes are consistent with having looked 21 times.**
 
 # Standing caveats
 
@@ -386,8 +473,7 @@ out not to be the thing that was limiting this book.
    different spec.
 5. **Two instruments, both survivors.** The same selection bias the long study named as
    its largest un-deflatable problem applies here unchanged.
-6. **No TrialRegistry rows and no deflated Sharpe — a real gap, not an omission by
-   design.** The brief for this book asks for both. The long study has them; this one
-   does not, and the stop sweep has just added a fresh trial series on top. Every Sharpe
-   here is therefore RAW, undeflated, and should be read as an upper bound. Closing this
-   is the first thing to do before any stop family is adopted.
+6. **The DSR pool counts configurations, not everything.** It does not count the
+   two-symbol choice, nor the decision to test a short book on crypto after a decade of
+   visible crypto trend. As the long study put it: a DSR below 0.95 means "no
+   demonstrated edge"; a DSR above 0.95 would not mean the reverse.

@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D172**.
+New decisions are added here going forward — next number is **D173**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -160,3 +160,4 @@ written rationale for *why not now*, per R3.
 | [D169](D169-the-short-book-and-its-close-based-stop.md) | The short book ships with a CLOSE-based stop because the engine has no intrabar execution; the gap-through shortfall is measured, tail discipline is enforced at construction, and borrow is charged | Committed | Signals & strategy interface |
 | [D170](D170-intrabar-stop-execution.md) | Intrabar stop orders in `run_backtest` via the existing `stop_fill_price`; the engine records which fills a stop caused, and the short book's stop turns out to be present but not binding | Committed | Backtest engine |
 | [D171](D171-the-stop-family-sweep.md) | Trailing-channel, ATR and chandelier stops added and swept; stop levels ratchet, and binding more helps BTC (+0.94 rank corr) while hurting ETH (-0.43) | Committed | Signals & strategy interface |
+| [D172](D172-the-short-book-deflated.md) | The short book gets a trial registry and a deflated Sharpe; DSR lands at 0.04-0.52 and its best results do not survive the search that produced them | Committed | Validation & research integrity |

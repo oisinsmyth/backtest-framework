@@ -888,11 +888,11 @@ def run_breakout_study(
                     volumes=None if volumes_by_symbol is None else volumes_by_symbol.get(symbol),
                 )
                 results[(variant.name, tier.name)] = result
-                _log_trials(registry, result, study, snapshot_id, trial_id_prefix, spans, bars)
+                log_trials(registry, result, study, snapshot_id, trial_id_prefix, spans, bars)
 
         dsr_by_tier, dsr_inputs_by_tier = {}, {}
         for tier in tiers:
-            dsr, inputs = _dsr_for(registry, symbol, tier, study, results, trial_id_prefix)
+            dsr, inputs = dsr_for(registry, symbol, tier, study, results, trial_id_prefix)
             dsr_by_tier[tier.name] = dsr
             dsr_inputs_by_tier[tier.name] = inputs
 
@@ -918,7 +918,11 @@ def run_breakout_study(
     )
 
 
-def _log_trials(
+def log_trials(
+    # PUBLIC because the breakdown short book (D172) reuses this module's VariantResult
+    # and run_variant wholesale, so it logs through this rather than becoming a fifth
+    # copy of the same function. The other studies each keep their own private version
+    # because each has its own result type.
     registry: TrialRegistry,
     result: VariantResult,
     study: BreakoutStudyConfig,
@@ -971,7 +975,7 @@ def _log_trials(
         )
 
 
-def _dsr_for(
+def dsr_for(
     registry: TrialRegistry,
     symbol: str,
     tier: CostTier,

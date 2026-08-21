@@ -311,6 +311,27 @@ def _max_drawdown(returns: Sequence[float]) -> float:
     return worst
 
 
+def combined_series(
+    long_returns: Sequence[float], short_returns: Sequence[float]
+) -> list[float]:
+    """The equal-VOL-weighted combined book's return series.
+
+    Split out from `combine_books` so the same series that produces the reported
+    combined Sharpe can also be fed to the paired bootstrap — otherwise the interval
+    would be computed on a differently-weighted book than the point estimate, which is
+    the kind of quiet mismatch that makes an interval meaningless."""
+    n = min(len(long_returns), len(short_returns))
+    a, b = list(long_returns[-n:]), list(short_returns[-n:])
+    sd_a = statistics.stdev(a) if len(set(a)) > 1 else 0.0
+    sd_b = statistics.stdev(b) if len(set(b)) > 1 else 0.0
+    if sd_a > 0 and sd_b > 0:
+        wa, wb = 1.0 / sd_a, 1.0 / sd_b
+        wa, wb = wa / (wa + wb), wb / (wa + wb)
+    else:
+        wa = wb = 0.5
+    return [wa * x + wb * y for x, y in zip(a, b)]
+
+
 def combine_books(
     long_returns: Sequence[float],
     short_returns: Sequence[float],

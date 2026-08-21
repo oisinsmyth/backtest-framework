@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T14:43:54.065036+00:00",
+  "generated_utc": "2026-08-21T16:56:56.263259+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -22,6 +22,50 @@
   "n_variants": 21,
   "symbols": {
     "BTC-USD": {
+      "dsr_by_tier": {
+        "maker_0bp": 0.0957239732123506,
+        "maker_10bp": 0.07787734560785065,
+        "maker_25bp": 0.05596025585058029,
+        "taker_40bp": 0.03922476861527635
+      },
+      "dsr_inputs_by_tier": {
+        "maker_0bp": {
+          "observed_sr_daily": -0.010766759185597531,
+          "best_variant": "stop_trail_5",
+          "t": 3716,
+          "skew": 5.586265306745383,
+          "kurt": 182.20492812147475,
+          "n_trials": 21,
+          "var_trials_daily": 3.490023424096435e-05
+        },
+        "maker_10bp": {
+          "observed_sr_daily": -0.012534984327049784,
+          "best_variant": "stop_trail_5",
+          "t": 3716,
+          "skew": 5.496666090974192,
+          "kurt": 181.24121373913798,
+          "n_trials": 21,
+          "var_trials_daily": 3.6564997433497976e-05
+        },
+        "maker_25bp": {
+          "observed_sr_daily": -0.015174809457741738,
+          "best_variant": "stop_trail_5",
+          "t": 3716,
+          "skew": 5.3586442715320155,
+          "kurt": 179.69068849016674,
+          "n_trials": 21,
+          "var_trials_daily": 3.9458650065933856e-05
+        },
+        "taker_40bp": {
+          "observed_sr_daily": -0.017797919804099203,
+          "best_variant": "stop_trail_5",
+          "t": 3716,
+          "skew": 5.216459853901328,
+          "kurt": 178.02037949425545,
+          "n_trials": 21,
+          "var_trials_daily": 4.281719013621346e-05
+        }
+      },
       "oos_start": "2015-09-10",
       "oos_end": "2025-11-12",
       "n_oos_bars": 3717,
@@ -3899,6 +3943,50 @@
       }
     },
     "ETH-USD": {
+      "dsr_by_tier": {
+        "maker_0bp": 0.5153085475157425,
+        "maker_10bp": 0.48464755256479464,
+        "maker_25bp": 0.4386689326842584,
+        "taker_40bp": 0.3932961466048602
+      },
+      "dsr_inputs_by_tier": {
+        "maker_0bp": {
+          "observed_sr_daily": 0.020761243007089546,
+          "best_variant": "short_40_5",
+          "t": 2708,
+          "skew": 1.3362556516006576,
+          "kurt": 39.23810810307745,
+          "n_trials": 21,
+          "var_trials_daily": 0.00010861926432658869
+        },
+        "maker_10bp": {
+          "observed_sr_daily": 0.019558219457514535,
+          "best_variant": "short_40_5",
+          "t": 2708,
+          "skew": 1.3213146659976511,
+          "kurt": 39.22686500428125,
+          "n_trials": 21,
+          "var_trials_daily": 0.00011142961680899867
+        },
+        "maker_25bp": {
+          "observed_sr_daily": 0.017751112159181383,
+          "best_variant": "short_40_5",
+          "t": 2708,
+          "skew": 1.2985292156693085,
+          "kurt": 39.19830009443608,
+          "n_trials": 21,
+          "var_trials_daily": 0.00011584366318615665
+        },
+        "taker_40bp": {
+          "observed_sr_daily": 0.015941458828428352,
+          "best_variant": "short_40_5",
+          "t": 2708,
+          "skew": 1.2752583668285555,
+          "kurt": 39.15571894785916,
+          "n_trials": 21,
+          "var_trials_daily": 0.00012048682851498042
+        }
+      },
       "oos_start": "2018-07-19",
       "oos_end": "2025-12-17",
       "n_oos_bars": 2709,
@@ -7778,6 +7866,15 @@
   },
   "baseline_detail": {
     "BTC-USD": {
+      "ensemble_test": {
+        "observed": -0.7899286139851961,
+        "p05": -1.1250249006918425,
+        "p95": -0.44215429962187586,
+        "prob_positive": 0.0,
+        "n_sims": 4000.0,
+        "block_size": 20.0,
+        "seed": 0.0
+      },
       "null": {
         "n_draws": 1000,
         "direction": -1,
@@ -7809,6 +7906,15 @@
       "long_baseline_total_return": 56.57037792647125
     },
     "ETH-USD": {
+      "ensemble_test": {
+        "observed": -0.1264664358145825,
+        "p05": -0.5722616570300242,
+        "p95": 0.31454761860086483,
+        "prob_positive": 0.3095,
+        "n_sims": 4000.0,
+        "block_size": 20.0,
+        "seed": 0.0
+      },
       "null": {
         "n_draws": 1000,
         "direction": -1,

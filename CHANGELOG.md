@@ -10,6 +10,38 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (short book: trial registry + deflated Sharpe, 2026-08-21 — D172)
+- **Every breakdown trial is now registered** — one variant row per (symbol, variant,
+  tier) plus one per walk-forward window, into `data/breakdown_study_registry.sqlite`
+  under the `breakdown-v1` prefix. 168 out-of-sample trials, 2,142 per-window rows.
+- **Deflated Sharpe per (symbol, tier)**, pool = configurations tried at that cell
+  (D116), selected on identity fields and never on the presence of a metric (D98).
+- **A paired block bootstrap of (combined - long-only) Sharpe** (D120), so the ensemble
+  claim has an interval rather than a point estimate. The brief asked for
+  Jobson-Korkie/Memmel; this project's convention for a Sharpe difference is the paired
+  bootstrap, which answers the same question without assuming normality — the deviation
+  is recorded in D172 rather than left silent.
+- `breakout_study.log_trials` / `dsr_for` are now **public**: the breakdown book reuses
+  this module's `VariantResult` and `run_variant` wholesale, so it shares these rather
+  than becoming a fifth private copy. Every other study keeps its own.
+- A **multiplicity sum-guard**, matching the one Phase 1.1 added to the long study after
+  its breakdown table failed to add up.
+
+### Findings — the gap was not cosmetic
+- **DSR: BTC 0.039-0.096, ETH 0.393-0.515.** The long study sat near 1.0 at every tier;
+  not one cell here reaches 0.95.
+- **This overturns the report's two strongest positives.** ETH's 96th-percentile null
+  result and its clean sweep of the three success criteria were the best of 21
+  configurations; priced for that search, the evidence for skill is gone.
+- **It lands on the stop sweep too.** DSR selects `stop_trail_5` as BTC's best — the very
+  stop D171 found taking BTC from -71.6% to -40.6% — and deflates it to 0.039. D171's
+  refusal to adopt it was right, and this is the number that proves it.
+- **Ensemble, with an interval:** BTC -0.79 Sharpe, 90% CI [-1.13, -0.44], P(helps) = 0%
+  — the whole interval is negative, so the short book measurably hurts. ETH -0.13,
+  CI [-0.57, +0.31], P(helps) = 31% — spans zero, which is absence of evidence, not
+  neutrality.
+
+
 ### Added (stop family + sweep, 2026-08-21 — D171)
 - **`TrailingChannelStop`, `AtrStop`, `ChandelierStop`** alongside the incumbent
   `ChannelStopExit`, all direction-agnostic. `ExitRule` gains an optional
