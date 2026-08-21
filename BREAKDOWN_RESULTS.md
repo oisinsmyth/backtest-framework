@@ -223,6 +223,35 @@ report profitable moves as squeezes.
 
 **6 of 35 trades (17%) ran more than 2 ATR against the position while open**, and those trades carry -39,015 of P&L between them. The stop was the exit on 0% of them — a squeeze the stop caught is a different event from one it did not.
 
+### E1 on the combined book
+
+E1 clears the every-symbol bar on both books separately (D178). That does **not** imply it
+improves the combination: the two legs are weighted by inverse volatility, so a rule that
+changes each leg's volatility changes the weights, and one that changes their correlation
+changes how much diversification there is to have.
+
+Both legs carry `failed_breakout` at k=3 — the stronger k on both books in
+D178, so it is the consistent choice rather than one tuned per leg.
+
+| | Without E1 | With E1 on both legs | Δ |
+|---|---|---|---|
+| Long leg Sharpe | +1.202 | +1.303 | +0.101 |
+| Short leg Sharpe | -0.619 | -0.558 | +0.061 |
+| Long/short correlation | +0.001 | +0.002 | +0.001 |
+| **Combined Sharpe** | +0.412 | +0.526 | +0.114 |
+| **Combined max drawdown** | 34.0% | 29.5% | -4.5 pp |
+
+Paired block bootstrap of the combined-Sharpe difference (4,000 sims,
+seed 0, D120): observed **+0.114**, 90% interval
+[+0.002, +0.219], P(E1 helps the combination) =
+**95%**.
+
+**The whole interval is positive.** Adding E1 to both legs improves the combined book measurably, not just on the point estimate.
+
+**No new configurations were introduced for this comparison.** Both legs already exist and
+are already in their DSR pools, so the combined test costs no additional multiplicity — it
+is a different reading of trials already paid for.
+
 ## What the close-based stop actually cost
 
 Every exit that filled beyond its own stop level — the tail the stop did not truncate.
@@ -418,6 +447,35 @@ report profitable moves as squeezes.
 | P&L in squeezed trades | -86,158 |
 
 **6 of 27 trades (22%) ran more than 2 ATR against the position while open**, and those trades carry -86,158 of P&L between them. The stop was the exit on 0% of them — a squeeze the stop caught is a different event from one it did not.
+
+### E1 on the combined book
+
+E1 clears the every-symbol bar on both books separately (D178). That does **not** imply it
+improves the combination: the two legs are weighted by inverse volatility, so a rule that
+changes each leg's volatility changes the weights, and one that changes their correlation
+changes how much diversification there is to have.
+
+Both legs carry `failed_breakout` at k=3 — the stronger k on both books in
+D178, so it is the consistent choice rather than one tuned per leg.
+
+| | Without E1 | With E1 on both legs | Δ |
+|---|---|---|---|
+| Long leg Sharpe | +0.775 | +0.952 | +0.177 |
+| Short leg Sharpe | +0.142 | +0.243 | +0.101 |
+| Long/short correlation | -0.001 | -0.001 | -0.001 |
+| **Combined Sharpe** | +0.649 | +0.845 | +0.197 |
+| **Combined max drawdown** | 29.5% | 24.4% | -5.1 pp |
+
+Paired block bootstrap of the combined-Sharpe difference (4,000 sims,
+seed 0, D120): observed **+0.197**, 90% interval
+[+0.063, +0.362], P(E1 helps the combination) =
+**100%**.
+
+**The whole interval is positive.** Adding E1 to both legs improves the combined book measurably, not just on the point estimate.
+
+**No new configurations were introduced for this comparison.** Both legs already exist and
+are already in their DSR pools, so the combined test costs no additional multiplicity — it
+is a different reading of trials already paid for.
 
 ## What the close-based stop actually cost
 

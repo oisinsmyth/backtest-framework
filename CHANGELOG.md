@@ -10,6 +10,38 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (E1 on the combined book, 2026-08-21 — D179)
+- A second long leg carrying `failed_breakout` at k=3, so the LONG+SHORT ensemble can be
+  measured with E1 on both legs against the same ensemble without it. `COMBINED_E1_K = 3`
+  — the stronger k on both books in D178, used on both legs rather than tuned per side.
+- `_combined_e1_block` in the breakdown report, and a `combined_e1` entry in
+  `data/breakdown_study_summary.json`.
+
+### Findings
+- **The first ensemble improvement in this project whose interval excludes zero.** BTC
+  combined Sharpe 0.412 -> 0.526 (+0.114, 90% CI [+0.002, +0.219], P=95.4%); ETH 0.649 ->
+  0.845 (+0.197, 90% CI [+0.063, +0.362], P=99.5%). Every prior ensemble claim either
+  spanned zero or was negative.
+- **The gain is not from correlation.** Correlation moves ~0.001 or less on both symbols.
+  It comes entirely from improving both legs while leaving their independence intact —
+  which is exactly the channel through which the vol-weighted combination could have got
+  worse while both components got better.
+- **Drawdown improves alongside Sharpe**: combined max DD 34.0% -> 29.5% (BTC) and 29.5%
+  -> 24.4% (ETH). The long leg's own max DD falls 43.0% -> 29.2% on BTC.
+- **No new multiplicity.** The E1 long leg's config is byte-identical to the long study's
+  registered `exit_e1_k3`, and both long legs run outside the short book's registered
+  loop. A different reading of trials already paid for.
+- Still the same two instruments throughout. The honest next test is unchanged from D178:
+  E1 vs no-E1 on the D140 universe, 62 coins.
+
+### Fixed
+- The combined-E1 comparison was computed inside the variant loop, where `results_by_key`
+  is only partly populated (`exit_e1_k3` is appended last) — the `is not None` guard
+  silently skipped the whole section, so the first run produced NO tables rather than
+  wrong ones. Moved after both loops and the silent skip replaced with a loud
+  `AssertionError`.
+
+
 ### Added (cross-book test, pre-registered, 2026-08-21 — D178)
 - `exit_swing_k2` / `exit_swing_k3` on the LONG book, and `exit_e1_k2` / `exit_e1_k3` on
   the SHORT book — each rule on the side it was NOT developed on. Both k tested on both

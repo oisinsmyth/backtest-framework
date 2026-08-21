@@ -31,6 +31,14 @@ REGISTRY_PATH = REPO / "data" / "breakdown_study_registry.sqlite"
 RESULTS = REPO / "BREAKDOWN_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "breakdown_study_summary.json"
 
+COMBINED_E1_K = 3
+"""The k used on BOTH legs of the combined book (D179).
+
+k=3 was the stronger of the two on BOTH books in D178 (+0.101/+0.177 long, +0.061/+0.101
+short), so using it on both legs is the consistent choice rather than one tuned per side.
+k=2 also cleared the every-symbol bar everywhere; picking between them per leg would be a
+search this comparison has no need to run."""
+
 TRIAL_PREFIX = "breakdown-v1"
 """Trial-id prefix, which is also the DSR pool predicate (D98): the pool is selected on
 identity fields, never on whether a metric happens to be present."""
@@ -104,8 +112,22 @@ def main() -> int:
         )
         long_result = bs.run_variant(bars, symbol, long_variant, tiers[-1], study)
 
+        # The same long baseline WITH E1, for the combined-book question (D179): E1
+        # improves each book separately, but the ensemble is equal-VOL weighted, so a rule
+        # that changes each leg's volatility and their correlation does not automatically
+        # improve the combination. k=3 on both legs — it was the stronger k on BOTH books
+        # in D178, so this is the consistent choice rather than one picked per side.
+        long_e1_variant = bs.Variant(
+            "long_baseline_e1", "exit",
+            fixed_config=bs.breakout_config(
+                bs.BASELINE_N_ENTRY, bs.BASELINE_N_EXIT,
+                exit_rules=[{"type": "failed_breakout", "k": COMBINED_E1_K}],
+            ),
+        )
+        long_e1_result = bs.run_variant(bars, symbol, long_e1_variant, tiers[-1], study)
+
         per_variant: dict = {}
-        results_by_key: dict[tuple[str, str], object] = {}
+        results_by_key: dict[tuple[str, str], bs.VariantResult] = {}
         for tier in tiers:
             for variant in variants:
                 n_runs += 1
@@ -214,6 +236,38 @@ def main() -> int:
             value, inputs = bs.dsr_for(registry, symbol, tier, study, results_by_key, TRIAL_PREFIX)
             dsr_by_tier[tier.name] = value
             dsr_inputs_by_tier[tier.name] = inputs
+
+        # The combined book with E1 on BOTH legs (D179), computed here rather than inside
+        # the variant loop: `results_by_key` is only fully populated once every variant has
+        # run, and `exit_e1_k3` is appended last. No new strategy configurations are
+        # introduced — both legs already exist and are already in their DSR pools — so this
+        # comparison costs no additional multiplicity.
+        detail = payload.get("baseline_detail", {}).get(symbol)
+        short_e1 = results_by_key.get((f"exit_e1_k{COMBINED_E1_K}", ref))
+        short_plain = results_by_key.get((ds.SHORT_BASELINE, ref))
+        if detail is not None and short_e1 is not None and short_plain is not None:
+            e1_ensemble = ds.combine_books(
+                long_e1_result.oos_returns, short_e1.oos_returns,
+                study.rf_annual, study.periods_per_year,
+            )
+            plain_series = ds.combined_series(long_result.oos_returns, short_plain.oos_returns)
+            e1_series = ds.combined_series(long_e1_result.oos_returns, short_e1.oos_returns)
+            n = min(len(plain_series), len(e1_series))
+            detail["combined_e1"] = {
+                "ensemble": e1_ensemble.to_dict(),
+                "long_e1_sharpe": long_e1_result.sharpe_annual(study),
+                "short_e1_sharpe": short_e1.sharpe_annual(study),
+                "vs_plain": bs.sharpe_difference_bootstrap(
+                    e1_series[-n:], plain_series[-n:], study, seed=study.seed
+                ),
+            }
+        elif detail is not None:
+            raise AssertionError(
+                f"{symbol}: the combined-book E1 comparison could not be built "
+                f"(short_e1={short_e1 is not None}, short_plain={short_plain is not None}). "
+                "Failing rather than silently omitting the section, which is how the first "
+                "run of this produced empty tables."
+            )
 
         payload["symbols"][symbol] = {
             "dsr_by_tier": dsr_by_tier,
@@ -449,6 +503,74 @@ def _stop_sweep_table(sr: dict, ref: str) -> str:
     )
 
 
+def _combined_e1_block(d: dict) -> str:
+    """E1 on BOTH legs of the combined book (D179).
+
+    Not implied by the two single-book results. The combination is equal-VOL weighted, so
+    a rule that changes each leg's volatility also changes the weights, and one that
+    changes their correlation changes how much diversification there is to have. Improving
+    both components and improving the combination are different claims."""
+    c = d.get("combined_e1")
+    if not c:
+        return ""
+    plain, e1 = d["ensemble"], c["ensemble"]
+    test = c["vs_plain"]
+    rows = [
+        ("Long leg Sharpe", plain["long_sharpe"], c["long_e1_sharpe"]),
+        ("Short leg Sharpe", plain["short_sharpe"], c["short_e1_sharpe"]),
+        ("Long/short correlation", plain["correlation"], e1["correlation"]),
+        ("**Combined Sharpe**", plain["combined_sharpe"], e1["combined_sharpe"]),
+    ]
+    body = NL.join(f"| {label} | {a:+.3f} | {b:+.3f} | {b - a:+.3f} |" for label, a, b in rows)
+    dd = (
+        f"| **Combined max drawdown** | {plain['combined_max_drawdown'] * 100:.1f}% | "
+        f"{e1['combined_max_drawdown'] * 100:.1f}% | "
+        f"{(e1['combined_max_drawdown'] - plain['combined_max_drawdown']) * 100:+.1f} pp |"
+    )
+    if test["p05"] > 0:
+        reading = (
+            f"**The whole interval is positive.** Adding E1 to both legs improves the "
+            f"combined book measurably, not just on the point estimate."
+        )
+    elif test["p95"] < 0:
+        reading = (
+            f"**The whole interval is negative.** E1 improves each leg separately and makes "
+            f"the COMBINATION worse — which is possible precisely because the weighting is "
+            f"vol-based and the correlation moved."
+        )
+    else:
+        reading = (
+            f"**The interval spans zero**, so the combined effect is not measurable at this "
+            f"sample size, whatever the point estimate shows. That is the absence of "
+            f"evidence, not evidence of no effect."
+        )
+    return f"""### E1 on the combined book
+
+E1 clears the every-symbol bar on both books separately (D178). That does **not** imply it
+improves the combination: the two legs are weighted by inverse volatility, so a rule that
+changes each leg's volatility changes the weights, and one that changes their correlation
+changes how much diversification there is to have.
+
+Both legs carry `failed_breakout` at k={COMBINED_E1_K} — the stronger k on both books in
+D178, so it is the consistent choice rather than one tuned per leg.
+
+| | Without E1 | With E1 on both legs | Δ |
+|---|---|---|---|
+{body}
+{dd}
+
+Paired block bootstrap of the combined-Sharpe difference ({int(test["n_sims"]):,} sims,
+seed {int(test["seed"])}, D120): observed **{test["observed"]:+.3f}**, 90% interval
+[{test["p05"]:+.3f}, {test["p95"]:+.3f}], P(E1 helps the combination) =
+**{test["prob_positive"]:.0%}**.
+
+{reading}
+
+**No new configurations were introduced for this comparison.** Both legs already exist and
+are already in their DSR pools, so the combined test costs no additional multiplicity — it
+is a different reading of trials already paid for."""
+
+
 def _window_correlation_block(d: dict) -> str:
     """Per-window correlation (D176). The full-sample figure above is one number for a
     decade; this asks whether it holds window to window."""
@@ -610,6 +732,8 @@ which answers the same question without assuming normality.
 {_window_correlation_block(d)}
 
 {_squeeze_block(d)}
+
+{_combined_e1_block(d)}
 
 ## What the close-based stop actually cost
 
@@ -833,7 +957,7 @@ def _multiplicity(p: dict) -> str:
     # The long study printed a breakdown that did not sum, and its verdict then quoted
     # the wrong number twice (fixed in Phase 1.1). A multiplicity table that does not add
     # up is the one table here that must never be wrong, so it is asserted.
-    by_group = {}
+    by_group: dict[str, int] = {}
     for v in ds.short_variants():
         by_group[v.group] = by_group.get(v.group, 0) + 1
     if sum(by_group.values()) != n_variants:

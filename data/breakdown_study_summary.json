@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T19:14:17.719205+00:00",
+  "generated_utc": "2026-08-21T19:26:41.902005+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -10476,7 +10476,29 @@
         "total_gap_cost_pct_of_nav": 0.0
       },
       "long_baseline_sharpe": 1.2016261981079577,
-      "long_baseline_total_return": 56.57037792647125
+      "long_baseline_total_return": 56.57037792647125,
+      "combined_e1": {
+        "ensemble": {
+          "correlation": 0.0016083786177350772,
+          "n_bars": 3716,
+          "long_sharpe": 1.302774186725204,
+          "short_sharpe": -0.5582954266532487,
+          "combined_sharpe": 0.5260031435436111,
+          "long_max_drawdown": 0.2924235188745894,
+          "combined_max_drawdown": 0.29526601247605977
+        },
+        "long_e1_sharpe": 1.302774186725204,
+        "short_e1_sharpe": -0.5582954266532487,
+        "vs_plain": {
+          "observed": 0.11430555942084952,
+          "p05": 0.002163765611998585,
+          "p95": 0.2187940320464213,
+          "prob_positive": 0.9535,
+          "n_sims": 4000.0,
+          "block_size": 20.0,
+          "seed": 0.0
+        }
+      }
     },
     "ETH-USD": {
       "ensemble_test": {
@@ -10785,7 +10807,29 @@
         "total_gap_cost_pct_of_nav": 0.0
       },
       "long_baseline_sharpe": 0.7751172902971348,
-      "long_baseline_total_return": 5.522072405483212
+      "long_baseline_total_return": 5.522072405483212,
+      "combined_e1": {
+        "ensemble": {
+          "correlation": -0.001162310594817816,
+          "n_bars": 2708,
+          "long_sharpe": 0.9522820726804373,
+          "short_sharpe": 0.24259323584742581,
+          "combined_sharpe": 0.8453958824735831,
+          "long_max_drawdown": 0.3465163567992716,
+          "combined_max_drawdown": 0.24425414285753266
+        },
+        "long_e1_sharpe": 0.9522820726804373,
+        "short_e1_sharpe": 0.24259323584742581,
+        "vs_plain": {
+          "observed": 0.19674502799103077,
+          "p05": 0.06348491044431828,
+          "p95": 0.3616472192070302,
+          "prob_positive": 0.99525,
+          "n_sims": 4000.0,
+          "block_size": 20.0,
+          "seed": 0.0
+        }
+      }
     }
   }
 }
