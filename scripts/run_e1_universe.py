@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import statistics
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -102,6 +103,16 @@ def variant_for(book: str, with_e1: bool) -> bs.Variant:
 
 
 def main() -> int:
+    # Re-render the report from the payload already on disk, without re-running four
+    # walk-forwards over 62 symbols. The payload is the study's whole output, so a
+    # reporting change never needs a recompute — and a report that can only be produced
+    # by a 40-minute run is a report nobody checks.
+    if "--report-only" in sys.argv:
+        payload = json.loads(SUMMARY_JSON.read_text(encoding="utf-8"))
+        RESULTS.write_text(build_report(payload), encoding="utf-8")
+        print(f"re-rendered {RESULTS.name} from {SUMMARY_JSON.name}")
+        return 0
+
     started = time.time()
     raw_bars, raw_volumes = load_fixture_csv_with_volumes(FIXTURE)
     cleaned, cleaning_report = clean(raw_bars)
@@ -308,6 +319,10 @@ def _book_section(p: dict, book: str) -> str:
 
 {_trade_count_note(d, book)}
 
+{_pnl_table(d, book)}
+
+{_samples(d, book)}
+
 <details><summary>Every symbol ({book})</summary>
 
 | Symbol | Status | Baseline Sharpe | +E1 Sharpe | Δ | Trades |
@@ -316,6 +331,93 @@ def _book_section(p: dict, book: str) -> str:
 
 </details>
 """
+
+
+def blown_accounts(per_symbol: dict) -> dict:
+    """Symbols where EITHER arm lost more than the entire account.
+
+    Not a curiosity. This engine has no margin call, no liquidation and no borrow recall
+    (D175), so NAV goes negative and the book keeps trading. A mean that quietly contains
+    a -1100% row is not a mean of anything, so these are excluded from the mean column
+    and named separately (D174)."""
+    return {
+        sym: r
+        for sym, r in per_symbol.items()
+        if min(r["base_return"], r["e1_return"]) <= -1.0
+    }
+
+
+def _pnl_table(d: dict, book: str) -> str:
+    """The ABSOLUTE result, which the Sharpe deltas above deliberately do not show.
+
+    A win rate is a RELATIVE statistic: it says whether E1 is the better of two
+    configurations, and says nothing about whether either is worth running. This says the
+    second thing."""
+    rows = d["per_symbol"]
+    if not rows:
+        return ""
+    blown = blown_accounts(rows)
+    kept = {s: r for s, r in rows.items() if s not in blown}
+    lines = []
+    for label, name in (("base", "baseline"), ("e1", "+ E1")):
+        allr = [r[f"{label}_return"] for r in rows.values()]
+        exr = [r[f"{label}_return"] for r in kept.values()]
+        sh = [r[f"{label}_sharpe"] for r in rows.values()]
+        dd = [r[f"{label}_maxdd"] for r in rows.values()]
+        pos = sum(1 for x in allr if x > 0)
+        lines.append(
+            f"| `{name}` | {statistics.median(allr) * 100:+.1f}% | "
+            f"{statistics.fmean(exr) * 100:+.1f}% | {statistics.fmean(sh):+.3f} | "
+            f"{statistics.fmean(dd) * 100:.1f}% | {pos} / {len(allr)} |"
+        )
+    blowup = (
+        f"{len(blown)} symbol(s) lost more than the entire account "
+        f"(`{'`, `'.join(sorted(blown))}`), so the mean column excludes them. The engine "
+        f"models no margin call, liquidation or borrow recall (D175) — a real venue would "
+        f"have closed those positions."
+        if blown
+        else "No symbol drove total return past -100% in this book."
+    )
+    return f"""**Absolute P&L — is either arm worth running?**
+
+The win rate above is a RELATIVE statistic. It says whether E1 is the better of two
+configurations; it says nothing about whether either makes money. This says that.
+
+| Arm | Median total return | Mean, ex blow-ups | Mean Sharpe | Mean max DD | Profitable symbols |
+|---|---|---|---|---|---|
+{NL.join(lines)}
+
+**The median is the headline and the mean is not** — a cross-section of alts has a return
+distribution with a tail that eats any average. {blowup}"""
+
+
+def _samples(d: dict, book: str, k: int = 5) -> str:
+    """Named symbols at both ends, with actual P&L rather than Sharpe.
+
+    A mean delta of +0.05 can be one coin moving a lot or sixty moving a little, and those
+    are different findings. These rows say which."""
+    fired = [(s, r) for s, r in d["per_symbol"].items() if r["fired"]]
+    if not fired:
+        return ""
+    ranked = sorted(fired, key=lambda kv: -kv[1]["delta"])
+    picks = ranked[:k] + ([("...", None)] if len(ranked) > 2 * k else []) + ranked[-k:]
+    lines = []
+    for sym, r in picks:
+        if r is None:
+            lines.append(f"| … | | | | | |")
+            continue
+        lines.append(
+            f"| `{sym}` | {r['status']} | {r['base_return'] * 100:+,.1f}% | "
+            f"{r['e1_return'] * 100:+,.1f}% | "
+            f"{(r['e1_return'] - r['base_return']) * 100:+,.1f} pp | "
+            f"{r['delta']:+.3f} |"
+        )
+    return f"""**Sample symbols — the {k} largest gains and {k} largest losses**, by Sharpe
+delta, shown in total return so the size of the effect is legible:
+
+| Symbol | Status | Baseline return | + E1 return | Δ return | Δ Sharpe |
+|---|---|---|---|---|---|
+{NL.join(lines)}"""
 
 
 def _trade_count_note(d: dict, book: str) -> str:

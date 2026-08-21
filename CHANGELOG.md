@@ -10,6 +10,43 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (E1 on the D140 universe, pre-registered, 2026-08-21 — D180)
+- `scripts/run_e1_universe.py` — E1 vs no-E1 on BOTH books across the 62-coin D140
+  cross-section, k=3 fixed, four runs, own registry so no published DSR moves. The long
+  control is byte-identical to `breakout_universe.baseline_variant()`.
+- Ties counted as ties: E1 is an added brick rather than a swapped one, so win rates are
+  over firing symbols only and both denominators are reported. (It fired on all 62, so
+  this turned out not to bind.)
+- `--report-only` re-renders the report from the saved payload without re-running four
+  walk-forwards.
+
+### Findings — predictions committed first (494450e), then scored
+- **All three predictions FALSIFIED, one of them reversed.** Long book 39% win rate
+  (mean Δ Sharpe -0.065), short book 48% (-0.010). H3 predicted the gain would be LARGER
+  among the coins that died; the long book runs monotonically the other way — survived
+  -0.022, collapsed -0.081, delisted -0.144.
+- **The four published BTC/ETH numbers reproduce exactly** (+0.101/+0.177 long,
+  +0.061/+0.101 short), so this is not a measurement difference.
+- **Absolute P&L, long book:** median total return +152.4% -> +97.6%, profitable symbols
+  52 -> 50, mean Sharpe +0.411 -> +0.346, for 2.1pp less drawdown.
+- **The damage is predicted by E1's trade-count growth (-0.72), NOT by volatility
+  (+0.06)**, baseline Sharpe (-0.02) or history length (-0.03). Symbols where E1 added
+  <=10% trades: mean Δ +0.055. Where it added >=40%: mean Δ -0.220.
+- **The firing rate is ~+30% on everything** and is not predicted by any instrument
+  property. What varies is the COST per firing: bucketed by baseline trade count, mean Δ
+  runs -0.091 (9-17 trades) -> -0.028 (25-42), monotone, while the firing rate stays flat.
+- **BTC sits at the 97th percentile of baseline trade count and ETH at the 85th**, median
+  21 — the top quartile is the one E1 damages least. They rank 9th and 3rd of 62.
+- **E1 is not noise.** Max drawdown improves on 42/62 long and 39/62 short, mean -2.1pp.
+  It is a real risk reducer whose price exceeds its payoff outside two instruments.
+- **The re-entry attribution is settled against D177.** E1 raised the trade count on 61/62
+  long symbols, and that rise correlates -0.72 with the outcome. Re-entry is the mechanism
+  of E1's HARM, not its benefit; it looked like a benefit only where re-entry was cheap.
+- **D179's arithmetic stands, its interpretation does not.** Both bootstrap intervals
+  excluded zero on a sample now shown to be the rule's best case. A confidence interval
+  quantifies sampling error within a sample; it cannot detect an unrepresentative one.
+
+
 ### Added (E1 on the combined book, 2026-08-21 — D179)
 - A second long leg carrying `failed_breakout` at k=3, so the LONG+SHORT ensemble can be
   measured with E1 on both legs against the same ensemble without it. `COMBINED_E1_K = 3`
