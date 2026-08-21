@@ -10,6 +10,39 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (swing-structure rules, pre-registered, 2026-08-21 — D173)
+- **`SwingStructureStop(k)`** — the stop sits at the most recent CONFIRMED swing pivot
+  against the trade; **`SwingStructureGate(k)`** — an entry gate requiring the last two
+  confirmed swings to agree (higher high AND higher low, or lower high AND lower low),
+  with ambiguous structure vetoing rather than guessing. `k in {2,3}`.
+- **`last_swings()`** — pivot detection that never considers a bar newer than `index - k`.
+  A k-bar pivot is not knowable until k bars after it forms, and an implementation that
+  forgets that offset leaks the future INVISIBLY: DataView stops a crude version indexing
+  past the present, but not one that computes pivots from visible bars and drops the lag.
+  Asserted directly — a pivot must be invisible at t and t+k-1 and visible at t+k.
+- Pivot LEVELS, not drawn trend lines. A sloped line through chosen swing points is a fit
+  with free parameters, and `TERRAIN_MODEL.md` already rules out discretionary drawing.
+
+### Findings — the pre-registration was committed first (d1f0d6c), then scored
+- **H1 FALSIFIED.** `swing_k2` beats `trail_10` on BOTH symbols (+0.100 BTC, +0.093 ETH)
+  and is the first stop here to improve both substantially. The prediction that no
+  structure stop would clear the every-symbol bar was wrong.
+- **Why it was wrong:** the redundancy argument compared swing SPACING to channel
+  LOOKBACK and concluded the levels coincide. Spacing ~ lookback does not imply level ~
+  level — a swing pivot is a LOCAL extreme and sits far closer to price after a
+  favourable move than a rolling N-bar extreme still carrying the pre-move high. The
+  prediction did hold for k=3 (+0.008), which is the case its spacing was reasoned from;
+  the mechanism was right and generalised to the wrong parameter.
+- **H2 holds.** Neither gate improves on the plain baseline across both symbols (k2
+  -0.066/-0.006, k3 +0.168/-0.165). Trade counts fall by two thirds — another
+  trade-removing device removing good trades with bad.
+- **H3 holds.** DSR with the pool at 25: BTC 0.037-0.088, ETH 0.392-0.538, and DSR still
+  selects `stop_trail_5` / `short_40_5` as best rather than `swing_k2`. **The
+  falsification does not rescue the book:** `swing_k2` is a real improvement over
+  `trail_10` and simultaneously the 25th configuration tried on a strategy with no
+  demonstrated edge, and the second fact dominates.
+
+
 ### Added (short book: trial registry + deflated Sharpe, 2026-08-21 — D172)
 - **Every breakdown trial is now registered** — one variant row per (symbol, variant,
   tier) plus one per walk-forward window, into `data/breakdown_study_registry.sqlite`

@@ -628,6 +628,103 @@ chop return > −10% — thresholds fixed before reading, and blunt on purpose.
 {gate_reading}"""
 
 
+def _prereg_scorecard(p: dict) -> str:
+    """Score D173's pre-registered predictions against what actually happened.
+
+    The predictions were committed before this ever ran (git d1f0d6c). Computed here, so
+    the scorecard cannot drift from the numbers it scores."""
+    ref = "taker_40bp"
+    symbols = list(p["symbols"])
+
+    def sharpe(sym, name):
+        v = p["symbols"][sym]["variants"].get(f"{name}@{ref}")
+        return v["sharpe_annual"] if v else None
+
+    # H1: structure stop vs trail_10, every-symbol rule at SHARPE_EPS.
+    h1_rows, h1_beats = [], []
+    for k in (2, 3):
+        deltas = {}
+        for sym in symbols:
+            a, b = sharpe(sym, f"stop_swing_k{k}"), sharpe(sym, "stop_trail_10")
+            if a is None or b is None:
+                continue
+            deltas[sym] = a - b
+        if not deltas:
+            continue
+        beats = min(deltas.values()) >= SHARPE_EPS
+        if beats:
+            h1_beats.append(f"swing_k{k}")
+        h1_rows.append(
+            f"| `stop_swing_k{k}` vs `stop_trail_10` | "
+            + " | ".join(f"{deltas[s]:+.3f}" for s in symbols)
+            + f" | {'**BEATS IT**' if beats else 'does not'} |"
+        )
+
+    # H2: structure gate vs the plain baseline.
+    h2_rows, h2_beats = [], []
+    for k in (2, 3):
+        deltas = {}
+        for sym in symbols:
+            a, b = sharpe(sym, f"gate_swing_k{k}"), sharpe(sym, ds.SHORT_BASELINE)
+            if a is None or b is None:
+                continue
+            deltas[sym] = a - b
+        if not deltas:
+            continue
+        beats = min(deltas.values()) >= SHARPE_EPS
+        if beats:
+            h2_beats.append(f"gate_k{k}")
+        h2_rows.append(
+            f"| `gate_swing_k{k}` vs baseline | "
+            + " | ".join(f"{deltas[s]:+.3f}" for s in symbols)
+            + f" | {'**BEATS IT**' if beats else 'does not'} |"
+        )
+
+    best_dsr = max(max(sr["dsr_by_tier"].values()) for sr in p["symbols"].values())
+    header = ("| Comparison | " + " | ".join(f"Δ Sharpe {s}" for s in symbols)
+              + " | Every-symbol rule |" + NL + "|---|" + "---|" * (len(symbols) + 1) + NL)
+
+    h1_verdict = (
+        f"**H1 IS FALSIFIED.** {', '.join(h1_beats)} clears the every-symbol bar against "
+        f"`trail_10`. The prediction was that no structure stop would, and it was wrong."
+        if h1_beats
+        else "**H1 holds.** No structure stop clears the every-symbol bar against `trail_10`."
+    )
+    h2_verdict = (
+        f"**H2 is falsified**: {', '.join(h2_beats)} improves on the baseline on every symbol."
+        if h2_beats
+        else "**H2 holds.** Neither gate improves on the plain SMA200 baseline across both "
+        "symbols — and the mechanism is visible in the trade counts, which fall by roughly "
+        "two thirds. A second gate is another trade-removing device, and it removes good "
+        "trades along with bad, exactly as every such device tested in this project has."
+    )
+    h3_verdict = (
+        f"**H3 holds.** The best DSR anywhere is {best_dsr:.3f}, nowhere near 0.95."
+        if best_dsr < 0.95
+        else f"**H3 is falsified**: DSR reaches {best_dsr:.3f}."
+    )
+
+    return f"""### The pre-registered predictions, scored
+
+D173 recorded three predictions and was committed before this study ran, so they are
+dated by git rather than written afterwards. Scored by the same every-symbol rule at
+SHARPE_EPS = {SHARPE_EPS:.2f}.
+
+**H1 — the structure stop will not beat `trail_10` on both symbols.**
+
+{header}{NL.join(h1_rows)}
+
+{h1_verdict}
+
+**H2 — the structure gate will not improve on the SMA200 gate alone.**
+
+{header}{NL.join(h2_rows)}
+
+{h2_verdict}
+
+**H3 — deflated Sharpe will not reach 0.95 on either symbol.** {h3_verdict}"""
+
+
 def _multiplicity(p: dict) -> str:
     n_variants = p["n_variants"]
     # The long study printed a breakdown that did not sum, and its verdict then quoted
@@ -651,6 +748,7 @@ def _multiplicity(p: dict) -> str:
 | — of which entry/exit grid cells | {len([v for v in ds.short_variants() if v.group == "plateau"])} |
 | — of which time-stop variants | {len([v for v in ds.short_variants() if v.group == "exit"])} |
 | — of which stop families | {len([v for v in ds.short_variants() if v.group == "stop"])} |
+| — of which structure gates | {len([v for v in ds.short_variants() if v.group == "gate"])} |
 | — of which gate counterfactuals | {len([v for v in ds.short_variants() if v.group == "counterfactual"])} |
 | Cost tiers | {n_tiers} |
 | Symbols | {n_symbols} |
@@ -970,7 +1068,7 @@ def _verdict(p: dict) -> str:
 
     lines += [
         _criteria_scorecard(p), _stop_sweep_verdict(p), _stop_paragraph(p),
-        _multiplicity(p), _deflation_reading(p), """
+        _multiplicity(p), _prereg_scorecard(p), _deflation_reading(p), """
 # Standing caveats
 
 1. **The stop is intrabar (D170) but almost never binds.** The mechanism is correct —

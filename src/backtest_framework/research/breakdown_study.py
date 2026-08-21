@@ -86,6 +86,8 @@ STOP_FAMILIES: tuple[tuple[str, list[dict[str, Any]]], ...] = (
     ("atr_2", [{"type": "atr_stop", "multiple": 2.0, "window": 20}]),
     ("atr_3", [{"type": "atr_stop", "multiple": 3.0, "window": 20}]),
     ("chandelier_3", [{"type": "chandelier_stop", "multiple": 3.0, "window": 20}]),
+    ("swing_k2", [{"type": "swing_structure_stop", "k": 2}]),
+    ("swing_k3", [{"type": "swing_structure_stop", "k": 3}]),
 )
 """The stop families swept on the fixed baseline entry/exit parameters (D171).
 
@@ -164,6 +166,27 @@ def short_variants() -> list[bs.Variant]:
                     ],
                     direction="short",
                     exit_rules=rules,
+                ),
+            )
+        )
+    # The structure GATE is a separate hypothesis (H2 in D173) from the structure STOP,
+    # so it gets its own variants rather than being folded into the stop sweep: the
+    # baseline stop is held fixed and only the gate changes.
+    for k in (2, 3):
+        variants.append(
+            bs.Variant(
+                f"gate_swing_k{k}", "gate",
+                fixed_config=bs.breakout_config(
+                    n_entry=SHORT_BASELINE_N_ENTRY,
+                    n_exit=SHORT_BASELINE_N_EXIT,
+                    weight_source=SHORT_INVERSE_VOL,
+                    filters=[
+                        {"type": "trend_gate", "sma_window": SMA_GATE_WINDOW,
+                         "direction": "short"},
+                        {"type": "swing_structure_gate", "k": k, "direction": "short"},
+                    ],
+                    direction="short",
+                    exit_rules=[{"type": "channel_stop"}],
                 ),
             )
         )

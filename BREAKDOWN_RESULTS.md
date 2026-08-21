@@ -100,6 +100,10 @@ Baseline `short_20_5` at `taker_40bp`:
 | `stop_atr_2` | -63.2% | -9.3% | -0.53 | 66.3% | 35 | 11.1% |
 | `stop_atr_3` | -68.3% | -10.7% | -0.59 | 70.0% | 35 | 11.4% |
 | `stop_chandelier_3` | -57.8% | -8.1% | -0.53 | 57.8% | 36 | 9.3% |
+| `stop_swing_k2` | -46.8% | -6.0% | -0.38 | 55.6% | 35 | 10.1% |
+| `stop_swing_k3` | -57.0% | -8.0% | -0.47 | 62.7% | 35 | 10.6% |
+| `gate_swing_k2` | -38.9% | -4.7% | -0.69 | 41.4% | 14 | 4.4% |
+| `gate_swing_k3` | -26.4% | -3.0% | -0.45 | 34.4% | 10 | 3.0% |
 
 ## The stop sweep: which stops actually bind, and what they cost
 
@@ -112,6 +116,8 @@ Baseline `short_20_5` at `taker_40bp`:
 | `atr_2` | -63.2% | -0.53 | 66.3% | 35 | 11 / 411 | 2.7% | 0 |
 | `atr_3` | -68.3% | -0.59 | 70.0% | 35 | 4 / 423 | 0.9% | 0 |
 | `chandelier_3` | -57.8% | -0.53 | 57.8% | 36 | 19 / 344 | 5.5% | 0 |
+| `swing_k2` | -46.8% | -0.38 | 55.6% | 35 | 25 / 374 | 6.7% | 0 |
+| `swing_k3` | -57.0% | -0.47 | 62.7% | 35 | 18 / 393 | 4.6% | 0 |
 
 **Bind rate first.** A stop that never fires is not being tested — that row is the strategy without a stop, whatever else it shows. **Gapped** counts exits that filled past the level because the bar opened beyond it, which is the residue no intrabar stop can remove on daily bars.
 
@@ -119,12 +125,12 @@ Baseline `short_20_5` at `taker_40bp`:
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `stop_trail_5` | -0.0108 | 3,716 | 21 | 0.000035 | **0.0957** |
-| `maker_10bp` | `stop_trail_5` | -0.0125 | 3,716 | 21 | 0.000037 | **0.0779** |
-| `maker_25bp` | `stop_trail_5` | -0.0152 | 3,716 | 21 | 0.000039 | **0.0560** |
-| `taker_40bp` | `stop_trail_5` | -0.0178 | 3,716 | 21 | 0.000043 | **0.0392** |
+| `maker_0bp` | `stop_trail_5` | -0.0108 | 3,716 | 25 | 0.000037 | **0.0883** |
+| `maker_10bp` | `stop_trail_5` | -0.0125 | 3,716 | 25 | 0.000038 | **0.0724** |
+| `maker_25bp` | `stop_trail_5` | -0.0152 | 3,716 | 25 | 0.000040 | **0.0526** |
+| `taker_40bp` | `stop_trail_5` | -0.0178 | 3,716 | 25 | 0.000042 | **0.0371** |
 
-**Every tier lands between 0.04 and 0.10, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
+**Every tier lands between 0.04 and 0.09, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
 
 ## The primary verdict: exposure-matched random SHORT entries
 
@@ -248,6 +254,10 @@ Baseline `short_20_5` at `taker_40bp`:
 | `stop_atr_2` | +40.6% | +4.7% | 0.15 | 54.0% | 27 | 16.2% |
 | `stop_atr_3` | +36.5% | +4.3% | 0.14 | 54.1% | 27 | 18.0% |
 | `stop_chandelier_3` | +16.1% | +2.0% | 0.05 | 55.7% | 30 | 13.8% |
+| `stop_swing_k2` | +86.7% | +8.8% | 0.30 | 45.2% | 28 | 15.5% |
+| `stop_swing_k3` | +67.8% | +7.2% | 0.25 | 48.7% | 28 | 17.0% |
+| `gate_swing_k2` | +42.1% | +4.8% | 0.14 | 39.8% | 13 | 8.8% |
+| `gate_swing_k3` | +16.0% | +2.0% | -0.02 | 36.6% | 13 | 8.3% |
 
 ## The stop sweep: which stops actually bind, and what they cost
 
@@ -260,6 +270,8 @@ Baseline `short_20_5` at `taker_40bp`:
 | `atr_2` | +40.6% | 0.15 | 54.0% | 27 | 9 / 439 | 2.1% | 0 |
 | `atr_3` | +36.5% | 0.14 | 54.1% | 27 | 1 / 488 | 0.2% | 0 |
 | `chandelier_3` | +16.1% | 0.05 | 55.7% | 30 | 18 / 374 | 4.8% | 0 |
+| `swing_k2` | +86.7% | 0.30 | 45.2% | 28 | 19 / 420 | 4.5% | 0 |
+| `swing_k3` | +67.8% | 0.25 | 48.7% | 28 | 13 / 460 | 2.8% | 0 |
 
 **Bind rate first.** A stop that never fires is not being tested — that row is the strategy without a stop, whatever else it shows. **Gapped** counts exits that filled past the level because the bar opened beyond it, which is the residue no intrabar stop can remove on daily bars.
 
@@ -267,12 +279,12 @@ Baseline `short_20_5` at `taker_40bp`:
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `short_40_5` | 0.0208 | 2,708 | 21 | 0.000109 | **0.5153** |
-| `maker_10bp` | `short_40_5` | 0.0196 | 2,708 | 21 | 0.000111 | **0.4846** |
-| `maker_25bp` | `short_40_5` | 0.0178 | 2,708 | 21 | 0.000116 | **0.4387** |
-| `taker_40bp` | `short_40_5` | 0.0159 | 2,708 | 21 | 0.000120 | **0.3933** |
+| `maker_0bp` | `stop_swing_k2` | 0.0221 | 2,708 | 25 | 0.000103 | **0.5377** |
+| `maker_10bp` | `stop_swing_k2` | 0.0205 | 2,708 | 25 | 0.000105 | **0.5006** |
+| `maker_25bp` | `stop_swing_k2` | 0.0182 | 2,708 | 25 | 0.000109 | **0.4447** |
+| `taker_40bp` | `short_40_5` | 0.0159 | 2,708 | 25 | 0.000112 | **0.3917** |
 
-**Every tier lands between 0.39 and 0.52, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
+**Every tier lands between 0.39 and 0.54, far below the 0.95 bar.** The long study's convention applies unchanged: *a DSR below 0.95 means no demonstrated edge; a DSR above 0.95 would not mean the reverse.* This book is decisively on the wrong side of it.
 
 ## The primary verdict: exposure-matched random SHORT entries
 
@@ -385,8 +397,10 @@ not a distinct configuration at all.
 | `atr_2` | +0.092 | +0.013 | 20 | **KEEP** |
 | `atr_3` | +0.034 | -0.002 | 5 | DROP |
 | `chandelier_3` | +0.092 | -0.096 | 37 | DROP |
+| `swing_k2` | +0.244 | +0.161 | 44 | **KEEP** |
+| `swing_k3` | +0.152 | +0.105 | 31 | **KEEP** |
 
-**2 of the swept stops improve risk-adjusted return on every symbol by more than 0.01 Sharpe**, and the strongest by worst-case improvement is `trail_10` (+0.07 on its weaker symbol, 27 stop exits). **But binding more is not uniformly better.** The rank correlation between how often a stop binds and how much it helps is BTC-USD +0.94, ETH-USD -0.43 — positive on BTC-USD, negative on ETH-USD. On the symbol where it is negative, the stops that fire most (`trail_5`, `chandelier_3`) are cutting winning trades short rather than truncating losers. That is the same failure mode the long study found in its entry filters: a device that removes trades removes good ones too.
+**4 of the swept stops improve risk-adjusted return on every symbol by more than 0.01 Sharpe**, and the strongest by worst-case improvement is `swing_k2` (+0.16 on its weaker symbol, 44 stop exits). The mechanism is consistent: rank correlation between how often a stop binds and how much it helps is positive on every symbol (BTC-USD +0.93, ETH-USD +0.00). **Stops that actually engage do better**, which is the finding D170 could not produce with a stop that never fired.
 
 **Three things this does not mean.**
 
@@ -420,37 +434,63 @@ out not to be the thing that was limiting this book.
 
 | What | Count |
 |---|---|
-| Strategy variants per symbol | 21 |
+| Strategy variants per symbol | 25 |
 | — of which entry/exit grid cells | 12 |
 | — of which time-stop variants | 2 |
-| — of which stop families | 6 |
+| — of which stop families | 8 |
+| — of which structure gates | 2 |
 | — of which gate counterfactuals | 1 |
 | Cost tiers | 4 |
 | Symbols | 2 |
-| **Out-of-sample trials logged** | **168** |
-| Per-window trial rows logged | 2142 |
+| **Out-of-sample trials logged** | **200** |
+| Per-window trial rows logged | 2550 |
 
 Every one is registered in `data/breakdown_study_registry.sqlite` and every variant row
 is in the DSR pool for its (symbol, tier) cell. One of the stop families (`trail_20`) is
-inert — mechanically the incumbent under another name — so 20 of the
-21 are distinct configurations, and the pool is not reduced for it: a
+inert — mechanically the incumbent under another name — so 24 of the
+25 are distinct configurations, and the pool is not reduced for it: a
 configuration you tried and learned nothing from still cost you a look.
+### The pre-registered predictions, scored
+
+D173 recorded three predictions and was committed before this study ran, so they are
+dated by git rather than written afterwards. Scored by the same every-symbol rule at
+SHARPE_EPS = 0.01.
+
+**H1 — the structure stop will not beat `trail_10` on both symbols.**
+
+| Comparison | Δ Sharpe BTC-USD | Δ Sharpe ETH-USD | Every-symbol rule |
+|---|---|---|---|
+| `stop_swing_k2` vs `stop_trail_10` | +0.100 | +0.093 | **BEATS IT** |
+| `stop_swing_k3` vs `stop_trail_10` | +0.008 | +0.037 | does not |
+
+**H1 IS FALSIFIED.** swing_k2 clears the every-symbol bar against `trail_10`. The prediction was that no structure stop would, and it was wrong.
+
+**H2 — the structure gate will not improve on the SMA200 gate alone.**
+
+| Comparison | Δ Sharpe BTC-USD | Δ Sharpe ETH-USD | Every-symbol rule |
+|---|---|---|---|
+| `gate_swing_k2` vs baseline | -0.066 | -0.006 | does not |
+| `gate_swing_k3` vs baseline | +0.168 | -0.165 | does not |
+
+**H2 holds.** Neither gate improves on the plain SMA200 baseline across both symbols — and the mechanism is visible in the trade counts, which fall by roughly two thirds. A second gate is another trade-removing device, and it removes good trades along with bad, exactly as every such device tested in this project has.
+
+**H3 — deflated Sharpe will not reach 0.95 on either symbol.** **H3 holds.** The best DSR anywhere is 0.538, nowhere near 0.95.
 ### What deflation does to all of it — and this is the section that matters
 
-Deflated Sharpe by symbol across all four tiers: **BTC-USD 0.039–0.096 · ETH-USD 0.393–0.515**. Not one cell reaches the
+Deflated Sharpe by symbol across all four tiers: **BTC-USD 0.037–0.088 · ETH-USD 0.392–0.538**. Not one cell reaches the
 0.95 bar, and the weaker symbol does not reach 0.10 at any tier.
 
 **This reframes every positive number above.** ETH's 96th-percentile null result and its
 clean sweep of the three success criteria were the strongest things in this document.
-Both were computed on the best of 21 configurations, and once that search
+Both were computed on the best of 25 configurations, and once that search
 is priced in, the evidence for skill is gone. The same applies to the stop sweep: the
 variant that most improved BTC (`stop_trail_5`, −71.6% → −40.6%) is precisely the one
-DSR selects as the best-of-21 and deflates to near zero. That is not DSR
+DSR selects as the best-of-25 and deflates to near zero. That is not DSR
 being harsh — it is DSR doing the exact job it exists for, on a search this study
 performed and then reported.
 
 The honest one-line summary of the short book is now: **a rule with no demonstrated edge,
-whose apparent successes are consistent with having looked 21 times.**
+whose apparent successes are consistent with having looked 25 times.**
 
 # Standing caveats
 

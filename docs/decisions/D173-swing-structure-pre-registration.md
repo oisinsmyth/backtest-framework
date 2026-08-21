@@ -87,3 +87,64 @@ variant that turns out inert, as `trail_20` already demonstrated.
 This cost is worth paying only because D172 closed the deflation gap first. Run before
 that, these four would have produced raw numbers with no way to price the search that
 produced them.
+
+---
+
+# RESULT — appended 2026-08-21, after the run. Nothing above this line was edited.
+
+**Status: H1 FALSIFIED. H2 and H3 hold.**
+
+## H1 was wrong, and the way it was wrong is the useful part
+
+`stop_swing_k2` beats `trail_10` on **both** symbols, clearing the every-symbol bar:
+
+| | Δ Sharpe BTC | Δ Sharpe ETH | Verdict |
+|---|---|---|---|
+| `swing_k2` vs `trail_10` | **+0.100** | **+0.093** | beats it |
+| `swing_k3` vs `trail_10` | +0.008 | +0.037 | does not (BTC below the 0.01 floor) |
+
+The prediction said no structure stop would clear that bar. One did, decisively, and it is
+also the first stop in this project to improve **both** symbols substantially — `trail_5`
+gained +0.279 on BTC and nothing on ETH, while `swing_k2` gains +0.244 and +0.161 against
+the baseline.
+
+**Where the reasoning went wrong.** The redundancy argument compared *swing spacing* (9
+bars at k=3) to *channel lookback* (10 bars) and concluded the two devices place their
+levels in the same place. **Spacing ≈ lookback does not imply level ≈ level.** A swing
+pivot is a LOCAL extreme; after a favourable move it sits far closer to price than the
+rolling N-bar extreme, which still carries the pre-move high in its window. The adaptivity
+is real and I priced it at zero.
+
+Note the prediction *did* hold for k=3 (+0.008 on BTC is inside the noise floor) — which is
+exactly the case whose spacing I reasoned from. The mechanism was right; it was applied to
+the wrong parameter. Reasoning from one member of a swept set to the whole set is the
+error, and it is worth naming because it looked like careful mechanism-based inference at
+the time.
+
+## H2 holds
+
+Neither gate improves on the plain baseline across both symbols: `gate_k2` gives −0.066 /
+−0.006, `gate_k3` gives +0.168 / −0.165 — opposite signs, the classic coin-flip failure.
+The mechanism is visible in the trade counts, which fall from ~35 to 10–14. A second gate
+is another trade-removing device, and it removed good trades along with bad, as every such
+device tested in this project has.
+
+## H3 holds, and it is what governs the reading
+
+DSR with the pool now at 25 configurations: **BTC 0.037–0.088, ETH 0.392–0.538.** Nothing
+near 0.95. And the variant DSR selects as best is still `stop_trail_5` on BTC and
+`short_40_5` on ETH — **not** `swing_k2`.
+
+So H1's falsification does not rescue the book. `swing_k2` is a genuine improvement over
+`trail_10` and simultaneously the 25th configuration tried on a strategy with no
+demonstrated edge. Both statements are true and the second dominates: **adopting it on
+this evidence would be selecting the best of 25 looks, which is precisely what the
+deflation exists to price.**
+
+## What would make `swing_k2` believable
+
+Not another sweep on this data. It needs to hold on instruments this study did not choose
+— the crypto universe fixture already exists (D140) and contains assets that died — and
+its own multiplicity would have to be counted afresh there. Until then the honest
+description is: *a structure stop that beat one incumbent on two symbols, inside a book
+whose deflated Sharpe is under 0.10 on one of them.*
