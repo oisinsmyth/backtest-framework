@@ -490,6 +490,140 @@ class ChannelStopExit:
         return {"type": "channel_stop"}
 
 
+SWING_SCAN_BARS = 60
+"""How far back a stop looks for a confirmed pivot before giving up.
+
+Median swing spacing on this data is 7 bars at k=2 and 9 at k=3, so 60 covers roughly
+six to eight swings. Returning None past that costs nothing: the ratchet simply keeps the
+level it already had. Bounded because this runs on every bar a position is open."""
+
+
+def _is_swing(view: DataView, index: int, k: int, sign: int) -> bool:
+    """Is bar `index` a k-bar fractal pivot in the `sign` direction?
+
+    A swing HIGH (sign > 0) is the STRICT maximum of `high` over [index-k, index+k].
+    Strict, and unique: equal extremes produce no pivot rather than an arbitrary
+    tiebreak, which is the stated tie convention.
+
+    **The caller is responsible for only asking about bars that are already confirmed.**
+    This function reads [index-k, index+k], so asking about `index` when the view's
+    current bar is less than `index+k` would reach past the present — which the DataView
+    would refuse, but the discipline belongs at the call site, not in an exception."""
+    if index - k < 0:
+        return False
+    window = range(index - k, index + k + 1)
+    if sign > 0:
+        values = [view[j].high for j in window]
+        return view[index].high == max(values) and values.count(max(values)) == 1
+    values = [view[j].low for j in window]
+    return view[index].low == min(values) and values.count(min(values)) == 1
+
+
+def last_swings(
+    view: DataView, index: int, k: int, sign: int, count: int = 1, scan: int = SWING_SCAN_BARS
+) -> list[float]:
+    """The `count` most recent CONFIRMED swing extremes at or before `index`, newest first.
+
+    **The confirmation lag is the whole design problem and it is handled here.** A pivot
+    at bar t cannot be recognised until bar t+k, because it needs the k bars after it. So
+    the newest bar this will even consider is `index - k`. A naive implementation that
+    labelled pivots on the visible series without that offset would be reading k bars into
+    the future — and it would leak invisibly, because the equity curve it produced would
+    look entirely plausible.
+
+    This is also why a structure stop is STRICTLY SLOWER than a channel stop of the same
+    nominal length: the level it places is at least k bars stale by construction."""
+    found: list[float] = []
+    newest = index - k
+    for t in range(newest, max(newest - scan, k) - 1, -1):
+        if _is_swing(view, t, k, sign):
+            found.append(view[t].high if sign > 0 else view[t].low)
+            if len(found) == count:
+                break
+    return found
+
+
+@dataclass(frozen=True)
+class SwingStructureStop:
+    """Stop at the most recent CONFIRMED swing pivot against the trade (D173).
+
+    For a short that is the last confirmed swing high; for a long, the last confirmed
+    swing low. This is the price-action trader's "structure stop", and it is the closest
+    mechanical analogue of "following the trend line" that does not require fitting a
+    line — see D173 on why pivot LEVELS are used rather than sloped lines through chosen
+    points.
+
+    Adaptive in principle: the level sits wherever the market's own swing rhythm put it,
+    rather than at a fixed lookback. Slower in practice: the pivot is only knowable k bars
+    after it forms, so the level is always at least k bars stale."""
+
+    k: int = 3
+    name: str = field(default="swing_structure_stop", init=False)
+
+    def __post_init__(self) -> None:
+        if self.k < 1:
+            raise ValueError(f"k must be at least 1, got {self.k}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return 2 * self.k + 1
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        return False
+
+    def stop_level(self, view: DataView, position: OpenPosition) -> float | None:
+        swings = last_swings(view, view.current_index, self.k, -position.direction, count=1)
+        return swings[0] if swings else None
+
+    def config(self) -> dict[str, Any]:
+        return {"type": "swing_structure_stop", "k": self.k}
+
+
+@dataclass(frozen=True)
+class SwingStructureGate:
+    """Entry gate on market structure: trade only when the last two confirmed swings
+    agree on a direction (D173).
+
+    Uptrend = higher high AND higher low. Downtrend = lower high AND lower low. Anything
+    else is **ambiguous**, and ambiguous is a veto rather than a coin flip — on this data
+    structure was unambiguous on only about half of all swings, so a gate that forced
+    every bar into up-or-down would be fabricating a signal half the time.
+
+    This is the "how would you qualify the trend" question answered mechanically: by the
+    SEQUENCE of pivots rather than by price against an average, which is what makes it a
+    genuinely different functional form from the 200-day SMA gate it sits beside."""
+
+    k: int = 3
+    direction: Direction = Direction.LONG
+    name: str = field(default="swing_structure_gate", init=False)
+    requires_volume: bool = field(default=False, init=False)
+
+    def __post_init__(self) -> None:
+        if self.k < 1:
+            raise ValueError(f"k must be at least 1, got {self.k}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return 2 * self.k + 1
+
+    def accepts(self, view: DataView, entry_condition: EntryCondition) -> bool:
+        i = view.current_index
+        highs = last_swings(view, i, self.k, +1, count=2, scan=250)
+        lows = last_swings(view, i, self.k, -1, count=2, scan=250)
+        if len(highs) < 2 or len(lows) < 2:
+            return False  # not enough structure yet: veto, never guess
+        # last_swings returns newest first.
+        higher_high, higher_low = highs[0] > highs[1], lows[0] > lows[1]
+        lower_high, lower_low = highs[0] < highs[1], lows[0] < lows[1]
+        if self.direction is Direction.LONG:
+            return higher_high and higher_low
+        return lower_high and lower_low
+
+    def config(self) -> dict[str, Any]:
+        config: dict[str, Any] = {"type": "swing_structure_gate", "k": self.k}
+        if self.direction is not Direction.LONG:
+            config["direction"] = self.direction.name.lower()
+        return config
+
+
 @dataclass(frozen=True)
 class TrailingChannelStop:
     """The classic trend-following stop: the `n_bars`-bar extreme AGAINST the trade,
@@ -1040,6 +1174,13 @@ ENTRY_FILTER_REGISTRY.register(
     ),
 )
 ENTRY_FILTER_REGISTRY.register(
+    "swing_structure_gate",
+    lambda c: SwingStructureGate(
+        k=_required_int(c, "k", "swing_structure_gate"),
+        direction=_direction(c, "swing_structure_gate"),
+    ),
+)
+ENTRY_FILTER_REGISTRY.register(
     "volume_confirmation",
     lambda c: VolumeConfirmationFilter(
         multiple=_optional_number(c, "multiple", 1.5, "volume_confirmation"),
@@ -1056,6 +1197,10 @@ ENTRY_FILTER_REGISTRY.register(
 
 EXIT_RULE_REGISTRY = FactoryRegistry(kind="exit_rule")
 EXIT_RULE_REGISTRY.register("channel_stop", lambda c: ChannelStopExit())
+EXIT_RULE_REGISTRY.register(
+    "swing_structure_stop",
+    lambda c: SwingStructureStop(k=_required_int(c, "k", "swing_structure_stop")),
+)
 EXIT_RULE_REGISTRY.register(
     "trailing_channel_stop",
     lambda c: TrailingChannelStop(n_bars=_required_int(c, "n_bars", "trailing_channel_stop")),
