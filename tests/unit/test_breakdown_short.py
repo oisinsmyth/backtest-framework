@@ -18,9 +18,12 @@ from backtest_framework.research import breakdown_study as ds
 from backtest_framework.research import breakout_study as bs
 from backtest_framework.simulator.fills import Bar
 from backtest_framework.strategies.breakout import (
+    AtrStop,
     BreakoutStrategy,
+    ChandelierStop,
     ChannelStopExit,
     Direction,
+    TrailingChannelStop,
     FixedWeight,
     InverseVolatilityWeight,
     OpenPosition,
@@ -81,41 +84,113 @@ def test_the_long_book_is_not_forced_to_carry_a_stop():
     assert BreakoutStrategy("s", "X", n_entry=40, n_exit=10).direction is Direction.LONG
 
 
-def test_every_short_config_the_study_builds_carries_the_stop():
+def test_every_short_config_the_study_builds_carries_a_stop():
+    """The tail-discipline requirement is "a stop", not "the entry-channel stop" — D171
+    added three more families and the sweep uses them. What must hold for every config
+    the study builds is that SOME rule places a stop, which is exactly what
+    `BreakoutStrategy.__post_init__` enforces."""
     for variant in ds.short_variants():
-        rules = variant.fixed_config.get("exit_rules", [])
-        assert any(r["type"] == "channel_stop" for r in rules), variant.name
         rebuilt = build_breakout_strategy(variant.fixed_config, "s", "X")
+        assert any(hasattr(r, "stop_level") for r in rebuilt.exit_rules), variant.name
         assert rebuilt.direction is Direction.SHORT
         assert rebuilt.weight_source.cap <= 1.0
+
+
+def test_the_sweep_covers_every_declared_stop_family():
+    """A family listed in STOP_FAMILIES but never turned into a variant would be a silent
+    hole in the sweep — the table would look complete and quietly omit a row."""
+    names = {v.name for v in ds.short_variants()}
+    for label, _rules in ds.STOP_FAMILIES:
+        expected = ds.SHORT_BASELINE if label == "entry_channel" else f"stop_{label}"
+        assert expected in names, label
 
 
 # ------------------------------------------------------------------- the exit rules
 
 
-def test_channel_stop_fires_for_a_short_when_price_closes_above_the_stop():
-    bars = bars_from([100] * 6)
+def test_channel_stop_provides_the_level_and_does_not_itself_exit():
+    """Since D170 the rule PLACES the stop and the engine enforces it intrabar. The
+    rule's own `exits()` is deliberately False — the close-based backstop lives once on
+    the strategy, against the ratcheted level, rather than duplicated into every rule."""
     rule = ChannelStopExit()
     position = OpenPosition(PositionState.SHORT, entry_index=2, entry_reference=100.0,
                             stop_level=110.0)
     view = _View(bars_from([100, 100, 100, 100, 105, 115]), 5)
-    assert rule.exits(view, position) is True
-    view_below = _View(bars_from([100, 100, 100, 100, 105, 108]), 5)
-    assert rule.exits(view_below, position) is False
+    assert rule.exits(view, position) is False
+    assert rule.stop_level(view, position) == 110.0
 
 
-def test_channel_stop_never_fires_on_the_decision_bar_itself():
-    view = _View(bars_from([100] * 4), 2)
-    position = OpenPosition(PositionState.SHORT, entry_index=2, entry_reference=100.0,
-                            stop_level=50.0)
-    assert ChannelStopExit().exits(view, position) is False
+def test_the_strategy_backstops_a_breached_stop_on_a_close():
+    """The engine fires on a TOUCH; this fires on a CLOSE beyond the level, and exists
+    for callers that drive generate_targets() without the engine."""
+    strategy = BreakoutStrategy(
+        "s", "X", n_entry=3, n_exit=3, direction=Direction.SHORT,
+        weight_source=FixedWeight(1.0), exit_rules=(ChannelStopExit(),),
+    )
+    strategy._state = PositionState.SHORT
+    strategy._entry_index = 0
+    strategy._entry_reference = 100.0
+    strategy._held_weight = 1.0
+    strategy._stop_level = 110.0
+    view = _View(bars_from([100, 100, 100, 115]), 3)
+    assert strategy._stop_breached(view, 3) is True
+    assert strategy._stop_breached(_View(bars_from([100, 100, 100, 108]), 3), 3) is False
 
 
-def test_channel_stop_is_symmetric_for_a_long():
-    position = OpenPosition(PositionState.LONG, entry_index=0, entry_reference=100.0,
-                            stop_level=90.0)
-    assert ChannelStopExit().exits(_View(bars_from([100, 100, 85]), 2), position) is True
-    assert ChannelStopExit().exits(_View(bars_from([100, 100, 95]), 2), position) is False
+def test_trailing_channel_stop_is_the_n_bar_extreme_against_the_trade():
+    """The user-facing shape: 'lowest low of N days' for a long, highest high for a
+    short."""
+    bars = bars_from([100, 101, 102, 103, 104, 105])
+    view = _View(bars, 5)
+    short_pos = OpenPosition(PositionState.SHORT, 0, 100.0, 0.0)
+    long_pos = OpenPosition(PositionState.LONG, 0, 100.0, 0.0)
+    rule = TrailingChannelStop(n_bars=3)
+    assert rule.stop_level(view, short_pos) == max(b.bar.high for b in bars[2:5])
+    assert rule.stop_level(view, long_pos) == min(b.bar.low for b in bars[2:5])
+
+
+def test_a_trailing_stop_ratchets_and_never_loosens():
+    """A level allowed to retreat is not a stop: it would let a loss grow after having
+    promised not to. Rising prices must not widen a short's stop."""
+    strategy = BreakoutStrategy(
+        "s", "X", n_entry=3, n_exit=3, direction=Direction.SHORT,
+        weight_source=FixedWeight(1.0), exit_rules=(TrailingChannelStop(n_bars=2),),
+    )
+    strategy._state = PositionState.SHORT
+    strategy._entry_index = 0
+    strategy._entry_reference = 100.0
+    strategy._stop_level = 0.0
+
+    falling = bars_from([100, 99, 98, 97, 96])
+    for i in (2, 3, 4):
+        strategy._ratchet_stop(
+            _View(falling, i),
+            OpenPosition(PositionState.SHORT, 0, 100.0, strategy._stop_level),
+        )
+    tight = strategy._stop_level
+    assert tight > 0
+
+    # Now prices rise again; the raw 2-bar high would move UP, the stop must not.
+    rising = bars_from([100, 99, 98, 130, 140])
+    strategy._ratchet_stop(
+        _View(rising, 4),
+        OpenPosition(PositionState.SHORT, 0, 100.0, strategy._stop_level),
+    )
+    assert strategy._stop_level == tight, "a short's stop widened on a rally"
+
+
+def test_atr_and_chandelier_place_their_stops_against_the_trade():
+    bars = bars_from([100] * 40)
+    view = _View(bars, 30)
+    short_pos = OpenPosition(PositionState.SHORT, 25, 100.0, 0.0)
+    for rule in (AtrStop(multiple=2.0, window=20), ChandelierStop(multiple=3.0, window=20)):
+        level = rule.stop_level(view, short_pos)
+        assert level is not None and level > 100.0, f"{rule.name} placed a short's stop below entry"
+
+    long_pos = OpenPosition(PositionState.LONG, 25, 100.0, 0.0)
+    for rule in (AtrStop(multiple=2.0, window=20), ChandelierStop(multiple=3.0, window=20)):
+        level = rule.stop_level(view, long_pos)
+        assert level is not None and level < 100.0, f"{rule.name} placed a long's stop above entry"
 
 
 def test_time_stop_waits_its_full_window_then_exits_an_unprofitable_short():

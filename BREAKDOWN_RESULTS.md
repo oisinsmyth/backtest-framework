@@ -94,6 +94,26 @@ Baseline `short_20_5` at `taker_40bp`:
 | `short_timestop_3` | -50.0% | -6.6% | -0.42 | 58.4% | 41 | 7.7% |
 | `short_timestop_5` | -56.2% | -7.8% | -0.47 | 61.3% | 38 | 8.8% |
 | `short_no_regime_gate` | -92.5% | -22.5% | -0.92 | 92.5% | 61 | 19.6% |
+| `stop_trail_5` | -40.6% | -5.0% | -0.34 | 52.0% | 36 | 9.5% |
+| `stop_trail_10` | -58.3% | -8.2% | -0.47 | 63.4% | 35 | 10.9% |
+| `stop_trail_20` | -71.5% | -11.6% | -0.62 | 72.4% | 35 | 11.5% |
+| `stop_atr_2` | -63.2% | -9.3% | -0.53 | 66.3% | 35 | 11.1% |
+| `stop_atr_3` | -68.3% | -10.7% | -0.59 | 70.0% | 35 | 11.4% |
+| `stop_chandelier_3` | -57.8% | -8.1% | -0.53 | 57.8% | 36 | 9.3% |
+
+## The stop sweep: which stops actually bind, and what they cost
+
+| Stop | Total return | Sharpe | Max DD | Trades | Stop exits / armed bars | Bind rate | Gapped |
+|---|---|---|---|---|---|---|---|
+| `entry_channel` *(incumbent)* | -71.6% | -0.62 | 72.4% | 35 | 1 / 426 | 0.2% | 0 |
+| `trail_5` | -40.6% | -0.34 | 52.0% | 36 | 33 / 353 | 9.3% | 0 |
+| `trail_10` | -58.3% | -0.47 | 63.4% | 35 | 16 / 404 | 4.0% | 0 |
+| `trail_20` | -71.5% | -0.62 | 72.4% | 35 | 1 / 426 | 0.2% | 0 |
+| `atr_2` | -63.2% | -0.53 | 66.3% | 35 | 11 / 411 | 2.7% | 0 |
+| `atr_3` | -68.3% | -0.59 | 70.0% | 35 | 4 / 423 | 0.9% | 0 |
+| `chandelier_3` | -57.8% | -0.53 | 57.8% | 36 | 19 / 344 | 5.5% | 0 |
+
+**Bind rate first.** A stop that never fires is not being tested — that row is the strategy without a stop, whatever else it shows. **Gapped** counts exits that filled past the level because the bar opened beyond it, which is the residue no intrabar stop can remove on daily bars.
 
 ## The primary verdict: exposure-matched random SHORT entries
 
@@ -196,6 +216,26 @@ Baseline `short_20_5` at `taker_40bp`:
 | `short_timestop_3` | +64.3% | +6.9% | 0.23 | 36.9% | 31 | 11.8% |
 | `short_timestop_5` | +42.7% | +4.9% | 0.16 | 40.2% | 31 | 12.8% |
 | `short_no_regime_gate` | -19.3% | -2.9% | -0.08 | 66.1% | 43 | 24.7% |
+| `stop_trail_5` | +38.2% | +4.5% | 0.14 | 44.5% | 31 | 13.4% |
+| `stop_trail_10` | +56.3% | +6.2% | 0.21 | 50.4% | 28 | 17.3% |
+| `stop_trail_20` | +37.1% | +4.3% | 0.14 | 54.1% | 27 | 18.1% |
+| `stop_atr_2` | +40.6% | +4.7% | 0.15 | 54.0% | 27 | 16.2% |
+| `stop_atr_3` | +36.5% | +4.3% | 0.14 | 54.1% | 27 | 18.0% |
+| `stop_chandelier_3` | +16.1% | +2.0% | 0.05 | 55.7% | 30 | 13.8% |
+
+## The stop sweep: which stops actually bind, and what they cost
+
+| Stop | Total return | Sharpe | Max DD | Trades | Stop exits / armed bars | Bind rate | Gapped |
+|---|---|---|---|---|---|---|---|
+| `entry_channel` *(incumbent)* | +37.1% | 0.14 | 54.1% | 27 | 0 / 489 | 0.0% | 0 |
+| `trail_5` | +38.2% | 0.14 | 44.5% | 31 | 26 / 363 | 7.2% | 0 |
+| `trail_10` | +56.3% | 0.21 | 50.4% | 28 | 11 / 468 | 2.4% | 0 |
+| `trail_20` | +37.1% | 0.14 | 54.1% | 27 | 0 / 489 | 0.0% | 0 |
+| `atr_2` | +40.6% | 0.15 | 54.0% | 27 | 9 / 439 | 2.1% | 0 |
+| `atr_3` | +36.5% | 0.14 | 54.1% | 27 | 1 / 488 | 0.2% | 0 |
+| `chandelier_3` | +16.1% | 0.05 | 55.7% | 30 | 18 / 374 | 4.8% | 0 |
+
+**Bind rate first.** A stop that never fires is not being tested — that row is the strategy without a stop, whatever else it shows. **Gapped** counts exits that filled past the level because the bar opened beyond it, which is the residue no intrabar stop can remove on daily bars.
 
 ## The primary verdict: exposure-matched random SHORT entries
 
@@ -278,6 +318,41 @@ chop return > −10% — thresholds fixed before reading, and blunt on purpose.
 **Split again, and along the same line as the null.** ETH-USD meets all three; BTC-USD does not. The two symbols are telling different stories about the same rule, which on a two-instrument sample is the definition of an undemonstrated result rather than a partial success.
 
 **The gate itself works on every symbol** — bull-regime exposure is at most 1%, so the book really does stand aside when the long book is working. Note that this is a separate claim from the bull CRITERION above, and the two can diverge: on a symbol where the criterion fails, it fails not because the gate let the book trade through the bull market but because the handful of trades it did allow were bad enough to lose double digits on their own. The gate is not the problem. What it gates is.
+### The stop sweep, scored
+
+Same rule the long study fixed before looking: keep only what improves on EVERY symbol,
+because one out of two is a coin flip. Δ is against the incumbent `entry_channel` stop at
+`taker_40bp`; `INERT` means the variant produced results identical to the incumbent, so it is
+not a distinct configuration at all.
+
+| Stop | Δ Sharpe BTC-USD | Δ Sharpe ETH-USD | Stop exits | Decision |
+|---|---|---|---|---|
+| `trail_5` | +0.279 | -0.002 | 59 | DROP |
+| `trail_10` | +0.144 | +0.068 | 27 | **KEEP** |
+| `trail_20` | +0.002 | +0.000 | 1 | INERT |
+| `atr_2` | +0.092 | +0.013 | 20 | **KEEP** |
+| `atr_3` | +0.034 | -0.002 | 5 | DROP |
+| `chandelier_3` | +0.092 | -0.096 | 37 | DROP |
+
+**2 of the swept stops improve risk-adjusted return on every symbol by more than 0.01 Sharpe**, and the strongest by worst-case improvement is `trail_10` (+0.07 on its weaker symbol, 27 stop exits). **But binding more is not uniformly better.** The rank correlation between how often a stop binds and how much it helps is BTC-USD +0.94, ETH-USD -0.43 — positive on BTC-USD, negative on ETH-USD. On the symbol where it is negative, the stops that fire most (`trail_5`, `chandelier_3`) are cutting winning trades short rather than truncating losers. That is the same failure mode the long study found in its entry filters: a device that removes trades removes good ones too.
+
+**Three things this does not mean.**
+
+First, **less bad is not good.** The best BTC row is still a large loss at a negative
+Sharpe; a tighter stop shrinks the damage, it does not create an edge. The entry rule is
+what failed its null, and no stop repairs an entry.
+
+Second, **this is a fresh trial series and it is not free.** Six stop configurations on
+two symbols across four tiers were evaluated here on top of an already-swept strategy.
+One of them (`trail_20`) turned out to be inert — for a short entering on a 20-bar low, a
+20-bar trailing high IS the entry channel — so the effective count is five. These trials
+are NOT yet in the deflated-Sharpe accounting (see the gap noted below), and picking the
+best row of five after the fact is exactly the selection this project's machinery exists
+to penalise.
+
+Third, **the sweep was run at fixed entry/exit parameters.** A stop interacts with the
+exit channel it sits beside, and re-optimising both together would be a much larger
+multiplicity bill for a book that has not yet shown an entry edge.
 ### What the stop actually did
 
 The stop was armed for **915 bars** and caused **1 exit(s)**
@@ -311,3 +386,8 @@ out not to be the thing that was limiting this book.
    different spec.
 5. **Two instruments, both survivors.** The same selection bias the long study named as
    its largest un-deflatable problem applies here unchanged.
+6. **No TrialRegistry rows and no deflated Sharpe — a real gap, not an omission by
+   design.** The brief for this book asks for both. The long study has them; this one
+   does not, and the stop sweep has just added a fresh trial series on top. Every Sharpe
+   here is therefore RAW, undeflated, and should be read as an upper bound. Closing this
+   is the first thing to do before any stop family is adopted.

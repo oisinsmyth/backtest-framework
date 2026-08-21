@@ -432,6 +432,16 @@ class ExitRule(Protocol):
 
     def config(self) -> dict[str, Any]: ...
 
+    # OPTIONAL: a rule that places a STOP implements
+    #
+    #     def stop_level(self, view: DataView, position: OpenPosition) -> float | None
+    #
+    # returning the price at which the trade should be closed intrabar. The strategy
+    # collects every proposal each bar, keeps the TIGHTEST, and RATCHETS it — a level
+    # that could loosen is not a stop. The engine enforces the result (D170); the
+    # strategy also keeps a close-based backstop against the same level for callers that
+    # drive generate_targets() without the engine.
+
 
 @dataclass(frozen=True)
 class ChannelStopExit:
@@ -465,12 +475,141 @@ class ChannelStopExit:
         return n_entry
 
     def exits(self, view: DataView, position: OpenPosition) -> bool:
-        if view.current_index <= position.entry_index:
-            return False  # never on the decision bar itself
-        return _beyond(view[view.current_index].close, position.stop_level, -position.direction)
+        # The level is what this rule contributes; enforcement is the engine's, and the
+        # strategy keeps a single close-based backstop against the ratcheted level for
+        # every stop rule at once rather than each rule duplicating it.
+        return False
+
+    def stop_level(self, view: DataView, position: OpenPosition) -> float | None:
+        """Fixed at entry: the entry channel's opposite boundary. Returned unchanged on
+        every bar, so ratcheting against a tighter trailing rule leaves it as the
+        outermost backstop rather than fighting it."""
+        return position.stop_level if position.stop_level else None
 
     def config(self) -> dict[str, Any]:
         return {"type": "channel_stop"}
+
+
+@dataclass(frozen=True)
+class TrailingChannelStop:
+    """The classic trend-following stop: the `n_bars`-bar extreme AGAINST the trade,
+    recomputed every bar and ratcheted.
+
+    For a long that is the **lowest low of the last n bars**; for a short, the highest
+    high. It is the same shape as the strategy's own exit channel, and the difference is
+    the point: the exit channel needs a CLOSE beyond the level, this needs only a TOUCH,
+    and the engine fills it intrabar (D170). On the same lookback the stop is therefore
+    strictly the tighter of the two.
+
+    Ratcheting is not optional. The raw n-bar extreme moves both ways, and a level that
+    can loosen is not a stop — it would let a loss grow after having promised not to.
+    The strategy keeps the tightest level ever proposed for the life of the trade."""
+
+    n_bars: int = 5
+    name: str = field(default="trailing_channel_stop", init=False)
+
+    def __post_init__(self) -> None:
+        if self.n_bars < 1:
+            raise ValueError(f"n_bars must be at least 1, got {self.n_bars}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return self.n_bars
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        return False
+
+    def stop_level(self, view: DataView, position: OpenPosition) -> float | None:
+        i = view.current_index
+        if i < self.n_bars:
+            return None
+        return _channel_extreme(view, i - self.n_bars, i, -position.direction)
+
+    def config(self) -> dict[str, Any]:
+        return {"type": "trailing_channel_stop", "n_bars": self.n_bars}
+
+
+@dataclass(frozen=True)
+class AtrStop:
+    """A volatility-scaled stop fixed at entry: `multiple` x ATR(`window`), measured at
+    the trigger bar, placed against the trade from the entry reference.
+
+    Fixed rather than trailing on purpose — it is the control that isolates "how far
+    away should a stop sit" from "should a stop follow the trade". Compare it against
+    TrailingChannelStop to separate the two questions."""
+
+    multiple: float = 2.0
+    window: int = 20
+    name: str = field(default="atr_stop", init=False)
+
+    def __post_init__(self) -> None:
+        if self.multiple <= 0:
+            raise ValueError(f"multiple must be positive, got {self.multiple}")
+        if self.window < 1:
+            raise ValueError(f"window must be at least 1, got {self.window}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return self.window + 1
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        return False
+
+    def stop_level(self, view: DataView, position: OpenPosition) -> float | None:
+        entry = position.entry_index
+        if entry - self.window < 1:
+            return None
+        atr = _mean_true_range(view, entry - self.window, entry)
+        if atr <= 0.0:
+            return None
+        # Against the trade: above a short, below a long.
+        return position.entry_reference - position.direction * self.multiple * atr
+
+    def config(self) -> dict[str, Any]:
+        return {"type": "atr_stop", "multiple": self.multiple, "window": self.window}
+
+
+@dataclass(frozen=True)
+class ChandelierStop:
+    """Trailing volatility stop: `multiple` x ATR back from the BEST excursion the trade
+    has achieved so far, recomputed each bar and ratcheted.
+
+    The trend-follower's standard trailing stop. It differs from TrailingChannelStop in
+    what it anchors to — the trade's own best price rather than a fixed-length channel —
+    so it tightens monotonically as the move runs and never loosens on a quiet stretch
+    the way a short channel can."""
+
+    multiple: float = 3.0
+    window: int = 20
+    name: str = field(default="chandelier_stop", init=False)
+
+    def __post_init__(self) -> None:
+        if self.multiple <= 0:
+            raise ValueError(f"multiple must be positive, got {self.multiple}")
+        if self.window < 1:
+            raise ValueError(f"window must be at least 1, got {self.window}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return self.window + 1
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        return False
+
+    def stop_level(self, view: DataView, position: OpenPosition) -> float | None:
+        i = view.current_index
+        if i - self.window < 1 or i <= position.entry_index:
+            return None
+        atr = _mean_true_range(view, i - self.window, i)
+        if atr <= 0.0:
+            return None
+        # The best price the trade has seen, in its own favour, since entry.
+        best = _channel_extreme(view, position.entry_index, i + 1, position.direction)
+        return best - position.direction * self.multiple * atr
+
+    def config(self) -> dict[str, Any]:
+        return {
+            "type": "chandelier_stop",
+            "multiple": self.multiple,
+            "window": self.window,
+        }
 
 
 @dataclass(frozen=True)
@@ -635,12 +774,13 @@ class BreakoutStrategy:
         # ceiling at all. So this is enforced at construction and there is deliberately
         # no flag to turn it off — a config that omits the stop does not run.
         if self.direction is Direction.SHORT:
-            if not any(isinstance(r, ChannelStopExit) for r in self.exit_rules):
+            if not any(hasattr(r, "stop_level") for r in self.exit_rules):
                 raise ValueError(
-                    "a SHORT breakout strategy must carry a ChannelStopExit — the per-trade "
-                    "stop is non-optional tail discipline, not a configurable filter "
-                    "(BREAKDOWN_SHORT_STRATEGY.md, D169). Refusing to construct an unprotected "
-                    "short book"
+                    "a SHORT breakout strategy must carry a stop rule (ChannelStopExit, "
+                    "TrailingChannelStop, AtrStop or ChandelierStop) — the per-trade stop is "
+                    "non-optional tail discipline, not a configurable filter "
+                    "(BREAKDOWN_SHORT_STRATEGY.md, D169). Refusing to construct an "
+                    "unprotected short book"
                 )
             if self.weight_source.cap > 1.0:
                 raise ValueError(
@@ -697,12 +837,24 @@ class BreakoutStrategy:
                 entry_reference=self._entry_reference,
                 stop_level=self._stop_level,
             )
+            self._ratchet_stop(view, position)
+            position = OpenPosition(
+                state=self._state,
+                entry_index=self._entry_index,
+                entry_reference=self._entry_reference,
+                stop_level=self._stop_level,
+            )
             # The trailing channel remains the safety net UNDERNEATH every added rule:
             # any one of them firing closes the trade, so a rule can only ever make the
             # book flatter, never keep it in a position the channel wanted out of.
-            if self.exit_condition(view, i) or any(r.exits(view, position) for r in self.exit_rules):
+            if (
+                self.exit_condition(view, i)
+                or self._stop_breached(view, i)
+                or any(r.exits(view, position) for r in self.exit_rules)
+            ):
                 self._state, self._held_weight = PositionState.FLAT, 0.0
                 self._entry_index = -1
+                self._stop_level = 0.0
             elif self.weight_source.rebalance == "every_bar":
                 w = self.weight_source.weight(view)
                 if w is not None:
@@ -716,13 +868,50 @@ class BreakoutStrategy:
                 self._held_weight = w
                 self._entry_index = i
                 self._entry_reference = view[i].close
-                # The stop is the entry channel's opposite boundary, fixed at entry:
-                # max(high) over the entry window for a short, min(low) for a long.
-                self._stop_level = _channel_extreme(view, i - self.n_entry, i, -self.direction)
+                # Seed from the entry channel's opposite boundary when a ChannelStopExit
+                # is configured — max(high) over the entry window for a short, min(low)
+                # for a long. Other stop rules propose their own levels from the next
+                # bar and ratchet against this seed.
+                self._stop_level = (
+                    _channel_extreme(view, i - self.n_entry, i, -self.direction)
+                    if any(isinstance(r, ChannelStopExit) for r in self.exit_rules)
+                    else 0.0
+                )
 
         # The state IS the sign, so a short book emits a negative target weight with
         # no branch here. `_held_weight` stays a magnitude in every state.
         return self._targets(self._state * self._held_weight)
+
+    def _ratchet_stop(self, view: DataView, position: OpenPosition) -> None:
+        """Collect every stop rule's proposed level, keep the TIGHTEST, and never loosen.
+
+        Tightest means nearest the price in the trade's direction: the HIGHEST level for
+        a long (whose stop sits below) and the LOWEST for a short. Ratcheting is what
+        makes a trailing rule a stop rather than a suggestion — the raw n-bar extreme
+        moves both ways, and a level allowed to retreat would let a loss grow after
+        having promised not to."""
+        proposals = [
+            level
+            for rule in self.exit_rules
+            for level in [getattr(rule, "stop_level", lambda *_: None)(view, position)]
+            if level is not None
+        ]
+        if not proposals:
+            return
+        tighten = max if self.direction is Direction.LONG else min
+        proposed = tighten(proposals)
+        self._stop_level = proposed if not self._stop_level else tighten(self._stop_level, proposed)
+
+    def _stop_breached(self, view: DataView, index: int) -> bool:
+        """Close-based backstop against the ratcheted level, kept in ONE place rather
+        than duplicated into every stop rule.
+
+        A no-op whenever the engine path is live — the engine fires on the TOUCH, this
+        can only see a close — but it keeps callers that drive `generate_targets()`
+        directly, which several tests do, from running with no stop at all."""
+        if not self._stop_level or index <= self._entry_index:
+            return False
+        return _beyond(view[index].close, self._stop_level, -self.direction)
 
     def _live_stop(self) -> float | None:
         """The stop level to hand the engine with this bar's target (D170).
@@ -730,9 +919,7 @@ class BreakoutStrategy:
         Only while a position is open, and only when a ChannelStopExit is configured —
         the rule computes the level, the engine enforces it intrabar. A strategy with no
         stop rule declares None and the engine arms nothing."""
-        if self._state is PositionState.FLAT:
-            return None
-        if not any(isinstance(r, ChannelStopExit) for r in self.exit_rules):
+        if self._state is PositionState.FLAT or not self._stop_level:
             return None
         return self._stop_level
 
@@ -778,6 +965,7 @@ class BreakoutStrategy:
         self._state = PositionState.FLAT
         self._held_weight = 0.0
         self._entry_index = -1
+        self._stop_level = 0.0
 
     def config(self) -> dict[str, Any]:
         """Declarative description of the whole strategy (D52/D102) — what the
@@ -868,6 +1056,24 @@ ENTRY_FILTER_REGISTRY.register(
 
 EXIT_RULE_REGISTRY = FactoryRegistry(kind="exit_rule")
 EXIT_RULE_REGISTRY.register("channel_stop", lambda c: ChannelStopExit())
+EXIT_RULE_REGISTRY.register(
+    "trailing_channel_stop",
+    lambda c: TrailingChannelStop(n_bars=_required_int(c, "n_bars", "trailing_channel_stop")),
+)
+EXIT_RULE_REGISTRY.register(
+    "atr_stop",
+    lambda c: AtrStop(
+        multiple=_optional_number(c, "multiple", 2.0, "atr_stop"),
+        window=int(_optional_number(c, "window", 20, "atr_stop")),
+    ),
+)
+EXIT_RULE_REGISTRY.register(
+    "chandelier_stop",
+    lambda c: ChandelierStop(
+        multiple=_optional_number(c, "multiple", 3.0, "chandelier_stop"),
+        window=int(_optional_number(c, "window", 20, "chandelier_stop")),
+    ),
+)
 EXIT_RULE_REGISTRY.register(
     "time_stop", lambda c: TimeStopExit(n_bars=_required_int(c, "n_bars", "time_stop"))
 )

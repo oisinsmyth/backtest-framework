@@ -31,6 +31,14 @@ REGISTRY_PATH = REPO / "data" / "breakdown_study_registry.sqlite"
 RESULTS = REPO / "BREAKDOWN_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "breakdown_study_summary.json"
 
+SHARPE_EPS = 0.01
+"""Smallest annualised-Sharpe difference this study will call a difference.
+
+Stated up front and deliberately blunt. Ten years of daily data buys a standard error
+around +/-0.4 on an annualised Sharpe (the long study measured it), so 0.01 sits far
+below the noise floor either way. Its job is only to stop arithmetic dust being reported
+as a result — it certifies nothing above it as real."""
+
 NL = "\n"
 
 
@@ -107,7 +115,10 @@ def main() -> int:
                     r.oos_returns, labels[1:], in_market[1:]
                 ) if len(r.oos_returns) == len(labels) - 1 else []
 
+                armings = sum(e.bars_held for e in r.episodes if not e.is_open)
+                stop_report = ds.measure_stop_gaps(r.stop_fills, n_armings=armings)
                 per_variant[key] = {
+                    "stops": stop_report.to_dict(),
                     "total_return": r.total_return,
                     "cagr": bs.cagr(r.total_return, r.n_oos_bars, study.periods_per_year),
                     "sharpe_annual": r.sharpe_annual(study),
@@ -271,6 +282,10 @@ the strategy's own gate is the plain close-vs-average test and it never sees the
 ## Every variant at `{ref}`
 
 {_variant_table(sr, ref)}
+
+## The stop sweep: which stops actually bind, and what they cost
+
+{_stop_sweep_table(sr, ref)}
 """)
         detail = p.get("baseline_detail", {}).get(symbol)
         if detail:
@@ -310,6 +325,39 @@ def _variant_table(sr: dict, ref: str) -> str:
     return (
         "| Variant | Total return | CAGR | Sharpe (ann.) | Max DD | Trades | Exposure |" + NL
         + "|---|---|---|---|---|---|---|" + NL + NL.join(rows)
+    )
+
+
+def _stop_sweep_table(sr: dict, ref: str) -> str:
+    """One row per stop family, baseline entry/exit throughout (D171).
+
+    The BIND RATE is the column to read first. A stop that never fires cannot be
+    evaluated on its returns — it is not doing anything, and whatever the row shows is
+    the strategy without a stop. D170 found the incumbent entry-channel stop binding once
+    in 915 armed bars; the point of this sweep is to find stops that actually engage."""
+    rows = []
+    for label, _rules in ds.STOP_FAMILIES:
+        name = ds.SHORT_BASELINE if label == "entry_channel" else f"stop_{label}"
+        v = sr["variants"].get(f"{name}@{ref}")
+        if not v:
+            continue
+        st = v.get("stops", {})
+        armed, fired = st.get("n_armings", 0), st.get("n_stop_exits", 0)
+        rate = fired / armed if armed else 0.0
+        rows.append(
+            f"| `{label}`{' *(incumbent)*' if label == 'entry_channel' else ''} | "
+            f"{v['total_return'] * 100:+.1f}% | {v['sharpe_annual']:.2f} | "
+            f"{v['max_drawdown'] * 100:.1f}% | {v['n_closed_trades']} | "
+            f"{fired} / {armed:,} | {rate:.1%} | {st.get('n_gapped', 0)} |"
+        )
+    return (
+        "| Stop | Total return | Sharpe | Max DD | Trades | Stop exits / armed bars | "
+        "Bind rate | Gapped |" + NL
+        + "|---|---|---|---|---|---|---|---|" + NL + NL.join(rows) + NL + NL
+        + "**Bind rate first.** A stop that never fires is not being tested — that row is "
+        "the strategy without a stop, whatever else it shows. **Gapped** counts exits that "
+        "filled past the level because the bar opened beyond it, which is the residue no "
+        "intrabar stop can remove on daily bars."
     )
 
 
@@ -473,6 +521,153 @@ chop return > −10% — thresholds fixed before reading, and blunt on purpose.
 {gate_reading}"""
 
 
+def _bind_reading(p: dict) -> str:
+    """Does binding MORE actually help? Measured per symbol rather than asserted.
+
+    Reuses `feature_analysis.spearman` (D167) instead of a second rank-correlation
+    implementation. The tempting sentence here is "tighter stops that bind more do
+    better", and it is true on one symbol and false on the other — which is the finding,
+    not a wrinkle to smooth over."""
+    from backtest_framework.research.feature_analysis import spearman
+
+    ref = "taker_40bp"
+    readings = []
+    for sym, sr in p["symbols"].items():
+        base = sr["variants"][f"{ds.SHORT_BASELINE}@{ref}"]["sharpe_annual"]
+        binds, deltas = [], []
+        for label, _rules in ds.STOP_FAMILIES:
+            if label == "entry_channel":
+                continue
+            v = sr["variants"].get(f"stop_{label}@{ref}")
+            if not v:
+                continue
+            binds.append(v.get("stops", {}).get("n_stop_exits", 0))
+            deltas.append(v["sharpe_annual"] - base)
+        rho = spearman(binds, deltas)
+        if rho is not None:
+            readings.append((sym, rho))
+
+    if not readings:
+        return ""
+    positives = [sym for sym, rho in readings if rho > 0.2]
+    negatives = [sym for sym, rho in readings if rho < -0.2]
+    detail = ", ".join(f"{sym} {rho:+.2f}" for sym, rho in readings)
+    if positives and not negatives:
+        return (
+            f"The mechanism is consistent: rank correlation between how often a stop binds "
+            f"and how much it helps is positive on every symbol ({detail}). **Stops that "
+            f"actually engage do better**, which is the finding D170 could not produce with "
+            f"a stop that never fired."
+        )
+    if positives and negatives:
+        return (
+            f"**But binding more is not uniformly better.** The rank correlation between how "
+            f"often a stop binds and how much it helps is {detail} — positive on "
+            f"{', '.join(positives)}, negative on {', '.join(negatives)}. On the symbol where "
+            f"it is negative, the stops that fire most (`trail_5`, `chandelier_3`) are cutting "
+            f"winning trades short rather than truncating losers. That is the same failure "
+            f"mode the long study found in its entry filters: a device that removes trades "
+            f"removes good ones too."
+        )
+    return (
+        f"Binding more does not help: the rank correlation between bind frequency and "
+        f"improvement is {detail}. Whatever these stops are cutting, it is not only losses."
+    )
+
+
+def _stop_sweep_verdict(p: dict) -> str:
+    """Score the stop families by the SAME rule the long study fixed before looking: a
+    change is kept only if it improves on EVERY symbol, because one symbol out of two is
+    a coin flip. Computed, not asserted."""
+    ref = "taker_40bp"
+    symbols = list(p["symbols"])
+    baseline = {
+        sym: p["symbols"][sym]["variants"][f"{ds.SHORT_BASELINE}@{ref}"]["sharpe_annual"]
+        for sym in symbols
+    }
+
+    rows, keepers = [], []
+    for label, _rules in ds.STOP_FAMILIES:
+        if label == "entry_channel":
+            continue
+        deltas, binds = {}, {}
+        for sym in symbols:
+            v = p["symbols"][sym]["variants"].get(f"stop_{label}@{ref}")
+            if not v:
+                continue
+            deltas[sym] = v["sharpe_annual"] - baseline[sym]
+            binds[sym] = v.get("stops", {}).get("n_stop_exits", 0)
+        if not deltas:
+            continue
+
+        # A stated floor, fixed before reading and blunt on purpose. Without one, a
+        # difference of 0.001 Sharpe reads as an improvement: an earlier cut of this
+        # table marked `trail_20` KEEP on a delta that rounds to +0.00, when it is the
+        # incumbent stop under another name.
+        worst = min(deltas.values())
+        if all(abs(d) < SHARPE_EPS for d in deltas.values()):
+            verdict = "INERT"
+        elif worst >= SHARPE_EPS:
+            verdict = "**KEEP**"
+            keepers.append((label, worst, sum(binds.values())))
+        else:
+            verdict = "DROP"
+        rows.append(
+            "| `" + label + "` | "
+            + " | ".join(f"{deltas[sym]:+.3f}" for sym in symbols)
+            + f" | {sum(binds.values())} | {verdict} |"
+        )
+
+    header = (
+        "| Stop | " + " | ".join(f"Δ Sharpe {sym}" for sym in symbols)
+        + " | Stop exits | Decision |" + NL
+        + "|---|" + "---|" * (len(symbols) + 2) + NL
+    )
+
+    keepers.sort(key=lambda k: -k[1])
+    if keepers:
+        best = keepers[0]
+        lead = (
+            f"**{len(keepers)} of the swept stops improve risk-adjusted return on every "
+            f"symbol by more than {SHARPE_EPS:.2f} Sharpe**, and the strongest by worst-case improvement is `{best[0]}` "
+            f"(+{best[1]:.2f} on its weaker symbol, {best[2]} stop exits). {_bind_reading(p)}"
+        )
+    else:
+        lead = (
+            "**No swept stop improves on every symbol.** By the rule the long study fixed "
+            "before looking, none is adopted."
+        )
+
+    return f"""### The stop sweep, scored
+
+Same rule the long study fixed before looking: keep only what improves on EVERY symbol,
+because one out of two is a coin flip. Δ is against the incumbent `entry_channel` stop at
+`{ref}`; `INERT` means the variant produced results identical to the incumbent, so it is
+not a distinct configuration at all.
+
+{header}{NL.join(rows)}
+
+{lead}
+
+**Three things this does not mean.**
+
+First, **less bad is not good.** The best BTC row is still a large loss at a negative
+Sharpe; a tighter stop shrinks the damage, it does not create an edge. The entry rule is
+what failed its null, and no stop repairs an entry.
+
+Second, **this is a fresh trial series and it is not free.** Six stop configurations on
+two symbols across four tiers were evaluated here on top of an already-swept strategy.
+One of them (`trail_20`) turned out to be inert — for a short entering on a 20-bar low, a
+20-bar trailing high IS the entry channel — so the effective count is five. These trials
+are NOT yet in the deflated-Sharpe accounting (see the gap noted below), and picking the
+best row of five after the fact is exactly the selection this project's machinery exists
+to penalise.
+
+Third, **the sweep was run at fixed entry/exit parameters.** A stop interacts with the
+exit channel it sits beside, and re-optimising both together would be a much larger
+multiplicity bill for a book that has not yet shown an entry edge."""
+
+
 def _stop_paragraph(p: dict) -> str:
     """Report what the stop DID, from the engine's own record.
 
@@ -599,7 +794,7 @@ def _verdict(p: dict) -> str:
         )
     lines += [ens_read, ""]
 
-    lines += [_criteria_scorecard(p), _stop_paragraph(p), """
+    lines += [_criteria_scorecard(p), _stop_sweep_verdict(p), _stop_paragraph(p), """
 # Standing caveats
 
 1. **The stop is intrabar (D170) but almost never binds.** The mechanism is correct —
@@ -621,6 +816,11 @@ def _verdict(p: dict) -> str:
    different spec.
 5. **Two instruments, both survivors.** The same selection bias the long study named as
    its largest un-deflatable problem applies here unchanged.
+6. **No TrialRegistry rows and no deflated Sharpe — a real gap, not an omission by
+   design.** The brief for this book asks for both. The long study has them; this one
+   does not, and the stop sweep has just added a fresh trial series on top. Every Sharpe
+   here is therefore RAW, undeflated, and should be read as an upper bound. Closing this
+   is the first thing to do before any stop family is adopted.
 """]
     return NL.join(lines)
 

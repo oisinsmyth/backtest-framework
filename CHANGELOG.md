@@ -10,6 +10,35 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (stop family + sweep, 2026-08-21 — D171)
+- **`TrailingChannelStop`, `AtrStop`, `ChandelierStop`** alongside the incumbent
+  `ChannelStopExit`, all direction-agnostic. `ExitRule` gains an optional
+  `stop_level(view, position)`; the strategy keeps the TIGHTEST proposal each bar and
+  RATCHETS it, because a level that can loosen is not a stop. The close-based backstop
+  moved onto the strategy, applied once against the ratcheted level instead of being
+  duplicated into every rule.
+- **A seven-family stop sweep on the short book** at fixed entry/exit parameters, with a
+  bind-rate column — D170's incumbent stop bound once in 915 armed bars, the trailing
+  stops bind 20-60 times, and that is the difference between a stop being tested and a
+  stop being decorative.
+- **`SHARPE_EPS = 0.01`**, a stated floor below which a Sharpe difference is not called a
+  difference. An earlier cut of the scorecard marked `trail_20` KEEP on a delta that
+  rounds to +0.00 — it is in fact the incumbent under another name (for a short entering
+  on a 20-bar low, a 20-bar trailing high IS the entry channel) and is now correctly
+  reported INERT.
+
+### Findings
+- Two stops survive the every-symbol rule (`trail_10`, `atr_2`); neither is adopted,
+  because the sweep added a fresh trial series to a book with no demonstrated entry edge.
+- **Binding more is not uniformly better**: rank correlation between bind frequency and
+  improvement is +0.94 on BTC and -0.43 on ETH, where the most-active stops cut winners
+  rather than losers — the same failure mode the long study found in its entry filters.
+- `trail_5` takes BTC from -71.6% to -40.6% and its drawdown from 72% to 52%, at a Sharpe
+  that is still -0.34. Less bad is not good; no stop repairs an entry.
+- **Known gap now pressing:** the short book still logs no TrialRegistry rows and computes
+  no deflated Sharpe. Every Sharpe in the breakdown report is raw and is an upper bound.
+
+
 ### Added (intrabar stop execution, 2026-08-21 — D170, disposes of D169's limitation)
 - **`TargetWeight.stop`** — an optional stop price riding with the target it protects.
   Re-declared every bar, so a trailing stop moves with no extra machinery; optional with

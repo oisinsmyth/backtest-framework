@@ -78,6 +78,27 @@ Note vol expands in crashes, so vol targeting automatically de-sizes as a move m
 That is intended behaviour and is not to be "fixed"."""
 
 
+STOP_FAMILIES: tuple[tuple[str, list[dict[str, Any]]], ...] = (
+    ("entry_channel", [{"type": "channel_stop"}]),
+    ("trail_5", [{"type": "trailing_channel_stop", "n_bars": 5}]),
+    ("trail_10", [{"type": "trailing_channel_stop", "n_bars": 10}]),
+    ("trail_20", [{"type": "trailing_channel_stop", "n_bars": 20}]),
+    ("atr_2", [{"type": "atr_stop", "multiple": 2.0, "window": 20}]),
+    ("atr_3", [{"type": "atr_stop", "multiple": 3.0, "window": 20}]),
+    ("chandelier_3", [{"type": "chandelier_stop", "multiple": 3.0, "window": 20}]),
+)
+"""The stop families swept on the fixed baseline entry/exit parameters (D171).
+
+Chosen to separate two questions that the entry-channel stop conflates: HOW FAR the stop
+sits (atr_2 vs atr_3, both fixed at entry) and WHETHER IT FOLLOWS the trade (trail_* and
+chandelier_3, which ratchet). `entry_channel` is the incumbent and the control — the wide
+stop D170 measured binding once in 915 armed bars.
+
+Seven families, one sweep, counted as its own trial series. Everything else about the
+strategy is held at the baseline, so a difference between rows is attributable to the
+stop and to nothing else."""
+
+
 def short_config(n_entry: int, n_exit: int, time_stop: int | None = None) -> dict[str, Any]:
     """A short config with the non-optional tail discipline always present.
 
@@ -125,6 +146,27 @@ def short_variants() -> list[bs.Variant]:
         exit_rules=[{"type": "channel_stop"}],
     )
     variants.append(bs.Variant("short_no_regime_gate", "counterfactual", fixed_config=ungated))
+
+    # The stop sweep (D171). Baseline entry/exit throughout; only the stop changes.
+    for label, rules in STOP_FAMILIES:
+        if label == "entry_channel":
+            continue  # that IS the baseline variant, already in the list above
+        variants.append(
+            bs.Variant(
+                f"stop_{label}", "stop",
+                fixed_config=bs.breakout_config(
+                    n_entry=SHORT_BASELINE_N_ENTRY,
+                    n_exit=SHORT_BASELINE_N_EXIT,
+                    weight_source=SHORT_INVERSE_VOL,
+                    filters=[
+                        {"type": "trend_gate", "sma_window": SMA_GATE_WINDOW,
+                         "direction": "short"}
+                    ],
+                    direction="short",
+                    exit_rules=rules,
+                ),
+            )
+        )
     return variants
 
 
