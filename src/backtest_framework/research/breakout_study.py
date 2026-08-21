@@ -225,6 +225,13 @@ class ScheduledBreakout:
     def warm_up_bars(self) -> int:
         return self._warm_up
 
+    def on_stop_filled(self, instrument_id: str) -> None:
+        """Forward to whichever configuration is currently active (D170), the same way
+        `_state` is carried across a schedule swap. A wrapper that swallowed this would
+        leave the inner strategy believing it still held a position the engine closed."""
+        if self._inner is not None:
+            self._inner.on_stop_filled(instrument_id)
+
     def _config_for(self, index: int) -> tuple[int, dict[str, Any]]:
         active = self.schedule[0]
         for start, config in self.schedule:
@@ -475,6 +482,10 @@ class VariantResult:
     episodes: list[TradeEpisode]
     diagnostics: DiagnosticsSummary
     n_oos_bars: int
+    stop_fills: list[tuple[Any, ...]] = field(default_factory=list)
+    """Intrabar stop fills recorded by the engine (D170), passed through so the study
+    can report on the exits the stop actually caused rather than inferring them."""
+
 
     @property
     def final_nav(self) -> float:
@@ -707,6 +718,7 @@ def run_variant(
         window_sharpes_daily=window_sharpes,
         window_final_nav=window_final_nav,
         episodes=oos_episodes,
+        stop_fills=list(result.stop_fills),
         diagnostics=diagnostics,
         n_oos_bars=len(oos_curve),
     )

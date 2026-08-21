@@ -134,9 +134,13 @@ def main() -> int:
                         long_result.oos_returns, r.oos_returns,
                         study.rf_annual, study.periods_per_year,
                     )
-                    gaps = ds.measure_stop_gaps(
-                        r.episodes, bars, ds.SHORT_BASELINE_N_ENTRY, direction=-1
+                    # A stop is live on exactly the bars a position is open, so the
+                    # in-market bar count is the arming count — the denominator that
+                    # says whether the tail discipline BINDS or is merely present.
+                    armings = sum(
+                        e.bars_held for e in r.episodes if not e.is_open
                     )
+                    gaps = ds.measure_stop_gaps(r.stop_fills, n_armings=armings)
                     payload.setdefault("baseline_detail", {})[symbol] = {
                         "null": null.to_dict(),
                         "ensemble": ensemble.to_dict(),
@@ -205,22 +209,26 @@ def build_report(p: dict) -> str:
 
 ## Read this first: three things that bound what this study can claim
 
-### 1. The stop is CLOSE-BASED, so the squeeze tail is NOT truncated by construction
+### 1. The stop is INTRABAR now — and it turns out barely to matter
 
-The brief makes tail discipline non-optional and says plainly that *"short expectancy is
-only calculable with the squeeze tail truncated by construction"*. That standard is **not
-met here, and cannot be with the current engine.**
+Phase 2 shipped this book with a close-based stop, because `run_backtest` had no intrabar
+stop execution, and said so loudly. D170 wired it: `simulator/fills.stop_fill_price` and
+its D10 gap semantics now sit in the engine's bar loop, checked before the strategy is
+consulted, so a stop closes a position **the moment the bar touches it** and a bar that
+gaps through fills at the open rather than at a price the market never traded.
 
-`simulator/fills.stop_fill_price` implements correct gap-through semantics (D10) and
-names `BUY_STOP` as "the exit order for a short position" — but it is a Step-2
-demonstration vehicle wired only to `config/fill_model.py`, never to `run_backtest`. The
-engine's order path is weight-target → quantity → fill at close or next open. There is no
-intrabar stop.
+The honest result is that it changes almost nothing here, and the reason is worth more
+than the fix. **The stop sits at the far side of the entry channel** — for a short
+entering on an N-bar low, it is the N-bar high — which is an enormous distance from the
+entry. The trailing exit channel gets there first essentially every time. See the stop
+table below: the stop is armed for hundreds of bars per symbol and causes a handful of
+exits, or none.
 
-So `ChannelStopExit` observes a **close** beyond the stop and exits at the **next open**.
-An overnight gap goes straight through it. The study therefore MEASURES the shortfall
-rather than assuming it away — see the stop-gap table. Read every short number here as
-"with a stop that mostly works", not "with a bounded loss per trade".
+**This also corrects a Phase 2 claim.** That report said "4 of 4 stop exits filled beyond
+their own stop, worst by 38.5%". That number was a measurement artifact: it inferred stop
+exits by asking whether an exit price ended up beyond the stop level, which also counts
+ordinary channel exits that closed past it. The engine now records which fills a stop
+actually caused, and the true count is far smaller.
 
 ### 2. Borrow is charged, at a stated non-zero rate
 
@@ -351,12 +359,21 @@ Every exit that filled beyond its own stop level — the tail the stop did not t
 
 | | Value |
 |---|---|
-| Exits that filled beyond the stop | {gaps["n_gapped"]} of {gaps["n_stop_exits"]} stop exits |
+| Exits the stop actually caused | {gaps["n_stop_exits"]} |
+| ...of which gapped past the stop | {gaps["n_gapped"]} |
+| Bars carrying a live stop | {gaps["n_armings"]:,} |
 | Worst single gap | {gaps["worst_gap_pct"] * 100:.1f}% beyond the stop |
-| Mean gap | {gaps["mean_gap_pct"] * 100:.1f}% |
 
-If this table is empty the stop was never the binding exit on this symbol — which is
-information, not a clean bill of health.
+**Read the first two rows against the third.** A stop that is armed for thousands of bars
+and closes a handful of trades is *present* rather than *binding*: the trailing channel
+almost always gets there first, because the stop sits at the far side of the entry
+channel and that is a very long way from a breakdown entry.
+
+These counts come from the engine's own record of which fills a stop caused (D170).
+The Phase 2 version of this table inferred them, by asking whether an exit price ended
+up beyond the stop level — which also catches ordinary channel exits that happened to
+close past it. That inference is what produced the earlier "4 of 4 stop exits gapped"
+claim, and it was wrong: most of those exits were not stop exits at all.
 """
 
 
@@ -457,25 +474,55 @@ chop return > −10% — thresholds fixed before reading, and blunt on purpose.
 
 
 def _stop_paragraph(p: dict) -> str:
+    """Report what the stop DID, from the engine's own record.
+
+    Written computed rather than as prose because this is the third time in this project
+    that a hardcoded sentence has drifted from the numbers beside it. The earlier version
+    of this paragraph asserted the stop "did not do its job" on the strength of a gap
+    count that, once measured properly, turned out to be zero."""
     detail = p.get("baseline_detail", {})
+    exits = sum(d["stop_gaps"]["n_stop_exits"] for d in detail.values())
     gapped = sum(d["stop_gaps"]["n_gapped"] for d in detail.values())
-    total = sum(d["stop_gaps"]["n_stop_exits"] for d in detail.values())
+    armed = sum(d["stop_gaps"]["n_armings"] for d in detail.values())
     worst = max((d["stop_gaps"]["worst_gap_pct"] for d in detail.values()), default=0.0)
-    if total == 0:
-        return """### The stop was never the binding exit
+    per_symbol = " · ".join(
+        f"{sym} {d['stop_gaps']['n_stop_exits']} exit(s) from "
+        f"{d['stop_gaps']['n_armings']:,} armed bars"
+        for sym, d in detail.items()
+    )
 
-No trade on either symbol exited through its stop, so the gap measurement has nothing to
-report. That is information rather than a clean bill of health: it means the trailing
-channel and the regime gate closed every position first, and the tail discipline is
-untested by this sample rather than validated by it."""
-    return f"""### And the stop did not do its job
+    if exits == 0:
+        return f"""### The stop never fired
 
-**{gapped} of {total} stop exits filled BEYOND their own stop level**, the worst by
-{worst * 100:.1f}%. That is not a rounding error on the tail discipline — it is the tail
-discipline failing in the only cases where it was ever the binding exit. The brief's
-premise, that short expectancy becomes calculable once the squeeze tail is truncated by
-construction, is not satisfied by this implementation, and every number above should be
-read with that in front of it."""
+Across both symbols the stop was armed for {armed:,} bars and closed **not one trade**
+({per_symbol}). The trailing exit channel reached every position first.
+
+That is information, not a clean bill of health, and it is not a defence of the design
+either. A stop placed at the far side of the entry channel is so distant from a breakdown
+entry that it is nearly unreachable before the ordinary exit fires. The tail discipline
+the brief demanded is **present but not binding** — and a risk control that never binds
+has not been shown to work, it has only been shown not to be needed on this sample."""
+
+    gap_line = (
+        f"Of those, **{gapped} gapped past the stop** and filled at the bar's open "
+        f"instead, the worst by {worst * 100:.1f}%. That is the residue no intrabar stop "
+        f"can remove: on daily bars the dangerous move happens between one close and the "
+        f"next open, where there is no intrabar to trade in."
+        if gapped
+        else "**None of them gapped** — each filled at its stop price, which is the "
+        "intrabar machinery doing exactly what it exists to do."
+    )
+    return f"""### What the stop actually did
+
+The stop was armed for **{armed:,} bars** and caused **{exits} exit(s)**
+({per_symbol}). {gap_line}
+
+**Read those two numbers against each other.** A stop armed for hundreds of bars that
+closes a handful of trades is *present* rather than *binding*: it sits at the far side of
+the entry channel, which is a very long way from a breakdown entry, so the trailing exit
+gets there first almost every time. The brief's premise — that short expectancy becomes
+calculable once the squeeze tail is truncated — is now satisfied mechanically, and turns
+out not to be the thing that was limiting this book."""
 
 
 def _verdict(p: dict) -> str:
@@ -555,9 +602,12 @@ def _verdict(p: dict) -> str:
     lines += [_criteria_scorecard(p), _stop_paragraph(p), """
 # Standing caveats
 
-1. **The stop is close-based.** The squeeze tail is not truncated by construction; the
-   gap table measures what that costs. Intrabar stop execution in `run_backtest` is the
-   prerequisite for the brief's stated standard, and it does not exist.
+1. **The stop is intrabar (D170) but almost never binds.** The mechanism is correct —
+   touched stops fill at the stop, gapped ones at the open — but the level sits at the
+   far side of the entry channel, so the trailing exit closes nearly every position
+   first. A risk control that never binds has not been shown to work on this sample, only
+   to be unneeded on it. A tighter stop (ATR-based, say) is a different strategy and
+   would need its own sweep and its own multiplicity accounting.
 2. **Borrow is a stated assumption, not a quote.** 10%/yr is mid-range for BTC/ETH spot
    margin borrow over the sample; it was neither swept nor negotiated, and hard-to-borrow
    episodes in a real crash would be worse precisely when the book is most short.

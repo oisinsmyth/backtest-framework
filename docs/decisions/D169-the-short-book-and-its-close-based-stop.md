@@ -1,9 +1,25 @@
 # D169 — The short book ships with a CLOSE-based stop, and the shortfall is measured rather than assumed
 
-**Status:** Committed
+**Status:** Committed; the close-based-stop limitation is disposed of by [D170](D170-intrabar-stop-execution.md), and one number below is withdrawn
 **Date:** 2026-08-21
 **Category:** Signals & strategy interface
 **Source:** Phase 2 session (breakdown short book)
+
+> **DISPOSITION, 2026-08-21 ([D170](D170-intrabar-stop-execution.md)).** The engine now
+> has intrabar stop execution, so the deviation recorded below no longer applies.
+>
+> **One claim here is withdrawn.** This record and the report it accompanied said "4 of 4
+> stop exits filled beyond their own stop, the worst by 38.5%". That was a measurement
+> artifact: `measure_stop_gaps` inferred stop exits from whether an exit price ended up
+> beyond the stop level, which also counts ordinary trailing-channel exits that closed
+> past it. With the engine recording causation directly, the stop caused **one** exit
+> across both symbols, and it did not gap.
+>
+> The finding that replaces it is less dramatic and more useful: the stop sits at the far
+> side of the entry channel, so the trailing exit reaches every position first. The tail
+> discipline is **present but not binding**. The rest of this record — why the deviation
+> was shipped, why enforcement is asymmetric, why borrow is not optional — stands as
+> written, per the D111 precedent that the original reasoning is the half worth keeping.
 
 ## Decision
 

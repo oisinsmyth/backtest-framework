@@ -29,6 +29,18 @@ class TargetWeight:
     weight: float
     """Fraction of the strategy's allocated capital this instrument should represent."""
 
+    stop: float | None = None
+    """Price at which this position must be closed INTRABAR, if it is touched (D170).
+
+    The stop rides with the target it protects rather than living in its own channel:
+    it is per-(strategy, instrument) state the strategy already holds, and re-declaring
+    it every bar is what lets a trailing stop move without any extra machinery. None
+    means no stop, which is every strategy written before D170 and remains the default.
+
+    **Declared in the VIEW frame, enforced against EXECUTION prices.** Identical for
+    spot crypto, which has no splits (D108); `run_backtest` refuses to run a stop on an
+    instrument carrying splits rather than silently comparing two frames (D75)."""
+
 
 @dataclass(frozen=True)
 class Order:

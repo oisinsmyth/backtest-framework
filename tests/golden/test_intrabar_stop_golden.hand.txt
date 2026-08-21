@@ -1,0 +1,129 @@
+THE INTRABAR STOP GOLDEN MASTER — hand arithmetic
+=============================================================================
+Computed by hand from the stated rules, without running the codebase. If the
+engine and this file disagree, one of them is wrong about what a stop order
+IS, and that argument happens here.
+
+This file pins ONE distinction, twice: a stop that is TOUCHED fills at the
+stop price, and a stop that is GAPPED THROUGH fills at the bar's OPEN, which
+is worse. Same position, same stop, two different bars. The difference
+between the two final NAVs is the money D10 exists to stop a backtest from
+inventing.
+
+NOTE ON INDEXING: t is the BAR INDEX and bar t is calendar day t+1 — bar 0 is
+2021-01-01, bar 2 is 2021-01-03. Everything below is stated in bar indices.
+
+SETUP (identical in both scenarios)
+-----------------------------------
+instrument     BTC-TEST, Equity(quantity_precision=8)
+cost stack     trade: PercentOfNotionalSpread(bps=40) -> 0.40% of |notional|
+               no carry, no event flows.
+strategy       a minimal test double, NOT BreakoutStrategy: flat on bar 0,
+               then targets weight -0.5 with stop = 110.00 from bar 1 on.
+               Implements on_stop_filled by going flat permanently, so the
+               scenario has exactly two fills and no rebalancing to obscure
+               the arithmetic.
+fill timing    "close" — a target decided on bar t fills at bar t's close.
+               Chosen for arithmetic clarity; the stop path is independent of
+               fill timing, since a stop is an INTRABAR order either way.
+starting cash  100,000.00
+sizing         desired quantity = weight x capital / close(t), 8 dp;
+               capital = NAV at that bar's close.
+
+ENGINE ORDERING THAT MATTERS HERE (D170)
+----------------------------------------
+Within a bar the stop is checked BEFORE the strategy is consulted. So on the
+bar the stop fires, the position is already flat when the strategy runs, and
+the strategy — having been told via on_stop_filled — targets 0 and issues no
+order. That is why each scenario has exactly two fills and not three.
+
+SHARED BARS 0 AND 1
+-------------------
+ t   open   high   low   close
+ 0   100    102     98    100
+ 1   100    102     98    100
+
+t=0  target weight 0, nothing held -> no order.       NAV = 100,000.00
+
+t=1  no position yet, so no stop to check.
+     target -0.5; capital = NAV = 100,000.00; close = 100
+     desired = -0.5 x 100,000.00 / 100 = -500.00000000
+     held 0 -> ORDER -500, fills at this bar's close (100)
+       notional = 500 x 100                        =  50,000.00
+       fee      = 0.0040 x 50,000.00               =     200.00
+       cash     = 100,000.00 + 50,000.00 - 200.00  = 149,800.00
+                  [a short SALE adds proceeds to cash]
+       position = -500
+     NAV(t=1) = 149,800.00 + (-500 x 100) = 149,800.00 - 50,000.00
+              = 99,800.00
+     stop 110.00 is now armed, side BUY_STOP (the exit order for a short).
+
+
+SCENARIO A — the stop is TOUCHED
+================================
+ t   open   high   low   close
+ 2   105    115    104    112     <- opens BELOW the stop, trades through it
+
+t=2  STOP CHECK, before anything else.
+       held -500 -> BUY_STOP at 110.00
+       open 105 >= 110?  NO  -> not a gap
+       high 115 >= 110?  YES -> TOUCHED, fills AT THE STOP: 110.00
+     FILL +500 @ 110.00
+       notional = 500 x 110                        =  55,000.00
+       fee      = 0.0040 x 55,000.00               =     220.00
+       cash     = 149,800.00 - 55,000.00 - 220.00  =  94,580.00
+       position = 0
+     on_stop_filled -> strategy goes flat -> targets 0 -> no order
+     NAV(t=2) = 94,580.00
+
+RECONCILIATION
+     gross P&L = -500 x (110 - 100)                = -5,000.00
+     fees      = 200.00 + 220.00                   =   -420.00
+     net                                           = -5,420.00
+     100,000.00 - 5,420.00 = 94,580.00  ✓
+
+
+SCENARIO B — the stop is GAPPED THROUGH
+=======================================
+ t   open   high   low   close
+ 2   118    120    117    119     <- opens ABOVE the stop; it never traded at 110
+
+t=2  STOP CHECK, before anything else.
+       held -500 -> BUY_STOP at 110.00
+       open 118 >= 110?  YES -> GAPPED. Fills at the OPEN, 118.00, NOT at
+       110.00. The market never traded at 110 on this bar; filling there
+       would be free money and a fantasy risk number (D10).
+     FILL +500 @ 118.00
+       notional = 500 x 118                        =  59,000.00
+       fee      = 0.0040 x 59,000.00               =     236.00
+       cash     = 149,800.00 - 59,000.00 - 236.00  =  90,564.00
+       position = 0
+     NAV(t=2) = 90,564.00
+
+RECONCILIATION
+     gross P&L = -500 x (118 - 100)                = -9,000.00
+     fees      = 200.00 + 236.00                   =   -436.00
+     net                                           = -9,436.00
+     100,000.00 - 9,436.00 = 90,564.00  ✓
+
+
+THE POINT, IN ONE LINE
+----------------------
+     Scenario A final NAV   94,580.00
+     Scenario B final NAV   90,564.00
+     difference              4,016.00
+
+A stop set at 110 did NOT cap the loss at 10 points in scenario B. It capped
+it at 18, because that is where the market opened. Any engine that reports
+94,580 for scenario B is inventing 4,016.00 of risk control that did not
+exist — which is precisely the failure D169 measured in the short book and
+D170 exists to remove.
+
+WHAT THIS FILE PINS
+-------------------
+1. A touched stop fills AT the stop price.
+2. A gapped stop fills at the bar's OPEN, and the loss is correspondingly
+   worse. The stop bounds the loss EXCEPT through the open.
+3. The stop is checked before the strategy is consulted, so a stopped-out
+   strategy that implements on_stop_filled issues no order on that bar.
+4. A stop fill is charged the same trade cost as every other fill.

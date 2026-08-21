@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T07:21:01.678949+00:00",
+  "generated_utc": "2026-08-21T14:25:56.203293+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -33,229 +33,229 @@
       },
       "variants": {
         "short_10_3@maker_0bp": {
-          "total_return": -0.5470937096867519,
-          "cagr": -0.0748313879657676,
-          "sharpe_annual": -0.45563012150384824,
-          "max_drawdown": 0.57671447702372,
+          "total_return": -0.5365749308957766,
+          "cagr": -0.07274318502699251,
+          "sharpe_annual": -0.4484451403794519,
+          "max_drawdown": 0.5616141521192006,
           "n_closed_trades": 51,
-          "exposure": 0.10707559860102232,
+          "exposure": 0.10573042776432606,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.21419874334570366,
-              "mean_daily_return": -0.00010110501804930783,
-              "sharpe_daily": -0.04255403319411592,
+              "total_return": -0.21302774653087675,
+              "mean_daily_return": -0.00010046254082378944,
+              "sharpe_daily": -0.04228671839537477,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.08494645921141486,
-              "mean_daily_return": 0.0003006436858557469,
-              "sharpe_daily": 0.014702394963119056,
-              "exposure": 0.2982885085574572
+              "total_return": 0.07190517406249342,
+              "mean_daily_return": 0.00028674940976449305,
+              "sharpe_daily": 0.013994662593212642,
+              "exposure": 0.29706601466992666
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.46876420945987884,
-              "mean_daily_return": -0.001004445260794172,
-              "sharpe_daily": -0.07993610461189857,
-              "exposure": 0.2542955326460481
+              "total_return": -0.4506315233233821,
+              "mean_daily_return": -0.0009528224947965993,
+              "sharpe_daily": -0.07835758796926624,
+              "exposure": 0.24742268041237114
             }
           ]
         },
         "short_10_5@maker_0bp": {
-          "total_return": -0.6723147953036862,
-          "cagr": -0.10377080652511139,
-          "sharpe_annual": -0.5206496860436386,
-          "max_drawdown": 0.7180691123398243,
-          "n_closed_trades": 46,
-          "exposure": 0.15012106537530268,
+          "total_return": -0.6845549816328751,
+          "cagr": -0.10711490791643119,
+          "sharpe_annual": -0.53524851163761,
+          "max_drawdown": 0.7151313752072048,
+          "n_closed_trades": 47,
+          "exposure": 0.14447134786117838,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.3199445853345587,
-              "mean_daily_return": -0.00016162498534587629,
-              "sharpe_daily": -0.053056049065964464,
+              "total_return": -0.3196698343920845,
+              "mean_daily_return": -0.0001614506116714048,
+              "sharpe_daily": -0.052998848265880916,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.00941421911217133,
-              "mean_daily_return": 0.00025806938339258936,
-              "sharpe_daily": 0.011445236968033784,
-              "exposure": 0.4156479217603912
+              "total_return": -0.02677802446243538,
+              "mean_daily_return": 0.0002134296244597193,
+              "sharpe_daily": 0.009466110456748283,
+              "exposure": 0.3960880195599022
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.522643201643279,
-              "mean_daily_return": -0.0011640728681313515,
-              "sharpe_daily": -0.08118480046667952,
-              "exposure": 0.35223367697594504
+              "total_return": -0.5235777469889387,
+              "mean_daily_return": -0.0011655966215015033,
+              "sharpe_daily": -0.08060701061453784,
+              "exposure": 0.3436426116838488
             }
           ]
         },
         "short_10_10@maker_0bp": {
-          "total_return": -0.47085336439513026,
-          "cagr": -0.06058851359585038,
-          "sharpe_annual": -0.27614533723499146,
-          "max_drawdown": 0.6484638294939526,
-          "n_closed_trades": 34,
-          "exposure": 0.193166532149583,
+          "total_return": -0.4695698782684843,
+          "cagr": -0.06036500368113806,
+          "sharpe_annual": -0.27541889467110137,
+          "max_drawdown": 0.6445497757012466,
+          "n_closed_trades": 35,
+          "exposure": 0.1869787463007802,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.32017445437851566,
-              "mean_daily_return": -0.00016177093318384963,
-              "sharpe_daily": -0.05310395278757181,
+              "total_return": -0.31989979613217534,
+              "mean_daily_return": -0.0001615965594114241,
+              "sharpe_daily": -0.05304675191593324,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.2141564869279191,
-              "mean_daily_return": 0.0005260289070911868,
-              "sharpe_daily": 0.021542746776919888,
-              "exposure": 0.5354523227383863
+              "total_return": 0.21899647623245966,
+              "mean_daily_return": 0.0005292861917455923,
+              "sharpe_daily": 0.021734288968040243,
+              "exposure": 0.5134474327628362
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.3589323013625828,
-              "mean_daily_return": -0.0006350456809341002,
-              "sharpe_daily": -0.04005129538763086,
-              "exposure": 0.46048109965635736
+              "total_return": -0.3601873487345064,
+              "mean_daily_return": -0.000636569426571987,
+              "sharpe_daily": -0.03987035841493285,
+              "exposure": 0.4518900343642612
             }
           ]
         },
         "short_20_3@maker_0bp": {
-          "total_return": -0.5365600225988868,
-          "cagr": -0.072740255870686,
-          "sharpe_annual": -0.46671939822170994,
-          "max_drawdown": 0.5696639287771142,
+          "total_return": -0.5529474200917336,
+          "cagr": -0.07601249299663315,
+          "sharpe_annual": -0.4803484970115115,
+          "max_drawdown": 0.5696639284740397,
           "n_closed_trades": 38,
-          "exposure": 0.08528383104654291,
+          "exposure": 0.08501479687920366,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.21556446899377302,
-              "mean_daily_return": -0.00010178518121377881,
-              "sharpe_daily": -0.04236135814532146,
+              "total_return": -0.2155644693423202,
+              "mean_daily_return": -0.00010178518139725068,
+              "sharpe_daily": -0.0423613581636447,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.06655557706487714,
-              "mean_daily_return": 0.0002666826086103242,
-              "sharpe_daily": 0.013474148177048048,
-              "exposure": 0.23471882640586797
+              "total_return": 0.028841803830305324,
+              "mean_daily_return": 0.00022567979854736306,
+              "sharpe_daily": 0.011321347925511666,
+              "exposure": 0.2334963325183374
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4460727294972252,
-              "mean_daily_return": -0.0009389407008443885,
-              "sharpe_daily": -0.0778721262293244,
+              "total_return": -0.4460727292209329,
+              "mean_daily_return": -0.0009389406999099587,
+              "sharpe_daily": -0.07787212611067007,
               "exposure": 0.20446735395189003
             }
           ]
         },
         "short_20_5@maker_0bp": {
-          "total_return": -0.6044582246029143,
-          "cagr": -0.08705354143382515,
-          "sharpe_annual": -0.47622779532817533,
-          "max_drawdown": 0.6559645774560233,
+          "total_return": -0.6202338248876655,
+          "cagr": -0.0906950356633125,
+          "sharpe_annual": -0.49165731291670606,
+          "max_drawdown": 0.6559645791238347,
           "n_closed_trades": 35,
-          "exposure": 0.12106537530266344,
+          "exposure": 0.11460855528652139,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.32142647942967817,
-              "mean_daily_return": -0.00016247863755318125,
-              "sharpe_daily": -0.052878856657824574,
+              "total_return": -0.32142647997783014,
+              "mean_daily_return": -0.0001624786378770587,
+              "sharpe_daily": -0.05287885663606027,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.13980032667165676,
-              "mean_daily_return": 0.00038469453296012117,
-              "sharpe_daily": 0.017838143560870098,
-              "exposure": 0.33007334963325186
+              "total_return": 0.09434107627986066,
+              "mean_daily_return": 0.000337280505665417,
+              "sharpe_daily": 0.015567655434827543,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.48859299448217597,
-              "mean_daily_return": -0.0010614432617780235,
-              "sharpe_daily": -0.08039699405863766,
+              "total_return": -0.4885929961364036,
+              "mean_daily_return": -0.0010614432672833973,
+              "sharpe_daily": -0.08039699446065503,
               "exposure": 0.2869415807560137
             }
           ]
         },
         "short_20_10@maker_0bp": {
-          "total_return": -0.36046341973636664,
-          "cagr": -0.042945934876760905,
-          "sharpe_annual": -0.22405418960642093,
-          "max_drawdown": 0.6090806097283127,
-          "n_closed_trades": 25,
-          "exposure": 0.15469464622006995,
+          "total_return": -0.45357167767188544,
+          "cagr": -0.05761921107413637,
+          "sharpe_annual": -0.29047247773045964,
+          "max_drawdown": 0.6090806097743249,
+          "n_closed_trades": 26,
+          "exposure": 0.14635458703255314,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.32165584834287353,
-              "mean_daily_return": -0.00016262458583775512,
-              "sharpe_daily": -0.05292635023940515,
+              "total_return": -0.32165584863479413,
+              "mean_daily_return": -0.0001626245860146402,
+              "sharpe_daily": -0.05292635024967578,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.5737921881889412,
-              "mean_daily_return": 0.0008160260555371219,
-              "sharpe_daily": 0.03506451073329173,
-              "exposure": 0.4254278728606357
+              "total_return": 0.34466839123989956,
+              "mean_daily_return": 0.0006203928072556445,
+              "sharpe_daily": 0.02684270022340886,
+              "exposure": 0.38753056234718825
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4009433135374162,
-              "mean_daily_return": -0.0007632099158361611,
-              "sharpe_daily": -0.05060784817161567,
+              "total_return": -0.40094331288742246,
+              "mean_daily_return": -0.0007632099138307683,
+              "sharpe_daily": -0.050607848005840415,
               "exposure": 0.3694158075601375
             }
           ]
@@ -527,305 +527,305 @@
           ]
         },
         "short_timestop_5@maker_0bp": {
-          "total_return": -0.3882382671060277,
-          "cagr": -0.04710966433369601,
-          "sharpe_annual": -0.3158562846757844,
-          "max_drawdown": 0.5157991701515521,
+          "total_return": -0.4106839936364881,
+          "cagr": -0.05060098313984118,
+          "sharpe_annual": -0.33056051766175865,
+          "max_drawdown": 0.5157991697462438,
           "n_closed_trades": 38,
-          "exposure": 0.08824320688727469,
+          "exposure": 0.08770513855259618,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.22308846976320207,
-              "mean_daily_return": -0.00010534046351989505,
-              "sharpe_daily": -0.04004061861981217,
+              "total_return": -0.22308846905201196,
+              "mean_daily_return": -0.00010534046316128472,
+              "sharpe_daily": -0.04004061867539761,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.24970893113587556,
-              "mean_daily_return": 0.0004787671784063644,
-              "sharpe_daily": 0.023126339145441783,
-              "exposure": 0.2628361858190709
+              "total_return": 0.20385672457993786,
+              "mean_daily_return": 0.0004360782335796122,
+              "sharpe_daily": 0.02092669973046786,
+              "exposure": 0.2603911980440098
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.3699110448573266,
-              "mean_daily_return": -0.000723060157186513,
-              "sharpe_daily": -0.062225794900495894,
+              "total_return": -0.36991104506732186,
+              "mean_daily_return": -0.0007230601577537542,
+              "sharpe_daily": -0.06222579494846517,
               "exposure": 0.18384879725085912
             }
           ]
         },
         "short_no_regime_gate@maker_0bp": {
-          "total_return": -0.8716360798934265,
-          "cagr": -0.18256852804428547,
-          "sharpe_annual": -0.7318301247324966,
-          "max_drawdown": 0.8743612464306151,
+          "total_return": -0.875857664767132,
+          "cagr": -0.18524839132077764,
+          "sharpe_annual": -0.7421444266172738,
+          "max_drawdown": 0.8784932070405699,
           "n_closed_trades": 61,
-          "exposure": 0.20231369383911757,
+          "exposure": 0.19558783965563625,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.7683735084747685,
-              "mean_daily_return": -0.0005724928611256801,
-              "sharpe_daily": -0.05349281791884746,
+              "total_return": -0.7683046685015906,
+              "mean_daily_return": -0.000572364573558502,
+              "sharpe_daily": -0.05348080557220806,
               "exposure": 0.12694300518134716
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.13980032735764647,
-              "mean_daily_return": 0.00038469453381006325,
-              "sharpe_daily": 0.01783814359483273,
-              "exposure": 0.33007334963325186
+              "total_return": 0.09434107872327124,
+              "mean_daily_return": 0.0003372805084182572,
+              "sharpe_daily": 0.015567655560723252,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5137876731139304,
-              "mean_daily_return": -0.001119751121644261,
-              "sharpe_daily": -0.07380082266403667,
-              "exposure": 0.3230240549828179
+              "total_return": -0.5103903988512025,
+              "mean_daily_return": -0.0011088769087851415,
+              "sharpe_daily": -0.07339720294265964,
+              "exposure": 0.32130584192439865
             }
           ]
         },
         "short_10_3@maker_10bp": {
-          "total_return": -0.5878022554161191,
-          "cagr": -0.08334830807964455,
-          "sharpe_annual": -0.49970896429530465,
-          "max_drawdown": 0.6061235668037017,
+          "total_return": -0.5782167988811884,
+          "cagr": -0.08127673279930092,
+          "sharpe_annual": -0.49226898004663483,
+          "max_drawdown": 0.5920500546795537,
           "n_closed_trades": 51,
-          "exposure": 0.10707559860102232,
-          "cost_share_of_gross": 0.1330394038376686,
+          "exposure": 0.10573042776432606,
+          "cost_share_of_gross": 0.1368747395312775,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.2168117026946621,
-              "mean_daily_return": -0.0001025303810714254,
-              "sharpe_daily": -0.043061658180677836,
+              "total_return": -0.21456646578024208,
+              "mean_daily_return": -0.00010129609966141412,
+              "sharpe_daily": -0.04255557844085934,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.028228940844757577,
-              "mean_daily_return": 0.00023503825791406862,
-              "sharpe_daily": 0.011494020116222766,
-              "exposure": 0.2982885085574572
+              "total_return": 0.01584303587159619,
+              "mean_daily_return": 0.00022119558278219567,
+              "sharpe_daily": 0.010793291144883862,
+              "exposure": 0.29706601466992666
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.48814187886613236,
-              "mean_daily_return": -0.001068241240599198,
-              "sharpe_daily": -0.0850303815107414,
-              "exposure": 0.2542955326460481
+              "total_return": -0.4713682649603288,
+              "mean_daily_return": -0.0010184538232881953,
+              "sharpe_daily": -0.0835550988560277,
+              "exposure": 0.24742268041237114
             }
           ]
         },
         "short_10_5@maker_10bp": {
-          "total_return": -0.701009303592016,
-          "cagr": -0.11179971195549343,
-          "sharpe_annual": -0.5590891388286522,
-          "max_drawdown": 0.7373146212146574,
-          "n_closed_trades": 46,
-          "exposure": 0.15012106537530268,
-          "cost_share_of_gross": 0.10426832977342325,
+          "total_return": -0.7127305611820747,
+          "cagr": -0.11528092379697008,
+          "sharpe_annual": -0.5740274637867113,
+          "max_drawdown": 0.7345797641419496,
+          "n_closed_trades": 47,
+          "exposure": 0.14447134786117838,
+          "cost_share_of_gross": 0.09998502646703317,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.32363402255630136,
-              "mean_daily_return": -0.00016395960644125735,
-              "sharpe_daily": -0.05374548611974597,
+              "total_return": -0.32261133705229916,
+              "mean_daily_return": -0.0001633077295565984,
+              "sharpe_daily": -0.05353402109154705,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.041958176900766087,
-              "mean_daily_return": 0.00019424113929579785,
-              "sharpe_daily": 0.008614661945672213,
-              "exposure": 0.4156479217603912
+              "total_return": -0.07805516777547039,
+              "mean_daily_return": 0.0001473971962184606,
+              "sharpe_daily": 0.006536242888184824,
+              "exposure": 0.3960880195599022
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5385852721334583,
-              "mean_daily_return": -0.0012223934253520151,
-              "sharpe_daily": -0.08527085573877399,
-              "exposure": 0.35223367697594504
+              "total_return": -0.5400119303778461,
+              "mean_daily_return": -0.0012255272990267859,
+              "sharpe_daily": -0.08463929546680364,
+              "exposure": 0.3436426116838488
             }
           ]
         },
         "short_10_10@maker_10bp": {
-          "total_return": -0.5103172198789243,
-          "cagr": -0.0677112991345723,
-          "sharpe_annual": -0.30607473555464765,
-          "max_drawdown": 0.6695628325040288,
-          "n_closed_trades": 34,
-          "exposure": 0.193166532149583,
-          "cost_share_of_gross": 0.21721649492475337,
+          "total_return": -0.510038532341927,
+          "cagr": -0.06765921061454827,
+          "sharpe_annual": -0.30582162395922213,
+          "max_drawdown": 0.6658863127317884,
+          "n_closed_trades": 35,
+          "exposure": 0.1869787463007802,
+          "cost_share_of_gross": 0.22030989798961423,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.32456303056674496,
-              "mean_daily_return": -0.0001645526671667091,
-              "sharpe_daily": -0.053938093105929785,
+              "total_return": -0.32354175039256794,
+              "mean_daily_return": -0.00016390079064949049,
+              "sharpe_daily": -0.053726640694211555,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.16136371542487482,
-              "mean_daily_return": 0.00047172003312591625,
-              "sharpe_daily": 0.019318345149237335,
-              "exposure": 0.5354523227383863
+              "total_return": 0.1638688988061925,
+              "mean_daily_return": 0.00047288446100460186,
+              "sharpe_daily": 0.01941367720091104,
+              "exposure": 0.5134474327628362
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.3757453999733631,
-              "mean_daily_return": -0.0006806061728866767,
-              "sharpe_daily": -0.04291432856793713,
-              "exposure": 0.46048109965635736
+              "total_return": -0.3776755465555798,
+              "mean_daily_return": -0.0006837400469251513,
+              "sharpe_daily": -0.04276040119667165,
+              "exposure": 0.4518900343642612
             }
           ]
         },
         "short_20_3@maker_10bp": {
-          "total_return": -0.5688929148961023,
-          "cagr": -0.07930202733338776,
-          "sharpe_annual": -0.5018438916184609,
-          "max_drawdown": 0.592898875089618,
+          "total_return": -0.5841692887836701,
+          "cagr": -0.0825581013870813,
+          "sharpe_annual": -0.5151666679686174,
+          "max_drawdown": 0.5928988762901036,
           "n_closed_trades": 38,
-          "exposure": 0.08528383104654291,
-          "cost_share_of_gross": 0.10782882246663876,
+          "exposure": 0.08501479687920366,
+          "cost_share_of_gross": 0.10112472549192367,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.21817341852586447,
-              "mean_daily_return": -0.00010321079187682568,
-              "sharpe_daily": -0.0428645542829527,
+              "total_return": -0.21817341904979204,
+              "mean_daily_return": -0.00010321079214105147,
+              "sharpe_daily": -0.042864554224578785,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.027821280176324015,
-              "mean_daily_return": 0.00022144551246859698,
-              "sharpe_daily": 0.011190429172595424,
-              "exposure": 0.23471882640586797
+              "total_return": -0.00859978918696358,
+              "mean_daily_return": 0.00018046719559446927,
+              "sharpe_daily": 0.009052290820742178,
+              "exposure": 0.2334963325183374
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4635155687946284,
-              "mean_daily_return": -0.000993947179242008,
-              "sharpe_daily": -0.08249116120838082,
+              "total_return": -0.46351556983594644,
+              "mean_daily_return": -0.0009939471824730933,
+              "sharpe_daily": -0.08249116142635646,
               "exposure": 0.20446735395189003
             }
           ]
         },
         "short_20_5@maker_10bp": {
-          "total_return": -0.6322421152188006,
-          "cagr": -0.09355953198507472,
-          "sharpe_annual": -0.5084744405612779,
-          "max_drawdown": 0.6744369354483178,
+          "total_return": -0.6468651340382219,
+          "cagr": -0.09716391256727419,
+          "sharpe_annual": -0.5236027263664407,
+          "max_drawdown": 0.6744369361758576,
           "n_closed_trades": 35,
-          "exposure": 0.12106537530266344,
-          "cost_share_of_gross": 0.09751510301864408,
+          "exposure": 0.11460855528652139,
+          "cost_share_of_gross": 0.09025740118598152,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.3243714052721356,
-              "mean_daily_return": -0.00016434272483535457,
-              "sharpe_daily": -0.05341215658178387,
+              "total_return": -0.32437140553364063,
+              "mean_daily_return": -0.00016434272498772526,
+              "sharpe_daily": -0.05341215655552902,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.09688956632638068,
-              "mean_daily_return": 0.00033776063988610015,
-              "sharpe_daily": 0.01566422522669891,
-              "exposure": 0.33007334963325186
+              "total_return": 0.05327436109496331,
+              "mean_daily_return": 0.00029062248294980985,
+              "sharpe_daily": 0.013412985242757169,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5037608030301861,
-              "mean_daily_return": -0.0011132146217642973,
-              "sharpe_daily": -0.08437319853317735,
+              "total_return": -0.5037608043126918,
+              "mean_daily_return": -0.0011132146260902419,
+              "sharpe_daily": -0.08437319881279844,
               "exposure": 0.2869415807560137
             }
           ]
         },
         "short_20_10@maker_10bp": {
-          "total_return": -0.39800126159934723,
-          "cagr": -0.048613809139159136,
-          "sharpe_annual": -0.24865675645820154,
-          "max_drawdown": 0.6235167543665836,
-          "n_closed_trades": 25,
-          "exposure": 0.15469464622006995,
-          "cost_share_of_gross": 0.27544826034584086,
+          "total_return": -0.48647425786997456,
+          "cagr": -0.06334869647282748,
+          "sharpe_annual": -0.3158017429033029,
+          "max_drawdown": 0.6235167540887606,
+          "n_closed_trades": 26,
+          "exposure": 0.14635458703255314,
+          "cost_share_of_gross": 0.16081629750687668,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.32529940075862895,
-              "mean_daily_return": -0.00016493578571844244,
-              "sharpe_daily": -0.0536031501264857,
+              "total_return": -0.325299400213113,
+              "mean_daily_return": -0.00016493578540351247,
+              "sharpe_daily": -0.05360315019899034,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.5271422927798963,
-              "mean_daily_return": 0.0007791110452197606,
-              "sharpe_daily": 0.03348808782862761,
-              "exposure": 0.4254278728606357
+              "total_return": 0.30270518618752185,
+              "mean_daily_return": 0.0005816117453844774,
+              "sharpe_daily": 0.025167923536355382,
+              "exposure": 0.38753056234718825
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.41574157916140675,
-              "mean_daily_return": -0.0008061733451688799,
-              "sharpe_daily": -0.053464987414069576,
+              "total_return": -0.4157415791532134,
+              "mean_daily_return": -0.000806173345065108,
+              "sharpe_daily": -0.0534649873878855,
               "exposure": 0.3694158075601375
             }
           ]
@@ -1097,305 +1097,305 @@
           ]
         },
         "short_timestop_5@maker_10bp": {
-          "total_return": -0.43182082628318963,
-          "cagr": -0.0540001263116765,
-          "sharpe_annual": -0.35066638632648867,
-          "max_drawdown": 0.5420855879272013,
+          "total_return": -0.4527117157122117,
+          "cagr": -0.05747367696913408,
+          "sharpe_annual": -0.36511350445088636,
+          "max_drawdown": 0.5420855882950458,
           "n_closed_trades": 38,
-          "exposure": 0.08824320688727469,
-          "cost_share_of_gross": 0.20093589353492286,
+          "exposure": 0.08770513855259618,
+          "cost_share_of_gross": 0.18048853383147218,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.22479820598588474,
-              "mean_daily_return": -0.00010628018702694876,
-              "sharpe_daily": -0.040334266989431954,
+              "total_return": -0.22479820592611466,
+              "mean_daily_return": -0.0001062801870006651,
+              "sharpe_daily": -0.04033426701535862,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.20007358726331126,
-              "mean_daily_return": 0.0004291808124079257,
-              "sharpe_daily": 0.020735224335705817,
-              "exposure": 0.2628361858190709
+              "total_return": 0.15594911795329125,
+              "mean_daily_return": 0.0003865147778688386,
+              "sharpe_daily": 0.01854717406151793,
+              "exposure": 0.2603911980440098
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.38925114085530577,
-              "mean_daily_return": -0.0007766703862398224,
-              "sharpe_daily": -0.06688944721578258,
+              "total_return": -0.38925114099998803,
+              "mean_daily_return": -0.0007766703867982969,
+              "sharpe_daily": -0.06688944733704626,
               "exposure": 0.18384879725085912
             }
           ]
         },
         "short_no_regime_gate@maker_10bp": {
-          "total_return": -0.886840284066321,
-          "cagr": -0.19262567833494504,
-          "sharpe_annual": -0.7767572919363342,
-          "max_drawdown": 0.8886406143294437,
+          "total_return": -0.8905463093889562,
+          "cagr": -0.19526135772206832,
+          "sharpe_annual": -0.7866982529349299,
+          "max_drawdown": 0.8922876781259813,
           "n_closed_trades": 61,
-          "exposure": 0.20231369383911757,
-          "cost_share_of_gross": 0.07173435003733503,
+          "exposure": 0.19558783965563625,
+          "cost_share_of_gross": 0.06898012941102147,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.7813728858933011,
-              "mean_daily_return": -0.0005974169559627124,
-              "sharpe_daily": -0.05583109574444935,
+              "total_return": -0.7810433820740303,
+              "mean_daily_return": -0.0005967671797063842,
+              "sharpe_daily": -0.055770420635629474,
               "exposure": 0.12694300518134716
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.0968895679914199,
-              "mean_daily_return": 0.0003377606419194246,
-              "sharpe_daily": 0.01566422531364775,
-              "exposure": 0.33007334963325186
+              "total_return": 0.05327436032099464,
+              "mean_daily_return": 0.0002906224821309488,
+              "sharpe_daily": 0.013412985202476219,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5281272258984269,
-              "mean_daily_return": -0.001171242592625654,
-              "sharpe_daily": -0.07723899784858757,
-              "exposure": 0.3230240549828179
+              "total_return": -0.5253966259946646,
+              "mean_daily_return": -0.0011622370948051067,
+              "sharpe_daily": -0.07691865644623723,
+              "exposure": 0.32130584192439865
             }
           ]
         },
         "short_10_3@maker_25bp": {
-          "total_return": -0.6421671231661463,
-          "cagr": -0.09599147023568089,
-          "sharpe_annual": -0.5656655136493433,
-          "max_drawdown": 0.646493108818097,
+          "total_return": -0.6338301554482272,
+          "cagr": -0.0939446432238834,
+          "sharpe_annual": -0.5577335355059677,
+          "max_drawdown": 0.6338319929660048,
           "n_closed_trades": 51,
-          "exposure": 0.10707559860102232,
-          "cost_share_of_gross": 0.3318239174673222,
+          "exposure": 0.10573042776432606,
+          "cost_share_of_gross": 0.3411926518991968,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.22071982868037898,
-              "mean_daily_return": -0.00010466850372937471,
-              "sharpe_daily": -0.04379913987169556,
+              "total_return": -0.21687112006040288,
+              "mean_daily_return": -0.00010254651421318195,
+              "sharpe_daily": -0.04294877482307701,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.05142995415571161,
-              "mean_daily_return": 0.0001366053994222986,
-              "sharpe_daily": 0.0066789255240565495,
-              "exposure": 0.2982885085574572
+              "total_return": -0.0628928970706869,
+              "mean_daily_return": 0.00012284013985727386,
+              "sharpe_daily": 0.005991064673480731,
+              "exposure": 0.29706601466992666
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5159199242211365,
-              "mean_daily_return": -0.0011639472623064186,
-              "sharpe_daily": -0.09262815816918082,
-              "exposure": 0.2542955326460481
+              "total_return": -0.5010464625897022,
+              "mean_daily_return": -0.0011169052463739235,
+              "sharpe_daily": -0.09124950548306723,
+              "exposure": 0.24742268041237114
             }
           ]
         },
         "short_10_5@maker_25bp": {
-          "total_return": -0.7394490460977154,
-          "cagr": -0.12372153843256184,
-          "sharpe_annual": -0.616625306970987,
-          "max_drawdown": 0.7637758472706042,
-          "n_closed_trades": 46,
-          "exposure": 0.15012106537530268,
-          "cost_share_of_gross": 0.26380481073196643,
+          "total_return": -0.7503863441164743,
+          "cagr": -0.12740388443916806,
+          "sharpe_annual": -0.631991401784212,
+          "max_drawdown": 0.7613197099395164,
+          "n_closed_trades": 47,
+          "exposure": 0.14447134786117838,
+          "cost_share_of_gross": 0.2521543194506426,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.3291374725256774,
-              "mean_daily_return": -0.00016746163245398614,
-              "sharpe_daily": -0.054751387914097366,
+              "total_return": -0.32700496121621747,
+              "mean_daily_return": -0.00016609345969541725,
+              "sharpe_daily": -0.054315331940671854,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.11423496388514598,
-              "mean_daily_return": 9.847536116123736e-05,
-              "sharpe_daily": 0.004366883369186192,
-              "exposure": 0.4156479217603912
+              "total_return": -0.15003180524277115,
+              "mean_daily_return": 4.832101271397743e-05,
+              "sharpe_daily": 0.002141847711559419,
+              "exposure": 0.3960880195599022
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5615292774303078,
-              "mean_daily_return": -0.0013098883053975698,
-              "sharpe_daily": -0.09137222561575949,
-              "exposure": 0.35223367697594504
+              "total_return": -0.5636310874181611,
+              "mean_daily_return": -0.0013154296555962489,
+              "sharpe_daily": -0.0906331879519897,
+              "exposure": 0.3436426116838488
             }
           ]
         },
         "short_10_10@maker_25bp": {
-          "total_return": -0.5641200934449342,
-          "cagr": -0.07830605041056271,
-          "sharpe_annual": -0.3509210323984973,
-          "max_drawdown": 0.6988923663833807,
-          "n_closed_trades": 34,
-          "exposure": 0.193166532149583,
-          "cost_share_of_gross": 0.5748636393798834,
+          "total_return": -0.5650863693927406,
+          "cagr": -0.07850689302408698,
+          "sharpe_annual": -0.35132235361724307,
+          "max_drawdown": 0.6955458339193162,
+          "n_closed_trades": 35,
+          "exposure": 0.1869787463007802,
+          "cost_share_of_gross": 0.5827957222386912,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.33110096063151306,
-              "mean_daily_return": -0.0001687253679251243,
-              "sharpe_daily": -0.055154910244543935,
+              "total_return": -0.32897469011759006,
+              "mean_daily_return": -0.00016735719479008302,
+              "sharpe_daily": -0.05471900233980851,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.0863704939508958,
-              "mean_daily_return": 0.00039023361219211534,
-              "sharpe_daily": 0.015979361492569403,
-              "exposure": 0.5354523227383863
+              "total_return": 0.08573190688643484,
+              "mean_daily_return": 0.00038825492846985085,
+              "sharpe_daily": 0.015932037037725857,
+              "exposure": 0.5134474327628362
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.40016981705035415,
-              "mean_daily_return": -0.0007489705258797883,
-              "sharpe_daily": -0.04719799013034191,
-              "exposure": 0.46048109965635736
+              "total_return": -0.40304510606499866,
+              "mean_daily_return": -0.0007545118823700814,
+              "sharpe_daily": -0.04706900613900904,
+              "exposure": 0.4518900343642612
             }
           ]
         },
         "short_20_3@maker_25bp": {
-          "total_return": -0.6132591367313853,
-          "cagr": -0.08906855606953845,
-          "sharpe_annual": -0.5544284756682976,
-          "max_drawdown": 0.6254543876307517,
+          "total_return": -0.6270069365046751,
+          "cagr": -0.09230049771252136,
+          "sharpe_annual": -0.5672624772837109,
+          "max_drawdown": 0.6270069365046751,
           "n_closed_trades": 38,
-          "exposure": 0.08528383104654291,
-          "cost_share_of_gross": 0.27054490311752133,
+          "exposure": 0.08501479687920366,
+          "cost_share_of_gross": 0.2532024639158786,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.2220755356594124,
-              "mean_daily_return": -0.00010534928244273268,
-              "sharpe_daily": -0.04359602911771418,
+              "total_return": -0.22207553584474993,
+              "mean_daily_return": -0.00010534928253929476,
+              "sharpe_daily": -0.043596029113694625,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.027721447802671606,
-              "mean_daily_return": 0.00015357410789030532,
-              "sharpe_daily": 0.0077614315864190184,
-              "exposure": 0.23471882640586797
+              "total_return": -0.06228384493927275,
+              "mean_daily_return": 0.0001126325413969048,
+              "sharpe_daily": 0.005647958389698874,
+              "exposure": 0.2334963325183374
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.48868100434196593,
-              "mean_daily_return": -0.0010764646249132918,
-              "sharpe_daily": -0.089387330175209,
+              "total_return": -0.488681003591638,
+              "mean_daily_return": -0.0010764646225351088,
+              "sharpe_daily": -0.08938733005591579,
               "exposure": 0.20446735395189003
             }
           ]
         },
         "short_20_5@maker_25bp": {
-          "total_return": -0.6703401672087295,
-          "cagr": -0.10324190998051153,
-          "sharpe_annual": -0.556767686738577,
-          "max_drawdown": 0.7003289913879436,
+          "total_return": -0.6833885285922321,
+          "cagr": -0.10679122749197989,
+          "sharpe_annual": -0.5714198058696688,
+          "max_drawdown": 0.7003289917112282,
           "n_closed_trades": 35,
-          "exposure": 0.12106537530266344,
-          "cost_share_of_gross": 0.2460223066068138,
+          "exposure": 0.11460855528652139,
+          "cost_share_of_gross": 0.22705481839037264,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.3287700378281091,
-              "mean_daily_return": -0.00016713889145863588,
-              "sharpe_daily": -0.05419093760513379,
+              "total_return": -0.3287700376547916,
+              "mean_daily_return": -0.00016713889134870074,
+              "sharpe_daily": -0.05419093757954373,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.03546582537588194,
-              "mean_daily_return": 0.0002673408646494541,
-              "sharpe_daily": 0.012399714077461025,
-              "exposure": 0.33007334963325186
+              "total_return": -0.005519247807152516,
+              "mean_daily_return": 0.0002206172604246245,
+              "sharpe_daily": 0.010179569792429408,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5256936599754851,
-              "mean_daily_return": -0.0011908754962001666,
-              "sharpe_daily": -0.09031345444111132,
+              "total_return": -0.5256936599783287,
+              "mean_daily_return": -0.0011908754962563566,
+              "sharpe_daily": -0.0903134544668674,
               "exposure": 0.2869415807560137
             }
           ]
         },
         "short_20_10@maker_25bp": {
-          "total_return": -0.4502676881578719,
-          "cagr": -0.05706118942637983,
-          "sharpe_annual": -0.2855544591985436,
-          "max_drawdown": 0.6467222999757819,
-          "n_closed_trades": 25,
-          "exposure": 0.15469464622006995,
-          "cost_share_of_gross": 0.7521043454730258,
+          "total_return": -0.532194068021212,
+          "cagr": -0.07188607531991498,
+          "sharpe_annual": -0.3537657552960727,
+          "max_drawdown": 0.6467223003056078,
+          "n_closed_trades": 26,
+          "exposure": 0.14635458703255314,
+          "cost_share_of_gross": 0.4165119390686347,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.3307346004924453,
-              "mean_daily_return": -0.00016840262642617225,
-              "sharpe_daily": -0.054591275042855374,
+              "total_return": -0.33073460041700586,
+              "mean_daily_return": -0.0001684026263776963,
+              "sharpe_daily": -0.05459127502881305,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.45968257921347333,
-              "mean_daily_return": 0.0007237218949587153,
-              "sharpe_daily": 0.03111896546310927,
-              "exposure": 0.4254278728606357
+              "total_return": 0.24214668686563545,
+              "mean_daily_return": 0.0005234277305573774,
+              "sharpe_daily": 0.022652723663978098,
+              "exposure": 0.38753056234718825
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4372772587346616,
-              "mean_daily_return": -0.0008706285732600714,
-              "sharpe_daily": -0.05774023153534825,
+              "total_return": -0.43727725917348215,
+              "mean_daily_return": -0.0008706285744779981,
+              "sharpe_daily": -0.057740231587490615,
               "exposure": 0.3694158075601375
             }
           ]
@@ -1667,305 +1667,305 @@
           ]
         },
         "short_timestop_5@maker_25bp": {
-          "total_return": -0.4915030875633366,
-          "cagr": -0.0642534042529268,
-          "sharpe_annual": -0.4028288514706346,
-          "max_drawdown": 0.5789008522512107,
+          "total_return": -0.5102590978078576,
+          "cagr": -0.0677004335341207,
+          "sharpe_annual": -0.4168610093207133,
+          "max_drawdown": 0.5789008523386082,
           "n_closed_trades": 38,
-          "exposure": 0.08824320688727469,
-          "cost_share_of_gross": 0.5140839791366683,
+          "exposure": 0.08770513855259618,
+          "cost_share_of_gross": 0.45900701345831296,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.22735881892733145,
-              "mean_daily_return": -0.00010768972919910913,
-              "sharpe_daily": -0.040763078620542306,
+              "total_return": -0.22735881864504592,
+              "mean_daily_return": -0.00010768972905857105,
+              "sharpe_daily": -0.040763078657615824,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.12921921138043513,
-              "mean_daily_return": 0.00035478760442625895,
-              "sharpe_daily": 0.01714367766991885,
-              "exposure": 0.2628361858190709
+              "total_return": 0.08756773550305952,
+              "mean_daily_return": 0.0003121564175103519,
+              "sharpe_daily": 0.014975645396098781,
+              "exposure": 0.2603911980440098
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4171830012452531,
-              "mean_daily_return": -0.0008570940516766536,
-              "sharpe_daily": -0.07385909227939053,
+              "total_return": -0.41718300168464784,
+              "mean_daily_return": -0.0008570940529065139,
+              "sharpe_daily": -0.0738590923545872,
               "exposure": 0.18384879725085912
             }
           ]
         },
         "short_no_regime_gate@maker_25bp": {
-          "total_return": -0.9063587703179277,
-          "cagr": -0.20749744489612765,
-          "sharpe_annual": -0.8440208455758523,
-          "max_drawdown": 0.9070951162509204,
+          "total_return": -0.9094062737763324,
+          "cagr": -0.21006806233515107,
+          "sharpe_annual": -0.8533601288199998,
+          "max_drawdown": 0.9101186557269533,
           "n_closed_trades": 61,
-          "exposure": 0.20231369383911757,
-          "cost_share_of_gross": 0.17888182795566304,
+          "exposure": 0.19558783965563625,
+          "cost_share_of_gross": 0.17179744628857402,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.7995422700932203,
-              "mean_daily_return": -0.0006348198851382769,
-              "sharpe_daily": -0.059322596300839275,
+              "total_return": -0.7988751904271423,
+              "mean_daily_return": -0.0006333877847048126,
+              "sharpe_daily": -0.05918952804901213,
               "exposure": 0.12694300518134716
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.035465825143565555,
-              "mean_daily_return": 0.00026734086429161915,
-              "sharpe_daily": 0.01239971406367412,
-              "exposure": 0.33007334963325186
+              "total_return": -0.0055192481007174665,
+              "mean_daily_return": 0.00022061725994212104,
+              "sharpe_daily": 0.010179569773369179,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5488629135711556,
-              "mean_daily_return": -0.0012484687342895627,
-              "sharpe_daily": -0.08237959458480179,
-              "exposure": 0.3230240549828179
+              "total_return": -0.5470647770431338,
+              "mean_daily_return": -0.001242266320670764,
+              "sharpe_daily": -0.0821734916741778,
+              "exposure": 0.32130584192439865
             }
           ]
         },
         "short_10_3@taker_40bp": {
-          "total_return": -0.6894230618826771,
-          "cagr": -0.10847751673325112,
-          "sharpe_annual": -0.6313660922439948,
-          "max_drawdown": 0.6894230618826771,
+          "total_return": -0.682173493038597,
+          "cagr": -0.1064552073583942,
+          "sharpe_annual": -0.6228112962731225,
+          "max_drawdown": 0.682173493038597,
           "n_closed_trades": 51,
-          "exposure": 0.10707559860102232,
-          "cost_share_of_gross": 0.5293158252312092,
+          "exposure": 0.10573042776432606,
+          "cost_share_of_gross": 0.5439033265155742,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.2246143805285764,
-              "mean_daily_return": -0.00010680670653677485,
-              "sharpe_daily": -0.04450732087553336,
+              "total_return": -0.21917167000325932,
+              "mean_daily_return": -0.00010379702103423872,
+              "sharpe_daily": -0.04332979707523149,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.12502095478106245,
-              "mean_daily_return": 3.814290464637619e-05,
-              "sharpe_daily": 0.001864013460771365,
-              "exposure": 0.2982885085574572
+              "total_return": -0.1356284638072246,
+              "mean_daily_return": 2.4455070880979948e-05,
+              "sharpe_daily": 0.0011918211785960683,
+              "exposure": 0.29706601466992666
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5422231677210778,
-              "mean_daily_return": -0.001259667683823291,
-              "sharpe_daily": -0.10016094675670015,
-              "exposure": 0.2542955326460481
+              "total_return": -0.5290941390613415,
+              "mean_daily_return": -0.001215361831710994,
+              "sharpe_daily": -0.09880889995480568,
+              "exposure": 0.24742268041237114
             }
           ]
         },
         "short_10_5@taker_40bp": {
-          "total_return": -0.7729884297665988,
-          "cagr": -0.13549891756460875,
-          "sharpe_annual": -0.6739742052391496,
-          "max_drawdown": 0.7876017942579076,
-          "n_closed_trades": 46,
-          "exposure": 0.15012106537530268,
-          "cost_share_of_gross": 0.42687878717430006,
+          "total_return": -0.7831479918676608,
+          "cagr": -0.13937703753069375,
+          "sharpe_annual": -0.6896688412297239,
+          "max_drawdown": 0.7853963653382844,
+          "n_closed_trades": 47,
+          "exposure": 0.14447134786117838,
+          "cost_share_of_gross": 0.4066630594787164,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.33460424736394034,
-              "mean_daily_return": -0.00017096377077067588,
-              "sharpe_daily": -0.05572238926380523,
+              "total_return": -0.3313762973059229,
+              "mean_daily_return": -0.00016887924879492372,
+              "sharpe_daily": -0.055070362395171206,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.181146323791061,
-              "mean_daily_return": 2.681513080780827e-06,
-              "sharpe_daily": 0.00011887531132551391,
-              "exposure": 0.4156479217603912
+              "total_return": -0.2164798530979707,
+              "mean_daily_return": -5.078819146343115e-05,
+              "sharpe_daily": -0.002249809069842478,
+              "exposure": 0.3960880195599022
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.583359325874237,
-              "mean_daily_return": -0.0013973999865461641,
-              "sharpe_daily": -0.09743350524533395,
-              "exposure": 0.35223367697594504
+              "total_return": -0.5860656076692675,
+              "mean_daily_return": -0.00140533951908346,
+              "sharpe_daily": -0.09655496077050656,
+              "exposure": 0.3436426116838488
             }
           ]
         },
         "short_10_10@taker_40bp": {
-          "total_return": -0.6120718131716747,
-          "cagr": -0.08879431368377888,
-          "sharpe_annual": -0.3956896869056841,
-          "max_drawdown": 0.7256531193470958,
-          "n_closed_trades": 34,
-          "exposure": 0.193166532149583,
-          "cost_share_of_gross": 0.975356659371986,
+          "total_return": -0.6140131192357323,
+          "cagr": -0.08924310182085826,
+          "sharpe_annual": -0.3966773597164846,
+          "max_drawdown": 0.7226074373278717,
+          "n_closed_trades": 35,
+          "exposure": 0.1869787463007802,
+          "cost_share_of_gross": 0.9881008361140899,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.33758529046836117,
-              "mean_daily_return": -0.00017289818589789687,
-              "sharpe_daily": -0.056328930773331225,
+              "total_return": -0.33437180249993514,
+              "mean_daily_return": -0.0001708136642534185,
+              "sharpe_daily": -0.05567744710121879,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.016133560426541793,
-              "mean_daily_return": 0.0003087194692101092,
-              "sharpe_daily": 0.012638556542144068,
-              "exposure": 0.5354523227383863
+              "total_return": 0.012745706839852877,
+              "mean_daily_return": 0.0003035930856831575,
+              "sharpe_daily": 0.012450694903173147,
+              "exposure": 0.5134474327628362
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4236708669148296,
-              "mean_daily_return": -0.0008173632081039745,
-              "sharpe_daily": -0.05146578917801427,
-              "exposure": 0.46048109965635736
+              "total_return": -0.4274144001789235,
+              "mean_daily_return": -0.0008253027350270838,
+              "sharpe_daily": -0.05134289960402338,
+              "exposure": 0.4518900343642612
             }
           ]
         },
         "short_20_3@taker_40bp": {
-          "total_return": -0.6531100666526939,
-          "cagr": -0.09874437674063896,
-          "sharpe_annual": -0.6068498308310193,
-          "max_drawdown": 0.6554440762330704,
+          "total_return": -0.6654804486300354,
+          "cagr": -0.10195232144073774,
+          "sharpe_annual": -0.6191610818428319,
+          "max_drawdown": 0.6654804486300354,
           "n_closed_trades": 38,
-          "exposure": 0.08528383104654291,
-          "cost_share_of_gross": 0.4341913399146546,
+          "exposure": 0.08501479687920366,
+          "cost_share_of_gross": 0.40553804982072456,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.2259640891339897,
-              "mean_daily_return": -0.00010748785063927452,
-              "sharpe_daily": -0.044298975326368936,
+              "total_return": -0.22596408849510186,
+              "mean_daily_return": -0.00010748785032585972,
+              "sharpe_daily": -0.04429897548681167,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.08033427453329522,
-              "mean_daily_return": 8.568368146428172e-05,
-              "sharpe_daily": 0.004329989001827558,
-              "exposure": 0.23471882640586797
+              "total_return": -0.1131303157120408,
+              "mean_daily_return": 4.4778878886690676e-05,
+              "sharpe_daily": 0.0022443497888352867,
+              "exposure": 0.2334963325183374
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5126953162133292,
-              "mean_daily_return": -0.0011589912432671005,
-              "sharpe_daily": -0.09623340422762146,
+              "total_return": -0.5126953162622305,
+              "mean_daily_return": -0.0011589912432010542,
+              "sharpe_daily": -0.09623340406866923,
               "exposure": 0.20446735395189003
             }
           ]
         },
         "short_20_5@taker_40bp": {
-          "total_return": -0.7045326713584794,
-          "cagr": -0.11283302123813121,
-          "sharpe_annual": -0.6049394680260648,
-          "max_drawdown": 0.7241911268527191,
+          "total_return": -0.7161740778778272,
+          "cagr": -0.1163279978355436,
+          "sharpe_annual": -0.6190868622157594,
+          "max_drawdown": 0.7241911276665036,
           "n_closed_trades": 35,
-          "exposure": 0.12106537530266344,
-          "cost_share_of_gross": 0.3970021521208447,
+          "exposure": 0.11460855528652139,
+          "cost_share_of_gross": 0.36534455972725716,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.33314621977991177,
-              "mean_daily_return": -0.00016993508786452842,
-              "sharpe_daily": -0.05494377435338749,
+              "total_return": -0.3331462200085863,
+              "mean_daily_return": -0.00016993508799583335,
+              "sharpe_daily": -0.05494377430985314,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.022595018530729427,
-              "mean_daily_return": 0.00019689829472350256,
-              "sharpe_daily": 0.009132110978491738,
-              "exposure": 0.33007334963325186
+              "total_return": -0.06110475287221939,
+              "mean_daily_return": 0.0001505901441317628,
+              "sharpe_daily": 0.0069457160251064146,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5466806053812483,
-              "mean_daily_return": -0.0012685408655361528,
-              "sharpe_daily": -0.09621756950446637,
+              "total_return": -0.5466806058643127,
+              "mean_daily_return": -0.0012685408671488036,
+              "sharpe_daily": -0.09621756951273001,
               "exposure": 0.2869415807560137
             }
           ]
         },
         "short_20_10@taker_40bp": {
-          "total_return": -0.49805129768803014,
-          "cagr": -0.06544362619271116,
-          "sharpe_annual": -0.32243088620781235,
-          "max_drawdown": 0.6714860395108663,
-          "n_closed_trades": 25,
-          "exposure": 0.15469464622006995,
-          "cost_share_of_gross": 1.3239222345657427,
+          "total_return": -0.5738906020106935,
+          "cagr": -0.0803556432962812,
+          "sharpe_annual": -0.39167867660815525,
+          "max_drawdown": 0.6714860397342478,
+          "n_closed_trades": 26,
+          "exposure": 0.14635458703255314,
+          "cost_share_of_gross": 0.6906798064389337,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.33613379563784085,
-              "mean_daily_return": -0.00017186950338273887,
-              "sharpe_daily": -0.05554596692893537,
+              "total_return": -0.3361337963271288,
+              "mean_daily_return": -0.0001718695037857491,
+              "sharpe_daily": -0.05554596682199133,
               "exposure": 0.005613126079447323
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.3951283829945693,
-              "mean_daily_return": 0.0006683127257173773,
-              "sharpe_daily": 0.028744944377445923,
-              "exposure": 0.4254278728606357
+              "total_return": 0.18433878545138183,
+              "mean_daily_return": 0.00046522875632501345,
+              "sharpe_daily": 0.02013448371878968,
+              "exposure": 0.38753056234718825
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.4580432857486326,
-              "mean_daily_return": -0.0009350958494700084,
-              "sharpe_daily": -0.061999888256706145,
+              "total_return": -0.4580432861517676,
+              "mean_daily_return": -0.000935095850748133,
+              "sharpe_daily": -0.061999888340985354,
               "exposure": 0.3694158075601375
             }
           ]
@@ -2237,78 +2237,78 @@
           ]
         },
         "short_timestop_5@taker_40bp": {
-          "total_return": -0.5449811255466286,
-          "cagr": -0.07440850988987258,
-          "sharpe_annual": -0.4548905076638194,
-          "max_drawdown": 0.6127971165138822,
+          "total_return": -0.5618180311365373,
+          "cagr": -0.0778291746345382,
+          "sharpe_annual": -0.468473329488492,
+          "max_drawdown": 0.6127971164803421,
           "n_closed_trades": 38,
-          "exposure": 0.08824320688727469,
-          "cost_share_of_gross": 0.8411795071126971,
+          "exposure": 0.08770513855259618,
+          "cost_share_of_gross": 0.746467457919625,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.22991462135368357,
-              "mean_daily_return": -0.00010909920538876054,
-              "sharpe_daily": -0.0411777421381402,
+              "total_return": -0.22991462105219918,
+              "mean_daily_return": -0.00010909920522937015,
+              "sharpe_daily": -0.04117774213091287,
               "exposure": 0.0025906735751295338
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": 0.06246539946756724,
-              "mean_daily_return": 0.00028037793908273643,
-              "sharpe_daily": 0.013547910626867632,
-              "exposure": 0.2628361858190709
+              "total_return": 0.02315135987000927,
+              "mean_daily_return": 0.00023778217408484164,
+              "sharpe_daily": 0.01140304135955701,
+              "exposure": 0.2603911980440098
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.44387074889599476,
-              "mean_daily_return": -0.0009375276175739117,
-              "sharpe_daily": -0.08078564923332487,
+              "total_return": -0.4438707486066097,
+              "mean_daily_return": -0.0009375276166119061,
+              "sharpe_daily": -0.08078564910983016,
               "exposure": 0.18384879725085912
             }
           ]
         },
         "short_no_regime_gate@taker_40bp": {
-          "total_return": -0.9225316345836931,
-          "cagr": -0.22211602523394403,
-          "sharpe_annual": -0.9110847773734536,
-          "max_drawdown": 0.9225316345836931,
+          "total_return": -0.9250368426190541,
+          "cagr": -0.2246230144600747,
+          "sharpe_annual": -0.9197734293482595,
+          "max_drawdown": 0.9250368426190541,
           "n_closed_trades": 61,
-          "exposure": 0.20231369383911757,
-          "cost_share_of_gross": 0.28508283850046606,
+          "exposure": 0.19558783965563625,
+          "cost_share_of_gross": 0.273487997524409,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 2316,
               "share_of_sample": 0.6232508073196986,
-              "total_return": -0.8162296209498109,
-              "mean_daily_return": -0.0006722430295335056,
-              "sharpe_daily": -0.06279144455364451,
+              "total_return": -0.8152822342502308,
+              "mean_daily_return": -0.0006700285071529584,
+              "sharpe_daily": -0.06258688558337902,
               "exposure": 0.12694300518134716
             },
             {
               "regime": "bear",
               "n_bars": 818,
               "share_of_sample": 0.2201291711517761,
-              "total_return": -0.022595017238141724,
-              "mean_daily_return": 0.00019689829631765876,
-              "sharpe_daily": 0.009132111052830034,
-              "exposure": 0.33007334963325186
+              "total_return": -0.06110475281605432,
+              "mean_daily_return": 0.00015059014434864757,
+              "sharpe_daily": 0.006945716032964979,
+              "exposure": 0.30073349633251834
             },
             {
               "regime": "chop",
               "n_bars": 582,
               "share_of_sample": 0.1566200215285253,
-              "total_return": -0.5687050901623969,
-              "mean_daily_return": -0.0013256814770075235,
-              "sharpe_daily": -0.08749544714975091,
-              "exposure": 0.3230240549828179
+              "total_return": -0.5677628780303582,
+              "mean_daily_return": -0.00132228215040593,
+              "sharpe_daily": -0.08739052792886713,
+              "exposure": 0.32130584192439865
             }
           ]
         }
@@ -2326,39 +2326,39 @@
       },
       "variants": {
         "short_10_3@maker_0bp": {
-          "total_return": -0.1075289779630344,
-          "cagr": -0.015210869103743252,
-          "sharpe_annual": -0.11525359939041509,
-          "max_drawdown": 0.5014122938837865,
+          "total_return": -0.10965218886463379,
+          "cagr": -0.015526859252767866,
+          "sharpe_annual": -0.11659629382589716,
+          "max_drawdown": 0.501412293905259,
           "n_closed_trades": 44,
-          "exposure": 0.16758951642672573,
+          "exposure": 0.1672203765227021,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.14451353497036046,
-              "mean_daily_return": -0.00011362322978681202,
-              "sharpe_daily": -0.0587554809629381,
+              "total_return": -0.14451353497794206,
+              "mean_daily_return": -0.00011362322979331081,
+              "sharpe_daily": -0.058755480965331196,
               "exposure": 0.009622501850481125
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.051928078179655834,
-              "mean_daily_return": 0.00024328453072524175,
-              "sharpe_daily": 0.012533012260146638,
-              "exposure": 0.38199780461031835
+              "total_return": 0.04942551497878145,
+              "mean_daily_return": 0.00024070127395832243,
+              "sharpe_daily": 0.012398900827316336,
+              "exposure": 0.3809001097694841
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": -0.008266614554447771,
-              "mean_daily_return": 4.947306970425326e-05,
-              "sharpe_daily": 0.004225397806496089,
+              "total_return": -0.008266614572864706,
+              "mean_daily_return": 4.9473069669608826e-05,
+              "sharpe_daily": 0.004225397803324479,
               "exposure": 0.2085201793721973
             }
           ]
@@ -2402,40 +2402,40 @@
           ]
         },
         "short_10_10@maker_0bp": {
-          "total_return": 0.4002635615993826,
-          "cagr": 0.046404819945047526,
-          "sharpe_annual": 0.17020212053565195,
-          "max_drawdown": 0.5476001907219858,
-          "n_closed_trades": 30,
-          "exposure": 0.2897748246585456,
+          "total_return": 0.4316557568559942,
+          "cagr": 0.04953537267250607,
+          "sharpe_annual": 0.1818959926291264,
+          "max_drawdown": 0.5423878678560866,
+          "n_closed_trades": 31,
+          "exposure": 0.27759320782576596,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.24689503825883674,
-              "mean_daily_return": -0.00020515522608018726,
-              "sharpe_daily": -0.06802008455445595,
+              "total_return": -0.24689503825647963,
+              "mean_daily_return": -0.00020515522607782868,
+              "sharpe_daily": -0.06802008455333851,
               "exposure": 0.012583271650629163
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.44426966628629216,
-              "mean_daily_return": 0.000695939563468082,
-              "sharpe_daily": 0.028710895593029025,
-              "exposure": 0.6158068057080132
+              "total_return": 0.48129734519254863,
+              "mean_daily_return": 0.0007343535769073588,
+              "sharpe_daily": 0.02975679350768229,
+              "exposure": 0.6136114160263447
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.28737771978497695,
-              "mean_daily_return": 0.0007042594976286822,
-              "sharpe_daily": 0.04221041477594698,
-              "exposure": 0.4641255605381166
+              "total_return": 0.2833373987238841,
+              "mean_daily_return": 0.000698145198467634,
+              "sharpe_daily": 0.041680993530979545,
+              "exposure": 0.39461883408071746
             }
           ]
         },
@@ -2516,40 +2516,40 @@
           ]
         },
         "short_20_10@maker_0bp": {
-          "total_return": 0.2765329788036057,
-          "cagr": 0.03344255214221792,
-          "sharpe_annual": 0.11654630869740616,
-          "max_drawdown": 0.5097009517477696,
-          "n_closed_trades": 24,
-          "exposure": 0.23403469915097821,
+          "total_return": 0.24359209019505124,
+          "cagr": 0.029808647989454817,
+          "sharpe_annual": 0.1062432626388646,
+          "max_drawdown": 0.5097009517583758,
+          "n_closed_trades": 25,
+          "exposure": 0.2248062015503876,
           "cost_share_of_gross": 0.0,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.23810837262009388,
-              "mean_daily_return": -0.00019687682031999243,
-              "sharpe_daily": -0.06757415685209414,
+              "total_return": -0.23810837265015505,
+              "mean_daily_return": -0.00019687682034811468,
+              "sharpe_daily": -0.06757415685361415,
               "exposure": 0.008142116950407105
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.3581773818573313,
-              "mean_daily_return": 0.0005838460009067664,
-              "sharpe_daily": 0.026164498154070726,
+              "total_return": 0.391782074745753,
+              "mean_daily_return": 0.0006187049503033786,
+              "sharpe_daily": 0.02728527948741466,
               "exposure": 0.4829857299670692
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.233622677523873,
-              "mean_daily_return": 0.000598368231166584,
-              "sharpe_daily": 0.03724772352146231,
-              "exposure": 0.4103139013452915
+              "total_return": 0.17277179121646835,
+              "mean_daily_return": 0.0004858793787306273,
+              "sharpe_daily": 0.03012631986796443,
+              "exposure": 0.3542600896860987
             }
           ]
         },
@@ -2896,39 +2896,39 @@
           ]
         },
         "short_10_3@maker_10bp": {
-          "total_return": -0.1705767439628174,
-          "cagr": -0.024884127102462905,
-          "sharpe_annual": -0.15731878173560998,
-          "max_drawdown": 0.5282835012460805,
+          "total_return": -0.17255302804553108,
+          "cagr": -0.025197499955513347,
+          "sharpe_annual": -0.1586515515194585,
+          "max_drawdown": 0.528283501248662,
           "n_closed_trades": 44,
-          "exposure": 0.16758951642672573,
-          "cost_share_of_gross": 3.278557017451742,
+          "exposure": 0.1672203765227021,
+          "cost_share_of_gross": 3.600754343246945,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.14831774887936422,
-              "mean_daily_return": -0.00011688730932126891,
-              "sharpe_daily": -0.059909079716422266,
+              "total_return": -0.14831774887422788,
+              "mean_daily_return": -0.00011688730931719635,
+              "sharpe_daily": -0.0599090797203019,
               "exposure": 0.009622501850481125
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.001211725128454022,
-              "mean_daily_return": 0.0001890503162194462,
-              "sharpe_daily": 0.009739522809552906,
-              "exposure": 0.38199780461031835
+              "total_return": -0.0011738828964944492,
+              "mean_daily_return": 0.00018647370284130075,
+              "sharpe_daily": 0.009605715650421086,
+              "exposure": 0.3809001097694841
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": -0.02731395623713928,
-              "mean_daily_return": 5.867461261077373e-06,
-              "sharpe_daily": 0.0005016161517511899,
+              "total_return": -0.027313956266623696,
+              "mean_daily_return": 5.86746119096181e-06,
+              "sharpe_daily": 0.0005016161457648767,
               "exposure": 0.2085201793721973
             }
           ]
@@ -2972,40 +2972,40 @@
           ]
         },
         "short_10_10@maker_10bp": {
-          "total_return": 0.30798259582498666,
-          "cagr": 0.03683700755952635,
-          "sharpe_annual": 0.13966732885710234,
-          "max_drawdown": 0.5634504549630843,
-          "n_closed_trades": 30,
-          "exposure": 0.2897748246585456,
-          "cost_share_of_gross": 0.17060726519149017,
+          "total_return": 0.33421811727529094,
+          "cagr": 0.03961508075143105,
+          "sharpe_annual": 0.1508191459254917,
+          "max_drawdown": 0.5583344337726538,
+          "n_closed_trades": 31,
+          "exposure": 0.27759320782576596,
+          "cost_share_of_gross": 0.17072360152938082,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.2495957530716424,
-              "mean_daily_return": -0.0002077776923955687,
-              "sharpe_daily": -0.06862592736438018,
+              "total_return": -0.24959575306648818,
+              "mean_daily_return": -0.00020777769239061403,
+              "sharpe_daily": -0.06862592736365065,
               "exposure": 0.012583271650629163
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.37936351767910037,
-              "mean_daily_return": 0.0006454620394320447,
-              "sharpe_daily": 0.02662907979190439,
-              "exposure": 0.6158068057080132
+              "total_return": 0.4133024991884249,
+              "mean_daily_return": 0.0006827908614316752,
+              "sharpe_daily": 0.027667122058742596,
+              "exposure": 0.6136114160263447
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.2636533315000722,
-              "mean_daily_return": 0.0006624449947511379,
-              "sharpe_daily": 0.0397176111383676,
-              "exposure": 0.4641255605381166
+              "total_return": 0.2580457166432759,
+              "mean_daily_return": 0.0006535641127804889,
+              "sharpe_daily": 0.03901127945515047,
+              "exposure": 0.39461883408071746
             }
           ]
         },
@@ -3086,40 +3086,40 @@
           ]
         },
         "short_20_10@maker_10bp": {
-          "total_return": 0.20758790433247842,
-          "cagr": 0.02574028083878055,
-          "sharpe_annual": 0.0897949971192672,
-          "max_drawdown": 0.5220952981763669,
-          "n_closed_trades": 24,
-          "exposure": 0.23403469915097821,
-          "cost_share_of_gross": 0.17611649518523065,
+          "total_return": 0.17393533851847498,
+          "cagr": 0.021841607210522085,
+          "sharpe_annual": 0.07885890791269712,
+          "max_drawdown": 0.5220952981803315,
+          "n_closed_trades": 25,
+          "exposure": 0.2248062015503876,
+          "cost_share_of_gross": 0.19520744828129577,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.2402421981239906,
-              "mean_daily_return": -0.00019892992143890248,
-              "sharpe_daily": -0.06810540588650824,
+              "total_return": -0.2402421981241153,
+              "mean_daily_return": -0.0001989299214392518,
+              "sharpe_daily": -0.06810540588826947,
               "exposure": 0.008142116950407105
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.3093137136381088,
-              "mean_daily_return": 0.0005436981815770948,
-              "sharpe_daily": 0.024362333398292232,
+              "total_return": 0.3406992865074461,
+              "mean_daily_return": 0.0005777274985296789,
+              "sharpe_daily": 0.025475286334728904,
               "exposure": 0.4829857299670692
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.2139473996009209,
-              "mean_daily_return": 0.000562164195878921,
-              "sharpe_daily": 0.03501409764125323,
-              "exposure": 0.4103139013452915
+              "total_return": 0.15249123050548796,
+              "mean_daily_return": 0.0004467470599805825,
+              "sharpe_daily": 0.027702523650531174,
+              "exposure": 0.3542600896860987
             }
           ]
         },
@@ -3466,39 +3466,39 @@
           ]
         },
         "short_10_3@maker_25bp": {
-          "total_return": -0.2569625551814474,
-          "cagr": -0.0392276648541251,
-          "sharpe_annual": -0.22038683820309352,
-          "max_drawdown": 0.5724975937089225,
+          "total_return": -0.25873713031614753,
+          "cagr": -0.03953714814557763,
+          "sharpe_annual": -0.22170078923617423,
+          "max_drawdown": 0.5724975937103403,
           "n_closed_trades": 44,
-          "exposure": 0.16758951642672573,
-          "cost_share_of_gross": 3.4693859370990454,
+          "exposure": 0.1672203765227021,
+          "cost_share_of_gross": 3.6125529496376587,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.15399994457324195,
-              "mean_daily_return": -0.00012178508569000067,
-              "sharpe_daily": -0.061535073001378095,
+              "total_return": -0.1539999445877448,
+              "mean_daily_return": -0.00012178508570207876,
+              "sharpe_daily": -0.06153507299825442,
               "exposure": 0.009622501850481125
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": -0.07036581880010706,
-              "mean_daily_return": 0.00010770026530785106,
-              "sharpe_daily": 0.005548071379424669,
-              "exposure": 0.38199780461031835
+              "total_return": -0.07258603758232718,
+              "mean_daily_return": 0.00010513361998805166,
+              "sharpe_daily": 0.005415029425261783,
+              "exposure": 0.3809001097694841
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": -0.05522536471801698,
-              "mean_daily_return": -5.954108224578196e-05,
-              "sharpe_daily": -0.0050956758062794755,
+              "total_return": -0.0552253647175136,
+              "mean_daily_return": -5.9541082244507196e-05,
+              "sharpe_daily": -0.005095675806166496,
               "exposure": 0.2085201793721973
             }
           ]
@@ -3542,40 +3542,40 @@
           ]
         },
         "short_10_10@maker_25bp": {
-          "total_return": 0.1807509746204039,
-          "cagr": 0.022638943202820228,
-          "sharpe_annual": 0.09384810004634168,
-          "max_drawdown": 0.5862100770827108,
-          "n_closed_trades": 30,
-          "exposure": 0.2897748246585456,
-          "cost_share_of_gross": 0.3940291547445057,
+          "total_return": 0.20025519197843233,
+          "cagr": 0.024898864605039872,
+          "sharpe_annual": 0.10419832107113801,
+          "max_drawdown": 0.5812378093323455,
+          "n_closed_trades": 31,
+          "exposure": 0.27759320782576596,
+          "cost_share_of_gross": 0.3946480160370808,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.2536344363642665,
-              "mean_daily_return": -0.0002117132936856822,
-              "sharpe_daily": -0.06950078883265581,
+              "total_return": -0.2536344363700951,
+              "mean_daily_return": -0.00021171329369122172,
+              "sharpe_daily": -0.06950078883273902,
               "exposure": 0.012583271650629163
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.28737264065988866,
-              "mean_daily_return": 0.0005697422675667207,
-              "sharpe_daily": 0.023504327586797238,
-              "exposure": 0.6158068057080132
+              "total_return": 0.3170552674617739,
+              "mean_daily_return": 0.0006054440745414814,
+              "sharpe_daily": 0.02453082491075238,
+              "exposure": 0.6136114160263447
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.228860102251915,
-              "mean_daily_return": 0.0005997255385013145,
-              "sharpe_daily": 0.03596984033851298,
-              "exposure": 0.4641255605381166
+              "total_return": 0.2210065685380722,
+              "mean_daily_return": 0.000586685879572696,
+              "sharpe_daily": 0.03500213154705748,
+              "exposure": 0.39461883408071746
             }
           ]
         },
@@ -3656,40 +3656,40 @@
           ]
         },
         "short_20_10@maker_25bp": {
-          "total_return": 0.11102668054182296,
-          "cagr": 0.014286716038833358,
-          "sharpe_annual": 0.04966235926338581,
-          "max_drawdown": 0.5401168716588041,
-          "n_closed_trades": 24,
-          "exposure": 0.23403469915097821,
-          "cost_share_of_gross": 0.4112292048065487,
+          "total_return": 0.07663442209887039,
+          "cagr": 0.009998552324627097,
+          "sharpe_annual": 0.03778797939525277,
+          "max_drawdown": 0.5442673289275239,
+          "n_closed_trades": 25,
+          "exposure": 0.2248062015503876,
+          "cost_share_of_gross": 0.45326247715763224,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.24343520745104164,
-              "mean_daily_return": -0.00020200987248198776,
-              "sharpe_daily": -0.06887382626012108,
+              "total_return": -0.24343520746568803,
+              "mean_daily_return": -0.00020200987249570086,
+              "sharpe_daily": -0.06887382626018404,
               "exposure": 0.008142116950407105
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.23924691864447767,
-              "mean_daily_return": 0.0004834697150628738,
-              "sharpe_daily": 0.021658211871038197,
+              "total_return": 0.26751926223505884,
+              "mean_daily_return": 0.0005162548871710607,
+              "sharpe_daily": 0.02275930862691136,
               "exposure": 0.4829857299670692
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.18500590233447878,
-              "mean_daily_return": 0.000507866921137417,
-              "sharpe_daily": 0.031655005400310264,
-              "exposure": 0.4103139013452915
+              "total_return": 0.12270993524201512,
+              "mean_daily_return": 0.0003880639328780068,
+              "sharpe_daily": 0.024062806306641225,
+              "exposure": 0.3542600896860987
             }
           ]
         },
@@ -4036,39 +4036,39 @@
           ]
         },
         "short_10_3@taker_40bp": {
-          "total_return": -0.3344223739884641,
-          "cagr": -0.053373865136214005,
-          "sharpe_annual": -0.28337784989172277,
-          "max_drawdown": 0.6126075672404233,
+          "total_return": -0.33601565401353295,
+          "cagr": -0.05367950215874051,
+          "sharpe_annual": -0.2846683024576972,
+          "max_drawdown": 0.6126075673077315,
           "n_closed_trades": 44,
-          "exposure": 0.16758951642672573,
-          "cost_share_of_gross": 3.516505010569666,
+          "exposure": 0.1672203765227021,
+          "cost_share_of_gross": 3.611285803684396,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.1596532623161223,
-              "mean_daily_return": -0.00012668484359070102,
-              "sharpe_daily": -0.06303794540766877,
+              "total_return": -0.15965326232440047,
+              "mean_daily_return": -0.00012668484359772502,
+              "sharpe_daily": -0.0630379454070633,
               "exposure": 0.009622501850481125
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": -0.13688283768880427,
-              "mean_daily_return": 2.6351668813903347e-05,
-              "sharpe_daily": 0.001357130666209754,
-              "exposure": 0.38199780461031835
+              "total_return": -0.13894899384063786,
+              "mean_daily_return": 2.379499504615173e-05,
+              "sharpe_daily": 0.0012252232170735407,
+              "exposure": 0.3809001097694841
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": -0.08236399893254498,
-              "mean_daily_return": -0.00012494972025898747,
-              "sharpe_daily": -0.010699881673939904,
+              "total_return": -0.0823639989675371,
+              "mean_daily_return": -0.0001249497203456399,
+              "sharpe_daily": -0.01069988168145431,
               "exposure": 0.2085201793721973
             }
           ]
@@ -4112,40 +4112,40 @@
           ]
         },
         "short_10_10@taker_40bp": {
-          "total_return": 0.06580137196514979,
-          "cagr": 0.00862329046355903,
-          "sharpe_annual": 0.04802271100181983,
-          "max_drawdown": 0.6078051952398515,
-          "n_closed_trades": 30,
-          "exposure": 0.2897748246585456,
-          "cost_share_of_gross": 0.5853925338612674,
+          "total_return": 0.07963646714880923,
+          "cagr": 0.010377544498596736,
+          "sharpe_annual": 0.05758590736453119,
+          "max_drawdown": 0.6029755881506136,
+          "n_closed_trades": 31,
+          "exposure": 0.27759320782576596,
+          "cost_share_of_gross": 0.5867743898474117,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.2576582641307733,
-              "mean_daily_return": -0.00021565117094401868,
-              "sharpe_daily": -0.07033509056434348,
+              "total_return": -0.25765826415725,
+              "mean_daily_return": -0.0002156511709692533,
+              "sharpe_daily": -0.07033509056440784,
               "exposure": 0.012583271650629163
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.2014496695672805,
-              "mean_daily_return": 0.0004940182498596156,
-              "sharpe_daily": 0.0203778619114468,
-              "exposure": 0.6158068057080132
+              "total_return": 0.22729298340018023,
+              "mean_daily_return": 0.0005280939724577159,
+              "sharpe_daily": 0.021393099281961425,
+              "exposure": 0.6136114160263447
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.19499699873400678,
-              "mean_daily_return": 0.0005370089732614286,
-              "sharpe_daily": 0.032213634853078814,
-              "exposure": 0.4641255605381166
+              "total_return": 0.18501927927238038,
+              "mean_daily_return": 0.0005197997638114218,
+              "sharpe_daily": 0.030989804059289996,
+              "exposure": 0.39461883408071746
             }
           ]
         },
@@ -4226,40 +4226,40 @@
           ]
         },
         "short_20_10@taker_40bp": {
-          "total_return": 0.022117586224193575,
-          "cagr": 0.0029519072616992492,
-          "sharpe_annual": 0.009534149704681588,
-          "max_drawdown": 0.5607342710565952,
-          "n_closed_trades": 24,
-          "exposure": 0.23403469915097821,
-          "cost_share_of_gross": 0.6167563097578035,
+          "total_return": -0.012671028161381104,
+          "cagr": -0.0017166778111565861,
+          "sharpe_annual": -0.0032639567491490906,
+          "max_drawdown": 0.5756850421413681,
+          "n_closed_trades": 25,
+          "exposure": 0.2248062015503876,
+          "cost_share_of_gross": 0.6764221815440062,
           "regimes": [
             {
               "regime": "bull",
               "n_bars": 1351,
               "share_of_sample": 0.4988921713441654,
-              "total_return": -0.24661895013724977,
-              "mean_daily_return": -0.0002050901768444264,
-              "sharpe_daily": -0.06960795413534507,
+              "total_return": -0.24661895013358193,
+              "mean_daily_return": -0.00020509017684082972,
+              "sharpe_daily": -0.06960795413422481,
               "exposure": 0.008142116950407105
             },
             {
               "regime": "bear",
               "n_bars": 911,
               "share_of_sample": 0.336410635155096,
-              "total_return": 0.1728751081942952,
-              "mean_daily_return": 0.0004232328743391405,
-              "sharpe_daily": 0.018953586987599406,
+              "total_return": 0.19827683154493903,
+              "mean_daily_return": 0.00045477425434881715,
+              "sharpe_daily": 0.02004269221846539,
               "exposure": 0.4829857299670692
             },
             {
               "regime": "chop",
               "n_bars": 446,
               "share_of_sample": 0.16469719350073855,
-              "total_return": 0.15673639249065063,
-              "mean_daily_return": 0.00045358035153544553,
-              "sharpe_daily": 0.028287006362355184,
-              "exposure": 0.4103139013452915
+              "total_return": 0.09367938628512529,
+              "mean_daily_return": 0.00032939943253378014,
+              "sharpe_daily": 0.020420276784008515,
+              "exposure": 0.3542600896860987
             }
           ]
         },
@@ -4613,28 +4613,29 @@
       "null": {
         "n_draws": 1000,
         "direction": -1,
-        "observed_sharpe": -0.6049394680260648,
-        "null_mean": -0.6097229658821355,
-        "null_p05": -1.090469767238481,
-        "null_p50": -0.6137259205372545,
-        "null_p95": -0.11219137150285716,
-        "percentile": 0.51
+        "observed_sharpe": -0.6190868622157594,
+        "null_mean": -0.6057100149932619,
+        "null_p05": -1.0944168982547045,
+        "null_p50": -0.624049421042792,
+        "null_p95": -0.10829451727855545,
+        "percentile": 0.507
       },
       "ensemble": {
-        "correlation": 0.0010129170923210192,
+        "correlation": 0.0010686938516597144,
         "n_bars": 3716,
         "long_sharpe": 1.2016261981079577,
-        "short_sharpe": -0.6049394680260648,
-        "combined_sharpe": 0.42170770966808463,
+        "short_sharpe": -0.6190868622157594,
+        "combined_sharpe": 0.4116975841227616,
         "long_max_drawdown": 0.43010607965284864,
-        "combined_max_drawdown": 0.3402366840578891
+        "combined_max_drawdown": 0.34024416834531024
       },
       "stop_gaps": {
-        "n_stop_exits": 2,
-        "n_gapped": 2,
-        "worst_gap_pct": 0.18574968419657611,
-        "mean_gap_pct": 0.18256253595814756,
-        "total_gap_cost_pct_of_nav": 0.3651250719162951
+        "n_stop_exits": 1,
+        "n_gapped": 0,
+        "n_armings": 426,
+        "worst_gap_pct": 0.0,
+        "mean_gap_pct": 0.0,
+        "total_gap_cost_pct_of_nav": 0.0
       },
       "long_baseline_sharpe": 1.2016261981079577,
       "long_baseline_total_return": 56.57037792647125
@@ -4660,11 +4661,12 @@
         "combined_max_drawdown": 0.29502434215379647
       },
       "stop_gaps": {
-        "n_stop_exits": 2,
-        "n_gapped": 2,
-        "worst_gap_pct": 0.3847963320328764,
-        "mean_gap_pct": 0.3680208019277579,
-        "total_gap_cost_pct_of_nav": 0.7360416038555158
+        "n_stop_exits": 0,
+        "n_gapped": 0,
+        "n_armings": 489,
+        "worst_gap_pct": 0.0,
+        "mean_gap_pct": 0.0,
+        "total_gap_cost_pct_of_nav": 0.0
       },
       "long_baseline_sharpe": 0.7751172902971348,
       "long_baseline_total_return": 5.522072405483212

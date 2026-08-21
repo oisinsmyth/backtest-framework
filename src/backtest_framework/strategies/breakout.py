@@ -442,18 +442,22 @@ class ChannelStopExit:
     Mechanical, unambiguous, and exactly what BREAKDOWN_SHORT_STRATEGY.md specifies.
     Symmetric for a long, though the long book does not require it.
 
-    **This is a CLOSE-BASED stop, and that is a real limitation, not a detail (D169).**
-    The engine has no intrabar stop execution: `simulator/fills.stop_fill_price` exists
-    with correct D10 gap semantics and is explicitly a Step-2 demonstration vehicle
-    wired only to `config/fill_model.py`, never to `run_backtest`. So this rule can only
-    observe a CLOSE beyond the stop and exit at the NEXT OPEN. An overnight gap goes
-    straight through it and fills wherever the next open lands.
+    **This rule DECLARES the level; the engine ENFORCES it intrabar (D170).** The
+    strategy hands the level to `run_backtest` on every target it emits while a position
+    is open, and the engine closes the position the moment the bar touches it, routing
+    through `simulator/fills.stop_fill_price` so a bar that GAPS through the stop fills
+    at the bar's open rather than at a price the market never traded (D10).
 
-    The consequence must be stated rather than assumed: the squeeze tail is **not**
-    truncated by construction, which is the premise the brief's "short expectancy is
-    only calculable with the tail truncated" rests on. The study therefore MEASURES the
-    gap — stop level versus realised fill on every stop exit — so the shortfall is a
-    reported number instead of an unstated assumption."""
+    The close-based `exits()` check below is **retained deliberately as a backstop**, not
+    left over. Whenever the engine path is live it is a no-op — the engine will always
+    have fired first, on the bar the stop was touched rather than at the next close. It
+    still matters for callers that drive `generate_targets` directly without the engine,
+    which several unit tests do: without it those paths would have no stop at all.
+
+    Under D169 this rule WAS the stop, and could only observe a close beyond the level
+    and exit at the next open. That shipped, and it did not hold: 4 of 4 stop exits in
+    the Phase 2 study filled beyond their own stop, the worst by 38.5%. D170 is the
+    disposition of that finding."""
 
     name: str = field(default="channel_stop", init=False)
 
@@ -720,6 +724,18 @@ class BreakoutStrategy:
         # no branch here. `_held_weight` stays a magnitude in every state.
         return self._targets(self._state * self._held_weight)
 
+    def _live_stop(self) -> float | None:
+        """The stop level to hand the engine with this bar's target (D170).
+
+        Only while a position is open, and only when a ChannelStopExit is configured —
+        the rule computes the level, the engine enforces it intrabar. A strategy with no
+        stop rule declares None and the engine arms nothing."""
+        if self._state is PositionState.FLAT:
+            return None
+        if not any(isinstance(r, ChannelStopExit) for r in self.exit_rules):
+            return None
+        return self._stop_level
+
     def _check_volume_available(self, view: DataView) -> None:
         """Fail loudly, once, if any filter needs volume and the view has none (D168).
 
@@ -743,9 +759,25 @@ class BreakoutStrategy:
     def _targets(self, weight: float) -> list[TargetWeight]:
         return [
             TargetWeight(
-                strategy_id=self.strategy_id, instrument_id=self.instrument_id, weight=weight
+                strategy_id=self.strategy_id,
+                instrument_id=self.instrument_id,
+                weight=weight,
+                stop=self._live_stop(),
             )
         ]
+
+    def on_stop_filled(self, instrument_id: str) -> None:
+        """The engine closed this position intrabar at its stop (D170).
+
+        Without this the strategy would still believe it holds the position, keep
+        emitting the same target, and re-enter on the very next bar — turning one
+        bounded loss into a repeated one. Optional on the protocol, mandatory for any
+        strategy that keeps its own state, which this one does (D68)."""
+        if instrument_id != self.instrument_id:
+            return
+        self._state = PositionState.FLAT
+        self._held_weight = 0.0
+        self._entry_index = -1
 
     def config(self) -> dict[str, Any]:
         """Declarative description of the whole strategy (D52/D102) — what the

@@ -408,16 +408,20 @@ class StopGapReport:
 
     n_stop_exits: int
     n_gapped: int
-    """Exits where the fill was WORSE than the stop level — the tail the stop did not
-    actually truncate."""
+    """Stop exits that filled WORSE than the stop level — the tail the stop did not
+    actually truncate, because the bar opened past it."""
     worst_gap_pct: float
     mean_gap_pct: float
     total_gap_cost_pct_of_nav: float
+    n_armings: int = 0
+    """How many bars carried a live stop. The ratio of exits to armings is the honest
+    measure of whether the tail discipline BINDS or is merely present."""
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "n_stop_exits": self.n_stop_exits,
             "n_gapped": self.n_gapped,
+            "n_armings": self.n_armings,
             "worst_gap_pct": self.worst_gap_pct,
             "mean_gap_pct": self.mean_gap_pct,
             "total_gap_cost_pct_of_nav": self.total_gap_cost_pct_of_nav,
@@ -425,39 +429,33 @@ class StopGapReport:
 
 
 def measure_stop_gaps(
-    episodes: Sequence[Any],
-    bars: Sequence[TimestampedBar],
-    n_entry: int,
-    direction: int,
+    stop_fills: Sequence[tuple[Any, ...]],
+    n_armings: int = 0,
 ) -> StopGapReport:
-    """For every episode, recover the stop level that was live and compare it against the
-    exit fill. A short's stop sits at the entry channel's high; a fill above it is a gap
-    the stop did not stop."""
+    """Report on the exits the STOP actually caused (D170).
+
+    Takes `BacktestResult.stop_fills`, which the engine records, rather than inferring
+    stop exits from prices afterwards. The Phase 2 version of this function inferred:
+    it recomputed the stop level and counted any episode whose exit price ended beyond
+    it. That also catches ordinary trailing-channel exits that happened to close past
+    the level, and it reported them as stops that had failed — which is how
+    BREAKDOWN_RESULTS came to claim "4 of 4 stop exits gapped" when the true number of
+    stop-caused exits was far smaller. Only the engine knows which fill a stop caused.
+
+    A fill price differing from the stop price is the gap case (D10): the bar opened
+    beyond the stop, so the position filled at the open and the stop did not bound the
+    loss where it was set."""
     gaps: list[float] = []
-    n_stop_exits = 0
-    for e in episodes:
-        if e.is_open or e.exit_price is None:
-            continue
-        trigger = e.entry_index - 1  # fills are next-open (D103)
-        if trigger - n_entry < 0:
-            continue
-        window = bars[trigger - n_entry : trigger]
-        if not window:
-            continue
-        stop_level = (
-            max(b.bar.high for b in window) if direction < 0 else min(b.bar.low for b in window)
-        )
-        beyond = (e.exit_price > stop_level) if direction < 0 else (e.exit_price < stop_level)
-        if not beyond:
-            continue
-        n_stop_exits += 1
-        gaps.append(abs(e.exit_price - stop_level) / stop_level)
+    for _ts, _sid, _inst, _qty, fill_price, stop_price in stop_fills:
+        if stop_price and abs(fill_price - stop_price) > 1e-9:
+            gaps.append(abs(fill_price - stop_price) / stop_price)
     return StopGapReport(
-        n_stop_exits=n_stop_exits,
+        n_stop_exits=len(stop_fills),
         n_gapped=len(gaps),
         worst_gap_pct=max(gaps) if gaps else 0.0,
         mean_gap_pct=statistics.fmean(gaps) if gaps else 0.0,
         total_gap_cost_pct_of_nav=sum(gaps) if gaps else 0.0,
+        n_armings=n_armings,
     )
 
 

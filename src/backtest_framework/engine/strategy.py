@@ -28,6 +28,18 @@ class Strategy(Protocol):
 
     def generate_targets(self, views: Mapping[str, DataView]) -> list[TargetWeight]: ...
 
+    # OPTIONAL (D170), deliberately not declared here as a required member so that every
+    # strategy written before intrabar stops existed still conforms:
+    #
+    #     def on_stop_filled(self, instrument_id: str) -> None: ...
+    #
+    # The engine calls it, if present, immediately after a stop closes a position. A
+    # stateful strategy MUST implement it or it will not learn that it was stopped out:
+    # it would keep emitting the same target and re-enter on the very next bar, which
+    # turns a bounded loss into a repeated one. `run_backtest` looks it up with getattr,
+    # so omitting it is silent — that is the price of keeping the protocol additive, and
+    # it is why the requirement is stated here rather than left to be discovered.
+
 
 @dataclass(frozen=True)
 class ScheduledWeightStrategy:

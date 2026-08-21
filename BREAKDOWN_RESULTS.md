@@ -13,22 +13,26 @@
 
 ## Read this first: three things that bound what this study can claim
 
-### 1. The stop is CLOSE-BASED, so the squeeze tail is NOT truncated by construction
+### 1. The stop is INTRABAR now — and it turns out barely to matter
 
-The brief makes tail discipline non-optional and says plainly that *"short expectancy is
-only calculable with the squeeze tail truncated by construction"*. That standard is **not
-met here, and cannot be with the current engine.**
+Phase 2 shipped this book with a close-based stop, because `run_backtest` had no intrabar
+stop execution, and said so loudly. D170 wired it: `simulator/fills.stop_fill_price` and
+its D10 gap semantics now sit in the engine's bar loop, checked before the strategy is
+consulted, so a stop closes a position **the moment the bar touches it** and a bar that
+gaps through fills at the open rather than at a price the market never traded.
 
-`simulator/fills.stop_fill_price` implements correct gap-through semantics (D10) and
-names `BUY_STOP` as "the exit order for a short position" — but it is a Step-2
-demonstration vehicle wired only to `config/fill_model.py`, never to `run_backtest`. The
-engine's order path is weight-target → quantity → fill at close or next open. There is no
-intrabar stop.
+The honest result is that it changes almost nothing here, and the reason is worth more
+than the fix. **The stop sits at the far side of the entry channel** — for a short
+entering on an N-bar low, it is the N-bar high — which is an enormous distance from the
+entry. The trailing exit channel gets there first essentially every time. See the stop
+table below: the stop is armed for hundreds of bars per symbol and causes a handful of
+exits, or none.
 
-So `ChannelStopExit` observes a **close** beyond the stop and exits at the **next open**.
-An overnight gap goes straight through it. The study therefore MEASURES the shortfall
-rather than assuming it away — see the stop-gap table. Read every short number here as
-"with a stop that mostly works", not "with a bounded loss per trade".
+**This also corrects a Phase 2 claim.** That report said "4 of 4 stop exits filled beyond
+their own stop, worst by 38.5%". That number was a measurement artifact: it inferred stop
+exits by asking whether an exit price ended up beyond the stop level, which also counts
+ordinary channel exits that closed past it. The engine now records which fills a stop
+actually caused, and the true count is far smaller.
 
 ### 2. Borrow is charged, at a stated non-zero rate
 
@@ -68,19 +72,19 @@ Baseline `short_20_5` at `taker_40bp`:
 | Regime | Bars | Share | Return in regime | Daily Sharpe | Exposure |
 |---|---|---|---|---|---|
 | **bull** | 2,316 | 62% | -33.3% | -0.055 | 1% |
-| **bear** | 818 | 22% | -2.3% | +0.009 | 33% |
+| **bear** | 818 | 22% | -6.1% | +0.007 | 30% |
 | **chop** | 582 | 16% | -54.7% | -0.096 | 29% |
 
 ## Every variant at `taker_40bp`
 
 | Variant | Total return | CAGR | Sharpe (ann.) | Max DD | Trades | Exposure |
 |---|---|---|---|---|---|---|
-| `short_10_3` | -68.9% | -10.8% | -0.63 | 68.9% | 51 | 10.7% |
-| `short_10_5` | -77.3% | -13.5% | -0.67 | 78.8% | 46 | 15.0% |
-| `short_10_10` | -61.2% | -8.9% | -0.40 | 72.6% | 34 | 19.3% |
-| `short_20_3` | -65.3% | -9.9% | -0.61 | 65.5% | 38 | 8.5% |
-| `short_20_5` | -70.5% | -11.3% | -0.60 | 72.4% | 35 | 12.1% |
-| `short_20_10` | -49.8% | -6.5% | -0.32 | 67.1% | 25 | 15.5% |
+| `short_10_3` | -68.2% | -10.6% | -0.62 | 68.2% | 51 | 10.6% |
+| `short_10_5` | -78.3% | -13.9% | -0.69 | 78.5% | 47 | 14.4% |
+| `short_10_10` | -61.4% | -8.9% | -0.40 | 72.3% | 35 | 18.7% |
+| `short_20_3` | -66.5% | -10.2% | -0.62 | 66.5% | 38 | 8.5% |
+| `short_20_5` | -71.6% | -11.6% | -0.62 | 72.4% | 35 | 11.5% |
+| `short_20_10` | -57.4% | -8.0% | -0.39 | 67.1% | 26 | 14.6% |
 | `short_30_3` | -52.8% | -7.1% | -0.54 | 61.0% | 27 | 6.1% |
 | `short_30_5` | -59.5% | -8.5% | -0.54 | 67.6% | 25 | 8.6% |
 | `short_30_10` | -60.5% | -8.7% | -0.49 | 72.4% | 21 | 10.9% |
@@ -88,8 +92,8 @@ Baseline `short_20_5` at `taker_40bp`:
 | `short_40_5` | -54.1% | -7.4% | -0.51 | 63.3% | 23 | 7.9% |
 | `short_40_10` | -53.7% | -7.3% | -0.44 | 67.7% | 19 | 10.1% |
 | `short_timestop_3` | -50.0% | -6.6% | -0.42 | 58.4% | 41 | 7.7% |
-| `short_timestop_5` | -54.5% | -7.4% | -0.45 | 61.3% | 38 | 8.8% |
-| `short_no_regime_gate` | -92.3% | -22.2% | -0.91 | 92.3% | 61 | 20.2% |
+| `short_timestop_5` | -56.2% | -7.8% | -0.47 | 61.3% | 38 | 8.8% |
+| `short_no_regime_gate` | -92.5% | -22.5% | -0.92 | 92.5% | 61 | 19.6% |
 
 ## The primary verdict: exposure-matched random SHORT entries
 
@@ -100,10 +104,10 @@ same count and the same holding-period distribution. 1,000 draws, direction
 
 | | Sharpe (ann.) |
 |---|---|
-| **Strategy (observed)** | **-0.605** |
-| Random-entry null, 95th pct | -0.112 |
-| Random-entry null, median | -0.614 |
-| Random-entry null, 5th pct | -1.090 |
+| **Strategy (observed)** | **-0.619** |
+| Random-entry null, 95th pct | -0.108 |
+| Random-entry null, median | -0.624 |
+| Random-entry null, 5th pct | -1.094 |
 
 **Percentile vs the null: 51%.** At the conventional 95% bar the
 strategy **does not beat** the null.
@@ -120,8 +124,8 @@ long book sleeps.
 | Long-vs-short daily return correlation | **+0.001** |
 | Target from the brief | ≤ ~0.2 |
 | Long book Sharpe (alone) | 1.20 |
-| Short book Sharpe (alone) | -0.60 |
-| Combined, equal VOL weight | 0.42 |
+| Short book Sharpe (alone) | -0.62 |
+| Combined, equal VOL weight | 0.41 |
 | Long book max drawdown | 43.0% |
 | Combined max drawdown | 34.0% |
 
@@ -131,12 +135,21 @@ Every exit that filled beyond its own stop level — the tail the stop did not t
 
 | | Value |
 |---|---|
-| Exits that filled beyond the stop | 2 of 2 stop exits |
-| Worst single gap | 18.6% beyond the stop |
-| Mean gap | 18.3% |
+| Exits the stop actually caused | 1 |
+| ...of which gapped past the stop | 0 |
+| Bars carrying a live stop | 426 |
+| Worst single gap | 0.0% beyond the stop |
 
-If this table is empty the stop was never the binding exit on this symbol — which is
-information, not a clean bill of health.
+**Read the first two rows against the third.** A stop that is armed for thousands of bars
+and closes a handful of trades is *present* rather than *binding*: the trailing channel
+almost always gets there first, because the stop sits at the far side of the entry
+channel and that is a very long way from a breakdown entry.
+
+These counts come from the engine's own record of which fills a stop caused (D170).
+The Phase 2 version of this table inferred them, by asking whether an exit price ended
+up beyond the stop level — which also catches ordinary channel exits that happened to
+close past it. That inference is what produced the earlier "4 of 4 stop exits gapped"
+claim, and it was wrong: most of those exits were not stop exits at all.
 
 ---
 
@@ -168,12 +181,12 @@ Baseline `short_20_5` at `taker_40bp`:
 
 | Variant | Total return | CAGR | Sharpe (ann.) | Max DD | Trades | Exposure |
 |---|---|---|---|---|---|---|
-| `short_10_3` | -33.4% | -5.3% | -0.28 | 61.3% | 44 | 16.8% |
+| `short_10_3` | -33.6% | -5.4% | -0.28 | 61.3% | 44 | 16.7% |
 | `short_10_5` | +60.3% | +6.6% | 0.23 | 55.5% | 34 | 23.7% |
-| `short_10_10` | +6.6% | +0.9% | 0.05 | 60.8% | 30 | 29.0% |
+| `short_10_10` | +8.0% | +1.0% | 0.06 | 60.3% | 31 | 27.8% |
 | `short_20_3` | -42.6% | -7.2% | -0.40 | 66.6% | 35 | 12.6% |
 | `short_20_5` | +37.1% | +4.3% | 0.14 | 54.1% | 27 | 18.1% |
-| `short_20_10` | +2.2% | +0.3% | 0.01 | 56.1% | 24 | 23.4% |
+| `short_20_10` | -1.3% | -0.2% | -0.00 | 57.6% | 25 | 22.5% |
 | `short_30_3` | -33.8% | -5.4% | -0.37 | 64.2% | 29 | 11.5% |
 | `short_30_5` | +53.7% | +6.0% | 0.20 | 56.9% | 22 | 16.4% |
 | `short_30_10` | +33.9% | +4.0% | 0.13 | 58.6% | 20 | 20.3% |
@@ -224,18 +237,27 @@ Every exit that filled beyond its own stop level — the tail the stop did not t
 
 | | Value |
 |---|---|
-| Exits that filled beyond the stop | 2 of 2 stop exits |
-| Worst single gap | 38.5% beyond the stop |
-| Mean gap | 36.8% |
+| Exits the stop actually caused | 0 |
+| ...of which gapped past the stop | 0 |
+| Bars carrying a live stop | 489 |
+| Worst single gap | 0.0% beyond the stop |
 
-If this table is empty the stop was never the binding exit on this symbol — which is
-information, not a clean bill of health.
+**Read the first two rows against the third.** A stop that is armed for thousands of bars
+and closes a handful of trades is *present* rather than *binding*: the trailing channel
+almost always gets there first, because the stop sits at the far side of the entry
+channel and that is a very long way from a breakdown entry.
+
+These counts come from the engine's own record of which fills a stop caused (D170).
+The Phase 2 version of this table inferred them, by asking whether an exit price ended
+up beyond the stop level — which also catches ordinary channel exits that happened to
+close past it. That inference is what produced the earlier "4 of 4 stop exits gapped"
+claim, and it was wrong: most of those exits were not stop exits at all.
 
 ---
 
 # Verdict
 
-- **BTC-USD**: null percentile 51%, long/short correlation +0.00, combined Sharpe 0.42 against 1.20 long-only (max drawdown 34% against 43%).
+- **BTC-USD**: null percentile 51%, long/short correlation +0.00, combined Sharpe 0.41 against 1.20 long-only (max drawdown 34% against 43%).
 - **ETH-USD**: null percentile 96%, long/short correlation -0.00, combined Sharpe 0.65 against 0.78 long-only (max drawdown 30% against 35%).
 
 **The null verdict is SPLIT and must not be read as a pass.** ETH-USD clears the 95% bar; BTC-USD does not. The long study fixed the rule for exactly this situation before looking — a filter is kept only if it improves on EVERY symbol, because one symbol out of two is a coin flip. The same discipline applies here, and by it the entry rule is not demonstrated. Reporting the winner alone would be the single most misleading thing available in this document.
@@ -250,26 +272,32 @@ chop return > −10% — thresholds fixed before reading, and blunt on purpose.
 
 | Symbol | Bear (strongly profitable?) | Bull (flat-to-small-loss?) | Chop (acceptable bleed?) |
 |---|---|---|---|
-| BTC-USD | -2.3% FAIL | -33.3% at 1% exposure FAIL | -54.7% FAIL |
+| BTC-USD | -6.1% FAIL | -33.3% at 1% exposure FAIL | -54.7% FAIL |
 | ETH-USD | +33.7% PASS | -16.4% at 1% exposure PASS | +22.6% PASS |
 
 **Split again, and along the same line as the null.** ETH-USD meets all three; BTC-USD does not. The two symbols are telling different stories about the same rule, which on a two-instrument sample is the definition of an undemonstrated result rather than a partial success.
 
 **The gate itself works on every symbol** — bull-regime exposure is at most 1%, so the book really does stand aside when the long book is working. Note that this is a separate claim from the bull CRITERION above, and the two can diverge: on a symbol where the criterion fails, it fails not because the gate let the book trade through the bull market but because the handful of trades it did allow were bad enough to lose double digits on their own. The gate is not the problem. What it gates is.
-### And the stop did not do its job
+### What the stop actually did
 
-**4 of 4 stop exits filled BEYOND their own stop level**, the worst by
-38.5%. That is not a rounding error on the tail discipline — it is the tail
-discipline failing in the only cases where it was ever the binding exit. The brief's
-premise, that short expectancy becomes calculable once the squeeze tail is truncated by
-construction, is not satisfied by this implementation, and every number above should be
-read with that in front of it.
+The stop was armed for **915 bars** and caused **1 exit(s)**
+(BTC-USD 1 exit(s) from 426 armed bars · ETH-USD 0 exit(s) from 489 armed bars). **None of them gapped** — each filled at its stop price, which is the intrabar machinery doing exactly what it exists to do.
+
+**Read those two numbers against each other.** A stop armed for hundreds of bars that
+closes a handful of trades is *present* rather than *binding*: it sits at the far side of
+the entry channel, which is a very long way from a breakdown entry, so the trailing exit
+gets there first almost every time. The brief's premise — that short expectancy becomes
+calculable once the squeeze tail is truncated — is now satisfied mechanically, and turns
+out not to be the thing that was limiting this book.
 
 # Standing caveats
 
-1. **The stop is close-based.** The squeeze tail is not truncated by construction; the
-   gap table measures what that costs. Intrabar stop execution in `run_backtest` is the
-   prerequisite for the brief's stated standard, and it does not exist.
+1. **The stop is intrabar (D170) but almost never binds.** The mechanism is correct —
+   touched stops fill at the stop, gapped ones at the open — but the level sits at the
+   far side of the entry channel, so the trailing exit closes nearly every position
+   first. A risk control that never binds has not been shown to work on this sample, only
+   to be unneeded on it. A tighter stop (ATR-based, say) is a different strategy and
+   would need its own sweep and its own multiplicity accounting.
 2. **Borrow is a stated assumption, not a quote.** 10%/yr is mid-range for BTC/ETH spot
    margin borrow over the sample; it was neither swept nor negotiated, and hard-to-borrow
    episodes in a real crash would be worse precisely when the book is most short.

@@ -312,3 +312,96 @@ def test_no_nav_leaks_with_carry(scenario):
         expected = position * (closes[i] - closes[i - 1]) - carry
         assert abs((navs[i] - navs[i - 1]) - expected) < 1e-6
         position += fills_at.get(timestamps[i], 0.0)
+
+
+# --------------------------------------------------------- intrabar stops (D170)
+
+
+@settings(derandomize=True, max_examples=200)
+@given(
+    opens=st.lists(st.floats(50.0, 200.0), min_size=4, max_size=12),
+    stop=st.floats(60.0, 190.0),
+    long_side=st.booleans(),
+)
+def test_a_stop_bounds_the_loss_except_through_the_open(opens, stop, long_side):
+    """The invariant the whole intrabar-stop exercise exists to establish (D170).
+
+    A stop fill is never BETTER than its stop price, and is worse only when the bar
+    opened beyond it — i.e. the loss is bounded except through the gap. If this ever
+    fails, a backtest is inventing risk control that did not exist, which is exactly the
+    failure D169 measured in the short book.
+
+    Driven through run_backtest rather than stop_fill_price directly, because the claim
+    under test is about the ENGINE's wiring: the primitive was already correct and
+    already tested in isolation before D170; what was missing was it being called.
+    """
+    from backtest_framework.engine.dataview import DataView as _DataView  # noqa: F401
+    from backtest_framework.pipeline.sizing import TargetWeight as _TW
+
+    symbol = "X"
+    days = [datetime(2021, 1, 1) + timedelta(days=i) for i in range(len(opens))]
+    bars = [
+        TimestampedBar(
+            day,
+            Bar(open=o, high=o * 1.08, low=o * 0.92, close=o),
+        )
+        for day, o in zip(days, opens)
+    ]
+
+    class _Stopper:
+        strategy_id = "s"
+
+        def __init__(self):
+            self.stopped = False
+
+        def generate_targets(self, views):
+            flat = self.stopped or views[symbol].current_index < 1
+            return [
+                _TW(
+                    strategy_id="s",
+                    instrument_id=symbol,
+                    weight=0.0 if flat else (0.5 if long_side else -0.5),
+                    stop=None if flat else stop,
+                )
+            ]
+
+        def on_stop_filled(self, instrument_id):
+            self.stopped = True
+
+    strategy = _Stopper()
+    result = run_backtest(
+        bars_by_instrument={symbol: bars},
+        instruments={symbol: Equity(symbol=symbol, quantity_precision=8)},
+        strategies=[strategy],
+        cost_stack=CostStack(),
+        allocator=ConstantSplitAllocator(),
+        starting_cash=100_000.0,
+        fill_timing="close",
+    )
+
+    if not strategy.stopped:
+        return  # the stop was never touched on this path; nothing to assert
+
+    # Identify the STOP fill specifically. Every bar the position is open the strategy
+    # re-targets the same weight against a changed NAV, so there are rebalancing fills
+    # carrying the same sign as a close — picking on sign alone would test those too,
+    # and they are not stop fills.
+    position, stop_fill = 0.0, None
+    for timestamp, _instrument, quantity, price, _cost in result.fills:
+        previous, position = position, position + quantity
+        if previous != 0.0 and abs(position) < 1e-9:
+            stop_fill = (timestamp, price)
+    assert stop_fill is not None, "strategy reports being stopped but no fill flattened it"
+
+    timestamp, price = stop_fill
+    bar = next(tb.bar for tb in bars if tb.timestamp == timestamp)
+    if long_side:
+        # A sell stop never fills above its stop; below it only on a gap down.
+        assert price <= stop + 1e-9
+        if price < stop - 1e-9:
+            assert bar.open <= stop + 1e-9
+    else:
+        # A buy stop never fills below its stop; above it only on a gap up.
+        assert price >= stop - 1e-9
+        if price > stop + 1e-9:
+            assert bar.open >= stop - 1e-9

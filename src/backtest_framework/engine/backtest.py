@@ -30,6 +30,7 @@ from ..data.bars import TimestampedBar
 from ..instruments.base import Instrument
 from ..pipeline.sizing import Order, Sizer, TargetWeight, apply_virtual_orders, net_orders
 from ..registry.trial_registry import TrialRegistry
+from ..simulator.fills import StopSide, stop_fill_price
 from .allocator import Allocator
 from .dataview import DataView, build_data_view, normalise_volumes
 from .portfolio import PortfolioState
@@ -59,6 +60,19 @@ class BacktestResult:
     """(strategy_id, instrument_id) -> quantity: each strategy's virtual book at the
     end of the run (D46/D101). Sums across strategies to final_positions exactly
     when no orders were rejected."""
+    stop_fills: list[tuple[datetime, str, str, float, float, float]] = field(default_factory=list)
+    """(timestamp, strategy_id, instrument_id, quantity, fill price, stop price) per
+    INTRABAR STOP fill (D170).
+
+    Recorded separately because "this exit was caused by the stop" is not recoverable
+    from `fills` afterwards, and guessing it is how a measurement goes wrong: Phase 2
+    inferred stop exits by asking whether an exit price ended up beyond the stop LEVEL,
+    which also catches ordinary channel exits that happened to close past it, and it
+    reported those as stops that failed. Only the engine knows which fill a stop caused,
+    so only the engine should say.
+
+    `fill price != stop price` is exactly the gap case (D10) — the position filled at the
+    bar's open because the market never traded at the stop."""
 
     @property
     def final_nav(self) -> float:
@@ -219,6 +233,8 @@ def run_backtest(
     portfolio = PortfolioState(cash=starting_cash)
     virtual_positions: dict[tuple[str, str], float] = {}
     pending_virtual: dict[tuple[str, str], Order] = {}  # next_open mode only (D103)
+    live_stops: dict[tuple[str, str], float] = {}  # (strategy, instrument) -> stop price (D170)
+    strategies_by_id = {s.strategy_id: s for s in strategies}
     strategy_ids = [s.strategy_id for s in strategies]
 
     result = BacktestResult()
@@ -319,6 +335,57 @@ def run_backtest(
                 )
             pending_virtual = {}
 
+        # 1c. INTRABAR STOPS (D170). Checked here — after any next_open fill, before
+        #     the strategy is consulted — for two reasons. A position opened at THIS
+        #     bar's open can still be stopped out on this same bar, which is real and
+        #     must be allowed; and the strategy's decision step then sees a book that
+        #     already reflects the stop.
+        #
+        #     D42's adverse-fill-first convention is satisfied by construction: the stop
+        #     is an intrabar order and every other exit in this engine is a decision
+        #     taken at a close, so the stop is always evaluated first and always wins a
+        #     bar in which both would have fired.
+        #
+        #     D10 lives inside stop_fill_price: a bar that GAPS through the stop fills at
+        #     the bar's open, not at the stop price. That is the whole point of routing
+        #     through it rather than assuming the stop price — filling at the stop when
+        #     the market never traded there is free money and fantasy risk numbers.
+        if live_stops:
+            for (strategy_id, instrument_id), stop_price in list(live_stops.items()):
+                held = virtual_positions.get((strategy_id, instrument_id), 0.0)
+                if held == 0.0:
+                    del live_stops[(strategy_id, instrument_id)]
+                    continue
+                side = StopSide.SELL_STOP if held > 0 else StopSide.BUY_STOP
+                fill_price = stop_fill_price(side, stop_price, ab.bars[instrument_id])
+                if fill_price is None:
+                    continue
+
+                quantity = -held
+                trade_cost = cost_stack.trade_cost(instruments[instrument_id], quantity, fill_price)
+                portfolio.apply_fill(instrument_id, quantity, fill_price, trade_cost)
+                result.fills.append((ab.timestamp, instrument_id, quantity, fill_price, trade_cost))
+                virtual_positions[(strategy_id, instrument_id)] = 0.0
+                result.virtual_fills.append(
+                    (ab.timestamp, strategy_id, instrument_id, quantity, fill_price)
+                )
+                result.stop_fills.append(
+                    (ab.timestamp, strategy_id, instrument_id, quantity, fill_price, stop_price)
+                )
+                del live_stops[(strategy_id, instrument_id)]
+
+                # A stateful strategy does not otherwise learn it was stopped out: it
+                # would keep emitting the same target and re-enter on the next bar,
+                # turning a bounded loss into a repeated one. Optional by design so
+                # every pre-D170 strategy still conforms to the protocol.
+                on_stop_filled = getattr(strategies_by_id.get(strategy_id), "on_stop_filled", None)
+                if on_stop_filled is not None:
+                    on_stop_filled(instrument_id)
+
+                # A pending next_open order for this key is now stale — it was sized
+                # against a position the stop has just closed.
+                pending_virtual.pop((strategy_id, instrument_id), None)
+
         # 2. Build this bar's DataView per instrument (D32, D56) from each
         #    instrument's own ALIGNED series — the VIEW series when one was supplied
         #    (split-adjusted signals, D75), never the raw frame either way.
@@ -335,6 +402,25 @@ def run_backtest(
         targets: list[TargetWeight] = []
         for strategy in strategies:
             targets.extend(strategy.generate_targets(views))
+
+        # Refresh the stop registry from this bar's targets (D170). Re-declared every
+        # bar, so a trailing stop simply moves; a target that stops declaring one drops
+        # its entry rather than leaving a stale level armed.
+        for target in targets:
+            key = (target.strategy_id, target.instrument_id)
+            if target.stop is None:
+                live_stops.pop(key, None)
+                continue
+            if splits_by_instrument.get(target.instrument_id):
+                # The stop was computed in the VIEW frame and is enforced against
+                # EXECUTION prices. Those are the same series only when the instrument
+                # has no splits (D75). Rather than silently compare two frames, refuse.
+                raise ValueError(
+                    f"instrument {target.instrument_id!r} carries splits and cannot use an "
+                    "intrabar stop: the stop is declared in the view frame and enforced "
+                    "against execution prices, which diverge across a split (D75/D170)"
+                )
+            live_stops[key] = target.stop
 
         # 3. Capital is reallocated from current NAV every bar (D61).
         current_nav = portfolio.nav(prices, instruments)

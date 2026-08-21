@@ -10,6 +10,37 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (intrabar stop execution, 2026-08-21 — D170, disposes of D169's limitation)
+- **`TargetWeight.stop`** — an optional stop price riding with the target it protects.
+  Re-declared every bar, so a trailing stop moves with no extra machinery; optional with
+  a default, so all five construction sites and every pre-existing golden master are
+  untouched.
+- **Stop orders in `run_backtest`** — a live registry keyed (strategy, instrument),
+  checked BEFORE the strategy is consulted so a position opened at this bar's open can
+  still be stopped on the same bar, and routed through the existing
+  `simulator/fills.stop_fill_price` so a gapped stop fills at the open rather than at a
+  price the market never traded (D10). D42's adverse-fill-first convention holds by
+  construction: the stop is intrabar, every other exit is a close decision.
+- **Optional `Strategy.on_stop_filled`** — without it a stateful strategy never learns it
+  was stopped and re-enters on the next bar, turning one bounded loss into a repeated
+  one. Called via getattr, so every pre-D170 strategy still conforms.
+  `ScheduledBreakout` forwards it to its inner strategy.
+- **`BacktestResult.stop_fills`** — which fills a stop actually caused, recorded by the
+  engine because only the engine knows.
+
+### Fixed
+- **D169's stop-gap measurement was wrong, and its headline number is withdrawn.**
+  `measure_stop_gaps` inferred stop exits by asking whether an exit price ended beyond
+  the stop level, which also counts trailing-channel exits that closed past it. That
+  produced the "4 of 4 stop exits gapped, worst 38.5%" claim. Measured properly, the stop
+  caused ONE exit across both symbols and did not gap. The real finding: armed for 915
+  bars, binding once — the stop sits at the far side of the entry channel, so the
+  trailing exit gets there first. Present, not binding.
+- The breakdown report's stop section and standing caveat are now **computed from the
+  numbers** rather than asserted alongside them — the third instance in this project of
+  hardcoded prose drifting from the data beside it.
+
+
 ### Added (Phase 2 — the breakdown short book, 2026-08-21 — see `BREAKDOWN_RESULTS.md`, D169)
 - **`ExitRule` brick family on the breakout strategy** — the mirror of `EntryFilter`: a
   filter can only keep you OUT of a trade, an exit rule can only get you OUT of one. The
