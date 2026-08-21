@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T17:15:34.724036+00:00",
+  "generated_utc": "2026-08-21T18:06:29.058695+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -9347,6 +9347,371 @@
         "block_size": 20.0,
         "seed": 0.0
       },
+      "squeeze": {
+        "n_trades": 35,
+        "n_squeezes": 6,
+        "share_of_trades": 0.17142857142857143,
+        "pnl_in_squeezed_trades": -39014.89523701018,
+        "worst_atr_multiples": 3.7039062377653647,
+        "median_atr_multiples": 0.9625289929437252,
+        "stop_hit_share": 0.0
+      },
+      "correlation_by_window": [
+        {
+          "window": 0,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 1,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 2,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 3,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 4,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 5,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 6,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 7,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 8,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 9,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 10,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 11,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 12,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 13,
+          "n_bars": 63,
+          "correlation": -0.01742197274985991,
+          "short_active": true
+        },
+        {
+          "window": 14,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 15,
+          "n_bars": 63,
+          "correlation": 0.0085187074475589,
+          "short_active": true
+        },
+        {
+          "window": 16,
+          "n_bars": 63,
+          "correlation": -0.0013393845509215452,
+          "short_active": true
+        },
+        {
+          "window": 17,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 18,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 19,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 20,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 21,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 22,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 23,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 24,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 25,
+          "n_bars": 63,
+          "correlation": 0.008240977471909994,
+          "short_active": true
+        },
+        {
+          "window": 26,
+          "n_bars": 63,
+          "correlation": -0.009270353295397871,
+          "short_active": true
+        },
+        {
+          "window": 27,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 28,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 29,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 30,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 31,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 32,
+          "n_bars": 63,
+          "correlation": -0.04202241671565674,
+          "short_active": true
+        },
+        {
+          "window": 33,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 34,
+          "n_bars": 63,
+          "correlation": 0.0026703242287532893,
+          "short_active": true
+        },
+        {
+          "window": 35,
+          "n_bars": 63,
+          "correlation": -0.007822199951433684,
+          "short_active": true
+        },
+        {
+          "window": 36,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 37,
+          "n_bars": 63,
+          "correlation": -0.026728197965631098,
+          "short_active": true
+        },
+        {
+          "window": 38,
+          "n_bars": 63,
+          "correlation": 0.003799588565313777,
+          "short_active": true
+        },
+        {
+          "window": 39,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 40,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 41,
+          "n_bars": 63,
+          "correlation": -0.02012080735940733,
+          "short_active": true
+        },
+        {
+          "window": 42,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 43,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 44,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 45,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 46,
+          "n_bars": 63,
+          "correlation": 0.004566038366639506,
+          "short_active": true
+        },
+        {
+          "window": 47,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 48,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 49,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 50,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 51,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 52,
+          "n_bars": 63,
+          "correlation": -0.011172416388372785,
+          "short_active": true
+        },
+        {
+          "window": 53,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 54,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 55,
+          "n_bars": 63,
+          "correlation": 0.019128924520625156,
+          "short_active": true
+        },
+        {
+          "window": 56,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 57,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 58,
+          "n_bars": 62,
+          "correlation": -0.00391039402629154,
+          "short_active": true
+        }
+      ],
       "null": {
         "n_draws": 1000,
         "direction": -1,
@@ -9387,6 +9752,275 @@
         "block_size": 20.0,
         "seed": 0.0
       },
+      "squeeze": {
+        "n_trades": 27,
+        "n_squeezes": 6,
+        "share_of_trades": 0.2222222222222222,
+        "pnl_in_squeezed_trades": -86158.12004416318,
+        "worst_atr_multiples": 3.9435666905388804,
+        "median_atr_multiples": 1.2413044101637358,
+        "stop_hit_share": 0.0
+      },
+      "correlation_by_window": [
+        {
+          "window": 0,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 1,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 2,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 3,
+          "n_bars": 63,
+          "correlation": -0.010268369385883035,
+          "short_active": true
+        },
+        {
+          "window": 4,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 5,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 6,
+          "n_bars": 63,
+          "correlation": -0.014861236453550275,
+          "short_active": true
+        },
+        {
+          "window": 7,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 8,
+          "n_bars": 63,
+          "correlation": -0.012839979978321522,
+          "short_active": true
+        },
+        {
+          "window": 9,
+          "n_bars": 63,
+          "correlation": 0.004689387656758555,
+          "short_active": true
+        },
+        {
+          "window": 10,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 11,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 12,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 13,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 14,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 15,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 16,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 17,
+          "n_bars": 63,
+          "correlation": 0.01705105694537431,
+          "short_active": true
+        },
+        {
+          "window": 18,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 19,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 20,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 21,
+          "n_bars": 63,
+          "correlation": -0.0021827798216351745,
+          "short_active": true
+        },
+        {
+          "window": 22,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 23,
+          "n_bars": 63,
+          "correlation": -0.003735375603627715,
+          "short_active": true
+        },
+        {
+          "window": 24,
+          "n_bars": 63,
+          "correlation": -0.01601735256787626,
+          "short_active": true
+        },
+        {
+          "window": 25,
+          "n_bars": 63,
+          "correlation": 0.002338557399571726,
+          "short_active": true
+        },
+        {
+          "window": 26,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 27,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 28,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 29,
+          "n_bars": 63,
+          "correlation": -0.02184735256563948,
+          "short_active": true
+        },
+        {
+          "window": 30,
+          "n_bars": 63,
+          "correlation": 0.024823352605070917,
+          "short_active": true
+        },
+        {
+          "window": 31,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 32,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 33,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 34,
+          "n_bars": 63,
+          "correlation": -0.007728112046690035,
+          "short_active": true
+        },
+        {
+          "window": 35,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 36,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 37,
+          "n_bars": 63,
+          "correlation": 0.009878573218533025,
+          "short_active": true
+        },
+        {
+          "window": 38,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": true
+        },
+        {
+          "window": 39,
+          "n_bars": 63,
+          "correlation": 0.004990426196267896,
+          "short_active": true
+        },
+        {
+          "window": 40,
+          "n_bars": 63,
+          "correlation": 0.017378332679185253,
+          "short_active": true
+        },
+        {
+          "window": 41,
+          "n_bars": 63,
+          "correlation": null,
+          "short_active": false
+        },
+        {
+          "window": 42,
+          "n_bars": 62,
+          "correlation": null,
+          "short_active": true
+        }
+      ],
       "null": {
         "n_draws": 1000,
         "direction": -1,

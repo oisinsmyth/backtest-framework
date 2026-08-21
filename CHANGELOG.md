@@ -10,6 +10,32 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (Phase 2's two missing diagnostics, 2026-08-21 — D176)
+- **Squeeze events** — adverse excursions beyond 2 ATR against an open short, with share
+  of trades, P&L carried, and how many the stop caught. The function existed as DEAD CODE
+  from the Phase 2 session and was never called, so the requirement looked satisfied.
+- **Per-window long/short correlation** — the brief asks for it per window; the study
+  reported the full-sample figure only.
+
+### Fixed
+- **The dead squeeze function had the direction backwards.** It used `abs(mae)` as the
+  adverse excursion. Excursions are measured in PRICE terms (D112), so a SHORT's adverse
+  side is MFE — a short is hurt when price rises. It would have reported the short book's
+  profitable moves as squeezes. The code carried a comment reasoning confidently to the
+  wrong answer; it was caught only because wiring it up meant reading it again. Dead code
+  is unreviewed code wearing the appearance of a delivered requirement.
+
+### Findings
+- **6 of 35 BTC trades (17%) ran more than 2 ATR against the position**, worst 3.70 ATR,
+  carrying -39,015 of P&L — and **0% ended at the stop**. A direct measurement of what
+  D169-D171 kept circling: the stop is present and is not what closes the dangerous trades.
+- **Per-window correlation holds**: 15 of 59 windows measurable (the book sat out 44,
+  which is the regime gate working), none exceeding ±0.2, median -0.004. The near-zero
+  full-sample figure is NOT opposite-signed regimes cancelling out.
+- Windows the short book sat out are reported as unmeasurable, not zero — "uncorrelated"
+  and "not present" are different claims, and 44 of 59 fall in the second.
+
+
 ### Added (swing_k2 out-of-sample on the D140 universe, 2026-08-21 — D174)
 - **`scripts/run_swing_universe.py` + `docs/results/swing_universe.md`** — `swing_k2` and
   `trail_10` run UNCHANGED across 62 screened coins, one configuration each, no

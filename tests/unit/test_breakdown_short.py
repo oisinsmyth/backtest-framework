@@ -310,3 +310,85 @@ def test_long_tier_configs_are_unchanged_by_the_borrow_field():
         "portfolio_carry_bricks": [],
         "event_flow_bricks": [],
     }
+
+
+# ------------------------------------------------------ D176: the two closed gaps
+
+
+def _episode(entry_index, mfe, mae, net=1.0, exit_ts=None, bars_held=5):
+    from backtest_framework.research.trade_diagnostics import TradeEpisode
+
+    return TradeEpisode(
+        entry_timestamp=EPOCH + timedelta(days=entry_index),
+        exit_timestamp=exit_ts if exit_ts is not None else EPOCH + timedelta(days=entry_index + bars_held),
+        entry_index=entry_index,
+        exit_index=entry_index + bars_held,
+        bars_held=bars_held,
+        entry_price=100.0,
+        exit_price=100.0,
+        gross_pnl=net,
+        costs=0.0,
+        rebalance_costs=0.0,
+        traded_notional=100.0,
+        n_fills=2,
+        mfe=mfe,
+        mae=mae,
+    )
+
+
+def test_a_short_squeeze_is_measured_on_MFE_not_MAE():
+    """The bug this closes. Excursions are measured in PRICE terms (D112), so a short is
+    hurt when price RISES — which the diagnostics call MFE. Reading MAE instead would
+    report profitable moves as squeezes, and the first cut of this function did."""
+    bars = bars_from([100.0] * 60)
+    # Price ran 30% UP against the short (adverse) and 2% down (favourable).
+    squeezed = _episode(entry_index=40, mfe=0.30, mae=-0.02)
+    report = ds.squeeze_events([squeezed], bars, direction=-1)
+    assert report.n_squeezes == 1, "a 30% rise against a short is a squeeze"
+
+    # Mirror: for a LONG the same episode is a big favourable move, not a squeeze.
+    assert ds.squeeze_events([squeezed], bars, direction=+1).n_squeezes == 0
+
+
+def test_a_favourable_short_move_is_never_counted_as_a_squeeze():
+    bars = bars_from([100.0] * 60)
+    winner = _episode(entry_index=40, mfe=0.01, mae=-0.40)  # price collapsed: short wins
+    assert ds.squeeze_events([winner], bars, direction=-1).n_squeezes == 0
+
+
+def test_open_episodes_are_excluded_from_the_squeeze_count():
+    from backtest_framework.research.trade_diagnostics import TradeEpisode
+
+    bars = bars_from([100.0] * 60)
+    still_open = TradeEpisode(
+        entry_timestamp=EPOCH, exit_timestamp=None, entry_index=40, exit_index=None,
+        bars_held=5, entry_price=100.0, exit_price=None, gross_pnl=0.0, costs=0.0,
+        rebalance_costs=0.0, traded_notional=100.0, n_fills=1, mfe=0.90, mae=0.0,
+    )
+    assert ds.squeeze_events([still_open], bars, direction=-1).n_trades == 0
+
+
+def test_per_window_correlation_reports_unmeasurable_rather_than_zero():
+    """A window the short book sat out has no correlation. Returning 0.0 there would
+    report 'uncorrelated' for a window in which one book did not exist."""
+    long_r = [0.01, -0.01, 0.02, -0.02, 0.01, -0.01]
+    flat_short = [0.0] * 6
+    rows = ds.correlation_by_window(long_r, flat_short, [(0, 3), (3, 6)])
+    assert all(r["correlation"] is None for r in rows)
+    assert all(r["short_active"] is False for r in rows)
+
+
+def test_per_window_correlation_recovers_a_known_sign():
+    long_r = [0.01, -0.01, 0.02, -0.02, 0.03, -0.03]
+    mirrored = [-x for x in long_r]
+    rows = ds.correlation_by_window(long_r, mirrored, [(0, 6)])
+    assert rows[0]["correlation"] == pytest.approx(-1.0, abs=1e-9)
+
+
+def test_per_window_correlation_can_disagree_with_the_full_sample():
+    """The reason the brief asks for it: opposite-signed windows can average to zero."""
+    long_r = [0.01, 0.02, 0.03, 0.01, 0.02, 0.03]
+    short_r = [0.01, 0.02, 0.03, -0.01, -0.02, -0.03]
+    rows = ds.correlation_by_window(long_r, short_r, [(0, 3), (3, 6)])
+    signs = {r["correlation"] > 0 for r in rows if r["correlation"] is not None}
+    assert signs == {True, False}, "expected one positive and one negative window"

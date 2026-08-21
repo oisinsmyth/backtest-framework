@@ -181,6 +181,46 @@ which answers the same question without assuming normality.
 
 **The entire interval is negative.** Adding this short book to the long one does not fail to help; it measurably hurts, and the sample is large enough to say so. This is not the 'inside the noise' verdict the long study reached on its own Sharpe gap — it is a decisive negative.
 
+### Correlation per window
+
+The headline correlation is one number for a decade. The brief asks for it **per window**,
+and the two can disagree: a full-sample figure near zero is consistent with the books
+moving together in some regimes and opposite in others, which would break the
+diversification argument at exactly the moment it is needed.
+
+| | Value |
+|---|---|
+| Windows with a measurable correlation | 15 of 59 |
+| Windows the short book sat out entirely | 44 |
+| Median per-window correlation | -0.004 |
+| Min / max | -0.042 / +0.019 |
+| Windows exceeding the ±0.2 target | **0** |
+| Largest single-window correlation | -0.042 (window 32) |
+
+A window the short book sat out has no correlation to measure, and is reported as
+unmeasurable rather than as zero — "uncorrelated" and "not present" are different claims.
+
+**The target holds window by window, not just on average** — no single window exceeds ±0.2, so the near-zero full-sample figure is not an artefact of opposite-signed regimes cancelling out.
+
+### Squeeze events
+
+The event the tail discipline exists for: an adverse excursion beyond 2 ATR against an
+open short. For a short, "adverse" means price RISING — excursions are measured in price
+terms (D112), so the adverse side is MFE rather than MAE, and reading the wrong one would
+report profitable moves as squeezes.
+
+| | Value |
+|---|---|
+| Closed trades | 35 |
+| Squeezes (> 2 ATR adverse) | **6** |
+| Share of trades | 17% |
+| Median adverse excursion | 0.96 ATR |
+| Worst squeeze | 3.70 ATR |
+| Squeezes that ended at the stop | 0% |
+| P&L in squeezed trades | -39,015 |
+
+**6 of 35 trades (17%) ran more than 2 ATR against the position while open**, and those trades carry -39,015 of P&L between them. The stop was the exit on 0% of them — a squeeze the stop caught is a different event from one it did not.
+
 ## What the close-based stop actually cost
 
 Every exit that filled beyond its own stop level — the tail the stop did not truncate.
@@ -334,6 +374,46 @@ which answers the same question without assuming normality.
 | P(adding the short book helps) | **31%** |
 
 **The interval spans zero**, so the ensemble effect is not measurable at this sample size. That is not evidence of neutrality — it is the absence of evidence either way, and it should not be reported as 'the short book is roughly neutral'.
+
+### Correlation per window
+
+The headline correlation is one number for a decade. The brief asks for it **per window**,
+and the two can disagree: a full-sample figure near zero is consistent with the books
+moving together in some regimes and opposite in others, which would break the
+diversification argument at exactly the moment it is needed.
+
+| | Value |
+|---|---|
+| Windows with a measurable correlation | 15 of 43 |
+| Windows the short book sat out entirely | 28 |
+| Median per-window correlation | -0.002 |
+| Min / max | -0.022 / +0.025 |
+| Windows exceeding the ±0.2 target | **0** |
+| Largest single-window correlation | +0.025 (window 30) |
+
+A window the short book sat out has no correlation to measure, and is reported as
+unmeasurable rather than as zero — "uncorrelated" and "not present" are different claims.
+
+**The target holds window by window, not just on average** — no single window exceeds ±0.2, so the near-zero full-sample figure is not an artefact of opposite-signed regimes cancelling out.
+
+### Squeeze events
+
+The event the tail discipline exists for: an adverse excursion beyond 2 ATR against an
+open short. For a short, "adverse" means price RISING — excursions are measured in price
+terms (D112), so the adverse side is MFE rather than MAE, and reading the wrong one would
+report profitable moves as squeezes.
+
+| | Value |
+|---|---|
+| Closed trades | 27 |
+| Squeezes (> 2 ATR adverse) | **6** |
+| Share of trades | 22% |
+| Median adverse excursion | 1.24 ATR |
+| Worst squeeze | 3.94 ATR |
+| Squeezes that ended at the stop | 0% |
+| P&L in squeezed trades | -86,158 |
+
+**6 of 27 trades (22%) ran more than 2 ATR against the position while open**, and those trades carry -86,158 of P&L between them. The stop was the exit on 0% of them — a squeeze the stop caught is a different event from one it did not.
 
 ## What the close-based stop actually cost
 

@@ -547,24 +547,126 @@ def measure_stop_gaps(
 
 # ------------------------------------------------------------------------- squeeze
 
-def squeeze_events(episodes: Sequence[Any], atr_by_entry: Mapping[int, float]) -> dict[str, Any]:
-    """Adverse excursions beyond 2 ATR against an open short — the event the tail
-    discipline exists for. Counted and priced, so "the stop works" is a measurement."""
-    events = []
-    for e in episodes:
-        atr = atr_by_entry.get(e.entry_index)
-        if not atr or atr <= 0:
+@dataclass(frozen=True)
+class SqueezeReport:
+    """Adverse excursions beyond `atr_multiple` ATR against an open position — the event
+    the tail discipline exists for, counted and priced rather than asserted."""
+
+    n_trades: int
+    n_squeezes: int
+    share_of_trades: float
+    pnl_in_squeezed_trades: float
+    worst_atr_multiples: float
+    median_atr_multiples: float
+    stop_hit_share: float
+    """Fraction of squeezed trades that ended at the stop. A squeeze the stop caught is a
+    different event from one it did not."""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "n_trades": self.n_trades,
+            "n_squeezes": self.n_squeezes,
+            "share_of_trades": self.share_of_trades,
+            "pnl_in_squeezed_trades": self.pnl_in_squeezed_trades,
+            "worst_atr_multiples": self.worst_atr_multiples,
+            "median_atr_multiples": self.median_atr_multiples,
+            "stop_hit_share": self.stop_hit_share,
+        }
+
+
+def squeeze_events(
+    episodes: Sequence[Any],
+    bars: Sequence[TimestampedBar],
+    stop_fills: Sequence[tuple[Any, ...]] = (),
+    *,
+    direction: int = -1,
+    atr_multiple: float = 2.0,
+    atr_window: int = 20,
+) -> SqueezeReport:
+    """Adverse excursions beyond `atr_multiple` ATR against an open position (D176).
+
+    **Which excursion is "adverse" depends on the trade's direction, and getting that
+    backwards is silent.** `trade_diagnostics` measures excursions in PRICE terms, not
+    trade terms: `mfe` is `max(high)/entry - 1` and `mae` is `min(low)/entry - 1`,
+    written for the long-flat book it was built for (D112). For a LONG the adverse side
+    is therefore `mae`; **for a SHORT it is `mfe`** — a short is hurt when price rises.
+
+    The first version of this function used `abs(mae)` for the short book, which is the
+    FAVOURABLE side, and would have reported profitable excursions as squeezes. It was
+    never called, so nothing was published from it; it is corrected here rather than
+    quietly rewritten, because the comment above it had reasoned its way confidently to
+    the wrong answer."""
+    trades = [e for e in episodes if not e.is_open]
+    stop_bars = {t[0] for t in stop_fills}
+    multiples, squeezed = [], []
+    for e in trades:
+        atr = _atr_at(bars, e.entry_index, atr_window)
+        if atr is None or atr <= 0.0:
             continue
-        # For a short, an adverse move is the position going UP: MFE on a short episode
-        # is measured against entry price in the trade's favour, so the adverse side is
-        # the one the diagnostics call MAE for a long. Use the raw excursion magnitude.
-        adverse = abs(e.mae) * e.entry_price
-        if adverse > 2.0 * atr:
-            events.append({"entry_index": e.entry_index, "atr_multiples": adverse / atr,
-                           "net_pnl": e.net_pnl})
-    return {
-        "n_squeeze_events": len(events),
-        "share_of_trades": len(events) / len(episodes) if episodes else 0.0,
-        "pnl_in_squeeze_trades": sum(ev["net_pnl"] for ev in events),
-        "worst_atr_multiples": max((ev["atr_multiples"] for ev in events), default=0.0),
-    }
+        adverse_fraction = e.mfe if direction < 0 else -e.mae
+        if adverse_fraction <= 0:
+            continue
+        adverse = adverse_fraction * e.entry_price
+        m = adverse / atr
+        multiples.append(m)
+        if m > atr_multiple:
+            squeezed.append((e, m))
+
+    caught = sum(1 for e, _ in squeezed if e.exit_timestamp in stop_bars)
+    return SqueezeReport(
+        n_trades=len(trades),
+        n_squeezes=len(squeezed),
+        share_of_trades=len(squeezed) / len(trades) if trades else 0.0,
+        pnl_in_squeezed_trades=sum(e.net_pnl for e, _ in squeezed),
+        worst_atr_multiples=max((m for _e, m in squeezed), default=0.0),
+        median_atr_multiples=statistics.median(multiples) if multiples else 0.0,
+        stop_hit_share=caught / len(squeezed) if squeezed else 0.0,
+    )
+
+
+def _atr_at(bars: Sequence[TimestampedBar], index: int, window: int) -> float | None:
+    """Mean true range over the `window` bars ENDING AT index-1 (D44), so the entry bar's
+    own range does not set the yardstick its excursion is measured against."""
+    start = index - window
+    if start < 1 or index > len(bars):
+        return None
+    total = 0.0
+    for j in range(start, index):
+        bar, prev_close = bars[j].bar, bars[j - 1].bar.close
+        total += max(bar.high - bar.low, abs(bar.high - prev_close), abs(bar.low - prev_close))
+    return total / window
+
+
+def correlation_by_window(
+    long_returns: Sequence[float],
+    short_returns: Sequence[float],
+    window_bounds: Sequence[tuple[int, int]],
+) -> list[dict[str, Any]]:
+    """Long-vs-short return correlation computed PER WALK-FORWARD WINDOW (D176).
+
+    The brief asks for this and the first cut of the study reported the full-sample figure
+    only. They answer different questions: a full-sample correlation near zero is
+    consistent with the two books being strongly correlated in some regimes and strongly
+    anti-correlated in others, which is exactly the case that would break the
+    diversification argument at the moment it is needed.
+
+    `window_bounds` are (start, end) indices into the OOS return series. Windows where
+    either series is constant — which for a short book means it never traded in that
+    window — return None rather than a fabricated zero: "no correlation measurable" and
+    "correlation is zero" are different findings."""
+    out: list[dict[str, Any]] = []
+    for i, (start, end) in enumerate(window_bounds):
+        a = list(long_returns[start:end])
+        b = list(short_returns[start:end])
+        n = min(len(a), len(b))
+        a, b = a[:n], b[:n]
+        rho: float | None = None
+        if n >= 3 and len(set(a)) > 1 and len(set(b)) > 1:
+            rho = float(np.corrcoef(a, b)[0, 1])
+        out.append({
+            "window": i,
+            "n_bars": n,
+            "correlation": rho,
+            "short_active": bool(len(set(b)) > 1),
+        })
+    return out

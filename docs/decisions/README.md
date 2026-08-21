@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D176**.
+New decisions are added here going forward — next number is **D177**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -164,3 +164,4 @@ written rationale for *why not now*, per R3.
 | [D173](D173-swing-structure-pre-registration.md) | Swing-structure stop and gate, with a pre-registered prediction that neither beats the incumbent; pivot levels not drawn trend lines, and the k-bar confirmation lag handled explicitly | Committed (H1 falsified) | Validation & research integrity |
 | [D174](D174-swing-k2-on-the-universe.md) | `swing_k2` beats `trail_10` on 69% of 62 coins including the ones that died, but the book loses ~50% on the median coin — the stop is real, the strategy is not | Committed | Validation & research integrity |
 | [D175](D175-no-margin-call-or-liquidation-model.md) | The engine has no margin call, liquidation or borrow recall; three short accounts passed -100% (worst -1106%) with stops active | Deferred | Backtest engine |
+| [D176](D176-phase-2-diagnostic-gaps-closed.md) | Phase 2's squeeze-event and per-window correlation diagnostics built and wired; the dead squeeze function had the adverse direction backwards for shorts | Committed | Diagnostics & reporting |

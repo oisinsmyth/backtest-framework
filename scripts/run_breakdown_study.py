@@ -179,8 +179,24 @@ def main() -> int:
                         study,
                         seed=study.seed,
                     )
+                    # Squeeze events (D176): adverse excursions beyond 2 ATR against an
+                    # open short. Direction is passed explicitly because the excursion
+                    # diagnostics are measured in PRICE terms, so the adverse side for a
+                    # short is MFE, not MAE.
+                    squeeze = ds.squeeze_events(r.episodes, bars, r.stop_fills, direction=-1)
+                    # Per-window correlation (D176): the brief asks for it, and the
+                    # full-sample number can hide regime-dependent sign changes.
+                    bounds = [
+                        (test_start - oos_start, test_end - oos_start)
+                        for _i, _t, test_start, test_end in spans
+                    ]
+                    per_window = ds.correlation_by_window(
+                        long_result.oos_returns, r.oos_returns, bounds
+                    )
                     payload.setdefault("baseline_detail", {})[symbol] = {
                         "ensemble_test": ensemble_test,
+                        "squeeze": squeeze.to_dict(),
+                        "correlation_by_window": per_window,
                         "null": null.to_dict(),
                         "ensemble": ensemble.to_dict(),
                         "stop_gaps": gaps.to_dict(),
@@ -433,6 +449,89 @@ def _stop_sweep_table(sr: dict, ref: str) -> str:
     )
 
 
+def _window_correlation_block(d: dict) -> str:
+    """Per-window correlation (D176). The full-sample figure above is one number for a
+    decade; this asks whether it holds window to window."""
+    rows = d.get("correlation_by_window") or []
+    measured = [r for r in rows if r["correlation"] is not None]
+    if not measured:
+        return ("### Correlation per window" + NL + NL
+                + "The short book never traded in any window with enough variation to "
+                "measure a correlation. Reported as unmeasurable rather than as zero.")
+    values = [r["correlation"] for r in measured]
+    inactive = len(rows) - len(measured)
+    strong = [r for r in measured if abs(r["correlation"]) > 0.2]
+    worst = max(measured, key=lambda r: abs(r["correlation"]))
+    reading = (
+        "**The target holds window by window, not just on average** — no single window "
+        "exceeds ±0.2, so the near-zero full-sample figure is not an artefact of "
+        "opposite-signed regimes cancelling out."
+        if not strong
+        else f"**The full-sample figure hides window-level variation.** {len(strong)} of "
+        f"{len(measured)} measurable windows exceed the ±0.2 target, the largest at "
+        f"{worst['correlation']:+.3f}. A decade-long average near zero is therefore not the "
+        f"whole story: the books do move together in some windows, and a diversifier that "
+        f"correlates when it matters is worth less than its average suggests."
+    )
+    return f"""### Correlation per window
+
+The headline correlation is one number for a decade. The brief asks for it **per window**,
+and the two can disagree: a full-sample figure near zero is consistent with the books
+moving together in some regimes and opposite in others, which would break the
+diversification argument at exactly the moment it is needed.
+
+| | Value |
+|---|---|
+| Windows with a measurable correlation | {len(measured)} of {len(rows)} |
+| Windows the short book sat out entirely | {inactive} |
+| Median per-window correlation | {statistics.median(values):+.3f} |
+| Min / max | {min(values):+.3f} / {max(values):+.3f} |
+| Windows exceeding the ±0.2 target | **{len(strong)}** |
+| Largest single-window correlation | {worst["correlation"]:+.3f} (window {worst["window"]}) |
+
+A window the short book sat out has no correlation to measure, and is reported as
+unmeasurable rather than as zero — "uncorrelated" and "not present" are different claims.
+
+{reading}"""
+
+
+def _squeeze_block(d: dict) -> str:
+    """Squeeze events (D176) — the diagnostic the brief required and Phase 2 shipped
+    without, because the function existed and was never called."""
+    sq = d.get("squeeze")
+    if not sq:
+        return ""
+    reading = (
+        f"**{sq['n_squeezes']} of {sq['n_trades']} trades ({sq['share_of_trades']:.0%}) ran "
+        f"more than 2 ATR against the position while open**, and those trades carry "
+        f"{sq['pnl_in_squeezed_trades']:,.0f} of P&L between them. The stop was the exit on "
+        f"{sq['stop_hit_share']:.0%} of them — a squeeze the stop caught is a different "
+        f"event from one it did not."
+        if sq["n_squeezes"]
+        else "**No trade ran more than 2 ATR against the position while it was open.** For a "
+        "short book in crypto that is a strong statement, and it is a fact about this sample "
+        "rather than a property of the rule."
+    )
+    return f"""### Squeeze events
+
+The event the tail discipline exists for: an adverse excursion beyond 2 ATR against an
+open short. For a short, "adverse" means price RISING — excursions are measured in price
+terms (D112), so the adverse side is MFE rather than MAE, and reading the wrong one would
+report profitable moves as squeezes.
+
+| | Value |
+|---|---|
+| Closed trades | {sq["n_trades"]} |
+| Squeezes (> 2 ATR adverse) | **{sq["n_squeezes"]}** |
+| Share of trades | {sq["share_of_trades"]:.0%} |
+| Median adverse excursion | {sq["median_atr_multiples"]:.2f} ATR |
+| Worst squeeze | {sq["worst_atr_multiples"]:.2f} ATR |
+| Squeezes that ended at the stop | {sq["stop_hit_share"]:.0%} |
+| P&L in squeezed trades | {sq["pnl_in_squeezed_trades"]:,.0f} |
+
+{reading}"""
+
+
 def _ensemble_reading(test: dict) -> str:
     """Say what the interval means, computed — an interval that excludes zero and one
     that spans it are different findings and must not share a sentence."""
@@ -507,6 +606,10 @@ which answers the same question without assuming normality.
 | P(adding the short book helps) | **{test["prob_positive"]:.0%}** |
 
 {_ensemble_reading(test)}
+
+{_window_correlation_block(d)}
+
+{_squeeze_block(d)}
 
 ## What the close-based stop actually cost
 
