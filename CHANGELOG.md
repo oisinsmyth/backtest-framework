@@ -10,6 +10,53 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (cross-sectional portfolio, pre-registered, 2026-08-21 — D183)
+- `scripts/run_portfolio_universe.py` — a long/short portfolio ACROSS the 62-coin
+  universe. Each date, the long portfolio earns the equal-weighted mean of every live long
+  book, likewise the short; the two are combined at D181's expanding inverse-vol weights.
+  Return aggregation, not a portfolio backtest. Own registry, no multiplicity added.
+- Books that wipe out are truncated at NAV zero. Once NAV is negative `b/a - 1` is not a
+  return and averaging it would propagate nonsense across every other coin. Stricter than
+  the per-symbol studies, still not a liquidation model (D175).
+
+### Findings — predictions committed first (9dbd2d6), then scored
+- **H1 CONFIRMED, narrowly.** Long portfolio Sharpe **+1.278** (total return +2,913%, max
+  DD 28.8%) against **+0.437** on the median single coin. But the pre-registered robustness
+  check bites: restricted to dates with >=5 coins live, it is **+0.928** — clearing the
+  predicted +0.90 bar by 0.028. **A third of the headline was the thin 2015-2017 sample.**
+  Still more than double the median single coin, so the diversification claim survives even
+  though the headline does not.
+- **This is the first thing in this project that has worked.** It is also the least
+  surprising, because it is arithmetic: it operates on the return DISTRIBUTION rather than
+  on one book's timing, which is what every failed rule tried to do.
+- **H2 CONFIRMED, three times more strongly than per symbol.** Adding the short portfolio
+  costs **-1.170** Sharpe (D182's per-symbol cost was -0.382) and takes total return from
+  +2,913% to +54%. On the breadth-conditioned sample the combined book is NEGATIVE.
+  The pre-registered counter-mechanism — that aggregation would fix the short book by
+  making it continuously held — is refuted: it is continuously held here and subtracts more.
+- **D181's weighting flaw gets WORSE at portfolio level.** Mean long-portfolio weight
+  **0.302** — the losing leg carries 70% of the risk budget, against 61% on BTC alone.
+  Pooling 62 coins diversifies the short arm's returns, lowering its measured volatility,
+  which inverse-vol rewards with MORE weight. **The construction pays a book for being
+  diversified and for being absent.**
+
+### Fixed (in this study's own reporting, before publication)
+- The weighting paragraph asserted that aggregation would make D181's flaw bite LESS. It
+  was written before the run and is the opposite of what happened; it is now derived from
+  the payload rather than hardcoded.
+- The breadth table was labelled "books with a position open" and actually counts books
+  LIVE IN THE SAMPLE — a flat book contributes a 0.0 return and was counted. Label fixed,
+  and the exposed gap stated: **position-level breadth is not measured**, which bears
+  directly on whether daily equal-weighting is realistic.
+
+### Owed before +0.928 is a result rather than a number
+- The rebalancing cost between coins, which this study does not charge and which
+  daily-rebalanced equal weight maximises. The largest single threat to the finding.
+- A deflated Sharpe: the underlying baseline survived a 30-configuration search.
+- Its own out-of-sample test. One crypto cross-section over one bull-dominated decade is
+  exactly the sample-shaped problem D180 exists to warn about.
+
+
 ### Added (combined book on the D140 universe, pre-registered, 2026-08-21 — D182)
 - `scripts/run_combined_universe.py` — the long+short combined book across 62 coins,
   per-symbol, no rule attached. The baseline that had never been measured. Own registry,

@@ -1,6 +1,6 @@
 # D183 — A cross-sectional long/short portfolio: the diversification this project never had
 
-**Status:** PRE-REGISTERED — implementation committed, **study not yet run**
+**Status:** Committed (H1 confirmed narrowly, H2 confirmed strongly)
 **Date:** 2026-08-21
 **Category:** Analytics
 **Source:** D182 answered the per-symbol question and named this one as the thing it did not answer
@@ -107,3 +107,138 @@ rebalancing cost it currently ignores, a deflated Sharpe against the pool of con
 that produced the underlying baseline, and its own out-of-sample test on instruments this
 universe does not contain. A portfolio Sharpe computed on a crypto bull sample with free
 rebalancing is not a result; it is a number that has earned the right to be tested.
+
+---
+
+# RESULT — appended 2026-08-21, after the run. Nothing above this line was edited.
+
+**Status: H1 CONFIRMED — narrowly, once the stated robustness check is applied. H2
+CONFIRMED, and far more strongly than at per-symbol level.**
+
+62 symbols, 3,762 dates, 2015-09-11 to 2025-12-28.
+
+## The headline
+
+| | Sharpe | Total return | Max DD | Median SINGLE coin |
+|---|---|---|---|---|
+| **long portfolio** | **+1.278** | **+2,912.7%** | **28.8%** | +0.437 |
+| short portfolio | −0.588 | −53.6% | 61.0% | −0.450 |
+| combined portfolio | +0.108 | +53.6% | 22.8% | — |
+
+**Diversifying across coins is the first thing in this project that has worked.** The long
+book goes from a median single-coin Sharpe of **+0.437** to a portfolio Sharpe of
+**+1.278**, while max drawdown falls from a 48.1% single-coin mean to **28.8%**. Nothing
+else tested here — four entry filters, six stops, E1, the swing stop, the within-coin
+ensemble — has moved a number like that.
+
+It is also the least surprising result in the project, because it is arithmetic. 62
+partially-independent books averaged together have less variance than one of them. The
+finding is not that the effect exists; it is that it is large enough to matter, and that
+it is the only lever tried so far that operates on the return **distribution** rather than
+on a single book's timing.
+
+## H1 — CONFIRMED, and the margin matters
+
+Predicted: long portfolio Sharpe above **+0.90**. Observed **+1.278** on the full sample.
+
+The pre-registration named the way this could hold for the wrong reason — thin early
+breadth, where a "portfolio" is one or two coins in the 2015–2017 bull run. Scoring only
+dates with at least five coins live:
+
+| Coins live | Dates kept | Long portfolio Sharpe | Combined Sharpe |
+|---|---|---|---|
+| ≥ 1 | 3,510 | **+1.275** | +0.102 |
+| ≥ 5 | 2,712 | **+0.927** | −0.029 |
+| ≥ 10 / 20 / 30 | 2,708 | **+0.928** | −0.014 |
+
+**A third of the headline Sharpe was the thin early sample.** +1.278 becomes **+0.928**
+once the near-single-coin period is dropped — which clears the pre-registered bar of +0.90
+by 0.028. H1 holds as stated, and it holds *narrowly*, and quoting +1.278 without this
+table would be the more flattering half of a two-number result.
+
+The rows past 5 are identical because the universe fills in quickly: essentially no period
+has between five and thirty coins live.
+
+**+0.928 is still more than double the median single coin's +0.437**, so the diversification
+claim survives its own robustness check even though the headline does not.
+
+## H2 — CONFIRMED, and much worse than per symbol
+
+Adding the short portfolio costs **−1.170 Sharpe** (+1.278 → +0.108) and takes total return
+from **+2,913% to +54%**. Drawdown improves 28.8% → 22.8%, six points.
+
+At per-symbol level (D182) combining cost 0.382 Sharpe. At portfolio level it costs three
+times that, and on the breadth-conditioned sample the combined book is **negative**
+(−0.014 to −0.029) — worse than holding nothing.
+
+The mechanism against H2 that the pre-registration raised — that aggregation makes the
+short arm continuously held, so it might hedge properly once it is no longer intermittent —
+is refuted. The short portfolio *is* continuously held here, and it subtracts more, not
+less.
+
+## The D181 weighting flaw gets WORSE at portfolio level, not better
+
+I wrote the opposite into the report before running it: that pooling 62 coins would raise
+the short arm's in-the-market share and so make the flaw bite less. That was wrong, and the
+run says so.
+
+**Mean weight on the long portfolio: 0.302.** The losing leg carries **70%** of the risk
+budget, against 61% on BTC alone (D181).
+
+The reason is worth stating because it generalises past this study. Pooling 62 coins
+**diversifies the short arm's own returns**, which lowers its measured volatility, which
+inverse-vol rewards with **more** weight. **The construction pays a book for being
+diversified and for being absent, and neither is a reason to give it capital.** Any
+inverse-vol allocation across strategies of differing breadth has this problem.
+
+That claim is now derived in the report rather than asserted, because asserting it is how I
+got it backwards — the single most repeated defect in this project.
+
+## Two errors this run caught in its own reporting
+
+**The weight paragraph, above** — written before the run, wrong, now computed.
+
+**The breadth table was mislabelled.** It counts coins **live in the sample** — whose
+walk-forward has started and which have not wiped out — and I had labelled it "books with a
+position open". A flat book still contributes a 0.0 return and is counted. The label is
+fixed, and the gap it exposed is now stated rather than papered over: **position-level
+breadth is not measured in this study.** The long book is in the market roughly half the
+time and the short book far less, so the number of positions actually held is materially
+below these counts. That bears directly on whether daily equal-weighting across coins is a
+realistic construction, and this study does not answer it.
+
+## What must be attached to the +0.928
+
+**It is not a strategy result yet.** Three things are owed before it could be:
+
+1. **The rebalancing cost this study does not charge.** Each coin's own trading costs are
+   inside its book; moving capital between coins to hold equal weights is free here.
+   Daily-rebalanced equal weight is the most turnover-hungry construction available, so the
+   un-modelled cost is at its maximum. This is the single largest threat to the result.
+2. **A deflated Sharpe.** The underlying baseline is the survivor of a 30-configuration
+   search on the long book. A portfolio built from it inherits that multiplicity and has
+   not been deflated against it.
+3. **Its own out-of-sample test.** This is one crypto cross-section over one bull-dominated
+   decade. The lesson of D180 is precisely that a number measured on a favourable sample is
+   not a number about the world.
+
+**And two of the account-destroying books were truncated**, which is stricter than the
+per-symbol studies but still not a liquidation model (D175). `LUNA1-USD` and `LUNC-USD`
+short both died 2022-05-14.
+
+## What this changes
+
+**The project's negative streak has an explanation, not just a tally.** Every rule tested
+here tried to improve a single book's decisions, and every one failed out of sample. The
+one intervention that operates on the return distribution instead — holding many books at
+once — produced a larger, more robust improvement than all of them combined, and it needed
+no new parameters, no search, and no multiplicity.
+
+**The short book should stop being carried.** It has now failed as a standalone book
+(D172), as a per-symbol hedge (D182), and as a portfolio hedge here, where it costs 1.17
+Sharpe and takes 2,859 percentage points of return with it. There is no configuration of
+this project's evidence in which it earns its place.
+
+**The next test is the rebalancing cost**, not another rule. A +0.928 that survives realistic
+turnover costs is worth deflating and testing out of sample; one that does not is a
+measurement artifact of free trading, and no amount of further rule search would matter.

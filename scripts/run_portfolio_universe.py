@@ -244,6 +244,14 @@ def build_payload(runs, cohorts, snapshot_id, study) -> dict:
         "portfolio": portfolio,
         "single_symbol": single,
         "breadth": breadth,
+        # The study's actual output. Without it, every follow-up question needs a full
+        # recompute and `--report-only` is a promise the payload cannot keep.
+        "series": {
+            "dates": dates,
+            "long": arm_series["long"],
+            "short": arm_series["short"],
+            "combined": combined,
+        },
         "deaths": deaths,
         "per_symbol": per_symbol,
     }
@@ -295,6 +303,8 @@ are excluded from every figure, all three arms alike.
 {_verdict(p)}
 
 {_breadth_block(p)}
+
+{_breadth_conditional(p)}
 
 {_weight_block(p)}
 
@@ -363,20 +373,26 @@ def _breadth_block(p: dict) -> str:
     rows = NL.join(f"| {d} | {nl} | {ns} |" for d, nl, ns in marks)
     longs = [x[1] for x in b]
     thin = sum(1 for x in longs if x <= 3)
-    return f"""## Breadth — how many coins the portfolio actually held
+    return f"""## Breadth — how many coins the portfolio could hold
 
-A portfolio of one coin is a coin. This is the number of books with a position open, which
-is not the number of coins admitted: the long book is in the market roughly half the time
-and the short book ~15% of it.
+A portfolio of one coin is a coin. This counts the books **live in the sample** on each
+date — coins whose own walk-forward has started and which have not wiped out. It is an
+upper bound on positions, not a position count: a book that is flat still contributes a
+0.0 return and is counted here.
 
-| Date | Long books open | Short books open |
+| Date | Long books live | Short books live |
 |---|---|---|
 {rows}
 
-Median long breadth **{statistics.median(longs):.0f}**, maximum {max(longs)}. On
-**{thin:,} of {len(b):,}** dates ({thin / len(b):.0%}) the long side held three coins or
-fewer, and those dates are concentrated at the start of the sample where only the oldest
-coins had cleared their walk-forward."""
+Median **{statistics.median(longs):.0f}** live, maximum {max(longs)}. On **{thin:,} of
+{len(b):,}** dates ({thin / len(b):.0%}) fewer than four coins were live at all, and those
+dates sit at the start of the sample where only the oldest coins had cleared their
+walk-forward.
+
+**Position-level breadth is not measured here.** The long book is in the market roughly
+half the time and the short book far less, so the number of positions actually held is
+materially below these counts. That matters for whether daily equal-weighting across coins
+is a realistic construction, and this study does not answer it."""
 
 
 def _weight_block(p: dict) -> str:
@@ -387,10 +403,82 @@ Mean weight on the LONG portfolio: **{pf["mean_long_weight"]:.3f}**. Long/short 
 **{pf["correlation"]:+.4f}**; the weighting fell back to 50/50 on {pf["n_fallback_bars"]:,}
 bars.
 
-Inverse-vol weighting reads a book that is flat most of the time as low-risk, when what it
-actually is, is absent (D181). Aggregating across 62 coins raises the short arm's
-in-the-market share well above any single coin's, so this bites less here than it does per
-symbol — but it is the same construction and it is not fixed."""
+{_weight_reading(pf)}"""
+
+
+def _weight_reading(pf: dict) -> str:
+    """Read the weight off the run rather than asserting it.
+
+    I wrote the opposite of this into the report before running it — that aggregation
+    would make the D181 weighting flaw bite LESS at portfolio level, because the short arm
+    is in the market far more often once 62 coins are pooled. Hardcoded prose drifting
+    from computed data is the single most repeated defect in this project, so the claim is
+    now derived."""
+    w = pf["mean_long_weight"]
+    if w < 0.389:  # the worst single-coin figure, BTC, from D181
+        return (
+            f"Inverse-vol weighting reads a book that is flat most of the time as low-risk, "
+            f"when what it actually is, is absent (D181). **Aggregation makes this WORSE, "
+            f"not better.** Pooling 62 coins diversifies the short arm's own returns, which "
+            f"lowers its measured volatility, which inverse-vol rewards with MORE weight — "
+            f"so the losing leg carries {1 - w:.0%} of the risk budget here against 61% on "
+            f"BTC alone (D181). The construction pays a book for being diversified and for "
+            f"being absent, and neither is a reason to give it capital."
+        )
+    return (
+        f"Inverse-vol weighting reads a book that is flat most of the time as low-risk, when "
+        f"what it actually is, is absent (D181). Pooling 62 coins raises the short arm's "
+        f"in-the-market share above any single coin's, and the long leg ends up with "
+        f"{w:.1%} of the risk budget against 38.9% on BTC alone — so aggregation bites less "
+        f"here than per symbol. It is the same construction and it is not fixed."
+    )
+
+
+def _breadth_conditional(p: dict) -> str:
+    """Does H1 survive dropping the thin early sample?
+
+    The pre-registration named this as the way H1 could hold for the wrong reason: a
+    one-coin portfolio is a coin, and the earliest dates have almost nothing admitted."""
+    ser, breadth = p["series"], p["breadth"]
+    w = p["min_bars"]
+    rows = []
+    for k in (1, 5, 10, 20, 30):
+        idx = [i for i, (_, nl, _) in enumerate(breadth) if nl >= k and i >= w]
+        if len(idx) < 60:
+            continue
+        lr = [ser["long"][i] for i in idx]
+        cr = [ser["combined"][i - w] for i in idx if i - w < len(ser["combined"])]
+        rows.append(
+            f"| >= {k} | {len(idx):,} | {_sharpe_of(lr):+.3f} | {_sharpe_of(cr):+.3f} |"
+        )
+    return f"""## Does the long portfolio's Sharpe survive dropping the thin early sample?
+
+The pre-registration named this as the way H1 could hold for the wrong reason. Each row
+keeps only the dates on which at least that many long books were open, and rescores.
+
+| Long books live | Dates kept | Long portfolio Sharpe | Combined Sharpe |
+|---|---|---|---|
+{NL.join(rows)}
+
+The rows above 5 are identical because the universe fills in quickly: there is essentially
+no period with between five and thirty coins live, so every threshold past five selects the
+same 2,708 dates.
+
+A Sharpe that climbed as the thin dates were dropped would mean the early, near-single-coin
+period was dragging the headline down; one that collapsed would mean the headline was that
+period's luck. Conditioning on breadth is not a free lunch either — it is a filter applied
+after the fact, and the rows are a robustness reading rather than a tradable variant."""
+
+
+def _sharpe_of(returns: list[float]) -> float:
+    import math
+
+    if len(returns) < 2 or len(set(returns)) < 2:
+        return 0.0
+    mean = statistics.fmean(returns)
+    sd = statistics.stdev(returns)
+    rf_per_bar = 0.04 / 365.0
+    return (mean - rf_per_bar) / sd * math.sqrt(365.0) if sd else 0.0
 
 
 def _deaths_block(p: dict) -> str:
