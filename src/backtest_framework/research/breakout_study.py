@@ -420,6 +420,15 @@ def exit_variants() -> list[Variant]:
                 fixed_config=baseline_plus({"type": "failed_breakout", "k": k}))
         for k in E1_K
     ]
+    # The cross-book test (D178): swing_k2/k3 were developed and judged entirely on the
+    # SHORT book. Running them here asks whether the effect belongs to the RULE or to the
+    # book it was found on. Both k are tested, not just the one that won on the short
+    # side — D173's error was generalising from a single member of a swept set.
+    variants += [
+        Variant(f"exit_swing_k{k}", "exit",
+                fixed_config=baseline_plus({"type": "swing_structure_stop", "k": k}))
+        for k in (2, 3)
+    ]
     variants += [
         Variant(f"exit_e2_n{n}", "exit",
                 fixed_config=baseline_plus({

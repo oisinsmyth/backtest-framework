@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D178**.
+New decisions are added here going forward — next number is **D179**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -166,3 +166,4 @@ written rationale for *why not now*, per R3.
 | [D175](D175-no-margin-call-or-liquidation-model.md) | The engine has no margin call, liquidation or borrow recall; three short accounts passed -100% (worst -1106%) with stops active | Deferred | Backtest engine |
 | [D176](D176-phase-2-diagnostic-gaps-closed.md) | Phase 2's squeeze-event and per-window correlation diagnostics built and wired; the dead squeeze function had the adverse direction backwards for shorts | Committed | Diagnostics & reporting |
 | [D177](D177-phase-1-5-exit-signatures.md) | Phase 1.5's exit signatures: E1 built for the first time and KEEPS on both symbols, E2 had been built to the wrong spec and fails, E3 logged only | Committed | Signals & strategy interface |
+| [D178](D178-cross-book-test-pre-registration.md) | Cross-book test: `swing_k2` on the long book and E1 on the short book, each on the side it was not developed on, with predictions committed first | Pre-registered | Validation & research integrity |

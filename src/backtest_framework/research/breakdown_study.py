@@ -190,6 +190,26 @@ def short_variants() -> list[bs.Variant]:
                 ),
             )
         )
+    # The cross-book test (D178): E1 was developed and judged entirely on the LONG book.
+    # It is NOT a stop — it bounds duration in a window, not loss — so on a short it must
+    # ride alongside the incumbent channel stop, which is also what the baseline carries.
+    # The delta against the baseline therefore prices E1 alone.
+    for k in (2, 3):
+        variants.append(
+            bs.Variant(
+                f"exit_e1_k{k}", "exit",
+                fixed_config=bs.breakout_config(
+                    n_entry=SHORT_BASELINE_N_ENTRY,
+                    n_exit=SHORT_BASELINE_N_EXIT,
+                    weight_source=SHORT_INVERSE_VOL,
+                    filters=[{"type": "trend_gate", "sma_window": SMA_GATE_WINDOW,
+                              "direction": "short"}],
+                    direction="short",
+                    exit_rules=[{"type": "channel_stop"},
+                                {"type": "failed_breakout", "k": k}],
+                ),
+            )
+        )
     return variants
 
 
