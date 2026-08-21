@@ -569,14 +569,21 @@ def run_universe_study(
     end_date: date = date(2025, 12, 31),
     trial_id_prefix: str = "breakout-universe-v1",
     progress: Callable[[str], None] | None = None,
+    variant: bs.Variant | None = None,
 ) -> UniverseResult:
-    """Run the fixed baseline configuration on every symbol the policy admits, at every
-    cost tier, and log every run.
+    """Run ONE fixed configuration on every symbol the policy admits, at every cost tier,
+    and log every run.
 
     The policy is applied HERE, on the data handed in — not trusted from the fixture
-    meta. A symbol that fails the screen never reaches `run_variant`."""
+    meta. A symbol that fails the screen never reaches `run_variant`.
+
+    `variant` defaults to the long book's published baseline, which is what this study
+    was built for. It is a parameter so the SHORT book's stop comparison (D174) can reuse
+    this machinery unchanged rather than fork it — the whole point of D141's
+    one-configuration-across-the-cross-section rule is that the configuration is fixed
+    BEFORE it meets the universe, and that holds whichever configuration it is."""
     selection = apply_policy(bars_by_symbol, volumes_by_symbol, policy, end_date)
-    variant = baseline_variant()
+    variant = variant if variant is not None else baseline_variant()
     runs: dict[str, SymbolRun] = {}
 
     for symbol in selection.included:

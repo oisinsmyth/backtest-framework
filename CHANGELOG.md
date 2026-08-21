@@ -10,6 +10,29 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (swing_k2 out-of-sample on the D140 universe, 2026-08-21 — D174)
+- **`scripts/run_swing_universe.py` + `docs/results/swing_universe.md`** — `swing_k2` and
+  `trail_10` run UNCHANGED across 62 screened coins, one configuration each, no
+  per-symbol tuning (D141). The single pre-stated question D173 left standing.
+- `run_universe_study` gains an optional `variant` parameter so the short book reuses that
+  machinery instead of forking it; default unchanged, so the published long-book universe
+  study is untouched.
+
+### Findings
+- **The stop survives, the strategy does not.** `swing_k2` beats `trail_10` on 43/62
+  symbols (69%), above half in EVERY survivorship cohort — collapsed 71%, delisted 2/2,
+  survived 63% — and robust to dropping blow-ups (41/59). But median total return is
+  -50.5%, profitable on 5/62, and it posts one FEWER profitable symbol than `trail_10`
+  while beating it on average.
+- **Three accounts lost more than everything** (D175): USTC -1105.7%, LUNC -167.1%,
+  LUNA1 -149.5%, with stops active. The engine models no margin call, no liquidation and
+  no borrow recall, so NAV goes negative and the book keeps trading. This was the most
+  important thing the run found and it is not what the run was looking for.
+- Reports lead on the MEDIAN: a mean over a cross-section containing a -1105% row is not
+  an average of anything. CAGR emits None rather than nan past -100%, because a nan in a
+  results document is a number nobody has thought about — the first cut printed one.
+
+
 ### Added (swing-structure rules, pre-registered, 2026-08-21 — D173)
 - **`SwingStructureStop(k)`** — the stop sits at the most recent CONFIRMED swing pivot
   against the trade; **`SwingStructureGate(k)`** — an entry gate requiring the last two
