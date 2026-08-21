@@ -1,9 +1,22 @@
 # D111 — Volume-confirmation filter NOT built: `Bar` carries no volume, and neither workaround is acceptable
 
-**Status:** Deferred (blocked on an interface change)
+**Status:** Superseded by [D168](D168-volume-rides-inside-the-dataview.md), 2026-08-21
 **Date:** 2026-08-18
 **Category:** Signals & strategy interface
 **Source:** Breakout study session
+
+> **DISPOSITION, 2026-08-21.** This deferral is **closed**. The interface change scoped
+> below was built as designed: volume rides inside `DataView` as an aligned,
+> optionally-present series constructed sliced exactly as bars are, with three explicitly
+> distinguishable states so that "this instrument has no volume" and "somebody forgot to
+> wire volume through" are never the same observation. `VolumeConfirmationFilter` exists,
+> is registered, and faces the same keep/drop rule as the other filters; feature F2 is
+> computable. See [D168](D168-volume-rides-inside-the-dataview.md).
+>
+> The record below is left exactly as written on 2026-08-18 — it is the reasoning that
+> justified NOT faking the filter for three months, and the "what would need to be true"
+> section is what the build then followed. Rewriting it to match the outcome would erase
+> the more useful half.
 
 ## Decision
 

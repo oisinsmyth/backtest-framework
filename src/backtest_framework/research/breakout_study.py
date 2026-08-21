@@ -336,6 +336,12 @@ def filter_variants() -> list[Variant]:
                      "short_window": 20, "long_window": 100})),
         Variant("filter_trend_gate_200", "filter",
                 fixed_config=baseline_plus({"type": "trend_gate", "sma_window": 200})),
+        # The filter the original brief specified and D111 recorded as BLOCKED. D168
+        # closed the blocker, so it now faces exactly the same keep/drop rule as the
+        # other four rather than being reported as an absence.
+        Variant("filter_volume_1.5x", "filter",
+                fixed_config=baseline_plus(
+                    {"type": "volume_confirmation", "multiple": 1.5, "window": 20})),
     ]
 
 
@@ -536,10 +542,15 @@ def run_variant(
     tier: CostTier,
     study: BreakoutStudyConfig,
     breadth: Mapping[datetime, float] | None = None,
+    volumes: Sequence[float] | None = None,
 ) -> VariantResult:
     """`breadth` is F4's cross-sectional input, built once across the whole universe by
     `run_breakout_study`. None simply leaves F4 unavailable — features are diagnostics
-    and never gate a run."""
+    and never gate a run.
+
+    `volumes` must align 1:1 with `bars` and is sliced to the run window alongside them
+    (D168). A variant carrying a filter that requires volume will fail loudly if this is
+    None, which is the intended behaviour — better than silently rejecting every entry."""
     spans = _window_spans(bars, study)
     if not spans:
         raise ValueError("no walk-forward windows fit the series — check sizes vs series length")
@@ -584,6 +595,8 @@ def run_variant(
     if strategy.warm_up_bars() != warm_up:
         raise ValueError("warm-up disagreement between probe and run strategy — refusing to run")
 
+    # Sliced with exactly the same bounds as run_bars, so the two cannot drift apart.
+    run_volumes = None if volumes is None else list(volumes[run_start:oos_end])
     result = run_backtest(
         bars_by_instrument={symbol: run_bars},
         instruments=_instruments(symbol),
@@ -592,6 +605,7 @@ def run_variant(
         allocator=ConstantSplitAllocator(),
         starting_cash=study.starting_cash,
         fill_timing=study.fill_timing,
+        volumes_by_instrument=None if run_volumes is None else {symbol: run_volumes},
     )
 
     # The prefix is exactly warm_up bars long, so the strategy's own guard keeps it
@@ -629,7 +643,9 @@ def run_variant(
         result,
         symbol,
         run_bars,
-        features_at=lambda i: trigger_features(run_bars, i, breadth=breadth),
+        features_at=lambda i: trigger_features(
+            run_bars, i, breadth=breadth, volumes=run_volumes
+        ),
     )
     oos_episodes = [e for e in episodes if e.entry_index >= warm_up]
     if len(oos_episodes) != len(episodes):
@@ -779,6 +795,7 @@ def run_breakout_study(
     bars_by_symbol: Mapping[str, Sequence[TimestampedBar]],
     registry: TrialRegistry,
     snapshot_id: str,
+    volumes_by_symbol: Mapping[str, Sequence[float]] | None = None,
     study: BreakoutStudyConfig = BreakoutStudyConfig(),
     tiers: Sequence[CostTier] = DEFAULT_TIERS,
     trial_id_prefix: str = "breakout-v1",
@@ -816,7 +833,10 @@ def run_breakout_study(
             for variant in variants:
                 if progress:
                     progress(f"{symbol} {tier.name} {variant.name}")
-                result = run_variant(bars, symbol, variant, tier, study, breadth=breadth)
+                result = run_variant(
+                    bars, symbol, variant, tier, study, breadth=breadth,
+                    volumes=None if volumes_by_symbol is None else volumes_by_symbol.get(symbol),
+                )
                 results[(variant.name, tier.name)] = result
                 _log_trials(registry, result, study, snapshot_id, trial_id_prefix, spans, bars)
 

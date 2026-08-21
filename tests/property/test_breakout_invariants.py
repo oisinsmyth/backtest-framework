@@ -32,6 +32,7 @@ from backtest_framework.strategies.breakout import (
     InverseVolatilityWeight,
     TrendGateFilter,
     VolatilityContractionFilter,
+    VolumeConfirmationFilter,
 )
 
 SETTINGS = settings(derandomize=True, max_examples=40, deadline=None)
@@ -96,6 +97,75 @@ def test_perturbing_future_bars_cannot_change_todays_signal(bars, tail, scale):
     original = _replay(_make(40, 10, with_filters=True), bars, split)
     replayed = _replay(_make(40, 10, with_filters=True), perturbed, split)
     assert original == replayed
+
+
+def _replay_with_volume(strategy, bars, volumes, up_to: int):
+    return [
+        strategy.generate_targets({"X": build_data_view(bars, i, volumes=volumes)})[0].weight
+        for i in range(up_to + 1)
+    ]
+
+
+def _volume_filtered() -> BreakoutStrategy:
+    return BreakoutStrategy(
+        "s", "X", n_entry=40, n_exit=10,
+        weight_source=InverseVolatilityWeight(vol_window=20, rebalance="at_entry"),
+        filters=(VolumeConfirmationFilter(multiple=1.5, window=20),),
+    )
+
+
+def _volume_series(seeds, n: int) -> list[float]:
+    """A volume series of exactly `n` entries, cycled from whatever hypothesis gave us.
+    The bar count varies per example, so the series is built from it rather than
+    generated at a fixed length and hoped to be long enough."""
+    return [seeds[i % len(seeds)] for i in range(n)]
+
+
+@SETTINGS
+@given(
+    bars=bar_paths(min_bars=80),
+    seeds=st.lists(st.floats(1.0, 1e7), min_size=1, max_size=40),
+    tail_seeds=st.lists(st.floats(1.0, 1e9), min_size=1, max_size=40),
+)
+def test_perturbing_future_volumes_cannot_change_todays_signal(bars, seeds, tail_seeds):
+    """The single most important test the volume channel adds (D168).
+
+    Volume is a SECOND data channel reaching strategy code, and a second channel is a
+    second way to leak the future. The bar channel's guarantee does not extend to it by
+    argument — only by the volume tuple being constructed sliced the same way, which is
+    exactly what this asserts end to end: replay to bar i, then replay to bar i again on
+    a series whose volumes after i are arbitrary and wildly different. The two target
+    sequences must be identical."""
+    n = len(bars)
+    volumes = _volume_series(seeds, n)
+    split = n // 2
+    tail = _volume_series(tail_seeds, n - split - 1)
+    perturbed = volumes[: split + 1] + [v * 1000.0 for v in tail]
+    assert len(perturbed) == len(volumes) == n
+
+    original = _replay_with_volume(_volume_filtered(), bars, volumes, split)
+    replayed = _replay_with_volume(_volume_filtered(), bars, perturbed, split)
+    assert original == replayed
+
+
+@SETTINGS
+@given(
+    bars=bar_paths(min_bars=80),
+    seeds=st.lists(st.floats(1.0, 1e7), min_size=1, max_size=40),
+)
+def test_a_volume_filters_decision_is_a_pure_function_of_visible_volumes(bars, seeds):
+    """Two views built over the same visible prefix must produce the same verdict, no
+    matter what the underlying full series holds beyond it."""
+    n = len(bars)
+    volumes = _volume_series(seeds, n)
+    brick = VolumeConfirmationFilter(multiple=1.5, window=20)
+    for i in (25, n // 2, n - 1):
+        if i < brick.warm_up_bars(40, 10) or i >= n:
+            continue
+        short_view = build_data_view(bars[: i + 1], i, volumes=volumes[: i + 1])
+        long_view = build_data_view(bars, i, volumes=volumes)
+        condition = lambda j: True  # noqa: E731 - the filter's verdict is what is under test
+        assert brick.accepts(short_view, condition) == brick.accepts(long_view, condition)
 
 
 @SETTINGS

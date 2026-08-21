@@ -1,6 +1,6 @@
 {
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-20T23:29:53.516236+00:00",
+  "generated_utc": "2026-08-21T00:04:47.686955+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -35,7 +35,7 @@
       "role": "taker"
     }
   ],
-  "n_oos_trials": 184,
+  "n_oos_trials": 192,
   "n_train_evaluations": 4896,
   "sanity_gate": {
     "cleaning_changes": 0,
@@ -127,6 +127,25 @@
         }
       },
       "keep": true
+    },
+    "filter_volume_1.5x": {
+      "rows": {
+        "BTC-USD": {
+          "d_sharpe": -0.23759726347126753,
+          "d_return": -39.11802383974357,
+          "d_maxdd": -0.10276757753746141,
+          "d_trades": -11,
+          "d_exposure": -0.07748184019370458
+        },
+        "ETH-USD": {
+          "d_sharpe": -0.35100445698615346,
+          "d_return": -4.063659139117235,
+          "d_maxdd": 0.05401002595866339,
+          "d_trades": -6,
+          "d_exposure": -0.07604282022886677
+        }
+      },
+      "keep": false
     }
   },
   "feature_verdicts": {
@@ -197,15 +216,66 @@
     "F2": {
       "feature": "F2",
       "n_total": 66,
-      "n_available": 0,
-      "unavailable_reason": "no volume on TimestampedBar/DataView (D111) \u2014 the same blocker that stops the volume-confirmation filter; F2 is a ratio of the field that does not reach strategy code",
-      "buckets": [],
-      "rho_mfe": null,
-      "rho_mae": null,
-      "rho_first_half": null,
-      "rho_second_half": null,
-      "verdict": "UNAVAILABLE",
-      "note": "blocked: no volume on TimestampedBar/DataView (D111) \u2014 the same blocker that stops the volume-confirmation filter; F2 is a ratio of the field that does not reach strategy code"
+      "n_available": 66,
+      "unavailable_reason": null,
+      "buckets": [
+        {
+          "quintile": 1,
+          "n": 13,
+          "lo": 0.6680726384946404,
+          "hi": 1.1655623017086065,
+          "mean_mfe": 0.5813667334251312,
+          "mean_mae": -0.05477561412184976,
+          "win_rate": 0.46153846153846156,
+          "whipsaw_rate": 0.0
+        },
+        {
+          "quintile": 2,
+          "n": 13,
+          "lo": 1.1670586301809343,
+          "hi": 1.3224180215192,
+          "mean_mfe": 0.48500347814283473,
+          "mean_mae": -0.058308391180733006,
+          "win_rate": 0.5384615384615384,
+          "whipsaw_rate": 0.0
+        },
+        {
+          "quintile": 3,
+          "n": 13,
+          "lo": 1.3230975408829158,
+          "hi": 1.5723521707747308,
+          "mean_mfe": 0.3062945798910858,
+          "mean_mae": -0.09894649230102531,
+          "win_rate": 0.5384615384615384,
+          "whipsaw_rate": 0.0
+        },
+        {
+          "quintile": 4,
+          "n": 13,
+          "lo": 1.6116963389839634,
+          "hi": 1.9210391221167957,
+          "mean_mfe": 0.331809687490736,
+          "mean_mae": -0.06402441960012116,
+          "win_rate": 0.5384615384615384,
+          "whipsaw_rate": 0.0
+        },
+        {
+          "quintile": 5,
+          "n": 14,
+          "lo": 1.9370152934304046,
+          "hi": 3.1470456732638667,
+          "mean_mfe": 0.40692671459920915,
+          "mean_mae": -0.04002253793277401,
+          "win_rate": 0.7142857142857143,
+          "whipsaw_rate": 0.0
+        }
+      ],
+      "rho_mfe": 0.15545350172215844,
+      "rho_mae": 0.05959774134278641,
+      "rho_first_half": 0.09090909090909091,
+      "rho_second_half": 0.43482620320855614,
+      "verdict": "NO",
+      "note": "rank correlation with MFE is +0.16 \u2014 no usable relationship"
     },
     "F3": {
       "feature": "F3",
@@ -420,10 +490,10 @@
       "n_oos_bars": 3717,
       "n_windows": 59,
       "dsr_by_tier": {
-        "maker_0bp": 0.9999564301718804,
-        "maker_10bp": 0.999937339048607,
-        "maker_25bp": 0.9998888636087792,
-        "taker_40bp": 0.9998009209783048
+        "maker_0bp": 0.9999455084523451,
+        "maker_10bp": 0.9999233067547715,
+        "maker_25bp": 0.9998686748849888,
+        "taker_40bp": 0.9997719446716473
       },
       "dsr_inputs_by_tier": {
         "maker_0bp": {
@@ -432,8 +502,8 @@
           "t": 3716,
           "skew": 1.1750640315424705,
           "kurt": 19.285485216485913,
-          "n_trials": 23,
-          "var_trials_daily": 1.9569315517334944e-05
+          "n_trials": 24,
+          "var_trials_daily": 2.3216104090848136e-05
         },
         "maker_10bp": {
           "observed_sr_daily": 0.06982641505461203,
@@ -441,8 +511,8 @@
           "t": 3716,
           "skew": 1.174559748421578,
           "kurt": 19.280009626516787,
-          "n_trials": 23,
-          "var_trials_daily": 2.0160585379498618e-05
+          "n_trials": 24,
+          "var_trials_daily": 2.352347975588582e-05
         },
         "maker_25bp": {
           "observed_sr_daily": 0.06793850243330826,
@@ -450,8 +520,8 @@
           "t": 3716,
           "skew": 1.173480954386781,
           "kurt": 19.26573845479036,
-          "n_trials": 23,
-          "var_trials_daily": 2.1826460729092604e-05
+          "n_trials": 24,
+          "var_trials_daily": 2.4719060136284507e-05
         },
         "taker_40bp": {
           "observed_sr_daily": 0.06604109859156704,
@@ -459,8 +529,8 @@
           "t": 3716,
           "skew": 1.1719735578929178,
           "kurt": 19.24421263017486,
-          "n_trials": 23,
-          "var_trials_daily": 2.4129576461649102e-05
+          "n_trials": 24,
+          "var_trials_daily": 2.6591109446423106e-05
         }
       },
       "plateau_spread": {
@@ -1001,6 +1071,37 @@
           "downside_participation": 0.2758471738454173,
           "downside_avoided": 0.7241528261545827,
           "drawdown_avoided": 0.5776503480737112
+        },
+        "filter_volume_1.5x@maker_0bp": {
+          "total_return": 21.272046724453407,
+          "cagr": 0.35627150151751485,
+          "sharpe_annual": 1.02414213967841,
+          "max_drawdown": 0.31868281634416745,
+          "n_closed_trades": 27.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5925925925925926,
+          "mean_mfe": 0.4080795426962989,
+          "mean_mae": -0.05845106197980712,
+          "median_mfe": 0.2807955382946481,
+          "median_mae": -0.031314370474604614,
+          "mean_bars_held": 39.81481481481482,
+          "median_bars_held": 30.0,
+          "p90_bars_held": 90.0,
+          "mean_bars_to_stop_out_losers": 21.363636363636363,
+          "median_bars_to_stop_out_losers": 22.0,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.289211729889696,
+          "total_costs": 0.0,
+          "rebalance_cost_share": 0.0,
+          "traded_notional": 43876945.33464134,
+          "annual_turnover": 4.846517978389954,
+          "gross_pnl": 2127204.672445342,
+          "net_pnl": 2127204.672445342,
+          "cost_share_of_gross": 0.0,
+          "upside_capture": 0.2677570621495652,
+          "downside_participation": 0.23361383520701456,
+          "downside_avoided": 0.7663861647929855,
+          "drawdown_avoided": 0.6178817700056689
         },
         "sizing_fixed_1.0@maker_0bp": {
           "total_return": 109.12514340484275,
@@ -1715,6 +1816,37 @@
           "downside_avoided": 0.7235637903740246,
           "drawdown_avoided": 0.5663645398813144
         },
+        "filter_volume_1.5x@maker_10bp": {
+          "total_return": 20.250907901868214,
+          "cagr": 0.35003526349526504,
+          "sharpe_annual": 1.0092006951997776,
+          "max_drawdown": 0.32065192294779266,
+          "n_closed_trades": 27.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5925925925925926,
+          "mean_mfe": 0.4080795426962989,
+          "mean_mae": -0.05845106197980712,
+          "median_mfe": 0.2807955382946481,
+          "median_mae": -0.031314370474604614,
+          "mean_bars_held": 39.81481481481482,
+          "median_bars_held": 30.0,
+          "p90_bars_held": 90.0,
+          "mean_bars_to_stop_out_losers": 21.363636363636363,
+          "median_bars_to_stop_out_losers": 22.0,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.289211729889696,
+          "total_costs": 42447.875340000865,
+          "rebalance_cost_share": 0.0498130599067127,
+          "traded_notional": 42447875.34000087,
+          "annual_turnover": 4.8404795313460784,
+          "gross_pnl": 2067538.665526822,
+          "net_pnl": 2025090.790186821,
+          "cost_share_of_gross": 0.02053063192856172,
+          "upside_capture": 0.2671713625667502,
+          "downside_participation": 0.2341158161596232,
+          "downside_avoided": 0.7658841838403768,
+          "drawdown_avoided": 0.615520702852193
+        },
         "sizing_fixed_1.0@maker_10bp": {
           "total_return": 101.06832414098749,
           "cagr": 0.574954509636983,
@@ -2427,6 +2559,37 @@
           "downside_participation": 0.2773205087699196,
           "downside_avoided": 0.7226794912300805,
           "drawdown_avoided": 0.5497213675909005
+        },
+        "filter_volume_1.5x@maker_25bp": {
+          "total_return": 18.80381116222683,
+          "cagr": 0.34071803202906126,
+          "sharpe_annual": 0.9866788569989976,
+          "max_drawdown": 0.3240031561782079,
+          "n_closed_trades": 27.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5555555555555556,
+          "mean_mfe": 0.4080795426962989,
+          "mean_mae": -0.05845106197980712,
+          "median_mfe": 0.2807955382946481,
+          "median_mae": -0.031314370474604614,
+          "mean_bars_held": 39.81481481481482,
+          "median_bars_held": 30.0,
+          "p90_bars_held": 90.0,
+          "mean_bars_to_stop_out_losers": 21.666666666666668,
+          "median_bars_to_stop_out_losers": 22.0,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.289211729889696,
+          "total_costs": 101000.50762571934,
+          "rebalance_cost_share": 0.05059982332875672,
+          "traded_notional": 40400203.05028774,
+          "annual_turnover": 4.831950123247367,
+          "gross_pnl": 1981381.623848402,
+          "net_pnl": 1880381.1162226826,
+          "cost_share_of_gross": 0.050974787698670525,
+          "upside_capture": 0.2662922388421755,
+          "downside_participation": 0.23486947202890898,
+          "downside_avoided": 0.765130527971091,
+          "drawdown_avoided": 0.6115023898317586
         },
         "sizing_fixed_1.0@maker_25bp": {
           "total_return": 90.04944541590777,
@@ -3141,6 +3304,37 @@
           "downside_avoided": 0.7217942159834696,
           "drawdown_avoided": 0.5334087908440228
         },
+        "filter_volume_1.5x@taker_40bp": {
+          "total_return": 17.452354086727677,
+          "cagr": 0.33144454608470975,
+          "sharpe_annual": 0.9640289346366901,
+          "max_drawdown": 0.32733850211538756,
+          "n_closed_trades": 27.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5555555555555556,
+          "mean_mfe": 0.4080795426962989,
+          "mean_mae": -0.05845106197980712,
+          "median_mfe": 0.2807955382946481,
+          "median_mae": -0.031314370474604614,
+          "mean_bars_held": 39.81481481481482,
+          "median_bars_held": 30.0,
+          "p90_bars_held": 90.0,
+          "mean_bars_to_stop_out_losers": 21.666666666666668,
+          "median_bars_to_stop_out_losers": 22.0,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.289211729889696,
+          "total_costs": 153836.33174213304,
+          "rebalance_cost_share": 0.05141526800007876,
+          "traded_notional": 38459082.935533255,
+          "annual_turnover": 4.8237141149799,
+          "gross_pnl": 1899071.740414897,
+          "net_pnl": 1745235.408672764,
+          "cost_share_of_gross": 0.08100606652623027,
+          "upside_capture": 0.2654123055369104,
+          "downside_participation": 0.2356239531239763,
+          "downside_avoided": 0.7643760468760237,
+          "drawdown_avoided": 0.6075031265499962
+        },
         "sizing_fixed_1.0@taker_40bp": {
           "total_return": 80.19206261768562,
           "cagr": 0.5399598712378504,
@@ -3392,10 +3586,10 @@
       "n_oos_bars": 2709,
       "n_windows": 43,
       "dsr_by_tier": {
-        "maker_0bp": 0.9916356375972448,
-        "maker_10bp": 0.9902605477216639,
-        "maker_25bp": 0.9877333033485847,
-        "taker_40bp": 0.9845120276630095
+        "maker_0bp": 0.9881061109184179,
+        "maker_10bp": 0.9862381527714053,
+        "maker_25bp": 0.9828609225661176,
+        "taker_40bp": 0.9786464180664083
       },
       "dsr_inputs_by_tier": {
         "maker_0bp": {
@@ -3404,8 +3598,8 @@
           "t": 2708,
           "skew": 1.6703163152364664,
           "kurt": 22.87215425579547,
-          "n_trials": 23,
-          "var_trials_daily": 3.295975468677331e-05
+          "n_trials": 24,
+          "var_trials_daily": 4.7897788416927324e-05
         },
         "maker_10bp": {
           "observed_sr_daily": 0.05431627271806416,
@@ -3413,8 +3607,8 @@
           "t": 2708,
           "skew": 1.6673639370305318,
           "kurt": 22.878642882390174,
-          "n_trials": 23,
-          "var_trials_daily": 3.211984881970245e-05
+          "n_trials": 24,
+          "var_trials_daily": 4.692554341149464e-05
         },
         "maker_25bp": {
           "observed_sr_daily": 0.05257973291132808,
@@ -3422,8 +3616,8 @@
           "t": 2708,
           "skew": 1.662461057281154,
           "kurt": 22.88117811720851,
-          "n_trials": 23,
-          "var_trials_daily": 3.117115694482908e-05
+          "n_trials": 24,
+          "var_trials_daily": 4.5764147954105914e-05
         },
         "taker_40bp": {
           "observed_sr_daily": 0.05083615408438045,
@@ -3431,8 +3625,8 @@
           "t": 2708,
           "skew": 1.65694029385177,
           "kurt": 22.875057545069918,
-          "n_trials": 23,
-          "var_trials_daily": 3.060070603434475e-05
+          "n_trials": 24,
+          "var_trials_daily": 4.4964034582004054e-05
         }
       },
       "plateau_spread": {
@@ -3973,6 +4167,37 @@
           "downside_participation": 0.2023167565399378,
           "downside_avoided": 0.7976832434600623,
           "drawdown_avoided": 0.5854824568718384
+        },
+        "filter_volume_1.5x@maker_0bp": {
+          "total_return": 1.8350790206018597,
+          "cagr": 0.1507390471093737,
+          "sharpe_annual": 0.4884927432596423,
+          "max_drawdown": 0.3939213385136664,
+          "n_closed_trades": 22.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5454545454545454,
+          "mean_mfe": 0.36052209351273296,
+          "mean_mae": -0.08404067750856793,
+          "median_mfe": 0.18713501531517085,
+          "median_mae": -0.05416877416981031,
+          "mean_bars_held": 31.0,
+          "median_bars_held": 24.0,
+          "p90_bars_held": 46.0,
+          "mean_bars_to_stop_out_losers": 16.8,
+          "median_bars_to_stop_out_losers": 14.5,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.2517534145441122,
+          "total_costs": 0.0,
+          "rebalance_cost_share": 0.0,
+          "traded_notional": 6710842.898961287,
+          "annual_turnover": 4.846250713128601,
+          "gross_pnl": 183507.90206018614,
+          "net_pnl": 183507.90206018614,
+          "cost_share_of_gross": 0.0,
+          "upside_capture": 0.1928231583483872,
+          "downside_participation": 0.17886744641050933,
+          "downside_avoided": 0.8211325535894907,
+          "drawdown_avoided": 0.5220143607286171
         },
         "sizing_fixed_1.0@maker_0bp": {
           "total_return": 8.556203518622343,
@@ -4687,6 +4912,37 @@
           "downside_avoided": 0.797294402066468,
           "drawdown_avoided": 0.5839951251571326
         },
+        "filter_volume_1.5x@maker_10bp": {
+          "total_return": 1.7359845368523925,
+          "cagr": 0.14523594772097015,
+          "sharpe_annual": 0.4724335843495887,
+          "max_drawdown": 0.3969006610880363,
+          "n_closed_trades": 22.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5454545454545454,
+          "mean_mfe": 0.36052209351273296,
+          "mean_mae": -0.08404067750856793,
+          "median_mfe": 0.18713501531517085,
+          "median_mae": -0.05416877416981031,
+          "mean_bars_held": 31.0,
+          "median_bars_held": 24.0,
+          "p90_bars_held": 46.0,
+          "mean_bars_to_stop_out_losers": 16.8,
+          "median_bars_to_stop_out_losers": 14.5,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.2517534145441122,
+          "total_costs": 6573.519884399902,
+          "rebalance_cost_share": 0.09434138527006468,
+          "traded_notional": 6573519.884399902,
+          "annual_turnover": 4.840282495604216,
+          "gross_pnl": 180171.97356963909,
+          "net_pnl": 173598.4536852392,
+          "cost_share_of_gross": 0.03648469711555411,
+          "upside_capture": 0.19229140593613292,
+          "downside_participation": 0.1792150679334025,
+          "downside_avoided": 0.8207849320665975,
+          "drawdown_avoided": 0.5183992394694359
+        },
         "sizing_fixed_1.0@maker_10bp": {
           "total_return": 8.034011950210719,
           "cagr": 0.3452146824332427,
@@ -5400,6 +5656,37 @@
           "downside_avoided": 0.796710814457091,
           "drawdown_avoided": 0.5817652257750761
         },
+        "filter_volume_1.5x@maker_25bp": {
+          "total_return": 1.5936118850183574,
+          "cagr": 0.13701954282623574,
+          "sharpe_annual": 0.44829962191204675,
+          "max_drawdown": 0.4013459908540206,
+          "n_closed_trades": 22.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5,
+          "mean_mfe": 0.36052209351273296,
+          "mean_mae": -0.08404067750856793,
+          "median_mfe": 0.18713501531517085,
+          "median_mae": -0.05416877416981031,
+          "mean_bars_held": 31.0,
+          "median_bars_held": 24.0,
+          "p90_bars_held": 46.0,
+          "mean_bars_to_stop_out_losers": 16.90909090909091,
+          "median_bars_to_stop_out_losers": 15.0,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.2517534145441122,
+          "total_costs": 15935.538534394473,
+          "rebalance_cost_share": 0.09499815004407774,
+          "traded_notional": 6374215.413757789,
+          "annual_turnover": 4.831680793189969,
+          "gross_pnl": 175296.7270362301,
+          "net_pnl": 159361.18850183563,
+          "cost_share_of_gross": 0.09090608138451403,
+          "upside_capture": 0.19149343121434131,
+          "downside_participation": 0.1797367841889499,
+          "downside_avoided": 0.8202632158110501,
+          "drawdown_avoided": 0.5130052595495276
+        },
         "sizing_fixed_1.0@maker_25bp": {
           "total_return": 7.302046317554014,
           "cagr": 0.3299869828368176,
@@ -6112,6 +6399,37 @@
           "downside_participation": 0.2038733877797261,
           "downside_avoided": 0.7961266122202739,
           "drawdown_avoided": 0.5795357445000935
+        },
+        "filter_volume_1.5x@taker_40bp": {
+          "total_return": 1.4584132663659766,
+          "cagr": 0.12884757081042242,
+          "sharpe_annual": 0.4241128333109814,
+          "max_drawdown": 0.40576812258456413,
+          "n_closed_trades": 22.0,
+          "n_open_at_end": 0.0,
+          "win_rate": 0.5,
+          "mean_mfe": 0.36052209351273296,
+          "mean_mae": -0.08404067750856793,
+          "median_mfe": 0.18713501531517085,
+          "median_mae": -0.05416877416981031,
+          "mean_bars_held": 31.0,
+          "median_bars_held": 24.0,
+          "p90_bars_held": 46.0,
+          "mean_bars_to_stop_out_losers": 16.90909090909091,
+          "median_bars_to_stop_out_losers": 15.0,
+          "whipsaw_rate": 0.0,
+          "exposure": 0.2517534145441122,
+          "total_costs": 24728.466030331823,
+          "rebalance_cost_share": 0.0956858406309008,
+          "traded_notional": 6182116.507582956,
+          "annual_turnover": 4.823137843877037,
+          "gross_pnl": 170569.79266692948,
+          "net_pnl": 145841.32663659766,
+          "cost_share_of_gross": 0.14497564688150227,
+          "upside_capture": 0.1906950393430058,
+          "downside_participation": 0.18025906578773232,
+          "downside_avoided": 0.8197409342122677,
+          "drawdown_avoided": 0.5076394282133996
         },
         "sizing_fixed_1.0@taker_40bp": {
           "total_return": 6.6274228993155955,

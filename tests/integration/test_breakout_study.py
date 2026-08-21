@@ -35,6 +35,16 @@ def btc():
 
 
 @pytest.fixture(scope="module")
+def btc_volumes():
+    """The volume series that goes with `btc`, for variants carrying the volume filter
+    (D168). A filter declaring `requires_volume` refuses to run without it, which is the
+    whole point of the three-state design — so any test sweeping `filter_variants()` has
+    to supply it."""
+    _bars, volumes = load_fixture_csv_with_volumes(FIXTURE)
+    return volumes["BTC-USD"]
+
+
+@pytest.fixture(scope="module")
 def study():
     return bs.BreakoutStudyConfig()
 
@@ -133,7 +143,9 @@ def test_debounce_m1_reproduces_the_baseline_through_the_whole_study(btc, study)
     assert base.diagnostics.n_closed_trades == debounced.diagnostics.n_closed_trades
 
 
-def test_each_filter_only_ever_removes_entries_relative_to_the_baseline_count(btc, study):
+def test_each_filter_only_ever_removes_entries_relative_to_the_baseline_count(
+    btc, btc_volumes, study
+):
     """A veto cannot increase the number of entries taken on a fixed price path. (The
     entry BARS can shift — see the unit-test note — but the count cannot rise, because
     every entry the filtered strategy takes is one the baseline's raw condition also
@@ -143,7 +155,7 @@ def test_each_filter_only_ever_removes_entries_relative_to_the_baseline_count(bt
         btc, "BTC-USD", bs.Variant("base", "plateau", fixed_config=bs.breakout_config(40, 10)), tier, study
     )
     for variant in bs.filter_variants():
-        filtered = bs.run_variant(btc, "BTC-USD", variant, tier, study)
+        filtered = bs.run_variant(btc, "BTC-USD", variant, tier, study, volumes=btc_volumes)
         assert len(filtered.episodes) <= len(base.episodes), variant.name
 
 

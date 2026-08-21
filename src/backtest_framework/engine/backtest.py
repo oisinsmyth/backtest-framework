@@ -31,7 +31,7 @@ from ..instruments.base import Instrument
 from ..pipeline.sizing import Order, Sizer, TargetWeight, apply_virtual_orders, net_orders
 from ..registry.trial_registry import TrialRegistry
 from .allocator import Allocator
-from .dataview import DataView, build_data_view
+from .dataview import DataView, build_data_view, normalise_volumes
 from .portfolio import PortfolioState
 from .risk import RiskLimits, RiskMonitor, RiskViolation, gross_exposure
 from .strategy import Strategy
@@ -110,12 +110,22 @@ def run_backtest(
     seed: int = 0,
     splits_by_instrument: Mapping[str, Sequence[tuple[datetime, float]]] | None = None,
     view_bars_by_instrument: Mapping[str, Sequence[TimestampedBar]] | None = None,
+    volumes_by_instrument: Mapping[str, Sequence[float | None]] | None = None,
 ) -> BacktestResult:
     """`bars_by_instrument` is the EXECUTION series (raw prices — fills, commissions,
     carry, NAV all use it, per D6). `view_bars_by_instrument`, when given, is what
     strategies see instead (e.g. split-adjusted for signal continuity, D75); it must
     cover every aligned execution timestamp. `splits_by_instrument` scales broker and
     virtual positions on ex-dates (D75).
+
+    `volumes_by_instrument`, when given, makes per-bar volume visible to strategy code
+    through the same DataView guard the bars ride in (D168). It is keyed by instrument
+    and each series is `{timestamp: volume}`-matched against the aligned bars, exactly
+    as the view-bar path is; a timestamp present in the aligned bars but absent from an
+    instrument's volume map is a loud error rather than a silent gap. Instruments absent
+    from the mapping simply get no volume series, which is the correct silent state for
+    something like an index level. **Volumes are in the VIEW frame** — see
+    `build_data_view` on why share volume's split sensitivity makes that load-bearing.
 
     `enforce_pretrade=True` (D101, off by default) runs RiskMonitor.pretrade_check
     on each netted order before it fills: a rejected order does not execute, the
@@ -173,6 +183,33 @@ def run_backtest(
             ) from exc
     else:
         view_bar_series = aligned_bar_series
+
+    # Volume rides the same timestamp-matching path as the view bars, and fails the
+    # same way. align_bars is deliberately NOT changed: volume is looked up against the
+    # already-aligned series rather than participating in the inner join itself, so the
+    # set of tradeable timestamps cannot shift because a volume column had a hole.
+    volume_series: dict[str, tuple[float | None, ...] | None] = {}
+    if volumes_by_instrument is not None:
+        for instrument_id in bars_by_instrument:
+            supplied = volumes_by_instrument.get(instrument_id)
+            if supplied is None:
+                volume_series[instrument_id] = None
+                continue
+            source = view_bars_by_instrument or bars_by_instrument
+            series = source[instrument_id]
+            if len(supplied) != len(series):
+                raise ValueError(
+                    f"volumes_by_instrument[{instrument_id!r}] has {len(supplied)} entries but "
+                    f"its bar series has {len(series)} — the two must align exactly"
+                )
+            by_timestamp = {tb.timestamp: v for tb, v in zip(series, normalise_volumes(supplied))}
+            try:
+                volume_series[instrument_id] = tuple(by_timestamp[ab.timestamp] for ab in aligned)
+            except KeyError as exc:
+                raise ValueError(
+                    "volumes_by_instrument is missing a volume for an aligned execution "
+                    f"timestamp on {instrument_id!r}: {exc}"
+                ) from exc
 
     splits_by_instrument = splits_by_instrument or {}
 
@@ -286,7 +323,13 @@ def run_backtest(
         #    instrument's own ALIGNED series — the VIEW series when one was supplied
         #    (split-adjusted signals, D75), never the raw frame either way.
         views: dict[str, DataView] = {
-            instrument_id: build_data_view(view_bar_series[instrument_id], i)
+            instrument_id: build_data_view(
+                view_bar_series[instrument_id],
+                i,
+                volumes=volume_series.get(instrument_id),
+                instrument_id=instrument_id,
+                volumes_already_normalised=True,
+            )
             for instrument_id in bars_by_instrument
         }
         targets: list[TargetWeight] = []

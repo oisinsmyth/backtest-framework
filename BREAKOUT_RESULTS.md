@@ -1,6 +1,6 @@
 # Long-flat breakout: does trend following on BTC/ETH survive exchange fees?
 
-**Produced:** 2026-08-20 ·
+**Produced:** 2026-08-21 ·
 **Snapshot:** `a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032` ·
 **Registry:** `data/breakout_study_registry.sqlite` ·
 **Reproduce:** `uv run python scripts/run_breakout_study.py` (offline, deterministic)
@@ -20,8 +20,8 @@ through the Step-7 pipeline. The sanity gate (D25/D26) reported
 violation(s)**, with 7 warning(s) — all of them genuine large crypto
 moves (2017-12, 2020-03, 2021-01, 2021-05), none of them quarantining.
 
-**Scale.** 184 out-of-sample trials logged
-(23 strategy variants × 4 cost tiers ×
+**Scale.** 192 out-of-sample trials logged
+(24 strategy variants × 4 cost tiers ×
 2 symbols) plus 4,896 in-training-window
 parameter evaluations, all counted in the multiplicity section. Risk-free rate
 4%; annualisation on 365 days (crypto trades
@@ -159,6 +159,7 @@ bars across 59 walk-forward windows (train 252, test
 | `filter_volcontract_0.8` | +2236.60% | +36.27% | 1.05 | 36.8% | 20 | 21.0% | 7.8% |
 | `filter_volcontract_1.0` | +4103.67% | +44.36% | 1.15 | 39.1% | 31 | 31.6% | 9.6% |
 | `filter_trend_gate_200` | +5962.27% | +49.64% | 1.24 | 38.9% | 33 | 34.0% | 10.2% |
+| `filter_volume_1.5x` | +1745.24% | +33.14% | 0.96 | 32.7% | 27 | 28.9% | 8.1% |
 | `sizing_fixed_1.0` | +8019.21% | +54.00% | 1.16 | 48.2% | 38 | 36.7% | 12.5% |
 | `sizing_invvol_daily` | +2958.68% | +39.92% | 1.18 | 42.6% | 38 | 36.7% | 16.9% |
 | `voltarget_020` | +3022.17% | +40.20% | 1.23 | 30.3% | 38 | 36.7% | 8.8% |
@@ -189,6 +190,7 @@ stacked — so each delta prices exactly one component.
 | `filter_volcontract_0.8` | +2236.60% | +36.27% | 1.05 | 36.8% | 20 | 21.0% | 7.8% |
 | `filter_volcontract_1.0` | +4103.67% | +44.36% | 1.15 | 39.1% | 31 | 31.6% | 9.6% |
 | `filter_trend_gate_200` | +5962.27% | +49.64% | 1.24 | 38.9% | 33 | 34.0% | 10.2% |
+| `filter_volume_1.5x` | +1745.24% | +33.14% | 0.96 | 32.7% | 27 | 28.9% | 8.1% |
 | **buy & hold** | +42386.71% | +81.17% | 1.16 | 83.4% | 1 | 100.0% | — |
 
 At the free tier (`maker_0bp`), which isolates the filters' effect on the SIGNAL from
@@ -201,6 +203,7 @@ their effect on costs:
 | `filter_volcontract_0.8` | +2604.91% | +38.24% | 1.10 | 33.6% | 20 | 21.0% | 0.0% |
 | `filter_volcontract_1.0` | +5147.68% | +47.54% | 1.22 | 37.2% | 31 | 31.6% | 0.0% |
 | `filter_trend_gate_200` | +7519.26% | +53.04% | 1.30 | 35.2% | 33 | 34.0% | 0.0% |
+| `filter_volume_1.5x` | +2127.20% | +35.63% | 1.02 | 31.9% | 27 | 28.9% | 0.0% |
 | **buy & hold** | +42556.66% | +81.24% | 1.16 | 83.4% | 1 | 100.0% | — |
 
 ## Parameter plateau surface — annualised Sharpe at `taker_40bp`
@@ -399,6 +402,7 @@ single target without the ladder beside it.
 | `filter_volcontract_0.8` | 65.0% | +54.58% | -5.62% | 30 | 76 | 13 | 0.0% | 2.6% | 3.05x |
 | `filter_volcontract_1.0` | 58.1% | +42.91% | -5.73% | 30 | 87 | 10 | 0.0% | 2.6% | 6.17x |
 | `filter_trend_gate_200` | 57.6% | +47.30% | -4.53% | 30 | 87 | 21 | 0.0% | 3.2% | 6.48x |
+| `filter_volume_1.5x` | 55.6% | +40.81% | -5.85% | 30 | 90 | 22 | 0.0% | 5.1% | 4.82x |
 | `sizing_fixed_1.0` | 57.9% | +43.03% | -5.34% | 29 | 87 | 12 | 0.0% | 0.2% | 8.02x |
 | `sizing_invvol_daily` | 55.3% | +43.03% | -5.34% | 29 | 87 | 13 | 0.0% | 32.0% | 9.56x |
 | `voltarget_020` | 57.9% | +43.03% | -5.34% | 29 | 87 | 12 | 0.0% | 11.1% | 4.79x |
@@ -431,6 +435,7 @@ on those bars). Downside participated is the same on down bars; downside avoided
 | `filter_volcontract_0.8` | 23.3% | 19.1% | 80.9% | 55.9% |
 | `filter_volcontract_1.0` | 30.7% | 26.3% | 73.7% | 53.2% |
 | `filter_trend_gate_200` | 32.8% | 27.8% | 72.2% | 53.3% |
+| `filter_volume_1.5x` | 26.5% | 23.6% | 76.4% | 60.8% |
 | `sizing_fixed_1.0` | 40.6% | 35.9% | 64.1% | 42.2% |
 | `sizing_invvol_daily` | 28.4% | 24.7% | 75.3% | 48.9% |
 | `voltarget_020` | 25.3% | 21.0% | 79.0% | 63.6% |
@@ -443,10 +448,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `plateau_20_10` | 0.0711 | 3,716 | 23 | 0.000020 | **1.0000** |
-| `maker_10bp` | `plateau_20_10` | 0.0698 | 3,716 | 23 | 0.000020 | **0.9999** |
-| `maker_25bp` | `plateau_20_10` | 0.0679 | 3,716 | 23 | 0.000022 | **0.9999** |
-| `taker_40bp` | `plateau_20_10` | 0.0660 | 3,716 | 23 | 0.000024 | **0.9998** |
+| `maker_0bp` | `plateau_20_10` | 0.0711 | 3,716 | 24 | 0.000023 | **0.9999** |
+| `maker_10bp` | `plateau_20_10` | 0.0698 | 3,716 | 24 | 0.000024 | **0.9999** |
+| `maker_25bp` | `plateau_20_10` | 0.0679 | 3,716 | 24 | 0.000025 | **0.9999** |
+| `taker_40bp` | `plateau_20_10` | 0.0660 | 3,716 | 24 | 0.000027 | **0.9998** |
 
 
 ---
@@ -477,6 +482,7 @@ bars across 43 walk-forward windows (train 252, test
 | `filter_volcontract_0.8` | +331.86% | +21.79% | 0.67 | 34.7% | 16 | 18.4% | 8.3% |
 | `filter_volcontract_1.0` | +454.59% | +25.96% | 0.73 | 35.3% | 24 | 27.9% | 10.7% |
 | `filter_trend_gate_200` | +548.54% | +28.65% | 0.80 | 34.7% | 23 | 28.5% | 8.6% |
+| `filter_volume_1.5x` | +145.84% | +12.88% | 0.42 | 40.6% | 22 | 25.2% | 14.5% |
 | `sizing_fixed_1.0` | +662.74% | +31.49% | 0.73 | 47.0% | 28 | 32.8% | 12.0% |
 | `sizing_invvol_daily` | +251.22% | +18.44% | 0.62 | 31.5% | 28 | 32.8% | 17.6% |
 | `voltarget_020` | +206.68% | +16.30% | 0.68 | 19.1% | 28 | 32.8% | 9.3% |
@@ -507,6 +513,7 @@ stacked — so each delta prices exactly one component.
 | `filter_volcontract_0.8` | +331.86% | +21.79% | 0.67 | 34.7% | 16 | 18.4% | 8.3% |
 | `filter_volcontract_1.0` | +454.59% | +25.96% | 0.73 | 35.3% | 24 | 27.9% | 10.7% |
 | `filter_trend_gate_200` | +548.54% | +28.65% | 0.80 | 34.7% | 23 | 28.5% | 8.6% |
+| `filter_volume_1.5x` | +145.84% | +12.88% | 0.42 | 40.6% | 22 | 25.2% | 14.5% |
 | **buy & hold** | +500.91% | +27.33% | 0.66 | 82.4% | 1 | 100.0% | — |
 
 At the free tier (`maker_0bp`), which isolates the filters' effect on the SIGNAL from
@@ -519,6 +526,7 @@ their effect on costs:
 | `filter_volcontract_0.8` | +379.13% | +23.50% | 0.71 | 34.2% | 16 | 18.4% | 0.0% |
 | `filter_volcontract_1.0` | +545.48% | +28.56% | 0.80 | 34.2% | 24 | 27.9% | 0.0% |
 | `filter_trend_gate_200` | +648.95% | +31.17% | 0.85 | 34.2% | 23 | 28.5% | 0.0% |
+| `filter_volume_1.5x` | +183.51% | +15.07% | 0.49 | 39.4% | 22 | 25.2% | 0.0% |
 | **buy & hold** | +503.32% | +27.40% | 0.67 | 82.4% | 1 | 100.0% | — |
 
 ## Parameter plateau surface — annualised Sharpe at `taker_40bp`
@@ -714,6 +722,7 @@ single target without the ladder beside it.
 | `filter_volcontract_0.8` | 50.0% | +53.20% | -8.80% | 28 | 52 | 14 | 0.0% | 9.0% | 3.26x |
 | `filter_volcontract_1.0` | 50.0% | +43.40% | -7.74% | 26 | 52 | 14 | 0.0% | 8.1% | 5.37x |
 | `filter_trend_gate_200` | 60.9% | +45.89% | -6.67% | 27 | 52 | 17 | 0.0% | 9.9% | 4.70x |
+| `filter_volume_1.5x` | 50.0% | +36.05% | -8.40% | 24 | 46 | 15 | 0.0% | 9.6% | 4.82x |
 | `sizing_fixed_1.0` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 0.2% | 7.35x |
 | `sizing_invvol_daily` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 37.2% | 8.09x |
 | `voltarget_020` | 53.6% | +41.08% | -7.58% | 26 | 52 | 16 | 0.0% | 20.4% | 3.50x |
@@ -746,6 +755,7 @@ on those bars). Downside participated is the same on down bars; downside avoided
 | `filter_volcontract_0.8` | 17.6% | 14.9% | 85.1% | 58.0% |
 | `filter_volcontract_1.0` | 23.2% | 20.2% | 79.8% | 57.2% |
 | `filter_trend_gate_200` | 23.7% | 20.4% | 79.6% | 58.0% |
+| `filter_volume_1.5x` | 19.1% | 18.0% | 82.0% | 50.8% |
 | `sizing_fixed_1.0` | 35.2% | 31.8% | 68.2% | 42.9% |
 | `sizing_invvol_daily` | 20.1% | 18.4% | 81.6% | 61.8% |
 | `voltarget_020` | 14.0% | 12.3% | 87.7% | 76.8% |
@@ -758,10 +768,10 @@ on those bars). Downside participated is the same on down bars; downside avoided
 
 | Tier | Best variant | Its daily SR | T (bars) | N (trials in pool) | V[{SRn}] | **DSR** |
 |---|---|---|---|---|---|---|
-| `maker_0bp` | `plateau_55_5` | 0.0555 | 2,708 | 23 | 0.000033 | **0.9916** |
-| `maker_10bp` | `plateau_55_5` | 0.0543 | 2,708 | 23 | 0.000032 | **0.9903** |
-| `maker_25bp` | `plateau_55_5` | 0.0526 | 2,708 | 23 | 0.000031 | **0.9877** |
-| `taker_40bp` | `plateau_55_5` | 0.0508 | 2,708 | 23 | 0.000031 | **0.9845** |
+| `maker_0bp` | `plateau_55_5` | 0.0555 | 2,708 | 24 | 0.000048 | **0.9881** |
+| `maker_10bp` | `plateau_55_5` | 0.0543 | 2,708 | 24 | 0.000047 | **0.9862** |
+| `maker_25bp` | `plateau_55_5` | 0.0526 | 2,708 | 24 | 0.000046 | **0.9829** |
+| `taker_40bp` | `plateau_55_5` | 0.0508 | 2,708 | 24 | 0.000045 | **0.9786** |
 
 
 ---
@@ -780,9 +790,10 @@ is deliberately strict.
 | `filter_volcontract_0.8` | -0.15 | -0.11 | -6.2 pp | -0.5 pp | DROP |
 | `filter_volcontract_1.0` | -0.05 | -0.04 | -4.0 pp | +0.1 pp | DROP |
 | `filter_trend_gate_200` | +0.04 | +0.02 | -4.1 pp | -0.5 pp | **KEEP** |
+| `filter_volume_1.5x` | -0.24 | -0.35 | -10.3 pp | +5.4 pp | DROP |
 
 **Kept: `filter_trend_gate_200`.**
-**Dropped: `filter_debounce_m2`, `filter_volcontract_0.8`, `filter_volcontract_1.0`.**
+**Dropped: `filter_debounce_m2`, `filter_volcontract_0.8`, `filter_volcontract_1.0`, `filter_volume_1.5x`.**
 
 **The three dropped filters all fail the same way, and it is instructive.**
 (Figures below are BTC / ETH, in that order.) Each of them does what it was meant to do
@@ -889,7 +900,19 @@ Rank correlation with MFE **+0.19**, with MAE +0.03; by sample half +0.02 then +
 
 *Prior on record: predicted a BAND rather than a floor — healthy roughly 1.5-3x, climax above ~5x.*
 
-**UNAVAILABLE.** blocked: no volume on TimestampedBar/DataView (D111) — the same blocker that stops the volume-confirmation filter; F2 is a ratio of the field that does not reach strategy code
+| Quintile | Trades | Feature low | Feature high | Mean MFE | Mean MAE | Win rate | Whipsaw |
+|---|---|---|---|---|---|---|---|
+| 1 | 13 | +0.67 | +1.17 | +58.1% | -5.5% | 46% | 0% |
+| 2 | 13 | +1.17 | +1.32 | +48.5% | -5.8% | 54% | 0% |
+| 3 | 13 | +1.32 | +1.57 | +30.6% | -9.9% | 54% | 0% |
+| 4 | 13 | +1.61 | +1.92 | +33.2% | -6.4% | 54% | 0% |
+| 5 | 14 | +1.94 | +3.15 | +40.7% | -4.0% | 71% | 0% |
+
+Rank correlation with MFE **+0.16**, with MAE +0.06; by sample half +0.09 then +0.43 (66 of 66 closed trades carry a value).
+
+**NO.** rank correlation with MFE is +0.16 — no usable relationship
+
+**The prior's climax half was untestable.** It names a BAND — healthy around 1.5-3x, climax above ~5x — but the largest volume ratio any trigger printed is 3.15x, so the climax region is empty on this population. Only the lower half of the hypothesis was exposed to data. Worth noting that a 40-day breakout on daily crypto bars simply does not seem to arrive on 5x volume; whether that is a fact about breakouts or about a venue-aggregated volume series (see the standing caveat) this study cannot separate.
 
 ### F3 — Close location value — (close − low) / (high − low) on the trigger bar
 
@@ -953,12 +976,13 @@ Rank correlation with MFE **-0.10**, with MAE -0.15; by sample half -0.14 then +
 
 **Ranked shortlist: empty. No feature met the promotion bar.** That is a clean negative result and it is reported as one — the companion doc asks explicitly for falsified hypotheses to be stated rather than buried, and the priors recorded above were written down in advance precisely so they could be embarrassed.
 
-**Two of the six could not be computed at all**, and are reported as blocked rather than
-quietly dropped. F2 needs trigger-bar volume, which stops at the data layer — the same
-D111 blocker that prevents the volume-confirmation filter, surfacing a second time in a
-second place, which is the clearest evidence yet that the `Bar` schema gap is worth
-closing. F5 needs perpetual-futures open interest and funding; the exchange-native
-sources are identified and free, but the plumbing does not exist.
+**1 of the 6 could not be computed at all (F5), and is reported as blocked rather than quietly dropped.** F5 needs perpetual-futures open interest and funding; the
+exchange-native sources are identified and free, but the plumbing does not exist.
+
+**F2 is computed here for the first time.** It was blocked in v1.1 by the same D111
+`Bar`-schema gap that blocked the volume-confirmation filter; D168 closed that gap by
+putting volume inside `DataView` as an aligned, optionally-present series, so both the
+filter and this feature now run against the same guarded channel.
 
 **F6 is half-built and the report says which half.** On daily bars with a 00:00 UTC
 boundary, every bar close sits exactly on a perp funding timestamp (00/08/16 UTC), so
@@ -976,21 +1000,21 @@ turned, whether or not it appears in a table above.
 
 | What | Count |
 |---|---|
-| Strategy variants per symbol | 23 |
+| Strategy variants per symbol | 24 |
 | — of which parameter-grid cells (N_entry × N_exit) | 12 |
-| — of which filter increments | 4 |
+| — of which filter increments | 5 |
 | — of which sizing sensitivities | 2 |
 | — of which vol-target sensitivities | 4 |
 | — of which in-training-window selection | 1 |
 | Cost tiers | 4 |
 | Symbols | 2 |
-| **Out-of-sample trials logged** | **184** (92 per symbol) |
-| Per-window trial rows logged | 9,384 |
+| **Out-of-sample trials logged** | **192** (96 per symbol) |
+| Per-window trial rows logged | 9,792 |
 | In-training-window parameter evaluations (fitting, not trials) | 4,896 |
 
 **What the DSR trial pool is, and is not.** Bailey & López de Prado's N is the number of
 *configurations* tried. This study has many, so the pool is every variant's out-of-sample
-daily Sharpe at one (symbol, tier) — 23 per cell, selected on
+daily Sharpe at one (symbol, tier) — 24 per cell, selected on
 identity fields in the logged config, never on the presence of a metric (D98). Per-window
 rows carry `row_kind="window"` and are excluded by that same predicate. This is a
 different pool from the pairs studies' one-row-per-window, deliberately: those studies
@@ -1092,11 +1116,11 @@ that are not fees are.**
 
 3. **The selection bias above this study is larger than anything inside it.** The DSR
    numbers are near 1.0 at every tier, and the mechanical reason is that the plateau is
-   flat: 23 variants whose Sharpes cluster tightly give a tiny
+   flat: 24 variants whose Sharpes cluster tightly give a tiny
    V[{SRn}], so the noise floor SR0 barely rises and almost nothing is deflated away.
    That is DSR working correctly on the multiplicity it was given, and it is also why
    those numbers should not be read as vindication. The trial pool counts
-   23 configurations. It does not count
+   24 configurations. It does not count
    the 4,896 training-window fits, the two-symbol choice, or the
    decision — made in 2026, with a decade of crypto trend visible — to test a trend
    follower on the two crypto assets that survived. **Treat DSR ≈ 1.0 here as "the

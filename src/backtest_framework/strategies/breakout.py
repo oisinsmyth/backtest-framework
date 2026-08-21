@@ -45,15 +45,14 @@ the position is. Baseline = no filters + whatever sizing is configured; each fil
 increment is the same strategy with one more brick in the tuple. Same Lego-brick shape
 as CostStack (D1).
 
-NOT IMPLEMENTED — volume confirmation (D111). A "trigger bar volume > 1.5× 20-day
-average volume" filter cannot be written against the current interfaces: `Bar` carries
-open/high/low/close and nothing else, `TimestampedBar` adds only a timestamp, and
-`DataView` hands strategies `Bar` objects. Volume exists in the fixtures and snapshots
-but stops at the data layer (csv_fixture is explicit that "TimestampedBar carries no
-volume field (D59/D60), and inventing one here would be a false affordance (D48)").
-Smuggling a volume series into the strategy's constructor would hand it full-sample
-data outside the DataView guard — precisely the look-ahead hole D32 exists to close —
-so the filter is absent rather than faked. See docs/decisions/D111-*.md.
+VOLUME CONFIRMATION: built, and the D111 blocker that stopped it is closed (D168).
+Volume reaches strategy code by riding inside `DataView` as an aligned, optionally
+present series constructed sliced exactly as the bars are — not as a field on `Bar`
+(which is built at ~90 sites and which D60 already refused to widen for `timestamp`),
+and not through the strategy's constructor (which would hand strategy code full-sample
+data outside the D32 guard). `VolumeConfirmationFilter` reads it through
+`require_volume`, so a run wired without volume fails loudly instead of quietly
+rejecting every entry.
 """
 
 from __future__ import annotations
@@ -66,7 +65,7 @@ from typing import Any, Callable, Mapping, Protocol, Sequence
 
 from ..config.errors import ConfigError
 from ..config.factory import FactoryRegistry
-from ..engine.dataview import DataView
+from ..engine.dataview import DataView, MissingVolumeError
 from ..pipeline.sizing import TargetWeight
 
 EntryCondition = Callable[[int], bool]
@@ -126,6 +125,15 @@ class EntryFilter(Protocol):
         """Read-only by declaration: every concrete filter is a frozen dataclass, and
         a settable protocol attribute would mark them all non-conforming — the same
         variance trap audit F20 found on Instrument.quote_currency."""
+        ...
+
+    @property
+    def requires_volume(self) -> bool:
+        """Whether this filter cannot function without a volume series (D168).
+
+        Declared rather than discovered, so the strategy can check for the data ONCE
+        and fail loudly, instead of every bar quietly rejecting entries because the
+        volume it wanted was never wired through."""
         ...
 
     def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
@@ -269,6 +277,7 @@ class ConsecutiveCloseFilter:
 
     m: int = 2
     name: str = field(default="debounce", init=False)
+    requires_volume: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
         if self.m < 1:
@@ -301,6 +310,7 @@ class VolatilityContractionFilter:
     short_window: int = 20
     long_window: int = 100
     name: str = field(default="vol_contraction", init=False)
+    requires_volume: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
         if self.short_window < 1 or self.long_window < 1:
@@ -348,6 +358,7 @@ class TrendGateFilter:
     sma_window: int = 200
     direction: Direction = Direction.LONG
     name: str = field(default="trend_gate", init=False)
+    requires_volume: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
         if self.sma_window < 2:
@@ -366,6 +377,70 @@ class TrendGateFilter:
         if self.direction is not Direction.LONG:
             config["direction"] = self.direction.name.lower()
         return config
+
+
+@dataclass(frozen=True)
+class VolumeConfirmationFilter:
+    """Volume confirmation: accept a trigger only when the trigger bar's volume exceeds
+    `multiple` times the mean volume over the preceding `window` bars.
+
+    This is the filter the original brief specified and D111 recorded as BLOCKED — the
+    `Bar` schema carried no volume, and neither workaround was acceptable (a schema
+    change to the framework's most load-bearing type, or smuggling a full-sample series
+    into the strategy's constructor outside the D32 guard). D168 closed the gap the
+    third way: volume rides inside `DataView`, constructed sliced exactly as bars are,
+    so this filter reads it under the same structural look-ahead guarantee as prices.
+
+    The averaging window ENDS AT t−1 (D44), so the trigger bar's own volume is compared
+    against a baseline it is not part of — otherwise a large trigger bar would inflate
+    the very average it has to beat, and the filter would understate its own threshold.
+
+    **Stated gap policy: any missing volume rejects the entry.** A `None` on the trigger
+    bar or anywhere inside the averaging window means the entry is refused. You cannot
+    confirm on data you do not have, and the conservative direction for a confirmation
+    filter is to decline. This is a policy choice, it is documented, and it is tested —
+    the alternative (skip the gaps and average what is left) silently changes the window
+    length per trigger, which is worse.
+
+    `requires_volume` is True: a run that reaches this filter without a volume series is
+    a configuration error, and `require_volume` raises rather than rejecting everything
+    and returning a plausible, wrong result."""
+
+    multiple: float = 1.5
+    window: int = 20
+    name: str = field(default="volume_confirmation", init=False)
+    requires_volume: bool = field(default=True, init=False)
+
+    def __post_init__(self) -> None:
+        if self.window < 1:
+            raise ValueError(f"window must be at least 1, got {self.window}")
+        if self.multiple <= 0:
+            raise ValueError(f"multiple must be positive, got {self.multiple}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        # The window ends at i-1 and starts at i-window, so the earliest bar touched is
+        # i-window; i >= window is enough.
+        return self.window
+
+    def accepts(self, view: DataView, entry_condition: EntryCondition) -> bool:
+        i = view.current_index
+        trigger = view.require_volume(i)
+        if trigger is None:
+            return False
+        baseline = [view.require_volume(j) for j in range(i - self.window, i)]
+        if any(v is None for v in baseline):
+            return False
+        mean_volume = sum(v for v in baseline if v is not None) / self.window
+        if mean_volume <= 0.0:
+            return False  # a dead window confirms nothing
+        return trigger > self.multiple * mean_volume
+
+    def config(self) -> dict[str, Any]:
+        return {
+            "type": "volume_confirmation",
+            "multiple": self.multiple,
+            "window": self.window,
+        }
 
 
 def _mean_true_range(view: DataView, start: int, end: int) -> float:
@@ -401,6 +476,7 @@ class BreakoutStrategy:
 
     _state: PositionState = field(default=PositionState.FLAT, init=False, repr=False)
     _held_weight: float = field(default=0.0, init=False, repr=False)
+    _checked_volume: bool = field(default=False, init=False, repr=False)
 
     def __post_init__(self) -> None:
         if self.n_entry < 1 or self.n_exit < 1:
@@ -447,6 +523,7 @@ class BreakoutStrategy:
     def generate_targets(self, views: Mapping[str, DataView]) -> list[TargetWeight]:
         view = views[self.instrument_id]
         i = view.current_index
+        self._check_volume_available(view)
 
         if i < self.warm_up_bars():
             # Warm-up self-guard (the same shape ZScorePairsStrategy uses): stand
@@ -471,6 +548,26 @@ class BreakoutStrategy:
         # The state IS the sign, so a short book emits a negative target weight with
         # no branch here. `_held_weight` stays a magnitude in every state.
         return self._targets(self._state * self._held_weight)
+
+    def _check_volume_available(self, view: DataView) -> None:
+        """Fail loudly, once, if any filter needs volume and the view has none (D168).
+
+        **Why the first call and not construction:** the strategy is built before it
+        ever sees a view, so construction-time validation would mean handing the
+        strategy its data — precisely the look-ahead hole this design exists to avoid.
+        The first call is bar 0, not bar 3,000, which satisfies the spirit of D35's
+        "fail at factory time" as closely as the architecture allows. The trade-off is
+        deliberate, not an oversight."""
+        if self._checked_volume:
+            return
+        self._checked_volume = True
+        needed = [f.name for f in self.filters if f.requires_volume]
+        if needed and not view.has_volume:
+            raise MissingVolumeError(
+                f"filter(s) {needed} require volume but instrument {self.instrument_id!r} was "
+                "given a DataView without a volume series — pass volumes_by_instrument to "
+                "run_backtest. Refusing to run rather than silently rejecting every entry (D168)"
+            )
 
     def _targets(self, weight: float) -> list[TargetWeight]:
         return [
@@ -544,6 +641,13 @@ ENTRY_FILTER_REGISTRY.register(
         threshold=_optional_number(c, "threshold", 1.0, "volatility_contraction"),
         short_window=int(_optional_number(c, "short_window", 20, "volatility_contraction")),
         long_window=int(_optional_number(c, "long_window", 100, "volatility_contraction")),
+    ),
+)
+ENTRY_FILTER_REGISTRY.register(
+    "volume_confirmation",
+    lambda c: VolumeConfirmationFilter(
+        multiple=_optional_number(c, "multiple", 1.5, "volume_confirmation"),
+        window=int(_optional_number(c, "window", 20, "volume_confirmation")),
     ),
 )
 ENTRY_FILTER_REGISTRY.register(

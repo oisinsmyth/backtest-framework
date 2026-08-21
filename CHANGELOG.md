@@ -10,6 +10,34 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (volume reaches strategy code, 2026-08-21 — closes D111, see D168)
+- **`DataView` carries volume (D168)** — an aligned, optionally-present series
+  constructed sliced exactly as bars are, so the look-ahead guarantee is inherited
+  rather than re-argued. `Bar` and `TimestampedBar` are unchanged. `build_data_view`,
+  `run_backtest` and `walk_forward_windows` each gain one optional parameter with a
+  default, so no existing call site changed — and all pre-existing golden masters pass
+  untouched, which is the evidence the change is additive rather than a claim about it.
+- **Three volume states, only one of them loud.** `has_volume` False means the
+  instrument has none (silent, correct); a `None` entry means a gap on that bar
+  (silent, consumer states its policy); `require_volume` on a view with no series
+  raises `MissingVolumeError`. Collapsing the first and third is the trap — a volume
+  filter with no volume rejects every entry and returns a clean-looking, entirely wrong
+  result. `NaN` is normalised to `None` once at construction and never enters a view.
+- **`VolumeConfirmationFilter(multiple=1.5, window=20)`** — the filter the original
+  brief specified and D111 recorded as blocked. Added as a fifth filter variant facing
+  the same keep/drop rule as the others. Averaging baseline ends at t−1 (D44) so a big
+  trigger bar cannot inflate the threshold it has to beat; any missing volume in the
+  window or on the trigger bar rejects the entry, stated and tested.
+- **Feature F2 (trigger volume ratio) is computable** for the first time; D167 recorded
+  it blocked by the same gap.
+- **Verification** — the D32 reflection audit extended to the new surface (its Attack 5
+  inspected only tuples of `Bar`, so the volume tuple would have been untested by
+  construction); a property test that perturbing any future volume cannot change a
+  target already produced; and a hand-computed golden master
+  (`test_volume_confirmation_golden.hand.txt`) whose bar 3 and bar 9 differ in volume
+  and nothing else.
+
+
 ### Added (breakout Phase 1.1, 2026-08-21 — see `BREAKOUT_RESULTS.md`, D166–D167)
 - **`Direction` / `PositionState` on the breakout brick (D166)** — the strategy is now
   sign-parameterized: one `_channel_extreme` / `_beyond` pair serves both sides, the

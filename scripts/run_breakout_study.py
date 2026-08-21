@@ -62,12 +62,23 @@ def freeze_snapshot() -> tuple[str, dict, dict]:
             f"{v.symbol} {v.timestamp.date()} {v.check}: {v.detail}" for v in validation.warnings
         ],
     }
-    return snapshot_id, snapshot.bars_by_symbol, gate
+    # Volumes come from the SNAPSHOT, not from the raw fixture load, so they are the
+    # same cleaned, frozen series the bars are (D168). Taking them from `volumes` above
+    # would silently mis-align if cleaning ever dropped a bar; asserting here means that
+    # would be a loud failure rather than a quietly shifted volume history.
+    for symbol, series in snapshot.bars_by_symbol.items():
+        supplied = snapshot.volumes_by_symbol.get(symbol)
+        if supplied is None or len(supplied) != len(series):
+            raise ValueError(
+                f"snapshot volume series for {symbol!r} has "
+                f"{0 if supplied is None else len(supplied)} entries against {len(series)} bars"
+            )
+    return snapshot_id, snapshot.bars_by_symbol, snapshot.volumes_by_symbol, gate
 
 
 def main() -> int:
     started = time.time()
-    snapshot_id, bars_by_symbol, gate = freeze_snapshot()
+    snapshot_id, bars_by_symbol, volumes_by_symbol, gate = freeze_snapshot()
     print(f"snapshot {snapshot_id}")
     print(f"  clean: {gate['cleaning_changes']} change(s); "
           f"validator: {gate['hard_violations']} hard, {gate['warnings']} warning(s)")
@@ -86,7 +97,12 @@ def main() -> int:
 
     BARS_BY_SYMBOL.update(bars_by_symbol)
     result = bs.run_breakout_study(
-        bars_by_symbol, registry, snapshot_id, study=study, progress=progress
+        bars_by_symbol,
+        registry,
+        snapshot_id,
+        volumes_by_symbol=volumes_by_symbol,
+        study=study,
+        progress=progress,
     )
     print(f"ran {result.n_oos_trials} out-of-sample trials, "
           f"{result.n_train_evaluations} in-train evaluations, "
@@ -855,6 +871,16 @@ def _feature_observation(name: str, verdict) -> str:
             f"tested on breakout triggers — that is a finding about the feature's definition, "
             f"not evidence against the idea."
         )
+    if name == "F2" and hi < 5.0:
+        notes.append(
+            f"**The prior's climax half was untestable.** It names a BAND — healthy around "
+            f"1.5-3x, climax above ~5x — but the largest volume ratio any trigger printed is "
+            f"{hi:.2f}x, so the climax region is empty on this population. Only the lower half "
+            f"of the hypothesis was exposed to data. Worth noting that a 40-day breakout on "
+            f"daily crypto bars simply does not seem to arrive on 5x volume; whether that is a "
+            f"fact about breakouts or about a venue-aggregated volume series (see the standing "
+            f"caveat) this study cannot separate."
+        )
     if name == "F4":
         flat = sum(1 for b in verdict.buckets if b.lo == b.hi)
         if flat >= len(verdict.buckets) - 2:
@@ -889,6 +915,14 @@ def _feature_section(result: bs.StudyResult) -> str:
     closed = sum(per_symbol.values())
     counts = ", ".join(f"{sym} {n}" for sym, n in per_symbol.items())
     candidates = [name for name, v in verdicts.items() if v.verdict == "CANDIDATE"]
+    blocked = [name for name, v in verdicts.items() if v.verdict == "UNAVAILABLE"]
+    blocked_sentence = (
+        f"{len(blocked)} of the {len(fa.FEATURE_NAMES)} could not be computed at all "
+        f"({', '.join(blocked)}), and is reported as blocked rather than quietly dropped."
+        if len(blocked) == 1
+        else f"{len(blocked)} of the {len(fa.FEATURE_NAMES)} could not be computed at all "
+        f"({', '.join(blocked)}), and are reported as blocked rather than quietly dropped."
+    ) if blocked else "Every feature in the set was computable."
 
     blocks = []
     for name in fa.FEATURE_NAMES:
@@ -963,12 +997,13 @@ thinness.
 
 {shortlist}
 
-**Two of the six could not be computed at all**, and are reported as blocked rather than
-quietly dropped. F2 needs trigger-bar volume, which stops at the data layer — the same
-D111 blocker that prevents the volume-confirmation filter, surfacing a second time in a
-second place, which is the clearest evidence yet that the `Bar` schema gap is worth
-closing. F5 needs perpetual-futures open interest and funding; the exchange-native
-sources are identified and free, but the plumbing does not exist.
+**{blocked_sentence}** F5 needs perpetual-futures open interest and funding; the
+exchange-native sources are identified and free, but the plumbing does not exist.
+
+**F2 is computed here for the first time.** It was blocked in v1.1 by the same D111
+`Bar`-schema gap that blocked the volume-confirmation filter; D168 closed that gap by
+putting volume inside `DataView` as an aligned, optionally-present series, so both the
+filter and this feature now run against the same guarded channel.
 
 **F6 is half-built and the report says which half.** On daily bars with a 00:00 UTC
 boundary, every bar close sits exactly on a perp funding timestamp (00/08/16 UTC), so

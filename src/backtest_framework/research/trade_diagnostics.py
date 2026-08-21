@@ -46,9 +46,6 @@ open-ended by design — the terrain addon continues it at F7 — so this tuple 
 `TradeEpisode.features` map both grow without a schema migration."""
 
 FEATURE_UNAVAILABLE = {
-    "F2": "no volume on TimestampedBar/DataView (D111) — the same blocker that stops "
-          "the volume-confirmation filter; F2 is a ratio of the field that does not reach "
-          "strategy code",
     "F5": "no perpetual-futures open-interest or funding plumbing in the data layer; "
           "exchange-native APIs are identified but unbuilt",
 }
@@ -432,6 +429,7 @@ def trigger_features(
     trigger_index: int,
     *,
     breadth: Mapping[datetime, float] | None = None,
+    volumes: Sequence[float | None] | None = None,
 ) -> dict[str, float | None]:
     """The at-trigger feature vector for a decision taken on `bars[trigger_index]`.
 
@@ -449,7 +447,18 @@ def trigger_features(
         sma50 = statistics.fmean(bars[j].bar.close for j in range(trigger_index - 50, trigger_index))
         features["F1"] = (bar.close - sma50) / atr
 
-    # F2 — trigger volume ratio: blocked at the data layer (D111).
+    # F2 — trigger volume ratio: trigger-bar volume over the mean of the preceding
+    # `window` bars. The baseline ENDS AT t-1 for the same reason the filter's does — a
+    # big trigger bar must not inflate the average it is being measured against.
+    # Unblocked by D168; the D111 gap that made this None is closed.
+    if volumes is not None and trigger_index >= 20:
+        window = [volumes[j] for j in range(trigger_index - 20, trigger_index)]
+        trigger_volume = volumes[trigger_index]
+        if trigger_volume is not None and not any(v is None for v in window):
+            mean_volume = sum(v for v in window if v is not None) / 20
+            if mean_volume > 0.0:
+                features["F2"] = trigger_volume / mean_volume
+
 
     # F3 — close location value: where in the bar's own range the close landed.
     span = bar.high - bar.low

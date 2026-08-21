@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D168**.
+New decisions are added here going forward — next number is **D169**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -122,7 +122,7 @@ written rationale for *why not now*, per R3.
 | [D108](D108-crypto-as-equity-instrument.md) | BTC/ETH modelled as `Equity(quantity_precision=8)`, not a new crypto instrument | Committed | Instruments |
 | [D109](D109-breakout-strategy-design.md) | Long-flat breakout: filters and sizing as bricks, hysteresis enforced structurally | Committed | Signals & strategy interface |
 | [D110](D110-vol-target-sizing-lives-in-the-weight.md) | Inverse-volatility sizing lives in the signal→target-weight stage, not the portfolio layer | Committed | Signals & strategy interface |
-| [D111](D111-volume-filter-blocked-on-bar-schema.md) | Volume-confirmation filter NOT built: `Bar` carries no volume, and neither workaround is acceptable | Deferred | Signals & strategy interface |
+| [D111](D111-volume-filter-blocked-on-bar-schema.md) | Volume-confirmation filter NOT built: `Bar` carries no volume, and neither workaround is acceptable | Superseded by D168 | Signals & strategy interface |
 | [D112](D112-trade-episode-diagnostics.md) | A "trade" is a position episode, and the diagnostics say so once | Committed | Analytics |
 | [D113](D113-continuous-oos-run-with-parameter-schedule.md) | Walk-forward as one continuous OOS run with a parameter schedule, not chained windows | Committed | Validation & research integrity |
 | [D114](D114-crypto-fee-tiers-are-fees-only.md) | Crypto cost tiers model an exchange fee and nothing else, stated loudly | Committed | Cost architecture |
@@ -156,3 +156,4 @@ written rationale for *why not now*, per R3.
 | [D165](D165-the-crossover-rule-and-the-spliced-gross-edge.md) | The crossover is read three ways, and the load-bearing reading splices a measured cost curve onto a ten-year gross edge | Committed | Analytics |
 | [D166](D166-direction-is-omitted-from-config-at-its-default.md) | The breakout brick is sign-parameterized ({long, flat, short} state enum, direction-aware gate) and `direction` is omitted from `config()` at its LONG default so v1 trial hashes survive | Committed | Signals & strategy interface |
 | [D167](D167-at-trigger-features-are-logged-on-an-open-map.md) | At-trigger features live on an open F-numbered map, are computed at the trigger bar (not the entry bar), and unavailable never means imputed | Committed | Diagnostics & reporting |
+| [D168](D168-volume-rides-inside-the-dataview.md) | Volume reaches strategy code inside `DataView` as an aligned sliced series, in three explicitly different states — absent, gapped, and required-but-unwired (loud) | Committed | Signals & strategy interface |

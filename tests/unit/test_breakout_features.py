@@ -149,9 +149,42 @@ def test_blocked_features_are_present_and_none_never_absent():
     bars = bars_from([100] * 60)
     features = trigger_features(bars, 55)
     assert set(features) == set(FEATURE_NAMES)
-    for name in ("F2", "F5"):
-        assert features[name] is None
-        assert name in FEATURE_UNAVAILABLE
+    # F5 is still blocked: no derivatives plumbing exists.
+    assert features["F5"] is None
+    assert "F5" in FEATURE_UNAVAILABLE
+    # F2 is NOT blocked any more (D168 closed the D111 gap). It is None here only
+    # because this call supplied no volumes, which is a different statement — the
+    # distinction is exactly what FEATURE_UNAVAILABLE encodes.
+    assert "F2" not in FEATURE_UNAVAILABLE
+    assert features["F2"] is None
+
+
+def test_f2_is_computed_when_volumes_are_supplied():
+    bars = bars_from([100] * 60)
+    volumes = [100.0] * 60
+    volumes[55] = 250.0
+    features = trigger_features(bars, 55, volumes=volumes)
+    # Baseline is bars 35..54, all 100.0 -> mean 100.0; the trigger bar is 250.0.
+    assert features["F2"] == pytest.approx(2.5)
+
+
+def test_f2_baseline_excludes_the_trigger_bar():
+    """If the trigger bar's own volume entered the average it has to beat, a large bar
+    would inflate its own threshold and the ratio would be understated."""
+    bars = bars_from([100] * 60)
+    volumes = [100.0] * 60
+    volumes[55] = 2100.0
+    ratio = trigger_features(bars, 55, volumes=volumes)["F2"]
+    # Excluding the trigger bar: 2100 / 100 = 21.0.
+    # Including it, the mean would be (19*100 + 2100)/20 = 200 -> ratio 10.5.
+    assert ratio == pytest.approx(21.0)
+
+
+def test_f2_is_none_when_a_volume_is_missing_in_the_window():
+    bars = bars_from([100] * 60)
+    volumes: list = [100.0] * 60
+    volumes[40] = None
+    assert trigger_features(bars, 55, volumes=volumes)["F2"] is None
 
 
 def test_close_location_value_is_none_on_a_zero_range_bar_rather_than_a_divide_by_zero():
@@ -244,9 +277,9 @@ def test_a_feature_below_the_trade_floor_is_underpowered_not_verdicted():
 
 def test_a_blocked_feature_reports_its_reason():
     episodes = [_episode(i, i / 10) for i in range(40)]
-    verdict = analyse_feature(episodes, "F2")
+    verdict = analyse_feature(episodes, "F5")
     assert verdict.verdict == "UNAVAILABLE"
-    assert verdict.unavailable_reason and "D111" in verdict.unavailable_reason
+    assert verdict.unavailable_reason and "open-interest" in verdict.unavailable_reason
 
 
 def test_a_clean_monotone_relationship_is_a_candidate():

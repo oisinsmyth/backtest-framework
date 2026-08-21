@@ -1,6 +1,15 @@
 # Per-Bar Volume Extension — Design Plan (D111 → proposed D150)
 
-**Status: designed, not built.** Written 2026-08-18, prompted by
+**Status: BUILT, 2026-08-21 — see [D168](decisions/D168-volume-rides-inside-the-dataview.md).**
+The plan below was followed as written; the design survived contact with the code, and the
+verification gates it specified are the ones that ran. Two things worth recording against
+the estimates: the reflection-audit extension mattered exactly as much as predicted (the
+existing Attack 5 inspected only tuples of `Bar`, so the volume tuple would have been
+untested by construction), and the golden master's off-by-one risk showed up in the test
+rather than the hand file — bar index t is calendar day t+1, and the first cut asserted on
+calendar days, which made one assertion pass vacuously.
+
+Originally written 2026-08-18, prompted by
 [`BREAKOUT_RESULTS.md`](../BREAKOUT_RESULTS.md)'s blocked volume-confirmation filter
 ([D111](decisions/D111-volume-filter-blocked-on-bar-schema.md)). Unlike
 [`options_extension.md`](options_extension.md), which is a deferral, this is a **design for

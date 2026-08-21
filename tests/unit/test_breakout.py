@@ -339,8 +339,12 @@ def test_strategy_config_round_trips_through_the_factory():
 
 
 def test_unknown_component_type_fails_loudly_naming_the_key():
+    # This used "volume_confirmation" as its unknown-filter example, because D111 had
+    # it recorded as blocked and no such filter existed. D168 built it, so the example
+    # had to move to a type that is genuinely unregistered — the test failing when the
+    # filter landed is the registry behaving correctly, not a regression.
     with pytest.raises(ConfigError, match="unknown type"):
-        build_entry_filter({"type": "volume_confirmation", "multiple": 1.5})
+        build_entry_filter({"type": "open_interest_confirmation", "multiple": 1.5})
     with pytest.raises(ConfigError, match="unknown type"):
         build_weight_source({"type": "kelly"})
     with pytest.raises(ConfigError, match="breakout_long_flat"):
