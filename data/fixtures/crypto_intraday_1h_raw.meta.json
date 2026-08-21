@@ -1,0 +1,46 @@
+{
+  "symbols": [
+    "BTC-USD",
+    "ETH-USD"
+  ],
+  "start": "2024-08-19",
+  "end": "2026-08-18",
+  "interval": "1h",
+  "minutes_per_bar": 60,
+  "bar_boundary": "UTC, on the interval grid (D160) \u2014 timestamps stored naive, meaning UTC",
+  "per_symbol": {
+    "BTC-USD": {
+      "first_bar": "2024-08-19T00:00:00",
+      "last_bar": "2026-08-17T23:00:00",
+      "bar_count": 17463,
+      "bars_if_gapless": 17496,
+      "missing_bars": 33,
+      "gap_histogram_minutes": {
+        "120": 2,
+        "720": 1,
+        "1260": 1
+      },
+      "per_bar_sigma": 0.004811884334615535,
+      "annualised_sigma": 0.4503676967140662
+    },
+    "ETH-USD": {
+      "first_bar": "2024-08-19T00:00:00",
+      "last_bar": "2026-08-17T23:00:00",
+      "bar_count": 17460,
+      "bars_if_gapless": 17496,
+      "missing_bars": 36,
+      "gap_histogram_minutes": {
+        "120": 3,
+        "180": 1,
+        "720": 1,
+        "1260": 1
+      },
+      "per_bar_sigma": 0.007089391235063176,
+      "annualised_sigma": 0.6635306627534296
+    }
+  },
+  "fetched_at_utc": "2026-08-18T22:15:33.697664+00:00",
+  "source": "yfinance Ticker.history(auto_adjust=False, actions=True) via EquityDataSource (D18); spot crypto has no dividends or splits, so the events sidecar is empty by construction (D108)",
+  "retention_note": "yfinance serves 730 days of 1h, 60 days of 15m/30m, and no 4h or 6h interval at all \u2014 so 1h is the study base and 2h/4h/6h/12h/1d are resampled from it (D160/D161); 15m and 30m are a 60-day turnover measurement only (D163)",
+  "alignment_note": "NOT inner-joined across symbols \u2014 one single-instrument backtest per symbol (the N=1 case of D64), so D45 truncation never applies"
+}

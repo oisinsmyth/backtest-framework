@@ -6,11 +6,27 @@ by structure, not convention — every friction, instrument, and validation chec
 individually-tested component. Research output is the product; the framework is the instrument.
 
 The framework is complete (all in-scope verification gates passed) and the Phase G
-research program has published five studies from it.
+research program has published five studies from it, plus a second, deliberately
+contrasting strategy (a long-flat crypto breakout) that exists to test the framework's
+own claim that a strategy is a swappable brick.
 
 **The research output is [`docs/writeup.md`](docs/writeup.md)** — the five-study
 measurement of whether ETF pairs trading clears real frictions (draft skeleton; every
 headline number final and cross-checked against its source artifact by the test suite).
+
+**The second study is [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md)** — a long-flat
+Donchian breakout on BTC/ETH, run through the same engine, cost stack, walk-forward
+harness and trial registry as the pairs work. It is **directional and beta-loaded**, and
+explicitly labelled as outside the market-neutral thesis (D38/D117); its verdict is that
+fees are not the binding constraint, which turns out to be the least interesting true
+thing about it.
+
+**The third study is [`docs/results/crypto_pairs_btc_eth.md`](docs/results/crypto_pairs_btc_eth.md)**
+— the market-neutral thesis strategy (the existing z-score pairs signal, unmodified) on
+the same BTC/ETH data, with borrow and margin priced. It is an honest negative: at zero
+fees *and* zero carry the strategy still loses 88.7%, because the pair's log spread is
+stationary in only 14% of training windows. Realised beta is ≈ 0 on all three benchmarks,
+so the neutrality engineering works — the thesis is what fails (D122–D127).
 
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
@@ -49,5 +65,9 @@ cannot rot.
 (1–9, 11, 12) passed their gates; the simulator is anchored to hand-computed golden masters
 and reconciled penny-exact against vectorbt. Phase G has produced five one-variable-per-step
 studies (selection → hedging → capacity → gross exposure) on a frozen 57-ETF universe, all
-collected in [`docs/writeup.md`](docs/writeup.md) — draft prose, final numbers. Next:
-writeup polish and reviewer outreach. See [`AITODO.md`](AITODO.md) for the live task list.
+collected in [`docs/writeup.md`](docs/writeup.md) — draft prose, final numbers. A sixth
+study, the long-flat crypto breakout in [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md)
+(D108–D117), reuses the framework unchanged on a directional strategy — and recorded one
+blocked feature (a volume filter the `Bar` schema cannot support, D111) rather than working
+around it. Next: writeup polish and reviewer outreach. See [`AITODO.md`](AITODO.md) for the
+live task list.

@@ -1,0 +1,239 @@
+THE CRYPTO PAIRS GOLDEN MASTER — hand arithmetic
+=============================================================================
+Computed by hand from the stated rules, without running the codebase. If the
+engine and this file disagree, one of them is wrong about what a SHORT-ONE-LEG,
+~200%-GROSS pairs backtest IS, and that argument happens here.
+
+What is new here, and why this file exists alongside the breakout golden master
+(tests/golden/test_breakout_golden.hand.txt): that scenario is long-or-flat,
+never levered, and pays a trade fee and nothing else. This one is the opposite
+case on every axis a pairs book differs on —
+
+  * TWO legs fill on every decision, so a round trip pays four fees, not two;
+  * one leg is SHORT, so BorrowFee (D71) charges on its notional and the other
+    leg pays nothing — the shorts-only shape, not just the rate;
+  * gross exposure is ~200% of NAV, so MarginInterest (D5) charges on
+    max(gross - NAV, 0), a PORTFOLIO-level base no per-leg brick can see;
+  * the strategy emits a target WEIGHT every bar, so the book re-normalizes to
+    constant gross as NAV moves — the interior fills at t=5 are that, and they
+    are the mechanism behind the study's 31x annualised turnover.
+
+SETUP
+-----
+instruments       AAA, BBB — both Equity(quantity_precision=8)   [D108: spot
+                  crypto as an Equity; 8-dp lot size]
+cost stack        trade:            PercentOfNotionalSpread(bps=40) -> 0.40% of
+                                    |quantity x price|, charged per LEG per fill
+                  carry:            BorrowFee(annual_rate=0.365)
+                  portfolio carry:  MarginInterest(annual_rate=0.365)
+                  event flows:      none (spot crypto pays no dividends, D108)
+
+                  0.365 / 365 = 0.001 EXACTLY per calendar day (ACT/365, D51).
+                  That rate is chosen for hand arithmetic, not for realism — the
+                  study itself runs 10%/yr on both (D124).
+
+strategy          ZScorePairsStrategy(A=AAA, B=BBB, lookback=3, entry_z=1.0,
+                  exit_z=0.5, leg_weight=1.0)   [D69, UNMODIFIED]
+                    spread(t) = ln(AAA close) - ln(BBB close)
+                    window    = the 3 spreads ending at t-1 (never t itself, D44)
+                    z         = (spread(t) - mean) / sample stdev (ddof=1)
+                    z >  +1.0 -> side = -1  (short AAA, long BBB)
+                    z <  -1.0 -> side = +1
+                    |z| < 0.5 -> flat;  0.5 <= |z| <= 1.0 -> hold current side
+                    warm-up: fewer than lookback+1 = 4 visible bars -> flat
+fill timing       next_open (D103): a decision at bar t's close fills at bar
+                  t+1's OPEN. A decision on the final bar never fills.
+starting cash     100,000.00
+allocator         ConstantSplitAllocator, one strategy -> capital = full NAV,
+                  recomputed from NAV every bar (D61)
+
+BARS (daily, 00:00 UTC, 2021-01-01 .. 2021-01-06)
+-------------------------------------------------
+AAA
+ t   open        high    low     close
+ 0   100         105     95      100
+ 1   100         130     98      125
+ 2   125         160     120     156.25
+ 3   156.25      200     150     195.3125
+ 4   200         260     195     244.140625
+ 5   250         330     245     305.17578125
+
+BBB
+ t   open=high=low=close = 100 on every bar
+
+AAA's closes are 100 x 1.25^t, chosen so every quantity below is exact in
+binary and the z-score is a whole number. BBB is held flat so the spread is
+AAA's alone; the two legs are symmetric in the code, so one moving leg is
+enough to pin the arithmetic. AAA's OPENS deliberately GAP away from the prior
+close at t=4 (195.3125 -> 200) and t=5 (244.140625 -> 250), so "sized on the
+decision bar's close, filled at the next bar's open" is visible rather than
+hidden by open == previous close.
+
+SPREAD AND SIGNAL WALK
+----------------------
+L := ln(1.25) = 0.2231435513...
+spread(t) = ln(100 x 1.25^t) - ln(100) = t x L exactly.
+
+ t   n=t+1   window (spreads at)      mean   stdev   z = (tL - mean)/stdev
+ 0     1     n < 4  -> warm-up          -      -     flat
+ 1     2     n < 4  -> warm-up          -      -     flat
+ 2     3     n < 4  -> warm-up          -      -     flat
+ 3     4     t=0,1,2  ->  0, L, 2L      L      L     (3L - L)/L = +2.0
+ 4     5     t=1,2,3  ->  L, 2L, 3L    2L      L     (4L - 2L)/L = +2.0
+ 5     6     t=2,3,4  -> 2L, 3L, 4L    3L      L     (5L - 3L)/L = +2.0
+
+   stdev of three equally-spaced values {x-d, x, x+d} with ddof=1
+     = sqrt( (d^2 + 0 + d^2) / 2 ) = d,  and here d = L, so stdev = L exactly.
+
+z = +2.0 > entry_z = 1.0 on every decision bar -> side = -1 throughout:
+   target weight AAA = -1.0,  BBB = +1.0.
+
+A steadily TRENDING spread pins z at a constant +2 — the strategy enters short
+and stays short while the spread runs away from it. That is not an accident of
+the fixture; it is the study's headline failure mode reproduced in six bars.
+
+MONEY WALK
+----------
+Engine step order per bar (engine/backtest.py): splits -> carry+flows ->
+next_open fills -> views -> NAV -> targets -> sizing -> pending -> equity point.
+Carry therefore sees the positions held at the PREVIOUS close, and this bar's
+fills land AFTER it.
+
+t=0   prev_timestamp is None -> no carry.
+      warm-up -> no targets, no orders, nothing pending.
+      cash 100,000.00   positions {}   NAV = 100,000.00
+
+t=1   carry: positions {} -> per-leg carry 0.
+             gross = 0; margin base = max(0 - 100,000, 0) = 0 -> 0.
+      warm-up -> nothing.                       NAV = 100,000.00
+
+t=2   identical to t=1.                         NAV = 100,000.00
+
+t=3   carry: still flat -> 0.
+      signal: z = +2.0 -> side -1.
+      NAV for sizing = 100,000.00 (cash only), capital = 100,000.00.
+      desired AAA = -1.0 x 100,000 / 195.3125 = -512.00000000
+                    (195.3125 x 512 = 100,000 exactly)
+      desired BBB = +1.0 x 100,000 / 100      = +1000.00000000
+      current positions 0 -> orders AAA -512, BBB +1000, both PENDING.
+      no fill this bar.                        NAV = 100,000.00
+
+t=4   carry: snapshot positions are still {} (t=3's orders have not filled) -> 0.
+      FILLS at t=4 OPENS: AAA 200.00, BBB 100.00
+        AAA  -512 @ 200      notional -102,400.00   cash +102,400.00
+                             fee 0.0040 x 102,400.00 =    409.60
+        BBB +1000 @ 100      notional +100,000.00   cash -100,000.00
+                             fee 0.0040 x 100,000.00 =    400.00
+        cash = 100,000.00 + 102,400.00 - 409.60 - 100,000.00 - 400.00
+             = 101,590.40
+        positions: AAA -512.00000000, BBB +1000.00000000
+      NAV at t=4 close (AAA 244.140625, BBB 100):
+        AAA  -512 x 244.140625 = -125,000.00     (244.140625 x 512 = 125,000)
+        BBB +1000 x 100        = +100,000.00
+        NAV = 101,590.40 - 125,000.00 + 100,000.00 = 76,590.40
+      signal: z = +2.0 -> side -1 (unchanged). capital = 76,590.40.
+        desired AAA = -76,590.40 / 244.140625
+                    = -76,590.40 x 0.004096 = -313.71427840   (exact at 8 dp)
+        desired BBB = +76,590.40 / 100       = +765.90400000
+        orders AAA  -313.7142784 - (-512)    = +198.28572160
+               BBB   765.904     - 1000      = -234.09600000
+        both PENDING.
+      NAV = 76,590.40
+
+t=5   carry (t=4 -> t=5 is exactly 1 calendar day, factor 0.001):
+        snapshot positions AAA -512, BBB +1000, priced at t=5 CLOSES
+        (AAA 305.17578125, BBB 100):
+          AAA  -512 x 305.17578125 = -156,250.00  (305.17578125 x 512 = 156,250)
+          BBB +1000 x 100          = +100,000.00
+          snapshot NAV = 101,590.40 - 156,250.00 + 100,000.00 = 45,340.40
+        per-leg BorrowFee (base = that leg's own SIGNED notional, D71):
+          AAA  base -156,250.00 -> short notional 156,250.00
+               -> 156,250.00 x 0.001 =      156.25
+          BBB  base +100,000.00 -> max(-100,000, 0) = 0
+               ->                              0.00     <- longs pay no borrow
+        portfolio MarginInterest (D5, base computed by the engine):
+          gross = |-156,250.00| + |+100,000.00| = 256,250.00
+          base  = max(256,250.00 - 45,340.40, 0) = 210,909.60
+          ->  210,909.60 x 0.001 =              210.90960
+        cash = 101,590.40 - 156.25 - 210.90960 = 101,223.24040
+
+      FILLS at t=5 OPENS: AAA 250.00, BBB 100.00
+        AAA +198.2857216 @ 250   notional  +49,571.43040  cash  -49,571.43040
+                                 fee 0.0040 x 49,571.43040 =    198.28572160
+        BBB -234.096     @ 100   notional  -23,409.60000  cash  +23,409.60000
+                                 fee 0.0040 x 23,409.60000 =     93.63840000
+        cash = 101,223.24040 - 49,571.43040 - 198.2857216
+                             + 23,409.60000 -  93.6384
+             = 74,769.48587840
+        positions: AAA -512 + 198.2857216 = -313.71427840
+                   BBB 1000 - 234.096     = +765.90400000
+      NAV at t=5 close (AAA 305.17578125, BBB 100):
+        AAA -313.7142784 x 305.17578125 = -95,738.00
+             (305.17578125 = 10^7 / 32768, and 313.7142784 x 10^7 / 32768
+              = 3,137,142,784 / 32768 = 95,738 exactly)
+        BBB +765.904 x 100              = +76,590.40
+        NAV = 74,769.48587840 - 95,738.00 + 76,590.40 = 55,621.88587840
+      signal: side -1, orders sized -> PENDING, and the run ends.
+        Orders decided on the FINAL bar never fill (D103). The book therefore
+        ends holding AAA -313.7142784 / BBB +765.904, marked at the close with
+        no forced liquidation.
+
+RESULTS TO ASSERT
+-----------------
+equity curve      t=0  100,000.00
+                  t=1  100,000.00
+                  t=2  100,000.00
+                  t=3  100,000.00
+                  t=4   76,590.40
+                  t=5   55,621.88587840
+
+fills (4)         t=4  AAA  -512.00000000 @ 200.00  fee    409.60000000
+                  t=4  BBB +1000.00000000 @ 100.00  fee    400.00000000
+                  t=5  AAA  +198.28572160 @ 250.00  fee    198.28572160
+                  t=5  BBB  -234.09600000 @ 100.00  fee     93.63840000
+                  (no fill on t=0..t=3; none at any bar's CLOSE price)
+
+final cash        74,769.48587840
+final positions   AAA -313.71427840   BBB +765.90400000
+final NAV         55,621.88587840
+
+cost totals       trade fees   409.60 + 400.00 + 198.2857216 + 93.6384
+                             = 1,101.52412160
+                  borrow                                    156.25000000
+                  margin interest                           210.90960000
+                  total frictions                         1,468.68372160
+
+RECONCILIATION (the identity the whole file exists to check)
+------------------------------------------------------------
+Price P&L, segment by segment (position held x price move over that segment):
+
+  t=4 open -> t=4 close   AAA -512 x (244.140625 - 200)      =  -22,600.00
+                          BBB +1000 x (100 - 100)            =        0.00
+  t=4 close -> t=5 open   AAA -512 x (250 - 244.140625)      =   -3,000.00
+                          BBB +1000 x (100 - 100)            =        0.00
+  t=5 open -> t=5 close   AAA -313.7142784 x (305.17578125 - 250)
+                            = -(95,738.00 - 78,428.5696)     =  -17,309.4304
+                          BBB +765.904 x (100 - 100)         =        0.00
+                                                    total    =  -42,909.4304
+
+  NAV(t=5) = 100,000.00 - 42,909.4304 - 1,101.5241216 - 367.1596
+           =  55,621.88587840                                  <- matches above
+
+Every dollar is accounted for: price moves, four leg fees, one borrow charge on
+the short leg only, and one portfolio margin charge on the gross above NAV.
+
+WHAT WOULD BREAK THIS FILE, AND WHAT THAT WOULD MEAN
+-----------------------------------------------------
+* A borrow charge on BBB   -> BorrowFee stopped being shorts-only (D71), and
+                              every pairs number in the study is overstated.
+* Margin base = gross      -> D5's "borrowed portion" became "whole book"; the
+                              200%-gross study would double-count its financing.
+* Carry charged at t=4     -> carry started accruing on positions that were not
+                              yet held; next_open fills would be paying rent
+                              before they existed.
+* A fill at 244.140625     -> next_open fill timing silently reverted to close
+                              (D103), and the strategy would be trading at the
+                              price its own signal saw.
+* No fills at t=5          -> the constant-gross re-normalization stopped
+                              happening, and the study's turnover figure — the
+                              single largest driver of its fee bill — is wrong.

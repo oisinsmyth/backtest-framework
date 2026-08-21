@@ -1,0 +1,158 @@
+THE BREAKOUT GOLDEN MASTER — hand arithmetic
+=============================================================================
+Computed by hand from the stated rules, without running the codebase. If the
+engine and this file disagree, one of them is wrong about what a long-flat
+breakout backtest IS, and that argument happens here.
+
+SETUP
+-----
+instrument        BTC-TEST, Equity(quantity_precision=8)   [D108: spot crypto
+                  as an Equity — long only, never levered, 8-dp lot size]
+cost stack        trade: PercentOfNotionalSpread(bps=40)  -> 0.40% of |notional|
+                  carry: none.  portfolio carry: none.  event flows: none.
+                  => carry accrual is exactly 0 on every bar; the ONLY money
+                     leaving the book is the 0.40% taker fee on each fill.
+strategy          BreakoutStrategy(n_entry=3, n_exit=2, FixedWeight(1.0))
+                  entry:  close(t) >  max(high) over t-3 .. t-1
+                  exit:   close(t) <  min(low)  over t-2 .. t-1
+                  warm-up = max(n_entry, n_exit) = 3  -> bars 0,1,2 stand aside
+fill timing       next_open (D103): a decision made at bar t's close fills at
+                  bar t+1's OPEN. A decision on the final bar never fills.
+starting cash     100,000.00
+allocator         ConstantSplitAllocator, one strategy -> capital = full NAV,
+                  recomputed from NAV every bar (D61)
+
+BARS (daily, 00:00 UTC, days 1..9 of 2021-01)
+---------------------------------------------
+ t   open    high    low    close
+ 0   100     110     90     100
+ 1   100     105     95     100
+ 2   100     108     96     100
+ 3   100     130     99     125
+ 4   125     126     99     100
+ 5   100     205     98     200
+ 6   200     201     94      95
+ 7    95      96     89      90
+ 8    90      93     88      92
+
+SIGNAL WALK
+-----------
+t=0,1,2   current_index < 3 (warm-up)                         -> flat, no order
+t=3       entry level = max(high[0..2]) = max(110,105,108)=110
+          close 125 > 110                                     -> ENTER
+          exit level  = max? n/a (flat, exits are not consulted)
+t=4       exit level = min(low[2..3]) = min(96,99) = 96
+          close 100 > 96                                      -> hold
+t=5       exit level = min(low[3..4]) = min(99,99) = 99
+          close 200 > 99                                      -> hold
+t=6       exit level = min(low[4..5]) = min(99,98) = 98
+          close  95 < 98                                      -> EXIT
+t=7       flat. entry level = max(high[4..6]) = max(126,205,201) = 205
+          close 90 < 205                                      -> no entry
+t=8       flat. entry level = max(high[5..7]) = max(205,201,96) = 205
+          close 92 < 205                                      -> no entry
+
+Note t=3: the entry window is bars 0..2 ONLY. Bar 3's own high of 130 is not
+in it — a bar cannot trigger on itself. If it were included the level would be
+130 and no entry would fire at all.
+
+SIZING AND FILLS
+----------------
+Sizing rule: desired quantity = weight x capital / close(t), rounded to 8 dp;
+capital = NAV at that bar's close. The order is the difference against the
+position already held. It fills at the NEXT bar's open.
+
+t=3  NAV = 100,000.00 (all cash, nothing held)
+     desired = 1.0 x 100,000.00 / 125 = 800.00000000
+     held 0 -> ORDER +800.00000000, pending
+
+t=4  FILL +800 @ open 125
+       notional = 800 x 125                      = 100,000.00
+       fee      = 0.0040 x 100,000.00            =     400.00
+       cash     = 100,000.00 - 100,000.00 - 400.00 = -400.00
+       position = 800
+     NAV(t=4) = cash + 800 x close 100 = -400.00 + 80,000.00 = 79,600.00
+     still long; desired = 1.0 x 79,600.00 / 100 = 796.00000000
+     held 800 -> ORDER -4.00000000, pending
+     [Why a trade at all: the 400.00 fee left cash negative, so a constant
+      100% WEIGHT is now slightly over-invested in QUANTITY terms. Trimming it
+      is what weight targeting means; the trim is exactly cash/price = 4 units.]
+
+t=5  FILL -4 @ open 100
+       notional = 4 x 100                        =     400.00
+       fee      = 0.0040 x 400.00                =       1.60
+       cash     = -400.00 + 400.00 - 1.60        =      -1.60
+       position = 796
+     NAV(t=5) = -1.60 + 796 x 200 = -1.60 + 159,200.00 = 159,198.40
+     still long; desired = 159,198.40 / 200 = 795.99200000
+     held 796 -> ORDER -0.00800000, pending
+
+t=6  FILL -0.008 @ open 200
+       notional = 0.008 x 200                    =       1.60
+       fee      = 0.0040 x 1.60                  =       0.0064
+       cash     = -1.60 + 1.60 - 0.0064          =      -0.0064
+       position = 795.992
+     NAV(t=6) = -0.0064 + 795.992 x 95 = -0.0064 + 75,619.24 = 75,619.2336
+     EXIT fires; desired = 0 -> ORDER -795.99200000, pending
+
+t=7  FILL -795.992 @ open 95
+       notional = 795.992 x 95                   =  75,619.24
+       fee      = 0.0040 x 75,619.24             =     302.47696
+       cash     = -0.0064 + 75,619.24 - 302.47696 = 75,316.75664
+       position = 0
+     flat, no entry -> no order
+
+t=8  no pending order, no entry -> nothing happens
+
+EQUITY CURVE (NAV at each bar's close)
+--------------------------------------
+ t=0   100,000.00
+ t=1   100,000.00
+ t=2   100,000.00
+ t=3   100,000.00        (the order is pending; nothing has filled yet)
+ t=4    79,600.00        (bought 800 @125, price closed at 100)
+ t=5   159,198.40
+ t=6    75,619.2336
+ t=7    75,316.75664
+ t=8    75,316.75664     (flat; cash only)
+
+FINAL: cash 75,316.75664, position 0, NAV 75,316.75664
+
+RECONCILIATION
+--------------
+total fees        = 400.00 + 1.60 + 0.0064 + 302.47696 = 704.08336
+gross P&L         = -(sum of signed quantity x fill price)
+                  = -(800x125 + (-4)x100 + (-0.008)x200 + (-795.992)x95)
+                  = -(100,000.00 - 400.00 - 1.60 - 75,619.24)
+                  = -23,979.16
+net P&L           = -23,979.16 - 704.08336 = -24,683.24336
+NAV check         = 100,000.00 - 24,683.24336 = 75,316.75664   MATCHES
+
+TRADE DIAGNOSTICS (D112) — one closed position episode
+------------------------------------------------------
+entry            t=4 @ 125       exit t=7 @ 95
+bars held        7 - 4 = 3
+fills in episode 4  (open, two trims, close)
+episode costs    704.08336   of which rebalance (interior fills) 1.6064
+traded notional  100,000.00 + 400.00 + 1.60 + 75,619.24 = 176,020.84
+MFE              highs over bars [4,7) = 126, 205, 201; plus the exit price 95
+                 -> max 205;  205/125 - 1 = +0.64
+MAE              lows  over bars [4,7) =  99,  98,  94; plus the exit price 95
+                 -> min  94;   94/125 - 1 = -0.248
+                 [bar 7's own range is excluded: the position was closed at
+                  that bar's open, so its later excursion is not this trade's]
+win rate         net P&L < 0            -> 0.0  (0 of 1 closed trades)
+whipsaw rate     3 bars held <= 3       -> 1.0  (1 of 1 closed trades)
+cost / |gross|   704.08336 / 23,979.16  -> 0.029362...
+
+WHAT THIS PINS
+--------------
+1. The entry extremum excludes the current bar (t=3 fires on a 110 level, not
+   on its own 130 high).
+2. next_open fill timing: every fill price is the FOLLOWING bar's open, never
+   the close that produced the signal.
+3. Fees are 0.40% of |quantity x fill price| on every fill, including trims.
+4. Hysteresis: the exit at t=6 needed a 2-bar low breach (98), not merely a
+   down close — at t=4 a close of 100 against a 96 level did not exit.
+5. Weight targeting under next_open costs money even with no signal change:
+   two interior trims, 1.6064 of fees, purely to keep a 100% weight on target.

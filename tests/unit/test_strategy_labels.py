@@ -7,8 +7,10 @@ where its label requirement lives.
 """
 
 import backtest_framework.engine.strategy as strategy_module
+import backtest_framework.strategies.breakout as breakout_module
 import backtest_framework.strategies.zscore_pairs as zscore_module
 from backtest_framework.engine.strategy import ScheduledWeightStrategy
+from backtest_framework.strategies.breakout import BreakoutStrategy
 from backtest_framework.strategies.zscore_pairs import ZScorePairsStrategy
 
 
@@ -22,6 +24,17 @@ def test_zscore_pairs_is_labelled_the_minimal_non_research_strategy():
     assert "not phase g" in text.lower() or "honest minimum" in text.lower()
 
 
+def test_breakout_is_labelled_directional_and_outside_the_market_neutral_thesis():
+    """The case D38 was written for, now real (D117). The breakout strategy is long
+    or flat on a single high-beta instrument — directional by construction. Its
+    docstring must say so, and say what the honest benchmark is, or this fails."""
+    text = (breakout_module.__doc__ or "") + (BreakoutStrategy.__doc__ or "")
+    lowered = " ".join(text.lower().split())  # line wrapping must not defeat the grep
+    assert "directional" in lowered
+    assert "not part of this project's market-neutral thesis" in lowered
+    assert "buy-and-hold" in lowered  # the benchmark frame it must be judged against
+
+
 def test_no_unlabelled_directional_strategy_exists_yet():
     # If a sector-momentum (or any directional) strategy lands in
     # backtest_framework.strategies, it must carry a learning/reference label in its
@@ -30,8 +43,9 @@ def test_no_unlabelled_directional_strategy_exists_yet():
 
     import backtest_framework.strategies as pkg
 
-    module_names = [m.name for m in pkgutil.iter_modules(pkg.__path__)]
-    assert module_names == ["zscore_pairs"], (
-        f"new strategy module(s) {set(module_names) - {'zscore_pairs'}} added — "
+    registered = {"zscore_pairs", "breakout"}
+    module_names = {m.name for m in pkgutil.iter_modules(pkg.__path__)}
+    assert module_names == registered, (
+        f"new strategy module(s) {module_names - registered} added — "
         "give each an honest thesis label (D38/D82) and register it in this test"
     )

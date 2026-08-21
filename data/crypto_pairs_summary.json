@@ -1,0 +1,1615 @@
+{
+  "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
+  "generated_utc": "2026-08-18T21:47:20.965377+00:00",
+  "config": {
+    "study": "crypto_pairs_btc_eth_v1",
+    "signal": "zscore_pairs (D69, unmodified: fixed 1:1 log hedge, trailing z ending at t-1)",
+    "symbol_a": "BTC-USD",
+    "symbol_b": "ETH-USD",
+    "train_size": 252,
+    "test_size": 63,
+    "step": 63,
+    "starting_cash": 100000.0,
+    "rf_annual": 0.04,
+    "periods_per_year": 365.0,
+    "fill_timing": "next_open",
+    "borrow_annual_rate": 0.1,
+    "margin_annual_rate": 0.1,
+    "stitch": "continuous",
+    "adf_lags": 1,
+    "seed": 0
+  },
+  "tiers": [
+    {
+      "name": "maker_0bp",
+      "fee_bps": 0.0,
+      "role": "maker"
+    },
+    {
+      "name": "maker_10bp",
+      "fee_bps": 10.0,
+      "role": "maker"
+    },
+    {
+      "name": "maker_25bp",
+      "fee_bps": 25.0,
+      "role": "maker"
+    },
+    {
+      "name": "taker_40bp",
+      "fee_bps": 40.0,
+      "role": "taker"
+    }
+  ],
+  "sanity_gate": {
+    "cleaning_changes": 0,
+    "hard_violations": 0,
+    "warnings": 7
+  },
+  "oos_start": "2018-07-19",
+  "oos_end": "2025-12-17",
+  "n_oos_bars": 2709,
+  "n_windows": 43,
+  "n_oos_trials": 76,
+  "cointegration": {
+    "coint_windows": 43.0,
+    "coint_rate_traded_5pct": 0.13953488372093023,
+    "coint_rate_traded_10pct": 0.18604651162790697,
+    "coint_rate_eg_5pct": 0.046511627906976744,
+    "coint_rate_eg_10pct": 0.13953488372093023,
+    "beta_median": 0.7394584236913757,
+    "beta_coherent_rate": 0.5116279069767442,
+    "windows": [
+      {
+        "window": 0,
+        "train_start": "2017-11-09",
+        "train_end": "2018-07-18",
+        "adf_traded_spread": -2.042758580550568,
+        "engle_granger_beta": 0.5229770825660507,
+        "engle_granger_adf": -1.7343565843985465
+      },
+      {
+        "window": 1,
+        "train_start": "2018-01-11",
+        "train_end": "2018-09-19",
+        "adf_traded_spread": 0.5564651332773985,
+        "engle_granger_beta": 0.3819386739229425,
+        "engle_granger_adf": -2.501357128754569
+      },
+      {
+        "window": 2,
+        "train_start": "2018-03-15",
+        "train_end": "2018-11-21",
+        "adf_traded_spread": 0.0027759256045675586,
+        "engle_granger_beta": 0.23379611052857974,
+        "engle_granger_adf": -1.7602602581650333
+      },
+      {
+        "window": 3,
+        "train_start": "2018-05-17",
+        "train_end": "2019-01-23",
+        "adf_traded_spread": -1.6875874679589438,
+        "engle_granger_beta": 0.3915371946268995,
+        "engle_granger_adf": -0.7506143477615572
+      },
+      {
+        "window": 4,
+        "train_start": "2018-07-19",
+        "train_end": "2019-03-27",
+        "adf_traded_spread": -2.924176483891148,
+        "engle_granger_beta": 0.6210734625067248,
+        "engle_granger_adf": -1.7984316778915743
+      },
+      {
+        "window": 5,
+        "train_start": "2018-09-20",
+        "train_end": "2019-05-29",
+        "adf_traded_spread": -2.599673324312146,
+        "engle_granger_beta": 0.9127020850162296,
+        "engle_granger_adf": -2.2653987150022115
+      },
+      {
+        "window": 6,
+        "train_start": "2018-11-22",
+        "train_end": "2019-07-31",
+        "adf_traded_spread": -0.7716350402770223,
+        "engle_granger_beta": 1.135098086609122,
+        "engle_granger_adf": -1.3837937814715218
+      },
+      {
+        "window": 7,
+        "train_start": "2019-01-24",
+        "train_end": "2019-10-02",
+        "adf_traded_spread": -0.8662525069623551,
+        "engle_granger_beta": 1.2792519511942162,
+        "engle_granger_adf": -1.0574832458025534
+      },
+      {
+        "window": 8,
+        "train_start": "2019-03-28",
+        "train_end": "2019-12-04",
+        "adf_traded_spread": -1.6852291322568094,
+        "engle_granger_beta": 0.7543298386388917,
+        "engle_granger_adf": -2.2168914949002025
+      },
+      {
+        "window": 9,
+        "train_start": "2019-05-30",
+        "train_end": "2020-02-05",
+        "adf_traded_spread": -2.542323464342086,
+        "engle_granger_beta": 0.4757032986814819,
+        "engle_granger_adf": -2.4321899426381544
+      },
+      {
+        "window": 10,
+        "train_start": "2019-08-01",
+        "train_end": "2020-04-08",
+        "adf_traded_spread": -1.5048985069484648,
+        "engle_granger_beta": 0.6973457126555058,
+        "engle_granger_adf": -1.434974406032533
+      },
+      {
+        "window": 11,
+        "train_start": "2019-10-03",
+        "train_end": "2020-06-10",
+        "adf_traded_spread": -1.3510671272870027,
+        "engle_granger_beta": 0.5989541645272006,
+        "engle_granger_adf": -2.1061430436060724
+      },
+      {
+        "window": 12,
+        "train_start": "2019-12-05",
+        "train_end": "2020-08-12",
+        "adf_traded_spread": -0.3642689065541649,
+        "engle_granger_beta": 0.5258570576209424,
+        "engle_granger_adf": -2.0643040607822036
+      },
+      {
+        "window": 13,
+        "train_start": "2020-02-06",
+        "train_end": "2020-10-14",
+        "adf_traded_spread": -1.1229205336271395,
+        "engle_granger_beta": 0.5278872195505027,
+        "engle_granger_adf": -2.811880980136608
+      },
+      {
+        "window": 14,
+        "train_start": "2020-04-09",
+        "train_end": "2020-12-16",
+        "adf_traded_spread": -1.6533054618559178,
+        "engle_granger_beta": 0.6632777286443795,
+        "engle_granger_adf": -1.016201066666529
+      },
+      {
+        "window": 15,
+        "train_start": "2020-06-11",
+        "train_end": "2021-02-17",
+        "adf_traded_spread": -2.141291390705596,
+        "engle_granger_beta": 0.849401481190363,
+        "engle_granger_adf": -2.176464587142415
+      },
+      {
+        "window": 16,
+        "train_start": "2020-08-13",
+        "train_end": "2021-04-21",
+        "adf_traded_spread": -1.8454935325145543,
+        "engle_granger_beta": 0.937500842440858,
+        "engle_granger_adf": -2.188716701106253
+      },
+      {
+        "window": 17,
+        "train_start": "2020-10-15",
+        "train_end": "2021-06-23",
+        "adf_traded_spread": -0.6106986358403815,
+        "engle_granger_beta": 0.6461136717790681,
+        "engle_granger_adf": -1.1369112202525617
+      },
+      {
+        "window": 18,
+        "train_start": "2020-12-17",
+        "train_end": "2021-08-25",
+        "adf_traded_spread": -1.1835686305501885,
+        "engle_granger_beta": 0.32784766770131013,
+        "engle_granger_adf": -1.4590802951520885
+      },
+      {
+        "window": 19,
+        "train_start": "2021-02-18",
+        "train_end": "2021-10-27",
+        "adf_traded_spread": -1.3953491144045354,
+        "engle_granger_beta": 0.16770853474904374,
+        "engle_granger_adf": -1.3868527377728717
+      },
+      {
+        "window": 20,
+        "train_start": "2021-04-22",
+        "train_end": "2021-12-29",
+        "adf_traded_spread": -3.233377314413357,
+        "engle_granger_beta": 0.7041280825173851,
+        "engle_granger_adf": -3.3115717520028523
+      },
+      {
+        "window": 21,
+        "train_start": "2021-06-24",
+        "train_end": "2022-03-02",
+        "adf_traded_spread": -2.6027940871462065,
+        "engle_granger_beta": 0.7394584236913757,
+        "engle_granger_adf": -2.3423931290314353
+      },
+      {
+        "window": 22,
+        "train_start": "2021-08-26",
+        "train_end": "2022-05-04",
+        "adf_traded_spread": -2.4168123757738935,
+        "engle_granger_beta": 0.8341760481006636,
+        "engle_granger_adf": -2.2362166768302294
+      },
+      {
+        "window": 23,
+        "train_start": "2021-10-28",
+        "train_end": "2022-07-06",
+        "adf_traded_spread": -0.8971681596330608,
+        "engle_granger_beta": 0.7423043837432547,
+        "engle_granger_adf": -2.831546036852872
+      },
+      {
+        "window": 24,
+        "train_start": "2021-12-30",
+        "train_end": "2022-09-07",
+        "adf_traded_spread": -1.3220371043108332,
+        "engle_granger_beta": 0.7997265318009581,
+        "engle_granger_adf": -0.07497455542622562
+      },
+      {
+        "window": 25,
+        "train_start": "2022-03-03",
+        "train_end": "2022-11-09",
+        "adf_traded_spread": -1.6075672449257765,
+        "engle_granger_beta": 0.8434843659406355,
+        "engle_granger_adf": -1.4237774577949294
+      },
+      {
+        "window": 26,
+        "train_start": "2022-05-05",
+        "train_end": "2023-01-11",
+        "adf_traded_spread": -1.5351236269952404,
+        "engle_granger_beta": 0.8106420979699559,
+        "engle_granger_adf": -1.0449242622268866
+      },
+      {
+        "window": 27,
+        "train_start": "2022-07-07",
+        "train_end": "2023-03-15",
+        "adf_traded_spread": -3.6822889542051156,
+        "engle_granger_beta": 0.7968891039989547,
+        "engle_granger_adf": -3.220488418955647
+      },
+      {
+        "window": 28,
+        "train_start": "2022-09-08",
+        "train_end": "2023-05-17",
+        "adf_traded_spread": -2.993070977146161,
+        "engle_granger_beta": 1.1461711569012665,
+        "engle_granger_adf": -4.118545477938702
+      },
+      {
+        "window": 29,
+        "train_start": "2022-11-10",
+        "train_end": "2023-07-19",
+        "adf_traded_spread": -1.884780555157441,
+        "engle_granger_beta": 1.2534066835868867,
+        "engle_granger_adf": -3.4377991355936133
+      },
+      {
+        "window": 30,
+        "train_start": "2023-01-12",
+        "train_end": "2023-09-20",
+        "adf_traded_spread": -1.8427769985119413,
+        "engle_granger_beta": 1.2447932576377676,
+        "engle_granger_adf": -1.7631135661814468
+      },
+      {
+        "window": 31,
+        "train_start": "2023-03-16",
+        "train_end": "2023-11-22",
+        "adf_traded_spread": -0.8660915291849365,
+        "engle_granger_beta": 0.8328537989374061,
+        "engle_granger_adf": -0.5617804573982716
+      },
+      {
+        "window": 32,
+        "train_start": "2023-05-18",
+        "train_end": "2024-01-24",
+        "adf_traded_spread": -1.666037177425983,
+        "engle_granger_beta": 1.3051356466529016,
+        "engle_granger_adf": -2.191067456158983
+      },
+      {
+        "window": 33,
+        "train_start": "2023-07-20",
+        "train_end": "2024-03-27",
+        "adf_traded_spread": -1.8655344630882706,
+        "engle_granger_beta": 1.1368267204782099,
+        "engle_granger_adf": -2.5548617831593132
+      },
+      {
+        "window": 34,
+        "train_start": "2023-09-21",
+        "train_end": "2024-05-29",
+        "adf_traded_spread": -2.8882141091864284,
+        "engle_granger_beta": 1.1013684255560061,
+        "engle_granger_adf": -3.137263488089228
+      },
+      {
+        "window": 35,
+        "train_start": "2023-11-23",
+        "train_end": "2024-07-31",
+        "adf_traded_spread": -3.0495895611097334,
+        "engle_granger_beta": 1.0273899468390353,
+        "engle_granger_adf": -3.1243617562290606
+      },
+      {
+        "window": 36,
+        "train_start": "2024-01-25",
+        "train_end": "2024-10-02",
+        "adf_traded_spread": -0.6917940282965324,
+        "engle_granger_beta": 0.576949406114159,
+        "engle_granger_adf": -2.1912236293176446
+      },
+      {
+        "window": 37,
+        "train_start": "2024-03-28",
+        "train_end": "2024-12-04",
+        "adf_traded_spread": -0.9989060294499637,
+        "engle_granger_beta": 0.40786609035448745,
+        "engle_granger_adf": 0.18872605994413108
+      },
+      {
+        "window": 38,
+        "train_start": "2024-05-30",
+        "train_end": "2025-02-05",
+        "adf_traded_spread": -0.6284525989212896,
+        "engle_granger_beta": 0.813866421457907,
+        "engle_granger_adf": -0.29020321544105093
+      },
+      {
+        "window": 39,
+        "train_start": "2024-08-01",
+        "train_end": "2025-04-09",
+        "adf_traded_spread": 0.14118427048611218,
+        "engle_granger_beta": 0.47608589633746184,
+        "engle_granger_adf": -0.9278328970019453
+      },
+      {
+        "window": 40,
+        "train_start": "2024-10-03",
+        "train_end": "2025-06-11",
+        "adf_traded_spread": -1.2341790430323998,
+        "engle_granger_beta": 0.20475860086561906,
+        "engle_granger_adf": -2.2986030945294864
+      },
+      {
+        "window": 41,
+        "train_start": "2024-12-05",
+        "train_end": "2025-08-13",
+        "adf_traded_spread": -1.2832310401162785,
+        "engle_granger_beta": 0.2847366617708173,
+        "engle_granger_adf": -1.7808490653947562
+      },
+      {
+        "window": 42,
+        "train_start": "2025-02-06",
+        "train_end": "2025-10-15",
+        "adf_traded_spread": -0.5866996860407564,
+        "engle_granger_beta": 0.3195480161201103,
+        "engle_granger_adf": -1.674072698927308
+      }
+    ]
+  },
+  "dsr_by_tier": {
+    "maker_0bp": 0.00874722134085204,
+    "maker_10bp": 0.0035405206774165032,
+    "maker_25bp": 0.0007207928227742633,
+    "taker_40bp": 0.00011297309095043007
+  },
+  "dsr_inputs_by_tier": {
+    "maker_0bp": {
+      "observed_sr_daily": -0.019948026509766216,
+      "best_variant": "grid_lb90_z2.5",
+      "t": 2708,
+      "skew": 0.8488463337113471,
+      "kurt": 25.970318560075953,
+      "n_trials": 14,
+      "var_trials_daily": 0.00022649212330968057
+    },
+    "maker_10bp": {
+      "observed_sr_daily": -0.023109995691502235,
+      "best_variant": "grid_lb90_z2.5",
+      "t": 2708,
+      "skew": 0.8413343036003851,
+      "kurt": 25.918529548347426,
+      "n_trials": 14,
+      "var_trials_daily": 0.00028281955707296097
+    },
+    "maker_25bp": {
+      "observed_sr_daily": -0.027842674433879677,
+      "best_variant": "grid_lb90_z2.5",
+      "t": 2708,
+      "skew": 0.8286919353069316,
+      "kurt": 25.80528936471763,
+      "n_trials": 14,
+      "var_trials_daily": 0.00038801467232931375
+    },
+    "taker_40bp": {
+      "observed_sr_daily": -0.0325587717051747,
+      "best_variant": "grid_lb90_z2.5",
+      "t": 2708,
+      "skew": 0.814106094612753,
+      "kurt": 25.650503126836803,
+      "n_trials": 14,
+      "var_trials_daily": 0.0005159527602471371
+    }
+  },
+  "betas_by_tier": {
+    "maker_0bp": {
+      "vs_BTC-USD": -0.010635162936679498,
+      "vs_ETH-USD": 0.023023979172689727,
+      "vs_basket_5050": -0.004560847596775686
+    },
+    "maker_10bp": {
+      "vs_BTC-USD": -0.010771165973503857,
+      "vs_ETH-USD": 0.02266474621299788,
+      "vs_basket_5050": -0.004810726960850753
+    },
+    "maker_25bp": {
+      "vs_BTC-USD": -0.010969226001299464,
+      "vs_ETH-USD": 0.022129058519489073,
+      "vs_basket_5050": -0.005180464473171073
+    },
+    "taker_40bp": {
+      "vs_BTC-USD": -0.011160249540028162,
+      "vs_ETH-USD": 0.021596869984572505,
+      "vs_basket_5050": -0.005544372188496187
+    }
+  },
+  "variants": {
+    "grid_lb20_z1.5@maker_0bp": {
+      "total_return": -0.9827518834431623,
+      "cagr": -0.42133726919055026,
+      "sharpe_annual": -1.2031825317707932,
+      "max_drawdown": 0.9862384320697622,
+      "round_trips": 143,
+      "exposure": 0.6164636397194537,
+      "annual_turnover": 88.11665767701453,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 6535.015469970073,
+        "margin": 6572.711433983942
+      }
+    },
+    "grid_lb20_z2@maker_0bp": {
+      "total_return": -0.9660573678138559,
+      "cagr": -0.36607419230138527,
+      "sharpe_annual": -1.0744259751368785,
+      "max_drawdown": 0.969927436049214,
+      "round_trips": 111,
+      "exposure": 0.5197489848652639,
+      "annual_turnover": 72.065785835195,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 7336.536293033798,
+        "margin": 7384.1343055445195
+      }
+    },
+    "grid_lb20_z2.5@maker_0bp": {
+      "total_return": -0.9563362461164351,
+      "cagr": -0.34419418353674713,
+      "sharpe_annual": -1.0723798826228905,
+      "max_drawdown": 0.9613146958436687,
+      "round_trips": 87,
+      "exposure": 0.43078626799557035,
+      "annual_turnover": 60.95460792272462,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 6985.596008917064,
+        "margin": 7035.286751335271
+      }
+    },
+    "grid_lb30_z1.5@maker_0bp": {
+      "total_return": -0.9879438203839492,
+      "cagr": -0.4485962100957158,
+      "sharpe_annual": -1.343124656669626,
+      "max_drawdown": 0.9898298909665539,
+      "round_trips": 95,
+      "exposure": 0.6282761166482097,
+      "annual_turnover": 61.808494797637266,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 6977.704669891633,
+        "margin": 7008.039436817483
+      }
+    },
+    "grid_lb30_z2@maker_0bp": {
+      "total_return": -0.9762790390909943,
+      "cagr": -0.3959516296099034,
+      "sharpe_annual": -1.1811374738064229,
+      "max_drawdown": 0.9792735579514944,
+      "round_trips": 76,
+      "exposure": 0.5526024363233666,
+      "annual_turnover": 51.135052422672544,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 6751.414423077244,
+        "margin": 6782.786217855644
+      }
+    },
+    "grid_lb30_z2.5@maker_0bp": {
+      "total_return": -0.9582772404854926,
+      "cagr": -0.34819979875957074,
+      "sharpe_annual": -1.0545368908901283,
+      "max_drawdown": 0.9661339799927594,
+      "round_trips": 63,
+      "exposure": 0.48874123292727945,
+      "annual_turnover": 43.94804301997132,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 7118.836095112391,
+        "margin": 7155.355480581075
+      }
+    },
+    "grid_lb60_z1.5@maker_0bp": {
+      "total_return": -0.9735572555423373,
+      "cagr": -0.3870461321625581,
+      "sharpe_annual": -1.1046827674456663,
+      "max_drawdown": 0.9748889738102969,
+      "round_trips": 50,
+      "exposure": 0.5710594315245479,
+      "annual_turnover": 37.96543222410814,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 7309.778572554038,
+        "margin": 7335.942253208225
+      }
+    },
+    "grid_lb60_z2@maker_0bp": {
+      "total_return": -0.9481411916570726,
+      "cagr": -0.32881808593977113,
+      "sharpe_annual": -0.9353004112185215,
+      "max_drawdown": 0.9507529220534209,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.31846592232483,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 7874.43053449482,
+        "margin": 7896.46489747719
+      }
+    },
+    "grid_lb60_z2.5@maker_0bp": {
+      "total_return": -0.9289894760256957,
+      "cagr": -0.29978446306832773,
+      "sharpe_annual": -0.871410959998956,
+      "max_drawdown": 0.9325657313231414,
+      "round_trips": 34,
+      "exposure": 0.4485049833887043,
+      "annual_turnover": 28.427268979386135,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 8562.622462080506,
+        "margin": 8586.32993879473
+      }
+    },
+    "grid_lb90_z1.5@maker_0bp": {
+      "total_return": -0.8774317029660421,
+      "cagr": -0.24634660569048128,
+      "sharpe_annual": -0.6045729030925926,
+      "max_drawdown": 0.8938764654528383,
+      "round_trips": 42,
+      "exposure": 0.528608342561831,
+      "annual_turnover": 33.683848789700036,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 11471.8130247586,
+        "margin": 11497.525664185867
+      }
+    },
+    "grid_lb90_z2@maker_0bp": {
+      "total_return": -0.7790503444306942,
+      "cagr": -0.1840704474057927,
+      "sharpe_annual": -0.4377265953041941,
+      "max_drawdown": 0.8163416247315447,
+      "round_trips": 33,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 27.67344368235985,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 13178.733078811709,
+        "margin": 13218.405414870167
+      }
+    },
+    "grid_lb90_z2.5@maker_0bp": {
+      "total_return": -0.6988929914612263,
+      "cagr": -0.1493225892923501,
+      "sharpe_annual": -0.3811065113541522,
+      "max_drawdown": 0.7497130110728818,
+      "round_trips": 25,
+      "exposure": 0.3831672203765227,
+      "annual_turnover": 21.81862477743239,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 15166.660820722078,
+        "margin": 15203.273551661672
+      }
+    },
+    "gross_lw0.25@maker_0bp": {
+      "total_return": -0.4160505572427248,
+      "cagr": -0.06991568539620985,
+      "sharpe_annual": -1.1041126447607363,
+      "max_drawdown": 0.4278205630053878,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 7.728105570862446,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 6808.60636318277,
+        "margin": 0.0
+      }
+    },
+    "gross_lw0.5@maker_0bp": {
+      "total_return": -0.6844246091514226,
+      "cagr": -0.1439263559716546,
+      "sharpe_annual": -0.9071361560981022,
+      "max_drawdown": 0.6963446072488667,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 15.439766315724155,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 9409.120022301206,
+        "margin": 375.7952882324324
+      }
+    },
+    "fill_close@maker_0bp": {
+      "total_return": -0.9477480046126875,
+      "cagr": -0.32813467712760125,
+      "sharpe_annual": -0.9326681901532041,
+      "max_drawdown": 0.9504223095419907,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.29815480230656,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 7904.660162929343,
+        "margin": 7913.793479076177
+      }
+    },
+    "stitch_chained@maker_0bp": {
+      "total_return": -0.9144371924480761,
+      "cagr": -0.2819738090941517,
+      "sharpe_annual": -0.8164653326352866,
+      "max_drawdown": 0.9195908543155614,
+      "round_trips": 52,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 31.56357527159231,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 8499.610779031094,
+        "margin": 8522.801162007498
+      }
+    },
+    "carry_free@maker_0bp": {
+      "total_return": -0.887446618175257,
+      "cagr": -0.2549528054005118,
+      "sharpe_annual": -0.667342581967318,
+      "max_drawdown": 0.8973507474268848,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.602092173567733,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 0.0,
+        "margin": 0.0
+      }
+    },
+    "borrow_0pct@maker_0bp": {
+      "total_return": -0.9236323272643969,
+      "cagr": -0.2928889412935666,
+      "sharpe_annual": -0.8014894193943989,
+      "max_drawdown": 0.9287730604866805,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.454854667031892,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 0.0,
+        "margin": 8934.303730238325
+      }
+    },
+    "borrow_25pct@maker_0bp": {
+      "total_return": -0.9709976044146867,
+      "cagr": -0.3793676769266723,
+      "sharpe_annual": -1.1358664497337034,
+      "max_drawdown": 0.9723857603887257,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.142195927032056,
+      "costs": {
+        "fees": 0.0,
+        "borrow": 16694.506365830923,
+        "margin": 6698.411785350196
+      }
+    },
+    "grid_lb20_z1.5@maker_10bp": {
+      "total_return": -0.9911759832088387,
+      "cagr": -0.47130261223173986,
+      "sharpe_annual": -1.4170685788450426,
+      "max_drawdown": 0.9927458945630894,
+      "round_trips": 143,
+      "exposure": 0.6164636397194537,
+      "annual_turnover": 87.51288647300616,
+      "costs": {
+        "fees": 7653.266811341618,
+        "borrow": 5866.633346201792,
+        "margin": 5900.270882722347
+      }
+    },
+    "grid_lb20_z2@maker_10bp": {
+      "total_return": -0.9799794337696724,
+      "cagr": -0.40959828822882205,
+      "sharpe_annual": -1.2544968507570076,
+      "max_drawdown": 0.9819431946283518,
+      "round_trips": 111,
+      "exposure": 0.5197489848652639,
+      "annual_turnover": 72.05555124641072,
+      "costs": {
+        "fees": 8372.454660659092,
+        "borrow": 6557.542950883575,
+        "margin": 6600.101412553738
+      }
+    },
+    "grid_lb20_z2.5@maker_10bp": {
+      "total_return": -0.9713065084265983,
+      "cagr": -0.3802624601499349,
+      "sharpe_annual": -1.225174099950283,
+      "max_drawdown": 0.9741209722226543,
+      "round_trips": 87,
+      "exposure": 0.43078626799557035,
+      "annual_turnover": 61.29343305682308,
+      "costs": {
+        "fees": 7950.337977170052,
+        "borrow": 6334.976643757502,
+        "margin": 6379.666368892631
+      }
+    },
+    "grid_lb30_z1.5@maker_10bp": {
+      "total_return": -0.9925568070720641,
+      "cagr": -0.48328720054943897,
+      "sharpe_annual": -1.499438337272868,
+      "max_drawdown": 0.9935642860268724,
+      "round_trips": 95,
+      "exposure": 0.6282761166482097,
+      "annual_turnover": 61.42146054529467,
+      "costs": {
+        "fees": 5680.852828968256,
+        "borrow": 6425.6047754278125,
+        "margin": 6452.515135404296
+      }
+    },
+    "grid_lb30_z2@maker_10bp": {
+      "total_return": -0.9840424534200092,
+      "cagr": -0.4273691698563725,
+      "sharpe_annual": -1.3146509184029331,
+      "max_drawdown": 0.9857659442079919,
+      "round_trips": 76,
+      "exposure": 0.5526024363233666,
+      "annual_turnover": 50.910547539506766,
+      "costs": {
+        "fees": 5221.582261864106,
+        "borrow": 6192.14484813447,
+        "margin": 6221.028414146983
+      }
+    },
+    "grid_lb30_z2.5@maker_10bp": {
+      "total_return": -0.9701441870245631,
+      "cagr": -0.37693781324182185,
+      "sharpe_annual": -1.1730283314369632,
+      "max_drawdown": 0.9752690159928283,
+      "round_trips": 63,
+      "exposure": 0.48874123292727945,
+      "annual_turnover": 43.94354689224023,
+      "costs": {
+        "fees": 5511.599279797004,
+        "borrow": 6491.741149446275,
+        "margin": 6525.069952052744
+      }
+    },
+    "grid_lb60_z1.5@maker_10bp": {
+      "total_return": -0.9802557002901265,
+      "cagr": -0.41070259747572313,
+      "sharpe_annual": -1.2013250798341064,
+      "max_drawdown": 0.9812035745428671,
+      "round_trips": 50,
+      "exposure": 0.5710594315245479,
+      "annual_turnover": 37.840524086116005,
+      "costs": {
+        "fees": 4483.875274306153,
+        "borrow": 6808.847873462816,
+        "margin": 6833.36542793137
+      }
+    },
+    "grid_lb60_z2@maker_10bp": {
+      "total_return": -0.9592918644987163,
+      "cagr": -0.3503582652634183,
+      "sharpe_annual": -1.0189980274372061,
+      "max_drawdown": 0.961246159752608,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.229276830310745,
+      "costs": {
+        "fees": 4454.353215621053,
+        "borrow": 7337.756222569376,
+        "margin": 7358.999569657128
+      }
+    },
+    "grid_lb60_z2.5@maker_10bp": {
+      "total_return": -0.9423353106973655,
+      "cagr": -0.319152443148049,
+      "sharpe_annual": -0.9462202611672155,
+      "max_drawdown": 0.9451036465083813,
+      "round_trips": 34,
+      "exposure": 0.4485049833887043,
+      "annual_turnover": 28.468540035839823,
+      "costs": {
+        "fees": 4997.704757188967,
+        "borrow": 8002.689814052646,
+        "margin": 8025.608157921283
+      }
+    },
+    "grid_lb90_z1.5@maker_10bp": {
+      "total_return": -0.9048276008618702,
+      "cagr": -0.27160225258368154,
+      "sharpe_annual": -0.6889776261903575,
+      "max_drawdown": 0.9168655077180777,
+      "round_trips": 42,
+      "exposure": 0.528608342561831,
+      "annual_turnover": 33.53869066567203,
+      "costs": {
+        "fees": 6730.782339287533,
+        "borrow": 10450.679294007043,
+        "margin": 10474.908958723532
+      }
+    },
+    "grid_lb90_z2@maker_10bp": {
+      "total_return": -0.8201305243560282,
+      "cagr": -0.2063739748287272,
+      "sharpe_annual": -0.5092916751621286,
+      "max_drawdown": 0.8491866811188258,
+      "round_trips": 33,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 27.71005189301624,
+      "costs": {
+        "fees": 7525.622296454154,
+        "borrow": 12074.51201564238,
+        "margin": 12111.799164306318
+      }
+    },
+    "grid_lb90_z2.5@maker_10bp": {
+      "total_return": -0.7438052833979432,
+      "cagr": -0.16763641528448237,
+      "sharpe_annual": -0.44151584774994984,
+      "max_drawdown": 0.7851910369900273,
+      "round_trips": 25,
+      "exposure": 0.3831672203765227,
+      "annual_turnover": 21.997502675203133,
+      "costs": {
+        "fees": 8534.8622175664,
+        "borrow": 14060.090722104544,
+        "margin": 14095.463838883246
+      }
+    },
+    "gross_lw0.25@maker_10bp": {
+      "total_return": -0.4488167770368511,
+      "cagr": -0.07712423869009444,
+      "sharpe_annual": -1.1841323287924796,
+      "max_drawdown": 0.4586815972819722,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 7.720484971371288,
+      "costs": {
+        "fees": 3980.7679405466292,
+        "borrow": 6623.587202291631,
+        "margin": 0.0
+      }
+    },
+    "gross_lw0.5@maker_10bp": {
+      "total_return": -0.7191276726671745,
+      "cagr": -0.1572587220291598,
+      "sharpe_annual": -0.9878381933877856,
+      "max_drawdown": 0.7284991548681016,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 15.40749599651922,
+      "costs": {
+        "fees": 5399.388534039996,
+        "borrow": 8945.35831230989,
+        "margin": 359.8377066301151
+      }
+    },
+    "fill_close@maker_10bp": {
+      "total_return": -0.9588975580019765,
+      "cagr": -0.34951396354977315,
+      "sharpe_annual": -1.019237289060639,
+      "max_drawdown": 0.9609071045618099,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.21020342638405,
+      "costs": {
+        "fees": 4480.444222693654,
+        "borrow": 7365.004557455406,
+        "margin": 7374.216115479219
+      }
+    },
+    "stitch_chained@maker_10bp": {
+      "total_return": -0.9326255911228154,
+      "cagr": -0.3047259475345544,
+      "sharpe_annual": -0.9027361378796495,
+      "max_drawdown": 0.9363386505933017,
+      "round_trips": 52,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 31.436125322986474,
+      "costs": {
+        "fees": 5626.243266836103,
+        "borrow": 7841.6065218079075,
+        "margin": 7863.924619825564
+      }
+    },
+    "carry_free@maker_10bp": {
+      "total_return": -0.9116114393345205,
+      "cagr": -0.27882352520804754,
+      "sharpe_annual": -0.7510650056596383,
+      "max_drawdown": 0.918640904976912,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.497968619927185,
+      "costs": {
+        "fees": 5762.735993678763,
+        "borrow": 0.0,
+        "margin": 0.0
+      }
+    },
+    "borrow_0pct@maker_10bp": {
+      "total_return": -0.9400421386569757,
+      "cagr": -0.31556565047813245,
+      "sharpe_annual": -0.8852071231020374,
+      "max_drawdown": 0.9435589124017111,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.35683614727368,
+      "costs": {
+        "fees": 5040.7297697594,
+        "borrow": 0.0,
+        "margin": 8260.780099368343
+      }
+    },
+    "borrow_25pct@maker_10bp": {
+      "total_return": -0.9772402191671589,
+      "cagr": -0.3993087703455881,
+      "sharpe_annual": -1.2195280211115014,
+      "max_drawdown": 0.978282231276675,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.07005446313529,
+      "costs": {
+        "fees": 3763.075662552314,
+        "borrow": 15721.045906042065,
+        "margin": 6308.295941803558
+      }
+    },
+    "grid_lb20_z1.5@maker_25bp": {
+      "total_return": -0.9967806974471066,
+      "cagr": -0.5384639475828503,
+      "sharpe_annual": -1.7339647543828496,
+      "max_drawdown": 0.9972433694825676,
+      "round_trips": 143,
+      "exposure": 0.6164636397194537,
+      "annual_turnover": 86.61974047070647,
+      "costs": {
+        "fees": 16414.168917499468,
+        "borrow": 5115.151717844757,
+        "margin": 5144.1099817798095
+      }
+    },
+    "grid_lb20_z2@maker_25bp": {
+      "total_return": -0.9909516924698686,
+      "cagr": -0.46951155809387424,
+      "sharpe_annual": -1.5217561032757465,
+      "max_drawdown": 0.9916531949238678,
+      "round_trips": 111,
+      "exposure": 0.5197489848652639,
+      "annual_turnover": 72.06302427108604,
+      "costs": {
+        "fees": 17902.96402023458,
+        "borrow": 5668.334155784146,
+        "margin": 5704.921413016722
+      }
+    },
+    "grid_lb20_z2.5@maker_25bp": {
+      "total_return": -0.9847415905919488,
+      "cagr": -0.4308153411195287,
+      "sharpe_annual": -1.4523056373766998,
+      "max_drawdown": 0.9859245541588424,
+      "round_trips": 87,
+      "exposure": 0.43078626799557035,
+      "annual_turnover": 61.808610024502634,
+      "costs": {
+        "fees": 17309.258395991066,
+        "borrow": 5554.9432901601085,
+        "margin": 5593.457645395075
+      }
+    },
+    "grid_lb30_z1.5@maker_25bp": {
+      "total_return": -0.9963965759289488,
+      "cagr": -0.5314009065542562,
+      "sharpe_annual": -1.7316071163121616,
+      "max_drawdown": 0.9967666313914,
+      "round_trips": 95,
+      "exposure": 0.6282761166482097,
+      "annual_turnover": 60.87699315720508,
+      "costs": {
+        "fees": 12511.915602952187,
+        "borrow": 5764.135870258089,
+        "margin": 5786.825790012056
+      }
+    },
+    "grid_lb30_z2@maker_25bp": {
+      "total_return": -0.9912111616760468,
+      "cagr": -0.47158709232320994,
+      "sharpe_annual": -1.513164060952999,
+      "max_drawdown": 0.9919135528611244,
+      "round_trips": 76,
+      "exposure": 0.5526024363233666,
+      "annual_turnover": 50.55287641870314,
+      "costs": {
+        "fees": 11414.640527739684,
+        "borrow": 5525.308316664658,
+        "margin": 5551.025983911339
+      }
+    },
+    "grid_lb30_z2.5@maker_25bp": {
+      "total_return": -0.9819494616271882,
+      "cagr": -0.4177810390434279,
+      "sharpe_annual": -1.3493186100880405,
+      "max_drawdown": 0.9845846308887037,
+      "round_trips": 63,
+      "exposure": 0.48874123292727945,
+      "annual_turnover": 43.90685224561956,
+      "costs": {
+        "fees": 12011.82733245688,
+        "borrow": 5731.655722011593,
+        "margin": 5760.917600725757
+      }
+    },
+    "grid_lb60_z1.5@maker_25bp": {
+      "total_return": -0.9872724652326897,
+      "cagr": -0.444555457729222,
+      "sharpe_annual": -1.345410082135723,
+      "max_drawdown": 0.987838272381346,
+      "round_trips": 50,
+      "exposure": 0.5710594315245479,
+      "annual_turnover": 37.6670195994906,
+      "costs": {
+        "fees": 10069.682250313841,
+        "borrow": 6190.461251305388,
+        "margin": 6212.813286933718
+      }
+    },
+    "grid_lb60_z2@maker_25bp": {
+      "total_return": -0.971712686667036,
+      "cagr": -0.3814517837408443,
+      "sharpe_annual": -1.1439579751579643,
+      "max_drawdown": 0.972970209245516,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.109914067755014,
+      "costs": {
+        "fees": 10030.38997765684,
+        "borrow": 6662.091567518329,
+        "margin": 6682.210015294096
+      }
+    },
+    "grid_lb60_z2.5@maker_25bp": {
+      "total_return": -0.9578286008023748,
+      "cagr": -0.34725983435352104,
+      "sharpe_annual": -1.0579190751270302,
+      "max_drawdown": 0.9597033452862123,
+      "round_trips": 34,
+      "exposure": 0.4485049833887043,
+      "annual_turnover": 28.52969007809644,
+      "costs": {
+        "fees": 11315.557451729886,
+        "borrow": 7283.24941385765,
+        "margin": 7305.035756514521
+      }
+    },
+    "grid_lb90_z1.5@maker_25bp": {
+      "total_return": -0.9349391751037622,
+      "cagr": -0.3079916292384731,
+      "sharpe_annual": -0.8150768715822354,
+      "max_drawdown": 0.942409938998899,
+      "round_trips": 42,
+      "exposure": 0.528608342561831,
+      "annual_turnover": 33.33916758342007,
+      "costs": {
+        "fees": 14724.32839343945,
+        "borrow": 9194.856382613287,
+        "margin": 9217.090399412278
+      }
+    },
+    "grid_lb90_z2@maker_25bp": {
+      "total_return": -0.867974074129643,
+      "cagr": -0.23876090587141985,
+      "sharpe_annual": -0.6163387900396924,
+      "max_drawdown": 0.8878487911703165,
+      "round_trips": 33,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 27.76387121832972,
+      "costs": {
+        "fees": 16634.770687256056,
+        "borrow": 10676.64880288088,
+        "margin": 10710.80511787447
+      }
+    },
+    "grid_lb90_z2.5@maker_25bp": {
+      "total_return": -0.7990319901994274,
+      "cagr": -0.19442484230106127,
+      "sharpe_annual": -0.5319335481667998,
+      "max_drawdown": 0.8292850047440888,
+      "round_trips": 25,
+      "exposure": 0.3831672203765227,
+      "annual_turnover": 22.27264501137765,
+      "costs": {
+        "fees": 19249.19882241523,
+        "borrow": 12605.94988836899,
+        "margin": 12639.56262037643
+      }
+    },
+    "gross_lw0.25@maker_25bp": {
+      "total_return": -0.4945791528286554,
+      "cagr": -0.08783922689286616,
+      "sharpe_annual": -1.3034193555749207,
+      "max_drawdown": 0.5019076004913293,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 7.708886330676099,
+      "costs": {
+        "fees": 9560.880841189286,
+        "borrow": 6359.463768364833,
+        "margin": 0.0
+      }
+    },
+    "gross_lw0.5@maker_25bp": {
+      "total_return": -0.7642090025188994,
+      "cagr": -0.17689206827758341,
+      "sharpe_annual": -1.1082724184105548,
+      "max_drawdown": 0.7705082457146709,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 15.358737077561228,
+      "costs": {
+        "fees": 12540.700873359117,
+        "borrow": 8314.072563569407,
+        "margin": 337.91107666568297
+      }
+    },
+    "fill_close@maker_25bp": {
+      "total_return": -0.9713489250606688,
+      "cagr": -0.3803859759127264,
+      "sharpe_annual": -1.149325346408572,
+      "max_drawdown": 0.9726507565970778,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.0924225743362,
+      "costs": {
+        "fees": 10087.719737181036,
+        "borrow": 6685.60067810665,
+        "margin": 6694.8501572899695
+      }
+    },
+    "stitch_chained@maker_25bp": {
+      "total_return": -0.9529623896235287,
+      "cagr": -0.3375844832706747,
+      "sharpe_annual": -1.0314403411914939,
+      "max_drawdown": 0.9551913892343473,
+      "round_trips": 52,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 31.25934541825677,
+      "costs": {
+        "fees": 12531.462066420154,
+        "borrow": 7010.071100858809,
+        "margin": 7031.149676490311
+      }
+    },
+    "carry_free@maker_25bp": {
+      "total_return": -0.938541807010937,
+      "cagr": -0.3132826698906228,
+      "sharpe_annual": -0.8762053316023062,
+      "max_drawdown": 0.9426395063417617,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.349781250472926,
+      "costs": {
+        "fees": 12721.221654698387,
+        "borrow": 0.0,
+        "margin": 0.0
+      }
+    },
+    "borrow_0pct@maker_25bp": {
+      "total_return": -0.9583249502869516,
+      "cagr": -0.3483002714160339,
+      "sharpe_annual": -1.0102685343652957,
+      "max_drawdown": 0.9602984828870846,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.221410225448516,
+      "costs": {
+        "fees": 11242.677168133447,
+        "borrow": 0.0,
+        "margin": 7419.677645859463
+      }
+    },
+    "borrow_25pct@maker_25bp": {
+      "total_return": -0.9841915592634923,
+      "cagr": -0.428093021292853,
+      "sharpe_annual": -1.344326356014103,
+      "max_drawdown": 0.9848657160370494,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 30.978707629539414,
+      "costs": {
+        "fees": 8584.002199119635,
+        "borrow": 14479.460440520063,
+        "margin": 5810.639091839302
+      }
+    },
+    "grid_lb20_z1.5@taker_40bp": {
+      "total_return": -0.9988300470624746,
+      "cagr": -0.5973047137408346,
+      "sharpe_annual": -2.044760017155123,
+      "max_drawdown": 0.998956397303946,
+      "round_trips": 143,
+      "exposure": 0.6164636397194537,
+      "annual_turnover": 85.73070797862215,
+      "costs": {
+        "fees": 23051.481804195548,
+        "borrow": 4556.254843177406,
+        "margin": 4581.7162560233855
+      }
+    },
+    "grid_lb20_z2@taker_40bp": {
+      "total_return": -0.995923239535958,
+      "cagr": -0.5235434817104532,
+      "sharpe_annual": -1.7845711135003113,
+      "max_drawdown": 0.9961534875637698,
+      "round_trips": 111,
+      "exposure": 0.5197489848652639,
+      "annual_turnover": 72.07621016435148,
+      "costs": {
+        "fees": 25057.893836803352,
+        "borrow": 5004.90869681328,
+        "margin": 5036.922849459475
+      }
+    },
+    "grid_lb20_z2.5@taker_40bp": {
+      "total_return": -0.9919050254556364,
+      "cagr": -0.4774098905426075,
+      "sharpe_annual": -1.6761898135908737,
+      "max_drawdown": 0.9923622146002999,
+      "round_trips": 87,
+      "exposure": 0.43078626799557035,
+      "annual_turnover": 62.30748303129037,
+      "costs": {
+        "fees": 24501.901375966347,
+        "borrow": 4946.311555573784,
+        "margin": 4979.904965506989
+      }
+    },
+    "grid_lb30_z1.5@taker_40bp": {
+      "total_return": -0.9982600239970205,
+      "cagr": -0.5751832254262302,
+      "sharpe_annual": -1.9603265296640258,
+      "max_drawdown": 0.9983812914269881,
+      "round_trips": 95,
+      "exposure": 0.6282761166482097,
+      "annual_turnover": 60.37844301417329,
+      "costs": {
+        "fees": 17926.722164846487,
+        "borrow": 5244.821284203917,
+        "margin": 5264.143824637156
+      }
+    },
+    "grid_lb30_z2@taker_40bp": {
+      "total_return": -0.9951707235997085,
+      "cagr": -0.5125440418496913,
+      "sharpe_annual": -1.7090477510875564,
+      "max_drawdown": 0.9954218253429218,
+      "round_trips": 76,
+      "exposure": 0.5526024363233666,
+      "annual_turnover": 50.183695993244356,
+      "costs": {
+        "fees": 16244.478111956527,
+        "borrow": 5008.317736237066,
+        "margin": 5031.414106510469
+      }
+    },
+    "grid_lb30_z2.5@taker_40bp": {
+      "total_return": -0.9891044545480829,
+      "cagr": -0.4560654435959358,
+      "sharpe_annual": -1.5234664010009713,
+      "max_drawdown": 0.9904061202816328,
+      "round_trips": 63,
+      "exposure": 0.48874123292727945,
+      "annual_turnover": 43.83873948337411,
+      "costs": {
+        "fees": 17002.647191185555,
+        "borrow": 5135.034712510122,
+        "margin": 5160.933815210624
+      }
+    },
+    "grid_lb60_z1.5@taker_40bp": {
+      "total_return": -0.9918054185835016,
+      "cagr": -0.4765480669661808,
+      "sharpe_annual": -1.4881992722290458,
+      "max_drawdown": 0.9921404067113931,
+      "round_trips": 50,
+      "exposure": 0.5710594315245479,
+      "annual_turnover": 37.51349349359745,
+      "costs": {
+        "fees": 14632.822903211189,
+        "borrow": 5694.241883215327,
+        "margin": 5714.736165249174
+      }
+    },
+    "grid_lb60_z2@taker_40bp": {
+      "total_return": -0.9803661706594728,
+      "cagr": -0.4111479214768684,
+      "sharpe_annual": -1.268038490039901,
+      "max_drawdown": 0.9811687869635847,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.010849663373342,
+      "costs": {
+        "fees": 14588.625109067525,
+        "borrow": 6109.914038229202,
+        "margin": 6128.9875455170195
+      }
+    },
+    "grid_lb60_z2.5@taker_40bp": {
+      "total_return": -0.969185960806252,
+      "cagr": -0.37428014309571744,
+      "sharpe_annual": -1.168864512385957,
+      "max_drawdown": 0.9704456150375756,
+      "round_trips": 34,
+      "exposure": 0.4485049833887043,
+      "annual_turnover": 28.59372122634319,
+      "costs": {
+        "fees": 16512.750588805506,
+        "borrow": 6682.203077583598,
+        "margin": 6702.925996684352
+      }
+    },
+    "grid_lb90_z1.5@taker_40bp": {
+      "total_return": -0.9555740759334517,
+      "cagr": -0.342663331256997,
+      "sharpe_annual": -0.9403841083502382,
+      "max_drawdown": 0.9601499686182149,
+      "round_trips": 42,
+      "exposure": 0.528608342561831,
+      "annual_turnover": 33.16529351060523,
+      "costs": {
+        "fees": 20862.693417354116,
+        "borrow": 8197.282604426477,
+        "margin": 8217.76560470549
+      }
+    },
+    "grid_lb90_z2@taker_40bp": {
+      "total_return": -0.9031727096840125,
+      "cagr": -0.26990843520380425,
+      "sharpe_annual": -0.7228844706661994,
+      "max_drawdown": 0.9166657777541356,
+      "round_trips": 33,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 27.815047637781277,
+      "costs": {
+        "fees": 23726.210639218527,
+        "borrow": 9531.263200562707,
+        "margin": 9562.741306710635
+      }
+    },
+    "grid_lb90_z2.5@taker_40bp": {
+      "total_return": -0.8424591181918558,
+      "cagr": -0.2204213661700264,
+      "sharpe_annual": -0.6220344600234257,
+      "max_drawdown": 0.8644127404617774,
+      "round_trips": 25,
+      "exposure": 0.3831672203765227,
+      "annual_turnover": 22.555324631701637,
+      "costs": {
+        "fees": 27907.582044037637,
+        "borrow": 11362.568825674492,
+        "margin": 11394.539402389197
+      }
+    },
+    "gross_lw0.25@taker_40bp": {
+      "total_return": -0.5365728080169129,
+      "cagr": -0.09843786487307626,
+      "sharpe_annual": -1.4216140149761485,
+      "max_drawdown": 0.5419027814071298,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 7.69709982750777,
+      "costs": {
+        "fees": 14705.402553169915,
+        "borrow": 6110.504108915389,
+        "margin": 0.0
+      }
+    },
+    "gross_lw0.5@taker_40bp": {
+      "total_return": -0.8021065490568131,
+      "cagr": -0.19609646504952072,
+      "sharpe_annual": -1.2277702027208357,
+      "max_drawdown": 0.8065789892799078,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 15.31010052338489,
+      "costs": {
+        "fees": 18689.935824662116,
+        "borrow": 7751.40341514551,
+        "margin": 318.12376296867876
+      }
+    },
+    "fill_close@taker_40bp": {
+      "total_return": -0.9800512016169378,
+      "cagr": -0.40988388910854434,
+      "sharpe_annual": -1.2794974513616912,
+      "max_drawdown": 0.9808882643192133,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 30.995056480789593,
+      "costs": {
+        "fees": 14669.83294150646,
+        "borrow": 6130.384178953511,
+        "margin": 6139.610793300802
+      }
+    },
+    "stitch_chained@taker_40bp": {
+      "total_return": -0.9671992361620769,
+      "cagr": -0.36899028677521706,
+      "sharpe_annual": -1.1591231706418206,
+      "max_drawdown": 0.9685401064678953,
+      "round_trips": 52,
+      "exposure": 0.45514950166112955,
+      "annual_turnover": 31.105211423758078,
+      "costs": {
+        "fees": 18029.678406568855,
+        "borrow": 6328.133923544061,
+        "margin": 6348.060382168919
+      }
+    },
+    "carry_free@taker_40bp": {
+      "total_return": -0.9573148983715205,
+      "cagr": -0.3461941212891453,
+      "sharpe_annual": -1.0006340572430759,
+      "max_drawdown": 0.959604123336494,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.21613382954606,
+      "costs": {
+        "fees": 18166.620085524635,
+        "borrow": 0.0,
+        "margin": 0.0
+      }
+    },
+    "borrow_0pct@taker_40bp": {
+      "total_return": -0.9710656031185059,
+      "cagr": -0.37956393428803503,
+      "sharpe_annual": -1.134533847520126,
+      "max_drawdown": 0.9723327045605067,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 31.103871303602485,
+      "costs": {
+        "fees": 16209.151407273457,
+        "borrow": 0.0,
+        "margin": 6739.31151524643
+      }
+    },
+    "borrow_25pct@taker_40bp": {
+      "total_return": -0.9890325014022489,
+      "cagr": -0.45558283636641494,
+      "sharpe_annual": -1.4681181425351524,
+      "max_drawdown": 0.9894655766023249,
+      "round_trips": 40,
+      "exposure": 0.5171650055370985,
+      "annual_turnover": 30.90913393876483,
+      "costs": {
+        "fees": 12631.750970758821,
+        "borrow": 13448.31892697915,
+        "margin": 5397.247124322581
+      }
+    }
+  },
+  "benchmarks": {
+    "BTC-USD@maker_0bp": {
+      "total_return": 10.535977576549984,
+      "cagr": 0.39026321231459526,
+      "sharpe_annual": 0.7814484362754636,
+      "max_drawdown": 0.7663456371029892
+    },
+    "ETH-USD@maker_0bp": {
+      "total_return": 5.033158515140493,
+      "cagr": 0.27399442131957286,
+      "sharpe_annual": 0.6651797624623942,
+      "max_drawdown": 0.824127978244264
+    },
+    "basket_5050@maker_0bp": {
+      "total_return": 7.784568045845239,
+      "cagr": 0.34014927158143804,
+      "sharpe_annual": 0.7197010305869336,
+      "max_drawdown": 0.768367985848973
+    },
+    "BTC-USD@maker_10bp": {
+      "total_return": 10.524453118640203,
+      "cagr": 0.39007599984532626,
+      "sharpe_annual": 0.7812312792420143,
+      "max_drawdown": 0.7663456370644515
+    },
+    "ETH-USD@maker_10bp": {
+      "total_return": 5.0271313836845195,
+      "cagr": 0.2738228656435713,
+      "sharpe_annual": 0.6650185120305987,
+      "max_drawdown": 0.8241279782326842
+    },
+    "basket_5050@maker_10bp": {
+      "total_return": 7.775792251162361,
+      "cagr": 0.3399688074669205,
+      "sharpe_annual": 0.7194998426939474,
+      "max_drawdown": 0.7683679858309916
+    },
+    "BTC-USD@maker_25bp": {
+      "total_return": 10.50720955013742,
+      "cagr": 0.3897955788489662,
+      "sharpe_annual": 0.7809058718564685,
+      "max_drawdown": 0.7663456370825847
+    },
+    "ETH-USD@maker_25bp": {
+      "total_return": 5.018113231960196,
+      "cagr": 0.27356589643834406,
+      "sharpe_annual": 0.6647770201729074,
+      "max_drawdown": 0.8241279782281775
+    },
+    "basket_5050@maker_25bp": {
+      "total_return": 7.762661391048809,
+      "cagr": 0.33969849461686086,
+      "sharpe_annual": 0.7191984409219606,
+      "max_drawdown": 0.7683679858389416
+    },
+    "BTC-USD@taker_40bp": {
+      "total_return": 10.49001750439241,
+      "cagr": 0.3895156335342773,
+      "sharpe_annual": 0.7805808595337543,
+      "max_drawdown": 0.7663456370857868
+    },
+    "ETH-USD@taker_40bp": {
+      "total_return": 5.0091220269730306,
+      "cagr": 0.27330936316274723,
+      "sharpe_annual": 0.6645359883499175,
+      "max_drawdown": 0.8241279782347579
+    },
+    "basket_5050@taker_40bp": {
+      "total_return": 7.749569765682722,
+      "cagr": 0.33942864031256303,
+      "sharpe_annual": 0.7188974955846321,
+      "max_drawdown": 0.768367985840724
+    }
+  }
+}
