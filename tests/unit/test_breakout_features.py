@@ -34,6 +34,7 @@ from backtest_framework.research.trade_diagnostics import (
 from backtest_framework.simulator.fills import Bar
 from backtest_framework.strategies.breakout import (
     BreakoutStrategy,
+    ChannelStopExit,
     Direction,
     PositionState,
     TrendGateFilter,
@@ -73,6 +74,9 @@ def test_short_config_is_explicit_and_round_trips():
         n_exit=10,
         direction=Direction.SHORT,
         filters=(TrendGateFilter(200, direction=Direction.SHORT),),
+        # D169 made the per-trade stop non-optional on the short side, so a short
+        # strategy no longer constructs without one. This test predates that rule.
+        exit_rules=(ChannelStopExit(),),
     )
     config = original.config()
     assert config["direction"] == "short"
@@ -100,7 +104,10 @@ class _View:
 def test_short_channel_logic_mirrors_long_exactly():
     bars = bars_from([10, 11, 12, 13, 14, 15])
     long_side = BreakoutStrategy("s", SYMBOL, n_entry=5, n_exit=3)
-    short_side = BreakoutStrategy("s", SYMBOL, n_entry=5, n_exit=3, direction=Direction.SHORT)
+    short_side = BreakoutStrategy(
+        "s", SYMBOL, n_entry=5, n_exit=3, direction=Direction.SHORT,
+        exit_rules=(ChannelStopExit(),),
+    )
     view = _View(bars, 5)
 
     assert long_side.entry_level(view, 5) == max(b.bar.high for b in bars[0:5])

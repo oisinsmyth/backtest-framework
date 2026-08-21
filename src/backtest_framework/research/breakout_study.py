@@ -97,11 +97,27 @@ class CostTier:
     name: str
     fee_bps: float
     role: str
+    borrow_annual_rate: float = 0.0
+    """Cost of borrowing the coin to sell it short, per year (D169).
+
+    Zero for the long book, where it is not merely negligible but structurally absent —
+    a long spot position borrows nothing, and `BorrowFee` charges only the short side of
+    a signed notional anyway. Non-zero for the short book, where assuming free shorts is
+    the single most result-corrupting choice available: the borrow accrues on ~100% of
+    NAV for the entire life of every trade, and D124 made exactly this point for the
+    pairs book's short leg."""
 
     def cost_stack_config(self) -> dict[str, Any]:
+        # The borrow brick is emitted ONLY when the rate is non-zero, so every long-side
+        # tier hashes exactly as it did before the short book existed (D166's rule).
+        carry_bricks: list[dict[str, Any]] = []
+        if self.borrow_annual_rate:
+            carry_bricks.append(
+                {"type": "borrow_fee", "annual_rate": self.borrow_annual_rate}
+            )
         return {
             "trade_bricks": [{"type": "percent_spread", "bps": self.fee_bps}],
-            "carry_bricks": [],
+            "carry_bricks": carry_bricks,
             "portfolio_carry_bricks": [],
             "event_flow_bricks": [],
         }
@@ -119,6 +135,18 @@ DEFAULT_TIERS: tuple[CostTier, ...] = (
     CostTier("maker_25bp", 25.0, "maker"),
     CostTier("taker_40bp", 40.0, "taker"),
 )
+
+SHORT_BORROW_ANNUAL_RATE = 0.10
+"""10%/yr, the same rate D124 pinned for the crypto pairs book's short leg: mid-range
+for BTC/ETH spot margin borrow on the major venues over the sample. Not a free parameter
+and not swept — it is a stated cost, and the short book is not run without it."""
+
+SHORT_TIERS: tuple[CostTier, ...] = tuple(
+    CostTier(t.name, t.fee_bps, t.role, borrow_annual_rate=SHORT_BORROW_ANNUAL_RATE)
+    for t in DEFAULT_TIERS
+)
+"""The same four fee tiers as the long book, so the fee dimension is directly
+comparable, plus the borrow every short position actually pays."""
 REFERENCE_TIER = "taker_40bp"
 """The tier the headline verdict is read at: a market order into a breakout is a taker
 fill, so this is the honest default and the maker tiers are the sensitivity."""
@@ -281,14 +309,24 @@ def breakout_config(
     n_exit: int = 10,
     weight_source: dict[str, Any] | None = None,
     filters: Sequence[dict[str, Any]] = (),
+    direction: str = "long",
+    exit_rules: Sequence[dict[str, Any]] = (),
 ) -> dict[str, Any]:
-    return {
+    """`direction` and `exit_rules` are emitted only when they differ from the long-flat
+    defaults, so every config this produced before the short side existed still hashes
+    exactly as it did (D166/D169)."""
+    config: dict[str, Any] = {
         "type": "breakout_long_flat",
         "n_entry": n_entry,
         "n_exit": n_exit,
         "weight_source": dict(weight_source or INVERSE_VOL_AT_ENTRY),
         "filters": [dict(f) for f in filters],
     }
+    if direction != "long":
+        config["direction"] = direction
+    if exit_rules:
+        config["exit_rules"] = [dict(r) for r in exit_rules]
+    return config
 
 
 PLATEAU_N_ENTRY: tuple[int, ...] = (20, 30, 40, 55)

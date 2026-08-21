@@ -10,6 +10,40 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (Phase 2 — the breakdown short book, 2026-08-21 — see `BREAKDOWN_RESULTS.md`, D169)
+- **`ExitRule` brick family on the breakout strategy** — the mirror of `EntryFilter`: a
+  filter can only keep you OUT of a trade, an exit rule can only get you OUT of one. The
+  trailing channel stays the safety net underneath every added rule. `exit_rules` is
+  emitted from `config()` only when non-empty, so long-flat configs written before it
+  existed still hash identically.
+- **`ChannelStopExit` and `TimeStopExit`** — the per-trade stop at the entry channel's
+  opposite boundary fixed at entry, and the "not in profit within n bars" exit. Both are
+  signal-level rules measured against the trigger bar's close, because the strategy
+  decides on a close and the engine fills at the next open — it genuinely does not know
+  what it paid.
+- **Tail discipline enforced at construction (D169)** — a SHORT strategy without a
+  `ChannelStopExit`, or with a weight source capping above 1.0, refuses to build. There
+  is no flag that disables either. The long book is deliberately NOT held to this: a
+  long's worst case is the instrument going to zero, a short's has no ceiling.
+- **`CostTier.borrow_annual_rate` + `SHORT_TIERS`** — 10%/yr on short notional (D124's
+  rate). The brick is emitted only when non-zero, so every long-side tier config and
+  trial hash is unchanged.
+- **`research/breakdown_study.py`** — the short book's own sweep ({10,20,30,40} x
+  {3,5,10}, deliberately faster than the long book's), ex-post bull/bear/chop regime
+  slicing, long-vs-short correlation computed INCLUDING flat bars, equal-vol ensemble
+  metrics, an exposure-matched random-entry null that takes a `direction` parameter (the
+  last outstanding D166 forward-compat requirement), and stop-gap measurement.
+- **`scripts/run_breakdown_study.py` + `BREAKDOWN_RESULTS.md`** — 120 out-of-sample
+  trials across 15 variants and 4 tiers on two symbols.
+
+### Known limitation (D169)
+- **The short stop is CLOSE-based, so the squeeze tail is not truncated by construction.**
+  `stop_fill_price` has correct D10 gap semantics but is a Step-2 demonstration vehicle
+  wired only to `config/fill_model.py`, never to `run_backtest`. The study measures the
+  shortfall instead of assuming it away, and the measurement is damning: every stop exit
+  on both symbols filled beyond its own stop, by roughly 18%.
+
+
 ### Added (volume reaches strategy code, 2026-08-21 — closes D111, see D168)
 - **`DataView` carries volume (D168)** — an aligned, optionally-present series
   constructed sliced exactly as bars are, so the look-ahead guarantee is inherited

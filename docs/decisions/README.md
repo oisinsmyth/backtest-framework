@@ -2,7 +2,7 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D169**.
+New decisions are added here going forward — next number is **D170**.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
@@ -157,3 +157,4 @@ written rationale for *why not now*, per R3.
 | [D166](D166-direction-is-omitted-from-config-at-its-default.md) | The breakout brick is sign-parameterized ({long, flat, short} state enum, direction-aware gate) and `direction` is omitted from `config()` at its LONG default so v1 trial hashes survive | Committed | Signals & strategy interface |
 | [D167](D167-at-trigger-features-are-logged-on-an-open-map.md) | At-trigger features live on an open F-numbered map, are computed at the trigger bar (not the entry bar), and unavailable never means imputed | Committed | Diagnostics & reporting |
 | [D168](D168-volume-rides-inside-the-dataview.md) | Volume reaches strategy code inside `DataView` as an aligned sliced series, in three explicitly different states — absent, gapped, and required-but-unwired (loud) | Committed | Signals & strategy interface |
+| [D169](D169-the-short-book-and-its-close-based-stop.md) | The short book ships with a CLOSE-based stop because the engine has no intrabar execution; the gap-through shortfall is measured, tail discipline is enforced at construction, and borrow is charged | Committed | Signals & strategy interface |

@@ -161,6 +161,14 @@ class WeightSource(Protocol):
         ...
 
     @property
+    def cap(self) -> float:
+        """The largest weight this source can ever return, as a fraction of allocated
+        capital. Declared rather than inferred, because the short book's per-trade
+        position cap is non-optional (D169) and a cap that has to be discovered by
+        sampling the output is not a cap."""
+        ...
+
+    @property
     def rebalance(self) -> str:
         """"at_entry" — the weight is computed once when the trade opens and held for
         its life; "every_bar" — recomputed each bar the position is open. The
@@ -195,6 +203,10 @@ class FixedWeight:
     fraction: float = 1.0
     name: str = field(default="fixed", init=False)
     rebalance: str = field(default="every_bar", init=False)
+
+    @property
+    def cap(self) -> float:
+        return self.fraction
 
     def __post_init__(self) -> None:
         if not 0.0 < self.fraction <= 1.0:
@@ -231,6 +243,10 @@ class InverseVolatilityWeight:
     max_weight: float = 1.0
     rebalance: str = "at_entry"
     name: str = field(default="inverse_vol", init=False)
+
+    @property
+    def cap(self) -> float:
+        return self.max_weight
 
     def __post_init__(self) -> None:
         if self.vol_window < 2:
@@ -380,6 +396,110 @@ class TrendGateFilter:
 
 
 @dataclass(frozen=True)
+class OpenPosition:
+    """What an exit rule may know about the trade it is being asked to close.
+
+    `entry_reference` is the TRIGGER BAR'S CLOSE, not the fill price. The strategy
+    decides on a close and the engine fills at the next open (D103), so the strategy
+    genuinely does not know what it paid — and inventing a fill price here would be a
+    false affordance. Every exit rule is therefore a signal-level rule measured against
+    the information the strategy actually had."""
+
+    state: PositionState
+    entry_index: int
+    entry_reference: float
+    stop_level: float
+
+    @property
+    def direction(self) -> int:
+        return int(self.state)
+
+
+class ExitRule(Protocol):
+    """A condition that closes an open position, consulted alongside the trailing
+    channel exit. Any rule firing closes the trade; the channel exit remains the
+    safety net underneath them all.
+
+    Exit rules are the mirror of EntryFilter: a filter can only keep you OUT of a
+    trade, an exit rule can only get you OUT of one. Neither can do the other's job."""
+
+    @property
+    def name(self) -> str: ...
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int: ...
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool: ...
+
+    def config(self) -> dict[str, Any]: ...
+
+
+@dataclass(frozen=True)
+class ChannelStopExit:
+    """Hard per-trade stop at the entry channel's OPPOSITE boundary, fixed at entry.
+
+    For a short entering below an n_entry-bar low, the stop sits at the n_entry-bar
+    HIGH measured at the trigger bar — the top of the channel whose floor just broke.
+    Mechanical, unambiguous, and exactly what BREAKDOWN_SHORT_STRATEGY.md specifies.
+    Symmetric for a long, though the long book does not require it.
+
+    **This is a CLOSE-BASED stop, and that is a real limitation, not a detail (D169).**
+    The engine has no intrabar stop execution: `simulator/fills.stop_fill_price` exists
+    with correct D10 gap semantics and is explicitly a Step-2 demonstration vehicle
+    wired only to `config/fill_model.py`, never to `run_backtest`. So this rule can only
+    observe a CLOSE beyond the stop and exit at the NEXT OPEN. An overnight gap goes
+    straight through it and fills wherever the next open lands.
+
+    The consequence must be stated rather than assumed: the squeeze tail is **not**
+    truncated by construction, which is the premise the brief's "short expectancy is
+    only calculable with the tail truncated" rests on. The study therefore MEASURES the
+    gap — stop level versus realised fill on every stop exit — so the shortfall is a
+    reported number instead of an unstated assumption."""
+
+    name: str = field(default="channel_stop", init=False)
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return n_entry
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        if view.current_index <= position.entry_index:
+            return False  # never on the decision bar itself
+        return _beyond(view[view.current_index].close, position.stop_level, -position.direction)
+
+    def config(self) -> dict[str, Any]:
+        return {"type": "channel_stop"}
+
+
+@dataclass(frozen=True)
+class TimeStopExit:
+    """Exit a position that has not moved in its favour within `n_bars` of entry.
+
+    Rationale from the brief: a short not in profit within roughly 3-5 bars is carrying
+    squeeze risk for no compensation, and stagnation is information. Measured against
+    the trigger bar's close, for the same reason `OpenPosition` carries a reference
+    rather than a fill price."""
+
+    n_bars: int = 5
+    name: str = field(default="time_stop", init=False)
+
+    def __post_init__(self) -> None:
+        if self.n_bars < 1:
+            raise ValueError(f"n_bars must be at least 1, got {self.n_bars}")
+
+    def warm_up_bars(self, n_entry: int, n_exit: int) -> int:
+        return 0
+
+    def exits(self, view: DataView, position: OpenPosition) -> bool:
+        i = view.current_index
+        if i - position.entry_index < self.n_bars:
+            return False
+        # "In profit" means the price has moved IN the trade's direction since entry.
+        return not _beyond(view[i].close, position.entry_reference, position.direction)
+
+    def config(self) -> dict[str, Any]:
+        return {"type": "time_stop", "n_bars": self.n_bars}
+
+
+@dataclass(frozen=True)
 class VolumeConfirmationFilter:
     """Volume confirmation: accept a trigger only when the trigger bar's volume exceeds
     `multiple` times the mean volume over the preceding `window` bars.
@@ -473,10 +593,14 @@ class BreakoutStrategy:
     direction: Direction = Direction.LONG
     weight_source: WeightSource = field(default_factory=lambda: FixedWeight(1.0))
     filters: tuple[EntryFilter, ...] = ()
+    exit_rules: tuple[ExitRule, ...] = ()
 
     _state: PositionState = field(default=PositionState.FLAT, init=False, repr=False)
     _held_weight: float = field(default=0.0, init=False, repr=False)
     _checked_volume: bool = field(default=False, init=False, repr=False)
+    _entry_index: int = field(default=-1, init=False, repr=False)
+    _entry_reference: float = field(default=0.0, init=False, repr=False)
+    _stop_level: float = field(default=0.0, init=False, repr=False)
 
     def __post_init__(self) -> None:
         if self.n_entry < 1 or self.n_exit < 1:
@@ -490,6 +614,36 @@ class BreakoutStrategy:
         names = [f.name for f in self.filters]
         if len(names) != len(set(names)):
             raise ValueError(f"duplicate filter names {names} — each filter may appear at most once")
+        exit_names = [r.name for r in self.exit_rules]
+        if len(exit_names) != len(set(exit_names)):
+            raise ValueError(
+                f"duplicate exit rule names {exit_names} — each rule may appear at most once"
+            )
+
+        # TAIL DISCIPLINE IS NON-OPTIONAL ON THE SHORT SIDE (D169).
+        #
+        # BREAKDOWN_SHORT_STRATEGY.md: "hard per-trade stop above the entry channel
+        # high; per-trade position cap. Short expectancy is only calculable with the
+        # squeeze tail truncated by construction. No configuration may disable these."
+        #
+        # A short's loss is unbounded in a way a long's is not: the long book's worst
+        # case is the instrument going to zero, the short book's worst case has no
+        # ceiling at all. So this is enforced at construction and there is deliberately
+        # no flag to turn it off — a config that omits the stop does not run.
+        if self.direction is Direction.SHORT:
+            if not any(isinstance(r, ChannelStopExit) for r in self.exit_rules):
+                raise ValueError(
+                    "a SHORT breakout strategy must carry a ChannelStopExit — the per-trade "
+                    "stop is non-optional tail discipline, not a configurable filter "
+                    "(BREAKDOWN_SHORT_STRATEGY.md, D169). Refusing to construct an unprotected "
+                    "short book"
+                )
+            if self.weight_source.cap > 1.0:
+                raise ValueError(
+                    f"a SHORT breakout strategy may not be levered: weight source "
+                    f"{self.weight_source.name!r} caps at {self.weight_source.cap}, above the "
+                    "1.0 per-trade position cap (D169)"
+                )
 
     # ---- signal primitives, both strictly over COMPLETED bars before the current one
 
@@ -516,6 +670,8 @@ class BreakoutStrategy:
         required = max(required, self.weight_source.warm_up_bars())
         for f in self.filters:
             required = max(required, f.warm_up_bars(self.n_entry, self.n_exit))
+        for r in self.exit_rules:
+            required = max(required, r.warm_up_bars(self.n_entry, self.n_exit))
         return required
 
     # ---- the D27 interface
@@ -531,8 +687,18 @@ class BreakoutStrategy:
             return self._targets(0.0)
 
         if self._state is not PositionState.FLAT:
-            if self.exit_condition(view, i):
+            position = OpenPosition(
+                state=self._state,
+                entry_index=self._entry_index,
+                entry_reference=self._entry_reference,
+                stop_level=self._stop_level,
+            )
+            # The trailing channel remains the safety net UNDERNEATH every added rule:
+            # any one of them firing closes the trade, so a rule can only ever make the
+            # book flatter, never keep it in a position the channel wanted out of.
+            if self.exit_condition(view, i) or any(r.exits(view, position) for r in self.exit_rules):
                 self._state, self._held_weight = PositionState.FLAT, 0.0
+                self._entry_index = -1
             elif self.weight_source.rebalance == "every_bar":
                 w = self.weight_source.weight(view)
                 if w is not None:
@@ -544,6 +710,11 @@ class BreakoutStrategy:
             if w is not None and w > 0.0:
                 self._state = PositionState(int(self.direction))
                 self._held_weight = w
+                self._entry_index = i
+                self._entry_reference = view[i].close
+                # The stop is the entry channel's opposite boundary, fixed at entry:
+                # max(high) over the entry window for a short, min(low) for a long.
+                self._stop_level = _channel_extreme(view, i - self.n_entry, i, -self.direction)
 
         # The state IS the sign, so a short book emits a negative target weight with
         # no branch here. `_held_weight` stays a magnitude in every state.
@@ -586,6 +757,11 @@ class BreakoutStrategy:
             "weight_source": self.weight_source.config(),
             "filters": [f.config() for f in self.filters],
         }
+        # Emitted only when non-empty, so every long-flat config produced before exit
+        # rules existed still hashes identically (the same compatibility rule D166
+        # applies to `direction`).
+        if self.exit_rules:
+            config["exit_rules"] = [r.config() for r in self.exit_rules]
         # `direction` is emitted only when it is not the LONG default, so every
         # config a long-flat run produces hashes exactly as it did before the sign
         # parameterization existed and the v1 trial registry stays comparable
@@ -658,6 +834,12 @@ ENTRY_FILTER_REGISTRY.register(
     ),
 )
 
+EXIT_RULE_REGISTRY = FactoryRegistry(kind="exit_rule")
+EXIT_RULE_REGISTRY.register("channel_stop", lambda c: ChannelStopExit())
+EXIT_RULE_REGISTRY.register(
+    "time_stop", lambda c: TimeStopExit(n_bars=_required_int(c, "n_bars", "time_stop"))
+)
+
 WEIGHT_SOURCE_REGISTRY = FactoryRegistry(kind="weight_source")
 WEIGHT_SOURCE_REGISTRY.register(
     "fixed_weight", lambda c: FixedWeight(fraction=_optional_number(c, "fraction", 1.0, "fixed_weight"))
@@ -682,6 +864,10 @@ def build_weight_source(config: dict[str, Any]) -> WeightSource:
     return WEIGHT_SOURCE_REGISTRY.build(config)
 
 
+def build_exit_rule(config: dict[str, Any]) -> ExitRule:
+    return EXIT_RULE_REGISTRY.build(config)
+
+
 def build_breakout_strategy(
     config: dict[str, Any], strategy_id: str, instrument_id: str
 ) -> BreakoutStrategy:
@@ -700,4 +886,5 @@ def build_breakout_strategy(
         direction=_direction(config, "breakout_long_flat"),
         weight_source=build_weight_source(config["weight_source"]),
         filters=tuple(build_entry_filter(f) for f in filters),
+        exit_rules=tuple(build_exit_rule(r) for r in config.get("exit_rules", [])),
     )
