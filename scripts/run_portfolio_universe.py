@@ -57,6 +57,21 @@ NL = "\n"
 
 ARMS = ("long", "short")
 
+COST_BPS = (0.0, 10.0, 25.0, 40.0)
+"""One-way cost charged on portfolio turnover, in basis points.
+
+The same four levels as `bs.DEFAULT_TIERS` — maker 0/10/25 and taker 40 — so the
+rebalancing charge is read on the ladder the rest of the project already uses, rather than
+on a number invented for this study. `taker_40bp` is the reference tier and the honest
+default: moving capital between small-cap alts on a daily schedule is a taker fill."""
+
+D184_ARTIFACTS = {("HT-USD", "2025-03-12"), ("AAVE-USD", "2020-10-03")}
+"""Two unrecorded corporate actions (D184), neutralised in the BENCHMARK only.
+
+HT-USD printed +3,398,300% on a price-scale defect; AAVE-USD +10,189% on the LEND->AAVE
+100:1 migration. Left in, the equal-weight benchmark reads +102,682,123%. The strategy is
+untouched by both — next-open fills (D103) mean a one-bar gap cannot be entered."""
+
 
 def variant_for(arm: str) -> bs.Variant:
     """Both published baselines, reused rather than re-derived (D141). The long arm IS
@@ -146,12 +161,105 @@ def main() -> int:
             progress=lambda m: None,
         )
 
-    payload = build_payload(runs, cohorts, snapshot_id, study)
+    payload = build_payload(runs, cohorts, snapshot_id, study, snapshot.bars_by_symbol)
     SUMMARY_JSON.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     RESULTS.write_text(build_report(payload), encoding="utf-8")
     print(f"built the portfolio over {payload['n_dates']:,} dates in {time.time() - started:.0f}s")
     print(f"wrote {RESULTS.name} and {SUMMARY_JSON.name}")
     return 0
+
+
+def _equal_weight_arm(
+    dates: list[str], per_symbol: dict[str, dict[str, float]]
+) -> tuple[list[float], list[float]]:
+    """Equal-weight the live books each date, and measure the TURNOVER that requires.
+
+    Returns (gross return series, one-way turnover series). This is the cost D183 did not
+    charge and named as the test of its own result.
+
+    Where the turnover comes from. Each date opens with capital split equally across the
+    live books. Over the day each book's slice grows by its own return, so the slices
+    drift apart; restoring equal weight means selling the winners and buying the losers.
+    Books entering or leaving the live set are a full slice traded either way.
+
+    One-way turnover is `0.5 * sum |drifted weight - target weight|` — the standard
+    convention, counting the value that changes hands once rather than double-counting
+    each sale against its matching purchase.
+
+    **A book that is flat holds cash, and moving cash between books is free.** A flat book
+    reports exactly 0.0, so its slice does not drift and it contributes turnover only
+    through the denominator — which is the correct treatment and not an approximation.
+    What IS approximate: when a flat book joins or leaves the live set its whole slice is
+    counted as traded, though it was cash. That over-charges, and over-charging is the
+    right direction for a test built to threaten a result."""
+    gross: list[float] = []
+    turn: list[float] = []
+    prev_weights: dict[str, float] = {}
+    for d in dates:
+        live = {s: r[d] for s, r in per_symbol.items() if d in r}
+        if not live:
+            gross.append(0.0)
+            # Capital that was deployed is now in nothing: unwinding is a real trade.
+            turn.append(0.5 * sum(abs(w) for w in prev_weights.values()))
+            prev_weights = {}
+            continue
+        target = 1.0 / len(live)
+        # Value each slice carries into the date. A book that was not held yesterday
+        # starts from zero and has to be bought.
+        value = {s: prev_weights.get(s, 0.0) * (1.0 + r) for s, r in live.items()}
+        for s, w in prev_weights.items():
+            if s not in live:
+                value[s] = w  # dropped out; the slice is still there and must be sold
+        total = sum(value.values())
+        invested = sum(prev_weights.values())
+        gross.append(total / invested - 1.0 if invested > 0 else 0.0)
+        drifted = (
+            {s: v / total for s, v in value.items()} if total > 0
+            else {s: 0.0 for s in value}
+        )
+        turn.append(
+            0.5 * sum(abs(drifted.get(s, 0.0) - (target if s in live else 0.0))
+                      for s in set(drifted) | set(live))
+        )
+        prev_weights = {s: target for s in live}
+    return gross, turn
+
+
+def _charge(gross: list[float], turnover: list[float], bps: float) -> list[float]:
+    """Net returns after a one-way cost of `bps` on each unit of turnover."""
+    rate = bps / 10_000.0
+    return [g - t * rate for g, t in zip(gross, turnover)]
+
+
+def _breakeven(
+    s_gross: list[float], s_turn: list[float],
+    b_gross: list[float], b_turn: list[float],
+    w: int, study: bs.BreakoutStudyConfig,
+) -> float | None:
+    """The cost at which the strategy's Sharpe EDGE over the benchmark reaches zero.
+
+    Both sides are charged the same rate. The benchmark holds every coin every day and so
+    turns over more, which means a rising cost hurts it faster — the edge can therefore
+    WIDEN with cost rather than narrow, and the honest answer is then "there isn't one".
+
+    Bisection on a monotone-in-practice function, not a solve: if the edge is already
+    negative at zero cost, or still positive at 1000bp, that is reported rather than
+    interpolated into a number that does not exist."""
+    def edge(bps: float) -> float:
+        a = bs.sharpe(_charge(s_gross, s_turn, bps)[w:], study.rf_annual, study.periods_per_year)
+        b = bs.sharpe(_charge(b_gross, b_turn, bps)[w:], study.rf_annual, study.periods_per_year)
+        return a - b
+
+    lo, hi = 0.0, 1000.0
+    if edge(lo) <= 0.0 or edge(hi) > 0.0:
+        return None
+    for _ in range(60):
+        mid = (lo + hi) / 2.0
+        if edge(mid) > 0.0:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2.0
 
 
 def _stats(returns: list[float], study: bs.BreakoutStudyConfig) -> dict[str, float]:
@@ -168,7 +276,7 @@ def _stats(returns: list[float], study: bs.BreakoutStudyConfig) -> dict[str, flo
     }
 
 
-def build_payload(runs, cohorts, snapshot_id, study) -> dict:
+def build_payload(runs, cohorts, snapshot_id, study, bars_by_symbol) -> dict:
     # ---- per-symbol dated series, per arm -----------------------------------------
     series: dict[str, dict[str, dict[str, float]]] = {arm: {} for arm in ARMS}
     per_symbol: dict[str, dict[str, Any]] = {}
@@ -194,22 +302,35 @@ def build_payload(runs, cohorts, snapshot_id, study) -> dict:
     dates = sorted({d for arm in ARMS for s in series[arm].values() for d in s})
     breadth: list[tuple[str, int, int]] = []
     arm_series: dict[str, list[float]] = {arm: [] for arm in ARMS}
+    turnover: dict[str, list[float]] = {arm: [] for arm in ARMS}
+    for arm in ARMS:
+        arm_series[arm], turnover[arm] = _equal_weight_arm(dates, series[arm])
     for d in dates:
-        counts = {}
-        for arm in ARMS:
-            live = [s[d] for s in series[arm].values() if d in s]
-            counts[arm] = len(live)
-            # Equal weight across every coin live on the date; a date with nothing live
-            # earns zero rather than being dropped, so the two arms stay aligned and the
-            # flat periods are counted honestly.
-            arm_series[arm].append(statistics.fmean(live) if live else 0.0)
-        breadth.append((d, counts["long"], counts["short"]))
+        breadth.append(
+            (d, sum(1 for s in series["long"].values() if d in s),
+             sum(1 for s in series["short"].values() if d in s))
+        )
 
     ens = ds.combine_books(
         arm_series["long"], arm_series["short"], study.rf_annual, study.periods_per_year
     )
     combined = ds.combined_series(arm_series["long"], arm_series["short"])
     w = ds.ENSEMBLE_MIN_BARS
+
+    # ---- benchmarks, charged the SAME way -----------------------------------------
+    # Charging the strategy and not the benchmark would rig the comparison: the
+    # equal-weight universe rebalances daily too, holds every coin all the time, and
+    # therefore turns over far more.
+    bench_raw = {}
+    for symbol, bars in bars_by_symbol.items():
+        r = {}
+        for a, b in zip(bars, bars[1:]):
+            d = b.timestamp.date().isoformat()
+            if a.bar.close > 0 and (symbol, d) not in D184_ARTIFACTS:
+                r[d] = b.bar.close / a.bar.close - 1.0
+        bench_raw[symbol] = r
+    ew_gross, ew_turn = _equal_weight_arm(dates, bench_raw)
+    btc_gross = [bench_raw.get("BTC-USD", {}).get(d, 0.0) for d in dates]
 
     portfolio = {
         # Scored on the same post-warm-up span as the combination, so all three are
@@ -221,6 +342,25 @@ def build_payload(runs, cohorts, snapshot_id, study) -> dict:
         "mean_long_weight": ens.mean_long_weight,
         "n_fallback_bars": ens.n_fallback_bars,
     }
+    # ---- the rebalancing cost D183 named as the test of its own result -------------
+    costed: dict[str, Any] = {"tiers": list(COST_BPS), "rows": {}}
+    for label, gross, turn in (
+        ("strategy_long", arm_series["long"], turnover["long"]),
+        ("benchmark_ew", ew_gross, ew_turn),
+        # Buy and hold turns over once at the start and never again; charging it the same
+        # daily rate would invent a cost it does not pay.
+        ("benchmark_btc", btc_gross, [0.0] * len(btc_gross)),
+    ):
+        costed["rows"][label] = {
+            "mean_daily_turnover": statistics.fmean(turn[w:]) if len(turn) > w else 0.0,
+            "annual_turnover": (statistics.fmean(turn[w:]) * 365.0) if len(turn) > w else 0.0,
+            "net": {
+                str(bps): _stats(_charge(gross, turn, bps)[w:], study) for bps in COST_BPS
+            },
+        }
+    costed["breakeven_bps"] = _breakeven(
+        arm_series["long"], turnover["long"], ew_gross, ew_turn, w, study
+    )
     single = {
         arm: {
             "median_sharpe": statistics.median(
@@ -246,6 +386,7 @@ def build_payload(runs, cohorts, snapshot_id, study) -> dict:
         "first_date": dates[0],
         "last_date": dates[-1],
         "portfolio": portfolio,
+        "costed": costed,
         "single_symbol": single,
         "breadth": breadth,
         # The study's actual output. Without it, every follow-up question needs a full
@@ -309,6 +450,8 @@ are excluded from every figure, all three arms alike.
 {_breadth_block(p)}
 
 {_breadth_conditional(p)}
+
+{_cost_block(p)}
 
 {_weight_block(p)}
 
@@ -397,6 +540,77 @@ walk-forward.
 half the time and the short book far less, so the number of positions actually held is
 materially below these counts. That matters for whether daily equal-weighting across coins
 is a realistic construction, and this study does not answer it."""
+
+
+def _cost_block(p: dict) -> str:
+    """The rebalancing cost D183 named as the test of its own result."""
+    c = p.get("costed")
+    if not c:
+        return ""
+    labels = {
+        "strategy_long": "**LONG portfolio (strategy)**",
+        "benchmark_ew": "Equal-weight universe",
+        "benchmark_btc": "BTC buy & hold",
+    }
+    header = ("| Book | Annual turnover | " + " | ".join(f"{int(b)} bp" for b in c["tiers"])
+              + " |" + NL + "|---|---|" + "---|" * len(c["tiers"]))
+    rows = []
+    for key, lab in labels.items():
+        r = c["rows"][key]
+        cells = " | ".join(f"{r['net'][str(b)]['sharpe']:+.3f}" for b in c["tiers"])
+        rows.append(f"| {lab} | {r['annual_turnover']:.1f}x | {cells} |")
+    be = c.get("breakeven_bps")
+    strat = c["rows"]["strategy_long"]["net"]
+    bench = c["rows"]["benchmark_ew"]["net"]
+    edges = " · ".join(
+        f"{int(b)}bp **{strat[str(b)]['sharpe'] - bench[str(b)]['sharpe']:+.3f}**"
+        for b in c["tiers"]
+    )
+    if be is None:
+        e0 = strat["0.0"]["sharpe"] - bench["0.0"]["sharpe"]
+        verdict = (
+            "**There is no break-even cost.** "
+            + (
+                "The edge is already negative before any cost is charged, so the "
+                "strategy never beat the benchmark on a like-for-like basis."
+                if e0 <= 0
+                else "The edge is still positive at 1000bp, because the benchmark holds "
+                "every coin every day and turns over far more — so a rising cost hurts "
+                "the benchmark faster than it hurts the strategy, and the gap WIDENS. "
+                "That is a real property of a book that sits in cash half the time, and "
+                "it is not a licence to ignore the cost: the strategy's own absolute "
+                "return still falls at every tier."
+            )
+        )
+    else:
+        verdict = (
+            f"**The edge breaks even at {be:.0f} bp** of one-way cost per unit of "
+            f"turnover. Below that the strategy beats the equal-weight universe on a "
+            f"like-for-like basis; above it, it does not."
+        )
+    return f"""## Charging the rebalancing cost
+
+D183 charged nothing for moving capital between coins and named that as the test of its own
+result. This charges it — **on the benchmark too**, because the equal-weight universe
+rebalances daily as well and charging only the strategy would rig the comparison.
+
+Turnover is one-way, `0.5 * sum |drifted weight - target weight|`, and buy-and-hold is
+charged nothing after its initial purchase because it does not trade again.
+
+Net Sharpe at each cost level:
+
+{header}
+{NL.join(rows)}
+
+Strategy edge over the equal-weight universe: {edges}.
+
+{verdict}
+
+**A flat book holds cash and moving cash is free**, which the turnover measure gets right
+on its own: a flat book reports exactly 0.0, so its slice does not drift. What is still
+over-charged is a flat book joining or leaving the live set, counted as a full slice
+traded when it was cash — and over-charging is the right direction for a test built to
+threaten a result."""
 
 
 def _weight_block(p: dict) -> str:
