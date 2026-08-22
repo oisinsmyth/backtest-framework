@@ -28,14 +28,14 @@ import hashlib
 import json
 import shutil
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Mapping, Sequence
 
 from .bars import TimestampedBar
 from .cleaner import CleaningReport
 from .corporate_actions import CorporateActions, load_events_json, save_events_json
-from .csv_fixture import load_fixture_csv_with_volumes, save_fixture_csv
+from .csv_fixture import load_fixture_csv_with_extras, save_fixture_csv
 from .validator import ValidationResult
 
 
@@ -54,6 +54,10 @@ class Snapshot:
     volumes_by_symbol: dict[str, list[float]]
     actions: CorporateActions
     meta: dict
+    extras: dict[str, dict[str, list[float]]] = field(default_factory=dict)
+    """`extras` carries provider columns beyond the standard seven — Binance klines
+    report base volume, quote volume and taker-buy volume separately (D190). It defaults
+    to empty, so every snapshot frozen before the column existed loads unchanged."""
 
 
 class SnapshotStore:
@@ -69,11 +73,14 @@ class SnapshotStore:
         cleaning_report: CleaningReport | None = None,
         validation: ValidationResult | None = None,
         extra_meta: dict | None = None,
+        extra_columns: Mapping[str, Mapping[str, Sequence[float]]] | None = None,
     ) -> str:
         staging = self.root / f"_staging_{uuid.uuid4().hex}"
         staging.mkdir()
         try:
-            save_fixture_csv(staging / "bars.csv", bars_by_symbol, volumes_by_symbol)
+            save_fixture_csv(
+                staging / "bars.csv", bars_by_symbol, volumes_by_symbol, extra_columns
+            )
             save_events_json(staging / "events.json", actions)
 
             snapshot_id = _hash_payload(staging)
@@ -124,13 +131,14 @@ class SnapshotStore:
                 "pass allow_quarantined=True only for inspection, never for a run"
             )
 
-        bars, volumes = load_fixture_csv_with_volumes(directory / "bars.csv")
+        bars, volumes, extras = load_fixture_csv_with_extras(directory / "bars.csv")
         return Snapshot(
             snapshot_id=snapshot_id,
             bars_by_symbol=bars,
             volumes_by_symbol=volumes,
             actions=load_events_json(directory / "events.json"),
             meta=meta,
+            extras=extras,
         )
 
 

@@ -27,6 +27,7 @@ from backtest_framework.data.binance_archive import (
     detect_timestamp_unit,
     gap_census,
     month_sequence,
+    offgrid_census,
     parse_klines,
     parse_listing,
     resample_to_daily,
@@ -399,3 +400,46 @@ def test_real_archive_month_parses_and_verifies():
     for tb in parsed.bars:
         assert tb.bar.low <= tb.bar.open <= tb.bar.high
         assert tb.bar.low <= tb.bar.close <= tb.bar.high
+
+
+# ---------------------------------------------------------------- off-grid census (D193)
+
+
+def test_offgrid_census_finds_a_constant_clock_skew():
+    """The real occurrence: 2017-12-04 to 2017-12-18, every BTCUSDT 1m bar stamped
+    20.799s past the minute. A constant offset, not jitter, and 20,401 bars of it."""
+    base = 1512345600000  # 2017-12-04 00:00 UTC
+    skew = 20_799
+    text = "".join(_bar_row(base + skew + m * 60_000) for m in range(5))
+    parsed = parse_klines(text)
+    census = offgrid_census(parsed.bars, 1)
+    assert census.bars == 5
+    assert census.residual_seconds == (20.799,)
+    assert len(census.days) == 1
+
+
+def test_offgrid_census_is_empty_on_an_aligned_series():
+    parsed = parse_klines(_MS_ROWS)
+    census = offgrid_census(parsed.bars, 1)
+    assert census.bars == 0 and census.days == [] and census.residual_seconds == ()
+
+
+def test_offgrid_census_counts_per_day_and_reports_the_span():
+    base = 1512345600000
+    text = "".join(
+        _bar_row(base + 20_799 + d * 86_400_000 + m * 60_000)
+        for d in range(3)
+        for m in range(2)
+    )
+    census = offgrid_census(parse_klines(text).bars, 1)
+    assert len(census.days) == 3
+    assert census.bars == 6
+    assert all(n == 2 for n in census.bars_by_day.values())
+
+
+def test_a_bar_on_the_minute_but_off_a_fifteen_minute_grid_counts_as_offgrid():
+    """The census is relative to the target interval, not to the minute."""
+    parsed = parse_klines(_MS_ROWS)  # 00:00 and 00:01
+    census = offgrid_census(parsed.bars, 15)
+    assert census.bars == 1  # 00:01 is off the 15m grid, 00:00 is on it
+    assert census.residual_seconds == (60.0,)

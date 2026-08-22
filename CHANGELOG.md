@@ -10,6 +10,66 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (BinanceDataSource and the first non-yfinance fixture, 2026-08-23 — D193)
+- `data/binance_source.py` — assembles monthly 1m archives into a continuous series behind
+  `get_raw_history`, the seam every fetch script uses. Verifies each archive against its
+  published SHA256 **on every run including cache hits** and raises on mismatch; calls
+  `dedupe_seam` at the monthly joins, which is the caller that function was committed
+  without. Caches under `data/raw/` (already gitignored).
+- `scripts/fetch_binance_fixture.py` + `data/fixtures/crypto_binance_15m_raw.csv.gz` —
+  BTCUSDT/ETHUSDT (matching D189) and XEMUSDT/BTGUSDT (delisted, carrying the empty-bar
+  problem), 1m resampled to 15m through D161's existing contract. Refuses to write a
+  partial fixture unless `--allow-partial`.
+- `data/manifests/binance_1m_majors.json` — D191's committed artifact: 279 archives with
+  the provider's own SHA256. The 1m base (486 MB cached) is not committed.
+- `save_fixture_csv` gained an optional `extra_columns`, threaded through
+  `SnapshotStore.create` to `Snapshot.extras`, so the fixture carries base volume, quote
+  volume and taker-buy volume side by side rather than deriving one from another (D187).
+
+### Findings
+- **A second provider defect, caught by D161's alignment guard on the first real run.**
+  From 2017-12-04 06:00:20.799 to 2017-12-18 10:00:20.799 every `BTCUSDT` 1m bar is
+  stamped exactly 20.799 seconds past the minute — a constant clock skew, not jitter.
+  `ETHUSDT` carries 20.810s; a second episode at ~14.79s runs into February 2018. 17 days
+  and 21,602 bars per symbol. The bars are **dropped, not snapped**: a bar labelled
+  00:00:20.799 could describe [00:00, 00:01) or [00:00:20.8, 00:01:20.8) and the archive
+  does not say which, so rewriting the timestamp would be inventing the answer (D25).
+- **The first fix for it was wrong, and the gate caught that too.** Dropping the off-grid
+  days made 2017-12-03 and 2017-12-19 adjacent, so fifteen days of the December 2017 rally
+  arrived as one bar and the validator correctly called it +69.0% on BTC / +68.4% on ETH.
+  The drop policy manufactured the violation. The series is now TRUNCATED to start after
+  the last off-grid day rather than stitched across it, costing BTC and ETH 170 good days
+  each. The same artifact is latent in the 1h fixture and has only never fired because its
+  holes are one day long.
+- **The 15m base needed no gate override.** 0 hard violations, snapshot not quarantined,
+  7,334 warnings (6,671 `volume_spike`, 658 `zero_volume`, 5 `unexplained_move`). The
+  volume rule would have dropped 658 bars — measured by calling `clean()` twice, not
+  assumed. D192's and D143's deferrals both stay unspent.
+- **Empty-bar rates at 15m**: BTC/ETH 0.000%, XEM 0.195%, BTG 0.788%, against 25.3% and
+  44.7% for the same two dying coins at 1m.
+- **Reconciliation against the daily fixture over 2,853 days**: BTC median 8.3 bp
+  (p90 63.6, max 371), ETH median 9.4 bp (p90 66.2, max 585). Reported, not asserted —
+  a single-venue USDT pair and a multi-venue USD index are different instruments (D161).
+
+### Fixed
+- **Gzipped fixtures are now byte-reproducible.** `gzip.open` stamps the current time into
+  the header, so re-running any fetch produced a whole-file diff — 25 MB of it here — even
+  when not one row had changed. Writes now pin `mtime=0` and omit the embedded filename.
+  A diff that always appears is a diff that stops being read, and immutable-by-diff
+  (D70/D24) is the reason fixtures are committed rather than re-fetched. Reads untouched;
+  snapshot ids unaffected, since `bars.csv` inside a snapshot is uncompressed.
+- A units bug in `binance_source`'s first draft: the D192 census was being computed against
+  a trade count inferred from volume, which would have made "does zero volume agree with
+  zero trades" answer itself. It now uses the provider's own `number_of_trades`, and the
+  fetch refuses to build a fixture on a symbol where the two disagree.
+
+### Verified
+- Three committed fixtures still freeze to their pre-change snapshot ids, pinned as a test
+  — the schema extension is provably inert on the default write path.
+- Two consecutive full fetches produce a byte-identical fixture.
+- A tampered cached archive is refused by name, identified as stale rather than corrupt.
+- 862 tests green (49 new), mypy clean.
+
 ### Added (the Binance archive, probed before anything is built on it, 2026-08-22 — D190/D191/D192)
 - `data/binance_archive.py` — pure, offline parsing for Binance's public flat-file
   archives. The epoch unit is DETECTED per file, not configured: the archive switched kline

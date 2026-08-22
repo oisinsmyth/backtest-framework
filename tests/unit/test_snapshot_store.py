@@ -4,6 +4,7 @@ refused; quarantined -> unreachable by any default path (D26, D72).
 """
 
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 
@@ -84,3 +85,46 @@ def test_passing_validation_is_loadable_and_meta_carries_reports(tmp_path):
     loaded = store.load(snapshot_id)
     assert loaded.meta["quarantined"] is False
     assert loaded.meta["validation"]["passed"] is True
+
+
+# ------------------------------------------------- the schema extension is inert (D190)
+
+_FIXTURE_SNAPSHOT_IDS = {
+    # Pinned BEFORE `save_fixture_csv` grew its `extra_columns` parameter. A snapshot id
+    # is logged with every trial and printed in results docs, so a writer change that
+    # moved these would silently invalidate the provenance of every study in the repo.
+    "crypto_intraday_1h_raw": "88b3e08d666006f7b47f08ba42eaa3bcae5ec484d9a8d3811d1c7240e177a281",
+    "crypto_universe_2015_2025_raw": "51756f0d66b037982a8fb7d08db68d843fb84e81bf62f51e97688798da90776d",
+    "universe_daily_2015_2024_raw": "b1e9424d04ca988264a3421ad337c6dd8e69d96c2e4aa985402821a9110eb1ad",
+}
+
+
+@pytest.mark.parametrize("name,expected", sorted(_FIXTURE_SNAPSHOT_IDS.items()))
+def test_committed_fixtures_still_freeze_to_their_original_snapshot_id(
+    name, expected, tmp_path
+):
+    from backtest_framework.data.corporate_actions import load_events_json
+    from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
+
+    fixtures = Path(__file__).resolve().parents[2] / "data" / "fixtures"
+    bars, volumes = load_fixture_csv_with_volumes(fixtures / f"{name}.csv.gz")
+    actions = load_events_json(fixtures / f"{name}_events.json")
+
+    store = SnapshotStore(tmp_path / "snapshots")
+    assert store.create(bars, actions, volumes_by_symbol=volumes) == expected
+
+
+def test_extra_columns_change_the_snapshot_id_and_survive_the_roundtrip(tmp_path):
+    """The other half: opting IN must change the payload, or the columns are not stored."""
+    bars = {"X": [TimestampedBar(datetime(2021, 5, 1), Bar(1.0, 1.0, 1.0, 1.0))]}
+    store = SnapshotStore(tmp_path / "snapshots")
+    plain = store.create(bars, CorporateActions(), volumes_by_symbol={"X": [7.0]})
+    with_extras = store.create(
+        bars,
+        CorporateActions(),
+        volumes_by_symbol={"X": [7.0]},
+        extra_columns={"base_volume": {"X": [3.0]}},
+    )
+    assert plain != with_extras
+    assert store.load(plain).extras == {}
+    assert store.load(with_extras).extras == {"base_volume": {"X": [3.0]}}

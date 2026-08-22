@@ -300,6 +300,71 @@ def assert_on_grid(bars: list[TimestampedBar], minutes: int) -> None:
         raise ArchiveFormatError("sub-minute components in bar timestamps")
 
 
+@dataclass(frozen=True)
+class OffGridCensus:
+    """UTC days whose bars do not sit on the interval grid, and by how much.
+
+    Found by running this against the real archive: from **2017-12-04 06:00:20.799 to
+    2017-12-18 10:00:20.799**, every `BTCUSDT` 1m bar is stamped exactly 20.799 seconds
+    past the minute — 20,401 bars across 15 days, a constant offset rather than jitter.
+    `ETHUSDT` carries 20.810s over the same window. Binance's kline generator was running
+    on a skewed clock for a fortnight, through the December 2017 top.
+
+    Reported as data rather than raised on, because the caller decides. Snapping the
+    timestamps to the grid is not an option: the OHLC of a bar labelled 00:00:20.799
+    could belong to `[00:00, 00:01)` or to `[00:00:20.8, 00:01:20.8)` and nothing in the
+    archive says which. Rewriting it would be inventing the answer, which is the sin
+    `clean-v1` avoids by dropping and reporting instead of correcting (D25).
+    """
+
+    minutes: int
+    bars_by_day: dict[date, int] = field(default_factory=dict)
+    residual_seconds: tuple[float, ...] = ()
+
+    @property
+    def days(self) -> list[date]:
+        return sorted(self.bars_by_day)
+
+    @property
+    def bars(self) -> int:
+        return sum(self.bars_by_day.values())
+
+    def to_meta(self) -> dict:
+        return {
+            "minutes": self.minutes,
+            "days": len(self.bars_by_day),
+            "bars": self.bars,
+            "first_day": self.days[0].isoformat() if self.bars_by_day else None,
+            "last_day": self.days[-1].isoformat() if self.bars_by_day else None,
+            "residual_seconds": list(self.residual_seconds),
+        }
+
+
+def offgrid_census(bars: list[TimestampedBar], minutes: int) -> OffGridCensus:
+    """Which UTC days hold bars off the `minutes`-minute grid, and the offsets seen.
+
+    The day is the unit because that is the unit D161's drop policy works in, and because
+    the real occurrence spans whole days rather than scattered bars.
+    """
+    by_day: dict[date, int] = {}
+    residuals: set[float] = set()
+    for tb in bars:
+        offset = (
+            (tb.timestamp.minute % minutes) * 60
+            + tb.timestamp.second
+            + tb.timestamp.microsecond / 1e6
+        )
+        if offset:
+            day = tb.timestamp.date()
+            by_day[day] = by_day.get(day, 0) + 1
+            residuals.add(round(offset, 6))
+    return OffGridCensus(
+        minutes=minutes,
+        bars_by_day=by_day,
+        residual_seconds=tuple(sorted(residuals)),
+    )
+
+
 def dedupe_seam(
     bars: list[TimestampedBar], volumes: list[float]
 ) -> tuple[list[TimestampedBar], list[float], int]:

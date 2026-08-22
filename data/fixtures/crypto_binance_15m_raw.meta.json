@@ -1,0 +1,423 @@
+{
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "XEMUSDT",
+    "BTGUSDT"
+  ],
+  "start": "2017-01-01",
+  "end": "2026-12-31",
+  "interval": "15m",
+  "minutes_per_bar": 15,
+  "bar_boundary": "UTC, on the 15-minute grid (D161) \u2014 timestamps stored naive, meaning UTC",
+  "source": "Binance public flat-file archives (data.binance.vision), spot monthly 1m klines resampled to 15m under D161's contract. TRUE AS-TRADED FRAME: no split adjustment, no dividend adjustment, and spot crypto has neither event \u2014 so as_traded_from_adjusted must NOT be applied (D190).",
+  "volume_columns": {
+    "volume": "quote_volume \u2014 USDT notional, the convention every crypto fixture here uses and what D189's S1 sensor ran on",
+    "base_volume": "base units (coins), as the provider states them",
+    "taker_buy_base": "base units bought by the aggressor; taker sell volume is base_volume - taker_buy_base"
+  },
+  "manifest": "binance_1m_majors.json",
+  "storage_policy": "1m base NOT committed (D191) \u2014 the manifest of provider-published SHA256s is the committed record; raw archives cache under data/raw/",
+  "drop_policy": "D161 day-level: a UTC day the provider did not serve in full is dropped entirely, because resample refuses to emit a short bucket",
+  "screen_note": "apply_policy / DEFAULT_POLICY is deliberately NOT run. Both its volume floor (5,000,000 USD) and its peg screen (median |log return| >= 0.5%) are per-BAR medians calibrated on DAILY bars; on 15m bars the peg screen alone would exclude every symbol in the universe. A daily screen applied to intraday bars is not a conservative choice, it is a broken one.",
+  "per_symbol": {
+    "BTCUSDT": {
+      "symbol": "BTCUSDT",
+      "interval": "1m",
+      "months": 108,
+      "first_month": "2017-08",
+      "last_month": "2026-07",
+      "bars": 4701439,
+      "seam_duplicates_dropped": 0,
+      "cache_hits": 108,
+      "downloads": 0,
+      "offgrid": {
+        "minutes": 1,
+        "days": 17,
+        "bars": 21602,
+        "first_day": "2017-12-04",
+        "last_day": "2018-02-10",
+        "residual_seconds": [
+          14.789,
+          20.799
+        ]
+      },
+      "first_bar": "2018-02-12T00:00:00",
+      "last_bar": "2026-07-31T23:45:00",
+      "bar_count": 294336,
+      "gap_histogram_minutes": {
+        "1455": 24,
+        "2895": 1
+      },
+      "source_bars_1m": 4701439,
+      "empty_bars_1m": 24003,
+      "empty_rate_1m": 0.0051054581373915515,
+      "zero_trade_bars_1m": 24003,
+      "zero_volume_agrees_with_zero_trades_1m": true,
+      "empty_bars_15m": 0,
+      "empty_rate_15m": 0.0,
+      "days_kept": 3066,
+      "days_dropped_short": 35,
+      "days_dropped_offgrid": 17,
+      "days_lost_to_offgrid_truncation": 170,
+      "short_day_detail": [
+        [
+          "2017-08-17",
+          1200
+        ],
+        [
+          "2017-09-06",
+          1020
+        ],
+        [
+          "2017-12-04",
+          1441
+        ],
+        [
+          "2017-12-18",
+          1363
+        ],
+        [
+          "2018-01-04",
+          1315
+        ],
+        [
+          "2018-02-08",
+          29
+        ],
+        [
+          "2018-02-09",
+          841
+        ],
+        [
+          "2018-02-10",
+          1425
+        ],
+        [
+          "2018-02-11",
+          1406
+        ],
+        [
+          "2018-06-26",
+          840
+        ],
+        [
+          "2018-06-27",
+          1335
+        ],
+        [
+          "2018-07-04",
+          983
+        ],
+        [
+          "2018-10-19",
+          1230
+        ],
+        [
+          "2018-11-14",
+          1020
+        ],
+        [
+          "2019-03-12",
+          1080
+        ],
+        [
+          "2019-05-15",
+          840
+        ],
+        [
+          "2019-06-07",
+          1379
+        ],
+        [
+          "2019-08-15",
+          960
+        ],
+        [
+          "2019-11-13",
+          1297
+        ],
+        [
+          "2019-11-25",
+          1320
+        ]
+      ],
+      "median_quote_volume_15m": 9970143.09943096
+    },
+    "ETHUSDT": {
+      "symbol": "ETHUSDT",
+      "interval": "1m",
+      "months": 108,
+      "first_month": "2017-08",
+      "last_month": "2026-07",
+      "bars": 4701438,
+      "seam_duplicates_dropped": 0,
+      "cache_hits": 108,
+      "downloads": 0,
+      "offgrid": {
+        "minutes": 1,
+        "days": 17,
+        "bars": 21602,
+        "first_day": "2017-12-04",
+        "last_day": "2018-02-10",
+        "residual_seconds": [
+          14.8,
+          20.81
+        ]
+      },
+      "first_bar": "2018-02-12T00:00:00",
+      "last_bar": "2026-07-31T23:45:00",
+      "bar_count": 294336,
+      "gap_histogram_minutes": {
+        "1455": 24,
+        "2895": 1
+      },
+      "source_bars_1m": 4701438,
+      "empty_bars_1m": 32237,
+      "empty_rate_1m": 0.006856838269482656,
+      "zero_trade_bars_1m": 32237,
+      "zero_volume_agrees_with_zero_trades_1m": true,
+      "empty_bars_15m": 0,
+      "empty_rate_15m": 0.0,
+      "days_kept": 3066,
+      "days_dropped_short": 35,
+      "days_dropped_offgrid": 17,
+      "days_lost_to_offgrid_truncation": 170,
+      "short_day_detail": [
+        [
+          "2017-08-17",
+          1200
+        ],
+        [
+          "2017-09-06",
+          1020
+        ],
+        [
+          "2017-12-04",
+          1441
+        ],
+        [
+          "2017-12-18",
+          1363
+        ],
+        [
+          "2018-01-04",
+          1315
+        ],
+        [
+          "2018-02-08",
+          29
+        ],
+        [
+          "2018-02-09",
+          841
+        ],
+        [
+          "2018-02-10",
+          1425
+        ],
+        [
+          "2018-02-11",
+          1406
+        ],
+        [
+          "2018-06-26",
+          840
+        ],
+        [
+          "2018-06-27",
+          1335
+        ],
+        [
+          "2018-07-04",
+          983
+        ],
+        [
+          "2018-10-19",
+          1230
+        ],
+        [
+          "2018-11-14",
+          1020
+        ],
+        [
+          "2019-03-12",
+          1080
+        ],
+        [
+          "2019-05-15",
+          840
+        ],
+        [
+          "2019-06-07",
+          1379
+        ],
+        [
+          "2019-08-15",
+          960
+        ],
+        [
+          "2019-11-13",
+          1297
+        ],
+        [
+          "2019-11-25",
+          1320
+        ]
+      ],
+      "median_quote_volume_15m": 4849344.867444
+    },
+    "XEMUSDT": {
+      "symbol": "XEMUSDT",
+      "interval": "1m",
+      "months": 44,
+      "first_month": "2020-11",
+      "last_month": "2024-06",
+      "bars": 1871416,
+      "seam_duplicates_dropped": 0,
+      "cache_hits": 44,
+      "downloads": 0,
+      "offgrid": {
+        "minutes": 1,
+        "days": 0,
+        "bars": 0,
+        "first_day": null,
+        "last_day": null,
+        "residual_seconds": []
+      },
+      "first_bar": "2020-11-25T00:00:00",
+      "last_bar": "2024-06-16T23:45:00",
+      "bar_count": 123840,
+      "gap_histogram_minutes": {
+        "1455": 10
+      },
+      "source_bars_1m": 1871416,
+      "empty_bars_1m": 474050,
+      "empty_rate_1m": 0.25331086193556107,
+      "zero_trade_bars_1m": 474050,
+      "zero_volume_agrees_with_zero_trades_1m": true,
+      "empty_bars_15m": 241,
+      "empty_rate_15m": 0.0019460594315245478,
+      "days_kept": 1290,
+      "days_dropped_short": 12,
+      "days_dropped_offgrid": 0,
+      "days_lost_to_offgrid_truncation": 0,
+      "short_day_detail": [
+        [
+          "2020-11-24",
+          660
+        ],
+        [
+          "2020-11-30",
+          1380
+        ],
+        [
+          "2020-12-21",
+          1209
+        ],
+        [
+          "2020-12-25",
+          1380
+        ],
+        [
+          "2021-02-11",
+          1361
+        ],
+        [
+          "2021-03-06",
+          1350
+        ],
+        [
+          "2021-04-20",
+          1290
+        ],
+        [
+          "2021-04-25",
+          1156
+        ],
+        [
+          "2021-08-13",
+          1170
+        ],
+        [
+          "2021-09-29",
+          1320
+        ],
+        [
+          "2023-03-24",
+          1360
+        ],
+        [
+          "2024-06-17",
+          180
+        ]
+      ],
+      "median_quote_volume_15m": 14331.428066999999
+    },
+    "BTGUSDT": {
+      "symbol": "BTGUSDT",
+      "interval": "1m",
+      "months": 19,
+      "first_month": "2021-04",
+      "last_month": "2022-10",
+      "bars": 799936,
+      "seam_duplicates_dropped": 0,
+      "cache_hits": 19,
+      "downloads": 0,
+      "offgrid": {
+        "minutes": 1,
+        "days": 0,
+        "bars": 0,
+        "first_day": null,
+        "last_day": null,
+        "residual_seconds": []
+      },
+      "first_bar": "2021-04-17T00:00:00",
+      "last_bar": "2022-10-23T23:45:00",
+      "bar_count": 52896,
+      "gap_histogram_minutes": {
+        "1455": 4
+      },
+      "source_bars_1m": 799936,
+      "empty_bars_1m": 357305,
+      "empty_rate_1m": 0.44666698335866867,
+      "zero_trade_bars_1m": 357305,
+      "zero_volume_agrees_with_zero_trades_1m": true,
+      "empty_bars_15m": 417,
+      "empty_rate_15m": 0.007883393829401088,
+      "days_kept": 551,
+      "days_dropped_short": 6,
+      "days_dropped_offgrid": 0,
+      "days_lost_to_offgrid_truncation": 0,
+      "short_day_detail": [
+        [
+          "2021-04-16",
+          1020
+        ],
+        [
+          "2021-04-20",
+          1290
+        ],
+        [
+          "2021-04-25",
+          1156
+        ],
+        [
+          "2021-08-13",
+          1170
+        ],
+        [
+          "2021-09-29",
+          1320
+        ],
+        [
+          "2022-10-24",
+          540
+        ]
+      ],
+      "median_quote_volume_15m": 4607.0774705
+    }
+  },
+  "fetched_at_utc": "2026-08-22T23:47:35.731143+00:00",
+  "elapsed_seconds": 419.2726240158081
+}
