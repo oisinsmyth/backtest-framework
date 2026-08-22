@@ -108,6 +108,18 @@ class CostTier:
     NAV for the entire life of every trade, and D124 made exactly this point for the
     pairs book's short leg."""
 
+    impact_coefficient: float = 0.0
+    """Square-root market impact, off by default (D186).
+
+    `impact_fraction = coefficient × σ_daily × √(|Q| / ADV)`, so total impact dollars
+    scale as Q^1.5 — D66's form, and 1.0 is its Y ≈ 1 convention, the same value
+    `pairs_study.py` uses. **Not a free parameter and not swept**: tuning it would be a
+    search for whichever capacity number flattered the book.
+
+    Zero everywhere except the capacity study, because every result published before D186
+    assumed a fill at the quoted price regardless of size. Turning it on by default would
+    silently restate them all."""
+
     def cost_stack_config(self) -> dict[str, Any]:
         # The borrow brick is emitted ONLY when the rate is non-zero, so every long-side
         # tier hashes exactly as it did before the short book existed (D166's rule).
@@ -116,17 +128,47 @@ class CostTier:
             carry_bricks.append(
                 {"type": "borrow_fee", "annual_rate": self.borrow_annual_rate}
             )
+        # Same rule, fifth application: the impact brick appears only when it is switched
+        # on, so every tier in every published study hashes exactly as it does today and
+        # no registered trial is orphaned.
+        trade_bricks: list[dict[str, Any]] = [
+            {"type": "percent_spread", "bps": self.fee_bps}
+        ]
+        if self.impact_coefficient:
+            trade_bricks.append(
+                {
+                    "type": "sqrt_impact",
+                    "coefficient": self.impact_coefficient,
+                    "calibration": "full_sample",
+                }
+            )
         return {
-            "trade_bricks": [{"type": "percent_spread", "bps": self.fee_bps}],
+            "trade_bricks": trade_bricks,
             "carry_bricks": carry_bricks,
             "portfolio_carry_bricks": [],
             "event_flow_bricks": [],
         }
 
-    def build(self) -> CostStack:
+    def build(self, context: StackDataContext | None = None) -> CostStack:
+        """`context` is required once impact is switched on, and refused quietly never.
+
+        `SqrtImpact` calibrates σ and ADV from the context's bars and volumes. Built
+        against the empty default it would raise inside `calibrate_impact_params` — but
+        relying on that would make the failure a stack trace from two modules away, so it
+        is caught here where the cause is legible."""
+        if self.impact_coefficient and context is None:
+            raise ValueError(
+                f"tier {self.name!r} has impact_coefficient={self.impact_coefficient} but "
+                "no StackDataContext was supplied, so sigma and ADV cannot be calibrated. "
+                "Pass the snapshot's bars and volumes. An impact brick that silently "
+                "costs nothing is worse than no impact brick at all."
+            )
         return build_cost_stack(
             self.cost_stack_config(),
-            StackDataContext(bars_by_symbol={}, volumes_by_symbol={}, actions=CorporateActions()),
+            context
+            or StackDataContext(
+                bars_by_symbol={}, volumes_by_symbol={}, actions=CorporateActions()
+            ),
         )
 
 
@@ -696,11 +738,29 @@ def run_variant(
 
     # Sliced with exactly the same bounds as run_bars, so the two cannot drift apart.
     run_volumes = None if volumes is None else list(volumes[run_start:oos_end])
+    # Impact calibrates against THIS symbol's own bars and volumes (D186). Built here
+    # rather than threaded in from the caller, because this is the only place that holds
+    # the sliced series the run actually trades.
+    if tier.impact_coefficient and run_volumes is None:
+        raise ValueError(
+            f"tier {tier.name!r} charges square-root impact but no volume series was "
+            f"passed for {symbol!r}. ADV must be calibrated, never defaulted (D48) — a "
+            "missing volume series has to stop the run, not quietly cost nothing."
+        )
+    context = (
+        StackDataContext(
+            bars_by_symbol={symbol: run_bars},
+            volumes_by_symbol={symbol: run_volumes or []},
+            actions=CorporateActions(),
+        )
+        if tier.impact_coefficient
+        else None
+    )
     result = run_backtest(
         bars_by_instrument={symbol: run_bars},
         instruments=_instruments(symbol),
         strategies=[strategy],
-        cost_stack=tier.build(),
+        cost_stack=tier.build(context),
         allocator=ConstantSplitAllocator(),
         starting_cash=study.starting_cash,
         fill_timing=study.fill_timing,

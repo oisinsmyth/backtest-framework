@@ -9,6 +9,7 @@ turning the enforcement into a default.
 
 from __future__ import annotations
 
+import math
 import random
 from datetime import datetime, timedelta
 
@@ -398,6 +399,72 @@ def test_long_tier_configs_are_unchanged_by_the_borrow_field():
         "portfolio_carry_bricks": [],
         "event_flow_bricks": [],
     }
+
+
+# ------------------------------------------------- square-root market impact (D186)
+
+
+def test_every_shipped_tier_omits_the_impact_brick_entirely():
+    """Impact is off by default, and "off" must mean ABSENT rather than zero-valued.
+
+    A `sqrt_impact` entry with coefficient 0.0 would cost nothing and still change every
+    config hash in both studies, orphaning every registered trial (D166's rule, fifth
+    application)."""
+    for tier in bs.DEFAULT_TIERS + bs.SHORT_TIERS:
+        bricks = tier.cost_stack_config()["trade_bricks"]
+        assert bricks == [{"type": "percent_spread", "bps": tier.fee_bps}], tier.name
+
+
+def test_impact_brick_appears_only_when_switched_on():
+    tier = bs.CostTier("taker_40bp", 40.0, "taker", impact_coefficient=1.0)
+    bricks = tier.cost_stack_config()["trade_bricks"]
+    assert bricks[0] == {"type": "percent_spread", "bps": 40.0}
+    assert bricks[1] == {
+        "type": "sqrt_impact",
+        "coefficient": 1.0,
+        "calibration": "full_sample",
+    }
+
+
+def test_building_an_impact_tier_without_data_raises():
+    """A silently zero-cost impact brick is worse than no impact brick at all."""
+    tier = bs.CostTier("taker_40bp", 40.0, "taker", impact_coefficient=1.0)
+    with pytest.raises(ValueError, match="no StackDataContext"):
+        tier.build()
+
+
+def test_impact_cost_grows_with_size_and_grows_SUB_linearly():
+    """The whole content of D66: doubling the order multiplies the cost FRACTION by
+    sqrt(2), so total impact dollars scale as Q^1.5 rather than Q.
+
+    A model that charged a flat fraction would be a spread, and capacity would be
+    scale-free — which is exactly the assumption this work exists to remove."""
+    from backtest_framework.costs.equity_bricks import ImpactParams, SqrtImpact
+
+    brick = SqrtImpact(
+        params_by_symbol={"X": ImpactParams(sigma_daily=0.05, adv_shares=1_000_000.0)},
+        coefficient=1.0,
+    )
+    fracs = [
+        brick.coefficient
+        * brick.params_by_symbol["X"].sigma_daily
+        * math.sqrt(q / brick.params_by_symbol["X"].adv_shares)
+        for q in (10_000.0, 20_000.0, 40_000.0)
+    ]
+    assert fracs[0] < fracs[1] < fracs[2]
+    assert fracs[1] / fracs[0] == pytest.approx(math.sqrt(2.0))
+    assert fracs[2] / fracs[1] == pytest.approx(math.sqrt(2.0))
+
+
+def test_a_symbol_with_no_volume_cannot_be_calibrated():
+    """D48's rule, on the crypto path: a missing ADV is a loud error, never a default."""
+    from backtest_framework.costs.calibration import calibrate_impact_params
+
+    bars = bars_from([100.0, 101.0, 99.0, 102.0])
+    with pytest.raises(ValueError, match="no volume series"):
+        calibrate_impact_params({"X": bars}, {})
+    with pytest.raises(ValueError, match="non-positive mean volume"):
+        calibrate_impact_params({"X": bars}, {"X": [0.0, 0.0, 0.0, 0.0]})
 
 
 # ------------------------------------------------------ D176: the two closed gaps
