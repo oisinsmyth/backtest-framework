@@ -10,6 +10,39 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (rebalancing cost charged, pre-registered, 2026-08-22 — D185)
+- `_equal_weight_arm` now returns one-way TURNOVER alongside the gross series, and the
+  portfolio study charges it at the project's existing 0/10/25/40bp ladder. **The benchmark
+  is charged too** — the equal-weight universe rebalances daily as well, and charging only
+  the strategy would rig the comparison. Buy-and-hold pays nothing after its first purchase.
+- Break-even solver: the cost at which the strategy's Sharpe edge over the benchmark
+  reaches zero, by bisection, reporting "none" rather than interpolating a number that does
+  not exist.
+- The two D184 artifacts are neutralised in the benchmark only; the strategy is untouched
+  by both.
+
+### Findings — predictions committed first (32fd7a2), then scored
+- **The cost barely touches the result. Both predictions FALSIFIED.**
+- Annual turnover: strategy **1.8x**, equal-weight universe **4.8x**, BTC buy & hold 0x.
+- Net Sharpe at 40bp: strategy **+1.252** (from +1.277), benchmark **+1.174** (from
+  +1.196), BTC +1.096. **Edge +0.081 -> +0.078.** Break-even **972bp**, about 24x the
+  reference tier.
+- **H1 falsified**: predicted the strategy would drop below +1.00 at 40bp; it drops 0.025.
+  1.8x turnover at 40bp one-way is 0.72%/yr against ~25% vol.
+- **H2 falsified as stated**: the edge narrows very slightly rather than widening, and a
+  break-even exists. The turnover half of the reasoning was right — the 2.7x asymmetry was
+  predicted and observed, for the predicted reason (flat books do not drift).
+- **The error is the normalisation, and it is worth keeping.** A cost's damage to a SHARPE
+  is `cost / volatility`. The benchmark turns over 2.7x more and pays the same Sharpe
+  penalty because it is 3.4x more volatile. Turnover and volatility scale together, so the
+  comparison is near cost-invariant. **In RETURN terms the intuition does hold**: the
+  strategy gives up 7% of total return at 40bp, the benchmark 17%.
+- Drawdown is untouched: 28.8% -> 29.3%.
+- **D183's largest stated threat is now paid.** Two debts remain: a deflated Sharpe against
+  the 30-configuration pool, and an out-of-sample cross-section. And a turnover charge is
+  not a liquidity model — capacity in small-cap alts is the next and harder question.
+
+
 ### Fixed (unrecorded corporate actions, 2026-08-21 — D184)
 - **A benchmark returned +102,682,123%, and it came from ONE bar.** `HT-USD` printed
   **+3,398,300%** on 2025-03-12 (close 0.0000150 -> 0.5098, then flat at ~0.50): a

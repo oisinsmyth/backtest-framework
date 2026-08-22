@@ -1,6 +1,6 @@
 # A cross-sectional long/short portfolio across 62 coins
 
-**Produced:** 2026-08-21 ·
+**Produced:** 2026-08-22 ·
 **Snapshot:** `318edab51866d81986f1426abf9ab275908b27f2c6b0b8330a6529263c89b957` ·
 **Reproduce:** `uv run python scripts/run_portfolio_universe.py` (offline, deterministic)
 
@@ -30,13 +30,13 @@ are excluded from every figure, all three arms alike.
 
 | | Sharpe | Total return | Max DD | Median SINGLE coin Sharpe | Median single coin return |
 |---|---|---|---|---|---|
-| long portfolio | +1.278 | +2,912.7% | 28.8% | +0.437 | +152.4% |
-| short portfolio | -0.588 | -53.6% | 61.0% | -0.450 | -55.9% |
-| **combined portfolio** | **+0.108** | +53.6% | 22.8% | — | — |
+| long portfolio | +1.277 | +2,907.9% | 28.8% | +0.437 | +152.4% |
+| short portfolio | -0.580 | -52.8% | 60.8% | -0.450 | -55.9% |
+| **combined portfolio** | **+0.115** | +55.0% | 22.4% | — | — |
 
-**Diversifying across coins lifts the long book from +0.437 on the median single coin to +1.278 as a portfolio — +0.841.** That is the one form of diversification this project had never tested, and it is the only one that operates on the return distribution rather than on a losing book's timing.
+**Diversifying across coins lifts the long book from +0.437 on the median single coin to +1.277 as a portfolio — +0.840.** That is the one form of diversification this project had never tested, and it is the only one that operates on the return distribution rather than on a losing book's timing.
 
-**Adding the short portfolio costs -1.170 Sharpe** and moves max drawdown by -6.0 pp. The D182 finding survives at portfolio level: the short book subtracts.
+**Adding the short portfolio costs -1.162 Sharpe** and moves max drawdown by -6.4 pp. The D182 finding survives at portfolio level: the short book subtracts.
 
 ## Breadth — how many coins the portfolio could hold
 
@@ -70,11 +70,11 @@ keeps only the dates on which at least that many long books were open, and resco
 
 | Long books live | Dates kept | Long portfolio Sharpe | Combined Sharpe |
 |---|---|---|---|
-| >= 1 | 3,510 | +1.275 | +0.102 |
-| >= 5 | 2,712 | +0.927 | -0.029 |
-| >= 10 | 2,708 | +0.928 | -0.014 |
-| >= 20 | 2,708 | +0.928 | -0.014 |
-| >= 30 | 2,708 | +0.928 | -0.014 |
+| >= 1 | 3,510 | +1.274 | +0.109 |
+| >= 5 | 2,712 | +0.926 | -0.026 |
+| >= 10 | 2,708 | +0.927 | -0.012 |
+| >= 20 | 2,708 | +0.927 | -0.012 |
+| >= 30 | 2,708 | +0.927 | -0.012 |
 
 The rows above 5 are identical because the universe fills in quickly: there is essentially
 no period with between five and thirty coins live, so every threshold past five selects the
@@ -85,10 +85,37 @@ period was dragging the headline down; one that collapsed would mean the headlin
 period's luck. Conditioning on breadth is not a free lunch either — it is a filter applied
 after the fact, and the rows are a robustness reading rather than a tradable variant.
 
+## Charging the rebalancing cost
+
+D183 charged nothing for moving capital between coins and named that as the test of its own
+result. This charges it — **on the benchmark too**, because the equal-weight universe
+rebalances daily as well and charging only the strategy would rig the comparison.
+
+Turnover is one-way, `0.5 * sum |drifted weight - target weight|`, and buy-and-hold is
+charged nothing after its initial purchase because it does not trade again.
+
+Net Sharpe at each cost level:
+
+| Book | Annual turnover | 0 bp | 10 bp | 25 bp | 40 bp |
+|---|---|---|---|---|---|
+| **LONG portfolio (strategy)** | 1.8x | +1.277 | +1.271 | +1.261 | +1.252 |
+| Equal-weight universe | 4.8x | +1.196 | +1.191 | +1.182 | +1.174 |
+| BTC buy & hold | 0.0x | +1.096 | +1.096 | +1.096 | +1.096 |
+
+Strategy edge over the equal-weight universe: 0bp **+0.081** · 10bp **+0.080** · 25bp **+0.079** · 40bp **+0.078**.
+
+**The edge breaks even at 972 bp** of one-way cost per unit of turnover. Below that the strategy beats the equal-weight universe on a like-for-like basis; above it, it does not.
+
+**A flat book holds cash and moving cash is free**, which the turnover measure gets right
+on its own: a flat book reports exactly 0.0, so its slice does not drift. What is still
+over-charged is a flat book joining or leaving the live set, counted as a full slice
+traded when it was cash — and over-charging is the right direction for a test built to
+threaten a result.
+
 ## How the risk budget splits, and the flaw it carries
 
 Mean weight on the LONG portfolio: **0.302**. Long/short correlation
-**-0.0409**; the weighting fell back to 50/50 on 0
+**-0.0410**; the weighting fell back to 50/50 on 0
 bars.
 
 Inverse-vol weighting reads a book that is flat most of the time as low-risk, when what it actually is, is absent (D181). **Aggregation makes this WORSE, not better.** Pooling 62 coins diversifies the short arm's own returns, which lowers its measured volatility, which inverse-vol rewards with MORE weight — so the losing leg carries 70% of the risk budget here against 61% on BTC alone (D181). The construction pays a book for being diversified and for being absent, and neither is a reason to give it capital.
