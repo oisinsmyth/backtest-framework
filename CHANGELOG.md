@@ -10,6 +10,48 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (the ETF cross-section, pre-registered, 2026-08-22 — D188)
+- `scripts/run_etf_universe.py` — the SAME long baseline, unchanged, on 57 ETFs.
+  `periods_per_year=252`, `volume_units="shares"` (D187), dividends PAID on both arms
+  (2,285 across 53 symbols + 14 splits), two crypto-specific screens disabled with the
+  measurement behind each. Two cost tiers fixed in advance: equity (IBKR + 1bp) and the
+  crypto 40bp as a stated handicap. Impact off — this asks whether the effect exists, not
+  what it costs at size.
+- `actions` threaded through `run_variant`, all three benchmark runners and
+  `run_universe_study`, mirroring the volumes pattern; `_context_for` now serves both
+  data-dependent bricks. Dividends are not optional: on SPY alone they move the strategy
+  from +0.060 to +0.171 Sharpe, and omitting them would flatter the STRATEGY, which is
+  flat about half the time and collects fewer than the benchmark.
+
+### Findings — predictions committed first (cac1c45), then scored
+- **The portfolio does NOT transfer. H1 confirmed emphatically.**
+
+  | | Sharpe | Return | Max DD |
+  |---|---|---|---|
+  | Strategy (equity costs) | **-0.273** | +21.6% | **6.1%** |
+  | Equal-weight basket | +0.395 | +100.5% | 33.4% |
+  | SPY buy & hold | +0.617 | +187.0% | 33.7% |
+
+  **Edge -0.667**, against +0.075 on crypto. At the crypto 40bp tier, -1.190 and the book
+  returns -0.5%. Turnover 0.4x/yr: the breakout condition barely fires on an index fund.
+- **H2 confirmed** — max DD 6.1% vs 33.4%. The drawdown property has now survived every
+  test in this project and is the only claim that has. Read for what it is: a book invested
+  a fraction of the time has a small drawdown for the same reason it has a small return.
+- **H3 FALSIFIED, and its failure is the finding.** I predicted the diversification lift
+  would reproduce, calling it "arithmetic, not a market claim". The portfolio Sharpe
+  (-0.273) is BELOW the median single ETF (-0.177) — the lift **reversed**.
+  **Sharpe is mean/sigma: averaging shrinks sigma, so it raises the Sharpe when the mean is
+  positive and makes it MORE NEGATIVE when the mean is negative.** Diversification is a
+  magnifier with the sign of the expectancy, not free arithmetic. D183 called the lift
+  guaranteed; it is conditional on a positive mean, which is the entire question.
+- **This was the easier test.** All 57 ETFs survived — identical spans, no delistings — the
+  opposite property to the crypto universe, which was built to contain the assets that died.
+  The strategy lost on the friendlier sample by 0.667 Sharpe.
+- **Still untested, and now the deepest assumption in the project:** both samples are
+  2015-2024. A different asset class is not a different era, and that cannot be fixed with
+  data already on disk.
+
+
 ### Fixed (volume units in the impact model, 2026-08-22 — D187)
 - **`SqrtImpact` divides an order QUANTITY by ADV, and `calibrate_impact_params` never
   asked what the volume column counted.** The ETF fixture reports SHARES (SPY 68.1M, x $474

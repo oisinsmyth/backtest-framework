@@ -1,6 +1,6 @@
 # D188 — The out-of-sample test: the portfolio on 57 ETFs
 
-**Status:** PRE-REGISTERED — implementation committed, **study not yet run**
+**Status:** Committed (H1 and H2 confirmed, H3 falsified — the diversification lift has the sign of the expectancy)
 **Date:** 2026-08-22
 **Category:** Validation & research integrity
 **Source:** D183's third and last debt, and the only one that asks whether any of this is real
@@ -104,3 +104,106 @@ would be the easier kind**, and should be discounted accordingly.
 **And a different asset class is not a different era.** Both samples are 2015–2024. Nothing
 here tests the strategy against a period unlike the one it was built in, and that remains
 the deepest untested assumption in the project.
+
+---
+
+# RESULT — appended 2026-08-22, after the run. Nothing above this line was edited.
+
+**Status: H1 CONFIRMED emphatically. H2 CONFIRMED. H3 FALSIFIED — and H3's failure is the
+finding.**
+
+57 ETFs, 2,204 dates, 2016-01-05 to 2024-10-07.
+
+| | Sharpe | Total return | Max DD |
+|---|---|---|---|
+| **Strategy** (equity costs) | **−0.273** | **+21.6%** | **6.1%** |
+| Equal-weight basket | +0.395 | +100.5% | 33.4% |
+| SPY buy & hold | +0.617 | +187.0% | 33.7% |
+| *Strategy at the crypto 40 bp tier* | *−0.819* | *−0.5%* | *10.6%* |
+
+**Edge over the basket: −0.667.** At the crypto cost tier, −1.190.
+
+## H1 — CONFIRMED, and not narrowly
+
+The crypto portfolio's **+0.075** edge becomes **−0.667** on an asset class the strategy was
+never developed on. The book returns **+21.6%** over nine years while simply holding `SPY`
+returned **+187%**.
+
+The mechanism predicted holds: the crypto edge came substantially from **standing aside
+while things collapsed** — 41 of 62 coins fell 90%+ and never recovered. ETFs do not do
+that. A book flat most of the time gives away the compounding without avoiding a catastrophe
+that never comes.
+
+Turnover tells the same story from another angle: **0.4× a year**. The breakout condition
+barely fires on an index fund. The strategy is not losing money by trading badly; it is
+losing by not being invested.
+
+## H2 — CONFIRMED, and it is the only thing that survives
+
+**Max drawdown 6.1% against the basket's 33.4%** — a fifth. The drawdown property has now
+survived every test in this project, including this one, and it is the only claim here that
+has.
+
+It should be read for what it is. A book invested a fraction of the time has a small
+drawdown for the same reason it has a small return. At 40 bp the strategy returns **−0.5%**
+with a 10.6% drawdown: nearly cash, and cash also has a small drawdown.
+
+## H3 — FALSIFIED, and this is the part worth keeping
+
+I predicted the diversification lift would reproduce, and called it *"arithmetic, not a
+market claim — averaging partially-independent books reduces variance whatever they hold."*
+
+| | Median single ETF | Portfolio | **Lift** |
+|---|---|---|---|
+| Sharpe | −0.177 | −0.273 | **−0.096** |
+
+**The portfolio is WORSE than the median single ETF.** The lift did not merely fail to
+appear; it reversed.
+
+**And the arithmetic is exactly why.** Sharpe is `mean ÷ σ`. Averaging partially-independent
+books does reduce σ — that part was right. But it divides a *mean* by that smaller σ, so:
+
+- when the mean is **positive**, shrinking σ raises the Sharpe — the crypto case, +0.44 →
+  +1.28
+- when the mean is **negative**, shrinking σ makes the Sharpe **more negative** — this case,
+  −0.177 → −0.273
+
+**Diversification is a magnifier, and it has the sign of the expectancy.** It does not
+create edge; it concentrates whatever sign is already there. D183 called the lift "the least
+surprising result in the project, because it is arithmetic" and treated it as guaranteed. It
+is arithmetic, and it is not guaranteed — it is conditional on a positive mean, which is the
+entire question.
+
+That correction applies backwards to D183's framing without changing its numbers: the crypto
+lift was real, and it was real *because the crypto books had positive expectancy*, not
+because averaging is free.
+
+## What this settles
+
+**The strategy does not transfer.** The one working idea in this project is a property of a
+crypto cross-section in 2015–2025, not of breakout trading. Every number downstream of
+D183 — the +0.075 edge, the 972 bp rebalancing break-even, the $66M capacity — describes
+that sample and nothing wider.
+
+**This was the easier test and it still failed.** These 57 ETFs all survived: identical
+spans, no delistings, no collapses. The crypto universe was built to contain the assets that
+died. A survivorship-clean sample is the *friendlier* one, and the strategy lost on it by
+0.667 Sharpe.
+
+**The project's tally is now complete and consistent.** Four entry filters, six stops, E1,
+the swing stop, the within-coin ensemble, the short book — every rule-level idea failed out
+of sample. The portfolio was the one thing that worked, and it worked on one asset class in
+one decade.
+
+## What it does not settle
+
+**A different asset class is not a different era.** Both samples are 2015–2024. Nothing here
+tests the strategy against a period unlike the one it was built in, and that remains the
+deepest untested assumption in the project — deeper than this one, because it cannot be
+fixed with data already on disk.
+
+**And a breakout rule on index funds may simply be the wrong instrument for the idea.** A
+40-bar channel breakout is a trend-following device, and 57 correlated index funds in a
+decade-long bull market give it little to catch that buy-and-hold does not catch first. This
+is evidence that the crypto result does not generalise. It is weaker evidence about breakout
+trading in general, and it should not be quoted as the latter.
