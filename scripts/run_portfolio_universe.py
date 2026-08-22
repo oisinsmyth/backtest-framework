@@ -28,6 +28,7 @@ amount, and the amount is not measured.
 from __future__ import annotations
 
 import json
+import math
 import statistics
 import sys
 import time
@@ -102,7 +103,12 @@ def dated_returns(equity: list[tuple[datetime, float]]) -> tuple[list[tuple[str,
     out: list[tuple[str, float]] = []
     died = False
     for (_, a), (ts, b) in zip(equity, equity[1:]):
-        if a <= 0.0:
+        # `not (a > 0.0)` rather than `a <= 0.0`: NaN compares False to BOTH, so the
+        # obvious form lets a non-finite NAV straight through. Market impact large enough
+        # to exceed a position's notional produces exactly that (D186), and in the one
+        # case observed the NAV went negative a few hundred bars before it went NaN — so
+        # the loose guard happened to catch it. Relying on that ordering is luck.
+        if not (a > 0.0) or not math.isfinite(b):
             died = True
             break
         r = b / a - 1.0

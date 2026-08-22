@@ -1,6 +1,6 @@
 # D186 — Capacity: does the portfolio edge exist at size?
 
-**Status:** PRE-REGISTERED — implementation committed, **sweep not yet run**
+**Status:** Committed (H1 confirmed narrowly, H2 confirmed)
 **Date:** 2026-08-22
 **Category:** Analytics
 **Source:** D183 and D185 both closed by naming this as the next question
@@ -113,3 +113,125 @@ magnitude, and one average across both flatters the thin years.
 whether a counterparty exists. On a delisted coin the honest answer is that the trade does
 not happen at any price, and no coefficient expresses that. **The capacity number this
 produces is therefore an upper bound on capacity, not an estimate of it.**
+
+---
+
+# RESULT — appended 2026-08-22, after the sweep. Nothing above this line was edited.
+
+**Status: H1 CONFIRMED, narrowly. H2 CONFIRMED.**
+
+**The portfolio has a capacity of roughly $30M, and the edge is gone above it.**
+
+| Total AUM | Per coin | Strategy | Return | Max DD | Books destroyed | Benchmark | **Edge** |
+|---|---|---|---|---|---|---|---|
+| $0.1M | $1,613 | +1.240 | +2,624% | 29.4% | 0 | +1.173 | **+0.067** |
+| $0.3M | $4,839 | +1.233 | +2,576% | 29.4% | 0 | +1.172 | +0.061 |
+| $1M | $16,129 | +1.222 | +2,498% | 29.4% | 0 | +1.171 | +0.051 |
+| $3M | $48,387 | +1.207 | +2,395% | 29.5% | 0 | +1.170 | +0.037 |
+| $10M | $161,290 | +1.180 | +2,226% | 29.6% | 0 | +1.166 | +0.014 |
+| **$30M** | $483,871 | +1.161 | +2,117% | 29.9% | **2** | +1.161 | **−0.000** |
+| $100M | $1,612,903 | +1.124 | +1,913% | 30.4% | 2 | +1.151 | **−0.026** |
+
+## H1 — CONFIRMED
+
+Predicted the strategy's Sharpe would fall by more than 0.10 across the sweep. It falls
+**+1.240 → +1.124, a loss of 0.116** — clearing the stated bar by 0.016, which is close
+enough that it should be quoted with the margin attached.
+
+## H2 — CONFIRMED, and for the predicted reason
+
+Predicted the edge would reach zero at or below $100M. **It reaches zero at $30M** and goes
+negative at $100M.
+
+The prediction was made with low confidence and an explicit expectation of failing D185's
+way — where a cost asymmetry was correctly identified and produced no consequence, because
+Sharpe damage is `cost ÷ volatility` and the benchmark is 3.4× more volatile. **That did not
+happen here, and the reason is the mechanism the pre-registration named:**
+
+| | Sharpe lost, $100k → $100M |
+|---|---|
+| **Strategy** | **0.116** |
+| Benchmark | 0.022 |
+
+**The strategy loses 5.3× more Sharpe to impact than the benchmark does**, despite the
+benchmark turning over 2.7× more (D185). Volatility normalisation did not rescue it,
+because the strategy's impact is **concentrated** in the thin coins it actually trades,
+while the benchmark spreads its turnover across all 62 including the liquid ones.
+Concentration is not divided away by volatility.
+
+That is the first time in this project a mechanism-first prediction has been right about
+both the mechanism and its consequence.
+
+## Two books destroyed, and by impact alone
+
+At $30M and above, `LUNA1-USD` and `LUNC-USD` **long** books reach zero NAV and are
+truncated. **No long book dies at zero impact** — D183's only deaths were on the short side
+— so impact is doing this by itself: the cost of entering those coins at $484k exceeds what
+the position can bear.
+
+**This is also the model's own edge, and it should be read that way.** A square-root impact
+charge large enough to destroy an account is outside the range D66's functional form was
+fitted for — it models a cost, not a bankruptcy. The honest reading is that **the trade does
+not exist at this size**, which is the same answer arrived at less gracefully.
+
+The published rows are not contaminated by it: NAV goes negative at bar 874, several hundred
+bars before the raw equity curve goes NaN at 1,326, so the account-death truncation from
+D183 caught it cleanly. **That was luck, not design** — `if a <= 0.0` compares False against
+NaN, so the guard would have let a non-finite NAV straight through had the ordering been
+reversed. It now tests `not (a > 0.0) or not isfinite(b)`.
+
+## The deflated Sharpe — D183's second debt, paid and worth less than it looks
+
+At $100k the portfolio scores **+1.240** annualised. Deflated against the long book's own
+published pool — **30 trials**, V[SRn] = 4.99e-05 daily, read from
+`breakout_study_summary.json` rather than asserted — **DSR = 0.9996**.
+
+**That number should not be quoted on its own, and here is why.**
+
+**It deflates against a trial pool, not against a benchmark.** DSR asks whether a Sharpe is
+plausibly the best of 30 zero-skill attempts. It does not ask whether the Sharpe beat buy
+and hold. At $30M the strategy scores +1.161 and the equal-weight universe scores +1.161 —
+**identical** — and the DSR of the former would still be high. A deflated Sharpe near 1.0 on
+a book that merely matches a passive basket is measuring crypto beta surviving a
+multiplicity correction, not skill surviving one.
+
+**The pool is an approximation.** The 30 trials are per-symbol BTC/ETH variants; the thing
+being deflated is a 62-coin portfolio. Using that pool's variance as the noise floor is the
+closest honest choice available — the search that selected the configuration is the right
+pool — but it is not a pool of portfolios.
+
+**And the return distribution is extreme:** skew **+4.76**, kurtosis **106.7**. The DSR
+formula corrects for both, which is why it is the right tool, but a Sharpe estimated from
+returns that shaped is itself unstable.
+
+## What this settles
+
+**The capacity is ~$30M of total AUM** — about $484k per coin across 62 coins. Below that
+the edge is real and shrinking; at it, the edge is zero; above it, negative.
+
+**All three of D183's debts are now paid.** The rebalancing cost (D185, immaterial), the
+deflated Sharpe (high, and less meaningful than it looks), and capacity (~$30M). The
+remaining debt is the one D183 named third: an out-of-sample cross-section, on a universe
+this one does not contain.
+
+**And the result is smaller than it was.** D183 reported +1.277 with no impact at all. At a
+realistic $10M the strategy scores +1.180 against a benchmark at +1.166 — **an edge of
++0.014**. The honest summary of this project's one working idea is now:
+
+> An equal-weight crypto basket with a breakout overlay, returning roughly what the basket
+> returns at a third of its drawdown, with an edge over the basket that is small at $1M,
+> marginal at $10M, and gone at $30M.
+
+## What it does not settle
+
+**Impact is calibrated full-sample and ADV is a whole-period mean** — D66's caveat carried
+forward. A coin's 2016 and 2025 volumes differ by orders of magnitude, and one average
+across both flatters the thin years, which is where capacity binds.
+
+**Parameter selection is done on pre-impact economics**, deliberately: the sweep varies size
+and nothing else, and letting fitted parameters move with AUM would make it measure two
+things at once. The mismatch is real and unmeasured.
+
+**A square-root impact model is still not a liquidity model.** It says what a fill costs, not
+whether a counterparty exists. **The $30M figure is therefore an upper bound on capacity,
+not an estimate of it.**

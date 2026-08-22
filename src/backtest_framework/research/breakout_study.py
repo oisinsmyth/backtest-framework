@@ -45,7 +45,7 @@ would this have actually earned".
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime
 from typing import Any, Callable, Mapping, Sequence
 
@@ -521,7 +521,14 @@ class InTrainGridSelector:
     def __call__(
         self, train_bars: Sequence[TimestampedBar], tier: CostTier, study: BreakoutStudyConfig
     ) -> dict[str, Any]:
-        stack = tier.build()
+        # Parameter SELECTION is deliberately done on pre-impact economics (D186), and the
+        # impact is STRIPPED rather than left off by omission, so this is a decision in the
+        # code rather than an accident of which call sites got a context threaded through.
+        # The reason: a capacity sweep varies size and nothing else, and letting the fitted
+        # parameters move with AUM would make it measure two things at once. The mismatch —
+        # selecting on pre-impact economics and then trading with impact — is real and is
+        # stated in the study's own artifact.
+        stack = replace(tier, impact_coefficient=0.0).build()
         best_score, best_key, best_config = -math.inf, None, None
         for n_entry, n_exit in self.grid:
             config = breakout_config(n_entry=n_entry, n_exit=n_exit, weight_source=self.weight_source)
@@ -676,6 +683,32 @@ def _window_spans(
     return spans
 
 
+def _context_for(
+    tier: CostTier,
+    symbol: str,
+    bars: Sequence[TimestampedBar],
+    volumes: Sequence[float] | None,
+) -> StackDataContext | None:
+    """The data a cost stack needs, or None when it needs none (D186).
+
+    `SqrtImpact` calibrates sigma and ADV from this. Every caller that builds a stack for a
+    tier that MIGHT charge impact goes through here, so the "did anyone remember to pass
+    the volumes" question is asked in exactly one place instead of at four call sites."""
+    if not tier.impact_coefficient:
+        return None
+    if volumes is None:
+        raise ValueError(
+            f"tier {tier.name!r} charges square-root impact but no volume series was "
+            f"passed for {symbol!r}. ADV must be calibrated, never defaulted (D48) — a "
+            "missing volume series has to stop the run, not quietly cost nothing."
+        )
+    return StackDataContext(
+        bars_by_symbol={symbol: list(bars)},
+        volumes_by_symbol={symbol: list(volumes)},
+        actions=CorporateActions(),
+    )
+
+
 def run_variant(
     bars: Sequence[TimestampedBar],
     symbol: str,
@@ -741,21 +774,7 @@ def run_variant(
     # Impact calibrates against THIS symbol's own bars and volumes (D186). Built here
     # rather than threaded in from the caller, because this is the only place that holds
     # the sliced series the run actually trades.
-    if tier.impact_coefficient and run_volumes is None:
-        raise ValueError(
-            f"tier {tier.name!r} charges square-root impact but no volume series was "
-            f"passed for {symbol!r}. ADV must be calibrated, never defaulted (D48) — a "
-            "missing volume series has to stop the run, not quietly cost nothing."
-        )
-    context = (
-        StackDataContext(
-            bars_by_symbol={symbol: run_bars},
-            volumes_by_symbol={symbol: run_volumes or []},
-            actions=CorporateActions(),
-        )
-        if tier.impact_coefficient
-        else None
-    )
+    context = _context_for(tier, symbol, run_bars, run_volumes)
     result = run_backtest(
         bars_by_instrument={symbol: run_bars},
         instruments=_instruments(symbol),
@@ -839,7 +858,11 @@ def run_variant(
 
 
 def run_benchmark(
-    bars: Sequence[TimestampedBar], symbol: str, tier: CostTier, study: BreakoutStudyConfig
+    bars: Sequence[TimestampedBar],
+    symbol: str,
+    tier: CostTier,
+    study: BreakoutStudyConfig,
+    volumes: Sequence[float] | None = None,
 ) -> BenchmarkResult:
     """True buy-and-hold over the OOS span, on the SAME cost tier and the SAME fill
     timing as every strategy variant (D115).
@@ -867,7 +890,9 @@ def run_benchmark(
         raise ValueError("buy-and-hold needs at least two OOS bars")
 
     instrument = _instruments(symbol)[symbol]
-    stack = tier.build()
+    # Buy-and-hold pays impact on its one purchase too. Charging the strategy and not the
+    # benchmark would rig every `beats_hold` verdict in the universe study (D186).
+    stack = tier.build(_context_for(tier, symbol, series, volumes))
     entry_price = series[1].bar.open
     # Solve for the quantity whose notional plus its own fee exhausts starting cash.
     # The fee bricks in this study are proportional, so one Newton step is exact; the
@@ -890,7 +915,11 @@ def run_benchmark(
 
 
 def run_benchmark_via_engine(
-    bars: Sequence[TimestampedBar], symbol: str, tier: CostTier, study: BreakoutStudyConfig
+    bars: Sequence[TimestampedBar],
+    symbol: str,
+    tier: CostTier,
+    study: BreakoutStudyConfig,
+    volumes: Sequence[float] | None = None,
 ) -> BenchmarkResult:
     """The engine-run constant-100%-weight version of buy-and-hold — kept as the
     cross-check on `run_benchmark`, not as the reported benchmark (see its docstring)."""
@@ -911,7 +940,7 @@ def run_benchmark_via_engine(
                 strategy_id=f"buyhold-{symbol}", weights_by_instrument={symbol: [1.0]}
             )
         ],
-        cost_stack=tier.build(),
+        cost_stack=tier.build(_context_for(tier, symbol, run_bars, volumes)),
         allocator=ConstantSplitAllocator(),
         starting_cash=study.starting_cash,
         fill_timing=study.fill_timing,
@@ -1353,6 +1382,7 @@ def run_constant_fraction_benchmark(
     tier: CostTier,
     study: BreakoutStudyConfig,
     fraction: float,
+    volumes: Sequence[float] | None = None,
 ) -> BenchmarkResult:
     """Hold a CONSTANT FRACTION of capital in the instrument, rest in cash, through the
     same engine, tier and fill timing as every strategy variant (D119).
@@ -1379,7 +1409,9 @@ def run_constant_fraction_benchmark(
                 strategy_id=f"constfrac-{symbol}", weights_by_instrument={symbol: [fraction]}
             )
         ],
-        cost_stack=tier.build(),
+        cost_stack=tier.build(
+            _context_for(tier, symbol, list(bars[oos_start:oos_end]), volumes)
+        ),
         allocator=ConstantSplitAllocator(),
         starting_cash=study.starting_cash,
         fill_timing=study.fill_timing,

@@ -117,6 +117,13 @@ def main() -> int:
         extra_meta={"source_fixture": FIXTURE.name, "study": "capacity_portfolio_v1"},
     )
     snapshot = store.load(snapshot_id)
+    # Re-index volumes onto the CLEANED bars. `clean()` drops bad prints and does not
+    # re-index the volume list it was handed, so the two are misaligned by construction
+    # after any drop (D111's precedent, handled by `align_volumes`). Impact calibrates ADV
+    # from this series, so a misalignment here would quietly mis-price every fill.
+    volumes = {
+        s: bu.align_volumes(cleaned[s], raw_bars[s], raw_volumes[s]) for s in cleaned
+    }
     cohorts = json.loads(META.read_text(encoding="utf-8"))["cohort_by_symbol"]
 
     if REGISTRY_PATH.exists():
@@ -133,7 +140,7 @@ def main() -> int:
         print(f"AUM ${aum:,.0f}  (${per_coin:,.0f} per coin) ...", flush=True)
         run = bu.run_universe_study(
             snapshot.bars_by_symbol,
-            snapshot.volumes_by_symbol,
+            volumes,
             registry,
             snapshot_id,
             cohorts=cohorts,
@@ -142,11 +149,26 @@ def main() -> int:
             trial_id_prefix=f"capacity-{int(aum)}",
             variant=bu.baseline_variant(),
             progress=lambda m: None,
+            # This study deflates against the LONG BOOK's published trial pool, not a
+            # cross-section of 62 symbols running one configuration. It also must skip
+            # the built-in DSR because at large AUM impact makes coins untradeable, their
+            # returns go flat, and `_dsr_for` rightly refuses a pool with an undefined
+            # Sharpe in it. A study whose FINDING is "coins go inert at size" cannot be
+            # stopped by a guard against inert coins — so they are counted below instead.
+            compute_dsr=False,
         )
         per_symbol = {}
+        killed = []
         for symbol, srun in run.runs.items():
-            dated, _ = dated_returns(srun.by_tier[tier.name].variant.oos_equity)
+            dated, died = dated_returns(srun.by_tier[tier.name].variant.oos_equity)
             per_symbol[symbol] = dict(dated)
+            # A book whose NAV reaches zero has been DESTROYED by its own trading costs:
+            # at this size the impact of entering a thin coin exceeds what the position
+            # can bear. No long book dies at zero impact, so every name here is impact
+            # doing it. That is the capacity limit arriving coin by coin rather than as a
+            # smooth Sharpe decay, and it is the most concrete thing this study finds.
+            if died:
+                killed.append(symbol)
         dates = sorted({d for s in per_symbol.values() for d in s})
         dates_ref = dates_ref or dates
         gross, turn = _equal_weight_arm(dates, per_symbol)
@@ -157,12 +179,14 @@ def main() -> int:
             "per_coin": per_coin,
             **_stats(net[w:], base_study),
             "mean_daily_turnover": statistics.fmean(turn[w:]) if len(turn) > w else 0.0,
+            "n_killed": len(killed),
+            "killed": sorted(killed),
             # Popped in build_payload once the DSR's skew/kurt are computed from it; it
             # would otherwise bloat the summary with seven copies of a 3,500-point series.
             "_net": net[w:],
         }
 
-    payload = build_payload(levels, snapshot, dates_ref, base_study, snapshot_id)
+    payload = build_payload(levels, snapshot, volumes, dates_ref, base_study, snapshot_id)
     SUMMARY_JSON.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     RESULTS.write_text(build_report(payload), encoding="utf-8")
     print(f"swept {len(AUM_LEVELS)} AUM levels in {time.time() - started:.0f}s")
@@ -184,12 +208,12 @@ def _stats(returns: list[float], study: bs.BreakoutStudyConfig) -> dict[str, flo
     }
 
 
-def build_payload(levels, snapshot, dates, study, snapshot_id) -> dict:
+def build_payload(levels, snapshot, volumes, dates, study, snapshot_id) -> dict:
     # ---- the benchmark, charged impact on the SAME terms ----------------------------
     # A passive equal-weight basket also has to trade to hold its weights, and it holds
     # every coin every day. Charging only the strategy would rig the comparison — the
     # principle D185 established for the rebalancing cost, applied to impact.
-    params = calibrate_impact_params(snapshot.bars_by_symbol, snapshot.volumes_by_symbol)
+    params = calibrate_impact_params(snapshot.bars_by_symbol, volumes)
     raw: dict[str, dict[str, float]] = {}
     prices: dict[str, dict[str, float]] = {}
     for symbol, bars in snapshot.bars_by_symbol.items():
@@ -288,7 +312,7 @@ def build_report(p: dict) -> str:
         rows.append(
             f"| ${aum / 1e6:,.1f}M | ${aum / 62 / 1e3:,.0f}k | {s['sharpe']:+.3f} | "
             f"{s['total_return'] * 100:+,.0f}% | {s['max_drawdown'] * 100:.1f}% | "
-            f"{b['sharpe']:+.3f} | **{p['edges'][k]:+.3f}** |"
+            f"{s.get('n_killed', 0)} | {b['sharpe']:+.3f} | **{p['edges'][k]:+.3f}** |"
         )
     d = p["deflated_sharpe"]
     return f"""# Capacity: does the portfolio edge exist at size?
@@ -321,11 +345,13 @@ tiers would quadruple the runtime for a sensitivity nobody reads here.
 
 ## The sweep
 
-| Total AUM | Per coin | Strategy Sharpe | Return | Max DD | Benchmark Sharpe | Edge |
-|---|---|---|---|---|---|---|
+| Total AUM | Per coin | Strategy Sharpe | Return | Max DD | Books destroyed | Benchmark Sharpe | Edge |
+|---|---|---|---|---|---|---|---|
 {NL.join(rows)}
 
 {_verdict(p)}
+
+{_killed_block(p)}
 
 ## The deflated Sharpe — D183's second debt
 
@@ -359,6 +385,41 @@ to zero regardless of the strategy — the exact bug D98 was written to close.
 5. Everything D183 and D185 carry still applies: one crypto cross-section, one
    bull-dominated decade, no out-of-sample test on a cross-section this one does not contain.
 """
+
+
+def _killed_block(p: dict) -> str:
+    """Books destroyed by their own trading costs as size rises.
+
+    This is the capacity limit in its most concrete form. A Sharpe drifting down is an
+    average; this is an account reaching zero."""
+    rows = []
+    for aum in p["aum_levels"]:
+        lvl = p["strategy"][str(int(aum))]
+        n = lvl.get("n_killed", 0)
+        if n:
+            names = ", ".join(f"`{s}`" for s in lvl.get("killed", [])[:8])
+            more = "" if n <= 8 else f" and {n - 8} more"
+            rows.append(f"| ${aum / 1e6:,.1f}M | {n} | {names}{more} |")
+    if not rows:
+        return (
+            "**No book was destroyed at any size tested.** Impact made the fills worse "
+            f"all the way to ${p['aum_levels'][-1] / 1e6:,.0f}M; it did not wipe an "
+            "account out."
+        )
+    return f"""### Books destroyed by their own trading costs
+
+**No long book dies at zero impact** (D183), so every name below is impact doing it: at
+this size the cost of entering a thin coin exceeds what the position can bear, and the
+account reaches zero.
+
+| Total AUM | Books destroyed | Which |
+|---|---|---|
+{NL.join(rows)}
+
+**Read this as the model's own edge, not only as a result.** A square-root impact charge
+large enough to destroy an account is a charge outside the range the functional form was
+calibrated for — D66 fits a cost, not a bankruptcy. The honest reading is that the trade
+does not exist at this size, which is the same answer, arrived at less gracefully."""
 
 
 def _verdict(p: dict) -> str:

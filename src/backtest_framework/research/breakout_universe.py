@@ -570,12 +570,22 @@ def run_universe_study(
     trial_id_prefix: str = "breakout-universe-v1",
     progress: Callable[[str], None] | None = None,
     variant: bs.Variant | None = None,
+    compute_dsr: bool = True,
 ) -> UniverseResult:
     """Run ONE fixed configuration on every symbol the policy admits, at every cost tier,
     and log every run.
 
     The policy is applied HERE, on the data handed in — not trusted from the fixture
     meta. A symbol that fails the screen never reaches `run_variant`.
+
+    `compute_dsr=False` skips the cross-sectional deflated Sharpe. Only the capacity sweep
+    (D186) passes it: that study deflates against the LONG BOOK's published trial pool —
+    the search that actually selected the configuration — rather than against a pool of
+    62 symbols running the same configuration, which is a cross-section and not a search.
+    It also has to, because at large AUM impact makes some coins untradeable, their return
+    series go flat, and their Sharpe is undefined. `_dsr_for` refuses that pool and is
+    right to; a study whose FINDING is "coins go inert at size" must not be blocked by a
+    guard against inert coins, so it counts them and reports them instead.
 
     `variant` defaults to the long book's published baseline, which is what this study
     was built for. It is a parameter so the SHORT book's stop comparison (D174) can reuse
@@ -599,11 +609,21 @@ def run_universe_study(
         for tier in tiers:
             if progress:
                 progress(f"{symbol} {tier.name}")
-            result = bs.run_variant(bars, symbol, variant, tier, study)
-            hold = bs.run_benchmark(bars, symbol, tier, study)
+            # Volumes were accepted by this function, used for the policy screen, and
+            # then never handed to the run (D186). Harmless while nothing downstream
+            # wanted them; the moment a cost tier charged square-root impact it became a
+            # loud failure, which is the only reason it was found. Passed unconditionally
+            # rather than "when needed" — a conditional is what hid it in the first place.
+            result = bs.run_variant(
+                bars, symbol, variant, tier, study, volumes=volumes_by_symbol.get(symbol)
+            )
+            vols = volumes_by_symbol.get(symbol)
+            hold = bs.run_benchmark(bars, symbol, tier, study, volumes=vols)
             fraction = result.diagnostics.exposure
             matched = (
-                bs.run_constant_fraction_benchmark(bars, symbol, tier, study, fraction)
+                bs.run_constant_fraction_benchmark(
+                    bars, symbol, tier, study, fraction, volumes=vols
+                )
                 if fraction > 1e-9
                 else None
             )
@@ -629,10 +649,11 @@ def run_universe_study(
 
     dsr_by_tier: dict[str, float] = {}
     dsr_inputs_by_tier: dict[str, dict[str, Any]] = {}
-    for tier in tiers:
-        dsr, inputs = _dsr_for(registry, tier, study, runs, trial_id_prefix)
-        dsr_by_tier[tier.name] = dsr
-        dsr_inputs_by_tier[tier.name] = inputs
+    if compute_dsr:
+        for tier in tiers:
+            dsr, inputs = _dsr_for(registry, tier, study, runs, trial_id_prefix)
+            dsr_by_tier[tier.name] = dsr
+            dsr_inputs_by_tier[tier.name] = inputs
 
     return UniverseResult(
         config=study,

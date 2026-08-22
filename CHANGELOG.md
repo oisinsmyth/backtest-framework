@@ -10,6 +10,54 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (capacity, pre-registered, 2026-08-22 — D186)
+- `CostTier.impact_coefficient` wires square-root market impact (D66) into the breakout
+  cost tiers, reusing `SqrtImpact` and `calibrate_impact_params` from the equities pairs
+  study. **The D166 rule, fifth application**: the `sqrt_impact` brick is ABSENT when off,
+  not present with coefficient zero, so every config hash in both studies is unchanged.
+- `CostTier.build()` takes an optional `StackDataContext` and raises if impact is on
+  without one; a new `_context_for` helper is the single place all four build sites ask
+  "did anyone pass the volumes".
+- `scripts/run_capacity_portfolio.py` sweeps $100k-$100M, per-coin slice AUM/62, at the
+  reference tier, with the benchmark charged impact on the same terms.
+- `run_universe_study` gains `compute_dsr` (only the capacity sweep passes False).
+
+### Findings — predictions committed first (6a9529e), then scored
+- **BOTH CONFIRMED. Capacity is ~$30M of total AUM (~$484k per coin).** Edge over the
+  equal-weight universe: **+0.067** at $100k, +0.051 at $1M, +0.014 at $10M, **-0.000 at
+  $30M**, **-0.026 at $100M**.
+- **H1 confirmed narrowly**: strategy Sharpe falls +1.240 -> +1.124, a loss of 0.116
+  against a predicted >0.10.
+- **H2 confirmed, and for the predicted reason.** The strategy loses **5.3x more Sharpe to
+  impact than the benchmark** (0.116 vs 0.022) despite the benchmark turning over 2.7x
+  more. Volatility normalisation did not rescue it — the mechanism the pre-registration
+  named — because the strategy's impact CONCENTRATES in the thin coins it trades while the
+  benchmark spreads turnover across all 62. **First time a mechanism-first prediction here
+  was right about both the mechanism and its consequence.**
+- **Two long books destroyed by impact alone** at $30M+: `LUNA1-USD`, `LUNC-USD`. No long
+  book dies at zero impact (D183). Also the model's own edge: a sqrt-impact charge large
+  enough to bankrupt an account is outside the range D66's form was fitted for.
+- **Deflated Sharpe = 0.9996** at $100k (30 trials, V[SRn] read from the long study's
+  published inputs, not asserted). **It should not be quoted alone**: DSR deflates against
+  a trial pool, not a benchmark. At $30M the strategy and the benchmark both score +1.161
+  and the DSR would still be high — it measures crypto beta surviving a multiplicity
+  correction, not skill surviving one. Skew +4.76, kurtosis 106.7.
+- **All three of D183's debts are now paid**; the honest summary is an equal-weight crypto
+  basket with a breakout overlay, at a third of the basket's drawdown, with an edge that is
+  small at $1M, marginal at $10M and gone at $30M.
+
+### Fixed
+- `run_universe_study` accepted `volumes_by_symbol`, used it for the policy screen and
+  **never handed it to the run**. Harmless until a cost tier needed ADV, at which point it
+  became a loud failure — which is the only reason it was found. Volumes now passed
+  unconditionally to `run_variant` and to both benchmarks; verified byte-identical on the
+  existing portfolio study before anything downstream was trusted.
+- `dated_returns` tested `a <= 0.0` for account death, which is False for NaN. Impact large
+  enough to exceed a position's notional produces exactly that; in the one observed case
+  NAV went negative several hundred bars before it went NaN, so the loose guard happened to
+  catch it. Now `not (a > 0.0) or not isfinite(b)`.
+
+
 ### Added (rebalancing cost charged, pre-registered, 2026-08-22 — D185)
 - `_equal_weight_arm` now returns one-way TURNOVER alongside the gross series, and the
   portfolio study charges it at the project's existing 0/10/25/40bp ladder. **The benchmark
