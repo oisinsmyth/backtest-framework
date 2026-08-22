@@ -10,6 +10,16 @@ research program has published five studies from it, plus a second, deliberately
 contrasting strategy (a long-flat crypto breakout) that exists to test the framework's
 own claim that a strategy is a swappable brick.
 
+**The final report is [`docs/results/final_report.html`](docs/results/final_report.html)**
+— the whole project in one document: what was tested, how each idea died, the seven real
+defects the guards caught, and the two properties that survived (neither of which is
+signal). Published at
+<https://claude.ai/code/artifact/322b8663-8de5-4c75-b798-988d50281d63>.
+
+It is the single source for that summary — deliberately not mirrored as Markdown, because
+two copies of the same prose drift apart, which is the most repeated defect in this
+project's own history (D176, D183, D186).
+
 **The research output is [`docs/writeup.md`](docs/writeup.md)** — the five-study
 measurement of whether ETF pairs trading clears real frictions (draft skeleton; every
 headline number final and cross-checked against its source artifact by the test suite).

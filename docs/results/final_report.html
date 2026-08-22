@@ -1,0 +1,576 @@
+<title>Nothing Worked</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+  :root {
+    --paper:      #F2F4F3;
+    --surface:    #FFFFFF;
+    --sunk:       #E9EDEC;
+    --ink:        #101C2B;
+    --muted:      #5C6B7A;
+    --faint:      #8697A6;
+    --rule:       #D3DAE0;
+    --brass:      #9A6B1F;
+    --brass-soft: #EFE3CC;
+    --slate:      #2F4356;
+
+    --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --cond:  "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+    --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --measure: 34rem;
+    --wide:    58rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0E141B;
+      --surface:    #151D26;
+      --sunk:       #121A22;
+      --ink:        #E3E9ED;
+      --muted:      #93A3B1;
+      --faint:      #6D7E8C;
+      --rule:       #26333F;
+      --brass:      #D3A050;
+      --brass-soft: #2C2416;
+      --slate:      #A8BACA;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0E141B;
+    --surface:    #151D26;
+    --sunk:       #121A22;
+    --ink:        #E3E9ED;
+    --muted:      #93A3B1;
+    --faint:      #6D7E8C;
+    --rule:       #26333F;
+    --brass:      #D3A050;
+    --brass-soft: #2C2416;
+    --slate:      #A8BACA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    display: grid;
+    grid-template-columns: 1fr min(var(--measure), calc(100% - 2.5rem)) 1fr;
+    row-gap: 0;
+  }
+  .page > * { grid-column: 2; }
+  .page > .bleed {
+    grid-column: 1 / -1;
+    width: min(var(--wide), calc(100% - 2.5rem));
+    margin-inline: auto;
+  }
+
+  /* ---------------------------------------------------------------- masthead */
+
+  .masthead {
+    padding: 5rem 0 2.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .eyebrow {
+    font-family: var(--cond);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 1.25rem;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 7vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.19rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .byline {
+    font-family: var(--cond);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+  }
+
+  /* ---------------------------------------------------------------- sections */
+
+  section { padding: 3.25rem 0 0; }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.65rem;
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    margin: 0 0 0.35rem;
+    text-wrap: balance;
+  }
+  h2 + .kicker {
+    font-family: var(--cond);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 1.5rem;
+  }
+  h3 {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin: 2.25rem 0 0.75rem;
+  }
+  p { margin: 0 0 1.05rem; }
+  p.lead { font-size: 1.06rem; }
+  strong { font-weight: 700; }
+  em.term { font-style: italic; color: var(--muted); }
+
+  a { color: var(--brass); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; border-radius: 2px; }
+
+  code, .num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.88em;
+  }
+  code {
+    background: var(--sunk);
+    padding: 0.08em 0.32em;
+    border-radius: 2px;
+  }
+  .obs { color: var(--brass); font-weight: 600; }
+
+  /* ---------------------------------------------------------------- evidence */
+
+  .bleed { margin-block: 2rem; }
+
+  figure { margin: 0; }
+  figcaption {
+    font-family: var(--cond);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    margin-top: 0.7rem;
+    max-width: var(--measure);
+  }
+
+  .scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    padding-bottom: 0.6rem;
+  }
+  th {
+    font-family: var(--cond);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-align: right;
+    padding: 0 0.7rem 0.5rem;
+    border-bottom: 1px solid var(--ink);
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; padding-left: 0; }
+  th:last-child, td:last-child { padding-right: 0; }
+  td {
+    text-align: right;
+    padding: 0.46rem 0.7rem;
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 1px solid var(--ink); }
+  td.name { font-family: var(--serif); font-size: 0.95rem; white-space: normal; }
+  td.hi { color: var(--brass); font-weight: 600; }
+  tr.total td { font-weight: 600; }
+
+  /* ---------------------------------------------------------------- verdicts */
+
+  .chip {
+    display: inline-block;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.16em 0.5em;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    white-space: nowrap;
+    vertical-align: 0.08em;
+  }
+  .chip.fail    { color: var(--brass); }
+  .chip.hold    { color: var(--slate); }
+  .chip.neutral { color: var(--faint); }
+
+  /* ---------------------------------------------------------------- panels */
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brass);
+    padding: 1.4rem 1.5rem;
+    margin: 2rem 0;
+  }
+  .panel h3 { margin-top: 0; }
+  .panel p:last-child { margin-bottom: 0; }
+
+  .pull {
+    font-family: var(--serif);
+    font-size: 1.32rem;
+    line-height: 1.36;
+    font-style: italic;
+    color: var(--ink);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 1.4rem 0;
+    margin: 2.4rem 0;
+    text-wrap: pretty;
+  }
+
+  /* ---------------------------------------------------------------- stats row */
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .stat { background: var(--surface); padding: 1.1rem 1.2rem; }
+  .stat dt {
+    font-family: var(--cond);
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 0.4rem;
+  }
+  .stat dd {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .stat dd .unit { font-size: 0.85rem; color: var(--muted); }
+
+  /* ---------------------------------------------------------------- lists */
+
+  ul.findings { list-style: none; padding: 0; margin: 0; }
+  ul.findings li {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 3.4rem 1fr;
+    gap: 0 1rem;
+    align-items: baseline;
+  }
+  ul.findings li:first-child { border-top: 1px solid var(--rule); }
+  ul.findings .rec {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+
+  hr.rule { border: 0; border-top: 1px solid var(--rule); margin: 3rem 0 0; }
+
+  footer {
+    padding: 3rem 0 5rem;
+    font-family: var(--cond);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .masthead { padding-top: 3rem; }
+    ul.findings li { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <p class="eyebrow">Backtest Framework &middot; Final Report</p>
+    <h1>Nothing worked, and that is the result</h1>
+    <p class="standfirst">Every rule this project invented to add signal failed a fair test. Two things survived, and neither of them is signal. This is the record of how each one died, and of the machinery that made the deaths legible.</p>
+    <p class="byline">
+      <span>166 decision records</span>
+      <span>775 tests</span>
+      <span>D189 &middot; 22 Aug 2026</span>
+    </p>
+  </header>
+
+  <section>
+    <h2>What was being tested</h2>
+    <p class="kicker">A breakout book, and everything tried to improve it</p>
+    <p class="lead">A long book buys a 40-day high and exits on a 10-day low. A short book sells a 20-day low below the 200-day average, pays 10%/yr to borrow, and carries a mandatory stop. Both run walk-forward — fit on 252 days, trade the next 63, roll — so nothing is ever scored on data it was fitted on.</p>
+    <p>On top of that baseline, the project tested entry filters, six families of stop, two exit signatures, an ensemble, a cross-sectional portfolio, and finally a supply-and-demand terrain model. Each addition was registered before it ran, scored against a stated bar, and kept or dropped on that bar alone.</p>
+    <p>The discipline mattered more than any of the ideas. Predictions were committed to git <em class="term">before</em> the run that would score them, so a wrong call is dated and cannot be quietly rewritten. Nine studies were pre-registered this way, stating twenty-three hypotheses between them. Close to half turned out wrong — a record that is only meaningful because the falsifications are still in the repository, unedited, above the results that refuted them.</p>
+  </section>
+
+  <div class="bleed">
+    <dl class="stats">
+      <div class="stat"><dt>Configurations registered</dt><dd>57</dd></div>
+      <div class="stat"><dt>Survived out of sample</dt><dd>0</dd></div>
+      <div class="stat"><dt>Pre-registered studies</dt><dd>9</dd></div>
+      <div class="stat"><dt>Real bugs found</dt><dd>7</dd></div>
+    </dl>
+  </div>
+
+  <section>
+    <h2>Act one: the rules</h2>
+    <p class="kicker">Fifty-seven registered configurations, none surviving contact with new instruments</p>
+    <p>Four entry filters were tested and all four removed good trades along with bad. Six stop families were swept; three failed outright and the rest split by symbol, which is a coin flip wearing a result's clothes.</p>
+    <p>The most instructive failure was <strong>E1</strong> — a rule that exits a breakout which immediately falls back inside the channel it broke. It cleared its bar <strong>five times</strong>: the long book at two settings, the short book at two settings, and the combined book with both bootstrap intervals excluding zero. Five independent passes.</p>
+    <p>Then it was run on 62 coins, a universe screened mechanically to <em class="term">include</em> the ones that failed — 41 that fell 90%+ and never recovered, two delisted.</p>
+  </section>
+
+  <div class="bleed">
+    <div class="scroll">
+      <table>
+        <caption>E1 across every test it was given</caption>
+        <thead>
+          <tr><th>Test</th><th>Scope</th><th>Result</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">Long book, k=2 and k=3</td><td>BTC, ETH</td><td>+0.058 to +0.177</td><td>keep</td></tr>
+          <tr><td class="name">Short book, k=2 and k=3</td><td>BTC, ETH</td><td>+0.020 to +0.101</td><td>keep</td></tr>
+          <tr><td class="name">Combined book, k=3</td><td>BTC, ETH</td><td>+0.114 / +0.197</td><td>keep</td></tr>
+          <tr class="total"><td class="name">Long book, cross-section</td><td>62 coins</td><td class="hi">39% win rate</td><td>fail</td></tr>
+          <tr class="total"><td class="name">Short book, cross-section</td><td>62 coins</td><td class="hi">48% win rate</td><td>fail</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figcaption>Five passes on two instruments, then a loss on 57 of 62 coins. Win rates are over the symbols where the rule actually fired.</figcaption>
+  </div>
+
+  <section>
+    <p>The reason was measurable, not mysterious. E1's damage tracks how many extra trades it creates, at a correlation of <span class="num obs">&minus;0.72</span>. BTC and ETH sit at the <strong>97th and 85th percentile</strong> of trade density across the cross-section — precisely the two instruments where each extra interruption costs least.</p>
+    <div class="pull">Five &ldquo;independent&rdquo; passes were five readings of two unusually favourable price series. Nothing about the statistics was wrong; the sample was.</div>
+  </section>
+
+  <section>
+    <h2>Act two: the portfolio</h2>
+    <p class="kicker">The one thing that worked, and how far it got</p>
+    <p>Every result up to this point was a single-instrument book, or a cross-section of single-instrument books averaged afterwards. <strong>Averaging Sharpes is not the same as earning the Sharpe of an average.</strong> Holding all 62 books at once had never been tried.</p>
+    <p>It worked. The long book went from a median single-coin Sharpe of <span class="num">+0.437</span> to a portfolio Sharpe of <span class="num obs">+1.277</span>, with maximum drawdown falling from a 48% average to 28.8%. Nothing else tested moved a number like that.</p>
+    <p>It was also the least surprising result in the project, because it is arithmetic rather than a discovery — and it is the only lever tried that operates on the <em class="term">return distribution</em> rather than on one book's decisions.</p>
+    <p>Three debts were then paid, in order.</p>
+  </section>
+
+  <div class="bleed">
+    <div class="scroll">
+      <table>
+        <caption>What the portfolio survived, and what it did not</caption>
+        <thead>
+          <tr><th>Challenge</th><th>Outcome</th><th>Edge after</th><th>Verdict</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">Thin early sample dropped</td><td>+1.277 &rarr; +0.928</td><td>&mdash;</td><td>a third was the early years</td></tr>
+          <tr><td class="name">Rebalancing cost charged</td><td>1.8&times;/yr turnover</td><td class="num">+0.078</td><td>break-even at 972&nbsp;bp</td></tr>
+          <tr><td class="name">Market impact charged</td><td>capacity ~$66M</td><td class="num">+0.047 at $10M</td><td>gone above capacity</td></tr>
+          <tr class="total"><td class="name">Run on 57 ETFs</td><td class="hi">&minus;0.273 vs basket +0.395</td><td class="num hi">&minus;0.667</td><td>does not transfer</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figcaption>Edges are measured against a daily-rebalanced equal-weight basket of the same instruments — the like-for-like benchmark, not a single asset.</figcaption>
+  </div>
+
+  <section>
+    <p>The first three it survived. The fourth ended it: on 57 ETFs — a different asset class, the same strategy, no refitting — the edge inverted from <span class="num">+0.075</span> to <span class="num obs">&minus;0.667</span>.</p>
+
+    <h3>The finding inside the failure</h3>
+    <p>Going in, I predicted the diversification lift would reproduce, calling it <em class="term">arithmetic, not a market claim</em>. It did not. The ETF portfolio scored <span class="num">&minus;0.273</span> against a median single ETF of <span class="num">&minus;0.177</span>. The lift did not fail to appear — it <strong>reversed</strong>.</p>
+    <p>The arithmetic is exactly why. Sharpe is <code>mean ÷ σ</code>. Averaging partially-independent books does shrink σ — but it divides a <em class="term">mean</em> by that smaller σ. Positive mean: shrinking σ raises the Sharpe. Negative mean: it makes the Sharpe worse.</p>
+    <div class="pull">Diversification is a magnifier with the sign of the expectancy. It does not create edge; it concentrates whichever sign is already there.</div>
+    <p>That correction applies backwards without changing a single number: the crypto lift was real, and it was real <em class="term">because those books had positive expectancy</em> — not because averaging is free.</p>
+  </section>
+
+  <section>
+    <h2>Act three: the terrain model</h2>
+    <p class="kicker">A supply-and-demand map, and the null test that closed it</p>
+    <p>The last phase specified a terrain model: sensors estimating where resting supply and demand sit relative to price, fused into a field that would gate entries and modulate exits. Its own plan carried a stop condition — if the lead sensor cannot beat randomly placed levels, the programme stops rather than hoping a weaker sensor rescues it.</p>
+    <p>The lead sensor is a volume profile: a histogram of dollars traded at each price over a rolling window, from which high-volume nodes are extracted as levels. The test asks one question. Does price behave differently at <em class="term">those</em> levels than at the same number of levels scattered at random over the same range?</p>
+  </section>
+
+  <div class="bleed">
+    <figure>
+      <svg viewBox="0 0 760 210" width="100%" height="auto" role="img"
+           aria-label="Null distribution of the reversal rate at randomly placed levels, with the sensor's observed value sitting at the 41st percentile, near the centre of the distribution.">
+        <defs>
+          <linearGradient id="nullfill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0.16"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0.02"/>
+          </linearGradient>
+        </defs>
+        <g color="var(--slate)">
+          <path d="M60,170 C160,170 190,150 250,104 C300,66 330,44 380,44 C430,44 460,66 510,104 C570,150 600,170 700,170 Z"
+                fill="url(#nullfill)" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.65"/>
+        </g>
+        <line x1="60" y1="170" x2="700" y2="170" stroke="var(--rule)" stroke-width="1"/>
+        <g stroke="var(--faint)" stroke-width="1" stroke-dasharray="3 3">
+          <line x1="243" y1="52" x2="243" y2="170"/>
+          <line x1="517" y1="52" x2="517" y2="170"/>
+        </g>
+        <g fill="var(--faint)" font-family="IBM Plex Mono, monospace" font-size="11">
+          <text x="243" y="44" text-anchor="middle">0.3415</text>
+          <text x="517" y="44" text-anchor="middle">0.4310</text>
+          <text x="60"  y="192">null 5th</text>
+          <text x="700" y="192" text-anchor="end">null 95th</text>
+        </g>
+        <g stroke="var(--brass)" stroke-width="2.5">
+          <line x1="349" y1="26" x2="349" y2="170"/>
+        </g>
+        <circle cx="349" cy="26" r="4.5" fill="var(--brass)"/>
+        <g fill="var(--brass)" font-family="IBM Plex Sans Condensed, sans-serif" font-size="12.5" font-weight="700" letter-spacing="0.06em">
+          <text x="349" y="15" text-anchor="middle">OBSERVED &nbsp;0.3768&nbsp; &middot; &nbsp;41st PERCENTILE</text>
+        </g>
+      </svg>
+      <figcaption>BTC, primary configuration. The sensor&rsquo;s real levels reverse price <em>less</em> often than randomly placed ones — 41st percentile of the null on BTC, 26th on ETH. All 16 configurations failed, on all three reaction statistics.</figcaption>
+    </figure>
+  </div>
+
+  <section>
+    <p>Sixteen configurations were run — two symbols, two lookbacks, two bucket widths, two touch bands. Not one beat its null on any metric. On the reversal statistic the entire model rests on, the real levels sit <strong>below the null median on both symbols</strong>.</p>
+    <p>The programme stopped there, by its own stated condition. The lead sensor was the strongest of the three on the specification's own assessment; the second is marginal by design and the third has, in the spec's words, zero independent validation in the literature. A programme whose best sensor cannot beat noise is not rescued by its weaker ones.</p>
+
+    <div class="panel">
+      <h3>The control that caught me twice</h3>
+      <p>The harness had to pass two synthetic checks: find levels that were deliberately planted, and find nothing in a pure random walk. The false-positive check passed first time across three seeds.</p>
+      <p>The positive control failed twice, and <strong>both times my test fixture was wrong.</strong> A drift term of <code>−0.9 × gap</code> pushes price <em class="term">toward</em> a level — a magnet, not a wall — so the harness correctly reported the planted level as worse than chance. Flipping the sign built a wall price could never return to: one touch in 1,500 bars.</p>
+      <p>The harness caught both errors before either could reach a result. That is what a positive control is for, and it is worth more than a clean first pass.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What survived</h2>
+    <p class="kicker">Two properties, neither of which is signal</p>
+    <p><strong>Reduced drawdown.</strong> The one claim that held in every test, including the ETF cross-section where everything else inverted: 6.1% against the basket's 33.4%. It should be read for what it is — a book invested a fraction of the time has a small drawdown for the same reason it has a small return. At realistic costs on ETFs the strategy returns <span class="num">&minus;0.5%</span>, which is nearly cash, and cash also has a small drawdown.</p>
+    <p><strong>Diversification.</strong> Real, arithmetic, and — as the ETF run showed — carrying the sign of the expectancy rather than creating one.</p>
+    <p>Meanwhile the deflated Sharpe on the long book reads <span class="num">0.9998</span> on BTC against a pool of 30 configurations, which sounds like a triumph and is not. A deflated Sharpe deflates against a <em class="term">trial pool</em>, not against a benchmark. At the point where the portfolio and a passive basket both score <span class="num">+1.161</span>, that number would still be high. It measures crypto beta surviving a multiplicity correction, not skill surviving one.</p>
+  </section>
+
+  <section>
+    <h2>The bugs are the other half of the report</h2>
+    <p class="kicker">Seven real defects, and what each one taught</p>
+    <p>Every one of these was found by a guard, an assertion, or an implausible number — not by inspection. Several would have flattered the results had they gone unnoticed.</p>
+  </section>
+
+  <div class="bleed">
+    <ul class="findings">
+      <li>
+        <span class="rec">D181</span>
+        <span><strong>The ensemble weighted itself with whole-sample volatility.</strong> The structural look-ahead guard makes this impossible for a <em class="term">strategy</em> and does nothing for analytics built on strategy output. That boundary had never been written down. The missing test was one line: the weight at bar <code>t</code> must not move when returns at <code>t</code> or later change.</span>
+      </li>
+      <li>
+        <span class="rec">D187</span>
+        <span><strong>Crypto volume is quoted in dollars; the impact model read it as coins.</strong> Every market-impact charge was off by <code>√price</code> — understated 148&times; on BTC, overstated 40&times; on a sub-cent coin, in the same run. It produced two results that looked like findings and were artifacts. A units error is invisible to every other check here: the name of a field is not a contract, the parameter that enforces it is.</span>
+      </li>
+      <li>
+        <span class="rec">D184</span>
+        <span><strong>A benchmark returned +102,682,123%, from one bar.</strong> A single coin printed a 3.4-million-percent day on a price-scale defect. Chasing the absurd number rather than quoting it exposed an empty corporate-actions file, four scripts declining to load it, and a validator override nobody had inspected. An implausible number in a throwaway comparison is worth more attention than a plausible one in a result.</span>
+      </li>
+      <li>
+        <span class="rec">D186</span>
+        <span><strong>Volumes reached the policy screen and never reached the run.</strong> Harmless for as long as nothing downstream wanted them; a loud failure the moment a cost model needed them, which is the only reason it surfaced.</span>
+      </li>
+      <li>
+        <span class="rec">D176</span>
+        <span><strong>A dead diagnostic had its direction reversed</strong> — it would have reported profitable moves as losses. Never called, so nothing was published from it. Dead code is unreviewed code wearing the appearance of a delivered requirement.</span>
+      </li>
+      <li>
+        <span class="rec">D177</span>
+        <span><strong>A report printed an impossibility</strong> — a cumulative rate that fell as its window grew. The arithmetic could not be true, which is the only reason the counting bug behind it was visible at all.</span>
+      </li>
+      <li>
+        <span class="rec">D169</span>
+        <span><strong>A headline claim was a measurement artifact.</strong> &ldquo;Four of four stop exits gapped through by 38.5%&rdquo; came from inferring stop exits from price rather than recording them. The true count was one.</span>
+      </li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>What the discipline was worth</h2>
+    <p class="kicker">The parts that earned their cost</p>
+    <p><strong>Pre-registration.</strong> Nine studies, twenty-three hypotheses, every one committed before the run that scored it. Close to half were wrong, and the wrong ones are the useful ones — twice I identified a real mechanism and drew the wrong consequence from it, both times by reasoning about a numerator and forgetting its denominator. That pattern is only visible because the predictions are dated.</p>
+    <p><strong>The every-symbol rule.</strong> Keep only what improves on <em class="term">both</em> instruments, because one of two is a coin flip. It killed several rules that a one-symbol reading would have promoted.</p>
+    <p><strong>The failure universe.</strong> A cross-section screened to include assets that died, not the ones that survived to be worth studying. It is the only test in the project that ever caught anything, and it caught both rules put to it.</p>
+    <p><strong>Loud failures over silent defaults.</strong> Missing volume raises rather than costing zero. An unknown unit raises rather than guessing. An unavailable sensor returns nothing rather than an empty density. Most of the bugs above surfaced because something refused to proceed quietly.</p>
+
+    <div class="pull">Walk-forward, a trial registry, deflated Sharpe, block bootstraps, pre-registration — all correct, all applied, and all satisfied by a rule that does not work. Every one controls for error <em>within</em> a sample. None can detect that the sample is the problem.</div>
+  </section>
+
+  <section>
+    <h2>What remains untested</h2>
+    <p class="kicker">The assumption no data on hand can reach</p>
+    <p>Both cross-sections — 62 coins and 57 ETFs — span <strong>2015 to 2024</strong>. A different asset class is not a different era. Nothing here tests the strategy against a period unlike the one it was built in, and that is now the deepest untested assumption in the project. It cannot be fixed with any file in the repository.</p>
+    <p>Three smaller gaps are documented and deliberately unfixed: there is no margin-call or liquidation model, so short accounts have passed &minus;100% and kept trading; market impact is calibrated on full-sample volume, a mild look-ahead in cost parameters though never in the signal; and inverse-volatility weighting pays a book for being <em class="term">absent</em>, handing the losing leg 70% of the risk budget precisely because it barely trades.</p>
+    <p>The terrain result closes one sensor on daily bars on two instruments. A sharper map built from real exchange intraday volume is a different measurement — the available hourly series reports zero volume on half its bars, which is why the test ran on daily. The harness is kept: it passed both controls and can test any future sensor.</p>
+  </section>
+
+  <section>
+    <h2>The honest summary</h2>
+    <p class="kicker">One paragraph, no hedging</p>
+    <p class="lead">A breakout book on crypto, held across many instruments at once, returns roughly what an equal-weight basket of the same instruments returns, at about a third of its drawdown, with a small edge over that basket that survives realistic trading costs and dies somewhere around $66M of capital. That edge is a property of one asset class in one decade. On a different asset class, with no refitting, it inverts. Every rule invented to improve the book failed a fair out-of-sample test, and the supply-and-demand model built to explain where price stalls could not distinguish its own levels from randomly placed ones.</p>
+    <p>The project produced no tradable edge. It produced a harness that reliably refuses to confirm what it is pointed at, a documented record of the ideas that do not work, and a short list of ways a quantitative result can be wrong while every statistic in it is computed correctly.</p>
+    <div class="pull">A result measured on a favourable sample is not a result about the world. Learning that cost every idea in the project, and it was still the cheapest thing here.</div>
+  </section>
+
+  <hr class="rule">
+
+  <footer>
+    <p>Backtest Framework &middot; final report, 22 August 2026 &middot; 166 decision records, 775 tests passing &middot; every figure reproducible offline from the committed fixtures</p>
+  </footer>
+
+</div>
