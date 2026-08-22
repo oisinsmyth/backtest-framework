@@ -1,6 +1,6 @@
 # D186 — Capacity: does the portfolio edge exist at size?
 
-**Status:** Committed (H1 confirmed narrowly, H2 confirmed)
+**Status:** Committed — **CORRECTED by D187** (H1 now falsified by 0.001, H2 still confirmed, capacity ~$66M not ~$30M)
 **Date:** 2026-08-22
 **Category:** Analytics
 **Source:** D183 and D185 both closed by naming this as the next question
@@ -235,3 +235,58 @@ things at once. The mismatch is real and unmeasured.
 **A square-root impact model is still not a liquidity model.** It says what a fill costs, not
 whether a counterparty exists. **The $30M figure is therefore an upper bound on capacity,
 not an estimate of it.**
+
+---
+
+# CORRECTION — appended 2026-08-22. Nothing above this line was edited.
+
+**The capacity number above was computed with ADV in the wrong units. It is corrected from
+~$30M to ~$66M, and the "two books destroyed by impact" finding is withdrawn.**
+
+D187 records the bug in full: crypto fixtures report quote-currency notional, the
+calibration treated it as shares, and `SqrtImpact` divides a quantity by ADV — so every
+charge was off by √price. BTC's impact was understated ~148×; `LUNC-USD`'s was overstated
+~40×.
+
+| Total AUM | Strategy | Benchmark | Edge as published | **Edge corrected** | Books destroyed |
+|---|---|---|---|---|---|
+| $0.1M | +1.248 | +1.173 | +0.067 | **+0.075** | 0 |
+| $0.3M | +1.246 | +1.173 | +0.061 | +0.073 | 0 |
+| $1M | +1.241 | +1.172 | +0.051 | **+0.068** | 0 |
+| $3M | +1.233 | +1.172 | +0.037 | +0.061 | 0 |
+| $10M | +1.218 | +1.170 | +0.014 | **+0.047** | 0 |
+| $30M | +1.194 | +1.168 | −0.000 | **+0.026** | **0** |
+| $100M | +1.149 | +1.163 | −0.026 | **−0.014** | 0 |
+
+**Capacity ≈ $66M** (log-interpolated between the bracketing levels), about $1.06M per coin.
+
+## What survives, what does not
+
+**H1 still holds, more narrowly.** The strategy's Sharpe falls +1.248 → +1.149, a loss of
+**0.099** against a predicted >0.10 — so it now *fails* the stated bar by 0.001. Called as
+written: **H1 is FALSIFIED on the corrected numbers.** It is as close to the line as a
+prediction can land, and reporting it as confirmed because it was confirmed yesterday would
+be the worst available option.
+
+**H2 still holds.** The edge reaches zero at ~$66M, below the predicted $100M.
+
+**The concentration mechanism still holds, and is stronger.** Strategy loses 0.099 Sharpe to
+impact against the benchmark's 0.010 — a **10× asymmetry**, up from 5.3×. The reasoning that
+the strategy's impact concentrates in the coins it actually trades, while the benchmark
+spreads across all 62, survives the correction that changed everything else.
+
+**"Two long books destroyed by impact" is withdrawn.** `LUNA1-USD` and `LUNC-USD` are
+sub-cent coins whose impact was overstated ~40×. With the units right, **no book is
+destroyed at any size tested**, and the paragraph reading that as "the trade does not exist
+at this size" was reading an artifact.
+
+**The deflated Sharpe is unchanged at 0.9996**, and everything said about why it is worth
+less than it looks stands — it deflates against a trial pool, not a benchmark.
+
+## The honest summary, restated
+
+> An equal-weight crypto basket with a breakout overlay, at roughly a third of the basket's
+> drawdown, with an edge of +0.075 at $100k, +0.047 at $10M, and gone by ~$66M.
+
+Better than the number this record first published, on every row — and arrived at by fixing
+a bug that made it look worse, which is the only reason to trust the direction.

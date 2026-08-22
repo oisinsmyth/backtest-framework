@@ -108,6 +108,17 @@ class CostTier:
     NAV for the entire life of every trade, and D124 made exactly this point for the
     pairs book's short leg."""
 
+    volume_units: str = "quote_notional"
+    """What this study's fixture counts in its volume column (D187).
+
+    Every `X-USD` crypto pair here reports quote-currency notional, not units: `BTC-USD`
+    prints ~47.5bn, which cannot be coins. `SqrtImpact` divides an order QUANTITY by ADV,
+    so the two must agree — feeding notional into a field meaning shares understated
+    impact ~148x on BTC and overstated it ~40x on LUNC, in the same run.
+
+    Inert unless `impact_coefficient` is set, and emitted from `config()` only alongside
+    the impact brick, so no tier without impact changes its hash."""
+
     impact_coefficient: float = 0.0
     """Square-root market impact, off by default (D186).
 
@@ -140,6 +151,7 @@ class CostTier:
                     "type": "sqrt_impact",
                     "coefficient": self.impact_coefficient,
                     "calibration": "full_sample",
+                    "volume_units": self.volume_units,
                 }
             )
         return {
@@ -892,7 +904,14 @@ def run_benchmark(
     instrument = _instruments(symbol)[symbol]
     # Buy-and-hold pays impact on its one purchase too. Charging the strategy and not the
     # benchmark would rig every `beats_hold` verdict in the universe study (D186).
-    stack = tier.build(_context_for(tier, symbol, series, volumes))
+    stack = tier.build(
+        # Volumes sliced with the SAME bounds as `series`. Handing a sliced bar series
+        # a full-length volume series is the misalignment `align_volumes` exists to
+        # prevent, one level down (D187).
+        _context_for(
+            tier, symbol, series, None if volumes is None else volumes[oos_start:oos_end]
+        )
+    )
     entry_price = series[1].bar.open
     # Solve for the quantity whose notional plus its own fee exhausts starting cash.
     # The fee bricks in this study are proportional, so one Newton step is exact; the
@@ -940,7 +959,12 @@ def run_benchmark_via_engine(
                 strategy_id=f"buyhold-{symbol}", weights_by_instrument={symbol: [1.0]}
             )
         ],
-        cost_stack=tier.build(_context_for(tier, symbol, run_bars, volumes)),
+        cost_stack=tier.build(
+            _context_for(
+                tier, symbol, run_bars,
+                None if volumes is None else volumes[oos_start:oos_end],
+            )
+        ),
         allocator=ConstantSplitAllocator(),
         starting_cash=study.starting_cash,
         fill_timing=study.fill_timing,
@@ -1410,7 +1434,10 @@ def run_constant_fraction_benchmark(
             )
         ],
         cost_stack=tier.build(
-            _context_for(tier, symbol, list(bars[oos_start:oos_end]), volumes)
+            _context_for(
+                tier, symbol, list(bars[oos_start:oos_end]),
+                None if volumes is None else volumes[oos_start:oos_end],
+            )
         ),
         allocator=ConstantSplitAllocator(),
         starting_cash=study.starting_cash,

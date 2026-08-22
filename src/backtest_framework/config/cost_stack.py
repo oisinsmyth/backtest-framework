@@ -118,8 +118,15 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
                 f"sqrt_impact config key 'calibration' must be one of {IMPACT_CALIBRATIONS}, "
                 f"got {calibration!r}"
             )
+        # `volume_units` defaults to "shares", the equity convention every caller before
+        # D187 assumed. A crypto fixture reports quote-currency notional and MUST say so:
+        # SqrtImpact divides an order quantity by ADV, so mismatched units scale the whole
+        # charge by the square root of the price.
+        units = c.get("volume_units", "shares")
         return SqrtImpact(
-            params_by_symbol=calibrate_impact_params(context.bars_by_symbol, context.volumes_by_symbol),
+            params_by_symbol=calibrate_impact_params(
+                context.bars_by_symbol, context.volumes_by_symbol, volume_units=units
+            ),
             coefficient=_optional_numeric(c, "coefficient", 1.0, "sqrt_impact"),
         )
 

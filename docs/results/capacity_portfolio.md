@@ -30,37 +30,23 @@ tiers would quadruple the runtime for a sensitivity nobody reads here.
 
 | Total AUM | Per coin | Strategy Sharpe | Return | Max DD | Books destroyed | Benchmark Sharpe | Edge |
 |---|---|---|---|---|---|---|---|
-| $0.1M | $2k | +1.240 | +2,624% | 29.4% | 0 | +1.173 | **+0.067** |
-| $0.3M | $5k | +1.233 | +2,576% | 29.4% | 0 | +1.172 | **+0.061** |
-| $1.0M | $16k | +1.222 | +2,498% | 29.4% | 0 | +1.171 | **+0.051** |
-| $3.0M | $48k | +1.207 | +2,395% | 29.5% | 0 | +1.170 | **+0.037** |
-| $10.0M | $161k | +1.180 | +2,226% | 29.6% | 0 | +1.166 | **+0.014** |
-| $30.0M | $484k | +1.161 | +2,117% | 29.9% | 2 | +1.161 | **-0.000** |
-| $100.0M | $1,613k | +1.124 | +1,913% | 30.4% | 2 | +1.151 | **-0.026** |
+| $0.1M | $2k | +1.248 | +2,683% | 29.4% | 0 | +1.173 | **+0.075** |
+| $0.3M | $5k | +1.246 | +2,665% | 29.4% | 0 | +1.173 | **+0.073** |
+| $1.0M | $16k | +1.241 | +2,629% | 29.4% | 0 | +1.172 | **+0.068** |
+| $3.0M | $48k | +1.233 | +2,573% | 29.5% | 0 | +1.172 | **+0.061** |
+| $10.0M | $161k | +1.218 | +2,468% | 29.6% | 0 | +1.170 | **+0.047** |
+| $30.0M | $484k | +1.194 | +2,311% | 29.7% | 0 | +1.168 | **+0.026** |
+| $100.0M | $1,613k | +1.149 | +2,043% | 30.1% | 0 | +1.163 | **-0.014** |
 
-**The edge dies at $30.0M.** Below it the strategy beats the equal-weight universe; at and above it, it does not.
+**The edge dies at $100.0M.** Below it the strategy beats the equal-weight universe; at and above it, it does not.
 
-The strategy's own Sharpe falls +1.240 → +1.124 across the sweep, a loss of **0.116**. Impact is the only thing that changes between rows — same signal, same rebalancing charge, same span.
+The strategy's own Sharpe falls +1.248 → +1.149 across the sweep, a loss of **0.099**. Impact is the only thing that changes between rows — same signal, same rebalancing charge, same span.
 
-### Books destroyed by their own trading costs
-
-**No long book dies at zero impact** (D183), so every name below is impact doing it: at
-this size the cost of entering a thin coin exceeds what the position can bear, and the
-account reaches zero.
-
-| Total AUM | Books destroyed | Which |
-|---|---|---|
-| $30.0M | 2 | `LUNA1-USD`, `LUNC-USD` |
-| $100.0M | 2 | `LUNA1-USD`, `LUNC-USD` |
-
-**Read this as the model's own edge, not only as a result.** A square-root impact charge
-large enough to destroy an account is a charge outside the range the functional form was
-calibrated for — D66 fits a cost, not a bankruptcy. The honest reading is that the trade
-does not exist at this size, which is the same answer, arrived at less gracefully.
+**No book was destroyed at any size tested.** Impact made the fills worse all the way to $100M; it did not wipe an account out.
 
 ## The deflated Sharpe — D183's second debt
 
-At $0.1M the portfolio scores **+1.240**
+At $0.1M the portfolio scores **+1.248**
 annualised. Deflated against **30 trials** (V[SRn] = 4.99e-05 daily,
 both read from the long study's own published DSR inputs rather than asserted here), DSR =
 **0.9996**.
@@ -70,8 +56,8 @@ The portfolio runs **one** configuration — but that configuration is the survi
 1, and not 62: **holding a selected rule on more instruments does not undo the selection
 that produced it.**
 
-Units are per-period throughout (D98): observed SR 0.06490 daily over
-3,510 bars, skew +4.763, kurtosis 106.70. Feeding an annualised
+Units are per-period throughout (D98): observed SR 0.06533 daily over
+3,510 bars, skew +4.763, kurtosis 106.68. Feeding an annualised
 Sharpe against a daily pool variance would inflate the noise floor ~19x and force the DSR
 to zero regardless of the strategy — the exact bug D98 was written to close.
 

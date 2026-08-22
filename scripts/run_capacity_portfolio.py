@@ -213,7 +213,12 @@ def build_payload(levels, snapshot, volumes, dates, study, snapshot_id) -> dict:
     # A passive equal-weight basket also has to trade to hold its weights, and it holds
     # every coin every day. Charging only the strategy would rig the comparison — the
     # principle D185 established for the rebalancing cost, applied to impact.
-    params = calibrate_impact_params(snapshot.bars_by_symbol, volumes)
+    # Crypto fixtures report quote-currency notional, not units (D187). Saying so is
+    # mandatory: the default is the equity convention and guessing wrong scales every
+    # impact charge by the square root of the price.
+    params = calibrate_impact_params(
+        snapshot.bars_by_symbol, volumes, volume_units="quote_notional"
+    )
     raw: dict[str, dict[str, float]] = {}
     prices: dict[str, dict[str, float]] = {}
     for symbol, bars in snapshot.bars_by_symbol.items():

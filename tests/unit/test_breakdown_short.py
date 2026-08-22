@@ -423,7 +423,38 @@ def test_impact_brick_appears_only_when_switched_on():
         "type": "sqrt_impact",
         "coefficient": 1.0,
         "calibration": "full_sample",
+        "volume_units": "quote_notional",
     }
+
+
+def test_crypto_volume_is_converted_to_UNITS_before_becoming_ADV():
+    """D187: `X-USD` fixtures report quote-currency notional, not units.
+
+    SqrtImpact divides an order QUANTITY by ADV, so treating a notional column as shares
+    scales the whole charge by the square root of the price — understating impact on an
+    expensive instrument and overstating it on a cheap one, in the same run."""
+    from backtest_framework.costs.calibration import calibrate_impact_params
+
+    # $1,000 a day traded, at prices that alternate 100/200 — so the day's UNITS
+    # alternate 10/5 and average 7.5, while the raw column still reads 1,000.
+    bars = bars_from([100.0, 200.0, 100.0, 200.0])
+    notional = [1_000.0] * 4
+
+    as_shares = calibrate_impact_params({"X": bars}, {"X": notional}, "shares")
+    as_quoted = calibrate_impact_params({"X": bars}, {"X": notional}, "quote_notional")
+    assert as_shares["X"].adv_shares == pytest.approx(1_000.0)
+    assert as_quoted["X"].adv_shares == pytest.approx(7.5)
+    # An ADV wrong by 133x is an impact charge wrong by sqrt(133) — not a rounding error.
+    assert math.sqrt(
+        as_shares["X"].adv_shares / as_quoted["X"].adv_shares
+    ) == pytest.approx(math.sqrt(1_000.0 / 7.5))
+
+
+def test_an_unknown_volume_unit_raises_rather_than_guessing():
+    from backtest_framework.costs.calibration import calibrate_impact_params
+
+    with pytest.raises(ValueError, match="volume_units must be one of"):
+        calibrate_impact_params({"X": bars_from([1.0, 2.0, 3.0])}, {"X": [1.0] * 3}, "usd")
 
 
 def test_building_an_impact_tier_without_data_raises():

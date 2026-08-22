@@ -10,6 +10,42 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (volume units in the impact model, 2026-08-22 — D187)
+- **`SqrtImpact` divides an order QUANTITY by ADV, and `calibrate_impact_params` never
+  asked what the volume column counted.** The ETF fixture reports SHARES (SPY 68.1M, x $474
+  = $32bn/day); every crypto fixture reports QUOTE-CURRENCY NOTIONAL (BTC 47.5bn, which
+  cannot be coins). So every crypto charge was off by sqrt(price): BTC's ADV was 21,970x
+  too large (impact understated ~148x), LUNC's 1,585x too small (overstated ~40x). **The
+  same run was wrong in both directions at once.**
+- `calibrate_impact_params` now takes `volume_units` in `("shares", "quote_notional")` and
+  **raises** on anything else — there is no safe default to guess with. `"shares"` stays
+  the default, so the pairs study's published trials are untouched. Conversion is bar by
+  bar, `mean(volume_t / close_t)`, not mean-notional over mean-price.
+- **A second bug, found only because the fix required an alignment assertion.** All three
+  benchmark runners were handed a SLICED bar series with a FULL-LENGTH volume series
+  (`ADA-USD`: 2,974 volumes against 2,709 bars), introduced the day before when volumes
+  were first threaded to them. Without the assertion it would never have raised — ADV would
+  have been calibrated over a longer window than the bars it priced, quietly, in the
+  direction of understating impact.
+- Both study summaries remain byte-identical; `volume_units` is emitted only alongside the
+  impact brick.
+
+### Findings — D186 corrected
+- **Capacity moves from ~$30M to ~$66M.** Edge: +0.075 at $100k (was +0.067), +0.047 at
+  $10M (was +0.014), -0.014 at $100M (was -0.026).
+- **"Two long books destroyed by impact" is WITHDRAWN.** `LUNA1-USD` and `LUNC-USD` are
+  sub-cent coins whose impact was overstated ~40x. With the units right, **no book is
+  destroyed at any size tested**.
+- **H1 is now FALSIFIED by 0.001**: Sharpe falls 0.099 against a predicted >0.10. Called as
+  written rather than left as yesterday's confirmation.
+- **H2 still confirmed, and the concentration mechanism is stronger**: the strategy loses
+  10x more Sharpe to impact than the benchmark (0.099 vs 0.010), up from 5.3x.
+- **I predicted the correction would move capacity DOWN and it moved up.** BTC and ETH see
+  impact rise 148x and 29x — but they are 2 of 62 in an equal-weight book, and most of the
+  universe trades below $1 where impact was OVERstated. Same error class as D185: a correct
+  mechanism applied to the wrong population.
+
+
 ### Added (capacity, pre-registered, 2026-08-22 — D186)
 - `CostTier.impact_coefficient` wires square-root market impact (D66) into the breakout
   cost tiers, reusing `SqrtImpact` and `calibrate_impact_params` from the equities pairs
