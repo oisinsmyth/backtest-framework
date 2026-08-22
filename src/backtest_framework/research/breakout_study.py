@@ -700,24 +700,26 @@ def _context_for(
     symbol: str,
     bars: Sequence[TimestampedBar],
     volumes: Sequence[float] | None,
+    actions: CorporateActions | None = None,
 ) -> StackDataContext | None:
-    """The data a cost stack needs, or None when it needs none (D186).
+    """The data a cost stack needs, or None when it needs none (D186/D188).
 
-    `SqrtImpact` calibrates sigma and ADV from this. Every caller that builds a stack for a
-    tier that MIGHT charge impact goes through here, so the "did anyone remember to pass
-    the volumes" question is asked in exactly one place instead of at four call sites."""
-    if not tier.impact_coefficient:
-        return None
-    if volumes is None:
+    Two bricks are data-dependent. `SqrtImpact` calibrates sigma and ADV from the bars and
+    volumes; `DividendFlow` reads the declared dividends off `actions`. Every caller that
+    builds a stack goes through here, so "did anyone remember to pass the data" is asked in
+    one place rather than at five call sites — which is how the last two bugs got in."""
+    if tier.impact_coefficient and volumes is None:
         raise ValueError(
             f"tier {tier.name!r} charges square-root impact but no volume series was "
             f"passed for {symbol!r}. ADV must be calibrated, never defaulted (D48) — a "
             "missing volume series has to stop the run, not quietly cost nothing."
         )
+    if volumes is None and actions is None:
+        return None
     return StackDataContext(
         bars_by_symbol={symbol: list(bars)},
-        volumes_by_symbol={symbol: list(volumes)},
-        actions=CorporateActions(),
+        volumes_by_symbol={symbol: list(volumes) if volumes is not None else []},
+        actions=actions or CorporateActions(),
     )
 
 
@@ -729,6 +731,7 @@ def run_variant(
     study: BreakoutStudyConfig,
     breadth: Mapping[datetime, float] | None = None,
     volumes: Sequence[float] | None = None,
+    actions: CorporateActions | None = None,
 ) -> VariantResult:
     """`breadth` is F4's cross-sectional input, built once across the whole universe by
     `run_breakout_study`. None simply leaves F4 unavailable — features are diagnostics
@@ -786,7 +789,7 @@ def run_variant(
     # Impact calibrates against THIS symbol's own bars and volumes (D186). Built here
     # rather than threaded in from the caller, because this is the only place that holds
     # the sliced series the run actually trades.
-    context = _context_for(tier, symbol, run_bars, run_volumes)
+    context = _context_for(tier, symbol, run_bars, run_volumes, actions)
     result = run_backtest(
         bars_by_instrument={symbol: run_bars},
         instruments=_instruments(symbol),
@@ -875,6 +878,7 @@ def run_benchmark(
     tier: CostTier,
     study: BreakoutStudyConfig,
     volumes: Sequence[float] | None = None,
+    actions: CorporateActions | None = None,
 ) -> BenchmarkResult:
     """True buy-and-hold over the OOS span, on the SAME cost tier and the SAME fill
     timing as every strategy variant (D115).
@@ -909,7 +913,8 @@ def run_benchmark(
         # a full-length volume series is the misalignment `align_volumes` exists to
         # prevent, one level down (D187).
         _context_for(
-            tier, symbol, series, None if volumes is None else volumes[oos_start:oos_end]
+            tier, symbol, series,
+            None if volumes is None else volumes[oos_start:oos_end], actions,
         )
     )
     entry_price = series[1].bar.open
@@ -939,6 +944,7 @@ def run_benchmark_via_engine(
     tier: CostTier,
     study: BreakoutStudyConfig,
     volumes: Sequence[float] | None = None,
+    actions: CorporateActions | None = None,
 ) -> BenchmarkResult:
     """The engine-run constant-100%-weight version of buy-and-hold — kept as the
     cross-check on `run_benchmark`, not as the reported benchmark (see its docstring)."""
@@ -962,7 +968,7 @@ def run_benchmark_via_engine(
         cost_stack=tier.build(
             _context_for(
                 tier, symbol, run_bars,
-                None if volumes is None else volumes[oos_start:oos_end],
+                None if volumes is None else volumes[oos_start:oos_end], actions,
             )
         ),
         allocator=ConstantSplitAllocator(),
@@ -1407,6 +1413,7 @@ def run_constant_fraction_benchmark(
     study: BreakoutStudyConfig,
     fraction: float,
     volumes: Sequence[float] | None = None,
+    actions: CorporateActions | None = None,
 ) -> BenchmarkResult:
     """Hold a CONSTANT FRACTION of capital in the instrument, rest in cash, through the
     same engine, tier and fill timing as every strategy variant (D119).
@@ -1436,7 +1443,7 @@ def run_constant_fraction_benchmark(
         cost_stack=tier.build(
             _context_for(
                 tier, symbol, list(bars[oos_start:oos_end]),
-                None if volumes is None else volumes[oos_start:oos_end],
+                None if volumes is None else volumes[oos_start:oos_end], actions,
             )
         ),
         allocator=ConstantSplitAllocator(),

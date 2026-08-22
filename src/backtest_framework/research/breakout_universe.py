@@ -52,6 +52,7 @@ from typing import Any, Callable, Mapping, Sequence
 import numpy as np
 
 from ..data.bars import TimestampedBar
+from ..data.corporate_actions import CorporateActions
 from ..registry.trial_registry import TrialRegistry
 from ..validation.dsr import deflated_sharpe_from_trials
 from . import breakout_study as bs
@@ -571,6 +572,7 @@ def run_universe_study(
     progress: Callable[[str], None] | None = None,
     variant: bs.Variant | None = None,
     compute_dsr: bool = True,
+    actions: CorporateActions | None = None,
 ) -> UniverseResult:
     """Run ONE fixed configuration on every symbol the policy admits, at every cost tier,
     and log every run.
@@ -615,14 +617,15 @@ def run_universe_study(
             # loud failure, which is the only reason it was found. Passed unconditionally
             # rather than "when needed" — a conditional is what hid it in the first place.
             result = bs.run_variant(
-                bars, symbol, variant, tier, study, volumes=volumes_by_symbol.get(symbol)
+                bars, symbol, variant, tier, study,
+                volumes=volumes_by_symbol.get(symbol), actions=actions,
             )
             vols = volumes_by_symbol.get(symbol)
-            hold = bs.run_benchmark(bars, symbol, tier, study, volumes=vols)
+            hold = bs.run_benchmark(bars, symbol, tier, study, volumes=vols, actions=actions)
             fraction = result.diagnostics.exposure
             matched = (
                 bs.run_constant_fraction_benchmark(
-                    bars, symbol, tier, study, fraction, volumes=vols
+                    bars, symbol, tier, study, fraction, volumes=vols, actions=actions
                 )
                 if fraction > 1e-9
                 else None
