@@ -10,6 +10,37 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (Phase 3: the S1 terrain sensor and its null, pre-registered, 2026-08-22 — D189)
+- `research/terrain.py` — the terrain sensor interface, frozen for every later sensor, plus
+  `VolumeProfileSensor` (S1). `PriceDensity` returns None outside the mapped range rather
+  than 0.0; a bar's volume spreads across the buckets its RANGE covers rather than landing
+  at its close. Lookback/bucket/volume-units all raise outside the spec's stated sets.
+- `research/terrain_nulls.py` — the reusable null-test harness. Touch and reversal
+  definitions fixed in the docstring before any run; reuses `MetricSpec`/`summarise_null`
+  from D130 so every metric declares its own tail.
+- `TERRAIN_RESULTS.md` — the programme's append-only ledger, carrying the multiplicity count.
+- Look-ahead guarded HERE rather than inherited: D181 established `DataView` protects
+  strategies and not analytics built on their output, and a sensor is analytics.
+
+### Findings — predictions committed first (e2a8b09), then scored
+- **S1 FAILS its null on all 16 configurations, all 3 metrics, both symbols.** At the
+  primary config (180d, 0.5 ATR, k=0.5): BTC P(reversal|touch) real +0.3768 against a null
+  mean of +0.3835 — the **41st percentile**; ETH +0.3529 against +0.3736, the **26th**.
+  **On the metric the model rests on, real levels reverse price LESS often than random
+  ones.** Traversal and volatility sit mid-null and in the wrong tail.
+- **H1 confirmed**, against the spec's own prior that S1 is the lead sensor expected to pass.
+- **The terrain programme STOPS at WP2** by its own stated condition. WP3-WP8 do not run:
+  S1 was the strongest sensor on the spec's assessment, S2 is marginal and expected to fail,
+  and S3 has zero independent validation in the literature.
+- **The mandatory false-positive check passed first time** — on a pure random walk across
+  three seeds the harness finds nothing.
+- **The positive control failed twice and the FIXTURE was wrong both times.** A drift of
+  `-0.9*gap` pushes price TOWARD the level, building a magnet rather than a wall; the
+  harness correctly reported the planted level as worse than chance. Flipping to `+1.2*gap`
+  built a wall price never returned to — one touch in 1,500 bars. The harness caught both.
+- `New Docs/` is now complete: every phase either delivered or closed by its own criterion.
+
+
 ### Added (the ETF cross-section, pre-registered, 2026-08-22 — D188)
 - `scripts/run_etf_universe.py` — the SAME long baseline, unchanged, on 57 ETFs.
   `periods_per_year=252`, `volume_units="shares"` (D187), dividends PAID on both arms

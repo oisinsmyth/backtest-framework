@@ -104,13 +104,21 @@ Pre-registered hypotheses (recorded here, before data):
 - **Session hygiene:** each WP session starts by reading this doc, TERRAIN_MODEL.md, and the current TERRAIN_RESULTS.md; ends by updating TERRAIN_RESULTS.md and the WP checklist below.
 
 ## WP checklist (update on completion)
-- [ ] WP0 intraday data brick
-- [ ] WP1 S1 volume profile + sensor interface
-- [ ] WP2 null-test harness + S1 verdict
-- [ ] WP3a Coin Metrics anchor layer (availability verified)
-- [ ] WP3b self-computed URPD (Dune) + verdict
-- [ ] WP4 S2 anchored VWAP + verdict
-- [ ] WP5 fusion + F7/F8/F9 + quintile go/no-go
-- [ ] WP6 confluence analysis (H1–H4 verdicts)
-- [ ] WP7 increments: gate [ ] / exit-mod [ ] / size-mod [ ] / MVRV-Z gate [ ]
-- [ ] WP8 S4 diagnostics channel (unscheduled)
+- [x] WP0 intraday data brick — delivered earlier by D160/D161/D165, not as a terrain WP
+- [x] WP1 S1 volume profile + sensor interface — D189
+- [x] WP2 null-test harness + S1 verdict — **S1 FAILED**, D189
+- [ ] ~~WP3a Coin Metrics anchor layer~~ — not run, stop condition
+- [ ] ~~WP3b self-computed URPD (Dune) + verdict~~ — not run, stop condition
+- [ ] ~~WP4 S2 anchored VWAP + verdict~~ — not run, stop condition
+- [ ] ~~WP5 fusion + F7/F8/F9 + quintile go/no-go~~ — not run, stop condition
+- [ ] ~~WP6 confluence analysis~~ — not run, stop condition
+- [ ] ~~WP7 increments~~ — not run, stop condition
+- [ ] ~~WP8 S4 diagnostics channel~~ — not run, stop condition
+
+**PROGRAMME STOPPED at WP2 on 2026-08-22**, by this document's own condition: *"If S1 fails
+its null, STOP the terrain programme and report."* S1's volume-profile levels are
+indistinguishable from levels scattered at random — 16 of 16 configurations fail, and on
+P(reversal | touch) the real levels sit BELOW the null median on both symbols. Verdict and
+tables in `TERRAIN_RESULTS.md`; reasoning in
+`docs/decisions/D189-the-s1-terrain-sensor-and-its-null.md`. The harness is retained: it
+passed both synthetic controls and can test any future sensor.

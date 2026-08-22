@@ -239,7 +239,7 @@ def _primary_table(p: dict[str, Any]) -> str:
             continue
         rows = NL.join(
             f"| {m.label} | {r['real'][m.name]:+.4f} | {d['null_mean']:+.4f} | "
-            f"[{d['null_p05']:+.4f}, {d['null_p95']:+.4f}] | {d['percentile']:.1%} | "
+            f"[{d['null_p05']:+.4f}, {d['null_p95']:+.4f}] | {d['percentile']:.1f}th | "
             f"{d['p_value']:.4f} | {m.direction} |"
             for m in TERRAIN_METRICS
             if (d := r["distributions"].get(m.name))

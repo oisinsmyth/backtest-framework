@@ -1,6 +1,6 @@
 # D189 — Phase 3 opens: the S1 terrain sensor and the null test that can close it
 
-**Status:** PRE-REGISTERED — implementation committed, **null test not yet run**
+**Status:** Committed (H1 confirmed — S1 fails its null on all 16 configurations; the terrain programme stops at WP2)
 **Date:** 2026-08-22
 **Category:** Signals & strategy interface
 **Source:** `New Docs/TERRAIN_MODEL.md` WP1 + WP2 — the last unstarted work in the roadmap
@@ -141,3 +141,101 @@ It would mean one sensor's levels beat randomly placed ones on reaction statisti
 **not** mean the terrain model works: the ladder's actual go/no-go is WP5 — F7/F8/F9 on the
 existing trade population — which this phase does not touch, deliberately, because building
 features on an untested sensor is the ordering the ladder exists to prevent.
+
+---
+
+# RESULT — appended 2026-08-22, after the run. Nothing above this line was edited.
+
+**Status: H1 CONFIRMED. The terrain programme stops here.**
+
+**S1 fails its null on all 16 configurations, all 3 metrics, both symbols.** Not narrowly —
+the real levels are statistically indistinguishable from levels scattered at random over the
+same range.
+
+## The primary configuration (180-day lookback, 0.5 ATR buckets, k = 0.5)
+
+**BTC-USD** — 353 touches over 191 rebuilds, 3.9 levels each, 500 null draws:
+
+| Metric | Real | Null mean | Null 90% | Percentile | p | Tail |
+|---|---|---|---|---|---|---|
+| P(reversal \| touch) | +0.3768 | +0.3835 | [+0.3415, +0.4310] | **41.4th** | 0.587 | high |
+| Bars to traverse | +4.3088 | +4.2891 | [+4.1623, +4.4120] | 58.8th | 0.413 | high |
+| Vol after / before | +1.1962 | +1.1932 | [+1.0861, +1.3062] | 52.6th | 0.527 | low |
+
+**ETH-USD** — 255 touches over 139 rebuilds:
+
+| Metric | Real | Null mean | Null 90% | Percentile | p | Tail |
+|---|---|---|---|---|---|---|
+| P(reversal \| touch) | +0.3529 | +0.3736 | [+0.3160, +0.4286] | **26.0th** | 0.743 | high |
+| Bars to traverse | +4.3647 | +4.2841 | [+4.1276, +4.4293] | 80.8th | 0.194 | high |
+| Vol after / before | +1.1789 | +1.1387 | [+1.0458, +1.2409] | 76.0th | 0.761 | low |
+
+**On the metric the whole model rests on, the real levels are BELOW the null median on both
+symbols** — 41st percentile on BTC, 26th on ETH. Price reverses at a high-volume node
+slightly *less* often than at a randomly placed level. Traversal and volatility sit near the
+middle of their nulls and in the wrong tail for the hypothesis.
+
+**And the failure is unanimous across the sensitivity grid.** All 16 configurations fail;
+`beaten` is empty in every one. There is no lookback, bucket width or touch band at which
+volume-profile levels beat random placement.
+
+## H1 — CONFIRMED
+
+Predicted S1 would fail the every-symbol bar at the primary configuration, against the
+spec's own prior that S1 is the lead sensor and expected to pass. It fails on both symbols
+and at every other configuration too.
+
+The grounds given were the project's own record — every rule-level idea has failed out of
+sample — plus the coarseness of daily buckets and the fact that the spec's support for S1 is
+that it is *adjacent* to validated microstructure work rather than validated. Nothing here
+distinguishes between those and a simpler explanation: **there is no effect to find.**
+
+## H2 — untestable, as pre-registered, and it no longer matters
+
+H2 said a pass would come from the where-price-lingered confound rather than from support
+and resistance. There is no pass, so the confound is moot. It is worth keeping in the record
+only because it was stated in advance and would otherwise have been the first question of a
+passing branch.
+
+## What this closes
+
+**The terrain programme stops at WP2, by its own stop condition:**
+
+> If S1 fails its null, STOP the terrain programme and report — do not proceed to WP3+ on
+> the theory that other sensors will save it.
+
+That condition exists because S1 is the *strongest* of the three sensors on the spec's own
+assessment: it computes from immutable data, it is the only family adjacent to validated
+work, and it was expected to pass. S2 is marginal and expected to fail. S3 has, in the
+spec's words, **zero independent validation in the literature**. A programme whose lead
+sensor cannot beat random placement does not get rescued by its weaker ones.
+
+**WP3, WP4, WP5, WP6, WP7 and WP8 do not run.** `New Docs/` is now complete — every phase
+either delivered or closed by its own stated criterion.
+
+## What it does not close
+
+**This tests one sensor on daily bars, on two instruments.** A sharper map — real intraday
+volume from an exchange API rather than the yfinance series that reports zero on half its
+bars — is a different measurement, and this result does not settle it. What it does settle
+is that the version buildable from the data on hand carries no signal, and the spec's
+build-first-and-cheapest ordering put that question first deliberately.
+
+**The harness is kept.** It is reusable, it passed both synthetic controls, and it is the
+only piece of machinery in this project that can answer "does this level mean anything"
+about any future sensor. The code stays; the programme stops.
+
+## The pattern, now complete
+
+Four entry filters. Six stops. E1, five passes on two instruments and a failure on
+sixty-two. The swing stop, transferring only as a family. The within-coin ensemble. The
+short book. The cross-sectional portfolio, which worked on one asset class in one decade and
+inverted on another. And now the terrain model's lead sensor, indistinguishable from noise.
+
+**Every idea this project tested that was supposed to add signal has failed a fair test.**
+The two things that survived are not signal: diversification, which is arithmetic and has
+the sign of the expectancy (D188), and reduced drawdown, which is what being out of the
+market buys.
+
+That is a complete and coherent negative result, and it was obtained by a harness that
+consistently refused to confirm what it was pointed at.

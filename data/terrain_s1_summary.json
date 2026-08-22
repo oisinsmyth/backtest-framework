@@ -1,0 +1,1096 @@
+{
+  "generated_utc": "2026-08-22T16:27:07.213434+00:00",
+  "fixture": "crypto_daily_2015_2025_raw.csv.gz",
+  "volume_units": "quote_notional",
+  "n_sims": 500,
+  "seed": 0,
+  "primary": {
+    "lookback": 180,
+    "bucket_atr": 0.5,
+    "k": 0.5
+  },
+  "symbols": [
+    "BTC-USD",
+    "ETH-USD"
+  ],
+  "spans": {
+    "BTC-USD": [
+      "2015-01-01",
+      "2025-12-30",
+      4017
+    ],
+    "ETH-USD": [
+      "2017-11-09",
+      "2025-12-30",
+      2974
+    ]
+  },
+  "primary_passed": {
+    "BTC-USD": false,
+    "ETH-USD": false
+  },
+  "every_symbol_pass": false,
+  "multiplicity": {
+    "configurations": 16,
+    "metrics_per_configuration": 3,
+    "total_looks": 48
+  },
+  "runs": {
+    "BTC-USD|90|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 195,
+      "mean_levels_per_rebuild": 4.297435897435897,
+      "real": {
+        "n_touches": 590.0,
+        "p_reversal": 0.35084745762711866,
+        "traversal_bars": 4.313559322033898,
+        "vol_ratio": 1.1495303996325874
+      },
+      "mean_null_touches": 534.658,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.35084745762711866,
+          "n_sims": 500,
+          "percentile": 25.4,
+          "p_value": 0.7465069860279441,
+          "p_value_se": 0.019454269754448198,
+          "null_mean": 0.3643985258680252,
+          "null_p05": 0.3300405094456433,
+          "null_median": 0.3639707249463347,
+          "null_p95": 0.3965404294526635
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.313559322033898,
+          "n_sims": 500,
+          "percentile": 40.2,
+          "p_value": 0.5988023952095808,
+          "p_value_se": 0.021919766727812127,
+          "null_mean": 4.32715240700062,
+          "null_p05": 4.241989042774501,
+          "null_median": 4.328063021830185,
+          "null_p95": 4.411769838825583
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1495303996325874,
+          "n_sims": 500,
+          "percentile": 25.4,
+          "p_value": 0.2554890219560878,
+          "p_value_se": 0.019504583134023114,
+          "null_mean": 1.1808625258975862,
+          "null_p05": 1.106388265272197,
+          "null_median": 1.1798056582229681,
+          "null_p95": 1.259366745429624
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 590
+      }
+    },
+    "BTC-USD|90|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 195,
+      "mean_levels_per_rebuild": 4.297435897435897,
+      "real": {
+        "n_touches": 680.0,
+        "p_reversal": 0.19264705882352942,
+        "traversal_bars": 4.811764705882353,
+        "vol_ratio": 1.074642543631323
+      },
+      "mean_null_touches": 650.244,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.19264705882352942,
+          "n_sims": 500,
+          "percentile": 15.6,
+          "p_value": 0.844311377245509,
+          "p_value_se": 0.01621417130162999,
+          "null_mean": 0.20725727715665732,
+          "null_p05": 0.18416631642434647,
+          "null_median": 0.20702502697980368,
+          "null_p95": 0.2313511052387244
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.811764705882353,
+          "n_sims": 500,
+          "percentile": 88.4,
+          "p_value": 0.11776447105788423,
+          "p_value_se": 0.014414992224371193,
+          "null_mean": 4.780268745968716,
+          "null_p05": 4.7376942751824265,
+          "null_median": 4.780635400907715,
+          "null_p95": 4.822934264259121
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.074642543631323,
+          "n_sims": 500,
+          "percentile": 7.4,
+          "p_value": 0.07584830339321358,
+          "p_value_se": 0.011840214378598439,
+          "null_mean": 1.130075092652171,
+          "null_p05": 1.0665821845841947,
+          "null_median": 1.1292610334827478,
+          "null_p95": 1.1968764934874976
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 680
+      }
+    },
+    "BTC-USD|90|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 195,
+      "mean_levels_per_rebuild": 2.8205128205128207,
+      "real": {
+        "n_touches": 389.0,
+        "p_reversal": 0.33676092544987146,
+        "traversal_bars": 4.285347043701799,
+        "vol_ratio": 1.2052257270071665
+      },
+      "mean_null_touches": 347.086,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.33676092544987146,
+          "n_sims": 500,
+          "percentile": 9.4,
+          "p_value": 0.906187624750499,
+          "p_value_se": 0.013039295494738038,
+          "null_mean": 0.3733721032378225,
+          "null_p05": 0.32967032967032966,
+          "null_median": 0.3739124587049537,
+          "null_p95": 0.4166666666666667
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.285347043701799,
+          "n_sims": 500,
+          "percentile": 23.6,
+          "p_value": 0.7644710578842315,
+          "p_value_se": 0.01897656763177132,
+          "null_mean": 4.329198644711803,
+          "null_p05": 4.226055117805355,
+          "null_median": 4.331541098442507,
+          "null_p95": 4.424112469081915
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.2052257270071665,
+          "n_sims": 500,
+          "percentile": 63.6,
+          "p_value": 0.6367265469061876,
+          "p_value_se": 0.02150841004682169,
+          "null_mean": 1.187505118196752,
+          "null_p05": 1.101011725519712,
+          "null_median": 1.1872609315593685,
+          "null_p95": 1.2772768570608084
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 389
+      }
+    },
+    "BTC-USD|90|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 195,
+      "mean_levels_per_rebuild": 2.8205128205128207,
+      "real": {
+        "n_touches": 462.0,
+        "p_reversal": 0.17532467532467533,
+        "traversal_bars": 4.7770562770562774,
+        "vol_ratio": 1.0596634080947205
+      },
+      "mean_null_touches": 432.156,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.17532467532467533,
+          "n_sims": 500,
+          "percentile": 1.8,
+          "p_value": 0.9820359281437125,
+          "p_value_se": 0.0059399265952753315,
+          "null_mean": 0.21593036369261903,
+          "null_p05": 0.1853506144789838,
+          "null_median": 0.2161245796315816,
+          "null_p95": 0.24505715763474
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.7770562770562774,
+          "n_sims": 500,
+          "percentile": 37.0,
+          "p_value": 0.6307385229540918,
+          "p_value_se": 0.021582744895669893,
+          "null_mean": 4.787485895851592,
+          "null_p05": 4.738194444444445,
+          "null_median": 4.786542923433875,
+          "null_p95": 4.839548986216807
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0596634080947205,
+          "n_sims": 500,
+          "percentile": 8.8,
+          "p_value": 0.08982035928143713,
+          "p_value_se": 0.012786920062312947,
+          "null_mean": 1.1195176231547679,
+          "null_p05": 1.0493878278328617,
+          "null_median": 1.1174916473361922,
+          "null_p95": 1.1965827071435537
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 462
+      }
+    },
+    "BTC-USD|180|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 191,
+      "mean_levels_per_rebuild": 6.455497382198953,
+      "real": {
+        "n_touches": 630.0,
+        "p_reversal": 0.346031746031746,
+        "traversal_bars": 4.32063492063492,
+        "vol_ratio": 1.157006754794597
+      },
+      "mean_null_touches": 507.61,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.346031746031746,
+          "n_sims": 500,
+          "percentile": 7.6,
+          "p_value": 0.9241516966067864,
+          "p_value_se": 0.011840214378598439,
+          "null_mean": 0.37716022447402964,
+          "null_p05": 0.34028797107375763,
+          "null_median": 0.3769448953512468,
+          "null_p95": 0.4134781167108753
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.32063492063492,
+          "n_sims": 500,
+          "percentile": 60.0,
+          "p_value": 0.40119760479041916,
+          "p_value_se": 0.021919766727812127,
+          "null_mean": 4.3022091601161865,
+          "null_p05": 4.203785022722782,
+          "null_median": 4.305228396668402,
+          "null_p95": 4.395745745745746
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.157006754794597,
+          "n_sims": 500,
+          "percentile": 37.2,
+          "p_value": 0.37325349301397204,
+          "p_value_se": 0.021630317749253745,
+          "null_mean": 1.1737102949920262,
+          "null_p05": 1.084615096419739,
+          "null_median": 1.1719594693066875,
+          "null_p95": 1.2598590751356753
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 630
+      }
+    },
+    "BTC-USD|180|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 191,
+      "mean_levels_per_rebuild": 6.455497382198953,
+      "real": {
+        "n_touches": 722.0,
+        "p_reversal": 0.18005540166204986,
+        "traversal_bars": 4.774238227146815,
+        "vol_ratio": 1.0673076934565635
+      },
+      "mean_null_touches": 623.028,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.18005540166204986,
+          "n_sims": 500,
+          "percentile": 0.0,
+          "p_value": 1.0,
+          "p_value_se": 0.0,
+          "null_mean": 0.2207510295881004,
+          "null_p05": 0.19481968744819686,
+          "null_median": 0.22068064505786927,
+          "null_p95": 0.24595016467201433
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.774238227146815,
+          "n_sims": 500,
+          "percentile": 55.0,
+          "p_value": 0.45109780439121755,
+          "p_value_se": 0.022253475021427122,
+          "null_mean": 4.7697418437805945,
+          "null_p05": 4.722377622377622,
+          "null_median": 4.770837250913152,
+          "null_p95": 4.814519324165431
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0673076934565635,
+          "n_sims": 500,
+          "percentile": 6.8,
+          "p_value": 0.06986027944111776,
+          "p_value_se": 0.011399984280473962,
+          "null_mean": 1.1283328423739798,
+          "null_p05": 1.061215161923919,
+          "null_median": 1.1263931618929868,
+          "null_p95": 1.1979605813765932
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 722
+      }
+    },
+    "BTC-USD|180|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 191,
+      "mean_levels_per_rebuild": 3.884816753926702,
+      "real": {
+        "n_touches": 353.0,
+        "p_reversal": 0.37677053824362605,
+        "traversal_bars": 4.308781869688385,
+        "vol_ratio": 1.1961807530261668
+      },
+      "mean_null_touches": 293.654,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.37677053824362605,
+          "n_sims": 500,
+          "percentile": 41.4,
+          "p_value": 0.5868263473053892,
+          "p_value_se": 0.02202095299543614,
+          "null_mean": 0.383459991862166,
+          "null_p05": 0.3414510547132499,
+          "null_median": 0.38202131387463156,
+          "null_p95": 0.43095176348547715
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.308781869688385,
+          "n_sims": 500,
+          "percentile": 58.8,
+          "p_value": 0.41317365269461076,
+          "p_value_se": 0.022020952995436136,
+          "null_mean": 4.289063675830655,
+          "null_p05": 4.162300879963898,
+          "null_median": 4.289061045286607,
+          "null_p95": 4.412010590409669
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1961807530261668,
+          "n_sims": 500,
+          "percentile": 52.6,
+          "p_value": 0.5269461077844312,
+          "p_value_se": 0.022328184309310502,
+          "null_mean": 1.1932162162839712,
+          "null_p05": 1.086090129504321,
+          "null_median": 1.1890201077725864,
+          "null_p95": 1.3062231592059883
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 353
+      }
+    },
+    "BTC-USD|180|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 191,
+      "mean_levels_per_rebuild": 3.884816753926702,
+      "real": {
+        "n_touches": 429.0,
+        "p_reversal": 0.20046620046620048,
+        "traversal_bars": 4.79020979020979,
+        "vol_ratio": 1.1704053874488025
+      },
+      "mean_null_touches": 364.686,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.20046620046620048,
+          "n_sims": 500,
+          "percentile": 10.4,
+          "p_value": 0.8962075848303394,
+          "p_value_se": 0.013639615076893442,
+          "null_mean": 0.2283397422548033,
+          "null_p05": 0.1902098793303087,
+          "null_median": 0.2288026665504771,
+          "null_p95": 0.26631330625895844
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.79020979020979,
+          "n_sims": 500,
+          "percentile": 69.4,
+          "p_value": 0.3073852295409182,
+          "p_value_se": 0.020634900057959826,
+          "null_mean": 4.771535947987689,
+          "null_p05": 4.711111111111111,
+          "null_median": 4.772727962660797,
+          "null_p95": 4.827615347255949
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1704053874488025,
+          "n_sims": 500,
+          "percentile": 67.0,
+          "p_value": 0.6706586826347305,
+          "p_value_se": 0.0210178787721967,
+          "null_mean": 1.1523170322616012,
+          "null_p05": 1.0719044557755466,
+          "null_median": 1.1520940511072855,
+          "null_p95": 1.2390346741896412
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 429
+      }
+    },
+    "ETH-USD|90|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 143,
+      "mean_levels_per_rebuild": 3.979020979020979,
+      "real": {
+        "n_touches": 418.0,
+        "p_reversal": 0.3349282296650718,
+        "traversal_bars": 4.260765550239235,
+        "vol_ratio": 1.1534974772345254
+      },
+      "mean_null_touches": 369.338,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.3349282296650718,
+          "n_sims": 500,
+          "percentile": 9.6,
+          "p_value": 0.9041916167664671,
+          "p_value_se": 0.01316276087572128,
+          "null_mean": 0.36709180754676923,
+          "null_p05": 0.32764766431149295,
+          "null_median": 0.36734777005909974,
+          "null_p95": 0.4086525149976927
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.260765550239235,
+          "n_sims": 500,
+          "percentile": 7.4,
+          "p_value": 0.9261477045908184,
+          "p_value_se": 0.011695993662102982,
+          "null_mean": 4.349053740865378,
+          "null_p05": 4.252024309129781,
+          "null_median": 4.348865779098337,
+          "null_p95": 4.449205500381971
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1534974772345254,
+          "n_sims": 500,
+          "percentile": 55.0,
+          "p_value": 0.5508982035928144,
+          "p_value_se": 0.02224452170180444,
+          "null_mean": 1.147366734877834,
+          "null_p05": 1.0836305461814018,
+          "null_median": 1.1464762224944307,
+          "null_p95": 1.2192804499819354
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 418
+      }
+    },
+    "ETH-USD|90|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 143,
+      "mean_levels_per_rebuild": 3.979020979020979,
+      "real": {
+        "n_touches": 480.0,
+        "p_reversal": 0.17291666666666666,
+        "traversal_bars": 4.741666666666666,
+        "vol_ratio": 1.1482461786398532
+      },
+      "mean_null_touches": 447.6,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.17291666666666666,
+          "n_sims": 500,
+          "percentile": 6.8,
+          "p_value": 0.9321357285429142,
+          "p_value_se": 0.011247996454185501,
+          "null_mean": 0.19931498967772177,
+          "null_p05": 0.1716118079788739,
+          "null_median": 0.19822807413439558,
+          "null_p95": 0.23076923076923078
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.741666666666666,
+          "n_sims": 500,
+          "percentile": 19.2,
+          "p_value": 0.8083832335329342,
+          "p_value_se": 0.017601123900238404,
+          "null_mean": 4.770099005269227,
+          "null_p05": 4.711745475171454,
+          "null_median": 4.769412444637092,
+          "null_p95": 4.8248420177383595
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1482461786398532,
+          "n_sims": 500,
+          "percentile": 72.8,
+          "p_value": 0.7285429141716567,
+          "p_value_se": 0.019888093743842157,
+          "null_mean": 1.126325689691324,
+          "null_p05": 1.066221312989099,
+          "null_median": 1.1263871898492037,
+          "null_p95": 1.1902634151590172
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 480
+      }
+    },
+    "ETH-USD|90|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 143,
+      "mean_levels_per_rebuild": 2.6433566433566433,
+      "real": {
+        "n_touches": 284.0,
+        "p_reversal": 0.34507042253521125,
+        "traversal_bars": 4.28169014084507,
+        "vol_ratio": 1.145434418710639
+      },
+      "mean_null_touches": 234.768,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.34507042253521125,
+          "n_sims": 500,
+          "percentile": 6.0,
+          "p_value": 0.9401197604790419,
+          "p_value_se": 0.010610805477047517,
+          "null_mean": 0.39419398429976293,
+          "null_p05": 0.34186965811965814,
+          "null_median": 0.39359183844477963,
+          "null_p95": 0.4481476657425153
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.28169014084507,
+          "n_sims": 500,
+          "percentile": 10.4,
+          "p_value": 0.8962075848303394,
+          "p_value_se": 0.013639615076893442,
+          "null_mean": 4.374498525617293,
+          "null_p05": 4.255945507377637,
+          "null_median": 4.3775681341719075,
+          "null_p95": 4.489669037739577
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.145434418710639,
+          "n_sims": 500,
+          "percentile": 87.6,
+          "p_value": 0.8762475049900199,
+          "p_value_se": 0.01472669786400094,
+          "null_mean": 1.0886790871053258,
+          "null_p05": 1.0043576962546914,
+          "null_median": 1.0884985055143437,
+          "null_p95": 1.1761903663410576
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 284
+      }
+    },
+    "ETH-USD|90|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 143,
+      "mean_levels_per_rebuild": 2.6433566433566433,
+      "real": {
+        "n_touches": 311.0,
+        "p_reversal": 0.16720257234726688,
+        "traversal_bars": 4.784565916398714,
+        "vol_ratio": 1.1045369887646637
+      },
+      "mean_null_touches": 304.08,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.16720257234726688,
+          "n_sims": 500,
+          "percentile": 1.8,
+          "p_value": 0.9820359281437125,
+          "p_value_se": 0.0059399265952753315,
+          "null_mean": 0.20772379406469232,
+          "null_p05": 0.17518131944767307,
+          "null_median": 0.20689860243829913,
+          "null_p95": 0.24382883152662155
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.784565916398714,
+          "n_sims": 500,
+          "percentile": 34.8,
+          "p_value": 0.6526946107784432,
+          "p_value_se": 0.02129245668490227,
+          "null_mean": 4.798133948434717,
+          "null_p05": 4.73342427468725,
+          "null_median": 4.800990121702458,
+          "null_p95": 4.854099764762651
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1045369887646637,
+          "n_sims": 500,
+          "percentile": 81.6,
+          "p_value": 0.8163672654690619,
+          "p_value_se": 0.017315412402806242,
+          "null_mean": 1.069656637870566,
+          "null_p05": 1.005853837738725,
+          "null_median": 1.0691598113813603,
+          "null_p95": 1.141671458338825
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 311
+      }
+    },
+    "ETH-USD|180|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 139,
+      "mean_levels_per_rebuild": 6.23021582733813,
+      "real": {
+        "n_touches": 416.0,
+        "p_reversal": 0.35096153846153844,
+        "traversal_bars": 4.3173076923076925,
+        "vol_ratio": 1.14298065792757
+      },
+      "mean_null_touches": 353.998,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.35096153846153844,
+          "n_sims": 500,
+          "percentile": 23.6,
+          "p_value": 0.7644710578842315,
+          "p_value_se": 0.01897656763177132,
+          "null_mean": 0.37164601397700786,
+          "null_p05": 0.32469685063634407,
+          "null_median": 0.3724031949838401,
+          "null_p95": 0.41787801820283627
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.3173076923076925,
+          "n_sims": 500,
+          "percentile": 44.2,
+          "p_value": 0.5588822355289421,
+          "p_value_se": 0.022205084207861686,
+          "null_mean": 4.323295391733946,
+          "null_p05": 4.195318047782392,
+          "null_median": 4.329664098706443,
+          "null_p95": 4.4297964883639045
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.14298065792757,
+          "n_sims": 500,
+          "percentile": 75.4,
+          "p_value": 0.7544910179640718,
+          "p_value_se": 0.019247562015778024,
+          "null_mean": 1.1144117193262817,
+          "null_p05": 1.045580241411764,
+          "null_median": 1.1123018321599438,
+          "null_p95": 1.1947780828530792
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 416
+      }
+    },
+    "ETH-USD|180|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 139,
+      "mean_levels_per_rebuild": 6.23021582733813,
+      "real": {
+        "n_touches": 489.0,
+        "p_reversal": 0.18813905930470348,
+        "traversal_bars": 4.770961145194274,
+        "vol_ratio": 1.1177089806296
+      },
+      "mean_null_touches": 440.464,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.18813905930470348,
+          "n_sims": 500,
+          "percentile": 14.4,
+          "p_value": 0.8562874251497006,
+          "p_value_se": 0.01568816564676677,
+          "null_mean": 0.2093148764758662,
+          "null_p05": 0.17794044796716324,
+          "null_median": 0.208753402560742,
+          "null_p95": 0.24573166923133696
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.770961145194274,
+          "n_sims": 500,
+          "percentile": 34.4,
+          "p_value": 0.656686626746507,
+          "p_value_se": 0.021234373124667503,
+          "null_mean": 4.78348822673624,
+          "null_p05": 4.7259180457052805,
+          "null_median": 4.783581614463968,
+          "null_p95": 4.836688326690926
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1177089806296,
+          "n_sims": 500,
+          "percentile": 76.8,
+          "p_value": 0.7684630738522954,
+          "p_value_se": 0.01886412351410884,
+          "null_mean": 1.088932694499546,
+          "null_p05": 1.023043884652165,
+          "null_median": 1.087253350152201,
+          "null_p95": 1.1604961852612157
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 489
+      }
+    },
+    "ETH-USD|180|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 139,
+      "mean_levels_per_rebuild": 3.856115107913669,
+      "real": {
+        "n_touches": 255.0,
+        "p_reversal": 0.35294117647058826,
+        "traversal_bars": 4.364705882352941,
+        "vol_ratio": 1.1789449715063633
+      },
+      "mean_null_touches": 215.682,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.35294117647058826,
+          "n_sims": 500,
+          "percentile": 26.0,
+          "p_value": 0.7425149700598802,
+          "p_value_se": 0.019554359580249894,
+          "null_mean": 0.37358923430504065,
+          "null_p05": 0.31603576638663916,
+          "null_median": 0.37380909173396243,
+          "null_p95": 0.42860512129380046
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.364705882352941,
+          "n_sims": 500,
+          "percentile": 80.8,
+          "p_value": 0.1936127744510978,
+          "p_value_se": 0.017670702760243927,
+          "null_mean": 4.284118678553129,
+          "null_p05": 4.127556788981396,
+          "null_median": 4.284568912882804,
+          "null_p95": 4.429327263635985
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1789449715063633,
+          "n_sims": 500,
+          "percentile": 76.0,
+          "p_value": 0.7604790419161677,
+          "p_value_se": 0.019086679581448177,
+          "null_mean": 1.138652760976996,
+          "null_p05": 1.0458030431234686,
+          "null_median": 1.1328348735273137,
+          "null_p95": 1.2408859788985263
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 255
+      }
+    },
+    "ETH-USD|180|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 20,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 139,
+      "mean_levels_per_rebuild": 3.856115107913669,
+      "real": {
+        "n_touches": 280.0,
+        "p_reversal": 0.175,
+        "traversal_bars": 4.7214285714285715,
+        "vol_ratio": 1.1092353992602544
+      },
+      "mean_null_touches": 267.316,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.175,
+          "n_sims": 500,
+          "percentile": 2.9,
+          "p_value": 0.9720558882235529,
+          "p_value_se": 0.0073706496855396,
+          "null_mean": 0.2210443503269312,
+          "null_p05": 0.182830242475331,
+          "null_median": 0.21917713760343244,
+          "null_p95": 0.264077182979622
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 4.7214285714285715,
+          "n_sims": 500,
+          "percentile": 24.4,
+          "p_value": 0.7564870259481038,
+          "p_value_se": 0.01919449949961169,
+          "null_mean": 4.75048517360718,
+          "null_p05": 4.678006338899196,
+          "null_median": 4.75178653463325,
+          "null_p95": 4.820042185643531
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1092353992602544,
+          "n_sims": 500,
+          "percentile": 44.6,
+          "p_value": 0.4471057884231537,
+          "p_value_se": 0.02223520642502173,
+          "null_mean": 1.1165986863604558,
+          "null_p05": 1.0252178575796833,
+          "null_median": 1.114731504061178,
+          "null_p95": 1.207404274874666
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 280
+      }
+    }
+  }
+}
