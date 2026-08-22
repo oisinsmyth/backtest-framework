@@ -10,6 +10,53 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (the Binance archive, probed before anything is built on it, 2026-08-22 — D190/D191/D192)
+- `data/binance_archive.py` — pure, offline parsing for Binance's public flat-file
+  archives. The epoch unit is DETECTED per file, not configured: the archive switched kline
+  `open_time` from milliseconds to microseconds at 2025-01, and a reader that assumes
+  milliseconds dates a mid-2025 bar to the year 57,400. Base and quote volume are carried
+  separately in the provider's own units and neither is derived from the other.
+- `scripts/probe_binance_archive.py` — the network probe. Writes no fixture and no
+  snapshot; produces `data/binance_probe_summary.json` and a report rendered from it, with
+  `--report-only` re-rendering offline. Retention and size come from S3 listings, so only a
+  stratified sample of archives is actually downloaded.
+- `docs/results/binance_provider_probe.md` — the findings.
+- `tests/unit/test_binance_archive.py` — 38 offline tests plus one `live_fetch` smoke test
+  that deliberately picks a month AFTER the microsecond switch.
+
+### Findings
+- **Retention: 108 monthly archives of 1m bars for BTC and ETH, 2017-08 to 2026-07**,
+  against the 730 days of 1h yfinance serves. D163 refused any return claim below 1h
+  because 60 days cannot hold a 252-day training window; that constraint does not bind here.
+- **Zero-volume rate is 0.000% on every sampled month from 2022 onward**, against D160's
+  17,520-of-34,923 on yfinance hourly bars.
+- **The zero bars that do exist are TRUE, and the column that proves it is
+  `number_of_trades`.** In every sampled month on every symbol, the zero-volume bars and the
+  zero-trade bars are the same bars exactly — 25,878 of each on `BTGUSDT` 2022-01. That is
+  the market saying nothing traded, not a feed defect, and it is the opposite of D160's case.
+- **On dying coins a 1m time grid is majority-empty**: 57.97% on `BTGUSDT` 2022-01, 56.68%
+  on `XEMUSDT` 2022-09. Since the failure universe is the only screen in this project that
+  ever caught anything (D140/D180), this constrains the bar definition of any intraday
+  study, and D192 declines to choose it before a pre-registration does.
+- **The units cross-check D187 did not have passes on 100.0000% of bars** in every sampled
+  month: quote volume ÷ base volume lands inside the bar's own high–low range.
+- **The daily crypto fixture gets its first independent check.** Binance 1m resampled to
+  UTC days agrees with it to a median 9.6 bp on BTC and 14.8 bp on ETH over May 2021.
+  Volume does not reconcile and should not — global USD notional against single-venue base
+  units, which is the same distinction D187 got wrong in the other direction.
+- **58 of 63 universe coins are reachable, and the 5 that are not are not random**: `OKB`,
+  `HT` and `CRO` are rival exchanges' tokens. A single-venue archive applies a selection
+  screen the yfinance roster did not, and that is recorded rather than absorbed.
+- **6.34 GB of 1m archives, 952x the largest committed fixture and 367x the whole `.git`.**
+  Checksum coverage is 100% across all 58 symbols, which is what makes D191's manifest-only
+  policy available rather than merely appealing.
+
+### Fixed
+- A local-time bug in the archive parser, caught before it reached a result:
+  `datetime.fromtimestamp(x, tz=None)` reads the epoch in the machine's zone, so the same
+  archive would have parsed differently in London and New York and the fixture would have
+  depended on who ran the fetch.
+
 ### Added (Phase 3: the S1 terrain sensor and its null, pre-registered, 2026-08-22 — D189)
 - `research/terrain.py` — the terrain sensor interface, frozen for every later sensor, plus
   `VolumeProfileSensor` (S1). `PriceDensity` returns None outside the mapped range rather
