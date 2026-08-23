@@ -297,3 +297,125 @@ excused as a diagnostic.
 would isolate the signing hypothesis specifically, and it is not run. It was thought of
 after this document was committed; adding it now would be an unregistered look, so it
 belongs in a later pre-registration or nowhere.
+
+---
+
+## RESULT — appended after the run; nothing above this line edited
+
+**0 of 16 cells clear all three hurdles.** Every cell is negative-Sharpe against
+buy-and-hold of +0.773 on BTC and +0.308 on ETH. 16 cells, two nulls, 500 draws each,
+682 seconds — against a 576-second projection, the first runtime estimate in this
+programme that was not badly wrong.
+
+**Primary configuration** — k=2, cluster_atr=0.5, X=0:
+
+| | BTC-USD | ETH-USD |
+|---|---:|---:|
+| real Sharpe | **−0.437** | **−0.667** |
+| erasure-only control | −0.866 | −1.166 |
+| **control delta** | **+0.430** ✓ | **+0.499** ✓ |
+| verdict null (local band) | −0.430 | −0.656 |
+| **null delta** | **−0.007** ✗ | **−0.012** ✗ |
+| buy-and-hold | +0.773 ✗ | +0.308 ✗ |
+
+### H1 — FALSIFIED, and this is the run's finding
+
+Predicted **TRUE** at high confidence: S6 would fail to beat the erasure-only control on
+at least one symbol. It beats the control on **all 16 cells, both symbols**, by +0.152 to
++0.757 — every one of them clearing the +0.10 floor. The prediction was wrong and not
+marginally.
+
+**And it does not matter, because the null says the map contributed nothing.** On the
+primary configuration the real field beats randomly-placed mass by −0.007 (BTC) and −0.012
+(ETH): dead even, 46th and 49th percentile. Only 2 of 16 cells clear +0.10 against the
+verdict null and neither symbol has a partner.
+
+The mechanism is visible in the legs. Against the control, the real arm takes fewer shorts
+and less bad ones:
+
+| BTC | trades | long Sharpe | short Sharpe |
+|---|---:|---:|---:|
+| control (fade every break) | 186 | +0.023 (n=49) | **−1.187** (n=137) |
+| S6 filtered | 124 | +0.065 (n=39) | **−0.658** (n=85) |
+
+The entire control-beating margin is *don't short a breakout into territory where you have
+no information*. **A randomly-placed field earns that margin just as well**, because
+virginity is a property of where price is going, not of where the mass was put. 39.6% of
+BTC fires are virgin and the shuffle cannot move them.
+
+**So the control and the null answered opposite questions, and both were needed.** This
+document argued the control was "a stronger test than the null" and made it the primary
+comparison. That reasoning was sound — the erasure confound is real and no null can see it
+— but it was over-weighted. On the control alone this run reads as a large, unanimous
+success on both symbols. It is not one.
+
+### The amendment earned itself on BTC
+
+The two shuffle bands disagree, exactly where the amendment predicted they might:
+
+| BTC primary | delta | percentile |
+|---|---:|---:|
+| local band (verdict) | −0.007 | 46.0 |
+| whole-series span (diagnostic) | **+0.284** | **94.0** |
+
+D189's and D196's `pseudo_levels` convention is the whole-span one. Had it carried the
+verdict, the primary BTC cell would have reported **+0.284 at the 94th percentile** — over
+the effect floor, and a headline. The local band says that edge is entirely "the mass is
+in the right neighbourhood", which is a fact about price history, not about the sensor.
+ETH shows no such gap (−0.012 local, −0.073 span), so the artifact is BTC-specific and the
+every-symbol rule would have caught it too — second.
+
+### H2 — CONFIRMED, 16 of 16
+
+The short leg is worse than the long leg in **every cell on both symbols**. On the primary,
+BTC longs return +24.3% and shorts −90.5%; ETH longs −39.3% and shorts −94.0%. The census
+pre-registered this from the 321/171 fire split and the mechanism it named — a book that
+leans short across a decade in which BTC rose roughly 300× — and it is what the negative
+Sharpes are made of.
+
+The BTC long leg is faintly positive (+0.065, and up to +0.467 in the sensitivity cells).
+That is drift, not skill, and it is why H3 is the hurdle that matters.
+
+### H3 — CONFIRMED
+
+Nothing beats buy-and-hold. All 16 cells negative, best −0.110.
+
+### H5 — CONFIRMED
+
+The erasure-only control is itself strongly negative: −0.866 BTC, −1.166 ETH. Fading a
+40-bar breakout across a decade-long uptrend loses, as predicted, and almost all of it is
+the short leg (−1.187 and −1.221).
+
+### H4 — CONFIRMED, but the diagnostic is confounded and that is my error
+
+The decile response is non-monotone on both symbols: BTC rises on 7 of 9 steps, ETH on 5
+of 9 with the top decile reversing hard (+0.017 → −0.115).
+
+BTC's curve nonetheless looks like a clean gradient, from −0.258 in the bottom decile to
++0.129 in the top. **It should not be read as one.** The sign of `tilt` *determines the
+trade direction* — negative tilt fires only on up-breaks (shorts), positive only on
+down-breaks (longs) — so the decile axis and the direction axis are the same axis. The
+gradient is H2's long/short split wearing a different label. As specified in this document
+the diagnostic cannot separate magnitude from direction, and computing it within each
+direction would be a further look that was not pre-registered and is not taken here.
+
+### Ledger
+
+**D197: 16 cells × 2 nulls + 2 controls = 34 looks, own ledger.** As amended.
+
+### What this closes and what it does not
+
+S6 is **not** tradeable as specified: the field's placement is indistinguishable from
+random placement in the same neighbourhood, on both symbols, on the primary configuration
+and on fifteen of sixteen cells.
+
+It does not close the signing hypothesis. What was tested is signed inventory read *at a
+40-bar boundary* under a fade rule, which the erasure geometry forced. The equilibrium
+claim was shelved before the run and remains untested, and the imbalance formulation —
+mass above versus mass below current price, which never reads the erased bucket at all —
+was tabled in design and is still the open question.
+
+The methodological finding is the durable one, and it generalises past this sensor: **a
+control and a null answer different questions, and a result that clears one can be dead
+even on the other.** D196 established that a paired null is necessary and not sufficient.
+This adds that it is not even the right question on its own.
