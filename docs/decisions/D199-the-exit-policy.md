@@ -165,3 +165,109 @@ and the leg split is what exposes it. Hence legs are mandatory reporting, not a 
 - A trade whose stop and trail both trigger on one bar takes the worse of the two.
 - Exit-reason accounting sums to the trade count in every cell.
 - Full suite green, mypy clean, summary JSON re-renders byte-identically.
+
+---
+
+## RESULT — appended after the run; nothing above this line edited
+
+**Both primaries fail, on both symbols.** 16 cells, 500 null draws each, 276 seconds. The
+baseline reproduced exactly (−0.437 BTC, −0.667 ETH), so the exit refactor changed nothing
+it should not have.
+
+| | BTC | ETH |
+|---|---:|---:|
+| D197 baseline (ALL / fixed / 60) | −0.437 | −0.667 |
+| **Primary A — clock, `MAX_HOLD` 20** | −0.473 (**−0.036**) ✗ | −0.741 (**−0.073**) ✗ |
+| **Primary B — chandelier trail** | −0.495 (**−0.058**) ✗ | −0.734 (**−0.067**) ✗ |
+
+### H1 — CONFIRMED, and the reason is the useful part
+
+The clock had **almost nothing to shorten**. At `MAX_HOLD` 60 the backstop binds on only
+**16.1% of BTC trades and 10.4% of ETH's**, and the median holding period is **9.5 and 10
+bars**. Moving the cap from 60 to 20 moves the median from 9.5 to 9.
+
+D198's diagnostic was right that the winners resolve fast. It did not follow that the book
+was being held too long — it already wasn't. What separated the winners was **which trades
+they were, not how long they were held**, and a clock cannot express that distinction. The
+lever the diagnostic seemed to point at does not exist.
+
+This also retro-validates D196's framing of `MAX_HOLD` as a backstop rather than an exit
+rule. It was one, and the numbers now say so.
+
+### H2 — CONFIRMED, but the trail is not inert this time
+
+Unlike D196's trail, which never fired once behind a 3R target, this one dominates the
+book: at `MAX_HOLD` 60 it closes **164 of 181 BTC trades and 140 of 151 on ETH**, with
+zero time-exits. Median hold falls from 9.5 bars to 5.
+
+So "should the stop follow the trade" now has an answer: **it binds, and it does not
+help.** It produces a faster, busier book (181 trades against 124) that is slightly worse
+(−0.495 against −0.437). Dropping the fixed target removed the winners' upside without
+removing the losers.
+
+### H3 — CONFIRMED, mechanism and all
+
+`MAX_HOLD` = 5 is the worst cell on both symbols by a wide margin: **−1.010 and −1.157**.
+The predicted mechanism is exactly what happened — a 3R target sits 6 ATR away and five
+bars covers about 2.2 ATR of typical range, so the target became unreachable:
+
+| | target exits | time exits |
+|---|---:|---:|
+| BTC h=5 | **3 of 199** | 130 (65.3%) |
+| ETH h=5 | **2 of 159** | 100 (62.9%) |
+
+Two of 159 trades reached their target. That is D196's `touch_horizon` rebuilt, and it
+performs like it.
+
+### H4 — CONFIRMED
+
+No cell beats its null by the floor on both symbols. **One cell clears it anywhere**:
+`ETH | confirmed | trail | h60` at +0.190, the 74th percentile — and its BTC twin is
+**−0.182 at the 18.8th percentile**. A textbook single-symbol artifact, and precisely what
+the every-symbol rule exists to catch. It is also the best Sharpe in the grid at −0.068,
+which is what such artifacts always look like from one side.
+
+### H5, H6 — CONFIRMED
+
+Nothing beats buy-and-hold; every one of the 16 cells is negative. The short leg is worse
+than the long leg in **16 of 16 cells**, continuing D197's 16-of-16 and D198's clean sweep.
+
+### The one thing that did clear a hurdle on both symbols
+
+`confirmed | fixed | h20` — D198's confirmation entry combined with the shorter clock —
+beats the baseline by **+0.131 on BTC and +0.188 on ETH**. That is the first configuration
+in the entire S6 family to clear *any* hurdle on both symbols at once, and the two
+refinements are additive.
+
+It then fails the null on both (−0.204, −0.008) and loses to buy-and-hold by over a Sharpe
+point. It is a better wrapper around the same empty box.
+
+### Ledger
+
+**D199: 20 looks. Cumulative on the S6 family: 60.**
+
+### Recommendation — this line should stop
+
+Three rounds of refinement, sixty looks, one unchanging answer:
+
+| | what was refined | vs baseline | vs null |
+|---|---|---|---|
+| D197 | the map itself | beat the control 16/16 | **−0.007 / −0.012** |
+| D198 | the entry timing | beat it on both symbols | **−0.156 / +0.090** |
+| D199 | the exit policy | failed on both | **−0.013 / −0.045** |
+
+Every round has improved the strategy against its own predecessor and left the null
+comparison exactly where it was. That is the signature of tuning a wrapper around a signal
+that is not there: D197 measured the placement claim at zero and nothing since has moved
+it, because nothing since has been *about* placement.
+
+The same reasoning closed S1 in D194 — an infinite ladder of refinements, each a fresh
+look at one hypothesis, is an unfalsifiable escape hatch. **The recommendation is to close
+the S6 reversal line and not pre-register a fourth refinement of it.**
+
+What is untouched and does not inherit this: the **imbalance formulation** — mass above
+current price against mass below — which was tabled during D197's design. It never reads
+the erased bucket, so it is not constrained by the erasure geometry that forced everything
+above into a boundary-fade shape. That is a different construction with a different failure
+mode, and it would deserve its own document and its own ledger rather than an extension of
+this one.

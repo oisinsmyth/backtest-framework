@@ -1,5 +1,5 @@
 {
-  "n_sims": 15,
+  "n_sims": 500,
   "seed": 0,
   "cost_bps": 40.0,
   "holds": [
@@ -120,17 +120,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 199,
-        "n_trades_null_mean": 113.86666666666666,
+        "n_trades_null_mean": 109.352,
         "real_sharpe": -1.010035097612055,
         "real_total_return": -0.9712873207845596,
         "real_max_drawdown": -0.9758482112518931,
         "real_hit_rate": 0.4020100502512563,
-        "null_sharpe_mean": -0.6850957782466136,
-        "null_sharpe_p05": -1.0149916457748585,
-        "null_sharpe_p95": -0.42686317303584687,
-        "sharpe_delta": -0.3249393193654413,
-        "sharpe_percentile": 6.666666666666667,
-        "n_sims": 15
+        "null_sharpe_mean": -0.6211790211180332,
+        "null_sharpe_p05": -0.9714351792332498,
+        "null_sharpe_p95": -0.2760832765753006,
+        "sharpe_delta": -0.38885607649402165,
+        "sharpe_percentile": 3.2,
+        "n_sims": 500
       }
     },
     "BTC-USD|all|fixed|h20": {
@@ -211,17 +211,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 157,
-        "n_trades_null_mean": 93.13333333333334,
+        "n_trades_null_mean": 90.706,
         "real_sharpe": -0.47256446565888194,
         "real_total_return": -0.880201583727317,
         "real_max_drawdown": -0.9283719504864615,
         "real_hit_rate": 0.34394904458598724,
-        "null_sharpe_mean": -0.5095318372421729,
-        "null_sharpe_p05": -0.8709373664322569,
-        "null_sharpe_p95": -0.19903617319556477,
-        "sharpe_delta": 0.03696737158329094,
-        "sharpe_percentile": 46.666666666666664,
-        "n_sims": 15
+        "null_sharpe_mean": -0.4591624201541714,
+        "null_sharpe_p05": -0.8288888808416874,
+        "null_sharpe_p95": -0.104790577063818,
+        "sharpe_delta": -0.013402045504710525,
+        "sharpe_percentile": 43.6,
+        "n_sims": 500
       }
     },
     "BTC-USD|all|fixed|h60": {
@@ -302,17 +302,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 124,
-        "n_trades_null_mean": 82.0,
+        "n_trades_null_mean": 80.198,
         "real_sharpe": -0.436617459930971,
         "real_total_return": -0.8818754621528891,
         "real_max_drawdown": -0.9562212142803486,
         "real_hit_rate": 0.2903225806451613,
-        "null_sharpe_mean": -0.4325142496099452,
-        "null_sharpe_p05": -0.8355882073194403,
-        "null_sharpe_p95": -0.11627363090063327,
-        "sharpe_delta": -0.004103210321025785,
-        "sharpe_percentile": 40.0,
-        "n_sims": 15
+        "null_sharpe_mean": -0.429611422212595,
+        "null_sharpe_p05": -0.7892646082621788,
+        "null_sharpe_p95": -0.10754808087792336,
+        "sharpe_delta": -0.00700603771837599,
+        "sharpe_percentile": 46.0,
+        "n_sims": 500
       }
     },
     "BTC-USD|all|trail|h5": {
@@ -393,17 +393,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 207,
-        "n_trades_null_mean": 119.06666666666666,
+        "n_trades_null_mean": 113.902,
         "real_sharpe": -1.0315454078968314,
         "real_total_return": -0.9699342729038745,
         "real_max_drawdown": -0.9727310249619315,
         "real_hit_rate": 0.3864734299516908,
-        "null_sharpe_mean": -0.6984659953201279,
-        "null_sharpe_p05": -1.0161099210048372,
-        "null_sharpe_p95": -0.3799391485507233,
-        "sharpe_delta": -0.3330794125767035,
-        "sharpe_percentile": 6.666666666666667,
-        "n_sims": 15
+        "null_sharpe_mean": -0.6656399029240229,
+        "null_sharpe_p05": -1.0151294325964495,
+        "null_sharpe_p95": -0.33742530790955144,
+        "sharpe_delta": -0.3659055049728085,
+        "sharpe_percentile": 4.4,
+        "n_sims": 500
       }
     },
     "BTC-USD|all|trail|h20": {
@@ -484,17 +484,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 189,
-        "n_trades_null_mean": 109.66666666666667,
+        "n_trades_null_mean": 105.324,
         "real_sharpe": -0.741008988171753,
         "real_total_return": -0.9464721571207113,
         "real_max_drawdown": -0.9600124066485108,
         "real_hit_rate": 0.31746031746031744,
-        "null_sharpe_mean": -0.607463836204919,
-        "null_sharpe_p05": -0.9194750959607706,
-        "null_sharpe_p95": -0.3303457424020254,
-        "sharpe_delta": -0.13354515196683403,
-        "sharpe_percentile": 20.0,
-        "n_sims": 15
+        "null_sharpe_mean": -0.5975939938042079,
+        "null_sharpe_p05": -0.9469163192103421,
+        "null_sharpe_p95": -0.2901930858458515,
+        "sharpe_delta": -0.14341499436754512,
+        "sharpe_percentile": 24.8,
+        "n_sims": 500
       }
     },
     "BTC-USD|all|trail|h60": {
@@ -574,17 +574,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 181,
-        "n_trades_null_mean": 108.66666666666667,
+        "n_trades_null_mean": 103.874,
         "real_sharpe": -0.49482035135906455,
         "real_total_return": -0.8612634429625783,
         "real_max_drawdown": -0.9141170870108931,
         "real_hit_rate": 0.3259668508287293,
-        "null_sharpe_mean": -0.518573817676106,
-        "null_sharpe_p05": -0.8999302502604144,
-        "null_sharpe_p95": -0.09668448244874438,
-        "sharpe_delta": 0.02375346631704145,
-        "sharpe_percentile": 46.666666666666664,
-        "n_sims": 15
+        "null_sharpe_mean": -0.5149660142758177,
+        "null_sharpe_p05": -0.9284812212389216,
+        "null_sharpe_p95": -0.11906079042903514,
+        "sharpe_delta": 0.020145662916753126,
+        "sharpe_percentile": 51.8,
+        "n_sims": 500
       }
     },
     "BTC-USD|confirmed|fixed|h20": {
@@ -665,17 +665,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 81,
-        "n_trades_null_mean": 39.86666666666667,
+        "n_trades_null_mean": 37.678,
         "real_sharpe": -0.30574701599564724,
         "real_total_return": -0.6346415016713199,
         "real_max_drawdown": -0.7775614799203736,
         "real_hit_rate": 0.3950617283950617,
-        "null_sharpe_mean": -0.17069636077531677,
-        "null_sharpe_p05": -0.4993824525746163,
-        "null_sharpe_p95": 0.186817410637265,
-        "sharpe_delta": -0.13505065522033047,
-        "sharpe_percentile": 26.666666666666668,
-        "n_sims": 15
+        "null_sharpe_mean": -0.10181826918042707,
+        "null_sharpe_p05": -0.4428536405205328,
+        "null_sharpe_p95": 0.23434371132890078,
+        "sharpe_delta": -0.20392874681522016,
+        "sharpe_percentile": 15.0,
+        "n_sims": 500
       }
     },
     "BTC-USD|confirmed|trail|h60": {
@@ -755,17 +755,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 90,
-        "n_trades_null_mean": 45.0,
+        "n_trades_null_mean": 42.024,
         "real_sharpe": -0.3472188718334254,
         "real_total_return": -0.6542014606444316,
         "real_max_drawdown": -0.7514896322699103,
         "real_hit_rate": 0.3333333333333333,
-        "null_sharpe_mean": -0.14186252152450213,
-        "null_sharpe_p05": -0.4881841074226162,
-        "null_sharpe_p95": 0.22891883911505193,
-        "sharpe_delta": -0.2053563503089233,
-        "sharpe_percentile": 13.333333333333334,
-        "n_sims": 15
+        "null_sharpe_mean": -0.1654211844408745,
+        "null_sharpe_p05": -0.5175077693221445,
+        "null_sharpe_p95": 0.18413789900105554,
+        "sharpe_delta": -0.18179768739255092,
+        "sharpe_percentile": 18.8,
+        "n_sims": 500
       }
     },
     "ETH-USD|all|fixed|h5": {
@@ -838,17 +838,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 159,
-        "n_trades_null_mean": 96.26666666666667,
+        "n_trades_null_mean": 96.788,
         "real_sharpe": -1.1570811211014427,
         "real_total_return": -0.9840637873107049,
         "real_max_drawdown": -0.985333723150026,
         "real_hit_rate": 0.39622641509433965,
-        "null_sharpe_mean": -0.958285832430568,
-        "null_sharpe_p05": -1.1839456745865822,
-        "null_sharpe_p95": -0.6950395476894544,
-        "sharpe_delta": -0.1987952886708747,
-        "sharpe_percentile": 20.0,
-        "n_sims": 15
+        "null_sharpe_mean": -0.955693564385481,
+        "null_sharpe_p05": -1.2940202824665912,
+        "null_sharpe_p95": -0.5732290629357224,
+        "sharpe_delta": -0.20138755671596165,
+        "sharpe_percentile": 17.6,
+        "n_sims": 500
       }
     },
     "ETH-USD|all|fixed|h20": {
@@ -921,17 +921,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 130,
-        "n_trades_null_mean": 82.6,
+        "n_trades_null_mean": 82.982,
         "real_sharpe": -0.7405072883111191,
         "real_total_return": -0.966409967383733,
         "real_max_drawdown": -0.9714268310334275,
         "real_hit_rate": 0.33076923076923076,
-        "null_sharpe_mean": -0.7565126120533473,
-        "null_sharpe_p05": -1.134557990497797,
-        "null_sharpe_p95": -0.43010964706594723,
-        "sharpe_delta": 0.016005323742228184,
-        "sharpe_percentile": 40.0,
-        "n_sims": 15
+        "null_sharpe_mean": -0.6957643508840493,
+        "null_sharpe_p05": -1.0927883558299798,
+        "null_sharpe_p95": -0.2563449724487233,
+        "sharpe_delta": -0.04474293742706981,
+        "sharpe_percentile": 44.2,
+        "n_sims": 500
       }
     },
     "ETH-USD|all|fixed|h60": {
@@ -1004,17 +1004,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 106,
-        "n_trades_null_mean": 70.66666666666667,
+        "n_trades_null_mean": 71.034,
         "real_sharpe": -0.6674309484249155,
         "real_total_return": -0.9638505113971414,
         "real_max_drawdown": -0.9660769933398009,
         "real_hit_rate": 0.2358490566037736,
-        "null_sharpe_mean": -0.693639053440044,
-        "null_sharpe_p05": -1.0058862636412818,
-        "null_sharpe_p95": -0.46739429300927704,
-        "sharpe_delta": 0.02620810501512849,
-        "sharpe_percentile": 46.666666666666664,
-        "n_sims": 15
+        "null_sharpe_mean": -0.6556474305984088,
+        "null_sharpe_p05": -1.1063310952875511,
+        "null_sharpe_p95": -0.22745933730255205,
+        "sharpe_delta": -0.011783517826506662,
+        "sharpe_percentile": 49.2,
+        "n_sims": 500
       }
     },
     "ETH-USD|all|trail|h5": {
@@ -1087,17 +1087,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 162,
-        "n_trades_null_mean": 100.26666666666667,
+        "n_trades_null_mean": 100.764,
         "real_sharpe": -1.0675699353959098,
         "real_total_return": -0.9754322440791087,
         "real_max_drawdown": -0.9780890579164034,
         "real_hit_rate": 0.37037037037037035,
-        "null_sharpe_mean": -0.9678027631707503,
-        "null_sharpe_p05": -1.3050642723313093,
-        "null_sharpe_p95": -0.7240161371892562,
-        "sharpe_delta": -0.09976717222515952,
-        "sharpe_percentile": 33.333333333333336,
-        "n_sims": 15
+        "null_sharpe_mean": -0.9228973584736683,
+        "null_sharpe_p05": -1.2936663162733921,
+        "null_sharpe_p95": -0.550268165871013,
+        "sharpe_delta": -0.14467257692224156,
+        "sharpe_percentile": 24.4,
+        "n_sims": 500
       }
     },
     "ETH-USD|all|trail|h20": {
@@ -1170,17 +1170,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 152,
-        "n_trades_null_mean": 96.0,
+        "n_trades_null_mean": 95.912,
         "real_sharpe": -0.7436113168836695,
         "real_total_return": -0.9526860167350419,
         "real_max_drawdown": -0.9583968688414803,
         "real_hit_rate": 0.3157894736842105,
-        "null_sharpe_mean": -0.7768277122444183,
-        "null_sharpe_p05": -1.1248410811660907,
-        "null_sharpe_p95": -0.510509864142158,
-        "sharpe_delta": 0.03321639536074872,
-        "sharpe_percentile": 53.333333333333336,
-        "n_sims": 15
+        "null_sharpe_mean": -0.7304107196706264,
+        "null_sharpe_p05": -1.1111222399187997,
+        "null_sharpe_p95": -0.3428840397873325,
+        "sharpe_delta": -0.01320059721304312,
+        "sharpe_percentile": 47.2,
+        "n_sims": 500
       }
     },
     "ETH-USD|all|trail|h60": {
@@ -1252,17 +1252,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 151,
-        "n_trades_null_mean": 95.6,
+        "n_trades_null_mean": 95.466,
         "real_sharpe": -0.7340936298662737,
         "real_total_return": -0.9531266447643452,
         "real_max_drawdown": -0.9587843125617134,
         "real_hit_rate": 0.31788079470198677,
-        "null_sharpe_mean": -0.7480359506140185,
-        "null_sharpe_p05": -1.1031790534508354,
-        "null_sharpe_p95": -0.35033172089482756,
-        "sharpe_delta": 0.013942320747744819,
-        "sharpe_percentile": 53.333333333333336,
-        "n_sims": 15
+        "null_sharpe_mean": -0.6924446488479354,
+        "null_sharpe_p05": -1.0829800132031808,
+        "null_sharpe_p95": -0.2590896711967431,
+        "sharpe_delta": -0.04164898101833825,
+        "sharpe_percentile": 43.8,
+        "n_sims": 500
       }
     },
     "ETH-USD|confirmed|fixed|h20": {
@@ -1335,17 +1335,17 @@
       "null": {
         "band": "local",
         "n_trades_real": 64,
-        "n_trades_null_mean": 31.933333333333334,
+        "n_trades_null_mean": 31.75,
         "real_sharpe": -0.4793501271678101,
         "real_total_return": -0.7996814192719427,
         "real_max_drawdown": -0.886250703157414,
         "real_hit_rate": 0.34375,
-        "null_sharpe_mean": -0.4893861445794857,
-        "null_sharpe_p05": -0.9383451363010112,
-        "null_sharpe_p95": -0.08955346299643033,
-        "sharpe_delta": 0.01003601741167559,
-        "sharpe_percentile": 53.333333333333336,
-        "n_sims": 15
+        "null_sharpe_mean": -0.47104916816863773,
+        "null_sharpe_p05": -0.9109789987426636,
+        "null_sharpe_p95": -0.07915162351013423,
+        "sharpe_delta": -0.008300958999172381,
+        "sharpe_percentile": 47.2,
+        "n_sims": 500
       }
     },
     "ETH-USD|confirmed|trail|h60": {
@@ -1417,19 +1417,19 @@
       "null": {
         "band": "local",
         "n_trades_real": 70,
-        "n_trades_null_mean": 34.6,
+        "n_trades_null_mean": 34.684,
         "real_sharpe": -0.06848482847966994,
         "real_total_return": -0.1836323873186103,
         "real_max_drawdown": -0.7612143032158631,
         "real_hit_rate": 0.34285714285714286,
-        "null_sharpe_mean": -0.27679355370832975,
-        "null_sharpe_p05": -0.55856942063086,
-        "null_sharpe_p95": -0.0002716948866649249,
-        "sharpe_delta": 0.2083087252286598,
-        "sharpe_percentile": 86.66666666666667,
-        "n_sims": 15
+        "null_sharpe_mean": -0.2583962969953391,
+        "null_sharpe_p05": -0.7210792850109877,
+        "null_sharpe_p95": 0.13415593354985256,
+        "sharpe_delta": 0.18991146851566917,
+        "sharpe_percentile": 74.2,
+        "n_sims": 500
       }
     }
   },
-  "elapsed_seconds": 12.378973960876465
+  "elapsed_seconds": 275.6444773674011
 }
