@@ -573,3 +573,111 @@ def run_field_reversal(
         open_until = exit_index
 
     return StrategyResult(tuple(trades), cost_bps, periods_per_year)
+
+
+TRAIL_ATR = 2.0
+"""Chandelier multiple for D199's trailing exit policy. Deliberately the same number as
+`STOP_ATR`, so the fixed and trailing policies differ in SHAPE and not in distance."""
+
+
+def chandelier_level(
+    bars: Sequence[TimestampedBar],
+    entry_index: int,
+    index: int,
+    direction: int,
+    atr: Sequence[float],
+    multiple: float = TRAIL_ATR,
+) -> float:
+    """The trade's best excursion since entry, less `multiple` x ATR — unratcheted.
+
+    Restates `strategies.breakout.ChandelierStop.stop_level` on a bare bar sequence,
+    because a research sensor has no `DataView`. The two are pinned against each other by
+    test rather than trusted to agree, which is the same arrangement
+    `terrain.mean_true_range` has with `strategies.breakout._mean_true_range` and
+    `terrain_swing._is_swing_bars` has with `_is_swing`. A restatement is only valid if it
+    is provably the same number."""
+    window = bars[entry_index : index + 1]
+    best = (
+        max(b.bar.high for b in window) if direction > 0
+        else min(b.bar.low for b in window)
+    )
+    return best - direction * multiple * atr[index]
+
+
+def run_field_trailing(
+    bars: Sequence[TimestampedBar],
+    signals: Sequence,
+    atr: Sequence[float],
+    cost_bps: float,
+    periods_per_year: float,
+    threshold: float = 0.0,
+    filtered: bool = True,
+    stop_atr: float = STOP_ATR,
+    trail_atr: float = TRAIL_ATR,
+    max_hold: int = MAX_HOLD,
+) -> StrategyResult:
+    """D199's trailing exit policy: a ratcheting chandelier and NO fixed target.
+
+    The target is dropped on purpose. D196 measured a trail sitting behind a 3R target and
+    the target resolved first on all 115 stop exits, so a trail-plus-target cell would
+    re-run a known null result. The two policies are therefore compared as whole policies:
+    "fixed stop plus fixed target" against "a stop that follows the trade".
+
+    **Ratcheting is not optional** and the reason is `TrailingChannelStop`'s: the raw
+    chandelier level moves both ways as ATR breathes, and a level that can loosen is not a
+    stop — it would let a loss grow after having promised not to. The tightest level ever
+    proposed is kept for the life of the trade, so the initial 2-ATR stop is also a floor
+    the trail can only improve on.
+
+    Entry, sizing, costs, one-position-at-a-time and the pessimistic intrabar convention
+    are all `run_field_reversal`'s, unchanged."""
+    trades: list[Trade] = []
+    open_until = -1
+
+    for sig in signals:
+        t = sig.index
+        if t <= open_until or t + 1 >= len(bars):
+            continue
+        if filtered:
+            if sig.virgin:
+                continue
+            if sig.direction > 0 and not (sig.tilt < -threshold):
+                continue
+            if sig.direction < 0 and not (sig.tilt > threshold):
+                continue
+        direction = -sig.direction
+
+        a = atr[t]
+        if not (a == a) or a <= 0.0:
+            continue
+        entry_index = t + 1
+        entry_price = bars[entry_index].bar.open
+        risk = stop_atr * a
+        if not (risk > 0.0) or risk >= entry_price:
+            continue
+        level = entry_price - direction * risk  # the initial stop is the trail's floor
+
+        exit_index, exit_price, reason = None, 0.0, ""
+        for j in range(entry_index, min(entry_index + max_hold, len(bars))):
+            b = bars[j].bar
+            if (b.low <= level) if direction > 0 else (b.high >= level):
+                exit_index, exit_price = j, level
+                reason = "stop" if j == entry_index else "trail"
+                break
+            aj = atr[j]
+            if aj == aj and aj > 0.0:
+                candidate = chandelier_level(
+                    bars, entry_index, j, direction, atr, trail_atr
+                )
+                # ratchet: tighten only
+                level = max(level, candidate) if direction > 0 else min(level, candidate)
+        if exit_index is None:
+            exit_index = min(entry_index + max_hold, len(bars) - 1)
+            exit_price, reason = bars[exit_index].bar.close, "max_hold"
+
+        trades.append(
+            Trade(entry_index, exit_index, direction, entry_price, exit_price, reason)
+        )
+        open_until = exit_index
+
+    return StrategyResult(tuple(trades), cost_bps, periods_per_year)

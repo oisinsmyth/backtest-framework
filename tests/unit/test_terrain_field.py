@@ -519,3 +519,101 @@ def test_the_confirmation_walk_reads_no_bar_past_the_confirming_signal():
 
     horizon = cut - 21  # a confirmation at t is decided by bars <= t
     assert [s.index for s in split.confirmed if s.index <= horizon] ==            [s.index for s in psplit.confirmed if s.index <= horizon]
+
+
+# ---------------------------------------------------------------- D199 exit policy
+
+
+def test_the_bare_bar_chandelier_agrees_with_the_dataview_one():
+    """Pinned against `strategies.breakout.ChandelierStop`, not trusted to agree.
+
+    Same arrangement terrain.mean_true_range has with breakout._mean_true_range: a
+    restatement is only valid if it is provably the same number."""
+    from backtest_framework.engine.dataview import DataView
+    from backtest_framework.strategies.breakout import (
+        ChandelierStop, OpenPosition, PositionState)
+    from backtest_framework.research.terrain import mean_true_range
+    from backtest_framework.research.terrain_strategies import chandelier_level
+
+    bars = _walk(200, seed=31)
+    stop = ChandelierStop(multiple=2.0, window=20)
+    # ChandelierStop measures ATR over [i-window, i), EXCLUDING the current bar, while
+    # rolling_mean_true_range includes it. That off-by-one is a real difference in
+    # convention and it is pinned elsewhere (test_terrain.py). What is under test HERE is
+    # the excursion geometry, so both sides are fed the same ATR to isolate it.
+    atr = [
+        mean_true_range(bars, j - 20, j) if j >= 21 else float("nan")
+        for j in range(len(bars))
+    ]
+
+    checked = 0
+    for direction in (1, -1):
+        for entry in (60, 90):
+            for j in range(entry + 1, entry + 25):
+                view = DataView(tuple(tb.bar for tb in bars[: j + 1]))
+                pos = OpenPosition(
+                    state=PositionState(direction),
+                    entry_index=entry,
+                    entry_reference=bars[entry].bar.open,
+                    stop_level=0.0,
+                )
+                theirs = stop.stop_level(view, pos)
+                if theirs is None:
+                    continue
+                mine = chandelier_level(bars, entry, j, direction, atr, 2.0)
+                assert mine == pytest.approx(theirs, rel=1e-9), (
+                    f"dir={direction} entry={entry} j={j}: {mine} vs {theirs}"
+                )
+                checked += 1
+    assert checked > 40, f"only {checked} comparisons made — the pin is vacuous"
+
+
+def test_the_trail_never_loosens_in_either_direction():
+    from backtest_framework.research.terrain import rolling_mean_true_range
+    from backtest_framework.research.terrain_strategies import chandelier_level
+
+    bars = _walk(300, seed=32)
+    atr = rolling_mean_true_range(bars, 20)
+    for direction in (1, -1):
+        entry = 80
+        level = bars[entry].bar.open - direction * 2.0 * atr[entry]
+        for j in range(entry + 1, entry + 60):
+            if not (atr[j] == atr[j]):
+                continue
+            cand = chandelier_level(bars, entry, j, direction, atr, 2.0)
+            new = max(level, cand) if direction > 0 else min(level, cand)
+            if direction > 0:
+                assert new >= level, "a long's trail loosened"
+            else:
+                assert new <= level, "a short's trail loosened"
+            level = new
+
+
+def test_the_trailing_policy_has_no_target_so_never_exits_on_one():
+    from backtest_framework.research.terrain import rolling_mean_true_range
+    from backtest_framework.research.terrain_strategies import run_field_trailing
+
+    bars = _walk(900, seed=33)
+    atr = rolling_mean_true_range(bars, 20)
+    sigs = field_signals(bars, confirmed_swings(bars, [1_000.0] * len(bars), PARAMS),
+                         PARAMS)
+    res = run_field_trailing(bars, sigs, atr, 40.0, 365.0)
+    assert res.n_trades > 5
+    reasons = {t.reason for t in res.trades}
+    assert "target" not in reasons
+    assert reasons <= {"stop", "trail", "max_hold"}
+
+
+def test_a_shorter_max_hold_never_increases_the_holding_period():
+    from backtest_framework.research.terrain import rolling_mean_true_range
+    from backtest_framework.research.terrain_strategies import run_field_reversal
+
+    bars = _walk(900, seed=34)
+    atr = rolling_mean_true_range(bars, 20)
+    sigs = field_signals(bars, confirmed_swings(bars, [1_000.0] * len(bars), PARAMS),
+                         PARAMS)
+    short = run_field_reversal(bars, sigs, atr, 40.0, 365.0, max_hold=5)
+    long_ = run_field_reversal(bars, sigs, atr, 40.0, 365.0, max_hold=60)
+    assert short.n_trades > 0 and long_.n_trades > 0
+    assert max(t.exit_index - t.entry_index for t in short.trades) <= 5
+    assert max(t.exit_index - t.entry_index for t in long_.trades) <= 60
