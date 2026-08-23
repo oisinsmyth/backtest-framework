@@ -237,9 +237,25 @@ def sensor_levels(
     sensor: TerrainSensor,
     rebuild_every: int = REBUILD_EVERY,
 ) -> dict[int, tuple[float, ...]]:
-    """The sensor's HVN levels, rebuilt every `rebuild_every` bars and held between."""
+    """Levels the sensor would have had, rebuilt every `rebuild_every` bars.
+
+    **Two ways a sensor may supply levels, and the choice is the sensor's.** A histogram
+    sensor (S1) emits a density and its levels are the high-volume nodes extracted from
+    it. A sensor whose output is already a discrete set of levels (S5) publishes
+    `levels_at` and that set is used directly.
+
+    Forcing the second kind through the first path is not neutral: `PriceDensity.levels`
+    keeps only local maxima at or above `HVN_QUANTILE`, which on a sparse spike map
+    discarded three of every four levels S5 produced and imported a quantile the sensor
+    never needed. The fallback is unchanged, so S1's path is byte-identical."""
+    explicit = getattr(sensor, "levels_at", None)
     out: dict[int, tuple[float, ...]] = {}
     for t in range(0, len(bars), rebuild_every):
+        if explicit is not None:
+            levels = explicit(bars, t, volumes)
+            if levels:
+                out[t] = tuple(levels)
+            continue
         density = sensor.density(bars, t, volumes)
         if density is None:
             continue
