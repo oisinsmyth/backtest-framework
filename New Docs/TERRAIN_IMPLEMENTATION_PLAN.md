@@ -107,6 +107,7 @@ Pre-registered hypotheses (recorded here, before data):
 - [x] WP0 intraday data brick — delivered earlier by D160/D161/D165, not as a terrain WP
 - [x] WP1 S1 volume profile + sensor interface — D189
 - [x] WP2 null-test harness + S1 verdict — **S1 FAILED**, D189
+- [x] WP2 re-run on exchange-native 15m volume — **S1 FAILED AGAIN**, D194; S1 closed at any resolution by D194's permanent stop
 - [ ] ~~WP3a Coin Metrics anchor layer~~ — not run, stop condition
 - [ ] ~~WP3b self-computed URPD (Dune) + verdict~~ — not run, stop condition
 - [ ] ~~WP4 S2 anchored VWAP + verdict~~ — not run, stop condition
@@ -122,3 +123,33 @@ P(reversal | touch) the real levels sit BELOW the null median on both symbols. V
 tables in `TERRAIN_RESULTS.md`; reasoning in
 `docs/decisions/D189-the-s1-terrain-sensor-and-its-null.md`. The harness is retained: it
 passed both synthetic controls and can test any future sensor.
+
+**RE-OPENED ONCE AND CLOSED FOR GOOD on 2026-08-23 (D194).** D189 tested a 90-to-180-DAY
+volume profile built from daily bars — a construction nobody trades — and named the gap in
+its own losing result: a map from real intraday exchange volume is a different
+measurement. D190–D193 built that data. D194 re-ran S1 on exchange-native 15m volume with
+every window calendar-matched to D189, so bar resolution was the only variable.
+
+**S1 failed again, on all three pre-registered conditions.** The primary configuration
+reached the 89.6th percentile on BTC (p = 0.106) and the 66.4th on ETH (p = 0.337). The
+sign did flip — D189's real levels sat below their null, D194's sit above it on both
+symbols — so intraday attribution produces a real, correctly-signed effect. It is 6.6x and
+19x below the pre-registered effect-size floor.
+
+Three BTC configurations DID clear p <= 0.05, one at **p = 0.0080, the 99.4th percentile,
+on 30,187 touches** — which is what a discovery looks like. All were 4.5x to 7.1x below
+the floor, and none was on ETH, so two independent pre-registered guards killed the same
+cell. That is the run's most useful output.
+
+A span-matched daily control on the overlapping years rules out the era: still
+indistinguishable from random (BTC 22.4th percentile, ETH 51.2nd). The bucket-span census
+rules out degeneracy: median span 4.0 buckets, so the map is a genuine volume profile and
+not a close-price histogram.
+
+**S1 is closed at any resolution**, by D194's own pre-registered permanent stop: the
+resolution ladder is infinite, every rung is a fresh look at one hypothesis, and two rungs
+two orders of magnitude apart both returning an effect ~20x too small to act on means the
+hypothesis is not resolution-limited. No 5m, 1m or tick variant will be tried.
+
+**Cumulative multiplicity: 147 looks on one hypothesis** (48 from D189, 96 from D194, 3
+for the control). WP3–WP8 remain unrun.

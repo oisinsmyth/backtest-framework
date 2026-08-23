@@ -53,18 +53,38 @@ from ..data.bars import TimestampedBar
 VOLUME_UNITS = ("shares", "quote_notional")
 """Same two conventions `costs.calibration` pins, and for the same reason (D187)."""
 
-LOOKBACK_DAYS = (90, 180)
-"""The ONLY lookbacks this sensor may take. `TERRAIN_MODEL.md`: "sweep only {90, 180}
-days". A third value is a search, and the terrain programme's multiplicity ledger counts
-every combination tested."""
+LOOKBACK_BARS = (90, 180, 8_640, 17_280)
+"""The ONLY lookbacks this sensor may take, in BARS. A value outside this set is a search,
+and the terrain programme's multiplicity ledger counts every combination tested.
+
+Named `_BARS` and not `_DAYS` because the value is *applied* as a bar count
+(`bars[index - lookback + 1 : index + 1]`). That was harmless while the sensor only ever
+saw daily bars and became a lie the moment it saw 15m ones. D187's lesson, applied before
+it cost anything: the name of a field is not a contract, the parameter that enforces it is.
+
+90 and 180 are `TERRAIN_MODEL.md`'s "sweep only {90, 180} days" on daily bars (D189).
+8,640 and 17,280 are the same 90 and 180 days at 15m (96 bars a day), registered in D194
+before the run that uses them."""
+
+DAILY_LOOKBACKS = (90, 180)
+"""What D189 swept. Kept as its own tuple so extending `LOOKBACK_BARS` cannot silently
+change what the daily runner iterates over — that would rewrite a committed result."""
+
+INTRADAY_15M_LOOKBACKS = (8_640, 17_280)
+"""90 and 180 calendar days at 15m. D194's sweep."""
 
 BUCKET_ATR = (0.25, 0.5)
 """The ONLY bucket widths, in ATR units. Fixed dollar buckets are prohibited by the spec —
 a $100 bucket means something different on a $300 coin and a $90,000 one."""
 
 ATR_WINDOW = 20
-"""Bars of true range behind the bucket width. Matches `AtrStop`/`ChandelierStop`, so the
-terrain and the stops measure volatility the same way rather than two ways."""
+"""DEFAULT bars of true range behind the bucket width — 20 daily bars, matching
+`AtrStop`/`ChandelierStop` so the terrain and the stops measure volatility the same way.
+
+A default rather than a constant since D194, which passes 1,920 (20 days at 15m) so the
+bucket width and touch band stay the same PRICES they were on daily bars. A window left at
+20 there would be five hours of volatility setting the spatial scale of a map covering six
+months, and the study would be changing two things at once."""
 
 
 @dataclass(frozen=True)
@@ -89,6 +109,37 @@ class PriceDensity:
     is_stub: bool = False
     """Reserved for the honest-stub sensors the spec requires (S3 before its data exists).
     Always False for a sensor computing from real data."""
+
+    spans: tuple[int, ...] = ()
+    """How many buckets each contributing bar's range covered.
+
+    The sensor spreads a bar's volume across the buckets its RANGE covers precisely so the
+    profile does not become "a close-price histogram wearing a volume label". That
+    reasoning holds only while a bar is wider than a bucket. On daily bars it always was.
+    At 15m a bar's range is often narrower than one bucket, `span == 1`, and the map
+    silently degenerates into the very histogram the spreading exists to avoid — while
+    looking exactly like a legitimate volume profile.
+
+    So the census is carried out of the sensor rather than reconstructed later, and D194
+    pre-registers reporting it BEFORE any verdict. A median span of 1 invalidates a pass
+    whatever the null test says."""
+
+    @property
+    def median_span(self) -> float:
+        if not self.spans:
+            return 0.0
+        ordered = sorted(self.spans)
+        mid = len(ordered) // 2
+        if len(ordered) % 2:
+            return float(ordered[mid])
+        return (ordered[mid - 1] + ordered[mid]) / 2.0
+
+    @property
+    def single_bucket_share(self) -> float:
+        """Fraction of contributing bars that landed in exactly one bucket."""
+        if not self.spans:
+            return 0.0
+        return sum(1 for s in self.spans if s == 1) / len(self.spans)
 
     def bucket_of(self, price: float) -> int | None:
         """Index of the bucket containing `price`, or None if outside the mapped range.
@@ -204,17 +255,21 @@ class VolumeProfileSensor:
     baselines trade at, which is what the ladder's next step has to annotate. The spec
     wants intraday for sharpness, not necessity."""
 
-    lookback_days: int
+    lookback_bars: int
     bucket_atr: float
     volume_units: str
     name: str = "S1_volume_profile"
+    atr_window: int = ATR_WINDOW
+    """Bars behind the ATR that sets bucket width. Calendar-matched by the caller."""
 
     def __post_init__(self) -> None:
-        if self.lookback_days not in LOOKBACK_DAYS:
+        if self.lookback_bars not in LOOKBACK_BARS:
             raise ValueError(
-                f"lookback_days must be one of {LOOKBACK_DAYS}, got {self.lookback_days}. "
+                f"lookback_bars must be one of {LOOKBACK_BARS}, got {self.lookback_bars}. "
                 "The spec fixes this set; a third value is an unregistered search."
             )
+        if self.atr_window < 2:
+            raise ValueError(f"atr_window must be at least 2 bars, got {self.atr_window}")
         if self.bucket_atr not in BUCKET_ATR:
             raise ValueError(
                 f"bucket_atr must be one of {BUCKET_ATR}, got {self.bucket_atr}. "
@@ -230,7 +285,7 @@ class VolumeProfileSensor:
     def warm_up_bars(self) -> int:
         """Bars needed before the first density. The lookback itself, plus the ATR window
         that sets the bucket width, plus one for the ATR's first previous close."""
-        return self.lookback_days + ATR_WINDOW + 1
+        return self.lookback_bars + self.atr_window + 1
 
     def density(
         self,
@@ -256,10 +311,10 @@ class VolumeProfileSensor:
         if index < self.warm_up_bars() - 1 or index >= len(bars):
             return None
 
-        start = index - self.lookback_days + 1
+        start = index - self.lookback_bars + 1
         window = bars[start : index + 1]
         window_volumes = volumes[start : index + 1]
-        atr = mean_true_range(bars, index - ATR_WINDOW + 1, index + 1)
+        atr = mean_true_range(bars, index - self.atr_window + 1, index + 1)
         if not math.isfinite(atr) or atr <= 0.0:
             return None
 
@@ -273,6 +328,7 @@ class VolumeProfileSensor:
         edges = tuple(low + i * width for i in range(n_buckets + 1))
 
         raw = [0.0] * n_buckets
+        spans: list[int] = []
         for bar, vol in zip(window, window_volumes):
             if vol != vol or vol <= 0.0:  # NaN or no trade — contributes nothing
                 continue
@@ -283,6 +339,7 @@ class VolumeProfileSensor:
             lo_i = max(0, int((bar.bar.low - low) / width))
             hi_i = min(n_buckets - 1, int((bar.bar.high - low) / width))
             span = hi_i - lo_i + 1
+            spans.append(span)
             share = vol / span
             for i in range(lo_i, hi_i + 1):
                 raw[i] += share
@@ -294,9 +351,10 @@ class VolumeProfileSensor:
             edges=edges,
             mass=tuple(r / total for r in raw),
             bucket_width=width,
-            lookback=self.lookback_days,
+            lookback=self.lookback_bars,
             bucket_atr=self.bucket_atr,
             n_bars=len(window),
+            spans=tuple(spans),
         )
 
 
@@ -316,6 +374,69 @@ def _quantile(sorted_values: Sequence[float], q: float) -> float:
     hi = min(lo + 1, len(sorted_values) - 1)
     frac = pos - lo
     return sorted_values[lo] * (1.0 - frac) + sorted_values[hi] * frac
+
+
+def rolling_mean_true_range(bars: Sequence[TimestampedBar], window: int) -> list[float]:
+    """`mean_true_range(bars, t - window + 1, t + 1)` for every `t`, in one pass.
+
+    Arithmetically identical to calling `mean_true_range` per bar, and computed this way
+    because the per-bar form is quadratic in the window. Measured on the D194 grid: 282.5
+    microseconds a call, 77.6 s per reaction scan, **173 hours** for the sixteen
+    configurations. This form builds in 0.08 s.
+
+    An optimisation is only an optimisation if it is provably the same number, so
+    `test_terrain.py` pins it against `mean_true_range` on real bars rather than trusting
+    this docstring. Entries before the window is full are NaN, never a partial mean."""
+    if window < 2:
+        raise ValueError(f"ATR window must be at least 2 bars, got {window}")
+    n = len(bars)
+    out = [math.nan] * n
+    if n < window + 1:
+        return out
+    true_ranges = [0.0] * n
+    for j in range(1, n):
+        bar, prev_close = bars[j].bar, bars[j - 1].bar.close
+        true_ranges[j] = max(
+            bar.high - bar.low, abs(bar.high - prev_close), abs(bar.low - prev_close)
+        )
+    total = sum(true_ranges[1 : window + 1])
+    out[window] = total / window
+    for t in range(window + 1, n):
+        total += true_ranges[t] - true_ranges[t - window]
+        out[t] = total / window
+    return out
+
+
+def rolling_realized_volatility(
+    bars: Sequence[TimestampedBar], window: int
+) -> list[float]:
+    """`realized_volatility(bars, t - window, t + 1)` for every `t`, in one pass.
+
+    Same motivation and same obligation as `rolling_mean_true_range`: the null harness
+    calls the per-window form twice per touch over a 480-bar window, and it is pinned
+    against the original by test rather than asserted here.
+
+    Sample standard deviation (n-1), matching `statistics.stdev`. Degenerate windows
+    return 0.0 exactly as the original does."""
+    if window < 2:
+        raise ValueError(f"volatility window must be at least 2 bars, got {window}")
+    n = len(bars)
+    out = [0.0] * n
+    rets = [0.0] * n
+    for j in range(1, n):
+        a, b = bars[j - 1].bar.close, bars[j].bar.close
+        rets[j] = math.log(b / a) if a > 0 and b > 0 else 0.0
+    # window+1 closes -> window returns, at indices (t-window+1 .. t]
+    s1 = sum(rets[1 : window + 1])
+    s2 = sum(r * r for r in rets[1 : window + 1])
+    for t in range(window, n):
+        if t > window:
+            drop = rets[t - window]
+            s1 += rets[t] - drop
+            s2 += rets[t] * rets[t] - drop * drop
+        var = (s2 - s1 * s1 / window) / (window - 1)
+        out[t] = math.sqrt(var) if var > 0.0 else 0.0
+    return out
 
 
 def realized_volatility(bars: Sequence[TimestampedBar], start: int, end: int) -> float:

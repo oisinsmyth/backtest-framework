@@ -1,0 +1,2524 @@
+{
+  "generated_utc": "2026-08-23T03:54:29.648070+00:00",
+  "preregistration": "D194-the-s1-sensor-re-tested-at-15m.md (commit d2cc20e)",
+  "fixture": "crypto_binance_15m_raw.csv.gz",
+  "volume_units": "quote_notional",
+  "bars_per_day": 96,
+  "n_sims": 500,
+  "seed": 0,
+  "windows": {
+    "lookbacks": [
+      8640,
+      17280
+    ],
+    "atr_window": 1920,
+    "horizon": 480,
+    "rebuild_every": 1920,
+    "note": "every window calendar-matched to D189 at 96 bars/day"
+  },
+  "primary": {
+    "lookback": 17280,
+    "bucket_atr": 0.5,
+    "k": 0.5
+  },
+  "verdict_symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ],
+  "secondary_symbols": [
+    "XEMUSDT",
+    "BTGUSDT"
+  ],
+  "effect_floor": 0.045,
+  "d189_primary": {
+    "BTC-USD": {
+      "p_reversal": 0.37677053824362605,
+      "null_mean": 0.383459991862166,
+      "percentile": 41.4,
+      "n_touches": 353
+    },
+    "ETH-USD": {
+      "p_reversal": 0.35294117647058826,
+      "null_mean": 0.37358923430504065,
+      "percentile": 26.0,
+      "n_touches": 255
+    }
+  },
+  "spans": {
+    "BTCUSDT": {
+      "median_span": 4.0,
+      "mean_span": 5.334191508581752,
+      "single_bucket_share": 0.014323622402890696,
+      "n_bars_censused": 354240
+    },
+    "ETHUSDT": {
+      "median_span": 4.0,
+      "mean_span": 5.3890469738030715,
+      "single_bucket_share": 0.013476738934056006,
+      "n_bars_censused": 354240
+    },
+    "XEMUSDT": {
+      "median_span": 4.0,
+      "mean_span": 5.723379518310863,
+      "single_bucket_share": 0.02697832568612697,
+      "n_bars_censused": 353506
+    },
+    "BTGUSDT": {
+      "median_span": 4.0,
+      "mean_span": 5.730013490360369,
+      "single_bucket_share": 0.031483199663025596,
+      "n_bars_censused": 351362
+    }
+  },
+  "outcome": {
+    "per_symbol": {
+      "BTCUSDT": {
+        "available": true,
+        "n_touches": 13782.0,
+        "real": 0.6022347990132056,
+        "null_mean": 0.5954624730815347,
+        "delta": 0.006772325931670986,
+        "percentile": 89.6,
+        "p_value": 0.10578842315369262,
+        "statistical_pass": false,
+        "effect_pass": false,
+        "grid_cells": 8,
+        "grid_beaten": 3,
+        "breadth_pass": false,
+        "harness_verdict_generous": false,
+        "span_census": {
+          "median_span": 3.0,
+          "mean_span": 3.2265102755194217,
+          "single_bucket_share": 0.112744184733514,
+          "n_bars_censused": 708480
+        }
+      },
+      "ETHUSDT": {
+        "available": true,
+        "n_touches": 13664.0,
+        "real": 0.5878951990632318,
+        "null_mean": 0.585519392823456,
+        "delta": 0.002375806239775846,
+        "percentile": 66.4,
+        "p_value": 0.3373253493013972,
+        "statistical_pass": false,
+        "effect_pass": false,
+        "grid_cells": 8,
+        "grid_beaten": 0,
+        "breadth_pass": false,
+        "harness_verdict_generous": false,
+        "span_census": {
+          "median_span": 3.0,
+          "mean_span": 3.3320404245709123,
+          "single_bucket_share": 0.10060693315266486,
+          "n_bars_censused": 708480
+        }
+      }
+    },
+    "statistical": false,
+    "effect": false,
+    "breadth": false,
+    "effect_floor": 0.045,
+    "passed": false
+  },
+  "multiplicity": {
+    "d189_looks": 48,
+    "this_run_configurations": 32,
+    "metrics_per_configuration": 3,
+    "this_run_looks": 96,
+    "cumulative_looks": 147,
+    "daily_control_looks": 3
+  },
+  "elapsed_seconds": 10908.87268781662,
+  "runs": {
+    "BTCUSDT|8640|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 30.08108108108108,
+      "real": {
+        "n_touches": 27687.0,
+        "p_reversal": 0.6027377469570556,
+        "traversal_bars": 292.60653014049916,
+        "vol_ratio": 1.1067441803584073
+      },
+      "mean_null_touches": 23693.944,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6027377469570556,
+          "n_sims": 500,
+          "percentile": 94.6,
+          "p_value": 0.05588822355289421,
+          "p_value_se": 0.010272753284392255,
+          "null_mean": 0.5972886394376248,
+          "null_p05": 0.5915238849551387,
+          "null_median": 0.5972300925149912,
+          "null_p95": 0.6028602542601619
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 292.60653014049916,
+          "n_sims": 500,
+          "percentile": 96.0,
+          "p_value": 0.041916167664670656,
+          "p_value_se": 0.008962053621015428,
+          "null_mean": 289.8255299884049,
+          "null_p05": 287.019553462034,
+          "null_median": 289.77898115527137,
+          "null_p95": 292.4468844061323
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1067441803584073,
+          "n_sims": 500,
+          "percentile": 78.4,
+          "p_value": 0.7844311377245509,
+          "p_value_se": 0.018390156491597216,
+          "null_mean": 1.0970368791707985,
+          "null_p05": 1.0754514950443799,
+          "null_median": 1.096636269118559,
+          "null_p95": 1.1192669841764054
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "traversal_bars"
+        ],
+        "n_metrics": 3,
+        "n_touches": 27687
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.334191508581752,
+        "single_bucket_share": 0.014323622402890696,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 533.3934438228607
+    },
+    "BTCUSDT|8640|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 30.08108108108108,
+      "real": {
+        "n_touches": 30697.0,
+        "p_reversal": 0.6481089357266182,
+        "traversal_bars": 319.3731960777926,
+        "vol_ratio": 1.1000628359415288
+      },
+      "mean_null_touches": 26469.716,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6481089357266182,
+          "n_sims": 500,
+          "percentile": 98.4,
+          "p_value": 0.017964071856287425,
+          "p_value_se": 0.005939926595275326,
+          "null_mean": 0.63958729986895,
+          "null_p05": 0.633013495563178,
+          "null_median": 0.6396968418734461,
+          "null_p95": 0.6460278340756188
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 319.3731960777926,
+          "n_sims": 500,
+          "percentile": 99.4,
+          "p_value": 0.007984031936127744,
+          "p_value_se": 0.00398002190199266,
+          "null_mean": 314.9999363137798,
+          "null_p05": 312.1064313501014,
+          "null_median": 315.0379713580578,
+          "null_p95": 317.93631618720383
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1000628359415288,
+          "n_sims": 500,
+          "percentile": 54.6,
+          "p_value": 0.5469061876247505,
+          "p_value_se": 0.022262066820603683,
+          "null_mean": 1.0987879449632372,
+          "null_p05": 1.079579323191932,
+          "null_median": 1.09862229518924,
+          "null_p95": 1.1200771774262512
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "p_reversal",
+          "traversal_bars"
+        ],
+        "n_metrics": 3,
+        "n_touches": 30697
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.334191508581752,
+        "single_bucket_share": 0.014323622402890696,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 528.2975208759308
+    },
+    "BTCUSDT|8640|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 15.93918918918919,
+      "real": {
+        "n_touches": 14142.0,
+        "p_reversal": 0.6032385801159666,
+        "traversal_bars": 292.98154433602036,
+        "vol_ratio": 1.1083330592006408
+      },
+      "mean_null_touches": 12448.462,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6032385801159666,
+          "n_sims": 500,
+          "percentile": 87.4,
+          "p_value": 0.1277445109780439,
+          "p_value_se": 0.014928218305814282,
+          "null_mean": 0.5975312400658308,
+          "null_p05": 0.5900300043985695,
+          "null_median": 0.5973311731985087,
+          "null_p95": 0.6054179355167681
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 292.98154433602036,
+          "n_sims": 500,
+          "percentile": 89.6,
+          "p_value": 0.10578842315369262,
+          "p_value_se": 0.013754797903302534,
+          "null_mean": 289.9631556847002,
+          "null_p05": 286.39175251423484,
+          "null_median": 289.80820788257057,
+          "null_p95": 293.7244419162876
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1083330592006408,
+          "n_sims": 500,
+          "percentile": 74.6,
+          "p_value": 0.7465069860279441,
+          "p_value_se": 0.019454269754448198,
+          "null_mean": 1.097230360659331,
+          "null_p05": 1.0691595599158834,
+          "null_median": 1.0973467630544478,
+          "null_p95": 1.126688346379309
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 14142
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.1684535907859077,
+        "single_bucket_share": 0.07232384823848238,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 275.0787880420685
+    },
+    "BTCUSDT|8640|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 15.93918918918919,
+      "real": {
+        "n_touches": 15646.0,
+        "p_reversal": 0.6468106864374281,
+        "traversal_bars": 319.5124632493928,
+        "vol_ratio": 1.101278012681297
+      },
+      "mean_null_touches": 13886.52,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6468106864374281,
+          "n_sims": 500,
+          "percentile": 90.4,
+          "p_value": 0.09780439121756487,
+          "p_value_se": 0.013284479084715847,
+          "null_mean": 0.6390868139696801,
+          "null_p05": 0.6299596084384371,
+          "null_median": 0.6390044954080916,
+          "null_p95": 0.6488149662938507
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 319.5124632493928,
+          "n_sims": 500,
+          "percentile": 96.4,
+          "p_value": 0.03792415169660679,
+          "p_value_se": 0.008542354524918706,
+          "null_mean": 314.82559959988214,
+          "null_p05": 310.7651226036338,
+          "null_median": 314.6481753407462,
+          "null_p95": 319.2526056665125
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.101278012681297,
+          "n_sims": 500,
+          "percentile": 52.8,
+          "p_value": 0.5289421157684631,
+          "p_value_se": 0.02232318767267994,
+          "null_mean": 1.1002955111274573,
+          "null_p05": 1.0728737720773933,
+          "null_median": 1.100207313191687,
+          "null_p95": 1.1279396151443686
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "traversal_bars"
+        ],
+        "n_metrics": 3,
+        "n_touches": 15646
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.1684535907859077,
+        "single_bucket_share": 0.07232384823848238,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 263.101877450943
+    },
+    "BTCUSDT|17280|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 46.826388888888886,
+      "real": {
+        "n_touches": 26783.0,
+        "p_reversal": 0.6017249747974461,
+        "traversal_bars": 291.9132658776089,
+        "vol_ratio": 1.1257231834217198
+      },
+      "mean_null_touches": 24724.61,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6017249747974461,
+          "n_sims": 500,
+          "percentile": 97.0,
+          "p_value": 0.031936127744510975,
+          "p_value_se": 0.0078633595223921,
+          "null_mean": 0.5953597587242759,
+          "null_p05": 0.5889633135059237,
+          "null_median": 0.5953929154831996,
+          "null_p95": 0.6011116190039233
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 291.9132658776089,
+          "n_sims": 500,
+          "percentile": 97.4,
+          "p_value": 0.027944111776447105,
+          "p_value_se": 0.007370649685539604,
+          "null_mean": 288.82802348575484,
+          "null_p05": 285.7509963609337,
+          "null_median": 288.8667193721402,
+          "null_p95": 291.53665388167764
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1257231834217198,
+          "n_sims": 500,
+          "percentile": 99.4,
+          "p_value": 0.9940119760479041,
+          "p_value_se": 0.003450265937937243,
+          "null_mean": 1.0926731941955108,
+          "null_p05": 1.0692223355554578,
+          "null_median": 1.0932097514969001,
+          "null_p95": 1.1170357045707677
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "p_reversal",
+          "traversal_bars"
+        ],
+        "n_metrics": 3,
+        "n_touches": 26783
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.4520635727190605,
+        "single_bucket_share": 0.03844850948509485,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 657.3809497356415
+    },
+    "BTCUSDT|17280|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 46.826388888888886,
+      "real": {
+        "n_touches": 30187.0,
+        "p_reversal": 0.6487560870573426,
+        "traversal_bars": 319.14473117567167,
+        "vol_ratio": 1.1274548448997221
+      },
+      "mean_null_touches": 27750.044,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6487560870573426,
+          "n_sims": 500,
+          "percentile": 99.4,
+          "p_value": 0.007984031936127744,
+          "p_value_se": 0.00398002190199266,
+          "null_mean": 0.6386643297034489,
+          "null_p05": 0.6314310729865416,
+          "null_median": 0.6388422494671298,
+          "null_p95": 0.6450691726312134
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 319.14473117567167,
+          "n_sims": 500,
+          "percentile": 99.4,
+          "p_value": 0.007984031936127744,
+          "p_value_se": 0.00398002190199266,
+          "null_mean": 314.2893283742937,
+          "null_p05": 311.11126773400315,
+          "null_median": 314.400915183178,
+          "null_p95": 317.18192949123676
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1274548448997221,
+          "n_sims": 500,
+          "percentile": 99.8,
+          "p_value": 0.998003992015968,
+          "p_value_se": 0.0019960079840319624,
+          "null_mean": 1.0946744938390314,
+          "null_p05": 1.0727891549261384,
+          "null_median": 1.0946483563011418,
+          "null_p95": 1.1168425586521717
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "p_reversal",
+          "traversal_bars"
+        ],
+        "n_metrics": 3,
+        "n_touches": 30187
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.4520635727190605,
+        "single_bucket_share": 0.03844850948509485,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 679.4749865531921
+    },
+    "BTCUSDT|17280|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 23.84722222222222,
+      "real": {
+        "n_touches": 13782.0,
+        "p_reversal": 0.6022347990132056,
+        "traversal_bars": 292.27332752866056,
+        "vol_ratio": 1.1298894190611886
+      },
+      "mean_null_touches": 12630.632,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6022347990132056,
+          "n_sims": 500,
+          "percentile": 89.6,
+          "p_value": 0.10578842315369262,
+          "p_value_se": 0.013754797903302534,
+          "null_mean": 0.5954624730815347,
+          "null_p05": 0.5868971383115669,
+          "null_median": 0.5953245751157443,
+          "null_p95": 0.6036655445182328
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 292.27332752866056,
+          "n_sims": 500,
+          "percentile": 90.8,
+          "p_value": 0.09381237524950099,
+          "p_value_se": 0.013039295494738035,
+          "null_mean": 288.9056698504386,
+          "null_p05": 284.82703582601965,
+          "null_median": 288.8733682024281,
+          "null_p95": 292.7809983168113
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1298894190611886,
+          "n_sims": 500,
+          "percentile": 97.8,
+          "p_value": 0.9780439121756487,
+          "p_value_se": 0.0065534751135257535,
+          "null_mean": 1.0900173423161146,
+          "null_p05": 1.0583395321532023,
+          "null_median": 1.089699225564696,
+          "null_p95": 1.1208196596132245
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 13782
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.2265102755194217,
+        "single_bucket_share": 0.112744184733514,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 353.5816514492035
+    },
+    "BTCUSDT|17280|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 23.84722222222222,
+      "real": {
+        "n_touches": 15462.0,
+        "p_reversal": 0.6441598758246022,
+        "traversal_bars": 317.4632647781658,
+        "vol_ratio": 1.1164903304408682
+      },
+      "mean_null_touches": 14134.474,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6441598758246022,
+          "n_sims": 500,
+          "percentile": 82.6,
+          "p_value": 0.17564870259481039,
+          "p_value_se": 0.017017416717678993,
+          "null_mean": 0.6389410518343539,
+          "null_p05": 0.6303327565274742,
+          "null_median": 0.6390268467814617,
+          "null_p95": 0.647577548323826
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 317.4632647781658,
+          "n_sims": 500,
+          "percentile": 88.8,
+          "p_value": 0.11377245508982035,
+          "p_value_se": 0.014200583336796777,
+          "null_mean": 314.4876245621041,
+          "null_p05": 310.64092821734357,
+          "null_median": 314.4462964599577,
+          "null_p95": 318.40256375280995
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1164903304408682,
+          "n_sims": 500,
+          "percentile": 90.0,
+          "p_value": 0.9001996007984032,
+          "p_value_se": 0.013404497716870908,
+          "null_mean": 1.09323990258196,
+          "null_p05": 1.0647664526382765,
+          "null_median": 1.0927208068515581,
+          "null_p95": 1.1216175404708402
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 15462
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.2265102755194217,
+        "single_bucket_share": 0.112744184733514,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 370.03389739990234
+    },
+    "ETHUSDT|8640|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 32.46621621621622,
+      "real": {
+        "n_touches": 26566.0,
+        "p_reversal": 0.5862380486335919,
+        "traversal_bars": 284.60784461341564,
+        "vol_ratio": 1.1245917969965884
+      },
+      "mean_null_touches": 23425.938,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5862380486335919,
+          "n_sims": 500,
+          "percentile": 59.0,
+          "p_value": 0.4111776447105788,
+          "p_value_se": 0.022005026207702633,
+          "null_mean": 0.5855156798529122,
+          "null_p05": 0.5796732733091083,
+          "null_median": 0.5855396468063032,
+          "null_p95": 0.5913156103194421
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 284.60784461341564,
+          "n_sims": 500,
+          "percentile": 63.0,
+          "p_value": 0.3712574850299401,
+          "p_value_se": 0.021606728805591276,
+          "null_mean": 284.0722720332099,
+          "null_p05": 281.3337260170763,
+          "null_median": 284.0831313254227,
+          "null_p95": 286.79220457461656
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1245917969965884,
+          "n_sims": 500,
+          "percentile": 99.4,
+          "p_value": 0.9940119760479041,
+          "p_value_se": 0.003450265937937243,
+          "null_mean": 1.0954689330618217,
+          "null_p05": 1.0764381261220246,
+          "null_median": 1.095418819549609,
+          "null_p95": 1.1154477065141486
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 26566
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.3890469738030715,
+        "single_bucket_share": 0.013476738934056006,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 496.91769433021545
+    },
+    "ETHUSDT|8640|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 32.46621621621622,
+      "real": {
+        "n_touches": 29607.0,
+        "p_reversal": 0.6264734691120343,
+        "traversal_bars": 309.15053872395043,
+        "vol_ratio": 1.1263976231495159
+      },
+      "mean_null_touches": 26227.198,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6264734691120343,
+          "n_sims": 500,
+          "percentile": 53.8,
+          "p_value": 0.4630738522954092,
+          "p_value_se": 0.022299617019836855,
+          "null_mean": 0.6259845598528794,
+          "null_p05": 0.6190435401707919,
+          "null_median": 0.6259246051604537,
+          "null_p95": 0.6325377434093968
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 309.15053872395043,
+          "n_sims": 500,
+          "percentile": 71.0,
+          "p_value": 0.29141716566866266,
+          "p_value_se": 0.020322066884168346,
+          "null_mean": 308.13296134442004,
+          "null_p05": 304.9844642448618,
+          "null_median": 308.16833328944074,
+          "null_p95": 311.1436517340742
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1263976231495159,
+          "n_sims": 500,
+          "percentile": 99.6,
+          "p_value": 0.9960079840319361,
+          "p_value_se": 0.0028199573672573813,
+          "null_mean": 1.0979377990359418,
+          "null_p05": 1.0787843340962657,
+          "null_median": 1.0978584921907681,
+          "null_p95": 1.1171919305677378
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 29607
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.3890469738030715,
+        "single_bucket_share": 0.013476738934056006,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 497.0357096195221
+    },
+    "ETHUSDT|8640|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 16.385135135135137,
+      "real": {
+        "n_touches": 13431.0,
+        "p_reversal": 0.5861067679249498,
+        "traversal_bars": 284.563919291192,
+        "vol_ratio": 1.1031751890024126
+      },
+      "mean_null_touches": 11910.854,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5861067679249498,
+          "n_sims": 500,
+          "percentile": 50.2,
+          "p_value": 0.499001996007984,
+          "p_value_se": 0.022360635231944193,
+          "null_mean": 0.586118587461896,
+          "null_p05": 0.578437948701214,
+          "null_median": 0.5861008496592939,
+          "null_p95": 0.5946214940626176
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 284.563919291192,
+          "n_sims": 500,
+          "percentile": 53.6,
+          "p_value": 0.46506986027944114,
+          "p_value_se": 0.022306047849814284,
+          "null_mean": 284.3702752570796,
+          "null_p05": 280.70667817474447,
+          "null_median": 284.3216018481008,
+          "null_p95": 288.4007739676739
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1031751890024126,
+          "n_sims": 500,
+          "percentile": 87.2,
+          "p_value": 0.872255489021956,
+          "p_value_se": 0.014928218305814285,
+          "null_mean": 1.0836238823023627,
+          "null_p05": 1.0585472410355974,
+          "null_median": 1.0832945549976576,
+          "null_p95": 1.111899997326578
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 13431
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.1943738708220417,
+        "single_bucket_share": 0.06974085365853659,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 261.2530291080475
+    },
+    "ETHUSDT|8640|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 148,
+      "mean_levels_per_rebuild": 16.385135135135137,
+      "real": {
+        "n_touches": 15100.0,
+        "p_reversal": 0.6237086092715232,
+        "traversal_bars": 307.8377483443709,
+        "vol_ratio": 1.1046688847823039
+      },
+      "mean_null_touches": 13331.356,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6237086092715232,
+          "n_sims": 500,
+          "percentile": 28.8,
+          "p_value": 0.7125748502994012,
+          "p_value_se": 0.02023916663403843,
+          "null_mean": 0.6270408133355363,
+          "null_p05": 0.6172868218203302,
+          "null_median": 0.6271110345773145,
+          "null_p95": 0.6371310118839945
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 307.8377483443709,
+          "n_sims": 500,
+          "percentile": 37.6,
+          "p_value": 0.624750499001996,
+          "p_value_se": 0.021653513017464533,
+          "null_mean": 308.70416262387135,
+          "null_p05": 304.37782825361273,
+          "null_median": 308.7682127980278,
+          "null_p95": 313.06410996371864
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1046688847823039,
+          "n_sims": 500,
+          "percentile": 88.6,
+          "p_value": 0.8862275449101796,
+          "p_value_se": 0.01420058333679678,
+          "null_mean": 1.0861399857156373,
+          "null_p05": 1.0632246398394,
+          "null_median": 1.0860188087378413,
+          "null_p95": 1.1124516909577553
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 15100
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.1943738708220417,
+        "single_bucket_share": 0.06974085365853659,
+        "n_bars_censused": 354240
+      },
+      "elapsed_s": 273.45361614227295
+    },
+    "ETHUSDT|17280|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 52.11805555555556,
+      "real": {
+        "n_touches": 27408.0,
+        "p_reversal": 0.5878940455341506,
+        "traversal_bars": 285.26977524810275,
+        "vol_ratio": 1.1190224511702203
+      },
+      "mean_null_touches": 25372.412,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5878940455341506,
+          "n_sims": 500,
+          "percentile": 77.4,
+          "p_value": 0.2275449101796407,
+          "p_value_se": 0.018749305268781557,
+          "null_mean": 0.5852810333431414,
+          "null_p05": 0.5799774823485876,
+          "null_median": 0.5850608282721188,
+          "null_p95": 0.5909654254841663
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 285.26977524810275,
+          "n_sims": 500,
+          "percentile": 79.2,
+          "p_value": 0.20958083832335328,
+          "p_value_se": 0.018202016950384026,
+          "null_mean": 283.9038351425827,
+          "null_p05": 281.43024587478516,
+          "null_median": 283.8102206065512,
+          "null_p95": 286.5694418352438
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1190224511702203,
+          "n_sims": 500,
+          "percentile": 99.8,
+          "p_value": 0.998003992015968,
+          "p_value_se": 0.0019960079840319624,
+          "null_mean": 1.083568717031039,
+          "null_p05": 1.0654691999326789,
+          "null_median": 1.0835410251003794,
+          "null_p95": 1.1024613272870927
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 27408
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.664865627822945,
+        "single_bucket_share": 0.028998701445347788,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 778.6891894340515
+    },
+    "ETHUSDT|17280|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 52.11805555555556,
+      "real": {
+        "n_touches": 30700.0,
+        "p_reversal": 0.6286644951140065,
+        "traversal_bars": 309.8274592833876,
+        "vol_ratio": 1.1219675802967235
+      },
+      "mean_null_touches": 28580.664,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6286644951140065,
+          "n_sims": 500,
+          "percentile": 59.4,
+          "p_value": 0.40718562874251496,
+          "p_value_se": 0.021972050085873995,
+          "null_mean": 0.6276988238898641,
+          "null_p05": 0.6216026667267288,
+          "null_median": 0.6276360957708418,
+          "null_p95": 0.6338011782299364
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 309.8274592833876,
+          "n_sims": 500,
+          "percentile": 73.4,
+          "p_value": 0.26746506986027946,
+          "p_value_se": 0.01979532804804787,
+          "null_mean": 308.75259120538755,
+          "null_p05": 305.98861324780626,
+          "null_median": 308.72594390776226,
+          "null_p95": 311.53373654008317
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1219675802967235,
+          "n_sims": 500,
+          "percentile": 99.8,
+          "p_value": 0.998003992015968,
+          "p_value_se": 0.0019960079840319624,
+          "null_mean": 1.0862407069422566,
+          "null_p05": 1.068348912901705,
+          "null_median": 1.086207136442932,
+          "null_p95": 1.103366633248036
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 30700
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.664865627822945,
+        "single_bucket_share": 0.028998701445347788,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 819.8483991622925
+    },
+    "ETHUSDT|17280|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 25.854166666666668,
+      "real": {
+        "n_touches": 13664.0,
+        "p_reversal": 0.5878951990632318,
+        "traversal_bars": 285.280737704918,
+        "vol_ratio": 1.110780309679592
+      },
+      "mean_null_touches": 12876.532,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5878951990632318,
+          "n_sims": 500,
+          "percentile": 66.4,
+          "p_value": 0.3373253493013972,
+          "p_value_se": 0.02114412249397395,
+          "null_mean": 0.585519392823456,
+          "null_p05": 0.5766078893375189,
+          "null_median": 0.5858172597966504,
+          "null_p95": 0.5939445827390386
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 285.280737704918,
+          "n_sims": 500,
+          "percentile": 68.8,
+          "p_value": 0.313373253493014,
+          "p_value_se": 0.020744659914696945,
+          "null_mean": 284.0519825115639,
+          "null_p05": 279.78308085601697,
+          "null_median": 284.20231491674224,
+          "null_p95": 288.0132067795897
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.110780309679592,
+          "n_sims": 500,
+          "percentile": 97.4,
+          "p_value": 0.9740518962075848,
+          "p_value_se": 0.007109824147191439,
+          "null_mean": 1.0811280396606195,
+          "null_p05": 1.057029567498321,
+          "null_median": 1.0816121970431465,
+          "null_p95": 1.104696322110305
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 13664
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.3320404245709123,
+        "single_bucket_share": 0.10060693315266486,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 378.74538397789
+    },
+    "ETHUSDT|17280|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 144,
+      "mean_levels_per_rebuild": 25.854166666666668,
+      "real": {
+        "n_touches": 15316.0,
+        "p_reversal": 0.6276442935492296,
+        "traversal_bars": 309.5464220423087,
+        "vol_ratio": 1.1087942401790112
+      },
+      "mean_null_touches": 14489.946,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6276442935492296,
+          "n_sims": 500,
+          "percentile": 46.2,
+          "p_value": 0.5389221556886228,
+          "p_value_se": 0.02229282690896561,
+          "null_mean": 0.6282935853135109,
+          "null_p05": 0.6187674770841619,
+          "null_median": 0.6283023909512733,
+          "null_p95": 0.6377053839064049
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 309.5464220423087,
+          "n_sims": 500,
+          "percentile": 59.4,
+          "p_value": 0.40718562874251496,
+          "p_value_se": 0.021972050085873995,
+          "null_mean": 309.0871882166617,
+          "null_p05": 304.7423881506863,
+          "null_median": 309.05778178277114,
+          "null_p95": 313.35672241313574
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1087942401790112,
+          "n_sims": 500,
+          "percentile": 96.2,
+          "p_value": 0.9620758483033932,
+          "p_value_se": 0.008542354524918706,
+          "null_mean": 1.083770193862945,
+          "null_p05": 1.0619946983906863,
+          "null_median": 1.083532368837234,
+          "null_p95": 1.1069425127235937
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 15316
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.3320404245709123,
+        "single_bucket_share": 0.10060693315266486,
+        "n_bars_censused": 708480
+      },
+      "elapsed_s": 347.7661507129669
+    },
+    "XEMUSDT|8640|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 59,
+      "mean_levels_per_rebuild": 52.983050847457626,
+      "real": {
+        "n_touches": 17334.0,
+        "p_reversal": 0.5961693781008423,
+        "traversal_bars": 289.27218183916006,
+        "vol_ratio": 1.1335713911091074
+      },
+      "mean_null_touches": 15703.056,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5961693781008423,
+          "n_sims": 500,
+          "percentile": 37.0,
+          "p_value": 0.6307385229540918,
+          "p_value_se": 0.021582744895669893,
+          "null_mean": 0.5978104595513394,
+          "null_p05": 0.5902164689425203,
+          "null_median": 0.5979066841847944,
+          "null_p95": 0.6057383483881482
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 289.27218183916006,
+          "n_sims": 500,
+          "percentile": 39.8,
+          "p_value": 0.6027944111776448,
+          "p_value_se": 0.02188302122791281,
+          "null_mean": 289.8414897644004,
+          "null_p05": 286.3687283565949,
+          "null_median": 289.8834960928733,
+          "null_p95": 293.5586550642177
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1335713911091074,
+          "n_sims": 500,
+          "percentile": 69.8,
+          "p_value": 0.6986027944111777,
+          "p_value_se": 0.02052105894207565,
+          "null_mean": 1.1223150799964525,
+          "null_p05": 1.0854918719510265,
+          "null_median": 1.1221415477358772,
+          "null_p95": 1.1593281008940006
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 17334
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.723379518310863,
+        "single_bucket_share": 0.02697832568612697,
+        "n_bars_censused": 353506
+      },
+      "elapsed_s": 330.09552359580994
+    },
+    "XEMUSDT|8640|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 59,
+      "mean_levels_per_rebuild": 52.983050847457626,
+      "real": {
+        "n_touches": 19366.0,
+        "p_reversal": 0.6397294226995766,
+        "traversal_bars": 315.25802953630074,
+        "vol_ratio": 1.1333090072504255
+      },
+      "mean_null_touches": 17632.292,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6397294226995766,
+          "n_sims": 500,
+          "percentile": 30.4,
+          "p_value": 0.6966067864271457,
+          "p_value_se": 0.020559463588858087,
+          "null_mean": 0.6423286025437585,
+          "null_p05": 0.6338936224654724,
+          "null_median": 0.6424789875454668,
+          "null_p95": 0.6505046025857334
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 315.25802953630074,
+          "n_sims": 500,
+          "percentile": 36.4,
+          "p_value": 0.6367265469061876,
+          "p_value_se": 0.02150841004682169,
+          "null_mean": 315.9981058376074,
+          "null_p05": 312.1914260435836,
+          "null_median": 316.0320166173443,
+          "null_p95": 319.6957665502171
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1333090072504255,
+          "n_sims": 500,
+          "percentile": 70.4,
+          "p_value": 0.7045908183632734,
+          "p_value_se": 0.020403068251684402,
+          "null_mean": 1.122333211824591,
+          "null_p05": 1.0901905401390097,
+          "null_median": 1.1222760419228055,
+          "null_p95": 1.15499220131238
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 19366
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.723379518310863,
+        "single_bucket_share": 0.02697832568612697,
+        "n_bars_censused": 353506
+      },
+      "elapsed_s": 378.39820075035095
+    },
+    "XEMUSDT|8640|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 59,
+      "mean_levels_per_rebuild": 23.203389830508474,
+      "real": {
+        "n_touches": 7830.0,
+        "p_reversal": 0.5983397190293742,
+        "traversal_bars": 290.381098339719,
+        "vol_ratio": 1.0875438184880601
+      },
+      "mean_null_touches": 6783.326,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5983397190293742,
+          "n_sims": 500,
+          "percentile": 53.8,
+          "p_value": 0.4630738522954092,
+          "p_value_se": 0.022299617019836855,
+          "null_mean": 0.597952477625993,
+          "null_p05": 0.5868421278022303,
+          "null_median": 0.5974301407669326,
+          "null_p95": 0.6096504442841839
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 290.381098339719,
+          "n_sims": 500,
+          "percentile": 56.6,
+          "p_value": 0.4351297405189621,
+          "p_value_se": 0.022171686874699583,
+          "null_mean": 289.937779901293,
+          "null_p05": 284.6855937869141,
+          "null_median": 289.712770698967,
+          "null_p95": 295.50173162314957
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0875438184880601,
+          "n_sims": 500,
+          "percentile": 4.8,
+          "p_value": 0.0499001996007984,
+          "p_value_se": 0.009737573586946482,
+          "null_mean": 1.1426577446869497,
+          "null_p05": 1.0878095561642116,
+          "null_median": 1.1425112296975612,
+          "null_p95": 1.2016840440490024
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "vol_ratio"
+        ],
+        "n_metrics": 3,
+        "n_touches": 7830
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.3606020831329597,
+        "single_bucket_share": 0.08161954818305771,
+        "n_bars_censused": 353506
+      },
+      "elapsed_s": 164.76866173744202
+    },
+    "XEMUSDT|8640|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 59,
+      "mean_levels_per_rebuild": 23.203389830508474,
+      "real": {
+        "n_touches": 8805.0,
+        "p_reversal": 0.635320840431573,
+        "traversal_bars": 313.44486087450315,
+        "vol_ratio": 1.083313111853326
+      },
+      "mean_null_touches": 7596.902,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.635320840431573,
+          "n_sims": 500,
+          "percentile": 28.2,
+          "p_value": 0.718562874251497,
+          "p_value_se": 0.020111204339816367,
+          "null_mean": 0.6399523112778251,
+          "null_p05": 0.6273074399948442,
+          "null_median": 0.6401311249137336,
+          "null_p95": 0.6525278290796602
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 313.44486087450315,
+          "n_sims": 500,
+          "percentile": 32.2,
+          "p_value": 0.6786427145708582,
+          "p_value_se": 0.020884768637969387,
+          "null_mean": 315.05097145993125,
+          "null_p05": 309.4110649461275,
+          "null_median": 315.055426933254,
+          "null_p95": 320.8930034374011
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.083313111853326,
+          "n_sims": 500,
+          "percentile": 1.2,
+          "p_value": 0.013972055888223553,
+          "p_value_se": 0.005249159464615246,
+          "null_mean": 1.1436652178791296,
+          "null_p05": 1.097010559126932,
+          "null_median": 1.1429020695763503,
+          "null_p95": 1.1971892330109632
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "vol_ratio"
+        ],
+        "n_metrics": 3,
+        "n_touches": 8805
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.3606020831329597,
+        "single_bucket_share": 0.08161954818305771,
+        "n_bars_censused": 353506
+      },
+      "elapsed_s": 165.7216579914093
+    },
+    "XEMUSDT|17280|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 55,
+      "mean_levels_per_rebuild": 98.27272727272727,
+      "real": {
+        "n_touches": 20089.0,
+        "p_reversal": 0.5995818607197969,
+        "traversal_bars": 290.7100900990592,
+        "vol_ratio": 1.1522801395875548
+      },
+      "mean_null_touches": 15303.84,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5995818607197969,
+          "n_sims": 500,
+          "percentile": 57.8,
+          "p_value": 0.4231536926147705,
+          "p_value_se": 0.022095005998698205,
+          "null_mean": 0.5983104730829207,
+          "null_p05": 0.5901714500435465,
+          "null_median": 0.5981445187241226,
+          "null_p95": 0.6061012411482362
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 290.7100900990592,
+          "n_sims": 500,
+          "percentile": 61.4,
+          "p_value": 0.3872255489021956,
+          "p_value_se": 0.021784486368954806,
+          "null_mean": 289.94703587756464,
+          "null_p05": 286.1244012708391,
+          "null_median": 289.89232285262585,
+          "null_p95": 293.5733066014532
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1522801395875548,
+          "n_sims": 500,
+          "percentile": 68.0,
+          "p_value": 0.6806387225548902,
+          "p_value_se": 0.020850402965589772,
+          "null_mean": 1.1431253786371494,
+          "null_p05": 1.1107329450206467,
+          "null_median": 1.1419177830113734,
+          "null_p95": 1.1801981317838972
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 20089
+      },
+      "span_census": {
+        "median_span": 5.0,
+        "mean_span": 6.915593262060682,
+        "single_bucket_share": 0.030991861223461974,
+        "n_bars_censused": 706863
+      },
+      "elapsed_s": 578.3917758464813
+    },
+    "XEMUSDT|17280|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 55,
+      "mean_levels_per_rebuild": 98.27272727272727,
+      "real": {
+        "n_touches": 22601.0,
+        "p_reversal": 0.6422282199902659,
+        "traversal_bars": 316.28799610636696,
+        "vol_ratio": 1.1548065153402827
+      },
+      "mean_null_touches": 17230.58,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6422282199902659,
+          "n_sims": 500,
+          "percentile": 77.4,
+          "p_value": 0.2275449101796407,
+          "p_value_se": 0.018749305268781557,
+          "null_mean": 0.6386385591361434,
+          "null_p05": 0.6298211483429176,
+          "null_median": 0.6389619672621798,
+          "null_p95": 0.6465265469502007
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 316.28799610636696,
+          "n_sims": 500,
+          "percentile": 84.4,
+          "p_value": 0.15768463073852296,
+          "p_value_se": 0.016298477718325637,
+          "null_mean": 314.1836245398654,
+          "null_p05": 310.1091885148632,
+          "null_median": 314.36042334239914,
+          "null_p95": 317.766071415809
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1548065153402827,
+          "n_sims": 500,
+          "percentile": 76.0,
+          "p_value": 0.7604790419161677,
+          "p_value_se": 0.019086679581448177,
+          "null_mean": 1.142239093944493,
+          "null_p05": 1.1109699711715149,
+          "null_median": 1.141042502578719,
+          "null_p95": 1.1747452225690755
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 22601
+      },
+      "span_census": {
+        "median_span": 5.0,
+        "mean_span": 6.915593262060682,
+        "single_bucket_share": 0.030991861223461974,
+        "n_bars_censused": 706863
+      },
+      "elapsed_s": 613.173880815506
+    },
+    "XEMUSDT|17280|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 55,
+      "mean_levels_per_rebuild": 44.236363636363635,
+      "real": {
+        "n_touches": 8216.0,
+        "p_reversal": 0.5944498539435248,
+        "traversal_bars": 288.3220545277507,
+        "vol_ratio": 1.1300305483688642
+      },
+      "mean_null_touches": 6515.16,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5944498539435248,
+          "n_sims": 500,
+          "percentile": 46.6,
+          "p_value": 0.5349301397205589,
+          "p_value_se": 0.022306047849814284,
+          "null_mean": 0.5947954539906324,
+          "null_p05": 0.5831872772924613,
+          "null_median": 0.5949140700653539,
+          "null_p95": 0.6060128788409044
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 288.3220545277507,
+          "n_sims": 500,
+          "percentile": 50.0,
+          "p_value": 0.500998003992016,
+          "p_value_se": 0.022360635231944193,
+          "null_mean": 288.28539337866135,
+          "null_p05": 282.8572697260025,
+          "null_median": 288.32543518784576,
+          "null_p95": 293.4650749144867
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1300305483688642,
+          "n_sims": 500,
+          "percentile": 13.2,
+          "p_value": 0.13373253493013973,
+          "p_value_se": 0.015221573113926083,
+          "null_mean": 1.1714333183131524,
+          "null_p05": 1.1120252507696722,
+          "null_median": 1.170464437362908,
+          "null_p95": 1.2338234853424812
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 8216
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.958013080328154,
+        "single_bucket_share": 0.0791115110000099,
+        "n_bars_censused": 706863
+      },
+      "elapsed_s": 276.48427271842957
+    },
+    "XEMUSDT|17280|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 55,
+      "mean_levels_per_rebuild": 44.236363636363635,
+      "real": {
+        "n_touches": 9049.0,
+        "p_reversal": 0.6306774229196597,
+        "traversal_bars": 310.41573654547466,
+        "vol_ratio": 1.1447458984441425
+      },
+      "mean_null_touches": 7317.03,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6306774229196597,
+          "n_sims": 500,
+          "percentile": 22.8,
+          "p_value": 0.7724550898203593,
+          "p_value_se": 0.01874930526878156,
+          "null_mean": 0.6361057561522152,
+          "null_p05": 0.623707618289023,
+          "null_median": 0.6361539266097093,
+          "null_p95": 0.6481117143313501
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 310.41573654547466,
+          "n_sims": 500,
+          "percentile": 21.4,
+          "p_value": 0.7864271457085829,
+          "p_value_se": 0.01832809265587853,
+          "null_mean": 313.03204429686144,
+          "null_p05": 307.40067225119856,
+          "null_median": 313.0195136107836,
+          "null_p95": 318.47905006509865
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.1447458984441425,
+          "n_sims": 500,
+          "percentile": 24.2,
+          "p_value": 0.2435129740518962,
+          "p_value_se": 0.01919449949961169,
+          "null_mean": 1.1687782475722952,
+          "null_p05": 1.118650255106225,
+          "null_median": 1.1687644564314168,
+          "null_p95": 1.2239497281262481
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 9049
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.958013080328154,
+        "single_bucket_share": 0.0791115110000099,
+        "n_bars_censused": 706863
+      },
+      "elapsed_s": 230.7258415222168
+    },
+    "BTGUSDT|8640|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 22,
+      "mean_levels_per_rebuild": 44.22727272727273,
+      "real": {
+        "n_touches": 4411.0,
+        "p_reversal": 0.6071185672183178,
+        "traversal_bars": 294.26547268193156,
+        "vol_ratio": 1.0188913686204852
+      },
+      "mean_null_touches": 4262.29,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6071185672183178,
+          "n_sims": 500,
+          "percentile": 92.0,
+          "p_value": 0.08183632734530938,
+          "p_value_se": 0.012258804417392485,
+          "null_mean": 0.5957902011819897,
+          "null_p05": 0.5821370087336244,
+          "null_median": 0.595895490076753,
+          "null_p95": 0.6086437923240954
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 294.26547268193156,
+          "n_sims": 500,
+          "percentile": 91.8,
+          "p_value": 0.08383233532934131,
+          "p_value_se": 0.012393907768139166,
+          "null_mean": 288.87908503801555,
+          "null_p05": 282.30210783482426,
+          "null_median": 288.9839369255369,
+          "null_p95": 294.8717253311093
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0188913686204852,
+          "n_sims": 500,
+          "percentile": 58.0,
+          "p_value": 0.5808383233532934,
+          "p_value_se": 0.02206649793136321,
+          "null_mean": 1.0143207871334707,
+          "null_p05": 0.9815008503705229,
+          "null_median": 1.0140115724583216,
+          "null_p95": 1.0445691006583473
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 4411
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.730013490360369,
+        "single_bucket_share": 0.031483199663025596,
+        "n_bars_censused": 351362
+      },
+      "elapsed_s": 93.90617156028748
+    },
+    "BTGUSDT|8640|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 22,
+      "mean_levels_per_rebuild": 44.22727272727273,
+      "real": {
+        "n_touches": 5154.0,
+        "p_reversal": 0.6348467209934032,
+        "traversal_bars": 311.94819557625146,
+        "vol_ratio": 1.0190938158042424
+      },
+      "mean_null_touches": 4948.786,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6348467209934032,
+          "n_sims": 500,
+          "percentile": 93.6,
+          "p_value": 0.0658682634730539,
+          "p_value_se": 0.011093208313206622,
+          "null_mean": 0.6220047149878337,
+          "null_p05": 0.6069226675860415,
+          "null_median": 0.6227780824795027,
+          "null_p95": 0.6366495077642703
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 311.94819557625146,
+          "n_sims": 500,
+          "percentile": 93.2,
+          "p_value": 0.06986027944111776,
+          "p_value_se": 0.011399984280473962,
+          "null_mean": 306.1203778406632,
+          "null_p05": 299.1188673704062,
+          "null_median": 306.3881435713088,
+          "null_p95": 312.7302211215434
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0190938158042424,
+          "n_sims": 500,
+          "percentile": 54.4,
+          "p_value": 0.5449101796407185,
+          "p_value_se": 0.022270297517753928,
+          "null_mean": 1.0174242674196345,
+          "null_p05": 0.9866856350647855,
+          "null_median": 1.0171099029132162,
+          "null_p95": 1.0446880933092968
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 5154
+      },
+      "span_census": {
+        "median_span": 4.0,
+        "mean_span": 5.730013490360369,
+        "single_bucket_share": 0.031483199663025596,
+        "n_bars_censused": 351362
+      },
+      "elapsed_s": 93.24467492103577
+    },
+    "BTGUSDT|8640|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 22,
+      "mean_levels_per_rebuild": 20.363636363636363,
+      "real": {
+        "n_touches": 1916.0,
+        "p_reversal": 0.605427974947808,
+        "traversal_bars": 293.6043841336117,
+        "vol_ratio": 1.0169814332866767
+      },
+      "mean_null_touches": 1989.348,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.605427974947808,
+          "n_sims": 500,
+          "percentile": 70.8,
+          "p_value": 0.2934131736526946,
+          "p_value_se": 0.020362803499506067,
+          "null_mean": 0.5974765661929828,
+          "null_p05": 0.572712462975621,
+          "null_median": 0.5979271499703628,
+          "null_p95": 0.6197039754444987
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 293.6043841336117,
+          "n_sims": 500,
+          "percentile": 71.6,
+          "p_value": 0.28542914171656686,
+          "p_value_se": 0.020196997141927357,
+          "null_mean": 289.70080344599415,
+          "null_p05": 278.2053015645251,
+          "null_median": 289.790640194081,
+          "null_p95": 300.37638679274994
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0169814332866767,
+          "n_sims": 500,
+          "percentile": 56.0,
+          "p_value": 0.5608782435129741,
+          "p_value_se": 0.022194316365537148,
+          "null_mean": 1.0124482773833443,
+          "null_p05": 0.9687423455453186,
+          "null_median": 1.0131415956945298,
+          "null_p95": 1.056067500346591
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 1916
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.3655517671233657,
+        "single_bucket_share": 0.0999083566236531,
+        "n_bars_censused": 351362
+      },
+      "elapsed_s": 43.94056296348572
+    },
+    "BTGUSDT|8640|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 22,
+      "mean_levels_per_rebuild": 20.363636363636363,
+      "real": {
+        "n_touches": 2241.0,
+        "p_reversal": 0.6265060240963856,
+        "traversal_bars": 307.91432396251673,
+        "vol_ratio": 1.0171261103054374
+      },
+      "mean_null_touches": 2304.39,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6265060240963856,
+          "n_sims": 500,
+          "percentile": 58.2,
+          "p_value": 0.41916167664670656,
+          "p_value_se": 0.02206649793136321,
+          "null_mean": 0.6235313804393569,
+          "null_p05": 0.6031687953327592,
+          "null_median": 0.6238282475112964,
+          "null_p95": 0.6448034984098137
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 307.91432396251673,
+          "n_sims": 500,
+          "percentile": 55.6,
+          "p_value": 0.44510978043912175,
+          "p_value_se": 0.022225528735963004,
+          "null_mean": 306.97918310739755,
+          "null_p05": 297.7024831170728,
+          "null_median": 307.0997443415698,
+          "null_p95": 316.476894916791
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0171261103054374,
+          "n_sims": 500,
+          "percentile": 53.0,
+          "p_value": 0.530938123752495,
+          "p_value_se": 0.02231783289204735,
+          "null_mean": 1.0137949521887124,
+          "null_p05": 0.9760810225678566,
+          "null_median": 1.0148724062560803,
+          "null_p95": 1.0546589572859366
+        }
+      },
+      "verdict": {
+        "passed": false,
+        "alpha": 0.05,
+        "beaten": [],
+        "n_metrics": 3,
+        "n_touches": 2241
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.3655517671233657,
+        "single_bucket_share": 0.0999083566236531,
+        "n_bars_censused": 351362
+      },
+      "elapsed_s": 45.04300332069397
+    },
+    "BTGUSDT|17280|0.25|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 18,
+      "mean_levels_per_rebuild": 74.66666666666667,
+      "real": {
+        "n_touches": 3546.0,
+        "p_reversal": 0.5789622109419064,
+        "traversal_bars": 281.0800902425268,
+        "vol_ratio": 1.0088406901774905
+      },
+      "mean_null_touches": 3101.976,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5789622109419064,
+          "n_sims": 500,
+          "percentile": 43.2,
+          "p_value": 0.5688622754491018,
+          "p_value_se": 0.02214759522024782,
+          "null_mean": 0.5810734246072098,
+          "null_p05": 0.5640673600013971,
+          "null_median": 0.5803880531099026,
+          "null_p95": 0.5994597295301783
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 281.0800902425268,
+          "n_sims": 500,
+          "percentile": 46.4,
+          "p_value": 0.5369261477045908,
+          "p_value_se": 0.022299617019836855,
+          "null_mean": 281.83600343993305,
+          "null_p05": 273.61819456769695,
+          "null_median": 281.49051938442994,
+          "null_p95": 290.5670473261946
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0088406901774905,
+          "n_sims": 500,
+          "percentile": 0.2,
+          "p_value": 0.003992015968063872,
+          "p_value_se": 0.002819957367257383,
+          "null_mean": 1.1472301360322503,
+          "null_p05": 1.070934575372852,
+          "null_median": 1.1456979613189668,
+          "null_p95": 1.2338468995251828
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "vol_ratio"
+        ],
+        "n_metrics": 3,
+        "n_touches": 3546
+      },
+      "span_census": {
+        "median_span": 5.0,
+        "mean_span": 6.830848425608564,
+        "single_bucket_share": 0.02714404212605091,
+        "n_bars_censused": 702843
+      },
+      "elapsed_s": 126.67024993896484
+    },
+    "BTGUSDT|17280|0.25|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 18,
+      "mean_levels_per_rebuild": 74.66666666666667,
+      "real": {
+        "n_touches": 4116.0,
+        "p_reversal": 0.6256073858114675,
+        "traversal_bars": 307.33479105928086,
+        "vol_ratio": 1.0236044160209299
+      },
+      "mean_null_touches": 3615.772,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6256073858114675,
+          "n_sims": 500,
+          "percentile": 76.6,
+          "p_value": 0.23552894211576847,
+          "p_value_se": 0.01897656763177132,
+          "null_mean": 0.617011366116528,
+          "null_p05": 0.5986598548341332,
+          "null_median": 0.6172230263890435,
+          "null_p95": 0.6339756508910276
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 307.33479105928086,
+          "n_sims": 500,
+          "percentile": 79.4,
+          "p_value": 0.20758483033932135,
+          "p_value_se": 0.018137991539986808,
+          "null_mean": 303.2200955364432,
+          "null_p05": 294.8525826242053,
+          "null_median": 303.17295574630725,
+          "null_p95": 311.08885388878747
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 1.0236044160209299,
+          "n_sims": 500,
+          "percentile": 0.6,
+          "p_value": 0.007984031936127744,
+          "p_value_se": 0.00398002190199266,
+          "null_mean": 1.1360312250464344,
+          "null_p05": 1.0685354194960544,
+          "null_median": 1.133770018192123,
+          "null_p95": 1.214737629737702
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "vol_ratio"
+        ],
+        "n_metrics": 3,
+        "n_touches": 4116
+      },
+      "span_census": {
+        "median_span": 5.0,
+        "mean_span": 6.830848425608564,
+        "single_bucket_share": 0.02714404212605091,
+        "n_bars_censused": 702843
+      },
+      "elapsed_s": 126.25897812843323
+    },
+    "BTGUSDT|17280|0.5|0.5": {
+      "available": true,
+      "k": 0.5,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 18,
+      "mean_levels_per_rebuild": 33.77777777777778,
+      "real": {
+        "n_touches": 1417.0,
+        "p_reversal": 0.5695130557515878,
+        "traversal_bars": 276.66478475652787,
+        "vol_ratio": 0.9600976628155565
+      },
+      "mean_null_touches": 1356.684,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.5695130557515878,
+          "n_sims": 500,
+          "percentile": 25.0,
+          "p_value": 0.7504990019960079,
+          "p_value_se": 0.01935201539886758,
+          "null_mean": 0.5807782046846767,
+          "null_p05": 0.5535567112182381,
+          "null_median": 0.5812505074665499,
+          "null_p95": 0.6072267754825236
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 276.66478475652787,
+          "n_sims": 500,
+          "percentile": 25.6,
+          "p_value": 0.7445109780439122,
+          "p_value_se": 0.019504583134023114,
+          "null_mean": 281.69563373327435,
+          "null_p05": 269.23025082676384,
+          "null_median": 281.92573616220056,
+          "null_p95": 294.06328012628296
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 0.9600976628155565,
+          "n_sims": 500,
+          "percentile": 0.0,
+          "p_value": 0.001996007984031936,
+          "p_value_se": 0.001996007984031936,
+          "null_mean": 1.1640018204295328,
+          "null_p05": 1.036414560784804,
+          "null_median": 1.1605787713015945,
+          "null_p95": 1.2956337219280452
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "vol_ratio"
+        ],
+        "n_metrics": 3,
+        "n_touches": 1417
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.9157720856578213,
+        "single_bucket_share": 0.07706272951427275,
+        "n_bars_censused": 702843
+      },
+      "elapsed_s": 55.83927392959595
+    },
+    "BTGUSDT|17280|0.5|1.0": {
+      "available": true,
+      "k": 1.0,
+      "n_sims": 500,
+      "seed": 0,
+      "rebuild_every": 1920,
+      "horizon": 5,
+      "hvn_quantile": 0.7,
+      "n_rebuilds": 18,
+      "mean_levels_per_rebuild": 33.77777777777778,
+      "real": {
+        "n_touches": 1673.0,
+        "p_reversal": 0.6168559473998805,
+        "traversal_bars": 303.14524805738193,
+        "vol_ratio": 0.9703952493117602
+      },
+      "mean_null_touches": 1581.682,
+      "distributions": {
+        "p_reversal": {
+          "metric": "p_reversal",
+          "direction": "high",
+          "real": 0.6168559473998805,
+          "n_sims": 500,
+          "percentile": 46.4,
+          "p_value": 0.5369261477045908,
+          "p_value_se": 0.022299617019836855,
+          "null_mean": 0.6178781605977681,
+          "null_p05": 0.5886729277256023,
+          "null_median": 0.6180895293057413,
+          "null_p95": 0.64638786187693
+        },
+        "traversal_bars": {
+          "metric": "traversal_bars",
+          "direction": "high",
+          "real": 303.14524805738193,
+          "n_sims": 500,
+          "percentile": 47.2,
+          "p_value": 0.5289421157684631,
+          "p_value_se": 0.02232318767267994,
+          "null_mean": 303.45010981861185,
+          "null_p05": 290.37765521785815,
+          "null_median": 303.8759427870052,
+          "null_p95": 316.08086922450593
+        },
+        "vol_ratio": {
+          "metric": "vol_ratio",
+          "direction": "low",
+          "real": 0.9703952493117602,
+          "n_sims": 500,
+          "percentile": 0.0,
+          "p_value": 0.001996007984031936,
+          "p_value_se": 0.001996007984031936,
+          "null_mean": 1.1511790528771748,
+          "null_p05": 1.042961202814258,
+          "null_median": 1.151479912004663,
+          "null_p95": 1.2782969500756345
+        }
+      },
+      "verdict": {
+        "passed": true,
+        "alpha": 0.05,
+        "beaten": [
+          "vol_ratio"
+        ],
+        "n_metrics": 3,
+        "n_touches": 1673
+      },
+      "span_census": {
+        "median_span": 3.0,
+        "mean_span": 3.9157720856578213,
+        "single_bucket_share": 0.07706272951427275,
+        "n_bars_censused": 702843
+      },
+      "elapsed_s": 56.83006954193115
+    }
+  },
+  "daily_control": {
+    "BTC-USD": {
+      "bars": 2879,
+      "span": [
+        "2018-02-12",
+        "2025-12-30"
+      ],
+      "available": true,
+      "n_touches": 262.0,
+      "p_reversal": 0.3511450381679389,
+      "null_mean": 0.37728580249439087,
+      "percentile": 22.4,
+      "p_value": 0.7764471057884231
+    },
+    "ETH-USD": {
+      "bars": 2879,
+      "span": [
+        "2018-02-12",
+        "2025-12-30"
+      ],
+      "available": true,
+      "n_touches": 248.0,
+      "p_reversal": 0.3709677419354839,
+      "null_mean": 0.3705614580298323,
+      "percentile": 51.2,
+      "p_value": 0.48902195608782434
+    }
+  }
+}

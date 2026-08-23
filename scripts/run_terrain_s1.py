@@ -37,7 +37,11 @@ from typing import Any
 from backtest_framework.data.cleaner import clean
 from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
 from backtest_framework.research import breakout_universe as bu
-from backtest_framework.research.terrain import BUCKET_ATR, LOOKBACK_DAYS, VolumeProfileSensor
+from backtest_framework.research.terrain import (
+    BUCKET_ATR,
+    DAILY_LOOKBACKS,
+    VolumeProfileSensor,
+)
 from backtest_framework.research.terrain_nulls import (
     TERRAIN_METRICS,
     TOUCH_ATR,
@@ -77,7 +81,7 @@ def main() -> int:
     runs: dict[str, dict[str, Any]] = {}
     for symbol in sorted(cleaned):
         bars = cleaned[symbol]
-        for lookback in LOOKBACK_DAYS:
+        for lookback in DAILY_LOOKBACKS:
             for bucket in BUCKET_ATR:
                 sensor = VolumeProfileSensor(lookback, bucket, VOLUME_UNITS)
                 for k in TOUCH_ATR:

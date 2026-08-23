@@ -22,10 +22,13 @@ from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.research.terrain import (
     ATR_WINDOW,
     BUCKET_ATR,
-    LOOKBACK_DAYS,
+    DAILY_LOOKBACKS,
+    rolling_mean_true_range,
+    rolling_realized_volatility,
     PriceDensity,
     VolumeProfileSensor,
     mean_true_range,
+    realized_volatility,
 )
 from backtest_framework.simulator.fills import Bar
 
@@ -197,15 +200,15 @@ def test_misaligned_volumes_raise():
 def test_parameters_outside_the_specs_stated_sets_raise():
     """`TERRAIN_MODEL.md` fixes both sets. A third value is an unregistered search, and the
     terrain programme counts every combination tested."""
-    with pytest.raises(ValueError, match="lookback_days must be one of"):
+    with pytest.raises(ValueError, match="lookback_bars must be one of"):
         VolumeProfileSensor(120, 0.5, "quote_notional")
     with pytest.raises(ValueError, match="bucket_atr must be one of"):
         VolumeProfileSensor(90, 1.0, "quote_notional")
     with pytest.raises(ValueError, match="volume_units must be one of"):
         VolumeProfileSensor(90, 0.5, "usd")
-    for lb in LOOKBACK_DAYS:
+    for lb in DAILY_LOOKBACKS:
         for ba in BUCKET_ATR:
-            assert VolumeProfileSensor(lb, ba, "shares").lookback_days == lb
+            assert VolumeProfileSensor(lb, ba, "shares").lookback_bars == lb
 
 
 def test_the_atr_here_matches_the_one_the_stops_use():
@@ -233,3 +236,118 @@ def test_atr_window_needs_a_previous_close():
 def test_warm_up_covers_both_the_lookback_and_the_atr_window():
     s = VolumeProfileSensor(180, 0.25, "shares")
     assert s.warm_up_bars() == 180 + ATR_WINDOW + 1
+
+
+# ------------------------------------------------- rolling series equivalence (D194)
+
+
+def test_rolling_atr_equals_the_per_call_form():
+    """An optimisation is only an optimisation if it is provably the same number.
+
+    `level_reactions` called `mean_true_range` once per bar, which is quadratic in the
+    window: measured at 173 hours for D194's grid. The rolling form is linear. It is
+    pinned here rather than in a docstring because the whole D194 result rests on the two
+    being the same computation."""
+    bars = wandering(400, seed=7)
+    for window in (5, 20, 60):
+        rolling = rolling_mean_true_range(bars, window)
+        for t in range(window, len(bars)):
+            assert rolling[t] == pytest.approx(
+                mean_true_range(bars, t - window + 1, t + 1), rel=1e-12
+            ), (window, t)
+
+
+def test_rolling_atr_is_nan_before_the_window_fills():
+    """Never a partial mean — a partial mean is a different statistic wearing the name."""
+    bars = wandering(60, seed=1)
+    rolling = rolling_mean_true_range(bars, 20)
+    assert all(r != r for r in rolling[:20])
+    assert rolling[20] == rolling[20]
+
+
+def test_rolling_realized_volatility_equals_the_per_call_form():
+    bars = wandering(400, seed=11)
+    for window in (5, 20, 60):
+        rolling = rolling_realized_volatility(bars, window)
+        for t in range(window, len(bars)):
+            assert rolling[t] == pytest.approx(
+                realized_volatility(bars, t - window, t + 1), rel=1e-9, abs=1e-15
+            ), (window, t)
+
+
+def test_rolling_series_reject_a_degenerate_window():
+    bars = wandering(50, seed=2)
+    with pytest.raises(ValueError, match="at least 2 bars"):
+        rolling_mean_true_range(bars, 1)
+    with pytest.raises(ValueError, match="at least 2 bars"):
+        rolling_realized_volatility(bars, 1)
+
+
+# ------------------------------------------------- the bucket-span census (D194)
+
+
+def test_density_records_how_many_buckets_each_bar_spanned():
+    """The census D194 pre-registers reporting BEFORE any verdict."""
+    density = SENSOR.density(
+        wandering(300, seed=3), 299, [1000.0] * 300
+    )
+    assert density is not None
+    assert len(density.spans) > 0
+    assert all(s >= 1 for s in density.spans)
+    assert density.median_span >= 1.0
+    assert 0.0 <= density.single_bucket_share <= 1.0
+
+
+def test_narrow_bars_collapse_the_span_to_one_and_the_census_says_so():
+    """The failure mode the volume-spreading exists to prevent, made visible.
+
+    A bar narrower than a bucket puts its whole volume at one price, which is a
+    close-price histogram wearing a volume label. On daily bars this never happened; at
+    15m it can, and a map that has degenerated this way looks exactly like a real one."""
+    closes = [tb.bar.close for tb in wandering(300, seed=5)]
+    # highs and lows within 0.01% of the close — far narrower than a 0.5-ATR bucket
+    bars = bars_from(closes, highs=[c * 1.0001 for c in closes], lows=[c * 0.9999 for c in closes])
+    density = SENSOR.density(bars, 299, [1000.0] * 300)
+    assert density is not None
+    assert density.median_span == 1.0
+    # Not exactly 1.0: a narrow bar straddling a bucket boundary still spans two.
+    assert density.single_bucket_share > 0.95
+
+
+def test_wide_bars_span_several_buckets():
+    closes = [tb.bar.close for tb in wandering(300, seed=5)]
+    bars = bars_from(closes, highs=[c * 1.05 for c in closes], lows=[c * 0.95 for c in closes])
+    density = SENSOR.density(bars, 299, [1000.0] * 300)
+    assert density is not None
+    assert density.median_span > 1.0
+
+
+def test_an_empty_span_census_reports_zero_rather_than_raising():
+    from backtest_framework.research.terrain import PriceDensity
+
+    empty = PriceDensity(edges=(0.0, 1.0), mass=(1.0,), bucket_width=1.0,
+                         lookback=90, bucket_atr=0.5, n_bars=1)
+    assert empty.median_span == 0.0
+    assert empty.single_bucket_share == 0.0
+
+
+# ------------------------------------------------- the ATR window is a parameter (D194)
+
+
+def test_atr_window_is_a_parameter_and_changes_the_bucket_width():
+    """D194 passes 1,920 so a 15m map keeps D189's bucket width in PRICE terms."""
+    bars = wandering(400, seed=9)
+    volumes = [1000.0] * 400
+    narrow = VolumeProfileSensor(90, 0.5, "shares", atr_window=10).density(bars, 399, volumes)
+    wide = VolumeProfileSensor(90, 0.5, "shares", atr_window=60).density(bars, 399, volumes)
+    assert narrow is not None and wide is not None
+    assert narrow.bucket_width != wide.bucket_width
+
+
+def test_a_degenerate_atr_window_raises():
+    with pytest.raises(ValueError, match="atr_window must be at least 2"):
+        VolumeProfileSensor(90, 0.5, "shares", atr_window=1)
+
+
+def test_warm_up_accounts_for_the_configured_atr_window():
+    assert VolumeProfileSensor(90, 0.5, "shares", atr_window=1920).warm_up_bars() == 90 + 1920 + 1

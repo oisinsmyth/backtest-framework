@@ -283,3 +283,158 @@ Both synthetic checks run again at 15m before any real data touches the harness:
 - **Look-ahead:** mutating every bar after `t` must leave the density at `t`
   byte-identical. D181 established that `DataView` protects strategies and does nothing for
   analytics built on their output, and a sensor is analytics.
+
+---
+
+# RESULT — appended 2026-08-23, after the run. Nothing above this line was edited.
+
+**Status: H1 CONFIRMED and H3 CONFIRMED. S1 fails all three conditions. The permanent
+stop fires and S1 is closed at any resolution.**
+
+## The primary configuration
+
+| | D189 (daily) | **D194 (15m)** |
+|---|---:|---:|
+| **BTC** touches | 353 | 13,782 |
+| real | +0.3768 | +0.6022 |
+| null mean | +0.3835 | +0.5955 |
+| **real − null** | **−0.0067** | **+0.0068** |
+| percentile | 41.4th | 89.6th |
+| p | 0.587 | 0.106 |
+| **ETH** touches | 255 | 13,664 |
+| real | +0.3529 | +0.5879 |
+| null mean | +0.3736 | +0.5855 |
+| **real − null** | **−0.0206** | **+0.0024** |
+| percentile | 26.0th | 66.4th |
+| p | 0.743 | 0.337 |
+
+| condition | requirement | BTC | ETH | verdict |
+|---|---|---|---|---|
+| 1. Statistical | p ≤ 0.05 on both | 0.106 | 0.337 | **FAIL** |
+| 2. Effect size | ≥ 0.045 on both | +0.0068 (6.6× short) | +0.0024 (19× short) | **FAIL** |
+| 3. Breadth | > half the grid | 3/8 | 0/8 | **FAIL** |
+
+## H1 — CONFIRMED
+
+Predicted at high confidence that S1 would fail the bar again. It fails all three
+conditions on both symbols.
+
+## The sign flipped, and that is the honest nuance
+
+D189's real levels sat **below** their null on both symbols. D194's sit **above** it on
+both — 41.4th → 89.6th on BTC, 26.0th → 66.4th on ETH. Intraday attribution moved the
+statistic in the direction the hypothesis predicts, on both instruments independently.
+
+So the mechanism is not nothing. Attributing volume to where it actually traded, rather
+than smearing it across a day, produces a real and correctly-signed change. **It is 6.6×
+and 19× too small to matter**, and D189's grounds for predicting failure — that daily
+buckets were too coarse — turn out to have been *partly right about the mechanism and
+entirely wrong about the magnitude*. That is the sixth time in this project a prediction
+has identified a real mechanism and drawn the wrong consequence from its size.
+
+The absolute reversal rate also rose, from ~0.38 to ~0.60, because a 20-day ATR band with
+a 480-bar horizon is a far easier bar to clear than a 20-day band with a 5-bar one. Real
+and null rose **together**, which is the entire reason the test compares them rather than
+reading the level.
+
+## H3 — CONFIRMED, and it is the reason this run was worth doing
+
+H3 predicted that if S1 cleared statistical significance, it would fail the effect-size
+floor. Three configurations cleared p ≤ 0.05, all on BTC:
+
+| configuration | p | percentile | delta | vs the 0.045 floor |
+|---|---:|---:|---:|---|
+| `BTCUSDT 17280 0.25 k=1.0` | **0.0080** | **99.4th** | +0.0101 | **4.5× short** |
+| `BTCUSDT 8640 0.25 k=1.0` | 0.0180 | 98.4th | +0.0085 | 5.3× short |
+| `BTCUSDT 17280 0.25 k=0.5` | 0.0319 | 97.0th | +0.0064 | 7.1× short |
+
+**A p-value of 0.008 at the 99.4th percentile on 30,187 touches is what a discovery looks
+like.** Reported on its own it would have read as "S1 works at 15m", and every downstream
+work package would have been built on it. It is an effect of one percentage point on a
+base rate of 65%, resolvable only because 15m supplies 39× the touches D189 had.
+
+The floor caught it, and the floor was fixed before the run at a number derived from
+D189's own null width rather than from anything in this data. **Two independent
+pre-registered guards caught the same cell**: the every-symbol rule also kills it, because
+none of the three significant configurations is on ETH.
+
+This is the clearest demonstration this project has produced that a pre-registered
+effect-size floor is not ceremony. Without it, the honest reading of this run and the
+p-hacked reading are the same sentence.
+
+## The two diagnostics did their jobs
+
+**The bucket-span census cleared the degeneracy risk.** Median span **4.0 buckets** on
+every symbol, single-bucket share 1.3–3.1%. The concern that a 15m bar would be narrower
+than a bucket — collapsing the map into a close-price histogram wearing a volume label —
+did not materialise. The map is a genuine volume profile, so the result is about the
+sensor rather than about a broken construction. Had the median been 1, no pass would have
+been readable whatever the null said.
+
+**The span-matched daily control rules out the era.** D189's exact configuration on daily
+bars over 2018-02-12 – 2025-12-30, the overlap with the 15m fixture:
+
+| symbol | touches | real | null | real − null | percentile |
+|---|---:|---:|---:|---:|---:|
+| BTC-USD | 262 | +0.3511 | +0.3773 | −0.0261 | 22.4th |
+| ETH-USD | 248 | +0.3710 | +0.3706 | +0.0004 | 51.2nd |
+
+Still indistinguishable from random on the same span the 15m run covers. **D189's failure
+was not a decade artifact**, so the D189→D194 difference is attributable to resolution.
+
+The control also shows how much noise sits at this sample size: the same daily
+configuration moved from the 41.4th percentile to the 22.4th on BTC and from the 26.0th to
+the 51.2nd on ETH merely by dropping the pre-2018 years. On ~250 touches these percentiles
+are close to unstable — which is a second, independent reason the effect-size floor matters
+more than the percentile.
+
+## The permanent stop fires
+
+> If S1 fails here, S1 is closed. No finer resolution — 5m, 1m, tick — will be tried, and
+> no further S1 variant will be pre-registered.
+
+**S1 is closed.** Two rungs two orders of magnitude apart both return an effect that is
+either absent or ~20× too small to act on, and the map at the finer rung is demonstrably
+not degenerate. The hypothesis is not resolution-limited.
+
+WP3–WP8 remain unrun. The terrain programme stays stopped, now for a second and better
+reason than the first.
+
+## H2 — untestable, as pre-registered
+
+H2 said any pass would be the where-price-lingered confound rather than support and
+resistance. There is no pass. It is recorded only because it was stated in advance and
+would have been the first question of a passing branch.
+
+## What this cost, and one estimate that was wrong
+
+**Runtime: 10,909 s — 3.03 hours, against the 0.5 hours D194 predicted.** Wrong by 6×,
+and the reason is instructive: the pre-registration's benchmark timed the per-bar scan and
+omitted the per-touch work. The two numbers it did not have were 23.85 levels per rebuild
+against D189's 3.88, and 13,782 touches per scan against D189's 353. Every touch triggers
+a forward scan of up to 480 bars.
+
+Recorded rather than quietly corrected, because a 6× miss on a figure stated in a
+pre-registration is exactly the class of unverified number this project keeps catching in
+its own documents. The registered rolling-ATR optimisation was correct and load-bearing —
+without it the measured cost was 173 hours.
+
+The 32 configurations are independent and this machine has 16 cores; a process pool would
+have made this ~15 minutes. It was written single-threaded to match the existing daily
+runner's shape, which was the wrong call for a job 96× larger.
+
+## Multiplicity
+
+**147 cumulative looks on one hypothesis** — 48 from D189, 96 here, 3 for the daily
+control. Exactly as pre-registered, and never reset.
+
+## What is now settled, and what is not
+
+Settled: volume-at-price levels, built either from daily bars or from exchange-native 15m
+volume with every window calendar-matched, do not predict price reaction by a margin worth
+acting on. The finer map produces a correctly-signed effect roughly a fiftieth the size
+required to be useful.
+
+Not settled by this, and not going to be: whether some other construction of "where supply
+rests" carries signal. S2 and S3 were never run. This closes S1, which the specification
+called the lead sensor and expected to pass.

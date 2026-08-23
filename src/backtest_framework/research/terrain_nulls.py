@@ -64,7 +64,14 @@ import numpy as np
 
 from ..data.bars import TimestampedBar
 from .breakout_nulls import MetricSpec, NullDistribution, summarise_null
-from .terrain import ATR_WINDOW, TerrainSensor, mean_true_range, realized_volatility
+from .terrain import (
+    ATR_WINDOW,
+    TerrainSensor,
+    mean_true_range,
+    realized_volatility,
+    rolling_mean_true_range,
+    rolling_realized_volatility,
+)
 
 HORIZON = 5
 """Bars a reaction is measured over. Fixed at the E2 window already in the project
@@ -138,6 +145,9 @@ def level_reactions(
     levels_by_index: Mapping[int, Sequence[float]],
     k: float,
     horizon: int = HORIZON,
+    atr_window: int = ATR_WINDOW,
+    atr_series: Sequence[float] | None = None,
+    vol_series: Sequence[float] | None = None,
 ) -> ReactionStats:
     """Reaction statistics at a set of levels, under the definitions fixed in this module.
 
@@ -160,10 +170,15 @@ def level_reactions(
             active = tuple(levels_by_index[schedule[next_change]])
             inside = {lv: False for lv in active}
             next_change += 1
-        if not active or t < ATR_WINDOW + 1:
+        if not active or t < atr_window + 1:
             continue
 
-        atr = mean_true_range(bars, t - ATR_WINDOW + 1, t + 1)
+        # Precomputed series when the caller supplies them, per-call otherwise. The
+        # fallback is not dead code: it keeps the daily path (D189) byte-identical, and
+        # the two are pinned to agree by test rather than by inspection.
+        atr = atr_series[t] if atr_series is not None else mean_true_range(
+            bars, t - atr_window + 1, t + 1
+        )
         if not math.isfinite(atr) or atr <= 0.0:
             continue
         band = k * atr
@@ -197,8 +212,12 @@ def level_reactions(
 
             reversals.append(1.0 if reversed_ and not crossed else 0.0)
             traversals.append(traversal)
-            before = realized_volatility(bars, t - horizon, t + 1)
-            after = realized_volatility(bars, t, t + horizon + 1)
+            if vol_series is not None:
+                before = vol_series[t]
+                after = vol_series[t + horizon] if t + horizon < len(vol_series) else 0.0
+            else:
+                before = realized_volatility(bars, t - horizon, t + 1)
+                after = realized_volatility(bars, t, t + horizon + 1)
             if before > 0.0:
                 vol_ratios.append(after / before)
 
@@ -258,6 +277,9 @@ def run_null(
     n_sims: int = 500,
     seed: int = 0,
     rebuild_every: int = REBUILD_EVERY,
+    horizon: int = HORIZON,
+    atr_window: int = ATR_WINDOW,
+    precompute: bool = False,
 ) -> dict[str, Any]:
     """The sensor's levels against `n_sims` matched random level sets.
 
@@ -268,7 +290,15 @@ def run_null(
     if not real_levels:
         return {"available": False, "reason": "sensor produced no levels over this series"}
 
-    real = level_reactions(bars, real_levels, k)
+    # The ATR and realized-volatility series depend only on the BARS, never on the levels,
+    # so they are identical across the real run and all `n_sims` null draws. Computing
+    # them once turns the reaction scan from quadratic in the window into linear: measured
+    # at 173 hours for D194's grid the per-call way, 0.5 hours this way. Off by default so
+    # the daily path (D189) runs the exact code it ran before.
+    atr_series = rolling_mean_true_range(bars, atr_window) if precompute else None
+    vol_series = rolling_realized_volatility(bars, horizon) if precompute else None
+
+    real = level_reactions(bars, real_levels, k, horizon, atr_window, atr_series, vol_series)
     if real.n_touches == 0:
         return {"available": False, "reason": "no touches of the sensor's levels"}
 
@@ -276,7 +306,10 @@ def run_null(
     draws: dict[str, list[float]] = {m.name: [] for m in TERRAIN_METRICS}
     null_touches: list[int] = []
     for _ in range(n_sims):
-        stats = level_reactions(bars, pseudo_levels(real_levels, rng), k)
+        stats = level_reactions(
+            bars, pseudo_levels(real_levels, rng), k, horizon, atr_window,
+            atr_series, vol_series,
+        )
         if stats.n_touches == 0:
             continue
         null_touches.append(stats.n_touches)

@@ -10,6 +10,60 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (S1 re-tested at 15m and closed for good, 2026-08-23 — D194)
+- `scripts/run_terrain_s1_intraday.py` — the WP2 re-run on exchange-native 15m volume,
+  every window calendar-matched to D189 so bar resolution is the only variable. Appends its
+  own dated section to `TERRAIN_RESULTS.md` rather than overwriting it, which the daily
+  runner does despite the ledger's append-only header.
+- `data/terrain_s1_15m_summary.json` — every figure in the result, machine-readable.
+- `rolling_mean_true_range` / `rolling_realized_volatility` in `research/terrain.py`. The
+  reaction scan recomputed a 1,920-bar ATR per bar: measured at 173 hours for the grid.
+  These are linear, build in 0.08 s, and are pinned by test against the per-call forms.
+- A bucket-span census on `PriceDensity` (`spans`, `median_span`, `single_bucket_share`),
+  pre-registered in D194 as a diagnostic that can invalidate a pass.
+- `ATR_WINDOW`, `HORIZON` and `REBUILD_EVERY` are now parameters rather than constants read
+  at import; `run_null` never forwarded `horizon` at all, which is fixed.
+
+### Changed
+- `VolumeProfileSensor.lookback_days` → **`lookback_bars`**. The field was applied as a bar
+  count and named days — harmless on daily bars, a lie at 15m. `LOOKBACK_BARS` extended to
+  `(90, 180, 8_640, 17_280)`, with `DAILY_LOOKBACKS` kept as its own tuple so extending the
+  set cannot silently change what D189's runner iterates.
+
+### Findings — predictions committed first (d2cc20e), then scored
+- **H1 CONFIRMED. S1 fails all three pre-registered conditions.** Primary configuration:
+  BTC 89.6th percentile (p = 0.106), ETH 66.4th (p = 0.337). Deltas +0.0068 and +0.0024
+  against a floor of 0.045 — **6.6× and 19× short**. Breadth 3/8 and 0/8.
+- **The sign flipped, and that is the honest nuance.** D189's real levels sat BELOW their
+  null on both symbols; D194's sit above it on both. Intraday attribution produces a real,
+  correctly-signed effect — roughly a fiftieth the size needed to be useful.
+- **H3 CONFIRMED, and it is why the run was worth doing.** Three BTC configurations cleared
+  p ≤ 0.05, one at **p = 0.0080, the 99.4th percentile, on 30,187 touches**. All were
+  4.5–7.1× below the effect-size floor, and none was on ETH. Reported alone that cell would
+  have read as "S1 works at 15m". Two independent pre-registered guards killed it.
+- **The span-matched daily control rules out the era**: D189's configuration on the
+  overlapping years is still indistinguishable from random (BTC 22.4th, ETH 51.2nd). It
+  also shows how unstable ~250 touches is — the same configuration moved 41.4th → 22.4th on
+  BTC merely by dropping the pre-2018 years.
+- **The bucket-span census rules out degeneracy**: median span 4.0 buckets, single-bucket
+  share 1.3–3.1%. The map is a genuine volume profile, not a close-price histogram.
+- **S1 is closed at any resolution** by D194's permanent stop. WP3–WP8 remain unrun.
+  Cumulative multiplicity: **147 looks on one hypothesis**.
+
+### Corrected
+- **D194's runtime estimate was wrong by 6×** — 0.5 hours predicted, 10,909 s (3.03 hours)
+  measured. The benchmark timed the per-bar scan and omitted the per-touch work, and the
+  two numbers it lacked were 23.85 levels per rebuild (D189: 3.88) and 13,782 touches per
+  scan (D189: 353). Recorded rather than quietly fixed: a 6× miss on a figure stated in a
+  pre-registration is the class of unverified number this project keeps catching.
+
+### Verified
+- D189's committed summary reproduces **byte-identically** from the refactored code.
+- Both synthetic controls re-run at intraday windows: nothing found in a random walk across
+  three seeds, planted level still found.
+- Precomputed and per-call reaction paths pinned to agree end to end.
+- 878 tests green (16 new), mypy clean.
+
 ### Added (BinanceDataSource and the first non-yfinance fixture, 2026-08-23 — D193)
 - `data/binance_source.py` — assembles monthly 1m archives into a continuous series behind
   `get_raw_history`, the seam every fetch script uses. Verifies each archive against its

@@ -23,6 +23,7 @@ import numpy as np
 import pytest
 
 from backtest_framework.data.bars import TimestampedBar
+from backtest_framework.research.terrain import VolumeProfileSensor
 from backtest_framework.research.terrain_nulls import (
     HORIZON,
     TERRAIN_METRICS,
@@ -200,3 +201,97 @@ def test_a_sensor_with_no_levels_reports_unavailable_not_a_pass():
     result = run_null(bars, [100.0] * 300, sensor, k=0.5, n_sims=10, seed=0)
     assert result["available"] is False
     assert verdict(result)["passed"] is False
+
+
+# ---------------------------------------------- the controls, re-run at 15m (D194)
+#
+# D194 requires both synthetic checks to pass at the NEW frequency before any real data
+# touches the harness. Re-running them is not a formality: D189's positive control failed
+# twice and both times the fixture was wrong, so the check was doing its job in the only
+# direction that matters.
+#
+# "15m" here means the calendar-matched windows D194 registered, scaled down so the test
+# stays fast: the point is that the harness behaves correctly when ATR window, horizon and
+# rebuild cadence are all much larger than the daily defaults, which is the regime that
+# was never exercised before.
+
+_15M_ATR = 96
+_15M_HORIZON = 48
+_15M_REBUILD = 192
+
+
+@pytest.mark.parametrize("seed", [1, 2, 3])
+def test_false_positive_check_at_intraday_windows(seed):
+    """A pure random walk must still yield nothing when every window is scaled up."""
+    n = 3000
+    bars = _bars(random_walk(n, seed=seed))
+    rng = random.Random(seed)
+    volumes = [rng.uniform(500.0, 1500.0) for _ in range(n)]
+    sensor = VolumeProfileSensor(90, 0.5, "shares", atr_window=_15M_ATR)
+    result = run_null(
+        bars, volumes, sensor, k=0.5, n_sims=100, seed=seed,
+        rebuild_every=_15M_REBUILD, horizon=_15M_HORIZON,
+        atr_window=_15M_ATR, precompute=True,
+    )
+    if not result.get("available"):
+        pytest.skip(f"no levels or touches at these windows: {result.get('reason')}")
+    v = verdict(result)
+    assert not v["passed"], (
+        f"the harness found structure in a random walk at intraday windows (seed {seed}): "
+        f"{v['beaten']}"
+    )
+
+
+def test_positive_control_at_intraday_windows():
+    """A planted level must still be found when the windows are scaled up.
+
+    Same triangular oscillation as the daily control: a level at either bound is somewhere
+    price keeps returning to AND keeps turning at, and the mid-range level it is compared
+    against is crossed without reversing."""
+    n = 6000
+    bars = _bars(bouncing(n, seed=4, period=200))
+    real = {t: (100.0,) for t in range(1000, n - _15M_HORIZON, _15M_REBUILD)}
+    truth = level_reactions(
+        bars, real, k=0.5, horizon=_15M_HORIZON, atr_window=_15M_ATR
+    )
+    assert truth.n_touches > 5, f"fixture produced only {truth.n_touches} touches"
+
+    rng = np.random.default_rng(4)
+    beaten = 0
+    trials = 100
+    for _ in range(trials):
+        stats = level_reactions(
+            bars, pseudo_levels_wide(real, rng), k=0.5,
+            horizon=_15M_HORIZON, atr_window=_15M_ATR,
+        )
+        if stats.n_touches and stats.p_reversal >= truth.p_reversal:
+            beaten += 1
+    assert beaten / trials <= 0.05, (
+        f"a planted level was beaten by {beaten}/{trials} random ones at intraday windows"
+    )
+
+
+def test_precomputed_series_give_the_same_reactions_as_the_per_call_path():
+    """The optimisation D194 registered, pinned end to end rather than only unit-wise.
+
+    If these ever diverge, every D194 number is computed by different code than the one
+    whose equivalence was demonstrated."""
+    from backtest_framework.research.terrain import (
+        rolling_mean_true_range,
+        rolling_realized_volatility,
+    )
+
+    n = 1200
+    bars = _bars(random_walk(n, seed=9))
+    real = {t: (bars[t].bar.close * 1.01, bars[t].bar.close * 0.99)
+            for t in range(200, n - 60, 100)}
+    slow = level_reactions(bars, real, k=0.5, horizon=30, atr_window=40)
+    fast = level_reactions(
+        bars, real, k=0.5, horizon=30, atr_window=40,
+        atr_series=rolling_mean_true_range(bars, 40),
+        vol_series=rolling_realized_volatility(bars, 30),
+    )
+    assert slow.n_touches == fast.n_touches
+    assert slow.p_reversal == pytest.approx(fast.p_reversal, rel=1e-12)
+    assert slow.traversal_bars == pytest.approx(fast.traversal_bars, rel=1e-12)
+    assert slow.vol_ratio == pytest.approx(fast.vol_ratio, rel=1e-9)
