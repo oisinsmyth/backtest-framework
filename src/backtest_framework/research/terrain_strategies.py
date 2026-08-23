@@ -471,3 +471,105 @@ def buy_and_hold(
         "max_drawdown": worst,
         "bars": len(window),
     }
+
+
+# --------------------------------------------------------------------------- D197 / S6
+
+STOP_ATR = 2.0
+"""Stop distance in ATR, for the S6 field strategy (D197).
+
+Not inherited from D196 and the difference is the point. `bounce_rr` stopped at the far
+band edge, 0.5 ATR, which is 2.1% of price on this fixture — so a 40 bps round trip cost
+**0.49R** and break-even sat at 36.6%. It made money before costs and lost after them. At
+2 ATR the same 40 bps is about 0.12R and break-even falls to roughly 28%.
+
+The R multiple does not transfer between designs; the stop distance is what gives it
+meaning. 3R on a 0.5-ATR stop is a 6% move, 3R on a 2-ATR stop is a 25% move."""
+
+FIELD_TARGET_R = 3.0
+"""Reward multiple for the field strategy. One value, fixed by D197 — a swept target is
+the easiest way to rescue a weak signal."""
+
+
+def run_field_reversal(
+    bars: Sequence[TimestampedBar],
+    signals: Sequence,
+    atr: Sequence[float],
+    cost_bps: float,
+    periods_per_year: float,
+    threshold: float = 0.0,
+    filtered: bool = True,
+    stop_atr: float = STOP_ATR,
+    target_r: float = FIELD_TARGET_R,
+    max_hold: int = MAX_HOLD,
+) -> StrategyResult:
+    """S6's reversal rule, and with `filtered=False` the erasure-only control.
+
+    Price leaves its recent range and meets inventory that has not been tested in 40+
+    bars; the trade fades the break when that inventory is correctly oriented — a break UP
+    into net supply is shorted, a break DOWN into net demand is bought. The two
+    continuation cells are counted elsewhere and never traded (D197).
+
+    `filtered=False` drops the `tilt` condition and fades EVERY fire. That is the
+    erasure-only control — "fade every 40-bar breakout", unfiltered — and it is the
+    primary comparison rather than the null, because the erasure is a deterministic
+    function of price: it is present in the real arm, in the control, and identically in
+    every null draw, so a null cannot detect a confound carried by it and the control can.
+    The control is deliberately NOT trade-count matched; filtering is the map's whole job,
+    so both counts are reported (D189's H2 confound).
+
+    Entry is **market at the open of the bar after the signal**, so the close that fired
+    is not also the fill. The entry bar's own range is then live for the stop and the
+    target — unlike `bounce_rr`, whose limit filled mid-bar and could not attribute the
+    rest of that bar honestly. Intrabar ordering is pessimistic throughout: when a bar
+    covers both, the STOP is taken."""
+    trades: list[Trade] = []
+    open_until = -1
+
+    for sig in signals:
+        t = sig.index
+        if t <= open_until or t + 1 >= len(bars):
+            continue
+        if filtered:
+            if sig.virgin:
+                continue  # no mass at all: the field is silent, not neutral
+            if sig.direction > 0 and not (sig.tilt < -threshold):
+                continue
+            if sig.direction < 0 and not (sig.tilt > threshold):
+                continue
+        direction = -sig.direction  # fade the break
+
+        a = atr[t]
+        if not (a == a) or a <= 0.0:
+            continue
+        entry_index = t + 1
+        entry_price = bars[entry_index].bar.open
+        risk = stop_atr * a
+        # A stop wider than the price it hangs from cannot be a stop. D196's scalar band
+        # produced a -105% short before this guard existed.
+        if not (risk > 0.0) or risk >= entry_price:
+            continue
+        stop = entry_price - direction * risk
+        target = entry_price + direction * target_r * risk
+
+        exit_index, exit_price, reason = None, 0.0, ""
+        for j in range(entry_index, min(entry_index + max_hold, len(bars))):
+            b = bars[j].bar
+            hit_stop = (b.low <= stop) if direction > 0 else (b.high >= stop)
+            hit_target = (b.high >= target) if direction > 0 else (b.low <= target)
+            if hit_stop:  # stop first when a bar covers both
+                exit_index, exit_price, reason = j, stop, "stop"
+                break
+            if hit_target:
+                exit_index, exit_price, reason = j, target, "target"
+                break
+        if exit_index is None:
+            exit_index = min(entry_index + max_hold, len(bars) - 1)
+            exit_price, reason = bars[exit_index].bar.close, "max_hold"
+
+        trades.append(
+            Trade(entry_index, exit_index, direction, entry_price, exit_price, reason)
+        )
+        open_until = exit_index
+
+    return StrategyResult(tuple(trades), cost_bps, periods_per_year)
