@@ -171,3 +171,120 @@ a failure of evidence rather than a success of strategy.
 - A stopped-out book stays flat until the signal changes state.
 - Cost charged once per unit of exposure changed.
 - Census reproduces; full suite green; mypy clean; `--report-only` re-renders identically.
+
+---
+
+## RESULT — appended after the run; nothing above this line edited
+
+**No configuration passes on both symbols.** The pre-registered bar is not met by anything.
+8 cells, 500 null draws each, 198 seconds.
+
+| cell | Sharpe | B&H | null Δ | pct | long% | flat% |
+|---|---:|---:|---:|---:|---:|---:|
+| **BTC erased nostop** *(primary)* | +0.677 | +0.756 | −0.052 | 20.2 | 88.8 | 0.7 |
+| BTC erased stop | **+0.761** | +0.756 | **+0.718** | 91.4 | 88.7 | 8.5 |
+| BTC raw nostop | +0.674 | +0.756 | −0.015 | 35.6 | 92.7 | 0.7 |
+| BTC raw stop | −0.207 | +0.756 | −0.814 | 6.6 | 2.4 | **94.3** |
+| **ETH erased nostop** *(primary)* | +0.083 | +0.315 | −0.077 | 26.6 | 61.4 | 1.2 |
+| ETH erased stop | +0.011 | +0.315 | −0.100 | 34.6 | 17.8 | 45.6 |
+| ETH raw nostop | **+0.382** | +0.315 | **+0.112** | 93.4 | 69.4 | 0.8 |
+| ETH raw stop | **+0.385** | +0.315 | **+0.110** | 90.0 | 69.2 | 0.9 |
+
+*(Buy-and-hold reads +0.756 here against D197's +0.773 because this book starts at bar 0
+rather than at the first signal. Same asset, same fixture, marginally different span.)*
+
+**These are the first positive Sharpes in the entire programme** — and they are positive for
+the least interesting available reason, which the next section is about.
+
+### The primary fails cleanly, on both symbols
+
+Erased field, no stop: **−0.052 and −0.077** against the null, at the 20th and 27th
+percentile, and below buy-and-hold on both. H1 and the primary verdict are unambiguous.
+
+### Three cells cleared both hurdles, and all three are one decision
+
+`BTC | erased | stop` clears both. Its per-decision breakdown:
+
+| | bars held | log return | share of total |
+|---|---:|---:|---:|
+| **one long** | **3,503** | +5.117 | **92.4%** |
+| the other nine decisions | — | +0.419 | 7.6% |
+
+**A single 9.6-year long position is 92.4% of everything the strategy made.** That is not a
+strategy, it is "be long BTC for a decade" — which is why it beats buy-and-hold by **0.005
+Sharpe**, a margin indistinguishable from rounding.
+
+And its null delta is not what it looks like. Real +0.761 against a null **p95 of +0.773**:
+the real result sits *below* the null's 95th percentile. The +0.718 delta comes from the
+null *mean* being dragged to +0.043 by draws that went short at the wrong moments. "Beating
+the null by 0.72" here means *being long a rising asset beats a random field that sometimes
+shorts it*. It says nothing about the map.
+
+`ETH | raw | nostop` is the same shape: one 1,984-bar long is **77.8%** of the total, real
++0.382 against a null p95 of +0.394 — again below it.
+
+**Every cell that cleared a hurdle is carried by one multi-year long.** The named failure
+mode fired, though not in the direction predicted: the document guessed one lucky *short*
+through a drawdown, and it is one lucky *long* through the bull run. Structurally identical
+— one decision out of ten — and directionally wrong, which is recorded rather than rounded.
+
+### The predictions
+
+**H1 — primary fails the null on at least one symbol.** **CONFIRMED**, on both.
+
+**H2 — nothing beats buy-and-hold.** **FALSIFIED.** Three cells beat it: BTC erased+stop by
+0.005, ETH raw+nostop by 0.067, ETH raw+stop by 0.070. None on both symbols, and the BTC
+margin is noise, but the prediction as written is wrong.
+
+**H3 — the stop makes things worse on at least one symbol.** **CONFIRMED**, and
+`BTC | raw | stop` is the mechanism in its purest form: **94.3% of bars flat, 2.4% long,
+Sharpe −0.207**. One stop-out early in a multi-year run parked the book for the rest of the
+decade, exactly as the document predicted a 2-ATR stop would do against sign runs of 3,504
+bars. The stop did not tighten risk; it converted holding into absence.
+
+**H4 — erased and raw differ by less than the floor on both symbols.** **FALSIFIED.** BTC
+agrees (0.003) but ETH differs by **0.299** with no stop. The census measured 92.3% sign
+agreement on ETH and that residual 7.7% moved the Sharpe by three floors — because with 16
+to 30 decisions, a handful of disagreements is a large fraction of the evidence.
+
+**H5 — every null percentile between the 10th and 90th.** **FALSIFIED.** Four cells fall
+outside (6.6, 90.0, 91.4, 93.4). The underlying power problem is real but shows up
+differently than predicted: the same sensor family produces **+0.718** on one
+symbol/configuration and **−0.814** on another. That spread across configurations *is* the
+nine-decisions problem, expressed as instability rather than as narrowness.
+
+**H6 — long leg beats short leg everywhere.** **CONFIRMED, 8 of 8.** Continuing 16/16 in
+D197 and 16/16 in D199.
+
+### What the run established
+
+**The mechanical long bias is the whole story.** The census predicted the book would be long
+89–93% of the time because in an uptrend almost all mass sits below price. It was, and the
+consequence is that the book's Sharpe is buy-and-hold's Sharpe minus the cost of its
+occasional departures. Every departure that helped was one long run; every stop that fired
+turned a holding into an absence.
+
+**The erasure is irrelevant to this reading, and that answers D197's open question.** Sign
+agreement 92–94%; BTC's erased and raw results differ by 0.003. The erasure decided almost
+everything about the boundary rule and almost nothing about the aggregate one.
+
+**Nine decisions cannot be tested.** The verdict here does not rest on 4,000 bars. It rests
+on ten regime calls per cell, one of which is 92% of the result. No null, however many
+draws, can make that a measurement.
+
+### Ledger
+
+**D201: 12 looks, own ledger.** Same map as the S6 family's closed 60, disclosed.
+
+### Recommendation
+
+The imbalance formulation is **not** an edge. What it is, mechanically, is a slightly worse
+buy-and-hold with a structural long bias produced by the shape of an uptrend, and the
+configurations that appear to beat their null do so because a random field sometimes shorts
+a rising asset and this one mostly does not.
+
+The honest closing position on the S6 map as a whole: its placement carried no information
+at the bucket level (D197), no information at a boundary under three refinements
+(D198/D199), and no information in aggregate here that survives the every-symbol rule.
+Testing it a fifth way would need a genuinely new claim rather than a new reading of the
+same field, and the same reasoning that closed S1 and the S6 reversal line applies.

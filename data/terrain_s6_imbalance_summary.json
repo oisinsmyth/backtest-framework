@@ -1,0 +1,1384 @@
+{
+  "n_sims": 500,
+  "seed": 0,
+  "cost_bps": 40.0,
+  "stop_atr": 2.0,
+  "effect_floor": 0.1,
+  "primary": [
+    "erased",
+    "nostop"
+  ],
+  "cells": {
+    "BTC-USD|erased|nostop": {
+      "symbol": "BTC-USD",
+      "field": "erased",
+      "stop": "nostop",
+      "n_position_changes": 10,
+      "turnover": 19,
+      "sharpe": 0.6774603496522494,
+      "total_return": 142.07766448280853,
+      "max_drawdown": -0.8339900882218974,
+      "hit_rate": 0.5199298069691652,
+      "share_long": 0.8877271595718198,
+      "share_short": 0.1053024645257655,
+      "share_flat": 0.0069703759024147376,
+      "long_leg_sharpe": 0.7734376128554404,
+      "short_leg_sharpe": -0.24453563245070783,
+      "long_leg_return": 232.05524527367254,
+      "short_leg_return": -0.38598921044162293,
+      "by_year": {
+        "2015": 0.13051905377200915,
+        "2016": 0.3900226863368315,
+        "2017": 2.687097483431967,
+        "2018": -1.3303594527335938,
+        "2019": 0.6533842261446101,
+        "2020": 1.3941635431585604,
+        "2021": 0.46792599620033504,
+        "2022": -1.029046362069034,
+        "2023": 0.937728959717794,
+        "2024": 0.7932402069899284,
+        "2025": -0.05499118317511793
+      },
+      "flips": [
+        {
+          "from": 28,
+          "to": 193,
+          "direction": -1,
+          "bars": 165,
+          "sum_log_return": -0.284407409311176
+        },
+        {
+          "from": 193,
+          "to": 194,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.06242651475623316
+        },
+        {
+          "from": 194,
+          "to": 239,
+          "direction": -1,
+          "bars": 45,
+          "sum_log_return": 0.2618654716933307
+        },
+        {
+          "from": 239,
+          "to": 281,
+          "direction": 1,
+          "bars": 42,
+          "sum_log_return": 0.0751199440099198
+        },
+        {
+          "from": 281,
+          "to": 286,
+          "direction": -1,
+          "bars": 5,
+          "sum_log_return": -0.029297821519667134
+        },
+        {
+          "from": 286,
+          "to": 292,
+          "direction": 1,
+          "bars": 6,
+          "sum_log_return": 0.054323333502050514
+        },
+        {
+          "from": 292,
+          "to": 296,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.04838206756341179
+        },
+        {
+          "from": 296,
+          "to": 310,
+          "direction": 1,
+          "bars": 14,
+          "sum_log_return": 0.30331533394082694
+        },
+        {
+          "from": 310,
+          "to": 514,
+          "direction": -1,
+          "bars": 204,
+          "sum_log_return": -0.3474407377424317
+        },
+        {
+          "from": 514,
+          "to": 4017,
+          "direction": 1,
+          "bars": 3503,
+          "sum_log_return": 5.117015625521084
+        }
+      ],
+      "bh_sharpe": 0.7564624299475897,
+      "bh_total_return": 280.4014835523565,
+      "null": {
+        "band": "local",
+        "n_trades_real": 10,
+        "n_trades_null_mean": 8.992,
+        "real_sharpe": 0.6774603496522494,
+        "real_total_return": 142.07766448280853,
+        "real_max_drawdown": -0.8339900882218974,
+        "real_hit_rate": 0.5199298069691652,
+        "null_sharpe_mean": 0.7292133471175569,
+        "null_sharpe_p05": 0.6113567587053752,
+        "null_sharpe_p95": 0.814632337603499,
+        "sharpe_delta": -0.05175299746530748,
+        "sharpe_percentile": 20.2,
+        "n_sims": 500
+      },
+      "beats_bh": false,
+      "beats_null": false,
+      "clears_both": false
+    },
+    "BTC-USD|erased|stop": {
+      "symbol": "BTC-USD",
+      "field": "erased",
+      "stop": "stop",
+      "n_position_changes": 10,
+      "turnover": 19,
+      "sharpe": 0.761087402211558,
+      "total_return": 233.94616196264445,
+      "max_drawdown": -0.8339900882218971,
+      "hit_rate": 0.5270601033451183,
+      "share_long": 0.887478217575305,
+      "share_short": 0.02788150360965895,
+      "share_flat": 0.0846402788150361,
+      "long_leg_sharpe": 0.7720393731732612,
+      "short_leg_sharpe": 0.013542414633256625,
+      "long_leg_return": 229.7606581230617,
+      "short_leg_return": 0.018203544994949583,
+      "by_year": {
+        "2015": 0.4185576865067904,
+        "2016": 0.5978722078556326,
+        "2017": 2.687097483431967,
+        "2018": -1.3303594527335938,
+        "2019": 0.6533842261446101,
+        "2020": 1.3941635431585604,
+        "2021": 0.46792599620033504,
+        "2022": -1.029046362069034,
+        "2023": 0.937728959717794,
+        "2024": 0.7932402069899284,
+        "2025": -0.05499118317511793
+      },
+      "flips": [
+        {
+          "from": 28,
+          "to": 58,
+          "direction": -1,
+          "bars": 30,
+          "sum_log_return": -0.0816991110244066
+        },
+        {
+          "from": 193,
+          "to": 194,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.06242651475623316
+        },
+        {
+          "from": 195,
+          "to": 239,
+          "direction": -1,
+          "bars": 44,
+          "sum_log_return": 0.24602440197352532
+        },
+        {
+          "from": 239,
+          "to": 281,
+          "direction": 1,
+          "bars": 42,
+          "sum_log_return": 0.0751199440099198
+        },
+        {
+          "from": 281,
+          "to": 286,
+          "direction": -1,
+          "bars": 5,
+          "sum_log_return": -0.029297821519667134
+        },
+        {
+          "from": 287,
+          "to": 292,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": 0.04442886522755418
+        },
+        {
+          "from": 292,
+          "to": 295,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.039397787195833825
+        },
+        {
+          "from": 296,
+          "to": 310,
+          "direction": 1,
+          "bars": 14,
+          "sum_log_return": 0.30331533394082694
+        },
+        {
+          "from": 310,
+          "to": 340,
+          "direction": -1,
+          "bars": 30,
+          "sum_log_return": -0.03750962414889489
+        },
+        {
+          "from": 514,
+          "to": 4017,
+          "direction": 1,
+          "bars": 3503,
+          "sum_log_return": 5.117015625521084
+        }
+      ],
+      "bh_sharpe": 0.7564624299475897,
+      "bh_total_return": 280.4014835523565,
+      "null": {
+        "band": "local",
+        "n_trades_real": 10,
+        "n_trades_null_mean": 8.628,
+        "real_sharpe": 0.761087402211558,
+        "real_total_return": 233.94616196264445,
+        "real_max_drawdown": -0.8339900882218971,
+        "real_hit_rate": 0.5270601033451183,
+        "null_sharpe_mean": 0.04283134535151038,
+        "null_sharpe_p05": -0.6556878894750008,
+        "null_sharpe_p95": 0.7733138356863026,
+        "sharpe_delta": 0.7182560568600477,
+        "sharpe_percentile": 91.4,
+        "n_sims": 500
+      },
+      "beats_bh": true,
+      "beats_null": true,
+      "clears_both": true
+    },
+    "BTC-USD|raw|nostop": {
+      "symbol": "BTC-USD",
+      "field": "raw",
+      "stop": "nostop",
+      "n_position_changes": 14,
+      "turnover": 27,
+      "sharpe": 0.6737527237158588,
+      "total_return": 138.54041231970817,
+      "max_drawdown": -0.8339900882218976,
+      "hit_rate": 0.525695663073452,
+      "share_long": 0.9268110530246453,
+      "share_short": 0.06621857107294,
+      "share_flat": 0.0069703759024147376,
+      "long_leg_sharpe": 0.7593362420378864,
+      "short_leg_sharpe": -0.3245865601834533,
+      "long_leg_return": 229.1637745003587,
+      "short_leg_return": -0.39360712202487,
+      "by_year": {
+        "2015": 0.04398513562531691,
+        "2016": 0.48365195352749574,
+        "2017": 2.687097483431967,
+        "2018": -1.3303594527335938,
+        "2019": 0.6533842261446101,
+        "2020": 1.3941635431585604,
+        "2021": 0.46792599620033504,
+        "2022": -1.029046362069034,
+        "2023": 0.937728959717794,
+        "2024": 0.7932402069899284,
+        "2025": -0.05499118317511793
+      },
+      "flips": [
+        {
+          "from": 28,
+          "to": 191,
+          "direction": -1,
+          "bars": 163,
+          "sum_log_return": -0.1971594521638127
+        },
+        {
+          "from": 191,
+          "to": 195,
+          "direction": 1,
+          "bars": 4,
+          "sum_log_return": 0.008980372671324743
+        },
+        {
+          "from": 195,
+          "to": 209,
+          "direction": -1,
+          "bars": 14,
+          "sum_log_return": -0.023933503602667883
+        },
+        {
+          "from": 209,
+          "to": 210,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.01656498435681487
+        },
+        {
+          "from": 210,
+          "to": 290,
+          "direction": -1,
+          "bars": 80,
+          "sum_log_return": 0.06767653828516389
+        },
+        {
+          "from": 290,
+          "to": 291,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.033808578905344916
+        },
+        {
+          "from": 291,
+          "to": 295,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.046231082198601725
+        },
+        {
+          "from": 295,
+          "to": 315,
+          "direction": 1,
+          "bars": 20,
+          "sum_log_return": 0.12685093815506115
+        },
+        {
+          "from": 315,
+          "to": 316,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.08343250231798256
+        },
+        {
+          "from": 316,
+          "to": 380,
+          "direction": 1,
+          "bars": 64,
+          "sum_log_return": 0.07456725530963647
+        },
+        {
+          "from": 380,
+          "to": 383,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.06079592779376058
+        },
+        {
+          "from": 383,
+          "to": 384,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.018295459016986062
+        },
+        {
+          "from": 384,
+          "to": 385,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.10023896012970848
+        },
+        {
+          "from": 385,
+          "to": 4017,
+          "direction": 1,
+          "bars": 3632,
+          "sum_log_return": 5.3491658528827575
+        }
+      ],
+      "bh_sharpe": 0.7564624299475897,
+      "bh_total_return": 280.4014835523565,
+      "null": {
+        "band": "local",
+        "n_trades_real": 14,
+        "n_trades_null_mean": 19.426,
+        "real_sharpe": 0.6737527237158588,
+        "real_total_return": 138.54041231970817,
+        "real_max_drawdown": -0.8339900882218976,
+        "real_hit_rate": 0.525695663073452,
+        "null_sharpe_mean": 0.6890960570044884,
+        "null_sharpe_p05": 0.608718495037572,
+        "null_sharpe_p95": 0.7612690272360451,
+        "sharpe_delta": -0.01534333328862958,
+        "sharpe_percentile": 35.6,
+        "n_sims": 500
+      },
+      "beats_bh": false,
+      "beats_null": false,
+      "clears_both": false
+    },
+    "BTC-USD|raw|stop": {
+      "symbol": "BTC-USD",
+      "field": "raw",
+      "stop": "stop",
+      "n_position_changes": 14,
+      "turnover": 28,
+      "sharpe": -0.20693912464192213,
+      "total_return": -0.3157662176927507,
+      "max_drawdown": -0.4502487952742311,
+      "hit_rate": 0.5,
+      "share_long": 0.02439631565845158,
+      "share_short": 0.03286034353995519,
+      "share_flat": 0.9427433408015933,
+      "long_leg_sharpe": -0.0010409631454766591,
+      "short_leg_sharpe": -0.3004436381927599,
+      "long_leg_return": -0.0013759717737019672,
+      "short_leg_return": -0.31472396654654344,
+      "by_year": {
+        "2015": 0.15729449139991278,
+        "2016": -0.424380364905701
+      },
+      "flips": [
+        {
+          "from": 28,
+          "to": 58,
+          "direction": -1,
+          "bars": 30,
+          "sum_log_return": -0.0816991110244066
+        },
+        {
+          "from": 191,
+          "to": 195,
+          "direction": 1,
+          "bars": 4,
+          "sum_log_return": 0.008980372671324743
+        },
+        {
+          "from": 195,
+          "to": 209,
+          "direction": -1,
+          "bars": 14,
+          "sum_log_return": -0.023933503602667883
+        },
+        {
+          "from": 209,
+          "to": 210,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.01656498435681487
+        },
+        {
+          "from": 210,
+          "to": 290,
+          "direction": -1,
+          "bars": 80,
+          "sum_log_return": 0.06767653828516389
+        },
+        {
+          "from": 290,
+          "to": 291,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.033808578905344916
+        },
+        {
+          "from": 292,
+          "to": 295,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.039397787195833825
+        },
+        {
+          "from": 296,
+          "to": 315,
+          "direction": 1,
+          "bars": 19,
+          "sum_log_return": 0.11786665778748319
+        },
+        {
+          "from": 315,
+          "to": 316,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.08343250231798256
+        },
+        {
+          "from": 316,
+          "to": 380,
+          "direction": 1,
+          "bars": 64,
+          "sum_log_return": 0.07456725530963647
+        },
+        {
+          "from": 380,
+          "to": 383,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.06079592779376058
+        },
+        {
+          "from": 383,
+          "to": 384,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.018295459016986062
+        },
+        {
+          "from": 384,
+          "to": 385,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.10023896012970848
+        },
+        {
+          "from": 386,
+          "to": 394,
+          "direction": 1,
+          "bars": 8,
+          "sum_log_return": -0.07800988321589067
+        }
+      ],
+      "bh_sharpe": 0.7564624299475897,
+      "bh_total_return": 280.4014835523565,
+      "null": {
+        "band": "local",
+        "n_trades_real": 14,
+        "n_trades_null_mean": 18.59,
+        "real_sharpe": -0.20693912464192213,
+        "real_total_return": -0.3157662176927507,
+        "real_max_drawdown": -0.4502487952742311,
+        "real_hit_rate": 0.5,
+        "null_sharpe_mean": 0.6071999491965551,
+        "null_sharpe_p05": -0.24787489450133673,
+        "null_sharpe_p95": 0.7768093622759477,
+        "sharpe_delta": -0.8141390738384772,
+        "sharpe_percentile": 6.6,
+        "n_sims": 500
+      },
+      "beats_bh": false,
+      "beats_null": false,
+      "clears_both": false
+    },
+    "ETH-USD|erased|nostop": {
+      "symbol": "ETH-USD",
+      "field": "erased",
+      "stop": "nostop",
+      "n_position_changes": 16,
+      "turnover": 31,
+      "sharpe": 0.08339258396980354,
+      "total_return": 0.7940964089419715,
+      "max_drawdown": -0.9202627460303612,
+      "hit_rate": 0.502892140183736,
+      "share_long": 0.6143241425689308,
+      "share_short": 0.37390719569603226,
+      "share_flat": 0.011768661735036988,
+      "long_leg_sharpe": 0.2126892567490041,
+      "short_leg_sharpe": -0.09776286612387108,
+      "long_leg_return": 1.8992839360611775,
+      "short_leg_return": -0.3810635086359425,
+      "by_year": {
+        "2017": -0.41718831307559356,
+        "2018": 1.9966920181767203,
+        "2019": 0.028577602341959277,
+        "2020": -1.5082686412109476,
+        "2021": 0.8237362506031018,
+        "2022": -1.1240006371597857,
+        "2023": 0.6451931968682179,
+        "2024": 0.3789118026259888,
+        "2025": -0.11469343826935792
+      },
+      "flips": [
+        {
+          "from": 23,
+          "to": 34,
+          "direction": -1,
+          "bars": 11,
+          "sum_log_return": -0.3338277481526243
+        },
+        {
+          "from": 38,
+          "to": 57,
+          "direction": -1,
+          "bars": 19,
+          "sum_log_return": -0.34284306254364477
+        },
+        {
+          "from": 65,
+          "to": 1108,
+          "direction": -1,
+          "bars": 1043,
+          "sum_log_return": 0.9153789041163459
+        },
+        {
+          "from": 1108,
+          "to": 1114,
+          "direction": 1,
+          "bars": 6,
+          "sum_log_return": 0.01761091125867163
+        },
+        {
+          "from": 1114,
+          "to": 1118,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.1698455208968062
+        },
+        {
+          "from": 1118,
+          "to": 1119,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.045789289896317836
+        },
+        {
+          "from": 1119,
+          "to": 1120,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.018602909234697766
+        },
+        {
+          "from": 1120,
+          "to": 1121,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": 0.0302170500492328
+        },
+        {
+          "from": 1121,
+          "to": 1134,
+          "direction": -1,
+          "bars": 13,
+          "sum_log_return": -0.031087554367090937
+        },
+        {
+          "from": 1134,
+          "to": 1137,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": 0.03569109117438255
+        },
+        {
+          "from": 1137,
+          "to": 1145,
+          "direction": -1,
+          "bars": 8,
+          "sum_log_return": -0.03479555325302052
+        },
+        {
+          "from": 1145,
+          "to": 1167,
+          "direction": 1,
+          "bars": 22,
+          "sum_log_return": 0.61073451803018
+        },
+        {
+          "from": 1167,
+          "to": 1168,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.09117179063699767
+        },
+        {
+          "from": 1168,
+          "to": 1170,
+          "direction": 1,
+          "bars": 2,
+          "sum_log_return": -0.2053917707057531
+        },
+        {
+          "from": 1170,
+          "to": 1182,
+          "direction": -1,
+          "bars": 12,
+          "sum_log_return": -0.3008129902025798
+        },
+        {
+          "from": 1182,
+          "to": 2974,
+          "direction": 1,
+          "bars": 1792,
+          "sum_log_return": 0.6734955561610254
+        }
+      ],
+      "bh_sharpe": 0.3146229065305629,
+      "bh_total_return": 8.260096244058452,
+      "null": {
+        "band": "local",
+        "n_trades_real": 16,
+        "n_trades_null_mean": 13.112,
+        "real_sharpe": 0.08339258396980354,
+        "real_total_return": 0.7940964089419715,
+        "real_max_drawdown": -0.9202627460303612,
+        "real_hit_rate": 0.502892140183736,
+        "null_sharpe_mean": 0.1602881921019617,
+        "null_sharpe_p05": -0.13051435272156492,
+        "null_sharpe_p95": 0.3983373115500845,
+        "sharpe_delta": -0.07689560813215818,
+        "sharpe_percentile": 26.6,
+        "n_sims": 500
+      },
+      "beats_bh": false,
+      "beats_null": false,
+      "clears_both": false
+    },
+    "ETH-USD|erased|stop": {
+      "symbol": "ETH-USD",
+      "field": "erased",
+      "stop": "stop",
+      "n_position_changes": 14,
+      "turnover": 28,
+      "sharpe": 0.010749257480484747,
+      "total_return": 0.06561444801428329,
+      "max_drawdown": -0.8806205479994532,
+      "hit_rate": 0.5046382189239332,
+      "share_long": 0.17821116341627438,
+      "share_short": 0.3655010087424344,
+      "share_flat": 0.4562878278412912,
+      "long_leg_sharpe": 0.061525644299456395,
+      "short_leg_sharpe": -0.030685154529014307,
+      "long_leg_return": 0.23535143622524268,
+      "short_leg_return": -0.1372745336183534,
+      "by_year": {
+        "2017": -0.5057685111344291,
+        "2018": 2.2561745157973956,
+        "2019": 0.028577602341959277,
+        "2020": -1.4438764420799317,
+        "2021": 0.9583088553975184,
+        "2022": -1.117494681787719
+      },
+      "flips": [
+        {
+          "from": 23,
+          "to": 34,
+          "direction": -1,
+          "bars": 11,
+          "sum_log_return": -0.3338277481526243
+        },
+        {
+          "from": 38,
+          "to": 41,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.17194076298180486
+        },
+        {
+          "from": 65,
+          "to": 1108,
+          "direction": -1,
+          "bars": 1043,
+          "sum_log_return": 0.9153789041163459
+        },
+        {
+          "from": 1108,
+          "to": 1114,
+          "direction": 1,
+          "bars": 6,
+          "sum_log_return": 0.01761091125867163
+        },
+        {
+          "from": 1114,
+          "to": 1118,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.1698455208968062
+        },
+        {
+          "from": 1120,
+          "to": 1121,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": 0.0302170500492328
+        },
+        {
+          "from": 1121,
+          "to": 1134,
+          "direction": -1,
+          "bars": 13,
+          "sum_log_return": -0.031087554367090937
+        },
+        {
+          "from": 1134,
+          "to": 1137,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": 0.03569109117438255
+        },
+        {
+          "from": 1137,
+          "to": 1145,
+          "direction": -1,
+          "bars": 8,
+          "sum_log_return": -0.03479555325302052
+        },
+        {
+          "from": 1145,
+          "to": 1167,
+          "direction": 1,
+          "bars": 22,
+          "sum_log_return": 0.61073451803018
+        },
+        {
+          "from": 1167,
+          "to": 1168,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.09117179063699767
+        },
+        {
+          "from": 1168,
+          "to": 1170,
+          "direction": 1,
+          "bars": 2,
+          "sum_log_return": -0.2053917707057531
+        },
+        {
+          "from": 1170,
+          "to": 1174,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.16624038540816183
+        },
+        {
+          "from": 1182,
+          "to": 1678,
+          "direction": 1,
+          "bars": 496,
+          "sum_log_return": -0.2294100496917569
+        }
+      ],
+      "bh_sharpe": 0.3146229065305629,
+      "bh_total_return": 8.260096244058452,
+      "null": {
+        "band": "local",
+        "n_trades_real": 14,
+        "n_trades_null_mean": 12.712,
+        "real_sharpe": 0.010749257480484747,
+        "real_total_return": 0.06561444801428329,
+        "real_max_drawdown": -0.8806205479994532,
+        "real_hit_rate": 0.5046382189239332,
+        "null_sharpe_mean": 0.11092037718673571,
+        "null_sharpe_p05": -0.3361456434505615,
+        "null_sharpe_p95": 0.4425052496829594,
+        "sharpe_delta": -0.10017111970625096,
+        "sharpe_percentile": 34.6,
+        "n_sims": 500
+      },
+      "beats_bh": false,
+      "beats_null": false,
+      "clears_both": false
+    },
+    "ETH-USD|raw|nostop": {
+      "symbol": "ETH-USD",
+      "field": "raw",
+      "stop": "nostop",
+      "n_position_changes": 30,
+      "turnover": 59,
+      "sharpe": 0.38239187062083235,
+      "total_return": 13.75191889671772,
+      "max_drawdown": -0.8054900175606409,
+      "hit_rate": 0.5130464249406981,
+      "share_long": 0.6940147948890383,
+      "share_short": 0.29825151311365167,
+      "share_flat": 0.00773369199731002,
+      "long_leg_sharpe": 0.4094860541171321,
+      "short_leg_sharpe": 0.0966782786104443,
+      "long_leg_return": 8.714791715968335,
+      "short_leg_return": 0.5192112170420093,
+      "by_year": {
+        "2017": 0.09396913284559164,
+        "2018": 1.671482869341407,
+        "2019": -0.2640397023355894,
+        "2020": 0.033785133436446034,
+        "2021": 1.6077058122822565,
+        "2022": -1.1240006371597857,
+        "2023": 0.6451931968682179,
+        "2024": 0.3789118026259888,
+        "2025": -0.11469343826935792
+      },
+      "flips": [
+        {
+          "from": 23,
+          "to": 31,
+          "direction": -1,
+          "bars": 8,
+          "sum_log_return": -0.01481238655128694
+        },
+        {
+          "from": 31,
+          "to": 44,
+          "direction": 1,
+          "bars": 13,
+          "sum_log_return": 0.35434907386012515
+        },
+        {
+          "from": 44,
+          "to": 47,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.12646017542284474
+        },
+        {
+          "from": 47,
+          "to": 52,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": -0.06553117480853707
+        },
+        {
+          "from": 52,
+          "to": 53,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.053576204231864905
+        },
+        {
+          "from": 53,
+          "to": 69,
+          "direction": 1,
+          "bars": 16,
+          "sum_log_return": 0.33104306749150797
+        },
+        {
+          "from": 69,
+          "to": 72,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": 0.013943303221812687
+        },
+        {
+          "from": 72,
+          "to": 75,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": -0.035100222926682835
+        },
+        {
+          "from": 75,
+          "to": 78,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.05126191425952453
+        },
+        {
+          "from": 78,
+          "to": 83,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": 0.01419754883016379
+        },
+        {
+          "from": 83,
+          "to": 93,
+          "direction": -1,
+          "bars": 10,
+          "sum_log_return": 0.19216512453158374
+        },
+        {
+          "from": 93,
+          "to": 94,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.02688951953855484
+        },
+        {
+          "from": 94,
+          "to": 98,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.07082201704003961
+        },
+        {
+          "from": 98,
+          "to": 105,
+          "direction": 1,
+          "bars": 7,
+          "sum_log_return": -0.08303458147487315
+        },
+        {
+          "from": 105,
+          "to": 109,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": 0.0060904939079781655
+        },
+        {
+          "from": 109,
+          "to": 113,
+          "direction": 1,
+          "bars": 4,
+          "sum_log_return": 0.031907022291082075
+        },
+        {
+          "from": 113,
+          "to": 115,
+          "direction": -1,
+          "bars": 2,
+          "sum_log_return": 0.01731836998819748
+        },
+        {
+          "from": 115,
+          "to": 118,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": -0.048121295621752325
+        },
+        {
+          "from": 118,
+          "to": 176,
+          "direction": -1,
+          "bars": 58,
+          "sum_log_return": 0.04687121504314596
+        },
+        {
+          "from": 176,
+          "to": 181,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": -0.034832593158775134
+        },
+        {
+          "from": 181,
+          "to": 182,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": 0.000773314548468718
+        },
+        {
+          "from": 182,
+          "to": 190,
+          "direction": 1,
+          "bars": 8,
+          "sum_log_return": -0.11186646569821937
+        },
+        {
+          "from": 190,
+          "to": 191,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.03176513015845464
+        },
+        {
+          "from": 191,
+          "to": 195,
+          "direction": 1,
+          "bars": 4,
+          "sum_log_return": -0.06950967744003364
+        },
+        {
+          "from": 195,
+          "to": 591,
+          "direction": -1,
+          "bars": 396,
+          "sum_log_return": 0.7389196710627927
+        },
+        {
+          "from": 591,
+          "to": 596,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": -0.050081606488974015
+        },
+        {
+          "from": 596,
+          "to": 598,
+          "direction": -1,
+          "bars": 2,
+          "sum_log_return": -0.08401534748759108
+        },
+        {
+          "from": 598,
+          "to": 599,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.09622704584979991
+        },
+        {
+          "from": 599,
+          "to": 990,
+          "direction": -1,
+          "bars": 391,
+          "sum_log_return": -0.04493641121856745
+        },
+        {
+          "from": 990,
+          "to": 2974,
+          "direction": 1,
+          "bars": 1984,
+          "sum_log_return": 2.2795797342346953
+        }
+      ],
+      "bh_sharpe": 0.3146229065305629,
+      "bh_total_return": 8.260096244058452,
+      "null": {
+        "band": "local",
+        "n_trades_real": 30,
+        "n_trades_null_mean": 23.864,
+        "real_sharpe": 0.38239187062083235,
+        "real_total_return": 13.75191889671772,
+        "real_max_drawdown": -0.8054900175606409,
+        "real_hit_rate": 0.5130464249406981,
+        "null_sharpe_mean": 0.27013929375555895,
+        "null_sharpe_p05": 0.13492043228824818,
+        "null_sharpe_p95": 0.393854993495933,
+        "sharpe_delta": 0.1122525768652734,
+        "sharpe_percentile": 93.4,
+        "n_sims": 500
+      },
+      "beats_bh": true,
+      "beats_null": true,
+      "clears_both": true
+    },
+    "ETH-USD|raw|stop": {
+      "symbol": "ETH-USD",
+      "field": "raw",
+      "stop": "stop",
+      "n_position_changes": 30,
+      "turnover": 59,
+      "sharpe": 0.3854552992512697,
+      "total_return": 14.045836979360217,
+      "max_drawdown": -0.805490017560641,
+      "hit_rate": 0.5135777325186693,
+      "share_long": 0.6923335574983187,
+      "share_short": 0.29825151311365167,
+      "share_flat": 0.00941492938802959,
+      "long_leg_sharpe": 0.4134691268355006,
+      "short_leg_sharpe": 0.0966782786104443,
+      "long_leg_return": 8.90818997672268,
+      "short_leg_return": 0.5192112170420093,
+      "by_year": {
+        "2017": 0.09396913284559164,
+        "2018": 1.6911949116856966,
+        "2019": -0.2640397023355894,
+        "2020": 0.033785133436446034,
+        "2021": 1.6077058122822565,
+        "2022": -1.1240006371597857,
+        "2023": 0.6451931968682179,
+        "2024": 0.3789118026259888,
+        "2025": -0.11469343826935792
+      },
+      "flips": [
+        {
+          "from": 23,
+          "to": 31,
+          "direction": -1,
+          "bars": 8,
+          "sum_log_return": -0.01481238655128694
+        },
+        {
+          "from": 31,
+          "to": 44,
+          "direction": 1,
+          "bars": 13,
+          "sum_log_return": 0.35434907386012515
+        },
+        {
+          "from": 44,
+          "to": 47,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.12646017542284474
+        },
+        {
+          "from": 47,
+          "to": 52,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": -0.06553117480853707
+        },
+        {
+          "from": 52,
+          "to": 53,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.053576204231864905
+        },
+        {
+          "from": 53,
+          "to": 69,
+          "direction": 1,
+          "bars": 16,
+          "sum_log_return": 0.33104306749150797
+        },
+        {
+          "from": 69,
+          "to": 72,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": 0.013943303221812687
+        },
+        {
+          "from": 72,
+          "to": 75,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": -0.035100222926682835
+        },
+        {
+          "from": 75,
+          "to": 78,
+          "direction": -1,
+          "bars": 3,
+          "sum_log_return": -0.05126191425952453
+        },
+        {
+          "from": 78,
+          "to": 83,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": 0.01419754883016379
+        },
+        {
+          "from": 83,
+          "to": 93,
+          "direction": -1,
+          "bars": 10,
+          "sum_log_return": 0.19216512453158374
+        },
+        {
+          "from": 93,
+          "to": 94,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.02688951953855484
+        },
+        {
+          "from": 94,
+          "to": 98,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": -0.07082201704003961
+        },
+        {
+          "from": 98,
+          "to": 105,
+          "direction": 1,
+          "bars": 7,
+          "sum_log_return": -0.08303458147487315
+        },
+        {
+          "from": 105,
+          "to": 109,
+          "direction": -1,
+          "bars": 4,
+          "sum_log_return": 0.0060904939079781655
+        },
+        {
+          "from": 109,
+          "to": 113,
+          "direction": 1,
+          "bars": 4,
+          "sum_log_return": 0.031907022291082075
+        },
+        {
+          "from": 113,
+          "to": 115,
+          "direction": -1,
+          "bars": 2,
+          "sum_log_return": 0.01731836998819748
+        },
+        {
+          "from": 115,
+          "to": 118,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": -0.048121295621752325
+        },
+        {
+          "from": 118,
+          "to": 176,
+          "direction": -1,
+          "bars": 58,
+          "sum_log_return": 0.04687121504314596
+        },
+        {
+          "from": 176,
+          "to": 181,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": -0.034832593158775134
+        },
+        {
+          "from": 181,
+          "to": 182,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": 0.000773314548468718
+        },
+        {
+          "from": 182,
+          "to": 185,
+          "direction": 1,
+          "bars": 3,
+          "sum_log_return": -0.09215442335392988
+        },
+        {
+          "from": 190,
+          "to": 191,
+          "direction": -1,
+          "bars": 1,
+          "sum_log_return": -0.03176513015845464
+        },
+        {
+          "from": 191,
+          "to": 195,
+          "direction": 1,
+          "bars": 4,
+          "sum_log_return": -0.06950967744003364
+        },
+        {
+          "from": 195,
+          "to": 591,
+          "direction": -1,
+          "bars": 396,
+          "sum_log_return": 0.7389196710627927
+        },
+        {
+          "from": 591,
+          "to": 596,
+          "direction": 1,
+          "bars": 5,
+          "sum_log_return": -0.050081606488974015
+        },
+        {
+          "from": 596,
+          "to": 598,
+          "direction": -1,
+          "bars": 2,
+          "sum_log_return": -0.08401534748759108
+        },
+        {
+          "from": 598,
+          "to": 599,
+          "direction": 1,
+          "bars": 1,
+          "sum_log_return": -0.09622704584979991
+        },
+        {
+          "from": 599,
+          "to": 990,
+          "direction": -1,
+          "bars": 391,
+          "sum_log_return": -0.04493641121856745
+        },
+        {
+          "from": 990,
+          "to": 2974,
+          "direction": 1,
+          "bars": 1984,
+          "sum_log_return": 2.2795797342346953
+        }
+      ],
+      "bh_sharpe": 0.3146229065305629,
+      "bh_total_return": 8.260096244058452,
+      "null": {
+        "band": "local",
+        "n_trades_real": 30,
+        "n_trades_null_mean": 23.328,
+        "real_sharpe": 0.3854552992512697,
+        "real_total_return": 14.045836979360217,
+        "real_max_drawdown": -0.805490017560641,
+        "real_hit_rate": 0.5135777325186693,
+        "null_sharpe_mean": 0.27524441430162,
+        "null_sharpe_p05": 0.10401320565969514,
+        "null_sharpe_p95": 0.41304385759992535,
+        "sharpe_delta": 0.1102108849496497,
+        "sharpe_percentile": 90.0,
+        "n_sims": 500
+      },
+      "beats_bh": true,
+      "beats_null": true,
+      "clears_both": true
+    }
+  },
+  "elapsed_seconds": 198.18195152282715
+}
