@@ -1,0 +1,273 @@
+{
+  "n_sims": 500,
+  "seed": 0,
+  "cost_bps": 40.0,
+  "confirm_window": 20,
+  "stop_atr": 2.0,
+  "target_r": 3.0,
+  "max_hold": 60,
+  "params": {
+    "k": 2,
+    "cluster_atr": 0.5
+  },
+  "effect_floor": 0.1,
+  "cells": {
+    "BTC-USD": {
+      "symbol": "BTC-USD",
+      "n_qualifying": 492,
+      "n_triggers": 114,
+      "n_absorbed": 206,
+      "confirmed": {
+        "n_trades": 67,
+        "sharpe": -0.28785667027770145,
+        "total_return": -0.6914706755122333,
+        "max_drawdown": -0.8945885269297095,
+        "hit_rate": 0.2835820895522388,
+        "long": {
+          "n_trades": 20,
+          "sharpe": 0.10480760209361285,
+          "total_return": 0.3468663347088705,
+          "hit_rate": 0.4
+        },
+        "short": {
+          "n_trades": 47,
+          "sharpe": -0.5021378006901801,
+          "total_return": -0.7709280300970206,
+          "hit_rate": 0.23404255319148937
+        }
+      },
+      "all_signals": {
+        "n_trades": 124,
+        "sharpe": -0.436617459930971,
+        "total_return": -0.8818754621528891,
+        "max_drawdown": -0.9562212142803486,
+        "hit_rate": 0.2903225806451613,
+        "long": {
+          "n_trades": 39,
+          "sharpe": 0.06518989500065912,
+          "total_return": 0.2429029523564996,
+          "hit_rate": 0.41025641025641024
+        },
+        "short": {
+          "n_trades": 85,
+          "sharpe": -0.6577042160933282,
+          "total_return": -0.9049607713754715,
+          "hit_rate": 0.23529411764705882
+        }
+      },
+      "unconfirmed_DIAGNOSTIC_hindsight": {
+        "n_trades": 42,
+        "sharpe": 0.7849974557171716,
+        "total_return": 15.409940587141858,
+        "max_drawdown": -0.4265836074227628,
+        "hit_rate": 0.5714285714285714,
+        "long": {
+          "n_trades": 15,
+          "sharpe": 0.7421079123335023,
+          "total_return": 6.042768487958022,
+          "hit_rate": 0.8
+        },
+        "short": {
+          "n_trades": 27,
+          "sharpe": 0.3514216851070673,
+          "total_return": 1.3300411784371682,
+          "hit_rate": 0.4444444444444444
+        }
+      },
+      "confirmed_by_year": {
+        "2015": {
+          "n": 5,
+          "sum_net": 0.3436420921307958
+        },
+        "2016": {
+          "n": 5,
+          "sum_net": -0.23637754866386618
+        },
+        "2017": {
+          "n": 7,
+          "sum_net": -0.2344551300868909
+        },
+        "2018": {
+          "n": 6,
+          "sum_net": 0.05712875597799738
+        },
+        "2019": {
+          "n": 4,
+          "sum_net": -0.35319535697011917
+        },
+        "2020": {
+          "n": 7,
+          "sum_net": -0.22187921600016536
+        },
+        "2021": {
+          "n": 7,
+          "sum_net": -0.42689939302173174
+        },
+        "2022": {
+          "n": 6,
+          "sum_net": 0.034082671980707135
+        },
+        "2023": {
+          "n": 9,
+          "sum_net": 0.4314424376807712
+        },
+        "2024": {
+          "n": 8,
+          "sum_net": -0.15659217257048297
+        },
+        "2025": {
+          "n": 3,
+          "sum_net": 0.22023135840512398
+        }
+      },
+      "bh_sharpe": 0.7726354700767663,
+      "bh_total_return": 313.60617393527707,
+      "null": {
+        "band": "local",
+        "n_trades_real": 67,
+        "n_trades_null_mean": 33.588,
+        "real_sharpe": -0.28785667027770145,
+        "real_total_return": -0.6914706755122333,
+        "real_max_drawdown": -0.8945885269297095,
+        "real_hit_rate": 0.2835820895522388,
+        "null_sharpe_mean": -0.13154998071267857,
+        "null_sharpe_p05": -0.46370544971591626,
+        "null_sharpe_p95": 0.19630881988171542,
+        "sharpe_delta": -0.1563066895650229,
+        "sharpe_percentile": 21.4,
+        "n_sims": 500
+      },
+      "vs_all_delta": 0.14876078965326955,
+      "vs_unconf_delta": -1.0728541259948732,
+      "beats_all": true,
+      "beats_null": false,
+      "beats_bh": false,
+      "clears_all_three": false
+    },
+    "ETH-USD": {
+      "symbol": "ETH-USD",
+      "n_qualifying": 410,
+      "n_triggers": 91,
+      "n_absorbed": 183,
+      "confirmed": {
+        "n_trades": 54,
+        "sharpe": -0.18296334760357863,
+        "total_return": -0.5148290518278154,
+        "max_drawdown": -0.7493286074002257,
+        "hit_rate": 0.2962962962962963,
+        "long": {
+          "n_trades": 21,
+          "sharpe": 0.20222491410073504,
+          "total_return": 0.800170771665847,
+          "hit_rate": 0.38095238095238093
+        },
+        "short": {
+          "n_trades": 33,
+          "sharpe": -0.4896206008322815,
+          "total_return": -0.7304861539757055,
+          "hit_rate": 0.24242424242424243
+        }
+      },
+      "all_signals": {
+        "n_trades": 106,
+        "sharpe": -0.6674309484249155,
+        "total_return": -0.9638505113971414,
+        "max_drawdown": -0.9660769933398009,
+        "hit_rate": 0.2358490566037736,
+        "long": {
+          "n_trades": 44,
+          "sharpe": -0.13533102093655586,
+          "total_return": -0.3925589144224254,
+          "hit_rate": 0.29545454545454547
+        },
+        "short": {
+          "n_trades": 62,
+          "sharpe": -0.843711088058634,
+          "total_return": -0.9404888976706498,
+          "hit_rate": 0.1935483870967742
+        }
+      },
+      "unconfirmed_DIAGNOSTIC_hindsight": {
+        "n_trades": 30,
+        "sharpe": 0.3098555209835767,
+        "total_return": 1.648289058061862,
+        "max_drawdown": -0.7709712851508197,
+        "hit_rate": 0.43333333333333335,
+        "long": {
+          "n_trades": 14,
+          "sharpe": 0.07228893082150996,
+          "total_return": 0.1833551076238069,
+          "hit_rate": 0.35714285714285715
+        },
+        "short": {
+          "n_trades": 16,
+          "sharpe": 0.38160702764752097,
+          "total_return": 1.2379495732094008,
+          "hit_rate": 0.5
+        }
+      },
+      "confirmed_by_year": {
+        "2017": {
+          "n": 1,
+          "sum_net": -0.16567474397364812
+        },
+        "2018": {
+          "n": 9,
+          "sum_net": 0.5975899136263727
+        },
+        "2019": {
+          "n": 4,
+          "sum_net": -0.07686848829355353
+        },
+        "2020": {
+          "n": 7,
+          "sum_net": 0.1970246473201973
+        },
+        "2021": {
+          "n": 7,
+          "sum_net": 0.21690217205771045
+        },
+        "2022": {
+          "n": 5,
+          "sum_net": 0.7881913550685433
+        },
+        "2023": {
+          "n": 6,
+          "sum_net": -0.03617823525354047
+        },
+        "2024": {
+          "n": 7,
+          "sum_net": -0.04283342850333871
+        },
+        "2025": {
+          "n": 8,
+          "sum_net": -0.7278080433624496
+        }
+      },
+      "bh_sharpe": 0.30800840917672423,
+      "bh_total_return": 7.8007814530185,
+      "null": {
+        "band": "local",
+        "n_trades_real": 54,
+        "n_trades_null_mean": 29.406,
+        "real_sharpe": -0.18296334760357863,
+        "real_total_return": -0.5148290518278154,
+        "real_max_drawdown": -0.7493286074002257,
+        "real_hit_rate": 0.2962962962962963,
+        "null_sharpe_mean": -0.2733748961351188,
+        "null_sharpe_p05": -0.7373734256747708,
+        "null_sharpe_p95": 0.16431130065600855,
+        "sharpe_delta": 0.09041154853154015,
+        "sharpe_percentile": 60.2,
+        "n_sims": 500
+      },
+      "vs_all_delta": 0.48446760082133683,
+      "vs_unconf_delta": -0.49281886858715535,
+      "beats_all": true,
+      "beats_null": false,
+      "beats_bh": false,
+      "clears_all_three": false
+    }
+  },
+  "elapsed_seconds": 38.7583749294281
+}
