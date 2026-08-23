@@ -174,3 +174,36 @@ It would **not** revive S6's placement claim. D197 measured that at zero against
 band and this run does not re-test it; a pass would say the *timing* rule works on top of
 a map whose *placement* is still indistinguishable from random, which is a strange and
 narrow thing to own and should be written that way rather than rounded up.
+
+## CLARIFICATION — what the census counted, and what the rule enters, before any run
+
+The census above reports **67.5% / 64.6% confirmed**. That is the share of qualifying
+signals that *have* a distinct-approach partner within 20 bars. It is not the number of
+entries, and a reader would reasonably have expected about 330 trades on BTC from it.
+
+The pending walk this document specifies **consumes pairs**: a confirmation retires both
+the trigger and the confirmer, and a signal that fires mid-excursion without confirming
+anything is absorbed. Running the implemented rule:
+
+| BTC-USD | | ETH-USD | |
+|---|---:|---|---:|
+| qualifying | 492 | qualifying | 410 |
+| **CONFIRMED entries** | **114** | **CONFIRMED entries** | **91** |
+| triggers (set up an entry, are not one) | 114 | triggers | 91 |
+| absorbed (same excursion still running) | 206 | absorbed | 183 |
+| **UNCONFIRMED** | **58** | **UNCONFIRMED** | **45** |
+
+Both figures are true and they measure different things; the rule is unchanged. This is
+recorded before the run rather than explained afterwards, in D144's manner.
+
+Two consequences worth having in writing first:
+
+- **114 entries against D197's 124** on BTC, so hurdle 1 compares books of comparable
+  size rather than a large one against a small one.
+- **The UNCONFIRMED diagnostic is thin — 58 and 45 trades.** H2's test is correspondingly
+  weak, and a difference there will need to be large before it means anything. Stated now
+  so a null result on H2 is not later read as evidence that waiting is harmless.
+
+The confirmed entries spread evenly across the fixture — BTC 7 to 19 a year for eleven
+years, ETH 1 to 15 — which is some reassurance against the era-selection failure mode
+named above, though the by-year P&L split is still mandatory reporting.

@@ -374,3 +374,113 @@ def typical_sigma(swings: Sequence[Swing], params: FieldParams) -> float:
     if not swings:
         return params.cluster_atr * 0.04  # ~1 ATR on this fixture; only for empty series
     return float(np.median([s.sigma_ln for s in swings]))
+
+
+CONFIRM_WINDOW = 20
+"""Bars a qualifying signal waits for a second, distinct approach (D198). Fixed at the
+value proposed and not swept — it controls the trade count directly."""
+
+
+def qualifying(signals: Sequence[Signal], threshold: float = 0.0) -> list[Signal]:
+    """The signals D197's reversal rule would actually trade: not virgin, correctly
+    oriented for the fade — break up into net supply, or break down into net demand."""
+    out = []
+    for s in signals:
+        if s.virgin:
+            continue
+        if s.direction > 0 and s.tilt < -threshold:
+            out.append(s)
+        elif s.direction < 0 and s.tilt > threshold:
+            out.append(s)
+    return out
+
+
+@dataclass(frozen=True)
+class ConfirmationSplit:
+    """D198's two books plus full accounting, so no signal can vanish unnoticed.
+
+    Every qualifying signal lands in exactly one of four roles and the four sum to
+    `n_qualifying`. That is asserted by test rather than trusted, because a first draft
+    scanned each signal independently and put the confirming signal in BOTH books at
+    once — the counts still added up, which is precisely why the count-only property test
+    passed while the bookkeeping was wrong."""
+
+    confirmed: tuple[Signal, ...]
+    """The CONFIRMING signals — entries are taken on the second sighting."""
+    unconfirmed: tuple[Signal, ...]
+    """Aged out with no second approach. A DIAGNOSTIC, never a strategy: this is only
+    knowable `window` bars later, so trading it at its own bar reads the future."""
+    n_triggers: int
+    """Signals that were confirmed by a later one. They set up an entry, they are not one."""
+    n_absorbed: int
+    """Fired while an earlier signal was still pending and did not confirm it — the same
+    excursion still running. The census measured these at 61% of naive 'confirmations'."""
+    n_qualifying: int
+
+    def accounts(self) -> bool:
+        return (
+            len(self.confirmed) + len(self.unconfirmed) + self.n_triggers + self.n_absorbed
+            == self.n_qualifying
+        )
+
+
+def split_by_confirmation(
+    bars: Sequence[TimestampedBar],
+    signals: Sequence[Signal],
+    params: FieldParams,
+    window: int = CONFIRM_WINDOW,
+    threshold: float = 0.0,
+) -> ConfirmationSplit:
+    """D198's two-approach rule, as the pending walk the document specifies.
+
+    A signal at `t1` is CONFIRMED by a later same-direction qualifying signal at `t2` when
+    `t2 - t1 <= window` AND at least one bar strictly between them closes INSIDE the
+    erasure envelope. The entry is taken on `t2` — the second sighting — and both signals
+    are then consumed.
+
+    Requiring the return inside the envelope is the whole rule. Without it the census
+    measured 86% of signals "confirmed", 61% of them on the very next bar, because S6
+    keeps firing while one excursion is still running: that is an entry delay, not a
+    second approach. This is `terrain_nulls.level_reactions`' first-bar-of-an-approach
+    convention, reused rather than re-invented.
+
+    **The unconfirmed book is a DIAGNOSTIC, not a strategy** — see `ConfirmationSplit`."""
+    qual = qualifying(signals, threshold)
+    lo_b, hi_b = erasure_bounds(bars, params)
+    inside = [
+        bool(lo_b[t] == lo_b[t] and lo_b[t] <= bars[t].bar.close <= hi_b[t])
+        for t in range(len(bars))
+    ]
+
+    def returned_home(a: int, b: int) -> bool:
+        return any(inside[u] for u in range(a + 1, b))
+
+    pending: dict[int, Signal] = {}
+    confirmed: list[Signal] = []
+    unconfirmed: list[Signal] = []
+    triggers = absorbed = 0
+
+    for s in qual:
+        held = pending.get(s.direction)
+        if held is None:
+            pending[s.direction] = s
+            continue
+        if s.index - held.index > window:  # aged out; this one starts a new wait
+            unconfirmed.append(held)
+            pending[s.direction] = s
+            continue
+        if returned_home(held.index, s.index):
+            confirmed.append(s)
+            triggers += 1
+            del pending[s.direction]
+        else:
+            absorbed += 1  # same excursion still running
+
+    unconfirmed.extend(pending.values())
+    return ConfirmationSplit(
+        confirmed=tuple(confirmed),
+        unconfirmed=tuple(unconfirmed),
+        n_triggers=triggers,
+        n_absorbed=absorbed,
+        n_qualifying=len(qual),
+    )

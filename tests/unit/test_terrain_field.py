@@ -386,3 +386,136 @@ def test_the_local_band_requires_bounds():
 
     with pytest.raises(ValueError, match="needs per-bar bounds"):
         shuffled_swings([], ShuffleBand.LOCAL, np.random.default_rng(0))
+
+
+# ---------------------------------------------------------------- D198 confirmation
+
+
+def _sig(index, direction, tilt, gross=2.0, virgin=False, price=100.0):
+    from backtest_framework.research.terrain_field import Signal
+    return Signal(index=index, direction=direction, price=price, tilt=tilt,
+                  gross=gross, virgin=virgin)
+
+
+def test_every_qualifying_signal_is_accounted_for_exactly_once():
+    """Counts alone are not enough. A first draft scanned each signal independently and
+    put the confirming signal in BOTH books; the totals still matched, so a count-only
+    property test passed on a genuine bug. This checks roles, not just arithmetic."""
+    from backtest_framework.research.terrain_field import (
+        qualifying, split_by_confirmation)
+
+    bars = _walk(900, seed=21)
+    sigs = field_signals(bars, confirmed_swings(bars, [1_000.0] * len(bars), PARAMS),
+                         PARAMS)
+    qual = qualifying(sigs)
+    split = split_by_confirmation(bars, sigs, PARAMS)
+    assert split.n_qualifying == len(qual)
+    assert split.accounts(), (
+        f"{len(split.confirmed)}+{len(split.unconfirmed)}+{split.n_triggers}"
+        f"+{split.n_absorbed} != {split.n_qualifying}"
+    )
+    ci = {s.index for s in split.confirmed}
+    ui = {s.index for s in split.unconfirmed}
+    assert not (ci & ui), "a signal landed in both books"
+
+
+def test_a_continuing_excursion_is_not_a_second_approach():
+    """The whole difference from the rule the census rejected.
+
+    Two same-direction signals with NO bar between them back inside the envelope is one
+    excursion still running, not a second approach."""
+    from backtest_framework.research.terrain_field import split_by_confirmation
+
+    rows = [(100 + 3 * i, 100 + 3 * i + 1, 100 + 3 * i - 1, 100 + 3 * i + 2)
+            for i in range(60)]
+    bars = _bars(rows)
+    split = split_by_confirmation(bars, [_sig(50, 1, -0.9), _sig(52, 1, -0.9)], PARAMS)
+    assert split.confirmed == ()
+    assert split.n_absorbed == 1
+    assert [s.index for s in split.unconfirmed] == [50]
+    assert split.accounts()
+
+
+def _straddle(bars, lo, hi, lookfrom=200, lookto=320):
+    return next(
+        t for t in range(lookfrom, lookto)
+        if lo[t] == lo[t] and lo[t] <= bars[t].bar.close <= hi[t]
+    )
+
+
+def test_a_return_inside_the_envelope_makes_it_a_second_approach():
+    from backtest_framework.research.terrain_field import split_by_confirmation
+
+    bars = _walk(400, seed=22)
+    lo, hi = erasure_bounds(bars, PARAMS)
+    mid = _straddle(bars, lo, hi)
+    split = split_by_confirmation(bars, [_sig(mid - 1, 1, -0.9), _sig(mid + 1, 1, -0.9)],
+                                  PARAMS)
+    assert [s.index for s in split.confirmed] == [mid + 1], "entry is the second sighting"
+    assert split.unconfirmed == (), "the trigger is consumed, not left waiting"
+    assert split.n_triggers == 1
+    assert split.accounts()
+
+
+def test_confirmation_respects_the_window():
+    from backtest_framework.research.terrain_field import (
+        CONFIRM_WINDOW, split_by_confirmation)
+
+    bars = _walk(400, seed=23)
+    lo, hi = erasure_bounds(bars, PARAMS)
+    mid = _straddle(bars, lo, hi, 200, 300)
+    far = _sig(mid - 1 + CONFIRM_WINDOW + 1, 1, -0.9)
+    split = split_by_confirmation(bars, [_sig(mid - 1, 1, -0.9), far], PARAMS)
+    assert split.confirmed == (), "a partner beyond the window must not confirm"
+    assert len(split.unconfirmed) == 2
+    assert split.accounts()
+
+
+def test_opposite_directions_do_not_confirm_each_other():
+    from backtest_framework.research.terrain_field import split_by_confirmation
+
+    bars = _walk(400, seed=24)
+    lo, hi = erasure_bounds(bars, PARAMS)
+    mid = _straddle(bars, lo, hi, 200, 300)
+    split = split_by_confirmation(
+        bars, [_sig(mid - 1, 1, -0.9), _sig(mid + 1, -1, 0.9)], PARAMS
+    )
+    assert split.confirmed == ()
+    assert len(split.unconfirmed) == 2
+    assert split.accounts()
+
+
+def test_a_virgin_signal_never_qualifies_so_never_confirms():
+    from backtest_framework.research.terrain_field import split_by_confirmation
+
+    bars = _walk(400, seed=25)
+    split = split_by_confirmation(
+        bars, [_sig(200, 1, 0.0, gross=0.0, virgin=True)], PARAMS
+    )
+    assert split.confirmed == () and split.unconfirmed == ()
+    assert split.n_qualifying == 0
+
+
+def test_the_confirmation_walk_reads_no_bar_past_the_confirming_signal():
+    """Same guard as the field itself: mutating the future must not move the split."""
+    from backtest_framework.research.terrain_field import split_by_confirmation
+
+    bars = _walk(600, seed=26)
+    vols = [1_000.0] * len(bars)
+    sigs = field_signals(bars, confirmed_swings(bars, vols, PARAMS), PARAMS)
+    cut = 400
+    split = split_by_confirmation(bars, sigs, PARAMS)
+
+    poisoned = list(bars)
+    for i in range(cut + 1, len(bars)):
+        b = poisoned[i].bar
+        poisoned[i] = TimestampedBar(
+            poisoned[i].timestamp, Bar(b.open * 30, b.high * 30, b.low * 30, b.close * 30)
+        )
+    grid = build_grid(bars, BUCKET_LN)
+    psigs = field_signals(poisoned, confirmed_swings(poisoned, vols, PARAMS), PARAMS,
+                          grid=grid)
+    psplit = split_by_confirmation(poisoned, psigs, PARAMS)
+
+    horizon = cut - 21  # a confirmation at t is decided by bars <= t
+    assert [s.index for s in split.confirmed if s.index <= horizon] ==            [s.index for s in psplit.confirmed if s.index <= horizon]
