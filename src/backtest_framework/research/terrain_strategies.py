@@ -681,3 +681,173 @@ def run_field_trailing(
         open_until = exit_index
 
     return StrategyResult(tuple(trades), cost_bps, periods_per_year)
+
+
+# --------------------------------------------------------------------------- D201
+
+@dataclass(frozen=True)
+class PositionResult:
+    """An always-in book, held as a POSITION SERIES rather than a list of trades.
+
+    ## Why this exists rather than reusing StrategyResult
+
+    `StrategyResult.equity_curve` picks a trade up only when `open_trade is None` at the
+    top of the bar, so a position entering on the exact bar another exits is **silently
+    dropped**. D196-D199 never hit that because `open_until = exit_index` forced a gap
+    between trades. A rule that flips from long to short holds no such gap, and every
+    flipped position would vanish from the curve — a strategy that traded and a curve that
+    did not, with nothing raising an error.
+
+    A position series is also the honest representation of the thing: exposure per bar,
+    with cost charged on CHANGES. `test_terrain_field.py` pins this curve against
+    `StrategyResult`'s on a non-overlapping trade set, where the two must agree exactly.
+
+    `position[t]` is the exposure held THROUGH bar t, decided on bar t-1's information.
+    Interface matches `StrategyResult` so `compare_field_to_null` consumes either."""
+
+    position: tuple[int, ...]
+    returns: tuple[float, ...]
+    """Log return of the underlying, bar over bar; `returns[0]` is 0."""
+    cost_bps: float
+    periods_per_year: float
+
+    @property
+    def n_trades(self) -> int:
+        """Position CHANGES, which is what is charged and what turnover means here."""
+        return sum(
+            1 for a, b in zip(self.position, self.position[1:]) if a != b and b != 0
+        )
+
+    @property
+    def turnover(self) -> float:
+        """Units of exposure traded, so a long-to-short flip counts 2."""
+        return sum(abs(b - a) for a, b in zip(self.position, self.position[1:]))
+
+    @property
+    def share_long(self) -> float:
+        held = [p for p in self.position if p != 0]
+        return sum(1 for p in held if p > 0) / len(held) if held else 0.0
+
+    def equity_curve(self, bars: Sequence[TimestampedBar] | None = None) -> list[float]:
+        """Compounded equity per bar, cost charged on every unit of exposure changed."""
+        charge = self.cost_bps / 10_000.0
+        equity, current = [], 1.0
+        prev = 0
+        for i, pos in enumerate(self.position):
+            # Cost lands on the bar the exposure CHANGES INTO, and that bar's return is
+            # earned at THIS bar's position, not the previous one. Applying `prev` here
+            # was the first draft and it held one bar past every exit while missing the
+            # first bar of every position — caught by the pin against StrategyResult,
+            # which is the entire reason that pin exists.
+            current *= 1.0 - charge * abs(pos - prev)
+            if i > 0:
+                current *= math.exp(pos * self.returns[i])
+            prev = pos
+            equity.append(current)
+        return equity
+
+    def curve_sharpe(
+        self, bars: Sequence[TimestampedBar], periods_per_year: float
+    ) -> float:
+        curve = self.equity_curve()
+        rets = [math.log(b / a) for a, b in zip(curve, curve[1:]) if a > 0.0 and b > 0.0]
+        if len(rets) < 3:
+            return 0.0
+        sd = statistics.stdev(rets)
+        if sd <= 0.0:
+            return 0.0
+        return (statistics.fmean(rets) / sd) * math.sqrt(periods_per_year)
+
+    def curve_total_return(self, bars: Sequence[TimestampedBar] | None = None) -> float:
+        return self.equity_curve()[-1] - 1.0
+
+    def max_drawdown(self, bars: Sequence[TimestampedBar] | None = None) -> float:
+        peak, worst = 1.0, 0.0
+        for x in self.equity_curve():
+            peak = max(peak, x)
+            if peak > 0.0:
+                worst = min(worst, x / peak - 1.0)
+        return worst
+
+    @property
+    def hit_rate(self) -> float:
+        """Share of HELD BARS that made money — a position series has no trade-level
+        outcome to count, and inventing one would not be comparable to D196-D199's."""
+        held = [
+            self.position[i] * self.returns[i]
+            for i in range(len(self.position))
+            if self.position[i] != 0
+        ]
+        return sum(1 for r in held if r > 0) / len(held) if held else 0.0
+
+    def leg(self, direction: int) -> "PositionResult":
+        """The same book with only one side held; the other side is flat."""
+        return PositionResult(
+            tuple(p if p == direction else 0 for p in self.position),
+            self.returns,
+            self.cost_bps,
+            self.periods_per_year,
+        )
+
+
+def run_field_imbalance(
+    bars: Sequence[TimestampedBar],
+    imbalance: Sequence[float],
+    atr: Sequence[float],
+    cost_bps: float,
+    periods_per_year: float,
+    threshold: float = 0.0,
+    use_stop: bool = False,
+    stop_atr: float = STOP_ATR,
+) -> PositionResult:
+    """Hold long while the imbalance is above `threshold`, short while below `-threshold`.
+
+    The signal is read on bar `t`'s close and the position is held from bar `t+1`, so the
+    close that decided is never also the bar that pays — the same convention D197-D199 use
+    for entry.
+
+    **`use_stop`** adds a protective `stop_atr` x ATR(20) level fixed at the price the
+    position was opened at. After a stop-out the book stays FLAT until the signal CHANGES
+    STATE, because re-entering while the signal still reads the same way would just be
+    stopped again next bar, and repeatedly. No target: adding one would change two things
+    at once and D199 already showed what a target does to a trailing policy.
+
+    Intrabar convention is D196's, pessimistic: the stop is checked against the bar's low
+    for a long and its high for a short, so it is taken whenever the bar reached it."""
+    n = len(bars)
+    position = [0] * n
+    entry_price: float | None = None
+    stopped_state: int | None = None  # the signal state we were stopped out of
+    held = 0
+
+    for t in range(n - 1):
+        x = imbalance[t]
+        target = 0 if not (x == x) else (1 if x > threshold else (-1 if x < -threshold else 0))
+
+        if stopped_state is not None:
+            if target != stopped_state:
+                stopped_state = None  # the signal moved on; the book may trade again
+            else:
+                target = 0
+
+        if use_stop and held != 0 and entry_price is not None:
+            b = bars[t].bar
+            a = atr[t]
+            if a == a and a > 0.0:
+                level = entry_price - held * stop_atr * a
+                hit = (b.low <= level) if held > 0 else (b.high >= level)
+                if hit:
+                    stopped_state = held
+                    target = 0
+
+        if target != held:
+            entry_price = bars[t + 1].bar.open if target != 0 else None
+            held = target
+        position[t + 1] = held
+
+    closes = [b.bar.close for b in bars]
+    returns = [0.0] + [
+        math.log(b / a) if a > 0.0 and b > 0.0 else 0.0
+        for a, b in zip(closes, closes[1:])
+    ]
+    return PositionResult(tuple(position), tuple(returns), cost_bps, periods_per_year)

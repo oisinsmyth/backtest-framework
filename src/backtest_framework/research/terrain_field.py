@@ -126,6 +126,17 @@ class FieldParams:
     erase_exclude: int = ERASE_EXCLUDE
     vol_norm_bars: int = VOL_NORM_BARS
     bucket_ln: float = BUCKET_LN
+    erase: bool = True
+    """Whether the destroy step runs at all (D201).
+
+    False leaves the field as a pure cumulative signed map. That is NOT a legal setting for
+    the boundary rule — with nothing erased, price is never outside the envelope and the
+    rule never fires — but it is legal, and interesting, for the imbalance formulation,
+    which reads the whole field rather than the bucket at price.
+
+    D197's census found the erasure destroys 70% of pivots and keeps only wick extremes, an
+    unintended selection doing more work than the volume weighting. This flag is what lets
+    a run separate the erasure from the map, which nothing in D197-D199 could do."""
 
     def __post_init__(self) -> None:
         # Same enforcement, and the same reason, as SwingSupplyDemandSensor: a value
@@ -140,7 +151,7 @@ class FieldParams:
                 f"cluster_atr must be one of {CLUSTER_ATR}, got {self.cluster_atr}. "
                 "The spec fixes this set; a third value is an unregistered search."
             )
-        if self.erase_exclude < 1:
+        if self.erase and self.erase_exclude < 1:
             raise ValueError(
                 f"erase_exclude={self.erase_exclude} would put the current bar inside the "
                 "erasure envelope, which makes the field identically zero at every price "
@@ -298,7 +309,7 @@ def _walk_field(
             _deposit(net, gross, grid, s, centres)
 
         lo, hi = lo_b[t], hi_b[t]
-        if lo == lo:  # NaN while the envelope is undefined
+        if params.erase and lo == lo:  # NaN while the envelope is undefined
             a, z = grid.bucket(lo), grid.bucket(hi)
             net[a : z + 1] = 0.0  # destroy, not mask
             gross[a : z + 1] = 0.0
@@ -484,3 +495,51 @@ def split_by_confirmation(
         n_absorbed=absorbed,
         n_qualifying=len(qual),
     )
+
+
+def field_imbalance(
+    bars: Sequence[TimestampedBar],
+    swings: Sequence[Swing],
+    params: FieldParams,
+    grid: Grid | None = None,
+) -> list[float]:
+    """Demand below current price against supply above it, per bar (D201).
+
+        D_below   = sum of POSITIVE net over buckets below the close
+        S_above   = sum of NEGATIVE net (as a magnitude) over buckets above it
+        imbalance = (D_below - S_above) / (D_below + S_above)        in [-1, +1]
+
+    Positive means demand underneath dominates overhead supply; negative the reverse. NaN
+    only while the field is still empty, which is the warm-up and nothing else.
+
+    ## Why this is a different claim from the closed reversal line
+
+    D200 closed the boundary-fade rule. That rule read the single bucket **at** the current
+    price, which the erasure geometry forced: it could only speak on the ~20% of bars where
+    price sat outside the envelope, and only ever about reversal at a boundary. This reads
+    the **whole field on both sides** and has an answer on every bar. A map can be locally
+    uninformative and still carry aggregate skew, so D197's verdict on placement does not
+    settle it — though it is the same map, and that prior is not favourable.
+
+    Note what is deliberately excluded: the bucket at the close itself contributes to
+    neither sum. That is what makes the reading independent of the erasure's two-bar trick
+    rather than dependent on it.
+
+    Shares `_walk_field` with `field_signals` and `build_field`, so the field this reads is
+    by construction the same field those trade."""
+    grid = grid or build_grid(bars, params.bucket_ln)
+    out: list[float] = []
+    for t, net, _gross, _lo, _hi in _walk_field(
+        bars, swings, params, grid, len(bars) - 1
+    ):
+        c = grid.bucket(bars[t].bar.close)
+        if not (0 <= c < grid.n):
+            out.append(float("nan"))
+            continue
+        below = net[:c]
+        above = net[c + 1 :]
+        demand_below = float(below[below > 0.0].sum())
+        supply_above = float(-above[above < 0.0].sum())
+        total = demand_below + supply_above
+        out.append((demand_below - supply_above) / total if total > 0.0 else float("nan"))
+    return out

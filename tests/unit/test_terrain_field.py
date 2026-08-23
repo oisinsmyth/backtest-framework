@@ -617,3 +617,186 @@ def test_a_shorter_max_hold_never_increases_the_holding_period():
     assert short.n_trades > 0 and long_.n_trades > 0
     assert max(t.exit_index - t.entry_index for t in short.trades) <= 5
     assert max(t.exit_index - t.entry_index for t in long_.trades) <= 60
+
+
+# ---------------------------------------------------------------- D201 imbalance
+
+
+def _same(a, b) -> bool:
+    """List equality that treats NaN as equal to NaN — the imbalance is NaN through the
+    warm-up, and `nan != nan` would make every comparison below vacuously fail."""
+    return len(a) == len(b) and all(
+        (x != x and y != y) or x == y for x, y in zip(a, b)
+    )
+
+
+def test_imbalance_stays_in_range_and_is_defined_after_warm_up():
+    from backtest_framework.research.terrain_field import field_imbalance
+
+    bars = _walk(900, seed=41)
+    swings = confirmed_swings(bars, [1_000.0] * len(bars), PARAMS)
+    imb = field_imbalance(bars, swings, PARAMS)
+    assert len(imb) == len(bars)
+    defined = [x for x in imb if x == x]
+    assert len(defined) > 0.5 * len(bars), f"only {len(defined)} defined readings"
+    assert all(-1.0 <= x <= 1.0 for x in defined)
+
+
+def test_imbalance_does_not_read_a_single_bar_past_its_own_index():
+    from backtest_framework.research.terrain_field import field_imbalance
+
+    bars = _walk(400, seed=42)
+    vols = [1_000.0] * len(bars)
+    cut = 250
+    grid = build_grid(bars, BUCKET_LN)
+    clean = field_imbalance(bars, confirmed_swings(bars, vols, PARAMS), PARAMS, grid)
+
+    poisoned = list(bars)
+    for i in range(cut + 1, len(bars)):
+        b = poisoned[i].bar
+        poisoned[i] = TimestampedBar(
+            poisoned[i].timestamp, Bar(b.open * 25, b.high * 25, b.low * 25, b.close * 25)
+        )
+    after = field_imbalance(
+        poisoned, confirmed_swings(poisoned, vols, PARAMS), PARAMS, grid
+    )
+    assert _same(clean[: cut + 1], after[: cut + 1])
+
+
+def test_the_poison_actually_reaches_a_later_imbalance():
+    from backtest_framework.research.terrain_field import field_imbalance
+
+    bars = _walk(400, seed=42)
+    vols = [1_000.0] * len(bars)
+    cut = 250
+    grid = build_grid(bars, BUCKET_LN)
+    clean = field_imbalance(bars, confirmed_swings(bars, vols, PARAMS), PARAMS, grid)
+    poisoned = list(bars)
+    for i in range(cut + 1, len(bars)):
+        b = poisoned[i].bar
+        poisoned[i] = TimestampedBar(
+            poisoned[i].timestamp, Bar(b.open * 25, b.high * 25, b.low * 25, b.close * 25)
+        )
+    after = field_imbalance(
+        poisoned, confirmed_swings(poisoned, vols, PARAMS), PARAMS, grid
+    )
+    assert not _same(clean[cut + 1 :], after[cut + 1 :])
+
+
+def test_the_raw_field_never_erases_anything():
+    """erase=False must leave gross monotone non-decreasing — nothing is ever destroyed."""
+    from backtest_framework.research.terrain_field import _walk_field
+
+    raw = FieldParams(k=2, cluster_atr=0.5, erase=False)
+    bars = _walk(400, seed=43)
+    swings = confirmed_swings(bars, [1_000.0] * len(bars), raw)
+    grid = build_grid(bars, BUCKET_LN)
+    prev = 0.0
+    seen = 0
+    for _t, _net, gross, _lo, _hi in _walk_field(bars, swings, raw, grid, len(bars) - 1):
+        total = float(gross.sum())
+        assert total >= prev - 1e-9, "the raw field lost mass"
+        prev = total
+        seen += 1
+    assert prev > 0.0 and seen == len(bars)
+
+
+def test_the_erased_field_does_lose_mass_so_the_flag_is_not_inert():
+    from backtest_framework.research.terrain_field import _walk_field
+
+    bars = _walk(400, seed=43)
+    swings = confirmed_swings(bars, [1_000.0] * len(bars), PARAMS)
+    grid = build_grid(bars, BUCKET_LN)
+    drops = 0
+    prev = 0.0
+    for _t, _net, gross, _lo, _hi in _walk_field(bars, swings, PARAMS, grid, len(bars) - 1):
+        total = float(gross.sum())
+        if total < prev - 1e-9:
+            drops += 1
+        prev = total
+    assert drops > 10, f"the erasure destroyed mass on only {drops} bars"
+
+
+def test_erase_false_is_rejected_for_nothing_but_allowed_with_exclude_zero():
+    """The erase_exclude guard protects the BOUNDARY rule; it is meaningless when the
+    erasure is off entirely, so it must not fire there."""
+    FieldParams(k=2, cluster_atr=0.5, erase=False, erase_exclude=0)  # must not raise
+    with pytest.raises(ValueError, match="identically zero"):
+        FieldParams(k=2, cluster_atr=0.5, erase=True, erase_exclude=0)
+
+
+def test_the_position_curve_agrees_with_the_trade_list_curve():
+    """Pinned against StrategyResult on a book the trade-list path CAN represent.
+
+    The new equity path exists because that path silently drops a position entering on the
+    bar another exits. Where both are valid they must be the same number."""
+    from backtest_framework.research.terrain_strategies import (
+        PositionResult, StrategyResult, Trade)
+
+    bars = _walk(60, seed=44)
+    # one long, held bars 10..20, entered and exited at the CLOSE so the two
+    # representations describe the same exposure
+    tr = Trade(10, 20, 1, bars[10].bar.close, bars[20].bar.close, "test")
+    trades = StrategyResult((tr,), cost_bps=0.0, periods_per_year=365.0)
+
+    closes = [b.bar.close for b in bars]
+    returns = [0.0] + [
+        math.log(b / a) for a, b in zip(closes, closes[1:])
+    ]
+    pos = [0] * len(bars)
+    for i in range(11, 21):
+        pos[i] = 1
+    series = PositionResult(tuple(pos), tuple(returns), 0.0, 365.0)
+
+    assert series.curve_total_return() == pytest.approx(
+        trades.curve_total_return(bars), rel=1e-9
+    )
+    assert series.curve_sharpe(bars, 365.0) == pytest.approx(
+        trades.curve_sharpe(bars, 365.0), rel=1e-6
+    )
+
+
+def test_a_flip_keeps_continuous_exposure():
+    """The exact case the trade-list curve drops: short becomes long with no flat bar."""
+    from backtest_framework.research.terrain_strategies import run_field_imbalance
+
+    bars = _walk(60, seed=45)
+    atr = [1.0] * len(bars)
+    imb = [-0.9] * 30 + [0.9] * 30
+    res = run_field_imbalance(bars, imb, atr, 0.0, 365.0)
+    assert set(res.position[1:]) == {-1, 1}, "a flat bar appeared at the flip"
+    assert 0 not in res.position[2:]
+    # 1 unit opening the short from flat, then 2 more flipping it to long
+    assert res.turnover == 3
+    assert res.n_trades == 2, "an open and a flip are two position changes"
+
+
+def test_cost_is_charged_once_per_position_change():
+    from backtest_framework.research.terrain_strategies import PositionResult
+
+    rets = tuple([0.0] * 11)
+    flat = PositionResult(tuple([0] * 11), rets, 100.0, 365.0)  # 1% a unit
+    one = PositionResult(tuple([0] + [1] * 10), rets, 100.0, 365.0)
+    assert flat.curve_total_return() == pytest.approx(0.0)
+    assert one.curve_total_return() == pytest.approx(-0.01, rel=1e-9)
+    assert one.n_trades == 1 and one.turnover == 1
+
+
+def test_a_stopped_out_book_stays_flat_until_the_signal_changes_state():
+    from backtest_framework.research.terrain_strategies import run_field_imbalance
+
+    # long signal throughout; bar 12 collapses far enough to trip a 2 ATR stop
+    rows = [(100.0, 101.0, 99.0, 100.0)] * 30
+    rows[12] = (100.0, 101.0, 80.0, 100.0)
+    bars = _bars(rows)
+    atr = [2.0] * len(bars)
+    imb = [0.9] * len(bars)
+    res = run_field_imbalance(bars, imb, atr, 0.0, 365.0, use_stop=True)
+    assert 1 in res.position[:13], "the book never opened"
+    assert set(res.position[14:]) == {0}, "it re-entered while the signal was unchanged"
+
+    flipped = list(imb)
+    for i in range(20, len(bars)):
+        flipped[i] = -0.9
+    res2 = run_field_imbalance(bars, flipped, atr, 0.0, 365.0, use_stop=True)
+    assert -1 in res2.position, "the book never resumed after the signal changed state"
