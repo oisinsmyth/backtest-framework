@@ -266,3 +266,34 @@ It would **not** establish supply and demand as the mechanism. The census shows 
 erasure geometry selects wick extremes and discards 70% of pivots, so a pass is at least
 as consistent with "sharp rejections mark prices that matter" as with anything about
 volume or inventory. Separating those is the first task of a passing branch, not the last.
+
+## AMENDMENT — the null's price band, fixed before any run
+
+This document specified that the null shuffles mass "preserving the sign and magnitude
+distributions" and did **not** fix the price range the shuffle draws from. That is a
+material gap: over a decade in which BTC ran roughly 300×, a shuffle over the whole series
+span scatters 2015 pivots across 2024 prices, so the null map sits in the wrong
+neighbourhood by era and the real arm beats it for a reason that has nothing to do with
+placement.
+
+**Two nulls now run**, decided here before any result exists, in D144's manner:
+
+- **Verdict null — local band.** Each pivot keeps its bar index, sign and weight; only its
+  **price** is redrawn, uniform over the high–low range of the trailing lookback at that
+  same bar. Era, price scale and volatility all match, so the only randomised thing is
+  where within the neighbourhood the mass sits. This is the harder null and it carries the
+  verdict.
+- **Diagnostic null — whole-series span.** `pseudo_levels`' existing convention from D189
+  and D196, retained for comparability. Reported, never used for the verdict.
+
+The gap between them is itself informative: it separates "the mass is in the right
+neighbourhood" from "the mass is in the right place within that neighbourhood." Only the
+second is a claim about the sensor.
+
+**Ledger: 18 → 34 looks.** The diagnostic null is 16 more cells and it is counted, not
+excused as a diagnostic.
+
+**Still out of scope, deliberately.** A sign-shuffle null — permute signs, keep prices —
+would isolate the signing hypothesis specifically, and it is not run. It was thought of
+after this document was committed; adding it now would be an unregistered look, so it
+belongs in a later pre-registration or nowhere.
