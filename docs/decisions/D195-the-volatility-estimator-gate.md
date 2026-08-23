@@ -147,3 +147,129 @@ It would mean the incumbent sizing input is measurably worse than an available
 alternative. It would **not** mean the book improves, which is step 2's question and has
 its own bar. Building step 2 on a passed gate is legitimate; reporting the gate as though
 it were the result is not.
+
+---
+
+# RESULT — appended 2026-08-23, after the run. Nothing above this line was edited.
+
+**Status: the gate FAILS. H1 falsified, H2 falsified. Step 2 does not run.**
+
+## The numbers
+
+Loss reduction, candidate against incumbent. Positive means the candidate forecasts
+better. The bar was **≥ 30% on every cell**.
+
+| symbol | pairs | realized/MSE | realized/QLIKE | c2c/MSE | c2c/QLIKE | worst | verdict |
+|---|---:|---:|---:|---:|---:|---:|---|
+| BTCUSDT | 3,026 | +18.6% | +29.9% | **+15.8%** | +27.2% | +15.8% | FAIL |
+| ETHUSDT | 3,026 | +22.0% | +26.5% | **+22.7%** | +25.8% | +22.0% | FAIL |
+| XEMUSDT | 1,250 | +32.8% | +55.7% | **−0.2%** | +34.6% | −0.2% | FAIL |
+| BTGUSDT | 511 | +36.2% | +51.6% | **−29.6%** | +13.9% | −29.6% | FAIL |
+
+Mincer–Zarnowitz R² on the majors, against the accurate target: BTC 0.2128 → 0.2710,
+ETH 0.2145 → 0.2938.
+
+## H1 — FALSIFIED
+
+Predicted at **high** confidence that the candidate would beat the incumbent
+*comfortably*, and called it "the first proposal in this project with a strong positive
+prior".
+
+**The direction was right on every one of the eight gate cells. The magnitude was not.**
+BTC's worst cell is +15.8% against a floor of 30% — short by 14.2 points. ETH's is +22.0%,
+short by 8.0.
+
+This is the case D195 wrote down in advance:
+
+> If the improvement here is materially smaller than the literature that motivated the
+> idea, that gap is itself the finding — it would mean crypto's 15m bars are noisier than
+> the equity data those results come from.
+
+That is what happened. Intraday realized variance is a better forecaster of crypto
+volatility than twenty close-to-close returns — reliably, on both majors, on both targets,
+on both losses — by roughly **16–30%** rather than the 30%+ the equity literature reports.
+
+**The honest reading is that the floor was set from the wrong reference class**, and that
+I set it there before seeing anything, which is the only reason that sentence is worth
+believing. A floor calibrated on equity data was applied to 24/7 crypto with no session
+structure, no opening auction, and a materially different microstructure. Nothing about
+the run tells us whether 30% was too strict; it tells us the effect here is smaller than
+30%, and that is all a floor can ever tell you.
+
+**What I will not do is move the floor now.** A 20% loss reduction is a real improvement
+and a reader may reasonably think it worth having — the numbers are above so they can
+judge. But re-deciding the threshold after seeing the result is precisely the move that
+makes every subsequent number in a project unbelievable, and D194's `p = 0.008` is only
+three days old.
+
+## H2 — FALSIFIED, and the two-target design is why we know
+
+Predicted the effect would be **smaller** on the thin, dying instruments, because 1m
+empty-bar rates of 25.3% and 44.7% mean staleness biases realized variance downward.
+
+Against the accurate target, the effect is **larger**: XEM +32.8%/+55.7%, BTG
++36.2%/+51.6% — the only cells anywhere in the run that clear the 30% bar.
+
+Against the incumbent's own basis it goes **negative**: XEM −0.2%, BTG **−29.6%**.
+
+| symbol | realized/MSE | c2c/MSE | divergence |
+|---|---:|---:|---:|
+| XEMUSDT | +32.8% | −0.2% | 33.0 points |
+| BTGUSDT | +36.2% | −29.6% | **65.8 points** |
+
+**This is the shared-basis artifact, caught by the guard built to catch it.** On a thin
+instrument, 15m realized variance carries a large idiosyncratic component from stale
+prices and zero-return bars. The candidate estimator and the realized target both inherit
+it, so the candidate predicts *itself* extremely well — and predicts what actually happened
+to close-to-close volatility **worse than the twenty-observation estimator does**.
+
+Scored on the accurate target alone, BTGUSDT would have been the strongest result in the
+run: +36% and +52%, both clearing the bar that the majors missed. It is the weakest. A
+single-target design would have reported a thin dying coin as the best evidence for the
+method, which is the same shape as D180 — the instruments where a result looks best being
+the instruments where it is least real.
+
+The prediction was wrong about the direction of the bias and right that thin instruments
+would behave differently. That is worth separating: the mechanism was real, the sign was
+not, which is now the seventh time in this project a prediction has done exactly that.
+
+## Step 2 does not run
+
+D195: *"Only if step 1 passes."* It did not. The sizing study is not run and its +0.10
+Sharpe bar is not tested.
+
+Worth stating plainly, because the temptation runs the other way: the candidate estimator
+is genuinely better on the majors, and it would have been easy to call 16–30% "close
+enough", run step 2, and report whatever came out. The gate exists so that decision is
+made once, in advance, by someone who does not yet know the answer.
+
+**H3 is therefore untested.** It predicted step 2 would fail its bar even if step 1 passed,
+on the grounds that the sizing defect is structural in the weighting rule rather than an
+accuracy problem with its input. That argument is untouched by this run and remains the
+more likely explanation of the 70%-of-risk-budget defect — a better input does not fix a
+rule with the wrong shape. Recorded as unresolved, not as supported.
+
+## What this settles
+
+**Finer data does give a better estimate here — measurably, consistently, and by less than
+the theory that motivated the study.** Both majors improve on all four cells; the R²
+of forecasting 20-day-ahead volatility rises from 0.2128 to 0.2710 on BTC and 0.2145 to
+0.2938 on ETH. That is a real property of the data and it did not require any alpha to exist.
+
+It also does not clear a bar set in advance, so nothing is built on it.
+
+The finding with the longest reach is the thin-instrument divergence. Any future study that
+validates an intraday-derived estimator against an intraday-derived target is measuring
+self-consistency, and on illiquid instruments that can invert the answer by 66 points. The
+second target cost one extra column of arithmetic.
+
+## What is not settled
+
+Whether a 16–30% better volatility forecast improves a book. That is step 2's question and
+this run declines to answer it, by its own rule.
+
+Whether a different estimator clears 30% — a jump-robust bipower variation, a two-scale
+estimator correcting for microstructure noise, or a simple 5m/30m sampling sweep. None was
+pre-registered, none was run, and adding one now to reach the bar would be searching for a
+configuration that passes, which is the failure this project's whole apparatus exists to
+prevent. If it is worth doing it is worth pre-registering as its own question.

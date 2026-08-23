@@ -1,0 +1,218 @@
+{
+  "generated_utc": "2026-08-23T11:40:19.238127+00:00",
+  "preregistration": "D195-the-volatility-estimator-gate.md (commit c27e671)",
+  "fixture": "crypto_binance_15m_raw.csv.gz",
+  "window_days": 20,
+  "bars_per_day": 96,
+  "loss_reduction_floor": 0.3,
+  "gate_symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ],
+  "secondary_symbols": [
+    "XEMUSDT",
+    "BTGUSDT"
+  ],
+  "results": {
+    "BTCUSDT": {
+      "n_pairs": 3026,
+      "realized": {
+        "mse_log": {
+          "incumbent": 0.18441324366522466,
+          "candidate": 0.15010071435917624,
+          "reduction": 0.1860632600136778
+        },
+        "qlike": {
+          "incumbent": 0.6423370523459877,
+          "candidate": 0.45006855263119505,
+          "reduction": 0.29932649691089186
+        },
+        "r2": {
+          "incumbent": 0.21280468482699744,
+          "candidate": 0.2709981223962099
+        }
+      },
+      "close_to_close": {
+        "mse_log": {
+          "incumbent": 0.2188348089424596,
+          "candidate": 0.1843498216000018,
+          "reduction": 0.1575845611998834
+        },
+        "qlike": {
+          "incumbent": 0.7158931407640474,
+          "candidate": 0.5210504675534923,
+          "reduction": 0.27216725809470177
+        },
+        "r2": {
+          "incumbent": 0.16014361895823714,
+          "candidate": 0.21876776167540513
+        }
+      },
+      "days": 3066,
+      "short_days_dropped": 0,
+      "first_day": "2018-02-12",
+      "last_day": "2026-07-31"
+    },
+    "ETHUSDT": {
+      "n_pairs": 3026,
+      "realized": {
+        "mse_log": {
+          "incumbent": 0.17003565655355882,
+          "candidate": 0.13255567311017624,
+          "reduction": 0.22042425808246235
+        },
+        "qlike": {
+          "incumbent": 0.43757605984468567,
+          "candidate": 0.3216426348623356,
+          "reduction": 0.2649446247664915
+        },
+        "r2": {
+          "incumbent": 0.2144793821475094,
+          "candidate": 0.2937793635646406
+        }
+      },
+      "close_to_close": {
+        "mse_log": {
+          "incumbent": 0.19285728274577432,
+          "candidate": 0.1491641925139055,
+          "reduction": 0.2265565998327651
+        },
+        "qlike": {
+          "incumbent": 0.4736797424386836,
+          "candidate": 0.351685173012062,
+          "reduction": 0.25754652035264824
+        },
+        "r2": {
+          "incumbent": 0.19152931057796263,
+          "candidate": 0.28272774259747535
+        }
+      },
+      "days": 3066,
+      "short_days_dropped": 0,
+      "first_day": "2018-02-12",
+      "last_day": "2026-07-31"
+    },
+    "XEMUSDT": {
+      "n_pairs": 1250,
+      "realized": {
+        "mse_log": {
+          "incumbent": 0.2805037353931622,
+          "candidate": 0.1883948097153249,
+          "reduction": 0.32836969371810587
+        },
+        "qlike": {
+          "incumbent": 1.0123550147355769,
+          "candidate": 0.44838525724391004,
+          "reduction": 0.5570869401372733
+        },
+        "r2": {
+          "incumbent": 0.20998940293333168,
+          "candidate": 0.20933460842547869
+        }
+      },
+      "close_to_close": {
+        "mse_log": {
+          "incumbent": 0.292007961180766,
+          "candidate": 0.2925372244066858,
+          "reduction": -0.0018124958777823164
+        },
+        "qlike": {
+          "incumbent": 0.8489211619501457,
+          "candidate": 0.555181451391333,
+          "reduction": 0.34601530003567404
+        },
+        "r2": {
+          "incumbent": 0.18836571662576773,
+          "candidate": 0.2020057483067036
+        }
+      },
+      "days": 1290,
+      "short_days_dropped": 0,
+      "first_day": "2020-11-25",
+      "last_day": "2024-06-16"
+    },
+    "BTGUSDT": {
+      "n_pairs": 511,
+      "realized": {
+        "mse_log": {
+          "incumbent": 0.20751512514056283,
+          "candidate": 0.13232899761271108,
+          "reduction": 0.3623163732133913
+        },
+        "qlike": {
+          "incumbent": 0.738538186969352,
+          "candidate": 0.3572961884276752,
+          "reduction": 0.5162116262479703
+        },
+        "r2": {
+          "incumbent": 0.09538646151234997,
+          "candidate": 0.20741008372209047
+        }
+      },
+      "close_to_close": {
+        "mse_log": {
+          "incumbent": 0.19038228928227094,
+          "candidate": 0.24667586768584238,
+          "reduction": -0.2956870547979784
+        },
+        "qlike": {
+          "incumbent": 0.4670260600323256,
+          "candidate": 0.40194677189529143,
+          "reduction": 0.13934830131862375
+        },
+        "r2": {
+          "incumbent": 0.10554195561487723,
+          "candidate": 0.13955500828377565
+        }
+      },
+      "days": 551,
+      "short_days_dropped": 0,
+      "first_day": "2021-04-17",
+      "last_day": "2022-10-23"
+    }
+  },
+  "verdicts": {
+    "BTCUSDT": {
+      "cells": {
+        "realized/mse_log": 0.1860632600136778,
+        "realized/qlike": 0.29932649691089186,
+        "close_to_close/mse_log": 0.1575845611998834,
+        "close_to_close/qlike": 0.27216725809470177
+      },
+      "min_reduction": 0.1575845611998834,
+      "passed": false
+    },
+    "ETHUSDT": {
+      "cells": {
+        "realized/mse_log": 0.22042425808246235,
+        "realized/qlike": 0.2649446247664915,
+        "close_to_close/mse_log": 0.2265565998327651,
+        "close_to_close/qlike": 0.25754652035264824
+      },
+      "min_reduction": 0.22042425808246235,
+      "passed": false
+    },
+    "XEMUSDT": {
+      "cells": {
+        "realized/mse_log": 0.32836969371810587,
+        "realized/qlike": 0.5570869401372733,
+        "close_to_close/mse_log": -0.0018124958777823164,
+        "close_to_close/qlike": 0.34601530003567404
+      },
+      "min_reduction": -0.0018124958777823164,
+      "passed": false
+    },
+    "BTGUSDT": {
+      "cells": {
+        "realized/mse_log": 0.3623163732133913,
+        "realized/qlike": 0.5162116262479703,
+        "close_to_close/mse_log": -0.2956870547979784,
+        "close_to_close/qlike": 0.13934830131862375
+      },
+      "min_reduction": -0.2956870547979784,
+      "passed": false
+    }
+  },
+  "gate_passed": false,
+  "elapsed_seconds": 11.099110126495361
+}

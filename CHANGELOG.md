@@ -10,6 +10,41 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (the volatility estimator gate, 2026-08-23 — D195)
+- `research/vol_estimators.py` — the incumbent (20 close-to-close daily returns, pinned by
+  test against `InverseVolatilityWeight.weight()` rather than merely resembling it) and the
+  candidate (realized vol from 15m returns), plus MSE-on-log-vol, QLIKE and Mincer-Zarnowitz
+  R². Both estimators come from the SAME 15m fixture with the daily series resampled from
+  it, so provider, span and calendar are identical and the estimator is the only variable.
+- `scripts/run_vol_estimator_gate.py` + `data/vol_estimator_gate_summary.json` +
+  `docs/results/vol_estimator_gate.md`. Runs in 11 s.
+
+### Findings — predictions committed first (c27e671), then scored
+- **The gate FAILS. Step 2 does not run.** Loss reduction on the majors is +15.8% to
+  +29.9%, against a pre-registered floor of 30%. BTC's worst cell is short by 14.2 points,
+  ETH's by 8.0.
+- **H1 FALSIFIED.** Predicted at high confidence that the candidate would win
+  *comfortably*. The direction was right on all eight gate cells and the magnitude was not
+  — D195 wrote that case down in advance: the effect being smaller than the literature that
+  motivated it IS the finding. A floor calibrated on equity data was applied to 24/7 crypto.
+  **The floor was not moved after the fact.**
+- **H2 FALSIFIED, and the two-target design is why we know.** Predicted the effect would be
+  smaller on thin dying coins. Against the accurate target it is LARGER — XEM +32.8%/+55.7%,
+  BTG +36.2%/+51.6%, the only cells anywhere clearing the bar. Against the incumbent's own
+  basis it goes NEGATIVE: XEM −0.2%, **BTG −29.6%**, a 65.8-point divergence. On a thin
+  instrument the candidate predicts *itself* well and predicts reality worse than a
+  20-observation estimator. Scored on one target, BTGUSDT would have been the run's
+  strongest result; it is the weakest.
+- **H3 untested**, since step 2 did not run. Its argument — that the 70%-of-risk-budget
+  defect is structural in the weighting rule rather than an accuracy problem with its input
+  — is untouched and remains the more likely explanation.
+- Real and unused: forecast R² of 20-day-ahead volatility rises 0.2128 → 0.2710 on BTC and
+  0.2145 → 0.2938 on ETH. Better estimate, nothing built on it.
+
+### Verified
+- 898 tests green (20 new), mypy clean. Every figure in the result section checked against
+  the summary JSON programmatically; one R² was quoted at an ambiguous 3 dp and is now 4.
+
 ### Added (S1 re-tested at 15m and closed for good, 2026-08-23 — D194)
 - `scripts/run_terrain_s1_intraday.py` — the WP2 re-run on exchange-native 15m volume,
   every window calendar-matched to D189 so bar resolution is the only variable. Appends its
