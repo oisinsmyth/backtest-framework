@@ -129,3 +129,89 @@ one asset class in one decade. It would **not** establish supply and demand as t
 mechanism — `tests` scores a level by how often price returned to it, so a high-scoring
 level is by construction a price the market revisits, and that confound is sharper in S5
 than it was in S1.
+
+---
+
+## RESULT — appended after the run; nothing above this line edited
+
+**Zero of 20 cells cleared both hurdles.** Every cell has a negative Sharpe, range −0.777
+to −0.248, against buy-and-hold of +0.817 on BTC and +0.275 on ETH. 20 cells, 500 null
+draws each, 84 seconds.
+
+### A correction to this document
+
+It says **40 cells**. It is **20**: 2 sensors × 2 symbols × (1 `touch_horizon` + 2 targets
+× 2 fills) = 20. An arithmetic error in the pre-registration, not in the run. The ledger
+carries 20.
+
+### H1 — confirmed
+
+No strategy passes the null hurdle on both symbols. Six cells beat their null by ≥ +0.10,
+and all six are negative-Sharpe:
+
+| cell | trades | Sharpe | null mean | Δ | pctile | B&H |
+|---|---:|---:|---:|---:|---:|---:|
+| BTC · bounce_rr · 3R · touch | 170 | −0.248 | −0.489 | **+0.242** | 84.4 | +0.817 |
+| BTC · bounce_rr · 3R · trade_through | 177 | −0.443 | −0.629 | +0.186 | 79.6 | +0.817 |
+| ETH · touch_horizon | 225 | −0.367 | −0.538 | +0.171 | 71.4 | +0.275 |
+
+*(and the three identical S5b twins — see H4.)*
+
+**A paired null is necessary and not sufficient.** These beat random levels by being *less
+bad* than random, while losing money and losing to holding the asset by more than a full
+Sharpe point. Reported on hurdle 1 alone this run produces a headline.
+
+### H2 — confirmed, and it is the run's most useful number
+
+D9 named bar-level limit fills as adversely selected in July and nobody had ever priced
+it. Sharpe cost of the pessimistic convention:
+
+| | touch | trade_through | cost |
+|---|---:|---:|---:|
+| BTC 2R | −0.602 | −0.759 | **0.157** |
+| BTC 3R | −0.248 | −0.443 | **0.195** |
+| ETH 2R | −0.501 | −0.639 | **0.138** |
+| ETH 3R | −0.343 | −0.519 | **0.176** |
+
+**0.138–0.195 Sharpe, 4 of 4 pairs, both symbols.** Larger than the +0.10 effect floor
+this project uses to decide whether anything is real: an optimistic fill convention would
+have been worth more than any edge yet hunted.
+
+### H3 — confirmed
+
+Nothing beats buy-and-hold. Every cell is negative.
+
+### H4 — VOID, not confirmed
+
+All 10 S5b cells are **bit-identical** to their S5 twins — identical to the last digit,
+not merely indistinguishable. Both strategies read level *prices* via `levels_at` and
+trade every level equally, so the decay, which lives in the level **score**, is never
+consulted. **S5b was not tested.** The subagent that built S5b flagged exactly this before
+the strategies were written and they were built this way anyway. Testing it needs a rule
+that ranks or sizes by score.
+
+### Why it loses, which is not what the null test was measuring
+
+On the best cell — BTC, 3R, touch, 170 trades:
+
+- average win **+3.00R**, average loss **−0.958R**, hit rate **32.4%**
+- gross break-even **24.2%**. **Before costs this strategy makes money.**
+- the stop sits 0.5 ATR away = **2.1% of price**, so a 40 bps round trip is **0.49R**
+- break-even after costs **36.6%**, and 32.4% is not 36.6%
+
+The loss is the stop being too tight to pay for the spread, not the levels being wrong. A
+better map does not fix that arithmetic; only the geometry does. This is the finding D197
+is built on.
+
+Separately: **none of the 115 stop exits finished in profit** (best −0.132R). The trailing
+channel never engages — the 3R target resolves first every time — so `TRAIL_LOOKBACK` is
+inert in these results and was not tested either.
+
+### Ledger
+
+**D196: 20 cells, 20 looks, own ledger.** Not merged with the S1 programme's 147.
+
+### What was deferred and stays deferred
+
+`level_stop` — using the levels for stop *placement* on the existing breakout book. It
+modifies an existing book rather than standing up its own and was never run.
