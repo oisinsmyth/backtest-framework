@@ -21,6 +21,18 @@ version (likely at the Phase C "first real number" milestone, see
 - `tests/unit/test_structure_examples.py` (13) pins every number the page quotes against
   its source JSON, including that the stylesheet is still byte-identical to the original's.
 
+### Added (candlestick charts on the examples, 2026-08-24)
+- `scripts/build_structure_examples_report.py` now draws an inline SVG candle chart per
+  trade — the change of character, the impulse leg, the 61.8% touch band drawn to scale,
+  the fair value gap, entry, stop, 5R target and exit. Hollow/filled candles rather than
+  red/green: the inherited palette has one accent and it is reserved for what the trade
+  turned on. Every colour is a custom property, so the charts follow the viewer's theme.
+- `run_structure_examples.py` now stores the full bar window per trade (23–88 bars, from
+  before the change of character to past the exit) rather than ±4 bars around entry.
+- Seven further tests: one candle per bar against the stored window, nothing drawn outside
+  its own frame, no hard-coded colours, every chart marking the structure it illustrates,
+  and each chart in its own horizontal scroll container.
+
 ### Findings — illustrative, not a verdict
 - **The eight-slot rule yields seven trades: the highest-cost trade in either book IS
   BTC's worst.** The worst outcome and the most expensive one are the same event.

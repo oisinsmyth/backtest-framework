@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -177,8 +178,13 @@ def test_the_report_reuses_the_final_reports_stylesheet(page):
     it verbatim rather than reimplemented. If the two ever diverge this fails and the
     builder has to be re-run."""
     original = (REPO / "docs" / "results" / "final_report.html").read_text(encoding="utf-8")
-    style = original[original.index("<style>") : original.index("</style>") + 8]
-    assert style in page, "the stylesheet is no longer identical to final_report.html's"
+    inherited = original[original.index("<style>") : original.index("</style>")]
+    assert inherited in page, "the inherited stylesheet is no longer byte-identical"
+
+    # The chart rules are the only addition, and they come after everything inherited.
+    raw = REPORT.read_text(encoding="utf-8")
+    assert raw.index("/* ------") < raw.index(".chart {"), "chart rules must be appended"
+    assert raw.count("<style>") == 1 and raw.count("</style>") == 1
 
 
 def test_the_report_states_its_own_selection_rule(page):
@@ -193,4 +199,87 @@ def test_the_report_states_what_it_does_not_show(page):
         "flatter the strategy on purpose",
         "not the thing being taught",
     ):
+        assert phrase in page
+
+
+# ---------------------------------------------------------------------- the charts
+
+@pytest.fixture(scope="module")
+def raw() -> str:
+    """The page as written, entities intact — the SVG assertions need exact markup."""
+    return REPORT.read_text(encoding="utf-8")
+
+
+@pytest.fixture(scope="module")
+def charts(raw: str) -> list[tuple[float, float, str]]:
+    return [
+        (float(m.group(1)), float(m.group(2)), m.group(3))
+        for m in re.finditer(r'<svg viewBox="0 0 ([\d.]+) ([\d.]+)"(.*?)</svg>', raw, re.S)
+    ]
+
+
+def test_there_is_one_chart_per_trade(charts):
+    assert len(charts) == 7
+
+
+def test_every_chart_draws_one_candle_per_bar_in_its_window(charts, examples):
+    """The chart window is stored in the artifact, so the candle count is checkable rather
+    than eyeballed. A truncated window would otherwise look like a perfectly good chart."""
+    order = [
+        examples["per_symbol"]["BTCUSDT"][k] for k in ("best", "median", "worst")
+    ] + [
+        examples["per_symbol"]["ETHUSDT"][k] for k in ("best", "median", "worst")
+    ] + [examples["lowest_cost"]]
+
+    for (_, _, inner), trade in zip(charts, order):
+        expected = len(trade["chart"]["bars"])
+        wicks = len(re.findall(r'stroke="var\(--muted\)"', inner))
+        assert wicks == expected, "one wick per bar"
+        bodies = len(re.findall(r'stroke="var\(--ink\)" stroke-width="1"/>', inner))
+        assert bodies == expected, "one body per bar"
+
+
+def test_nothing_is_drawn_outside_its_own_frame(charts):
+    """A stop or a gap band can fall off the bottom if the price scale is built from the
+    candles alone. The generator widens the scale to include every overlay; this is what
+    says it actually did."""
+    for width, height, inner in charts:
+        for x, y, w, h in re.findall(
+            r'<rect x="([\d.-]+)" y="([\d.-]+)" width="([\d.-]+)" height="([\d.-]+)"', inner
+        ):
+            assert -1 <= float(x) and float(x) + float(w) <= width + 1
+            assert -1 <= float(y) and float(y) + float(h) <= height + 1
+        for cx, cy in re.findall(r'<circle cx="([\d.-]+)" cy="([\d.-]+)"', inner):
+            assert 0 <= float(cx) <= width and 0 <= float(cy) <= height
+
+
+def test_every_chart_marks_the_structure_it_is_illustrating(charts):
+    """A chart missing its overlays is still a chart, and would pass every other check."""
+    for _, _, inner in charts:
+        assert "CHoCH" in inner
+        assert ">entry<" in inner
+        assert ">exit<" in inner
+        assert "61.8%" in inner or "61.8" in inner
+        assert 'stroke-dasharray="4 3"' in inner, "the stop line"
+
+
+def test_the_charts_theme_with_the_page(charts):
+    """Every colour is a custom property from the inherited palette, so the charts follow
+    the viewer's theme. A literal hex here would render one theme's ink on the other
+    theme's ground."""
+    for _, _, inner in charts:
+        for literal in re.findall(r'(?:fill|stroke)="(#[0-9A-Fa-f]{3,8})"', inner):
+            raise AssertionError(f"hard-coded colour {literal} in a chart")
+        assert 'fill="var(--brass)"' in inner
+
+
+def test_the_charts_are_horizontally_scrollable(raw):
+    """The widest chart is 772px and the measure is 34rem. Without its own scroll container
+    the page body would scroll sideways on a phone."""
+    assert raw.count('<div class="scroll">') >= 7
+
+
+def test_the_legend_names_every_mark_the_charts_use(raw):
+    page = html.unescape(raw)
+    for phrase in ("closed up", "closed down", "impulse leg", "fair value gap"):
         assert phrase in page

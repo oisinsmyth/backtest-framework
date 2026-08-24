@@ -79,6 +79,12 @@ STACK = ("C2", "C3", "C4")
 CONTEXT_BARS = 4
 """Bars of price printed either side of the entry, for the bar table in the report."""
 
+CHART_PAD = 6
+"""Bars kept either side of the whole setup, so the chart shows what the structure was
+drawn on rather than only the trade. The window runs from the earlier of the change of
+character and the impulse leg's start, back `CHART_PAD` bars, through to `CHART_PAD` bars
+past the exit."""
+
 
 def describe(
     bars: Sequence[Any],
@@ -98,6 +104,8 @@ def describe(
     mfe, mae = _excursions(bars, trade)
     midpoint, width = first_gap_in_leg(setup, gaps)
     depth = retracement(setup.leg, close)
+    chart_lo = max(0, min(setup.choch_index, setup.leg.start_index) - CHART_PAD)
+    chart_hi = min(len(bars) - 1, trade.exit_index + CHART_PAD)
 
     return {
         "symbol": symbol,
@@ -159,19 +167,28 @@ def describe(
             "gross_return": trade.gross_return,
         },
         "context_bars": [
-            {
-                "index": i,
-                "timestamp": bars[i].timestamp.isoformat(),
-                "open": bars[i].bar.open,
-                "high": bars[i].bar.high,
-                "low": bars[i].bar.low,
-                "close": bars[i].bar.close,
-            }
+            _bar(bars, i)
             for i in range(
                 max(0, trade.entry_index - CONTEXT_BARS),
                 min(len(bars), trade.entry_index + CONTEXT_BARS + 1),
             )
         ],
+        "chart": {
+            "first_index": chart_lo,
+            "last_index": chart_hi,
+            "bars": [_bar(bars, i) for i in range(chart_lo, chart_hi + 1)],
+        },
+    }
+
+
+def _bar(bars: Sequence[Any], i: int) -> dict[str, Any]:
+    return {
+        "index": i,
+        "timestamp": bars[i].timestamp.isoformat(),
+        "open": bars[i].bar.open,
+        "high": bars[i].bar.high,
+        "low": bars[i].bar.low,
+        "close": bars[i].bar.close,
     }
 
 
