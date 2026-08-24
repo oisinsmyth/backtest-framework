@@ -98,7 +98,7 @@ def test_a_bar_covering_both_stop_and_target_resolves_as_a_stop():
         (100, 100, 100, 100),
         (100, 111, 97, 105),
     ] + [(105, 105, 105, 105)] * 5)
-    setup = setup_at(0, direction=1, leg=Leg(0, 120.0, 0, 98.0), window_len=3)
+    setup = setup_at(0, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=3)
     trades = run_arm(bars, [setup])
     assert len(trades) == 1
     assert trades[0].reason == "stop"
@@ -112,7 +112,7 @@ def test_a_gap_through_the_stop_fills_at_the_open_not_the_stop_price():
         (100, 100, 100, 100),
         (90, 91, 89, 90),  # opens well below the 98 stop
     ] + [(90, 90, 90, 90)] * 5)
-    setup = setup_at(0, direction=1, leg=Leg(0, 120.0, 0, 98.0), window_len=3)
+    setup = setup_at(0, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=3)
     trades = run_arm(bars, [setup])
     assert trades[0].reason == "stop"
     assert trades[0].exit_price == 90.0, "filled at the open, not at 98"
@@ -125,7 +125,7 @@ def test_a_clean_run_to_target_exits_at_the_target():
         (100, 104, 100, 103),
         (103, 111, 103, 110),
     ] + [(110, 110, 110, 110)] * 5)
-    setup = setup_at(0, direction=1, leg=Leg(0, 120.0, 0, 98.0), window_len=3)
+    setup = setup_at(0, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=3)
     trades = run_arm(bars, [setup])
     assert trades[0].reason == "target"
     assert trades[0].exit_price == pytest.approx(110.0)
@@ -134,7 +134,7 @@ def test_a_clean_run_to_target_exits_at_the_target():
 
 def test_a_trade_that_resolves_neither_way_exits_on_the_hold_cap():
     bars = flat([100.0] * (MAX_HOLD + 8))
-    setup = setup_at(0, direction=1, leg=Leg(0, 120.0, 0, 98.0), window_len=3)
+    setup = setup_at(0, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=3)
     trades = run_arm(bars, [setup])
     assert trades[0].reason == "max_hold"
     assert trades[0].exit_index - trades[0].entry_index == MAX_HOLD
@@ -146,7 +146,7 @@ def test_the_signal_bar_never_also_pays():
     """The signal is read on bar t's close and the position fills at bar t+1's close —
     D197-D201's convention, kept identical so the numbers stay comparable."""
     bars = ohlc([(100 + i, 100 + i, 100 + i, 100 + i) for i in range(20)])
-    setup = setup_at(3, direction=1, leg=Leg(0, 120.0, 0, 98.0), window_len=5)
+    setup = setup_at(3, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=5)
     trades = run_arm(bars, [setup])
     assert trades[0].entry_index == 4
     assert trades[0].entry_price == bars[4].bar.close
@@ -158,7 +158,7 @@ def test_only_one_position_is_held_at_a_time():
     `StrategyResult.equity_curve`'s known blind spot, avoided by construction."""
     bars = flat([100.0] * 400)
     setups = [
-        setup_at(ready, direction=1, leg=Leg(0, 120.0, 0, 98.0), window_len=5)
+        setup_at(ready, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=5)
         for ready in (10, 12, 14, 200)
     ]
     trades = run_arm(bars, setups)
@@ -167,19 +167,25 @@ def test_only_one_position_is_held_at_a_time():
 
 
 def test_a_stop_on_the_wrong_side_of_the_entry_is_refused():
-    """An unguarded division here produces an infinite R multiple rather than an error."""
+    """An unguarded division here produces an infinite R multiple rather than an error.
+
+    This guard is also what exposed D209's defect: with the stop read off the wrong end of
+    the leg it silently rejected 93% of setups, and the surviving 7% were the ones that had
+    barely pulled back."""
     bars = flat([100.0] * 50)
-    # Long setup whose leg extreme sits ABOVE the entry price — not a stop.
-    setup = setup_at(0, direction=1, leg=Leg(0, 90.0, 0, 110.0), window_len=3)
+    # Long setup whose leg ORIGIN sits above the entry price — not a stop.
+    setup = setup_at(0, direction=1, leg=Leg(0, 110.0, 0, 130.0), window_len=3)
     assert run_arm(bars, [setup]) == []
 
 
 # ------------------------------------------------------------------------- excursions
 
-def test_excursions_are_signed_by_direction():
+def test_excursions_are_signed_by_direction_and_measured_in_r():
     """For a short, favourable is the LOW. Unsigned excursions would rank every short by
     how far price rose against it, which is exactly the kind of plausible wrong answer
-    `feature_analysis` would report without complaint."""
+    `feature_analysis` would report without complaint.
+
+    And the unit is R, not price fraction — risk is 10 here, so a 10-point move is 1.0."""
     bars = ohlc([
         (100, 100, 100, 100),
         (100, 102, 90, 95),
@@ -187,13 +193,34 @@ def test_excursions_are_signed_by_direction():
     ])
     short = ArmTrade(0, 0, 2, -1, 100.0, 95.0, 110.0, 10.0, "target")
     mfe, mae = _excursions(bars, short)
-    assert mfe == pytest.approx(0.10), "price fell to 90 — favourable for a short"
-    assert mae == pytest.approx(-0.02), "price rose to 102 — adverse for a short"
+    assert mfe == pytest.approx(1.0), "price fell 10 against a risk of 10 — 1R favourable"
+    assert mae == pytest.approx(-0.2), "price rose 2 against a risk of 10"
 
     long = ArmTrade(0, 0, 2, 1, 100.0, 95.0, 90.0, 10.0, "stop")
     mfe, mae = _excursions(bars, long)
-    assert mfe == pytest.approx(0.02)
-    assert mae == pytest.approx(-0.10)
+    assert mfe == pytest.approx(0.2)
+    assert mae == pytest.approx(-1.0)
+
+
+def test_excursions_are_scale_invariant():
+    """The reason the unit changed, asserted directly.
+
+    The same geometry at $100 and at $90,000 must produce the same excursion. In the
+    price-fraction form it does not, which is why `stop_atr` came back a CANDIDATE at
+    rho +0.56 in the first WP4 run — an artifact of a scale-dependent quantity ranked
+    across eras that do not share the scale (D187's lesson)."""
+    small = ohlc([(100, 100, 100, 100), (100, 102, 90, 95), (95, 96, 94, 95)])
+    scale = 900.0
+    large = ohlc([
+        tuple(v * scale for v in row)
+        for row in [(100, 100, 100, 100), (100, 102, 90, 95), (95, 96, 94, 95)]
+    ])
+    a = _excursions(small, ArmTrade(0, 0, 2, -1, 100.0, 95.0, 110.0, 10.0, "target"))
+    b = _excursions(
+        large,
+        ArmTrade(0, 0, 2, -1, 100.0 * scale, 95.0 * scale, 110.0 * scale, 10.0 * scale, "target"),
+    )
+    assert a == pytest.approx(b)
 
 
 def test_mfe_is_never_negative_and_mae_never_positive():
@@ -278,3 +305,36 @@ def test_episodes_carry_their_features_into_the_analysis_objects():
         assert "fib_depth" in episode.features
         assert episode.costs > 0.0
         assert math.isfinite(episode.mfe) and math.isfinite(episode.mae)
+
+
+# ------------------------------------------------- untradeable trades, and the overlap flag
+
+def test_a_trade_whose_cost_exceeds_its_risk_is_counted_as_untradeable():
+    """The first WP4 run reported mean R of -104. Not a bug: a stop a few basis points from
+    the entry really does make a 40 bps round trip cost 10R. What it describes is a position
+    size nobody can take, so the share is reported rather than left inside a mean."""
+    tight = ArmTrade(0, 0, 1, 1, 100.0, 100.0, 99.99, 0.01, "max_hold")
+    wide = ArmTrade(1, 2, 3, 1, 100.0, 100.0, 90.0, 10.0, "max_hold")
+    other = ArmTrade(2, 4, 5, 1, 100.0, 100.0, 92.0, 8.0, "max_hold")
+    out = expectancy([tight, wide, other], cost_bps=40.0)
+    assert out["share_untradeable"] == pytest.approx(1 / 3)
+    assert out["mean_r"] < -10.0, "the one tight stop dominates the mean"
+    assert out["mean_r_tradeable"] > -1.0, "and does not dominate the takeable subset"
+    assert out["median_r"] > -1.0, "nor the median"
+    assert out["median_r"] > out["mean_r"]
+
+
+def test_overlap_is_off_for_a_book_and_on_for_annotation():
+    """WP4's feature analysis needs one outcome per setup; the one-at-a-time rule threw away
+    most of them. An overlapping population is for annotation and has no equity curve."""
+    bars = flat([100.0] * 400)
+    setups = [
+        setup_at(ready, direction=1, leg=Leg(0, 98.0, 0, 120.0), window_len=5)
+        for ready in (10, 12, 14, 16)
+    ]
+    book = run_arm(bars, setups)
+    annotated = run_arm(bars, setups, allow_overlap=True)
+    assert len(book) == 1, "every later setup falls inside the first trade"
+    assert len(annotated) == len(setups)
+    for a, b in zip(annotated, annotated[1:]):
+        assert b.entry_index > a.entry_index

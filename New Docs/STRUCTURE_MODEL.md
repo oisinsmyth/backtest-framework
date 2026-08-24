@@ -359,6 +359,6 @@ baseline-relative capped at moderate per Disclosure D4.
 - [x] WP1 — detectors and their tests (D205)
 - [x] WP2 — the census (D206)
 - [x] WP3 — components against their nulls (D208)
-- [ ] WP4 — marginal contribution
-- [ ] WP5 — costed verdict
+- [x] WP4 — marginal contribution (D209 correction, D210 result)
+- [~] WP5 — costed verdict: **DOES NOT RUN.** D210 triggered the pre-registered stop — no component clears the promotion criteria
 - [ ] WP6 — discretion audit and final report

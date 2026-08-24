@@ -344,14 +344,37 @@ def _first_leg_bar(
     return None
 
 
+def stop_price(setup: Setup) -> float:
+    """Where the stop sits: the extreme the impulse leg came FROM, `leg.start_price`.
+
+    **This was wrong in the first implementation and D209 records the correction.** The
+    first version used `leg.end_price`, the extreme the leg ran TO, on a reading of "beyond
+    the swing extreme that defined the structure" that put the stop on the wrong side of
+    the trade for 93% of setups.
+
+    The geometry: after a bullish change of character the leg runs from a swing LOW up to a
+    swing HIGH, and the entry is on the pullback DOWN from that high. A long stop therefore
+    has to sit BELOW the entry — at the swing low the move began from. `leg.end_price` is
+    the high, above the entry, which is not a stop at all.
+
+    The course says it plainly for the bullish case: *"we can start to set ourselves up to
+    be able to risk underneath that low"*. And the corrected level is exactly the
+    invalidation boundary — `retracement == 1.0` is `leg.start_price` — so the stop and the
+    rule that kills the setup are the same line, which is the coherent arrangement and was
+    the clue that the first reading was wrong.
+
+    No buffer is added: a buffer would be a free parameter, and the sensitivity of
+    everything downstream to stop WIDTH is precisely what WP2's cost arithmetic measures."""
+    return setup.leg.start_price
+
+
 def stop_distance(setup: Setup, entry_price: float) -> float:
     """Distance from `entry_price` to the stop, in price units.
 
-    The course places the stop beyond the swing extreme that defined the structure — which
-    is the impulse leg's end. No buffer is added: a buffer would be a free parameter, and
-    the sensitivity of everything downstream to stop WIDTH is precisely what WP2's cost
-    arithmetic is about to measure."""
-    return abs(entry_price - setup.leg.end_price)
+    Equals `(1 - retracement) * |leg span|`, so a shallow entry risks the whole leg and a
+    deep one risks little. The first implementation had this exactly backwards — see
+    `stop_price`."""
+    return abs(entry_price - stop_price(setup))
 
 
 def friction_in_r(cost_bps: float, entry_price: float, stop: float) -> float | None:

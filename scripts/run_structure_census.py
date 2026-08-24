@@ -242,14 +242,14 @@ def _reading(payload: dict[str, Any], primary: str) -> str:
     )
 
     parts.append(
-        "**2. The round-trip cost is roughly the whole distance to the stop.** On the "
-        "C1-only arm the median stop sits at "
+        "**2. The round trip eats a third to a half of the risk before anything happens.** "
+        "On the C1-only arm the median stop sits at "
         + " and ".join(f"{base[s]['median_stop_pct']:.2%} of price on `{s}`" for s in runs)
         + f", against a {COST_BPS:.0f} bps round trip — so friction is "
         + " and ".join(f"{base[s]['median_friction_r']:.2f}R" for s in runs)
-        + ". This is the whole problem with running this strategy on 15m bars, and it is "
-        "arithmetic rather than a result: a stop placed at the swing extreme of a 15m "
-        "impulse leg is simply not far enough away to pay for crossing the spread twice.\n"
+        + ". That is arithmetic rather than a result, and it is the structural problem with "
+        "running this strategy on 15m bars: a stop placed at a 15m swing extreme is close "
+        "enough that crossing the spread twice is a material fraction of the whole trade.\n"
     )
 
     need = {s: stack_stats[s]["required_hit_rate_at_5r"] for s in runs}
@@ -268,21 +268,34 @@ def _reading(payload: dict[str, Any], primary: str) -> str:
         "carry information.\n"
     )
 
+    worse = all(
+        stack_stats[s]["median_friction_r"] > base[s]["median_friction_r"] for s in runs
+    )
     parts.append(
-        "**4. The confluence stack's one measurable effect so far is that it enters "
-        "deeper.** Median retracement moves from "
+        "**4. The confluence stack enters deeper, and that makes the arithmetic "
+        + ("WORSE" if worse else "better")
+        + ".** Median retracement moves from "
         + " and ".join(
-            f"{base[s]['median_retracement']:.3f} to {stack_stats[s]['median_retracement']:.3f} on `{s}`"
+            f"{base[s]['median_retracement']:.3f} to "
+            f"{stack_stats[s]['median_retracement']:.3f} on `{s}`"
             for s in runs
         )
-        + ", which widens the stop from "
+        + ". The stop sits at the extreme the leg came FROM, so a deeper entry is a "
+        "**tighter** stop, not a wider one: "
         + " and ".join(
-            f"{base[s]['median_stop_atr']:.2f} to {stack_stats[s]['median_stop_atr']:.2f} ATR"
+            f"{base[s]['median_stop_atr']:.2f} to "
+            f"{stack_stats[s]['median_stop_atr']:.2f} ATR"
             for s in runs
         )
-        + " and roughly halves the friction. That is a real mechanical benefit and it is "
-        "**not evidence of a signal** — waiting for a deeper pullback would do the same "
-        "thing without any of the structure. WP4 is where the two get separated.\n"
+        + ", and friction rises from "
+        + " and ".join(
+            f"{base[s]['median_friction_r']:.2f}R to "
+            f"{stack_stats[s]['median_friction_r']:.2f}R"
+            for s in runs
+        )
+        + ". So the confluence the course sells as precision is, in cost terms, a tax: it "
+        "buys a better price by risking less, and the fixed spread then eats a larger share "
+        "of what is left. WP4 asks whether the better price is worth the tax.\n"
     )
 
     parts.append(
@@ -328,6 +341,14 @@ def render(payload: dict[str, Any]) -> str:
         "section. `STRUCTURE_MODEL.md` requires the counts first, because counts have "
         "repeatedly caught defects in this project before they became results (D197, D198, "
         "D201, D202).\n")
+
+    add("> **CORRECTED 2026-08-24 (D209).** The first version of this section placed the "
+        "stop at `leg.end_price`, the extreme the impulse ran TO, which for a long sits "
+        "ABOVE the entry and is not a stop at all. Every friction number below is the "
+        "recomputed one. The superseded figures were: base-arm friction 0.97R / 0.72R "
+        "against 0.48R / 0.34R here, and required hit rate at 5R 32.9% / 28.6% against "
+        "24.7% / 22.3%. The direction of finding 4 also reversed. D209 records how it was "
+        "caught.\n")
 
     add("### The population, at the primary cell\n")
     add(f"Primary: `k={PRIMARY_K}`, touch band `{PRIMARY_TOUCH}` ATR, "

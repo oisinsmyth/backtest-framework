@@ -10,6 +10,39 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (the stop was on the wrong side of the trade, 2026-08-24 — D209)
+- `structure_setups.stop_price` now returns `leg.start_price`, the extreme the impulse came
+  FROM. It previously used `leg.end_price`, which for a long sits ABOVE the entry. The
+  wrong-side guard in `run_arm` rejected 1,865 of 2,000 setups and kept an adversely
+  selected 135 — a wrong answer converted into a missing one, D205's finding for the third
+  time. Surfaced by a count that did not match another count, not by a test.
+- WP2's friction table recomputed and its section carries a generated correction banner
+  naming the superseded figures. One finding reverses: a deeper entry is a TIGHTER stop, so
+  the confluence stack raises friction from 0.48R to 0.71R rather than halving it.
+- Two tests pin the stop side in both directions and the `(1 - retracement) x |span|` identity.
+
+### Added (the marginal analysis, 2026-08-24 — D210)
+- `scripts/run_structure_marginal.py` + `data/structure_marginal_summary.json` + the WP4
+  section. Three readings: feature quintiles on an overlapping annotation population,
+  the same features conditioned on depth and on stop width, and the 8-arm ablation lattice.
+- `structure_strategies`: MFE/MAE moved into **R units** (scale-invariant, asserted by
+  test) after the price-fraction form made `stop_atr` a false candidate at rho +0.56 —
+  D187's lesson in a new costume. `run_arm` gained `allow_overlap` for annotation
+  populations; the one-at-a-time rule was throwing away 93% of the sample for a rank
+  statistic. `expectancy` gained `median_r`, `share_untradeable` and `mean_r_tradeable`
+  after mean R came back −104 (correct arithmetic for a position size nobody can take).
+
+### Findings — WP4, 48 looks
+- **Nothing survives holding leg size constant.** Three features clear the promotion
+  criteria unconditionally and are one quantity under three names (pairwise rank
+  correlation +0.79 to +0.88). Inside stop-width quintiles the largest correlation any
+  feature reaches is **0.13** against a bar of 0.2, with no sign agreement — depth included.
+- **Stacking all four filters makes the strategy worse before costs**: −0.038R and −0.102R
+  a trade at zero cost, against the base arm's +0.013R and +0.093R.
+- **44% and 32% of base-arm trades are untradeable** at 40 bps — the round trip costs at
+  least their entire risk.
+- **The pre-registered stop condition is triggered. WP5 does not run.**
+
 ### Added (component placebos and the frozen wrapper, 2026-08-24 — D207/D208)
 - `research/structure_nulls.py` — the continuation statistic (`terrain_nulls`' reversal
   definition, re-oriented by the setup's direction rather than the approach side), four

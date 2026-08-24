@@ -334,10 +334,17 @@ entries and fading lost in every form terrain measured.
 - [x] **D207 amendments**, written before the runs they govern: market entry at the
       close (so D196's adverse selection is NOT paid here — stated, not buried), 5R
       primary target, and an 8-arm ablation rather than 16.
-- [ ] **WP4 — marginal contribution.** Feature quintiles (primary) + the 16-arm ablation
-      lattice (confirmation), wrapper frozen. Stop condition: nothing clears the promotion
-      criteria and the programme ends here as a reportable negative.
-- [ ] **WP5 — costed verdict**, both fill conventions, pessimistic carries it.
+- [x] **WP4 — marginal contribution (D210).** **Nothing survives holding leg size
+      constant.** Three features clear the promotion criteria and turn out to be ONE
+      quantity under three names (pairwise rho +0.79 to +0.88); MFE is in R, so
+      MFE_R = excursion/risk tracks leg size arithmetically. Inside stop-width
+      quintiles the largest correlation any feature reaches is 0.13 against a bar of
+      0.2, depth included. Stacking all four filters is WORSE before costs. 48 looks.
+- [x] **D209 defect**: the stop was on the wrong side of the trade. A guard rejected
+      93% of setups and kept an adversely selected sliver — found by a count that did
+      not match another count, not by a test. WP2's friction table corrected and one
+      finding reversed.
+- [~] **WP5 — costed verdict: DOES NOT RUN.** D210 triggered the pre-registered stop.
 - [ ] **WP6 — the discretion audit** and the final report.
 
 ## Next (queued, not started) — Phase G closing

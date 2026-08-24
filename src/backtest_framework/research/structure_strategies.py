@@ -39,22 +39,32 @@ does not say which came first, and resolving that ambiguity in the strategy's fa
 a backtest manufactures an edge it will not have (D42). Gap-through fills go at the bar's
 open, not the stop price (D10) — a bug fix, never a configurable option.
 
-## Excursions are direction-signed, unlike `trade_diagnostics._excursions`
+## Excursions are direction-signed AND in R units, unlike `trade_diagnostics._excursions`
 
-That function is long-only: `max(high)/entry - 1`. Half the trades here are short, where the
-favourable excursion is the **low**. So MFE is `direction * (best/entry - 1)` and MAE is
-`direction * (worst/entry - 1)`, which makes longs and shorts comparable and keeps MAE
-non-positive for both.
+Two deliberate deviations, both recorded here rather than left as a surprise for whoever
+next reads the two implementations side by side.
 
-This matters because `feature_analysis.analyse_feature` ranks on MFE, and feeding it
-unsigned excursions from a two-sided book would rank every short by how far price rose
-against it. The deviation is deliberate and is recorded here rather than left as a surprise
-for whoever next reads the two side by side.
+**Signed.** That function is long-only: `max(high)/entry - 1`. Half the trades here are
+short, where the favourable excursion is the **low**. Feeding `feature_analysis` unsigned
+excursions from a two-sided book would rank every short by how far price rose against it.
+
+**In R, not in price fraction.** `analyse_feature` ranks on MFE, and an excursion expressed
+as a fraction of the entry price is a **scale-dependent** quantity on a fixture running from
+$3,000 to $100,000 across eight years and two assets. Ranking on it makes any feature
+correlated with volatility look predictive: a wider stop means a wider leg means bigger
+moves means a bigger price-fraction excursion, mechanically and with no information in it.
+
+That is D187's lesson — a scale-dependent quantity applied across instruments and eras that
+do not share the scale — and the first WP4 run walked straight into it: `stop_atr` came back
+a CANDIDATE with rank correlations of +0.56 and +0.63 inside depth quintiles, which is the
+artifact and not a finding. Dividing by the trade's own risk removes it and makes a
+comparison between features an actual comparison.
 """
 
 from __future__ import annotations
 
 import math
+import statistics
 from dataclasses import dataclass
 from typing import Iterable, Sequence
 
@@ -67,6 +77,7 @@ from .structure_setups import (
     GOLDEN_RATIO,
     Setup,
     stop_distance,
+    stop_price,
 )
 from .terrain import rolling_mean_true_range
 from .terrain_strategies import MAX_HOLD, TRAIL_AFTER_R, TRAIL_LOOKBACK
@@ -120,14 +131,21 @@ def run_arm(
     setups: Sequence[Setup],
     required: Iterable[str] = (),
     wrapper: Wrapper | None = None,
+    allow_overlap: bool = False,
 ) -> list[ArmTrade]:
     """Trade one filter subset through the frozen wrapper.
 
-    One position at a time: a setup whose entry falls inside an open trade is skipped, not
-    stacked. Overlapping positions would make the equity path depend on a sizing policy
-    this study never states, and `StrategyResult.equity_curve`'s known blind spot — a
-    position entering on the exact bar another exits is silently dropped — is avoided by
-    requiring a strict gap rather than by hoping it does not arise.
+    One position at a time by default: a setup whose entry falls inside an open trade is
+    skipped, not stacked. Overlapping positions would make the equity path depend on a
+    sizing policy this study never states, and `StrategyResult.equity_curve`'s known blind
+    spot — a position entering on the exact bar another exits is silently dropped — is
+    avoided by requiring a strict gap rather than by hoping it does not arise.
+
+    `allow_overlap=True` evaluates every setup independently and is for **annotation, not
+    for a book**. WP4's feature analysis needs one outcome per setup, and the one-at-a-time
+    rule throws away most of them — 3,875 setups became 275 trades in the first run, which
+    is a fine book and a poor sample. An overlapping population has no meaningful equity
+    curve and none is computed from it.
 
     The signal is read on bar `t`'s close and the position fills at bar `t+1`'s close, so
     the bar that decides never also pays — D197-D201's convention, kept identical so the
@@ -139,12 +157,14 @@ def run_arm(
 
     for position, setup in enumerate(setups):
         signal = setup.first_entry(required)
-        if signal is None or signal <= open_until or signal + 1 >= len(bars):
+        if signal is None or signal + 1 >= len(bars):
+            continue
+        if not allow_overlap and signal <= open_until:
             continue
         entry_index = signal + 1
         entry_price = bars[entry_index].bar.close
         direction = setup.direction
-        stop = setup.leg.end_price
+        stop = stop_price(setup)
         risk = stop_distance(setup, entry_price)
         # A stop at or through the entry price is not a stop. Guarded rather than left to
         # produce an infinite R multiple, which is what an unguarded division would do.
@@ -201,21 +221,22 @@ def run_arm(
 def _excursions(
     bars: Sequence[TimestampedBar], trade: ArmTrade
 ) -> tuple[float, float]:
-    """Direction-signed MFE and MAE as fractions of the entry price.
+    """Direction-signed MFE and MAE, in units of the trade's own risk.
 
-    Long: favourable is the high. Short: favourable is the low. Signing them is what makes
-    a two-sided book rankable by `feature_analysis.analyse_feature`, which was written for
-    a long-flat one — see the module docstring."""
+    Long: favourable is the high. Short: favourable is the low. Signed so a two-sided book
+    is rankable by `feature_analysis.analyse_feature`, which was written for a long-flat
+    one; divided by risk so the ranking is not dominated by volatility. See the module
+    docstring — the price-fraction form made `stop_atr` look like a candidate feature when
+    it is a scaling artifact."""
     highs = [bars[j].bar.high for j in range(trade.entry_index, trade.exit_index)]
     lows = [bars[j].bar.low for j in range(trade.entry_index, trade.exit_index)]
     highs.append(trade.exit_price)
     lows.append(trade.exit_price)
     best = max(highs) if trade.direction > 0 else min(lows)
     worst = min(lows) if trade.direction > 0 else max(highs)
-    entry = trade.entry_price
     return (
-        trade.direction * (best / entry - 1.0),
-        trade.direction * (worst / entry - 1.0),
+        trade.direction * (best - trade.entry_price) / trade.risk,
+        trade.direction * (worst - trade.entry_price) / trade.risk,
     )
 
 
@@ -333,21 +354,41 @@ def r_multiples(trades: Sequence[ArmTrade], cost_bps: float) -> list[float]:
 
 
 def expectancy(trades: Sequence[ArmTrade], cost_bps: float) -> dict[str, float]:
-    """Hit rate, mean R and the arithmetic the course actually claims.
+    """Hit rate, mean R, median R, and the share of trades that are untradeable.
 
-    Reported together because either alone is misleading: a 60% hit rate at 0.2R and a 20%
-    hit rate at 5R are different businesses, and the course's entire pitch is the second
-    one."""
+    Reported together because each alone misleads.
+
+    A 60% hit rate at 0.2R and a 20% hit rate at 5R are different businesses, and the
+    course's entire pitch is the second one — so hit rate never appears without mean R.
+
+    **Mean R alone is unusable here, and the first WP4 run proved it: it came back −104.**
+    Not a bug. A stop placed at the swing extreme, entered at a shallow retracement, can sit
+    a few basis points from the entry price, and a 40 bps round trip against a 4 bps stop
+    really is 10R. What that number describes is a position size nobody can take, so
+    `share_untradeable` — the fraction of trades whose round trip costs at least their whole
+    risk — is reported beside it, with the median and the mean over the takeable trades."""
     values = r_multiples(trades, cost_bps)
     if not values:
-        return {"n": 0, "hit_rate": 0.0, "mean_r": 0.0, "total_r": 0.0}
+        return {
+            "n": 0, "hit_rate": 0.0, "mean_r": 0.0, "median_r": 0.0, "total_r": 0.0,
+            "share_untradeable": 0.0, "mean_r_tradeable": 0.0,
+        }
+    charge = cost_bps / 10_000.0
+    frictions = [charge * (t.entry_price + t.exit_price) / t.risk for t in trades]
+    untradeable = [f >= 1.0 for f in frictions]
     wins = [v for v in values if v > 0.0]
     losses = [v for v in values if v <= 0.0]
+    takeable = [v for v, bad in zip(values, untradeable) if not bad]
     return {
         "n": len(values),
         "hit_rate": len(wins) / len(values),
         "mean_r": sum(values) / len(values),
+        "median_r": statistics.median(values),
         "total_r": sum(values),
         "mean_win_r": sum(wins) / len(wins) if wins else 0.0,
         "mean_loss_r": sum(losses) / len(losses) if losses else 0.0,
+        "share_untradeable": sum(untradeable) / len(untradeable),
+        "mean_r_tradeable": (
+            sum(takeable) / len(takeable) if takeable else float("nan")
+        ),
     }

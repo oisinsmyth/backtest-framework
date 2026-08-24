@@ -44,7 +44,11 @@ because in that world the two studies are reading the same swing structure.
 | WP2 census (counts only, no test) | 0 |
 | WP3 components against their placebos | 24 |
 | WP3 depth-matched re-reading (post-hoc) | 6 |
-| **Total** | **30** |
+| WP4 feature quintiles | 12 |
+| WP4 conditional on depth (post-hoc) | 10 |
+| WP4 conditional on stop width (post-hoc) | 10 |
+| WP4 ablation lattice | 16 |
+| **Total** | **78** |
 
 Never reset. Retired and failed cells count. Budget estimated in the plan at ~118 looks
 for the full programme; the estimate is not a licence and the actual count is what feeds
@@ -72,6 +76,8 @@ capping baseline-relative predictions at moderate confidence.
 **Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_census.py` (offline, deterministic)
 
 No return, no Sharpe and no verdict about whether anything works appears in this section. `STRUCTURE_MODEL.md` requires the counts first, because counts have repeatedly caught defects in this project before they became results (D197, D198, D201, D202).
+
+> **CORRECTED 2026-08-24 (D209).** The first version of this section placed the stop at `leg.end_price`, the extreme the impulse ran TO, which for a long sits ABOVE the entry and is not a stop at all. Every friction number below is the recomputed one. The superseded figures were: base-arm friction 0.97R / 0.72R against 0.48R / 0.34R here, and required hit rate at 5R 32.9% / 28.6% against 24.7% / 22.3%. The direction of finding 4 also reversed. D209 records how it was caught.
 
 ### The population, at the primary cell
 
@@ -118,10 +124,10 @@ A 40 bps round trip against the stop widths these entries actually produce. D196
 
 | symbol | arm | n | median wait (bars) | median retracement | median stop (ATR) | median stop (%) | median friction (R) | hit rate needed at 5R |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| `BTCUSDT` | C1 only | 3,875 | 5 | 0.321 | 1.04 | 0.41% | 0.972 | 32.9% |
-| `BTCUSDT` | C1+C2+C3+C4 | 120 | 9 | 0.538 | 1.70 | 0.68% | 0.589 | 26.5% |
-| `ETHUSDT` | C1 only | 3,753 | 5 | 0.316 | 1.06 | 0.56% | 0.718 | 28.6% |
-| `ETHUSDT` | C1+C2+C3+C4 | 106 | 9 | 0.547 | 1.84 | 1.01% | 0.395 | 23.3% |
+| `BTCUSDT` | C1 only | 3,875 | 5 | 0.321 | 2.14 | 0.83% | 0.480 | 24.7% |
+| `BTCUSDT` | C1+C2+C3+C4 | 120 | 9 | 0.538 | 1.39 | 0.57% | 0.706 | 28.4% |
+| `ETHUSDT` | C1 only | 3,753 | 5 | 0.316 | 2.28 | 1.18% | 0.340 | 22.3% |
+| `ETHUSDT` | C1+C2+C3+C4 | 106 | 9 | 0.547 | 1.47 | 0.79% | 0.505 | 25.1% |
 
 Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of ten". The column above is the same arithmetic with costs put back.
 
@@ -129,11 +135,11 @@ Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of 
 
 **1. The stop condition clears, so the programme continues.** `BTCUSDT` produces 120 stacked entries and `ETHUSDT` produces 106 stacked entries, both above the pre-registered floor of 30. H5 — that the stacked arm would be underpowered — is **falsified**. It was held at moderate confidence and it was wrong.
 
-**2. The round-trip cost is roughly the whole distance to the stop.** On the C1-only arm the median stop sits at 0.41% of price on `BTCUSDT` and 0.56% of price on `ETHUSDT`, against a 40 bps round trip — so friction is 0.97R and 0.72R. This is the whole problem with running this strategy on 15m bars, and it is arithmetic rather than a result: a stop placed at the swing extreme of a 15m impulse leg is simply not far enough away to pay for crossing the spread twice.
+**2. The round trip eats a third to a half of the risk before anything happens.** On the C1-only arm the median stop sits at 0.83% of price on `BTCUSDT` and 1.18% of price on `ETHUSDT`, against a 40 bps round trip — so friction is 0.48R and 0.34R. That is arithmetic rather than a result, and it is the structural problem with running this strategy on 15m bars: a stop placed at a 15m swing extreme is close enough that crossing the spread twice is a material fraction of the whole trade.
 
-**3. The course's central arithmetic is wrong once costs exist.** It claims a 5R target breaks even at ~20% and is "highly profitable" at 30%. Frictionless that is nearly right — the true break-even is 16.7%. At 40 bps on the stacked arm it becomes 26.5% on `BTCUSDT` and 23.3% on `ETHUSDT`, and on the C1-only arm 32.9% and 28.6%. **A 20% hit rate at 5R loses money at every cell measured here.** No backtest was needed to establish that, and none of it depends on whether the components carry information.
+**3. The course's central arithmetic is wrong once costs exist.** It claims a 5R target breaks even at ~20% and is "highly profitable" at 30%. Frictionless that is nearly right — the true break-even is 16.7%. At 40 bps on the stacked arm it becomes 28.4% on `BTCUSDT` and 25.1% on `ETHUSDT`, and on the C1-only arm 24.7% and 22.3%. **A 20% hit rate at 5R loses money at every cell measured here.** No backtest was needed to establish that, and none of it depends on whether the components carry information.
 
-**4. The confluence stack's one measurable effect so far is that it enters deeper.** Median retracement moves from 0.321 to 0.538 on `BTCUSDT` and 0.316 to 0.547 on `ETHUSDT`, which widens the stop from 1.04 to 1.70 ATR and 1.06 to 1.84 ATR and roughly halves the friction. That is a real mechanical benefit and it is **not evidence of a signal** — waiting for a deeper pullback would do the same thing without any of the structure. WP4 is where the two get separated.
+**4. The confluence stack enters deeper, and that makes the arithmetic WORSE.** Median retracement moves from 0.321 to 0.538 on `BTCUSDT` and 0.316 to 0.547 on `ETHUSDT`. The stop sits at the extreme the leg came FROM, so a deeper entry is a **tighter** stop, not a wider one: 2.14 to 1.39 ATR and 2.28 to 1.47 ATR, and friction rises from 0.48R to 0.71R and 0.34R to 0.51R. So the confluence the course sells as precision is, in cost terms, a tax: it buys a better price by risking less, and the fixed spread then eats a larger share of what is left. WP4 asks whether the better price is worth the tax.
 
 **5. Two filters barely filter, and one is incompatible with the rest.** C3 (the 61.8% band) admits 2,672 of 3,875 and 2,619 of 3,753 setups on its own — roughly 69% and 70% of the population, which is very little work for a filter, before anyone asks whether 0.618 is special. C5 (RSI 30/70) collapses the stacked arm to 2 and 2 entries: the textbook thresholds essentially never coincide with structural confluence. **C5 is therefore dropped as a stacked filter and kept as a continuous feature in WP4a**, which is where a 2-trade arm has nothing to say and a rank correlation still does.
 
@@ -142,18 +148,19 @@ Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of 
 
 | symbol | k | touch | setups | stacked | median stop (ATR) | median friction (R) |
 |---|---:|---:|---:|---:|---:|---:|
-| `BTCUSDT` **(primary)** | 2 | 0.5 | 3,875 | 120 | 1.70 | 0.589 |
-| `BTCUSDT` | 2 | 1.0 | 3,875 | 244 | 1.74 | 0.532 |
-| `BTCUSDT` | 3 | 0.5 | 2,808 | 67 | 2.19 | 0.411 |
-| `BTCUSDT` | 3 | 1.0 | 2,808 | 131 | 2.01 | 0.432 |
-| `ETHUSDT` **(primary)** | 2 | 0.5 | 3,753 | 106 | 1.84 | 0.395 |
-| `ETHUSDT` | 2 | 1.0 | 3,753 | 239 | 1.80 | 0.438 |
-| `ETHUSDT` | 3 | 0.5 | 2,717 | 45 | 2.00 | 0.376 |
-| `ETHUSDT` | 3 | 1.0 | 2,717 | 137 | 2.10 | 0.363 |
+| `BTCUSDT` **(primary)** | 2 | 0.5 | 3,875 | 120 | 1.39 | 0.706 |
+| `BTCUSDT` | 2 | 1.0 | 3,875 | 244 | 1.89 | 0.502 |
+| `BTCUSDT` | 3 | 0.5 | 2,808 | 67 | 1.65 | 0.540 |
+| `BTCUSDT` | 3 | 1.0 | 2,808 | 131 | 2.19 | 0.420 |
+| `ETHUSDT` **(primary)** | 2 | 0.5 | 3,753 | 106 | 1.47 | 0.505 |
+| `ETHUSDT` | 2 | 1.0 | 3,753 | 239 | 1.96 | 0.393 |
+| `ETHUSDT` | 3 | 0.5 | 2,717 | 45 | 1.65 | 0.509 |
+| `ETHUSDT` | 3 | 1.0 | 2,717 | 137 | 2.27 | 0.339 |
 
 ### Multiplicity
 
 **Looks: 0.** A census is not a test. Nothing here compares anything to anything, no hypothesis is scored, and no parameter is chosen on the strength of it. The grid above is reported so that WP6's discretion audit has counts to stand on and so a cell producing nothing cannot quietly vanish from a later table.
+
 ## WP3 — each component alone, against its own matched placebo
 
 **Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_components.py` (offline, deterministic, seed 0)
@@ -275,6 +282,176 @@ Paired bootstrap of 0.618 minus each placebo ratio, one resampled index vector a
 **The depth-matched comparison was NOT pre-registered.** It was designed after the C3 ladder came back a monotone staircase, which is post-hoc by any honest accounting, and it is counted as six further looks rather than folded into the arms it re-reads. Two things make it disclosable rather than disqualifying: it makes every verdict HARSHER, not kinder — C4 goes from a clean pass to nothing — and the confound it controls for was named in `structure_nulls.py`'s docstring before any run, as D189's H2. What was not anticipated is that the confound would turn out to explain the whole result.
 
 The `k` and touch-band grid is NOT run here. WP3 reports the pre-registered primary cell only; the grid belongs to WP6's discretion audit, where the spread across parameterisations is the question rather than a sensitivity footnote. Running it twice would double the count for one answer.
+
+## WP4 - what each component adds on top of the others
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_marginal.py` (offline, deterministic)
+
+Wrapper frozen in every arm: stop at the swing extreme, 5R target, channel trail after 1R, 60-bar cap. D203's finding is that refining a wrapper improves a strategy against its own predecessor and moves the null not at all, so the filters are the only thing that varies.
+
+### (a) Feature quintiles on one trade population - the primary reading
+
+The loosest arm (C1 only) generates the population; every component is annotated onto it as a **continuous** feature. Promotion criteria are `feature_analysis`'s, unchanged: |rho| >= 0.2, the same sign in both halves of the sample, and quintile means stepping monotonically.
+
+| symbol | feature | n | rho(MFE) | first half | second half | verdict |
+|---|---|---:|---:|---:|---:|---|
+| `BTCUSDT` | fib_depth | 3,750 | +0.183 | +0.182 | +0.185 | NO |
+| `BTCUSDT` | gap_distance_atr | 3,418 | -0.214 | -0.220 | -0.212 | CANDIDATE |
+| `BTCUSDT` | atr_to_golden | 3,750 | -0.243 | -0.265 | -0.224 | CANDIDATE |
+| `BTCUSDT` | rsi | 3,750 | -0.019 | -0.034 | -0.004 | NO |
+| `BTCUSDT` | stop_atr | 3,750 | -0.307 | -0.324 | -0.293 | CANDIDATE |
+| `BTCUSDT` | bars_waited | 3,750 | -0.059 | -0.020 | -0.099 | NO |
+| `ETHUSDT` | fib_depth | 3,640 | +0.178 | +0.209 | +0.145 | NO |
+| `ETHUSDT` | gap_distance_atr | 3,357 | -0.205 | -0.220 | -0.188 | CANDIDATE |
+| `ETHUSDT` | atr_to_golden | 3,640 | -0.246 | -0.268 | -0.223 | CANDIDATE |
+| `ETHUSDT` | rsi | 3,640 | -0.022 | -0.058 | +0.014 | NO |
+| `ETHUSDT` | stop_atr | 3,640 | -0.301 | -0.311 | -0.289 | CANDIDATE |
+| `ETHUSDT` | bars_waited | 3,640 | -0.028 | -0.031 | -0.027 | NO |
+
+Depth quintiles on `BTCUSDT` - the gradient the ladder in WP3 predicted:
+
+| quintile | depth range | n | mean MFE | mean MAE | win rate |
+|---:|---|---:|---:|---:|---:|
+| 1 | 0.000 - 0.176 | 750 | +1.0067 | -0.6576 | 25.2% |
+| 2 | 0.176 - 0.265 | 750 | +1.1986 | -0.6773 | 25.7% |
+| 3 | 0.265 - 0.363 | 750 | +1.3815 | -0.6954 | 24.7% |
+| 4 | 0.364 - 0.492 | 750 | +1.4876 | -0.7681 | 15.9% |
+| 5 | 0.492 - 0.999 | 750 | +2.3205 | -1.2025 | 13.2% |
+
+Depth quintiles on `ETHUSDT` - the gradient the ladder in WP3 predicted:
+
+| quintile | depth range | n | mean MFE | mean MAE | win rate |
+|---:|---|---:|---:|---:|---:|
+| 1 | 0.002 - 0.177 | 728 | +1.0457 | -0.6453 | 32.4% |
+| 2 | 0.177 - 0.266 | 728 | +1.1749 | -0.6828 | 30.8% |
+| 3 | 0.267 - 0.360 | 728 | +1.2563 | -0.7014 | 28.3% |
+| 4 | 0.360 - 0.489 | 728 | +1.6680 | -0.8509 | 24.9% |
+| 5 | 0.489 - 0.996 | 728 | +2.5930 | -1.2794 | 16.5% |
+
+### (b) The same features WITHIN depth quintiles - the reading D208 forced
+
+D208 found that retracement depth explains every apparent effect in the strategy, so *does this component add anything* now means *does it add anything at a given depth*. Trades are split into depth quintiles and each feature is ranked inside each one, holding depth roughly constant while the feature varies.
+
+| symbol | feature | rho by depth quintile (1 shallow -> 5 deep) | max abs | signs agree |
+|---|---|---|---:|:--:|
+| `BTCUSDT` | gap_distance_atr | -0.15 / -0.25 / -0.14 / -0.13 / -0.02 | 0.247 | yes |
+| `BTCUSDT` | atr_to_golden | -0.21 / -0.32 / -0.17 / -0.12 / -0.03 | 0.319 | yes |
+| `BTCUSDT` | rsi | -0.01 / +0.00 / -0.04 / +0.04 / -0.07 | 0.074 | no |
+| `BTCUSDT` | stop_atr | -0.23 / -0.35 / -0.24 / -0.22 / -0.28 | 0.350 | yes |
+| `BTCUSDT` | bars_waited | -0.11 / +0.01 / -0.09 / -0.02 / +0.01 | 0.110 | no |
+| `ETHUSDT` | gap_distance_atr | -0.20 / -0.20 / -0.13 / -0.12 / -0.03 | 0.199 | yes |
+| `ETHUSDT` | atr_to_golden | -0.23 / -0.26 / -0.15 / -0.11 / -0.06 | 0.265 | yes |
+| `ETHUSDT` | rsi | -0.05 / +0.03 / -0.10 / +0.01 / +0.02 | 0.097 | no |
+| `ETHUSDT` | stop_atr | -0.25 / -0.31 / -0.21 / -0.21 / -0.31 | 0.309 | yes |
+| `ETHUSDT` | bars_waited | -0.03 / -0.04 / +0.00 / -0.05 / +0.04 | 0.050 | no |
+
+The promotion bar is |rho| >= 0.2. A feature that never reaches it inside any depth bucket is a proxy for depth and nothing more.
+
+#### (b2) The same features within STOP-WIDTH quintiles
+
+MFE is measured in R, and `MFE_R = excursion / risk`. So anything that varies with leg size relative to ATR inherits a correlation with it **arithmetically**, whether or not it means anything. This holds stop width roughly constant instead of depth.
+
+| symbol | feature | rho by stop-width quintile | max abs | signs agree |
+|---|---|---|---:|:--:|
+| `BTCUSDT` | fib_depth | +0.01 / -0.02 / +0.03 / +0.04 / +0.07 | 0.071 | no |
+| `BTCUSDT` | gap_distance_atr | +0.10 / +0.08 / -0.05 / +0.06 / -0.09 | 0.101 | no |
+| `BTCUSDT` | atr_to_golden | +0.05 / +0.08 / -0.04 / +0.02 / -0.13 | 0.129 | no |
+| `BTCUSDT` | rsi | -0.04 / -0.03 / -0.03 / +0.00 / -0.04 | 0.036 | no |
+| `BTCUSDT` | bars_waited | -0.02 / +0.01 / -0.05 / -0.01 / -0.04 | 0.053 | no |
+| `ETHUSDT` | fib_depth | +0.04 / -0.03 / +0.05 / +0.02 / +0.06 | 0.064 | no |
+| `ETHUSDT` | gap_distance_atr | +0.07 / +0.06 / -0.04 / +0.05 / -0.09 | 0.091 | no |
+| `ETHUSDT` | atr_to_golden | +0.03 / +0.08 / -0.07 / -0.02 / -0.13 | 0.130 | no |
+| `ETHUSDT` | rsi | +0.03 / -0.07 / -0.07 / -0.02 / -0.00 | 0.073 | no |
+| `ETHUSDT` | bars_waited | +0.05 / -0.04 / +0.02 / -0.05 / -0.01 | 0.052 | no |
+
+#### Are the surviving features three things or one?
+
+Pairwise rank correlation between the features themselves. Added after the corrected run returned three candidates whose signs and magnitudes were suspiciously alike.
+
+**`BTCUSDT`**
+
+| | fib_depth | gap_distance_atr | atr_to_golden | rsi | stop_atr | bars_waited |
+|---|---:|---:|---:|---:|---:|---:|
+| fib_depth | +1.00 | -0.55 | -0.76 | -0.07 | -0.57 | -0.11 |
+| gap_distance_atr | -0.55 | +1.00 | +0.82 | -0.03 | +0.79 | +0.17 |
+| atr_to_golden | -0.76 | +0.82 | +1.00 | +0.00 | +0.87 | +0.13 |
+| rsi | -0.07 | -0.03 | +0.00 | +1.00 | -0.01 | -0.01 |
+| stop_atr | -0.57 | +0.79 | +0.87 | -0.01 | +1.00 | +0.12 |
+| bars_waited | -0.11 | +0.17 | +0.13 | -0.01 | +0.12 | +1.00 |
+
+**`ETHUSDT`**
+
+| | fib_depth | gap_distance_atr | atr_to_golden | rsi | stop_atr | bars_waited |
+|---|---:|---:|---:|---:|---:|---:|
+| fib_depth | +1.00 | -0.54 | -0.75 | -0.04 | -0.57 | -0.09 |
+| gap_distance_atr | -0.54 | +1.00 | +0.83 | -0.04 | +0.80 | +0.16 |
+| atr_to_golden | -0.75 | +0.83 | +1.00 | -0.02 | +0.88 | +0.11 |
+| rsi | -0.04 | -0.04 | -0.02 | +1.00 | -0.03 | -0.02 |
+| stop_atr | -0.57 | +0.80 | +0.88 | -0.03 | +1.00 | +0.10 |
+| bars_waited | -0.09 | +0.16 | +0.11 | -0.02 | +0.10 | +1.00 |
+
+### (c) The ablation lattice - confirmation
+
+All 8 subsets of {C2, C3, C4}, identical wrapper, identical setups. C5 is absent by D206: RSI at 30/70 leaves 2 stacked entries on both symbols, and it is carried as a continuous feature in (a) instead. **Trade counts are printed beside every number - an arm that wins on nine trades has not won.**
+
+| symbol | arm | trades | untradeable | hit rate | median R (40bp) | mean R, takeable only (40bp) | mean R (0bp, diagnostic) | median entry depth | stops/targets/caps |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| `BTCUSDT` | C1 | 3,025 | 44% | 21.0% | -1.379 | -0.495 | +0.013 | 0.308 | 2141/137/747 |
+| `BTCUSDT` | C1+C2 | 811 | 51% | 18.6% | -1.568 | -0.534 | -0.022 | 0.407 | 642/31/138 |
+| `BTCUSDT` | C1+C3 | 2,329 | 71% | 15.4% | -2.025 | -0.590 | -0.000 | 0.547 | 2018/167/144 |
+| `BTCUSDT` | C1+C4 | 1,006 | 44% | 22.5% | -1.342 | -0.501 | +0.098 | 0.448 | 719/54/233 |
+| `BTCUSDT` | C1+C2+C3 | 368 | 70% | 10.3% | -2.007 | -0.864 | -0.160 | 0.518 | 332/16/20 |
+| `BTCUSDT` | C1+C2+C4 | 248 | 50% | 16.1% | -1.561 | -0.668 | -0.021 | 0.466 | 198/13/37 |
+| `BTCUSDT` | C1+C3+C4 | 573 | 66% | 17.3% | -1.817 | -0.502 | +0.142 | 0.574 | 481/49/43 |
+| `BTCUSDT` | C1+C2+C3+C4 | 118 | 67% | 11.0% | -1.801 | -1.058 | -0.038 | 0.538 | 102/8/8 |
+| `ETHUSDT` | C1 | 2,999 | 32% | 27.5% | -1.185 | -0.401 | +0.093 | 0.309 | 2100/160/739 |
+| `ETHUSDT` | C1+C2 | 881 | 31% | 24.1% | -1.371 | -0.575 | -0.017 | 0.406 | 688/36/157 |
+| `ETHUSDT` | C1+C3 | 2,308 | 54% | 20.7% | -1.709 | -0.572 | +0.043 | 0.556 | 1997/170/141 |
+| `ETHUSDT` | C1+C4 | 1,038 | 31% | 26.9% | -1.212 | -0.440 | +0.074 | 0.443 | 748/50/240 |
+| `ETHUSDT` | C1+C2+C3 | 368 | 52% | 16.8% | -1.737 | -0.607 | -0.039 | 0.527 | 321/22/25 |
+| `ETHUSDT` | C1+C2+C4 | 254 | 30% | 21.7% | -1.463 | -0.641 | -0.149 | 0.462 | 204/4/46 |
+| `ETHUSDT` | C1+C3+C4 | 551 | 49% | 22.7% | -1.598 | -0.558 | +0.125 | 0.570 | 462/42/47 |
+| `ETHUSDT` | C1+C2+C3+C4 | 104 | 50% | 15.4% | -1.751 | -0.815 | -0.102 | 0.547 | 88/4/12 |
+
+**`untradeable` is the share of trades whose 40 bps round trip costs at least their entire risk.** A stop placed at the swing extreme, entered at a shallow retracement, can sit a few basis points away, and the plain mean R for those trades runs to -100 and worse. That is correct arithmetic describing a position size nobody can take, so the median and the takeable-only mean are what the table reports and the raw mean is left in the JSON.
+
+The zero-cost column is a **diagnostic and never a strategy** - D202's device for separating 'no information' from 'information this cost structure cannot support'.
+
+### What the readings say
+
+**Unconditionally, `atr_to_golden`, `gap_distance_atr`, `stop_atr` clear the promotion criteria on both symbols — and the next two paragraphs take that back.** The bar is `feature_analysis`'s, unchanged: |rho| >= 0.2, the same sign in both halves, and quintile means stepping monotonically.
+
+| feature | `BTCUSDT` rho / verdict | `ETHUSDT` rho / verdict |
+|---|---|---|
+| fib_depth | +0.183 / NO | +0.178 / NO |
+| gap_distance_atr | -0.214 / CANDIDATE | -0.205 / CANDIDATE |
+| atr_to_golden | -0.243 / CANDIDATE | -0.246 / CANDIDATE |
+| rsi | -0.019 / NO | -0.022 / NO |
+| stop_atr | -0.307 / CANDIDATE | -0.301 / CANDIDATE |
+| bars_waited | -0.059 / NO | -0.028 / NO |
+
+**And the survivors are one quantity, not three.** Pairwise rank correlation between them: `BTCUSDT` gap_distance_atr~atr_to_golden +0.82, `BTCUSDT` gap_distance_atr~stop_atr +0.79, `BTCUSDT` atr_to_golden~stop_atr +0.87, `ETHUSDT` gap_distance_atr~atr_to_golden +0.83, `ETHUSDT` gap_distance_atr~stop_atr +0.80, `ETHUSDT` atr_to_golden~stop_atr +0.88. `stop_atr` is leg size relative to ATR; `atr_to_golden` is a distance to a fixed fraction of the same leg, in the same ATR units; `gap_distance_atr` is a distance to a level inside it. **MFE is measured in R, so `MFE_R = excursion / risk` correlates with leg size arithmetically** — which is what all three are reporting.
+
+**Conditioned on depth, the largest rank correlation any component reaches in any depth bucket is** `BTCUSDT` gap_distance_atr 0.25, atr_to_golden 0.32, rsi 0.07, stop_atr 0.35, bars_waited 0.11 and `ETHUSDT` gap_distance_atr 0.20, atr_to_golden 0.26, rsi 0.10, stop_atr 0.31, bars_waited 0.05, against the promotion bar of 0.2. Signs agreeing across all five depth buckets: `BTCUSDT` gap_distance_atr, atr_to_golden, stop_atr; `ETHUSDT` gap_distance_atr, atr_to_golden, stop_atr. A component that neither clears the bar nor holds its sign inside depth buckets is carrying nothing depth does not already carry.
+
+**And holding leg size constant instead, everything collapses.** Inside stop-width quintiles the largest rank correlation ANY feature reaches in ANY bucket is 0.13 on `BTCUSDT` and 0.13 on `ETHUSDT`, against a bar of 0.2, and not one of them holds its sign across all five buckets. Depth included. **That is the verdict: once leg size relative to ATR is held constant, no component of this strategy predicts anything.**
+
+**The lattice shows the mechanism.** Median entry depth rises from 0.308 to 0.538 on `BTCUSDT` and 0.309 to 0.547 on `ETHUSDT` as the filters stack — they enter deeper, which is what D206's census predicted and D208 showed is the whole of it. The fully-stacked arm holds 118 and 104 trades, so it is powered enough to carry a verdict, and the verdict is that at zero cost it earns -0.038R and -0.102R a trade against the base arm's +0.013R and +0.093R — **stacking all four filters makes it worse, before costs.**
+
+**Every arm loses at 40 bps, and most of them lose before costs too.** Median net R on the base arm is -1.379 and -1.185, with 44% and 32% of its trades untradeable outright — the round trip costs at least their whole risk. The zero-cost diagnostic on the same arm is +0.013 and +0.093 mean R, which separates 'no information' from 'information the costs ate': there was not much to eat.
+
+### Multiplicity
+
+| reading | cells | looks |
+|---|---|---:|
+| (a) feature quintiles | 6 features x 2 symbols | 12 |
+| (b) conditional on depth | 5 features x 2 symbols | 10 |
+| (b2) conditional on stop width | 5 features x 2 symbols | 10 |
+| collinearity matrix | diagnostic, not a test | 0 |
+| (c) ablation lattice | 8 arms x 2 symbols | 16 |
+| **WP4 total** | | **48** |
+
+Reading (b) was not pre-registered - D208 created the question it answers. It is counted in full rather than folded into (a), and like D208's depth-matched null it makes the verdict harsher rather than kinder.
 
 ---
 

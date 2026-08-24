@@ -22,7 +22,7 @@ from itertools import combinations
 import pytest
 
 from backtest_framework.data.bars import TimestampedBar
-from backtest_framework.research.structure import Event, market_structure
+from backtest_framework.research.structure import Event, market_structure, retracement
 from backtest_framework.research.structure_setups import (
     ATR_WINDOW_15M,
     CONDITIONS,
@@ -30,6 +30,7 @@ from backtest_framework.research.structure_setups import (
     friction_in_r,
     required_hit_rate,
     stop_distance,
+    stop_price,
 )
 from backtest_framework.research.terrain_nulls import TOUCH_ATR
 from backtest_framework.research.terrain_strategies import MAX_HOLD
@@ -209,10 +210,40 @@ def test_a_target_the_friction_has_already_eaten_returns_none():
     assert required_hit_rate(0.4, 0.5) is None
 
 
-def test_stop_distance_is_measured_to_the_swing_extreme():
-    setup = SETUPS[0]
-    entry = BARS[setup.ready_index].bar.close
-    assert stop_distance(setup, entry) == abs(entry - setup.leg.end_price)
+def test_the_stop_sits_on_the_far_side_of_the_entry_in_both_directions():
+    """The defect D209 records, pinned so it cannot come back.
+
+    The first implementation put the stop at `leg.end_price` — the extreme the leg ran TO —
+    which for a long sits ABOVE the entry and is not a stop at all. It silently rejected
+    93% of setups through the wrong-side guard and left an adversely-selected 7% that had
+    barely pulled back.
+
+    The correct level is the extreme the leg came FROM, which is also the invalidation
+    boundary: `retracement == 1.0` is `leg.start_price`."""
+    for setup in SETUPS:
+        entry = BARS[setup.ready_index].bar.close
+        stop = stop_price(setup)
+        assert stop == setup.leg.start_price
+        depth = retracement(setup.leg, entry)
+        if depth is None or not (0.0 < depth < 1.0):
+            continue  # price outside the leg: the side is undefined, not wrong
+        if setup.direction > 0:
+            assert stop < entry, "a long stop must sit below the entry"
+        else:
+            assert stop > entry, "a short stop must sit above the entry"
+
+
+def test_stop_distance_is_the_unretraced_part_of_the_leg():
+    """`(1 - retracement) * |span|`: a shallow entry risks the whole leg and a deep one
+    risks little. The first implementation had this exactly backwards, which is why WP2's
+    friction table overstated the toll by roughly five times."""
+    for setup in SETUPS[:200]:
+        entry = BARS[setup.ready_index].bar.close
+        depth = retracement(setup.leg, entry)
+        if depth is None:
+            continue
+        expected = abs(1.0 - depth) * abs(setup.leg.span)
+        assert stop_distance(setup, entry) == pytest.approx(expected)
 
 
 def test_degenerate_inputs_return_none_rather_than_a_number():
