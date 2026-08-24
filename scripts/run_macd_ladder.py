@@ -56,11 +56,13 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
 from backtest_framework.data.cleaner import clean  # noqa: E402
+from backtest_framework.data.corporate_actions import load_events_json  # noqa: E402
 from backtest_framework.data.csv_fixture import load_fixture_csv  # noqa: E402
 from backtest_framework.research import macd as M  # noqa: E402
 from backtest_framework.validation.dsr import expected_max_sharpe  # noqa: E402
 
 FIXTURE = REPO / "data" / "fixtures" / "universe_daily_2015_2024_raw.csv.gz"
+EVENTS = REPO / "data" / "fixtures" / "universe_daily_2015_2024_raw_events.json"
 SUMMARY = REPO / "data" / "macd_ladder_summary.json"
 RESULTS = REPO / "MACD_RESULTS.md"
 
@@ -127,12 +129,17 @@ class Panel:
 
     symbols: tuple[str, ...]
     closes: np.ndarray  # (n, T)
-    log_returns: np.ndarray  # (n, T), [:, 0] = 0
+    log_returns: np.ndarray  # (n, T), price only, [:, 0] = 0
     cost_fraction: np.ndarray  # (n,) per-side cost as a fraction of notional
     dates: tuple[str, ...]
+    total_log_returns: np.ndarray  # (n, T), dividends reinvested on the ex-date
+    dividends_matched: int = 0
+    dividends_unmatched: int = 0
 
 
-def portfolio_log_returns(panel: Panel, position: np.ndarray) -> np.ndarray:
+def portfolio_log_returns(
+    panel: Panel, position: np.ndarray, *, total_return: bool = False
+) -> np.ndarray:
     """Equal-weighted, daily-rebalanced portfolio of the per-symbol books.
 
     Per symbol this is exactly `PositionResult.equity_curve`'s arithmetic written
@@ -149,8 +156,14 @@ def portfolio_log_returns(panel: Panel, position: np.ndarray) -> np.ndarray:
     charge = panel.cost_fraction[:, None] * turnover
     if np.any(charge >= 1.0):  # pragma: no cover - a cost of 100% is a config error
         raise ValueError("a per-bar charge reached 100% of notional")
-    per_symbol = position * panel.log_returns + np.log1p(-charge)
+    rets = panel.total_log_returns if total_return else panel.log_returns
+    per_symbol = position * rets + np.log1p(-charge)
     return per_symbol.mean(axis=0)
+
+    # `total_return=True` swaps the PRICE return for the dividend-reinvested one.
+    # It never touches the position series: MACD is computed on the price a trader
+    # actually sees, and rewriting the price to smuggle dividends into the SIGNAL
+    # would be a different indicator wearing the same name.
 
 
 def sharpe_of(log_returns: np.ndarray) -> float:
@@ -347,8 +360,58 @@ def load_panel() -> tuple[Panel, dict]:
         [per_side_bps(float(p), PRIMARY_CAPITAL / len(symbols)) for p in median_close]
     )
     dates = tuple(b.timestamp.date().isoformat() for b in cleaned[symbols[0]])
-    panel = Panel(symbols, closes, log_returns, cost_bps / 1e4, dates)
+    cash, matched, unmatched = dividend_panel(symbols, cleaned, closes.shape[1])
+
+    # Total return: the dividend lands on its ex-date bar and is reinvested.
+    #   r_tr[t] = log((close[t] + div[t]) / close[t-1])
+    # The sidecar dividends and the fixture prices are BOTH in the split-adjusted
+    # frame (D75), so no conversion is needed and `as_declared_dividends` is
+    # deliberately not called — that transform is for as-traded prices, which these
+    # are not.
+    total = np.zeros_like(closes)
+    total[:, 1:] = np.log((closes[:, 1:] + cash[:, 1:]) / closes[:, :-1])
+
+    panel = Panel(
+        symbols,
+        closes,
+        log_returns,
+        cost_bps / 1e4,
+        dates,
+        total_log_returns=total,
+        dividends_matched=matched,
+        dividends_unmatched=unmatched,
+    )
     return panel, cleaned
+
+
+def dividend_panel(
+    symbols: tuple[str, ...], cleaned: dict, n_bars: int
+) -> tuple[np.ndarray, int, int]:
+    """Per-share dividends laid onto the bar grid, one row per symbol.
+
+    An ex-date that is not itself a bar in the cleaned series is attached to the
+    NEXT bar at or after it — dropping it would silently understate the benchmark,
+    which is the direction that flatters a part-time-exposed strategy. Ex-dates
+    after the last bar have nowhere to go and are counted as unmatched rather than
+    discarded quietly."""
+    actions = load_events_json(EVENTS)
+    cash = np.zeros((len(symbols), n_bars))
+    matched = unmatched = 0
+    for i, sym in enumerate(symbols):
+        index = {b.timestamp.date(): j for j, b in enumerate(cleaned[sym])}
+        ordered = sorted(index)
+        for ts, amount in actions.dividends_by_symbol.get(sym, ()):  # noqa: B007
+            day = ts.date()
+            j = index.get(day)
+            if j is None:
+                after = [d for d in ordered if d >= day]
+                if not after:
+                    unmatched += 1
+                    continue
+                j = index[after[0]]
+            cash[i, j] += float(amount)
+            matched += 1
+    return cash, matched, unmatched
 
 
 # --------------------------------------------------------------------------
@@ -432,6 +495,8 @@ def census(panel: Panel, bars_by_symbol: dict) -> dict:
         "last_date": panel.dates[-1],
         "warm_up_share_of_sample": start / panel.log_returns.shape[1],
         "n_symbols": len(panel.symbols),
+        "dividends_matched": int(panel.dividends_matched),
+        "dividends_unmatched": int(panel.dividends_unmatched),
         "arms": arms,
         "cost": {
             "primary_capital": PRIMARY_CAPITAL,
@@ -467,10 +532,15 @@ def _half_index(panel: Panel, start: int) -> int:
 
 def score_arm(panel: Panel, position: np.ndarray, start: int) -> dict:
     live = portfolio_log_returns(panel, position)[start:]
+    tr = portfolio_log_returns(panel, position, total_return=True)[start:]
     half = _half_index(panel, start)
     return {
         "sharpe": sharpe_of(live),
         "total_return": total_return_of(live),
+        "sharpe_total_return": sharpe_of(tr),
+        "total_return_with_dividends": total_return_of(tr),
+        "cagr_price_only": _cagr(total_return_of(live), len(live)),
+        "cagr_with_dividends": _cagr(total_return_of(tr), len(tr)),
         "max_drawdown": max_drawdown_of(live),
         "turnover_units": float(np.abs(np.diff(position[:, start:], axis=1)).sum()),
         "exposure": float(np.mean(np.abs(position[:, start:]))),
@@ -478,6 +548,11 @@ def score_arm(panel: Panel, position: np.ndarray, start: int) -> dict:
         "sharpe_first_half": sharpe_of(live[: half - start]),
         "sharpe_second_half": sharpe_of(live[half - start :]),
     }
+
+
+def _cagr(total: float, bars: int) -> float:
+    years = bars / PPY
+    return (1.0 + total) ** (1.0 / years) - 1.0 if years > 0 else 0.0
 
 
 def buy_and_hold(panel: Panel, start: int) -> dict:
@@ -489,10 +564,15 @@ def buy_and_hold(panel: Panel, start: int) -> dict:
     ones = np.ones_like(panel.log_returns)
     ones[:, :start] = 0.0
     live = portfolio_log_returns(panel, ones)[start:]
+    tr = portfolio_log_returns(panel, ones, total_return=True)[start:]
     return {
         "sharpe": sharpe_of(live),
         "total_return": total_return_of(live),
         "max_drawdown": max_drawdown_of(live),
+        "sharpe_total_return": sharpe_of(tr),
+        "total_return_with_dividends": total_return_of(tr),
+        "cagr_price_only": _cagr(total_return_of(live), len(live)),
+        "cagr_with_dividends": _cagr(total_return_of(tr), len(tr)),
     }
 
 
@@ -742,8 +822,17 @@ def verdict(core: list[dict], deltas: list[dict], bh: dict, mult: dict) -> dict:
             ladder_ok = d["zero_clears"]
         else:
             ladder_ok = False  # the floor cannot clear a hurdle it defines
+        # Hurdle D says "beat buy-and-hold" without naming a metric. This is the
+        # Sharpe reading, which is the one the study ran and therefore the one that
+        # counts. The TOTAL-RETURN reading is recorded beside it and is NOT used to
+        # move the verdict either way — see the addendum in the decision record.
         beats_benchmark = (
             c["sharpe"] > bh["sharpe"] if c["book"] == "long_flat" else c["sharpe"] > 0.0
+        )
+        beats_benchmark_pnl = (
+            c["total_return_with_dividends"] > bh["total_return_with_dividends"]
+            if c["book"] == "long_flat"
+            else c["total_return_with_dividends"] > 0.0
         )
         checks = {
             "A_ladder_delta": bool(ladder_ok),
@@ -759,6 +848,10 @@ def verdict(core: list[dict], deltas: list[dict], bh: dict, mult: dict) -> dict:
                 "sharpe": c["sharpe"],
                 **checks,
                 "survivor": all(checks.values()),
+                "D_benchmark_total_return_reading": bool(beats_benchmark_pnl),
+                "survivor_under_pnl_reading": all(
+                    {**checks, "D_benchmark": beats_benchmark_pnl}.values()
+                ),
             }
         )
     return {
@@ -767,6 +860,10 @@ def verdict(core: list[dict], deltas: list[dict], bh: dict, mult: dict) -> dict:
         "rows": rows,
         "survivors": [r["cell"] for r in rows if r["survivor"]],
         "stage_2_runs": any(r["survivor"] for r in rows),
+        "survivors_under_pnl_reading": [
+            r["cell"] for r in rows if r["survivor_under_pnl_reading"]
+        ],
+        "buy_and_hold_total_return_with_dividends": bh["total_return_with_dividends"],
     }
 
 
@@ -852,6 +949,35 @@ def render(p: dict) -> str:
         f" **{p['buy_and_hold']['sharpe']:+.3f}** Sharpe,"
         f" {_pct(p['buy_and_hold']['total_return'])} total,"
         f" {_pct(p['buy_and_hold']['max_drawdown'])} max drawdown.",
+        "",
+        "**The money, and the dividend adjustment.**",
+        "",
+        "The fixture is split-adjusted and **dividend-unadjusted** (D75), so a price-only"
+        " comparison silently favours a strategy that is out of the market part of the time"
+        " over a benchmark that never is. The dividends are in the sidecar and in the same"
+        " split-adjusted frame as the prices, so they are added back here: the ex-date"
+        " dividend lands on its bar and is reinvested. **The position series is untouched** —"
+        " MACD is computed on the price a trader sees, and rewriting the price to smuggle"
+        " dividends into the SIGNAL would be a different indicator.",
+        "",
+        "| rung | book | gate | price-only | +dividends | CAGR (price) | CAGR (+div) | exposure |",
+        "|---|---|---|---:|---:|---:|---:|---:|",
+    ]
+    for a in p["core"]:
+        lines.append(
+            f"| {a['rung']} | {a['book']} | {a['gate']} | {_pct(a['total_return'])} |"
+            f" {_pct(a['total_return_with_dividends'])} | {_pct(a['cagr_price_only'])} |"
+            f" {_pct(a['cagr_with_dividends'])} | {_pct(a['exposure'])} |"
+        )
+    bhp = p["buy_and_hold"]
+    lines += [
+        f"| **buy-and-hold** | — | — | **{_pct(bhp['total_return'])}** |"
+        f" **{_pct(bhp['total_return_with_dividends'])}** | {_pct(bhp['cagr_price_only'])} |"
+        f" **{_pct(bhp['cagr_with_dividends'])}** | 100.00% |",
+        "",
+        f"Dividends matched to bars: {p['census']['dividends_matched']:,}"
+        f" ({p['census']['dividends_unmatched']} ex-dates fell past the last bar and are"
+        " counted rather than dropped quietly).",
         "",
         "**Hurdle A — the nested deltas. This is the study.**",
         "",
@@ -983,6 +1109,18 @@ def render(p: dict) -> str:
             f" {tick[r['D_benchmark']]} | {tick[r['F_half_stability']]} |"
             f" {tick[r['G_dsr_floor']]} | {tick[r['survivor']]} |"
         )
+    v2 = p["verdict"]
+    lines += [
+        "",
+        "**Hurdle D under a total-return reading, disclosed.** The record wrote"
+        " *beat buy-and-hold* without naming a metric, and the study ran it on Sharpe,"
+        " which is therefore the reading that counts. On dividend-adjusted TOTAL RETURN the"
+        f" long-flat cells are judged against buy-and-hold's"
+        f" {_pct(v2['buy_and_hold_total_return_with_dividends'])}, and"
+        f" **{len(v2['survivors_under_pnl_reading'])}** cells would survive under that"
+        " reading. The verdict is unchanged either way — every cell already fails G — so"
+        " this is recorded as a second reading, not used to move a goalpost.",
+    ]
     survivors = p["verdict"]["survivors"]
     lines += [
         "",

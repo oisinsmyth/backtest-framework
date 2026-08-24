@@ -1,6 +1,6 @@
 # D217 — the MACD crossover ladder: does the signal line add anything to trend following?
 
-**Status:** Committed (H7 confirmed on turnover; H1, H3, H4, H6 falsified; H2 and H5 split)
+**Status:** Committed (H7 confirmed on turnover; H1, H3, H4, H6 falsified; H2 and H5 split) · Addendum 2026-08-24: dividend-adjusted returns
 **Date:** 2026-08-24
 **Category:** Validation & research integrity
 **Source:** A new study, opened on the most widely taught technical strategy there is
@@ -511,3 +511,86 @@ doing, and both are stated now rather than after a good number:
    the transferable claim: *trend acceleration predicts where trend level does not.* If
    that reproduces on independent data it is worth a study. If it does not, the honest
    reading of this one is that 45,783 looks bought a coincidence with a good story.
+
+---
+
+## ADDENDUM — the dividend-adjusted returns
+
+*Appended after the RESULT. Nothing above this line was edited. Same pattern as D212's
+post-close addendum: the study is closed, and this restates its money in the units the
+question was actually asked in.*
+
+**Why this exists.** The RESULT above is stated almost entirely in Sharpe. Asked for the
+PnLs, the price-only numbers turned out to say something the Sharpe table does not, and the
+design gap I had flagged in planning — *handle the dividend bias, do not merely note it* —
+had been noted rather than handled. This closes it.
+
+### The bias, and its direction
+
+The fixture is split-adjusted and **dividend-unadjusted** (D75). Buy-and-hold is exposed
+100% of the time and forgoes the whole dividend stream in a price-only comparison; the best
+arm is exposed **50.8%** of the time and forgoes about half of it. **A price-only comparison
+therefore flatters every part-time-exposed arm**, which is every arm that matters here.
+
+The sidecar dividends are in the same split-adjusted frame as the fixture prices, so they
+apply directly and `as_declared_dividends` is deliberately not called — that transform is
+for as-traded prices, which these are not. The ex-date dividend lands on its bar and is
+reinvested: `r_tr[t] = log((close[t] + div[t]) / close[t-1])`. **2,285 dividends matched,
+0 unmatched.** The position series is untouched — MACD is computed on the price a trader
+sees, and rewriting the price to move dividends into the *signal* would be a different
+indicator wearing the same name.
+
+### The money
+
+Over the live span 2016-07-26 → 2024-12-30 (2,122 bars, 8.42 years), net of costs:
+
+| cell | price-only | +dividends | CAGR (+div) | exposure |
+|---|---:|---:|---:|---:|
+| signal_line / long_flat / none | +41.25% | **+53.54%** | **5.22%** | 50.8% |
+| signal_line / long_short / none | +40.52% | +38.78% | 3.97% | 100% |
+| zero_line / long_flat / none | +20.85% | +34.49% | 3.58% | 57.9% |
+| momentum / long_flat / none | +10.99% | +22.76% | 2.46% | 57.1% |
+| signal_line / long_flat / 200ma | +11.04% | +17.22% | 1.91% | 33.0% |
+| zero_line / long_flat / 200ma | +10.48% | +19.81% | 2.17% | 47.6% |
+| momentum / long_flat / 200ma | +6.14% | +14.63% | 1.64% | 47.1% |
+| zero_line / long_short / none | +2.87% | +6.48% | 0.75% | 100% |
+| momentum / long_short / none | −13.63% | −11.64% | −1.46% | 99.8% |
+| **buy-and-hold** | **+42.78%** | **+70.81%** | **6.56%** | 100% |
+
+### What it changes
+
+**1. The best cell loses to buy-and-hold on money, and the dividend adjustment roughly
+tenfolds the margin.** Price-only, +41.25% against +42.78% — a gap of 1.5 points, or
+−0.13pp of CAGR, close enough to call a tie. Dividend-adjusted, **+53.54% against +70.81%**
+— a gap of **17.3 points**, or **−1.34pp of CAGR**. The arm earns roughly three quarters of
+the passive basket's money.
+
+**2. The Sharpe advantage is a risk-reduction result, not a return result, and should be
+described that way.** The cell's +0.496 against buy-and-hold's +0.266 is bought entirely by
+being out of the market half the time: max drawdown −13.6% against −35.1%. That is a real
+and reproducible property — it is what trend following claims to do — but *"it beat the
+market"* is not what happened and the RESULT's framing leaned closer to that than the money
+supports.
+
+**3. Hurdle D has two readings, and it fails the other one.** D217 wrote *beat
+buy-and-hold* without naming a metric. The study ran it on Sharpe, so that is the reading
+that counts and the verdict stands as recorded. Under a total-return reading the long-flat
+cells are judged against +70.81% and **0 of 12 cells clear D**. **The verdict is unchanged
+either way — every cell already failed G — which is the only reason it is honest to report
+this at all.** Had the second reading rescued a cell rather than killed one, the correct
+move would have been to leave it in the addendum and out of the verdict, and I am recording
+that now so the rule is not invented later.
+
+**4. The long-short arms get WORSE with dividends, and that is the check that the sign is
+right.** `signal_line / long_short` falls +40.52% → +38.78%: a short book is short the
+dividend too, and pays it. `test_a_long_position_receives_the_dividend_and_a_short_pays_it`
+pins both directions.
+
+### What it does not change
+
+The study's actual finding is a **delta between two rungs**, and both rungs hold the same
+kind of exposure, so the dividend stream very largely cancels inside it. The R1-versus-R2
+separation, the eight dead zero-line sweep cells, the fill-timing collapse of R2−R3 and the
+destructiveness of the 200-MA gate all stand exactly as recorded. **What moves is the
+absolute money, and the absolute money was never the claim** — but it was reported in a way
+that let it read as one, and that is the defect this addendum fixes.

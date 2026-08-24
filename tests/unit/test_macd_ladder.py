@@ -88,6 +88,7 @@ def test_the_numpy_portfolio_agrees_with_position_result_on_one_symbol():
         log_returns=rets[None, :],
         cost_fraction=np.asarray([cost_bps / 1e4]),
         dates=tuple(str(i) for i in range(n_bars)),
+        total_log_returns=rets[None, :],
     )
     mine = R.portfolio_log_returns(panel, pos[None, :])
 
@@ -112,6 +113,7 @@ def test_a_long_short_flip_is_charged_twice_because_per_side_is_the_authority():
         log_returns=np.zeros((1, 3)),
         cost_fraction=np.asarray([100.0 / 1e4]),  # 100 bp per side, for legibility
         dates=("a", "b", "c"),
+        total_log_returns=np.zeros((1, 3)),
     )
     flip = R.portfolio_log_returns(panel, np.asarray([[1.0, -1.0, -1.0]]))
     assert flip[1] == pytest.approx(math.log1p(-0.02), abs=1e-15)  # 2 units x 100bp
@@ -148,6 +150,7 @@ def test_the_position_is_shifted_so_no_arm_earns_its_own_signal_bar():
         log_returns=np.zeros((1, len(closes))),
         cost_fraction=np.asarray([0.0]),
         dates=tuple(str(i) for i in range(len(closes))),
+        total_log_returns=np.zeros((1, len(closes))),
     )
     start = R.ladder_start(12, 26, 9)
     by_symbol = {"X": bars}
@@ -256,3 +259,78 @@ def test_the_verdict_is_taken_at_the_largest_count(payload):
     m = payload["multiplicity"]
     counts = [f["n_trials"] for f in m["counts"].values()]
     assert m["counts"][m["verdict_count"]]["n_trials"] == max(counts)
+
+
+# --------------------------------------------------------------------------
+# 5. The dividend adjustment (post-close addendum)
+# --------------------------------------------------------------------------
+
+
+def _tiny_panel(divs):
+    closes = np.asarray([[100.0, 100.0, 100.0]])
+    total = np.zeros_like(closes)
+    total[:, 1:] = np.log((closes[:, 1:] + np.asarray([divs])[:, 1:]) / closes[:, :-1])
+    return R.Panel(
+        symbols=("X",),
+        closes=closes,
+        log_returns=np.zeros_like(closes),
+        cost_fraction=np.asarray([0.0]),
+        dates=("a", "b", "c"),
+        total_log_returns=total,
+    )
+
+
+def test_a_long_position_receives_the_dividend_and_a_short_pays_it():
+    """The sign is the whole point: a short book is SHORT the dividend too, which is
+    why the long-short arms get WORSE when dividends are added back and the
+    long-flat arms get better."""
+    panel = _tiny_panel([0.0, 1.0, 0.0])  # $1 on a $100 close = 1%
+    longed = R.portfolio_log_returns(panel, np.asarray([[1.0, 1.0, 1.0]]), total_return=True)
+    shorted = R.portfolio_log_returns(panel, np.asarray([[-1.0, -1.0, -1.0]]), total_return=True)
+    assert longed[1] == pytest.approx(math.log(1.01), abs=1e-12)
+    assert shorted[1] == pytest.approx(-math.log(1.01), abs=1e-12)
+
+
+def test_price_only_returns_ignore_the_dividend_entirely():
+    panel = _tiny_panel([0.0, 1.0, 0.0])
+    price = R.portfolio_log_returns(panel, np.asarray([[1.0, 1.0, 1.0]]), total_return=False)
+    assert price[1] == 0.0
+
+
+def test_the_dividend_adjustment_widens_the_gap_against_the_strategy(payload):
+    """The reason this addendum exists. A part-time-exposed arm forgoes less of the
+    dividend stream than a benchmark that is never out, so a price-only comparison
+    flatters it — and adding the dividends back is the direction that hurts."""
+    bh = payload["buy_and_hold"]
+    best = next(
+        c for c in payload["core"]
+        if (c["rung"], c["book"], c["gate"]) == ("signal_line", "long_flat", "none")
+    )
+    assert bh["total_return_with_dividends"] > bh["total_return"]
+    price_gap = best["total_return"] - bh["total_return"]
+    div_gap = best["total_return_with_dividends"] - bh["total_return_with_dividends"]
+    assert div_gap < price_gap, "dividends must widen the gap against the arm"
+    assert div_gap < 0.0, "the best cell does not beat buy-and-hold on money"
+
+
+def test_every_dividend_found_a_bar(payload):
+    c = payload["census"]
+    assert c["dividends_matched"] > 2000
+    assert c["dividends_unmatched"] == 0
+
+
+def test_the_published_pnl_table_is_the_artifact(payload, page):
+    for a in payload["core"]:
+        present(page, f"{a['total_return_with_dividends'] * 100:.2f}%", "arm total return")
+        present(page, f"{a['cagr_with_dividends'] * 100:.2f}%", "arm CAGR")
+    bh = payload["buy_and_hold"]
+    present(page, f"{bh['total_return_with_dividends'] * 100:.2f}%", "B&H total return")
+    present(page, f"{bh['cagr_with_dividends'] * 100:.2f}%", "B&H CAGR")
+
+
+def test_no_cell_survives_under_either_reading_of_hurdle_d(payload):
+    """The verdict does not move, which is what makes this a disclosure rather than
+    a goalpost being shifted after the fact."""
+    v = payload["verdict"]
+    assert v["survivors"] == []
+    assert v["survivors_under_pnl_reading"] == []

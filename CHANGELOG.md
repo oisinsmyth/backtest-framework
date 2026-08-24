@@ -44,6 +44,26 @@ version (likely at the Phase C "first real number" milestone, see
 - 0 of 12 cells clear every hurdle, so the pre-registered programme stop applies and Stage 2
   (the costed engine verdict) does not run.
 
+### Added (D217 ADDENDUM — dividend-adjusted returns, 2026-08-24)
+- `scripts/run_macd_ladder.py` gains a total-return panel: sidecar dividends laid onto the
+  bar grid and reinvested on the ex-date (`r_tr[t] = log((close[t] + div[t]) / close[t-1])`),
+  2,285 matched and 0 unmatched. Dividends and fixture prices are both in the split-adjusted
+  frame (D75), so `as_declared_dividends` is deliberately not called. **The position series
+  is untouched** — the signal still reads the price a trader sees.
+- Every cell now reports price-only and dividend-adjusted total return and CAGR, and the
+  verdict records hurdle D under both a Sharpe and a total-return reading.
+- Six tests in `tests/unit/test_macd_ladder.py`, including the sign check that a long
+  receives the dividend and a short pays it.
+
+### Changed (D217 ADDENDUM)
+- **The best cell loses to buy-and-hold on money, and the adjustment roughly tenfolds the
+  margin**: +53.54% against +70.81% dividend-adjusted, a 17.3-point gap (−1.34pp CAGR),
+  where price-only it was 1.5 points (−0.13pp). Its Sharpe advantage is a risk-reduction
+  result — half the exposure, −13.6% drawdown against −35.1% — not a return result.
+- Hurdle D fails under the total-return reading, 0 of 12. The verdict is unchanged because
+  every cell already failed G. The ladder deltas are unmoved: both rungs hold the same kind
+  of exposure, so the dividend stream largely cancels inside them.
+
 ### Fixed (D217)
 - D217's own ledger arithmetic: the declared sweep grid admits **8** (fast,slow) pairs, not
   the 6 counted by eye — (12,13) and (24,26) satisfy `fast < slow`. The grid was not widened;

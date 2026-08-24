@@ -1,8 +1,12 @@
 {
   "buy_and_hold": {
+    "cagr_price_only": 0.04319654590552702,
+    "cagr_with_dividends": 0.06564541245347422,
     "max_drawdown": -0.3513085750059727,
     "sharpe": 0.2657330627621594,
-    "total_return": 0.4277578718855116
+    "sharpe_total_return": 0.4004992443766861,
+    "total_return": 0.4277578718855116,
+    "total_return_with_dividends": 0.708113131766074
   },
   "census": {
     "arms": {
@@ -86,6 +90,8 @@
       "retail_minimum_binds_on": 57,
       "retail_per_side_bps_median": 6.7
     },
+    "dividends_matched": 2285,
+    "dividends_unmatched": 0,
     "first_live_date": "2016-07-26",
     "last_date": "2024-12-30",
     "live_bars": 2122,
@@ -105,6 +111,8 @@
       },
       "block_percentile": 99.25,
       "book": "long_short",
+      "cagr_price_only": 0.041221516293096894,
+      "cagr_with_dividends": 0.03968221970297625,
       "clears_block": true,
       "clears_rotation": false,
       "delta_vs_block": 0.7935728452791977,
@@ -127,7 +135,9 @@
       "sharpe": 0.31150478107121954,
       "sharpe_first_half": 0.18690647418486206,
       "sharpe_second_half": 0.37380221764931765,
+      "sharpe_total_return": 0.30058137713282496,
       "total_return": 0.4051553030237983,
+      "total_return_with_dividends": 0.38775859137078295,
       "turnover_units": 19427.0
     },
     {
@@ -142,6 +152,8 @@
       },
       "block_percentile": 73.5,
       "book": "long_short",
+      "cagr_price_only": 0.0209047387886645,
+      "cagr_with_dividends": 0.022128335483362793,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": 0.13926615055714947,
@@ -164,7 +176,9 @@
       "sharpe": 0.20490759686080695,
       "sharpe_first_half": -0.02130047309533528,
       "sharpe_second_half": 0.2877919447197121,
+      "sharpe_total_return": 0.2170924941325425,
       "total_return": 0.19031321398923895,
+      "total_return_with_dividends": 0.20237998640768406,
       "turnover_units": 14046.0
     },
     {
@@ -179,6 +193,8 @@
       },
       "block_percentile": 100.0,
       "book": "long_flat",
+      "cagr_price_only": 0.04186719316666254,
+      "cagr_with_dividends": 0.052238999177683265,
       "clears_block": true,
       "clears_rotation": true,
       "delta_vs_block": 0.3347562591483232,
@@ -201,7 +217,9 @@
       "sharpe": 0.495680381678844,
       "sharpe_first_half": 0.6469331061299755,
       "sharpe_second_half": 0.4686077261748091,
+      "sharpe_total_return": 0.6180461220693193,
       "total_return": 0.4125095917152867,
+      "total_return_with_dividends": 0.5353848063131634,
       "turnover_units": 9721.0
     },
     {
@@ -216,6 +234,8 @@
       },
       "block_percentile": 89.25,
       "book": "long_flat",
+      "cagr_price_only": 0.012512426411333655,
+      "cagr_with_dividends": 0.019051629708749074,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": 0.10506651715742152,
@@ -238,7 +258,9 @@
       "sharpe": 0.28752601177062276,
       "sharpe_first_half": 0.1767561142242448,
       "sharpe_second_half": 0.3463634282493914,
+      "sharpe_total_return": 0.4384559634951911,
       "total_return": 0.11038727571086082,
+      "total_return_with_dividends": 0.17224153619229576,
       "turnover_units": 8427.0
     },
     {
@@ -253,6 +275,8 @@
       },
       "block_percentile": 35.0,
       "book": "long_short",
+      "cagr_price_only": 0.003364894556764364,
+      "cagr_with_dividends": 0.007486680494419584,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.12468625120316337,
@@ -275,7 +299,9 @@
       "sharpe": 0.026390625607528216,
       "sharpe_first_half": -0.44479296803106816,
       "sharpe_second_half": 0.18355721376547599,
+      "sharpe_total_return": 0.058647114143824716,
       "total_return": 0.028690859773854497,
+      "total_return_with_dividends": 0.06482214432009074,
       "turnover_units": 8267.0
     },
     {
@@ -290,6 +316,8 @@
       },
       "block_percentile": 8.0,
       "book": "long_short",
+      "cagr_price_only": 0.002161539073352703,
+      "cagr_with_dividends": 0.006165458189859141,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.2642088431729374,
@@ -312,7 +340,9 @@
       "sharpe": 0.01857224547763175,
       "sharpe_first_half": -0.3889008240222193,
       "sharpe_second_half": 0.14664494585831467,
+      "sharpe_total_return": 0.05294180079616393,
       "total_return": 0.01834818490537182,
+      "total_return_with_dividends": 0.05312052056203347,
       "turnover_units": 8491.0
     },
     {
@@ -327,6 +357,8 @@
       },
       "block_percentile": 69.0,
       "book": "long_flat",
+      "cagr_price_only": 0.022745240142266532,
+      "cagr_with_dividends": 0.03581205763663742,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": 0.029500985403435598,
@@ -349,7 +381,9 @@
       "sharpe": 0.2861996125921156,
       "sharpe_first_half": 0.17735703406848152,
       "sharpe_second_half": 0.3420956606603293,
+      "sharpe_total_return": 0.44916834805356437,
       "total_return": 0.20850450430424175,
+      "total_return_with_dividends": 0.34485482099518205,
       "turnover_units": 4156.0
     },
     {
@@ -364,6 +398,8 @@
       },
       "block_percentile": 8.75,
       "book": "long_flat",
+      "cagr_price_only": 0.011911399413451429,
+      "cagr_with_dividends": 0.02169972441440171,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.08672282401322515,
@@ -386,7 +422,9 @@
       "sharpe": 0.19413453419796226,
       "sharpe_first_half": 0.046201114846244215,
       "sharpe_second_half": 0.26891228415140483,
+      "sharpe_total_return": 0.3536486492700968,
       "total_return": 0.10484922934869136,
+      "total_return_with_dividends": 0.1981409327494694,
       "turnover_units": 4521.0
     },
     {
@@ -401,6 +439,8 @@
       },
       "block_percentile": 26.25,
       "book": "long_short",
+      "cagr_price_only": -0.017255030381322145,
+      "cagr_with_dividends": -0.014590126344836252,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.1439085995307973,
@@ -423,7 +463,9 @@
       "sharpe": -0.13649283647927876,
       "sharpe_first_half": -0.5504747279297275,
       "sharpe_second_half": -0.018446314291015915,
+      "sharpe_total_return": -0.11539210750564896,
       "total_return": -0.13633168985888497,
+      "total_return_with_dividends": -0.11641094946602397,
       "turnover_units": 17919.0
     },
     {
@@ -438,6 +480,8 @@
       },
       "block_percentile": 6.0,
       "book": "long_short",
+      "cagr_price_only": -0.00812282074635573,
+      "cagr_with_dividends": -0.00482375623934872,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.30859958048481473,
@@ -460,7 +504,9 @@
       "sharpe": -0.06995351864267861,
       "sharpe_first_half": -0.4350260038168588,
       "sharpe_second_half": 0.03701133732675799,
+      "sharpe_total_return": -0.04154574683582929,
       "total_return": -0.06637331848695188,
+      "total_return_with_dividends": -0.03989955974454874,
       "turnover_units": 13312.0
     },
     {
@@ -475,6 +521,8 @@
       },
       "block_percentile": 10.5,
       "book": "long_flat",
+      "cagr_price_only": 0.012461824165426627,
+      "cagr_with_dividends": 0.024647979961923028,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.07325671074516113,
@@ -497,7 +545,9 @@
       "sharpe": 0.15729087222520738,
       "sharpe_first_half": 0.1294412537551602,
       "sharpe_second_half": 0.1747483796421696,
+      "sharpe_total_return": 0.3099894132436143,
       "total_return": 0.10992006992128812,
+      "total_return_with_dividends": 0.2275680846686891,
       "turnover_units": 8975.0
     },
     {
@@ -512,6 +562,8 @@
       },
       "block_percentile": 2.0,
       "book": "long_flat",
+      "cagr_price_only": 0.007099416988816776,
+      "cagr_with_dividends": 0.016351014386797535,
       "clears_block": false,
       "clears_rotation": false,
       "delta_vs_block": -0.14399530316840561,
@@ -534,7 +586,9 @@
       "sharpe": 0.116575240677505,
       "sharpe_first_half": 0.03415670309040106,
       "sharpe_second_half": 0.15939611150234556,
+      "sharpe_total_return": 0.26854548883654905,
       "total_return": 0.061380469357943036,
+      "total_return_with_dividends": 0.1463378608286654,
       "turnover_units": 7629.0
     }
   ],
@@ -588,12 +642,14 @@
       "zero_minus_momentum": 0.07755929352045726
     }
   ],
-  "elapsed_seconds": 59.1,
+  "elapsed_seconds": 57.6,
   "fixture": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\fixtures\\universe_daily_2015_2024_raw.csv.gz",
   "fresh_looks": 42,
   "lagged": [
     {
       "book": "long_short",
+      "cagr_price_only": 0.029935249728631597,
+      "cagr_with_dividends": 0.029490107714658986,
       "exposure": 0.9990574929311969,
       "gate": "none",
       "max_drawdown": -0.186069954180214,
@@ -602,11 +658,15 @@
       "sharpe": 0.22540951304971507,
       "sharpe_first_half": 0.044404243175078524,
       "sharpe_second_half": 0.30099791178829194,
+      "sharpe_total_return": 0.22240365649963634,
       "total_return": 0.28193993914676097,
+      "total_return_with_dividends": 0.2772818818473179,
       "turnover_units": 19425.0
     },
     {
       "book": "long_short",
+      "cagr_price_only": 0.013516130665783166,
+      "cagr_with_dividends": 0.01537261269999024,
       "exposure": 0.5210245217190006,
       "gate": "200ma",
       "max_drawdown": -0.15242165731392243,
@@ -615,11 +675,15 @@
       "sharpe": 0.1332064016128376,
       "sharpe_first_half": -0.10764283663500959,
       "sharpe_second_half": 0.2125598664556947,
+      "sharpe_total_return": 0.15155089802347882,
       "total_return": 0.1196902650119963,
+      "total_return_with_dividends": 0.13707851797239512,
       "turnover_units": 14042.0
     },
     {
       "book": "long_flat",
+      "cagr_price_only": 0.03604670308346769,
+      "cagr_with_dividends": 0.04690855927945159,
       "exposure": 0.5075896621856243,
       "gate": "none",
       "max_drawdown": -0.1334744485459778,
@@ -628,11 +692,15 @@
       "sharpe": 0.42488205861006784,
       "sharpe_first_half": 0.5355439763498119,
       "sharpe_second_half": 0.41039945684733287,
+      "sharpe_total_return": 0.5521449549696523,
       "total_return": 0.3474223565358985,
+      "total_return_with_dividends": 0.47110719566755416,
       "turnover_units": 9720.0
     },
     {
       "book": "long_flat",
+      "cagr_price_only": 0.008391048300590231,
+      "cagr_with_dividends": 0.015109481700426253,
       "exposure": 0.3300345585925228,
       "gate": "200ma",
       "max_drawdown": -0.09464458187316405,
@@ -641,11 +709,15 @@
       "sharpe": 0.18812024931394739,
       "sharpe_first_half": 0.1235603652439045,
       "sharpe_second_half": 0.22229437854306322,
+      "sharpe_total_return": 0.3391244780478843,
       "total_return": 0.07289773885961828,
+      "total_return_with_dividends": 0.13459958769116653,
       "turnover_units": 8427.0
     },
     {
       "book": "long_short",
+      "cagr_price_only": -0.0027963921015862203,
+      "cagr_with_dividends": 0.0014920883960054532,
       "exposure": 0.9990574929311969,
       "gate": "none",
       "max_drawdown": -0.21049191646725784,
@@ -654,11 +726,15 @@
       "sharpe": -0.022027454849953332,
       "sharpe_first_half": -0.44919733380350185,
       "sharpe_second_half": 0.11816567851331809,
+      "sharpe_total_return": 0.011738333490407918,
       "total_return": -0.023304537580311414,
+      "total_return_with_dividends": 0.01263411189442274,
       "turnover_units": 8267.0
     },
     {
       "book": "long_short",
+      "cagr_price_only": -0.002731153775224371,
+      "cagr_with_dividends": 0.0014580118154630117,
       "exposure": 0.740719612414637,
       "gate": "200ma",
       "max_drawdown": -0.20485725858499493,
@@ -667,11 +743,15 @@
       "sharpe": -0.023679333815189937,
       "sharpe_first_half": -0.3669184564151333,
       "sharpe_second_half": 0.08368151117524948,
+      "sharpe_total_return": 0.012632455353132174,
       "total_return": -0.022766356534098104,
+      "total_return_with_dividends": 0.012344009676015523,
       "turnover_units": 8488.0
     },
     {
       "book": "long_flat",
+      "cagr_price_only": 0.019444324862971873,
+      "cagr_with_dividends": 0.032567955247919,
       "exposure": 0.5786331993981183,
       "gate": "none",
       "max_drawdown": -0.13912426747264006,
@@ -680,11 +760,15 @@
       "sharpe": 0.2418714848641121,
       "sharpe_first_half": 0.16161740238620506,
       "sharpe_second_half": 0.2843252378817786,
+      "sharpe_total_return": 0.40380782203793464,
       "total_return": 0.17605081108560994,
+      "total_return_with_dividends": 0.30979645713469783,
       "turnover_units": 4156.0
     },
     {
       "book": "long_flat",
+      "cagr_price_only": 0.010060373221833396,
+      "cagr_with_dividends": 0.020014798615324958,
       "exposure": 0.47540387254658795,
       "gate": "200ma",
       "max_drawdown": -0.13483978405314345,
@@ -693,11 +777,15 @@
       "sharpe": 0.16010511356468346,
       "sharpe_first_half": 0.06942793296805856,
       "sharpe_second_half": 0.20728442898489025,
+      "sharpe_total_return": 0.3184753049466348,
       "total_return": 0.08794591399552397,
+      "total_return_with_dividends": 0.18160403179106435,
       "turnover_units": 4521.0
     },
     {
       "book": "long_short",
+      "cagr_price_only": -0.008196981426611183,
+      "cagr_with_dividends": -0.005076852483083982,
       "exposure": 0.9977346759925261,
       "gate": "none",
       "max_drawdown": -0.23789613931231213,
@@ -706,11 +794,15 @@
       "sharpe": -0.06442567758479376,
       "sharpe_first_half": -0.540164463893607,
       "sharpe_second_half": 0.08594440128267317,
+      "sharpe_total_return": -0.039883419196953575,
       "total_return": -0.06696096129258958,
+      "total_return_with_dividends": -0.041953734691576997,
       "turnover_units": 17913.0
     },
     {
       "book": "long_short",
+      "cagr_price_only": -0.00531057326678297,
+      "cagr_with_dividends": -0.001707763864926104,
       "exposure": 0.7387601898242308,
       "gate": "200ma",
       "max_drawdown": -0.2270114767844752,
@@ -719,11 +811,15 @@
       "sharpe": -0.045977029974010805,
       "sharpe_first_half": -0.4068436265701365,
       "sharpe_second_half": 0.0668039129680866,
+      "sharpe_total_return": -0.014783107899201746,
       "total_return": -0.043847214213829984,
+      "total_return_with_dividends": -0.014289668761043414,
       "turnover_units": 13306.0
     },
     {
       "book": "long_flat",
+      "cagr_price_only": 0.016862325576748827,
+      "cagr_with_dividends": 0.029353598935714986,
       "exposure": 0.5710848752418275,
       "gate": "none",
       "max_drawdown": -0.17144965768649412,
@@ -732,11 +828,15 @@
       "sharpe": 0.20890246292993175,
       "sharpe_first_half": 0.11061847870671991,
       "sharpe_second_half": 0.25799164597633656,
+      "sharpe_total_return": 0.36233811826030554,
       "total_return": 0.15120316302176967,
+      "total_return_with_dividends": 0.2758564175721766,
       "turnover_units": 8972.0
     },
     {
       "book": "long_flat",
+      "cagr_price_only": 0.00869089806770984,
+      "cagr_with_dividends": 0.01811807168021984,
       "exposure": 0.4708814921375068,
       "gate": "200ma",
       "max_drawdown": -0.1560732744980512,
@@ -745,7 +845,9 @@
       "sharpe": 0.1385429846094837,
       "sharpe_first_half": 0.01648923782516476,
       "sharpe_second_half": 0.20245407729611278,
+      "sharpe_total_return": 0.28881012031581366,
       "total_return": 0.07558714933443661,
+      "total_return_with_dividends": 0.16322932673467624,
       "turnover_units": 7627.0
     }
   ],
@@ -884,6 +986,8 @@
   "seed": 0,
   "sweep": [
     {
+      "cagr_price_only": 0.0380968428569759,
+      "cagr_with_dividends": 0.035776565014153494,
       "exposure": 0.9995663486556808,
       "fast": 6,
       "max_drawdown": -0.21318492323899607,
@@ -892,12 +996,16 @@
       "sharpe": 0.31234393896118484,
       "sharpe_first_half": 0.22019378397647432,
       "sharpe_second_half": 0.3721358849001725,
+      "sharpe_total_return": 0.29404199536916825,
       "signal": 5,
       "slow": 13,
       "total_return": 0.40795702751471624,
+      "total_return_with_dividends": 0.3794207478400118,
       "turnover_units": 39739.0
     },
     {
+      "cagr_price_only": 0.03429031409684735,
+      "cagr_with_dividends": 0.032659431435637876,
       "exposure": 0.9995663486556808,
       "fast": 6,
       "max_drawdown": -0.20798975398146402,
@@ -906,12 +1014,16 @@
       "sharpe": 0.26997194596473073,
       "sharpe_first_half": -0.028940732734202654,
       "sharpe_second_half": 0.4266052823665381,
+      "sharpe_total_return": 0.25755855684176754,
       "signal": 9,
       "slow": 13,
       "total_return": 0.36141367393966567,
+      "total_return_with_dividends": 0.3418954715448284,
       "turnover_units": 32275.0
     },
     {
+      "cagr_price_only": 0.03638213625426401,
+      "cagr_with_dividends": 0.035228705835816276,
       "exposure": 0.9995663486556808,
       "fast": 6,
       "max_drawdown": -0.22475587303521793,
@@ -920,12 +1032,16 @@
       "sharpe": 0.2815910601332717,
       "sharpe_first_half": 0.15576740645386578,
       "sharpe_second_half": 0.35586458231073353,
+      "sharpe_total_return": 0.2731385426214755,
       "signal": 18,
       "slow": 13,
       "total_return": 0.38681832797965277,
+      "total_return_with_dividends": 0.37275847562553466,
       "turnover_units": 26317.0
     },
     {
+      "cagr_price_only": 0.010053484034321603,
+      "cagr_with_dividends": 0.01236895007582084,
       "exposure": 0.9995663486556808,
       "fast": 6,
       "max_drawdown": -0.2198529046044293,
@@ -934,12 +1050,16 @@
       "sharpe": 0.07892180882420403,
       "sharpe_first_half": -0.3200276966257971,
       "sharpe_second_half": 0.26212655124021517,
+      "sharpe_total_return": 0.09715612993862938,
       "signal": null,
       "slow": 13,
       "total_return": 0.09585840446173914,
+      "total_return_with_dividends": 0.11906267179856975,
       "turnover_units": 18421.0
     },
     {
+      "cagr_price_only": 0.04846943051276065,
+      "cagr_with_dividends": 0.04593790379811247,
       "exposure": 0.9995267392333176,
       "fast": 6,
       "max_drawdown": -0.22447883567193472,
@@ -948,12 +1068,16 @@
       "sharpe": 0.376711699374605,
       "sharpe_first_half": 0.2184210592174144,
       "sharpe_second_half": 0.45401031550448845,
+      "sharpe_total_return": 0.35777514415859824,
       "signal": 5,
       "slow": 26,
       "total_return": 0.48716282785618437,
+      "total_return_with_dividends": 0.4573217199810153,
       "turnover_units": 32043.0
     },
     {
+      "cagr_price_only": 0.0417625657616747,
+      "cagr_with_dividends": 0.04031052029311599,
       "exposure": 0.9995267392333176,
       "fast": 6,
       "max_drawdown": -0.22114518969094676,
@@ -962,12 +1086,16 @@
       "sharpe": 0.3200742705742746,
       "sharpe_first_half": 0.2134192893392293,
       "sharpe_second_half": 0.37593062196714255,
+      "sharpe_total_return": 0.3095418793309982,
       "signal": 9,
       "slow": 26,
       "total_return": 0.40925485170240133,
+      "total_return_with_dividends": 0.3928691264539078,
       "turnover_units": 25259.0
     },
     {
+      "cagr_price_only": 0.04600608747727497,
+      "cagr_with_dividends": 0.04474163742629411,
       "exposure": 0.9995267392333176,
       "fast": 6,
       "max_drawdown": -0.19867676867563888,
@@ -976,12 +1104,16 @@
       "sharpe": 0.3456008368780606,
       "sharpe_first_half": 0.2606859792107983,
       "sharpe_second_half": 0.39573157608629206,
+      "sharpe_total_return": 0.3368591306148626,
       "signal": 18,
       "slow": 26,
       "total_return": 0.4581184908809279,
+      "total_return_with_dividends": 0.4434048079136042,
       "turnover_units": 19831.0
     },
     {
+      "cagr_price_only": 0.005016827806902713,
+      "cagr_with_dividends": 0.009075510264775044,
       "exposure": 0.9995267392333176,
       "fast": 6,
       "max_drawdown": -0.18578328393388865,
@@ -990,12 +1122,16 @@
       "sharpe": 0.039156701538906505,
       "sharpe_first_half": -0.5407960428318751,
       "sharpe_second_half": 0.22923630339717335,
+      "sharpe_total_return": 0.07077841771774857,
       "signal": null,
       "slow": 26,
       "total_return": 0.042853323186230675,
+      "total_return_with_dividends": 0.07869739441157682,
       "turnover_units": 11703.0
     },
     {
+      "cagr_price_only": 0.04956918104685282,
+      "cagr_with_dividends": 0.04881797869222404,
       "exposure": 0.9994212962962963,
       "fast": 6,
       "max_drawdown": -0.2164474804722778,
@@ -1004,12 +1140,16 @@
       "sharpe": 0.3520672303625588,
       "sharpe_first_half": 0.24289932740970585,
       "sharpe_second_half": 0.3851591677708289,
+      "sharpe_total_return": 0.34744359128909524,
       "signal": 5,
       "slow": 52,
       "total_return": 0.3934003249875834,
+      "total_return_with_dividends": 0.3865760774222893,
       "turnover_units": 24035.0
     },
     {
+      "cagr_price_only": 0.042806924264283674,
+      "cagr_with_dividends": 0.04230982414986939,
       "exposure": 0.9994212962962963,
       "fast": 6,
       "max_drawdown": -0.1904016597622824,
@@ -1018,12 +1158,16 @@
       "sharpe": 0.29910671585810605,
       "sharpe_first_half": 0.1958097031639791,
       "sharpe_second_half": 0.32955191876184997,
+      "sharpe_total_return": 0.29621701725363847,
       "signal": 9,
       "slow": 52,
       "total_return": 0.3329896753073573,
+      "total_return_with_dividends": 0.3286385289164797,
       "turnover_units": 18775.0
     },
     {
+      "cagr_price_only": 0.05106132051598178,
+      "cagr_with_dividends": 0.05303739566357191,
       "exposure": 0.9994212962962963,
       "fast": 6,
       "max_drawdown": -0.18364429071949062,
@@ -1032,12 +1176,16 @@
       "sharpe": 0.3543699032747663,
       "sharpe_first_half": 0.16890243109547518,
       "sharpe_second_half": 0.4036248122966481,
+      "sharpe_total_return": 0.3685194527152261,
       "signal": 18,
       "slow": 52,
       "total_return": 0.4070406907712094,
+      "total_return_with_dividends": 0.42528036795140445,
       "turnover_units": 14271.0
     },
     {
+      "cagr_price_only": 0.0033237993545431888,
+      "cagr_with_dividends": 0.0070519072077661615,
       "exposure": 0.9994212962962963,
       "fast": 6,
       "max_drawdown": -0.21937384208805444,
@@ -1046,12 +1194,16 @@
       "sharpe": 0.024046129443736002,
       "sharpe_first_half": -0.4201408641003159,
       "sharpe_second_half": 0.11493744999023679,
+      "sharpe_total_return": 0.0509541580334432,
       "signal": null,
       "slow": 52,
       "total_return": 0.023014819414189355,
+      "total_return_with_dividends": 0.04936606236461437,
       "turnover_units": 6831.0
     },
     {
+      "cagr_price_only": 0.03444661363004853,
+      "cagr_with_dividends": 0.03262331515995198,
       "exposure": 0.9995663486556808,
       "fast": 12,
       "max_drawdown": -0.21889107611365255,
@@ -1060,12 +1212,16 @@
       "sharpe": 0.27022541915437015,
       "sharpe_first_half": 0.002131535191442154,
       "sharpe_second_half": 0.4123123022067769,
+      "sharpe_total_return": 0.25634742888219225,
       "signal": 5,
       "slow": 13,
       "total_return": 0.36329745998031265,
+      "total_return_with_dividends": 0.3414660721851624,
       "turnover_units": 31565.0
     },
     {
+      "cagr_price_only": 0.03827331621486141,
+      "cagr_with_dividends": 0.03744622718930879,
       "exposure": 0.9995663486556808,
       "fast": 12,
       "max_drawdown": -0.2210803087165808,
@@ -1074,12 +1230,16 @@
       "sharpe": 0.294965018948652,
       "sharpe_first_half": 0.15497936980996804,
       "sharpe_second_half": 0.3765303935477886,
+      "sharpe_total_return": 0.28907742483657334,
       "signal": 9,
       "slow": 13,
       "total_return": 0.41014877410895745,
+      "total_return_with_dividends": 0.3999027651822959,
       "turnover_units": 25131.0
     },
     {
+      "cagr_price_only": 0.041369844700130054,
+      "cagr_with_dividends": 0.0391690044855888,
       "exposure": 0.9995663486556808,
       "fast": 12,
       "max_drawdown": -0.22870853960750637,
@@ -1088,12 +1248,16 @@
       "sharpe": 0.315490443623388,
       "sharpe_first_half": 0.2999274346902156,
       "sharpe_second_half": 0.3403806456562527,
+      "sharpe_total_return": 0.29943524416053446,
       "signal": 18,
       "slow": 13,
       "total_return": 0.44910448108839823,
+      "total_return_with_dividends": 0.421319880974454,
       "turnover_units": 20063.0
     },
     {
+      "cagr_price_only": 0.010203833811789131,
+      "cagr_with_dividends": 0.013182892224972598,
       "exposure": 0.9995663486556808,
       "fast": 12,
       "max_drawdown": -0.2088361364636404,
@@ -1102,12 +1266,16 @@
       "sharpe": 0.07961269413960426,
       "sharpe_first_half": -0.24416335492587513,
       "sharpe_second_half": 0.2266052019613108,
+      "sharpe_total_return": 0.10285086302437378,
       "signal": null,
       "slow": 13,
       "total_return": 0.0973520071817111,
+      "total_return_with_dividends": 0.1273228858572459,
       "turnover_units": 12779.0
     },
     {
+      "cagr_price_only": 0.040191787161605985,
+      "cagr_with_dividends": 0.038573375089873796,
       "exposure": 0.9995267392333176,
       "fast": 12,
       "max_drawdown": -0.21494498814095064,
@@ -1116,12 +1284,16 @@
       "sharpe": 0.3067991322737977,
       "sharpe_first_half": 0.15538998014924663,
       "sharpe_second_half": 0.37768463194923513,
+      "sharpe_total_return": 0.2950511555477698,
       "signal": 5,
       "slow": 26,
       "total_return": 0.39153672474293255,
+      "total_return_with_dividends": 0.37348680044395205,
       "turnover_units": 24621.0
     },
     {
+      "cagr_price_only": 0.04302677622464968,
+      "cagr_with_dividends": 0.041514860252068075,
       "exposure": 0.9995267392333176,
       "fast": 12,
       "max_drawdown": -0.20479560366375504,
@@ -1130,12 +1302,16 @@
       "sharpe": 0.32424634521537427,
       "sharpe_first_half": 0.23699030481198075,
       "sharpe_second_half": 0.37380221764931765,
+      "sharpe_total_return": 0.31358604172006294,
       "signal": 9,
       "slow": 26,
       "total_return": 0.4236589417632741,
+      "total_return_with_dividends": 0.4064476466349951,
       "turnover_units": 19329.0
     },
     {
+      "cagr_price_only": 0.04379506271769951,
+      "cagr_with_dividends": 0.04421785685014279,
       "exposure": 0.9995267392333176,
       "fast": 12,
       "max_drawdown": -0.1902295908435071,
@@ -1144,12 +1320,16 @@
       "sharpe": 0.32698234245988195,
       "sharpe_first_half": 0.06724074745773323,
       "sharpe_second_half": 0.43500280823864884,
+      "sharpe_total_return": 0.3307944684773513,
       "signal": 18,
       "slow": 26,
       "total_return": 0.4324758052011357,
+      "total_return_with_dividends": 0.4373482798813575,
       "turnover_units": 15051.0
     },
     {
+      "cagr_price_only": 0.0024138856907334194,
+      "cagr_with_dividends": 0.006513957343421417,
       "exposure": 0.9995267392333176,
       "fast": 12,
       "max_drawdown": -0.1948382880641013,
@@ -1158,12 +1338,16 @@
       "sharpe": 0.018906562972876597,
       "sharpe_first_half": -0.48034589322153587,
       "sharpe_second_half": 0.18355721376547599,
+      "sharpe_total_return": 0.05095945840097461,
       "signal": null,
       "slow": 26,
       "total_return": 0.02042157462841377,
+      "total_return_with_dividends": 0.0559511145217859,
       "turnover_units": 8251.0
     },
     {
+      "cagr_price_only": 0.042011259138866386,
+      "cagr_with_dividends": 0.04171900113340343,
       "exposure": 0.9994212962962963,
       "fast": 12,
       "max_drawdown": -0.18469233827955778,
@@ -1172,12 +1356,16 @@
       "sharpe": 0.294515252945313,
       "sharpe_first_half": 0.2520038578505359,
       "sharpe_second_half": 0.3119738422454603,
+      "sharpe_total_return": 0.2931220538344136,
       "signal": 5,
       "slow": 52,
       "total_return": 0.3260310079060695,
+      "total_return_with_dividends": 0.3234828040324557,
       "turnover_units": 18153.0
     },
     {
+      "cagr_price_only": 0.05754969370047758,
+      "cagr_with_dividends": 0.05918080212387222,
       "exposure": 0.9994212962962963,
       "fast": 12,
       "max_drawdown": -0.18035673041172162,
@@ -1186,12 +1374,16 @@
       "sharpe": 0.39666563152783946,
       "sharpe_first_half": 0.259868261247028,
       "sharpe_second_half": 0.43711625658396747,
+      "sharpe_total_return": 0.40849185320005055,
       "signal": 9,
       "slow": 52,
       "total_return": 0.4676886847447526,
+      "total_return_with_dividends": 0.48328138426239775,
       "turnover_units": 13847.0
     },
     {
+      "cagr_price_only": 0.04267694640744191,
+      "cagr_with_dividends": 0.04404915019894662,
       "exposure": 0.9994212962962963,
       "fast": 12,
       "max_drawdown": -0.20960926755582499,
@@ -1200,12 +1392,16 @@
       "sharpe": 0.29532920183608363,
       "sharpe_first_half": -0.04183571940865831,
       "sharpe_second_half": 0.3737449215492459,
+      "sharpe_total_return": 0.3052493673527119,
       "signal": 18,
       "slow": 52,
       "total_return": 0.33185079804153966,
+      "total_return_with_dividends": 0.34391619950184915,
       "turnover_units": 10607.0
     },
     {
+      "cagr_price_only": -0.005943230646035524,
+      "cagr_with_dividends": -0.0023020398620351434,
       "exposure": 0.9994212962962963,
       "fast": 12,
       "max_drawdown": -0.2576174885248803,
@@ -1214,12 +1410,16 @@
       "sharpe": -0.04345406270854366,
       "sharpe_first_half": -0.44713474886856747,
       "sharpe_second_half": 0.03625031533721069,
+      "sharpe_total_return": -0.016812926491920552,
       "signal": null,
       "slow": 52,
       "total_return": -0.040051044724429365,
+      "total_return_with_dividends": -0.015679391604499975,
       "turnover_units": 5021.0
     },
     {
+      "cagr_price_only": 0.04542303174872875,
+      "cagr_with_dividends": 0.044563390343409726,
       "exposure": 0.9995267392333176,
       "fast": 24,
       "max_drawdown": -0.19951209615783616,
@@ -1228,12 +1428,16 @@
       "sharpe": 0.34163254495501977,
       "sharpe_first_half": 0.2214183108577999,
       "sharpe_second_half": 0.4036800625266289,
+      "sharpe_total_return": 0.3359963332405276,
       "signal": 5,
       "slow": 26,
       "total_return": 0.4513174733293362,
+      "total_return_with_dividends": 0.44134120065834614,
       "turnover_units": 19675.0
     },
     {
+      "cagr_price_only": 0.04740833375962805,
+      "cagr_with_dividends": 0.04834644645785069,
       "exposure": 0.9995267392333176,
       "fast": 24,
       "max_drawdown": -0.1877448221332383,
@@ -1242,12 +1446,16 @@
       "sharpe": 0.3537888746417661,
       "sharpe_first_half": 0.05756110229752734,
       "sharpe_second_half": 0.47564057290959116,
+      "sharpe_total_return": 0.36139589707377445,
       "signal": 9,
       "slow": 26,
       "total_return": 0.47458996360421174,
+      "total_return_with_dividends": 0.48570077720797955,
       "turnover_units": 15389.0
     },
     {
+      "cagr_price_only": 0.02728343380779319,
+      "cagr_with_dividends": 0.02820921645306762,
       "exposure": 0.9995267392333176,
       "fast": 24,
       "max_drawdown": -0.2135108103031097,
@@ -1256,12 +1464,16 @@
       "sharpe": 0.20557376350069265,
       "sharpe_first_half": -0.33707593971763866,
       "sharpe_second_half": 0.3965827130155837,
+      "sharpe_total_return": 0.21288337257146214,
       "signal": 18,
       "slow": 26,
       "total_return": 0.2532049711423232,
+      "total_return_with_dividends": 0.26270632193187043,
       "turnover_units": 11717.0
     },
     {
+      "cagr_price_only": -0.010437811895316895,
+      "cagr_with_dividends": -0.006727173924627294,
       "exposure": 0.9995267392333176,
       "fast": 24,
       "max_drawdown": -0.24633750693221124,
@@ -1270,12 +1482,16 @@
       "sharpe": -0.08284859007708908,
       "sharpe_first_half": -0.51262449320754,
       "sharpe_second_half": 0.05318224855688956,
+      "sharpe_total_return": -0.0533344118375751,
       "signal": null,
       "slow": 26,
       "total_return": -0.08422097971002276,
+      "total_return_with_dividends": -0.055025564191251194,
       "turnover_units": 6051.0
     },
     {
+      "cagr_price_only": 0.04955195939299828,
+      "cagr_with_dividends": 0.05182271000541028,
       "exposure": 0.9994212962962963,
       "fast": 24,
       "max_drawdown": -0.18534307557987162,
@@ -1284,12 +1500,16 @@
       "sharpe": 0.3453177035370864,
       "sharpe_first_half": 0.22969145136016741,
       "sharpe_second_half": 0.37978898396670435,
+      "sharpe_total_return": 0.36150463321037707,
       "signal": 5,
       "slow": 52,
       "total_return": 0.3932435553256289,
+      "total_return_with_dividends": 0.41404475497959664,
       "turnover_units": 13973.0
     },
     {
+      "cagr_price_only": 0.0383816221764699,
+      "cagr_with_dividends": 0.039426698896444456,
       "exposure": 0.9994212962962963,
       "fast": 24,
       "max_drawdown": -0.208852348939913,
@@ -1298,12 +1518,16 @@
       "sharpe": 0.2659911578987536,
       "sharpe_first_half": -0.014820354408687033,
       "sharpe_second_half": 0.3318827183758785,
+      "sharpe_total_return": 0.27365258204997545,
       "signal": 9,
       "slow": 52,
       "total_return": 0.29467940262793957,
+      "total_return_with_dividends": 0.30364082358243477,
       "turnover_units": 10743.0
     },
     {
+      "cagr_price_only": 0.02285434819342136,
+      "cagr_with_dividends": 0.024215522176390003,
       "exposure": 0.9994212962962963,
       "fast": 24,
       "max_drawdown": -0.2069588570903711,
@@ -1312,12 +1536,16 @@
       "sharpe": 0.15857901486723622,
       "sharpe_first_half": -0.10101435139682302,
       "sharpe_second_half": 0.2161135191671897,
+      "sharpe_total_return": 0.16819178346694394,
       "signal": 18,
       "slow": 52,
       "total_return": 0.16760137870842237,
+      "total_return_with_dividends": 0.1782976037588286,
       "turnover_units": 8069.0
     },
     {
+      "cagr_price_only": -0.02224576622137442,
+      "cagr_with_dividends": -0.018322004364336064,
       "exposure": 0.9994212962962963,
       "fast": 24,
       "max_drawdown": -0.2955926533181773,
@@ -1326,9 +1554,11 @@
       "sharpe": -0.165507575426132,
       "sharpe_first_half": -0.567352528849489,
       "sharpe_second_half": -0.09236233347720572,
+      "sharpe_total_return": -0.13618931589901614,
       "signal": null,
       "slow": 52,
       "total_return": -0.142954867777079,
+      "total_return_with_dividends": -0.1190917602793937,
       "turnover_units": 3673.0
     }
   ],
@@ -1393,6 +1623,7 @@
   ],
   "verdict": {
     "buy_and_hold_sharpe": 0.2657330627621594,
+    "buy_and_hold_total_return_with_dividends": 0.708113131766074,
     "dsr_floor_annualised": 0.6377318633600076,
     "rows": [
       {
@@ -1400,135 +1631,160 @@
         "B_rotation_null": false,
         "C_block_null": true,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": true,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "signal_line/long_short/none",
         "sharpe": 0.31150478107121954,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": true,
         "F_half_stability": false,
         "G_dsr_floor": false,
         "cell": "signal_line/long_short/200ma",
         "sharpe": 0.20490759686080695,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": true,
         "B_rotation_null": true,
         "C_block_null": true,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "signal_line/long_flat/none",
         "sharpe": 0.495680381678844,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "signal_line/long_flat/200ma",
         "sharpe": 0.28752601177062276,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": true,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": true,
         "F_half_stability": false,
         "G_dsr_floor": false,
         "cell": "zero_line/long_short/none",
         "sharpe": 0.026390625607528216,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": true,
         "F_half_stability": false,
         "G_dsr_floor": false,
         "cell": "zero_line/long_short/200ma",
         "sharpe": 0.01857224547763175,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": true,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": true,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "zero_line/long_flat/none",
         "sharpe": 0.2861996125921156,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": false,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "zero_line/long_flat/200ma",
         "sharpe": 0.19413453419796226,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": false,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "momentum/long_short/none",
         "sharpe": -0.13649283647927876,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": false,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": false,
         "G_dsr_floor": false,
         "cell": "momentum/long_short/200ma",
         "sharpe": -0.06995351864267861,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": false,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "momentum/long_flat/none",
         "sharpe": 0.15729087222520738,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       },
       {
         "A_ladder_delta": false,
         "B_rotation_null": false,
         "C_block_null": false,
         "D_benchmark": false,
+        "D_benchmark_total_return_reading": false,
         "F_half_stability": true,
         "G_dsr_floor": false,
         "cell": "momentum/long_flat/200ma",
         "sharpe": 0.116575240677505,
-        "survivor": false
+        "survivor": false,
+        "survivor_under_pnl_reading": false
       }
     ],
     "stage_2_runs": false,
-    "survivors": []
+    "survivors": [],
+    "survivors_under_pnl_reading": []
   }
 }

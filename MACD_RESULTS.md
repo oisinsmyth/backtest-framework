@@ -60,6 +60,28 @@ Zero-line turnover is 8.8 position changes per year, so the annual cost drag is 
 
 Buy-and-hold over the same bars, through the same cost path: **+0.266** Sharpe, 42.78% total, -35.13% max drawdown.
 
+**The money, and the dividend adjustment.**
+
+The fixture is split-adjusted and **dividend-unadjusted** (D75), so a price-only comparison silently favours a strategy that is out of the market part of the time over a benchmark that never is. The dividends are in the sidecar and in the same split-adjusted frame as the prices, so they are added back here: the ex-date dividend lands on its bar and is reinvested. **The position series is untouched** — MACD is computed on the price a trader sees, and rewriting the price to smuggle dividends into the SIGNAL would be a different indicator.
+
+| rung | book | gate | price-only | +dividends | CAGR (price) | CAGR (+div) | exposure |
+|---|---|---|---:|---:|---:|---:|---:|
+| signal_line | long_short | none | 40.52% | 38.78% | 4.12% | 3.97% | 99.95% |
+| signal_line | long_short | 200ma | 19.03% | 20.24% | 2.09% | 2.21% | 52.13% |
+| signal_line | long_flat | none | 41.25% | 53.54% | 4.19% | 5.22% | 50.76% |
+| signal_line | long_flat | 200ma | 11.04% | 17.22% | 1.25% | 1.91% | 33.01% |
+| zero_line | long_short | none | 2.87% | 6.48% | 0.34% | 0.75% | 99.95% |
+| zero_line | long_short | 200ma | 1.83% | 5.31% | 0.22% | 0.62% | 74.10% |
+| zero_line | long_flat | none | 20.85% | 34.49% | 2.27% | 3.58% | 57.87% |
+| zero_line | long_flat | 200ma | 10.48% | 19.81% | 1.19% | 2.17% | 47.55% |
+| momentum | long_short | none | -13.63% | -11.64% | -1.73% | -1.46% | 99.82% |
+| momentum | long_short | 200ma | -6.64% | -3.99% | -0.81% | -0.48% | 73.91% |
+| momentum | long_flat | none | 10.99% | 22.76% | 1.25% | 2.46% | 57.12% |
+| momentum | long_flat | 200ma | 6.14% | 14.63% | 0.71% | 1.64% | 47.10% |
+| **buy-and-hold** | — | — | **42.78%** | **70.81%** | 4.32% | **6.56%** | 100.00% |
+
+Dividends matched to bars: 2,285 (0 ex-dates fell past the last bar and are counted rather than dropped quietly).
+
 **Hurdle A — the nested deltas. This is the study.**
 
 | book | gate | R1 signal | R2 zero | R3 momentum | R1-R2 | R2-R3 | R1 turnover / R2 |
@@ -172,6 +194,8 @@ The prior ETF-fixture registries hold **129,286 rows**, which is NOT an N — re
 | `momentum/long_short/200ma` | -0.070 | no | no | no | no | no | no | no |
 | `momentum/long_flat/none` | +0.157 | no | no | no | no | yes | no | no |
 | `momentum/long_flat/200ma` | +0.117 | no | no | no | no | yes | no | no |
+
+**Hurdle D under a total-return reading, disclosed.** The record wrote *beat buy-and-hold* without naming a metric, and the study ran it on Sharpe, which is therefore the reading that counts. On dividend-adjusted TOTAL RETURN the long-flat cells are judged against buy-and-hold's 70.81%, and **0** cells would survive under that reading. The verdict is unchanged either way — every cell already fails G — so this is recorded as a second reading, not used to move a goalpost.
 
 **0 of 12 cells clear every hurdle.**
 
