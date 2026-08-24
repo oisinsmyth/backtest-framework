@@ -543,3 +543,86 @@ def field_imbalance(
         total = demand_below + supply_above
         out.append((demand_below - supply_above) / total if total > 0.0 else float("nan"))
     return out
+
+
+LOCAL_DECAY_ATR = 2.0
+"""Decay scale for the local reading, in ATR (D202).
+
+Deliberately `terrain_strategies.STOP_ATR`'s value rather than a new number, and the
+justification is the same quantity: inventory matters over the distance the trade actually
+risks. Restated here rather than imported to keep the sensor free of a strategy import.
+"""
+
+LOCAL_PSEUDO_COUNT = 1.0
+"""Shrinkage for the local reading: ONE era-typical swing's total mass.
+
+**These units are the opposite of `_shrinkage`'s, and that is not an inconsistency.** D197
+reads a single BUCKET, so its pseudo-count has to be one swing's per-bucket peak — using
+total mass there crushed every reading toward zero and the census caught it. This reads a
+weighted SUM over many buckets, so one swing's TOTAL mass is the correct unit.
+
+The exact invariant, which is what the test pins: with `S_near = 0`, a weighted demand
+mass of `d` reads `d / (d + 1)`, so one full unit reads 0.5 and the pseudo-count is
+measured in the same units as the sum.
+
+A single swing sitting NEAR the price reads rather less than that — about 0.30 — and the
+reason is worth stating rather than tuning away. The kernel is `cluster_atr` = 0.5 ATR wide
+and the decay scale is 2 ATR, within a factor of four, so a swing close enough to escape
+the decay still has part of its kernel on the FAR side of price, where it counts toward
+neither sum. There is no placement at which one swing contributes its whole mass
+undiscounted. That is a property of the geometry, not a miscalibration.
+"""
+
+
+def local_imbalance(
+    bars: Sequence[TimestampedBar],
+    swings: Sequence[Swing],
+    params: FieldParams,
+    grid: Grid | None = None,
+    decay_atr: float = LOCAL_DECAY_ATR,
+    pseudo_count: float = LOCAL_PSEUDO_COUNT,
+) -> list[float]:
+    """Net inventory pressure in the NEIGHBOURHOOD of price, per bar (D202).
+
+        w(p)   = exp(-|ln p - ln price| / s),  s = decay_atr x ATR(t) / price(t)
+        D_near = sum of POSITIVE net BELOW price, weighted by w
+        S_near = sum of NEGATIVE net ABOVE price, weighted by w
+        local  = (D_near - S_near) / (D_near + S_near + pseudo_count)
+
+    ## What this fixes
+
+    D201 summed the WHOLE field either side of price. In an uptrend almost all accumulated
+    mass sits below price, so that reading was a proxy for *where price sits in its own
+    history* — a trend indicator wearing an inventory label. It was long 89-93% of the
+    time and its best cells were one multi-year long.
+
+    Weighting by distance removes the confound because the window travels with price:
+    doubling the price does not double `D_near`. The decay scale is the distance the trade
+    risks, so "near" means near in the terms the strategy itself uses.
+
+    Unlike D201's reading this is defined even when the neighbourhood is empty — shrinkage
+    returns 0.0 rather than NaN, which is the honest value for "no inventory either side of
+    me" and keeps the book flat there instead of undefined.
+
+    Shares `_walk_field` with every other reader of this field."""
+    grid = grid or build_grid(bars, params.bucket_ln)
+    centres = grid.centres()
+    atr = rolling_mean_true_range(bars, params.atr_window)
+    out: list[float] = []
+    for t, net, _gross, _lo, _hi in _walk_field(
+        bars, swings, params, grid, len(bars) - 1
+    ):
+        price = bars[t].bar.close
+        a = atr[t]
+        if not (a == a) or a <= 0.0 or price <= 0.0:
+            out.append(0.0)
+            continue
+        s = decay_atr * a / price  # log units
+        c = grid.bucket(price)
+        w = np.exp(-np.abs(centres - math.log(price)) / s)
+        below = net[:c] * w[:c]
+        above = net[c + 1 :] * w[c + 1 :]
+        demand = float(below[below > 0.0].sum())
+        supply = float(-above[above < 0.0].sum())
+        out.append((demand - supply) / (demand + supply + pseudo_count))
+    return out

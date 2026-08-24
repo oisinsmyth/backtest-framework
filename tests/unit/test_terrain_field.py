@@ -800,3 +800,153 @@ def test_a_stopped_out_book_stays_flat_until_the_signal_changes_state():
         flipped[i] = -0.9
     res2 = run_field_imbalance(bars, flipped, atr, 0.0, 365.0, use_stop=True)
     assert -1 in res2.position, "the book never resumed after the signal changed state"
+
+
+# ---------------------------------------------------------------- D202 local imbalance
+
+
+def _swing_at(price, sign=-1, weight=1.0, sigma=0.02, index=0):
+    return Swing(index, index, sign, price, weight, sigma)
+
+
+def test_the_pseudo_count_is_in_the_same_units_as_the_sum():
+    """The shrinkage units, pinned — and they are the OPPOSITE of _shrinkage's.
+
+    D197 reads a single bucket, so its pseudo-count is one swing's per-bucket PEAK; using
+    total mass there crushed every reading toward zero and its census caught it. This reads
+    a weighted SUM, so the unit is one swing's TOTAL mass.
+
+    The invariant that pins it: with no supply, weighted demand `d` reads `d / (d + 1)`.
+    Measure it once to recover `d`, double the mass, and the reading must land exactly
+    where that formula says. No appeal to what a single swing "should" read — which is
+    about 0.30, not 0.50, because the kernel is 0.5 ATR wide against a 2 ATR decay so part
+    of any nearby swing always falls on the far side of price."""
+    from backtest_framework.research.terrain_field import local_imbalance
+
+    bars = _bars([(100.0, 101.0, 99.0, 100.0)] * 80)
+    params = FieldParams(k=2, cluster_atr=0.5, erase=False)
+    one = local_imbalance(bars, [_swing_at(99.0, index=30)], params)[-1]
+    two = local_imbalance(
+        bars, [_swing_at(99.0, index=30), _swing_at(99.0, index=31)], params
+    )[-1]
+
+    d = one / (1.0 - one)                       # recover the weighted mass
+    assert two == pytest.approx(2 * d / (2 * d + 1.0), rel=1e-6), (
+        f"doubling the mass moved {one:.4f} to {two:.4f}, not to "
+        f"{2*d/(2*d+1):.4f} — the pseudo-count is not 1.0 in the sum's own units"
+    )
+    assert 0.15 < one < 0.45, f"one nearby swing read {one:.3f}"
+    assert two > one, "more evidence must read stronger"
+
+
+def test_a_distant_swing_barely_registers():
+    """Locality, asserted in the direction that matters: far mass must not move it."""
+    from backtest_framework.research.terrain_field import local_imbalance
+
+    bars = _bars([(100.0, 101.0, 99.0, 100.0)] * 80)
+    params = FieldParams(k=2, cluster_atr=0.5, erase=False)
+    near = local_imbalance(bars, [_swing_at(99.0, index=30)], params)[-1]
+    far = local_imbalance(bars, [_swing_at(40.0, index=30)], params)[-1]
+    assert abs(far) < 0.05, f"a swing 60% away read {far:.3f}"
+    assert near > 10 * abs(far), "the decay is not doing anything"
+
+
+def test_near_mass_does_move_it_so_the_decay_is_not_inert():
+    """The other direction — a guard that only ever returns zero would pass the test above."""
+    from backtest_framework.research.terrain_field import local_imbalance
+
+    bars = _bars([(100.0, 101.0, 99.0, 100.0)] * 80)
+    params = FieldParams(k=2, cluster_atr=0.5, erase=False)
+    demand = local_imbalance(bars, [_swing_at(99.0, sign=-1, index=30)], params)[-1]
+    supply = local_imbalance(bars, [_swing_at(101.0, sign=+1, index=30)], params)[-1]
+    assert demand > 0.2, "demand below price should read positive"
+    assert supply < -0.2, "supply above price should read negative"
+
+
+def test_the_local_reading_is_defined_even_with_no_nearby_mass():
+    """Shrinkage returns 0.0, not NaN — 'nothing either side of me' is a real answer and
+    keeps the book flat rather than undefined, which is what D201's NaN did."""
+    from backtest_framework.research.terrain_field import local_imbalance
+
+    bars = _bars([(100.0, 101.0, 99.0, 100.0)] * 80)
+    params = FieldParams(k=2, cluster_atr=0.5, erase=False)
+    out = local_imbalance(bars, [], params)
+    assert all(x == x for x in out) and set(out) == {0.0}
+
+
+def test_local_imbalance_does_not_read_past_its_own_index():
+    from backtest_framework.research.terrain_field import local_imbalance
+
+    raw = FieldParams(k=2, cluster_atr=0.5, erase=False)
+    bars = _walk(400, seed=51)
+    vols = [1_000.0] * len(bars)
+    cut = 250
+    grid = build_grid(bars, BUCKET_LN)
+    clean = local_imbalance(bars, confirmed_swings(bars, vols, raw), raw, grid)
+    poisoned = list(bars)
+    for i in range(cut + 1, len(bars)):
+        b = poisoned[i].bar
+        poisoned[i] = TimestampedBar(
+            poisoned[i].timestamp, Bar(b.open * 25, b.high * 25, b.low * 25, b.close * 25)
+        )
+    after = local_imbalance(
+        poisoned, confirmed_swings(poisoned, vols, raw), raw, grid
+    )
+    assert _same(clean[: cut + 1], after[: cut + 1])
+    assert not _same(clean[cut + 1 :], after[cut + 1 :]), "the poison never reached it"
+
+
+def test_continuous_sizing_charges_cost_in_proportion():
+    from backtest_framework.research.terrain_strategies import PositionResult
+
+    rets = tuple([0.0] * 11)
+    small = PositionResult(tuple([0.0] + [0.1] * 10), rets, 100.0, 365.0)
+    full = PositionResult(tuple([0.0] + [1.0] * 10), rets, 100.0, 365.0)
+    assert small.curve_total_return() == pytest.approx(-0.001, rel=1e-9)
+    assert full.curve_total_return() == pytest.approx(-0.01, rel=1e-9)
+    assert small.turnover == pytest.approx(0.1)
+
+
+def test_continuous_sizing_holds_the_signal_magnitude():
+    from backtest_framework.research.terrain_strategies import run_field_position
+
+    bars = _walk(40, seed=52)
+    atr = [1.0] * len(bars)
+    sig = [0.5] * len(bars)
+    res = run_field_position(bars, sig, atr, 0.0, 365.0, continuous=True)
+    assert set(res.position[2:]) == {0.5}
+    binary = run_field_position(bars, sig, atr, 0.0, 365.0, continuous=False)
+    assert set(binary.position[2:]) == {1.0}
+
+
+def test_sign_changes_and_net_exposure_describe_the_book():
+    from backtest_framework.research.terrain_strategies import PositionResult
+
+    rets = tuple([0.0] * 7)
+    r = PositionResult((0.0, 0.8, 0.8, -0.4, -0.4, 0.2, 0.2), rets, 0.0, 365.0)
+    assert r.sign_changes == 2
+    assert r.net_exposure == pytest.approx((0.8 + 0.8 - 0.4 - 0.4 + 0.2 + 0.2) / 7)
+
+
+def test_the_rotation_null_preserves_the_book_and_moves_only_its_timing():
+    from backtest_framework.research.terrain_field_nulls import rotation_null
+    from backtest_framework.research.terrain_strategies import PositionResult
+
+    bars = _walk(300, seed=53)
+    closes = [b.bar.close for b in bars]
+    rets = tuple([0.0] + [math.log(b / a) for a, b in zip(closes, closes[1:])])
+    pos = tuple(
+        (0.7 if (i // 40) % 3 == 0 else (-0.5 if (i // 40) % 3 == 1 else 0.0))
+        for i in range(len(bars))
+    )
+    real = PositionResult(pos, rets, 40.0, 365.0)
+    draws = rotation_null(real, 30, np.random.default_rng(0))
+
+    assert len(draws) == 30
+    for d in draws:
+        assert sorted(d.position) == sorted(real.position), "exposure distribution moved"
+        assert d.net_exposure == pytest.approx(real.net_exposure)
+    # turnover is preserved up to the single wrap-around seam
+    assert all(abs(d.turnover - real.turnover) <= 2.0 for d in draws)
+    curves = {round(d.curve_sharpe(bars, 365.0), 6) for d in draws}
+    assert len(curves) > 20, "rotation did not change the equity curve — control is vacuous"

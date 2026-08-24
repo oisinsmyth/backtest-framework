@@ -188,3 +188,36 @@ def compare_field_to_null(
         comparison.null_returns.append(result.curve_total_return(bars))
         comparison.null_trades.append(result.n_trades)
     return comparison
+
+
+def rotation_null(
+    result,
+    n_sims: int,
+    rng: np.random.Generator,
+) -> list["object"]:
+    """The realised book, rotated in time — the TIMING control D201 lacked (D202).
+
+    Circularly rotating the position series by a random offset preserves the exposure
+    distribution, the autocorrelation, the turnover and the net long tilt **exactly**, and
+    destroys only the alignment with price. A rotated book therefore carries the same beta
+    against the same uptrend as the real one.
+
+    That is what makes it the right control here. Sharpe is invariant to constant leverage,
+    so a book running at +0.78 net exposure cannot be separated from buy-and-hold by
+    scaling arguments, and the mass-shuffle null answers a different question (placement).
+    Only rotation asks: did the exposure CHANGE at the right moments?
+
+    D201 had neither, and its best cells turned out to be one multi-year long."""
+    from .terrain_strategies import PositionResult
+
+    n = len(result.position)
+    out = []
+    for _ in range(n_sims):
+        k = int(rng.integers(1, n)) if n > 1 else 0
+        rotated = result.position[k:] + result.position[:k]
+        out.append(
+            PositionResult(
+                tuple(rotated), result.returns, result.cost_bps, result.periods_per_year
+            )
+        )
+    return out

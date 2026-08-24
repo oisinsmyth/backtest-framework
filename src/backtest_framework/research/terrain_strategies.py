@@ -705,7 +705,10 @@ class PositionResult:
     `position[t]` is the exposure held THROUGH bar t, decided on bar t-1's information.
     Interface matches `StrategyResult` so `compare_field_to_null` consumes either."""
 
-    position: tuple[int, ...]
+    position: tuple[float, ...]
+    """Exposure held THROUGH each bar, in [-1, +1]. Fractional since D202: sizing on the
+    signal's magnitude is the thing D196 found had never been tested, because every
+    strategy in that study read level prices and never scores."""
     returns: tuple[float, ...]
     """Log return of the underlying, bar over bar; `returns[0]` is 0."""
     cost_bps: float
@@ -713,14 +716,33 @@ class PositionResult:
 
     @property
     def n_trades(self) -> int:
-        """Position CHANGES, which is what is charged and what turnover means here."""
+        """Bars on which the position changed to something non-flat.
+
+        Meaningful for a binary book and nearly every bar for a continuous one, so the
+        D202 runner reports `turnover` and `sign_changes` instead. Kept unchanged so
+        D201's committed summary re-renders identically."""
         return sum(
             1 for a, b in zip(self.position, self.position[1:]) if a != b and b != 0
         )
 
     @property
+    def sign_changes(self) -> int:
+        """Direction flips — the decision count for a continuously sized book. D201's
+        result turned on there being only nine of these, so it is reported explicitly."""
+        signs = [(1 if p > 0 else (-1 if p < 0 else 0)) for p in self.position]
+        nz = [x for x in signs if x != 0]
+        return sum(1 for a, b in zip(nz, nz[1:]) if a != b)
+
+    @property
+    def net_exposure(self) -> float:
+        """Average signed exposure. D201's BTC book ran at +0.78, which is why most of
+        its Sharpe was beta — and why a timing control was needed and missing."""
+        return sum(self.position) / len(self.position) if self.position else 0.0
+
+    @property
     def turnover(self) -> float:
-        """Units of exposure traded, so a long-to-short flip counts 2."""
+        """Units of exposure traded, so a long-to-short flip counts 2 and a trim from
+        0.6 to 0.5 counts 0.1. This is what cost is charged on."""
         return sum(abs(b - a) for a, b in zip(self.position, self.position[1:]))
 
     @property
@@ -783,7 +805,7 @@ class PositionResult:
     def leg(self, direction: int) -> "PositionResult":
         """The same book with only one side held; the other side is flat."""
         return PositionResult(
-            tuple(p if p == direction else 0 for p in self.position),
+            tuple(p if p * direction > 0 else 0.0 for p in self.position),
             self.returns,
             self.cost_bps,
             self.periods_per_year,
@@ -842,6 +864,87 @@ def run_field_imbalance(
 
         if target != held:
             entry_price = bars[t + 1].bar.open if target != 0 else None
+            held = target
+        position[t + 1] = held
+
+    closes = [b.bar.close for b in bars]
+    returns = [0.0] + [
+        math.log(b / a) if a > 0.0 and b > 0.0 else 0.0
+        for a, b in zip(closes, closes[1:])
+    ]
+    return PositionResult(tuple(position), tuple(returns), cost_bps, periods_per_year)
+
+
+def run_field_position(
+    bars: Sequence[TimestampedBar],
+    signal: Sequence[float],
+    atr: Sequence[float],
+    cost_bps: float,
+    periods_per_year: float,
+    continuous: bool = True,
+    use_stop: bool = False,
+    stop_atr: float = STOP_ATR,
+) -> PositionResult:
+    """Hold exposure equal to the signal (D202), or its sign when `continuous=False`.
+
+    The signal is read on bar `t`'s close and held from `t+1` — D197-D201's convention, so
+    the close that decides never also pays.
+
+    **Continuous sizing is the point.** D196 found that every strategy in that study read
+    level *prices* and never *scores*, which is why S5b came back bit-identical to S5 and
+    was never tested; D201 then built a field with a magnitude everywhere and thresholded
+    it at zero, discarding the same information a second time. Here exposure IS the
+    magnitude, so conviction and size are the same number and cost is charged on the change
+    in exposure rather than on a flip.
+
+    That also makes exposure fall as conviction falls, which is the natural risk control,
+    and is why `use_stop` is a sensitivity rather than the primary. A hard stop on a scaled
+    position is ill-defined, and D201 measured what one does to a book with multi-year runs:
+    94.3% of bars flat after a single stop-out.
+
+    `use_stop` closes to flat when price runs `stop_atr` x ATR against the level the
+    position was last opened or increased at, and stays flat until the signal's SIGN
+    changes — D201's rule, kept identical so the comparison means something."""
+    n = len(bars)
+    position = [0.0] * n
+    ref_price: float | None = None
+    stopped_sign: int | None = None
+    held = 0.0
+
+    for t in range(n - 1):
+        x = signal[t]
+        if not (x == x):
+            x = 0.0
+        target = max(-1.0, min(1.0, x)) if continuous else float(
+            1 if x > 0.0 else (-1 if x < 0.0 else 0)
+        )
+        sign = 1 if target > 0 else (-1 if target < 0 else 0)
+
+        if stopped_sign is not None:
+            if sign != stopped_sign:
+                stopped_sign = None
+            else:
+                target = 0.0
+
+        if use_stop and held != 0.0 and ref_price is not None:
+            b = bars[t].bar
+            a = atr[t]
+            if a == a and a > 0.0:
+                d = 1 if held > 0 else -1
+                level = ref_price - d * stop_atr * a
+                if (b.low <= level) if d > 0 else (b.high >= level):
+                    stopped_sign = d
+                    target = 0.0
+
+        if target != held:
+            # The stop hangs from the price the exposure was last INCREASED at; trimming a
+            # position does not move the level, which would otherwise let a losing trade
+            # walk its own stop away from itself.
+            if target != 0.0 and (held == 0.0 or abs(target) > abs(held)
+                                  or (target > 0) != (held > 0)):
+                ref_price = bars[t + 1].bar.open
+            elif target == 0.0:
+                ref_price = None
             held = target
         position[t + 1] = held
 
