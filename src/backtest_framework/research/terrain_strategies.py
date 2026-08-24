@@ -753,8 +753,9 @@ class PositionResult:
     def equity_curve(self, bars: Sequence[TimestampedBar] | None = None) -> list[float]:
         """Compounded equity per bar, cost charged on every unit of exposure changed."""
         charge = self.cost_bps / 10_000.0
-        equity, current = [], 1.0
-        prev = 0
+        equity: list[float] = []
+        current = 1.0
+        prev: float = 0.0
         for i, pos in enumerate(self.position):
             # Cost lands on the bar the exposure CHANGES INTO, and that bar's return is
             # earned at THIS bar's position, not the previous one. Applying `prev` here
@@ -837,10 +838,10 @@ def run_field_imbalance(
     Intrabar convention is D196's, pessimistic: the stop is checked against the bar's low
     for a long and its high for a short, so it is taken whenever the bar reached it."""
     n = len(bars)
-    position = [0] * n
+    position: list[float] = [0.0] * n
     entry_price: float | None = None
     stopped_state: int | None = None  # the signal state we were stopped out of
-    held = 0
+    held: float = 0.0
 
     for t in range(n - 1):
         x = imbalance[t]
@@ -859,7 +860,7 @@ def run_field_imbalance(
                 level = entry_price - held * stop_atr * a
                 hit = (b.low <= level) if held > 0 else (b.high >= level)
                 if hit:
-                    stopped_state = held
+                    stopped_state = 1 if held > 0 else -1
                     target = 0
 
         if target != held:

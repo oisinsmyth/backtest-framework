@@ -45,7 +45,7 @@ import numpy as np
 
 from ..data.bars import TimestampedBar
 from .terrain_field import FieldParams, Swing
-from .terrain_strategies import StrategyResult
+from .terrain_strategies import PositionResult, StrategyResult
 
 NULL_LOOKBACK = 180
 """Bars behind the local band. S5's primary lookback, reused rather than re-chosen — the
@@ -191,10 +191,10 @@ def compare_field_to_null(
 
 
 def rotation_null(
-    result,
+    result: PositionResult,
     n_sims: int,
     rng: np.random.Generator,
-) -> list["object"]:
+) -> list[PositionResult]:
     """The realised book, rotated in time — the TIMING control D201 lacked (D202).
 
     Circularly rotating the position series by a random offset preserves the exposure
@@ -208,8 +208,6 @@ def rotation_null(
     Only rotation asks: did the exposure CHANGE at the right moments?
 
     D201 had neither, and its best cells turned out to be one multi-year long."""
-    from .terrain_strategies import PositionResult
-
     n = len(result.position)
     out = []
     for _ in range(n_sims):
