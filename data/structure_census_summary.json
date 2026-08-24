@@ -1,0 +1,613 @@
+{
+  "produced": "2026-08-24",
+  "fixture": "crypto_binance_15m_raw.csv.gz",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ],
+  "primary": {
+    "k": 2,
+    "touch_atr": 0.5,
+    "cost_bps": 40.0
+  },
+  "atr_window": 1920,
+  "min_stacked_entries": 30,
+  "course_target_r": 5.0,
+  "runs": {
+    "BTCUSDT": {
+      "n_bars": 294336,
+      "cells": {
+        "k2|touch0.5": {
+          "k": 2,
+          "touch_atr": 0.5,
+          "events": {
+            "choch": 4366,
+            "bos": 23017
+          },
+          "population": {
+            "n_choch": 4366,
+            "setups": 3875,
+            "dropped_no_leg": 91,
+            "dropped_dead_on_arrival": 373,
+            "dropped_no_atr": 27
+          },
+          "closed_by": {
+            "invalidated": 1452,
+            "superseded": 1587,
+            "max_hold": 835,
+            "series_end": 1,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 3875,
+              "C1+C2": 874,
+              "C1+C2+C3": 389,
+              "C1+C2+C3+C4": 120,
+              "C1+C2+C3+C4+C5": 2
+            },
+            "each_alone": {
+              "C1+C2": 874,
+              "C1+C3": 2672,
+              "C1+C4": 1089,
+              "C1+C5": 126
+            },
+            "ever_in_window": {
+              "C2": 874,
+              "C3": 2672,
+              "C4": 1089,
+              "C5": 126
+            },
+            "stack_ever_separately": 340,
+            "stack_simultaneously": 120
+          },
+          "entries_base": {
+            "n": 3875,
+            "n_long": 1935,
+            "n_short": 1940,
+            "median_wait_bars": 5,
+            "median_stop_atr": 1.0378024653797542,
+            "median_stop_pct": 0.004114517737195658,
+            "median_retracement": 0.3205478390577461,
+            "median_friction_r": 0.9721673973694643,
+            "mean_friction_r": 4.195865468275126,
+            "friction_r_p90": 3.185823012643912,
+            "required_hit_rate_at_5r": 0.32869456622824406,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 120,
+            "n_long": 52,
+            "n_short": 68,
+            "median_wait_bars": 9.0,
+            "median_stop_atr": 1.7049191437923472,
+            "median_stop_pct": 0.006791185866682127,
+            "median_retracement": 0.5375062552189268,
+            "median_friction_r": 0.5890081858328291,
+            "mean_friction_r": 0.801734920871525,
+            "friction_r_p90": 1.429968291346801,
+            "required_hit_rate_at_5r": 0.26483469763880485,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        },
+        "k2|touch1.0": {
+          "k": 2,
+          "touch_atr": 1.0,
+          "events": {
+            "choch": 4366,
+            "bos": 23017
+          },
+          "population": {
+            "n_choch": 4366,
+            "setups": 3875,
+            "dropped_no_leg": 91,
+            "dropped_dead_on_arrival": 373,
+            "dropped_no_atr": 27
+          },
+          "closed_by": {
+            "invalidated": 1452,
+            "superseded": 1587,
+            "max_hold": 835,
+            "series_end": 1,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 3875,
+              "C1+C2": 1180,
+              "C1+C2+C3": 818,
+              "C1+C2+C3+C4": 244,
+              "C1+C2+C3+C4+C5": 4
+            },
+            "each_alone": {
+              "C1+C2": 1180,
+              "C1+C3": 3154,
+              "C1+C4": 1089,
+              "C1+C5": 126
+            },
+            "ever_in_window": {
+              "C2": 1180,
+              "C3": 3154,
+              "C4": 1089,
+              "C5": 126
+            },
+            "stack_ever_separately": 467,
+            "stack_simultaneously": 244
+          },
+          "entries_base": {
+            "n": 3875,
+            "n_long": 1935,
+            "n_short": 1940,
+            "median_wait_bars": 5,
+            "median_stop_atr": 1.0378024653797542,
+            "median_stop_pct": 0.004114517737195658,
+            "median_retracement": 0.3205478390577461,
+            "median_friction_r": 0.9721673973694643,
+            "mean_friction_r": 4.195865468275126,
+            "friction_r_p90": 3.185823012643912,
+            "required_hit_rate_at_5r": 0.32869456622824406,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 244,
+            "n_long": 122,
+            "n_short": 122,
+            "median_wait_bars": 8.0,
+            "median_stop_atr": 1.743885344173321,
+            "median_stop_pct": 0.007518908651633391,
+            "median_retracement": 0.4845519521361601,
+            "median_friction_r": 0.532042401083018,
+            "mean_friction_r": 0.7428292388124415,
+            "friction_r_p90": 1.3656583492847472,
+            "required_hit_rate_at_5r": 0.255340400180503,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        },
+        "k3|touch0.5": {
+          "k": 3,
+          "touch_atr": 0.5,
+          "events": {
+            "choch": 3209,
+            "bos": 17263
+          },
+          "population": {
+            "n_choch": 3209,
+            "setups": 2808,
+            "dropped_no_leg": 79,
+            "dropped_dead_on_arrival": 304,
+            "dropped_no_atr": 18
+          },
+          "closed_by": {
+            "invalidated": 1008,
+            "superseded": 892,
+            "max_hold": 907,
+            "series_end": 1,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 2808,
+              "C1+C2": 535,
+              "C1+C2+C3": 207,
+              "C1+C2+C3+C4": 67,
+              "C1+C2+C3+C4+C5": 2
+            },
+            "each_alone": {
+              "C1+C2": 535,
+              "C1+C3": 1896,
+              "C1+C4": 845,
+              "C1+C5": 129
+            },
+            "ever_in_window": {
+              "C2": 535,
+              "C3": 1896,
+              "C4": 845,
+              "C5": 129
+            },
+            "stack_ever_separately": 222,
+            "stack_simultaneously": 67
+          },
+          "entries_base": {
+            "n": 2808,
+            "n_long": 1333,
+            "n_short": 1475,
+            "median_wait_bars": 7.0,
+            "median_stop_atr": 1.2308320945451614,
+            "median_stop_pct": 0.0048951499599563485,
+            "median_retracement": 0.31920454904407325,
+            "median_friction_r": 0.8171353494024866,
+            "mean_friction_r": 1.370734392021026,
+            "friction_r_p90": 2.5142305326415015,
+            "required_hit_rate_at_5r": 0.3028558915670811,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 67,
+            "n_long": 28,
+            "n_short": 39,
+            "median_wait_bars": 12,
+            "median_stop_atr": 2.1935048408975337,
+            "median_stop_pct": 0.009725048389498139,
+            "median_retracement": 0.5539379329491657,
+            "median_friction_r": 0.4113090073998511,
+            "mean_friction_r": 0.6817856993390494,
+            "friction_r_p90": 1.565207366949851,
+            "required_hit_rate_at_5r": 0.23521816789997518,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        },
+        "k3|touch1.0": {
+          "k": 3,
+          "touch_atr": 1.0,
+          "events": {
+            "choch": 3209,
+            "bos": 17263
+          },
+          "population": {
+            "n_choch": 3209,
+            "setups": 2808,
+            "dropped_no_leg": 79,
+            "dropped_dead_on_arrival": 304,
+            "dropped_no_atr": 18
+          },
+          "closed_by": {
+            "invalidated": 1008,
+            "superseded": 892,
+            "max_hold": 907,
+            "series_end": 1,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 2808,
+              "C1+C2": 728,
+              "C1+C2+C3": 455,
+              "C1+C2+C3+C4": 131,
+              "C1+C2+C3+C4+C5": 3
+            },
+            "each_alone": {
+              "C1+C2": 728,
+              "C1+C3": 2211,
+              "C1+C4": 845,
+              "C1+C5": 129
+            },
+            "ever_in_window": {
+              "C2": 728,
+              "C3": 2211,
+              "C4": 845,
+              "C5": 129
+            },
+            "stack_ever_separately": 307,
+            "stack_simultaneously": 131
+          },
+          "entries_base": {
+            "n": 2808,
+            "n_long": 1333,
+            "n_short": 1475,
+            "median_wait_bars": 7.0,
+            "median_stop_atr": 1.2308320945451614,
+            "median_stop_pct": 0.0048951499599563485,
+            "median_retracement": 0.31920454904407325,
+            "median_friction_r": 0.8171353494024866,
+            "mean_friction_r": 1.370734392021026,
+            "friction_r_p90": 2.5142305326415015,
+            "required_hit_rate_at_5r": 0.3028558915670811,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 131,
+            "n_long": 63,
+            "n_short": 68,
+            "median_wait_bars": 11,
+            "median_stop_atr": 2.0064739932767655,
+            "median_stop_pct": 0.009254029630273356,
+            "median_retracement": 0.5021175083092122,
+            "median_friction_r": 0.4322441314553953,
+            "mean_friction_r": 0.6345144824215271,
+            "friction_r_p90": 1.396724780498684,
+            "required_hit_rate_at_5r": 0.2387073552425659,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        }
+      }
+    },
+    "ETHUSDT": {
+      "n_bars": 294336,
+      "cells": {
+        "k2|touch0.5": {
+          "k": 2,
+          "touch_atr": 0.5,
+          "events": {
+            "choch": 4193,
+            "bos": 23133
+          },
+          "population": {
+            "n_choch": 4193,
+            "setups": 3753,
+            "dropped_no_leg": 79,
+            "dropped_dead_on_arrival": 333,
+            "dropped_no_atr": 28
+          },
+          "closed_by": {
+            "invalidated": 1482,
+            "superseded": 1435,
+            "max_hold": 836,
+            "series_end": 0,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 3753,
+              "C1+C2": 942,
+              "C1+C2+C3": 385,
+              "C1+C2+C3+C4": 106,
+              "C1+C2+C3+C4+C5": 2
+            },
+            "each_alone": {
+              "C1+C2": 942,
+              "C1+C3": 2619,
+              "C1+C4": 1127,
+              "C1+C5": 144
+            },
+            "ever_in_window": {
+              "C2": 942,
+              "C3": 2619,
+              "C4": 1127,
+              "C5": 144
+            },
+            "stack_ever_separately": 388,
+            "stack_simultaneously": 106
+          },
+          "entries_base": {
+            "n": 3753,
+            "n_long": 1833,
+            "n_short": 1920,
+            "median_wait_bars": 5,
+            "median_stop_atr": 1.0649355985127067,
+            "median_stop_pct": 0.005569507799019341,
+            "median_retracement": 0.31614859742229384,
+            "median_friction_r": 0.718196319018407,
+            "mean_friction_r": 1.2005868892674518,
+            "friction_r_p90": 2.2051571955719678,
+            "required_hit_rate_at_5r": 0.2863660531697345,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 106,
+            "n_long": 54,
+            "n_short": 52,
+            "median_wait_bars": 9.0,
+            "median_stop_atr": 1.844275359105258,
+            "median_stop_pct": 0.010123882395397472,
+            "median_retracement": 0.547447495401731,
+            "median_friction_r": 0.3951067492735381,
+            "mean_friction_r": 0.5949190180139586,
+            "friction_r_p90": 1.198872205538863,
+            "required_hit_rate_at_5r": 0.23251779154558969,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        },
+        "k2|touch1.0": {
+          "k": 2,
+          "touch_atr": 1.0,
+          "events": {
+            "choch": 4193,
+            "bos": 23133
+          },
+          "population": {
+            "n_choch": 4193,
+            "setups": 3753,
+            "dropped_no_leg": 79,
+            "dropped_dead_on_arrival": 333,
+            "dropped_no_atr": 28
+          },
+          "closed_by": {
+            "invalidated": 1482,
+            "superseded": 1435,
+            "max_hold": 836,
+            "series_end": 0,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 3753,
+              "C1+C2": 1259,
+              "C1+C2+C3": 862,
+              "C1+C2+C3+C4": 239,
+              "C1+C2+C3+C4+C5": 3
+            },
+            "each_alone": {
+              "C1+C2": 1259,
+              "C1+C3": 3048,
+              "C1+C4": 1127,
+              "C1+C5": 144
+            },
+            "ever_in_window": {
+              "C2": 1259,
+              "C3": 3048,
+              "C4": 1127,
+              "C5": 144
+            },
+            "stack_ever_separately": 539,
+            "stack_simultaneously": 239
+          },
+          "entries_base": {
+            "n": 3753,
+            "n_long": 1833,
+            "n_short": 1920,
+            "median_wait_bars": 5,
+            "median_stop_atr": 1.0649355985127067,
+            "median_stop_pct": 0.005569507799019341,
+            "median_retracement": 0.31614859742229384,
+            "median_friction_r": 0.718196319018407,
+            "mean_friction_r": 1.2005868892674518,
+            "friction_r_p90": 2.2051571955719678,
+            "required_hit_rate_at_5r": 0.2863660531697345,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 239,
+            "n_long": 106,
+            "n_short": 133,
+            "median_wait_bars": 8,
+            "median_stop_atr": 1.7952534618397142,
+            "median_stop_pct": 0.00913621262458467,
+            "median_retracement": 0.48214285714285315,
+            "median_friction_r": 0.4378181818181841,
+            "mean_friction_r": 0.5867520929607886,
+            "friction_r_p90": 1.1072455308641975,
+            "required_hit_rate_at_5r": 0.239636363636364,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        },
+        "k3|touch0.5": {
+          "k": 3,
+          "touch_atr": 0.5,
+          "events": {
+            "choch": 3064,
+            "bos": 17439
+          },
+          "population": {
+            "n_choch": 3064,
+            "setups": 2717,
+            "dropped_no_leg": 76,
+            "dropped_dead_on_arrival": 247,
+            "dropped_no_atr": 24
+          },
+          "closed_by": {
+            "invalidated": 984,
+            "superseded": 821,
+            "max_hold": 912,
+            "series_end": 0,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 2717,
+              "C1+C2": 547,
+              "C1+C2+C3": 175,
+              "C1+C2+C3+C4": 45,
+              "C1+C2+C3+C4+C5": 0
+            },
+            "each_alone": {
+              "C1+C2": 547,
+              "C1+C3": 1829,
+              "C1+C4": 877,
+              "C1+C5": 152
+            },
+            "ever_in_window": {
+              "C2": 547,
+              "C3": 1829,
+              "C4": 877,
+              "C5": 152
+            },
+            "stack_ever_separately": 243,
+            "stack_simultaneously": 45
+          },
+          "entries_base": {
+            "n": 2717,
+            "n_long": 1310,
+            "n_short": 1407,
+            "median_wait_bars": 7,
+            "median_stop_atr": 1.2680832088314067,
+            "median_stop_pct": 0.006489466551681706,
+            "median_retracement": 0.3148891437308855,
+            "median_friction_r": 0.6163834836260038,
+            "mean_friction_r": 0.9527888345872639,
+            "friction_r_p90": 1.836090734932616,
+            "required_hit_rate_at_5r": 0.2693972472710006,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 45,
+            "n_long": 23,
+            "n_short": 22,
+            "median_wait_bars": 11,
+            "median_stop_atr": 2.0016250939028026,
+            "median_stop_pct": 0.010626736394835848,
+            "median_retracement": 0.563352826510725,
+            "median_friction_r": 0.3764090734332917,
+            "mean_friction_r": 0.581194733697949,
+            "friction_r_p90": 1.094011823065201,
+            "required_hit_rate_at_5r": 0.22940151223888194,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        },
+        "k3|touch1.0": {
+          "k": 3,
+          "touch_atr": 1.0,
+          "events": {
+            "choch": 3064,
+            "bos": 17439
+          },
+          "population": {
+            "n_choch": 3064,
+            "setups": 2717,
+            "dropped_no_leg": 76,
+            "dropped_dead_on_arrival": 247,
+            "dropped_no_atr": 24
+          },
+          "closed_by": {
+            "invalidated": 984,
+            "superseded": 821,
+            "max_hold": 912,
+            "series_end": 0,
+            "atr_unavailable": 0
+          },
+          "funnel": {
+            "cumulative": {
+              "C1": 2717,
+              "C1+C2": 757,
+              "C1+C2+C3": 471,
+              "C1+C2+C3+C4": 137,
+              "C1+C2+C3+C4+C5": 1
+            },
+            "each_alone": {
+              "C1+C2": 757,
+              "C1+C3": 2130,
+              "C1+C4": 877,
+              "C1+C5": 152
+            },
+            "ever_in_window": {
+              "C2": 757,
+              "C3": 2130,
+              "C4": 877,
+              "C5": 152
+            },
+            "stack_ever_separately": 363,
+            "stack_simultaneously": 137
+          },
+          "entries_base": {
+            "n": 2717,
+            "n_long": 1310,
+            "n_short": 1407,
+            "median_wait_bars": 7,
+            "median_stop_atr": 1.2680832088314067,
+            "median_stop_pct": 0.006489466551681706,
+            "median_retracement": 0.3148891437308855,
+            "median_friction_r": 0.6163834836260038,
+            "mean_friction_r": 0.9527888345872639,
+            "friction_r_p90": 1.836090734932616,
+            "required_hit_rate_at_5r": 0.2693972472710006,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          },
+          "entries_stacked": {
+            "n": 137,
+            "n_long": 58,
+            "n_short": 79,
+            "median_wait_bars": 10,
+            "median_stop_atr": 2.096559302245713,
+            "median_stop_pct": 0.0110062893081761,
+            "median_retracement": 0.49163568773233557,
+            "median_friction_r": 0.36342857142857143,
+            "mean_friction_r": 0.5155339447736075,
+            "friction_r_p90": 1.0207991293464853,
+            "required_hit_rate_at_5r": 0.22723809523809524,
+            "frictionless_hit_rate_at_5r": 0.16666666666666666
+          }
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 120.3
+}

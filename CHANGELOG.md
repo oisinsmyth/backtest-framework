@@ -10,6 +10,42 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (the setup census, 2026-08-24 — D206)
+- `research/structure_setups.py` — composes the five detectors into `Setup` objects that
+  record, per bar of the pullback window, **which conditions held there**. Any subset reads
+  its own entry off the same object, so WP4's 16 arms differ in the filters and in nothing
+  else. `SetupPopulation` returns the drops explicitly. Plus `friction_in_r` and
+  `required_hit_rate`, pinned against D196/D197's published 0.49R/0.12R pair.
+- `scripts/run_structure_census.py` + `data/structure_census_summary.json` + the WP2
+  section of `STRUCTURE_RESULTS.md`. Counts only — no return, no Sharpe, 0 looks. The
+  section's prose is generated from the payload so the two cannot drift (D176/D183/D186).
+- `tests/unit/test_structure_setups.py` (26).
+
+### Findings — counts only, no backtest
+- **The round-trip cost is roughly the whole distance to the stop.** 40 bps is 0.40% of
+  price; the median C1-only stop is 0.41% (BTC) and 0.56% (ETH), so friction is 0.97R and
+  0.72R.
+- **The course's arithmetic fails once costs exist.** Its 5R target breaks even at 16.7%
+  frictionless and at 23.3–32.9% at 40 bps. **A 20% hit rate at 5R loses money in every
+  cell measured.** Independent of whether any component carries information.
+- **H5 falsified** — the stacked arm is not underpowered (120 and 106 entries against a
+  floor of 30). WP3/WP4 proceed.
+- **C5 dropped as a stacked filter on counts alone**: RSI 30/70 collapses the stack to 2
+  entries on both symbols. Retained as a continuous feature for WP4a.
+- **C3 admits 69–70% of setups on its own** — very little work for a filter, before WP3
+  asks whether 0.618 differs from the placebo ratios.
+- **The stack's one measurable effect is entering deeper** (retracement 0.32 → 0.54, stop
+  1.05 → 1.75 ATR), which halves friction and is not evidence of a signal.
+- **The discretion gap, measured**: 340 BTC setups had all three conditions somewhere in
+  the window and only 120 had them at the same bar.
+
+### Fixed
+- Two guard-shaped defects, both caught by tests written before the run. ATR warm-up was
+  punching holes in pullback windows, producing non-contiguous windows whose first bar was
+  not the bar an entry became possible; those setups are now refused and counted. And ~9%
+  of setups were dropped dead-on-arrival by an `if window:` without being counted — found
+  because `SetupPopulation`'s drop arithmetic is asserted to add up.
+
 ### Added (the structure detectors, 2026-08-24 — D204/D205)
 - `New Docs/STRUCTURE_MODEL.md` + `STRUCTURE_RESULTS.md` — a new programme and a new
   ledger, opened at 0 looks, on a genuinely new construction: the five components of a

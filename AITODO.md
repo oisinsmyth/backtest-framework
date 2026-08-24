@@ -317,9 +317,13 @@ entries and fading lost in every form terrain measured.
       was mutated six ways: **two mutations survived 43 green tests**, one of them the
       higher-low requirement that IS the pre-registered CHoCH definition. Both tests
       strengthened; the second finding generalises and is written up in D205.
-- [ ] **WP2 — the census. Counts only, before any performance number.** The funnel through
-      the four conjunctive filters, and the friction in R by arithmetic. Stop condition:
-      under 30 stacked entries per symbol and that arm carries no verdict.
+- [x] **WP2 — the census (D206).** Stop condition CLEARS (120 and 106 stacked entries
+      against a floor of 30) so H5 is falsified and the programme continues. The
+      decisive number needed no backtest: **40 bps is 0.40% of price and the median
+      C1-only stop is 0.41%**, so the cost of trading is roughly the entire distance to
+      the stop and a 20% hit rate at 5R loses money in every cell. C5 dropped as a
+      stacked filter on counts alone (RSI 30/70 leaves 2 entries), kept as a feature.
+      Two guard-shaped defects flushed out by tests written before the run. 0 looks.
 - [ ] **WP3 — each component against its own matched null**, no costs. Includes the Fib
       placebo ladder, the cheapest decisive test in the programme.
 - [ ] **WP4 — marginal contribution.** Feature quintiles (primary) + the 16-arm ablation
