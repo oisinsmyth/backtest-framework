@@ -10,6 +10,47 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D216 — the tail, the frequency and the fill, 2026-08-24)
+- `scripts/run_reversion_tail.py` + `data/reversion_tail_summary.json` + a D216 section.
+  Adds a spacing-based tail sampler (≥ M bars apart, ~8× the events blind stepping gives at
+  the 99th percentile), a maker-fill arm on `FillAssumption.TRADE_THROUGH`, and an
+  asymmetric break-even solver — break-even is a fixed point, not a constant, because the
+  take-profit can rest and the stop cannot.
+- `tests/unit/test_reversion_tail.py` (40), including the mandatory pair, a subset/strictness
+  pin on the fill convention, and a regression pin on `_rate` (see Fixed).
+
+### Findings
+- **`p` keeps rising all the way into the tail.** 52.33% → **56.66%** (BTC) and 52.89% →
+  **61.43%** (ETH) across the 87.5th → 99.5th percentiles of move size, monotone on both.
+  D215's one open thread, closed with a yes.
+- **It still does not pay.** The maker arm — the only arm whose costs make a 15m entry
+  possible at all — reaches 59.27% and 58.60% against break-evens of 63.77% and 60.76%.
+  **The gap narrows from roughly 4× to about 4 points and does not reach zero.**
+- **Two cells cleared every hurdle, both on the optimistic bound.** `maker in/out` prices the
+  stop as a maker fill; you cannot rest a stop, so those passes are real arithmetic on an
+  untradeable fee model.
+- **At daily the sign flips.** BTC's top bucket reverts 40.00% — big daily moves continue.
+  H3 predicted weaker reversion and got reversal of sign, matching the standard stylised
+  fact. Weak claim on n = 120 / 100 and recorded as one.
+- **Adverse selection is real in direction but half the predicted size**: +1.46% mean against
+  a predicted ≥ 3 points, 7 of 10 cells in the predicted direction.
+
+### Fixed
+- **`rate()` returned 1.0 for every cell.** `sum(1 for _, ok in rows)` with no `if ok` counts
+  every row, so every bucket read 100.00%, every hurdle "cleared", and the reading function
+  announced a positive. No test caught it — the halves function sums bools correctly and
+  disagreed with the headline, the same tell as D209. Root cause: it was a **closure inside
+  `measure`**, so it could not be imported and was never pinned. Now module-level `_rate`,
+  pinned against a hand-counted list, with a companion test requiring the headline to equal
+  the sample-weighted blend of the halves.
+- **The verdict table paired a taker fill with maker costs**, taking `p` from the population
+  that crossed the spread and the cost from the population that rested. It produced a
+  spurious pass (ETH 99.5th, +0.67%) that reads −2.16% once corrected. Each tier in `FEES`
+  now declares the arm it is coherent with, pinned by test.
+- **The test fixture could not test what it was written for.** `_bars` padded every synthetic
+  bar with a 0.1% wick, so a limit at the previous close always traded through and the maker
+  arm filled 434 of 434 events. Default padding is now zero.
+
 ### Added (D215 — is it just mean reversion?, 2026-08-24)
 - `scripts/run_generic_reversal.py` + `data/generic_reversal_summary.json` + a D215 section.
   Both arms call the *same* `structure_nulls.continue_from` — one function, not two

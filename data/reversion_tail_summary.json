@@ -1,0 +1,670 @@
+{
+  "produced": "2026-08-24",
+  "lookback_M": 8,
+  "band_atr": 0.5,
+  "horizon": 5,
+  "cutoffs": [
+    87.5,
+    95.0,
+    99.0,
+    99.5
+  ],
+  "min_n": 100,
+  "fees": [
+    {
+      "name": "maker in/out",
+      "c_in": 1.0,
+      "c_tp": 1.0,
+      "c_stop": 1.0,
+      "arm": "maker"
+    },
+    {
+      "name": "maker in, taker stop",
+      "c_in": 1.0,
+      "c_tp": 1.0,
+      "c_stop": 10.0,
+      "arm": "maker"
+    },
+    {
+      "name": "taker throughout",
+      "c_in": 40.0,
+      "c_tp": 40.0,
+      "c_stop": 40.0,
+      "arm": "taker"
+    }
+  ],
+  "verdict_fee": "maker in, taker stop",
+  "runs": {
+    "15m|BTCUSDT": {
+      "frequency": "15m",
+      "symbol": "BTCUSDT",
+      "tail": true,
+      "n_bars": 294336,
+      "atr_bp": 38.21174531453426,
+      "n_candidate_bars": 292409,
+      "cells": {
+        "p87.5": {
+          "taker": {
+            "n": 9049,
+            "p": 0.5232622389214278,
+            "p_first_half": 0.5102781136638452,
+            "p_second_half": 0.5341880341880342
+          },
+          "maker": {
+            "n": 8846,
+            "fill_rate": 0.9775665819427561,
+            "p": 0.5057653176576984,
+            "p_first_half": 0.4951863737348803,
+            "p_second_half": 0.5147028154327424
+          },
+          "adverse_selection": 0.01749692126372937,
+          "cutoff_pct": 87.5,
+          "cutoff_move_atr": 2.723935558817774,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.5523399280388085,
+              "arm": "maker",
+              "verdict": {
+                "n": 8846,
+                "p": 0.5057653176576984,
+                "p_star": 0.5523399280388085,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.046574610381110104
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6376776045175978,
+              "arm": "maker",
+              "verdict": {
+                "n": 8846,
+                "p": 0.5057653176576984,
+                "p_star": 0.6376776045175978,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.13191228685989942
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.5935971215523392,
+              "arm": "taker",
+              "verdict": {
+                "n": 9049,
+                "p": 0.5232622389214278,
+                "p_star": 2.5935971215523392,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -2.0703348826309114
+              }
+            }
+          }
+        },
+        "p95.0": {
+          "taker": {
+            "n": 3784,
+            "p": 0.5269556025369979,
+            "p_first_half": 0.5208946439081813,
+            "p_second_half": 0.53189448441247
+          },
+          "maker": {
+            "n": 3731,
+            "fill_rate": 0.9859936575052854,
+            "p": 0.5172875904583222,
+            "p_first_half": 0.5124851367419738,
+            "p_second_half": 0.5212298682284041
+          },
+          "adverse_selection": 0.009668012078675736,
+          "cutoff_pct": 95.0,
+          "cutoff_move_atr": 4.392212225249038,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.5523399280388085,
+              "arm": "maker",
+              "verdict": {
+                "n": 3731,
+                "p": 0.5172875904583222,
+                "p_star": 0.5523399280388085,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.035052337580486315
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6376776045175978,
+              "arm": "maker",
+              "verdict": {
+                "n": 3731,
+                "p": 0.5172875904583222,
+                "p_star": 0.6376776045175978,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.12039001405927563
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.5935971215523392,
+              "arm": "taker",
+              "verdict": {
+                "n": 3784,
+                "p": 0.5269556025369979,
+                "p_star": 2.5935971215523392,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -2.0666415190153415
+              }
+            }
+          }
+        },
+        "p99.0": {
+          "taker": {
+            "n": 838,
+            "p": 0.5656324582338902,
+            "p_first_half": 0.5706806282722513,
+            "p_second_half": 0.5614035087719298
+          },
+          "maker": {
+            "n": 830,
+            "fill_rate": 0.9904534606205251,
+            "p": 0.5277108433734939,
+            "p_first_half": 0.5555555555555556,
+            "p_second_half": 0.504424778761062
+          },
+          "adverse_selection": 0.03792161486039625,
+          "cutoff_pct": 99.0,
+          "cutoff_move_atr": 8.189399981145195,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.5523399280388085,
+              "arm": "maker",
+              "verdict": {
+                "n": 830,
+                "p": 0.5277108433734939,
+                "p_star": 0.5523399280388085,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.02462908466531455
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6376776045175978,
+              "arm": "maker",
+              "verdict": {
+                "n": 830,
+                "p": 0.5277108433734939,
+                "p_star": 0.6376776045175978,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.10996676114410386
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.5935971215523392,
+              "arm": "taker",
+              "verdict": {
+                "n": 838,
+                "p": 0.5656324582338902,
+                "p_star": 2.5935971215523392,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -2.027964663318449
+              }
+            }
+          }
+        },
+        "p99.5": {
+          "taker": {
+            "n": 413,
+            "p": 0.5665859564164649,
+            "p_first_half": 0.5925925925925926,
+            "p_second_half": 0.5446428571428571
+          },
+          "maker": {
+            "n": 410,
+            "fill_rate": 0.9927360774818402,
+            "p": 0.5926829268292683,
+            "p_first_half": 0.6256684491978609,
+            "p_second_half": 0.5650224215246636
+          },
+          "adverse_selection": -0.026096970412803344,
+          "cutoff_pct": 99.5,
+          "cutoff_move_atr": 10.187869478881556,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.5523399280388085,
+              "arm": "maker",
+              "verdict": {
+                "n": 410,
+                "p": 0.5926829268292683,
+                "p_star": 0.5523399280388085,
+                "powered": true,
+                "clears_break_even": true,
+                "stable_across_halves": true,
+                "margin": 0.04034299879045977
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6376776045175978,
+              "arm": "maker",
+              "verdict": {
+                "n": 410,
+                "p": 0.5926829268292683,
+                "p_star": 0.6376776045175978,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.04499467768832954
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.5935971215523392,
+              "arm": "taker",
+              "verdict": {
+                "n": 413,
+                "p": 0.5665859564164649,
+                "p_star": 2.5935971215523392,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -2.027011165135874
+              }
+            }
+          }
+        }
+      }
+    },
+    "15m|ETHUSDT": {
+      "frequency": "15m",
+      "symbol": "ETHUSDT",
+      "tail": true,
+      "n_bars": 294336,
+      "atr_bp": 51.40923372435208,
+      "n_candidate_bars": 292409,
+      "cells": {
+        "p87.5": {
+          "taker": {
+            "n": 9168,
+            "p": 0.5289048865619547,
+            "p_first_half": 0.5188386524822695,
+            "p_second_half": 0.538659793814433
+          },
+          "maker": {
+            "n": 8985,
+            "fill_rate": 0.9800392670157068,
+            "p": 0.5108514190317195,
+            "p_first_half": 0.509263443289652,
+            "p_second_half": 0.5123930686554069
+          },
+          "adverse_selection": 0.01805346753023518,
+          "cutoff_pct": 87.5,
+          "cutoff_move_atr": 2.7933102244262757,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.538903517035941,
+              "arm": "maker",
+              "verdict": {
+                "n": 8985,
+                "p": 0.5108514190317195,
+                "p_star": 0.538903517035941,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.028052098004221482
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6075994446421811,
+              "arm": "maker",
+              "verdict": {
+                "n": 8985,
+                "p": 0.5108514190317195,
+                "p_star": 0.6075994446421811,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.09674802561046159
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.056140681437637,
+              "arm": "taker",
+              "verdict": {
+                "n": 9168,
+                "p": 0.5289048865619547,
+                "p_star": 2.056140681437637,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -1.5272357948756823
+              }
+            }
+          }
+        },
+        "p95.0": {
+          "taker": {
+            "n": 3879,
+            "p": 0.531580304202114,
+            "p_first_half": 0.5391949152542372,
+            "p_second_half": 0.5243596182822702
+          },
+          "maker": {
+            "n": 3815,
+            "fill_rate": 0.9835009022944058,
+            "p": 0.5399737876802096,
+            "p_first_half": 0.5474649406688241,
+            "p_second_half": 0.5328913819479857
+          },
+          "adverse_selection": -0.008393483478095654,
+          "cutoff_pct": 95.0,
+          "cutoff_move_atr": 4.397226119213754,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.538903517035941,
+              "arm": "maker",
+              "verdict": {
+                "n": 3815,
+                "p": 0.5399737876802096,
+                "p_star": 0.538903517035941,
+                "powered": true,
+                "clears_break_even": true,
+                "stable_across_halves": false,
+                "margin": 0.0010702706442686782
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6075994446421811,
+              "arm": "maker",
+              "verdict": {
+                "n": 3815,
+                "p": 0.5399737876802096,
+                "p_star": 0.6075994446421811,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.06762565696197143
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.056140681437637,
+              "arm": "taker",
+              "verdict": {
+                "n": 3879,
+                "p": 0.531580304202114,
+                "p_star": 2.056140681437637,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -1.524560377235523
+              }
+            }
+          }
+        },
+        "p99.0": {
+          "taker": {
+            "n": 828,
+            "p": 0.5809178743961353,
+            "p_first_half": 0.6168674698795181,
+            "p_second_half": 0.5447941888619855
+          },
+          "maker": {
+            "n": 815,
+            "fill_rate": 0.9842995169082126,
+            "p": 0.5607361963190184,
+            "p_first_half": 0.6049382716049383,
+            "p_second_half": 0.5170731707317073
+          },
+          "adverse_selection": 0.020181678077116905,
+          "cutoff_pct": 99.0,
+          "cutoff_move_atr": 8.036492900466042,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.538903517035941,
+              "arm": "maker",
+              "verdict": {
+                "n": 815,
+                "p": 0.5607361963190184,
+                "p_star": 0.538903517035941,
+                "powered": true,
+                "clears_break_even": true,
+                "stable_across_halves": false,
+                "margin": 0.021832679283077416
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6075994446421811,
+              "arm": "maker",
+              "verdict": {
+                "n": 815,
+                "p": 0.5607361963190184,
+                "p_star": 0.6075994446421811,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.04686324832316269
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.056140681437637,
+              "arm": "taker",
+              "verdict": {
+                "n": 828,
+                "p": 0.5809178743961353,
+                "p_star": 2.056140681437637,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -1.4752228070415017
+              }
+            }
+          }
+        },
+        "p99.5": {
+          "taker": {
+            "n": 420,
+            "p": 0.6142857142857143,
+            "p_first_half": 0.6135265700483091,
+            "p_second_half": 0.6150234741784038
+          },
+          "maker": {
+            "n": 413,
+            "fill_rate": 0.9833333333333333,
+            "p": 0.585956416464891,
+            "p_first_half": 0.6305418719211823,
+            "p_second_half": 0.5428571428571428
+          },
+          "adverse_selection": 0.028329297820823274,
+          "cutoff_pct": 99.5,
+          "cutoff_move_atr": 10.018092221145949,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.538903517035941,
+              "arm": "maker",
+              "verdict": {
+                "n": 413,
+                "p": 0.585956416464891,
+                "p_star": 0.538903517035941,
+                "powered": true,
+                "clears_break_even": true,
+                "stable_across_halves": true,
+                "margin": 0.04705289942895008
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.6075994446421811,
+              "arm": "maker",
+              "verdict": {
+                "n": 413,
+                "p": 0.585956416464891,
+                "p_star": 0.6075994446421811,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.021643028177290025
+              }
+            },
+            "taker throughout": {
+              "p_star": 2.056140681437637,
+              "arm": "taker",
+              "verdict": {
+                "n": 420,
+                "p": 0.6142857142857143,
+                "p_star": 2.056140681437637,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -1.4418549671519227
+              }
+            }
+          }
+        }
+      }
+    },
+    "1d|BTC-USD": {
+      "frequency": "1d",
+      "symbol": "BTC-USD",
+      "tail": false,
+      "n_bars": 4017,
+      "atr_bp": 381.61657926359936,
+      "n_candidate_bars": 3990,
+      "cells": {
+        "p87.5": {
+          "taker": {
+            "n": 120,
+            "p": 0.4,
+            "p_first_half": 0.391304347826087,
+            "p_second_half": 0.4117647058823529
+          },
+          "maker": {
+            "n": 118,
+            "fill_rate": 0.9833333333333333,
+            "p": 0.4576271186440678,
+            "p_first_half": 0.43283582089552236,
+            "p_second_half": 0.49019607843137253
+          },
+          "adverse_selection": -0.057627118644067776,
+          "cutoff_pct": 87.5,
+          "cutoff_move_atr": 3.5173479633248146,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.5052408624485324,
+              "arm": "maker",
+              "verdict": {
+                "n": 118,
+                "p": 0.4576271186440678,
+                "p_star": 0.5052408624485324,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.04761374380446459
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.5166403587176304,
+              "arm": "maker",
+              "verdict": {
+                "n": 118,
+                "p": 0.4576271186440678,
+                "p_star": 0.5166403587176304,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.05901324007356257
+              }
+            },
+            "taker throughout": {
+              "p_star": 0.7096344979412974,
+              "arm": "taker",
+              "verdict": {
+                "n": 120,
+                "p": 0.4,
+                "p_star": 0.7096344979412974,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.3096344979412974
+              }
+            }
+          }
+        }
+      }
+    },
+    "1d|ETH-USD": {
+      "frequency": "1d",
+      "symbol": "ETH-USD",
+      "tail": false,
+      "n_bars": 2974,
+      "atr_bp": 527.6162421264452,
+      "n_candidate_bars": 2947,
+      "cells": {
+        "p87.5": {
+          "taker": {
+            "n": 100,
+            "p": 0.5,
+            "p_first_half": 0.42857142857142855,
+            "p_second_half": 0.5909090909090909
+          },
+          "maker": {
+            "n": 94,
+            "fill_rate": 0.94,
+            "p": 0.39361702127659576,
+            "p_first_half": null,
+            "p_second_half": null
+          },
+          "adverse_selection": 0.10638297872340424,
+          "cutoff_pct": 87.5,
+          "cutoff_move_atr": 3.386000707806697,
+          "break_even": {
+            "maker in/out": {
+              "p_star": 0.503790633874233,
+              "arm": "maker",
+              "verdict": {
+                "n": 94,
+                "p": 0.39361702127659576,
+                "p_star": 0.503790633874233,
+                "powered": false,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.1101736125976372
+              }
+            },
+            "maker in, taker stop": {
+              "p_star": 0.5121129393591265,
+              "arm": "maker",
+              "verdict": {
+                "n": 94,
+                "p": 0.39361702127659576,
+                "p_star": 0.5121129393591265,
+                "powered": false,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.11849591808253074
+              }
+            },
+            "taker throughout": {
+              "p_star": 0.6516253549693182,
+              "arm": "taker",
+              "verdict": {
+                "n": 100,
+                "p": 0.5,
+                "p_star": 0.6516253549693182,
+                "powered": true,
+                "clears_break_even": false,
+                "stable_across_halves": false,
+                "margin": -0.15162535496931817
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 7.0
+}

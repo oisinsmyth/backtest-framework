@@ -1034,6 +1034,106 @@ So the five components, the confluence, the golden ratio and the fair value gap 
 
 **Test A starts a fresh ledger**: it reuses no sensor, component or level, and multiplicity inflates false positives - a test whose predicted outcome is *this effect is generic and therefore not yours* is not weakened by prior looks. B and C reuse the structure machinery and inherit the 395.
 
+## D216 - the tail, the frequency, and the fill
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_reversion_tail.py` (offline, deterministic)
+
+Pre-registered in `docs/decisions/D216-the-tail-the-frequency-and-the-fill.md`, which also records two corrections to arithmetic I had stated earlier: daily ATR is ten times the 15m ATR so the same fixed cost is ten times cheaper in ATR terms, and a bracketed trade's cost is asymmetric because the take-profit can rest and the stop cannot - so break-even is a fixed point rather than a constant.
+
+### Break-even, per frequency and fee tier
+
+`p* = (c_in + c_stop + 0.5*ATR) / (ATR + c_stop - c_tp)`, which collapses to `0.5 + RT/ATR` when the legs are symmetric.
+
+| cell | ATR | maker in/out | maker in, taker stop | taker throughout |
+|---|---:|---:|---:|---:|
+| `15m|BTCUSDT` | 38.2 bp | 55.23% | 63.77% | impossible |
+| `15m|ETHUSDT` | 51.4 bp | 53.89% | 60.76% | impossible |
+| `1d|BTC-USD` | 381.6 bp | 50.52% | 51.66% | 70.96% |
+| `1d|ETH-USD` | 527.6 bp | 50.38% | 51.21% | 65.16% |
+
+**`maker in, taker stop` carries the verdict** - you can rest an entry and a take-profit, you cannot rest a stop. `maker in/out` is an optimistic bound kept so the gap between the two is visible.
+
+### Every cell, both fill arms
+
+| cell | cutoff | move >= | taker n | taker p | maker n | fill rate | maker p | adverse selection |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `15m|BTCUSDT` | 87.5th | 2.72 ATR | 9,049 | 52.33% | 8,846 | 97.8% | 50.58% | **+1.75%** |
+| `15m|BTCUSDT` | 95.0th | 4.39 ATR | 3,784 | 52.70% | 3,731 | 98.6% | 51.73% | **+0.97%** |
+| `15m|BTCUSDT` | 99.0th | 8.19 ATR | 838 | 56.56% | 830 | 99.0% | 52.77% | **+3.79%** |
+| `15m|BTCUSDT` | 99.5th | 10.19 ATR | 413 | 56.66% | 410 | 99.3% | 59.27% | **-2.61%** |
+| `15m|ETHUSDT` | 87.5th | 2.79 ATR | 9,168 | 52.89% | 8,985 | 98.0% | 51.09% | **+1.81%** |
+| `15m|ETHUSDT` | 95.0th | 4.40 ATR | 3,879 | 53.16% | 3,815 | 98.4% | 54.00% | **-0.84%** |
+| `15m|ETHUSDT` | 99.0th | 8.04 ATR | 828 | 58.09% | 815 | 98.4% | 56.07% | **+2.02%** |
+| `15m|ETHUSDT` | 99.5th | 10.02 ATR | 420 | 61.43% | 413 | 98.3% | 58.60% | **+2.83%** |
+| `1d|BTC-USD` | 87.5th | 3.52 ATR | 120 | 40.00% | 118 | 98.3% | 45.76% | **-5.76%** |
+| `1d|ETH-USD` | 87.5th | 3.39 ATR | 100 | 50.00% | 94 | 94.0% | 39.36% | **+10.64%** |
+
+**Adverse selection is the rightmost column and it is the study's second finding.** A reversion entry rests a bid below a falling market and fills only when the fall continues - the losing case by construction. `FillAssumption.TRADE_THROUGH` exists for exactly this and its docstring says so.
+
+### The verdict, each fee tier scored only on the arm it is coherent with
+
+**A tier that assumes the entry rested must be scored on the population that actually filled by resting.** This study's first draft scored both arms against every tier and produced a pass by pairing a taker fill with maker costs — inflating `p` and deflating the cost at the same time. The pairing below is enforced in `FEES`.
+
+| cell | cutoff | fee tier | arm | n | p | p* | margin | powered | clears | stable |
+|---|---:|---|---|---:|---:|---:|---:|:--:|:--:|:--:|
+| `15m|BTCUSDT` | 87.5th | maker in/out | maker | 8,846 | 50.58% | 55.23% | -4.66% | yes | no | no |
+| `15m|BTCUSDT` | 87.5th | maker in, taker stop **(verdict)** | maker | 8,846 | 50.58% | 63.77% | -13.19% | yes | no | no |
+| `15m|BTCUSDT` | 87.5th | taker throughout | taker | 9,049 | 52.33% | impossible | -207.03% | yes | no | no |
+| `15m|BTCUSDT` | 95.0th | maker in/out | maker | 3,731 | 51.73% | 55.23% | -3.51% | yes | no | no |
+| `15m|BTCUSDT` | 95.0th | maker in, taker stop **(verdict)** | maker | 3,731 | 51.73% | 63.77% | -12.04% | yes | no | no |
+| `15m|BTCUSDT` | 95.0th | taker throughout | taker | 3,784 | 52.70% | impossible | -206.66% | yes | no | no |
+| `15m|BTCUSDT` | 99.0th | maker in/out | maker | 830 | 52.77% | 55.23% | -2.46% | yes | no | no |
+| `15m|BTCUSDT` | 99.0th | maker in, taker stop **(verdict)** | maker | 830 | 52.77% | 63.77% | -11.00% | yes | no | no |
+| `15m|BTCUSDT` | 99.0th | taker throughout | taker | 838 | 56.56% | impossible | -202.80% | yes | no | no |
+| `15m|BTCUSDT` | 99.5th | maker in/out | maker | 410 | 59.27% | 55.23% | +4.03% | yes | **YES** | yes |
+| `15m|BTCUSDT` | 99.5th | maker in, taker stop **(verdict)** | maker | 410 | 59.27% | 63.77% | -4.50% | yes | no | no |
+| `15m|BTCUSDT` | 99.5th | taker throughout | taker | 413 | 56.66% | impossible | -202.70% | yes | no | no |
+| `15m|ETHUSDT` | 87.5th | maker in/out | maker | 8,985 | 51.09% | 53.89% | -2.81% | yes | no | no |
+| `15m|ETHUSDT` | 87.5th | maker in, taker stop **(verdict)** | maker | 8,985 | 51.09% | 60.76% | -9.67% | yes | no | no |
+| `15m|ETHUSDT` | 87.5th | taker throughout | taker | 9,168 | 52.89% | impossible | -152.72% | yes | no | no |
+| `15m|ETHUSDT` | 95.0th | maker in/out | maker | 3,815 | 54.00% | 53.89% | +0.11% | yes | **YES** | no |
+| `15m|ETHUSDT` | 95.0th | maker in, taker stop **(verdict)** | maker | 3,815 | 54.00% | 60.76% | -6.76% | yes | no | no |
+| `15m|ETHUSDT` | 95.0th | taker throughout | taker | 3,879 | 53.16% | impossible | -152.46% | yes | no | no |
+| `15m|ETHUSDT` | 99.0th | maker in/out | maker | 815 | 56.07% | 53.89% | +2.18% | yes | **YES** | no |
+| `15m|ETHUSDT` | 99.0th | maker in, taker stop **(verdict)** | maker | 815 | 56.07% | 60.76% | -4.69% | yes | no | no |
+| `15m|ETHUSDT` | 99.0th | taker throughout | taker | 828 | 58.09% | impossible | -147.52% | yes | no | no |
+| `15m|ETHUSDT` | 99.5th | maker in/out | maker | 413 | 58.60% | 53.89% | +4.71% | yes | **YES** | yes |
+| `15m|ETHUSDT` | 99.5th | maker in, taker stop **(verdict)** | maker | 413 | 58.60% | 60.76% | -2.16% | yes | no | no |
+| `15m|ETHUSDT` | 99.5th | taker throughout | taker | 420 | 61.43% | impossible | -144.19% | yes | no | no |
+| `1d|BTC-USD` | 87.5th | maker in/out | maker | 118 | 45.76% | 50.52% | -4.76% | yes | no | no |
+| `1d|BTC-USD` | 87.5th | maker in, taker stop **(verdict)** | maker | 118 | 45.76% | 51.66% | -5.90% | yes | no | no |
+| `1d|BTC-USD` | 87.5th | taker throughout | taker | 120 | 40.00% | 70.96% | -30.96% | yes | no | no |
+| `1d|ETH-USD` | 87.5th | maker in/out | maker | 94 | 39.36% | 50.38% | -11.02% | **no** | no | no |
+| `1d|ETH-USD` | 87.5th | maker in, taker stop **(verdict)** | maker | 94 | 39.36% | 51.21% | -11.85% | **no** | no | no |
+| `1d|ETH-USD` | 87.5th | taker throughout | taker | 100 | 50.00% | 65.16% | -15.16% | yes | no | no |
+
+### Verdict
+
+**`15m|BTCUSDT` into the tail:** 52.33% at the 87.5th, 52.70% at the 95.0th, 56.56% at the 99.0th, 56.66% at the 99.5th — still rising.
+**`15m|ETHUSDT` into the tail:** 52.89% at the 87.5th, 53.16% at the 95.0th, 58.09% at the 99.0th, 61.43% at the 99.5th — still rising.
+
+**Adverse selection is real in direction but small.** Across all 10 cells the maker arm scores +1.46% against the taker arm on average (predicted: at least +3.00%), spanning -5.76% to +10.64%, with 7 of 10 cells in the predicted direction. **H2 falsified on magnitude** — resting a bid below a falling market does fill you when the fall continues, but at this horizon it costs about half what I predicted.
+
+
+**At daily the effect is not weaker, it is absent or inverted.** `1d|BTC-USD` 40.00%, `1d|ETH-USD` 50.00% against a coin-flip 50% — 1 of 2 below it. H3 predicted a weaker-but-present reversion at daily; what is here is the opposite sign on one symbol and nothing on the other. **H3 falsified**, and in the direction that matches the standard stylised fact: reversal intraday, momentum at daily. These are the two thinnest samples in the study (n = 120, 100) and the claim is reported at that weight.
+**Coherent arm/fee pairings clearing all four hurdles: 2 of 30.** They are: `15m|BTCUSDT` 99.5th under `maker in/out`, `15m|ETHUSDT` 99.5th under `maker in/out`.
+
+**On the tier that carries the verdict — `maker in, taker stop` — 0 of 10 cells clear.** Every survivor above sits on `maker in/out`, the tier this pre-registration itself labelled *an optimistic bound*, and it is optimistic for a concrete reason: it prices the stop as a maker fill. **You cannot rest a stop.** A resting sell placed below a long's market price is immediately marketable and crosses as a taker. So the two clearing cells clear a fee model that cannot be traded.
+
+**H4 is falsified as literally written and confirmed as it was meant.** I score it falsified, because the hurdle text said *no cell* and two cells cleared, and because scoring my own prediction on the reading most favourable to it is the failure mode this whole programme exists to avoid. What the falsification buys is one real fact: at the 99.5th percentile the effect is finally large enough to beat a 2 bp round trip on both symbols, stably across both halves. It is still not large enough to beat the 11 bp round trip you would actually pay.
+
+**Underpowered cells (n < 100): 2 of 30**, reported with no verdict rather than with a rate computed on too few events.
+
+### Multiplicity
+
+| | cells | looks |
+|---|---|---:|
+| 15m tail | cutoffs x symbols x 2 fills | 16 |
+| daily | top bucket x symbols x 2 fills | 4 |
+| **D216 total** | | **20** |
+
+On the reversion ledger D215's Test A opened at 4 - running total **24**. The structure programme's 395 are not inherited: no sensor, component or level is reused.
+
 ---
 
 ### Parking lot
