@@ -358,7 +358,7 @@ baseline-relative capped at moderate per Disclosure D4.
 - [x] WP0 — pre-registration (this document, the ledger, D204)
 - [x] WP1 — detectors and their tests (D205)
 - [x] WP2 — the census (D206)
-- [ ] WP3 — components against their nulls
+- [x] WP3 — components against their nulls (D208)
 - [ ] WP4 — marginal contribution
 - [ ] WP5 — costed verdict
 - [ ] WP6 — discretion audit and final report

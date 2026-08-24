@@ -10,6 +10,33 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (component placebos and the frozen wrapper, 2026-08-24 — D207/D208)
+- `research/structure_nulls.py` — the continuation statistic (`terrain_nulls`' reversal
+  definition, re-oriented by the setup's direction rather than the approach side), four
+  matched placebos, a paired bootstrap, and `DepthTable` for the depth-matched re-reading.
+- `research/structure_strategies.py` — the frozen wrapper, identical in every arm. Market
+  entry at the close (D207), stop at the swing extreme with D10 gap-through fills and D42
+  stop-first ordering, 5R target, channel trail after 1R. Direction-signed excursions, so
+  `feature_analysis.analyse_feature` can rank a two-sided book.
+- `scripts/run_structure_components.py` + `data/structure_components_summary.json` + the
+  WP3 section of `STRUCTURE_RESULTS.md`.
+- `tests/unit/test_structure_nulls.py` (22), `tests/unit/test_structure_strategies.py` (16).
+
+### Findings — WP3, no costs, 30 looks
+- **One variable explains the whole strategy: retracement depth.** The eight-ratio ladder
+  is a strictly monotone staircase in depth. 0.618 ranks **4 of 8** on both symbols and
+  loses to 0.691 and 0.724 in 97%+ of paired bootstrap draws. The spread between arbitrary
+  ratios is ten times the golden ratio's advantage over them.
+- **The depth-matched null takes back the study's only clean pass.** The fair value gap
+  falls from +0.082 at the 100th percentile to **+0.006 / −0.006**, because real gaps sit
+  at retracement 0.626 against the uniform placebo's 0.444.
+- **The flipped level is negative either way**, consistent with D196's S5 result.
+- **The change of character fails the both-symbols requirement**: BTC +0.133 delta at the
+  66th percentile (below the null's p95), ETH −0.057 at the 43.6th.
+- **RSI — the control — is the only arm that survives depth matching.** H6 confirmed.
+- The depth-matched null was **post-hoc**, is counted as six further looks, and makes every
+  verdict harsher rather than kinder. Disclosed rather than folded in.
+
 ### Added (the setup census, 2026-08-24 — D206)
 - `research/structure_setups.py` — composes the five detectors into `Setup` objects that
   record, per bar of the pullback window, **which conditions held there**. Any subset reads

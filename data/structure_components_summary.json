@@ -1,0 +1,504 @@
+{
+  "produced": "2026-08-24",
+  "fixture": "crypto_binance_15m_raw.csv.gz",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ],
+  "primary": {
+    "k": 2,
+    "touch_atr": 0.5
+  },
+  "n_sims": 500,
+  "seed": 0,
+  "horizon": 5,
+  "periods_per_year": 35040.0,
+  "effect_floor": 0.1,
+  "runs": {
+    "BTCUSDT": {
+      "n_bars": 294336,
+      "n_setups": 3875,
+      "C1": {
+        "real_sharpe": 0.12404403395826707,
+        "net_exposure": -8.153946510110893e-05,
+        "share_long": 0.4993805492463349,
+        "bars_held": 19372,
+        "null": {
+          "metric": "sharpe",
+          "direction": "high",
+          "real": 0.12404403395826707,
+          "n_sims": 500,
+          "percentile": 66.2,
+          "p_value": 0.3393213572854291,
+          "p_value_se": 0.021174625086428485,
+          "null_mean": -0.008579810894682353,
+          "null_p05": -0.5842047220414717,
+          "null_median": -0.019605081220196073,
+          "null_p95": 0.532929775108459
+        },
+        "delta_vs_null_mean": 0.13262384485294942,
+        "clears_floor": true,
+        "beats_p95": false
+      },
+      "C2": {
+        "real": {
+          "n_setups": 3875,
+          "n_touches": 2780,
+          "n_continued": 1239,
+          "p_continuation": 0.4456834532374101,
+          "touch_rate": 0.7174193548387097
+        },
+        "null": {
+          "metric": "p_continuation",
+          "direction": "high",
+          "real": 0.4456834532374101,
+          "n_sims": 500,
+          "percentile": 0.4,
+          "p_value": 0.9960079840319361,
+          "p_value_se": 0.0028199573672573813,
+          "null_mean": 0.46951022068340015,
+          "null_p05": 0.4556528583140544,
+          "null_median": 0.4691358802268086,
+          "null_p95": 0.4833706587137829
+        },
+        "delta_vs_null_mean": -0.02382676744599005,
+        "beats_p95": false,
+        "depth": {
+          "real_median": 0.39139996811394884,
+          "placebo_median": 0.43095397989887296,
+          "matched_expected_rate": 0.46162291133938627,
+          "matched_touches_covered": 2687,
+          "matched_touches_total": 2780,
+          "delta_vs_depth_matched": -0.015939458101976167
+        }
+      },
+      "C3": {
+        "ladder": {
+          "0.382": {
+            "ratio": 0.382,
+            "canonical": true,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 3270,
+            "n_continued": 1509,
+            "p_continuation": 0.4614678899082569,
+            "touch_rate": 0.8438709677419355
+          },
+          "0.447": {
+            "ratio": 0.447,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 3137,
+            "n_continued": 1554,
+            "p_continuation": 0.4953777494421422,
+            "touch_rate": 0.8095483870967742
+          },
+          "0.500": {
+            "ratio": 0.5,
+            "canonical": true,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 2999,
+            "n_continued": 1555,
+            "p_continuation": 0.5185061687229077,
+            "touch_rate": 0.7739354838709678
+          },
+          "0.553": {
+            "ratio": 0.553,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 2854,
+            "n_continued": 1562,
+            "p_continuation": 0.547302032235459,
+            "touch_rate": 0.736516129032258
+          },
+          "0.618": {
+            "ratio": 0.618,
+            "canonical": true,
+            "golden": true,
+            "n_setups": 3875,
+            "n_touches": 2672,
+            "n_continued": 1520,
+            "p_continuation": 0.5688622754491018,
+            "touch_rate": 0.6895483870967742
+          },
+          "0.691": {
+            "ratio": 0.691,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 2470,
+            "n_continued": 1450,
+            "p_continuation": 0.5870445344129555,
+            "touch_rate": 0.6374193548387097
+          },
+          "0.724": {
+            "ratio": 0.724,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 2371,
+            "n_continued": 1402,
+            "p_continuation": 0.5913116828342472,
+            "touch_rate": 0.6118709677419355
+          },
+          "0.786": {
+            "ratio": 0.786,
+            "canonical": true,
+            "golden": false,
+            "n_setups": 3875,
+            "n_touches": 2187,
+            "n_continued": 1324,
+            "p_continuation": 0.6053955189757659,
+            "touch_rate": 0.5643870967741935
+          }
+        },
+        "vs_placebo": {
+          "0.447": {
+            "mean_difference": 0.07246906665357024,
+            "p05": 0.0540132317659997,
+            "p95": 0.09001782418738066,
+            "share_not_better": 0.0,
+            "n_sims": 500
+          },
+          "0.553": {
+            "mean_difference": 0.021113797233453795,
+            "p05": 0.006818115451496487,
+            "p95": 0.035010597844993926,
+            "share_not_better": 0.004,
+            "n_sims": 500
+          },
+          "0.691": {
+            "mean_difference": -0.01781379087156512,
+            "p05": -0.03349223075715414,
+            "p95": -0.0027310489794470016,
+            "share_not_better": 0.974,
+            "n_sims": 500
+          },
+          "0.724": {
+            "mean_difference": -0.022659864122691522,
+            "p05": -0.040507367502932615,
+            "p95": -0.004301687275466993,
+            "share_not_better": 0.976,
+            "n_sims": 500
+          }
+        },
+        "golden_rank_of_8": 4,
+        "golden_rate": 0.5688622754491018,
+        "placebo_mean_rate": 0.555258999731201,
+        "spread_across_all_eight": 0.14392762906750906
+      },
+      "C4": {
+        "real": {
+          "n_setups": 3875,
+          "n_touches": 2228,
+          "n_continued": 1251,
+          "p_continuation": 0.5614901256732495,
+          "touch_rate": 0.5749677419354838
+        },
+        "null": {
+          "metric": "p_continuation",
+          "direction": "high",
+          "real": 0.5614901256732495,
+          "n_sims": 500,
+          "percentile": 100.0,
+          "p_value": 0.001996007984031936,
+          "p_value_se": 0.001996007984031936,
+          "null_mean": 0.47979890211560877,
+          "null_p05": 0.46507511521208894,
+          "null_median": 0.479943514211164,
+          "null_p95": 0.49455073598636634
+        },
+        "delta_vs_null_mean": 0.08169122355764075,
+        "beats_p95": true,
+        "depth": {
+          "real_median": 0.6259790443315167,
+          "placebo_median": 0.4440232945132021,
+          "matched_expected_rate": 0.5555267092176607,
+          "matched_touches_covered": 2195,
+          "matched_touches_total": 2228,
+          "delta_vs_depth_matched": 0.005963416455588844
+        },
+        "n_setups_with_a_gap": 3507
+      },
+      "C5": {
+        "real": {
+          "n_setups": 3875,
+          "n_touches": 126,
+          "n_continued": 57,
+          "p_continuation": 0.4523809523809524,
+          "touch_rate": 0.03251612903225806
+        },
+        "null": {
+          "metric": "p_continuation",
+          "direction": "high",
+          "real": 0.4523809523809524,
+          "n_sims": 500,
+          "percentile": 100.0,
+          "p_value": 0.001996007984031936,
+          "p_value_se": 0.001996007984031936,
+          "null_mean": 0.3287777777777777,
+          "null_p05": 0.2619047619047619,
+          "null_median": 0.3333333333333333,
+          "null_p95": 0.3892857142857139
+        },
+        "delta_vs_null_mean": 0.12360317460317466,
+        "beats_p95": true,
+        "n_setups_with_a_trigger": 126,
+        "depth": {
+          "real_median": 0.7962122288880877,
+          "placebo_median": 0.2143837433162303,
+          "matched_expected_rate": 0.3705794516034086,
+          "matched_touches_covered": 122,
+          "matched_touches_total": 126,
+          "delta_vs_depth_matched": 0.08180150077754378
+        }
+      }
+    },
+    "ETHUSDT": {
+      "n_bars": 294336,
+      "n_setups": 3753,
+      "C1": {
+        "real_sharpe": -0.06769295646930891,
+        "net_exposure": -0.0014813002826701456,
+        "share_long": 0.4883820081006182,
+        "bars_held": 18764,
+        "null": {
+          "metric": "sharpe",
+          "direction": "high",
+          "real": -0.06769295646930891,
+          "n_sims": 500,
+          "percentile": 43.6,
+          "p_value": 0.564870259481038,
+          "p_value_se": 0.02217168687469958,
+          "null_mean": -0.010289643423112057,
+          "null_p05": -0.5394873665864597,
+          "null_median": -0.004440547798241757,
+          "null_p95": 0.5323642842653041
+        },
+        "delta_vs_null_mean": -0.05740331304619685,
+        "clears_floor": false,
+        "beats_p95": false
+      },
+      "C2": {
+        "real": {
+          "n_setups": 3753,
+          "n_touches": 2663,
+          "n_continued": 1222,
+          "p_continuation": 0.4588809613218175,
+          "touch_rate": 0.7095656807887024
+        },
+        "null": {
+          "metric": "p_continuation",
+          "direction": "high",
+          "real": 0.4588809613218175,
+          "n_sims": 500,
+          "percentile": 13.0,
+          "p_value": 0.8702594810379242,
+          "p_value_se": 0.015027169840094778,
+          "null_mean": 0.4679320876491689,
+          "null_p05": 0.45374501529493094,
+          "null_median": 0.4681053999114051,
+          "null_p95": 0.4818536343357089
+        },
+        "delta_vs_null_mean": -0.009051126327351389,
+        "beats_p95": false,
+        "depth": {
+          "real_median": 0.39900000000002367,
+          "placebo_median": 0.4338898911795777,
+          "matched_expected_rate": 0.46307762038843886,
+          "matched_touches_covered": 2577,
+          "matched_touches_total": 2663,
+          "delta_vs_depth_matched": -0.0041966590666213666
+        }
+      },
+      "C3": {
+        "ladder": {
+          "0.382": {
+            "ratio": 0.382,
+            "canonical": true,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 3155,
+            "n_continued": 1462,
+            "p_continuation": 0.46339144215530903,
+            "touch_rate": 0.8406608046895817
+          },
+          "0.447": {
+            "ratio": 0.447,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 3066,
+            "n_continued": 1529,
+            "p_continuation": 0.49869536855838226,
+            "touch_rate": 0.8169464428457234
+          },
+          "0.500": {
+            "ratio": 0.5,
+            "canonical": true,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 2929,
+            "n_continued": 1524,
+            "p_continuation": 0.5203141003755548,
+            "touch_rate": 0.7804423128164135
+          },
+          "0.553": {
+            "ratio": 0.553,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 2786,
+            "n_continued": 1544,
+            "p_continuation": 0.5541995692749462,
+            "touch_rate": 0.7423394617639222
+          },
+          "0.618": {
+            "ratio": 0.618,
+            "canonical": true,
+            "golden": true,
+            "n_setups": 3753,
+            "n_touches": 2619,
+            "n_continued": 1462,
+            "p_continuation": 0.5582283314242077,
+            "touch_rate": 0.697841726618705
+          },
+          "0.691": {
+            "ratio": 0.691,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 2400,
+            "n_continued": 1372,
+            "p_continuation": 0.5716666666666667,
+            "touch_rate": 0.6394884092725819
+          },
+          "0.724": {
+            "ratio": 0.724,
+            "canonical": false,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 2323,
+            "n_continued": 1352,
+            "p_continuation": 0.5820060266896255,
+            "touch_rate": 0.6189714894750866
+          },
+          "0.786": {
+            "ratio": 0.786,
+            "canonical": true,
+            "golden": false,
+            "n_setups": 3753,
+            "n_touches": 2111,
+            "n_continued": 1224,
+            "p_continuation": 0.5798199905258171,
+            "touch_rate": 0.5624833466560085
+          }
+        },
+        "vs_placebo": {
+          "0.447": {
+            "mean_difference": 0.05921248370473404,
+            "p05": 0.0417428169344958,
+            "p95": 0.07836377800865799,
+            "share_not_better": 0.0,
+            "n_sims": 500
+          },
+          "0.553": {
+            "mean_difference": 0.004046426656600373,
+            "p05": -0.00983981567048522,
+            "p95": 0.018744536083104647,
+            "share_not_better": 0.292,
+            "n_sims": 500
+          },
+          "0.691": {
+            "mean_difference": -0.013569850384714656,
+            "p05": -0.027962466882470886,
+            "p95": 0.0015491005239970607,
+            "share_not_better": 0.936,
+            "n_sims": 500
+          },
+          "0.724": {
+            "mean_difference": -0.023849167773586585,
+            "p05": -0.04208348000931686,
+            "p95": -0.006056691291936484,
+            "share_not_better": 0.988,
+            "n_sims": 500
+          }
+        },
+        "golden_rank_of_8": 4,
+        "golden_rate": 0.5582283314242077,
+        "placebo_mean_rate": 0.5516419077974052,
+        "spread_across_all_eight": 0.1186145845343165
+      },
+      "C4": {
+        "real": {
+          "n_setups": 3753,
+          "n_touches": 2151,
+          "n_continued": 1167,
+          "p_continuation": 0.5425383542538355,
+          "touch_rate": 0.5731414868105515
+        },
+        "null": {
+          "metric": "p_continuation",
+          "direction": "high",
+          "real": 0.5425383542538355,
+          "n_sims": 500,
+          "percentile": 100.0,
+          "p_value": 0.001996007984031936,
+          "p_value_se": 0.001996007984031936,
+          "null_mean": 0.4782049941844302,
+          "null_p05": 0.46280378959520047,
+          "null_median": 0.477846916140927,
+          "null_p95": 0.49413438404694915
+        },
+        "delta_vs_null_mean": 0.06433336006940527,
+        "beats_p95": true,
+        "depth": {
+          "real_median": 0.6253968253968284,
+          "placebo_median": 0.4470960136161066,
+          "matched_expected_rate": 0.5487585775470646,
+          "matched_touches_covered": 2126,
+          "matched_touches_total": 2151,
+          "delta_vs_depth_matched": -0.006220223293229132
+        },
+        "n_setups_with_a_gap": 3436
+      },
+      "C5": {
+        "real": {
+          "n_setups": 3753,
+          "n_touches": 144,
+          "n_continued": 79,
+          "p_continuation": 0.5486111111111112,
+          "touch_rate": 0.03836930455635491
+        },
+        "null": {
+          "metric": "p_continuation",
+          "direction": "high",
+          "real": 0.5486111111111112,
+          "n_sims": 500,
+          "percentile": 100.0,
+          "p_value": 0.001996007984031936,
+          "p_value_se": 0.001996007984031936,
+          "null_mean": 0.34175,
+          "null_p05": 0.2847222222222222,
+          "null_median": 0.3402777777777778,
+          "null_p95": 0.4027777777777778
+        },
+        "delta_vs_null_mean": 0.20686111111111116,
+        "beats_p95": true,
+        "n_setups_with_a_trigger": 144,
+        "depth": {
+          "real_median": 0.7445696167631666,
+          "placebo_median": 0.2424738514100801,
+          "matched_expected_rate": 0.39385519752245235,
+          "matched_touches_covered": 138,
+          "matched_touches_total": 144,
+          "delta_vs_depth_matched": 0.1547559135886588
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 231.0
+}

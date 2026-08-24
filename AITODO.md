@@ -324,8 +324,16 @@ entries and fading lost in every form terrain measured.
       the stop and a 20% hit rate at 5R loses money in every cell. C5 dropped as a
       stacked filter on counts alone (RSI 30/70 leaves 2 entries), kept as a feature.
       Two guard-shaped defects flushed out by tests written before the run. 0 looks.
-- [ ] **WP3 — each component against its own matched null**, no costs. Includes the Fib
-      placebo ladder, the cheapest decisive test in the programme.
+- [x] **WP3 — components against their placebos (D208).** **One variable — retracement
+      depth — explains every apparent effect.** The ratio ladder is a monotone
+      staircase: 0.618 ranks 4 of 8 and loses to 0.691/0.724 in 97%+ of draws. The
+      depth-matched null then takes back the only clean pass: the fair value gap falls
+      from +0.082 at the 100th percentile to +0.006/-0.006. Flipped level negative
+      either way; CHoCH fails the both-symbols rule; **RSI, the control, is the only
+      survivor**. Depth-matched null disclosed as post-hoc, 30 looks.
+- [x] **D207 amendments**, written before the runs they govern: market entry at the
+      close (so D196's adverse selection is NOT paid here — stated, not buried), 5R
+      primary target, and an 8-arm ablation rather than 16.
 - [ ] **WP4 — marginal contribution.** Feature quintiles (primary) + the 16-arm ablation
       lattice (confirmation), wrapper frozen. Stop condition: nothing clears the promotion
       criteria and the programme ends here as a reportable negative.
