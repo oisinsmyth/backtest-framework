@@ -57,6 +57,9 @@ because in that world the two studies are reading the same swing structure.
 | Post-close Sharpe/PnL addendum (D212) | 16 |
 | **Total** | **102** |
 
+**D213 is a separate study with its own ledger (22 looks)** — a different claim, pre-registered after this programme closed, with these 102 disclosed. Its section is
+below the final report.
+
 Never reset. Retired and failed cells count. Budget estimated in the plan at ~118 looks
 for the full programme; the estimate is not a licence and the actual count is what feeds
 the deflated Sharpe.
@@ -696,6 +699,117 @@ document and a new ledger, with this one disclosed.
 | **addendum total** | | **16** |
 
 Counted in full even though no arm is under test, because a metric computed on a configuration is a look at it whatever the intent — the same rule that made D189 count three metrics across sixteen configurations as 48.
+
+## D213 - can selection rescue it? A mined rule on a held-out seven years
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_selection.py` (offline, deterministic)
+
+Pre-registered in `docs/decisions/D213-conditional-selection-on-a-held-out-year.md` before the mining ran. Development year **2018**, chosen by trade count on both symbols before any outcome was read; every later number excludes it entirely. Mining runs on **gross** R - cost divided by a four-basis-point stop runs past 20R, so mining on net R would be a search for wide stops wearing a search for signal.
+
+### Trades by year, and the year the rule was mined from
+
+| year | `BTCUSDT` | `ETHUSDT` | role |
+|---|---:|---:|---|
+| 2018 | 385 | 351 | **development** |
+| 2019 | 454 | 412 | held out |
+| 2020 | 453 | 431 | held out |
+| 2021 | 453 | 420 | held out |
+| 2022 | 393 | 455 | held out |
+| 2023 | 424 | 441 | held out |
+| 2024 | 443 | 428 | held out |
+| 2025 | 478 | 446 | held out |
+| 2026 | 267 | 256 | held out |
+
+### What the 2018 data said about each feature
+
+Median split, no threshold search. A feature is kept only if the same side wins on **both** symbols and gains at least **0.10R** on each.
+
+| feature | better side | `BTCUSDT` edge (R) | `ETHUSDT` edge (R) | sides agree | kept |
+|---|---|---:|---:|:--:|:--:|
+| fib_depth | below | 0.052 | 0.060 | yes | no |
+| stop_atr | below | 0.044 | 0.180 | yes | no |
+| rsi | split | 0.111 | 0.383 | no | no |
+| bars_waited | above | 0.294 | 0.109 | yes | **KEPT** |
+| hour_utc | split | 0.023 | 0.237 | no | no |
+| trend_align | — | — | — | — | too thin |
+| leg_bars | above | 0.222 | 0.098 | yes | no |
+| vol_regime | above | 0.269 | 0.267 | yes | **KEPT** |
+
+Survivors: **bars_waited, vol_regime**.
+
+### The frozen rule, in sample and out
+
+Thresholds are the development year's medians and are **not** recomputed on any holdout year - re-taking the median inside the test data is the quietest form of leakage available, because the result still looks like a holdout.
+
+| symbol | sample | trades | kept | mean gross R (all) | mean gross R (kept) | advantage | mean net R (kept) |
+|---|---|---:|---:|---:|---:|---:|---:|
+| `BTCUSDT` | 2018 (in sample) | 385 | 20% | -0.017 | +0.472 | +0.489 | -0.690 |
+| `BTCUSDT` | all other years (held out) | 3,365 | 26% | +0.013 | -0.115 | -0.128 | -1.850 |
+| `ETHUSDT` | 2018 (in sample) | 351 | 23% | +0.036 | +0.301 | +0.265 | -2.593 |
+| `ETHUSDT` | all other years (held out) | 3,289 | 27% | +0.066 | +0.050 | -0.016 | -1.476 |
+
+### The same rule, year by year on the holdout
+
+| symbol | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `BTCUSDT` | +0.042 | -0.035 | -0.157 | -0.012 | -0.380 | -0.105 | -0.199 | -0.074 |
+| `ETHUSDT` | -0.021 | -0.038 | -0.042 | -0.089 | -0.138 | +0.189 | +0.165 | -0.272 |
+
+Advantage in mean gross R of the filtered trades over all trades, that year.
+
+### The feature that was never tested, tested
+
+`trend_align` was pre-registered and then silently dropped: a median split on a +/-1 variable puts the median at one of the two values, so one side comes back empty and the thinness guard removes the feature. It disappeared from the table above without appearing as a failure - D196's H4 in a new costume, caught by checking which keys the output contains rather than trusting that eight features in means eight features out.
+
+Split at zero instead, and run **standalone**: the mined rule was frozen before this ran and is deliberately not re-mined to include it, because re-mining after seeing the holdout is the move the whole design exists to prevent.
+
+| symbol | sample | with the trend | against it | edge (R) |
+|---|---|---:|---:|---:|
+| `BTCUSDT` | 2018 (dev) | +0.001 (218) | -0.040 (167) | +0.041 |
+| `BTCUSDT` | held out | +0.018 (1,970) | +0.006 (1,395) | +0.012 |
+| `ETHUSDT` | 2018 (dev) | +0.116 (197) | -0.067 (154) | +0.183 |
+| `ETHUSDT` | held out | +0.101 (1,947) | +0.014 (1,342) | +0.087 |
+
+### The control that makes those numbers readable
+
+The identical mining procedure, run 200 times on the same 2018 trades with the outcomes **shuffled within symbol** - every marginal distribution preserved, only the pairing between feature and outcome destroyed.
+
+| | value |
+|---|---:|
+| draws that produced at least one survivor | 54% |
+| mean survivors per draw | 0.83 |
+| median in-sample advantage from pure noise | +0.071R |
+| 95th percentile | +0.274R |
+| largest in 200 draws | +0.410R |
+| **the real rule's in-sample advantage** | **+0.377R** |
+
+**A weakness of this control, stated rather than left for a reader to find.** The shuffle is independent per symbol, so it destroys the cross-symbol correlation real outcomes have - BTC and ETH move together. The survivor test requires both symbols to agree on which side wins, and real data gets that agreement more easily than independently-shuffled data does. So this distribution is **narrower than the true selection distribution**, and clearing its 95th percentile is an easier bar than it looks. A block shuffle preserving the cross-symbol pairing would be the right fix and is a different study.
+
+### Verdict
+
+**2 features survived the 2018 split: bars_waited, vol_regime.** In sample the rule gains +0.489R and +0.265R on the two symbols. H1 confirmed, as predicted at high confidence — with eight features and a low bar, something always survives.
+
+**Out of sample it gains -0.128R and -0.016R**, against the pre-registered hurdle of +0.10R on both symbols. **It does not clear it.**
+
+The out-of-sample advantage is -26% and -6% of the in-sample one — H2 predicted under half.
+
+**Against the shuffled control the real in-sample advantage of +0.377R sits above the noise distribution** (95th percentile +0.274R, largest of 200 draws +0.410R). So the mining found more than a selection effect would have produced.
+
+**H5 was void, not falsified, until the amendment.** `trend_align` never reached the table because a median split cannot divide a binary. Tested properly it gains +0.041R and +0.183R in 2018 and +0.012R and +0.087R on the held-out years — below the +0.10R bar out of sample, so the most-cited missing filter in this style is not the missing piece either.
+
+**After costs the filtered arm returns -1.850R and -1.476R a trade out of sample.** Hurdle 4 fails, as H4 predicted at high confidence: no entry filter changes what the wrapper risks, and the toll is 0.96R on the median base-arm trade.
+
+### Multiplicity
+
+| | cells | looks |
+|---|---|---:|
+| dev-year feature splits | 8 features x 2 symbols | 16 |
+| frozen rule on the holdout | 2 symbols | 2 |
+| trend_align standalone (amendment) | dev + holdout x 2 symbols | 4 |
+| shuffled control | a control, not a test | 0 |
+| **D213 total** | | **22** |
+
+The structure programme's 102 looks are disclosed adjacent and separately counted.
 
 ---
 

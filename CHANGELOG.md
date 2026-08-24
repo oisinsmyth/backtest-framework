@@ -10,6 +10,30 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D213 — mined selection rule on a held-out seven years, 2026-08-24)
+- `scripts/run_structure_selection.py` + `data/structure_selection_summary.json` + a D213
+  section. Development year picked on counts before any outcome was read; thresholds frozen
+  at that year's medians and never recomputed on a holdout year; mining on gross R so the
+  search cannot become a search for wide stops.
+- A shuffled-outcome control that runs the identical mining procedure on permuted outcomes,
+  which is what makes the in-sample and out-of-sample numbers interpretable.
+
+### Findings
+- **Two features survived 2018 — wait longer, higher volatility — and inverted out of
+  sample**: +0.489R/+0.265R in sample against **−0.128R/−0.016R** on the seven held-out
+  years, negative in 7 of 8 years on BTC.
+- **54% of shuffled-outcome draws manufacture a surviving feature** from pure noise, yet
+  the real in-sample edge cleared that control's 95th percentile — so 2018 was a real
+  pattern that did not persist. Regime, not randomness.
+- **`trend_align` was pre-registered and never tested**: a median split cannot divide a ±1
+  variable, so it vanished from the table without appearing as a failure — D196's H4 again,
+  caught by checking which keys the output contained. Amended, tested standalone, and
+  falsified out of sample (+0.012R / +0.087R against a +0.10R bar).
+- **After costs the filtered arm returns −1.850R and −1.476R a trade.** An entry filter
+  changes which trades are taken, not what the wrapper risks.
+- Records the control's own weakness: shuffling independently per symbol destroys
+  cross-symbol correlation, so the null is narrower than the true selection distribution.
+
 ### Added (worked trade examples, 2026-08-24)
 - `scripts/run_structure_examples.py` + `data/structure_examples_summary.json` — extracts
   example trades from the full confluence arm under a selection rule fixed in the script

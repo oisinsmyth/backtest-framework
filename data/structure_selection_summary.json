@@ -1,0 +1,559 @@
+{
+  "produced": "2026-08-24",
+  "fixture": "crypto_binance_15m_raw.csv.gz",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ],
+  "dev_year": 2018,
+  "trades_by_year": {
+    "2018": {
+      "BTCUSDT": 385,
+      "ETHUSDT": 351
+    },
+    "2019": {
+      "BTCUSDT": 454,
+      "ETHUSDT": 412
+    },
+    "2020": {
+      "BTCUSDT": 453,
+      "ETHUSDT": 431
+    },
+    "2021": {
+      "BTCUSDT": 453,
+      "ETHUSDT": 420
+    },
+    "2022": {
+      "BTCUSDT": 393,
+      "ETHUSDT": 455
+    },
+    "2023": {
+      "BTCUSDT": 424,
+      "ETHUSDT": 441
+    },
+    "2024": {
+      "BTCUSDT": 443,
+      "ETHUSDT": 428
+    },
+    "2025": {
+      "BTCUSDT": 478,
+      "ETHUSDT": 446
+    },
+    "2026": {
+      "BTCUSDT": 267,
+      "ETHUSDT": 256
+    }
+  },
+  "features": [
+    "fib_depth",
+    "stop_atr",
+    "rsi",
+    "bars_waited",
+    "hour_utc",
+    "trend_align",
+    "leg_bars",
+    "vol_regime"
+  ],
+  "edge_bar": 0.1,
+  "cost_bps_per_side": 40.0,
+  "per_feature": {
+    "fib_depth": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "fib_depth",
+          "threshold": 0.2907700515739017,
+          "mean_above": -0.042493142288709006,
+          "mean_below": 0.009027316117196389,
+          "n_above": 192,
+          "n_below": 193,
+          "better_side": "below",
+          "edge": 0.0515204584059054
+        },
+        "ETHUSDT": {
+          "feature": "fib_depth",
+          "threshold": 0.2802547770700618,
+          "mean_above": 0.00569937962792042,
+          "mean_below": 0.0658559898483705,
+          "n_above": 175,
+          "n_below": 176,
+          "better_side": "below",
+          "edge": 0.06015661022045008
+        }
+      },
+      "sides_agree": true,
+      "min_edge": 0.0515204584059054,
+      "kept": false
+    },
+    "stop_atr": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "stop_atr",
+          "threshold": 2.2945222012157145,
+          "mean_above": -0.03870488924539784,
+          "mean_below": 0.005258691327995643,
+          "n_above": 192,
+          "n_below": 193,
+          "better_side": "below",
+          "edge": 0.04396358057339348
+        },
+        "ETHUSDT": {
+          "feature": "stop_atr",
+          "threshold": 2.4340987498608997,
+          "mean_above": -0.05433635827223673,
+          "mean_below": 0.12555061560136768,
+          "n_above": 175,
+          "n_below": 176,
+          "better_side": "below",
+          "edge": 0.17988697387360442
+        }
+      },
+      "sides_agree": true,
+      "min_edge": 0.04396358057339348,
+      "kept": false
+    },
+    "rsi": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "rsi",
+          "threshold": 49.58970621320974,
+          "mean_above": 0.038828519389473674,
+          "mean_below": -0.07187298980099571,
+          "n_above": 192,
+          "n_below": 193,
+          "better_side": "above",
+          "edge": 0.1107015091904694
+        },
+        "ETHUSDT": {
+          "feature": "rsi",
+          "threshold": 49.47226324609492,
+          "mean_above": -0.1560917575672865,
+          "mean_below": 0.2267278592186046,
+          "n_above": 175,
+          "n_below": 176,
+          "better_side": "below",
+          "edge": 0.3828196167858911
+        }
+      },
+      "sides_agree": false,
+      "min_edge": 0.1107015091904694,
+      "kept": false
+    },
+    "bars_waited": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "bars_waited",
+          "threshold": 5.0,
+          "mean_above": 0.15725016749909898,
+          "mean_below": -0.1364240684481218,
+          "n_above": 157,
+          "n_below": 228,
+          "better_side": "above",
+          "edge": 0.29367423594722075
+        },
+        "ETHUSDT": {
+          "feature": "bars_waited",
+          "threshold": 5.0,
+          "mean_above": 0.09971840523276641,
+          "mean_below": -0.009613861052607885,
+          "n_above": 146,
+          "n_below": 205,
+          "better_side": "above",
+          "edge": 0.10933226628537429
+        }
+      },
+      "sides_agree": true,
+      "min_edge": 0.10933226628537429,
+      "kept": true
+    },
+    "hour_utc": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "hour_utc",
+          "threshold": 12.0,
+          "mean_above": -0.004602149299935862,
+          "mean_below": -0.027709531530472776,
+          "n_above": 184,
+          "n_below": 201,
+          "better_side": "above",
+          "edge": 0.02310738223053691
+        },
+        "ETHUSDT": {
+          "feature": "hour_utc",
+          "threshold": 12.0,
+          "mean_above": -0.08486898938469722,
+          "mean_below": 0.1518743677227218,
+          "n_above": 172,
+          "n_below": 179,
+          "better_side": "below",
+          "edge": 0.23674335710741903
+        }
+      },
+      "sides_agree": false,
+      "min_edge": 0.02310738223053691,
+      "kept": false
+    },
+    "leg_bars": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "leg_bars",
+          "threshold": 8.0,
+          "mean_above": 0.10304005923257178,
+          "mean_below": -0.1185312586200886,
+          "n_above": 177,
+          "n_below": 208,
+          "better_side": "above",
+          "edge": 0.22157131785266038
+        },
+        "ETHUSDT": {
+          "feature": "leg_bars",
+          "threshold": 8.0,
+          "mean_above": 0.08753971592301989,
+          "mean_below": -0.010505660513632534,
+          "n_above": 166,
+          "n_below": 185,
+          "better_side": "above",
+          "edge": 0.09804537643665243
+        }
+      },
+      "sides_agree": true,
+      "min_edge": 0.09804537643665243,
+      "kept": false
+    },
+    "vol_regime": {
+      "cells": {
+        "BTCUSDT": {
+          "feature": "vol_regime",
+          "threshold": 0.9338700005217192,
+          "mean_above": 0.1183126657572721,
+          "mean_below": -0.15094530121352057,
+          "n_above": 192,
+          "n_below": 193,
+          "better_side": "above",
+          "edge": 0.2692579669707927
+        },
+        "ETHUSDT": {
+          "feature": "vol_regime",
+          "threshold": 0.9387502192354943,
+          "mean_above": 0.1696102230712543,
+          "mean_below": -0.0971235419844899,
+          "n_above": 175,
+          "n_below": 176,
+          "better_side": "above",
+          "edge": 0.2667337650557442
+        }
+      },
+      "sides_agree": true,
+      "min_edge": 0.2667337650557442,
+      "kept": true
+    }
+  },
+  "survivors": [
+    "bars_waited",
+    "vol_regime"
+  ],
+  "rule": {
+    "BTCUSDT": [
+      {
+        "feature": "bars_waited",
+        "threshold": 5.0,
+        "mean_above": 0.15725016749909898,
+        "mean_below": -0.1364240684481218,
+        "n_above": 157,
+        "n_below": 228,
+        "better_side": "above",
+        "edge": 0.29367423594722075,
+        "symbol": "BTCUSDT"
+      },
+      {
+        "feature": "vol_regime",
+        "threshold": 0.9338700005217192,
+        "mean_above": 0.1183126657572721,
+        "mean_below": -0.15094530121352057,
+        "n_above": 192,
+        "n_below": 193,
+        "better_side": "above",
+        "edge": 0.2692579669707927,
+        "symbol": "BTCUSDT"
+      }
+    ],
+    "ETHUSDT": [
+      {
+        "feature": "bars_waited",
+        "threshold": 5.0,
+        "mean_above": 0.09971840523276641,
+        "mean_below": -0.009613861052607885,
+        "n_above": 146,
+        "n_below": 205,
+        "better_side": "above",
+        "edge": 0.10933226628537429,
+        "symbol": "ETHUSDT"
+      },
+      {
+        "feature": "vol_regime",
+        "threshold": 0.9387502192354943,
+        "mean_above": 0.1696102230712543,
+        "mean_below": -0.0971235419844899,
+        "n_above": 175,
+        "n_below": 176,
+        "better_side": "above",
+        "edge": 0.2667337650557442,
+        "symbol": "ETHUSDT"
+      }
+    ]
+  },
+  "in_sample": {
+    "BTCUSDT": {
+      "n_all": 385,
+      "n_kept": 77,
+      "share_kept": 0.2,
+      "mean_gross_r_all": -0.016666003399514875,
+      "mean_gross_r_kept": 0.47189026864122374,
+      "mean_net_r_all": -1.192738003532309,
+      "mean_net_r_kept": -0.69007026584591,
+      "advantage": 0.4885562720407386
+    },
+    "ETHUSDT": {
+      "n_all": 351,
+      "n_kept": 79,
+      "share_kept": 0.22507122507122507,
+      "mean_gross_r_all": 0.035863377915097666,
+      "mean_gross_r_kept": 0.30118144072604863,
+      "mean_net_r_all": -1.3530266922486671,
+      "mean_net_r_kept": -2.5931303875565326,
+      "advantage": 0.26531806281095094
+    }
+  },
+  "out_of_sample": {
+    "BTCUSDT": {
+      "n_all": 3365,
+      "n_kept": 868,
+      "share_kept": 0.25794947994056466,
+      "mean_gross_r_all": 0.013362316638596302,
+      "mean_gross_r_kept": -0.11469883303225538,
+      "mean_net_r_all": -2.110612114697867,
+      "mean_net_r_kept": -1.8503631768809312,
+      "advantage": -0.1280611496708517
+    },
+    "ETHUSDT": {
+      "n_all": 3289,
+      "n_kept": 890,
+      "share_kept": 0.27059896625114016,
+      "mean_gross_r_all": 0.06555786687306314,
+      "mean_gross_r_kept": 0.04950507466139035,
+      "mean_net_r_all": -1.4527464205642766,
+      "mean_net_r_kept": -1.4761655924708161,
+      "advantage": -0.016052792211672794
+    }
+  },
+  "out_of_sample_by_year": {
+    "BTCUSDT": {
+      "2019": {
+        "n_all": 454,
+        "n_kept": 92,
+        "share_kept": 0.2026431718061674,
+        "mean_gross_r_all": -0.02827759807864778,
+        "mean_gross_r_kept": 0.013622875637476306,
+        "mean_net_r_all": -2.0716755997666185,
+        "mean_net_r_kept": -1.1025599854951378,
+        "advantage": 0.041900473716124084
+      },
+      "2020": {
+        "n_all": 453,
+        "n_kept": 93,
+        "share_kept": 0.2052980132450331,
+        "mean_gross_r_all": 0.008308801057722696,
+        "mean_gross_r_kept": -0.026636727839639694,
+        "mean_net_r_all": -1.9099272625377952,
+        "mean_net_r_kept": -1.282639334627395,
+        "advantage": -0.03494552889736239
+      },
+      "2021": {
+        "n_all": 453,
+        "n_kept": 133,
+        "share_kept": 0.293598233995585,
+        "mean_gross_r_all": -0.07915021022979701,
+        "mean_gross_r_kept": -0.23612273876803522,
+        "mean_net_r_all": -1.130725503031932,
+        "mean_net_r_kept": -1.6298515623001089,
+        "advantage": -0.1569725285382382
+      },
+      "2022": {
+        "n_all": 393,
+        "n_kept": 95,
+        "share_kept": 0.24173027989821882,
+        "mean_gross_r_all": 0.035787018145566826,
+        "mean_gross_r_kept": 0.023456361541362533,
+        "mean_net_r_all": -1.1747533547311702,
+        "mean_net_r_kept": -1.2446700265685688,
+        "advantage": -0.012330656604204293
+      },
+      "2023": {
+        "n_all": 424,
+        "n_kept": 120,
+        "share_kept": 0.2830188679245283,
+        "mean_gross_r_all": 0.017039286903895334,
+        "mean_gross_r_kept": -0.36260510818793523,
+        "mean_net_r_all": -2.817721035602899,
+        "mean_net_r_kept": -3.6998012627886774,
+        "advantage": -0.37964439509183057
+      },
+      "2024": {
+        "n_all": 443,
+        "n_kept": 137,
+        "share_kept": 0.309255079006772,
+        "mean_gross_r_all": 0.15497561308518504,
+        "mean_gross_r_kept": 0.04963335940984952,
+        "mean_net_r_all": -1.8410548638126367,
+        "mean_net_r_kept": -1.6496920609904724,
+        "advantage": -0.10534225367533552
+      },
+      "2025": {
+        "n_all": 478,
+        "n_kept": 141,
+        "share_kept": 0.29497907949790797,
+        "mean_gross_r_all": -0.005438439379924235,
+        "mean_gross_r_kept": -0.20415667089889775,
+        "mean_net_r_all": -3.75484201826232,
+        "mean_net_r_kept": -2.0641890286336855,
+        "advantage": -0.1987182315189735
+      },
+      "2026": {
+        "n_all": 267,
+        "n_kept": 57,
+        "share_kept": 0.21348314606741572,
+        "mean_gross_r_all": 0.009549831535354903,
+        "mean_gross_r_kept": -0.06420653845074242,
+        "mean_net_r_all": -1.93805155040384,
+        "mean_net_r_kept": -1.567469008932168,
+        "advantage": -0.07375636998609733
+      }
+    },
+    "ETHUSDT": {
+      "2019": {
+        "n_all": 412,
+        "n_kept": 84,
+        "share_kept": 0.20388349514563106,
+        "mean_gross_r_all": 0.09704373133211866,
+        "mean_gross_r_kept": 0.07591414801348431,
+        "mean_net_r_all": -1.3617199733073941,
+        "mean_net_r_kept": -2.287301550963919,
+        "advantage": -0.02112958331863435
+      },
+      "2020": {
+        "n_all": 431,
+        "n_kept": 125,
+        "share_kept": 0.2900232018561485,
+        "mean_gross_r_all": 0.02501265854151373,
+        "mean_gross_r_kept": -0.01339479872224441,
+        "mean_net_r_all": -1.6638979789147483,
+        "mean_net_r_kept": -3.181758789941507,
+        "advantage": -0.03840745726375814
+      },
+      "2021": {
+        "n_all": 420,
+        "n_kept": 106,
+        "share_kept": 0.2523809523809524,
+        "mean_gross_r_all": 0.05030758689788909,
+        "mean_gross_r_kept": 0.00813242538793142,
+        "mean_net_r_all": -0.7798233902667409,
+        "mean_net_r_kept": -0.7391064088664057,
+        "advantage": -0.04217516150995767
+      },
+      "2022": {
+        "n_all": 455,
+        "n_kept": 120,
+        "share_kept": 0.26373626373626374,
+        "mean_gross_r_all": 0.14313286177584092,
+        "mean_gross_r_kept": 0.05372705311086401,
+        "mean_net_r_all": -1.0774047144740213,
+        "mean_net_r_kept": -0.7323699262245226,
+        "advantage": -0.08940580866497691
+      },
+      "2023": {
+        "n_all": 441,
+        "n_kept": 127,
+        "share_kept": 0.28798185941043086,
+        "mean_gross_r_all": 0.08070810206167314,
+        "mean_gross_r_kept": -0.05698773804663255,
+        "mean_net_r_all": -2.289925840569387,
+        "mean_net_r_kept": -1.381484169462818,
+        "advantage": -0.13769584010830568
+      },
+      "2024": {
+        "n_all": 428,
+        "n_kept": 125,
+        "share_kept": 0.29205607476635514,
+        "mean_gross_r_all": 0.08152714747206165,
+        "mean_gross_r_kept": 0.27092935376695054,
+        "mean_net_r_all": -1.5881827623533316,
+        "mean_net_r_kept": -1.0348924867874847,
+        "advantage": 0.1894022062948889
+      },
+      "2025": {
+        "n_all": 446,
+        "n_kept": 134,
+        "share_kept": 0.3004484304932735,
+        "mean_gross_r_all": -0.0016821451270481436,
+        "mean_gross_r_kept": 0.1628492473965931,
+        "mean_net_r_all": -1.3868330812316967,
+        "mean_net_r_kept": -1.004613027610377,
+        "advantage": 0.16453139252364124
+      },
+      "2026": {
+        "n_all": 256,
+        "n_kept": 69,
+        "share_kept": 0.26953125,
+        "mean_gross_r_all": 0.03463694140461533,
+        "mean_gross_r_kept": -0.23772074273520416,
+        "mean_net_r_all": -1.4611026488891774,
+        "mean_net_r_kept": -1.714149735051929,
+        "advantage": -0.2723576841398195
+      }
+    }
+  },
+  "trend_align_standalone": {
+    "BTCUSDT": {
+      "dev": {
+        "n_aligned": 218,
+        "n_against": 167,
+        "mean_aligned": 0.0012241127419489394,
+        "mean_against": -0.04001956818298261,
+        "edge": 0.041243680924931546
+      },
+      "holdout": {
+        "n_aligned": 1970,
+        "n_against": 1395,
+        "mean_aligned": 0.01848991385029783,
+        "mean_against": 0.0061211936944729995,
+        "edge": 0.012368720155824828
+      }
+    },
+    "ETHUSDT": {
+      "dev": {
+        "n_aligned": 197,
+        "n_against": 154,
+        "mean_aligned": 0.1163674228505605,
+        "mean_against": -0.06711906917766972,
+        "edge": 0.1834864920282302
+      },
+      "holdout": {
+        "n_aligned": 1947,
+        "n_against": 1342,
+        "mean_aligned": 0.1012391457977073,
+        "mean_against": 0.013790765482390856,
+        "edge": 0.08744838031531645
+      }
+    }
+  },
+  "shuffled_control": {
+    "n_draws": 200,
+    "mean": 0.08112154851411947,
+    "p50": 0.07092844502904935,
+    "p95": 0.27422663026977734,
+    "max": 0.4098460739712886,
+    "mean_survivors": 0.83,
+    "share_with_a_survivor": 0.54
+  },
+  "real_in_sample_advantage": 0.37693716742584477,
+  "elapsed_seconds": 39.9
+}
