@@ -1,6 +1,6 @@
 # D214 — the terrain gate: reopening D203 by amendment, and the three bars it is judged against
 
-**Status:** Pre-registered — written and committed BEFORE the runner exists
+**Status:** Committed (H1, H3, H4, H5 confirmed; H2 falsified)
 **Date:** 2026-08-24
 **Category:** Validation & research integrity
 **Source:** a decision to test the terrain map as a confluence filter on the structure setups
@@ -166,3 +166,106 @@ publishable as a first study and is not publishable as the 396th look at the sam
 
 Opens at **12**. Disclosed adjacent and inherited for the combined bar: the structure
 programme's **124** and the terrain programme's **259**.
+
+---
+
+# RESULT — appended 2026-08-24, nothing above it edited
+
+**Nothing clears anything.** 0 of 12 cells clear the gross-R hurdle, 0 of 12 beat the
+shuffle control, 0 of 12 clear a Sharpe bar — including the lowest one, the fresh count that
+pretends none of the history exists.
+
+## The three bars, which is what this study was asked to show
+
+| bar | looks | required annual Sharpe | cells clearing |
+|---|---:|---:|---:|
+| fresh | 12 | 1.27 | **0 of 12** |
+| structure only | 136 | 1.69 | **0 of 12** |
+| combined | 395 | 1.83 | **0 of 12** |
+
+Best observed Sharpe across every cell: **−2.28**. Worst: **−6.00**.
+
+**So the distinction between the bars never arises.** The question was whether a result
+would have been publishable as a first study and disqualified only by the 395 looks behind
+it. It would not have been publishable as a first study either. **This is not a result that
+history killed; it is one that was never there.** Had it come in at, say, +1.4 Sharpe, the
+table would have read PASS / fail / fail and the price of the history would have been
+visible as exactly one line — that is what the three bars are for, and this run did not need
+them.
+
+## The gate
+
+| | BTC | ETH |
+|---|---:|---:|
+| primary (`inverted / zero`) gross advantage | **−0.030R** | **+0.020R** |
+| net R at 40 bps/side | −1.642R | −1.409R |
+| cells beating the shuffle control | 0 of 6 | 0 of 6 |
+
+**H2 is falsified.** It predicted `inverted` would clear +0.10R on at least one symbol, on
+the strength of D202's measurement that this reading is anti-predictive at the 2.6th
+percentile. It does not.
+
+**The direction fared better than the effect, and that distinction is worth keeping.**
+`inverted` averages −0.007R against `aligned`'s −0.038R and wins **5 of 6** paired cells. So
+D202's anti-signal does show up in the sign — faintly, consistently, and at perhaps a
+twentieth of the size needed to matter. The pre-registered prior pointed the right way at
+something far too small to trade, which is a more precise outcome than "wrong".
+
+**In 8 of 12 cells the trades the gate REJECTED outperformed the ones it kept.** D198's
+finding repeating: a filter can improve nothing while looking like it filters, and pricing
+the discarded book beside the kept one is the only way to see it.
+
+## The census that was a tautology, and had to be rebuilt
+
+The first version compared the full-series price grid against one built from the first half
+and returned **exactly zero** on both symbols. Not a result — a tautology. `Grid.bucket`
+depends only on `ln_min`, this fixture's lowest low falls in the first half on both symbols,
+and causal deposits put no mass above the prefix grid's top at an early bar. **It could not
+have failed.**
+
+Rebuilt to perturb the axis *origin* by half a bucket — the largest misalignment the
+discretisation admits — it says something real:
+
+| symbol | trades | mean shift | max shift | sign flips |
+|---|---:|---:|---:|---:|
+| `BTCUSDT` | 3,750 | 0.0748 | 1.1017 | **215 (5.73%)** |
+| `ETHUSDT` | 3,640 | 0.0573 | 0.9375 | **145 (3.98%)** |
+
+**Roughly one gate decision in twenty is an artifact of where the buckets happen to fall.**
+That bounds the precision of any gate built on this field: an advantage smaller than the
+noise floor set by the discretisation cannot be trusted, and every advantage measured here
+is inside it.
+
+This is a limitation of the inherited field, not of the gate. `test_terrain_field.py` knew
+the axis was not causal — its look-ahead test passes the same grid to both arms with the
+comment *"same axis, or the buckets alone would differ"* — and pinning around it is the
+right call for a **signal**, where the axis is a discretisation choice. For a **gate**, which
+reads only the sign, it needed a number. Now it has one.
+
+## Predictions, scored
+
+- **H1** — `aligned` fails hurdle 1 on both symbols. **Confirmed.**
+- **H2** — `inverted` gains ≥ +0.10R gross on at least one symbol. **Falsified.**
+- **H3** — neither direction clears hurdle 2. **Confirmed**; the toll is a function of the
+  stop and a gate does not touch stops.
+- **H4** — the shuffle control produces a comparable gain. **Confirmed**, and more strongly
+  than predicted: 0 of 12 cells beat it at all.
+- **H5** — the gated book clears none of the three bars, the lowest included. **Confirmed.**
+
+Four of five, with the one falsification on the hypothesis that had the most evidence behind
+it. Worth noting: the prediction I held at *moderate* confidence is the one that failed, and
+the four at *high* confidence all held — which is the calibration this project has been
+tracking since D199.
+
+## What this cost, and what it bought
+
+**12 looks**, and the exception spent against D203's stop.
+
+What it bought is a clean answer to a question that had been open since terrain WP7 was
+cancelled: *does the map help someone else's signal?* No — and not because the multiplicity
+bar was too high, which was the interesting failure mode, but because there is nothing there
+at any bar. Terrain WP7 can now be marked answered rather than unscheduled.
+
+**The stop is restored.** The exception was for one bounded question and it is spent. D203
+stands again in full, and a second override would need its own record and would not inherit
+this one's reasoning.

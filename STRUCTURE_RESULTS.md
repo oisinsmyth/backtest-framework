@@ -60,6 +60,10 @@ because in that world the two studies are reading the same swing structure.
 **D213 is a separate study with its own ledger (22 looks)** — a different claim, pre-registered after this programme closed, with these 102 disclosed. Its section is
 below the final report.
 
+**D214 is a third (12 looks)** — the terrain map as a confluence gate, which overrides
+D203's stop by explicit amendment and inherits both families' counts for its combined
+bar: 124 + 259 + 12 = 395.
+
 Never reset. Retired and failed cells count. Budget estimated in the plan at ~118 looks
 for the full programme; the estimate is not a licence and the actual count is what feeds
 the deflated Sharpe.
@@ -810,6 +814,112 @@ The out-of-sample advantage is -26% and -6% of the in-sample one — H2 predicte
 | **D213 total** | | **22** |
 
 The structure programme's 102 looks are disclosed adjacent and separately counted.
+
+## D214 - the terrain map as a confluence gate
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_terrain_gate.py` (offline, deterministic)
+
+**This study overrides D203's stop**, deliberately and for one bounded question. The record and the reasoning are in `docs/decisions/D214-the-terrain-gate.md`, committed before this runner existed. `inverted` is the pre-registered primary because D202 measured this exact reading anti-predictive at the 2.6th percentile - the prior comes from a published result here, not from peeking at this run.
+
+Field: D202's raw parameters (`k=2`, `cluster_atr=0.5`, no erasure) with every window calendar-matched at 96 bars/day per D194 - `atr_window` 1,920, `vol_norm_bars` 8,640. Read at the signal bar, so the bar that decides never also pays.
+
+### A census first: does the discretisation move a gate decision?
+
+`build_grid` spans the whole series' high and low, so the axis a reading is discretised onto knows the eventual price range. `test_terrain_field.py` knew and pinned around it — its look-ahead test passes the same grid to both arms with the comment *"same axis, or the buckets alone would differ"*. That is the right call for a signal, where the axis is a discretisation choice. A **gate** reads only the sign, so the question is whether the sign moves.
+
+**The first version of this census was a tautology and is reported as one.** It compared the full grid against one built from the first half and returned exactly zero on both symbols — because `Grid.bucket` depends only on `ln_min`, this fixture's lowest low falls in the first half, and causal deposits put no mass above the prefix grid's top at an early bar. It could not have failed.
+
+The potent version perturbs the axis **origin** by half a bucket, the largest misalignment the discretisation admits:
+
+| symbol | trades | mean shift in reading | max shift | sign flips |
+|---|---:|---:|---:|---:|
+| `BTCUSDT` | 3,750 | 0.0748 | 1.1017 | **215** (5.73%) |
+| `ETHUSDT` | 3,640 | 0.0573 | 0.9375 | **145** (3.98%) |
+
+Reported before the verdict, in counts, because that is when a census is worth anything.
+
+### The gate, every cell
+
+| symbol | gate | kept | gross R (kept) | gross R (all) | advantage | gross R of REJECTED | net R @40bp | Sharpe @40bp |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| `BTCUSDT` **(primary)** | inverted / zero | 52% (1,944) | -0.020 | +0.010 | -0.030 | +0.043 | -1.642 | -6.00 |
+| `BTCUSDT` | inverted / median | 26% (989) | +0.025 | +0.010 | +0.015 | +0.005 | -1.602 | -3.75 |
+| `BTCUSDT` | inverted / tertile | 17% (648) | -0.052 | +0.010 | -0.062 | +0.023 | -1.601 | -3.29 |
+| `BTCUSDT` | aligned / zero | 48% (1,806) | +0.043 | +0.010 | +0.033 | -0.020 | -2.420 | -5.82 |
+| `BTCUSDT` | aligned / median | 24% (886) | -0.038 | +0.010 | -0.048 | +0.025 | -2.776 | -4.74 |
+| `BTCUSDT` | aligned / tertile | 16% (601) | -0.112 | +0.010 | -0.122 | +0.034 | -1.884 | -4.42 |
+| `ETHUSDT` **(primary)** | inverted / zero | 54% (1,983) | +0.082 | +0.063 | +0.020 | +0.039 | -1.409 | -4.22 |
+| `ETHUSDT` | inverted / median | 28% (1,015) | +0.079 | +0.063 | +0.017 | +0.056 | -1.537 | -2.83 |
+| `ETHUSDT` | inverted / tertile | 19% (678) | +0.061 | +0.063 | -0.002 | +0.063 | -1.553 | -2.36 |
+| `ETHUSDT` | aligned / zero | 46% (1,657) | +0.039 | +0.063 | -0.024 | +0.082 | -1.483 | -4.11 |
+| `ETHUSDT` | aligned / median | 22% (805) | -0.001 | +0.063 | -0.064 | +0.081 | -1.588 | -3.12 |
+| `ETHUSDT` | aligned / tertile | 15% (534) | +0.058 | +0.063 | -0.005 | +0.063 | -1.650 | -2.28 |
+
+**The rejected column is not decoration.** D198's confirmation filter beat its baseline on both symbols and was worthless, because the signals it discarded scored +0.785 against the kept ones at -0.288. A filter that improves the book it keeps by throwing away the winners is not a filter.
+
+### The control: is it placement or is it selectivity?
+
+The identical gate applied to terrain readings **permuted among setups**. A gate keeping half the trades moves the mean whatever it selects on; this is what separates the map's placement from the gate's selectivity.
+
+| symbol | gate | real advantage | shuffled median | shuffled p95 | shuffled max | beats p95 |
+|---|---|---:|---:|---:|---:|:--:|
+| `BTCUSDT` | inverted / zero | -0.030 | -0.003 | +0.042 | +0.064 | no |
+| `BTCUSDT` | inverted / median | +0.015 | -0.002 | +0.064 | +0.124 | no |
+| `BTCUSDT` | inverted / tertile | -0.062 | -0.002 | +0.093 | +0.178 | no |
+| `BTCUSDT` | aligned / zero | +0.033 | +0.003 | +0.041 | +0.078 | no |
+| `BTCUSDT` | aligned / median | -0.048 | +0.002 | +0.070 | +0.128 | no |
+| `BTCUSDT` | aligned / tertile | -0.122 | -0.000 | +0.095 | +0.168 | no |
+| `ETHUSDT` | inverted / zero | +0.020 | -0.005 | +0.033 | +0.053 | no |
+| `ETHUSDT` | inverted / median | +0.017 | -0.008 | +0.065 | +0.098 | no |
+| `ETHUSDT` | inverted / tertile | -0.002 | -0.012 | +0.089 | +0.147 | no |
+| `ETHUSDT` | aligned / zero | -0.024 | +0.006 | +0.046 | +0.073 | no |
+| `ETHUSDT` | aligned / median | -0.064 | +0.009 | +0.077 | +0.132 | no |
+| `ETHUSDT` | aligned / tertile | -0.005 | +0.008 | +0.097 | +0.170 | no |
+
+### The three bars
+
+The deliverable. Each cell's observed Sharpe against three multiplicity counts, with an explicit pass/fail. The combined count is forced by `TERRAIN_RESULTS.md`: *anything that reuses these sensors inherits the count*.
+
+| symbol | gate | Sharpe @40bp | fresh (n=12) | structure only (n=136) | combined (n=395) |
+|---|---|---:|---|---|---|
+| `BTCUSDT` | inverted / zero | -6.00 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `BTCUSDT` | inverted / median | -3.75 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `BTCUSDT` | inverted / tertile | -3.29 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `BTCUSDT` | aligned / zero | -5.82 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `BTCUSDT` | aligned / median | -4.74 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `BTCUSDT` | aligned / tertile | -4.42 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `ETHUSDT` | inverted / zero | -4.22 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `ETHUSDT` | inverted / median | -2.83 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `ETHUSDT` | inverted / tertile | -2.36 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `ETHUSDT` | aligned / zero | -4.11 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `ETHUSDT` | aligned / median | -3.12 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+| `ETHUSDT` | aligned / tertile | -2.28 | need 1.27 — **fail** | need 1.69 — **fail** | need 1.83 — **fail** |
+
+### Verdict
+
+**The primary gate (`inverted|zero`) gains -0.030R and +0.020R gross on the two symbols**, against the pre-registered +0.10R hurdle. **Hurdle 1 fails.**
+
+Across all cells, **0 of 6 `inverted`** and **0 of 6 `aligned`** clear the gross-R hurdle. **H2 is falsified**: it predicted `inverted` would gain at least the hurdle on at least one symbol, and it does not.
+
+The pre-registered *direction* fares better than the pre-registered *effect*. `inverted` averages -0.007R against `aligned`'s -0.038R and wins 5 of 6 paired cells — so D202's anti-signal does show up in the sign, faintly, and nowhere near the size needed to matter. That is the honest reading: the prior pointed the right way and at something far too small to trade.
+
+**Against the shuffle control, 0 of 12 cells beat the 95th percentile of a gate applied to permuted readings.** So most of what the gate does is selectivity, not the map's placement — which is D197's finding (dead even against randomly placed mass) reappearing one level up.
+
+**In 8 of 12 cells the trades the gate REJECTED did better than the ones it kept.** That is D198's finding repeating: a filter can improve nothing while looking like it filters, and the only way to see it is to price the discarded book beside the kept one.
+
+**After costs the primary gate returns -1.642R and -1.409R a trade.** Hurdle 2 fails — a gate changes which trades are taken, not what the wrapper risks, and the toll is a function of the stop.
+
+**And the three bars, which is what this study was asked to show.** Cells clearing each: **fresh** 0 of 12, **structure only** 0 of 12, **combined** 0 of 12. Nothing clears any bar, so the distinction between them never arises — the result is not one that history disqualified, it is one that was never there.
+
+### Multiplicity
+
+| | cells | looks |
+|---|---|---:|
+| gate cells | 2 directions x 3 thresholds x 2 symbols | 12 |
+| gate-shuffle and rotation controls | controls, not tests | 0 |
+| **D214 total** | | **12** |
+
+Inherited for the combined bar: the structure programme's 124 and the terrain programme's 259.
 
 ---
 

@@ -10,6 +10,29 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D214 — the terrain map as a confluence gate, 2026-08-24)
+- `scripts/run_structure_terrain_gate.py` + `data/structure_terrain_gate_summary.json` + a
+  D214 section. Overrides D203's stop by explicit amendment, recorded before the runner
+  existed. Field windows calendar-matched to 15m per D194 and asserted by test.
+- `tests/unit/test_structure_terrain_gate.py` (19), including the composition look-ahead
+  pair — both inputs are individually guarded and neither says anything about reading the
+  field at the signal bar rather than the entry bar.
+
+### Findings
+- **0 of 12 cells clear the gross-R hurdle, 0 of 12 beat the shuffle control, and 0 of 12
+  clear a Sharpe bar — including the lowest.** Best observed Sharpe −2.28. The three-bar
+  distinction never arises: not a result history killed, one that was never there.
+- **H2 falsified.** `inverted` did not clear +0.10R despite D202's measured anti-signal —
+  though the *direction* held: it averages −0.007R against `aligned`'s −0.038R and wins 5 of
+  6 paired cells. The prior pointed the right way at a twentieth of the needed size.
+- **In 8 of 12 cells the rejected trades beat the kept ones** (D198 repeating).
+- **The grid census was first written as a tautology** that returned exactly zero and could
+  not have failed — `Grid.bucket` depends only on `ln_min`, the fixture's lowest low falls
+  in the first half, so every bucket index was identical by construction. Rebuilt to perturb
+  the axis origin by half a bucket, it shows **5.7% / 4.0% of gate decisions flip**, which
+  bounds the precision of any gate on this field and is inside every advantage measured.
+- D203's stop is restored; the exception was bounded and is spent.
+
 ### Added (D213 — mined selection rule on a held-out seven years, 2026-08-24)
 - `scripts/run_structure_selection.py` + `data/structure_selection_summary.json` + a D213
   section. Development year picked on counts before any outcome was read; thresholds frozen
