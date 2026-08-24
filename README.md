@@ -38,6 +38,17 @@ fees *and* zero carry the strategy still loses 88.7%, because the pair's log spr
 stationary in only 14% of training windows. Realised beta is ≈ 0 on all three benchmarks,
 so the neutrality engineering works — the thesis is what fails (D122–D127).
 
+**The seventh study is [`STRUCTURE_RESULTS.md`](STRUCTURE_RESULTS.md)** — a five-part
+discretionary retail price-action strategy (change of character, the flipped level, the
+61.8% Fibonacci retracement, the fair value gap, RSI), mechanised so each part could be
+measured separately and together on BTC/ETH 15m bars. Closed after 86 looks (D204–D211).
+The result is a single variable: **no component predicts anything once leg size relative to
+ATR is held constant**, and three features that cleared the promotion bar turned out to be
+one quantity under three names. Three findings stand independently of that — the course's
+5R break-even is 22.3–28.4% after costs rather than the 20% it claims, 27–44% of its trades
+cost at least their entire risk to trade, and the confluence stack is *worse* at zero cost
+than no filters at all.
+
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
 anti-self-deception, composability, scope discipline) that generated every decision below,
