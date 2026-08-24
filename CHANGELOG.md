@@ -10,6 +10,33 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (the structure detectors, 2026-08-24 — D204/D205)
+- `New Docs/STRUCTURE_MODEL.md` + `STRUCTURE_RESULTS.md` — a new programme and a new
+  ledger, opened at 0 looks, on a genuinely new construction: the five components of a
+  discretionary retail price-action strategy. Terrain's 259 looks disclosed adjacent.
+  Pre-registered before any code existed (D204).
+- `research/structure.py` — five INDEPENDENT detectors, no strategy and no thresholds.
+  `market_structure` (the BOS/CHoCH state machine, D173's confirmation lag applied),
+  `retracement` + `ratio_price` (continuous depth, never a boolean), `fair_value_gaps`
+  (three-bar imbalance, filled on the bar RANGE), `rsi` (Wilder's original smoothing, as
+  the study's control). `PLACEBO_RATIOS` fixed here: 0.447/0.553/0.691/0.724, the
+  non-canonical ratios 0.618 is measured against.
+- `tests/unit/test_structure.py` (45) + `tests/property/test_structure_invariants.py` (10).
+
+### Findings — from a mutation pass run because the suite passed first time
+- **Two of six deliberate mutations survived 43 green tests.** Mutation 5 dropped the
+  higher-low requirement — the pre-registered definition of a change of character — and
+  nothing noticed. Mutation 6 introduced a mirror sign error on the bullish leg's start,
+  and the degeneracy guard converted it into *missing* legs rather than wrong ones, which
+  the sign-of-every-leg assertion satisfied vacuously.
+- Both fixed: a planted pattern that separates the higher-low definition from the naive
+  one (and its mirror, reflected through a price axis), and leg-endpoint assertions that
+  require **each direction to be populated**.
+- The general form, recorded in D205: **an invariant asserted only over the outputs a
+  component produces cannot see a component that has stopped producing them.** Same shape
+  as D196's H4, reached from the opposite direction.
+- 1,098 tests green (55 new), mypy `--strict` clean on the new module.
+
 ### Added (the volatility estimator gate, 2026-08-23 — D195)
 - `research/vol_estimators.py` — the incumbent (20 close-to-close daily returns, pinned by
   test against `InverseVolatilityWeight.weight()` rather than merely resembling it) and the

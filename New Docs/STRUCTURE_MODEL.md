@@ -356,7 +356,7 @@ baseline-relative capped at moderate per Disclosure D4.
 ## WP checklist
 
 - [x] WP0 — pre-registration (this document, the ledger, D204)
-- [ ] WP1 — detectors and their tests
+- [x] WP1 — detectors and their tests (D205)
 - [ ] WP2 — the census
 - [ ] WP3 — components against their nulls
 - [ ] WP4 — marginal contribution

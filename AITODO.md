@@ -312,9 +312,11 @@ entries and fading lost in every form terrain measured.
       primary cell, three hurdles with the percentile beside every delta, a stop condition
       per WP, and seven predictions (four at high confidence that the component FAILS).
       Looks: 0.
-- [ ] **WP1 — the five detectors + their tests.** `research/structure.py`. The two tests
-      that matter are the no-look-ahead property test per detector and the random-walk
-      false-positive check; if either is weak the rest of the programme is unfalsifiable.
+- [x] **WP1 — the five detectors + their tests (D205).** `research/structure.py`, 55 new
+      tests, 1098 green, mypy --strict clean. The suite passed first time, so the module
+      was mutated six ways: **two mutations survived 43 green tests**, one of them the
+      higher-low requirement that IS the pre-registered CHoCH definition. Both tests
+      strengthened; the second finding generalises and is written up in D205.
 - [ ] **WP2 — the census. Counts only, before any performance number.** The funnel through
       the four conjunctive filters, and the friction in R by arithmetic. Stop condition:
       under 30 stacked entries per symbol and that arm carries no verdict.
