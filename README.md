@@ -79,6 +79,23 @@ that is never out. Adjusted, the best cell earns **+53.54% against buy-and-hold'
 a risk-reduction result, not a return result, and the ladder deltas are unmoved because the
 dividend stream cancels inside them.
 
+The same ledger carries **the ninth study, D218** — Impulse MACD (LazyBear), supplied as
+"another MACD indicator" and, on reading the Pine, not a MACD variant at all: a zero-lag mid
+price against a slow smoothed high/low channel with a dead zone. The algebra put it in
+D217's shape anyway (`md = 33b` on constant drift where MACD reads `7b`, and its histogram
+goes to zero the same way), which turned it into a **replication of D217's mechanism on a
+construction sharing no arithmetic with it**.
+
+It replicates — and the clean read is stronger than the headline. The signal-line delta is
++0.628 against D217's +0.285, but that is mostly the level rung being *worse* here
+(anti-predictive, at the 0th percentile of its own null). The comparison that matters,
+this indicator's acceleration rung against D217's on identical bars, is **≈ 0**: the whole
+apparatus buys nothing over `EMA(12) − EMA(26)`. **Two acceleration rules from unrelated
+arithmetic agree to within 0.04 Sharpe while both level counterparts are dead.** The dead
+zone hurts both Sharpe and money. 0 of 16 cells clear, and the noise floor at 45,803 looks
+is +1.42 — *no arm anyone runs on this universe can clear it.* The fixture is exhausted, and
+that is now the standing conclusion rather than an argument.
+
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
 anti-self-deception, composability, scope discipline) that generated every decision below,
