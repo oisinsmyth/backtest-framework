@@ -300,6 +300,32 @@ none.
       644 tests (44 new), mypy clean.
 - [ ] Commit breakout universe study + D140–D144
 
+## Now — the STRUCTURE programme (opened 2026-08-24, D204)
+
+Mechanising a discretionary retail price-action strategy so its five components can be
+measured separately and together. Spec `New Docs/STRUCTURE_MODEL.md`, ledger
+`STRUCTURE_RESULTS.md`. Prior stated as bad up front: three of the five are pullback-fade
+entries and fading lost in every form terrain measured.
+
+- [x] **WP0 — pre-registration.** Spec + ledger + D204 committed before any code. Fixes the
+      five definitions, the confirmation-lag requirement, the parameter sets and the named
+      primary cell, three hurdles with the percentile beside every delta, a stop condition
+      per WP, and seven predictions (four at high confidence that the component FAILS).
+      Looks: 0.
+- [ ] **WP1 — the five detectors + their tests.** `research/structure.py`. The two tests
+      that matter are the no-look-ahead property test per detector and the random-walk
+      false-positive check; if either is weak the rest of the programme is unfalsifiable.
+- [ ] **WP2 — the census. Counts only, before any performance number.** The funnel through
+      the four conjunctive filters, and the friction in R by arithmetic. Stop condition:
+      under 30 stacked entries per symbol and that arm carries no verdict.
+- [ ] **WP3 — each component against its own matched null**, no costs. Includes the Fib
+      placebo ladder, the cheapest decisive test in the programme.
+- [ ] **WP4 — marginal contribution.** Feature quintiles (primary) + the 16-arm ablation
+      lattice (confirmation), wrapper frozen. Stop condition: nothing clears the promotion
+      criteria and the programme ends here as a reportable negative.
+- [ ] **WP5 — costed verdict**, both fill conventions, pessimistic carries it.
+- [ ] **WP6 — the discretion audit** and the final report.
+
 ## Next (queued, not started) — Phase G closing
 
 - [ ] **Writeup polish**: expand the `[TODO prose]` sections (pairs-trading
