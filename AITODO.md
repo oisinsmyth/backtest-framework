@@ -356,6 +356,43 @@ entries and fading lost in every form terrain measured.
       against buy-and-hold and cash. **0 of 16 arms make money at 40 bps/side and 0
       of 16 at 10 bps/side.** Ledger 86 -> 102 looks.
 
+## Now — D217, the MACD crossover ladder (opened and closed 2026-08-24)
+
+Not a continuation of STRUCTURE. A fresh ledger on a different fixture (57-ETF daily, not
+crypto 15m), a different claim family, and a sensor that did not exist in this repo. Record
+`docs/decisions/D217-the-macd-crossover-ladder.md`, ledger `MACD_RESULTS.md`.
+
+The claim under test was never "does MACD make money" — it was whether the signal line adds
+anything over the zero-line cross (which is identically a 12/26 EMA crossover) and whether
+that adds anything over flat momentum at the same centre of mass.
+
+- [x] **WP0** pre-registration, committed BEFORE the runner existed. Seven predictions with
+      confidences, hurdles A–G, the programme stop, and the ledger arithmetic.
+- [x] **WP1** `research/macd.py` — the first EMA here, seed convention and 393-bar burn-in
+      derived and stated. 57 tests: unit, property (analytics has no D32 guard, so this file
+      is the guard), and a golden at MACD(3,7,3) where every value is a dyadic rational.
+- [x] **WP2** census + break-even. Zero looks. No arm underpowered; friction is 0.015 Sharpe
+      institutional, and the IBKR $1.00 minimum binds on all 57 ETFs at a $100k book.
+- [x] **WP3** the ladder, 12 looks. **H1 falsified**: R1−R2 = +0.285, and the algebra I was
+      most confident about was right and read the wrong way round.
+- [x] **WP4** the declared sweep, 30 looks. 12/26/9 ranks 10 of 32; all eight zero-line cells
+      sit between −0.166 and +0.080.
+- [x] **The verdict**: 0 of 12 cells clear all seven hurdles. The best clears six and fails
+      only the DSR floor — +0.334 at the fresh count of 42, +0.638 at the verdict count of
+      45,783. **Stage 2 does not run**; the pre-registered stop fired.
+
+Open, and deliberately not pursued inside this study (D215's rule): the R1-vs-R2 separation
+is the one transferable claim — *trend acceleration predicts where trend level does not* —
+and it needs its own pre-registration and its own holdout on a fixture this project has not
+already mined. The crypto daily universe is the obvious candidate.
+
+> **Housekeeping debt, noticed while writing the D217 section:** the STRUCTURE checklist
+> above stops at D212, while D213, D214, D215 and D216 all shipped and are in the CHANGELOG.
+> That is drift against R5 and against this file's own instruction that stale entries are
+> worse than none. Not fixed here because backfilling four studies from memory is exactly
+> the kind of reconstruction this project does not trust; it needs a session with the
+> records open.
+
 ## Next (queued, not started) — Phase G closing
 
 - [ ] **Writeup polish**: expand the `[TODO prose]` sections (pairs-trading

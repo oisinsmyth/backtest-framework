@@ -1,6 +1,6 @@
 # D217 — the MACD crossover ladder: does the signal line add anything to trend following?
 
-**Status:** Pre-registered — written and committed BEFORE the runner exists
+**Status:** Committed (H7 confirmed on turnover; H1, H3, H4, H6 falsified; H2 and H5 split)
 **Date:** 2026-08-24
 **Category:** Validation & research integrity
 **Source:** A new study, opened on the most widely taught technical strategy there is
@@ -372,3 +372,142 @@ explain it away.
 Secondarily: if the census shows the fully-filtered arm leaves fewer than 30 entries per ETF,
 the honest finding is that a strategy sold as a repeatable process does not fire often enough
 to be one, and that finding is reported instead of the performance numbers, not alongside them.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited.*
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_macd_ladder.py`
+(offline, deterministic, seed 0) · Ledger: [`MACD_RESULTS.md`](../../MACD_RESULTS.md) ·
+Artifact: `data/macd_ladder_summary.json`
+
+### The one-sentence version
+
+**The signal line is the only part of MACD that does anything, it does considerably more
+than the +0.10 hurdle, it survives a stricter fill than the one pre-registered — and the
+whole thing still dies, on multiplicity alone, at the last hurdle of seven.**
+
+### Scoring my own predictions
+
+| | Prediction | Outcome |
+|---|---|---|
+| **H1** | signal line adds nothing (R1−R2 < +0.10) | **FALSIFIED.** +0.285 / +0.209 / +0.186 / +0.093 across the four book×gate cells — clears on three of four, and survives the lag bracket |
+| **H2** | two-EMA difference adds nothing over flat 37-bar momentum | **SPLIT, and the split is the finding.** +0.163 / +0.129 at the primary fill, **+0.042 / +0.033** with one more bar of lag. The advantage is a fill-timing artifact |
+| **H3** | long-flat arms lose to buy-and-hold | **FALSIFIED** for both MACD rungs (+0.496 and +0.286 against B&H's +0.266), confirmed for momentum (+0.157) |
+| **H4** | long-short arms ≤ 0 net of costs | **FALSIFIED** for R1 (+0.312) and marginally for R2 (+0.026); confirmed for R3 (−0.136) |
+| **H5** | 12/26/9 mid-distribution, and the best swept cell fails its own noise floor | **SPLIT.** Mid-distribution **confirmed** — rank 10 of 32, +0.324 against a grid median of +0.295. Noise floor **falsified**: the best cell (+0.397, 12/52/9) clears SR0 = +0.318 at the sweep's own N |
+| **H6** | the 200-MA filter improves long-flat, does ~nothing for long-short | **FALSIFIED, and in the opposite direction.** The filter makes *every* cell worse in *both* books — signal-line long-flat falls +0.496 → +0.288 |
+| **H7** | R1 turns over ≥1.5× R2 and gives back the difference to costs | **CONFIRMED on turnover** (2.35× / 1.65× / 2.34× / 1.86×), **falsified on the consequence** — the drag is 0.015–0.054 Sharpe and cannot overturn a +0.285 delta |
+
+**One clean confirmation, four falsifications and two splits.** That is a bad prediction
+record and it is the honest summary. The one I was most confident about — H1, at *high*,
+on the grounds that the algebra settled it — is the one that failed hardest.
+
+### What is actually true
+
+**1. The signal line is not the redundant part. It is the only part that works.**
+
+The prediction rested on a correct piece of algebra read the wrong way round. R1's return
+kernel does sum to zero, and R1 *is* a trend-acceleration rule rather than a trend-level
+rule — the derivation stands and the tests pin it. What I inferred from that was that
+acceleration would be noise. On this universe it is the reverse: the *level* rung is the
+dead one.
+
+The sweep makes this structural rather than anecdotal. **All eight zero-line cells in the
+declared grid land between −0.166 and +0.080** — every parameterisation of "EMA(fast)
+crosses EMA(slow)", across a 4× range of both windows, is indistinguishable from nothing.
+The twenty-four signal-line cells have a median of **+0.315**. That is not a knife-edge or
+a lucky cell; the two rungs separate across the whole grid.
+
+**2. The two-EMA difference's edge over flat momentum is a fill-timing artifact.**
+
+R2 − R3 is +0.163 at the primary fill and **+0.042** with one more bar of lag. R1 − R2 is
++0.285 and **+0.247** — it barely moves. So the middle rung is doing nothing that survives
+contact with a realistic fill, while the top rung is. Momentum is the only arm that gets
+*better* with lag (−0.136 → −0.064 long-short), which is what a slower signal should do.
+
+**3. The confluence filter is destructive, and it is destructive everywhere.**
+
+The 200-MA gate — the commercially taught version of this strategy — costs between −0.09
+and −0.21 Sharpe on every one of the six cells it touches, in both books. It is not beta
+timing that helps a long-flat book and does nothing for a long-short one, as predicted; it
+just removes good exposure. This is the second time this project has found a taught
+confluence stack to be worse than no filter at all.
+
+**4. The result dies on multiplicity, and only on multiplicity.**
+
+`signal_line / long_flat / gate off` clears **six of seven hurdles**: the ladder deltas,
+the rotation null (+0.282 at the **99.25th** percentile, above its p95 of +0.371), the
+block null (100th percentile), buy-and-hold (+0.496 against +0.266, at *half* the drawdown
+— −13.6% against −35.1%), and sign stability across both halves (+0.647 and +0.469).
+
+It fails **G**. At the fresh count of 42 looks the noise floor is SR0 = **+0.334** and
++0.496 clears it comfortably. At the verdict count — 45,783, which is the fresh count plus
+the 45,346 distinct configurations already logged against this fixture plus the disclosed
+395 — the floor is **+0.638**, and it does not.
+
+**This is the exact situation D214 built the three-count report for: a result that would
+have been publishable as a first study and is not publishable as the 45,783rd look, made
+visible as precisely that.** The honest statement is not "MACD does not work"; it is that
+*this project has already spent enough of its search budget on this fixture that it can no
+longer distinguish a +0.496 Sharpe from the best of its own noise.* Sullivan, Timmermann &
+White (1999) is not a citation here — it is the mechanism that produced the verdict, run
+against this project's own trial registry.
+
+**0 of 12 cells clear every hurdle. Stage 2 does not run.** The pre-registered programme
+stop applies and the study closes as a reportable negative.
+
+**5. Friction was never the binding constraint, as predicted — but the retail arithmetic
+is its own finding.** Institutional per-side cost is 1.82 bp median and the drag is 0.015
+Sharpe. At a $100,000 book split 57 ways the **IBKR $1.00 per-order minimum binds on all
+57 ETFs**, taking the per-side cost to 6.7 bp — roughly 4× — for identical trades. Still
+not fatal here (0.054 Sharpe), but it means the cost of this strategy is a function of who
+is trading it, and quoting one number for it would have been wrong.
+
+### Defects found, and how
+
+**The ledger arithmetic was wrong in the pre-registration, and the runner caught it.** The
+record wrote the sweep block as "6 (fast,slow) pairs ⇒ 22 looks". The grid it declares —
+fast ∈ {6,12,24}, slow ∈ {13,26,52}, `fast < slow` — admits **eight** pairs: (12,13) and
+(24,26) satisfy the constraint and were missed counting by eye. The grid was not widened;
+the count was wrong. Corrected fresh total: **42**, and that is the number the deflated
+Sharpe is computed against. `test_the_sweep_grid_admits_eight_pairs_not_six` pins it.
+
+**The implemented fill is one bar more favourable than the pre-registered one.** D217 says
+next-open. A close-to-close position series cannot express an open fill, and the repo's
+`PositionResult` convention charges as if filled at the decision close. Rather than argue
+about which is closer, every cell is reported at both `lag=1` and `lag=2`, which brackets
+next-open from either side. **That disclosure is what produced finding 2** — without it,
+R2 − R3 = +0.163 would have been reported as a real effect. This is a sensitivity on the
+same 12 cells, not 12 further looks.
+
+### Ledger
+
+| block | looks |
+|---|---:|
+| core ladder — 3 rungs × 2 books × {gate off, on} | 12 |
+| declared sweep — 8 pairs × 3 signals + 8 zero-line, minus 2 already counted | 30 |
+| **fresh total** | **42** |
+
+Census, break-even arithmetic, the lag bracket, the nulls and buy-and-hold carry zero
+looks. Verdict count: **45,783** (42 + 45,346 distinct prior ETF-fixture configurations +
+395 disclosed). The raw registry row count, **129,286**, is reported as a ceiling and is
+**not** used as an N.
+
+### What happens to the positive
+
+D215's rule, pre-committed and unchanged: the surviving cell is a positive claim, it does
+**not** get pursued inside this study, and it gets its own pre-registration and its own
+holdout before anyone believes it. Two things would have to be true for that to be worth
+doing, and both are stated now rather than after a good number:
+
+1. **It has to replicate out of sample on a fixture this project has not already mined** —
+   the crypto daily universe is the obvious candidate, and it is the only way to escape a
+   45,346-configuration prior that has nothing to do with MACD but everything to do with
+   what this fixture has already been asked.
+2. **The R1-versus-R2 separation has to survive it.** That separation, not the level, is
+   the transferable claim: *trend acceleration predicts where trend level does not.* If
+   that reproduces on independent data it is worth a study. If it does not, the honest
+   reading of this one is that 45,783 looks bought a coincidence with a good story.

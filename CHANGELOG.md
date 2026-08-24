@@ -10,6 +10,47 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D217 — the MACD crossover ladder, 2026-08-24)
+- `src/backtest_framework/research/macd.py` — the first EMA in this codebase, with the seed
+  convention stated rather than assumed (SMA-seeded at `slow-1`, each leg over its own
+  window; exact on a linear ramp, which is why that seed and not another) and the burn-in
+  derived (166/124/360, slow leg binding, **393** total for 12/26/9). MACD is the first IIR
+  estimator in an all-FIR codebase and the module says so out loud.
+- `scripts/run_macd_ladder.py` + `data/macd_ladder_summary.json` + `MACD_RESULTS.md` (a new
+  append-only ledger). Census, break-even arithmetic, the three-rung nested ladder, the
+  declared sweep, rotation and block nulls, a fill-timing bracket, and the deflated Sharpe at
+  three multiplicity counts. Offline, deterministic, seed 0.
+- `tests/unit/test_macd.py` (36), `tests/property/test_macd_invariants.py` (9),
+  `tests/golden/test_macd_golden.py` + its hand-computed twin (12), and
+  `tests/unit/test_macd_ladder.py` (15). The golden runs at MACD(3,7,3) so every alpha is a
+  power of two and every value in the walk is a dyadic rational — asserted with `==`, not
+  `approx` — and its scenario makes the two rungs hold opposite positions, so a ladder that
+  collapses into one rule turns the file red.
+
+### Result (D217)
+- **The signal line is the only part of MACD that does anything, and the whole thing still
+  dies on multiplicity alone.** R1−R2 = +0.285 long-short against a +0.10 hurdle, holding at
+  +0.247 under a stricter fill. All eight zero-line sweep cells land between −0.166 and
+  +0.080 against a signal-line median of +0.315, so the separation is structural rather than
+  a lucky cell.
+- The best cell clears **six of seven** hurdles — ladder deltas, rotation null at the 99.25th
+  percentile, block null at the 100th, buy-and-hold (+0.496 vs +0.266 at half the drawdown),
+  both halves — and fails only the deflated-Sharpe floor: +0.334 at the fresh count of 42,
+  +0.638 at the verdict count of 45,783.
+- R2−R3 collapses from +0.163 to +0.042 under one more bar of lag: the middle rung's edge is
+  a fill-timing artifact, surfaced only because the implemented fill was disclosed as more
+  favourable than the pre-registered one and bracketed instead of argued.
+- The 200-MA confluence gate is destructive in every cell and both books (−0.09 to −0.21).
+- 0 of 12 cells clear every hurdle, so the pre-registered programme stop applies and Stage 2
+  (the costed engine verdict) does not run.
+
+### Fixed (D217)
+- D217's own ledger arithmetic: the declared sweep grid admits **8** (fast,slow) pairs, not
+  the 6 counted by eye — (12,13) and (24,26) satisfy `fast < slow`. The grid was not widened;
+  the count was wrong. Fresh look count corrected from 34 to 42, which is what the deflated
+  Sharpe is computed against, and pinned by
+  `test_the_sweep_grid_admits_eight_pairs_not_six`.
+
 ### Added (D216 — the tail, the frequency and the fill, 2026-08-24)
 - `scripts/run_reversion_tail.py` + `data/reversion_tail_summary.json` + a D216 section.
   Adds a spacing-based tail sampler (≥ M bars apart, ~8× the events blind stepping gives at
