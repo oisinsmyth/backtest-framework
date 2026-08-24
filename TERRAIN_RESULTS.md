@@ -209,3 +209,126 @@ Traversal in the payload is in 15-minute bars; divided by 96 it is directly comp
 
 Never reset. D189's failures count — the question has not changed, and the plan's own rule is that retired and failed items still count.
 
+
+---
+
+# FINAL REPORT — the terrain programme is closed
+
+**Produced:** 2026-08-24 · **Status:** terminal. No further sensor, statistic or strategy
+will be pre-registered on price-derived terrain.
+
+## The question
+
+`TERRAIN_MODEL.md` proposed that a map of *where inventory sits* — built from volume at
+price, or from where price repeatedly turned — marks levels at which price behaves
+differently, and that trading those levels beats trading levels placed at random.
+
+Three sensor families were built and tested against that claim over eleven years of daily
+crypto, plus one intraday re-test on exchange-native data.
+
+## The answer
+
+**No, on every construction tried, by every measure applied.**
+
+| | sensor | what it read | verdict |
+|---|---|---|---|
+| D189 | **S1** volume profile | volume at price, daily | fails its null 16 of 16 configurations |
+| D194 | **S1** at 15m | the same, exchange-native intraday | fails again; **S1 closed at any resolution** |
+| D196 | **S5** swing supply/demand | discrete bands from repeated turns | 0 of 20 cells clear both hurdles |
+| D197 | **S6** signed field | the bucket *at* price, at a boundary | **−0.007 / −0.012** vs its null |
+| D198 | S6 | the same, on a second approach | −0.156 / +0.090 |
+| D199 | S6 | the same, shorter clock and a trail | −0.013 / −0.045 |
+| D201 | S6 | *all* mass either side of price | −0.052 / −0.077 |
+| D202 | S6 | mass *near* price, sized on magnitude | **−0.822 / −0.829** |
+
+Closed by D194 (S1), D200 (the S6 reversal line) and D203 (the S6 map).
+
+## The shape of the failure, which is the interesting part
+
+It was never one bad idea failing once. It was a **consistent pattern across five
+refinements** of the last sensor:
+
+> Every refinement that changed the **wrapper** — entry timing, exits, stops, thresholds —
+> improved the strategy against its own predecessor and left the null comparison exactly
+> where the first fair test put it. The one refinement that changed the **statistic**
+> (D202) fixed every defect named in its diagnosis and produced the **worst** result of the
+> five.
+
+D202 is the cleanest measurement in the programme, and it is the reason for stopping rather
+than continuing. With costs removed, the beta confound gone (net exposure −0.07 against
+D201's +0.78) and the sample raised from nine decisions to 393, the local reading sat at the
+**2.6th and 1.4th percentile** of its own rotation null and lost **in 11 years out of 11** on
+BTC. The map's local structure is not uninformative about direction; it is reliably wrong.
+
+Reading it better made the answer worse. That is a stop condition, not a setback.
+
+The mechanism unifies everything: inventory accumulates below price exactly when price has
+been *falling into* it, so trading it fades a decline. **Fading lost in every form measured**
+— short leg worse than long in 16 of 16 cells (D197), 16 of 16 (D199), 8 of 8 (D201), 11
+years of 11 (D202).
+
+## What outlives the programme
+
+The strategies failed. The methodology is the output, and most of it was learned *from* the
+failures rather than despite them.
+
+1. **A paired null is necessary and not sufficient** (D196). Six cells beat randomly placed
+   levels while losing money. "Better than chance" and "worth trading" are different claims.
+2. **A control and a null answer different questions** (D197). S6 beat "fade every breakout"
+   on 16 of 16 cells and was simultaneously dead even against randomly placed mass. Clearing
+   one says nothing about the other.
+3. **Waiting for confirmation sells the winners to buy a better entry** (D198). The signals a
+   confirmation filter discarded scored +0.785 and +0.310 against the kept ones at −0.288 and
+   −0.183 — because a signal goes unconfirmed exactly when the trade already worked.
+4. **A timing control is not an exposure control** (D201/D202). Sharpe is invariant to
+   constant leverage, so a book with a net directional tilt cannot be judged against
+   buy-and-hold alone. Rotating the realised position series preserves exposure,
+   autocorrelation and turnover exactly and isolates *when* from *how much*.
+5. **An effect-size floor carries a width assumption** (D202). A +0.10 delta over a null
+   *mean* is not a hurdle when the null is wide — D201's statistic cleared it at the 67th
+   percentile. D194 built a floor to stop large samples manufacturing significance; this is
+   the mirror failure, and the percentile must be reported beside the delta.
+6. **A census before the document, and counts only** (D197, D198, D201, D202). It caught a
+   shrinkage-units defect that would have silenced a sensor, refuted an objection that looked
+   analytically fatal, rejected a proposed rule that was a one-bar delay in disguise, and
+   measured a 13%/yr cost drag before it could be mistaken for a result.
+
+Reusable numbers: **D9's adverse selection priced at 0.138–0.195 Sharpe** (D196, the first
+measurement of it in this project), and the stop-width arithmetic that turns a 40 bps round
+trip into **0.49R at a 0.5-ATR stop** and **0.12R at 2 ATR** (D196/D197).
+
+Two disclosures worth keeping visible: **S5b was never actually tested** (every D196 strategy
+read level prices and never the score where its decay lived, so all ten cells came back
+bit-identical to S5), and **D201's design was bad and its census said so before the run** —
+naming a defect in a pre-registration does not stop it being a defect.
+
+## Multiplicity ledger — final, cumulative
+
+| | looks |
+|---|---:|
+| S1 (D189 + D194 + daily control) | 147 |
+| S5 (D196) | 20 |
+| S6 reversal line (D197 + D198 + D199) | 60 |
+| S6 global imbalance (D201) | 12 |
+| S6 local imbalance (D202) | 20 |
+| **Total on one hypothesis** | **259** |
+
+Never reset, as the plan requires. Anything that reuses these sensors inherits the count.
+
+Adjacent and separately counted: **D195**, the volatility-estimator gate — 16 looks — which
+asked whether finer data gives a better *estimate* rather than a better signal. It failed its
+own 30% floor and is recorded in its own document.
+
+## What is closed, and what is not
+
+**Closed:** price-derived terrain as a source of directional or reversal signal on this data.
+S1 at any resolution (D194), the S6 reversal line (D200), the S6 map entirely (D203).
+
+**Not closed:** the components, several of which are pinned by test against older
+implementations and are reusable — the confirmed-pivot detector and its D173 lag, the
+era-normalised volume weighting, the log-price kernel, the rolling ATR, the null harnesses,
+and the position-series equity path. Nor is anything here a claim about supply and demand as
+a concept; it is a result about these maps, on these bars, in this decade.
+
+A different data source, a different claim, or a genuinely new construction starts a new
+document and a new ledger, with this one disclosed.

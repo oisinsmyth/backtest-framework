@@ -1,6 +1,9 @@
 # TERRAIN_IMPLEMENTATION_PLAN.md — Work-package plan for TERRAIN_MODEL.md
 
 ## Status and prerequisites
+
+**PROGRAMME CLOSED, 2026-08-24.** WP3-WP8 never ran and will not. S1 was closed at any resolution by D194, the S6 reversal line by D200, and the S6 map entirely by D203. The final report and the cumulative 259-look ledger are the last section of `TERRAIN_RESULTS.md`. What follows is the plan as written and is retained for the record, not as live work.
+
 Companion to TERRAIN_MODEL.md (the spec); this doc is the build plan. Phase 3 gating still applies: WP2 onward must not start until the Phase 1 long baseline is accepted. **Exception: WP0 (intraday data brick) is independently justified by execution modelling and may be built any time after the Phase 1 session.** Each work package (WP) is sized for one focused Claude Code session, ends with an acceptance gate, and must leave the repo green (all tests passing) — no WP starts while a previous WP's gate is unmet. Ground rules from DESIGN_DECISIONS.md, VERIFICATION_SCHEME.md, and the multiplicity restrictions in TERRAIN_MODEL.md apply throughout and override anything here if in conflict.
 
 **REVISION NOTE (post data-source research, Aug 2026):** Revised in step with TERRAIN_MODEL.md. Changes: WP3 rebuilt around Coin Metrics Community anchor + self-computed URPD from Dune UTXO data (point-in-time-correct, free); WP8 redefined as a diagnostics/risk-context channel — S4 is OUT of fusion permanently; MVRV Z-score supervisory gate added to WP7's candidate list; data-immutability rule added to cross-cutting rules; priors updated (S1 lead; S3 open hypothesis); terrain is BTC-first (ETH on S1+S2 only until S3 earns extension).
