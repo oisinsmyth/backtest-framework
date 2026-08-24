@@ -347,3 +347,206 @@ def positions(
 def crossings(position: Sequence[float]) -> int:
     """Number of bars on which the position changed — the turnover count H7 predicts."""
     return sum(1 for a, b in zip(position, position[1:]) if a != b)
+
+
+# --------------------------------------------------------------------------
+# Impulse MACD (LazyBear, 2015) — D218
+#
+# NOT a MACD variant. There is no difference of two EMAs of one series anywhere
+# in it. It is a zero-lag mid price measured against a slow smoothed high/low
+# channel, with a dead zone, and an SMA signal line on top. Structurally it is
+# closer to this project's Donchian breakout book than to the ladder above.
+#
+# The two exact properties that make it worth running, both pinned by test:
+#
+#   * `smma(x, n)` is Wilder smoothing — an EMA with alpha = 1/n, NOT the
+#     2/(n+1) convention used above. Effective period 2n-1 = 67 at n=34, and it
+#     lags a linear ramp by exactly (n-1)*b = 33b.
+#   * `zlema = 2*EMA1 - EMA2` has centre of mass EXACTLY ZERO: EMA1 lags a ramp
+#     by (n-1)/2 and EMA2 by (n-1), so the combination lags by
+#     2*(n-1)/2 - (n-1) = 0. The name is accurate.
+#
+# So on constant drift b with no bar range, mi = c_t and hi = c_t - 33b, giving
+# **md = 33b** — the same shape as `macd = 7b` above — and since SMA(md, 9)
+# converges to 33b as well, **sh -> 0**.
+#
+# THE SAME LEVEL/ACCELERATION DECOMPOSITION, ON A CONSTRUCTION THAT SHARES NO
+# ARITHMETIC WITH MACD. `md` is a trend-LEVEL rule; `sh` is a trend-ACCELERATION
+# rule. That is why D218 is a replication of D217 rather than a new indicator.
+# --------------------------------------------------------------------------
+
+IMPULSE_LENGTH = 34
+IMPULSE_SIGNAL = 9
+
+
+def burn_in_for_alpha(alpha: float, residual: float = SEED_RESIDUAL) -> int:
+    """Bars until a worst-case seed difference decays below `residual` * price.
+
+    `burn_in_bars` above assumes alpha = 2/(n+1). Wilder smoothing uses 1/n, which
+    decays far more slowly, and hard-coding the wrong alpha here would understate
+    the burn-in by a factor of nearly three."""
+    if not 0.0 < alpha < 1.0:
+        raise ValueError(f"alpha must be in (0, 1), got {alpha}")
+    return math.ceil(math.log(residual) / math.log(1.0 - alpha))
+
+
+def _recurse(values: Sequence[float], alpha: float, seed_index: int, seed: float) -> list[float]:
+    out = [math.nan] * len(values)
+    if seed_index >= len(values):
+        return out
+    current = seed
+    out[seed_index] = current
+    for t in range(seed_index + 1, len(values)):
+        current += alpha * (values[t] - current)
+        out[t] = current
+    return out
+
+
+def smma(values: Sequence[float], window: int) -> tuple[float, ...]:
+    """Wilder's smoothed moving average, SMA-seeded — the Pine `calc_smma`.
+
+    `s[t] = (s[t-1]*(n-1) + x[t]) / n` is algebraically `s + (1/n)(x - s)`, i.e.
+    an EMA with alpha = 1/n. Seeded with the simple mean of the first `n` values
+    at index `n-1`, which is what Pine's `na(smma[1]) ? sma(src, len)` does on the
+    first bar where the window is full."""
+    if window < 2:
+        raise ValueError(f"window must be >= 2, got {window}")
+    if len(values) < window:
+        return tuple([math.nan] * len(values))
+    seed = statistics.fmean(values[:window])
+    return tuple(_recurse(values, 1.0 / window, window - 1, seed))
+
+
+def zlema(values: Sequence[float], window: int) -> tuple[float, ...]:
+    """Zero-lag EMA — the Pine `calc_zlema`: `e1 + (e1 - e2)` where `e2 = ema(e1)`.
+
+    Both legs use alpha = 2/(n+1) and the SMA seed this module already uses. `e2`
+    cannot start until `e1` has `n` values of its own, so the result first exists
+    at index `2(n-1)` — 66 bars at n=34, before any burn-in."""
+    if window < 2:
+        raise ValueError(f"window must be >= 2, got {window}")
+    n = len(values)
+    if n < 2 * window - 1:
+        return tuple([math.nan] * n)
+    alpha = _alpha(window)
+    e1 = _recurse(values, alpha, window - 1, statistics.fmean(values[:window]))
+    second_seed = 2 * (window - 1)
+    e2 = _recurse(e1, alpha, second_seed, statistics.fmean(e1[window - 1 : 2 * window - 1]))
+    return tuple(
+        math.nan if math.isnan(e2[t]) else 2.0 * e1[t] - e2[t] for t in range(n)
+    )
+
+
+def _sma(values: Sequence[float], window: int) -> tuple[float, ...]:
+    out = [math.nan] * len(values)
+    for t in range(len(values)):
+        chunk = values[t - window + 1 : t + 1]
+        if len(chunk) == window and not any(v != v for v in chunk):
+            out[t] = statistics.fmean(chunk)
+    return tuple(out)
+
+
+@dataclass(frozen=True)
+class ImpulseSeries:
+    """Impulse MACD and its parts, aligned 1:1 with the input bars."""
+
+    md: tuple[float, ...]
+    signal: tuple[float, ...]
+    histogram: tuple[float, ...]
+    mi: tuple[float, ...]
+    hi: tuple[float, ...]
+    lo: tuple[float, ...]
+    mid: tuple[float, ...]
+    """`smma(close, length)` — the channel collapsed to one average. Not part of the
+    published indicator; it is the I3 control that deletes the dead zone."""
+    length: int
+    signal_window: int
+
+    @property
+    def first_md_index(self) -> int:
+        return 2 * (self.length - 1)
+
+    @property
+    def first_signal_index(self) -> int:
+        return self.first_md_index + self.signal_window - 1
+
+
+def impulse_macd_series(
+    bars: Sequence[TimestampedBar],
+    length: int = IMPULSE_LENGTH,
+    signal: int = IMPULSE_SIGNAL,
+) -> ImpulseSeries:
+    """Impulse MACD as published, plus the one extra series the I3 control needs."""
+    if length < 2 or signal < 2:
+        raise ValueError(f"windows must be >= 2, got length={length} signal={signal}")
+    highs = [b.bar.high for b in bars]
+    lows = [b.bar.low for b in bars]
+    closes = [b.bar.close for b in bars]
+    hlc3 = [(h + lo + c) / 3.0 for h, lo, c in zip(highs, lows, closes)]
+
+    hi = smma(highs, length)
+    lo = smma(lows, length)
+    mid = smma(closes, length)
+    mi = zlema(hlc3, length)
+
+    md: list[float] = []
+    for m, h, low in zip(mi, hi, lo):
+        if m != m or h != h or low != low:
+            md.append(math.nan)
+        elif m > h:
+            md.append(m - h)
+        elif m < low:
+            md.append(m - low)
+        else:
+            md.append(0.0)  # the dead zone — a stated value, not a missing one
+
+    sig = _sma(md, signal)
+    hist = tuple(
+        math.nan if (a != a or b != b) else a - b for a, b in zip(md, sig)
+    )
+    return ImpulseSeries(tuple(md), sig, hist, mi, hi, lo, mid, length, signal)
+
+
+def impulse_warm_up_bars(
+    length: int = IMPULSE_LENGTH,
+    signal: int = IMPULSE_SIGNAL,
+    *,
+    include_burn_in: bool = True,
+) -> int:
+    """First index at which an Impulse MACD score may be acted on.
+
+    The Wilder legs dominate and they dominate badly: alpha = 1/34 decays so slowly
+    that the seed takes **926 bars** to become irrelevant at 1e-12 of price, against
+    360 for the 26-period EMA above. Total warm-up is 1,000 bars — about four years
+    of daily data — and that is a real property of the indicator worth knowing
+    before anyone runs it on a short series."""
+    seeded = 2 * (length - 1) + (signal - 1)
+    if not include_burn_in:
+        return seeded
+    return seeded + max(burn_in_for_alpha(1.0 / length), burn_in_for_alpha(_alpha(length)))
+
+
+# The three rungs. I1 and I2 read the SAME ImpulseSeries, for the same reason the
+# MACD rungs above do: nestedness has to be structural or it drifts.
+
+
+def impulse_signal_score(series: ImpulseSeries) -> tuple[float, ...]:
+    """RUNG I1 — `sh = md - sma(md, 9)`. Trend ACCELERATION (kernel sums to zero)."""
+    return series.histogram
+
+
+def impulse_band_score(series: ImpulseSeries) -> tuple[float, ...]:
+    """RUNG I2 — `md` itself: the band state, dead zone included.
+
+    `md > 0` is exactly `mi > hi` and `md < 0` is exactly `mi < lo`; inside the
+    channel it is exactly `0.0`, so a sign rule stands aside there rather than
+    guessing. Trend LEVEL."""
+    return series.md
+
+
+def impulse_no_deadzone_score(series: ImpulseSeries) -> tuple[float, ...]:
+    """RUNG I3 — `mi - smma(close, length)`: I2 with the channel collapsed to its
+    midpoint, so the ONLY difference between I2 and I3 is the dead zone."""
+    return tuple(
+        math.nan if (m != m or c != c) else m - c for m, c in zip(series.mi, series.mid)
+    )

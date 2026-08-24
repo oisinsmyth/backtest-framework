@@ -10,6 +10,43 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D218 — Impulse MACD, 2026-08-24)
+- Impulse MACD (LazyBear) in `research/macd.py`: `smma` (Wilder, alpha = 1/n), `zlema`
+  (`2*EMA1 - EMA2`, centre of mass exactly zero), `impulse_macd_series` and the three rung
+  scores. Deliberately in the same module as the D217 ladder so the two indicator families
+  stay pinned together.
+- `scripts/run_impulse_macd.py` + `data/impulse_macd_summary.json` + a D218 section in
+  `MACD_RESULTS.md`. The runner **imports the D217 runner** rather than restating its cost
+  path, portfolio arithmetic, nulls or DSR machinery — D212 is why — and a test asserts by
+  identity that it has not defined its own copies.
+- `tests/unit/test_impulse_macd.py` (33) and `tests/unit/test_impulse_ladder.py` (16).
+
+### Result (D218)
+- **D217's mechanism replicates, and the clean read is stronger than the headline delta.**
+  I1−I2 = +0.628 long-short against D217's +0.285, but **I1−C ≈ 0** (−0.038 to +0.008): a
+  Wilder channel, a zero-lag mid and a dead zone buy nothing over `EMA(12)−EMA(26)`. Two
+  acceleration rules from unrelated arithmetic agree to within 0.04 Sharpe while both level
+  counterparts are dead.
+- The level rung is **anti-predictive**, not merely dead: −0.265 Sharpe at the 0.0th
+  percentile of its own rotation null.
+- The dead zone hurts **both** metrics — the indicator's most distinctive feature is its
+  most useless one.
+- Best cell +0.658 (the highest this project has produced on this fixture) fails A, D and G.
+  **0 of 16 clear; the pre-registered stop applies.**
+- Verdict floor +1.420 at 45,803 looks, driven by the inherited prior rather than this
+  study: **no arm anyone runs on this universe can clear it.** The fixture is exhausted.
+
+### Fixed (D218)
+- Hurdle D now names **both** metrics before the run (Sharpe AND dividend-adjusted total
+  return, both required), which is the design-time fix for the gap D217 had to disclose in
+  an addendum. It bites immediately: the best cell beats buy-and-hold on Sharpe at a third
+  of the drawdown and loses 10 points of money.
+- Recorded a real defect in the published indicator: an SMA seed matches an EMA's steady
+  state only at `alpha = 2/(n+1)`, and Wilder smoothing uses `1/n`, so Impulse MACD starts
+  16.5 slopes from its own steady state and needs **926 bars** to forget it — about four
+  years of daily data. Pinned by
+  `test_the_sma_seed_is_exact_for_the_macd_ema_and_NOT_for_wilder`.
+
 ### Added (D217 — the MACD crossover ladder, 2026-08-24)
 - `src/backtest_framework/research/macd.py` — the first EMA in this codebase, with the seed
   convention stated rather than assumed (SMA-seeded at `slow-1`, each leg over its own

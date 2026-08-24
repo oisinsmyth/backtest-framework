@@ -393,6 +393,29 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D218, Impulse MACD (opened and closed 2026-08-24)
+
+A user-supplied indicator that turned out to be a test of D217 rather than a new question.
+Record `docs/decisions/D218-the-impulse-macd-replication.md`, ledger `MACD_RESULTS.md`.
+
+- [x] Spec read from the published Pine and restated in the record before any code.
+- [x] The algebra first: `smma` is Wilder (alpha = 1/n, 33b lag), `zlema` has centre of mass
+      exactly zero, so `md = 33b` and `sh -> 0` — the same level/acceleration split D217
+      found, on a construction sharing no arithmetic with MACD.
+- [x] Four rungs isolating the signal line, the dead zone, and D217's own R1 as control.
+- [x] **J2 confirmed**: the replication holds in sign. **And the clean read is better**:
+      I1 − C ≈ 0, so the two acceleration rungs are interchangeable and the result is about
+      acceleration versus level rather than about either indicator.
+- [x] J3 and J5 falsified: the delta is twice D217's (because the level rung is worse, not
+      because the top rung is better), and the dead zone hurts both metrics.
+- [x] 0 of 16 clear. Verdict floor +1.420 at 45,803 looks.
+
+**The standing conclusion about this fixture:** no arm anyone runs on the 57-ETF universe can
+clear +1.42, and the inherited prior rather than any new study is what put it there. Any
+further work on the acceleration-versus-level result moves to unmined data — the crypto daily
+universe — and tests `acceleration − level` rather than a named indicator, using whichever
+construction is cheapest to compute.
+
 ## Next (queued, not started) — Phase G closing
 
 - [ ] **Writeup polish**: expand the `[TODO prose]` sections (pairs-trading

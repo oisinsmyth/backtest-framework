@@ -203,6 +203,140 @@ Stage 2 — the costed engine verdict — **does not run.** D217's pre-registere
 
 **Reading.** The signal line is worth +0.285 Sharpe long-short and +0.209 long-flat against a +0.10 hurdle, while turning over 2.35x as much as the rung it sits on. The two-EMA difference is worth +0.163 and +0.129 over flat momentum at the same centre of mass. Those four numbers are the study; everything above them is the apparatus that makes them mean something.
 
+## D218 — Impulse MACD, and whether D217's mechanism replicates
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_impulse_macd.py` (offline, deterministic, seed 0)
+
+Impulse MACD is **not a MACD variant**. There is no difference of two EMAs of one series anywhere in it: it is a zero-lag mid price against a slow smoothed high/low channel, with a dead zone. But the algebra puts it in the same shape D217 worked in — `smma` is Wilder smoothing (alpha = 1/n, lagging a ramp by exactly 33b) and `zlema = 2*EMA1 - EMA2` has centre of mass **exactly zero** — so on constant drift **`md = 33b`** where D217's **`macd = 7b`**, and `sh -> 0` exactly as D217's histogram does. `md` is a trend-LEVEL rule; `sh` is a trend-ACCELERATION rule. **That makes this a replication of D217's finding on a construction that shares no arithmetic with it.**
+
+Warm-up is **1000 bars** — about four years of daily data — because Wilder smoothing at alpha = 1/34 needs 926 bars for its seed to stop mattering, against 360 for a 26-period EMA. The SMA seed is exact for the 2/(n+1) convention and **not** for Wilder, and that asymmetry is the whole gap. Every arm, including the D217 control, starts on 2018-12-21 and runs to 2024-12-30 — 1515 live bars.
+
+### The ladder. 16 looks.
+
+| rung | book | gate | Sharpe | +div total | CAGR | maxDD | expo | rot. delta | pct |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|
+| I1 signal line | long_short | none | +0.363 | 39.88% | 5.74% | -19.22% | 96.85% | +0.445 | 84 |
+| I1 signal line | long_short | 200ma | +0.170 | 15.02% | 2.36% | -14.14% | 52.98% | -0.186 | 32 |
+| I1 signal line | long_flat | none | +0.658 | 52.12% | 7.23% | -12.70% | 49.93% | +0.355 | 100 |
+| I1 signal line | long_flat | 200ma | +0.291 | 13.60% | 2.14% | -6.22% | 32.87% | -0.069 | 32 |
+| I2 band state | long_short | none | -0.265 | -17.19% | -3.09% | -30.30% | 88.10% | -0.766 | 0 |
+| I2 band state | long_short | 200ma | -0.196 | -12.41% | -2.18% | -26.81% | 78.39% | -0.718 | 0 |
+| I2 band state | long_flat | none | +0.129 | 14.34% | 2.25% | -15.28% | 54.64% | -0.262 | 0 |
+| I2 band state | long_flat | 200ma | +0.195 | 15.40% | 2.41% | -13.46% | 49.81% | -0.210 | 1 |
+| I3 no dead zone | long_short | none | -0.249 | -16.18% | -2.89% | -29.80% | 99.93% | -0.744 | 1 |
+| I3 no dead zone | long_short | 200ma | -0.164 | -10.08% | -1.75% | -25.09% | 84.86% | -0.657 | 0 |
+| I3 no dead zone | long_flat | none | +0.153 | 17.61% | 2.74% | -16.95% | 60.60% | -0.230 | 0 |
+| I3 no dead zone | long_flat | 200ma | +0.224 | 18.27% | 2.83% | -14.55% | 53.61% | -0.177 | 1 |
+| C MACD control | long_short | none | +0.401 | 42.24% | 6.04% | -20.48% | 99.93% | +0.547 | 88 |
+| C MACD control | long_short | 200ma | +0.212 | 17.13% | 2.67% | -16.89% | 52.01% | -0.112 | 39 |
+| C MACD control | long_flat | none | +0.649 | 53.21% | 7.35% | -13.55% | 50.87% | +0.361 | 100 |
+| C MACD control | long_flat | 200ma | +0.387 | 16.07% | 2.51% | -6.24% | 32.32% | +0.039 | 64 |
+| **buy-and-hold** | — | — | **+0.333** | **62.59%** | 8.42% | -34.81% | 100.00% | — | — |
+
+**Hurdle A — the deltas. J2 is the whole study.**
+
+| book | gate | I1 | I2 | I3 | C | I1−I2 (signal) | I2−I3 (dead zone) | I1−C |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| long_short | none | +0.363 | -0.265 | -0.249 | +0.401 | **+0.628** | **-0.016** | -0.038 |
+| long_short | 200ma | +0.170 | -0.196 | -0.164 | +0.212 | **+0.366** | **-0.032** | -0.042 |
+| long_flat | none | +0.658 | +0.129 | +0.153 | +0.649 | **+0.529** | **-0.024** | +0.008 |
+| long_flat | 200ma | +0.291 | +0.195 | +0.224 | +0.387 | **+0.096** | **-0.029** | -0.096 |
+
+**The replication test.** D217 measured its own signal-line delta at **+0.285** long-short and **+0.209** long-flat. The same delta here, on an indicator sharing no arithmetic with it, is **+0.628** and **+0.529**. Same sign: **yes**. Clears the +0.10 hurdle: **yes**.
+
+**A caveat on the magnitude, before anyone quotes it.** A large I1−I2 delta can be manufactured two ways: by I1 being good, or by I2 being BAD. I2 here sits at the **0th percentile of its own rotation null** on three of four cells — the band state is not noise, it is actively anti-predictive — so part of the +0.628 is I2 being wrong rather than I1 being right. The clean read is `I1 − C`, which compares this indicator's acceleration rung against D217's on the same bars: **that delta is approximately zero**. The replication is real in SIGN; its MAGNITUDE is inflated by how badly the level rung does here.
+
+**The dead zone, and the exposure trap it walks straight into.**
+
+| book | gate | I2 expo | I3 expo | I2 +div total | I3 +div total | Sharpe I2−I3 |
+|---|---|---:|---:|---:|---:|---:|
+| long_short | none | 88.10% | 99.93% | -17.19% | -16.18% | -0.016 |
+| long_short | 200ma | 78.39% | 84.86% | -12.41% | -10.08% | -0.032 |
+| long_flat | none | 54.64% | 60.60% | 14.34% | 17.61% | -0.024 |
+| long_flat | 200ma | 49.81% | 53.61% | 15.40% | 18.27% | -0.029 |
+
+The dead zone's only mechanism is standing aside, so it buys Sharpe by holding less and pays for it in money. D217's addendum documented that trade exactly; here it is designed into the indicator rather than emerging from a filter, which is why hurdle D names **both** metrics up front.
+
+### The fill bracket
+
+| rung | book | gate | Sharpe lag 1 | Sharpe lag 2 | change |
+|---|---|---|---:|---:|---:|
+| I1 signal line | long_short | none | +0.363 | +0.294 | -0.068 |
+| I1 signal line | long_short | 200ma | +0.170 | +0.102 | -0.068 |
+| I1 signal line | long_flat | none | +0.658 | +0.607 | -0.050 |
+| I1 signal line | long_flat | 200ma | +0.291 | +0.228 | -0.063 |
+| I2 band state | long_short | none | -0.265 | -0.275 | -0.010 |
+| I2 band state | long_short | 200ma | -0.196 | -0.225 | -0.030 |
+| I2 band state | long_flat | none | +0.129 | +0.131 | +0.002 |
+| I2 band state | long_flat | 200ma | +0.195 | +0.184 | -0.011 |
+| I3 no dead zone | long_short | none | -0.249 | -0.335 | -0.087 |
+| I3 no dead zone | long_short | 200ma | -0.164 | -0.243 | -0.079 |
+| I3 no dead zone | long_flat | none | +0.153 | +0.102 | -0.051 |
+| I3 no dead zone | long_flat | 200ma | +0.224 | +0.217 | -0.006 |
+| C MACD control | long_short | none | +0.401 | +0.316 | -0.086 |
+| C MACD control | long_short | 200ma | +0.212 | +0.121 | -0.091 |
+| C MACD control | long_flat | none | +0.649 | +0.593 | -0.056 |
+| C MACD control | long_flat | 200ma | +0.387 | +0.263 | -0.124 |
+
+### Sensitivity — `lengthMA`. 4 looks.
+
+**These levels are not comparable to the ladder above.** `lengthMA = 55` needs a 1,506-bar burn-in of its own, so this block starts at bar 1622 rather than 1000 and runs on 893 live bars — a shorter and later span. Only the comparison WITHIN the block is meaningful, and the question it answers is narrow: is 34 special?
+
+| rung | lengthMA | Sharpe |
+|---|---:|---:|
+| I1 signal line | 21 | +0.124 |
+| I2 band state | 21 | -0.542 |
+| I1 signal line **(published)** | 34 | +0.010 |
+| I2 band state **(published)** | 34 | -0.755 |
+| I1 signal line | 55 | -0.132 |
+| I2 band state | 55 | -0.343 |
+
+### Multiplicity — and this study does not get a fresh ledger
+
+D217 argued a fresh ledger on three grounds: different fixture, different claim family, a sensor that did not exist here. **None of them hold now.** Same fixture, same claim family, close-cousin sensors — so D217's 42 are inherited in full.
+
+| block | looks |
+|---|---:|
+| the ladder — 4 rungs x 2 books x {gate off, on} | 16 |
+| sensitivity — 3 lengths x 2 rungs, minus 2 already counted | 4 |
+| **fresh, D218 only** | **20** |
+| inherited from D217 | 42 |
+
+| count | N | SR0 (per-period) | SR0 (annualised) |
+|---|---:|---:|---:|
+| combined_with_disclosed **(verdict)** | 45,803 | 0.08946 | 1.420 |
+| fresh_d218_only | 20 | 0.04032 | 0.640 |
+| with_inherited_d217 | 62 | 0.05001 | 0.794 |
+
+62 new looks against 45,741 moves the floor by almost nothing, and that is the point rather than a footnote: **this fixture is exhausted.** The raw registry row ceiling is 129,286 and is not used as an N (D98/D116/D126/D142).
+
+### The verdict
+
+| cell | Sharpe | +div total | A | B | C | D both | F | G | survivor |
+|---|---:|---:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| `I1_signal/long_short/none` | +0.363 | 39.88% | no | no | no | yes | yes | no | no |
+| `I1_signal/long_short/200ma` | +0.170 | 15.02% | no | no | no | yes | no | no | no |
+| `I1_signal/long_flat/none` | +0.658 | 52.12% | no | yes | yes | no | yes | no | no |
+| `I1_signal/long_flat/200ma` | +0.291 | 13.60% | no | no | no | no | yes | no | no |
+| `I2_band/long_short/none` | -0.265 | -17.19% | no | no | no | no | yes | no | no |
+| `I2_band/long_short/200ma` | -0.196 | -12.41% | no | no | no | no | yes | no | no |
+| `I2_band/long_flat/none` | +0.129 | 14.34% | no | no | no | no | yes | no | no |
+| `I2_band/long_flat/200ma` | +0.195 | 15.40% | no | no | no | no | yes | no | no |
+| `I3_no_deadzone/long_short/none` | -0.249 | -16.18% | no | no | no | no | yes | no | no |
+| `I3_no_deadzone/long_short/200ma` | -0.164 | -10.08% | no | no | no | no | yes | no | no |
+| `I3_no_deadzone/long_flat/none` | +0.153 | 17.61% | no | no | no | no | yes | no | no |
+| `I3_no_deadzone/long_flat/200ma` | +0.224 | 18.27% | no | no | no | no | yes | no | no |
+| `C_macd_signal/long_short/none` | +0.401 | 42.24% | no | no | yes | yes | yes | no | no |
+| `C_macd_signal/long_short/200ma` | +0.212 | 17.13% | no | no | no | yes | no | no | no |
+| `C_macd_signal/long_flat/none` | +0.649 | 53.21% | no | yes | yes | no | yes | no | no |
+| `C_macd_signal/long_flat/200ma` | +0.387 | 16.07% | no | no | no | no | yes | no | no |
+
+**0 of 16 cells clear every hurdle.**
+
+D218's pre-registered stop applies and the study closes here as a reportable negative.
+
+**Reading.** D217's acceleration-beats-level result **REPLICATES** here: I1-I2 is +0.628 long-short and +0.529 long-flat, against D217's +0.285 and +0.209 on an indicator sharing no arithmetic with it. The dead zone is worth -0.016 Sharpe while cutting exposure from 99.93% to 88.10% — hurting BOTH metrics, not trading one for the other. And Impulse MACD beats D217's own best rung by -0.038: the whole apparatus of a Wilder channel, a zero-lag mid and a dead zone buys nothing over a plain 12/26/9 signal line. Those numbers are the study; everything above them is what makes them mean something.
+
 ---
 
 ### Parking lot
