@@ -55,6 +55,22 @@ published at <https://claude.ai/code/artifact/7b93befb-9689-4efa-bf95-378a0fafd9
 examples are chosen by a rule fixed before any outcome was read, and every number on the
 page is pinned against its source artifact by the test suite.
 
+**The eighth study is [`MACD_RESULTS.md`](MACD_RESULTS.md)** — the MACD crossover, the
+most widely taught technical strategy there is, framed so it could not confirm itself. The
+claim under test was never whether MACD makes money but whether the **signal line adds
+anything over the zero-line cross** — which is identically a 12/26 EMA crossover — and
+whether that adds anything over flat momentum at the same centre of mass. Three strictly
+nested rungs on the frozen 57-ETF daily universe (D217).
+
+It produced this project's first genuinely positive result, and then killed it. The signal
+line clears the hurdle by +0.285 Sharpe and holds under a stricter fill; all eight
+zero-line cells in the declared grid sit between −0.166 and +0.080, so the *level* rung is
+dead and the *acceleration* rung is not. The best cell clears **six of seven hurdles** —
+including buy-and-hold at half the drawdown — and fails only the deflated-Sharpe floor:
++0.334 at the fresh count of 42 looks, +0.638 at the verdict count of 45,783. A result that
+would have been publishable as a first study and is not publishable as the 45,783rd look.
+**0 of 12 cells clear everything, so the pre-registered stop fired and Stage 2 never ran.**
+
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
 anti-self-deception, composability, scope discipline) that generated every decision below,
