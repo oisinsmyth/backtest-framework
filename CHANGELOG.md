@@ -10,6 +10,15 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (the discretion audit and the close, 2026-08-24 — D211)
+- `scripts/run_structure_audit.py` + `data/structure_audit_summary.json` + the WP6 section
+  and the FINAL REPORT section of `STRUCTURE_RESULTS.md`.
+- **The structure programme is closed after 86 looks.** Across all 8 cells of the
+  pre-registered grid the largest rank correlation any feature reaches inside any
+  stop-width quintile is 0.10–0.15 against a bar of 0.2; stacking the filters helps at zero
+  cost in **0 of 8** cells; the base arm's zero-cost mean R never leaves +0.013 to +0.093.
+- WP5 never ran — D210 triggered the pre-registered stop.
+
 ### Fixed (the stop was on the wrong side of the trade, 2026-08-24 — D209)
 - `structure_setups.stop_price` now returns `leg.start_price`, the extreme the impulse came
   FROM. It previously used `leg.end_price`, which for a long sits ABOVE the entry. The

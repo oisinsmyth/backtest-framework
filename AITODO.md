@@ -345,7 +345,11 @@ entries and fading lost in every form terrain measured.
       not match another count, not by a test. WP2's friction table corrected and one
       finding reversed.
 - [~] **WP5 — costed verdict: DOES NOT RUN.** D210 triggered the pre-registered stop.
-- [ ] **WP6 — the discretion audit** and the final report.
+- [x] **WP6 — the discretion audit and the close (D211).** The verdict is not a
+      property of one cell: across all 8 grid cells the largest rank correlation any
+      feature reaches inside any stop-width quintile is 0.10-0.15 against a bar of 0.2,
+      and stacking the filters helps at zero cost in **0 of 8**. **Programme CLOSED at
+      86 looks.** Final report is the last section of `STRUCTURE_RESULTS.md`.
 
 ## Next (queued, not started) — Phase G closing
 

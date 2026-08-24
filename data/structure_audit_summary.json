@@ -1,0 +1,242 @@
+{
+  "produced": "2026-08-24",
+  "fixture": "crypto_binance_15m_raw.csv.gz",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ],
+  "grid": {
+    "k": [
+      2,
+      3
+    ],
+    "touch_atr": [
+      0.5,
+      1.0
+    ]
+  },
+  "primary": {
+    "k": 2,
+    "touch_atr": 0.5
+  },
+  "cost_bps": 40.0,
+  "runs": {
+    "BTCUSDT": {
+      "cells": {
+        "k2|touch0.5": {
+          "k": 2,
+          "touch_atr": 0.5,
+          "n_setups": 3875,
+          "n_stacked_setups": 120,
+          "base": {
+            "n": 3025,
+            "zero_cost_mean_r": 0.01333524258755924,
+            "costed_median_r": -1.3785800918218067,
+            "share_untradeable": 0.44099173553719007
+          },
+          "stacked": {
+            "n": 118,
+            "zero_cost_mean_r": -0.03759546891943717,
+            "costed_median_r": -1.801331947602661
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.0705484509817355,
+            "gap_distance_atr": 0.10059743266711622,
+            "atr_to_golden": 0.1286604421671276,
+            "rsi": 0.03600652121704469,
+            "bars_waited": 0.053398630282446666
+          },
+          "max_rho_any_feature": 0.1286604421671276,
+          "stacking_helps_at_zero_cost": false
+        },
+        "k2|touch1.0": {
+          "k": 2,
+          "touch_atr": 1.0,
+          "n_setups": 3875,
+          "n_stacked_setups": 244,
+          "base": {
+            "n": 3025,
+            "zero_cost_mean_r": 0.01333524258755924,
+            "costed_median_r": -1.3785800918218067,
+            "share_untradeable": 0.44099173553719007
+          },
+          "stacked": {
+            "n": 239,
+            "zero_cost_mean_r": -0.02135684136389718,
+            "costed_median_r": -1.593183098591549
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.0705484509817355,
+            "gap_distance_atr": 0.10059743266711622,
+            "atr_to_golden": 0.1286604421671276,
+            "rsi": 0.03600652121704469,
+            "bars_waited": 0.053398630282446666
+          },
+          "max_rho_any_feature": 0.1286604421671276,
+          "stacking_helps_at_zero_cost": false
+        },
+        "k3|touch0.5": {
+          "k": 3,
+          "touch_atr": 0.5,
+          "n_setups": 2808,
+          "n_stacked_setups": 67,
+          "base": {
+            "n": 2376,
+            "zero_cost_mean_r": 0.01659785540828682,
+            "costed_median_r": -1.2259705334772137,
+            "share_untradeable": 0.3926767676767677
+          },
+          "stacked": {
+            "n": 66,
+            "zero_cost_mean_r": -0.20386628957891523,
+            "costed_median_r": -1.7209607492649746
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.0996613762564327,
+            "gap_distance_atr": 0.08630821396005592,
+            "atr_to_golden": 0.07230610726856318,
+            "rsi": 0.06635007609989677,
+            "bars_waited": 0.10306729797925131
+          },
+          "max_rho_any_feature": 0.10306729797925131,
+          "stacking_helps_at_zero_cost": false
+        },
+        "k3|touch1.0": {
+          "k": 3,
+          "touch_atr": 1.0,
+          "n_setups": 2808,
+          "n_stacked_setups": 131,
+          "base": {
+            "n": 2376,
+            "zero_cost_mean_r": 0.01659785540828682,
+            "costed_median_r": -1.2259705334772137,
+            "share_untradeable": 0.3926767676767677
+          },
+          "stacked": {
+            "n": 128,
+            "zero_cost_mean_r": -0.1369443836449326,
+            "costed_median_r": -1.5641899870771114
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.0996613762564327,
+            "gap_distance_atr": 0.08630821396005592,
+            "atr_to_golden": 0.07230610726856318,
+            "rsi": 0.06635007609989677,
+            "bars_waited": 0.10306729797925131
+          },
+          "max_rho_any_feature": 0.10306729797925131,
+          "stacking_helps_at_zero_cost": false
+        }
+      }
+    },
+    "ETHUSDT": {
+      "cells": {
+        "k2|touch0.5": {
+          "k": 2,
+          "touch_atr": 0.5,
+          "n_setups": 3753,
+          "n_stacked_setups": 106,
+          "base": {
+            "n": 2999,
+            "zero_cost_mean_r": 0.09275184644199207,
+            "costed_median_r": -1.1847290322580648,
+            "share_untradeable": 0.3217739246415472
+          },
+          "stacked": {
+            "n": 104,
+            "zero_cost_mean_r": -0.10176679180502247,
+            "costed_median_r": -1.7509215914736063
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.06356619553684054,
+            "gap_distance_atr": 0.09058318689160058,
+            "atr_to_golden": 0.13034999897013594,
+            "rsi": 0.07302474690223462,
+            "bars_waited": 0.052108462996252734
+          },
+          "max_rho_any_feature": 0.13034999897013594,
+          "stacking_helps_at_zero_cost": false
+        },
+        "k2|touch1.0": {
+          "k": 2,
+          "touch_atr": 1.0,
+          "n_setups": 3753,
+          "n_stacked_setups": 239,
+          "base": {
+            "n": 2999,
+            "zero_cost_mean_r": 0.09275184644199207,
+            "costed_median_r": -1.1847290322580648,
+            "share_untradeable": 0.3217739246415472
+          },
+          "stacked": {
+            "n": 232,
+            "zero_cost_mean_r": 0.010648563399284171,
+            "costed_median_r": -1.4683311867390683
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.06356619553684054,
+            "gap_distance_atr": 0.09058318689160058,
+            "atr_to_golden": 0.13034999897013594,
+            "rsi": 0.07302474690223462,
+            "bars_waited": 0.052108462996252734
+          },
+          "max_rho_any_feature": 0.13034999897013594,
+          "stacking_helps_at_zero_cost": false
+        },
+        "k3|touch0.5": {
+          "k": 3,
+          "touch_atr": 0.5,
+          "n_setups": 2717,
+          "n_stacked_setups": 45,
+          "base": {
+            "n": 2279,
+            "zero_cost_mean_r": 0.06454424369140917,
+            "costed_median_r": -0.8856198347107394,
+            "share_untradeable": 0.26546731022378234
+          },
+          "stacked": {
+            "n": 44,
+            "zero_cost_mean_r": -0.3373448612617778,
+            "costed_median_r": -1.7595761969375516
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.11695939467776251,
+            "gap_distance_atr": 0.1253119041333093,
+            "atr_to_golden": 0.14898472768186297,
+            "rsi": 0.06842503736250259,
+            "bars_waited": 0.05008652354137773
+          },
+          "max_rho_any_feature": 0.14898472768186297,
+          "stacking_helps_at_zero_cost": false
+        },
+        "k3|touch1.0": {
+          "k": 3,
+          "touch_atr": 1.0,
+          "n_setups": 2717,
+          "n_stacked_setups": 137,
+          "base": {
+            "n": 2279,
+            "zero_cost_mean_r": 0.06454424369140917,
+            "costed_median_r": -0.8856198347107394,
+            "share_untradeable": 0.26546731022378234
+          },
+          "stacked": {
+            "n": 134,
+            "zero_cost_mean_r": -0.1832567901514611,
+            "costed_median_r": -1.381657548125641
+          },
+          "max_rho_within_stop_quintiles": {
+            "fib_depth": 0.11695939467776251,
+            "gap_distance_atr": 0.1253119041333093,
+            "atr_to_golden": 0.14898472768186297,
+            "rsi": 0.06842503736250259,
+            "bars_waited": 0.05008652354137773
+          },
+          "max_rho_any_feature": 0.14898472768186297,
+          "stacking_helps_at_zero_cost": false
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 192.0
+}

@@ -1,7 +1,9 @@
 # STRUCTURE_MODEL.md — mechanising a discretionary price-action strategy
 
-**Status:** Pre-registration. Written and committed BEFORE any detector exists and before
-any run. Recorded as D204.
+**Status:** Pre-registration, and the programme it governs is **CLOSED (D211, 2026-08-24,
+86 looks)**. Written and committed BEFORE any detector existed and before any run,
+recorded as D204, amended once by D207. Retained as written; the results are in
+`STRUCTURE_RESULTS.md`.
 
 Companion documents: `STRUCTURE_RESULTS.md` is the append-only results ledger and carries
 the multiplicity count. This document is the spec and does not change once code starts —
@@ -361,4 +363,4 @@ baseline-relative capped at moderate per Disclosure D4.
 - [x] WP3 — components against their nulls (D208)
 - [x] WP4 — marginal contribution (D209 correction, D210 result)
 - [~] WP5 — costed verdict: **DOES NOT RUN.** D210 triggered the pre-registered stop — no component clears the promotion criteria
-- [ ] WP6 — discretion audit and final report
+- [x] WP6 — discretion audit and final report (D211)

@@ -1,5 +1,8 @@
 # STRUCTURE_RESULTS.md — the structure programme's ledger
 
+**PROGRAMME CLOSED, 2026-08-24 (D211), after 86 looks.** The final report is the last
+section of this document. WP5 never ran — D210 triggered the pre-registered stop.
+
 **Append-only.** Every work package adds a dated section; nothing above is rewritten. This
 is the single results ledger `New Docs/STRUCTURE_MODEL.md` requires, and it carries the
 multiplicity count that feeds the deflated Sharpe if the programme reaches WP5.
@@ -48,7 +51,9 @@ because in that world the two studies are reading the same swing structure.
 | WP4 conditional on depth (post-hoc) | 10 |
 | WP4 conditional on stop width (post-hoc) | 10 |
 | WP4 ablation lattice | 16 |
-| **Total** | **78** |
+| WP5 costed verdict | **did not run** |
+| WP6 discretion audit (grid) | 8 |
+| **Total** | **86** |
 
 Never reset. Retired and failed cells count. Budget estimated in the plan at ~118 looks
 for the full programme; the estimate is not a licence and the actual count is what feeds
@@ -452,6 +457,170 @@ The zero-cost column is a **diagnostic and never a strategy** - D202's device fo
 | **WP4 total** | | **48** |
 
 Reading (b) was not pre-registered - D208 created the question it answers. It is counted in full rather than folded into (a), and like D208's depth-matched null it makes the verdict harsher rather than kinder.
+
+## WP6 - the discretion audit
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_audit.py` (offline, deterministic)
+
+The course's method is discretionary: a human decides what counts as a swing, how close is close enough, which gap matters. Mechanising it replaced those judgements with parameters, and this measures how much the answer depends on them. **If the sign flips across plausible parameterisations, the strategy is a judgement call wearing a rule's clothes.**
+
+| symbol | k | touch | setups | stacked | base zero-cost mean R | stacked zero-cost mean R | stacking helps? | max abs rho within stop quintiles |
+|---|---:|---:|---:|---:|---:|---:|:--:|---:|
+| `BTCUSDT` **(primary)** | 2 | 0.5 | 3,875 | 120 | +0.013 | -0.038 | no | 0.13 |
+| `BTCUSDT` | 2 | 1.0 | 3,875 | 244 | +0.013 | -0.021 | no | 0.13 |
+| `BTCUSDT` | 3 | 0.5 | 2,808 | 67 | +0.017 | -0.204 | no | 0.10 |
+| `BTCUSDT` | 3 | 1.0 | 2,808 | 131 | +0.017 | -0.137 | no | 0.10 |
+| `ETHUSDT` **(primary)** | 2 | 0.5 | 3,753 | 106 | +0.093 | -0.102 | no | 0.13 |
+| `ETHUSDT` | 2 | 1.0 | 3,753 | 239 | +0.093 | +0.011 | no | 0.13 |
+| `ETHUSDT` | 3 | 0.5 | 2,717 | 45 | +0.065 | -0.337 | no | 0.15 |
+| `ETHUSDT` | 3 | 1.0 | 2,717 | 137 | +0.065 | -0.183 | no | 0.15 |
+
+Per feature, the largest |rho| reached inside any stop-width quintile, across every cell of the grid:
+
+| symbol | cell | fib_depth | gap_distance_atr | atr_to_golden | rsi | bars_waited |
+|---|---|---:|---:|---:|---:|---:|
+| `BTCUSDT` | k2/touch0.5 | 0.07 | 0.10 | 0.13 | 0.04 | 0.05 |
+| `BTCUSDT` | k2/touch1.0 | 0.07 | 0.10 | 0.13 | 0.04 | 0.05 |
+| `BTCUSDT` | k3/touch0.5 | 0.10 | 0.09 | 0.07 | 0.07 | 0.10 |
+| `BTCUSDT` | k3/touch1.0 | 0.10 | 0.09 | 0.07 | 0.07 | 0.10 |
+| `ETHUSDT` | k2/touch0.5 | 0.06 | 0.09 | 0.13 | 0.07 | 0.05 |
+| `ETHUSDT` | k2/touch1.0 | 0.06 | 0.09 | 0.13 | 0.07 | 0.05 |
+| `ETHUSDT` | k3/touch0.5 | 0.12 | 0.13 | 0.15 | 0.07 | 0.05 |
+| `ETHUSDT` | k3/touch1.0 | 0.12 | 0.13 | 0.15 | 0.07 | 0.05 |
+
+### What the audit says
+
+**The verdict does not depend on the parameters.** Across all 8 cells of the pre-registered grid, the largest rank correlation any feature reaches inside any stop-width quintile ranges from **0.10 to 0.15**, against a promotion bar of 0.2. Not one cell produces a feature that would be promoted.
+
+**Stacking the filters helps at zero cost in 0 of 8 cells.** It never helps.
+
+**The base arm's zero-cost mean R ranges from +0.013 to +0.093** across the grid — indistinguishable from zero everywhere, in both signs, with no cell approaching the 27%-44% of trades that are untradeable at 40 bps. The strategy is not sensitive to its parameters because there is nothing there for a parameter to be sensitive to.
+
+**The one honest caveat about this audit:** a verdict that is stable because the effect is zero is a weaker demonstration than a verdict that is stable while an effect is present. This grid shows that the *absence* is robust. It cannot show that a present effect would have been, because there is none to test that way.
+
+### Multiplicity
+
+| grid re-runs of D210's two readings | 2 symbols x 4 cells | 8 |
+|---|---|---:|
+| **WP6 total** | | **8** |
+
+The primary cell is re-reported here rather than re-tested; it was already counted in WP4 and is not double-counted. The three non-primary cells per symbol are the new looks.
+
+## FINAL REPORT — the structure programme is closed after 86 looks
+
+**Produced:** 2026-08-24 · Recorded as D211.
+
+### The strategy, and what it turned out to be
+
+Five components, taught as a system: wait for a **change of character**, then enter the
+pullback where a **flipped level**, the **61.8% Fibonacci retracement** and a **fair value
+gap** stack up, filtered by **RSI**, with a stop past the swing extreme and a 5R target.
+
+| | what was claimed | what it measured |
+|---|---|---|
+| **C1** change of character | the trigger; a trend flip you can trade | BTC Sharpe +0.124 at the **66th percentile** of its rotation null; ETH −0.068 at the 44th. Fails the both-symbols rule (D208) |
+| **C2** the flipped level | support becomes resistance | **negative** against a matched placebo, on both symbols, matched or unmatched (D208) |
+| **C3** the golden ratio | 0.618 is special; "how the universe is coded" | ranks **4 of 8** against seven other numbers on the same legs, and **loses to 0.691 and 0.724** in 97%+ of paired bootstrap draws (D208) |
+| **C4** the fair value gap | a 3-bar imbalance price returns to | **+0.082 at the 100th percentile** — until matched on depth, where it becomes **+0.006 / −0.006** (D208) |
+| **C5** RSI, the control | a supporting filter | beat all three structural components, then collapsed with them (D208/D210) |
+
+And the unifying result: **not one of them predicts anything once leg size relative to ATR
+is held constant.** Inside stop-width quintiles the largest rank correlation any feature
+reaches, in any bucket, in any cell of the grid, is **0.15** against a promotion bar of 0.2
+(D210, D211).
+
+### The three findings that do not depend on any of that
+
+**1. The course's own arithmetic fails once costs exist.** It claims a 5R target breaks even
+at "two out of ten". Frictionless the true figure is 16.7%, so the claim is nearly right —
+and at 40 bps it is **22.3% to 28.4%**. A 20% hit rate at 5R loses money in every cell
+measured. This needed no backtest and does not depend on whether any component works
+(D206/D209).
+
+**2. Between 27% and 44% of the base arm's trades are untradeable outright.** Their 40 bps
+round trip costs at least their entire risk. A stop at a 15m swing extreme is simply close
+enough that crossing the spread twice is a material fraction of the whole trade (D210).
+
+**3. The confluence is a tax, not precision.** Risk is `(1 − retracement) × |leg span|`, so
+a deeper entry is a *tighter* stop. Stacking the filters moves median entry depth from 0.31
+to 0.54 and raises friction from **0.48R to 0.71R**. And at **zero cost** the fully-stacked
+arm earns −0.038R and −0.102R a trade against the base arm's +0.013R and +0.093R: stacking
+all four filters makes the strategy worse before costs are even considered (D209/D210).
+
+### What is closed, and what is not
+
+**Closed:** these five components, mechanised as `STRUCTURE_MODEL.md` defines them, on
+BTC/ETH 15m bars, as a source of tradeable directional signal. No further statistic, sizing
+rule, exit policy or threshold will be pre-registered on them.
+
+**Not closed:** the components themselves are reusable and several are pinned by test —
+the BOS/CHoCH state machine with its D173 lag, the fair-value-gap detector, the R-unit
+excursion, the depth-matched and stop-width-matched controls. Nor is this a claim about
+price action as a concept, or about the course's method as practised by a human. It is a
+result about **these definitions, on these bars, in this decade**.
+
+**The one thing this study cannot tell you** is whether the discretionary version works. The
+course's method is not the mechanised one, and a human drawing the lines is doing something
+this programme deliberately removed. A negative here does not refute them — and, more to the
+point, a positive would not have vindicated them either.
+
+### What outlives the programme
+
+Six things, most of them learned from defects rather than results.
+
+1. **A guard that drops bad input converts a wrong answer into a missing one** (D205, D206,
+   D209 — three times in six work packages). A mirrored state machine that produced no
+   bullish legs, an `if window:` that dropped 9% of setups, and a stop on the wrong side of
+   the trade that rejected 93% of them. Each was invisible to tests written over the outputs
+   the component still produced.
+2. **Count what a guard drops, and put the count where someone will compare it to another
+   count** (D209). The stop defect surfaced because the census said 120 stacked setups and
+   the lattice reported 2 trades. Not a test — two numbers that should have agreed.
+3. **Mutate the module when the suite passes first time** (D205). Two of six deliberate
+   mutations survived 43 green tests, one of them the pre-registered definition of a change
+   of character.
+4. **A scale-dependent quantity ranked across eras is an artifact generator** (D210, and
+   D187 before it). MFE as a fraction of entry price made `stop_atr` a candidate at
+   rho +0.56. In R units it is nothing.
+5. **When several features come back with suspiciously similar verdicts, correlate them
+   with each other before believing any of them** (D210). Three candidates, pairwise rank
+   correlation +0.79 to +0.88 — one quantity under three names.
+6. **A placebo has to be matched on the thing that actually varies** (D208). The fair value
+   gap beat a uniformly-drawn band at the 100th percentile and beat a depth-matched one by
+   nothing, because real gaps sit at retracement 0.63 and uniform placebos sit at 0.44.
+
+Two disclosures kept visible: **the depth-matched null and the stop-width control were both
+post-hoc**, designed after seeing a result, counted in full in the ledger, and both made the
+verdict harsher rather than kinder. And **D196's adverse selection is not paid in this
+study** (D207) — entry is a market order at the close, so a trader running the course's
+actual limit-at-the-level method should subtract something in the 0.138–0.195 Sharpe range
+that D196 measured.
+
+### Multiplicity ledger — final
+
+| | looks |
+|---|---:|
+| WP3 components against their placebos | 24 |
+| WP3 depth-matched re-reading (post-hoc) | 6 |
+| WP4 feature quintiles | 12 |
+| WP4 conditional on depth (post-hoc) | 10 |
+| WP4 conditional on stop width (post-hoc) | 10 |
+| WP4 ablation lattice | 16 |
+| WP6 discretion audit | 8 |
+| **Total on one hypothesis** | **86** |
+
+WP0, WP1 and WP2 contribute zero: a pre-registration, a detector suite and a census are not
+tests. WP5 never ran — D210 triggered the pre-registered stop.
+
+Disclosed adjacent and separately counted: the terrain programme's **259 looks**
+(`TERRAIN_RESULTS.md`). Its stop does not bind this construction, and the pre-committed
+inheritance rule in D204 — if the flipped level had been the only survivor, D196's 20 looks
+would join this total — did not trigger, because the flipped level did not survive either.
+
+A different data source, a different claim, or a genuinely new construction starts a new
+document and a new ledger, with this one disclosed.
+
+---
 
 ---
 
