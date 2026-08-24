@@ -66,10 +66,18 @@ It produced this project's first genuinely positive result, and then killed it. 
 line clears the hurdle by +0.285 Sharpe and holds under a stricter fill; all eight
 zero-line cells in the declared grid sit between −0.166 and +0.080, so the *level* rung is
 dead and the *acceleration* rung is not. The best cell clears **six of seven hurdles** —
-including buy-and-hold at half the drawdown — and fails only the deflated-Sharpe floor:
+including buy-and-hold *on Sharpe*, at half the drawdown — and fails only the
+deflated-Sharpe floor:
 +0.334 at the fresh count of 42 looks, +0.638 at the verdict count of 45,783. A result that
 would have been publishable as a first study and is not publishable as the 45,783rd look.
 **0 of 12 cells clear everything, so the pre-registered stop fired and Stage 2 never ran.**
+
+A post-close addendum adds the dividend-adjusted returns, and they matter: the fixture is
+dividend-*un*adjusted, which flatters an arm exposed 50.8% of the time against a benchmark
+that is never out. Adjusted, the best cell earns **+53.54% against buy-and-hold's +70.81%**
+— a 17.3-point gap where the price-only numbers looked like a tie. Its Sharpe advantage is
+a risk-reduction result, not a return result, and the ladder deltas are unmoved because the
+dividend stream cancels inside them.
 
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
