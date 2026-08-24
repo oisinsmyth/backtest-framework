@@ -27,6 +27,7 @@ from backtest_framework.research.structure_setups import (
     ATR_WINDOW_15M,
     CONDITIONS,
     find_setups,
+    ROUND_TRIP_SIDES,
     friction_in_r,
     required_hit_rate,
     stop_distance,
@@ -178,14 +179,39 @@ def test_conditions_are_drawn_only_from_the_registered_set():
 # ------------------------------------------------------------------- the cost arithmetic
 
 def test_friction_reproduces_the_numbers_d196_already_published():
-    """D196/D197 measured a 40 bps round trip at **0.49R on a 0.5-ATR stop** and **0.12R
-    at 2 ATR**. Reproduced here from the implied daily ATR rather than retyped as a
-    constant, so the formula is pinned against a number this project already stands
-    behind — the same discipline as anchoring to a reference you did not write."""
+    """D196/D197 measured 0.49R on a 0.5-ATR stop and 0.12R at 2 ATR at the 40 bps tier.
+
+    Reproduced from the implied daily ATR rather than retyped as a constant. The 4x ratio
+    between the two is the load-bearing part — it is what says friction scales inversely
+    with stop width — and it holds under either cost convention."""
     price = 10_000.0
     atr = 0.016_33 * price  # the ATR/price the published pair implies
-    assert friction_in_r(40.0, price, 0.5 * atr) == pytest.approx(0.49, abs=0.005)
-    assert friction_in_r(40.0, price, 2.0 * atr) == pytest.approx(0.12, abs=0.005)
+    tight = friction_in_r(40.0, price, 0.5 * atr)
+    wide = friction_in_r(40.0, price, 2.0 * atr)
+    assert tight is not None and wide is not None
+    assert tight / wide == pytest.approx(4.0)
+    assert tight == pytest.approx(ROUND_TRIP_SIDES * 0.49, abs=0.01)
+
+
+def test_the_two_cost_paths_agree_on_the_same_tier():
+    """The pin that was missing, and the defect it would have caught (D212).
+
+    `friction_in_r` (WP2's census) and `structure_strategies.r_multiples` (WP4's lattice)
+    both price a round trip at the same tier, and for a while they disagreed by a factor of
+    two — the census charged `cost_bps` once, the lattice charged it per side. The earlier
+    test asserted `r_multiples` matched itself and never compared the two.
+
+    `cost_bps` is a PER-SIDE exchange fee: `breakout_study.CostTier.fee_bps` is a fee tier
+    charged per fill, and `StrategyResult.net_returns` doubles it explicitly."""
+    from backtest_framework.research.structure_strategies import ArmTrade, r_multiples
+
+    price, risk = 10_000.0, 200.0
+    # A flat trade: the whole R multiple is the friction.
+    trade = ArmTrade(0, 0, 1, 1, price, price, price - risk, risk, "max_hold")
+    from_lattice = -r_multiples([trade], cost_bps=40.0)[0]
+    from_census = friction_in_r(40.0, price, risk)
+    assert from_census is not None
+    assert from_lattice == pytest.approx(from_census)
 
 
 def test_friction_scales_inversely_with_the_stop_width():

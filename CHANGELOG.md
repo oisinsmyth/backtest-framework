@@ -10,6 +10,31 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (the cost convention, 2026-08-24 — D212)
+- `structure_setups.friction_in_r` charged `cost_bps` once for a round trip while
+  `structure_strategies.r_multiples` charged it per side — **two halves of one study
+  pricing the same tier a factor of two apart.** Per-side is correct
+  (`CostTier.fee_bps` is a per-fill exchange fee; `StrategyResult.net_returns` doubles it).
+- The suite missed it because `test_the_cost_charged_in_r_matches_the_census_arithmetic`
+  compared `r_multiples` to a formula retyped from `r_multiples` — a test named for an
+  agreement between two components that never called both. The real pin now exists.
+- WP2's friction doubles and the conclusion strengthens: the stacked arm's round trip now
+  costs **more than the entire risk of the trade** (1.41R / 1.01R), and the required hit
+  rate at 5R rises to 32.7%/28.0% (base) and 40.2%/33.5% (stacked). Nothing in D208/D210/D211
+  moves — those rest on zero-cost and rank statistics.
+
+### Added (post-close Sharpe/PnL addendum, 2026-08-24 — D212)
+- `scripts/run_structure_pnl.py` + `data/structure_pnl_summary.json` + an addendum section.
+  Supplies the sizing rule the R-based study never had (constant unit exposure through each
+  trade, `PositionResult` path) so the arms can be reported in Sharpe and money against
+  buy-and-hold and cash, at three fee tiers.
+- **0 of 16 arms make money at 40 bps/side, and 0 of 16 at 10 bps/side.** Buy-and-hold
+  returns +460% (BTC, Sharpe +0.32) and +115% (ETH, +0.11) over the same span. The best
+  zero-cost arm returns +1,788% and goes to −9,532 of 10,000 at ten basis points a side.
+- Admitted to a closed programme as a descriptive restatement under three pre-stated
+  conditions, including that a positive would have required its own pre-registration.
+  Ledger 86 → **102 looks**.
+
 ### Added (the discretion audit and the close, 2026-08-24 — D211)
 - `scripts/run_structure_audit.py` + `data/structure_audit_summary.json` + the WP6 section
   and the FINAL REPORT section of `STRUCTURE_RESULTS.md`.

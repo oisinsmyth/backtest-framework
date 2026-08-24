@@ -377,17 +377,34 @@ def stop_distance(setup: Setup, entry_price: float) -> float:
     return abs(entry_price - stop_price(setup))
 
 
-def friction_in_r(cost_bps: float, entry_price: float, stop: float) -> float | None:
-    """A round trip of `cost_bps`, expressed as a fraction of the risked distance.
+ROUND_TRIP_SIDES = 2.0
+"""`cost_bps` is a PER-SIDE exchange fee, so a round trip costs twice it.
 
-    This is the arithmetic D196/D197 already ran on daily bars — 40 bps costs **0.49R at a
-    0.5-ATR stop** and **0.12R at 2 ATR** — restated so WP2 can run it on the stop widths
-    this strategy actually produces, *before* any backtest. The course's entire claim is a
-    hit-rate argument at 5R, made with costs omitted; this is the same argument with the
-    costs put back."""
+That is this project's convention and it is not obvious from the number alone.
+`breakout_study.CostTier.fee_bps` is a fee *tier* — charged per fill — and
+`terrain_strategies.StrategyResult.net_returns` doubles it explicitly for exactly this
+reason. `PositionResult.equity_curve` reaches the same place by charging every unit of
+exposure changed, so a 0 -> 1 -> 0 round trip pays twice.
+
+**This constant exists because the first version of `friction_in_r` did not have it**, and
+WP2's census was therefore priced at half what WP4's lattice charged for the identical
+40 bps tier — two sections of one study disagreeing by a factor of two. D212 records it."""
+
+
+def friction_in_r(cost_bps: float, entry_price: float, stop: float) -> float | None:
+    """A round trip at `cost_bps` PER SIDE, as a fraction of the risked distance.
+
+    This is the arithmetic D196/D197 already ran on daily bars, restated so WP2 can run it
+    on the stop widths this strategy actually produces, *before* any backtest. The course's
+    entire claim is a hit-rate argument at 5R made with costs omitted; this is the same
+    argument with the costs put back.
+
+    Note the convention carefully: `cost_bps` is charged **twice**. The first version of
+    this function charged it once and disagreed with `structure_strategies.r_multiples` by
+    a factor of two on the same tier."""
     if entry_price <= 0.0 or stop <= 0.0:
         return None
-    return (cost_bps / 10_000.0) / (stop / entry_price)
+    return (ROUND_TRIP_SIDES * cost_bps / 10_000.0) / (stop / entry_price)
 
 
 def required_hit_rate(target_r: float, friction_r: float) -> float | None:

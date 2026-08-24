@@ -350,6 +350,11 @@ entries and fading lost in every form terrain measured.
       feature reaches inside any stop-width quintile is 0.10-0.15 against a bar of 0.2,
       and stacking the filters helps at zero cost in **0 of 8**. **Programme CLOSED at
       86 looks.** Final report is the last section of `STRUCTURE_RESULTS.md`.
+- [x] **D212**: a cost-convention defect (the census and the lattice priced the same
+      tier a factor of two apart; a test named for their agreement compared one to
+      itself), plus a post-close addendum restating every arm in **Sharpe and PnL**
+      against buy-and-hold and cash. **0 of 16 arms make money at 40 bps/side and 0
+      of 16 at 10 bps/side.** Ledger 86 -> 102 looks.
 
 ## Next (queued, not started) — Phase G closing
 

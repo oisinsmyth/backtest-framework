@@ -1,7 +1,8 @@
 # STRUCTURE_RESULTS.md — the structure programme's ledger
 
-**PROGRAMME CLOSED, 2026-08-24 (D211), after 86 looks.** The final report is the last
-section of this document. WP5 never ran — D210 triggered the pre-registered stop.
+**PROGRAMME CLOSED, 2026-08-24 (D211).** The final report is below; a post-close
+descriptive addendum restating every arm in Sharpe and PnL follows it (D212), taking
+the ledger to **102 looks**. WP5 never ran — D210 triggered the pre-registered stop.
 
 **Append-only.** Every work package adds a dated section; nothing above is rewritten. This
 is the single results ledger `New Docs/STRUCTURE_MODEL.md` requires, and it carries the
@@ -53,7 +54,8 @@ because in that world the two studies are reading the same swing structure.
 | WP4 ablation lattice | 16 |
 | WP5 costed verdict | **did not run** |
 | WP6 discretion audit (grid) | 8 |
-| **Total** | **86** |
+| Post-close Sharpe/PnL addendum (D212) | 16 |
+| **Total** | **102** |
 
 Never reset. Retired and failed cells count. Budget estimated in the plan at ~118 looks
 for the full programme; the estimate is not a licence and the actual count is what feeds
@@ -82,7 +84,13 @@ capping baseline-relative predictions at moderate confidence.
 
 No return, no Sharpe and no verdict about whether anything works appears in this section. `STRUCTURE_MODEL.md` requires the counts first, because counts have repeatedly caught defects in this project before they became results (D197, D198, D201, D202).
 
-> **CORRECTED 2026-08-24 (D209).** The first version of this section placed the stop at `leg.end_price`, the extreme the impulse ran TO, which for a long sits ABOVE the entry and is not a stop at all. Every friction number below is the recomputed one. The superseded figures were: base-arm friction 0.97R / 0.72R against 0.48R / 0.34R here, and required hit rate at 5R 32.9% / 28.6% against 24.7% / 22.3%. The direction of finding 4 also reversed. D209 records how it was caught.
+> **CORRECTED TWICE, 2026-08-24 — D209 then D212.** Both corrections are named here rather than shown as new numbers under an old heading.
+>
+> **D209** — the stop was placed at `leg.end_price`, the extreme the impulse ran TO, which for a long sits ABOVE the entry and is not a stop at all. It also reversed the direction of finding 4 below: a deeper entry is a *tighter* stop, so the confluence stack raises friction rather than halving it.
+>
+> **D212** — the cost convention. `cost_bps` is a PER-SIDE exchange fee, so a round trip pays twice it. This section charged it once while WP4's lattice charged it twice: two halves of one study disagreeing by a factor of two on the same tier.
+>
+> Superseded base-arm friction: **0.97R / 0.72R** (D209 era) and **0.48R / 0.34R** (post-D209, pre-D212). Superseded required hit rate at 5R: **32.9% / 28.6%** and **24.7% / 22.3%**. The figures below are the current ones.
 
 ### The population, at the primary cell
 
@@ -129,10 +137,10 @@ A 40 bps round trip against the stop widths these entries actually produce. D196
 
 | symbol | arm | n | median wait (bars) | median retracement | median stop (ATR) | median stop (%) | median friction (R) | hit rate needed at 5R |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| `BTCUSDT` | C1 only | 3,875 | 5 | 0.321 | 2.14 | 0.83% | 0.480 | 24.7% |
-| `BTCUSDT` | C1+C2+C3+C4 | 120 | 9 | 0.538 | 1.39 | 0.57% | 0.706 | 28.4% |
-| `ETHUSDT` | C1 only | 3,753 | 5 | 0.316 | 2.28 | 1.18% | 0.340 | 22.3% |
-| `ETHUSDT` | C1+C2+C3+C4 | 106 | 9 | 0.547 | 1.47 | 0.79% | 0.505 | 25.1% |
+| `BTCUSDT` | C1 only | 3,875 | 5 | 0.321 | 2.14 | 0.83% | 0.960 | 32.7% |
+| `BTCUSDT` | C1+C2+C3+C4 | 120 | 9 | 0.538 | 1.39 | 0.57% | 1.412 | 40.2% |
+| `ETHUSDT` | C1 only | 3,753 | 5 | 0.316 | 2.28 | 1.18% | 0.680 | 28.0% |
+| `ETHUSDT` | C1+C2+C3+C4 | 106 | 9 | 0.547 | 1.47 | 0.79% | 1.011 | 33.5% |
 
 Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of ten". The column above is the same arithmetic with costs put back.
 
@@ -140,11 +148,11 @@ Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of 
 
 **1. The stop condition clears, so the programme continues.** `BTCUSDT` produces 120 stacked entries and `ETHUSDT` produces 106 stacked entries, both above the pre-registered floor of 30. H5 — that the stacked arm would be underpowered — is **falsified**. It was held at moderate confidence and it was wrong.
 
-**2. The round trip eats a third to a half of the risk before anything happens.** On the C1-only arm the median stop sits at 0.83% of price on `BTCUSDT` and 1.18% of price on `ETHUSDT`, against a 40 bps round trip — so friction is 0.48R and 0.34R. That is arithmetic rather than a result, and it is the structural problem with running this strategy on 15m bars: a stop placed at a 15m swing extreme is close enough that crossing the spread twice is a material fraction of the whole trade.
+**2. The round trip eats a third to a half of the risk before anything happens.** On the C1-only arm the median stop sits at 0.83% of price on `BTCUSDT` and 1.18% of price on `ETHUSDT`, against a 40 bps round trip — so friction is 0.96R and 0.68R. That is arithmetic rather than a result, and it is the structural problem with running this strategy on 15m bars: a stop placed at a 15m swing extreme is close enough that crossing the spread twice is a material fraction of the whole trade.
 
-**3. The course's central arithmetic is wrong once costs exist.** It claims a 5R target breaks even at ~20% and is "highly profitable" at 30%. Frictionless that is nearly right — the true break-even is 16.7%. At 40 bps on the stacked arm it becomes 28.4% on `BTCUSDT` and 25.1% on `ETHUSDT`, and on the C1-only arm 24.7% and 22.3%. **A 20% hit rate at 5R loses money at every cell measured here.** No backtest was needed to establish that, and none of it depends on whether the components carry information.
+**3. The course's central arithmetic is wrong once costs exist.** It claims a 5R target breaks even at ~20% and is "highly profitable" at 30%. Frictionless that is nearly right — the true break-even is 16.7%. At 40 bps on the stacked arm it becomes 40.2% on `BTCUSDT` and 33.5% on `ETHUSDT`, and on the C1-only arm 32.7% and 28.0%. **A 20% hit rate at 5R loses money at every cell measured here.** No backtest was needed to establish that, and none of it depends on whether the components carry information.
 
-**4. The confluence stack enters deeper, and that makes the arithmetic WORSE.** Median retracement moves from 0.321 to 0.538 on `BTCUSDT` and 0.316 to 0.547 on `ETHUSDT`. The stop sits at the extreme the leg came FROM, so a deeper entry is a **tighter** stop, not a wider one: 2.14 to 1.39 ATR and 2.28 to 1.47 ATR, and friction rises from 0.48R to 0.71R and 0.34R to 0.51R. So the confluence the course sells as precision is, in cost terms, a tax: it buys a better price by risking less, and the fixed spread then eats a larger share of what is left. WP4 asks whether the better price is worth the tax.
+**4. The confluence stack enters deeper, and that makes the arithmetic WORSE.** Median retracement moves from 0.321 to 0.538 on `BTCUSDT` and 0.316 to 0.547 on `ETHUSDT`. The stop sits at the extreme the leg came FROM, so a deeper entry is a **tighter** stop, not a wider one: 2.14 to 1.39 ATR and 2.28 to 1.47 ATR, and friction rises from 0.96R to 1.41R and 0.68R to 1.01R. So the confluence the course sells as precision is, in cost terms, a tax: it buys a better price by risking less, and the fixed spread then eats a larger share of what is left. WP4 asks whether the better price is worth the tax.
 
 **5. Two filters barely filter, and one is incompatible with the rest.** C3 (the 61.8% band) admits 2,672 of 3,875 and 2,619 of 3,753 setups on its own — roughly 69% and 70% of the population, which is very little work for a filter, before anyone asks whether 0.618 is special. C5 (RSI 30/70) collapses the stacked arm to 2 and 2 entries: the textbook thresholds essentially never coincide with structural confluence. **C5 is therefore dropped as a stacked filter and kept as a continuous feature in WP4a**, which is where a 2-trade arm has nothing to say and a rank correlation still does.
 
@@ -153,14 +161,14 @@ Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of 
 
 | symbol | k | touch | setups | stacked | median stop (ATR) | median friction (R) |
 |---|---:|---:|---:|---:|---:|---:|
-| `BTCUSDT` **(primary)** | 2 | 0.5 | 3,875 | 120 | 1.39 | 0.706 |
-| `BTCUSDT` | 2 | 1.0 | 3,875 | 244 | 1.89 | 0.502 |
-| `BTCUSDT` | 3 | 0.5 | 2,808 | 67 | 1.65 | 0.540 |
-| `BTCUSDT` | 3 | 1.0 | 2,808 | 131 | 2.19 | 0.420 |
-| `ETHUSDT` **(primary)** | 2 | 0.5 | 3,753 | 106 | 1.47 | 0.505 |
-| `ETHUSDT` | 2 | 1.0 | 3,753 | 239 | 1.96 | 0.393 |
-| `ETHUSDT` | 3 | 0.5 | 2,717 | 45 | 1.65 | 0.509 |
-| `ETHUSDT` | 3 | 1.0 | 2,717 | 137 | 2.27 | 0.339 |
+| `BTCUSDT` **(primary)** | 2 | 0.5 | 3,875 | 120 | 1.39 | 1.412 |
+| `BTCUSDT` | 2 | 1.0 | 3,875 | 244 | 1.89 | 1.004 |
+| `BTCUSDT` | 3 | 0.5 | 2,808 | 67 | 1.65 | 1.079 |
+| `BTCUSDT` | 3 | 1.0 | 2,808 | 131 | 2.19 | 0.839 |
+| `ETHUSDT` **(primary)** | 2 | 0.5 | 3,753 | 106 | 1.47 | 1.011 |
+| `ETHUSDT` | 2 | 1.0 | 3,753 | 239 | 1.96 | 0.786 |
+| `ETHUSDT` | 3 | 0.5 | 2,717 | 45 | 1.65 | 1.017 |
+| `ETHUSDT` | 3 | 1.0 | 2,717 | 137 | 2.27 | 0.679 |
 
 ### Multiplicity
 
@@ -607,7 +615,8 @@ that D196 measured.
 | WP4 conditional on stop width (post-hoc) | 10 |
 | WP4 ablation lattice | 16 |
 | WP6 discretion audit | 8 |
-| **Total on one hypothesis** | **86** |
+| Post-close Sharpe/PnL addendum (D212) | 16 |
+| **Total on one hypothesis** | **102** |
 
 WP0, WP1 and WP2 contribute zero: a pre-registration, a detector suite and a census are not
 tests. WP5 never ran — D210 triggered the pre-registered stop.
@@ -621,6 +630,72 @@ A different data source, a different claim, or a genuinely new construction star
 document and a new ledger, with this one disclosed.
 
 ---
+
+## ADDENDUM (post-close) - every arm in Sharpe and PnL, against baselines
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_pnl.py` (offline, deterministic)
+
+**The programme is closed (D211). This is not a new test and it cannot rescue anything.** It restates arms that have already been run in two units the study never reported — annualised Sharpe and money — because *mean R per trade* is not what most people mean when they ask how a strategy did. Every look is counted in the ledger, and the rule is stated in advance: **a positive here would be a new hypothesis requiring its own pre-registration, not a result.**
+
+**Sizing rule, which the study never had:** constant unit exposure while in a trade, flat otherwise, cost charged on every unit of exposure changed. The same `PositionResult` path D197-D202 used, reused rather than rewritten so these numbers sit on the same footing as the terrain programme's. It deliberately avoids fixed-fractional risk: on a book where a large share of trades cost at least their whole risk to trade, fixed-fractional sizing produces an equity curve that says more about the sizing rule than about the signal.
+
+**Costs:** three tiers, all **per side**, so a round trip pays twice each (D212). Zero is the D202 diagnostic and never a strategy; 10 bps/side is roughly a real Binance spot taker fee, so the result cannot be waved away as a punitive assumption; 40 bps/side is `breakout_study`'s `taker_40bp`, the tier every other study in this repo uses. Capital 10,000 units, Sharpe annualised at 35,040 periods. Buy-and-hold pays one round trip and is shown unchanged across tiers.
+
+### `BTCUSDT` — 8.3 years, 294,336 bars
+
+| arm | trades | exposure | Sharpe / PnL @ zero (diagnostic) | Sharpe / PnL @ 10 bps/side | Sharpe / PnL @ 40 bps/side | max DD (40bp) |
+|---|---:|---:|---:|---:|---:|---:|
+| C1 | 3,025 | 32.6% | -0.10 / -2,657 | -2.15 / -9,983 | -7.98 / -10,000 | -100.0% |
+| C1+C2 | 811 | 8.3% | -0.35 / -3,689 | -1.56 / -8,755 | -4.95 / -9,991 | -99.9% |
+| C1+C3 | 2,329 | 16.5% | +0.27 / +6,843 | -2.15 / -9,841 | -8.79 / -10,000 | -100.0% |
+| C1+C4 | 1,006 | 11.0% | +0.27 / +5,858 | -0.91 / -7,882 | -4.31 / -9,995 | -100.0% |
+| C1+C2+C3 | 368 | 2.7% | -0.63 / -3,471 | -1.72 / -6,874 | -4.59 / -9,658 | -96.6% |
+| C1+C2+C4 | 248 | 2.4% | -0.44 / -2,746 | -1.11 / -5,584 | -2.97 / -9,006 | -90.7% |
+| C1+C3+C4 | 573 | 4.5% | +0.60 / +8,057 | -0.56 / -4,263 | -3.79 / -9,817 | -98.3% |
+| C1+C2+C3+C4 | 118 | 0.9% | -0.38 / -1,368 | -0.98 / -3,184 | -2.56 / -6,648 | -67.8% |
+| **buy and hold** | 1 | 100% | +0.32 / +46,000 | +0.32 / +46,000 | +0.32 / +46,000 | -77.2% |
+| **cash** | 0 | 0% | +0.00 / +0 | +0.00 / +0 | +0.00 / +0 | 0.0% |
+
+### `ETHUSDT` — 8.3 years, 294,336 bars
+
+| arm | trades | exposure | Sharpe / PnL @ zero (diagnostic) | Sharpe / PnL @ 10 bps/side | Sharpe / PnL @ 40 bps/side | max DD (40bp) |
+|---|---:|---:|---:|---:|---:|---:|
+| C1 | 2,999 | 32.2% | +0.77 / +178,800 | -0.80 / -9,532 | -5.36 / -10,000 | -100.0% |
+| C1+C2 | 881 | 8.8% | -0.31 / -4,179 | -1.31 / -9,001 | -4.18 / -9,995 | -100.0% |
+| C1+C3 | 2,308 | 16.0% | +0.47 / +22,250 | -1.39 / -9,682 | -6.70 / -10,000 | -100.0% |
+| C1+C4 | 1,038 | 11.0% | +0.51 / +19,792 | -0.46 / -6,267 | -3.28 / -9,993 | -99.9% |
+| C1+C2+C3 | 368 | 2.8% | -0.07 / -595 | -0.91 / -5,497 | -3.26 / -9,508 | -95.2% |
+| C1+C2+C4 | 254 | 2.5% | -0.07 / -659 | -0.63 / -4,381 | -2.21 / -8,781 | -87.8% |
+| C1+C3+C4 | 551 | 4.4% | +0.65 / +11,615 | -0.28 / -2,823 | -2.95 / -9,739 | -97.6% |
+| C1+C2+C3+C4 | 104 | 0.8% | -0.01 / -55 | -0.50 / -1,923 | -1.85 / -5,679 | -60.0% |
+| **buy and hold** | 1 | 100% | +0.11 / +11,521 | +0.11 / +11,521 | +0.11 / +11,521 | -90.6% |
+| **cash** | 0 | 0% | +0.00 / +0 | +0.00 / +0 | +0.00 / +0 | 0.0% |
+
+### What this shows
+
+**After costs, 0 of 16 arms make money.** None. Sharpe ranges -8.79 to -1.85 and PnL ranges -10,000 to -5,679 on 10,000 of capital.
+
+**At zero cost, 7 of 16 make money**, with Sharpe between -0.63 and +0.77. That is the D202 diagnostic doing its job: it separates *no information* from *information this cost structure cannot support*.
+
+**The largest of those is worth naming rather than leaving for a reader to spot.** `ETHUSDT` C1 returns +1,788% at zero cost, Sharpe +0.77 — which beats buy-and-hold. It is in the market 32% of the time and takes 2,999 round trips to do it, and it dies at the first fee tier: 10 bps a side takes it to -9,532. A book that cannot survive a tenth of a percent per side is not an edge with a cost problem; it is turnover with no edge.
+
+**`BTCUSDT`** — buy and hold returns +460.0% at Sharpe +0.32 over the same span, against the best arm's -66.5% at -2.56 (C1+C2+C3+C4). The passive baseline is not a high bar to clear and no arm clears it.
+**`ETHUSDT`** — buy and hold returns +115.2% at Sharpe +0.11 over the same span, against the best arm's -56.8% at -1.85 (C1+C2+C3+C4). The passive baseline is not a high bar to clear and no arm clears it.
+
+**At a realistic 10 bps/side, 0 of 16 arms make money.** None. So the verdict does not rest on the 40 bps tier being generous.
+
+**Why the costed losses are so total.** These are constant-notional books taking 104 to 3,025 round trips over 8.3 years. At 40 bps a side that is 80 bps a round trip, and the base arm's 3,000-odd trips compound to roughly 24 e-folds of fee drag — arithmetically ruinous, and exactly the same statement as D206's finding that a large share of these trades cost at least their entire risk to put on. It is not a bug and it is not a knife-edge: at a quarter of the fee the picture is the same.
+
+**One number that matters for reading the Sharpes:** these books are in the market 1% to 33% of the time. A Sharpe computed over the whole series on a book that is mostly flat is diluted toward zero by the flat bars, so a small magnitude in the zero-cost column should not be read as *nearly* working. The PnL column is the unambiguous one.
+
+### Multiplicity
+
+| | cells | looks |
+|---|---|---:|
+| post-close Sharpe/PnL restatement | 8 arms x 2 symbols | 16 |
+| **addendum total** | | **16** |
+
+Counted in full even though no arm is under test, because a metric computed on a configuration is a look at it whatever the intent — the same rule that made D189 count three metrics across sixteen configurations as 48.
 
 ---
 

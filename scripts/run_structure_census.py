@@ -342,13 +342,22 @@ def render(payload: dict[str, Any]) -> str:
         "repeatedly caught defects in this project before they became results (D197, D198, "
         "D201, D202).\n")
 
-    add("> **CORRECTED 2026-08-24 (D209).** The first version of this section placed the "
-        "stop at `leg.end_price`, the extreme the impulse ran TO, which for a long sits "
-        "ABOVE the entry and is not a stop at all. Every friction number below is the "
-        "recomputed one. The superseded figures were: base-arm friction 0.97R / 0.72R "
-        "against 0.48R / 0.34R here, and required hit rate at 5R 32.9% / 28.6% against "
-        "24.7% / 22.3%. The direction of finding 4 also reversed. D209 records how it was "
-        "caught.\n")
+    add("> **CORRECTED TWICE, 2026-08-24 — D209 then D212.** Both corrections are named "
+        "here rather than shown as new numbers under an old heading.")
+    add(">")
+    add("> **D209** — the stop was placed at `leg.end_price`, the extreme the impulse ran "
+        "TO, which for a long sits ABOVE the entry and is not a stop at all. It also "
+        "reversed the direction of finding 4 below: a deeper entry is a *tighter* stop, so "
+        "the confluence stack raises friction rather than halving it.")
+    add(">")
+    add("> **D212** — the cost convention. `cost_bps` is a PER-SIDE exchange fee, so a "
+        "round trip pays twice it. This section charged it once while WP4's lattice charged "
+        "it twice: two halves of one study disagreeing by a factor of two on the same tier.")
+    add(">")
+    add("> Superseded base-arm friction: **0.97R / 0.72R** (D209 era) and **0.48R / 0.34R** "
+        "(post-D209, pre-D212). Superseded required hit rate at 5R: **32.9% / 28.6%** and "
+        "**24.7% / 22.3%**. The figures below are the current ones.")
+    add("")
 
     add("### The population, at the primary cell\n")
     add(f"Primary: `k={PRIMARY_K}`, touch band `{PRIMARY_TOUCH}` ATR, "

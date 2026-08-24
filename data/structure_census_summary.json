@@ -69,10 +69,10 @@
             "median_stop_atr": 2.1404624274684756,
             "median_stop_pct": 0.008334045811322457,
             "median_retracement": 0.3205478390577461,
-            "median_friction_r": 0.47995896477622974,
-            "mean_friction_r": 1.37548303580136,
-            "friction_r_p90": 1.7322384644614213,
-            "required_hit_rate_at_5r": 0.24665982746270496,
+            "median_friction_r": 0.9599179295524595,
+            "mean_friction_r": 2.75096607160272,
+            "friction_r_p90": 3.4644769289228425,
+            "required_hit_rate_at_5r": 0.3266529882587432,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -83,10 +83,10 @@
             "median_stop_atr": 1.385262748615372,
             "median_stop_pct": 0.005667905016859834,
             "median_retracement": 0.5375062552189268,
-            "median_friction_r": 0.7059071805198884,
-            "mean_friction_r": 0.8262598161870652,
-            "friction_r_p90": 1.4138848048960335,
-            "required_hit_rate_at_5r": 0.2843178634199814,
+            "median_friction_r": 1.4118143610397769,
+            "mean_friction_r": 1.6525196323741305,
+            "friction_r_p90": 2.827769609792067,
+            "required_hit_rate_at_5r": 0.40196906017329614,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         },
@@ -142,10 +142,10 @@
             "median_stop_atr": 2.1404624274684756,
             "median_stop_pct": 0.008334045811322457,
             "median_retracement": 0.3205478390577461,
-            "median_friction_r": 0.47995896477622974,
-            "mean_friction_r": 1.37548303580136,
-            "friction_r_p90": 1.7322384644614213,
-            "required_hit_rate_at_5r": 0.24665982746270496,
+            "median_friction_r": 0.9599179295524595,
+            "mean_friction_r": 2.75096607160272,
+            "friction_r_p90": 3.4644769289228425,
+            "required_hit_rate_at_5r": 0.3266529882587432,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -156,10 +156,10 @@
             "median_stop_atr": 1.8859665593709272,
             "median_stop_pct": 0.007966007534563859,
             "median_retracement": 0.4845519521361601,
-            "median_friction_r": 0.5021479084632715,
-            "mean_friction_r": 0.673968662206031,
-            "friction_r_p90": 1.1921804902350484,
-            "required_hit_rate_at_5r": 0.2503579847438786,
+            "median_friction_r": 1.004295816926543,
+            "mean_friction_r": 1.347937324412062,
+            "friction_r_p90": 2.3843609804700967,
+            "required_hit_rate_at_5r": 0.3340493028210905,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         },
@@ -215,10 +215,10 @@
             "median_stop_atr": 2.548378061178997,
             "median_stop_pct": 0.009946071359233286,
             "median_retracement": 0.31920454904407325,
-            "median_friction_r": 0.4021691420013529,
-            "mean_friction_r": 2.3739908467527386,
-            "friction_r_p90": 1.6178435103040425,
-            "required_hit_rate_at_5r": 0.2336948570002255,
+            "median_friction_r": 0.8043382840027058,
+            "mean_friction_r": 4.747981693505477,
+            "friction_r_p90": 3.235687020608085,
+            "required_hit_rate_at_5r": 0.3007230473337843,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -229,10 +229,10 @@
             "median_stop_atr": 1.6483029889348055,
             "median_stop_pct": 0.007413763659997113,
             "median_retracement": 0.5539379329491657,
-            "median_friction_r": 0.5395370264610725,
-            "mean_friction_r": 0.699526371348048,
-            "friction_r_p90": 1.2283169642000278,
-            "required_hit_rate_at_5r": 0.25658950441017875,
+            "median_friction_r": 1.079074052922145,
+            "mean_friction_r": 1.399052742696096,
+            "friction_r_p90": 2.4566339284000556,
+            "required_hit_rate_at_5r": 0.34651234215369087,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         },
@@ -288,10 +288,10 @@
             "median_stop_atr": 2.548378061178997,
             "median_stop_pct": 0.009946071359233286,
             "median_retracement": 0.31920454904407325,
-            "median_friction_r": 0.4021691420013529,
-            "mean_friction_r": 2.3739908467527386,
-            "friction_r_p90": 1.6178435103040425,
-            "required_hit_rate_at_5r": 0.2336948570002255,
+            "median_friction_r": 0.8043382840027058,
+            "mean_friction_r": 4.747981693505477,
+            "friction_r_p90": 3.235687020608085,
+            "required_hit_rate_at_5r": 0.3007230473337843,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -302,10 +302,10 @@
             "median_stop_atr": 2.185422235574681,
             "median_stop_pct": 0.00953149039654581,
             "median_retracement": 0.5021175083092122,
-            "median_friction_r": 0.4196615464722695,
-            "mean_friction_r": 0.5795043514636549,
-            "friction_r_p90": 1.0961114399428336,
-            "required_hit_rate_at_5r": 0.23661025774537825,
+            "median_friction_r": 0.839323092944539,
+            "mean_friction_r": 1.1590087029273097,
+            "friction_r_p90": 2.192222879885667,
+            "required_hit_rate_at_5r": 0.3065538488240898,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         }
@@ -366,10 +366,10 @@
             "median_stop_atr": 2.284494668940745,
             "median_stop_pct": 0.011762001622045899,
             "median_retracement": 0.31614859742229384,
-            "median_friction_r": 0.34007817109144683,
-            "mean_friction_r": 0.9908744195156735,
-            "friction_r_p90": 1.380148046672331,
-            "required_hit_rate_at_5r": 0.22334636184857448,
+            "median_friction_r": 0.6801563421828937,
+            "mean_friction_r": 1.981748839031347,
+            "friction_r_p90": 2.760296093344662,
+            "required_hit_rate_at_5r": 0.2800260570304823,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -380,10 +380,10 @@
             "median_stop_atr": 1.4686620810783757,
             "median_stop_pct": 0.007914459475002876,
             "median_retracement": 0.547447495401731,
-            "median_friction_r": 0.5054384989392692,
-            "mean_friction_r": 0.6385193710124122,
-            "friction_r_p90": 1.0565547856816857,
-            "required_hit_rate_at_5r": 0.2509064164898782,
+            "median_friction_r": 1.0108769978785384,
+            "mean_friction_r": 1.2770387420248244,
+            "friction_r_p90": 2.1131095713633714,
+            "required_hit_rate_at_5r": 0.33514616631308974,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         },
@@ -439,10 +439,10 @@
             "median_stop_atr": 2.284494668940745,
             "median_stop_pct": 0.011762001622045899,
             "median_retracement": 0.31614859742229384,
-            "median_friction_r": 0.34007817109144683,
-            "mean_friction_r": 0.9908744195156735,
-            "friction_r_p90": 1.380148046672331,
-            "required_hit_rate_at_5r": 0.22334636184857448,
+            "median_friction_r": 0.6801563421828937,
+            "mean_friction_r": 1.981748839031347,
+            "friction_r_p90": 2.760296093344662,
+            "required_hit_rate_at_5r": 0.2800260570304823,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -453,10 +453,10 @@
             "median_stop_atr": 1.9598670590669236,
             "median_stop_pct": 0.010172252185805057,
             "median_retracement": 0.48214285714285315,
-            "median_friction_r": 0.3932265861027147,
-            "mean_friction_r": 0.4940358016524196,
-            "friction_r_p90": 0.8714297375174183,
-            "required_hit_rate_at_5r": 0.2322044310171191,
+            "median_friction_r": 0.7864531722054294,
+            "mean_friction_r": 0.9880716033048392,
+            "friction_r_p90": 1.7428594750348365,
+            "required_hit_rate_at_5r": 0.29774219536757157,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         },
@@ -512,10 +512,10 @@
             "median_stop_atr": 2.7250897747163743,
             "median_stop_pct": 0.014087323332584336,
             "median_retracement": 0.31482408993773325,
-            "median_friction_r": 0.2839437371742196,
-            "mean_friction_r": 1.1579356206445146,
-            "friction_r_p90": 1.1823798813781738,
-            "required_hit_rate_at_5r": 0.21399062286236994,
+            "median_friction_r": 0.5678874743484392,
+            "mean_friction_r": 2.315871241289029,
+            "friction_r_p90": 2.3647597627563477,
+            "required_hit_rate_at_5r": 0.2613145790580732,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -526,10 +526,10 @@
             "median_stop_atr": 1.6475340222440027,
             "median_stop_pct": 0.007862570201519642,
             "median_retracement": 0.563352826510725,
-            "median_friction_r": 0.5087394957983202,
-            "mean_friction_r": 0.7454352087289116,
-            "friction_r_p90": 1.346505693176886,
-            "required_hit_rate_at_5r": 0.25145658263305337,
+            "median_friction_r": 1.0174789915966405,
+            "mean_friction_r": 1.4908704174578231,
+            "friction_r_p90": 2.693011386353772,
+            "required_hit_rate_at_5r": 0.33624649859944006,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         },
@@ -585,10 +585,10 @@
             "median_stop_atr": 2.7250897747163743,
             "median_stop_pct": 0.014087323332584336,
             "median_retracement": 0.31482408993773325,
-            "median_friction_r": 0.2839437371742196,
-            "mean_friction_r": 1.1579356206445146,
-            "friction_r_p90": 1.1823798813781738,
-            "required_hit_rate_at_5r": 0.21399062286236994,
+            "median_friction_r": 0.5678874743484392,
+            "mean_friction_r": 2.315871241289029,
+            "friction_r_p90": 2.3647597627563477,
+            "required_hit_rate_at_5r": 0.2613145790580732,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           },
           "entries_stacked": {
@@ -599,15 +599,15 @@
             "median_stop_atr": 2.2678422891365537,
             "median_stop_pct": 0.011788817702388476,
             "median_retracement": 0.49163568773233557,
-            "median_friction_r": 0.33930459363957927,
-            "mean_friction_r": 0.44142514239736474,
-            "friction_r_p90": 0.8796690975569182,
-            "required_hit_rate_at_5r": 0.2232174322732632,
+            "median_friction_r": 0.6786091872791585,
+            "mean_friction_r": 0.8828502847947295,
+            "friction_r_p90": 1.7593381951138365,
+            "required_hit_rate_at_5r": 0.2797681978798598,
             "frictionless_hit_rate_at_5r": 0.16666666666666666
           }
         }
       }
     }
   },
-  "elapsed_seconds": 119.4
+  "elapsed_seconds": 122.8
 }
