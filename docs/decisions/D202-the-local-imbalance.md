@@ -193,3 +193,115 @@ the census figure is a bug report before it is a result.
   **changes** the equity curve, or the control is vacuous.
 - Continuous cost is proportional: a position moving 0.1 costs a tenth of one moving 1.0.
 - Census reproduces; one-cell benchmark with projected runtime before the full run.
+
+---
+
+## RESULT — appended after the run; nothing above this line edited
+
+**0 of 10 cells clear all three hurdles. The primary fails all three, on both symbols.**
+603 seconds, 500 draws per null.
+
+| cell | Sharpe | B&H | rot Δ (pct) | mass Δ | net | drag |
+|---|---:|---:|---:|---:|---:|---:|
+| **BTC local continuous 40bps** *(primary)* | **−1.434** | +0.756 | −0.822 (2.2) | −1.037 | −0.07 | 13.2% |
+| BTC local continuous **0bps** *(diagnostic)* | −0.916 | +0.756 | −0.764 (2.6) | −0.955 | −0.07 | 0% |
+| BTC local smoothed 40bps | −1.190 | +0.756 | −0.843 (1.8) | −1.067 | −0.08 | 5.3% |
+| BTC local binary 40bps | −1.091 | +0.756 | −0.632 (4.6) | −1.041 | −0.04 | 28.6% |
+| BTC **global** continuous 40bps | +0.705 | +0.756 | +0.117 (67.6) | +0.051 | +0.58 | 2.5% |
+| **ETH local continuous 40bps** *(primary)* | **−1.284** | +0.315 | −0.829 (1.8) | −1.122 | +0.01 | 14.2% |
+| ETH local continuous **0bps** *(diagnostic)* | −0.816 | +0.315 | −0.839 (1.4) | −0.956 | +0.01 | 0% |
+| ETH local smoothed 40bps | −1.049 | +0.315 | −0.877 (1.4) | −1.069 | +0.01 | 5.3% |
+| ETH local binary 40bps | −0.778 | +0.315 | −0.363 (16.2) | −0.763 | +0.02 | 36.3% |
+| ETH **global** continuous 40bps | +0.274 | +0.315 | +0.200 (67.4) | +0.028 | +0.29 | 3.4% |
+
+### The zero-cost arm answered the question it was built for
+
+It is **not** "information the costs ate". At **zero cost** the local reading sits at the
+**2.6th and 1.4th percentile** of its own rotation null. Random timing of the same exposures
+beats this timing 97–99% of the time.
+
+And it is not one bad era. On BTC the diagnostic **loses in 11 years out of 11**:
+
+```
+2015 -0.09  2016 -0.17  2017 -0.61  2018 -0.11  2019 -0.25  2020 -0.33
+2021 -0.03  2022 -0.36  2023 -0.37  2024 -0.09  2025 -0.16
+```
+
+The reading is **systematically on the wrong side**, persistently, across the whole fixture.
+
+**The obvious inference is one this project does not get to make.** Inverting a signal that
+failed is a post-hoc reversal of a rejected test — precisely the move the pre-registration
+discipline exists to prevent, and it would need its own document, its own bar, and its own
+place in the ledger before any number from it counted. It is recorded as an observation and
+nothing more.
+
+The likely mechanism is worth stating because it unifies the family. Demand mass accumulates
+below price exactly when price has been *falling into* that area, so going long there fades
+a decline; the local imbalance is a mean-reversion signal by construction. Fading has lost
+in every form this programme has measured it — short leg worse than long in 16 of 16 cells
+in D197, 16 of 16 in D199, 8 of 8 in D201, and now 11 years of 11 here.
+
+**H6 falsified, consistently with that.** Binary beat continuous on both symbols (−1.091 vs
+−1.434; −0.778 vs −1.284) *despite paying two to three times the cost drag*. Sizing on the
+magnitude makes the book more wrong, which is what sizing on an anti-predictive signal
+should do.
+
+### The global statistic's apparent rotation pass is an artifact of a wide null
+
+D201's statistic is the only thing that clears any hurdle here — `rotΔ` of +0.117 and +0.200,
+both over the floor, on both symbols. It is not a result:
+
+| BTC global | value |
+|---|---:|
+| real Sharpe | +0.705 |
+| rotation null p05 → p95 | **+0.259 → +1.030** |
+| percentile | **67.6** |
+
+The real value sits comfortably mid-distribution. The delta clears +0.10 only because the
+null *mean* is a poor summary of a very wide distribution — rotating a book with 13
+decisions produces enormous variance. It also fails the placement null (+0.051, +0.028) and
+buy-and-hold on both symbols.
+
+**This is a limitation of the +0.10 floor itself and it belongs in the record.** That floor
+was calibrated on D189's null half-width, a tight distribution built from thousands of
+touches. Against a null this wide it is not a meaningful hurdle, and a delta-over-mean test
+should be read alongside the percentile rather than instead of it. D194 built an effect-size
+floor to stop large samples manufacturing significance; this is the mirror failure — a small
+sample manufacturing an effect size.
+
+### Predictions
+
+| | | |
+|---|---|---|
+| **H1** | primary fails buy-and-hold | **CONFIRMED** |
+| **H2** | primary fails the rotation null on ≥1 symbol | **CONFIRMED**, on both, at the 2nd percentile |
+| **H3** | the zero-cost diagnostic also fails | **CONFIRMED** — the run's finding |
+| **H4** | local and global differ by ≥ +0.10 | **CONFIRMED**, by 2.14 and 1.56 |
+| **H5** | net exposure within ±0.2 | **CONFIRMED** (−0.07, +0.01) — the confound really is gone |
+| **H6** | continuous beats binary on ≥1 symbol | **FALSIFIED** — binary won on both |
+
+Five of six. The one that mattered most, H3, was the one designed to separate two very
+different failures, and it separated them.
+
+### What the refinement did and did not achieve
+
+It **worked as a refinement**. Net exposure moved from +0.78 to −0.07, the decision count
+from nine to 393, and sign agreement with the old statistic to 48.7% — a genuinely different
+reading, with real statistical power, and free of the beta confound that made D201
+uninterpretable. Every defect named in the diagnosis was fixed.
+
+And with those defects fixed, the answer is unambiguous and worse than before: the map's
+local structure is not uninformative about direction, it is **reliably wrong**, at zero cost,
+in eleven years out of eleven.
+
+### The permanent stop triggers
+
+D202 fixed this before the run:
+
+> If the local statistic fails, the S6 map is closed entirely.
+
+It failed. **The S6 map is closed.** See D203.
+
+### Ledger
+
+**D202: 20 looks. Cumulative on the S6 map: 60 (reversal, closed) + 12 (D201) + 20 = 92.**
