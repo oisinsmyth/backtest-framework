@@ -1,0 +1,158 @@
+THE MACD GOLDEN MASTER — hand arithmetic
+=============================================================================
+Computed from the stated rules with exact rational arithmetic, without running
+the codebase (D39/D77). If `research/macd.py` and this file disagree, one of
+them is wrong about what MACD IS, and that argument happens here.
+
+Every number below is a DYADIC RATIONAL — a fraction whose denominator is a
+power of two — so every one of them is exactly representable in IEEE-754 double
+and the golden test asserts `==`, not `approx`. That is not luck; the setup was
+chosen for it, and the choices that buy it are stated in SETUP.
+
+SETUP
+-----
+parameters        MACD(fast=3, slow=7, signal=3)
+                  alpha = 2/(n+1)  =>  fast 1/2, slow 1/4, signal 1/2.
+                  Chosen because every alpha is a power of two. At 12/26/9 the
+                  alphas are 2/13 and 2/27 and NOTHING is exact, so a hand file
+                  at the default triple could only ever be approximate.
+                  The default's numerical behaviour is pinned separately, in
+                  tests/unit/test_macd.py, where approximation is honest.
+seeding           Both EMAs SMA-seeded at index slow-1 = 6, EACH OVER ITS OWN
+                  WINDOW: the slow leg over closes[0:7], the fast leg over the
+                  LAST 3 closes, closes[4:7]. Not closes[0:3].
+                  Signal line SMA-seeded at index 6+3-1 = 8, over macd[6:9].
+closes            Integers, chosen so that sum(closes[0:7]) = 721 = 7 x 103 and
+                  sum(closes[4:7]) = 315 = 3 x 105 divide EXACTLY, and so that
+                  sum(macd[6:9]) = 117/16 divides exactly by 3. That last one is
+                  why close[8] is 112 and not 111: at 111 the signal seed is
+                  113/48, which is not dyadic, and the file would have to round.
+scores            rung 2 (zero line)   = macd
+                  rung 1 (signal line) = macd - signal      [the histogram]
+positions         sign of the score, ties flat, evaluated on close(t).
+                  Both arms start at the LADDER'S COMMON START = 8, which is
+                  warm_up_bars(3,7,3, include_burn_in=False) = (7-1)+(3-1).
+                  If each arm started at its own first defined bar the two
+                  series would cover different spans and could not be compared.
+burn-in           OFF for this file. `burn_in_bars` moves only the first bar the
+                  strategy may ACT on; it never touches a single number above.
+                  Turning it off is what lets a 16-bar file pin the classic,
+                  live-seed MACD — which is exactly the regime where the seed
+                  convention is visible and therefore what a golden should pin.
+
+BARS (close only; MACD reads closes and nothing else)
+------------------------------------------------------
+ t   close        t   close        t   close        t   close
+ 0    100         4    104         8    112        12     98
+ 1    101         5    106         9    109        13    101
+ 2    103         6    105        10    104        14    106
+ 3    102         7    108        11    100        15    110
+
+THE SEEDS
+---------
+ema_slow[6] = (100+101+103+102+104+106+105)/7 = 721/7 = 103         exact
+ema_fast[6] = (104+106+105)/3                = 315/3 = 105          exact
+macd[6]     = 105 - 103 = 2
+
+signal[8]   = (macd[6] + macd[7] + macd[8])/3
+            = (2 + 9/4 + 49/16)/3 = (117/16)/3 = 39/16 = 2.4375     exact
+
+THE RECURSION, ONE LINE PER BAR
+--------------------------------
+ema_slow[t] = ema_slow[t-1] + (1/4)(close[t] - ema_slow[t-1])
+ema_fast[t] = ema_fast[t-1] + (1/2)(close[t] - ema_fast[t-1])
+signal[t]   = signal[t-1]   + (1/2)(macd[t]  - signal[t-1])
+
+ t=7  ema_slow = 103      + (1/4)(108-103)      = 103 + 5/4    = 417/4   = 104.25
+      ema_fast = 105      + (1/2)(108-105)      = 105 + 3/2    = 213/2   = 106.5
+      macd     = 213/2 - 417/4                                 = 9/4     = 2.25
+
+ t=8  ema_slow = 417/4    + (1/4)(112 - 417/4)  = 1699/16                = 106.1875
+      ema_fast = 213/2    + (1/2)(112 - 213/2)  = 437/4                  = 109.25
+      macd     = 437/4 - 1699/16                                = 49/16  = 3.0625
+      signal   = 39/16 (seed)                                            = 2.4375
+      hist     = 49/16 - 39/16                                 = 5/8     = 0.625
+
+ t=9  ema_slow = 1699/16  + (1/4)(109 - 1699/16)  = 6841/64             = 106.890625
+      ema_fast = 437/4    + (1/2)(109 - 437/4)    = 873/8               = 109.125
+      macd     = 873/8 - 6841/64                          = 143/64      = 2.234375
+      signal   = 39/16 + (1/2)(143/64 - 39/16)   = 299/128              = 2.3359375
+      hist     = 143/64 - 299/128                = -13/128              = -0.1015625
+
+ t=10 ema_slow = 6841/64  + (1/4)(104 - 6841/64)  = 27179/256           = 106.16796875
+      ema_fast = 873/8    + (1/2)(104 - 873/8)    = 1705/16             = 106.5625
+      macd     = 1705/16 - 27179/256              = 101/256             = 0.39453125
+      signal   = 299/128 + (1/2)(101/256 - 299/128) = 699/512           = 1.365234375
+      hist     = 101/256 - 699/512                = -497/512            = -0.970703125
+
+ t=11 ema_slow = 27179/256 + (1/4)(100 - 27179/256) = 107137/1024       = 104.625976562
+      ema_fast = 1705/16   + (1/2)(100 - 1705/16)   = 3305/32           = 103.28125
+      macd     = 3305/32 - 107137/1024             = -1377/1024         = -1.344726562
+      signal   = 699/512 + (1/2)(-1377/1024 - 699/512) = 21/2048        = 0.01025390625
+      hist     = -1377/1024 - 21/2048              = -2775/2048         = -1.354980469
+
+ t=12 ema_slow = 107137/1024 + (1/4)(98 - 107137/1024) = 421639/4096    = 102.969482422
+      ema_fast = 3305/32     + (1/2)(98 - 3305/32)     = 6441/64        = 100.640625
+      macd     = 6441/64 - 421639/4096                 = -9539/4096     = -2.328857422
+      signal   = 21/2048 + (1/2)(-9539/4096 - 21/2048) = -9497/8192     = -1.159301758
+      hist     = -9539/4096 - (-9497/8192)             = -9581/8192     = -1.169555664
+
+ t=13 ema_slow = 421639/4096 + (1/4)(101 - 421639/4096) = 1678953/16384 = 102.477111816
+      ema_fast = 6441/64     + (1/2)(101 - 6441/64)     = 12905/128     = 100.8203125
+      macd     = 12905/128 - 1678953/16384              = -27145/16384  = -1.656799316
+      signal   = -9497/8192 + (1/2)(-27145/16384 + 9497/8192) = -46139/32768 = -1.408050537
+      hist     = -27145/16384 - (-46139/32768)          = -8151/32768   = -0.248748779
+
+ t=14 ema_slow = 1678953/16384 + (1/4)(106 - 1678953/16384) = 6773071/65536 = 103.357833862
+      ema_fast = 12905/128     + (1/2)(106 - 12905/128)     = 26473/256     = 103.410156250
+      macd     = 26473/256 - 6773071/65536                  = 3429/65536    = 0.052322388
+      signal   = -46139/32768 + (1/2)(3429/65536 + 46139/32768) = -88849/131072 = -0.677864075
+      hist     = 3429/65536 - (-88849/131072)               = 95707/131072  = 0.730186462
+
+ t=15 ema_slow = 6773071/65536 + (1/4)(110 - 6773071/65536) = 27530313/262144 = 105.018375397
+      ema_fast = 26473/256     + (1/2)(110 - 26473/256)     = 54873/512       = 107.174... see note
+      macd     = 442159/262144                                                = 1.686702728
+      signal   = -88849/131072 + (1/2)(442159/262144 + 88849/131072) = 264461/524288 = 0.504419327
+      hist     = 442159/262144 - 264461/524288              = 619857/524288  = 1.182283401
+
+      note: ema_fast[15] = 26473/256 + (1/2)(110 - 26473/256) = (26473 + 28160)/512
+            = 54633/512 = 106.705078125.  macd = 106.705078125 - 105.018375397
+            = 1.686702728, i.e. 442159/262144, which is the value asserted.
+
+THE TWO ARMS, BAR BY BAR (common start = 8)
+--------------------------------------------
+ t    macd          hist        rung2 (zero)   rung1 (signal)
+  8    3.0625        0.625            +1             +1
+  9    2.234375     -0.1015625        +1             -1     <- they DIVERGE here
+ 10    0.39453125   -0.970703125      +1             -1
+ 11   -1.344726562  -1.354980469      -1             -1
+ 12   -2.328857422  -1.169555664      -1             -1
+ 13   -1.656799316  -0.248748779      -1             -1
+ 14    0.052322388   0.730186462      +1             +1
+ 15    1.686702728   1.182283401      +1             +1
+
+position changes (counting the initial move off flat at t=8):
+   rung 2:  t=8 (0->+1), t=11 (+1->-1), t=14 (-1->+1)   = 3
+   rung 1:  t=8 (0->+1), t=9  (+1->-1), t=14 (-1->+1)   = 3
+
+WHAT THIS PINS
+--------------
+1. alpha = 2/(n+1), applied to fast, slow AND the signal line.
+2. The seed convention, exactly: BOTH EMAs seeded at index slow-1 = 6, the fast
+   leg over its OWN last 3 closes (104,106,105) and not over closes 0..2. Seeding
+   the fast leg from bar 0 would give ema_fast[6] a different value and every
+   number below it would move.
+3. The signal line is an EMA of the MACD, not of price, seeded over the first 3
+   MACD values.
+4. The score is evaluated on close(t) — a completed bar. Fill timing is the
+   caller's business; nothing here reads close(t+1).
+5. `burn_in_bars` moves only the first tradeable bar. Every number in the
+   recursion above is identical with it on and off.
+6. THE NESTING, AND ITS CONSEQUENCE. Rung 1 is rung 2's series minus an EMA of
+   itself, and at t=9 and t=10 THE TWO ARMS HOLD OPPOSITE POSITIONS on the same
+   bars. That is not a rounding artifact: the MACD is still positive (trend up)
+   while the histogram has gone negative (trend decelerating). It is the
+   clearest small-scale demonstration of D217's central claim that the signal
+   line converts a trend-LEVEL rule into a trend-ACCELERATION rule, and if a
+   future edit ever makes the two arms agree everywhere, the ladder has stopped
+   being a ladder and this file goes red.
