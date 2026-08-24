@@ -49,6 +49,12 @@ one quantity under three names. Three findings stand independently of that — t
 cost at least their entire risk to trade, and the confluence stack is *worse* at zero cost
 than no filters at all.
 
+Seven worked trades from that study, in the same form as the terrain final report, are at
+[`docs/results/structure_trade_examples.html`](docs/results/structure_trade_examples.html) —
+published at <https://claude.ai/code/artifact/7b93befb-9689-4efa-bf95-378a0fafd9d9>. The
+examples are chosen by a rule fixed before any outcome was read, and every number on the
+page is pinned against its source artifact by the test suite.
+
 **Start with [`PHILOSOPHY.md`](PHILOSOPHY.md) if you're new here.** It's the guiding layer
 above everything else — the small set of values (trust by structure, honesty over comfort,
 anti-self-deception, composability, scope discipline) that generated every decision below,

@@ -1,0 +1,485 @@
+<title>Four Basis Points</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+
+<style>
+  :root {
+    --paper:      #F2F4F3;
+    --surface:    #FFFFFF;
+    --sunk:       #E9EDEC;
+    --ink:        #101C2B;
+    --muted:      #5C6B7A;
+    --faint:      #8697A6;
+    --rule:       #D3DAE0;
+    --brass:      #9A6B1F;
+    --brass-soft: #EFE3CC;
+    --slate:      #2F4356;
+
+    --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --cond:  "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+    --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --measure: 34rem;
+    --wide:    58rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0E141B;
+      --surface:    #151D26;
+      --sunk:       #121A22;
+      --ink:        #E3E9ED;
+      --muted:      #93A3B1;
+      --faint:      #6D7E8C;
+      --rule:       #26333F;
+      --brass:      #D3A050;
+      --brass-soft: #2C2416;
+      --slate:      #A8BACA;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:      #0E141B;
+    --surface:    #151D26;
+    --sunk:       #121A22;
+    --ink:        #E3E9ED;
+    --muted:      #93A3B1;
+    --faint:      #6D7E8C;
+    --rule:       #26333F;
+    --brass:      #D3A050;
+    --brass-soft: #2C2416;
+    --slate:      #A8BACA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    display: grid;
+    grid-template-columns: 1fr min(var(--measure), calc(100% - 2.5rem)) 1fr;
+    row-gap: 0;
+  }
+  .page > * { grid-column: 2; }
+  .page > .bleed {
+    grid-column: 1 / -1;
+    width: min(var(--wide), calc(100% - 2.5rem));
+    margin-inline: auto;
+  }
+
+  /* ---------------------------------------------------------------- masthead */
+
+  .masthead {
+    padding: 5rem 0 2.5rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .eyebrow {
+    font-family: var(--cond);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 0 0 1.25rem;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 7vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.19rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .byline {
+    font-family: var(--cond);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+  }
+
+  /* ---------------------------------------------------------------- sections */
+
+  section { padding: 3.25rem 0 0; }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.65rem;
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    margin: 0 0 0.35rem;
+    text-wrap: balance;
+  }
+  h2 + .kicker {
+    font-family: var(--cond);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 1.5rem;
+  }
+  h3 {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin: 2.25rem 0 0.75rem;
+  }
+  p { margin: 0 0 1.05rem; }
+  p.lead { font-size: 1.06rem; }
+  strong { font-weight: 700; }
+  em.term { font-style: italic; color: var(--muted); }
+
+  a { color: var(--brass); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; border-radius: 2px; }
+
+  code, .num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.88em;
+  }
+  code {
+    background: var(--sunk);
+    padding: 0.08em 0.32em;
+    border-radius: 2px;
+  }
+  .obs { color: var(--brass); font-weight: 600; }
+
+  /* ---------------------------------------------------------------- evidence */
+
+  .bleed { margin-block: 2rem; }
+
+  figure { margin: 0; }
+  figcaption {
+    font-family: var(--cond);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    margin-top: 0.7rem;
+    max-width: var(--measure);
+  }
+
+  .scroll { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    padding-bottom: 0.6rem;
+  }
+  th {
+    font-family: var(--cond);
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-align: right;
+    padding: 0 0.7rem 0.5rem;
+    border-bottom: 1px solid var(--ink);
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; padding-left: 0; }
+  th:last-child, td:last-child { padding-right: 0; }
+  td {
+    text-align: right;
+    padding: 0.46rem 0.7rem;
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: 1px solid var(--ink); }
+  td.name { font-family: var(--serif); font-size: 0.95rem; white-space: normal; }
+  td.hi { color: var(--brass); font-weight: 600; }
+  tr.total td { font-weight: 600; }
+
+  /* ---------------------------------------------------------------- verdicts */
+
+  .chip {
+    display: inline-block;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.16em 0.5em;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    white-space: nowrap;
+    vertical-align: 0.08em;
+  }
+  .chip.fail    { color: var(--brass); }
+  .chip.hold    { color: var(--slate); }
+  .chip.neutral { color: var(--faint); }
+
+  /* ---------------------------------------------------------------- panels */
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brass);
+    padding: 1.4rem 1.5rem;
+    margin: 2rem 0;
+  }
+  .panel h3 { margin-top: 0; }
+  .panel p:last-child { margin-bottom: 0; }
+
+  .pull {
+    font-family: var(--serif);
+    font-size: 1.32rem;
+    line-height: 1.36;
+    font-style: italic;
+    color: var(--ink);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 1.4rem 0;
+    margin: 2.4rem 0;
+    text-wrap: pretty;
+  }
+
+  /* ---------------------------------------------------------------- stats row */
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .stat { background: var(--surface); padding: 1.1rem 1.2rem; }
+  .stat dt {
+    font-family: var(--cond);
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 0.4rem;
+  }
+  .stat dd {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .stat dd .unit { font-size: 0.85rem; color: var(--muted); }
+
+  /* ---------------------------------------------------------------- lists */
+
+  ul.findings { list-style: none; padding: 0; margin: 0; }
+  ul.findings li {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 3.4rem 1fr;
+    gap: 0 1rem;
+    align-items: baseline;
+  }
+  ul.findings li:first-child { border-top: 1px solid var(--rule); }
+  ul.findings .rec {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+
+  hr.rule { border: 0; border-top: 1px solid var(--rule); margin: 3rem 0 0; }
+
+  footer {
+    padding: 3rem 0 5rem;
+    font-family: var(--cond);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .masthead { padding-top: 3rem; }
+    ul.findings li { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <p class="eyebrow">Backtest Framework &middot; Structure Programme</p>
+    <h1>Four basis points from the stop</h1>
+    <p class="standfirst">Seven worked examples from the strategy exactly as taught &mdash; change of character, flipped level, 61.8&percnt; retracement, fair value gap, all four agreeing on one bar. Chosen by a rule fixed before any outcome was looked at. The worst trade in the book is not a bad prediction; it is a fee bill.</p>
+    <p class="byline">
+      <span>222 stacked trades</span>
+      <span>D204 &ndash; D212</span>
+      <span>24 Aug 2026</span>
+    </p>
+  </header>
+
+  <section>
+    <h2>What you are looking at</h2>
+    <p class="kicker">The full confluence arm, 15-minute bars, eight years</p>
+    <p class="lead">Every trade below comes from the arm the course actually teaches: a change of character, then a pullback where the flipped level, the 61.8&percnt; retracement and a fair value gap all hold <em class="term">at the same bar</em>. 118 such trades on <code>BTCUSDT</code> and 104 on <code>ETHUSDT</code> over eight years of 15-minute bars.</p>
+    <p>The wrapper is identical in every one and never varies: stop at the origin of the impulse leg, target at 5R, a channel trail once 1R in profit, a 60-bar cap. Entry is a market order at the close of the signalling bar. Costs are 40&nbsp;bps <strong>per side</strong>, so a round trip pays 80.</p>
+    <p>Two numbers set the frame. At the measured costs this arm needs a <span class="num obs">40.2&percnt;</span> hit rate on BTC and <span class="num obs">33.5&percnt;</span> on ETH just to break even at a 5R target. It achieves <span class="num">11.0&percnt;</span> and <span class="num">15.4&percnt;</span>.</p>
+  </section>
+
+  <section>
+    <h2>How these seven were chosen</h2>
+    <p class="kicker">The rule, written down before the outcomes were read</p>
+    <p>Examples are the easiest thing in a study to cherry-pick, so the selection is mechanical and was fixed in the extraction script before anything was inspected: per symbol, the <strong>best</strong>, <strong>median</strong> and <strong>worst</strong> trade by net R; then, pooled across both symbols, the trades with the <strong>highest</strong> and <strong>lowest cost in R</strong>.</p>
+    <p>That names eight slots and yields seven trades, because the highest-cost trade in either book <em class="term">is</em> BTC's worst. Which is itself the finding: on this rule the worst outcome and the most expensive one are the same event.</p>
+  </section>
+
+  <div class="bleed">
+    <figure>
+      <div class="scroll">
+        <table>
+          <caption>Seven trades, full confluence arm, 40&nbsp;bps per side</caption>
+          <thead>
+            <tr><th>Trade</th><th>Side</th><th>Date</th><th>Retrace</th><th>Stop (ATR)</th><th>Stop (&percnt; px)</th><th>Gross R</th><th>Cost R</th><th>Net R</th><th>Exit</th></tr>
+          </thead>
+          <tbody>
+      <tr><td class="name">BTC best</td><td>short</td><td>2018-04-01</td><td>0.378</td><td>1.19</td><td>1.281%</td><td>+5.00</td><td class="hi">0.60</td><td>+4.40</td><td>target</td></tr>
+      <tr><td class="name">BTC median</td><td>short</td><td>2021-10-10</td><td>0.542</td><td>2.10</td><td>1.002%</td><td>-1.00</td><td class="hi">0.80</td><td>-1.80</td><td>stop</td></tr>
+      <tr><td class="name">BTC worst</td><td>short</td><td>2022-11-29</td><td>0.578</td><td>0.08</td><td>0.038%</td><td>-1.00</td><td class="hi">20.89</td><td>-21.89</td><td>stop</td></tr>
+      <tr><td class="name">ETH best</td><td>long</td><td>2025-07-09</td><td>0.563</td><td>2.54</td><td>0.969%</td><td>+5.00</td><td class="hi">0.85</td><td>+4.15</td><td>target</td></tr>
+      <tr><td class="name">ETH median</td><td>short</td><td>2022-05-28</td><td>0.730</td><td>1.05</td><td>1.055%</td><td>-1.00</td><td class="hi">0.76</td><td>-1.76</td><td>stop</td></tr>
+      <tr><td class="name">ETH worst</td><td>short</td><td>2023-09-09</td><td>0.507</td><td>0.19</td><td>0.039%</td><td>-1.00</td><td class="hi">20.44</td><td>-21.44</td><td>stop</td></tr>
+      <tr><td class="name">Cheapest</td><td>long</td><td>2021-01-22</td><td>0.505</td><td>2.99</td><td>3.947%</td><td>+0.37</td><td class="hi">0.20</td><td>+0.16</td><td>max_hold</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption>Cost in R is the 80&nbsp;bp round trip divided by the distance to the stop. Where it exceeds 1.00 the fee is larger than everything the trade was risking.</figcaption>
+    </figure>
+  </div>
+
+  <section>
+    <h2>BTCUSDT</h2>
+    <p class="kicker">118 trades &mdash; best, median, worst</p>
+  </section>
+
+  <div class="bleed">
+    <ul class="findings">
+      <li>
+        <span class="rec">BEST</span>
+        <span><strong>The strategy working exactly as advertised &mdash; and the golden ratio is not really in it.</strong> A change of character, a 12-bar impulse down 2.06%, a pullback into a fair value gap 0.52&nbsp;ATR wide, a stop 1.19&nbsp;ATR away at the leg&rsquo;s origin, and a clean 5R banked 38 bars later for <span class="num obs">+4.395R</span> net. It is a good trade. But it filled at a <strong>37.8%</strong> retracement, not 61.8&percnt;: the 0.618 level sat at <code>6,984.66</code> and price closed <code>33.70</code> below it. The touch band is half an ATR &mdash; <code>37.41</code> on a leg of <code>144.88</code>, or <strong>25.8% of the entire move</strong>. &ldquo;Price touched the golden ratio&rdquo; was true anywhere between the 36% and 88% retracement.</span>
+      </li>
+      <li>
+        <span class="rec">MEDIAN</span>
+        <span><strong>A textbook loss, correctly handled, and still half fee.</strong> Short at 54.2% into the leg, stop 2.10&nbsp;ATR away, 5R target below. Price went +0.67R in favour, turned, and paid the stop 18 bars later. Nothing went wrong: gross <span class="num">-1.00R</span> is exactly one unit of planned risk. What makes it a losing business is the line beneath &mdash; <span class="num obs">0.802R</span> of fees on that 1R, so the median trade hands back 80% of its risk before the market is consulted.</span>
+      </li>
+      <li>
+        <span class="rec">WORST</span>
+        <span><strong>The worst trade in the book is not a bad prediction. It is a fee bill.</strong> Gross it lost <span class="num">-1.00R</span> &mdash; an ordinary stop-out, identical to the median. The difference is that the entry filled <code>6.22</code> from its stop on a <code>16,239.70</code> bitcoin: <strong>0.038% of price</strong>, 0.08&nbsp;ATR. An 80&nbsp;bp round trip against a 3.8&nbsp;bp stop is <span class="num obs">20.891R</span>, and no position size makes that tradeable. The setup was textbook: change of character, 57.8% retracement, inside a fair value gap 0.37&nbsp;ATR wide, all three filters agreeing. They agreed on a trade whose entire risk was smaller than the spread. Its recorded +8.99R best excursion is the same tininess from the other side &mdash; the excursion window includes the entry bar, whose own fifteen minutes are nine times a six-dollar stop. At this scale every number in R is noise.</span>
+      </li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>ETHUSDT</h2>
+    <p class="kicker">104 trades &mdash; best, median, worst</p>
+  </section>
+
+  <div class="bleed">
+    <ul class="findings">
+      <li>
+        <span class="rec">BEST</span>
+        <span><strong>The mirror of BTC&rsquo;s best, five years later and the other way up.</strong> A long at 56.3% into a 6-bar impulse, a fair value gap 1.81&nbsp;ATR wide, stop 2.54&nbsp;ATR below at the leg&rsquo;s origin, target reached in 20 bars for <span class="num obs">+4.154R</span>. A real 5R, and the tightest the 61.8&percnt; band gets in this set &mdash; half an ATR here is only 9.6% of the leg, so the level meant something closer to what the course claims. The fee still took <span class="num">0.846R</span>. Fees are not why this trade fails, because it does not fail. They are why the 103 around it do.</span>
+      </li>
+      <li>
+        <span class="rec">MEDIAN</span>
+        <span><strong>Deeper than the golden ratio, and it made no difference.</strong> Entered at a <strong>73.0%</strong> retracement &mdash; well past 61.8&percnt;, and still inside the band, which here reaches to 79%. Price never moved more than <span class="num">+0.18R</span> in favour and stopped out in 3 bars. The wrapper did nothing wrong and the entry was simply not predictive. This is what the middle of 104 perfect-confluence setups looks like.</span>
+      </li>
+      <li>
+        <span class="rec">WORST</span>
+        <span><strong>The same defect as BTC&rsquo;s worst, on a different asset in a different year.</strong> A 0.37% impulse leg &mdash; six dollars on a <code>1,635.15</code> ether &mdash; with the entry <code>0.64</code> from its stop, <strong>0.039% of price</strong>. Cost <span class="num obs">20.443R</span>. That the two worst trades in two independent books are the same shape is the point: the leg&rsquo;s origin can sit arbitrarily close to the pullback entry, and nothing anywhere in the rule prevents it. There is no minimum stop, because the course never mentions one.</span>
+      </li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>The cheapest trade the rule ever produced</h2>
+    <p class="kicker">Everything about the cost structure going right</p>
+  </section>
+
+  <div class="bleed">
+    <ul class="findings">
+      <li>
+        <span class="rec">LOW</span>
+        <span><strong>When the fees are as small as they ever get, the trade makes a sixth of one unit of risk.</strong> A 4.74% impulse leg puts the stop 2.99&nbsp;ATR away, so the round trip costs only <span class="num obs">0.204R</span> &mdash; the lowest of all 222 stacked trades in both books. Price drifted the right way, never came near the 5R target 19.7% above, and closed at the 60-bar cap for <span class="num">+0.367R</span> gross. Net <span class="num">+0.163R</span>. This is the ceiling of the friendly case.</span>
+      </li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>Three things the examples show</h2>
+    <p class="kicker">Each visible in the numbers above, not inferred from them</p>
+  </section>
+
+  <div class="bleed">
+    <ul class="findings">
+      <li>
+        <span class="rec">1</span>
+        <span><strong>The stop can be arbitrarily tight and the rule does not care.</strong> Stop distance is the unretraced part of the leg, so a deep entry on a small leg leaves almost nothing between fill and stop. Across the two books that produces trades risking <span class="num">0.038%</span> and <span class="num">0.039%</span> of price, on which an 80&nbsp;bp round trip is twenty times the risk. <strong>67&percnt; of BTC&rsquo;s stacked trades and 50&percnt; of ETH&rsquo;s cost at least their entire risk to put on.</strong> A minimum-stop filter would fix it and would also be a new parameter the course never states.</span>
+      </li>
+      <li>
+        <span class="rec">2</span>
+        <span><strong>The 61.8&percnt; level is a band, and the band is up to a quarter of the leg on each side.</strong> The touch tolerance is half an ATR in price. On a 15-minute impulse leg that is 9.6% of the move at its tightest here and 28.1% at its loosest &mdash; so &ldquo;price reached the golden ratio&rdquo; can be satisfied anywhere from the 34% to the 90% retracement. It is why this filter admits roughly seven setups in ten, and why the best trade in the BTC book qualifies at a 37.8% retracement.</span>
+      </li>
+      <li>
+        <span class="rec">3</span>
+        <span><strong>The winners are real. There are not enough of them.</strong> Both best trades reached a clean, full 5R exactly as designed &mdash; this is not a strategy that never works. At the measured costs it needs <span class="num obs">40.2&percnt;</span> of trades to do that on BTC and <span class="num obs">33.5&percnt;</span> on ETH. It gets <span class="num">11.0&percnt;</span> and <span class="num">15.4&percnt;</span>. Over eight years the full confluence arm turns 10,000 into <span class="num">3,352</span> on BTC and <span class="num">4,321</span> on ETH, against buy-and-hold&rsquo;s <span class="num">56,000</span> and <span class="num">21,521</span>.</span>
+      </li>
+    </ul>
+  </div>
+
+  <section>
+    <h2>What these examples do not show</h2>
+    <p>Seven trades cannot carry a verdict and are not being asked to. The verdict came from 222 stacked trades, 3,875 setups, eight parameter cells and a set of matched-placebo controls, and it is that no component of this strategy predicts anything once leg size relative to ATR is held constant. These are illustrations of a conclusion reached elsewhere.</p>
+    <p>Two of them flatter the strategy on purpose. The selection rule includes both best trades because a page that showed only losers would be answering a question nobody asked &mdash; and both of those are genuine 5R winners, correctly identified, correctly held to target.</p>
+    <p>And none of this refutes the course as a human practises it. What was tested is the mechanised version, which is not the thing being taught. A discretionary trader would have skipped the six-dollar stop. That instinct is exactly what mechanising the rules removed, and its absence from the written rules is the finding.</p>
+  </section>
+
+  <hr class="rule">
+  <footer>
+    <p>Reproduce: <code>uv run python scripts/run_structure_examples.py</code> &middot; offline, deterministic, from the committed 15-minute Binance fixture. Every number on this page is quoted from <code>data/structure_examples_summary.json</code> and pinned against it by <code>tests/unit/test_structure_examples.py</code>.</p>
+    <p>Full programme: <code>STRUCTURE_RESULTS.md</code>, decision records D204&ndash;D212, closed after 102 looks.</p>
+  </footer>
+
+</div>

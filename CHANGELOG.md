@@ -10,6 +10,28 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (worked trade examples, 2026-08-24)
+- `scripts/run_structure_examples.py` + `data/structure_examples_summary.json` — extracts
+  example trades from the full confluence arm under a selection rule fixed in the script
+  before any outcome was inspected: per symbol the best, median and worst by net R, plus
+  the pooled highest and lowest cost in R.
+- `docs/results/structure_trade_examples.html` + `scripts/build_structure_examples_report.py`
+  — the report, reusing `final_report.html`'s stylesheet verbatim so the two are the same
+  document rather than two that resemble each other.
+- `tests/unit/test_structure_examples.py` (13) pins every number the page quotes against
+  its source JSON, including that the stylesheet is still byte-identical to the original's.
+
+### Findings — illustrative, not a verdict
+- **The eight-slot rule yields seven trades: the highest-cost trade in either book IS
+  BTC's worst.** The worst outcome and the most expensive one are the same event.
+- **The worst trade is not a bad prediction, it is a fee bill.** Gross −1.00R, an ordinary
+  stop-out; the entry sat 0.038% of price from its stop, so the round trip cost **20.891R**.
+  ETH's worst is the same shape at 0.039% and 20.443R, five years and one asset apart.
+- **The 61.8% level is a band covering 9.6%–28.1% of the leg on each side.** BTC's best
+  trade qualifies as a golden-ratio touch at an actual retracement of **37.8%**.
+- **Both best trades are genuine, clean 5R winners.** The strategy is not one that never
+  works — it needs 40.2%/33.5% of trades to do that and gets 11.0%/15.4%.
+
 ### Fixed (the cost convention, 2026-08-24 — D212)
 - `structure_setups.friction_in_r` charged `cost_bps` once for a round trip while
   `structure_strategies.r_multiples` charged it per side — **two halves of one study
