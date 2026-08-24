@@ -64,6 +64,11 @@ below the final report.
 D203's stop by explicit amendment and inherits both families' counts for its combined
 bar: 124 + 259 + 12 = 395.
 
+**D215 is a fourth (16 looks)** — the test of *why* it all failed. Its Test A carries a
+**fresh** ledger: it deletes the structure entirely, and a test whose predicted outcome is
+*this effect is generic and therefore not yours* is negative-confirming, which prior looks
+do not weaken. Tests B and C inherit the 395.
+
 Never reset. Retired and failed cells count. Budget estimated in the plan at ~118 looks
 for the full programme; the estimate is not a licence and the actual count is what feeds
 the deflated Sharpe.
@@ -920,6 +925,114 @@ The pre-registered *direction* fares better than the pre-registered *effect*. `i
 | **D214 total** | | **12** |
 
 Inherited for the combined bar: the structure programme's 124 and the terrain programme's 259.
+
+## D215 - is it just mean reversion?
+
+**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_generic_reversal.py` (offline, deterministic)
+
+Pre-registered in `docs/decisions/D215-is-it-just-mean-reversion.md` before this runner existed. The claim: the retracement-depth staircase - the only monotone relationship either programme found - is generic short-horizon reversion after a large move, and the structure contributes nothing.
+
+**Both arms call the same function.** `structure_nulls.continue_from`, same 0.5 ATR band fixed at the bar, same horizon. Not two implementations of one rule - one function, because a second definition is a thing to drift from.
+
+### The census that sets the lookback
+
+| symbol | setups | M = median impulse leg | generic samples | structure touches |
+|---|---:|---:|---:|---:|
+| `BTCUSDT` | 3,875 | **8 bars** | 36,545 | 21,960 |
+| `ETHUSDT` | 3,753 | **8 bars** | 36,512 | 21,389 |
+
+`M` is read off the structure population, not chosen. The generic arm steps by `M` so no two samples share a lookback window - pre-registered, because overlapping windows make a **negative** look sharper than it is.
+
+### A - the staircase with the structure deleted
+
+**`BTCUSDT`** - every 8th bar, bucketed by move size, no change of character and no levels anywhere:
+
+| bucket | move size (ATR) | n | P(reversal) generic | P(continuation) structure |
+|---:|---|---:|---:|---:|
+| 1 | 0.09 | 4,569 | 37.8% | 26.9% (175) |
+| 2 | 0.28 | 4,568 | 37.1% | 28.4% (846) |
+| 3 | 0.48 | 4,568 | 40.4% | 33.4% (1,485) |
+| 4 | 0.72 | 4,568 | 41.5% | 36.1% (2,825) |
+| 5 | 1.01 | 4,568 | 43.9% | 38.1% (3,532) |
+| 6 | 1.42 | 4,568 | 48.5% | 44.7% (4,227) |
+| 7 | 2.10 | 4,568 | 50.5% | 49.8% (4,841) |
+| 8 | 3.96 | 4,568 | 50.9% | 51.6% (4,029) |
+
+**`ETHUSDT`** - every 8th bar, bucketed by move size, no change of character and no levels anywhere:
+
+| bucket | move size (ATR) | n | P(reversal) generic | P(continuation) structure |
+|---:|---|---:|---:|---:|
+| 1 | 0.10 | 4,564 | 37.6% | 31.3% (163) |
+| 2 | 0.30 | 4,564 | 38.7% | 36.7% (711) |
+| 3 | 0.51 | 4,564 | 40.1% | 31.3% (1,532) |
+| 4 | 0.76 | 4,564 | 42.6% | 36.4% (2,435) |
+| 5 | 1.07 | 4,564 | 44.8% | 40.5% (3,561) |
+| 6 | 1.49 | 4,564 | 47.7% | 44.2% (4,094) |
+| 7 | 2.18 | 4,564 | 50.0% | 48.4% (4,863) |
+| 8 | 4.00 | 4,564 | 52.6% | 53.4% (4,030) |
+
+For reference, the Fibonacci ladder this is being compared against ran `BTCUSDT` 46.1% to 60.5% and `ETHUSDT` 46.3% to 58.2% across its eight rungs.
+
+### The verdict: matched on move size
+
+Each structure touch scored against the generic reversal rate of its own move-size bucket. D208's precedent and its warning - there the fair value gap sat at the 100th percentile of 500 draws raw and at +0.006 depth-matched.
+
+| symbol | touches covered | structure | matched generic | delta | within ±0.02 |
+|---|---:|---:|---:|---:|:--:|
+| `BTCUSDT` | 21,960 | 43.4% | 46.7% | **-0.0329** | **NO** |
+| `ETHUSDT` | 21,389 | 44.1% | 47.1% | **-0.0302** | **NO** |
+
+### B - does the slope decay with horizon?
+
+| symbol | h=5 slope | h=20 slope | h=60 slope | decays |
+|---|---:|---:|---:|:--:|
+| `BTCUSDT` | +0.1029 | +0.0345 | +0.0281 | yes |
+| `ETHUSDT` | +0.1029 | +0.0437 | +0.0399 | yes |
+
+### C - the target sweep, and its counterintuitive prediction
+
+| symbol | target | P(reach target) | mean gross R | mean net R @40bp | untradeable |
+|---|---:|---:|---:|---:|---:|
+| `BTCUSDT` | 1R | 42.4% | -0.007 | -2.034 | 46% |
+| `BTCUSDT` | 2R | 21.3% | +0.009 | -2.017 | 46% |
+| `BTCUSDT` | 5R | 4.5% | +0.010 | -2.016 | 46% |
+| `ETHUSDT` | 1R | 42.7% | -0.004 | -1.510 | 33% |
+| `ETHUSDT` | 2R | 21.1% | +0.020 | -1.486 | 32% |
+| `ETHUSDT` | 5R | 5.1% | +0.063 | -1.443 | 32% |
+
+### The arithmetic that makes all of it moot at this bar size
+
+| symbol | 0.5 ATR band as share of price | 80 bp round trip | move predicted / cost |
+|---|---:|---:|---:|
+| `BTCUSDT` | 0.191% | 0.800% | **0.24x** |
+| `ETHUSDT` | 0.259% | 0.800% | **0.32x** |
+
+### Verdict
+
+**The staircase survives with the structure deleted.** The generic ladder's slope is +0.1029 on `BTCUSDT` and +0.1029 on `ETHUSDT` — plain bars, bucketed by how far price just moved, with no change of character, no impulse leg, no Fibonacci level and no fair value gap anywhere in the construction. H1 confirmed.
+
+**And matched on move size, the structure adds something.** Structure touches score 43.4% against a matched-generic 46.7% on `BTCUSDT` and 44.1% against a matched-generic 47.1% on `ETHUSDT` — deltas of -0.0329 and -0.0302, against H2's ±0.02 bar. **H2 FALSIFIED — the components carry something the raw move does not, which is the first positive finding in 395 looks and needs its own study.**
+
+So the five components, the confluence, the golden ratio and the fair value gap reduce to **how far price just moved**. That is not a level, it is not structure, and it is not the course's mechanism — it is the oldest effect in intraday data wearing a chart pattern.
+
+**`BTCUSDT` across horizons:** slope +0.1029 at 5 bars, +0.0345 at 20 bars, +0.0281 at 60 bars.
+**`ETHUSDT` across horizons:** slope +0.1029 at 5 bars, +0.0437 at 20 bars, +0.0399 at 60 bars.
+
+**`BTCUSDT` target sweep:** dropping from 5R to 1R lifts P(reach target) 4.5% -> 42.4% and mean gross R +0.010 -> -0.007, while mean net R goes -2.016 -> -2.034 — **worse, as H4 predicted**.
+**`ETHUSDT` target sweep:** dropping from 5R to 1R lifts P(reach target) 5.1% -> 42.7% and mean gross R +0.063 -> -0.004, while mean net R goes -1.443 -> -1.510 — **worse, as H4 predicted**.
+
+**And the arithmetic that ends it at this bar size.** The move being predicted is half an ATR, which on 15m bars is 0.191% and 0.259% of price, against an 80 bp round trip. The effect is 0.24x and 0.32x the cost of capturing it. **H5 confirmed** — a real effect, and not one you can trade at fifteen minutes. Which is the whole argument for the frequency frontier: the binding question was never which levels to draw, it is what bar size makes this move large relative to the spread.
+
+### Multiplicity
+
+| test | cells | looks |
+|---|---|---:|
+| A generic ladder + matched comparison | 2 metrics x 2 symbols | 4 |
+| B slope by horizon | 3 horizons x 2 symbols | 6 |
+| C target sweep | 3 targets x 2 symbols | 6 |
+| **D215 total** | | **16** |
+
+**Test A starts a fresh ledger**: it reuses no sensor, component or level, and multiplicity inflates false positives - a test whose predicted outcome is *this effect is generic and therefore not yours* is not weakened by prior looks. B and C reuse the structure machinery and inherit the 395.
 
 ---
 

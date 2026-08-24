@@ -10,6 +10,30 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D215 — is it just mean reversion?, 2026-08-24)
+- `scripts/run_generic_reversal.py` + `data/generic_reversal_summary.json` + a D215 section.
+  Both arms call the *same* `structure_nulls.continue_from` — one function, not two
+  implementations — so the comparison is like-for-like by construction.
+- `tests/unit/test_generic_reversal.py` (12), including the mandatory pair: the statistic
+  must be flat on a random walk and steep on a series built to revert.
+
+### Findings
+- **The staircase survives with the structure deleted.** Bucketing every 8th bar by move
+  size reproduces the Fibonacci ladder's shape with no change of character, no leg, no level
+  and no gap: 37.8% → 50.9% (BTC), 37.6% → 52.6% (ETH). Slopes +0.10288 and +0.10293 — two
+  independent assets to four decimal places.
+- **Matched on move size, the structure is worse.** −0.033 and −0.030, outside the ±0.02
+  band on the negative side. **H2 falsified in the hypothesis's favour**: the components do
+  not merely fail to add, they subtract about three percentage points. Conjecture: D173's
+  confirmation lag makes the move stale by the time a touch registers.
+- **The slope decays two thirds by 20 bars** — reversion's signature, not a level's.
+- **It is a slope, not a level**: even the largest-move bucket reverts only ~51%.
+- **Matching the target to the horizon converts the tilt into hit rate and gives it back in
+  size**: P(target) 4.5% → 42.4% at 1R, gross R unchanged-to-worse, net R worse.
+- **And it ends at 15m regardless**: the predicted move is a 0.5 ATR band worth 0.19%/0.26%
+  of price against an 80 bp round trip — **0.24× and 0.32× the cost of capturing it**.
+
+
 ### Added (D214 — the terrain map as a confluence gate, 2026-08-24)
 - `scripts/run_structure_terrain_gate.py` + `data/structure_terrain_gate_summary.json` + a
   D214 section. Overrides D203's stop by explicit amendment, recorded before the runner

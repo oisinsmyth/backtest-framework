@@ -1,6 +1,6 @@
 # D215 — is it just mean reversion? Testing the hypothesis by deleting the structure
 
-**Status:** Pre-registered — written and committed BEFORE the runner exists
+**Status:** Committed (H1, H3, H5 confirmed; H2 falsified — in the hypothesis's favour; H4 split)
 **Date:** 2026-08-24
 **Category:** Validation & research integrity
 **Source:** the hypothesis offered for why the structure programme failed
@@ -135,3 +135,129 @@ If structure touches beat matched generic bars by more than 0.02 at the same mov
 hypothesis is wrong: the components carry something the raw move does not. That would be the
 first positive finding in 395 looks and would need its own study. The test is built so that
 outcome is visible rather than absorbed.
+
+---
+
+# RESULT — appended 2026-08-24, nothing above it edited
+
+**The staircase survives with the structure deleted, and the structure is slightly worse
+than nothing.**
+
+`M = 8 bars`, the median impulse-leg length over 3,875 and 3,753 setups — a census, read off
+the population rather than chosen.
+
+## A — the ladder, with no structure anywhere in it
+
+Every 8th bar, bucketed by how far price moved in the previous 8, no change of character, no
+leg, no level, no gap:
+
+| bucket (median move, ATR) | 0.09 | 0.28 | 0.48 | 0.72 | 1.01 | 1.42 | 2.10 | 3.96 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **`BTCUSDT`** P(reversal) | 37.8% | 37.1% | 40.4% | 41.5% | 43.9% | 48.5% | 50.5% | **50.9%** |
+| **`ETHUSDT`** P(reversal) | 37.6% | 38.7% | 40.1% | 42.6% | 44.8% | 47.7% | 50.0% | **52.6%** |
+
+Monotone, both symbols, ~36,500 non-overlapping samples each. Slope **+0.10288** on BTC and
+**+0.10293** on ETH — two independent assets agreeing to four decimal places, which is
+better evidence that the effect is a real market property than any single number here.
+
+**H1 confirmed.** The Fibonacci ladder's shape reproduces with none of the Fibonacci in it.
+
+## The verdict — matched on move size
+
+| symbol | touches covered | structure | matched generic | delta |
+|---|---:|---:|---:|---:|
+| `BTCUSDT` | 21,960 | 43.4% | 46.7% | **−0.0329** |
+| `ETHUSDT` | 21,389 | 44.1% | 47.1% | **−0.0302** |
+
+**H2 is falsified**, and it is worth being precise about how. It predicted structure touches
+would land *within* ±0.02 of matched plain bars — neutral. They land **outside it, on the
+negative side**: at the same move size, a structure touch is a slightly *worse* moment than
+a bar picked for having moved that far and nothing else.
+
+So the prediction was wrong and the hypothesis is stronger than the prediction. The
+components do not merely fail to add; they subtract about three percentage points.
+
+**A conjecture for why, offered as a conjecture.** A pivot cannot be confirmed until `k`
+bars after it (D173), and the leg's end pivot gates the whole setup. By the time a touch
+registers, the move is several bars stale and part of the reversion has already happened.
+D173's lag is *correct* — removing it would be look-ahead — but correctness has a price, and
+this may be it. Untested, and it is a testable claim: the deficit should shrink as `k` falls.
+
+## B — the slope decays, which is what reversion does
+
+| symbol | h=5 | h=20 | h=60 |
+|---|---:|---:|---:|
+| `BTCUSDT` | +0.1029 | +0.0345 | +0.0281 |
+| `ETHUSDT` | +0.1029 | +0.0437 | +0.0399 |
+
+**H3 confirmed.** Two thirds of the slope is gone by 20 bars and it is flat thereafter — the
+signature of a short-horizon effect, not of a level that means something.
+
+The *level* moves the other way and is worth noting: overall reversal is 43.8% at 5 bars and
+52.3% at 20. So over five bars price mostly **continues**, and the ladder measures a tilt in
+how often it does not. Even in the largest-move bucket reversal reaches only ~51%.
+
+**The effect is a slope, not a level.** There is no move size after which price reliably
+bounces; there is a mild gradient, worth a few percentage points, on a near coin flip.
+
+## C — the target sweep
+
+| symbol | target | P(reach target) | mean gross R | mean net R @40bp |
+|---|---:|---:|---:|---:|
+| `BTCUSDT` | 5R | 4.5% | +0.010 | −2.016 |
+| `BTCUSDT` | 1R | **42.4%** | −0.007 | −2.034 |
+| `ETHUSDT` | 5R | 5.1% | +0.063 | −1.443 |
+| `ETHUSDT` | 1R | **42.7%** | −0.004 | −1.510 |
+
+**H4 splits.** The hit rate does jump past 35% as predicted, and net R does get *worse* — the
+counterintuitive half, which was the point of making the prediction. But **gross R does not
+improve**; it falls. Matching the target to the horizon where the effect lives converts the
+5-bar tilt into hit rate and gives back exactly as much in size. A 42% hit rate at 1R is a
+coin flip that pays 1:1.
+
+## H5 — and this is where it ends at fifteen minutes
+
+| symbol | 0.5 ATR band, as share of price | 80 bp round trip | ratio |
+|---|---:|---:|---:|
+| `BTCUSDT` | 0.192% | 0.800% | **0.24×** |
+| `ETHUSDT` | 0.260% | 0.800% | **0.32×** |
+
+**The move being predicted is a quarter to a third of the cost of capturing it.** Confirmed
+at high confidence, and it is the sentence the whole programme reduces to.
+
+## What this settles
+
+The five components, the confluence, the golden ratio and the fair value gap reduce to **how
+far price just moved** — and reduce to slightly *less* than that. What was being taught as
+market structure is a mild, decaying, sub-coin-flip tilt that any bar carries, measured
+through machinery that costs three percentage points to apply.
+
+Two things follow, and only the second is about this strategy:
+
+1. **The effect is real, generic, and known.** Short-horizon reversion after a large move is
+   not a discovery, and the pre-committed rule in this document applies to it: nothing here
+   is pursued as a strategy without its own pre-registration and holdout. It is not being
+   pursued.
+2. **The binding constraint was never which levels to draw.** At 15m the predicted move is
+   0.24× the spread. The only lever that changes that by an order of magnitude is bar size,
+   which is what the frequency frontier measures.
+
+## Ledger
+
+**16 looks.** Test A (4) on a fresh ledger — it reuses no sensor, component or level, and a
+test whose predicted outcome is *this effect is generic and therefore not yours* is
+negative-confirming, which prior looks do not weaken. Tests B and C (12) reuse the structure
+machinery and inherit the 395.
+
+## Predictions, scored
+
+- **H1** monotone generic ladder — **confirmed**.
+- **H2** structure within ±0.02 of matched generic — **falsified**; it is −0.03, i.e. worse.
+- **H3** slope decays with horizon — **confirmed**.
+- **H4** hit rate >35%, gross improves, net worsens — **split**: 1st and 3rd confirmed, 2nd
+  falsified.
+- **H5** the effect is not tradeable at 15m — **confirmed**, at 0.24× and 0.32× the cost.
+
+Three of five clean, one falsified in the hypothesis's favour, one split. The two that
+missed were both at *moderate* confidence and all three *high*-confidence calls held — the
+calibration this project has tracked since D199, holding for the third study running.
