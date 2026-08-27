@@ -128,6 +128,15 @@
  "timezone_note": "US/Eastern as stated by the provider in its own Meta Data block. DST-shifting, so NOT a fixed offset and NOT the crypto fixtures' 'naive means UTC' convention (D108)",
  "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true at fetch. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, which breaks D24's immutable-snapshot requirement; as-traded values never change. Volume is identical under both settings (measured, ratio 1.000000). Provider frame is as-traded: NOT split-adjusted (D75)",
  "volume_provenance": "CONSOLIDATED. Verified before the backfill: SPY 2024-01 median session volume summed from 15m bars = 66,595,182 shares against a consolidated ADV of ~70-90M. Not a single-venue sample",
+ "split_adjusted": true,
+ "split_events_applied": 12,
+ "split_adjusted_bars": 414968,
+ "split_policy": "Back-adjusted from the events sidecar: prices DIVIDED by the product of every split ratio effective after the bar, volumes MULTIPLIED by the same factor. The opposite directions are the point -- a 2:1 split halves the price and doubles the share count. Matches corporate_actions.split_adjusted for prices; that helper does not touch volume because TimestampedBar carries none, and in a VOLUME study it must be handled. The as-traded values remain recoverable from the uncommitted raw cache plus this sidecar",
+ "largest_residual_bar_move": {
+  "symbol": "XOP",
+  "timestamp": "2020-03-09 09:30:00",
+  "move": 0.29666924864446165
+ },
  "half_days_dropped": [
   "2018-07-03",
   "2018-11-23",
@@ -397,6 +406,6 @@
  "zero_volume_bars": 0,
  "zero_volume_rate": 0.0,
  "empty_bar_disclosure": "D192 requires any intraday study on a new provider to measure and report its own universe's empty-bar rate. That rate is `zero_volume_rate` above and must be quoted in the study's pre-registration. yfinance's comparable rates were 50% at 1h and 15% at 15m, unexplained (D160), which is why this cannot be assumed",
- "fetched_at_utc": "2026-08-27T14:09:50.052382+00:00",
- "built_at_utc": "2026-08-27T14:09:50.052382+00:00"
+ "fetched_at_utc": "2026-08-27T15:13:38.969594+00:00",
+ "built_at_utc": "2026-08-27T15:13:38.969594+00:00"
 }

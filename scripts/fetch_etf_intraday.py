@@ -267,6 +267,127 @@ def do_plan() -> int:
     return 0
 
 
+# --------------------------------------------------------------------------
+# Corporate actions — WP0. The fixture is unusable without this.
+# --------------------------------------------------------------------------
+
+
+def fetch_action(function: str, symbol: str, key: str, limiter: RateLimiter) -> list:
+    """One SPLITS or DIVIDENDS call. Both are free endpoints.
+
+    Same structural validation as the bar fetch: Alpha Vantage returns HTTP 200 on
+    errors, so a payload without a `data` list is a failure however healthy the
+    status line looks."""
+    params = {"function": function, "symbol": symbol, "apikey": key}
+    limiter.wait()
+    url = f"{API}?{urllib.parse.urlencode(params)}"
+    with urllib.request.urlopen(url, timeout=TIMEOUT) as r:
+        payload = json.loads(r.read().decode("utf-8", errors="replace"))
+    for flag in ("Error Message", "Note", "Information"):
+        if flag in payload:
+            raise RuntimeError(f"{flag}: {str(payload[flag])[:200]}")
+    if "data" not in payload:
+        raise RuntimeError(f"no `data` in {function} payload; keys={list(payload)}")
+    return payload["data"]
+
+
+def do_actions() -> int:
+    """Fetch splits and dividends and write the events sidecar.
+
+    WHY THIS EXISTS. The bar fixture is as-traded, which is right for immutability
+    (D24) -- but as-traded means SPLITS ARE UNADJUSTED, and a scan of all 3,194,849
+    bars found twelve of them, including OIH's 1:20 reverse split showing as a
+    +1,772% single bar. A trend arm fed that number produces confident nonsense
+    (D184's failure mode, at 15m).
+
+    Five of the twelve -- the SPDR sector 2:1 splits on 2025-12-05 -- are recorded
+    NOWHERE in this repo, because the daily fixture's sidecar ends 2024-12-31. They
+    have to come from the provider.
+
+    Dividends are fetched at the same time so `total_return_with_dividends` stops
+    being a name for a price-only number: with an empty sidecar `dividend_panel`
+    returns all-zero cash and `total_log_returns` degenerates to `log_returns`
+    silently, which is the worst kind of wrong."""
+    key = api_key()
+    limiter = RateLimiter(MIN_INTERVAL)
+    dividends: dict[str, list] = {}
+    splits: dict[str, list] = {}
+
+    print(f"fetching SPLITS and DIVIDENDS for {len(SYMBOLS)} symbols "
+          f"({2 * len(SYMBOLS)} calls at {REQUESTS_PER_MIN}/min)\n")
+    for i, symbol in enumerate(SYMBOLS, 1):
+        try:
+            raw_splits = fetch_action("SPLITS", symbol, key, limiter)
+            raw_divs = fetch_action("DIVIDENDS", symbol, key, limiter)
+        except (RuntimeError, urllib.error.URLError, TimeoutError, OSError) as exc:
+            print(f"  [{i}/{len(SYMBOLS)}] {symbol}: FAILED — {str(exc)[:120]}")
+            return 1
+
+        # The repo's sidecar format: {symbol: [[iso_timestamp, value], ...]}
+        splits[symbol] = sorted(
+            [f"{d['effective_date']}T00:00:00", float(d["split_factor"])]
+            for d in raw_splits
+            if START_MONTH <= d["effective_date"][:7] <= END_MONTH
+        )
+        dividends[symbol] = sorted(
+            [f"{d['ex_dividend_date']}T00:00:00", float(d["amount"])]
+            for d in raw_divs
+            if START_MONTH <= d["ex_dividend_date"][:7] <= END_MONTH
+            and d["amount"] not in ("None", "")
+        )
+        if splits[symbol]:
+            print(f"  [{i}/{len(SYMBOLS)}] {symbol}: {len(dividends[symbol])} dividends, "
+                  f"SPLITS {splits[symbol]}")
+        elif i % 10 == 0:
+            print(f"  [{i}/{len(SYMBOLS)}] {symbol}: {len(dividends[symbol])} dividends")
+
+    EVENTS.write_text(
+        json.dumps({"dividends": dividends, "splits": splits}, indent=2,
+                   sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    n_splits = sum(len(v) for v in splits.values())
+    n_divs = sum(len(v) for v in dividends.values())
+    print(f"\nwrote {EVENTS.name}: {n_splits} splits, {n_divs} dividends "
+          f"across {len(SYMBOLS)} symbols")
+    print("symbols with splits in range:")
+    for s, v in sorted(splits.items()):
+        if v:
+            print(f"  {s:<6} " + ", ".join(f"{d[:10]} x{r}" for d, r in v))
+    return 0
+
+
+def load_splits() -> dict:
+    """Splits from the events sidecar, as {symbol: [(iso_date, ratio), ...]}.
+
+    Empty if the sidecar has not been fetched -- and that is a LOUD condition, not
+    a quiet one: `do_build` refuses to write an unadjusted fixture."""
+    if not EVENTS.exists():
+        return {}
+    payload = json.loads(EVENTS.read_text(encoding="utf-8"))
+    return {s: [(d, float(r)) for d, r in v]
+            for s, v in payload.get("splits", {}).items()}
+
+
+def split_factor_at(stamp: str, splits: list) -> float:
+    """The product of every split ratio with an effective date AFTER this bar.
+
+    Back-adjustment, matching `corporate_actions.split_adjusted` exactly (which
+    this cannot call directly because that function takes TimestampedBar objects
+    and this build works on the raw JSON to avoid materialising 3.2M objects).
+
+    PRICES ARE DIVIDED by the factor and VOLUMES ARE MULTIPLIED by it, and the
+    opposite directions are the whole point: a 2:1 split halves the price and
+    doubles the share count, so to express pre-split bars in post-split terms the
+    price comes down and the volume goes up. Getting this backwards would leave a
+    2x step in the volume series -- in a study whose signal IS volume."""
+    factor = 1.0
+    for eff_date, ratio in splits:
+        if eff_date[:10] > stamp[:10]:
+            factor *= ratio
+    return factor
+
+
 def _session_counts(regular_hours_only: bool) -> dict:
     """First pass: bars per (symbol, session). Needed before writing, because the
     half-day calendar is DERIVED from the data rather than hardcoded."""
@@ -325,12 +446,25 @@ def do_build(regular_hours_only: bool) -> int:
             short_sessions[sym] = short_sessions.get(sym, 0) + 1
             missing_bars[sym] = missing_bars.get(sym, 0) + (FULL_SESSION_BARS - n)
 
+    all_splits = load_splits()
+    if not all_splits:
+        raise SystemExit(
+            "REFUSING TO BUILD AN UNADJUSTED FIXTURE.\n"
+            "The events sidecar has no splits. This fixture is as-traded, and a scan "
+            "of it found TWELVE unadjusted splits -- OIH's 1:20 reverse shows as a "
+            "+1,772% single 15-minute bar. Run `--actions` first."
+        )
+    n_split_events = sum(len(v) for v in all_splits.values())
+
     rows = 0
     per_symbol: dict[str, int] = {}
     first: dict[str, str] = {}
     last: dict[str, str] = {}
     zero_volume = 0
     dropped_half_day_bars = 0
+    adjusted_bars = 0
+    prev_close: dict[str, float] = {}
+    max_move = {"symbol": None, "timestamp": None, "move": 0.0}
 
     FIXTURE.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(FIXTURE, "wt", encoding="utf-8", newline="") as out:
@@ -350,10 +484,25 @@ def do_build(regular_hours_only: bool) -> int:
                         dropped_half_day_bars += 1
                         continue
                     b = series[stamp]
-                    if float(b["5. volume"]) == 0.0:
+                    f = split_factor_at(stamp, all_splits.get(symbol, []))
+                    if f != 1.0:
+                        adjusted_bars += 1
+                    o = float(b["1. open"]) / f
+                    h = float(b["2. high"]) / f
+                    lo = float(b["3. low"]) / f
+                    c = float(b["4. close"]) / f
+                    v = float(b["5. volume"]) * f   # opposite direction, deliberately
+                    if v == 0.0:
                         zero_volume += 1
-                    w.writerow([stamp, symbol, b["1. open"], b["2. high"],
-                                b["3. low"], b["4. close"], b["5. volume"]])
+                    pc = prev_close.get(symbol)
+                    if pc:
+                        move = abs(c / pc - 1.0)
+                        if move > max_move["move"]:
+                            max_move = {"symbol": symbol, "timestamp": stamp,
+                                        "move": move}
+                    prev_close[symbol] = c
+                    w.writerow([stamp, symbol, f"{o:.6f}", f"{h:.6f}",
+                                f"{lo:.6f}", f"{c:.6f}", f"{v:.2f}"])
                     rows += 1
                     per_symbol[symbol] = per_symbol.get(symbol, 0) + 1
                     first.setdefault(symbol, stamp)
@@ -393,6 +542,20 @@ def do_build(regular_hours_only: bool) -> int:
             "volume summed from 15m bars = 66,595,182 shares against a consolidated "
             "ADV of ~70-90M. Not a single-venue sample"
         ),
+        "split_adjusted": True,
+        "split_events_applied": n_split_events,
+        "split_adjusted_bars": adjusted_bars,
+        "split_policy": (
+            "Back-adjusted from the events sidecar: prices DIVIDED by the product of "
+            "every split ratio effective after the bar, volumes MULTIPLIED by the "
+            "same factor. The opposite directions are the point -- a 2:1 split halves "
+            "the price and doubles the share count. Matches "
+            "corporate_actions.split_adjusted for prices; that helper does not touch "
+            "volume because TimestampedBar carries none, and in a VOLUME study it "
+            "must be handled. The as-traded values remain recoverable from the "
+            "uncommitted raw cache plus this sidecar"
+        ),
+        "largest_residual_bar_move": max_move,
         "half_days_dropped": sorted(half_days),
         "half_day_policy": (
             "US early closes (13:00) are DERIVED, not hardcoded: a session where at "
@@ -454,6 +617,13 @@ def do_build(regular_hours_only: bool) -> int:
           f"{sum(missing_bars.values()):,} bars missing")
     print(f"  zero-volume   {zero_volume:,} bars "
           f"({meta['zero_volume_rate'] * 100:.4f}%)")
+    print(f"  splits        {n_split_events} events applied to "
+          f"{adjusted_bars:,} bars")
+    print(f"  largest move  {max_move['move'] * 100:.2f}%  "
+          f"({max_move['symbol']} {max_move['timestamp']})")
+    if max_move["move"] > 0.35:
+        print("  WARNING: a >35% single-bar move survived adjustment. Either a split "
+              "is missing from the sidecar or it is a real event -- check before use.")
     if rows and zero_volume / rows > 0.05:
         print("  WARNING: zero-volume rate above 5%. D192's gate -- investigate "
               "before any volume study uses this fixture.")
@@ -468,10 +638,14 @@ def main() -> int:
     ap.add_argument("--plan", action="store_true", help="cost the job, no network")
     ap.add_argument("--fetch", action="store_true", help="the long job, resumable")
     ap.add_argument("--build", action="store_true", help="cache -> fixture")
+    ap.add_argument("--actions", action="store_true",
+                    help="fetch SPLITS + DIVIDENDS into the events sidecar")
     ap.add_argument("--limit", type=int, help="fetch at most N slices this run")
     ap.add_argument("--extended", action="store_true",
                     help="build with extended hours instead of regular only")
     args = ap.parse_args()
+    if args.actions:
+        return do_actions()
     if args.fetch:
         return do_fetch(args.limit)
     if args.build:
