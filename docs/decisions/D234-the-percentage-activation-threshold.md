@@ -173,3 +173,112 @@ cannot detect a subtle success.
 | panel, costs, buy-and-hold | `load_panel`, `portfolio_log_returns`, `buy_and_hold` | `run_macd_ladder.py` |
 
 **Written fresh:** the conjunction rule only — `md_L` and `hist_L` both already exist.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.** The holdout is untouched.*
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_activation_threshold.py` · Page:
+[`ACTIVATION_THRESHOLD_RESULTS.md`](../../ACTIVATION_THRESHOLD_RESULTS.md)
+
+### The one-sentence version
+
+**Every declared cell failed, by the largest margin this programme has recorded — and the
+direction of the failure located where the arm's edge actually lives. It is not in breakouts.
+It is in recoveries.**
+
+### The declared ladder
+
+Baseline `I1L` (`hist_L > 0`): **+0.564** at 49.3% exposure. Buy-and-hold +0.235.
+
+| c | exposure | excess Sharpe | √f predicts | **selection** | Δ baseline | min ent/sym |
+|---|---:|---:|---:|---:|---:|---:|
+| 0.00% | 30.4% | +0.062 | +0.443 | **−86%** | −0.502 | 16 ✗ |
+| 0.25% | 29.0% | +0.036 | +0.433 | **−92%** | −0.527 | 11 ✗ |
+| 0.50% | 27.5% | +0.048 | +0.421 | **−89%** | −0.515 | 6 ✗ |
+| 0.75% | 26.0% | +0.014 | +0.409 | **−97%** | −0.550 | 3 ✗ |
+| 1.00% | 24.5% | −0.042 | +0.397 | **−110%** | −0.605 | 1 ✗ |
+
+**−86% to −110% selection quality.** The previous worst in this programme was D228's G2 at −78%.
+Requiring the midline to sit *above* the channel does not merely fail to help — it removes
+almost everything the arm earns. At 30.4% exposure the breakout-only book returns **1.52% a
+year**, which is below cash.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **W1** | no cell beats the baseline | **CONFIRMED**, by −0.502 to −0.605 |
+| **W2** | no cell reaches +15% selection | **CONFIRMED** — every cell is deeply negative |
+| **W3** | selection quality does not rise with `c` | **CONFIRMED, and then some.** Slope **−21.6% per 1%** of threshold, correlation **−0.880** across the ladder |
+| **W4** | nothing clears hurdle B | **CONFIRMED.** Best −0.502 against a null p95 of −0.019 |
+| **W5** | money falls roughly linearly in exposure | **CONFIRMED** |
+
+**Five of five**, and as in D229 and D231 that is the easy case — four of them predicted failure.
+
+### The post-hoc look, disclosed and counted
+
+**W3's answer forced a question the pre-registration did not ask.** If the `md_L > 0` half is
+nearly worthless while the union earns +0.564, the complement must carry the return. That is a
+**partition of a book already scored**, not a search — but it was **not declared**, and it is
+recorded here as **one post-hoc look**, added to the ledger.
+
+| cell | exposure | excess Sharpe | CAGR | money | vol | max DD | selection |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `hist_L > 0` — the baseline | 49.3% | +0.564 | 7.08% | +50.85% | — | — | — |
+| `AND md_L > 0` — **breakout** | 30.4% | **+0.062** | 1.52% | +9.47% | — | — | −86% |
+| `AND md_L ≤ 0` — **recovery** | **18.9%** | **+0.746** | 5.43% | +37.39% | **6.1%** | **−10.30%** | **+114%** |
+
+> **The recovery half beats the entire arm, on 38% of its exposure.**
+
+**+114% selection quality against a programme-best of +12%**, and it is what the user asked for
+from the outset: **less capital committed, higher risk-adjusted return.**
+
+### The controls, run before this was written down
+
+| control | result |
+|---|---|
+| **matched-count rotation** — same exposure, turnover and holding periods, wrong bars | **PASSES.** +0.182 against an own-rotation p95 of **−0.167** |
+| **paired block bootstrap vs the baseline** | point +0.182, **90% interval −0.186 to +0.508 — contains zero** |
+| **paired block bootstrap vs buy-and-hold** | +0.511, **interval −0.204 to +1.098 — contains zero** |
+| **hurdle E** | pooled 1,124 ✓ · **min 9 per symbol ✗** (30 required) |
+
+**It is the first cell in this study to beat its own rotation**, so the edge is not an exposure
+artifact. And it fails on precision exactly as **all twenty-four deltas in D230 did** — that is
+a property of a 1,515-bar sample of correlated ETFs, not a property of this cell.
+
+### Independent corroboration, and it is the reason this is worth pursuing
+
+An earlier measurement, taken for a different purpose and on a different quantity, said the same
+thing: bucketing the arm's held bars by **trailing 63-day return**, the *lowest* quintile
+returned **+49.9%** annualised and the *highest* **−2.4%**, monotone across all five.
+
+**Two unrelated cuts — one on the indicator's own level, one on realised price history — both
+say this arm makes its money buying weakness, not strength.** One lucky partition is a
+coincidence; two from different directions is a mechanism.
+
+### What this changes, and what it does not
+
+**It does not promote anything.** D215's standing rule applies exactly as written: *a positive
+needs its own pre-registration and holdout.* This is a post-hoc partition, on a mined fixture,
+with an interval containing zero and a failing sample-size hurdle. **Quoting +0.746 as a result
+would be the precise error this programme has spent nine studies learning to avoid.**
+
+**What it is: the strongest lead the programme has produced**, and the first thing to survive a
+matched-count rotation.
+
+**The stop from D228 stays overridden for one more record only** — a successor that
+pre-registers the recovery rule properly, states its hurdles in advance, and takes it to the
+**holdout**. The per-symbol sample problem must be solved there, not waived: nine entries per
+symbol is not a testable book.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 5 declared thresholds | 5 |
+| **+ 1 disclosed post-hoc look** | **6** |
+| + D218's inherited | 68 |
+| + disclosed ETF prior | **45,809** |
