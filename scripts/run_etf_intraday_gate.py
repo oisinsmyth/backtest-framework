@@ -53,7 +53,7 @@ THE HURDLES, FIXED IN ADVANCE
                    comes from the SIMULATED NULL and never from this study's own
                    cells (D219's amendment, and D224's demonstration that a sweep
                    containing real effects inflates the floor past usefulness).
-                   Reported at N=10 (this study's fresh looks) and N=3,879 (the
+                   Reported at N=10 (fresh), N=78 (+ hypothesis lineage) and N=45,819 (the
                    declared ledger, which carries the verdict).
 
 FIVE THINGS THIS FILE IS CAREFUL ABOUT
@@ -206,13 +206,38 @@ NULL_PERCENTILE = 95.0
 MIN_POOLED_TRADES = 100
 MIN_ENTRIES_PER_ETF = 30
 FRESH_LOOKS = len(WINDOWS)  # 10
-VERDICT_COUNT = 3879  # D226's declared ledger: D224's 3,833 + D225's 36 + these 10
+
+# THE LEDGER, and the judgement in it stated rather than buried.
+#
+# D226 runs on the ETF INTRADAY fixture, which has never been used. So the three
+# counts this project reports are:
+#
+#   1. fresh                     10   the declared window sweep
+#   2. + hypothesis lineage      78   D220's 12 (ETF daily, entry filter) + D224's
+#                                     10 + D225's 46. The CLAIM has been looked at
+#                                     even though this fixture has not, and D225's
+#                                     40-cell sweep attaches specifically because
+#                                     the 200-bar gate is used BECAUSE it pointed
+#                                     there.
+#   3. + disclosed ETF prior 45,819   plus 45,741 (45,346 distinct registry configs
+#                                     + the 395 structure/terrain bar).
+#
+# Count 3 carries the verdict, as in every study in this line. Note what does NOT
+# transfer: D225's crypto-fixture prior of 3,739. That was logged on Binance data
+# and has no bearing on an ETF study - carrying it here would be arithmetic
+# theatre. An earlier draft of this file declared 3,879, which was exactly that
+# mistake.
+INHERITED_LINEAGE = 12 + 10 + 46  # D220 + D224 + D225
+DISCLOSED_ETF_PRIOR = 45_741  # 45,346 distinct configs + 395 structure/terrain
+VERDICT_COUNT = FRESH_LOOKS + INHERITED_LINEAGE + DISCLOSED_ETF_PRIOR  # 45,819
+LINEAGE_COUNT = FRESH_LOOKS + INHERITED_LINEAGE  # 78
 ORACLE_GRID = (0.10, 0.20, 0.30, 0.50)
 
 # Both return bases are reported. The dividend-adjusted one is PRIMARY and carries the
 # verdict: D217's addendum turned a tie into a 17-point loss the moment dividends were
-# put back, and on a 57-ETF long-flat book that are flat much of the time the omission
-# is not a rounding difference. Price-only is reported beside it, never instead of it.
+# put back, and on a 57-ETF long-flat book that is out of the market roughly half the
+# time the omission is not a rounding difference — the smoke run alone moves the parent
+# from -0.146 to +0.004 Sharpe. Price-only is reported beside it, never instead of it.
 PRIMARY_BASE = "dividend_adjusted"
 BASES = ("dividend_adjusted", "price_only")
 _TOTAL_RETURN_FLAG = {"dividend_adjusted": True, "price_only": False}

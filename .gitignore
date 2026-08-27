@@ -41,3 +41,7 @@ alphavantage*.txt
 
 # Alpha Vantage raw slice cache — D191: cache the raw, commit the derived
 data/raw/alphavantage/
+
+# Smoke-test artifacts: never tracked. A smoke page sitting next to a real
+# results page is exactly what gets misread as a result later.
+*.smoke.*
