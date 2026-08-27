@@ -161,3 +161,113 @@ was built to answer.
 **Written fresh:** the three controls and **the matched-frequency overlay null R7 requires** —
 which does not exist yet as reusable code, and should, since R7 now binds on every future overlay
 study.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.** The holdout and the 2025–2026 forward
+window are untouched.*
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_risk_controls.py` · Page:
+[`RISK_CONTROLS_RESULTS.md`](../../RISK_CONTROLS_RESULTS.md)
+
+### The one-sentence version
+
+**All six controls reduce drawdown, none improves risk-adjusted return, and every one is beaten
+by holding back the same amount at random times — which means the bars they cut are better than
+average, not worse.**
+
+### The six
+
+Baseline: **+0.746** excess Sharpe, 5.43% CAGR, **−10.30%** max DD, **CAGR/|DD| = 0.527**,
+18.9% exposure. Buy-and-hold: 0.243.
+
+| cell | binds | exposure | max DD | CAGR/\|DD\| | Δ | excess Sharpe | √f predicts | null p95 | K1 | K2 | N |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|:--:|:--:|:--:|
+| C@30% | 19.3% | 13.7% | **−6.03%** | 0.420 | −0.107 | +0.609 | +0.637 | +0.840 | ✓ | — | — |
+| C@40% | 14.1% | 15.4% | −7.19% | 0.469 | −0.058 | +0.694 | +0.675 | +0.845 | ✓ | — | — |
+| C@50% | 10.4% | 16.6% | −8.07% | 0.511 | −0.016 | +0.746 | +0.700 | +0.815 | ✓ | — | — |
+| **R SMA50>200** | 31.7% | 8.4% | **−2.87%** | 0.288 | −0.239 | +0.267 | +0.497 | +0.868 | ✓ | — | — |
+| D@5% | 72.9% | 5.5% | −7.24% | 0.286 | −0.241 | +0.446 | +0.402 | +0.915 | ✓ | — | — |
+| D@8% | 40.3% | 10.6% | −9.93% | 0.310 | −0.216 | +0.516 | +0.558 | +0.879 | ✓ | — | — |
+
+**K1: 6 of 6. K2: 0 of 6. N: 0 of 6.**
+
+### The finding, and it inverts the premise of the study
+
+**Every control's real excess Sharpe sits below its own overlay null's p95.** Holding back the
+*same amount of book at random bars* beats holding it back when the control says to — C@50% real
+**+0.746** against a null p95 of **+0.815**; R real **+0.267** against **+0.868**.
+
+That is not "the controls are neutral." It is stronger:
+
+> **The bars these controls cut are better than average.** A cap binds exactly when exposure is
+> high — and high-exposure bars are when the rule has the most breadth and conviction. Cutting
+> there removes its best moments.
+
+**Concentration was assumed to be the risk. It is measured here as the opposite** — the 89.5%-exposure
+days are not the dangerous ones, they are the profitable ones.
+
+That agrees with the one other exposure result in the programme: D235's `DT@2.0%` was the single
+construction that gained by *adding* exposure. **At 18.9% this rule is under-exposed, and
+everything that cuts participation costs more than it saves.**
+
+### The regime filter behaved exactly as the pre-registration said it would
+
+`R` gives the **largest drawdown reduction of any cell** — −10.30% to **−2.87%**, a 72%
+improvement — and the **worst excess Sharpe**, +0.267 against the baseline's +0.746. Its implied
+CAGR is **0.83%/yr**. It reduces drawdown by very nearly not trading.
+
+The measurement recorded before the run explains it: the rule is 3× more active when the regime
+is OFF (33.1% exposure) than ON (12.3%), so gating on "bull market" removes most of its activity
+by construction. **This was stated in advance rather than discovered afterwards**, which is the
+only reason it counts for anything.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **U1** | all caps reduce max drawdown | **CONFIRMED**, 6 of 6 |
+| **U2** | excess Sharpe falls at every cell, roughly as √f | **SPLIT.** It falls at five of six, but **four cells beat their own √f prediction** (C@40, C@50, D@5) — the drop is smaller than exposure alone implies |
+| **U3** | at least one cell improves `CAGR/\|maxDD\|` | **FALSIFIED. Zero of six.** Every control costs more return than the drawdown it saves |
+| **U4** | `R` is the worst cell | **SPLIT.** Worst on excess Sharpe (+0.267) by a distance; second-worst on Calmar, where D@5% edges it by 0.002 |
+| **U5** | no cell beats its overlay null | **CONFIRMED**, 0 of 6 — and by a wide margin |
+
+**Two clean of five.**
+
+### What this means for the concern that prompted it
+
+The worry was **unbounded loss in unusual conditions.** Three measurements bear on it, and none
+supports adding a control:
+
+1. **Single-trade loss is bounded by diversification** — a position is 1/57, so the worst trade in
+   six years cost **0.43% of capital**.
+2. **The rule was 2.0% exposed through the COVID crash leg** and lost 0.73% against −33.86%.
+   `hist_L > 0` keeps it flat while a fall is still accelerating. It buys the turn, not the dip.
+3. **The concentration case is profitable, not dangerous** — established above by the overlay
+   null.
+
+**The residual risk is the grind**, and `D` was built for it: the 5% breaker binds on **72.9% of
+bars** and takes exposure to 5.5%. It does not manage the grind so much as abolish the strategy.
+
+### What survives
+
+**Nothing is promoted, and one thing is closed.** Portfolio-level risk controls join trade-level
+stops and targets: measured, mechanism understood, shut.
+
+**R7's overlay null works and earned its place immediately** — it is the only hurdle here that
+distinguished "reduces risk" from "reduces risk intelligently", and all six cells look reasonable
+on K1 alone. Its first application found six false positives that K1 would have waved through.
+
+**And the direction is now unambiguous across three studies**: `DT@2.0%` gained by adding
+exposure, every cut here lost, and the overlay null says the cut bars are above average. **The
+next thing worth testing on this rule adds exposure, not risk control.**
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 6 cells | 6 |
+| + D234's 6 and D235's 7 | 19 |
+| + disclosed ETF prior | **45,822** |
