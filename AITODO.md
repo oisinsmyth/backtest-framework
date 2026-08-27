@@ -393,6 +393,31 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D222, the scaling ladder (opened and closed 2026-08-27)
+
+Record `docs/decisions/D222-does-the-fine-bar-advantage-grow-with-the-window.md`, page
+`SCALING_RESULTS.md`.
+
+- [x] Tested a user prediction with a SHAPE - that the fine-bar margin grows with the
+      timeframe - across k = 4, 32, 96.
+- [x] **It does not.** Delta goes up, down, then sideways, is negative in 3 of 6 cells, and
+      every bootstrap interval straddles zero.
+- [x] The internal check is the strongest evidence: the same Delta(4) is +0.054 on 8.3
+      years and +0.155 on 5.6. That is why the pre-registration refused to reuse D221's
+      number.
+- [x] Turnover, like signal, is set by the window and not the bar rate.
+- [x] Scored 1 of 5; the one that landed was N4, the prediction that the study could not
+      tell.
+
+**Standing note on power, and it belongs in the DESIGN of the next study rather than its
+bootstrap:** this fixture supports roughly 11 symbol-years of independent crypto history at
+the frequencies that matter, so **effects below ~0.15 Sharpe are not resolvable on it,
+whatever the hypothesis**. Check a proposed effect size against that number before building
+a runner.
+
+**Closed:** the D221 residual. Any future work citing "the 15m arm slightly beat the 1h arm"
+is citing noise.
+
 ## Now — D221, sampling invariance (opened and closed 2026-08-27)
 
 Record `docs/decisions/D221-does-the-indicator-care-about-sampling-rate.md`, page

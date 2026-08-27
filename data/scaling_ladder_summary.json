@@ -1,0 +1,455 @@
+{
+  "calendar": {
+    "BTCUSDT": {
+      "complete_days": 3066,
+      "dropped_days": 0
+    },
+    "ETHUSDT": {
+      "complete_days": 3066,
+      "dropped_days": 0
+    }
+  },
+  "fresh_looks": 6,
+  "per_symbol": {
+    "BTCUSDT": {
+      "common_start": "2020-12-11T06:45:00",
+      "deltas": {
+        "1d": {
+          "bootstrap": {
+            "block_days": 30,
+            "ci_width": 0.363670437317072,
+            "delta_daily_basis": 0.03985043724684567,
+            "n_boot": 400,
+            "n_days": 2049,
+            "p5": -0.13934387446428084,
+            "p50": 0.03934083373388708,
+            "p95": 0.22432656285279115,
+            "share_positive": 0.6225
+          },
+          "delta_gross_sharpe": 0.011737015582134136,
+          "fine_gross_sharpe": 0.5717105979386522,
+          "fine_rt_per_year": 8.636550746291412,
+          "k": 96,
+          "native_gross_sharpe": 0.5599735823565181,
+          "native_rt_per_year": 8.283308931185944
+        },
+        "1h": {
+          "bootstrap": {
+            "block_days": 30,
+            "ci_width": 0.4273269227257209,
+            "delta_daily_basis": 0.15351970792798797,
+            "n_boot": 400,
+            "n_days": 2050,
+            "p5": -0.05938575093952345,
+            "p50": 0.16666765683350146,
+            "p95": 0.36794117178619745,
+            "share_positive": 0.895
+          },
+          "delta_gross_sharpe": 0.15459648113371294,
+          "fine_gross_sharpe": 0.7282451272665141,
+          "fine_rt_per_year": 221.70114802335686,
+          "k": 4,
+          "native_gross_sharpe": 0.5736486461328012,
+          "native_rt_per_year": 225.97605350354723
+        },
+        "8h": {
+          "bootstrap": {
+            "block_days": 30,
+            "ci_width": 0.50127371094696,
+            "delta_daily_basis": -0.10783650478022244,
+            "n_boot": 400,
+            "n_days": 2050,
+            "p5": -0.3355594527814545,
+            "p50": -0.11008208728078231,
+            "p95": 0.16571425816550553,
+            "share_positive": 0.255
+          },
+          "delta_gross_sharpe": -0.12378514426216769,
+          "fine_gross_sharpe": 0.5578552487898072,
+          "fine_rt_per_year": 27.42327453461603,
+          "k": 32,
+          "native_gross_sharpe": 0.6816403930519749,
+          "native_rt_per_year": 29.02667100341519
+        }
+      },
+      "span_years": 5.615639269406393
+    },
+    "ETHUSDT": {
+      "common_start": "2020-12-11T06:45:00",
+      "deltas": {
+        "1d": {
+          "bootstrap": {
+            "block_days": 30,
+            "ci_width": 0.421829105995153,
+            "delta_daily_basis": -0.12832742938941644,
+            "n_boot": 400,
+            "n_days": 2049,
+            "p5": -0.3465666611747629,
+            "p50": -0.11941840875824561,
+            "p95": 0.0752624448203901,
+            "share_positive": 0.1575
+          },
+          "delta_gross_sharpe": -0.11996276286237306,
+          "fine_gross_sharpe": 0.6668852868063658,
+          "fine_rt_per_year": 8.458477535027672,
+          "k": 96,
+          "native_gross_sharpe": 0.7868480496687389,
+          "native_rt_per_year": 9.530258662762323
+        },
+        "1h": {
+          "bootstrap": {
+            "block_days": 30,
+            "ci_width": 0.41364497010572027,
+            "delta_daily_basis": 0.14173441956151367,
+            "n_boot": 400,
+            "n_days": 2050,
+            "p5": -0.08154886148269426,
+            "p50": 0.13941469306557963,
+            "p95": 0.332096108623026,
+            "share_positive": 0.8525
+          },
+          "delta_gross_sharpe": 0.14846723978736887,
+          "fine_gross_sharpe": 0.755717105794456,
+          "fine_rt_per_year": 229.7144425302252,
+          "k": 4,
+          "native_gross_sharpe": 0.6072498660070871,
+          "native_rt_per_year": 228.29101701461587
+        },
+        "8h": {
+          "bootstrap": {
+            "block_days": 30,
+            "ci_width": 0.4329469115197593,
+            "delta_daily_basis": -0.07679019567101428,
+            "n_boot": 400,
+            "n_days": 2050,
+            "p5": -0.30188552771763416,
+            "p50": -0.07931346641355985,
+            "p95": 0.1310613838021251,
+            "share_positive": 0.2675
+          },
+          "delta_gross_sharpe": -0.08728346768775591,
+          "fine_gross_sharpe": 0.23696678773456314,
+          "fine_rt_per_year": 29.916299492308397,
+          "k": 32,
+          "native_gross_sharpe": 0.32425025542231906,
+          "native_rt_per_year": 28.670515530980648
+        }
+      },
+      "span_years": 5.615639269406393
+    }
+  },
+  "produced": "2026-08-27",
+  "rows": [
+    {
+      "bar_minutes": 15,
+      "config": "fine_x4",
+      "exposure": 0.48952346104394406,
+      "gross_sharpe": 0.7282451272665141,
+      "gross_total_return": 4.272747323908667,
+      "k": 4,
+      "n_live_bars": 196773,
+      "net_sharpe": {
+        "maker_0bp": 0.7282451272665141,
+        "maker_10bp": -0.36249603719376355,
+        "maker_25bp": -1.9852787816883375,
+        "taker_40bp": -3.567554566329768
+      },
+      "params": [
+        136,
+        36
+      ],
+      "round_trips": 1245,
+      "round_trips_per_year": 221.70114802335686,
+      "rung": "1h",
+      "symbol": "BTCUSDT",
+      "years": 5.615667808219178
+    },
+    {
+      "bar_minutes": 60,
+      "config": "native_1h",
+      "exposure": 0.4597402069400118,
+      "gross_sharpe": 0.5736486461328012,
+      "gross_total_return": 2.534684039762897,
+      "k": 4,
+      "n_live_bars": 49193,
+      "net_sharpe": {
+        "maker_0bp": 0.5736486461328012,
+        "maker_10bp": -0.5793793813948099,
+        "maker_25bp": -2.2943784779544774,
+        "taker_40bp": -3.9646171460718316
+      },
+      "params": [
+        34,
+        9
+      ],
+      "round_trips": 1269,
+      "round_trips_per_year": 225.97605350354723,
+      "rung": "1h",
+      "symbol": "BTCUSDT",
+      "years": 5.615639269406393
+    },
+    {
+      "bar_minutes": 15,
+      "config": "fine_x32",
+      "exposure": 0.5163767386785789,
+      "gross_sharpe": 0.5578552487898072,
+      "gross_total_return": 2.5519125008825627,
+      "k": 32,
+      "n_live_bars": 196773,
+      "net_sharpe": {
+        "maker_0bp": 0.5578552487898072,
+        "maker_10bp": 0.42213431842730303,
+        "maker_25bp": 0.21827425346768448,
+        "taker_40bp": 0.014489001323380567
+      },
+      "params": [
+        1088,
+        288
+      ],
+      "round_trips": 154,
+      "round_trips_per_year": 27.42327453461603,
+      "rung": "8h",
+      "symbol": "BTCUSDT",
+      "years": 5.615667808219178
+    },
+    {
+      "bar_minutes": 480,
+      "config": "native_8h",
+      "exposure": 0.483818507074321,
+      "gross_sharpe": 0.6816403930519749,
+      "gross_total_return": 3.3405827953964327,
+      "k": 32,
+      "n_live_bars": 6149,
+      "net_sharpe": {
+        "maker_0bp": 0.6816403930519749,
+        "maker_10bp": 0.5301890138399875,
+        "maker_25bp": 0.3025192250497723,
+        "taker_40bp": 0.07476933602394423
+      },
+      "params": [
+        34,
+        9
+      ],
+      "round_trips": 163,
+      "round_trips_per_year": 29.02667100341519,
+      "rung": "8h",
+      "symbol": "BTCUSDT",
+      "years": 5.615525114155251
+    },
+    {
+      "bar_minutes": 15,
+      "config": "fine_x96",
+      "exposure": 0.5006072987655826,
+      "gross_sharpe": 0.5717105979386522,
+      "gross_total_return": 2.722279875928787,
+      "k": 96,
+      "n_live_bars": 196773,
+      "net_sharpe": {
+        "maker_0bp": 0.5717105979386522,
+        "maker_10bp": 0.5294822610923772,
+        "maker_25bp": 0.46597441086395625,
+        "taker_40bp": 0.4023070709691844
+      },
+      "params": [
+        3264,
+        864
+      ],
+      "round_trips": 48,
+      "round_trips_per_year": 8.636550746291412,
+      "rung": "1d",
+      "symbol": "BTCUSDT",
+      "years": 5.615667808219178
+    },
+    {
+      "bar_minutes": 1440,
+      "config": "native_1d",
+      "exposure": 0.4816983894582723,
+      "gross_sharpe": 0.5599735823565181,
+      "gross_total_return": 2.3428601332693,
+      "k": 96,
+      "n_live_bars": 2049,
+      "net_sharpe": {
+        "maker_0bp": 0.5599735823565181,
+        "maker_10bp": 0.5167828610806593,
+        "maker_25bp": 0.4518296862692318,
+        "taker_40bp": 0.38671752259856657
+      },
+      "params": [
+        34,
+        9
+      ],
+      "round_trips": 46,
+      "round_trips_per_year": 8.283308931185944,
+      "rung": "1d",
+      "symbol": "BTCUSDT",
+      "years": 5.6136986301369864
+    },
+    {
+      "bar_minutes": 15,
+      "config": "fine_x4",
+      "exposure": 0.49451398311760253,
+      "gross_sharpe": 0.755717105794456,
+      "gross_total_return": 8.118948007592325,
+      "k": 4,
+      "n_live_bars": 196773,
+      "net_sharpe": {
+        "maker_0bp": 0.755717105794456,
+        "maker_10bp": -0.12672015370382808,
+        "maker_25bp": -1.4448428370639081,
+        "taker_40bp": -2.743462592121794
+      },
+      "params": [
+        136,
+        36
+      ],
+      "round_trips": 1290,
+      "round_trips_per_year": 229.7144425302252,
+      "rung": "1h",
+      "symbol": "ETHUSDT",
+      "years": 5.615667808219178
+    },
+    {
+      "bar_minutes": 60,
+      "config": "native_1h",
+      "exposure": 0.4635415607911695,
+      "gross_sharpe": 0.6072498660070871,
+      "gross_total_return": 4.6331578202283445,
+      "k": 4,
+      "n_live_bars": 49193,
+      "net_sharpe": {
+        "maker_0bp": 0.6072498660070871,
+        "maker_10bp": -0.29363970046452553,
+        "maker_25bp": -1.6386682641274959,
+        "taker_40bp": -2.9629264047547
+      },
+      "params": [
+        34,
+        9
+      ],
+      "round_trips": 1282,
+      "round_trips_per_year": 228.29101701461587,
+      "rung": "1h",
+      "symbol": "ETHUSDT",
+      "years": 5.615639269406393
+    },
+    {
+      "bar_minutes": 15,
+      "config": "fine_x32",
+      "exposure": 0.5255700731299517,
+      "gross_sharpe": 0.23696678773456314,
+      "gross_total_return": 0.9830000272413011,
+      "k": 32,
+      "n_live_bars": 196773,
+      "net_sharpe": {
+        "maker_0bp": 0.23696678773456314,
+        "maker_10bp": 0.12059512611449727,
+        "maker_25bp": -0.05411234124013763,
+        "taker_40bp": -0.22876304482520884
+      },
+      "params": [
+        1088,
+        288
+      ],
+      "round_trips": 168,
+      "round_trips_per_year": 29.916299492308397,
+      "rung": "8h",
+      "symbol": "ETHUSDT",
+      "years": 5.615667808219178
+    },
+    {
+      "bar_minutes": 480,
+      "config": "native_8h",
+      "exposure": 0.5044722719141324,
+      "gross_sharpe": 0.32425025542231906,
+      "gross_total_return": 1.4298596255407818,
+      "k": 32,
+      "n_live_bars": 6149,
+      "net_sharpe": {
+        "maker_0bp": 0.32425025542231906,
+        "maker_10bp": 0.20654350264943916,
+        "maker_25bp": 0.029853528871427323,
+        "taker_40bp": -0.1467499704246911
+      },
+      "params": [
+        34,
+        9
+      ],
+      "round_trips": 161,
+      "round_trips_per_year": 28.670515530980648,
+      "rung": "8h",
+      "symbol": "ETHUSDT",
+      "years": 5.615525114155251
+    },
+    {
+      "bar_minutes": 15,
+      "config": "fine_x96",
+      "exposure": 0.5107712948422802,
+      "gross_sharpe": 0.6668852868063658,
+      "gross_total_return": 6.601069021558781,
+      "k": 96,
+      "n_live_bars": 196773,
+      "net_sharpe": {
+        "maker_0bp": 0.6668852868063658,
+        "maker_10bp": 0.6356168142384098,
+        "maker_25bp": 0.588594826278542,
+        "taker_40bp": 0.5414456385886217
+      },
+      "params": [
+        3264,
+        864
+      ],
+      "round_trips": 47,
+      "round_trips_per_year": 8.458477535027672,
+      "rung": "1d",
+      "symbol": "ETHUSDT",
+      "years": 5.615667808219178
+    },
+    {
+      "bar_minutes": 1440,
+      "config": "native_1d",
+      "exposure": 0.4924353343094192,
+      "gross_sharpe": 0.7868480496687389,
+      "gross_total_return": 9.226700436120723,
+      "k": 96,
+      "n_live_bars": 2049,
+      "net_sharpe": {
+        "maker_0bp": 0.7868480496687389,
+        "maker_10bp": 0.7508623802854076,
+        "maker_25bp": 0.696686771831711,
+        "taker_40bp": 0.6422948995368493
+      },
+      "params": [
+        34,
+        9
+      ],
+      "round_trips": 53,
+      "round_trips_per_year": 9.530258662762323,
+      "rung": "1d",
+      "symbol": "ETHUSDT",
+      "years": 5.6136986301369864
+    }
+  ],
+  "seed": 0,
+  "verdict": {
+    "K_direction_all_positive": {
+      "BTCUSDT": false,
+      "ETHUSDT": false
+    },
+    "K_holds": false,
+    "L_holds": false,
+    "L_shape_monotone_increasing": {
+      "BTCUSDT": false,
+      "ETHUSDT": false
+    },
+    "M_gap_exceeds_ci_width": {
+      "BTCUSDT": false,
+      "ETHUSDT": false
+    },
+    "M_holds": false,
+    "rung_order": [
+      "1h",
+      "8h",
+      "1d"
+    ]
+  }
+}

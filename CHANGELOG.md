@@ -10,6 +10,35 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D222 — the scaling ladder, 2026-08-27)
+- `scripts/run_scaling_ladder.py` + `data/scaling_ladder_summary.json` +
+  `SCALING_RESULTS.md` + `tests/unit/test_scaling_ladder.py` (12). Reuses D221's arm,
+  annualisation and Sharpe by import rather than restating them (D212).
+- A **paired block bootstrap** on the shared daily grid — both arms recomputed on the same
+  resampled index set, so the pairing survives the resample.
+
+### Result (D222)
+- **The fine-bar residual D221 left is noise.** Delta(k) goes up, down, then sideways:
+  BTC +0.155 / -0.124 / +0.012 and ETH +0.148 / -0.087 / -0.120 across k = 4 / 32 / 96.
+  Negative in 3 of 6 cells, no ordering by k, and **all six bootstrap intervals straddle
+  zero** (widths 0.36-0.50 against deltas of 0.01-0.16).
+- **The cleanest proof needs no statistics:** the same Delta(4) measures +0.054 on D221's
+  8.3 years and +0.155 here on 5.6. A statistic that moves 0.10 when you change the start
+  date is not measuring a property of the estimator.
+- **Strengthens D221.** At k = 96 the 15m arm decides 96x more often than the daily arm and
+  still trades the same 8-9 round trips a year: **turnover is set by the window, not the
+  bar rate** — as signal already was.
+- The verdict is **"not detectable here"**, not "does not exist": resolving a 0.05 effect
+  needs ~19x the independent sample, about 100 symbol-years against the ~11 available.
+
+### Fixed (D222)
+- The shared-span gate demanded identical start timestamps across configs, which is
+  impossible — a daily bar can only begin at 00:00 UTC and an 8h bar at 00/08/16:00. It
+  fired on the first run, **wrong in the safe direction**: it refused to publish rather
+  than publishing a misaligned comparison. Rewritten as a bounded spread (all starts agree
+  to within one coarse bar) and pinned by a test that checks it still rejects a genuinely
+  misaligned ladder.
+
 ### Added (D221 — sampling invariance, 2026-08-27)
 - `scripts/run_sampling_invariance.py` + `data/sampling_invariance_summary.json` +
   `SAMPLING_RESULTS.md` + `tests/unit/test_sampling_invariance.py` (13). The 1h series is
