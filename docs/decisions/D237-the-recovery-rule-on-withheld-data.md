@@ -157,3 +157,121 @@ test needs months that have not yet happened.
 **Written fresh:** the two forward fixtures only. The rule itself is untouched from D234 — **if
 so much as a parameter moves between the mined run and this one, the test is void**, and that is
 the single thing this record exists to guarantee.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited.*
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_withheld_test.py` · Page:
+[`WITHHELD_TEST_RESULTS.md`](../../WITHHELD_TEST_RESULTS.md)
+
+### The one-sentence version
+
+**T1 passes all three hurdles and the effect did not shrink — the first genuine out-of-sample
+pass this programme has produced. T3 fails, because 2025–26 was a melt-up the rule could not
+participate in at 15.6% exposure.**
+
+### The three tests
+
+| | isolates | bars | arm | B&H | **Δ** | boot p05 | boot p95 | H1 | H2 | H3 |
+|---|---|---:|---:|---:|---:|---:|---:|:--:|:--:|:--:|
+| **T1** | **instruments** | 1,515 | **+0.779** | +0.230 | **+0.549** | −0.152 | +1.158 | **✓** | **✓** | **✓** |
+| T2 | both (confounded) | 413 | +1.016 | +1.146 | −0.130 | −1.346 | +0.465 | ✗ | ✗ | ✗ |
+| **T3** | **period** | 413 | +0.898 | **+1.234** | **−0.336** | −1.475 | +0.418 | ✗ | ✗ | ✗ |
+
+*H3 floor +0.128, being 25% of the mined delta of +0.511.*
+
+| | CAGR | vol | max DD | exposure |
+|---|---:|---:|---:|---:|
+| T1 arm | 5.49% | 5.9% | −9.04% | 19.7% |
+| T1 B&H | 8.34% | 17.8% | −37.92% | 100% |
+| T3 arm | 3.64% | 3.3% | −2.94% | 15.6% |
+| **T3 B&H** | **23.72%** | 14.1% | −14.06% | 100% |
+
+### T1 — the pass, and it is a real one
+
+**On 60 ETFs sharing zero tickers with the training set, the rule reproduced itself almost
+exactly:**
+
+| | mined | **T1 (withheld instruments)** |
+|---|---:|---:|
+| excess Sharpe | +0.746 | **+0.779** |
+| exposure | 18.9% | 19.7% |
+| max drawdown | −10.30% | −9.04% |
+| **delta over B&H** | **+0.511** | **+0.549** |
+
+**The effect did not shrink — it grew slightly**, which falsifies T1b and is the single most
+surprising number here. Out-of-sample results normally regress. And it cleared **H2**, the
+matched-count rotation null, as it had at the 100th percentile on mined data.
+
+**The honest discount, stated in the pre-registration and unchanged by the result:** the two
+universes correlate at **+0.978**. T1 shows the rule is not fitted to the particular 57 tickers.
+It does *not* show independence from the 2018–24 market, because both fixtures live in it.
+
+### T3 — the failure, and what it actually says
+
+**The rule did not break. The benchmark had an exceptional run.**
+
+The arm's own forward performance was **better than its mined performance** — +0.898 excess
+Sharpe against +0.746, at a −2.94% maximum drawdown. What changed is that buy-and-hold made
+**23.72% a year** at +1.234 excess Sharpe. **A book 15.6% exposed cannot keep pace with a 24%
+melt-up**, and Sharpe is already the volatility-matched comparison, so leverage does not close it.
+
+**The declared reading stands** — `(T1 pass, T3 fail)` was pre-registered as *"instrument-general,
+period-specific."* That verdict is not rewritten here. The additional fact worth recording is
+that the mechanism is not deterioration but **benchmark outperformance**, and those are different
+failure modes with different implications.
+
+**And T3 cannot distinguish anything.** Its interval is **−1.475 to +0.418**, spanning 1.9 Sharpe
+points. T3a predicted exactly this. **A 413-bar test was always a sanity check**, and what it
+reports is that the rule kept working on its own terms in a regime it had never seen.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **T1a** | T1 passes H1 | **CONFIRMED** |
+| **T1b** | the effect shrinks out-of-sample | **FALSIFIED.** +0.549 against +0.511 — it grew |
+| **T1c** | T1 passes H2, the rotation null | **CONFIRMED** |
+| **T3a** | T3 is inconclusive, interval spanning zero widely | **CONFIRMED.** −1.475 to +0.418 |
+| **T3b** | T3's point estimate is positive but below the floor | **FALSIFIED.** It is negative, −0.336 |
+
+**Three of five.**
+
+### Hurdle E fails everywhere, including T1
+
+Minimum entries per symbol: **9 (T1), 1 (T2), 2 (T3)** against 30 required. Declared in advance
+for T2 and T3; T1's failure matches the mined fixture's 9 and was not flagged.
+
+**This is a real limitation, not a technicality.** Nine entries per symbol over six years means
+the per-symbol evidence is thin, and the result rests entirely on pooling across a universe whose
+members are correlated at ~0.4. It is the weakest part of the case.
+
+### What this changes — and the stop, applied as written
+
+**The rule is not closed.** T1 passed, so D237's closure condition did not trigger.
+
+**And nothing is promoted**, exactly as pre-committed: *"it becomes a rule with one clean
+out-of-sample result on a correlated universe, and the next step is more forward time — not a
+decision to trade it."*
+
+What the programme now has, stated at its real strength:
+
+- **A rule that survived a genuine instrument holdout without shrinking**, cleared a matched-count
+  rotation null on both fixtures, and carries an independent corroborating measurement (the
+  trailing-63-day cut).
+- **Whose every bootstrap interval still contains zero**, whose per-symbol sample fails hurdle E,
+  and which **lost to buy-and-hold over the only forward period ever tested.**
+
+**The 2025–2026 window is spent.** Any further forward test needs months that have not happened
+yet — roughly a year before another 250 bars exist.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 1 rule × 3 fixtures | 3 |
+| + D234–D236's 19 | 22 |
+| + disclosed ETF prior | **45,825** |
