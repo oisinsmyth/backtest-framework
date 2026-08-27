@@ -151,6 +151,52 @@ The override is scoped: **this record only.** D228's stop otherwise stands.
 
 ---
 
+## PRE-RUN AMENDMENT 2 — screen on the mined fixture, test on the holdout
+
+*Written before any cell was scored on either fixture. Prompted by the question "should the
+filter be tested on pre-mined data first, or straight on the new data?"*
+
+**The section above says the mined fixture "cannot answer" and goes straight to the holdout.
+That conflated two different inferences.** The mined fixture cannot **detect** a real effect —
+floor +0.104, arm interval ±0.5. It can perfectly well **reject** a broken one: D228's G2
+scored **−78%** selection quality, and a failure that size punches through the noise easily.
+
+**So the design becomes two-stage:**
+
+| stage | fixture | purpose |
+|---|---|---|
+| **1 — screen** | mined 57 | prove the machinery, kill catastrophic cells. **Not a test; no verdict.** |
+| **2 — test** | holdout 60 | the verdict, on survivors only |
+
+**Three reasons this is better than what was pre-registered:**
+
+1. **Debugging on the holdout is unforgivable.** If a dial misses its exposure target or the
+   rolling quantile leaks, discovering it on the holdout burns a one-shot resource. Stage 1
+   asserts the exposures land where declared before anything is spent.
+2. **Rejecting is easier than detecting.** A screen does not need the power a test needs.
+3. **It raises the holdout's power.** The best-of-search floor scales with the number of
+   candidates searched. Carrying 3 survivors instead of 8 candidates lowers the floor **where
+   it decides the verdict.**
+
+### The screen rule, declared now
+
+> **Stage 1 drops a cell only if its selection quality is worse than −25%**, where selection
+> quality is `actual Sharpe / (√f × parent Sharpe) − 1`.
+
+**Deliberately lenient.** With a ±0.5 interval on the mined fixture, a genuinely good cell can
+look mediocre by luck, so the screen kills only disasters. On D228's cells this threshold would
+have dropped G2 (−78%) and S5 (−29%) and kept G1 (+1%), S1 (+12%) and S3 (−13%).
+
+**Stage 1 also asserts, and stops on failure:** every cell's realised exposure is within
+**±3 percentage points** of its declared target, on both families.
+
+**Reporting obligation.** The RESULT must state **how many cells the screen dropped and which**,
+so nobody reads a three-cell holdout table as though three were all that was tried. Stage 1's
+Sharpes are reported for completeness and **carry no verdict** — they are a screen, and the
+record says so wherever they appear.
+
+---
+
 ## Hurdles
 
 - **X (carries the verdict).** Beat the unfiltered parent on **excess Sharpe at `rf = 4%`,

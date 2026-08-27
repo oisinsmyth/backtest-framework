@@ -97,6 +97,25 @@ N_SELECT = 60
 # ---------------------------------------------------------------------------
 LIQUIDITY_FLOOR_USD = 5_000_000.0  # median pre-live dollar volume, a floor not a rank
 
+# SECOND AND FINAL AMENDMENT -- the volatility envelope.
+#
+# Minimising correlation alone produced a BARBELL: 19 of 60 sat below the parent's
+# 10th-percentile volatility (SHV at 0.4%, FLOT at 1.0%) and the maximum reached
+# 89.7% against the parent's 43.7%. The greedy was buying decorrelation by picking
+# instruments that either barely move or move wildly -- neither of which the parent
+# universe contains in that proportion.
+#
+# That would CONFOUND the test: a difference in outcome could be "the holdout is
+# bondier" rather than "the arm does not generalise". So candidates must sit inside
+# the PARENT'S OWN volatility envelope, p10 to p90 of its pre-live annualised
+# volatility, derived from the parent rather than chosen here.
+#
+# This is the SECOND amendment to this rule and it is the last. The principle --
+# the holdout must be comparable to the parent in tradeable character, not merely
+# uncorrelated with it -- is stated once and not revisited. Further tuning would be
+# rule-shopping, and the point of pinning a rule is that it stops being tunable.
+VOL_ENVELOPE_PCTILES = (10.0, 90.0)
+
 # The build span is the PARENT FIXTURE'S EXACT DATE GRID. Same period, different
 # instruments -- so a difference in result is attributable to the instruments and
 # not to the years. Data after 2024-12-30 is cached but NOT built: forward time is
@@ -285,7 +304,21 @@ def do_select_diverse() -> None:
     grid_dates = {t[:10] for t in grid}
     pre = [d for d in sorted(grid_dates) if SCREEN_START <= d <= SCREEN_END]
 
-    syms, rets, liq = [], [], {}
+    # The envelope is DERIVED FROM THE PARENT, not chosen here.
+    pv = []
+    with gzip.open(PARENT_FIXTURE, "rt") as f:
+        by_sym = {}
+        for r in csv.DictReader(f):
+            d = r["timestamp"][:10]
+            if SCREEN_START <= d <= SCREEN_END:
+                by_sym.setdefault(r["symbol"], []).append(float(r["close"]))
+    for c in by_sym.values():
+        a = np.asarray(c)
+        pv.append(float(np.std(np.log(a[1:] / a[:-1]), ddof=1) * np.sqrt(252)))
+    lo_v, hi_v = (float(np.percentile(pv, p)) for p in VOL_ENVELOPE_PCTILES)
+    print(f"parent volatility envelope  {lo_v:.1%} .. {hi_v:.1%}  (p10..p90 of the 57)")
+
+    syms, rets = [], []
     for p in pool:
         path = daily_path(p["symbol"])
         if not path.exists():
@@ -298,12 +331,15 @@ def do_select_diverse() -> None:
         if len(dv) < MIN_SCREEN_BARS or statistics.median(dv) < LIQUIDITY_FLOOR_USD:
             continue
         closes = np.array([float(series[d]["4. close"]) for d in pre])
+        r_ = np.log(closes[1:] / closes[:-1])
+        vol = float(np.std(r_, ddof=1) * np.sqrt(252))
+        if not (lo_v <= vol <= hi_v):
+            continue
         syms.append(p["symbol"])
-        liq[p["symbol"]] = statistics.median(dv)
-        rets.append(np.log(closes[1:] / closes[:-1]))
+        rets.append(r_)
 
     R = np.asarray(rets)
-    print(f"eligible (floor ${LIQUIDITY_FLOOR_USD/1e6:.0f}M + full coverage)  {len(syms):,}")
+    print(f"eligible (${LIQUIDITY_FLOOR_USD/1e6:.0f}M floor + envelope + coverage)  {len(syms):,}")
     C = np.nan_to_num(np.corrcoef(R), nan=1.0)
 
     chosen = [int(np.argmin(C.mean(axis=1)))]
