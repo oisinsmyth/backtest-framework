@@ -39,10 +39,55 @@ full multi-currency accounting, live IBKR integration.
 
 ## R5. This doc suite is source of truth; keep it in sync as code lands
 
-New decisions go in `docs/decisions/` (next number: **D50**), shipped changes go in
+New decisions go in `docs/decisions/` (next number: **D236**), shipped changes go in
 [`CHANGELOG.md`](../CHANGELOG.md), current work-in-progress goes in [`AITODO.md`](../AITODO.md).
 
 **Because:** the original four docs (`MASTER_PROJECT_DOC.md`, `DESIGN_DECISIONS.md`,
 `VERIFICATION_SCHEME.md`, `DEVELOPMENT_TIMETABLE.md`) were written before implementation
 started and are frozen planning artifacts; the doc suite added on 2026-07-13 is what stays
 current once code exists.
+
+---
+
+## R6. A hurdle that names a test is not cleared until that test is run
+
+A record claiming a hurdle passed must point at the artifact field holding that test's output.
+A runner implementing a multi-leg hurdle must compute **every** leg or fail loudly.
+
+**Because:** D217 and D218 both wrote hurdle A as *"≥ +0.10 Sharpe, above the paired
+bootstrap's p95"* and **neither runner ever computed a bootstrap** — `ladder_deltas` compared
+the point estimate to +0.10 and stopped. Both records read as though the second leg had passed.
+When D229 built the leg and D230 swept all 24 reported deltas through it, **zero cleared the
+hurdle as claimed**, against 8 that cleared it as scored.
+
+Prose that is not enforced in code gets skipped, and a hurdle that exists only in prose is
+worse than no hurdle: it manufactures confidence nobody earned.
+
+**Scope:** binding on every study. Introduced by [D230](decisions/D230-the-bootstrap-sweep.md).
+
+## R7. Null the overlay, not the book
+
+A study that applies an **overlay** to an existing book — a stop, a target, a partial exit,
+anything that modifies positions a base rule already chose — must be controlled against a null
+that **keeps the base book and randomises only the overlay's decisions, matched on how many it
+makes.**
+
+A rotation null is the wrong control here. Rotation randomises the *whole book's* timing, which
+is the right question for an **entry** rule and the wrong one for a rule that modifies an
+existing book.
+
+**Because:** D235 tested seven stop and target overlays. All seven beat their baseline and the
+pre-registered rotation null cleared — at a p95 of **−0.284**, a bar anything not actively
+harmful would clear, because a rotated 17.5%-exposure book scores far below the unrotated 18.9%
+baseline by construction. Against the correct null — cutting **the same 146 of 1,124 trades**
+short at *random* bars — the best overlay landed at the **63rd percentile**, with the median
+random-exit book scoring +0.785 against the real +0.794. **The trigger carried no information at
+all**, and the pre-registered hurdle said the opposite.
+
+Corollary, and it is the cheaper half of the rule: **a hurdle that everything clears is not
+evidence, it is a broken hurdle.** A clean sweep of positive results is a tell, not a triumph —
+the same tell that surfaced D224's look-ahead defect.
+
+**Scope:** binding on every study applying an overlay. Introduced by
+[D235](decisions/D235-stops-and-targets-on-the-recovery-rule.md).
+
