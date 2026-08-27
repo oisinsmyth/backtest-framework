@@ -535,7 +535,7 @@ def do_build(regular_hours_only: bool) -> int:
             "adjusted prices are BACK-adjusted and drift as dividends are paid, "
             "which breaks D24's immutable-snapshot requirement; as-traded values "
             "never change. Volume is identical under both settings (measured, "
-            "ratio 1.000000). Provider frame is as-traded: NOT split-adjusted (D75)"
+            "ratio 1.000000). The PROVIDER frame is as-traded; the BUILD back-adjusts from the events sidecar, so this FIXTURE is split-adjusted and dividend events are supplied separately (D75's two frames)"
         ),
         "volume_provenance": (
             "CONSOLIDATED. Verified before the backfill: SPY 2024-01 median session "

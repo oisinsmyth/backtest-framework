@@ -126,7 +126,7 @@
  "bar_boundary": "timestamps mark the interval's OPEN, so a bar stamped t covers [t, t+15m) and is not complete until t+15m -- MEASURED, not assumed",
  "timezone": "US/Eastern",
  "timezone_note": "US/Eastern as stated by the provider in its own Meta Data block. DST-shifting, so NOT a fixed offset and NOT the crypto fixtures' 'naive means UTC' convention (D108)",
- "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true at fetch. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, which breaks D24's immutable-snapshot requirement; as-traded values never change. Volume is identical under both settings (measured, ratio 1.000000). Provider frame is as-traded: NOT split-adjusted (D75)",
+ "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true at fetch. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, which breaks D24's immutable-snapshot requirement; as-traded values never change. Volume is identical under both settings (measured, ratio 1.000000). The PROVIDER frame is as-traded; the BUILD back-adjusts from the events sidecar, so this FIXTURE is split-adjusted and dividend events are supplied separately (D75's two frames)",
  "volume_provenance": "CONSOLIDATED. Verified before the backfill: SPY 2024-01 median session volume summed from 15m bars = 66,595,182 shares against a consolidated ADV of ~70-90M. Not a single-venue sample",
  "split_adjusted": true,
  "split_events_applied": 12,
@@ -406,6 +406,6 @@
  "zero_volume_bars": 0,
  "zero_volume_rate": 0.0,
  "empty_bar_disclosure": "D192 requires any intraday study on a new provider to measure and report its own universe's empty-bar rate. That rate is `zero_volume_rate` above and must be quoted in the study's pre-registration. yfinance's comparable rates were 50% at 1h and 15% at 15m, unexplained (D160), which is why this cannot be assumed",
- "fetched_at_utc": "2026-08-27T15:13:38.969594+00:00",
- "built_at_utc": "2026-08-27T15:13:38.969594+00:00"
+ "fetched_at_utc": "2026-08-27T15:22:12.350439+00:00",
+ "built_at_utc": "2026-08-27T15:22:12.350439+00:00"
 }
