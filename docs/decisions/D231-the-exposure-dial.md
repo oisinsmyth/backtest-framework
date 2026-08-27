@@ -253,6 +253,86 @@ independent data once the holdout is spent.
 
 ---
 
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the screen ran. **This is not the RESULT and carries no verdict** — that
+section stays empty until stage 2 runs on the holdout.*
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_exposure_dial.py --stage screen`
+(mined 57, 1,515 live bars, 1,000 rotations, seed 0) · Page:
+[`EXPOSURE_DIAL_RESULTS.md`](../../EXPOSURE_DIAL_RESULTS.md)
+
+### The machinery works — which was the point
+
+**All eight dials landed inside the ±3 pp tolerance**, on both families, without any constant
+inherited from elsewhere: T@40% → 39.3%, T@30% → 29.5%, T@20% → 19.9%, T@10% → 10.9%; N within
+0.6 pp at every level. Amendment 1's self-calibration does what it claimed.
+
+Parent **+0.570** at 49.9% exposure; buy-and-hold **+0.235**.
+
+| cell | exposure | excess Sharpe | √f predicts | selection | Δ vs parent | own-rotation p95 | beats rotation |
+|---|---:|---:|---:|---:|---:|---:|:--:|
+| **T@40%** | 39.3% | **+0.560** | +0.506 | **+11%** | −0.010 | −0.162 | **PASS** |
+| T@30% | 29.5% | +0.418 | +0.439 | −5% | −0.153 | −0.122 | — |
+| T@20% | 19.9% | +0.261 | +0.360 | −28% | −0.310 | −0.074 | — |
+| T@10% | 10.9% | +0.159 | +0.267 | −40% | −0.411 | −0.003 | — |
+| **N@40%** | 39.9% | +0.430 | +0.510 | −16% | −0.141 | −0.189 | **PASS** |
+| N@30% | 29.5% | +0.344 | +0.438 | −21% | −0.226 | −0.162 | — |
+| N@20% | 20.6% | +0.310 | +0.367 | −16% | −0.261 | −0.126 | — |
+| N@10% | 10.1% | +0.353 | +0.257 | **+37%** | −0.217 | −0.042 | — |
+
+**Best-of-search: best real −0.010 against a null p95 of +0.053. Nothing beats the parent, and
+hurdle B fails.** Reported for information only — the mined fixture's detection floor makes a
+pass here uninformative either way.
+
+### The null earned its place immediately
+
+**N@10% shows the highest selection quality anything in this programme has produced — +37% —
+and it does not beat its own rotation** (−0.217 against a p95 of −0.042). Rotation holds
+exposure, turnover and holding-period distribution fixed and moves only the timing; a book that
+cannot beat itself pointed at the wrong bars has no timing signal. **The +37% is noise**, and
+without the null it would have been the most interesting number in the table.
+
+That check was added because it was asked for. It is the only thing here that changed a reading.
+
+**Two cells do beat their own rotation, both at 40%** — T@40% (−0.010 vs −0.162) and N@40%
+(−0.141 vs −0.189). Small, and at the loosest setting, but it is a real timing signal rather
+than an exposure artifact.
+
+### Scoring the predictions — provisionally, on a screen
+
+| | outcome on the mined fixture |
+|---|---|
+| **Y1** money falls with exposure | **holds.** Monotone in both families |
+| **Y2** no cell clears the Sharpe hurdle | **holds.** Best is −0.010 |
+| **Y3** the 10% cells fail hurdle E | **falsified.** Both clear it comfortably |
+| **Y4** family N beats family T | **split.** T wins at 40% and 30%, N wins at 20% and 10% |
+| **Y5** nothing clears hurdle B | **holds** |
+| **Y6** monotone decline, 40% best, drop > 0.20 | **split.** T is monotone (0.560 → 0.159, drop 0.401). **N is not** — it falls to +0.310 at 20% then rises to +0.353 at 10% |
+
+**These are provisional.** Stage 1 is a screen and the fixture cannot distinguish; the
+predictions are scored properly against stage 2.
+
+### The screen
+
+Floor: selection quality ≥ −25%, declared in amendment 2. **Six of eight survive.**
+
+- **Dropped: T@20% (−28%), T@10% (−40%).**
+- **Survivors: T@40%, T@30%, N@40%, N@30%, N@20%, N@10%.**
+
+**A note on what was deliberately not done.** The rotation nulls say only T@40% and N@40% beat
+their own rotations, so a screen on *that* basis would carry two cells to the holdout instead of
+six — and a lower floor there. **The declared rule is the −25% selection floor and it was not
+narrowed after seeing the nulls.** Post-hoc tightening of a screen is selection on the outcome,
+and the multiplicity saving is not worth the thing it would cost. Recorded here so the choice is
+visible rather than silent.
+
+### Stage 2 is not run
+
+Six cells go forward. The holdout remains untouched.
+
+---
+
 ## Reuse — D212 is binding
 
 | need | reuse | from |
