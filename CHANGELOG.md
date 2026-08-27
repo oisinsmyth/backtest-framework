@@ -10,6 +10,33 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D221 — sampling invariance, 2026-08-27)
+- `scripts/run_sampling_invariance.py` + `data/sampling_invariance_summary.json` +
+  `SAMPLING_RESULTS.md` + `tests/unit/test_sampling_invariance.py` (13). The 1h series is
+  exact OHLCV aggregation of the 15m source (D161) on a **shared calendar**, so a gap
+  between the two is the sampling rate and nothing else.
+
+### Result (D221)
+- **Invariance holds. The window is the variable; the sampling rate is not.** 15m with x4
+  parameters matches 1h with defaults on every symbol — deltas +0.054, +0.080, -0.103,
+  -0.149 — with hourly return streams correlating at **0.94-0.96**.
+- **The control carries it:** the same indicator on the same 15m bars with an *unmatched*
+  window correlates at only **0.50** and loses up to 4.183 Sharpe.
+- Round trips are set by the window too: ~225/yr matched on either bar rate, ~950
+  unmatched. The cost problem and the signal problem had one cause.
+- **Nothing is tradeable**, as pre-committed. Every matched config is negative at
+  `taker_40bp`; the sole positive net cell is BTG, the least reliable series in the study.
+
+### Fixed (D221)
+- **Corrects the earlier 15m screen.** It reported gross -0.400 on BTC and concluded the
+  signal was dead at 15m. That ran the default `(34, 9)` on 15m bars — an 8-hour channel
+  against the 1h version's 33-hour one — so it compared two indicators and reported it as a
+  comparison between two timeframes. Matching the window moves BTC from -0.298 to **+0.735
+  on the same bars**. The screen's cost arithmetic stands; its signal conclusion does not.
+- Records that `crypto_intraday_1h_raw`, the repo's only **native** 1h crypto fixture, is
+  **50.4% zero-volume bars** — the cleaner drops 17,520, leaving an irregular ~2h series
+  wearing a 1h label. Unusable for frequency comparison and for volume work.
+
 ### Added (D219/D220 — the dual verdict and the volume filter, 2026-08-27)
 - **D219** changes the acceptance rule: every arm now carries **two verdicts**, standalone
   (A–G) and in-portfolio (P1–P5), reported side by side with neither allowed to replace the

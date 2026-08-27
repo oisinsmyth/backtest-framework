@@ -393,6 +393,30 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D221, sampling invariance (opened and closed 2026-08-27)
+
+Record `docs/decisions/D221-does-the-indicator-care-about-sampling-rate.md`, page
+`SAMPLING_RESULTS.md`.
+
+- [x] A user proposal that turned out to be a paired test with a real null: scale the
+      parameters by x4 on 15m so the window matches 1h, and see whether they converge.
+- [x] **They converge.** |delta| <= 0.15 on every symbol, rho 0.94-0.96.
+- [x] The control is what proves it: unmatched window, same bars, rho **0.50**.
+- [x] **Corrected my own earlier screen** — "the signal is dead at 15m" was a
+      parameterisation artifact. Matching the window moves BTC -0.298 -> +0.735 on the
+      same bars. Scored 1 of 6 on my predictions; the proposal was right wherever we
+      differed.
+- [x] Recorded that `crypto_intraday_1h_raw` is 50.4% zero-volume and unusable.
+
+**Standing conclusion.** Frequency is now a **cost** decision, not a signal decision. Porting
+this indicator across timeframes REQUIRES scaling the parameters or the hypothesis has
+changed. The practical rule is simply to multiply by the frequency ratio — the derived
+lag-match gave no advantage over the naive x4.
+
+**Open, and it is the natural next study:** whether a matched-window arm clears anything on a
+fixture where fees are payable. On this evidence it needs maker rates or a coarser bar. That
+is a pre-registration, not an extension of D221.
+
 ## Now — D219 and D220 (opened and closed 2026-08-27)
 
 **D219 — the dual verdict.** A proposal to swap hurdles A–G for three portfolio criteria,

@@ -1,6 +1,6 @@
 # D221 — Does Impulse MACD care about the sampling rate, or only about the window?
 
-**Status:** Pre-registered — written and committed BEFORE the runner exists
+**Status:** Committed (INVARIANCE HOLDS; M6 confirmed, M1–M5 falsified)
 **Date:** 2026-08-27
 **Category:** Validation & research integrity
 **Source:** A user proposal — scale the parameters by ×4 on 15m data so the window matches
@@ -145,3 +145,131 @@ report, and the four gross Sharpes already screened for config D.
   comparison is between different samples rather than different sampling rates.
 - **No parameter search.** Four configs are declared here and the grid is not extended. If B
   disagrees with A, the response is *not* to tune B until it agrees.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_sampling_invariance.py`
+(offline, deterministic) · Page: [`SAMPLING_RESULTS.md`](../../SAMPLING_RESULTS.md) ·
+Artifact: `data/sampling_invariance_summary.json`
+
+### The one-sentence version
+
+**Invariance holds on every symbol — `|Δ| ≤ 0.15` and `ρ ≥ 0.94` between 15m×4 and 1h — so
+this indicator is scale-free in bars and cares only about the window; and the control proves
+it, because the same indicator at the same sampling rate with an *unmatched* window
+correlates at only 0.50 and loses up to 4.2 Sharpe.**
+
+### Scoring my own predictions
+
+| | Prediction | Outcome |
+|---|---|---|
+| **M1** | Invariance fails, `B < A` on the majority of symbols | **FALSIFIED.** It holds. Deltas are +0.054, +0.080, −0.103, −0.149 — noise around zero, not a direction |
+| **M2** | The mechanism is `zlema` boosting high frequencies, so finer sampling injects more microstructure noise | **FALSIFIED.** No systematic degradation. Naming a mechanism did not make it real — presumably the high-frequency boost lands on a 136-bar smoothed series whose HF content is already gone |
+| **M3** | B trades **more** round trips per year than A despite the matched window | **FALSIFIED.** 222 vs 226 (BTC), 228 vs 226 (ETH), 215 vs 217 (BTG), 234 vs 239 (XEM). Essentially identical, and B trades *fewer* on three of four. The whipsaw argument was wrong |
+| **M4** | B is therefore worse than A net at every non-zero tier | **FALSIFIED.** B is **better** net on BTC (−0.28 vs −0.39) and ETH (−0.01 vs −0.10) |
+| **M5** | C (lag-matched) lands closer to A than B does | **FALSIFIED.** B is closer on BTC and BTG, identical on ETH, C closer only on XEM. **The naive ×4 was as good as the derived lag-match**, so the arithmetic about Wilder's `n−1` was correct and did not matter |
+| **M6** | D (unmatched default) is far below all three | **CONFIRMED**, emphatically |
+
+**One of six.** The proposal was right on every point where it and I differed, and this
+record should say so plainly rather than bury it in a table.
+
+### What is actually true
+
+**1. The window is the variable. The sampling rate is not.**
+
+| symbol | A · 1h (34,9) | B · 15m ×4 (136,36) | Δ | ρ |
+|---|---:|---:|---:|---:|
+| BTCUSDT | +0.681 | +0.735 | **+0.054** | 0.95 |
+| ETHUSDT | +0.733 | +0.813 | **+0.080** | 0.96 |
+| XEMUSDT | −0.547 | −0.650 | **−0.103** | 0.96 |
+| BTGUSDT | +0.767 | +0.617 | **−0.149** | 0.96 |
+
+Against the control — the same indicator, the same 15m bars, the *unmatched* default window:
+
+| symbol | D · 15m (34,9) | Δ vs 1h | ρ | RT/yr |
+|---|---:|---:|---:|---:|
+| BTCUSDT | −0.298 | **−0.979** | **0.50** | 946 |
+| ETHUSDT | +0.224 | −0.510 | 0.50 | 939 |
+| XEMUSDT | −1.939 | −1.392 | 0.58 | 990 |
+| BTGUSDT | −3.416 | **−4.183** | 0.50 | 961 |
+
+**Matched window: ρ = 0.95. Unmatched: ρ = 0.50.** The correlation is the cleanest statement
+of the result — at a matched window the two estimators are measuring the same thing, and at
+an unmatched one they are measuring different things while wearing the same name.
+
+**2. The earlier screen's conclusion was a parameterisation artifact, and it was mine.**
+
+The arithmetic gate reported gross Sharpes of −0.400, +0.159, −1.826 and −2.674 at 15m and
+concluded the signal was dead at that frequency. **That conclusion was wrong.** It ran the
+default `(34, 9)` on 15m bars, which is an 8-hour channel against the 1h version's 33-hour
+one — a comparison between two different indicators, reported as a comparison between two
+timeframes. Matching the window moves BTC from −0.298 to +0.735 on the same bars.
+
+The screen's *cost* arithmetic stands; its *signal* conclusion does not, and nothing should
+cite it.
+
+**3. Round trips are set by the window, not the bar rate.**
+
+~225 per year at a 33-hour window whether the decisions are taken on 15m or 1h bars, against
+~950 at an 8-hour window. This is why the cost problem and the signal problem had the same
+cause: the 15m default was trading four times too often *and* measuring the wrong thing, and
+both were the window.
+
+**4. Two of four symbols are positive gross, and the signal is not universal.**
+
+BTC and ETH are positive at every matched config; XEM is negative at all of them. That is
+dispersion worth reporting rather than averaging away.
+
+### Defects and disclosures
+
+**Nothing here is tradeable, exactly as pre-committed.** At `taker_40bp` every matched config
+is deeply negative (−0.81 to −3.54). At `maker_10bp` only BTG is positive (+0.37 / +0.26) —
+**and BTG is the least reliable series in the study**: 372 complete days against **179
+dropped**, a 32% dropout, on a 1.4-year span. It should be read as noise, not as a signal,
+and it is named here so it cannot be quoted later as the one that worked.
+
+**The shared calendar drops real data and the amounts are unequal.** BTG loses 179 days and
+XEM 132, because `clean()` removes zero-volume bars and `census_days` then rejects any UTC
+day left incomplete — at *both* frequencies, which is the point (D161). BTC and ETH lose
+nothing. The comparison is valid within each symbol; the spans are not equal across symbols.
+
+**The repo's only native 1h crypto fixture is unusable, and that is a finding in its own
+right.** `crypto_intraday_1h_raw` is **50.4% zero-volume bars** — the cleaner drops 17,520 of
+them, leaving an irregular ~2h series wearing a 1h label. It cannot support a frequency
+comparison and cannot support any volume work. The 1h arm here is resampled from the 15m
+source for that reason, which also removes the provider confound: both series are built from
+the same trades.
+
+### Ledger
+
+| block | looks |
+|---|---:|
+| 4 configs × 1 book, symbols as sample not hypotheses | **4** |
+| inherited from D217 + D218 + D220 | 74 |
+| crypto-fixture prior + structure/terrain bar on this fixture | 3,739 |
+| **verdict count** | **3,817** |
+
+**No config is promoted, so no floor is applied.** This study asked how an estimator behaves,
+not whether an arm is tradeable, and a positive gross Sharpe found here gets its own
+pre-registration or it gets nothing.
+
+### What this changes
+
+**Frequency is now a cost decision, not a signal decision.** Since the estimator is scale-free
+in bars, the only reasons to prefer one sampling rate over another are execution granularity
+and fees — and the fee arithmetic already says coarser is better, because round trips scale
+with the window and the window is what you choose. **Anyone porting this indicator across
+timeframes must scale the parameters or they are changing the hypothesis**, which is precisely
+the error the earlier screen made.
+
+**The `×4` heuristic is good enough.** The derived lag-match `(133, 33)` gave no advantage over
+the naive `(136, 36)`, so the practical rule is simply to multiply the parameters by the
+frequency ratio.
+
+The open question this does *not* answer: whether a matched-window arm clears anything on a
+fixture where fees are payable. That needs its own pre-registration, and on the evidence here
+it needs a venue at maker rates or a coarser bar.
