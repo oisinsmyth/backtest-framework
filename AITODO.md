@@ -393,6 +393,35 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D226, the gate on 57 ETFs (opened and closed 2026-08-27)
+
+Record `docs/decisions/D226-the-volume-gate-on-57-etfs-at-15-minutes.md`, page
+`ETF_INTRADAY_RESULTS.md`.
+
+- [x] Fetched, split-adjusted and committed a 57-ETF 15m fixture (3.19M rows, 7.94 live
+      years, ZERO zero-volume bars). Twelve unadjusted splits found and fixed - worst was a
+      **+1,772% single bar** - in prices AND volumes.
+- [x] **THE SPIKE MOVED.** H clears at one window of ten (96 bars); D224's committed
+      200-bar window lands at the 45th percentile. Two spiky profiles, different spikes.
+- [x] Three cells cleared the multiplicity floor - a first - because 57 instruments tighten
+      the null, not because the effect is stronger.
+- [x] Nothing survives; the gate loses money to its own parent.
+- [x] **The dividend fetch changed the verdict** - price-only it ties, dividend-adjusted it
+      loses by 4.6 points.
+
+**THE VOLUME REGIME GATE IS CLOSED.** It survived two coins and two sampling rates; given 57
+instruments and its own pre-registered sweep it produced a spike at a different window while
+losing money to the arm it filters. That is a more useful negative than another failed floor,
+because it explains *why* D224 and D225 looked positive without needing them to be wrong
+about their own numbers.
+
+**What survives is the method:** the matched-count null, the floor-from-the-null correction,
+naming both metrics up front, and pre-registering the sweep. Those made a fitted parameter
+visible in one 9-minute run instead of surviving three more studies.
+
+**Open, and now the only live thread:** the acceleration-versus-level result from D217/D218
+has never been tested on unmined data. Everything since has been about a filter on top of it.
+
 ## Now — D227, abandoned on power (2026-08-27)
 
 Record `docs/decisions/D227-the-time-split-that-cannot-answer-its-own-question.md`.

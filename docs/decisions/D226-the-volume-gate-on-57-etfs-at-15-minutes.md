@@ -1,6 +1,6 @@
 # D226 — Does the volume regime gate survive 57 instruments?
 
-**Status:** Pre-registered — committed BEFORE the study runs
+**Status:** Committed (R1, R2, R5 confirmed; R3 and R4 falsified) — **the spike moved**
 **Date:** 2026-08-27
 **Category:** Validation & research integrity
 **Source:** The generalisation question D227 could not answer, redirected to breadth
@@ -162,3 +162,154 @@ Nothing in this programme has ever done that.
 - **The random-null gate.** A cell that improves net PnL without clearing its matched-count
   null is reported as a **failure**, in those words.
 - **Nothing is promoted without unmined data**, whatever the result (D215/D216).
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_etf_intraday_gate.py`
+(offline, deterministic, seed 0, 9.4 min) · Page:
+[`ETF_INTRADAY_RESULTS.md`](../../ETF_INTRADAY_RESULTS.md) · Artifact:
+`data/etf_intraday_gate_summary.json`
+
+### The one-sentence version
+
+**The gate clears its selectivity null on 57 ETFs — at exactly one window, and it is not the
+one that worked on crypto: 96 bars here against 200 bars there, with 200 landing at the 45th
+percentile on this fixture. Two spiky profiles with their spikes in different places is what
+a fitted parameter looks like, not a discovered one.**
+
+### The sweep
+
+Dividend-adjusted, the primary basis. Parent: **+0.307** net Sharpe, **+24.9%** total, 49.7%
+exposure.
+
+| bars | hours | kept | removed | Sharpe | total | pct in null (Sh / $) | perm | H |
+|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| 48 | 12 | 11,149 | 45% | +0.239 | +10.8% | 24 / 28 | 27 | |
+| **96** | **24** | **10,585** | **48%** | **+0.467** | **+20.3%** | **98 / 98** | **98** | **PASS** |
+| 144 | 36 | 10,773 | 47% | +0.368 | +17.0% | 79 / 86 | 87 | |
+| **200** | **50** | 11,421 | 43% | +0.288 | +14.5% | **45 / 62** | 63 | *(D224's window)* |
+| 288 | 72 | 11,394 | 44% | +0.392 | +20.5% | 87 / 95 | 96 | |
+| 400 | 100 | 10,755 | 47% | +0.314 | +15.2% | 57 / 74 | 77 | |
+| 560 | 140 | 10,642 | 47% | **+0.008** | +0.4% | **0 / 0** | 0 | |
+| 800 | 200 | 10,830 | 46% | +0.176 | +10.0% | 6 / 22 | 24 | |
+| 1200 | 300 | 10,552 | 48% | +0.320 | +18.5% | 59 / 96 | 96 | |
+| 1920 | 480 | 10,664 | 47% | +0.209 | +12.2% | 12 / 42 | 46 | |
+
+**One window of ten clears H. `h_region_width = 1`, `contiguous = False`.**
+
+### Scoring my own predictions
+
+| | Prediction | Outcome |
+|---|---|---|
+| **R1** | The gate clears H at some window | **CONFIRMED.** Window 96, at the 98th percentile on both metrics and on the permutation test |
+| **R2** | **The 200-bar window is not special here** | **CONFIRMED.** D224's committed window lands at the **45th percentile** — indistinguishable from noise on this fixture |
+| **R3** | The profile is flatter; 57 instruments average away what two coins expressed | **FALSIFIED.** It is exactly as spiky. One point wide, non-contiguous, and 560 bars is a near-total collapse to +0.008 at the 0th percentile |
+| **R4** | No cell clears G at 45,819 looks | **FALSIFIED.** Three do — 96, 144 and 288. See below; this is a first for the programme |
+| **R5** | Better Sharpe, less money — the pattern every filter here has produced | **CONFIRMED**, and it is what kills the study |
+
+**Three of five.**
+
+### What is actually true
+
+**1. The spike moved, and that is the finding.**
+
+D225 measured a one-point-wide spike at **200 bars** on crypto and an inversion at 800. Here
+the spike is at **96 bars** and 200 is nothing. Both profiles are spiky; the spikes are in
+different places.
+
+> A real regime effect should live at a window with some physical meaning and degrade
+> gracefully either side of it. **An effect that appears at one window per fixture, at a
+> different window each time, is a parameter being fitted to noise.** That is the outcome
+> this study was designed to be able to see, and it is the one that arrived.
+
+The pre-registration named this branch in advance: *"If it is spiky and the spike is somewhere
+else, the gate is curve-fitting and this is where it dies."*
+
+**2. Three cells cleared the multiplicity floor — the first time anything in this programme
+has.**
+
+| | null sd | floor @ 10 | floor @ 45,819 | Sharpe |
+|---|---:|---:|---:|---:|
+| window 96 | 0.082 | +0.129 | **+0.347** | **+0.467** |
+| window 144 | 0.083 | +0.130 | +0.349 | +0.368 |
+| window 288 | 0.081 | +0.128 | +0.343 | +0.392 |
+
+The reason is the fixture, not the effect: **57 instruments make the matched-count null far
+tighter** (sd ≈ 0.082 against crypto's ≈ 0.24), so the floor falls from +0.88 to +0.35 even at
+a *larger* look count. This is the cleanest demonstration yet of D219's amendment — the floor
+is set by the null's dispersion, not by N.
+
+**It does not rescue the gate.** Clearing a floor while failing selectivity at nine of ten
+windows is evidence about the fixture's power, not about the method.
+
+**3. Nothing survives, because the gate loses money to its own parent.**
+
+Window 96 clears H, E and G — and fails **P**. It beats the parent on Sharpe (+0.467 against
++0.307) and loses on money (**+20.3% against +24.9%**). The programme's most consistent
+finding, for the sixth study running.
+
+**4. Fetching the dividends is what exposed that, and it changed the verdict.**
+
+| window 96 | parent Sharpe | parent total | gate Sharpe | gate total |
+|---|---:|---:|---:|---:|
+| price-only | +0.199 | **+15.5%** | +0.363 | **+15.5%** |
+| dividend-adjusted | +0.307 | **+24.9%** | +0.467 | **+20.3%** |
+
+**On price-only the gate ties its parent on money. On dividend-adjusted it loses by 4.6
+points.** The direction is exactly as predicted before the run: an arm invested ~50% of the
+time collects ~50% of dividends while the parent collects 100%, so omitting them flatters the
+gate.
+
+**Had WP0 not fetched dividends, hurdle P would have been a tie rather than a failure**, and
+the study would have reported a cell clearing H, E, G and drawing on P. D217 discovered this
+in an addendum two days late; here it was named up front and the fetch was done because of it.
+
+### Defects and disclosures
+
+**The runner was written before this record**, disclosed in the provenance section above. Only
+a 3-symbol smoke test preceded the pre-registration, on separate paths, and no cell from it
+enters this ledger.
+
+**An early draft of the runner declared `VERDICT_COUNT = 3879`** — D225's *crypto*-fixture
+arithmetic carried into an ETF study, which would have applied a prior of 3,739 Binance looks
+to a fixture they have nothing to do with. Corrected to 10 / 78 / 45,819 before the run.
+
+**The parent is positive here where it was negative on crypto** (+0.307 against −0.284), and
+the reason is costs: ~1.8 bp per side on ETFs against 10 bp on crypto. So the "any removal
+gains money mechanically" dynamic that made hurdle H load-bearing on crypto is **weaker here**
+— the ETF parent covers its fees. H is still the right hurdle, but it is doing less work.
+
+**The run is fully sequential.** 9.4 minutes on one of sixteen cores; numpy's OpenBLAS
+threading does not touch elementwise array work. `breakout_nulls.path_null` is the repo's
+precedent for parallelising a null deterministically if a larger sweep ever needs it.
+
+### Ledger
+
+| count | N | floor |
+|---|---:|---:|
+| fresh | 10 | +0.129 |
+| + hypothesis lineage | 78 | — |
+| **+ disclosed ETF prior** | **45,819** | **+0.347** |
+
+### What this changes
+
+**The volume regime gate is closed.** It survived D224 and D225 on two coins and two sampling
+rates. Given 57 instruments and its own pre-registered window sweep, it produced a spike at a
+*different* window, at one point of ten, while losing money to the arm it filters.
+
+Two studies found a one-point-wide effect. **The windows disagree.** That is the signature of
+a parameter fitted to whichever sample it met, and it is a more useful negative than another
+failed floor: it explains *why* D224 and D225 looked positive without needing them to be
+wrong about their own numbers.
+
+**What survives is the method, not the result.** The matched-count random null, the
+floor-from-the-null correction, naming both metrics up front, and pre-registering the sweep
+are what made a fitted parameter visible in one 9-minute run instead of surviving three more
+studies.
+
+**Nothing here is promoted, and nothing on this fixture continues.** A gate whose window moves
+between asset classes does not get an eleventh window.

@@ -43,6 +43,32 @@ version (likely at the Phase C "first real number" milestone, see
   still right — adjusted prices are *back-adjusted* and drift with every dividend, which
   breaks D24's immutable-snapshot rule.
 
+### Added (D226 — the gate on 57 ETFs at 15m, 2026-08-27)
+- `scripts/fetch_etf_intraday.py` gains `--actions` (SPLITS + DIVIDENDS) and split
+  adjustment; `data/fixtures/etf_intraday_15m_raw*` — a purpose-built 57-ETF 15-minute
+  fixture, 3.19M rows, 7.94 live years, zero zero-volume bars.
+- `scripts/run_etf_intraday_gate.py` + `data/etf_intraday_gate_summary.json` +
+  `ETF_INTRADAY_RESULTS.md` + `tests/unit/test_etf_intraday_fixture.py` (20).
+
+### Result (D226) — the volume regime gate is closed
+- **The spike moved.** The gate clears H at **one window of ten (96 bars)**, and D224's
+  committed **200-bar window lands at the 45th percentile** here. Two spiky profiles with
+  spikes in different places is a fitted parameter, not a discovered one.
+- **Three cells cleared the multiplicity floor** — a first — but because 57 instruments
+  tighten the null (sd 0.082 vs crypto's 0.24), dropping the floor from +0.88 to +0.35 at a
+  *larger* look count. D219's amendment, demonstrated.
+- **Nothing survives**: window 96 beats the parent on Sharpe and loses on money.
+- **The dividend fetch changed the verdict**: price-only the gate ties its parent (+15.5%
+  each); dividend-adjusted it loses by 4.6 points.
+
+### Fixed (D226)
+- **Twelve unadjusted splits** in the new fixture, worst appearing as a **+1,772% single
+  15-minute bar**. Now back-adjusted in prices *and* volumes (opposite directions —
+  `corporate_actions.split_adjusted` does not touch volume, and this is a volume study).
+  Five of the twelve existed nowhere in this repo.
+- An early runner draft declared `VERDICT_COUNT = 3879`, D225's *crypto* arithmetic applied
+  to an ETF study. Corrected to 10 / 78 / 45,819.
+
 ### Added (D225 — the gate at 1h, 2026-08-27)
 - `scripts/run_gate_1h_replication.py` + `data/gate_1h_summary.json`. Reuses D224's scoring
   path verbatim; only the position builder is local, because `build_positions` hard-reads
