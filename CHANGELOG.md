@@ -10,6 +10,41 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D223/D224 — the volume-regime gate and the assembled strategy, 2026-08-27)
+- **D223** pre-registers the volume-regime hypothesis and measures its two premises.
+  Volume/volatility holds emphatically (top quintile has **4.5x** the mean absolute move);
+  the signal-to-noise refinement does **not** — the variance ratio falls from **1.35 to
+  0.67** across volume quintiles, so quiet markets trend and loud markets revert.
+- **D224** + `scripts/run_assembled_strategy.py` + `data/assembled_strategy_summary.json`
+  + `ASSEMBLED_RESULTS.md` + `tests/unit/test_assembled_strategy.py` (14). Run as a
+  **2x2 factorial**, not a stack, so each component's contribution and their interaction
+  are separable.
+
+### Result (D224)
+- **The volume gate is the first thing this programme has produced that beats its own
+  matched-count random null** — 96th/96th percentile on BTC, 100th/100th on ETH. It takes
+  BTC from -0.284 to **+0.205** net Sharpe and ETH from -0.006 to **+0.584**, deltas above
+  the pre-stated MDE of 0.18.
+- **It still fails the multiplicity floor** (+0.880 / +0.923 at 3,833 looks). ETH clears the
+  *fresh-look* floor and fails the verdict one — D214's pattern exactly.
+- The **2-ATR trailing stop is catastrophic**: it stopped out **98%** of trades, cut median
+  hold 63 -> 7 bars and cost 2.0-2.9 Sharpe.
+- The **interaction is strongly negative** (-2.561, -1.568), exactly as D223's variance-ratio
+  census predicted. Running the stack whole would have shown a bad number and taught nothing.
+
+### Fixed (D224)
+- **A look-ahead defect, caught by an implausible number.** Zeroing the position on the bar
+  the stop triggered let the book escape the entire adverse move, inflating `C_stop` to
+  gross **+4.197**. The stop bar is now a held bar earning `log(fill / previous close)`.
+- **The fill now uses `simulator.fills.stop_fill_price` (D10)** rather than a restatement —
+  the repo already encoded "a gapped stop fills at the open", and reimplementing it was
+  D212 again.
+- **`var_trials` now comes from the simulated null, not from the study's own cells.** D219's
+  amendment predicted the inflation; here it is extreme, with `C_stop`'s -3.17 putting the
+  floor at an unusable **+4.944**. Every future study should estimate it from its null.
+- Hurdle G was **missing from D224's pre-registered hurdle list** and was added post hoc —
+  defensible only because it made the result worse, and disclosed rather than absorbed.
+
 ### Added (D222 — the scaling ladder, 2026-08-27)
 - `scripts/run_scaling_ladder.py` + `data/scaling_ladder_summary.json` +
   `SCALING_RESULTS.md` + `tests/unit/test_scaling_ladder.py` (12). Reuses D221's arm,

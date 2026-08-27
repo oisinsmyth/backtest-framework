@@ -1,6 +1,6 @@
 # D224 — The assembled strategy: best window, volume gate, and a 2-ATR trailing ratchet
 
-**Status:** Pre-registered — written and committed BEFORE the runner exists
+**Status:** Committed (Q3, Q5 confirmed; Q1, Q2, Q4 falsified) — the gate clears H and P and fails G
 **Date:** 2026-08-27
 **Category:** Validation & research integrity
 **Source:** A user specification — take the best timeframe ratio, scale the standard 15m
@@ -152,3 +152,145 @@ unfiltered parent, and the ATR itself (a sensor is not a hypothesis).
 - **No parameter search.** ATR 56, multiple 2, windows 200/200, `k = 4`. None of these is
   swept. If the stack fails, the answer is not ATR 40 or 3 ATR.
 - **Nothing is promoted without unmined data**, whatever the result (D215/D216).
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_assembled_strategy.py`
+(offline, deterministic, seed 0) · Page: [`ASSEMBLED_RESULTS.md`](../../ASSEMBLED_RESULTS.md)
+· Artifact: `data/assembled_strategy_summary.json`
+
+### The one-sentence version
+
+**The volume gate is the first thing this programme has produced that beats its own
+matched-count random null — on both symbols, by more than the stated minimum detectable
+effect — and it still fails the multiplicity floor; the 2-ATR trailing stop is catastrophic,
+destroying 2.0 to 2.9 Sharpe, and the interaction is strongly negative exactly as the
+variance-ratio census predicted.**
+
+### The factorial
+
+| symbol | cell | net Sharpe | net return | gross Sharpe | exposure | trades | median hold |
+|---|---|---:|---:|---:|---:|---:|---:|
+| BTC | A parent | −0.284 | −64% | +0.735 | 49.3% | 1,842 | 63 |
+| BTC | **B gate** | **+0.205** | **+76%** | +0.882 | 26.1% | 927 | 67 |
+| BTC | C stop | −3.173 | −98% | −0.133 | 6.3% | 1,842 | 7 |
+| BTC | D both | −2.355 | −88% | −0.333 | 3.3% | 927 | 7 |
+| ETH | A parent | −0.006 | −3% | +0.813 | 49.7% | 1,891 | 60 |
+| ETH | **B gate** | **+0.584** | **+724%** | +1.096 | 26.4% | 923 | 68 |
+| ETH | C stop | −2.019 | −96% | +0.303 | 6.4% | 1,891 | 7 |
+| ETH | D both | −0.984 | −71% | +0.498 | 3.3% | 923 | 8 |
+
+### Scoring my own predictions
+
+| | Prediction | Outcome |
+|---|---|---|
+| **Q1** | Every cell improves net PnL over A | **FALSIFIED.** C and D are far worse |
+| **Q2** | The stop raises Sharpe and cuts return | **FALSIFIED.** It destroys both |
+| **Q3** | Negative interaction: `D < max(B, C)` | **CONFIRMED**, and strongly: **−2.561** (BTC), **−1.568** (ETH) |
+| **Q4** | No cell clears H on both metrics on both symbols | **FALSIFIED. The gate clears it on both.** |
+| **Q5** | The stop cuts median holding period by more than half | **CONFIRMED.** 63 → 7 bars |
+
+**Two of five, and the one that matters most is Q4 — the prediction that nothing would clear.**
+
+### What is actually true
+
+**1. The volume gate does something real.**
+
+`EMA(200) > SMA(200)` on volume, gating entries only, halves the trade count (1,842 → 927)
+and takes BTC from **−0.284 to +0.205** net Sharpe and ETH from **−0.006 to +0.584**. Deltas
+of **+0.489** and **+0.590**, both above the pre-stated MDE of 0.18.
+
+**And it clears hurdle H on both symbols** — the 96th/96th percentile on BTC and 100th/100th
+on ETH of a null that removes *the same number* of the parent's trades at random. That is the
+hurdle written specifically to catch *"you just traded less"*, and this is the first time
+anything in this programme has cleared it.
+
+**2. It still fails the multiplicity floor.**
+
+| symbol | net Sharpe | floor @ 10 fresh | floor @ 3,833 verdict |
+|---|---:|---:|---:|
+| BTC | +0.205 | +0.383 | **+0.880** |
+| ETH | +0.584 | +0.401 | **+0.923** |
+
+**ETH clears the fresh-look floor and fails the verdict floor.** That is D214's pattern
+exactly: a result publishable as a first study is not publishable as the *n*-th look. BTC
+fails both.
+
+**3. The 2-ATR stop is not tight-ish. It is destroyed.**
+
+It stopped out **1,800 of 1,842** trades on BTC and 1,828 of 1,891 on ETH — **98%** — and cut
+median hold from 63 bars to 7. At `2 × ATR(56)` on 15m crypto the stop sits inside the arm's
+normal excursion, so it exits almost every trade almost immediately and pays the round trip
+each time.
+
+**4. The interaction is negative and the census predicted it.**
+
+D223 measured VR falling from 1.35 (quiet) to 0.67 (loud). The gate selects into loud markets;
+loud markets revert; a trailing stop in a reverting market is a whipsaw generator. The gate
+and the stop therefore fight each other, and `D − max(B, C)` is **−2.561 / −1.568**. **Running
+the stack whole would have shown a bad number and taught nothing about why.**
+
+### Defects and disclosures
+
+**A look-ahead defect in my stop implementation, caught by an implausible number.** The first
+run reported `C_stop` at gross Sharpe **+4.197** and **+4.623** with 5.7% exposure. That is
+not a real number. The cause: on the bar where the stop triggered I set the position to zero,
+so the book **escaped the entire adverse move that triggered the stop**. I had also declared a
+conservative fill convention in the pre-registration — `min(stop, open)` — and never
+implemented it.
+
+Fixed: the stop bar is still a *held* bar, earning `log(fill / previous close)` with the fill
+floored at that bar's open so a gap-through cannot fill at the stop price. **`B_gate` has no
+stop and was unaffected**, but every number for C and D changed, and C went from +4.197 to
+−0.133 gross. **The tell was the magnitude, not a test** — and a test now pins it.
+
+**Hurdle G was missing from D224's hurdle list.** The pre-registration named H, P, E and an
+MDE but omitted the multiplicity floor, which D219's dual verdict requires. Added post hoc
+and reported above. Adding a hurdle after a run is only defensible because it made the result
+*worse*, not better, and it is disclosed rather than absorbed.
+
+**`var_trials` is taken from the simulated null, not from this study's own cells — and this
+is a methodological improvement worth keeping.** D219's amendment recorded that a sweep
+containing real effects inflates `var_trials` and raises the floor spuriously. Here it is
+extreme: `C_stop`'s −3.17 is a genuine effect, and estimating from the eight cells puts the
+floor at **+4.944 annualised**, which is not a noise floor for anything. The matched-count
+random null *is* the null distribution, so **its** variance is the correct estimate, and it
+gives +0.880 / +0.923. **Every future study in this programme should estimate `var_trials`
+from its null rather than from its cells.**
+
+**The window was selected on prior results**, counted as 6 looks in the ledger (D214).
+
+**Two symbols is thin.** ETH's +724% net return against BTC's +76% is enormous dispersion for
+a two-instrument sample, and the gate's BTC result sits only just above its null (96th
+percentile against a 95 threshold).
+
+### Ledger
+
+| block | looks |
+|---|---:|
+| 2 × 2 factorial | 4 |
+| window selection, disclosed | 6 |
+| **fresh, D224 only** | **10** |
+| inherited | 84 |
+| crypto-fixture prior + structure/terrain bar | 3,739 |
+| **verdict count** | **3,833** |
+
+### What this changes
+
+**The volume-regime hypothesis survives its first real test and is not dead.** It cleared the
+selectivity null on both symbols by a margin above the stated MDE. What it did not do is clear
+a floor set by 3,833 accumulated looks on a fixture this programme has already mined hard.
+
+**That is a statement about the fixture, not about the idea.** The correct next step is not
+another parameterisation here — it is the pre-registered claim tested on **unmined data**,
+where the floor is set by ten looks rather than 3,833 and ETH's +0.584 would clear
+comfortably. D215/D216 are unchanged: a positive gets a fresh pre-registration and a holdout
+before anyone believes it.
+
+**The trailing stop is closed at these parameters.** Not "needs tuning" — 98% stop-out is not
+a parameter problem to be swept away, and D224 pre-committed to not sweeping it. Any future
+stop work is a new hypothesis with its own record.

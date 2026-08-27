@@ -393,6 +393,33 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D223 and D224 (opened and closed 2026-08-27)
+
+Records `docs/decisions/D223-the-volume-regime-gate.md` and
+`docs/decisions/D224-the-assembled-strategy.md`, page `ASSEMBLED_RESULTS.md`.
+
+- [x] Measured both premises before designing. Volume/volatility: **confirmed, 4.5x**.
+      Signal-to-noise: **refuted** — VR falls 1.35 -> 0.67, so loud markets REVERT.
+- [x] Ran the user's specified stack as a **2x2 factorial** rather than whole.
+- [x] **The volume gate clears hurdle H on both symbols** — the first time anything here has
+      beaten its matched-count random null.
+- [x] It fails the multiplicity floor. ETH clears the FRESH floor and fails the verdict one.
+- [x] The 2-ATR stop stops out 98% of trades and costs 2-3 Sharpe. Closed at these
+      parameters, and D224 pre-committed to not sweeping them.
+- [x] Interaction strongly negative, as the census predicted.
+
+**Two methodology keepers.** `var_trials` must come from the **simulated null**, not from a
+study's own cells — D219's amendment identified the inflation and D224 shows it at its
+extreme (+4.944, unusable). And a stack gets run as a **factorial**, because a bad number
+from a whole stack teaches nothing about which part caused it.
+
+**The open thread, and it is the most promising one this programme has:** the volume-regime
+gate cleared selectivity by a margin above the stated MDE and failed only a floor set by
+3,833 accumulated looks on a heavily mined fixture. **That is a statement about the fixture,
+not the idea.** The next step is the same pre-registered claim on **unmined data**, where the
+floor is set by ten looks and ETH's +0.584 would clear comfortably. Not another
+parameterisation here.
+
 ## Now — D222, the scaling ladder (opened and closed 2026-08-27)
 
 Record `docs/decisions/D222-does-the-fine-bar-advantage-grow-with-the-window.md`, page
