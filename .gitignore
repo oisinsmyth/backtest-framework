@@ -38,3 +38,6 @@ Thumbs.db
 .secrets/
 alphavantage*.txt
 *.env.local
+
+# Alpha Vantage raw slice cache — D191: cache the raw, commit the derived
+data/raw/alphavantage/
