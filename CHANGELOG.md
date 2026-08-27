@@ -43,6 +43,30 @@ version (likely at the Phase C "first real number" milestone, see
   still right — adjusted prices are *back-adjusted* and drift with every dividend, which
   breaks D24's immutable-snapshot rule.
 
+### Added (D229 — the jerk rung, 2026-08-27)
+- `scripts/run_jerk_rung.py` + `data/jerk_rung_summary.json` + `JERK_RUNG_RESULTS.md` +
+  `tests/unit/test_jerk_rung.py` (17).
+- **A paired block bootstrap**, which the repo did not have. Both rungs recomputed on
+  identical resampled dates, block 21, 1,000 replications.
+
+### Result (D229) — the derivative ladder closes at I1
+- **Jerk does not beat acceleration.** `I0 - I1 = -0.218`, hurdle A fails in all four cells.
+- **P1-P5 all confirmed**, and a clean sweep in a study that predicted its own failure is
+  the easy case; only P4 carried information.
+- **I0 beats the LEVEL rung** (`+0.310`) while losing to acceleration — both derivative
+  rungs beat level, so the ladder is not monotone.
+- The pre-registration's free measurements landed exactly: exposure 48.5% (48.53% predicted),
+  turnover 16,421 (16,422 predicted).
+
+### Fixed (D229)
+- **D217 and D218 both state hurdle A as "above the paired bootstrap's p95" and NEITHER
+  RUNNER EVER RAN ONE.** The leg now exists, and **D218's headline fails it in all four
+  cells**: `I1 - I2 = +0.628` has a 90% interval of `-0.133` to `+1.325`, containing zero.
+  Fairly stated, this attacks the reported *certainty*, not the point estimate, and leaves
+  D218's cross-construction replication argument untouched.
+- **Third appearance of the `sort_keys` idempotency defect** (D220, D222): `--report-only`
+  emitted the same content in a different row order. Pinned by an explicit `CELL_ORDER`.
+
 ### Added (D228 — the filter search, 2026-08-27)
 - `scripts/run_filter_search.py` + `data/filter_search_summary.json` +
   `FILTER_SEARCH_RESULTS.md` + `tests/unit/test_filter_search.py` (23).

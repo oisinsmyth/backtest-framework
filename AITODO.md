@@ -393,6 +393,33 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D229, the jerk rung (opened and closed 2026-08-27)
+
+Record `docs/decisions/D229-one-more-rung-up-the-derivative-ladder.md`, page
+`JERK_RUNG_RESULTS.md`.
+
+- [x] **Jerk does not beat acceleration.** `I0 - I1 = -0.218`, hurdle A fails in all four
+      cells. P1-P5 all confirmed.
+- [x] I0 **beats the level rung** (+0.310) while losing to acceleration — the ladder is not
+      monotone, and both derivative rungs beat level.
+- [x] Built the **paired block bootstrap** the repo lacked.
+
+**THE DERIVATIVE LADDER CLOSES AT I1.**
+
+## THE OPEN ITEM THAT MATTERS MOST
+
+**Every ladder delta in D217 and D218 was reported as clearing a hurdle whose bootstrap leg
+was never computed.** The leg now exists, and D218's headline `I1 - I2 = +0.628` fails it in
+all four cells with a 90% interval of `-0.133` to `+1.325`.
+
+This does **not** say the effect is zero — it says the reported certainty was not earned, and
+D218's cross-construction replication argument (D217's +0.285 from unrelated arithmetic) is
+separate evidence the bootstrap cannot see.
+
+- [ ] **Run `paired_block_bootstrap` against every delta this programme has reported**, and
+      record which of them survive their own stated hurdles. Nothing should be carried
+      further until that is done.
+
 ## Now — D228, the filter search (opened and closed 2026-08-27)
 
 Record `docs/decisions/D228-mining-the-mined-fixture.md`, page `FILTER_SEARCH_RESULTS.md`.

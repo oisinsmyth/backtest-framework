@@ -1,6 +1,6 @@
 # D229 — One more rung up the derivative ladder
 
-**Status:** Pre-registered — committed BEFORE any runner exists
+**Status:** Committed (P1–P5 all confirmed) — **the derivative ladder closes at I1**, and D218's headline fails the bootstrap leg it stated
 **Date:** 2026-08-27
 **Area:** Strategy research
 
@@ -200,3 +200,145 @@ rather than discovered afterwards.
 **Written fresh:** the `I0` score (`hist[t] − hist[t−1]`, NaN-safe at the first live bar) and
 the **paired block bootstrap**, which does not exist in the repo — established above, not
 assumed.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited except the Status field.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_jerk_rung.py`
+(offline, deterministic, seed 0, **6.8 s**) · Page:
+[`JERK_RUNG_RESULTS.md`](../../JERK_RUNG_RESULTS.md) · Artifact: `data/jerk_rung_summary.json`
+
+### The one-sentence version
+
+**Jerk does not beat acceleration — `I0 − I1 = −0.218`, failing hurdle A in all four cells —
+but building the bootstrap leg that D217 and D218 stated and never ran shows that D218's own
+headline result fails it too, in all four cells, with a 90% interval spanning zero.**
+
+### The three rungs, long-flat, no gate
+
+| rung | Sharpe (price) | gross | excess @rf=4% | money | CAGR | max DD | exposure | turnover |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **I0 jerk** | +0.439 | +0.542 | **+0.335** | +34.94% | 5.11% | −13.01% | 48.5% | **16,421** |
+| I1 acceleration | **+0.658** | +0.689 | **+0.570** | +52.12% | 7.23% | −11.78% | 49.9% | 4,835 |
+| I2 level | +0.129 | +0.139 | +0.011 | +14.34% | 2.25% | −13.40% | 54.6% | 1,458 |
+| buy and hold | +0.333 | — | +0.235 | +62.59% | 8.42% | −34.81% | 100% | — |
+
+The pre-registration's free measurements land exactly: exposure **48.5%** against the 48.53%
+measured in advance, turnover **16,421** against 16,422. Measuring the position series before
+committing to predictions worked.
+
+### Hurdle A — all four cells fail
+
+| book | gate | I0−I1 | gross | excess | boot p05 | boot p95 | A |
+|---|---|---:|---:|---:|---:|---:|:--:|
+| long_flat | **none** | **−0.218** | −0.147 | −0.235 | −0.759 | +0.402 | **FAIL** |
+| long_flat | 200ma | +0.006 | — | — | −0.554 | — | **FAIL** |
+| long_short | none | −0.224 | −0.099 | −0.251 | −1.031 | +0.621 | **FAIL** |
+| long_short | 200ma | −0.152 | — | — | −0.712 | — | **FAIL** |
+
+**The basis for hurdle A is price-only, rf = 0** — chosen at implementation time, before the
+run, because that is the basis D217's `+0.285` and D218's `+0.529 / +0.628` were computed on
+and a ladder delta that is not comparable with the ladder it extends is not worth having. The
+gross and excess-Sharpe deltas are reported beside it and agree on sign everywhere.
+
+### Scoring the predictions
+
+| | prediction | outcome |
+|---|---|---|
+| **P1** | `I0 − I1 < 0` at the primary cell | **CONFIRMED.** −0.218 |
+| **P2** | Gross more favourable than net by 0.04–0.09 | **CONFIRMED.** −0.147 against −0.218, a gap of **0.071**, inside the declared range and bracketing the −0.06 cost headwind stated before the run |
+| **P3** | I0 still loses to buy-and-hold on dividend money | **CONFIRMED.** +34.94% against +62.59% |
+| **P4** | Bootstrap p05 sits ≥0.15 below the point estimate | **CONFIRMED, by 3.6×.** p05 is **0.540** below. These deltas are far less precisely estimated than D218's point-estimate-only hurdle implied |
+| **P5** | I0 beats I2 even while losing to I1 | **CONFIRMED.** `I0 − I2 = +0.310`, `I1 − I2 = +0.529`. **Both derivative rungs beat the level rung; the ladder is not monotone** |
+
+**Five of five.** Worth saying plainly: a clean sweep in a study that predicted its own failure
+is the *easy* case. P1 and P3 were near-arithmetic given the pre-registration's measurements,
+and predicting a negative correctly is cheap. P4 is the only one that carried information.
+
+### The finding that outlives this study
+
+P4 is not a footnote about precision. Applying the same correctly-specified test to **D218's
+own headline** — the `I1 − I2` delta that this entire line of work rests on:
+
+| book | gate | I1−I2 | boot p05 | clears the hurdle D218 wrote |
+|---|---|---:|---:|:--:|
+| long_flat | none | **+0.529** | −0.055 | **FAIL** |
+| long_flat | 200ma | +0.096 | −0.322 | **FAIL** |
+| long_short | none | **+0.628** | −0.133 | **FAIL** |
+| long_short | 200ma | +0.366 | −0.076 | **FAIL** |
+
+**D218's headline result fails the bootstrap leg D218 itself specified, in all four cells.**
+The `+0.628` has a 90% interval of **−0.133 to +1.325** — it contains zero. Both parent studies
+reported hurdle A as cleared while computing only its point-estimate half.
+
+**Stated fairly, because this is the strongest claim in the record and it should not be
+overstated:**
+
+- A 90% interval containing zero means *not significant at the one-sided 5% level*. It does
+  **not** mean the effect is zero, and **+0.529 remains the best point estimate.**
+- D218's other argument is untouched by this. *"Two trend-acceleration rules built from
+  unrelated arithmetic agree with each other"* — D217's `+0.285` and D218's `+0.628`, with
+  `I1 − C ≈ 0` — is **independent evidence that a single-fixture bootstrap cannot see.**
+  Replication across constructions and precision on one sample are different things.
+- What is *not* defensible is the reported certainty. **The acceleration-beats-level result is
+  a plausible point estimate on a wide interval, not the settled finding two records describe.**
+
+The rule that follows: **a hurdle that names a test is not cleared until the test is run.**
+Both parent runners omitted it and both records read as though it had passed.
+
+### The primary cell against the other hurdles
+
+**E clears** — 8,230 entries, minimum **125** per symbol, comfortably above 30. Tripling the
+turnover buys sample size, which is the one thing it does buy.
+
+**D fails, and in the now-familiar shape.** I0's excess Sharpe of **+0.335** *beats*
+buy-and-hold's +0.235 — it clears the Sharpe leg — and it loses on money, +34.94% against
++62.59%. D228's mechanism again: exposure 48.5%, so roughly half the yield.
+
+### Defects and disclosures
+
+1. **The `I1 − I2` bootstrap was added after the run.** Defensible on the same grounds D218
+   used for adding hurdle G post hoc: it can only make a **parent** study look worse and cannot
+   launder D229's own failure. It spends no new looks — I1 and I2 are D218's cells, already in
+   the ledger — and D229 is the record that discovered the missing leg, so reporting what the
+   leg says is an obligation rather than an option.
+2. **Hurdle A's basis was not pinned by the pre-registration.** Price-only rf = 0 was chosen at
+   implementation time for comparability with D217/D218, with gross and excess reported beside.
+   The choice does not change the verdict — all three bases agree on sign in every cell.
+3. **An idempotency defect was found and fixed before the artifact was committed.**
+   `json.dumps(sort_keys=True)` reorders the deltas dict on the round trip, so `--report-only`
+   emitted the same content in a different row order. Third appearance of this defect after
+   D220 and D222; now pinned by an explicit `CELL_ORDER` rather than dict iteration.
+4. **D218's committed runner was not edited.** Four lines of rung dispatch are duplicated
+   rather than patching `run_impulse_macd.arm_positions`, because adding a rung to a committed
+   study's code after it reported is how a record stops describing what was run. Pinned by test.
+
+### Ledger
+
+| count | N | floor |
+|---|---:|---:|
+| fresh | 4 | +0.365 |
+| + D218's inherited | 66 | — |
+| + disclosed ETF prior | **45,807** | **+1.465** |
+
+Not the verdict, as declared in advance — the paired delta is, and it fails on its own terms
+without needing the floor.
+
+### What this changes
+
+**The pre-registered stop applies: the derivative ladder closes at I1.** No thresholded
+variant, no smoothed `Δhist`, no second signal length. Differencing an already-differenced
+smoothed series triples turnover, costs ~0.07 Sharpe in fees alone, and gives back 0.22.
+
+**Two things survive, and the second is the larger.**
+
+**The arm is unchanged and still the only live candidate** — `sign(hist)`, +0.570 excess Sharpe
+against buy-and-hold's +0.235, untested on unmined data.
+
+**And the programme now knows its central result is far less precise than it reported.** Every
+ladder delta in D217 and D218 was a point estimate presented as though a bootstrap had endorsed
+it. The bootstrap now exists. **It should be run against every delta this programme has
+reported before any of them is carried further.**
