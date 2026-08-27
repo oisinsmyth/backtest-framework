@@ -1,0 +1,411 @@
+{
+ "buy_and_hold": {
+  "cagr_price_only": 0.06079639229320888,
+  "cagr_with_dividends": 0.08420285629644497,
+  "excess_sharpe": 0.23506526218347956,
+  "max_drawdown": -0.3481448103919773,
+  "sharpe": 0.3325639930635093,
+  "sharpe_total_return": 0.45655667924738685,
+  "total_return": 0.4259271809106944,
+  "total_return_with_dividends": 0.6258529569042475
+ },
+ "cells": {
+  "I1L_log|long_flat|200ma": {
+   "cagr_with_dividends": 0.022646953422005255,
+   "entries": 2232,
+   "excess_sharpe": 0.21101091980740827,
+   "exposure": 0.32365236523652363,
+   "max_drawdown": -0.05656856112586928,
+   "min_entries_per_symbol": 21,
+   "sharpe": 0.32278477922663584,
+   "sharpe_gross": 0.32278477922663584,
+   "sharpe_total_return": 0.48706153022194465,
+   "total_return": 0.0940979250806388,
+   "total_return_with_dividends": 0.14411625471092115,
+   "turnover_units": 4463
+  },
+  "I1L_log|long_flat|none": {
+   "cagr_with_dividends": 0.0708891599204388,
+   "entries": 2436,
+   "excess_sharpe": 0.5651190637138148,
+   "exposure": 0.4928956053500087,
+   "max_drawdown": -0.11667264901643892,
+   "min_entries_per_symbol": 34,
+   "sharpe": 0.6515532438387702,
+   "sharpe_gross": 0.6515532438387702,
+   "sharpe_total_return": 0.7869378894409275,
+   "total_return": 0.4082002403938513,
+   "total_return_with_dividends": 0.5094587042766137,
+   "turnover_units": 4871
+  },
+  "I1L_log|long_short|200ma": {
+   "cagr_with_dividends": 0.0246510020707552,
+   "entries": 3871,
+   "excess_sharpe": 0.16549069457577478,
+   "exposure": 0.5272885183255167,
+   "max_drawdown": -0.1345465206973505,
+   "min_entries_per_symbol": 51,
+   "sharpe": 0.18038052629706888,
+   "sharpe_gross": 0.18038052629706888,
+   "sharpe_total_return": 0.2051379243301332,
+   "total_return": 0.13758419706567096,
+   "total_return_with_dividends": 0.1576618432020897,
+   "turnover_units": 7748
+  },
+  "I1L_log|long_short|none": {
+   "cagr_with_dividends": 0.05645917704765906,
+   "entries": 2638,
+   "excess_sharpe": 0.37252339433064946,
+   "exposure": 0.970366510335244,
+   "max_drawdown": -0.19495653184369766,
+   "min_entries_per_symbol": 36,
+   "sharpe": 0.3599239679152994,
+   "sharpe_gross": 0.3599239679152994,
+   "sharpe_total_return": 0.37652185551254763,
+   "total_return": 0.37181725784319963,
+   "total_return_with_dividends": 0.3912343148473327,
+   "turnover_units": 5286
+  },
+  "I1_signal|long_flat|200ma": {
+   "cagr_with_dividends": 0.021435137251739046,
+   "entries": 2248,
+   "excess_sharpe": 0.1782081337868671,
+   "exposure": 0.3286549707602339,
+   "max_drawdown": -0.059309270644901546,
+   "min_entries_per_symbol": 22,
+   "sharpe": 0.2906580565557982,
+   "sharpe_gross": 0.2906580565557982,
+   "sharpe_total_return": 0.45428279424078344,
+   "total_return": 0.08570949017732547,
+   "total_return_with_dividends": 0.13598975072580413,
+   "turnover_units": 4495
+  },
+  "I1_signal|long_flat|none": {
+   "cagr_with_dividends": 0.07226530498247198,
+   "entries": 2418,
+   "excess_sharpe": 0.5704234905785612,
+   "exposure": 0.499299403624573,
+   "max_drawdown": -0.11779874500727727,
+   "min_entries_per_symbol": 34,
+   "sharpe": 0.6576090573696894,
+   "sharpe_gross": 0.6576090573696894,
+   "sharpe_total_return": 0.7925771891819726,
+   "total_return": 0.4183051665359232,
+   "total_return_with_dividends": 0.5211577844989679,
+   "turnover_units": 4835
+  },
+  "I1_signal|long_short|200ma": {
+   "cagr_with_dividends": 0.02355309068390096,
+   "entries": 3863,
+   "excess_sharpe": 0.15395561728559595,
+   "exposure": 0.5298129812981298,
+   "max_drawdown": -0.13760465503191766,
+   "min_entries_per_symbol": 52,
+   "sharpe": 0.16972265668378267,
+   "sharpe_gross": 0.16972265668378267,
+   "sharpe_total_return": 0.19606822247624991,
+   "total_return": 0.12898308073031844,
+   "total_return_with_dividends": 0.1502244780749715,
+   "turnover_units": 7726
+  },
+  "I1_signal|long_short|none": {
+   "cagr_with_dividends": 0.05740785304315995,
+   "entries": 2624,
+   "excess_sharpe": 0.3742245657971212,
+   "exposure": 0.9685252735799896,
+   "max_drawdown": -0.18695070683047632,
+   "min_entries_per_symbol": 36,
+   "sharpe": 0.36294316110706115,
+   "sharpe_gross": 0.36294316110706115,
+   "sharpe_total_return": 0.38215530473192466,
+   "total_return": 0.3760555263172331,
+   "total_return_with_dividends": 0.39876188698329107,
+   "turnover_units": 5256
+  },
+  "I1r_ratio|long_flat|200ma": {
+   "cagr_with_dividends": 0.02101390482332537,
+   "entries": 2246,
+   "excess_sharpe": 0.17788287265257396,
+   "exposure": 0.32243645417173294,
+   "max_drawdown": -0.05741002369441339,
+   "min_entries_per_symbol": 22,
+   "sharpe": 0.28930166267364676,
+   "sharpe_gross": 0.28930166267364676,
+   "sharpe_total_return": 0.45381619467521944,
+   "total_return": 0.08366429848237344,
+   "total_return_with_dividends": 0.13317623913100493,
+   "turnover_units": 4491
+  },
+  "I1r_ratio|long_flat|none": {
+   "cagr_with_dividends": 0.06600453177836625,
+   "entries": 2433,
+   "excess_sharpe": 0.5235298187534141,
+   "exposure": 0.4894678941578368,
+   "max_drawdown": -0.12488379179097908,
+   "min_entries_per_symbol": 33,
+   "sharpe": 0.6102983413608831,
+   "sharpe_gross": 0.6102983413608831,
+   "sharpe_total_return": 0.747885053391501,
+   "total_return": 0.3701387234299503,
+   "total_return_with_dividends": 0.46853658590316766,
+   "turnover_units": 4865
+  },
+  "I1r_ratio|long_short|200ma": {
+   "cagr_with_dividends": 0.01757524703533541,
+   "entries": 3877,
+   "excess_sharpe": 0.10674014682714135,
+   "exposure": 0.527207457587864,
+   "max_drawdown": -0.15691150068728277,
+   "min_entries_per_symbol": 53,
+   "sharpe": 0.1201052063867409,
+   "sharpe_gross": 0.1201052063867409,
+   "sharpe_total_return": 0.14519106039119734,
+   "total_return": 0.09063256042737973,
+   "total_return_with_dividends": 0.11042513059076355,
+   "turnover_units": 7757
+  },
+  "I1r_ratio|long_short|none": {
+   "cagr_with_dividends": 0.04509585595849031,
+   "entries": 2639,
+   "excess_sharpe": 0.29857674457818045,
+   "exposure": 0.9685252735799896,
+   "max_drawdown": -0.19993158861111993,
+   "min_entries_per_symbol": 36,
+   "sharpe": 0.2837179070183532,
+   "sharpe_gross": 0.2837179070183532,
+   "sharpe_total_return": 0.3012477940992693,
+   "total_return": 0.28417931577917444,
+   "total_return_with_dividends": 0.30366138915733165,
+   "turnover_units": 5286
+  }
+ },
+ "delta_hurdle": 0.1,
+ "deltas": {
+  "I1L_log|long_flat|200ma": {
+   "book": "long_flat",
+   "boot": {
+    "block": 21,
+    "mean": 0.03104555746643127,
+    "n_boot": 1000,
+    "p05": -0.012225858118975473,
+    "p50": 0.031415684534675456,
+    "p95": 0.07223075817197076,
+    "sd": 0.02579675309840783
+   },
+   "clears_A": false,
+   "delta": 0.03212672267083766,
+   "delta_excess": 0.03280278602054118,
+   "gate": "200ma",
+   "rung": "I1L_log"
+  },
+  "I1L_log|long_flat|none": {
+   "book": "long_flat",
+   "boot": {
+    "block": 21,
+    "mean": -0.007002372762781975,
+    "n_boot": 1000,
+    "p05": -0.05148317823847411,
+    "p50": -0.0052605215010135455,
+    "p95": 0.03321187479996213,
+    "sd": 0.026223669705473768
+   },
+   "clears_A": false,
+   "delta": -0.0060558135309192185,
+   "delta_excess": -0.005304426864746414,
+   "gate": "none",
+   "rung": "I1L_log"
+  },
+  "I1L_log|long_short|200ma": {
+   "book": "long_short",
+   "boot": {
+    "block": 21,
+    "mean": 0.014029847156247225,
+    "n_boot": 1000,
+    "p05": -0.018888371494850332,
+    "p50": 0.01225872533788671,
+    "p95": 0.051612183518621096,
+    "sd": 0.02282825462946501
+   },
+   "clears_A": false,
+   "delta": 0.010657869613286214,
+   "delta_excess": 0.01153507729017883,
+   "gate": "200ma",
+   "rung": "I1L_log"
+  },
+  "I1L_log|long_short|none": {
+   "book": "long_short",
+   "boot": {
+    "block": 21,
+    "mean": -0.002889065044306583,
+    "n_boot": 1000,
+    "p05": -0.05464740273075491,
+    "p50": -0.00200735484508888,
+    "p95": 0.046716781138719,
+    "sd": 0.03184300028897366
+   },
+   "clears_A": false,
+   "delta": -0.0030191931917617487,
+   "delta_excess": -0.0017011714664717514,
+   "gate": "none",
+   "rung": "I1L_log"
+  },
+  "I1L_minus_I1r|long_flat|200ma": {
+   "book": "long_flat",
+   "boot": {
+    "block": 21,
+    "mean": 0.034568483052804744,
+    "n_boot": 1000,
+    "p05": -0.00798126971557944,
+    "p50": 0.033479150348122794,
+    "p95": 0.08034069904913536,
+    "sd": 0.0268609711054386
+   },
+   "clears_A": false,
+   "delta": 0.03348311655298908,
+   "delta_excess": 0.033128047154834306,
+   "gate": "200ma",
+   "rung": "I1L_minus_I1r"
+  },
+  "I1L_minus_I1r|long_flat|none": {
+   "book": "long_flat",
+   "boot": {
+    "block": 21,
+    "mean": 0.03800209797384883,
+    "n_boot": 1000,
+    "p05": -0.020041306339745116,
+    "p50": 0.03462043061733756,
+    "p95": 0.10257998452783461,
+    "sd": 0.037763483323050774
+   },
+   "clears_A": false,
+   "delta": 0.0412549024778871,
+   "delta_excess": 0.04158924496040073,
+   "gate": "none",
+   "rung": "I1L_minus_I1r"
+  },
+  "I1L_minus_I1r|long_short|200ma": {
+   "book": "long_short",
+   "boot": {
+    "block": 21,
+    "mean": 0.06341901921032135,
+    "n_boot": 1000,
+    "p05": 0.012879181679734515,
+    "p50": 0.05891004355972049,
+    "p95": 0.12883930340814617,
+    "sd": 0.03502898738677839
+   },
+   "clears_A": false,
+   "delta": 0.06027531991032799,
+   "delta_excess": 0.05875054774863343,
+   "gate": "200ma",
+   "rung": "I1L_minus_I1r"
+  },
+  "I1L_minus_I1r|long_short|none": {
+   "book": "long_short",
+   "boot": {
+    "block": 21,
+    "mean": 0.07459597216315285,
+    "n_boot": 1000,
+    "p05": -0.0015581869774941583,
+    "p50": 0.06704750955633262,
+    "p95": 0.17230184832121861,
+    "sd": 0.05317377379287663
+   },
+   "clears_A": false,
+   "delta": 0.0762060608969462,
+   "delta_excess": 0.07394664975246901,
+   "gate": "none",
+   "rung": "I1L_minus_I1r"
+  },
+  "I1r_ratio|long_flat|200ma": {
+   "book": "long_flat",
+   "boot": {
+    "block": 21,
+    "mean": -0.003522925586373477,
+    "n_boot": 1000,
+    "p05": -0.05452436628936068,
+    "p50": -0.001929076806992681,
+    "p95": 0.044383243907127626,
+    "sd": 0.03048192230263973
+   },
+   "clears_A": false,
+   "delta": -0.0013563938821514188,
+   "delta_excess": -0.00032526113429312553,
+   "gate": "200ma",
+   "rung": "I1r_ratio"
+  },
+  "I1r_ratio|long_flat|none": {
+   "book": "long_flat",
+   "boot": {
+    "block": 21,
+    "mean": -0.0450044707366308,
+    "n_boot": 1000,
+    "p05": -0.1049132959938752,
+    "p50": -0.04170635029112685,
+    "p95": 0.008407587104705228,
+    "sd": 0.034878583999577675
+   },
+   "clears_A": false,
+   "delta": -0.04731071600880632,
+   "delta_excess": -0.04689367182514714,
+   "gate": "none",
+   "rung": "I1r_ratio"
+  },
+  "I1r_ratio|long_short|200ma": {
+   "book": "long_short",
+   "boot": {
+    "block": 21,
+    "mean": -0.049389172054074115,
+    "n_boot": 1000,
+    "p05": -0.10451231350378513,
+    "p50": -0.047419950375941905,
+    "p95": -0.0016009182058241765,
+    "sd": 0.03231806293504277
+   },
+   "clears_A": false,
+   "delta": -0.049617450297041774,
+   "delta_excess": -0.0472154704584546,
+   "gate": "200ma",
+   "rung": "I1r_ratio"
+  },
+  "I1r_ratio|long_short|none": {
+   "book": "long_short",
+   "boot": {
+    "block": 21,
+    "mean": -0.07748503720745945,
+    "n_boot": 1000,
+    "p05": -0.16403052137902088,
+    "p50": -0.07414497169301126,
+    "p95": -0.002023800739413977,
+    "sd": 0.051730227873236986
+   },
+   "clears_A": false,
+   "delta": -0.07922525408870795,
+   "delta_excess": -0.07564782121894076,
+   "gate": "none",
+   "rung": "I1r_ratio"
+  }
+ },
+ "elapsed_seconds": 6.0,
+ "first_live_date": "2018-12-21",
+ "is_verdict": false,
+ "last_date": "2024-12-30",
+ "live_bars": 1515,
+ "mechanism": {
+  "I1L_log": {
+   "corr_improvement_vs_log_drift": -0.11136772332898713,
+   "mean_improvement": 0.0010760047887879145,
+   "symbols_improved": 32
+  },
+  "I1r_ratio": {
+   "corr_improvement_vs_log_drift": -0.15597948121353544,
+   "mean_improvement": -0.022020400387377962,
+   "symbols_improved": 23
+  }
+ },
+ "n_boot": 1000,
+ "n_symbols": 57,
+ "produced": "D232",
+ "seed": 0,
+ "stage": "screen"
+}

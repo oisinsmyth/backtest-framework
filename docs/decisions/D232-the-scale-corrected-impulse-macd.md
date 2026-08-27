@@ -172,6 +172,106 @@ thing future work would mine against — not to produce a verdict.
 | ladder arms, panel, costs, buy-and-hold, scoring | `arm_positions`, `load_panel`, `score_cell`, `excess_sharpe` | `run_jerk_rung.py`, `run_macd_ladder.py` |
 | the Impulse series and its `mid` leg | `impulse_macd_series` | `research/macd.py` |
 
-**Written fresh:** `hist_r` and `hist_L` only. `ImpulseSeries` already carries `md` and `mid`, so the
+**Written fresh:** `hist_r` and `hist_L` only.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.***
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_scale_corrected.py` · Page:
+[`SCALE_CORRECTED_RESULTS.md`](../../SCALE_CORRECTED_RESULTS.md)
+
+### The one-sentence version
+
+**The defect is real, provable and exactly removable — and fixing it does not help. Both
+corrections are fractionally *worse* than the published indicator, because on real data they
+change the signal's sign on barely one bar in eighty-seven.**
+
+### The numbers
+
+| rung | Sharpe | excess @rf=4% | exposure | turnover | Δ vs published | boot p05 |
+|---|---:|---:|---:|---:|---:|---:|
+| **I1 published** | **+0.658** | **+0.570** | 49.9% | 4,835 | — | — |
+| I1L log | +0.652 | +0.565 | 49.3% | 4,871 | **−0.006** | −0.051 |
+| I1r ratio | +0.610 | +0.524 | 48.9% | 4,865 | **−0.047** | −0.105 |
+| buy and hold | +0.333 | +0.235 | 100% | — | — | — |
+
+`I1L − I1r = +0.041` (p05 −0.020). Hurdle A fails everywhere, as expected.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **Z1** | `I1L − I1 > 0` | **FALSIFIED.** −0.006 — a dead heat, fractionally the wrong way |
+| **Z2** | the delta is below +0.10 | held, trivially, since it is negative |
+| **Z3** | exposure within 2 pp | **CONFIRMED.** 49.3% and 48.9% against 49.9% |
+| **Z4** | bootstrap p05 below zero | **CONFIRMED.** −0.051 and −0.105 |
+| **Z5** | improvement correlates with abs log drift | **FALSIFIED, and backwards.** −0.111 and −0.156 |
+| **Z6** | `I1L` beats `I1r` | **CONFIRMED** directionally, +0.041, though p05 −0.020 |
+
+**Z5 is the one that matters.** It was declared as the mechanism test — *"a positive Z1 with a
+null Z5 would mean the fix helped by accident"*. Z1 came out negative and Z5 came out negative,
+so the small differences that do exist did not arrive through the channel the algebra names.
+
+### Why a provable defect turned out to be immaterial
+
+**Sign agreement between the published and log constructions: 98.85% mean, 95.45% worst.**
+Histogram correlation 0.972. **The corrected signal makes the same call on 99 bars in 100.**
+
+The reason is a horizon mismatch that the analysis missed:
+
+> `hist = md − sma(md, 9)` reads md's change over **~9 bars**. The scale contamination is md's
+> dollar magnitude drifting with the price level — **also over ~9 bars, not over the span**.
+> Median absolute 9-bar move on this fixture is **2.24%**, so the contamination perturbs `md` by
+> about 2%, against md's own 9-bar variation, which is far larger.
+
+**In the synthetic demonstration the path was noiseless, so that 2% drift was the *only* thing
+moving `md`, and it set the sign on 100% of bars. In real data there is always something else
+happening.**
+
+### The methodological error, recorded because it is the transferable part
+
+The demonstration that motivated this study was a **noiseless path constructed to isolate the
+mechanism**. That is the right way to *find* a defect and the **wrong way to size one** — an
+adversarial path maximises the effect by construction, and I read a magnitude off it.
+
+> **A defect that is provable is not thereby material.** Establishing that a bias exists and
+> establishing that it matters are separate measurements, and the second cannot be inferred from
+> a path chosen to make the first visible.
+
+The cheap check that would have caught this before any of the machinery was written is the one
+that explains it afterwards: **compare the corrected and uncorrected signals on the real data
+and count how often they disagree.** 1.15% would have ended the study in a minute.
+
+### A conjecture, labelled as such
+
+Symbols that **fell** over the span improved under the fix (mean +0.0173, n=14); symbols that
+**rose** got slightly worse (−0.0042, n=43). That is consistent with the dollar-scale bias having
+acted as an accidental **long tilt** — it pushes `hist` positive when price levels rise, which
+flatters a mostly-rising sample.
+
+**It is not established.** The correlation with signed drift is +0.083, essentially zero; the
+quartile gradient is non-monotone (+0.017, −0.016, +0.006, −0.002); and the "fell" group is 14
+symbols. Recorded as a conjecture with a stated test — it predicts the corrected rungs should
+*beat* the published one on a declining sample — and not as a finding.
+
+### What survives
+
+**Two things, and neither is a strategy.**
+
+The corrected constructions are **provably right**: on a path with no acceleration both drive
+`hist` to **~1e−16**, thirteen orders of magnitude below the published construction's 1.3e−03,
+and `I1L` is *exactly* scale-invariant. Pinned by test. If a future study runs on an instrument
+whose price level moves far more than these ETFs did — a crypto drawdown, a single stock, a long
+bear market — **`I1L` is the construction to use**, on correctness grounds, at no measured cost.
+
+And the horizon insight bounds every future attempt at this indicator: **the operator only ever
+sees ~9 bars of `md`.** Anything hoped to matter must move `md` inside that window.
+
+### The holdout
+
+**Untouched.** Nothing here justifies spending it. `ImpulseSeries` already carries `md` and `mid`, so the
 correction is a two-line function and nothing else needs restating — which is itself evidence
 that the defect was always visible in the data structure and simply never looked at.
