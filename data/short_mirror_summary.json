@@ -1,0 +1,237 @@
+{
+ "anatomy": {
+  "dead_zone_share_of_held": {
+   "M1": 0.16031284389246975,
+   "M2": 0.03213522801151667,
+   "M3": 0.18868421682995185,
+   "M4": 0.10007752313581085,
+   "S1": 0.23296325829601913
+  },
+  "live_cells": 86355,
+  "share_above": 0.5536564182734063,
+  "share_below": 0.3294539980313821,
+  "share_inside": 0.11688958369521163,
+  "simultaneous_s1_m1": 0
+ },
+ "borrow_annual": 0.01,
+ "buy_and_hold": {
+  "breakeven_borrow_annual": null,
+  "cagr": 0.08420285629644501,
+  "clears_E": false,
+  "entries": 57,
+  "excess_sharpe": 0.23506526218347956,
+  "exposure_gross": 1.0,
+  "exposure_long": 1.0,
+  "exposure_short": 0.0,
+  "max_drawdown": -0.34598052274227475,
+  "min_entries_per_symbol": 1,
+  "sharpe_rf0": 0.45655667924738685,
+  "total_return": 0.6258529569042475,
+  "total_return_price": 0.4259271809106944,
+  "turnover_units": 57.0,
+  "vol": 0.17707554393389835
+ },
+ "cells": {
+  "M1": {
+   "breakeven_borrow_annual": -0.06901948070255208,
+   "cagr": -0.02085158332484174,
+   "clears_E": false,
+   "entries": 1742,
+   "excess_sharpe": -0.4065539708228562,
+   "exposure_gross": 0.2946442012622315,
+   "exposure_long": 0.0,
+   "exposure_short": 0.2946442012622315,
+   "max_drawdown": -0.1927506353483166,
+   "min_entries_per_symbol": 17,
+   "sharpe_rf0": -0.35694920203037417,
+   "total_return": -0.11898721715110898,
+   "total_return_price": -0.08995529874914095,
+   "turnover_units": 3465.0,
+   "vol": 0.059033743571541564
+  },
+  "M2": {
+   "breakeven_borrow_annual": -0.07614402954888942,
+   "cagr": -0.019555815806470266,
+   "clears_E": false,
+   "entries": 1764,
+   "excess_sharpe": -0.45022503128102626,
+   "exposure_gross": 0.249365989230502,
+   "exposure_long": 0.0,
+   "exposure_short": 0.249365989230502,
+   "max_drawdown": -0.16926557527025998,
+   "min_entries_per_symbol": 16,
+   "sharpe_rf0": -0.40003462867534506,
+   "total_return": -0.1119546600403981,
+   "total_return_price": -0.08888516427812343,
+   "turnover_units": 3513.0,
+   "vol": 0.0493696280550189
+  },
+  "M3": {
+   "breakeven_borrow_annual": 0.08618768943861835,
+   "cagr": 0.03227377817177525,
+   "clears_E": true,
+   "entries": 2860,
+   "excess_sharpe": 0.2618299636007987,
+   "exposure_gross": 0.48343465925539925,
+   "exposure_long": 0.18879045799316774,
+   "exposure_short": 0.2946442012622315,
+   "max_drawdown": -0.21865281609807552,
+   "min_entries_per_symbol": 42,
+   "sharpe_rf0": 0.3879536739537439,
+   "total_return": 0.2104130521017164,
+   "total_return_price": 0.22339149948933712,
+   "turnover_units": 5713.0,
+   "vol": 0.08187555096181962
+  },
+  "M4": {
+   "breakeven_borrow_annual": -0.11014502434280685,
+   "cagr": -0.05425422129693516,
+   "clears_E": true,
+   "entries": 2476,
+   "excess_sharpe": -0.45771912169448575,
+   "exposure_gross": 0.4780035898326675,
+   "exposure_long": 0.0,
+   "exposure_short": 0.4780035898326675,
+   "max_drawdown": -0.43948121121716044,
+   "min_entries_per_symbol": 36,
+   "sharpe_rf0": -0.4217709643122788,
+   "total_return": -0.28491433961494356,
+   "total_return_price": -0.24358267349490076,
+   "turnover_units": 4898.0,
+   "vol": 0.13225537942941784
+  },
+  "S1": {
+   "breakeven_borrow_annual": null,
+   "cagr": 0.05425670051501004,
+   "clears_E": false,
+   "entries": 1124,
+   "excess_sharpe": 0.7463196376488916,
+   "exposure_gross": 0.18879045799316774,
+   "exposure_long": 0.18879045799316774,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.10302048536365305,
+   "min_entries_per_symbol": 9,
+   "sharpe_rf0": 0.8670523598688872,
+   "total_return": 0.37388819101936493,
+   "total_return_price": 0.3443202342344243,
+   "turnover_units": 2248.0,
+   "vol": 0.06093746097371618
+  }
+ },
+ "conditional_order": [
+  "hist>0 & md<=0  (S1)",
+  "hist<0 & md>=0  (M1)",
+  "hist<0 & md<0",
+  "hist<0 alone    (M4)",
+  "all live bars"
+ ],
+ "conditional_returns": {
+  "all live bars": {
+   "annualised": 0.08423839987115878,
+   "bars": 86355
+  },
+  "hist<0 & md<0": {
+   "annualised": 0.03284843083486612,
+   "bars": 15834
+  },
+  "hist<0 & md>=0  (M1)": {
+   "annualised": 0.00851559147325261,
+   "bars": 25444
+  },
+  "hist<0 alone    (M4)": {
+   "annualised": 0.017781006661445223,
+   "bars": 41278
+  },
+  "hist>0 & md<=0  (S1)": {
+   "annualised": 0.33218557053087727,
+   "bars": 16303
+  }
+ },
+ "correlation_s1_m1": -0.06874911667550378,
+ "elapsed_seconds": 25.7,
+ "first_live_date": "2018-12-21",
+ "last_date": "2024-12-30",
+ "live_bars": 1515,
+ "n_sims": 1000,
+ "n_symbols": 57,
+ "nulls": {
+  "M1": {
+   "below_median": false,
+   "clears_W1": true,
+   "money_p50": -0.2599478282218288,
+   "money_p95": -0.2060539520933297,
+   "money_percentile_of_actual": 100.0,
+   "p50": -0.9695670200631606,
+   "p95": -0.72814195594386,
+   "percentile_of_actual": 100.0,
+   "sd": 0.15038164496500447,
+   "vol_p50": 0.054736524514629674,
+   "vol_ratio_actual_over_null": 1.0785073421269806
+  },
+  "M2": {
+   "below_median": false,
+   "clears_W1": true,
+   "money_p50": -0.22683989438796454,
+   "money_p95": -0.17570336295716965,
+   "money_percentile_of_actual": 99.9,
+   "p50": -0.9709714112185062,
+   "p95": -0.7233589605694526,
+   "percentile_of_actual": 99.9,
+   "sd": 0.16173513455607144,
+   "vol_p50": 0.04640509113343877,
+   "vol_ratio_actual_over_null": 1.0638838724194193
+  },
+  "M3": {
+   "below_median": false,
+   "clears_W1": true,
+   "money_p50": -0.21042156183066596,
+   "money_p95": -0.11410166738858098,
+   "money_percentile_of_actual": 100.0,
+   "p50": -1.5702502836254184,
+   "p95": -0.8784610883286038,
+   "percentile_of_actual": 100.0,
+   "sd": 0.4268338999675027,
+   "vol_p50": 0.03157126349797381,
+   "vol_ratio_actual_over_null": 2.593356802684639
+  },
+  "M4": {
+   "below_median": false,
+   "clears_W1": true,
+   "money_p50": -0.36918376217772386,
+   "money_p95": -0.30975840613663697,
+   "money_percentile_of_actual": 99.1,
+   "p50": -0.9575353898184573,
+   "p95": -0.7665674079859898,
+   "percentile_of_actual": 100.0,
+   "sd": 0.11178755153997769,
+   "vol_p50": 0.08497754828006278,
+   "vol_ratio_actual_over_null": 1.556356733116614
+  }
+ },
+ "post_hoc_cells": [
+  "M4"
+ ],
+ "produced": "D238",
+ "rf_annual": 0.04,
+ "seed": 0,
+ "sqrt_f_vs_s1": {
+  "M1": 1.2492775315089093,
+  "M2": 1.1492872535583978,
+  "M3": 1.600216969892831,
+  "M4": 1.5912028906675748
+ },
+ "stage": "screen (mined 57) -- the holdout and forward window are untouched",
+ "w3": {
+  "bootstrap": {
+   "block": 21,
+   "mean": -0.5266627472769503,
+   "n_boot": 1000,
+   "p05": -1.0426202335553552,
+   "p50": -0.5227291017234339,
+   "p95": -0.02828834265312653,
+   "sd": 0.3246573692605729
+  },
+  "clears_W3": false,
+  "delta_m3_minus_s1": -0.48448967404809296
+ }
+}

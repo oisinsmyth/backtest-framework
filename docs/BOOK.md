@@ -149,6 +149,17 @@ to **4.3** — significant on data already in hand, with no waiting.
 It also covers S1's one demonstrated weakness: **T3 showed it cannot keep up in a strong bull
 market**, which is precisely where a higher-exposure arm would earn.
 
+**Amendment, 2026-08-27 ([D238](decisions/D238-the-short-side-mirror.md)).** The obvious
+candidate — the short-side mirror of this rule — was tested and **closed**. It is recorded here
+because it sharpens the target rather than merely removing an option: the mirror **supplies the
+correlation and not the return.** `corr(S1, M1) = −0.0687` is exactly the ρ ≈ 0 the arithmetic
+above needs, at an excess Sharpe of **−0.407**; the combined book scores **−0.484 against S1
+alone**, with the entire 90% interval below zero. Since adding an arm helps only when
+`SR_B > ρ·SR_A = −0.051`, **the bar for arm two is about −0.05 excess Sharpe at ρ ≈ 0 —
+uncorrelatedness was never the binding constraint.**
+
+*S1's specification and evidence are unchanged by this. Nothing above this line moved.*
+
 > **The book has one entry at 18.9% exposure. That is a start, not a book.**
 
 ---

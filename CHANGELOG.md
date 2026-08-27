@@ -10,6 +10,31 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D238 — the short-side mirror, 2026-08-27)
+- `scripts/run_short_mirror.py` — the first **signed** book in the programme, and with it a
+  scorer that handles `position = −1` correctly.
+- `tests/unit/test_short_mirror.py` — 16 gates, offline and deterministic.
+- `SHORT_MIRROR_RESULTS.md`, `data/short_mirror_summary.json`.
+
+### Fixed (D238 — short compounding, and it would have been silent)
+- **`position * log_return` is wrong for a short.** It is exact at `pos ∈ {0, 1}` and wrong at
+  `pos = −1`, because a daily-rebalanced short earns `log(1 − r_simple)` per bar, not
+  `−log(1 + r_simple)`. The two differ by one variance per bar and the error runs one way:
+  it **flatters the short**. Measured on D238's own book, **−11.97% correct against −2.75%
+  naive — a 9.22-point overstatement.** On a two-bar case it flips the sign outright.
+- The replacement, `signed_log_returns`, is `log1p(pos * expm1(r)) + log1p(−cost)` and is
+  **exactly backward-compatible**: it reduces to the existing code at `pos ∈ {0, 1}`, so no
+  previously published number moves. That is pinned by test against `portfolio_log_returns`
+  rather than asserted, and against a hand-computed short.
+- **Financing generalised too.** `excess = total − mean(max(pos,0))·rf − mean(max(−pos,0))·borrow`
+  — rf on the long fraction only, since a short book's collateral earns rf, plus borrow on the
+  short fraction. Also reduces exactly to the long-flat formula.
+- `run_exposure_dial.score`, `_excess_sharpe` and `rotation_nulls` all inherit the original
+  defect. They are **correct for every book scored so far**, all of which are long-flat, and
+  are superseded for signed work by the versions in `run_short_mirror.py`.
+- Stale `next number` counters corrected in `docs/RULES.md` (D236 → D239) and
+  `docs/decisions/README.md` (D238 → D239).
+
 ### Added (Alpha Vantage intraday provider, 2026-08-27)
 - `scripts/fetch_etf_intraday.py` — 15-minute bars for the 57-ETF universe, 2018-01 to
   2026-08, one call per `(symbol, month)`. Resumable, cached, paced at 66/min against a

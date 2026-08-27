@@ -231,5 +231,165 @@ backward-compatible rather than asserted.
   D237's published S1 numbers on the same fixture.
 - **The short compounding is pinned against a hand-computed two-bar case**, so the sign and
   the second-order term are both checked rather than trusted.
-- **No look-ahead:** perturb a close from bar *t* onward and assert no position at any index
-  <= *t* moves.
+- **No look-ahead:** assert `position[t] = mask[t−1]` on every symbol and every bar of the real
+  panel — the whole of what a memoryless level rule promises. The mask's own causality belongs
+  to `smma`/`zlema`/`sma` and is pinned by `test_macd_ladder`.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.** The holdout 60 and the 2025–2026 forward
+window are untouched.*
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_short_mirror.py` · Page:
+[`SHORT_MIRROR_RESULTS.md`](../../SHORT_MIRROR_RESULTS.md)
+
+### The one-sentence version
+
+**The short signal has real skill and cannot be traded: it identifies bars that underperform
+the market by 7.6 points a year, but those bars still go *up* — so shorting them beats a
+randomly-timed short by a wide margin and still loses money.**
+
+### The four books
+
+Buy and hold over the span: **+0.235** excess Sharpe, +62.59%, −34.60% max drawdown, 8.42%/yr.
+
+| | rule | long | short | excess Sharpe | CAGR | vol | max DD | money |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| **S1** | `hist>0 & md<=0` | 18.9% | — | **+0.746** | 5.43% | 6.1% | −10.30% | +37.39% |
+| **M1** | `hist<0 & md>=0` | — | 29.5% | **−0.407** | −2.09% | 5.9% | −19.28% | −11.90% |
+| **M2** | `hist<0 & md>0` | — | 24.9% | −0.450 | −1.96% | 4.9% | −16.93% | −11.20% |
+| **M3** | S1 − M1 | 18.9% | 29.5% | +0.262 | 3.23% | 8.2% | −21.87% | +21.04% |
+| **M4** | `hist<0` alone *(post-hoc)* | — | 47.8% | −0.458 | −5.43% | 13.2% | −43.95% | −28.49% |
+
+**W1: 3 of 3. W2: 0 of 3. W3: FAILS.**
+
+### W1 cleared everywhere — so the hurdle was audited before it was believed
+
+All three registered cells beat their rotation null at the 99.9th–100th percentile. **Under
+R7's corollary a clean sweep is a tell, not a triumph**, and there is a specific mechanism that
+would produce exactly this with no skill at all:
+
+> Sharpe is `mean / sd`. A real short book concentrates its exposure after declines, when
+> volatility is high; a rotated one spreads the same exposure across calm bars too. **For a
+> book whose mean is negative, a larger `sd` makes the Sharpe *less* negative.** An arm could
+> therefore beat this null purely by being exposed in noisy weather.
+
+So the same 1,000 rotations were re-scored on **money** and on **volatility**, neither of which
+can be inflated that way:
+
+| | Sharpe | null p50 | pct | **money** | **null p50** | **pct** | vol | null vol | **ratio** |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **M1** | −0.407 | −0.970 | 100.0th | **−11.90%** | **−25.99%** | **100.0th** | 5.90% | 5.47% | **1.079x** |
+| **M2** | −0.450 | −0.971 | 99.9th | −11.20% | −22.68% | 99.9th | 4.94% | 4.64% | 1.064x |
+| **M4** | −0.458 | −0.958 | 100.0th | −28.49% | −36.92% | 99.1th | 13.23% | 8.50% | 1.556x |
+
+**The volatility explanation is ruled out at 1.079x** — it would have needed roughly 2.4x to
+account for the Sharpe gap. And M1 beats all 1,000 rotations **on money**: it loses −11.90%
+where a randomly-timed short of identical exposure, turnover and holding periods loses
+**−25.99%**. **The timing is real. It halves the loss.**
+
+### The measurement that decides the reading
+
+A rotation null can only establish that the selected bars **underperform**. A short needs bars
+that **fall**. So:
+
+| condition | bars held | annualised return of those bars |
+|---|---:|---:|
+| `hist>0 & md<=0` — **S1** | 16,303 | **+33.22%** |
+| all live bars | 86,355 | +8.42% |
+| `hist<0 & md<0` | 15,834 | +3.28% |
+| `hist<0` alone — **M4** | 41,278 | +1.78% |
+| `hist<0 & md>=0` — **M1** | 25,444 | **+0.85%** |
+
+**The worst bars the indicator can name still return +0.85% a year.** That is 7.6 points below
+the market and it is the wrong side of zero. An edge of that shape can never become a
+profitable short — you are shorting something that rises, and paying dividends and borrow to do
+it. **M1's breakeven borrow rate is −6.90%/yr: you would have to be *paid* 6.9% a year to hold
+the position for it to break even.** Borrow is not what killed it, and no financing assumption
+rescues it.
+
+**`md_L >= 0` is doing real work, which the post-hoc M4 is what establishes.** Shorting on
+`sign(hist)` alone selects bars returning +1.78%/yr; adding the level condition sharpens that
+to **+0.85%**, roughly halving it. So this is **not** a restatement of the programme's known
+one-bit finding — the level term adds short-side information the sign does not carry. It just
+adds it in a direction that cannot be monetised.
+
+*M4 was computed on the analyst's initiative after M1 cleared, because the reading turned on a
+question the registration had not asked. Disclosed, and counted as a fourth look.*
+
+### Why Sharpe reads backwards here, and why the tables above are the ones to trust
+
+M1 scores −0.407 against M4's −0.458 and looks better. **On the numbers that matter it *is*
+better, but not for that reason.** Per unit of exposure M1's shorted bars return +0.85% against
+M4's +1.78%, and M1 is also the *less* volatile book (5.90% at 29.5% exposure, against 13.23%
+at 47.8%). For a book with a **negative** mean, lower volatility drives the Sharpe *down*. The
+ranking is right and the instrument that produced it is unreliable — the same lesson D236
+recorded when Sharpe could not see drawdown.
+
+### W3 — the combined book is decisively worse than S1 alone
+
+| | excess Sharpe |
+|---|---:|
+| S1 alone | **+0.746** |
+| M3 combined | +0.262 |
+| **delta** | **−0.484** |
+| paired bootstrap | **p05 −1.043, p95 −0.028** |
+
+**The entire 90% interval sits below zero.** Adding the short arm to S1 costs 0.484 of Sharpe
+and 16 points of money, and turns a −10.30% drawdown into −21.87%.
+
+### Scoring — three of five, and the two misses are the interesting ones
+
+| | prediction | outcome |
+|---|---|---|
+| **V1** | M1's excess Sharpe is negative after borrow | **CONFIRMED**, −0.407, and the breakeven borrow of −6.90% shows financing is not the cause |
+| **V2** | M1 fails W1 — no skill survives the drift match | **FALSIFIED.** 100th percentile on Sharpe *and* on money |
+| **V3** | M1 lands *below* its null median — an anti-signal | **FALSIFIED, and in the opposite direction.** It lands above every draw |
+| **V4** | M3 does not beat S1 | **CONFIRMED**, −0.484 with the whole interval below zero |
+| **V5** | M2 does not materially beat M1 | **CONFIRMED**, −0.450 against −0.407 |
+
+**V2 and V3 were the substantive predictions and both were wrong.** I expected shorting
+strength-that-has-turned to fight momentum and land below its null. It does the opposite: the
+condition selects genuinely bad bars, by a wide and robust margin. **What it does not select is
+bars that fall.**
+
+### What this changes
+
+**The correlation the second-arm argument needs was found, and it is not the missing piece.**
+`corr(S1, M1) = −0.0687` — the ρ ≈ 0 that would give ×√2 on the delta and cut the significance
+requirement from 8.6 years to 4.3. **The mirror supplies the correlation and fails to supply
+the return**, and W3 shows the arithmetic is not close: a −0.407 arm cannot help a +0.746 arm
+at ρ ≈ 0, because adding B helps only when `SR_B > ρ·SR_A = −0.051`.
+
+That is a far more specific finding than "the short side does not work", and it retargets the
+search: **arm two needs to clear roughly −0.05 excess Sharpe at ρ ≈ 0, not merely be
+uncorrelated.** Uncorrelatedness was never the binding constraint.
+
+**And there is a constraint here that is about the asset class, not the indicator.** Over this
+span, on 57 long-only US equity ETFs, the worst-conditioned bars *any* of these constructions
+can isolate still return +0.85%/yr. A short arm on this universe is fighting a drift the signal
+is not strong enough to overcome. **If a short arm is wanted, it needs instruments that
+actually fall** — which is a fixture decision, not a rule decision.
+
+### What survives
+
+**Nothing is promoted. The short side is closed as a standalone arm and as an addition to S1.**
+It joins trade-level stops (D235) and portfolio-level risk controls (D236): measured, mechanism
+understood, shut.
+
+**Two things are kept.** The signed-book scorer is now correct and pinned — `position *
+log_return` was wrong for shorts by 9.22 points, and every future signed study inherits the
+fix. And the **money-and-volatility audit of a Sharpe-based null** is reusable: it is what
+turned a suspicious clean sweep into a defensible finding, and it should run on any null where
+the arm's mean is negative.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 3 registered cells | 3 |
+| + M4, disclosed post-hoc | **4** |
+| + D234's 6, D235's 7, D236's 6 | 23 |
+| + disclosed ETF prior | **45,826** |

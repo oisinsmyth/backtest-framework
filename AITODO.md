@@ -450,6 +450,20 @@ the first pre-registered out-of-sample test anything in this programme has passe
       on data already in hand, with no waiting. It also covers S1's one demonstrated weakness,
       since T3 showed it cannot keep pace in a strong bull market.
 
+      **D238 sharpened the target and closed the obvious candidate.** The short-side mirror
+      was tried and it **supplies the correlation but not the return**: `corr(S1, M1) =
+      -0.0687`, which is exactly the rho ~ 0 the argument above needs, at an excess Sharpe of
+      **-0.407**. Adding an arm helps only when `SR_B > rho * SR_A = -0.051`, so the combined
+      book scores **-0.484 against S1 alone**, with the whole 90% interval below zero.
+
+      **The bar for arm two is therefore roughly -0.05 excess Sharpe at rho ~ 0, and
+      uncorrelatedness was never the binding constraint.** That is a much easier target than
+      "beat S1" and a much more specific one than "find something uncorrelated".
+
+      **And one constraint is about the fixture, not the rule:** on 57 long-only US equity
+      ETFs the worst-conditioned bars *any* of these constructions can isolate still return
+      **+0.85%/yr**. A short arm needs instruments that actually fall.
+
 
 - [ ] **Test the arm on unmined data** — ETFs outside these 57. No further work on this
       fixture can narrow the intervals above, because they are a property of the sample.
