@@ -160,3 +160,115 @@ the entry dip" is the wrong explanation and the failure is something else.
 **Written fresh:** the three exit overlays. They are stateful where every prior rule in this
 programme was memoryless, which is the one genuinely new piece of machinery here — and the reason
 the look-ahead test is not optional.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.** The holdout and the 2025–2026 forward
+window are untouched.*
+
+**Produced:** 2026-08-27 · `uv run python scripts/run_stops_targets.py` · Page:
+[`STOPS_TARGETS_RESULTS.md`](../../STOPS_TARGETS_RESULTS.md)
+
+### The one-sentence version
+
+**All seven cells beat the baseline and hurdle B cleared — and none of it is a result, because
+hurdle B was the wrong control. Against a null that cuts the same number of trades short at
+random bars, the best overlay sits at the 63rd percentile.**
+
+### The cells
+
+Baseline (recovery): **+0.746** at 18.9% exposure, +37.39% money. Buy-and-hold +0.235.
+
+| cell | exposure | excess Sharpe | √f predicts | selection | Δ baseline | money |
+|---|---:|---:|---:|---:|---:|---:|
+| **BE@3%** | 17.5% | **+0.794** | +0.719 | +10% | **+0.047** | +33.22% |
+| BE@6% | 18.4% | +0.747 | +0.737 | +1% | +0.001 | +34.62% |
+| PT@3% | 14.7% | +0.767 | +0.659 | +16% | +0.021 | +26.07% |
+| PT@6% | 16.6% | +0.748 | +0.700 | +7% | +0.002 | +29.45% |
+| DT@0.5% | 20.0% | +0.764 | +0.769 | −1% | +0.018 | +39.35% |
+| DT@1.0% | 21.1% | +0.772 | +0.790 | −2% | +0.025 | +40.72% |
+| DT@2.0% | 22.9% | +0.781 | +0.821 | −5% | +0.035 | +42.97% |
+
+### Hurdle B was the wrong control, and the record says so before the numbers are read
+
+Hurdle B as pre-registered used the **rotation null** — the construction D231 and D234 used, and
+correct there. **It is wrong for an overlay**, and it cleared trivially:
+
+> Best real **+0.047** against a rotation-null p95 of **−0.284**. *Anything not actively harmful
+> clears a bar that low.*
+
+Rotation destroys the whole book's timing, so a rotated 17.5%-exposure book scores far below the
+unrotated 18.9% baseline and the delta is hugely negative by construction. **It answers "is this
+book better than a randomly-timed book?" when the question is "does the trigger's timing carry
+information?"**
+
+### The right control, built because the result was not trusted
+
+Keep the base book. Cut **the same number of trades short — 146 of 1,124, 13.0% — at random bars
+inside them**, instead of at the breakeven trigger. Then the only thing varying is *when* the
+overlay fires.
+
+| | excess Sharpe |
+|---|---:|
+| random-exit books, p05 | +0.735 |
+| random-exit books, **p50** | **+0.785** |
+| random-exit books, p95 | +0.836 |
+| random-exit books, best of 400 | +0.870 |
+| **BE@3%, the real overlay** | **+0.794** |
+
+> **63rd percentile. The median random-exit book scores +0.785 against the real overlay's +0.794,
+> and the best random one reaches +0.870.**
+
+**The breakeven trigger carries no information.** Cutting 13% of trades short at random does
+essentially the same thing. The +0.047 is "trimming some trades helps slightly on this book", not
+"this stop is smart."
+
+**Paired bootstrap, BE@3% vs baseline:** +0.047, interval **−0.082 to +0.177** — contains zero.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **V1** | no variant beats the baseline | **FALSIFIED on the letter** — all seven are positive — **and right in spirit**: none is distinguishable from random exits |
+| **V2** | `BE` does least harm of the three families | **MOSTLY FALSIFIED.** BE mean +0.024, DT **+0.026**, PT +0.011. DT edges it, so "stops fail because they cut the entry dip" is not the whole explanation |
+| **V3** | `PT` loses money and falls roughly as √f | **SPLIT.** It loses money (+26.07% against +37.39%) ✓ but **beat** its √f prediction by +16% ✗ |
+| **V4** | `DT` is roughly neutral, \|Δ\| < 0.05 | **CONFIRMED.** +0.018, +0.025, +0.035 |
+| **V5** | nothing clears hurdle B | **FALSIFIED as specified** — and B was the wrong test. On the correct null, nothing clears |
+
+**One of five clean.** The worst prediction record in the programme, and the reason is
+instructive: four of the five were framed around an effect that turned out to be too small to
+have a sign worth predicting.
+
+### The correction that outlives this study
+
+> **A rotation null is the wrong control for an overlay.** Rotation randomises the *whole book's*
+> timing, which is the right question for an entry rule and the wrong one for a rule that modifies
+> an existing book. The correct control **keeps the base book and randomises only the overlay's
+> decisions**, matched on how many it makes.
+
+This should have been in the pre-registration. It was not, and the error was caught only because
+a clean sweep of positive results looked wrong — the same tell that caught D224's look-ahead. **A
+hurdle that everything clears is not evidence; it is a broken hurdle.**
+
+**Standing rule, proposed:** any study applying an overlay to an existing book must null the
+**overlay**, matched on its decision count, not the book.
+
+### What survives
+
+**Nothing is promoted.** The recovery rule stands unchanged at +0.746; stops and targets add
+nothing beyond what randomly trimming trades would add.
+
+**Two things are worth keeping.** The look-ahead gate held — close-to-close exits, effective the
+following bar, no intrabar fill assumed, and no cell produced anything resembling D224's +4.197.
+And the overlay-null construction is now available and should be used wherever an overlay is
+tested.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 7 cells | 7 |
+| + D234's 6 | 13 |
+| + disclosed ETF prior | **45,816** |
