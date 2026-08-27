@@ -313,3 +313,81 @@ studies.
 
 **Nothing here is promoted, and nothing on this fixture continues.** A gate whose window moves
 between asset classes does not get an eleventh window.
+
+---
+
+## ADDENDUM — 2026-08-27: the benchmark the study failed to compute
+
+*Prompted by the obvious question the RESULT above does not answer: if the gate reaches
++0.467 Sharpe, why is that not good enough?*
+
+### The defect
+
+**D226 computed no buy-and-hold benchmark.** D219's amendment requires every cross-fixture
+comparison to be made on **`arm − matched buy-and-hold`** rather than on raw Sharpe, and the
+runner emits no such number. The RESULT above was accepted without checking that it did.
+
+The verdict does not change. The reasoning behind it was incomplete, and the missing half is
+the more direct half.
+
+### The number
+
+Equal-weighted 57 ETFs, same span, same cost path, dividend-adjusted:
+
+| book | Sharpe | CAGR | vol | max DD |
+|---|---:|---:|---:|---:|
+| **buy and hold** | **+0.563** | **9.83%** | 16.6% | −35.6% |
+| parent, no gate | +0.307 | 2.86% | 9.3% | — |
+| **gate @ 96 bars** | **+0.467** | **2.38%** | 5.1% | — |
+
+**The gate's Sharpe is below buy-and-hold's.** The best cell in the study, at the one window
+that cleared selectivity, is worse risk-adjusted than owning the basket and doing nothing.
+
+Vol-matching does not rescue it — the D219 leverage argument, applied honestly:
+
+| book | leverage to B&H vol | levered CAGR |
+|---|---:|---:|
+| buy and hold | 1.00× | **9.83%** |
+| parent, no gate | 1.79× | 5.12% |
+| gate @ 96 bars | 3.26× | **7.77%** |
+
+At matched risk the gate returns **7.77% a year against passive's 9.83%**, and that figure is
+linear-approximate and ignores financing, so it is an **upper bound** (D219's disclosure rule).
+
+### What this means, stated fairly
+
+**+0.467 is not a bad Sharpe.** In isolation it is roughly what a diversified equity book
+delivers, and treating it as obviously worthless would be wrong. The objection that prompted
+this addendum was reasonable.
+
+**It is not good enough here for one reason: the alternative was better.** Over 2018–2026 an
+equal-weighted basket of these 57 ETFs beat it risk-adjusted, with no trading, no fees and no
+20,463 round trips. This is D218's hurdle D restated — *"good Sharpe"* and *"beats the thing
+you already had"* are different questions, and this programme has been caught by that
+distinction before (D217's dividend addendum, for the same underlying reason).
+
+**One genuine point in the gate's favour**, which the headline should not bury: it runs at
+5.1% volatility against buy-and-hold's 16.6%. An investor who cannot tolerate a −35.6%
+drawdown is not choosing between these on Sharpe alone. But they would be paying roughly two
+points of annual return for that comfort, at 3.26× leverage, before financing.
+
+### Why the RESULT above still stands
+
+The closure rests on two independent arguments and only one of them was made:
+
+1. **The window moved** — a one-point spike at 200 bars on crypto and at 96 bars here, which
+   is a fitted parameter rather than a discovered one. This was argued.
+2. **It loses to passive** — below buy-and-hold on Sharpe *and* on vol-matched return. This
+   was not, because the number was never computed.
+
+The second is simpler, more direct, and should have led. **A study that reports a Sharpe
+without its benchmark is reporting half a number**, and the fix is not to argue the verdict
+was still right — it is to record that the check was skipped and what it would have said.
+
+### The correction that outlives this study
+
+**Any future runner in this line must emit a matched buy-and-hold on the same panel, cost
+path and return basis, and the verdict table must carry `arm − B&H` as a column.** D219's
+amendment required it in prose; it was not enforced in code, and prose that is not enforced
+gets skipped. `run_macd_ladder.buy_and_hold` already exists and is shape-agnostic — there was
+no cost to doing this and no reason it was missed beyond not looking.
