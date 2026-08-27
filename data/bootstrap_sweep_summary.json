@@ -1,7 +1,19 @@
 {
+ "arm_vs_benchmark": {
+  "arm_excess_sharpe": 0.5704234905785612,
+  "basis": "excess Sharpe, rf=4% charged on the exposed fraction (D228)",
+  "bh_excess_sharpe": 0.23506526218347956,
+  "note": "added after the 24-delta sweep; spends no looks",
+  "p05": -0.24186056948991827,
+  "p50": 0.2763403500252949,
+  "p95": 0.8037815866287247,
+  "point": 0.33535822839508167,
+  "sd": 0.32409805378754647,
+  "straddles_zero": true
+ },
  "block": 21,
  "delta_hurdle": 0.1,
- "elapsed_seconds": 12.6,
+ "elapsed_seconds": 12.3,
  "live_bars": {
   "D217": 2122,
   "D218": 1515

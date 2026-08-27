@@ -177,6 +177,30 @@ def test_the_sweep_reuses_d229s_bootstrap_rather_than_reimplementing_it():
     assert "def paired_block_bootstrap" not in src
 
 
+def test_arm_vs_benchmark_is_computed_and_carries_its_interval():
+    """The comparison the 24-delta sweep did not cover, and the one the programme
+    is carrying forward. It lives in the artifact so it is reproducible rather
+    than a number quoted once in conversation."""
+    a = ARTIFACT["arm_vs_benchmark"]
+    assert a["point"] == pytest.approx(
+        a["arm_excess_sharpe"] - a["bh_excess_sharpe"], rel=1e-12
+    )
+    assert a["p05"] <= a["p50"] <= a["p95"]
+    assert a["straddles_zero"] == (a["p05"] < 0.0 < a["p95"])
+
+
+def test_arm_vs_benchmark_uses_the_excess_sharpe_basis_not_the_rung_basis():
+    """Rung deltas are audited price-only, rf=0, because that is how they were
+    reported. This comparison was reported on excess Sharpe with rf on the
+    exposed fraction, so it is audited on that. Mixing the two would compare
+    numbers nobody published."""
+    src = (REPO / "scripts" / "run_bootstrap_sweep.py").read_text(encoding="utf-8")
+    body = src.split("def arm_vs_benchmark")[1].split("def build")[0]
+    assert "total_return=True" in body
+    assert "J.RF_PER_BAR" in body
+    assert "exposure * J.RF_PER_BAR" in body
+
+
 def test_deltas_are_audited_on_the_basis_they_were_reported_on():
     """Price-only, rf=0 -- D217's and D218's reporting basis. Auditing on a better
     basis would answer a question nobody asked."""

@@ -287,3 +287,69 @@ this benchmark over this span* is not in question.
 
 **The next step is unchanged and is now better motivated: unmined data.** No further work on
 this fixture can narrow these intervals, because the intervals are a property of the sample.
+
+---
+
+## ADDENDUM — the comparison the sweep did not cover
+
+*Prompted by the obvious question the RESULT above does not answer: if every rung delta is
+inside the noise, what about the arm against the benchmark — the number the programme is
+actually carrying forward?*
+
+### The defect
+
+**D230's scope was twenty-four nested-rung deltas, and the one comparison that matters most was
+not among them.** `arm − buy-and-hold` is D218's hurdle D. It has been quoted in every record
+since, most recently as D228's *"+0.570 excess Sharpe against buy-and-hold's +0.235"*, and **it
+has never been given an interval.**
+
+### The number
+
+Same instrument, same basis as it was reported on — excess Sharpe at `rf = 4%` charged on the
+exposed fraction (D228's correction), paired block bootstrap, block 21, 1,000 replications:
+
+| | excess Sharpe |
+|---|---:|
+| arm (I1, long-flat, no gate) | **+0.570** |
+| buy and hold | +0.235 |
+| **difference** | **+0.335** |
+
+> **90% interval: −0.242 to +0.804. It contains zero.**
+
+**The programme's one carried-forward positive is not statistically distinguishable from zero
+on this fixture** — the same verdict the twenty-four rung deltas received, now applied to the
+number they were all in service of.
+
+### Stated fairly
+
+- **+0.335 remains the best estimate**, and the arm still achieved it at **8.8% volatility
+  against 17.7%** and a **−12.70% drawdown against −34.81%**. Those are descriptive facts about
+  what happened, not inferences, and the interval does not touch them.
+- What is not established is that the advantage **generalises**. A 1,515-bar sample of 57
+  correlated ETFs — roughly 2.1 effective independent instruments by D226's measure — does not
+  contain enough information to separate +0.335 from noise.
+- This is **not** a new failure. It is the same finding as the RESULT above, reaching the
+  headline number instead of the ones underneath it.
+
+### Why this was added after the sweep
+
+Same justification as D229's post-hoc `I1 − I2` bootstrap, and it should be checked against the
+same test: **it spends no looks** — this comparison was already reported and is already in the
+ledger — and **it can only make the programme's headline worse.** A post-hoc addition that can
+only cut against you is not the freedom the pre-registration discipline exists to control.
+
+It is now computed by `run_bootstrap_sweep.py` and lives in
+`data/bootstrap_sweep_summary.json` under `arm_vs_benchmark`, so it is reproducible rather
+than a number quoted once in conversation.
+
+### What this changes
+
+**Nothing about the plan, and everything about what the plan is for.**
+
+Before this, the holdout test read as a *confirmation* exercise: the arm looks good in-sample,
+go check it holds up. It is not. **The in-sample result does not establish the arm**, so the
+holdout is not a confirmation — **it is the experiment.**
+
+That is a better position to be in than it sounds. A confirmation that fails teaches you little
+because you never knew what you had. An experiment on data selected by a rule fixed in advance
+gives an answer either way.

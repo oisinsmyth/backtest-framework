@@ -1,6 +1,6 @@
 # D230 — the bootstrap sweep
 
-*`scripts/run_bootstrap_sweep.py`, seed 0, 1,000 replications at block 21, 12.6s. D217 arms start at bar 393, D218 and D229 at 1,000.*
+*`scripts/run_bootstrap_sweep.py`, seed 0, 1,000 replications at block 21, 12.3s. D217 arms start at bar 393, D218 and D229 at 1,000.*
 
 **8 of 24 deltas cleared the hurdle as the runners scored it. 0 clear it as the records claimed it. 8 change verdict.**
 
@@ -36,4 +36,16 @@
 | D229 | `I0 - I1` | long_flat | 200ma | **+0.006** | -0.554 | +0.563 | 1.118 | — | **FAIL** |
 
 **24 of 24 intervals contain zero.**
+
+## The comparison the sweep did not cover: the arm against buy-and-hold
+
+*Added after the 24-delta sweep. Spends no looks — this comparison is D218's hurdle D, already reported — and it can only make the headline worse.*
+
+| | excess Sharpe |
+|---|---:|
+| arm (I1, long-flat, no gate) | **+0.570** |
+| buy and hold | +0.235 |
+| **difference** | **+0.335** |
+
+90% interval **-0.242 to +0.804** (p50 +0.276, sd 0.324). **Contains zero: YES.**
 

@@ -43,6 +43,21 @@ version (likely at the Phase C "first real number" milestone, see
   still right — adjusted prices are *back-adjusted* and drift with every dividend, which
   breaks D24's immutable-snapshot rule.
 
+### Added (holdout fetcher, 2026-08-27)
+- `scripts/fetch_etf_holdout.py` — the selection rule pinned in code and committed
+  **before** it runs. LISTING_STATUS active ETFs minus the parent 57, ipoDate <= 2014-12-31,
+  no leveraged/inverse, ranked by median dollar volume over **2015-01-02..2018-12-20** —
+  strictly *before* the parent's first live bar, so the screen cannot see the test period.
+  Top 60 with complete coverage of the parent's exact date grid. Pool: **1,219 eligible**.
+
+### Result (D230 addendum) — the arm against buy-and-hold also contains zero
+- `arm - buy-and-hold` was D218's hurdle D, quoted in every record since, and **never given
+  an interval**. Computed: **+0.335, 90% interval −0.242 to +0.804, contains zero.**
+- +0.335 remains the best estimate, and 8.8% vol against 17.7% with a −12.70% drawdown
+  against −34.81% are descriptive facts the interval does not touch. What is not established
+  is that the advantage generalises.
+- Now stored under `arm_vs_benchmark` in the artifact, reproducible rather than conversational.
+
 ### Added (D230 — the bootstrap sweep, 2026-08-27)
 - `scripts/run_bootstrap_sweep.py` + `data/bootstrap_sweep_summary.json` +
   `BOOTSTRAP_SWEEP_RESULTS.md` + `tests/unit/test_bootstrap_sweep.py` (18).

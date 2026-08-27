@@ -117,6 +117,52 @@ def committed_point(study: str, field: str | None, book: str, gate: str) -> floa
     return None
 
 
+def arm_vs_benchmark(panel, cleaned, start: int) -> dict:
+    """The one comparison the 24-delta sweep does NOT cover, and the one that
+    matters most now that every rung delta has failed.
+
+    ADDED AFTER THE SWEEP RAN. Same justification as D229's post-hoc `I1 - I2`
+    bootstrap: it spends no looks (this comparison is D218's hurdle D, already
+    reported), and it can only make the programme's headline WORSE. A post-hoc
+    addition that can only cut against you is not the freedom the pre-registration
+    discipline exists to control.
+
+    Scored on EXCESS Sharpe with rf charged on the exposed fraction (D228), not
+    on the rung deltas' price-only basis: the rung deltas are audited on the basis
+    they were reported on, and this comparison was reported on that one."""
+    import numpy as _np
+
+    arm = J.arm_positions(
+        panel, cleaned, "I1_signal", long_short=False, gated=False, start=start
+    )
+    ones = _np.ones_like(arm)
+    ones[:, :start] = 0.0
+
+    arm_r = L.portfolio_log_returns(panel, arm, total_return=True)[start:]
+    bh_r = L.portfolio_log_returns(panel, ones, total_return=True)[start:]
+    exposure = arm[:, start:].mean(axis=0)
+
+    arm_ex = arm_r - exposure * J.RF_PER_BAR
+    bh_ex = bh_r - 1.0 * J.RF_PER_BAR
+
+    def sh(x):
+        return float(_np.mean(x)) / float(_np.std(x, ddof=1)) * _np.sqrt(L.PPY)
+
+    boot = J.paired_block_bootstrap(arm_ex, bh_ex)
+    return {
+        "arm_excess_sharpe": sh(arm_ex),
+        "bh_excess_sharpe": sh(bh_ex),
+        "point": sh(arm_ex) - sh(bh_ex),
+        "p05": boot["p05"],
+        "p50": boot["p50"],
+        "p95": boot["p95"],
+        "sd": boot["sd"],
+        "straddles_zero": boot["p05"] < 0.0 < boot["p95"],
+        "basis": "excess Sharpe, rf=4% charged on the exposed fraction (D228)",
+        "note": "added after the 24-delta sweep; spends no looks",
+    }
+
+
 def build() -> dict:
     t0 = time.time()
     panel, cleaned = L.load_panel()
@@ -173,6 +219,7 @@ def build() -> dict:
                       if k == "D217" else
                       int(len(series[("D218", "I2_band", "long_flat", "none")]))
                       for k in ("D217", "D218")},
+        "arm_vs_benchmark": arm_vs_benchmark(panel, cleaned, starts["D218"]),
         "rows": rows,
         "n_deltas": len(rows),
         "n_as_scored": scored,
@@ -223,6 +270,23 @@ def render(p: dict) -> str:
     o.append(
         f"**{p['n_straddling_zero']} of {p['n_deltas']} intervals contain zero.**\n"
     )
+    a = p["arm_vs_benchmark"]
+    o.append("## The comparison the sweep did not cover: the arm against buy-and-hold\n")
+    o.append(
+        "*Added after the 24-delta sweep. Spends no looks — this comparison is D218's "
+        "hurdle D, already reported — and it can only make the headline worse.*\n"
+    )
+    o.append("| | excess Sharpe |")
+    o.append("|---|---:|")
+    o.append(f"| arm (I1, long-flat, no gate) | **{a['arm_excess_sharpe']:+.3f}** |")
+    o.append(f"| buy and hold | {a['bh_excess_sharpe']:+.3f} |")
+    o.append(f"| **difference** | **{a['point']:+.3f}** |")
+    o.append("")
+    o.append(
+        f"90% interval **{a['p05']:+.3f} to {a['p95']:+.3f}** "
+        f"(p50 {a['p50']:+.3f}, sd {a['sd']:.3f}). "
+        f"**Contains zero: {'YES' if a['straddles_zero'] else 'no'}.**\n"
+    )
     if not p["reproduction_clean"]:
         o.append("## Reproduction failures\n")
         o.append("| study | delta | book | gate | recomputed | published | drift |")
@@ -254,6 +318,10 @@ def main() -> int:
     print(f"clear as CLAIMED    {payload['n_as_claimed']}")
     print(f"change verdict      {payload['n_changed_verdict']}")
     print(f"intervals inc. zero {payload['n_straddling_zero']}")
+    a = payload["arm_vs_benchmark"]
+    print(f"ARM - B&H           {a['point']:+.3f}   "
+          f"[{a['p05']:+.3f}, {a['p95']:+.3f}]   "
+          f"contains zero: {a['straddles_zero']}")
     return 0
 
 
