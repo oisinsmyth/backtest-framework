@@ -393,6 +393,46 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D219 and D220 (opened and closed 2026-08-27)
+
+**D219 — the dual verdict.** A proposal to swap hurdles A–G for three portfolio criteria,
+resolved as *both run, neither replaces the other*. Records
+`docs/decisions/D219-the-dual-verdict-standalone-and-in-portfolio.md`.
+
+- [x] Tested the proposal against the 24 existing arms before deciding: 2 of 24 pass, and
+      the two survivors correlate at **0.90** — the first layering attempt produced two
+      copies of one strategy.
+- [x] Established that **leverage, not layering**, converts Sharpe into PnL, and that at
+      rho = 0.90 the combined Sharpe ceiling is +0.823 for any N.
+- [x] Added P4 (marginal contribution to a **pre-declared** incumbent) and P5 (deflate the
+      **book**, not the arm).
+- [x] **Pre-run amendment:** cross-fixture comparisons use `arm − matched B&H`. Corrected
+      the claim that the crypto fixture buys meaningful multiplicity relief — it buys
+      0.09–0.20 Sharpe, because the floor is logarithmic in N and set by `var_trials`.
+
+**D220 — the volume filter.** Record `docs/decisions/D220-the-volume-filter-on-impulse-macd.md`.
+
+- [x] Census first, blind to volume: **44.4% win rate**, 2.1:1 payoff — a majority of trades
+      lose, so the proposal was not fighting the base rate. My contrary guess is recorded in
+      the pre-registration as wrong.
+- [x] ORACLE and matched-count RANDOM bounds computed **before** any filter was tested.
+- [x] **0 survivors; every cell underpowered.** The transferable result is that this arm
+      cannot be filtered and remain powered.
+- [x] Hurdle H alone would have promoted a losing book — the conjunction caught it.
+
+**Standing conclusions.** The ETF fixture is closed to arms *and* now to filters. The ORACLE
+bound is worth keeping as a standing tool: it costs nothing and converts "would a filter
+help?" into a bounded question.
+
+**Not built, and it is a gap in the D220 runner rather than in D219:** P4 was measured only
+against the buy-and-hold incumbent, which is a weak bar — all six long-flat cells clear it,
+including cells losing 31 points to their own parent. The declared-order greedy incumbent
+D219 also specified was not implemented. Any future study using P4 should build it.
+
+**Next:** the crypto pre-registration (63 symbols), which owes a ragged-span and
+inception-bias treatment, and where K6 — the delta transfers, the level does not — is the
+falsifiable claim.
+
 ## Now — D218, Impulse MACD (opened and closed 2026-08-24)
 
 A user-supplied indicator that turned out to be a test of D217 rather than a new question.

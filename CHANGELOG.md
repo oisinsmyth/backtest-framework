@@ -10,6 +10,37 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D219/D220 — the dual verdict and the volume filter, 2026-08-27)
+- **D219** changes the acceptance rule: every arm now carries **two verdicts**, standalone
+  (A–G) and in-portfolio (P1–P5), reported side by side with neither allowed to replace the
+  other. P4 makes correlation a hurdle rather than a hope; P5 moves the unit of deflation
+  from the arm to the book. Amended pre-run with the cross-fixture invariant — comparisons
+  are made on `arm − matched buy-and-hold`, never on raw Sharpe.
+- **D220** + `scripts/run_volume_filter.py` + `data/volume_filter_summary.json` +
+  `tests/unit/test_volume_filter.py` (22). Volume is loaded **separately** rather than by
+  changing `load_panel`, so no previously published number can move; a test pins it.
+- The **ORACLE bound** and the **matched-count random null** as a reusable pair for any
+  selection rule over a fixed trade population, plus the **capture ratio** they define.
+
+### Result (D219/D220)
+- **A volume filter selective enough to matter cuts the arm below its own power threshold
+  before it can be judged.** All 12 cells remove 39–61% of trades; every one fails the
+  pre-registered census gate. At 7.1 round trips per ETF per year the trade population is
+  too thin to subset — a fact about the **arm**, not about volume.
+- The textbook confirmation rule never clears selectivity. **No cell beats the parent on
+  money**; the two that beat it on Sharpe cost 31 and 18 points of return.
+- Capture ratios of **0–6%** against an ORACLE reaching **+1.503**: the space was real and
+  volume took none of it.
+- **Hurdle H in isolation would have promoted a book with Sharpe −0.003.** Only the
+  conjunction caught it — D219's dual verdict working on its first outing.
+
+### Fixed (D220)
+- `append_section` reintroduced D217's non-reproducible-render defect in a new place: the
+  insert and replace paths emitted a different number of blank lines, so `--report-only`
+  did not reproduce the page byte-for-byte. Now strips any existing section first so both
+  paths run one insertion, pinned by
+  `test_report_only_reproduces_the_page_byte_for_byte`.
+
 ### Added (D218 — Impulse MACD, 2026-08-24)
 - Impulse MACD (LazyBear) in `research/macd.py`: `smma` (Wilder, alpha = 1/n), `zlema`
   (`2*EMA1 - EMA2`, centre of mass exactly zero), `impulse_macd_series` and the three rung

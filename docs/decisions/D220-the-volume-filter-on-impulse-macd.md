@@ -1,6 +1,6 @@
 # D220 — Can volume tell Impulse MACD which of its trades are the bad ones?
 
-**Status:** Pre-registered — written and committed BEFORE the runner exists
+**Status:** Committed (L1, L4, L5 confirmed; L2 and L3 falsified) — every cell underpowered
 **Date:** 2026-08-27
 **Category:** Validation & research integrity
 **Source:** A user proposal — filter out the arm's bad trades, be in the market less,
@@ -168,3 +168,161 @@ rescaling of numbers already counted).
   need to trade. A negative result here is therefore **weaker evidence against volume as a
   concept** than the same result would be on single names or crypto, and the report must say
   so where the verdict is rather than in a footnote.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_volume_filter.py`
+(offline, deterministic, seed 0) · Ledger: [`MACD_RESULTS.md`](../../MACD_RESULTS.md) ·
+Artifact: `data/volume_filter_summary.json`
+
+### The one-sentence version
+
+**A volume filter selective enough to matter removes 39–61% of this arm's trades, which
+drops it below the power threshold before it can be judged — every one of the twelve cells
+is underpowered and carries no verdict — and on the way there it takes 18 to 31 points of
+return with it while not one cell beats the parent on money.**
+
+### Scoring my own predictions
+
+| | Prediction | Outcome |
+|---|---|---|
+| **L1** | V1, the textbook confirmation rule, does not clear H | **CONFIRMED.** Best V1 cell reaches the 79th/86th percentile against a 95 requirement; the long-short V1 cells reach 18/0 and 46/0 |
+| **L2** | No cell reaches a capture ratio of 20% on either metric | **FALSIFIED.** `V2_contrarian` long-short captures **38%** and **35%** of the Sharpe space. Both cells have negative Sharpe and zero minimum entries |
+| **L3** | Every filtered arm correlates > 0.85 with its parent and fails P4 | **FALSIFIED IN BOTH DIRECTIONS** — see below. It held for long-flat (0.86–0.96) and broke completely for long-short (0.23, 0.26, 0.36, 0.41, **−0.41**, **−0.43**), and all six long-flat cells *cleared* P4 rather than failing it |
+| **L4** | No cell clears both verdicts | **CONFIRMED.** 0 survivors |
+| **L5** | V1 and V2 will not both fail — one direction will look good by chance, and G is what it must survive | **CONFIRMED, exactly as described.** `V2_contrarian` long-short sits at the **100th percentile on both metrics and on the label permutation**, and is dead on every other hurdle |
+
+**Three confirmed, two falsified.**
+
+### What is actually true
+
+**1. The census gate kills all twelve, and that is the finding.**
+
+The parent trades 43 round trips per ETF at a *minimum* of 34 — barely above the 30-entry
+power threshold D216 set. Every filter here removes 39–61% of trades, so:
+
+| book | min entries per ETF, after filtering |
+|---|---|
+| long-flat cells | 8, 8, 13, 17, 17 |
+| long-short cells | 0, 0, 0, 0, 1 |
+
+**Filtering this arm and retaining power are incompatible.** At 7.1 round trips per ETF per
+year there is not enough trade population to subset. That is a structural fact about the
+arm, not about volume, and it would apply to *any* filter — which makes it the more useful
+result: the pre-registered census gate ended this study before the volume question could be
+answered properly.
+
+**2. The textbook claim fails on its own terms.**
+
+`V1_confirmation` — volume above its own trailing mean at entry, the oldest claim in
+technical analysis — never clears H on either window or either book.
+
+**3. Not one cell beats the parent on money.**
+
+Two cells beat it on Sharpe: `V1/50/long_flat` at +0.841 and `V3/50/long_flat` at +0.817,
+against the parent's +0.793. Both cost enormous return:
+
+| cell | Sharpe | total | vs parent's +52.12% |
+|---|---:|---:|---:|
+| parent, unfiltered | +0.793 | +52.12% | — |
+| V1 confirmation / 50 | +0.841 | +21.5% | **−31 points** |
+| V3 rising / 50 | +0.817 | +33.7% | **−18 points** |
+
+So the hypothesis is answered directly, and the answer is the same shape as the 200-MA
+gate's: **you can be in the market less and nudge Sharpe up; you cannot keep the good
+trades.** The filters removed winners and losers at close to the rate chance would.
+
+**4. The capture ratios say it plainly: 0–6% on the book that matters.**
+
+The space is real — the ORACLE reaches +1.503 by removing the worst 10% — and on the
+long-flat book volume captured **0%, 5%, −4%, −7%, 0% and 3%** of it. Volume is not
+carrying information about which of these trades will fail.
+
+**5. Volume is right-skewed, which makes "above average volume" a much blunter instrument
+than it sounds.**
+
+`V1_confirmation` removed **61%** of trades, not the ~50% a symmetric reading would predict,
+because daily volume's mean sits well above its median. Anyone specifying a volume filter as
+"above average" is cutting substantially more than half the book, and this is worth knowing
+before choosing the threshold rather than after.
+
+**6. Hurdle H in isolation would have promoted a book that loses money.**
+
+`V2_contrarian` long-short clears selectivity at the **100th percentile on both metrics and
+on the permutation test** with a Sharpe of **−0.003**. It genuinely is selective — it beats
+its matched-count random null convincingly — and it is still not worth holding. Only the
+conjunction caught it. **This is D219's dual-verdict design working on its first outing**,
+and it is the strongest argument in the record so far for never scoring an arm on one axis.
+
+**7. L3 was wrong, and the reason is instructive.**
+
+I argued that a filter can only *remove* exposure, so a filtered arm's return stream is a
+sub-sample of its parent's and high correlation is structural rather than empirical. That is
+true for **long-flat**, where the filtered book's position is always either the parent's or
+zero, and the six cells duly came in at 0.86–0.96.
+
+It is false for **long-short**, and I should have seen it: removing a run from a long-short
+book replaces a *short* with flat. That is not a subset of the parent's exposure, it is a
+change of sign, and in a rising universe removing shorts changes the return stream
+fundamentally. Two cells came in at **−0.41 and −0.43**. The structural argument was sound
+only for the book I happened to be thinking about.
+
+### Defects and disclosures
+
+**The verdict floor of +3.599 is inflated by var_trials, exactly as D219's amendment
+predicted.** The twelve cells span **−1.171 to +0.841** because the long-short cells are
+catastrophic; the long-flat cells alone span +0.663 to +0.841. Including wildly dispersed
+cells in the variance estimate raises the bar for everything, and D219's amendment recorded
+that `var_trials` moves the floor further than N does. This is that effect observed live,
+one study later. It is conservative and therefore safe, and it means +3.599 should be read
+as *"the floor if all of this dispersion were noise"*.
+
+**P4 measured against buy-and-hold is a weak hurdle, and D220 only implemented one of the
+two incumbents D219 declared.** All six long-flat cells clear P4 — including cells that lose
+31 points of money to their own parent — because adding any decent-Sharpe arm to a +0.457
+benchmark at equal weight lifts the book. The declared-order greedy incumbent, which would
+have measured these against the parent arm rather than against a passive book, was **not
+built**. That is a gap in this runner, not in D219, and it is the reason the P4 column here
+should not be read as evidence that these filters add anything.
+
+**The `append_section` defect from D217 recurred here and was caught before publication.**
+The insert path and the replace path emitted a different number of blank lines, so
+`--report-only` did not reproduce the page byte-for-byte. Fixed by stripping any existing
+section first so both paths run one insertion, and pinned by test.
+
+**ETF volume is a weak instrument**, as disclosed before the run. ETF liquidity comes from
+the creation/redemption mechanism and the underlying basket, so a quiet tape can mean the
+authorised participants did not need to trade. **This negative is weaker evidence against
+volume as a concept than the same result on single names or crypto would be**, and the
+census finding above is the part that generalises.
+
+### Ledger
+
+| block | looks |
+|---|---:|
+| filters — 3 conditions × 2 windows × 2 books | 12 |
+| **fresh, D220 only** | **12** |
+| inherited from D217 + D218 | 62 |
+| disclosed prior ETF-fixture configurations + structure/terrain bar | 45,741 |
+| **verdict count** | **45,815** |
+
+Zero-look: the trade census, the ORACLE bound, the matched random null, the capture ratio.
+
+### What this changes
+
+**The pre-registered stop applies: no volume work continues on this fixture.**
+
+The transferable result is not about volume. It is that **this arm cannot be filtered and
+remain powered** — 7.1 round trips per ETF per year is too thin a trade population to
+subset, and any future filter proposal on a low-frequency arm should be checked against the
+census gate *before* it is designed rather than after it fails.
+
+The ORACLE bound is worth keeping as a standing tool. Computing it costs nothing, it is the
+ceiling for any selection rule over a fixed trade population, and it converts "would a
+filter help?" from an open question into a bounded one. **On this arm it showed the space
+was real and that volume took none of it** — which is a far more useful negative than a
+Sharpe that came in slightly lower than hoped.

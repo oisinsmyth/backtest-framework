@@ -339,6 +339,85 @@ D218's pre-registered stop applies and the study closes here as a reportable neg
 
 ---
 
+## D220 — a volume filter on Impulse MACD: can it tell the bad trades from the good?
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_volume_filter.py`
+(offline, deterministic, seed 0) · Decision record:
+[`D220`](docs/decisions/D220-the-volume-filter-on-impulse-macd.md) · Artifact:
+`data/volume_filter_summary.json`
+
+### The parent, and the space a filter has to work in
+
+`I1_signal` long-flat: **2,418 trades**, win rate **44.38%**, mean win 6.02% against mean loss -2.84%. **A majority of this arm's trades lose** — it earns on the payoff ratio, not the hit rate, so there is a real population of bad trades to remove.
+
+| remove | ORACLE Sharpe | ORACLE total | — the ceiling for ANY filter |
+|---:|---:|---:|---|
+| 10% | +1.503 | 109.47% | look-ahead, never a strategy |
+| 20% | +1.871 | 144.35% | look-ahead, never a strategy |
+| 30% | +2.126 | 170.12% | look-ahead, never a strategy |
+| 50% | +2.451 | 198.82% | look-ahead, never a strategy |
+
+Unfiltered parent: **+0.793** Sharpe, **52.12%** total.
+
+### The filters
+
+| cell | removed | Sharpe | total | capture Sh | capture $ | pct in random (Sh / $) | perm |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| V1_confirmation/20/long_flat | 1,478 (61%) | +0.773 | 17.31% | +0% | -0% | 51 / 42 | 46 |
+| V1_confirmation/50/long_flat | 1,483 (61%) | +0.841 | 21.47% | +5% | +2% | 79 / 86 | 86 |
+| V2_contrarian/20/long_flat | 940 (39%) | +0.706 | 29.67% | -4% | +0% | 22 / 54 | 53 |
+| V2_contrarian/50/long_flat | 935 (39%) | +0.663 | 25.23% | -7% | -3% | 6 / 12 | 13 |
+| V3_rising/20/long_flat | 1,318 (55%) | +0.766 | 20.01% | +0% | -1% | 52 / 39 | 37 |
+| V3_rising/50/long_flat | 1,266 (52%) | +0.817 | 33.70% | +3% | +6% | 72 / 100 | 100 |
+| V1_confirmation/20/long_short | 207 (48%) | -1.044 | -25.02% | -10% | -19% | 18 / 0 | 0 |
+| V1_confirmation/50/long_short | 222 (52%) | -0.846 | -22.75% | -1% | -16% | 46 / 0 | 0 |
+| V2_contrarian/20/long_short | 224 (52%) | -0.003 | -0.11% | +38% | +21% | 100 / 100 | 100 |
+| V2_contrarian/50/long_short | 209 (48%) | -0.083 | -3.04% | +35% | +18% | 100 / 100 | 100 |
+| V3_rising/20/long_short | 184 (43%) | -1.155 | -25.45% | -13% | -17% | 14 / 0 | 0 |
+| V3_rising/50/long_short | 208 (48%) | -1.171 | -20.98% | -16% | -12% | 10 / 2 | 2 |
+
+`capture` is the fraction of the ORACLE-minus-RANDOM space the filter took, at its
+own removal count. `pct in random` is where it sits inside the matched-count null;
+hurdle H needs **95 on both** plus 95 on the label permutation.
+
+### Verdict
+
+| cell | H | D | E | F | G | P4 | > parent Sh | > parent $ |
+|---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| V1_confirmation/20/long_flat | no | no | no | yes | no | yes | no | no |
+| V1_confirmation/50/long_flat | no | no | no | yes | no | yes | yes | no |
+| V2_contrarian/20/long_flat | no | no | no | yes | no | yes | no | no |
+| V2_contrarian/50/long_flat | no | no | no | yes | no | yes | no | no |
+| V3_rising/20/long_flat | no | no | no | yes | no | yes | no | no |
+| V3_rising/50/long_flat | no | no | no | yes | no | yes | yes | no |
+| V1_confirmation/20/long_short | no | no | no | yes | no | no | no | no |
+| V1_confirmation/50/long_short | no | no | no | yes | no | no | no | no |
+| V2_contrarian/20/long_short | yes | no | no | no | no | no | no | no |
+| V2_contrarian/50/long_short | yes | no | no | no | no | no | no | no |
+| V3_rising/20/long_short | no | no | no | yes | no | no | no | no |
+| V3_rising/50/long_short | no | no | no | yes | no | no | no | no |
+
+**2 of 12 cells clear hurdle H (selectivity). 6 clear P4. 0 clear every hurdle.**
+
+### Multiplicity
+
+| count | N | noise floor |
+|---|---:|---:|
+| combined_with_disclosed | 45,815 | +3.599 |
+| fresh_d220_only | 12 | +1.421 |
+| with_inherited | 74 | +2.067 |
+
+Verdict floor **+3.599**. Raw row ceiling 129,286, which is not an N.
+
+### The disclosure that belongs beside the verdict, not in a footnote
+
+**ETF volume is a weak instrument.** ETF liquidity comes from the
+creation/redemption mechanism and the underlying basket, so on-exchange volume is a
+poor proxy for interest — a quiet tape can simply mean the authorised participants
+did not need to trade. A negative result here is **weaker evidence against volume as
+a concept** than the same result would be on single names or crypto.
+
+
 ### Parking lot
 
 - **PPO on the signal line.** `EMA(macd/d) != EMA(macd)/d`, so PPO-signal-cross and
