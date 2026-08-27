@@ -406,19 +406,51 @@ Record `docs/decisions/D229-one-more-rung-up-the-derivative-ladder.md`, page
 
 **THE DERIVATIVE LADDER CLOSES AT I1.**
 
-## THE OPEN ITEM THAT MATTERS MOST
+## Now — D230, the bootstrap sweep (opened and closed 2026-08-27)
+
+Record `docs/decisions/D230-the-bootstrap-sweep.md`, page `BOOTSTRAP_SWEEP_RESULTS.md`.
+
+- [x] Swept all **24** reported deltas through the test the records said had been run.
+- [x] **8 cleared as scored. 0 clear as claimed. All 24 intervals contain zero.**
+- [x] Reproduction gate clean to 1e-9 — this audits the published numbers.
+- [x] Found the error running the **other** way: near-zero deltas reported as evidence of
+      absence on intervals 3-6x their own size.
+- [x] Corrected D229's over-generous statement about D218's replication argument, and
+      appended an addendum to D229 so it does not read as sound standalone.
+
+**STANDING RULE, now binding: a hurdle that names a test is not cleared until the test is
+run.** A record must point at the artifact field holding the output; a multi-leg hurdle must
+compute every leg or fail loudly.
+
+**What is NOT in question:** the arm itself. +0.570 excess Sharpe against buy-and-hold's
++0.235 is an absolute measurement, not a rung delta, and was not audited here.
+
+**What IS now open:** whether acceleration beats level. `I1 - I2` was the programme's one
+carried-forward positive and it is a plausible estimate on an interval containing zero,
+corroborated by a correlated study on overlapping data.
+
+## The only live thread
+
+- [ ] **Test the arm on unmined data** — ETFs outside these 57. No further work on this
+      fixture can narrow the intervals above, because they are a property of the sample.
+
+## RESOLVED — the open item that mattered most (closed by D230)
 
 **Every ladder delta in D217 and D218 was reported as clearing a hurdle whose bootstrap leg
 was never computed.** The leg now exists, and D218's headline `I1 - I2 = +0.628` fails it in
 all four cells with a 90% interval of `-0.133` to `+1.325`.
 
-This does **not** say the effect is zero — it says the reported certainty was not earned, and
-D218's cross-construction replication argument (D217's +0.285 from unrelated arithmetic) is
-separate evidence the bootstrap cannot see.
+This does **not** say the effect is zero — it says the reported certainty was not earned.
 
-- [ ] **Run `paired_block_bootstrap` against every delta this programme has reported**, and
-      record which of them survive their own stated hurdles. Nothing should be carried
-      further until that is done.
+~~D218's cross-construction replication argument (D217's +0.285 from unrelated arithmetic) is
+separate evidence the bootstrap cannot see.~~ **D230 corrected this.** The `I1 − C ≈ 0` leg is
+exactly what the sweep dissolves (intervals ≈ ±0.3), and "independent" overstated it: D218's
+span is a *subset* of D217's on the same 57 ETFs, so the two are correlated. What survives is
+**corroboration, not independent replication**.
+
+- [x] **Ran `paired_block_bootstrap` against every delta this programme has reported.**
+      Closed by D230: 8 of 24 cleared as scored, **0 as claimed**, all 24 intervals contain
+      zero.
 
 ## Now — D228, the filter search (opened and closed 2026-08-27)
 

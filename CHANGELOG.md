@@ -43,6 +43,28 @@ version (likely at the Phase C "first real number" milestone, see
   still right — adjusted prices are *back-adjusted* and drift with every dividend, which
   breaks D24's immutable-snapshot rule.
 
+### Added (D230 — the bootstrap sweep, 2026-08-27)
+- `scripts/run_bootstrap_sweep.py` + `data/bootstrap_sweep_summary.json` +
+  `BOOTSTRAP_SWEEP_RESULTS.md` + `tests/unit/test_bootstrap_sweep.py` (18).
+- A **reproduction gate**: every point estimate must match its committed artifact to 1e-9
+  or the sweep stops and reports that instead.
+
+### Result (D230) — zero of twenty-four clear the hurdle as claimed
+- **8 of 24 cleared as the runners scored it. 0 clear as the records claimed it.
+  All 24 intervals contain zero.** Reproduction clean.
+- **The subtler error runs the other way**: D218's `I2-I3` (-0.016 to -0.032) and `I1-C`
+  (~0) were read as evidence of *absence*, on intervals 3-6x and ~±0.3 wide. An interval
+  that wide around zero is evidence of nothing.
+- 12 of 24 have intervals wider than 5x their point estimate; the extremes are 180.8x
+  and 63.6x.
+
+### Fixed (D230)
+- **Corrects D229 and the conversation.** D229 called D218's cross-construction argument
+  "untouched"; it is not. The `I1-C` leg is what the sweep dissolves, and "independent"
+  overstates it — D218's span is a *subset* of D217's on the same 57 ETFs. What survives is
+  corroboration, not independent replication. Recorded as an addendum on D229 too, so that
+  record does not read as sound standalone.
+
 ### Added (D229 — the jerk rung, 2026-08-27)
 - `scripts/run_jerk_rung.py` + `data/jerk_rung_summary.json` + `JERK_RUNG_RESULTS.md` +
   `tests/unit/test_jerk_rung.py` (17).

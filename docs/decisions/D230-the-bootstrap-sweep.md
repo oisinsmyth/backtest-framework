@@ -1,6 +1,6 @@
 # D230 — The bootstrap sweep: every delta this programme reported
 
-**Status:** Pre-registered — committed BEFORE any runner exists
+**Status:** Committed (E1–E5 all confirmed) — **zero of twenty-four clear the hurdle as the records claimed it**
 **Date:** 2026-08-27
 **Area:** Validation & research integrity
 
@@ -148,3 +148,142 @@ What follows from it is a **standing rule**, proposed here and binding if the re
 
 **Written fresh:** only the sweep harness and the reproduction gate. If anything else needs
 writing, the delta being audited is not the delta that was reported.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited except the Status field.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_bootstrap_sweep.py`
+(offline, deterministic, seed 0, 8.9 s) · Page:
+[`BOOTSTRAP_SWEEP_RESULTS.md`](../../BOOTSTRAP_SWEEP_RESULTS.md) · Artifact:
+`data/bootstrap_sweep_summary.json`
+
+### The one-sentence version
+
+**Eight of twenty-four deltas cleared the hurdle as the runners scored it. Zero clear it as the
+records claimed it. All twenty-four intervals contain zero.**
+
+**The reproduction gate is clean** — every point estimate matches its committed artifact to
+1e-9, so this is an audit of the published numbers and not of a re-derivation of them.
+
+### Every delta
+
+| study | delta | book | gate | point | p05 | p95 | width | as scored | as claimed |
+|---|---|---|---|---:|---:|---:|---:|:--:|:--:|
+| D217 | `R1−R2` | long_short | none | **+0.285** | −0.167 | +0.809 | 0.977 | PASS | **FAIL** |
+| D217 | `R1−R2` | long_short | 200ma | +0.186 | −0.081 | +0.495 | 0.576 | PASS | **FAIL** |
+| D217 | `R1−R2` | long_flat | none | +0.209 | −0.152 | +0.572 | 0.724 | PASS | **FAIL** |
+| D217 | `R1−R2` | long_flat | 200ma | +0.093 | −0.250 | +0.433 | 0.682 | — | FAIL |
+| D217 | `R2−R3` | long_short | none | +0.163 | −0.078 | +0.443 | 0.521 | PASS | **FAIL** |
+| D217 | `R2−R3` | long_short | 200ma | +0.089 | −0.043 | +0.241 | 0.283 | — | FAIL |
+| D217 | `R2−R3` | long_flat | none | +0.129 | −0.070 | +0.322 | 0.391 | PASS | **FAIL** |
+| D217 | `R2−R3` | long_flat | 200ma | +0.078 | −0.078 | +0.212 | 0.290 | — | FAIL |
+| **D218** | **`I1−I2`** | long_short | none | **+0.628** | **−0.133** | +1.325 | **1.458** | PASS | **FAIL** |
+| D218 | `I1−I2` | long_short | 200ma | +0.366 | −0.076 | +0.721 | 0.797 | PASS | **FAIL** |
+| **D218** | **`I1−I2`** | long_flat | none | **+0.529** | **−0.055** | +1.015 | 1.070 | PASS | **FAIL** |
+| D218 | `I1−I2` | long_flat | 200ma | +0.096 | −0.322 | +0.435 | 0.757 | — | FAIL |
+| D218 | `I2−I3` | long_short | none | −0.016 | −0.068 | +0.031 | 0.099 | — | FAIL |
+| D218 | `I2−I3` | long_short | 200ma | −0.032 | −0.102 | +0.020 | 0.121 | — | FAIL |
+| D218 | `I2−I3` | long_flat | none | −0.024 | −0.115 | +0.049 | 0.165 | — | FAIL |
+| D218 | `I2−I3` | long_flat | 200ma | −0.029 | −0.105 | +0.034 | 0.139 | — | FAIL |
+| D218 | `I1−C` | long_short | none | −0.038 | −0.378 | +0.279 | 0.657 | — | FAIL |
+| D218 | `I1−C` | long_short | 200ma | −0.042 | −0.299 | +0.169 | 0.468 | — | FAIL |
+| D218 | `I1−C` | long_flat | none | +0.008 | −0.258 | +0.263 | 0.521 | — | FAIL |
+| D218 | `I1−C` | long_flat | 200ma | −0.096 | −0.339 | +0.152 | 0.490 | — | FAIL |
+| D229 | `I0−I1` | long_short | none | −0.224 | −1.031 | +0.621 | 1.652 | — | FAIL |
+| D229 | `I0−I1` | long_short | 200ma | −0.152 | −0.712 | +0.391 | 1.104 | — | FAIL |
+| D229 | `I0−I1` | long_flat | none | −0.218 | −0.759 | +0.402 | 1.161 | — | FAIL |
+| D229 | `I0−I1` | long_flat | 200ma | +0.006 | −0.554 | +0.563 | 1.118 | — | FAIL |
+
+### Scoring the predictions
+
+| | prediction | outcome |
+|---|---|---|
+| **E1** | Every one of D217's four `R1−R2` deltas fails the p05 leg | **CONFIRMED.** 0 of 4 |
+| **E2** | Zero of the 24 clear the claimed hurdle | **CONFIRMED.** 0 of 24 |
+| **E3** | `I2−I3`'s intervals straddle zero by a wide margin | **CONFIRMED.** 4 of 4, on point estimates of −0.016 to −0.032 with widths of 0.099 to 0.165 — **three to six times the estimate** |
+| **E4** | At least one delta has an interval wider than 5× its point estimate | **CONFIRMED, 12 times.** Half the sweep. The extremes are `I0−I1` long_flat/200ma at **180.8×** and `I1−C` long_flat/none at **63.6×** |
+| **E5** | All 24 point estimates reproduce to 1e-9 | **CONFIRMED.** No drift anywhere |
+
+**Five of five** — and, as in D229, that is the *easy* case. Four of these predicted failure and
+were arithmetic given what D229 already showed. Only E5 could have surprised.
+
+### The error that runs through this, and it is not the one everybody expects
+
+The obvious reading is *"the positives were overstated."* That is true of the eight that changed
+verdict. **The subtler and more common error is in the other direction.**
+
+**D218 reported `I2−I3` at −0.016 to −0.032 as evidence the dead zone does not matter, and
+`I1−C` at ≈ 0 as evidence the two constructions measure the same thing.** Both were read as
+*confirmations* — as knowing something. But:
+
+- `I2−I3` intervals are **0.099 to 0.165 wide** on estimates of ~0.02.
+- `I1−C` intervals span **−0.378 to +0.279**.
+
+**An interval that wide around zero is not evidence of absence. It is evidence of nothing at
+all** — consistent with the dead zone mattering a great deal in either direction, and with the
+two constructions differing substantially. A near-zero point estimate got reported as a settled
+equivalence when the sample could not distinguish it from a large effect.
+
+That is the more dangerous mistake, because a null result reads as modest and careful, and
+nobody asks a modest claim for its confidence interval.
+
+### A correction to what D229 said, and to what was said in conversation
+
+D229's RESULT stated that D218's cross-construction argument was *"untouched by this"* —
+specifically *"D217's +0.285 and D218's +0.628, with `I1 − C ≈ 0`, is independent evidence
+that a single-fixture bootstrap cannot see."* **That was too generous, in two ways.**
+
+1. **The `I1 − C ≈ 0` leg is not untouched — it is exactly what this sweep dissolves.** Its
+   four intervals span roughly ±0.3. The claim that Impulse MACD's acceleration rung and plain
+   MACD's *"are the same measurement"* is not supported by the data that was used to make it.
+2. **"Independent" overstates the relationship.** D217 runs from bar 393 and D218 from bar
+   1,000 on the **same 57 ETFs** — D218's span is a *subset* of D217's. Two different
+   estimators on heavily overlapping data are correlated, not independent.
+
+**What actually survives** is weaker and should be stated at its real strength: **two
+structurally different trend estimators produced same-signed positive deltas on overlapping
+data.** That is corroboration. It is not independent replication, and it is not what D218
+described.
+
+### What this does *not* say
+
+Restated from the pre-registration because the tables above invite over-reading:
+
+- **The point estimates are unchanged and remain the best estimates.** `+0.529` is still the
+  best estimate of `I1−I2`. A wide interval is not a refutation.
+- **Nothing here says trend acceleration does not work.** It says this fixture, over this span,
+  cannot tell you how well.
+- **Block 21 is one choice** — the repo's only precedent on daily bars. Its sensitivity is not
+  swept, and that is a limitation of this study rather than a defence of the results.
+
+### The standing rule, now binding
+
+> **A hurdle that names a test is not cleared until the test is run.** A record claiming a
+> hurdle passed must point at the artifact field holding that test's output, and a runner
+> implementing a multi-leg hurdle must compute every leg or fail loudly.
+
+Twenty of these deltas were reported against a hurdle whose second leg existed only in prose.
+**Prose that is not enforced in code gets skipped** — which is the correction D226 already
+recorded, in a different context, and which has now cost the programme its headline result's
+credibility rather than one study's benchmark.
+
+### What this changes
+
+**No verdict in D217, D218 or D229 flips from pass to fail on the substance** — every one of
+those studies already closed as a negative or a qualified negative on other grounds. What
+changes is the **confidence attached to the one positive the programme was carrying forward.**
+
+`I1 − I2` was the reason to believe acceleration beats level, and it was the reason D229
+existed. It is a plausible estimate on an interval containing zero, corroborated by a
+correlated study on overlapping data.
+
+**The arm itself is unaffected by all of this.** D228 established it at **+0.570** excess
+Sharpe against buy-and-hold's **+0.235** — an absolute measurement, not a delta between rungs,
+and not audited here. Whether *acceleration beats level* is now open; whether *this arm beat
+this benchmark over this span* is not in question.
+
+**The next step is unchanged and is now better motivated: unmined data.** No further work on
+this fixture can narrow these intervals, because the intervals are a property of the sample.

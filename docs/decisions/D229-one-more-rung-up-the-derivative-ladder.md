@@ -342,3 +342,26 @@ against buy-and-hold's +0.235, untested on unmined data.
 ladder delta in D217 and D218 was a point estimate presented as though a bootstrap had endorsed
 it. The bootstrap now exists. **It should be run against every delta this programme has
 reported before any of them is carried further.**
+
+---
+
+## ADDENDUM — the claim above that D230 corrected
+
+The RESULT above states that D218's cross-construction argument is *"untouched by this"*, and
+names `I1 − C ≈ 0` as part of the evidence it leaves standing. **[D230](D230-the-bootstrap-sweep.md)
+swept all twenty-four deltas and that statement was too generous, in two ways.**
+
+1. **The `I1 − C ≈ 0` leg is not untouched — it is what the sweep dissolves.** Its four
+   intervals span roughly ±0.3 around point estimates of −0.096 to +0.008. *"The two
+   accelerations are the same measurement"* is not supported by the data used to make it. A
+   near-zero estimate on an interval that wide is evidence of nothing, not evidence of absence.
+2. **"Independent" overstates it.** D217 runs from bar 393 and D218 from bar 1,000 on the
+   **same 57 ETFs** — D218's span is a subset of D217's. Two estimators on heavily overlapping
+   data are correlated.
+
+**What survives, at its real strength:** two structurally different trend estimators produced
+same-signed positive deltas on overlapping data. That is corroboration, not independent
+replication.
+
+The rest of the RESULT stands. This addendum exists so the section above is not read as sound
+on its own.
