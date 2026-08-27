@@ -175,3 +175,96 @@ visible.
 the correlation structure among these arms is materially better than the 0.90 the two
 survivors showed, and it would make the layering argument correct on this fixture rather than
 merely correct in principle. I do not expect it, and the ceiling of +0.823 as N grows is why.
+
+---
+
+## AMENDMENT (pre-run) — 2026-08-27
+
+*Written BEFORE the runner exists and BEFORE any result. Nothing above this line
+is edited; this section adds a reporting invariant, commits a prediction, and
+corrects a claim made above.*
+
+**Source:** the observation that ETFs and crypto are different instruments, and
+that a real strategy might work on one and not the other.
+
+### The point is correct, and the data says what form the allowance takes
+
+Splitting the 57 ETFs by instrument volatility and re-scoring R1 long-flat —
+dispersion reporting over arms already run, **zero fresh looks**:
+
+| tercile | vol | arm Sharpe | B&H Sharpe | **arm - B&H** |
+|---|---:|---:|---:|---:|
+| low vol | 14.9% | +0.988 | +0.651 | **+0.337** |
+| mid vol | 23.9% | +0.789 | +0.512 | **+0.277** |
+| high vol | 37.4% | +0.549 | +0.284 | **+0.265** |
+
+The raw Sharpe collapses as volatility rises. **Buy-and-hold on the same
+instruments collapses just as fast, so the delta is nearly flat.** Splitting
+instead by each asset's own drift gives the same answer: +0.263, +0.366, +0.213.
+
+The rule is not worse on volatile instruments. Those instruments were worse, and
+the rule inherits whatever the instrument does.
+
+### The invariant this adds
+
+> **Every cross-fixture comparison is made on `arm - matched buy-and-hold`,
+> never on raw Sharpe.**
+
+Comparing an ETF Sharpe against a crypto Sharpe compares the *instruments*, not
+the strategies. This closes a specific trap: crypto's raw Sharpes may come back
+far higher purely because BTC rose ~300x inside the window, and that would say
+nothing about the rule. The delta is the only quantity with a claim to transfer.
+
+### The prediction, committed now
+
+**K6.** On the crypto fixture the **delta** transfers to within +/-0.15 of the ETF
+value (~+0.28), while the **level** does whatever crypto's own buy-and-hold does.
+Confidence: **moderate**. Falsifiable, unlike "crypto is different".
+
+**What limits it, stated now rather than when it becomes convenient:**
+correlation(instrument vol, instrument B&H Sharpe) = **-0.42** in this universe,
+so high-vol and weak-drift are partly the same split and cannot be fully
+separated here. Crypto sits **outside the observed range on both axes** — high
+vol *and* high drift, where this universe only offered high vol *with* weak
+drift. The extrapolation is therefore unsupported by the ETF data, which is a
+reason to run crypto rather than a reason to predict it.
+
+### The guard against the obvious abuse
+
+"Instruments differ" explains away any negative, and if ETFs fail while crypto
+passes, that sentence is available for free. It is the mirror of what D218 was
+built to catch: that study asked whether two different-looking things were the
+same; this asks whether two same-looking tests are different. Both fail
+identically if decided after the fact. **So the expected direction and its
+mechanism are committed before the crypto run (K6 above), and a difference that
+was not predicted is recorded as unexplained rather than as an instrument
+effect.**
+
+### CORRECTION to the Scope section above
+
+That section argues the crypto fixture is worth moving to because the inherited
+ETF prior does not apply there. **The size of that relief was overstated.**
+Measured:
+
+| | N | floor (D217 var_trials) | floor (D218 var_trials) |
+|---|---:|---:|---:|
+| ETF fixture | 45,765 | +0.638 | +1.420 |
+| crypto (ETF prior drops away) | 3,763 | +0.547 | +1.217 |
+| crypto, fresh only | 24 | +0.299 | +0.667 |
+
+Dropping ~42,000 inherited looks buys **0.09-0.20 Sharpe**, not a
+transformation, because `expected_max_sharpe` grows like `sqrt(2 ln N)` and is
+logarithmic in the count. ETF registries hold 45,346 distinct configs against
+crypto's 3,344, and that 12x reduction is nearly invisible in the floor.
+
+**What actually sets the floor is `var_trials`, estimated from each study's own
+sweep.** A 5x change there moves the floor further than a 1,900x change in N.
+D218's +1.420 was high in large part because its sensitivity block swept a rung
+already established as anti-predictive, scattering the Sharpes and inflating the
+variance. That is conservative and therefore safe, but it means the published
+number is *"the floor if all of my own dispersion were noise"* rather than the
+noise floor, and no study in this project has said so out loud until now.
+
+**The case for crypto therefore does not rest on multiplicity relief.** It rests
+on the fixture being unmined for this question and on K6 being falsifiable there.
+That is a weaker argument than the one written above, and it is the true one.
