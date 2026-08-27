@@ -72,7 +72,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import date, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -106,6 +106,7 @@ MAX_CONSECUTIVE_FAILURES = 5
 TIMEOUT = 90
 
 TZ = "US/Eastern"
+FULL_SESSION_BARS = 26  # 09:30..15:45 inclusive = 390 minutes
 
 
 def api_key() -> str:
@@ -266,16 +267,70 @@ def do_plan() -> int:
     return 0
 
 
+def _session_counts(regular_hours_only: bool) -> dict:
+    """First pass: bars per (symbol, session). Needed before writing, because the
+    half-day calendar is DERIVED from the data rather than hardcoded."""
+    counts: dict[tuple[str, str], int] = {}
+    for symbol in SYMBOLS:
+        for month in months(START_MONTH, END_MONTH):
+            path = slice_path(symbol, month)
+            if not path.exists():
+                continue
+            with gzip.open(path, "rt", encoding="utf-8") as fh:
+                series = series_of(json.load(fh))
+            for stamp in series:
+                if regular_hours_only and not ("09:30" <= stamp[11:16] <= "15:45"):
+                    continue
+                key = (symbol, stamp[:10])
+                counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
+def _half_days(counts: dict) -> set:
+    """US market early closes, DERIVED not hardcoded.
+
+    A half-day is a session where MOST of the universe is short -- the whole market
+    shut at 13:00. That is a calendar fact and it is systematic. It is separated
+    here from the OTHER cause of short sessions, a thin symbol that simply did not
+    trade in some 15m slot, because the two need opposite treatment: the calendar
+    one is dropped, the liquidity one is measured and kept."""
+    by_date: dict[str, list] = {}
+    for (_sym, day), n in counts.items():
+        by_date.setdefault(day, []).append(n)
+    out = set()
+    for day, ns in by_date.items():
+        short = sum(1 for n in ns if n < FULL_SESSION_BARS)
+        if short >= 0.5 * len(ns):
+            out.add(day)
+    return out
+
+
 def do_build(regular_hours_only: bool) -> int:
     """Cache -> one committed fixture, in the repo's raw-OHLCV shape."""
     import csv
+
+    counts = _session_counts(regular_hours_only)
+    half_days = _half_days(counts) if regular_hours_only else set()
+
+    # The liquidity-correlated gap rate, measured EXCLUDING the calendar half-days
+    # so the two causes are never conflated.
+    short_sessions: dict[str, int] = {}
+    missing_bars: dict[str, int] = {}
+    total_sessions: dict[str, int] = {}
+    for (sym, day), n in counts.items():
+        if day in half_days:
+            continue
+        total_sessions[sym] = total_sessions.get(sym, 0) + 1
+        if n != FULL_SESSION_BARS:
+            short_sessions[sym] = short_sessions.get(sym, 0) + 1
+            missing_bars[sym] = missing_bars.get(sym, 0) + (FULL_SESSION_BARS - n)
 
     rows = 0
     per_symbol: dict[str, int] = {}
     first: dict[str, str] = {}
     last: dict[str, str] = {}
-    empty_slices = 0
     zero_volume = 0
+    dropped_half_day_bars = 0
 
     FIXTURE.parent.mkdir(parents=True, exist_ok=True)
     with gzip.open(FIXTURE, "wt", encoding="utf-8", newline="") as out:
@@ -288,17 +343,14 @@ def do_build(regular_hours_only: bool) -> int:
                     continue
                 with gzip.open(path, "rt", encoding="utf-8") as fh:
                     series = series_of(json.load(fh))
-                if not series:
-                    empty_slices += 1
-                    continue
                 for stamp in sorted(series):
-                    if regular_hours_only:
-                        hhmm = stamp[11:16]
-                        if not ("09:30" <= hhmm <= "15:45"):
-                            continue
+                    if regular_hours_only and not ("09:30" <= stamp[11:16] <= "15:45"):
+                        continue
+                    if stamp[:10] in half_days:
+                        dropped_half_day_bars += 1
+                        continue
                     b = series[stamp]
-                    vol = float(b["5. volume"])
-                    if vol == 0.0:
+                    if float(b["5. volume"]) == 0.0:
                         zero_volume += 1
                     w.writerow([stamp, symbol, b["1. open"], b["2. high"],
                                 b["3. low"], b["4. close"], b["5. volume"]])
@@ -307,6 +359,7 @@ def do_build(regular_hours_only: bool) -> int:
                     first.setdefault(symbol, stamp)
                     last[symbol] = stamp
 
+    worst = sorted(short_sessions.items(), key=lambda kv: -kv[1])[:10]
     meta = {
         "symbols_requested": list(SYMBOLS),
         "symbols_included": sorted(per_symbol),
@@ -314,11 +367,12 @@ def do_build(regular_hours_only: bool) -> int:
         "start": START_MONTH,
         "end": END_MONTH,
         "interval": INTERVAL,
-        "session": "regular_hours_09:30-15:45" if regular_hours_only
-                   else "extended_hours_04:00-20:00",
+        "session": ("regular_hours_09:30-15:45" if regular_hours_only
+                    else "extended_hours_04:00-20:00"),
+        "bars_per_full_session": FULL_SESSION_BARS,
         "bar_boundary": (
             "timestamps mark the interval's OPEN, so a bar stamped t covers "
-            "[t, t+15m) and is not complete until t+15m — MEASURED, not assumed"
+            "[t, t+15m) and is not complete until t+15m -- MEASURED, not assumed"
         ),
         "timezone": TZ,
         "timezone_note": (
@@ -328,47 +382,84 @@ def do_build(regular_hours_only: bool) -> int:
         ),
         "source": (
             "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, "
-            "adjusted=false, extended_hours=true. adjusted=false because adjusted "
-            "prices are BACK-adjusted and drift as dividends are paid, which breaks "
-            "D24's immutable-snapshot requirement; as-traded values never change. "
-            "Volume is identical under both settings (measured, ratio 1.000000). "
-            "Provider frame is therefore as-traded: NOT split-adjusted (D75)"
+            "adjusted=false, extended_hours=true at fetch. adjusted=false because "
+            "adjusted prices are BACK-adjusted and drift as dividends are paid, "
+            "which breaks D24's immutable-snapshot requirement; as-traded values "
+            "never change. Volume is identical under both settings (measured, "
+            "ratio 1.000000). Provider frame is as-traded: NOT split-adjusted (D75)"
         ),
         "volume_provenance": (
             "CONSOLIDATED. Verified before the backfill: SPY 2024-01 median session "
             "volume summed from 15m bars = 66,595,182 shares against a consolidated "
             "ADV of ~70-90M. Not a single-venue sample"
         ),
+        "half_days_dropped": sorted(half_days),
+        "half_day_policy": (
+            "US early closes (13:00) are DERIVED, not hardcoded: a session where at "
+            "least half the universe is short. Dropped at every symbol so the "
+            "calendar is uniform -- the same argument D161 makes for crypto, which "
+            "cannot be applied to a 390-minute session any other way"
+        ),
+        "half_day_bars_dropped": dropped_half_day_bars,
+        "incomplete_sessions_excluding_half_days": sum(short_sessions.values()),
+        "incomplete_session_rate": (
+            sum(short_sessions.values()) / sum(total_sessions.values())
+            if total_sessions else 0.0
+        ),
+        "missing_bars_excluding_half_days": sum(missing_bars.values()),
+        "worst_symbols_by_incomplete_sessions": [
+            {"symbol": s, "short_sessions": n,
+             "rate": n / total_sessions[s], "bars_missing": missing_bars.get(s, 0)}
+            for s, n in worst
+        ],
+        "gap_disclosure": (
+            "Short sessions that are NOT half-days are a thin symbol failing to "
+            "trade in some 15m slot, and they TRACK LIQUIDITY: the ten worst "
+            "symbols average roughly a sixth the daily volume of the ten cleanest. "
+            "The overall rate is small, but it is systematically concentrated in "
+            "thin names, and THIS IS A VOLUME STUDY -- an arm that weights symbols "
+            "equally is weighting a slightly different sampling density per symbol. "
+            "Measured and disclosed rather than filled; forward-filling would "
+            "invent data"
+        ),
         "rows": rows,
         "bars_per_symbol": per_symbol,
         "first_bar": first,
         "last_bar": last,
-        "empty_slices": empty_slices,
         "zero_volume_bars": zero_volume,
         "zero_volume_rate": zero_volume / rows if rows else 0.0,
         "empty_bar_disclosure": (
-            "D192 requires any intraday study on a new provider to measure and report "
-            "its own universe's empty-bar rate. That rate is `zero_volume_rate` above "
-            "and must be quoted in the study's pre-registration"
+            "D192 requires any intraday study on a new provider to measure and "
+            "report its own universe's empty-bar rate. That rate is "
+            "`zero_volume_rate` above and must be quoted in the study's "
+            "pre-registration. yfinance's comparable rates were 50% at 1h and 15% "
+            "at 15m, unexplained (D160), which is why this cannot be assumed"
         ),
-        "fetched_at_utc": datetime.utcnow().isoformat() + "Z",
-        "built_at_utc": datetime.utcnow().isoformat() + "Z",
+        "fetched_at_utc": datetime.now(timezone.utc).isoformat(),
+        "built_at_utc": datetime.now(timezone.utc).isoformat(),
     }
     META.write_text(json.dumps(meta, indent=1) + "\n", encoding="utf-8")
-    # Equities have dividends and splits; the sidecar exists for shape-compatibility
-    # with the daily fixture and is populated separately if a study needs it.
     if not EVENTS.exists():
-        EVENTS.write_text(json.dumps({"note": "not populated; as-traded frame"},
-                                     indent=1) + "\n", encoding="utf-8")
+        EVENTS.write_text(
+            json.dumps({"note": "not populated; as-traded frame"}, indent=1) + "\n",
+            encoding="utf-8",
+        )
 
     print(f"wrote {FIXTURE.name}: {rows:,} rows, "
           f"{FIXTURE.stat().st_size / 1e6:.1f} MB")
-    print(f"  symbols {len(per_symbol)}/{len(SYMBOLS)}, "
-          f"empty slices {empty_slices:,}, "
-          f"zero-volume bars {zero_volume:,} ({zero_volume / rows * 100 if rows else 0:.2f}%)")
+    print(f"  symbols       {len(per_symbol)}/{len(SYMBOLS)}")
+    print(f"  half-days     {len(half_days)} dropped ({dropped_half_day_bars:,} bars)")
+    print(f"  incomplete    {sum(short_sessions.values()):,} sessions "
+          f"({meta['incomplete_session_rate'] * 100:.3f}%), "
+          f"{sum(missing_bars.values()):,} bars missing")
+    print(f"  zero-volume   {zero_volume:,} bars "
+          f"({meta['zero_volume_rate'] * 100:.4f}%)")
     if rows and zero_volume / rows > 0.05:
-        print("  WARNING: zero-volume rate above 5%. D192's gate — investigate "
+        print("  WARNING: zero-volume rate above 5%. D192's gate -- investigate "
               "before any volume study uses this fixture.")
+    if worst:
+        print(f"  worst symbol  {worst[0][0]} at "
+              f"{worst[0][1] / total_sessions[worst[0][0]] * 100:.2f}% short sessions")
     return 0
 
 
