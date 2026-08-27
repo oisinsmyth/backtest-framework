@@ -34,4 +34,7 @@ Thumbs.db
 
 # Env / secrets
 .env
+*.key
+.secrets/
+alphavantage*.txt
 *.env.local
