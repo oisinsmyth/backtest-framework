@@ -393,6 +393,27 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D225, the gate at 1h (opened and closed 2026-08-27)
+
+Record `docs/decisions/D225-does-the-volume-gate-survive-a-change-of-sampling-rate.md`.
+
+- [x] **The gate replicates at 1h** — not a sampling artifact. H clears on both symbols.
+- [x] **Its working window is one point wide**, and inverts at 200h into a significant
+      anti-signal. This is the strongest mark against the result on the record.
+- [x] Separated two claims: the SIGNAL is scale-free in bars; the GATE is window-critical.
+- [x] Verified by bit-exact reproduction of D224's artifact (delta = 0.00e+00).
+- [x] Recorded AFTER the run and disclosed; the 40-cell sweep was unregistered.
+
+**Standing constraint now in force:** the 50-hour window is **contaminated for selection**.
+It was clean in D224 because it fell out of "200 bars at 15m" rather than a search. Any study
+that picks 50h from here inherits D225's 40 looks.
+
+**The open thread, and the shape it now has.** The gate is above its selectivity null on two
+symbols and two sampling rates, and below its multiplicity floor on both. The next question is
+no longer "does it work" but **"is 50h a property of the market or of these two coins over this
+span"** — and the cheapest discriminating test is a TIME split, since 8.29 years is available
+and needs no new data.
+
 ## Now — D223 and D224 (opened and closed 2026-08-27)
 
 Records `docs/decisions/D223-the-volume-regime-gate.md` and

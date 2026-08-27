@@ -10,6 +10,33 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D225 — the gate at 1h, 2026-08-27)
+- `scripts/run_gate_1h_replication.py` + `data/gate_1h_summary.json`. Reuses D224's scoring
+  path verbatim; only the position builder is local, because `build_positions` hard-reads
+  its window constants.
+
+### Result (D225)
+- **The volume gate replicates at 1h.** Δ vs parent **+0.635** (BTC) and **+0.558** (ETH)
+  against 15m's +0.489 / +0.590, with hurdle H at 99.5/100 and 98.5/98.8. It is **not** an
+  artifact of the 15m sampling rate, and it beats the mechanical benefit of trading less by
+  about **6×**.
+- **Its working window is one point wide.** 50h is the only positive-net window on BTC out
+  of ten; both neighbours are negative; and **at 200h the identical construction inverts
+  into a significant anti-signal** (0.5th percentile of its own null).
+- **Two claims separated:** the *signal* is scale-free in bars (D221); the *gate* is **not**
+  scale-free in wall-clock — it is window-critical.
+- Nothing clears the verdict floor. ETH clears the fresh-look floor by 0.084 — D214's
+  pattern for the second study running.
+
+### Fixed (D225)
+- **Recorded after the run**, which departs from this programme's practice and is disclosed
+  in the record rather than glossed. The replication was confirmatory of a pre-registered
+  claim; the **40-cell window sweep was an unregistered search** and is counted as such.
+  The 50-hour window was clean when D224 used it and **is not clean now**.
+- Corrects a subagent claim: the window-response curve agreeing across the 15m and 1h grids
+  is a *mathematical consequence* of D221's invariance (the 1h series is resampled from the
+  same bars), so it validates the implementation and is silent on whether 50h is special.
+
 ### Added (D223/D224 — the volume-regime gate and the assembled strategy, 2026-08-27)
 - **D223** pre-registers the volume-regime hypothesis and measures its two premises.
   Volume/volatility holds emphatically (top quintile has **4.5x** the mean absolute move);
