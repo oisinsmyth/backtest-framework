@@ -1,6 +1,6 @@
 # D228 — Mining the mined fixture: a filter search with a *measured* selection bias
 
-**Status:** Pre-registered — committed BEFORE any runner exists
+**Status:** Committed (Q1, Q3, Q4, Q5 confirmed; Q2 confirmed on a corrected basis) — **the filter line is closed**
 **Date:** 2026-08-27
 **Area:** Validation & research integrity
 
@@ -301,3 +301,144 @@ The methodological claim, separable from whether any candidate works:
 
 If that holds, it is reusable across the whole programme, and it is worth more than any filter
 this study might find.
+
+---
+
+## RESULT
+
+*Appended after the run. Nothing above this line was edited except the Status field.*
+
+**Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_filter_search.py`
+(offline, deterministic, seed 0, **73.5 s**) · Page:
+[`FILTER_SEARCH_RESULTS.md`](../../FILTER_SEARCH_RESULTS.md) · Artifact:
+`data/filter_search_summary.json`
+
+### The one-sentence version
+
+**Nothing clears anything. The best of eight declared candidates improves the arm by +0.023
+excess Sharpe against a measured selection-bias floor of +0.104 — so the search found less
+than the same search finds on noise — and the pre-registered stop closes the filter line.**
+
+### The eight
+
+Parent: **+0.570** excess Sharpe, **+52.12%** dividend-adjusted, 49.9% exposure.
+Buy and hold: **+0.235**, +62.59%, 100%.
+
+| | excess Sharpe | Δ Sharpe | money | Δ money | exposure | entries | min/sym | P | E |
+|---|---:|---:|---:|---:|---:|---:|---:|:--:|:--:|
+| G1 vol gate | +0.399 | −0.171 | +16.39% | −35.73 pp | 24.0% | 1,334 | **16** | | **fail** |
+| G2 slope gate | +0.089 | **−0.481** | +8.24% | −43.88 pp | 25.4% | 1,458 | **11** | | **fail** |
+| **S1 inverse-vol** | **+0.594** | **+0.023** | +43.42% | −8.70 pp | 43.1% | 12,585 | 37 | | pass |
+| S2 magnitude | +0.551 | −0.019 | +40.14% | −11.97 pp | 37.6% | 11,748 | 171 | | pass |
+| S3 = G1 continuous | +0.459 | −0.111 | +31.72% | −20.40 pp | 42.8% | 2,418 | 34 | | pass |
+| S4 = G2 continuous | +0.570 | +0.000 | +23.34% | −28.78 pp | 25.0% | 2,418 | 34 | | pass |
+| S5 rank | +0.466 | −0.104 | +61.00% | **+8.88 pp** | 66.9% | 20,447 | 293 | | pass |
+| R1 bonds when flat | +0.333 | −0.238 | +55.32% | +3.20 pp | 100.0% | 3,002 | 34 | | pass |
+
+**Not one of the eight clears hurdle P.** Three improve money, none of those improves Sharpe;
+one improves Sharpe, and it loses money. Six studies became seven.
+
+### Hurdle B — the floor, measured
+
+| | best real | null p50 | **null p95** | |
+|---|---:|---:|---:|:--:|
+| excess Sharpe | +0.023 | +0.014 | **+0.104** | **FAIL** |
+| money | −8.70 pp | −1.95 pp | **+6.55 pp** | **FAIL** |
+
+**The best candidate is inside the noise on both metrics.** S1's +0.023 is barely above the
+null's *median* of +0.014 — the search's single best result is roughly what this search
+returns on a coin flip.
+
+### Scoring the predictions
+
+| | prediction | outcome |
+|---|---|---|
+| **Q1** | No gating candidate clears B | **CONFIRMED, emphatically.** −0.171 and −0.481, and *both gates also fail hurdle E* — 16 and 11 entries per symbol against the required 30. The gates cut so hard they destroy their own sample |
+| **Q2** | The floor is materially below +1.420 | **CONFIRMED, but the comparison as written was wrong** — see below. +1.420 is an *absolute* Sharpe floor; everything here is on the *delta* scale. The prediction compared incommensurable quantities and happened to be right |
+| **Q3** | A sizing candidate beats its gating twin on money within 0.10 Sharpe | **CONFIRMED.** S3 beats G1 by **15.33 pp** of money at a Sharpe difference of 0.060. And S4 beats G2 on **both** metrics, by 15.10 pp and 0.481 Sharpe. **Sizing dominates gating on both matched pairs** |
+| **Q4** | Selection bias over correlated candidates is real and measurable | **CONFIRMED.** Best-of-seven p95 **+0.104** against the largest single-candidate p95 of **+0.069** (G2) and S1's own **+0.022**. Searching seven costs ~5× a single look |
+| **Q5** | Nothing clears B at all | **CONFIRMED** |
+
+**Four of five, with Q2's reasoning corrected.**
+
+### The finding that partly refutes this record's own premise
+
+D228 argued that `expected_max_sharpe` should be replaced because it *"takes `var_trials` as an
+input and cannot see how correlated the candidates are."* Measured, at **matched trial count**:
+
+| | floor |
+|---|---:|
+| analytic `expected_max_sharpe(8, var_from_null)` | **+0.099** |
+| **measured best-of-seven p95** | **+0.104** |
+
+**They agree to within 5%.** The formula is well calibrated. What was wrong was never the
+approximation — it was **the `var_trials` fed to it and the inherited N**, and D224 had already
+caught the first of those.
+
+So the honest version of this record's methodological claim is narrower than the claim it
+made:
+
+> **The simulation's value is that it supplies the right `var_trials` for free and cannot be
+> fed the wrong one.** It is not that the analytic bound is inaccurate. On this candidate set
+> the two are interchangeable, and the correlation structure the simulation captures for free
+> turned out not to matter much here — which is itself only knowable by having run it.
+
+The analytic floor at the disclosed prior (**+0.287** on the delta scale, N = 45,811) also
+fails S1's +0.023, so the verdict is unanimous across every bar this study could have used.
+
+### The mechanism, confirmed across eight independent constructions
+
+D228 Part 1 claimed the arm's money gap against buy-and-hold **is** its exposure gap. Eight
+candidates spanning **24.0% to 100.0%** exposure:
+
+> **r = +0.823**, slope **0.58 pp of money per pp of exposure.**
+
+The two candidates that gain money are the two that raise exposure (S5 at 66.9%, R1 at 100%);
+the two that lose most are the two gates that cut it hardest. **A filter's effect on this
+arm's money is predicted by how much time it removes from the market, and almost nothing
+else.** That is the mechanism behind seven studies of "better Sharpe, less money", measured
+rather than argued.
+
+**S4 is the cleanest illustration and reads as a control**: it is close to a pure scale change,
+and it moves money by −28.78 pp while moving Sharpe by **+0.000**. Sharpe is scale-invariant;
+money is not.
+
+### Defects and disclosures
+
+1. **`MEDIAN_WINDOW = 252` was not pinned by the pre-registration.** The record named "trailing
+   63-day realised vol … below its own trailing median" without saying over what window. One
+   year was chosen at implementation time. It is a free parameter the pre-registration failed
+   to close, and it is disclosed rather than described as declared.
+2. **S4's construction was not pinned either**, and the reading chosen (`0.5 + 0.5·z`) turned
+   out **near-degenerate** — mostly a constant halving. It was left as built rather than
+   corrected after the smoke run, because changing a candidate after seeing its number is the
+   exact freedom this study exists to control. The best-of-search null handles it correctly
+   anyway: a candidate that cannot discriminate contributes nothing to the max in *either* the
+   real or the rotated arm, and its own null p95 of **+0.001** shows that directly.
+3. **S5 does not do what the pre-registration implied.** It normalises rank to mean 1 across
+   **all 57** symbols rather than the held subset, so it *raises* exposure to 66.9% instead of
+   preserving it. Also left as built, for the same reason, and it is why S5 gains money.
+4. **R1 is excluded from hurdle B** — its signal is the parent's own flat mask, so there is
+   nothing to rotate. The null covers **seven** candidates, not eight. This is a gap in the
+   pre-registration's design, not in the runner.
+5. **The exposure-vs-money correlation was added after a 5-sim smoke run**, when the pattern
+   was visible in the table. It is descriptive, costs no looks (it re-reads cells already
+   scored), and is not a hurdle. Flagged because it was not pre-registered.
+6. **The runner was written after this record was committed**, which is the correct order and
+   the opposite of D226's disclosure.
+
+### What this changes
+
+**The pre-registered stop applies: the filter line on this arm is closed.** No ninth candidate,
+no widened sweep, no second fixture for the same question. Seven studies have now tried to
+improve this arm by filtering it and all seven failed, and D228 supplies the reason rather than
+another instance: **filtering removes exposure, and on this arm money is exposure.**
+
+**What survives is the arm, unfiltered** — **+0.570** excess Sharpe against buy-and-hold's
+**+0.235**, at 8.8% volatility against 17.7%, with a −12.70% maximum drawdown against −34.81%.
+It has never been tested on unmined data, and that is now the only live thread on this line.
+
+**And the boundary survives.** *"A look is any operation conditioned on the arm's realised
+P&L"* let this study derive eight candidates from the arm's construction without spending a
+single look on exploration, and let D229 measure turnover, exposure and dead-zone frequency
+before committing to predictions. It is the reusable part.

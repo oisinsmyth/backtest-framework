@@ -393,6 +393,32 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D228, the filter search (opened and closed 2026-08-27)
+
+Record `docs/decisions/D228-mining-the-mined-fixture.md`, page `FILTER_SEARCH_RESULTS.md`.
+
+- [x] Defined the **free/costly boundary** the programme never had: a look is any operation
+      conditioned on the arm's realised P&L. Describing the market is free.
+- [x] Mined the arm's **construction**, not its returns — eight candidates from what the arm
+      throws away (sign only, unit size, equal weight, cash half the time). Zero looks spent
+      on exploration.
+- [x] Built the **best-of-search null** and measured the floor at **+0.104**.
+- [x] **Nothing clears.** Best candidate +0.023, below the floor and barely above the null's
+      median. Both gates also fail hurdle E.
+- [x] **The mechanism measured**: r = +0.823 between exposure delta and money delta.
+- [x] Honoured D220's volume stop rather than overriding it.
+
+**THE FILTER LINE ON THIS ARM IS CLOSED.** Seven studies have tried to improve it by filtering
+and all seven failed. D228 supplies the reason rather than another instance: filtering removes
+exposure, and on this arm money *is* exposure.
+
+**Corrected programme-wide:** rf on a long-flat book belongs on the **exposed fraction**. The
+arm is **+0.570** excess Sharpe against buy-and-hold's **+0.235** — not the +0.354 / +0.240
+quoted before the correction.
+
+**Open, and now the only live thread on this line:** the arm has never been tested on unmined
+data. D229 (the jerk rung) is pre-registered and not yet run.
+
 ## Now — D226, the gate on 57 ETFs (opened and closed 2026-08-27)
 
 Record `docs/decisions/D226-the-volume-gate-on-57-etfs-at-15-minutes.md`, page

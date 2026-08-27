@@ -43,6 +43,31 @@ version (likely at the Phase C "first real number" milestone, see
   still right — adjusted prices are *back-adjusted* and drift with every dividend, which
   breaks D24's immutable-snapshot rule.
 
+### Added (D228 — the filter search, 2026-08-27)
+- `scripts/run_filter_search.py` + `data/filter_search_summary.json` +
+  `FILTER_SEARCH_RESULTS.md` + `tests/unit/test_filter_search.py` (23).
+- The **best-of-search null**: the identical eight-candidate search run over rotated filter
+  signals, one offset vector per replication reused across all candidates so cross-candidate
+  correlation survives. 1,000 replications, 73.5 s.
+
+### Result (D228) — the filter line on the acceleration arm is closed
+- **Nothing clears anything.** Best candidate +0.023 excess Sharpe against a measured floor
+  of **+0.104**, barely above the null's *median* of +0.014. Not one of eight clears hurdle P.
+- **Both gates also fail hurdle E** — 16 and 11 entries per symbol against 30 required.
+- **Sizing dominates gating on both matched pairs**: S3 beats G1 by 15.33 pp of money at a
+  0.060 Sharpe difference; S4 beats G2 on both metrics.
+- **The analytic floor was never the problem.** At matched N the formula (+0.099) and the
+  measured floor (+0.104) agree to within 5%. What was wrong was `var_trials` and inherited N.
+- **The mechanism, measured**: across candidates spanning 24%–100% exposure, money delta
+  against exposure delta gives **r = +0.823**, slope 0.58 pp per pp. Seven studies of "better
+  Sharpe, less money" explained rather than repeated.
+
+### Fixed (D228)
+- **rf on a long-flat book is charged on the EXPOSED FRACTION**, not the whole book. The arm's
+  excess Sharpe is **+0.566**, not the +0.354 quoted in conversation; buy-and-hold is +0.231.
+- Recorded that D218's headline **+0.658 is price-only** while the money figures beside it are
+  dividend-adjusted — two bases mixed in one sentence. The dividend-adjusted Sharpe is +0.793.
+
 ### Added (D226 — the gate on 57 ETFs at 15m, 2026-08-27)
 - `scripts/fetch_etf_intraday.py` gains `--actions` (SPLITS + DIVIDENDS) and split
   adjustment; `data/fixtures/etf_intraday_15m_raw*` — a purpose-built 57-ETF 15-minute
