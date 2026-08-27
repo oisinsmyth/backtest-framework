@@ -429,7 +429,27 @@ compute every leg or fail loudly.
 carried-forward positive and it is a plausible estimate on an interval containing zero,
 corroborated by a correlated study on overlapping data.
 
+## THE BOOK HAS ITS FIRST ENTRY — S1, the recovery rule (2026-08-27)
+
+[`docs/BOOK.md`](docs/BOOK.md). Admitted after [D237](docs/decisions/D237-the-recovery-rule-on-withheld-data.md),
+the first pre-registered out-of-sample test anything in this programme has passed.
+
+- **T1 (60 new tickers, zero overlap):** +0.779 excess Sharpe against buy-and-hold's +0.230,
+  delta **+0.549** — and the effect **grew** rather than shrank. All three hurdles cleared,
+  including a matched-count rotation null.
+- **Still wrong with it, all four recorded in the entry:** every interval contains zero
+  (short by 0.106); hurdle E fails at 9 entries/symbol; the holdout correlates **+0.978** with
+  the training set; and it **lost to buy-and-hold** over the only forward period tested.
+- **Not promoted to capital.** D237 pre-committed that, and R8 now makes it general.
+
 ## The only live thread
+
+- [ ] **A SECOND, UNCORRELATED STRATEGY.** Now the highest-value item in the programme, and the
+      arithmetic is specific: required data scales as `1/delta²`, so two arms at rho ~ 0 give
+      **x sqrt(2)** on the delta and cut the requirement from **8.6 years to 4.3** — significant
+      on data already in hand, with no waiting. It also covers S1's one demonstrated weakness,
+      since T3 showed it cannot keep pace in a strong bull market.
+
 
 - [ ] **Test the arm on unmined data** — ETFs outside these 57. No further work on this
       fixture can narrow the intervals above, because they are a property of the sample.

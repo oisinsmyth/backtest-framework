@@ -91,3 +91,20 @@ the same tell that surfaced D224's look-ahead defect.
 **Scope:** binding on every study applying an overlay. Introduced by
 [D235](decisions/D235-stops-and-targets-on-the-recovery-rule.md).
 
+## R8. Admission to the book requires a pre-registered out-of-sample test
+
+A strategy enters [`BOOK.md`](BOOK.md) only after a test whose **hurdles were committed before
+the withheld data was touched**, and it enters carrying its own **falsification conditions** and
+a full statement of what is still wrong with it.
+
+**Because:** D215 committed that a positive needs its own pre-registration and holdout, and
+nine studies then produced nothing that reached one. When S1 finally did, the temptation was to
+report the pass and not the four things still broken about it — a +0.978-correlated holdout, an
+interval containing zero, a failing sample-size hurdle, and a loss to buy-and-hold over the only
+forward period tested. **A book entry that records only its evidence is a marketing document.**
+
+**Corollary:** a place in the book is **not** a decision to trade. Sizing, leverage and capital
+allocation are separate decisions, recorded separately.
+
+**Scope:** binding. Introduced alongside [S1](BOOK.md#s1--the-recovery-rule).
+
