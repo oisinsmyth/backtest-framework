@@ -76,6 +76,27 @@ MIN_SCREEN_BARS = 500
 # breadth as well as span.
 N_SELECT = 60
 
+# ---------------------------------------------------------------------------
+# AMENDED RULE -- select for INDEPENDENCE, not size.
+#
+# The original rule ranked by dollar volume, and the fixture it produced
+# correlated with the parent's equal-weighted book at +0.9739 -- 94.9% SHARED
+# VARIANCE, and a LESS diverse universe than the parent (mean pairwise 0.560
+# against 0.439; 1.76 effective independent instruments against 2.23).
+#
+# The cause is structural and should have been foreseen: RANKING BY LIQUIDITY
+# SELECTS FOR SIZE, AND SIZE SELECTS FOR BROAD-MARKET BETA. The most liquid ETFs
+# outside the 57 are the huge index funds -- IVV, VOO, VTI, VEA, VWO -- which are
+# precisely the ones carrying the least independent information.
+#
+# Amended: liquidity becomes a FLOOR (tradeable) rather than a RANK (biggest),
+# and the 60 are chosen greedily to minimise average pairwise correlation within
+# the set. Correlation is a market description computed on PRE-LIVE bars only --
+# it touches no strategy return, so this is free under D228's boundary and cannot
+# see the test period.
+# ---------------------------------------------------------------------------
+LIQUIDITY_FLOOR_USD = 5_000_000.0  # median pre-live dollar volume, a floor not a rank
+
 # The build span is the PARENT FIXTURE'S EXACT DATE GRID. Same period, different
 # instruments -- so a difference in result is attributable to the instruments and
 # not to the years. Data after 2024-12-30 is cached but NOT built: forward time is
@@ -246,6 +267,68 @@ def do_select() -> None:
         print(f"\nWARNING: only {len(selected)} of {N_SELECT} met full coverage.")
 
 
+def do_select_diverse() -> None:
+    """Select 60 for INDEPENDENCE rather than size. See the amended rule above.
+
+    Greedy minimum-average-correlation. Starts from the fund least correlated
+    with everything else, then repeatedly adds whichever fund is least correlated
+    with what is already chosen. All correlations from PRE-LIVE bars only, so the
+    selection cannot see the test period.
+
+    Greedy rather than exhaustive because choosing 60 of ~1,100 to minimise mean
+    pairwise correlation is combinatorial; greedy is the standard approximation
+    and the rule is stated rather than tuned."""
+    import numpy as np
+
+    pool = json.loads(POOL.read_text(encoding="utf-8"))["pool"]
+    _, grid = parent_symbols_and_dates()
+    grid_dates = {t[:10] for t in grid}
+    pre = [d for d in sorted(grid_dates) if SCREEN_START <= d <= SCREEN_END]
+
+    syms, rets, liq = [], [], {}
+    for p in pool:
+        path = daily_path(p["symbol"])
+        if not path.exists():
+            continue
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            series = json.load(f)
+        if not grid_dates.issubset(series.keys()):
+            continue
+        dv = [float(series[d]["4. close"]) * float(series[d]["5. volume"]) for d in pre]
+        if len(dv) < MIN_SCREEN_BARS or statistics.median(dv) < LIQUIDITY_FLOOR_USD:
+            continue
+        closes = np.array([float(series[d]["4. close"]) for d in pre])
+        syms.append(p["symbol"])
+        liq[p["symbol"]] = statistics.median(dv)
+        rets.append(np.log(closes[1:] / closes[:-1]))
+
+    R = np.asarray(rets)
+    print(f"eligible (floor ${LIQUIDITY_FLOOR_USD/1e6:.0f}M + full coverage)  {len(syms):,}")
+    C = np.nan_to_num(np.corrcoef(R), nan=1.0)
+
+    chosen = [int(np.argmin(C.mean(axis=1)))]
+    while len(chosen) < min(N_SELECT, len(syms)):
+        avg = C[:, chosen].mean(axis=1)
+        avg[chosen] = np.inf
+        chosen.append(int(np.argmin(avg)))
+
+    sel = [syms[i] for i in chosen]
+    sub = C[np.ix_(chosen, chosen)]
+    iu = np.triu_indices_from(sub, 1)
+    w = np.ones(len(chosen)) / len(chosen)
+    SELECTION.write_text(
+        json.dumps({"selected": sel, "rule": "diversity",
+                    "mean_pairwise_prelive": float(sub[iu].mean()),
+                    "effective_independent_prelive": float(1.0 / (w @ sub @ w))},
+                   indent=1),
+        encoding="utf-8",
+    )
+    print(f"SELECTED          {len(sel)}")
+    print(f"  mean pairwise correlation (pre-live)  {sub[iu].mean():+.3f}")
+    print(f"  effective independent instruments     {1.0 / (w @ sub @ w):.2f}")
+    print("  first 10:", ", ".join(sel[:10]))
+
+
 def do_actions(key: str, limiter: RateLimiter) -> None:
     selected = json.loads(SELECTION.read_text(encoding="utf-8"))["selected"]
     out = {"dividends": {}, "splits": {}}
@@ -357,7 +440,7 @@ def do_build() -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    for flag in ("plan", "fetch", "select", "actions", "build"):
+    for flag in ("plan", "fetch", "select", "select-diverse", "actions", "build"):
         ap.add_argument(f"--{flag}", action="store_true")
     args = ap.parse_args()
 
@@ -374,6 +457,8 @@ def main() -> int:
         do_fetch(key, limiter)
     if args.select:
         do_select()
+    if getattr(args, 'select_diverse', False):
+        do_select_diverse()
     if args.actions:
         do_actions(key, limiter)
     if args.build:
