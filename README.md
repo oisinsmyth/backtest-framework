@@ -101,6 +101,9 @@ above everything else — the small set of values (trust by structure, honesty o
 anti-self-deception, composability, scope discipline) that generated every decision below,
 and the first thing any new decision should be checked against.
 
+**Data providers:** [`docs/alpha_vantage_api.md`](docs/alpha_vantage_api.md) covers the intraday equity provider — read it before adding any
+new fetcher, since several load-bearing facts about it are measured rather than documented.
+
 **To USE the framework, read [`docs/TUTORIAL.md`](docs/TUTORIAL.md)** — the full path from
 setup to research output, with every example executed verbatim by the test suite so it
 cannot rot.

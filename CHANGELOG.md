@@ -10,6 +10,39 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (Alpha Vantage intraday provider, 2026-08-27)
+- `scripts/fetch_etf_intraday.py` — 15-minute bars for the 57-ETF universe, 2018-01 to
+  2026-08, one call per `(symbol, month)`. Resumable, cached, paced at 66/min against a
+  75/min tier ceiling. Raw cache is not committed (D191); only the derived fixture is.
+- `docs/alpha_vantage_api.md` — the provider reference, with **every claim tagged
+  `[DOC]` / `[MEASURED]` / `[INFER]`**, because the documentation is thin on exactly the
+  points a study depends on.
+
+### Why (Alpha Vantage)
+- yfinance serves **60 days of 15m** (D160). Impulse MACD at `(136, 36)` needs **4,049
+  bars of warm-up alone** — short by a factor of three *before* the strategy starts. Alpha
+  Vantage's `month=YYYY-MM` slices reach back to 2000-01, which is what makes an intraday
+  ETF study possible at all.
+
+### Measured before spending ~5,900 requests
+- **Volume is CONSOLIDATED** — SPY median session 66,595,182 shares against a ~70–90M
+  consolidated ADV. Undocumented, and the one finding that could have killed the study.
+- Timestamps mark the interval's **OPEN**, so a bar stamped `t` is not complete until
+  `t+15m` — a look-ahead hazard, now recorded in the fixture meta.
+- Errors arrive as **HTTP 200** with an `Error Message` body; success must be decided
+  structurally or error bodies land in the fixture.
+- `outputsize=full` is **mandatory** with `month`; the default returns 100 bars silently.
+- **Fetch extended hours, build regular hours only.** Extended bars exist only where
+  something traded (AGG 27–35/session, ragged; RTH exactly 26 every session), so an
+  extended-hours fixture would put a **liquidity-correlated** difference in bar counts into
+  a **volume** study.
+
+### Fixed
+- Corrects an inference that `adjusted=true` dividend-adjusts **volume**. Measured: volume
+  is byte-identical either way (ratio 1.000000); only prices adjust. `adjusted=false` is
+  still right — adjusted prices are *back-adjusted* and drift with every dividend, which
+  breaks D24's immutable-snapshot rule.
+
 ### Added (D225 — the gate at 1h, 2026-08-27)
 - `scripts/run_gate_1h_replication.py` + `data/gate_1h_summary.json`. Reuses D224's scoring
   path verbatim; only the position builder is local, because `build_positions` hard-reads
