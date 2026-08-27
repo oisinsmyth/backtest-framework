@@ -66,6 +66,50 @@ Family N is declared as a **fraction of the universe**, not a count, so the rule
 **`NORM_WINDOW = 252`.** Declared here rather than discovered later — D228 was caught by
 leaving `MEDIAN_WINDOW` unpinned.
 
+### PRE-RUN AMENDMENT — family T must self-calibrate too
+
+*Written before the holdout fixture was built and before any cell was scored. Prompted by the
+question "how are you going to hit that target?", which the section above does not actually
+answer for family T.*
+
+**The defect.** Family N is a **rank** rule, so holding the strongest 35% of the universe
+produces ~35% exposure on *any* fixture, automatically. Family T's `c` values above were fitted
+to the **mined** fixture's z-distribution; applied to 60 different ETFs they land wherever they
+land. That makes exposure a **control** for N and an **outcome** for T — the two families would
+not be comparable, and T's "four levels" would not be four levels of anything.
+
+**The fix.** Family T becomes self-calibrating on the same principle as N:
+
+```
+c[i,t] = the (1 - target) quantile of z[i, t-252 .. t-1]     # per symbol, strictly trailing
+hold when z[i,t] > c[i,t]
+```
+
+A rolling 252-bar quantile of each symbol's own z. Exposure is then ≈ target **by
+construction**, with no look-ahead and no dependence on any other fixture.
+
+**This is strictly better than what it replaces, for a reason beyond comparability: it removes
+every trace of mined-fixture information from the holdout test.** The constants in the table
+above are demoted to a **sanity reference** — the holdout's own fitted thresholds should land
+near them if the two universes are similar, and a large divergence is itself worth reporting.
+Nothing operative is inherited.
+
+**The cost, stated:** `c` is now time-varying rather than fixed, so family T is a slightly
+different estimator than the one first described. The dial it turns — target exposure — is
+unchanged, and that is what the study is about.
+
+### Additional prediction, committed with this amendment
+
+| | prediction | confidence |
+|---|---|---|
+| **Y6** | **Excess Sharpe is monotone decreasing in the dial: 40% best of the four, 10% worst, and the drop from 40% to 10% exceeds 0.20 Sharpe.** Not tautological with Y2 — a selection effect strong enough to beat the concentration and cost penalties would make this **U-shaped** instead, with a middle level best | **moderate** |
+
+The reasoning, so it can be checked against the outcome: **D228's S2 sized positions by
+normalised `|hist|` and returned −0.019.** A threshold is the hard version of exactly that idea.
+If the soft version was neutral-to-negative, the hard version should be worse, and worse
+monotonically as the bar rises — because concentration and cost both worsen as exposure falls
+while the selection effect apparently does not pay.
+
 ---
 
 ## Where it runs, and why not here
