@@ -393,6 +393,27 @@ already mined. The crypto daily universe is the obvious candidate.
 > the kind of reconstruction this project does not trust; it needs a session with the
 > records open.
 
+## Now — D227, abandoned on power (2026-08-27)
+
+Record `docs/decisions/D227-the-time-split-that-cannot-answer-its-own-question.md`.
+
+- [x] Designed the time split, verified the split bar is clean (149,192, parent flat on
+      both symbols, zero straddling trades).
+- [x] **Computed the power BEFORE running it, and it kills the design.** Per-half MDE
+      +0.554 to +0.642 against effects of +0.558 to +0.635 - the effect sits ON the
+      threshold. P(all four symbol-halves clear) = **7%** on an effect that is real by
+      assumption.
+- [x] Checked the better-powered reformulation (difference between halves): detects a full
+      collapse only 37% of the time. Also unusable.
+- [x] **Zero looks spent.** Blind to the outcome throughout.
+
+**The transferable lesson:** compute the MDE before designing the stop, not after seeing
+which half failed. A stop that fires 93% of the time on a true effect is not a hurdle.
+
+**The stability question is redirected, not abandoned** - it goes to the 57-ETF intraday
+fixture, where 57 instruments carry more information about generalisation than two halves
+of two correlated coins.
+
 ## Now — D225, the gate at 1h (opened and closed 2026-08-27)
 
 Record `docs/decisions/D225-does-the-volume-gate-survive-a-change-of-sampling-rate.md`.
