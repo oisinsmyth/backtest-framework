@@ -45,3 +45,4 @@ data/raw/alphavantage/
 # Smoke-test artifacts: never tracked. A smoke page sitting next to a real
 # results page is exactly what gets misread as a result later.
 *.smoke.*
+data/fixtures/us_shorts_daily_raw.csv.gz
