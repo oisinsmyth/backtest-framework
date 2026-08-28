@@ -10,6 +10,35 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D244 - the book on crypto, 2026-08-28)
+- `scripts/run_book_crypto.py` - the frozen book on 35 coins over 5.2 years at 10 bp/side.
+  **Written fresh: the 34-coin panel builder, the cost override and the PPY = 365 override.**
+  The builder iterates to a fixed point because `clean` drops bars per symbol, so a raw date
+  intersection does not survive loading with equal bar counts.
+- `data/fixtures/crypto_book_2018_raw.csv.gz` - 35 coins from 2018-01-01, chosen by DATE (the
+  earliest start retaining a majority of the 63 ragged-inception coins), never by performance.
+- `tests/unit/test_book_crypto.py` - 16 gates. The load-bearing ones cover the two silent ways
+  this study could go wrong: **an override leaking** into the shared modules and corrupting every
+  later equity study, and **a single-symbol book scored on the full panel**.
+- `BOOK_CRYPTO_RESULTS.md`, `data/book_crypto_summary.json`.
+
+### Fixed (D244)
+- **"BTC alone" was being scored at 1/35 weight.** Zeroing 34 of 35 rows leaves
+  `portfolio_log_returns` dividing by 35, so BTC reported +1.13% CAGR instead of **+48.15%** -
+  the same defect `subset_panel` was written for in D239. Now scored on its own one-symbol panel.
+- **The crypto overrides are restored in a `finally` and asserted off afterwards.** `PPY` and
+  `cost_fraction` live on shared modules; one left switched on would have silently corrupted
+  every later study on the equity fixtures.
+
+### Changed (D244)
+- **`docs/BOOK.md` carries two more amendments.** S1 failed on crypto at the **29.1st percentile**
+  of its own rotation null - worse than random timing - which is its second consecutive failure
+  and the first on the asset class the reversal thesis said should suit it. S2's generality is
+  recorded as **bounded to equities**: it beat the benchmark and failed its null at the 73.2nd.
+- **D244 carries a written CORRECTION**: its pre-registration claimed the universe held LUNC,
+  USTC and FTT. It does not - all three launched after 2018 and the date cut excludes them.
+  Caught by a test asserting their presence, which failed. Appended, not edited.
+
 ### Added (D243 - the book on extended history, 2026-08-28)
 - `scripts/fetch_extended_history.py` - rebuilds the daily fixtures back to each universe's own
   inception. The price cache already held full history; what was missing was **corporate actions**,

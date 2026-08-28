@@ -160,3 +160,121 @@ cost override and the `PPY = 365` override — and nothing else.**
   values outside it — an override that silently persisted would corrupt every later study.
 - **The 34-coin panel is asserted**: 34 symbols, equal bar counts, first bar 2018-01-01 or later.
 - **Hurdle E is computed, not assumed.**
+
+---
+
+## VERDICT
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_book_crypto.py` · Page:
+[`BOOK_CRYPTO_RESULTS.md`](../../BOOK_CRYPTO_RESULTS.md)
+
+**35 coins × 1,899 live bars (5.2 years at PPY 365), 2020-10-15 → 2025-12-30, 10 bp/side.**
+
+### The one-sentence version
+
+**S1 does not merely fail on the most reversal-heavy asset class available — it lands at the
+29.1st percentile of its own rotation null, meaning randomly-timed books at the same exposure
+beat it seven times in ten.**
+
+### The book on crypto
+
+| | exposure | excess Sharpe | Δ vs B&H | CAGR | deployable | max DD | rot null |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **S1** | 25.4% | **−0.291** | −0.187 | −6.17% | −3.38% | −48.90% | **29.1st** |
+| **S2** | 14.3% | +0.052 | +0.156 | 1.53% | 5.00% | −34.30% | 73.2nd |
+| **C** | 38.1% | −0.162 | −0.058 | −3.67% | −1.30% | −59.44% | 49.0th |
+| *B&H, equal-weighted 35* | *100%* | *−0.105* | — | *−4.18%* | *−4.18%* | ***−90.90%*** | — |
+| *BTC alone* | *100%* | *+0.602* | — | ***+48.15%*** | *+48.15%* | *−76.63%* | — |
+
+**X1: 1 of 2. X2: 0 of 2. X3: 0 of 2.**
+
+### S1 failed, and not because of costs
+
+**The breakeven cost is −50.6 bp per side.** S1 loses money with *free trading*. Costs — the
+thing D244 named as most likely to kill it — are not the cause. Neither is the benchmark: S1
+underperformed an equal-weighted alt basket that itself lost 4.18% a year and drew down 90.9%.
+
+**The rotation null is the damning number.** At the 29.1st percentile, S1's timing is *worse than
+random* at the same exposure, turnover and holding periods. On the mined and holdout ETF fixtures
+it sat at the 100th.
+
+### S2 was not skilful either, only unharmful
+
+**S2 cleared X1 — it beat buy-and-hold by +0.156 — and failed X2 at the 73.2nd percentile.** Its
+positive result is not distinguishable from trading the same amount at random times. It has real
+cost headroom (breakeven **63 bp**, 6.3× what was charged), so if a signal were there the fees
+would not have hidden it.
+
+### CORRECTION — the universe does not contain LUNC, USTC or FTT
+
+**The pre-registration above states the universe holds Terra and FTX. It does not.** All three
+launched after 2018, so the date cut excludes them. Caught by a test asserting their presence,
+which failed.
+
+**What the 35 do retain is the 2017-era cohort that collapsed** — XEM, LSK, STEEM, SC, SNT, ICX,
+BTG, OMG, QTUM, REP, WAVES, most of them down 90-99% from their peaks. **The equal-weighted
+benchmark still drew down 90.90%**, so nothing was screened out and the conclusion is unchanged.
+But the exposure to catastrophic failure is of the *2018 cohort*, not the 2021-22 blowups, and
+the record should not have said otherwise.
+
+### Y5 mattered, and it is why no win here would have counted
+
+**Buy-and-hold on the equal-weighted 35 lost 4.18% a year at a −90.90% drawdown, while BTC alone
+made 48.15%.** The benchmark this book had to beat was a catastrophe, and beating it would have
+meant very little. As registered in advance.
+
+### Scoring — three confirmed, one split, one falsified
+
+| | prediction | outcome |
+|---|---|---|
+| **Y1** | **S1 clears X1 and X2** | **FALSIFIED**, and it was the point of the record |
+| **Y2** | S2 clears X1 and X2 | **SPLIT.** X1 yes, X2 no |
+| **Y3** | both fail X3 | **CONFIRMED**, p05 −1.205 and −0.647 |
+| **Y4** | ρ stays below 0.35 | **CONFIRMED**, +0.2343 — higher than the ETF spans but still low |
+| **Y5** | equal-weighted B&H much worse than BTC | **CONFIRMED** by 52 points of CAGR |
+
+### The reading, as declared in advance
+
+> **NEITHER RULE TRAVELS. Both are about US equity ETFs.**
+
+### What is fair to say, and what is not
+
+**Two confounds are real and were declared before the run.**
+
+1. **The calendar mismatch.** 252 bars is one year on ETFs and **0.69 years** here, so S2's
+   "confirmed year-long uptrend" is really eight months and S1's 34-bar Impulse is five weeks
+   rather than seven. The bar-frozen rule is what the book specifies and what was run, **but this
+   is not the same economic rule.**
+2. **The warm-up ate 2.74 years**, so the live window starts 2020-10 and misses the 2018–2020
+   crypto bear entirely. What was tested is the 2021 blowoff, the 2022 collapse and the recovery.
+
+**What those confounds do NOT excuse is the rotation null.** A calendar mismatch would make the
+rule weaker; it would not make its timing *worse than random*. **S1 at the 29.1st percentile is a
+statement about the signal, not about the units.**
+
+**And per this record's stop, no calendar-matched variant is created here.** If someone wants to
+test 365/91 on crypto, that is a separate pre-registration.
+
+### What this changes
+
+**Nothing in the rules. Everything in the evidence.**
+
+**S1's record is now:** cleared an instrument holdout on US equity ETFs (D237) · **went negative
+in a continuation era on the same asset class** (D243, 80.6th percentile) · **negative and
+worse-than-random on crypto** (here, 29.1st percentile).
+
+**Two failures in a row, the second on the asset class the reversal thesis said should suit it
+best.** Recorded in `BOOK.md` as evidence against S1.
+
+**S2's record is:** cleared an instrument holdout (D242) · cleared a time holdout (D243) ·
+**showed no demonstrated skill on crypto, while not being harmful** (here). It remains the
+stronger entry, and its generality is now bounded to equities.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| **fresh — 0 cells** | **0** |
+| + D243's 0, D242's 3, D241's 5, D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 39 |
+| + the gradient anatomy | 60 |
+| + disclosed ETF prior | **45,863** |

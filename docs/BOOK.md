@@ -219,6 +219,48 @@ so the condition has not fired — but it came close, and a repeat retires S1.
 
 ---
 
+### AMENDMENT, 2026-08-28 — S1 also failed on crypto, at the 29.1st percentile
+
+[D244](decisions/D244-the-book-on-crypto.md) ran the frozen book on **35 coins over 5.2 years**
+at 10 bp/side. The test was pointed: D239 and D243 established S1 is a bet that reversals beat
+continuations, **so the most reversal-heavy asset class available is where it should have
+worked.**
+
+| S1 on crypto | |
+|---|---:|
+| excess Sharpe | **−0.291** |
+| equal-weighted buy-and-hold | −0.105 |
+| delta | −0.187 |
+| max drawdown | −48.90% |
+| **rotation null percentile** | **29.1st** |
+| breakeven cost | **−50.6 bp** |
+
+**It was not the costs.** A breakeven of −50.6 bp means S1 loses with *free trading*. **It was
+not the benchmark** — it underperformed an alt basket that itself lost 4.18%/yr and drew down
+90.9%. **The rotation null is the finding: at the 29.1st percentile S1's timing was worse than
+random** at the same exposure, turnover and holding periods. It sat at the 100th on both ETF
+fixtures.
+
+**Two declared confounds are real.** 252 bars is one year on ETFs and **0.69 years** on a
+365-day calendar, so this is the same estimator and not the same economic rule; and the 2.74-year
+warm-up pushed the live window to 2020-10, missing the 2018–20 crypto bear. **Neither excuses the
+null** — a units mismatch would make a rule weaker, not worse than random.
+
+**S1's evidence base, stated plainly:**
+
+| | result |
+|---|---|
+| Instrument holdout, US equity ETFs (D237) | **passed**, and the effect grew |
+| Time holdout, 2013–2018 ETFs (D243) | **failed** — negative, 80.6th percentile |
+| Asset-class holdout, crypto (D244) | **failed** — negative, 29.1st percentile |
+
+**It works on US equity ETFs over 2018–2024 and has not been shown to work anywhere else.** It
+stays in the book because it cleared a pre-registered holdout and because it contributes +0.109
+to the pair over 12.8 years — but **it should not be traded standalone, and the case that it
+generalises is now weak.**
+
+---
+
 ## S2 — The Uptrend Onset
 
 **Admitted:** 2026-08-28 · **Status:** live in the book, **not promoted to capital**
@@ -327,6 +369,27 @@ than the correlation ever was.**
 
 *Weakness 1 above is partly relieved: entries per symbol are unchanged for S2 at 5, but the
 combined book now reaches 24 against the 30 required, from 9 on the original fixture.*
+
+### AMENDMENT, 2026-08-28 — S2's generality is bounded to equities
+
+[D244](decisions/D244-the-book-on-crypto.md) ran S2 on 35 coins over 5.2 years.
+
+| S2 on crypto | |
+|---|---:|
+| excess Sharpe | +0.052 |
+| equal-weighted buy-and-hold | −0.105 |
+| delta | **+0.156** |
+| rotation null percentile | **73.2nd** |
+| breakeven cost | 63 bp — **6.3× what was charged** |
+
+**S2 beat the benchmark and showed no demonstrated skill.** It cleared X1 and failed X2: its
+result is not distinguishable from trading the same amount at random times. **It was not harmful,
+and costs did not hide anything** — the breakeven is 6.3× the fee charged.
+
+**So S2's generality is bounded.** It has passed an instrument holdout and a time holdout **on US
+equity ETFs**, and has not been shown to work outside them. The same declared confounds apply:
+252 bars is 0.69 years on a 365-day calendar, so this was the same estimator rather than the same
+economic rule.
 
 ### Falsification — what removes S2
 

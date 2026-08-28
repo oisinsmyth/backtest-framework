@@ -1,0 +1,223 @@
+{
+ "bootstrap": {
+  "C": {
+   "clears_X3": false,
+   "delta_bh": -0.05791711534156342,
+   "delta_bh_excludes_zero": false,
+   "delta_bh_p05": -0.6959311860498367,
+   "p05": -0.9790445564812537,
+   "p95": 0.6785762347190784
+  },
+  "S1": {
+   "clears_X3": false,
+   "delta_bh": -0.18685409310745277,
+   "delta_bh_excludes_zero": false,
+   "delta_bh_p05": -0.9625489668000915,
+   "p05": -1.2051411135352514,
+   "p95": 0.5771249660042417
+  },
+  "S2": {
+   "clears_X3": false,
+   "delta_bh": 0.1560908157186386,
+   "delta_bh_excludes_zero": false,
+   "delta_bh_p05": -0.6167488303482291,
+   "p05": -0.6471049378759663,
+   "p95": 0.7298022640318689
+  }
+ },
+ "breakeven_bps": {
+  "C": -31.118186110252744,
+  "S1": -50.55930764226613,
+  "S2": 63.00927804936296
+ },
+ "btc_only": {
+  "breakeven_borrow_annual": null,
+  "cagr": 0.4815144167899676,
+  "clears_E": false,
+  "entries": 1,
+  "excess_sharpe": 0.6018318762813121,
+  "exposure_gross": 1.0,
+  "exposure_long": 1.0,
+  "exposure_short": 0.0,
+  "max_drawdown": -0.7663456370856904,
+  "min_entries_per_symbol": 1,
+  "sharpe_rf0": 0.5554963802574684,
+  "total_return": 6.7292663583626435,
+  "total_return_price": 6.7292663583626435,
+  "turnover_units": 1.0,
+  "vol": 0.5879451055813562
+ },
+ "buy_and_hold": {
+  "breakeven_borrow_annual": null,
+  "cagr": -0.04183611716819185,
+  "clears_E": false,
+  "entries": 35,
+  "excess_sharpe": -0.10455691555948986,
+  "exposure_gross": 1.0,
+  "exposure_long": 1.0,
+  "exposure_short": 0.0,
+  "max_drawdown": -0.9089548006610394,
+  "min_entries_per_symbol": 1,
+  "sharpe_rf0": -0.045302077380529035,
+  "total_return": -0.19936219731062152,
+  "total_return_price": -0.19936219731062152,
+  "turnover_units": 35.0,
+  "vol": 0.7838521314662464
+ },
+ "cells": {
+  "C": {
+   "breakeven_borrow_annual": null,
+   "cagr": -0.03666619832489304,
+   "clears_E": false,
+   "entries": 1171,
+   "excess_sharpe": -0.16247403090105328,
+   "exposure_gross": 0.3806966072368916,
+   "exposure_long": 0.3806966072368916,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.5943721339381008,
+   "min_entries_per_symbol": 18,
+   "sharpe_rf0": -0.09644933530540473,
+   "total_return": -0.17663024753526538,
+   "total_return_price": -0.17663024753526538,
+   "turnover_units": 2318.0,
+   "vol": 0.3218154069207172
+  },
+  "S1": {
+   "breakeven_borrow_annual": null,
+   "cagr": -0.06168123750730613,
+   "clears_E": false,
+   "entries": 1121,
+   "excess_sharpe": -0.29141100866694264,
+   "exposure_gross": 0.2536673437147371,
+   "exposure_long": 0.2536673437147371,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.4890237109488025,
+   "min_entries_per_symbol": 17,
+   "sharpe_rf0": -0.2094038603865097,
+   "total_return": -0.2819638158305453,
+   "total_return_price": -0.2819638158305453,
+   "turnover_units": 2218.0,
+   "vol": 0.2526234652534336
+  },
+  "S2": {
+   "breakeven_borrow_annual": null,
+   "cagr": 0.015312936168743097,
+   "clears_E": false,
+   "entries": 164,
+   "excess_sharpe": 0.05153390015914872,
+   "exposure_gross": 0.14312796208530806,
+   "exposure_long": 0.14312796208530806,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.3429611670506604,
+   "min_entries_per_symbol": 3,
+   "sharpe_rf0": 0.06790128862049317,
+   "total_return": 0.0822750928973511,
+   "total_return_price": 0.0822750928973511,
+   "turnover_units": 328.0,
+   "vol": 0.18596454640375198
+  }
+ },
+ "deployable_return": {
+  "C": -0.012980792896637726,
+  "S1": -0.033809110965136085,
+  "S2": 0.050014537046670374
+ },
+ "elapsed_seconds": 15.0,
+ "fee_bps": 10.0,
+ "first_live": "2020-10-15",
+ "last_bar": "2025-12-30",
+ "live_bars": 1899,
+ "live_years": 5.2027397260273975,
+ "n_sims": 1000,
+ "n_symbols": 35,
+ "nulls": {
+  "C": {
+   "clears_X2": false,
+   "money_percentile_of_actual": 48.1,
+   "p50": -0.15925502773250627,
+   "p95": 0.08888821034048333,
+   "percentile_of_actual": 49.0,
+   "vol_ratio": 1.0268228874461662
+  },
+  "S1": {
+   "clears_X2": false,
+   "money_percentile_of_actual": 21.3,
+   "p50": -0.18667506866387185,
+   "p95": 0.10444111848711754,
+   "percentile_of_actual": 29.099999999999998,
+   "vol_ratio": 1.1631903320480097
+  },
+  "S2": {
+   "clears_X2": false,
+   "money_percentile_of_actual": 76.1,
+   "p50": -0.0962243575291526,
+   "p95": 0.29035423569557445,
+   "percentile_of_actual": 73.2,
+   "vol_ratio": 1.4548578891592139
+  }
+ },
+ "ppy": 365.0,
+ "produced": "D244",
+ "reading": "NEITHER RULE TRAVELS. Both are about US equity ETFs.",
+ "rho_S1_S2": 0.23428844990514094,
+ "seed": 0,
+ "stage": "ASSET-CLASS holdout -- not a time holdout",
+ "universe": {
+  "bars": 2899,
+  "first": "2018-01-17",
+  "last": "2025-12-30",
+  "symbols": [
+   "ADA-USD",
+   "BAT-USD",
+   "BCH-USD",
+   "BNB-USD",
+   "BTC-USD",
+   "BTG-USD",
+   "DASH-USD",
+   "DOGE-USD",
+   "EOS-USD",
+   "ETC-USD",
+   "ETH-USD",
+   "FIL-USD",
+   "ICX-USD",
+   "LINK-USD",
+   "LSK-USD",
+   "LTC-USD",
+   "MANA-USD",
+   "MKR-USD",
+   "NEO-USD",
+   "OMG-USD",
+   "QTUM-USD",
+   "REP-USD",
+   "SC-USD",
+   "SNT-USD",
+   "STEEM-USD",
+   "THETA-USD",
+   "TRX-USD",
+   "WAVES-USD",
+   "XEM-USD",
+   "XLM-USD",
+   "XMR-USD",
+   "XRP-USD",
+   "XTZ-USD",
+   "ZEC-USD",
+   "ZRX-USD"
+  ]
+ },
+ "verdict": {
+  "S1": {
+   "clears_X1": false,
+   "clears_X2": false,
+   "clears_X3": false,
+   "clears_all": false,
+   "delta_vs_bh": -0.18685409310745277
+  },
+  "S2": {
+   "clears_X1": true,
+   "clears_X2": false,
+   "clears_X3": false,
+   "clears_all": false,
+   "delta_vs_bh": 0.1560908157186386
+  }
+ }
+}
