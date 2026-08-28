@@ -266,3 +266,107 @@ counting only the three cells would understate it.
   cell's full-span position matrix equals the concatenation of its two halves.
 - **D247's unfiltered reference must reproduce** at −1.550 / 334 turnover / 0.13 bp, or the
   pipeline has changed underneath the comparison.
+
+---
+
+## RESULT — closed, and for a better reason than losing money
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_intraday_filtered.py` · Page:
+[`INTRADAY_FILTERED_RESULTS.md`](../../INTRADAY_FILTERED_RESULTS.md)
+
+### The one-sentence version
+
+**The relationship this record was built on does not exist causally — it was an artifact of
+conditioning on the same bar being measured — and the correctly-lagged rule shows exactly the no
+edge that implies.**
+
+### The three cells
+
+| | exposure | turnover/yr | SCREEN | null pct | breakeven | VALIDATE | null pct | breakeven |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| T05 | **5.3%** | **102** | -1.564 | 90.6th | -0.87 bp | -1.426 | 100.0th | -0.21 bp |
+| T10 | **10.1%** | 169 | -1.589 | 94.6th | -0.49 bp | -1.477 | 100.0th | 0.01 bp |
+| T15 | **14.9%** | 226 | -1.439 | 99.3th | -0.07 bp | -1.602 | 100.0th | 0.01 bp |
+
+**A1, A4, A5 and A6 fail on every cell.** Every breakeven is at or below zero: **these lose with
+free trading.**
+
+**The mechanics did exactly what was registered.** Exposure landed on target (5.3 / 10.1 / 14.9
+against 5 / 10 / 15) and turnover fell from D247's **334 to 102** — T-a confirmed. **The
+machinery worked and there was nothing for it to capture.**
+
+### A7 — the hurdle that mattered, and the error it exposed
+
+**The motivating anatomy was look-ahead.** `z[t] = |hist_L[t]| / sd`, and `hist_L[t]` is computed
+from bar `t`'s **close**. A large `|hist_L|` with `hist_L < 0` means **the bar has already
+fallen**. Selecting bar `t` on `z[t]` and then measuring bar `t`'s return measures the fall that
+was conditioned on.
+
+| quintile | *look-ahead `z[t]`* | **lagged `z[t-1]`** SCREEN | **lagged** VALIDATE |
+|---|---:|---:|---:|
+| Q1 — weakest | *+355.29%* | **-10.10%** | **+13.86%** |
+| Q2 | *+22.63%* | -16.48% | +2.55% |
+| Q3 | *-22.57%* | -8.29% | +2.25% |
+| Q4 | *-46.99%* | -5.28% | -5.08% |
+| Q5 — strongest | *-68.55%* | **+10.51%** | **-3.52%** |
+| **monotone** | ***yes*** | **no** | **no** |
+
+**A 465-point spread collapses to nothing, and the two halves disagree on the sign.** The
+strongest quintile is the *worst* bucket for a short on SCREEN and mildly the best on VALIDATE.
+**There is no relationship.**
+
+**The rule never had this problem.** `hold_book` shifts by `lag = 1`, so it always used
+`z[t-1]`. **That is precisely why it shows no edge — the rule was measuring reality and the
+anatomy was not.** A cell at -1.5 Sharpe is what a no-edge book paying 1.6%/yr in costs at 5%
+exposure should score.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **T-a** | turnover below 120 at the 5% target | **CONFIRMED**, 102 |
+| **T-b** | at least one cell clears A1 and A4 on SCREEN | **FALSIFIED**, none |
+| **T-c** | no cell clears A5 and A6 on VALIDATE | **CONFIRMED** |
+| **T-d** | the monotonicity partly survives | **FALSIFIED.** It does not survive *lagging*, let alone the split |
+| **T-e** | most of the improvement is exposure, not selection | **MOOT** — nothing improved |
+
+### Four amendments, all forced during the build
+
+1. **The threshold updates once per session**, not per bar — 26x cheaper and closer to how a
+   threshold would actually be set.
+2. **The calibration population was wrong in the pre-registration.** D248 claimed exposure would
+   land on target "by construction"; the first build gave **0.9% against 5%**, because the
+   quantile was taken over all bars then intersected with a condition true on 27% of them. Fixed
+   by scoring non-signal bars at a sentinel.
+3. **The warm-up was one window short.** `z` needs 1,638 bars and the *threshold* reads `z` over
+   another 1,638, so the first valid threshold is at bar **3,276**.
+4. **A target can exceed the signal-on rate** in a given symbol-quarter. The rule now takes every
+   available signal-on bar and the exposure assertion is one-sided.
+
+**Each was caught by an assertion written before the run.** The 0.9%-exposure version in
+particular would have run cleanly, produced plausible Sharpes, and made the sqrt(f) decomposition
+meaningless.
+
+### The stop applies as written
+
+**CLOSED.** No fourth target, no `md_L` variant, no re-cut normalisation window, no 30-minute
+bars.
+
+### What survives
+
+**One thing, and it was never conditioned on a contemporaneous variable:** all equity drift
+accrues overnight — **+8.59%/yr against -0.36% intraday** — so an intraday-only book genuinely
+faces no drift headwind. **D238's structural objection to shorting remains answered.**
+
+What is closed is the *Impulse MACD* as the signal for it. Four constructions from that indicator
+have now failed, and D247 showed even its long side breaks at 15 minutes.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 3 cells | 3 |
+| + the D247 anatomy this design came from | 13 |
+| + D247's 8, D245's 2, D242's 3, D241's 5, D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 62 |
+| + the gradient anatomy | 83 |
+| + disclosed ETF prior | **45,886** |

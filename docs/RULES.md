@@ -108,3 +108,29 @@ allocation are separate decisions, recorded separately.
 
 **Scope:** binding. Introduced alongside [S1](BOOK.md#s1--the-recovery-rule).
 
+
+## R9. A conditioning variable in an anatomy must be lagged exactly as the rule would lag it
+
+A descriptive cut that buckets returns by some variable must use **the value the rule could have
+seen** — `z[t-1]`, not `z[t]` — whenever the variable is computed from the same bar whose return
+is being measured.
+
+**Because:** [D248](decisions/D248-the-strength-filtered-intraday-short.md) was pre-registered on
+a monotone quintile relationship spanning **465 percentage points**, from +396% at the weakest
+signal to -68% at the strongest. `z = |hist_L| / sd`, and `hist_L[t]` is computed from bar `t`'s
+close — so a large `|hist_L|` with `hist_L < 0` means **the bar had already fallen.** The anatomy
+selected bars on that and then measured the fall it had conditioned on.
+
+**Lagged by one bar the entire effect vanishes**: the spread collapses to under two points, the
+ordering scrambles, and the two halves of the sample disagree on the sign.
+
+**The runners were never wrong** — `hold_book` shifts by `lag = 1` and always did. The error
+lived in a throwaway analysis script, **upstream of every null, hurdle and stop the programme
+has**, and it drove a full pre-registration before anything downstream could catch it.
+
+**Corollary, and it is the expensive half:** an ad-hoc script gets none of the look-ahead
+protection the runners have. **A number that motivates a pre-registration deserves the same
+scrutiny as one that comes out of it.**
+
+**Scope:** binding on every descriptive cut, anatomy and conditional-return table. Introduced by
+D248.

@@ -1,0 +1,330 @@
+{
+ "a7_monotone": {
+  "SCREEN": false,
+  "VALIDATE": false
+ },
+ "a7_monotone_lookahead": {
+  "SCREEN": true,
+  "VALIDATE": true
+ },
+ "best_of_p95": {
+  "SCREEN": -1.4448234039465602,
+  "VALIDATE": -2.2835547459238197
+ },
+ "calibration": {
+  "T05": {
+   "share_capped": 0.0,
+   "target": 0.05
+  },
+  "T10": {
+   "share_capped": 1.7727827672135535e-05,
+   "target": 0.1
+  },
+  "T15": {
+   "share_capped": 0.0004184436305253123,
+   "target": 0.15
+  }
+ },
+ "cells": {
+  "T05": {
+   "FULL": {
+    "bars": 52450,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.533224597911719,
+    "cagr": -0.02400299253615018,
+    "excess_sharpe": -1.4928140119001716,
+    "exposure_short": 0.05285936480858963,
+    "max_drawdown": -0.18447976554899448,
+    "turnover_per_year": 102.41005583548957,
+    "years": 8.052594639645568
+   },
+   "SCREEN": {
+    "bars": 25734,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.8650239777585611,
+    "cagr": -0.02762335123123237,
+    "excess_sharpe": -1.5641169923701022,
+    "exposure_short": 0.05295404127790526,
+    "max_drawdown": -0.12267721151235644,
+    "turnover_per_year": 103.74679763058847,
+    "years": 3.9509145940255297
+   },
+   "VALIDATE": {
+    "bars": 26716,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.20533757359331162,
+    "cagr": -0.02050296268759825,
+    "excess_sharpe": -1.4258794154678063,
+    "exposure_short": 0.05276816836221412,
+    "max_drawdown": -0.08725985618463639,
+    "turnover_per_year": 101.12244865795272,
+    "years": 4.1016800456200375
+   }
+  },
+  "T10": {
+   "FULL": {
+    "bars": 52450,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.23441502894128163,
+    "cagr": -0.034491458552357815,
+    "excess_sharpe": -1.5306380629688963,
+    "exposure_short": 0.10085662201261017,
+    "max_drawdown": -0.2547040581243245,
+    "turnover_per_year": 169.35807535999194,
+    "years": 8.052594639645568
+   },
+   "SCREEN": {
+    "bars": 25734,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.48805247438554744,
+    "cagr": -0.03899929814457399,
+    "excess_sharpe": -1.5891958135631397,
+    "exposure_short": 0.10054620892013978,
+    "max_drawdown": -0.167642978979042,
+    "turnover_per_year": 170.95752905228798,
+    "years": 3.9509145940255297
+   },
+   "VALIDATE": {
+    "bars": 26716,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": 0.01446470352606255,
+    "cagr": -0.030129321067783467,
+    "excess_sharpe": -1.4772434929561233,
+    "exposure_short": 0.10115562525118005,
+    "max_drawdown": -0.1271857498667105,
+    "turnover_per_year": 167.81741278634527,
+    "years": 4.1016800456200375
+   }
+  },
+  "T15": {
+   "FULL": {
+    "bars": 52450,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.03158842771799897,
+    "cagr": -0.041435248397604034,
+    "excess_sharpe": -1.509227149536887,
+    "exposure_short": 0.14868663555934641,
+    "max_drawdown": -0.29685897154286467,
+    "turnover_per_year": 225.7570268856125,
+    "years": 8.052594639645568
+   },
+   "SCREEN": {
+    "bars": 25734,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": -0.07172992104287346,
+    "cagr": -0.042807987328586004,
+    "excess_sharpe": -1.438730742601968,
+    "exposure_short": 0.14817110001240763,
+    "max_drawdown": -0.18099679130627533,
+    "turnover_per_year": 228.53691292815859,
+    "years": 3.9509145940255297
+   },
+   "VALIDATE": {
+    "bars": 26716,
+    "borrow_paid_annualised": 0.0,
+    "breakeven_bps": 0.008023383203381584,
+    "cagr": -0.04011110579051286,
+    "excess_sharpe": -1.60224263375309,
+    "exposure_short": 0.14918322156641792,
+    "max_drawdown": -0.1627697229770556,
+    "turnover_per_year": 223.07932111308367,
+    "years": 4.1016800456200375
+   }
+  }
+ },
+ "charged_bps": 1.6,
+ "d247_reference": {
+  "borrow_paid_annualised": 0.0,
+  "cagr": -0.05549031328119297,
+  "clears_E": true,
+  "entries": 79877,
+  "excess_sharpe": -1.5499949776149742,
+  "exposure_long": 0.0,
+  "exposure_short": 0.2592289113677004,
+  "max_drawdown": -0.4066148860884218,
+  "min_entries_per_symbol": 1219,
+  "total_return": -0.3810099743509879,
+  "turnover_per_year": 333.52229136595463,
+  "vol": 0.03683194913218587
+ },
+ "elapsed_seconds": 582.5,
+ "half_bars": {
+  "FULL": 52450,
+  "SCREEN": 25734,
+  "VALIDATE": 26716
+ },
+ "n_sims": 1000,
+ "norm_window": 1638,
+ "nulls": {
+  "SCREEN": {
+   "T05": {
+    "clears": false,
+    "p95": -1.4644358599006386,
+    "percentile_of_actual": 90.60000000000001
+   },
+   "T10": {
+    "clears": false,
+    "p95": -1.5697972930317166,
+    "percentile_of_actual": 94.6
+   },
+   "T15": {
+    "clears": true,
+    "p95": -1.6080507439741043,
+    "percentile_of_actual": 99.3
+   }
+  },
+  "VALIDATE": {
+   "T05": {
+    "clears": true,
+    "p95": -2.2936760421272377,
+    "percentile_of_actual": 100.0
+   },
+   "T10": {
+    "clears": true,
+    "p95": -2.529154476756351,
+    "percentile_of_actual": 100.0
+   },
+   "T15": {
+    "clears": true,
+    "p95": -2.628268366168519,
+    "percentile_of_actual": 100.0
+   }
+  }
+ },
+ "ppy": 6513.428571428572,
+ "produced": "D248",
+ "quintiles": {
+  "SCREEN": [
+   {
+    "annualised": -0.10100992248488437,
+    "bars": 77027
+   },
+   {
+    "annualised": -0.16476882069943916,
+    "bars": 77026
+   },
+   {
+    "annualised": -0.08293928464540268,
+    "bars": 77026
+   },
+   {
+    "annualised": -0.05276756956560832,
+    "bars": 77026
+   },
+   {
+    "annualised": 0.1050656978732809,
+    "bars": 77027
+   }
+  ],
+  "VALIDATE": [
+   {
+    "annualised": 0.13864974225497914,
+    "bars": 78642
+   },
+   {
+    "annualised": 0.02549690146512176,
+    "bars": 78642
+   },
+   {
+    "annualised": 0.02252889106994332,
+    "bars": 78641
+   },
+   {
+    "annualised": -0.05076664532551244,
+    "bars": 78642
+   },
+   {
+    "annualised": -0.035160813448623505,
+    "bars": 78642
+   }
+  ]
+ },
+ "quintiles_lookahead": {
+  "SCREEN": [
+   {
+    "annualised": 3.5529405568460977,
+    "bars": 77027
+   },
+   {
+    "annualised": 0.22625246573374022,
+    "bars": 77026
+   },
+   {
+    "annualised": -0.2256669203343942,
+    "bars": 77026
+   },
+   {
+    "annualised": -0.4698880235992891,
+    "bars": 77026
+   },
+   {
+    "annualised": -0.6854896231361839,
+    "bars": 77027
+   }
+  ],
+  "VALIDATE": [
+   {
+    "annualised": 4.489820991515422,
+    "bars": 78642
+   },
+   {
+    "annualised": 0.5004997833747096,
+    "bars": 78642
+   },
+   {
+    "annualised": -0.24649677715774326,
+    "bars": 78641
+   },
+   {
+    "annualised": -0.444536296878301,
+    "bars": 78642
+   },
+   {
+    "annualised": -0.6828305051251978,
+    "bars": 78642
+   }
+  ]
+ },
+ "reading": "NO CELL SURVIVES. The strength-filtered intraday short is CLOSED per D248's stop: no fourth target, no md_L variant, no re-cut window, no 30-minute bars.",
+ "seed": 0,
+ "split": "2022-06-30",
+ "stage": "screen + time-split validation",
+ "targets": [
+  0.05,
+  0.1,
+  0.15
+ ],
+ "verdict": {
+  "T05": {
+   "clears_A1": false,
+   "clears_A2": false,
+   "clears_A3": false,
+   "clears_A4": false,
+   "clears_A5": false,
+   "clears_A6": false,
+   "screen_ok": false,
+   "validate_ok": false
+  },
+  "T10": {
+   "clears_A1": false,
+   "clears_A2": false,
+   "clears_A3": false,
+   "clears_A4": false,
+   "clears_A5": false,
+   "clears_A6": false,
+   "screen_ok": false,
+   "validate_ok": false
+  },
+  "T15": {
+   "clears_A1": false,
+   "clears_A2": true,
+   "clears_A3": true,
+   "clears_A4": false,
+   "clears_A5": false,
+   "clears_A6": false,
+   "screen_ok": false,
+   "validate_ok": false
+  }
+ },
+ "warmup_bars": 3276
+}
