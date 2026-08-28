@@ -10,6 +10,23 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D242 - the withheld-data verdict, 2026-08-28)
+- `scripts/run_uptrend_withheld.py` - A0, A2 and the combined book on the 60-ETF holdout.
+  **Written fresh: nothing.** Every component already existed and was tested; a holdout test
+  that needed new code would be a holdout test whose code had never been checked.
+- `tests/unit/test_uptrend_withheld.py` - 14 gates, including the two ways a holdout test can be
+  worthless: **the rule drifting** (every frozen constant asserted, and the mined numbers must
+  reproduce before the withheld fixture is touched) and **the fixtures being crossed** (the two
+  symbol sets asserted disjoint).
+- `UPTREND_WITHHELD_RESULTS.md`, `data/uptrend_withheld_summary.json`.
+
+### Changed (D242)
+- **`docs/BOOK.md` gains S2 - the uptrend onset.** Second entry, admitted on a pre-registered
+  out-of-sample test per R8, carrying its falsification conditions and five recorded weaknesses.
+- **D240's result section carries a written CORRECTION.** Its headline quoted A2 at +0.822 on the
+  strength of a stop that then failed its overlay null out of sample - 99.6th percentile mined,
+  71.7th on the holdout. A0 is the finding. Appended, not edited.
+
 ### Added (D241 - the combined book and capital allocator, 2026-08-28)
 - `scripts/run_combined_book.py` - the S1 + A2 book, and a **capital allocator** with a shared
   pool, per-arm reserves and first-come-first-served rationing. Written fresh: nothing in the

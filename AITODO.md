@@ -497,10 +497,35 @@ the first pre-registered out-of-sample test anything in this programme has passe
       Deployable return is **6.08%** against buy-and-hold's 8.42%, so it is a diversifier, not
       the return engine the income arithmetic needs.
 
-- [ ] **NEXT: the actual combined book.** Hurdle C is weighting-independent and passed, but the
-      pairing table is *arithmetic, not a measurement*. A concrete S1 + A2 book with a paired
-      block bootstrap against S1 alone has never been built. That, then a pre-registered
-      out-of-sample test on the holdout 60 — R8's only route to `BOOK.md`.
+- [x] **DONE — the combined book was built (D241) and tested on withheld data (D242).**
+
+      **The book now has two entries.** S2 — the uptrend onset — scored **+0.672** on 60 ETFs
+      sharing zero tickers with the training set, against **+0.610** mined. **It grew**, at the
+      **99.7th percentile** of its rotation null and the **99.9th on money**, with a delta over
+      buy-and-hold of **+0.442** against a floor of +0.147.
+
+      **ρ with S1 held at +0.175** (mined +0.159), so the diversification is structural and
+      travelled. Only 8.9% of S2's positions are also S1's — less than half what chance gives.
+
+      **The combined book beat buy-and-hold on money AND drawdown out of sample** — 10.07%
+      deployable against 8.34%, at −9.52% against −37.92%.
+
+      **And the −8% stop was fitted.** It failed its overlay null out of sample (99.6th → 71.7th),
+      exactly as D242's R3 predicted. It is a risk control, not alpha, and it is **not** part of
+      S2. D240's headline is corrected in writing.
+
+- [ ] **THE ONE THING THAT MOVES THE NEEDLE NOW: extend the fixture back to ~2005.**
+      Every remaining weakness is the same weakness. The combined book's advantage over S1 has
+      `p05 = −0.104`; hurdle E fails at **2 entries per symbol**; and the holdout correlates
+      **+0.978** with training, so what has been shown is instrument-independence, never
+      time-independence.
+
+      **Six years of data against the ~8.8 needed.** Most of these ETFs go back to 2003–2005 and
+      Alpha Vantage has it. Tripling the span would satisfy the data requirement outright,
+      include **2008**, and fix hurdle E directly — since entries per symbol scale with span.
+
+      **It is a fetch, not a research problem.** No further analysis of this fixture can
+      substitute for it.
 
 - [ ] **OPEN METHODOLOGICAL ITEM — three studies running, the result has lived in the
       complement of what was registered.** S1 came out of D234's failed cells; D238's exclusion

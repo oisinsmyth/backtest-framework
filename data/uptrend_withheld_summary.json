@@ -1,0 +1,176 @@
+{
+ "arm_closed": false,
+ "buy_and_hold": {
+  "breakeven_borrow_annual": null,
+  "cagr": 0.08344914434165991,
+  "clears_E": false,
+  "entries": 60,
+  "excess_sharpe": 0.23011488611059905,
+  "exposure_gross": 1.0,
+  "exposure_long": 1.0,
+  "exposure_short": 0.0,
+  "max_drawdown": -0.37920640531278815,
+  "min_entries_per_symbol": 1,
+  "sharpe_rf0": 0.45062586647463926,
+  "total_return": 0.6190698028061559,
+  "total_return_price": 0.3231797181382136,
+  "turnover_units": 60.0,
+  "vol": 0.17786285784287068
+ },
+ "cells": {
+  "A0": {
+   "breakeven_borrow_annual": null,
+   "cagr": 0.02376979745610599,
+   "clears_E": false,
+   "entries": 217,
+   "excess_sharpe": 0.6718440613648677,
+   "exposure_gross": 0.1390869086908691,
+   "exposure_long": 0.1390869086908691,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.04397128674050388,
+   "min_entries_per_symbol": 2,
+   "sharpe_rf0": 0.874035131808026,
+   "total_return": 0.15168930809167736,
+   "total_return_price": 0.11627630612592227,
+   "turnover_units": 432.0,
+   "vol": 0.026877288243585488
+  },
+  "A2": {
+   "breakeven_borrow_annual": null,
+   "cagr": 0.02091215207162659,
+   "clears_E": false,
+   "entries": 220,
+   "excess_sharpe": 0.6990501207565686,
+   "exposure_gross": 0.12460946094609461,
+   "exposure_long": 0.12460946094609461,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.027110304246241168,
+   "min_entries_per_symbol": 2,
+   "sharpe_rf0": 0.9142424322285255,
+   "total_return": 0.13249748013593798,
+   "total_return_price": 0.10038907846969182,
+   "turnover_units": 440.0,
+   "vol": 0.02263786243693254
+  },
+  "C0": {
+   "breakeven_borrow_annual": null,
+   "cagr": 0.07133406187175086,
+   "clears_E": false,
+   "entries": 1321,
+   "excess_sharpe": 0.8734724168164094,
+   "exposure_gross": 0.31103410341034105,
+   "exposure_long": 0.31103410341034105,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.09522366321999731,
+   "min_entries_per_symbol": 12,
+   "sharpe_rf0": 1.060281085853148,
+   "total_return": 0.5132327336522688,
+   "total_return_price": 0.4196286738153075,
+   "turnover_units": 2641.0,
+   "vol": 0.06498716198560973
+  },
+  "S1": {
+   "breakeven_borrow_annual": null,
+   "cagr": 0.05490240507457202,
+   "clears_E": false,
+   "entries": 1190,
+   "excess_sharpe": 0.7791143284243726,
+   "exposure_gross": 0.1967986798679868,
+   "exposure_long": 0.1967986798679868,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.09042134370467403,
+   "min_entries_per_symbol": 9,
+   "sharpe_rf0": 0.909441145957761,
+   "total_return": 0.3789548020990744,
+   "total_return_price": 0.3298513502815443,
+   "turnover_units": 2379.0,
+   "vol": 0.058770439239783305
+  }
+ },
+ "combined": {
+  "clears_H5": true,
+  "clears_H6": false,
+  "delta_vs_S1": 0.09435808839203685,
+  "p05": -0.10372240311731186,
+  "p95": 0.2763787283002242
+ },
+ "deployable_return": {
+  "A0": 0.05892825831215848,
+  "A2": 0.056572243372749687,
+  "C0": 0.1006780428301485,
+  "S1": 0.0886630504613873
+ },
+ "elapsed_seconds": 22.7,
+ "first_live_date": "2018-12-21",
+ "frozen": {
+  "AGE_CAP": 63,
+  "ATR_WINDOW": 21,
+  "FIXED_STOP": 0.08,
+  "FLOOR_ATR": 2.0,
+  "K": 3,
+  "STOP_ATR": 1.0,
+  "TARGET_R": 2.0,
+  "WINDOW": 252
+ },
+ "h3_floor": 0.14675,
+ "last_date": "2024-12-30",
+ "live_bars": 1515,
+ "mined_reproduction": {
+  "A0": 0.6097424904780624,
+  "A2": 0.8219336761089906,
+  "S1": 0.7463196376488916
+ },
+ "n_sims": 1000,
+ "n_symbols": 60,
+ "nulls": {
+  "A0": {
+   "clears_H2": true,
+   "money_percentile_of_actual": 99.9,
+   "p50": 0.1677873395106925,
+   "p95": 0.4870604895830486,
+   "percentile_of_actual": 99.7,
+   "vol_ratio": 1.0231634775233178
+  },
+  "A2": {
+   "clears_H2": true,
+   "money_percentile_of_actual": 99.9,
+   "p50": 0.16882749131082878,
+   "p95": 0.49881218602347593,
+   "percentile_of_actual": 99.6,
+   "vol_ratio": 0.9648546325366901
+  }
+ },
+ "overlay_null": {
+  "clears_H4": false,
+  "n_cut": 57,
+  "n_trades": 241,
+  "p50": 0.6668407465365347,
+  "p95": 0.7648552370543281,
+  "percentile_of_actual": 71.7
+ },
+ "produced": "D242",
+ "reading": "THE STRONGEST RESULT THE PROGRAMME HAS PRODUCED. Still one era and a +0.978-correlated universe -- the next step is more forward time, not capital.",
+ "rho_S1_A2": 0.17488682215074208,
+ "seed": 0,
+ "stage": "VERDICT -- withheld 60-ETF fixture",
+ "verdict": {
+  "A0": {
+   "clears_H1": true,
+   "clears_H2": true,
+   "clears_H3": true,
+   "clears_all": true,
+   "delta_vs_bh": 0.4417291752542687,
+   "mined": 0.61,
+   "shrinkage": 0.10138370715552081
+  },
+  "A2": {
+   "clears_H1": true,
+   "clears_H2": true,
+   "clears_H3": true,
+   "clears_all": true,
+   "delta_vs_bh": 0.46893523464596953,
+   "mined": 0.822,
+   "shrinkage": -0.14957406233994086
+  }
+ }
+}

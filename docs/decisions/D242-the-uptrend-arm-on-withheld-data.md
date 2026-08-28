@@ -181,3 +181,141 @@ test that needed new code would be a holdout test whose code had never been chec
   +0.746 for S1, +0.822 for A2. A holdout runner that cannot reproduce the training result is
   measuring something else.
 - **Hurdle E is computed, not assumed**, and reported whichever way it lands.
+
+---
+
+## STAGE 2 — THE VERDICT
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_uptrend_withheld.py` · Page:
+[`UPTREND_WITHHELD_RESULTS.md`](../../UPTREND_WITHHELD_RESULTS.md)
+
+*The runner reproduced the mined numbers before touching the holdout — A0 +0.610, A2 +0.822,
+S1 +0.746 — so it is measuring the same rules.*
+
+### The one-sentence version
+
+**The entry rule generalised and grew; the stop did not.** A0 scored **+0.672** on 60 disjoint
+tickers against **+0.610** on the training set, at the **99.7th percentile** of its rotation
+null — while the −8% stop's edge collapsed from the 99.6th percentile to the **71.7th**, exactly
+as R3 predicted.
+
+### The books on withheld data
+
+| | exposure | excess Sharpe | *mined* | change | CAGR | deployable | max DD | Calmar |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **A0** | 13.9% | **+0.672** | *+0.610* | **+10.1%** | 2.38% | 5.89% | −4.40% | 0.541 |
+| **A2** | 12.5% | +0.699 | *+0.822* | −15.0% | 2.09% | 5.66% | **−2.71%** | 0.771 |
+| **C0** | 31.1% | **+0.873** | — | — | 7.13% | **10.07%** | −9.52% | 0.749 |
+| *S1* | *19.7%* | *+0.779* | — | — | *5.49%* | *8.87%* | *−9.04%* | *0.607* |
+| *B&H* | *100%* | *+0.230* | — | — | *8.34%* | *8.34%* | *−37.92%* | *0.220* |
+
+### H1–H3 — both entry rules clear everything
+
+| | Δ vs B&H | floor | rotation null | percentile | money pct | H1 | H2 | H3 |
+|---|---:|---:|---:|---:|---:|:--:|:--:|:--:|
+| **A0** | **+0.442** | +0.147 | p95 +0.487 | **99.7th** | **99.9th** | ✓ | ✓ | ✓ |
+| **A2** | **+0.469** | +0.147 | p95 +0.499 | 99.6th | 99.9th | ✓ | ✓ | ✓ |
+
+**The delta over buy-and-hold is three times the anti-triviality floor.** The money leg of the
+null — which volatility cannot inflate — sits at the **99.9th percentile** for both.
+
+**A0 did not shrink. It grew, +0.610 → +0.672.** Out-of-sample results normally give back
+30–70%. That is now the second rule in this programme to grow on an instrument holdout, after
+S1 did the same thing in D237.
+
+### H4 — the stop was fitted, and this was registered in advance
+
+| trades cut | actual | null p50 | null p95 | **percentile** | H4 |
+|---:|---:|---:|---:|---:|:--:|
+| 57 of 241 | +0.699 | +0.667 | +0.765 | **71.7th** | ✗ |
+
+**99.6th on mined data, 71.7th here.** The stop's *timing* carries no information beyond cutting
+the same number of trades short at random points.
+
+**This is exactly what R3 predicted and why H4 was registered separately from H1–H3.** The stop
+was the best of four overlays at the 99.6th percentile with no multiplicity correction, and a
+best-of-four with no correction is precisely what regresses.
+
+**What the stop still does:** it lowers max drawdown from −4.40% to **−2.71%** and lifts Calmar
+from 0.541 to 0.771. That is a *mechanical* benefit of holding less, not an informational one —
+the same distinction D236 drew. **It is a risk control, not alpha, and it must not be described
+as alpha.**
+
+### H5 / H6 — the combined book
+
+| | |
+|---|---:|
+| S1 alone | +0.779 |
+| **C0 combined** | **+0.873** |
+| **delta** | **+0.094** |
+| bootstrap p05 | **−0.104** |
+| **H5** point estimate | ✓ |
+| **H6** interval | ✗ |
+
+**The in-sample split repeated exactly**, as R5 predicted: the combination beats S1 on the point
+estimate and the interval still contains zero.
+
+**But C0 beat buy-and-hold on money *and* drawdown out of sample** — **10.07% against 8.34%**,
+at **−9.52% against −37.92%**. D241 found that in-sample; it replicated.
+
+**ρ between S1 and A2 held at +0.1749**, against +0.1586 on the mined fixture. **The
+diversification is structural and it travels** — which R4 predicted from construction rather
+than from the data.
+
+### Scoring — four of five, and the miss was pessimistic
+
+| | prediction | outcome |
+|---|---|---|
+| **R1** | A0's entry replicates | **CONFIRMED**, and it grew |
+| **R2** | A2 shrinks to +0.35 to +0.60 | **FALSIFIED** — it landed at +0.699, *better* than I predicted |
+| **R3** | H4 fails; the stop does not replicate | **CONFIRMED**, 99.6th → 71.7th |
+| **R4** | ρ stays below 0.30 | **CONFIRMED**, +0.1749 |
+| **R5** | H5 passes, H6 fails | **CONFIRMED** |
+
+### The reading, as declared in advance
+
+Both entry rules cleared H1–H3, so the pre-committed cell fires:
+
+> **THE STRONGEST RESULT THE PROGRAMME HAS PRODUCED. Still one era and a +0.978-correlated
+> universe — the next step is more forward time, not capital.**
+
+**With the precision H4 forces, and which the reading table could not express:** the *entry*
+generalised; the *stop* did not. **A0 is the finding.**
+
+### What is wrong with it — at full strength
+
+1. **Hurdle E fails worse than anything in the book: 2 entries per symbol**, from 217 entries
+   across 60 ETFs. S1's 9 was already called its weakest point.
+2. **This is an instrument holdout, not a time holdout.** ρ between the two universes is
+   **+0.978**. It shows the rule is not fitted to 57 particular tickers. It shows nothing about
+   independence from the 2018–2024 market, and D239 established that S1's edge is partly a bet
+   on that market's character.
+3. **The combined book's advantage over S1 still fails its interval**, on both fixtures.
+4. **A0's own money is modest** — 5.89% deployable against buy-and-hold's 8.34%. It earns its
+   place as a *diversifier*, not as a return engine.
+5. **D240's headline was the wrong number to quote.** It reported A2 at +0.822 on the strength of
+   a stop that has now failed its null out of sample.
+
+### What this changes
+
+**A0 is admitted to `BOOK.md` as S2**, per the pass condition committed above — carrying its own
+falsification conditions and this full statement of weaknesses.
+
+**A2 is NOT admitted.** Its stop failed H4 on withheld data. It is recorded as a variant that
+reduces drawdown mechanically and adds no demonstrated timing information.
+
+**D240's result section is corrected in writing** rather than edited, per the append-only rule.
+
+**Nothing is promoted to capital.** R8's corollary binds and book sizing is explicitly deferred.
+
+**The 2025–2026 forward window remains unspent for these rules**, and extending the fixture back
+to ~2005 remains the only action that can close the interval.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 3 books on withheld data | 3 |
+| + D241's 5, D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 39 |
+| + the gradient anatomy | 60 |
+| + disclosed ETF prior | **45,863** |

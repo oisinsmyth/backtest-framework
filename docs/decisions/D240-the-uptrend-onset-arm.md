@@ -445,3 +445,25 @@ no out-of-sample evidence whatsoever.
 | the gradient anatomy: 8 states, 3 books, 10 age buckets | 21 |
 | + D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 47 |
 | + disclosed ETF prior | **45,850** |
+
+---
+
+## CORRECTION, 2026-08-28 — the headline above quoted the wrong number
+
+*Appended rather than edited, per the append-only rule.*
+
+**This record's headline was A2 at +0.822, on the strength of the −8% stop clearing R7's
+matched-exit-count overlay null at the 99.6th percentile.**
+[D242](D242-the-uptrend-arm-on-withheld-data.md) tested that on withheld data and **the stop's
+edge collapsed to the 71.7th percentile.**
+
+The caveat recorded above — *"A2's pass is not multiplicity-corrected; four overlay cells were
+tested and no best-of null was registered"* — is what happened. A best-of-four at the 99.6th with
+no correction regressed exactly as such things do, and D242's R3 predicted it in advance.
+
+**A0 is the finding, not A2.** A0 replicated and *grew*, +0.610 → +0.672 at the 99.7th percentile
+of its rotation null, and it is what entered `BOOK.md` as **S2**.
+
+**What the stop still does:** it lowers max drawdown from −4.40% to −2.71% out of sample. That is
+a *mechanical* benefit of holding less, exactly as D236 characterised exposure controls — **it is
+a risk control, not alpha.** Nothing above this line is retracted; the reading of it is corrected.

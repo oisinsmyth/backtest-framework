@@ -179,6 +179,91 @@ no earlier study could have stated, and it is recorded as weakness 7 above.
 
 ---
 
+## S2 — The Uptrend Onset
+
+**Admitted:** 2026-08-28 · **Status:** live in the book, **not promoted to capital**
+**Evidence:** [D240](decisions/D240-the-uptrend-onset-arm.md) (discovery) ·
+[D242](decisions/D242-the-uptrend-arm-on-withheld-data.md) (the out-of-sample test)
+
+### What it does, in one sentence
+
+**Buy an ETF on the first day it enters a confirmed structural uptrend — rising swing lows *and*
+rising swing highs over the past year — and hold it for one quarter or until the trend breaks.**
+
+### Specification
+
+```
+For each instrument, on DAILY bars, in LOG space:
+
+    lows  = confirmed swing lows  in the trailing 252 bars   (k = 3)
+    highs = confirmed swing highs in the trailing 252 bars
+
+    g_lo  = OLS slope of log(price) on bar index, over lows
+    g_hi  = OLS slope of log(price) on bar index, over highs
+
+    UPTREND := g_lo > 0 AND g_hi > 0
+
+    ENTRY   the FIRST bar of an UPTREND episode  (onset only; no re-entry within one)
+    EXIT    the earlier of  age >= 63 bars  |  the state ends
+```
+
+| | |
+|---|---|
+| **book** | long-flat, equal-weighted across the universe |
+| **fill** | `lag = 1` |
+| **warm-up** | 1,000 bars, shared with S1 so both are scored on identical bars |
+| **costs / returns** | unchanged from S1 — per-symbol IBKR schedule, dividend-adjusted, `rf` on the exposed fraction |
+| **exposure** | 13.9% |
+
+**Every constant is either fixed by prior decision or canonical.** `k ∈ {2,3}` was fixed by
+D173; 252 bars is one year; 63 bars is one quarter. **The regression answers D173's standing
+objection to trend lines rather than evading it** — OLS over *all* confirmed pivots in the window
+chooses no points, refits every bar, and includes the disagreeing third, which are precisely the
+free parameters D173 named.
+
+### Evidence
+
+| | mined 57 | **holdout 60** |
+|---|---:|---:|
+| **excess Sharpe** | +0.610 | **+0.672** |
+| buy and hold | +0.235 | +0.230 |
+| **delta** | +0.375 | **+0.442** |
+| rotation null percentile | 97.3rd | **99.7th** |
+| *money* leg of that null | 99.2nd | **99.9th** |
+| max drawdown | −5.78% | **−4.40%** |
+| exposure | 14.2% | 13.9% |
+
+**The effect grew out of sample**, +0.610 → +0.672, on 60 ETFs sharing zero tickers with the
+training set. That is the second rule here to do so, after S1.
+
+**ρ with S1 is +0.175 on the holdout, against +0.159 mined.** The two rules avoid each other by
+construction — an ETF at or below its volatility channel is rarely in a confirmed year-long
+uptrend — and only **8.9%** of S2's positions are also S1's, *less than half* what chance would
+give. **The diversification is structural and it travelled.**
+
+### What is wrong with it — at full strength
+
+1. **Hurdle E fails worse than anything else in this book: 2 entries per symbol** against 30,
+   from 217 entries across 60 ETFs.
+2. **Instrument holdout, not time holdout.** The two universes correlate **+0.978**.
+3. **The design was fitted on the mined fixture** — the 63-bar cap came from a measured decay
+   table, the long-only decision from measured downtrend returns.
+4. **Modest money: 5.89% deployable against buy-and-hold's 8.34%.** It earns its place as a
+   diversifier, not a return engine.
+5. **The −8% stop is NOT part of this entry.** It was tested and **failed** its matched-exit-count
+   overlay null out of sample (99.6th percentile mined → **71.7th** on the holdout). It lowers
+   drawdown to −2.71% *mechanically*, by holding less, and adds no demonstrated timing
+   information. **A variant with the stop is a separate entry and is not in this book.**
+
+### Falsification — what removes S2
+
+- **A negative delta over buy-and-hold across ≥2 years of forward data.**
+- **Failure of a matched-count rotation null** on any future fixture.
+- **A structural change to the rule.** S2 is this specification exactly. Adding the stop, moving
+  the age cap, or changing `k` makes a new entry tested from scratch.
+
+---
+
 ## Standing conditions on every entry
 
 1. **Admission requires a pre-registered out-of-sample test** with hurdles committed before the
