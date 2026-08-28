@@ -261,6 +261,61 @@ generalises is now weak.**
 
 ---
 
+### CORRECTION to the amendment above, 2026-08-28 — the crypto result is INCONCLUSIVE, not a failure
+
+*Appended rather than edited. The table above is left as written and this replaces its third row.*
+
+**The line "neither excuses the null — a units mismatch would make a rule weaker, not worse than
+random" is WRONG.** It addressed the calendar confound and missed a second one that does explain
+a below-null result without saying anything about the signal.
+
+**Crypto has the opposite conditional-return structure to equities.** Forward return by trailing
+63-bar return quintile, Q1 being the most beaten down:
+
+| quintile | **ETFs, 12.8y** | **crypto, 5.2y** |
+|---|---:|---:|
+| **Q1 — most beaten down** | **+16.83%** | **−41.65%** |
+| Q2 | +7.48% | −8.75% |
+| Q3 | +5.16% | −1.05% |
+| Q4 | +5.02% | +71.18% |
+| Q5 | +5.31% | −11.43% |
+
+**In equities, buying weakness is the best thing available. In crypto it is the worst, by 58
+points.** 19 of the 35 coins had negative CAGR, median −9.1%.
+
+S1's whole mechanism is buying weakness that has turned, so **it concentrates exposure in exactly
+the bars crypto punishes.** A rotation null spreads the same exposure across all five quintiles.
+**S1 therefore lands below its null by construction given the drift structure — no timing failure
+is required to produce the 29.1st percentile.**
+
+This is the mirror of [D238](decisions/D238-the-short-side-mirror.md), which established that a
+*short* fails on positively-drifting ETFs. The symmetric statement — a *dip-buyer* fails on
+negatively-drifting assets — is the same structural fact from the other side, and it should have
+been seen before the crypto result was weighed.
+
+**Corrected reading of row three: INCONCLUSIVE.** The test measured whether crypto mean-reverts,
+not whether S1's signal works. What it legitimately bounds is narrower: **S1 requires an asset
+class that mean-reverts.**
+
+**None of this rescues S1, and the verdict is unchanged.** The case against it never rested on
+crypto:
+
+```
+out-of-training ETFs -- 6.8 years, same asset class, same rule, same units
+  S1                   +0.106
+  buy and hold         +0.243        delta  -0.137
+  what S1 adds to S2   -0.155
+```
+
+**One fact does cut in S1's favour and is recorded for completeness.** The Q1 premium of
+**+16.83%** spans the full 12.8 ETF years *including 2013–2018*, the era S1 lost money in. **The
+effect S1 targets was present when S1 failed to capture it** — which points at this particular
+implementation rather than at the thesis. That is not a licence to re-cut the rule; doing so
+would be the fourth time a result in this programme lived in the complement of what was
+registered, which is an open methodological item in `AITODO.md`.
+
+---
+
 ## S2 — The Uptrend Onset
 
 **Admitted:** 2026-08-28 · **Status:** live in the book, **not promoted to capital**
@@ -390,6 +445,18 @@ and costs did not hide anything** — the breakeven is 6.3× the fee charged.
 equity ETFs**, and has not been shown to work outside them. The same declared confounds apply:
 252 bars is 0.69 years on a 365-day calendar, so this was the same estimator rather than the same
 economic rule.
+
+**Note added 2026-08-28, and it cuts against S2 rather than for it.** The correction to S1's
+crypto amendment above shows crypto's conditional-return structure is *hostile* to a dip-buyer —
+Q1 at −41.65% — which excuses S1's result there. **It is not hostile to a continuation rule in
+the same way**: the second-highest trailing-return quintile returned **+71.18%**. So the
+structure was not stacked against S2, and S2 still failed its rotation null at the 73.2nd
+percentile.
+
+**That makes S2's crypto non-result somewhat more informative than S1's**, though not decisive —
+the crypto quintile profile is **non-monotone** (Q5 at −11.43%), so "crypto rewards trend" is not
+a clean claim either. The honest reading stays: **no demonstrated skill outside US equity ETFs**,
+with a slightly firmer basis than for S1.
 
 ### Falsification — what removes S2
 
