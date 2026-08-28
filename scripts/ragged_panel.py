@@ -73,7 +73,48 @@ class RaggedPanel:
         return self.live.sum(axis=0)
 
 
-def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float) -> tuple[RaggedPanel, dict]:
+def assert_gates_passed(fixture: Path) -> dict:
+    """Refuse a fixture whose meta does not assert its own gates passed.
+
+    D256 was run against an intermediate build that had printed `GATES FAILED`
+    and been left on disk. The file decompressed to EOF cleanly -- which rules out
+    truncation and NOTHING ELSE -- and its meta carried the failing gate report in
+    a key the caller read straight past. It contained a x300 and a x66.7 fabricated
+    single-bar return, on the short side, where an up-spike is the loss.
+
+    THE LOADER IS THE CHOKEPOINT EVERY STUDY GOES THROUGH, so the check belongs
+    here rather than in each runner's preamble."""
+    meta_path = fixture.with_suffix("").with_suffix(".meta.json")
+    if not meta_path.exists():
+        raise FileNotFoundError(f"{fixture.name}: no meta.json beside it -- cannot verify gates")
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    gates = meta.get("gates")
+    if not isinstance(gates, dict):
+        raise ValueError(f"{fixture.name}: meta has no `gates` block; refusing to load")
+    # ONLY a block carrying an explicit `failures` list is a gate. The same object
+    # also holds REPORTS -- `largest_25_moves`, `unconfirmed_splits`,
+    # `moves_across_a_trading_halt`, `excluded_for_data_quality` -- which describe
+    # what the build found and rejected. A first version of this check read those
+    # as failures and refused a clean fixture, which is the mirror of the error it
+    # exists to prevent: a check that cannot pass is as useless as one that cannot
+    # fail.
+    gate_names = [k for k, v in gates.items() if isinstance(v, dict) and "failures" in v]
+    if not gate_names:
+        raise ValueError(f"{fixture.name}: meta `gates` block declares no gate with a "
+                         "`failures` list; refusing to load")
+    failed = {k: len(gates[k]["failures"]) for k in gate_names
+              if isinstance(gates[k]["failures"], list) and gates[k]["failures"]}
+    if failed:
+        raise ValueError(
+            f"{fixture.name}: GATES FAILED {failed} -- this fixture is not fit to load. "
+            "Rebuild it; do not work around this check.")
+    return meta
+
+
+def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
+                require_gates: bool = True) -> tuple[RaggedPanel, dict]:
+    if require_gates:
+        assert_gates_passed(fixture)
     rows: dict[str, list] = {}
     with gzip.open(fixture, "rt") as f:
         for r in csv.DictReader(f):

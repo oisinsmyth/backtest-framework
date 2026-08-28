@@ -252,3 +252,68 @@ cohort was never touched.
 **What a future study would need is not a new universe but a different construction** — a
 concentrated book, which collides with hurdle E, or a factor-neutral one, which D251 closed on
 ETFs and which this fixture's breadth could now support.
+
+---
+
+## CORRECTION, same day — the run above was on a fixture that had FAILED ITS OWN GATES
+
+**The 1,580-symbol / 4,150,614-row fixture the numbers above were computed on was an intermediate
+build that printed `GATES FAILED. The fixture on disk is NOT clean -- fix before use.`** It was
+left on disk, and I read it.
+
+**My error is specific and worth naming: I verified the file was READABLE, not that it was VALID.**
+I checked it decompressed to EOF without error — which rules out truncation and nothing else — and
+I printed selected keys from its `meta.json` while reading straight past the `gates` key sitting in
+the same object. **A file that parses is not a file that passed.**
+
+**What the discarded build carried**, per [D252](D252-the-dead-inclusive-us-single-name-universe.md):
+
+- **7 symbols with unexplained persistent discontinuities**, since excluded — **ORIG at x300 in one
+  session** (Ocean Rig's post-restructuring reverse split, for which the provider records no
+  coefficient at all), EAR at x27, GOTU, SEVCF, and ADEA/NAAS/RYM split residuals.
+- **7 fabricated in-span single-bar returns** from provider split coefficients the price series
+  contradicts, since rejected — **x66.7** (CHMT), x50 (KRRO), x16 (DNTH), x5, x3.125, x2, x0.4.
+
+**About 14 of 1,580 names, 0.9%.** On headcount that looks harmless. **It is not**, and the reason
+is exactly the mechanism this study measures: single bars of x300 and x66.7 **on the short side,
+where an up-spike is the loss**, in a book holding 76.6% of live names at once.
+
+### Re-run on the settled fixture — 1,573 symbols, 4,137,239 rows, three byte-identical builds
+
+| | contaminated build | **settled fixture** |
+|---|---|---|
+| S1_short | 88.5th / 11.5th | **100.0th / 0.0th** |
+| S2_short | 90.2nd / 87.2nd | **100.0th / 79.0th** |
+| C_short | 83.5th / 17.0th | **100.0th / 0.0th** |
+
+**Every verdict is unchanged — no cell clears H, which requires ≥95th on BOTH legs — but the
+numbers moved enormously and the reading is now sharper, not merely cleaner.**
+
+**The two legs disagree maximally, and that is the finding.** S1_short beats **all 400** null draws
+on Sharpe (−0.725 against a null p95 of −0.827) and is beaten by **all 400** on money (−0.400
+against a null p95 of −0.292).
+
+> **The arm reliably selects bars that RISE — the worst possible selection for a short — and does
+> so with low volatility.** Anti-predictive on money at the **0.0 percentile**, where the
+> contaminated build read a merely-mediocre 11.5th. This is the ETF result reproduced exactly:
+> S1's short mirror holds bars that beat their own drift on 42 of 46 equity ETFs.
+
+**Part B is materially unaffected.** Reachability moves by hundredths (S1 9.0% → 8.9%), all nine
+take-profit cells remain negative against base (−0.005 to −0.060), and concurrency is 76.6% against
+76.5%. **The take-profit conclusion and the diversification finding both stand as written.**
+
+**Prediction scoring is unchanged.** Z-b is falsified more decisively, not less.
+
+### The methodological point, which is worth more than the numbers
+
+**A derived fixture needs a machine-checkable pass/fail that a consumer must read, not a `gates`
+key a consumer may read.** D252's build knew it had failed and said so on stdout; nothing in the
+artifact stopped a downstream runner from loading it anyway. **`ragged_panel.load_ragged` should
+refuse a fixture whose meta does not assert its gates passed** — that is a one-line change and it
+is the correct place for the check, because the loader is the chokepoint every study goes through.
+
+**Credit where it is due: the rebuild loop that exposed this was a real defect of its own** —
+`--actions` wrote the sidecar, `--build` pruned it and wrote it back, so a second build saw the
+excluded symbols' splits already gone and reached a different verdict. Non-idempotency, now pinned
+by `test_build_never_reads_the_sidecar_it_writes`. **Noticing the symbol count wobble is what
+surfaced both problems.**
