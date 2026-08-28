@@ -10,6 +10,29 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D243 - the book on extended history, 2026-08-28)
+- `scripts/fetch_extended_history.py` - rebuilds the daily fixtures back to each universe's own
+  inception. The price cache already held full history; what was missing was **corporate actions**,
+  whose sidecars stopped at 2015-01-16. Fetches SPLITS and DIVIDENDS over the full span for all
+  117 symbols (234 calls) - 5,716 dividends and 30 splits for the 57. Building without them would
+  have left every pre-2015 split unadjusted, which D226 showed produces confident nonsense.
+- `data/fixtures/universe_daily_extended_raw.csv.gz` - 57 symbols, 4,222 bars, 2009-11-11 to
+  2026-08-26. **12.8 live years against 6.0.** Capped by GDXJ's inception.
+- `data/fixtures/universe_holdout_extended_raw.csv.gz` - 60 symbols, 2,963 bars, 7.8 live years.
+  Capped by HACK.
+- `scripts/run_book_extended.py` - the frozen book on the extended fixture, with the live window
+  split into NEW / TRAIN / FORWARD. **Written fresh: the sub-period split, and nothing else.**
+- `tests/unit/test_book_extended.py` - 16 gates, including that the split is applied to scored
+  RETURNS rather than to the signal, so the pre-2018 window carries the warm-up it would have had.
+- `BOOK_EXTENDED_RESULTS.md`, `data/book_extended_summary.json`, `data/extended_history_summary.json`.
+
+### Changed (D243)
+- **`docs/BOOK.md` carries two amendments, both committed in advance by D243's stop.** S1 failed
+  every hurdle on the never-seen 2013-2018 window and its headline Sharpe is restated from +0.746
+  (6.0y) to **+0.478** (12.8y). S2 cleared every hurdle there and is now the only rule in this
+  programme to have passed both an instrument holdout and a time holdout.
+- **The old fixtures are untouched** (D24), so every previously published number stays reproducible.
+
 ### Added (D242 - the withheld-data verdict, 2026-08-28)
 - `scripts/run_uptrend_withheld.py` - A0, A2 and the combined book on the 60-ETF holdout.
   **Written fresh: nothing.** Every component already existed and was tested; a holdout test

@@ -179,6 +179,46 @@ no earlier study could have stated, and it is recorded as weakness 7 above.
 
 ---
 
+### AMENDMENT, 2026-08-28 — S1 failed the first time-independent test
+
+*Committed in advance by [D243](decisions/D243-the-book-on-extended-history.md)'s stop. S1 is
+amended, not dropped and not re-cut.*
+
+**The fixture was extended from 6.0 to 12.8 live years, back to 2013-11.** The stretch
+**2013-11 → 2018-12 had never been seen** — and every previous holdout was an *instrument*
+holdout at ρ = +0.978 between universes, so **this is the first data that was new in time.**
+
+| S1 on the never-seen window | |
+|---|---:|
+| excess Sharpe | **−0.123** |
+| buy-and-hold over the same bars | −0.149 |
+| delta | +0.025 |
+| **floor it had to clear** | **+0.128** |
+| rotation null percentile | **80.6th** |
+
+**S1's excess Sharpe was negative, it beat buy-and-hold by a fifth of its floor, and it failed
+its rotation null for the first time ever** — having sat at the 100th percentile on both prior
+fixtures.
+
+**The headline number is restated.** `+0.746` was measured over 6.0 years; over 12.8 it is
+**+0.478**, with a 90% interval of **−0.036 to +0.917** that still contains zero. The old number
+was never wrong — it was measured on a window that suited the rule.
+
+**This is weakness 7 realised, not a new one.** D239 predicted it: *"S1's edge is in part a bet
+that reversals dominate continuations, and in a continuation-dominated regime it should weaken."*
+2013–2018 was that regime. **The prediction was registered before the data existed.**
+
+**Why S1 stays in the book.** It cleared a pre-registered instrument holdout (D237), its
+rotation null on two fixtures, and it remains **structurally uncorrelated with S2 at ρ = +0.123
+measured across all 12.8 years.** What it is *not* is a rule that works in every era, and the
+book now says so.
+
+**Falsification unchanged**, and one condition is now partially met: a negative delta over
+buy-and-hold across a further ≥2 years. NEW is 5.1 years and the delta was positive by +0.025,
+so the condition has not fired — but it came close, and a repeat retires S1.
+
+---
+
 ## S2 — The Uptrend Onset
 
 **Admitted:** 2026-08-28 · **Status:** live in the book, **not promoted to capital**
@@ -254,6 +294,39 @@ give. **The diversification is structural and it travelled.**
    overlay null out of sample (99.6th percentile mined → **71.7th** on the holdout). It lowers
    drawdown to −2.71% *mechanically*, by holding less, and adds no demonstrated timing
    information. **A variant with the stop is a separate entry and is not in this book.**
+
+### AMENDMENT, 2026-08-28 — S2 cleared a time holdout, which nothing else here has
+
+[D243](decisions/D243-the-book-on-extended-history.md) ran the frozen book on 12.8 live years,
+of which **2013-11 → 2018-12 had never been seen.**
+
+| S2 on the never-seen window | |
+|---|---:|
+| excess Sharpe | **+0.248** |
+| buy-and-hold over the same bars | −0.149 |
+| **delta** | **+0.396** |
+| floor it had to clear | +0.094 |
+| rotation null percentile | **97.1st** |
+
+**Four times its floor, and it cleared its rotation null** — in an era where buy-and-hold itself
+scored −0.149, dragged by the commodity and emerging-market collapse. It also posted **+1.504**
+over 2025–2026 against buy-and-hold's +1.235, the window where S1 loses.
+
+**S2 has now cleared a pre-registered instrument holdout (D242) and a pre-registered time
+holdout (D243). No other rule in this programme has done both.**
+
+**Over the full 12.8 years its own interval excludes zero** — `+0.511`, p05 **+0.066** — the
+first time any entry here has managed that. Its advantage over buy-and-hold does not (p05
+−0.134).
+
+**And the pairing has a mechanism now, not just a correlation.** D239 established that S1 bets
+on reversals beating continuations; S2 is the continuation arm. **Each covers the other's bad
+era** — S1 went negative over 2013–2018 while S2 beat the market by four times its floor. ρ has
+been +0.159, +0.175 and +0.123 on three separate spans. **That is a better reason to hold both
+than the correlation ever was.**
+
+*Weakness 1 above is partly relieved: entries per symbol are unchanged for S2 at 5, but the
+combined book now reaches 24 against the 30 required, from 9 on the original fixture.*
 
 ### Falsification — what removes S2
 
