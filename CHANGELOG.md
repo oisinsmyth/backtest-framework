@@ -10,6 +10,20 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D240 — the uptrend-onset arm, 2026-08-28)
+- `scripts/run_uptrend_onset.py` — pivot-regression trend states, an onset/age-cap state
+  machine, log-space ATR, and **R7's matched-exit-count trade-level overlay null**, which did
+  not exist: `run_risk_controls.overlay_null` is bar-level position scaling, and D235's
+  committed runner only ever called a rotation null whose p95 of −0.284 anything would clear.
+- `tests/unit/test_uptrend_onset.py` — 14 gates. The load-bearing two are the prefix-sum
+  regression pinned against brute-force `np.polyfit`, and D173's confirmation lag asserted
+  directly (a pivot is invisible for exactly `k` bars).
+- `UPTREND_ONSET_RESULTS.md`, `data/uptrend_onset_summary.json`.
+- **`rolling_fit`** — rolling OLS slope *and* intercept in **O(T) per symbol** via prefix sums
+  over `(1, x, y, x², xy)` deposited at pivot indices, replacing 86k per-`(symbol, bar)`
+  refits. Measured at 0.2s for all 57 symbols. The causal window `i ∈ [t−252, t−k]` is
+  expressed exactly as `P[t−k+1] − P[t−WINDOW]`.
+
 ### Added (D239 — time-series momentum as arm two, 2026-08-28)
 - `scripts/run_tsmom_arm.py` — 12-month TSMOM on the 57, plus `subset_panel`.
 - `tests/unit/test_tsmom_arm.py` — 13 gates.

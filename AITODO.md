@@ -479,6 +479,29 @@ the first pre-registered out-of-sample test anything in this programme has passe
       `ZScorePairsStrategy` already exists with tests, and the universe has natural candidates
       in `GDX/GLD`, `XOP/XLE`, `IWM/SPY`, `EWA/EWC`.
 
+- [x] **D240 FOUND ONE — and it is the first candidate that has cleared every registered
+      hurdle.** Enter at the onset of a structural uptrend (`g_lo > 0 AND g_hi > 0`, OLS slopes
+      of log swing-low/high prices over 252 bars, `k = 3`), exit at the earliest of 63 bars, the
+      state ending, or a fixed **−8%** stop.
+
+      **The number that matters is ρ = +0.150 against S1, not the Sharpe.** A0 beats its
+      rotation null at the **97.3rd** percentile (money **99.2nd**); A2 beats R7's
+      matched-exit-count overlay null at the **99.6th**; A2 posts **+0.822** at a **−1.93%**
+      drawdown, Calmar **1.306** against S1's 0.527. Pairing arithmetic: **S1 + A2 → 1.032**,
+      cutting time-to-significance from **8.8 years to 5.5**.
+
+      **And what is wrong with it, which is a lot.** Hurdle E fails at **2 entries per symbol**
+      against 30 — worse than S1's 9 and the single biggest reason to withhold belief. A2's pass
+      is **not multiplicity-corrected** across the four overlay cells. The design is **fitted** —
+      age cap, long-only and state definition all came from anatomy on this same fixture.
+      Deployable return is **6.08%** against buy-and-hold's 8.42%, so it is a diversifier, not
+      the return engine the income arithmetic needs.
+
+- [ ] **NEXT: the actual combined book.** Hurdle C is weighting-independent and passed, but the
+      pairing table is *arithmetic, not a measurement*. A concrete S1 + A2 book with a paired
+      block bootstrap against S1 alone has never been built. That, then a pre-registered
+      out-of-sample test on the holdout 60 — R8's only route to `BOOK.md`.
+
 - [ ] **OPEN METHODOLOGICAL ITEM — three studies running, the result has lived in the
       complement of what was registered.** S1 came out of D234's failed cells; D238's exclusion
       reading out of the mirror's failure; and D239's inverse-of-an-anti-signal sits at the
