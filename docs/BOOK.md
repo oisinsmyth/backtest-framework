@@ -316,6 +316,33 @@ registered, which is an open methodological item in `AITODO.md`.
 
 ---
 
+### AMENDMENT, 2026-08-28 — S1 cleared a second instrument holdout, on 385 unseen names
+
+[D245](decisions/D245-the-wide-universe.md) rebuilt the universe from the cache — 1,276 symbols
+were available and the book had used 117 — and ran the frozen book on two liquidity cells over
+the identical span as D243.
+
+| | never-seen instruments | S1 | B&H | delta | floor | rotation null |
+|---|---:|---:|---:|---:|---:|---:|
+| W5, 244 symbols | **152** | +0.468 | +0.365 | +0.103 | +0.059 | **99.8th** ✓ |
+| W1, 486 symbols | **385** | +0.493 | +0.319 | +0.174 | +0.059 | **100.0th** ✓ |
+
+**S1's diagnosis is now precise. It is INSTRUMENT-GENERAL and ERA-SPECIFIC.**
+
+| test | result |
+|---|---|
+| Instrument holdout, 60 tickers (D237) | **passed**, effect grew |
+| **Instrument holdout, 385 tickers (D245)** | **passed**, 100th percentile |
+| Time holdout, 2013–2018 (D243) | **failed** — negative, 80.6th percentile |
+| Asset class, crypto (D244) | **inconclusive** — opposite drift structure |
+
+**Two instrument holdouts passed, one era holdout failed.** That is not a broken rule; it is a
+rule with a regime dependency, and D239 predicted it from a mechanism before D243 measured it.
+**Its own interval still contains zero at every universe size** (p05 −0.036, −0.053, −0.050),
+and it should still not be traded standalone.
+
+---
+
 ## S2 — The Uptrend Onset
 
 **Admitted:** 2026-08-28 · **Status:** live in the book, **not promoted to capital**
@@ -511,3 +538,34 @@ it is judged on crash contribution — which is measurable, out-of-training, and
 3. **An entry is never silently edited.** Amend or retire in writing, with the reason.
 4. **A place in the book is not a decision to trade.** Sizing, leverage and capital allocation are
    separate decisions and are recorded separately.
+
+---
+
+## A book-level finding: adding instruments is closed as a route to significance
+
+*[D245](decisions/D245-the-wide-universe.md), 2026-08-28. Recorded here because it constrains
+every future entry, not just these two.*
+
+The book's intervals have always been wide, and the reason was assumed to be too few
+instruments. **Measured, it is not.**
+
+| universe | symbols | **effective independent instruments** |
+|---|---:|---:|
+| the 57 | 57 | **2.23** |
+| W5 | 244 | **2.02** |
+| W1 | 486 | **2.08** |
+
+**Going from 57 to 486 ETFs LOWERED effective breadth.** The 57 were unusually diverse — bonds,
+metals, commodities and fourteen country funds. The broad universe above $5M/day is dominated by
+US equity sector and style products that move together, so **429 extra names added correlation
+rather than independence.**
+
+S2's lower bound did roughly double, +0.066 to +0.126, which is real and far smaller than
+eightfold more instruments would suggest — because **breadth, not headcount, sets it.**
+
+> **At ρ ≈ 0.4 across US equity ETFs, breadth saturates near 2 and no amount of headcount fixes
+> it. The remaining routes to significance are more TIME, or genuinely uncorrelated RETURN
+> DRIVERS.**
+
+*I recommended the expansion partly as a breadth fix. That premise was wrong and is recorded as
+such. It was worth doing as an instrument holdout, which is what it delivered.*
