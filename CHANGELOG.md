@@ -10,6 +10,33 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D249 - the inverse wedge breakout, 2026-08-28)
+- `scripts/run_wedge_inverse.py` - the wedge geometry (two pivot regression lines, convergence,
+  ATR-scaled channel width), a +/-2 ATR trigger off the channel midline, and a long-only book on
+  the DOWN break. Screened on the extended 57, validated on the 60-ETF instrument holdout.
+  **Written fresh: the wedge state machine and its walk, a paired block bootstrap on the
+  CORRELATION (`J.paired_block_bootstrap` returns a Sharpe difference, a different statistic), and
+  a daily `breakeven_bps` (the existing one is bound to `excess_intraday`).** Everything else is
+  reused - `rolling_fit`, `atr_log` and `null_book` from D240, the signed scorer, `excess_of` and
+  `rotation_nulls` from D238, `sub_score` from D243, `effective_instruments` from D245.
+- `tests/unit/test_wedge_inverse.py` - 19 gates. The load-bearing ones are **R9 asserted from both
+  sides** (the armed mask, the centre and the ATR must each be the `t-1` value or a synthetic trade
+  lands on a different bar), **no look-ahead on the real panel**, and **hurdle E asserted PER SYMBOL
+  and asserted to FAIL** - if it ever silently passes, the record is stale.
+- `WEDGE_INVERSE_RESULTS.md`, `data/wedge_inverse_summary.json`.
+
+### Notes (D249)
+- **D245's reserved never-seen cohort is not spent.** `books_on` refuses to open either
+  wide-universe fixture and the refusal is pinned by test.
+- **The two-legged null is what caught the result.** Money alone would have passed W2 at the 99.8th
+  percentile; Sharpe alone would have missed that the book earns real money. The gap is a 2.20x
+  volatility ratio against the null.
+- **`concurrency` is a new diagnostic and it belongs beyond this study.** It decomposes that
+  volatility gap into *loudness* (are the held bars individually more volatile - here only 1.14x)
+  and *clustering* (how many names are held at once - here up to 41 of 57 against a rotated book's
+  23). **A per-symbol rotation null destroys cross-sectional synchrony by construction**, so it
+  under-states the volatility of any market-wide signal. Computed post-hoc, disclosed, counted.
+
 ### Added (D244 - the book on crypto, 2026-08-28)
 - `scripts/run_book_crypto.py` - the frozen book on 35 coins over 5.2 years at 10 bp/side.
   **Written fresh: the 34-coin panel builder, the cost override and the PPY = 365 override.**

@@ -401,3 +401,233 @@ the house pattern and it is used here.**
 - **S1 and S2 must reproduce +0.478 and +0.511 on the extended 57**, or ρ and the overlap are void.
 - **D245's reserved cohort is asserted untouched** — the runner fails loudly if either wide-universe
   fixture path is opened.
+
+---
+
+## RESULT — closed, and it is a market timer wearing a per-instrument signal
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_wedge_inverse.py` · Page:
+[`WEDGE_INVERSE_RESULTS.md`](../../WEDGE_INVERSE_RESULTS.md)
+
+### The one-sentence version
+
+**The wedge down-break is not a per-instrument signal — it fires across the universe at once,
+holding up to 41 of 57 names simultaneously where a rotated book never exceeds 23 — so W2 builds a
+book 2.2× more volatile than its own null, earns more money than 99.8% of rotations and less per
+unit of risk than the median one, and on the holdout it is not paid at all.**
+
+### The three cells
+
+| | | exposure | net exSh | *gross* | Δ vs B&H | CAGR | max DD | breakeven | entries | min/sym | E |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| **W1** | hold 21 | 9.8% | +0.115 | *+0.125* | −0.127 | 0.92% | −17.54% | 24.9 bp | 853 | **5** | ✗ |
+| **W2** | hold 42 | 15.4% | +0.265 | *+0.272* | +0.023 | 2.11% | −18.24% | 81.6 bp | 675 | **4** | ✗ |
+| **W3** | 42 + −2·ATR stop | 9.3% | **+0.318** | *+0.335* | +0.075 | 1.05% | **−4.66%** | 38.7 bp | 675 | **4** | ✗ |
+| *S1* | | *18.2%* | *+0.478* | — | *+0.236* | *3.11%* | *−10.28%* | — | *2,374* | *20* | — |
+| *S2* | | *13.3%* | *+0.511* | — | *+0.269* | *1.85%* | *−5.83%* | — | *393* | *5* | — |
+| *B&H* | | *100%* | *+0.242* | — | — | *7.84%* | *−34.55%* | — | — | — | — |
+
+**Screen: 57 ETFs × 3,222 live bars, 2013-11-01 → 2026-08-26. Effective independent instruments
+2.29** — so the 675–853 pooled trades are *not* a sample size and are not quoted as one.
+
+### Every hurdle, scored
+
+| hurdle | screen (57) | validation (60) |
+|---|---|---|
+| **H — rotation null, p95 on Sharpe AND money** | **FAILS 3 of 3.** 29.0th / 63.0th / 74.7th on Sharpe | **FAILS 3 of 3.** 10.1st / 15.7th / 7.3rd |
+| *H, money leg alone* | *W2 clears at the 99.8th, W3 at the 91.8th* | *W2 55.6th, the others below the 11th* |
+| **H-BEST — best-of-three floor (D228)** | **FAILS.** W3 at +0.318 against a +0.505 floor, 60.0th percentile | — |
+| **H-OVL — R7, the stop only** | **CLEARS**, W3 at the 97.9th of its matched-exit-count null | — |
+| **E — ≥100 pooled and ≥30 per symbol** | **FAILS**, minimum **4–5** per symbol | **FAILS**, minimum **1** |
+| **P — beats buy-and-hold** | W1 ✗, W2 ✓ (+0.023), W3 ✓ (+0.075) | **✗ on all three**, by −0.21 to −0.35 |
+| **anti-triviality floor** | — | **FAILS 3 of 3** |
+| **costs** | **not the cause.** Breakeven 24.9 / 81.6 / 38.7 bp against ~1.6 bp charged | 2.6 / 46.4 / **0.1** bp |
+
+**Gross and net differ by less than 0.02 of Sharpe on every cell.** This does not fail on friction.
+
+### The finding: money passed, Sharpe failed, and the book is 2.2× the null's volatility
+
+| | vol | null vol p50 | **ratio** | money / vol | null money / vol | better bars? |
+|---|---:|---:|---:|---:|---:|:--:|
+| **W1** | 4.66% | 1.68% | **2.77×** | 2.68 | 5.72 | ✗ |
+| **W2** | 5.59% | 2.54% | **2.20×** | 5.47 | 6.40 | ✗ |
+| **W3** | 2.15% | 1.66% | 1.29× | 6.67 | 5.98 | ✓ |
+
+**The +15% to +18% annualised after a down-break — the number that motivated this whole study — is
+compensation for risk, not timing skill.** W2 earns 5.47 units of money per unit of volatility
+where a randomly-timed book of the same exposure earns 6.40. **It is not merely unpaid for its risk
+— it is paid slightly below the going rate.** The rotation null matches exposure, turnover and
+holding periods; it does not match the volatility of the book that results, and that gap is the
+whole distance between the money column and the Sharpe column.
+
+### Where that volatility comes from, and it is NOT the obvious answer
+
+**The obvious reading is that a 2-ATR break selects loud bars. Measured, that is barely true and it
+is not the mechanism.**
+
+| | loudness of held bars | names held, mean | max | *rotated max* | bars over 20 names | *rotated* | clustering |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **W1** | 1.22× | 5.6 | **36** | *19* | **4.3%** | *0.0%* | 1.44× |
+| **W2** | **1.14×** | 8.8 | **41** | *23* | **13.7%** | *0.0%* | **1.36×** |
+| **W3** | 0.89× | 5.3 | **30** | *19* | **2.0%** | *0.0%* | 1.33× |
+
+**The bars are 1.14× as volatile as average. The book is vastly more crowded.** W2 holds more than
+20 of 57 names on **13.7%** of bars where a per-symbol-rotated book of identical exposure does so
+on **0.0%**, and it peaks at **41** names against the rotation's **23**. **Converging channels
+break downward together, because they break when the market falls.**
+
+**So the rule is not selecting which ETF to buy; it is selecting *when* to buy all of them.** That
+is a legitimate thing to be — it is roughly what S1 is — but it means the diversification across 57
+names the equal-weighted book appears to have is largely illusory on exactly the bars that matter,
+and it is why W2 carries an −18.24% drawdown at 15.4% exposure where S2 carries −5.83% at 13.3%.
+
+**A limitation of the rotation null, recorded rather than buried.** `rotation_nulls` draws an
+**independent offset per symbol**, which destroys cross-sectional synchrony by construction — so it
+**understates the volatility of any book whose signal is market-wide.** It is therefore a
+*conservative* control for such a rule on money and a *harsh* one on Sharpe. Both legs were
+registered and between them they bracket the truth, which is the practical argument for the
+two-legged form and is a stronger one than the argument the registration actually gave.
+
+**D249 registered the money leg for the opposite reason and it caught this anyway.** The record's
+argument was D238's: a high-volatility book could inflate its *Sharpe*, so money was added as the
+leg that cannot be inflated. **What happened is the mirror image — money was the inflated leg and
+Sharpe was the honest one — because D238's arm had a negative mean and this one does not.** The
+reasoning was pointed the wrong way; requiring **both** legs is what made that harmless, and that
+is a general point about R6 rather than about this study.
+
+### The overlap analysis, which was the question worth asking
+
+| | `P(S1 \| wedge)` | *chance* | ratio | `P(wedge \| S1)` | ρ with S1 | ρ p05 | ρ p95 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **W1** | 28.2% | *18.2%* | 1.55× | 15.1% | +0.199 | +0.138 | +0.370 |
+| **W2** | **32.5%** | *18.2%* | **1.79×** | **27.6%** | **+0.389** | +0.257 | +0.588 |
+| **W3** | 29.5% | *18.2%* | 1.62× | 15.1% | +0.382 | +0.308 | +0.478 |
+
+*Chance is S1's own exposure: independent rules would sit exactly there. D242 measured **8.9%** for
+S2 — **half** chance — which is what a structurally disjoint arm looks like.*
+
+**The diversification condition clears against S1 in all three cells** — bars of +0.095 / +0.186 /
++0.183 against actuals of +0.115 / +0.265 / +0.318 — and against S2 in two of three. **It clears
+while every return hurdle fails, which is exactly what T-e registered.**
+
+**The S1-excluded residual:** W2 with every bar S1 also holds removed keeps 67.5% of its bars and
+scores +0.190 at 10.4% exposure, against W2's +0.265 at 15.4%. **The result is not living in the
+S1 overlap** — it is thin everywhere.
+
+### O4 — the direct answer
+
+> **NEITHER. It is not S1 in disguise — overlap peaks at 32.5% of the wedge's held bars against an
+> 18.2% chance baseline (1.79× chance) with ρ at most +0.389, so the two rules lean on a shared
+> population without being the same rule. But it is not a new arm either, and that is the operative
+> half: there is no edge here to diversify. No cell beats its rotation null on the screen, and on
+> the holdout the best of the three sits at the 7.3rd–15.7th percentile of randomly-timed books
+> holding the same amount. What the two rules share is the thing the concurrency measurement
+> names: both are buying broad market weakness. The wedge holds up to 41 of 57 names at once, so
+> it is a market timer wearing a per-instrument signal, and S1 is the same bet made better.**
+
+**The overlap stop did not fire** — 32.5% is below the 50% line D249 committed to — so this record
+does not get to close the candidate on that ground. **It closes on the return hurdles instead**,
+which is a cleaner outcome: the honest statement is *shared population, no edge*, not *duplicate of
+S1*.
+
+### The screen restricted to the validation span
+
+*So that a 12.8-year screen and a 7.8-year validation can be compared at all.*
+
+| | 57, from 2018-11 | 60, full |
+|---|---:|---:|
+| W1 | +0.059 | +0.001 |
+| **W2** | **+0.243** | **+0.115** |
+| W3 | +0.240 | −0.021 |
+| *S1* | *+0.626* | *+0.660* |
+| *S2* | *+0.673* | *+0.468* |
+| *B&H* | *+0.363* | *+0.326* |
+
+**Over the validation era the wedge loses to buy-and-hold on both universes** while S1 and S2 both
+beat it comfortably. The shrinkage from the 57 to the 60 is real but secondary — the rule was
+already behind the market on the same era, same-instrument.
+
+### Scoring — four of five, and the miss is the informative one
+
+| | prediction | outcome |
+|---|---|---|
+| **T-a** | hurdle E fails, ≤5 minimum per symbol on the 57 and ≤2 on the 60 | **CONFIRMED.** 5 / 4 / 4 on the 57, **1** on the 60. The proposal's "50.4 entries/symbol" was setups |
+| **T-b** | at least one cell beats its rotation null on both Sharpe and money on the 57 | **FALSIFIED.** Zero on Sharpe. W2 clears money at the 99.8th and fails Sharpe at the 63.0th — **the split is the finding, not the miss** |
+| **T-c** | no cell clears H on the 60 | **CONFIRMED**, 7.3rd–15.7th percentile |
+| **T-d** | `P(S1 \| wedge)` above 30% and ρ above +0.30 | **PARTIALLY CONFIRMED.** True for W2 (32.5%, +0.389); W3 clears on ρ and misses on overlap (29.5%); W1 misses both (28.2%, +0.199). **The direction is unambiguous in every cell** — 1.55× to 1.79× chance, against S2's 0.49× |
+| **T-e** | the diversification condition clears against S1 anyway and settles nothing | **CONFIRMED.** 3 of 3 clear it while 0 of 3 clear a null |
+
+**T-b is the miss and it is worth more than the four hits.** I expected the conditional-return
+table to survive a null that matched exposure. It survived on *money* and died on *risk-adjusted*
+money, and the concurrency measurement names the reason. **A forward-return table computed per
+(symbol, bar) tells you nothing about the book those bars assemble into** — 1,474 down-breaks look
+like 1,474 independent observations and are in fact a few dozen market-wide events.
+
+### Build-time amendments — one, and it was caught by a pre-run check
+
+**The apex reading of "the crossover point" was rejected before the runner existed**, because a
+pre-registration check on the reconstruction showed the regression apex sits a **median 113 bars
+ahead** of the arming bar. The apex *price* is therefore a long extrapolation, it does not
+reproduce the proposer's trigger counts (891/1,909 against 1,052/1,444), and it scores materially
+differently. **The channel midline is the registered definition and the reason is written into the
+record rather than discovered afterwards.** No amendment was needed during the build itself; every
+runner assertion passed first time.
+
+### The stop applies as written
+
+**CLOSED.** No fourth holding rule, no re-cut arming threshold, no change to the ±2 ATR trigger, no
+move to the apex definition, no wider universe — **and D245's reserved cohort was never opened**,
+asserted in code and pinned by test.
+
+### What survives
+
+**Two measurements and one method, none of which is a strategy.**
+
+- **Concurrency belongs beside every pooled conditional-return table this programme produces.** A
+  per-(symbol, bar) forward-return table cannot see that its 1,474 observations are a few dozen
+  market-wide events, and the book that results carries risk the table never showed. **This is R9's
+  neighbour rather than a case of it**: R9 catches conditioning on the bar being measured; this
+  catches a table that is *correct per bar* and misleading about the portfolio. Cheap to compute —
+  names held per bar, actual against rotated — and it should be reported wherever a rule's
+  triggers can synchronise across the universe.
+- **A per-symbol rotation null is a biased control for a market-wide signal**, in a known
+  direction: it under-states the arm's volatility, so it flatters the arm on money and penalises it
+  on Sharpe. Not a reason to stop using it — it remains the right control for exposure and turnover
+  — but a reason to report the concurrency gap beside the percentile.
+- **A two-legged null with a money leg and a Sharpe leg is worth its cost**, and the leg that
+  catches the problem is not the one you expect. D238's audit found volatility inflating Sharpe;
+  this one found it inflating money. **Registering both is cheap and the asymmetry is unpredictable
+  in advance.**
+
+**The wedge geometry itself is not retired, only this bet on it.** The lines, the convergence test
+and the ATR-scaled width are D240 machinery and are unaffected.
+
+### What is wrong with this study, at full strength
+
+1. **It is complement-chasing, the fourth time in this programme.** The registration states it and
+   the holdout tested it, and neither is strong protection. `AITODO.md`'s open methodological item
+   stands.
+2. **The validation cohort is not pristine** and its span is nested inside the screen's era. This
+   was an instrument test, not a time test, and the record said so in advance.
+3. **Breadth is 2.29.** Every interval here is wide and none excludes zero for any cell.
+4. **W3's H-OVL pass is a lone positive in a failing study and should not be quoted.** The stop
+   beats random trimming of the same book — but the book it trims does not beat its own rotation
+   null, so the stop is a better way of holding less of something worthless. **This is exactly the
+   reading D242 forced on D240's −8% stop**, arrived at one study earlier this time.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 3 cells (W1, W2, W3) | 3 |
+| the motivating anatomy, re-verified and disclosed: 5 width percentiles, 3 arming thresholds, 2 trigger-centre definitions × 2 directions × 5 horizons, 2 holding lengths × 2 fixtures | 32 |
+| the S1-excluded residual diagnostic | 1 |
+| **+ the concurrency decomposition, computed on the analyst's initiative after the two null legs disagreed — disclosed, and counted** | **1** |
+| carried from D248 | 45,886 |
+| **total** | **45,923** |
+
+*The pre-registration's ledger said 45,922. The extra look is the concurrency measurement: the
+registration anticipated a volatility explanation and named the money leg for it, but did not
+anticipate decomposing that volatility into loudness and clustering. It was computed after the
+result, following D238's M4 precedent — **disclosed, counted, and not presented as
+pre-registered.***

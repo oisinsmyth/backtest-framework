@@ -442,6 +442,47 @@ the first pre-registered out-of-sample test anything in this programme has passe
   the training set; and it **lost to buy-and-hold** over the only forward period tested.
 - **Not promoted to capital.** D237 pre-committed that, and R8 now makes it general.
 
+## D249 — the inverse wedge breakout, closed (2026-08-28)
+
+Registered **separately and explicitly not as S3**, because it is the inverse of a failed
+construction and [D246](docs/decisions/D246-the-search-protocol-for-s3.md) Constraint 3 forbids
+complement-chasing under that protocol. **D245's reserved never-seen cohort was not spent** — the
+runner refuses to open it and the refusal is pinned by test.
+
+- **Every return hurdle failed.** 0 of 3 cells beat the matched-count rotation null on the 57
+  (29.0th / 63.0th / 74.7th percentile) and 0 of 3 on the 60 (10.1st / 15.7th / 7.3rd). Costs are
+  not the cause: breakeven 24.9–81.6 bp against ~1.6 charged.
+- **The mechanism is concurrency, not per-bar loudness.** The two null legs disagreed — W2 at the
+  **99.8th percentile on money** and the **63.0th on Sharpe** — because its book is **2.20× more
+  volatile** than a randomly-timed book of identical exposure and turnover. Decomposed: the held
+  bars are only **1.14×** as volatile as average, but the book holds **more than 20 of 57 names on
+  13.7% of bars** where a per-symbol-rotated book does so on **0.0%**, peaking at **41** against the
+  rotation's 23. **Converging channels break downward together, because they break when the market
+  falls.** The rule is not choosing which ETF to buy; it is choosing when to buy all of them, and
+  W2 earns 5.47 units of money per unit of volatility where the rotated book earns 6.40.
+- **An error in the motivating measurement, found before registering and corrected in it.** "50.4
+  entries/symbol at k=2" counts armed **setups**. Only the down-breaks are traded, not every episode
+  triggers, and overlapping trades are suppressed — the real figure is 16.4 mean and a **minimum of
+  5** per symbol. **Hurdle E fails, worse than S1's 20.**
+- **The overlap answer: neither a new arm nor S1 in disguise.** `P(S1 | wedge)` peaks at **32.5%**
+  against an 18.2% chance baseline (1.79× chance, against S2's 0.49×), ρ at most **+0.389**. The
+  two rules lean on a shared population without being the same rule, and the operative half is that
+  there is no edge here to diversify.
+
+**Two things to carry forward, and the first is R9's neighbour rather than a case of it.**
+
+1. **A pooled conditional-return table cannot see the book it implies.** 1,474 down-breaks look
+   like 1,474 observations and are a few dozen market-wide events. **Report concurrency — names
+   held per bar, actual against rotated — beside any pooled table whose triggers can synchronise
+   across the universe.** `concurrency` in `scripts/run_wedge_inverse.py` is short and reusable.
+2. **A per-symbol rotation null is a biased control for a market-wide signal, in a known
+   direction.** Independent offsets destroy cross-sectional synchrony, so the null under-states the
+   arm's volatility: flattering on money, penalising on Sharpe. Still the right control for
+   exposure and turnover — but the concurrency gap should be reported next to the percentile.
+
+*Neither is promoted to a standing rule; recorded here so the next study that needs them can find
+them.*
+
 ## The only live thread
 
 - [ ] **A SECOND, UNCORRELATED STRATEGY.** Now the highest-value item in the programme, and the
