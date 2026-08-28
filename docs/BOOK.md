@@ -467,6 +467,42 @@ with a slightly firmer basis than for S1.
 
 ---
 
+## How the book behaves when the market falls
+
+*Added 2026-08-28. Measured across the 12.8-year extended fixture, pooling every bar on which
+the equal-weighted 57 was in a drawdown worse than 10% — **1,375 bars, 42.7% of the sample.***
+
+| | **in market drawdowns** | in everything else |
+|---|---:|---:|
+| Buy and hold | **−43.57%** | **+365.31%** |
+| **S1** | **+10.03%** | +34.48% |
+| S2 | −5.52% | +33.81% |
+| **Combined** | **+4.09%** | +75.69% |
+
+**The book earns in falling markets.** The combined book made **+4.09%** across bars where the
+market lost **43.57%**. Through COVID (2020-01-17 → 2020-07-13) S1 alone made **+16.98%** against
+buy-and-hold's −11.11%, having bought the March bottom.
+
+**The weakness is the other side.** The book captures **+75.69%** of a **+365.31%** up-move —
+roughly a fifth. **Up-capture, not downside, is what is broken here**, and any addition to the
+book should be judged against that.
+
+### This is what S1 is for, and it reframes its standalone numbers
+
+**S1 is the crash-alpha arm: +10.03% in drawdowns against S2's −5.52%.** And it holds outside its
+training window — through the 2014-09 → 2016-06 decline, entirely inside the never-seen period,
+S1 made **+1.10%** while the market lost 10.90%.
+
+**S1's poor out-of-training Sharpe and its crash performance are the same fact seen twice.** It
+earns in falling markets and does little in rising ones; 2013–2018 was mostly rising. **An
+all-weather Sharpe is the wrong instrument for measuring an arm with that job**, in the same way
+D236 found Sharpe could not see drawdown.
+
+**This supersedes the reading in the amendments above that S1 might be retired.** It stays, and
+it is judged on crash contribution — which is measurable, out-of-training, and which it passes.
+
+---
+
 ## Standing conditions on every entry
 
 1. **Admission requires a pre-registered out-of-sample test** with hurdles committed before the
