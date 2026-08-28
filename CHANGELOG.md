@@ -10,6 +10,29 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D251 - the cross-sectional dollar-neutral pre-screen, 2026-08-28)
+- `scripts/prescreen_cross_sectional.py` - eight ranking scores, each with its a priori long leg
+  declared before the run, sorted into daily quintiles on the LAGGED score and measured at 21 and
+  63 bars, with `exposure x edge` net of measured turnover and borrow. **Written fresh: a
+  prefix-sum `rolling_ols` generalising `run_uptrend_onset.rolling_fit` from a bar-index
+  regressor to an arbitrary one (pinned against it on the bar-index case), nan-safe prefix sums,
+  an eigenvalue `participation_ratio` because `effective_instruments` is degenerate on
+  market-neutral residuals, and a disclosed portfolio-level aggregation.** Reused: `load_panel`,
+  `base_masks`, `signed_log_returns` / `excess_of` / `score` from D238, `effective_instruments`
+  from D245.
+- `tests/unit/test_cross_sectional_prescreen.py` - 18 gates. The load-bearing ones are **R9 from
+  the strong side** (corrupt every bar after a cut point; no earlier score may move), **a nan may
+  not poison the future** (the defect that silently emptied both `md_L` cells on the first run),
+  **the reuse pin against `rolling_fit`**, and **the two aggregations identical on one symbol** -
+  D251's verdict turns on their difference, so a second defect in either had to be excluded.
+- `CROSS_SECTIONAL_PRESCREEN_RESULTS.md`, `data/cross_sectional_prescreen_summary.json`.
+
+### Notes (D251)
+- **D245's reserved never-seen cohort is not spent.** The pre-screen names only the extended 57
+  fixture, and a test pins that no reserved fixture appears in the script at all.
+- **No hurdle, no null, no runner.** A pre-screen in D250's shape - the point is to close a family
+  before paying for the machinery, and it did.
+
 ### Added (D249 - the inverse wedge breakout, 2026-08-28)
 - `scripts/run_wedge_inverse.py` - the wedge geometry (two pivot regression lines, convergence,
   ATR-scaled channel width), a +/-2 ATR trigger off the channel midline, and a long-only book on

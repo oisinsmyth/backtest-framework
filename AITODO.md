@@ -442,6 +442,30 @@ the first pre-registered out-of-sample test anything in this programme has passe
   the training set; and it **lost to buy-and-hold** over the only forward period tested.
 - **Not promoted to capital.** D237 pre-committed that, and R8 now makes it general.
 
+## D251 — cross-sectional dollar-neutral, pre-screened and closed (2026-08-28)
+
+**D250's inversion applied a second time, and it paid a second time.** Eight ranking scores —
+D246's stop exactly — each with its a priori long leg declared before the run. No
+pre-registration, no runner, no null. **D245's never-seen cohort was not touched.**
+
+- **The premise checks out and is not the null.** Eigenvalue participation ratio **3.61** on raw
+  returns against **11.55** on market-neutral residuals: removing the common factor really does
+  triple the breadth. *The argument being right and the family paying are separate claims.*
+- **The spread table cleared and every book still lost.** RESMOM was the cleanest cross-sectional
+  relationship this programme has found — monotone across all five quintiles, **+4.80%/yr** edge,
+  net beta only −0.14 — and its book made **−2.41%/yr**. All sixteen lost.
+- **The gap is the finding.** `gross = exposure × edge` **needs a third term for a two-sided
+  book**: minus the short leg's convexity. A daily-rebalanced short earns `log(2 − e^r)`,
+  expectation `−μ − σ²`, worth **6.2 to 14.9 points a year** here — D238's +9.22 from the other
+  side. **A spread table is stated in a coordinate system where shorting is free of variance
+  drag.**
+- **R10's literal form cannot fire on a fixed-count sort** — it is *less* crowded than its own
+  rotated null. The binding form is **net beta**, and it fired twice: BAB at **−1.27** and
+  low-vol at **−0.74** are levered short-the-market books wearing factor names. **Matched
+  notional is not matched exposure.**
+- **Also measured:** short-horizon relative strength is *reversal*, not momentum (both fail their
+  declared direction), and S1's level rules do not survive being turned into ranks.
+
 ## D249 — the inverse wedge breakout, closed (2026-08-28)
 
 Registered **separately and explicitly not as S3**, because it is the inverse of a failed
@@ -575,6 +599,20 @@ them.*
       not be.** Either the registrations are systematically aimed wrong or the protocol leaks,
       and only one of those is testable. Needs a rule.
 
+
+- [ ] **OPEN METHODOLOGICAL ITEM, opened by D251 — is the house scorer's PER-SYMBOL
+      aggregation right for a TWO-SIDED book?** `signed_log_returns` averages per-symbol log
+      growths, so every name is its own compounding sleeve. That is correct for every book this
+      programme has scored — all of them long-flat — and it charges a dollar-neutral book the
+      **name-level** variance drag on its short leg (`E[log(2 − e^r)] ≈ −μ − σ²`, 4–6%/yr at
+      typical ETF volatility). In a real dollar-neutral account both legs sit in **one equity**,
+      so the drag is set by the **spread's** variance, not by each name's.
+
+      **It is a 6.6-point swing and it flips the sign** of D251's best cell. It is not a licence
+      to re-score anything: the two agree to well inside a tenth of a point on long-flat books,
+      so nothing already in `BOOK.md` moves. **What it blocks is registering a long-short arm
+      before the question is settled**, because the answer decides the verdict rather than
+      decorating it.
 
 - [ ] **Test the arm on unmined data** — ETFs outside these 57. No further work on this
       fixture can narrow the intervals above, because they are a property of the sample.
