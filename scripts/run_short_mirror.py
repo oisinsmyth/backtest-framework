@@ -213,7 +213,12 @@ def rotation_nulls(panel, positions: dict, start: int) -> dict:
     rng = np.random.default_rng(SEED)
     n, T = next(iter(positions.values())).shape
     span = T - start
-    names = [k for k in CELL_ORDER if k in positions]
+    # Dict insertion order, NOT this module's CELL_ORDER. Filtering against
+    # CELL_ORDER made the function silently return nothing for any caller whose
+    # cells are named differently -- which D239 is. Callers pass an ordered dict,
+    # and for D238's own call the two orders coincide exactly, so the artifact and
+    # the page are unchanged (pinned by `test_the_page_round_trips_byte_for_byte`).
+    names = list(positions)
     per = {k: np.empty(N_SIMS) for k in names}
     money = {k: np.empty(N_SIMS) for k in names}
     vol = {k: np.empty(N_SIMS) for k in names}

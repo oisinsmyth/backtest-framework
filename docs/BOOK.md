@@ -115,6 +115,15 @@ crash.
    failed, and this rule is the complement — computed on the analyst's initiative, disclosed and
    counted as one look. D237 is its first pre-registration.
 6. **18.9% exposure is not a portfolio.** Four fifths of the capital sits in cash.
+7. **It is a bet on a regime, and that is now measured.**
+   [D239](decisions/D239-time-series-momentum-as-arm-two.md) ran twelve-month time-series
+   momentum on the same fixture and found it is not merely skill-free but an **anti-signal** —
+   the 0.7th percentile of its own rotation null on Sharpe, the 0.2nd on money. The mechanism
+   is that 2018–2024 is dense in sharp **V-shaped** reversals, which whipsaw trend and are
+   exactly what S1 buys. **The single feature of this fixture that makes S1 work is the feature
+   that makes its opposite fail.** So: *S1's edge is in part a bet that reversals dominate
+   continuations, and in a continuation-dominated regime it should weaken.* T3 already agrees —
+   it lost to buy-and-hold across the 2025–2026 melt-up, which is a continuation regime.
 
 ### Deployment notes
 
@@ -159,6 +168,12 @@ alone**, with the entire 90% interval below zero. Since adding an arm helps only
 uncorrelatedness was never the binding constraint.**
 
 *S1's specification and evidence are unchanged by this. Nothing above this line moved.*
+
+**Amendment, 2026-08-28 ([D239](decisions/D239-time-series-momentum-as-arm-two.md)).** Trend
+following was tested as arm two and **closed** — it fails every hurdle and is an anti-signal.
+The finding that matters is not about trend: **arm two must not be another bet on
+reversals-beating-continuations**, because S1 already is one. That is a constraint on the search
+no earlier study could have stated, and it is recorded as weakness 7 above.
 
 > **The book has one entry at 18.9% exposure. That is a start, not a book.**
 

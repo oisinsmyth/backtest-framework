@@ -464,6 +464,28 @@ the first pre-registered out-of-sample test anything in this programme has passe
       ETFs the worst-conditioned bars *any* of these constructions can isolate still return
       **+0.85%/yr**. A short arm needs instruments that actually fall.
 
+      **D239 closed the second candidate and added the sharpest constraint yet.** Twelve-month
+      time-series momentum is not skill-free on this fixture, it is an **anti-signal** — the
+      **0.7th percentile** of its own rotation null on Sharpe, the **0.2nd on money**, with
+      selection quality of **−35.8%** against a random slice of the same exposure. The
+      mechanism matters more than the verdict: 2018–2024 is dense in sharp **V-shaped**
+      reversals, which whipsaw trend and are exactly what S1 buys.
+
+      > **Arm two must not be another bet on reversals-beating-continuations. S1 already is
+      > one, and that is now recorded as its seventh weakness.**
+
+      Candidates that remain live and do *not* violate it: **cross-sectional dollar-neutral**
+      (drift cancels, and D238's signed scorer finally makes it computable), and **pairs** —
+      `ZScorePairsStrategy` already exists with tests, and the universe has natural candidates
+      in `GDX/GLD`, `XOP/XLE`, `IWM/SPY`, `EWA/EWC`.
+
+- [ ] **OPEN METHODOLOGICAL ITEM — three studies running, the result has lived in the
+      complement of what was registered.** S1 came out of D234's failed cells; D238's exclusion
+      reading out of the mirror's failure; and D239's inverse-of-an-anti-signal sits at the
+      99.3rd percentile *by construction*. **None of these has been chased and the third must
+      not be.** Either the registrations are systematically aimed wrong or the protocol leaks,
+      and only one of those is testable. Needs a rule.
+
 
 - [ ] **Test the arm on unmined data** — ETFs outside these 57. No further work on this
       fixture can narrow the intervals above, because they are a property of the sample.

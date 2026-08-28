@@ -10,6 +10,22 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D239 — time-series momentum as arm two, 2026-08-28)
+- `scripts/run_tsmom_arm.py` — 12-month TSMOM on the 57, plus `subset_panel`.
+- `tests/unit/test_tsmom_arm.py` — 13 gates.
+- `TSMOM_ARM_RESULTS.md`, `data/tsmom_arm_summary.json`.
+
+### Fixed (D239)
+- **`subset_panel`, and the defect that motivated it.** An N-name book must be equal-weighted
+  over **N**. Zeroing the unwanted rows of a 57-row position matrix leaves
+  `portfolio_log_returns` dividing by 57, so an 11-name book at 49.8% exposure scored as a
+  57-name book at **9.6%**. Caught only because D239 published the exposure *before* the run.
+- **`run_short_mirror.rotation_nulls` filtered cell names against its own module-level
+  `CELL_ORDER`**, so it silently returned nothing for any caller whose cells are named
+  differently — which D239 is. Now uses dict insertion order. **D238's artifact is numerically
+  unchanged** (the two orders coincided for its own call); verified field-by-field against the
+  committed JSON.
+
 ### Added (D238 — the short-side mirror, 2026-08-27)
 - `scripts/run_short_mirror.py` — the first **signed** book in the programme, and with it a
   scorer that handles `position = −1` correctly.

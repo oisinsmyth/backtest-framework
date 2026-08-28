@@ -173,3 +173,136 @@ blend. Nothing else — D238's scorer was built to be the general one and this i
   construction, so "12-month return > 0" is checked rather than trusted.
 - **Both arms are scored on the identical bar range**, asserted, since the paired bootstrap and
   ρ are meaningless otherwise.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.** The holdout 60 and the 2025–2026 forward
+window are untouched.*
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_tsmom_arm.py` · Page:
+[`TSMOM_ARM_RESULTS.md`](../../TSMOM_ARM_RESULTS.md)
+
+### The one-sentence version
+
+**Trend following is not a neutral failure on this fixture — it is an anti-signal, landing at
+the 0.7th percentile of its own rotation null on Sharpe and the 0.2nd on money, and the reason
+is the same market feature that makes S1 work.**
+
+### Every hurdle fails
+
+| | rule | exposure | excess Sharpe | CAGR | **deployable** | vol | max DD | Calmar |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| **S1** | arm one | 18.9% | **+0.746** | 5.43% | **8.83%** | 6.1% | −10.30% | 0.527 |
+| **T1** | `close[t] > close[t−252]`, all 57 | 58.3% | **+0.115** | 3.30% | 5.00% | 8.3% | −14.19% | 0.232 |
+| **T2** | same rule, non-equity 11 | 49.8% | **−0.068** | 1.54% | 3.56% | 6.2% | −15.66% | 0.098 |
+| **T3** | 50/50 blend | 38.6% | +0.563 | 4.87% | 7.43% | 5.8% | −8.66% | 0.563 |
+| B&H | always long | 100.0% | +0.235 | 8.42% | 8.42% | 17.7% | −34.60% | 0.243 |
+
+**P1: 0 of 2. P2: fails. P3: 0 of 2 informative cells. P4: 0 of 2. E: fails everywhere.**
+
+### P3 — an anti-signal, and the volatility leg makes the finding *stronger*
+
+| | actual | null p50 | null p95 | **percentile** | **money pct** | vol ratio |
+|---|---:|---:|---:|---:|---:|---:|
+| **T1** | **+0.115** | +0.296 | +0.423 | **0.7th** | **0.2th** | 0.781x |
+| **T2** | −0.068 | −0.165 | +0.355 | 63.7th | 63.1th | 1.022x |
+| *T3* | *+0.563* | *+0.334* | *+0.442* | *100.0th* | *99.3th* | *0.832x* |
+
+**993 of 1,000 randomly-timed books with T1's exact exposure, turnover and holding periods beat
+it.** Not "the timing carries no information" — the timing is *worse than no information*.
+
+And D238's audit cuts the right way here. T1 is a **positive**-mean book, so its volatility
+ratio of **0.781x** — it is *less* volatile than its rotations — pushes its Sharpe **up**. The
+anti-signal survives a mechanical effect working in its favour, and the money leg at the
+**0.2nd percentile** confirms it independently of Sharpe entirely.
+
+**T3's 100th percentile is uninformative and is italicised for that reason.** T3 contains S1,
+which is itself at the 100th percentile of its own null. It is measuring arm one.
+
+### P4 — below even the selection-free prediction
+
+| | exposure | √f predicts | actual | **selection quality** |
+|---|---:|---:|---:|---:|
+| **T1** | 58.3% | +0.179 | +0.115 | **−35.8%** |
+| **T2** | 49.8% | +0.166 | −0.068 | **−141.3%** |
+
+A *selection-free* 58.3% slice of buy-and-hold scores +0.179. T1 scores +0.115. **Choosing the
+bars by twelve-month momentum was worse than choosing them at random**, and worse than not
+choosing at all.
+
+### The mechanism, and it is a warning about S1 rather than about trend
+
+2018–2024 contains three sharp **V-shaped** reversals — Q4 2018, March 2020, October 2022.
+Trend following exits after a fall and re-enters after the recovery, so it systematically misses
+the steepest up-moves; a rotated book with identical exposure catches them in proportion. That
+is the textbook trend whipsaw, and this sample is unusually dense in it.
+
+**But that is the exact complement of S1's mechanism.** S1 *buys the turn* — D236 measured it 2.0%
+exposed through the COVID crash leg, and an independent quintile cut put its lowest trailing-return
+bucket at +49.9%/yr. **The single feature of this fixture that makes S1 work is the feature that
+makes trend fail.**
+
+So the two arms are **not** the independent bets the pre-registration argued for. They are
+opposite sides of one regime characteristic, and this six-year sample picked a side. Which
+yields a specific, falsifiable risk statement about arm one that did not exist before:
+
+> **S1's edge is, in part, a bet that reversals dominate continuations. In a
+> continuation-dominated regime it should weaken and trend should recover.**
+
+And that is consistent with the one forward result already on record: **T3 in D237 lost to
+buy-and-hold across 2025–2026 — a melt-up, which is a continuation regime.** Two independent
+observations now point at the same conditioning variable.
+
+### Scoring — two of five, and all three misses were optimistic
+
+| | prediction | outcome |
+|---|---|---|
+| **Q1** | T1 beats buy-and-hold | **FALSIFIED.** +0.115 against +0.235 |
+| **Q2** | ρ lands in 0.30–0.50 | **FALSIFIED, narrowly.** +0.2668 |
+| **Q3** | P1 passes narrowly | **FALSIFIED**, and not narrowly — +0.115 against a bar of +0.199 |
+| **Q4** | P2 fails | **CONFIRMED.** −0.183; predicted ≈ +0.63 for the blend against an actual +0.563 |
+| **Q5** | T2 scores below T1 but at lower ρ | **CONFIRMED**, both legs — −0.068 vs +0.115, ρ 0.073 vs 0.267 |
+
+**Every prediction I got wrong, I got wrong in the optimistic direction.** That is the third
+study running where the registered hypothesis was more hopeful than the data.
+
+### The construction error the registration caught
+
+T2 was first built by zeroing the 46 equity rows of a 57-row position matrix. That leaves
+`portfolio_log_returns` dividing by 57, so an 11-name book at 49.8% exposure scored as a 57-name
+book at **9.6%**. **The discrepancy against the exposure disclosed in this record before the run
+is what surfaced it** — the number was registered, so the mismatch was visible rather than
+plausible. Fixed with a `subset_panel` helper and re-run. This is the concrete argument for
+D236's practice of measuring and publishing exposure in advance.
+
+### A pattern that now needs a rule
+
+The inverse of a 0.7th-percentile anti-signal sits at roughly the 99.3rd by construction, and
+**it must not be chased.** That would be the *third* consecutive study whose "result" lives in
+the complement of what was registered — after S1 out of D234 and the exclusion reading out of
+D238. The instinct keeps landing and the registrations keep missing, which is either a very
+good analyst or a very leaky protocol, and only one of those is testable.
+
+**Recorded here as an open methodological item, not acted on.**
+
+### What survives
+
+**Nothing is promoted. Time-series momentum is closed as arm two on this fixture** — it joins
+the short mirror (D238), stops and targets (D235) and portfolio risk controls (D236).
+
+**Two things are kept, and one is worth more than the study.**
+
+1. **The regime dependency of S1 is now on the record**, with a mechanism and a falsifiable
+   prediction. Arm two must not be another bet on reversals-beat-continuations, which is a
+   constraint no previous study could have stated.
+2. **`subset_panel`**, and the reason it exists — an N-name book must be equal-weighted over N.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 3 cells | 3 |
+| + D238's 4, D234's 6, D235's 7, D236's 6 | 26 |
+| + disclosed ETF prior | **45,829** |
