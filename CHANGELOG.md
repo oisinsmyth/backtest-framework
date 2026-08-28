@@ -10,6 +10,39 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D252 - the dead-inclusive US single-name universe, 2026-08-28)
+- `scripts/fetch_short_universe.py` - sibling of `fetch_etf_holdout.py`, same
+  `--plan / --fetch / --select / --actions / --build` phases, same key handling, same
+  rate limiter, same structural success test. **Written fresh: delisted-cohort discovery
+  from `LISTING_STATUS state=delisted` plus 16 yearly snapshots, a recycled-ticker rule,
+  a PER-SYMBOL pre-live screen, a ragged writer, evidence-based split confirmation, a
+  three-way classifier for extreme bars, and a shared-limiter concurrent fetch.**
+- `data/fixtures/us_shorts_daily_raw.csv.gz` + events + meta - **1,573 US common stocks,
+  4,137,239 rows, 2010-01-04 to 2026-08-26, 562 of them (35.7%) delisted inside the span.**
+  Ragged by design: 870 distinct bar counts. `run_macd_ladder.load_panel` refuses it and
+  the loader it needs does not exist yet; the meta says what that loader must do.
+- `tests/unit/test_us_shorts_fixture.py` - 40 gates. The load-bearing ones are **the
+  delisted cohort is above its floor**, **the screen reads the pre-live window and
+  nothing after it** (called against `apply_screen` with two series identical for 252
+  bars and maximally different afterwards), **no persistent up-step survived without
+  volume behind it**, **no rejected split coefficient was applied**, **`--build` never
+  reads the sidecar it writes**, and **the key appears in no artifact and no source**.
+- `docs/alpha_vantage_api.md` - `LISTING_STATUS` and `TIME_SERIES_DAILY_ADJUSTED`
+  sections, provenance-tagged like the rest.
+
+### Notes (D252)
+- **Four data findings, each of which changed the build.** (1) `delistingDate` is often a
+  roster-refresh stamp - **601 of 9,449 delisted rows carry 2026-08-27**. (2) The
+  provider's split coefficients are unreliable for single names: **16 of 959 rejected**
+  because the price series contradicts them, 7 of which would have manufactured in-span
+  single-bar returns up to **x66.7**. (3) Extreme bars fall into three classes with three
+  different right answers - reverting bad prints are LEFT IN for `clean()`, volume-
+  corroborated events are retained, unexplained persistent steps exclude the symbol
+  (ORIG's x300 is Ocean Rig's unrecorded post-restructuring reverse split). (4) `--build`
+  was **not idempotent** and produced 1,580 / 1,573 / 1,574 symbols across three runs of
+  unchanged code; fixed, pinned by a test.
+- **No strategy was run, no cell scored, no rule proposed.** Ledger contribution: 0.
+
 ### Added (D251 - the cross-sectional dollar-neutral pre-screen, 2026-08-28)
 - `scripts/prescreen_cross_sectional.py` - eight ranking scores, each with its a priori long leg
   declared before the run, sorted into daily quintiles on the LAGGED score and measured at 21 and

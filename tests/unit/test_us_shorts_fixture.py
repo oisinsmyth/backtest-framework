@@ -189,6 +189,42 @@ def test_no_adjusted_bar_multiplies_the_price_outside_the_documented_events(clos
     )
 
 
+def test_build_never_reads_the_sidecar_it_writes():
+    """`--build` must be a pure function of the cache and the selection.
+
+    It was not. `--actions` wrote the committed sidecar, `--build` read it, pruned it
+    to the symbols that survived the data-quality gates, and wrote it back — so the
+    SECOND `--build` saw a sidecar with the excluded symbols' splits already gone, did
+    not apply them, reached a different verdict, and produced a different fixture.
+    1,580 -> 1,573 -> 1,574 symbols across three runs of unchanged code.
+
+    A committed artifact must not depend on how many times the builder ran. The full
+    sidecar now lives in the cache; the committed one is derived from it and never fed
+    back."""
+    src = SCRIPT.read_text(encoding="utf-8")
+    build = src[src.index("def do_build("):]
+    assert "EVENTS_FULL.read_text" in build, "build must read the CACHED full sidecar"
+    assert "EVENTS.read_text" not in build, "build must not read the artifact it writes"
+    actions = src[src.index("def do_actions("):src.index("def do_build(")]
+    assert "EVENTS.write_text" not in actions, "--actions must write the cache, not the sidecar"
+
+
+@needs_fixture
+def test_the_committed_sidecar_is_exactly_the_fixtures_symbols(meta):
+    """The committed sidecar and the fixture must name the same symbols. A sidecar
+    listing events for absent symbols invites a loader to build a longer index than the
+    data supports."""
+    events = json.loads(EVENTS.read_text(encoding="utf-8"))
+    assert set(events["splits"]) == set(meta["symbols"])
+    assert set(events["dividends"]) == set(meta["symbols"])
+    full = F.EVENTS_FULL
+    if full.exists():
+        cached = json.loads(full.read_text(encoding="utf-8"))
+        assert set(events["splits"]) <= set(cached["splits"]), "sidecar is not a subset of the cache"
+        for sym in events["splits"]:
+            assert events["splits"][sym] == cached["splits"][sym], sym
+
+
 @needs_fixture
 def test_the_symbols_excluded_for_data_quality_really_are_absent(meta):
     """An exclusion that did not take is worse than no exclusion, because the meta then

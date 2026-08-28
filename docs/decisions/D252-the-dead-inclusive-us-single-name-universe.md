@@ -409,4 +409,109 @@ screen, the ragged writer, the two gates, and the shared-limiter concurrency. No
 
 ## RESULT
 
-<!-- filled in from the actual build below -->
+**Produced:** 2026-08-28 · `scripts/fetch_short_universe.py` · `data/fixtures/us_shorts_daily_raw.csv.gz`
+
+### The fixture
+
+| | |
+|---|---:|
+| symbols | **1,573** |
+| rows | **4,137,239** |
+| span | **2010-01-04 → 2026-08-26** |
+| **dead (carry a delistingDate in the span)** | **562 — 35.7%** |
+| alive at the span end | 1,011 |
+| bars per symbol, min / median / max | 379 / 2,488 / 4,187 |
+| **distinct bar counts (the panel is ragged)** | **870** |
+| bars carrying a split adjustment | 546,753 |
+| dividends / splits in the sidecar | 50,222 / 943 (172 reverse) |
+| file size | 69.3 MB gz |
+
+Hindsight labels: **562 delisted, 122 collapsed** (still listed but 90%+ below their own
+in-span peak), **889 survived**. Exchanges: 876 NYSE, 688 NASDAQ, 9 other.
+
+**The dead cohort is spread across the whole span**, not bunched:
+
+| 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 7 | 7 | 28 | 26 | 45 | 44 | 40 | 65 | 52 | 35 | 51 | 37 | 41 | 28 | 29 | 27 |
+
+The 2011–2012 thinness is the provider's archive, not the tape, and the meta says so.
+
+### The cost of getting here, and what it cost in names
+
+| | |
+|---|---:|
+| eligible after the metadata rules | 8,601 (41.6% dead) |
+| prefix fetched (a pinned permutation) | 3,400 |
+| **provider would not serve** | **12 — all dead names** |
+| screened out (liquidity, price, history) | 1,805 |
+| dropped as provider contradictions | 3 |
+| **excluded for data quality** | **7** (5 alive, 2 dead) |
+| **selected** | **1,573** |
+
+Screen pass rate 46.4%, close to the pilot's 47.2%.
+
+### What the data turned out to be
+
+Four findings, none of which were in the plan, and every one of them changed the build.
+
+**1. `delistingDate` is often a roster-refresh stamp.** 601 of 9,449 delisted rows carry
+`2026-08-27`. 34 symbols were reclassified alive (delisted after the span end) and 3 dropped
+as contradictions.
+
+**2. The provider's split coefficients are unreliable for single names.** **16 of 959 were
+rejected** because the price series contradicts them: final-bar artefacts on zero volume
+(RSPP's 0.32, FMSA's 0.2), coefficients on continuous prices (CHMT's 0.015 with the close
+flat at ~15.50; AMRC's 2.0 with the close flat at ~10), and spinoffs modelled as splits
+(ADEA's 3.78 is the Xperi separation). **Seven of the sixteen sit inside the span, so applying
+them would have manufactured single-bar returns of ×66.7, ×50, ×16, ×5, ×3.125, ×2 and ×0.4.**
+The other nine predate their symbol's first in-span bar and would have rescaled a whole
+series without touching a single return.
+
+**3. Large moves fall into three classes, not one, and an allow-list cannot express that.**
+28 up-moves at ≥ ×4:
+
+| class | n | what happens to it |
+|---|---:|---|
+| **revert** | 9 | **left in.** A single bad print — PRMW 7.65 → 0.75 → 7.96; MIL 12.64 → 105.80 → 11.48 on the Flash Crash. D6 stores raw bars, D25's `clean()` removes these at load |
+| **corroborated** | 12 | **retained.** GLSI ×10.98 on 18.0M shares against a 9.4k baseline; KRTX ×5.43 on 15.0M against 60k; KODK's loan bar at ×31,775 dollar volume |
+| **unexplained** | 7 | **the symbol is excluded.** ORIG 0.08 → 24.00, a ×300 move on ×5 dollar volume — Ocean Rig's post-restructuring reverse split, for which the provider records no coefficient at all. GOTU's ADS ratio change as volume collapses 1,039,092 → 1,460. EAR ×27 across three consecutive zero-volume bars |
+
+**The hand-verified list earned its keep by being wrong-footed once.** KODK's 2020-07-29 bar
+was verified by hand as the DFC loan announcement; the classifier called it unexplained. The
+classifier was reading dollar volume against the immediately preceding bar — which was
+already a 264M-share day, because the move started on the 28th. **A multi-day event inflates
+its own denominator**, so the baseline is now a trailing median and KODK reads ×31,775
+instead of ×4.3. That cross-check is the reason the constant is right rather than merely
+chosen.
+
+**4. `--build` was not idempotent, and it took an outside observer to notice.** `--actions`
+wrote the committed sidecar; `--build` read it, pruned it to the surviving symbols, and wrote
+it back — so the second run saw a sidecar with the excluded symbols' splits already gone, did
+not apply them, reached a different verdict and produced a different fixture. **1,580 → 1,573
+→ 1,574 symbols across three runs of unchanged code.** The full sidecar now lives in the cache
+and the committed one is derived from it, never fed back. Three consecutive builds are
+byte-identical, and a test reads the source to keep it that way.
+
+### Gates
+
+| | |
+|---|---|
+| GATE A — every confirmed split leaves no discontinuity | **clean** (3 residual failures, all in excluded symbols) |
+| GATE B — every ≥ ×4 up-move is classified | **clean** (0 unexplained in the fixture) |
+| hand-verified moves classified `corroborated` | **6 of 6** |
+| moves across a trading halt | 5, reported not gated — ANV after 3,984 days, CHK after 1,313, PKD 372, USX 1,069, VRM 83 |
+| large drops ≤ ×0.15 | 14, reported and never gated — this is the payload |
+| rebuild is byte-identical | yes, gzip mtime pinned to 0 |
+
+### What is NOT done
+
+**No strategy was run, no cell scored, no rule proposed.** `run_macd_ladder.load_panel`
+refuses this fixture by design and **the ragged loader it needs does not exist**; what it must
+do is written into the meta and into section 9 above.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — a data acquisition, no cell scored | **0** |

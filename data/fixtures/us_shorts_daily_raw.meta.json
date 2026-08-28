@@ -59,7 +59,6 @@
    "ARD",
    "ASTR",
    "BLFY",
-   "SEVCF",
    "ALE",
    "BGFV",
    "CHU",
@@ -1006,7 +1005,7 @@
  "provider": "Alpha Vantage TIME_SERIES_DAILY_ADJUSTED, outputsize=full",
  "raw_cache_committed": false,
  "raw_cache_note": "D191: the raw cache is not committed; only the derived fixture is.",
- "fetched_at_utc": "2026-08-28T21:15:40.049750+00:00",
+ "fetched_at_utc": "2026-08-28T21:37:09.319420+00:00",
  "symbols": {
   "AA": {
    "cohort": "alive",

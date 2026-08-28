@@ -138,6 +138,7 @@ CACHE = REPO / "data" / "raw" / "alphavantage" / "daily_adjusted"
 LISTINGS = REPO / "data" / "raw" / "alphavantage" / "listings"
 POOL = CACHE / "_pool.json"
 SELECTION = CACHE / "_selection.json"
+EVENTS_FULL = CACHE / "_events_full.json"  # every selected symbol; --build prunes it
 
 FIXTURE = REPO / "data" / "fixtures" / "us_shorts_daily_raw.csv.gz"
 EVENTS = REPO / "data" / "fixtures" / "us_shorts_daily_raw_events.json"
@@ -882,8 +883,13 @@ def do_actions() -> None:
         out["splits"][sym] = sp
         out["dividends"][sym] = dv
 
-    EVENTS.parent.mkdir(parents=True, exist_ok=True)
-    EVENTS.write_text(json.dumps(out, indent=1, sort_keys=True), encoding="utf-8")
+    # Written to the CACHE, not to the fixture sidecar. `--build` prunes this down to
+    # the symbols that survive its data-quality gates and writes the committed sidecar
+    # itself. Having `--build` read and rewrite the SAME file made it non-idempotent:
+    # the second run saw a sidecar with the excluded symbols' splits already removed,
+    # did not apply them, reached a different verdict, and produced a different
+    # fixture. A committed artifact must not depend on how many times the builder ran.
+    EVENTS_FULL.write_text(json.dumps(out, indent=1, sort_keys=True), encoding="utf-8")
     (CACHE / "_unconfirmed_splits.json").write_text(
         json.dumps(unconfirmed, indent=1), encoding="utf-8")
     n_div = sum(len(v) for v in out["dividends"].values())
@@ -930,9 +936,9 @@ def split_factor_at(stamp: str, splits: list) -> float:
 def do_build() -> None:
     sel = json.loads(SELECTION.read_text(encoding="utf-8"))
     selected = sel["selected"]
-    if not EVENTS.exists():
+    if not EVENTS_FULL.exists():
         raise SystemExit("REFUSING TO BUILD AN UNADJUSTED FIXTURE. Run --actions first.")
-    events = json.loads(EVENTS.read_text(encoding="utf-8"))
+    events = json.loads(EVENTS_FULL.read_text(encoding="utf-8"))
     splits_by = events["splits"]
     unconfirmed_splits = json.loads(
         (CACHE / "_unconfirmed_splits.json").read_text(encoding="utf-8")
@@ -1154,13 +1160,15 @@ def do_build() -> None:
                 "max_gap_days": max_gap,
             }
 
-    # The sidecar is pruned to exactly the symbols in the fixture. A sidecar carrying
-    # events for symbols that are not there invites a loader to build a longer index
-    # than the data supports, and it makes "sidecar and fixture agree" untestable.
+    # The committed sidecar is `_events_full.json` PRUNED to exactly the symbols in the
+    # fixture. A sidecar carrying events for symbols that are not there invites a loader
+    # to build a longer index than the data supports, and it makes "sidecar and fixture
+    # agree" untestable. The full version stays in the cache and is what `--build`
+    # reads, so this pruning never feeds back into the next run.
+    EVENTS.parent.mkdir(parents=True, exist_ok=True)
     EVENTS.write_text(json.dumps(
         {k: {s: v for s, v in sect.items() if s in per_symbol} for k, sect in events.items()},
         indent=1, sort_keys=True), encoding="utf-8")
-    events = json.loads(EVENTS.read_text(encoding="utf-8"))
 
     # HINDSIGHT LABELS. Exactly the crypto convention (D140/`fetch_crypto_universe.py`):
     # these are computed from the outcome, they are used ONLY to split results after the
