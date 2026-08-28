@@ -1,0 +1,185 @@
+{
+  "any_clears_H": true,
+  "bars": 2899,
+  "best_of_floor_p95": -0.3286248349185704,
+  "borrow_annual_assumed": 0.1,
+  "cells": {
+    "B&H": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.32546557738682247,
+      "clears_E": false,
+      "entries": 35,
+      "excess_sharpe": 0.7085054057585586,
+      "exposure_gross": 1.0,
+      "max_drawdown": -0.8486069918702823,
+      "min_entries_per_symbol": 1,
+      "terminal_multiple": 4.331628617030996,
+      "total_return": 3.3316286170309963,
+      "turnover_units": 35.0,
+      "vol": 0.7758318230164539,
+      "worst_bar": -0.33249774097658186
+    },
+    "C_short": {
+      "breakeven_borrow_annual": -0.26101778748202153,
+      "cagr": -0.13548480240467664,
+      "clears_E": false,
+      "entries": 1002,
+      "excess_sharpe": -0.46325909022305756,
+      "exposure_gross": 0.34049499736703526,
+      "max_drawdown": -0.6631783801745519,
+      "min_entries_per_symbol": 15,
+      "terminal_multiple": 0.46886138077824857,
+      "total_return": -0.5311386192217514,
+      "turnover_units": 1977.0,
+      "vol": 0.29229351000707166,
+      "worst_bar": -0.09043481783200158
+    },
+    "S1_short": {
+      "breakeven_borrow_annual": -0.25646114447320084,
+      "cagr": -0.10123499370552891,
+      "clears_E": false,
+      "entries": 1121,
+      "excess_sharpe": -0.3946005987010045,
+      "exposure_gross": 0.2536673437147371,
+      "max_drawdown": -0.5791907877516708,
+      "min_entries_per_symbol": 17,
+      "terminal_multiple": 0.5738957485758718,
+      "total_return": -0.4261042514241282,
+      "turnover_units": 2218.0,
+      "vol": 0.25169767675479743,
+      "worst_bar": -0.09043481783200158
+    },
+    "S2_short": {
+      "breakeven_borrow_annual": -0.31667887261374844,
+      "cagr": -0.06456243247740157,
+      "clears_E": false,
+      "entries": 162,
+      "excess_sharpe": -0.4716884483258562,
+      "exposure_gross": 0.14661852102610395,
+      "max_drawdown": -0.3719840131673823,
+      "min_entries_per_symbol": 2,
+      "terminal_multiple": 0.7066389738099741,
+      "total_return": -0.2933610261900259,
+      "turnover_units": 315.0,
+      "vol": 0.14793211204412945,
+      "worst_bar": -0.05891792741994482
+    },
+    "SHORT_ALL": {
+      "breakeven_borrow_annual": -0.44554214807230486,
+      "cagr": -0.5889984404105968,
+      "clears_E": false,
+      "entries": 35,
+      "excess_sharpe": -0.882411213241715,
+      "exposure_gross": 1.0,
+      "max_drawdown": -0.992299822657048,
+      "min_entries_per_symbol": 1,
+      "terminal_multiple": 0.009793277937669632,
+      "total_return": -0.9902067220623304,
+      "turnover_units": 35.0,
+      "vol": 0.7758411139239985,
+      "worst_bar": -0.2490490023369466
+    }
+  },
+  "concurrency": {
+    "C_short": {
+      "line": 11,
+      "max": 35,
+      "mean": 11.917324907846234,
+      "names": 35,
+      "over_line": 0.430753027909426,
+      "rot_max": 23,
+      "rot_mean": 11.917324907846234,
+      "rot_over_line": 0.5687203791469194,
+      "sd_ratio": 3.9188323228022197
+    },
+    "S1_short": {
+      "line": 11,
+      "max": 35,
+      "mean": 8.878357030015797,
+      "names": 35,
+      "over_line": 0.3054239073196419,
+      "rot_max": 16,
+      "rot_mean": 8.878357030015797,
+      "rot_over_line": 0.1416535018430753,
+      "sd_ratio": 4.366467192831901
+    },
+    "S2_short": {
+      "line": 11,
+      "max": 23,
+      "mean": 5.131648235913639,
+      "names": 35,
+      "over_line": 0.18220115850447605,
+      "rot_max": 13,
+      "rot_mean": 5.131648235913639,
+      "rot_over_line": 0.009478672985781991,
+      "sd_ratio": 2.8010774276891097
+    }
+  },
+  "effective_instruments": 1.7965083005245268,
+  "fee_bps": 10.0,
+  "fixture": "crypto_book_2018_raw.csv.gz",
+  "model_a_ruin": {
+    "C_short": {
+      "date": "2025-06-13",
+      "equity_multiple_at_1x": -1.1513043869954234,
+      "max_survivable_notional": 0.4648342680119898,
+      "ruined_at_1x": true,
+      "symbol": "BTG-USD",
+      "worst_adverse_bar": 2.1513043869954234
+    },
+    "S1_short": {
+      "date": "2025-06-13",
+      "equity_multiple_at_1x": -1.1513043869954234,
+      "max_survivable_notional": 0.4648342680119898,
+      "ruined_at_1x": true,
+      "symbol": "BTG-USD",
+      "worst_adverse_bar": 2.1513043869954234
+    },
+    "S2_short": {
+      "date": "2022-04-21",
+      "equity_multiple_at_1x": 0.2906808351173631,
+      "max_survivable_notional": 1.4098025959378369,
+      "ruined_at_1x": false,
+      "symbol": "STEEM-USD",
+      "worst_adverse_bar": 0.7093191648826369
+    }
+  },
+  "n_sims": 1000,
+  "n_symbols": 35,
+  "ppy": 365.0,
+  "rf_annual": 0.04,
+  "seconds": 6.559514999389648,
+  "seed": 0,
+  "start": 1000,
+  "study": "D253",
+  "universe_drift": {
+    "equal_weighted_cagr": -0.04165184205246634,
+    "median_symbol_cagr": -0.0912119418634772,
+    "n_symbols": 35,
+    "symbols_that_fell": 19
+  },
+  "verdict": {
+    "C_short": {
+      "clears_H": true,
+      "money_pct": 98.5,
+      "null_money_p95": -0.5952285533113532,
+      "null_sharpe_p95": -0.5836610335213479,
+      "sharpe_pct": 99.3
+    },
+    "S1_short": {
+      "clears_H": true,
+      "money_pct": 95.8,
+      "null_money_p95": -0.43779864895144377,
+      "null_sharpe_p95": -0.5141876682569331,
+      "sharpe_pct": 98.7
+    },
+    "S2_short": {
+      "clears_H": false,
+      "money_pct": 79.60000000000001,
+      "null_money_p95": -0.18796729696589418,
+      "null_sharpe_p95": -0.3417801548454,
+      "sharpe_pct": 86.3
+    }
+  },
+  "years": 5.2027397260273975
+}

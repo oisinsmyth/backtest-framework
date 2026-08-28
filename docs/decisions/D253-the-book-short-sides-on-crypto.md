@@ -140,3 +140,132 @@ separate registration with its own ledger, not a second look at this one.
 | + the motivating anatomy: 3 idio terciles x 2 universes x (2 return buckets + 1 held-bar measure) | 21 |
 | + carried from D250 | 45,936 |
 | **total** | **45,957** |
+
+---
+
+## RESULT — CLOSED, and the registered primary hurdle was the wrong hurdle
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_book_shorts_crypto.py` · artifact
+`data/book_shorts_crypto_summary.json` · page `BOOK_SHORTS_CRYPTO_RESULTS.md`
+
+35 coins x 2,899 bars, **5.20 live years**, 2020-10-15 → 2025-12-30. Universe equal-weighted
+CAGR **−4.17%**, median coin **−9.12%**, **19 of 35 coins fell**. Effective independent
+instruments **1.80 of 35**.
+
+### The one-sentence version
+
+**Two cells clear hurdle H at the 98.7th and 99.3rd percentiles on both legs, and both lose
+double-digit percentages a year — because hurdle H measures skill against random timing and
+cannot see the structural variance drag that makes a crypto short unviable regardless of skill.**
+
+### The cells (model B — one pooled account, 1/n per coin)
+
+| cell | exposure | CAGR | terminal | excess Sharpe | vol | max DD | min entries/sym | breakeven borrow |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **S1_short** | 25.4% | **−10.12%** | x0.574 | −0.395 | 25.2% | −57.92% | 17 | **−25.6%** |
+| **S2_short** | 14.7% | **−6.46%** | x0.707 | −0.472 | 14.8% | −37.20% | 2 | **−31.7%** |
+| **C_short** | 34.0% | **−13.55%** | x0.469 | −0.463 | 29.2% | −66.32% | 15 | **−26.1%** |
+| *SHORT_ALL* | *100%* | ***−58.90%*** | *x0.010* | *−0.882* | *77.6%* | *−99.23%* | — | *−44.6%* |
+| *B&H* | *100%* | *+32.55%* | *x4.332* | *+0.709* | *77.6%* | *−84.86%* | — | — |
+
+**Every breakeven borrow is NEGATIVE.** These lose with free stock loan, and would still lose if a
+counterparty *paid* 25% a year to lend. **Making borrow a headline number was worth it: the
+assumption turned out to be irrelevant, which is exactly what needed establishing.**
+
+### Hurdle H — passed, and worthless
+
+| cell | Sharpe pct | money pct | clears H |
+|---|---:|---:|:--:|
+| **S1_short** | **98.7th** | **95.8th** | **YES** |
+| S2_short | 86.3rd | 79.6th | no |
+| **C_short** | **99.3rd** | **98.5th** | **YES** |
+
+**The signal has real skill.** S1_short loses 10.12%/yr where randomly-timed shorts of identical
+exposure, turnover and holding period lose materially more. It also clearly beats the registered
+`SHORT_ALL` benchmark. **By the letter of this pre-registration, two cells pass.**
+
+**They are still uninvestable.** A book returning −10.12%/yr is not a strategy whatever percentile
+it occupies. **The registration's defect is now recorded: hurdle H is a skill test, not a
+viability test, and D253 never registered a hurdle requiring a positive return.** Necessary, not
+sufficient — and the same error is available to any future study that reads a percentile as a
+result.
+
+### Why everything loses — the mechanism, and it is quantitative
+
+**A daily-rebalanced short earns `log(2 − e^r)`, whose expectation is approximately `−mu − sigma^2`.**
+[D251](D251-the-cross-sectional-dollar-neutral-pre-screen.md) found this independently on ETFs and
+measured the drag at 6.2 to 14.9 points a year. Crypto's volatility makes it enormous:
+
+| | |
+|---|---:|
+| universe vol | **77.6%** → `sigma^2` = **0.602** |
+| universe geometric drift `mu` | −4.17% |
+| **predicted** short return `−mu − sigma^2` | **−56.05%** |
+| **measured** `SHORT_ALL` | **−58.90%** |
+| gap | **2.85 points** |
+
+**The formula predicts the measured number to under three points.** This is also why `B&H` returns
+**+32.55%** while the median coin returns **−9.12%**: the same convexity, with the sign reversed,
+paid as a rebalancing premium. **The long and short sides of this universe are not mirror images —
+variance is a tax on one and a subsidy on the other.**
+
+### Model A — ruin, caught by an assertion D238 wrote
+
+`run_short_mirror.signed_log_returns` refuses to score a position wiped out on one bar. **It
+refused.**
+
+| cell | worst adverse bar | | equity at 1x | verdict |
+|---|---:|---|---:|---|
+| **S1_short** | **+215.1%** | BTG-USD 2025-06-13 | **−1.15** | **RUINED** |
+| **C_short** | **+215.1%** | BTG-USD 2025-06-13 | **−1.15** | **RUINED** |
+| S2_short | +70.9% | STEEM-USD 2022-04-21 | +0.29 | survives |
+
+**Maximum survivable per-name notional is 0.46x.** Eight bars in this fixture would wipe out a
+full-notional short; the arms held one of them. **A guard written for a different study on a
+different asset class caught the thing that matters most here** — that a crypto short is not
+merely unprofitable but not survivable at full size.
+
+Model B (pooled, 1/n) is what the table above scores, and **it flatters the arms**: it assumes
+costless continuous rebalancing to 1/n and no intra-bar margin call. Both models are reported;
+the ruin is not superseded by the pooled numbers.
+
+### R10 — concurrency, and T-c was right
+
+| cell | mean held | max | *rotated max* | **sd ratio** |
+|---|---:|---:|---:|---:|
+| S1_short | 8.9 | **35 of 35** | *16* | **4.37x** |
+| S2_short | 5.1 | 23 of 35 | *13* | **2.80x** |
+| C_short | 11.9 | **35 of 35** | *23* | **3.92x** |
+
+**Both S1-derived cells hold the entire universe at once.** Effective instruments **1.80 of 35**.
+The 1,121 pooled entries are not a sample size.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **T-a** | both arms hold bars that fall relative to their own drift | **CONFIRMED** — S1_short at the 98.7th percentile of its matched null |
+| **T-b** | at least one cell clears H on both legs | **CONFIRMED** — two do, and it did not matter |
+| **T-c** | concurrency extreme, over half the universe at peak | **CONFIRMED** — 35 of 35, sd ratio 4.37x |
+| **T-d** | S2_short fails hurdle E | **CONFIRMED**, and understated: **all three fail**, at 17 / 2 / 15 minimum entries |
+| **T-e** | raw returns look good and most is drift | **FALSIFIED, and it is the informative one.** The raw returns look terrible and the null looks worse. I expected drift to flatter the arms; instead **variance drag crushed everything and the arms beat their nulls by losing less** |
+
+**T-e is the miss worth more than the four hits.** The pre-registration anticipated the wrong
+confound. It guarded against a good-looking number being drift, and the actual hazard was a
+bad-looking number being read as a failure of the signal when it was a failure of the instrument.
+
+### What is closed, and what is not
+
+**CLOSED per the registered stop.** No fourth cell, no calendar-matched variant, no move to the
+63-name universe.
+
+**What this does NOT close is the principal's hypothesis.** The between-universe claim held: the
+buy-the-dip premium reverses sign between ETFs and crypto, and the short signal has measurable
+skill here where it had none on ETFs. **What defeats it is a second obstacle the hypothesis never
+addressed** — the variance drag on a short position, which scales with `sigma^2` and is therefore
+worst in exactly the high-idiosyncratic instruments the hypothesis points toward.
+
+**That is the finding: the two effects run in opposite directions.** Idiosyncratic risk is where
+the short edge lives, and it is also what makes a short position bleed. Crypto has enough of the
+second to swamp the first by an order of magnitude. A single-name equity universe sits between the
+two extremes, which is where D252's fixture becomes the deciding test rather than an extension.
