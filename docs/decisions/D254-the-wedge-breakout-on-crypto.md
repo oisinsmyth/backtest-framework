@@ -213,3 +213,80 @@ for the two long cells.
 **CLOSED as registered.** No parameter sweep, no second arming threshold, no move to the 63-name
 universe. **The anatomy's sign stands as a mechanism finding regardless of the cells**, which is
 why it was registered as a separate prediction from the hurdles.
+
+---
+
+## ADDENDUM — the wedge's last untested claim, and the line is now closed for good
+
+**Produced:** 2026-08-28, after D254 was scored. A **pre-screen** in D250's shape: measure the
+conditional cheaply, state the bar in advance, and do not build a runner unless it clears.
+
+### The question neither study asked
+
+D249 and D254 both asked *"which way?"* and got nothing. **Neither asked the textbook claim: does
+compression forecast expansion?** The h=5 anatomy is what raised it — crypto up-breaks **+80.62%**
+and down-breaks **+81.40%**, near-identical, which is the signature of a volatility forecast rather
+than a directional one.
+
+**The bar was stated before the run, and it is not "is there a relationship".** Compression *is*
+low volatility, and volatility is autocorrelated, so a naive test passes trivially. The bar is
+whether channel width beats **trailing realised volatility** — a one-line estimator — at
+forecasting forward realised volatility.
+
+### It does not, on either universe
+
+| | ETFs (16.8 yr, 92,736 cells) | crypto (5.2 yr, 33,210 cells) |
+|---|---:|---:|
+| corr(width, forward vol) | −0.077 | −0.109 |
+| **corr(trailing vol, forward vol)** — the control | **+0.683** | **+0.400** |
+| corr(width, trailing vol) | −0.131 | −0.252 |
+| **partial corr(width, forward \| trailing)** | **+0.018** | **−0.009** |
+
+**The wedge adds essentially nothing over `std(returns, 21)`.** Double-sorted, the raw width spread
+of −2.64% (ETFs) collapses to **−0.39%** inside trailing-vol terciles, and crypto's −14.04%
+collapses to **−4.40%** — and on ETFs the within-bucket sign is not even stable (+1.8%, +0.8%,
+−3.8%).
+
+**The direction of the raw effect is also wrong for the textbook claim.** A *narrower* channel
+predicts *lower* forward volatility, not higher. Compression does not precede expansion here; it
+precedes more of the same quiet. **The wedge is a laggy, expensive proxy for trailing volatility.**
+
+### The arming threshold, widened — and it makes hurdle E worse, not better
+
+The proposal was that 2 ATR is too tight and a real wedge is generally wider. **Measured, episodes
+peak at 3 ATR and then decline:**
+
+| arm ≤ k ATR | % of cells (ETF) | episodes | per name | median gap |
+|---:|---:|---:|---:|---:|
+| 2.0 | 10.32% | 3,021 | 53.0 | 14 bars |
+| **3.0** | 34.76% | **5,586** | **98.0** | 13 bars |
+| 4.0 | 48.23% | 5,062 | 88.8 | 14 bars |
+| 5.0 | 50.41% | 4,732 | 83.0 | 15 bars |
+| 6.0 | 50.61% | 4,689 | 82.3 | 15 bars |
+
+**The share of armed cells saturates near 50%, which is simply the converging fraction** — past
+about 4 ATR the threshold stops selecting anything. And because the armed state becomes nearly
+always-on, *episodes* fall: one long episode replaces several short ones.
+
+**The structural reason hurdle E cannot be bought with a looser threshold:** the median gap between
+episodes is **13–15 bars at every threshold**, which is *shorter than the 21-bar hold*. So most
+firings arrive while the symbol is still held and are suppressed — D254 measured **2,090 of 2,416
+suppressed for `D_long`, 86%**. Widening the threshold generates more firings into a queue that is
+already full.
+
+**Loosening the arming threshold cannot reach hurdle E. Only a shorter hold could, and that pays
+the cost wall instead.**
+
+### Verdict
+
+**The wedge line is CLOSED — directionally by D249 and D254, and now as a volatility forecaster
+too.** Three distinct claims tested across two universes, none surviving:
+
+| claim | verdict |
+|---|---|
+| the break's direction is informative | **failed**, 6 cells, 2 universes |
+| the mechanism is basket-vs-single-asset | **falsified** — same sign both universes (X-2) |
+| compression forecasts expansion | **failed** — partial corr +0.018 / −0.009 against a control at +0.683 / +0.400 |
+
+**Cost of this addendum: one pre-screen, no runner, no new fixture, nothing spent that matters.**
+That is the D250 discipline doing exactly what it was written for.
