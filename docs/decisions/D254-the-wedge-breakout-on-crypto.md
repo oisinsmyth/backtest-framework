@@ -120,3 +120,96 @@ a mechanism finding independent of whether any cell is tradeable.
 | + the anatomy: 2 directions x 4 horizons | 11 |
 | + carried from D253 | 45,957 |
 | **total** | **45,968** |
+
+---
+
+## RESULT — CLOSED. X-2 falsified, and it is the most useful thing in this record.
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_wedge_crypto.py` · page
+`WEDGE_CRYPTO_RESULTS.md` · 34 coins x 2,899 bars, 5.20 live years, armed on **12.43%** of live
+cells, effective instruments **1.80**.
+
+### X-2 — the load-bearing number, and it went the wrong way
+
+| horizon | **crypto up** | **crypto down** | **crypto spread** | *ETF spread* |
+|---:|---:|---:|---:|---:|
+| 5 | +80.62% (3,490) | +81.40% (2,409) | **−0.78%** | *−8.08%* |
+| 10 | +54.96% | +32.28% | **+22.67%** | *−2.16%* |
+| 21 | −1.52% | +18.70% | **−20.22%** | *−6.96%* |
+| 42 | −36.39% | +7.91% | **−44.30%** | *−8.84%* |
+| 63 | −43.95% | +18.55% | **−62.50%** | *−10.05%* |
+
+**The crypto spread is positive at one horizon of five, and strongly NEGATIVE at 21, 42 and 63 —
+the same sign as the ETFs and three to six times the magnitude.**
+
+**X-2 is FALSIFIED, and the basket hypothesis therefore does not explain the breakout result.**
+This was registered in advance as the outcome that would make the prediction wrong *in an
+interesting way*, and it is: down-breaks outperform up-breaks in **both** universes, so
+diversification cancelling asset-specific continuation cannot be the cause.
+
+### What the falsification points at instead
+
+**The wedge does not select weakness. It selects volatility COMPRESSION.** A converging channel
+narrower than 2 ATR is a quiet name, and the trigger fires on expansion out of that quiet. So the
+conditioning variable is *not* the one [D253](D253-the-book-short-sides-on-crypto.md) tested:
+
+| conditioning on | ETFs | crypto |
+|---|---|---|
+| **past return** (D253's anatomy) | fallen names **bounce** (+39.77%) | fallen names **keep falling** (−50.57%) |
+| **wedge compression + break** (here) | down-break **rises** | down-break **rises** |
+
+**Those are two different phenomena and the hypothesis only governs the first.** Post-compression
+reversion appears to be a property of the setup rather than of the asset class, which is why it
+survives a change of universe that reverses the past-return effect completely.
+
+**So the principal's hypothesis stands where it was tested and does not extend here:**
+
+- **Shorts — CONFIRMED.** D253 found real timing skill on crypto (98.7th percentile) where the
+  identical rule had none on ETFs.
+- **Breakouts — FALSIFIED.** Same sign in both universes, so the mechanism is not the one proposed.
+
+### The cells — and why nothing succeeds
+
+| cell | exposure | CAGR | excess Sharpe | H (Sharpe / money) | V | E | success |
+|---|---:|---:|---:|---:|:--:|:--:|:--:|
+| **U_long** | 12.7% | **+10.60%** | +0.668 | 73.6th / 91.3rd | yes | no (min 5) | **no** |
+| **D_long** | 10.3% | **+9.47%** | +0.686 | 64.2nd / 86.0th | yes | no (min 3) | **no** |
+| **D_short** | 10.3% | **−11.07%** | −0.834 | 41.8th / **8.7th** | no | no (min 3) | **no** |
+
+**Both long cells make money and neither beats its null.** That is the cleanest demonstration in
+the programme of why hurdle H exists: a randomly-timed book of identical exposure captures the
+same **+32.55%** pooled buy-and-hold that the arms are riding, so the positive CAGR is exposure,
+not signal. The best-of-three floor is **+1.063**, far above either.
+
+**`D_short` sits at the 8.7th percentile on money — actively worse than random**, which the
+anatomy already said it would be.
+
+**X-1 is FALSIFIED, and so is the principal's prediction.** No cell beats its rotation null at
+p95. The registered bet was that it would.
+
+### Scoring
+
+| | prediction | conf. | outcome |
+|---|---|---|---|
+| **principal** | it will at least beat the nulls | — | **FALSIFIED** — best is 73.6th on Sharpe |
+| **X-1** | ≥1 cell beats its null at p95 on Sharpe | ~70% | **FALSIFIED** |
+| **X-2** | the up/down spread flips sign vs ETFs | ~70% | **FALSIFIED** — the finding |
+| **X-3** | hurdle E fails on every cell | ~90% | **CONFIRMED** — minimums of 5 / 3 / 3 |
+| **X-4** | `D_short` posts a negative CAGR | ~80% | **CONFIRMED** (−11.07%); the *"even where it beats its null"* clause is **MOOT** — it did not |
+| **X-5** | concurrency ≥30 of 34 at once | ~75% | **FALSIFIED** — 29 / 26 / 26, though sd ratios of 2.4–3.0x confirm the clustering |
+
+**Three of my five predictions failed, and the two that carried the argument were both wrong.**
+Registering them numerically is what makes that visible rather than absorbable.
+
+### R10 and ruin
+
+Concurrency maxima 29 / 26 / 26 of 34 against rotated maxima of 11 / 10 / 9 — **sd ratios 3.02x,
+2.44x, 2.88x.** `D_short` is ruined at full per-name notional (**BTG-USD +102.4%, 2025-12-09**,
+max survivable **0.98x**). The ruin measure is short-side by construction and is reported as N/A
+for the two long cells.
+
+### Stop
+
+**CLOSED as registered.** No parameter sweep, no second arming threshold, no move to the 63-name
+universe. **The anatomy's sign stands as a mechanism finding regardless of the cells**, which is
+why it was registered as a separate prediction from the hurdles.
