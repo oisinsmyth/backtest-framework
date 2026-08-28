@@ -134,3 +134,48 @@ scrutiny as one that comes out of it.**
 
 **Scope:** binding on every descriptive cut, anatomy and conditional-return table. Introduced by
 D248.
+
+
+## R10. A pooled conditional-return table must report concurrency beside it
+
+Any table that pools forward returns across `(symbol, bar)` must be accompanied by **how many
+names the resulting book would hold at once** — mean, max, and the fraction of bars above a stated
+crowding line — each measured **against a per-symbol-rotated book of identical exposure**.
+
+**Because:** [D249](decisions/D249-the-inverse-wedge-breakout.md) was proposed on a conditional-
+return table showing **1,474 down-break observations returning +15% to +18%** against a +7.84%
+baseline. The table was correct. Every cell was properly lagged and R9 was satisfied. **The book
+those bars assemble into still failed its null**, because the 1,474 observations were not 1,474
+independent events — they were a few dozen market-wide ones.
+
+The measurement that named it:
+
+| | held bars' own volatility | names held, max | *rotated max* | bars over 20 names | *rotated* |
+|---|---:|---:|---:|---:|---:|
+| the wedge book | **1.14x** | **41** of 57 | *23* | **13.7%** | *0.0%* |
+
+**The bars were barely louder than average; the book was vastly more crowded.** Converging
+channels break downward together because they break when the market falls, so the rule was not
+selecting *which* instrument to buy but *when* to buy all of them. That is why the book ran
+**2.20x** the null's volatility, cleared the money leg at the **99.8th** percentile and failed the
+Sharpe leg at the **63.0th**, and carried an **-18.24%** drawdown at 15.4% exposure where S2
+carries **-5.83%** at 13.3%.
+
+**This is R9's neighbour, not a case of it.** R9 catches a table that conditions on the bar it
+measures. **R10 catches a table that is correct per bar and misleading about the portfolio** — the
+diversification a pooled count appears to supply is illusory on exactly the bars that matter.
+
+**Corollary — pooled counts are not sample sizes, and the fix is not a bigger universe.** Effective
+independent instruments on this universe saturate near **2.2** regardless of headcount, so a
+pooled trade count overstates the sample by roughly the concurrency factor. Report both, always,
+and never quote the pooled number alone.
+
+**Second corollary — a per-symbol rotation null is a biased control for a market-wide signal.**
+`rotation_nulls` draws an **independent offset per symbol**, which destroys cross-sectional
+synchrony by construction and therefore **understates the volatility of any book whose triggers
+synchronise**. It is conservative on money and harsh on Sharpe. Requiring **both** legs is what
+brackets the truth; a single-leg verdict on such a rule is not safe.
+
+**Scope:** binding on every pooled conditional-return table, anatomy and setup census whose
+triggers can synchronise across the universe — which is nearly all of them on a single asset
+class. Introduced by D249.
