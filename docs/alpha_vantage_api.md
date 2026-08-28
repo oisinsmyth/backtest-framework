@@ -1,6 +1,7 @@
-# Alpha Vantage: the intraday equity provider
+# Alpha Vantage: the equity provider
 
-Reference for `scripts/fetch_etf_intraday.py`. Written 2026-08-27.
+Reference for `scripts/fetch_etf_intraday.py`. Written 2026-08-27; extended 2026-08-28 with
+`LISTING_STATUS` and `TIME_SERIES_DAILY_ADJUSTED` for `scripts/fetch_short_universe.py` (D252).
 
 **Every claim here is tagged by provenance**, because the split matters: the
 documentation is thin on exactly the points a study depends on, and several of the
@@ -170,6 +171,79 @@ resampling avoids the problem rather than solving it.
 
 ---
 
+## `LISTING_STATUS` — the delisted roster, and the traps in it
+
+Added 2026-08-28 for [D252](decisions/D252-the-dead-inclusive-us-single-name-universe.md), the
+dead-inclusive single-name fixture. **The documentation for this endpoint is two sentences in a
+spreadsheet add-in reference**, so everything below except the parameter list is [MEASURED].
+
+**[DOC]** `state` is `active` or `delisted`, default `active`. `date` is *"Get listing status for
+this date. Default is most recent trading date"*, format `YYYY-MM-DD`, supported from 2010-01-01.
+
+**[MEASURED]** Returns CSV with `symbol, name, exchange, assetType, ipoDate, delistingDate, status`.
+
+| | rows | `assetType == "Stock"` |
+|---|---:|---:|
+| `state=active` | 14,389 | 8,609 |
+| `state=delisted` | 9,449 | 7,469 |
+
+**`state=delisted` with no `date` is CUMULATIVE, not a snapshot.** It returns every symbol the
+provider has ever seen delisted — `delistingDate` spanning 1997-04-01 to the day of the call. Dated
+calls are strict subsets: 183 rows at `2012-06-29`, 4,099 at `2020-06-30`.
+
+**Dated snapshots are still worth querying, because inclusion is not monotone.** A ticker recycled
+by a new issuer drops off the current delisted roster. The union of 16 yearly snapshots holds
+**8,187** distinct dead `Stock` tickers against **7,469** from the cumulative call — **718 dead
+names, 9.6% of the cohort, that a single call does not return.**
+
+### Three traps, each of which would corrupt a survivorship analysis
+
+**1. `assetType == "Stock"` is not common stock.** Warrants, units, rights and every preferred
+series are filed under it: `AA-W`, `AAC-U`, `-P-HIZ`, and 627 five-letter tickers ending `U`.
+Filtering by `assetType` alone gives a universe roughly a third of which is not equity.
+
+**2. `delistingDate` is often a roster-refresh stamp.** **601 of the 9,449 delisted rows — 6.4% —
+carry `2026-08-27`**, the day the roster was pulled; the next largest single date is `2026-05-28`
+with 54. Six hundred companies did not delist on one Thursday. Taking the field at face value puts
+601 phantom same-day delistings into any survival curve. Some rows also *contradict* the bars: LTCH
+is stamped `2026-05-28` and trades through `2026-08-26`.
+
+**3. Delisting coverage before ~2013 is thin.** By year: 40 (2009), 46, 76, 55, then 140, 185, 382,
+559, 766, and roughly 700–1,000 a year after 2016. Several hundred US listings die every year in
+reality, so **any "delistings rose over time" reading off this endpoint is an artefact of the
+archive**, not a fact about the tape.
+
+### Dead tickers do serve data
+
+**[MEASURED]** `TIME_SERIES_DAILY_ADJUSTED` on delisted symbols returns full history terminating at
+the delisting date — AABA 5,016 bars to 2019-11-06, TWTR 2,260 to 2022-10-28, AAI 2,567 to
+2011-11-30 — and `SPLITS` / `DIVIDENDS` answer for them too. Not every delisted symbol resolves
+(LEHMQ returns `Error Message`), so failures must be counted rather than assumed absent.
+
+---
+
+## `TIME_SERIES_DAILY_ADJUSTED` — three payloads in one request
+
+**[MEASURED]** Fields: `1. open`, `2. high`, `3. low`, `4. close`, `5. adjusted close`, `6. volume`,
+`7. dividend amount`, `8. split coefficient`.
+
+**Columns 1–4 are AS-TRADED.** AAPL 1999-11-01 returns `4. close` **77.62** against
+`5. adjusted close` **0.58** — the raw columns carry none of the 2000/2005/2014/2020 splits. So this
+endpoint serves the same frame as `TIME_SERIES_DAILY` *plus* the corporate actions inline, at one
+request instead of three. D24's immutability argument and D75's two-frame separation are unaffected;
+splits must still be applied by the consumer.
+
+**The one cost:** the inline actions cover only the window the series covers. AABA's `SPLITS`
+endpoint lists three splits where the inline coefficients show two, the missing one predating the
+series. Immaterial for a span starting well after the series start; not for one that does not.
+
+**[MEASURED] Throughput is payload-bound, not limit-bound.** A full daily history is a few hundred
+kilobytes. A sequential loop paced for 66/min measured **35/min**; four concurrent workers behind one
+shared limiter measured **38/min**. Budget ~90 minutes per 3,400 symbols and do not expect
+concurrency to fix it.
+
+---
+
 ## Rate limits and tiers
 
 **[DOC]** Free tier: **25 requests per day**, and historical intraday is premium-gated
@@ -261,6 +335,9 @@ Flagged rather than guessed:
 ## See also
 
 - `scripts/fetch_etf_intraday.py` — the fetcher, with `--plan` / `--fetch` / `--build`
+- `scripts/fetch_short_universe.py` — the dead-inclusive single-name fetcher; the
+  `LISTING_STATUS` and `TIME_SERIES_DAILY_ADJUSTED` measurements above were made for it
+- `docs/decisions/D252-the-dead-inclusive-us-single-name-universe.md` — what was built on them
 - `docs/decisions/D160-intraday-data-reality-and-the-1h-study-base.md` — the yfinance
   retention wall that forced this provider
 - `docs/decisions/D161-the-resampling-contract.md` — the UTC-bucket contract that does not

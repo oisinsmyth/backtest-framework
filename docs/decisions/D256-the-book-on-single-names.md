@@ -141,3 +141,114 @@ not touched.**
 | + reachability diagnostic (3 arms x 3 levels) | 21 |
 | + carried from D255 | 46,007 |
 | **total** | **46,028** |
+
+---
+
+## RESULT — both parts CLOSED, and the study falsifies the reason D255 gave for its own failure
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_book_single_names.py --sims 400` ·
+`BOOK_SINGLE_NAMES_RESULTS.md`
+
+**Fixture as built:** **1,580 names**, 4,187 bars, 2010-01-04 → 2026-08-26, **564 dead (35.7%)**,
+delistings spread 7–66 per year. **135 of 1,580 symbols carry internal gaps** — caught by a
+pre-run assertion (`AAV: window 2254 != bars 2252`) which forced indicators to be scattered to
+each symbol's **actual** bar indices rather than a contiguous slice. A slice would have misaligned
+every indicator on those 135 names by the gap width.
+
+### Part B — reachability rose threefold and the overlay still hurts
+
+| arm | trades | median max gain | **reach +20%** | *ETF (D255)* |
+|---|---:|---:|---:|---:|
+| S1 | 38,220 | +4.25% | **9.0%** | *2.8%* |
+| S2 | 6,299 | +8.42% | **21.4%** | *9.7%* |
+| C | 41,402 | +4.85% | **11.2%** | *4.2%* |
+
+**Z-a is directionally right and numerically short** — reachability is 2–3x the ETF figure, but
+the prediction was ">15% for the long arms" and only S2 clears.
+
+**And every one of the nine take-profit cells hurts:**
+
+| | TP10 | TP20 | TP30 |
+|---|---:|---:|---:|
+| S1 vs base | −0.016 | −0.005 | −0.006 |
+| S2 vs base | **−0.073** | −0.026 | −0.005 |
+| C vs base | **−0.051** | −0.020 | −0.011 |
+
+**The harm is monotone in tightness, and the loosest target approaches neutral only by ceasing to
+fire** (S2:TP30 cuts 726 of 6,299 trades for −0.005).
+
+> **This falsifies D255's own explanation of its own result.** D255 attributed the +0.017 ceiling
+> to reachability — *"97.2% of its trades never travel far enough to be cut."* **Here trades travel
+> three times as far and the overlay is still harmful.** Reachability was never the binding
+> constraint. **A take-profit on these rules is simply a bad exit**, and it approaches harmlessness
+> only by becoming inert. [FINDINGS §5](../FINDINGS.md) is corrected accordingly.
+
+### Part A — no skill on single names
+
+| cell | exposure | CAGR | **exposure x edge** | H (Sharpe / money) | V | E |
+|---|---:|---:|---:|---:|:--:|:--:|
+| S1_short | 13.6% | −3.01% | −2.95% | 88.5th / 11.5th | n | n |
+| S2_short | 7.7% | −1.13% | −1.11% | 90.2nd / 87.2nd | n | n |
+| C_short | 18.1% | −3.52% | −3.43% | 83.5th / 17.0th | n | n |
+
+**Z-b is FALSIFIED.** No cell clears H, and the best is S2_short at the 90.2nd/87.2nd. **On crypto
+the identical rule reached the 98.7th.** Skill did *not* appear in the middle case, which is what
+the hypothesis predicted it would.
+
+**Z-c and Z-d confirmed** — no cell clears V, and E fails at a minimum of **1** entry per traded
+symbol across 1,357 symbols.
+
+### Z-e — falsified, and my measure was stated in the wrong units
+
+**First a correction to my own prediction.** Z-e was stated as an `sd_ratio` under 2.5x. **That
+statistic is not comparable across universes of different size** — with `n` names driven by one
+factor it scales roughly as `sqrt(n)`, so the ETF-to-single-name jump from 3.02x to 9.64x is mostly
+arithmetic, not evidence. **`max share of live names held` is the scale-free measure** and is what
+should have been registered.
+
+| book | max share of live held | universe |
+|---|---:|---|
+| crypto S1_short (D253) | **100%** | 34 names |
+| **single names S1** | **76.5%** | **1,580 names** |
+| ETF wedge (D249) | ~72% | 57 names |
+
+**Single names cluster essentially as hard as ETFs.** A market-wide event takes down **76.5% of
+1,580 individually-listed companies at once**.
+
+### The finding, and it is the one worth carrying forward
+
+> **An equal-weighted book over 1,580 single names IS a diversified basket.** The idiosyncratic
+> variance exists at the **name** level and averages away at the **book** level. In building the
+> universe the hypothesis asked for, we rebuilt the very diversification the hypothesis identified
+> as the problem.
+
+That reconciles the whole sequence: **crypto (34 names, little averaging) showed skill at the
+98.7th percentile; single names (1,580 names, maximal averaging) show none.** It was never the
+instrument's listing status — **it is how many of them you hold at once.**
+
+**And it exposes a tension the programme has to face:** *the same averaging that buys statistical
+confidence destroys the idiosyncratic edge being measured.* Concentration would preserve the edge
+and collapse the sample; breadth preserves the sample and averages out the edge. **Hurdle E and
+the short hypothesis pull in opposite directions**, and no universe choice resolves it.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **Z-a** | reachability >15% on the long arms | **PARTIAL** — 2–3x the ETF rate, but 9.0% / 21.4% / 11.2% |
+| **Z-b** | ≥1 short cell clears H | **FALSIFIED** — best 90.2nd, against 98.7th on crypto |
+| **Z-c** | no short cell clears V | **CONFIRMED** |
+| **Z-d** | E fails everywhere | **CONFIRMED** — minimum of 1 |
+| **Z-e** | concurrency materially lower | **FALSIFIED**, and the statistic was mis-specified |
+
+**Three of five failed. Both load-bearing predictions failed**, and the study is worth more for it
+than a confirmation would have been.
+
+### The stop applies to both parts
+
+**CLOSED.** No parameter sweeps, no additional levels, no second fixture cut. D245's reserved
+cohort was never touched.
+
+**What a future study would need is not a new universe but a different construction** — a
+concentrated book, which collides with hurdle E, or a factor-neutral one, which D251 closed on
+ETFs and which this fixture's breadth could now support.

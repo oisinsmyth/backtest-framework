@@ -184,6 +184,13 @@ D251 measured the factor-removal gain directly: the eigenvalue participation rat
 hurt. A stop on a rule that buys dips cuts the signal — D236's mechanism, now measured from the
 universe side at **+89.74%** forward after a −20% five-bar move.
 
+**CORRECTION, from [D256](decisions/D256-the-book-on-single-names.md):** the ceiling above is real
+but **the reason given for it was wrong.** D255 attributed it to reachability. On single names
+reachability is **2–3x higher** (S1 reaches +20% on 9.0% of trades against 2.8%) and **all nine
+take-profit cells still hurt**, monotonically in tightness, approaching neutral only by ceasing to
+fire. **Reachability was never the binding constraint — a take-profit on these rules is simply a
+bad exit.**
+
 **One row is not dead:** **61.8% of all stop levels beat S2's base** (best +0.121), so a stop
 generically helps the trend arm — but **no particular level is special**, so the effect is *having
 a stop*, not *having a 10% stop*.
@@ -259,5 +266,24 @@ pre-live screen).
 2. **Take-profit reachability** — the exact quantity that closed D255, and the one that should
    differ most between a basket and a single name.
 
-**Caveat:** 231 names gives effective breadth near 4, not 50. Enough for a real test, not enough
-for a decile sort.
+**RESOLVED, 2026-08-28, by [D256](decisions/D256-the-book-on-single-names.md) — and the answer was
+neither of the two expected.** The fixture built out at **1,580 names, 35.7% dead**. Both parts
+closed: no short cell cleared H (best 90.2nd against crypto's 98.7th), and every take-profit cell
+hurt despite three times the reachability.
+
+> **An equal-weighted book over 1,580 single names IS a diversified basket.** Idiosyncratic
+> variance exists at the **name** level and averages away at the **book** level — the book holds
+> **76.5% of live names at once**, against ~72% for the ETF wedge. **We rebuilt the very
+> diversification the hypothesis identified as the problem.**
+
+**So the operative variable is not the instrument's listing status — it is how many you hold at
+once.** Crypto's 34-name book showed skill at the 98.7th percentile; a 1,580-name book shows none.
+
+**And that exposes a tension with no universe-level solution:** *the same averaging that buys
+statistical confidence destroys the idiosyncratic edge being measured.* Concentration preserves the
+edge and collapses the sample; breadth preserves the sample and averages out the edge. **Hurdle E
+and the short hypothesis pull in opposite directions.**
+
+**What is live now** is therefore a question of **construction**, not universe: a concentrated
+book (colliding with hurdle E), or a factor-neutral one — which D251 closed on ETFs at breadth 2.2
+but which this fixture's 1,580 names could genuinely support.
