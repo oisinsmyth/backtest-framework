@@ -1,0 +1,302 @@
+{
+ "bars": 55726,
+ "bars_per_session": 25.846938775510203,
+ "best_of_p95": 0.3150221730228085,
+ "bootstrap": {
+  "S1_long_cont": {
+   "clears_Q3": false,
+   "p05": -0.7603673027513486,
+   "p95": 0.267859366864372
+  },
+  "S1_long_intra": {
+   "clears_Q3": false,
+   "p05": -1.2409223670738927,
+   "p95": 0.038300223034542946
+  },
+  "S1_short_cont": {
+   "clears_Q3": false,
+   "p05": -1.8056250426897835,
+   "p95": -0.7186500541363088
+  },
+  "S1_short_intra": {
+   "clears_Q3": false,
+   "p05": -2.100249084698307,
+   "p95": -1.028723062468514
+  },
+  "S2_long_cont": {
+   "clears_Q3": false,
+   "p05": -0.3499729953687565,
+   "p95": 0.7486151758235484
+  },
+  "S2_long_intra": {
+   "clears_Q3": false,
+   "p05": -1.7358808076522136,
+   "p95": -0.6341783960862304
+  },
+  "S2_short_cont": {
+   "clears_Q3": false,
+   "p05": -1.3371477003437313,
+   "p95": -0.29062201919521996
+  },
+  "S2_short_intra": {
+   "clears_Q3": false,
+   "p05": -1.709941553832138,
+   "p95": -0.5123958659716299
+  }
+ },
+ "borrow_annual": 0.01,
+ "breakeven_bps": {
+  "S1_long_cont": 0.6032816225109983,
+  "S1_long_intra": 0.8600336653519225,
+  "S1_short_cont": -1.5465948153581266,
+  "S1_short_intra": 0.13037882125033207,
+  "S2_long_cont": 4.081383563158125,
+  "S2_long_intra": -0.868523363837248,
+  "S2_short_cont": -7.711707573920812,
+  "S2_short_intra": -1.0540118352952987
+ },
+ "buy_and_hold": {
+  "borrow_paid_annualised": 0.0,
+  "cagr": 0.0901697915285814,
+  "clears_E": false,
+  "entries": 57,
+  "excess_sharpe": 0.2885495236439298,
+  "exposure_long": 1.0,
+  "exposure_short": 0.0,
+  "max_drawdown": -0.3577687009470327,
+  "min_entries_per_symbol": 1,
+  "total_return": 1.0655075715359965,
+  "turnover_per_year": 0.11901890456873462,
+  "vol": 0.1632743745551048
+ },
+ "cells": {
+  "S1_long_cont": {
+   "borrow_paid_annualised": 0.0,
+   "cagr": -0.013672576384929504,
+   "clears_E": true,
+   "entries": 43335,
+   "excess_sharpe": -0.2790862558129619,
+   "exposure_long": 0.22595308942604658,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.24038884852282305,
+   "min_entries_per_symbol": 687,
+   "total_return": -0.10923079789187554,
+   "turnover_per_year": 180.95884816745294,
+   "vol": 0.08108166641481988
+  },
+  "S1_long_intra": {
+   "borrow_paid_annualised": 0.0,
+   "cagr": -0.019768047145456016,
+   "clears_E": true,
+   "entries": 68206,
+   "excess_sharpe": -0.5855729318196424,
+   "exposure_long": 0.21575812132018457,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.20968775591453137,
+   "min_entries_per_symbol": 1050,
+   "total_return": -0.15443925844428683,
+   "turnover_per_year": 284.8226788877687,
+   "vol": 0.04854831332683959
+  },
+  "S1_short_cont": {
+   "borrow_paid_annualised": 0.0032361023619865343,
+   "cagr": -0.06484845376787454,
+   "clears_E": true,
+   "entries": 49713,
+   "excess_sharpe": -1.247801696848544,
+   "exposure_long": 0.0,
+   "exposure_short": 0.2716441910609217,
+   "max_drawdown": -0.45069348032891987,
+   "min_entries_per_symbol": 735,
+   "total_return": -0.4306887593365799,
+   "turnover_per_year": 207.55435321117176,
+   "vol": 0.05630960707857708
+  },
+  "S1_short_intra": {
+   "borrow_paid_annualised": 0.0,
+   "cagr": -0.05549031328119297,
+   "clears_E": true,
+   "entries": 79877,
+   "excess_sharpe": -1.5499949776149742,
+   "exposure_long": 0.0,
+   "exposure_short": 0.2592289113677004,
+   "max_drawdown": -0.4066148860884218,
+   "min_entries_per_symbol": 1219,
+   "total_return": -0.3810099743509879,
+   "turnover_per_year": 333.52229136595463,
+   "vol": 0.03683194913218587
+  },
+  "S2_long_cont": {
+   "borrow_paid_annualised": 0.0,
+   "cagr": 0.011300431858552033,
+   "clears_E": true,
+   "entries": 6643,
+   "excess_sharpe": 0.19148057410708344,
+   "exposure_long": 0.12874857904546477,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.08255421232130766,
+   "min_entries_per_symbol": 106,
+   "total_return": 0.0990147186322566,
+   "turnover_per_year": 27.718876458771092,
+   "vol": 0.03231377719342473
+  },
+  "S2_long_intra": {
+   "borrow_paid_annualised": 0.0,
+   "cagr": -0.019596855689336043,
+   "clears_E": true,
+   "entries": 21723,
+   "excess_sharpe": -1.209359536913761,
+   "exposure_long": 0.12377868436760871,
+   "exposure_short": 0.0,
+   "max_drawdown": -0.1569071107859642,
+   "min_entries_per_symbol": 335,
+   "total_return": -0.1531977124386022,
+   "turnover_per_year": 90.69449333233312,
+   "vol": 0.020377955540565307
+  },
+  "S2_short_cont": {
+   "borrow_paid_annualised": 0.001232452962278117,
+   "cagr": -0.024363124898028964,
+   "clears_E": true,
+   "entries": 6487,
+   "excess_sharpe": -0.7844297008625738,
+   "exposure_long": 0.0,
+   "exposure_short": 0.12355139575723653,
+   "max_drawdown": -0.21045483482119487,
+   "min_entries_per_symbol": 100,
+   "total_return": -0.18717093172144794,
+   "turnover_per_year": 27.086197018695184,
+   "vol": 0.033014449745847066
+  },
+  "S2_short_intra": {
+   "borrow_paid_annualised": 0.0,
+   "cagr": -0.025115599562623037,
+   "clears_E": true,
+   "entries": 20945,
+   "excess_sharpe": -1.1128601200733501,
+   "exposure_long": 0.0,
+   "exposure_short": 0.11877480859990858,
+   "max_drawdown": -0.19861521189251452,
+   "min_entries_per_symbol": 317,
+   "total_return": -0.19242320781465078,
+   "turnover_per_year": 87.46427850131853,
+   "vol": 0.02285676178764615
+  }
+ },
+ "conditional_returns": {
+  "ALL BARS": {
+   "annualised": 0.09019380271494876,
+   "bars": 3119382
+  },
+  "S1_short_cont": {
+   "annualised": 0.04717875102234015,
+   "bars": 847362
+  },
+  "S1_short_intra": {
+   "annualised": -0.042699558870961885,
+   "bars": 808634
+  },
+  "S2_short_cont": {
+   "annualised": 0.09520342821052054,
+   "bars": 385404
+  },
+  "S2_short_intra": {
+   "annualised": 0.045273347353570775,
+   "bars": 370504
+  }
+ },
+ "elapsed_seconds": 797.3,
+ "first_bar": "2018-01-02",
+ "last_bar": "2026-08-26",
+ "live_bars": 54726,
+ "live_years": 8.402026582445059,
+ "n_sims": 1000,
+ "n_symbols": 57,
+ "nulls": {
+  "S1_long_cont": {
+   "clears_Q2": true,
+   "p50": -0.598850515053876,
+   "p95": -0.38616419755172915,
+   "percentile_of_actual": 99.4
+  },
+  "S1_long_intra": {
+   "clears_Q2": true,
+   "p50": -1.1468261884275952,
+   "p95": -0.9377182131131719,
+   "percentile_of_actual": 100.0
+  },
+  "S1_short_cont": {
+   "clears_Q2": true,
+   "p50": -1.7714261831978353,
+   "p95": -1.5797692019953093,
+   "percentile_of_actual": 100.0
+  },
+  "S1_short_intra": {
+   "clears_Q2": true,
+   "p50": -2.321050772357748,
+   "p95": -2.107750501926882,
+   "percentile_of_actual": 100.0
+  },
+  "S2_long_cont": {
+   "clears_Q2": false,
+   "p50": 0.03477242599906365,
+   "p95": 0.3150221730228085,
+   "percentile_of_actual": 81.5
+  },
+  "S2_long_intra": {
+   "clears_Q2": false,
+   "p50": -0.479390062046143,
+   "p95": -0.20043865174519973,
+   "percentile_of_actual": 0.0
+  },
+  "S2_short_cont": {
+   "clears_Q2": true,
+   "p50": -1.1032846765271054,
+   "p95": -0.8086760365457286,
+   "percentile_of_actual": 96.3
+  },
+  "S2_short_intra": {
+   "clears_Q2": true,
+   "p50": -1.6097730435774396,
+   "p95": -1.3248547717314811,
+   "percentile_of_actual": 99.6
+  }
+ },
+ "ppy": 6513.428571428572,
+ "produced": "D247",
+ "reading": "THE LONG CONTROLS HOLD AND THE SHORTS DO NOT -- a direction result, and informative.",
+ "seed": 0,
+ "sessions": 2156,
+ "stage": "baseline, expected negative",
+ "verdict": {
+  "S1_short_cont": {
+   "clears_Q1": false,
+   "clears_Q2": true,
+   "clears_Q3": false,
+   "clears_all": false,
+   "clears_best_of": false
+  },
+  "S1_short_intra": {
+   "clears_Q1": false,
+   "clears_Q2": true,
+   "clears_Q3": false,
+   "clears_all": false,
+   "clears_best_of": false
+  },
+  "S2_short_cont": {
+   "clears_Q1": false,
+   "clears_Q2": true,
+   "clears_Q3": false,
+   "clears_all": false,
+   "clears_best_of": false
+  },
+  "S2_short_intra": {
+   "clears_Q1": false,
+   "clears_Q2": true,
+   "clears_Q3": false,
+   "clears_all": false,
+   "clears_best_of": false
+  }
+ },
+ "warmup_bars": 1000
+}

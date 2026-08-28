@@ -199,3 +199,129 @@ the wrong direction.
   every intraday-only cell.
 - **The intraday-only cells are asserted flat at every session close**, on every symbol.
 - **No look-ahead:** perturbing a bar from *t* onward moves no position at any index ≤ *t*.
+
+---
+
+## RESULT
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_intraday_shorts.py` · Page:
+[`INTRADAY_SHORTS_RESULTS.md`](../../INTRADAY_SHORTS_RESULTS.md)
+
+**57 ETFs × 55,726 bars, PPY 6,513, live 8.40 years.**
+
+### The one-sentence version
+
+**Every cell loses and the structural thesis is confirmed anyway: the intraday-only S1 short is
+the first construction in this programme to hold bars that actually fall — −4.27%/yr against the
+continuous version's +4.72% — and turnover costs five times the edge it buys.**
+
+### The eight cells
+
+| | long | short | excess Sharpe | CAGR | turnover/yr | borrow/yr | null pctile | breakeven bp |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| S1_short_cont | — | 27.2% | −1.248 | −6.48% | 208 | 0.32% | 100.0th | −1.55 |
+| **S1_short_intra** | — | 25.9% | −1.550 | −5.55% | **334** | **0.00%** | 100.0th | **0.13** |
+| S2_short_cont | — | 12.4% | −0.784 | −2.44% | 27 | 0.12% | 96.3th | −7.71 |
+| S2_short_intra | — | 11.9% | −1.113 | −2.51% | 87 | 0.00% | 99.6th | −1.05 |
+| *S1_long_cont* | *22.6%* | — | *−0.279* | *−1.37%* | *181* | — | *99.4th* | *0.60* |
+| *S1_long_intra* | *21.6%* | — | *−0.586* | *−1.98%* | *285* | — | *100.0th* | *0.86* |
+| *S2_long_cont* | *12.9%* | — | ***+0.191*** | *+1.13%* | *28* | — | *81.5th* | ***4.08*** |
+| *S2_long_intra* | *12.4%* | — | *−1.209* | *−1.96%* | *91* | — | ***0.0th*** | *−0.87* |
+| **B&H** | 100% | — | **+0.289** | **+9.02%** | 0 | — | — | — |
+
+**Seven of eight cells lose money**, and the eighth (+0.191) still loses to buy-and-hold's +0.289.
+**Q1: 0 of 4. Q3: 0 of 4. Best-of-four floor +0.315: cleared by nothing.**
+
+### The finding — the drift thesis is confirmed
+
+Annualised return of the bars each short actually holds:
+
+| held by | bars | return of those bars |
+|---|---:|---:|
+| all bars | 3,119,382 | +9.02% |
+| S1 short, **continuous** | 847,362 | **+4.72%** |
+| **S1 short, intraday-only** | 808,634 | **−4.27%** |
+| S2 short, continuous | 385,404 | +9.52% |
+| S2 short, intraday-only | 370,504 | +4.53% |
+
+**An 8.99-point swing from flattening overnight, against the +8.55 predicted** from the
+overnight/intraday decomposition. **P-b's mechanism is confirmed on its own terms.**
+
+D238 closed the short side because *"the worst bars the indicator can name still return
++0.85%/yr"*. **Here they return −4.27%.** That objection is answered — by the calendar, not by
+the signal.
+
+### And the symmetry is the strongest evidence it is real
+
+Flattening overnight **helps every short and hurts every long**:
+
+| | continuous | intraday-only | change |
+|---|---:|---:|---:|
+| S1 short, held-bar return | +4.72% | **−4.27%** | **−8.99** |
+| S2 short, held-bar return | +9.52% | +4.53% | −4.99 |
+| *S2 long, excess Sharpe* | *+0.191* | *−1.209* | *−1.400* |
+| *S2 long, null percentile* | *81.5th* | ***0.0th*** | — |
+
+**S2's long arm goes from the 81.5th percentile of its null to the 0.0th** when the overnight
+gap is removed — its entire edge was the overnight drift. That is the same fact from the other
+side, and it is what makes the short result credible rather than a fluke.
+
+### Why it still fails: costs, exactly as registered
+
+**Only one cell of eight has a breakeven above the ~1.6 bp charged** — S2_long_cont at 4.08 bp.
+The intraday S1 short breaks even at **0.13 bp**, an eighth of what it pays.
+
+**The arithmetic in the pre-registration was right and slightly optimistic.** It projected
+turnover eating nine tenths of the drift advantage; measured, at 334 turnover units per year
+against a gross edge of roughly 1.1%/yr at 25.9% exposure, **costs run about five times the
+gross edge.**
+
+### The rotation nulls look paradoxical and are not
+
+**Shorts at the 100th percentile while scoring −1.248 and −1.550.** That is not an error: a
+rotated short book has the same exposure and the same drift drag, so beating it means *the
+timing is better than random*. The book still loses because the direction is wrong. **D238 found
+exactly this pattern on daily bars** — real skill, unmonetisable.
+
+### Scoring — three confirmed, two split
+
+| | prediction | outcome |
+|---|---|---|
+| **P-a** | all four shorts fail Q1 | **CONFIRMED** |
+| **P-b** | intraday shorts beat continuous by the drift swing | **SPLIT.** On held-bar returns, decisively (−8.99 points). **On Sharpe, no** — intraday is *worse* (−1.550 vs −1.248) because turnover rose from 208 to 334 |
+| **P-c** | breakeven below 1.6 bp for ≥3 of 4 shorts | **CONFIRMED**, all four |
+| **P-d** | the long controls also fail Q2 | **SPLIT.** S1's longs clear their nulls at the 99.4th and 100th — while scoring −0.279 and −0.586. S2's do not |
+| **P-e** | no short clears the best-of-four floor | **CONFIRMED** |
+
+### A correction to the runner's own output
+
+**The auto-generated reading — *"the long controls hold and the shorts do not"* — is wrong**, and
+the flaw is mine: the logic counted a long control as "holding" if it merely beat its rotation
+null, and S1's longs do that at **−0.279** and **−0.586** excess Sharpe. Beating a null is not
+holding.
+
+**The correct reading: 15-minute sampling breaks both estimators in both directions.** That was
+declared as likely before the run — S1's 34-bar Impulse is 1.3 sessions here — and it means this
+study says almost nothing about the daily book.
+
+### What is closed and what is not
+
+**Closed: these two estimators at these bar counts on 15-minute bars.** Nothing else.
+
+**Explicitly NOT closed: the intraday short.** The overnight/intraday decomposition and the
+−4.27% held-bar return are the strongest evidence this programme has produced that a short arm
+*can* select falling bars. **What fails is the turnover, and turnover is a property of the rule,
+not of the idea.** A rule designed for the intraday horizon — holding hours rather than
+flipping, at a fraction of 334 turnover units — is a separate pre-registration and now has a
+measured motivation.
+
+**No rule is proposed here**, per the stop.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 8 cells | 8 |
+| + D245's 2, D242's 3, D241's 5, D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 49 |
+| + the gradient anatomy | 70 |
+| + disclosed ETF prior | **45,873** |
