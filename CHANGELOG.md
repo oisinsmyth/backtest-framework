@@ -10,6 +10,24 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D241 - the combined book and capital allocator, 2026-08-28)
+- `scripts/run_combined_book.py` - the S1 + A2 book, and a **capital allocator** with a shared
+  pool, per-arm reserves and first-come-first-served rationing. Written fresh: nothing in the
+  repo can express *this entry was denied because the pool was full* - D236's control scales a
+  position matrix that already exists.
+- `tests/unit/test_combined_book.py` - 14 gates.
+- `COMBINED_BOOK_RESULTS.md`, `data/combined_book_summary.json`.
+
+### Fixed (D241 - two invariants, both caught by assertions during the build)
+- **A name is held once and charged once.** Both arms can want the same instrument (1,000 cells,
+  3.63% of demand); the first draft summed the two granted books and **double-funded** them. The
+  allocator now works on names, with an owning arm tracked for accounting only, and ownership
+  transfers without a capital event when one arm exits and the other still wants the name.
+- **`TOTAL` is a hard cap and is enforced globally.** Because ownership can transfer without a
+  capital event, an arm can come to hold more than its reserve - after which the per-arm room
+  checks no longer bound the sum, and the 50%-cap cell over-committed. `RESERVE` constrains
+  *funding* per arm; `TOTAL` constrains the *book*.
+
 ### Added (D240 — the uptrend-onset arm, 2026-08-28)
 - `scripts/run_uptrend_onset.py` — pivot-regression trend states, an onset/age-cap state
   machine, log-space ATR, and **R7's matched-exit-count trade-level overlay null**, which did

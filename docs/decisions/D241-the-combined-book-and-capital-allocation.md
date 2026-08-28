@@ -182,3 +182,154 @@ exists, and cannot express "this entry was denied because the pool was full."
   its own arm exited, regardless of how much new demand arrived.
 - **No look-ahead:** the allocator reads only bars ≤ `t`; perturbing a close from bar `t` onward
   moves no allocation at any index ≤ `t`.
+
+---
+
+## Two amendments, both forced by assertions during the build
+
+### Amendment 1 — a name is held once and charged once
+
+The registration never said what happens when **both arms want the same name** — 1,000 cells,
+3.63% of demand. The first draft summed the two granted books and **double-funded them**; the
+`book.max() <= 1.0` assertion caught it on the first run.
+
+**The allocator now works on names, not on (arm, name) pairs.** An owning arm is tracked for
+reserve accounting and reporting only. A position whose owner exits but which the other arm
+still wants **continues, with ownership transferring and no capital event** — which is the
+correct reading of a shared pool: you cannot buy the same ETF twice with the same money.
+
+### Amendment 2 — `TOTAL` is a hard constraint and needs enforcing separately
+
+Ownership transfer moves a position between arms *without* a capital event, so an arm can come
+to hold more than its reserve. After that the per-arm room checks no longer bound the sum, and
+C2 over-committed. **`RESERVE` is a funding constraint on an arm; `TOTAL` is a hard cap on the
+book**, applied globally after the per-arm budgets are computed.
+
+---
+
+## STAGE 1 — SCREEN RESULT
+
+*Appended after the run. **A screen, not a verdict.** The holdout 60 and the 2025–2026 forward
+window are untouched.*
+
+**Produced:** 2026-08-28 · `uv run python scripts/run_combined_book.py` · Page:
+[`COMBINED_BOOK_RESULTS.md`](../../COMBINED_BOOK_RESULTS.md)
+
+### The one-sentence version
+
+**The combined book is the first thing this programme has produced that beats buy-and-hold on
+money *and* on drawdown — 10.68% against 8.42%, at −10.41% against −34.60% — and its advantage
+over S1 alone still fails its bootstrap by a hair.**
+
+### The books
+
+| | total | reserve | exposure | excess Sharpe | CAGR | **deployable** | max DD | Calmar |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **C0** | 100% | — | 30.7% | **+0.924** | 7.71% | **10.68%** | −10.41% | 0.741 |
+| **C1** | 50% | — | 27.6% | +0.910 | 5.80% | 8.85% | −7.64% | 0.759 |
+| **C2** | 50% | 25/25 | 23.6% | +0.804 | 4.00% | 7.17% | −6.65% | 0.602 |
+| **C3** | 50% | 15/15 | 26.0% | +0.868 | 4.89% | 7.98% | −7.09% | 0.690 |
+| **C4** | 75% | — | 30.2% | **+0.959** | 7.57% | 10.55% | −9.97% | 0.759 |
+| *S1 alone* | | | *18.9%* | *+0.746* | *5.43%* | *8.83%* | *−10.30%* | *0.527* |
+| *A2 alone* | | | *13.0%* | *+0.822* | *2.52%* | *6.08%* | *−1.93%* | *1.306* |
+| *B&H* | | | *100%* | *+0.235* | *8.42%* | *8.42%* | *−34.60%* | *0.243* |
+
+### The closed form promised more than the book delivers
+
+**D240 predicted 1.032. The book built scores 0.924.** The gap is **weighting**: the closed form
+assumes *optimal* weights, while the union book holds each arm at its natural exposure — 18.9%
+against 13.0%. Closing it requires a sizing decision, which R8 keeps as a separate record.
+
+**Quoting 1.032 as what the pairing achieves would have been wrong**, and it is exactly why this
+study exists.
+
+### M1 and M2 — both fail, and M1 by a whisker
+
+| | delta | p05 | p95 | excludes 0 |
+|---|---:|---:|---:|:--:|
+| **M1 — C0 vs S1 alone** | **+0.178** | **−0.010** | +0.394 | ✗ |
+| **M2 — C0 vs A2 alone** | +0.102 | −0.513 | +0.661 | ✗ |
+
+**p05 = −0.010.** The combination beats S1 on the point estimate and the interval contains zero
+by one part in a hundred. **This is the fourth time in this programme that a result has cleared
+as scored and failed as claimed** — and N2 predicted it in advance.
+
+### M3 clears — sharing beats partitioning
+
+| | excess Sharpe |
+|---|---:|
+| C1 — shared, FCFS | +0.910 |
+| C2 — fixed 25/25 | +0.804 |
+| **difference** | **+0.107** |
+
+Same 50% of capital, same two arms; the only difference is whether it is pooled or split.
+**First-come-first-served is worth +0.107 of Sharpe**, and the direction survives the
+reversed-symbol-order diagnostic (+0.066) even though the magnitude does not.
+
+The mechanism is visible in the denial rates: at C2 both arms are starved (**85.1% and 86.8%**
+of entries denied) because neither can borrow the other's idle reserve. At C1 the same capital
+denies **72.4% and 41.9%** — A2, the smaller-demand arm, gets served far better.
+
+### M4 fails — and it contradicts D236
+
+**C4, capped at 75%, scores +0.959 against the uncapped C0's +0.924.** A capped cell beat the
+unconstrained book, which D236 said should not happen — there, all six exposure controls cut
+better-than-average bars.
+
+**The likely reconciliation is the mechanism, not the direction:** D236 rationed by *scaling
+every position proportionally*; this rations by *denying entries*. D241 registered that
+distinction in advance. But the margin is **0.035** and the reversed-order diagnostic moves C4
+to +0.945, so this is a lead, not a finding.
+
+### The order-dependence is worse than I predicted
+
+Entries are admitted in ascending symbol index — arbitrary but deterministic. Reversing it:
+
+| | forward | reversed | move |
+|---|---:|---:|---:|
+| C0 | +0.924 | +0.924 | 0.000 |
+| C1 | +0.910 | +0.952 | **+0.042** |
+| C2 | +0.804 | +0.885 | **+0.081** |
+| C3 | +0.868 | +0.931 | **+0.063** |
+| C4 | +0.959 | +0.945 | −0.014 |
+
+**At the heavily-binding cells an arbitrary tie-break moves the answer by up to 0.081** — larger
+than M3's entire effect under one ordering. C0 is unmoved because it never rations. **Any
+conclusion drawn from a capped cell has to survive both orderings**, and only M3's direction
+does.
+
+### Scoring — one confirmed, one partial, three falsified
+
+| | prediction | outcome |
+|---|---|---|
+| **N1** | C0 beats S1 and lands near 1.032 | **PARTIAL.** Beats S1 by +0.178, but lands at 0.924 — the closed form assumed optimal weights |
+| **N2** | C0's `p05` is still below zero; M1 fails as claimed | **CONFIRMED**, −0.010 |
+| **N3** | no capped cell beats C0 | **FALSIFIED.** C4 does, +0.959 |
+| **N4** | C1 ≈ C2, M3 fails | **FALSIFIED.** +0.107, and M3 clears |
+| **N5** | reversed order moves under 0.05 everywhere | **FALSIFIED.** C2 moves 0.081 |
+
+### What survives
+
+**Nothing is promoted.** C0 is the strongest book this programme has produced and it has **no
+out-of-sample evidence at all** — and it contains A2, whose design was fitted on this fixture.
+
+**Three things are kept.**
+
+1. **The combined book exists and is measurable**, which is what D240 could not do. Its
+   advantage over S1 is +0.178 with p05 −0.010 — the honest statement is *"probably real, not
+   demonstrated."*
+2. **Sharing beats partitioning**, direction-robust across orderings. If two arms ever run
+   together, pool the capital.
+3. **The allocator**, with both amendments — a name is held once, and `TOTAL` binds globally.
+
+**The next step is unchanged and this study sharpens it:** C0 at p05 −0.010 needs *more data*,
+not more analysis. Extending the fixture back to ~2005 remains the only action that can move it.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 5 cells | 5 |
+| + D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 36 |
+| + the gradient anatomy | 57 |
+| + disclosed ETF prior | **45,860** |
