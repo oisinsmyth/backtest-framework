@@ -39,7 +39,7 @@ full multi-currency accounting, live IBKR integration.
 
 ## R5. This doc suite is source of truth; keep it in sync as code lands
 
-New decisions go in `docs/decisions/` (next number: **D241**), shipped changes go in
+New decisions go in `docs/decisions/` (next number: **D242**), shipped changes go in
 [`CHANGELOG.md`](../CHANGELOG.md), current work-in-progress goes in [`AITODO.md`](../AITODO.md).
 
 **Because:** the original four docs (`MASTER_PROJECT_DOC.md`, `DESIGN_DECISIONS.md`,
