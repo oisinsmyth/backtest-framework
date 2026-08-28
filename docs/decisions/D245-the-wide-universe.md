@@ -140,3 +140,118 @@ and a raw date intersection will not load with equal bar counts.
 - **No leveraged or inverse tickers** enter, asserted against a named list.
 - **The liquidity screen is computed on the fixture's own span**, never on a later window.
 - `--report-only` re-renders byte-for-byte; full suite green.
+
+---
+
+## AMENDMENT 1 — a completeness screen was required, and it is survivorship bias
+
+*Forced by the first build, recorded rather than patched away.*
+
+A rectangular panel needs every symbol present on every date, so **one delisted fund truncates
+the whole intersection.** The first build produced **W1 at 880 bars ending 2017-10-13**, and even
+W5 lost 1,115 bars.
+
+**56 of the 792 stop trading before 2026-08** — FEO in 2022-12, then IRL, DDF, DEX, MGU and NKG
+through 2023, mostly liquidated closed-end funds — and 67 carry sparse coverage.
+
+**The screen: at least 4,200 bars in the window and data through 2026-08-01. It drops 67 and
+leaves 725.**
+
+**This is survivorship bias and it flatters any long book**, because funds that get liquidated
+are disproportionately funds that did badly. The alternative is a ragged panel, which
+`load_panel` refuses by design. **The excluded names are written to the artifact** so the bias is
+auditable rather than asserted to be small.
+
+The runner now also refuses a fixture with fewer than 500 live bars, rather than crashing a
+hundred lines later inside `max_drawdown_of`.
+
+---
+
+## RESULT
+
+**Produced:** 2026-08-28 · `build_wide_universe.py` then `run_book_wide.py` · Page:
+[`BOOK_WIDE_RESULTS.md`](../../BOOK_WIDE_RESULTS.md)
+
+### The one-sentence version
+
+**Both entries clear on instruments they have never seen — S1 included — and the premise this
+study was recommended on is falsified: adding 429 ETFs LOWERED effective breadth from 2.23 to
+2.02.**
+
+### The never-seen cohort — where the verdict lives
+
+| | symbols | new | | excess Sharpe | B&H | delta | floor | null pctile | verdict |
+|---|---:|---:|---|---:|---:|---:|---:|---:|:--:|
+| **W5** | 244 | **152** | S1 | +0.468 | +0.365 | +0.103 | +0.059 | **99.8th** | **✓** |
+| | | | S2 | +0.496 | +0.365 | +0.131 | +0.067 | **99.0th** | **✓** |
+| **W1** | 486 | **385** | S1 | +0.493 | +0.319 | +0.174 | +0.059 | **100.0th** | **✓** |
+| | | | S2 | +0.497 | +0.319 | +0.178 | +0.067 | **99.9th** | **✓** |
+
+**S1 clears on 385 instruments it has never seen.** Together with D243 that locates its problem
+exactly: **S1 generalises across INSTRUMENTS and fails across ERAS.** It is not a broken rule, it
+is a rule with a regime dependency — which is what D239 predicted from a mechanism, before D243
+measured it.
+
+### The finding: breadth did not increase, it fell
+
+| universe | symbols | **effective independent instruments** |
+|---|---:|---:|
+| the 57 | 57 | **2.23** |
+| W5 | 244 | **2.02** |
+| W1 | 486 | **2.08** |
+
+**Adding 429 ETFs added correlation, not diversification.** The 57 were unusually diverse —
+bonds, metals, commodities and fourteen country funds. The wide universe above $5M/day is
+dominated by US equity sector and style products that move together.
+
+**This puts a hard ceiling on "more instruments" as a route to narrower intervals**, and it is
+the most consequential thing in this record.
+
+### The intervals, against D243's 57-name figures
+
+| | D243 (57) | W5 (244) | W1 (486) |
+|---|---:|---:|---:|
+| S1 | +0.478 `[−0.036]` | +0.491 `[−0.053]` | +0.499 `[−0.050]` |
+| **S2** | +0.511 `[+0.066]` | **+0.530** `[+0.126]` | +0.514 `[+0.110]` |
+| **C** | +0.620 `[+0.126]` | **+0.649** `[+0.126]` | +0.641 `[+0.140]` |
+
+**S2's lower bound roughly doubled, from +0.066 to +0.126.** Real, and far less than an eightfold
+increase in instruments would suggest — because breadth, not headcount, is what sets it.
+
+**S1's interval contains zero at every universe size.**
+
+### Scoring — two confirmed, three falsified
+
+| | prediction | outcome |
+|---|---|---|
+| **Z-a** | S2 clears Z1–Z3 on the never-seen cohort | **CONFIRMED** at both floors |
+| **Z-b** | effective breadth roughly doubles to 4–6 | **FALSIFIED.** It *fell* to 2.02 |
+| **Z-c** | the interval narrows by less than the count suggests | **CONFIRMED**, emphatically |
+| **Z-d** | W1 scores higher than W5 and is less trustworthy | **FALSIFIED.** W1 scored *lower* on S2, +0.514 against +0.530. The cost-model inflation this guarded against did not appear |
+| **Z-e** | S1 stays weak on the never-seen cohort | **FALSIFIED.** 99.8th and 100th percentile |
+
+**Three of five wrong, and Z-b was the premise the study was recommended on.** The
+recommendation was right for a reason that turned out to be false: expansion was worth doing as
+an *instrument holdout*, not as a breadth fix.
+
+### What this changes
+
+**S1's evidence table gains a row and its diagnosis sharpens.** It has now cleared two
+instrument holdouts — 60 tickers (D237) and 385 (here) — and failed one era holdout (D243) and
+one asset class (D244, inconclusive). **Instrument-general, era-specific**, stated precisely.
+
+**S2 is confirmed across the broad ETF universe** at both liquidity floors.
+
+**And "add more instruments" is closed as a route to significance.** At ρ ≈ 0.4 across US equity
+ETFs, breadth saturates near 2 and headcount cannot fix it. The remaining routes are more
+*time*, or genuinely uncorrelated *return drivers* — which is what D246's protocol already
+targets.
+
+### Ledger
+
+| count | N |
+|---|---:|
+| fresh — 2 cells | 2 |
+| + D247's 8, D242's 3, D241's 5, D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 49 |
+| + the gradient anatomy | 70 |
+| + disclosed ETF prior | **45,873** |

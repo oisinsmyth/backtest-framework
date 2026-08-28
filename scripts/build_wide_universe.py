@@ -62,6 +62,20 @@ ACTIONS = REPO / "data" / "raw" / "alphavantage" / "_actions_full.json"
 START = "2009-11-11"          # the extended fixture's first bar
 END = "2026-08-26"
 
+# AMENDMENT 1 to D245, forced by the first build. A rectangular panel needs every
+# symbol present on every date, so ONE delisted fund truncates the whole
+# intersection: W1's first attempt produced 880 bars ending 2017-10-13, and even
+# W5 lost 1,115 bars. 56 of the 792 stop trading before 2026-08 -- FEO in 2022-12,
+# then IRL, DDF, DEX, MGU, NKG through 2023 -- and 67 carry sparse coverage.
+#
+# THIS IS A SURVIVORSHIP SCREEN AND IT IS DISCLOSED AS ONE. Funds that were
+# liquidated are disproportionately funds that did badly, so excluding them
+# FLATTERS any long book. The alternative -- a ragged panel -- `load_panel`
+# refuses by design. The excluded names are written to the artifact so the bias
+# is auditable rather than asserted to be small.
+MIN_BARS = 4_200
+MUST_TRADE_THROUGH = "2026-08-01"
+
 CELLS = {"W5": 5_000_000.0, "W1": 1_000_000.0}
 
 # Structural exclusions, asserted rather than assumed. None are expected to be
@@ -94,7 +108,7 @@ def survey():
                 dv.append(float(b["4. close"]) * float(b["5. volume"]))
         if not dates:
             continue
-        out[sym] = (set(dates), float(np.median(dv)))
+        out[sym] = (set(dates), float(np.median(dv)), max(dates), len(dates))
     return out
 
 
@@ -121,7 +135,9 @@ def write_fixture(path, syms, grid, splits):
 
 def build_cell(name, floor, info, actions):
     t0 = time.time()
-    syms = sorted(s for s, (_, dv) in info.items() if dv >= floor)
+    complete = {s for s, v in info.items()
+                if v[3] >= MIN_BARS and v[2] >= MUST_TRADE_THROUGH}
+    syms = sorted(s for s in complete if info[s][1] >= floor)
     grid = sorted(set.intersection(*(info[s][0] for s in syms)))
     print(f"\n{name}: {len(syms)} symbols at >= ${floor:,.0f}/day, "
           f"raw grid {len(grid):,}", flush=True)
@@ -162,6 +178,8 @@ def build_cell(name, floor, info, actions):
           f"({grid[0]} .. {grid[-1]}), {n_div:,} dividends, {n_spl} splits "
           f"[{time.time() - t0:.0f}s]")
     return {"cell": name, "floor": floor, "symbols": syms, "n_symbols": len(syms),
+            "excluded_incomplete": sorted(
+                s for s in info if s not in complete and info[s][1] >= floor),
             "bars": len(grid), "first": grid[0], "last": grid[-1],
             "dividends": n_div, "splits": n_spl}
 
@@ -174,7 +192,11 @@ def main() -> int:
     print(f"actions cached for {len(actions['dividends']):,} symbols", flush=True)
 
     info = survey()
-    print(f"{len(info):,} cached symbols with history back to {START}", flush=True)
+    dropped = sorted(s for s, v in info.items()
+                     if v[3] < MIN_BARS or v[2] < MUST_TRADE_THROUGH)
+    print(f"{len(info):,} cached symbols with history back to {START}")
+    print(f"  completeness screen drops {len(dropped)} (delisted or sparse) -> "
+          f"{len(info) - len(dropped)} survive. SURVIVORSHIP BIAS, disclosed.", flush=True)
     missing = [s for s in info if s not in actions["dividends"]]
     if missing:
         raise SystemExit(f"{len(missing)} symbols lack actions, e.g. {missing[:5]}")

@@ -1,0 +1,807 @@
+{
+ "cells": {
+  "W1": {
+   "bars": 4206,
+   "bootstrap": {
+    "ALL": {
+     "C": {
+      "excludes_zero": true,
+      "p05": 0.13991459983792243,
+      "p95": 1.1131154906999046
+     },
+     "S1": {
+      "excludes_zero": false,
+      "p05": -0.05013693950907408,
+      "p95": 0.962912161556817
+     },
+     "S2": {
+      "excludes_zero": true,
+      "p05": 0.10951554817250435,
+      "p95": 0.9842080415045007
+     }
+    },
+    "NEW": {
+     "C": {
+      "excludes_zero": true,
+      "p05": 0.10697083065520015,
+      "p95": 1.1185741201954202
+     },
+     "S1": {
+      "excludes_zero": false,
+      "p05": -0.07347901774507289,
+      "p95": 0.9760736640866519
+     },
+     "S2": {
+      "excludes_zero": true,
+      "p05": 0.0862694807380961,
+      "p95": 0.9708494506207821
+     }
+    }
+   },
+   "by_cohort": {
+    "ALL": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.08419891084027277,
+      "clears_E": false,
+      "entries": 486,
+      "excess_sharpe": 0.3062223693737486,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.35136151735262333,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.5947871540569434,
+      "total_return": 1.79681716183712,
+      "total_return_price": 0.678744711313426,
+      "turnover_units": 486.0,
+      "vol": 0.13591649166872646
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.04443528863200363,
+      "clears_E": false,
+      "entries": 21231,
+      "excess_sharpe": 0.6410135564009712,
+      "exposure_gross": 0.30580457424222585,
+      "exposure_long": 0.30580457424222585,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.11995705677890078,
+      "min_entries_per_symbol": 24,
+      "sharpe_rf0": 0.8843882382521818,
+      "total_return": 0.7386617904485837,
+      "total_return_price": 0.4703017004939301,
+      "turnover_units": 42358.0,
+      "vol": 0.049159796362553444
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.02917659021811927,
+      "clears_E": false,
+      "entries": 19455,
+      "excess_sharpe": 0.49880621455658386,
+      "exposure_gross": 0.18190173260527456,
+      "exposure_long": 0.18190173260527456,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.1175336254262268,
+      "min_entries_per_symbol": 20,
+      "sharpe_rf0": 0.6625464207856392,
+      "total_return": 0.4417809145947213,
+      "total_return_price": 0.30203401219241016,
+      "turnover_units": 38819.0,
+      "vol": 0.04340685370030048
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.01580364828014587,
+      "clears_E": false,
+      "entries": 3353,
+      "excess_sharpe": 0.5141226896779777,
+      "exposure_gross": 0.13286494715412717,
+      "exposure_long": 0.13286494715412717,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.03777484646263307,
+      "min_entries_per_symbol": 3,
+      "sharpe_rf0": 0.7693823225771821,
+      "total_return": 0.22077432081602086,
+      "total_return_price": 0.13676050290926622,
+      "turnover_units": 6692.0,
+      "vol": 0.020380076916694623
+     }
+    },
+    "HOLDOUT": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.08411394965495661,
+      "clears_E": false,
+      "entries": 44,
+      "excess_sharpe": 0.2804065593587327,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.36412805626683287,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.5451426039660738,
+      "total_return": 1.7940301475821196,
+      "total_return_price": 0.966710846821828,
+      "turnover_units": 44.0,
+      "vol": 0.1481502574062169
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.04896223873160507,
+      "clears_E": false,
+      "entries": 1978,
+      "excess_sharpe": 0.6585668780830567,
+      "exposure_gross": 0.30695996143594395,
+      "exposure_long": 0.30695996143594395,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.08093427826458033,
+      "min_entries_per_symbol": 27,
+      "sharpe_rf0": 0.8796083776945188,
+      "total_return": 0.8370098352827677,
+      "total_return_price": 0.6494244335456312,
+      "turnover_units": 3942.0,
+      "vol": 0.054343879142597244
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.03204351152879217,
+      "clears_E": false,
+      "entries": 1819,
+      "excess_sharpe": 0.512965571828519,
+      "exposure_gross": 0.1886661373560937,
+      "exposure_long": 0.1886661373560937,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.07276533106982586,
+      "min_entries_per_symbol": 23,
+      "sharpe_rf0": 0.6695123092479581,
+      "total_return": 0.4937196661466905,
+      "total_return_price": 0.4091188242584429,
+      "turnover_units": 3627.0,
+      "vol": 0.04711015476338967
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.017272663260515284,
+      "clears_E": false,
+      "entries": 300,
+      "excess_sharpe": 0.5147363469953716,
+      "exposure_gross": 0.12755203311971872,
+      "exposure_long": 0.12755203311971872,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.04382803612186248,
+      "min_entries_per_symbol": 3,
+      "sharpe_rf0": 0.7265888287946033,
+      "total_return": 0.24342594588932193,
+      "total_return_price": 0.17883594963131744,
+      "turnover_units": 597.0,
+      "vol": 0.0235692952072379
+     }
+    },
+    "MINED": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.07783419740065632,
+      "clears_E": false,
+      "entries": 57,
+      "excess_sharpe": 0.23824525115383735,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.3455083272702475,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.4997448142213182,
+      "total_return": 1.5949754448586386,
+      "total_return_price": 0.9296327081920863,
+      "turnover_units": 57.0,
+      "vol": 0.14998385730824448
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.04789788651115419,
+      "clears_E": false,
+      "entries": 2539,
+      "excess_sharpe": 0.6110865050036893,
+      "exposure_gross": 0.3049818870319905,
+      "exposure_long": 0.3049818870319905,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.10403018637930206,
+      "min_entries_per_symbol": 24,
+      "sharpe_rf0": 0.8204532235693922,
+      "total_return": 0.8134366174521279,
+      "total_return_price": 0.6664560838905427,
+      "turnover_units": 5066.0,
+      "vol": 0.057024755674553784
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.031089857127686363,
+      "clears_E": false,
+      "entries": 2362,
+      "excess_sharpe": 0.47716794162879406,
+      "exposure_gross": 0.18177539919668165,
+      "exposure_long": 0.18177539919668165,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.10282925634111051,
+      "min_entries_per_symbol": 20,
+      "sharpe_rf0": 0.6214816568398521,
+      "total_return": 0.47625443338395296,
+      "total_return_price": 0.4119809944261182,
+      "turnover_units": 4713.0,
+      "vol": 0.0492634918714786
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.01819254683606858,
+      "clears_E": false,
+      "entries": 392,
+      "excess_sharpe": 0.4970597707119766,
+      "exposure_gross": 0.1335708266298935,
+      "exposure_long": 0.1335708266298935,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.05825857213494534,
+      "min_entries_per_symbol": 5,
+      "sharpe_rf0": 0.7002002863550337,
+      "total_return": 0.2578066943369115,
+      "total_return_price": 0.2059765630702116,
+      "turnover_units": 783.0,
+      "vol": 0.02574840780507908
+     }
+    },
+    "NEW": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.08515412658519005,
+      "clears_E": false,
+      "entries": 385,
+      "excess_sharpe": 0.3185862953065665,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.3518450006529219,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.6125814678635981,
+      "total_return": 1.8283282538946182,
+      "total_return_price": 0.6149950066802392,
+      "turnover_units": 385.0,
+      "vol": 0.13340597674498536
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.04340775023429847,
+      "clears_E": false,
+      "entries": 16714,
+      "excess_sharpe": 0.6316594828327001,
+      "exposure_gross": 0.305794330435628,
+      "exposure_long": 0.305794330435628,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.12698196691889974,
+      "min_entries_per_symbol": 24,
+      "sharpe_rf0": 0.8791914585143933,
+      "total_return": 0.7170250453073113,
+      "total_return_price": 0.42445414237923185,
+      "turnover_units": 33350.0,
+      "vol": 0.04833081467298223
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.028566578510107576,
+      "clears_E": false,
+      "entries": 15274,
+      "excess_sharpe": 0.49258856092568204,
+      "exposure_gross": 0.18114736168385576,
+      "exposure_long": 0.18114736168385576,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.12493505445057851,
+      "min_entries_per_symbol": 20,
+      "sharpe_rf0": 0.6579004105056928,
+      "total_return": 0.43094657701523453,
+      "total_return_price": 0.274932068254602,
+      "turnover_units": 30479.0,
+      "vol": 0.04281219644859903
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.015282749881423438,
+      "clears_E": false,
+      "entries": 2661,
+      "excess_sharpe": 0.49661417770656163,
+      "exposure_gross": 0.13336763049801104,
+      "exposure_long": 0.13336763049801104,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.03777884565892253,
+      "min_entries_per_symbol": 3,
+      "sharpe_rf0": 0.7573792933561737,
+      "total_return": 0.21283402365255782,
+      "total_return_price": 0.12218527816924245,
+      "turnover_units": 5312.0,
+      "vol": 0.02002582476806867
+     }
+    }
+   },
+   "cohort_sizes": {
+    "ALL": 486,
+    "HOLDOUT": 44,
+    "MINED": 57,
+    "NEW": 385
+   },
+   "deployable_return": {
+    "C": 0.0732626185334555,
+    "S1": 0.0627346590770806,
+    "S2": 0.05094496497518119
+   },
+   "effective_instruments": {
+    "ALL": 2.0766743539601333,
+    "HOLDOUT": 2.2844730213974738,
+    "MINED": 2.289768705914263,
+    "NEW": 1.9990801982699724
+   },
+   "first": "2009-11-11",
+   "last": "2026-08-07",
+   "live_bars": 3206,
+   "n_symbols": 486,
+   "nulls": {
+    "ALL": {
+     "S1": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.22367824768798839,
+      "percentile_of_actual": 100.0
+     },
+     "S2": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.35024172744030163,
+      "percentile_of_actual": 100.0
+     }
+    },
+    "NEW": {
+     "S1": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.22860908181971748,
+      "percentile_of_actual": 100.0
+     },
+     "S2": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.3728151514587094,
+      "percentile_of_actual": 99.9
+     }
+    }
+   },
+   "verdict": {
+    "S1": {
+     "bh": 0.3185862953065665,
+     "clears_Z1": true,
+     "clears_Z2": true,
+     "clears_Z3": true,
+     "clears_all": true,
+     "delta_vs_bh": 0.17400226561911553,
+     "floor": 0.059,
+     "sharpe": 0.49258856092568204
+    },
+    "S2": {
+     "bh": 0.3185862953065665,
+     "clears_Z1": true,
+     "clears_Z2": true,
+     "clears_Z3": true,
+     "clears_all": true,
+     "delta_vs_bh": 0.17802788239999512,
+     "floor": 0.06725,
+     "sharpe": 0.49661417770656163
+    }
+   }
+  },
+  "W5": {
+   "bars": 4221,
+   "bootstrap": {
+    "ALL": {
+     "C": {
+      "excludes_zero": true,
+      "p05": 0.12576528435185047,
+      "p95": 1.088668924446554
+     },
+     "S1": {
+      "excludes_zero": false,
+      "p05": -0.05313346056916172,
+      "p95": 0.9396136180469798
+     },
+     "S2": {
+      "excludes_zero": true,
+      "p05": 0.1263907277953708,
+      "p95": 0.9729832094890615
+     }
+    },
+    "NEW": {
+     "C": {
+      "excludes_zero": true,
+      "p05": 0.1033006864877211,
+      "p95": 1.0772898436076042
+     },
+     "S1": {
+      "excludes_zero": false,
+      "p05": -0.09844437022149076,
+      "p95": 0.9390459517800674
+     },
+     "S2": {
+      "excludes_zero": true,
+      "p05": 0.09664686556418048,
+      "p95": 0.9428967798963451
+     }
+    }
+   },
+   "by_cohort": {
+    "ALL": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.08943900599994628,
+      "clears_E": false,
+      "entries": 244,
+      "excess_sharpe": 0.326546499412673,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.33879165389507226,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.6023170889045723,
+      "total_return": 1.9889474705285144,
+      "total_return_price": 1.0443579683148299,
+      "turnover_units": 244.0,
+      "vol": 0.14222224794001617
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.0465653142463296,
+      "clears_E": false,
+      "entries": 10327,
+      "excess_sharpe": 0.6487164321982718,
+      "exposure_gross": 0.29248756877255305,
+      "exposure_long": 0.29248756877255305,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.1126331164489871,
+      "min_entries_per_symbol": 24,
+      "sharpe_rf0": 0.8666553706201334,
+      "total_return": 0.7891563748305312,
+      "total_return_price": 0.6084726174886173,
+      "turnover_units": 20611.0,
+      "vol": 0.05251646107979673
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.029657735946358746,
+      "clears_E": false,
+      "entries": 9451,
+      "excess_sharpe": 0.49124294230432447,
+      "exposure_gross": 0.16978104753131346,
+      "exposure_long": 0.16978104753131346,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.11060585010278312,
+      "min_entries_per_symbol": 20,
+      "sharpe_rf0": 0.6355402823915908,
+      "total_return": 0.45290512220358603,
+      "total_return_price": 0.37383020043920523,
+      "turnover_units": 18866.0,
+      "vol": 0.04598678106062757
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.01737587601060941,
+      "clears_E": false,
+      "entries": 1664,
+      "excess_sharpe": 0.5295680560373401,
+      "exposure_gross": 0.13112718278103228,
+      "exposure_long": 0.13112718278103228,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.04358478611045746,
+      "min_entries_per_symbol": 3,
+      "sharpe_rf0": 0.7543666613660355,
+      "total_return": 0.2463092195698409,
+      "total_return_price": 0.18111140838957165,
+      "turnover_units": 3321.0,
+      "vol": 0.02283590009581157
+     }
+    },
+    "HOLDOUT": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.08607258794963331,
+      "clears_E": false,
+      "entries": 35,
+      "excess_sharpe": 0.29284569285091333,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.3630129714409275,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.5578127096380564,
+      "total_return": 1.8730206299717085,
+      "total_return_price": 0.9998214653743609,
+      "turnover_units": 35.0,
+      "vol": 0.14802111458570197
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.05147787777475409,
+      "clears_E": false,
+      "entries": 1557,
+      "excess_sharpe": 0.6969193480441122,
+      "exposure_gross": 0.30492748480950904,
+      "exposure_long": 0.30492748480950904,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.08184816588667465,
+      "min_entries_per_symbol": 27,
+      "sharpe_rf0": 0.9141689831508906,
+      "total_return": 0.899519918400769,
+      "total_return_price": 0.7066547587408867,
+      "turnover_units": 3109.0,
+      "vol": 0.05490962626588684
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.03406168668768968,
+      "clears_E": false,
+      "entries": 1428,
+      "excess_sharpe": 0.5440965925718692,
+      "exposure_gross": 0.1882112919678893,
+      "exposure_long": 0.1882112919678893,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.07249616781345691,
+      "min_entries_per_symbol": 23,
+      "sharpe_rf0": 0.6971763453430833,
+      "total_return": 0.5343660993067685,
+      "total_return_price": 0.44042450775829356,
+      "turnover_units": 2852.0,
+      "vol": 0.04804298487146445
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.01741437141448084,
+      "clears_E": false,
+      "entries": 234,
+      "excess_sharpe": 0.5340175990314068,
+      "exposure_gross": 0.12516077526943717,
+      "exposure_long": 0.12516077526943717,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.04348484460469748,
+      "min_entries_per_symbol": 3,
+      "sharpe_rf0": 0.7455476464150658,
+      "total_return": 0.2469121125715018,
+      "total_return_price": 0.18797003701696613,
+      "turnover_units": 467.0,
+      "vol": 0.02315677477934714
+     }
+    },
+    "MINED": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.0786571719187043,
+      "clears_E": false,
+      "entries": 57,
+      "excess_sharpe": 0.24376534642522243,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.3455083272702475,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.5057282913152702,
+      "total_return": 1.6321323332289825,
+      "total_return_price": 0.9572345147615076,
+      "turnover_units": 57.0,
+      "vol": 0.1497185533997689
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.048065872087531776,
+      "clears_E": false,
+      "entries": 2553,
+      "excess_sharpe": 0.6155442167821259,
+      "exposure_gross": 0.30455835335000025,
+      "exposure_long": 0.30455835335000025,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.10400888832244548,
+      "min_entries_per_symbol": 24,
+      "sharpe_rf0": 0.8250793257013194,
+      "total_return": 0.822223502336578,
+      "total_return_price": 0.6751369607772506,
+      "turnover_units": 5093.0,
+      "vol": 0.0568993035051569
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.03125211524921303,
+      "clears_E": false,
+      "entries": 2374,
+      "excess_sharpe": 0.4810354238406459,
+      "exposure_gross": 0.181892950320539,
+      "exposure_long": 0.181892950320539,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.10280905930264217,
+      "min_entries_per_symbol": 20,
+      "sharpe_rf0": 0.625670407259097,
+      "total_return": 0.48192474067687924,
+      "total_return_price": 0.4175357552680816,
+      "turnover_units": 4737.0,
+      "vol": 0.04918517714496666
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.018104451533415732,
+      "clears_E": false,
+      "entries": 393,
+      "excess_sharpe": 0.4960614027949801,
+      "exposure_gross": 0.13297602902008201,
+      "exposure_long": 0.13297602902008201,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.05825824496971299,
+      "min_entries_per_symbol": 5,
+      "sharpe_rf0": 0.6988896471260473,
+      "total_return": 0.25776545992019434,
+      "total_return_price": 0.20626180901067878,
+      "turnover_units": 784.0,
+      "vol": 0.025672890689306102
+     }
+    },
+    "NEW": {
+     "BH": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.0942894617953023,
+      "clears_E": false,
+      "entries": 152,
+      "excess_sharpe": 0.3650644355589993,
+      "exposure_gross": 1.0,
+      "exposure_long": 1.0,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.3309345047224407,
+      "min_entries_per_symbol": 1,
+      "sharpe_rf0": 0.6464482463896003,
+      "total_return": 2.1635744411952627,
+      "total_return_price": 1.0885859628474264,
+      "turnover_units": 152.0,
+      "vol": 0.1393851090349082
+     },
+     "C": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.04487583741790737,
+      "clears_E": false,
+      "entries": 6217,
+      "excess_sharpe": 0.6252657082781217,
+      "exposure_gross": 0.2850965702053955,
+      "exposure_long": 0.2850965702053955,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.12329417890819627,
+      "min_entries_per_symbol": 24,
+      "sharpe_rf0": 0.8383178295541255,
+      "total_return": 0.7525885842806095,
+      "total_return_price": 0.5626970629496262,
+      "turnover_units": 12409.0,
+      "vol": 0.05236446242939466
+     },
+     "S1": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.02804965802614042,
+      "clears_E": false,
+      "entries": 5649,
+      "excess_sharpe": 0.4676971936072152,
+      "exposure_gross": 0.16099527770061603,
+      "exposure_long": 0.16099527770061603,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.12255285497438906,
+      "min_entries_per_symbol": 20,
+      "sharpe_rf0": 0.605398868780017,
+      "total_return": 0.42416754633858705,
+      "total_return_price": 0.34307132301093834,
+      "turnover_units": 11277.0,
+      "vol": 0.045694620135229985
+     },
+     "S2": {
+      "breakeven_borrow_annual": null,
+      "cagr": 0.017093933140906792,
+      "clears_E": false,
+      "entries": 1037,
+      "excess_sharpe": 0.49570841821904926,
+      "exposure_gross": 0.13180770927629537,
+      "exposure_long": 0.13180770927629537,
+      "exposure_short": 0.0,
+      "max_drawdown": -0.04974002660807786,
+      "min_entries_per_symbol": 4,
+      "sharpe_rf0": 0.7126794446471448,
+      "total_return": 0.2419017755611444,
+      "total_return_price": 0.170254505497151,
+      "turnover_units": 2070.0,
+      "vol": 0.023782748189163875
+     }
+    }
+   },
+   "cohort_sizes": {
+    "ALL": 244,
+    "HOLDOUT": 35,
+    "MINED": 57,
+    "NEW": 152
+   },
+   "deployable_return": {
+    "C": 0.07601329236065497,
+    "S1": 0.0637370545660305,
+    "S2": 0.052643325179056843
+   },
+   "effective_instruments": {
+    "ALL": 2.0237625663144683,
+    "HOLDOUT": 2.3805058522662086,
+    "MINED": 2.29296121921246,
+    "NEW": 1.8387913980214825
+   },
+   "first": "2009-11-11",
+   "last": "2026-08-26",
+   "live_bars": 3221,
+   "n_symbols": 244,
+   "nulls": {
+    "ALL": {
+     "S1": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.2724583396030478,
+      "percentile_of_actual": 100.0
+     },
+     "S2": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.4005139068461622,
+      "percentile_of_actual": 99.9
+     }
+    },
+    "NEW": {
+     "S1": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.3285891751321991,
+      "percentile_of_actual": 99.8
+     },
+     "S2": {
+      "clears_Z2": true,
+      "money_percentile_of_actual": 100.0,
+      "p95": 0.44194954792830143,
+      "percentile_of_actual": 99.0
+     }
+    }
+   },
+   "verdict": {
+    "S1": {
+     "bh": 0.3650644355589993,
+     "clears_Z1": true,
+     "clears_Z2": true,
+     "clears_Z3": true,
+     "clears_all": true,
+     "delta_vs_bh": 0.10263275804821587,
+     "floor": 0.059,
+     "sharpe": 0.4676971936072152
+    },
+    "S2": {
+     "bh": 0.3650644355589993,
+     "clears_Z1": true,
+     "clears_Z2": true,
+     "clears_Z3": true,
+     "clears_all": true,
+     "delta_vs_bh": 0.13064398266004995,
+     "floor": 0.06725,
+     "sharpe": 0.49570841821904926
+    }
+   }
+  }
+ },
+ "d243_reference": {
+  "C": 0.62,
+  "S1": 0.478,
+  "S2": 0.511
+ },
+ "elapsed_seconds": 461.9,
+ "n_sims": 1000,
+ "produced": "D245",
+ "reading": "S2 GENERALISES ACROSS THE BROAD ETF UNIVERSE at both liquidity floors.",
+ "seed": 0,
+ "stage": "instrument cohort split -- NEW carries the verdict",
+ "z3_floor": {
+  "S1": 0.059,
+  "S2": 0.06725
+ }
+}

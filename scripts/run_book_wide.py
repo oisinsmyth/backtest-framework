@@ -91,6 +91,12 @@ def books_on(cell):
     L.EVENTS = FIX / f"universe_wide_{cell.lower()}_raw_events.json"
     panel, cleaned = L.load_panel()
     start = max(M.impulse_warm_up_bars(), M.warm_up_bars(), M.MATCHED_MOMENTUM_LOOKBACK)
+    live = panel.closes.shape[1] - start
+    if live < 500:
+        raise SystemExit(
+            f"{cell}: only {live} live bars after a {start}-bar warm-up -- the date "
+            "intersection collapsed, which means a symbol with truncated history "
+            "survived the completeness screen")
     md, hs, ok = S.base_masks(panel, cleaned, start)
     s1 = S.hold_book((hs > 0) & (md <= 0) & ok, start)
     up, g_lo, i_lo, atr = U.signals(panel, cleaned, start)
