@@ -569,3 +569,69 @@ eightfold more instruments would suggest — because **breadth, not headcount, s
 
 *I recommended the expansion partly as a breadth fix. That premise was wrong and is recorded as
 such. It was worth doing as an instrument holdout, which is what it delivered.*
+
+---
+
+## The book as it stands, 2026-08-28
+
+**On the extended fixture — 57 ETFs, 16.8 years, dividend-adjusted, costs charged:**
+
+| | exposure | CAGR | excess Sharpe | max drawdown |
+|---|---:|---:|---:|---:|
+| **S1** — the Recovery Rule | 18.2% | +3.11% | **+0.478** | −10.28% |
+| **S2** — the Uptrend Onset | 13.3% | +1.85% | **+0.511** | −5.83% |
+| **C** — the combined book, FCFS at 100% | **30.5%** | **+4.83%** | **+0.620** | **−10.40%** |
+| *buy-and-hold* | *100%* | *+7.84%* | *+0.242* | *−34.55%* |
+
+**The book earns 2.6x buy-and-hold's risk-adjusted return at a third of its drawdown, and loses
+to it on money.** That is the honest one-line statement and it has not changed.
+
+**ρ(S1, S2) = +0.150**, which is why `C` beats both arms. **It remains the only genuinely
+uncorrelated pair this programme has found.**
+
+### Nothing was added to the book in the 2026-08-28 session, and the reason is now structural
+
+**Seven studies, all closed:** [D250](decisions/D250-the-overnight-gap-pre-screen.md),
+[D251](decisions/D251-the-cross-sectional-dollar-neutral-pre-screen.md),
+[D253](decisions/D253-the-book-short-sides-on-crypto.md),
+[D254](decisions/D254-the-wedge-breakout-on-crypto.md),
+[D255](decisions/D255-stops-and-targets-on-the-book.md), plus five web-research streams and
+[D252](decisions/D252-the-single-name-short-universe.md)'s fixture build.
+
+**The failures are no longer a list. They reduce to two measured facts**, both recorded in
+[FINDINGS.md](FINDINGS.md):
+
+- **`gross = exposure x edge − short-leg convexity`.** Selectivity cannot create gross return
+  (D250), and a short pays a variance tax of roughly `sigma^2` (D251, D253 — predicted −56.05%/yr
+  against a measured −58.90%).
+- **Diversification removes the component where an edge lives and leaves the component that
+  carries the premium.** Confirmed for shorts, falsified for breakouts, and the operative variable
+  is *between*-universe rather than within.
+
+**Two hurdles were added as a direct result, and both are now binding on this book:**
+
+- **V** — a cell is not a success without a **positive net CAGR**. D253 cleared hurdle H at the
+  98.7th percentile and returned −10.12%/yr. **H is a skill test; V is a viability test.**
+- **[R10](RULES.md)** — concurrency reported beside every pooled table.
+
+### The deployment target has changed, and it is not a return target
+
+**The prop-firm review establishes that the binding constraint is Sharpe ≈ 2.14, not 10%/yr.**
+This book runs at **0.620**. Three findings that bear directly on deployment:
+
+1. **Every major futures prop firm auto-liquidates at the close.** No plan permits an overnight
+   hold, so **both arms are structurally unportable to that route.**
+2. **Automation is banned at the funded stage** by several firms, permitted only in evaluation.
+3. **Own capital needs ~$1.03m unlevered, or ~$350k at 3x**, to net $50k/yr at this Sharpe.
+
+**Return = Sharpe x volatility x leverage.** Leverage is available from both routes, but only
+above a Sharpe that survives a 4–5% trailing drawdown constraint. **So the research problem is
+roughly doubling the book's Sharpe, which values a near-zero-correlation arm above a
+high-return one.**
+
+### What the book still needs
+
+**Unchanged and unmet: a third return driver that is not a bet on reversals beating
+continuations** ([D246](decisions/D246-the-search-protocol-for-s3.md)'s constraint 1) **and not
+long-only directional equity** (constraint 2). D251 closed the cross-sectional family on ETFs;
+the single-name fixture is the one live route, and it is registered separately from S3.
