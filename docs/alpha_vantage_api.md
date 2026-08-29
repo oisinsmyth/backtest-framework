@@ -346,3 +346,79 @@ Flagged rather than guessed:
 - `docs/decisions/D24-immutable-data-snapshots-fetch-once-freeze.md` — why `adjusted=false`
 - `docs/decisions/D191-manifest-only-storage-for-large-archives.md` — cache the raw, commit
   the derived
+
+---
+
+## Futures, FX and the extended session — measured 2026-08-29
+
+Prompted by a direct challenge to the assertion "Alpha Vantage does not serve futures". **Checked
+against the documentation AND by probing the live endpoints with this project's key.**
+
+### There are no futures. Confirmed three ways.
+
+The documentation lists no continuous futures, no CME/Globex contracts, no ES/NQ. Probing three
+plausible names returns `This API function (X) does not exist` for **`FUTURES_INTRADAY`**,
+**`FUTURES_DAILY`** and **`COMMODITY_INTRADAY`**.
+
+**The commodity endpoints are macroeconomic price series, not tradeable contracts**, and they are
+daily at finest:
+
+| endpoint | rows | span |
+|---|---:|---|
+| `WTI` | 10,604 | 1986-01-02 → 2026-08-25 |
+| `NATURAL_GAS` | 7,731 | 1997-01-07 → 2026-08-25 |
+| `COPPER` | 559 | 1980-01-01 → 2026-07-01 (monthly) |
+
+### FX intraday exists, is genuinely 24-hour, and has no history
+
+`FX_INTRADAY` **works on this key** at 1/5/15/30/60 min, and its bars run through the evening
+(21:00, 21:45 present), so it is a true 24-hour series.
+
+**But the `month=YYYY-MM` parameter is SILENTLY IGNORED.** Requested `month=2020-03` three ways —
+with `outputsize=full`, without it, and at 60min — and every response returned the trailing weeks
+instead:
+
+```
+FX_INTRADAY month=2020-03 (no outputsize)   100 rows  2026-08-27 -> 2026-08-28
+FX_INTRADAY 60min month=2020-03             973 rows  2026-07-03 -> 2026-08-28
+```
+
+**No error, no note — just the wrong data.** So FX intraday is limited to roughly the trailing
+month and **cannot support a study**. The failure is silent, which makes it the dangerous kind.
+
+### THE FINDING — `extended_hours=true` gives a 16-hour equity session back to 2005
+
+**`TIME_SERIES_INTRADAY` DOES honour `month`**, and with `extended_hours=true` the session is far
+wider than this project has been fetching:
+
+| | bars/session | session |
+|---|---:|---|
+| **as this project fetches it** (`extended_hours=false`) | **26** | 09:30 → 15:45 |
+| **`extended_hours=true`** | **~64** | **04:00 → 19:45** |
+
+Verified historically, with `month` honoured:
+
+```
+SPY 15min 2005-01    898 rows / 20 sessions = 44.9   08:00 -> 18:15
+SPY 15min 2010-01  1,155 rows / 19 sessions = 60.8   04:00 -> 19:45
+SPY 15min 2015-06  1,413 rows / 22 sessions = 64.2   04:00 -> 21:00
+SPY 15min 2018-01  1,384 rows / 21 sessions = 65.9   04:00 -> 23:30
+SPY 15min 2020-03  1,408 rows / 22 sessions = 64.0   04:00 -> 19:45
+```
+
+**Coverage is thinner before ~2010** (44.9 bars/session in 2005) and full from 2010 on.
+
+**Why this matters, and it corrects a claim made in [D258](decisions/D258-the-prop-track-candidates.md):**
+that record states *"RTH-only equity bars cannot represent a 23-hour futures session"* and treats
+that as a hard blocker on candidate C1. **We can in fact cover 16 of those 23 hours** — the
+pre-market 04:00–09:30 and the post-market 16:00–20:00 — leaving only **20:00–04:00 ET**, the Asian
+session, which is the quietest window for US index products.
+
+**The existing `etf_intraday_15m` fixture threw the extended session away.** Rebuilding SPY/QQQ/IWM
+alone with `extended_hours=true` is roughly **3 symbols x 200 months = 600 requests, ~10 minutes**
+at this project's pacing. All 57 would be ~11,400 requests, about three hours.
+
+**And it reopens a measurement:** the +8.59%/yr overnight drift is currently a close-to-open *gap*
+with no interior. With the extended session it can be **decomposed** — how much accrues 16:00–20:00,
+how much in the untraded window, how much 04:00–09:30 — which is exactly what hurdle P1 needs, since
+P1 measures the *path* and not the endpoints.
