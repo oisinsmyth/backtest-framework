@@ -192,7 +192,7 @@ what a funded account is actually judged on.
 | | standard | why |
 |---|---|---|
 | **P1** | **Trailing drawdown ≤ 4%**, measured on **OPEN** equity | Apex trails on unrealised intraday equity; open profit lifts the floor before anything is closed. Our closed-equity max-DD is a different and gentler statistic |
-| **P2** | **Zero overnight exposure** | Topstep 3:10pm CT, Apex 4:59pm ET, MyFundedFutures 4:10pm ET — every major futures firm auto-liquidates. No plan or tier permits a hold |
+| **P2** | **No exposure across the VENUE'S FLATTEN TIME** — see the amendment below; this is venue-specific, not universal | Topstep 3:10pm CT, Apex 4:59pm ET, MyFundedFutures 4:10pm ET |
 | **P3** | **Worst single day ≤ 2%** | Daily loss limits run 2–3% |
 | **P4** | **Expected time-to-breach > 3 years** | Against a trailing barrier and positive drift, ruin is certain eventually; the question is only when. At Sharpe 0.9 a 20-account book died every ~3.85 years |
 | **P5** | **No single day > 40% of trailing-year profit** | Consistency rules cap a single day at 30–50%, so a lumpy-but-profitable strategy is ineligible for payout while up |
@@ -216,3 +216,43 @@ futures.**
 
 **Scope:** binding on any candidate proposed for external funding. Introduced 2026-08-29 from the
 prop-firm review in [`research/shorts/05-prop-firm-reality.md`](research/shorts/05-prop-firm-reality.md).
+
+### AMENDMENT to P2, 2026-08-29 — it is venue-specific, and one venue permits the overnight
+
+**P2 was written as "zero overnight exposure" and that is wrong.** Checked against the firms' own
+documentation the same day it was recorded:
+
+**MyFundedFutures, from its own help centre:** *"Trades may be placed beginning at 6:00 PM EST when
+the Globex session opens"*, and such trades *"remain open until the New York session closes at 4:10
+PM EST."*
+
+**So a position may be opened at the 6:00pm ET Globex open and held through the entire overnight
+session to 4:10pm ET the next day — roughly a 22-hour hold — at a venue that also permits
+automation at the funded stage.** [D258](decisions/D258-the-prop-track-candidates.md)'s C1 is
+therefore **live, not a loophole**, and **the +8.59%/yr overnight drift is reachable inside prop
+rules.**
+
+**Topstep is the opposite and its own sources conflict.** Its funded-account rules give a
+wall-clock rule — *"All positions MUST be closed prior to 3:10 PM CT or prior to the market close
+of that product, whichever is sooner"* — while its help centre says *"Topstep does not permit
+holding positions from one session to the next."* **Treated as BLOCKED**, because an ambiguity
+whose downside is account forfeiture is not one to resolve by inference.
+
+**P2 is therefore restated as: no exposure across the venue's stated flatten time.** Whether that
+forbids the overnight is a fact about the venue, to be quoted from its own documentation, never
+assumed.
+
+**Two cautions that come with it:**
+
+1. **P1 becomes the binding constraint, and it bites harder here.** A 22-hour futures hold is 22
+   hours of **open-equity** exposure against a ratcheting 4% floor. The equity overnight return is
+   a close-to-open *gap*; the futures position lives through the whole *path*. **A −2% overnight
+   excursion breaches at half the deployed size, even if the position closes green.**
+2. **The measured +8.59% is a CASH-EQUITY statistic and may not transfer.** It is the close→open
+   gap on ETFs. Futures trade that period continuously, so the drift may be the same while the path
+   — which is what P1 measures — is entirely different. **We hold no futures data and cannot test
+   this on anything we own.**
+
+**And the rule is new.** MyFundedFutures' overnight permission dates from March 2026 by secondary
+report. A rule that changed recently can change back, which is a business risk on top of the
+research one.
