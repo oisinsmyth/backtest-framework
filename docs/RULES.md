@@ -179,3 +179,40 @@ brackets the truth; a single-leg verdict on such a rule is not safe.
 **Scope:** binding on every pooled conditional-return table, anatomy and setup census whose
 triggers can synchronise across the universe — which is nearly all of them on a single asset
 class. Introduced by D249.
+
+
+## R11. A candidate for the prop-firm route must clear hurdle P, and the book does not
+
+**Anything intended for external funding is measured against the venue's rules, not against
+`max_drawdown`.** The statistics this programme computes are closed-equity and far kinder than
+what a funded account is actually judged on.
+
+**Hurdle P, all six:**
+
+| | standard | why |
+|---|---|---|
+| **P1** | **Trailing drawdown ≤ 4%**, measured on **OPEN** equity | Apex trails on unrealised intraday equity; open profit lifts the floor before anything is closed. Our closed-equity max-DD is a different and gentler statistic |
+| **P2** | **Zero overnight exposure** | Topstep 3:10pm CT, Apex 4:59pm ET, MyFundedFutures 4:10pm ET — every major futures firm auto-liquidates. No plan or tier permits a hold |
+| **P3** | **Worst single day ≤ 2%** | Daily loss limits run 2–3% |
+| **P4** | **Expected time-to-breach > 3 years** | Against a trailing barrier and positive drift, ruin is certain eventually; the question is only when. At Sharpe 0.9 a 20-account book died every ~3.85 years |
+| **P5** | **No single day > 40% of trailing-year profit** | Consistency rules cap a single day at 30–50%, so a lumpy-but-profitable strategy is ineligible for payout while up |
+| **P6** | **Venue permits automation at the FUNDED stage** | Apex: *"No Automation or Algorithm Usage allowed"* on Performance Accounts, penalty *"forfeiture of all funds and balances"*. Take Profit Trader bans EAs throughout. **Only Topstep and MyFundedFutures permit it.** Third-party comparison tables contradict both firms' own terms and must not be relied on |
+
+**Because:** the committed book fails P1 by roughly sevenfold (−29.82% at deployed size against 4%)
+and **fails P2 structurally** — it holds overnight, and [D247](decisions/D247-the-short-side-at-fifteen-minutes.md)
+measured that **86.6% of its return is timing that accrues overnight**. **No amount of position
+sizing fixes P2.**
+
+**Corollary, and it is the operative one:** the prop route needs a **different, intraday strategy**,
+not a scaled version of this book. **The two goals must be tracked separately**, and the 4% trailing
+constraint must not be allowed to distort the own-capital book, where a −15% drawdown is
+survivable and a −29.82% one is merely uncomfortable.
+
+**Second corollary — the cost wall does not transfer.** This programme's ~1.9 bp/side ETF figure and
+the "one round trip per day costs 8.90%/yr" arithmetic are **equity** numbers. Futures round-turn
+commission on the instruments these firms offer is roughly an order of magnitude cheaper, so
+**intraday constructions excluded on ETF cost arithmetic must be re-costed before being excluded on
+futures.**
+
+**Scope:** binding on any candidate proposed for external funding. Introduced 2026-08-29 from the
+prop-firm review in [`research/shorts/05-prop-firm-reality.md`](research/shorts/05-prop-firm-reality.md).
