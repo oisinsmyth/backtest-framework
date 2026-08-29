@@ -107,3 +107,86 @@ instrument generality and era robustness are different properties and S1 has one
 | + the decomposition that found it: 5 signals x 2 universes, plus 3 timing/selection splits x 2 | 18 |
 | + carried from D256 | 46,028 |
 | **total** | **46,046** |
+
+---
+
+## RESULT — CLOSED. The Sharpe reproduces, the IC does not, and G is what caught it.
+
+**Produced:** 2026-08-29 · `uv run python scripts/run_xsec_trend_arm.py` ·
+`XSEC_TREND_ARM_RESULTS.md` · split seed 20260829, 400 null draws per cohort.
+
+| | names | Sharpe | ann. return | vol | gross | **IC** | corr. t | breadth | breakeven | H (Sharpe/money) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **A screen** | 786 | +0.396 | +0.31% | 0.79% | 13.8% | **+0.00325** | +0.67 | 67.0 | 32 bp | 64.2nd / 89.8th |
+| **B holdout** | 787 | +0.564 | +0.42% | 0.75% | 13.7% | **−0.00049** | −0.11 | 69.4 | 41 bp | **88.2nd / 99.0th** |
+
+### Hurdle G fails, and it is the hurdle that mattered
+
+**The two cohorts' ICs have OPPOSITE SIGNS** — `+0.00325` against `−0.00049`, ratio **0.15**. Both
+are indistinguishable from zero (corrected t of +0.67 and −0.11).
+
+> **The signal does not rank one random half of the market, and it does not rank the other.**
+> G was registered for exactly this and it fired.
+
+**Hurdle H also fails on cohort B**: the money leg clears at the **99.0th** and the Sharpe leg fails
+at the **88.2nd**. Both are required.
+
+### What DID reproduce, and it is the interesting part
+
+| | predicted | measured |
+|---|---|---|
+| **W-b** — Sharpe near 0.43 per half, from halved breadth | 0.43 | **0.396 / 0.564** |
+| **W-d** — rho with the ETF book stays negative | — | **−0.124** [−0.189, −0.061] |
+| combined book at equal risk weight | — | **+1.113** against +0.831 |
+| **W-e** — breakeven under 20 bp | <20 bp | **32–41 bp**, falsified in the arm's favour |
+
+**So the Sharpe, the negative correlation and the combined-book improvement all reproduce out of
+sample — while the IC is zero on both halves.** That dissociation is the finding.
+
+### The net-beta hypothesis, tested and REFUTED
+
+[D251](D251-the-cross-sectional-dollar-neutral-pre-screen.md) established that *"matched notional is
+not matched exposure"* and that its two apparent winners were levered short-the-market books wearing
+factor names. **That is the obvious explanation here and it is wrong:**
+
+| cohort | beta | t | R² | alpha (ann) | t |
+|---|---:|---:|---:|---:|---:|
+| A screen | −0.007 | −12.5 | 0.036 | +0.34% | +1.8 |
+| B holdout | −0.007 | −12.9 | 0.039 | +0.45% | +2.5 |
+
+**Beta is statistically detectable and economically nil** — it explains 4% of variance. Held names
+average beta **+0.963** against **+1.007** for unheld, an implied tilt of **−0.045**. **This is not
+a disguised market bet**, and a small beta-adjusted alpha survives at t ≈ +2.4.
+
+### A defect in my own hurdle, recorded and NOT used to rescue the cell
+
+**G was specified on a 21-bar forward IC. The book rebalances daily and earns the one-day spread.**
+If the effect is concentrated at short horizons, a 21-bar IC can read zero while the daily book
+works — which is precisely the pattern observed.
+
+**That is a plausible defect in the hurdle rather than evidence for the arm, and D257's stop
+forbids using it as one:** *"no re-split, no second seed, no alternative neutralisation, no move to
+a time holdout as a second chance."* **Re-testing G at a horizon chosen after seeing it fail is the
+definition of the second chance the stop exists to prevent.** The observation is recorded so that
+**any future registration specifies IC at the horizon the book actually earns over** — it is not a
+reason to reopen this one.
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **W-a** | cohort B's IC within a factor of two of A's, same sign | **FALSIFIED** — opposite signs, ratio 0.15 |
+| **W-b** | both cohorts near 0.43, breadth not decay | **CONFIRMED** — 0.396 / 0.564 |
+| **W-c** | cohort B clears H | **FALSIFIED** — 88.2nd on Sharpe |
+| **W-d** | rho stays negative | **CONFIRMED** — −0.124, interval entirely below zero |
+| **W-e** | breakeven under 20 bp/side | **FALSIFIED**, in the arm's favour — 32–41 bp |
+
+### The stop applies
+
+**CLOSED.** The name holdout is spent. **A screen result chosen after looking failed its holdout,
+which is the fifth time in this programme and the reason the protocol exists.**
+
+**What survives as a measurement rather than an arm:** a dollar-neutral trend book on 1,573 single
+names is genuinely uncorrelated with the ETF book (**rho −0.124**, interval below zero, reproducing
+out of sample) and would lift the combined Sharpe from **0.831 to 1.113** — *if* it had an edge. It
+does not have one that a holdout can see.
