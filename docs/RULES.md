@@ -256,3 +256,45 @@ assumed.
 **And the rule is new.** MyFundedFutures' overnight permission dates from March 2026 by secondary
 report. A rule that changed recently can change back, which is a business risk on top of the
 research one.
+
+
+## R12. Two tracks, two standards — and a candidate closed on one is screened against the other before it is discarded
+
+**This programme now serves two books with incompatible constraints**, and a single set of hurdles
+cannot serve both:
+
+| | **personal** | **prop** |
+|---|---|---|
+| book | [BOOK.md](BOOK.md) | [BOOK_PROP.md](BOOK_PROP.md) |
+| drawdown tolerance | ~20% | **4% trailing, on OPEN equity** |
+| overnight | permitted | venue-specific ([R11](#r11) amendment) |
+| automation | unrestricted | funded stage: Topstep and MyFundedFutures only |
+| instrument | ETFs, single names | futures |
+| **round-trip cost** | **~3.8 bp** (IBKR Pro, and the **$0.35 minimum binds below ~$1,000 per position**) | **~0.2 bp** |
+| hurdles | E, H, V | **P1–P6** |
+
+**The rule:** a candidate that fails one track's standards is **screened against the other's before
+it is closed**. A `CLOSED` verdict is track-specific and does not travel.
+
+**Because the differences are large enough to flip a verdict, in both directions:**
+
+1. **Drawdown tolerance differs fivefold.** A strategy failing P1's 4% trailing floor may sit
+   comfortably inside a personal book that already runs at −18%.
+2. **Cost differs by roughly twenty times.** [D258](decisions/D258-the-prop-track-candidates.md)
+   recorded this: constructions excluded on ETF cost arithmetic — scalping,
+   [D247](decisions/D247-the-short-side-at-fifteen-minutes.md)'s intraday shorts, most of the
+   intraday microstructure literature — **clear their costs by an order of magnitude on futures.**
+   **A cross-screen must RE-COST, not merely re-threshold.**
+3. **Timeframe is not a property of the edge.** D247 measured S1 and S2 breaking at 15 minutes while
+   working daily — *"15-minute sampling breaks both estimators in both directions."* **A rule that
+   fails on a lower timeframe may work on a higher one, and the converse.** Neither result closes
+   the other.
+4. **The prop route cannot use the personal book's edge at all.** 86.6% of it is timing that
+   accrues overnight, so P2 forecloses it on most venues regardless of sizing.
+
+**Corollary — a stop condition must now name its track.** "CLOSED" without a track is ambiguous, and
+the cross-screen is what stops nine studies' worth of work being thrown away because it failed the
+wrong bar.
+
+**Scope:** binding from 2026-08-29. Applies retroactively to every candidate closed in the
+2026-08-28/29 sessions, none of which was screened against the prop track's cost structure.
