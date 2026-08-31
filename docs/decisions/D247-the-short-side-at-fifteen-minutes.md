@@ -325,3 +325,54 @@ measured motivation.
 | + D245's 2, D242's 3, D241's 5, D240's 5, D239's 3, D238's 4, D234's 6, D235's 7, D236's 6 | 49 |
 | + the gradient anatomy | 70 |
 | + disclosed ETF prior | **45,873** |
+
+---
+
+## CROSS-SCREEN at futures cost, 2026-08-29 — [R12](../RULES.md#r12)
+
+**R12 requires a candidate closed on one track to be screened against the other's standards before
+it is discarded, and D247 is the clearest case: it closed on COST arithmetic, and the prop track's
+cost is roughly twenty times lower.**
+
+D247 charged **~1.60 bp/side** on ETFs. An ES round turn is ~0.2 bp, so **~0.10 bp/side**.
+Re-screened from the committed artifact, no re-run — the breakevens D247 already published are
+sufficient:
+
+| cell | turn/yr | breakeven | @1.60 bp (as run) | **@0.10 bp (futures)** | verdict |
+|---|---:|---:|---:|---:|---|
+| S1_long_cont | 181 | 0.603 bp | −1.80% | **+0.91%** | clears, marginal |
+| **S1_long_intra** | 285 | **0.860 bp** | −2.11% | **+2.16%** | **clears materially** |
+| S1_short_cont | 208 | **−1.547 bp** | −6.53% | −3.42% | **loses when FREE** |
+| **S1_short_intra** | 334 | **0.130 bp** | −4.90% | **+0.10%** | clears, worth ~nothing |
+| S2_long_cont | 28 | 4.081 bp | +0.69% | +1.10% | clears (already did) |
+| S2_long_intra | 91 | −0.869 bp | −2.24% | −0.88% | **loses when FREE** |
+| S2_short_cont | 27 | −7.712 bp | −2.52% | −2.12% | **loses when FREE** |
+| S2_short_intra | 87 | −1.054 bp | −2.32% | −1.01% | **loses when FREE** |
+
+### The shorts were never a cost problem, and this proves it
+
+**Four of the eight cells have a NEGATIVE breakeven — they lose with completely free trading.**
+Three of those four are short cells. **S2_short_cont would need to be PAID 7.7 bp per side to break
+even.**
+
+**So removing the cost wall changes nothing for the short side.** D247's shorts are closed a second
+time, on stronger grounds than the first: not *"the turnover ate it"* but *"there was nothing
+there."* **That is a better closure than the original, and R12's cross-screen is what produced it.**
+
+### What does change, and what it does not license
+
+**S1_long_intra flips sign** — breakeven 0.860 bp against a 0.10 bp charge, so its excess Sharpe
+crosses from **−0.586** to positive on cost alone. That is a genuine reversal of a published cell.
+
+**It does not reopen the study, for two reasons stated in D247 itself:**
+
+1. **The estimator objection is untouched and was never about cost.** D247's own reading was that
+   *"15-minute sampling breaks both estimators in both directions"* — S1's 34-bar Impulse is **1.3
+   sessions** at this rate. A broken estimator that becomes affordable is still broken.
+2. **The universe is wrong.** These are 57 ETFs. The prop track trades **three** index futures, so
+   effective breadth falls from 2.2 toward 1, and `IR ~ IC x sqrt(breadth)` takes most of the gain
+   straight back.
+
+**The honest statement: the cross-screen removes ONE of D247's two objections, for the LONG cells
+only, on the wrong universe.** That is a lead for [C2](../BOOK_PROP.md), not a result — and it is
+recorded here so that a future study cannot present it as one.
