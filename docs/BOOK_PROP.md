@@ -159,3 +159,77 @@ screened on MAE before its returns are computed** — D259's method is the reusa
 
 **Next: [C2](decisions/D258-the-prop-track-candidates.md), whose shape fits P1 by design** — high
 hit rate, tight tails — and whose cost objection R12's cross-screen has already removed.
+
+---
+
+## C1 — REOPENED, 2026-08-29. The closure above tested only STATIC sizing, and that was my error.
+
+**[D258](decisions/D258-the-prop-track-candidates.md) named C4, the sizing wrapper, as a
+PRECONDITION** — *"Any candidate needs this bolted on before P1 is even measurable."* **C1 was
+closed without it.** The verdict above measured a constant notional against a ratcheting floor,
+which is the one sizing scheme guaranteed to be wrong when the tail is regime-driven.
+
+### Vol-targeted sizing, matched on average exposure
+
+Size `k = target_vol / trailing_vol`, the volatility estimate taken over the **prior 21 holds only**
+(R9), capped. Compared against static sizing **at the same average exposure** — the only fair
+comparison:
+
+| avg size | **breach, vol-targeted** | *breach, static* | ratio | ann return | **profit before breach** |
+|---:|---:|---:|---:|---:|---:|
+| 0.48x | **0.06%** | *0.13%* | 0.47x | +4.41% | **28.20%** *(vs 18.75%)* |
+| 0.71x | **0.18%** | *0.55%* | **0.32x** | +6.61% | **14.71%** *(vs 6.74%)* |
+| 0.95x | **0.57%** | *1.75%* | **0.33x** | +8.79% | **6.08%** *(vs 2.82%)* |
+| 1.42x | 2.95% | *6.66%* | 0.44x | +13.04% | 1.75% *(vs 1.11%)* |
+
+**A threefold reduction in breach rate at matched exposure, and roughly double the expected profit
+before breach.**
+
+### And it removes the regime dependence entirely
+
+| era | static 1x | **vol-targeted** | avg size it chose |
+|---|---:|---:|---:|
+| 2010–2019 | 1.07% | **0.22%** | 0.79x |
+| **2020** | **11.36%** | **0.13%** | **0.50x** |
+| 2021–2026 | 2.19% | **0.11%** | 0.63x |
+
+**2020's breach rate falls by a factor of 87, and the three eras converge to 0.11–0.22%.** The tail
+was regime-driven; sizing to volatility removes the regime. **This is D236's finding read against
+the right criterion** — those six controls "reduced drawdown without improving risk-adjusted
+return", which is exactly what a drawdown constraint wants.
+
+### Does it clear P4?
+
+**Yes, at a 0.4% volatility target:**
+
+| scheme | avg size | breach | **expected life** | ann return | profit before breach |
+|---|---:|---:|---:|---:|---:|
+| **voltgt 0.4%, cap 4x** | **0.48x** | **0.06%** | **6.40 years** | **+4.41%** | **28.20%** |
+| voltgt 0.6% | 0.71x | 0.18% | 2.33 years | +6.61% | 14.71% |
+| *static 1x (the closure above)* | *1.00x* | *2.09%* | *0.19 years* | *+13.10%* | *2.49%* |
+
+**P4 needs an expected life above 3 years. The 0.4% target gives 6.40.**
+
+**And the number that matters most for a funded account: expected profit before breach is 28.20% of
+account value** — on a $150k MFF account, roughly **$42,000**, which comfortably exceeds the payout
+ladders these firms cap at. **The account earns its full ladder well before it dies.**
+
+### What this is, and what it is not
+
+**It is a correction to a premature closure**, not a rescue of a dead candidate. The distinction
+matters and rests on one fact: **D258 named the sizing wrapper as a precondition before C1 was ever
+screened.** Applying it is completing the registered test, not searching for a variant that passes.
+
+**Five caveats, all real:**
+
+1. **The vol target was chosen after seeing the breach data.** 0.4% is not pre-registered and a
+   proper study must fix it in advance or sweep it and pay the multiplicity.
+2. **In-sample throughout.** No holdout has been spent on this.
+3. **The path is measured on EQUITY extended-hours bars, not futures.** 16 of 23 hours, and the
+   futures path may differ.
+4. **+4.41%/yr is gross of the firm's own costs** — evaluation fees, data, and the payout split.
+5. **2020 is one event.** A single observation carrying an 87x improvement is a thin basis, however
+   good the mechanism sounds.
+
+**C1 moves from CLOSED to OPEN, pending a pre-registration that fixes the vol target in advance and
+reserves a holdout.**
