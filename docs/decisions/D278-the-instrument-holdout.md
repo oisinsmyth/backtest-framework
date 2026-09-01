@@ -1,6 +1,8 @@
 # D278 — The instrument holdout
 
-**Status:** PRE-REGISTERED. Committed **before the holdout bars are scored**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** 0 of 12. **All five in-sample winners reverse sign.**
+
+**Everything above the RESULT heading was committed in `f8407c3`, and the fixture in `681723a`, BEFORE the holdout was scored.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track**
 
@@ -176,3 +178,95 @@ exist, so it is a specification rather than a choice made after seeing which rea
 **336 dividends across 11 names**, reinvested on the ex-date bar by `load_panel`. The original
 eight carried **no splits at all**, so the back-adjustment path is exercised here for the first
 time on this fixture family — and D226's residual-step gate is the check that it worked.
+
+---
+
+## RESULT — every one of the five reverses sign
+
+`uv run python scripts/run_holdout_test.py` · `data/d278_holdout_summary.json` · 16 names ×
+56,115 bars, 2,160 sessions, 500 rotations.
+
+**Zero of twelve cells clear all five hurdles. All twelve have a negative CAGR.**
+
+### The five winners, in-sample against holdout
+
+| cell | in-sample CAGR | **holdout CAGR** | H5 |
+|---|---:|---:|---|
+| LOW · `macd_line` | +0.73% | **−1.87%** | **fail** |
+| LOW · `impulse_hist` | +0.69% | **−0.71%** | **fail** |
+| HIGH · `mass_imbalance` | +0.58% | **−1.22%** | **fail** |
+| ALL · `mass_imbalance` | +0.38% | **−0.81%** | **fail** |
+| LOW · `mass_imbalance` | +0.17% | **−0.40%** | **fail** |
+
+**All five reverse.** P2 predicted *at least one*; every one did.
+
+### The full table
+
+| cell | move | ×cost | CAGR | Sharpe | H1 | H2 | H3 | H4 | H5 |
+|---|---:|---:|---:|---:|---|---|---|---|---|
+| ALL `none` | +1.89b | 0.19× | −4.99% | −1.268 | no | no | **YES** | no | YES |
+| ALL `impulse_hist` | −0.55b | −0.05× | −1.92% | −1.287 | no | no | no | no | YES |
+| ALL `macd_line` | −1.00b | −0.10× | −2.71% | −1.224 | no | no | no | no | YES |
+| ALL `mass_imbalance` | −2.40b | −0.25× | −0.81% | −1.528 | no | no | no | no | no |
+| LOW `none` | −1.60b | −0.39× | −3.17% | −0.941 | no | no | no | no | YES |
+| LOW `impulse_hist` | +0.46b | 0.11× | −0.71% | −0.462 | no | no | no | no | no |
+| LOW `macd_line` | −4.00b | −0.96× | −1.87% | −0.911 | no | no | no | no | no |
+| LOW `mass_imbalance` | −1.42b | −0.35× | −0.40% | −0.746 | no | no | no | no | no |
+| HIGH `none` | +5.56b | 0.33× | −6.77% | −1.133 | no | no | **YES** | no | YES |
+| HIGH `impulse_hist` | −1.59b | −0.10× | −3.11% | −1.372 | no | no | no | no | YES |
+| HIGH `macd_line` | +2.06b | 0.12× | −3.54% | −1.079 | no | no | no | no | YES |
+| HIGH `mass_imbalance` | −3.57b | −0.22× | −1.22% | −1.364 | no | no | no | no | no |
+
+**Best-of-12 floor +0.100; best cell −0.462.** Nothing is close.
+
+### THE FINDING — the base's skill replicates and the filters do not
+
+**Two cells clear the rotation null on BOTH legs, and they are the UNFILTERED base**: `ALL|none`
+and `HIGH|none`. The same `S2_short_intra` that cleared hurdle H at the 97.2nd/97.9th percentile
+in-sample clears it again on sixteen names it has never seen — **while losing 4.99% and 6.77% a
+year.** [FINDINGS §3](../FINDINGS.md) for the fourth time this session: real timing, comprehensively
+unprofitable.
+
+**And the filters degrade it.** On the quantity that decides viability — move per trade — the
+unfiltered base beats its own filtered versions in **7 of 9** comparisons:
+
+| stratum | `none` | `impulse_hist` | `macd_line` | `mass_imbalance` |
+|---|---:|---:|---:|---:|
+| ALL | **+1.89b** | −0.55b | −1.00b | −2.40b |
+| HIGH | **+5.56b** | −1.59b | +2.06b | −3.57b |
+| LOW | −1.60b | **+0.46b** | −4.00b | −1.42b |
+
+**In-sample every one of these filters improved the base. Out-of-sample, seven of nine make it
+worse.** That is what a mined filter looks like when the mine is measured.
+
+### Predictions
+
+| | outcome |
+|---|---|
+| **P1** no cell clears all five | **CONFIRMED** — 0 of 12 |
+| **P2** at least one filter reverses sign | **CONFIRMED — all five did** |
+| **P3** the unfiltered base loses on the holdout too | **CONFIRMED** — −4.99% / −3.17% / −6.77%, reproducing D264 on sixteen fresh names |
+| **P4** the three filters disagree with each other | **CONFIRMED** — on LOW they run +0.46, −4.00, −1.42; on HIGH −1.59, +2.06, −3.57 |
+
+### A defect caught during the run, and it would have flattered the result
+
+`load_panel` builds `cost_fraction` from `L.per_side_bps`, which adds the **ETF half-spread of
+1.0 bp** — not D264's 1.5 (low) / 4.5 (high). Repointing the stratum map without repointing the
+cost vector would have costed the holdout's high stratum **2.5× too cheaply** and made H1 trivially
+easier. **It surfaced because `borrow_vector` raised `KeyError: 'ANF'`** — a guard failing loudly
+rather than a number quietly being wrong, which is the whole design intent of D226's guard style.
+
+Costs as actually charged, from the holdout panel's own median close: **RIG 15.31 bp/side**, CNX
+7.59, HLF 6.31, NI 6.32 — against COST at **1.60** and HD at 1.66.
+
+---
+
+## Stop — fired, and it closes the family
+
+**The mined construction is closed, and per D278's stop the single-name intraday short closes with
+it.** The in-sample search is spent, the holdout is spent, and **no third sample will be selected
+from this pool.**
+
+**What replicated:** `S2_short_intra`'s timing, on sixteen unseen names, at the 95th percentile of
+both null legs — and it loses 5–7% a year. **What did not:** every filter the mine found, all five
+reversing sign.

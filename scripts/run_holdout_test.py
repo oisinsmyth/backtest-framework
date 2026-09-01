@@ -167,8 +167,26 @@ def main() -> int:
         finally:
             R.L.FIXTURE, R.L.EVENTS = saved
         h = json.loads((REPO / "data" / "holdout_name_selection.json").read_text())
-        strata = strata_of(panel.symbols, [x["symbol"] for x in h["low"]],
-                           [x["symbol"] for x in h["high"]])
+        low = [x["symbol"] for x in h["low"]]
+        high = [x["symbol"] for x in h["high"]]
+        strata = strata_of(panel.symbols, low, high)
+
+        # THE STRATUM MAP AND THE COST VECTOR MUST BOTH BE REPOINTED, and missing
+        # the second would have been silent. `load_panel` builds cost_fraction
+        # from `L.per_side_bps`, which adds the ETF half-spread of 1.0 bp -- not
+        # D264's 1.5 (low) / 4.5 (high). Left alone, the holdout would have been
+        # costed 2.5x too cheaply on its high stratum and H1 would have been
+        # trivially easier to clear. Caught by `borrow_vector` raising KeyError on
+        # ANF, which is the loud failure D226's guards are written to produce.
+        R.STRATUM = {**{s: "low" for s in low}, **{s: "high" for s in high}}
+        panel = type(panel)(
+            symbols=panel.symbols, closes=panel.closes,
+            log_returns=panel.log_returns,
+            cost_fraction=R.cost_vector(panel.symbols, panel.closes),
+            dates=panel.dates, total_log_returns=panel.total_log_returns)
+        print("cost per side, from the holdout panel's own median close:")
+        for i, s in enumerate(panel.symbols):
+            print(f"    {s:6s} {R.STRATUM[s]:5s} {panel.cost_fraction[i] * 1e4:5.2f} bp")
         label = "HOLDOUT"
 
     first, gap = D.session_structure(panel.dates)
