@@ -100,7 +100,7 @@ symbol-year is an upper bound, since no bar prints for a minute without a trade.
 
 | schema | per symbol-year | why |
 |---|---:|---|
-| **`ohlcv-1m`** | **$0.51** | 19.5 MB |
+| **`ohlcv-1m`** | **$0.5079** | 19.5 MB. *Quoted as $0.51 elsewhere in this document; the exact figure is $0.5079 and the rounding propagates to the totals below.* |
 | `ohlcv-1s` | **$30.60** | 60x the records |
 | **`trades`** | **$145.33** | 5.19 GiB — measured from the worked example, not extrapolated |
 
@@ -125,6 +125,12 @@ symbol-year is an upper bound, since no bar prints for a minute without a trade.
 | **ags** | ZC, ZS, ZW | 16 | 48.0 | $24.48 |
 | livestock | LE, HE | 16 | 32.0 | $16.32 |
 | **total** | **26 symbols** | | **358.0** | **$182.58** |
+
+> **ROUNDING CORRECTION, 2026-09-01.** Every figure in this column was computed at **$0.51** per
+> symbol-year. The exact rate is **$0.5079**, so the true total is **$181.81**, not $182.58 — a
+> $0.77 overstatement that carries through §10 as well. **The symbol count (26) and the symbol-year
+> count (358.0) are exact and reproduce.** `uv run python scripts/fetch_databento.py --plan`
+> computes the unrounded table offline, with no key and no network, and is the figure to trust.
 
 **Plus `definition` and `statistics` schemas** — negligible in size, and **`definition` is not
 optional**: it carries the roll calendar and contract metadata that make a correct continuous series
@@ -338,6 +344,26 @@ is a slow positioning read rather than a tape read — a different animal from f
 complementary to it. **It surfaced in none of the twelve free-data lanes**, which searched for price
 data.
 
+> **AMENDED 2026-09-01, once rung 1 was actually built: RUNG 2 HAS A FREE WEEKLY
+> FORM, and this proposal did not know it.**
+>
+> **The CFTC reports the micros as their own contracts** — MES `13874U`, MNQ
+> `209747`, M2K `239747`, MYM `124608`, plus micro gold, silver and copper — each
+> with the full trader-category breakdown **and its own `nonrept` small-trader
+> column.** So the retail-versus-institutional split does not have to be inferred
+> from contract choice at all: **the CFTC classifies the traders directly, weekly,
+> for nothing.**
+>
+> It does not replace the paid rung 2 — weekly resolution cannot support an
+> intraday rule — and **the free form is bounded harder than expected**, because a
+> contract enters COT only once it has enough *reportable* traders: MES first
+> reports **2020-07-28** against a 2019-05-06 listing, M2K **2021-11-30**, MYM
+> **2022-07-26**, and the metal micros only in 2026. **So it is ES/MES and NQ/MNQ
+> at ~6 years, not four pairs at seven.**
+>
+> **But the premise can now be falsified for £0 before any purchase decision.**
+> See [`docs/cftc_cot.md`](../../cftc_cot.md).
+
 **Rung 2 — the micro/mini notional ratio. $14.28, and ALREADY on the buy list.**
 
 | | tick size-buckets | **micro/mini ratio** |
@@ -540,10 +566,11 @@ making at this budget is rung 4, and this proposal recommends not making it yet.
 
 **Step 0 costs nothing and does not wait for any of the rest.**
 
-0. **Fetch the CFTC Commitment of Traders history** — free, public domain, ~50 MB, no account and
-   no purchase. **It is committable**, so it lands in `data/fixtures` under the normal convention
-   rather than the gitignored cache. This is rung 1 of §7.5 and it can be screened before a penny
-   is spent.
+0. ~~**Fetch the CFTC Commitment of Traders history**~~ — **DONE 2026-09-01.**
+   `data/fixtures/cftc_cot_raw.csv.gz`: **210,717 rows, 28 symbols, three report families,
+   1986-01-15 → 2026-08-25, 3.1 MB, committed.** Free, public domain, no account. See
+   [`docs/cftc_cot.md`](../../cftc_cot.md) and `scripts/fetch_cftc_cot.py`. **Rung 1 is now
+   screenable, and so is a free weekly form of rung 2** (see the amendment in §7.5).
 1. **Sign up and confirm the unit price** — `list_unit_prices(dataset="GLBX.MDP3")`. Thirty seconds,
    and it removes the one inferred number in this costing **before any money is spent.**
 2. **Alpha Vantage top-up**, on the month already paid for: extended-hours 15-minute for all 57
@@ -560,8 +587,17 @@ making at this budget is rung 4, and this proposal recommends not making it yet.
 
 **Two traps carried forward from the free-data search, restated because they are cheap to hit:**
 
-- **`stype_in="continuous"` (`ES.c.0`), never `parent`** — `parent` resolves to every outright *plus*
-  every calendar spread, which is both wrong and far more expensive.
+- **`stype_in="continuous"`, never `parent`** — `parent` resolves to every outright *plus* every
+  calendar spread, which is both wrong and far more expensive.
+
+  > **CORRECTED 2026-09-01: use `ES.v.0`, NOT the `ES.c.0` this section originally wrote.**
+  > Continuous symbology is `[ROOT].[ROLL_RULE].[RANK]`, and the letter mapping is undocumented —
+  > but `databento-python` carries `RollRule = volume | open_interest | calendar`, which makes
+  > **`c` = CALENDAR, i.e. rolling at expiry.** That is exactly the failure §12 measures in Yahoo's
+  > `ES=F`, where rolling at expiry rather than volume crossover leaves the last 4–5 days of each
+  > quarter tracking the dying contract and contaminates 7–8% of the sample. **We would have bought
+  > the defect we wrote the acceptance tests to catch.** `fetch_databento.py --verify` resolves all
+  > three letters on a free call to settle the inference before any byte is bought.
 - **`batch.submit_job`, not streaming** — streaming re-bills on retry; batch bills once and allows
   30 days of free re-downloads.
 

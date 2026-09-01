@@ -10,6 +10,60 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D262 - the futures data layer and the free rung, 2026-09-01)
+- `scripts/fetch_cftc_cot.py` - sibling of `fetch_index_extended.py`, same
+  `--plan / --probe / --map / --fetch / --build` phases, same limiter discipline, stdlib
+  only. **The symbol map is DERIVED by `--map` and refuses ambiguity**, because a typed
+  contract code returns a plausible, well-formed series for the WRONG MARKET and nothing
+  downstream errors: `%CRUDE OIL%` matches seven contracts, and `%NATURAL GAS%` matches
+  the main Henry Hub contract not at all (the CFTC abbreviates it to `NAT GAS NYME`).
+- `data/fixtures/cftc_cot_raw.csv.gz` + meta + map - **210,717 rows, 28 symbols, three
+  report families, 1986-01-15 to 2026-08-25, 3.1 MB. COMMITTED**, which nothing else in
+  the futures data layer may be: COT is a work of the US government and is public domain.
+  Tidy shape, one row per (report, category), `family` on every row so incomparable
+  trader taxonomies cannot be pooled. **The micros have their own contracts** (MES
+  `13874U`, MNQ `209747`, M2K `239747`, MYM `124608`, plus micro metals), which gives the
+  proposal's rung 2 a free weekly form.
+- `scripts/futures_continuous.py` - the continuous-contract stitcher and its acceptance
+  gates, **built and tested against no vendor data at all**. Rolls on volume or
+  open-interest crossover with persistence required, never the calendar; ratio and
+  difference back-adjustment with the unadjusted series always retained; no
+  forward-filling.
+- `scripts/fetch_databento.py` - **verify-first client that cannot spend by accident**.
+  `--plan` touches neither network nor key, `--verify` calls only free metadata
+  endpoints, `--submit` refuses without both a passed verify and an explicitly accepted
+  figure and is then deliberately not wired up.
+- `tests/unit/test_cftc_cot_fixture.py` (23), `test_futures_continuous.py` (14),
+  `test_databento_client.py` (16). The load-bearing ones are **the open-interest identity
+  holds on 55,661/55,661 rows**, **ratio adjustment recovers synthetic ground truth to
+  1e-12**, **the gates REJECT the reconstructed Yahoo `ES=F` signature** and a correct
+  series still passes, **the provider's own typos are pinned verbatim**, **`--plan` fails
+  if it reaches the network**, and **the fixture is byte-reproducible**.
+- `docs/cftc_cot.md`, `docs/databento_api.md` - provider references in the shape of
+  `docs/alpha_vantage_api.md`. The Databento one tags **every fact VERIFIED or INFERRED**,
+  because the docs site is JS-rendered and the surface was established from the two
+  official client sources instead.
+
+### Fixed (D262)
+- **`fetch_cftc_cot.py --build` is byte-reproducible.** Content was stable across rebuilds
+  but the FILE was not: gzip stamps an mtime into header bytes 4-7, so identical builds
+  hashed differently. Written with `mtime=0` and asserted directly - D252's
+  non-idempotent-build defect in a new disguise.
+- **The COT open-interest gate was wrong on its first version**, passing on 5.82% of rows.
+  `OI == sum(long)` is not the identity; a spread position is one long AND one short held
+  by the same trader, inside open interest and outside the directional columns.
+- **The release-date convention was wrong on its first version.** A flat +3 days from a
+  Wednesday report lands on a Saturday, and a Friday-dated report would release on itself.
+
+### Changed (D262)
+- `scripts/fetch_etf_intraday.py` gains `--start` / `--end`, so extending the ETF span is
+  a flag rather than an edit to a module constant.
+- `docs/research/futures-data/data-purchase-proposal.md` - three corrections. Rung 2 has a
+  free weekly form via the micro COT series; **the proposal's `ES.c.0` is almost certainly
+  the CALENDAR roll** and is corrected to `ES.v.0`, since rolling at expiry is precisely
+  the defect the acceptance tests exist to catch; and the totals carried a rounding error
+  ($0.51 per symbol-year is really $0.5079, so $182.58 is really $181.81).
+
 ### Added (D252 - the dead-inclusive US single-name universe, 2026-08-28)
 - `scripts/fetch_short_universe.py` - sibling of `fetch_etf_holdout.py`, same
   `--plan / --fetch / --select / --actions / --build` phases, same key handling, same
