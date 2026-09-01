@@ -178,6 +178,15 @@ schema is the best free reference implementation of correct stitching.
 
 ## 7. What the search could not cover
 
+> **RESOLVED 2026-09-01 for r/algotrading — see [lane 01 §5](01-reddit-and-forums.md) and
+> [the proposal §8](data-purchase-proposal.md).** A working Redlib instance was found and four
+> threads (2022–2026) were read. **The lane changed no conclusion below**: Databento is the
+> top-voted answer in every thread, every named alternative is more expensive, and every thread
+> independently names **continuous-contract stitching** — §6 above — as the real difficulty. Two
+> confirmations were banked; one lead (cheap long-span tick) weakened an argument in the proposal
+> and is recorded there. **r/FuturesTrading and the remaining subreddits are CLOSED, not pending**
+> — after that degree of convergence the expected yield does not justify the effort.
+
 **Reddit was inaccessible from every route** — `WebSearch` with `allowed_domains: reddit.com`
 returns HTTP 400, `WebFetch` and the browser pane refuse it by policy, and three redlib mirrors
 returned 403 or hung. **r/algotrading, r/quant, r/futures and r/systematictrading are uncovered**,
@@ -204,6 +213,12 @@ credit, priced per byte, against a schema small enough that 16 years costs $30.*
 ---
 
 ## 9. Recommendation
+
+> **This section is the SEARCH's recommendation. The costed purchase that came out of it is
+> [data-purchase-proposal.md](data-purchase-proposal.md)**, which supersedes
+> `13-ACQUISITION-PROPOSAL.md` and extends the list below to 26 symbols, adds micros, ags and
+> quote-level snapshots, defers tick behind a staged ladder, and adds the free CFTC Commitment of
+> Traders series that this search — looking for price data — did not surface.
 
 1. **Take the Databento credit.** ES/NQ/RTY/YM, `ohlcv-1m`, `stype_in="continuous"`,
    `batch.submit_job`. **$30 of $125.** Confirm the unit price first with `list_unit_prices`.

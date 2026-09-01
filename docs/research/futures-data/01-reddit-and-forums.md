@@ -7,6 +7,11 @@ CL/GC/ZB/6E useful), 15-min or finer, 5+ years, full ~23h Globex session, progra
 
 ## 0. Access constraints — read this before trusting the coverage
 
+> **SUPERSEDED IN PART — see §5 at the foot of this file.**
+> A working Redlib instance (`safereddit.com`) was found on 2026-09-01 and r/algotrading WAS read.
+> The block below was per-instance availability, not a categorical wall. **The lane changed no
+> conclusion.** The record is kept as written because the access finding is itself a result.
+
 **Reddit was completely inaccessible from this environment.** Three independent routes were tried:
 
 | route | result |
@@ -200,3 +205,79 @@ serious 2025–2026 EliteTrader thread on futures data ends there.
 | [NexusFi downloads — NinjaTrader Market Replay Data](https://nexusfi.com/local_links.php?catid=28) | 2017 – Aug 2026 | **High.** The archive itself |
 | [NexusFi 36820 — CME Futures Historical DATA (FREE)](https://futures.io/brokers/36820-cme-futures-historical-data-free.html) | Aug 2015 | Dead end, documented so it is not rediscovered |
 | Hacker News (Algolia API, `free futures historical data`) | 2009 – 2020 | Low. Everything named is stale or equities-focused |
+
+---
+
+## 5. RESOLUTION — 2026-09-01. The lane is covered, and it changed no conclusion.
+
+**§0 above is preserved as written, because the access finding is itself the record.** It is now
+superseded on one point: **a working Redlib instance was found.** `redlib.tiekoetter.com` returned
+"Backend temporarily unavailable" throughout, but **`safereddit.com` — the same Redlib software on a
+healthy host — served search and thread pages normally.** The block in §0 was per-instance
+availability, not a categorical wall.
+
+**Four r/algotrading threads were read, spanning 2022 → May 2026**, on free data sources, free REST
+APIs, and the cost of tick data. **r/FuturesTrading was not reached, and is now CLOSED rather than
+pending** — see §5.4.
+
+**No thread content, URL or username is recorded in this repository.** What follows is the derived
+market facts only — vendor names and prices, which are facts about the market rather than anything
+belonging to a poster.
+
+### 5.1 The headline: the lane corroborated, it did not overturn
+
+**Databento is the top-voted answer in every one of the four threads.** That is the same conclusion
+[§1 of the synthesis](00-SYNTHESIS.md) reached from the licensing argument, arrived at independently
+by practitioners. **Two specific confirmations:**
+
+- **A Databento staff account put CME minute-bar depth at 2010-06-06** — matching this search's
+  finding exactly.
+- **Repeated warnings that raw per-contract data means you build the continuous series yourself**,
+  which is precisely what [§6, the roll warning](00-SYNTHESIS.md) exists for.
+
+**And the strongest signal in the whole sweep is not about price:** *every* thread names
+**continuous-contract stitching** — roll rule, back-adjustment, RTH versus full session, time zones —
+rather than data availability as the real difficulty. **Four independent sources landing on §6 says
+the acceptance-test budget is aimed correctly.**
+
+### 5.2 Every alternative vendor is more expensive
+
+**Priced against Databento's $0.51/symbol-year in
+[the proposal §8](data-purchase-proposal.md), not repeated here.** Summary: **Kibot is 14.7x more**,
+FirstRateData exceeds our entire 358-symbol-year complex for a subset, tickmarketdata is 2.6x the
+whole plan for one symbol, Quandl/CHRIS is dead (as §4 of the synthesis already found), Kinetick is
+EOD only, and **yfinance was already killed by our own measurement** — independently corroborated
+here by a report of inaccurate weekly closes.
+
+**QuantConnect is the one genuinely free futures source, and it fails on architecture rather than
+price: the data cannot leave the platform.** Taking it means abandoning this engine, the 1,446-test
+suite, the matched-count and rotation nulls, D228's floor, and offline determinism — **weeks of
+rewriting to save $60**, forfeiting the validation stack that is the actual asset.
+
+### 5.3 One lead did real damage — to our own argument
+
+**Sierra Chart + Denali at ~€40/month for 15 years of tick, and MarketTick at $79 for 10 years of
+ES+NQ L2**, attack the proposal's tick-deferral directly. **The proposal had costed a ONE-YEAR
+sample because $145.33/symbol-year made anything longer unaffordable — and affordability was the
+binding constraint.** At 10–15 years the MDE on Sharpe falls from **1.65 to 0.52–0.42**, and the
+power objection largely dissolves.
+
+**Recorded in full at [proposal §7.5b](data-purchase-proposal.md), including the three conditions
+attached before either route is bought** and the argument that survives it.
+
+**One lead is excluded outright and recorded so it is not rediscovered:** an account offering CME
+data down to MBO through a private group chat. **Redistributed licensed exchange data. No backtest
+built on it would be defensible**, and it is exactly what the gitignore-plus-refetch pattern exists
+to keep out of this repository.
+
+### 5.4 Why the remaining subreddits are CLOSED, not pending
+
+**r/FuturesTrading, r/quant, r/systematictrading and the rest are deliberately not being read.**
+Four threads spanning four years converged on a single vendor, priced every alternative above it,
+and independently reproduced this search's own roll warning. **After that degree of convergence the
+expected yield does not justify the effort**, and leaving the lane marked "pending" would invite
+someone to spend a session re-deriving the same answer.
+
+**The one checkable item that came out of the lane is carried in
+[proposal §13](data-purchase-proposal.md)**: a 2025 report that Polygon.io listed a free futures
+tier as "coming soon". One page load settles it.

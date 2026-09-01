@@ -462,6 +462,13 @@ symbol-year**:
 | **Kinetick EOD** (NinjaTrader) | free | — | daily settlements only |
 | **QuantConnect** | **free futures data** | — | **free data that cannot leave the platform.** Backtests run in LEAN on their cloud, so taking it means abandoning this engine, the 1,446-test suite, the matched-count and rotation nulls, D228's floor, and offline determinism. **Weeks of rewriting to save $60**, forfeiting the validation stack that is the actual asset |
 
+**The rest of the forum lane is CLOSED, not pending.** r/FuturesTrading, r/quant and
+r/systematictrading are deliberately unread: four threads spanning four years converged on one
+vendor, priced every alternative above it, and independently reproduced this document's own roll
+warning. **After that degree of convergence the expected yield does not justify the effort**, and
+leaving the lane open would invite a future session to re-derive the same answer. Recorded in
+[lane 01 §5.4](01-reddit-and-forums.md).
+
 **Two confirmations from the same sweep**, both matching what the twelve lanes found independently: a
 Databento staff account putting **CME minute bars at 2010-06-06**, and the repeated warning that
 **raw per-contract data means you build the continuous series yourself** — which is precisely what
