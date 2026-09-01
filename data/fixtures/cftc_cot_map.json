@@ -1,0 +1,175 @@
+{
+ "generated_utc": "2026-09-01T11:56:22+00:00",
+ "source": "https://publicreporting.cftc.gov/resource/{dataset}.json \u2014 derived by --map, never hand-typed",
+ "why_derived": "contract_market_name 'CRUDE OIL' matches SEVEN contracts (WTI light sweet, 1st-line, E-mini, two financials, Dubai, Oman). A typed code silently selects a different market and nothing downstream errors.",
+ "symbols": {
+  "6B": {
+   "code": "096742",
+   "contract_name": "BRITISH POUND",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "6E": {
+   "code": "099741",
+   "contract_name": "EURO FX",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "6J": {
+   "code": "097741",
+   "contract_name": "JAPANESE YEN",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "BTC": {
+   "code": "133741",
+   "contract_name": "BITCOIN",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "CL": {
+   "code": "067411",
+   "contract_name": "CRUDE OIL, LIGHT SWEET-WTI",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "ES": {
+   "code": "13874A",
+   "contract_name": "E-MINI S&P 500",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "GC": {
+   "code": "088691",
+   "contract_name": "GOLD",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "HE": {
+   "code": "054642",
+   "contract_name": "LEAN HOGS",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "HG": {
+   "code": "085692",
+   "contract_name": "COPPER- #1",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "LE": {
+   "code": "057642",
+   "contract_name": "LIVE CATTLE",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "M2K": {
+   "code": "239747",
+   "contract_name": "MICRO E-MINI RUSSELL 2000 INDX",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "MES": {
+   "code": "13874U",
+   "contract_name": "MICRO E-MINI S&P 500 INDEX",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "MGC": {
+   "code": "088695",
+   "contract_name": "MICRO GOLD",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "MHG": {
+   "code": "085699",
+   "contract_name": "MICRO COPPER",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "MNQ": {
+   "code": "209747",
+   "contract_name": "MICRO E-MINI NASDAQ-100 INDEX",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "MSI": {
+   "code": "084694",
+   "contract_name": "MICRO SILVER",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "MYM": {
+   "code": "124608",
+   "contract_name": "MICRO E-MINI DJIA (x$0.5)",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "NG": {
+   "code": "023651",
+   "contract_name": "NAT GAS NYME",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "NQ": {
+   "code": "209742",
+   "contract_name": "NASDAQ MINI",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "RTY": {
+   "code": "239742",
+   "contract_name": "RUSSELL E-MINI",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "SI": {
+   "code": "084691",
+   "contract_name": "SILVER",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "YM": {
+   "code": "124603",
+   "contract_name": "DJIA x $5",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "ZB": {
+   "code": "020601",
+   "contract_name": "UST BOND",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "ZC": {
+   "code": "002602",
+   "contract_name": "CORN",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "ZF": {
+   "code": "044601",
+   "contract_name": "UST 5Y NOTE",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "ZN": {
+   "code": "043602",
+   "contract_name": "UST 10Y NOTE",
+   "primary_family": "tff",
+   "resolved_by": "pinned"
+  },
+  "ZS": {
+   "code": "005602",
+   "contract_name": "SOYBEANS",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  },
+  "ZW": {
+   "code": "001602",
+   "contract_name": "WHEAT-SRW",
+   "primary_family": "disaggregated",
+   "resolved_by": "pinned"
+  }
+ }
+}

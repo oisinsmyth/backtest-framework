@@ -1,0 +1,507 @@
+{
+ "symbols_requested": [
+  "6B",
+  "6E",
+  "6J",
+  "BTC",
+  "CL",
+  "ES",
+  "GC",
+  "HE",
+  "HG",
+  "LE",
+  "M2K",
+  "MES",
+  "MGC",
+  "MHG",
+  "MNQ",
+  "MSI",
+  "MYM",
+  "NG",
+  "NQ",
+  "RTY",
+  "SI",
+  "YM",
+  "ZB",
+  "ZC",
+  "ZF",
+  "ZN",
+  "ZS",
+  "ZW"
+ ],
+ "symbols_resolved": [
+  "6B",
+  "6E",
+  "6J",
+  "BTC",
+  "CL",
+  "ES",
+  "GC",
+  "HE",
+  "HG",
+  "LE",
+  "M2K",
+  "MES",
+  "MGC",
+  "MHG",
+  "MNQ",
+  "MSI",
+  "MYM",
+  "NG",
+  "NQ",
+  "RTY",
+  "SI",
+  "YM",
+  "ZB",
+  "ZC",
+  "ZF",
+  "ZN",
+  "ZS",
+  "ZW"
+ ],
+ "rows": 210717,
+ "rows_per_family": {
+  "disaggregated": 52775,
+  "legacy": 101382,
+  "tff": 56560
+ },
+ "reports_per_symbol": {
+  "6B": 10906,
+  "6E": 9634,
+  "6J": 11071,
+  "BTC": 3504,
+  "CL": 7136,
+  "ES": 9793,
+  "GC": 11068,
+  "HE": 10024,
+  "HG": 10813,
+  "LE": 11071,
+  "M2K": 1088,
+  "MES": 2176,
+  "MGC": 1280,
+  "MHG": 24,
+  "MNQ": 2416,
+  "MSI": 40,
+  "MYM": 624,
+  "NG": 10759,
+  "NQ": 9532,
+  "RTY": 5307,
+  "SI": 11068,
+  "YM": 9061,
+  "ZB": 11071,
+  "ZC": 9760,
+  "ZF": 10900,
+  "ZN": 11071,
+  "ZS": 9760,
+  "ZW": 9760
+ },
+ "span": {
+  "first": "1986-01-15",
+  "last": "2026-08-25"
+ },
+ "shape": "TIDY -- one row per (report_date, symbol, family, category). The three report families use DIFFERENT trader taxonomies and a study must not pool them; `family` is on every row so it cannot be lost.",
+ "source": "CFTC Socrata open data, https://publicreporting.cftc.gov/resource/{dataset}.json, futures-only variants: disaggregated=72hh-3qpy, legacy=6dca-aqww, tff=gpe5-46if. Combined futures-and-options datasets exist and are deliberately NOT used -- an options-inclusive position is not a futures position.",
+ "licence": "Work of the US government, PUBLIC DOMAIN. This is the only source in the futures data layer that may be committed; every CME-derived product is licensed and gitignored.",
+ "release_convention": "Surveyed at Tuesday's close, published Friday 15:30 ET, so release_date_nominal = THE FRIDAY OF THE REPORT'S WEEK. Not a flat +3 days: the survey day shifts on holidays (2007-01-03 is a Wednesday because 2007-01-02 was the National Day of Mourning for President Ford). A study MUST key on release, not report -- keying on report_date is three days of look-ahead, exactly what R9 forbids of a conditioning variable.",
+ "release_convention_measured": {
+  "tuesday_schedule_from": "1993-01-01",
+  "before_that": "There was NO weekly Tuesday schedule. 1986 report dates are 46.8% Friday, 16.2% Monday, 16.2% Wednesday, 12.3% Tuesday. release_date_nominal is therefore EMPTY before 1993-01-01 -- a fabricated release date would be worse than an admitted gap, because it would look usable.",
+  "rows_without_a_release_date": 4383
+ },
+ "release_convention_fails_here": [
+  {
+   "from": "2018-12-18",
+   "to": "2019-02-05",
+   "why": "35-day federal government shutdown"
+  },
+  {
+   "from": "2013-10-01",
+   "to": "2013-10-16",
+   "why": "16-day federal government shutdown"
+  }
+ ],
+ "rows_inside_a_suspension": 450,
+ "provider_typos_preserved_verbatim": [
+  "swap__positions_short_all",
+  "swap__positions_spread_all",
+  "noncomm_postions_spread_all"
+ ],
+ "gates": {
+  "every_symbol_resolved": true,
+  "unresolved_symbols": {
+   "failures": []
+  },
+  "no_duplicate_report_rows": true,
+  "duplicate_rows_dropped": 0,
+  "open_interest_identity": {
+   "checked": 55661,
+   "passed": 55661,
+   "rate": 1.0,
+   "note": "sum of per-category LONG positions must equal open interest, within 0.5% or 1 contract. This is the cheapest available proof that columns landed in the right slots.",
+   "failures": []
+  },
+  "no_unexplained_gap_over_3_weeks": {
+   "failures": [
+    {
+     "series": "6E|legacy",
+     "from": "1986-03-14",
+     "to": "1986-06-30",
+     "weeks": 15.4
+    },
+    {
+     "series": "6E|legacy",
+     "from": "1986-08-29",
+     "to": "1999-01-05",
+     "weeks": 644.6
+    },
+    {
+     "series": "ES|legacy",
+     "from": "1997-12-19",
+     "to": "1998-01-13",
+     "weeks": 3.6
+    },
+    {
+     "series": "HE|legacy",
+     "from": "1996-04-02",
+     "to": "1996-05-14",
+     "weeks": 6.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2021-12-14",
+     "to": "2022-03-15",
+     "weeks": 13.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2022-03-15",
+     "to": "2022-06-14",
+     "weeks": 13.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2022-06-14",
+     "to": "2022-10-25",
+     "weeks": 19.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2022-10-25",
+     "to": "2022-11-29",
+     "weeks": 5.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2022-12-06",
+     "to": "2023-03-14",
+     "weeks": 14.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2023-03-14",
+     "to": "2023-08-29",
+     "weeks": 24.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2023-09-05",
+     "to": "2023-10-24",
+     "weeks": 7.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2023-12-12",
+     "to": "2024-02-13",
+     "weeks": 9.0
+    },
+    {
+     "series": "M2K|legacy",
+     "from": "2024-06-18",
+     "to": "2024-07-16",
+     "weeks": 4.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2021-12-14",
+     "to": "2022-03-15",
+     "weeks": 13.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2022-03-15",
+     "to": "2022-06-14",
+     "weeks": 13.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2022-06-14",
+     "to": "2022-10-25",
+     "weeks": 19.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2022-10-25",
+     "to": "2022-11-29",
+     "weeks": 5.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2022-12-06",
+     "to": "2023-03-14",
+     "weeks": 14.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2023-03-14",
+     "to": "2023-08-29",
+     "weeks": 24.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2023-09-05",
+     "to": "2023-10-24",
+     "weeks": 7.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2023-12-12",
+     "to": "2024-02-13",
+     "weeks": 9.0
+    },
+    {
+     "series": "M2K|tff",
+     "from": "2024-06-18",
+     "to": "2024-07-16",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2020-08-18",
+     "to": "2020-09-15",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2020-09-15",
+     "to": "2020-10-13",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2020-12-15",
+     "to": "2021-03-02",
+     "weeks": 11.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2021-03-16",
+     "to": "2021-04-13",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2021-04-13",
+     "to": "2021-06-08",
+     "weeks": 8.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2021-06-15",
+     "to": "2021-08-17",
+     "weeks": 9.0
+    },
+    {
+     "series": "MES|legacy",
+     "from": "2021-09-14",
+     "to": "2021-11-02",
+     "weeks": 7.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2020-08-18",
+     "to": "2020-09-15",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2020-09-15",
+     "to": "2020-10-13",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2020-12-15",
+     "to": "2021-03-02",
+     "weeks": 11.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2021-03-16",
+     "to": "2021-04-13",
+     "weeks": 4.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2021-04-13",
+     "to": "2021-06-08",
+     "weeks": 8.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2021-06-15",
+     "to": "2021-08-17",
+     "weeks": 9.0
+    },
+    {
+     "series": "MES|tff",
+     "from": "2021-09-14",
+     "to": "2021-11-02",
+     "weeks": 7.0
+    },
+    {
+     "series": "MGC|disaggregated",
+     "from": "2020-12-01",
+     "to": "2020-12-29",
+     "weeks": 4.0
+    },
+    {
+     "series": "MGC|disaggregated",
+     "from": "2020-12-29",
+     "to": "2021-05-18",
+     "weeks": 20.0
+    },
+    {
+     "series": "MGC|disaggregated",
+     "from": "2021-05-18",
+     "to": "2021-08-17",
+     "weeks": 13.0
+    },
+    {
+     "series": "MGC|disaggregated",
+     "from": "2021-09-07",
+     "to": "2021-11-16",
+     "weeks": 10.0
+    }
+   ],
+   "count": 102
+  },
+  "series_with_no_rows": {
+   "failures": [],
+   "absent": [
+    "6B/disaggregated",
+    "6E/disaggregated",
+    "6J/disaggregated",
+    "BTC/disaggregated",
+    "CL/tff",
+    "ES/disaggregated",
+    "GC/tff",
+    "HE/tff",
+    "HG/tff",
+    "LE/tff",
+    "M2K/disaggregated",
+    "MES/disaggregated",
+    "MGC/tff",
+    "MHG/tff",
+    "MNQ/disaggregated",
+    "MSI/tff",
+    "MYM/disaggregated",
+    "NG/tff",
+    "NQ/disaggregated",
+    "RTY/disaggregated",
+    "SI/tff",
+    "YM/disaggregated",
+    "ZB/disaggregated",
+    "ZC/tff",
+    "ZF/disaggregated",
+    "ZN/disaggregated",
+    "ZS/tff",
+    "ZW/tff"
+   ],
+   "note": "A family that predates a contract legitimately returns nothing -- TFF begins 2010-07 and the micros begin 2019. Recorded, not treated as failure."
+  }
+ },
+ "family_first_report_published": {
+  "legacy": "1986-01-01",
+  "disaggregated": "2009-09-01",
+  "tff": "2010-07-20"
+ },
+ "family_first_report_measured": {
+  "legacy": "1986-01-15",
+  "disaggregated": "2006-06-13",
+  "tff": "2006-06-13"
+ },
+ "family_first_report_note": "The CFTC publishes 2009-09 for disaggregated and 2010-07-20 for TFF. Both datasets actually carry back-history to 2006-06-13. Recorded as a discrepancy rather than silently taking the better number.",
+ "first_report_per_symbol_family": {
+  "6B|legacy": "1988-04-29",
+  "6B|tff": "2006-06-13",
+  "6E|legacy": "1986-01-15",
+  "6E|tff": "2006-06-13",
+  "6J|legacy": "1986-01-15",
+  "6J|tff": "2006-06-13",
+  "BTC|legacy": "2018-04-10",
+  "BTC|tff": "2018-04-10",
+  "CL|disaggregated": "2009-07-28",
+  "CL|legacy": "2009-07-28",
+  "ES|legacy": "1997-09-16",
+  "ES|tff": "2006-06-13",
+  "GC|disaggregated": "2006-06-13",
+  "GC|legacy": "1986-01-15",
+  "HE|disaggregated": "2006-06-13",
+  "HE|legacy": "1996-04-02",
+  "HG|disaggregated": "2006-06-13",
+  "HG|legacy": "1989-07-31",
+  "LE|disaggregated": "2006-06-13",
+  "LE|legacy": "1986-01-15",
+  "M2K|legacy": "2021-11-30",
+  "M2K|tff": "2021-11-30",
+  "MES|legacy": "2020-07-28",
+  "MES|tff": "2020-07-28",
+  "MGC|disaggregated": "2020-12-01",
+  "MGC|legacy": "2020-12-01",
+  "MHG|disaggregated": "2026-01-27",
+  "MHG|legacy": "2026-01-27",
+  "MNQ|legacy": "2020-08-04",
+  "MNQ|tff": "2020-08-04",
+  "MSI|disaggregated": "2026-01-13",
+  "MSI|legacy": "2026-01-13",
+  "MYM|legacy": "2022-07-26",
+  "MYM|tff": "2022-07-26",
+  "NG|disaggregated": "2006-06-13",
+  "NG|legacy": "1990-04-12",
+  "NQ|legacy": "1999-06-22",
+  "NQ|tff": "2006-06-13",
+  "RTY|legacy": "2002-08-13",
+  "RTY|tff": "2006-06-13",
+  "SI|disaggregated": "2006-06-13",
+  "SI|legacy": "1986-01-15",
+  "YM|legacy": "2002-05-21",
+  "YM|tff": "2006-06-13",
+  "ZB|legacy": "1986-01-15",
+  "ZB|tff": "2006-06-13",
+  "ZC|disaggregated": "2006-06-13",
+  "ZC|legacy": "1998-01-06",
+  "ZF|legacy": "1988-05-31",
+  "ZF|tff": "2006-06-13",
+  "ZN|legacy": "1986-01-15",
+  "ZN|tff": "2006-06-13",
+  "ZS|disaggregated": "2006-06-13",
+  "ZS|legacy": "1998-01-06",
+  "ZW|disaggregated": "2006-06-13",
+  "ZW|legacy": "1998-01-06"
+ },
+ "provenance_warnings": {
+  "6E": "Legacy rows run from 1986-01-15 under the name 'EURO FX', but THE EURO DID NOT EXIST UNTIL 1999-01-01 and continuous coverage begins exactly 1999-01-05. Code 099741 carries a back-labelled predecessor (Deutsche Mark or ECU) under the euro's name, with a 644-week gap between the stragglers and the real series. USE 1999-01-05 ONWARD.",
+  "RTY": "Legacy rows begin 2002-08-13, which is NOT pre-inception -- but the Russell 2000 E-mini traded on ICE between 2008 and 2017 before moving to CME. The series therefore spans a VENUE CHANGE, and pre-2017 rows describe a contract on a different exchange from the one the prop track would trade."
+ },
+ "micro_cot_inception": {
+  "MES": "2020-07-28",
+  "MNQ": "2020-08-04",
+  "M2K": "2021-11-30",
+  "MYM": "2022-07-26",
+  "MGC": "2020-12-01",
+  "MSI": "2026-01-13",
+  "MHG": "2026-01-27"
+ },
+ "micro_cot_inception_note": "A contract enters COT only once it has enough REPORTABLE traders, which is much later than its listing date -- the micros launched 2019-05-06 but MES first reports 2020-07-28 and MYM not until 2022-07-26. MSI and MHG have under a year of history. This BOUNDS the free weekly form of the proposal's rung 2: ES/MES and NQ/MNQ carry ~6 years, M2K ~4.7, MYM ~4, and the metal micros are unusable. Any micro/mini study must be scoped to the pairs that have history.",
+ "built_utc": "2026-09-01T12:09:04+00:00"
+}

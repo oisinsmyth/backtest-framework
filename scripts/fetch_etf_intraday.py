@@ -634,6 +634,10 @@ def do_build(regular_hours_only: bool) -> int:
 
 
 def main() -> int:
+    # Declared up front: the help strings below READ these, so Python requires the
+    # declaration to precede the first use, not merely the first assignment.
+    global START_MONTH, END_MONTH
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--plan", action="store_true", help="cost the job, no network")
     ap.add_argument("--fetch", action="store_true", help="the long job, resumable")
@@ -643,7 +647,20 @@ def main() -> int:
     ap.add_argument("--limit", type=int, help="fetch at most N slices this run")
     ap.add_argument("--extended", action="store_true",
                     help="build with extended hours instead of regular only")
+    ap.add_argument("--start", help=f"override START_MONTH (default {START_MONTH})")
+    ap.add_argument("--end", help=f"override END_MONTH (default {END_MONTH})")
     args = ap.parse_args()
+
+    # Span overrides exist so extending the history is a FLAG rather than an edit
+    # to a module constant. The 57-ETF span was fixed at 2018-01 to match the
+    # crypto fixture; the extended-session work wants 2010-01, and the two must
+    # not silently become the same thing. Whatever is passed is recorded in the
+    # meta by do_build, so a fixture always states its own span.
+    if args.start:
+        START_MONTH = args.start
+    if args.end:
+        END_MONTH = args.end
+
     if args.actions:
         return do_actions()
     if args.fetch:
