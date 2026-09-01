@@ -62,6 +62,32 @@ def strata_of(symbols, low, high):
     return {"ALL": tuple(symbols), "LOW": tuple(low), "HIGH": tuple(high)}
 
 
+def trade_weighted_2c(panel, pos, start, sess_end):
+    """`2c` weighted by each symbol's TRADE COUNT, not by symbol.
+
+    Declared in D278's addendum BEFORE the holdout bars existed. The left-hand
+    side of H1 -- mean move per TRADE -- is trade-weighted, so the right-hand
+    side must be, or the comparison weights two things differently. It barely
+    mattered in-sample, where four names' costs spanned 1.8x; on the holdout HIGH
+    they span 2.9x (RIG 15.32 bp against TRGP 5.27), because commission is
+    charged per SHARE and RIG trades at $4.62."""
+    n_by_sym = []
+    for i in range(pos.shape[0]):
+        s = pos[i]
+        ent = np.flatnonzero((s[start:] != 0.0) & (s[start - 1:-1] == 0.0)) + start
+        n = 0
+        for tt in ent:
+            close = int(sess_end[tt])
+            z = np.flatnonzero(s[tt:close] == 0.0)
+            if (tt + int(z[0]) if z.size else close) > tt:
+                n += 1
+        n_by_sym.append(n)
+    w = np.asarray(n_by_sym, dtype=float)
+    if w.sum() == 0:
+        return 2.0 * float(np.mean(panel.cost_fraction) * 1e4)
+    return 2.0 * float((w * panel.cost_fraction).sum() / w.sum() * 1e4)
+
+
 def run(panel, cleaned, strata, first, gap, start, ppy, sess_end, vol, px, bod, label):
     scores = {**C.build_scores(panel, cleaned),
               **V.build_volume_scores(panel, vol, px, bod, panel.total_log_returns),
@@ -76,7 +102,6 @@ def run(panel, cleaned, strata, first, gap, start, ppy, sess_end, vol, px, bod, 
         p, _ = R.subset(panel, cleaned, syms) if st != "ALL" else (panel, cleaned)
         keep = [panel.symbols.index(s) for s in p.symbols]
         keep_of[st] = (p, keep, R.borrow_vector(p.symbols))
-        c2 = 2.0 * float(np.mean(p.cost_fraction) * 1e4)
         for f in FILTERS:
             pos = base_all[keep] if f == "none" else base_all[keep] * masks[f][keep]
             if not (pos != 0).any():
@@ -84,6 +109,7 @@ def run(panel, cleaned, strata, first, gap, start, ppy, sess_end, vol, px, bod, 
             sc = R.score(p, pos, start, first, gap, ppy, R.borrow_vector(p.symbols))
             tr = Q.S.per_trade(pos, p.total_log_returns, start, sess_end)
             mv = float(tr.mean()) if tr.size else 0.0
+            c2 = trade_weighted_2c(p, pos, start, sess_end)   # D278 addendum
             cells[f"{st}|{f}"] = {**sc, "cost_bp": c2, "n_trades": int(tr.size),
                                   "move_bp": mv, "move_vs_cost": mv / c2,
                                   "H1": bool(mv >= c2), "H2": bool(sc["cagr"] > 0)}
