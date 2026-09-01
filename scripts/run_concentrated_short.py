@@ -51,14 +51,38 @@ N_SIMS, SEED = 300, 0
 PPY, RF, BORROW, FEE = B.PPY, B.RF_ANNUAL, B.BORROW_ANNUAL, B.FEE_BPS
 
 
+def lag1(a):
+    """Shift a score grid one bar forward, exactly as `hold_book` shifts a mask.
+
+    R9. THE FIRST VERSION OF `top_n` DID NOT DO THIS AND THE RESULT WAS ENTIRELY
+    LOOK-AHEAD. `hold_book` lags the qualifying MASK (`p[:, 1:] = mask[:, :-1]`)
+    and `pooled_returns` earns bar t's return on the position held at bar t, so
+    the base book was aligned. But ranking with `score[:, t]` chose WHICH N
+    qualifiers to hold using `hist_L` computed from the close of the very bar the
+    position was about to be paid for.
+
+    Measured, not argued: `corr(hist_L at t, return at t) = +0.0737`, against
+    `corr(hist_L at t-1, return at t) = -0.0103`. Ranking ascending on the
+    unlagged score selects names that had ALREADY fallen that bar. `top25` scored
+    +2.250 Sharpe unlagged and -0.638 lagged; `top50` +1.865 and -0.659.
+
+    The lag lives inside `top_n` rather than at the call site because three other
+    modules call it and a convention that must be remembered is one that will be
+    forgotten. Column 0 becomes NaN and ranks last -- there is no prior bar."""
+    out = np.full_like(a, np.nan)
+    out[:, 1:] = a[:, :-1]
+    return out
+
+
 def top_n(base, score, n, rng=None):
     """Keep only the N strongest qualifying names at each bar.
 
     `score` ASCENDING selects the strongest short -- most negative `hist_L`, or
-    steepest `g_lo`. With `rng` supplied the N are drawn AT RANDOM from the
-    qualifying set instead, which is hurdle C's control: same N, same count, same
-    bars, no ranking."""
+    steepest `g_lo`. IT IS LAGGED ONE BAR HERE, unconditionally; see `lag1`. With
+    `rng` supplied the N are drawn AT RANDOM from the qualifying set instead,
+    which is hurdle C's control: same N, same count, same bars, no ranking."""
     out = np.zeros_like(base)
+    score = lag1(score)
     n_sym, T = base.shape
     for t in range(T):
         q = np.flatnonzero(base[:, t] != 0.0)
