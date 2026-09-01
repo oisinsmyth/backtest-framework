@@ -1,6 +1,8 @@
 # D265 — The entry-time reconciliation
 
-**Status:** PRE-REGISTERED. Committed **before the check is run**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** Gate G passed; the discrepancy is fully explained.
+
+**Everything above the RESULT heading was committed in `6b5f729`, BEFORE the check was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track** ([BOOK.md](../BOOK.md))
 
@@ -149,3 +151,102 @@ nothing**, because counting only the survivors is how a search gets mistaken for
 **258 fresh looks since D264's result was committed.** That is the honest cost of following a
 discrepancy, and it is exactly the count a deflated-Sharpe floor would be computed against if
 anything here were ever proposed as a rule.
+
+---
+
+## RESULT — the gate passed, the discrepancy is fully explained, and both numbers were right
+
+`uv run python scripts/run_entry_time_reconciliation.py` · `data/d265_entry_time_summary.json`
+
+### THE VALIDATION GATE FIRST, because it could have voided everything
+
+| | |
+|---|---:|
+| D264's committed `gross_linear_pa` | **+1.4300%** |
+| Arm A, rebuilt from 1,507 individual trades | **+1.4269%** |
+| delta | **−0.003 pts**, against a ±0.30 tolerance |
+
+**GATE G PASSES.** The per-trade decomposition reproduces the book to three decimal places, so the
+bucket table below describes the same object D264 scored and may be read.
+
+### The bucket table
+
+*Round-trip cost `2c` = 4.00 bp. A bucket clears if its mean P&L per trade exceeds it.*
+
+| bucket | bars | n | share | **Arm A** hold / bp / ×2c | **Arm B** hold / bp / ×2c |
+|---|---|---:|---:|---|---|
+| **EARLY** | 1–8 | 1,205 | **80.0%** | 20.0 · **+6.28 bp** · **1.57×** | 24.6 · +5.39 bp · 1.35× |
+| **MID** | 9–17 | 144 | 9.6% | 12.6 · **−15.68 bp** · −3.92× | 13.0 · −15.43 bp · −3.86× |
+| **LATE** | 18–25 | 158 | 10.5% | 4.6 · −3.84 bp · −0.96× | 4.6 · −4.06 bp · −1.01× |
+| **ALL** | 1–25 | 1,507 | 100% | 17.7 · **+3.12 bp** · **0.78×** | 21.4 · +2.41 bp · 0.60× |
+
+**The arithmetic closes exactly:** `0.800 × 6.28 + 0.096 × (−15.68) + 0.105 × (−3.84) = +3.12 bp`.
+**Twenty percent of the trades destroy a third of the gross**, and MID alone — 144 trades — removes
+1.51 bp of the 5.02 bp EARLY contributes.
+
+### The predictions, scored
+
+| | prediction | outcome |
+|---|---|---|
+| **P-1** | EARLY > LATE in both arms | **CONFIRMED**, and not marginally: +6.28 against −3.84 |
+| **P-2** | all-bucket Arm A below the 4.00 bp bar | **CONFIRMED** — 3.12 bp, which is why the book loses |
+| **P-3** | Arm B (fixed horizon) beats Arm A (the signal's exits) | **FALSIFIED** — 2.41 against 3.12 |
+| **P-4** | the ARM gap explains more of the discrepancy than the BUCKET gap | **FALSIFIED** — arm gap −0.72 bp against bucket gap **9.44 bp** |
+
+**Both falsifications point the same way, and P-4 was registered against my own hypothesis on
+purpose.** Entry timing explains the discrepancy by more than thirteenfold over exit discipline. The
+entry-time story was right.
+
+**P-3's falsification is a finding in its own right.** The signal's own exits **beat** holding to
+the close by 0.71 bp per trade, exiting 4.6 bars early on average. The decay profile suggested the
+opposite — that marginal return was still positive when the signal turned off — and at the level of
+individual trades it is not. **A conditional-mean profile and a per-trade P&L disagree here, and the
+per-trade number is the one that pays.**
+
+### So both original numbers were right
+
+The decay profile's long-hold columns can only contain entries early enough to have that many bars
+before the close — which **is** the EARLY bucket. **EARLY clears at 1.57×. The whole book comes to
+0.78×.** The profile was correct about early entries; D264 was correct about the average; nothing
+was broken.
+
+### AND IT DOES NOT MATTER, WHICH IS THE POINT OF SIZING IT
+
+An EARLY-only book, from this table, is arithmetic rather than a scored run:
+
+| | |
+|---|---:|
+| trades per symbol per year | 36.5 |
+| exposure | 11.2% |
+| gross (linear) | **+2.30%** |
+| − variance tax *(scaled from D264's measured figure)* | −0.45% |
+| − trading cost | −1.46% |
+| **= net** | **+0.38%/yr** |
+
+**+0.38% a year.** Against D264's whole-book −0.89%, the entry-time cut is worth about 1.3 points —
+real, and trivial.
+
+**And it has to be read against the multiplicity floor.** D218 measured this programme's
+deflated-Sharpe noise floor at **+1.42 Sharpe at ~45,800 looks**; the ledger now stands at
+**46,167**. A book earning 0.38%/yr at 11% exposure is not within an order of magnitude of clearing
+that, and **no arm anyone runs on this fixture can** — which was D218's standing conclusion and
+remains it.
+
+### What this licenses
+
+**Nothing enters any book.** Under [R8](../RULES.md#r8) an entry-time rule would need its own
+pre-registered out-of-sample test on names or a period this fixture has never touched, and the
+three bucket boundaries used here are now spent looks that such a test would inherit.
+
+**What it establishes instead is cleaner and worth more than the candidate:** the discrepancy that
+prompted this record is **fully accounted for**, the gate proves the decomposition is faithful to
+the book, and the size of the surviving effect is now known rather than guessed. **An idea that
+looked like it might be worth a fetch is measurably worth 0.38%/yr.**
+
+---
+
+## Stop — fired
+
+**This record answered one question and stops**, as registered. No entry-time rule is built, no
+threshold swept, no fourth bucket, no other arm, no other stratum. The candidate is described and
+costed; it is not pursued.

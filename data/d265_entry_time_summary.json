@@ -1,0 +1,73 @@
+{
+  "preregistration": "docs/decisions/D265-the-entry-time-reconciliation.md",
+  "commit": "6b5f729",
+  "cell": "LOW:S2_short_intra",
+  "round_trip_cost_bp": 4.003299936038737,
+  "n_trades": 1507,
+  "years": 8.248063055731588,
+  "gate": {
+    "target": 0.0143,
+    "rebuilt": 0.014268626498276135,
+    "delta": -3.137350172386505e-05,
+    "tolerance": 0.003,
+    "pass": true
+  },
+  "buckets": [
+    {
+      "bucket": "EARLY",
+      "bars": [
+        1,
+        8
+      ],
+      "n": 1205,
+      "share": 0.7996018579960186,
+      "arm_a_bp": 6.283955067652078,
+      "arm_b_bp": 5.386228037375543,
+      "arm_a_hold": 20.002489626556017,
+      "arm_b_hold": 24.559336099585064,
+      "arm_a_clears": true,
+      "arm_b_clears": true,
+      "hit_a": 0.5136929460580912
+    },
+    {
+      "bucket": "MID",
+      "bars": [
+        9,
+        17
+      ],
+      "n": 144,
+      "share": 0.09555408095554081,
+      "arm_a_bp": -15.680348695177138,
+      "arm_b_bp": -15.434615683062727,
+      "arm_a_hold": 12.625,
+      "arm_b_hold": 13.034722222222221,
+      "arm_a_clears": false,
+      "arm_b_clears": false,
+      "hit_a": 0.3958333333333333
+    },
+    {
+      "bucket": "LATE",
+      "bars": [
+        18,
+        25
+      ],
+      "n": 158,
+      "share": 0.10484406104844061,
+      "arm_a_bp": -3.839584818713154,
+      "arm_b_bp": -4.057080356598033,
+      "arm_a_hold": 4.620253164556962,
+      "arm_b_hold": 4.6455696202531644,
+      "arm_a_clears": false,
+      "arm_b_clears": false,
+      "hit_a": 0.4936708860759494
+    }
+  ],
+  "all": {
+    "arm_a_bp": 3.123783173894205,
+    "arm_b_bp": 2.406636649193103,
+    "arm_a_hold": 17.684804246848042,
+    "arm_b_hold": 21.37027206370272
+  },
+  "arm_gap_bp": -0.7171465247011021,
+  "bucket_gap_bp": 9.443308393973576
+}
