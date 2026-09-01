@@ -1,6 +1,135 @@
 # PICKUP — handoff for the next session
 
-**Written 2026-09-01 at the end of a session that built the free half of the futures data layer.**
+**Updated 2026-09-01, end of the session that ran D264 — the intraday short on single names.**
+
+---
+
+## 0. THIS SESSION — D264 ran and closed. Three commits.
+
+```
+fc5b080  D264 RESULT: closed -- zero of twelve, and the cost decides, not the signal
+7492402  Single-name 15m fixture: gates pass, and all 30 flagged steps are real
+56c6156  D264 PRE-REGISTRATION, committed BEFORE the fixture is scored
+```
+
+**Working tree CLEAN. Suite 1,831 passing, 5 deselected, 1 failing** — the same pre-existing
+`test_every_gap_is_a_non_empty_band_that_price_left_behind`. **Still not to be fixed.**
+
+**Next decision number is D265.** Both counters (`docs/decisions/README.md`, `docs/RULES.md` R5)
+are correct.
+
+### What was built and is now durable
+
+| | |
+|---|---|
+| `data/fixtures/single_name_intraday_15m_raw.csv.gz` | 8 names, 448,279 rows, 2018→2026, gates PASS |
+| `data/fixtures/single_name_intraday_15m_panel.csv.gz` | **8 × 55,004 bars, 2,117 sessions, exactly 26.0/session** |
+| `scripts/select_single_name_intraday.py` | the sample rule, on a window disjoint from the test span |
+| `scripts/fetch_single_name_intraday.py` | fetcher, reusing the ETF one's helpers |
+| `scripts/classify_single_name_steps.py` | D226's allow-list, built by measurement |
+| `scripts/run_single_name_intraday.py` | 16 cells, six hurdles, every leg computed |
+
+**~848 Alpha Vantage requests spent. Any further single-name intraday work on PG LMT PM MO CLF SM
+YELP RH starts at zero requests.**
+
+### THE PROVIDER LIMIT THAT SHAPES ALL FUTURE INTRADAY WORK — measured, five calls
+
+**`TIME_SERIES_INTRADAY` serves NOTHING for a delisted ticker.** TWTR, FRC, SIVB and AABA all
+return `Invalid API call` at 155 bytes; AAPL returns a clean 546 bars. **`TIME_SERIES_DAILY_ADJUSTED`
+DOES serve dead names** — that is how D252 built a 35.7%-dead daily fixture.
+
+**So any intraday single-name study on this provider is survivor-only, and 41.6% of the 2013–2017
+cohort is unreachable.** Do not re-probe this; it is settled. If a dead-inclusive intraday fixture
+is ever needed, it requires a different vendor (Polygon, Databento) and that is a spending decision.
+
+### The result, in one line
+
+**Zero of twelve short cells cleared.** The construction produces the **largest gross short edge
+this programme has measured** — held bars returning **−28.87%/yr**, hurdle H cleared on both legs at
+the **96.9th / 99.7th** percentile — and loses **15.84%/yr**, because:
+
+```
+exposure x edge   +8.31%/yr        (continuously compounded; percentages do not add)
+- sigma^2 tax     -4.87%           59% of the gross, exactly as FINDINGS 1b describes
+= realisable      +3.43%           still profitable at this point
+- trading cost   -20.68%           324 turns/yr at 6.42 bp/side -- 6.0x the realisable gross
+= net            -17.24%
+```
+
+**And the kill is assumption-free: mean commission ALONE is 1.92 bp against a 1.06 bp breakeven.
+The cell loses at a zero spread**, so the verdict does not depend on the half-spread figure that was
+named in advance as the design's weakest number.
+
+**The closure is bounded**: it closes *that construction on those eight survivor names, personal
+track*. It does not close the intraday short, because the survivorship bias runs **against** the
+short and that direction was declared before the data was seen.
+
+---
+
+## 0b. THE THREE THINGS FROM D264 WORTH ACTING ON
+
+### (a) OVERNIGHT DRIFT IS A PROPERTY OF VOLATILITY, AND THIS CHANGES A QUEUED STUDY
+
+| | overnight/yr | intraday/yr |
+|---|---:|---:|
+| **LOW vol** — PG LMT PM MO | +4.36% | **+5.56%** |
+| **HIGH vol** — CLF SM YELP RH | +13.81% | **−8.97%** |
+| *57 ETFs — D247* | *+8.59%* | *−0.36%* |
+
+**In low-volatility names the drift accrues INTRADAY and the sign reverses.** D247's figure is an
+average over instruments whose volatility differs, not an asset-class constant.
+
+> **ACT ON THIS: the wide extended-hours pre-registration in §4c below should carry a VOLATILITY
+> SPLIT.** It already asks where untraded-window drift accrues across 11 instruments, and PICKUP
+> already records SPY and QQQ disagreeing 33% against 91%. **D264 says that disagreement has a
+> measurable axis.** Add it to the design *before* running, alongside the EEM/FXI prediction that is
+> already declared.
+
+### (b) COST PER BASIS POINT IS A FUNCTION OF PRICE — post-hoc, disclosed, NOT tested
+
+IBKR charges **per share**, so commission in bps is inversely proportional to price. Inside the
+high-vol stratum it varied twenty-fold:
+
+| | RH | YELP | SM | CLF |
+|---|---:|---:|---:|---:|
+| commission, bp/side | **0.20** | 1.44 | 1.89 | **4.15** |
+
+**A high-priced, high-volatility name gets the high stratum's edge at a fraction of its commission.**
+Invisible on ETFs, which cluster in price.
+
+> **This is NOT eligible as a D264 follow-up** — D264's stop forbids an additional stratum, and
+> computing a per-symbol verdict now is precisely the complement-chasing D246 Constraint 3 forbids.
+> **It is eligible as its own pre-registration with the provenance stated**, which Constraint 3
+> explicitly permits. If you take it: select on price × volatility on a pre-period, fetch a fresh
+> sample, and declare in advance that the breakeven must exceed commission alone.
+
+### (c) BREADTH IS NOT CAPPED AT 2.2
+
+**Effective instruments 3.02 of 8 single names**, against **2.23** on 57 ETFs and 1.80 of 35 on
+crypto. FINDINGS §4's saturation near 2.2 is a property of the ETF universe, **not a ceiling**. Any
+future breadth argument should stop quoting 2.2 as universal.
+
+---
+
+## 0c. WHAT IS STILL LIVE, IN PRIORITY ORDER
+
+1. **The wide extended-hours decomposition** (§4c) — fixture built and gated, nothing decomposed,
+   prediction already declared. **Add D264's volatility split before running.**
+2. **Rung 2's free micro/mini form and rung 3** (§4) — untested, free, prop track.
+3. **The factor-neutral branch of FINDINGS §9** — never attempted on the 1,580-name daily fixture.
+4. **The price-stratified intraday question** (0b above) — needs its own pre-registration.
+
+**Note on the personal track's short side:** with D264 closed, *directional* shorts are now closed on
+liquid ETFs (D238/D240/D247/D248/D249), on single names daily (D256), and on concentrated single
+names intraday (D264). **The remaining untested shapes are factor-neutral, not directional.**
+
+---
+
+## PREVIOUS SESSION — the futures data layer
+
+*Written 2026-09-01 at the end of the session that built the free half of the futures data layer.
+Everything below this line predates D264 and is preserved unedited; §1 and §2 restate that
+session's tree state, not the current one — see §0 above for the current state.*
 
 Read this first, then [`docs/decisions/D262-the-futures-data-layer-and-the-free-rung.md`](docs/decisions/D262-the-futures-data-layer-and-the-free-rung.md).
 Everything below is verifiable from the repo; nothing here is a plan I intend to be trusted on faith.
