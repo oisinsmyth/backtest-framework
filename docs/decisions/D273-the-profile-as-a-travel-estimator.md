@@ -212,3 +212,66 @@ alternative node quantile, no third arm.
 **And the closure is stronger than the usual one here.** Most stops in this programme fire because
 an effect is too small to pay. **This one fires because the mechanism was measured and is absent:
 the distance to the next node does not predict how far price goes.**
+
+---
+
+## ADDENDUM — the assertion, now measured. R6 defect closed.
+
+**The result section above claimed "any distance measure would reproduce it, including a randomly
+placed level" and never computed it.** That is a claim asserted rather than measured — the R6
+defect — and the principal was right to press on it. `scripts/d273_halt_test.py`.
+
+### What D273 could not distinguish, and what this can
+
+`P(reach a level at distance d)` **is** `P(MFE ≥ d)`, which does not depend on *what* sits at that
+price. **So the 62.6% → 1.3% ordering genuinely cannot tell an HVN from a random line, and that
+half of the reading stands.**
+
+**What it could not see is whether the excursion STOPS there.** `MFE / d_hvn` piles up at 1.0 if
+the node halts price and passes smoothly through if the node is only a location. That distinction
+is realisable, because the level's price is known in advance.
+
+| | | | | |
+|---|---|---|---|---|
+| **H1** | density of `MFE/d` in [0.9, 1.1] | > | shuffled null p95 | *does the excursion pile up on the node* |
+| **H2** | median overshoot among reachers | < | null's | *do reachers stop rather than run through* |
+
+### The first null was confounded, and R7's corollary caught it
+
+**H2 passed six of six.** Under R7 — *"a hurdle that everything clears is not evidence, it is a
+broken hurdle"* — that is a tell, not six findings.
+
+**The cause:** `d` here is a **raw** log distance, not D273's ATR-normalised `room_atr`, so it
+scales with volatility and so does MFE. A plain within-symbol shuffle pairs a high-volatility MFE
+with a low-volatility distance, inflating the null's overshoot for a reason with nothing to do with
+nodes. **Re-run with the shuffle stratified within symbol × distance tercile**, which preserves the
+distance–volatility pairing and destroys only the node-specific one.
+
+### The result, under the corrected null
+
+| cell | n | in [0.9,1.1] | null p95 | H1 | overshoot | null | H2 |
+|---|---:|---:|---:|---|---:|---:|---|
+| ALL S1 | 10,486 | **3.357%** | 3.930% | no | 1.301 | 1.369 | yes |
+| LOW S1 | 5,402 | **3.369%** | 4.018% | no | 1.378 | 1.397 | yes |
+| HIGH S1 | 5,084 | **3.344%** | 4.053% | no | 1.280 | 1.348 | yes |
+| ALL S2 | 1,492 | 5.429% | 5.027% | **yes** | 1.803 | 1.794 | no |
+| LOW S2 | 754 | 5.305% | 5.305% | no *(dead tie)* | 1.869 | 1.884 | yes |
+| **HIGH S2** | **738** | 5.556% | 5.420% | **yes** | 1.691 | 1.715 | **yes** |
+
+**One cell of six clears both — and it should not be believed.** It has the **smallest sample**
+(738), its margin is **0.14 percentage points on a 5.4% base**, which is about **one trade**, and
+**the same arm ties on LOW and fails H2 on ALL.** An effect that reverses across strata of the same
+signal is not an effect.
+
+**And S1 runs the other way in all three strata:** 3.34–3.37% against nulls of 3.93–4.05%. **The
+excursion is LESS likely to stop at a node than at a random distance.**
+
+### Verdict
+
+**The node does not halt price.** D273's assertion was substantively correct, and it is now
+measured rather than asserted.
+
+**A limitation of this addendum, stated:** the stratum is the distance's own tercile, a *proxy* for
+volatility rather than a measured ATR. It removed enough of the confound to drop H2 from 6/6 to
+4/6, so it is doing real work — but a purpose-built volatility stratifier would be better, and
+that is not run because the answer is not close.

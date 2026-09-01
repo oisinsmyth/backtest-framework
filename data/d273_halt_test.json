@@ -1,0 +1,62 @@
+{
+  "ALL:S1_short_intra": {
+    "n": 10486,
+    "in_band": 0.03356856761396147,
+    "null_p95": 0.039295250810604615,
+    "H1": false,
+    "overshoot": 1.3010165021853504,
+    "null_overshoot": 1.3687475996389515,
+    "H2": true,
+    "reach_rate": 0.2621590692351707
+  },
+  "ALL:S2_short_intra": {
+    "n": 1492,
+    "in_band": 0.054289544235924934,
+    "null_p95": 0.05026809651474531,
+    "H1": true,
+    "overshoot": 1.8029804486292158,
+    "null_overshoot": 1.7942735751116166,
+    "H2": false,
+    "reach_rate": 0.4524128686327078
+  },
+  "LOW:S1_short_intra": {
+    "n": 5402,
+    "in_band": 0.03369122547204739,
+    "null_p95": 0.04017956312476861,
+    "H1": false,
+    "overshoot": 1.3779083820043614,
+    "null_overshoot": 1.3968320378046475,
+    "H2": true,
+    "reach_rate": 0.2539800074046649
+  },
+  "LOW:S2_short_intra": {
+    "n": 754,
+    "in_band": 0.05305039787798409,
+    "null_p95": 0.05305039787798409,
+    "H1": false,
+    "overshoot": 1.8692520507628716,
+    "null_overshoot": 1.8838209259844048,
+    "H2": true,
+    "reach_rate": 0.43103448275862066
+  },
+  "HIGH:S1_short_intra": {
+    "n": 5084,
+    "in_band": 0.033438237608182535,
+    "null_p95": 0.04052911093627066,
+    "H1": false,
+    "overshoot": 1.2803415419989612,
+    "null_overshoot": 1.3477839037954142,
+    "H2": true,
+    "reach_rate": 0.27084972462627854
+  },
+  "HIGH:S2_short_intra": {
+    "n": 738,
+    "in_band": 0.05555555555555555,
+    "null_p95": 0.05420054200542006,
+    "H1": true,
+    "overshoot": 1.6914717750663764,
+    "null_overshoot": 1.7149941268543383,
+    "H2": true,
+    "reach_rate": 0.4742547425474255
+  }
+}
