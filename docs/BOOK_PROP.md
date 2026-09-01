@@ -294,3 +294,54 @@ accounts.**
 
 **Remaining: C3 (opening-range), and C4 which was never a candidate.** The prop track has one
 untested idea left.
+
+### C2 — the two rescues tested, 2026-08-29. Neither works, and one leaves something behind.
+
+**Asked whether book-level sizing or multi-symbol deployment saves C2.**
+
+**Sizing does not, and for a different reason than C1's.** C1 had a **positive** edge too large for
+the constraint, so sizing traded return for survival. **C2's edge is negative**, and `w x negative`
+is negative for every `w`. **A confidence scalar is the right instinct and the gradient is
+inverted**: hit rate falls **50.7% → 48.7%** and mean/trade worsens **−0.0017% → −0.0102%** as the
+signal strengthens. **Sizing up on conviction makes it worse.**
+
+**Multi-symbol does not either, because the edge is negative in EVERY asset class.** Re-run across
+55 symbols of the 57-ETF 15m fixture, grouped into the classes a futures book actually spans:
+
+| asset class | symbols | setups | mean/trade | hit rate |
+|---|---:|---:|---:|---:|
+| energy | 5 | 126,233 | −0.0034% | 50.0% |
+| international equity | 14 | 110,381 | −0.0039% | 49.2% |
+| sector | 20 | 340,415 | −0.0041% | 49.8% |
+| equity index | 5 | 57,000 | −0.0078% | 49.7% |
+| metals | 4 | 74,054 | −0.0089% | 49.8% |
+| **rates** | 5 | 8,684 | **−0.0154%** | **48.5%** |
+
+**Seven of seven negative, hit rates 48.5–50.0%.** A handful of single names print positive
+(EWH +0.0095%, FXI +0.0056%) at ~50% hit rates — **that is noise, and selecting them would be
+selection on the outcome.**
+
+**Breadth multiplies whatever edge you have. C2's is negative everywhere, so more breadth buys a
+more reliable loss.**
+
+### What the multi-symbol question DID establish, and it outlives C2
+
+**Effective breadth of the daily P&L series:**
+
+| book | symbols | **effective** |
+|---|---:|---:|
+| 4 equity indices *(what C2 was screened on)* | 4 | **1.17** |
+| **diversified futures complex** *(indices + energy + metals + rates + international)* | 12 | **3.00** |
+| all 55 ETFs | 55 | 2.35 |
+
+**A futures-complex book has 2.6x the breadth of an equity-index book — worth `sqrt(2.6) = 1.6x` on
+IR for any candidate with a positive edge.** And note the third row: **55 symbols give LESS breadth
+than 12**, the same saturation [FINDINGS §4](FINDINGS.md) measured on ETFs — adding correlated
+sector names subtracts.
+
+**This corrects how the prop track has been screening.** C1 and C2 were both measured on four
+near-identical equity indices at effective breadth **1.17**. **Every future candidate should be
+screened on the diversified complex**, and the `sqrt(k)` argument that C1 needs a partner for is
+worth 1.6x before any second arm is even found.
+
+**C2 remains CLOSED.** Neither rescue applies to a negative edge.
