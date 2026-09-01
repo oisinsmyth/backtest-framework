@@ -10,11 +10,18 @@ the row count.
 
 The source fixture is NOT modified (D24). This writes a derived one.
 
-    uv run python scripts/build_intraday_panel.py
+    uv run python scripts/build_intraday_panel.py                    # the 57 ETFs
+    uv run python scripts/build_intraday_panel.py --single-names     # D264's eight
+
+D264 GENERALISED THE PATHS AND NOTHING ELSE. The ETF defaults are unchanged and
+`--single-names` merely points the same fixed-point intersection at D264's raw
+fixture. Duplicating 130 lines to change two constants is the failure D212
+exists to prevent, and the fixed point is the part that took the debugging.
 """
 
 from __future__ import annotations
 
+import argparse
 import csv
 import gzip
 import importlib.util
@@ -45,8 +52,22 @@ SRC_EVENTS = FIX / "etf_intraday_15m_raw_events.json"
 OUT = FIX / "etf_intraday_15m_panel.csv.gz"
 OUT_EVENTS = FIX / "etf_intraday_15m_panel_events.json"
 
+SINGLE = {
+    "src": FIX / "single_name_intraday_15m_raw.csv.gz",
+    "src_events": FIX / "single_name_intraday_15m_raw_events.json",
+    "out": FIX / "single_name_intraday_15m_panel.csv.gz",
+    "out_events": FIX / "single_name_intraday_15m_panel_events.json",
+}
+
 
 def main() -> int:
+    global SRC, SRC_EVENTS, OUT, OUT_EVENTS
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--single-names", action="store_true",
+                    help="build D264's eight-name panel instead of the 57 ETFs")
+    if ap.parse_args().single_names:
+        SRC, SRC_EVENTS = SINGLE["src"], SINGLE["src_events"]
+        OUT, OUT_EVENTS = SINGLE["out"], SINGLE["out_events"]
     t0 = time.time()
     rows: dict[str, dict[str, list[str]]] = defaultdict(dict)
     with gzip.open(SRC, "rt") as f:

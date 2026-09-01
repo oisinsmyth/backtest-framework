@@ -1,0 +1,421 @@
+{
+ "fixture": "single_name_intraday_15m_raw.csv.gz",
+ "purpose": "15-minute bars for the eight-name stratified single-stock sample. DATA ONLY -- no strategy, no cell, no rule.",
+ "symbols_requested": [
+  "PG",
+  "LMT",
+  "PM",
+  "MO",
+  "CLF",
+  "SM",
+  "YELP",
+  "RH"
+ ],
+ "symbols_included": [
+  "CLF",
+  "LMT",
+  "MO",
+  "PG",
+  "PM",
+  "RH",
+  "SM",
+  "YELP"
+ ],
+ "symbols_excluded": [],
+ "strata": {
+  "PG": "low",
+  "LMT": "low",
+  "PM": "low",
+  "MO": "low",
+  "CLF": "high",
+  "SM": "high",
+  "YELP": "high",
+  "RH": "high"
+ },
+ "selection": {
+  "artefact": "data/single_name_intraday_selection.json",
+  "script": "scripts/select_single_name_intraday.py",
+  "window": [
+   "2013-01-02",
+   "2017-12-29"
+  ],
+  "note": "the selection window is DISJOINT from the test span, so no statistic that picked a name has seen a bar this fixture holds"
+ },
+ "SURVIVORSHIP_BIAS_STATEMENT": "SURVIVOR-ONLY, AND NOT BY CHOICE. Probed 2026-09-01: TIME_SERIES_INTRADAY returns `Invalid API call` (155 bytes) for every delisted ticker tried -- TWTR, FRC, SIVB, AABA -- against AAPL's clean 546 bars. TIME_SERIES_DAILY_ADJUSTED does serve dead names, which is how D252 built a 35.7%-dead DAILY fixture; the intraday endpoint does not, on this tier. 496 of the 1,192 names trading in 2013-2017 are not survivors, so 41.6% of the cohort is unreachable at this frequency. D252 holds that survivorship is not a caveat for a short book but the whole measurement. The direction of the bias and what it does and does not license are stated in the study's pre-registration.",
+ "start": "2018-01",
+ "end": "2026-08",
+ "interval": "15min",
+ "session": "regular_hours_09:30-15:45",
+ "bars_per_full_session": 26,
+ "bar_boundary": "timestamps mark the interval's OPEN, so a bar stamped t covers [t, t+15m) and is not complete until t+15m",
+ "timezone": "US/Eastern",
+ "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true at fetch; BUILT regular-hours-only. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, breaking D24's immutable-snapshot requirement.",
+ "split_adjusted": true,
+ "split_events_applied": 0,
+ "split_adjusted_bars": 0,
+ "splits_by_symbol": {},
+ "largest_residual_bar_move": {
+  "symbol": "SM",
+  "timestamp": "2020-03-09 09:30:00",
+  "move": 0.5392670157068062
+ },
+ "session_boundary_steps_over_threshold": [
+  {
+   "symbol": "CLF",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.18293936279547796,
+   "prev_close": 4.865,
+   "close": 3.975,
+   "volume": 781753.0
+  },
+  {
+   "symbol": "CLF",
+   "from": "2024-11-05 15:45:00",
+   "to": "2024-11-06 09:30:00",
+   "step": 0.15934539190353147,
+   "prev_close": 11.61,
+   "close": 13.46,
+   "volume": 6068593.0
+  },
+  {
+   "symbol": "CLF",
+   "from": "2025-05-30 15:45:00",
+   "to": "2025-06-02 09:30:00",
+   "step": 0.24442538593481977,
+   "prev_close": 5.83,
+   "close": 7.255,
+   "volume": 18644004.0
+  },
+  {
+   "symbol": "CLF",
+   "from": "2026-02-06 15:45:00",
+   "to": "2026-02-09 09:30:00",
+   "step": -0.24204067796610174,
+   "prev_close": 14.75,
+   "close": 11.1799,
+   "volume": 8637343.0
+  },
+  {
+   "symbol": "CLF",
+   "from": "2026-07-22 15:45:00",
+   "to": "2026-07-23 09:30:00",
+   "step": 0.16772486772486772,
+   "prev_close": 9.45,
+   "close": 11.035,
+   "volume": 7115328.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-03-06 15:45:00",
+   "to": "2020-03-09 09:30:00",
+   "step": -0.5392670157068062,
+   "prev_close": 3.82,
+   "close": 1.76,
+   "volume": 5433.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-03-09 15:45:00",
+   "to": "2020-03-10 09:30:00",
+   "step": 0.24999999999999978,
+   "prev_close": 1.36,
+   "close": 1.7,
+   "volume": 1106778.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.3539484978540772,
+   "prev_close": 2.33,
+   "close": 1.5053,
+   "volume": 374932.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-04-08 15:45:00",
+   "to": "2020-04-09 09:30:00",
+   "step": 0.2655844155844156,
+   "prev_close": 1.54,
+   "close": 1.949,
+   "volume": 1246134.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-06-04 15:45:00",
+   "to": "2020-06-05 09:30:00",
+   "step": 0.17738095238095242,
+   "prev_close": 4.2,
+   "close": 4.945,
+   "volume": 873931.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-07-30 15:45:00",
+   "to": "2020-07-31 09:30:00",
+   "step": -0.1676217765042981,
+   "prev_close": 3.49,
+   "close": 2.905,
+   "volume": 2214849.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.3044692737430168,
+   "prev_close": 1.79,
+   "close": 2.335,
+   "volume": 1551715.0
+  },
+  {
+   "symbol": "SM",
+   "from": "2020-11-17 15:45:00",
+   "to": "2020-11-18 09:30:00",
+   "step": 0.1633333333333331,
+   "prev_close": 3.18,
+   "close": 3.6994,
+   "volume": 3135228.0
+  },
+  {
+   "symbol": "YELP",
+   "from": "2018-08-08 15:45:00",
+   "to": "2018-08-09 09:30:00",
+   "step": 0.21855345911949686,
+   "prev_close": 38.16,
+   "close": 46.5,
+   "volume": 4439919.0
+  },
+  {
+   "symbol": "YELP",
+   "from": "2018-11-08 15:45:00",
+   "to": "2018-11-09 09:30:00",
+   "step": -0.27943882244710205,
+   "prev_close": 43.48,
+   "close": 31.33,
+   "volume": 5107390.0
+  },
+  {
+   "symbol": "YELP",
+   "from": "2019-11-07 15:45:00",
+   "to": "2019-11-08 09:30:00",
+   "step": 0.15664243225380026,
+   "prev_close": 30.26,
+   "close": 35.0,
+   "volume": 896821.0
+  },
+  {
+   "symbol": "YELP",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.2565845369583687,
+   "prev_close": 23.54,
+   "close": 17.5,
+   "volume": 50347.0
+  },
+  {
+   "symbol": "YELP",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.22284878863826219,
+   "prev_close": 23.94,
+   "close": 29.275,
+   "volume": 440973.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2018-03-27 15:45:00",
+   "to": "2018-03-28 09:30:00",
+   "step": 0.193792280143255,
+   "prev_close": 75.39,
+   "close": 90.0,
+   "volume": 1162733.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2018-06-11 15:45:00",
+   "to": "2018-06-12 09:30:00",
+   "step": 0.21367840296495944,
+   "prev_close": 118.72,
+   "close": 144.0879,
+   "volume": 1490841.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2019-03-28 15:45:00",
+   "to": "2019-03-29 09:30:00",
+   "step": -0.1680155267377551,
+   "prev_close": 131.9015,
+   "close": 109.74,
+   "volume": 1539625.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2019-06-12 15:45:00",
+   "to": "2019-06-13 09:30:00",
+   "step": 0.22272583535364188,
+   "prev_close": 94.87,
+   "close": 116.0,
+   "volume": 1309548.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.2559421702404159,
+   "prev_close": 123.12,
+   "close": 91.6084,
+   "volume": 95582.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2020-09-09 15:45:00",
+   "to": "2020-09-10 09:30:00",
+   "step": 0.229493895602342,
+   "prev_close": 321.08,
+   "close": 394.7659,
+   "volume": 387561.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2024-09-12 15:45:00",
+   "to": "2024-09-13 09:30:00",
+   "step": 0.19172478279502858,
+   "prev_close": 256.67,
+   "close": 305.88,
+   "volume": 819303.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2024-12-12 15:45:00",
+   "to": "2024-12-13 09:30:00",
+   "step": 0.15692243098561987,
+   "prev_close": 381.08,
+   "close": 440.88,
+   "volume": 581367.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2025-04-02 15:45:00",
+   "to": "2025-04-03 09:30:00",
+   "step": -0.3928714217175756,
+   "prev_close": 250.12,
+   "close": 151.855,
+   "volume": 1370389.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2025-05-09 15:45:00",
+   "to": "2025-05-12 09:30:00",
+   "step": 0.16817620419925894,
+   "prev_close": 194.32,
+   "close": 227.0,
+   "volume": 308249.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2025-06-12 15:45:00",
+   "to": "2025-06-13 09:30:00",
+   "step": 0.2297526262283971,
+   "prev_close": 177.06,
+   "close": 217.74,
+   "volume": 1088047.0
+  },
+  {
+   "symbol": "RH",
+   "from": "2026-03-31 15:45:00",
+   "to": "2026-04-01 09:30:00",
+   "step": -0.19439885836603643,
+   "prev_close": 140.15,
+   "close": 112.905,
+   "volume": 1170558.0
+  }
+ ],
+ "step_threshold": 0.15,
+ "step_policy": "D226's 15% threshold, unchanged. A step above it is REPORTED and classified by D252's test -- reverts (bad print), persists at volume (corporate action), or is corroborated (real) -- never silently adjusted. SPLITS+DIVIDENDS do not cover spin-offs: XLF's XLRE spin-off is a -18.3% step Alpha Vantage reports as zero splits (PICKUP.md).",
+ "half_days_dropped": [
+  "2018-07-03",
+  "2018-11-23",
+  "2018-12-24",
+  "2019-07-03",
+  "2019-11-29",
+  "2019-12-24",
+  "2020-03-16",
+  "2020-11-27",
+  "2020-12-24",
+  "2021-11-26",
+  "2022-11-25",
+  "2023-07-03",
+  "2023-11-24",
+  "2024-07-03",
+  "2024-11-29",
+  "2025-12-24"
+ ],
+ "half_day_bars_dropped": 2531,
+ "half_day_policy": "US early closes DERIVED, not hardcoded: a session where at least half the sample is short. Dropped at every symbol so the calendar is uniform.",
+ "incomplete_sessions_excluding_half_days": 17,
+ "incomplete_session_rate": 0.000985850150777082,
+ "missing_bars_excluding_half_days": 65,
+ "per_symbol_short_sessions": {
+  "RH": {
+   "short_sessions": 8,
+   "rate": 0.0037418147801683817,
+   "bars_missing": 17
+  },
+  "YELP": {
+   "short_sessions": 4,
+   "rate": 0.0018509949097639982,
+   "bars_missing": 27
+  },
+  "SM": {
+   "short_sessions": 3,
+   "rate": 0.0013882461823229986,
+   "bars_missing": 19
+  },
+  "MO": {
+   "short_sessions": 1,
+   "rate": 0.000462962962962963,
+   "bars_missing": 1
+  },
+  "CLF": {
+   "short_sessions": 1,
+   "rate": 0.00046274872744099955,
+   "bars_missing": 1
+  }
+ },
+ "rows": 448279,
+ "bars_per_symbol": {
+  "PG": 56160,
+  "LMT": 55692,
+  "PM": 56186,
+  "MO": 56159,
+  "CLF": 56185,
+  "SM": 56167,
+  "YELP": 56159,
+  "RH": 55571
+ },
+ "first_bar": {
+  "PG": "2018-01-02 09:30:00",
+  "LMT": "2018-01-02 09:30:00",
+  "PM": "2018-01-02 09:30:00",
+  "MO": "2018-01-02 09:30:00",
+  "CLF": "2018-01-02 09:30:00",
+  "SM": "2018-01-02 09:30:00",
+  "YELP": "2018-01-02 09:30:00",
+  "RH": "2018-01-02 09:30:00"
+ },
+ "last_bar": {
+  "PG": "2026-08-31 15:45:00",
+  "LMT": "2026-08-31 15:45:00",
+  "PM": "2026-08-31 15:45:00",
+  "MO": "2026-08-31 15:45:00",
+  "CLF": "2026-08-31 15:45:00",
+  "SM": "2026-08-31 15:45:00",
+  "YELP": "2026-08-31 15:45:00",
+  "RH": "2026-08-31 15:45:00"
+ },
+ "zero_volume_bars": 0,
+ "zero_volume_rate": 0.0,
+ "empty_bar_disclosure": "D192 requires any intraday study on a new universe to measure and report its own empty-bar rate; it must be quoted in the pre-registration.",
+ "built_at_utc": "2026-09-01T15:19:58.586138+00:00"
+}

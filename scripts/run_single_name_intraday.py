@@ -80,8 +80,8 @@ pivots = D.pivots
 SUMMARY = REPO / "data" / "single_name_intraday_summary.json"
 RESULTS = REPO / "SINGLE_NAME_INTRADAY_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
-FIXTURE = FIX / "single_name_intraday_15m_raw.csv.gz"
-EVENTS = FIX / "single_name_intraday_15m_raw_events.json"
+FIXTURE = FIX / "single_name_intraday_15m_panel.csv.gz"
+EVENTS = FIX / "single_name_intraday_15m_panel_events.json"
 
 SEED, N_SIMS = X.SEED, X.N_SIMS
 RF_ANNUAL = X.RF_ANNUAL
@@ -259,14 +259,28 @@ def build_books(panel, cleaned, start, first):
     return books
 
 
-def load_stratum(symbols):
-    """A panel restricted to `symbols`, with the per-stratum cost schedule."""
+def load_full():
+    """The eight-name panel, loaded ONCE.
+
+    `load_panel` refuses a panel whose symbols have different bar counts, so this
+    reads the PANEL fixture (`build_intraday_panel.py --single-names`), not the
+    raw one -- the same thing D247 did, for the same reason."""
     saved = (L.FIXTURE, L.EVENTS)
     try:
         L.FIXTURE, L.EVENTS = FIXTURE, EVENTS
-        panel, cleaned = L.load_panel()
+        return L.load_panel()
     finally:
         L.FIXTURE, L.EVENTS = saved
+
+
+def subset(panel, cleaned, symbols):
+    """A stratum panel, carved from the eight-name one.
+
+    THE TIME GRID IS THE EIGHT-SYMBOL INTERSECTION FOR EVERY STRATUM, deliberately.
+    A LOW-only panel built from scratch would keep a few bars the eight-name
+    intersection drops, and the two strata would then be scored on different grids
+    -- which is exactly the comparison this study is built to make. A handful of
+    bars is the right price for LOW and HIGH being measured on the same clock."""
     keep = [i for i, s in enumerate(panel.symbols) if s in symbols]
     syms = tuple(panel.symbols[i] for i in keep)
     assert set(syms) == set(symbols), f"missing symbols: {set(symbols) - set(syms)}"
@@ -340,7 +354,8 @@ def rotation_all(ctx, ppy, start, first, gap):
 
 def build() -> dict:
     t0 = time.time()
-    panel_all, cleaned_all = load_stratum(STRATA["ALL"])
+    raw_panel, raw_cleaned = load_full()
+    panel_all, cleaned_all = subset(raw_panel, raw_cleaned, STRATA["ALL"])
     first, gap = D.session_structure(panel_all.dates)
     n_sessions = int(first.sum())
     T = panel_all.closes.shape[1]
@@ -358,7 +373,8 @@ def build() -> dict:
 
     ctx = {}
     for st, syms in STRATA.items():
-        p, cl = (panel_all, cleaned_all) if st == "ALL" else load_stratum(syms)
+        p, cl = ((panel_all, cleaned_all) if st == "ALL"
+                 else subset(raw_panel, raw_cleaned, syms))
         ctx[st] = {"panel": p, "cleaned": cl, "borrow": borrow_vector(p.symbols),
                    "books": build_books(p, cl, start, first)}
 
@@ -649,6 +665,30 @@ def render(p: dict) -> str:
         A(f"| {st} | {k} | {c['mean_held']:.2f} | {c['max_held']} | "
           f"{c['share_of_universe_mean']:.1%} | *{c['rotated_max_held']}* | "
           + (f"{c['sd_ratio']:.2f}x |" if c["sd_ratio"] is not None else "— |"))
+
+    A("\n## Limitations carried into the reading, none of them discovered afterwards\n")
+    A(f"1. **Survivorship.** {p['SURVIVORSHIP']}")
+    A(f"2. **Breadth.** Effective independent instruments "
+      f"**{p['anatomy']['ALL']['effective_instruments']:.2f}** of "
+      f"{p['anatomy']['ALL']['n_symbols']}. R10's corollary is binding: the pooled entry "
+      f"counts in Part B are **not** sample sizes, and are never quoted alone.")
+    A(f"3. **The bootstrap block is {BLOCK} bars**, inherited from D247 unchanged so the two "
+      f"studies stay comparable. At fifteen minutes that is **under one session**, so hurdle B "
+      f"under-weights any autocorrelation living at the daily scale and is the weakest of the "
+      f"six. Kept rather than re-chosen: picking a block length after seeing the data is the "
+      f"defect R9's corollary warns about.")
+    A("4. **The half-spread and borrow are assumptions** (1.5/4.5 bp, 0.30/3.00%). The "
+      "commission is derived from the committed IBKR schedule. **Read hurdle K off the "
+      "breakeven column, which is a property of the strategy**, not off my spread guess.")
+    A("5. **Locate fees and SEC Rule 201 are not modelled**, and both run *against* the short "
+      "— hardest on the HIGH stratum, where a falling small-cap is exactly what becomes "
+      "expensive to borrow.")
+    A("6. **The volatility axis is confounded with sector** — sorting a liquid pool on "
+      "volatility produced defensive mega-caps at one end and cyclicals at the other. "
+      "Unavoidable, and any stratum-level reading carries it.")
+    A("7. **The calendar mismatch is D247's and is severe.** S1's 34-bar Impulse is ~1.3 "
+      "sessions here against seven weeks daily; S2's 252-bar regression is ~9.8 sessions "
+      "against a year.")
 
     A("\n## Verdict\n")
     if p["survivors"]:
