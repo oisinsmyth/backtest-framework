@@ -345,3 +345,76 @@ screened on the diversified complex**, and the `sqrt(k)` argument that C1 needs 
 worth 1.6x before any second arm is even found.
 
 **C2 remains CLOSED.** Neither rescue applies to a negative edge.
+
+---
+
+## C3 — SCREENED AND CLOSED, 2026-08-29. Fails all three, and on the opposite shape to the one predicted.
+
+**Screened on the 12-symbol diversified complex (effective breadth 3.00), not the four equity
+indices C1 and C2 used.** Range = high/low of the first `k` bars; break above goes long, below goes
+short; exit at the session close. **Both directions pre-specified**, since a range break is
+symmetric. **Bar and shape prediction both stated before looking. Prior: ~20%.**
+
+| OR bars | side | trades | per sym-yr | hit | mean/trade | **skew** | net futures | worst |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|
+| 1 | long | 19,716 | 99 | 52.6% | +0.0079% | **−0.80** | +0.58% | −16.36% |
+| **2** | **long** | 17,841 | 90 | **53.2%** | **+0.0118%** | **−0.51** | **+0.88%** | −14.54% |
+| 4 | long | 15,182 | 76 | 53.0% | +0.0128% | −0.55 | +0.82% | −10.63% |
+| 1 | short | 19,365 | 97 | 48.0% | −0.0024% | −0.14 | −0.43% | −12.67% |
+| 2 | short | 17,309 | 87 | 47.9% | −0.0128% | −0.31 | −1.29% | −10.56% |
+| 4 | short | 14,402 | 72 | 48.6% | +0.0038% | −0.55 | +0.13% | −11.22% |
+
+### All three criteria fail
+
+| | required | best measured | |
+|---|---|---|---|
+| `exposure x edge` net of futures cost | ≥ 3%/yr | **+0.88%** | **FAILS**, 3.4x short |
+| hit rate | > 55% | **53.2%** | **FAILS** |
+| worst single trade | < 2% | **−10.63%** | **FAILS by fivefold** |
+
+### The shape prediction was wrong, and the truth is worse
+
+**Predicted: low hit rate with POSITIVE skew** — many small losses, few large wins, which P1
+punishes because losses ratchet against the floor.
+
+**Measured: hit rate ABOVE 50% and skew NEGATIVE at −0.51 to −0.80.** Frequent small wins with rare
+large losses.
+
+**That is the worse of the two shapes for P1**, and [D258](decisions/D258-the-prop-track-candidates.md)
+said so before any of this was run: *"negative skew is fatal — one large loss breaches
+immediately."* **A −10.63% trade against a 4% floor breaches at any size above 0.38x**, and at that
+size the return is a fraction of an already-failing +0.88%.
+
+### Two further findings
+
+**The long side works and the short side does not** — +0.0118% against −0.0128% at OR 2. **That
+asymmetry is consistent with drift rather than signal.** A long held from break to close captures
+part of the intraday drift [D250](decisions/D250-the-overnight-gap-pre-screen.md) measured at
+**+3.05%/yr since 2021**; at ~15% exposure that is roughly **+0.46%/yr of the +0.97% gross**.
+**About half the edge may be drift, and a matched-exposure null would be required to separate them
+— which the cell does not clear the bar to justify building.**
+
+**The era split runs opposite to D250's gap.** 2020 **loses** (−0.0533%/trade), 2010–19 is flat
+(+0.0038%), and **2021–26 carries it** (+0.0286%, hit 53.9%). Different pathology, same lesson: the
+edge is one era, and it is the recent one.
+
+**By asset class**, international equity leads (+0.0355%, hit 55.4%) — **but selecting it after
+seeing it is selection on the outcome**, and it is named here only so that nobody proposes it later
+as though it had been predicted.
+
+**C3 is CLOSED.**
+
+---
+
+## The prop candidate list is now exhausted
+
+| | state |
+|---|---|
+| **C1** — session-boundary hold | closed standalone (+1.87%/yr, 20 accounts); open as a component, **but there is no partner** |
+| **C2** — intraday reversion | closed — negative edge in **all seven** asset classes |
+| **C3** — opening range | closed — fails all three, negative skew |
+| **C4** — sizing wrapper | never a candidate. **The vol-targeting method survives and is the track's one durable output** |
+
+**[D258](decisions/D258-the-prop-track-candidates.md) fixed four candidates in advance and all four
+are now resolved.** A fifth would need a new mechanism, not a new parameter — and it would need to
+clear a bar that has now rejected three constructions on **shape** rather than on return.
