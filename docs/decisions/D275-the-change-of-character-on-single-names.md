@@ -1,6 +1,8 @@
 # D275 — The change of character, on single names at fifteen minutes
 
-**Status:** PRE-REGISTERED. Committed **before the run**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** Zero of three short cells clear. The legs run; the rule captures 0.3% of them.
+
+**Everything above the RESULT heading was committed in `0b39133`, BEFORE the runner was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track**
 
@@ -120,3 +122,66 @@ need its own registration.
 
 **Disclosed and not summed: the structure programme's 86 looks**, spent on five components under a
 confluence stack, on crypto.
+
+---
+
+## RESULT — the move is there, and the rule captures a three-hundredth of it
+
+`uv run python scripts/run_choch_short.py` · `data/d275_choch_summary.json` · seed 0, 1,000
+rotations, 1,000 bootstrap draws.
+
+### The leg diagnostic, which was not hurdled and is the finding
+
+**188,687 down-legs. Median 182.7 bp, mean 263.0 bp. 99.1% of them exceed the cost bar.**
+
+**The move exists.** The state machine finds real impulse legs, and almost all of them are large
+enough to pay for a round trip several times over.
+
+### And the tradeable arm captures +0.57 bp
+
+| stratum | exposure | CAGR | Sharpe | turnover | trades | **move/trade** | cost bar |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| ALL | 46.9% | −22.17% | −2.020 | 474 | 15,628 | **+0.57 bp** | 8.42 |
+| LOW | 45.9% | −11.83% | −1.436 | 471 | 7,770 | **−0.64 bp** | 4.00 |
+| HIGH | 47.8% | −31.31% | −1.762 | 476 | 7,858 | **+1.76 bp** | 12.84 |
+
+**A median leg of 182.7 bp; a captured move of 0.57 bp. Three tenths of one percent.**
+
+**The mechanism is visible in the turnover: 474 per year at 47% exposure.** At `k = 2` on
+15-minute bars the trend state flips constantly, so the book churns *around* the legs rather than
+riding them. Every flip is a round trip, and 474 of them at 8.42 bp costs 40%/yr.
+
+### The hurdle table
+
+| cell | move | Z1 | SR pct | $ pct | Z2 | Z3 | Z4 | Z5 |
+|---|---:|---|---:|---:|---|---|---|---|
+| ALL short | +0.57b | no | 92.4th | **99.4th** | no | no | no | no |
+| LOW short | −0.64b | no | 83.0th | 96.6th | no | no | no | no |
+| HIGH short | +1.76b | no | 87.9th | **99.2th** | no | no | no | no |
+| ALL long | −0.27b | no | **0.0th** | 10.7th | no | no | no | no |
+| LOW long | +1.58b | no | 5.6th | 33.2th | no | no | no | no |
+| HIGH long | −2.17b | no | **0.0th** | 13.2th | no | no | no | no |
+
+**Zero of six clear all five.**
+
+### The predictions
+
+| | outcome |
+|---|---|
+| **Z-a** no short cell clears Z1 | **CONFIRMED** — +0.57, −0.64, +1.76 against bars of 8.42, 4.00, 12.84 |
+| **Z-b** the leg runs past `2c` while the arm does not | **CONFIRMED, and by a factor of 320.** This separates *"there is no move"* from *"there is a move we cannot capture"* — and it is decisively the second |
+| **Z-c** the short clears the Sharpe leg and fails the money leg | **FALSIFIED, and informatively.** The **money** percentile EXCEEDS the Sharpe percentile in all three shorts — 99.4th against 92.4th — which is the reverse of D256's 100.0th / 0.0th shape. A 47%-exposed short in a rising market loses heavily whatever it does, so rotation loses *more*, and the money leg reads high while the arm still returns −22%/yr. **FINDINGS §3 in its purest form yet: real timing, comprehensively unprofitable** |
+| **Z-d** the long control also loses | **CONFIRMED**, and it is at the **0th percentile** on Sharpe in two strata. The state machine's direction *is* informative and it is mirror-imaged: short-in-DOWN beats random, long-in-UP is worse than random |
+
+---
+
+## Stop — fired
+
+**The change of character is closed on this fixture** — no second `k`, no confluence component
+added back, no alternative exit, no re-cut strata.
+
+**And the stop is binding on the obvious next thought.** The 182.7 bp leg against a 0.57 bp capture
+points at a **leg-relative exit** — hold the leg rather than the state. That is a second
+construction, it would need its own registration, and **D274 has just closed time-based exits on
+S1 and S2 after finding a random exit bar beats a fixed one.** Named here so the idea is on record
+rather than pursued.
