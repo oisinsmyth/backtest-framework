@@ -8,6 +8,31 @@ none.
 
 ## Now
 
+> **SESSION HANDOFF 2026-09-01 — read [`PICKUP.md`](PICKUP.md) first.** The free half of the
+> futures data layer is built and committed (D262). The one blocker is a Databento API key,
+> which is the principal's to create; the next actionable step needs no key and no purchase.
+
+- [x] **D262 — the futures data layer, and the free rung of the ladder.** CFTC Commitments of
+      Traders built and committed (210,717 rows, 28 symbols, 1986-2026, public domain so it MAY
+      be committed); the continuous-contract stitcher and its acceptance gates, built and tested
+      against no vendor data; a Databento client that cannot spend by accident; provider
+      references for both new sources.
+- [x] Alpha Vantage 15-minute cache completed to 11,400 slices including the 2010-2017 backfill.
+      **The 57-ETF extended-hours FIXTURE is refused on measurement** — only 2 of 57 symbols
+      reach a median 58 of 64 slots, the raggedness is liquidity-correlated, and an unfiltered
+      +428.52% bad print survives. The cache is still the durable win.
+- [ ] **NEXT: pre-register and run the COT screen (rung 1).** Needs no key, no purchase, no new
+      data. It is a STUDY, so it needs its own registration under R8 — D262 deliberately scored
+      nothing. Scope the micro/mini form to ES/MES and NQ/MNQ (~6 years); MYM has ~4 and the
+      metal micros under one. A negative result is worth as much as a positive one: it would say
+      not to spend the ~$205 at all.
+- [ ] **BLOCKED ON THE PRINCIPAL: `fetch_databento.py --verify`.** Free, ~7 calls. Needs a key at
+      `~/.config/databento/key` (usage-based $0/mo, NOT Standard). Settles the one inferred
+      number the whole costing rests on -- $28.00/GiB derived versus the 280.0 their docs show --
+      and whether the roll-rule letters mean what the client source implies.
+- [ ] Do NOT wire up `--submit` until the purchase is actually decided.
+
+
 - [x] Set up the full doc suite (ADR records, RULES.md, CHANGELOG.md, this file, README.md)
 - [x] Initialize local git repo + `.gitignore`
 - [x] Write `PHILOSOPHY.md`, wired into README.md and RULES.md
