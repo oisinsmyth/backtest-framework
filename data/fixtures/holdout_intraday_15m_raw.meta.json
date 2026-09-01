@@ -1,0 +1,773 @@
+{
+ "fixture": "holdout_intraday_15m_raw.csv.gz",
+ "purpose": "15-minute bars for the eight-name stratified single-stock sample. DATA ONLY -- no strategy, no cell, no rule.",
+ "symbols_requested": [
+  "RTX",
+  "VZ",
+  "COST",
+  "HD",
+  "DIS",
+  "SPG",
+  "CMCSA",
+  "SBUX",
+  "CNX",
+  "BB",
+  "THC",
+  "ANF",
+  "NI",
+  "RIG",
+  "HLF",
+  "TRGP"
+ ],
+ "symbols_included": [
+  "ANF",
+  "BB",
+  "CMCSA",
+  "CNX",
+  "COST",
+  "DIS",
+  "HD",
+  "HLF",
+  "NI",
+  "RIG",
+  "RTX",
+  "SBUX",
+  "SPG",
+  "THC",
+  "TRGP",
+  "VZ"
+ ],
+ "symbols_excluded": [],
+ "strata": {
+  "RTX": "low",
+  "VZ": "low",
+  "COST": "low",
+  "HD": "low",
+  "DIS": "low",
+  "SPG": "low",
+  "CMCSA": "low",
+  "SBUX": "low",
+  "CNX": "high",
+  "BB": "high",
+  "THC": "high",
+  "ANF": "high",
+  "NI": "high",
+  "RIG": "high",
+  "HLF": "high",
+  "TRGP": "high"
+ },
+ "selection": {
+  "artefact": "data/single_name_intraday_selection.json",
+  "script": "scripts/select_single_name_intraday.py",
+  "window": [
+   "2013-01-02",
+   "2017-12-29"
+  ],
+  "note": "the selection window is DISJOINT from the test span, so no statistic that picked a name has seen a bar this fixture holds"
+ },
+ "SURVIVORSHIP_BIAS_STATEMENT": "SURVIVOR-ONLY, AND NOT BY CHOICE. Probed 2026-09-01: TIME_SERIES_INTRADAY returns `Invalid API call` (155 bytes) for every delisted ticker tried -- TWTR, FRC, SIVB, AABA -- against AAPL's clean 546 bars. TIME_SERIES_DAILY_ADJUSTED does serve dead names, which is how D252 built a 35.7%-dead DAILY fixture; the intraday endpoint does not, on this tier. 496 of the 1,192 names trading in 2013-2017 are not survivors, so 41.6% of the cohort is unreachable at this frequency. D252 holds that survivorship is not a caveat for a short book but the whole measurement. The direction of the bias and what it does and does not license are stated in the study's pre-registration.",
+ "start": "2018-01",
+ "end": "2026-08",
+ "interval": "15min",
+ "session": "regular_hours_09:30-15:45",
+ "bars_per_full_session": 26,
+ "bar_boundary": "timestamps mark the interval's OPEN, so a bar stamped t covers [t, t+15m) and is not complete until t+15m",
+ "timezone": "US/Eastern",
+ "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true at fetch; BUILT regular-hours-only. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, breaking D24's immutable-snapshot requirement.",
+ "split_adjusted": true,
+ "split_events_applied": 3,
+ "split_adjusted_bars": 68873,
+ "splits_by_symbol": {
+  "CMCSA": [
+   [
+    "2026-01-05T00:00:00",
+    1.067
+   ]
+  ],
+  "HLF": [
+   [
+    "2018-05-15T00:00:00",
+    2.0
+   ]
+  ],
+  "RTX": [
+   [
+    "2020-04-03T00:00:00",
+    1.589
+   ]
+  ]
+ },
+ "largest_residual_bar_move": {
+  "symbol": "BB",
+  "timestamp": "2020-12-01 09:30:00",
+  "move": 0.3611584327086883
+ },
+ "session_boundary_steps_over_threshold": [
+  {
+   "symbol": "RTX",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.18444022770398505,
+   "prev_close": 66.33102580239145,
+   "close": 54.09691629955947,
+   "volume": 1066190.398
+  },
+  {
+   "symbol": "HD",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.21878829135466304,
+   "prev_close": 205.66,
+   "close": 160.664,
+   "volume": 900675.0
+  },
+  {
+   "symbol": "SPG",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.27278805437931797,
+   "prev_close": 89.74,
+   "close": 65.26,
+   "volume": 480871.0
+  },
+  {
+   "symbol": "SPG",
+   "from": "2020-04-06 15:45:00",
+   "to": "2020-04-07 09:30:00",
+   "step": 0.1641073080481037,
+   "prev_close": 54.05,
+   "close": 62.92,
+   "volume": 847859.0
+  },
+  {
+   "symbol": "SPG",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.30447785321694143,
+   "prev_close": 61.86,
+   "close": 80.695,
+   "volume": 3658721.0
+  },
+  {
+   "symbol": "SBUX",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.20385438972162728,
+   "prev_close": 70.05,
+   "close": 55.77,
+   "volume": 1425745.0
+  },
+  {
+   "symbol": "SBUX",
+   "from": "2024-04-30 15:45:00",
+   "to": "2024-05-01 09:30:00",
+   "step": -0.1519774011299435,
+   "prev_close": 88.5,
+   "close": 75.05,
+   "volume": 8451062.0
+  },
+  {
+   "symbol": "SBUX",
+   "from": "2024-08-12 15:45:00",
+   "to": "2024-08-13 09:30:00",
+   "step": 0.20791563919532785,
+   "prev_close": 77.05,
+   "close": 93.0699,
+   "volume": 27020156.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2019-09-23 15:45:00",
+   "to": "2019-09-24 09:30:00",
+   "step": -0.15994666666666668,
+   "prev_close": 7.5,
+   "close": 6.3004,
+   "volume": 5087707.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.2938496583143507,
+   "prev_close": 4.39,
+   "close": 3.1,
+   "volume": 830995.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2020-11-30 15:45:00",
+   "to": "2020-12-01 09:30:00",
+   "step": 0.3611584327086883,
+   "prev_close": 5.87,
+   "close": 7.99,
+   "volume": 21469050.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2021-01-14 15:45:00",
+   "to": "2021-01-15 09:30:00",
+   "step": 0.21220879120879133,
+   "prev_close": 9.1,
+   "close": 11.0311,
+   "volume": 23863373.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2021-01-22 15:45:00",
+   "to": "2021-01-25 09:30:00",
+   "step": 0.3556735566642908,
+   "prev_close": 14.03,
+   "close": 19.0201,
+   "volume": 27986225.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2021-01-26 15:45:00",
+   "to": "2021-01-27 09:30:00",
+   "step": 0.18118022328548644,
+   "prev_close": 18.81,
+   "close": 22.218,
+   "volume": 31793887.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2021-01-27 15:45:00",
+   "to": "2021-01-28 09:30:00",
+   "step": -0.15707434052757796,
+   "prev_close": 25.02,
+   "close": 21.09,
+   "volume": 16007626.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2025-06-24 15:45:00",
+   "to": "2025-06-25 09:30:00",
+   "step": 0.19768786127167615,
+   "prev_close": 4.325,
+   "close": 5.18,
+   "volume": 7256985.0
+  },
+  {
+   "symbol": "BB",
+   "from": "2026-06-24 15:45:00",
+   "to": "2026-06-25 09:30:00",
+   "step": 0.19315545243619492,
+   "prev_close": 8.62,
+   "close": 10.285,
+   "volume": 12223277.0
+  },
+  {
+   "symbol": "THC",
+   "from": "2020-03-11 15:45:00",
+   "to": "2020-03-12 09:30:00",
+   "step": -0.15407703851925958,
+   "prev_close": 19.99,
+   "close": 16.91,
+   "volume": 8986.0
+  },
+  {
+   "symbol": "THC",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.236275565123789,
+   "prev_close": 18.58,
+   "close": 14.19,
+   "volume": 124621.0
+  },
+  {
+   "symbol": "THC",
+   "from": "2020-06-04 15:45:00",
+   "to": "2020-06-05 09:30:00",
+   "step": 0.1556026365348402,
+   "prev_close": 21.24,
+   "close": 24.545,
+   "volume": 468863.0
+  },
+  {
+   "symbol": "THC",
+   "from": "2020-09-18 15:45:00",
+   "to": "2020-09-21 09:30:00",
+   "step": -0.16519121813031157,
+   "prev_close": 28.24,
+   "close": 23.575,
+   "volume": 442612.0
+  },
+  {
+   "symbol": "THC",
+   "from": "2022-10-20 15:45:00",
+   "to": "2022-10-21 09:30:00",
+   "step": -0.29425837320574166,
+   "prev_close": 54.34,
+   "close": 38.35,
+   "volume": 1563842.0
+  },
+  {
+   "symbol": "THC",
+   "from": "2026-07-23 15:45:00",
+   "to": "2026-07-24 09:30:00",
+   "step": 0.23163288373144453,
+   "prev_close": 199.065,
+   "close": 245.175,
+   "volume": 594274.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2018-11-28 15:45:00",
+   "to": "2018-11-29 09:30:00",
+   "step": 0.20969626168224287,
+   "prev_close": 17.12,
+   "close": 20.71,
+   "volume": 4272455.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2019-03-05 15:45:00",
+   "to": "2019-03-06 09:30:00",
+   "step": 0.17721518987341778,
+   "prev_close": 21.33,
+   "close": 25.11,
+   "volume": 2816820.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2019-05-28 15:45:00",
+   "to": "2019-05-29 09:30:00",
+   "step": -0.22319999999999995,
+   "prev_close": 25.0,
+   "close": 19.42,
+   "volume": 2882120.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.20975609756097557,
+   "prev_close": 11.275,
+   "close": 8.91,
+   "volume": 176348.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2020-08-26 15:45:00",
+   "to": "2020-08-27 09:30:00",
+   "step": 0.15992812219227304,
+   "prev_close": 11.13,
+   "close": 12.91,
+   "volume": 2210853.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2021-11-22 15:45:00",
+   "to": "2021-11-23 09:30:00",
+   "step": -0.15065873353166181,
+   "prev_close": 47.06,
+   "close": 39.97,
+   "volume": 755065.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2022-03-01 15:45:00",
+   "to": "2022-03-02 09:30:00",
+   "step": -0.15699944227551588,
+   "prev_close": 35.86,
+   "close": 30.23,
+   "volume": 1100244.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2022-05-23 15:45:00",
+   "to": "2022-05-24 09:30:00",
+   "step": -0.26187803965581746,
+   "prev_close": 26.73,
+   "close": 19.73,
+   "volume": 2412640.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2022-11-21 15:45:00",
+   "to": "2022-11-22 09:30:00",
+   "step": 0.19243156199677935,
+   "prev_close": 18.63,
+   "close": 22.215,
+   "volume": 911142.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2023-05-23 15:45:00",
+   "to": "2023-05-24 09:30:00",
+   "step": 0.20621468926553654,
+   "prev_close": 23.01,
+   "close": 27.755,
+   "volume": 1129592.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2023-08-22 15:45:00",
+   "to": "2023-08-23 09:30:00",
+   "step": 0.1734665367674033,
+   "prev_close": 41.1601,
+   "close": 48.3,
+   "volume": 1826606.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2025-01-10 15:45:00",
+   "to": "2025-01-13 09:30:00",
+   "step": -0.15159227760879024,
+   "prev_close": 161.09,
+   "close": 136.67,
+   "volume": 884444.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2025-05-27 15:45:00",
+   "to": "2025-05-28 09:30:00",
+   "step": 0.2682389529609952,
+   "prev_close": 77.17,
+   "close": 97.87,
+   "volume": 2993154.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2025-11-24 15:45:00",
+   "to": "2025-11-25 09:30:00",
+   "step": 0.17303884234577294,
+   "prev_close": 65.65,
+   "close": 77.01,
+   "volume": 985400.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2026-01-09 15:45:00",
+   "to": "2026-01-12 09:30:00",
+   "step": -0.18915672299191166,
+   "prev_close": 124.87,
+   "close": 101.25,
+   "volume": 1097668.0
+  },
+  {
+   "symbol": "ANF",
+   "from": "2026-08-25 15:45:00",
+   "to": "2026-08-26 09:30:00",
+   "step": 0.2925511332227748,
+   "prev_close": 108.54,
+   "close": 140.2935,
+   "volume": 1231583.0
+  },
+  {
+   "symbol": "NI",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.1740166865315853,
+   "prev_close": 25.17,
+   "close": 20.79,
+   "volume": 159358.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-03-06 15:45:00",
+   "to": "2020-03-09 09:30:00",
+   "step": -0.28952772073921973,
+   "prev_close": 2.435,
+   "close": 1.73,
+   "volume": 23334.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-03-12 15:45:00",
+   "to": "2020-03-13 09:30:00",
+   "step": 0.16541353383458635,
+   "prev_close": 1.33,
+   "close": 1.55,
+   "volume": 2794632.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.1858974358974359,
+   "prev_close": 1.56,
+   "close": 1.27,
+   "volume": 1335817.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-04-08 15:45:00",
+   "to": "2020-04-09 09:30:00",
+   "step": 0.2421875,
+   "prev_close": 1.28,
+   "close": 1.59,
+   "volume": 6327233.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-06-04 15:45:00",
+   "to": "2020-06-05 09:30:00",
+   "step": 0.2831325301204819,
+   "prev_close": 1.66,
+   "close": 2.13,
+   "volume": 9606598.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-06-05 15:45:00",
+   "to": "2020-06-08 09:30:00",
+   "step": 0.20080321285140568,
+   "prev_close": 2.49,
+   "close": 2.99,
+   "volume": 13222112.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-06-08 15:45:00",
+   "to": "2020-06-09 09:30:00",
+   "step": -0.17866666666666664,
+   "prev_close": 3.75,
+   "close": 3.08,
+   "volume": 9698557.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-06-09 15:45:00",
+   "to": "2020-06-10 09:30:00",
+   "step": -0.20104895104895093,
+   "prev_close": 2.86,
+   "close": 2.285,
+   "volume": 9951931.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-06-11 15:45:00",
+   "to": "2020-06-12 09:30:00",
+   "step": 0.19106699751861034,
+   "prev_close": 2.015,
+   "close": 2.4,
+   "volume": 5438518.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-11-02 15:45:00",
+   "to": "2020-11-03 09:30:00",
+   "step": 0.2123600165906263,
+   "prev_close": 0.7233,
+   "close": 0.8769,
+   "volume": 6337765.0
+  },
+  {
+   "symbol": "RIG",
+   "from": "2020-11-23 15:45:00",
+   "to": "2020-11-24 09:30:00",
+   "step": 0.35277777777777786,
+   "prev_close": 1.8,
+   "close": 2.435,
+   "volume": 16999914.0
+  },
+  {
+   "symbol": "HLF",
+   "from": "2022-12-05 15:45:00",
+   "to": "2022-12-06 09:30:00",
+   "step": -0.16409376786735275,
+   "prev_close": 17.49,
+   "close": 14.62,
+   "volume": 887933.0
+  },
+  {
+   "symbol": "HLF",
+   "from": "2024-02-14 15:45:00",
+   "to": "2024-02-15 09:30:00",
+   "step": -0.2987234042553192,
+   "prev_close": 11.75,
+   "close": 8.24,
+   "volume": 2581248.0
+  },
+  {
+   "symbol": "HLF",
+   "from": "2025-02-19 15:45:00",
+   "to": "2025-02-20 09:30:00",
+   "step": 0.31793960923623454,
+   "prev_close": 5.63,
+   "close": 7.42,
+   "volume": 2603134.0
+  },
+  {
+   "symbol": "TRGP",
+   "from": "2020-03-06 15:45:00",
+   "to": "2020-03-09 09:30:00",
+   "step": -0.24847177274361743,
+   "prev_close": 27.81,
+   "close": 20.9,
+   "volume": 4590.0
+  },
+  {
+   "symbol": "TRGP",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-17 09:30:00",
+   "step": -0.27884615384615385,
+   "prev_close": 12.48,
+   "close": 9.0,
+   "volume": 367220.0
+  },
+  {
+   "symbol": "TRGP",
+   "from": "2020-03-17 15:45:00",
+   "to": "2020-03-18 09:30:00",
+   "step": -0.21968121968121967,
+   "prev_close": 7.215,
+   "close": 5.63,
+   "volume": 249118.0
+  },
+  {
+   "symbol": "TRGP",
+   "from": "2020-03-27 15:45:00",
+   "to": "2020-03-30 09:30:00",
+   "step": -0.17952722063037263,
+   "prev_close": 6.98,
+   "close": 5.7269,
+   "volume": 574597.0
+  },
+  {
+   "symbol": "TRGP",
+   "from": "2020-04-06 15:45:00",
+   "to": "2020-04-07 09:30:00",
+   "step": 0.18333333333333335,
+   "prev_close": 7.2,
+   "close": 8.52,
+   "volume": 599699.0
+  }
+ ],
+ "step_threshold": 0.15,
+ "step_policy": "D226's 15% threshold, unchanged. A step above it is REPORTED and classified by D252's test -- reverts (bad print), persists at volume (corporate action), or is corroborated (real) -- never silently adjusted. SPLITS+DIVIDENDS do not cover spin-offs: XLF's XLRE spin-off is a -18.3% step Alpha Vantage reports as zero splits (PICKUP.md).",
+ "half_days_dropped": [
+  "2018-07-03",
+  "2018-11-23",
+  "2018-12-24",
+  "2019-07-03",
+  "2019-11-29",
+  "2019-12-24",
+  "2020-03-16",
+  "2020-11-27",
+  "2020-12-24",
+  "2021-11-26",
+  "2022-11-25",
+  "2023-07-03",
+  "2023-11-24",
+  "2024-12-24",
+  "2025-12-24"
+ ],
+ "half_day_bars_dropped": 4800,
+ "half_day_policy": "US early closes DERIVED, not hardcoded: a session where at least half the sample is short. Dropped at every symbol so the calendar is uniform.",
+ "incomplete_sessions_excluding_half_days": 35,
+ "incomplete_session_rate": 0.001011853136744724,
+ "missing_bars_excluding_half_days": 144,
+ "per_symbol_short_sessions": {
+  "CNX": {
+   "short_sessions": 6,
+   "rate": 0.0027752081406105457,
+   "bars_missing": 37
+  },
+  "TRGP": {
+   "short_sessions": 6,
+   "rate": 0.0027752081406105457,
+   "bars_missing": 17
+  },
+  "THC": {
+   "short_sessions": 5,
+   "rate": 0.002312673450508788,
+   "bars_missing": 31
+  },
+  "HLF": {
+   "short_sessions": 5,
+   "rate": 0.002312673450508788,
+   "bars_missing": 22
+  },
+  "SPG": {
+   "short_sessions": 4,
+   "rate": 0.0018501387604070306,
+   "bars_missing": 10
+  },
+  "NI": {
+   "short_sessions": 4,
+   "rate": 0.0018501387604070306,
+   "bars_missing": 22
+  },
+  "ANF": {
+   "short_sessions": 2,
+   "rate": 0.0009250693802035153,
+   "bars_missing": 2
+  },
+  "CMCSA": {
+   "short_sessions": 1,
+   "rate": 0.00046253469010175765,
+   "bars_missing": 1
+  },
+  "BB": {
+   "short_sessions": 1,
+   "rate": 0.00046253469010175765,
+   "bars_missing": 1
+  },
+  "RIG": {
+   "short_sessions": 1,
+   "rate": 0.00046253469010175765,
+   "bars_missing": 1
+  }
+ },
+ "rows": 899196,
+ "bars_per_symbol": {
+  "RTX": 56160,
+  "VZ": 56212,
+  "COST": 56212,
+  "HD": 56212,
+  "DIS": 56212,
+  "SPG": 56202,
+  "CMCSA": 56211,
+  "SBUX": 56212,
+  "CNX": 56175,
+  "BB": 56211,
+  "THC": 56181,
+  "ANF": 56210,
+  "NI": 56190,
+  "RIG": 56211,
+  "HLF": 56190,
+  "TRGP": 56195
+ },
+ "first_bar": {
+  "RTX": "2018-01-02 09:30:00",
+  "VZ": "2018-01-02 09:30:00",
+  "COST": "2018-01-02 09:30:00",
+  "HD": "2018-01-02 09:30:00",
+  "DIS": "2018-01-02 09:30:00",
+  "SPG": "2018-01-02 09:30:00",
+  "CMCSA": "2018-01-02 09:30:00",
+  "SBUX": "2018-01-02 09:30:00",
+  "CNX": "2018-01-02 09:30:00",
+  "BB": "2018-01-02 09:30:00",
+  "THC": "2018-01-02 09:30:00",
+  "ANF": "2018-01-02 09:30:00",
+  "NI": "2018-01-02 09:30:00",
+  "RIG": "2018-01-02 09:30:00",
+  "HLF": "2018-01-02 09:30:00",
+  "TRGP": "2018-01-02 09:30:00"
+ },
+ "last_bar": {
+  "RTX": "2026-08-31 15:45:00",
+  "VZ": "2026-08-31 15:45:00",
+  "COST": "2026-08-31 15:45:00",
+  "HD": "2026-08-31 15:45:00",
+  "DIS": "2026-08-31 15:45:00",
+  "SPG": "2026-08-31 15:45:00",
+  "CMCSA": "2026-08-31 15:45:00",
+  "SBUX": "2026-08-31 15:45:00",
+  "CNX": "2026-08-31 15:45:00",
+  "BB": "2026-08-31 15:45:00",
+  "THC": "2026-08-31 15:45:00",
+  "ANF": "2026-08-31 15:45:00",
+  "NI": "2026-08-31 15:45:00",
+  "RIG": "2026-08-31 15:45:00",
+  "HLF": "2026-08-31 15:45:00",
+  "TRGP": "2026-08-31 15:45:00"
+ },
+ "zero_volume_bars": 0,
+ "zero_volume_rate": 0.0,
+ "empty_bar_disclosure": "D192 requires any intraday study on a new universe to measure and report its own empty-bar rate; it must be quoted in the pre-registration.",
+ "built_at_utc": "2026-09-01T21:29:04.794303+00:00"
+}

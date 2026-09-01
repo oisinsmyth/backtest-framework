@@ -72,9 +72,18 @@ from collections import defaultdict
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+import argparse, sys
+
 FIXTURE = REPO / "data" / "fixtures" / "single_name_intraday_15m_raw.csv.gz"
 META = REPO / "data" / "fixtures" / "single_name_intraday_15m_raw.meta.json"
 OUT = REPO / "data" / "single_name_intraday_steps.json"
+
+# D278's holdout uses the same gate on its own fixture. One flag swaps all three
+# paths together, for the reason build_targets exists in fetch_etf_intraday.py.
+if "--holdout" in sys.argv:
+    FIXTURE = REPO / "data" / "fixtures" / "holdout_intraday_15m_raw.csv.gz"
+    META = REPO / "data" / "fixtures" / "holdout_intraday_15m_raw.meta.json"
+    OUT = REPO / "data" / "holdout_intraday_steps.json"
 
 # A bad print is ONE bar out of line with BOTH its neighbours (D259's EWJ: 11.46
 # on 912 shares between bars of ~60.60). This is the deviation that triggers it.
