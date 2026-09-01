@@ -1,0 +1,88 @@
+{
+  "purpose": "instrument holdout for D278; scores nothing",
+  "rule": "D264's, unchanged; ranks 13-16 of each stratum instead of 1-4",
+  "selection_window": [
+    "2013-01-02",
+    "2017-12-29"
+  ],
+  "in_sample_excluded": [
+    "ANF",
+    "BB",
+    "CLF",
+    "CMCSA",
+    "CNX",
+    "COST",
+    "DIS",
+    "HD",
+    "HLF",
+    "LMT",
+    "MO",
+    "NI",
+    "PG",
+    "PM",
+    "RH",
+    "RIG",
+    "RTX",
+    "SBUX",
+    "SM",
+    "SPG",
+    "THC",
+    "TRGP",
+    "VZ",
+    "YELP"
+  ],
+  "low": [
+    {
+      "symbol": "V",
+      "median_dollar_volume": 602731560.48,
+      "annualised_vol": 0.20047519003762435
+    },
+    {
+      "symbol": "JPM",
+      "median_dollar_volume": 990784645.0,
+      "annualised_vol": 0.20240358384181073
+    },
+    {
+      "symbol": "FDX",
+      "median_dollar_volume": 247053465.8331278,
+      "annualised_vol": 0.20752233447607746
+    },
+    {
+      "symbol": "MDLZ",
+      "median_dollar_volume": 302241861.68,
+      "annualised_vol": 0.20759432093227642
+    }
+  ],
+  "high": [
+    {
+      "symbol": "NBIS",
+      "median_dollar_volume": 55826870.00000001,
+      "annualised_vol": 0.43012448594372354
+    },
+    {
+      "symbol": "BBD",
+      "median_dollar_volume": 98183831.8927394,
+      "annualised_vol": 0.42005171524206797
+    },
+    {
+      "symbol": "TRIP",
+      "median_dollar_volume": 121586190.78,
+      "annualised_vol": 0.4109501381242583
+    },
+    {
+      "symbol": "CIEN",
+      "median_dollar_volume": 56659649.97,
+      "annualised_vol": 0.4066082557727884
+    }
+  ],
+  "symbols": [
+    "V",
+    "JPM",
+    "FDX",
+    "MDLZ",
+    "NBIS",
+    "BBD",
+    "TRIP",
+    "CIEN"
+  ]
+}

@@ -169,6 +169,30 @@ HOLDOUT_FIXTURE = FIX / "holdout_intraday_15m_raw.csv.gz"
 HOLDOUT_META = FIX / "holdout_intraday_15m_raw.meta.json"
 HOLDOUT_EVENTS = FIX / "holdout_intraday_15m_raw_events.json"
 
+# ---------------------------------------------------------------------------
+# THE THIRD COHORT -- ranks 13-16 of each stratum, D264's rule again unchanged,
+# sharing no ticker with the in-sample eight or D278's sixteen. Frozen output of
+# `select_holdout_names.py --next8`.
+#
+# TWO FACTS ABOUT THIS COHORT THAT ARE NOT FACTS ABOUT THE OTHER TWO:
+#
+#   THE STRATA HAVE CONVERGED. 20.0%..43.0% is a 2.15x volatility spread against
+#   5.5x for the original eight. By rank 13 the "low" and "high" tails are much
+#   closer together, so this cohort spans the volatility axis far less than
+#   D264's did. Any study using it must not claim the axis is under test.
+#
+#   NBIS IS AN IDENTITY DISCONTINUITY. The 2013-2017 bars the selector ranked
+#   are YANDEX's, under a ticker that has pointed at Nebius since 2024, and
+#   Yandex was suspended on Nasdaq from Feb 2022 to Jul 2024. A multi-year hole
+#   and a change of issuer are both expected. It is fetched rather than dropped
+#   by hand so the exclusion, if any, is made on MEASURED coverage.
+# ---------------------------------------------------------------------------
+COHORT3_LOW = ('V', 'JPM', 'FDX', 'MDLZ')
+COHORT3_HIGH = ('NBIS', 'BBD', 'TRIP', 'CIEN')
+COHORT3_FIXTURE = FIX / "cohort3_intraday_15m_raw.csv.gz"
+COHORT3_META = FIX / "cohort3_intraday_15m_raw.meta.json"
+COHORT3_EVENTS = FIX / "cohort3_intraday_15m_raw_events.json"
+
 # D226's threshold, unchanged. A residual session-boundary step above this is
 # REPORTED and classified, never silently adjusted.
 STEP_THRESHOLD = 0.15
@@ -522,13 +546,21 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=None, help="cap slices this run")
     ap.add_argument("--holdout", action="store_true",
                     help="D278's 16-name instrument holdout, separate fixture")
+    ap.add_argument("--cohort3", action="store_true",
+                    help="the third cohort, ranks 13-16, separate fixture")
     a = ap.parse_args()
-    if a.holdout:
+    if a.holdout and a.cohort3:
+        raise SystemExit("--holdout and --cohort3 are mutually exclusive")
+    if a.holdout or a.cohort3:
         global SYMBOLS, LOW_VOL, HIGH_VOL, STRATUM, FIXTURE, META, EVENTS
-        LOW_VOL, HIGH_VOL = HOLDOUT_LOW, HOLDOUT_HIGH
+        if a.holdout:
+            LOW_VOL, HIGH_VOL = HOLDOUT_LOW, HOLDOUT_HIGH
+            FIXTURE, META, EVENTS = HOLDOUT_FIXTURE, HOLDOUT_META, HOLDOUT_EVENTS
+        else:
+            LOW_VOL, HIGH_VOL = COHORT3_LOW, COHORT3_HIGH
+            FIXTURE, META, EVENTS = COHORT3_FIXTURE, COHORT3_META, COHORT3_EVENTS
         SYMBOLS = LOW_VOL + HIGH_VOL
         STRATUM = {**{s: "low" for s in LOW_VOL}, **{s: "high" for s in HIGH_VOL}}
-        FIXTURE, META, EVENTS = HOLDOUT_FIXTURE, HOLDOUT_META, HOLDOUT_EVENTS
     if a.plan:
         return do_plan()
     if a.actions:

@@ -36,6 +36,7 @@ REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "data" / "fixtures" / "us_shorts_daily_raw.csv.gz"
 META = REPO / "data" / "fixtures" / "us_shorts_daily_raw.meta.json"
 PRIOR = REPO / "data" / "single_name_intraday_selection.json"
+HOLDOUT = REPO / "data" / "holdout_name_selection.json"
 OUT = REPO / "data" / "holdout_name_selection.json"
 
 SELECT_START, SELECT_END = "2013-01-02", "2017-12-29"
@@ -44,13 +45,28 @@ MIN_DOLLAR_VOL = 50_000_000.0
 TOP_N_BY_DOLLAR_VOL = 40
 RANK_FROM, RANK_TO = 4, 12          # ranks 5..12, zero-indexed 4..12
 
+# --next8: a THIRD cohort at ranks 13-16 of each stratum -- 4 low + 4 high, the
+# same 4+4 shape D264's original sample had. Same rule, same window, deeper
+# ranks, and it excludes BOTH prior sets. It is a second instrument holdout and
+# is spendable ONCE, on the same terms D278's was: the construction under test
+# must be frozen in writing before these bars are scored.
+NEXT8_FROM, NEXT8_TO = 12, 16
+
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--select", action="store_true")
-    if not ap.parse_args().select:
+    ap.add_argument("--next8", action="store_true",
+                    help="third cohort: ranks 13-16 of each stratum, 4+4")
+    a = ap.parse_args()
+    if not (a.select or a.next8):
         ap.print_help()
         return 2
+
+    global RANK_FROM, RANK_TO, OUT
+    if a.next8:
+        RANK_FROM, RANK_TO = NEXT8_FROM, NEXT8_TO
+        OUT = REPO / "data" / "cohort3_name_selection.json"
 
     meta = json.loads(META.read_text())["symbols"]
     rows = defaultdict(list)
@@ -89,6 +105,11 @@ def main() -> int:
 
     prior = json.loads(PRIOR.read_text())
     used = {x["symbol"] for x in prior["low_vol_stratum"] + prior["high_vol_stratum"]}
+    if a.next8:
+        # D278's sixteen are SPENT. A third cohort that reused any of them would
+        # not be a holdout, so they join the exclusion set rather than merely
+        # being ranked below.
+        used |= set(json.loads(HOLDOUT.read_text())["symbols"])
     low = [x for x in low_all[RANK_FROM:RANK_TO] if x["symbol"] not in used]
     high = [x for x in high_all[RANK_FROM:RANK_TO] if x["symbol"] not in used]
     assert not ({x["symbol"] for x in low} & {x["symbol"] for x in high}), "strata overlap"
@@ -107,7 +128,8 @@ def main() -> int:
 
     OUT.write_text(json.dumps({
         "purpose": "instrument holdout for D278; scores nothing",
-        "rule": "D264's, unchanged; ranks 5-12 of each stratum instead of 1-4",
+        "rule": (f"D264's, unchanged; ranks {RANK_FROM + 1}-{RANK_TO} of each "
+                 f"stratum instead of 1-4"),
         "selection_window": [SELECT_START, SELECT_END],
         "in_sample_excluded": sorted(used),
         "low": low, "high": high,
