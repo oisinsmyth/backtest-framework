@@ -1,0 +1,120 @@
+{
+  "purpose": "instrument holdout for D278; scores nothing",
+  "rule": "D264's, unchanged; ranks 5-12 of each stratum instead of 1-4",
+  "selection_window": [
+    "2013-01-02",
+    "2017-12-29"
+  ],
+  "in_sample_excluded": [
+    "CLF",
+    "LMT",
+    "MO",
+    "PG",
+    "PM",
+    "RH",
+    "SM",
+    "YELP"
+  ],
+  "low": [
+    {
+      "symbol": "RTX",
+      "median_dollar_volume": 354002896.558416,
+      "annualised_vol": 0.1628817811265676
+    },
+    {
+      "symbol": "VZ",
+      "median_dollar_volume": 660928616.0,
+      "annualised_vol": 0.16362668989943271
+    },
+    {
+      "symbol": "COST",
+      "median_dollar_volume": 270907716.09999996,
+      "annualised_vol": 0.16884452822597557
+    },
+    {
+      "symbol": "HD",
+      "median_dollar_volume": 543052398.3499999,
+      "annualised_vol": 0.17412859060878344
+    },
+    {
+      "symbol": "DIS",
+      "median_dollar_volume": 602729224.8000001,
+      "annualised_vol": 0.18283352926925975
+    },
+    {
+      "symbol": "SPG",
+      "median_dollar_volume": 235417824.0,
+      "annualised_vol": 0.1836744399799304
+    },
+    {
+      "symbol": "CMCSA",
+      "median_dollar_volume": 618242086.0329827,
+      "annualised_vol": 0.1911841722187763
+    },
+    {
+      "symbol": "SBUX",
+      "median_dollar_volume": 390527307.00000006,
+      "annualised_vol": 0.19575401164462425
+    }
+  ],
+  "high": [
+    {
+      "symbol": "CNX",
+      "median_dollar_volume": 74771262.81,
+      "annualised_vol": 0.5248258066154117
+    },
+    {
+      "symbol": "BB",
+      "median_dollar_volume": 67246503.92,
+      "annualised_vol": 0.4998060312505281
+    },
+    {
+      "symbol": "THC",
+      "median_dollar_volume": 61644306.330000006,
+      "annualised_vol": 0.4837371955915067
+    },
+    {
+      "symbol": "ANF",
+      "median_dollar_volume": 58519620.0,
+      "annualised_vol": 0.4815858836531073
+    },
+    {
+      "symbol": "NI",
+      "median_dollar_volume": 61592915.04000001,
+      "annualised_vol": 0.4769332389210629
+    },
+    {
+      "symbol": "RIG",
+      "median_dollar_volume": 161401492.0,
+      "annualised_vol": 0.47470641747368825
+    },
+    {
+      "symbol": "HLF",
+      "median_dollar_volume": 74455029.0,
+      "annualised_vol": 0.4627766692624576
+    },
+    {
+      "symbol": "TRGP",
+      "median_dollar_volume": 56950148.25,
+      "annualised_vol": 0.4572077704642665
+    }
+  ],
+  "symbols": [
+    "RTX",
+    "VZ",
+    "COST",
+    "HD",
+    "DIS",
+    "SPG",
+    "CMCSA",
+    "SBUX",
+    "CNX",
+    "BB",
+    "THC",
+    "ANF",
+    "NI",
+    "RIG",
+    "HLF",
+    "TRGP"
+  ]
+}

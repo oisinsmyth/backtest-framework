@@ -155,6 +155,20 @@ FIXTURE = FIX / "single_name_intraday_15m_raw.csv.gz"
 META = FIX / "single_name_intraday_15m_raw.meta.json"
 EVENTS = FIX / "single_name_intraday_15m_raw_events.json"
 
+# ---------------------------------------------------------------------------
+# D278's INSTRUMENT HOLDOUT -- ranks 5-12 of each stratum by D264's rule
+# unchanged, sharing no ticker with the in-sample eight. Frozen output of
+# `select_holdout_names.py`. `--holdout` swaps the symbol list and the fixture
+# triple together, in ONE place, for the reason `build_targets` exists in
+# fetch_etf_intraday.py: three constants and two of them swapped is the pattern
+# that hides the one you forget.
+# ---------------------------------------------------------------------------
+HOLDOUT_LOW = ('RTX', 'VZ', 'COST', 'HD', 'DIS', 'SPG', 'CMCSA', 'SBUX')
+HOLDOUT_HIGH = ('CNX', 'BB', 'THC', 'ANF', 'NI', 'RIG', 'HLF', 'TRGP')
+HOLDOUT_FIXTURE = FIX / "holdout_intraday_15m_raw.csv.gz"
+HOLDOUT_META = FIX / "holdout_intraday_15m_raw.meta.json"
+HOLDOUT_EVENTS = FIX / "holdout_intraday_15m_raw_events.json"
+
 # D226's threshold, unchanged. A residual session-boundary step above this is
 # REPORTED and classified, never silently adjusted.
 STEP_THRESHOLD = 0.15
@@ -506,7 +520,15 @@ def main() -> int:
     ap.add_argument("--actions", action="store_true", help="SPLITS + DIVIDENDS sidecar")
     ap.add_argument("--build", action="store_true", help="cache -> committed fixture")
     ap.add_argument("--limit", type=int, default=None, help="cap slices this run")
+    ap.add_argument("--holdout", action="store_true",
+                    help="D278's 16-name instrument holdout, separate fixture")
     a = ap.parse_args()
+    if a.holdout:
+        global SYMBOLS, LOW_VOL, HIGH_VOL, STRATUM, FIXTURE, META, EVENTS
+        LOW_VOL, HIGH_VOL = HOLDOUT_LOW, HOLDOUT_HIGH
+        SYMBOLS = LOW_VOL + HIGH_VOL
+        STRATUM = {**{s: "low" for s in LOW_VOL}, **{s: "high" for s in HIGH_VOL}}
+        FIXTURE, META, EVENTS = HOLDOUT_FIXTURE, HOLDOUT_META, HOLDOUT_EVENTS
     if a.plan:
         return do_plan()
     if a.actions:
