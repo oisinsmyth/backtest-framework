@@ -10,6 +10,43 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D279 - the concentrated short on the dead-inclusive daily universe, 2026-09-01)
+- `scripts/run_concentrated_short.py` (D279) - top-N concentration on D256's two arms,
+  N in {10, 25, 50}, with the `random-N` control and the five hurdles. Committed while the
+  run was still in flight so the code could not follow the number.
+- `scripts/d279_turnover_decomposition.py` - separates ranking from turnover in hurdle C.
+  Re-scores every cell at zero fees/borrow/rf and adds a PERSISTENT random control that
+  holds its draw while it qualifies. Found that `random-N` churned 5.6x harder than the
+  ranked book, so the pre-registered control differed from the treatment in two ways.
+- `scripts/d279_fix_eprime.py` - recomputes E-prime over the HELD BOOK rather than the
+  panel. The runner's version returned 5.44 for all fourteen cells; corrected it
+  disqualifies `S1_short|top10`, the study's highest Sharpe.
+- `scripts/d279_survivor_attribution.py` - attributes already-scored P&L across dead vs
+  live names, calendar year, and per-symbol concentration.
+
+### Added (cohort 3 - the third instrument holdout, 2026-09-01)
+- `data/fixtures/cohort3_intraday_15m_raw.csv.gz` - V JPM FDX MDLZ / BBD TRIP CIEN MUR,
+  448,861 rows, 2018-01-02 .. 2026-08-31, 104/104 monthly slices per name, build gates PASS.
+  All 28 session-boundary steps above 15% classify REAL (9 market-wide, 19 idiosyncratic
+  on volume). Spendable ONCE, on D278's terms.
+- `scripts/select_holdout_names.py` gains `--next8` - ranks 13-16 of each stratum under
+  D264's rule unchanged, excluding both prior cohorts, with a documented exclusion path
+  for names the provider cannot serve.
+- `scripts/fetch_single_name_intraday.py` and `scripts/classify_single_name_steps.py` gain
+  `--cohort3`, swapping the symbol list and fixture triple in one place.
+
+### Fixed
+- D279's hurdle E-prime was computed over the panel instead of the held book, making it
+  constant across the grid. Third appearance of the D230/D270 pattern - a hurdle computed,
+  printed, and not applied to what it names.
+- D279's hurdle C compared books with 5.6x different turnover. S2_short's three C passes
+  were the fee gap alone and are withdrawn.
+
+### Documentation
+- `docs/decisions/README.md` backfilled with D265-D270, D272-D273 and D275-D279, which had
+  not been indexed. **D271 and D274 have scripts but no decision record** - noted, not
+  invented.
+
 ### Added (D265-D278 - the single-name intraday programme, 2026-09-01)
 - `scripts/run_entry_time_reconciliation.py` (D265) - two arms x three bar-of-day buckets,
   behind a **validation gate that rebuilt D264's committed gross to 0.003 points** before

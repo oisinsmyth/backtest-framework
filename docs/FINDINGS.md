@@ -381,3 +381,53 @@ cohort is unreachable at this frequency**, and the bias runs *against* the short
    ETFs. Recorded post-hoc, deliberately not tested inside D264, and eligible only as its own
    pre-registration under D246 Constraint 3.
 3. **Overnight drift is a property of volatility, not of equities** — see §6.
+
+### And the DAILY concentrated branch answered differently — [D279](decisions/D279-the-concentrated-short-on-dead-inclusive-names.md), 2026-09-01
+
+**Same construction question, same fixture as D256, one change: hold only the top N.** D264 above
+took the concentrated branch at *fifteen minutes* and lost to turnover. D279 took it on *daily
+bars*, where S1's ~15-day hold puts the move-to-cost ratio roughly twelve times higher.
+
+**Two cells survive** — `S1_short|top25` (**+2.250** Sharpe, +1.43% CAGR) and `|top50` (**+1.865**,
++2.05%) — on V, C, F and a corrected E′.
+
+**The result that matters is not the return. It is that a strength ranking finally beat its own
+matched control.** D267 measured that strength is not magnitude-calibrated; D278 watched five
+strength filters reverse sign out of sample. Against a **turnover-matched, persistent** random
+control at **zero fees, zero borrow and zero rf**, S1's ranking wins by **+3.22 Sharpe** at N = 10.
+**First time in D264–D279.** The same decomposition shows S2's ranking is *worse* than random once
+turnover is matched, so the two arms are not one phenomenon.
+
+**Three general lessons, each larger than the cell that produced them:**
+
+1. **A CONTROL MUST DIFFER FROM THE TREATMENT IN EXACTLY ONE WAY, AND "matched count" IS NOT
+   "matched turnover".** D279's pre-registered `random-N` re-drew every bar while the ranked book
+   held its picks — the control churned **5.6× harder** and paid 5.6× the fees. It would have
+   *flattered* the treatment, and did: S2 passed hurdle C on the fee gap alone. **Check what else
+   moved when you moved the one thing.**
+
+2. **A hurdle can be computed, printed, and never applied to the thing it names.** E′ was specified
+   "over the held book" and measured over the whole 1,573-name panel — **5.44 for every cell**, so a
+   ten-name book and a 1,200-name book scored identically on the hurdle whose job was to separate
+   them. Corrected, it **disqualifies the highest-Sharpe cell in the study.** Third appearance of
+   this pattern after D230 and D270; see [R6](RULES.md#r6).
+
+3. **An effective-instrument count degenerates on a rotating book.** `top25` scored **28.00 on 28
+   names** — the correlation matrix is the identity, because almost no *pair* shares the 250-bar
+   overlap minimum. The metric silently becomes "how many names were held ≥250 bars". **Any
+   independence measure with an overlap floor needs that floor checked against the book's holding
+   pattern before its number is trusted.**
+
+**What is NOT claimed.** Hurdle H is **failed for this study** under [R7](RULES.md#r7)'s corollary —
+`S1_short|all` scores the **100th percentile on both legs with −0.757 Sharpe and −2.45% CAGR**, and
+nine of fourteen cells clear it. And the book is **1.86% gross exposure at 0.064% per name**: Sharpe
+is scale-invariant, **borrow availability is not**, and a breakeven borrow of 121.7% says the *rate*
+survives, not that 25 of the worst-accelerating names in the market can be located and held at size.
+
+**What is live after D279:**
+
+1. **An out-of-sample test of `S1_short|top25` on a fixture this programme has not touched.** Under
+   R8 that is the only thing the two survivors license. **This fixture has no untouched cohort
+   left**; D246's reserved wide-universe cohort is a different fixture and remains unspent, and
+   `cohort3` is intraday and therefore the wrong instrument for it.
+2. **The factor-neutral branch of §9, still untouched** after D256, D264 and D279.

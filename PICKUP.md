@@ -1,50 +1,74 @@
-# PICKUP — handoff for the next session
+# PICKUP - handoff for the next session
 
-**Updated 2026-09-01, end of the session that closed the single-name intraday short on every
-lever it has.** D264 → D278, plus a new standing rule R13.
+**Updated 2026-09-01, end of the session in which the concentrated DAILY short became the first
+thing in this programme to survive its own controls.** D264 -> D279, plus standing rule R13.
 
 ---
 
 ## 0. THE ONE-LINE STATE
 
-**Everything on the eight-name 15-minute single-name fixture is closed, and it all closed on the
-same arithmetic.** [D265](docs/decisions/D265-the-entry-time-reconciliation.md) reduced the entire
-cost problem to one condition in which the trade count cancels and hit rate never appears:
+**The INTRADAY single-name short is closed on every lever it has. The DAILY concentrated short is
+NOT** - [D279](docs/decisions/D279-the-concentrated-short-on-dead-inclusive-names.md) left two
+cells standing.
+
+Everything intraday closed on one condition, in which the trade count cancels and hit rate never
+appears:
 
 ```
 mean move per trade  >=  2c        (the round-trip cost)
-2c = 4.00 bp LOW · 8.42 bp ALL · 12.84 bp HIGH
+2c = 4.00 bp LOW - 8.42 bp ALL - 12.84 bp HIGH
 ```
 
-**Six signal families, three input families, a volume profile three ways, two exit levers and a
-300-cell mine have all failed that one bar.** Nothing has failed for want of a null.
+**Six signal families, three input families, a volume profile three ways, two exit levers, a
+300-cell mine and a 16-name instrument holdout all failed that bar.** Nothing failed for want of a
+null.
 
-## 1. THE HOLDOUT IS IN FLIGHT — pick this up first
+**D279 moved to daily bars, where S1's ~15-day hold puts the move-to-cost ratio about twelve times
+higher, and held only the top N names by the signal's own score.** `S1_short|top25` scores **+2.250
+Sharpe / +1.43% CAGR** and `|top50` **+1.865 / +2.05%**, clearing V, C, F and a corrected E'.
 
-**[D278](docs/decisions/D278-the-instrument-holdout.md) is pre-registered (`f8407c3`) and its
-runner is validated (`5c10db0`), but the data may not have finished landing.**
+## 1. PICK THIS UP FIRST - what D279 licenses, and what it does not
 
-```bash
-uv run python scripts/fetch_single_name_intraday.py --holdout --fetch    # resumable
-uv run python scripts/fetch_single_name_intraday.py --holdout --build    # read the D226 gate
-uv run python scripts/build_intraday_panel.py --holdout
-uv run python scripts/run_holdout_test.py                                # the test
-```
+**The only thing two surviving cells license under [R8](docs/RULES.md#r8) is a PRE-REGISTERED
+OUT-OF-SAMPLE TEST on a fixture this programme has not touched.** No fourth N, no third arm, no
+alternative ranking score, no re-cut of the universe.
 
-**Sixteen names, zero shared with the in-sample eight:** RTX VZ COST HD DIS SPG CMCSA SBUX ·
-CNX BB THC ANF NI RIG HLF TRGP. Selected by D264's rule unchanged, ranks 5–12 of each stratum.
+**And the instrument for it does not exist yet.** `us_shorts_daily_raw` has no untouched cohort
+left. `cohort3` (built this session) is **intraday** and is the wrong frequency. **D246's reserved
+wide-universe cohort is a different fixture and remains unspent** - it is the obvious candidate and
+has not been examined for fitness.
 
-**READ THE BUILD'S STEP GATE BEFORE SCORING.** Three of the sixteen carry splits — RTX ×1.589
-(Raytheon/UTC), CMCSA ×1.067, HLF ×2.0 — where the original eight had **none**. The
-back-adjustment is load-bearing here rather than idle. An unadjusted 1.589 shows as a +59% bar.
+**Read the three caveats in D279's RESULT before designing that test.** Two of them would change
+what you build:
 
-**The runner's validation gate already passed**: `--validate` reproduces all twelve of D277's
-in-sample cells to four decimal places. If you change the runner, re-run it.
+1. **Hurdle H is FAILED for that study, not passed.** `S1_short|all` scores the **100th percentile
+   on both legs with -0.757 Sharpe and -2.45% CAGR**; nine of fourteen cells clear it.
+   [R7](docs/RULES.md#r7)'s corollary applies. **Do not reuse that null unmodified.**
+2. **E' degenerates on a rotating book.** `top25` scored **28.00 on 28 names** - the correlation
+   matrix is the identity, because almost no *pair* shares the 250-bar overlap minimum. It silently
+   became "how many names were held >=250 bars". Any independence measure with an overlap floor
+   needs that floor checked against the book's holding pattern first.
+3. **The book is 1.86% gross exposure at 0.064% per name.** Running it real is a **~62x step**.
+   Sharpe is scale-invariant; **borrow availability is not**. Breakeven borrow of 121.7% says the
+   *rate* survives, not that 25 of the worst-accelerating names can be **located and held at size**,
+   and says nothing about Reg SHO restrictions on exactly that population.
 
-**A structural property of D278's hurdles, so it is not mistaken for a bug:** H2 needs a positive
-holdout CAGR and H5 needs the sign to match in-sample, so **the seven cells negative in-sample
-cannot clear both.** Only the mine's five winners are eligible; the other seven are controls, and
-if they light up the holdout is uniformly positive rather than replicating.
+## 1a. THE RESULT WORTH CARRYING OUT OF D279, INDEPENDENT OF THE CELLS
+
+**A strength ranking beat its own matched control for the first time in D264-D279.** Against a
+**turnover-matched, persistent** random book at **zero fees, zero borrow and zero rf**, S1's
+ranking wins by **+3.22 Sharpe** at N=10.
+
+That matters because D267 measured strength is not magnitude-calibrated and D278 watched five
+strength filters reverse sign out of sample. **The same decomposition shows S2's ranking is WORSE
+than random once turnover is matched**, so the two arms are not one phenomenon and neither result
+generalises to "strength works".
+
+**And the method lesson is bigger than either:** D279's pre-registered `random-N` control re-drew
+every bar while the ranked book held its picks, so it **churned 5.6x harder and paid 5.6x the
+fees**. The control differed from the treatment in **two** ways. S2 passed hurdle C on the fee gap
+alone, and those three marks are withdrawn. **A control must differ from the treatment in exactly
+one way, and "matched count" is not "matched turnover".**
 
 ## 2. WHAT WAS CLOSED, AND ON WHAT
 
@@ -61,6 +85,7 @@ if they light up the holdout is uniformly positive rather than replicating.
 | change of character | D275 | legs run 182.7 bp median, the rule captures 0.57 bp |
 | exits, structural | D276 | removing churn made it worse; exposure 47% → 4.5% killed it |
 | the mine, 300 cells | D277 | best +0.392 against a best-of-300 floor of +0.605 |
+| **all five in-sample winners** | **D278** | **every one reverses sign on 16 fresh names** |
 
 ## 3. THE FOUR THINGS WORTH CARRYING
 
@@ -97,10 +122,8 @@ discontinuity rather than erasing it.
 
 1. **The wide extended-hours decomposition** — fixture built and gated (`c25218d`), nothing
    decomposed, prediction declared. **Add the volatility split from §3.3 before running it.**
-2. **A concentrated ranked short on the DAILY dead-inclusive fixture** — `us_shorts_daily_raw`,
-   1,573 names, **35.7% dead**, no survivorship hole, and round trips ~20× rarer so the cost bar is
-   far lower. **FINDINGS §9 names this and nobody has run it.** It is the single best remaining
-   idea in the programme.
+2. ~~A concentrated ranked short on the DAILY dead-inclusive fixture~~ — **RUN, D279. Two cells
+   survive.** What is live is now the out-of-sample test in §1 above, on a fixture yet to be chosen.
 3. **The factor-neutral branch of FINDINGS §9** — still untouched.
 4. **Prop track:** rung 2's micro/mini form and rung 3, both free, both untested.
    [D266](docs/decisions/D266-the-prop-cross-screen.md) screened this session's work against
@@ -111,7 +134,8 @@ discontinuity rather than erasing it.
 | | |
 |---|---|
 | `single_name_intraday_15m_{raw,panel}.csv.gz` | 8 names, 55,004 bars, 26.0/session, gates PASS |
-| `holdout_intraday_15m_raw.csv.gz` | 16 names — **check the fetch finished** |
+| `holdout_intraday_15m_raw.csv.gz` | 16 names, 899,196 rows — fetch finished, D278 spent it |
+| `cohort3_intraday_15m_raw.csv.gz` | **8 names, 448,861 rows, gates PASS, all 28 steps REAL. UNSPENT — spendable ONCE** |
 | Alpha Vantage 15m cache | 57 ETFs + 24 single names, ~2,500 slices. **Any of these starts at zero requests.** |
 
 **The provider limit is settled, do not re-probe it:** `TIME_SERIES_INTRADAY` serves **nothing**
