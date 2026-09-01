@@ -1,0 +1,110 @@
+{
+  "ALL:S1_short_intra": {
+    "charged_bps": 4.2110565772373665,
+    "required_gross_log_per_unit_exposure_at_floor": 0.2122372514927633,
+    "actual": {
+      "exposure": 0.2502430375527739,
+      "turnover_per_year": 333.502542525848
+    },
+    "once_per_session": {
+      "exposure": 0.4043265313680468,
+      "turnover_per_year": 267.9720056776354
+    },
+    "turnover_floor": 126.12249092659803,
+    "churn_share": 0.6218244995333942,
+    "gross_linear_log": 0.031825085840026045,
+    "gross_realisable_log": 0.003761882253061518,
+    "required_gross_log_at_actual": 0.14043980752288568,
+    "required_gross_log_at_floor": 0.053110894495401066
+  },
+  "ALL:S2_short_intra": {
+    "charged_bps": 4.2110565772373665,
+    "required_gross_log_per_unit_exposure_at_floor": 0.2122372514927633,
+    "actual": {
+      "exposure": 0.12227335012221317,
+      "turnover_per_year": 89.93020482361094
+    },
+    "once_per_session": {
+      "exposure": 0.14727381305088513,
+      "turnover_per_year": 89.83927438395106
+    },
+    "turnover_floor": 61.62576846159544,
+    "churn_share": 0.3147378171497752,
+    "gross_linear_log": -0.00941818047342731,
+    "gross_realisable_log": -0.024517541672610485,
+    "required_gross_log_at_actual": 0.03787011805147704,
+    "required_gross_log_at_floor": 0.025950959760750857
+  },
+  "LOW:S1_short_intra": {
+    "charged_bps": 2.0016499680193687,
+    "required_gross_log_per_unit_exposure_at_floor": 0.10088315838817619,
+    "actual": {
+      "exposure": 0.25663376786904674,
+      "turnover_per_year": 343.44427059532705
+    },
+    "once_per_session": {
+      "exposure": 0.41524701873935266,
+      "turnover_per_year": 274.94333938489206
+    },
+    "turnover_floor": 129.34341900599955,
+    "churn_share": 0.6233932836270776,
+    "gross_linear_log": -0.01942177885321278,
+    "gross_realisable_log": -0.02679909085383015,
+    "required_gross_log_at_actual": 0.06874552132535719,
+    "required_gross_log_at_floor": 0.025890025051687478
+  },
+  "LOW:S2_short_intra": {
+    "charged_bps": 2.0016499680193687,
+    "required_gross_log_per_unit_exposure_at_floor": 0.10088315838817619,
+    "actual": {
+      "exposure": 0.1233751203614547,
+      "turnover_per_year": 91.32447156506227
+    },
+    "once_per_session": {
+      "exposure": 0.14903525664765574,
+      "turnover_per_year": 91.26385127195569
+    },
+    "turnover_floor": 62.181060662173174,
+    "churn_share": 0.31911940363242575,
+    "gross_linear_log": 0.014268626498276133,
+    "gross_realisable_log": 0.00934290930171499,
+    "required_gross_log_at_actual": 0.01827996255875926,
+    "required_gross_log_at_floor": 0.012446471808584936
+  },
+  "HIGH:S1_short_intra": {
+    "charged_bps": 6.420463186455365,
+    "required_gross_log_per_unit_exposure_at_floor": 0.3235913445973504,
+    "actual": {
+      "exposure": 0.243852307236501,
+      "turnover_per_year": 323.560814456369
+    },
+    "once_per_session": {
+      "exposure": 0.393406043996741,
+      "turnover_per_year": 261.00067197037873
+    },
+    "turnover_floor": 122.9015628471965,
+    "churn_share": 0.6201593105342817,
+    "gross_linear_log": 0.08307195053326488,
+    "gross_realisable_log": 0.03432285535995319,
+    "required_gross_log_at_actual": 0.2077410297796632,
+    "required_gross_log_at_floor": 0.07890849598182555
+  },
+  "HIGH:S2_short_intra": {
+    "charged_bps": 6.420463186455365,
+    "required_gross_log_per_unit_exposure_at_floor": 0.3235913445973504,
+    "actual": {
+      "exposure": 0.12117157988297163,
+      "turnover_per_year": 88.5359380821596
+    },
+    "once_per_session": {
+      "exposure": 0.1455123694541145,
+      "turnover_per_year": 88.41469749594644
+    },
+    "turnover_floor": 61.0704762610177,
+    "churn_share": 0.3102182279432618,
+    "gross_linear_log": -0.03310498744513076,
+    "gross_realisable_log": -0.05837799264693595,
+    "required_gross_log_at_actual": 0.05684417311347974,
+    "required_gross_log_at_floor": 0.039210074461316045
+  }
+}
