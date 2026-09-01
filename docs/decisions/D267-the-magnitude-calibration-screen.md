@@ -1,6 +1,8 @@
 # D267 — The magnitude-calibration screen
 
-**Status:** PRE-REGISTERED. Committed **before the screen is run**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** Zero of 27 cells cleared.
+
+**Everything above the RESULT heading was committed in `e35486f`, BEFORE the screen was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track** ([BOOK.md](../BOOK.md))
 
@@ -157,3 +159,80 @@ deflated-Sharpe noise floor at **+1.42 Sharpe at ~45,800 looks**, and concluded 
 runs on this fixture can clear it.* **That conclusion stands and is not suspended by this record.**
 A score clearing M1–M3 here is evidence about a *property*, cheaply obtained — it is not a Sharpe
 claim, and it must not be reported as one.
+
+---
+
+## RESULT — zero of twenty-seven, and the shape of the failure is the finding
+
+`uv run python scripts/run_magnitude_calibration.py` · `data/d267_calibration_summary.json` ·
+seed 0, 500 shuffle draws, H = 8 bars.
+
+**No score clears all three hurdles. M1 and M2 fail on ALL 27 cells.** The stop fires.
+
+### The three hurdles, separately
+
+| | outcome |
+|---|---|
+| **M1 — monotone quintiles** | **0 of 27.** Not one score orders forward returns monotonically, on any stratum |
+| **M2 — extreme quintile ≥ 2c** | **0 of 27.** The largest extreme quintile anywhere is **−3.96 bp** (`g_lo`, HIGH, Q5) against a **12.84 bp** bar |
+| **M3 — best-of-27 shuffle floor, 2.93 bp** | **4 of 27 pass** — `impulse_md`, `impulse_nodz`, `g_lo`, `g_min`, **all on the HIGH stratum** |
+
+### THE FINDING, and it is not "these nine scores are bad"
+
+**Four cells beat the shuffle null, so the orderings are not noise — the information is real.** And
+it does not matter, because:
+
+> **The entire Q1-to-Q5 spread, for every one of the nine scores, on every stratum, is smaller than
+> one round-trip cost.**
+
+| stratum | largest \|spread\| | cost bar `2c` | ratio |
+|---|---:|---:|---:|
+| **LOW** | 2.80 bp | **4.00 bp** | **0.70×** |
+| ALL | 2.76 bp | 8.42 bp | 0.33× |
+| **HIGH** | **4.89 bp** | **12.84 bp** | 0.38× |
+
+**Selectivity works by moving from the average bucket to the best one. If the whole distance between
+the best and worst bucket is a third to seven tenths of a single round trip, there is nowhere to move
+to.** That is a statement about the achievable dispersion at this horizon on these names, and it does
+not depend on which of the nine scores is used.
+
+**And the ratio is worst where the edge is biggest.** HIGH has both the largest spread (4.89) and the
+largest bar (12.84); LOW has the smallest spread (2.80) and comes closest to clearing at **0.70×**.
+**Cost scales faster than dispersion** — the same shape [D264](D264-the-intraday-short-on-single-names.md)
+found for gross edge, arrived at from a completely different direction.
+
+### The predictions, scored
+
+| | prediction | outcome |
+|---|---|---|
+| **Q-a** | no score clears all three | **CONFIRMED** — 0 of 27 |
+| **Q-b** | `impulse_hist` fails M1, reproducing D248's A7 elsewhere | **CONFIRMED on all three strata.** D248's result was a property of the score, not of its universe — it generalises to single names at a different frequency |
+| **Q-c** | `rsi` fails M2 even if it passes M1 | **CONFIRMED on M2 — but the conditional never arose**, because RSI failed M1 too. Reported precisely rather than claimed as a clean hit |
+| **Q-d** | if anything clears it is a trend slope, not an oscillator | **UNTRIGGERED** — nothing cleared. Directionally consistent: `g_lo` has the largest spread anywhere (−4.89 bp) and both slope scores beat the null, but so do both Impulse *level* scores, so the oscillator/slope split is not cleanly supported |
+
+**Q-b is the one worth having run.** This programme has cited D248 as a general fact about
+selectivity all session — including by me, wrongly. It is a fact about `impulse_hist`, and that fact
+now has a second, independent confirmation on a different universe and frequency.
+
+### What this settles, and what it does not
+
+**Settles:** the principal's framing was right — selectivity *is* a property of a signal rather than
+a technique — and **none of the nine scores in this library has it at an 8-bar horizon on these eight
+names.** Each one is now closed on a single cheap cell instead of a full study, which is exactly what
+the screen was built to do.
+
+**Does not settle:** this is nine scores at one horizon on eight survivor names. **A score that is
+magnitude-calibrated may well exist** — nothing here says otherwise, and the four cells beating the
+null show these constructions are not information-free. What is established is that **the dispersion
+available to any of them is bounded below the cost of trading**, so a new score would have to be
+different in kind, not merely better.
+
+---
+
+## Stop — fired
+
+**The magnitude-calibration route is closed for this library.** No tenth score, no second horizon, no
+re-cut quintiles, no per-stratum threshold, as registered.
+
+**And the D218 floor is untouched:** a score clearing here would have been evidence about a property,
+not a Sharpe claim. Nothing cleared, so the point does not arise.
