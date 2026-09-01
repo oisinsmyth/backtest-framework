@@ -24,7 +24,8 @@ Four probe calls on SPY/2024-01 settled what the documentation does not state:
   timezone     stated explicitly in the payload as `US/Eastern`
   timestamps   mark the interval's OPEN (first RTH bar 09:30, last 15:45), so a bar
                stamped t covers [t, t+15m) and is NOT COMPLETE until t+15m
-  bars/session 26 at RTH (390 min exactly), 65 with extended hours (04:00-20:00)
+  bars/session 26 at RTH (390 min exactly); the extended build uses 64
+               (04:00..19:45, matching D259 -- bars stamped 20:00+ are dropped)
   errors       HTTP 200 with {"Error Message": ...} -- validate STRUCTURALLY
 
 `adjusted=false` is used deliberately. Adjusted prices are BACK-adjusted and drift
@@ -65,6 +66,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import io
 import json
 import os
 import sys
@@ -106,7 +108,37 @@ MAX_CONSECUTIVE_FAILURES = 5
 TIMEOUT = 90
 
 TZ = "US/Eastern"
-FULL_SESSION_BARS = 26  # 09:30..15:45 inclusive = 390 minutes
+RTH_SESSION_BARS = 26   # 09:30..15:45 inclusive = 390 minutes
+FULL_SESSION_BARS = RTH_SESSION_BARS   # kept: the RTH build's stats read this
+
+# EXTENDED-HOURS BUILD -- a SEPARATE fixture, never an overwrite.
+#
+# `--extended` used to write to FIXTURE, which would clobber the regular-hours
+# artifact that D226 and every study after it was run against. D24 makes a
+# committed fixture immutable, so the extended session gets its own triple.
+#
+# The window matches `fetch_index_extended.py` (D259) rather than this file's
+# original docstring: 04:00..19:45 is 64 slots, and bars stamped 20:00 or later
+# are DROPPED. Timestamps mark the interval's OPEN, so a bar stamped 19:45
+# covers [19:45, 20:00) and its close IS the 20:00 print; a bar stamped 20:00 is
+# already past the documented session end and appears in only about half of
+# sessions, so keeping it would make the last window mean different things on
+# different days.
+EXT_FIXTURE = REPO / "data" / "fixtures" / "etf_intraday_15m_extended_raw.csv.gz"
+EXT_META = REPO / "data" / "fixtures" / "etf_intraday_15m_extended_raw.meta.json"
+EXT_EVENTS = REPO / "data" / "fixtures" / "etf_intraday_15m_extended_raw_events.json"
+EXT_SESSION_BARS = 64
+EXT_OPEN, EXT_LAST_BAR = "04:00", "19:45"
+RTH_OPEN, RTH_LAST_BAR = "09:30", "15:45"
+
+
+def in_session(stamp: str, regular_hours_only: bool) -> bool:
+    """One place decides what a session is, so the counting pass and the writing
+    pass cannot drift apart -- they read the same function."""
+    hhmm = stamp[11:16]
+    if regular_hours_only:
+        return RTH_OPEN <= hhmm <= RTH_LAST_BAR
+    return EXT_OPEN <= hhmm <= EXT_LAST_BAR
 
 
 def api_key() -> str:
@@ -400,14 +432,14 @@ def _session_counts(regular_hours_only: bool) -> dict:
             with gzip.open(path, "rt", encoding="utf-8") as fh:
                 series = series_of(json.load(fh))
             for stamp in series:
-                if regular_hours_only and not ("09:30" <= stamp[11:16] <= "15:45"):
+                if not in_session(stamp, regular_hours_only):
                     continue
                 key = (symbol, stamp[:10])
                 counts[key] = counts.get(key, 0) + 1
     return counts
 
 
-def _half_days(counts: dict) -> set:
+def _half_days(counts: dict, full_session_bars: int) -> set:
     """US market early closes, DERIVED not hardcoded.
 
     A half-day is a session where MOST of the universe is short -- the whole market
@@ -420,7 +452,7 @@ def _half_days(counts: dict) -> set:
         by_date.setdefault(day, []).append(n)
     out = set()
     for day, ns in by_date.items():
-        short = sum(1 for n in ns if n < FULL_SESSION_BARS)
+        short = sum(1 for n in ns if n < full_session_bars)
         if short >= 0.5 * len(ns):
             out.add(day)
     return out
@@ -430,8 +462,15 @@ def do_build(regular_hours_only: bool) -> int:
     """Cache -> one committed fixture, in the repo's raw-OHLCV shape."""
     import csv
 
+    # The extended build writes a SEPARATE fixture. Overwriting the regular-hours
+    # one would silently restate every study that has ever read it.
+    fixture = FIXTURE if regular_hours_only else EXT_FIXTURE
+    meta_path = META if regular_hours_only else EXT_META
+    events_path = EVENTS if regular_hours_only else EXT_EVENTS
+    full_session_bars = RTH_SESSION_BARS if regular_hours_only else EXT_SESSION_BARS
+
     counts = _session_counts(regular_hours_only)
-    half_days = _half_days(counts) if regular_hours_only else set()
+    half_days = _half_days(counts, full_session_bars) if regular_hours_only else set()
 
     # The liquidity-correlated gap rate, measured EXCLUDING the calendar half-days
     # so the two causes are never conflated.
@@ -442,9 +481,9 @@ def do_build(regular_hours_only: bool) -> int:
         if day in half_days:
             continue
         total_sessions[sym] = total_sessions.get(sym, 0) + 1
-        if n != FULL_SESSION_BARS:
+        if n != full_session_bars:
             short_sessions[sym] = short_sessions.get(sym, 0) + 1
-            missing_bars[sym] = missing_bars.get(sym, 0) + (FULL_SESSION_BARS - n)
+            missing_bars[sym] = missing_bars.get(sym, 0) + (full_session_bars - n)
 
     all_splits = load_splits()
     if not all_splits:
@@ -466,8 +505,11 @@ def do_build(regular_hours_only: bool) -> int:
     prev_close: dict[str, float] = {}
     max_move = {"symbol": None, "timestamp": None, "move": 0.0}
 
-    FIXTURE.parent.mkdir(parents=True, exist_ok=True)
-    with gzip.open(FIXTURE, "wt", encoding="utf-8", newline="") as out:
+    # mtime=0: gzip stamps a timestamp into header bytes 4-7, so two builds of
+    # identical content hash differently and an idempotence check fails on a file
+    # that is in fact correct. Same fix as fetch_cftc_cot.py.
+    fixture.parent.mkdir(parents=True, exist_ok=True)
+    with open(fixture, "wb") as _raw,             gzip.GzipFile(filename="", fileobj=_raw, mode="wb", mtime=0) as _gz,             io.TextIOWrapper(_gz, encoding="utf-8", newline="") as out:
         w = csv.writer(out)
         w.writerow(["timestamp", "symbol", "open", "high", "low", "close", "volume"])
         for symbol in SYMBOLS:
@@ -478,7 +520,7 @@ def do_build(regular_hours_only: bool) -> int:
                 with gzip.open(path, "rt", encoding="utf-8") as fh:
                     series = series_of(json.load(fh))
                 for stamp in sorted(series):
-                    if regular_hours_only and not ("09:30" <= stamp[11:16] <= "15:45"):
+                    if not in_session(stamp, regular_hours_only):
                         continue
                     if stamp[:10] in half_days:
                         dropped_half_day_bars += 1
@@ -517,8 +559,8 @@ def do_build(regular_hours_only: bool) -> int:
         "end": END_MONTH,
         "interval": INTERVAL,
         "session": ("regular_hours_09:30-15:45" if regular_hours_only
-                    else "extended_hours_04:00-20:00"),
-        "bars_per_full_session": FULL_SESSION_BARS,
+                    else "extended_hours_04:00-19:45_open_stamped"),
+        "bars_per_full_session": full_session_bars,
         "bar_boundary": (
             "timestamps mark the interval's OPEN, so a bar stamped t covers "
             "[t, t+15m) and is not complete until t+15m -- MEASURED, not assumed"
@@ -608,8 +650,8 @@ def do_build(regular_hours_only: bool) -> int:
             encoding="utf-8",
         )
 
-    print(f"wrote {FIXTURE.name}: {rows:,} rows, "
-          f"{FIXTURE.stat().st_size / 1e6:.1f} MB")
+    print(f"wrote {fixture.name}: {rows:,} rows, "
+          f"{fixture.stat().st_size / 1e6:.1f} MB")
     print(f"  symbols       {len(per_symbol)}/{len(SYMBOLS)}")
     print(f"  half-days     {len(half_days)} dropped ({dropped_half_day_bars:,} bars)")
     print(f"  incomplete    {sum(short_sessions.values()):,} sessions "
@@ -646,7 +688,7 @@ def main() -> int:
                     help="fetch SPLITS + DIVIDENDS into the events sidecar")
     ap.add_argument("--limit", type=int, help="fetch at most N slices this run")
     ap.add_argument("--extended", action="store_true",
-                    help="build with extended hours instead of regular only")
+                    help="build the SEPARATE extended-hours fixture (04:00-19:45); does not touch the regular-hours one")
     ap.add_argument("--start", help=f"override START_MONTH (default {START_MONTH})")
     ap.add_argument("--end", help=f"override END_MONTH (default {END_MONTH})")
     args = ap.parse_args()

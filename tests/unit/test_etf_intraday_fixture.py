@@ -388,8 +388,20 @@ def test_half_days_flags_a_market_wide_early_close_and_not_a_thin_symbol():
         counts[(symbol, "2019-11-29")] = 13 if i < 40 else 26  # market-wide close
         counts[(symbol, "2019-11-27")] = 25 if i == 0 else 26  # one thin symbol
         counts[(symbol, "2019-11-26")] = 26                    # ordinary session
-    got = F._half_days(counts)
+    got = F._half_days(counts, F.RTH_SESSION_BARS)
     assert got == {"2019-11-29"}
+
+
+def test_half_days_takes_the_session_length_rather_than_assuming_it():
+    """`_half_days` used to read a module-level FULL_SESSION_BARS of 26, which is
+    the REGULAR-hours figure. The extended build's session is 64 slots, so the
+    length is now a parameter -- otherwise an extended session of 40 bars would
+    look complete and no early close would ever be detected."""
+    counts = {(s, "2019-11-29"): (32 if i < 40 else 64)
+              for i, s in enumerate(F.SYMBOLS)}
+    assert F._half_days(counts, F.EXT_SESSION_BARS) == {"2019-11-29"}
+    # Judged against the RTH length, every one of those sessions looks complete.
+    assert F._half_days(counts, F.RTH_SESSION_BARS) == set()
 
 
 def test_half_days_needs_only_half_the_universe_short_not_all_of_it():
@@ -398,10 +410,10 @@ def test_half_days_needs_only_half_the_universe_short_not_all_of_it():
     on a single shared count would miss it."""
     counts = {(s, "2020-07-03"): (13 if i % 2 == 0 else 26)
               for i, s in enumerate(F.SYMBOLS)}
-    assert F._half_days(counts) == {"2020-07-03"}
+    assert F._half_days(counts, F.RTH_SESSION_BARS) == {"2020-07-03"}
     counts = {(s, "2020-07-03"): (13 if i < 5 else 26)
               for i, s in enumerate(F.SYMBOLS)}
-    assert F._half_days(counts) == set()
+    assert F._half_days(counts, F.RTH_SESSION_BARS) == set()
 
 
 def test_the_rate_limiter_actually_sleeps():
