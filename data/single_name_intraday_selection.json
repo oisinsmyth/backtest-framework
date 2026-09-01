@@ -1,0 +1,414 @@
+{
+  "purpose": "sample selection for the single-name 15m intraday fixture; scores nothing",
+  "rule": {
+    "selection_window": [
+      "2013-01-02",
+      "2017-12-29"
+    ],
+    "test_window": [
+      "2018-01-02",
+      "2026-08-26"
+    ],
+    "survivor_only_reason": "TIME_SERIES_INTRADAY serves no delisted ticker (probed 2026-09-01)",
+    "min_coverage": 0.95,
+    "min_median_dollar_volume": 50000000.0,
+    "top_n_by_dollar_volume": 40,
+    "n_per_stratum": 4
+  },
+  "eligible_pool_size": 185,
+  "rejections": {
+    "coverage": 143,
+    "not_a_survivor": 496,
+    "liquidity": 368
+  },
+  "low_vol_stratum": [
+    {
+      "symbol": "PG",
+      "median_dollar_volume": 625132424.0,
+      "annualised_vol": 0.1409970313035152,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "LMT",
+      "median_dollar_volume": 244116504.45000002,
+      "annualised_vol": 0.1582087085164691,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "PM",
+      "median_dollar_volume": 391121346.0,
+      "annualised_vol": 0.16089712044059432,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "MO",
+      "median_dollar_volume": 339612215.76,
+      "annualised_vol": 0.16181411922798652,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    }
+  ],
+  "high_vol_stratum": [
+    {
+      "symbol": "CLF",
+      "median_dollar_volume": 81516180.33999999,
+      "annualised_vol": 0.7797687642568922,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "SM",
+      "median_dollar_volume": 70751855.22,
+      "annualised_vol": 0.6478136455535262,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "YELP",
+      "median_dollar_volume": 82608803.7,
+      "annualised_vol": 0.5620293648214134,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "RH",
+      "median_dollar_volume": 60847995.260000005,
+      "annualised_vol": 0.5365051256861744,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    }
+  ],
+  "top40_by_dollar_volume": [
+    {
+      "symbol": "META",
+      "median_dollar_volume": 2352117740.5,
+      "annualised_vol": 0.3132478797819083,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "BAC",
+      "median_dollar_volume": 1431676488.1799998,
+      "annualised_vol": 0.25140671901946476,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "MSFT",
+      "median_dollar_volume": 1406169822.64,
+      "annualised_vol": 0.22355828642148245,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "JPM",
+      "median_dollar_volume": 990784645.0,
+      "annualised_vol": 0.20240358384181073,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "C",
+      "median_dollar_volume": 987990044.9000001,
+      "annualised_vol": 0.23855882425029676,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "INTC",
+      "median_dollar_volume": 780059926.17,
+      "annualised_vol": 0.21564772030956592,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "CSCO",
+      "median_dollar_volume": 687322542.9200001,
+      "annualised_vol": 0.2077856393835466,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "VZ",
+      "median_dollar_volume": 660928616.0,
+      "annualised_vol": 0.16362668989943271,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "PG",
+      "median_dollar_volume": 625132424.0,
+      "annualised_vol": 0.1409970313035152,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "CMCSA",
+      "median_dollar_volume": 618242086.0329827,
+      "annualised_vol": 0.1911841722187763,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "V",
+      "median_dollar_volume": 602731560.48,
+      "annualised_vol": 0.20047519003762435,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "DIS",
+      "median_dollar_volume": 602729224.8000001,
+      "annualised_vol": 0.18283352926925975,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "HD",
+      "median_dollar_volume": 543052398.3499999,
+      "annualised_vol": 0.17412859060878344,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "SLB",
+      "median_dollar_volume": 531364717.5,
+      "annualised_vol": 0.2279963107269118,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "BA",
+      "median_dollar_volume": 511465803.09000003,
+      "annualised_vol": 0.21000462897655842,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "GM",
+      "median_dollar_volume": 435845492.54,
+      "annualised_vol": 0.23894856064262343,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "F",
+      "median_dollar_volume": 431102020.77,
+      "annualised_vol": 0.2249690828037399,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "HAL",
+      "median_dollar_volume": 424796116.79,
+      "annualised_vol": 0.3000342708832848,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "ABBV",
+      "median_dollar_volume": 405034343.0,
+      "annualised_vol": 0.25869570726320157,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "BIIB",
+      "median_dollar_volume": 402584447.07,
+      "annualised_vol": 0.3446126864326836,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "PM",
+      "median_dollar_volume": 391121346.0,
+      "annualised_vol": 0.16089712044059432,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "SBUX",
+      "median_dollar_volume": 390527307.00000006,
+      "annualised_vol": 0.19575401164462425,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "DAL",
+      "median_dollar_volume": 384309744.0,
+      "annualised_vol": 0.3166090325087713,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "BMY",
+      "median_dollar_volume": 380421217.0,
+      "annualised_vol": 0.24669095182957226,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "UNP",
+      "median_dollar_volume": 358108644.0,
+      "annualised_vol": 0.20890127991520058,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "RTX",
+      "median_dollar_volume": 354002896.558416,
+      "annualised_vol": 0.1628817811265676,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "MO",
+      "median_dollar_volume": 339612215.76,
+      "annualised_vol": 0.16181411922798652,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "AAL",
+      "median_dollar_volume": 334735397.1,
+      "annualised_vol": 0.35713333722673973,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "MDLZ",
+      "median_dollar_volume": 302241861.68,
+      "annualised_vol": 0.20759432093227642,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "TXN",
+      "median_dollar_volume": 292536313.65000004,
+      "annualised_vol": 0.20862898776382463,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "COST",
+      "median_dollar_volume": 270907716.09999996,
+      "annualised_vol": 0.16884452822597557,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "KMI",
+      "median_dollar_volume": 266144824.16,
+      "annualised_vol": 0.3003016398819747,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "LYB",
+      "median_dollar_volume": 262955665.0,
+      "annualised_vol": 0.2772233190533056,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "LVS",
+      "median_dollar_volume": 250814677.83,
+      "annualised_vol": 0.30064868955281393,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "FDX",
+      "median_dollar_volume": 247053465.8331278,
+      "annualised_vol": 0.20752233447607746,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "LMT",
+      "median_dollar_volume": 244116504.45000002,
+      "annualised_vol": 0.1582087085164691,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "WYNN",
+      "median_dollar_volume": 237295800.0,
+      "annualised_vol": 0.39243796742501524,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NASDAQ"
+    },
+    {
+      "symbol": "SPG",
+      "median_dollar_volume": 235417824.0,
+      "annualised_vol": 0.1836744399799304,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "LUV",
+      "median_dollar_volume": 227228111.04000002,
+      "annualised_vol": 0.27558493044614146,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    },
+    {
+      "symbol": "PSX",
+      "median_dollar_volume": 226055850.35,
+      "annualised_vol": 0.24771845251588162,
+      "n_bars": 1259,
+      "coverage": 1.0,
+      "exchange": "NYSE"
+    }
+  ]
+}
