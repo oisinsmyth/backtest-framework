@@ -157,6 +157,50 @@ applies.
 
 ---
 
+## 4c. INTRADAY — a wide extended-hours fixture is built and gated, decomposition NOT run
+
+**Commit `c25218d`. `data/fixtures/wide_extended_15m_raw.csv.gz` — 2,440,395 rows, 11 symbols,
+2010-01 → 2026-08, all four gates PASS. Zero API requests; every slice was already cached.**
+
+Built to settle a question **D259 explicitly left open**: SPY and QQQ *disagree* about where the
+overnight drift accrues — the untraded 20:00–04:00 window carries **33% of SPY's and 91% of QQQ's**
+— and D259 said in terms that *"nothing should be built on the untraded window's dominance."*
+Four instruments cannot separate noise from structure. This is eleven.
+
+**Universe:** SPY QQQ IWM DIA GLD SLV USO UNG GDX EEM FXI. Selected by **coverage** (median ≥45
+extended bars of 64), a data-quality rule fixed before any decomposition ran and one that cannot
+select on the quantity being measured.
+
+### THE NEXT STEP, AND THE PREDICTION IS ALREADY DECLARED
+
+**20:00–04:00 ET is Asian trading hours.** EEM and FXI track markets that are **open** during the
+window the US calls untraded. **So if the untraded-window drift is a real transfer of information,
+those two should show the LARGEST untraded share. If they do not, the effect is an artefact of
+measuring a closed market rather than a real overnight risk** — and that would materially weaken
+the case that overnight futures holds are structurally bad for hurdle P.
+
+**Declare that prediction in the pre-registration before running it.** D263 showed the value: the
+biggest number in that table had the wrong sign, and only the advance declaration made it legible
+rather than reinterpretable.
+
+**This is a STUDY. It needs its own R8 pre-registration.** Nothing was decomposed.
+
+### Two findings from the build itself
+
+- **THE EVENTS SIDECAR CANNOT EXPRESS A SPIN-OFF.** XLF qualified on coverage and was excluded
+  anyway: it closes 23.63 on 2016-09-16 and opens 19.30 — **then holds there all day on 5.9M
+  shares.** A −18.3% step persisting at full volume is a corporate action, the XLRE real-estate
+  spin-off, and **Alpha Vantage's `SPLITS` reports zero splits for XLF.** `SPLITS` + `DIVIDENDS`
+  between them do not cover spin-offs and this project has no general handling. **Check any new
+  symbol for one before trusting its returns.**
+- **D226's gate spec always required a documented real-events allow-list** — "no move above 15%
+  *that is not on a documented list of real events*". The four-symbol build never needed the second
+  half of that sentence. It exists now, the threshold is unchanged at 15%, and admission uses D252's
+  test: does the move revert (bad print), persist at volume (corporate action), or is it
+  corroborated (real).
+
+---
+
 ## 5. Traps found this session that will bite you if you do not know them
 
 **The symbol map is derived for a reason. Never type a CFTC contract code.**
