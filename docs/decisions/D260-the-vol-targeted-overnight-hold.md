@@ -227,3 +227,29 @@ stop forbids**, and the arithmetic above already shows where it lands: **+1.87%/
 dependence of a drawdown constraint — 2020's static breach rate of 11.36% became 0.000% at N=12,
 out of sample, on a rule fitted before the event. **That belongs in the sizing wrapper (C4) for
 every future prop candidate**, and it is the reusable part of this study.
+
+
+---
+
+## AMENDMENT — the verdict above closed C1 as a STANDALONE, not as a component
+
+**The principal's objection: hurdle P constrains the ACCOUNT, not a strategy.** This study measured
+C1 running alone at 100% of the book, which is the wrong frame for a candidate intended to sit
+beside others. **[R11's clarification](../RULES.md#r11) records it.**
+
+**The verdict does not move for a solo arm.** Weight and size are one lever: C1 at book weight 0.60
+contributes the same **+1.87%/yr** that C1 at size 0.21x produced. Renaming the lever changes
+nothing.
+
+**But the constraint is shared, and that does change the reading.** With `k` uncorrelated arms each
+sized so the *book* meets the 2% daily limit, book return scales as `sqrt(k) x 1.87%`: **2.64% at
+two arms, 3.73% at four, 5.60% at nine** — 20 funded accounts falling to 7.
+
+**So C1 is CLOSED AS A STANDALONE and OPEN AS A COMPONENT**, and the distinction is not a
+technicality: **C1 holds the overnight session and [C2](D258-the-prop-track-candidates.md) would
+hold the intraday one — structurally disjoint bars.** That is the same argument that produced
+`rho = +0.150` between S1 and S2, the only genuinely uncorrelated pair this programme has found.
+
+**What this does not license:** C1 cannot be resurrected on its own, and `k = 1` today because
+BOOK_PROP.md is empty. **The scaling is a reason to keep C1 on the shelf while C2 is screened, not
+a result.** If C2 fails, C1 stays closed at 1.87%/yr and twenty accounts.

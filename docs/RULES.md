@@ -214,6 +214,34 @@ commission on the instruments these firms offer is roughly an order of magnitude
 **intraday constructions excluded on ETF cost arithmetic must be re-costed before being excluded on
 futures.**
 
+### CLARIFICATION, 2026-08-29 — hurdle P is measured on the ACCOUNT, not on a strategy
+
+**P1, P3 and P4 are constraints on the funded account. They are not constraints on a strategy, and
+[D260](decisions/D260-the-vol-targeted-overnight-hold.md) applied them as though they were** —
+measuring a single arm running alone at 100% of the book. **The principal caught this.**
+
+**What it does NOT change:** weight and size are the same lever. Running an arm at book weight `w`
+is arithmetically identical to running it at size `w`, so D260's answer is unchanged for a
+*solo* arm — the 0.60 weight that clears P3 gives the same **+1.87%/yr** as the 0.21x size did.
+
+**What it DOES change is that the constraint is shared, and diversification relaxes it.** With `k`
+uncorrelated arms each sized so the BOOK meets the limit, each runs at `1/sqrt(k)` of solo size and
+there are `k` of them:
+
+| arms | each at | book return | accounts needed for $50k |
+|---:|---:|---:|---:|
+| 1 | 1.00x | **1.87%** | 20 |
+| 2 | 0.71x | **2.64%** | 14 |
+| 4 | 0.50x | **3.73%** | 10 |
+| 9 | 0.33x | **5.60%** | 7 |
+
+**So a closure on P1/P3/P4 closes a candidate AS A STANDALONE BOOK. It does not close it as a
+component.** A verdict must now say which.
+
+*The `sqrt(k)` law is vol-scaling; tails do not add in exact quadrature, so it is the right order
+rather than the exact number. And it requires arms that are genuinely uncorrelated —
+[BOOK_PROP.md](BOOK_PROP.md) is empty, so `k = 1` today.*
+
 **Scope:** binding on any candidate proposed for external funding. Introduced 2026-08-29 from the
 prop-firm review in [`research/shorts/05-prop-firm-reality.md`](research/shorts/05-prop-firm-reality.md).
 
