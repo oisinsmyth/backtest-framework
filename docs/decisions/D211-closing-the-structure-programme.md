@@ -85,3 +85,43 @@ it is the opposite of the failure mode post-hoc analysis is feared for.
 Terrain's 259 looks are disclosed adjacent and separately counted. D204's pre-committed
 inheritance rule — if the flipped level had been the only survivor, D196's 20 looks would
 join this total — did not trigger, because the flipped level did not survive either.
+
+---
+
+## CROSS-SCREEN at futures cost, 2026-08-29 — [R12](../RULES.md#r12). The stop stands.
+
+**Raised because [D206](D206-the-census-kills-the-courses-arithmetic-before-any-backtest.md)'s
+headline is a COST statement** — *"a 40 bps round trip costs 0.40% of price; the median stop is
+0.41%. The cost of trading is roughly the entire distance to the stop"* — **and the prop track's
+cost is roughly two hundred times smaller.** R12 requires a cost-based closure to be re-costed
+before it stands, and on its face this is the strongest such case in the repo.
+
+**It does not stand, because the programme did not close on cost. It closed at ZERO cost:**
+
+> **"the base arm's zero-cost mean R ranges +0.013 to +0.093 — indistinguishable from zero
+> everywhere"**
+> **"stacking the filters helps at ZERO COST in 0 of 8 cells"**
+
+**The components were measured frictionless and had no signal.** Removing the cost wall removes an
+objection that was never load-bearing for the verdict — D206's arithmetic killed the *course's*
+claim about break-even hit rates, not the components.
+
+**Nor is the timeframe the missing dimension.** The programme ran on **BTC/ETH 15-minute bars** —
+already intraday.
+
+**And the per-component record is worse than "no edge":**
+
+| | |
+|---|---|
+| C1 change of character | 66th percentile of its own rotation null on BTC, negative on ETH |
+| C2 the flipped level | **negative against a matched placebo**, both symbols |
+| C4 the fair value gap | 100th percentile unmatched, **±0.006 depth-matched** |
+| C5 **RSI, the control** | **beat all three structural components** |
+
+**[D208](D208-one-variable-explains-the-whole-strategy.md) explains the lot: retracement depth is
+the one variable, and the structure is a proxy for it.**
+
+**The stop is UNCHANGED.** The only dimension a cross-screen could reopen is the cost wall, and the
+verdict never rested on it. **Re-running this on futures would be the infinite-refinement ladder
+D211 exists to stop**, and the one previous stop override in this repo — D214's — returned *"0 of 12
+cells clear... best observed Sharpe −2.28."*
