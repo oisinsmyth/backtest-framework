@@ -118,3 +118,61 @@ period nobody has touched.
 
 **The ETF programme's 45,783 is not carried**, per R13 and D218's own scoping of its floor to
 *"this fixture"*.
+
+---
+
+## ADDENDUM, committed BEFORE the holdout bars exist — the cost preview, and one hurdle clarified
+
+`scripts/d278_precompute_costs.py`, run while the fetch was still going. **Prices from the
+committed daily fixture; no intraday bar was read. The study's final cost still comes from the
+intraday panel's own median close, as D264's did.**
+
+### The holdout HIGH stratum is a 29% harder test than the study it replicates
+
+| stratum | holdout `2c` | in-sample `2c` | ratio |
+|---|---:|---:|---:|
+| LOW | 4.13 bp | 4.00 bp | 1.03× |
+| **HIGH** | **16.50 bp** | 12.84 bp | **1.29×** |
+| ALL | 10.32 bp | 8.42 bp | 1.22× |
+
+**[D264](D264-the-intraday-short-on-single-names.md)'s post-hoc price finding is now binding.**
+Commission is charged per *share*, so in basis points it is inversely proportional to price:
+
+| | median price | commission alone |
+|---|---:|---:|
+| **RIG** | $4.62 | **10.82 bp/side** |
+| **BB** | $5.32 | **9.40 bp/side** |
+| CNX | $16.20 | 3.09 bp/side |
+| *COST, for contrast* | *$490.06* | *0.10 bp/side* |
+
+**RIG and BB each pay more in commission alone than the in-sample HIGH stratum's entire cost bar
+per side** — a 108× spread across sixteen names, from price alone.
+
+**This is not corrected and the names are not excluded.** The selection rule was fixed before any
+of this was visible and selected on volatility; dropping a name now for a cost property seen
+afterwards is precisely the post-hoc adjustment this programme forbids. **It is recorded here so
+that a HIGH-stratum failure is read as 29% toll and not 100% signal.**
+
+### H1 clarified: `2c` is TRADE-WEIGHTED
+
+D278 states H1 as *"mean move per trade ≥ 2c, at the holdout's own measured cost"* and **does not
+say whether `2c` is the unweighted symbol mean or trade-weighted.** In-sample the two barely
+differed — costs spanned 1.8× across four names. **On the holdout HIGH they span 2.9×** (5.27 to
+15.32 bp), so the choice now changes the answer.
+
+**It is TRADE-WEIGHTED, and the reason is correctness rather than convenience:** the left-hand side
+*mean move per trade* is trade-weighted, so the right-hand side must be weighted the same way or
+the comparison is between two differently-weighted quantities. **Declared here, before the bars
+exist, so it is a specification rather than a choice made after seeing which reading passes.**
+
+### The splits, resolved from the sidecar
+
+| symbol | effective | factor | bars before are divided by |
+|---|---|---:|---:|
+| HLF | 2018-05-15 | ×2.0 | **2.0000** |
+| RTX | 2020-04-03 | ×1.589 | 1.5890 |
+| CMCSA | 2026-01-05 | ×1.067 | 1.0670 |
+
+**336 dividends across 11 names**, reinvested on the ex-date bar by `load_panel`. The original
+eight carried **no splits at all**, so the back-adjustment path is exercised here for the first
+time on this fixture family — and D226's residual-step gate is the check that it worked.

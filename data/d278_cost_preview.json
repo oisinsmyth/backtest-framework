@@ -1,0 +1,143 @@
+{
+  "per_symbol": [
+    {
+      "symbol": "RTX",
+      "stratum": "low",
+      "median_close": 89.73,
+      "commission_bps": 0.5572272372673577,
+      "cost_bps": 2.057227237267358,
+      "median_dollar_vol": 527715991.2606827
+    },
+    {
+      "symbol": "VZ",
+      "stratum": "low",
+      "median_close": 49.04,
+      "commission_bps": 1.0195758564437196,
+      "cost_bps": 2.5195758564437196,
+      "median_dollar_vol": 830989307.83
+    },
+    {
+      "symbol": "COST",
+      "stratum": "low",
+      "median_close": 490.06,
+      "commission_bps": 0.10202832306248213,
+      "cost_bps": 1.602028323062482,
+      "median_dollar_vol": 984784548.7199999
+    },
+    {
+      "symbol": "HD",
+      "stratum": "low",
+      "median_close": 306.9,
+      "commission_bps": 0.16291951775822744,
+      "cost_bps": 1.6629195177582274,
+      "median_dollar_vol": 1066919500.64
+    },
+    {
+      "symbol": "DIS",
+      "stratum": "low",
+      "median_close": 111.62,
+      "commission_bps": 0.44794839634474104,
+      "cost_bps": 1.947948396344741,
+      "median_dollar_vol": 1077034186.1399999
+    },
+    {
+      "symbol": "SPG",
+      "stratum": "low",
+      "median_close": 148.92,
+      "commission_bps": 0.33575073865162514,
+      "cost_bps": 1.8357507386516252,
+      "median_dollar_vol": 243787497.20000002
+    },
+    {
+      "symbol": "CMCSA",
+      "stratum": "low",
+      "median_close": 37.394564,
+      "commission_bps": 1.3370927389339262,
+      "cost_bps": 2.837092738933926,
+      "median_dollar_vol": 787465045.6695528
+    },
+    {
+      "symbol": "SBUX",
+      "stratum": "low",
+      "median_close": 90.62,
+      "commission_bps": 0.5517545795630104,
+      "cost_bps": 2.0517545795630103,
+      "median_dollar_vol": 663314263.71
+    },
+    {
+      "symbol": "CNX",
+      "stratum": "high",
+      "median_close": 16.2,
+      "commission_bps": 3.08641975308642,
+      "cost_bps": 7.58641975308642,
+      "median_dollar_vol": 47995832.68
+    },
+    {
+      "symbol": "BB",
+      "stratum": "high",
+      "median_close": 5.32,
+      "commission_bps": 9.398496240601501,
+      "cost_bps": 13.898496240601501,
+      "median_dollar_vol": 33544947.73
+    },
+    {
+      "symbol": "THC",
+      "stratum": "high",
+      "median_close": 63.74,
+      "commission_bps": 0.7844367743959837,
+      "cost_bps": 5.284436774395983,
+      "median_dollar_vol": 70331588.19
+    },
+    {
+      "symbol": "ANF",
+      "stratum": "high",
+      "median_close": 32.2,
+      "commission_bps": 1.5527950310559004,
+      "cost_bps": 6.052795031055901,
+      "median_dollar_vol": 61547623.199999996
+    },
+    {
+      "symbol": "NI",
+      "stratum": "high",
+      "median_close": 27.48,
+      "commission_bps": 1.819505094614265,
+      "cost_bps": 6.319505094614265,
+      "median_dollar_vol": 100657129.04
+    },
+    {
+      "symbol": "RIG",
+      "stratum": "high",
+      "median_close": 4.62,
+      "commission_bps": 10.822510822510822,
+      "cost_bps": 15.322510822510822,
+      "median_dollar_vol": 95298893.25
+    },
+    {
+      "symbol": "HLF",
+      "stratum": "high",
+      "median_close": 28.1,
+      "commission_bps": 1.7793594306049823,
+      "cost_bps": 6.279359430604982,
+      "median_dollar_vol": 30839979.87
+    },
+    {
+      "symbol": "TRGP",
+      "stratum": "high",
+      "median_close": 65.0,
+      "commission_bps": 0.7692307692307692,
+      "cost_bps": 5.269230769230769,
+      "median_dollar_vol": 109217573.34
+    }
+  ],
+  "cost_bars_2c": {
+    "low": 4.128574347006272,
+    "high": 16.503188479025162,
+    "all": 10.315881413015717
+  },
+  "notional": 175438.59649122806,
+  "half_spread": {
+    "low": 1.5,
+    "high": 4.5
+  },
+  "source": "daily fixture preview; final cost comes from the intraday panel's own median close"
+}
