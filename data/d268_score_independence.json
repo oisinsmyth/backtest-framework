@@ -1,0 +1,423 @@
+{
+  "purpose": "gates the consensus proposal; scores nothing",
+  "families": {
+    "impulse_hist": "ACCELERATION",
+    "macd_hist": "ACCELERATION",
+    "impulse_md": "LEVEL",
+    "impulse_nodz": "LEVEL",
+    "macd_line": "LEVEL",
+    "trailing_return": "MOMENTUM",
+    "rsi": "OSCILLATOR",
+    "g_lo": "SLOPE",
+    "g_min": "SLOPE"
+  },
+  "names": [
+    "impulse_hist",
+    "impulse_md",
+    "impulse_nodz",
+    "macd_hist",
+    "macd_line",
+    "trailing_return",
+    "rsi",
+    "g_lo",
+    "g_min"
+  ],
+  "spearman": [
+    [
+      1.0,
+      0.07700049033962479,
+      0.06632594204313257,
+      0.7442200807350492,
+      0.5671019422249904,
+      0.41135930827620926,
+      0.6740567386635552,
+      -0.18795235594617463,
+      -0.1873300133986492
+    ],
+    [
+      0.07700049033962479,
+      1.0,
+      0.9949176749796088,
+      -0.1743288695071518,
+      0.7794955151005382,
+      0.7765490928882597,
+      0.5804902624474343,
+      0.32744193260114224,
+      0.3267806514903703
+    ],
+    [
+      0.06632594204313257,
+      0.9949176749796088,
+      1.0,
+      -0.17906341821221541,
+      0.7758667749786985,
+      0.7711300900116848,
+      0.5706560222349254,
+      0.3252349920868591,
+      0.324404564140187
+    ],
+    [
+      0.7442200807350492,
+      -0.1743288695071518,
+      -0.17906341821221541,
+      1.0,
+      0.2335169990399458,
+      0.07756959348479998,
+      0.5150495003949692,
+      -0.09576328422718779,
+      -0.09531139738619375
+    ],
+    [
+      0.5671019422249904,
+      0.7794955151005382,
+      0.7758667749786984,
+      0.2335169990399458,
+      1.0,
+      0.8843109870211606,
+      0.8532781947920072,
+      0.09965794552009684,
+      0.09963303606811588
+    ],
+    [
+      0.41135930827620926,
+      0.7765490928882597,
+      0.7711300900116848,
+      0.07756959348479998,
+      0.8843109870211606,
+      1.0,
+      0.782307640136396,
+      0.09856719198375641,
+      0.09857291064316842
+    ],
+    [
+      0.6740567386635552,
+      0.5804902624474344,
+      0.5706560222349254,
+      0.5150495003949692,
+      0.8532781947920073,
+      0.782307640136396,
+      1.0,
+      0.06736033973676099,
+      0.06780383383335763
+    ],
+    [
+      -0.1879523559461746,
+      0.3274419326011423,
+      0.3252349920868591,
+      -0.09576328422718779,
+      0.09965794552009682,
+      0.09856719198375641,
+      0.06736033973676099,
+      1.0,
+      0.9910111475032265
+    ],
+    [
+      -0.1873300133986492,
+      0.32678065149037033,
+      0.324404564140187,
+      -0.09531139738619375,
+      0.09963303606811588,
+      0.09857291064316842,
+      0.06780383383335764,
+      0.9910111475032265,
+      1.0
+    ]
+  ],
+  "within": [
+    {
+      "a": "impulse_hist",
+      "b": "macd_hist",
+      "rho": 0.7442200807350492,
+      "family_a": "ACCELERATION",
+      "family_b": "ACCELERATION"
+    },
+    {
+      "a": "impulse_md",
+      "b": "impulse_nodz",
+      "rho": 0.9949176749796088,
+      "family_a": "LEVEL",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "impulse_md",
+      "b": "macd_line",
+      "rho": 0.7794955151005382,
+      "family_a": "LEVEL",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "macd_line",
+      "rho": 0.7758667749786985,
+      "family_a": "LEVEL",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "g_lo",
+      "b": "g_min",
+      "rho": 0.9910111475032265,
+      "family_a": "SLOPE",
+      "family_b": "SLOPE"
+    }
+  ],
+  "between": [
+    {
+      "a": "impulse_hist",
+      "b": "impulse_md",
+      "rho": 0.07700049033962479,
+      "family_a": "ACCELERATION",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "impulse_hist",
+      "b": "impulse_nodz",
+      "rho": 0.06632594204313257,
+      "family_a": "ACCELERATION",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "impulse_hist",
+      "b": "macd_line",
+      "rho": 0.5671019422249904,
+      "family_a": "ACCELERATION",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "impulse_hist",
+      "b": "trailing_return",
+      "rho": 0.41135930827620926,
+      "family_a": "ACCELERATION",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "impulse_hist",
+      "b": "rsi",
+      "rho": 0.6740567386635552,
+      "family_a": "ACCELERATION",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "impulse_hist",
+      "b": "g_lo",
+      "rho": -0.18795235594617463,
+      "family_a": "ACCELERATION",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "impulse_hist",
+      "b": "g_min",
+      "rho": -0.1873300133986492,
+      "family_a": "ACCELERATION",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "impulse_md",
+      "b": "macd_hist",
+      "rho": -0.1743288695071518,
+      "family_a": "LEVEL",
+      "family_b": "ACCELERATION"
+    },
+    {
+      "a": "impulse_md",
+      "b": "trailing_return",
+      "rho": 0.7765490928882597,
+      "family_a": "LEVEL",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "impulse_md",
+      "b": "rsi",
+      "rho": 0.5804902624474343,
+      "family_a": "LEVEL",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "impulse_md",
+      "b": "g_lo",
+      "rho": 0.32744193260114224,
+      "family_a": "LEVEL",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "impulse_md",
+      "b": "g_min",
+      "rho": 0.3267806514903703,
+      "family_a": "LEVEL",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "macd_hist",
+      "rho": -0.17906341821221541,
+      "family_a": "LEVEL",
+      "family_b": "ACCELERATION"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "trailing_return",
+      "rho": 0.7711300900116848,
+      "family_a": "LEVEL",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "rsi",
+      "rho": 0.5706560222349254,
+      "family_a": "LEVEL",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "g_lo",
+      "rho": 0.3252349920868591,
+      "family_a": "LEVEL",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "g_min",
+      "rho": 0.324404564140187,
+      "family_a": "LEVEL",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "macd_hist",
+      "b": "macd_line",
+      "rho": 0.2335169990399458,
+      "family_a": "ACCELERATION",
+      "family_b": "LEVEL"
+    },
+    {
+      "a": "macd_hist",
+      "b": "trailing_return",
+      "rho": 0.07756959348479998,
+      "family_a": "ACCELERATION",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "macd_hist",
+      "b": "rsi",
+      "rho": 0.5150495003949692,
+      "family_a": "ACCELERATION",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "macd_hist",
+      "b": "g_lo",
+      "rho": -0.09576328422718779,
+      "family_a": "ACCELERATION",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "macd_hist",
+      "b": "g_min",
+      "rho": -0.09531139738619375,
+      "family_a": "ACCELERATION",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "macd_line",
+      "b": "trailing_return",
+      "rho": 0.8843109870211606,
+      "family_a": "LEVEL",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "macd_line",
+      "b": "rsi",
+      "rho": 0.8532781947920072,
+      "family_a": "LEVEL",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "macd_line",
+      "b": "g_lo",
+      "rho": 0.09965794552009684,
+      "family_a": "LEVEL",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "macd_line",
+      "b": "g_min",
+      "rho": 0.09963303606811588,
+      "family_a": "LEVEL",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "trailing_return",
+      "b": "rsi",
+      "rho": 0.782307640136396,
+      "family_a": "MOMENTUM",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "trailing_return",
+      "b": "g_lo",
+      "rho": 0.09856719198375641,
+      "family_a": "MOMENTUM",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "trailing_return",
+      "b": "g_min",
+      "rho": 0.09857291064316842,
+      "family_a": "MOMENTUM",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "rsi",
+      "b": "g_lo",
+      "rho": 0.06736033973676099,
+      "family_a": "OSCILLATOR",
+      "family_b": "SLOPE"
+    },
+    {
+      "a": "rsi",
+      "b": "g_min",
+      "rho": 0.06780383383335763,
+      "family_a": "OSCILLATOR",
+      "family_b": "SLOPE"
+    }
+  ],
+  "between_family_violations": [
+    {
+      "a": "macd_line",
+      "b": "trailing_return",
+      "rho": 0.8843109870211606,
+      "family_a": "LEVEL",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "macd_line",
+      "b": "rsi",
+      "rho": 0.8532781947920072,
+      "family_a": "LEVEL",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "trailing_return",
+      "b": "rsi",
+      "rho": 0.782307640136396,
+      "family_a": "MOMENTUM",
+      "family_b": "OSCILLATOR"
+    },
+    {
+      "a": "impulse_md",
+      "b": "trailing_return",
+      "rho": 0.7765490928882597,
+      "family_a": "LEVEL",
+      "family_b": "MOMENTUM"
+    },
+    {
+      "a": "impulse_nodz",
+      "b": "trailing_return",
+      "rho": 0.7711300900116848,
+      "family_a": "LEVEL",
+      "family_b": "MOMENTUM"
+    }
+  ],
+  "effective_independent_scores": 2.8675224725710953,
+  "first_component_share": 0.4941239975826416,
+  "bar_effective": 3.0,
+  "verdict": "PROPOSAL IS DEAD ON ARRIVAL -- these are not independent families, and a consensus among them would be one signal agreeing with itself"
+}
