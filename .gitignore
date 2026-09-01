@@ -45,3 +45,9 @@ data/raw/alphavantage/
 # Smoke-test artifacts: never tracked. A smoke page sitting next to a real
 # results page is exactly what gets misread as a result later.
 *.smoke.*
+
+# Exchange-licensed data: cache locally, never commit (see docs/research/futures-data/00-SYNTHESIS.md)
+data/raw/databento/
+data/raw/futures/
+data/fixtures/*futures*
+data/fixtures/*glbx*
