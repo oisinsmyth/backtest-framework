@@ -366,6 +366,49 @@ point it is a refinement of a live result rather than a punt, and worth **2–3 
 ($291–$436). **If rungs 1–3 come back empty, that is meaningful evidence against the premise itself,
 bought for $14 instead of $145.**
 
+### 7.5b Amendment — cheaper tick routes, and what they do to the argument above
+
+**Added after an r/algotrading sweep (four threads, 2022–2026). Two leads attack §7.3's power
+argument directly, and one of its two legs does not survive.**
+
+| route | claimed price | span |
+|---|---|---|
+| **Sierra Chart + Denali feed** | **~€40/mo** — download, export to text, cancel | **15 years, many symbols** |
+| **MarketTick** | **$79** | **10 years, ES + NQ, L2** |
+
+**§7.3 costed a ONE-YEAR sample because $145.33/symbol-year made anything longer unaffordable.
+Affordability was the binding constraint, and these routes remove it:**
+
+| span | MDE on Sharpe (95%, 1-sided) |
+|---|---:|
+| 1 yr — what §7.3 costed | **1.65** |
+| 3 yr | 0.95 |
+| **10 yr — MarketTick** | **0.52** |
+| **15 yr — Sierra** | **0.42** |
+
+**At 10–15 years the power objection largely dissolves. MDE 0.52 is workable, and this proposal
+should not pretend otherwise.**
+
+**What survives is §7.4, which price cannot touch:** a trade-size threshold is a guessed cut, and
+hiding institutional size behind retail-looking child orders is the entire purpose of an execution
+algo. The MES/ES partition is economically enforced and cannot be sliced across. **So the ladder's
+ORDER is unchanged — rung 2 first because it is the better instrument, not because it is the
+cheaper one — but the case for putting tick last is now one argument rather than two.**
+
+**Three conditions before either route is bought:**
+
+1. **Both prices are single unverified Reddit comments.** Confirm against the vendor directly.
+2. **$79 for ten years of two-symbol L2 is implausible for licensed redistribution** — Databento
+   gates L2 depth behind $4,500/mo. **Provenance must be established before purchase**, because §12's
+   constraint binds regardless of what a vendor claims.
+3. **Sierra's licence forbids redistribution** — the gitignored-cache pattern in §12 covers it, but
+   `.scid` export across many symbol-years is **GUI work, plausibly days of it**, and that labour is
+   the real price.
+
+**Explicitly excluded:** a Reddit account offering CME data down to MBO through a private group
+chat. **That is redistributed licensed exchange data, and no backtest built on it would be
+defensible.** Recorded here so the lead is not re-found and re-considered.
+
 ### 7.6 If tick is ever bought — the parallel-backtest architecture
 
 **Reduce the tape to per-minute flow features at build time.** Signed volume and trade count per
@@ -402,6 +445,29 @@ more.**
 | **Non-CME venues (ICE, Eurex)** | Separate datasets, not on these plans; prop firms trade CME |
 | **Pre-2010 history** | `GLBX.MDP3` begins **2010-06-06**. Does not exist to buy |
 | **Calendar-spread instruments** | Constructible from the legs, which is how D261 built its spreads. And equity-index calendar spreads are near-pure rate/dividend plays with little vol |
+
+### Alternative vendors, priced and rejected
+
+**From an r/algotrading sweep of four threads, 2022–2026. Databento is the top-voted answer in every
+one of them, which is corroboration rather than a cheaper option.** Priced against **$0.51 per
+symbol-year**:
+
+| vendor | claimed price | the same coverage here | verdict |
+|---|---|---:|---|
+| **Kibot** | ~$150/symbol, 20 yr 1-min, ES *or* NQ | **$10.20** | **14.7x more.** Our 26-symbol complex would be **~$3,900** |
+| **FirstRateData** | ~$200 one-off, liquid contracts | $182.58 for **358** symbol-years | more than the entire complex, for a subset |
+| **tickmarketdata** | €380, NQ tick | — | 2.6x the whole plan, one symbol |
+| **Quandl / Nasdaq CHRIS** | free | — | **dead** — stopped being free for CME data in 2018 |
+| **yfinance** | free | — | **killed by our own measurement** (§12): a +2.77% spurious gap and `adjclose` a verbatim copy of `close` on 1258/1258 bars. Reddit independently reports inaccurate weekly closes |
+| **Kinetick EOD** (NinjaTrader) | free | — | daily settlements only |
+| **QuantConnect** | **free futures data** | — | **free data that cannot leave the platform.** Backtests run in LEAN on their cloud, so taking it means abandoning this engine, the 1,446-test suite, the matched-count and rotation nulls, D228's floor, and offline determinism. **Weeks of rewriting to save $60**, forfeiting the validation stack that is the actual asset |
+
+**Two confirmations from the same sweep**, both matching what the twelve lanes found independently: a
+Databento staff account putting **CME minute bars at 2010-06-06**, and the repeated warning that
+**raw per-contract data means you build the continuous series yourself** — which is precisely what
+§12 exists for. **Every thread names continuous-contract stitching, not data availability, as the
+real difficulty.** Several commenters also report **1-minute bars sufficing for intraday work, with
+tick data not changing results** — anecdote, but pointing the same way as §7's ladder.
 
 ---
 
@@ -534,5 +600,7 @@ writing ours.
 | **When MES volume became representative** — the contract launched 2019-05 and ramped, so the early months may not support the §7.5 rung-2 ratio | measure the micro share series itself and set the start where it stabilises | free, post-pull |
 | Whether CME's **`statistics`** schema carries open interest at daily resolution for all 26 symbols | schema inspection post-pull | free |
 | **CFTC COT contract-code mapping** to our symbols — the report uses its own market codes | one lookup against the CFTC code list | free, no purchase |
+| **Polygon.io free futures tier** — a 2025 r/algotrading comment reported one listed as "coming soon". If it shipped with real history it displaces part of §10 | one page load on their pricing page | free. **Low probability a free tier carries 16 years, but the check is one minute** |
+| Whether **Sierra Chart's** historical depth actually reaches 2010 for all 26 symbols, and whether `.scid` export can be scripted rather than driven by hand | vendor docs, before any subscription | free — see §7.5b |
 
 **None of these blocks step 0 or step 1**, and step 1 resolves the first two.
