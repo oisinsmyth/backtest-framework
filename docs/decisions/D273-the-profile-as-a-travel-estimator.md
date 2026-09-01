@@ -1,6 +1,8 @@
 # D273 — The volume profile as a travel estimator
 
-**Status:** PRE-REGISTERED. Committed **before the run**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** The mechanism is falsified directly, not merely unproven.
+
+**Everything above the RESULT heading was committed in `241c304`, BEFORE the runner was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track**
 
@@ -132,3 +134,81 @@ not as a near miss.
 
 **Terrain's 259 remain disclosed and not summed**, on the reasoning D272 settled: multiplicity
 corrects for looks at the same hypothesis, and this is not that hypothesis.
+
+---
+
+## RESULT — the profile predicts whether price *reaches* a level, and that is arithmetic
+
+`uv run python scripts/run_travel_estimator.py` · `data/d273_travel_summary.json`
+
+**Zero of six cells clear all four hurdles.** But the interesting part is not the hurdle table.
+
+### The two measurements, side by side
+
+**Whether price reaches the mapped support — monotone falling in ALL SIX cells:**
+
+| cell | Q1 (least room) | Q2 | Q3 | Q4 | Q5 (most room) |
+|---|---:|---:|---:|---:|---:|
+| ALL S1 | **62.6%** | 39.0% | 20.0% | 9.0% | **1.3%** |
+| ALL S2 | **75.6%** | 57.7% | 50.0% | 31.2% | **12.4%** |
+| HIGH S1 | 64.2% | 38.7% | 21.8% | 10.3% | 1.4% |
+| LOW S2 | 74.8% | 58.9% | 45.3% | 25.2% | 11.9% |
+
+**Six of six monotone, with a 60-point separation.** Nothing else in this programme has produced
+an ordering that clean.
+
+**And maximum favourable excursion — how far the trade ACTUALLY TRAVELS — is flat:**
+
+| cell | Q1 | Q5 | **Q5 − Q1** |
+|---|---:|---:|---:|
+| ALL S1 | 56.6 bp | 55.7 bp | **−0.9 bp** |
+| HIGH S1 | 87.1 bp | 78.0 bp | **−9.1 bp** |
+| LOW S1 | 30.3 bp | 33.9 bp | +3.6 bp |
+| ALL S2 | 81.7 bp | 91.1 bp | +9.4 bp |
+| LOW S2 | 48.5 bp | 56.7 bp | +8.2 bp |
+| HIGH S2 | 117.4 bp | 128.4 bp | +11.4 bp |
+
+**No trend, on bases of 30 to 138 bp.** Trades with five times the room travel the same distance
+as trades with almost none.
+
+### THE FINDING, and it falsifies the hypothesis rather than failing to support it
+
+**Travel is roughly constant. So whether price reaches a level depends only on how far away the
+level is.**
+
+The 62.6% → 1.3% ordering is not the profile predicting anything — it is the arithmetic of a
+fixed-length move against a variable-distance target. **Any distance measure would reproduce it,
+including a randomly placed level.** The node is a location, not a barrier and not a magnet.
+
+**So the claim under test — "if there is room below, the short will travel to the next support"
+— is measured and it is false.** The room does not determine the travel; the travel is set
+elsewhere and the room only determines whether that travel happens to cross a line we drew.
+
+### The predictions, scored
+
+| | outcome |
+|---|---|
+| **Y-a** room predicts P&L monotonically in ≥1 cell | **FALSIFIED** — 0 of 6 monotone |
+| **Y-b** the effect fails the ATR control | **PREMISE DID NOT ARISE.** There is no effect to control, and my confound worry was unfounded: **ρ(room, ATR) runs −0.005 to −0.076**. The ATR normalisation in the sensor's bucket width already handled it |
+| **Y-c** no cell clears all four | **CONFIRMED** |
+| **Y-d** MFE tracks room more strongly than P&L does | **FALSIFIED.** MFE is flat. This was the outcome that would have pointed at the exit rule rather than closing a door, and it is not there |
+
+### One structural observation worth keeping
+
+**Half of S2's trades have no mapped support below the entry price at all** — 50%, against 5% for
+S1. S2 shorts confirmed downtrends, so by the time it fires **price has usually already fallen
+through everything the profile mapped.** The terrain mechanism showing up as a census fact rather
+than a result: inventory sits above a downtrend, not below it.
+
+---
+
+## Stop — fired
+
+**The volume profile is closed as a travel estimator**, and with
+[D272](D272-the-volume-profile-as-a-positional-input.md) that closes the volume profile on this
+fixture entirely — as an input and as a target estimator both. No second room definition, no
+alternative node quantile, no third arm.
+
+**And the closure is stronger than the usual one here.** Most stops in this programme fire because
+an effect is too small to pay. **This one fires because the mechanism was measured and is absent:
+the distance to the next node does not predict how far price goes.**
