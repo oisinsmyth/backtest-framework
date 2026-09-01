@@ -135,3 +135,94 @@ tick sizes that SPY/QQQ/IWM/DIA do not reproduce. **A pass is a feasibility boun
 | + the shape measurement that motivated it: 4 legs + 4 spreads | 20 |
 | + carried from D260 | 46,069 |
 | **total** | **46,089** |
+
+---
+
+## RESULT — CLOSED. The shape is right, the signal is absent, and 2020 broke every pair.
+
+**Produced:** 2026-08-29 · `uv run python scripts/run_index_spread.py` · `INDEX_SPREAD_RESULTS.md`
+· 3,115 holds, 2010-01-05 → 2026-08-26.
+
+| pair | trades/yr | exposure | ann return | vol | Sharpe | worst hold | MAE p99 | life | **net beta** | null (S/M) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| IWM−DIA | 6.0 | 37.5% | **+3.01%** | 10.2% | +0.296 | −4.56% | 4.93% | 0.5y | **−0.010** | 24 / 60 |
+| QQQ−IWM | 5.5 | 35.6% | +1.46% | 9.9% | +0.147 | −4.72% | 3.34% | 2.0y | +0.025 | 47 / **98** |
+| SPY−IWM | 5.9 | 34.6% | +1.45% | 6.2% | +0.236 | −2.88% | 2.85% | **6.0y** | +0.010 | 78 / 6 |
+| SPY−QQQ | 5.8 | 39.9% | +0.23% | **4.8%** | +0.048 | −4.08% | **1.96%** | **6.0y** | +0.057 | 19 / 26 |
+| SPY−DIA | 7.0 | 35.6% | −1.02% | 5.1% | −0.199 | −2.03% | 3.04% | 3.0y | +0.026 | 0 / 29 |
+| QQQ−DIA | 5.8 | 36.6% | −1.82% | 10.6% | −0.173 | −5.06% | 4.25% | 0.9y | +0.025 | 69 / 75 |
+
+### The shape argument held. The signal did not.
+
+**Volatility is 4.8–10.6% against 16.7–22.1% for the legs**, exactly as the motivating measurement
+predicted, and **SPY−QQQ and SPY−IWM clear P4 at 6.0 years each.** The category does have the shape
+hurdle P wants.
+
+**But no pair beats its rotation null on both legs.** The best is QQQ−IWM at the **98th on money and
+the 47th on Sharpe**; SPY−IWM is the mirror at 78th/6th. **A z-score entry does no better than
+randomly-timed trades of the same count and duration.**
+
+**And P3 fails on all six** — worst holds of **−2.03% to −5.06%** against a 2% daily limit.
+
+### 2020 broke every pair, which is the opposite of what was registered
+
+**U-e predicted 2020 would be the spread's BEST period** — dislocation widens spreads, mean
+reversion pays. **Measured, it is the worst period for all six:**
+
+| pair | 2020 ann return | Sharpe |
+|---|---:|---:|
+| QQQ−DIA | **−23.58%** | −1.610 |
+| IWM−DIA | **−22.78%** | −1.813 |
+| SPY−QQQ | −8.70% | −0.861 |
+| SPY−DIA | −7.49% | −1.301 |
+| QQQ−IWM | −7.24% | −0.549 |
+| SPY−IWM | −4.43% | −0.556 |
+
+**Spreads did not converge in March 2020. They widened and kept widening.** That is the classic
+pairs failure — **the relationship breaks precisely when the dislocation that makes it attractive
+occurs** — and registering the opposite prediction is what makes the finding legible.
+
+### The neutrality hurdle worked, and caught nothing
+
+**All six pairs pass at net beta −0.010 to +0.057**, including the top earner. **U-c is falsified.**
+
+**The design is why.** The shape measurement saw QQQ−IWM earn **+8.03%** as a *buy-and-hold* spread,
+which accumulates a tech/small-cap tilt. **A z-score rule is in and out — 5.5 trades a year at 35%
+exposure — so it never accumulates the tilt.** The hurdle was built to catch a trap that the
+construction had already avoided. **That is a hurdle doing its job, not a wasted one:** without it,
+IWM−DIA's +3.01% could not have been distinguished from a factor bet.
+
+### Screen versus holdout — no decay, but nothing to decay from
+
+| pair | screen | holdout |
+|---|---:|---:|
+| SPY−IWM | +3.95% | +1.45% |
+| QQQ−IWM | +1.72% | +1.46% |
+| SPY−QQQ | +0.65% | +0.23% |
+| IWM−DIA | −0.51% | +3.01% |
+
+**Signs are mostly stable and every level is small.** The holdout does not contradict the screen; it
+confirms that neither contains much.
+
+### Scoring — three of five falsified
+
+| | prediction | outcome |
+|---|---|---|
+| **U-a** | ≥1 pair clears P1/P3/P4 | **FALSIFIED** — P3 fails on all six |
+| **U-b** | no pair clears V and the NULL together | **CONFIRMED** — none clears the NULL at all |
+| **U-c** | the earners fail NEUTRALITY | **FALSIFIED** — all six pass, including the top earner |
+| **U-d** | SPY−QQQ/SPY−DIA cleanest and emptiest | **PARTIAL** — SPY−QQQ is both; SPY−DIA is merely negative |
+| **U-e** | 2020 is the spread's best period | **FALSIFIED decisively** — worst for all six |
+
+**Being wrong three times out of five is the useful part**, and U-e most of all: **the intuition that
+spreads pay during dislocation is exactly backwards on the one event that matters.**
+
+### The stop applies
+
+**CLOSED. The spread category is finished for the prop track** — no threshold sweep, no second
+lookback, no cointegration screen added afterwards. **That would be the selection step this design
+deliberately removed.**
+
+**What survives is the shape measurement itself:** a spread genuinely has 3x lower volatility and a
+6x lower breach rate than its legs. **The category was the right shape and the wrong signal**, and
+anything future that needs to fit inside a 4% ratcheting floor should still be built as a spread.
