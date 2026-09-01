@@ -95,7 +95,18 @@ def book_trades(pos, rets, dates, syms, start, sess_end, bod):
 
 
 def score_trades(score, rets, dates, syms, start, sess_end, bod, q=4, n_q=5):
-    """Entries where the LAGGED score sits in its top quintile, held H bars."""
+    """Entries where the LAGGED score sits in its top quintile, held H bars.
+
+    NON-OVERLAPPING, and that correction matters more than it sounds. The first
+    version admitted an entry on EVERY qualifying bar, so consecutive Q5 bars
+    produced windows sharing seven of their eight bars -- 43,204 "trades" from
+    four symbols over 8.25 years, or 1,309 per symbol per year against 252
+    sessions. A construction cannot open 1,300 positions in 252 sessions; those
+    were overlapping observations wearing a trade's clothes, and pooling them
+    inflated the t-statistic from 2.31 to 5.30.
+
+    A position is now held to its horizon before another may open, which is what
+    a book would actually do."""
     out = []
     n, T = score.shape
     for i in range(n):
@@ -104,13 +115,15 @@ def score_trades(score, rets, dates, syms, start, sess_end, bod, q=4, n_q=5):
         if ok.sum() < 100:
             continue
         edges = np.quantile(s[ok], np.linspace(0, 1, n_q + 1)[1:-1])
+        nxt = -1
         for j in np.flatnonzero(ok):
             if np.searchsorted(edges, s[j], side="right") != q:
                 continue
             t = start + j
             e = min(int(sess_end[t]), t + H_VOL)
-            if e <= t:
+            if e <= t or t < nxt:      # no overlap: the prior hold must have closed
                 continue
+            nxt = e
             out.append({"symbol": syms[i], "date": dates[t][:10], "year": dates[t][:4],
                         "bod": int(bod[t]), "bars": int(e - t),
                         "pnl_bp": float(-rets[i, t:e].sum()) * 1e4})

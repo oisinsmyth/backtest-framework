@@ -170,9 +170,20 @@ def main() -> int:
   <p class="cap under">mean bp per trade, by year</p>
 </article>""")
 
-    ex = {"LOW:S2_short_intra": (3.12, -0.63, 12, 1507),
-          "HIGH:S1_short_intra": (5.13, -1.57, 37, 5338),
-          "LOW:rel_vol Q5": (1.97, -1.58, 170, 43204)}
+    # Computed, not transcribed -- a hardcoded table drifts the moment the data does.
+    ex = {}
+    for k in ORDER:
+        arr = sorted(d[k]["pnl_bp"], reverse=True)
+        n = len(arr)
+        n1 = max(1, round(0.01 * n))
+        tot = sum(arr)
+        run, j = 0.0, n
+        for i, v in enumerate(arr):
+            run += v
+            if run >= tot:
+                j = i + 1
+                break
+        ex[k] = (sum(arr) / n, sum(arr[n1:]) / (n - n1), j, n)
     rows = "".join(
         f"<tr><td>{esc(NICE[k])}</td><td class='num pos'>{a:+.2f}</td>"
         f"<td class='num neg'>{b:+.2f}</td><td class='num'>{c:,} / {n:,}</td>"
@@ -300,6 +311,25 @@ behind those means look like — and the distribution says something the mean ca
   zero and the cost line falls inside the body of the distribution</strong> — under half of
   trades beat it.</p>
   <div class="grid">{"".join(cards)}</div>
+</section>
+
+<section class="finding" style="border-left-color:var(--accent)">
+  <h2>A correction, and it changed a number by more than half</h2>
+  <p>The first version of this page admitted a volume entry on <em>every</em> qualifying
+  bar. Consecutive top-quintile bars share seven of their eight bars, so it reported
+  <strong>43,204 &ldquo;trades&rdquo; from four names over 8.25 years &mdash; 1,309 per
+  symbol per year against 252 sessions.</strong> A book cannot open 1,300 positions in 252
+  sessions; those were overlapping observations wearing a trade&rsquo;s clothes.</p>
+  <p>Held non-overlapping, as a book would: <strong>13,752 trades, mean +1.57 bp, and the
+  t-statistic falls from +5.30 to +2.31</strong> &mdash; to roughly 1.6 once the four names&rsquo;
+  cross-correlation is accounted for, since they carry only 1.87 effective instruments.</p>
+  <p><strong>And the symmetry is the tell.</strong> The percentile ratios sit at 1.04, 1.08 and
+  1.07 across p25/p75, p5/p95 and p1/p99 &mdash; a <em>constant</em> tilt at every point. That is
+  a location shift, not a change of shape; a real edge fattens the winning tail relative to the
+  losing one and the ratio grows outward. Against the unconditional distribution the conditioning
+  moves the mean <strong>+2.15 bp</strong> and widens the spread from <strong>58.8 to 77.2 bp</strong>.
+  <strong>High relative volume is mostly selecting volatility; direction is a side effect riding on
+  it.</strong> The cost bar is 4.00 bp.</p>
 </section>
 
 <section>
