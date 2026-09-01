@@ -494,3 +494,80 @@ which is a stronger and more durable statement than the one D247 could make.
 
 **Unchanged from the pre-registration.** No cell was added, and the post-hoc price observation above
 is recorded rather than scored, so it costs nothing against this count.
+
+---
+
+## ADDENDUM — is the verdict an artefact of the capital size it was run at? No, and it cannot be.
+
+**Asked by the principal after the result was committed.** `scripts/d264_cost_vs_size.py`.
+
+**This scores no new cell.** It varies only the cost schedule against an already-measured breakeven,
+which is the re-costing [R12](../RULES.md#r12) explicitly requires — *"a cross-screen must RE-COST,
+not merely re-threshold"* — before a candidate is discarded. No book is rebuilt, no hurdle re-run,
+no stratum added, no window re-cut. **It could only ever strengthen or weaken the closure, never
+rescue a cell, because the breakeven it is compared against does not move.**
+
+### The size the study was run at
+
+**$175,439 per position** — `PRIMARY_CAPITAL / 57`, which is **D247's own per-position notional**,
+fixed in the pre-registration so the commission comparison to the ETF study would be exact rather
+than approximate. Eight names, so **$1.40M** total.
+
+### Why the breakeven is the right thing to hold fixed
+
+`breakeven_bps` reconstructs the arm's **cost-free** excess return — it adds the charged cost back
+before dividing by turnover — so it is a property of the signal and its turnover, **not of the
+account.** Changing size cannot move it. The question therefore reduces to a single one: **at what
+size does the charged cost fall below the breakeven already measured?**
+
+### The answer is that no size does, and the arithmetic says why before the table does
+
+IBKR is `max(min(per_share × shares, 1% of notional), min_order)`. In the per-share regime the bps
+figure is
+
+```
+1e4 × (c × N/p) / N   =   1e4 × c / p
+```
+
+**Notional does not appear.** Commission in bps is a function of **price alone**. Below
+`shares = min_order / c` the order minimum binds and it gets **worse**; above, it is flat. **There is
+no size at which it gets cheaper.**
+
+| notional/position | HIGH commission, Fixed | HIGH commission, Pro tiered |
+|---:|---:|---:|
+| $1,000 | 10.00 bp | 3.50 bp |
+| $10,000 | 2.12 bp | 1.40 bp |
+| $50,000 | **1.92 bp** | **1.34 bp** |
+| **$175,439** *(as run)* | **1.92 bp** | **1.34 bp** |
+| $1,000,000 | 1.92 bp | 1.34 bp |
+| $10,000,000 | 1.92 bp | 1.34 bp |
+
+**Against HIGH S1_short_intra's breakeven of 1.06 bp.** So on **both** real IBKR schedules, at **every
+size from $1,000 to $10M**, and at a **zero spread**, the cell still loses. This is strictly stronger
+than the result section's claim, which priced only the Fixed schedule.
+
+**The LOW stratum's S2_short_intra is the nearest thing to an exception and does not survive
+either.** Breakeven 1.02 bp against a commission plateau of 0.50 bp (Fixed) or 0.35 bp (Pro), so
+**commission alone clears** — but it would then need an all-in half-spread under roughly 0.5–0.7 bp
+on names like MO, **tighter than SPY's**. Not reachable on a single name.
+
+### And the large-size rows are optimistic, in an unmeasured amount
+
+**Market impact is charged nowhere in this study**, and it is the only cost that **grows** with size.
+The high-volatility names ran $60–85M median daily dollar volume in the selection window against
+~324 turns/yr. **Every row above ~$1M per position understates the true cost by an amount nobody
+here has measured.** Read those rows as *"not cheaper"*, never as *"this is what it would cost"*.
+
+### A documentation defect this surfaced, recorded rather than silently fixed
+
+**[R12](../RULES.md#r12) states the personal track's cost as *"IBKR Pro, and the $0.35 minimum binds
+below ~$1,000 per position"*. The committed cost model in `run_macd_ladder.py` is IBKR FIXED:
+`$0.005/share, min $1.00, cap 1%`.** D264 used the code, not the prose.
+
+**Nothing is invalidated** — the verdict holds under both schedules, as the table shows — but the two
+should agree, and the quoted threshold is right only for a ~$10 instrument: the minimum binds below
+`100 × price` on Pro and `200 × price` on Fixed, so for a $250 name like RH it binds below $25,000,
+not $1,000.
+
+**Not fixed here, because which schedule the personal track assumes is a standing decision about the
+book and not a detail of this study.** Flagged for whoever makes it.
