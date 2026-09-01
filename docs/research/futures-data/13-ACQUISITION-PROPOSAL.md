@@ -1,3 +1,9 @@
+> **SUPERSEDED 2026-09-01 by [data-purchase-proposal.md](data-purchase-proposal.md).** This version
+> recommended the $199 Standard plan on the mistaken belief that a subscription included volume.
+> Databento tiers gate SCHEMA DEPTH, not volume: **L0 (OHLCV) is 16+ years on the free usage-based
+> tier**, so no subscription is needed. It also under-scoped micros, omitted ags and quote data, and
+> excluded tick data without pricing the minimum viable version. Kept for the record.
+
 # Data acquisition proposal
 
 **One month of Databento, one comprehensive Alpha Vantage top-up, then cancel both.**
