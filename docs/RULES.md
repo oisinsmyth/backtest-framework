@@ -326,3 +326,57 @@ wrong bar.
 
 **Scope:** binding from 2026-08-29. Applies retroactively to every candidate closed in the
 2026-08-28/29 sessions, none of which was screened against the prop track's cost structure.
+
+## R13. A ledger is scoped to a hypothesis, and transfers only where it shaped the search
+
+**A multiplicity count corrects for the looks that could have produced the candidate being
+reported. It therefore transfers to a new study exactly when the new study's search space was
+shaped by those looks — and not otherwise.**
+
+**Two tests, both required, before a count is carried:**
+
+1. **Same hypothesis?** Not the same *goal* — every study in this programme wants a tradeable
+   edge — but the same *proposition under test*, on a comparable universe.
+2. **Did it shape the search space?** If the new study's candidates, scores or fixtures exist
+   *because of* the earlier work, the count carries. If the candidates were arrived at
+   independently, it does not.
+
+**Because inheriting looks spent on a different hypothesis is not conservatism, it is
+over-correction, and it makes a finding unfalsifiable by construction.** A programme that sums
+every look it has ever taken into every new ledger eventually reaches a floor no measurement can
+clear — at which point the count has stopped being a statistical correction and become a way of
+never having to accept a result.
+
+### The two worked examples, both settled by the principal
+
+**The terrain programme's 259 — NOT carried into
+[D272](decisions/D272-the-volume-profile-as-a-positional-input.md).**
+`TERRAIN_RESULTS.md` says *"anything that reuses these sensors inherits the count"*, and I applied
+it. **The principal pushed back and the document supports them:** that row is labelled **"Total on
+one hypothesis"**, and the same file closes with *"a different data source, a different claim, or a
+genuinely new construction starts a new document and a new ledger, with this one disclosed."* D272
+had all three — equities not crypto, independence of an input not directional signal from a map.
+
+**The ETF programme's 45,783 — NOT carried into the single-name intraday work.**
+[D218](decisions/D218-impulse-macd.md) states its own floor as *"+1.42 Sharpe at 45,803 looks — no
+arm anyone runs on **this fixture** can clear it"*, scoped in its own words to the 57-ETF **daily**
+fixture. That count accumulates pairs studies, breakouts, the MACD ladder and structure work:
+hypotheses the single-name 15-minute search is not testing, on universes it does not use.
+
+**What DOES carry into that work is roughly 118** — D264 through D276 — because those studies built
+the bases and the scores the later ones mine, so their search space was not chosen independently.
+
+### Corollaries
+
+- **A count is never reset to zero by relabelling.** Test 2 is the guard: reusing a component, a
+  fixture or a candidate list carries the looks that produced it.
+- **Disclose what you do not carry, and say why.** An undisclosed exclusion is indistinguishable
+  from an oversight.
+- **The ledger is bookkeeping; the floor is the test.** What actually prices a search is the
+  empirical best-of-N floor over that search (D228), computed from the data. R13 governs what
+  number appears in a table, not what evidence exists.
+
+**Scope:** binding from 2026-09-01. **Records D247 through D276 carry the older convention** —
+a single cumulative count across the whole programme — and are **not** restated. R13 explains the
+discontinuity rather than erasing it, the same way [R11](#r11)'s amendment and
+[R12](#r12)'s retroactive scope were handled.
