@@ -1,6 +1,129 @@
 # PICKUP — handoff for the next session
 
-**Updated 2026-09-01, end of the session that ran D264 — the intraday short on single names.**
+**Updated 2026-09-01, end of the session that closed the single-name intraday short on every
+lever it has.** D264 → D278, plus a new standing rule R13.
+
+---
+
+## 0. THE ONE-LINE STATE
+
+**Everything on the eight-name 15-minute single-name fixture is closed, and it all closed on the
+same arithmetic.** [D265](docs/decisions/D265-the-entry-time-reconciliation.md) reduced the entire
+cost problem to one condition in which the trade count cancels and hit rate never appears:
+
+```
+mean move per trade  >=  2c        (the round-trip cost)
+2c = 4.00 bp LOW · 8.42 bp ALL · 12.84 bp HIGH
+```
+
+**Six signal families, three input families, a volume profile three ways, two exit levers and a
+300-cell mine have all failed that one bar.** Nothing has failed for want of a null.
+
+## 1. THE HOLDOUT IS IN FLIGHT — pick this up first
+
+**[D278](docs/decisions/D278-the-instrument-holdout.md) is pre-registered (`f8407c3`) and its
+runner is validated (`5c10db0`), but the data may not have finished landing.**
+
+```bash
+uv run python scripts/fetch_single_name_intraday.py --holdout --fetch    # resumable
+uv run python scripts/fetch_single_name_intraday.py --holdout --build    # read the D226 gate
+uv run python scripts/build_intraday_panel.py --holdout
+uv run python scripts/run_holdout_test.py                                # the test
+```
+
+**Sixteen names, zero shared with the in-sample eight:** RTX VZ COST HD DIS SPG CMCSA SBUX ·
+CNX BB THC ANF NI RIG HLF TRGP. Selected by D264's rule unchanged, ranks 5–12 of each stratum.
+
+**READ THE BUILD'S STEP GATE BEFORE SCORING.** Three of the sixteen carry splits — RTX ×1.589
+(Raytheon/UTC), CMCSA ×1.067, HLF ×2.0 — where the original eight had **none**. The
+back-adjustment is load-bearing here rather than idle. An unadjusted 1.589 shows as a +59% bar.
+
+**The runner's validation gate already passed**: `--validate` reproduces all twelve of D277's
+in-sample cells to four decimal places. If you change the runner, re-run it.
+
+**A structural property of D278's hurdles, so it is not mistaken for a bug:** H2 needs a positive
+holdout CAGR and H5 needs the sign to match in-sample, so **the seven cells negative in-sample
+cannot clear both.** Only the mine's five winners are eligible; the other seven are controls, and
+if they light up the holdout is uniformly positive rather than replicating.
+
+## 2. WHAT WAS CLOSED, AND ON WHAT
+
+| | closed by | on |
+|---|---|---|
+| S1 / S2 shorts, intraday, single names | D264 | 0 of 12 cells; commission alone beats the breakeven |
+| entry timing | D265 | early entries are 1.57× the bar; whole-book +0.38%/yr |
+| magnitude calibration, 9 price scores | D267 | 0 of 27; whole Q1–Q5 spread < one round trip |
+| the consensus proposal | D268 | 2.87 effective inputs of 9; **RSI is trailing return at ρ +0.78** |
+| volume as a third input | D270 | orthogonal at ρ 0.09, best cell 0.92× the bar |
+| the volume profile, as an input | D272 | most orthogonal thing measured (ρ 0.085), 0 of 6 |
+| the volume profile, as a travel estimator | D273 | travel is flat in room; the node is a distance |
+| exits, time-based | D274 | **a random exit bar beats a fixed one** |
+| change of character | D275 | legs run 182.7 bp median, the rule captures 0.57 bp |
+| exits, structural | D276 | removing churn made it worse; exposure 47% → 4.5% killed it |
+| the mine, 300 cells | D277 | best +0.392 against a best-of-300 floor of +0.605 |
+
+## 3. THE FOUR THINGS WORTH CARRYING
+
+1. **The cost bar is `mean move per trade ≥ 2c`, and it is signal-independent.** The trade count
+   cancels; hit rate never enters. Any future intraday construction should be screened on this
+   first, for the cost of one measurement.
+2. **Most technical indicators are monotone transforms of trailing return.** D268: nine scores,
+   **2.87 effective inputs**; RSI ↔ macd_line at **+0.85**. "Several indicators agree" is usually
+   one indicator agreeing with itself. `scripts/d268_score_independence.py` is the instrument.
+3. **Overnight drift is a property of VOLATILITY, not of equities.** Low-vol names accrue it
+   **intraday with the sign reversed** (+4.36% overnight vs +5.56% intraday); high-vol names run
+   +13.81% vs −8.97%. D247's +8.59%/−0.36% is an average over instruments, not a constant. **This
+   belongs in the wide extended-hours pre-registration before it runs.**
+4. **A correlation on a continuous score does not survive to its tails.** ρ = −0.83 between
+   `mass_imbalance` and `impulse_md` gave only **53% bar overlap** at the quintile extremes — and
+   +0.392 against −0.481 Sharpe. I called them "near-identical" and was wrong.
+
+## 4. R13 IS NEW AND IT CHANGES HOW LEDGERS ARE COUNTED
+
+**[R13](docs/RULES.md#r13): a ledger is scoped to a hypothesis and transfers only where it shaped
+the search.** Written after the principal pushed back twice, correctly, on inherited counts.
+
+- terrain's **259** is disclosed, not carried (D272)
+- the ETF programme's **45,783** is disclosed, not carried — **D218 scopes its own floor to "this
+  fixture"**, meaning 57 ETFs daily
+- what carries into the single-name work is **~118**, because D264–D276 built the bases and scores
+
+**D247–D276 keep the older single-cumulative convention and are NOT restated.** R13 explains the
+discontinuity rather than erasing it.
+
+**And nothing reopened.** Every closure above fired on a hurdle failure, not on multiplicity.
+
+## 5. WHAT IS ACTUALLY LIVE
+
+1. **The wide extended-hours decomposition** — fixture built and gated (`c25218d`), nothing
+   decomposed, prediction declared. **Add the volatility split from §3.3 before running it.**
+2. **A concentrated ranked short on the DAILY dead-inclusive fixture** — `us_shorts_daily_raw`,
+   1,573 names, **35.7% dead**, no survivorship hole, and round trips ~20× rarer so the cost bar is
+   far lower. **FINDINGS §9 names this and nobody has run it.** It is the single best remaining
+   idea in the programme.
+3. **The factor-neutral branch of FINDINGS §9** — still untouched.
+4. **Prop track:** rung 2's micro/mini form and rung 3, both free, both untested.
+   [D266](docs/decisions/D266-the-prop-cross-screen.md) screened this session's work against
+   hurdle P and the best cell earned +0.535%/yr after P1 sizing. BOOK_PROP.md stays empty.
+
+## 6. DATA THAT NOW EXISTS
+
+| | |
+|---|---|
+| `single_name_intraday_15m_{raw,panel}.csv.gz` | 8 names, 55,004 bars, 26.0/session, gates PASS |
+| `holdout_intraday_15m_raw.csv.gz` | 16 names — **check the fetch finished** |
+| Alpha Vantage 15m cache | 57 ETFs + 24 single names, ~2,500 slices. **Any of these starts at zero requests.** |
+
+**The provider limit is settled, do not re-probe it:** `TIME_SERIES_INTRADAY` serves **nothing**
+for a delisted ticker (TWTR/FRC/SIVB/AABA, four for four). `TIME_SERIES_DAILY_ADJUSTED` does.
+**41.6% of the 2013–17 cohort is unreachable at 15 minutes**, so every intraday single-name study
+is survivor-only and the bias runs *against* a short.
+
+---
+
+## EARLIER THE SAME DAY — the D264 session, as it stood mid-way
+
+*Superseded by the section above; kept because its data-layer notes are still accurate.*
 
 ---
 

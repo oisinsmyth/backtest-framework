@@ -10,6 +10,71 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D265-D278 - the single-name intraday programme, 2026-09-01)
+- `scripts/run_entry_time_reconciliation.py` (D265) - two arms x three bar-of-day buckets,
+  behind a **validation gate that rebuilt D264's committed gross to 0.003 points** before
+  any bucket was read. Established the cost bar the rest of the session runs on:
+  **mean move per trade >= 2c**, in which the trade count cancels and hit rate never
+  appears.
+- `scripts/run_magnitude_calibration.py` (D267) - nine price scores x three strata x
+  quintiles, with a best-of-27 shuffle floor on one shared draw. 0 of 27.
+- `scripts/d268_score_independence.py` (D268) - the correlation instrument. **Nine scores
+  collapse to 2.87 effective inputs**, and RSI correlates **+0.85** with a MACD level.
+  Reusable for any future consensus construction.
+- `scripts/run_volume_structure.py` (D269/D270) - five volume scores normalised WITHIN
+  bar-of-day, with **two-sided synthetic controls**: `ctrl_blend` must fail, `ctrl_noise`
+  must pass.
+- `scripts/run_volume_profile.py` (D272), `scripts/run_travel_estimator.py` (D273),
+  `scripts/d273_halt_test.py` - the volume profile as input, as travel estimator and as a
+  halt level, reusing `research/terrain.VolumeProfileSensor` unchanged.
+- `scripts/d271_trade_anatomy.py` + `d271_build_report.py` - per-trade distributions and a
+  self-contained HTML report, published as an Artifact.
+- `scripts/d274_exit_timing.py` (D274), `scripts/run_choch_short.py` (D275),
+  `scripts/run_leg_exit.py` (D276) - the exit question and the BOS/CHoCH state machine.
+- `scripts/d277_mine.py` + `d277_sizing.py` (D277) - the 300-cell mine and its sizing
+  analysis, with a best-of-300 floor over the whole search.
+- `scripts/select_holdout_names.py`, `scripts/run_holdout_test.py` (D278) - the sixteen-name
+  instrument holdout and its runner. **`--validate` reproduces all twelve of D277's
+  in-sample cells to four decimal places** before the runner may touch the holdout.
+- `data/fixtures/holdout_intraday_15m_raw.csv.gz` - 16 names sharing no ticker with the
+  in-sample eight. **Three carry splits in span** (RTX x1.589, CMCSA x1.067, HLF x2.0)
+  where the original eight had none, so the back-adjustment is load-bearing.
+
+### Changed
+- **`docs/RULES.md` - R13 added.** A ledger is scoped to a hypothesis and transfers only
+  where it shaped the search. Written after the principal pushed back twice, correctly, on
+  inherited counts: terrain's 259 and the ETF programme's 45,783 are disclosed and not
+  carried, since **D218 scopes its own floor to "this fixture"** meaning 57 ETFs daily.
+  D247-D276 keep the older convention and are not restated.
+- `docs/FINDINGS.md` - two extensions. **Section 1b: the `-mu - sigma^2` approximation is a
+  FLOOR on the drag, not an estimate** (error -2.85 pts at low volatility, -16.13 at high).
+  **Section 6: the overnight/intraday decomposition is cross-sectional as well as
+  era-dependent** - low-vol names accrue the drift intraday with the sign reversed.
+- `scripts/build_intraday_panel.py` - `--single-names` and `--holdout`, two path constants
+  each. ETF defaults untouched.
+- `scripts/fetch_single_name_intraday.py` - `--holdout` swaps symbols and the fixture triple
+  together in one place, for the reason `build_targets` exists in the ETF fetcher.
+
+### Fixed
+- **`exposure_x_edge` was `exposure * (cagr / exposure)`** - algebraically just `cagr`, and
+  the column duly reproduced the CAGR column in all sixteen rows (D264). The R6 failure
+  mode. Replaced with D250's construction, which is what surfaced the session's central
+  decomposition.
+- **D270's runner computed M3 only for cells that had already cleared M1 and M2**, so when
+  none did it printed "M3 not computed" and stopped - the same short-circuit D230 found in
+  D217/D218. Computed afterwards, and it changed the reading: three of fifteen volume cells
+  beat the shuffle floor.
+- **D271's volume arm counted overlapping windows as trades** - 43,204 "trades" from four
+  names over 8.25 years, or 1,309 per symbol per year against 252 sessions. De-overlapped,
+  the t-statistic falls from +5.30 to +2.31.
+- **The decomposition table was first rendered by subtracting annualised percentages**,
+  which do not add: -19.48% where the net was -15.84%. Restated in log units.
+- **`classify_single_name_steps.py` used the wrong tests twice** before settling on D259's
+  actual bad-print signature - one bar out of line with BOTH neighbours.
+- **D273's halt test shuffled without stratifying**, and H2 passed six of six - which under
+  R7's corollary is a broken hurdle, not six findings. Stratified, it drops to four.
+
+
 ### Added (D264 - the intraday short on single names, 2026-09-01)
 - `scripts/select_single_name_intraday.py` - the sample rule, run ONCE against the committed
   daily fixture over **2013-01-02 .. 2017-12-29, a window disjoint from the 2018-2026 test
