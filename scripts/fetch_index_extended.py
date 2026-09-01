@@ -99,6 +99,73 @@ EVENTS = REPO / "data" / "fixtures" / "index_extended_15m_raw_events.json"
 # which costs 96 extra requests and is therefore cheap enough to take.
 SYMBOLS = ("SPY", "QQQ", "IWM", "DIA")
 
+# --------------------------------------------------------------------------
+# THE WIDE UNIVERSE — `--wide`, added 2026-09-01 to settle a question D259 left
+# explicitly open.
+#
+# D259 measured the overnight decomposition on the four index ETFs and found
+# **SPY and QQQ DISAGREE about where the drift accrues** in the same era at the
+# same coverage: the untraded 20:00-04:00 window carries 33% of SPY's overnight
+# drift and 91% of QQQ's. D259's own words: "nothing should be built on the
+# untraded window's dominance." Four instruments cannot separate noise from
+# structure.
+#
+# SELECTION IS BY COVERAGE, NOT BY RESULT, and the threshold is stated here
+# before any decomposition is run: **median >= 45 extended bars per session of a
+# possible 64**, measured over a 34-month sample of the cache. That yields
+# exactly these twelve. The next symbol down (GDXJ at 44) and everything below it
+# is excluded by the same rule, and the rule is a DATA-QUALITY rule -- it cannot
+# select on the quantity being measured, because bar coverage is fixed before any
+# return is computed.
+#
+# The asset-class spread is the point. Four index ETFs are one bet; this adds
+# metals (GLD/SLV), energy (USO/UNG), miners (GDX), financials (XLF) and
+# INTERNATIONAL (EEM/FXI) -- and the international pair is the sharp test, since
+# 20:00-04:00 ET is Asian trading hours and their underlying markets are OPEN
+# during the window the US calls untraded.
+WIDE_SYMBOLS = ("SPY", "QQQ", "IWM", "DIA", "GLD", "SLV",
+                "USO", "UNG", "GDX", "EEM", "FXI")
+MIN_MEDIAN_BARS_FOR_WIDE = 45
+
+# XLF QUALIFIED ON COVERAGE (median 46) AND IS EXCLUDED ANYWAY, on data validity.
+#
+# The D226 large-move gate caught it on the first build and it is not a price
+# move: XLF closes 23.63 on Friday 2016-09-16 and opens 19.30 on Monday
+# 2016-09-19 -- then HOLDS there all day on 5.9M and 5.98M shares. A -18.3% step
+# that persists at full volume is a corporate action, and this one is the XLRE
+# REAL-ESTATE SPIN-OFF: XLF holders received XLRE shares and the price adjusted.
+#
+# **Alpha Vantage's SPLITS endpoint reports ZERO splits for XLF**, so the events
+# sidecar does not capture it. `SPLITS` and `DIVIDENDS` between them do not
+# express a spin-off, and this project has no general handling for one.
+#
+# Excluded rather than hand-patched, on D252's precedent (ORIG was dropped for an
+# unrecorded post-restructuring reverse split rather than corrected by hand). A
+# single hand-entered adjustment is a precedent that would not survive the next
+# fixture that needed two.
+XLF_EXCLUDED_SPINOFF = {
+    "symbol": "XLF", "date": "2016-09-19", "move": -0.1829,
+    "why": ("XLRE real-estate spin-off. -18.3% step persisting all day at full "
+            "volume; SPLITS reports none and the sidecar cannot express it."),
+}
+
+WIDE_FIXTURE = REPO / "data" / "fixtures" / "wide_extended_15m_raw.csv.gz"
+WIDE_META = REPO / "data" / "fixtures" / "wide_extended_15m_raw.meta.json"
+WIDE_EVENTS = REPO / "data" / "fixtures" / "wide_extended_15m_raw_events.json"
+
+
+def build_targets(wide: bool) -> tuple[Path, Path, Path, tuple]:
+    """Output paths AND the symbol list, chosen in ONE place.
+
+    Written this way because the sibling fetcher got exactly this wrong earlier
+    today: it parameterised two of three output paths, missed the meta, and
+    OVERWROTE A COMMITTED FIXTURE'S META. Three constants with two swapped hides
+    the one you forget.
+    """
+    if wide:
+        return WIDE_FIXTURE, WIDE_META, WIDE_EVENTS, WIDE_SYMBOLS
+    return FIXTURE, META, EVENTS, SYMBOLS
+
 INTERVAL = "15min"
 START_MONTH = "2010-01"   # coverage is thin before 2010 (44.9 bars/session in 2005)
 END_MONTH = "2026-08"
@@ -136,6 +203,46 @@ RTH_SESSION_BARS = 26
 MIN_MEDIAN_BARS_PER_SESSION = 32    # a silent RTH fallback would give exactly 26
 MIN_SESSION_SHARE_WITH_EXTENDED = 0.90
 MOVE_LIMIT = 0.15                   # D226: an unadjusted split looks exactly like this
+
+# DOCUMENTED REAL EVENTS — the allow-list D226's gate spec always required.
+#
+# D226 states the gate as "no residual single-bar move above 15% **that is not on
+# a documented list of real events**". The four-symbol index build never needed
+# the second half, because SPY/QQQ/IWM/DIA produce no such move in sixteen years.
+# A wider universe does, and the list below is NOT a loosened threshold -- the
+# threshold is unchanged at 15% and every entry is named, dated and reasoned.
+#
+# THE TEST FOR ADMISSION IS THE ONE D252 USED: does the move REVERT (a bad print),
+# PERSIST at full volume (a corporate action), or is it a corroborated market
+# event? Only the third belongs here. XLF's -18.3% persisted all day on 5.9M
+# shares and is therefore EXCLUDED AS A SYMBOL rather than allow-listed.
+DOCUMENTED_REAL_MOVES = {
+    ("USO", "2020-03-09"): (
+        "Saudi-Russia oil price war. WTI fell ~25% in a session; D226 already "
+        "documents XOP -36.9% and OIH -32.2% on this exact date as real."
+    ),
+    ("USO", "2020-04-02"): (
+        "Rebound on the OPEC+ production-cut headline, the mirror of the above."
+    ),
+    ("UNG", "2026-02-02"): (
+        "Natural gas gapped down and KEPT falling through the session -- 16.98 "
+        "to 14.12 pre-market, 13.74 at the open, 12.69 by the close, on 1.9M "
+        "shares. A bad print reverts; this did not."
+    ),
+}
+
+# Slices where the extended session is THIN rather than ABSENT. The gate exists
+# to catch `extended_hours` being silently ignored, which returns exactly 26
+# RTH bars. This slice returns a median of 33 over 19 sessions with 143
+# out-of-hours bars -- the extended session arrived, the month is just illiquid.
+# Named and counted rather than waved through by lowering the threshold.
+THIN_EXTENDED_SLICES = {
+    ("FXI", "2015-02"): (
+        "143 extended bars over 19 sessions, median 33/session against 26 for a "
+        "silent RTH fallback. Thin, not absent. FXI's neighbouring months carry "
+        "205-456 extended bars."
+    ),
+}
 
 # Clock times whose per-session availability is reported. 18:00 is the MyFundedFutures
 # Globex entry; the rest are the four-window boundaries.
@@ -828,7 +935,10 @@ def do_build() -> int:
             median_bars >= MIN_MEDIAN_BARS_PER_SESSION
             and anchor_cov["any_pre"] >= MIN_SESSION_SHARE_WITH_EXTENDED
             and anchor_cov["any_post"] >= MIN_SESSION_SHARE_WITH_EXTENDED
-            and not not_extended_slices
+            # Named exceptions only. A slice here has a THIN extended session,
+            # not an absent one -- the threshold is unchanged.
+            and not [s for s in not_extended_slices
+                     if tuple(s.split("/")) not in THIN_EXTENDED_SLICES]
         ),
         "the_04_00_and_19_45_bars_exist": bool(
             anchor_cov[SESSION_OPEN] > 0.0 and anchor_cov[SESSION_LAST_BAR] > 0.0
@@ -839,8 +949,19 @@ def do_build() -> int:
         "month_honoured": month_violations == 0,
         "bars_outside_requested_month": month_violations,
         "slices_without_extended_session": not_extended_slices,
-        "no_unexplained_large_bar": max_move["move"] <= MOVE_LIMIT,
+        # D226's gate in full: no move above the limit that is not on a
+        # DOCUMENTED list of real events. The threshold is unchanged.
+        "no_unexplained_large_bar": bool(
+            max_move["move"] <= MOVE_LIMIT
+            or (max_move["symbol"], str(max_move["timestamp"])[:10])
+            in DOCUMENTED_REAL_MOVES
+        ),
         "large_bar_threshold": MOVE_LIMIT,
+        "documented_real_moves": {f"{s}|{d}": why
+                                  for (s, d), why in DOCUMENTED_REAL_MOVES.items()},
+        "thin_extended_slices_allowed": {f"{s}|{m}": why
+                                         for (s, m), why in
+                                         THIN_EXTENDED_SLICES.items()},
         "anchor_bar_coverage": anchor_cov,
         "anchor_bar_coverage_by_symbol_and_era": anchor_cov_detail,
         "anchor_coverage_note": (
@@ -1005,6 +1126,10 @@ def do_build() -> int:
 
 
 def main() -> int:
+    # All four move together or none of them do. Declared up front because the
+    # help strings below read SYMBOLS.
+    global FIXTURE, META, EVENTS, SYMBOLS
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--plan", action="store_true", help="cost the job, no network")
     ap.add_argument("--probe", action="store_true",
@@ -1014,7 +1139,14 @@ def main() -> int:
                     help="fetch SPLITS + DIVIDENDS into the events sidecar")
     ap.add_argument("--build", action="store_true", help="cache -> fixture")
     ap.add_argument("--limit", type=int, help="fetch at most N slices this run")
+    ap.add_argument("--wide", action="store_true",
+                    help="the 12-symbol coverage-qualified universe, its OWN "
+                         "fixture; does not touch the 4-symbol index one")
     args = ap.parse_args()
+
+    # ONE assignment, so the fixture, meta, events and symbol list cannot drift
+    # apart. See build_targets() for why that is spelled out.
+    FIXTURE, META, EVENTS, SYMBOLS = build_targets(args.wide)
     if args.probe:
         return do_probe()
     if args.actions:
