@@ -4,7 +4,6 @@
 Supersedes `13-ACQUISITION-PROPOSAL.md`, which mis-read what a Databento subscription buys.
 
 ---
-
 ## 1. The governing principle
 
 **Historical data is a stock, not a flow.** A subscription buys new bars, corrections, and things
@@ -13,10 +12,13 @@ you did not think to pull. Once sixteen years are on disk they stay on disk.
 **So the correct shape is: subscribe, strip-mine, cancel** — and re-subscribe for a month if a
 future study needs fresh data. This is a one-off cost, not a running one.
 
-**The optimisation is therefore data-per-pound on a single pass**, with two constraints:
+**The optimisation is therefore data-per-pound on a single pass**, with three constraints:
 1. **Do not buy what Alpha Vantage already serves.**
 2. **Do not buy what has no plausible future study** — speculative volume is how you end up with
    500 GB and no result.
+3. **Do not buy the expensive instrument for a question a cheap one answers first.** This is the
+   constraint that moved tick data from a $145 line item to a conditional step (§7), and it is the
+   one most easily lost when a dataset is intrinsically interesting.
 
 ---
 
@@ -54,6 +56,12 @@ future study needs fresh data. This is a one-off cost, not a running one.
 **Alpha Vantage is therefore retained, not replaced.** Databento's plans cover
 **CME/CBOT/NYMEX/COMEX only** — equities and OPRA are separate products at every tier, so a
 subscription would not have bought equity coverage even if we wanted it.
+
+**One dataset sits outside both vendors and costs nothing: the CFTC Commitment of Traders report** —
+weekly institutional positioning, back to 1986, US-government public domain and therefore
+**committable to the repo, unlike anything from CME.** It is rung 1 of §7.5 and step 0 of §11. **It
+appeared in none of the twelve free-data lanes**, which searched for price data rather than
+positioning data.
 
 **One gap to close on the month already paid for:** extended-hours 15-minute for **all 57 ETFs**.
 D259 fetched only four, and **the existing 57-ETF fixture discarded the extended session at build
@@ -149,6 +157,12 @@ tenth.** Same underlying, exchange, session and settlement.
 Micros launched **May 2019**, so ~7 years. Their liquidity is thinner and the *relative* spread
 wider, which is itself worth measuring rather than assuming.
 
+**And micros carry a second payload that was not the reason for buying them.** Because MES exists
+so retail can trade a tenth-size contract, **the MES-to-ES notional ratio is an economically
+enforced read on retail participation** — which makes this $14.28 line the cheapest available test
+of the smart-money hypothesis, at roughly **3x the statistical power of $145 of tick data.** See
+**§7.4–7.5**. The micros justify their price twice over.
+
 **Ags and livestock (ZC/ZS/ZW/LE/HE) — bought for correlation, not for a strategy.** Their drivers
 are weather, planting and harvest cycles, export demand, biofuel mandates and herd dynamics. **None
 of those is the equity risk premium, the level of rates, or the dollar.**
@@ -200,50 +214,179 @@ overnight, where spreads widen and where C1 lives.**
 
 ---
 
-## 7. Tick data — the contested item, and a correction
+## 7. The smart-money question — a staged ladder, and why tick comes last
 
-**`trades`, ES only, 1 year: $145.33, 5.19 GiB.**
+**This section replaces an earlier one that proposed `trades` for ES, 12 months, $145.33. Tick is
+now DEFERRED, and the reasoning is worth keeping because it is not a cost argument.**
 
-**A correction first.** In discussion I priced tick at "about $8 per symbol-year" and quoted "ES+NQ,
-two years, ~$32". **Both were wrong by roughly 18x.** The measured figure is **$145.33 per
-symbol-year**, so ES+NQ for two years is **$581**, not $32. The proposal below uses the corrected
-numbers.
+### 7.1 Two corrections, in order
+
+**First, the price.** In discussion I put tick at "about $8 per symbol-year". The measured figure
+from Databento's own worked example is **$145.33 per symbol-year** — **wrong by ~18x**. ES+NQ for
+two years is **$581**, not $32.
 
 | scope | symbol-years | cost | volume |
 |---|---:|---:|---:|
-| **ES, 1 year** | 1 | **$145** | 5.2 GiB |
-| ES, 2 years | 2 | $291 | 10.4 GiB |
+| ES, 1 year | 1 | $145 | 5.2 GiB |
 | ES + NQ, 2 years | 4 | $581 | 20.8 GiB |
-| ES + NQ, 3 years | 6 | $872 | 31.1 GiB |
 | *ES, 15 years* | *15* | *$2,180* | *78 GiB* |
 
-**What it is:** every individual transaction — nanosecond timestamp, price, size, and the aggressor
-side (who crossed the spread). Roughly **1–5 million trades per day** for ES.
+**Second, the case for buying it.** The argument that reopened tick was that **order flow is one of
+the few signal families with the shape hurdle P wants** — many small observations, high hit rate,
+tight tails — where every construction this programme has closed was directional and failed on
+shape. **That argument still stands.** What changed is that a cheaper instrument answers the same
+question better, and generic order-flow mining is, as originally judged, the most heavily contested
+domain in the market.
 
-**What it unlocks, and this is what the original exclusion under-weighted:**
+### 7.2 The narrow question worth asking
 
-- **Order-flow imbalance** — the running difference between aggressive buying and aggressive selling
-- **Volume profile** — where volume concentrated by *price* rather than by time
-- **Large-trade detection** — institutional footprints in the size distribution
-- **Execution modelling** — how a real order would actually have filled
+Not *"does order flow predict returns"* — that is HFT's home ground. The narrow question is:
 
-**The argument that changes the verdict:** every construction this programme has built and closed was
-**directional**, and hurdle P rejected three of them on **shape** — negative skew, low hit rate, an
-outsized worst trade. **Order flow is one of the few signal families with the shape P wants:** many
-small observations, high hit rate, tight tails. *"No current question needs it"* was too narrow a
-test, because the absence of a question was itself a consequence of never having had the data.
+> **Can institutional participation be separated from retail participation, and does the separation
+> carry information at an hours-to-days horizon?**
 
-**The honest counterweight, which is not cost:** order flow is the most intensively mined domain in
-finance — it is what co-located HFT firms do. A retail-latency reading starts with a poor prior.
-**Though we would not be competing at their horizon**: a flow signal held for hours is a different
-game from one held for microseconds, and the crowding argument is much weaker there.
+That is a **detector**, not a speed race. Nothing about it requires being fast; it requires being
+able to tell two populations apart.
 
-**Recommendation: ES only, most recent 12 months, $145.** Not fifteen years — **order-flow
-relationships track market structure, and 2015's book is not 2026's.** One symbol is enough to
-establish whether anything is there; if it is, extending is cheap relative to having learned it.
+### 7.3 The levers on tick, measured — all three are weak
 
-**This single item is 43% of the total spend and 46% of the storage.** It is the one line worth
-deciding deliberately rather than by default.
+**Session filtering saves ~13%, not ~57%.** Measured on `index_extended_15m_raw`, 2010–2026:
+
+| | volume outside 09:30–16:00 | bars outside |
+|---|---:|---:|
+| **SPY** | **12.82%** | 58.8% |
+| QQQ | 9.85% | 56.8% |
+| IWM | 10.45% | 53.5% |
+| DIA | 5.21% | 47.3% |
+
+**Databento bills bytes, and bytes track TRADES, not hours.** Cutting 57% of the clock removes 13%
+of the tape: ES RTH-only is **~$126 instead of $145**. *(Caveat: this is equities on a 04:00–19:45
+window, not futures on 23 hours. The futures overnight share is likely higher, but not by enough to
+change the conclusion.)*
+
+**No size filter exists.** There is no server-side predicate for "trades ≥ 50 lots", and the small
+trades are needed anyway to establish what "large" means. **`tbbo` is MORE bytes than `trades`**,
+not fewer, so the schema cannot be traded down either.
+
+**Shortening the span breaks the study before it saves the money.** Standard error of an annualised
+Sharpe over `T` years is `~sqrt(1/T)`:
+
+| span | MDE on Sharpe, 95% one-sided |
+|---|---:|
+| 3 months | **3.29** |
+| 6 months | **2.33** |
+| **1 year** | **1.65** |
+| 2 years | 1.16 |
+| 3 years | 0.95 |
+| 7 years | 0.62 |
+| 16 years | 0.41 |
+
+**At ES-only-for-one-year, a Sharpe of 1.65 is required to distinguish the signal from zero. $145 is
+already the floor, not an opening price** — and [D227](../../decisions/README.md) was abandoned on
+precisely this arithmetic, where halving a sample lifted the MDE onto the effect size.
+
+**And breadth is priced badly for this idea.** Effective instruments for a pair is `2/(1+rho)`:
+
+| pair | rho | effective instruments | $ per unit of breadth |
+|---|---:|---:|---:|
+| ES + NQ | +0.90 | **1.05** | $276 |
+| ES + YM | +0.95 | 1.03 | $284 |
+| ES + CL | +0.35 | 1.48 | $196 |
+| ES + GC | +0.10 | 1.82 | $160 |
+| ES + ZN | −0.30 | **2.86** | **$102** |
+
+**ES+NQ costs $291 to move effective breadth from 1.00 to 1.05.** ZN is six times better value per
+unit — **but it is exactly where the detector's premise collapses.** Treasury futures flow is almost
+entirely institutional (dealers, pensions, central banks), so there is no retail population to
+separate against. **The premise is strongest precisely where the breadth is worst.**
+
+### 7.4 The decisive argument, and it is not about cost
+
+**A trade-size threshold is a guessed cut, and execution algorithms exist specifically to defeat
+it.** Hiding institutional size by slicing a parent order into child orders that look retail is the
+entire job of a VWAP or implementation-shortfall algo. **The adversary in this game has been
+actively attacking the detector's core assumption for twenty years.**
+
+**That attack does not work on the contract choice.**
+
+**MES exists so retail can trade a $30,000 contract instead of a $300,000 one.** Ten MES cost
+roughly **3x the round-turn fees** of one ES for identical exposure, plus far worse aggregate spread
+impact across ten times the contracts. **Anyone trading size uses ES, and that is not a preference,
+it is arithmetic.** So the micro/mini split is an **economically enforced partition of the
+participant pool**, not a heuristic:
+
+```
+micro notional share(t) = MES_vol(t) / ( MES_vol(t) + 10 * ES_vol(t) )
+```
+
+Rising micro share means retail crowding in. **Fading the retail crowd IS the smart-money signal** —
+the same hypothesis the tick version tests, measured on a partition nobody can slice their way
+across.
+
+### 7.5 The ladder, cheapest first
+
+**Rung 1 — CFTC Commitment of Traders. FREE, and it can be committed.**
+
+Weekly, **back to 1986**, published by a US government agency and therefore **public domain** — so
+unlike every CME product in this proposal, **the COT series is not subject to the redistribution
+constraint in §12 and may live in the repo.** It reports open interest split into **commercial
+(hedgers), non-commercial (managed money), and non-reportable (small traders)**, per contract, for
+every symbol on the buy list.
+
+**This is the official institutional-positioning series.** It is weekly and lagged three days, so it
+is a slow positioning read rather than a tape read — a different animal from flow, and
+complementary to it. **It surfaced in none of the twelve free-data lanes**, which searched for price
+data.
+
+**Rung 2 — the micro/mini notional ratio. $14.28, and ALREADY on the buy list.**
+
+| | tick size-buckets | **micro/mini ratio** |
+|---|---|---|
+| cost | $145.33 | **$14.28 — already budgeted** |
+| instruments | 1 (ES) | **4 pairs** — ES/MES, NQ/MNQ, RTY/M2K, YM/MYM |
+| span | 1 year | **7 years** (MES launched May 2019) |
+| effective instruments | 1.00 | **1.13** at rho ≈ 0.85 |
+| effective T | 1.0 yr | **7.9 yr** |
+| **MDE on Sharpe** | **1.65** | **0.59** |
+| defeated by order slicing | **yes** | **no** |
+
+**Ten times cheaper and roughly three times better powered, on the same hypothesis.**
+
+**Its honest weakness:** it is coarse. Per-minute *participation share*, not per-trade aggressor
+side — it cannot see absorption, and it cannot see who crossed the spread. **It is a weaker
+instrument answering a better-posed question with far more power.**
+
+**Rung 3 — open interest against volume. FREE with the purchase**, in the `statistics` schema (L0).
+Rising price with rising OI is new positioning; rising price with falling OI is short covering.
+**Conviction versus churn** — the same question again, at daily resolution, across all 26 symbols
+and 16 years.
+
+**Rung 4 — tick, CONDITIONAL.** Buy `trades` **only if rung 2 or rung 3 shows something**, at which
+point it is a refinement of a live result rather than a punt, and worth **2–3 years rather than 1**
+($291–$436). **If rungs 1–3 come back empty, that is meaningful evidence against the premise itself,
+bought for $14 instead of $145.**
+
+### 7.6 If tick is ever bought — the parallel-backtest architecture
+
+**Reduce the tape to per-minute flow features at build time.** Signed volume and trade count per
+size bucket, CVD per bucket, large-trade aggressor imbalance, and an absorption proxy (volume per
+unit of price range):
+
+| features per minute | derived panel, per symbol-year | share of the 5.19 GiB raw |
+|---:|---:|---:|
+| 12 float32 | 16.7 MB | 0.30% |
+| **20 float32** | **27.8 MB** | **0.50%** |
+| 32 float32 | 44.5 MB | 0.80% |
+
+**That is the same order as one `ohlcv-1m` symbol-year (19.5 MB), so it slots into the existing
+`(n, T)` panel as extra columns** — same `ragged_panel` loader, same cost model, same matched-count
+nulls, same hurdles. Raw trades stay on the external drive purely for re-derivation.
+
+**The constraint to state plainly:** the complex is 26 symbols x 16 years, and the flow panel would
+be **1 symbol x 1 year**. Any study touching flow features is a one-symbol one-year study at
+effective breadth 1.00, **however much other data sits beside it. The rest of the complex cannot
+lend it power.** That is the real reason tick is deferred, **and it is not solved by spending
+more.**
 
 ---
 
@@ -252,7 +395,7 @@ deciding deliberately rather than by default.
 | | reason |
 |---|---|
 | **`ohlcv-1s`** | **$30.60/symbol-year — 60x the 1-minute rate.** ES+NQ over 16 years is **$980**, eight times the entire 1-minute complex. It answers no question we hold; the execution question it might serve is better answered by **`bbo`** at 1/20th the price |
-| **`trades` beyond ES 1 year** | $145/symbol-year. Extending is cheap **once we know there is something there** — buying fifteen years first is the wrong order |
+| **`trades` — ALL scopes, deferred not excluded** | **$145.33/symbol-year.** Not price alone: at ES-only-1-year the **MDE is 1.65 Sharpe**, a trade-size cut is **what execution algos are built to defeat**, and the [micro/mini ratio](#75-the-ladder-cheapest-first) tests the same hypothesis for **$14.28 at 3x the power**. Bought only on a positive rung-2 or rung-3 result — see §7 |
 | **OPRA options** | Not cost. [D84](../../decisions/D84-options-scoping-writeup.md) scoped it: chain data at **100–1000x volume**, *plus* **6–10 weeks of engine surgery** for expiry and assignment lifecycle, because D45's inner-join alignment silently truncates the whole portfolio at the shortest-lived contract's expiry. **Data without an engine sits unused.** Alpha Vantage also covers options |
 | **Equity intraday** | **Alpha Vantage already serves it** — extended hours, back to ~2005. And it is not on Databento's CME plans at any tier |
 | **L2 / L3 order book (MBP-10, MBO)** | **Unavailable, not expensive.** Capped at *one month* on every tier below Unlimited ($4,500/mo) |
@@ -269,24 +412,27 @@ deciding deliberately rather than by default.
 | current project | 2.0 |
 | 1-minute complex, raw | 6.8 |
 | `bbo-1m`, ES + NQ, 12 months | ~0.03 |
-| **`trades`, ES, 12 months** | **5.2** |
+| CFTC COT, full history, all contracts | ~0.05 |
 | Alpha Vantage extended-hours top-up | 0.6 |
 | derived fixtures, working space, 2x headroom | ~8 |
-| **projected total** | **~23 GB** |
+| **projected total** | **~18 GB** |
+| *conditional — `trades`, ES, 12 months (rung 4)* | *+5.2* |
+| *conditional — `trades`, ES + NQ, 3 years* | *+31.1* |
 
-**Buy a 1 TB portable NVMe SSD, ~£55–75.** It is 40x more than the projection needs and is still the
-right unit: **it is the cheapest capacity point that is NVMe rather than a spinning disk.**
+**Buy a 1 TB portable NVMe SSD, ~£55–75.** It is ~55x more than the projection needs and is still
+the right unit: **it is the cheapest capacity point that is NVMe rather than a spinning disk**, and
+it is the only thing on this list that absorbs rung 4 without a second purchase.
 
 **Two specifics that matter:**
 
 1. **NVMe, not a portable hard disk.** Fixtures are read sequentially and decompressed at load; a
    5,400 rpm USB drive would add minutes to every run. A USB 3.2 NVMe unit sustains 1,000+ MB/s.
-2. **Put the RAW CACHE on the external drive; keep the git repo on internal storage** if there is any
-   room at all. The cache is the bulk (11,282 files today) and is read sequentially; git does small
-   random I/O and is much happier internal.
+2. **Put the RAW CACHE on the external drive; keep the git repo on internal storage** if there is
+   any room at all. The cache is the bulk (11,282 files today) and is read sequentially; git does
+   small random I/O and is much happier internal.
 
-**Only go larger if tick expands.** ES `trades` at 15 years is 78 GB and the full complex ~2.7 TB —
-**a decision to make when a study needs it**, at which point a 4 TB unit is ~£180.
+**Only go larger if tick expands past rung 4.** ES `trades` at 15 years is 78 GB and the full
+complex ~2.7 TB — **a decision to make when a study needs it**, at which point a 4 TB unit is ~£180.
 
 ---
 
@@ -296,33 +442,55 @@ right unit: **it is the cheapest capacity point that is NVMe rather than a spinn
 |---|---:|
 | 1-minute complex, 26 symbols, 358 symbol-years | $182.58 |
 | `bbo-1m`, ES + NQ, 12 months | ~$2 |
-| **`trades`, ES, 12 months** | **$145.33** |
-| `definition` + `statistics` | negligible |
-| **gross** | **~$330** |
+| `definition` + `statistics` (carries open interest — **rung 3**) | negligible |
+| CFTC Commitment of Traders (**rung 1**) | **$0** |
+| **gross** | **~$185** |
 | **less new-user credit** | **−$125** |
-| **cash for data** | **~$205** |
+| **cash for data** | **~$60** |
 | storage — 1 TB portable NVMe | ~$70 |
 | Alpha Vantage | $0 extra — a month already paid for |
-| **TOTAL, one-off** | **~$275** |
-
-**Without tick: ~$130 total** ($60 data + $70 drive).
+| **TOTAL, one-off** | **~$130** |
 
 **Recurring: nothing.**
+
+**Deferred, not budgeted:** `trades` for ES at 2–3 years, **$291–$436** — bought only on a positive
+result from rung 2 or rung 3 (§7.5). **The smart-money hypothesis is tested for $14.28 before that
+question is asked**, and the whole tick line is conditional on the answer.
+
+**The credit is the binding constraint, not the wallet.** At $182.58 the 1-minute complex overruns
+the $125 credit by **$57.58**, and every remaining item is $2 or free. **The only decision worth
+making at this budget is rung 4, and this proposal recommends not making it yet.**
 
 ---
 
 ## 11. Sequencing
 
+**Step 0 costs nothing and does not wait for any of the rest.**
+
+0. **Fetch the CFTC Commitment of Traders history** — free, public domain, ~50 MB, no account and
+   no purchase. **It is committable**, so it lands in `data/fixtures` under the normal convention
+   rather than the gitignored cache. This is rung 1 of §7.5 and it can be screened before a penny
+   is spent.
 1. **Sign up and confirm the unit price** — `list_unit_prices(dataset="GLBX.MDP3")`. Thirty seconds,
    and it removes the one inferred number in this costing **before any money is spent.**
-2. **Alpha Vantage top-up first**, on the month already paid for: extended-hours 15-minute for all 57
+2. **Alpha Vantage top-up**, on the month already paid for: extended-hours 15-minute for all 57
    ETFs, plus a refresh of every existing fixture.
 3. **Buy the drive**, move the raw cache, verify fixtures still load.
 4. **Databento pull** — one `batch.submit_job` for the 1-minute complex plus `definition` and
-   `statistics`; a second for `bbo-1m`; a third for `trades` if taken.
+   `statistics`; a second for `bbo-1m`. **No `trades` job.**
 5. **Acceptance-test the roll before any study reads the fixture** (§12).
-6. **Cancel nothing** — usage-based has no subscription to cancel. **Alpha Vantage is a separate
+6. **Screen the ladder in order** — COT (rung 1), micro/mini ratio (rung 2), OI-vs-volume (rung 3).
+   **Only a positive result there justifies returning for `trades`** (rung 4), which needs no new
+   subscription and can be bought at any later date.
+7. **Cancel nothing** — usage-based has no subscription to cancel. **Alpha Vantage is a separate
    decision** once the top-up is banked.
+
+**Two traps carried forward from the free-data search, restated because they are cheap to hit:**
+
+- **`stype_in="continuous"` (`ES.c.0`), never `parent`** — `parent` resolves to every outright *plus*
+  every calendar spread, which is both wrong and far more expensive.
+- **`batch.submit_job`, not streaming** — streaming re-bills on retry; batch bills once and allows
+  30 days of free re-downloads.
 
 ---
 
@@ -363,5 +531,8 @@ writing ours.
 | Whether **`bbo-1m`** exists as a schema, or only `bbo-1s` | schema list post-signup | free |
 | Whether **CME licence fees** apply on top of usage-based historical | the licensing pages would not load for any research lane | ask at signup |
 | Fair-use caps on bulk L0 under usage-based | not documented | ask at signup |
+| **When MES volume became representative** — the contract launched 2019-05 and ramped, so the early months may not support the §7.5 rung-2 ratio | measure the micro share series itself and set the start where it stabilises | free, post-pull |
+| Whether CME's **`statistics`** schema carries open interest at daily resolution for all 26 symbols | schema inspection post-pull | free |
+| **CFTC COT contract-code mapping** to our symbols — the report uses its own market codes | one lookup against the CFTC code list | free, no purchase |
 
-**None of these blocks step 1**, and step 1 resolves the first two.
+**None of these blocks step 0 or step 1**, and step 1 resolves the first two.
