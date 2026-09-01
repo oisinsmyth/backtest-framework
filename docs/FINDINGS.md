@@ -69,6 +69,27 @@ equal-weight basket returned **+32.55%** while the median coin returned **−9.1
 a tax on the short side and a rebalancing subsidy on the long side. **The two sides of a universe
 are not mirror images.**
 
+#### The approximation degrades where `sigma^2` is large — measured, 2026-09-01
+
+[D264](decisions/D264-the-intraday-short-on-single-names.md) tested the formula a third time, on
+eight single names at 15 minutes, split by volatility:
+
+| stratum | `sigma^2` | predicted | **measured `SHORT_ALL`** | error |
+|---|---:|---:|---:|---:|
+| **LOW** — PG LMT PM MO | 0.033 | −11.75% | **−14.60%** | **−2.85 pts** |
+| ALL | 0.073 | −12.82% | −27.08% | −14.25 pts |
+| **HIGH** — CLF SM YELP RH | 0.209 | −21.60% | **−37.73%** | **−16.13 pts** |
+
+**At low volatility it reproduces D253's crypto error exactly — −2.85 points, the same number. At
+high volatility it understates the drag by 16 points.** `log(2 − e^r)` is being approximated to
+second order, so higher-order terms bite as `|r|` grows, and **the formula is a floor on the drag
+rather than an estimate of it.** Quote it as universal only at moderate volatility.
+
+**And the practical form of the same point:** on D264's best cell the variance tax took **59% of
+the linear `exposure × edge`** — +8.31%/yr gross became +3.43%/yr realisable — **before a single
+basis point of trading cost was charged.** A short's gross edge is not what a conditional-return
+table says it is.
+
 ### 1c. Consequences
 
 - **A short is not survivable at full notional on a high-volatility universe.** D253's guard
@@ -219,6 +240,27 @@ a stop*, not *having a 10% stop*.
 - Rapach et al.'s aggregate short-interest timing, per the literature review: the entire result
   disappears without 2008.
 
+### The same decomposition is ALSO cross-sectional — [D264](decisions/D264-the-intraday-short-on-single-names.md), 2026-09-01
+
+**It is not one era *and* not one asset class. It is a property of VOLATILITY**, measured on eight
+single names over the same 2018–2026 span D247 used:
+
+| | overnight/yr | intraday/yr | swing |
+|---|---:|---:|---:|
+| **LOW vol** — PG LMT PM MO, 14–16% | +4.36% | **+5.56%** | **−1.21 pts** |
+| **HIGH vol** — CLF SM YELP RH, 54–78% | +13.81% | **−8.97%** | **+22.78 pts** |
+| *57 ETFs — D247* | *+8.59%* | *−0.36%* | *+8.95 pts* |
+
+**In the low-volatility names the drift accrues INTRADAY and the sign reverses.** The ETF figure
+is not an asset-class constant; it is an average across instruments whose volatility differs, and
+the effect is concentrated at the high-volatility end.
+
+**Two consequences.** First, **any construction justified by "the overnight carries the drift" must
+name which instruments it means** — the claim is false for defensive mega-caps. Second, the queued
+wide extended-hours study (`c25218d`), which asks where untraded-window drift accrues across 11
+instruments, **should carry a volatility split**; PICKUP.md already records SPY and QQQ disagreeing
+(33% against 91%), and this says that disagreement has a measurable axis.
+
 ---
 
 ## 7. The objective is Sharpe, not return
@@ -287,3 +329,55 @@ and the short hypothesis pull in opposite directions.**
 **What is live now** is therefore a question of **construction**, not universe: a concentrated
 book (colliding with hurdle E), or a factor-neutral one — which D251 closed on ETFs at breadth 2.2
 but which this fixture's 1,580 names could genuinely support.
+
+### The concentrated branch was taken, and it answered — [D264](decisions/D264-the-intraday-short-on-single-names.md), 2026-09-01
+
+**Eight names instead of 1,580, flat at every session close.** The concentration worked, in the sense
+the hypothesis required, and the construction failed anyway on arithmetic.
+
+**Concentration did what §4 said it could not.** Effective independent instruments came in at
+**3.02 of 8** — against **2.23** on the 57 ETFs and 1.80 of 35 on crypto. **Eight single names carry
+more independent breadth than fifty-seven ETFs, so §4's saturation near 2.2 is a property of that
+universe, not a ceiling on equities.** Hurdle E cleared in all sixteen cells.
+
+**And the idiosyncratic edge survived the concentration**, which is exactly what D256's diluted
+1,580-name book could not show. The intraday-flat S1 short on the high-volatility stratum holds bars
+returning **−28.87%/yr** — the most negative held-bar return this programme has measured, against
+D247's −4.27% — and clears hurdle H on **both** legs at the **96.9th / 99.7th** percentile.
+
+**It still loses 15.84% a year, and the identity says why:**
+
+| | %/yr, continuously compounded |
+|---|---:|
+| `exposure × edge` | **+8.31%** |
+| − the `sigma^2` variance tax (§1b) | −4.87% |
+| **= realisable gross** | **+3.43%** |
+| − trading cost, 324 turns/yr | **−20.68%** |
+| = net | **−17.24%** |
+
+**So the tension in §9 is real but it was not the binding one.** Concentration did preserve the edge
+*and* the sample. **What binds is turnover cost at 6.0× the realisable gross** — and it binds
+without needing any assumption, because **commission alone is 1.92 bp/side against a 1.06 bp
+breakeven.** The cell loses at a zero spread.
+
+**The cost wall does move with volatility, and not far enough.** Breakeven rose **8.2×** from D247's
+ETF figure while charged cost rose **4.0×**, halving the shortfall from **12.3× to 6.1×**.
+
+**R12's escape hatch does not apply to this family.** A construction excluded on ETF cost arithmetic
+is supposed to be re-costed on futures before being discarded. **This one cannot be** — its edge is
+single-name idiosyncratic variance, and no retail futures contract exists on a single name. The ~20×
+cost reduction that rescues other intraday constructions is structurally out of reach here.
+
+**Bounded closure.** D264 closes *that construction on those eight survivor names*. It does not close
+the intraday short: `TIME_SERIES_INTRADAY` serves no delisted ticker, so **41.6% of the 2013–17
+cohort is unreachable at this frequency**, and the bias runs *against* the short.
+
+**What is live after D264:**
+
+1. **The factor-neutral branch of §9 is still untouched.**
+2. **Cost per basis point is a function of PRICE, not just liquidity** — IBKR charges per share, and
+   commission ranged **0.20 bp (RH) to 4.15 bp (CLF)** inside one stratum. A high-priced,
+   high-volatility name gets the edge at a fraction of the commission. Invisible on price-clustered
+   ETFs. Recorded post-hoc, deliberately not tested inside D264, and eligible only as its own
+   pre-registration under D246 Constraint 3.
+3. **Overnight drift is a property of volatility, not of equities** — see §6.

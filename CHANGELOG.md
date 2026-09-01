@@ -10,6 +10,72 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D264 - the intraday short on single names, 2026-09-01)
+- `scripts/select_single_name_intraday.py` - the sample rule, run ONCE against the committed
+  daily fixture over **2013-01-02 .. 2017-12-29, a window disjoint from the 2018-2026 test
+  span**, so no statistic that picked a name has seen a bar the study scores. Survivor,
+  >=95% coverage, median dollar volume >=$50M, then stratified on realised volatility.
+  Output frozen into the fetcher as a literal tuple: LOW = PG LMT PM MO (14.1-16.2%),
+  HIGH = CLF SM YELP RH (53.7-78.0%).
+- `scripts/fetch_single_name_intraday.py` - `--plan / --actions / --fetch / --build`, reusing
+  `fetch_etf_intraday.py`'s helpers rather than copying them (D212). Adds a gate the ETF
+  builder does not have: **every session-boundary step above D226's 15% is reported and
+  classified**, because `SPLITS` + `DIVIDENDS` do not cover spin-offs and XLF's XLRE
+  spin-off is a -18.3% step Alpha Vantage reports as zero splits.
+- `scripts/classify_single_name_steps.py` - D226's allow-list, built by measurement.
+  **All 30 flagged steps classify as REAL** - 13 market-wide, 17 idiosyncratic on a clean
+  volume spike, zero corporate actions, zero split-like ratios, which corroborates the
+  provider's "no splits in span" from a direction that does not depend on the provider.
+  Every flagged step is in the HIGH stratum; the LOW stratum flagged nothing.
+- `data/fixtures/single_name_intraday_15m_raw.csv.gz` + meta + events - 448,279 rows,
+  8 symbols, 2018-01-02 .. 2026-08-31. **Zero-volume rate 0.0000%, incomplete-session rate
+  0.099%**, 16 half-days derived and dropped.
+- `data/fixtures/single_name_intraday_15m_panel.csv.gz` - the aligned panel `load_panel`
+  requires: **8 x 55,004 bars, 2,117 sessions, exactly 26.0 per session**, converged on the
+  first pass. Comparable by construction to D247's 57 x 55,726 at 25.85/session.
+- `scripts/run_single_name_intraday.py` - 16 cells, six hurdles, every leg computed (R6).
+  Three things written fresh and each PINNED against the committed primitive it generalises:
+  `cost_vector` (per-symbol cost; commission still derived from the IBKR schedule, only the
+  half-spread is per-stratum; pinned against `L.per_side_bps`), `excess_vec` (D247's
+  financing with a per-symbol borrow rate; pinned against `D.excess_intraday`), and
+  `rotation_all` (ONE shared offset draw across all 16 cells in all three strata, because
+  the strata are subsets of the same eight symbols and drawing per stratum would inflate the
+  best-of floor).
+- `SINGLE_NAME_INTRADAY_RESULTS.md`, `data/single_name_intraday_summary.json`,
+  `data/single_name_intraday_selection.json`, `data/single_name_intraday_steps.json`.
+
+### Changed (D264)
+- `scripts/build_intraday_panel.py` - generalised by two path constants and a
+  `--single-names` flag. **The ETF defaults are untouched.** Duplicating 130 lines of
+  fixed-point intersection to change two paths is what D212 exists to prevent.
+- `docs/FINDINGS.md` - two extensions, both measured by D264. **Section 1b: the
+  `-mu - sigma^2` approximation degrades where `sigma^2` is large** - error -2.85 pts on the
+  low-vol stratum, reproducing D253's crypto error exactly, against -16.13 pts on the
+  high-vol one; it is a FLOOR on the drag, not an estimate. **Section 6: the
+  overnight/intraday decomposition is cross-sectional as well as era-dependent** - low-vol
+  names accrue the drift INTRADAY with the sign reversed (+4.36% overnight against +5.56%
+  intraday) while high-vol names run +13.81% against -8.97%. Section 9 records that the
+  concentrated branch was taken and answered.
+
+### Fixed (D264, found during the run and both recorded rather than quietly replaced)
+- **`exposure_x_edge` was computed as `exposure * (cagr / exposure)`**, which is
+  algebraically just `cagr`, and the column duly reproduced the CAGR column in all sixteen
+  rows. R6 is the rule it broke: a reporting requirement that names a quantity is not
+  satisfied until that quantity is computed. Replaced with D250's construction - the signed
+  position against the bar return - and reported beside the held-bar edge it is the product
+  of. The decomposition it enabled is where the study's answer turned out to live.
+- **The decomposition table was first rendered by subtracting annualised percentages**,
+  which do not add: it gave -19.48% where the net was -15.84%. Restated in
+  continuously-compounded units, where the identity closes exactly.
+- **`classify_single_name_steps.py` used the wrong tests twice.** v1 asked "did price revert
+  within 5 sessions" and "was volume above the trailing median", and tagged CLF and YELP as
+  CORPORATE ACTION on 2020-03-17 while tagging RH REAL on the same date - a corporate action
+  does not hit three unrelated companies on one day, and the volume denominator already
+  contained the crash weeks. v2 still called RH 2018-06-12 a BAD PRINT on 25.69x volume.
+  The working test is D259's actual signature: ONE bar out of line with BOTH its neighbours.
+  Both wrong versions are documented in the module docstring.
+
+
 ### Added (D262 - the futures data layer and the free rung, 2026-09-01)
 - `scripts/fetch_cftc_cot.py` - sibling of `fetch_index_extended.py`, same
   `--plan / --probe / --map / --fetch / --build` phases, same limiter discipline, stdlib

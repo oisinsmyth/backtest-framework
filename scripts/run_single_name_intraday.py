@@ -173,12 +173,54 @@ def score(panel, pos, start, first, gap, ppy, borrow_v):
     yrs = len(total) / ppy
     exposure = float(np.maximum(-live, 0.0).mean() + np.maximum(live, 0.0).mean())
     cagr = float(np.expm1(np.sum(total) / yrs))
+
+    # FINDINGS 1a -- `exposure x edge`, and it must be computed as the PRODUCT.
+    #
+    # THE FIRST VERSION OF THIS LINE WAS `exposure * (cagr / exposure)`, which is
+    # algebraically just `cagr`, and the column duly reproduced the CAGR column
+    # in all sixteen rows. R6 is the rule it broke: a hurdle or a reporting
+    # requirement that names a quantity is not satisfied until that quantity is
+    # actually computed.
+    #
+    # The right construction is D250's, where `gross = share_of_cells x
+    # (-held_bar_edge)` reproduced +0.39%/yr from 3.51% of cells at a -11.53%
+    # edge. Summing the SIGNED position against the bar return does exactly that
+    # product with the signs handled, and it is GROSS -- before costs, before
+    # financing -- which is what makes it comparable across cells whose turnover
+    # differs by an order of magnitude.
+    lin_log = float((pos[:, start:] * panel.total_log_returns[:, start:]).mean(axis=0).sum())
+    gross = float(np.expm1(lin_log / yrs))
+    held = pos[:, start:] != 0.0
+    hv = panel.total_log_returns[:, start:][held]
+    held_edge = float(np.expm1(hv.mean() * ppy)) if hv.size else None
+
+    # THE EXACT DECOMPOSITION, and it is where this study's answer lives.
+    #
+    # `exposure x edge` is the LINEAR product, which is what FINDINGS 1a and
+    # D250's table compute. It is NOT what the book earns, because a short does
+    # not earn `-r`, it earns `log(2 - e^r)` -- FINDINGS 1b's convexity, whose
+    # expectation is about `-mu - sigma^2`. So the linear product OVERSTATES the
+    # realisable gross by exactly the variance tax, and on a 45.7%-vol stratum
+    # that gap is not a rounding error.
+    #
+    #   linear gross  ->  (less the sigma^2 convexity)  ->  realisable gross
+    #                 ->  (less trading cost)           ->  net
+    #
+    # Both legs are measured here rather than inferred, so the identity closes.
+    real_log = float(np.log1p(pos * np.expm1(panel.total_log_returns))[:, start:]
+                     .mean(axis=0).sum())
+    charge = panel.cost_fraction[:, None] * np.abs(np.diff(pos, axis=1, prepend=0.0))
+    cost_log = float(-np.log1p(-charge)[:, start:].mean(axis=0).sum())
     return {
         "excess_sharpe": _sharpe(ex, ppy),
         "cagr": cagr,
         "exposure": exposure,
-        # FINDINGS 1a: never the edge alone.
-        "exposure_x_edge": exposure * (cagr / exposure) if exposure > 0 else 0.0,
+        "exposure_x_edge": gross,
+        "held_bar_edge": held_edge,
+        "gross_linear_pa": gross,
+        "gross_realisable_pa": float(np.expm1(real_log / yrs)),
+        "convexity_tax_pa": float(np.expm1(lin_log / yrs) - np.expm1(real_log / yrs)),
+        "trading_cost_pa": float(np.expm1(cost_log / yrs)),
         "total_return": L.total_return_of(total),
         "vol": float(np.std(total, ddof=1) * math.sqrt(ppy)),
         "max_drawdown": L.max_drawdown_of(total),
@@ -619,13 +661,18 @@ def render(p: dict) -> str:
               + (f"**{c['annualised']:+.2%}** |" if c["annualised"] is not None else "— |"))
 
     A("\n## Part B — the 16 cells\n")
-    A("| stratum | cell | exposure | CAGR | exp x edge | excess Sharpe | max DD | "
-      "turnover/yr | borrow/yr | entries (min/sym) |")
-    A("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|")
+    A("*`exposure x edge` is the GROSS product per FINDINGS 1a -- signed position "
+      "against the bar return, before costs and financing -- reported beside the "
+      "held-bar edge it is the product of, never the edge alone. CAGR is net.*\n")
+    A("| stratum | cell | exposure | held-bar edge | **exp x edge** | CAGR (net) | "
+      "excess Sharpe | max DD | turnover/yr | borrow/yr | entries (min/sym) |")
+    A("|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
     for st, k in SCORED:
         c = p["cells"][f"{st}:{k}"]
-        A(f"| {st} | **{k}** | {c['exposure']:.1%} | {c['cagr']:+.2%} | "
-          f"{c['exposure_x_edge']:+.2%} | **{c['excess_sharpe']:+.3f}** | "
+        A(f"| {st} | **{k}** | {c['exposure']:.1%} | "
+          + (f"{c['held_bar_edge']:+.2%}" if c.get("held_bar_edge") is not None else "—")
+          + f" | **{c['exposure_x_edge']:+.2%}** | {c['cagr']:+.2%} | "
+          f"**{c['excess_sharpe']:+.3f}** | "
           f"{c['max_drawdown']:.2%} | {c['turnover_per_year']:.0f} | "
           f"{c['borrow_paid_annualised']:.2%} | {c['entries']:,} ({c['min_entries_per_symbol']}) |")
 
@@ -634,6 +681,7 @@ def render(p: dict) -> str:
       "a **12x** shortfall. That is the number this study exists to move.*\n")
     A("| stratum | cell | turnover/yr | **breakeven bp/side** | charged | headroom | K |")
     A("|---|---|---:|---:|---:|---:|:--:|")
+    A("| *ETF* | *S1_short_intra (D247)* | *334* | ***0.13*** | *1.60* | *0.08x* | *no* |")
     for st, k in SCORED:
         key = f"{st}:{k}"
         v, b = p["verdict"][key], p["breakeven_bps"][key]
@@ -642,6 +690,31 @@ def render(p: dict) -> str:
           + f" | {v['charged_bps']:.2f} | "
           + (f"{v['headroom_x']:.2f}x" if v["headroom_x"] is not None else "—")
           + f" | {'YES' if v['clears_K'] else 'no'} |")
+
+    A("\n### Where the gross edge goes — the exact decomposition\n")
+    A("*`exposure x edge` is the LINEAR product FINDINGS §1a and D250 compute. **It is not "
+      "what a short earns.** A short earns `log(2 − e^r)`, so FINDINGS §1b's variance tax "
+      "comes out BEFORE any trading cost does.*\n")
+    A("**Stated as continuously-compounded %/yr, because these legs must ADD and "
+      "annualised percentages do not.** Subtracting the percentage forms gives −19.48% "
+      "where the net is −15.84%; in log space the identity closes exactly. Net CAGR is "
+      "the same number expressed the usual way.\n")
+    A("| stratum | cell | exp × edge | − σ² tax | = realisable | − trading cost | "
+      "= **net** | *net CAGR* |")
+    A("|---|---|---:|---:|---:|---:|---:|---:|")
+    for st, k in SCORED:
+        if "_short_" not in k:
+            continue
+        c = p["cells"][f"{st}:{k}"]
+        lin = math.log1p(c["gross_linear_pa"])
+        real = math.log1p(c["gross_realisable_pa"])
+        cost = math.log1p(c["trading_cost_pa"])
+        A(f"| {st} | **{k}** | {lin * 100:+.2f}% | −{(lin - real) * 100:.2f}% | "
+          f"{real * 100:+.2f}% | −{cost * 100:.2f}% | **{(real - cost) * 100:+.2f}%** | "
+          f"*{c['cagr']:+.2%}* |")
+    A("\n**Read the S1_short_intra rows.** They are the only cells whose realisable gross "
+      "is positive, and the trading cost is what takes them under — not the signal, and "
+      "not, on its own, the variance tax.\n")
 
     A("\n### Hurdles — all six, every leg computed (R6)\n")
     A(f"*Best-of-{p['n_cells_scored']} floor (D228, one shared offset vector across "

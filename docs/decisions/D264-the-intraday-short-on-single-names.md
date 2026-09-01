@@ -1,8 +1,12 @@
 # D264 — The intraday short on single names
 
-**Status:** PRE-REGISTERED. Committed **before the fixture was scored**. Nothing here is a result.
+**Status:** **SCREENED AND CLOSED on this sample** — zero of twelve short cells cleared.
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track** ([BOOK.md](../BOOK.md)), R12 personal standards
+
+**Everything above the RESULT heading was committed in `56c6156`, BEFORE the fixture existed and
+before anything was scored.** The result was appended afterwards and nothing above it was edited —
+`git show 56c6156` is the check, not this sentence.
 
 **The ledger moves by 16 fresh cells. Nothing is admitted to any book by this record.**
 
@@ -322,3 +326,171 @@ bootstrap, D247's `flatten_overnight`, `excess_intraday` session-boundary borrow
 **R9 is binding on every table here:** any conditional cut uses the value the rule could have seen,
 `z[t-1]` and not `z[t]`. The runner's `lag = 1` already enforces it; the anatomy scripts do not get
 that protection for free and must be written to it.
+
+---
+
+## RESULT — CLOSED on this sample. Zero of twelve, and the arithmetic is the whole story.
+
+`uv run python scripts/run_single_name_intraday.py` · `data/single_name_intraday_summary.json` ·
+[`SINGLE_NAME_INTRADAY_RESULTS.md`](../../SINGLE_NAME_INTRADAY_RESULTS.md) · seed 0, 1,000
+rotations, 8 × 55,004 bars, 2,117 sessions, live 8.25 years.
+
+**Zero of the 12 short cells clear all six hurdles.** The stop fires.
+
+### The predictions, scored against what was declared
+
+| | prediction | outcome |
+|---|---|---|
+| **P-a** | no short cell clears all six | **CONFIRMED** — 0 of 12 |
+| **P-b** | `intra` holds lower-returning bars than `cont`, both strata | **CONFIRMED, 6 of 6**, and far larger than on ETFs |
+| **P-c** | HIGH shows a bigger edge *and* a bigger cost wall, and the wall wins | **SPLIT — the mechanism clause is FALSIFIED; the conclusion clause holds** |
+| **P-d** | `exposure × edge` roughly invariant across strata | **FALSIFIED** — it ranges −1.94% to +8.31% for one rule |
+
+### P-b, and the mechanism is real
+
+| | cont | intra | swing |
+|---|---:|---:|---:|
+| **HIGH S1** | +22.48% | **−28.87%** | **51.35 pts** |
+| ALL S1 | +20.22% | −11.94% | 32.16 pts |
+| LOW S1 | +18.11% | +7.86% | 10.25 pts |
+| *ETF S1 — D247* | *+4.72%* | *−4.27%* | *8.99 pts* |
+
+**−28.87%/yr is the most negative held-bar return this programme has produced**, against D247's
+−4.27%. Flattening at the close isolates falling bars, it does so far more strongly on volatile
+single names than on ETFs, and **it is not the reason the construction fails.**
+
+### Why it fails, stated as an identity that closes exactly
+
+**HIGH S1_short_intra, continuously-compounded %/yr** — log units, because these legs must add and
+annualised percentages do not:
+
+| | |
+|---|---:|
+| `exposure × edge` (linear, FINDINGS §1a) | **+8.31%** |
+| − the `sigma^2` variance tax (FINDINGS §1b) | **−4.87%** |
+| **= realisable gross** | **+3.43%** |
+| − trading cost, 324 turns/yr at 6.42 bp/side | **−20.68%** |
+| **= net** | **−17.24%** (= **−15.84%** CAGR) |
+
+**It is both taxes, and the cost is the one that decides.** The variance tax takes **59%** of the
+linear gross — exactly the mechanism FINDINGS §1b describes — but the cell would still be
+**profitable** after it. **Trading cost is 6.0× the realisable gross**, and that is what kills it.
+
+### P-c — the half that was falsified, and the half that fires the stop
+
+| | breakeven | charged | headroom |
+|---|---:|---:|---:|
+| *ETF S1_short_intra (D247)* | *0.13 bp* | *1.60 bp* | *0.08×* |
+| **HIGH S1_short_intra** | **1.06 bp** | **6.42 bp** | **0.16×** |
+
+**The breakeven rose 8.2× while the charged cost rose 4.0×** — the edge outran the cost, and P-c's
+mechanism clause said it would not. The shortfall roughly halved, from **12.3×** to **6.1×**.
+
+**But D264 tied the expand-the-sample trigger to the HIGH stratum CLEARING hurdle K, and it does
+not.** The reason is assumption-free, which matters because the half-spread was named in advance as
+this design's weakest number:
+
+> **Mean commission ALONE on the HIGH stratum is 1.92 bp/side against a breakeven of 1.06 bp.
+> The cell loses at a ZERO spread.**
+
+So the verdict does not rest on 4.5 bp being right. **The stop fires as written.**
+
+**And R12's usual escape hatch is unavailable here.** Its second corollary says a construction
+excluded on ETF cost arithmetic must be re-costed on futures before being discarded. **This one
+cannot be:** its edge is single-name idiosyncratic variance, and there is no retail futures contract
+on a single name. The ~20× cost reduction that rescues other intraday constructions is not reachable
+by this one.
+
+### Two cells clear hurdle H on both legs and lose money
+
+| cell | Sharpe pct | money pct | H | CAGR | V |
+|---|---:|---:|:--:|---:|:--:|
+| **HIGH S1_short_intra** | 96.9th | **99.7th** | **PASS** | −15.84% | ✗ |
+| **LOW S2_short_intra** | 97.2th | 97.9th | **PASS** | −0.89% | ✗ |
+
+**[FINDINGS §3](../FINDINGS.md) reproducing exactly: beating a null is not having a strategy.** There
+is real timing skill here — a money leg at the 99.7th percentile is not noise — and it is worth less
+than the cost of harvesting it.
+
+### The finding that outlives the study: overnight drift is a property of VOLATILITY, not of equities
+
+| stratum | overnight/yr | intraday/yr | swing |
+|---|---:|---:|---:|
+| **LOW** — PG LMT PM MO | +4.36% | **+5.56%** | **−1.21 pts** |
+| **HIGH** — CLF SM YELP RH | +13.81% | **−8.97%** | **+22.78 pts** |
+| ALL | +8.98% | −1.97% | +10.96 pts |
+| *57 ETFs — D247* | *+8.59%* | *−0.36%* | *+8.95 pts* |
+
+**In the defensive mega-caps the drift accrues INTRADAY and the sign reverses.** D247 measured
++8.59%/−0.36% on 57 ETFs, and the programme has since treated that as a fact about the asset class.
+**It is not.** It is concentrated in high-volatility names and absent at the low-volatility end.
+
+**This bears directly on the wide extended-hours question already queued** (commit `c25218d`), which
+asks where the untraded-window drift accrues across 11 instruments. **A volatility split belongs in
+that pre-registration**, and it is named here before that study runs.
+
+### Other measurements worth carrying
+
+- **`SHORT_ALL` against FINDINGS §1b's formula.** Predicted `−mu − sigma^2` vs measured: LOW
+  **−2.85 pts** (the same error D253 got on crypto), ALL −14.25, HIGH **−16.13**. **The
+  approximation degrades where `sigma^2` is large**, which is what a second-order expansion should
+  do. Quoting it as universal is safe only at moderate volatility.
+- **Effective instruments 3.02 of 8**, against the 57 ETFs' 2.23 — LOW 1.87, HIGH 2.08. **Eight
+  single names carry more independent breadth than fifty-seven ETFs.** FINDINGS §4's saturation near
+  2.2 is a property of that universe, not a universal ceiling.
+- **7 of 8 cells in the ALL stratum lose money**, including three of four long controls. **This is
+  D247's result reproduced exactly** — *"15-minute sampling breaks both estimators in both
+  directions"* — so this is a **horizon** result as much as a direction result, and the short failure
+  cannot be cleanly attributed to direction.
+
+### POST-HOC, DISCLOSED, AND NOT ACTED ON HERE
+
+**The IBKR commission is charged per SHARE, so cost in bps is inversely proportional to price**, and
+within the HIGH stratum it varies twenty-fold:
+
+| | RH | YELP | SM | CLF |
+|---|---:|---:|---:|---:|
+| commission, bp/side | **0.20** | 1.44 | 1.89 | **4.15** |
+
+**A high-priced, high-volatility name gets the HIGH stratum's edge at a fraction of its commission.**
+This was invisible on ETFs, which cluster in price.
+
+**It is NOT tested here and must not be.** D264's stop forbids an additional stratum, and computing a
+per-symbol verdict now would be exactly the complement-chasing
+[D246](D246-the-search-protocol-for-s3.md) Constraint 3 forbids. **It is recorded as a candidate for
+a separate pre-registration with this provenance stated**, which is the route Constraint 3 explicitly
+leaves open.
+
+---
+
+## Stop — fired, and bounded exactly as written
+
+**The construction is CLOSED on this sample.** No parameter sweep, no additional stratum, no third
+arm, no re-cut window, no 5-minute bars. D246's reserved cohort was not touched.
+
+**And the closure is bounded in the words fixed before the run.** It closes **this construction on
+these eight survivor names, on the personal track**. It does **not** close the intraday short as a
+question:
+
+1. **The sample is survivor-only and the bias runs AGAINST the short.** 41.6% of the 2013–17 cohort
+   is unreachable because `TIME_SERIES_INTRADAY` serves no delisted ticker. A fail is ambiguous, and
+   that was declared before the data was seen precisely so it could not be argued afterwards.
+2. **Eight names is thin**, at effective breadth 3.02.
+
+**What a negative here DOES establish**, and it is not nothing: the cost arithmetic that closed D247
+and D248 **moves with volatility, and does not move far enough** — and it fails at a zero spread,
+which is a stronger and more durable statement than the one D247 could make.
+
+---
+
+## Ledger, as run
+
+| count | N |
+|---|---:|
+| fresh — 12 short cells + 4 long controls | **16** |
+| + Part A anatomy (drift decomposition ×3, held-bar returns, `SHORT_ALL` ×3) | 23 |
+| + carried from D263 | 45,886 |
+| **total** | **45,909** |
+
+**Unchanged from the pre-registration.** No cell was added, and the post-hoc price observation above
+is recorded rather than scored, so it costs nothing against this count.
