@@ -76,7 +76,47 @@ requests.**
 
 ---
 
-## 4. The immediate next step, and it is NOT a purchase
+## 4. UPDATE — rung 1 was screened after this file was first written, and it CLOSED
+
+**[D263](docs/decisions/D263-the-cot-positioning-prescreen.md), commits `4dd6d3c` (design, before
+the run) and `48c2d36` (result).**
+
+**Zero of eight cells cleared. Monotonicity failed on all eight**, which is the decisive one —
+`nonreportable (disagg)` runs +1.83 / −5.53 / **−19.33** / +8.82 / −1.32. Best gross was
+**+1.26%/yr** against a 2% bar. **2020 is not the cause**: seven of eight signs survive its removal,
+so the result is *empty* rather than regime-dependent.
+
+**Weekly category positioning is CLOSED for the prop track.** The stop applies: no threshold sweep,
+no second lookback, no third category. **Do not reopen it with a variant.**
+
+**Two things worth carrying forward:**
+
+- **The largest spread had the WRONG SIGN** — `managed_money` at −7.32%/yr against a declared `+1`.
+  Disclosed, not claimed: it is non-monotone, and D246 Constraint 3 forbids re-reading a falsified
+  direction. Do not resurrect it as a momentum signal.
+- **THE PANEL SURVIVES AND IS THE REAL ASSET.** 11 contract/ETF pairs, 9,232 weekly observations,
+  16.2 years, **effective instruments 3.76, MDE 0.21** — assembled free from two committed fixtures
+  and better powered than anything the prop track has run. `scripts/prescreen_cot_positioning.py`
+  builds it in ~20 seconds. **Any future weekly cross-sectional question should be asked here.**
+
+### So what is next
+
+**Rung 2's free form — the micro/mini split — is still untested**, and it is a *different
+construction on a different quantity*, named on the ladder before D263 ran. It is not a rescue.
+Scope it to **ES/MES (272 weeks) and NQ/MNQ (302 weeks)**; M2K has 136, MYM 78, MSI 5. Thin, and R10
+applies to two correlated instruments.
+
+**Rung 3 — open interest against volume — is also untested and free.**
+
+**And weigh this honestly before spending:** the ladder's premise was that positioning/flow is one
+of the few families with the shape hurdle P wants. **The cheapest rung came back empty.** That is
+evidence about the family, bought for £0, and it is exactly what §7.5 was built to produce. It does
+not close intraday order flow — a weekly survey says nothing about an hours horizon — but it should
+lower the prior before ~$205 is spent.
+
+---
+
+## 4b. The original next step (superseded by §4 above)
 
 **Screen rung 1.** The ladder in §7.5 of the proposal says test the cheap instruments before buying
 the expensive one, and rung 1 is now sitting in the repo.
