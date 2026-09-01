@@ -1,6 +1,6 @@
-"""D269 -- volume structure as the orthogonal third input. Pre-registered in
-`docs/decisions/D269-volume-structure-as-the-third-input.md`, commit 76eb3da,
-BEFORE this file was written.
+"""D270 -- volume structure, retested under a control that can fail.
+Pre-registered in `docs/decisions/D270-volume-structure-retest.md`, commit
+4e186ce, BEFORE this version was written.
 
     uv run python scripts/run_volume_structure.py
 
@@ -8,11 +8,24 @@ STAGE 1 independence (V1a, V1b) -- then STAGE 2 calibration (M1, M2, M3) for
 whatever survives.
 
 THE NORMALISATION IS THE WHOLE TEST. Intraday volume is violently U-shaped by
-time of day, so a RAW volume score is orthogonal to price because it measures the
-clock. Every score here is normalised WITHIN BAR-OF-DAY against the trailing 20
-sessions at the same clock position, and `signed_vol` is carried as a CONTROL: it
-contains a return sign, so it MUST come out correlated. If it does not, the
-normalisation is broken and the run is void.
+time of day, so a RAW volume score is orthogonal to price BECAUSE IT MEASURES THE
+CLOCK. Every score is normalised WITHIN BAR-OF-DAY against the trailing 20
+sessions at the same clock position.
+
+WHY THE CONTROLS ARE TWO-SIDED NOW. D269 used `signed_vol = rel_vol x
+sign(return)` as a one-sided control, required to FAIL the independence bar. It
+passed at 0.14, voiding that run -- and the diagnosis showed the CONTROL was
+wrong, not the method: multiplying by a symmetric +/-1 decorrelates the product
+from BOTH parents (`signed_vol` vs `rel_vol` is +0.013), and a sign alone reaches
+only +0.279 against `trailing_return`, so a 0.5 bar was never reachable.
+
+D270 keeps `signed_vol` as an ordinary candidate score and instruments the test
+from both sides instead:
+
+  ctrl_blend  0.5*rank(rel_vol) + 0.5*rank(trailing_return)   MUST FAIL V1b
+  ctrl_noise  seeded uniform random                           MUST PASS V1b
+
+Neither is eligible to pass the study. If either misbehaves the run is void.
 """
 
 from __future__ import annotations
@@ -43,10 +56,15 @@ C = _load("d267", "run_magnitude_calibration.py")
 I = _load("d268", "d268_score_independence.py")
 R, M, D = C.R, C.M, C.D
 
-OUT = REPO / "data" / "d269_volume_summary.json"
+OUT = REPO / "data" / "d270_volume_summary.json"
 FIXTURE = REPO / "data" / "fixtures" / "single_name_intraday_15m_panel.csv.gz"
 
+# D270: the five REAL volume scores. `signed_vol` was D269's control and is
+# removed -- it decorrelated from both its parents, so it could not test anything.
 VOL_SCORES = ("rel_vol", "vol_z", "dollar_vol", "vol_trend", "signed_vol")
+REAL_VOL = ("rel_vol", "vol_z", "dollar_vol", "vol_trend", "signed_vol")
+# Two-sided instrumentation. Neither is eligible to pass the study.
+CONTROLS = ("ctrl_blend", "ctrl_noise")
 LOOKBACK_SESSIONS = 20      # trailing sessions at the same bar-of-day
 TREND_BARS = 8
 SIGN_BARS = 8
@@ -120,7 +138,7 @@ def build_volume_scores(panel, vol, px, bod, rets):
             seg = rv[t - TREND_BARS + 1:t + 1]
             if np.isfinite(seg).sum() == TREND_BARS:
                 out["vol_trend"][i, t] = np.polyfit(np.arange(TREND_BARS), seg, 1)[0]
-        # THE CONTROL: relative participation, signed by recent return.
+        # An ordinary candidate score in D270; it was D269's failed control.
         cum = np.full(T, np.nan)
         cs = np.concatenate([[0.0], np.cumsum(np.nan_to_num(rets[i]))])
         cum[SIGN_BARS:] = cs[SIGN_BARS + 1:] - cs[1:T - SIGN_BARS + 1]
@@ -138,8 +156,21 @@ def main() -> int:
     price_sc = C.build_scores(panel, cleaned)
     vol_sc = build_volume_scores(panel, vol, px, bod, panel.total_log_returns)
 
-    names = list(C.SCORES) + list(VOL_SCORES)
-    allsc = {**price_sc, **vol_sc}
+    # ---- D270's two-sided controls, built from the ranked columns ----
+    n_sym = len(panel.symbols)
+    rng = np.random.default_rng(0)
+    ctrl = {}
+    blend = np.full(panel.closes.shape, np.nan)
+    noise = np.full(panel.closes.shape, np.nan)
+    for i in range(n_sym):
+        rv = I.rankify(vol_sc["rel_vol"][i, start:])
+        tr = I.rankify(price_sc["trailing_return"][i, start:])
+        blend[i, start:] = 0.5 * rv + 0.5 * tr        # MUST fail V1b
+        noise[i, start:] = rng.random(rv.shape[0])    # MUST pass V1b
+    ctrl["ctrl_blend"], ctrl["ctrl_noise"] = blend, noise
+
+    names = list(C.SCORES) + list(VOL_SCORES) + list(CONTROLS)
+    allsc = {**price_sc, **vol_sc, **ctrl}
     cols = []
     for nme in names:
         per = [I.rankify(allsc[nme][i, start:]) for i in range(len(panel.symbols))]
@@ -150,16 +181,16 @@ def main() -> int:
     print(f"STAGE 1 -- INDEPENDENCE.  {X.shape[1]:,} bars with all {len(names)} scores finite\n")
     Rm = np.corrcoef(X)
 
-    print(f"  {'volume score':14s} " + " ".join(f"{n[:7]:>8s}" for n in C.SCORES)
+    print(f"  {'score':14s} " + " ".join(f"{n[:7]:>8s}" for n in C.SCORES)
           + f" {'max|rho|':>9s}  V1b")
     v1b_pass = []
     per_score = {}
-    for k, nme in enumerate(VOL_SCORES):
+    for k, nme in enumerate(list(VOL_SCORES) + list(CONTROLS)):
         r = k + len(C.SCORES)
         rhos = [float(Rm[r, j]) for j in range(len(C.SCORES))]
         mx = max(abs(x) for x in rhos)
         ok_b = mx < V1B_BAR
-        if ok_b:
+        if ok_b and nme in REAL_VOL:
             v1b_pass.append(nme)
         per_score[nme] = {"rho_vs_price": rhos, "max_abs_rho": mx, "V1b": ok_b}
         print(f"  {nme:14s} " + " ".join(f"{x:8.2f}" for x in rhos)
@@ -174,16 +205,23 @@ def main() -> int:
     print(f"  V1b  at least one volume score max|rho| < {V1B_BAR}: "
           f"{'PASS -> ' + ', '.join(v1b_pass) if v1b_pass else 'FAIL'}")
 
-    ctrl = per_score["signed_vol"]
-    print(f"\n  CONTROL -- signed_vol must FAIL V1b (it carries a return sign): "
-          + ("correctly fails, max|rho| "
-             f"{ctrl['max_abs_rho']:.2f} -- the normalisation is sound"
-             if not ctrl["V1b"] else
-             "*** IT PASSED. THE NORMALISATION IS BROKEN AND THIS RUN IS VOID ***"))
-    void = ctrl["V1b"]
+    # D270's TWO-SIDED instrumentation. Both must behave or the run is void.
+    cb, cn = per_score["ctrl_blend"], per_score["ctrl_noise"]
+    print("\n  CONTROLS -- both must behave, or the run is void:")
+    print(f"    ctrl_blend  MUST FAIL V1b (it is half a price score):  "
+          f"max|rho| {cb['max_abs_rho']:.2f}  -> "
+          + ("correctly FAILS -- correlation does detect contamination here"
+             if not cb["V1b"] else
+             "*** PASSED. CORRELATION CANNOT DETECT CONTAMINATION. VOID ***"))
+    print(f"    ctrl_noise  MUST PASS V1b (it is pure random):         "
+          f"max|rho| {cn['max_abs_rho']:.2f}  -> "
+          + ("correctly PASSES -- the instrument is not spuriously correlating"
+             if cn["V1b"] else
+             "*** FAILED. THE INSTRUMENT IS BROKEN. VOID ***"))
+    void = bool(cb["V1b"] or not cn["V1b"])
 
-    payload = {"preregistration": "docs/decisions/D269-volume-structure-as-the-third-input.md",
-               "commit": "76eb3da", "names": names,
+    payload = {"preregistration": "docs/decisions/D270-volume-structure-retest.md",
+               "commit": "4e186ce", "names": names,
                "effective_independent": eff, "V1a": v1a, "V1b_passers": v1b_pass,
                "per_score": per_score, "control_void": void, "stage2": {}}
 

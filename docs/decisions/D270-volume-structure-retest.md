@@ -1,6 +1,8 @@
 # D270 — Volume structure, retested under a control that can fail
 
-**Status:** PRE-REGISTERED. Committed **before the retest is run**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** Stage 1 passes emphatically; stage 2 fails. Volume is **independent but uninformative**.
+
+**Everything above the RESULT heading was committed in `4e186ce`, BEFORE the retest was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track**
 
@@ -96,3 +98,75 @@ diversification alone does not pay a round trip.
 
 **D269's voided run adds nothing**, because no stage-2 cell was read from it. The 15 are counted
 once, here.
+
+---
+
+## RESULT — volume is genuinely orthogonal, and it still does not pay
+
+`uv run python scripts/run_volume_structure.py` · `data/d270_volume_summary.json` · 432,032 bars.
+
+### The controls behaved, so the instrument is trustworthy this time
+
+| control | required | measured max abs(rho) | |
+|---|---|---:|---|
+| `ctrl_blend` — half a price score | **must FAIL** | **0.68** | correctly fails |
+| `ctrl_noise` — pure random | **must PASS** | **0.00** | correctly passes |
+
+**Two-sided and both correct.** D269's one-sided control could be passed for a reason unrelated to
+the hypothesis; this one cannot.
+
+### Stage 1 — V1a and V1b PASS, and not narrowly
+
+| score | max abs(rho) vs all nine price scores |
+|---|---:|
+| `dollar_vol` | **0.01** |
+| `vol_trend` | **0.01** |
+| `rel_vol`, `vol_z` | **0.09** |
+| `signed_vol` | 0.14 |
+
+**Effective independent scores: 2.87 of 9 → 5.25 of 16.** Against a bar of 3.5.
+
+**Volume is a real third input.** Not a clock artifact — the bar-of-day normalisation is in place and
+`ctrl_blend` proves contamination would have been detected. **W-a and W-b confirmed.**
+
+### Stage 2 — M2 fails on all 15, and W-c is confirmed
+
+**Nothing clears M1 and M2 together, so M3 was not computed.**
+
+But volume produced something no price score did:
+
+| LOW stratum | Q1 | Q2 | Q3 | Q4 | Q5 | spread | vs 4.00 bp bar | M1 |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| **`rel_vol`** | +1.71 | +1.23 | +1.00 | +0.96 | **−1.97** | **−3.68 bp** | **0.92×** | **MONOTONE** |
+| `vol_z` | +1.61 | +1.37 | +1.10 | +0.79 | −1.95 | −3.56 bp | 0.89× | **MONOTONE** |
+| `dollar_vol` | +1.75 | +1.22 | +1.28 | +0.86 | −2.18 | **−3.93 bp** | **0.98×** | no |
+
+**In [D267](D267-the-magnitude-calibration-screen.md), 0 of 27 price cells were monotone. Here 2 of
+15 are** — and they are the same quantity twice (`vol_z` is `rel_vol` z-scored), so it is **one**
+finding, not two.
+
+**And the relationship is clean and in the direction a short wants:** on the low-volatility
+mega-caps, **high relative volume precedes falls and low relative volume precedes rises, ordered
+across all five quintiles.** Low volume +1.71 bp, high volume −1.97 bp.
+
+**It fails anyway.** The best spread is **0.98×** the round-trip cost and the best *monotone* one is
+**0.92×**. Every other stratum is worse: ALL peaks at −1.88 bp against an 8.42 bp bar, HIGH at +1.36
+against 12.84.
+
+### The reading
+
+**Volume is independent but uninformative at this horizon — which is exactly the outcome D270
+registered as reportable rather than null.** A consensus rule could carry volume as a genuine third
+opinion, and D267's arithmetic already says diversification alone does not pay a round trip.
+
+**And the shape is the same one this entire thread keeps producing.** The closest cell is on the LOW
+stratum, where the cost bar is lowest; the effect is real, monotone, and about **0.9 of one round
+trip**. Nothing here is broken — the edge is simply smaller than the toll, once again, and this time
+by 8%.
+
+---
+
+## Stop — fired
+
+**Volume is closed as the third input.** No sixth score, no second normalisation window, no
+per-stratum retry, as registered. **Nothing is promoted; R8 governs.**
