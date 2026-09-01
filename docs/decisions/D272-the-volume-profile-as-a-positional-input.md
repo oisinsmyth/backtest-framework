@@ -1,6 +1,8 @@
 # D272 — The volume profile as a positional input
 
-**Status:** PRE-REGISTERED. Committed **before the run**. Nothing here is a result.
+**Status:** **RUN AND CLOSED.** Stage (a) passes; stage (b) fails on all six cells.
+
+**Everything above the RESULT heading was committed in `3d23e63`, BEFORE the runner was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track**
 
@@ -158,3 +160,100 @@ own out-of-sample test on names this fixture has never touched.
 **Disclosed and NOT summed: the terrain programme's 259 looks**, spent on a different hypothesis
 (directional signal from the map, on crypto). Recorded here so the decision to keep them separate
 is visible and arguable rather than silent.
+
+---
+
+## RESULT — the profile supplies the most independent input yet measured, and it carries nothing
+
+`uv run python scripts/run_volume_profile.py` · `data/d272_volume_profile_summary.json` ·
+317,635 bars with all 19 scores finite.
+
+### Controls behaved
+
+`ctrl_blend` **0.72 — correctly fails**. `ctrl_noise` **0.00 — correctly passes**. Not void.
+
+### Stage (a) — A1 and A2 both PASS
+
+| profile score | max abs(rho) vs the 13 | worst pair | A1 |
+|---|---:|---|---|
+| **`mass_here`** | **0.085** | `dollar_vol` (−0.08) | **PASS** |
+| **`dist_lvn`** | 0.452 | `g_min` (+0.45) | **PASS** |
+| `dist_hvn` | 0.555 | `impulse_md` (+0.56) | fail |
+| **`mass_imbalance`** | **0.830** | **`impulse_md` (−0.83)** | fail |
+
+**Effective independent scores 4.31 → 5.90, a rise of +1.59** against a +0.50 bar.
+
+**`mass_here` at 0.085 is the most orthogonal input this programme has measured** — more
+independent of the price family than any volume score in D270.
+
+### AND MY REASONING FOR RUNNING THIS WAS WRONG, in a way the data states plainly
+
+D272 argued the profile would be distinct because it is **positional** — *"not how much is
+trading, but what the current price is standing on."*
+
+**The positional scores are the ones that duplicate the price family.** `mass_imbalance` — mass
+above price against mass below — correlates **−0.83 with `impulse_md`**, the Impulse MACD band
+level. `dist_hvn` correlates +0.56 with the same score.
+
+**That is not a coincidence and it is obvious in hindsight:** if price sits high in its recent
+range then most accumulated volume is below it, and a channel-position indicator says the same
+thing. *Where price sits relative to accumulated volume* and *where price sits relative to its
+recent channel* are one measurement.
+
+**What is genuinely new is the DENSITY score, not the positional ones.** `mass_here` — how much
+volume transacted at the price we are standing on — is the one at 0.085, and it is the opposite
+of what the pre-registration reasoned. Recorded because the argument for running the study was
+wrong even though its A1 prediction was right.
+
+### Stage (b) — 0 of 6, and this time nothing beats the null either
+
+| cell | spread | M1 | M2 | M3 |
+|---|---:|---|---|---|
+| HIGH `dist_lvn` | −1.49 bp | no | no | no |
+| LOW `dist_lvn` | +0.56 bp | no | no | no |
+| LOW `mass_here` | +0.50 bp | no | no | no |
+| ALL `dist_lvn` | −0.48 bp | no | no | no |
+| HIGH `mass_here` | −0.18 bp | no | no | no |
+| ALL `mass_here` | +0.16 bp | no | no | no |
+
+**M3 floor 2.62 bp; the largest spread anywhere is 1.49 bp.** M3 was computed for every cell
+regardless of M1 and M2 — the short-circuit that hid D270's result is not repeated.
+
+**This is a cleaner failure than D270's.** There, three of fifteen cells beat the shuffle floor
+and the best missed the cost bar by 8%. Here **nothing is even distinguishable from a shuffle**.
+
+### Predictions
+
+| | outcome |
+|---|---|
+| **X-a** at least one profile score clears A1 | **CONFIRMED** — two did |
+| **X-b** no profile score clears M1–M3 | **CONFIRMED** — 0 of 6, and 0 of 6 on M3 alone |
+| **X-c** any `dist_hvn` relationship favours continuation | **UNTRIGGERED.** `dist_hvn` failed A1 at 0.555 and never reached stage (b), so the terrain mechanism was not re-tested here. Reported as untriggered rather than counted as a hit |
+| **X-d** both controls behave | **CONFIRMED** |
+
+---
+
+## The reading — three in a row, and that is the finding
+
+D272 registered this in advance: *"If (a) passes and (b) fails, that would be the third such
+finding — and three of them in a row is itself the result."* It is:
+
+| | independent? | informative? |
+|---|---|---|
+| [D267](D267-the-magnitude-calibration-screen.md) — nine price scores | — | **no**, 0 of 27 |
+| [D270](D270-volume-structure-retest.md) — volume magnitude | **yes**, ρ ≤ 0.09 | **no**, best 0.92× cost |
+| **D272 — volume profile** | **yes**, ρ = 0.085 | **no**, 0 of 6, none beats a shuffle |
+
+**Orthogonal inputs are not scarce. Edge at this horizon is.** Three independent families, one of
+them the most orthogonal measurement in the programme, and the achievable dispersion stays
+bounded below the cost of a round trip in every one.
+
+**And the terrain programme's verdict survives contact with a different asset class** — reached
+from a direction that made no directional claim at all.
+
+---
+
+## Stop — fired
+
+**The volume profile is closed as an input**, and the consensus proposal closes with it: no fifth
+score, no second lookback, no alternative bucket width. **Nothing promoted; R8 governs.**
