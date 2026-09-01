@@ -52,6 +52,22 @@ RANK_FROM, RANK_TO = 4, 12          # ranks 5..12, zero-indexed 4..12
 # must be frozen in writing before these bars are scored.
 NEXT8_FROM, NEXT8_TO = 12, 16
 
+# A NAME THAT THE PROVIDER CANNOT SERVE IS EXCLUDED ON MEASURED COVERAGE AND
+# REPLACED BY THE NEXT RANK. This is not a discretionary swap: the exclusion
+# applies D264's own >=95% coverage requirement to the TEST span rather than
+# only to the selection window, and the replacement is the mechanical
+# continuation of the same ranking.
+#
+#   NBIS, high stratum rank 13. TIME_SERIES_INTRADAY returns `Invalid API call`
+#   for 2018-06, 2023-06 and 2024-09, and serves bars from 2024-12 -- roughly
+#   21 of 104 months, ~20% coverage. The 2013-2017 bars the selector ranked are
+#   YANDEX's; the ticker has pointed at Nebius since 2024 and Nasdaq suspended
+#   the name Feb 2022 - Jul 2024. YNDX DOES serve 2019 bars, but splicing two
+#   issuers across a sanctions-driven suspension is a construction choice, not
+#   a data repair, and is refused here.
+#     -> replaced by MUR, rank 17, 40.3% vol, $84.4M median dollar volume.
+UNSERVED = {"NBIS": "intraday history begins 2024-12; ~20% of the test span"}
+
 
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -110,8 +126,21 @@ def main() -> int:
         # not be a holdout, so they join the exclusion set rather than merely
         # being ranked below.
         used |= set(json.loads(HOLDOUT.read_text())["symbols"])
-    low = [x for x in low_all[RANK_FROM:RANK_TO] if x["symbol"] not in used]
-    high = [x for x in high_all[RANK_FROM:RANK_TO] if x["symbol"] not in used]
+    def take(ranked, k):
+        """Ranks RANK_FROM.. onward, skipping spent names and names the provider
+        does not serve, until k survive. Deeper ranks are pulled in mechanically
+        rather than chosen."""
+        out = []
+        for x in ranked[RANK_FROM:]:
+            if x["symbol"] in used or x["symbol"] in UNSERVED:
+                continue
+            out.append(x)
+            if len(out) == k:
+                break
+        return out
+
+    k = RANK_TO - RANK_FROM
+    low, high = take(low_all, k), take(high_all, k)
     assert not ({x["symbol"] for x in low} & {x["symbol"] for x in high}), "strata overlap"
     assert not ({x["symbol"] for x in low + high} & used), "holdout touches the in-sample set"
 
@@ -132,6 +161,7 @@ def main() -> int:
                  f"stratum instead of 1-4"),
         "selection_window": [SELECT_START, SELECT_END],
         "in_sample_excluded": sorted(used),
+        "excluded_unserved": UNSERVED,
         "low": low, "high": high,
         "symbols": [x["symbol"] for x in low + high],
     }, indent=2))

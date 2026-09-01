@@ -181,14 +181,18 @@ HOLDOUT_EVENTS = FIX / "holdout_intraday_15m_raw_events.json"
 #   closer together, so this cohort spans the volatility axis far less than
 #   D264's did. Any study using it must not claim the axis is under test.
 #
-#   NBIS IS AN IDENTITY DISCONTINUITY. The 2013-2017 bars the selector ranked
-#   are YANDEX's, under a ticker that has pointed at Nebius since 2024, and
-#   Yandex was suspended on Nasdaq from Feb 2022 to Jul 2024. A multi-year hole
-#   and a change of issuer are both expected. It is fetched rather than dropped
-#   by hand so the exclusion, if any, is made on MEASURED coverage.
+#   NBIS WAS SELECTED AT RANK 13 AND IS NOT HERE, and the reason is measured,
+#   not assumed. It was fetched. TIME_SERIES_INTRADAY returns `Invalid API
+#   call` for 2018-06, 2023-06 and 2024-09 and serves bars from 2024-12 --
+#   roughly 21 of 104 months, ~20% coverage against D264's >=95% requirement.
+#   The 2013-2017 bars the selector ranked are Yandex's; the ticker has pointed
+#   at Nebius since 2024 and Nasdaq suspended the name Feb 2022 - Jul 2024.
+#   YNDX DOES serve 2019 bars, but splicing two issuers across a
+#   sanctions-driven suspension is a construction choice, not a data repair.
+#   MUR, rank 17, replaces it -- the mechanical continuation of the ranking.
 # ---------------------------------------------------------------------------
 COHORT3_LOW = ('V', 'JPM', 'FDX', 'MDLZ')
-COHORT3_HIGH = ('NBIS', 'BBD', 'TRIP', 'CIEN')
+COHORT3_HIGH = ('BBD', 'TRIP', 'CIEN', 'MUR')
 COHORT3_FIXTURE = FIX / "cohort3_intraday_15m_raw.csv.gz"
 COHORT3_META = FIX / "cohort3_intraday_15m_raw.meta.json"
 COHORT3_EVENTS = FIX / "cohort3_intraday_15m_raw_events.json"

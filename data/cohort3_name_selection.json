@@ -31,6 +31,9 @@
     "VZ",
     "YELP"
   ],
+  "excluded_unserved": {
+    "NBIS": "intraday history begins 2024-12; ~20% of the test span"
+  },
   "low": [
     {
       "symbol": "V",
@@ -55,11 +58,6 @@
   ],
   "high": [
     {
-      "symbol": "NBIS",
-      "median_dollar_volume": 55826870.00000001,
-      "annualised_vol": 0.43012448594372354
-    },
-    {
       "symbol": "BBD",
       "median_dollar_volume": 98183831.8927394,
       "annualised_vol": 0.42005171524206797
@@ -73,6 +71,11 @@
       "symbol": "CIEN",
       "median_dollar_volume": 56659649.97,
       "annualised_vol": 0.4066082557727884
+    },
+    {
+      "symbol": "MUR",
+      "median_dollar_volume": 84357802.0,
+      "annualised_vol": 0.40251764880604984
     }
   ],
   "symbols": [
@@ -80,9 +83,9 @@
     "JPM",
     "FDX",
     "MDLZ",
-    "NBIS",
     "BBD",
     "TRIP",
-    "CIEN"
+    "CIEN",
+    "MUR"
   ]
 }

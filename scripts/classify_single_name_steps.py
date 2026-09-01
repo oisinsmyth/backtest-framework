@@ -84,6 +84,10 @@ if "--holdout" in sys.argv:
     FIXTURE = REPO / "data" / "fixtures" / "holdout_intraday_15m_raw.csv.gz"
     META = REPO / "data" / "fixtures" / "holdout_intraday_15m_raw.meta.json"
     OUT = REPO / "data" / "holdout_intraday_steps.json"
+elif "--cohort3" in sys.argv:
+    FIXTURE = REPO / "data" / "fixtures" / "cohort3_intraday_15m_raw.csv.gz"
+    META = REPO / "data" / "fixtures" / "cohort3_intraday_15m_raw.meta.json"
+    OUT = REPO / "data" / "cohort3_intraday_steps.json"
 
 # A bad print is ONE bar out of line with BOTH its neighbours (D259's EWJ: 11.46
 # on 912 shares between bars of ~60.60). This is the deviation that triggers it.
