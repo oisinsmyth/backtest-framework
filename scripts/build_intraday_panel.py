@@ -58,6 +58,12 @@ SINGLE = {
     "out": FIX / "single_name_intraday_15m_panel.csv.gz",
     "out_events": FIX / "single_name_intraday_15m_panel_events.json",
 }
+HOLDOUT = {
+    "src": FIX / "holdout_intraday_15m_raw.csv.gz",
+    "src_events": FIX / "holdout_intraday_15m_raw_events.json",
+    "out": FIX / "holdout_intraday_15m_panel.csv.gz",
+    "out_events": FIX / "holdout_intraday_15m_panel_events.json",
+}
 
 
 def main() -> int:
@@ -65,9 +71,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--single-names", action="store_true",
                     help="build D264's eight-name panel instead of the 57 ETFs")
-    if ap.parse_args().single_names:
+    ap.add_argument("--holdout", action="store_true",
+                    help="build D278's sixteen-name instrument holdout panel")
+    a = ap.parse_args()
+    if a.single_names:
         SRC, SRC_EVENTS = SINGLE["src"], SINGLE["src_events"]
         OUT, OUT_EVENTS = SINGLE["out"], SINGLE["out_events"]
+    elif a.holdout:
+        SRC, SRC_EVENTS = HOLDOUT["src"], HOLDOUT["src_events"]
+        OUT, OUT_EVENTS = HOLDOUT["out"], HOLDOUT["out_events"]
     t0 = time.time()
     rows: dict[str, dict[str, list[str]]] = defaultdict(dict)
     with gzip.open(SRC, "rt") as f:

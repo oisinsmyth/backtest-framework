@@ -1,0 +1,18 @@
+{
+ "pass": true,
+ "worst_delta": 0.0,
+ "cells": {
+  "ALL|none": -0.06012581744729595,
+  "ALL|impulse_hist": -0.016810925354346945,
+  "ALL|macd_line": -0.022536417193121078,
+  "ALL|mass_imbalance": 0.0037535170713666544,
+  "LOW|none": -0.008895579988547033,
+  "LOW|impulse_hist": 0.006896991389218356,
+  "LOW|macd_line": 0.0073098193966382955,
+  "LOW|mass_imbalance": 0.001741928335635336,
+  "HIGH|none": -0.10870796134790142,
+  "HIGH|impulse_hist": -0.03996062678777973,
+  "HIGH|macd_line": -0.05149832026262801,
+  "HIGH|mass_imbalance": 0.0057691452599023954
+ }
+}
