@@ -138,3 +138,92 @@ which we do not hold, and which no free source provides.
 | + the correction that prompted it: 4 static + 8 vol-targeted + 3 era cuts | 23 |
 | + carried from D257 | 46,046 |
 | **total** | **46,069** |
+
+---
+
+## RESULT — CLOSED. P3 binds, not P4, and every route converges on the same number.
+
+**Produced:** 2026-08-29 · `uv run python scripts/run_vol_targeted_hold.py` ·
+`VOL_TARGETED_HOLD_RESULTS.md` · 12,901 holds, screen 6,899 (→2018-12-28), holdout 6,002
+(2019-01-03 → 2026-08-26).
+
+### The four cells
+
+| N | target | | avg size | breach | expected life | ann return | worst hold | P4 | **P3** |
+|---|---:|---|---:|---:|---:|---:|---:|:--:|:--:|
+| 6 | 0.67% | screen | 0.88x | 0.304% | 1.30 y | +8.33% | −8.50% | no | **no** |
+| | | holdout | 0.70x | 0.167% | 2.38 y | +6.20% | −6.64% | no | **no** |
+| 8 | 0.50% | screen | 0.66x | 0.130% | 3.04 y | +6.26% | −6.37% | yes | **no** |
+| | | **holdout** | 0.52x | **0.050%** | **7.94 y** | **+4.65%** | −4.98% | **yes** | **no** |
+| 10 | 0.40% | holdout | 0.42x | 0.033% | 11.91 y | +3.72% | −3.98% | yes | **no** |
+| **12** | 0.33% | **holdout** | 0.35x | **0.000%** | **∞** | +3.10% | −3.32% | **yes** | **no** |
+
+### The vol targeting works. P4 is comfortably cleared.
+
+**Three of four N clear P4 on the holdout, and N=12 never breaches the 4% trailing floor once in
+6,002 holds.** The mechanism from the correction reproduces out of sample: **stability ratios are
+0.55, 0.38, 0.38 and 0.00** — the holdout is *better* than the screen at every N, not merely within
+tolerance.
+
+### But P3 binds, and it binds everywhere
+
+**The daily loss limit — 2% — is stricter than the 4% trailing floor, and every cell fails it.**
+Worst holds run −3.32% to −8.50%.
+
+**And the closure is arithmetically clean, because the worst hold scales linearly with size.** Asked
+what size clears P3, all four cells give the same answer from four different starting points:
+
+| from | worst hold | needs | **implied size** | **implied return** |
+|---|---:|---:|---:|---:|
+| N=6 | −6.64% at 0.70x | 0.30x | **0.21x** | **+1.87%/yr** |
+| N=8 | −4.98% at 0.52x | 0.40x | **0.21x** | **+1.87%/yr** |
+| N=10 | −3.98% at 0.42x | 0.50x | **0.21x** | **+1.87%/yr** |
+| N=12 | −3.32% at 0.35x | 0.60x | **0.21x** | **+1.87%/yr** |
+
+> **The size that survives a 2% daily loss limit earns 1.87%/yr, and it does not matter which
+> direction you approach it from.** On a $150k MyFundedFutures account that is **~$2,800/yr gross**,
+> and roughly **twenty funded accounts** would be needed for the $50k goal.
+
+**This is `exposure x edge` ([FINDINGS §1a](../FINDINGS.md)) for the third time in this programme,
+now from the daily-limit side.**
+
+### Scoring
+
+| | prediction | outcome |
+|---|---|---|
+| **V-a** | holdout breach within 2x of screen | **CONFIRMED** — 0.55x, 0.38x, 0.38x, 0.00x, all improvements |
+| **V-b** | ≥1 N clears P4 on the holdout | **CONFIRMED** — three do |
+| **V-c** | 2020 is the worst year in the holdout | **PARTIAL.** 2020 is 2.8x and 3.3x the ex-2020 rate at N=6 and N=8, and **indistinguishable at N=10 and N=12.** The lagging estimator does degrade in 2020 — the effect is simply absorbed once size is small enough |
+| **V-d** | LADDER clears | **CONFIRMED** at N=8, 10, 12 |
+| **V-e** | 4–7%/yr, 8–12 accounts | **CONFIRMED at the low end** — +4.65% at N=8 |
+| **—** | *(unregistered)* | **P3 fails at every N**, which no prediction anticipated |
+
+### Two defects in my own instrument, and one in the registration
+
+**Two hurdle-logic bugs, both of which punished a GOOD result** — found and fixed before anything was
+read into the numbers:
+
+1. **`clears_LADDER` required `np.isfinite(profit)`**, so a **zero** breach rate — the best possible
+   outcome, giving infinite expected profit — was scored as a **failure**.
+2. **`clears_STABILITY` was two-sided**, so a holdout breach rate *better* than the screen's failed.
+   The hurdle exists to catch degradation; improvement is not a defect.
+
+**And the registered selection rule is degenerate.** D260 specified *"N is chosen on the SCREEN by
+expected profit before breach"*. **Profit-before-breach diverges as size falls** — halve the size and
+the life more than doubles — so **that rule always selects the smallest N in the grid, whatever the
+returns are.** It picked N=12 mechanically.
+
+**The verdict is unaffected**, because P3 fails at every N including the ones a sensible rule would
+pick. **But the rule was wrong when written and is recorded as such**: a selection criterion for a
+sizing sweep must be *return subject to clearing the constraints*, never a survival statistic alone.
+
+### The stop applies
+
+**CLOSED. C1 is finished** — no third sizing scheme, no extended N grid, no alternative estimator
+window. **Extending the grid to reach N≈20 after seeing P3 bind is precisely the second chance the
+stop forbids**, and the arithmetic above already shows where it lands: **+1.87%/yr.**
+
+**What survives is not a strategy but a method.** Vol-targeted sizing genuinely removes the regime
+dependence of a drawdown constraint — 2020's static breach rate of 11.36% became 0.000% at N=12,
+out of sample, on a rule fitted before the event. **That belongs in the sizing wrapper (C4) for
+every future prop candidate**, and it is the reusable part of this study.
