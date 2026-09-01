@@ -11,6 +11,7 @@ The live surface is checked by `fetch_databento.py --verify`, which is free.
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -141,6 +142,12 @@ def test_stype_in_is_continuous_never_parent(mod):
 
 # --------------------------------------------------------- it cannot spend
 
+def _stamp(tmp_path, fingerprint):
+    p = tmp_path / "verify.json"
+    p.write_text(json.dumps({"config_fingerprint": fingerprint}), encoding="utf-8")
+    return p
+
+
 
 def test_submit_refuses_without_a_verify_stamp(mod, monkeypatch, tmp_path):
     monkeypatch.setattr(mod, "VERIFY_STAMP", tmp_path / "absent.json")
@@ -150,9 +157,10 @@ def test_submit_refuses_without_a_verify_stamp(mod, monkeypatch, tmp_path):
 
 
 def test_submit_refuses_without_an_accepted_cost(mod, monkeypatch, tmp_path):
-    stamp = tmp_path / "verify.json"
-    stamp.write_text("{}", encoding="utf-8")
-    monkeypatch.setattr(mod, "VERIFY_STAMP", stamp)
+    # A stamp for the CURRENT configuration, so this test exercises the accepted-
+    # cost gate rather than tripping the fingerprint gate ahead of it.
+    monkeypatch.setattr(mod, "VERIFY_STAMP",
+                        _stamp(tmp_path, mod.config_fingerprint()))
     with pytest.raises(SystemExit) as exc:
         mod.do_submit(None)
     assert "REFUSING TO SPEND" in str(exc.value)
@@ -162,9 +170,10 @@ def test_submit_is_not_wired_up_even_when_fully_authorised(mod, monkeypatch,
                                                            tmp_path):
     """A spending path that exists is a spending path that can be run by
     accident. It gets wired up in the same commit as the purchase decision."""
-    stamp = tmp_path / "verify.json"
-    stamp.write_text("{}", encoding="utf-8")
-    monkeypatch.setattr(mod, "VERIFY_STAMP", stamp)
+    # A stamp for the CURRENT configuration, so this test exercises the accepted-
+    # cost gate rather than tripping the fingerprint gate ahead of it.
+    monkeypatch.setattr(mod, "VERIFY_STAMP",
+                        _stamp(tmp_path, mod.config_fingerprint()))
     with pytest.raises(SystemExit) as exc:
         mod.do_submit(181.81)
     assert "not wired up" in str(exc.value)
@@ -199,3 +208,112 @@ def test_dataset_start_is_the_real_floor(mod):
     span request reaching further back is a silent no-op, not an error."""
     assert mod.DATASET_START == "2010-06-06"
     assert mod.DATASET == "GLBX.MDP3"
+
+
+# ------------------------------------------------- the verify stamp binds
+
+def test_the_fingerprint_is_stable_and_covers_what_verification_vouched_for(mod):
+    """A bare stamp file whose EXISTENCE unlocks spending is a guard that reads
+    as protection and is not: edit the dataset or the buy list afterwards and the
+    stale stamp still says "verified" about a configuration nobody checked."""
+    assert mod.config_fingerprint() == mod.config_fingerprint()
+
+    base = mod.config_fingerprint()
+    for attr, value in [("ROLL_RULE", "c"), ("DATASET", "XNAS.ITCH"),
+                        ("SCHEMA", "trades"), ("ENCODING", "csv"),
+                        ("DERIVED_USD_PER_GIB", 280.0), ("BASE", "https://x/v0")]:
+        original = getattr(mod, attr)
+        setattr(mod, attr, value)
+        try:
+            assert mod.config_fingerprint() != base, f"{attr} did not move it"
+        finally:
+            setattr(mod, attr, original)
+    assert mod.config_fingerprint() == base
+
+
+def test_the_fingerprint_moves_when_the_buy_list_changes(mod):
+    base = mod.config_fingerprint()
+    original = mod.COMPLEX
+    mod.COMPLEX = original + [("speculative", ["XYZ"], 16.0)]
+    try:
+        assert mod.config_fingerprint() != base
+    finally:
+        mod.COMPLEX = original
+
+
+def test_require_verified_refuses_a_missing_stamp(mod, monkeypatch, tmp_path):
+    monkeypatch.setattr(mod, "VERIFY_STAMP", tmp_path / "absent.json")
+    with pytest.raises(SystemExit, match="run --verify first"):
+        mod.require_verified("--cost")
+
+
+def test_require_verified_refuses_a_stamp_from_a_DIFFERENT_configuration(
+        mod, monkeypatch, tmp_path):
+    """The gap this closes. Verify, then change the roll rule, then ask for a
+    cost: the stamp must stop vouching."""
+    monkeypatch.setattr(mod, "VERIFY_STAMP",
+                        _stamp(tmp_path, "0000stalefingerprint"))
+    with pytest.raises(SystemExit, match="CONFIGURATION CHANGED"):
+        mod.require_verified("--cost")
+
+
+def test_require_verified_accepts_a_matching_stamp(mod, monkeypatch, tmp_path):
+    monkeypatch.setattr(mod, "VERIFY_STAMP",
+                        _stamp(tmp_path, mod.config_fingerprint()))
+    assert mod.require_verified("--cost")["config_fingerprint"] == \
+        mod.config_fingerprint()
+
+
+def test_both_spending_paths_go_through_the_gate(mod, monkeypatch, tmp_path):
+    monkeypatch.setattr(mod, "VERIFY_STAMP",
+                        _stamp(tmp_path, "0000stalefingerprint"))
+    with pytest.raises(SystemExit, match="CONFIGURATION CHANGED"):
+        mod.do_cost()
+    with pytest.raises(SystemExit, match="CONFIGURATION CHANGED"):
+        mod.do_submit(181.81)
+
+
+# ------------------------------------------------- pacing and retries
+
+def test_pacing_is_present_but_not_slow(mod):
+    """The other fetchers pace at 30-66/min because they pull thousands of
+    slices. This one makes ~17 calls of free metadata across both network modes,
+    so 120/min is polite without being an obstacle."""
+    assert mod.REQUESTS_PER_MIN == 120
+    assert mod.MIN_INTERVAL == pytest.approx(0.5)
+    assert 17 * mod.MIN_INTERVAL < 10.0, "both modes must cost under ten seconds"
+
+
+def test_client_errors_are_NOT_retried(mod, monkeypatch):
+    """429 is a throttle and 5xx is the server's problem. Every other 4xx is OUR
+    bug -- a wrong parameter name, a bad key -- and retrying it is pointless,
+    rude, and hides the error behind a delay."""
+    import urllib.error, io as _io
+    monkeypatch.setattr(mod, "_CONSECUTIVE_FAILURES", 0)
+    calls = []
+
+    def _400(req, timeout=None):
+        calls.append(1)
+        raise urllib.error.HTTPError(req.full_url, 400, "Bad Request", {},
+                                     _io.BytesIO(b"unknown parameter 'mode'"))
+
+    monkeypatch.setattr(mod.urllib.request, "urlopen", _400)
+    monkeypatch.setattr(mod, "_LIMITER", mod.RateLimiter(0.0))
+    with pytest.raises(SystemExit, match="HTTP 400"):
+        mod.call("list_datasets", {}, "k")
+    assert len(calls) == 1, f"a 400 was retried {len(calls)} times"
+    assert 429 in mod.RETRYABLE_STATUS and 503 in mod.RETRYABLE_STATUS
+    assert 400 not in mod.RETRYABLE_STATUS and 401 not in mod.RETRYABLE_STATUS
+
+
+def test_there_is_a_hard_stop_rather_than_a_retry_loop(mod, monkeypatch):
+    import urllib.error, io as _io
+    monkeypatch.setattr(mod, "_LIMITER", mod.RateLimiter(0.0))
+    monkeypatch.setattr(mod, "_CONSECUTIVE_FAILURES", mod.MAX_CONSECUTIVE_FAILURES)
+
+    def _never(*_a, **_k):  # pragma: no cover - must not be reached
+        raise AssertionError("a request was made after the hard stop")
+
+    monkeypatch.setattr(mod.urllib.request, "_never", _never, raising=False)
+    with pytest.raises(SystemExit, match="HARD STOP"):
+        mod.call("list_datasets", {}, "k")

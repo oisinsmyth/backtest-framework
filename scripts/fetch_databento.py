@@ -60,11 +60,22 @@ confirmed on a free call before any byte is bought.
 
 BEING UNABLE TO SPEND BY ACCIDENT
 ---------------------------------
-  * `--plan` needs no key and no network at all
+  * the DEFAULT mode is `--plan`, so a bare invocation costs nothing
+  * `--plan` needs no key and no network at all — asserted by a test that fails
+    if the request function is reached
   * `--verify` and `--cost` call only free metadata endpoints
-  * `--submit` refuses unless BOTH a passed `--verify` stamp exists AND the
-    operator passes `--i-accept-the-cost` with a figure matching Databento's own
-    quote to the cent
+  * `--cost` AND `--submit` both refuse without a passed `--verify` stamp, and
+    **the stamp is bound to a fingerprint of the configuration it vouched for**:
+    edit the dataset, the endpoints, the roll rule, the rate or the buy list and
+    the stamp stops being accepted. Without that, a bare file's EXISTENCE would
+    unlock spending for a configuration nobody ever checked — a guard that reads
+    as protection and is not
+  * `--submit` additionally requires `--i-accept-the-cost` with Databento's own
+    quoted figure, and is then DELIBERATELY NOT WIRED UP
+  * paced at 120/min with exponential backoff and a HARD STOP after five
+    consecutive failures. **Only 429 and 5xx are retried** — every other 4xx is
+    our own bug, and retrying a malformed request is pointless, rude, and hides
+    the error behind a delay
   * the key is read from the environment or a file OUTSIDE the repo, and is never
     printed, logged, or written into any URL this script displays
   * the cache is gitignored; exchange-licensed bars are NEVER committed
@@ -74,9 +85,11 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -144,6 +157,16 @@ BARS_PER_SYMBOL_YEAR = 1380 * 252   # upper bound: no bar prints for a dead minu
 
 FREE_CREDIT_USD = 125.00
 
+# PACING. Looser than the data fetchers on purpose: those pull thousands of
+# slices, this makes seven calls for --verify and ten for --cost, all of them
+# free metadata. 120/min adds about eight seconds across both modes, which is
+# not worth optimising away and not worth skipping either.
+REQUESTS_PER_MIN = 120
+MIN_INTERVAL = 60.0 / REQUESTS_PER_MIN
+MAX_RETRIES = 4
+MAX_CONSECUTIVE_FAILURES = 5
+TIMEOUT = 90
+
 KEY_FILE = Path.home() / ".config" / "databento" / "key"
 CACHE = REPO / "data" / "raw" / "databento"
 VERIFY_STAMP = CACHE / "verify.json"
@@ -176,11 +199,51 @@ def api_key() -> str:
     )
 
 
+class RateLimiter:
+    """A floor on the gap between requests — the same conservative shape every
+    other fetcher in this repo uses, and for the same reason: a client that trips
+    a limit and backs off is slower than one that never trips it, and it is ruder.
+
+    Paced looser than the data fetchers deliberately. Those pull thousands of
+    slices; this one makes SEVEN calls for `--verify` and TEN for `--cost`, all of
+    them free metadata. At 120/min the whole of both modes costs about eight
+    seconds of waiting, which is not worth optimising and not worth skipping.
+    """
+
+    def __init__(self, min_interval: float) -> None:
+        self.min_interval = min_interval
+        self.last = 0.0
+
+    def wait(self) -> None:
+        gap = time.monotonic() - self.last
+        if gap < self.min_interval:
+            time.sleep(self.min_interval - gap)
+        self.last = time.monotonic()
+
+
+_LIMITER = RateLimiter(MIN_INTERVAL)
+_CONSECUTIVE_FAILURES = 0
+
+# Retry these and nothing else. 429 is a throttle and 5xx is the server's
+# problem, so both are worth waiting out. EVERY OTHER 4xx IS OUR BUG -- a
+# malformed request, a wrong parameter name, a bad key -- and retrying it is
+# pointless, rude, and hides the error behind a delay.
+RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+
+
 def call(name: str, params: dict, key: str) -> object:
     """One request. Basic auth, key as username, empty password.
 
     The key never enters the URL, so nothing printed by this module can leak it.
     """
+    global _CONSECUTIVE_FAILURES
+    if _CONSECUTIVE_FAILURES >= MAX_CONSECUTIVE_FAILURES:
+        raise SystemExit(
+            f"HARD STOP: {MAX_CONSECUTIVE_FAILURES} consecutive failures. "
+            "Something is wrong with the request or the service; hammering it "
+            "will not fix either."
+        )
+
     method, path = ENDPOINTS[name]
     url = f"{BASE}/{path}"
     token = base64.b64encode(f"{key}:".encode()).decode()
@@ -193,13 +256,81 @@ def call(name: str, params: dict, key: str) -> object:
         headers["Content-Type"] = "application/x-www-form-urlencoded"
     else:
         url += "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, data=body, headers=headers, method=method)
-    try:
-        with urllib.request.urlopen(req, timeout=90) as r:
-            return json.loads(r.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", "replace")[:400]
-        raise SystemExit(f"{name}: HTTP {exc.code} {detail}") from exc
+
+    delay = 2.0
+    for attempt in range(MAX_RETRIES):
+        _LIMITER.wait()
+        req = urllib.request.Request(url, data=body, headers=headers,
+                                     method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+                _CONSECUTIVE_FAILURES = 0
+                return json.loads(r.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", "replace")[:400]
+            if exc.code not in RETRYABLE_STATUS:
+                _CONSECUTIVE_FAILURES += 1
+                raise SystemExit(f"{name}: HTTP {exc.code} {detail}") from exc
+            if attempt == MAX_RETRIES - 1:
+                _CONSECUTIVE_FAILURES += 1
+                raise SystemExit(
+                    f"{name}: HTTP {exc.code} after {MAX_RETRIES} attempts. "
+                    f"{detail}"
+                ) from exc
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            if attempt == MAX_RETRIES - 1:
+                _CONSECUTIVE_FAILURES += 1
+                raise SystemExit(
+                    f"{name}: {type(exc).__name__} after {MAX_RETRIES} attempts. "
+                    f"{exc}"
+                ) from exc
+        time.sleep(delay)
+        delay *= 2
+    raise SystemExit(f"{name}: unreachable")  # pragma: no cover
+
+
+def config_fingerprint() -> str:
+    """A hash of every constant a verification actually vouched for.
+
+    THE STAMP MUST BIND TO WHAT IT VERIFIED. Without this the stamp is a bare
+    file whose existence unlocks `--cost` and `--submit`: edit an endpoint, the
+    dataset, the roll rule or the buy list afterwards, and a stale stamp still
+    says "verified" about a configuration nobody ever checked. That is exactly
+    the failure mode where a guard is worse than no guard, because it reads as
+    protection.
+    """
+    payload = json.dumps({
+        "base": BASE,
+        "endpoints": {k: list(v) for k, v in sorted(ENDPOINTS.items())},
+        "dataset": DATASET,
+        "schema": SCHEMA,
+        "stype_in": STYPE_IN,
+        "roll_rule": ROLL_RULE,
+        "encoding": ENCODING,
+        "compression": COMPRESSION,
+        "usd_per_gib": DERIVED_USD_PER_GIB,
+        "complex": [[g, list(s), y] for g, s, y in COMPLEX],
+    }, sort_keys=True)
+    return hashlib.sha256(payload.encode()).hexdigest()[:16]
+
+
+def require_verified(mode: str) -> dict:
+    """Gate for every mode that can reach a billable decision."""
+    if not VERIFY_STAMP.exists():
+        raise SystemExit(f"{mode}: run --verify first. It is free.")
+    stamp = json.loads(VERIFY_STAMP.read_text(encoding="utf-8"))
+    now = stamp.get("config_fingerprint")
+    want = config_fingerprint()
+    if now != want:
+        raise SystemExit(
+            f"{mode}: THE CONFIGURATION CHANGED SINCE --verify RAN.\n"
+            f"  verified: {now}\n"
+            f"  current : {want}\n"
+            "The endpoints, dataset, schema, roll rule, rate or buy list were "
+            "edited after verification, so the stamp vouches for something that "
+            "is no longer what would be requested. Re-run --verify. It is free."
+        )
+    return stamp
 
 
 def unit_price(payload: object, schema: str, mode: str = "historical") -> float:
@@ -320,7 +451,10 @@ def do_verify() -> int:
     CACHE.mkdir(parents=True, exist_ok=True)
     VERIFY_STAMP.write_text(json.dumps({
         "verified_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "config_fingerprint": config_fingerprint(),
         "base": BASE, "dataset": DATASET, "schema": SCHEMA,
+        "roll_rule": ROLL_RULE, "stype_in": STYPE_IN,
+        "encoding": ENCODING, "compression": COMPRESSION,
         "unit_price_usd_per_gb": rate,
         "derived_usd_per_gib": DERIVED_USD_PER_GIB,
         "checks": [{"check": c[0], "pass": c[1], "detail": c[2]} for c in checks],
@@ -332,8 +466,7 @@ def do_verify() -> int:
 def do_cost() -> int:
     """Databento's own quote for the planned job. Free, and it is what --submit
     requires the operator to accept."""
-    if not VERIFY_STAMP.exists():
-        raise SystemExit("Run --verify first. It is free.")
+    require_verified("--cost")
     key = api_key()
     end = datetime.now(timezone.utc).date().isoformat()
     total = 0.0
@@ -360,8 +493,7 @@ def do_cost() -> int:
 def do_submit(accepted: float | None) -> int:
     """The only mode that spends. Refuses without a passed verify AND an
     explicitly accepted figure matching Databento's quote."""
-    if not VERIFY_STAMP.exists():
-        raise SystemExit("Run --verify first. It is free.")
+    require_verified("--submit")
     if accepted is None:
         raise SystemExit(
             "REFUSING TO SPEND.\n"

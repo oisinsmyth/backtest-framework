@@ -194,13 +194,37 @@ equities and OPRA are separate products at every tier.
 
 | mode | what it touches |
 |---|---|
+| **default (no flags)** | `--plan`. **A bare invocation cannot fetch.** |
 | `--plan` | **nothing.** No network, no key. Asserted by a test that fails if `call` is reached |
 | `--verify` | free metadata endpoints only |
-| `--cost` | `get_cost` — free |
-| `--submit` | refuses without a passed `--verify` **and** `--i-accept-the-cost <figure>`, and is then **deliberately not wired up** |
+| `--cost` | `get_cost` — free, and **gated on a valid stamp** |
+| `--submit` | refuses without a valid stamp **and** `--i-accept-the-cost <figure>`, and is then **deliberately not wired up** |
 
 **A spending path that exists is a spending path that can be run by accident.**
 Submission gets written in the same commit as the purchase decision, not before.
+
+### The stamp is bound to what it verified
+
+`--verify` writes a **fingerprint** — a hash of the base URL, every endpoint, the
+dataset, schema, `stype_in`, roll rule, encoding, compression, the derived rate and
+the whole buy list. `--cost` and `--submit` recompute it and **refuse if it moved**.
+
+> Without that, the stamp is a bare file whose *existence* unlocks spending. Change
+> the roll rule from `v` to `c` after verifying, and a stale stamp would still say
+> "verified" about a configuration nobody ever checked. **That is a guard that
+> reads as protection and is not.**
+
+### Pacing, retries, and what is deliberately not retried
+
+**120/min**, exponential backoff, **hard stop after five consecutive failures.**
+Looser than the data fetchers (30–66/min) on purpose: those pull thousands of
+slices, this makes **seven calls for `--verify` and ten for `--cost`**. Measured,
+the pacing costs **8.0 seconds across both modes combined**.
+
+**Only `429` and `5xx` are retried.** A 429 is a throttle and a 5xx is the server's
+problem, so both are worth waiting out. **Every other 4xx is our own bug** — a wrong
+parameter name, a bad key — and retrying it is pointless, rude, and hides the error
+behind a delay. Asserted by a test that counts the attempts on a 400.
 
 Two traps hard-coded because they are cheap to hit: **`stype_in=continuous`, never
 `parent`**; and **`batch.submit_job`, never streaming** — streaming re-bills on
