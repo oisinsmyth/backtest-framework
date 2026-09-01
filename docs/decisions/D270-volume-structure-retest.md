@@ -170,3 +170,31 @@ by 8%.
 
 **Volume is closed as the third input.** No sixth score, no second normalisation window, no
 per-stratum retry, as registered. **Nothing is promoted; R8 governs.**
+
+---
+
+## ADDENDUM — M3 was specified and the runner skipped it. R6 defect, now closed.
+
+**D270 named three hurdles. The runner computed M3 only for cells that had already cleared M1 and
+M2, so when none did it printed *"M3 not computed"* and stopped.** That is precisely the defect
+[R6](../RULES.md#r6) exists for — *"a runner implementing a multi-leg hurdle must compute every leg
+or fail loudly"* — and it is the same short-circuit D230 found in D217 and D218.
+
+**Computed now. 300 shuffle draws, one shared permutation per simulation, best-of-15 across all
+volume cells: the floor is 2.56 bp.**
+
+| cell | spread | M1 | M2 | **M3** |
+|---|---:|---|---|---|
+| **LOW `rel_vol`** | **−3.68 bp** | **YES** | no *(0.92×)* | **YES** |
+| **LOW `vol_z`** | −3.56 bp | **YES** | no *(0.89×)* | **YES** |
+| **LOW `dollar_vol`** | **−3.93 bp** | no | no *(0.98×)* | **YES** |
+| LOW `vol_trend` | −2.26 bp | no | no | no |
+| every ALL and HIGH cell | ≤ 1.88 bp | no | no | no |
+
+**Three of fifteen beat the null, all on the LOW stratum.** `rel_vol` and `vol_z` clear **M1 and M3
+together** and fail only M2 — **the ordering is real, monotone, and statistically distinguishable
+from a shuffle. It is 8% short of paying for a round trip.**
+
+**The verdict is unchanged** — M2 is a hurdle, not a tiebreak, and nothing clears all three. But the
+record now says *how* it failed, which the short-circuit had hidden: **not for want of signal, and
+not for want of surviving a null.**
