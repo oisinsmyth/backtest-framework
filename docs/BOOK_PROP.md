@@ -90,3 +90,72 @@ futures hours, leaving only the Asian session uncovered. **That fetch is running
 
 Options for real futures data are recorded in
 [D259](decisions/) when acquired; none is free.
+
+---
+
+## C1 — SCREENED AND CLOSED, 2026-08-29
+
+[D259](decisions/D259-the-extended-session-and-the-overnight-interior.md) measured the path. **C1
+fails hurdle P4 by roughly sixteenfold and cannot be sized out of it profitably.**
+
+### The edge is real and era-stable — that is not the problem
+
+Overnight total **+9.04%/yr**, reproducing D247's +8.59% in shape, and **stable across eras**:
+**+8.55%** (2010–19) / +18.91% (2020) / **+8.28%** (2021–26). **Unlike the intraday leg, which is a
+2020 artefact, the overnight drift holds up.**
+
+Decomposed: post-market **+1.70%**, untraded 20:00–04:00 **+5.88%**, pre-market **+1.27%**, regular
+hours +3.12%.
+
+### The path is the problem
+
+| era | holds | MAE p99 | worst | **4% breach @1x** | @2x | @3x |
+|---|---:|---:|---:|---:|---:|---:|
+| ALL | 12,985 | 3.98% | **13.85%** | **2.07%** | 16.47% | 34.73% |
+| 2010–2019 | 7,758 | 3.48% | 13.85% | 1.06% | 11.34% | 26.46% |
+| **2020** | 792 | **7.05%** | 11.29% | **11.36%** | 35.10% | 56.57% |
+| **2021–2026** | 4,435 | 3.90% | 6.87% | **2.19%** | 22.10% | 45.30% |
+
+**P4 requires an expected time-to-breach above 3 years — a breach rate under 0.132%:**
+
+| | breach | expected life | verdict |
+|---|---:|---:|---|
+| **1x** | 2.07% | **48 sessions, 0.19 yr** | **FAILS by 16x** |
+| 2x | 16.47% | 6 sessions | FAILS by 125x |
+| 3x | 34.73% | 3 sessions | FAILS by 263x |
+
+**The typical hold is quiet — median MAE 0.55% — and the tail is not.** The 99th percentile sits
+*exactly* on the 4% floor.
+
+### Why sizing down does not rescue it
+
+Clearing P4 needs the 99.87th percentile of MAE inside the floor, which puts the notional near
+**0.5x**. At 0.5x the arm captures roughly **4.5%/yr of account value** — and **2020 would still
+have breached at 11.36% even at 1x**, so a single such month ends the account regardless.
+
+**This is `exposure x edge` ([FINDINGS §1a](FINDINGS.md)) arriving from the drawdown side.** The
+size that survives the constraint earns too little to matter, and the size that earns enough does
+not survive.
+
+### The unstoppable half
+
+**In the March 2020 cluster roughly half of each drawdown was delivered by the gap before the
+market opened** — IWM 2020-03-12 lost 5.07% of an 11.29% MAE in the untraded window.
+
+**R11's amendment claimed "a gap cannot be stopped out of" and D259 shows that is right in mechanism
+and small in magnitude** — only **3.72%** of 1x first-breaches occur in the untraded window, and the
+gap alone breaches on **0.10%** of holds at 1x. **Three caveats all make that a lower bound**: the
+untraded window contributes one observation per hold, the pre-market is counted exitable and barely
+is, and it is quiet by construction in this fixture.
+
+**Worst hold in sixteen years: QQQ 2010-05-06, the Flash Crash, 14.03% trailing drawdown** — a
+regular-hours event a stop could in principle have caught.
+
+### What C1 leaves behind
+
+**The overnight drift is real, era-stable and reachable at MyFundedFutures.** What defeats it is
+P1's ratcheting floor measured on open equity, not the edge. **Any future prop candidate must be
+screened on MAE before its returns are computed** — D259's method is the reusable part.
+
+**Next: [C2](decisions/D258-the-prop-track-candidates.md), whose shape fits P1 by design** — high
+hit rate, tight tails — and whose cost objection R12's cross-screen has already removed.

@@ -1,0 +1,275 @@
+{
+ "symbols": [
+  "SPY",
+  "QQQ",
+  "IWM",
+  "DIA"
+ ],
+ "start": "2010-01",
+ "end": "2026-08",
+ "interval": "15min",
+ "session": "extended_hours_04:00-19:45_open_stamped",
+ "session_note": "Timestamps mark the interval's OPEN, so the last bar 19:45 covers [19:45, 20:00) and its close IS the 20:00 print; the RTH last bar 15:45 covers [15:45, 16:00) and its close IS the 16:00 print. Bars stamped 20:00 or later are DROPPED \u2014 they are past the documented 8:00pm session end, appear in roughly half of sessions at 20:00 and 5-9% beyond it, and a ragged tail would make the 16:00->20:00 window mean different things on different days",
+ "bars_per_full_session": 64,
+ "bars_dropped_after_session_end": 7505,
+ "bar_boundary": "timestamps mark the interval's OPEN, so a bar stamped t covers [t, t+15m) and is not complete until t+15m -- MEASURED, not assumed",
+ "timezone": "US/Eastern",
+ "timezone_note": "US/Eastern as stated by the provider in its own Meta Data block. DST-shifting, so NOT a fixed offset and NOT the crypto fixtures' 'naive means UTC' convention (D108)",
+ "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, which breaks D24's immutable-snapshot requirement; as-traded values never change. The PROVIDER frame is as-traded; the BUILD back-adjusts splits from the events sidecar, so this FIXTURE is split-adjusted and dividends are supplied separately (D75's two frames)",
+ "gates": {
+  "extended_session_arrived": true,
+  "the_04_00_and_19_45_bars_exist": true,
+  "median_bars_per_session": 62,
+  "mean_bars_per_session": 57.21,
+  "rth_only_would_be": 26,
+  "month_honoured": true,
+  "bars_outside_requested_month": 0,
+  "slices_without_extended_session": [],
+  "no_unexplained_large_bar": true,
+  "large_bar_threshold": 0.15,
+  "anchor_bar_coverage": {
+   "04:00": 0.71919,
+   "18:00": 0.853415,
+   "19:45": 0.88327,
+   "09:30": 1.0,
+   "15:45": 0.998149,
+   "any_pre": 0.999881,
+   "any_post": 0.998985,
+   "sessions": 16748
+  },
+  "anchor_bar_coverage_by_symbol_and_era": {
+   "SPY|2010-2019": {
+    "04:00": 0.915739,
+    "18:00": 0.990461,
+    "19:45": 0.990461,
+    "09:30": 1.0,
+    "15:45": 1.0,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 2516
+   },
+   "SPY|2020": {
+    "04:00": 1.0,
+    "18:00": 0.992095,
+    "19:45": 0.992095,
+    "09:30": 1.0,
+    "15:45": 1.0,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 253
+   },
+   "SPY|2021-2026": {
+    "04:00": 1.0,
+    "18:00": 0.992948,
+    "19:45": 0.992948,
+    "09:30": 1.0,
+    "15:45": 1.0,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 1418
+   },
+   "QQQ|2010-2019": {
+    "04:00": 0.661367,
+    "18:00": 0.941574,
+    "19:45": 0.968601,
+    "09:30": 1.0,
+    "15:45": 0.998808,
+    "any_pre": 1.0,
+    "any_post": 0.999205,
+    "sessions": 2516
+   },
+   "QQQ|2020": {
+    "04:00": 1.0,
+    "18:00": 0.992095,
+    "19:45": 0.992095,
+    "09:30": 1.0,
+    "15:45": 1.0,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 253
+   },
+   "QQQ|2021-2026": {
+    "04:00": 1.0,
+    "18:00": 0.992948,
+    "19:45": 0.992948,
+    "09:30": 1.0,
+    "15:45": 1.0,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 1418
+   },
+   "IWM|2010-2019": {
+    "04:00": 0.415739,
+    "18:00": 0.653418,
+    "19:45": 0.76868,
+    "09:30": 1.0,
+    "15:45": 0.996025,
+    "any_pre": 1.0,
+    "any_post": 0.997615,
+    "sessions": 2516
+   },
+   "IWM|2020": {
+    "04:00": 0.944664,
+    "18:00": 0.940711,
+    "19:45": 0.956522,
+    "09:30": 1.0,
+    "15:45": 1.0,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 253
+   },
+   "IWM|2021-2026": {
+    "04:00": 0.997884,
+    "18:00": 0.988011,
+    "19:45": 0.990127,
+    "09:30": 1.0,
+    "15:45": 0.999295,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 1418
+   },
+   "DIA|2010-2019": {
+    "04:00": 0.220588,
+    "18:00": 0.532194,
+    "19:45": 0.566773,
+    "09:30": 1.0,
+    "15:45": 0.994038,
+    "any_pre": 0.999205,
+    "any_post": 0.996423,
+    "sessions": 2516
+   },
+   "DIA|2020": {
+    "04:00": 0.818182,
+    "18:00": 0.84585,
+    "19:45": 0.909091,
+    "09:30": 1.0,
+    "15:45": 0.996047,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 253
+   },
+   "DIA|2021-2026": {
+    "04:00": 0.897743,
+    "18:00": 0.901269,
+    "19:45": 0.923836,
+    "09:30": 1.0,
+    "15:45": 0.999295,
+    "any_pre": 1.0,
+    "any_post": 1.0,
+    "sessions": 1418
+   }
+  },
+  "anchor_coverage_note": "READ THIS BEFORE USING THE CLOCK ANCHORS. `any_pre`/`any_post` are near 1.0 \u2014 the extended session arrived on essentially every session. The SPECIFIC clock bars are a different matter: an extended-hours bar is printed only where something traded, so 04:00, 18:00 and 19:45 are sparse on IWM and DIA in the early era (DIA prints no 04:00 bar at all in some 2010-2014 months). A consumer that keys on exact clock times therefore selects a LIQUIDITY-CONDITIONED subsample. Boundary prices should be taken as the FIRST/LAST print inside each window, not at a fixed clock time, and the realised boundaries disclosed"
+ },
+ "gate_note": "Two silent failure modes are gated here because each would produce a fixture that looks fine and is wrong. (1) extended_hours ignored -> a 26-bar 09:30-15:45 session, and three of the four windows this fixture exists to measure collapse to nothing. (2) `month` ignored -> FX_INTRADAY does exactly this, silently returning the trailing weeks instead of the month requested (measured 2026-08-29). Both are verified per slice at fetch AND recomputed here from the written data",
+ "split_adjusted": true,
+ "split_events_applied": 0,
+ "split_adjusted_bars": 0,
+ "split_note": "ZERO splits for all four symbols over 2010-01..2026-08, from the provider's own SPLITS endpoint. That is the expected answer and it was CHECKED rather than assumed, because a build that assumes it fails silently -- D226 found twelve unadjusted splits across the 57-ETF fixture, one of them a +1,772% single 15-minute bar",
+ "largest_residual_bar_move": {
+  "symbol": "IWM",
+  "timestamp": "2020-03-20 04:00:00",
+  "move": 0.06824403597966366
+ },
+ "bad_prints": {
+  "rule": "anchor = median(open[t-1], open[t], open[t+1]); a bar is suspect when its CLOSE leaves a +/-3% band around the local anchor range (all sessions), or its HIGH/LOW leaves that band (EXTENDED SESSION ONLY)",
+  "tolerance": 0.03,
+  "suspect_bars": 2113,
+  "suspect_rate": 0.002205137249704399,
+  "edge_bars_exempt": 8,
+  "by_segment": {
+   "pre": 190,
+   "rth": 0,
+   "post": 1923
+  },
+  "rate_by_segment": {
+   "pre": 0.0006451393840616618,
+   "rth": 0.0,
+   "post": 0.008414245146385113
+  },
+  "by_symbol": {
+   "SPY": 856,
+   "QQQ": 875,
+   "IWM": 313,
+   "DIA": 69
+  },
+  "by_year": {
+   "2010": 84,
+   "2011": 24,
+   "2012": 5,
+   "2013": 4,
+   "2014": 6,
+   "2015": 2,
+   "2016": 4,
+   "2017": 3,
+   "2018": 10,
+   "2019": 4,
+   "2020": 47,
+   "2021": 0,
+   "2022": 8,
+   "2023": 200,
+   "2024": 455,
+   "2025": 797,
+   "2026": 460
+  },
+  "worst_lower_wick_raw": 9.078545032968627,
+  "why_extremes_are_only_filtered_in_the_extended_session": "In regular hours the large wicks are dominated by GENUINE dislocations -- 2010-05-06 (Flash Crash), 2015-08-24, 2018-02-06, 2025-04-07/09 -- and erasing them would delete the exact tail a drawdown study is about. In the extended session there is no comparable population of real 5% 15-minute index-ETF moves, and the count is two orders of magnitude larger. The residual RTH bad prints cluster on HALF-DAYS, on bars stamped after a 13:00 close"
+ },
+ "suspect_column": "The fixture ships RAW as-traded OHLCV and a `suspect` flag; no price is modified, so D24's immutability holds and the judgement is visible rather than baked in. A consumer measuring a PATH (highs and lows) must decide what to do with these bars and say so. A consumer measuring only window boundaries is far less exposed, but a suspect CLOSE lands on a boundary too, which is why the close test runs in every session",
+ "sessions": 16748,
+ "sessions_per_symbol": {
+  "SPY": 4187,
+  "QQQ": 4187,
+  "IWM": 4187,
+  "DIA": 4187
+ },
+ "half_days_flagged_not_dropped": [
+  "2010-11-26",
+  "2011-11-25",
+  "2012-11-23",
+  "2012-12-24",
+  "2013-07-03",
+  "2013-11-29",
+  "2013-12-24",
+  "2014-07-03",
+  "2014-10-30",
+  "2014-11-28",
+  "2014-12-24",
+  "2015-11-27",
+  "2015-12-24",
+  "2016-11-25",
+  "2017-07-03",
+  "2018-07-03",
+  "2018-11-23",
+  "2019-07-03",
+  "2019-11-29",
+  "2019-12-24",
+  "2020-11-27",
+  "2020-12-24",
+  "2022-11-25"
+ ],
+ "half_day_policy": "KEPT and flagged, unlike fetch_etf_intraday.py which drops them. That build drops early closes so a 57-name RTH grid stays exactly rectangular; here the extended grid is ragged by construction and rectangularity is not available, so dropping would discard real sessions for a property that cannot be attained anyway. A 13:00 close has no 16:00->20:00 window and the consumer must handle that explicitly rather than inherit a silent drop",
+ "rows": 958217,
+ "bars_per_symbol": {
+  "SPY": 265273,
+  "QQQ": 252505,
+  "IWM": 234105,
+  "DIA": 206334
+ },
+ "first_bar": {
+  "SPY": "2010-01-04 04:00:00",
+  "QQQ": "2010-01-04 04:15:00",
+  "IWM": "2010-01-04 06:15:00",
+  "DIA": "2010-01-04 08:00:00"
+ },
+ "last_bar": {
+  "SPY": "2026-08-26 19:45:00",
+  "QQQ": "2026-08-26 19:45:00",
+  "IWM": "2026-08-26 19:45:00",
+  "DIA": "2026-08-26 19:45:00"
+ },
+ "zero_volume_bars": 10,
+ "zero_volume_rate": 1.0436049454351155e-05,
+ "empty_bar_disclosure": "D192 requires an intraday study on a provider to measure its own universe's empty-bar rate rather than assume it. Note this rate is NOT comparable to the RTH fixture's: extended-hours bars are printed only where something traded, so a thin pre-market slot is absent rather than zero-volume, and absence shows up in bars-per-session, not here",
+ "built_at_utc": "2026-09-01T00:03:31.700834+00:00"
+}
