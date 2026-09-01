@@ -233,3 +233,64 @@ screened.** Applying it is completing the registered test, not searching for a v
 
 **C1 moves from CLOSED to OPEN, pending a pre-registration that fixes the vol target in advance and
 reserves a holdout.**
+
+---
+
+## C2 — SCREENED AND CLOSED, 2026-08-29. The direction is wrong.
+
+**Pre-screen, D250 discipline: the bar was stated before looking** — `exposure x edge` net of
+futures cost ≥ 3%/yr, hit rate > 55%, worst trade < 2%. **Prior stated at ~30%.**
+
+Buy a within-session decline from the running session high, exit after `h` bars or at the close.
+367,944 candidate bars, 16,748 sessions, SPY/QQQ/IWM/DIA, RTH only.
+
+| threshold | horizon | setups | hit rate | **mean/trade** | net at futures cost |
+|---:|---:|---:|---:|---:|---:|
+| 0.30% | 4 | 182,871 | 51.4% | **−0.0017%** | −10.30% |
+| 0.50% | 4 | 120,375 | 50.6% | **−0.0049%** | −12.53% |
+| 0.75% | 4 | 74,386 | 49.3% | **−0.0102%** | −13.70% |
+| 1.00% | 4 | 47,331 | 49.0% | **−0.0089%** | −7.76% |
+| 1.50% | 8 | 19,364 | 48.3% | +0.0066% | **+1.34%** |
+
+### All three criteria fail
+
+| | required | measured | |
+|---|---|---|---|
+| `exposure x edge` net of futures cost | ≥ 3%/yr | **+1.34%** best cell | **FAILS** |
+| hit rate | > 55% | **51.7%** best | **FAILS** |
+| worst single trade | < 2% | **−4.56% to −6.52%** | **FAILS** |
+
+**And the hit rate DECLINES as the threshold tightens** — 50.7% at 0.30% down to **48.7%** at 1.50%.
+**The deeper the decline, the worse the odds of a bounce**, which is the exact opposite of the shape
+P1 requires and the exact opposite of the premise.
+
+### The finding is bigger than the cell
+
+**Nineteen of twenty cells have a NEGATIVE mean return. Buying an intraday decline loses.**
+
+> **The reversion this universe shows at DAILY horizons does not exist at INTRADAY horizons.
+> Within a session, weakness CONTINUES.**
+
+That is a clean split and it reconciles two bodies of evidence this programme had never put side by
+side: **+16.83%, +18.31%, +37.42% and +89.74% after daily-horizon weakness**, against a negative
+edge at every intraday threshold here. **Horizon, not direction, is what separates them.**
+
+**The inverse is not a candidate either**, and it is worth saying so before anyone reaches for it
+(D246 C3 forbids it in any case): the per-trade edge is roughly **0.5 bp**, so shorting it nets
+**0.3 bp** after a 0.2 bp futures round turn — about **+0.34%/yr**. There is nothing on either side.
+
+### One methodological caveat, stated
+
+**The setups overlap** — every qualifying bar is counted, so consecutive bars share horizon. That
+inflates the annualised magnitudes in both directions. **It does not touch the two decisive facts**:
+the per-trade mean is negative and the hit rate is at or below 51.7%. **No annualisation turns a
+negative edge positive.**
+
+### What this does to C1
+
+**C1 stays closed.** The √k component argument needed a second uncorrelated arm, and C2 was the
+candidate. **With C2 dead, `k` remains 1 and C1's standalone figure stands at +1.87%/yr and twenty
+accounts.**
+
+**Remaining: C3 (opening-range), and C4 which was never a candidate.** The prop track has one
+untested idea left.
