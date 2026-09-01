@@ -1,6 +1,8 @@
 # D269 — Volume structure as the orthogonal third input
 
-**Status:** PRE-REGISTERED. Committed **before the test is run**. Nothing here is a result.
+**Status:** **RUN, AND VOID BY ITS OWN CONTROL.** No stage-2 reading was taken.
+
+**Everything above the RESULT heading was committed in `76eb3da`, BEFORE the test was written.**
 **Date:** 2026-09-01
 **Area:** Strategy research · **personal track**
 
@@ -105,3 +107,60 @@ pay a round trip.
 | **total** | **46,209** |
 
 *D268 scored nothing and did not move the count.*
+
+---
+
+## RESULT — VOID. The control fired, and the diagnosis says the control was wrong, not the method.
+
+`uv run python scripts/run_volume_structure.py` · `data/d269_volume_summary.json`
+
+### What happened
+
+| score | max abs(rho) vs the nine price scores | V1b |
+|---|---:|---|
+| `rel_vol` | 0.09 | pass |
+| `vol_z` | 0.09 | pass |
+| `dollar_vol` | 0.01 | pass |
+| `vol_trend` | 0.01 | pass |
+| **`signed_vol` — the control** | **0.14** | **pass — and it was required to FAIL** |
+
+Effective independent scores rose **2.87 → 4.85 of 14**, so V1a and V1b both passed on their face.
+
+**And V-c fired.** D269 states: *"if `signed_vol` comes out orthogonal, the bar-of-day normalisation
+is broken and the whole run is void."* It came out orthogonal. **Stage 2 was not run and no
+calibration number from this run is reported.**
+
+### The diagnosis — and it exonerates the normalisation
+
+| | rho |
+|---|---:|
+| `sign_only` vs `trailing_return` | **+0.279** |
+| `signed_vol` vs `trailing_return` | +0.131 |
+| **`signed_vol` vs `rel_vol`** | **+0.013** |
+
+**The last row is the tell.** `signed_vol` is `rel_vol × sign(return)`, and it is uncorrelated with
+`rel_vol` itself. Multiplying by a symmetric ±1 sends high `rel_vol` to *both* extremes of the
+ordering, so the product decorrelates from **both** its parents. It is not a contaminated version of
+`rel_vol`; it is a different object.
+
+**And a sign was never going to reach the 0.5 threshold anyway:** `sign_only` on its own reaches only
+**+0.279** against `trailing_return`, because a sign discards magnitude and rank correlation is
+mostly magnitude. **A control that cannot reach the bar even in its pure form cannot test anything.**
+
+### The verdict, and why it is not reinterpreted
+
+**The control was mis-specified. The normalisation is sound.** That is the honest reading of the
+diagnosis — and it is *not* a licence to read stage 2, because "the control was silly, let us use the
+result anyway" is exactly the move this programme's stop conditions exist to prevent. **The
+pre-registered void condition fired and is honoured.**
+
+**A corrected control requires a new pre-registration**, which is [D270](D270-volume-structure-retest.md).
+The V1 numbers will reproduce exactly — the run is deterministic — but they will have been produced
+under a control capable of failing.
+
+### What is worth keeping regardless
+
+**A sign-multiplied score decorrelates from both of its parents under rank correlation.** Anyone
+testing independence by correlation can be fooled by a symmetric transform into believing a
+contaminated input is clean. That is a methodological hazard, it was found by a control doing its
+job badly rather than not at all, and it is the reason D270 uses a **two-sided** control.
