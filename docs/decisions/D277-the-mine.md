@@ -99,3 +99,49 @@ R13's second test, because this search is what would have selected it.
 
 **What it does NOT do is reopen anything.** Every closure in D264–D276 fired on a hurdle failure,
 not on multiplicity, so R13's rescoping leaves them exactly where they were.
+
+---
+
+## ADDENDUM — what the five do under sizing
+
+`scripts/d277_sizing.py`. **Sharpe is invariant to constant leverage** (D201/D202), so the
+best-of-300 floor of **+0.605** is not reachable by sizing at any scale. What sizing changes is
+return, volatility, drawdown, and survival.
+
+### Reading (a) — full deployment per trade: 100% into the name when the signal fires
+
+| cell | scale | CAGR | vol | max DD | Sharpe |
+|---|---:|---:|---:|---:|---:|
+| ALL · S2 · `mass_imbalance` | 8× | **+3.04%** | 7.64% | **−16.13%** | +0.392 |
+| LOW · S2 · `macd_line` | 4× | +2.96% | 10.18% | **−23.01%** | +0.286 |
+| LOW · S2 · `impulse_hist` | 4× | +2.79% | 7.90% | −16.72% | +0.348 |
+| HIGH · S2 · `mass_imbalance` | 4× | +2.33% | 6.75% | −14.10% | +0.341 |
+| LOW · S2 · `mass_imbalance` | 4× | +0.70% | 3.55% | −6.31% | +0.196 |
+
+**This is the sensible reading and it produces the first thing in the session that reads like a
+book rather than a rounding error — roughly 3%/yr at 7.6% vol.** It is still below its own noise
+floor, and −16% of drawdown for 3%/yr is a poor exchange against [R12](../RULES.md#r12)'s ~20%
+tolerance; the `macd_line` cell at −23.01% is already outside it.
+
+**Caveat on my own figures: drawdown is scaled LINEARLY here, which UNDERSTATES it.** A levered
+book's drawdown compounds worse than linearly because the variance drag bites hardest on the way
+down. The true numbers are worse than the table.
+
+### Reading (b) — 100% average exposure: ruinous in all five
+
+| cell | leverage needed | implied vol | worst adverse bar | **max survivable** |
+|---|---:|---:|---:|---:|
+| LOW · `impulse_hist` | 52× | 102% | +5.57% | **17.9×** |
+| LOW · `macd_line` | 27× | 70% | +5.57% | **17.9×** |
+| HIGH · `mass_imbalance` | 217× | 366% | +2.76% | **36.2×** |
+| ALL · `mass_imbalance` | 227× | 217% | +2.76% | **36.2×** |
+| LOW · `mass_imbalance` | 239× | 212% | +1.27% | **78.5×** |
+
+**Every cell requires more leverage than its own worst adverse bar survives**, by margins of 1.5×
+to 6×. These books hold 0.42–3.65% average exposure precisely because the signal is rare, so
+reaching 100% means 27× to 239× — and a single bar each book *actually held* takes the account to
+zero.
+
+**[FINDINGS §1c](../FINDINGS.md) reproduced on equities:** *"a short is not survivable at full
+notional."* Crypto's maximum survivable per-name notional was 0.46×; these are more forgiving at
+18–79×, and the leverage required is far past it regardless.
