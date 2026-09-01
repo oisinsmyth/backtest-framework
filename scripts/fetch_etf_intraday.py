@@ -132,6 +132,22 @@ EXT_OPEN, EXT_LAST_BAR = "04:00", "19:45"
 RTH_OPEN, RTH_LAST_BAR = "09:30", "15:45"
 
 
+def build_targets(regular_hours_only: bool) -> tuple[Path, Path, Path]:
+    """The three output paths, chosen in ONE place.
+
+    This function exists because of a real bug. The first version of the
+    extended build parameterised the fixture path and the events path but MISSED
+    THE META, so `--extended` overwrote the committed regular-hours meta -- the
+    exact destructive failure the separate-fixture change had been written to
+    prevent. Three constants, two of them swapped, is a pattern that hides the
+    one you forget. One function now owns all three, and a test asserts
+    `do_build` reaches for no unparameterised output constant.
+    """
+    if regular_hours_only:
+        return FIXTURE, META, EVENTS
+    return EXT_FIXTURE, EXT_META, EXT_EVENTS
+
+
 def in_session(stamp: str, regular_hours_only: bool) -> bool:
     """One place decides what a session is, so the counting pass and the writing
     pass cannot drift apart -- they read the same function."""
@@ -464,9 +480,30 @@ def do_build(regular_hours_only: bool) -> int:
 
     # The extended build writes a SEPARATE fixture. Overwriting the regular-hours
     # one would silently restate every study that has ever read it.
-    fixture = FIXTURE if regular_hours_only else EXT_FIXTURE
-    meta_path = META if regular_hours_only else EXT_META
-    events_path = EVENTS if regular_hours_only else EXT_EVENTS
+    fixture, meta_path, events_path = build_targets(regular_hours_only)
+
+    if not regular_hours_only:
+        raise SystemExit(
+            "REFUSING TO BUILD A 57-ETF EXTENDED-HOURS FIXTURE.\n\n"
+            "MEASURED on the full 2010-2026 cache, 9,071,919 bars:\n"
+            "  * only 2 of 57 symbols reach a median 58 of 64 session slots\n"
+            "    (SPY 64, QQQ 63, IWM 56, GLD 55 ... TIP 28, EWL 27, IYT 27)\n"
+            "  * 94.1% of sessions are incomplete; AGG is short in 100% of them\n"
+            "  * the raggedness is LIQUIDITY-CORRELATED, which is disqualifying\n"
+            "    for anything volume-related -- it injects the quantity under\n"
+            "    test into the sampling grid\n"
+            "  * and this builder has NO BAD-PRINT FILTER. A 428.52% single-bar\n"
+            "    move survives adjustment: EWJ 2018-05-23 08:15 prints 11.46 on\n"
+            "    912 shares while every bar either side is ~60.60. D259 measured\n"
+            "    this pathology across the extended session and established that\n"
+            "    it must be filtered by CORROBORATION, not by magnitude.\n\n"
+            "USE `scripts/fetch_index_extended.py` INSTEAD. It shares this raw\n"
+            "cache, applies the corroboration filter, carries a `suspect` column\n"
+            "and gates on anchor-bar coverage -- and it is scoped to the symbols\n"
+            "where the extended session actually exists.\n\n"
+            "The 2010-2017 backfill was NOT wasted: 11,400 slices are now cached,\n"
+            "so any future extended-hours study starts with zero requests."
+        )
     full_session_bars = RTH_SESSION_BARS if regular_hours_only else EXT_SESSION_BARS
 
     counts = _session_counts(regular_hours_only)
@@ -643,9 +680,16 @@ def do_build(regular_hours_only: bool) -> int:
         "fetched_at_utc": datetime.now(timezone.utc).isoformat(),
         "built_at_utc": datetime.now(timezone.utc).isoformat(),
     }
-    META.write_text(json.dumps(meta, indent=1) + "\n", encoding="utf-8")
-    if not EVENTS.exists():
-        EVENTS.write_text(
+    meta_path.write_text(json.dumps(meta, indent=1) + "\n", encoding="utf-8")
+    # The events sidecar is the same splits/dividends for the same 57 symbols,
+    # so the extended fixture gets a COPY rather than a re-fetch. Copied rather
+    # than shared so the fixture-triple convention holds: every fixture has its
+    # own _events.json beside it.
+    if not regular_hours_only and EVENTS.exists():
+        events_path.write_text(EVENTS.read_text(encoding="utf-8"),
+                               encoding="utf-8")
+    if not events_path.exists():
+        events_path.write_text(
             json.dumps({"note": "not populated; as-traded frame"}, indent=1) + "\n",
             encoding="utf-8",
         )

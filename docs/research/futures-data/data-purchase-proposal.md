@@ -63,9 +63,39 @@ weekly institutional positioning, back to 1986, US-government public domain and 
 appeared in none of the twelve free-data lanes**, which searched for price data rather than
 positioning data.
 
-**One gap to close on the month already paid for:** extended-hours 15-minute for **all 57 ETFs**.
-D259 fetched only four, and **the existing 57-ETF fixture discarded the extended session at build
-time after the slices had already been paid for.** ~11,400 requests, ~3 hours, ~600 MB.
+~~**One gap to close on the month already paid for:** extended-hours 15-minute for **all 57 ETFs**.~~
+
+> **MEASURED AND CLOSED 2026-09-01. The gap is mostly empty, and this section was wrong twice.**
+>
+> **First, the cost.** The 11,400-request figure was the *whole plan*, not the work: **5,928 slices
+> were already cached**, because the original 57-ETF fetch used `extended_hours=true` and threw the
+> bars away at build time. The real job was the 2010–2017 backfill, **5,088 requests, 1.3 hours** —
+> now complete, so **all 11,400 slices are cached and any future extended study starts at zero
+> requests.** That is the durable win here.
+>
+> **Second, and decisively: a 57-ETF extended panel is not a usable fixture.** Built and measured
+> over 9,071,919 bars, then deleted:
+>
+> | | median bars of 64 |
+> |---|---:|
+> | SPY | **64** |
+> | QQQ | 63 |
+> | IWM | 56 |
+> | … | |
+> | TIP / EWL / IYT | **27–28** |
+>
+> **Only 2 of 57 symbols reach a median 58 of 64 slots.** 94.1% of sessions are incomplete and AGG
+> is short in 100% of them. **The raggedness is liquidity-correlated**, which is disqualifying for
+> anything volume-related — it injects the quantity under test into the sampling grid, exactly as
+> `fetch_etf_intraday.py`'s own docstring warned in 2018.
+>
+> **And the build carried an unfiltered bad print**: EWJ on 2018-05-23 08:15 prints **11.46 on 912
+> shares** while every bar either side is ~60.60 — a **+428.52%** move surviving adjustment. D259
+> established that the extended session must be filtered by **corroboration, not magnitude**, and
+> that filter lives in `fetch_index_extended.py`, not here.
+>
+> **`--extended` now refuses**, with the measurement as the reason, and points at the tool that does
+> this correctly for the symbols where the extended session actually exists.
 
 ---
 

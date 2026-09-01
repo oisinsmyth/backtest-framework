@@ -443,3 +443,32 @@ def test_split_factor_at_back_adjusts_only_bars_before_the_effective_date():
     assert F.split_factor_at("2024-01-24 09:30:00", splits) == 1.0
     assert F.split_factor_at("2026-08-26 15:45:00", splits) == 1.0
     assert F.split_factor_at("2019-01-02 09:30:00", []) == 1.0
+
+
+def test_build_targets_never_share_a_path_between_the_two_sessions():
+    """THE REGRESSION GUARD FOR A REAL BUG. The first version of the extended
+    build parameterised the fixture and the events sidecar but MISSED THE META,
+    so `--extended` overwrote the committed regular-hours meta -- the exact
+    destructive failure the separate-fixture change was written to prevent, and
+    it was found only because git reported the committed file as modified."""
+    rth = F.build_targets(True)
+    ext = F.build_targets(False)
+    assert rth == (F.FIXTURE, F.META, F.EVENTS)
+    assert ext == (F.EXT_FIXTURE, F.EXT_META, F.EXT_EVENTS)
+    assert not (set(rth) & set(ext)), "an output path is shared between sessions"
+    assert len(set(rth)) == 3 and len(set(ext)) == 3
+
+
+def test_do_build_writes_through_the_parameterised_paths_only():
+    """Three constants with two of them swapped is a pattern that hides the one
+    you forget. `do_build` must reach for none of the module-level output
+    constants directly -- only the tuple `build_targets` hands it."""
+    import inspect
+    src = inspect.getsource(F.do_build)
+    for name in ("FIXTURE", "META", "EVENTS", "EXT_FIXTURE", "EXT_META",
+                 "EXT_EVENTS"):
+        for forbidden in (f"{name}.write_text(", f"{name}.parent",
+                          f"gzip.open({name}", f"open({name},"):
+            assert forbidden not in src, (
+                f"do_build writes through the unparameterised {name}"
+            )
