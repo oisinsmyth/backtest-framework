@@ -255,3 +255,77 @@ is ~1.0×. That reasoning is withdrawn. Stage 2 can genuinely improve per-trade
 quality, so **1c is not a hard floor** — it is reported, and a candidate below it
 must state what stage-2 work is expected to close the gap and how that will be
 measured on the book rather than on trades.
+
+---
+
+# SECOND AMENDMENT, 2026-09-02 — stage 1 gains a CAPTURABILITY gate
+
+D290 ran stage 1 under this ladder and found that its own ranking statistic was
+not sufficient. The correction is prospective and binding on every future stage 1.
+
+## What went wrong
+
+D290 ranked on **name-split cross-validation**, declared here as "the honest
+column". It is honest about one thing and blind to another:
+
+> **An entry artifact generalises across names perfectly well.**
+
+`lower_wick` posted **CV +6.19** on the short book — second overall — on an
+effect that keeps **−11%** of itself after one skipped bar and **+1%** when
+entered at the next open. CV asks *does this hold on names I have not seen*. It
+never asks *is any of this real*, and nothing else in stage 1 asked either.
+
+Fifteen of D290's 51 collapsed on a test that was not in the pre-registration.
+
+## GATE 1e — CAPTURABILITY. New, and binding
+
+**A candidate must survive being entered one bar late.** Signal from close[t−1]
+as before, but **enter at open[t]** rather than at the close that generated it.
+
+| | threshold |
+|---|---|
+| **open-entry `t` ≥ 2.0** | there is evidence for an effect you could actually enter |
+| **retention ≥ 50%** | the edge is not merely the print you traded on |
+
+**Why open-entry and not skip-a-bar.** Skipping a whole bar removes an entry
+artifact **and** a genuinely fast signal at the same time, so "the edge dies at
+skip 1" is consistent with both. Open entry removes only the print, keeping the
+information one bar old and unexploited. The skip test stays as a **reported
+diagnostic**; it is not the gate.
+
+## Two diagnostics that must be REPORTED with every stage-1 candidate
+
+**The overnight / intraday split.** Assert that the two segments compose to the
+price return (D290 measured 4.44e-16 across 4,135,181 cells) and report the share
+earned between the close and the next open. A candidate earning ~100% overnight
+is telling you where its edge lives, and it is the segment you cannot trade into.
+
+**Liquidity-tercile scaling — and it is the only cut that identifies bid–ask
+bounce specifically.** Bounce magnitude is proportional to the spread;
+information is not. Split the universe by each name's own trailing
+Corwin–Schultz half-spread, rebuild the book inside each tercile, and report
+whether the edge scales like the spread does.
+
+**This is how D290 corrected an over-confident claim of mine.** I labelled the
+axis-B k=1 effects bid–ask bounce. Across terciles with a **5.2×** spread gap
+they scale **1.2× / 2.0× / 0.8×** — nothing like bounce — while the *volume*
+signals scale **3.0× / 3.1× / 4.2×**, which is. Without this cut the wrong
+mechanism goes into the record.
+
+**Note the degenerate bucket.** Corwin–Schultz clamps negative estimates to zero
+by the authors' convention, so the tight tercile averages 0.3 bp/side and the
+wide/tight ratio is unusable. Use **wide/mid**.
+
+## Stage 1's gates, restated in full
+
+| | gate |
+|---|---|
+| **1a** | t-based best-of-N floor. Both legs reported separately |
+| **1b** | mechanism and numeric shape declared before the run, with a falsifier |
+| **1c** | mean move vs the **measured** round trip — reported, not binding |
+| **1d** | correlation to existing book arms |
+| **1e** | **CAPTURABILITY — open-entry `t` ≥ 2 and retention ≥ 50%** |
+| **1f** | **name-split CV > 0** — necessary, and now explicitly **not sufficient** |
+
+**1e and 1f together, never 1f alone.** That pairing is the whole content of this
+amendment.

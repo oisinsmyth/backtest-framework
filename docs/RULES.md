@@ -485,3 +485,31 @@ the same weak signal.
 that includes re-entry, and say which of the two moved. An exit that improves trades while
 the book gets worse has located a re-entry problem, and that is a finding about the ENTRY
 rule.
+
+### SECOND AMENDMENT to R14, 2026-09-02 — name-split CV is necessary and NOT sufficient
+
+D290 ran a 51-candidate stage 1 under this rule and its ranking statistic proved
+blind to the thing that mattered most.
+
+**AN ENTRY ARTIFACT GENERALISES ACROSS NAMES PERFECTLY WELL.** `lower_wick` ranked
+second on the short book at name-split CV +6.19, on an effect that keeps **-11%**
+of itself after one skipped bar and **+1%** entered at the next open. Fifteen of
+51 candidates collapsed on a test that was not in the pre-registration.
+
+**NEW GATE 1e, BINDING ON EVERY FUTURE STAGE 1 -- CAPTURABILITY.** Enter at
+open[t] rather than at the close[t-1] that generated the signal. Require
+**open-entry t >= 2.0 and retention >= 50%**. Open entry rather than skipping a
+bar, because skipping removes a real fast signal and an entry artifact ALIKE --
+"the edge dies at skip 1" cannot tell them apart. The skip test remains a
+reported diagnostic, not the gate.
+
+**TWO DIAGNOSTICS MUST BE REPORTED ALONGSIDE.** The overnight/intraday split,
+asserted to compose to the price return, showing what share is earned in the
+segment you cannot trade into. And LIQUIDITY-TERCILE SCALING, which is the only
+cut that identifies bid-ask bounce specifically: bounce is proportional to the
+spread and information is not. That cut corrected an over-confident claim in
+D290 -- the axis-B effects scale 1.2x against a 5.2x spread gap and are therefore
+NOT bounce, while the volume signals scale 3.0x-4.2x and are.
+
+**Name-split CV stays as gate 1f, necessary and explicitly insufficient.** Full
+statement in [D289](decisions/D289-the-promotion-pipeline.md)'s second amendment.
