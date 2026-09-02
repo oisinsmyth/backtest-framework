@@ -161,3 +161,45 @@ badly; stage 1 spends nothing, so there is nothing to protect by closing it.
 What this study *can* conclude: **the ordering**, the null-failure pattern per
 candidate, and the shortlist that would be worth carrying to stage 2 — which
 requires the principal's decision, not this record's.
+
+---
+
+# AMENDMENT, 2026-09-02 — the ranking statistic, made affordable
+
+**Made BEFORE the runner was written and before any number was produced.** The
+original text is left standing.
+
+## What was wrong with it
+
+The record specified ranking on `min(z_rotation, z_permutation, z_tail)`
+**computed on name-split CV**. Costed: the rotation and permutation nulls each
+require a fresh column sort per draw (~1.5 s on a 1,573 x 4,187 panel), so
+`51 candidates x 2 re-ranking nulls x 100 draws x K splits` is tens of hours.
+The tail-randomised null is cheap — it reuses the observed ordering and
+randomises only the side — but the other two dominate.
+
+## What replaces it
+
+**Two instruments, both kept, each answering the question it is good at:**
+
+| | statistic | question | cost |
+|---|---|---|---|
+| **primary ranking** | **name-split CV**: pick the peak cell on half A, score that cell on half B, over K = 10 re-randomised splits; report the mean half-B `t` | *does it generalise to names it has not seen?* — the holdout's own structure | cheap |
+| **diagnostic** | **min(z) across the three nulls**, on the full panel, 100 draws | *is it better than chance, given turnover, regime and its own factor tilt?* | ~35 min |
+
+**A candidate is flagged INTERESTING only if it ranks high on half-B CV **and**
+carries `min(z) > 0` across all three nulls.** Neither alone is sufficient: CV
+without the nulls cannot tell a real effect from a nuisance tilt that also
+generalises, and nulls without CV are measured on the sample that selected the
+cell.
+
+**The null-failure PATTERN is still reported per candidate**, unchanged — it is
+the most diagnostic output of the study and costs nothing extra once the nulls
+are run.
+
+**Draws are 100, not 200.** D288 used 200 and the p95 was stable; 100 is
+sufficient for a z and halves the run. Stated rather than quietly chosen.
+
+**Nothing else changes** — three constructions, three nulls, era split,
+N ∈ {3, 5, 10, 25, 50}, short-only z reported beside its absolute level, and
+confluence still out of scope.
