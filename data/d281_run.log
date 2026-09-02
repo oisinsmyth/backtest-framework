@@ -1,0 +1,77 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 36s   1573 names x 4,187 bars
+  universe: 2,621,967 name-bars unfiltered vs 703,602 qualifying (26.8% of it)
+
+built 10 books 37s
+
+  LAG AUDIT -- the check D279 failed:
+    corr(hist_L at t,   return at t) : +0.0737   ranking on this is peeking
+    corr(hist_L at t-1, return at t) : -0.0103   the tradeable version
+    top10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0055 of the LAGGED score, 0.0073 of the contemporaneous one
+    top25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0146 of the LAGGED score, 0.0176 of the contemporaneous one
+    top50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0299 of the LAGGED score, 0.0346 of the contemporaneous one
+  lag audit passed 39s
+
+scored 46s
+
+  cell                expo   turnover  net CAGR   net SR  GROSS CAGR  GROSS SR    maxDD   trades
+  hist_L|all       61.54%      2,403   -9.50%   -0.760     -9.50%    -0.632 -82.52%    1,675
+  hist_L|top10      0.75%     10,162   -0.41%   -0.969     -0.38%    -0.853  -6.81%    5,086
+  hist_L|rnd10      0.75%     62,922   -0.31%   -1.551     -0.12%    -0.573  -5.00%   31,466
+  hist_L|per10      0.75%         18   -0.14%   -0.798     -0.13%    -0.686  -2.34%       14
+  hist_L|top25      1.87%     22,497   -0.70%   -0.911     -0.63%    -0.764 -11.10%   11,261
+  hist_L|rnd25      1.87%    154,465   -0.79%   -1.768     -0.33%    -0.698 -12.41%   77,245
+  hist_L|per25      1.87%         51   -0.30%   -0.768     -0.30%    -0.648  -4.96%       38
+  hist_L|top50      3.74%     40,984   -1.05%   -0.796     -0.93%    -0.636 -16.89%   20,517
+  hist_L|rnd50      3.74%    299,270   -1.43%   -1.723     -0.56%    -0.616 -21.34%  149,660
+  hist_L|per50      3.74%        116   -0.45%   -0.653     -0.45%    -0.523  -7.88%       83
+
+  E-prime over the HELD BOOK (never the panel) 46s ...
+    hist_L|all       names>=250 held  1288   E-prime     5.65   96s
+    hist_L|top10     names>=250 held     2   E-prime     2.00   96s
+    hist_L|rnd10     names>=250 held     0   E-prime     0.00   96s
+    hist_L|per10     names>=250 held    13   E-prime     3.49   96s
+    hist_L|top25     names>=250 held    63   E-prime    63.00   96s
+    hist_L|rnd25     names>=250 held     0   E-prime     0.00   96s
+    hist_L|per25     names>=250 held    35   E-prime     4.48   96s
+    hist_L|top50     names>=250 held   187   E-prime   177.97   96s
+    hist_L|rnd50     names>=250 held     0   E-prime     0.00   96s
+    hist_L|per50     names>=250 held    71   E-prime     5.11   97s
+
+  rotation nulls, 300 draws each -- REPORTED, NOT DECISIVE (R7 corollary; see the record) ...
+    hist_L|all       100.0th / 100.0th   null p50 -0.925 p95 -0.900   208s
+    hist_L|top10       0.7th /   0.7th   null p50 -0.490 p95 -0.230   329s
+    hist_L|rnd10      72.3th /  58.0th   null p50 -1.645 p95 -1.347   453s
+    hist_L|per10      61.7th /  25.7th   null p50 -0.826 p95 -0.690   563s
+    hist_L|top25       5.0th /   0.3th   null p50 -0.693 p95 -0.487   674s
+    hist_L|rnd25      78.3th /  37.3th   null p50 -1.871 p95 -1.598   786s
+    hist_L|per25      99.0th /  88.0th   null p50 -0.911 p95 -0.815   898s
+    hist_L|top50      65.0th /   1.7th   null p50 -0.827 p95 -0.681   1009s
+    hist_L|rnd50      94.7th /  86.3th   null p50 -1.932 p95 -1.722   1121s
+    hist_L|per50     100.0th / 100.0th   null p50 -0.845 p95 -0.769   1223s
+
+  best-of-10 floor: -0.230
+
+  RANKING CONTRIBUTION -- top-N minus each control, gross and net.
+  D279's FILTERED ranking added +0.203 GROSS over per25. Zero gross needs +0.635.
+
+     N   vs rnd net  vs rnd GROSS  vs per net  vs per GROSS   turnover ratio
+    10       +0.581        -0.280      -0.171        -0.167   rnd 6.2x per 0.0x
+    25       +0.858        -0.065      -0.143        -0.116   rnd 6.9x per 0.0x
+    50       +0.927        -0.019      -0.143        -0.113   rnd 7.3x per 0.0x
+
+  cell              net CAGR   net SR  GROSS SR   V   C   F  E-prime   (H)  ALL
+  hist_L|all         -9.50%   -0.760    -0.632  no  no  no      YES   YES  no
+  hist_L|top10       -0.41%   -0.969    -0.853  no  no  no       no    no  no
+  hist_L|rnd10       -0.31%   -1.551    -0.573  no  no  no       no    no  no
+  hist_L|per10       -0.14%   -0.798    -0.686  no  no  no       no    no  no
+  hist_L|top25       -0.70%   -0.911    -0.764  no  no  no      YES    no  no
+  hist_L|rnd25       -0.79%   -1.768    -0.698  no  no  no       no    no  no
+  hist_L|per25       -0.30%   -0.768    -0.648  no  no  no       no    no  no
+  hist_L|top50       -1.05%   -0.796    -0.636  no  no  no      YES    no  no
+  hist_L|rnd50       -1.43%   -1.723    -0.616  no  no  no       no    no  no
+  hist_L|per50       -0.45%   -0.653    -0.523  no  no  no       no   YES  no
+
+  SURVIVORS: NONE
+
+wrote data\d281_unfiltered_summary.json   1223s
