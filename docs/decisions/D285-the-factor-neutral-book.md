@@ -180,3 +180,127 @@ alternative score, no sector or beta refinement bolted on afterwards.
 
 **If it clears, it is not a book entry.** Under [R8](../RULES.md#r8) it needs a pre-registered
 out-of-sample test, and **D246's reserved wide-universe cohort is unspent** and is the candidate.
+
+---
+---
+
+# RESULT — appended 2026-09-02, after the run
+
+**SURVIVORS: NONE.** 18 cells. `A_nofloor|book10` clears **six of seven hurdles**
+and fails **B** alone.
+
+## The grid
+
+| cell | move/trade | ×2c | **breakeven** | NEU | gross SR | net SR | net CAGR | M | B | V | C | F |
+|---|---:|---:|---:|---:|---:|---:|---:|:-:|:-:|:-:|:-:|:-:|
+| **`A\|book10`** | **+36.44** | 3.64 | **14.35** | +0.126 | **+0.440** | +0.221 | +0.16% | YES | **no** | YES | YES | YES |
+| `A\|rnd10` | +0.68 | 0.07 | −0.36 | +0.047 | +0.146 | −2.395 | −0.35% | no | no | no | no | no |
+| `A\|tal10` | −0.80 | −0.08 | −1.68 | +0.002 | −0.053 | −0.701 | −0.24% | no | no | no | no | no |
+| `A\|book25` | +21.22 | 2.12 | 5.83 | +0.159 | +0.348 | +0.027 | +0.15% | YES | no | YES | YES | no |
+| `A\|book50` | +11.66 | 1.17 | 0.40 | +0.188 | +0.217 | −0.175 | +0.03% | YES | no | YES | YES | no |
+| `B\|book10` | +32.96 | 3.30 | 12.63 | +0.145 | +0.462 | +0.211 | +0.15% | YES | no | YES | **no** | YES |
+| `B\|tal10` | +8.00 | 0.80 | 2.92 | −0.048 | **+0.498** | −0.254 | −0.04% | no | no | YES | no | no |
+
+Best-of-18 floor **+0.171**.
+
+## What cleared
+
+**NEU clears everywhere** — correlation to the equal-weight universe **+0.126 to
++0.188**, inside ±0.20. **The book is genuinely market-neutral, so this study did
+test its hypothesis.** F1 correct, and as declared, not scored as a success.
+
+**F2 correct: gross Sharpe is positive** — **+0.440 / +0.348 / +0.217** on
+universe A. **The first positive gross figure in the programme.** Removing `−μ`
+did exactly what the arithmetic said it would: D279 lost −0.432 gross and D282's
+`base|all` −21.92% CAGR gross, and a two-sided book turns that sign over.
+
+**F5 FALSIFIED — `d` does not decay away.** The declared diagnostic, spread of
+the low tail minus the high tail:
+
+| horizon k | 1 | 2 | 5 | 10 | 15 |
+|---|---:|---:|---:|---:|---:|
+| total bp | 10.70 | 19.84 | 32.93 | 80.02 | **104.42** |
+| per bar | 10.70 | 9.92 | 6.59 | 8.00 | 6.96 |
+| t | 1.71 | 2.26 | 2.38 | 4.60 | **5.00** |
+
+The per-bar edge fades ~35% but stays positive to fifteen bars, and **its
+t-statistic RISES with horizon.** That is why the episode move is +36.44 bp
+rather than the ~9 bp a single bar implies, and it is the study's most useful
+number.
+
+## What failed, and it is the same wall
+
+**Hurdle B fails at every N: 14.35 / 5.83 / 0.40 bp/side against a 15 bp floor.**
+`A|book10` misses by **0.65 bp**.
+
+**F4 correct, and it was the load-bearing prediction.** The `book − tail-N` gross
+gap shrinks on universe B at every N: **+0.493 → −0.036** at N = 10, where the
+volatility-matched control *beats* the book; +0.331 → +0.199; +0.401 → +0.274.
+**The price floor removes the edge along with the cheap names.**
+
+## Three follow-ups that change how the failure reads
+
+**1. The 0.65 bp was never near** (`scripts/d285_spread_estimate.py`).
+Corwin–Schultz half-spread of the names actually held: **median 33.81 bp/side**
+against a 14.35 breakeven — **2.4×**. Even the $25+ bucket medians 21.44, and the
+universe medians 13.20, so **the book selects names 2.6× wider than average.**
+**The 15 bp floor was generous, not strict**, and the line closes on evidence
+rather than on my judgement.
+
+**2. No spread screen rescues it** (`scripts/d285_edge_vs_spread.py`). Trades
+bucketed on a 21-bar **trailing** estimate — the only form usable at entry:
+
+| quintile | half-spread | move | 2×spread | net |
+|---|---:|---:|---:|---:|
+| q1 tightest | 25.21 | 35.39 | 50.42 | **−15.03** |
+| q5 widest | 142.29 | 59.98 | 284.58 | −224.59 |
+
+A screen improves the shortfall by **93%** and never flips the sign. **The move
+is FLAT in spread** (corr −0.0056) — the edge is not in the wide names, only the
+cost is — so **a spread filter cannot raise the breakeven**, and the implied q1
+breakeven (~13.93) is *worse* than the unfiltered 14.35.
+
+**I nearly reported an artefact here.** Bucketing on the *window-mean* spread,
+averaged over each trade's own holding period, gave q1 **+240.67 bp** and a
+"tradeable subset exists" verdict. It is forward-looking: a screen at entry
+cannot know a hold that has not happened. Same class as D279's defect, caught
+before reporting, and both rejected alternatives are kept in the module.
+
+**3. The estimator is the weak link.** Corwin–Schultz is upward-biased where a
+day's range carries overnight movement — this population exactly — and 25.21
+bp/side on a $32.67 stock is far too wide for anything liquid. **The magnitudes
+are upper bounds.** The *structural* finding does not depend on it: the move is
+flat in spread, so no screen can raise the breakeven however wrong the level is.
+
+## Predictions
+
+| | outcome |
+|---|---|
+| **F1** NEU clears | **correct**, declared near-certain and not scored as a success |
+| **F2** positive gross Sharpe at all three N | **CORRECT** — first in the programme |
+| **F3** B fails on universe A | **CORRECT** |
+| **F4** the floor shrinks the book−tail gap | **CORRECT** — the load-bearing one |
+| **F5** `d` decays to under half by k = 5 | **WRONG** — it persists to 15 bars with a rising `t` |
+
+Four of five, and both predictions declared *against* the construction held.
+
+## Ledger
+
+109 carried + 18 fresh = **127.** The standing disclosure holds: no floor
+computed from a study's own cells prices a direction chosen after D280's 165
+statistics.
+
+## Stop
+
+**B failed on both universes, so the factor-neutral book is closed** — no third
+universe variant, no fourth N, no alternative score, no filter bolted on. The
+spread screen above was run as a *diagnostic* and scores no cell precisely
+because the clause forbids it as a rescue.
+
+**What this leaves live is not a rescue of this book but a different
+construction, and it comes from F5's falsification.** The exit here fires on
+**DISPLACEMENT** — a name leaves the top N because *other* names became more
+extreme — not on its own signal reverting, and the persistence table says the
+evicted names still carry edge. **A successor that exits on the signal's own
+state is a new hypothesis**, needs its own pre-registration, and must disclose
+that its holding rule was chosen after seeing this decay curve.
