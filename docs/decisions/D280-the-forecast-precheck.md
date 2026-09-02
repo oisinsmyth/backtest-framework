@@ -154,7 +154,7 @@ null, a book, or the `sigma^2` variance tax of [FINDINGS §1b](../FINDINGS.md). 
 a ranking statistic. It says the ordering is informative; it says nothing about whether the spread
 between the top and bottom of that ordering pays for two crossings of the spread.**
 
-**D282 is pre-registered by another agent to measure exactly that arithmetic. No result from it is
+**[D282](D282-the-overnight-only-short.md) is pre-registered by another agent to measure exactly that arithmetic. No result from it is
 referenced here, none may be read into this record, and this record makes no prediction about it.**
 
 **The same caution in one line:** D279's own history is a study whose headline statistic was
@@ -523,8 +523,8 @@ tests none of their hypotheses; it measures a property of the fixture.
 1. **[D281](D281-the-unfiltered-ranking.md)** — pre-registered, runner committed, **result pending
    and not referenced here.**
 2. **The overnight construction that part 4 implies**, whose cost arithmetic — ~252 round trips a
-   year against D265's `2c` bar — is the whole question. **D282 is pre-registered by another agent
-   to measure it. This record makes no prediction about its outcome.**
+   year against D265's `2c` bar — is the whole question. **[D282](D282-the-overnight-only-short.md)
+   is pre-registered by another agent to measure it. This record makes no prediction about its outcome.**
 3. **The volatility tilt of part 4C.** It needs `zr` scored on its own, a book, a cost model, and the
    `sigma^2` tax charged against it. **It is not a finding about `hist_L` and must not be reported as
    one.**

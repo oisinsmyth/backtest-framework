@@ -227,7 +227,7 @@ discontinuity rather than erasing it.
    filter/ranking collision D280 measured and changing nothing else.** Pre-registered before its
    runner existed; **result pending at the time this handoff was written.** It inherits D280's 150
    comparisons under [R13](docs/RULES.md#r13) test 2, because D280 shaped its search space.
-4. **D282 - the cost arithmetic of the overnight construction** part 4 implies: ~252 round trips a
+4. **[D282](docs/decisions/D282-the-overnight-only-short.md) - the cost arithmetic of the overnight construction** part 4 implies: ~252 round trips a
    year against D265's `2c` bar. **Pre-registered by another agent; result pending. Do not predict
    it.**
 5. **The volatility tilt D280 part 4 turned up** — `zh + zv + za + zr` reaches IC **−0.01373

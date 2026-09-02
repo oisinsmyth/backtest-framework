@@ -482,7 +482,7 @@ tradeable:**
   D279's ~15-day holds — so [D265](decisions/D265-the-entry-time-reconciliation.md)'s bar
   (`mean move per trade ≥ 2c`, 10 bp at 5 bp/side) must be cleared **15× more often**. A rough
   prior, **not computed from these artefacts**, puts the per-night edge near 4 bp against that 10 bp
-  toll. **D282 is pre-registered to measure it; no result is referenced or predicted here.**
+  toll. **[D282](decisions/D282-the-overnight-only-short.md) is pre-registered to measure it; no result is referenced or predicted here.**
 
 ### And WHY the ranking was worth so little — the same record
 
@@ -536,7 +536,7 @@ draws.
 
 1. **[D281](decisions/D281-the-unfiltered-ranking.md) — rank the whole universe, removing the
    filter/ranking collision and changing nothing else.** Pre-registered; **result pending.**
-2. **D282 — the cost arithmetic of the overnight construction part 4 implies**, ~252 round trips a
+2. **[D282](decisions/D282-the-overnight-only-short.md) — the cost arithmetic of the overnight construction part 4 implies**, ~252 round trips a
    year against D265's `2c` bar. Pre-registered by another agent; **result pending, and nothing here
    predicts it.**
 3. **The volatility tilt of D280 part 4C** — `zh + zv + za + zr` at IC **−0.01373 (t −5.07)**, the
