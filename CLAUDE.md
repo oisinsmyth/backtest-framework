@@ -76,6 +76,28 @@ processes.
 
 ---
 
+## The two books are the output, and almost nothing gets in
+
+| | | |
+|---|---|---|
+| [`docs/BOOK.md`](docs/BOOK.md) | personal track | S1, S2 — **admitted, not promoted to capital** |
+| [`docs/BOOK_PROP.md`](docs/BOOK_PROP.md) | prop track | **admitted arms: none**, and it says so on line 3 |
+
+Both are **append-only**: an entry is amended or retired *in writing*, never
+quietly edited, and every entry carries its own falsification conditions.
+
+**A result clearing its hurdles does NOT enter the book.** Under
+[R8](docs/RULES.md#r8) admission needs a **pre-registered out-of-sample test on
+a fixture the strategy has never seen** — a separate study, with its own record.
+The prop book additionally needs [hurdle P](docs/RULES.md#r11), all six.
+Nothing in D264–D285 produced a candidate, so nothing has been taken out of
+sample and **D246's reserved wide-universe cohort is still unspent.**
+
+**An empty book with stated standards is worth more than a populated one with
+borrowed standards** — `BOOK_PROP.md` says that about itself, and it is the
+posture to keep. Do not add an entry because a study looked good; add it because
+a second, pre-registered test on untouched data agreed.
+
 ## How to report a result
 
 **A number without the thing that makes it interpretable is not a result.** Four
