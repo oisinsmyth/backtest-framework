@@ -255,8 +255,13 @@ def main() -> int:
              [f"{r}{N}" for N in N_LEVELS for r in ("disp", "sig", "hyst", "cap",
                                                     "rnd", "tal")]}
     for k, p in books.items():
-        if not (p.sum(axis=0) == 0).all():
-            raise AssertionError(f"{k} is not dollar-neutral")
+        # TOLERANCE, NOT EQUALITY. Ten weights of 1/10 sum to 0.9999999999999999,
+        # so the legs cancel to ~1e-16 rather than to exactly zero. The first
+        # version asserted `== 0` here while the self-test used `allclose`, so
+        # the study died on floating-point residue that is 1e-16 of a unit leg.
+        worst = float(np.max(np.abs(p.sum(axis=0))))
+        if worst > 1e-9:
+            raise AssertionError(f"{k} is not dollar-neutral: worst {worst:.3e}")
     print(f"  built {len(books)} books {time.time() - t0:.0f}s\n", flush=True)
 
     free = type(panel)(**{**vars(panel),

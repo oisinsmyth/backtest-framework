@@ -86,7 +86,11 @@ One-way: `working/` → `temp/` → gone. Neither replaces `scripts/`, `data/`,
 
 ## Habits
 
-- **Every command over ~2 min runs in the background** (`nohup … &`); poll the log.
+- **Every command over ~2 min goes to the harness with `run_in_background: true`**
+  — no `nohup`, no `&`. Those detach the process, so the wrapper exits at once,
+  the completion notice fires on nothing, and you are left polling with
+  foreground `sleep`s that block the main agent. Never poll; you are re-invoked
+  when it really exits.
 - **Commit the pre-registration before the runner exists; the result separately**
   (R8). Several results here were saved by it.
 - Write tool over long heredocs: quote-heavy ones fail, and `\\n` inside
