@@ -384,3 +384,50 @@ z of +3.64 is doing less work than the same number would for a fast signal; its
 permutation z of +3.94 is the one carrying weight, because that shuffles *which
 name* holds which price. **When turnover is under ~5% per bar, read the
 permutation null first.**
+
+---
+
+# FOURTH AMENDMENT, 2026-09-02 — a score is a RANKING, and its direction is a choice
+
+The book is hard-coded: `order[:N]` goes long, `order[cnt−N:cnt]` goes short,
+every candidate, every N, every bar. **Nothing in D290 ever asked a score which
+way round it should go.** The principal caught that the direction is therefore
+imposed by the construction, not carried by the signal.
+
+**Seven of D290's 51 came out NEGATIVE on the spread** — `range_frac` −140.3 bp,
+`upper_wick` −17.2 (t −2.20), `wick_asym` −18.2 (t −1.79). Read the other way
+round those are positive results, and D290 scored one direction and priced
+neither.
+
+## GATE 1h — both directions, DECLARED then DISCLOSED
+
+**1b is extended: the mechanism must state WHICH END GOES LONG, before the run.**
+That is the guard against sign-shopping. A direction chosen after seeing the sign
+is a free parameter, and there is no floor that prices it.
+
+**Then both directions are reported, and the ledger counts both.**
+
+| | |
+|---|---|
+| **the point estimate is algebraically FREE** | `spread(−s) = −spread(s)` exactly. Ranking on the negated score reverses the order, so the legs simply swap. No re-sort, no re-run |
+| **the NULL is not free** | `max(−t) ≠ −max(t)`. The best-of-grid statistic is asymmetric, so the reversed direction needs its own null max from the same draws |
+| **the ledger doubles** | 2 × candidates, disclosed. Under D289's amended convention this is bookkeeping, not a bar — but an undisclosed direction flip is exactly the post-hoc selection the design exists to refuse |
+
+**A result in the direction the mechanism did NOT predict is reported as
+direction-inverted**, and that is a strike against the mechanism even when the
+number is good — the same logic as D288's gate B, where a right number in the
+wrong shape falsifies.
+
+## Two consequences of "it is a ranking" that also need stating
+
+**Monotone transforms are the SAME candidate.** `price_log` and raw price produce
+an identical ordering, so they are one signal with two names. Any candidate list
+must be deduplicated by ordering, not by formula — a rank book discards units,
+zero point and shape, and keeps only the order.
+
+**A rank book cannot say "nothing qualifies today".** It holds exactly N names
+whether they are extreme or ordinary — on a quiet day the ten most ordinary, in a
+crash the ten most extreme. **Level- or threshold-based selection is therefore
+untested by this whole design**, and is a different construction requiring its own
+pre-registration. The N sweep from 3 to 50 is the only crude proxy the study has
+for "how extreme must a name be before it is worth holding".

@@ -535,3 +535,29 @@ pre-bankruptcy tail, and the asymmetry is what the per-leg split exists to show.
 **NULL-DESIGN NOTE.** Rotation is a WEAK null for a near-static score -- rotating a
 score that is almost constant per symbol barely changes the book, so the z is
 inflated. Under ~5% turnover per bar, read the within-bar permutation null first.
+
+### FOURTH AMENDMENT to R14, 2026-09-02 — a score is a ranking; its direction is a choice
+
+`legs_from_order` hard-codes long = `order[:N]`, short = `order[cnt-N:cnt]`. No
+score in D290 was ever asked which way round it should go, so the DIRECTION is
+imposed by the construction rather than carried by the signal. Seven of 51 came
+out NEGATIVE on the spread -- range_frac -140.3 bp, upper_wick -17.2 t-2.20 --
+which read the other way are positive results that nothing priced.
+
+**NEW GATE 1h.** Gate 1b is extended: THE MECHANISM MUST DECLARE WHICH END GOES
+LONG, before the run. That is the guard against sign-shopping, because a
+direction chosen after seeing the sign is a free parameter no floor prices. Both
+directions are then reported and the LEDGER COUNTS BOTH.
+
+The point estimate is algebraically free -- `spread(-s) = -spread(s)`, the legs
+simply swap -- but THE NULL IS NOT, because `max(-t) != -max(t)` and the
+best-of-grid statistic is asymmetric. A result in the direction the mechanism did
+NOT predict is reported as DIRECTION-INVERTED, and counts against the mechanism
+even when the number is good.
+
+**TWO CONSEQUENCES OF "IT IS A RANKING".** Monotone transforms are the SAME
+candidate -- price_log and raw price give an identical ordering -- so candidate
+lists are deduplicated by ORDERING, not by formula. And a rank book cannot say
+"nothing qualifies today": it holds exactly N names however ordinary they are, so
+LEVEL- OR THRESHOLD-BASED SELECTION IS UNTESTED by this design and needs its own
+pre-registration.
