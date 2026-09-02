@@ -5,29 +5,16 @@
 
 ## Speed
 
-**A study that takes half an hour does not get iterated on.** Nulls are the
-bottleneck; use `scripts/fast_null.py` in every runner — ~6× on an 18-cell
-study, 32 min → 5.
+Nulls are the bottleneck. **Build every runner on `scripts/fast_null.py`** (~6×;
+usage in its docstring) and call **`assert_matches_scorer` once per study** — it
+already caught a one-ULP convention mismatch that would have made D282's null
+incomparable to its own study. `parallel_map` threads any read-only per-item
+work, not just nulls.
 
-```python
-from fast_null import NullContext, run_nulls, parallel_map
-ctx = NullContext(panel)                    # + simple/mask/turnover/divide for other conventions
-ctx.assert_matches_scorer(pos, my_scorer, rf_annual=RF, borrow_annual=BORROW, ppy=PPY)
-draws = run_nulls(ctx, books, n_sims=300, seed=0, ppy=PPY,
-                  rf_annual=RF, borrow_annual=BORROW)
-```
-
-- **`assert_matches_scorer` is mandatory** — it already caught a one-ULP
-  convention mismatch that would have made D282's null incomparable to its own
-  study. Pick the convention, don't inherit it.
-- **`parallel_map`** threads any independent per-item work, not just nulls.
-  Whatever it touches must be read-only.
-- **Exactness, not tolerance.** Optimise only by *hoisting* identical arithmetic
-  out of a loop or *skipping* what nothing reads. Never reorder a
-  floating-point sum or vectorise an RNG draw. Run
-  `uv run python scripts/fast_null.py --verify` after any change.
-- **Profile before optimising.** Both my guesses were wrong; the real cost was
-  an `np.expm1` over the whole panel recomputed 300× per book.
+**Exactness, not tolerance.** Optimise only by *hoisting* identical arithmetic
+out of a loop or *skipping* what nothing reads — never reorder a float sum or
+vectorise an RNG draw. Verify with `fast_null.py --verify`. **Profile first:**
+both my guesses were wrong.
 
 ## Reporting a result
 
