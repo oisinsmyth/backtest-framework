@@ -1093,7 +1093,28 @@ def do_build() -> None:
     # The hand-verified list is now a CROSS-CHECK on the classifier rather than an
     # exemption from it. Disagreement means one of the two is wrong.
     by_key = {(c["symbol"], c["date"]): c for c in classified}
+    # THE CROSS-CHECK APPLIES TO SYMBOLS THIS BUILD ACTUALLY CONTAINS.
+    #
+    # DOCUMENTED_LARGE_MOVES was hand-verified against the MINING universe, and
+    # `--holdout` builds a disjoint slice of the same permutation -- so KODK,
+    # TLMD, VSA and the rest are simply not in it. Requiring a classification for
+    # a symbol that was never fetched is not a check, it is a category error: it
+    # would fire on every disjoint fixture regardless of whether the classifier
+    # works.
+    #
+    # The check that DOES transfer is the conditional one, and it is kept at full
+    # strength: IF a documented symbol is in this build, its documented move must
+    # still come back `corroborated`. A symbol present but classified `revert`,
+    # `unexplained` or absent still stops the build.
+    #
+    # `skipped` is REPORTED rather than silently passed, because a cross-check
+    # that quietly verifies nothing is worse than no cross-check -- if a future
+    # build skips all of them, that is visible instead of reassuring.
+    in_build = {r["symbol"] for r in sel["selected"]}
+    skipped = sorted({s for (s, _d) in DOCUMENTED_LARGE_MOVES if s not in in_build})
     for key, why in DOCUMENTED_LARGE_MOVES.items():
+        if key[0] not in in_build:
+            continue
         c = by_key.get(key)
         if c is None or c["klass"] != "corroborated":
             raise SystemExit(
@@ -1467,6 +1488,10 @@ def do_build() -> None:
     print(f"splits        applied to {adjusted_bars:,} bars")
     print(f"GATE A        {len(gate_a_failures)} failures, all in EXCLUDED symbols "
           f"({sum(1 for f in gate_a_failures if f['symbol'] in per_symbol)} left in)")
+    checked = len(DOCUMENTED_LARGE_MOVES) - len(skipped)
+    print(f"CROSS-CHECK   {checked} of {len(DOCUMENTED_LARGE_MOVES)} documented moves "
+          f"verified; {len(skipped)} not in this build"
+          + (f" ({', '.join(skipped)})" if skipped else ""))
     klasses = Counter(c["klass"] for c in classified)
     print(f"GATE B        {sum(klasses.values())} moves >= x{GATE_B_UP_RATIO}: "
           f"{dict(sorted(klasses.items()))}")
