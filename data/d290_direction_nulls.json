@@ -1,0 +1,1029 @@
+{
+ "purpose": "Gate 1h -- nulls for both directions of the spread. spread(-s) = -spread(s) so the point estimate is free, but max(-t) != -max(t) so the null is not.",
+ "draws": 50,
+ "seed": 20260902,
+ "seed_note": "zlib.crc32, stable across processes -- run_stage1_rerun used hash(), which Python randomises, so D290's nulls are valid but NOT reproducible",
+ "results": {
+  "hist_L": {
+   "observed": {
+    "forward": 2.858259824959032,
+    "reversed": 1.253979347137193
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.3491788401716782,
+     "reversed": -0.9876379322974393
+    },
+    "permutation": {
+     "forward": -1.5120148814925634,
+     "reversed": 0.6173641435682833
+    },
+    "tail": {
+     "forward": 4.318535050751903,
+     "reversed": -3.6971963416057934
+    }
+   }
+  },
+  "md": {
+   "observed": {
+    "forward": 2.6232554562492347,
+    "reversed": 1.6697273307939589
+   },
+   "z": {
+    "rotation": {
+     "forward": 2.2296039957340597,
+     "reversed": -1.5949271902453082
+    },
+    "permutation": {
+     "forward": -1.9947133307749767,
+     "reversed": 1.1299930232231163
+    },
+    "tail": {
+     "forward": 2.1956942675298365,
+     "reversed": -1.9498410886948416
+    }
+   }
+  },
+  "macd_line": {
+   "observed": {
+    "forward": 3.236039679415299,
+    "reversed": 2.7358823218286012
+   },
+   "z": {
+    "rotation": {
+     "forward": 3.1096525205898815,
+     "reversed": 0.29385633325773053
+    },
+    "permutation": {
+     "forward": -1.313850225731294,
+     "reversed": 3.520063392359655
+    },
+    "tail": {
+     "forward": -2.4421510749397592,
+     "reversed": 8.993790709250714
+    }
+   }
+  },
+  "macd_hist": {
+   "observed": {
+    "forward": 4.1575845982003665,
+    "reversed": 1.0894506018719199
+   },
+   "z": {
+    "rotation": {
+     "forward": 3.9975381096742226,
+     "reversed": -1.178458031012911
+    },
+    "permutation": {
+     "forward": -0.07460523926395385,
+     "reversed": 0.38437755661932316
+    },
+    "tail": {
+     "forward": -5.002013060138408,
+     "reversed": 10.691496360281636
+    }
+   }
+  },
+  "trailing_return": {
+   "observed": {
+    "forward": 2.929663938067299,
+    "reversed": 1.2007874580867788
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.9370578655130768,
+     "reversed": -1.7442181419529346
+    },
+    "permutation": {
+     "forward": -1.4959600644964508,
+     "reversed": 0.5612384277430172
+    },
+    "tail": {
+     "forward": 9.903990094359017,
+     "reversed": -3.3318800027779876
+    }
+   }
+  },
+  "rsi": {
+   "observed": {
+    "forward": 4.002465536316026,
+    "reversed": 0.14538342308217522
+   },
+   "z": {
+    "rotation": {
+     "forward": 3.295230228868804,
+     "reversed": -3.000224951228987
+    },
+    "permutation": {
+     "forward": -0.15319825629329495,
+     "reversed": -0.7241210071193841
+    },
+    "tail": {
+     "forward": 1.3188624764776158,
+     "reversed": -3.8640789762612595
+    }
+   }
+  },
+  "impulse_nodz": {
+   "observed": {
+    "forward": 2.7615476917827837,
+    "reversed": 2.308198504890273
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.7460538495506372,
+     "reversed": -0.2752681604054312
+    },
+    "permutation": {
+     "forward": -2.183892771087493,
+     "reversed": 2.402489974393493
+    },
+    "tail": {
+     "forward": -1.0552987553578745,
+     "reversed": 7.395106868607312
+    }
+   }
+  },
+  "upper_wick": {
+   "observed": {
+    "forward": -2.1977359473610076,
+    "reversed": 7.881791604951876
+   },
+   "z": {
+    "rotation": {
+     "forward": -6.422092261578265,
+     "reversed": 7.5151359804906175
+    },
+    "permutation": {
+     "forward": -8.357634054316039,
+     "reversed": 10.711501279125567
+    },
+    "tail": {
+     "forward": -2.5057115726531776,
+     "reversed": 0.5681688185459486
+    }
+   }
+  },
+  "lower_wick": {
+   "observed": {
+    "forward": 8.696984219853254,
+    "reversed": 0.9227684685616375
+   },
+   "z": {
+    "rotation": {
+     "forward": 14.787052723703418,
+     "reversed": -2.3271303259742457
+    },
+    "permutation": {
+     "forward": 6.8854658101472355,
+     "reversed": 0.24746991063624627
+    },
+    "tail": {
+     "forward": 2.7465027618178195,
+     "reversed": 1.092912467930449
+    }
+   }
+  },
+  "wick_asym": {
+   "observed": {
+    "forward": -1.787680798677986,
+    "reversed": 10.352662332381959
+   },
+   "z": {
+    "rotation": {
+     "forward": -5.097728095814974,
+     "reversed": 14.71856320535483
+    },
+    "permutation": {
+     "forward": -8.962365727439746,
+     "reversed": 15.696536169365691
+    },
+    "tail": {
+     "forward": -1.5579583280007723,
+     "reversed": 5.065175998673372
+    }
+   }
+  },
+  "body_frac": {
+   "observed": {
+    "forward": 5.993011385516686,
+    "reversed": -1.7939359672707529
+   },
+   "z": {
+    "rotation": {
+     "forward": 6.111181456871492,
+     "reversed": -5.956330693130132
+    },
+    "permutation": {
+     "forward": 2.754475852965589,
+     "reversed": -4.28477394477115
+    },
+    "tail": {
+     "forward": 1.0653440628826125,
+     "reversed": -0.7728520549095357
+    }
+   }
+  },
+  "close_in_range": {
+   "observed": {
+    "forward": 15.884357051960531,
+    "reversed": -3.980157617254575
+   },
+   "z": {
+    "rotation": {
+     "forward": 21.752474814123083,
+     "reversed": -7.01641440465503
+    },
+    "permutation": {
+     "forward": 18.86780066282914,
+     "reversed": -6.4577913252986265
+    },
+    "tail": {
+     "forward": 10.01232150770886,
+     "reversed": -2.4649812216285447
+    }
+   }
+  },
+  "range_frac": {
+   "observed": {
+    "forward": -1.933859424053798,
+    "reversed": 8.920110053501213
+   },
+   "z": {
+    "rotation": {
+     "forward": -3.9189616522805677,
+     "reversed": 4.892444195121129
+    },
+    "permutation": {
+     "forward": -7.5612201811159405,
+     "reversed": 14.823314864286736
+    },
+    "tail": {
+     "forward": -2.9668475103305396,
+     "reversed": 0.31718706819699477
+    }
+   }
+  },
+  "gap_frac": {
+   "observed": {
+    "forward": 0.6729539203658752,
+    "reversed": 1.8983991027928546
+   },
+   "z": {
+    "rotation": {
+     "forward": -1.1591499140209678,
+     "reversed": 0.002187064619034386
+    },
+    "permutation": {
+     "forward": -4.564324926880929,
+     "reversed": 1.3302737757423233
+    },
+    "tail": {
+     "forward": 0.9371569719379518,
+     "reversed": -3.633491808751405
+    }
+   }
+  },
+  "rel_vol": {
+   "observed": {
+    "forward": -1.6200282821131353,
+    "reversed": 7.8105464827301105
+   },
+   "z": {
+    "rotation": {
+     "forward": -4.695499231291384,
+     "reversed": 7.328698954913486
+    },
+    "permutation": {
+     "forward": -7.60065621587211,
+     "reversed": 10.169180714098752
+    },
+    "tail": {
+     "forward": -0.4480012289643672,
+     "reversed": 1.4493252946072244
+    }
+   }
+  },
+  "vol_z": {
+   "observed": {
+    "forward": -0.5910243064606542,
+    "reversed": 7.267910586182814
+   },
+   "z": {
+    "rotation": {
+     "forward": -2.8681346051662295,
+     "reversed": 8.168070245605476
+    },
+    "permutation": {
+     "forward": -5.22294933369718,
+     "reversed": 11.225523459282197
+    },
+    "tail": {
+     "forward": 0.5529944889565634,
+     "reversed": -0.10893398537029964
+    }
+   }
+  },
+  "dollar_vol": {
+   "observed": {
+    "forward": -0.41152082084408376,
+    "reversed": 6.710422526982231
+   },
+   "z": {
+    "rotation": {
+     "forward": -2.212233341266027,
+     "reversed": 6.339396523953097
+    },
+    "permutation": {
+     "forward": -6.3107142019163085,
+     "reversed": 10.191926360558567
+    },
+    "tail": {
+     "forward": 1.775406217796872,
+     "reversed": 1.5330072027251334
+    }
+   }
+  },
+  "vol_trend": {
+   "observed": {
+    "forward": 1.0641039299114237,
+    "reversed": 5.048371692403928
+   },
+   "z": {
+    "rotation": {
+     "forward": -1.1045706126133525,
+     "reversed": 6.224593103777456
+    },
+    "permutation": {
+     "forward": -3.9758743456336263,
+     "reversed": 7.092518522228219
+    },
+    "tail": {
+     "forward": 0.4233267565849734,
+     "reversed": -1.7561790537674922
+    }
+   }
+  },
+  "signed_vol": {
+   "observed": {
+    "forward": 1.6585507058854425,
+    "reversed": 2.380216988039583
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.2513754890805871,
+     "reversed": 0.2628498334123876
+    },
+    "permutation": {
+     "forward": -3.3485180231095533,
+     "reversed": 2.1414453038633003
+    },
+    "tail": {
+     "forward": 3.0573162041788224,
+     "reversed": -3.672380373914114
+    }
+   }
+  },
+  "dist_hvn": {
+   "observed": {
+    "forward": 1.8888560424231664,
+    "reversed": 2.4504618958813795
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.4501472207305313,
+     "reversed": -1.5365365208840573
+    },
+    "permutation": {
+     "forward": -2.4040222411627923,
+     "reversed": 2.057764762934937
+    },
+    "tail": {
+     "forward": 0.6039765359107514,
+     "reversed": 0.8998153775067643
+    }
+   }
+  },
+  "dist_lvn": {
+   "observed": {
+    "forward": 2.8091910123288275,
+    "reversed": 0.9380523113669103
+   },
+   "z": {
+    "rotation": {
+     "forward": 2.884498071569086,
+     "reversed": -2.5698130202143368
+    },
+    "permutation": {
+     "forward": 0.46615489871621985,
+     "reversed": -0.3844065934756831
+    },
+    "tail": {
+     "forward": -1.0548526648640575,
+     "reversed": -0.7379616887247443
+    }
+   }
+  },
+  "mass_here": {
+   "observed": {
+    "forward": 2.993816547616537,
+    "reversed": 1.926911832213327
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.5011578454360193,
+     "reversed": 0.9389291429618098
+    },
+    "permutation": {
+     "forward": -0.8058016263849601,
+     "reversed": 1.6950334164425127
+    },
+    "tail": {
+     "forward": -0.6545045394327572,
+     "reversed": -0.10584628093655794
+    }
+   }
+  },
+  "mass_imbalance": {
+   "observed": {
+    "forward": 0.0441544378522944,
+    "reversed": 2.7825109483368426
+   },
+   "z": {
+    "rotation": {
+     "forward": -3.0691092455455466,
+     "reversed": 2.653904589235428
+    },
+    "permutation": {
+     "forward": -4.733682164144391,
+     "reversed": 3.2326785584072644
+    },
+    "tail": {
+     "forward": -2.0825131797188075,
+     "reversed": 0.33547967204669177
+    }
+   }
+  },
+  "atr_norm": {
+   "observed": {
+    "forward": 1.6518603661152436,
+    "reversed": 5.112692046670322
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.48018572739750703,
+     "reversed": 3.427071182687574
+    },
+    "permutation": {
+     "forward": -3.3540504719603335,
+     "reversed": 6.778055530321169
+    },
+    "tail": {
+     "forward": 6.013058563655374,
+     "reversed": -5.267874351654463
+    }
+   }
+  },
+  "cs_spread": {
+   "observed": {
+    "forward": 1.3538856315563357,
+    "reversed": 6.072680227303066
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.7676942258032295,
+     "reversed": 5.196095276388672
+    },
+    "permutation": {
+     "forward": -3.511513017183562,
+     "reversed": 7.26192012791148
+    },
+    "tail": {
+     "forward": 8.978414997205553,
+     "reversed": -11.628119176644134
+    }
+   }
+  },
+  "rvol21": {
+   "observed": {
+    "forward": 1.8414472239844666,
+    "reversed": 3.736479343395278
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.016566008900404175,
+     "reversed": 1.719633130945529
+    },
+    "permutation": {
+     "forward": -3.155776636000153,
+     "reversed": 5.365191596076436
+    },
+    "tail": {
+     "forward": 0.9376016516078752,
+     "reversed": 0.42190095281881834
+    }
+   }
+  },
+  "vol_ratio": {
+   "observed": {
+    "forward": 1.2002482585628262,
+    "reversed": 2.3657708336348295
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.853912752914908,
+     "reversed": 0.6571194841766742
+    },
+    "permutation": {
+     "forward": -2.9023843176455477,
+     "reversed": 2.6815913382061995
+    },
+    "tail": {
+     "forward": 0.7952234704273149,
+     "reversed": 1.0861864412854023
+    }
+   }
+  },
+  "range_over_atr": {
+   "observed": {
+    "forward": -0.31994021383956445,
+    "reversed": 2.7303941144489894
+   },
+   "z": {
+    "rotation": {
+     "forward": -2.4826811731515703,
+     "reversed": 0.7314013815201124
+    },
+    "permutation": {
+     "forward": -4.97167409492391,
+     "reversed": 2.853151461869764
+    },
+    "tail": {
+     "forward": -1.8762568738600176,
+     "reversed": 0.7521949307384426
+    }
+   }
+  },
+  "on_mean": {
+   "observed": {
+    "forward": 1.636480283603739,
+    "reversed": 3.2457976726616313
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.27702539490701206,
+     "reversed": 1.058805903205748
+    },
+    "permutation": {
+     "forward": -3.8129045629912826,
+     "reversed": 3.617295013544694
+    },
+    "tail": {
+     "forward": 4.775933553069047,
+     "reversed": -0.19114860584500812
+    }
+   }
+  },
+  "id_mean": {
+   "observed": {
+    "forward": 3.3555430205864365,
+    "reversed": 0.4085804578927835
+   },
+   "z": {
+    "rotation": {
+     "forward": 2.6364472528473275,
+     "reversed": -2.5541741919369816
+    },
+    "permutation": {
+     "forward": -0.972946817490989,
+     "reversed": -0.6507000555080463
+    },
+    "tail": {
+     "forward": 0.7782726232803627,
+     "reversed": -5.279813308018403
+    }
+   }
+  },
+  "on_share": {
+   "observed": {
+    "forward": 2.1470314419290335,
+    "reversed": 1.7649455271861303
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.6527164745654798,
+     "reversed": 0.06655527677548514
+    },
+    "permutation": {
+     "forward": -2.4391522095866365,
+     "reversed": 1.5872847136786075
+    },
+    "tail": {
+     "forward": -0.44734060243608936,
+     "reversed": -0.09156234395992274
+    }
+   }
+  },
+  "on_minus_id": {
+   "observed": {
+    "forward": 0.65817860257557,
+    "reversed": 2.7755653329930206
+   },
+   "z": {
+    "rotation": {
+     "forward": -2.137740003676021,
+     "reversed": 1.9040611948624748
+    },
+    "permutation": {
+     "forward": -4.110217898149464,
+     "reversed": 3.650289385488008
+    },
+    "tail": {
+     "forward": 2.49964470503513,
+     "reversed": -2.642454205002848
+    }
+   }
+  },
+  "on_persist": {
+   "observed": {
+    "forward": 2.5961298430284994,
+    "reversed": 0.9806058889305588
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.3829042498070376,
+     "reversed": -1.0970558738598644
+    },
+    "permutation": {
+     "forward": -2.129779081272668,
+     "reversed": 0.20194004099184662
+    },
+    "tail": {
+     "forward": -1.0646465973919084,
+     "reversed": -1.1372981710949357
+    }
+   }
+  },
+  "max_ret_21": {
+   "observed": {
+    "forward": 2.542600810969252,
+    "reversed": 1.844152936190809
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.9168560939979042,
+     "reversed": -0.6091301608230437
+    },
+    "permutation": {
+     "forward": -1.8434478103063414,
+     "reversed": 1.4009946601948247
+    },
+    "tail": {
+     "forward": 9.859244003375991,
+     "reversed": -8.845101581854909
+    }
+   }
+  },
+  "ivol_21": {
+   "observed": {
+    "forward": 1.7749321909697944,
+    "reversed": 4.662044709103725
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.3199908642244246,
+     "reversed": 3.73419912210707
+    },
+    "permutation": {
+     "forward": -3.2450512973096663,
+     "reversed": 6.161702139202753
+    },
+    "tail": {
+     "forward": 8.40306671974375,
+     "reversed": -6.524108047400634
+    }
+   }
+  },
+  "beta_63": {
+   "observed": {
+    "forward": 2.0695182692610037,
+    "reversed": 1.7088829370371785
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.2601211361985053,
+     "reversed": -1.3925832904913147
+    },
+    "permutation": {
+     "forward": -2.590801415550783,
+     "reversed": 1.1848470777585178
+    },
+    "tail": {
+     "forward": 5.914062453000784,
+     "reversed": -10.461553916255518
+    }
+   }
+  },
+  "rev_5": {
+   "observed": {
+    "forward": 2.7914348749641653,
+    "reversed": 0.21674449590463482
+   },
+   "z": {
+    "rotation": {
+     "forward": 2.4121462841872763,
+     "reversed": -3.0684046686839515
+    },
+    "permutation": {
+     "forward": -1.934328341535005,
+     "reversed": -0.7594863239783834
+    },
+    "tail": {
+     "forward": -0.8394046913175154,
+     "reversed": -6.414536449567147
+    }
+   }
+  },
+  "rev_21": {
+   "observed": {
+    "forward": 2.53121872257227,
+    "reversed": 0.9016095849812564
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.356026895501829,
+     "reversed": -2.5083388101114727
+    },
+    "permutation": {
+     "forward": -1.720834385849507,
+     "reversed": 0.18447393978989132
+    },
+    "tail": {
+     "forward": 4.916496029845693,
+     "reversed": -4.052663713236989
+    }
+   }
+  },
+  "mom_252_21": {
+   "observed": {
+    "forward": 2.02147836083516,
+    "reversed": 1.4539807462638101
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.2443593379641398,
+     "reversed": -2.3333947062498606
+    },
+    "permutation": {
+     "forward": -2.8396210226791188,
+     "reversed": 0.8329548278705265
+    },
+    "tail": {
+     "forward": -2.0534896147884356,
+     "reversed": -5.788158236993799
+    }
+   }
+  },
+  "skew_63": {
+   "observed": {
+    "forward": 2.9526853198649814,
+    "reversed": 0.31539305118855565
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.1900094532896512,
+     "reversed": -2.5775877542224355
+    },
+    "permutation": {
+     "forward": -1.0584977629507775,
+     "reversed": -0.612453952909332
+    },
+    "tail": {
+     "forward": -4.411683736406543,
+     "reversed": -7.369026928842016
+    }
+   }
+  },
+  "amihud_21": {
+   "observed": {
+    "forward": 2.4405756846968423,
+    "reversed": 2.5244188087064674
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.1805006527537234,
+     "reversed": 1.4610915248889054
+    },
+    "permutation": {
+     "forward": -2.094092840111601,
+     "reversed": 2.943863376861054
+    },
+    "tail": {
+     "forward": 39.9297685592202,
+     "reversed": -9.1344468416876
+    }
+   }
+  },
+  "price_log": {
+   "observed": {
+    "forward": 4.804003174460563,
+    "reversed": -0.13300151378529598
+   },
+   "z": {
+    "rotation": {
+     "forward": 3.413934730387382,
+     "reversed": -2.233099206689475
+    },
+    "permutation": {
+     "forward": 1.204408219796011,
+     "reversed": -1.810555054180154
+    },
+    "tail": {
+     "forward": -17.3151292376098,
+     "reversed": -1.6056574589878585
+    }
+   }
+  },
+  "dist_52w_high": {
+   "observed": {
+    "forward": 3.8175449483720567,
+    "reversed": 0.6320916483874576
+   },
+   "z": {
+    "rotation": {
+     "forward": 3.0824862189364755,
+     "reversed": -2.4653626183089417
+    },
+    "permutation": {
+     "forward": -0.2272223749103468,
+     "reversed": -0.43685707540674895
+    },
+    "tail": {
+     "forward": -2.413544029211802,
+     "reversed": 1.5847240728748615
+    }
+   }
+  },
+  "fvg_dist": {
+   "observed": {
+    "forward": 1.5231235656354323,
+    "reversed": 2.6280777167633778
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.5724642466782908,
+     "reversed": -1.064421455603289
+    },
+    "permutation": {
+     "forward": -3.1562622757637486,
+     "reversed": 3.073345526592295
+    },
+    "tail": {
+     "forward": 2.10064022215465,
+     "reversed": -1.7896092024316714
+    }
+   }
+  },
+  "fvg_signed": {
+   "observed": {
+    "forward": 1.3145332061135302,
+    "reversed": 4.0948144060252
+   },
+   "z": {
+    "rotation": {
+     "forward": -1.2379849908420932,
+     "reversed": 1.8519970489993107
+    },
+    "permutation": {
+     "forward": -3.461254906251897,
+     "reversed": 5.227827349961136
+    },
+    "tail": {
+     "forward": 0.6091211586876656,
+     "reversed": 2.2229940796604026
+    }
+   }
+  },
+  "struct_trend": {
+   "observed": {
+    "forward": 3.2598847173054106,
+    "reversed": 0.0820939921988788
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.9151122780357517,
+     "reversed": -2.564566588899731
+    },
+    "permutation": {
+     "forward": -0.984083613748741,
+     "reversed": -1.2060926045491858
+    },
+    "tail": {
+     "forward": -3.9275999851808012,
+     "reversed": -0.7245815849313626
+    }
+   }
+  },
+  "retrace_leg": {
+   "observed": {
+    "forward": 3.702006475773402,
+    "reversed": 0.3869834749568384
+   },
+   "z": {
+    "rotation": {
+     "forward": 3.4193025602956135,
+     "reversed": -2.8507023200324655
+    },
+    "permutation": {
+     "forward": 0.9627721721300306,
+     "reversed": -1.1655058636585658
+    },
+    "tail": {
+     "forward": -1.2462663924943453,
+     "reversed": 0.25873163891445566
+    }
+   }
+  },
+  "choch_dist": {
+   "observed": {
+    "forward": 2.4493137690556654,
+    "reversed": 1.4586135937119182
+   },
+   "z": {
+    "rotation": {
+     "forward": 1.1962582378969142,
+     "reversed": -1.7680983353029969
+    },
+    "permutation": {
+     "forward": 1.5090492290265156,
+     "reversed": -0.3670073991727472
+    },
+    "tail": {
+     "forward": 1.849111888435867,
+     "reversed": -2.656136332762105
+    }
+   }
+  },
+  "park_vol_21": {
+   "observed": {
+    "forward": 0.7013048222786057,
+    "reversed": 3.865626488890428
+   },
+   "z": {
+    "rotation": {
+     "forward": -1.734312406990453,
+     "reversed": 2.6764414930819296
+    },
+    "permutation": {
+     "forward": -4.2386500991859695,
+     "reversed": 4.641605885515195
+    },
+    "tail": {
+     "forward": -17.140583720907436,
+     "reversed": -13.025347565701233
+    }
+   }
+  },
+  "gk_minus_cc": {
+   "observed": {
+    "forward": 1.979590852340356,
+    "reversed": 2.5921470305004384
+   },
+   "z": {
+    "rotation": {
+     "forward": -0.5997164952173114,
+     "reversed": 1.411979052734372
+    },
+    "permutation": {
+     "forward": -2.4630994033994664,
+     "reversed": 2.5083662809289793
+    },
+    "tail": {
+     "forward": 3.0679487702523565,
+     "reversed": -1.2835683370274908
+    }
+   }
+  },
+  "gap_reversal": {
+   "observed": {
+    "forward": 1.9387185158019458,
+    "reversed": 1.5457289273864276
+   },
+   "z": {
+    "rotation": {
+     "forward": 0.3013926403528831,
+     "reversed": -0.10355951428814897
+    },
+    "permutation": {
+     "forward": 0.3469442545468806,
+     "reversed": -0.013197114470576844
+    },
+    "tail": {
+     "forward": 1.3722371680159078,
+     "reversed": -3.6070178473534935
+    }
+   }
+  }
+ },
+ "elapsed_s": 1259.7
+}

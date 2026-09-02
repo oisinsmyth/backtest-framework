@@ -51,6 +51,11 @@ ENT = json.loads((REPO / "data" / "d290_entry_test.json").read_text())
 SKIP = json.loads((REPO / "data" / "d290_skip_all.json").read_text())
 AX = S1["axes"]
 SKIPV = {r["c"]: r for r in SKIP["rows"]}
+# GATE 1h: nulls for BOTH directions. D290 fixed long=lowest by fiat, so the
+# reversed direction was never scored -- and it held wick_asym at t +10.51 with
+# min z +5.07, which the study had dismissed at tier 3.
+DIRN = json.loads((REPO / "data" / "d290_direction_nulls.json").read_text())["results"]
+NMAX, KMAX = max(S1["n_levels"]), max(S1["horizons"])
 CAPTURABLE_T = 2.0
 
 
@@ -86,7 +91,12 @@ def row(c, con):
     gen = cv > 0
     cap = oe_v is not None and oe_v[1] >= CAPTURABLE_T
     tier = 1 if (real and gen and cap) else 2 if (real and gen) else 3
-    return dict(c=c, ax=AX[c], N=N, k=k, bp=bp, t=t, cv=cv, mn=mn,
+    # GATE 1i: a peak at the edge of the sweep means the statistic was still
+    # climbing when the grid ran out. Reported, and it demotes nothing on its own
+    # -- but an edge peak is UNRESOLVED rather than concluded.
+    edge = ("corner" if (N == NMAX and k == KMAX) else
+            "edge" if (N == NMAX or k == KMAX) else "interior")
+    return dict(c=c, ax=AX[c], N=N, k=k, bp=bp, t=t, cv=cv, mn=mn, edge=edge,
                 oe_bp=oe_v[0] if oe_v else None, oe_t=oe_v[1] if oe_v else None,
                 kept=kept, on_share=on_share, rt=rt,
                 xbar=(bp / rt) if rt else None, tier=tier,

@@ -184,3 +184,72 @@ capturable candidates of which two clear cost. The short book has one, at 0.14×
 And the study's own ranking statistic needed three post-hoc tests to become
 trustworthy, which is the finding most worth carrying into the next
 pre-registration.
+
+---
+
+# ADDENDUM 2 — gates 1g, 1h and 1i applied retroactively
+
+Stage 1 spends nothing scarce, so applying new gates to an already-burnt fixture
+costs nothing and invalidates nothing. **The holdout remains unread.** These are
+retroactive applications, not a re-run — and they do NOT make D290 a
+pre-registered test of these gates. The gates bind from the next study.
+
+## 1g — turnover: two candidates are not signals
+
+**6 static tilts** under 5% turnover per bar, `price_log` the extreme at **1.9%
+and a 51-bar holding run**. It never says *when* to do anything.
+
+**12 with one-sided delisting exposure**, and the volatility family is severe:
+
+| candidate | dead in LONG | dead in SHORT |
+|---|--:|--:|
+| `vol_ratio` | **66.6%** | 28.6% |
+| `rvol21` | **66.4%** | 41.7% |
+| `atr_norm` | **65.8%** | 42.1% |
+| `ivol_21` | **64.9%** | 42.1% |
+| `max_ret_21` | **63.2%** | 41.7% |
+
+**Same frozen-tape mechanism as AVNS.** Lowest ATR does not mean a calm stock, it
+means a tape that has stopped — a takeover or a halt — which is a delisting. The
+low-volatility end of every ranking is structurally full of about-to-die names.
+
+## 1h — the direction D290 never scored
+
+51 candidates × 50 draws × 3 nulls × both directions, **21 minutes**. **11
+reversed candidates clear all three nulls; 5 are capturable.**
+
+**The miss: `wick_asym`.** D290 put it at tier 3 (−18.2 bp, t −1.79, min z −8.96).
+
+| direction | N | k | bp | t | min z | open t |
+|---|--:|--:|--:|--:|--:|--:|
+| forward | 25 | 30 | −18.2 | −1.80 | −8.96 | +0.36 |
+| **reversed** | 25 | 1 | **+19.3** | **+10.51** | **+5.07** | **−1.77** |
+
+Reversed it is the second-strongest thing in the study by evidence. **Gate 1h
+found it and gate 1e disqualified it** — open-entry t −1.77, 115% overnight, the
+same uncapturable close-to-open effect as `close_in_range`. The two gates working
+as intended.
+
+## 1i — and where the peak sits demotes two of the five
+
+| construction | corner (N=50, k=40) | edge | interior |
+|---|---|---|---|
+| long | **51 of 51**, 1 passes nulls | — | — |
+| short | — | **0 of 6 pass** | 19 of 45 |
+| spread | 1 of 1 | 7 of 13 | 16 of 37 |
+
+Tier 1 across both directions is **5 candidates** — but `range_frac` and `rvol21`
+sit at the **corner** with min z of only **+0.32 and +0.42**, and `rvol21` is one
+of 1g's 66%-dead-leg candidates. **`fvg_signed` is the only genuinely interior
+tier-1 candidate in the study**, at +32.8 bp and 0.21× cost.
+
+## The conclusion does not move
+
+The short book — the objective — still has nothing tradeable. The one candidate
+clearing cost is `choch_dist` at 2.41×, on CV t +0.96 and 25.7% coverage, with
+its peak at max k and therefore **horizon-unresolved**.
+
+**And a reproducibility defect, found while optimising and fixed prospectively:**
+`run_stage1_rerun.py:370` seeds with `SEED + hash(c) % 100000`, and Python
+randomises `hash()` per process. **D290's z-values are valid but cannot be
+regenerated.** `d290_direction_nulls.py` uses `zlib.crc32` instead.

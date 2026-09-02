@@ -48,6 +48,11 @@ KEY = [
      "defers magnitude to stage 2."),
     ("tier", "<b>1</b> real + generalises + capturable &middot; <b>2</b> real + "
      "generalises, not capturable &middot; <b>3</b> fails a null or the split."),
+    ("peak", "Where the peak sits in the swept grid. <b>interior</b> = the maximum "
+     "is contained. <b>edge / corner</b> = the statistic was still climbing when "
+     "the sweep ended, so the result is <b>unresolved, not concluded</b>. Every "
+     "long-only candidate peaks at the corner and one of fifty-one survives the "
+     "nulls."),
 ]
 
 
@@ -78,6 +83,7 @@ def body(rows):
             f'<td class="g strong">{fmt(r["oe_t"], 2)}</td>'
             f'<td>{fmt(r["oe_bp"])}</td><td>{pct(r["kept"])}</td>'
             f'<td class="g">{pct(r["on_share"])}</td><td class="g">{pill}</td>'
+            f'<td class="g edge {r.get("edge", "")}">{r.get("edge") or "&mdash;"}</td>'
             f'<td class="tier"><span class="t{r["tier"]}">{r["tier"]}</span></td></tr>')
     return "".join(out)
 
@@ -97,7 +103,8 @@ def section(con, label, blurb):
 <th class="ax">ax</th><th class="name">candidate</th><th class="g">N</th><th>k</th>
 <th class="g">bp</th><th>CV t</th><th>min z</th>
 <th class="g">open t</th><th>open bp</th><th>kept</th>
-<th class="g">on%</th><th class="g">&times; bar</th><th class="tier">tier</th>
+<th class="g">on%</th><th class="g">&times; bar</th>
+<th class="g">peak</th><th class="tier">tier</th>
 </tr></thead><tbody>{body(rows)}</tbody></table></div>
 <p class="note">Tier 3 truncated to six rows. All 51 per construction are in
 <code>data/d290_unified_rank.json</code>.</p></section>"""
@@ -166,6 +173,9 @@ tr:hover{background:var(--raised)}
 color:var(--ink2);font-size:11.5px}
 .pill.ok{border-color:var(--pos);color:var(--pos);font-weight:600}
 .na{color:var(--ink3)}
+td.edge{font-size:11.5px;color:var(--ink3)}
+td.edge.interior{color:var(--pos);font-weight:500}
+td.edge.corner{color:var(--amber)}
 .note{margin:0;padding:9px 18px;font-size:12px;color:var(--ink3);
 border-top:1px solid var(--line2)}
 footer{color:var(--ink3);font-size:12.5px;max-width:78ch}
