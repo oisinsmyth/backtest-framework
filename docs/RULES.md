@@ -380,3 +380,54 @@ the bases and the scores the later ones mine, so their search space was not chos
 a single cumulative count across the whole programme — and are **not** restated. R13 explains the
 discontinuity rather than erasing it, the same way [R11](#r11)'s amendment and
 [R12](#r12)'s retroactive scope were handled.
+
+---
+
+## R14. The whole promotion tree is pre-registered before stage 1, and looks multiply across stages
+
+The promotion flow is **signal hunt → sharpen with exits → strategy → tested as
+100% of a book → admitted as an arm**. That is the route **when things go well**, and
+written down it is a ladder. Left implicit it becomes a reason never to close anything,
+because every failure at stage *n* invites one more attempt at stage *n−1*.
+
+**Both halves of this rule exist because the pipeline is otherwise a licence.**
+
+**1. The tree is registered ONCE, up front** — the exit family, the target family, the
+strategy construction, the promotion rule and the stop condition at every stage — before
+stage 1 runs. Registering stage by stage as results arrive is the same search wearing a
+new label each time.
+
+**2. Looks MULTIPLY, they do not add.** Four stages with five choices each is `5^4 = 625`,
+not 20. A candidate reaching stage 3 carries stage 1's and stage 2's looks under
+[R13](#r13), because both decided which candidate arrived. A stage-1 selection made on the
+fixture stages 2–3 then reuse contaminates everything downstream, so the floor that matters
+at the end prices the whole tree.
+
+### What the pipeline relaxes, and what it does not
+
+It relaxes **sufficiency to existence**: stage 1 must show the effect is *there*, not that
+it is *enough*. Stage-1 gates are therefore **t-based, not magnitude-based** — D288's
+spread floor was the wrong instrument and its best candidate stood at 1.70× the null's
+largest draw while failing on size.
+
+It relaxes nothing else, and **the empirical uplift from stage 2 in this programme is
+~1.0× — nothing.** D286: the exit rule carried no information and the rule nobody designed
+beat all three deliberate ones. D285: the cap genuinely cut losers, touched trades ending
+−860 bp at 23.2% profitable, and still produced no viable book. **Stage 2 supplies margin,
+never rescue.** A signal failing cost by a factor of two at stage 1 is closed at stage 1.
+
+### Two orderings are fixed
+
+- **Correlation to existing arms is measured at STAGE 1**, not at admission. It is nearly
+  free, and discovering at stage 5 that a candidate is 0.9 with S1 spends four stages to
+  learn something available on day one.
+- **The holdout is read at STAGE 4 or not at all.** It is the scarcest asset in the
+  programme — one clean read — and spending it on a bare signal that was always going to
+  need stages 2–3 is the worse trade.
+
+**Low correlation is necessary and nowhere near sufficient for admission.** A zero-edge
+strategy is uncorrelated with everything; an arm needs a standalone IR before its
+correlation is worth discussing.
+
+**Scope:** binding from 2026-09-02. Full statement of the stage gates in
+[D289](decisions/D289-the-promotion-pipeline.md).

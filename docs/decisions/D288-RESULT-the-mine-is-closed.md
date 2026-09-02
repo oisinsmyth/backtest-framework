@@ -201,3 +201,105 @@ D289 would be exactly the post-hoc selection this design was built to refuse.
 
 **No book entry.** [`docs/BOOK.md`](../BOOK.md) is unchanged; the prop book
 remains empty.
+
+---
+
+# ADDENDUM — post-closure probes, and the plan's remaining phases abandoned
+
+**This does not reopen D288.** Its gates were pre-registered, they failed, and
+its stop condition stands. What follows was measured *after* closure, on the
+mining fixture, because the principal asked whether combining the mined signals
+was worth pursuing. The honest way to answer was to measure it **and count the
+looks**, which is done below.
+
+Artifact: `data/d288_postclosure_probes.json`, produced by
+`scripts/d288_postclosure_probes.py`.
+
+## Two constructions, and they are not the same question
+
+**Overlay** (weighted blend) — for equal IC the gain is `sqrt(2/(1+rho))`,
+**monotone in rho**. Lower is strictly better; there is no interior optimum.
+
+**Confluence** (AND gate) — intersecting two N-of-M sets leaves `N^2/M` names
+under independence, so low rho **empties the book** and high rho makes the filter
+a **no-op**. Confluence genuinely has an interior optimum in rho. That optimum
+turns out to be empty here.
+
+## Finding 1 — the two candidates that cleared are half the same signal
+
+`close_in_range = (C−L)/range` and `lower_wick = (min(O,C)−L)/range` are **the
+same number whenever C ≤ O**, which is **50.7% of 4,119,353 usable bars**. Their
+Spearman of +0.368 does not reveal that. Overlaying them buys **+1.9%**.
+
+## Finding 2 — the only useful overlay is residualisation, and it is fragile
+
+| pair | ρ | best leg | optimal | uplift | **equal-weight** |
+|---|--:|--:|--:|--:|--:|
+| close_in_range + body_frac | **+0.787** | +15.88 | +20.19 | **+27.1%** | +10.95 (**−31.0%**) |
+| close_in_range + lower_wick | +0.368 | +15.88 | +16.18 | +1.9% | +14.86 (−6.4%) |
+| close_in_range + on_persist | −0.001 | +15.88 | +16.10 | +1.3% | +13.08 (−17.7%) |
+
+The **most correlated** pair is the only one that buys anything, and its optimal
+weights are **+12.1 / −7.7** — it subtracts the conviction component rather than
+confirming it. Every near-zero-ρ partner buys ~1%, because D288 has **only one
+signal above t 9** and diversification needs two comparable edges.
+
+**Equal-weighting — what "overlay" usually means in practice — is strictly
+harmful**, by 6% to 31%. The uplift lives entirely in the weights.
+
+**And the +27.1% should not be believed as it stands.** At ρ = 0.787,
+`1 − ρ² = 0.381`, so the inverse divides by a small number and weight standard
+errors scale by ~1.62×, on inputs that are already the max over 31 × 3 × 12.
+That is Markowitz error-maximisation in miniature. A bootstrap of the weights
+across bars, reporting the uplift's own interval, is the test that would settle
+it and has **not** been run.
+
+## Finding 3 — confluence fails, and fails against its own control
+
+Baseline: `close_in_range` alone, N=25, k=20 → **+62.5 bp, t +6.61**, which is
+**0.92× the round trip** and so does not clear cost at that N.
+
+**0 of 18 partners beat their SIZE-MATCHED control on t.** Not one.
+
+| partner | ρ | keep | names/bar | confluence | t | matched control | t |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| dist_lvn | +0.02 | 1% | 1.1 | +1471.3 | +2.31 | N=1 → +190.2 | **+4.74** |
+| mass_imbalance | −0.03 | 1% | 1.2 | +413.8 | +2.94 | N=1 → +190.2 | +4.74 |
+| macd_hist | +0.10 | 1% | 1.2 | +228.8 | +1.67 | N=1 → +190.2 | +4.74 |
+| rel_vol | +0.02 | 4% | 1.6 | +115.7 | +1.33 | N=2 → +148.0 | +5.02 |
+
+The headline numbers are **lottery tickets**: `dist_lvn` shows 7.7× the spread of
+its control on **half the evidence**, from 1.1 names a bar. The low-ρ partners
+collapse the book to a single position exactly as `N²/M` predicts, and the
+high-ρ partners that leave 6–7 names a bar lose to plain concentration.
+
+**The control column is the whole finding.** A filter that shrinks the held set
+must beat *trading fewer names on the primary*, and none does.
+
+## Looks spent, and they are carried
+
+| | |
+|---|---:|
+| overlay pairs | 66 |
+| overlay triples inspected | 220 |
+| confluence partners | 18 |
+| size-matched controls | 4 |
+| **total** | **308** |
+
+**Any successor testing overlays, confluence, or `close_in_range` concentration
+carries these 308 on top of D288's 177** under [R13](../RULES.md#r13). Answering
+the question was not free, and pretending otherwise would make the next study's
+floor a fiction.
+
+## The plan's remaining phases are abandoned
+
+The plan of record ended with *"Phase 5 — promotion and holdout: one candidate,
+one test."* **Abandoned by decision of the principal, 2026-09-02.** There is no
+candidate to promote (zero survivors), and the instruction was explicit: do not
+spend the holdout.
+
+**`us_shorts_daily_holdout.csv.gz` remains UNREAD** — 803 names, 272 dead,
+2,156,127 rows, built at `2bdf6c5`. No runner in this study references it. It is
+carried forward intact, and [D289](D289-the-promotion-pipeline.md) moves the
+holdout read from stage 1 to **stage 4**, so the next candidate reaches it as a
+finished strategy rather than a bare signal.
