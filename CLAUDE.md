@@ -76,6 +76,50 @@ processes.
 
 ---
 
+## How to report a result
+
+**A number without the thing that makes it interpretable is not a result.** Four
+groups, every time, whatever the verdict.
+
+**1 — Performance, NET AND GROSS side by side.** Gross means zero fees, zero
+borrow, zero `rf`. Report `exposure`, `CAGR`, `Sharpe`, `vol`, `maxDD`, and the
+**mean move per trade against `2c`**. Without gross you cannot tell a cost
+failure from a signal failure, and they need opposite fixes — D279 lost
+**−0.432 GROSS**, so no cost improvement could ever have saved it. Without
+exposure a CAGR is meaningless: D284's `+0.27%` was earned on **0.75% gross
+exposure**, so it is a small sleeve with a large edge, not a small edge.
+
+**Also report the breakeven cost** — half-spread in bp/side, or borrow rate —
+because it is a property of the book rather than of your fee assumption. D284
+cleared its cost bar at **2.41×** and still died on a breakeven half-spread of
+**11.36 bp/side**.
+
+**2 — Trade distribution, and it is where results go to die.** Trade count,
+mean, **median**, win rate, payoff, holding-run length, skew, kurtosis. Then the
+one that decides it:
+
+> **Remove the best 1% of trades and re-report the mean.**
+
+D271 had three arms at `+3.12 / +5.13 / +1.57` bp go to `−0.63 / −1.57 / −2.37`.
+D285's book showed the top 1% carrying **196.9% of P&L** — the other 99% were
+collectively negative. **A positive mean carried by a handful of trades is a
+lottery ticket, not an edge, and the median usually says so first.**
+
+**3 — What the winners actually depend on.** Attribute the P&L before claiming
+it. At minimum: **how many names to reach half of it**, the top-1/5/10 name
+share, profitable years out of years traded, and the split across whatever the
+universe varies on — dead vs alive, era, and **price**, since cost in bp is
+inversely proportional to price. D284 died on three columns: **$13.19 median,
+$1.92 tenth percentile, 25.7% of positions under $5.**
+
+**4 — Nulls: the distribution, never the percentile alone.** Report the null's
+**p50 and p95** beside the cell's score. A percentile on its own hides
+everything: D279's `S1_short|all` sat at the **100th on both legs with −0.757
+Sharpe and −2.45% CAGR**, because its null was centred at **p50 −1.058**.
+Anything above −0.99 cleared. Say explicitly whether the null is decisive —
+[R7](docs/RULES.md#r7)'s corollary, and there are now four measured cases here
+of a *losing random control* clearing at the 100th.
+
 ## Every runner needs these three assertions
 
 Two results in this repo were destroyed by defects that care does not prevent,
