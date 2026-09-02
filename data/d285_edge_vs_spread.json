@@ -1,0 +1,59 @@
+{
+ "purpose": "does the D285 book's edge survive inside cheap-to-trade names? scores no cell, reopens no verdict",
+ "n_trades": 10203,
+ "corr_spread_move": -0.005619063843976638,
+ "buckets": {
+  "q1": {
+   "n": 2041,
+   "half_spread_bp": 25.20828695519746,
+   "window_mean_half_spread_bp": 37.988014049522576,
+   "move_bp": 35.39022733802159,
+   "round_trip_cost_bp": 50.41657391039492,
+   "net_bp": -15.026346572373335,
+   "median_price": 32.67,
+   "median_move_bp": 14.288066274267162
+  },
+  "q2": {
+   "n": 2040,
+   "half_spread_bp": 42.4779615098953,
+   "window_mean_half_spread_bp": 53.07594344220029,
+   "move_bp": 25.738627887022293,
+   "round_trip_cost_bp": 84.9559230197906,
+   "net_bp": -59.217295132768314,
+   "median_price": 20.72,
+   "median_move_bp": 60.23600764359568
+  },
+  "q3": {
+   "n": 2041,
+   "half_spread_bp": 58.500844984888595,
+   "window_mean_half_spread_bp": 70.92714883746248,
+   "move_bp": 33.32825280411341,
+   "round_trip_cost_bp": 117.00168996977719,
+   "net_bp": -83.67343716566378,
+   "median_price": 14.63,
+   "median_move_bp": 102.25048634393337
+  },
+  "q4": {
+   "n": 2040,
+   "half_spread_bp": 80.61491677666874,
+   "window_mean_half_spread_bp": 88.23141957098953,
+   "move_bp": 25.7388602018037,
+   "round_trip_cost_bp": 161.22983355333747,
+   "net_bp": -135.49097335153377,
+   "median_price": 9.145,
+   "median_move_bp": 130.39303676075946
+  },
+  "q5": {
+   "n": 2041,
+   "half_spread_bp": 142.28834334516745,
+   "window_mean_half_spread_bp": 128.87588660963513,
+   "move_bp": 59.982822415036544,
+   "round_trip_cost_bp": 284.5766866903349,
+   "net_bp": -224.59386427529836,
+   "median_price": 6.12,
+   "median_move_bp": 294.58743459404496
+  }
+ },
+ "tradeable_buckets": [],
+ "elapsed_s": 37.6
+}
