@@ -191,3 +191,131 @@ failed or two statistics disagreed, and all four are disclosed here.
 `data/d291_confluence.json` · `data/d291_diagnostics.json` ·
 `data/d291_control_audit.json` · `scripts/run_d291_confluence.py` ·
 `scripts/d291_diagnostics.py` · `scripts/d291_control_audit.py`
+
+---
+
+# AMENDMENT — 2026-09-03: the floor was the wrong instrument, and the shortlist is not empty
+
+Raised by the principal, in two steps. Both were right, and the record above
+framed the result wrongly. Nothing below changes a pre-registered number; it
+changes what the numbers are held to mean.
+
+## 1. The pre-registered floor controls the wrong error rate for stage 1
+
+The best-of-272 floor controls the **family-wise** rate: the chance that *any*
+cell is a false positive. That is the correct question when a study makes ONE
+claim. **Stage 1 makes no claim.** It spends no holdout, closes nothing, and
+produces a shortlist to carry forward. The cost asymmetry runs the other way: a
+false positive costs one extra candidate at stage 2, a false negative discards a
+real signal permanently.
+
+**The floor was also not scale-fair.** Cells' own nulls differ ~7× in spread
+(own p95 from +0.40 to +2.94), so a flat `t` threshold demands z ≈ +8 of a
+tight-null cell and z ≈ +1.5 of a wide-null one. Redrawn three ways on the same
+200 draws (`scripts/d291_floor_scales.py`):
+
+| scale | floor | best observed | clearing |
+|---|--:|--:|--:|
+| MAX-t (pre-registered) | +3.67 | +2.92 | 0 |
+| MAX-Z (scale-fair) | +3.38 | +2.86 | 0 |
+| MIN-p (rank-based) | 0.0050 | 0.0050 | 0 |
+
+The unfairness was real and it changed nothing.
+
+**Benjamini-Hochberg — the stage-1 instrument — is harsher, not softer.** On the
+163 gate cells: **0 kept at q = 0.05, 0.10, 0.20 and 0.50.** Not a resolution
+artifact of 200 draws: at q = 0.50 BH is resolvable from i = 2 (threshold
+0.0061) and the observed p(2) = 0.0100.
+
+## 2. WHAT CLOSES THE GATE IS THE DOSE-RESPONSE, NOT THE FLOOR
+
+The record above led with "0 of 254 clear the floor". That is the pre-registered
+verdict and it stands, but **it is not the reason the gate arm closes.**
+
+| f | t p50 | names kept |
+|--:|--:|--:|
+| 0.90 | +0.25 | 91% of N |
+| 0.75 | +0.07 | 88% |
+| 0.50 | −0.05 | 81% |
+| 0.25 | −0.33 | 65% |
+
+Monotone, arm mean Δ **−7.1 bp**, trend pointing at f = 1.00 — no filter at all.
+**No multiplicity correction is involved in reading that**, and it would say the
+same thing if this study had run one cell or ten thousand. The floor is a
+tiebreak that was never needed.
+
+## 3. AND THE SHORTLIST IS NOT EMPTY — the principal's second point holds
+
+Per-cell p95 against a cell's own rotate-B null is a legitimate stage-1 bar,
+because it asks the question confluence actually poses: **does B's CONTENT beat
+a B-shaped filter that knows nothing?** 14 of 163 gate cells clear it against
+8.2 expected by luck. Taken cell by cell that excess is unremarkable — the
+diffuse test lands at **p = 0.055** (14 observed, null p50 9, p95 14).
+
+**But the survivors are not scattered, and that is a different finding.**
+Tested against the null's own correlation structure, taking the MAX over
+candidates on each draw so the statistic is multiplicity-aware:
+
+| statistic | observed | null p50 | null p95 | P(null ≥ obs) |
+|---|--:|--:|--:|--:|
+| **most survivors in a single A** | **6** | 3.0 | 5.0 | **0.5%** |
+| most survivors in a single B | 4 | 3.0 | 4.0 | 20.5% |
+| survivors at f = 0.90 (least filtering) | 1 | 2.0 | 5.0 | 87.5% |
+
+**`hist_L` holds 6 of the 14 survivors, and 0.5% of null draws produce that much
+concentration in any candidate.** Its six are five different partners — `rsi`
+(f 0.50 and 0.25), `macd_line` (0.50), `rev_5` (0.75 and 0.50), `macd_hist`
+(0.50) — clustered at **f ≈ 0.50**, not at the lightly-filtered end.
+
+And the survivors **avoid** f = 0.90: 1 of 44, below the 2.2 expected. So they
+are not simply the books closest to A alone, which was the obvious deflationary
+explanation and is now ruled out.
+
+## 4. What this changes
+
+**The gate operator is closed as a source of PROMOTABLE cells** — no single
+cell survives any family-wise floor, on any scale, and FDR keeps nothing at
+q = 0.50. Unchanged from the record above.
+
+**It is NOT closed as a stage-1 screen.** The pre-registered stop condition —
+"if nothing beats its control, gate and veto are closed for this pool" — was
+written as if stage 1 made a claim. It does not. **Amended: the stop applies to
+promotion, not to the shortlist.**
+
+**What stage 1 carries forward is `hist_L` as a primary that responds to
+gating at f ≈ 0.50**, on the strength of a concentration that is beyond chance
+at p = 0.005 — not the individual cells, which mostly sit at `t` ≈ +1.0 against
+their controls.
+
+**The distinction that matters for whatever is built next.** These are two
+different questions and the survivors answer only the first:
+
+- **does B add content?** — the `z` against a rotated B. 14 cells say yes.
+- **does the confluence beat A alone?** — the raw `t`. Most survivors sit at
+  `t` ≈ +1.0. `macd_hist + retrace_leg` at f = 0.50 has `t` **+0.33** with null
+  mean −0.96: B's content clearly beats a rotated B, and the book still barely
+  beats `hist_L`'s own control.
+
+Third- and higher-order confluence built on these is legitimate stage-1 work and
+spends nothing. **It must not treat the 14 as confirmed**, and it inherits their
+in-sample selection — which the ledger prices when the holdout is eventually
+read, not before.
+
+## Amended ledger
+
+| | |
+|---|---:|
+| **holdout reads spent** | **0** |
+| holdout reads, whole programme | **0** |
+
+Disclosed and not priced, in addition to the 272 declared cells: the three-scale
+floor redraw, the BH-FDR reading, the diffuse-count test, and the concentration
+test. All four are post-hoc, all four were prompted by the principal's challenge
+to the pre-registered floor, and the concentration test is the only one that
+found anything.
+
+## Files added
+
+`scripts/d291_floor_scales.py` · `scripts/d291_walkthrough.py` ·
+`data/d291_null_surface.npz` (200 draws × 254 cells) ·
+`data/d291_floor_scales.json`

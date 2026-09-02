@@ -736,6 +736,28 @@ def main() -> int:
           f"p50 {np.percentile(joint, 50):+.2f}  p95 {floor:+.2f}  "
           f"max {max(joint):+.2f}", flush=True)
 
+    # The FULL (draws x cells) null surface, saved so the floor can be redrawn
+    # on a different scale without re-running. A max-t floor is harsher on a
+    # cell whose own null is tight than on one whose null is wide -- cells here
+    # differ 7x in null spread -- so a max-Z floor is a fair second reading and
+    # `d291_floor_scales.py` computes it from this file.
+    keys = sorted(obs)
+    surf = np.full((a.draws, len(keys)), np.nan)
+    for d in range(a.draws):
+        for ci, c in enumerate(keys):
+            v = draws[d].get(c)
+            if v is not None:
+                surf[d, ci] = v
+    np.savez_compressed(
+        REPO / "data" / "d291_null_surface.npz", surface=surf,
+        cell_kind=np.array([groups[i][0] for i, _ in keys]),
+        cell_A=np.array([groups[i][1] for i, _ in keys]),
+        cell_B=np.array([groups[i][2] for i, _ in keys]),
+        cell_f=np.array([f for _, f in keys]),
+        observed_t=np.array([obs[c]["t"] for c in keys]))
+    print(f"  wrote data/d291_null_surface.npz  "
+          f"({surf.shape[0]} draws x {surf.shape[1]} cells)", flush=True)
+
     rows = []
     for (i, f), r in obs.items():
         kind, ca, cb = groups[i]
