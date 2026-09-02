@@ -102,6 +102,47 @@ BREAKEVEN_FLOOR_BPS = 15.0         # hurdle B, pre-registered
 MIN_TRADES = 500                   # hurdle E-prime's second leg
 
 
+def tail_rnd(base, score, n, rng):
+    """THE VOLATILITY-MATCHED CONTROL, added by the amendment of 2026-09-02.
+
+    At each bar, take the 2N names with the most EXTREME lagged score -- the N
+    lowest and the N highest together -- and draw N of them AT RANDOM.
+
+    WHY IT IS THE CONTROL THIS STUDY NEEDED. `hist_L` is SIGNED acceleration, so
+    both of its tails are the volatile names, and D283 measured that volatile
+    names rise overnight whichever way they moved: a direction-blind tail tax of
+    -14.68 / -9.80 / -6.58 bp against a directional component of only +4.75 /
+    +4.66 / +3.60. `rnd-N`, `per-N` and `base` all draw from the WHOLE universe
+    and would be beaten by the tail tax alone.
+
+    Same N, same bars, same |score| magnitude, same volatility tail. **The only
+    remaining difference from the treatment is WHICH TAIL**, which is exactly the
+    directional component and exactly what hurdle C is supposed to test.
+
+    The score is lagged here for the same reason `top_n` lags it internally: the
+    control must see no more than the treatment does."""
+    out = np.zeros_like(base)
+    s = C.lag1(score)
+    for t in range(base.shape[1]):
+        q = np.flatnonzero(base[:, t] != 0.0)
+        if q.size == 0:
+            continue
+        v = s[q, t]
+        fin = np.isfinite(v)
+        q, v = q[fin], v[fin]
+        if q.size == 0:
+            continue
+        if q.size <= n:
+            out[q, t] = base[q, t]
+            continue
+        order = np.argsort(v, kind="stable")
+        k = min(n, q.size // 2)                 # N from each end, or as many as fit
+        pool = q[np.unique(np.concatenate([order[:k], order[-k:]]))]
+        pick = rng.choice(pool, size=min(n, pool.size), replace=False)
+        out[pick, t] = base[pick, t]
+    return out
+
+
 def long_score(panel, pos, night, **kw):
     """D282's scorer with borrow forced to zero. Named so a reader does not have
     to remember that the borrow argument is the one that changed."""
@@ -323,6 +364,7 @@ def main() -> int:
         books[f"lng{N}"] = +C.top_n(ones, hs, N)          # top_n lags `hs` itself
         books[f"rnd{N}"] = +C.top_n(ones, hs, N, rng=rng)
         books[f"per{N}"] = +TD.persistent_rnd(ones, N, rng)
+        books[f"tal{N}"] = +tail_rnd(ones, hs, N, rng)      # the amendment's control
     for k, p in books.items():
         if (p < 0).any():
             raise AssertionError(f"{k} holds a SHORT position in a long-only study")
@@ -405,12 +447,18 @@ def main() -> int:
         c = cells[k]
         if k.startswith("lng"):
             N = k[3:]
-            ctrls = [cells[f"rnd{N}"], cells[f"per{N}"], cells["base"]]
+            # `tal{N}` is the BINDING leg -- see the amendment. A book that
+            # beats the other three but not this one has found the tail premium.
+            ctrls = [cells[f"rnd{N}"], cells[f"per{N}"], cells[f"tal{N}"],
+                     cells["base"]]
             c["C"] = bool(all(c["excess_sharpe"] > x["excess_sharpe"]
                               and c["total_return"] > x["total_return"]
                               and c["gross_sharpe"] > x["gross_sharpe"]
                               for x in ctrls))
             c["beats_base_gross"] = bool(c["gross_sharpe"] > cells["base"]["gross_sharpe"])
+            c["beats_tail_gross"] = bool(c["gross_sharpe"] > cells[f"tal{N}"]["gross_sharpe"])
+            c["vs_tail_gross"] = c["gross_sharpe"] - cells[f"tal{N}"]["gross_sharpe"]
+            c["vs_tail_move_bp"] = c["mean_move_bp"] - cells[f"tal{N}"]["mean_move_bp"]
         else:
             c["C"] = False
         c["V"] = bool(c["cagr"] > 0)
