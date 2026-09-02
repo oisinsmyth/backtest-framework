@@ -153,3 +153,84 @@ that; it is priced when the holdout is read.
 
 `data/d292_third_order.json` · `data/d292_capturability.json` ·
 `scripts/run_d292_third_order.py` · `scripts/d292_capturability.py`
+
+---
+
+# ADDENDUM — 2026-09-03: the combined book's OWN number, and why `hist_L` is the problem
+
+Prompted by the principal asking a question the record above could not answer:
+**what is the combined t?** Everything reported was a DIFFERENCE against
+parents. The books' own numbers were never shown, and they change the reading.
+
+## 1. The full ladder (`scripts/d292_full_ladder.py`)
+
+`macd_hist + rsi`, meanrank, f = 0.75 — the strongest cell:
+
+| rung | held/bar | close bp | close t | open bp | open t |
+|---|--:|--:|--:|--:|--:|
+| `hist_L` alone (25 names) | 3.5 | +52.52 | +2.86 | +40.70 | +2.30 |
+| `hist_L` at N′ = 19 | 2.8 | +10.75 | +0.53 | −5.12 | −0.27 |
+| + `macd_hist` only (19) | 3.4 | +33.83 | +1.87 | +25.70 | +1.49 |
+| + `rsi` only (19) | 3.7 | +21.61 | +1.33 | +12.14 | +0.78 |
+| **+ both (19)** | 3.7 | **+61.91** | **+3.80** | **+46.65** | **+2.96** |
+
+**Each filter alone HURTS; both together HELP.** The combined book beats every
+control — count-matched primary `t` +2.76 close / +2.95 open, `macd_hist` parent
++2.14 / +1.70, `rsi` parent +2.97 / +2.62 — and beats `hist_L` alone on 6 fewer
+names, at both entries.
+
+**THE RUNG THE PRE-REGISTRATION LEFT OUT.** Its control was the parents, on the
+ground that D291 had answered "does the stack beat `hist_L` alone". But D291
+tested SINGLE filters; MEAN-RANK did not exist there, so nothing had ever
+compared this operator to the primary.
+
+**The record above was anchored on the wrong statistic.** `t_min` is the
+increment over parents, and the parents are degraded books — so `t_min` falling
+to +1.70 at open entry says the increment over `macd_hist`-alone is modest, not
+that the book is weak. The book's own open-entry `t` is **+2.96 against the
+primary's +2.30**.
+
+## 2. AND THEN THE ACTUAL PROBLEM, WHICH IS NOT THIRD ORDER
+
+`hist_L` alone, k = 5, swept finely in N:
+
+| N | 5 | 10 | 12 | 15 | 17 | 19 | 21 | 23 | **25** | 27 | 30 | 35 | 40 | 50 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| **close t** | −0.22 | −0.88 | +0.04 | +0.70 | +0.92 | +0.53 | +0.81 | +2.00 | **+2.86** | +2.78 | +2.02 | +1.54 | +0.92 | +1.01 |
+| **open t** | −0.43 | −1.12 | −0.10 | +0.14 | +0.48 | −0.27 | +0.03 | +1.30 | **+2.30** | +2.24 | +1.39 | +1.35 | +0.53 | +0.66 |
+
+**`hist_L`'s edge lives in a window of N ∈ [23, 30] and is absent everywhere
+else.** At N = 19 it is +0.53; at N = 10 it is **negative**. D290's grid was
+{3, 5, 10, 25, 50} — it contained the spike and neither neighbour, so the peak
+looked like a peak rather than like a spike.
+
+**D290's null did price the N search** (its null took the max over the same
+grid), so `hist_L`'s tier-1 status is not invalidated. But a candidate whose `t`
+runs −0.88 → +2.86 → +1.01 across the searched parameter is **knife-edge**, and
+every number in D291 and D292 inherits that: both studies fixed N = 25 by
+inheritance and never asked whether the primary was stable there.
+
+**This is the finding that should govern what happens next**, and it is about
+`hist_L`, not about confluence.
+
+## 3. What the addendum changes
+
+**It does not overturn section 5's conclusion, and it moves the reason.** The
+combined book is genuinely better than its controls at both entries. What it is
+not is *robust*, because the primary it is built on is not robust in N — and
+D292 never varied N, by design.
+
+**Nothing here is promotable, and now for a better reason than the bar being
+too low:** the whole `hist_L` cluster is conditioned on a single N that a fine
+sweep shows to be a spike.
+
+**The next test is obvious and it is not fourth order.** Re-run this cell across
+N ∈ [15, 40] and see whether the third-order improvement survives where the
+primary's own edge does not. If the combination is real, it should be less
+knife-edge than the primary; if it merely inherits the spike, it will vanish with
+it. **That is one runner, no new pre-registered cells, and it is worth more than
+another order of confluence.**
+
+## Files added
+
+`scripts/d292_full_ladder.py` · `data/d292_full_ladder.json`
