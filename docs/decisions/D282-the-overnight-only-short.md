@@ -1,8 +1,19 @@
 # D282 — The overnight-only short
 
-**Status:** PRE-REGISTERED. Committed **before the runner exists**. Nothing here is a result.
-**Date:** 2026-09-02
+**Status:** **PRE-REGISTERED, THEN CORRECTED BEFORE ANY CELL WAS SCORED. The motivating premise had
+the SIGN BACKWARDS.** The overnight window does carry the whole of the effect — **and it is the
+window in which the pre-registered ascending short LOSES HARDEST**, 11–18 bp a night at `t` up to
+**−7.18**. **RECOMMENDATION: DO NOT RUN.** Nothing here is a result; **no cell has ever been
+scored.**
+**Date:** 2026-09-02 · corrected the same day
 **Area:** Strategy research · **personal track**
+
+> **READ [THE CORRECTION](#the-premise-was-backwards--corrected-before-any-cell-was-scored) FIRST.**
+> Everything between this line and that heading is **the pre-registration exactly as committed in
+> `fcffdde`, unaltered**, and it is **wrong about the direction of the effect it describes**. It is
+> preserved rather than rewritten because a pre-registration that is edited after a measurement
+> lands is not a pre-registration, and because **the specific sentence that was wrong is the
+> evidence for how the error propagated.**
 
 ---
 
@@ -465,3 +476,263 @@ gross Sharpe/CAGR/money, all **eight** C legs stored individually rather than on
 conjunction, `eff_book` with its held-name count, `top_name_share`, `trades`, `turnover_units`, the
 rotation-null percentiles with the null's own p50 and p95, and the three lag/return audits with
 their verification counts. **A conjunction that hides which leg failed is not a reported hurdle.**
+
+---
+---
+
+# THE PREMISE WAS BACKWARDS — corrected before any cell was scored
+
+**Everything above this line is the pre-registration exactly as committed in `fcffdde`, unaltered.**
+**Nothing below it is a result of D282 either: the study was never run.**
+
+## The sentence that was wrong, quoted rather than paraphrased
+
+From the pre-registration above, and from `scripts/d280_score_extrapolation.py` before it:
+
+> The book ranks **ascending**, so **a negative IC is tradeable for a short**.
+
+> *"a SHORT ranks ASCENDING, so a NEGATIVE IC is the tradeable direction — low score, low forward
+> return."*
+
+**That gloss is self-contradictory and it is false.** A negative cross-sectional IC means a **low
+score goes with a HIGH forward return**. Shorting the lowest-scoring names therefore shorts the
+names that **rise**. The sentence asserts "low score, low forward return", which is what a
+*positive* IC says.
+
+**It propagated through D280 parts 3, 4 and 5 and into this record**, and every claim built on it —
+*"the edge is entirely overnight"*, *"correctly signed for a short"*, *"`h / lagged range` is the
+stronger gap predictor"* — inherited it.
+
+## Settled in money, not in correlation
+
+`scripts/d280_sign_audit.py` · `data/d280_sign_audit.json`. **It does not reason about correlation
+signs at all.** It takes the actual book — the **N lowest lagged score among live names, exactly
+what `top_n` selects** — and reports what a **short of those names earns** against the
+cross-sectional mean of the same bar:
+
+```
+short P&L  =  -( mean return of the selected N  -  mean return of the universe )
+POSITIVE bp = THE SHORT MAKES MONEY.
+```
+
+Out of sample from **2018-01-01**, 2,173 bars, **no costs charged** — the gross cross-sectional
+edge, directly comparable to D265's `2c` bar of **10 bp**.
+
+| universe | score | N | **overnight gap** | intraday session | total (close-to-close) |
+|---|---|---:|---:|---:|---:|
+| ALL | `h` | 10 | **−17.60 bp** (t **−5.42**) | −0.65 (t −0.10) | −11.63 (t −1.90) |
+| ALL | `h` | 25 | **−14.64 bp** (t **−7.18**) | +2.66 (t +0.71) | −9.16 (t −2.23) |
+| ALL | `h` | 50 | **−10.97 bp** (t **−7.07**) | +4.02 (t +1.49) | −5.47 (t −1.77) |
+| ALL | `h / lagged range` | 10 | −3.90 (t −2.54) | +2.16 (t +1.03) | −1.21 (t −0.48) |
+| ALL | `h / lagged range` | 25 | −3.44 (t −3.12) | +1.30 (t +0.82) | −1.76 (t −0.92) |
+| ALL | `h / lagged range` | 50 | −2.91 (t −3.33) | +2.28 (t +1.72) | −0.43 (t −0.26) |
+| QUAL | `h` | 25 | −4.66 (t −3.81) | +1.64 (t +0.84) | −2.37 (t −1.06) |
+| QUAL | `h / lagged range` | 25 | +0.43 (t +0.63) | +0.85 (t +0.82) | +1.38 (t +1.14) |
+
+**THE PRE-REGISTERED ASCENDING SHORT LOSES 11 TO 18 BASIS POINTS PER NIGHT ON THE OVERNIGHT LEG,
+BEFORE COSTS, WITH `t` UP TO −7.18.** The single largest statistic anywhere in this branch of the
+programme belongs to the construction failing, not to it working.
+
+**The structural claim survives; only its sign does not.** *The effect is concentrated in the
+overnight window and the intraday session does not carry it* — that is confirmed, and confirmed
+strongly: the overnight column runs −10.97 to −17.60 at `t` −5.42 to −7.18 while **every intraday
+cell is insignificant** (largest `|t|` = 1.72). **What changes is that overnight is where this book
+loses hardest, not where it wins.** Not one positive cell in the table clears `|t| = 1.8`.
+
+## Corroborated independently, by a full run rather than a measurement
+
+[D281](D281-the-unfiltered-ranking.md) ran the same universe and the same ascending `hist_L` ranking
+close-to-close (`d485caf`) and reached the same conclusion from the other direction:
+
+| N | vs `rnd` GROSS | vs `per` GROSS |
+|---:|---:|---:|
+| 10 | −0.280 | **−0.167** |
+| 25 | −0.065 | **−0.116** |
+| 50 | −0.019 | **−0.113** |
+
+**The unfiltered ascending ranking SUBTRACTS Sharpe against a turnover-matched random control at all
+three N, gross**, and its base loses **9.50%/yr at a −82.52% drawdown**. **Two instruments — a
+per-bar cross-sectional money measurement and a scored 10-cell grid with nulls — agree.** D281's own
+record puts it exactly: *"The magnitude of the Grinold estimate was about right and its SIGN was
+wrong."*
+
+## A SECOND correction, smaller and methodological: IC magnitude did not rank the arms
+
+**This record chose arm 2 on the strength of an IC and that was the wrong statistic.** D280 measured
+`h / lagged range` at **−0.01625, t −5.97** against plain `h` at **−0.01531, t −4.71**, and this
+record called it *"the stronger gap predictor"*. **In money the ordering reverses, and not
+marginally:**
+
+| arm | gap IC | **overnight bp at N = 25** |
+|---|---:|---:|
+| `h` | −0.01531 | **−14.64** |
+| `h / lagged range` | **−0.01625** | **−3.44** |
+
+**The arm with the larger IC moves the book by a quarter as much.** A rank correlation is a
+statement about the **whole cross-section**; a top-N book lives **entirely in one tail**. **A score
+can rank 1,000 names slightly better while ordering the extreme 25 slightly worse, and the second is
+the only thing a concentrated book earns.**
+
+**This is independent of the sign error and outlasts it:** for any top-N construction, **the arm
+selection statistic must be computed over the held tail, not over the panel.** It is the same class
+of mistake as D279's E′ — a quantity computed over the wrong population and then applied to a
+decision it cannot see.
+
+## The declared dividend dependency is DISCHARGED, and prediction O4 is scored against it
+
+This record made running D282 conditional on a concurrent dividend check. **That check has landed**
+— D280 part 5, `scripts/d280_dividend_check.py` · `data/d280_dividend_check.json`:
+
+| score | gap RAW | **DIVIDEND-ADJUSTED** | ex-dates ONLY (216 bars) |
+|---|---:|---:|---:|
+| ALL `h` | −0.01531 (t −4.71) | **−0.01498 (t −4.59)** | **−0.05197** (t −3.08) |
+| ALL `h / lagged range` | −0.01625 (t −5.97) | **−0.01574 (t −5.76)** | **−0.05682** (t −3.64) |
+
+**Adding the dividend back costs 2–3% of the IC.** The confound is real and **localised**: on
+ex-dates alone the effect is ~3.4× the average, but **only 0.834% of bars have an ex-date next
+session**, at a median yield of 0.6535%. **The score's tilt toward payers is −0.0057 at `t` −0.97 —
+none.**
+
+**So O4 is falsified, and by a measurement rather than by a run.** It predicted the dividend charge
+would cost **≥ 1 bp per night** on the held book, with **< 0.5 bp** named as its falsifier. The
+implied drag is `0.834% × 65.35 bp ≈ **0.55 bp/night**` — **at my own falsification threshold, on
+the wrong side of my own prediction.** The confound was correctly identified, correctly required to
+be charged, and **materially over-weighted.**
+
+**The runner still charges dividends explicitly on the short leg and still cross-checks its parse
+against the loader**, because D280's own conclusion is that a book must charge them rather than net
+them away: the ex-date subset is where a short's payment is largest.
+
+## The predictions, restated on the corrected premise
+
+| | original | corrected status |
+|---|---|---|
+| **O1** | M fails in every ranked cell; move per trade **below** 10 bp | **STRENGTHENED, and the reason changes.** Every ranked cell fails M with a **NEGATIVE** move per trade — not short of the bar but on the wrong side of zero. Expect ≈ **−11 to −18 bp/night** gross on arm 1 and **−3 to −4** on arm 2, **before** the ~10 bp toll. **Confidence: very high** — this is now a prediction about a measurement already taken on the same fixture, span, score, selection rule and N |
+| **O2** | the gross edge is **real and correctly signed** | **WRONG. WITHDRAWN AND REVERSED, before the run rather than after it.** The gross edge is real, large and highly significant — **and wrongly signed.** This was the one prediction declared *for* the construction and it is the one the measurement kills |
+| **O3** | move per trade declines monotonically in N | **CORRECT IN SHAPE, WRONG IN SIGN, and already settled by the audit: 17.60 → 14.64 → 10.97 in magnitude across N = 10 → 25 → 50.** The tail reasoning behind it was sound; it was reasoning about the wrong tail |
+| **O4** | dividend charge costs **≥ 1 bp/night** | **FALSIFIED at ≈ 0.55 bp/night** (D280 part 5), against my own **< 0.5 bp** falsifier. Over-weighted |
+
+**The honest prior in the original record was "fails on cost while showing a genuine,
+correctly-signed gross edge". The corrected prior is "fails on DIRECTION, before cost is even
+reached" — the same verdict for a materially worse reason.** A cost failure leaves a cheaper venue
+open under [R12](../RULES.md#r12); a sign failure does not.
+
+## The one genuinely useful magnitude, with its post-hoc status attached
+
+**17.60 bp per night, at N = 10 on the overnight gap, ALL universe, `t` −5.42, exceeds D265's `2c`
+bar of 10 bp.**
+
+**That is the first time in this programme that a measured per-trade move has cleared the cost bar.**
+D264 through D281 all failed `mean move per trade ≥ 2c`, and D279 and D281 failed at *zero* cost.
+Here the quantity is 1.76× the bar at N = 10 and 1.46× at N = 25, on 2,173 out-of-sample bars.
+
+**And it must not be read as a finding, for four reasons, all of which apply at once:**
+
+1. **It is the magnitude of a LOSS for the pre-registered direction.** Converting it into a gain
+   requires **inverting the ranking**, which is a hypothesis generated by looking at this result.
+2. **It was produced by a script written to audit a sign error**, not by a pre-registered test.
+   [D246](D246-the-search-protocol-for-s3.md) Constraint 3 and [R8](../RULES.md#r8) both say what
+   that makes it: a candidate for its own pre-registration, and nothing else.
+3. **Symmetry is assumed, not measured.** The audit scores only the *ascending* book. **That a
+   descending short of the same universe earns +17.60 bp is NOT what was measured** — the two tails
+   of `hist_L` are different sets of names with different volatility, price and borrow, and a
+   cross-sectionally demeaned gross number says nothing about either.
+4. **The borrow and cost questions are untouched and they point in opposite directions.** A
+   descending short would hold the *strongest recent accelerators* rather than the weakest, which
+   plausibly makes borrow **cheaper** than D279's hard-to-borrow worry — and it is still 252 round
+   trips a year at 10 bp, ~25.2%/yr per unit exposure, against ~17.6 bp × 252 ≈ **44%/yr** gross if
+   the symmetry held. **That arithmetic is the reason the question is worth asking and is not a
+   reason to believe the answer.**
+
+*One line of mechanism, flagged as unverified: shorting the highest-`hist_L` names overnight is an
+overnight reversal of recent acceleration, which is a documented family of effects. **Nothing in
+this programme has tested it and this record does not.***
+
+## What is deliberately NOT done
+
+**The ranking is NOT flipped to descending and no descending arm is pre-registered here.** D281's
+agent faced the identical temptation on the identical number and declined; so does this record.
+**A hypothesis generated by inverting a failed result is post-hoc, and pre-registering it in the
+same document that produced the result is pre-registration in name only.**
+
+**If a descending arm is ever run it needs its own record**, carrying in its multiplicity count:
+D256's 21, D279's 20, D281's 10, **D280's measurement grid and this sign audit, both disclosed under
+[R13](../RULES.md#r13) test 2 as the looks that produced the candidate** — and it needs the tail
+asymmetry in point 3 above measured rather than assumed. **That is the open question this record
+leaves. It is not acted on here.**
+
+## RECOMMENDATION: DO NOT RUN D282
+
+**The 19-cell grid should not be scored, and the reasons are that it would buy nothing and cost
+something real:**
+
+1. **The outcome is already determined to two significant figures**, by a committed measurement on
+   the *same fixture, same out-of-sample span, same score, same selection rule and same N*. The
+   runner would confirm −11 to −18 bp gross and then charge ~10 bp of toll on top.
+2. **It would spend 19 fresh cells on a settled question.** Under [D228](D228-mining-the-mined-fixture.md)
+   the empirical best-of-K floor is what actually prices a search, and every cell scored on this
+   fixture raises the bar every successor study must clear. **Paying that for a foregone conclusion
+   is a real cost with no information against it.**
+3. **The one number worth having — the reversed-direction magnitude — is not obtainable from this
+   runner as pre-registered**, and obtaining it would require exactly the post-hoc flip refused
+   above.
+
+**What a run WOULD add, stated so this recommendation can be overridden knowingly**, since three
+quantities in it have never been measured anywhere in the programme: **the dividend drag in bp per
+night on a held single-name short book**; **`mean move per trade` for a nightly construction scored
+as an actual equal-weight ragged book** rather than as a demeaned cross-sectional average; and
+confirmation that the cost model charges two sides a night, which shows up as an **`rnd-N` turnover
+ratio of ~1.0×** where D279 and D281 both measured 5–7×.
+
+**All three are available without scoring a cell.**
+`uv run python scripts/run_overnight_short.py --audit-only` loads the fixture, builds the overnight
+grid, runs L1/L2/L3 and prints the grid diagnostics, **and exits before any book is scored.** That
+is the recommended action if anything is wanted from this study at all.
+
+## The runner is kept, not deleted
+
+`scripts/run_overnight_short.py` is **written, self-tested and never run.** It is retained on the
+same principle as D279's withdrawn artefacts and the two superseded versions of
+`classify_single_name_steps.py`: **the machinery is correct and the hypothesis it was pointed at was
+not**, and a future overnight study on this fixture — in either direction — needs a scorer that
+compounds `open(t+1)/close(t)`, charges two sides a night, and proves it does both. **That is the
+part of this record with residual value.**
+
+Its self-test (`--selftest`, synthetic bars, no fixture read, no cell scored) passes all eight
+gates, including that `audit_lag` **raises** on a deliberately unlagged selection and that
+`assert_not_close_to_close` **refuses** a grid equal to `total_log_returns`.
+
+## Ledger, corrected
+
+**D282 SCORES ZERO CELLS.** The 19 in the table above were never spent, because no book was ever
+scored. **A successor study must not inherit them**, and this is recorded explicitly so that a
+future floor is not inflated with cells that never existed.
+
+| what a successor carries | N |
+|---|---:|
+| D256 | 21 |
+| D279, 14 pre-registered + 6 persistent controls | 20 |
+| D281, run and closed | 10 |
+| **D282** | **0 — nothing was scored** |
+| **total** | **51** |
+
+**D280 and this sign audit are disclosed and score no cell**, as measurements — but under R13 test 2
+they **shaped this search space entirely**, and they would shape a descending arm's search space
+even more directly. **An undisclosed exclusion is indistinguishable from an oversight.**
+
+## Stop — fired, on the pre-registered condition, without a run
+
+The pre-registered stop reads: *"If no cell clears M and V, the overnight-only short is closed on
+this fixture."* **The condition is met by measurement rather than by scoring**: the ascending short's
+overnight move per trade is negative at every N on both arms, at `t` up to −7.18, so M cannot be
+cleared by any cell in the grid.
+
+**With [D256](D256-the-book-on-single-names.md) (the universe),
+[D279](D279-the-concentrated-short-on-dead-inclusive-names.md) (the concentrated construction) and
+[D281](D281-the-unfiltered-ranking.md) (the unfiltered ranking), the dead-inclusive daily fixture is
+closed for ASCENDING `hist_L` directional shorts in every decomposition of the bar** — the whole
+bar, and now each of its two halves separately, the overnight half by direct measurement of what the
+book earns.
+
+**What this does not close** is stated above and is deliberately not converted into a plan: **the
+descending direction, unmeasured except by an assumption of symmetry that has not been tested.**
