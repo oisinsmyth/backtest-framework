@@ -1,0 +1,1164 @@
+{
+ "fixture": "cohort4_intraday_15m_raw.csv.gz",
+ "purpose": "15-minute bars for the eight-name stratified single-stock sample. DATA ONLY -- no strategy, no cell, no rule.",
+ "symbols_requested": [
+  "CSCO",
+  "TXN",
+  "UNP",
+  "BA",
+  "INTC",
+  "MSFT",
+  "F",
+  "SLB",
+  "C",
+  "GM",
+  "BMY",
+  "PSX",
+  "BBY",
+  "UAA",
+  "NRG",
+  "HWM",
+  "WYNN",
+  "ILMN",
+  "DVN",
+  "GME",
+  "NOW",
+  "LULU",
+  "BMRN",
+  "CX"
+ ],
+ "symbols_included": [
+  "BA",
+  "BBY",
+  "BMRN",
+  "BMY",
+  "C",
+  "CSCO",
+  "CX",
+  "DVN",
+  "F",
+  "GM",
+  "GME",
+  "HWM",
+  "ILMN",
+  "INTC",
+  "LULU",
+  "MSFT",
+  "NOW",
+  "NRG",
+  "PSX",
+  "SLB",
+  "TXN",
+  "UAA",
+  "UNP",
+  "WYNN"
+ ],
+ "symbols_excluded": [],
+ "strata": {
+  "CSCO": "low",
+  "TXN": "low",
+  "UNP": "low",
+  "BA": "low",
+  "INTC": "low",
+  "MSFT": "low",
+  "F": "low",
+  "SLB": "low",
+  "C": "low",
+  "GM": "low",
+  "BMY": "low",
+  "PSX": "low",
+  "BBY": "high",
+  "UAA": "high",
+  "NRG": "high",
+  "HWM": "high",
+  "WYNN": "high",
+  "ILMN": "high",
+  "DVN": "high",
+  "GME": "high",
+  "NOW": "high",
+  "LULU": "high",
+  "BMRN": "high",
+  "CX": "high"
+ },
+ "selection": {
+  "artefact": "data/single_name_intraday_selection.json",
+  "script": "scripts/select_single_name_intraday.py",
+  "window": [
+   "2013-01-02",
+   "2017-12-29"
+  ],
+  "note": "the selection window is DISJOINT from the test span, so no statistic that picked a name has seen a bar this fixture holds"
+ },
+ "SURVIVORSHIP_BIAS_STATEMENT": "SURVIVOR-ONLY, AND NOT BY CHOICE. Probed 2026-09-01: TIME_SERIES_INTRADAY returns `Invalid API call` (155 bytes) for every delisted ticker tried -- TWTR, FRC, SIVB, AABA -- against AAPL's clean 546 bars. TIME_SERIES_DAILY_ADJUSTED does serve dead names, which is how D252 built a 35.7%-dead DAILY fixture; the intraday endpoint does not, on this tier. 496 of the 1,192 names trading in 2013-2017 are not survivors, so 41.6% of the cohort is unreachable at this frequency. D252 holds that survivorship is not a caveat for a short book but the whole measurement. The direction of the bias and what it does and does not license are stated in the study's pre-registration.",
+ "start": "2018-01",
+ "end": "2026-08",
+ "interval": "15min",
+ "session": "regular_hours_09:30-15:45",
+ "bars_per_full_session": 26,
+ "bar_boundary": "timestamps mark the interval's OPEN, so a bar stamped t covers [t, t+15m) and is not complete until t+15m",
+ "timezone": "US/Eastern",
+ "source": "Alpha Vantage TIME_SERIES_INTRADAY, outputsize=full, month=YYYY-MM, adjusted=false, extended_hours=true at fetch; BUILT regular-hours-only. adjusted=false because adjusted prices are BACK-adjusted and drift as dividends are paid, breaking D24's immutable-snapshot requirement.",
+ "split_adjusted": true,
+ "split_events_applied": 4,
+ "split_adjusted_bars": 137841,
+ "splits_by_symbol": {
+  "GME": [
+   [
+    "2022-07-22T00:00:00",
+    4.0
+   ]
+  ],
+  "HWM": [
+   [
+    "2020-04-01T00:00:00",
+    1.304
+   ]
+  ],
+  "ILMN": [
+   [
+    "2024-06-25T00:00:00",
+    1.028
+   ]
+  ],
+  "NOW": [
+   [
+    "2025-12-18T00:00:00",
+    5.0
+   ]
+  ]
+ },
+ "largest_residual_bar_move": {
+  "symbol": "GME",
+  "timestamp": "2021-01-27 09:30:00",
+  "move": 1.1374987154454836
+ },
+ "session_boundary_steps_over_threshold": [
+  {
+   "symbol": "TXN",
+   "from": "2026-04-22 15:45:00",
+   "to": "2026-04-23 09:30:00",
+   "step": 0.15778341793570205,
+   "prev_close": 236.4,
+   "close": 273.7,
+   "volume": 3891388.0
+  },
+  {
+   "symbol": "BA",
+   "from": "2020-03-17 15:45:00",
+   "to": "2020-03-18 09:30:00",
+   "step": -0.1872933967588487,
+   "prev_close": 124.03,
+   "close": 100.8,
+   "volume": 6124528.0
+  },
+  {
+   "symbol": "BA",
+   "from": "2020-03-23 15:45:00",
+   "to": "2020-03-24 09:30:00",
+   "step": 0.15532277941037065,
+   "prev_close": 105.49,
+   "close": 121.875,
+   "volume": 3953565.0
+  },
+  {
+   "symbol": "BA",
+   "from": "2020-03-24 15:45:00",
+   "to": "2020-03-25 09:30:00",
+   "step": 0.17003921568627467,
+   "prev_close": 127.5,
+   "close": 149.18,
+   "volume": 6895725.0
+  },
+  {
+   "symbol": "INTC",
+   "from": "2020-07-23 15:45:00",
+   "to": "2020-07-24 09:30:00",
+   "step": -0.17523557612828566,
+   "prev_close": 60.49,
+   "close": 49.89,
+   "volume": 32019114.0
+  },
+  {
+   "symbol": "INTC",
+   "from": "2024-08-01 15:45:00",
+   "to": "2024-08-02 09:30:00",
+   "step": -0.2877018206801787,
+   "prev_close": 29.11,
+   "close": 20.735,
+   "volume": 41075632.0
+  },
+  {
+   "symbol": "INTC",
+   "from": "2025-03-12 15:45:00",
+   "to": "2025-03-13 09:30:00",
+   "step": 0.1593470374848851,
+   "prev_close": 20.675,
+   "close": 23.9695,
+   "volume": 54880741.0
+  },
+  {
+   "symbol": "INTC",
+   "from": "2025-09-17 15:45:00",
+   "to": "2025-09-18 09:30:00",
+   "step": 0.24809160305343503,
+   "prev_close": 24.89,
+   "close": 31.065,
+   "volume": 69895407.0
+  },
+  {
+   "symbol": "INTC",
+   "from": "2026-04-23 15:45:00",
+   "to": "2026-04-24 09:30:00",
+   "step": 0.2454734480179508,
+   "prev_close": 66.85,
+   "close": 83.2599,
+   "volume": 45035764.0
+  },
+  {
+   "symbol": "F",
+   "from": "2024-07-24 15:45:00",
+   "to": "2024-07-25 09:30:00",
+   "step": -0.16252562225475842,
+   "prev_close": 13.66,
+   "close": 11.4399,
+   "volume": 35287760.0
+  },
+  {
+   "symbol": "SLB",
+   "from": "2020-03-06 15:45:00",
+   "to": "2020-03-09 09:30:00",
+   "step": -0.35178197064989514,
+   "prev_close": 23.85,
+   "close": 15.46,
+   "volume": 1786565.0
+  },
+  {
+   "symbol": "SLB",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-16 09:30:00",
+   "step": -0.15965346534653468,
+   "prev_close": 16.16,
+   "close": 13.58,
+   "volume": 40465.0
+  },
+  {
+   "symbol": "SLB",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.193166885676741,
+   "prev_close": 15.22,
+   "close": 18.16,
+   "volume": 692363.0
+  },
+  {
+   "symbol": "C",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-16 09:30:00",
+   "step": -0.20717014399059663,
+   "prev_close": 51.045,
+   "close": 40.47,
+   "volume": 1458.0
+  },
+  {
+   "symbol": "PSX",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.21099935801412384,
+   "prev_close": 46.73,
+   "close": 56.59,
+   "volume": 890952.0
+  },
+  {
+   "symbol": "BBY",
+   "from": "2019-02-26 15:45:00",
+   "to": "2019-02-27 09:30:00",
+   "step": 0.1502986065029861,
+   "prev_close": 60.28,
+   "close": 69.34,
+   "volume": 2843257.0
+  },
+  {
+   "symbol": "BBY",
+   "from": "2021-11-22 15:45:00",
+   "to": "2021-11-23 09:30:00",
+   "step": -0.1579328577119472,
+   "prev_close": 138.065,
+   "close": 116.26,
+   "volume": 2213069.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2018-02-12 15:45:00",
+   "to": "2018-02-13 09:30:00",
+   "step": 0.165379213483146,
+   "prev_close": 14.24,
+   "close": 16.595,
+   "volume": 5937088.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2018-10-29 15:45:00",
+   "to": "2018-10-30 09:30:00",
+   "step": 0.22747252747252755,
+   "prev_close": 18.2,
+   "close": 22.34,
+   "volume": 4552470.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2019-07-29 15:45:00",
+   "to": "2019-07-30 09:30:00",
+   "step": -0.18553206997084548,
+   "prev_close": 27.44,
+   "close": 22.349,
+   "volume": 3087243.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2019-11-01 15:45:00",
+   "to": "2019-11-04 09:30:00",
+   "step": -0.15354274917335864,
+   "prev_close": 21.17,
+   "close": 17.9195,
+   "volume": 5151479.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2020-02-10 15:45:00",
+   "to": "2020-02-11 09:30:00",
+   "step": -0.16189777451699672,
+   "prev_close": 20.445,
+   "close": 17.135,
+   "volume": 5394858.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2021-11-01 15:45:00",
+   "to": "2021-11-02 09:30:00",
+   "step": 0.1555959963603275,
+   "prev_close": 21.98,
+   "close": 25.4,
+   "volume": 3756067.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2022-05-05 15:45:00",
+   "to": "2022-05-06 09:30:00",
+   "step": -0.2414275717284814,
+   "prev_close": 14.29,
+   "close": 10.84,
+   "volume": 2312396.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2024-11-06 15:45:00",
+   "to": "2024-11-07 09:30:00",
+   "step": 0.27942857142857136,
+   "prev_close": 8.75,
+   "close": 11.195,
+   "volume": 4026184.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2025-08-07 15:45:00",
+   "to": "2025-08-08 09:30:00",
+   "step": -0.1959306706857573,
+   "prev_close": 6.635,
+   "close": 5.335,
+   "volume": 4828846.0
+  },
+  {
+   "symbol": "UAA",
+   "from": "2026-05-11 15:45:00",
+   "to": "2026-05-12 09:30:00",
+   "step": -0.1975206611570247,
+   "prev_close": 6.05,
+   "close": 4.855,
+   "volume": 3655978.0
+  },
+  {
+   "symbol": "NRG",
+   "from": "2025-05-09 15:45:00",
+   "to": "2025-05-12 09:30:00",
+   "step": 0.17770326906957257,
+   "prev_close": 119.3,
+   "close": 140.5,
+   "volume": 1069262.0
+  },
+  {
+   "symbol": "HWM",
+   "from": "2019-01-18 15:45:00",
+   "to": "2019-01-22 09:30:00",
+   "step": -0.1926289926289927,
+   "prev_close": 15.605828220858896,
+   "close": 12.599693251533742,
+   "volume": 5951343.856000001
+  },
+  {
+   "symbol": "HWM",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.18700265251989379,
+   "prev_close": 18.85,
+   "close": 22.375,
+   "volume": 564813.0
+  },
+  {
+   "symbol": "WYNN",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-16 09:30:00",
+   "step": -0.17884721456150032,
+   "prev_close": 72.52,
+   "close": 59.55,
+   "volume": 75184.0
+  },
+  {
+   "symbol": "WYNN",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.2678326046221111,
+   "prev_close": 80.05,
+   "close": 101.49,
+   "volume": 3123838.0
+  },
+  {
+   "symbol": "ILMN",
+   "from": "2019-07-11 15:45:00",
+   "to": "2019-07-12 09:30:00",
+   "step": -0.15462570815686705,
+   "prev_close": 353.71595330739297,
+   "close": 299.022373540856,
+   "volume": 1149661.744
+  },
+  {
+   "symbol": "DVN",
+   "from": "2020-03-06 15:45:00",
+   "to": "2020-03-09 09:30:00",
+   "step": -0.3173652694610779,
+   "prev_close": 13.36,
+   "close": 9.12,
+   "volume": 304381.0
+  },
+  {
+   "symbol": "DVN",
+   "from": "2020-03-13 15:45:00",
+   "to": "2020-03-16 09:30:00",
+   "step": -0.1827586206896551,
+   "prev_close": 8.7,
+   "close": 7.11,
+   "volume": 800.0
+  },
+  {
+   "symbol": "DVN",
+   "from": "2020-11-06 15:45:00",
+   "to": "2020-11-09 09:30:00",
+   "step": 0.19959058341862868,
+   "prev_close": 9.77,
+   "close": 11.72,
+   "volume": 1866796.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2019-01-28 15:45:00",
+   "to": "2019-01-29 09:30:00",
+   "step": -0.2233699160748871,
+   "prev_close": 3.8725,
+   "close": 3.0075,
+   "volume": 14860764.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2019-06-04 15:45:00",
+   "to": "2019-06-05 09:30:00",
+   "step": -0.34582508145403434,
+   "prev_close": 1.956625,
+   "close": 1.279975,
+   "volume": 26119856.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2019-09-10 15:45:00",
+   "to": "2019-09-11 09:30:00",
+   "step": -0.15717092337917482,
+   "prev_close": 1.2725,
+   "close": 1.0725,
+   "volume": 20695192.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2020-04-14 15:45:00",
+   "to": "2020-04-15 09:30:00",
+   "step": -0.15345699831365944,
+   "prev_close": 1.4825,
+   "close": 1.255,
+   "volume": 4034344.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2020-09-21 15:45:00",
+   "to": "2020-09-22 09:30:00",
+   "step": 0.18184,
+   "prev_close": 2.1875,
+   "close": 2.585275,
+   "volume": 26838132.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2020-11-25 15:45:00",
+   "to": "2020-11-30 09:30:00",
+   "step": 0.22745762711864415,
+   "prev_close": 3.6875,
+   "close": 4.52625,
+   "volume": 18097752.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2020-12-08 15:45:00",
+   "to": "2020-12-09 09:30:00",
+   "step": -0.16962174940898345,
+   "prev_close": 4.23,
+   "close": 3.5125,
+   "volume": 20697484.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-01-15 15:45:00",
+   "to": "2021-01-19 09:30:00",
+   "step": 0.24936601859678786,
+   "prev_close": 8.8725,
+   "close": 11.085,
+   "volume": 26891828.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-01-22 15:45:00",
+   "to": "2021-01-25 09:30:00",
+   "step": 0.4394757131842715,
+   "prev_close": 16.2125,
+   "close": 23.3375,
+   "volume": 24051992.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-01-26 15:45:00",
+   "to": "2021-01-27 09:30:00",
+   "step": 1.1374987154454836,
+   "prev_close": 36.49125,
+   "close": 78.0,
+   "volume": 12101204.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-01-28 15:45:00",
+   "to": "2021-01-29 09:30:00",
+   "step": 0.7514688006482984,
+   "prev_close": 49.36,
+   "close": 86.4525,
+   "volume": 9589592.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-02-01 15:45:00",
+   "to": "2021-02-02 09:30:00",
+   "step": -0.5495154185022026,
+   "prev_close": 56.75,
+   "close": 25.565,
+   "volume": 18635552.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-02-24 15:45:00",
+   "to": "2021-02-25 09:30:00",
+   "step": 0.40730643402399136,
+   "prev_close": 22.925,
+   "close": 32.2625,
+   "volume": 21714204.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-02-25 15:45:00",
+   "to": "2021-02-26 09:30:00",
+   "step": 0.30899716837410063,
+   "prev_close": 27.289975,
+   "close": 35.7225,
+   "volume": 21790464.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-03-08 15:45:00",
+   "to": "2021-03-09 09:30:00",
+   "step": 0.17985387843929734,
+   "prev_close": 48.2475,
+   "close": 56.925,
+   "volume": 10962976.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-03-15 15:45:00",
+   "to": "2021-03-16 09:30:00",
+   "step": -0.19479398537228,
+   "prev_close": 55.0325,
+   "close": 44.3125,
+   "volume": 9882992.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2021-03-23 15:45:00",
+   "to": "2021-03-24 09:30:00",
+   "step": -0.1537651933701658,
+   "prev_close": 45.25,
+   "close": 38.292125,
+   "volume": 6460656.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2022-01-06 15:45:00",
+   "to": "2022-01-07 09:30:00",
+   "step": 0.18571101442637983,
+   "prev_close": 32.7525,
+   "close": 38.835,
+   "volume": 5530284.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2022-05-12 15:45:00",
+   "to": "2022-05-13 09:30:00",
+   "step": 0.18878457102736657,
+   "prev_close": 22.396825,
+   "close": 26.625,
+   "volume": 3113412.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2023-03-21 15:45:00",
+   "to": "2023-03-22 09:30:00",
+   "step": 0.3235127478753541,
+   "prev_close": 17.65,
+   "close": 23.36,
+   "volume": 11181382.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2023-06-07 15:45:00",
+   "to": "2023-06-08 09:30:00",
+   "step": -0.18276628352490432,
+   "prev_close": 26.1,
+   "close": 21.3298,
+   "volume": 4138198.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-03-26 15:45:00",
+   "to": "2024-03-27 09:30:00",
+   "step": -0.1630225080385852,
+   "prev_close": 15.55,
+   "close": 13.015,
+   "volume": 3808675.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-10 15:45:00",
+   "to": "2024-05-13 09:30:00",
+   "step": 0.6888252148997134,
+   "prev_close": 17.45,
+   "close": 29.47,
+   "volume": 13629136.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-13 15:45:00",
+   "to": "2024-05-14 09:30:00",
+   "step": 0.6285318250198721,
+   "prev_close": 30.4446,
+   "close": 49.58,
+   "volume": 5814599.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-14 15:45:00",
+   "to": "2024-05-15 09:30:00",
+   "step": -0.2277031905019019,
+   "prev_close": 49.4499,
+   "close": 38.19,
+   "volume": 5600756.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-15 15:45:00",
+   "to": "2024-05-16 09:30:00",
+   "step": -0.17747916140439512,
+   "prev_close": 39.59,
+   "close": 32.5636,
+   "volume": 6035679.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-16 15:45:00",
+   "to": "2024-05-17 09:30:00",
+   "step": -0.25036424307938154,
+   "prev_close": 27.6601,
+   "close": 20.735,
+   "volume": 10377633.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-24 15:45:00",
+   "to": "2024-05-28 09:30:00",
+   "step": 0.15263157894736845,
+   "prev_close": 19.0,
+   "close": 21.9,
+   "volume": 8706964.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2024-05-31 15:45:00",
+   "to": "2024-06-03 09:30:00",
+   "step": 0.4051948051948051,
+   "prev_close": 23.1,
+   "close": 32.46,
+   "volume": 17125090.0
+  },
+  {
+   "symbol": "GME",
+   "from": "2025-06-11 15:45:00",
+   "to": "2025-06-12 09:30:00",
+   "step": -0.16240968081374962,
+   "prev_close": 28.51,
+   "close": 23.8797,
+   "volume": 12403412.0
+  },
+  {
+   "symbol": "NOW",
+   "from": "2022-10-26 15:45:00",
+   "to": "2022-10-27 09:30:00",
+   "step": 0.1599847165743291,
+   "prev_close": 73.28200000000001,
+   "close": 85.006,
+   "volume": 3067820.0
+  },
+  {
+   "symbol": "LULU",
+   "from": "2019-03-27 15:45:00",
+   "to": "2019-03-28 09:30:00",
+   "step": 0.15003338556925794,
+   "prev_close": 146.77,
+   "close": 168.7904,
+   "volume": 2341948.0
+  },
+  {
+   "symbol": "LULU",
+   "from": "2024-03-21 15:45:00",
+   "to": "2024-03-22 09:30:00",
+   "step": -0.15357314348942563,
+   "prev_close": 478.99,
+   "close": 405.43,
+   "volume": 2462661.0
+  },
+  {
+   "symbol": "LULU",
+   "from": "2024-12-05 15:45:00",
+   "to": "2024-12-06 09:30:00",
+   "step": 0.16666666666666674,
+   "prev_close": 345.0,
+   "close": 402.5,
+   "volume": 2283044.0
+  },
+  {
+   "symbol": "LULU",
+   "from": "2025-06-05 15:45:00",
+   "to": "2025-06-06 09:30:00",
+   "step": -0.181040367724025,
+   "prev_close": 329.595,
+   "close": 269.925,
+   "volume": 2407958.0
+  },
+  {
+   "symbol": "LULU",
+   "from": "2025-09-04 15:45:00",
+   "to": "2025-09-05 09:30:00",
+   "step": -0.17484716157205238,
+   "prev_close": 206.1,
+   "close": 170.064,
+   "volume": 7281530.0
+  },
+  {
+   "symbol": "BMRN",
+   "from": "2020-08-18 15:45:00",
+   "to": "2020-08-19 09:30:00",
+   "step": -0.31062968894883247,
+   "prev_close": 118.63,
+   "close": 81.78,
+   "volume": 3170576.0
+  }
+ ],
+ "step_threshold": 0.15,
+ "step_policy": "D226's 15% threshold, unchanged. A step above it is REPORTED and classified by D252's test -- reverts (bad print), persists at volume (corporate action), or is corroborated (real) -- never silently adjusted. SPLITS+DIVIDENDS do not cover spin-offs: XLF's XLRE spin-off is a -18.3% step Alpha Vantage reports as zero splits (PICKUP.md).",
+ "half_days_dropped": [
+  "2018-07-03",
+  "2018-11-23",
+  "2018-12-24",
+  "2019-07-03",
+  "2019-11-29",
+  "2019-12-24",
+  "2020-11-27",
+  "2020-12-24",
+  "2021-11-26",
+  "2022-11-25",
+  "2023-07-03",
+  "2023-11-24",
+  "2024-12-24"
+ ],
+ "half_day_bars_dropped": 6325,
+ "half_day_policy": "US early closes DERIVED, not hardcoded: a session where at least half the sample is short. Dropped at every symbol so the calendar is uniform.",
+ "incomplete_sessions_excluding_half_days": 67,
+ "incomplete_session_rate": 0.001290049291435613,
+ "missing_bars_excluding_half_days": 174,
+ "per_symbol_short_sessions": {
+  "CX": {
+   "short_sessions": 7,
+   "rate": 0.003234750462107209,
+   "bars_missing": 23
+  },
+  "NRG": {
+   "short_sessions": 6,
+   "rate": 0.0027726432532347504,
+   "bars_missing": 13
+  },
+  "BMRN": {
+   "short_sessions": 6,
+   "rate": 0.0027726432532347504,
+   "bars_missing": 35
+  },
+  "PSX": {
+   "short_sessions": 5,
+   "rate": 0.0023105360443622922,
+   "bars_missing": 17
+  },
+  "UAA": {
+   "short_sessions": 5,
+   "rate": 0.0023105360443622922,
+   "bars_missing": 9
+  },
+  "WYNN": {
+   "short_sessions": 5,
+   "rate": 0.0023105360443622922,
+   "bars_missing": 12
+  },
+  "ILMN": {
+   "short_sessions": 5,
+   "rate": 0.0023105360443622922,
+   "bars_missing": 10
+  },
+  "UNP": {
+   "short_sessions": 4,
+   "rate": 0.0018484288354898336,
+   "bars_missing": 19
+  },
+  "BBY": {
+   "short_sessions": 4,
+   "rate": 0.0018484288354898336,
+   "bars_missing": 6
+  },
+  "HWM": {
+   "short_sessions": 4,
+   "rate": 0.0018484288354898336,
+   "bars_missing": 10
+  },
+  "NOW": {
+   "short_sessions": 4,
+   "rate": 0.0018484288354898336,
+   "bars_missing": 5
+  },
+  "DVN": {
+   "short_sessions": 3,
+   "rate": 0.0013863216266173752,
+   "bars_missing": 4
+  },
+  "GME": {
+   "short_sessions": 3,
+   "rate": 0.0013863216266173752,
+   "bars_missing": 4
+  },
+  "TXN": {
+   "short_sessions": 2,
+   "rate": 0.0009242144177449168,
+   "bars_missing": 2
+  },
+  "BA": {
+   "short_sessions": 2,
+   "rate": 0.0009242144177449168,
+   "bars_missing": 3
+  },
+  "F": {
+   "short_sessions": 1,
+   "rate": 0.0004621072088724584,
+   "bars_missing": 1
+  },
+  "BMY": {
+   "short_sessions": 1,
+   "rate": 0.0004621072088724584,
+   "bars_missing": 1
+  }
+ },
+ "coverage_requirement": 0.95,
+ "coverage_policy": "D264's >=95% requirement applied to the TEST span, not only to the selection window. Measured for EVERY name, not only suspected ones: incomplete_session_rate is computed over sessions that exist, so a name served for a fraction of the span scores 0% incomplete and passes. A name below the bar is excluded on this measured number and replaced by the next rank, as NBIS was.",
+ "sessions_in_calendar": 2164,
+ "months_in_span": 104,
+ "coverage_by_symbol": {
+  "CSCO": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "TXN": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "UNP": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "BA": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "INTC": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "MSFT": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "F": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "SLB": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "C": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "GM": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "BMY": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "PSX": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "BBY": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "UAA": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "NRG": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "HWM": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "WYNN": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "ILMN": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "DVN": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "GME": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "NOW": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "LULU": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "BMRN": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  },
+  "CX": {
+   "sessions": 2164,
+   "session_coverage": 1.0,
+   "months": 104,
+   "month_coverage": 1.0,
+   "meets_requirement": true
+  }
+ },
+ "symbols_below_coverage_requirement": [],
+ "ohlc_ordering_violations": 0,
+ "ohlc_ordering_examples": [],
+ "ohlc_ordering_policy": "low <= min(open, close) <= max(open, close) <= high, asserted on every bar. The split gate checks discontinuities BETWEEN bars and the step gate checks the size of a move; neither sees a bar that is internally incoherent. Five such bars were found in the daily fixture -- an ex-dividend adjustment applied to the close but not to the high and low -- after it had passed every gate it had.",
+ "rows": 1350162,
+ "bars_per_symbol": {
+  "CSCO": 56264,
+  "TXN": 56262,
+  "UNP": 56245,
+  "BA": 56261,
+  "INTC": 56264,
+  "MSFT": 56264,
+  "F": 56263,
+  "SLB": 56264,
+  "C": 56264,
+  "GM": 56264,
+  "BMY": 56263,
+  "PSX": 56247,
+  "BBY": 56258,
+  "UAA": 56255,
+  "NRG": 56251,
+  "HWM": 56254,
+  "WYNN": 56252,
+  "ILMN": 56254,
+  "DVN": 56260,
+  "GME": 56260,
+  "NOW": 56259,
+  "LULU": 56264,
+  "BMRN": 56229,
+  "CX": 56241
+ },
+ "first_bar": {
+  "CSCO": "2018-01-02 09:30:00",
+  "TXN": "2018-01-02 09:30:00",
+  "UNP": "2018-01-02 09:30:00",
+  "BA": "2018-01-02 09:30:00",
+  "INTC": "2018-01-02 09:30:00",
+  "MSFT": "2018-01-02 09:30:00",
+  "F": "2018-01-02 09:30:00",
+  "SLB": "2018-01-02 09:30:00",
+  "C": "2018-01-02 09:30:00",
+  "GM": "2018-01-02 09:30:00",
+  "BMY": "2018-01-02 09:30:00",
+  "PSX": "2018-01-02 09:30:00",
+  "BBY": "2018-01-02 09:30:00",
+  "UAA": "2018-01-02 09:30:00",
+  "NRG": "2018-01-02 09:30:00",
+  "HWM": "2018-01-02 09:30:00",
+  "WYNN": "2018-01-02 09:30:00",
+  "ILMN": "2018-01-02 09:30:00",
+  "DVN": "2018-01-02 09:30:00",
+  "GME": "2018-01-02 09:30:00",
+  "NOW": "2018-01-02 09:30:00",
+  "LULU": "2018-01-02 09:30:00",
+  "BMRN": "2018-01-02 09:30:00",
+  "CX": "2018-01-02 09:30:00"
+ },
+ "last_bar": {
+  "CSCO": "2026-08-31 15:45:00",
+  "TXN": "2026-08-31 15:45:00",
+  "UNP": "2026-08-31 15:45:00",
+  "BA": "2026-08-31 15:45:00",
+  "INTC": "2026-08-31 15:45:00",
+  "MSFT": "2026-08-31 15:45:00",
+  "F": "2026-08-31 15:45:00",
+  "SLB": "2026-08-31 15:45:00",
+  "C": "2026-08-31 15:45:00",
+  "GM": "2026-08-31 15:45:00",
+  "BMY": "2026-08-31 15:45:00",
+  "PSX": "2026-08-31 15:45:00",
+  "BBY": "2026-08-31 15:45:00",
+  "UAA": "2026-08-31 15:45:00",
+  "NRG": "2026-08-31 15:45:00",
+  "HWM": "2026-08-31 15:45:00",
+  "WYNN": "2026-08-31 15:45:00",
+  "ILMN": "2026-08-31 15:45:00",
+  "DVN": "2026-08-31 15:45:00",
+  "GME": "2026-08-31 15:45:00",
+  "NOW": "2026-08-31 15:45:00",
+  "LULU": "2026-08-31 15:45:00",
+  "BMRN": "2026-08-31 15:45:00",
+  "CX": "2026-08-31 15:45:00"
+ },
+ "zero_volume_bars": 0,
+ "zero_volume_rate": 0.0,
+ "empty_bar_disclosure": "D192 requires any intraday study on a new universe to measure and report its own empty-bar rate; it must be quoted in the pre-registration.",
+ "built_at_utc": "2026-09-02T13:59:26.323375+00:00"
+}

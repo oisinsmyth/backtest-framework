@@ -230,6 +230,20 @@ COHORT4_EVENTS = FIX / "cohort4_intraday_15m_raw_events.json"
 # REPORTED and classified, never silently adjusted.
 STEP_THRESHOLD = 0.15
 
+# D264's >=95% coverage requirement, APPLIED TO THE TEST SPAN rather than only
+# to the 2013-2017 selection window. This is the rule NBIS was excluded under
+# and it is enforced here rather than trusted.
+#
+# WHY IT NEEDED ITS OWN GATE. `incomplete_session_rate` is computed only over
+# sessions THAT EXIST, so a name the provider serves for 77 of 104 months --
+# every one of them complete -- scores a 0.000% incomplete rate and sails
+# through. The only existing check that could catch it is `no bars for [...]`,
+# which fires at zero coverage and nowhere else. Between 0% and 100% the build
+# had nothing to say, so a gate that PASSED was not evidence a name was served.
+# HWM is the live case: the ticker dates from the April 2020 Arconic
+# separation, so roughly 27 months of the span cannot exist.
+MIN_COVERAGE = 0.95
+
 
 def do_plan() -> int:
     plan = [(s, m) for s in SYMBOLS for m in months(START_MONTH, END_MONTH)]
@@ -391,6 +405,15 @@ def do_build() -> int:
             missing_bars[sym] = missing_bars.get(sym, 0) + (RTH_SESSION_BARS - n)
 
     rows = zero_volume = dropped_half_day_bars = adjusted_bars = 0
+    # OHLC ORDERING. Neither the split gate nor the step gate looks at whether a
+    # bar is internally coherent: one checks discontinuities BETWEEN bars, the
+    # other the size of a move. A bar whose close sits below its own low passes
+    # both. Five such bars were found in the daily fixture -- an ex-dividend
+    # adjustment applied to the close but not to the high and low -- on a
+    # fixture that had passed every gate it had. Counted here either way, and
+    # examples kept, because the count being zero is itself the evidence.
+    ohlc_violations = 0
+    ohlc_examples: list[dict] = []
     per_symbol: dict[str, int] = {}
     first: dict[str, str] = {}
     last: dict[str, str] = {}
@@ -431,6 +454,17 @@ def do_build() -> int:
                     v = float(b["5. volume"]) * f
                     if v == 0.0:
                         zero_volume += 1
+                    # low <= min(open, close) <= max(open, close) <= high.
+                    # Split adjustment divides all four by the same factor and
+                    # so cannot create a violation; anything here came from the
+                    # provider.
+                    if not (lo <= min(o, c) and max(o, c) <= h and lo <= h):
+                        ohlc_violations += 1
+                        if len(ohlc_examples) < 20:
+                            ohlc_examples.append(
+                                {"symbol": symbol, "timestamp": stamp,
+                                 "open": o, "high": h, "low": lo, "close": c,
+                                 "volume": v})
                     pc = prev_close.get(symbol)
                     if pc:
                         move = abs(c / pc - 1.0)
@@ -451,6 +485,23 @@ def do_build() -> int:
                     per_symbol[symbol] = per_symbol.get(symbol, 0) + 1
                     first.setdefault(symbol, stamp)
                     last[symbol] = stamp
+
+    # ---- COVERAGE, MEASURED FOR EVERY NAME AND NOT ONLY THE SUSPECTED ONES ----
+    # Two numbers per symbol against two denominators, because they answer
+    # different questions. SESSIONS is D264's own measure -- the selector took
+    # len(bars)/n_days against the union calendar -- and is what the >=95% bar
+    # is applied to. MONTHS is the unit the NBIS exclusion was recorded in
+    # (~21 of 104), so it is reported alongside for continuity of the register.
+    all_days = {d for (_s, d) in counts if d not in half_days}
+    all_months = months(START_MONTH, END_MONTH)
+    sessions_by_symbol = {s: total_sessions.get(s, 0) for s in SYMBOLS}
+    months_by_symbol = {
+        s: len({d[:7] for (sym, d) in counts if sym == s and d not in half_days})
+        for s in SYMBOLS}
+    coverage = {s: (sessions_by_symbol[s] / len(all_days)) if all_days else 0.0
+                for s in SYMBOLS}
+    month_coverage = {s: months_by_symbol[s] / len(all_months) for s in SYMBOLS}
+    under_covered = sorted(s for s in SYMBOLS if coverage[s] < MIN_COVERAGE)
 
     meta = {
         "fixture": FIXTURE.name,
@@ -517,6 +568,33 @@ def do_build() -> int:
             s: {"short_sessions": n, "rate": n / total_sessions[s],
                 "bars_missing": missing_bars.get(s, 0)}
             for s, n in sorted(short_sessions.items(), key=lambda kv: -kv[1])},
+        "coverage_requirement": MIN_COVERAGE,
+        "coverage_policy": (
+            "D264's >=95% requirement applied to the TEST span, not only to the "
+            "selection window. Measured for EVERY name, not only suspected ones: "
+            "incomplete_session_rate is computed over sessions that exist, so a "
+            "name served for a fraction of the span scores 0% incomplete and "
+            "passes. A name below the bar is excluded on this measured number "
+            "and replaced by the next rank, as NBIS was."),
+        "sessions_in_calendar": len(all_days),
+        "months_in_span": len(all_months),
+        "coverage_by_symbol": {
+            s: {"sessions": sessions_by_symbol[s],
+                "session_coverage": coverage[s],
+                "months": months_by_symbol[s],
+                "month_coverage": month_coverage[s],
+                "meets_requirement": bool(coverage[s] >= MIN_COVERAGE)}
+            for s in SYMBOLS},
+        "symbols_below_coverage_requirement": under_covered,
+        "ohlc_ordering_violations": ohlc_violations,
+        "ohlc_ordering_examples": ohlc_examples,
+        "ohlc_ordering_policy": (
+            "low <= min(open, close) <= max(open, close) <= high, asserted on "
+            "every bar. The split gate checks discontinuities BETWEEN bars and "
+            "the step gate checks the size of a move; neither sees a bar that "
+            "is internally incoherent. Five such bars were found in the daily "
+            "fixture -- an ex-dividend adjustment applied to the close but not "
+            "to the high and low -- after it had passed every gate it had."),
         "rows": rows,
         "bars_per_symbol": per_symbol,
         "first_bar": first, "last_bar": last,
@@ -536,6 +614,15 @@ def do_build() -> int:
         print(f"    {s:5s} {STRATUM[s]:4s} {n:8,} bars  "
               f"{first.get(s, '-')[:10]} .. {last.get(s, '-')[:10]}  "
               f"short {short_sessions.get(s, 0):4d}/{total_sessions.get(s, 0):4d}")
+    # EVERY name's coverage, printed whether or not it passes. A number only
+    # shown when it fails is a number nobody can check.
+    print(f"\n  COVERAGE vs D264's {MIN_COVERAGE:.0%} "
+          f"({len(all_days):,} sessions, {len(all_months)} months in span):")
+    for s in SYMBOLS:
+        flag = "  ok" if coverage[s] >= MIN_COVERAGE else "  <-- BELOW BAR"
+        print(f"    {s:5s} {sessions_by_symbol[s]:5,}/{len(all_days):,} sessions "
+              f"{coverage[s]:7.1%}   {months_by_symbol[s]:3d}/{len(all_months)} months "
+              f"{month_coverage[s]:6.1%}{flag}")
     print(f"  half-days     {len(half_days)} dropped ({dropped_half_day_bars:,} bars)")
     print(f"  incomplete    {sum(short_sessions.values()):,} sessions "
           f"({meta['incomplete_session_rate'] * 100:.3f}%), "
@@ -556,6 +643,25 @@ def do_build() -> int:
         print("    Persisting at volume => corporate action the sidecar missed.")
         print("    Reverting            => bad print.")
         print("    Corroborated         => real, and the fixture keeps it.")
+    print(f"\n  OHLC ordering  {ohlc_violations:,} violation(s) "
+          f"in {rows:,} bars"
+          + ("" if ohlc_violations else "  -- every bar internally coherent"))
+    for e in ohlc_examples:
+        print(f"    {e['symbol']:5s} {e['timestamp']}  o {e['open']:.4f} "
+              f"h {e['high']:.4f} l {e['low']:.4f} c {e['close']:.4f}")
+    if ohlc_violations:
+        print("  GATE FAIL: OHLC ordering violated -- low <= min(o,c) <= "
+              "max(o,c) <= high does not hold")
+        ok = False
+    if under_covered:
+        print(f"  GATE FAIL: below D264's {MIN_COVERAGE:.0%} coverage on the "
+              f"test span: {under_covered}")
+        for s in under_covered:
+            print(f"    {s:5s} {coverage[s]:.1%} of sessions, "
+                  f"{months_by_symbol[s]}/{len(all_months)} months")
+        print("    EXCLUDE on this measured number and pull the next rank; "
+              "do not drop by judgement.")
+        ok = False
     if rows and zero_volume / rows > 0.05:
         print("  GATE FAIL: zero-volume rate above 5% (D192)")
         ok = False
