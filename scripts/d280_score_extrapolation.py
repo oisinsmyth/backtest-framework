@@ -52,6 +52,40 @@ materially larger than h's" -- a tie means nothing changes.
 
 Reported alongside: what h(t)'s own IC is. If the extrapolation and the raw
 score have the same IC, the derivatives add nothing and this line closes.
+
+=========================================================================
+SIGN CORRECTION, 2026-09-02. THIS FILE ASSERTED THE WRONG DIRECTION.
+=========================================================================
+It said, and repeated in the printed output:
+
+    "a SHORT ranks ASCENDING, so a NEGATIVE IC is the tradeable direction
+     -- low score, low forward return."
+
+**That sentence contradicts itself.** A NEGATIVE cross-sectional correlation
+means a LOW score goes with a HIGH forward return. Shorting the lowest-scoring
+names therefore shorts the names that RISE. For an ASCENDING short ranking the
+tradeable direction is a POSITIVE IC, not a negative one.
+
+The error propagated through D280 parts 3, 4 and 5 and inverted their headline.
+Settled in money rather than in correlation by `scripts/d280_sign_audit.py`,
+which shorts the N lowest-scoring names and reports what that book EARNS:
+
+    ALL  h  N=25  overnight gap      -14.64 bp   t -7.18
+    ALL  h  N=25  intraday session    +2.66 bp   t +0.71
+
+**The ascending short LOSES 11-18 bp per night overnight.** The STRUCTURAL claim
+survives -- the effect really is concentrated overnight, and every intraday cell
+is insignificant -- but overnight is where this book loses hardest, not where it
+wins. D281 (`d485caf`) reached the same conclusion from a scored run.
+
+A SECOND ERROR, of a different kind, found by the D282 agent in the same audit:
+`h / lagged range` has the LARGER gap IC (-0.01625 against -0.01531) and moves
+the book FOUR TIMES LESS (-3.44 bp against -14.64 at N=25). **A rank IC
+describes the WHOLE cross-section; a top-N book lives in ONE TAIL.** Selecting a
+score on IC picked the weaker one. Same class as D279's E-prime defect: a
+quantity computed over the wrong population.
+
+Nothing below is edited. The file is kept as it ran.
 """
 
 from __future__ import annotations
@@ -182,8 +216,9 @@ def main() -> int:
             report(f"{label[:4]}|{nm}", ic_series(s, fwd, mask), rows)
         print(flush=True)
 
-    print("  READING: a SHORT ranks ASCENDING, so a NEGATIVE IC is the tradeable")
-    print("  direction -- low score, low forward return. What decides this line is")
+    print("  READING (CORRECTED -- see the SIGN CORRECTION in the docstring):")
+    print("  an ASCENDING short needs a POSITIVE IC. A negative IC means the")
+    print("  lowest-scoring names RISE. What decides this line is")
     print("  whether any extrapolated variant has a MATERIALLY more negative IC on")
     print("  the QUALIFYING SET than `h` itself. A tie means the derivatives add")
     print("  nothing and D279's ranking is already the whole of it.\n")

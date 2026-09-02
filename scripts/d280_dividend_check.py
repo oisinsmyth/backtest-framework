@@ -39,6 +39,40 @@ overnight edge is real and the study is worth its compute.
 Reported alongside: the share of bars that are ex-dates, and whether the score
 actually tilts toward dividend payers -- because if it does not, the confound
 cannot bite regardless of how large individual dividends are.
+
+=========================================================================
+SIGN CORRECTION, 2026-09-02. THIS FILE ASSERTED THE WRONG DIRECTION.
+=========================================================================
+It said, and repeated in the printed output:
+
+    "a SHORT ranks ASCENDING, so a NEGATIVE IC is the tradeable direction
+     -- low score, low forward return."
+
+**That sentence contradicts itself.** A NEGATIVE cross-sectional correlation
+means a LOW score goes with a HIGH forward return. Shorting the lowest-scoring
+names therefore shorts the names that RISE. For an ASCENDING short ranking the
+tradeable direction is a POSITIVE IC, not a negative one.
+
+The error propagated through D280 parts 3, 4 and 5 and inverted their headline.
+Settled in money rather than in correlation by `scripts/d280_sign_audit.py`,
+which shorts the N lowest-scoring names and reports what that book EARNS:
+
+    ALL  h  N=25  overnight gap      -14.64 bp   t -7.18
+    ALL  h  N=25  intraday session    +2.66 bp   t +0.71
+
+**The ascending short LOSES 11-18 bp per night overnight.** The STRUCTURAL claim
+survives -- the effect really is concentrated overnight, and every intraday cell
+is insignificant -- but overnight is where this book loses hardest, not where it
+wins. D281 (`d485caf`) reached the same conclusion from a scored run.
+
+A SECOND ERROR, of a different kind, found by the D282 agent in the same audit:
+`h / lagged range` has the LARGER gap IC (-0.01625 against -0.01531) and moves
+the book FOUR TIMES LESS (-3.44 bp against -14.64 at N=25). **A rank IC
+describes the WHOLE cross-section; a top-N book lives in ONE TAIL.** Selecting a
+score on IC picked the weaker one. Same class as D279's E-prime defect: a
+quantity computed over the wrong population.
+
+Nothing below is edited. The file is kept as it ran.
 """
 
 from __future__ import annotations
@@ -146,7 +180,7 @@ def main() -> int:
     qual = oos & (-B.hold_book((hs < 0) & (md >= 0) & okm, warm) != 0.0)
 
     rows = {"ex_date_share": ex_share, "dividends_applied": applied}
-    print("  THE COMPARISON. Negative IC = tradeable for a short.\n")
+    print("  THE COMPARISON. See the SIGN CORRECTION: an ascending short needs POSITIVE IC.\n")
     print(f"  {'universe':>9s} {'score':>20s} {'target':>26s} {'mean IC':>9s} {'t':>7s}")
     for uname, mask in (("ALL", oos), ("QUAL", qual)):
         for sname, s in (("h", h), ("h / lagged range", h / safe)):
@@ -185,8 +219,11 @@ def main() -> int:
                                               "t": float(tt), "bars": int(tl.size)}
         print(f"  SCORE TILT. Mean z of `hist_L` for dividend payers minus "
               f"non-payers:\n     {tl.mean():+.4f} (t {tt:+.2f}, {tl.size:,} bars). "
-              f"Positive = payers score HIGHER,\n     so the short ranking ASCENDING "
-              f"under-selects them and the confound cannot bite hard.\n")
+              f"A tilt of EITHER sign could matter -- the\n     original gloss "
+              f"here asserted a direction the measurement does not support and\n"
+              f"     is replaced. What settles the confound is that this tilt is "
+              f"NOT\n     distinguishable from zero, and that the "
+              f"dividend-ADJUSTED IC lands\n     within 3% of the raw one.\n")
 
     json.dump({"purpose": ("measures how much of D280 part 4's overnight gap IC "
                            "is an ex-dividend artefact; scores no cell"),
