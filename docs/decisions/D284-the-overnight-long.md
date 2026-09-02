@@ -191,3 +191,87 @@ and it is pre-emptively refused here**; if cheap names carry the effect, that is
 out-of-sample test on a fixture this programme has not touched. **D246's reserved wide-universe
 cohort is the candidate and is unspent.** `cohort3` is 15-minute intraday and is the wrong
 instrument for a daily overnight book.
+
+---
+---
+
+# AMENDMENT — appended 2026-09-02, BEFORE the runner was executed
+
+**Everything above is preserved byte-for-byte. Nothing here is a result.** This adds **one
+control** and tightens **one hurdle**. It adds no arm, varies no constant, and changes no
+prediction that was declared for the construction.
+
+## Why: D283 showed the existing controls cannot answer the question
+
+[D283](D283-the-descending-ranking.md) ran after this record was committed and decomposed the
+overnight move into a **direction-blind** part and a **directional** part, on the ALL universe, in
+short bp:
+
+```
+        asc      dsc        c = (asc+dsc)/2      d = (asc-dsc)/2
+N=10  -19.42   -9.93           -14.68                +4.75
+N=25  -14.46   -5.14            -9.80                +4.66
+N=50  -10.17   -2.98            -6.58                +3.60
+```
+
+**`c` is a TAIL TAX, not a signal.** `hist_L` is *signed acceleration*, so **both** of its tails
+are the volatile names, and volatile names rise overnight whichever way they moved. **`d` — the
+genuinely directional component — is real, correctly signed and stable at +3.6 to +4.8 bp**, and
+it is 3–4× smaller than the tail effect sitting on top of it.
+
+**So the ~+22 bp/night this study was built on decomposes as roughly +14.7 bp of tail premium and
++4.75 bp of `hist_L` direction.**
+
+**And none of the three pre-registered controls sits in the tail.** `rnd-N` and `per-N` draw from
+the whole universe; `base` is the whole universe. **All three would be beaten by the tail premium
+alone, and hurdle C would return a pass meaning "volatile names rise overnight" — which D283 has
+already established and which is not what this study asks.**
+
+## The control that is added
+
+```
+tail-N   at each bar, take the 2N names with the most EXTREME |lagged hist_L|
+         -- the N lowest and the N highest together -- and draw N of them AT
+         RANDOM. Same N, same bars, same |score| magnitude, same volatility
+         tail. The ONLY remaining difference from the treatment is WHICH TAIL.
+```
+
+**This isolates `d` from `c` by construction.** A book that beats `rnd-N`, `per-N` and `base` but
+**not** `tail-N` has found the tail premium. A book that beats `tail-N` has found something in the
+sign of `hist_L`.
+
+**Cells: 3 N × 4 modes + 1 base = 13**, up from 10. **Ledger 96 carried + 13 fresh = 109.**
+The best-of-K floor is computed over 13 rather than 10, and the disclosure above about the true
+multiplicity being larger than any such floor is unchanged and still governs.
+
+## Hurdle C is tightened
+
+| | was | now |
+|---|---|---|
+| **C** | beats `rnd-N`, `per-N` and `base` | **beats `rnd-N`, `per-N`, `base` AND `tail-N`**, on Sharpe *and* money, gross and net |
+
+**`tail-N` is the binding leg and is expected to be the one that fails.**
+
+## Predictions — one restated, one added
+
+**L2 is restated**, because as written it was answerable by the tail premium and therefore did not
+test what it claimed:
+
+| | prediction | direction | confidence |
+|---|---|---|---|
+| **L2′** | **The book beats `base` on gross Sharpe at all three N** — unchanged in substance, but it is now explicitly labelled as **the weak leg**, near-determined by the tail premium D283 measured, and **must not be read as evidence of selection** | neutral | **high** |
+| **L5** | **The book does NOT beat `tail-N` on gross Sharpe at N = 25.** D283 puts the directional component at +4.66 bp against a tail premium of −9.80, so once the control shares the tail the residual is ~4.7 bp — under half the 10 bp round trip | **AGAINST** | **moderate-high** |
+
+**L5 replaces L3 as the load-bearing prediction**, and both remain declared against the
+construction. **What would falsify L5: the book beating `tail-N` on gross Sharpe at N = 25.** That
+outcome would say the *sign* of `hist_L` carries overnight information beyond the volatility tail —
+the first such finding in the programme.
+
+**L1, L3 and L4 stand unamended.**
+
+## What is NOT changed, so the amendment cannot be read as tuning
+
+No arm is added, no N is added, no score is substituted, no universe is added, no constant is
+varied, and no filter is introduced. **The stop clause stands, including its pre-emptive refusal of
+a price filter added after the fact.** A control that makes an existing hurdle answer its own
+question is not a degree of freedom spent on the result — it is one taken away.
