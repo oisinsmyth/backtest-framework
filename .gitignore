@@ -51,3 +51,7 @@ data/raw/databento/
 data/raw/futures/
 data/fixtures/*futures*
 data/fixtures/*glbx*
+
+# temp/ is disposable by contract -- see temp/README.md. Only the README is tracked.
+/temp/*
+!/temp/README.md

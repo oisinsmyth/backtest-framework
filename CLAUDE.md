@@ -76,6 +76,33 @@ processes.
 
 ---
 
+## Where to put files: `working/` then `temp/`
+
+Two folders, and the difference between them is **time, not importance**.
+
+| | | tracked? | the contract |
+|---|---|---|---|
+| [`working/`](working/) | in active use | **yes** | losing it would cost real work **right now** |
+| [`temp/`](temp/) | done with | **no** — git-ignored | **could be deleted between two commands and nothing of value would be lost** |
+
+**`temp/` is a promise to the reader**: anyone may empty it at any moment,
+without asking, without reading the contents, without checking what depends on
+them. **If deleting a file would cost something, it does not belong there.**
+
+**The lifecycle is one-way: `working/` → `temp/` → gone.** When a file stops
+being needed it *moves*, it does not linger. A file sitting in `working/` across
+several sessions is telling you it is either finished or abandoned — promote it
+to `scripts/` or drop it in `temp/`.
+
+*(`working/` rather than "in-use" or "live": this repo already uses **live** for
+open research questions — see FINDINGS §9 — and overloading it would be worse
+than a slightly duller name.)*
+
+**Neither replaces the real homes.** A runner that has run belongs in `scripts/`,
+the numbers it produced in `data/`, the reasoning in `docs/decisions/`. **If a
+decision record quotes a number from a file, that file is evidence and belongs
+in `data/`, not in either of these.**
+
 ## The two books are the output, and almost nothing gets in
 
 | | | |
