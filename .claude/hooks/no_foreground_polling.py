@@ -46,8 +46,14 @@ HATCH = re.compile(r"#\s*hook:allow-sleep\s+\S")
 SLEEP_SH = re.compile(r"(?:^|[\n;|&]|\bdo\b|\bthen\b)\s*sleep\s+[\d.]", re.M)
 SLEEP_PS = re.compile(r"\bStart-Sleep\b", re.I)
 NOHUP = re.compile(r"\bnohup\b")
-# `&` that is job control: not `&&`, not `2>&1`, not `&>`.
-DETACH = re.compile(r"(?<![&>\d])&(?![&>])")
+# `&` that is JOB CONTROL, which is always preceded by whitespace: `cmd &`.
+#
+# A first version matched any `&` not part of `&&`, `2>&1` or `&>`, and blocked
+# a legitimate `sed` whose replacement text contained numpy's bitwise-and
+# (`m&np.isfinite(x)`). Requiring the preceding whitespace keeps `cmd &` and
+# drops every `a&b` inside a quoted argument -- the same class of false positive
+# as the heredoc one, and fixed the same way rather than worked around.
+DETACH = re.compile(r"(?<=\s)&(?![&>])")
 WAIT = re.compile(r"(?:^|[\n;&|])\s*wait\b", re.M)
 HEREDOC = re.compile(r"<<-?\s*(['\"]?)(\w+)\1")
 

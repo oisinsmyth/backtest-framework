@@ -29,6 +29,12 @@ CASES = [
      None, "prose inside a heredoc body"),
     (2, "Bash", f"cat <<'EOF' > f\nharmless text\nEOF\n{S} 30; tail f",
      None, "a real poll AFTER a heredoc still blocks"),
+    # an ampersand inside a quoted argument is not job control. This blocked a
+    # real sed whose replacement contained numpy's bitwise-and.
+    (0, "Bash", "sed -i 's/v=m&np.isfinite(d)/v=m\\&np.isfinite(d)\\&(y!=2020)/' f.py",
+     None, "bitwise-and inside a sed argument"),
+    (0, "Bash", "python -c \"print(a&b)\"", None, "bitwise-and in python -c"),
+    (2, "Bash", "python long.py &", None, "trailing job-control ampersand"),
 ]
 
 bad = 0
