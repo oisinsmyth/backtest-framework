@@ -192,9 +192,24 @@ def rotate(score, ats, off):
 
 
 def peak(score, base, fwd, T):
-    """Max spread in bp over 3 N x 12 horizons -- the grid the headline is read
-    off, so the grid the floor must price."""
-    mx = -9e9
+    """Max SPREAD and max t over 3 N x 12 horizons -- the grid the headline is
+    read off, so the grid the floor must price.
+
+    BOTH STATISTICS, FROM ONE PASS, AND BOTH REPORTED. A floor prices whatever
+    quantity you maximise, and maximising raw spread systematically selects the
+    NOISIEST cell: `md` peaks at +163.1 bp carrying t +1.31 while
+    `close_in_range` peaks at +90.6 bp carrying t +6.43. A spread floor answers
+    "how big a number does chance produce"; a t floor answers "how much evidence
+    does chance produce". They are different questions and the second is the one
+    a book cares about.
+
+    DISCLOSED DEPARTURE. D288 pre-registered gate A as "best-of-31, one shared
+    offset vector, D277's construction" without naming the statistic. Running two
+    RAISES the multiplicity rather than lowering it -- it is a harder test, not
+    an easier one -- and both floors are reported whatever they say. The ledger
+    counts both.
+    """
+    mx, mt = -9e9, -9e9
     order, cnt = M.rank_columns(score, base)        # once, not once per N
     for N in M.N_LEVELS:
         ev_lo, ev_hi, _ = M.legs_from_order(order, cnt, N, base.shape)
@@ -209,7 +224,10 @@ def peak(score, base, fwd, T):
                 continue
             d = slo[m] / clo[m] - shi[m] / chi[m]
             mx = max(mx, float(d.mean() * 1e4))
-    return mx
+            sd = d.std(ddof=1)
+            if sd > 0:
+                mt = max(mt, float(d.mean() / (sd / np.sqrt(d.size))))
+    return mx, mt
 
 
 def gateA(panel, live, scores, base, sims, workers) -> int:
@@ -217,11 +235,15 @@ def gateA(panel, live, scores, base, sims, workers) -> int:
     ats = [np.flatnonzero(live[i]) for i in range(live.shape[0])]
     fwd = M.forward_returns(panel, live)
 
-    observed = {c: peak(scores[c], base, fwd, T) for c in M.CANDIDATES}
-    best_name = max(observed, key=observed.get)
-    print(f"\n  OBSERVED peak spread, best of {len(M.CANDIDATES)}: "
-          f"{observed[best_name]:+.1f} bp  ({best_name}, axis "
-          f"{M.AXIS_OF[best_name]})", flush=True)
+    obs = {c: peak(scores[c], base, fwd, T) for c in M.CANDIDATES}
+    observed = {c: v[0] for c, v in obs.items()}
+    observed_t = {c: v[1] for c, v in obs.items()}
+    bs = max(observed, key=observed.get)
+    bt = max(observed_t, key=observed_t.get)
+    print(f"\n  OBSERVED best of {len(M.CANDIDATES)}:")
+    print(f"    by SPREAD  {observed[bs]:+8.1f} bp   {bs} (axis {M.AXIS_OF[bs]})")
+    print(f"    by t       {observed_t[bt]:+8.2f}      {bt} (axis {M.AXIS_OF[bt]})",
+          flush=True)
 
     rng = np.random.default_rng(SEED)
     # ONE SHARED OFFSET VECTOR PER DRAW, drawn up front so the parallel map is
@@ -229,28 +251,47 @@ def gateA(panel, live, scores, base, sims, workers) -> int:
     offs = [rng.integers(1, T, size=live.shape[0]) for _ in range(sims)]
 
     def one(s, off):
-        return max(peak(rotate(scores[c], ats, off), base, fwd, T)
-                   for c in M.CANDIDATES)
+        r = [peak(rotate(scores[c], ats, off), base, fwd, T) for c in M.CANDIDATES]
+        return (max(x[0] for x in r), max(x[1] for x in r))
 
     print(f"\n  best-of-{len(M.CANDIDATES)} floor: {sims} shared-offset draws",
           flush=True)
     t0 = time.time()
     res = FN.parallel_map(one, list(enumerate(offs)), workers=workers)
-    best = np.array([res[s] for s in range(sims)])
+    best = np.array([res[s][0] for s in range(sims)])
+    best_t = np.array([res[s][1] for s in range(sims)])
     floor = float(np.percentile(best, 95))
+    floor_t = float(np.percentile(best_t, 95))
     print(f"  {sims} draws in {time.time() - t0:.0f}s")
 
     print(f"\n{'=' * 78}")
-    print(f"  BEST-OF-{len(M.CANDIDATES)} FLOOR (p95): {floor:+.1f} bp")
-    print(f"  best candidate in the mine:  {observed[best_name]:+.1f} bp "
-          f"({best_name})")
-    print(f"  null max: mean {best.mean():+.1f}  p50 {np.percentile(best, 50):+.1f}"
-          f"  p95 {floor:+.1f}  max {best.max():+.1f}")
-    survivors = sorted([c for c in M.CANDIDATES if observed[c] > floor],
-                       key=lambda c: -observed[c])
-    print(f"\n  GATE A SURVIVORS: {len(survivors)}")
-    for c in survivors:
+    print(f"  BEST-OF-{len(M.CANDIDATES)} FLOOR (p95)")
+    print(f"    by SPREAD  {floor:+8.1f} bp   null max: mean {best.mean():+.1f} "
+          f"p50 {np.percentile(best, 50):+.1f} max {best.max():+.1f}")
+    print(f"    by t       {floor_t:+8.2f}      null max: mean {best_t.mean():+.2f} "
+          f"p50 {np.percentile(best_t, 50):+.2f} max {best_t.max():+.2f}")
+    print(f"  observed best: {observed[bs]:+.1f} bp ({bs}), "
+          f"t {observed_t[bt]:+.2f} ({bt})")
+
+    sur_s = sorted([c for c in M.CANDIDATES if observed[c] > floor],
+                   key=lambda c: -observed[c])
+    sur_t = sorted([c for c in M.CANDIDATES if observed_t[c] > floor_t],
+                   key=lambda c: -observed_t[c])
+    print(f"\n  CLEARS THE SPREAD FLOOR: {len(sur_s)}")
+    for c in sur_s:
         print(f"    {M.AXIS_OF[c]}  {c:16s} {observed[c]:+8.1f} bp")
+    print(f"  CLEARS THE t FLOOR: {len(sur_t)}")
+    for c in sur_t:
+        print(f"    {M.AXIS_OF[c]}  {c:16s} t {observed_t[c]:+7.2f}  "
+              f"({observed[c]:+.1f} bp)")
+    # A SURVIVOR MUST CLEAR BOTH. Clearing only one is reported because a number
+    # that is big but unevidenced, or evidenced but tiny, is exactly what the
+    # reader needs to see rather than a single word.
+    survivors = [c for c in sur_s if c in set(sur_t)]
+    print(f"\n  GATE A SURVIVORS (clear BOTH): {len(survivors)}")
+    for c in survivors:
+        print(f"    {M.AXIS_OF[c]}  {c:16s} {observed[c]:+8.1f} bp  "
+              f"t {observed_t[c]:+.2f}")
     if not survivors:
         print(f"    none -- and D288's stop condition applies: the mine is closed, "
               f"with no\n    thirty-second candidate and no re-cut of the axes.")
@@ -261,11 +302,17 @@ def gateA(panel, live, scores, base, sims, workers) -> int:
          "statistic": "max spread in bp over 3 N x 12 horizons",
          "rotation": "within each symbol's own live bars; one shared offset "
                      "vector per draw so the floor prices correlated looks",
-         "seed": SEED, "sims": sims, "floor_p95": floor,
+         "seed": SEED, "sims": sims,
+         "floor_p95": floor, "floor_p95_t": floor_t,
          "null_max": {"mean": float(best.mean()),
                       "p50": float(np.percentile(best, 50)),
                       "max": float(best.max())},
-         "observed": observed, "survivors": survivors}, indent=1))
+         "null_max_t": {"mean": float(best_t.mean()),
+                        "p50": float(np.percentile(best_t, 50)),
+                        "max": float(best_t.max())},
+         "observed": observed, "observed_t": observed_t,
+         "clears_spread_floor": sur_s, "clears_t_floor": sur_t,
+         "survivors": survivors}, indent=1))
     print(f"\n  wrote {OUTA.relative_to(REPO)}")
     return 0
 

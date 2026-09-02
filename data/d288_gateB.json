@@ -1,0 +1,7 @@
+{
+ "calibration_ok": true,
+ "calibration": "hist_L N=25 peak +56.3 bp against D286's +56.3 (delta 0.0, tol 15)",
+ "survivors": [],
+ "verdicts": {},
+ "promoted": null
+}
