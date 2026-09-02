@@ -131,15 +131,25 @@ def book(score, base, N, T):
 
 
 def stat(f, lo_idx, hi_idx, T):
+    """ALL THREE CONSTRUCTIONS, not just the spread.
+
+    A first version returned `lo - hi` only, so there was no capturability
+    diagnostic for the long or short book -- and the short book is the personal
+    track's actual objective. `short` is sign-flipped so positive always means
+    the construction MADE money, matching D290.
+    """
     slo, clo = M.bar_sums(f, lo_idx[0], lo_idx[1], T)
     shi, chi = M.bar_sums(f, hi_idx[0], hi_idx[1], T)
     m = (clo > 0) & (chi > 0)
     if int(m.sum()) < M.MIN_BARS:
         return None
-    d = slo[m] / clo[m] - shi[m] / chi[m]
-    sd = d.std(ddof=1)
-    return (float(d.mean() * 1e4),
-            float(d.mean() / (sd / np.sqrt(d.size))) if sd > 0 else 0.0)
+    lo, hi = slo[m] / clo[m], shi[m] / chi[m]
+    out = {}
+    for name, d in (("long", lo), ("short", -hi), ("spread", lo - hi)):
+        sd = d.std(ddof=1)
+        out[name] = (float(d.mean() * 1e4),
+                     float(d.mean() / (sd / np.sqrt(d.size))) if sd > 0 else 0.0)
+    return out
 
 
 def one(score, base, terc, grids, T):
