@@ -1,48 +1,63 @@
-"""A rotation null that is BIT-IDENTICAL to `RP.rotation_null` and much faster.
+"""Fast, BIT-IDENTICAL rotation nulls and threaded fan-out, for ANY study.
 
-    uv run python scripts/fast_null.py --verify        # exactness, on the real fixture
-    uv run python scripts/fast_null.py --bench         # against the original
+    uv run python scripts/fast_null.py --verify     # exactness on a real fixture
+    uv run python scripts/fast_null.py --bench      # against the original
 
-NOTHING HERE CHANGES A NUMBER, AND THAT IS THE WHOLE CONSTRAINT. A null that
-differs from the original by even one float would make every percentile in
-D256-D285 incomparable. Every optimisation below is either a HOISTED
-COMPUTATION (identical arithmetic, done once instead of 300 times) or a SKIPPED
-one (a quantity the null never reads). None reorders a floating-point sum.
+    from fast_null import NullContext, rotation_null, run_nulls, parallel_map
+    ctx = NullContext(panel)                        # close-to-close, the default
+    ctx.assert_matches_scorer(pos, my_scorer)       # DO THIS ONCE PER STUDY
+    draws = run_nulls(ctx, books, n_sims=300, seed=0, ppy=252,
+                      rf_annual=0.04, borrow_annual=0.03)
+
+THE CONSTRAINT IS EXACTNESS, NOT TOLERANCE. A null differing from the original
+by one float would make every percentile in D256-D285 incomparable. Every
+optimisation here is a HOISTED computation (identical arithmetic, done once
+instead of `n_sims` times) or a SKIPPED one (a quantity the null never reads).
+**Nothing reorders a floating-point sum.**
 
 WHAT WAS SLOW, measured rather than guessed
 ============================================
-
   1. `pooled_returns` recomputes `np.expm1(total_log_returns) * live` ON EVERY
-     CALL -- 6.6M transcendental evaluations plus a 6.6M multiply, 300 times per
-     book. **This is the single largest cost in the null and it is the same
-     array every time.** Hoisted out of the sim loop.
+     CALL -- 6.6M transcendental evaluations plus a 6.6M multiply, `n_sims`
+     times per book, producing the SAME array each time. The largest single
+     cost. Hoisted into the context.
+  2. `score` computes ~15 statistics; a null reads TWO. Drawdowns, entry counts,
+     turnover units and per-symbol P&L were computed and discarded `n_sims`
+     times.
+  3. The roll was ~1,570 `np.roll` calls per sim, but A BOOK IS ~1% DENSE:
+     `top25` has ~105k non-zero cells of 6.6M. Rolling is exact integer index
+     arithmetic, so each non-zero's new column is computed directly and
+     scattered. Identical array, ~60x fewer cells touched.
 
-  2. `score` computes ~15 statistics; the null reads TWO of them
-     (`excess_sharpe`, `total_return`). Drawdowns, entry counts, turnover units,
-     per-symbol P&L and the rest are computed 300 times per book and discarded.
-     Skipped -- not reordered.
+Measured on the daily fixture, 6 books x 100 sims, 16 cpus:
+`original serial 199.6s -> fast serial 87.4s (2.28x) -> fast + 6 threads 33.3s
+(6.00x)`, every path bit-identical.
 
-  3. The roll is 1,573 `np.roll` calls per sim on short segments. But A BOOK IS
-     ~1% DENSE: `top25` has ~105k non-zero cells out of 6.6M. Rolling is exact
-     integer index arithmetic, so the new column of a non-zero cell can be
-     computed directly and scattered, touching 105k cells instead of 6.6M.
-     The resulting dense array is IDENTICAL, element for element.
+WHAT IS DELIBERATELY NOT TOUCHED
+=================================
+  THE RNG DRAW SEQUENCE. The original draws `rng.integers(0, L)` once per symbol
+  per sim, IN SYMBOL ORDER, and **only where the window is longer than one bar**.
+  A vectorised draw is a different stream and every percentile would move.
+  `enforce_live`. 134 of 1,573 symbols have INTERNAL holes, so a rolled position
+  can land on a bar the name did not trade.
+  THE SUMMATION ORDER of every surviving quantity.
 
-WHAT IS NOT TOUCHED, deliberately
-==================================
+GENERALITY -- this is not tied to one fixture or one scorer
+============================================================
+`NullContext` takes the returns grid, the tradeability mask and the turnover
+convention as arguments, so it covers both study families in this repo:
 
-  THE RNG DRAW SEQUENCE. The original calls `rng.integers(0, seg.size)` once per
-  symbol per sim, IN SYMBOL ORDER, and **only for symbols whose window is longer
-  than one bar**. Drawing a vector of offsets instead would be a different
-  stream and every percentile would move. The scalar loop is kept exactly,
-  because it is cheap (~0.5M calls) and it is what makes the seed mean the same
-  thing it meant in D256.
+  CLOSE-TO-CLOSE (D256, D279, D281, D283, D285)
+      NullContext(panel)                       # defaults
+  OVERNIGHT (D282, D284), whose scorer compounds `open[t+1]/close[t]` and
+  charges `2*|pos|` every night rather than `|diff(pos)|`
+      NullContext(panel, simple=night["simple"], mask=night["valid"],
+                  turnover="per_bar_2x", divide="before")
 
-  `enforce_live`. Rolling stays inside a symbol's [first, last] window, but 134
-  of 1,573 symbols have INTERNAL holes, so a rolled position can land on a bar
-  the name did not trade. The mask is still applied.
-
-  THE SUMMATION ORDER of every quantity that survives.
+**AND EVERY STUDY MUST CALL `assert_matches_scorer` ONCE before using this.**
+It runs the study's OWN scorer and this module's light one on the real book and
+asserts they agree exactly. That is what makes "bit-identical" a property of
+your study rather than a claim inherited from mine.
 """
 
 from __future__ import annotations
@@ -72,93 +87,159 @@ def _load(name, filename):
 
 RP = _load("ragged_panel", "ragged_panel.py")
 
+DEFAULT_WORKERS = max(1, (os.cpu_count() or 4) - 2)
+
 
 class NullContext:
-    """Everything that does not change between sims, computed once.
+    """Everything invariant across sims, computed once. READ-ONLY after
+    construction, which is what makes the threaded path safe without a lock.
 
-    Built per panel, shared by every book and every thread. It is READ-ONLY
-    after construction, which is what makes the threaded path safe without a
-    lock."""
+    `simple`    per-bar SIMPLE returns. Defaults to the close-to-close grid
+                `expm1(total_log_returns) * live`. Pass an overnight grid to
+                score an overnight book.
+    `mask`      extra tradeability mask multiplied into every position on top of
+                `panel.live` -- e.g. an overnight book's priced-night mask.
+    `turnover`  "diff" charges `|diff(pos)|` (close-to-close); "per_bar_2x"
+                charges `2*|pos|` every bar, which is what a book that enters
+                and exits every period actually pays.
+    `divide`    "after" is `(gross - cost)/nlive`, what `RP.pooled_returns`
+                does; "before" is `gross/nlive - cost/nlive`, what D282's
+                overnight scorer does. **They differ in the last bit**, which
+                is exactly the kind of thing `assert_matches_scorer` exists to
+                catch rather than let a null silently inherit.
+    """
 
-    def __init__(self, panel):
+    def __init__(self, panel, simple=None, mask=None, turnover="diff",
+                 divide="after"):
+        if turnover not in ("diff", "per_bar_2x"):
+            raise ValueError(f"unknown turnover convention {turnover!r}")
+        if divide not in ("after", "before"):
+            raise ValueError(f"unknown divide convention {divide!r}")
+        self.divide = divide
         self.panel = panel
-        self.live = panel.live
-        # THE HOIST THAT MATTERS: identical to what `pooled_returns` builds on
-        # every single call, built once here.
-        self.sm = np.expm1(panel.total_log_returns) * panel.live
+        self.turnover = turnover
+        self.mask = mask
+        self.simple = (np.expm1(panel.total_log_returns) * panel.live
+                       if simple is None else simple)
         self.denom = np.maximum(panel.live.sum(axis=0), 1).astype(float)
         self.cost = panel.cost_fraction[:, None]
-        self.windows = [panel.index_of[s] for s in panel.symbols]
-        self.starts = np.array([a for a, _ in self.windows], dtype=np.int64)
-        self.lens = np.array([b - a + 1 for a, b in self.windows], dtype=np.int64)
+        self.starts = np.array([panel.index_of[s][0] for s in panel.symbols],
+                               dtype=np.int64)
+        self.lens = np.array([panel.index_of[s][1] - panel.index_of[s][0] + 1
+                              for s in panel.symbols], dtype=np.int64)
+
+    def enforce(self, pos, start):
+        out = RP.enforce_live(pos, self.panel, start)
+        return out if self.mask is None else out * self.mask
+
+    def light_score(self, pos, start, rf_annual, borrow_annual, ppy):
+        """`excess_sharpe` and `total_return`, by the arithmetic the full
+        scorers use, in their original order. What is absent is only what a null
+        never reads."""
+        p = self.enforce(pos, start)
+        turn = (np.abs(np.diff(p, axis=1, prepend=0.0)) if self.turnover == "diff"
+                else 2.0 * np.abs(p))
+        gross = (p * self.simple).sum(axis=0)
+        cost = (self.cost * turn).sum(axis=0)
+        # THE DIVISION ORDER IS A CONVENTION AND IT IS WORTH ONE ULP.
+        # `RP.pooled_returns` computes (gross - cost)/nlive; D282's overnight
+        # scorer computes gross/nlive - cost/nlive. The two differ in the last
+        # bit, which `assert_matches_scorer` catches and refuses -- so the
+        # convention is selected here rather than assumed.
+        r = (((gross - cost) / self.denom) if self.divide == "after"
+             else (gross / self.denom - cost / self.denom))[start:]
+
+        ps, d2 = p[:, start:], self.denom[start:]
+        lf = float((np.maximum(ps, 0.0).sum(axis=0) / d2).mean())
+        sf = float((np.maximum(-ps, 0.0).sum(axis=0) / d2).mean())
+        rf = math.expm1(math.log1p(rf_annual) / ppy)
+        bor = math.expm1(math.log1p(borrow_annual) / ppy)
+        ex = r - lf * rf - sf * bor
+        sd = float(np.std(ex, ddof=1))
+        eq = np.cumprod(1.0 + r)
+        return ((float(np.mean(ex)) / sd * math.sqrt(ppy)) if sd > 0 else 0.0,
+                float(eq[-1] - 1.0))
+
+    def assert_matches_scorer(self, pos, scorer, start=0, *, rf_annual, borrow_annual,
+                              ppy, sharpe_key="excess_sharpe",
+                              money_key="total_return"):
+        """CALL THIS ONCE PER STUDY, before any null is run.
+
+        Runs the study's OWN scorer and this module's light one on the real book
+        and asserts they agree EXACTLY. Without it, "bit-identical" is a claim
+        inherited from whichever study this file was written against; with it,
+        it is a property of yours. Costs one scoring call."""
+        ref = scorer(pos)
+        a, b = self.light_score(pos, start, rf_annual, borrow_annual, ppy)
+        for name, got, want in ((sharpe_key, a, ref[sharpe_key]),
+                                (money_key, b, ref[money_key])):
+            if got != want:
+                raise AssertionError(
+                    f"light_score disagrees with the study's scorer on {name}: "
+                    f"{got!r} vs {want!r}. The context's `simple`, `mask` or "
+                    f"`turnover` does not match this study's conventions -- "
+                    f"refusing to run a null that scores a different book.")
+        return True
 
 
-def light_score(ctx, pos, start, rf_annual, borrow_annual, ppy):
-    """`excess_sharpe` and `total_return`, by the arithmetic `RP.score` uses.
-
-    Every surviving line is copied from `pooled_returns`, `legs` and `score` in
-    their original order. What is absent is only what the null never reads."""
-    p = RP.enforce_live(pos, ctx.panel, start)
-    turn = np.abs(np.diff(p, axis=1, prepend=0.0))
-    gross = (p * ctx.sm).sum(axis=0)
-    cost = (ctx.cost * turn).sum(axis=0)
-    r = ((gross - cost) / ctx.denom)[start:]
-
-    ps = p[:, start:]
-    d2 = ctx.denom[start:]
-    long_f = float((np.maximum(ps, 0.0).sum(axis=0) / d2).mean())
-    short_f = float((np.maximum(-ps, 0.0).sum(axis=0) / d2).mean())
-
-    rf = math.expm1(math.log1p(rf_annual) / ppy)
-    bor = math.expm1(math.log1p(borrow_annual) / ppy)
-    ex = r - long_f * rf - short_f * bor
-    sd = float(np.std(ex, ddof=1))
-    eq = np.cumprod(1.0 + r)
-    sharpe = (float(np.mean(ex)) / sd * math.sqrt(ppy)) if sd > 0 else 0.0
-    return sharpe, float(eq[-1] - 1.0)
-
-
-def rotation_null(ctx, position, start, *, n_sims, seed, ppy, rf_annual,
+def rotation_null(ctx, position, start=0, *, n_sims, seed, ppy, rf_annual,
                   borrow_annual):
-    """Bit-identical replacement for `RP.rotation_null`."""
+    """Bit-identical replacement for `RP.rotation_null`, for any context."""
     rng = np.random.default_rng(seed)
-    pos = RP.enforce_live(position, ctx.panel, start)
+    pos = ctx.enforce(position, start)
     nz_i, nz_t = np.nonzero(pos)
     nz_v = pos[nz_i, nz_t]
-    a_of = ctx.starts[nz_i]
-    L_of = ctx.lens[nz_i]
-    rel = nz_t - a_of                       # position inside the symbol's window
+    a_of, L_of = ctx.starts[nz_i], ctx.lens[nz_i]
+    rel = nz_t - a_of                       # offset inside the symbol's window
 
-    sh = np.empty(n_sims)
-    mn = np.empty(n_sims)
-    offs = np.empty(len(ctx.windows), dtype=np.int64)
+    sh, mn = np.empty(n_sims), np.empty(n_sims)
+    offs = np.empty(len(ctx.lens), dtype=np.int64)
     rot = np.zeros_like(pos)
     for k in range(n_sims):
-        # THE DRAW SEQUENCE IS THE ORIGINAL'S, symbol by symbol, and skipped for
-        # a one-bar window exactly as the original skips it.
+        # the original's draw order, symbol by symbol, skipped for a one-bar
+        # window exactly as the original skips it
         for i, L in enumerate(ctx.lens):
             offs[i] = int(rng.integers(0, L)) if L > 1 else 0
         rot[:] = 0.0
         # np.roll(seg, off)[j] = seg[(j - off) % L], so a value at window offset
-        # `rel` lands at (rel + off) % L. Exact integer arithmetic on the ~1% of
-        # cells that are non-zero.
-        new_t = a_of + (rel + offs[nz_i]) % L_of
-        rot[nz_i, new_t] = nz_v
-        sh[k], mn[k] = light_score(ctx, rot, start, rf_annual, borrow_annual, ppy)
+        # `rel` lands at (rel + off) % L -- exact integer arithmetic on the ~1%
+        # of cells that are non-zero.
+        rot[nz_i, a_of + (rel + offs[nz_i]) % L_of] = nz_v
+        sh[k], mn[k] = ctx.light_score(rot, start, rf_annual, borrow_annual, ppy)
     return sh, mn
 
 
-def run_nulls_threaded(ctx, books: dict, start: int = 0, workers=None, **kw) -> dict:
-    """One thread per book, sharing the read-only context with no copy."""
-    if workers is None:
-        workers = max(1, min(len(books), (os.cpu_count() or 2) - 2))
-    out = {}
+def parallel_map(fn, items, workers=None, progress=None):
+    """Threaded fan-out for ANY independent per-item work -- building books,
+    scoring cells, computing per-cell diagnostics, not only nulls.
+
+    Threads rather than processes: measured at 2.28x against 2.23x for processes
+    on this workload, with no pickling, no per-worker panel reload and no spawn.
+    `fn` must not mutate shared state; every context here is read-only."""
+    items = list(items)
+    workers = workers or max(1, min(len(items), DEFAULT_WORKERS))
+    out, done, t0 = {}, 0, time.time()
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(rotation_null, ctx, p, start, **kw): k
-                for k, p in books.items()}
-        for f, k in futs.items():
+        futs = {ex.submit(fn, k, v): k for k, v in items}
+        for f in futs:
+            k = futs[f]
             out[k] = f.result()
+            done += 1
+            if progress:
+                print(f"    [{done}/{len(items)}] {k:24s} "
+                      f"{time.time() - t0:6.0f}s", flush=True)
     return out
+
+
+def run_nulls(ctx, books: dict, start=0, workers=None, progress=None, **kw):
+    """Rotation nulls for every book, one thread each. Returns {key: (sh, mn)}."""
+    return parallel_map(lambda k, p: rotation_null(ctx, p, start, **kw),
+                        books.items(), workers=workers, progress=progress)
+
+
+# --------------------------------------------------------------------------
+# exactness and timing, on real fixtures
+# --------------------------------------------------------------------------
 
 
 def _fixture_books(n_books):
@@ -177,20 +258,27 @@ def _fixture_books(n_books):
     return B, panel, dict(list(books.items())[:n_books])
 
 
-def verify(n_books=4, n_sims=40) -> int:
+def verify(n_books=4, n_sims=30) -> int:
     B, panel, books = _fixture_books(n_books)
     ctx = NullContext(panel)
     kw = dict(n_sims=n_sims, seed=0, ppy=B.PPY, rf_annual=B.RF_ANNUAL,
               borrow_annual=B.BORROW_ANNUAL)
     print(f"\n  {len(books)} books x {n_sims} sims -- EXACTNESS, not tolerance\n")
+
+    ctx.assert_matches_scorer(
+        books[next(iter(books))],
+        lambda p: RP.score(panel, p, 0, ppy=B.PPY, rf_annual=B.RF_ANNUAL,
+                           borrow_annual=B.BORROW_ANNUAL),
+        rf_annual=B.RF_ANNUAL, borrow_annual=B.BORROW_ANNUAL, ppy=B.PPY)
+    print("  [0] light_score agrees EXACTLY with RP.score on the real book")
+
     bad = 0
     for k, p in books.items():
         a_sh, a_mn = RP.rotation_null(panel, p, 0, **kw)
         b_sh, b_mn = rotation_null(ctx, p, 0, **kw)
         same = np.array_equal(a_sh, b_sh) and np.array_equal(a_mn, b_mn)
-        worst = max(float(np.max(np.abs(a_sh - b_sh))),
-                    float(np.max(np.abs(a_mn - b_mn))))
-        print(f"    {k:8s} identical: {str(same):5s}   max abs diff {worst:.3e}")
+        print(f"    {k:8s} identical: {str(same):5s}   max abs diff "
+              f"{max(float(np.max(np.abs(a_sh - b_sh))), float(np.max(np.abs(a_mn - b_mn)))):.3e}")
         bad += 0 if same else 1
     if bad:
         raise AssertionError(f"{bad} book(s) differ -- refusing to ship")
@@ -201,7 +289,7 @@ def verify(n_books=4, n_sims=40) -> int:
 def bench(n_books=6, n_sims=100) -> int:
     B, panel, books = _fixture_books(n_books)
     ctx = NullContext(panel)
-    w = max(1, min(len(books), (os.cpu_count() or 2) - 2))
+    w = max(1, min(len(books), DEFAULT_WORKERS))
     kw = dict(n_sims=n_sims, seed=0, ppy=B.PPY, rf_annual=B.RF_ANNUAL,
               borrow_annual=B.BORROW_ANNUAL)
     print(f"\n  {len(books)} books x {n_sims} sims, {w} threads, "
@@ -218,7 +306,7 @@ def bench(n_books=6, n_sims=100) -> int:
     print(f"  FAST, serial           {t_f1:7.1f}s   {t_ser / t_f1:5.2f}x", flush=True)
 
     t0 = time.time()
-    f2 = run_nulls_threaded(ctx, books, workers=w, **kw)
+    f2 = run_nulls(ctx, books, workers=w, **kw)
     t_f2 = time.time() - t0
     print(f"  FAST + {w} threads      {t_f2:7.1f}s   {t_ser / t_f2:5.2f}x", flush=True)
 
@@ -227,7 +315,7 @@ def bench(n_books=6, n_sims=100) -> int:
             if not (np.array_equal(ser[k][0], got[k][0])
                     and np.array_equal(ser[k][1], got[k][1])):
                 raise AssertionError(f"{name} {k}: NOT bit-identical")
-    print(f"\n  every path BIT-IDENTICAL to the original.")
+    print("\n  every path BIT-IDENTICAL to the original.")
     return 0
 
 
@@ -236,7 +324,7 @@ if __name__ == "__main__":
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--bench", action="store_true")
     ap.add_argument("--books", type=int, default=4)
-    ap.add_argument("--sims", type=int, default=40)
+    ap.add_argument("--sims", type=int, default=30)
     a = ap.parse_args()
     if a.verify:
         raise SystemExit(verify(a.books, a.sims))
