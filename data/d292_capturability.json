@@ -1,0 +1,70 @@
+{
+ "purpose": "D292's pre-registered gate-1e re-check, run separately because the runner omitted it.",
+ "capturable_t": 2.0,
+ "rows": [
+  {
+   "B1": "retrace_leg",
+   "B2": "rsi",
+   "op": "meanrank",
+   "f": 0.25,
+   "void": false,
+   "promote": true,
+   "t_min_close": 0.5578940900743938,
+   "close_bp": 59.803083579434336,
+   "close_t": 2.601939499355229,
+   "open_bp": 35.68347658734421,
+   "open_t": 1.6934649632170384,
+   "retained": 0.5966828874291591,
+   "t_min_open": 0.16509770591324327,
+   "capturable": false
+  },
+  {
+   "B1": "macd_line",
+   "B2": "rsi",
+   "op": "meanrank",
+   "f": 0.75,
+   "void": false,
+   "promote": true,
+   "t_min_close": 1.1575720477297042,
+   "close_bp": 65.04003071876963,
+   "close_t": 3.3897764554688106,
+   "open_bp": 55.57400654238765,
+   "open_t": 3.0215101194236023,
+   "retained": 0.8544584916124552,
+   "t_min_open": 1.5744615666743897,
+   "capturable": true
+  },
+  {
+   "B1": "macd_hist",
+   "B2": "rsi",
+   "op": "meanrank",
+   "f": 0.75,
+   "void": false,
+   "promote": true,
+   "t_min_close": 2.1433498292432964,
+   "close_bp": 61.909777896951304,
+   "close_t": 3.798277659230796,
+   "open_bp": 46.65393789221451,
+   "open_t": 2.961171848208756,
+   "retained": 0.7535794744712199,
+   "t_min_open": 1.7015546867859765,
+   "capturable": true
+  },
+  {
+   "B1": "retrace_leg",
+   "B2": "rev_5",
+   "op": "meanrank",
+   "f": 0.25,
+   "void": false,
+   "promote": true,
+   "t_min_close": 0.7912511273688024,
+   "close_bp": 86.41580098907103,
+   "close_t": 3.395744830026014,
+   "open_bp": 71.31204802849959,
+   "open_t": 2.9699006806046238,
+   "retained": 0.8252200085204139,
+   "t_min_open": 0.7936853945057681,
+   "capturable": true
+  }
+ ]
+}
