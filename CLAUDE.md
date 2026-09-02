@@ -69,6 +69,9 @@ a deliberately broken book.
 
 **A control must share the treatment's nuisance, not just its count.**
 Matched-count ≠ matched-turnover (D279) ≠ matched-volatility (D284).
+**A random subset is never a control for a persistent selector** — it re-draws
+each bar, so it churns (D291: 2.4× the entries, up to 7×, which voided 87 cells).
+Randomise the *partner*, not the *membership*.
 
 **Cost-cutting ≠ edge-sharpening.** A longer hold lifts breakeven by amortising
 one round trip; per-bar edge usually *falls*, so Sharpe can drop as cost
