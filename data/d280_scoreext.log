@@ -1,0 +1,39 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 42s
+
+  out-of-sample live bars      2,232,440
+  of which S1 qualifies        482,257 (21.6%)
+
+  IC vs NEXT-bar return -- ALL LIVE NAMES
+  score                               mean IC        t     bars     IC>0
+  ALL |h  (D279's corrected score)   -0.00524    -1.79    2,173    49.6%
+  ALL |h + v                         -0.00601    -2.06    2,173    48.9%
+  ALL |h + v + a/2                   -0.00615    -2.10    2,173    48.9%
+  ALL |h + v + a/2 + j/6 (full)      -0.00613    -2.10    2,173    49.1%
+  ALL |v alone (pure momentum of h)  -0.00570    -2.29    2,173    48.1%
+  ALL |a alone                       -0.00433    -1.75    2,173    50.1%
+
+  IC vs NEXT-bar return -- QUALIFYING SET ONLY
+  score                               mean IC        t     bars     IC>0
+  QUAL|h  (D279's corrected score)   +0.00462    +1.43    2,147    50.4%
+  QUAL|h + v                         +0.00343    +1.07    2,147    50.8%
+  QUAL|h + v + a/2                   +0.00315    +0.98    2,147    51.0%
+  QUAL|h + v + a/2 + j/6 (full)      +0.00314    +0.98    2,147    51.1%
+  QUAL|v alone (pure momentum of h)  -0.00286    -0.88    2,147    49.7%
+  QUAL|a alone                       -0.00388    -1.24    2,147    49.2%
+
+  READING: a SHORT ranks ASCENDING, so a NEGATIVE IC is the tradeable
+  direction -- low score, low forward return. What decides this line is
+  whether any extrapolated variant has a MATERIALLY more negative IC on
+  the QUALIFYING SET than `h` itself. A tie means the derivatives add
+  nothing and D279's ranking is already the whole of it.
+
+  variant                              mean IC      vs h
+  h  (D279's corrected score)         +0.00462  +0.00000
+  h + v                               +0.00343  -0.00120
+  h + v + a/2                         +0.00315  -0.00147
+  h + v + a/2 + j/6 (full)            +0.00314  -0.00148
+  v alone (pure momentum of h)        -0.00286  -0.00749
+  a alone                             -0.00388  -0.00850
+
+wrote data\d280_score_extrapolation.json   59s

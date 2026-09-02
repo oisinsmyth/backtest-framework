@@ -1,0 +1,49 @@
+loaded 22s   1573 names x 4,187 bars
+
+  out-of-sample span from 2018-01-01: 2,174 of 4,187 bars
+
+  G1 -- MAE skill vs NAIVE PERSISTENCE at predicting c(t+1), out of sample.
+     positive = the model wins. 'DEMA only' drops v, a and j.
+
+     n  component   DEMA only        +v      +v+a   +v+a+j (full)
+     9       open     -0.2850   -0.0994   -0.0741         -0.0725
+     9       high     -0.3922   -0.1776   -0.1256         -0.1999
+     9        low     -0.3901   -0.2022   -0.1520         -0.1350
+     9      close     -0.2350   -0.0969   -0.0487         -0.1006
+
+    21       open     -0.7524   -0.5479   -0.5743         -0.5849
+    21       high     -0.8097   -0.6321   -0.6634         -0.8832
+    21        low     -1.0030   -0.7653   -0.8428         -0.8022
+    21      close     -0.6485   -0.5058   -0.4607         -0.6347
+
+    34       open     -1.1467   -0.9741   -1.0629         -1.1176
+    34       high     -1.1339   -1.0641   -1.2101         -1.4293
+    34        low     -1.5492   -1.3530   -1.5451         -1.5232
+    34      close     -0.9778   -0.9206   -0.9443         -1.1269
+
+  G2 -- corr(forecast return, ACTUAL next-bar return), out of sample.
+     baseline to beat: the honest lagged hist_L at -0.0103.
+     |corr| below 0.02 is not tradeable at any size.
+
+     n         forecast       corr         bars
+     9        DEMA only    +0.0006    2,230,771
+     9               +v    -0.0037    2,230,182
+     9             +v+a    -0.0082    2,229,625
+     9    +v+a+j (full)    -0.0111    2,229,082
+    21        DEMA only    +0.0008    2,230,771
+    21               +v    +0.0017    2,230,182
+    21             +v+a    +0.0012    2,229,625
+    21    +v+a+j (full)    +0.0007    2,229,082
+    34        DEMA only    +0.0011    2,230,771
+    34               +v    +0.0031    2,230,182
+    34             +v+a    +0.0030    2,229,625
+    34    +v+a+j (full)    +0.0028    2,229,082
+        return(t) alone    -0.0073   <-- trivial baseline
+
+  G3 -- effective independent inputs among the 16 terms (D268's instrument, R10's count).
+
+  n=9    16 terms -> 15.76 effective inputs   (2,230,630 complete rows)
+  n=21   16 terms -> 15.18 effective inputs   (2,230,630 complete rows)
+  n=34   16 terms -> 13.50 effective inputs   (2,230,630 complete rows)
+
+wrote data\d280_forecast_precheck.json   49s

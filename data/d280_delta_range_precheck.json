@@ -1,0 +1,103 @@
+{
+ "purpose": "part 2 of the D280 pre-check, in the anchored open/delta/range parameterisation; scores no cell",
+ "split_date": "2018-01-01",
+ "results": {
+  "gap_median_abs": 0.0052631578947368585,
+  "gap_mean_abs": 0.009392559130014301,
+  "gap_over_body": 0.5145073824054954,
+  "corr_gap_body": -0.04291274931085976,
+  "delta|n9|v": {
+   "mae_skill": -0.16051434468007542,
+   "corr": -0.01101965398887776
+  },
+  "delta|n9|v+a": {
+   "mae_skill": -0.27303123701813314,
+   "corr": -0.012417320042410305
+  },
+  "delta|n9|v+a+j": {
+   "mae_skill": -0.17351822693252572,
+   "corr": -0.014240116954821844
+  },
+  "delta|n21|v": {
+   "mae_skill": -0.09676280288284644,
+   "corr": -0.012887420362760225
+  },
+  "delta|n21|v+a": {
+   "mae_skill": -0.149259443296758,
+   "corr": -0.014152611196326405
+  },
+  "delta|n21|v+a+j": {
+   "mae_skill": -0.09170635409555072,
+   "corr": -0.015533916245601274
+  },
+  "delta|n34|v": {
+   "mae_skill": -0.07466674229393977,
+   "corr": -0.014225536029832201
+  },
+  "delta|n34|v+a": {
+   "mae_skill": -0.10947598388331015,
+   "corr": -0.015384790756417237
+  },
+  "delta|n34|v+a+j": {
+   "mae_skill": -0.07251138258695411,
+   "corr": -0.01651013824061758
+  },
+  "range|n9|DEMA only": {
+   "mae_skill": -0.11968838577735208,
+   "corr": 0.5931566426599604
+  },
+  "range|n9|+v": {
+   "mae_skill": -0.06105378741008116,
+   "corr": 0.7097664787389478
+  },
+  "range|n9|+v+a": {
+   "mae_skill": -0.019170453097870244,
+   "corr": 0.8633142573925211
+  },
+  "range|n21|DEMA only": {
+   "mae_skill": -0.18409289932195239,
+   "corr": 0.5252830044570143
+  },
+  "range|n21|+v": {
+   "mae_skill": -0.11273687443890279,
+   "corr": 0.6340597307513414
+  },
+  "range|n21|+v+a": {
+   "mae_skill": -0.02161600214121595,
+   "corr": 0.8679254934694425
+  },
+  "range|n34|DEMA only": {
+   "mae_skill": -0.2700732788959723,
+   "corr": 0.49304791752276433
+  },
+  "range|n34|+v": {
+   "mae_skill": -0.19037326264768484,
+   "corr": 0.5825531519048212
+  },
+  "range|n34|+v+a": {
+   "mae_skill": -0.11547481980757479,
+   "corr": 0.8290468226400163
+  },
+  "wick|upper wick / range": {
+   "corr": 0.011173296372178993,
+   "bars": 2219681
+  },
+  "wick|lower wick / range": {
+   "corr": -0.012145794364144067,
+   "bars": 2219681
+  },
+  "wick|wick asymmetry": {
+   "corr": 0.014799848455282363,
+   "bars": 2219681
+  },
+  "wick|body / range": {
+   "corr": -0.004484211149497442,
+   "bars": 2219681
+  },
+  "wick|close position in range": {
+   "corr": -0.012102797477147102,
+   "bars": 2219681
+  }
+ },
+ "elapsed_s": 28.1
+}

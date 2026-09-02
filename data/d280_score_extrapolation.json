@@ -1,0 +1,93 @@
+{
+ "purpose": "extrapolates the STRATEGY SCORE and measures it cross-sectionally; scores no cell",
+ "corrections": "part 1/2 forecast the raw close and used POOLED correlation; both were the wrong target and the wrong metric for a cross-sectional book",
+ "split_date": "2018-01-01",
+ "min_names_per_bar": 20,
+ "results": {
+  "ALL |h  (D279's corrected score)": {
+   "mean_ic": -0.005241690305436534,
+   "sd": 0.13636948566492915,
+   "t": -1.791777252147167,
+   "bars": 2173,
+   "pct_positive": 0.4956281638288081
+  },
+  "ALL |h + v": {
+   "mean_ic": -0.006010407370987342,
+   "sd": 0.13594875149576152,
+   "t": -2.060907729410361,
+   "bars": 2173,
+   "pct_positive": 0.4887252646111367
+  },
+  "ALL |h + v + a/2": {
+   "mean_ic": -0.006153053480989072,
+   "sd": 0.13647347357565126,
+   "t": -2.101707662166057,
+   "bars": 2173,
+   "pct_positive": 0.48918545789231477
+  },
+  "ALL |h + v + a/2 + j/6 (full)": {
+   "mean_ic": -0.006133400706411596,
+   "sd": 0.13641006352922466,
+   "t": -2.095968690331278,
+   "bars": 2173,
+   "pct_positive": 0.49056603773584906
+  },
+  "ALL |v alone (pure momentum of h)": {
+   "mean_ic": -0.005700791218659589,
+   "sd": 0.11587387676305455,
+   "t": -2.2933981714459315,
+   "bars": 2173,
+   "pct_positive": 0.48136217211228716
+  },
+  "ALL |a alone": {
+   "mean_ic": -0.004334116341479868,
+   "sd": 0.11556221825523155,
+   "t": -1.7482943677725116,
+   "bars": 2173,
+   "pct_positive": 0.5006902899217671
+  },
+  "QUAL|h  (D279's corrected score)": {
+   "mean_ic": 0.004624637603851133,
+   "sd": 0.1497142372566421,
+   "t": 1.4312998519227553,
+   "bars": 2147,
+   "pct_positive": 0.503959012575687
+  },
+  "QUAL|h + v": {
+   "mean_ic": 0.0034259877243653027,
+   "sd": 0.14876793701970065,
+   "t": 1.067068953125308,
+   "bars": 2147,
+   "pct_positive": 0.5076851420586865
+  },
+  "QUAL|h + v + a/2": {
+   "mean_ic": 0.0031503668508423266,
+   "sd": 0.149386738543252,
+   "t": 0.9771587055645609,
+   "bars": 2147,
+   "pct_positive": 0.5104797391709361
+  },
+  "QUAL|h + v + a/2 + j/6 (full)": {
+   "mean_ic": 0.0031424037837690286,
+   "sd": 0.14928052786503562,
+   "t": 0.9753822525227449,
+   "bars": 2147,
+   "pct_positive": 0.5114112715416861
+  },
+  "QUAL|v alone (pure momentum of h)": {
+   "mean_ic": -0.00286415262164654,
+   "sd": 0.15059216897308905,
+   "t": -0.8812716314205103,
+   "bars": 2147,
+   "pct_positive": 0.49650675360968793
+  },
+  "QUAL|a alone": {
+   "mean_ic": -0.003876457766256069,
+   "sd": 0.14470035075706802,
+   "t": -1.2413135470508925,
+   "bars": 2147,
+   "pct_positive": 0.49231485794131347
+  }
+ },
+ "elapsed_s": 59.4
+}

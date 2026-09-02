@@ -1,0 +1,62 @@
+  symbols with internal gaps: 134 of 1573
+loaded 43s
+
+  A -- WHERE THE EDGE LIVES. Cross-sectional IC of the lagged score
+       against each PART of the next bar. Negative = tradeable short.
+
+    universe       target   mean IC       t    bars
+         ALL        total  -0.00524   -1.79   2,173
+         ALL          gap  -0.01531   -4.71   2,173
+         ALL     intraday  +0.00168   +0.65   2,173
+        QUAL        total  +0.00462   +1.43   2,147
+        QUAL          gap  -0.01255   -3.45   2,147
+        QUAL     intraday  +0.00868   +2.85   2,147
+
+  B -- VOLATILITY NORMALISATION. Does dividing the score by a
+       predicted width improve the ranking? Target = total return.
+
+    universe                      score   mean IC       t
+         ALL               h (baseline)  -0.00524   -1.79
+         ALL           h / lagged range  -0.00474   -1.90
+         ALL                    h / ATR  -0.00519   -2.01
+         ALL     h / sqrt(lagged range)  -0.00512   -1.87
+
+        QUAL               h (baseline)  +0.00462   +1.43
+        QUAL           h / lagged range  +0.00194   +0.79
+        QUAL                    h / ATR  +0.00114   +0.46
+        QUAL     h / sqrt(lagged range)  +0.00346   +1.28
+
+  C -- COMBINATION. Each part z-scored WITHIN the bar, unit weights,
+       nothing fitted. Target = total return.
+
+    universe                      score   mean IC       t     vs zh
+         ALL                         zh  -0.00524   -1.79  +0.00000
+         ALL                    zh + zv  -0.00698   -2.64  -0.00174
+         ALL               zh + zv + za  -0.00726   -2.84  -0.00202
+         ALL          zh / lagged range  -0.00474   -1.90  +0.00050
+         ALL     (zh + zv + za) / range  -0.00690   -2.44  -0.00166
+         ALL          zh + zv + za - zr  +0.00116   +0.39  +0.00640
+         ALL          zh + zv + za + zr  -0.01373   -5.07  -0.00849
+
+        QUAL                         zh  +0.00462   +1.43  +0.00000
+        QUAL                    zh + zv  +0.00012   +0.04  -0.00450
+        QUAL               zh + zv + za  -0.00048   -0.16  -0.00510
+        QUAL          zh / lagged range  +0.00194   +0.79  -0.00269
+        QUAL     (zh + zv + za) / range  -0.00073   -0.23  -0.00535
+        QUAL          zh + zv + za - zr  +0.00231   +0.65  -0.00231
+        QUAL          zh + zv + za + zr  -0.00185   -0.60  -0.00648
+
+  D -- IS THE GAP FORECASTABLE cross-sectionally? Target = gap only.
+
+    universe                      score   mean IC       t
+         ALL                          h  -0.01531   -4.71
+         ALL         yesterday's return  -0.00787   -2.30
+         ALL               lagged range  +0.01209   +2.70
+         ALL           h / lagged range  -0.01625   -5.97
+
+        QUAL                          h  -0.01255   -3.45
+        QUAL         yesterday's return  -0.00531   -1.28
+        QUAL               lagged range  +0.01520   +2.96
+        QUAL           h / lagged range  -0.00488   -1.84
+
+wrote data\d280_combined_forecast.json   85s

@@ -1,0 +1,34 @@
+  symbols with internal gaps: 134 of 1573
+loaded 42s
+  dividends placed on the grid: 35,713
+
+  bars whose NEXT session is an ex-date: 0.834%
+  median dividend yield on those bars: 0.6535%
+  median |raw gap| overall            : 0.5263%
+
+  THE COMPARISON. Negative IC = tradeable for a short.
+
+   universe                score                     target   mean IC       t
+        ALL                    h           gap RAW (part 4)  -0.01531   -4.71
+        ALL                    h      gap DIVIDEND-ADJUSTED  -0.01498   -4.59
+        ALL                    h gap RAW, ex-dates EXCLUDED  -0.01494   -4.58
+        ALL                    h     gap RAW, ex-dates ONLY  -0.05197   -3.08
+        ALL     h / lagged range           gap RAW (part 4)  -0.01625   -5.97
+        ALL     h / lagged range      gap DIVIDEND-ADJUSTED  -0.01574   -5.76
+        ALL     h / lagged range gap RAW, ex-dates EXCLUDED  -0.01570   -5.75
+        ALL     h / lagged range     gap RAW, ex-dates ONLY  -0.05682   -3.64
+
+       QUAL                    h           gap RAW (part 4)  -0.01255   -3.45
+       QUAL                    h      gap DIVIDEND-ADJUSTED  -0.01122   -3.08
+       QUAL                    h gap RAW, ex-dates EXCLUDED  -0.01131   -3.10
+       QUAL                    h     gap RAW, ex-dates ONLY   too few bars
+       QUAL     h / lagged range           gap RAW (part 4)  -0.00488   -1.84
+       QUAL     h / lagged range      gap DIVIDEND-ADJUSTED  -0.00447   -1.68
+       QUAL     h / lagged range gap RAW, ex-dates EXCLUDED  -0.00437   -1.64
+       QUAL     h / lagged range     gap RAW, ex-dates ONLY   too few bars
+
+  SCORE TILT. Mean z of `hist_L` for dividend payers minus non-payers:
+     -0.0057 (t -0.97, 2,174 bars). Positive = payers score HIGHER,
+     so the short ranking ASCENDING under-selects them and the confound cannot bite hard.
+
+wrote data\d280_dividend_check.json   56s
