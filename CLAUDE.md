@@ -8,12 +8,25 @@
 Nulls dominate runtime. **Build every runner on `scripts/fast_null.py`** (~6×,
 usage in its docstring) and call **`assert_matches_scorer` once per study** — it
 caught a one-ULP mismatch that would have made D282's null incomparable to its
-own study. `parallel_map` threads any read-only per-item work.
+own study.
 
-**Exactness, not tolerance.** Optimise only by *hoisting* identical arithmetic
-out of a loop or *skipping* what nothing reads — never reorder a float sum or
-vectorise an RNG draw. Check with `fast_null.py --verify`. **Profile first:**
-both my guesses were wrong.
+**Parallelise by default; the question is threads or processes.** Threads for
+numpy + read-only fan-out (`parallel_map`, 6.00×/2.28×). **Processes for
+GIL-bound pure Python** — D288 threaded two such families into 0.24 of 16 cores
+at 4.9 GB WS (17 min serial → 47 threaded); 8 subprocesses over `symbols[i::N]`
+→ 4 min. Stride, don't slice (bar counts vary ~10×); prove chunk == whole
+bit-identically first.
+
+**Cache costly derived arrays** in `temp/`, keyed on fixture *and* every
+estimator module's mtime — else stale numbers that look fine. D288: 17 min → 20 s
+across four entry points.
+
+**Exactness, not tolerance.** Only *hoist* invariants, *skip* what nothing reads,
+or *vectorise a loop into one axis-wise call* — never reorder a float sum or
+vectorise an RNG draw. Guard a rewrite with equality vs the loop it replaced,
+probed on a **tie-heavy** input (ties are where rewrites disagree). Sparse
+`bincount` over events beats masked full-array sums. Check with
+`fast_null.py --verify`. **Profile first:** every guess here has been wrong.
 
 ## Reporting a result
 
