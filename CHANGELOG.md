@@ -10,6 +10,65 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (D279 LOOK-AHEAD CORRECTION, 2026-09-02)
+- **`scripts/run_concentrated_short.py` gains `lag1` and applies it INSIDE `top_n`.** The first
+  version ranked qualifying names with `score[:, t]` - `hist_L` computed from the close of the
+  very bar the position was about to earn - while `hold_book` lagged the qualifying mask
+  correctly. So WHICH NAMES QUALIFIED was honest (D256 is untouched) and WHICH N OF THEM WERE
+  HELD was look-ahead, landing exactly on the quantity hurdle C tests. Measured:
+  `corr(hist_L[t], return[t]) = +0.0737` against `corr(hist_L[t-1], return[t]) = -0.0103`, on a
+  score whose one-bar autocorrelation is +0.9805. **The lag lives inside `top_n` rather than at
+  the call site because three other modules call it.**
+- **D279's whole RESULT section is rewritten. Its two survivors are withdrawn**: `top25` went
+  +2.250 -> **-0.638** Sharpe and `top50` +1.865 -> **-0.659**. **0 of 14 cells survive**, every
+  cell has a negative net CAGR and every breakeven borrow rate is negative.
+- `data/d279_concentrated_summary.json` and `data/d279_turnover_decomposition.json` regenerated;
+  the contaminated versions are kept as `*.WITHDRAWN_lookahead.json` rather than deleted.
+- `scripts/d279_fix_eprime.py` re-run on the corrected positions
+  (`data/d279_eprime_corrected.log`). **The runner's E-prime defect is NOT fixed** - it still
+  calls `RP.effective_instruments(panel, 0)` and returns 5.44 for all fourteen cells - so the
+  summary now carries an `Eprime_panel_defect` flag on every cell.
+- **Withdrawn as computed on contaminated positions:** every breakeven-borrow figure,
+  `data/d279_survivor_attribution.json` in full, and the corrected-E-prime survivor list in
+  `data/d279_eprime.log`. `scripts/d279_survivor_only_cut.py` was never completed and is now moot.
+
+### Added (D280 - the forecast pre-check, 2026-09-02)
+- `scripts/d280_forecast_precheck.py` - **a measurement instrument, not a study**: DEMA plus
+  velocity/acceleration/jerk Taylor extrapolation of each OHLC component, weights FIXED at
+  1, 1, 1/2, 1/6 so it cannot overfit, on a declared `n` grid of {9, 21, 34}, reported out of
+  sample from 2018-01-01. **Loses to naive persistence in all 48 level comparisons.** Also
+  measures effective independent inputs among the 16 terms: **13.50-15.76 of 16**, against a
+  predicted collapse below 3.
+- `scripts/d280_delta_range_precheck.py` - the anchored `open(t+1) := close(t)` reparameterisation.
+  **The anchor is not free: median |gap| 0.5263%, |gap|/|body| = 0.515.** Range forecasts reach
+  correlation **+0.87** and still lose to persistence-of-range on MAE in all nine cells.
+- `scripts/d280_score_extrapolation.py` - **corrects two errors in the two scripts above**: they
+  forecast the RAW close and range when the strategy ranks on the already-smoothed `hist_L`, and
+  they used POOLED correlation when the strategy is purely CROSS-SECTIONAL. Measures the
+  within-bar Spearman IC instead. **`hist_L` scores -0.00524 (t -1.79) over all live names and
+  +0.00462 (t +1.43) - the wrong sign - inside the qualifying set**, because D256 and D279 filter
+  and rank on the same variable.
+- `scripts/d280_combined_forecast.py` (part 4) - combines the surviving parts as a RANKING question
+  rather than a point forecast, and produces the record's headline. **The score's cross-sectional
+  edge is entirely OVERNIGHT**: IC vs the gap **-0.01531 (t -4.71)**, vs the intraday session
+  **+0.00168 (t +0.65)**; inside the qualifying set the intraday leg runs actively against the short
+  at **+0.00868 (t +2.85)**. **Close-to-close - all D256 and D279 ever measured - is the sum of the
+  two, which is why it read as noise.** Forecloses intraday exit overlays on this construction, and
+  equally forecloses taking the position at the open to shed overnight risk.
+- `scripts/d280_dividend_check.py` (part 5) - the ex-dividend confound, since `gap` is built from
+  raw OHLC, the fixture is split- but not dividend-adjusted, and a short OWES the dividend.
+  **Dividend-adjusted the IC is -0.01498 (t -4.59) against -0.01531 raw**, and excluding ex-dates
+  gives -0.01494: a 2-3% move, because only 0.834% of bars go ex next session. On those 216 bars the
+  IC is **-0.05197**, 3.4x the average - the mechanism is real and localised. **The overnight edge is
+  real.** Records one defect in its own output: the script prints a fixed gloss asserting the score
+  tilt is positive when the measured tilt is **-0.0057**, so the printed conclusion does not follow
+  from the sign measured. It changes nothing (t -0.97) and is recorded rather than left standing.
+- **AN IC IS NOT MONEY, stated in the record:** an overnight book trades ~252 round trips a year
+  against ~17 for D279's ~15-day holds, so D265's `mean move per trade >= 2c` bar must be cleared
+  15x more often. **D282 is pre-registered separately to measure that arithmetic.**
+- **Ledger unmoved at 0** - no cell scored, no rule proposed - but under R13 test 2 any study
+  built on these measurements inherits their **161 distinct comparisons** (165 reported across five parts).
+
 ### Added (D279 - the concentrated short on the dead-inclusive daily universe, 2026-09-01)
 - `scripts/run_concentrated_short.py` (D279) - top-N concentration on D256's two arms,
   N in {10, 25, 50}, with the `random-N` control and the five hurdles. Committed while the

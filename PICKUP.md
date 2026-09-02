@@ -1,15 +1,19 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-01, end of the session in which the concentrated DAILY short became the first
-thing in this programme to survive its own controls.** D264 -> D279, plus standing rule R13.
+**Updated 2026-09-02, end of the session in which the concentrated DAILY short's two survivors
+turned out to be look-ahead and were withdrawn.** D264 -> D280, plus standing rule R13.
 
 ---
 
 ## 0. THE ONE-LINE STATE
 
-**The INTRADAY single-name short is closed on every lever it has. The DAILY concentrated short is
-NOT** - [D279](docs/decisions/D279-the-concentrated-short-on-dead-inclusive-names.md) left two
-cells standing.
+**BOTH short branches are now closed. Nothing in this programme currently has a surviving cell.**
+
+- **The INTRADAY single-name short is closed on every lever it has** - D264 through
+  [D278](docs/decisions/D278-the-instrument-holdout.md).
+- **The DAILY concentrated short is now ALSO closed** -
+  [D279](docs/decisions/D279-the-concentrated-short-on-dead-inclusive-names.md), **0 of 14, no
+  survivors.** Its first RESULT reported two survivors and **they were look-ahead. Withdrawn.**
 
 Everything intraday closed on one condition, in which the trade count cancels and hit rate never
 appears:
@@ -23,52 +27,135 @@ mean move per trade  >=  2c        (the round-trip cost)
 300-cell mine and a 16-name instrument holdout all failed that bar.** Nothing failed for want of a
 null.
 
-**D279 moved to daily bars, where S1's ~15-day hold puts the move-to-cost ratio about twelve times
-higher, and held only the top N names by the signal's own score.** `S1_short|top25` scores **+2.250
-Sharpe / +1.43% CAGR** and `|top50` **+1.865 / +2.05%**, clearing V, C, F and a corrected E'.
+**D279 closed on something different and worse: it never reached the cost question.** Re-scored at
+zero fees, zero borrow and zero rf, `S1_short|top25` posts **-0.432 Sharpe and -0.26% CAGR**. Every
+cell in the grid has a negative net CAGR, every breakeven borrow rate is negative, and the
+best-of-14 floor is **-0.178** against a best cell of **-0.337**. **On the daily fixture the binding
+constraint is the drift, not the toll.**
 
-## 1. PICK THIS UP FIRST - what D279 licenses, and what it does not
+**What is live is one pre-registered study and one untouched branch.** See section 5.
 
-**The only thing two surviving cells license under [R8](docs/RULES.md#r8) is a PRE-REGISTERED
-OUT-OF-SAMPLE TEST on a fixture this programme has not touched.** No fourth N, no third arm, no
-alternative ranking score, no re-cut of the universe.
+## 1. PICK THIS UP FIRST - the D279 look-ahead, because the lesson is a runner lesson
 
-**And the instrument for it does not exist yet.** `us_shorts_daily_raw` has no untouched cohort
-left. `cohort3` (built this session) is **intraday** and is the wrong frequency. **D246's reserved
-wide-universe cohort is a different fixture and remains unspent** - it is the obvious candidate and
-has not been examined for fitness.
+**`run_concentrated_short.top_n` ranked the qualifying names with `score[:, t]` - `hist_L` computed
+from the close of the very bar the position was about to be paid for - and then held that position
+through bar t's return.**
 
-**Read the three caveats in D279's RESULT before designing that test.** Two of them would change
-what you build:
+`hold_book` lags the qualifying MASK correctly and always did (`p[:, 1:] = mask[:, :-1]`), so
+**which names QUALIFIED was honest and [D256](docs/decisions/D256-the-book-on-single-names.md) is
+untouched.** What was contaminated is **which N of the qualifiers were HELD** - which is exactly the
+quantity hurdle C exists to test.
+
+```
+corr(hist_L at t,   hist_L at t-1)   +0.9805      the score barely moves when lagged
+corr(hist_L at t,   return at t)     +0.0737      ranking on this is peeking
+corr(hist_L at t-1, return at t)     -0.0103      the tradeable version
+
+top25   UNLAGGED  +1.43% CAGR  +2.250 SR      LAGGED  -0.32%  -0.638
+top50   UNLAGGED  +2.05% CAGR  +1.865 SR      LAGGED  -0.56%  -0.659
+```
+
+**THE LESSON, and it is new to the programme: a lagged position built from an UNLAGGED RANKING is
+still look-ahead, and the base being correctly lagged is what hides it.** Every look-ahead guard we
+own points at `hold_book`, and `hold_book` was right. The defect entered one layer above it, in a
+function that *filters* an already-lagged book - a place nothing was watching, because filtering a
+lagged book feels like it cannot introduce a lag error. **[R9](docs/RULES.md#r9)'s third appearance**
+after D224 and D248, and the second on `hist_L` specifically.
+
+**The fix now lives INSIDE `top_n`**, not at the call site, because three other modules call it.
+**One consequence:** re-running `scripts/d279_lookahead_check.py` no longer reproduces its own
+UNLAGGED column - its two arms have become lag-1 and lag-2. The correlations still reproduce; the
+UNLAGGED Sharpes are only reproducible against the pre-fix runner and are quoted from the withdrawn
+artefact, kept as `data/d279_concentrated_summary.WITHDRAWN_lookahead.json`.
+
+**Three further caveats in D279's corrected RESULT, all still live for anything that inherits this
+construction:**
 
 1. **Hurdle H is FAILED for that study, not passed.** `S1_short|all` scores the **100th percentile
-   on both legs with -0.757 Sharpe and -2.45% CAGR**; nine of fourteen cells clear it.
-   [R7](docs/RULES.md#r7)'s corollary applies. **Do not reuse that null unmodified.**
-2. **E' degenerates on a rotating book.** `top25` scored **28.00 on 28 names** - the correlation
+   on both legs with -0.757 Sharpe and -2.45% CAGR**; seven of fourteen cells clear it and all
+   fourteen lose money. [R7](docs/RULES.md#r7)'s corollary applies. **Do not reuse that null
+   unmodified.**
+2. **Hurdle C is scored against ONE random draw, not a distribution.** The same control cell scored
+   **-1.528** in the runner and **-1.633** in the decomposition; at S2/N=50 the gap is 0.16 Sharpe.
+   `rotation_nulls` takes 300 draws and C took one.
+3. **E' degenerates on a rotating book.** `top25` scored **28.00 on 28 names** - the correlation
    matrix is the identity, because almost no *pair* shares the 250-bar overlap minimum. It silently
-   became "how many names were held >=250 bars". Any independence measure with an overlap floor
-   needs that floor checked against the book's holding pattern first.
-3. **The book is 1.86% gross exposure at 0.064% per name.** Running it real is a **~62x step**.
-   Sharpe is scale-invariant; **borrow availability is not**. Breakeven borrow of 121.7% says the
-   *rate* survives, not that 25 of the worst-accelerating names can be **located and held at size**,
-   and says nothing about Reg SHO restrictions on exactly that population.
+   became "how many names were held >=250 bars", on which `top10` scores **1.00 on one name**. **The
+   runner still has this defect**; `data/d279_concentrated_summary.json` carries an
+   `Eprime_panel_defect` flag on every cell and the honest values are in
+   `data/d279_eprime_corrected.log`.
 
-## 1a. THE RESULT WORTH CARRYING OUT OF D279, INDEPENDENT OF THE CELLS
+## 1a. THE EDGE IS ENTIRELY OVERNIGHT - [D280](docs/decisions/D280-the-forecast-precheck.md)
 
-**A strength ranking beat its own matched control for the first time in D264-D279.** Against a
-**turnover-matched, persistent** random book at **zero fees, zero borrow and zero rf**, S1's
-ranking wins by **+3.22 Sharpe** at N=10.
+**D280 is a MEASUREMENT record - it scores no cell, ranks no name and proposes no rule, and its
+ledger is 0.** It ran BEFORE any pre-registration because it decides whether there is anything to
+pre-register.
 
-That matters because D267 measured strength is not magnitude-calibrated and D278 watched five
-strength filters reverse sign out of sample. **The same decomposition shows S2's ranking is WORSE
-than random once turnover is matched**, so the two arms are not one phenomenon and neither result
-generalises to "strength works".
+**THE HEADLINE, and it is the largest result of the D264-D280 sequence.** Cross-sectional IC of the
+R9-lagged `hist_L` against each PART of the next bar, out of sample. Negative = tradeable for a
+short:
 
-**And the method lesson is bigger than either:** D279's pre-registered `random-N` control re-drew
-every bar while the ranked book held its picks, so it **churned 5.6x harder and paid 5.6x the
-fees**. The control differed from the treatment in **two** ways. S2 passed hurdle C on the fee gap
-alone, and those three marks are withdrawn. **A control must differ from the treatment in exactly
-one way, and "matched count" is not "matched turnover".**
+```
+universe   target       mean IC       t
+ALL        total        -0.00524   -1.79
+ALL        gap          -0.01531   -4.71     <-- the edge
+ALL        intraday     +0.00168   +0.65     <-- nothing
+QUAL       total        +0.00462   +1.43
+QUAL       gap          -0.01255   -3.45
+QUAL       intraday     +0.00868   +2.85     <-- runs AGAINST the short
+```
+
+> **There is a real, correctly-signed OVERNIGHT edge and a wrong-signed INTRADAY move that cancels
+> it. Close-to-close - the only quantity D256 and D279 ever measured - is the SUM OF THE TWO, which
+> is why it read as noise.**
+
+- **No intraday stop, target, partial exit or overlay can reach it**, and taking the position at the
+  open to shed overnight risk discards the edge and keeps the leg that fights it. **Both branches
+  close on one measurement.**
+- **It is NOT ex-dividend drops** - the obvious confound, since `gap` is raw OHLC and a short OWES
+  the dividend. Dividend-adjusted the IC is **-0.01498 (t -4.59)**; ex-dates excluded, **-0.01494**.
+  Only 0.834% of bars go ex next session. **On those 216 bars the IC is -0.05197**, 3.4x the average,
+  so the mechanism is real and localised - **charge dividends explicitly in any book built on this.**
+- **AN IC IS NOT MONEY.** An overnight book trades a full round trip EVERY NIGHT - ~252/yr against
+  ~17/yr for D279's ~15-day holds - so D265's bar (`mean move per trade >= 2c`, 10 bp at 5 bp/side)
+  must be cleared **15x more often**. A rough prior, **not computed from these artefacts**, puts the
+  per-night edge near 4 bp against that 10 bp toll. **D282 is pre-registered to measure it. Do not
+  predict it.**
+
+**THE STRUCTURAL FINDING, and it is the second thing to carry out of this session:**
+
+> **D256 and D279 both filter on `hist_L < 0 & md_L >= 0` and then rank the survivors by `hist_L`
+> again. The filter and the ranking are the SAME VARIABLE. The signal is spent by the time the
+> ranking runs, and what remains inside the filtered set reverses.**
+
+Cross-sectional IC - Spearman, within each bar, against the NEXT bar's return, out of sample:
+
+```
+hist_L over ALL live names       mean IC -0.00524   t -1.79   2,173 bars   correctly signed
+hist_L over the QUALIFYING set   mean IC +0.00462   t +1.43   2,147 bars   WRONG SIGN
+```
+
+**That is the whole of why D279's ranking bought +0.203 gross Sharpe on a book sitting at -0.432.**
+
+**What else D280 settled:**
+
+- **The DEMA + velocity/acceleration/jerk extrapolation is dead.** It loses to naive persistence in
+  **all 48** level comparisons, all nine delta comparisons and all nine range comparisons.
+  Derivatives correct the smoother's own lag rather than forecasting; longer n is monotonically
+  worse; jerk hurts in 8 of 12 cells (noise multiplier C(2k,k) = 20).
+- **16 OHLC derivative terms carry 13.50-15.76 EFFECTIVE inputs**, not the sub-3 collapse predicted.
+  **The intrabar axis is real, independent, and carries no predictive power** - the mirror image of
+  D268's lesson, and it belongs beside it.
+- **`open(t+1) := close(t)` is NOT free.** Median |gap| **0.5263%**, mean **0.9393%**,
+  **|gap|/|body| = 0.515**. Range is separately predictable at correlation **+0.87** and
+  persistence-of-range still beats the DEMA stack on MAE, so range is a sizing input at best.
+- **Multiplicity: 165 statistics across five parts, 161 distinct.** The median largest |t| under a
+  161-test null is **2.86**, so the best *extrapolation* result (**|t| 2.29**) is a best-of and is
+  **not evidence**, and the only un-searched baseline (`hist_L` alone, all names, t **-1.79**) is not
+  significant either. **The overnight numbers are the exception: |t| 4.71, 5.07 and 5.97 clear a
+  best-of-161 correction comfortably**, and part 4's gap leg was declared in the script before it
+  ran. **The t is small on 2.2M name-bars because n is 2,173 BARS** - the IC is computed within each
+  bar and averaged.
 
 ## 2. WHAT WAS CLOSED, AND ON WHAT
 
@@ -86,8 +173,12 @@ one way, and "matched count" is not "matched turnover".**
 | exits, structural | D276 | removing churn made it worse; exposure 47% → 4.5% killed it |
 | the mine, 300 cells | D277 | best +0.392 against a best-of-300 floor of +0.605 |
 | **all five in-sample winners** | **D278** | **every one reverses sign on 16 fresh names** |
+| **the concentrated DAILY short** | **D279** | **0 of 14; `top25` is −0.432 Sharpe GROSS, so it loses before costs** |
+| the DEMA derivative forecast | **D280** | loses to naive persistence in **all 48** level comparisons, all 9 delta, all 9 range |
+| **intraday exit overlays on this construction** | **D280** | **the edge is entirely overnight** (gap IC −0.01531 t −4.71; intraday +0.00168 t +0.65) |
+| taking the position at the open to shed overnight risk | **D280** | same measurement, reversed — it discards the edge and keeps the leg fighting it |
 
-## 3. THE FOUR THINGS WORTH CARRYING
+## 3. THE FIVE THINGS WORTH CARRYING
 
 1. **The cost bar is `mean move per trade ≥ 2c`, and it is signal-independent.** The trade count
    cancels; hit rate never enters. Any future intraday construction should be screened on this
@@ -102,6 +193,14 @@ one way, and "matched count" is not "matched turnover".**
 4. **A correlation on a continuous score does not survive to its tails.** ρ = −0.83 between
    `mass_imbalance` and `impulse_md` gave only **53% bar overlap** at the quintile extremes — and
    +0.392 against −0.481 Sharpe. I called them "near-identical" and was wrong.
+5. **A LAGGED POSITION BUILT FROM AN UNLAGGED RANKING IS STILL LOOK-AHEAD, AND THE BASE BEING
+   CORRECTLY LAGGED IS WHAT HIDES IT.** D279's `hold_book` shifted the qualifying mask by one bar
+   and always did; `top_n` then chose *which N of the qualifiers to hold* on the unlagged score.
+   **Every look-ahead guard this programme owns points at `hold_book`, and `hold_book` was right.**
+   Anything that *filters* an already-lagged book is a place to check, precisely because it feels
+   like it cannot introduce a lag error. **A second, independent re-derivation of the held set from
+   `score[:, t-1]` — not a call into the same function — is the cheap guard**, and D281's runner
+   is the first to carry one.
 
 ## 4. R13 IS NEW AND IT CHANGES HOW LEDGERS ARE COUNTED
 
@@ -122,10 +221,22 @@ discontinuity rather than erasing it.
 
 1. **The wide extended-hours decomposition** — fixture built and gated (`c25218d`), nothing
    decomposed, prediction declared. **Add the volatility split from §3.3 before running it.**
-2. ~~A concentrated ranked short on the DAILY dead-inclusive fixture~~ — **RUN, D279. Two cells
-   survive.** What is live is now the out-of-sample test in §1 above, on a fixture yet to be chosen.
-3. **The factor-neutral branch of FINDINGS §9** — still untouched.
-4. **Prop track:** rung 2's micro/mini form and rung 3, both free, both untested.
+2. ~~A concentrated ranked short on the DAILY dead-inclusive fixture~~ — **RUN AND CLOSED, D279.
+   0 of 14.** Its stop fired. Nothing further may be tuned on that fixture.
+3. **[D281](docs/decisions/D281-the-unfiltered-ranking.md) — rank the WHOLE universe, removing the
+   filter/ranking collision D280 measured and changing nothing else.** Pre-registered before its
+   runner existed; **result pending at the time this handoff was written.** It inherits D280's 150
+   comparisons under [R13](docs/RULES.md#r13) test 2, because D280 shaped its search space.
+4. **D282 - the cost arithmetic of the overnight construction** part 4 implies: ~252 round trips a
+   year against D265's `2c` bar. **Pre-registered by another agent; result pending. Do not predict
+   it.**
+5. **The volatility tilt D280 part 4 turned up** — `zh + zv + za + zr` reaches IC **−0.01373
+   (t −5.07)** on all live names, the only directional statistic in that record that clears its own
+   multiplicity. **It is a volatility tilt, not a stronger `hist_L`** (flip `zr`'s sign and the IC
+   goes positive), it does nothing on the qualifying set, `zr` alone was never scored, and no book,
+   cost model or `sigma^2` tax has been applied to it. **Needs its own pre-registration.**
+6. **The factor-neutral branch of FINDINGS §9** — still untouched after D256, D264, D279 and D280.
+7. **Prop track:** rung 2's micro/mini form and rung 3, both free, both untested.
    [D266](docs/decisions/D266-the-prop-cross-screen.md) screened this session's work against
    hurdle P and the best cell earned +0.535%/yr after P1 sizing. BOOK_PROP.md stays empty.
 
