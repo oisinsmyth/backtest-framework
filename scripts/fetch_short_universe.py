@@ -234,6 +234,25 @@ POOL_SEED = 20260828
 POOL_SIZE = 3400
 
 # ---------------------------------------------------------------------------
+# D288's HOLDOUT SLICE. The mining fixture is `order[:3400]`; this is the NEXT
+# 1,700 of the SAME permutation, so it is construction-identical by design --
+# same seed, same eligibility rules, same per-symbol pre-live screen, same span,
+# same gates -- and no symbol enters or leaves because of anything learned since.
+#
+# THAT IS THE WHOLE POINT. A holdout on a differently-built fixture makes a
+# failure ambiguous, and ambiguity is the one thing a holdout must not produce.
+# D246's reserved cohort would have been exactly that: ETFs and closed-end funds,
+# survivorship-screened in the opposite direction, at ~1.9 effective instruments
+# against this panel's 10.06. It stays reserved for S3.
+#
+# At the measured 47.2% screen pass rate, 1,700 fetched lands ~800 selected.
+# 5,201 eligible names remain unfetched beyond this slice, so a second holdout
+# is available later without re-picking anything.
+HOLDOUT_START = POOL_SIZE
+HOLDOUT_SIZE = 1700
+_HOLDOUT = False              # set by --holdout in main(); see `_prefix`
+
+# ---------------------------------------------------------------------------
 # THE SCREEN — pre-live, per symbol. See the header for why it is per-symbol.
 # ---------------------------------------------------------------------------
 SCREEN_BARS = 252            # each symbol's first 252 in-span sessions = its warm-up
@@ -584,6 +603,12 @@ def _prefix(limit: int | None) -> list[dict]:
     length back out of the pool file instead silently pinned the budget to whatever it
     was when `--plan` last ran, which is how the first full fetch stopped at 2,600."""
     pool = json.loads(POOL.read_text(encoding="utf-8"))
+    if _HOLDOUT:
+        # A SLICE, not a prefix. Everything before HOLDOUT_START is the mining
+        # fixture and must never appear here; `--holdout --plan` asserts the two
+        # sets are disjoint rather than trusting this line.
+        end = HOLDOUT_START + (limit or HOLDOUT_SIZE)
+        return pool["order"][HOLDOUT_START:end]
     return pool["order"][: (limit or POOL_SIZE)]
 
 
@@ -1471,9 +1496,38 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     for flag in ("plan", "fetch", "select", "actions", "build"):
         ap.add_argument(f"--{flag}", action="store_true")
+    ap.add_argument("--holdout", action="store_true",
+                    help="D288's holdout SLICE of the same permutation, "
+                         "order[3400:5100], into a separate fixture triple")
     ap.add_argument("--limit", type=int, default=None,
                     help="fetch only the first N of the pinned pool order")
     args = ap.parse_args()
+
+    if args.holdout:
+        # ONE PLACE swaps the slice and every output path together. Three
+        # constants where two get swapped is the pattern that hides the one you
+        # forget, which is why `fetch_single_name_intraday.py` does it this way
+        # too. `_HOLDOUT` steers `_prefix`; the rest are the artefacts.
+        global _HOLDOUT, FIXTURE, EVENTS, META, SELECTION, EVENTS_FULL
+        _HOLDOUT = True
+        FIXTURE = REPO / "data" / "fixtures" / "us_shorts_daily_holdout.csv.gz"
+        EVENTS = REPO / "data" / "fixtures" / "us_shorts_daily_holdout_events.json"
+        META = REPO / "data" / "fixtures" / "us_shorts_daily_holdout.meta.json"
+        SELECTION = CACHE / "_selection_holdout.json"
+        EVENTS_FULL = CACHE / "_events_full_holdout.json"
+        pool = json.loads(POOL.read_text(encoding="utf-8"))["order"]
+        mine = {e["symbol"] for e in pool[:HOLDOUT_START]}
+        hold = {e["symbol"] for e in pool[HOLDOUT_START:HOLDOUT_START + HOLDOUT_SIZE]}
+        # ASSERTED, not trusted. The whole value of this fixture is that no name
+        # in it has ever been scored; a silent overlap would destroy that without
+        # any visible symptom.
+        if mine & hold:
+            raise SystemExit(
+                f"HOLDOUT OVERLAPS THE MINING SET on {len(mine & hold)} symbols "
+                f"-- refusing to build a holdout that is not one")
+        print(f"holdout   order[{HOLDOUT_START}:{HOLDOUT_START + HOLDOUT_SIZE}]  "
+              f"{len(hold):,} symbols, disjoint from the {len(mine):,} mined")
+        print(f"fixture   {FIXTURE.name}")
 
     limiter = RateLimiter(MIN_INTERVAL)
     needs_key = args.plan or args.fetch
