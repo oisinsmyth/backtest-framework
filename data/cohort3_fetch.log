@@ -1,0 +1,76 @@
+fetching SPLITS and DIVIDENDS for 8 symbols (16 calls)
+
+  [1/8] V      35 dividends
+  [2/8] JPM    35 dividends
+  [3/8] FDX    35 dividends   SPLITS [['2026-06-01T00:00:00', 1.241]]
+  [4/8] MDLZ   34 dividends
+  [5/8] BBD   126 dividends   SPLITS [['2018-04-02T00:00:00', 1.1], ['2019-04-01T00:00:00', 1.2], ['2022-04-19T00:00:00', 1.1]]
+  [6/8] TRIP    1 dividends
+  [7/8] CIEN    0 dividends
+  [8/8] MUR    35 dividends
+
+wrote cohort3_intraday_15m_raw_events.json: 4 splits, 301 dividends
+832 slices planned, 414 already cached, 418 to fetch this run
+pacing at 66/min, ETA 6.3 min
+
+  [50/418] BBD 2021-12  822 bars  | 59/min | 5.6 min left
+  [100/418] BBD 2026-02  879 bars  | 55/min | 4.8 min left
+  [150/418] TRIP 2021-08  759 bars  | 54/min | 4.1 min left
+  [200/418] TRIP 2025-10  954 bars  | 54/min | 3.3 min left
+  [250/418] CIEN 2021-04  600 bars  | 54/min | 2.5 min left
+  [300/418] CIEN 2025-06  854 bars  | 52/min | 1.8 min left
+  [350/418] MUR 2020-12  799 bars  | 51/min | 1.0 min left
+  [400/418] MUR 2025-02  805 bars  | 50/min | 0.3 min left
+  [418/418] MUR 2026-08  912 bars  | 49/min | 0.0 min left
+
+done: 418 slices cached (0 empty)
+wrote cohort3_intraday_15m_raw.csv.gz: 448,861 rows, 7.3 MB
+  symbols       8/8
+    V     low    56,108 bars  2018-01-02 .. 2026-08-31  short    0/2158
+    JPM   low    56,108 bars  2018-01-02 .. 2026-08-31  short    0/2158
+    FDX   low    56,108 bars  2018-01-02 .. 2026-08-31  short    0/2158
+    MDLZ  low    56,108 bars  2018-01-02 .. 2026-08-31  short    0/2158
+    BBD   high   56,107 bars  2018-01-02 .. 2026-08-31  short    1/2158
+    TRIP  high   56,107 bars  2018-01-02 .. 2026-08-31  short    1/2158
+    CIEN  high   56,107 bars  2018-01-02 .. 2026-08-31  short    1/2158
+    MUR   high   56,108 bars  2018-01-02 .. 2026-08-31  short    0/2158
+  half-days     19 dropped (3,115 bars)
+  incomplete    3 sessions (0.017%), 3 bars missing
+  zero-volume   0 (0.0000%)
+  splits        4 events -> 82,289 bars
+  largest move  34.50%  (TRIP 2024-05-08 09:30:00)
+
+  28 SESSION-BOUNDARY STEP(S) OVER 15% -- CLASSIFY EACH BEFORE USE:
+    JPM   2020-03-13 -> 2020-03-17   -15.39%   103.91 -> 87.92
+    FDX   2020-03-13 -> 2020-03-17   -15.59%   85.92 -> 72.53
+    FDX   2020-06-30 -> 2020-07-01   +15.45%   112.92 -> 130.36
+    FDX   2022-09-15 -> 2022-09-16   -23.40%   165.03 -> 126.41
+    BBD   2020-03-11 -> 2020-03-12   -15.70%   4.78 -> 4.03
+    BBD   2020-03-13 -> 2020-03-17   -17.66%   4.74 -> 3.90
+    BBD   2025-05-07 -> 2025-05-08   +17.03%   2.27 -> 2.66
+    TRIP  2018-05-08 -> 2018-05-09   +18.70%   38.78 -> 46.03
+    TRIP  2018-11-07 -> 2018-11-08   +16.39%   58.13 -> 67.66
+    TRIP  2019-11-06 -> 2019-11-07   -19.76%   40.79 -> 32.73
+    TRIP  2020-11-06 -> 2020-11-09   +26.68%   19.98 -> 25.31
+    TRIP  2022-11-07 -> 2022-11-08   -23.54%   23.81 -> 18.20
+    TRIP  2024-02-12 -> 2024-02-13   +15.95%   22.38 -> 25.95
+    TRIP  2024-05-07 -> 2024-05-08   -34.50%   25.48 -> 16.69
+    TRIP  2025-07-02 -> 2025-07-07   +15.56%   15.01 -> 17.34
+    TRIP  2026-02-11 -> 2026-02-12   -16.38%   12.15 -> 10.16
+    TRIP  2026-08-05 -> 2026-08-06   -17.51%   13.96 -> 11.52
+    CIEN  2019-06-05 -> 2019-06-06   +19.50%   35.85 -> 42.84
+    CIEN  2020-09-02 -> 2020-09-03   -26.11%   60.04 -> 44.36
+    CIEN  2022-12-07 -> 2022-12-08   +16.77%   43.24 -> 50.49
+    CIEN  2024-12-11 -> 2024-12-12   +17.79%   73.23 -> 86.26
+    CIEN  2025-01-24 -> 2025-01-27   -17.35%   96.62 -> 79.86
+    CIEN  2025-09-03 -> 2025-09-04   +26.73%   94.90 -> 120.26
+    CIEN  2026-06-03 -> 2026-06-04   -18.44%   620.72 -> 506.27
+    MUR   2020-03-06 -> 2020-03-09   -30.52%   15.86 -> 11.02
+    MUR   2020-03-13 -> 2020-03-17   -18.12%   7.59 -> 6.21
+    MUR   2020-04-08 -> 2020-04-09   +17.07%   7.32 -> 8.57
+    MUR   2020-11-06 -> 2020-11-09   +19.32%   7.04 -> 8.40
+    Persisting at volume => corporate action the sidecar missed.
+    Reverting            => bad print.
+    Corroborated         => real, and the fixture keeps it.
+
+  GATES: PASS

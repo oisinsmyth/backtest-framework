@@ -1,0 +1,57 @@
+holdout   order[3400:5100]  1,700 symbols, disjoint from the 3,400 mined
+fixture   us_shorts_daily_holdout.csv.gz
+key       C:\Users\O\.config\alphavantage\key
+prefix 1,700  cached 0  known-unserved 0  to fetch 1,700  workers 4
+  UNSERVED HOS (recorded; will not be asked again)
+  200/1,700  61/min  ~24.4 min left
+  UNSERVED ABDC (recorded; will not be asked again)
+  400/1,700  62/min  ~20.8 min left
+  600/1,700  63/min  ~17.4 min left
+  800/1,700  62/min  ~14.5 min left
+  UNSERVED RANG (recorded; will not be asked again)
+  1,000/1,700  62/min  ~11.3 min left
+  UNSERVED FIO (recorded; will not be asked again)
+Traceback (most recent call last):
+  File "C:\Users\O\Desktop\Projects\Backtest Framework\scripts\fetch_short_universe.py", line 1555, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\O\Desktop\Projects\Backtest Framework\scripts\fetch_short_universe.py", line 1542, in main
+    do_fetch(key, limiter, args.limit)
+  File "C:\Users\O\Desktop\Projects\Backtest Framework\scripts\fetch_short_universe.py", line 676, in do_fetch
+    list(pool_exec.map(worker, todo))
+  File "C:\Users\O\AppData\Roaming\uv\python\cpython-3.12.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\O\AppData\Roaming\uv\python\cpython-3.12.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\O\AppData\Roaming\uv\python\cpython-3.12.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\O\AppData\Roaming\uv\python\cpython-3.12.13-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\O\AppData\Roaming\uv\python\cpython-3.12.13-windows-x86_64-none\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\O\Desktop\Projects\Backtest Framework\scripts\fetch_short_universe.py", line 639, in worker
+    _fetch_one(sym, key, limiter)
+  File "C:\Users\O\Desktop\Projects\Backtest Framework\scripts\fetch_short_universe.py", line 583, in _fetch_one
+    body = _get({"function": "TIME_SERIES_DAILY_ADJUSTED", "symbol": sym,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\O\Desktop\Projects\Backtest Framework\scripts\fetch_short_universe.py", line 432, in _get
+    raise type(exc)(f"{type(exc).__name__} on {params.get('function')} "
+http.client.IncompleteRead: IncompleteRead(63 bytes read)
+holdout   order[3400:5100]  1,700 symbols, disjoint from the 3,400 mined
+fixture   us_shorts_daily_holdout.csv.gz
+key       C:\Users\O\.config\alphavantage\key
+prefix 1,700  cached 1,104  known-unserved 0  to fetch 596  workers 4
+  UNSERVED HOS (recorded; will not be asked again)
+  UNSERVED ABDC (recorded; will not be asked again)
+  UNSERVED RANG (recorded; will not be asked again)
+  UNSERVED FIO (recorded; will not be asked again)
+  UNSERVED AMSWA (recorded; will not be asked again)
+  200/596  62/min  ~6.3 min left
+  UNSERVED PRTG (recorded; will not be asked again)
+  UNSERVED TFM (recorded; will not be asked again)
+  400/596  63/min  ~3.1 min left
+fetched 589 in 9.2 min; 7 missed (7 unserved by the provider)

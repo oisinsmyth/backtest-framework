@@ -1,0 +1,29 @@
+holdout   order[3400:5100]  1,700 symbols, disjoint from the 3,400 mined
+fixture   us_shorts_daily_holdout.csv.gz
+symbols       803   dead 272 (33.9%)   alive 531
+status        {'collapsed': 83, 'delisted': 272, 'survived': 448}
+rows          2,156,127   RAGGED, 481 distinct bar counts
+splits        applied to 316,539 bars
+GATE A        1 failures, all in EXCLUDED symbols (0 left in)
+CROSS-CHECK   0 of 6 documented moves verified; 6 not in this build (GLSI, HKD, KODK, KRTX, TLMD, VSA)
+GATE B        43 moves >= x4.0: {'corroborated': 6, 'revert': 13, 'unexplained': 24}
+    KEPT      DJT    2021-10-21  x4.57    $vol x118,518.9
+    KEPT      FFAI   2024-05-14  x4.67    $vol x157.1
+    KEPT      FNUC   2024-12-18  x4.48    $vol x4,065.4
+    KEPT      MCRB   2020-08-10  x4.89    $vol x537.1
+    KEPT      QNCX   2026-02-10  x4.06    $vol x280.6
+    KEPT      TIRX   2026-01-28  x4.11    $vol x21,589.6
+unconfirmed splits dropped  3
+EXCLUDED for data quality   5 symbols {'alive': 4, 'dead': 1}
+    ARBK   a confirmed split still leaves a discontinuity
+    LLEN   x106.0 in one session; no US common stock does that, so it is an unrecorded corporate action
+    LX     persistent step on dollar volume x6.1 against its own trailing median; a real event moves it by ord
+    NINE   persistent step on dollar volume x0.0 against its own trailing median; a real event moves it by ord
+    ZVZZT  persistent step on dollar volume x0.5 against its own trailing median; a real event moves it by ord
+halt crossings  2 (reported, not gated)
+    LTM    2024-07-25  x7.70  after 1507d of no bars
+    WW     2025-07-07  x160.26  after 53d of no bars
+large drops   5 at <= x0.15 (reported, not gated)
+fixture       us_shorts_daily_holdout.csv.gz  36.3 MB
+
+gates clean.

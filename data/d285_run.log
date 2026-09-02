@@ -1,0 +1,153 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 35s   1573 names x 4,187 bars
+  universe A_nofloor: 2,623,715 qualifying name-bars
+  universe B_floor5: 2,452,118 qualifying name-bars
+
+  built 18 books 40s
+
+  HURDLE M -- mean move PER TRADE (an episode, not a bar) against 2c = 10.0 bp,
+  HURDLE B -- breakeven half-spread against 15 bp/side, and HURDLE NEU -- |corr to the universe| <= 0.20.
+
+  cell                   move bp    x2c    run    be bp     NEU    trades    win   top1%
+  A_nofloor|book10        +36.44  +3.64   6.24    14.35  +0.126    10,210  56.3%  196.9%
+  A_nofloor|rnd10          +0.68  +0.07   1.01    -0.36  +0.047    62,976  49.2% 1897.4%
+  A_nofloor|tal10          -0.80  -0.08   1.71    -1.68  +0.002    37,170  49.0% -5312.9%
+  A_nofloor|book25        +21.22  +2.12   7.07     5.83  +0.159    22,529  57.3%  261.8%
+  A_nofloor|rnd25          +0.29  +0.03   1.03    -0.58  +0.036   154,397  49.1% 4442.3%
+  A_nofloor|tal25          +0.18  +0.02   1.75    -1.11  +0.004    90,985  49.3% 18480.9%
+  A_nofloor|book50        +11.66  +1.17   7.77     0.40  +0.188    41,000  57.7%  412.3%
+  A_nofloor|rnd50          +0.13  +0.01   1.06    -0.67  -0.017   299,330  49.2% 10144.5%
+  A_nofloor|tal50          -1.11  -0.11   1.77    -1.76  +0.007   180,030  49.5% -2613.1%
+  B_floor5|book10         +32.96  +3.30   5.99    12.63  +0.145    10,646  55.8%  193.9%
+  B_floor5|rnd10           +0.63  +0.06   1.01    -0.37  +0.016    62,898  49.2% 1923.8%
+  B_floor5|tal10           +8.00  +0.80   1.72     2.92  -0.048    37,134  49.6%  473.4%
+  B_floor5|book25         +13.02  +1.30   6.80     1.81  +0.176    23,429  56.6%  375.7%
+  B_floor5|rnd25           -0.83  -0.08   1.03    -1.13  +0.026   154,249  48.9% -1450.3%
+  B_floor5|tal25           +0.30  +0.03   1.74    -1.05  +0.068    91,819  49.3% 9571.8%
+  B_floor5|book50         +12.84  +1.28   7.53     1.25  +0.187    42,337  57.3%  337.5%
+  B_floor5|rnd50           +0.27  +0.03   1.07    -0.59  +0.001   297,877  49.3% 4526.6%
+  B_floor5|tal50           +0.04  +0.00   1.77    -1.22  -0.021   180,566  49.4% 68942.2%
+
+  cell                    expo  net CAGR   net SR  GROSS CAGR  GROSS SR    maxDD
+  A_nofloor|book10      1.50%    +0.16%   +0.221     +0.22%    +0.440   -1.52%
+  A_nofloor|rnd10       1.50%    -0.35%   -2.395     +0.02%    +0.146   -5.70%
+  A_nofloor|tal10       1.50%    -0.24%   -0.701     -0.02%    -0.053   -4.13%
+  A_nofloor|book25      3.74%    +0.15%   +0.027     +0.28%    +0.348   -3.13%
+  A_nofloor|rnd25       3.74%    -0.89%   -3.828     +0.02%    +0.087  -13.78%
+  A_nofloor|tal25       3.74%    -0.53%   -1.206     +0.01%    +0.017   -9.01%
+  A_nofloor|book50      7.48%    +0.03%   -0.175     +0.27%    +0.217   -5.35%
+  A_nofloor|rnd50       7.48%    -1.73%   -5.368     +0.02%    +0.059  -25.28%
+  A_nofloor|tal50       7.48%    -1.18%   -2.265     -0.12%    -0.184  -18.17%
+  B_floor5|book10       1.50%    +0.15%   +0.211     +0.21%    +0.462   -1.14%
+  B_floor5|rnd10        1.50%    -0.35%   -2.513     +0.02%    +0.150   -5.69%
+  B_floor5|tal10        1.50%    -0.04%   -0.254     +0.18%    +0.498   -1.80%
+  B_floor5|book25       3.74%    +0.04%   -0.114     +0.18%    +0.231   -2.95%
+  B_floor5|rnd25        3.74%    -0.99%   -4.253     -0.08%    -0.297  -15.17%
+  B_floor5|tal25        3.74%    -0.53%   -1.406     +0.01%    +0.032   -8.68%
+  B_floor5|book50       7.48%    +0.06%   -0.156     +0.31%    +0.267   -4.20%
+  B_floor5|rnd50        7.48%    -1.70%   -5.911     +0.05%    +0.153  -24.76%
+  B_floor5|tal50        7.48%    -1.07%   -2.345     -0.01%    -0.007  -16.41%
+
+  THE DECLARED DIAGNOSTIC -- does `d` accrue on every bar of a hold?
+  Spread = mean forward return of the LOW tail minus the HIGH tail.
+
+    universe    N    k   total bp   per bar       t
+   A_nofloor   10    1     +10.70    +10.70   +1.71
+   A_nofloor   10    2     +19.84     +9.92   +2.26
+   A_nofloor   10    5     +32.93     +6.59   +2.38
+   A_nofloor   10   10     +80.02     +8.00   +4.60
+   A_nofloor   10   15    +104.42     +6.96   +5.00
+
+   A_nofloor   25    1      +5.11     +5.11   +1.26
+   A_nofloor   25    2      +9.46     +4.73   +1.64
+   A_nofloor   25    5     +14.86     +2.97   +1.64
+   A_nofloor   25   10     +34.53     +3.45   +3.11
+   A_nofloor   25   15     +37.97     +2.53   +2.90
+
+   A_nofloor   50    1      +2.94     +2.94   +0.96
+   A_nofloor   50    2      +6.09     +3.04   +1.37
+   A_nofloor   50    5     +14.19     +2.84   +2.03
+   A_nofloor   50   10     +22.27     +2.23   +2.70
+   A_nofloor   50   15     +19.81     +1.32   +2.05
+
+    B_floor5   10    1      +6.38     +6.38   +1.15
+    B_floor5   10    2     +12.30     +6.15   +1.55
+    B_floor5   10    5     +11.47     +2.29   +0.93
+    B_floor5   10   10     +46.15     +4.62   +3.11
+    B_floor5   10   15     +46.32     +3.09   +2.69
+
+    B_floor5   25    1      +4.95     +4.95   +1.34
+    B_floor5   25    2      +9.50     +4.75   +1.78
+    B_floor5   25    5     +15.38     +3.08   +1.83
+    B_floor5   25   10     +30.48     +3.05   +3.14
+    B_floor5   25   15     +27.86     +1.86   +2.49
+
+    B_floor5   50    1      +2.60     +2.60   +0.89
+    B_floor5   50    2      +5.98     +2.99   +1.43
+    B_floor5   50    5     +12.28     +2.46   +1.88
+    B_floor5   50   10     +19.43     +1.94   +2.63
+    B_floor5   50   15     +21.69     +1.45   +2.50
+
+  E-prime over the HELD BOOK ...
+    A_nofloor|book10     names>=250 held     52   E-prime    52.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    A_nofloor|rnd10      names>=250 held      0   E-prime     0.00
+    A_nofloor|tal10      names>=250 held     52   E-prime    52.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    A_nofloor|book25     names>=250 held    184   E-prime   173.43
+    A_nofloor|rnd25      names>=250 held      0   E-prime     0.00
+    A_nofloor|tal25      names>=250 held    184   E-prime   173.43
+    A_nofloor|book50     names>=250 held    438   E-prime   140.64
+    A_nofloor|rnd50      names>=250 held    666   E-prime   666.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    A_nofloor|tal50      names>=250 held    438   E-prime   140.64
+    B_floor5|book10      names>=250 held     50   E-prime    50.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    B_floor5|rnd10       names>=250 held      0   E-prime     0.00
+    B_floor5|tal10       names>=250 held     50   E-prime    50.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    B_floor5|book25      names>=250 held    196   E-prime   186.40
+    B_floor5|rnd25       names>=250 held      2   E-prime     2.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    B_floor5|tal25       names>=250 held    196   E-prime   186.40
+    B_floor5|book50      names>=250 held    459   E-prime   181.93
+    B_floor5|rnd50       names>=250 held    656   E-prime   656.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    B_floor5|tal50       names>=250 held    459   E-prime   181.93
+
+  rotation nulls, 300 draws -- REPORTED, NOT DECISIVE (R7 corollary, four demonstrations) ...
+    A_nofloor|book10      99.0th /  97.0th   182s
+    A_nofloor|rnd10       50.0th /  75.7th   282s
+    A_nofloor|tal10       69.0th /  43.0th   380s
+    A_nofloor|book25      99.0th /  98.7th   480s
+    A_nofloor|rnd25       26.0th /  69.7th   580s
+    A_nofloor|tal25       66.3th /  57.7th   678s
+    A_nofloor|book50      98.3th /  93.0th   778s
+    A_nofloor|rnd50        8.0th /  69.7th   876s
+    A_nofloor|tal50       38.7th /  34.0th   976s
+    B_floor5|book10       98.7th /  97.3th   1075s
+    B_floor5|rnd10        51.0th /  74.3th   1174s
+    B_floor5|tal10        97.3th /  98.0th   1273s
+    B_floor5|book25       94.0th /  91.7th   1388s
+    B_floor5|rnd25         8.0th /  25.0th   1489s
+    B_floor5|tal25        69.7th /  57.0th   1597s
+    B_floor5|book50      100.0th /  98.7th   1711s
+    B_floor5|rnd50         1.3th /  82.0th   1868s
+    B_floor5|tal50        57.7th /  58.0th   1972s
+
+  best-of-18 floor: +0.171
+  cell                   move bp  GROSS SR  vs tail   M   B  NEU   V   C   F   E  ALL
+  A_nofloor|book10        +36.44    +0.440   +0.493 YES  no  YES YES YES YES YES  no
+  A_nofloor|rnd10          +0.68    +0.146        —  no  no  YES  no  no  no  no  no
+  A_nofloor|tal10          -0.80    -0.053        —  no  no  YES  no  no  no YES  no
+  A_nofloor|book25        +21.22    +0.348   +0.331 YES  no  YES YES YES  no YES  no
+  A_nofloor|rnd25          +0.29    +0.087        —  no  no  YES  no  no  no  no  no
+  A_nofloor|tal25          +0.18    +0.017        —  no  no  YES  no  no  no YES  no
+  A_nofloor|book50        +11.66    +0.217   +0.401 YES  no  YES YES YES  no YES  no
+  A_nofloor|rnd50          +0.13    +0.059        —  no  no  YES  no  no  no YES  no
+  A_nofloor|tal50          -1.11    -0.184        —  no  no  YES  no  no  no YES  no
+  B_floor5|book10         +32.96    +0.462   -0.036 YES  no  YES YES  no YES YES  no
+  B_floor5|rnd10           +0.63    +0.150        —  no  no  YES  no  no  no  no  no
+  B_floor5|tal10           +8.00    +0.498        —  no  no  YES  no  no  no YES  no
+  B_floor5|book25         +13.02    +0.231   +0.199 YES  no  YES YES YES  no YES  no
+  B_floor5|rnd25           -0.83    -0.297        —  no  no  YES  no  no  no  no  no
+  B_floor5|tal25           +0.30    +0.032        —  no  no  YES  no  no  no YES  no
+  B_floor5|book50         +12.84    +0.267   +0.274 YES  no  YES YES YES  no YES  no
+  B_floor5|rnd50           +0.27    +0.153        —  no  no  YES  no  no  no YES  no
+  B_floor5|tal50           +0.04    -0.007        —  no  no  YES  no  no  no YES  no
+
+  SURVIVORS: NONE
+  wrote data\d285_factor_neutral_summary.json   1972s

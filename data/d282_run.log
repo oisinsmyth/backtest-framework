@@ -1,0 +1,152 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 35s   1573 names x 4,187 bars
+  dividends: 35,713 applied, parse matches the loader to 5.6e-17 on 35,713 ex-date bars (0 open fallbacks)
+  overnight grid: 4,135,181 priced nights, 1,048 dropped for non-adjacency (provider holes), 1,048 live nights unpriced in total
+  largest 25 |overnight| moves (split-adjustment check): 4.35, 2.56, 2.38, 2.35, 2.32, 2.30, 2.23, 2.18, 2.13, 2.08 ...
+
+  L3  earned grid vs close-to-close: corr -0.0233, mean |overnight| is 45.0% of mean |close-to-close| over 4,135,181 cells   (D280 measured the gap at 51.5% of the body)
+  L2  4,000 held-night samples re-derived from the raw Bar objects: entry date, exit date and value all match (worst 0.0e+00)
+
+  universe: 2,621,967 name-nights before the unpriced-night mask
+built 19 books 38s
+
+  L1  LAG AUDIT -- the check D279 failed:
+      corr(hist_L[t-1], overnight[t]) : -0.0052   <-- WHAT THIS BOOK TRADES
+      corr(hist_L[t],   overnight[t]) : -0.0081   <-- legitimate for an overnight entry, DELIBERATELY UNUSED
+      corr(hist_L[t],   close-close[t]): +0.0737   <-- D279's contaminated quantity, for reference
+      hist_L|top10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0055 of the LAGGED score, 0.0073 of the contemporaneous one
+      hist_L|top25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0146 of the LAGGED score, 0.0176 of the contemporaneous one
+      hist_L|top50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0299 of the LAGGED score, 0.0346 of the contemporaneous one
+      hist_L_over_range|top10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0055 of the LAGGED score, 0.0357 of the contemporaneous one
+      hist_L_over_range|top25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0146 of the LAGGED score, 0.0512 of the contemporaneous one
+      hist_L_over_range|top50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names sit at pctile 0.0299 of the LAGGED score, 0.0690 of the contemporaneous one
+  ALL THREE GATES PASSED 43s
+
+scored 55s
+
+  HURDLE M -- mean move per trade against 2c = 10.0 bp/night.
+  D265: in this form the trade count cancels and the hit rate never appears.
+
+  cell                         move bp   raw gap  div drag    x 2c  breakeven     trades  M
+  base|all                      -5.657    -4.783    +0.874   -0.57    -3.443b  2,620,292  no
+  hist_L|top10                 -24.100   -21.883    +2.217   -2.41   -12.727b     31,831  no
+  hist_L|rnd10                  -6.636    -5.828    +0.808   -0.66    -3.979b     31,842  no
+  hist_L|per10                  -5.713    -4.481    +1.231   -0.57    -3.445b     31,846  no
+  hist_L|top25                 -18.330   -17.141    +1.189   -1.83    -9.827b     79,588  no
+  hist_L|rnd25                  -5.699    -4.895    +0.804   -0.57    -3.471b     79,600  no
+  hist_L|per25                  -4.344    -3.509    +0.834   -0.43    -2.769b     79,612  no
+  hist_L|top50                 -13.602   -12.717    +0.885   -1.36    -7.435b    159,193  no
+  hist_L|rnd50                  -5.583    -4.606    +0.978   -0.56    -3.415b    159,203  no
+  hist_L|per50                  -5.201    -4.278    +0.923   -0.52    -3.213b    159,217  no
+  hist_L_over_range|top10      -10.621    -8.324    +2.297   -1.06    -5.975b     31,741  no
+  hist_L_over_range|rnd10       -6.670    -5.854    +0.817   -0.67    -3.934b     31,845  no
+  hist_L_over_range|per10       -5.530    -4.663    +0.868   -0.55    -3.387b     31,847  no
+  hist_L_over_range|top25       -8.959    -7.640    +1.319   -0.90    -5.112b     79,495  no
+  hist_L_over_range|rnd25       -5.034    -4.258    +0.776   -0.50    -3.120b     79,603  no
+  hist_L_over_range|per25       -6.258    -5.426    +0.832   -0.63    -3.749b     79,609  no
+  hist_L_over_range|top50       -8.221    -7.156    +1.065   -0.82    -4.739b    159,103  no
+  hist_L_over_range|rnd50       -5.046    -4.057    +0.988   -0.50    -3.126b    159,220  no
+  hist_L_over_range|per50       -4.840    -3.976    +0.864   -0.48    -3.041b    159,229  no
+
+  cell                          expo    turnover  net CAGR   net SR  GROSS CAGR  GROSS SR    maxDD
+  base|all                   61.50%   5,240,584  -21.92%   -2.995     -8.82%    -1.018 -98.36%
+  hist_L|top10                0.75%      63,662   -0.64%   -2.666     -0.46%    -1.830 -10.18%
+  hist_L|rnd10                0.75%      63,684   -0.32%   -2.358     -0.13%    -0.893  -5.12%
+  hist_L|per10                0.75%      63,692   -0.30%   -2.562     -0.11%    -0.870  -4.80%
+  hist_L|top25                1.87%     159,176   -1.33%   -3.026     -0.87%    -1.892 -19.99%
+  hist_L|rnd25                1.87%     159,200   -0.74%   -2.738     -0.27%    -0.936 -11.61%
+  hist_L|per25                1.87%     159,224   -0.67%   -2.647     -0.21%    -0.746 -10.64%
+  hist_L|top50                3.74%     318,386   -2.21%   -2.922     -1.28%    -1.615 -31.02%
+  hist_L|rnd50                3.74%     318,406   -1.47%   -2.861     -0.53%    -0.965 -21.75%
+  hist_L|per50                3.74%     318,434   -1.43%   -2.894     -0.50%    -0.930 -21.26%
+  hist_L_over_range|top10     0.75%      63,482   -0.39%   -2.686     -0.20%    -1.323  -6.28%
+  hist_L_over_range|rnd10     0.75%      63,690   -0.31%   -2.378     -0.13%    -0.893  -5.09%
+  hist_L_over_range|per10     0.75%      63,694   -0.29%   -2.373     -0.11%    -0.795  -4.77%
+  hist_L_over_range|top25     1.87%     158,990   -0.89%   -3.026     -0.43%    -1.360 -13.84%
+  hist_L_over_range|rnd25     1.87%     159,206   -0.71%   -2.616     -0.24%    -0.819 -11.14%
+  hist_L_over_range|per25     1.87%     159,218   -0.77%   -2.869     -0.30%    -1.041 -12.01%
+  hist_L_over_range|top50     3.74%     318,206   -1.71%   -3.084     -0.78%    -1.321 -24.92%
+  hist_L_over_range|rnd50     3.74%     318,440   -1.41%   -2.731     -0.48%    -0.857 -21.05%
+  hist_L_over_range|per50     3.74%     318,458   -1.40%   -2.667     -0.46%    -0.817 -20.84%
+
+  E-prime over the HELD BOOK, on the OVERNIGHT grid 55s ...
+    base|all                   names>=250 held  1286   E-prime     4.57   96s
+    hist_L|top10               names>=250 held     2   E-prime     2.00   96s
+    hist_L|rnd10               names>=250 held     0   E-prime     0.00   96s
+    hist_L|per10               names>=250 held    13   E-prime     3.09   96s
+    hist_L|top25               names>=250 held    63   E-prime    63.00   96s
+    hist_L|rnd25               names>=250 held     0   E-prime     0.00   96s
+    hist_L|per25               names>=250 held    34   E-prime     3.41   96s
+    hist_L|top50               names>=250 held   186   E-prime   177.04   96s
+    hist_L|rnd50               names>=250 held     0   E-prime     0.00   96s
+    hist_L|per50               names>=250 held    71   E-prime     4.13   97s
+    hist_L_over_range|top10    names>=250 held     1   E-prime     1.00   97s
+    hist_L_over_range|rnd10    names>=250 held     0   E-prime     0.00   97s
+    hist_L_over_range|per10    names>=250 held    13   E-prime     2.68   97s
+    hist_L_over_range|top25    names>=250 held    15   E-prime    15.00   97s
+    hist_L_over_range|rnd25    names>=250 held     0   E-prime     0.00   97s
+    hist_L_over_range|per25    names>=250 held    37   E-prime     4.02   97s
+    hist_L_over_range|top50    names>=250 held    76   E-prime    76.00   97s
+    hist_L_over_range|rnd50    names>=250 held     0   E-prime     0.00   97s
+    hist_L_over_range|per50    names>=250 held    66   E-prime     3.34   97s
+
+  rotation nulls, 300 draws each -- REPORTED, NOT DECISIVE (R7 corollary; D279 established H is broken on this fixture) ...
+    base|all                   100.0th /  98.3th   null p50 -3.452 p95 -3.408   151s
+    hist_L|top10                28.0th /   0.0th   null p50 -2.558 p95 -2.238   205s
+    hist_L|rnd10                95.7th /  22.3th   null p50 -2.725 p95 -2.398   258s
+    hist_L|per10                98.0th /  17.0th   null p50 -2.830 p95 -2.608   311s
+    hist_L|top25                70.0th /   0.0th   null p50 -3.113 p95 -2.804   365s
+    hist_L|rnd25                96.3th /  58.0th   null p50 -3.081 p95 -2.821   419s
+    hist_L|per25               100.0th /  96.0th   null p50 -3.159 p95 -2.987   473s
+    hist_L|top50                99.0th /   0.0th   null p50 -3.319 p95 -3.062   526s
+    hist_L|rnd50                99.7th /  74.3th   null p50 -3.246 p95 -3.055   579s
+    hist_L|per50               100.0th /  74.3th   null p50 -3.233 p95 -3.123   632s
+    hist_L_over_range|top10     26.3th /   0.3th   null p50 -2.547 p95 -2.051   685s
+    hist_L_over_range|rnd10     93.7th /  20.7th   null p50 -2.694 p95 -2.334   738s
+    hist_L_over_range|per10    100.0th /  89.7th   null p50 -2.744 p95 -2.545   791s
+    hist_L_over_range|top25     54.0th /   0.0th   null p50 -3.035 p95 -2.617   847s
+    hist_L_over_range|rnd25     96.0th /  92.0th   null p50 -3.074 p95 -2.689   903s
+    hist_L_over_range|per25    100.0th /  68.3th   null p50 -3.174 p95 -3.025   957s
+    hist_L_over_range|top50     86.0th /   0.0th   null p50 -3.249 p95 -3.011   1015s
+    hist_L_over_range|rnd50    100.0th /  95.3th   null p50 -3.239 p95 -3.037   1073s
+    hist_L_over_range|per50    100.0th /  74.7th   null p50 -3.013 p95 -2.889   1131s
+
+  best-of-19 floor: -1.503
+
+  RANKING CONTRIBUTION -- top-N minus each control, gross and net.
+  Every night is a round trip for EVERY book, so rnd-N's fee
+  disadvantage should VANISH: a turnover ratio far from 1.0x
+  falsifies this runner's cost model, not the market.
+
+  arm                     N   vs rnd net  vs rnd GROSS  vs per net  vs per GROSS   turnover ratio
+  hist_L                 10       -0.308        -0.937      -0.105        -0.960   rnd 1.00x per 1.00x
+  hist_L                 25       -0.289        -0.956      -0.380        -1.146   rnd 1.00x per 1.00x
+  hist_L                 50       -0.061        -0.649      -0.028        -0.685   rnd 1.00x per 1.00x
+  hist_L_over_range      10       -0.308        -0.429      -0.312        -0.528   rnd 1.00x per 1.00x
+  hist_L_over_range      25       -0.409        -0.540      -0.157        -0.319   rnd 1.00x per 1.00x
+  hist_L_over_range      50       -0.352        -0.464      -0.417        -0.504   rnd 1.00x per 1.00x
+
+  cell                         move bp  net CAGR  GROSS SR   M   V   C   F  E-prime   (H)  ALL
+  base|all                      -5.657  -21.92%    -1.018  no  no  no  no      YES   YES  no
+  hist_L|top10                 -24.100   -0.64%    -1.830  no  no  no  no       no    no  no
+  hist_L|rnd10                  -6.636   -0.32%    -0.893  no  no  no  no       no    no  no
+  hist_L|per10                  -5.713   -0.30%    -0.870  no  no  no  no      YES    no  no
+  hist_L|top25                 -18.330   -1.33%    -1.892  no  no  no  no      YES    no  no
+  hist_L|rnd25                  -5.699   -0.74%    -0.936  no  no  no  no       no    no  no
+  hist_L|per25                  -4.344   -0.67%    -0.746  no  no  no  no      YES   YES  no
+  hist_L|top50                 -13.602   -2.21%    -1.615  no  no  no  no      YES    no  no
+  hist_L|rnd50                  -5.583   -1.47%    -0.965  no  no  no  no       no    no  no
+  hist_L|per50                  -5.201   -1.43%    -0.930  no  no  no  no      YES    no  no
+  hist_L_over_range|top10      -10.621   -0.39%    -1.323  no  no  no  no       no    no  no
+  hist_L_over_range|rnd10       -6.670   -0.31%    -0.893  no  no  no  no       no    no  no
+  hist_L_over_range|per10       -5.530   -0.29%    -0.795  no  no  no  no       no    no  no
+  hist_L_over_range|top25       -8.959   -0.89%    -1.360  no  no  no  no      YES    no  no
+  hist_L_over_range|rnd25       -5.034   -0.71%    -0.819  no  no  no  no       no    no  no
+  hist_L_over_range|per25       -6.258   -0.77%    -1.041  no  no  no  no      YES    no  no
+  hist_L_over_range|top50       -8.221   -1.71%    -1.321  no  no  no  no      YES    no  no
+  hist_L_over_range|rnd50       -5.046   -1.41%    -0.857  no  no  no  no       no   YES  no
+  hist_L_over_range|per50       -4.840   -1.40%    -0.817  no  no  no  no      YES    no  no
+
+  SURVIVORS: NONE
+
+wrote data\d282_overnight_summary.json   1131s

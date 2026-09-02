@@ -1,0 +1,93 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 36s   1573 names x 4,187 bars
+  dividends: 35,713 applied, 35,713 ex-date bars, parse agrees with the loader to 5.6e-17 (0 open-price fallbacks)
+  overnight grid: 4,135,181 priced nights, 1,048 dropped for non-adjacency, 1,048 live nights unpriced
+  SIGN AUDIT PASSED -- S1 a rising night pays a long +97866.7 bp; S2 a dividend adds +9670.0 bp to it
+
+  built 13 books 39s
+  LAG AUDIT PASSED at N = 10, 25, 50
+
+  HURDLE M -- mean move per trade against 2c = 10.0 bp/night,
+  and HURDLE B -- breakeven half-spread against 15 bp/side.
+
+  cell         move bp   raw gap     div    x2c  be bp/side   med px   p10 px    <$5     trades
+  base          +5.654    +4.780  -0.874  +0.57       2.077    36.86     7.12   6.5%  2,621,967
+  lng10        +24.100   +21.884  -2.217  +2.41      11.363    13.19     1.92  25.7%     31,841
+  rnd10         +5.703    +4.438  -1.264  +0.57       2.096    36.95     7.07   6.6%     31,853
+  per10         +5.130    +4.836  -0.294  +0.51       1.828    42.34    11.15   1.8%     31,856
+  tal10        +18.487   +16.836  -1.652  +1.85       8.589    12.78     1.91  26.1%     31,847
+  lng25        +18.347   +17.159  -1.188  +1.83       8.470    16.44     2.56  20.5%     79,613
+  rnd25         +5.237    +3.998  -1.239  +0.52       1.867    36.66     7.11   6.6%     79,621
+  per25         +4.374    +3.452  -0.921  +0.44       1.438    51.42    13.47   3.4%     79,644
+  tal25        +14.168   +12.919  -1.249  +1.42       6.377    16.42     2.57  20.5%     79,616
+  lng50        +13.625   +12.740  -0.885  +1.36       6.082    20.71     3.19  16.4%    159,243
+  rnd50         +5.874    +5.033  -0.841  +0.59       2.183    36.84     7.16   6.5%    159,254
+  per50         +4.861    +3.980  -0.880  +0.49       1.668    37.81    10.35   5.8%    159,278
+  tal50        +10.751    +9.942  -0.809  +1.08       4.654    20.80     3.20  16.3%    159,251
+
+  cell          expo  net CAGR   net SR  GROSS CAGR  GROSS SR    maxDD  top name
+  base       61.54%    -6.79%   -1.043     +8.84%    +1.018  -70.27%     0.9%
+  lng10       0.75%    +0.27%   +0.960     +0.46%    +1.830   -0.82%     4.6%
+  rnd10       0.75%    -0.08%   -0.872     +0.11%    +0.862   -1.44%     6.9%
+  per10       0.75%    -0.09%   -1.072     +0.10%    +0.881   -1.63%    24.0%
+  tal10       0.75%    +0.16%   +0.606     +0.35%    +1.579   -0.48%     5.9%
+  lng25       1.87%    +0.40%   +0.712     +0.87%    +1.894   -1.05%     2.4%
+  rnd25       1.87%    -0.22%   -0.993     +0.25%    +0.838   -3.78%     8.7%
+  per25       1.87%    -0.26%   -1.269     +0.21%    +0.790   -4.66%    16.9%
+  tal25       1.87%    +0.20%   +0.316     +0.68%    +1.638   -1.03%     3.3%
+  lng50       3.74%    +0.35%   +0.256     +1.30%    +1.617   -3.27%     2.1%
+  rnd50       3.74%    -0.39%   -0.937     +0.56%    +0.985   -6.37%     2.9%
+  per50       3.74%    -0.48%   -1.180     +0.46%    +0.867   -7.90%     9.3%
+  tal50       3.74%    +0.08%   -0.093     +1.03%    +1.457   -3.70%     2.5%
+
+  E-prime over the HELD BOOK, on the OVERNIGHT grid ...
+    base       names>=250 held   1288   E-prime     4.57
+    lng10      names>=250 held      2   E-prime     2.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    rnd10      names>=250 held      0   E-prime     0.00
+    per10      names>=250 held     12   E-prime     3.35
+    tal10      names>=250 held      3   E-prime     3.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    lng25      names>=250 held     63   E-prime    63.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    rnd25      names>=250 held      0   E-prime     0.00
+    per25      names>=250 held     29   E-prime     3.04
+    tal25      names>=250 held     65   E-prime    65.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    lng50      names>=250 held    186   E-prime   177.05
+    rnd50      names>=250 held      0   E-prime     0.00
+    per50      names>=250 held     66   E-prime     3.38
+    tal50      names>=250 held    186   E-prime   186.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+
+  rotation nulls, 300 draws each -- REPORTED, NOT DECISIVE (R7 corollary; three measured demonstrations) ...
+    base       100.0th /  99.0th   146s
+    lng10      100.0th / 100.0th   200s
+    rnd10       72.0th /  61.0th   252s
+    per10       94.7th /  91.7th   304s
+    tal10      100.0th / 100.0th   357s
+    lng25      100.0th / 100.0th   409s
+    rnd25       81.0th /  38.3th   461s
+    per25       99.7th /  85.0th   514s
+    tal25      100.0th / 100.0th   565s
+    lng50      100.0th / 100.0th   618s
+    rnd50       97.3th /  90.7th   671s
+    per50      100.0th /  89.0th   723s
+    tal50      100.0th / 100.0th   777s
+
+  best-of-13 floor: +0.117
+  NOTE: this floor prices TEN CELLS. It cannot price a DIRECTION chosen after
+  D280's 165 statistics -- see the pre-registration's ledger.
+
+  cell         move bp    be bp  GROSS SR   M   B   V   C   F   E  (H)  ALL
+  base          +5.654     2.08    +1.018  no  no  no  no  no YES  YES  no
+  lng10        +24.100    11.36    +1.830 YES  no YES YES YES  no  YES  no
+  rnd10         +5.703     2.10    +0.862  no  no  no  no  no  no   no  no
+  per10         +5.130     1.83    +0.881  no  no  no  no  no YES   no  no
+  tal10        +18.487     8.59    +1.579 YES  no YES  no YES YES  YES  no
+  lng25        +18.347     8.47    +1.894 YES  no YES YES YES YES  YES  no
+  rnd25         +5.237     1.87    +0.838  no  no  no  no  no  no   no  no
+  per25         +4.374     1.44    +0.790  no  no  no  no  no YES   no  no
+  tal25        +14.168     6.38    +1.638 YES  no YES  no YES YES  YES  no
+  lng50        +13.625     6.08    +1.617 YES  no YES YES YES YES  YES  no
+  rnd50         +5.874     2.18    +0.985  no  no  no  no  no  no   no  no
+  per50         +4.861     1.67    +0.867  no  no  no  no  no YES   no  no
+  tal50        +10.751     4.65    +1.457 YES  no YES  no  no YES  YES  no
+
+  SURVIVORS: NONE
+  wrote data\d284_overnight_long_summary.json   777s

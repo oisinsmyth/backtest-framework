@@ -1,0 +1,122 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 35s
+  built 18 books 48s
+    N=10  bars where the LONG entry already satisfies sig's exit:   0.0%;  SHORT:   0.0%
+    N=25  bars where the LONG entry already satisfies sig's exit:   0.1%;  SHORT:   0.2%
+    N=50  bars where the LONG entry already satisfies sig's exit:   0.4%;  SHORT:   0.8%
+
+  HURDLE M vs 2c = 10 bp; B1 vs 15 bp/side; B2 vs THIS BOOK'S OWN measured spread.
+
+  cell       move/trade    run  breakeven  B2 spread     NEU    trades  med move
+  disp10         +36.44   6.24      14.35      66.36  +0.126    10,210    +82.11
+  sig10          +28.69  20.70       1.68      58.47  +0.146     8,453   +244.18
+  hyst10         +38.11   8.82       9.61      63.99  +0.127     9,322   +102.69
+  cap10          +15.86   3.80       3.03      57.36  +0.105    10,231    -14.69
+  rnd10           +0.68   1.01      -0.36      30.20  +0.047    62,976     +0.00
+  tal10           -0.80   1.71      -1.68      66.36  +0.002    37,170     +0.00
+  disp25         +21.22   7.07       5.83      55.55  +0.159    22,529    +91.05
+  sig25          +34.99  20.43       3.81      48.54  +0.172    18,501   +241.15
+  hyst25         +25.01   9.91       5.39      53.43  +0.172    20,629   +113.02
+  cap25          +10.39   4.37       1.79      48.36  +0.108    22,526     -1.40
+  rnd25           +0.29   1.03      -0.58      30.27  +0.036   154,397     +0.00
+  tal25           +0.18   1.75      -1.11      55.55  +0.004    90,985     +0.00
+  disp50         +11.66   7.77       0.40      47.56  +0.188    41,000    +88.75
+  sig50          +25.84  20.02      -0.07      41.52  +0.193    33,274   +221.78
+  hyst50         +14.49  10.99      -0.13      45.27  +0.185    37,327   +112.35
+  cap50           +0.19   4.88      -3.28      41.39  +0.148    40,984     +5.33
+  rnd50           +0.13   1.06      -0.67      30.30  -0.017   299,330     +0.00
+  tal50           -1.11   1.77      -1.76      47.56  +0.007   180,030     +0.00
+
+  cell         expo  net CAGR   net SR  GROSS SR    maxDD
+  disp10     0.15%    +0.02%   +0.221    +0.440   -0.15%
+  sig10      0.15%    +0.00%   -0.064    +0.216   -0.09%
+  hyst10     0.15%    +0.01%   +0.114    +0.354   -0.15%
+  cap10      0.15%    +0.00%   -0.081    +0.214   -0.25%
+  rnd10      1.50%    -0.35%   -2.395    +0.146   -5.70%
+  tal10      1.50%    -0.24%   -0.701    -0.053   -4.13%
+  disp25     0.15%    +0.01%   +0.027    +0.348   -0.13%
+  sig25      0.15%    +0.00%   -0.030    +0.349   -0.08%
+  hyst25     0.15%    +0.01%   +0.012    +0.347   -0.10%
+  cap25      0.15%    -0.00%   -0.178    +0.241   -0.18%
+  rnd25      3.74%    -0.89%   -3.828    +0.087  -13.78%
+  tal25      3.74%    -0.53%   -1.206    +0.017   -9.01%
+  disp50     0.15%    +0.00%   -0.175    +0.217   -0.11%
+  sig50      0.15%    +0.00%   -0.155    +0.304   -0.06%
+  hyst50     0.15%    +0.00%   -0.180    +0.223   -0.10%
+  cap50      0.15%    -0.01%   -0.525    -0.024   -0.17%
+  rnd50      7.48%    -1.73%   -5.368    +0.059  -25.28%
+  tal50      7.48%    -1.18%   -2.265    -0.184  -18.17%
+
+  G2, THE LOAD-BEARING COMPARISON -- cost-cutting against edge-sharpening.
+  Both are measured against `disp`, which is D285's rule.
+
+     N   sig - disp  hyst - disp  reading
+    10       -12.67        -4.74  amortisation -- `sig` found nothing
+    25        -2.02        -0.44  amortisation -- `sig` found nothing
+    50        -0.47        -0.53  THE EXIT CARRIES INFORMATION
+
+  E-prime over the HELD BOOK ...
+    disp10    names>=250 held     52   E-prime    52.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    sig10     names>=250 held    220   E-prime   160.26
+    hyst10    names>=250 held     85   E-prime    85.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    cap10     names>=250 held      1   E-prime     1.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    rnd10     names>=250 held      0   E-prime     0.00
+    tal10     names>=250 held     52   E-prime    52.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    disp25    names>=250 held    184   E-prime   173.43
+    sig25     names>=250 held    513   E-prime    70.84
+    hyst25    names>=250 held    267   E-prime   208.89
+    cap25     names>=250 held     69   E-prime    69.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    rnd25     names>=250 held      0   E-prime     0.00
+    tal25     names>=250 held    184   E-prime   173.43
+    disp50    names>=250 held    438   E-prime   140.64
+    sig50     names>=250 held    860   E-prime    27.63
+    hyst50    names>=250 held    576   E-prime    86.48
+    cap50     names>=250 held    262   E-prime   260.25
+    rnd50     names>=250 held    666   E-prime   666.00  <-- ~= N: identity matrix, E-prime has stopped measuring
+    tal50     names>=250 held    438   E-prime   140.64
+
+  rotation nulls, 300 draws, threaded -- REPORTED, NOT DECISIVE (R7 corollary) ...
+    light_score agrees EXACTLY with RP.score on the real book
+    [1/18] disp10                      212s
+    [2/18] sig10                       212s
+    [3/18] hyst10                      212s
+    [4/18] cap10                       212s
+    [5/18] rnd10                       212s
+    [6/18] tal10                       212s
+    [7/18] disp25                      213s
+    [8/18] sig25                       213s
+    [9/18] hyst25                      213s
+    [10/18] cap25                       213s
+    [11/18] rnd25                       213s
+    [12/18] tal25                       213s
+    [13/18] disp50                      213s
+    [14/18] sig50                       213s
+    [15/18] hyst50                      287s
+    [16/18] cap50                       287s
+    [17/18] rnd50                       288s
+    [18/18] tal50                       289s
+
+  best-of-18 floor: +0.173
+
+  cell           move       be      B2  GROSS SR   M  B1  B2  NEU   V   C   F   E  ALL
+  disp10       +36.44    14.35   66.36    +0.440 YES  no  no  YES YES YES YES YES  no
+  sig10        +28.69     1.68   58.47    +0.216 YES  no  no  YES YES YES  no YES  no
+  hyst10       +38.11     9.61   63.99    +0.354 YES  no  no  YES YES YES  no YES  no
+  cap10        +15.86     3.03   57.36    +0.214 YES  no  no  YES YES YES  no  no  no
+  rnd10         +0.68    -0.36   30.20    +0.146  no  no  no  YES  no  no  no  no  no
+  tal10         -0.80    -1.68   66.36    -0.053  no  no  no  YES  no  no  no YES  no
+  disp25       +21.22     5.83   55.55    +0.348 YES  no  no  YES YES YES  no YES  no
+  sig25        +34.99     3.81   48.54    +0.349 YES  no  no  YES YES YES  no YES  no
+  hyst25       +25.01     5.39   53.43    +0.347 YES  no  no  YES YES YES  no YES  no
+  cap25        +10.39     1.79   48.36    +0.241 YES  no  no  YES  no YES  no YES  no
+  rnd25         +0.29    -0.58   30.27    +0.087  no  no  no  YES  no  no  no  no  no
+  tal25         +0.18    -1.11   55.55    +0.017  no  no  no  YES  no  no  no YES  no
+  disp50       +11.66     0.40   47.56    +0.217 YES  no  no  YES YES YES  no YES  no
+  sig50        +25.84    -0.07   41.52    +0.304 YES  no  no  YES YES YES  no YES  no
+  hyst50       +14.49    -0.13   45.27    +0.223 YES  no  no  YES YES YES  no YES  no
+  cap50         +0.19    -3.28   41.39    -0.024  no  no  no  YES  no  no  no YES  no
+  rnd50         +0.13    -0.67   30.30    +0.059  no  no  no  YES  no  no  no YES  no
+  tal50         -1.11    -1.76   47.56    -0.184  no  no  no  YES  no  no  no YES  no
+
+  SURVIVORS: NONE
+  wrote data\d286_exit_rules_summary.json   378s

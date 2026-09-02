@@ -1,0 +1,28 @@
+﻿fetching SPLITS and DIVIDENDS for 24 symbols (48 calls)
+
+  [1/24] CSCO   35 dividends
+  [2/24] TXN    35 dividends
+  [3/24] UNP    35 dividends
+  [4/24] BA      9 dividends
+  [5/24] INTC   27 dividends
+  [6/24] MSFT   35 dividends
+  [7/24] F      30 dividends
+  [8/24] SLB    35 dividends
+  [9/24] C      35 dividends
+  [10/24] GM     25 dividends
+  [11/24] BMY    35 dividends
+  [12/24] PSX    35 dividends
+  [13/24] BBY    34 dividends
+  [14/24] UAA     0 dividends
+  [15/24] NRG    35 dividends
+  [16/24] HWM    30 dividends   SPLITS [['2020-04-01T00:00:00', 1.304]]
+  [17/24] WYNN   23 dividends
+  [18/24] ILMN    0 dividends   SPLITS [['2024-06-25T00:00:00', 1.028]]
+  [19/24] DVN    36 dividends
+  [20/24] GME     5 dividends   SPLITS [['2022-07-22T00:00:00', 4.0]]
+  [21/24] NOW     0 dividends   SPLITS [['2025-12-18T00:00:00', 5.0]]
+  [22/24] LULU    0 dividends
+  [23/24] BMRN    0 dividends
+  [24/24] CX     11 dividends
+
+wrote cohort4_intraday_15m_raw_events.json: 4 splits, 545 dividends
