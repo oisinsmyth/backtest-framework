@@ -152,6 +152,72 @@ def volume_scores(vol, px, rets, live, bod=None):
     return out
 
 
+INTRABAR_SCORES = ("upper_wick", "lower_wick", "wick_asym", "body_frac",
+                   "close_in_range", "range_frac", "gap_frac")
+
+
+def intrabar_scores(g, live):
+    """Intrabar SHAPE, the axis D280 measured as genuinely independent.
+
+    D280 G3 found 16 OHLC-derivative terms carrying **13.50-15.76 effective
+    inputs**, against 2.87 for nine price scores (D268) -- the prediction that
+    they would collapse was WRONG, and that is why this family is in D288's mine
+    rather than more price transforms.
+
+    These live inline in `d280_delta_range_precheck.main()` and
+    `d280_combined_forecast.main()` and have never been a function. Lifted
+    verbatim -- same formulae, same guard -- so the mine calls one thing rather
+    than pasting ten lines. **Already ragged-safe**: they are pure per-bar
+    arithmetic on `build_grids` output, which maps each bar's own timestamp onto
+    the union grid, so nothing indexes a symbol-local array by a global bar.
+
+    UNLAGGED, matching every other score family here. Consumers (`top_n`,
+    `neutral_book`) call `lag1` themselves; lagging here would double-lag them.
+
+    `range_frac` is the fractional range `(H-L)/C` D280 used to normalise, and
+    `gap_frac` is the overnight leg `O/C_prev - 1` -- the window D280 part 4
+    measured as carrying the whole effect. Both are shape, not level, so they
+    are comparable across names."""
+    O, H, L, C = g["open"], g["high"], g["low"], g["close"]
+
+    # MALFORMED BARS ARE MASKED, NOT CLAMPED. An assertion here caught five bars
+    # in 4,137,239 where the CLOSE sits BELOW the LOW -- MWR 2014-05-09
+    # (O 25.3800 H 25.4100 L 25.3700 C 24.9893), AVV 2014-05-12, TLLP
+    # 2016-07-28. In every case the close carries decimals the OHLC do not,
+    # which is an ex-dividend adjustment applied to the close and not to the
+    # high and low: a provider artefact, not a market event.
+    #
+    # Nothing in the build gates looks for this. Gate A checks split
+    # discontinuities and gate B checks large single-bar moves; neither sees an
+    # OHLC ORDERING violation, so these five have been in the fixture unnoticed.
+    #
+    # A shape cannot be computed from a bar that is not a bar, so the cells go
+    # NaN. Clamping would invent a shape; dropping the symbol would spend three
+    # names on five bars.
+    valid = (H >= np.maximum(O, C) - 1e-12) & (L <= np.minimum(O, C) + 1e-12)
+    live = live & valid
+
+    rng = H - L
+    # A ZERO-RANGE BAR IS NOT A SHAPE EITHER -- 17,886 of them (0.43%), stub and
+    # halted sessions where high == low. Their ratios would all be 0/0.
+    safe = np.where(rng > 0, rng, np.nan)
+    body_hi = np.maximum(O, C)
+    body_lo = np.minimum(O, C)
+    prev_c = np.full_like(C, np.nan)
+    ok = live[:, 1:] & live[:, :-1]
+    prev_c[:, 1:] = np.where(ok, C[:, :-1], np.nan)
+    out = {
+        "upper_wick": (H - body_hi) / safe,
+        "lower_wick": (body_lo - L) / safe,
+        "wick_asym": ((H - body_hi) - (body_lo - L)) / safe,
+        "body_frac": (C - O) / safe,
+        "close_in_range": (C - L) / safe,
+        "range_frac": np.where(C > 0, rng / C, np.nan),
+        "gap_frac": np.where(prev_c > 0, O / prev_c - 1.0, np.nan),
+    }
+    return {k: np.where(live, v, np.nan) for k, v in out.items()}
+
+
 # --------------------------------------------------------------------------
 # the self-test -- equivalence against the original, on the RECTANGULAR panel
 # --------------------------------------------------------------------------
@@ -224,6 +290,32 @@ def selftest() -> int:
             "normalisation is not doing anything, which contradicts D269")
     print("  [3] bod=None differs from bod-grouped, as the declared estimator "
           "change requires")
+
+    # intrabar shape, on the daily panel where the mine will use it
+    P1 = _load("d280p1", "d280_forecast_precheck.py")
+    dg = P1.build_grids(dpanel, dcleaned)
+    isc = intrabar_scores(dg, dpanel.live)
+    for k, v in isc.items():
+        if np.isinf(v).any():
+            raise AssertionError(f"{k} produced an infinity")
+        if np.isfinite(v[~dpanel.live]).any():
+            raise AssertionError(f"{k} is finite OFF the live mask")
+    # the ratios that are shares of the range must lie in [0, 1]
+    for k in ("upper_wick", "lower_wick", "close_in_range"):
+        v = isc[k][np.isfinite(isc[k])]
+        if v.size and (v.min() < -1e-12 or v.max() > 1 + 1e-12):
+            raise AssertionError(f"{k} leaves [0,1]: {v.min():.4f}..{v.max():.4f}")
+    covered = {k: int(np.isfinite(v).sum()) for k, v in isc.items()}
+    dO, dH, dL, dC = dg["open"], dg["high"], dg["low"], dg["close"]
+    malformed = int((dpanel.live
+                     & ~((dH >= np.maximum(dO, dC) - 1e-12)
+                         & (dL <= np.minimum(dO, dC) + 1e-12))).sum())
+    zero_rng = int((dpanel.live & (dH == dL)).sum())
+    print(f"  [4] intrabar shape: no infinities, nothing finite off the live mask,")
+    print(f"      range shares within [0,1]; finite cells "
+          f"{min(covered.values()):,}..{max(covered.values()):,}")
+    print(f"  [4b] masked {malformed} malformed bar(s) (close outside high-low) and "
+          f"{zero_rng:,} zero-range bars")
 
     print("\n  ALL SELF-TESTS PASSED. No cell scored.")
     return 0
