@@ -179,3 +179,79 @@ confluence on `close_in_range`. Any successor testing those constructions
 It does not reopen D288, promote `close_in_range`, or authorise a holdout read.
 D288 is closed with zero survivors and **the holdout remains unspent** — which is
 the asset this whole pipeline exists to protect.
+
+---
+
+# AMENDMENT, 2026-09-02 — both "tightenings" above are wrong
+
+The principal rejected both, and was right both times. The original text is left
+standing because it has been quoted and the error is worth seeing.
+
+## 1. Multiplicity does NOT compound across stages
+
+**What the record said:** looks multiply, `5^4 = 625`, and a stage-1 selection
+contaminates everything downstream.
+
+**Why that is wrong:** selecting on data that is already burnt does not invalidate
+a later test on data never touched. **The mining fixture does not become more
+spent.** 625 in-sample combinations followed by ONE holdout test is still one test
+at its stated level.
+
+A wider search costs the **prior**, not the p-value — the survivor is likelier to
+be noise, so a holdout read is likelier to be wasted. That is an economic cost on
+a scarce resource, and the record stated it as a statistical invalidity.
+
+**What survives — and it is the useful distinction:** in-sample numbers are **free
+for selection and expensive as evidence.** Stages 1–3 are selection; only stage 4
+is evidence. That makes an in-sample floor a **triage device** — *is this worth
+one of my scarce holdout reads?* — not a verdict on whether the effect is real.
+
+**This reframes D288's own closure.** Gate A read as a verdict on
+`close_in_range`. It was a triage decision: *not worth a holdout read by that
+criterion*. The signal is not thereby shown to be absent, and its t of +15.88
+against a null max of +9.34 still stands as what it always was.
+
+**The ledger counts HOLDOUT READS, not in-sample looks.** In-sample looks stay
+disclosed — what shaped a search is worth knowing — but as bookkeeping, not a bar.
+The 308 post-closure looks in D288's addendum are therefore disclosure, not a
+floor anything must clear. Multiplicity compounds in exactly one place: iterating
+*through* the holdout, which [R8](../RULES.md#r8) already governs.
+
+## 2. Exits are not barred from creating edge — they are COUPLED to re-entry
+
+**What the record said:** exits cannot create edge; the empirical uplift here is
+~1.0×; stage 2 supplies margin, never rescue.
+
+**Why that is wrong:** it cited D285's cap **cutting losers** — touched trades
+ending −860 bp, only 23.2% profitable — as evidence against exits. That is a
+measurement of an exit **working**. The inference does not follow from its own
+citation.
+
+**The correct reading:** the exit improved per-trade quality, and the money was
+lost because **exiting forced re-entry into a weak signal** — earlier exit → more
+noise → re-enter → repeat. That is a failure of the **entry** rule the exit handed
+control back to.
+
+**The real constraint is coupling, not prohibition. An exit cannot be evaluated at
+trade level.** A stop that improves the average trade and hands the freed slot to
+a coin flip is a book-level loss wearing a trade-level win. This is precisely why
+D286's `disp` beat all three designed exits: it exited on **displacement**, so the
+freed slot always went to a *better-ranked* name instead of back to the same weak
+signal.
+
+### Stage 2's gate, restated
+
+| | gate |
+|---|---|
+| **2a** | report the exit's effect on **per-trade quality** AND on **the book including whatever re-enters**, and say which moved. An exit that improves trades while the book worsens has located a **re-entry** problem — a finding about the entry rule, not the exit |
+| **2b** | beat the **undesigned exit** (hold to the pre-declared horizon) and a **random exit with matched holding period** — D286's precedent, where the undesigned rule won |
+| **2c** | ≥ 1.5× the round trip, cost **measured** on held names |
+| **2d** | report **what the exit keys on** — its own signal reverting, or displacement by unrelated names |
+
+### And the stage-1 magnitude gate loosens with it
+
+Gate **1c** was set at ≥ 1.0× the round trip on the reasoning that stage-2 uplift
+is ~1.0×. That reasoning is withdrawn. Stage 2 can genuinely improve per-trade
+quality, so **1c is not a hard floor** — it is reported, and a candidate below it
+must state what stage-2 work is expected to close the gap and how that will be
+measured on the book rather than on trades.

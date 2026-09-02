@@ -431,3 +431,57 @@ correlation is worth discussing.
 
 **Scope:** binding from 2026-09-02. Full statement of the stage gates in
 [D289](decisions/D289-the-promotion-pipeline.md).
+
+### AMENDMENT to R14, 2026-09-02 — both "tightenings" were wrong, and the principal was right
+
+R14 was written the same day and is corrected here rather than rewritten, because the
+error is instructive and the original claims have already been quoted.
+
+**1. "Looks MULTIPLY across stages" is WRONG. Selection on spent data is free.**
+
+Selecting on data that is already burnt does not invalidate a later test on data that has
+never been touched. The out-of-sample p-value does not care how many candidates were
+auditioned in-sample; 625 in-sample combinations followed by ONE holdout test is still one
+test at its stated level. The principal's objection was correct: **the mining fixture does
+not become more spent.**
+
+What a wider search actually costs is the **PRIOR** — the survivor is likelier to be noise,
+so a holdout read is likelier to be wasted. That is an economic cost on a scarce resource,
+not a statistical invalidity, and R14 stated it as the latter.
+
+**The distinction that does hold: in-sample numbers are free for SELECTION and expensive as
+EVIDENCE.** The moment an in-sample number is reported as a result, multiplicity bites that
+claim. Under the pipeline, stages 1-3 are selection and only stage 4 is evidence, which
+makes an in-sample floor a **TRIAGE DEVICE** -- "is this worth one of my scarce holdout
+reads?" -- and not a verdict on whether the effect is real. D288's gate A read as a verdict;
+it was a triage.
+
+**The ledger therefore counts HOLDOUT READS, not in-sample looks.** In-sample looks are
+still disclosed, because what shaped a search is worth knowing, but they are bookkeeping
+rather than a bar. The one place multiplicity genuinely compounds is iterating THROUGH the
+holdout -- fail, search more, read it again -- which [R8](#r8)'s one-read discipline
+already governs.
+
+**2. "Exits cannot create edge" is WRONG, and the evidence cited against them shows the
+opposite.**
+
+R14 cited D285's cap CUTTING LOSERS -- touched trades ending -860 bp at 23.2% profitable --
+as evidence that exits do not work. That is a measurement of an exit WORKING. The
+inference does not follow.
+
+The correct reading, which is the principal's: the exit improved per-trade quality, and the
+money was lost because **exiting forced RE-ENTRY into a weak signal**. Earlier exit -> more
+noise -> re-enter -> repeat. That is a failure of the entry rule the exit handed control
+back to, not of the exit.
+
+**The real constraint is COUPLING, not prohibition: an exit cannot be evaluated at trade
+level.** A stop that improves the average trade and hands the freed slot to a coin flip is
+a book-level loss wearing a trade-level win. Stage 2 is therefore measured **on the book,
+including whatever re-enters** -- which is why D286's `disp` beat the designed exits: it
+exited on displacement, so the slot always went to a BETTER-RANKED name rather than back to
+the same weak signal.
+
+**Stage 2's gate becomes:** report the exit's effect on per-trade quality AND on the book
+that includes re-entry, and say which of the two moved. An exit that improves trades while
+the book gets worse has located a re-entry problem, and that is a finding about the ENTRY
+rule.
