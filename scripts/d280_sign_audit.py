@@ -93,20 +93,37 @@ def main() -> int:
                "intraday session": nxt(Cl) / nxt(O) - 1.0,
                "total (close-to-close)": nxt(np.expm1(panel.total_log_returns))}
 
-    h = C.lag1(hs)                                  # R9-lagged, as top_n uses it
+    # TWO ALIGNMENTS, BOTH LEGITIMATE, AND THE FIRST VERSION OF THIS FILE MIXED
+    # THEM. Found by the D283 agent, verified here rather than taken on trust.
+    #
+    #   STALE   hs[t-1] -> the quantity at column t.  D282's convention: `top_n`
+    #           lags internally, so the book entering at close(t) ranks on the
+    #           PREVIOUS close. Conservative by one full session.
+    #   FRESH   hs[t]   -> the quantity at column t.  Also honest for an
+    #           OVERNIGHT book and NOT look-ahead: `hist_L` at close(t) is known
+    #           at close(t), which is exactly when the position is entered.
+    #
+    # For the overnight gap both are defensible and STALE is what D282 scored.
+    # For the CLOSE-TO-CLOSE target STALE is over-lagged by one bar, because a
+    # close-to-close position taken at t earns return[t], not return[t+1] --
+    # that was the defect. Both are computed and printed; neither is asserted.
+    h_stale = C.lag1(hs)
+    h_fresh = hs
     rng_l = C.lag1((H - L) / Cl)
     safe = np.where(np.isfinite(rng_l) & (rng_l > 0), rng_l, np.nan)
 
     okm = ~(np.isnan(md) | np.isnan(hs)) & warm
     qual = oos & (-B.hold_book((hs < 0) & (md >= 0) & okm, warm) != 0.0)
 
-    scores = {"h": h, "h / lagged range": h / safe}
+    scores = {"h (STALE hs[t-1])": h_stale,
+              "h (FRESH hs[t])": h_fresh,
+              "h / lagged range": h_stale / safe}
     rows = {}
 
     print("  A SHORT of the N LOWEST-scoring names, against the cross-sectional")
     print("  mean of the same bar. POSITIVE bp = THE SHORT MAKES MONEY.")
     print("  No costs charged. D265's bar for one round trip is 2c = 10 bp.\n")
-    print(f"  {'universe':>6s} {'score':>18s} {'N':>4s} {'window':>24s} "
+    print(f"  {'universe':>6s} {'score':>20s} {'N':>4s} {'window':>24s} "
           f"{'short bp':>10s} {'t':>7s} {'bars':>7s}")
 
     for uname, umask in (("ALL", oos), ("QUAL", qual)):
@@ -114,7 +131,7 @@ def main() -> int:
             for N in N_LEVELS:
                 for tname, tgt in targets.items():
                     per_bar = []
-                    for t in range(h.shape[1]):
+                    for t in range(s.shape[1]):
                         m = umask[:, t] & np.isfinite(s[:, t]) & np.isfinite(tgt[:, t])
                         k = int(m.sum())
                         if k < max(P3.MIN_NAMES, N + 5):
@@ -131,7 +148,7 @@ def main() -> int:
                     rows[f"{uname}|{sname}|N{N}|{tname}"] = {
                         "short_bp": float(mu * 1e4), "t": float(tt),
                         "bars": int(v.size), "pct_positive": float((v > 0).mean())}
-                    print(f"  {uname:>6s} {sname:>18s} {N:4d} {tname:>24s} "
+                    print(f"  {uname:>6s} {sname:>20s} {N:4d} {tname:>24s} "
                           f"{mu * 1e4:+10.2f} {tt:+7.2f} {v.size:7,d}", flush=True)
                 print()
 
