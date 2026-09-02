@@ -86,12 +86,11 @@ One-way: `working/` → `temp/` → gone. Neither replaces `scripts/`, `data/`,
 
 ## Habits
 
-- **Every command over ~2 min goes to the harness with `run_in_background: true`**
-  — no `nohup`, no `&`. Those detach the process, so the wrapper exits at once,
-  the completion notice fires on nothing, and you are left polling with
-  foreground `sleep`s that block the main agent. Never poll; you are re-invoked
-  when it really exits.
-- **Commit the pre-registration before the runner exists; the result separately**
-  (R8). Several results here were saved by it.
-- Write tool over long heredocs: quote-heavy ones fail, and `\\n` inside
-  `<<'EOF'` stays literal — a silently no-op `str.replace`.
+- **>~2 min → `run_in_background: true`. Never `nohup`/`&`** — they detach, so the
+  wrapper exits at once and the completion notice fires on nothing, leaving you
+  polling with foreground `sleep`s that block the agent. **Never poll**; you are
+  re-invoked on real exit.
+- **Pre-registration committed before the runner exists; result separately** (R8).
+- Write tool over long heredocs. **Backticks in `git commit -m` are command
+  substitution** — they spliced a shell banner into a commit here. `\\n` inside
+  `<<'EOF'` stays literal: a silent no-op `str.replace`.
