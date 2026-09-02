@@ -513,3 +513,25 @@ NOT bounce, while the volume signals scale 3.0x-4.2x and are.
 
 **Name-split CV stays as gate 1f, necessary and explicitly insufficient.** Full
 statement in [D289](decisions/D289-the-promotion-pipeline.md)'s second amendment.
+
+### THIRD AMENDMENT to R14, 2026-09-02 — a cost ratio is unreadable without turnover
+
+D290 ranked `price_log` first on the spread construction and it was the only
+tier-1 candidate clearing its measured cost, at 1.96x. It turns over 1.9% per bar
+and holds a name for 51 bars: it is a STATIC CHARACTERISTIC TILT, not a signal.
+It never says when to do anything, and its cost ratio is one round trip
+amortised over a book that scarcely changes.
+
+**NEW GATE 1g -- report TURNOVER PER BAR, MEAN HOLDING RUN, and DEAD-NAME SHARE
+PER LEG with every candidate.** Reported, not thresholded: a slow signal is fine.
+What this prevents is a characteristic presenting itself as a signal, and a cost
+ratio being read as good when it is the product of inactivity. Cost per unit time
+is `round trip x turnover`; the ratio alone is meaningless.
+
+`price_log` also carried 33.5% dead names in its LONG leg against 10.7% in its
+short. On a 35.7%-dead fixture "buy the cheapest fifty" is buying the
+pre-bankruptcy tail, and the asymmetry is what the per-leg split exists to show.
+
+**NULL-DESIGN NOTE.** Rotation is a WEAK null for a near-static score -- rotating a
+score that is almost constant per symbol barely changes the book, so the z is
+inflated. Under ~5% turnover per bar, read the within-bar permutation null first.

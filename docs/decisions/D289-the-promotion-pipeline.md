@@ -329,3 +329,58 @@ wide/tight ratio is unusable. Use **wide/mid**.
 
 **1e and 1f together, never 1f alone.** That pairing is the whole content of this
 amendment.
+
+---
+
+# THIRD AMENDMENT, 2026-09-02 — turnover and holding run become reported
+
+D290 ranked `price_log` first on the spread construction: tier 1, open-entry
+t +4.48, 93% retained, and **1.96× its measured cost** — the only tier-1
+candidate to clear cost on evidence. Measured afterwards:
+
+| | turnover / bar | mean holding run | dead names LONG | dead names SHORT |
+|---|--:|--:|--:|--:|
+| **price_log** | **1.9%** | **51 bars** | **33.5%** | **10.7%** |
+| close_in_range | 91.3% | 1 | 22.3% | 20.7% |
+| rsi | 25.9% | 4 | 22.8% | 20.1% |
+
+**`price_log` is not a signal. It is a static characteristic tilt.** A share price
+barely moves day to day, so the bottom-fifty-by-price is nearly the same fifty
+names for months. It never says *when* to do anything — it holds a near-permanent
+book of cheap against expensive, which is the low-price premium, a documented
+risk premium rather than an edge.
+
+**And its cost ratio was flattered by exactly that.** 1.96× is one round trip
+amortised over a 40-bar hold on a book that scarcely changes. The number that
+made it rank best is partly an artifact of it not being a signal.
+
+**Worse, the risk is one-sided.** 33.5% of the long leg is dead names against
+10.7% of the short. On a 35.7%-dead fixture, "buy the cheapest fifty" is buying
+the pre-bankruptcy tail, and nothing in D290 priced that.
+
+## GATE 1g — turnover and holding run, REPORTED with every candidate
+
+| | |
+|---|---|
+| **turnover per bar** | fraction of the held set that changes |
+| **mean holding run** | bars a name stays in the book |
+| **dead-name share, PER LEG** | asymmetry is the thing to look for |
+
+**Reported, not thresholded.** A slow signal is not disqualified — `macd_hist`
+turns 14.6% and holds 7 bars and is perfectly legitimate. What the gate prevents
+is a **static characteristic presenting itself as a signal**, and a cost ratio
+being read as good when it is really the product of inactivity.
+
+**A cost ratio must be read beside turnover, never alone.** Cost per unit time is
+`round trip × turnover`, and a book that never trades has a flattering ratio and
+no timing content.
+
+## And a null-design note this exposed
+
+**Rotation is a WEAK null for a near-static score.** Rotating a symbol's score
+through time barely changes a score that is almost constant per symbol, so the
+rotated book resembles the real one and the z is inflated. `price_log`'s rotation
+z of +3.64 is doing less work than the same number would for a fast signal; its
+permutation z of +3.94 is the one carrying weight, because that shuffles *which
+name* holds which price. **When turnover is under ~5% per bar, read the
+permutation null first.**
