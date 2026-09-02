@@ -126,9 +126,27 @@ def walk_exits(base, score, n, rule, simple=None):
             if i not in held:
                 held[i] = (-1.0, t, 0.0)
 
+        # EACH LEG IS NORMALISED TO UNIT TOTAL WEIGHT, and this is a
+        # construction change from D285 forced by the study itself.
+        #
+        # D285 held +-1 per name and its legs had EQUAL COUNTS by construction,
+        # so the book was dollar-neutral for free. A SIGNAL-STATE exit breaks
+        # that: the two legs empty at different rates as each name's own score
+        # crosses zero, so +-1 leaves the book net long or net short -- which is
+        # what the first version of this runner asserted its way into.
+        #
+        # Giving each leg unit total weight restores exact neutrality at ANY leg
+        # counts. It is applied to ALL FOUR ARMS so they stay comparable, and for
+        # `disp` -- whose counts are equal anyway -- it is a uniform rescale of
+        # D285's book, so its Sharpe is unchanged and only exposure is smaller.
+        #
+        # A bar with an empty leg CANNOT be neutral, so the book holds nothing.
         if held:
             idx = np.fromiter(held.keys(), dtype=int)
-            out[idx, t] = np.fromiter((held[i][0] for i in idx), dtype=float)
+            sgn = np.fromiter((held[i][0] for i in idx), dtype=float)
+            nl, ns = int((sgn > 0).sum()), int((sgn < 0).sum())
+            if nl and ns:
+                out[idx, t] = np.where(sgn > 0, 1.0 / nl, -1.0 / ns)
     return out
 
 
@@ -156,9 +174,20 @@ def selftest() -> int:
 
     for rule in ("disp", "sig", "hyst", "cap"):
         p = walk_exits(base, sc, 1, rule, simple=np.expm1(panel.total_log_returns))
-        if not (p.sum(axis=0) == 0).all():
+        if not np.allclose(p.sum(axis=0), 0.0, atol=1e-12):
             raise AssertionError(f"{rule}: book is not dollar-neutral bar by bar")
     print("  [1] all four arms are dollar-neutral at every bar")
+
+    # THE GATE THAT WOULD HAVE CAUGHT THE FIRST VERSION. A signal-state exit
+    # empties the legs at different rates, so neutrality must survive UNEQUAL
+    # COUNTS -- not merely the equal counts `disp` produces by construction.
+    probe = np.zeros((5, 3))
+    probe[[0, 1, 2], 1] = 1.0
+    probe[[3], 1] = -1.0
+    lgs = np.where(probe > 0, 1.0 / max((probe > 0).sum(axis=0)[1], 1), 0.0)         + np.where(probe < 0, -1.0 / max((probe < 0).sum(axis=0)[1], 1), 0.0)
+    if not np.isclose(lgs[:, 1].sum(), 0.0):
+        raise AssertionError("leg normalisation does not neutralise unequal counts")
+    print("  [1b] neutrality survives UNEQUAL leg counts (3 long vs 1 short)")
 
     lag = C.lag1(sc)
     p = walk_exits(base, sc, 1, "sig", simple=np.expm1(panel.total_log_returns))
@@ -208,13 +237,23 @@ def main() -> int:
     base = np.where(ok, 1.0, 0.0)
     base[:, 0] = 0.0
 
+    # THE EXIT WALKS ARE THREADED. Each is an independent Python loop over 4,187
+    # bars that reads `base`, `hs` and `simple` and writes only its own array --
+    # read-only shared state, which is `parallel_map`'s contract. The controls
+    # stay SERIAL because they draw from one `rng` and threading them would make
+    # the draw order non-deterministic, which the seed is supposed to fix.
+    specs = [(f"{rule}{N}", (N, rule)) for N in N_LEVELS
+             for rule in ("disp", "sig", "hyst", "cap")]
+    books = FAST.parallel_map(
+        lambda k, spec: walk_exits(base, hs, spec[0], spec[1], simple=simple),
+        specs, progress=None)
     rng = np.random.default_rng(SEED)
-    books = {}
     for N in N_LEVELS:
-        for rule in ("disp", "sig", "hyst", "cap"):
-            books[f"{rule}{N}"] = walk_exits(base, hs, N, rule, simple=simple)
         books[f"rnd{N}"] = FN.neutral_book(base, hs, N, rng=rng)
         books[f"tal{N}"] = FN.neutral_book(base, hs, N, rng=rng, tail=True)
+    books = {k: books[k] for k in
+             [f"{r}{N}" for N in N_LEVELS for r in ("disp", "sig", "hyst", "cap",
+                                                    "rnd", "tal")]}
     for k, p in books.items():
         if not (p.sum(axis=0) == 0).all():
             raise AssertionError(f"{k} is not dollar-neutral")
