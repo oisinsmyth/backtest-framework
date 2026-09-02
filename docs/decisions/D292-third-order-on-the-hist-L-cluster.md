@@ -173,3 +173,47 @@ untouched by this; or the veto, still never validly tested.
 Third order with a different primary — the D291 concentration finding is about
 `hist_L` specifically and nothing licenses a general sweep. Partners outside the
 ρ band. Any use of magnitude.
+
+---
+
+## CLARIFICATION — before the runner produced any number
+
+Measured on the built runner with the fixture, before the observed pass ran.
+Nothing here changes an operator, a threshold or a cell count.
+
+**Retention of `hist_L`'s 25 long names, mean over bars:**
+
+| f | AND (g = √f) | MEAN-RANK | D291 second order |
+|--:|--:|--:|--:|
+| 0.90 | 97% | 88% | 97% |
+| 0.75 | 95% | 76% | 96% |
+| 0.50 | 90% | 48% | 91% |
+| 0.25 | 81% | 24% | 66% |
+
+**1. AND at g = √f meets its stated intent.** It reproduces D291's second-order
+retention to within 1pp at f ≥ 0.50, so "the count is matched to second order
+rather than collapsing" is true as written. It diverges at f = 0.25 (81% vs
+66%), which is reported, not corrected.
+
+**2. `f` is a threshold on the WHOLE cross-section, not a retention rate.**
+`hist_L`'s selected names already sit at one end of a partner's ranking
+(ρ = 0.41–0.64), so their percentiles are far from uniform and a cut at f = 0.50
+removes 10%, not 50%. This is inherited from D291 and is why its gate kept 81%
+of N at f = 0.50.
+
+**3. THEREFORE THE TWO OPERATORS ARE NOT COMPARABLE AT EQUAL f, AND Q3 IS
+CONFOUNDED WITH RETENTION AS WRITTEN.** AND spans 81–97% retention across the
+sweep; MEAN-RANK spans 24–88%. **Q3 must be read at matched retention, where
+the two overlap only in the 81–88% band** — AND at f = 0.25 against MEAN-RANK
+at f = 0.90. Any comparison at equal `f` is reading a book-size difference, which
+is the exact error the parents are count-matched per bar to avoid.
+
+**4. The operators answer different questions, and the record should say so.**
+AND asks *"does requiring two filters to agree, at second-order book size, beat
+one filter?"* MEAN-RANK asks *"does a rank blend that genuinely tightens
+selection beat one filter at the same tightened size?"* Both are legitimate;
+they are not two attempts at one question.
+
+**Q4's dose-response is unaffected** — it is read within an operator, not across.
+MEAN-RANK at f = 0.25 holds ~6 of 25 names, so its bar counts are reported
+beside its statistics.
