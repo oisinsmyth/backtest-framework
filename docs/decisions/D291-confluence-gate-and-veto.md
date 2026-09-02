@@ -154,6 +154,43 @@ it does not, the harness is wrong and no cell below is readable.
 
 ---
 
+## Clarifications, before the runner exists
+
+Five things the sections above imply but do not say outright. Fixed here so the
+runner cannot choose them later.
+
+**1. N and k are INHERITED, not swept.** Each cell takes `A`'s own D290 spread
+peak `(N, k)`. Only `f` moves. Re-sweeping N and k per cell would multiply 272
+by 60 and make the floor unpriceable — and the question here is whether B adds
+to A, not whether A has a better cell than D290 found.
+
+**2. Gate and veto are ONE operator.** Both are "take A's leg, drop the names in
+the worst fraction of B":
+
+```
+long  leg:  N lowest by A, keep those with  pct_B <= f
+short leg:  N highest by A, keep those with pct_B >= 1 - f
+```
+
+They differ **only** in which `(A, B)` pairs the rule admits and in what the
+control is. Writing them as two operators would have been two chances to find
+the same thing.
+
+**3. The rotate-B null is count-matched by construction.** `f` is a *percentile*
+threshold, so rotating B changes *which* names survive but not *how many*. The
+null therefore isolates B's alignment and nothing else — no separate count
+correction is needed, and this is a property of using a percentile rather than a
+score cut.
+
+**4. The veto's control yields both readings.** The 50 random removals give a
+per-bar mean, which is the paired control series for condition 1; the 50 totals
+give the permutation p-value. Same 50 draws, both numbers, reported together.
+
+**5. Draws: R = 200** rotate-B draws per cell. Offsets are seeded on
+`(B index, draw index)`, so they are independent across both and **reproducible**
+— D290's runner seeded on Python's `hash()`, which is salted per process and made
+its null draws unreproducible across runs.
+
 ## Predictions
 
 | | prediction | direction | confidence |
