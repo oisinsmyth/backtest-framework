@@ -1,0 +1,367 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 37s   1573 names x 4,187 bars
+  ALL   universe: 2,621,967 name-bars
+  QUAL  universe: 703,602 name-bars
+built 26 scored books, 5 rnd draws each 63s
+
+  LAG AUDIT -- the check D279 failed:
+    corr(hist_L at t,   return at t) : +0.0737   ranking on this is peeking
+    corr(hist_L at t-1, return at t) : -0.0103   the tradeable version
+    ALL  dsc10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.9945 LAGGED / 0.9930 contemporaneous
+    ALL  dsc25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.9854 LAGGED / 0.9826 contemporaneous
+    ALL  dsc50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.9701 LAGGED / 0.9656 contemporaneous
+    ALL  asc10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.0055 LAGGED / 0.0073 contemporaneous
+    ALL  asc25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.0146 LAGGED / 0.0176 contemporaneous
+    ALL  asc50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.0299 LAGGED / 0.0346 contemporaneous
+    QUAL dsc10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.9672 LAGGED / 0.9031 contemporaneous
+    QUAL dsc25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.9184 LAGGED / 0.8693 contemporaneous
+    QUAL dsc50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.8500 LAGGED / 0.8172 contemporaneous
+    QUAL asc10  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.0328 LAGGED / 0.0396 contemporaneous
+    QUAL asc25  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.0816 LAGGED / 0.0920 contemporaneous
+    QUAL asc50  3,186 bars re-derived from score[:, t-1] and MATCHED; held names at pctile 0.1500 LAGGED / 0.1625 contemporaneous
+  LAG AUDIT PASSED 72s
+
+scored 26 books 89s
+
+  REPRODUCTION of already-counted cells (asc == D281 / D279, to 1e-6):
+    ALL|all      vs hist_L|all       -0.760109 -> -0.760109   diff 0.00e+00  OK
+    ALL|asc10    vs hist_L|top10     -0.969437 -> -0.969437   diff 0.00e+00  OK
+    ALL|asc25    vs hist_L|top25     -0.910629 -> -0.910629   diff 0.00e+00  OK
+    ALL|asc50    vs hist_L|top50     -0.796055 -> -0.796055   diff 0.00e+00  OK
+    QUAL|all     vs S1_short|all     -0.757168 -> -0.757168   diff 0.00e+00  OK
+    QUAL|asc10   vs S1_short|top10   -0.662352 -> -0.662352   diff 0.00e+00  OK
+    QUAL|asc25   vs S1_short|top25   -0.637625 -> -0.637625   diff 0.00e+00  OK
+    QUAL|asc50   vs S1_short|top50   -0.659024 -> -0.659024   diff 0.00e+00  OK
+
+  cell              expo   turnover  net CAGR   net SR  GROSS CAGR  GROSS SR    maxDD   trades
+  ALL|all        61.54%      2,403   -9.50%   -0.760     -9.50%    -0.632 -82.52%    1,675
+  ALL|dsc10       0.75%     10,226   -0.19%   -0.527     -0.16%    -0.396  -3.92%    5,118
+  ALL|asc10       0.75%     10,162   -0.41%   -0.969     -0.38%    -0.853  -6.81%    5,086
+  ALL|rnd10       0.75%     62,922   -0.31%   -1.551     -0.12%    -0.573  -5.00%   31,466
+  ALL|per10       0.75%         16   -0.09%   -0.508     -0.09%    -0.407  -1.91%       13
+  ALL|dsc25       1.87%     22,495   -0.42%   -0.646     -0.35%    -0.479  -8.11%   11,260
+  ALL|asc25       1.87%     22,497   -0.70%   -0.911     -0.63%    -0.764 -11.10%   11,261
+  ALL|rnd25       1.87%    154,423   -0.73%   -1.694     -0.27%    -0.586 -11.52%   77,224
+  ALL|per25       1.87%         41   -0.29%   -0.693     -0.29%    -0.583  -5.08%       33
+  ALL|dsc50       3.74%     40,902   -0.77%   -0.717     -0.65%    -0.527 -13.68%   20,476
+  ALL|asc50       3.74%     40,984   -1.05%   -0.796     -0.93%    -0.636 -16.89%   20,517
+  ALL|rnd50       3.74%    298,830   -1.39%   -1.667     -0.51%    -0.565 -20.87%  149,440
+  ALL|per50       3.74%         96   -0.58%   -0.881     -0.57%    -0.738  -9.35%       73
+  QUAL|all       16.52%     90,497   -2.45%   -0.757     -2.19%    -0.560 -35.00%   45,405
+  QUAL|dsc10      0.75%     42,812   -0.25%   -1.845     -0.12%    -0.830  -4.07%   21,411
+  QUAL|asc10      0.75%     10,672   -0.18%   -0.662     -0.15%    -0.485  -3.09%    5,341
+  QUAL|rnd10      0.75%     59,422   -0.26%   -1.539     -0.08%    -0.462  -4.28%   29,716
+  QUAL|per10      0.75%      5,170   -0.12%   -0.799     -0.10%    -0.589  -2.14%    2,590
+  QUAL|dsc25      1.86%     87,973   -0.49%   -1.601     -0.23%    -0.674  -7.86%   43,999
+  QUAL|asc25      1.86%     22,467   -0.32%   -0.638     -0.26%    -0.432  -5.65%   11,246
+  QUAL|rnd25      1.86%    134,199   -0.63%   -1.661     -0.23%    -0.563 -10.01%   67,112
+  QUAL|per25      1.86%     12,757   -0.28%   -0.811     -0.24%    -0.584  -4.72%    6,391
+  QUAL|dsc50      3.66%    128,160   -0.75%   -1.289     -0.38%    -0.561 -11.97%   64,105
+  QUAL|asc50      3.66%     38,310   -0.56%   -0.659     -0.44%    -0.438  -9.30%   19,180
+  QUAL|rnd50      3.66%    225,200   -1.03%   -1.463     -0.36%    -0.466 -15.92%  112,625
+  QUAL|per50      3.66%     25,250   -0.56%   -0.875     -0.48%    -0.635  -9.31%   12,650
+
+  rnd-N AS A DISTRIBUTION, not a draw -- 5 seeds, GROSS Sharpe:
+    ALL|rnd10      min -0.752  median -0.573  max -0.204   SPREAD 0.548
+    ALL|rnd25      min -0.586  median -0.463  max -0.448   SPREAD 0.138
+    ALL|rnd50      min -0.686  median -0.565  max -0.486   SPREAD 0.200
+    QUAL|rnd10     min -0.572  median -0.500  max -0.392   SPREAD 0.180
+    QUAL|rnd25     min -0.605  median -0.563  max -0.492   SPREAD 0.114
+    QUAL|rnd50     min -0.553  median -0.466  max -0.435   SPREAD 0.117
+
+  per-N TURNOVER MATCH -- D281 measured 0.002x on an unfiltered universe:
+    ALL  N=10  per   0.0016x   rnd   6.15x   ** per-N IS NOT TURNOVER-MATCHED **
+    ALL  N=25  per   0.0018x   rnd   6.86x   ** per-N IS NOT TURNOVER-MATCHED **
+    ALL  N=50  per   0.0023x   rnd   7.31x   ** per-N IS NOT TURNOVER-MATCHED **
+    QUAL N=10  per   0.1208x   rnd   1.39x   per-N matched
+    QUAL N=25  per   0.1450x   rnd   1.53x   per-N matched
+    QUAL N=50  per   0.1970x   rnd   1.76x   per-N matched
+
+  ASYMMETRY -- descending vs ascending at matched N, in SHORT bp against
+  the same bar's cross-section. POSITIVE = the short makes money. OOS from
+  2018-01-01, no costs. Symmetry would make dsc the mirror of asc.
+  D280's audit, ascending, ALL, overnight: -17.60 / -14.64 / -10.97 bp.
+
+  universe  dir    N           window  align   short bp       t    bars
+       ALL  dsc   10    overnight gap   book      -9.93   -2.78   2,174
+       ALL  dsc   10    overnight gap  audit      -6.45   -2.05   2,173
+       ALL  dsc   10         intraday   book      +3.48   +0.75   2,174
+       ALL  dsc   10         intraday  audit      +3.87   +0.87   2,173
+       ALL  dsc   10   close-to-close   book      -4.24   -0.74   2,174
+       ALL  dsc   10   close-to-close  audit      -1.20   -0.22   2,173
+       ALL  dsc   10   total (scored)   book      -3.91   -0.68   2,174
+       ALL  dsc   10   total (scored)  audit      -1.35   -0.25   2,173
+       ALL  asc   10    overnight gap   book     -19.42   -5.85   2,174
+       ALL  asc   10    overnight gap  audit     -15.51   -5.06   2,173
+       ALL  asc   10         intraday   book      +2.23   +0.36   2,174
+       ALL  asc   10         intraday  audit      +1.71   +0.28   2,173
+       ALL  asc   10   close-to-close   book     -11.78   -2.05   2,174
+       ALL  asc   10   close-to-close  audit      -8.99   -1.60   2,173
+       ALL  asc   10   total (scored)   book     -11.31   -1.97   2,174
+       ALL  asc   10   total (scored)  audit      -8.54   -1.52   2,173
+
+       ALL  dsc   25    overnight gap   book      -5.14   -2.50   2,174
+       ALL  dsc   25    overnight gap  audit      -5.31   -2.65   2,173
+       ALL  dsc   25         intraday   book      +0.73   +0.26   2,174
+       ALL  dsc   25         intraday  audit      +1.26   +0.46   2,173
+       ALL  dsc   25   close-to-close   book      -3.54   -0.98   2,174
+       ALL  dsc   25   close-to-close  audit      -3.06   -0.91   2,173
+       ALL  dsc   25   total (scored)   book      -3.47   -0.96   2,174
+       ALL  dsc   25   total (scored)  audit      -2.97   -0.88   2,173
+       ALL  asc   25    overnight gap   book     -14.46   -6.99   2,174
+       ALL  asc   25    overnight gap  audit     -12.84   -6.64   2,173
+       ALL  asc   25         intraday   book      +3.74   +1.10   2,174
+       ALL  asc   25         intraday  audit      +3.39   +1.00   2,173
+       ALL  asc   25   close-to-close   book      -8.50   -2.29   2,174
+       ALL  asc   25   close-to-close  audit      -7.36   -1.99   2,173
+       ALL  asc   25   total (scored)   book      -8.20   -2.21   2,174
+       ALL  asc   25   total (scored)  audit      -6.95   -1.88   2,173
+
+       ALL  dsc   50    overnight gap   book      -2.98   -2.13   2,174
+       ALL  dsc   50    overnight gap  audit      -2.17   -1.61   2,173
+       ALL  dsc   50         intraday   book      +0.37   +0.18   2,174
+       ALL  dsc   50         intraday  audit      +0.21   +0.11   2,173
+       ALL  dsc   50   close-to-close   book      -2.29   -0.87   2,174
+       ALL  dsc   50   close-to-close  audit      -1.35   -0.56   2,173
+       ALL  dsc   50   total (scored)   book      -2.19   -0.84   2,174
+       ALL  dsc   50   total (scored)  audit      -1.25   -0.52   2,173
+       ALL  asc   50    overnight gap   book     -10.17   -6.68   2,174
+       ALL  asc   50    overnight gap  audit      -9.32   -6.30   2,173
+       ALL  asc   50         intraday   book      +3.45   +1.39   2,174
+       ALL  asc   50         intraday  audit      +3.52   +1.47   2,173
+       ALL  asc   50   close-to-close   book      -5.73   -1.99   2,174
+       ALL  asc   50   close-to-close  audit      -4.81   -1.72   2,173
+       ALL  asc   50   total (scored)   book      -5.39   -1.88   2,174
+       ALL  asc   50   total (scored)  audit      -4.50   -1.61   2,173
+
+      QUAL  dsc   10    overnight gap   book      +2.38   +2.66   2,148
+      QUAL  dsc   10    overnight gap  audit      +2.56   +2.96   2,147
+      QUAL  dsc   10         intraday   book      -2.69   -1.95   2,148
+      QUAL  dsc   10         intraday  audit      +0.64   +0.47   2,147
+      QUAL  dsc   10   close-to-close   book      -0.37   -0.23   2,148
+      QUAL  dsc   10   close-to-close  audit      +3.16   +1.99   2,147
+      QUAL  dsc   10   total (scored)   book      -0.35   -0.22   2,148
+      QUAL  dsc   10   total (scored)  audit      +3.19   +2.00   2,147
+      QUAL  asc   10    overnight gap   book      -6.19   -3.03   2,148
+      QUAL  asc   10    overnight gap  audit      -6.29   -3.18   2,147
+      QUAL  asc   10         intraday   book      +1.82   +0.58   2,148
+      QUAL  asc   10         intraday  audit      +3.78   +1.22   2,147
+      QUAL  asc   10   close-to-close   book      -3.59   -0.99   2,148
+      QUAL  asc   10   close-to-close  audit      -1.91   -0.53   2,147
+      QUAL  asc   10   total (scored)   book      -3.16   -0.88   2,148
+      QUAL  asc   10   total (scored)  audit      -1.48   -0.41   2,147
+
+      QUAL  dsc   25    overnight gap   book      +1.95   +2.93   2,136
+      QUAL  dsc   25    overnight gap  audit      +2.34   +3.78   2,134
+      QUAL  dsc   25         intraday   book      -1.25   -1.29   2,136
+      QUAL  dsc   25         intraday  audit      -0.82   -0.85   2,134
+      QUAL  dsc   25   close-to-close   book      +0.57   +0.49   2,136
+      QUAL  dsc   25   close-to-close  audit      +1.48   +1.27   2,134
+      QUAL  dsc   25   total (scored)   book      +0.57   +0.49   2,136
+      QUAL  dsc   25   total (scored)  audit      +1.42   +1.22   2,134
+      QUAL  asc   25    overnight gap   book      -4.28   -3.45   2,136
+      QUAL  asc   25    overnight gap  audit      -4.64   -3.79   2,134
+      QUAL  asc   25         intraday   book      +2.48   +1.29   2,136
+      QUAL  asc   25         intraday  audit      +1.62   +0.84   2,134
+      QUAL  asc   25   close-to-close   book      -1.45   -0.65   2,136
+      QUAL  asc   25   close-to-close  audit      -2.63   -1.18   2,134
+      QUAL  asc   25   total (scored)   book      -1.35   -0.60   2,136
+      QUAL  asc   25   total (scored)  audit      -2.36   -1.05   2,134
+
+      QUAL  dsc   50    overnight gap   book      +2.14   +4.06   2,024
+      QUAL  dsc   50    overnight gap  audit      +1.75   +3.40   2,023
+      QUAL  dsc   50         intraday   book      -1.06   -1.38   2,024
+      QUAL  dsc   50         intraday  audit      -0.81   -1.06   2,023
+      QUAL  dsc   50   close-to-close   book      +0.99   +1.10   2,024
+      QUAL  dsc   50   close-to-close  audit      +0.87   +0.94   2,023
+      QUAL  dsc   50   total (scored)   book      +0.86   +0.95   2,024
+      QUAL  dsc   50   total (scored)  audit      +0.75   +0.81   2,023
+      QUAL  asc   50    overnight gap   book      -2.74   -3.15   2,024
+      QUAL  asc   50    overnight gap  audit      -2.70   -3.08   2,023
+      QUAL  asc   50         intraday   book      +1.46   +1.10   2,024
+      QUAL  asc   50         intraday  audit      +1.05   +0.79   2,023
+      QUAL  asc   50   close-to-close   book      -1.06   -0.69   2,024
+      QUAL  asc   50   close-to-close  audit      -1.42   -0.92   2,023
+      QUAL  asc   50   total (scored)   book      -0.87   -0.57   2,024
+      QUAL  asc   50   total (scored)  audit      -1.25   -0.80   2,023
+
+  THE ASYMMETRY ITSELF -- dsc bp + asc bp. Perfect antisymmetry gives 0;
+  a positive sum means the DESCENDING tail is the better short by that much,
+  a negative sum means the ascending loss OVERSTATES the descending gain.
+
+    book   ALL N=10     overnight gap  asc   -19.42  dsc    -9.93  sum   -29.36  dsc / mirror   -0.51x
+    book   ALL N=10          intraday  asc    +2.23  dsc    +3.48  sum    +5.71  dsc / mirror   -1.56x
+    book   ALL N=10    close-to-close  asc   -11.78  dsc    -4.24  sum   -16.03  dsc / mirror   -0.36x
+    book   ALL N=10    total (scored)  asc   -11.31  dsc    -3.91  sum   -15.22  dsc / mirror   -0.35x
+    book   ALL N=25     overnight gap  asc   -14.46  dsc    -5.14  sum   -19.60  dsc / mirror   -0.36x
+    book   ALL N=25          intraday  asc    +3.74  dsc    +0.73  sum    +4.47  dsc / mirror   -0.19x
+    book   ALL N=25    close-to-close  asc    -8.50  dsc    -3.54  sum   -12.04  dsc / mirror   -0.42x
+    book   ALL N=25    total (scored)  asc    -8.20  dsc    -3.47  sum   -11.67  dsc / mirror   -0.42x
+    book   ALL N=50     overnight gap  asc   -10.17  dsc    -2.98  sum   -13.15  dsc / mirror   -0.29x
+    book   ALL N=50          intraday  asc    +3.45  dsc    +0.37  sum    +3.82  dsc / mirror   -0.11x
+    book   ALL N=50    close-to-close  asc    -5.73  dsc    -2.29  sum    -8.02  dsc / mirror   -0.40x
+    book   ALL N=50    total (scored)  asc    -5.39  dsc    -2.19  sum    -7.58  dsc / mirror   -0.41x
+
+    book  QUAL N=10     overnight gap  asc    -6.19  dsc    +2.38  sum    -3.81  dsc / mirror   +0.38x
+    book  QUAL N=10          intraday  asc    +1.82  dsc    -2.69  sum    -0.87  dsc / mirror   +1.48x
+    book  QUAL N=10    close-to-close  asc    -3.59  dsc    -0.37  sum    -3.96  dsc / mirror   -0.10x
+    book  QUAL N=10    total (scored)  asc    -3.16  dsc    -0.35  sum    -3.51  dsc / mirror   -0.11x
+    book  QUAL N=25     overnight gap  asc    -4.28  dsc    +1.95  sum    -2.33  dsc / mirror   +0.46x
+    book  QUAL N=25          intraday  asc    +2.48  dsc    -1.25  sum    +1.23  dsc / mirror   +0.50x
+    book  QUAL N=25    close-to-close  asc    -1.45  dsc    +0.57  sum    -0.88  dsc / mirror   +0.39x
+    book  QUAL N=25    total (scored)  asc    -1.35  dsc    +0.57  sum    -0.78  dsc / mirror   +0.42x
+    book  QUAL N=50     overnight gap  asc    -2.74  dsc    +2.14  sum    -0.60  dsc / mirror   +0.78x
+    book  QUAL N=50          intraday  asc    +1.46  dsc    -1.06  sum    +0.40  dsc / mirror   +0.72x
+    book  QUAL N=50    close-to-close  asc    -1.06  dsc    +0.99  sum    -0.07  dsc / mirror   +0.94x
+    book  QUAL N=50    total (scored)  asc    -0.87  dsc    +0.86  sum    -0.01  dsc / mirror   +0.98x
+
+   audit   ALL N=10     overnight gap  asc   -15.51  dsc    -6.45  sum   -21.96  dsc / mirror   -0.42x
+   audit   ALL N=10          intraday  asc    +1.71  dsc    +3.87  sum    +5.58  dsc / mirror   -2.26x
+   audit   ALL N=10    close-to-close  asc    -8.99  dsc    -1.20  sum   -10.19  dsc / mirror   -0.13x
+   audit   ALL N=10    total (scored)  asc    -8.54  dsc    -1.35  sum    -9.89  dsc / mirror   -0.16x
+   audit   ALL N=25     overnight gap  asc   -12.84  dsc    -5.31  sum   -18.15  dsc / mirror   -0.41x
+   audit   ALL N=25          intraday  asc    +3.39  dsc    +1.26  sum    +4.65  dsc / mirror   -0.37x
+   audit   ALL N=25    close-to-close  asc    -7.36  dsc    -3.06  sum   -10.42  dsc / mirror   -0.42x
+   audit   ALL N=25    total (scored)  asc    -6.95  dsc    -2.97  sum    -9.92  dsc / mirror   -0.43x
+   audit   ALL N=50     overnight gap  asc    -9.32  dsc    -2.17  sum   -11.50  dsc / mirror   -0.23x
+   audit   ALL N=50          intraday  asc    +3.52  dsc    +0.21  sum    +3.73  dsc / mirror   -0.06x
+   audit   ALL N=50    close-to-close  asc    -4.81  dsc    -1.35  sum    -6.16  dsc / mirror   -0.28x
+   audit   ALL N=50    total (scored)  asc    -4.50  dsc    -1.25  sum    -5.74  dsc / mirror   -0.28x
+
+   audit  QUAL N=10     overnight gap  asc    -6.29  dsc    +2.56  sum    -3.72  dsc / mirror   +0.41x
+   audit  QUAL N=10          intraday  asc    +3.78  dsc    +0.64  sum    +4.42  dsc / mirror   -0.17x
+   audit  QUAL N=10    close-to-close  asc    -1.91  dsc    +3.16  sum    +1.24  dsc / mirror   +1.65x
+   audit  QUAL N=10    total (scored)  asc    -1.48  dsc    +3.19  sum    +1.71  dsc / mirror   +2.16x
+   audit  QUAL N=25     overnight gap  asc    -4.64  dsc    +2.34  sum    -2.30  dsc / mirror   +0.50x
+   audit  QUAL N=25          intraday  asc    +1.62  dsc    -0.82  sum    +0.80  dsc / mirror   +0.51x
+   audit  QUAL N=25    close-to-close  asc    -2.63  dsc    +1.48  sum    -1.16  dsc / mirror   +0.56x
+   audit  QUAL N=25    total (scored)  asc    -2.36  dsc    +1.42  sum    -0.94  dsc / mirror   +0.60x
+   audit  QUAL N=50     overnight gap  asc    -2.70  dsc    +1.75  sum    -0.95  dsc / mirror   +0.65x
+   audit  QUAL N=50          intraday  asc    +1.05  dsc    -0.81  sum    +0.24  dsc / mirror   +0.78x
+   audit  QUAL N=50    close-to-close  asc    -1.42  dsc    +0.87  sum    -0.56  dsc / mirror   +0.61x
+   audit  QUAL N=50    total (scored)  asc    -1.25  dsc    +0.75  sum    -0.50  dsc / mirror   +0.60x
+
+  GROSS P&L DECOMPOSITION of the DESCENDING books -- annualised, over the
+  FULL scored span, pooled exactly as `pooled_returns` does, zero cost.
+  gap + intraday will NOT sum to the scored total: the components are RAW
+  OHLC and the total carries dividends. The residual is printed.
+
+  cell             overnight       t    intraday       t  close-close       total   div resid   missing
+  ALL|dsc10          -0.29%   -4.91     +0.10%   +1.17      -0.15%     -0.16%     -0.01%         0
+  ALL|dsc25          -0.49%   -4.77     +0.13%   +0.92      -0.31%     -0.35%     -0.04%         0
+  ALL|dsc50          -0.75%   -4.32     +0.14%   +0.58      -0.56%     -0.64%     -0.08%         0
+  ALL|asc10          -0.48%   -7.80     +0.07%   +0.64      -0.34%     -0.38%     -0.04%         0
+  ALL|asc25          -0.87%   -7.55     +0.21%   +1.23      -0.57%     -0.63%     -0.06%         0
+  ALL|asc50          -1.29%   -6.53     +0.37%   +1.31      -0.84%     -0.92%     -0.08%         0
+
+  QUAL|dsc10         -0.06%   -2.66     -0.05%   -1.74      -0.11%     -0.12%     -0.02%         0
+  QUAL|dsc25         -0.16%   -3.12     -0.04%   -0.55      -0.19%     -0.23%     -0.04%         0
+  QUAL|dsc50         -0.29%   -2.89     -0.01%   -0.10      -0.29%     -0.37%     -0.08%         0
+  QUAL|asc10         -0.19%   -4.25     +0.04%   +0.58      -0.13%     -0.15%     -0.01%         0
+  QUAL|asc25         -0.38%   -4.38     +0.14%   +1.15      -0.22%     -0.25%     -0.04%         0
+  QUAL|asc50         -0.62%   -4.16     +0.21%   +1.06      -0.38%     -0.44%     -0.06%         0
+
+  E-prime over the HELD BOOK (never the panel) 107s ...
+    ALL|all        names>=250 held  1288   E-prime     5.65   150s
+    ALL|dsc10      names>=250 held     2   E-prime     2.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   150s
+    ALL|asc10      names>=250 held     2   E-prime     2.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   150s
+    ALL|rnd10      names>=250 held     0   E-prime     0.00   150s
+    ALL|per10      names>=250 held    13   E-prime     3.11   150s
+    ALL|dsc25      names>=250 held    60   E-prime    60.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   150s
+    ALL|asc25      names>=250 held    63   E-prime    63.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   150s
+    ALL|rnd25      names>=250 held     0   E-prime     0.00   150s
+    ALL|per25      names>=250 held    32   E-prime     3.65   150s
+    ALL|dsc50      names>=250 held   181   E-prime   179.21   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   150s
+    ALL|asc50      names>=250 held   187   E-prime   177.97   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   150s
+    ALL|rnd50      names>=250 held     0   E-prime     0.00   150s
+    ALL|per50      names>=250 held    69   E-prime     4.43   151s
+    QUAL|all       names>=250 held   920   E-prime    10.06   159s
+    QUAL|dsc10     names>=250 held     3   E-prime     1.81   159s
+    QUAL|asc10     names>=250 held     1   E-prime     1.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|rnd10     names>=250 held     0   E-prime     0.00   159s
+    QUAL|per10     names>=250 held     2   E-prime     2.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|dsc25     names>=250 held     4   E-prime     2.67   159s
+    QUAL|asc25     names>=250 held    28   E-prime    28.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|rnd25     names>=250 held     0   E-prime     0.00   159s
+    QUAL|per25     names>=250 held     5   E-prime     6.93   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|dsc50     names>=250 held   118   E-prime   117.80   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|asc50     names>=250 held   137   E-prime   135.29   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|rnd50     names>=250 held    45   E-prime    45.00   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+    QUAL|per50     names>=250 held    88   E-prime    87.91   <-- ~= N: the correlation matrix is the IDENTITY and E-prime has stopped measuring anything   159s
+
+  rotation nulls, 300 draws each, K=26 -- REPORTED, NOT DECISIVE (R7 corollary) ...
+    ALL|all        100.0th / 100.0th   null p50 -0.925 p95 -0.900   269s
+    ALL|dsc10       50.0th /  19.0th   null p50 -0.525 p95 -0.247   376s
+    ALL|asc10        0.7th /   0.7th   null p50 -0.490 p95 -0.230   476s
+    ALL|rnd10       72.3th /  58.0th   null p50 -1.645 p95 -1.347   576s
+    ALL|per10      100.0th /  99.0th   null p50 -0.688 p95 -0.583   676s
+    ALL|dsc25       67.7th /  27.3th   null p50 -0.707 p95 -0.508   776s
+    ALL|asc25        5.0th /   0.3th   null p50 -0.693 p95 -0.487   876s
+    ALL|rnd25       89.7th /  76.3th   null p50 -1.859 p95 -1.632   976s
+    ALL|per25      100.0th / 100.0th   null p50 -0.885 p95 -0.803   1075s
+    ALL|dsc50       89.7th /  36.7th   null p50 -0.836 p95 -0.678   1175s
+    ALL|asc50       65.0th /   1.7th   null p50 -0.827 p95 -0.681   1274s
+    ALL|rnd50       97.7th /  96.7th   null p50 -1.936 p95 -1.717   1373s
+    ALL|per50      100.0th / 100.0th   null p50 -1.079 p95 -1.007   1474s
+    QUAL|all       100.0th / 100.0th   null p50 -1.049 p95 -0.980   1574s
+    QUAL|dsc10       2.3th /  52.0th   null p50 -1.534 p95 -1.256   1674s
+    QUAL|asc10      63.7th /  42.3th   null p50 -0.717 p95 -0.474   1774s
+    QUAL|rnd10      77.0th /  94.0th   null p50 -1.682 p95 -1.355   1874s
+    QUAL|per10      58.0th /  78.3th   null p50 -0.832 p95 -0.574   1973s
+    QUAL|dsc25      35.7th /  95.0th   null p50 -1.563 p95 -1.375   2073s
+    QUAL|asc25      99.3th /  91.7th   null p50 -0.882 p95 -0.709   2172s
+    QUAL|rnd25      90.0th /  98.0th   null p50 -1.826 p95 -1.614   2271s
+    QUAL|per25      91.0th /  98.0th   null p50 -0.970 p95 -0.789   2370s
+    QUAL|dsc50      98.0th / 100.0th   null p50 -1.467 p95 -1.334   2471s
+    QUAL|asc50     100.0th / 100.0th   null p50 -0.989 p95 -0.860   2572s
+    QUAL|rnd50      99.7th / 100.0th   null p50 -1.787 p95 -1.612   2671s
+    QUAL|per50      96.0th /  98.3th   null p50 -1.024 p95 -0.882   2769s
+
+  best-of-26 floor: -0.188
+  AND IT UNDERSTATES THE CORRECTION: the DIRECTION tested here was chosen
+  after D280's 165 statistics, which no floor computed inside this study
+  can see. Read any t or percentile against 161 + 69, not against 69.
+
+  RANKING CONTRIBUTION -- descending minus each control, gross and net,
+  and DESCENDING MINUS ASCENDING, which is the asymmetry in scored units.
+  D281 measured the ASCENDING contribution over per-N at -0.167 / -0.116 / -0.113 GROSS.
+
+   univ    N  vs rndMED net  vs rndMED GROSS  vs per net  vs per GROSS  dsc-asc GROSS
+    ALL   10         +1.024           +0.177      -0.019        +0.011         +0.457
+    ALL   25         +0.905           -0.015      +0.047        +0.104         +0.285
+    ALL   50         +0.950           +0.038      +0.164        +0.211         +0.109
+   QUAL   10         -0.266           -0.329      -1.046        -0.241         -0.345
+   QUAL   25         +0.063           -0.111      -0.790        -0.091         -0.243
+   QUAL   50         +0.173           -0.095      -0.414        +0.074         -0.122
+
+  cell            net CAGR   net SR  GROSS SR   V   C  C*   F  E-prime   (H)  ALL
+  ALL|all          -9.50%   -0.760    -0.632  no  no  no  no      YES   YES  no
+  ALL|dsc10        -0.19%   -0.527    -0.396  no  no  no  no       no    no  no
+  ALL|asc10        -0.41%   -0.969    -0.853  no  no  no  no       no    no  no
+  ALL|rnd10        -0.31%   -1.551    -0.573  no  no  no  no       no    no  no
+  ALL|per10        -0.09%   -0.508    -0.407  no  no  no  no       no   YES  no
+  ALL|dsc25        -0.42%   -0.646    -0.479  no  no  no  no      YES    no  no
+  ALL|asc25        -0.70%   -0.911    -0.764  no  no  no  no      YES    no  no
+  ALL|rnd25        -0.73%   -1.694    -0.586  no  no  no  no       no    no  no
+  ALL|per25        -0.29%   -0.693    -0.583  no  no  no  no       no   YES  no
+  ALL|dsc50        -0.77%   -0.717    -0.527  no  no  no  no      YES    no  no
+  ALL|asc50        -1.05%   -0.796    -0.636  no  no  no  no      YES    no  no
+  ALL|rnd50        -1.39%   -1.667    -0.565  no  no  no  no       no   YES  no
+  ALL|per50        -0.58%   -0.881    -0.738  no  no  no  no       no   YES  no
+  QUAL|all         -2.45%   -0.757    -0.560  no  no  no  no      YES   YES  no
+  QUAL|dsc10       -0.25%   -1.845    -0.830  no  no  no  no       no    no  no
+  QUAL|asc10       -0.18%   -0.662    -0.485  no  no  no  no       no    no  no
+  QUAL|rnd10       -0.26%   -1.539    -0.462  no  no  no  no       no    no  no
+  QUAL|per10       -0.12%   -0.799    -0.589  no  no  no  no       no    no  no
+  QUAL|dsc25       -0.49%   -1.601    -0.674  no  no  no  no       no    no  no
+  QUAL|asc25       -0.32%   -0.638    -0.432  no  no  no  no      YES    no  no
+  QUAL|rnd25       -0.63%   -1.661    -0.563  no  no  no  no       no    no  no
+  QUAL|per25       -0.28%   -0.811    -0.584  no  no  no  no      YES    no  no
+  QUAL|dsc50       -0.75%   -1.289    -0.561  no  no  no  no      YES   YES  no
+  QUAL|asc50       -0.56%   -0.659    -0.438  no  no  no  no      YES   YES  no
+  QUAL|rnd50       -1.03%   -1.463    -0.466  no  no  no  no      YES   YES  no
+  QUAL|per50       -0.56%   -0.875    -0.635  no  no  no  no      YES   YES  no
+
+  SURVIVORS: NONE
+
+wrote data\d283_descending_summary.json   2769s

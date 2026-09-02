@@ -383,3 +383,405 @@ fix that. **It is stated here so that it cannot be discovered later.**
 
 **NOT carried:** the single-name **intraday** programme (D264–D278, ~430) — different fixture,
 different frequency. The ETF programme's 45,783 is not carried for the reasons R13 already records.
+
+---
+---
+
+# RESULT — appended 2026-09-02, after the run
+
+**`scripts/run_descending_ranking.py`, seed 0, 300 null draws, 2,769s. Artifact:
+`data/d283_descending_summary.json`. Console: `data/d283_run.log`.**
+
+**SURVIVORS: NONE. No cell clears V. No cell clears C. No cell clears F. The stop fires.**
+
+**And the study's central risk was the thing that broke. SYMMETRY DOES NOT HOLD — AND IT FAILS BY
+SIGN, NOT BY DEGREE.** The motivating number said the ascending short loses 14.64 bp a night, so a
+descending short should gain something like it. **The descending short loses 5.14 bp a night.**
+**Both tails lose.** The +14.64 bp this study was asked to go and collect **does not exist**, and
+the reason it does not exist is the finding.
+
+## The lag audit — the check D279 failed, run first and reported whether or not it passed
+
+| | |
+|---|---:|
+| `corr(hist_L at t, return at t)` | **+0.0737** — ranking on this is peeking |
+| `corr(hist_L at t-1, return at t)` | **−0.0103** — the tradeable version |
+| bars re-derived from `score[:, t-1]` and **matched**, each of 12 books | **3,186 / 3,186** |
+| **DESCENDING** held names, mean pctile of the **lagged** score, ALL | **0.9945 · 0.9854 · 0.9701** |
+| **ASCENDING** held names, same, ALL | 0.0055 · 0.0146 · 0.0299 |
+| DESCENDING, QUAL | 0.9672 · 0.9184 · 0.8500 |
+| ASCENDING, QUAL | 0.0328 · 0.0816 · 0.1500 |
+
+**The direction took, and the books are lagged.** `audit_lag` was handed the **raw** `hist_L` and a
+direction flag — never the `-hs` that `top_n` was given — so a mis-ordered negation would have
+raised. It did not, on any of 38,232 bar-cells. **The audit was separately shown to reject an
+unlagged descending book before the run**, so its silence is informative rather than vacuous.
+
+**The ascending percentiles reproduce D281's to four decimals**, which is the first of two
+reproductions.
+
+## Reproduction of the already-counted cells — exact
+
+| this study | published | published Sharpe | here | diff |
+|---|---|---:|---:|---:|
+| `ALL\|all` | D281 `hist_L\|all` | −0.760109 | −0.760109 | **0.00e+00** |
+| `ALL\|asc10/25/50` | D281 `hist_L\|top10/25/50` | −0.969437 / −0.910629 / −0.796055 | identical | **0.00e+00** |
+| `QUAL\|all` | D279 `S1_short\|all` | −0.757168 | −0.757168 | **0.00e+00** |
+| `QUAL\|asc10/25/50` | D279 `S1_short\|top10/25/50` | −0.662352 / −0.637625 / −0.659024 | identical | **0.00e+00** |
+
+**Eight cells, bit-for-bit.** The matched-N ascending comparison below is therefore against D281's
+and D279's actual books, not against a re-implementation of them.
+
+## The grid — every cell NET and GROSS
+
+GROSS is zero fees, zero borrow, zero rf. `dsc` is the treatment; `asc` is D281/D279 reproduced;
+`rnd` redraws every bar (draw 0 of five); `per` draws once and holds.
+
+| cell | expo | turnover | **net CAGR** | **net SR** | **GROSS CAGR** | **GROSS SR** | maxDD | trades |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `ALL\|all` | 61.54% | 2,403 | −9.50% | −0.760 | −9.50% | −0.632 | **−82.52%** | 1,675 |
+| **`ALL\|dsc10`** | 0.75% | 10,226 | **−0.19%** | **−0.527** | −0.16% | **−0.396** | −3.92% | 5,118 |
+| `ALL\|asc10` | 0.75% | 10,162 | −0.41% | −0.969 | −0.38% | −0.853 | −6.81% | 5,086 |
+| `ALL\|rnd10` | 0.75% | 62,922 | −0.31% | −1.551 | −0.12% | −0.573 | −5.00% | 31,466 |
+| `ALL\|per10` | 0.75% | **16** | −0.09% | −0.508 | −0.09% | −0.407 | −1.91% | 13 |
+| **`ALL\|dsc25`** | 1.87% | 22,495 | −0.42% | **−0.646** | −0.35% | **−0.479** | −8.11% | 11,260 |
+| `ALL\|asc25` | 1.87% | 22,497 | −0.70% | −0.911 | −0.63% | −0.764 | −11.10% | 11,261 |
+| `ALL\|rnd25` | 1.87% | 154,423 | −0.73% | −1.694 | −0.27% | −0.586 | −11.52% | 77,224 |
+| `ALL\|per25` | 1.87% | **41** | −0.29% | −0.693 | −0.29% | −0.583 | −5.08% | 33 |
+| **`ALL\|dsc50`** | 3.74% | 40,902 | −0.77% | **−0.717** | −0.65% | **−0.527** | −13.68% | 20,476 |
+| `ALL\|asc50` | 3.74% | 40,984 | −1.05% | −0.796 | −0.93% | −0.636 | −16.89% | 20,517 |
+| `ALL\|rnd50` | 3.74% | 298,830 | −1.39% | −1.667 | −0.51% | −0.565 | −20.87% | 149,440 |
+| `ALL\|per50` | 3.74% | **96** | −0.58% | −0.881 | −0.57% | −0.738 | −9.35% | 73 |
+| `QUAL\|all` | 16.52% | 90,497 | −2.45% | −0.757 | −2.19% | −0.560 | −35.00% | 45,405 |
+| **`QUAL\|dsc10`** | 0.75% | **42,812** | −0.25% | **−1.845** | −0.12% | **−0.830** | −4.07% | 21,411 |
+| `QUAL\|asc10` | 0.75% | 10,672 | −0.18% | −0.662 | −0.15% | −0.485 | −3.09% | 5,341 |
+| `QUAL\|rnd10` | 0.75% | 59,422 | −0.26% | −1.539 | −0.08% | −0.462 | −4.28% | 29,716 |
+| `QUAL\|per10` | 0.75% | 5,170 | −0.12% | −0.799 | −0.10% | −0.589 | −2.14% | 2,590 |
+| **`QUAL\|dsc25`** | 1.86% | **87,973** | −0.49% | **−1.601** | −0.23% | **−0.674** | −7.86% | 43,999 |
+| `QUAL\|asc25` | 1.86% | 22,467 | −0.32% | −0.638 | −0.26% | −0.432 | −5.65% | 11,246 |
+| `QUAL\|rnd25` | 1.86% | 134,199 | −0.63% | −1.661 | −0.23% | −0.563 | −10.01% | 67,112 |
+| `QUAL\|per25` | 1.86% | 12,757 | −0.28% | −0.811 | −0.24% | −0.584 | −4.72% | 6,391 |
+| **`QUAL\|dsc50`** | 3.66% | **128,160** | −0.75% | **−1.289** | −0.38% | **−0.561** | −11.97% | 64,105 |
+| `QUAL\|asc50` | 3.66% | 38,310 | −0.56% | −0.659 | −0.44% | −0.438 | −9.30% | 19,180 |
+| `QUAL\|rnd50` | 3.66% | 225,200 | −1.03% | −1.463 | −0.36% | −0.466 | −15.92% | 112,625 |
+| `QUAL\|per50` | 3.66% | 25,250 | −0.56% | −0.875 | −0.48% | −0.635 | −9.31% | 12,650 |
+
+**Best-of-26 floor: −0.188. Nothing in the study exceeds it** — the best net Sharpe anywhere is
+`ALL|per10` at −0.508, and it is a random control.
+
+**Breakeven borrow is NEGATIVE in all six descending cells** (−16.2% to −26.2%). **No borrow rate
+makes any of them profitable, zero included.** D279's primary cost statistic is again unreachable.
+
+## THE ASYMMETRY — the deliverable, and the study's answer
+
+Short bp against the same bar's cross-section, OOS from 2018-01-01, no costs, **on the books
+actually scored above**. **POSITIVE = the short makes money.** `sum` is `asc + dsc`: **perfect
+antisymmetry gives zero.**
+
+### The unfiltered universe — both tails lose, at every N, in every window that matters
+
+| N | window | **asc bp** | **dsc bp** | **sum** | dsc / mirror |
+|---:|---|---:|---:|---:|---:|
+| 10 | **overnight gap** | **−19.42** | **−9.93** | **−29.36** | **−0.51×** |
+| 25 | **overnight gap** | **−14.46** | **−5.14** | **−19.60** | **−0.36×** |
+| 50 | **overnight gap** | **−10.17** | **−2.98** | **−13.15** | **−0.29×** |
+| 25 | intraday | +3.74 | +0.73 | +4.47 | −0.19× |
+| 25 | close-to-close | −8.50 | −3.54 | −12.04 | −0.42× |
+| 25 | total (scored) | −8.20 | −3.47 | −11.67 | −0.42× |
+
+**`dsc / mirror` is NEGATIVE in every overnight row.** The descending short does not earn a fraction
+of what the ascending short loses — **it loses too, in the same direction.** The pre-registration
+asked whether the +14.64 bp would be delivered in full or in part. **It is delivered in neither: the
+sign is wrong.**
+
+### Why — the symmetric/antisymmetric split, which is the mechanism
+
+Write `asc = c + d` and `dsc = c − d`, so **`c = (asc + dsc)/2` is the DIRECTION-BLIND cost of
+holding a `hist_L` tail at all** and **`d` is the DIRECTIONAL component the ranking is supposed to
+buy.** Overnight, book alignment:
+
+| universe | N | **c — common, direction-blind** | **d — directional, favours descending** |
+|---|---:|---:|---:|
+| **ALL** | 10 | **−14.68** | **+4.75** |
+| **ALL** | 25 | **−9.80** | **+4.66** |
+| **ALL** | 50 | **−6.58** | **+3.60** |
+| **QUAL** | 10 | **−1.91** | **+4.29** |
+| **QUAL** | 25 | **−1.17** | **+3.12** |
+| **QUAL** | 50 | **−0.30** | **+2.44** |
+
+**The directional component is REAL, correctly signed for a descending short, and stable at +2.4 to
++4.8 bp across both universes and all three N.** It is also **two to three times too small to pay
+for the company it keeps on the unfiltered universe**, where selecting *either* tail costs 6.6 to
+14.7 bp a night before direction is considered.
+
+**And the mechanism is legible: `hist_L` is signed acceleration, so BOTH tails are large-`|hist_L|`
+— which is to say both tails are the volatile names.** [FINDINGS §6](../FINDINGS.md) records
+overnight drift as a property of volatility rather than of equities, and a short pays that drift
+whichever tail supplies it. **`c` is the volatility-selection tax and it is direction-blind by
+construction.**
+
+**The qualifying filter is what removes it.** `hist_L < 0 & md_L >= 0` cuts `c` from −9.80 to −1.17
+at N = 25 — **an 88% reduction** — while `d` barely moves. **So D279's and D256's filter, which
+D281 diagnosed as spending the signal, turns out to have been doing a second job nobody credited it
+with: it was suppressing the volatility-selection tax.** That is the most useful thing this study
+found and it was not what it was looking for.
+
+### The motivating measurement is over-lagged by one bar, and this is measured, not asserted
+
+**Added to the runner after the pre-registration was committed and before the run, as a correctness
+check. It scores no cell.** `d280_sign_audit.py` lags its score with `C.lag1` — column `t` carries
+`hist_L[t-1]` — **and** takes its targets through `nxt`, so column `t` carries bar `t+1`'s return.
+The pair is `hist_L[t-1]` against `return[t+1]`. **The book D279, D281 and D283 actually trade pairs
+`hist_L[t-1]` against `return[t]`.** Either lag alone is correct; **both together is one bar too
+many.**
+
+| ALL, overnight, N = 25 | asc | dsc |
+|---|---:|---:|
+| **`book` alignment** — what the grid above trades | **−14.46** | **−5.14** |
+| `audit` alignment — what the motivating number measured | −12.84 | −5.31 |
+| *published `d280_sign_audit` value* | *−14.64* | *not measured* |
+
+**The published −14.64 sits between the two**, because the audit also ranked over `live & finite
+score` where this study's base additionally requires warm-up and a finite `md_L`. **The one-bar
+discrepancy is worth 1.6 bp at N = 25 and does not change any sign or any verdict here** — but it is
+a real defect in a file that motivated two pre-registrations, and **the correctly-aligned number is
+the one this record quotes throughout.**
+
+## The overnight / intraday decomposition — and X4's second clause is WRONG
+
+Annualised gross contribution over the full scored span, pooled as `pooled_returns` does, zero cost.
+**Zero held name-bars had a missing gap component**, in any cell.
+
+| cell | **overnight** | t | **intraday** | t | close-to-close | total (scored) | div residual |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `ALL\|dsc10` | **−0.29%** | **−4.91** | **+0.10%** | +1.17 | −0.15% | −0.16% | −0.01% |
+| `ALL\|dsc25` | **−0.49%** | **−4.77** | **+0.13%** | +0.92 | −0.31% | −0.35% | −0.04% |
+| `ALL\|dsc50` | **−0.75%** | **−4.32** | **+0.14%** | +0.58 | −0.56% | −0.64% | −0.08% |
+| `ALL\|asc10` | −0.48% | −7.80 | +0.07% | +0.64 | −0.34% | −0.38% | −0.04% |
+| `ALL\|asc25` | −0.87% | −7.55 | +0.21% | +1.23 | −0.57% | −0.63% | −0.06% |
+| `ALL\|asc50` | −1.29% | −6.53 | +0.37% | +1.31 | −0.84% | −0.92% | −0.08% |
+| `QUAL\|dsc25` | **−0.16%** | −3.12 | **−0.04%** | −0.55 | −0.19% | −0.23% | −0.04% |
+| `QUAL\|asc25` | −0.38% | −4.38 | +0.14% | +1.15 | −0.22% | −0.25% | −0.04% |
+
+**I predicted the descending book's overnight component would be POSITIVE and its intraday component
+NEGATIVE. Both signs are the other way round in every cell.** X4's second clause is **falsified**,
+and it is falsified with `t` between −4.32 and −4.91 — this is not a near-miss on a noisy statistic.
+**The descending book's single largest loss is overnight**, exactly like the ascending book's, and
+its intraday leg is a small positive that fails to cover it.
+
+**D280's structural finding survives with its sign intact — the action is overnight and the intraday
+leg opposes it — and only the DIRECTIONAL reading of it was wrong.** The overnight window is where
+this book's P&L is decided in both directions. It is simply not a window in which shorting a
+`hist_L` tail makes money.
+
+**The dividend residual runs −0.01% to −0.08%/yr**, small and correctly signed for a short that owes
+it, and it is charged in the scored total.
+
+## The cross-sectional bp that IS positive, and why it is still not money
+
+**`QUAL|dsc25` and `QUAL|dsc50` post POSITIVE total short bp — +0.57 and +0.86 — and lose money
+anyway** (gross CAGR −0.23% and −0.38%). **This is [FINDINGS §1a](../FINDINGS.md)'s identity, in the
+only form that matters here:**
+
+> `short bp` is measured **against the cross-sectional mean of the same bar**. It is a
+> **dollar-neutral** statistic. **The book is an OUTRIGHT short**, so it earns
+> `short bp − (the universe's own mean return)`, and over 2018–2026 that second term is large and
+> positive.
+
+**A positive cross-sectional edge is not a positive book, and the gap between them is the market.**
+Anyone reading the asymmetry table as a strategy result would be off by the equity risk premium —
+which is exactly why every bp in this record sits beside a scored cell rather than alone.
+
+## The contribution — descending minus each control, and minus ascending
+
+`rndMED` is the median of five draws. **D281 measured the ASCENDING contribution over `per-N` at
+−0.167 / −0.116 / −0.113 GROSS.**
+
+| universe | N | vs `rndMED` net | **vs `rndMED` GROSS** | vs `per` net | **vs `per` GROSS** | **dsc − asc GROSS** |
+|---|---:|---:|---:|---:|---:|---:|
+| **ALL** | 10 | +1.024 | **+0.177** | −0.019 | **+0.011** | **+0.457** |
+| **ALL** | 25 | +0.905 | **−0.015** | +0.047 | **+0.104** | **+0.285** |
+| **ALL** | 50 | +0.950 | **+0.038** | +0.164 | **+0.211** | **+0.109** |
+| **QUAL** | 10 | −0.266 | **−0.329** | −1.046 | **−0.241** | **−0.345** |
+| **QUAL** | 25 | +0.063 | **−0.111** | −0.790 | **−0.091** | **−0.243** |
+| **QUAL** | 50 | +0.173 | **−0.095** | −0.414 | **+0.074** | **−0.122** |
+
+**`dsc − asc GROSS` is positive at every N on ALL and negative at every N on QUAL.** The direction
+that helps outside the filter hurts inside it, at comparable magnitude and in the sign D280's two
+ICs predict. **That is a clean mechanistic confirmation and it is the strongest thing in this
+record other than the asymmetry itself.**
+
+**It is also worth +0.457 Sharpe at the very most, on a book sitting at −0.853.**
+
+## Hurdles
+
+| | outcome |
+|---|---|
+| **V** | **FAILS in all 26 cells.** Every net CAGR is negative, −0.09% to −9.50% |
+| **C** | **FAILS in all six descending cells.** Best case `ALL\|dsc50`: **all four Sharpe legs positive and BOTH money legs negative** |
+| **C★** | fails everywhere C fails |
+| **F** | **FAILS everywhere.** Floor −0.188; the best cell in the study is −0.508 and is a random control |
+| **E′** | passes in 4 of 6 descending cells and **decided nothing** — see the defects |
+| **H** | computed, **excluded from every verdict**, and broken again — see the defects |
+
+**`ALL|dsc50` is the near miss and it is worth stating precisely: it beats the median random draw
+and the persistent control on Sharpe, gross and net, all four legs — and loses to both on MONEY,
+gross and net.** Its net CAGR is −0.77% against `per50`'s −0.58%. **A better Sharpe on a bigger loss
+is not a result**, and requiring both legs is what stops it reading as one.
+
+## Verdict against the pre-registered predictions
+
+| | prediction | confidence | outcome |
+|---|---|---|---|
+| **X1** | descending beats ascending GROSS at all three N on ALL, and beats `per-N` gross at N = 25 | high | **CORRECT** — +0.457 / +0.285 / +0.109, and +0.104 over `per25` |
+| **X2** | the sign FLIPS on QUAL and descending LOSES to ascending at all three N | moderate | **CORRECT** — −0.345 / −0.243 / −0.122 |
+| **X3** | no cell clears V, none reaches positive GROSS Sharpe | high | **CORRECT** — 26 of 26 negative on both |
+| **X4a** | the asymmetry is material; the descending overnight bp comes in below the +14.64 symmetry implies | moderate-high | **CORRECT, and by far more than predicted** — it is **−5.14**, the wrong sign entirely |
+| **X4b** | the descending book's gross P&L is positive overnight and negative intraday | moderate-high | **WRONG, sign-inverted in every cell, at t −4.3 to −4.9** |
+
+**Four and a half of five.** **X1 is the first prediction declared FOR a construction to hold
+anywhere in the D279–D283 sequence** — and it holds while the construction still fails, which is
+what a correctly-scoped prediction is supposed to be able to do.
+
+**X4b is the one that was wrong and it was the one I was most confident about.** The reasoning that
+produced it — *"the overnight window is where the ascending short loses, so it is where the
+descending short must gain"* — **is the symmetry assumption applied to the decomposition instead of
+to the tails, and it failed for exactly the same reason the headline did.** Having named symmetry as
+the study's central risk, I then re-assumed it one paragraph later. **The record notes that rather
+than presenting X4 as a clean pass.**
+
+## Defects and degeneracies — headed, not buried
+
+### 1. `per-N` IS NOT TURNOVER-MATCHED ON THE UNFILTERED UNIVERSE — again, exactly as flagged
+
+Pre-registered against, flagged automatically, and it fired:
+
+| universe | N | `per` / `dsc` turnover | `rnd` / `dsc` | flag |
+|---|---:|---:|---:|---|
+| ALL | 10 · 25 · 50 | **0.0016× · 0.0018× · 0.0023×** | 6.15× · 6.86× · 7.31× | **NOT MATCHED** |
+| QUAL | 10 · 25 · 50 | **0.121× · 0.145× · 0.197×** | 1.39× · 1.53× · 1.76× | matched |
+
+**D281's 0.002× reproduces to two significant figures**, and the QUAL universe behaves as D279 said
+it would because a name can stop qualifying there. **On ALL, the `per-N` comparison is a
+holding-period comparison and is reported as one.** The verdict does not rest on it: `rnd-N` churns
+6–7× *harder*, `per-N` ~500× *less*, **the descending book sits between them and clears neither on
+money.**
+
+### 2. `rnd-N` ON ONE DRAW WOULD HAVE BEEN WORSE THAN D279 KNEW
+
+The five-draw spread in GROSS Sharpe:
+
+| cell | min | median | max | **spread** |
+|---|---:|---:|---:|---:|
+| `ALL\|rnd10` | −0.752 | −0.573 | **−0.204** | **0.548** |
+| `ALL\|rnd50` | −0.686 | −0.565 | −0.486 | 0.200 |
+| `QUAL\|rnd10` | −0.572 | −0.500 | −0.392 | 0.180 |
+| `ALL\|rnd25` | −0.586 | −0.463 | −0.448 | 0.138 |
+| `QUAL\|rnd50` | −0.553 | −0.466 | −0.435 | 0.117 |
+| `QUAL\|rnd25` | −0.605 | −0.563 | −0.492 | 0.114 |
+
+**D279 estimated the seed's influence at up to 0.16 Sharpe. At N = 10 it is 0.548 — three and a half
+times worse.** `ALL|dsc10` beats the median draw by +0.177 gross and **loses to the luckiest of five
+by −0.371.** **A single-draw hurdle C at N = 10 could have been reported either way depending on the
+seed**, and D279 and D281 both ran exactly that hurdle. **This is the strongest evidence yet that
+the fix belongs in every runner that uses a matched-count control, and five draws is the minimum,
+not the standard.**
+
+### 3. E′ degenerated in 4 of 6 descending cells and decided nothing
+
+| cell | names held ≥250 bars | E′ | reading |
+|---|---:|---:|---|
+| `ALL\|dsc10` | **2** | **2.00** | identity |
+| `ALL\|dsc25` | **60** | **60.00** | **identity — E′ is a headcount** |
+| `ALL\|dsc50` | 181 | **179.21** | identity |
+| `QUAL\|dsc50` | 118 | **117.80** | identity |
+| `QUAL\|dsc10` | 3 | 1.81 | real, and fails |
+| `QUAL\|dsc25` | 4 | 2.67 | real, and fails |
+| `ALL\|rnd10/25/50` | **0** | **0.00** | a bar-by-bar redraw accumulates 250 held bars on *no* name |
+
+**`ALL|dsc25` scoring exactly 60.00 on 60 names is E′ announcing it has stopped measuring
+correlation** — D279 saw 28.00 on 28, D281 63.00 on 63, and this is the third consecutive study in
+which it has done so. **Every cell that "passes" E′ fails V, C and F**, and the two cells where E′ is
+a real number are the two where it *fails*. **It discriminated nothing, in either direction.**
+
+**`top_name_share` is again not interpretable** and is again not interpreted: it reports +10.4% and
++8.9% on the ALL descending cells and **−3.9% to −10.0% on the QUAL ones**, a negative share of a
+negative raw total, which is what D281 said would happen on a losing book.
+
+### 4. Hurdle H is broken for the third consecutive study, and a random control tops it again
+
+| cell | net CAGR | net Sharpe | rotation null | reading |
+|---|---:|---:|---|---|
+| `ALL\|per25` · `ALL\|per50` | −0.29% · −0.58% | −0.693 · −0.881 | **100.0th / 100.0th** | **RANDOM controls at the ceiling on both legs** |
+| `ALL\|all` · `QUAL\|all` | −9.50% · −2.45% | −0.760 · −0.757 | **100.0th / 100.0th** | the two worst books in the study |
+| `QUAL\|asc50` | −0.56% | −0.659 | **100.0th / 100.0th** | D279's own cell |
+| `QUAL\|rnd50` | −1.03% | −1.463 | 99.7th / 100.0th | random again |
+| `ALL\|asc10` | −0.41% | −0.969 | **0.7th / 0.7th** | D281's cell, at the floor of its own null |
+| **`ALL\|dsc10`** | −0.19% | −0.527 | **50.0th / 19.0th** | the treatment, indistinguishable from chance |
+
+**Eight of 26 cells clear H and all 26 lose money.** Excluded from `clears_all` in code before the
+run, as pre-registered. **The informative line is the last one: the descending book sits at the
+50th percentile of a null that randomises the timing of its own positions** — better than the
+ascending book's 0.7th, and no better than chance.
+
+## What this closes, and what it does not
+
+> *"If no cell clears V, C and F, the descending ranking is closed. No fourth N, no alternative
+> score, no re-cut of the universe, no second population beyond the two declared here, no re-run at
+> a different seed."*
+
+**No cell cleared V, C or F. THE DESCENDING RANKING IS CLOSED**, and nothing was tuned after the
+result was seen.
+
+**Together with D256, D279 and D281 this closes `hist_L`-ranked directional shorts on the
+dead-inclusive daily fixture IN BOTH DIRECTIONS.** The four studies tested holding everything that
+qualifies, the top N of what qualifies, the top N of everything, and the bottom N of both. **That
+exhausts the ranking's usable degrees of freedom on this score, and the fixture has no untouched
+cohort left.**
+
+**What is NOT closed, stated so the closure is not read wider than it is:**
+
+1. **The overnight window is not closed and this study did not test it.** D283's arm is a
+   close-to-close daily book. **What it establishes about the overnight is that a `hist_L` tail
+   short loses there in BOTH directions** — which removes the premise
+   [D282](D282-the-overnight-only-short.md) was built on more completely than D282's own correction
+   did, and **strengthens D282's recommendation not to run.**
+2. **The +2.4 to +4.8 bp directional component is real and is not enough.** It sits against D265's
+   10 bp round-trip bar and against a 6.6–14.7 bp direction-blind tail tax on the unfiltered
+   universe. **It is a measurement, not a candidate**, and anything built on it needs its own
+   pre-registration and inherits this study's ledger plus D280's 161.
+3. **The factor-neutral branch of [FINDINGS §9](../FINDINGS.md) remains untouched**, as it has been
+   since D256.
+4. **The filter's second job is a finding, not a proposal.** That `hist_L < 0 & md_L >= 0` suppresses
+   88% of the volatility-selection tax is measured here and is **not** a licence to go looking for a
+   better filter on this fixture. That search is what the ledger below prices.
+
+## Ledger, as pre-registered
+
+| count | N |
+|---|---:|
+| fresh — descending, 2 universes × 3 N | **6** |
+| fresh — `per-N`, 2 × 3 | **6** |
+| fresh — `rnd-N`, 2 × 3 (five draws each, replicates of one control) | **6** |
+| **fresh total** | **18** |
+| carried: D281 | 10 |
+| carried: D279 | 20 |
+| carried: D256 | 21 |
+| **TOTAL** | **69** |
+
+**Unchanged from the pre-registration. No cell was added after the run.** The lag audit, the
+reproduction check, the asymmetry table, the two alignments, the P&L decomposition, E′ and
+`top_name_share` all re-read positions already scored.
+
+**The descriptive statistics ARE larger than the cell count and are declared:** the bp table is a
+complete factorial re-read — 2 universes × 3 N × 2 directions × 4 windows × 2 alignments = **96
+values, with no selection among them**, plus 48 asymmetry summaries derived from those same 96.
+**None scores a cell, none is a candidate, and none is quoted as a best-of** — the factorial is
+reported whole precisely so that no cell of it can be a survivor.
+
+**AND THE TRUE MULTIPLICITY REMAINS LARGER THAN 69**, as the pre-registration said before the run:
+**the DIRECTION itself was chosen after D280's 161 distinct statistics**, so under D280's own ledger
+clause this study inherits them. **Read any `t` or percentile here against 161 + 69 = 230.** The
+D228 floor of −0.188 is computed over K = 26 books inside this study and **cannot see that
+correction.** It did not need to — nothing came within 0.32 Sharpe of it — **but if anything ever
+does on this fixture, the floor it clears will be the wrong one.**
