@@ -1,0 +1,84 @@
+{
+ "purpose": "measures how much of D280 part 4's overnight gap IC is an ex-dividend artefact; scores no cell",
+ "split_date": "2018-01-01",
+ "results": {
+  "ex_date_share": 0.00834375200323117,
+  "dividends_applied": 35713,
+  "ALL|h|gap RAW (part 4)": {
+   "mean_ic": -0.015309523130984194,
+   "t": -4.710946831498445,
+   "bars": 2173
+  },
+  "ALL|h|gap DIVIDEND-ADJUSTED": {
+   "mean_ic": -0.01497525730453249,
+   "t": -4.5906618898395175,
+   "bars": 2173
+  },
+  "ALL|h|gap RAW, ex-dates EXCLUDED": {
+   "mean_ic": -0.014942331141267884,
+   "t": -4.583704546859805,
+   "bars": 2173
+  },
+  "ALL|h|gap RAW, ex-dates ONLY": {
+   "mean_ic": -0.05197058729495018,
+   "t": -3.0764245911511243,
+   "bars": 216
+  },
+  "ALL|h / lagged range|gap RAW (part 4)": {
+   "mean_ic": -0.016247138157531822,
+   "t": -5.9699736082181545,
+   "bars": 2173
+  },
+  "ALL|h / lagged range|gap DIVIDEND-ADJUSTED": {
+   "mean_ic": -0.015737613842281135,
+   "t": -5.758298890879279,
+   "bars": 2173
+  },
+  "ALL|h / lagged range|gap RAW, ex-dates EXCLUDED": {
+   "mean_ic": -0.015703221644621793,
+   "t": -5.746614759916183,
+   "bars": 2173
+  },
+  "ALL|h / lagged range|gap RAW, ex-dates ONLY": {
+   "mean_ic": -0.056822835393318595,
+   "t": -3.639957852759381,
+   "bars": 216
+  },
+  "QUAL|h|gap RAW (part 4)": {
+   "mean_ic": -0.012550482066304018,
+   "t": -3.448909548817114,
+   "bars": 2147
+  },
+  "QUAL|h|gap DIVIDEND-ADJUSTED": {
+   "mean_ic": -0.011222580927800936,
+   "t": -3.0751855306397893,
+   "bars": 2147
+  },
+  "QUAL|h|gap RAW, ex-dates EXCLUDED": {
+   "mean_ic": -0.011306095282615803,
+   "t": -3.096076593829167,
+   "bars": 2147
+  },
+  "QUAL|h / lagged range|gap RAW (part 4)": {
+   "mean_ic": -0.004882850676117617,
+   "t": -1.8396304010650117,
+   "bars": 2147
+  },
+  "QUAL|h / lagged range|gap DIVIDEND-ADJUSTED": {
+   "mean_ic": -0.0044660306507683205,
+   "t": -1.6777563264085327,
+   "bars": 2147
+  },
+  "QUAL|h / lagged range|gap RAW, ex-dates EXCLUDED": {
+   "mean_ic": -0.004365741145688184,
+   "t": -1.637611361509004,
+   "bars": 2147
+  },
+  "score_tilt_toward_payers_z": {
+   "mean": -0.00570380815733478,
+   "t": -0.9738845106255847,
+   "bars": 2174
+  }
+ },
+ "elapsed_s": 55.9
+}
