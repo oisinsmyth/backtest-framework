@@ -23,7 +23,9 @@ a result.
 1. **Performance, NET AND GROSS side by side** — plus exposure, vol, maxDD, mean
    move per trade vs `2c`, and **breakeven cost** (bp/side or borrow). Gross
    separates cost failure from signal failure: opposite fixes. CAGR without
-   exposure says nothing (D279, D284).
+   exposure says nothing (D279, D284). **Estimate the spread of the names HELD
+   (Corwin-Schultz off the OHLC) rather than trusting a fee assumption** — D285
+   missed a guessed 15 bp/side bar by 0.65 and the held names measured 33.8.
 2. **Trade distribution** — count, mean, **median**, win rate, payoff, holding
    run, skew, kurtosis. Then **drop the best 1% and re-report the mean**: a mean
    carried by a few trades is a lottery ticket, and the median says so first
