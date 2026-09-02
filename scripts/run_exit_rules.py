@@ -322,7 +322,36 @@ def main() -> int:
         worst = float(np.max(np.abs(p.sum(axis=0))))
         if worst > 1e-9:
             raise AssertionError(f"{k} is not dollar-neutral: worst {worst:.3e}")
-    print(f"  built {len(books)} books {time.time() - t0:.0f}s\n", flush=True)
+    print(f"  built {len(books)} books {time.time() - t0:.0f}s", flush=True)
+
+    # WHY `sig` MIGHT EXIT INSTANTLY, measured rather than assumed. It exits a
+    # LONG when the lagged score reaches >= 0. But the entry is the CROSS-
+    # SECTIONAL bottom, and in a rising market that bottom can itself be
+    # POSITIVE -- in which case the exit condition is already true on the entry
+    # bar and the arm degenerates. Reported so a 1.34-bar holding run is
+    # DIAGNOSED rather than guessed at.
+    s_lag = C.lag1(hs)
+    diag = {}
+    for N in N_LEVELS:
+        born_pos = born_neg = tot = 0
+        for tt in range(1, base.shape[1]):
+            q = np.flatnonzero(base[:, tt] != 0.0)
+            v = s_lag[q, tt]
+            fin = np.isfinite(v)
+            q, v = q[fin], v[fin]
+            if q.size < 2 * N:
+                continue
+            o = np.argsort(v, kind="stable")
+            born_pos += int(v[o[:N]].max() >= 0.0)      # long leg already >= 0
+            born_neg += int(v[o[-N:]].min() <= 0.0)     # short leg already <= 0
+            tot += 1
+        diag[N] = {"bars": tot,
+                   "long_entry_already_exited": born_pos / max(tot, 1),
+                   "short_entry_already_exited": born_neg / max(tot, 1)}
+        print(f"    N={N:<3d} bars where the LONG entry already satisfies sig's "
+              f"exit: {born_pos / max(tot, 1):6.1%};  SHORT: "
+              f"{born_neg / max(tot, 1):6.1%}", flush=True)
+    print(flush=True)
 
     free = type(panel)(**{**vars(panel),
                           "cost_fraction": np.zeros_like(panel.cost_fraction)})
@@ -455,7 +484,7 @@ def main() -> int:
                "preregistration": "docs/decisions/D286-the-exit-that-keys-on-the-signal.md, 9e60596",
                "two_c_bp": TWO_C_BP, "b1_floor_bps": B1_FLOOR,
                "loss_cap": LOSS_CAP, "floor": floor, "g2": g2,
-               "cells": cells, "survivors": surv,
+               "cells": cells, "survivors": surv, "sig_degeneracy": diag,
                "clears_b1_not_b2": b1_only,
                "elapsed_s": round(time.time() - t0, 1)}, open(OUT, "w"), indent=1)
     print(f"  wrote {OUT.relative_to(REPO)}   {time.time() - t0:.0f}s")
