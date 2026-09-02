@@ -87,6 +87,7 @@ def walk_exits(base, score, n, rule, simple=None):
     out = np.zeros_like(base)
     n_sym, T = base.shape
     held = {}                                   # symbol -> (+1/-1, entry_t, cum)
+    blocked = set()                             # `cap` only; see the entry loop
     band = 2 * n if rule == "hyst" else n
     for t in range(T):
         q = np.flatnonzero(base[:, t] != 0.0)
@@ -118,12 +119,22 @@ def walk_exits(base, score, n, rule, simple=None):
                 gone = i not in (lo_b if sgn > 0 else hi_b)
             if gone:
                 del held[i]
+                if rule == "cap" and cum <= LOSS_CAP:
+                    blocked.add(i)      # see below
 
+        # A CAPPED NAME MUST BE BLOCKED FROM RE-ENTRY, and the first version was
+        # not. It deleted the position and the entry loop immediately re-added it
+        # on the SAME BAR because the name was still in the extreme -- so the cap
+        # only reset `cum` and never removed a single trade. `cap` came back
+        # BIT-IDENTICAL to `disp`, which is what exposed it.
+        # The block is released when the name leaves the extreme, so the arm
+        # tests "stop out and stay out until the signal re-selects you".
+        blocked &= (lo_e | hi_e)
         for i in lo_e:
-            if i not in held:
+            if i not in held and i not in blocked:
                 held[i] = (+1.0, t, 0.0)
         for i in hi_e:
-            if i not in held:
+            if i not in held and i not in blocked:
                 held[i] = (-1.0, t, 0.0)
 
         # EACH LEG IS NORMALISED TO UNIT TOTAL WEIGHT, and this is a
@@ -148,6 +159,55 @@ def walk_exits(base, score, n, rule, simple=None):
             if nl and ns:
                 out[idx, t] = np.where(sgn > 0, 1.0 / nl, -1.0 / ns)
     return out
+
+
+def episode_moves_signed(panel, pos, start=0):
+    """Per-trade move on a UNIT position, splitting runs on the SIGN.
+
+    `FN.episode_moves` splits runs on exact position EQUALITY and accumulates
+    `position * return`. Both break here, because D286 normalises each leg to
+    unit total weight so a held name's weight CHANGES whenever the leg count
+    changes:
+
+      * the move came out scaled by 1/N -- `disp10` reported +3.64 bp against
+        D285's +36.44 for the identical book, a ratio of exactly 10 -- which
+        makes hurdle M's 10 bp bar meaningless;
+      * a name held continuously through a leg-count change was counted as TWO
+        trades, because its weight moved.
+
+    Splitting on `np.sign` and accumulating `sign * return` fixes both and is
+    what `2c` is denominated in: the cost of one round trip in one name."""
+    p = RP.enforce_live(pos, panel, start)
+    simple = np.expm1(panel.total_log_returns)
+    sgn_grid = np.sign(p)
+    moves, runs = [], []
+    n, T = p.shape
+    for i in range(n):
+        row = sgn_grid[i]
+        t = start
+        while t < T:
+            if row[t] == 0.0:
+                t += 1
+                continue
+            sgn, acc, k = row[t], 0.0, 0
+            while t < T and row[t] == sgn:
+                r = simple[i, t]
+                if np.isfinite(r):
+                    acc += sgn * r
+                k += 1
+                t += 1
+            moves.append(acc)
+            runs.append(k)
+    if not moves:
+        return None
+    m = np.array(moves)
+    return {"mean_move_bp": float(m.mean() * 1e4),
+            "median_move_bp": float(np.median(m) * 1e4),
+            "n_trades": int(m.size), "mean_run_bars": float(np.mean(runs)),
+            "win_rate": float((m > 0).mean()),
+            "share_of_pnl_top_1pct": float(
+                np.sort(m)[::-1][:max(1, m.size // 100)].sum() / m.sum())
+            if m.sum() != 0 else None}
 
 
 def trailing_spread(panel, g):
@@ -273,7 +333,7 @@ def main() -> int:
           f"{'B2 spread':>10s} {'NEU':>7s} {'trades':>9s} {'med move':>9s}")
     for k, p in books.items():
         s = RP.score(panel, p, 0, ppy=PPY, rf_annual=RF, borrow_annual=BORROW)
-        em = FN.episode_moves(panel, p) or {}
+        em = episode_moves_signed(panel, p) or {}
         s.update({f"episode_{kk}": vv for kk, vv in em.items()})
         s["breakeven_bps"] = FN.breakeven_bps(panel, p)
         s["neutrality_corr"] = FN.neutrality(panel, p)
