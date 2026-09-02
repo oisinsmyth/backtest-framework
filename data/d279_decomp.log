@@ -1,0 +1,42 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 35s
+built 18 books 37s
+
+  GROSS is zero fees / zero borrow / zero rf -- pure name selection.
+
+  arm           N  mode   turnover   net SR  GROSS SR  gross CAGR
+  S1_short     10   top     10,688   +2.343    +2.510     +0.80%
+  S1_short     10   rnd     59,482   -1.792    -0.725     -0.13%
+  S1_short     10   per      5,022   -0.918    -0.708     -0.12%
+
+  S1_short     25   top     22,695   +2.250    +2.448     +1.50%
+  S1_short     25   rnd    133,843   -1.633    -0.542     -0.22%
+  S1_short     25   per     13,049   -0.877    -0.635     -0.25%
+
+  S1_short     50   top     38,788   +1.865    +2.079     +2.17%
+  S1_short     50   rnd    225,406   -1.619    -0.617     -0.48%
+  S1_short     50   per     25,152   -0.881    -0.640     -0.49%
+
+  S2_short     10   top      3,546   -0.374    -0.280     -0.10%
+  S2_short     10   rnd     54,906   -1.222    -0.390     -0.09%
+  S2_short     10   per      1,992   -0.342    -0.213     -0.05%
+
+  S2_short     25   top      7,373   -0.475    -0.356     -0.23%
+  S2_short     25   rnd    107,897   -1.233    -0.441     -0.21%
+  S2_short     25   per      4,535   -0.377    -0.236     -0.11%
+
+  S2_short     50   top     11,166   -0.465    -0.338     -0.37%
+  S2_short     50   rnd    137,620   -0.736    -0.167     -0.15%
+  S2_short     50   per      7,794   -0.441    -0.300     -0.27%
+
+  THE DECOMPOSITION -- top-N minus each control, gross and net:
+
+  arm           N   vs rnd net  vs rnd GROSS  vs per net  vs per GROSS   turnover ratio
+  S1_short     10       +4.135        +3.236      +3.261        +3.218   rnd 5.6x per 0.5x
+  S1_short     25       +3.883        +2.990      +3.127        +3.083   rnd 5.9x per 0.6x
+  S1_short     50       +3.483        +2.695      +2.746        +2.719   rnd 5.8x per 0.6x
+  S2_short     10       +0.848        +0.110      -0.032        -0.068   rnd 15.5x per 0.6x
+  S2_short     25       +0.758        +0.085      -0.098        -0.121   rnd 14.6x per 0.6x
+  S2_short     50       +0.271        -0.171      -0.024        -0.038   rnd 12.3x per 0.7x
+
+wrote data\d279_turnover_decomposition.json

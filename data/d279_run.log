@@ -1,0 +1,59 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals 40s   1573 names x 4,187 bars
+effective independent instruments over the panel: 5.44
+
+built 14 books 195s
+
+  cell                     expo     CAGR      SR    maxDD  trades min/sym  be borrow  top name
+  S1_short|all           16.52%  -2.45%  -0.757 -35.00%  45,405       1    -11.4%    -2.4%
+  S1_short|top10         0.75%  +0.77%  +2.343  -0.35%   5,349       1    187.1%     1.5%
+  S1_short|rnd10         0.75%  -0.31%  -1.792  -5.10%  29,746       1    -32.1%    -7.0%
+  S1_short|top25         1.86%  +1.43%  +2.250  -0.65%  11,360       1    121.7%     0.8%
+  S1_short|rnd25         1.86%  -0.58%  -1.528  -9.22%  67,031       1    -24.7%  -136.9%
+  S1_short|top50         3.66%  +2.05%  +1.865  -1.12%  19,419       1     79.3%     0.7%
+  S1_short|rnd50         3.66%  -1.16%  -1.623 -17.79% 112,520       1    -25.1%    -5.5%
+  S2_short|all           7.72%  -1.13%  -0.519 -17.92%   5,909       1    -11.2%   -56.1%
+  S2_short|top10         0.75%  -0.11%  -0.374  -2.35%   1,778       1    -11.0%    17.4%
+  S2_short|rnd10         0.75%  -0.23%  -1.198  -3.78%  27,399       1    -24.4%    28.4%
+  S2_short|top25         1.85%  -0.25%  -0.475  -4.66%   3,699       1    -10.2%    13.6%
+  S2_short|rnd25         1.85%  -0.49%  -1.097  -7.80%  53,855       1    -20.9%    26.1%
+  S2_short|top50         3.53%  -0.40%  -0.465  -7.23%   5,608       1     -8.2%    12.2%
+  S2_short|rnd50         3.53%  -0.72%  -0.895 -11.25%  69,021       1    -16.0%    25.8%
+
+rotation nulls, 300 draws ...
+  S1_short|all           100.0th / 100.0th   342s
+  S1_short|top10         100.0th / 100.0th   476s
+  S1_short|rnd10          22.0th /  45.7th   615s
+  S1_short|top25         100.0th / 100.0th   751s
+  S1_short|rnd25          98.0th / 100.0th   886s
+  S1_short|top50         100.0th / 100.0th   1014s
+  S1_short|rnd50          96.7th /  99.0th   1122s
+  S2_short|all           100.0th /  78.0th   1223s
+  S2_short|top10          65.0th /  43.3th   1324s
+  S2_short|rnd10          94.0th /  92.3th   1426s
+  S2_short|top25          88.0th /  66.3th   1527s
+  S2_short|rnd25          99.3th /  98.7th   1644s
+  S2_short|top50         100.0th /  94.7th   1908s
+  S2_short|rnd50         100.0th / 100.0th   2155s
+
+best-of-14 floor: -0.165
+
+  cell                       CAGR      SR  vs random   H   V   C   F  E-prime  ALL
+  S1_short|all            -2.45%  -0.757          — YES  no  no  no      YES  no
+  S1_short|top10          +0.77%  +2.343     +4.135 YES YES YES YES      YES  ** YES **
+  S1_short|rnd10          -0.31%  -1.792          —  no  no  no  no      YES  no
+  S1_short|top25          +1.43%  +2.250     +3.778 YES YES YES YES      YES  ** YES **
+  S1_short|rnd25          -0.58%  -1.528          — YES  no  no  no      YES  no
+  S1_short|top50          +2.05%  +1.865     +3.487 YES YES YES YES      YES  ** YES **
+  S1_short|rnd50          -1.16%  -1.623          — YES  no  no  no      YES  no
+  S2_short|all            -1.13%  -0.519          —  no  no  no  no      YES  no
+  S2_short|top10          -0.11%  -0.374     +0.824  no  no YES  no      YES  no
+  S2_short|rnd10          -0.23%  -1.198          —  no  no  no  no      YES  no
+  S2_short|top25          -0.25%  -0.475     +0.621  no  no YES  no      YES  no
+  S2_short|rnd25          -0.49%  -1.097          — YES  no  no  no      YES  no
+  S2_short|top50          -0.40%  -0.465     +0.430  no  no YES  no      YES  no
+  S2_short|rnd50          -0.72%  -0.895          — YES  no  no  no      YES  no
+
+  SURVIVORS: ['S1_short|top10', 'S1_short|top25', 'S1_short|top50']
+
+wrote data\d279_concentrated_summary.json

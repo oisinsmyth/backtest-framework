@@ -1,0 +1,32 @@
+  symbols with internal gaps: 134 of 1573
+rebuilt 33s
+delisted names in the panel: 596 of 1573
+
+  S1_short|top25
+    dead-name share of P&L       +24.2%   (dead names are 37.9% of the panel)
+    post-2016 share of P&L       +87.1%
+    names traded / profitable   1,235 / 948
+    names to reach half the P&L 131
+    top 1 / 5 / 10 name share   +0.8% / +3.5% / +6.5%
+    by year: 2010:+0.000  2011:+0.000  2012:+0.000  2013:+0.112  2014:+17.164  2015:+23.772  2016:+18.734  2017:+21.187  2018:+24.789  2019:+18.661  2020:+27.263  2021:+23.612  2022:+28.669  2023:+24.254  2024:+27.814  2025:+34.776  2026:+26.925
+    profitable years            14/17
+
+  S1_short|top50
+    dead-name share of P&L       +22.7%   (dead names are 37.9% of the panel)
+    post-2016 share of P&L       +87.3%
+    names traded / profitable   1,303 / 1,059
+    names to reach half the P&L 172
+    top 1 / 5 / 10 name share   +0.7% / +2.9% / +5.3%
+    by year: 2010:+0.000  2011:+0.000  2012:+0.000  2013:-0.191  2014:+23.078  2015:+35.116  2016:+26.174  2017:+29.239  2018:+36.538  2019:+23.950  2020:+48.452  2021:+34.160  2022:+38.986  2023:+34.327  2024:+43.445  2025:+46.337  2026:+37.895
+    profitable years            13/17
+
+  S1_short|top10
+    dead-name share of P&L       +24.5%   (dead names are 37.9% of the panel)
+    post-2016 share of P&L       +87.9%
+    names traded / profitable   1,033 / 752
+    names to reach half the P&L 83
+    top 1 / 5 / 10 name share   +1.5% / +6.0% / +10.6%
+    by year: 2010:+0.000  2011:+0.000  2012:+0.000  2013:+0.220  2014:+9.057  2015:+11.710  2016:+10.795  2017:+11.386  2018:+14.168  2019:+11.055  2020:+12.417  2021:+11.509  2022:+15.348  2023:+11.691  2024:+17.178  2025:+23.085  2026:+13.459
+    profitable years            14/17
+
+wrote data\d279_survivor_attribution.json

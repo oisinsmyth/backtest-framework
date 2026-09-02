@@ -164,168 +164,313 @@ programme's 45,783 is not carried for the reasons R13 already records.
 ---
 ---
 
-# RESULT — appended 2026-09-01, after the run
+# RESULT — REWRITTEN 2026-09-02. The first RESULT section was WITHDRAWN IN FULL: it was look-ahead.
 
-**Three of the four predictions are wrong, and one of them is wrong in the direction that matters.**
+**Status of this study: RUN AND CLOSED. 0 of 14. SURVIVORS: NONE. The stop clause fires and the
+concentrated short is closed.**
 
-## The grid
+**Everything above this line is the pre-registration exactly as committed in `61ef31d`, unaltered.**
+The RESULT that stood here from 2026-09-01 reported two surviving cells at **+2.250** and **+1.865**
+Sharpe and called them the first evidence in this programme that a strength ranking carries usable
+information. **Those numbers were manufactured by a look-ahead defect in my own runner. Every one of
+them is withdrawn**, along with everything derived from them — the breakeven-borrow figures, the
+P&L attribution, the corrected-E′ survivor list and the decomposition's +3.22 headline.
 
-Costs as pre-registered: 5 bp/side, borrow 3%/yr, `rf` 4%, PPY 252.
+The contaminated artefacts are **kept, not deleted**, as
+`data/d279_concentrated_summary.WITHDRAWN_lookahead.json` and
+`data/d279_turnover_decomposition.WITHDRAWN_lookahead.json`.
 
-| cell | gross expo | CAGR | Sharpe | maxDD | trades | breakeven borrow | top name |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| `S1_short\|all` | 16.52% | −2.45% | −0.757 | −35.00% | 45,405 | −11.4% | −2.4% |
-| **`S1_short\|top10`** | 0.75% | **+0.77%** | **+2.343** | −0.35% | 5,349 | **+187.1%** | 1.5% |
-| `S1_short\|rnd10` | 0.75% | −0.31% | −1.792 | −5.10% | 29,746 | −32.1% | −7.0% |
-| **`S1_short\|top25`** | 1.86% | **+1.43%** | **+2.250** | −0.65% | 11,360 | **+121.7%** | 0.8% |
-| `S1_short\|rnd25` | 1.86% | −0.58% | −1.528 | −9.22% | 67,031 | −24.7% | −136.9% |
-| **`S1_short\|top50`** | 3.66% | **+2.05%** | **+1.865** | −1.12% | 19,419 | **+79.3%** | 0.7% |
-| `S1_short\|rnd50` | 3.66% | −1.16% | −1.623 | −17.79% | 112,520 | −25.1% | −5.5% |
-| `S2_short\|all` | 7.72% | −1.13% | −0.519 | −17.92% | 5,909 | −11.2% | −56.1% |
-| `S2_short\|top10` | 0.75% | −0.11% | −0.374 | −2.35% | 1,778 | −11.0% | 17.4% |
-| `S2_short\|top25` | 1.85% | −0.25% | −0.475 | −4.66% | 3,699 | −10.2% | 13.6% |
-| `S2_short\|top50` | 3.53% | −0.40% | −0.465 | −7.23% | 5,608 | −8.2% | 12.2% |
+`uv run python scripts/run_concentrated_short.py` · `data/d279_concentrated_summary.json` ·
+`data/d279_run_corrected.log` — 1,573 names × 4,187 bars, 300 rotation draws, 1,549s.
 
-Best-of-14 floor: **−0.165**. `S2_short`'s random controls are omitted from the table for width;
-all four sit between −0.74 and −1.23 and none clears V.
+---
 
-## Two defects in my own runner, both found after the run and both fixed
+## The verdict — hurdle V fails in all fourteen cells
 
-**Neither changes a position, a return or a null.** Both are recorded because the pattern —
-a hurdle computed, printed, and not actually applied to the thing it names — is the same one
-[D230](D230-the-overlay-null.md) and D270 found, and this is its third appearance.
+**Every cell in the grid has a negative net CAGR.** V is the first hurdle the pre-registration lists
+after H, and nothing reaches it, so C, F and E′ decide nothing.
 
-### 1. E′ measured the PANEL, not the HELD BOOK — and it flipped the survivor list
+| cell | gross expo | CAGR | Sharpe | maxDD | trades | H (Sharpe/money) | be borrow | top name |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `S1_short\|all` | 16.52% | −2.45% | −0.757 | −35.00% | 45,405 | 100.0 / 100.0 | −11.4% | −2.4% |
+| `S1_short\|top10` | 0.75% | −0.18% | −0.662 | −3.09% | 5,341 | 63.7 / 42.3 | −18.9% | 27.1% |
+| `S1_short\|rnd10` | 0.75% | −0.31% | −1.792 | −5.10% | 29,746 | 22.0 / 45.7 | −32.1% | −7.0% |
+| `S1_short\|top25` | 1.86% | −0.32% | −0.638 | −5.65% | 11,246 | 99.3 / 91.7 | −13.4% | 13.1% |
+| `S1_short\|rnd25` | 1.86% | −0.58% | −1.528 | −9.22% | 67,031 | 98.0 / 100.0 | −24.7% | −136.9% |
+| `S1_short\|top50` | 3.66% | −0.56% | −0.659 | −9.30% | 19,180 | 100.0 / 100.0 | −11.6% | 15.9% |
+| `S1_short\|rnd50` | 3.66% | −1.16% | −1.623 | −17.79% | 112,520 | 96.7 / 99.0 | −25.1% | −5.5% |
+| `S2_short\|all` | 7.72% | −1.13% | −0.519 | −17.92% | 5,909 | 100.0 / 78.0 | −11.2% | −56.1% |
+| `S2_short\|top10` | 0.75% | −0.10% | −0.337 | −2.37% | 1,805 | 72.7 / 53.7 | −9.5% | 15.8% |
+| `S2_short\|rnd10` | 0.75% | −0.23% | −1.198 | −3.78% | 27,399 | 94.0 / 92.3 | −24.4% | 28.4% |
+| `S2_short\|top25` | 1.85% | −0.21% | −0.414 | −4.21% | 3,719 | 97.3 / 84.7 | −8.1% | 11.7% |
+| `S2_short\|rnd25` | 1.85% | −0.49% | −1.097 | −7.80% | 53,855 | 99.3 / 98.7 | −20.9% | 26.1% |
+| `S2_short\|top50` | 3.53% | −0.39% | −0.449 | −7.00% | 5,645 | 100.0 / 97.0 | −7.7% | 11.5% |
+| `S2_short\|rnd50` | 3.53% | −0.72% | −0.895 | −11.25% | 69,021 | 100.0 / 100.0 | −16.0% | 25.8% |
 
-D279 above specifies E′ "over the held book". The runner called
-`RP.effective_instruments(panel, 0)`, which measures all 1,573 names and returned **5.44 for every
-cell**. A ten-name book and a 1,200-name book scored identically on the hurdle whose entire job is
-to tell them apart. Recomputed on bars where **both names were held**
-(`scripts/d279_fix_eprime.py`):
+**Best-of-14 floor: −0.178. Best cell: −0.337.** F fails everywhere too, and by a wider margin than
+V does. **Every breakeven borrow rate is negative** — the book does not survive borrow at *zero*,
+let alone at the 20–100%/yr this record warned hard-to-borrow names actually cost.
 
-| cell | names held ≥250 bars | E′ over the book | E′ verdict |
-|---|---:|---:|---|
-| `S1_short\|top10` | **1** | **1.00** | **FAILS** (was passing on the panel value) |
-| `S1_short\|top25` | 28 | 28.00 | passes |
-| `S1_short\|top50` | 139 | 137.12 | passes |
-| `S2_short\|top10` | 2 | 2.00 | **FAILS** |
+### And the gross numbers say the costs are not what is wrong
 
-**`top10` — the highest Sharpe in the study — is disqualified by its own pre-registered hurdle.**
-It rotates so hard that exactly one name ever accumulates 250 held bars.
+`scripts/d279_turnover_decomposition.py` · `data/d279_turnover_decomposition.json` ·
+`data/d279_decomp_corrected.log` — every book re-scored at **zero fees, zero borrow, zero rf**.
 
-**And E′ is close to vacuous here even when it passes, which is a finding about the hurdle rather
-than about the cells.** `top25` scores **28.00 on 28 names** — the correlation matrix is the
-identity, because in a rotating book almost no *pair* shares 250 held bars. So E′ degenerates into
-"how many names were held ≥250 bars". **The two survivors clear a hurdle that is barely measuring
-what it claims**, and that is stated here rather than left for a reader to notice.
+| arm | N | `top-N` gross SR | `rnd-N` gross SR | `per-N` gross SR | `top-N` gross CAGR |
+|---|---:|---:|---:|---:|---:|
+| S1_short | 10 | **−0.485** | −0.725 | −0.708 | −0.15% |
+| S1_short | 25 | **−0.432** | −0.542 | −0.635 | **−0.26%** |
+| S1_short | 50 | **−0.438** | −0.617 | −0.640 | −0.44% |
+| S2_short | 10 | **−0.244** | −0.390 | −0.213 | −0.09% |
+| S2_short | 25 | **−0.294** | −0.441 | −0.236 | −0.19% |
+| S2_short | 50 | **−0.322** | −0.167 | −0.300 | −0.35% |
 
-### 2. Hurdle C confounded the ranking with the turnover
+**`top25` scores −0.432 Sharpe and −0.26% CAGR before a single basis point is charged.** That is the
+number to carry out of this study. **Costs are not the binding constraint on this fixture — the
+drift is.** Every intraday record from D264 to D278 closed on `mean move per trade ≥ 2c`; this one
+does not get that far. It loses at zero cost, at every N, on both arms.
+
+---
+
+## THE DEFECT — the ranking read the bar it was about to be paid for
+
+**This is the primary finding of D279 and it is the reason the record exists in this form.**
+
+`hold_book` is R9-clean and always was:
+
+```
+p[:, 1:] = mask[:, :-1]          # the position at t comes from the signal at t-1
+```
+
+`pooled_returns` then earns bar `t`'s return on the position held at bar `t`, so the **base** book is
+aligned and **[D256](D256-the-book-on-single-names.md) is not in question.** But `top_n` ranked with
+
+```
+s = score[q, t]                  # <-- hist_L computed from the CLOSE OF BAR t
+out[pick, t] = base[pick, t]     # <-- and this position earns bar t's return
+```
+
+**Which names QUALIFY was honest. Which N of the qualifiers were HELD was chosen using the bar the
+position was about to be paid for** — and that is precisely the quantity hurdle C exists to test.
+`hist_L` is a function of recent returns *including that bar's*, so ranking ascending on it selects
+names that **had already fallen that day**, and a short book then books the fall it selected on.
+
+### Measured, not argued — `scripts/d279_lookahead_check.py`
+
+| | |
+|---|---:|
+| `corr(hist_L at t, hist_L at t−1)`, 3,897,016 live bars | **+0.9805** |
+| `corr(hist_L at t, return at t)` — ranking on this is peeking | **+0.0737** |
+| `corr(hist_L at t−1, return at t)` — the tradeable version | **−0.0103** |
+
+| cell | UNLAGGED — what D279 ran | LAGGED one bar — R9 |
+|---|---:|---:|
+| `top25` | **+1.43% CAGR, +2.250 Sharpe** | **−0.32%, −0.638** |
+| `top50` | **+2.05% CAGR, +1.865 Sharpe** | **−0.56%, −0.659** |
+
+**The score is 98.05% the same number one bar earlier and the entire result is in the other 1.95%.**
+That is the shape of every look-ahead defect: the contaminated quantity looks almost identical to
+the honest one and carries all of the P&L.
+
+**The fix lives inside `top_n`, not at the call site**, because three other modules call it and a
+convention that must be remembered is one that will be forgotten. **One consequence, recorded so a
+reader is not misled:** re-running `d279_lookahead_check.py` today no longer reproduces its own
+UNLAGGED column — `top_n` now lags unconditionally, so the script's two arms have become *lag-1* and
+*lag-2*. The correlations above still reproduce exactly; **the UNLAGGED Sharpes are reproducible
+only against the pre-fix runner**, and are quoted here from the withdrawn artefact.
+
+### Which pattern this is, checked against the records rather than asserted
+
+**It is NOT the D230/D270 pattern.** That label belongs to the E′ defect below, where the withdrawn
+RESULT correctly placed it; it does not stretch to this one.
+[D230](D230-the-bootstrap-sweep.md) and D270 are both **R6**: a hurdle leg *named in prose and never
+computed at all* — D230's paired bootstrap, D270's M3, which the runner skipped by control flow and
+printed *"M3 not computed"*. **Nothing here was skipped. The ranking was computed, and computed at
+the wrong time.**
+
+**It is the [R9](../RULES.md#r9) pattern, and this is its third appearance in the programme** —
+after D224's stop evaluated against its own bar's high/low, and [D248](D248-the-strength-filtered-intraday-short.md)'s
+quintile anatomy, which conditioned on `hist_L[t]` and then measured the fall it had conditioned on.
+**The same variable, `hist_L`, for the second time.**
+
+**And it carries a new corollary that D248's does not, because D248's defect lived in a throwaway
+script while this one lived in the runner:**
+
+> **A position built by lagging a MASK is not lagged if the choice of WHICH positions to keep is
+> made on an unlagged score. The base being correctly lagged is what hides it.**
+
+Every look-ahead guard this programme owns points at `hold_book`, and `hold_book` was right. The
+defect entered one layer above it, in a function that *filters* an already-lagged book — a place
+nothing was watching, because filtering a lagged book feels like it cannot introduce a lag error.
+
+---
+
+## The two other defects, both still true after the correction
+
+### 1. Hurdle C's control differed from the treatment in TWO ways
 
 `random-N` re-draws every bar. The ranked book does not have to: a name with the most negative
-`hist_L` today is usually still near the bottom tomorrow. So the control **churns 5.6× harder and
-pays 5.6× the fees** — the control differed from the treatment in *two* ways, and C could not say
-which one it was measuring.
+`hist_L` today is usually still near the bottom tomorrow. So the control **churns 5.6–6.0× harder on
+S1 and 12.2–15.3× harder on S2**, and pays that multiple of the fees. **C could not say which of the
+two differences it was measuring.**
 
-`scripts/d279_turnover_decomposition.py` separates them two ways: re-score everything at **zero
-fees, zero borrow, zero rf**, and add a **persistent random control** (`per-N`) that draws at
-random then *holds* the draw while it qualifies.
+The decomposition adds `per-N` — draw at random, then *hold* the draw while it qualifies — which
+matches turnover instead of count:
 
 | arm | N | vs `rnd` net | vs `rnd` **GROSS** | vs `per` net | vs `per` **GROSS** | turnover |
 |---|---:|---:|---:|---:|---:|---|
-| S1_short | 10 | +4.135 | **+3.236** | +3.261 | **+3.218** | rnd 5.6× · per 0.5× |
-| S1_short | 25 | +3.883 | **+2.990** | +3.127 | **+3.083** | rnd 5.9× · per 0.6× |
-| S1_short | 50 | +3.483 | **+2.695** | +2.746 | **+2.719** | rnd 5.8× · per 0.6× |
-| S2_short | 10 | +0.848 | +0.110 | −0.032 | **−0.068** | rnd 15.5× · per 0.6× |
-| S2_short | 25 | +0.758 | +0.085 | −0.098 | **−0.121** | rnd 14.6× · per 0.6× |
-| S2_short | 50 | +0.271 | −0.171 | −0.024 | **−0.038** | rnd 12.3× · per 0.7× |
+| S1_short | 10 | +1.129 | +0.240 | +0.255 | **+0.223** | rnd 5.6× · per 0.5× |
+| S1_short | 25 | +0.995 | +0.110 | +0.240 | **+0.203** | rnd 6.0× · per 0.6× |
+| S1_short | 50 | +0.960 | +0.178 | +0.222 | **+0.202** | rnd 5.9× · per 0.7× |
+| S2_short | 10 | +0.885 | +0.146 | +0.004 | **−0.031** | rnd 15.3× · per 0.6× |
+| S2_short | 25 | +0.819 | +0.147 | −0.037 | **−0.058** | rnd 14.6× · per 0.6× |
+| S2_short | 50 | +0.287 | −0.155 | −0.008 | **−0.022** | rnd 12.2× · per 0.7× |
 
-**The two arms separate completely.**
+**All six top-N cells still pass hurdle C as pre-registered, and the pass is worth nothing.** Against
+a turnover-matched persistent control at zero cost, S1's ranking is worth **+0.223 / +0.203 / +0.202**
+Sharpe and S2's is worth **less than nothing** (−0.031 / −0.058 / −0.022). **Against the contaminated
+positions the same three S1 numbers were +3.218 / +3.083 / +2.719, so roughly 93% of the apparent
+edge was the look-ahead.** What survives is real and is an order of magnitude too small: **`top25`
+needs +0.432 to reach zero GROSS and the ranking supplies +0.203.**
 
-- **S1's ranking survives both controls and the removal of all costs.** It beats a
-  turnover-matched random book by **+3.22 Sharpe gross** at N = 10. The `per-N` control has
-  *lower* turnover than the ranked book (0.5–0.7×), so it is if anything advantaged on cost, and
-  it still loses by three Sharpe. The fee gap was never the story.
-- **S2's three hurdle-C passes were ENTIRELY the fee gap.** Against a turnover-matched control at
-  zero cost, S2's ranking is **worse than random** at all three N. **Those three C marks are
-  withdrawn.** They changed no verdict — the S2 cells failed H, V and F anyway — but the mark was
-  wrong and is corrected rather than left standing.
+**A third problem with C, found while writing this up and not previously recorded.** `rnd-N` is **one
+draw**, not a distribution, and the main run and the decomposition drew different sequences. The same
+control cell scores **−1.528 in the runner and −1.633 in the decomposition** at S1/N=25, and
+**−0.895 against −0.736** at S2/N=50. **So C's margin moves by up to 0.16 Sharpe purely on the seed.**
+A hurdle scored against a single random draw has no error bar; `rotation_nulls` takes 300 draws and
+C takes one. It changed no verdict here — nothing cleared V — but C as written is not a test.
 
-## Where the money comes from — the three ways a survivor could be fake
+### 2. E′ was measured over the PANEL, not the held book
 
-`scripts/d279_survivor_attribution.py`, on P&L D279 had already scored:
+The pre-registration specifies E′ *"over the held book"*. The runner called
+`RP.effective_instruments(panel, 0)`, which measures all 1,573 names and returns **5.44 for every
+cell** — a ten-name book and a 1,200-name book scoring identically on the hurdle whose entire job is
+to tell them apart. **This is genuinely the D230/D270 pattern and its third appearance:** the leg was
+computed, printed, and not applied to the thing it names. **The runner still has this defect** — the
+corrected summary carries `effective_instruments: 5.44` and an `Eprime_panel_defect` flag on every
+cell.
 
-| | `top25` | `top50` |
-|---|---:|---:|
-| dead-name share of P&L | **+24.2%** (dead are **37.9%** of the panel) | +22.7% |
-| names traded / profitable | 1,235 / **948** | 1,303 / **1,059** |
-| names to reach **half** the P&L | **131** | **172** |
-| top 1 / 5 / 10 name share | 0.8% / 3.5% / 6.5% | 0.7% / 2.9% / 5.3% |
-| profitable years (of 14 traded) | **14 / 14** | 13 / 14 |
+Recomputed on bars where **both** names were held (`scripts/d279_fix_eprime.py`, re-run on the
+corrected positions, `data/d279_eprime_corrected.log`):
 
-**It is not the dead names.** Delisted names carry **24.2%** of the P&L while making up **37.9%**
-of the panel — they are *under*-represented, not driving it. The disqualifying pattern named in
-advance (majority-dead **and** majority-late) does not occur.
+| cell | names held ≥250 bars | E′ over the book | E′ verdict |
+|---|---:|---:|---|
+| `S1_short\|top10` | **1** | **1.00** | **FAILS** |
+| `S1_short\|top25` | 28 | 28.00 | passes |
+| `S1_short\|top50` | 137 | 135.29 | passes |
+| `S2_short\|top10` | **2** | **2.00** | **FAILS** |
+| `S2_short\|top25` | 14 | 14.00 | passes |
+| `S2_short\|top50` | 105 | 105.00 | passes |
+| `S1_short\|rnd10`, `\|rnd25`, `S2_short\|rnd10`, `\|rnd25` | 0 | 0.00 | **FAIL** |
 
-**It is not a handful of names.** It takes **131 names to reach half the P&L**; the single best
-name carries **0.8%**; 948 of 1,235 traded names are profitable. This is what E′ was supposed to
-guard and could not — measured directly instead.
+**And E′ is close to vacuous here even where it passes, which is a finding about the hurdle rather
+than about the cells.** `top25` scores **28.00 on 28 names**: the correlation matrix is the identity,
+because in a book that rotates this hard almost no *pair* of names shares the 250-bar overlap
+minimum. **E′ silently degenerates into "how many names were held ≥250 bars".** Any independence
+measure with an overlap floor needs that floor checked against the book's holding pattern before its
+number is trusted.
 
-**It is not one era.** 2010–2012 produce exactly zero (warm-up: the 252-bar window plus the ragged
-live mask), 2013 is ~0, and **every one of the 14 traded years is positive for `top25`.** The
-87.1% "post-2016" share is 11 of the 13 effective years, i.e. proportionate, not an era effect.
-Note the CAGR is divided by the **full 16.6-year** span while the book trades in 12.6 of them,
-which understates it — conservative, and left uncorrected.
+---
 
-## Verdict against the pre-registered predictions
+## Hurdle H is FAILED for this study, under R7's corollary
+
+`S1_short|all` scores the **100th percentile on both legs with −0.757 Sharpe and −2.45% CAGR.**
+**Seven of the fourteen cells clear H, and all fourteen lose money.**
+
+[R7](../RULES.md#r7)'s corollary is explicit: *a hurdle that everything clears is not evidence, it is
+a broken hurdle*, and a null that a **losing** book clears at the ceiling is broken rather than
+passed. The per-symbol rotation null randomises each name's offset independently, which on this
+fixture is a control so weak that the worst book in the grid tops it.
+
+**H carried no weight in this verdict, and it should not be reused unmodified** by anything that
+inherits this construction.
+
+---
+
+## The pre-registered predictions, scored against the corrected result
 
 | | prediction | outcome |
 |---|---|---|
-| **N1** | a concentrated cell beats its base on Sharpe | **CORRECT** — S1 goes −0.757 → +2.343 |
-| **N2** | the strength ranking does **not** beat `random-N` | **WRONG for S1, CORRECT for S2.** S1 beats a turnover-matched control by +3.22 Sharpe **gross** |
-| **N3** | no cell clears H, V and C together | **WRONG** — `S1_short\|top25` and `\|top50` clear H, V, C, F and the corrected E′ |
-| **N4** | any survivor has breakeven borrow below 20%/yr | **WRONG** — **121.7%** and **79.3%**. Even 100%/yr HTB leaves `top25` positive |
+| **N1** | at least one concentrated cell beats its unconcentrated base on Sharpe | **CORRECT, and it means less than it looks.** S1 goes −0.757 → −0.638 at N=25 and every S2 cell beats its base. Concentration removes exposure faster than it removes loss; **none of it reaches positive** |
+| **N2** | the strength ranking does **not** beat `random-N` (hurdle C) | **WRONG AS WRITTEN, CORRECT AS MEANT.** All six top-N cells beat `rnd-N` net. Against a turnover-matched control at zero cost the ranking is worth **+0.20** for S1 and **negative** for S2 — real, and roughly a fifth of what breakeven needs. **This was named as the hurdle that would kill the study and it is not the one that did** |
+| **N3** | no cell clears H, V and C together | **CORRECT — 0 of 14**, on V, and on F as well |
+| **N4** | any survivor has a breakeven borrow below 20%/yr | **VACUOUS — there are no survivors.** Every cell's breakeven borrow is **negative**: the book fails at zero borrow, so the question N4 asks never arises |
 
-**N2 was the hurdle I said would kill this, and it is the one that did not.** By the terms written
-above, that is the headline: *"the first evidence in this programme that a strength score carries
-usable information, and it would matter more than the cell's return."* It is the first time in
-D264–D279 that a strength ranking has beaten its own matched control.
+**The prediction that was wrong is N2, and it was wrong in both directions at once** — the ranking
+does beat the control, and the margin is far too small to matter. **A pre-registration that asks
+"does it beat the control" and not "by how much, against what bar" gets an answer it cannot use.**
 
-## What must not be claimed from this
+---
 
-**Hurdle H carried no weight and should be treated as failed for this study.**
-`S1_short|all` scores **100th percentile on both legs with −0.757 Sharpe and −2.45% CAGR.**
-[R7](../RULES.md#r7)'s corollary is explicit that a null a *losing* book clears at the ceiling is
-broken, not passed. Nine of fourteen cells clear H. **The verdicts here rest on V, C and F.**
-
-**The book is tiny and the scaling step is not free.** Positions are `1/n_symbols` — **0.064% per
-name** — so `top25` is 25 positions totalling **1.86% gross exposure** for **+1.43% CAGR**. In
-[FINDINGS §1a](../FINDINGS.md) terms the product is `1.86% × 76.7%`: a small sleeve with a large
-edge per unit of exposure. Running it as a real book means ~4% per name, a **~62× step**, and
-Sharpe is scale-invariant but **borrow availability is not**. The breakeven-borrow figures say the
-*rate* can be survived; they say nothing about whether 25 of the worst-accelerating names in the
-market can be **located and held at size**, or about Reg SHO restrictions on exactly that
-population. **The fixture cannot answer that and neither can I from here.**
-
-**This is not a book entry.** Under [R8](../RULES.md#r8) it needs a pre-registered out-of-sample
-test, and as this record said in advance, **this fixture has no untouched cohort left.** D246's
-reserved wide-universe cohort is a different fixture and remains unspent.
-
-## Ledger, restated
+## Ledger
 
 | count | N |
 |---|---:|
 | fresh — 14 as pre-registered | 14 |
-| **`per-N` persistent controls added by the decomposition (2 arms × 3 N)** | **6** |
+| `per-N` persistent controls added by the decomposition (2 arms × 3 N) | 6 |
 | carried: D256, same fixture and same arms | 21 |
 | **total** | **41** |
 
-Controls are counted like anything else — D228's floor does not care what a cell was built to
-prove. The E′ fix and the attribution add **no** cells: both re-read numbers already scored.
+**A bug fix is not a fresh look.** The corrected run re-scores the same fourteen pre-registered cells
+on the same fixture with the same constants; nothing was searched, nothing was chosen after seeing a
+number, and no cell was added or dropped. The E′ recomputation and the look-ahead check likewise add
+nothing — both re-read positions already scored. **The count is unchanged from the withdrawn
+version**, which is the correct outcome: the ledger prices the search, and the search did not change.
 
-## Stop, as written
+The six `per-N` controls **are** counted, because D228's floor does not care what a cell was built to
+prove.
 
-The stop clause fires only on failure and did not fire. **Two cells survive**, so the concentrated
-short is **not** closed — but nothing further may be tuned on this fixture either. The next honest
-step is a pre-registered out-of-sample test on a fixture this programme has not touched, and
-`cohort3` (D-number to be assigned) is **daily-selected but intraday** and is therefore *not* the
-right instrument for it.
+---
+
+## What is withdrawn
+
+Everything in this list was computed on the contaminated positions and **none of it may be quoted**:
+
+1. **Both former survivors** — `S1_short|top25` at +2.250 / +1.43% and `S1_short|top50` at
+   +1.865 / +2.05%, together with `S1_short|top10` at +2.343 / +0.77%.
+2. **The claim that a strength ranking beat its own matched control for the first time in
+   D264–D279.** The corrected margin is +0.203 gross at N=25, on a book at −0.432 gross.
+3. **The decomposition's +3.218 / +3.083 / +2.719** `vs per GROSS` figures for S1.
+4. **Every breakeven-borrow figure** — +187.1%, +121.7%, +79.3%. The corrected values are all
+   negative.
+5. **The whole P&L attribution**, `data/d279_survivor_attribution.json` and
+   `scripts/d279_survivor_attribution.py`: the dead-name share, the 131-names-to-half-the-P&L
+   count, the per-year table. It attributes P&L that does not exist.
+6. **The corrected-E′ survivor list** in `data/d279_eprime.log` — the E′ *defect* is real and the
+   *numbers* were computed on contaminated positions. Superseded by
+   `data/d279_eprime_corrected.log` above.
+7. **The survivor-only cut**, `scripts/d279_survivor_only_cut.py` — written to ask whether the
+   edge was the delistings, **never completed, and now moot**: there is no edge to attribute. The
+   script is kept because the counterfactual it measures is a real one for any future study on this
+   fixture, and it would need re-pointing at whatever that study's positions are.
+
+**S2's three withdrawn hurdle-C marks are re-withdrawn on better grounds.** The withdrawn RESULT
+struck them because they were the fee gap alone; that reasoning survives the correction unchanged and
+is strengthened — S2's ranking is *worse than random* at all three N once turnover is matched.
+
+---
+
+## Stop — fired
+
+**The pre-registered stop reads: *"If no cell clears H, V and C, the concentrated short is closed —
+no fourth N, no third arm, no alternative ranking score, no re-cut of the universe."* Zero cells
+clear. It fires.**
+
+**Together with [D256](D256-the-book-on-single-names.md), that closes the dead-inclusive daily
+fixture for directional shorts of this family.** D256 tested the universe and D279 tested the
+construction; both answered no, and the second answered no at zero cost, which is the harder no.
+
+**What this does NOT close** — and the distinction is the whole reason the ledger and R13 exist:
+
+- **The ranking itself is not closed, because it was never honestly tested.** What the corrected
+  decomposition establishes is that `hist_L` ascending, applied *inside the qualifying set*, is
+  worth about +0.20 gross Sharpe. [D280](D280-the-forecast-precheck.md) measured why it is that
+  small — **the filter and the ranking are the same variable** — and
+  [D281](D281-the-unfiltered-ranking.md) is the pre-registered test of the construction with that
+  collision removed. Neither is licensed by this record's cells; both are licensed by its defect.
+- **The factor-neutral branch of [FINDINGS §9](../FINDINGS.md) remains untouched** after D256, D264
+  and D279.
+
+**And nothing here reaches [R8](../RULES.md#r8).** There is no candidate, so there is nothing to take
+out of sample, and **D246's reserved wide-universe cohort remains unspent** — which is the one good
+outcome of catching this before designing a holdout around it.

@@ -1,0 +1,23 @@
+  symbols with internal gaps: 134 of 1573
+rebuilt the 14 books 47s (same seed, same order -- positions are identical)
+
+  panel-wide value the runner used for every cell: 5.44
+
+  cell              names>=250 held  E-prime(book)  entries   E-prime  was  now
+  S1_short|all                  920          10.06   45,405       YES  Y    Y
+  S1_short|top10                  1           1.00    5,341        no  Y    .  <-- CHANGED
+  S1_short|rnd10                  0           0.00   29,746        no  Y    .  <-- CHANGED
+  S1_short|top25                 28          28.00   11,246       YES  Y    Y
+  S1_short|rnd25                  0           0.00   67,031        no  Y    .  <-- CHANGED
+  S1_short|top50                137         135.29   19,180       YES  Y    Y
+  S1_short|rnd50                 34          34.00  112,520       YES  Y    Y
+  S2_short|all                  686         537.12    5,909       YES  Y    Y
+  S2_short|top10                  2           2.00    1,805        no  Y    .  <-- CHANGED
+  S2_short|rnd10                  0           0.00   27,399        no  Y    .  <-- CHANGED
+  S2_short|top25                 14          14.00    3,719       YES  Y    Y
+  S2_short|rnd25                  0           0.00   53,855        no  Y    .  <-- CHANGED
+  S2_short|top50                105         105.00    5,645       YES  Y    Y
+  S2_short|rnd50                 42          42.00   69,021       YES  Y    Y
+
+  SURVIVORS after the fix: NONE
+  updated data\d279_concentrated_summary.json   63s

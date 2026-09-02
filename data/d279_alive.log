@@ -1,0 +1,33 @@
+  symbols with internal gaps: 134 of 1573
+loaded + signals on the FULL panel 36s
+  dead removed: 596   survivors kept: 977 of 1573
+
+built 14 books 37s
+
+  cell               expo     CAGR       SR  was (dead-incl)    delta   trades  be borrow
+  S1_short|all     17.24%  -2.63%   -0.756           -0.757   +0.001   37,084    -11.7%
+  S1_short|top10   0.99%  +0.91%   +2.290           +2.343   -0.053    5,239    158.6%
+  S1_short|rnd10   0.99%  -0.42%   -1.903           -1.792   -0.111   29,047    -33.0%
+  S1_short|top25   2.44%  +1.58%   +2.011           +2.250   -0.239   11,052     95.9%
+  S1_short|rnd25   2.44%  -0.76%   -1.547           -1.528   -0.019   63,531    -24.6%
+  S1_short|top50   4.75%  +2.17%   +1.581           +1.865   -0.284   18,502     61.6%
+  S1_short|rnd50   4.75%  -1.24%   -1.357           -1.623   +0.266  102,780    -20.7%
+  S2_short|all     7.87%  -1.30%   -0.563           -0.519   -0.044    4,583    -12.8%
+  S2_short|top10   0.99%  -0.20%   -0.573           -0.374   -0.199    1,744    -15.5%
+  S2_short|rnd10   0.99%  -0.36%   -1.501           -1.198   -0.303   26,295    -28.8%
+  S2_short|top25   2.43%  -0.36%   -0.563           -0.475   -0.088    3,517    -11.2%
+  S2_short|rnd25   2.43%  -0.57%   -1.053           -1.097   +0.043   47,078    -18.6%
+  S2_short|top50   4.49%  -0.53%   -0.507           -0.465   -0.042    4,991     -8.6%
+  S2_short|rnd50   4.49%  -0.81%   -0.825           -0.895   +0.070   51,029    -14.0%
+
+rotation nulls on the SURVIVOR-ONLY panel, 300 draws ...
+  S1_short|all     100.0th / 100.0th   null p50 -1.058  p95 -0.986   121s
+  S1_short|top10   100.0th / 100.0th   null p50 -0.793  p95 -0.513   194s
+  S1_short|rnd10    12.0th /  52.3th   null p50 -1.726  p95 -1.455   258s
+  S1_short|top25   100.0th / 100.0th   null p50 -0.958  p95 -0.758   322s
+  S1_short|rnd25    98.7th / 100.0th   null p50 -1.827  p95 -1.661   395s
+  S1_short|top50   100.0th / 100.0th   null p50 -1.033  p95 -0.893   466s
+  S1_short|rnd50   100.0th / 100.0th   null p50 -1.763  p95 -1.617   544s
+  S2_short|all     100.0th /  75.7th   null p50 -0.886  p95 -0.767   615s
+  S2_short|top10    48.0th /  26.7th   null p50 -0.563  p95 -0.278   677s
+  S2_short|rnd10    52.7th /  67.3th   null p50 -1.510  p95 -1.238   746s
