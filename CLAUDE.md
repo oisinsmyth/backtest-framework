@@ -57,6 +57,15 @@ a deliberately broken book.
 **A control must share the treatment's nuisance, not just its count.**
 Matched-count ≠ matched-turnover (D279) ≠ matched-volatility (D284).
 
+**Cost-cutting is not edge-sharpening — say which one a change bought.**
+Amortising a fixed cost over a longer hold raises breakeven without making the
+signal better: the per-bar edge usually *falls* while exposure rises, so Sharpe
+can drop as cost coverage improves. Ask which quantity moved — edge per unit
+exposure, or cost per trade. **And check what the exit actually keys on:**
+D285's fired on *displacement*, a name pushed out of the top N by unrelated
+names, not on its own signal reverting — so its holds ended for reasons that had
+nothing to do with the trade.
+
 ## The books
 
 `docs/BOOK.md` (personal: S1, S2; not at capital) and `docs/BOOK_PROP.md` (prop:
