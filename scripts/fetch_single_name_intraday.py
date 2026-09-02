@@ -197,6 +197,35 @@ COHORT3_FIXTURE = FIX / "cohort3_intraday_15m_raw.csv.gz"
 COHORT3_META = FIX / "cohort3_intraday_15m_raw.meta.json"
 COHORT3_EVENTS = FIX / "cohort3_intraday_15m_raw_events.json"
 
+# ---------------------------------------------------------------------------
+# THE FOURTH COHORT -- ranks 17-28 of each stratum, 12 + 12, D264's rule again
+# unchanged, sharing no ticker with the in-sample eight, D278's sixteen or
+# cohort 3's eight. Frozen output of `select_holdout_names.py --next24`.
+#
+# THE STRATA HAVE CONVERGED FURTHER, AND THIS IS THE LOAD-BEARING FACT ABOUT
+# THIS COHORT. 20.8%..40.2% is a 1.93x volatility spread, against 2.15x for
+# cohort 3 and 5.5x for the original eight. THIS COHORT DOES NOT SPAN THE
+# VOLATILITY AXIS. The header of this file explains why D264 wanted 5.5x:
+# FINDINGS 1b's variance tax and FINDINGS 2's idiosyncratic-variance edge pull
+# in opposite directions and only a wide spread can say which binds. At 1.93x
+# the two strata are labels on adjacent ranks of one distribution. A study may
+# use these names as an instrument holdout; it may NOT claim the volatility
+# axis is under test. Carried forward verbatim in intent from cohort 3's block.
+#
+# MUR IS NOT HERE AND WAS NOT DROPPED BY JUDGEMENT. It ranks 17 in the high
+# stratum -- the first rank this cohort would take -- but it was already spent
+# on cohort 3, where it entered as NBIS's mechanical replacement. The selector's
+# `take` skips spent names and the ranks below shift up by one; BBY at rank 18
+# leads the high stratum here for that reason alone.
+# ---------------------------------------------------------------------------
+COHORT4_LOW = ('CSCO', 'TXN', 'UNP', 'BA', 'INTC', 'MSFT', 'F', 'SLB',
+               'C', 'GM', 'BMY', 'PSX')
+COHORT4_HIGH = ('BBY', 'UAA', 'NRG', 'HWM', 'WYNN', 'ILMN', 'DVN', 'GME',
+                'NOW', 'LULU', 'BMRN', 'CX')
+COHORT4_FIXTURE = FIX / "cohort4_intraday_15m_raw.csv.gz"
+COHORT4_META = FIX / "cohort4_intraday_15m_raw.meta.json"
+COHORT4_EVENTS = FIX / "cohort4_intraday_15m_raw_events.json"
+
 # D226's threshold, unchanged. A residual session-boundary step above this is
 # REPORTED and classified, never silently adjusted.
 STEP_THRESHOLD = 0.15
@@ -552,17 +581,22 @@ def main() -> int:
                     help="D278's 16-name instrument holdout, separate fixture")
     ap.add_argument("--cohort3", action="store_true",
                     help="the third cohort, ranks 13-16, separate fixture")
+    ap.add_argument("--cohort4", action="store_true",
+                    help="the fourth cohort, ranks 17-28, 12+12, separate fixture")
     a = ap.parse_args()
-    if a.holdout and a.cohort3:
-        raise SystemExit("--holdout and --cohort3 are mutually exclusive")
-    if a.holdout or a.cohort3:
+    if sum([a.holdout, a.cohort3, a.cohort4]) > 1:
+        raise SystemExit("--holdout, --cohort3 and --cohort4 are mutually exclusive")
+    if a.holdout or a.cohort3 or a.cohort4:
         global SYMBOLS, LOW_VOL, HIGH_VOL, STRATUM, FIXTURE, META, EVENTS
         if a.holdout:
             LOW_VOL, HIGH_VOL = HOLDOUT_LOW, HOLDOUT_HIGH
             FIXTURE, META, EVENTS = HOLDOUT_FIXTURE, HOLDOUT_META, HOLDOUT_EVENTS
-        else:
+        elif a.cohort3:
             LOW_VOL, HIGH_VOL = COHORT3_LOW, COHORT3_HIGH
             FIXTURE, META, EVENTS = COHORT3_FIXTURE, COHORT3_META, COHORT3_EVENTS
+        else:
+            LOW_VOL, HIGH_VOL = COHORT4_LOW, COHORT4_HIGH
+            FIXTURE, META, EVENTS = COHORT4_FIXTURE, COHORT4_META, COHORT4_EVENTS
         SYMBOLS = LOW_VOL + HIGH_VOL
         STRATUM = {**{s: "low" for s in LOW_VOL}, **{s: "high" for s in HIGH_VOL}}
     if a.plan:

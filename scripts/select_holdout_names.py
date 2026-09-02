@@ -37,6 +37,7 @@ FIXTURE = REPO / "data" / "fixtures" / "us_shorts_daily_raw.csv.gz"
 META = REPO / "data" / "fixtures" / "us_shorts_daily_raw.meta.json"
 PRIOR = REPO / "data" / "single_name_intraday_selection.json"
 HOLDOUT = REPO / "data" / "holdout_name_selection.json"
+COHORT3 = REPO / "data" / "cohort3_name_selection.json"
 OUT = REPO / "data" / "holdout_name_selection.json"
 
 SELECT_START, SELECT_END = "2013-01-02", "2017-12-29"
@@ -51,6 +52,20 @@ RANK_FROM, RANK_TO = 4, 12          # ranks 5..12, zero-indexed 4..12
 # is spendable ONCE, on the same terms D278's was: the construction under test
 # must be frozen in writing before these bars are scored.
 NEXT8_FROM, NEXT8_TO = 12, 16
+
+# --next24: a FOURTH cohort at ranks 17-28 of each stratum -- 12 low + 12 high.
+# Same rule, same window, same floors, deeper ranks again, and it excludes ALL
+# THREE prior sets. MUR IS RANK 17 OF THE HIGH STRATUM AND IS ALREADY SPENT: it
+# was pulled into cohort 3 as NBIS's mechanical replacement, so it is skipped
+# here by the same `take` that skipped NBIS and the ranks below it shift up by
+# one. That shift is the ranking continuing, not a choice made here.
+#
+# WHAT THIS COHORT IS NOT. It does not span the volatility axis. Cohort 3 had
+# already converged to a 2.15x spread against the original eight's 5.5x, and by
+# rank 28 the two tails are closer still -- the measured spread is written into
+# the artefact and into fetch_single_name_intraday.py's COHORT4 block. Any study
+# using these names must not claim volatility is under test.
+NEXT24_FROM, NEXT24_TO = 16, 28
 
 # A NAME THAT THE PROVIDER CANNOT SERVE IS EXCLUDED ON MEASURED COVERAGE AND
 # REPLACED BY THE NEXT RANK. This is not a discretionary swap: the exclusion
@@ -74,15 +89,22 @@ def main() -> int:
     ap.add_argument("--select", action="store_true")
     ap.add_argument("--next8", action="store_true",
                     help="third cohort: ranks 13-16 of each stratum, 4+4")
+    ap.add_argument("--next24", action="store_true",
+                    help="fourth cohort: ranks 17-28 of each stratum, 12+12")
     a = ap.parse_args()
-    if not (a.select or a.next8):
+    if not (a.select or a.next8 or a.next24):
         ap.print_help()
         return 2
+    if a.next8 and a.next24:
+        ap.error("--next8 and --next24 are mutually exclusive")
 
     global RANK_FROM, RANK_TO, OUT
     if a.next8:
         RANK_FROM, RANK_TO = NEXT8_FROM, NEXT8_TO
         OUT = REPO / "data" / "cohort3_name_selection.json"
+    if a.next24:
+        RANK_FROM, RANK_TO = NEXT24_FROM, NEXT24_TO
+        OUT = REPO / "data" / "cohort4_name_selection.json"
 
     meta = json.loads(META.read_text())["symbols"]
     rows = defaultdict(list)
@@ -121,11 +143,15 @@ def main() -> int:
 
     prior = json.loads(PRIOR.read_text())
     used = {x["symbol"] for x in prior["low_vol_stratum"] + prior["high_vol_stratum"]}
-    if a.next8:
+    if a.next8 or a.next24:
         # D278's sixteen are SPENT. A third cohort that reused any of them would
         # not be a holdout, so they join the exclusion set rather than merely
         # being ranked below.
         used |= set(json.loads(HOLDOUT.read_text())["symbols"])
+    if a.next24:
+        # Cohort 3's eight are spent too -- MUR among them, at high-stratum rank
+        # 17, which is where this cohort starts. Same reason, same mechanism.
+        used |= set(json.loads(COHORT3.read_text())["symbols"])
     def take(ranked, k):
         """Ranks RANK_FROM.. onward, skipping spent names and names the provider
         does not serve, until k survive. Deeper ranks are pulled in mechanically
@@ -155,6 +181,20 @@ def main() -> int:
     show(f"HOLDOUT LOW  (ranks {RANK_FROM + 1}-{RANK_TO} by ascending vol, top-40 $vol pool)", low)
     show(f"HOLDOUT HIGH (ranks {RANK_FROM + 1}-{RANK_TO} by descending vol)", high)
 
+    # THE VOLATILITY SPREAD IS A PROPERTY OF THE COHORT, NOT OF THE RULE, and it
+    # shrinks as the ranks deepen: the original eight spanned 5.5x, cohort 3
+    # 2.15x. Measured and recorded here so no study can quietly claim this
+    # cohort puts the volatility axis under test.
+    vols = [x["annualised_vol"] for x in low + high]
+    vlo, vhi = min(vols), max(vols)
+    spread = vhi / vlo
+    print(f"\nVOLATILITY SPREAD  {vlo:.1%} .. {vhi:.1%}  = {spread:.2f}x"
+          f"   (original eight 5.5x, cohort 3 2.15x)")
+    if spread < 3.0:
+        print("  THIS COHORT DOES NOT SPAN THE VOLATILITY AXIS. The strata are "
+              "labels\n  on adjacent ranks, not on distinct volatility regimes. "
+              "No study using\n  these names may claim volatility is under test.")
+
     OUT.write_text(json.dumps({
         "purpose": "instrument holdout for D278; scores nothing",
         "rule": (f"D264's, unchanged; ranks {RANK_FROM + 1}-{RANK_TO} of each "
@@ -162,6 +202,17 @@ def main() -> int:
         "selection_window": [SELECT_START, SELECT_END],
         "in_sample_excluded": sorted(used),
         "excluded_unserved": UNSERVED,
+        "volatility_spread": {
+            "min_annualised_vol": vlo, "max_annualised_vol": vhi,
+            "spread_x": spread,
+            "reference": {"original_eight_x": 5.5, "cohort3_x": 2.15},
+            "SPANS_THE_VOLATILITY_AXIS": bool(spread >= 3.0),
+            "note": ("The spread narrows monotonically as the ranks deepen. At "
+                     "ranks 17-28 the 'low' and 'high' strata are labels on "
+                     "adjacent ranks of one distribution, not on distinct "
+                     "volatility regimes. This cohort does NOT span the "
+                     "volatility axis and no study using it may claim otherwise."),
+        },
         "low": low, "high": high,
         "symbols": [x["symbol"] for x in low + high],
     }, indent=2))

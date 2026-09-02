@@ -1,0 +1,206 @@
+{
+  "purpose": "instrument holdout for D278; scores nothing",
+  "rule": "D264's, unchanged; ranks 17-28 of each stratum instead of 1-4",
+  "selection_window": [
+    "2013-01-02",
+    "2017-12-29"
+  ],
+  "in_sample_excluded": [
+    "ANF",
+    "BB",
+    "BBD",
+    "CIEN",
+    "CLF",
+    "CMCSA",
+    "CNX",
+    "COST",
+    "DIS",
+    "FDX",
+    "HD",
+    "HLF",
+    "JPM",
+    "LMT",
+    "MDLZ",
+    "MO",
+    "MUR",
+    "NI",
+    "PG",
+    "PM",
+    "RH",
+    "RIG",
+    "RTX",
+    "SBUX",
+    "SM",
+    "SPG",
+    "THC",
+    "TRGP",
+    "TRIP",
+    "V",
+    "VZ",
+    "YELP"
+  ],
+  "excluded_unserved": {
+    "NBIS": "intraday history begins 2024-12; ~20% of the test span"
+  },
+  "volatility_spread": {
+    "min_annualised_vol": 0.2077856393835466,
+    "max_annualised_vol": 0.401765725730539,
+    "spread_x": 1.933558675770317,
+    "reference": {
+      "original_eight_x": 5.5,
+      "cohort3_x": 2.15
+    },
+    "SPANS_THE_VOLATILITY_AXIS": false,
+    "note": "The spread narrows monotonically as the ranks deepen. At ranks 17-28 the 'low' and 'high' strata are labels on adjacent ranks of one distribution, not on distinct volatility regimes. This cohort does NOT span the volatility axis and no study using it may claim otherwise."
+  },
+  "low": [
+    {
+      "symbol": "CSCO",
+      "median_dollar_volume": 687322542.9200001,
+      "annualised_vol": 0.2077856393835466
+    },
+    {
+      "symbol": "TXN",
+      "median_dollar_volume": 292536313.65000004,
+      "annualised_vol": 0.20862898776382463
+    },
+    {
+      "symbol": "UNP",
+      "median_dollar_volume": 358108644.0,
+      "annualised_vol": 0.20890127991520058
+    },
+    {
+      "symbol": "BA",
+      "median_dollar_volume": 511465803.09000003,
+      "annualised_vol": 0.21000462897655842
+    },
+    {
+      "symbol": "INTC",
+      "median_dollar_volume": 780059926.17,
+      "annualised_vol": 0.21564772030956592
+    },
+    {
+      "symbol": "MSFT",
+      "median_dollar_volume": 1406169822.64,
+      "annualised_vol": 0.22355828642148245
+    },
+    {
+      "symbol": "F",
+      "median_dollar_volume": 431102020.77,
+      "annualised_vol": 0.2249690828037399
+    },
+    {
+      "symbol": "SLB",
+      "median_dollar_volume": 531364717.5,
+      "annualised_vol": 0.2279963107269118
+    },
+    {
+      "symbol": "C",
+      "median_dollar_volume": 987990044.9000001,
+      "annualised_vol": 0.23855882425029676
+    },
+    {
+      "symbol": "GM",
+      "median_dollar_volume": 435845492.54,
+      "annualised_vol": 0.23894856064262343
+    },
+    {
+      "symbol": "BMY",
+      "median_dollar_volume": 380421217.0,
+      "annualised_vol": 0.24669095182957226
+    },
+    {
+      "symbol": "PSX",
+      "median_dollar_volume": 226055850.35,
+      "annualised_vol": 0.24771845251588162
+    }
+  ],
+  "high": [
+    {
+      "symbol": "BBY",
+      "median_dollar_volume": 163358638.35999998,
+      "annualised_vol": 0.401765725730539
+    },
+    {
+      "symbol": "UAA",
+      "median_dollar_volume": 126463656.72000001,
+      "annualised_vol": 0.3981737547344183
+    },
+    {
+      "symbol": "NRG",
+      "median_dollar_volume": 92294848.0,
+      "annualised_vol": 0.39580053493618583
+    },
+    {
+      "symbol": "HWM",
+      "median_dollar_volume": 185281555.699968,
+      "annualised_vol": 0.39495514425722933
+    },
+    {
+      "symbol": "WYNN",
+      "median_dollar_volume": 237295800.0,
+      "annualised_vol": 0.39243796742501524
+    },
+    {
+      "symbol": "ILMN",
+      "median_dollar_volume": 165783778.5518388,
+      "annualised_vol": 0.3884204724777176
+    },
+    {
+      "symbol": "DVN",
+      "median_dollar_volume": 201909634.74,
+      "annualised_vol": 0.38761028219461796
+    },
+    {
+      "symbol": "GME",
+      "median_dollar_volume": 74531286.82000001,
+      "annualised_vol": 0.3870428557954961
+    },
+    {
+      "symbol": "NOW",
+      "median_dollar_volume": 94459521.0,
+      "annualised_vol": 0.3853323253842117
+    },
+    {
+      "symbol": "LULU",
+      "median_dollar_volume": 121977158.36,
+      "annualised_vol": 0.3840671244353938
+    },
+    {
+      "symbol": "BMRN",
+      "median_dollar_volume": 102205512.0,
+      "annualised_vol": 0.3742899028897982
+    },
+    {
+      "symbol": "CX",
+      "median_dollar_volume": 100981006.98,
+      "annualised_vol": 0.3730930661139979
+    }
+  ],
+  "symbols": [
+    "CSCO",
+    "TXN",
+    "UNP",
+    "BA",
+    "INTC",
+    "MSFT",
+    "F",
+    "SLB",
+    "C",
+    "GM",
+    "BMY",
+    "PSX",
+    "BBY",
+    "UAA",
+    "NRG",
+    "HWM",
+    "WYNN",
+    "ILMN",
+    "DVN",
+    "GME",
+    "NOW",
+    "LULU",
+    "BMRN",
+    "CX"
+  ]
+}
