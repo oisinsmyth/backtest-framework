@@ -10,6 +10,33 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (D281-D284 - closing the directional short, 2026-09-02)
+- `scripts/run_unfiltered_ranking.py` (D281), `scripts/run_overnight_short.py` (D282),
+  `scripts/run_descending_ranking.py` (D283), `scripts/run_overnight_long.py` (D284).
+  All four returned SURVIVORS NONE.
+- `scripts/d280_combined_forecast.py`, `d280_dividend_check.py`, `d280_sign_audit.py` -
+  measurement only, ledger unmoved.
+- D284 adds `tail_rnd`, a VOLATILITY-MATCHED control: N drawn at random from the 2N most
+  extreme |lagged score| names. It is what separates a 4 bp directional signal from a 14 bp
+  tail premium, and without it hurdle C would have passed on the nuisance.
+- D282 and D284 add an overnight scorer that compounds `log(open[t+1]/close[t])` and refuses
+  a grid equal to `total_log_returns`; turnover is charged as `2*|pos|` every night.
+
+### Fixed
+- **D279's `top_n` ranked with `score[:, t]` and earned bar `t`'s return** - look-ahead, R9.
+  Both survivors withdrawn; ~93% of the apparent ranking edge was the bug.
+- **D280 parts 3-5 asserted the wrong SIGN convention** ("a negative IC is the tradeable
+  direction for an ascending short"), inverting their headline. Settled in money by
+  `d280_sign_audit.py`.
+- **`d280_sign_audit.py` itself mixed two lag alignments**, pairing `hist_L[t-1]` with
+  `return[t+1]` for the close-to-close target. Both alignments now computed and printed.
+- **D279's E-prime was measured over the panel, not the held book** - 5.44 for every cell.
+
+### Documentation
+- D271, D274 written up as RECONSTRUCTED POST-HOC; D280 as a measurement record; D284's
+  pre-registration AMENDED before the run to add the volatility-matched control, with the
+  original preserved byte-for-byte.
+
 ### Fixed (D279 LOOK-AHEAD CORRECTION, 2026-09-02)
 - **`scripts/run_concentrated_short.py` gains `lag1` and applies it INSIDE `top_n`.** The first
   version ranked qualifying names with `score[:, t]` - `hist_L` computed from the close of the

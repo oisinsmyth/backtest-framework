@@ -1,19 +1,22 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-02, end of the session in which the concentrated DAILY short's two survivors
-turned out to be look-ahead and were withdrawn.** D264 -> D280, plus standing rule R13.
+**Updated 2026-09-02, end of the session that closed every directional short this programme can
+build.** D264 -> D284, plus standing rule R13.
 
 ---
 
 ## 0. THE ONE-LINE STATE
 
-**BOTH short branches are now closed. Nothing in this programme currently has a surviving cell.**
+**EIGHT CONSTRUCTIONS, FIVE UNIVERSES, TWO FREQUENCIES, BOTH DIRECTIONS. NOTHING SURVIVES.**
 
-- **The INTRADAY single-name short is closed on every lever it has** - D264 through
-  [D278](docs/decisions/D278-the-instrument-holdout.md).
-- **The DAILY concentrated short is now ALSO closed** -
-  [D279](docs/decisions/D279-the-concentrated-short-on-dead-inclusive-names.md), **0 of 14, no
-  survivors.** Its first RESULT reported two survivors and **they were look-ahead. Withdrawn.**
+| study | construction | outcome |
+|---|---|---|
+| D264-D278 | the intraday single-name short, every lever | closed on `2c` |
+| [D279](docs/decisions/D279-the-concentrated-short-on-dead-inclusive-names.md) | daily concentrated, top-N by score | **0 of 14.** Its first RESULT reported two survivors and **they were LOOK-AHEAD. Withdrawn.** |
+| [D281](docs/decisions/D281-the-unfiltered-ranking.md) | rank the whole universe | **0 of 10**, and worse than random |
+| [D282](docs/decisions/D282-the-overnight-only-short.md) | overnight-only, ascending | **0 of 19.** Loses 24 bp/night |
+| [D283](docs/decisions/D283-the-descending-ranking.md) | descending, both tails | **0 of 26.** Symmetry fails BY SIGN |
+| [D284](docs/decisions/D284-the-overnight-long.md) | the overnight LONG | **0 of 13.** Clears `2c` at 2.41x and dies on SPREAD |
 
 Everything intraday closed on one condition, in which the trade count cancels and hit rate never
 appears:

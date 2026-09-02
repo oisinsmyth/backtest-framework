@@ -532,19 +532,67 @@ than assumed: `|t|` of 4.71, 5.07 and 5.97 clear a best-of-161 correction comfor
 averaged, so `n` is 2,173 BARS** — the 1,573 names inside a bar are one cross-section, not 1,573
 draws.
 
-**What is live after D279 and D280:**
+### D281 to D284 resolved all four, and the answer is one sentence in four parts
 
-1. **[D281](decisions/D281-the-unfiltered-ranking.md) — rank the whole universe, removing the
-   filter/ranking collision and changing nothing else.** Pre-registered; **result pending.**
-2. **[D282](decisions/D282-the-overnight-only-short.md) — the cost arithmetic of the overnight construction part 4 implies**, ~252 round trips a
-   year against D265's `2c` bar. Pre-registered by another agent; **result pending, and nothing here
-   predicts it.**
-3. **The volatility tilt of D280 part 4C** — `zh + zv + za + zr` at IC **−0.01373 (t −5.07)**, the
-   only other statistic in that record to clear its own multiplicity. **It is a volatility tilt, not
-   a stronger `hist_L`**: flip `zr`'s sign and the IC goes positive, it does nothing on the
-   qualifying set, `zr` alone was never scored, and no book, cost model or `sigma^2` tax has touched
-   it.
-4. **The factor-neutral branch of §9, still untouched** after D256, D264, D279 and D280.
-5. **Nothing reaches [R8](RULES.md#r8).** D279 produced no candidate, so there is nothing to take out
-   of sample, and **D246's reserved wide-universe cohort remains unspent** — which is the one good
-   outcome of catching the defect before a holdout was designed around it.
+**[D281](decisions/D281-the-unfiltered-ranking.md), [D282](decisions/D282-the-overnight-only-short.md),
+[D283](decisions/D283-the-descending-ranking.md) and [D284](decisions/D284-the-overnight-long.md)
+all returned SURVIVORS NONE.** Together they take the overnight finding apart completely.
+
+**1. The overnight effect is real, and it is a TAIL TAX rather than a signal.** D283 split the
+overnight move into a direction-blind part and a directional part, on the unfiltered universe, in
+short bp:
+
+```
+        asc      dsc      c = (asc+dsc)/2      d = (asc-dsc)/2
+N=10  -19.42   -9.93          -14.68               +4.75
+N=25  -14.46   -5.14           -9.80               +4.66
+N=50  -10.17   -2.98           -6.58               +3.60
+```
+
+**`hist_L` is SIGNED acceleration, so BOTH of its tails are the volatile names, and volatile names
+rise overnight whichever way they moved.** Shorting *either* tail loses. **Symmetry fails by SIGN,
+not by degree** — the +14.64 bp a mirror would have implied does not exist.
+
+**2. The directional component is real, small, and confirmed twice independently.** D283's
+decomposition puts it at **+4.66 bp** at N = 25; D284 measured **+4.18 bp** against a
+volatility-matched control. **It is the first evidence in D264–D284 that the SIGN of `hist_L` adds
+information over a control drawn from the same tail** — and it is under half of D265's 10 bp round
+trip.
+
+**3. A per-trade move can clear its cost bar and still be untradeable.** D284's `lng10` is the
+**first construction in this programme to exceed `2c`** — **+24.10 bp, 2.41×** — with **+0.27% CAGR
+at +0.960 net Sharpe** and a −0.82% drawdown. It fails anyway, on a hurdle written in advance to
+catch it: **breakeven half-spread 11.36 bp/side against a 15 bp floor**, because the book holds a
+**$13.19 median stock with a $1.92 tenth percentile and 25.7% of positions under five dollars.**
+**On a $1.92 name one cent of spread is 26 bp per side.** The effect is bid-ask bounce in cheap,
+just-fallen names.
+
+**4. A CONTROL MUST SHARE THE TREATMENT'S NUISANCE, not just its count.** This is the session's
+most transferable lesson and it cost three studies to learn. D279's `random-N` differed in count
+*and turnover*. D284's first control set — random, persistent-random, and long-everything — differed
+in *volatility* too, and all three would have been beaten by the tail tax alone. **Adding
+`tail-N` — random selection from within the same extreme-|score| tail — is what separated a 4 bp
+signal from a 14 bp nuisance.** Without it, D284 would have reported "selection beats random".
+
+**On the ledger.** D281 10 cells, D282 19, D283 26, D284 13 — with D256's 21 and D279's 20 that is
+**109 carried**, on top of D280's 165 statistics. **No best-of floor computed from a study's own
+cells can price a DIRECTION chosen after 165 statistics**, and every one of these records says so
+rather than implying the F hurdle handles it.
+
+**What is live after D284:**
+
+1. **The factor-neutral branch of §9 — still untouched** after D256, D264, D279, D280, D281, D282,
+   D283 and D284. **It is the only remaining idea that is a different MECHANISM rather than a
+   variation on one already measured to fail**, and the arithmetic points at it: every construction
+   tested has been net directional in a market with positive drift, paying `−μ − σ²` before costs.
+   D279 loses **−0.432 gross**; D282's `base|all` loses **−21.92% CAGR gross**. **These are not cost
+   failures.** A factor-neutral book removes the `−μ` term by construction — the short leg only has
+   to underperform the long leg. D251 closed it on ETFs at breadth 2.2, which was the *universe*
+   failing; this fixture carries 1,573 names and 10.06 effective independent instruments over a held
+   book.
+2. **The 4 bp directional component is a MEASUREMENT, not a candidate.** It is under half its own
+   cost bar and would need a different instrument, not a different parameter.
+3. **Nothing reaches [R8](RULES.md#r8).** No study has produced a candidate, so there is nothing to
+   take out of sample, and **D246's reserved wide-universe cohort remains unspent.** `cohort3`
+   (8 names, 448,861 rows, gates passed, all 28 steps REAL) is also unspent — and is 15-minute
+   intraday, so it is the wrong instrument for anything daily.
