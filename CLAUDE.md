@@ -76,6 +76,34 @@ processes.
 
 ---
 
+## Every runner needs these three assertions
+
+Two results in this repo were destroyed by defects that care does not prevent,
+so they are excluded by assertion instead. Copy the patterns from
+`scripts/run_overnight_long.py`, which has all three.
+
+1. **Lag audit.** Re-derive the held set from `score[:, t-1]` in a **second
+   implementation that does not call the selection function**. A check sharing
+   the code it checks cannot disagree with it. D279's first result reported two
+   survivors at +2.250 Sharpe; ranked with `score[:, t-1]` instead of
+   `score[:, t]` it is **−0.638**, and ~93% of the apparent edge was the bug.
+2. **Sign audit, settled in money.** Assert that a name which moves the
+   favourable way contributes **positively**, and that a dividend moves a long
+   and a short in **opposite** directions. D280 parts 3–5 were inverted by a
+   sign convention asserted in prose and never checked against a P&L.
+3. **Not-the-wrong-quantity.** Assert the compounded grid differs materially
+   from the one you did *not* mean to score. An overnight book silently wired to
+   close-to-close returns looks entirely normal in the output.
+
+**And a self-test that cannot fail is worse than none.** Check the negative
+case: that the audit *raises* on a deliberately broken book. One of mine passed
+vacuously because the synthetic score was constant over time, which makes lagged
+and unlagged selections identical by construction.
+
+**One design rule, because it cost three studies to learn:** a control must
+share the treatment's **nuisance**, not just its count. Matched-count is not
+matched-turnover (D279) and neither is matched-volatility (D284).
+
 ## Long-running work
 
 - Background anything over a couple of minutes (`nohup … &`) and poll the log
