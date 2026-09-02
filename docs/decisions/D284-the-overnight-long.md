@@ -275,3 +275,101 @@ No arm is added, no N is added, no score is substituted, no universe is added, n
 varied, and no filter is introduced. **The stop clause stands, including its pre-emptive refusal of
 a price filter added after the fact.** A control that makes an existing hurdle answer its own
 question is not a degree of freedom spent on the result — it is one taken away.
+
+---
+---
+
+# RESULT — appended 2026-09-02, after the run
+
+**SURVIVORS: NONE.** Every hurdle clears except **B**, the one this record added to catch exactly
+this, and **L3 — the load-bearing prediction declared against the construction — is correct.**
+
+## The grid
+
+Costs as pre-registered: 5 bp/side, `rf` 4% financing on the long leg, **no borrow**, PPY 252.
+
+| cell | move bp | ×2c | **breakeven bp/side** | median px | p10 px | **<$5** | gross SR | net SR | M | B | V | C | F |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|:-:|:-:|:-:|:-:|:-:|
+| `base` | +5.65 | 0.57 | 2.08 | $36.86 | $7.12 | 6.5% | +1.018 | −1.043 | no | no | no | no | no |
+| **`lng10`** | **+24.10** | **2.41** | **11.36** | **$13.19** | **$1.92** | **25.7%** | +1.830 | **+0.960** | YES | **no** | YES | YES | YES |
+| `rnd10` | +5.70 | 0.57 | 2.10 | $36.95 | $7.07 | 6.6% | +0.862 | −0.872 | no | no | no | no | no |
+| `per10` | +5.13 | 0.51 | 1.83 | $42.34 | $11.15 | 1.8% | +0.881 | −1.072 | no | no | no | no | no |
+| `tal10` | +18.49 | 1.85 | 8.59 | $12.78 | $1.91 | 26.1% | +1.579 | +0.606 | YES | no | YES | no | YES |
+| **`lng25`** | +18.35 | 1.83 | 8.47 | $16.44 | $2.56 | 20.5% | **+1.894** | +0.712 | YES | **no** | YES | YES | YES |
+| `tal25` | +14.17 | 1.42 | 6.38 | $16.42 | $2.57 | 20.5% | +1.638 | +0.316 | YES | no | YES | no | YES |
+| **`lng50`** | +13.63 | 1.36 | 6.08 | $20.71 | $3.19 | 16.4% | +1.617 | +0.256 | YES | **no** | YES | YES | YES |
+| `tal50` | +10.75 | 1.08 | 4.65 | $20.80 | $3.20 | 16.3% | +1.457 | −0.093 | YES | no | YES | no | no |
+
+Best-of-13 floor **+0.117**.
+
+## What cleared, and it is not nothing
+
+**Hurdle M clears at 2.41× — the first construction in this programme to exceed its own cost bar.**
+`lng10` returns **+0.27% CAGR at +0.960 net Sharpe** on 31,841 trades, with a **−0.82% maximum
+drawdown**. V, C and F all clear at all three N.
+
+**And hurdle H clears at the 100th percentile on both legs at every N** — which, per this record's
+own statement and three prior demonstrations, means nothing.
+
+## What failed, and why it is the right answer
+
+**Hurdle B fails at every N: breakeven half-spread 11.36 / 8.47 / 6.08 bp/side against the 15 bp
+floor.** The price columns say why, and they are the reason B was written:
+
+**The book holds a $13.19 median stock with a $1.92 tenth percentile and 25.7% of its positions
+under five dollars.** `base` holds a $36.86 median with 6.5% under five. **On a $1.92 name a single
+cent of spread is a 26 bp half-spread — more than double the 11.36 bp at which this book breaks
+even.**
+
+**L3 is correct: the effect is bid-ask bounce in cheap, just-fallen names.** The stop clause
+pre-emptively refused a price filter added after the fact, and it is not added. **If cheap names
+carry the effect, that is the finding.**
+
+## L5 IS FALSIFIED, and this is the study's real result
+
+**The book beats the volatility-matched control at all three N on gross Sharpe: +0.251, +0.256,
++0.160**, and on move per trade by **+5.61 / +4.18 / +2.87 bp**. The falsifier was stated in advance
+as beating `tail-N` at N = 25, and it did, by +0.256.
+
+`tal25` holds the same price profile — $16.42 median, 20.5% under $5 — and still scores +14.17 bp
+against `lng25`'s +18.35. **So the tail tax [D283](D283-the-descending-ranking.md) measured is real
+and large, and the SIGN of `hist_L` carries something beyond it.**
+
+**That directional component is worth about 4 bp/night, and two independent constructions agree on
+the number: D283's decomposition put it at +4.66 bp at N = 25, and this study measures +4.18 bp.**
+It is the first evidence in D264–D284 that the score's direction adds information over a
+volatility-matched control.
+
+**It is also 4 bp against a 10 bp round trip, in stocks too cheap to trade at the required spread.**
+
+## The amendment earned its place
+
+**Without `tail-N`, hurdle C would have passed on three controls and this record would have
+reported "selection beats random".** The volatility-matched control is what separates a 4 bp
+directional signal from a 14 bp tail premium, and D283 is what showed the original control set
+could not.
+
+## Predictions
+
+| | prediction | outcome |
+|---|---|---|
+| **L1** | M clears at all three N — *declared near-determined, not to be scored as a success* | **correct**, and correctly discounted |
+| **L2′** | beats `base` on gross Sharpe — *declared the weak leg* | **correct**, and it means only what it was said to mean |
+| **L3** | breakeven below 15 bp/side; the effect is bounce | **CORRECT** — 11.36 / 8.47 / 6.08 |
+| **L4** | net Sharpe below 1.0 at every N | **correct** — 0.960 / 0.712 / 0.256, the closest call in the study |
+| **L5** | does NOT beat `tail-N` at N = 25 | **WRONG** — beats it by +0.256 |
+
+Three of five held. **The two that mattered split**: L3 killed the study and L5 found the one thing
+in it worth carrying.
+
+## Ledger
+
+96 carried + 13 fresh = **109**, and the disclosure stands that no floor computed from a study's own
+cells can price a direction chosen after D280's 165 statistics.
+
+## Stop
+
+**Hurdle B failed, so the overnight long is closed.** No price filter, no fourth N, no alternative
+score, no second universe. **The 4 bp directional component is recorded as a measurement, not as a
+candidate** — it is under half its own cost bar and would need a different instrument, not a
+different parameter, to be worth anything.
