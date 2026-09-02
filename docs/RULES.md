@@ -561,3 +561,25 @@ lists are deduplicated by ORDERING, not by formula. And a rank book cannot say
 "nothing qualifies today": it holds exactly N names however ordinary they are, so
 LEVEL- OR THRESHOLD-BASED SELECTION IS UNTESTED by this design and needs its own
 pre-registration.
+
+### FIFTH AMENDMENT to R14, 2026-09-02 — a boundary peak is unresolved, not concluded
+
+Measured on D290's 51: EVERY long-only candidate peaks at the corner (N=50, k=40)
+and 1 of 51 survives the nulls. On short-only, EDGE peaks pass 0 of 6 against 19
+of 45 interior. A peak at the edge of the sweep means the statistic was STILL
+CLIMBING when the grid ran out -- which is what drift accumulating with horizon
+and variance shrinking with N both look like.
+
+The SPREAD does not show the pattern, and that is correct rather than an
+exception: the corner peak signals drift accumulation and the spread construction
+removes drift. The flag belongs to constructions that carry exposure.
+
+**NEW GATE 1i -- report where the peak sits. An interior peak is a maximum; an
+edge or corner peak is UNRESOLVED, not concluded.**
+
+A SEPARATE CAUTION APPLIES TO THE SPREAD ANYWAY: t rises with N through
+AVERAGING, not a larger edge. close_in_range earns +71.8 bp at N=3 and +20.4 at
+N=50 while its t rises. A peak at N=50 is a small per-name effect rescued by
+breadth -- FINDINGS sections 4 and 9. REPORT THE PER-NAME EFFECT BESIDE t so
+breadth cannot masquerade as strength. A peak at max k means the grid may be too
+short; extend it or record the result as horizon-unresolved.

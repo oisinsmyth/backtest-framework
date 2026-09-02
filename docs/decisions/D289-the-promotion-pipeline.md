@@ -431,3 +431,42 @@ crash the ten most extreme. **Level- or threshold-based selection is therefore
 untested by this whole design**, and is a different construction requiring its own
 pre-registration. The N sweep from 3 to 50 is the only crude proxy the study has
 for "how extreme must a name be before it is worth holding".
+
+---
+
+# FIFTH AMENDMENT, 2026-09-02 — a peak at the edge of the sweep is not a result
+
+Measured across D290's 51 candidates, by where each one's peak (N, k) sits:
+
+| construction | corner (N=50, k=40) | edge | interior |
+|---|---|---|---|
+| **long-only** | **51 of 51**, 1 passes the nulls | — | — |
+| **short-only** | — | **0 of 6 pass** | 19 of 45 pass |
+| **spread** | 1 of 1 | 7 of 13 | 16 of 37 |
+
+**Every long-only candidate peaks at the corner and essentially none survives.**
+That is drift accumulating with horizon and variance shrinking with N — the
+statistic was still climbing when the grid ran out. On short-only, edge peaks
+pass **zero of six** against 42% for interior peaks.
+
+**The spread does NOT show the pattern, and that is correct rather than an
+exception:** a corner peak signals drift accumulation, and the spread
+construction is defined by removing drift. The red flag belongs to the
+constructions that carry exposure.
+
+## GATE 1i — report where the peak sits, and treat a boundary peak as unresolved
+
+| | |
+|---|---|
+| **interior peak** | the maximum is contained by the grid; the statistic is a maximum |
+| **edge / corner peak** | the statistic was still rising when the sweep ended. **The result is unresolved, not concluded** |
+
+**A separate caution applies to the spread even though the drift one does not.**
+`t` rises with N through **averaging**, not through a larger edge:
+`close_in_range` earns **+71.8 bp at N=3 and +20.4 at N=50** while its `t` rises.
+So a peak at N=50 means *a small per-name effect rescued by breadth* — exactly
+the constraint `FINDINGS.md` §4 and §9 describe. **Report the per-name effect at
+the peak alongside `t`**, so breadth cannot masquerade as strength.
+
+**And a peak at max k means the grid may be too short to contain the maximum.**
+Either extend the sweep or record the result as horizon-unresolved.
