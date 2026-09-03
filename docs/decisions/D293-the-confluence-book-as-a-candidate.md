@@ -155,3 +155,85 @@ would then be a cost question, not a statistics question.
 
 Any re-search of `f`, the partner pair, or the primary. Fourth order. The
 holdout. Stage 2 exits.
+
+---
+
+# CORRECTION — 2026-09-03: the cost verdict is aggregation-dependent, and I overstated it
+
+The section at the top of this document says the candidate is **already closed
+on cost**. That is true under one of three defensible aggregations of the same
+estimator, and it is the one with a known upward bias. **The claim as written
+was too strong and is withdrawn.** `scripts/d293_cost_breakdown.py`.
+
+## The estimator clamps, and 41.9% of held cells clamp
+
+Corwin–Schultz sets a negative daily estimate to zero — the authors' own
+convention. On this book **41.9% of held cells estimate EXACTLY zero**, so the
+negative half of the estimator's noise is removed and the positive half is not.
+**The mean is biased up, and the size of that bias is unknown.**
+
+| aggregation of the SAME estimator | half/side | round trip | × cost | R14 |
+|---|--:|--:|--:|:--|
+| **mean** of per-bar estimates *(used everywhere so far)* | 65.16 | 260.66 | **0.238** | **CLOSED** |
+| **median** of per-bar estimates | 26.31 | 105.23 | **0.588** | not closed |
+| per-**name** median over its life, then averaged | 25.90 | 103.62 | **0.597** | not closed |
+
+R14 closes a signal failing cost by a factor of two, i.e. `× < 0.50`. **The mean
+says closed at 0.238; the two robust central estimates say 0.59 and agree with
+each other to within 2%.** The verdict straddles the rule's line and the rule
+cannot be applied until the estimator question is settled.
+
+**Which is right is not resolvable with Corwin–Schultz alone.** You pay the mean
+spread, not the median, so if CS were unbiased the mean would be correct. It is
+not unbiased here: clamping guarantees an upward bias, and 41.9% clamping says
+the noise is large relative to the signal. Settling this needs a spread source
+that is not CS.
+
+## And the tight tercile is not a liquidity cut
+
+Section 5 of the breakdown showed the tight tercile covering **24× and 43×** its
+cost. That is an artifact and must not be read as a finding:
+
+| tercile | cells | mean half | **% exactly zero** | median price | dead-name % |
+|---|--:|--:|--:|--:|--:|
+| **tight** | 874,010 | **0.3** | **98.0%** | $38.57 | 17.6% |
+| mid | 872,880 | 18.2 | 31.8% | $42.81 | 17.0% |
+| wide | 875,077 | 94.9 | 1.4% | $31.06 | 19.4% |
+
+**The tight tercile is 98% clamped zeros.** Its 0.8 bp round trip is the
+estimator's floor, not a cost, and dividing by it produces a meaningless ratio.
+It is also not a liquidity cut in any useful sense — its median price is *lower*
+than the mid tercile's, and its dead-name share is unremarkable. What it selects
+is low high-low range, which is a **volatility** cut.
+
+**What does survive from that section is the EFFECT, not the cost:** in the
+tightest tercile `hist_L` earns +19.28 (t +2.16) and the confluence **+36.02
+(t +3.81)** — the confluence nearly doubles it. That is a real observation about
+where the edge lives; the cost beside it is not.
+
+## Cost by as-traded price and era, for the record
+
+| price | share held | mean half | median |
+|---|--:|--:|--:|
+| <$1 | 3.2% | 149.1 | 97.7 |
+| $2–5 | 12.7% | 91.5 | 48.3 |
+| $10–20 | 19.0% | 59.3 | 25.8 |
+| >$50 | 20.9% | 43.9 | 16.0 |
+
+Cost scales inversely with price as D284 found, and **45% of the book sits in
+names above $20**. By era, 2021+ is 44.5% of held cells at a mean half-spread of
+70.3 against pre-2016's 56.4 — **higher later, which is the opposite of the
+direction spreads have actually moved**, and another sign the mean is tracking
+the estimator rather than the market.
+
+## What this changes
+
+**D293's stop conditions are unchanged. Its framing is.** The opening claim that
+the aim can only be mechanism-not-viability rested on the candidate being
+closed on cost, and it is not clearly closed. **Under the two robust estimates
+it covers ~0.59× — failing, but by 1.7×, inside the range where stage 2's margin
+is at least arguable rather than absurd.**
+
+**The cost question is now the binding open question in this programme**, ahead
+of any further confluence work. It is also narrow: it needs one spread number
+this fixture cannot provide.

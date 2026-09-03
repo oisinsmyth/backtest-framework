@@ -68,6 +68,7 @@ D = _load("d292", "run_d292_third_order.py")
 ET = _load("d290et", "d290_entry_test.py")
 R, M, FN = D.R, D.M, D.FN
 OUT = REPO / "data" / "d292_null_across_n.json"
+OUT_DEEP = REPO / "data" / "d292_null_across_n_deep.json"
 SEED = 20260903
 NULLS = ("rot_B1", "rot_B2", "rot_both")
 
@@ -78,12 +79,19 @@ def main() -> int:
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--lo", type=int, default=15)
     ap.add_argument("--hi", type=int, default=40)
+    ap.add_argument("--only", default=None,
+                    help="restrict to one cell, as B1+B2, to buy draws with the "
+                         "time saved; the observed value is unchanged, only the "
+                         "null's resolution improves")
     a = ap.parse_args()
     t0 = time.time()
 
     res = json.loads((REPO / "data" / "d292_third_order.json").read_text())
     cells = [(r["B1"], r["B2"], r["op"], r["f"])
              for r in res["rows"] if r["screen"] or r["promote"]]
+    if a.only:
+        cells = [c for c in cells if f"{c[0]}+{c[1]}" == a.only]
+        assert cells, f"--only {a.only} matched no cell"
     k = res["k"]
 
     panel, cleaned = M.RP.load_ragged(M.B.FIXTURE, M.B.EVENTS, fee_bps=M.B.FEE_BPS)
@@ -198,8 +206,10 @@ def main() -> int:
                             "the p95 of the ROT BOTH null and of both single "
                             "rotations",
                "N_range": [a.lo, a.hi], "draws": a.draws, "k": k,
-               "entry": "open", "rows": rows}, open(OUT, "w"), indent=1)
-    print(f"  wrote {OUT.relative_to(REPO)}  ({time.time() - t0:.0f}s)")
+               "entry": "open", "rows": rows},
+              open(OUT_DEEP if a.only else OUT, "w"), indent=1)
+    print(f"  wrote {(OUT_DEEP if a.only else OUT).relative_to(REPO)}  "
+          f"({time.time() - t0:.0f}s)")
     return 0
 
 
