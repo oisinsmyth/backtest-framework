@@ -504,7 +504,34 @@ def main() -> int:
           f"{rt_med:.1f} bp  ({time.time() - t0:.0f}s)", flush=True)
     assert len(cells) == 20, f"expected 19 cells + the control, built {len(cells)}"
 
-    b0 = assertions(ctx, r1, vol, half, base, n, T, panel, live, plan, z)
+    # Assertions run in EVERY mode, shards included: a null shard scoring a
+    # book the audits would reject is worse than no null at all.
+    assertions(ctx, r1, vol, half, base, n, T, panel, live, plan, z)
+
+    # ---- SHARD MODE, AND IT MUST COME BEFORE ANYTHING THAT SPAWNS ----
+    # A shard runs its stride of (cell, draw) null tasks and EXITS. The first
+    # version of this file lost this branch to a silent `str.replace` no-op, so
+    # every child ran the parent's path and spawned six more of its own: 86
+    # processes and 4 MB of free RAM. The `assert` below the spawn block is the
+    # belt to this brace.
+    if a.shard is not None:
+        od = json.loads((REPO / "temp" / "d295_observed.json").read_text())
+        tasks = [(k2, d) for k2 in sorted(od["run_dist"]) for d in range(a.draws)]
+        out = {}
+        for k2, d in tasks[a.shard::a.nshards]:
+            runs = np.array(od["run_dist"][k2], dtype=int)
+            if runs.size == 0:
+                continue
+            st = run_cell(tuple(od["cells"][k2]), ctx, r1, vol, half, base, n, T,
+                          rt_mean, rt_med, runs=runs,
+                          rng=np.random.default_rng(SEED + 7919 * d))
+            if st is not None:
+                out.setdefault(k2, {})[str(d)] = st["bp"] - od["ctrl_bp"]
+        (REPO / "temp" / f"d295_null_{a.shard}.json").write_text(json.dumps(out))
+        print(f"  shard {a.shard}/{a.nshards}: {len(tasks[a.shard::a.nshards])} "
+              f"tasks in {time.time() - t0:.0f}s", flush=True)
+        return 0
+
     if a.selftest:
         print(f"\nOK  assertions pass  ({time.time() - t0:.0f}s)")
         return 0
@@ -516,6 +543,14 @@ def main() -> int:
         if s is not None:
             obs[c[0] + (f"@{c[2]}" if c[2] is not None else "")] = (c, s)
     print(f"  {len(obs)} evaluated ({time.time() - t0:.0f}s)", flush=True)
+
+    # what the shards need: each cell's OWN holding-run distribution, so the
+    # null matches RATE and PERSISTENCE rather than count alone (D279; and the
+    # mismatch that voided D291's veto arm)
+    (REPO / "temp" / "d295_observed.json").write_text(json.dumps({
+        "cells": {k2: list(v[0]) for k2, v in obs.items() if k2 != "B0"},
+        "run_dist": {k2: v[1]["run_dist"] for k2, v in obs.items() if k2 != "B0"},
+        "ctrl_bp": obs["B0"][1]["bp"]}))
 
     ctrl = obs["B0"][1]
     rows = []
@@ -557,22 +592,27 @@ def main() -> int:
               f"{fmt(r['run_ratio'], 4, 1)}")
 
     # ---- the null, in subprocesses ----
+    # THE GUARD, and it is not decoration. A shard that reached this line would
+    # spawn six more of itself, each of which would spawn six more. That is
+    # exactly what happened once: 86 processes and 4 MB of free RAM.
+    assert a.shard is None, "a shard must never reach the spawn block"
     import subprocess
     print(f"\n  NULL: {len(obs) - 1} cells x {a.draws} rate- and "
           f"persistence-matched draws, {a.nshards} processes", flush=True)
+    for i in range(a.nshards):
+        (REPO / "temp" / f"d295_null_{i}.json").unlink(missing_ok=True)
     procs = [subprocess.Popen([sys.executable, str(Path(__file__).resolve()),
                                "--shard", str(i), "--nshards", str(a.nshards),
                                "--draws", str(a.draws)])
              for i in range(a.nshards)]
-    for pr in procs:
-        pr.wait()
+    codes = [pr.wait() for pr in procs]
+    assert all(c == 0 for c in codes), f"a null shard failed: exit codes {codes}"
     dist = {}
     for i in range(a.nshards):
         f = REPO / "temp" / f"d295_null_{i}.json"
-        if not f.exists():
-            continue
+        assert f.exists(), f"shard {i} wrote no output"
         for key, dd in json.loads(f.read_text()).items():
-            dist.setdefault(key, []).extend(v["d_bp"] for v in dd.values())
+            dist.setdefault(key, []).extend(dd.values())
     joint = []
     ndraw = min((len(v) for v in dist.values()), default=0)
     for d in range(ndraw):
