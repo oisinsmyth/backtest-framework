@@ -218,6 +218,15 @@ def simulate(A, ref, band, X, runs=None, rng=None, peek=False, want_x=True,
     bexc = np.empty(N_SLOTS + 4)      # list -- same reduction, no conversion
     sampled = (ref == "sampled")
     scored = ref in ("raw", "excess")
+    # THE EXCESS RULE READS THE ACCUMULATOR want_x SKIPS. Calibration called it
+    # with want_x=False, so cum_x stayed 0.0 and the rule never fired -- the
+    # bisection ran to its lower bound and reported a "matched" multiplier of
+    # 0.0200 producing ZERO triggers. Assertion [6] tested the fast path on the
+    # RAW rule only, where cum_x genuinely is unused, so it passed a flag that
+    # was silently wrong everywhere else. Refused at the door now.
+    assert want_x or ref != "excess", (
+        "want_x=False with ref='excess': the excess rule reads cum_x, which "
+        "this flag stops accumulating")
 
     for t in range(1, T):
         r1t, fint, mt = r1T[t], finT[t], mkt[t]
@@ -380,14 +389,14 @@ def calibrate(A, band, target, verbose=True):
     lo, hi = 0.02, 4.0
     for _ in range(24):
         mid = 0.5 * (lo + hi)
-        f = simulate(A, "excess", band, mid, want_x=False)["fired"]["trigger"]
+        f = simulate(A, "excess", band, mid)["fired"]["trigger"]
         if f > target:
             lo = mid
         else:
             hi = mid
     out = 0.5 * (lo + hi)
     if verbose:
-        got = simulate(A, "excess", band, out, want_x=False)["fired"]["trigger"]
+        got = simulate(A, "excess", band, out)["fired"]["trigger"]
         print(f"    {band:4s}: matched multiplier {out:.4f}  ->  {got:,} triggers "
               f"vs the raw rule's {target:,}  ({100 * (got / target - 1):+.2f}%)")
     return out
@@ -499,8 +508,22 @@ def assertions(A):
     assert np.array_equal(np.nan_to_num(fx["book"], nan=-9e9),
                           np.nan_to_num(mine["book"], nan=-9e9)), \
         "skipping the excess accumulator changed the book"
-    print("    [6] want_x=False is bit-identical -- the null's fast path is "
-          "the slow path")
+    # AND IT MUST BE REFUSED FOR THE EXCESS RULE. The first version of [6]
+    # tested the raw rule only -- where cum_x genuinely is unused -- so it
+    # passed a flag that silently zeroed the excess rule's accumulator and let
+    # calibration bisect to its lower bound, reporting a "matched" multiplier
+    # of 0.0200 producing ZERO triggers.
+    refused = False
+    try:
+        simulate(A, "excess", "flat", 1.0, want_x=False)
+    except AssertionError:
+        refused = True
+    assert refused, ("want_x=False was ACCEPTED for the excess rule -- it "
+                     "silently zeroes the accumulator that rule reads")
+    ex = simulate(A, "excess", "flat", 1.0)
+    assert ex["fired"]["trigger"] >= 1, "the excess rule never fires at X=1.0"
+    print(f"    [6] want_x=False is bit-identical on the raw rule and REFUSED "
+          f"on the excess rule, which fires {ex['fired']['trigger']:,} times")
 
     # C. COST DIMENSIONS. The guard that was missing when `turn * 2.0 * rt`
     #    shipped in two runners.
