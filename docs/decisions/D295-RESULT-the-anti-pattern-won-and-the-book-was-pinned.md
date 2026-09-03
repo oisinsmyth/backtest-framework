@@ -251,3 +251,80 @@ book returns to the current selection.
 raise turnover (25.0%, 24.6–30.3%, 20.0% against the control's 20.0%) and none
 covers its round trip — but that is a stage-3 question and this record should not
 have treated it as a stage-2 one.
+
+---
+
+# ADDENDUM — 2026-09-03: why the trailing stop loses, measured
+
+`scripts/d295_why_trailing_fails.py`. The decay curve is measured on a **long
+fixed hold** (every position lives exactly 25 bars), so each age is sampled by
+the same population and the curve is the signal's own rather than a rule's.
+
+## 1. The edge is front-loaded and then it is gone
+
+| age | position-bars | bp/bar |
+|--:|--:|--:|
+| 1 | 4,875 | **+18.46** |
+| 2 | 4,873 | +9.80 |
+| 3 | 4,870 | +12.59 |
+| 4 | 4,868 | +8.74 |
+| 5 | 4,866 | +3.45 |
+| 10 | 4,861 | +7.21 |
+| 15 | 4,834 | −1.96 |
+| 20 | 4,822 | −2.27 |
+| 25 | 4,813 | −2.76 |
+
+```
+age 1-5   +10.61 bp/bar   over  24,352 position-bars
+age 6+     -1.14 bp/bar   over  96,754 position-bars
+```
+
+## 2. And "front-loaded" is really "while the name is still selected"
+
+```
+in the selected set     +9.74 bp/bar   over 32,310 bars
+out of it               -1.87 bp/bar   over 88,796 bars
+```
+
+The two cuts are the same fact: a name is selected while its signal is fresh,
+and the edge is worth **+9.74 bp/bar** for exactly that long.
+
+## 3. Where each rule spends its exposure
+
+| rule | bar-weighted mean age | % of bars at age ≤ 5 | **% of bars OUT of selection** |
+|---|--:|--:|--:|
+| B0 — 5-bar hold | 3.00 | 100.0% | **26.5%** |
+| **B4@1.0** trailing | 6.20 | 57.4% | **45.7%** |
+| **B4@2.0** trailing | 9.96 | 35.4% | **61.4%** |
+
+**That is the whole explanation.** The trailing stop puts 46–61% of its exposure
+into bars worth −1.87 bp, against the baseline's 26.5%.
+
+## 4. And the trailing stop is the worst possible shape for this edge
+
+A trailing stop exits only after the position **gives back** `p × vol` from its
+peak. On an edge that is front-loaded and decays:
+
+1. the peak arrives in the first few bars, while the name is still selected
+2. the position then drifts sideways at ≈0 bp
+3. the stop cannot fire until the drift has cost `p × vol`
+4. so it exits **after the edge is gone AND after handing part of it back**
+
+Widening the stop makes it strictly worse — B4@2.0 waits longer, holds 61.4% of
+its bars out of selection, and loses most (−9.38 bp/bar, p = 1.000).
+
+**The rule is not badly tuned. It is structurally mismatched to the signal**, and
+that is why every parameter fails in the same direction.
+
+## 5. What this says about the principle
+
+**"Let the winners run" presumes the winner keeps winning.** Here the winner is
+whoever is *currently ranked best*, and that title moves to another name within
+days. Running a position is holding a name that has already handed the title
+over.
+
+**The corollary is testable and not tested here:** on a signal whose edge does
+NOT decay — a trend rather than a cross-sectional rank — the same rule should
+win. Nothing in this study speaks to that, and §3 of the main record still
+applies: with slots equal to the selection size, no rule here could promote a
+better name into a freed slot.
