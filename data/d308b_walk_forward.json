@@ -1,0 +1,138 @@
+{
+ "none": {
+  "1": {
+   "run_obs": 1.6153066396350735,
+   "run_shuffled_p50": 1.2145579268292683,
+   "run_ratio": 1.329954384186518,
+   "walk_forward_bp": -45.795493057806226,
+   "best_static_bp": 11.1992564775702,
+   "oracle_charged_bp": 177.26965567304933
+  },
+  "5": {
+   "run_obs": 1.343157894736842,
+   "run_shuffled_p50": 1.2340425531914894,
+   "run_ratio": 1.088421052631579,
+   "walk_forward_bp": -15.622316550671634,
+   "best_static_bp": 11.1992564775702,
+   "oracle_charged_bp": 92.51972606115544
+  },
+  "21": {
+   "run_obs": 1.2773109243697478,
+   "run_shuffled_p50": 1.2459016393442623,
+   "run_ratio": 1.0252100840336134,
+   "walk_forward_bp": -5.826023124813802,
+   "best_static_bp": 11.1992564775702,
+   "oracle_charged_bp": 51.79169841042484
+  },
+  "63": {
+   "run_obs": 1.275,
+   "run_shuffled_p50": 1.3783783783783783,
+   "run_ratio": 0.925,
+   "walk_forward_bp": -8.22968487865432,
+   "best_static_bp": 11.1992564775702,
+   "oracle_charged_bp": 29.88773906229249
+  }
+ },
+ "target": {
+  "1": {
+   "run_obs": 1.55615234375,
+   "run_shuffled_p50": 1.2252979623221838,
+   "run_ratio": 1.27001953125,
+   "walk_forward_bp": -46.942148934308854,
+   "best_static_bp": 15.24853917036205,
+   "oracle_charged_bp": 181.5206086409453
+  },
+  "5": {
+   "run_obs": 1.3403361344537814,
+   "run_shuffled_p50": 1.2364341085271318,
+   "run_ratio": 1.084033613445378,
+   "walk_forward_bp": -12.862235757195155,
+   "best_static_bp": 15.24853917036205,
+   "oracle_charged_bp": 100.06387420619139
+  },
+  "21": {
+   "run_obs": 1.256198347107438,
+   "run_shuffled_p50": 1.2258064516129032,
+   "run_ratio": 1.024793388429752,
+   "walk_forward_bp": -3.4125677067698934,
+   "best_static_bp": 15.24853917036205,
+   "oracle_charged_bp": 54.87314539564143
+  },
+  "63": {
+   "run_obs": 1.2439024390243902,
+   "run_shuffled_p50": 1.3076923076923077,
+   "run_ratio": 0.9512195121951219,
+   "walk_forward_bp": -1.1296061695196122,
+   "best_static_bp": 15.24853917036205,
+   "oracle_charged_bp": 35.38943380070902
+  }
+ },
+ "none+overlay": {
+  "1": {
+   "run_obs": 1.9782743637492242,
+   "run_shuffled_p50": 1.2049149338374292,
+   "run_ratio": 1.6418373680943512,
+   "walk_forward_bp": -37.183334801720186,
+   "best_static_bp": 7.774152165811918,
+   "oracle_charged_bp": 147.68807371869633
+  },
+  "5": {
+   "run_obs": 1.6701570680628273,
+   "run_shuffled_p50": 1.2152380952380952,
+   "run_ratio": 1.37434554973822,
+   "walk_forward_bp": -5.793602817627285,
+   "best_static_bp": 7.774152165811918,
+   "oracle_charged_bp": 77.57335963672924
+  },
+  "21": {
+   "run_obs": 1.6344086021505377,
+   "run_shuffled_p50": 1.2881355932203389,
+   "run_ratio": 1.2688172043010755,
+   "walk_forward_bp": 1.483101900259992,
+   "best_static_bp": 7.774152165811918,
+   "oracle_charged_bp": 46.53963644153891
+  },
+  "63": {
+   "run_obs": 1.457142857142857,
+   "run_shuffled_p50": 1.2439024390243902,
+   "run_ratio": 1.1714285714285715,
+   "walk_forward_bp": -3.9820137186062654,
+   "best_static_bp": 7.774152165811918,
+   "oracle_charged_bp": 30.45162016396059
+  }
+ },
+ "target+overlay": {
+  "1": {
+   "run_obs": 1.8253150057273768,
+   "run_shuffled_p50": 1.2108662613981762,
+   "run_ratio": 1.5074455899198167,
+   "walk_forward_bp": -32.47222836593142,
+   "best_static_bp": 8.574690606167154,
+   "oracle_charged_bp": 159.41522738005511
+  },
+  "5": {
+   "run_obs": 1.5485436893203883,
+   "run_shuffled_p50": 1.2060491493383743,
+   "run_ratio": 1.2839805825242718,
+   "walk_forward_bp": -10.990986685202671,
+   "best_static_bp": 8.574690606167154,
+   "oracle_charged_bp": 87.99568719015481
+  },
+  "21": {
+   "run_obs": 1.3944954128440368,
+   "run_shuffled_p50": 1.2063492063492063,
+   "run_ratio": 1.1559633027522938,
+   "walk_forward_bp": -2.6008900647781013,
+   "best_static_bp": 8.574690606167154,
+   "oracle_charged_bp": 51.306864276742694
+  },
+  "63": {
+   "run_obs": 1.457142857142857,
+   "run_shuffled_p50": 1.2142857142857142,
+   "run_ratio": 1.2,
+   "walk_forward_bp": -1.3625922670801411,
+   "best_static_bp": 8.574690606167154,
+   "oracle_charged_bp": 35.188428253972575
+  }
+ }
+}
