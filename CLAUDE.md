@@ -40,9 +40,13 @@ a result.
    (Corwin-Schultz off the OHLC) rather than trusting a fee assumption** — D285
    missed a guessed 15 bp/side bar by 0.65 and the held names measured 33.8.
 2. **Trade distribution** — count, mean, **median**, win rate, payoff, holding
-   run, skew, kurtosis. Then **drop the best 1% and re-report the mean**: a mean
-   carried by a few trades is a lottery ticket, and the median says so first
-   (D285: top 1% = 196.9% of P&L).
+   run, skew, kurtosis. Then **trim 1% from BOTH tails and report all three
+   means**: ex-top, ex-bottom, and trimmed. Dropping only winners is a flag, not
+   a verdict — on a two-sided fat-tailed book it always frightens (D307 called
+   four cells lottery books on it; the symmetric trim was +24 to +52 bp and at
+   N=19 the *losing* tail was larger, −181% against +161%). **A mean below its
+   median is the tell** that the left tail is doing the work (D285: top 1% =
+   196.9% of P&L, and there it was genuine).
 3. **What the winners depend on** — names to reach half the P&L, top-1/5/10 name
    share, profitable years, and the split on what the universe varies: dead vs
    alive, era, and **price** (cost in bp scales inversely with price; killed
