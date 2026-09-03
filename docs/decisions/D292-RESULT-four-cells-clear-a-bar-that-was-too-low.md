@@ -234,3 +234,83 @@ another order of confluence.**
 ## Files added
 
 `scripts/d292_full_ladder.py` · `data/d292_full_ladder.json`
+
+---
+
+# ADDENDUM 2 — 2026-09-03: the N-stability test, which came out against my prediction
+
+Criterion fixed in `scripts/d292_n_stability.py` and committed **before the
+numbers existed**: INHERITED if the improvement tracks the primary's own N
+profile (high positive `corr(primary_t, improvement_t)`); ROBUST if the
+improvement is positive across the range **including where the primary is weak**.
+
+I expected INHERITED. **All four cells came out independent, and two came out
+robust.**
+
+## `macd_hist + rsi`, mean-rank, f = 0.75 — open entry
+
+| N | 15 | 18 | 20 | 22 | 24 | **25** | 26 | 28 | 30 | 32 | 36 | 40 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| **primary t** | +0.14 | −0.09 | +0.45 | +0.67 | +2.17 | **+2.30** | +2.15 | +1.65 | +1.39 | +0.49 | +1.08 | +0.53 |
+| **both t** | +1.87 | +1.33 | +2.23 | +2.23 | +2.89 | +2.96 | **+3.38** | +3.04 | +2.46 | +1.52 | +2.04 | +1.85 |
+| **improvement t** | +2.25 | +2.07 | +2.50 | +1.47 | +1.18 | +0.52 | +1.69 | +1.59 | +1.25 | +1.42 | +1.21 | +1.72 |
+
+**The primary is a spike; the combined book is not.** Its own open-entry `t` has
+median **+2.23** across N ∈ [15, 40] against the primary's **+0.89**, it is above
++1.3 at every N in the range, and its maximum is at **N = 26, not 25**.
+
+```
+corr(primary t, improvement t)          -0.74   -> NOT inherited
+improvement vs primary at N, positive   26/26
+   ... where the primary is WEAK (t<1)  14/14
+improvement vs primary at N' (matched)  20/26
+```
+
+## All four cells
+
+| cell | corr | imp > 0 | imp > 0 where primary weak | both own t p50 | vs N′ |
+|---|--:|--:|--:|--:|--:|
+| **`macd_hist + rsi`** 0.75 | **−0.74** | **26/26** | **14/14** | **+2.23** | 20/26 |
+| **`retrace_leg + rev_5`** 0.25 | −0.45 | **26/26** | **14/14** | +1.72 | 22/26 |
+| `macd_line + rsi` 0.75 | −0.25 | 22/26 | 13/14 | +1.40 | 17/26 |
+| `retrace_leg + rsi` 0.25 | −0.77 | 17/26 | 12/14 | +1.08 | 26/26 |
+
+Primary own `t` p50 for comparison: **+0.89**.
+
+**Every correlation is negative.** The improvement is largest exactly where the
+primary is weakest — the opposite of riding its spike. **The pre-committed
+ROBUST criterion is met outright by two cells.**
+
+## Four caveats, none of which I can dismiss
+
+**1. Adjacent N are not independent tests.** N = 24, 25, 26 share nearly all
+their names. "26/26" is perhaps 3–5 effective observations. The *shape* is the
+evidence, not the count.
+
+**2. The count-matched comparison is weaker.** Against the primary at N′ the
+improvement is positive 20/26 and turns **negative at N ≥ 32** (−1.23, −0.28,
+−0.65, −0.04). Some of the gain against the primary at N is the smaller book,
+not the selection.
+
+**3. There is no null in this sweep.** D292's rotate-B nulls exist only at
+N = 25. Nothing here tests whether a filter-shaped-but-content-free partner
+would produce the same profile across N. **This is the gap that matters most.**
+
+**4. The four cells were selected by D292's screen**, so this inherits that
+selection.
+
+## What it changes
+
+**My reading in section 5 was wrong on its stated reason.** I said the cluster
+was conditioned on a spike and would vanish with it. It does not vanish — the
+combined book is *more* stable in N than the primary it filters, which is what a
+real combination should look like and what I predicted against.
+
+**It still is not promotable**, because of caveat 3: an improvement that has
+never been tested against a rotated partner at any N but 25 is not an
+established effect, it is a shape.
+
+**The next test is now well defined and narrow:** run the rotate-B null across
+N ∈ [15, 40] for `macd_hist + rsi` at f = 0.75. If the profile survives, this is
+the first thing in this programme to beat a null on a parameter it was not
+selected on. If it does not, the shape was the filter's form and not its content.
