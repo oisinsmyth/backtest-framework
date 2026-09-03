@@ -1,0 +1,44 @@
+{
+ "B19 constrained, pool 19": {
+  "trades": 30242,
+  "mean_trade_bp": 24.16280073560503,
+  "median_trade_bp": 107.63582303345038,
+  "held_per_bar": 38.0
+ },
+ "B25 constrained, pool 25": {
+  "trades": 30242,
+  "mean_trade_bp": 24.16280073560503,
+  "median_trade_bp": 107.63582303345038,
+  "held_per_bar": 38.0
+ },
+ "A19 unconstrained, pool 19": {
+  "trades": 38909,
+  "mean_trade_bp": 18.090771857342446,
+  "median_trade_bp": 113.93938512170028,
+  "held_per_bar": 48.66865390649514
+ },
+ "A25 unconstrained, pool 25": {
+  "trades": 49405,
+  "mean_trade_bp": 11.411442287662755,
+  "median_trade_bp": 119.57611444493466,
+  "held_per_bar": 61.558832758079696
+ },
+ "contention_drag_bp": -6.072028878262583,
+ "bench_uncapped_bp": -6.679329569679693,
+ "bench_capped_bp": 0.0,
+ "book_B19_bp": 12.002829164475324,
+ "book_B25_bp": 12.002829164475324,
+ "premium_still": {
+  "n": 15520,
+  "bp": 9.216744564491083,
+  "t": 0.9603643963521719
+ },
+ "premium_drifted": {
+  "n": 14613,
+  "bp": 29.291027350596377,
+  "t": 3.2356337446771333
+ },
+ "exits_total": 30222,
+ "exits_still_selected_share": 0.5157832042882668,
+ "exits_same_name_reentry_share": 0.38028588445503275
+}

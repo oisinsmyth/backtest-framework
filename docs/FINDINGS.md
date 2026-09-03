@@ -667,7 +667,13 @@ three quantities that should be reported separately:
 **A book-width study that lets the pool track the slot count measures nothing
 about the bench.** If `sel = rank < N_SLOTS` is inherited while `N` is varied,
 the bench stays empty at every depth and concentration is welded to bench depth.
-**The refill pool is its own axis** — `N_SLOTS` (current behaviour) against
-`N_BASE` (a real 25-deep bench) — and it is the "deeper bench" D298's stop
-condition asked for, which turns out to be a one-line change rather than a
-different book.
+
+**CORRECTION, from [D304](../scripts/d304_two_lenses.py), 2026-09-03: widening
+the pool ALONE is inert.** A 19-slot book drawing from the 25-name gate is
+**bit-identical** to one drawing from the top 19 — same 30,242 trades, same
++24.2 bp/trade, same +12.00 bp/bar. The reason is that refill only runs when a
+slot is free, and a drifted-out name **holds its slot**, so the bench is never
+consulted. **The bench is unreachable unless something evicts the drifted-out
+holders** — a reversion exit, or a rank-based eviction. Pool width and eviction
+are one change, not two, and the earlier claim here that the pool was "a one-line
+change" was wrong.
