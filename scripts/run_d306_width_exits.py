@@ -189,8 +189,13 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
                 cnt[side][t] = k
 
     ok = np.isfinite(ret[0]) & np.isfinite(ret[1])
+    # cnt0/cnt1 are exposed for D307c's contribution decomposition: the book is
+    # mean(long) - mean(short), so a trade's weight at bar t is 1/n_t for its
+    # own leg, NOT 1/depth -- the two differ whenever a delisting leaves the leg
+    # short of its slots. Additive only; no computation above changes.
     return dict(book=np.where(ok, ret[0] - ret[1], np.nan), mask=ok, ent=ent,
-                trades=trades, held=(cnt[0] + cnt[1]))
+                trades=trades, held=(cnt[0] + cnt[1]),
+                cnt0=cnt[0], cnt1=cnt[1])
 
 
 def overlay_scale(book):
