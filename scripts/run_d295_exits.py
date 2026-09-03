@@ -15,11 +15,16 @@ trade and hands the freed slot to a coin flip is a book-level loss wearing a
 trade-level win, and D286's `disp` beat every designed exit precisely because
 its freed slot went to a better-ranked name.
 
-    N slots per leg. Each bar t:
-      1. mark every open position to bar t's return
-      2. close those the rule fires on, or that reach the baseline hold
-      3. refill freed slots from bar t's ranking, best available first
-      4. book return = mean(long holdings) - mean(short holdings)
+    N slots per leg. Each bar t, IN THIS ORDER -- see `simulate`:
+      1. exit, on information through t-1
+      2. drop anything delisted out from under us
+      3. refill freed slots from what was knowable at the close of t-1
+      4. MARK: every position now held earns bar t, exactly once, and the
+         book return is mean(long holdings) - mean(short holdings)
+
+    Deciding first and marking second is the whole correctness argument, and
+    getting it wrong in either direction produced a plausible-looking table
+    twice. Assertions [2] and [5] are what now pin it.
 
 THE BASELINE HOLD IS NOT A CAP. The first draft made it one, so every rule could
 only ever SHORTEN a trade and "let the winners run" could not be expressed. B4
@@ -98,14 +103,37 @@ def simulate(ctx, r1, vol, rule, param, skip_name, idle_bar, n, T):
 
     `ctx[side]` carries `sel` (in the composite's selected 19), `rank` (position
     in the composite's own preference, lower better, n = unranked) and `primary`
-    (in hist_L's top 25). Slots refill from `rank` best-first, which is what
+    (in hist_L's top 25). All three are ALREADY LAGGED: the value at column t is
+    derived from scores at t-1, so it is known at the close of t-1 and is what
+    you can act on for bar t. Slots refill from `rank` best-first, which is what
     sends a freed slot to a better name instead of a coin flip.
+
+    THE ORDER OF THE BAR IS THE WHOLE CORRECTNESS ARGUMENT.
+
+        1. EXIT on information through t-1  (cum, and the lagged sel/rank/vol)
+        2. drop anything with no return at t -- delisted out from under us
+        3. REFILL from sel[:, t], which is known at the close of t-1
+        4. MARK every position now held with r1[:, t], and mark the book
+
+    Deciding first and marking second is what makes each bar's return belong to
+    exactly one position per slot. The first version marked BEFORE the exit test
+    and again AFTER the refill, so a bar on which a slot turned over was credited
+    to both the position leaving and the one arriving -- one bar of return per
+    turnover, created from nothing, worth +-75 to 85 bp on numbers of magnitude 7
+    to 77, and it ranked the rules by how often they traded. Moving the mark
+    without moving the decision then broke it the other way: the exit test saw
+    bar t's return before deciding, which is look-ahead, and the oracle's
+    foresight collapsed from +267 to +9.7 bp/bar because the only bar it could
+    ever harvest was the double-counted one. Assertion [5] holds this to the
+    trade ledger and assertion [2] holds it to the oracle; both are needed
+    because each alone passed one of the two broken versions.
 
     Positions are marked on their own ONE-BAR return, so a rule that changes
     holding length changes exposure honestly; k-bar returns would double-count
     overlapping holds.
     """
     ret = {"lo": np.full(T, np.nan), "hi": np.full(T, np.nan)}
+    cnt = {"lo": np.zeros(T, dtype=np.int32), "hi": np.zeros(T, dtype=np.int32)}
     ent = np.zeros(T, dtype=np.int32)
     fired = {"trigger": 0, "cap": 0}
     trades = []
@@ -117,16 +145,8 @@ def simulate(ctx, r1, vol, rule, param, skip_name, idle_bar, n, T):
             sel, rk, prim = ctx[side]["sel"], ctx[side]["rank"], ctx[side]["primary"]
             held = open_[side]
             sgn = 1.0 if side == "lo" else -1.0
-            for row in list(held):
-                v = r1[row, t]
-                if not np.isfinite(v):                 # delisted out from under us
-                    st = held.pop(row)
-                    trades.append((st[1], st[0], side))
-                    continue
-                st = held[row]
-                st[0] += 1
-                st[1] += sgn * v
-                st[2] = max(st[2], st[1])
+
+            # 1. EXIT, on information through t-1 only
             for row in list(held):
                 age, cum, pk, tgt = held[row]
                 u = vol[row, t]
@@ -153,14 +173,23 @@ def simulate(ctx, r1, vol, rule, param, skip_name, idle_bar, n, T):
                 elif rule == "sampled_runs":
                     cap = False
                     trig = age >= tgt
-                if trig or cap:
+                if (trig or cap) and age > 0:
                     fired["trigger" if trig else "cap"] += 1
                     st = held.pop(row)
                     trades.append((st[1], st[0], side))
+
+            # 2. delisted out from under us -- no return at t, so it cannot be held
+            for row in list(held):
+                if not np.isfinite(r1[row, t]):
+                    st = held.pop(row)
+                    if st[0] > 0:
+                        trades.append((st[1], st[0], side))
+
+            # 3. REFILL from what was knowable at the close of t-1
             if not (idle_bar is not None and idle_bar[t]):
                 free = N_SLOTS - len(held)
                 if free > 0:
-                    cand = np.flatnonzero(sel[:, t])
+                    cand = np.flatnonzero(sel[:, t] & np.isfinite(r1[:, t]))
                     if skip_name is not None:
                         cand = cand[~skip_name[cand, t]]
                     if cand.size:
@@ -176,15 +205,29 @@ def simulate(ctx, r1, vol, rule, param, skip_name, idle_bar, n, T):
                             held[r] = [0, 0.0, 0.0, max(1, tgt)]
                             ent[t] += 1
                             free -= 1
-            if held:
-                v = np.array([r1[row, t] for row in held])
-                v = v[np.isfinite(v)]
-                if v.size:
-                    ret[side][t] = v.mean()
-    return ret["lo"], ret["hi"], ent, trades, fired
+
+            # 4. MARK. Every position now held earns bar t, once.
+            earned = []
+            for row in held:
+                v = r1[row, t]
+                st = held[row]
+                st[0] += 1
+                st[1] += sgn * v
+                st[2] = max(st[2], st[1])
+                earned.append(v)
+            if earned:
+                ret[side][t] = float(np.mean(earned))
+                cnt[side][t] = len(earned)
+
+    # positions still open at the end never became trades; the reconciliation in
+    # assertion [5] needs their accrued P&L or it will not close
+    resid = sum(st[1] for side in ("lo", "hi") for st in open_[side].values())
+    return (ret["lo"], ret["hi"], ent, trades, fired,
+            cnt["lo"], cnt["hi"], float(resid))
 
 
-def book_stats(ret_lo, ret_hi, ent, trades, fired, rt_mean, rt_med):
+def book_stats(ret_lo, ret_hi, ent, trades, fired, clo, chi, resid,
+               rt_mean, rt_med):
     """Book-level AND per-trade, side by side, per R14's amended stage-2 gate."""
     m = np.isfinite(ret_lo) & np.isfinite(ret_hi)
     if int(m.sum()) < M.MIN_BARS:
@@ -216,6 +259,18 @@ def book_stats(ret_lo, ret_hi, ent, trades, fired, rt_mean, rt_med):
         run_dist=age.astype(int).tolist(),
         exits_trigger=fired["trigger"], exits_cap=fired["cap"],
         trigger_share=(fired["trigger"] / max(fired["trigger"] + fired["cap"], 1)))
+    # THE RECONCILIATION. Total book P&L must equal total position P&L over the
+    # same position-bars: summing a position's per-bar marks over its life IS
+    # its trade P&L. Nothing in the original four assertions checked this, and
+    # it is the one thing that would have caught the entry-bar double count.
+    fl = np.isfinite(ret_lo) & (clo > 0)
+    fh = np.isfinite(ret_hi) & (chi > 0)
+    total_book = float((clo[fl] * ret_lo[fl]).sum() - (chi[fh] * ret_hi[fh]).sum())
+    total_pos = float(pnl.sum() + resid)
+    out["recon_book"] = total_book * 1e4
+    out["recon_pos"] = total_pos * 1e4
+    out["recon_gap_bp"] = (total_book - total_pos) * 1e4
+    out["recon_rel"] = (abs(total_book - total_pos) / max(abs(total_pos), 1e-12))
     out["run_ratio"] = (out["run_win"] / out["run_lose"]
                         if out["run_win"] and out["run_lose"] else None)
     out["net_mean"] = out["bp"] - out["cost_bar_mean"]
@@ -347,8 +402,9 @@ def run_cell(cell, ctx, r1, vol, half, base, n, T, rt_mean, rt_med,
     skip, idle = cell_masks(cell, ctx, half, base, n, T)
     if runs is not None:
         rule, param = "sampled_runs", (runs, rng)
-    lo, hi, ent, tr, fired = simulate(ctx, r1, vol, rule, param, skip, idle, n, T)
-    return book_stats(lo, hi, ent, tr, fired, rt_mean, rt_med)
+    lo, hi, ent, tr, fired, clo, chi, resid = simulate(
+        ctx, r1, vol, rule, param, skip, idle, n, T)
+    return book_stats(lo, hi, ent, tr, fired, clo, chi, resid, rt_mean, rt_med)
 
 
 # --------------------------------------------------------------------------
@@ -422,7 +478,8 @@ def assertions(ctx, r1, vol, half, base, n, T, panel, live, plan, z):
         prim = np.zeros((n, T), dtype=bool)
         prim[rows.ravel(), obc.ravel()] = True
         octx[side] = dict(rank=rank, sel=rank < N_SLOTS, primary=prim)
-    lo, hi, ent, tr, fd = simulate(octx, r1, vol, "none", None, None, None, n, T)
+    lo, hi, ent, tr, fd, _cl, _ch, _rs = simulate(
+        octx, r1, vol, "none", None, None, None, n, T)
     m = np.isfinite(lo) & np.isfinite(hi)
     lo_bp, hi_bp = float(lo[m].mean() * 1e4), float(-hi[m].mean() * 1e4)
     for nm, v in (("long", lo_bp), ("short", hi_bp)):
@@ -461,6 +518,29 @@ def assertions(ctx, r1, vol, half, base, n, T, panel, live, plan, z):
     print(f"    [4] the profit target caps winners as designed: win run "
           f"{pt['run_win']:.2f} vs lose run {pt['run_lose']:.2f} "
           f"(ratio {pt['run_ratio']:.2f})")
+
+    # 5. THE RECONCILIATION, AND IT IS THE ASSERTION THIS FILE MOST NEEDED.
+    #    Summing a position's per-bar marks over its life IS its trade P&L, so
+    #    total book P&L must equal total position P&L exactly. Nothing in [1]-[4]
+    #    checked it, and the first version of this simulator marked the book
+    #    AFTER the refill -- crediting bar t to both the position leaving a slot
+    #    and the one taking it. That created one bar of return per turnover,
+    #    worth +-75 to 85 bp on numbers of magnitude 7 to 77, and it ranked the
+    #    rules by how often they traded. [1]-[4] all passed while it did.
+    #    Checked on rules with DIFFERENT turnover, because the defect was
+    #    invisible on the fixed-schedule control.
+    for cell in (("B0", "none", None), ("B6", "profit_target", 1.0),
+                 ("B4", "trailing", 1.0), ("B3", "adverse_stop", 1.0),
+                 ("B5", "asymmetric", 1.5)):
+        st = run_cell(cell, ctx, r1, vol, half, base, n, T, 100.0, 100.0)
+        assert st["recon_rel"] < 1e-9, (
+            f"RECONCILIATION FAILED for {cell[0]}: the book totals "
+            f"{st['recon_book']:+,.0f} bp and the positions total "
+            f"{st['recon_pos']:+,.0f} bp, a gap of {st['recon_gap_bp']:+,.0f} "
+            f"({st['recon_rel']:.2%}). The book is not marking the same bars "
+            f"the positions earned.")
+    print(f"    [5] reconciliation: total book P&L == total position P&L to "
+          f"<1e-9 relative, on five rules spanning 7.7% to 29.5% turnover")
     return base_stat
 
 
