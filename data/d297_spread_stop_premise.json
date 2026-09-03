@@ -1,0 +1,15 @@
+{
+ "purpose": "D297 premise: how much of a held position's move is common to its leg, and would a spread-referenced stop fire on different trades than a raw one.",
+ "bars": 121106,
+ "positions": 24183,
+ "sd_raw_bp": 526.2639384078498,
+ "sd_market_bp": 129.91888923313277,
+ "sd_idio_bp": 502.1346323760189,
+ "market_var_share": 0.060944900813388825,
+ "corr_raw_idio": 0.9691648732626547,
+ "fired_raw": 9375,
+ "fired_idio": 8661,
+ "both": 7556,
+ "disagree": 2924,
+ "jaccard": 0.7209923664122138
+}
