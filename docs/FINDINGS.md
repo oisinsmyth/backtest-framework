@@ -596,3 +596,78 @@ rather than implying the F hurdle handles it.
    take out of sample, and **D246's reserved wide-universe cohort remains unspent.** `cohort3`
    (8 names, 448,861 rows, gates passed, all 28 steps REAL) is also unspent — and is 15-minute
    intraday, so it is the wrong instrument for anything daily.
+
+---
+
+## 10. The book has no bench, so most of its turnover is unpriced
+
+**The refill pool IS the slot count, by construction:**
+
+```python
+ctx[side] = dict(rank=rank, sel=rank < N_SLOTS, ...)      # run_d295_exits.py:348
+cand = np.flatnonzero(sel[:, t] & np.isfinite(r1[:, t]))  # run_d295_exits.py:211
+```
+
+`sel` is *defined* as `rank < N_SLOTS`. **The gate holds 25 names and only the top
+19 are ever eligible for refill** — the 6 bench names cannot be drawn on. Every
+book since [D293](decisions/D293-the-confluence-book-as-a-candidate.md) has run
+this way.
+
+**So an exit on a still-selected name re-enters that name on the same bar.**
+[D298](decisions/D298-RESULT-combining-adds-little-and-the-price-axis-is-void.md)
+measured it directly: `reversion + price exit` differs from `reversion` alone on
+**0.00% of held bars** — not "under 5%", zero.
+
+### Opportunity cost therefore splits in two, and only one half is zero
+
+| | opportunity cost | what the exit buys |
+|---|---|---|
+| exit on a **still-selected** name | **exactly zero** | nothing — pure churn, cost with no benefit |
+| exit on a name that has **drifted out** of the top 19 | positive | the slot refills with a still-selected name |
+
+**The second case is the entire mechanism by which the profit target earns**, and
+it has never been measured directly. D295 asked whether the book was better with
+the rule on; nothing has asked what each individual swap paid.
+
+**And small per-decision differences compound into different books.**
+[D303](decisions/D303-RESULT-the-reference-is-adopted-and-the-band-is-not.md):
+two rules agreeing on **73%** of the decisions they both face end up sharing only
+**56%** of their positions, because one divergent exit frees a slot that refills
+differently and the paths separate from there.
+
+### THE TWO LENSES — report both, never on the same statistic
+
+A path is part of the strategy, so a result measured through only one of these is
+half a result.
+
+**Path-invariant — the unconstrained ledger.** No slot cap: every gated name not
+already held opens a position and runs to the exit rule or the cap. This is the
+full set of decisions the rule faces, free of contention, and it answers *is this
+a good rule*. **It is not a tradeable book** — unbounded capital, uncontrolled
+exposure — so it is scored at the **trade** level and must never be quoted in
+bp/bar beside a real book.
+
+**Path-variant — the constrained book.** The slot-limited book, walking a subset
+of the invariant ledger's trades. Scored in bp/bar and Sharpe as now. It answers
+*what did we actually earn*.
+
+**The difference between them is the opportunity cost**, and it decomposes into
+three quantities that should be reported separately:
+
+1. **Contention drag** — mean trade P&L over all candidates minus over the held
+   subset. Positive means the path systematically holds the worse names.
+2. **The turned-away ledger** — at each bar the book is full, what the best
+   eligible unheld name earned over the next `k` bars.
+3. **The replacement premium** — for each exit, the incoming name's return minus
+   what the outgoing name *would* have earned had it stayed. **This prices each
+   exit decision directly** and is the sharpest of the three.
+
+### What this invalidates in a study design
+
+**A book-width study that lets the pool track the slot count measures nothing
+about the bench.** If `sel = rank < N_SLOTS` is inherited while `N` is varied,
+the bench stays empty at every depth and concentration is welded to bench depth.
+**The refill pool is its own axis** — `N_SLOTS` (current behaviour) against
+`N_BASE` (a real 25-deep bench) — and it is the "deeper bench" D298's stop
+condition asked for, which turns out to be a one-line change rather than a
+different book.

@@ -51,6 +51,13 @@ a result.
    p95** beside the score and say whether the null is decisive. Four cases here
    of a *losing* random control at the 100th (R7).
 
+**Where a path exists, both lenses.** Path-invariant (every candidate trade, no
+slot cap, scored per TRADE) and path-variant (the slot-limited book, scored in
+bp/bar) — **never compared on the same statistic**. Their difference is
+**opportunity cost**, which nothing here has measured: `sel = rank < N_SLOTS`, so
+the refill pool IS the slot count and an exit on a still-selected name re-enters
+it. `docs/FINDINGS.md` §10.
+
 ## Runner assertions
 
 All three, every runner. Patterns in `scripts/run_overnight_long.py`.
