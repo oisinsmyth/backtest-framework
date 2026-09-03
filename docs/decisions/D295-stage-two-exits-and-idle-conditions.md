@@ -150,3 +150,83 @@ not a rule problem), or the candidate itself.
 Any re-search of the base book. Hold length (R14 fourth amendment). Combinations
 of exit rules — each is tested alone, because a stage-2 search over combinations
 is a stage-1 mine wearing a stage-2 label.
+
+---
+
+# AMENDMENT — 2026-09-03, before the runner exists: the design had the point of an exit backwards
+
+Raised by the principal: **"the whole point of an exit is to trim the losers and
+let the winners run."** The arms above do the first and actively prevent the
+second. Corrected here, before anything is built, rather than after.
+
+## What was wrong
+
+**1. The fixed `k = 5` cap cuts every winner short by construction.** Arm B was
+specified as "hold until 5 bars **or** the trigger, whichever first" — so every
+rule in it could only ever *shorten* a trade. A design in which no trade can run
+longer than the baseline cannot test "let the winners run"; it has assumed the
+answer.
+
+**2. B4, the profit target, is the anti-pattern.** It caps winners harder. It
+was listed as a candidate rule; it is a **deliberate control** for the
+principle, and it is expected to lose.
+
+**3. And this REVERSES the prior at the top of this document.** I argued Arm B
+fights the binding cost constraint because early exits shorten holds and raise
+turnover. **That is true only of a SYMMETRIC early exit.** An asymmetric rule
+shortens losers and lengthens winners, so the net turnover effect can go either
+way — and in a book whose losers are what you most want out, it can fall.
+**Arm B is not structurally against the constraint. I had it backwards.**
+
+## The corrected Arm B
+
+`k = 5` is now the **baseline hold, not a cap**. A rule may exit before it or
+run past it.
+
+| | rule | direction | why |
+|---|---|---|---|
+| **B1** | signal reversion — the name leaves the composite's selected set | either | the exit that keys on *its own signal*, which is what D285 believed it was testing and was not |
+| **B2** | displacement — a better-ranked name takes the slot | either | D286's `disp`, which beat all three designed exits |
+| **B3** | adverse stop at 1.0 / 1.5 / 2.0 × the name's own 21-bar vol, **k cap retained** | trims losers only | the pure loser-trim |
+| **B4** | **trailing stop** — run with no cap, exit on giving back 1.0 / 1.5 / 2.0 × vol from the trade's peak | **lets winners run** | the missing arm |
+| **B5** | **asymmetric** — B3's stop on losers AND no cap on winners, exiting only on B1 | **both halves at once** | the principal's rule stated directly, and the one the whole amendment exists to test |
+| **B6** | profit target at 1.0 / 1.5 / 2.0 × vol | **caps winners** | **ANTI-PATTERN CONTROL, predicted to lose.** If it wins, the principle is wrong on this book and that is worth knowing |
+
+**14 exit configurations**, Arm C unchanged at 5. **19 cells.**
+
+## Two things this forces into the report
+
+**Hold length becomes an OUTPUT, not an input.** B4 and B5 have no cap, so mean
+holding run is a *result* of the rule. R14's fourth amendment says stage 1 may
+not PICK a fixed k on a criterion; it does not say a rule may not DETERMINE the
+hold. Those are different, and the distinction is why B4/B5 are legitimate here.
+
+**Winner and loser holding runs are reported SEPARATELY.** A rule claiming to
+trim losers and let winners run makes a specific, checkable claim about two
+numbers, not one:
+
+```
+mean holding run | profitable trades
+mean holding run | losing trades
+ratio of the two            <- the claim, in one number
+```
+
+A rule whose two runs are equal has not done the thing whatever its P&L says,
+and a rule with the ratio inverted is doing the opposite. **Reported for every
+cell including the controls**, so the mechanism is visible rather than inferred
+from the outcome.
+
+## Corrected predictions
+
+| | prediction | direction | confidence |
+|---|---|---|---|
+| **Q1** | no rule clears all four conditions (unchanged — stage 2's uplift here is ~1.0× across D285/D286) | AGAINST | moderate-high *(was high; B4/B5 are a genuinely untested shape)* |
+| **Q2** | B2 (displacement) beats B1, B3 and B6 (unchanged) | for B2 | moderate |
+| **Q3** | the CAPPED rules (B3, B6) improve per-trade quality while leaving the book flat — the coupling failure R14's amendment exists for | for | moderate-high |
+| **Q4** | C1 (partner disagreement) does nothing (unchanged) | AGAINST | moderate |
+| **Q5** | **WITHDRAWN AND REPLACED.** Was: every Arm B rule raises cost per bar. **Now: B4 and B5 LOWER cost per bar** by extending winners, and are the only rules in the study that push with the binding constraint | **for B4/B5** | moderate |
+| **Q6** | **B6 (profit target) is the worst rule in the study**, and B5 the best of Arm B | for | moderate |
+
+**Q5 has flipped direction entirely**, which is the substance of this amendment
+rather than a wording change. **Q6 is new and is the principal's principle
+stated as a falsifiable ranking.**
