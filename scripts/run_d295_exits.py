@@ -176,6 +176,19 @@ def simulate(ctx, r1, vol, rule, param, skip_name, idle_bar, n, T):
                     cap = False                        # UNCAPPED on the winner
                     trig = ((np.isfinite(u) and cum <= -param * u)
                             or not sel[row, t])
+                elif rule == "stop_and_target":
+                    trig = np.isfinite(u) and (cum <= -param * u or
+                                               cum >= param * u)
+                elif rule == "rev_stop":
+                    trig = (not sel[row, t]) or (np.isfinite(u) and
+                                                 cum <= -param * u)
+                elif rule == "rev_target":
+                    trig = (not sel[row, t]) or (np.isfinite(u) and
+                                                 cum >= param * u)
+                elif rule == "rev_both":
+                    trig = (not sel[row, t]) or (np.isfinite(u) and
+                                                 (cum <= -param * u or
+                                                  cum >= param * u))
                 elif rule == "sampled_runs":
                     cap = False
                     trig = age >= tgt
