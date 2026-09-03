@@ -50,7 +50,7 @@ def _load(name, filename):
 T8 = _load("d308", "run_d308_width_in_time.py")
 W, D, SP, M = T8.W, T8.D, T8.SP, T8.M
 DEPTHS, FAMILIES = T8.DEPTHS, T8.FAMILIES
-FREQS = (21, 63)
+FREQS = (21, 63, 126, 252, 504)
 OUT = REPO / "data" / "d308c_ceiling_null.json"
 SEED = 20260903
 
@@ -193,7 +193,8 @@ def main() -> int:
     for fam in FAMILIES:
         for f in FREQS:
             r = res[fam][str(f)]
-            share = r["null_gain_p50"] / r["obs_gain"] if r["obs_gain"] else None
+            share = (r["null_gain_p50"] / r["obs_gain"]
+                     if abs(r["obs_gain"]) > 1e-9 else float("inf"))
             print("  %-16s f=%-3s observed gain %+7.2f   null median gain %+7.2f"
                   "   %.0f%% of it is noise" % (
                       fam, f, r["obs_gain"], r["null_gain_p50"], 100 * share))
