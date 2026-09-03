@@ -328,3 +328,77 @@ NOT decay — a trend rather than a cross-sectional rank — the same rule shoul
 win. Nothing in this study speaks to that, and §3 of the main record still
 applies: with slots equal to the selection size, no rule here could promote a
 better name into a freed slot.
+
+---
+
+# CORRECTION — 2026-09-03: B4 was a malformed test, and the addendum's conclusion is withdrawn
+
+Raised by the principal: *"this seems like a malformed trailing stop rather than
+pointing at the fact that trailing stops do not work."* Correct.
+
+## What B4 actually varied
+
+B4 changed **two things at once** — it made the exit trailing AND removed the
+5-bar cap — so no comparison in the study could separate them. Post-hoc
+diagnostic cell `trailing_capped`, which is B4 with the cap put back:
+
+| cell | cap | bp/bar | vs B0 | Δ t | run | w/l | turnover | **% bars out of selection** |
+|---|:--|--:|--:|--:|--:|--:|--:|--:|
+| trailing@1.0 | **no** | +4.50 | −3.04 | −1.14 | 6.4 | 2.66 | 15.6% | **45.7%** |
+| trailing@1.5 | **no** | +1.68 | −5.86 | −2.05 | 9.5 | 2.56 | 10.6% | **54.7%** |
+| trailing@2.0 | **no** | −1.84 | −9.38 | −2.98 | 12.8 | 2.45 | 7.8% | **61.4%** |
+| **trailing_capped@1.0** | yes | **+8.57** | **+1.03** | +0.58 | 3.7 | 1.63 | 26.8% | 22.0% |
+| trailing_capped@1.5 | yes | +6.93 | −0.61 | −0.32 | 4.2 | 1.36 | 23.6% | 22.7% |
+| **trailing_capped@2.0** | yes | **+8.46** | **+0.92** | +0.50 | 4.6 | 1.21 | 22.0% | 23.1% |
+| B0 — 5-bar hold | yes | +7.54 | — | — | 5.0 | 1.00 | 20.0% | 26.5% |
+
+**The trailing rule is neutral-to-mildly-positive when capped** (Δt +0.58,
+−0.32, +0.50 — noise, with the outer two above the control) and **decisively
+negative when uncapped**. The out-of-selection share moves 22% → 61% and the P&L
+tracks it.
+
+## WITHDRAWN
+
+> *"the trailing stop is the worst possible shape for this edge … the rule is
+> not badly tuned, it is structurally mismatched to the signal"*
+
+**That is wrong.** The mismatch is with holding a position after the signal stops
+selecting it. Trailing was the vehicle I attached that to, and the write-up
+generalised from a confounded cell to a claim about a rule family.
+
+**The decisive comparison was already in the pre-registered data and I missed
+it.** B4 and B5 are both uncapped and stop losers identically — for a losing
+position `peak = 0`, so B4's `(peak − cum) ≥ p·vol` IS B3's adverse stop. They
+differ in exactly one thing:
+
+| | loser exit | **winner exit** | result |
+|---|---|---|--:|
+| **B5** | `cum ≤ −p·vol` | **name leaves the selected set** | **+3.73**, p = 0.010 |
+| **B4** | `cum ≤ −p·vol` (identical) | **gives back p·vol from peak** | **−3.04**, p = 0.980 |
+
+**The entire 6.77 bp/bar gap is in the winner exit**, and the finding is:
+*on a decaying cross-sectional edge, the winner's exit signal must be the SIGNAL,
+not the price path.* That is narrower and more useful than what the addendum
+claimed.
+
+## What survives from the addendum
+
+The decay curve is unaffected and remains the mechanism: **+10.61 bp/bar at age
+1–5, −1.14 at age 6+; +9.74 in the selected set, −1.87 out of it.** Any rule that
+raises out-of-selection exposure loses in proportion, whatever its shape.
+
+## And for the principle
+
+`trailing_capped@1.0` **does** trim losers and let winners run — run ratio
+**1.63** within the cap — and is the best non-anti-pattern cell tested at +8.57
+against the control's +7.54. Not significant, but pointing the right way. **The
+principle was never actually tested by B4**; it was tested by B5, which screens
+at p = 0.010, and by this cell, which is a post-hoc diagnostic and not
+pre-registered.
+
+## Disclosure
+
+`trailing_capped` is a **post-hoc diagnostic cell, added after the result and
+not in the pre-registration.** It carries no null and does not enter any count,
+floor or FDR. It exists to separate two things a pre-registered cell conflated,
+and its numbers are descriptive only.

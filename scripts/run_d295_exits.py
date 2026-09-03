@@ -166,6 +166,12 @@ def simulate(ctx, r1, vol, rule, param, skip_name, idle_bar, n, T):
                 elif rule == "trailing":
                     cap = False                        # UNCAPPED: winners run
                     trig = np.isfinite(u) and (pk - cum) >= param * u
+                elif rule == "trailing_capped":
+                    # POST-HOC DIAGNOSTIC, not a pre-registered cell. B4 removed
+                    # the cap AND changed the winner exit at once, so it cannot
+                    # separate "trailing is wrong for this edge" from "uncapped
+                    # is wrong". This is B4 with the cap put back.
+                    trig = np.isfinite(u) and (pk - cum) >= param * u
                 elif rule == "asymmetric":
                     cap = False                        # UNCAPPED on the winner
                     trig = ((np.isfinite(u) and cum <= -param * u)
