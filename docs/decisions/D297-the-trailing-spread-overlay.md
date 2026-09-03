@@ -139,3 +139,31 @@ Any change to the base book. Pairing — rank-matching would leave the aggregate
 return identical while making each pair's spread mostly noise, and sector- or
 beta-matched pairing invents structure the signal does not have. Re-risking on
 anything other than the shadow drawdown.
+
+---
+
+## AMENDMENT — before the runner produced any result: the threshold grid was mis-scaled
+
+**Declared:** X ∈ {1.0, 1.5, 2.0, 3.0} × trailing 63-bar vol.
+**Measured on the built runner, from the EXPOSURE PROFILE ONLY:**
+
+| X (daily vols) | 1.0 | 2.0 | 3.0 | 5 | **8** | **12** | **20** | **30** | 40 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| exposure | 17.5% | 27.4% | 35.2% | 45.8% | **59.6%** | **71.6%** | **80.6%** | **95.5%** | 100% |
+
+**A drawdown of one DAILY vol is nothing.** This book's own drawdown
+distribution, in the same units, is **p50 4.6, p90 19.8, max 40.1**. So every
+declared threshold leaves the book de-risked most of the time — X = 1.0 is on
+for **17.5%** of bars — and all four cells would have described a mostly-flat
+book rather than a trailing stop. The grid asked a degenerate question.
+
+**Re-declared: X ∈ {8, 12, 20, 30}**, spanning **59.6% → 95.5%** exposure. `s`,
+the statistic, the null, the pass condition and every prediction are unchanged.
+
+**Disclosure, and it matters.** The new grid was chosen after seeing this book's
+exposure profile, so it is data-dependent and that is a look. **It cannot bias
+the test, for a specific reason:** the null rotates each cell's own on/off
+series, so it holds exposure EXACTLY equal to the treatment's. A threshold
+chosen to produce a given exposure therefore changes which question is asked,
+never the fairness of the answer. No return, Sharpe or null was computed at any
+threshold before this amendment.
