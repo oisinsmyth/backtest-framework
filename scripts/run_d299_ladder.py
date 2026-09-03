@@ -390,7 +390,10 @@ def stats(res, Nser, rt_bp):
         exposure=float(np.mean(Nser[res["mask"]]) / N_FULL),
         entries=int(ent),
         turnover=float(turn),
-        cost_bar_bp=float(turn * 2.0 * rt_bp),
+        # rt IS a full pair round trip and `turn` IS the fraction of pairs
+        # entering per bar, so the product is the cost. The `* 2.0` that was
+        # here double-charged it -- d295 has `rt_mean * turn` and is right.
+        cost_bar_bp=float(turn * rt_bp),
         bars=int(bars))
 
 

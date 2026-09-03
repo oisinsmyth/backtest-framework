@@ -265,8 +265,11 @@ def block(res, scale, rt_mean, rt_rob, years):
         t=float(b.mean() / (sd / np.sqrt(bars))) if sd > 0 else None,
         maxdd_bp=dd, exposure=float(scale[ok].mean()), bars=bars,
         turnover=float(turn),
-        cost_mean_bp=float(turn * 2.0 * rt_mean),
-        cost_rob_bp=float(turn * 2.0 * rt_rob),
+        # d295 has `rt_mean * turn`: rt is a full pair round trip and `turn`
+        # is the fraction of pairs entering per bar. The `* 2.0` that was
+        # here double-charged every cost column.
+        cost_mean_bp=float(turn * rt_mean),
+        cost_rob_bp=float(turn * rt_rob),
         net_mean_bp=float(b.mean()) * 1e4 - float(turn * 2.0 * rt_mean),
         net_rob_bp=float(b.mean()) * 1e4 - float(turn * 2.0 * rt_rob),
         breakeven_bp_side=(float(b.mean()) * 1e4 / (turn * 4.0)
