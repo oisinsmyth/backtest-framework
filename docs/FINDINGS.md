@@ -677,3 +677,80 @@ consulted. **The bench is unreachable unless something evicts the drifted-out
 holders** — a reversion exit, or a rank-based eviction. Pool width and eviction
 are one change, not two, and the earlier claim here that the pool was "a one-line
 change" was wrong.
+
+
+## 11. Forecast the book's risk from the UNIVERSE, never from the book
+
+**From [D312](decisions/D312-RESULT-the-estimator-not-the-premise.md),
+2026-09-04.**
+
+D312 targeted the book's volatility using **the book's own trailing 63-bar sd** —
+one series, 63 numbers, off a two-name spread. Correlation with the **next** 63
+bars' realised book vol:
+
+```
+N_eff = 2     -0.016      the width that earns: nothing at all
+N_eff = 19    +0.347
+```
+
+**That reads as "the book's risk cannot be timed". It is not.** The same forward
+quantity, forecast instead from the **cross-sectional dispersion of the whole
+live universe** — ~1,019 names a bar against the gate's 50:
+
+| predictor | N=2 | N=5 | N=10 | N=19 | own lag-63 ρ |
+|---|--:|--:|--:|--:|--:|
+| the book's own trailing sd | **−0.016** | +0.056 | +0.185 | +0.347 | **−0.016** |
+| **dispersion, whole universe** | **+0.352** | +0.374 | +0.405 | +0.410 | **+0.616** |
+| **dispersion, names OUTSIDE the gate** | **+0.355** | +0.371 | +0.403 | +0.411 | +0.598 |
+| dispersion, the 25-name gate only | +0.242 | +0.300 | +0.334 | +0.342 | +0.588 |
+| mean \|r\|, whole universe | +0.136 | +0.202 | +0.291 | +0.381 | +0.477 |
+| trailing sd of the market reference | +0.104 | +0.165 | +0.250 | +0.349 | +0.312 |
+
+**At the width that earns, the forecast goes from −0.016 to +0.352 by changing
+nothing but where the estimate is read from.** The book's forward volatility is
+forecastable. A two-name realised series is simply too starved to see it, and the
+starvation is worst exactly where the book is most concentrated — the column
+where `own` collapses and the universe predictor does not.
+
+### The names you never hold carry the regime better than the ones you do
+
+**Dispersion over the ~969 names OUTSIDE the gate (+0.355) beats the whole
+universe (+0.352) and beats the 50 gate names outright (+0.242).** The gate is
+chosen on the signal, so its dispersion is contaminated by the selection; the
+unheld remainder is a clean read on the regime. **Nothing requires a risk
+estimator to be built from tradeable names, and here it is actively better not
+to.**
+
+**Generalise past volatility:** any regime quantity this programme conditions on
+should be estimated from the widest set that carries it, not from the held book.
+The held book is the smallest, most selected, most noise-dominated sample
+available.
+
+### The trap that produced the wrong reading
+
+**Estimating a quantity well in-sample is not forecasting it.** D311 measured
+that vol is estimated about fifteen times better than the mean — `t = 6.37`
+against `t = 0.42` — and D312 took that as licence to condition on it. The
+in-sample precision was real; the **out-of-sample** content of that particular
+estimator was zero. The predictor's own persistence is the check that separates
+them: `own` has lag-63 ρ = **−0.016**, universe dispersion **+0.616**. **A
+conditioner whose own level does not persist cannot forecast anything, and that
+costs one line to check before a study is designed.**
+
+### Two further traps, both priced in D312
+
+**Vol targeting against a FULL-SAMPLE-sd target is structurally a leverage rule.**
+A full-sample sd exceeds the average of rolling sds whenever vol varies over time,
+so `target / v_trail` averages **above 1** before any forecasting happens.
+Measured: ratios 1.15–1.27, realised mean exposure **1.34–1.53**. **A third of
+such an arm is leverage, not risk control**, and leverage on a book that does not
+cover its costs scales cost linearly against an unchanged gross-per-unit-exposure
+— at `N_eff` = 2 it bought +2.25 bp of gross for +10.78 bp of cost. **Report mean
+realised exposure beside any vol-targeted result** or the arm cannot be
+attributed.
+
+**Breadth is a priced risk lever, not a free one.** Widening cuts volatility and
+gross together, roughly one for one — D312's dynamic arm bought an 11% vol cut
+for 14% of gross, the same trade D300 and D310 priced statically. **Dynamic
+breadth pays the static breadth price on every bar it widens.** Any risk rule
+that works by widening must beat that price, not merely produce less volatility.
