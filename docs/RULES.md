@@ -583,3 +583,35 @@ N=50 while its t rises. A peak at N=50 is a small per-name effect rescued by
 breadth -- FINDINGS sections 4 and 9. REPORT THE PER-NAME EFFECT BESIDE t so
 breadth cannot masquerade as strength. A peak at max k means the grid may be too
 short; extend it or record the result as horizon-unresolved.
+
+### FOURTH AMENDMENT to R14, 2026-09-03 — the holding period is a DEPLOYMENT variable, not a research one
+
+D294 re-read D293's grid cost-adjusted and found the confluence's horizon peaks
+in three different places depending on what you optimise:
+
+| optimise | k | gross bp | t | bp/bar | × robust cost |
+|---|--:|--:|--:|--:|--:|
+| **Sharpe / edge density** | 2–3 | +30 to +44 | +2.84 / +3.45 | **+15.14 / +14.68** | 0.29 / 0.42 |
+| **t** | 5 | +61.91 | **+3.80** | +12.38 | 0.588 |
+| **gross and cost coverage** | 13–16 | **+84.84 / +85.45** | +3.38 / +3.23 | +6.53 / +5.34 | **0.805 / 0.811** |
+
+**The principal's ruling, and it is right: stage 1 does not own this choice.**
+Hold length trades gross against edge density, and which one you want is a
+function of the CAPITAL, not of the signal:
+
+- **dedicated capital** → maximise **gross**. The slot has no alternative use,
+  so total return per slot is what matters.
+- **shared capital** → maximise **Sharpe / edge per unit exposure**. The
+  constraint is the opportunity cost of the slot, so density is what matters.
+
+**So stage 1 REPORTS the whole horizon profile and picks nothing.** Picking a
+single k on any one criterion smuggles a capital-allocation decision into a
+signal test, and then prices it as if it were a discovery.
+
+**Two consequences.** A candidate is described by its profile, not by one cell —
+gate 1i's "interior vs edge" reading applies to the profile's *shape*, and
+`hist_L`'s N=25 being a spike while the confluence's k=13–16 is a plateau is a
+real difference in robustness that a single-cell summary hides. And the
+multiplicity a grid-max null prices is the search for max `t`; **selecting k on
+any other criterion is a different search over the same grid and needs its own
+null.**
