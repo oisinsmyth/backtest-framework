@@ -150,3 +150,104 @@ could not pose; and the cost question, still a spread-source problem.
 ## Files
 
 `data/d295_exits.json` · `scripts/run_d295_exits.py`
+
+---
+
+# AMENDMENT — 2026-09-03: the floor and the cost gate were promotion instruments, and this stage promotes nothing
+
+Raised by the principal, and it is **the same correction made on D291 that this
+study then repeated.** Two of the four pre-registered pass conditions do not
+belong at this stage:
+
+- **the best-of-19 joint floor** controls the chance that *any* cell is a false
+  positive. That is the right question when a study makes one claim. **The mined
+  fixture is not spent, no holdout is read, and nothing is promoted** — the
+  question is which cells to *carry*, not which to certify.
+- **the cost gate** is a stage-3 question. Cost coverage was made a pass
+  condition here; it should be reported and nothing more.
+
+Re-scored on **"beats its own rate- and persistence-matched null"** alone, cost
+reported not gating (`scripts/d295_false_positive_rate.py`).
+
+## The re-scored screen
+
+| cell | Δ bp/bar | Δ t | **p** | turnover | cost/bar | run w/l | screen |
+|---|--:|--:|--:|--:|--:|--:|:--|
+| **B6@1.0** target | +4.95 | +2.58 | **0.0050** | 25.0% | 26.34 | 0.64 | **YES** |
+| **C3** wide-spread idle | +0.25 | +0.10 | **0.0050** | 20.0% | 21.08 | 1.00 | **YES** |
+| **B5@1.0** asym | +3.73 | +1.78 | **0.0100** | 30.3% | 31.97 | 1.26 | **YES** |
+| **B5@1.5** asym | +3.73 | +1.78 | **0.0149** | 26.7% | 28.18 | 1.05 | **YES** |
+| **B1** reversion | +3.73 | +1.78 | **0.0299** | 29.5% | 31.12 | 0.76 | **YES** |
+| **B5@2.0** asym | +3.73 | +1.78 | **0.0299** | 24.6% | 25.92 | 0.91 | **YES** |
+| B6@2.0 | +2.54 | +1.33 | 0.1592 | 21.5% | 22.62 | 0.87 | no |
+| … | | | | | | | |
+| B4@1.0 trailing | −3.04 | −1.14 | 0.9801 | 15.6% | 16.39 | 2.66 | no |
+| B4@1.5 trailing | −5.86 | −2.05 | 0.9950 | 10.6% | 11.15 | 2.56 | no |
+| B4@2.0 trailing | −9.38 | −2.98 | **1.0000** | 7.8% | 8.26 | 2.45 | no |
+
+## The false-positive arithmetic
+
+```
+cells at p < 0.05          6 of 19
+expected by luck (0.05m)   0.95
+
+THE COUNT, against the null's OWN correlated structure:
+  observed                 6
+  null p50 / p95 / max     1 / 3 / 4
+  P(null count >= 6)       0.0%     <- not one draw of 200 reached it
+
+BENJAMINI-HOCHBERG
+  q = 0.05  ->  keep 2
+  q = 0.10  ->  keep 6
+  q = 0.20  ->  keep 6
+  q = 0.50  ->  keep 8
+```
+
+**Six survivors against 0.95 expected, and the null's own joint distribution
+never once produced six in 200 draws.** BH keeps all six at q = 0.10 — a
+shortlist in which roughly **16%** is expected to be noise.
+
+**This is the strongest screen result the programme has produced**, and the
+pre-registered verdict of "0 of 19" was an artifact of applying a promotion bar
+to a screen.
+
+## The caveat that matters most
+
+**B1 and all three B5 cells are ONE book, not four findings.** They report
+identical returns to four decimal places (§1) because the book is pinned to the
+selected 19. Their p-values differ only because each is scored against its own
+turnover- and persistence-matched null.
+
+So the six survivors are really **three distinct findings**:
+
+1. **B6@1.0** — the profit target, p = 0.005
+2. **B1 / B5** — exit when the name leaves the selected set, p = 0.010–0.030
+3. **C3** — the wide-spread idle, p = 0.005
+
+**And the count test is optimistic about this.** Under the null those four cells
+decorrelate (each draws its own random runs), so the null's joint distribution
+does not carry the exact duplication the observed cells have — its measured sd
+was 1.0× the binomial, i.e. it treated them as independent when they are not.
+Three findings from ~16 effectively distinct books against ~0.8 expected is still
+a clear excess, but it is **three, not six**.
+
+**C3 clears on a weak claim.** Its Δ is only +0.25 bp/bar; it clears because its
+null is centred *negative* (p50 −0.94), i.e. a random idle at matched rate
+*hurts* and C3 does not. And it keys on the estimator that clamps 41.9% of cells
+to zero, exactly as the pre-registration flagged.
+
+## What does NOT change
+
+**B4 fails on its own null too**, not merely on the floor: p = **0.98, 0.995,
+1.000**. "Let the winners run" is not a marginal miss on this book — it is
+decisively the wrong direction, and §2's mechanism explains why.
+
+**Section 3 stands unchanged and is still the binding limitation:** slots equal
+the selection size, so no rule could ever promote a *better* name into a freed
+slot. Every one of the three findings above is a statement about how fast the
+book returns to the current selection.
+
+**Cost is reported and gates nothing here.** For the record, all three survivors
+raise turnover (25.0%, 24.6–30.3%, 20.0% against the control's 20.0%) and none
+covers its round trip — but that is a stage-3 question and this record should not
+have treated it as a stage-2 one.
