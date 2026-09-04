@@ -940,6 +940,15 @@ score and a variance-denominated score all rank their denominator at the extreme
 `hist_L` passes it -- built entirely on **log** high/low/close
 (`run_activation_threshold.py:69`), it is scale-free.
 
+**Applied to all 51 of D290's candidates**
+([D328 AUDIT](decisions/D328-AUDIT-units-of-the-51-candidate-scores.md)):
+**three carry dollars by accident** -- `macd_line`, `macd_hist`, `impulse_nodz`,
+all from `research/macd.py` on raw closes -- and two by design, `amihud_21`
+(1/$) and `price_log`. `impulse_nodz` and `hist_L` are the *same instrument* in
+dollar and log units, screened side by side in D290 without the difference being
+stated. The other 46 are dimensionless, though several rank volatility or
+liquidity deliberately, which is a cost statement rather than a defect.
+
 ### Passing it is not enough: `hist_L` is dimensionless and still tilts
 
 Same measurement on the incumbent's own primary:
