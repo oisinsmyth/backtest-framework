@@ -143,15 +143,22 @@ produced is unavailable where the book actually runs** — and D297's +0.728 was
 *gross* Sharpe on a book netting **−15.51**, so the overlay has never operated on
 a profitable book.
 
-**Next: B — the tilt filters.** D304's unrun study. Held names cost **26.31 bp**
-half-spread against the universe's **13.20**; concentration alone already moved
-held price **$23.72 → $75.95**. Mandatory: a price-matched control (D284 died of
-discovering the price level) and a persistence-matched random exclusion (a per-bar
-random exclusion churns where the treatment persists — the defect that voided
-D291's veto arm).
+**D320 ran and CLOSED the tilt axis.** Every filter either loses to its
+price-matched control, fails its null, or wins by **shrinking the book into a
+concentration study** — a 40% spread filter leaves a 19-slot book holding **7
+names a leg**, which is D300's width axis through the back door and D305's
+confound for the third time. Both BH survivors collapse once turnover is divided
+by the names **held** rather than the nominal slots (`N=19/price40` netSHRP
++0.046 → **−0.455**). **Concentration had already collected the prize.**
 
-**Then the entry signal**, frozen since D293 and still the only untested surface
-of any size.
+One thread survives and is **not significant**: **`dv25`** cuts the held
+half-spread **18.31 → 14.61** at an essentially unchanged held price ($70.70 →
+$72), lifting net Sharpe to **+0.433** against the control's +0.334 — dollar
+volume finding tighter names at the *same* price, which is the one thing a
+price-matched control cannot explain. **p = 0.119.**
+
+**Next: the entry signal**, frozen since D293. **It is now the whole of what
+remains.**
 
 ## 6. Owed
 
