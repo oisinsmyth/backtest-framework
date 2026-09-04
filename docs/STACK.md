@@ -1,37 +1,65 @@
 # The stack, signal to present
 
 **What each layer contributes, what it is worth once costed honestly, and where
-the next study goes.** Rewritten 2026-09-04 after D317 and D318.
+the next study goes.** Rewritten 2026-09-05 after D322–D330. The previous
+version stopped at D321.
 
 Companion to [FINDINGS.md](FINDINGS.md) (substantive results) and
 [decisions/](decisions/README.md) (one call each).
-**[PICKUP.md](../PICKUP.md) is stale** — last updated 2026-09-02, before the whole
-D285→D318 spread programme.
+**[PICKUP.md](../PICKUP.md) is stale** — last updated 2026-09-02.
 
-**§7 records what earlier versions of this document got wrong.** Two of the three
-errors were caught by the principal, not by me.
+**§7 records what earlier versions of this document got wrong.** It has grown.
 
 ---
 
-## 0. The stack, and what it earns
+## 0. The stack, and what it earns — now stated as BOUNDS
 
 ```
-signal        the D293 confluence          min z +2.58 across three nulls
-construction  factor-neutral spread        removes -mu - sigma^2          (D285)
-width         N_eff = 2, FIXED             +21 bp over N=19, basis-immune (D300)
-exit          the target, or nothing       +0.69 bp/bar, and only at N <= 3
-overlay       CLOSED at this width         negative at all 12 thresholds (D319)
+signal        hist_L primary, D293 confluence      the LONG leg is real; the SHORT leg is
+                                                   the worst leg measured (D329), for a
+                                                   SIZING reason (D328 §11)
+construction  factor-neutral spread                removes -mu - sigma^2                  (D285)
+width         N_eff = 2, FIXED                     +21 bp over N=19, basis-immune       (D300)
+exit          the target, or nothing               +0.69 bp/bar, and only at N <= 3
+overlay       CLOSED at this width                 negative at all 12 thresholds        (D319)
+tilt          CLOSED, one variant carried          dv28, p = 0.0100, unconfirmed        (D320/D321)
 ```
 
-**Charged its own held-name spread and IBKR per-share commission (D318):**
+**The incumbent book, D318's costing** (per-name spread from the OHLC, IBKR
+per-share commission):
 
 | | net bp/bar | net Sharpe | gross Sharpe |
 |---|--:|--:|--:|
-| **N=2 / target** | **+11.36** | +0.261 | +0.754 |
-| **N=2 / none** | **+10.67** | **+0.288** | +0.770 |
+| N=2 / target | +11.36 | +0.261 | +0.754 |
+| N=2 / none | +10.67 | +0.288 | +0.770 |
 
-**These two are not distinguishable from each other** — D316 put the minimum
-detectable effect at ~18 bp/bar for a paired per-bar test at this concentration.
+**Every net number in this document is an UPPER BOUND.** §3 lists three holes
+in the cost model, each with a measured mechanism. None has been closed yet.
+
+### The best construction the programme has, and its bound
+
+**Leg-wise: `hist_L` picks the longs, `skew_63` picks the shorts** (D329). No
+composite before it let two signals own one leg each. It composes exactly —
+its long ledger *is* `hist_L`'s and its short ledger *is* `skew_63`'s,
+bit-identically in both lenses — so what it adds is the pairing, not a new
+signal.
+
+| k=20 | net per trade (invariant) | net Sharpe (variant) | round trip |
+|---|--:|--:|--:|
+| `hist_L` symmetric | −0.89 | −0.082 | 189.9 |
+| `skew_63` symmetric | +44.83 | +0.421 | 32.3 |
+| **leg-wise** | **+51 to +63** | **+0.22 to +0.43** | 120–127 |
+
+**The number is a bound because a fifth of `skew_63`'s short trades are
+takeover targets pinned at the deal price** (D329 §10, D330): the short earns
+nothing on them, cannot borrow them, and the spread estimator reads them as
+nearly free. The low end is over-filtered, the high end is contaminated, and
+at either end it beats both parents. `skew_63` is **first of 44** short
+partners for `hist_L`-long on both lenses; `hist_L` is **fourteenth of 45**
+long partners for `skew_63`-short — **the short leg is settled, the long leg is
+not.**
+
+**Status: a construction, not a candidate.** Nothing clears R8. Book: empty.
 
 ### The one declared VARIANT, carried and not promoted
 
@@ -45,197 +73,174 @@ detectable effect at ~18 bp/bar for a paired per-bar test at this concentration.
 | base (`N=2/target`, D321's costing) | +32.89 | 18.33 | +14.57 | +0.334 | 18.31 | $71 |
 | **base + dv28** | **+32.93** | **14.56** | **+18.37** | **+0.507** | 14.54 | $73 |
 
-**Gross and price are unchanged; the entire +3.80 bp/bar is cost.** Six contiguous
-thresholds (22–35) beat the base, and a *direct* spread filter at the same held
-half-spread destroys the book at all 19 — so this is not the price level and not a
-noisy-spread proxy.
+**Status: CARRIED, NOT PROMOTED. p = 0.0100 against its rotation null**, clears
+BH at every plausible effective count, misses at the nominal 19, unconfirmed on
+a separate construction. **Any study using dv28 reports the cell with AND
+without it.** It does not enter [BOOK.md](BOOK.md).
 
-**Status: CARRIED, NOT PROMOTED. p = 0.0100 against its rotation null.** It clears
-BH at every plausible effective test count (Li-Ji 3.0, Cheverud-Nyholt 4.7 — the
-19 threshold books correlate at a median of 0.892) and **misses at the nominal 19**.
-It has **not** been confirmed on a separate construction.
-
-> **Guard, and it is not optional.** The exit target was carried this way from
-> D295 and quietly became a base assumption until D307 discounted it 5×. **Any
-> study using dv28 must report the cell with AND without it**, and must carry
-> `p = 0.0100, unconfirmed` alongside the number. **It does not enter
-> [BOOK.md](BOOK.md).**
-
-## 1. Three axes, which earlier versions of this document ran together
+## 1. Three axes — unchanged, and still closed
 
 ### Axis A — should width VARY over time? **No. Five studies, all closed.**
 
-D299 (ladder), D308 (discrete), D311 (continuous λ), D312 (vol-targeted), D313
-(universe-conditioned). Every one lost to a fixed width. **D314 explains all five
-at once**: with ρ = 0.0020, `Sharpe = √N·net/σ`, net is monotone down in width, so
-the optimum is a **corner** — and a rule that varies N can only move away from a
-corner.
+D299, D308, D311, D312, D313. **D314 explains all five at once**: with
+ρ = 0.0020, `Sharpe = √N·net/σ`, net is monotone down in width, so the optimum
+is a **corner**, and a rule that varies N can only move away from one.
 
-### Axis B — which FIXED width? **N_eff = 2, and it is immune to the cost basis.**
+### Axis B — which FIXED width? **N_eff = 2, basis-immune.**
 
-In D300/D306's construction **turnover is invariant to N** — 0.2002–0.2003 at
-every depth, because it is just `1/k`. So the cost basis cancels out of the
-comparison:
-
-```
-N=2 minus N=19, common rt  56.98 : +21.03      per-cell held rt : +25.02
-                common rt  86.70 : +21.03
-                common rt 105.24 : +21.03
-```
-
-**Concentration wins by ~21 bp whatever round trip you charge**, and N=2 stays
-net-positive at the harshest basis *plus* commission.
+In D300/D306's construction turnover is `1/k` at every depth, so the cost basis
+cancels: **concentration wins by ~21 bp whatever round trip is charged.**
 
 ### Axis C — which CONSTRUCTION? **D300/D306's, not D310's.**
 
-| | D300/D306 | D310+ |
-|---|---|---|
-| build | top-N per leg, hold `k`=5 | rank-weight the whole 25-name gate |
-| turnover at N=2 | **0.2003** | **0.3465** (1.73×) |
-| turnover vs N | **invariant** (`1/k`) | **falls** with width |
-| net at N=2 | **+11.36** | +4.37 published, **−1.54** corrected |
-| width result | **basis-immune** | **basis-fragile — flips sign** |
+D310 turned over 1.73× more and its width result flipped sign under the correct
+basis (D317). D311–D316's *relative* results survive; their absolute nets do not.
 
-**D310 was meant as a refinement and correctly costed it is the worse book.**
-D311–D316 all sit on it. Their *relative* results survive (every arm shares one
-`rt`); their absolute nets do not. See [D317](decisions/D317-CORRECTION-the-D310-family-was-charged-the-wrong-spread.md).
+## 2. The exit work — unchanged
 
-## 2. The exit work
+Target +4.95 bp/bar, p = 0.0050 (D295); trailing overlay p = 0.0150 at N=19 and
+**negative at every threshold at N=2** (D319). Costed correctly the target is
+worth **+0.69 bp/bar at N=2**, reproduced three ways (D305, D307, D318). Stops,
+displacement, idle conditions, the ladder: dead. `sel = rank < N_SLOTS` pins the
+family: a price exit beside a signal exit is arithmetically inert.
 
-**Cleared their own matched nulls:**
+## 3. Cost — wrong twice, fixed twice, and now open in three places
 
-| exit | study | effect | null |
+**Fixed (D317, D318):** the spread basis — per-cell across widths, common
+within a width — and commission, which was never charged before D318.
+
+**What the cost model charges today:** `4 × held median Corwin–Schultz
+half-spread` per paired round trip, plus IBKR's official per-share commission
+`$0.005 / price` per crossing. **The commission is IBKR's published schedule
+and is not in question** — except that the schedule's **$1.00 per-order
+minimum and 1% of trade value maximum are not applied**; the minimum depends on
+position size and is the PM's to add, the maximum binds only below ~$0.50.
+
+**Open, each with a mechanism:**
+
+| hole | mechanism | size | found |
 |---|---|---|---|
-| **profit target** | D295 | +4.95 bp/bar, t +2.58 | p50 +1.49, p95 +3.11, **p = 0.0050** |
-| **trailing overlay** | D297 | gross Sharpe **+0.512 → +0.728**, maxDD **−62%** | **p = 0.0150** |
-| reversion | D295 | +1.78 | clears |
+| **Spread estimator floors at zero on pinned and quiet names** | Corwin–Schultz reads the spread from the daily range; a stock pinned at a deal price has none. Three D329 cells divided by zero; every volatility score's long leg is 24–35% pinned targets at a measured half-spread of **0.0** | `skew_63`'s short leg priced at 7.7 bp, honest ≥ 11.1 | D329 §5, D330 |
+| **No borrow cost** | Announced deal targets are the most crowded short in the market; any post-jump name may be hard to borrow | unquantified; the fixture has no borrow data | D329 §10 |
+| **Daily rebalancing is uncosted** | The book is equal-weight, rebalanced daily, and earns the *sum* of one-bar returns; the trades that realise that sum are free. On `hist_L`'s $8–10 names, ~5%/day of notional at 46.7 bp | ~30 bp/name/hold against a `two_c` of 96 | D328 §11 |
 
-**Died:** stops (p 0.98, 0.995) · displacement (D286 did not reproduce) · idle
-conditions (null p95 −0.40, R7's pathology) · the ladder (D299) · reversion *as an
-addition* · and "six survivors", which D295's correction reduced to **three
-distinct books, two non-pathological**.
-
-**The pinning governs the family.** `sel = rank < N_SLOTS`, so an exit on a
-still-selected name re-enters it the same bar — **0.00% of held bars differ**.
-Adding a price exit alongside a signal exit is arithmetically inert.
-
-**What each exit is worth, costed correctly (D318):**
-
-| N | **target − none** | **overlay on none** |
-|--:|--:|--:|
-| **2** | **+0.69** | **−3.37** |
-| 3 | +3.48 | +3.27 |
-| 7 | −4.41 | +5.98 |
-| 19 | −1.27 | +6.53 |
-
-**Mutually exclusive in sign.** The target pays only at N ≤ 3; the overlay only at
-N ≥ 3. And +0.69 independently reproduces D307's +0.80 and D305's +0.79 — three
-routes to one number.
-
-## 3. Cost, which was wrong twice and is now right
-
-1. **Spread basis.** D310+ charged the *universe's* median half-spread (rt 56.98)
-   to a book holding names at 18.51–25.05 bp. **The two axes need opposite
-   treatment** — per-cell across widths (the spread difference is *caused* by the
-   width choice), common within a width across exits (D307). D318 applies both.
-2. **Commission was never charged at all.** IBKR per-share on the held median
-   price: **0.66 bp/side at N=2 ($75.95), 2.11 at N=19 ($23.72)**. It works in
-   concentration's favour and changes no verdict.
-3. **Published `sharpe` columns in D306 and D310 are GROSS Sharpes** — verified,
-   not assumed. D306 §3's "net and Sharpe point at different books, 3× volatility
-   apart" was that mismatch; on net Sharpe **both objectives point at N_eff = 2.**
+**And one that is not a cost but decides which leg pays it — the rebalancing
+premium.** A rebalanced long on a bouncy name harvests volatility; a rebalanced
+short pays it. On `hist_L`'s names that is **+23.5 bp per trade to the long leg
+and −45.9 to the short**, and it is why the incumbent's short leg nets **−98.4
+per trade** — a sizing artefact with a concrete fix (constant shares), not a
+signal failure (D328 §11, D329 §2).
 
 ## 4. What is decisive, and what is merely not-rejected
 
-**Decisive against a null:** the spread construction, the confluence ranking
-(min z +2.58), concentration (p = 0.0050 at every depth).
+**Decisive against a null:** the spread construction; concentration
+(p = 0.0050 at every depth); **leg ownership on the short side** —
+`skew_63` first of 44 real partners, above the control's p95, on both lenses
+(D329).
 
-**Real but small, and confirmed three ways:** the target, ~+0.7 to +0.8 bp/bar.
+**Real but small, confirmed three ways:** the target, ~+0.7 bp/bar.
 
-**Not resolvable on this fixture:** everything else. D316 measured the minimum
-detectable effect at **11–18 bp/bar** at N_eff = 2 against a book netting ~11.
-**No component that could exist would register on a paired per-bar test here.** A
-non-significant result at this concentration is a statement about resolution, not
-about the component.
+**Real, and now with a mechanism:** `hist_L`'s long leg (+97 net per trade,
+t ≈ 3, **decays by k=40** as a real signal should); the two-leg asymmetry.
 
-## 5. Next
+**Not resolvable on this fixture:** any per-bar paired test at N_eff = 2 — MDE
+11–18 bp/bar against a book netting ~11 (D316). Any per-trade `t` on a leg
+that lives in its tails — `skew_63`'s short leg is +0.9, with its top 1% of
+trades at 159% of P&L and its bottom 1% at −203%.
 
-**D319 ran and CLOSED the overlay at this width.** Swept across D297's own twelve
-thresholds, the overlay is negative on gross Sharpe at **every** X at N_eff = 2,
-while D297's hump reproduces exactly at N = 19 (peak +0.212 at X = 12, giving
-0.724 against D297's published 0.728). **D306's single cell was not a threshold
-artefact.** And my mechanism hypothesis was wrong: replacing the noisy own-book
-denominator with D313's universe predictor made it **worse at every width**.
-Nothing survives BH over 144 cells. **The largest Sharpe effect this programme has
-produced is unavailable where the book actually runs** — and D297's +0.728 was a
-*gross* Sharpe on a book netting **−15.51**, so the overlay has never operated on
-a profitable book.
+## 5. What happened between D322 and D330, in one paragraph each
 
-**D320 ran and CLOSED the tilt axis.** Every filter either loses to its
-price-matched control, fails its null, or wins by **shrinking the book into a
-concentration study** — a 40% spread filter leaves a 19-slot book holding **7
-names a leg**, which is D300's width axis through the back door and D305's
-confound for the third time. Both BH survivors collapse once turnover is divided
-by the names **held** rather than the nominal slots (`N=19/price40` netSHRP
-+0.046 → **−0.455**). **Concentration had already collected the prize.**
+**D322 — the four-group report.** 57% of the incumbent's P&L sits in the
+cheapest price tercile at 8× the commission. Cost scales as 1/price; the book
+is a cheap-name book.
 
-**D321 swept that one surviving thread and it did not close.** D320's three-point
-grid put the dollar-volume optimum at the 25th percentile; **it is at 28–30**, and
-the pre-registration had declared in advance that the study could only succeed if
-the optimum sat away from 25.
+**D323 / D324 — the shortlist at the operating point.** D290's 51 re-read at
+N=2. `retrace_leg` (+20.91 bp/bar, netSHRP +0.625 at k=20) and `rsi` (+22.66,
++0.585 at k=10) lead the incumbent's +11.36. **The ranking inverts with width**
+and the incumbent is the least fragile of the four. A defect in the short leg's
+rank order — it shorted the *least* extreme names — was caught by a later
+assertion and voided the first run.
 
-| | gross | cost | **NET** | **netSHRP** | half | price | p |
-|---|--:|--:|--:|--:|--:|--:|--:|
-| control | +32.89 | 18.33 | **+14.57** | **+0.334** | 18.31 | $71 | — |
-| **dv28** | **+32.93** | **14.56** | **+18.37** | **+0.507** | 14.54 | $73 | **0.0100** |
+**D325 / D326 — composites, both lenses.** D325's +0.370 composite premium and
+a −0.644 pair effect. **D326 split them: the premium was the slot cap
+re-ordering which two names survive; the pair effect is a signal effect and
+survives the cap removed.** Neither beats `retrace_leg` alone. The mechanism
+D327 offered for the pair effect was withdrawn (below).
 
-**dv28's gross is identical to the control's and its price is unchanged — the
-entire +3.80 bp/bar is cost.** Six contiguous thresholds (22–35) beat the control,
-rising and falling smoothly: **D297's shape**, which a three-point grid could not
-have seen. Three of nineteen clear p < 0.05 against 0.95 expected.
+**D327 / D328 — the rank profile, at two resolutions.** No signal is monotone;
+the edge is a tail effect with a noisy middle. **`macd_hist` is computed in
+dollars and its extreme ranks are a price sort** — $2,706 at one end, $3,020 at
+the other, $22 in the middle — with a compounded spread of +18 bp carrying
+146 bp of cost. Three of D290's 51 carry dollars by accident. D328 was
+corrected three times in one day: a summed-vs-compounded *convention* mistaken
+for an error, a persistence hypothesis filed unmeasured, and a price-deviation
+"result" that was both errors stacked. What survived is the rebalancing
+premium and the tilt mechanism: **return cancels between the legs, cost adds
+across them.**
 
-**And the mechanism confirmed at all nineteen thresholds:** a *direct* spread
-filter calibrated to the **same held half-spread** destroys the book (−0.186 to
-+0.161 against a control of +0.334) while dollar volume reaches the same tilt and
-helps. The spread arm conditions on the per-name Corwin–Schultz estimate **D302
-measured as noisy**; dollar volume is cleanly measured and correlates with spread.
-**FINDINGS §11's lesson in a new place — what matters is not only what you
-condition on but how well the input is measured.**
+**D329 — the leg-wise composite.** §0 above. Six of seven predictions failed
+as written (every-k forms, a +0.10 margin); the substance at the operating
+point held; the enumeration was the finding.
 
-**Against it: BH-FDR over 19 thresholds returns NONE** (dv28's 0.0100 misses
-0.00526), the peak moved from where D320 put it, and dv28's +3.80 bp/bar sits
-below D316's ~18 bp resolution wall for a paired test.
+**D330 — the pinned names, mapped, and the tape's limit.** Short side: median
+1.5% pinned, `skew_63` 21%, `hist_L` 1.2%. Long side: **every volatility score
+24–35%**, surviving names at half-spread 0.0 — axis E's long side was never a
+book. A causal filter caught 71% of pinned trades and removed 39% of survivors:
+**a jump followed by quiet is a deal and a reversal candidate alike.** A
+deal-event source is required; an EDGAR pull is in progress (D331).
 
-**Nothing is promoted.** D321's stop condition fires for a **pre-registered
-confirmation on a separate construction, at a threshold fixed at 28 in advance** —
-re-sweeping would confirm nothing.
+## 6. Next, in order, and why the order
 
-**Then the entry signal**, frozen since D293.
+**The next four studies are infrastructure. Another signal result now is
+another upper bound on a cost model known to be wrong in three places.**
 
-## 6. Owed
+1. **Deal events (D331, running).** Settles `skew_63`'s short leg and
+   disqualifies every low-vol long leg properly.
+2. **The spread estimator's floor (D332).** The zero-range names are the
+   pinned deals; a hard floor at half a tick over price is exact, not fitted.
+   Reprices every cell measured since D318.
+3. **Constant-shares sizing on the short leg.** The direct test of the
+   rebalancing mechanism, and if it holds it rescues the incumbent's short leg
+   rather than dropping it.
+4. **A borrow stress charge**, declared, since no borrow data exists.
 
-- **`[S]` SPREAD BASIS assertion** for every runner: the round trip must come from
-  the names held, be reported per-cell *and* common, and **FAIL against the
-  universe median**. `[C]` checked cost's dimensions and never its basis.
-- **Sub-2 widths have never been run on D300/D306's construction** — D315a tested
-  them on D310's.
-- **D318's re-costing reorders cells, so D300/D306's null p-values no longer
-  attach** to the cells they were computed for on the exit axis.
+**Then, signal-side, each with a mechanism behind it:** the long leg for the
+leg-wise book, chosen from the profile side and *predicted* (the enumeration's
+winner is post-hoc and does not count); `macd_hist` normalised and D325 re-run;
+collapse capture in the high-vol short legs — 0–4% of trades at +1,300 to
++3,500 each — which needs a tail-aware framework, not a mean per trade.
+
+**Owed, still:** sub-2 widths on D300/D306's construction (D315a tested them on
+D310's); D318's re-costing detaches D300/D306's null p-values from their exit
+cells; dv28 on a separate construction at a threshold fixed at 28.
 
 ## 7. What earlier versions of this document got wrong
 
 Kept legible rather than quietly fixed.
 
-1. **"Nothing after D300 was an improvement."** Wrong — D303 (correctness), D305
-   arm S (+1.35 bp/bar, book kept full), D306 (the target composes with
-   concentration, and width/exits are separable).
+1. **"Nothing after D300 was an improvement."** Wrong — D303, D305 arm S, D306.
 2. **Calling the target and the exits "decoration" on a paired t of +0.17.**
    Wrong bar and wrong inference: the programme's standard is beating your own
-   matched null, which the target cleared at **p = 0.0050**, and the paired test
-   was blind anyway (MDE 18.3 against a book netting 11).
-3. **Quoting D310's `none/exp2` at +4.37 as "the best cell".** Wrong on both
-   counts — wrong construction, and +4.37 was the universe's cost basis.
+   matched null, and the paired test was blind (MDE 18 against a book netting 11).
+3. **Quoting D310's `none/exp2` at +4.37 as "the best cell".** Wrong
+   construction and the universe's cost basis.
+4. **"Cost, which was wrong twice and is now right."** *(the previous
+   version's §3 heading)* It was wrong in three further places, each large
+   enough to move a verdict, and the sentence was written the day before the
+   first of them was found. **A cost model is never "now right"; it is "not yet
+   found wrong in these places."**
+5. **The composite mechanism** — "a signal can carry information at depths its
+   own book never trades." Filed after the effect it explained, on a signal
+   that turned out to rank price. Withdrawn.
+6. **Three corrections on one study (D328).** A convention called an error; a
+   hypothesis filed before it was measured; a perfect Spearman on five points
+   with a measure chosen after seeing them. All caught before promotion, two by
+   the principal's questions and one by a read-only audit agent.
+7. **The best cost coverage in the programme (`skew_63`, 4.5×) was
+   "unexplained" for three studies.** It was takeover targets read as free.
+   **Measure the price and the spread of what each leg HOLDS** — FINDINGS §14
+   — would have found it in D326.
 
-**The principal caught 1 and 2 and prompted 3.** The common thread is reading a
-non-result as a null result, and ranking cells off a published table instead of
-measuring the difference between them.
+The common thread has not changed: reading a non-result as a null result,
+ranking cells off a published table instead of measuring the difference, and
+filing a mechanism before checking the statistic orders the outcome.
