@@ -151,14 +151,38 @@ confound for the third time. Both BH survivors collapse once turnover is divided
 by the names **held** rather than the nominal slots (`N=19/price40` netSHRP
 +0.046 → **−0.455**). **Concentration had already collected the prize.**
 
-One thread survives and is **not significant**: **`dv25`** cuts the held
-half-spread **18.31 → 14.61** at an essentially unchanged held price ($70.70 →
-$72), lifting net Sharpe to **+0.433** against the control's +0.334 — dollar
-volume finding tighter names at the *same* price, which is the one thing a
-price-matched control cannot explain. **p = 0.119.**
+**D321 swept that one surviving thread and it did not close.** D320's three-point
+grid put the dollar-volume optimum at the 25th percentile; **it is at 28–30**, and
+the pre-registration had declared in advance that the study could only succeed if
+the optimum sat away from 25.
 
-**Next: the entry signal**, frozen since D293. **It is now the whole of what
-remains.**
+| | gross | cost | **NET** | **netSHRP** | half | price | p |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| control | +32.89 | 18.33 | **+14.57** | **+0.334** | 18.31 | $71 | — |
+| **dv28** | **+32.93** | **14.56** | **+18.37** | **+0.507** | 14.54 | $73 | **0.0100** |
+
+**dv28's gross is identical to the control's and its price is unchanged — the
+entire +3.80 bp/bar is cost.** Six contiguous thresholds (22–35) beat the control,
+rising and falling smoothly: **D297's shape**, which a three-point grid could not
+have seen. Three of nineteen clear p < 0.05 against 0.95 expected.
+
+**And the mechanism confirmed at all nineteen thresholds:** a *direct* spread
+filter calibrated to the **same held half-spread** destroys the book (−0.186 to
++0.161 against a control of +0.334) while dollar volume reaches the same tilt and
+helps. The spread arm conditions on the per-name Corwin–Schultz estimate **D302
+measured as noisy**; dollar volume is cleanly measured and correlates with spread.
+**FINDINGS §11's lesson in a new place — what matters is not only what you
+condition on but how well the input is measured.**
+
+**Against it: BH-FDR over 19 thresholds returns NONE** (dv28's 0.0100 misses
+0.00526), the peak moved from where D320 put it, and dv28's +3.80 bp/bar sits
+below D316's ~18 bp resolution wall for a paired test.
+
+**Nothing is promoted.** D321's stop condition fires for a **pre-registered
+confirmation on a separate construction, at a threshold fixed at 28 in advance** —
+re-sweeping would confirm nothing.
+
+**Then the entry signal**, frozen since D293.
 
 ## 6. Owed
 
