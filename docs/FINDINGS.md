@@ -963,6 +963,59 @@ what it returns. Section 3 of the D328 record is the worked case, and it is
 arriving from a third direction: **what an input is made of decides more than
 what it is called.**
 
+### The test is INDEPENDENCE of price and rank, and correlation is not it
+
+The natural way to state the standard is "rank should not be correlated with
+price." **Measured, that statistic points backwards.** Correlation between bucket
+index and median price, against the book it produces:
+
+```
+              corr(rank, price)   max |log p/p_MID|   net/trade
+hist_L                  -0.074                1.61       -1.97
+macd_hist               +0.079                4.93       -6.36
+skew_63                 +0.323                0.58      +45.49
+rsi                     +0.784                0.66      +37.33
+retrace_leg             +0.812                0.40      +47.10
+price_log               +1.000                5.12    (control)
+```
+
+**rho(correlation, net per trade) = +0.800. rho(max log deviation, net per trade)
+= -1.000.** The correlation test **passes both losing books and fails both
+winning ones.**
+
+**Because the fatal shape is SYMMETRIC, and a correlation cannot see it.**
+`macd_hist` runs $2,706 / $22 / $3,020 and `hist_L` runs $10 / $41 / $8 -- a U
+and an inverted U, whose halves cancel to corr ~ 0 by construction.
+`retrace_leg` runs $25 / $37 / $43, a mild monotone ramp, and corr = +0.81.
+
+### And the two shapes do OPPOSITE things, which is the mechanism
+
+**Return cancels between the legs. Cost adds across them.**
+
+A **monotone** price relation is a directional factor bet -- long the cheap end,
+short the expensive end. On this fixture cheap outperforms, so it **pays**.
+`retrace_leg` and `rsi` carry it and are two of the three winners. Price it and
+keep or drop it deliberately.
+
+A **symmetric** price relation pays **nothing** and costs **double**. Both legs
+carry the same price penalty, so long-minus-short differences it away exactly:
+
+```
+macd_hist  long leg  (rank 0)   -531  =  signal  +69  +  price penalty -600
+           short leg (rank 0')  -723  =  signal -123  +  price penalty -600
+           book spread = -531 - (-723) = +192 = +69 - (-123)   <- the -600 CANCELS
+```
+
+The exposure was carried on both legs and collected on neither. **The spread it
+must pay does not cancel, it sums**: 2 x 32.7 + 2 x 40.2 = **146 bp** of round
+trip against a book realising **+43.7** gross per trade. `hist_L` is the same
+shape: 2 x 46.7 + 2 x 40.9 = **175 bp** against **+94**.
+
+**A symmetric tilt is the worst available structure -- all of the cost, none of
+the return.** And note what it does to the reading of `macd_hist`: its +192
+spread is NOT the price effect, which cancelled. It is a genuine weak signal
+buried under 146 bp of cost the construction dragged in with it.
+
 ### The open question this leaves
 
 **The depth-free extreme-rank edge and the per-trade book measurement are
@@ -979,7 +1032,8 @@ order anything: **rho(unrealised, trade count) = -0.400** and **rho(unrealised,
 holding run) = +0.000**.
 
 **What orders it perfectly is how far the rank-0 names sit from the universe in
-PRICE.** Using |log(price at rank 0 / price at the middle)|:
+PRICE** -- read with the shape caveat above, since it is a *symmetric* deviation
+that is fatal and a monotone one that is not:
 
 ```
                 macd_hist  hist_L    rsi   skew_63  retrace_leg
