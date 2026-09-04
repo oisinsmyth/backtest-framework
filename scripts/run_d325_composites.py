@@ -5,10 +5,14 @@
 
 PRE-REGISTERED AT `7199dac`, committed before this file existed (R8).
 
-hist_L ALONE scores +0.262 at the operating point, 11th of 13, while the
-confluence built ON hist_L scores +0.549 -- a composite premium of +0.287, larger
-than the spread between the top four singles, larger than dv28, larger than
-anything the width work produced. No composite of the new leaders has been built.
+NUMBERS HERE ARE D323's CORRECTED ONES. Its `rank_single` shorted the LEAST
+extreme names of its own gate; the fix and the re-run are at `903766d`, and the
+set below was amended at `fe2e500` because `rev_21` fell from 2nd to 9th.
+
+hist_L ALONE scores +0.293 at the operating point, 7th of 13, while the confluence
+built ON hist_L scores +0.549 -- a composite premium of +0.256, larger than the
+spread between the top four singles, larger than dv28, larger than anything the
+width work produced. No composite of the new leaders has been built.
 
 TWO HYPOTHESES PREDICTING OPPOSITE THINGS. SYNERGY says averaging quasi-independent
 signals cancels noise, so C4 -- the three strong singles together -- should be the
@@ -18,6 +22,13 @@ shows little. D324 already found the confluence puts 51.5% of its P&L in the
 cheapest tercile where rsi alone puts 89.4%, so the composite DILUTES its
 components -- evidence for repair. Q3 enters repair as the load-bearing
 prediction, against the study.
+
+AND THE LEADERBOARD ALREADY LEANS THAT WAY: the incumbent is a WEAK primary
+carrying two STRONG pair members -- hist_L 7th at +0.293 while macd_hist (+0.482)
+and rsi (+0.585) are both top four. THE DECISION THIS INFORMS is not which
+composite is best but whether the composite construction should survive at all:
+retrace_leg ALONE already scores +0.625 against the incumbent's +0.549, so under
+repair the right move is to drop the confluence rather than rebuild it.
 
 THE COMPOSITE CONSTRUCTION IS D295's `build_inputs`, COPIED NOT REIMPLEMENTED: a
 primary selects the 25-name gate, the pair re-ranks inside it by mean percentile,
@@ -63,15 +74,20 @@ N_BASE = Y.N_BASE
 
 DEPTH = 2
 KS = (10, 40)
+# THE AMENDED SET (`fe2e500`). `rev_21` fell from 2nd to 9th once D323's
+# short-leg defect was fixed, so it is replaced by `skew_63` -- MECHANICALLY, one
+# name for one name, every structural role unchanged. The corrected top four are
+# retrace_leg +0.625, rsi +0.585, macd_hist +0.482, skew_63 +0.467, against the
+# incumbent's +0.549 and hist_L alone at +0.293.
 COMPOSITES = {
-    "C0_incumbent":   ("hist_L",      ("macd_hist", "rsi")),
+    "C0_incumbent":    ("hist_L",      ("macd_hist", "rsi")),
     "C1_retrace_pair": ("retrace_leg", ("macd_hist", "rsi")),
-    "C2_rev21_pair":  ("rev_21",      ("macd_hist", "rsi")),
-    "C3_histL_strong": ("hist_L",     ("retrace_leg", "rev_21")),
-    "C4_all_strong":  ("retrace_leg", ("rev_21", "rsi")),
-    "C5_rsi_primary": ("rsi",         ("retrace_leg", "rev_21")),
+    "C2_skew_pair":    ("skew_63",     ("macd_hist", "rsi")),
+    "C3_histL_strong": ("hist_L",      ("retrace_leg", "skew_63")),
+    "C4_all_strong":   ("retrace_leg", ("skew_63", "rsi")),
+    "C5_rsi_primary":  ("rsi",         ("retrace_leg", "skew_63")),
 }
-SINGLES = ("hist_L", "retrace_leg", "rev_21", "rsi")
+SINGLES = ("hist_L", "retrace_leg", "skew_63", "rsi", "macd_hist")
 ANN, SEED = 252.0, 20260904
 OUT = REPO / "data" / "d325_composites.json"
 
@@ -304,7 +320,7 @@ def main() -> int:
     q2 = all(v > 0 for v in prem.values())
     p0 = max(prem[f"C0_incumbent/k{k}"] for k in KS)
     q3 = all(prem[f"{nm}/k{k}"] < p0 for nm in
-             ("C1_retrace_pair", "C2_rev21_pair", "C4_all_strong",
+             ("C1_retrace_pair", "C2_skew_pair", "C4_all_strong",
               "C5_rsi_primary") for k in KS)
     q4 = not any(c["sharpe_net"] > c0[c["k"]]
                  and c["low_price_share"] <= base_low
