@@ -57,9 +57,11 @@ SIGNALS = P.SIGNALS
 KS = P.KS
 # log-spaced rank edges from EACH end; powers of two, not tuned
 EDGES = (0, 1, 2, 4, 8, 16, 32, 64, 128, 256)
-# The first run scored SUMMED simple returns and wrote `d328_profile_at_depth.json`.
-# That file stays as the record of what was reported. The compounded re-run --
-# the right quantity -- writes beside it, and `--summed` reproduces the first.
+# The first run scored SUMMED simple returns -- the daily-rebalanced convention
+# every book runner uses -- and wrote `d328_profile_at_depth.json`. The
+# compounded run (constant shares) writes beside it. BOTH are results; their
+# difference is the rebalancing premium (record, section 11). `--summed`
+# reproduces the first.
 OUT_SUMMED = REPO / "data" / "d328_profile_at_depth.json"
 OUT = REPO / "data" / "d328b_profile_at_depth_compounded.json"
 
@@ -94,12 +96,18 @@ LABELS = ([f"L{EDGES[i]}" + ("" if i == len(EDGES) - 1 else
 def fwd_compounded_demeaned(r1T, finT, k):
     """Forward k-bar COMPOUNDED return, prod(1+r) - 1, cross-sectionally demeaned.
 
-    THE RIGHT QUANTITY, AND D327/D328's FIRST RUN SCORED THE WRONG ONE. Their
-    `fwd_demeaned` SUMS simple daily returns over the window. A held position
-    compounds, and on the bouncy $8 names at hist_L's extremes the two differ by
-    60-110 bp at k=20: the short end goes from +21 (summed) to -91 (compounded),
-    which reverses D327 section 2 and D328 Q5 outright. Same window, same
-    demeaning, same masks -- only the aggregation over the k bars changes.
+    THE BUY-AND-HOLD CONVENTION. `P.fwd_demeaned` SUMS simple daily returns over
+    the window, which is the P&L of an EQUAL-WEIGHT, DAILY-REBALANCED position --
+    and that is what every book runner from D295 to D326 simulates, so the
+    summed profile is the one to set beside a book. This one is what constant
+    SHARES would earn. NEITHER IS "THE RIGHT QUANTITY"; a comparison must use one
+    convention on both sides, and D328's first correction did not (record,
+    sections 9 and 11).
+
+    THEIR DIFFERENCE IS THE REBALANCING PREMIUM, and it is the finding: on the
+    bouncy $8 names at hist_L's extremes it is +78 bp to the long leg and -85
+    to the short leg at k=20. A rebalanced long harvests volatility; a rebalanced
+    short pays it. Same window, same demeaning, same masks.
     """
     x = np.where(finT, np.log1p(np.nan_to_num(r1T, nan=0.0)), 0.0)
     cs = np.concatenate([np.zeros((1, x.shape[1])), np.cumsum(x, axis=0)])
@@ -265,9 +273,10 @@ def main() -> int:
     print(f"    [1] AGGREGATION: the same {tot_ours:,} name-bars, and binned "
           f"D327's way they reproduce D327 to {dd:.1e} bp")
 
-    # RQ. RIGHT QUANTITY -- the compounded grid must DIFFER from the summed one
-    #     the first run scored (CLAUDE.md, runner assertion 3), and a spot check
-    #     must reproduce prod(1+r) - 1 from the raw daily series.
+    # RQ. RIGHT QUANTITY (CLAUDE.md, runner assertion 3) -- the two CONVENTIONS
+    #     must differ, and a spot check must reproduce prod(1+r) - 1 from the raw
+    #     daily series. Summed = daily-rebalanced, the books' convention;
+    #     compounded = constant shares. Their gap is the rebalancing premium.
     if compound:
         ps = profile(z, base, finT, r1T, HALF, CLOSE, "hist_L", 20, costs=False,
                      compound=False)

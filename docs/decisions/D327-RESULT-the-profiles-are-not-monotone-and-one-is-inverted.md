@@ -204,3 +204,32 @@ summed quantity and should not be quoted**; D328 §9.1 has the compounded ones.
 The runner is left as it ran — its data file is evidence of what was reported —
 and D328's runner carries the corrected quantity with `--summed` to reproduce
 this one.
+
+## 14. THIRD AMENDMENT, same day — §13 over-corrected; §2 is REINSTATED under the book's own convention, with its mechanism
+
+The summed quantity is not wrong. It is the P&L of an **equal-weight,
+daily-rebalanced** position, which is what every book runner from D295 to D326
+simulates (`run_d306_width_exits.py:184` and its siblings). This profile
+matched the books. Compounding is the buy-and-hold convention, which the books
+do not use. D328 §11 has the matched comparison.
+
+**Under the book's convention §2 stands: `hist_L`'s short leg loses.** What §13
+found is *why*: the summed and compounded short-end edges differ by **85 bp at
+k=20** because daily rebalancing of a short on a bouncy $8 name *pays* the
+volatility that the same rebalancing on a long *harvests*. The long leg gains
++78, the short leg gives up −85 — **163 bp between the two legs of one signal,
+from position sizing alone.** So §2's reading is narrowed, not withdrawn: the
+short leg is not shorting names that rise, it is **short the rebalancing premium
+on bouncy names**, which is a sizing artefact with a concrete fix — constant
+shares on the short leg, or shorts in names that do not bounce. That is D283's
+"symmetry fails BY SIGN" with a mechanism.
+
+**§9.2 (a long-only reading owed) is closed**, not by this but by D290, which
+ran all 51 long-only: fifty of fifty-one are market drift. The question §2
+raises is the short leg's *sizing*, not a long-only book.
+
+**§13's "the return numbers in §1 should not be quoted" is withdrawn.** They
+are the book-convention numbers and are the ones to quote beside a book. D328
+§9.1's compounded table is the buy-and-hold view, and the difference between
+the two tables is the rebalancing premium, which is now the more interesting
+quantity of the three.

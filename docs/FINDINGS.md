@@ -990,7 +990,11 @@ price_log               +1.000                5.12    (control)
 
 **rho(correlation, net per trade) = +0.800. rho(max log deviation, net per trade)
 = -1.000.** The correlation test **passes both losing books and fails both
-winning ones.**
+winning ones.** *(The deviation column is against the profile's own middle,
+which the subsection below says never to use -- it is shown only to make the
+contrast with correlation, and on n=5 it is a separation of two from three,
+not a ranking. The mechanism-derived statistic is the common-mode half-spread
+further down.)*
 
 **Because the fatal shape is SYMMETRIC, and a correlation cannot see it.**
 `macd_hist` runs $2,706 / $22 / $3,020 and `hist_L` runs $10 / $41 / $8 -- a U
@@ -1027,29 +1031,62 @@ carrying 146 bp of cost. Whatever information it holds is in the middle of its
 ranking (t = +9.6 there), where a composite's 25-name gate compresses the price
 dispersion that its full-cross-section extremes sort on.
 
-### The return quantity must be COMPOUNDED, and two studies scored the sum
+### Two P&L conventions, and the difference between them is a finding
 
-D327 and the first run of D328 summed simple daily returns over the k-bar
-window. A held position compounds. On the bouncy $8 names at the extremes the
-two differ by **up to 112 bp at k=20**, always in the direction of flattering
-the sum, and largest exactly where the price tilt is largest. Three findings
-were the artefact:
+A book that sets `ret[t] = mean(one-bar returns of the held names)` is
+**equal-weight, rebalanced daily**, and over a hold it earns the **sum** of the
+one-bar simple returns. Buy-and-hold with constant shares earns the
+**compound**. **Every book runner from D295 to D326 uses the sum**, per bar and
+per trade (`run_d306_width_exits.py:184` and its siblings), so the summed
+trade `cum` is exactly right for those books. D327's rank profile matched them.
+D328's compounded re-run is the buy-and-hold view. **Neither is "the right
+quantity"; a comparison must use one convention on both sides**, and D328's
+first correction did not (D328 section 9 against section 11).
 
-- **"`hist_L`'s short leg is actively harmful"** (D327 section 2, D328 Q5):
-  +21 summed, **-91 compounded**. The names it shorts fall. Withdrawn.
-- **"The lenses are inverted, rho = -0.900"**: compounded, **rho = 0.000**.
-  The depth-free extreme-rank edge and the per-trade book are *uncorrelated*
-  on these five signals, not opposed. Withdrawn.
-- **"The unrealised ratio orders the books perfectly, and price deviation
-  orders the unrealised ratio"**: the sum artefact stacked on a scale error --
-  a two-leg pair spread compared to D326's one-name gross. Properly scaled and
-  compounded, four of five books realise MORE per name than the snapshot.
-  **Withdrawn entirely, including the proposed test on D290's 51 signals.**
+**With convention and scale both matched** -- per-leg summed edge against
+D326's per-name gross and net, k=20 -- **rho = +0.300 with gross and -0.800
+with net.** The anti-correlation with net is real and it is *cost*: the signals
+with the largest depth-free edge hold the most expensive names. Not resolution,
+not a paradox.
 
-**CLAUDE.md's right-quantity assertion exists for this.** Neither runner had it.
-D328's now asserts the compounded grid differs from the summed one, keeps the
-summed one only to reproduce D327 bit-for-bit, and the first run's data file is
-kept as evidence of what was reported.
+**The difference between the conventions is the REBALANCING PREMIUM**, summed
+minus compounded per leg at k=20, and on `hist_L`'s $8-10 names it is the size
+of the whole effect:
+
+```
+                long leg   short leg          held price
+hist_L             +78         -85            $8-10
+rsi                +10         -30            $19-37
+skew_63            +20          -2            $21-33
+retrace_leg         +0          -3            $25-38
+```
+
+A long topped up after every fall and trimmed after every rise harvests
+volatility; a short rebalanced the same way pays it. **163 bp over 20 bars
+between the two legs of one signal, from position sizing alone.** So
+**`hist_L`'s short leg loses under the book's convention (D327 section 2
+stands), and the reason is that it is short the rebalancing premium on bouncy
+names** -- a sizing artefact, not a signal failure. D283's "symmetry fails BY
+SIGN" has its mechanism: a rebalanced long and a rebalanced short on the same
+volatile names are not symmetric. The fix is constant shares on the short leg,
+or shorts in names that do not bounce -- not dropping the leg.
+
+**And the rebalancing is uncosted in every one of those runners.** They charge
+entry and exit and earn the daily-rebalanced sum; the daily trades that realise
+it are free. On `hist_L`'s names that is of order 30 bp per name over a hold
+against a `two_c` of 96 -- second-order, not nothing, and it belongs beside
+[section 10](#10-the-book-has-no-bench-so-most-of-its-turnover-is-unpriced).
+
+**What was withdrawn and stays withdrawn:** the "unrealised ratio" and the
+price-deviation hypothesis on it (a mixed-convention, mixed-scale comparison;
+the residual it was chasing is the rebalancing premium above, now measured
+directly); and the proposed D290 test of it. **What was withdrawn and is
+reinstated:** D327 section 2.
+
+**CLAUDE.md's right-quantity assertion exists for exactly this** and no runner
+in the D304-D327 chain had one. D328's asserts the two grids differ and reports
+both; the requirement is to say which convention is scored and why, and to
+compare like with like.
 
 ### What the per-bar edge across horizons can and cannot say
 
@@ -1078,12 +1115,16 @@ what those names cost, and why a symmetric tilt cannot pay. All of that is
 measured on price and spread, and none of it moved when the return quantity was
 corrected.
 
-**Not established:** any relation between a signal's extreme-rank *return* edge
-and its book. rho = 0.000 on five signals is a clean null and a small sample.
-The lens that says what the #1 name returns has so far said nothing about which
-book makes money; the things that separate the books are the tilt structure and
-the cost, which are not return measurements. **D329 -- a composite predicted
-from single-signal profiles -- does not run on this basis.**
+**Established, convention-matched:** the extreme-rank *return* edge predicts
+the book's **cost**, not its net -- rho = +0.300 with gross and **-0.800 with
+net** on five signals. The lens that says what the #1 name returns says which
+signals hold expensive names; the things that separate the books are the tilt
+structure, the cost, and the rebalancing premium, and only the last is a return
+quantity. **D329 -- an ADDITIVE composite predicted from single-signal profiles
+-- does not run on this basis.** What the per-leg profile does motivate is a
+**leg-wise** composite -- one signal owning the long leg, another the short --
+which the rebalancing mechanism makes a construction with a reason rather than
+a search; see D328 section 11.6.
 
 ### The statistic for price-independence, derived from the mechanism
 

@@ -286,3 +286,111 @@ deviation (passes a *smooth* ∪, which `macd_hist`'s is) can see it.
 `data/d328b_profile_at_depth_compounded.json` (the result) ·
 `data/d328_profile_at_depth.json` (the first run, superseded, kept) ·
 `scripts/run_d328_profile_at_depth.py` (`--summed` reproduces the first run)
+
+---
+
+## 11. CORRECTION 3, same day — §9 over-corrected: there are two CONVENTIONS, not a wrong quantity, and their difference is the finding
+
+Appended, not edited. Prompted by a read-only audit of the chain that found the
+summed quantity in **every book simulator from D295 through D326**
+(`run_d306_width_exits.py:184`, `st[1] += sgn * (v − mt)`, and the same line in
+D295, D298–D301, D303, D305, D310), and in D304's forward-return helper.
+
+### 11.1 The two conventions
+
+A book that sets `ret[t] = mean(one-bar returns of the held names)` is
+**equal-weight, rebalanced daily**. Over a hold that book earns the **sum** of
+the one-bar returns — the summed trade `cum` is *exactly right for that book*.
+Buy-and-hold with constant shares earns the **compound**. Neither is "the right
+quantity"; they are two position-sizing conventions, and:
+
+- **the programme's books use the sum**, per bar and per trade;
+- **D327's profile matched them**;
+- **§9 switched D328 to buy-and-hold** and then, in §9.2.2, compared it against
+  D326's summed gross — a mixed-convention ratio, which the audit caught.
+
+`[RQ]` still stands as an assertion — the two grids *must* differ — but its
+message that the summed one was "the wrong quantity" is withdrawn. Both are
+reported, and the runner's docstring now says so.
+
+### 11.2 The comparison with BOTH conventions and scales matched
+
+Per-leg summed edge (the books' convention, ÷2 for one name) against D326's
+per-name gross and net, `k=20`:
+
+| signal | per-leg edge | D326 gross/name | ratio | D326 net/name |
+|---|--:|--:|--:|--:|
+| hist_L | +130 | +94.0 | 1.38 | −1.97 |
+| macd_hist | +64 | +43.7 | 1.46 | −6.36 |
+| rsi | +47 | +77.0 | 0.61 | +37.33 |
+| retrace_leg | +44 | +80.2 | 0.55 | +47.10 |
+| skew_63 | +37 | +61.0 | 0.61 | +45.49 |
+
+**ρ(per-leg edge, gross) = +0.300. ρ(per-leg edge, net) = −0.800.** The
+anti-correlation with net is real under the books' own convention, and it is
+**cost**: the signals with the largest depth-free edge hold the most expensive
+names (§3, §9.4). It is not a paradox and it is not resolution. §9.2.1's
+"ρ = 0.000" was the buy-and-hold view against a rebalanced book and is
+withdrawn as a comparison.
+
+### 11.3 The difference between the conventions is the REBALANCING PREMIUM, and on `hist_L`'s names it is the size of the effect
+
+Summed minus compounded, per leg, `k=20`, in bp — what daily rebalancing adds
+to a long and *takes from* a short on the same names:
+
+| signal | long leg | short leg | held price |
+|---|--:|--:|--:|
+| **hist_L** | **+78** | **−85** | $8–10 |
+| macd_hist | +53 | +57 | $2,700 (price sort) |
+| rsi | +10 | −30 | $19–37 |
+| skew_63 | +20 | −2 | $21–33 |
+| retrace_leg | +0 | −3 | $25–38 |
+
+A long that is topped back up after every fall and trimmed after every rise
+harvests volatility; a short rebalanced the same way pays it. On a $8 name that
+moves several percent a day, that is **163 bp over 20 bars between the two legs
+of the same signal.** On `retrace_leg`'s names it is nothing.
+
+**So D327 §2 is reinstated, with its mechanism.** Under the convention the book
+actually runs, `hist_L`'s short leg contributes **−26 bp** per name at `k=20`
+and the names it shorts do not fall net of rebalancing. §9.2.3 withdrew that
+on the buy-and-hold number (−91); **buy-and-hold is not what the book does.**
+The correct statement is narrower and more useful than either: **`hist_L`'s
+short leg is short the rebalancing premium on bouncy names.** It is a
+position-sizing artefact, not a signal failure, and the fix is not to drop the
+leg — it is to hold the short leg in constant *shares*, or in names that do not
+bounce. D283's "symmetry fails BY SIGN" now has a mechanism: **a rebalanced
+long and a rebalanced short on the same volatile names are not symmetric.**
+
+### 11.4 And the rebalancing is UNCOSTED
+
+Every runner from D295 to D326 charges cost at entry and exit (`two_c`) and
+earns the daily-rebalanced sum. The daily trades that make the sum realisable
+are not charged. Order of magnitude on `hist_L`'s names: a ~5%-a-day name at
+46.7 bp half-spread rebalances ~5% of notional a day at ~2.3 bp, so ~**30 bp
+per name over a 14-bar hold** against a `two_c` of 96. Second-order, not
+negligible, and **it belongs beside FINDINGS §10's unpriced turnover.** Not
+measured here; flagged.
+
+### 11.5 What this does to §9
+
+| §9 item | status after §11 |
+|---|---|
+| 9.2.1 lenses uncorrelated at 0.000 | **withdrawn as a comparison** — mixed conventions. Matched: +0.300 gross, −0.800 net, and the −0.800 is cost |
+| 9.2.2 unrealised ratio withdrawn | **stays withdrawn** — the matched ratio (1.38, 1.46 vs 0.55–0.61) is the rebalancing premium on bouncy names, which §11.3 measures directly |
+| 9.2.3 D327 §2 withdrawn | **reversed** — §2 reinstated under the book's convention, with the mechanism in §11.3 |
+| 9.2.4–9.2.6 | stand |
+| 9.3 | stands |
+| 9.4 the common-mode statistic | stands |
+| D327 §9.2 "a long-only reading of `hist_L` is owed" (W6) | **closed** — D290 ran all 51 long-only and fifty of fifty-one are market drift (D290). The question §2 actually raises is the short leg's sizing, §11.3, not a long-only book |
+
+### 11.6 D329 and the leg-wise composite
+
+D329 as pre-registered — an *additive* predictor from single-signal profiles —
+still does not run: ρ(edge, net) = −0.800 says the profile predicts the book's
+*cost*, not its net. What §11.3 does motivate is a **leg-wise** composite:
+`hist_L` owns a long leg (t = +2.96, +3.84) whose rebalancing premium *helps*;
+`skew_63` owns a short leg (t = −6.43, −2.05) in $30 names at 5–8 bp where
+there is **no** premium to pay. That is a pre-registrable construction with a
+mechanism, and the audit's Part B says its per-trade comparison must be run on
+the *same* convention as the parents. Filed as the next candidate; not run.
