@@ -84,9 +84,18 @@ def rank_single(z, base, cand, n, T):
     order, cnt, _ = R.ranked(z[cand], base)
     plan = R.LegPlan(order, cnt, N_BASE, T)
     bc = np.broadcast_to(plan.cols[None, :], plan.lo.shape)
-    pos = np.broadcast_to(np.arange(N_BASE, dtype=np.int32)[:, None], plan.lo.shape)
+    asc = np.broadcast_to(np.arange(N_BASE, dtype=np.int32)[:, None], plan.lo.shape)
+    # THE SHORT LEG IS REVERSED, AND THE FIRST VERSION OF THIS HAD IT WRONG.
+    # `legs_rows` returns the hi leg as the LAST N finite entries in ASCENDING
+    # rank, so its stored position 0 is the LEAST extreme name of the 25 and its
+    # position 24 the most. Assigning arange() in stored order therefore shorted
+    # the least extreme names. D295's composite uses `v = -avg` on the hi leg --
+    # most extreme first -- and that is the convention every published result
+    # rests on. D325's assertion [1b] caught this: a degenerate composite
+    # matched the long leg exactly and was the exact REVERSE on the short.
+    desc = asc[::-1]
     out = []
-    for rows in (plan.lo, plan.hi):
+    for rows, pos in ((plan.lo, asc), (plan.hi, desc)):
         rk = np.full((n, T), n, dtype=np.int32)
         rk[rows.ravel(), bc.ravel()] = pos.ravel()
         out.append(rk)
