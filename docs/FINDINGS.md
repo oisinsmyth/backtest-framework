@@ -972,8 +972,45 @@ sharpening the resolution from D327's 20 percentile bins to single ranks made it
 is the fraction of the depth-free spread each signal **fails to realise** --
 2.92x and 2.76x for the two losing books, 1.09x to 1.22x for the three winners.
 
-**Nothing yet explains that ratio.** The standing candidate is persistence: the
-path-invariant book holds **5.9 to 13.9** names per bar, not 2, so a name that
-enters rank 0-1 and stays pays one round trip over a long run. **A depth-free
-lens cannot see it, having removed the path by construction** -- see
-[section 10](#10-the-book-has-no-bench-so-most-of-its-turnover-is-unpriced).
+**Persistence was the obvious candidate and it is measured WRONG.** The
+path-invariant book holds 5.9 to 13.9 names per bar rather than 2, so a name that
+enters rank 0-1 and stays should pay one round trip over a long run. It does not
+order anything: **rho(unrealised, trade count) = -0.400** and **rho(unrealised,
+holding run) = +0.000**.
+
+**What orders it perfectly is how far the rank-0 names sit from the universe in
+PRICE.** Using |log(price at rank 0 / price at the middle)|:
+
+```
+                macd_hist  hist_L    rsi   skew_63  retrace_leg
+|log dev|            4.82    1.43   0.66      0.58         0.40
+unrealised           2.92    2.76   1.22      1.22         1.09
+```
+
+**rho = +1.000, five of five** -- and the same five order D326's net per trade at
+rho = -1.000. **The two constructions whose extremes sit furthest from the
+universe in price are the two losing books.**
+
+**This is a hypothesis, not a result, and it must not be cited as one.** It is
+five points, the measure was chosen after seeing them, and a perfect Spearman on
+n=5 is p = 0.017 two-sided at best. **It needs a pre-registered test on D290's 51
+signals**, where the price deviation at rank 0 is computable before any book is
+run and can therefore be a genuine out-of-these-five prediction.
+
+**The supporting diagnostic is cleaner and is a result.** Edge per bar at rank 0
+across k = 10, 20, 40 separates a forecast from a standing tilt:
+
+```
+              k=10    k=20    k=40
+macd_hist    -20.0   -26.6   -26.5   <- CONSTANT: a static tilt, not a forecast
+price_log    +18.5   +19.4   +17.4   <- CONSTANT: the known-bad control, as designed
+hist_L       +22.4   +13.6    +7.4      decaying: a real signal with a short life
+rsi          +13.9    +3.6    +3.5      decaying
+retrace_leg  +11.0    +5.6    -0.6      decaying
+skew_63       +5.8    -1.9    -4.8      decaying
+```
+
+**A constant per-bar edge at a fixed rank is the signature of a standing tilt**:
+the same names sit there day after day drifting at a constant rate, and nothing
+is being forecast. `macd_hist` matches the known-bad control and not the four
+signals. **Run this before trusting any extreme-rank edge.**

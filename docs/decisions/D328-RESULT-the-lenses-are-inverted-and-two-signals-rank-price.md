@@ -123,8 +123,25 @@ universe in both price and spread**: $19–27 and 9.6–16.4 bp.
 3. **`hist_L`'s extremes are a volatility tilt** — $8–10 names at 4× its own
    middle's spread. The incumbent's primary pays D284's tax at the depth it
    trades, and this is the first measurement that shows it there.
-4. **The unrealised ratio is a candidate instrument.** It orders these five
-   perfectly, and nothing here explains *why* — that is the open question.
+4. **Edge per bar at a fixed rank separates a forecast from a standing tilt**,
+   and this one *is* a result. Across `k` = 10, 20, 40 at rank 0:
+
+   ```
+                 k=10    k=20    k=40
+   macd_hist    -20.0   -26.6   -26.5   CONSTANT -- a static tilt
+   price_log    +18.5   +19.4   +17.4   CONSTANT -- the known-bad control
+   hist_L       +22.4   +13.6    +7.4   decaying -- a real, short-lived signal
+   rsi          +13.9    +3.6    +3.5   decaying
+   retrace_leg  +11.0    +5.6    -0.6   decaying
+   skew_63       +5.8    -1.9    -4.8   decaying
+   ```
+
+   **A constant per-bar edge means the same names sit at that rank day after day
+   drifting at a constant rate, and nothing is being forecast.** `macd_hist`
+   matches the control, not the signals. **Run this before trusting any
+   extreme-rank edge**, and it costs one extra horizon.
+5. **The unrealised ratio is a candidate instrument.** It orders these five
+   perfectly and §7.2 says what does and does not explain it.
 
 ## 6. Assertions
 
@@ -148,11 +165,16 @@ ran it, so the ρ is over the **five** signals D327's Q5 used, asserted to be fi
 1. **`macd_hist` should be normalised** — by price or by ATR — and re-measured.
    Every study that ranked on it cross-sectionally ranked partly on price, which
    reaches back through D290's screen and D325's composites.
-2. **Why the unrealised ratio orders the books perfectly.** The obvious candidate
-   is *persistence*: a name entering rank 0–1 and staying there pays one round
-   trip over a long holding run, and D326's invariant book holds **5.9 to 13.9**
-   names per bar, not 2. **That is measurable and this study cannot see it**,
-   having removed the path by construction.
+2. **Why the unrealised ratio orders the books perfectly.** ***Persistence was my
+   candidate when this record was first filed, and it is measured wrong***:
+   ρ(unrealised, trade count) = **−0.400**, ρ(unrealised, holding run) =
+   **+0.000**. What orders it is **how far the rank-0 names sit from the universe
+   in price**, |log(price at L0 / price at MID)| — **ρ = +1.000, five of five**.
+   **That is a hypothesis on five points with a measure chosen after seeing them,
+   and it must not be cited as a result.** The test that would make it one is
+   pre-registered on **D290's 51 signals**, where the price deviation is
+   computable before any book is run. See
+   [FINDINGS §14](../FINDINGS.md#14-a-cross-sectional-ranking-on-a-quantity-that-carries-units-ranks-those-units).
 3. **`skew_63` remains open**, and D328 makes it stranger: it has the *best* book
    in the study and **no measurable edge at the depth it trades** (`t` = −0.87
    at L0). Its advantage is not in the extreme ranks.
