@@ -320,9 +320,12 @@ def main() -> int:
         refit=dict(a=av, b=bv, rho=av / (av + bv), sigma=float(np.sqrt(max(av, 0) + bv)),
                    g0=g0, g1=g1, r2g=r2g, c0=c0, c1=c1, r2c=r2c,
                    n0=n0, n1=n1, N_star=Nstar),
-        best=dict(n_eff=best, sharpe=cellsum[best]["sharpe"], gain_vs_2=gain),
-        cost_excess_at_1=ex1,
-        predictions=dict(QA1=qa1, QA2=qa2, QA3=qa3, QA4=qa4, QA5=qa5, QA6=qa6)),
+        best=dict(n_eff=float(best), sharpe=cellsum[best]["sharpe"],
+                  gain_vs_2=float(gain)),
+        cost_excess_at_1=float(ex1),
+        predictions={k: bool(v) for k, v in
+                     dict(QA1=qa1, QA2=qa2, QA3=qa3, QA4=qa4, QA5=qa5,
+                          QA6=qa6).items()}),
         indent=1))
     print(f"\n  wrote {OUT.relative_to(REPO)}  ({time.time() - t0:.0f}s)")
     return 0

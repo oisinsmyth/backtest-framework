@@ -1,10 +1,34 @@
 # D314 — the algebra of width, and one explanation for five closed studies
 
-**Status:** **DERIVATION.** Descriptive fits to already-published cells. **Not a
-study, not pre-registered, and it scores no book.** Any rule derived from it
-needs its own pre-registration — see D315.
+**Status:** **DERIVATION — PARTIALLY WITHDRAWN.** Descriptive fits to
+already-published cells. **Not a study, not pre-registered, and it scores no
+book.** Any rule derived from it needs its own pre-registration — see D315.
 **Date:** 2026-09-04
 **Area:** Strategy research · **personal track**
+
+> ## AMENDMENT, 2026-09-04, from [D315 Stage A](D315a-RESULT-the-corner-is-real-the-formula-is-not.md)
+>
+> **§2's closed form and `N* = 1.66` are WITHDRAWN.** D315 ran the seven widths
+> below the floor and the log-linear net curve **does not extend below N = 2**:
+> gross turns down at `N_eff` 1.15 and net at 1.45, so the extrapolation that
+> produced 1.66 was invalid. Refitting on N ∈ [1, 25] makes the gross fit *worse*
+> (R² 0.9774 → 0.9143) and returns an equally meaningless `N*` = 4.75.
+>
+> **`ln N* = −n0/n1 − 2` remains the correct first-order condition for a
+> log-linear net curve. This book's net curve is not log-linear across the full
+> range, so the formula does not locate its optimum.** Caveat §5.2 anticipated
+> exactly this and the number should not have been quoted without it attached.
+>
+> **§1's variance decomposition, §2's `Sharpe = √N·net/σ`, and §3's corner all
+> SURVIVE and are strengthened.** The diversification law was verified at the
+> boundary: at `N_eff` = 1 the measured vol is 1,089 bp against an implied σ of
+> 1,095, and refitted ρ = 0.0088. The corner is now a **measured** statement —
+> `N_eff` = 2 is the Sharpe maximum of a surface sampled from 1.00 to 25.00, and
+> nothing below it differs from it on net (max paired t = 0.12) — rather than an
+> extrapolated one.
+>
+> **§4's Stage-B rule was never run:** D315's stop condition fired, because that
+> rule fits the same curve that failed here.
 
 **No holdout testing. Holdout reads spent: 0. Programme total: 0.**
 

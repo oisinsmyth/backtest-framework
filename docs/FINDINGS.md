@@ -791,14 +791,38 @@ d/dN [ sqrt(N) * net(N) ] = 0   =>   ln N* = -n0/n1 - 2   =>   N* = 1.66
 
 **below the grid floor of 2, and robust at 1.54-1.70 across every subset.**
 
+> **CORRECTION, from [D315 Stage A](decisions/D315a-RESULT-the-corner-is-real-the-formula-is-not.md),
+> 2026-09-04: `N* = 1.66` IS WITHDRAWN and the closed form does not locate this
+> book's optimum.** The seven widths below the floor were run. **The log-linear
+> net curve does not extend below N = 2** -- gross turns down at `N_eff` 1.15 and
+> net at 1.45 -- so 1.66 was an invalid extrapolation, and refitting on [1,25]
+> makes the gross fit worse (R^2 0.9774 -> 0.9143) for an equally meaningless
+> 4.75. `ln N* = -n0/n1 - 2` is still the right first-order condition **for a
+> log-linear net curve**; this book's is not log-linear across the full range.
+>
+> **The corner itself survives and is now MEASURED rather than extrapolated:**
+> net Sharpe peaks at `N_eff` = 2.00 on a surface sampled from 1.00 to 25.00, the
+> best cell below it beats N=2 by 0.0%, and no width below 2 is distinguishable
+> from 2 on net (largest paired t = **0.12**, win rate 47.8%). **The
+> diversification law was verified at the boundary** -- at `N_eff` = 1 measured
+> vol is 1,089 bp against an implied sigma of 1,095, refitted rho = 0.0088.
+>
+> **The lesson to keep is the one below, plus this: a fitted form is evidence
+> only inside its fitted range.** The optimum sat outside it, which is precisely
+> when a closed form must be checked rather than quoted.
+
 **A rule that varies N can only move AWAY from a corner, and moving away from a
 corner can only hurt.** That is one explanation for five closed studies -- D299's
-ladder, D308's discrete width, D311's continuous lambda, D312's vol target,
+ladder, D308's discrete width, D311's continuous lambda, D312's vol target and
 D313's universe-conditioned vol target. They were not five failures of five
 mechanisms; they were five ways of leaving a corner. It retro-explains details
 each reported without connecting: D312's arm pinned at the tightest level for
 80.6% of bars, D311's oracle gain reproduced 100-124% by noise, D313's arm
 raising gross at the wide end and still losing.
+
+**D315 Stage A is not a sixth** -- it varied nothing, and instead measured the
+static surface below the corner to check that the corner is where the algebra put
+it. It is the confirmation, not another casualty.
 
 ### What width should key on, if anything
 
