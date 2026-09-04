@@ -1,0 +1,18 @@
+# d332_cs_zero_rate.py -- stage-0 for D332, 2026-09-05
+
+CS half-spread estimate EXACTLY ZERO on 43.2% of live name-bars; median where nonzero 51.3 bp; overall median 14.2 bp
+
+by price bucket:  share of bars | zero-clamped | median CS (all) | median CS (nonzero) | half-tick floor | bars where floor > CS
+  $0   -1         0.4% |       34.3% |     87.6 bp |    170.7 bp |     0.78 bp |       35.1%
+  $1   -2         1.0% |       37.8% |     51.5 bp |    122.6 bp |    31.95 bp |       45.3%
+  $2   -5         4.8% |       40.9% |     31.9 bp |     94.0 bp |    13.92 bp |       44.9%
+  $5   -10        8.8% |       42.7% |     20.2 bp |     73.3 bp |     6.68 bp |       45.2%
+  $10  -20       18.3% |       42.6% |     17.4 bp |     57.6 bp |     3.33 bp |       44.0%
+  $20  -50       35.2% |       43.4% |     12.4 bp |     46.8 bp |     1.59 bp |       44.2%
+  $50  -100      18.1% |       44.3% |     10.9 bp |     42.6 bp |     0.75 bp |       44.7%
+  $100 -inf      13.3% |       44.0% |     12.2 bp |     45.9 bp |     0.30 bp |       44.2%
+
+the run of zeros: for a name-bar clamped to zero, is the NEXT bar also zero?
+  P(next also zero | zero) = 0.44   vs unconditional P(zero) = 0.43
+
+
