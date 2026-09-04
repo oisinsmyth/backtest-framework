@@ -33,6 +33,34 @@ overlay       CLOSED at this width         negative at all 12 thresholds (D319)
 **These two are not distinguishable from each other** — D316 put the minimum
 detectable effect at ~18 bp/bar for a paired per-bar test at this concentration.
 
+### The one declared VARIANT, carried and not promoted
+
+```
++ dv28   exclude the bottom 28% of the live cross-section by trailing
+         dollar volume, per bar, on a lagged 63-day mean          (D321)
+```
+
+| | gross | cost | **NET** | **netSHRP** | held ½s | held price |
+|---|--:|--:|--:|--:|--:|--:|
+| base (`N=2/target`, D321's costing) | +32.89 | 18.33 | +14.57 | +0.334 | 18.31 | $71 |
+| **base + dv28** | **+32.93** | **14.56** | **+18.37** | **+0.507** | 14.54 | $73 |
+
+**Gross and price are unchanged; the entire +3.80 bp/bar is cost.** Six contiguous
+thresholds (22–35) beat the base, and a *direct* spread filter at the same held
+half-spread destroys the book at all 19 — so this is not the price level and not a
+noisy-spread proxy.
+
+**Status: CARRIED, NOT PROMOTED. p = 0.0100 against its rotation null.** It clears
+BH at every plausible effective test count (Li-Ji 3.0, Cheverud-Nyholt 4.7 — the
+19 threshold books correlate at a median of 0.892) and **misses at the nominal 19**.
+It has **not** been confirmed on a separate construction.
+
+> **Guard, and it is not optional.** The exit target was carried this way from
+> D295 and quietly became a base assumption until D307 discounted it 5×. **Any
+> study using dv28 must report the cell with AND without it**, and must carry
+> `p = 0.0100, unconfirmed` alongside the number. **It does not enter
+> [BOOK.md](BOOK.md).**
+
 ## 1. Three axes, which earlier versions of this document ran together
 
 ### Axis A — should width VARY over time? **No. Five studies, all closed.**

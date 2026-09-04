@@ -8,6 +8,46 @@ committed before this file existed (R8).
 **No holdout testing. Holdout reads spent: 0. Programme total: 0.**
 **Nothing is promoted. This warrants a confirmation study and nothing more.**
 
+> ## AMENDMENT, 2026-09-04 — §5's BH bar corrected the multiplicity for tests that do not exist
+>
+> **The principal declined to discard dv28 on a BH bar computed over nineteen
+> nominal tests, and was right.** Measured
+> (`data/d321b_effective_tests.json`):
+>
+> ```
+> pairwise correlation of the 19 threshold books   min 0.762  median 0.892  max 0.993
+> first eigenvalue explains 90% of the variance
+> EFFECTIVE INDEPENDENT TESTS   Li-Ji 3.0    Cheverud-Nyholt 4.7    (nominal 19)
+> ```
+>
+> **Adjacent thresholds share nearly all their names, so a 19-point sweep is ONE
+> hypothesis measured at many correlated points, not nineteen hypotheses.** The BH
+> bar for the smallest p:
+>
+> | assumed m | bar | dv28 (p = 0.0100) |
+> |--:|--:|---|
+> | 19 nominal | 0.00526 | misses |
+> | 8 | 0.01250 | **CLEARS** |
+> | 5 (Cheverud-Nyholt) | 0.02000 | **CLEARS** |
+> | 3 (Li-Ji) | 0.03333 | **CLEARS** |
+>
+> **dv28 clears at every plausible effective count.**
+>
+> **And the precedent is this programme's own.** [D297](D297-RESULT-a-narrow-window-that-works.md)
+> applied BH to its **eight pre-registered cells** and reported its **25-point
+> fine sweep** separately as a count against chance — *"4 of 25 clear p < 0.05
+> against 1.25 expected"* — rather than as 25 hypothesis tests. **D321's count is
+> 3 of 19 against 0.95, and its sweep should have been framed the same way.**
+>
+> §5's first bullet is corrected: **BH over 19 was the wrong correction.** The
+> other four items in §5 stand unchanged — the peak still moved, the effect is
+> still small against D316's resolution, and QA5 and QA8 are still falsified.
+>
+> **This does not promote anything.** §7's confirmation requirement is unchanged
+> in every particular. What changes is that dv28 is **carried as a declared
+> variant of the stack** rather than set aside — see
+> [STACK.md](../STACK.md) §0.
+
 ---
 
 ## 1. QA2 is falsified, and it is falsified in the one way that counts

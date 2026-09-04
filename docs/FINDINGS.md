@@ -850,3 +850,63 @@ costs three regressions on numbers already in `data/`, and it says both whether
 an interior optimum exists and what argument the optimum actually takes. Related:
 [[stage-0-premise-check]] -- a premise needs measuring before a design; this is
 the same discipline applied to the objective's shape.
+
+## 13. Reach a tilt through a well-measured variable, not through the noisy one
+
+**From [D321](decisions/D321-RESULT-the-hump-is-real-and-the-optimum-moved.md),
+2026-09-04.**
+
+The book's cost problem is its held spread -- 26.31 bp against the universe's
+13.20 (D302). The obvious fix is to filter on spread. **It destroys the book.**
+
+D321 built a SPREAD-MATCHED control at every one of nineteen thresholds: a direct
+spread filter calibrated to reach the SAME held half-spread as a dollar-volume
+filter. Net Sharpe, against a control of +0.334:
+
+```
+                          dv        direct spread filter, same held spread
+20th percentile        +0.327                 -0.186
+25th                   +0.433                 -0.075
+28th                   +0.507                 -0.075
+30th                   +0.519                 +0.021
+```
+
+**Dollar volume wins at all nineteen, by +0.060 to +0.582.** Identical tilt,
+opposite outcome.
+
+**The mechanism is estimation noise.** The per-name Corwin-Schultz half-spread is
+noisy -- D302 measured its clamp as a left truncation and its per-name values as
+unstable -- so filtering on it discards good names that merely MEASURED wide.
+Dollar volume is cleanly measured and correlates with spread, so it buys the same
+tilt without the noise.
+
+**Generalise it:** when a nuisance variable is worth conditioning on but is badly
+measured, look for a well-measured variable that correlates with it. The tilt you
+want is not always best reached through the quantity you want to change.
+
+**This is [FINDINGS section 11](#11-forecast-the-books-risk-from-the-universe-never-from-the-book)
+from the other side** -- there, a starved estimator made a rule fail; here, a
+clean proxy makes the same rule succeed. Both say the same thing: **how well an
+input is measured decides more than what the input is.**
+
+### And the caution that arrived with it
+
+**D319 is the counter-example and it must travel with this.** Replacing the
+overlay's noisy own-book volatility denominator with D313's better-forecasting
+universe predictor made that rule WORSE at every width. **Forecasting a quantity
+well and using it well are different things.** The rule here works because dollar
+volume is a better-measured PROXY for the same tilt; D319's failed because a
+better FORECAST was substituted into a rule that needed a SCALE.
+
+### Multiplicity: a sweep is one hypothesis, not N
+
+**D321 nearly discarded its own result on a BH bar computed over nineteen tests
+that do not exist.** The nineteen threshold books correlate at a median of
+**0.892**, the first eigenvalue explains **90%** of the variance, and the
+effective independent count is **3.0 (Li-Ji) to 4.7 (Cheverud-Nyholt)**. The bar
+for the smallest p moves from 0.00526 to 0.020-0.033, and the cell clears.
+
+**The precedent was already here:** D297 applied BH to its EIGHT pre-registered
+cells and reported its 25-point fine sweep separately as a count against chance.
+**Correct a sweep for its effective width, not its nominal one -- and say which
+you used.**
