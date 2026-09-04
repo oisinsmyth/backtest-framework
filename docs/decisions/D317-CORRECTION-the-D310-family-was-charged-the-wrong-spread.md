@@ -128,6 +128,51 @@ the corner's *location* are unaffected. **Their absolute net figures do not.**
 D315a's withdrawal of it: its cost curve `23.51 − 4.12 ln N` was fitted on the
 universe basis, and the per-cell slope is about **−2.43**.
 
+## 5a. AND COMMISSION IS NOT CHARGED AT ALL IN THIS CHAIN
+
+Asked whether the tests use the IBKR cost model, I traced it. **They do not.**
+
+**The programme does own a real IBKR model — in [D264](D264-the-intraday-short-on-single-names.md)**,
+derived per symbol from its own median close:
+
+```
+max( min($0.005/share x shares, 1% of notional), $1.00 )
+```
+
+D264 measured it at **0.20 bp/side (RH) to 4.15 bp/side (CLF)** inside one
+volatility stratum, purely on price.
+
+**The D293 → D316 spread chain does not use it.** The only appearance of
+`FEE_BPS` in any of `run_d293`, `run_d295`, `run_d299`, `run_d303`, `run_d306`,
+`run_d310`, `run_d312` is passing it into `load_ragged`, which stores it on the
+panel as `cost_fraction` — **and `cost_fraction` is never read by any of those
+runners.** The scored series is
+
+```
+r1 = expm1(panel.total_log_returns)        # run_d295_exits.py:349 -- no fee
+```
+
+**So `FEE_BPS = 5.0` is loaded and unused, and the only cost charged anywhere in
+the spread programme is the Corwin-Schultz spread.** Commission is absent.
+
+**Rough magnitude, and it is owed a proper treatment rather than this estimate.**
+A paired spread position crosses four times per round trip. At D300's held median
+prices — **$75.95 at N=2, $23.72 at N=19** — IBKR's per-share charge is about
+0.66 and 2.11 bp/side, so the round trip gains roughly:
+
+| | held median price | commission, bp/side | **added to rt** |
+|---|--:|--:|--:|
+| N_eff = 2 | $75.95 | ~0.66 | **~2.6** |
+| N_eff = 19 | $23.72 | ~2.11 | **~8.4** |
+
+**This works in concentration's favour**, since concentration raises held price —
+the same second effect D300 reported on the spread. It does not rescue any level:
+against round trips of 74–100 bp it is a 3–8% addition to a cost that is already
+larger than the gross edge.
+
+**A proper treatment applies D264's derived per-symbol schedule to the held
+names**, and belongs in the same study as `[S]`.
+
 ## 6. What is owed
 
 1. **A width study on the D300/D306 construction with the basis stated and both
