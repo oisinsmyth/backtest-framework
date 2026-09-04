@@ -754,3 +754,75 @@ gross together, roughly one for one — D312's dynamic arm bought an 11% vol cut
 for 14% of gross, the same trade D300 and D310 priced statically. **Dynamic
 breadth pays the static breadth price on every bar it widens.** Any risk rule
 that works by widening must beat that price, not merely produce less volatility.
+
+## 12. The width optimum is a corner, and that is why every variable-N study closed
+
+**From [D314](decisions/D314-the-algebra-of-width.md), 2026-09-04.** Descriptive
+fits to already-published cells, not a study.
+
+Three curves, fitted to all sixteen widths of the `none` family:
+
+```
+vol(N)^2 = 2,396 + 1,201,745/N     R^2 = 0.9994
+gross(N) = 29.47 - 6.50 ln N       R^2 = 0.9774
+cost(N)  = 23.51 - 4.12 ln N       R^2 = 0.9522
+```
+
+**The implied average pairwise correlation is rho = 0.0020** -- statistically
+zero, and negative when fitted on N <= 10 alone. Single-name spread vol is
+~1,097 bp and the systematic floor `sigma*sqrt(rho)` is **49 bp against 237 bp at
+the widest width ever tested**. This is a *spread* book, so it nets out even the
+6.1% of variance D297 attributed to the market.
+
+**So `vol(N) = sigma/sqrt(N)` almost exactly, and Sharpe collapses to one term:**
+
+```
+Sharpe(N) = net(N)/vol(N) = sqrt(N) * net(N) / sigma
+```
+
+**And `net(N) = 5.96 - 2.38 ln N`: the edge dilutes 1.58x faster than the cost
+falls.** That single ratio is why net is monotone down in width everywhere.
+
+### The optimum is closed-form and it is a corner
+
+```
+d/dN [ sqrt(N) * net(N) ] = 0   =>   ln N* = -n0/n1 - 2   =>   N* = 1.66
+```
+
+**below the grid floor of 2, and robust at 1.54-1.70 across every subset.**
+
+**A rule that varies N can only move AWAY from a corner, and moving away from a
+corner can only hurt.** That is one explanation for five closed studies -- D299's
+ladder, D308's discrete width, D311's continuous lambda, D312's vol target,
+D313's universe-conditioned vol target. They were not five failures of five
+mechanisms; they were five ways of leaving a corner. It retro-explains details
+each reported without connecting: D312's arm pinned at the tightest level for
+80.6% of bars, D311's oracle gain reproduced 100-124% by noise, D313's arm
+raising gross at the wide end and still losing.
+
+### What width should key on, if anything
+
+Writing `gross = sigma*ghat(N)` while cost does not scale with sigma:
+
+```
+Sharpe(N) = sqrt(N) * ( ghat(N) - cost(N)/sigma )
+```
+
+**sigma cancels except through cost/sigma.** The optimal width moves with the
+**cost-to-opportunity ratio**, never with the volatility level itself. **A vol
+target varies N with sigma(t) directly, which is the wrong argument** -- the
+algebra predicts D312 and D313 fail before either is run. Doubling the
+opportunity ratio moves the best width from 2 to 8, so the sensitivity is real.
+
+The derived rule has **no free parameters**: `ln N*(t) = -n0(t)/n1(t) - 2`, so
+the whole question reduces to **how often -n0(t)/n1(t) exceeds ln 2 + 2 =
+2.693.** It currently sits at 2.509.
+
+### The general lesson
+
+**Fit the surface before searching it.** Five studies searched a surface whose
+shape was recoverable in an afternoon from cells already published. The check
+costs three regressions on numbers already in `data/`, and it says both whether
+an interior optimum exists and what argument the optimum actually takes. Related:
+[[stage-0-premise-check]] -- a premise needs measuring before a design; this is
+the same discipline applied to the objective's shape.
