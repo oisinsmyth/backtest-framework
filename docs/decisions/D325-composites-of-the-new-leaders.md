@@ -7,6 +7,57 @@ Nothing here is a result.
 
 **No holdout testing. Holdout reads spent: 0. Programme total: 0.**
 
+> ## AMENDMENT, 2026-09-04 — the declared set named a leader that is not one
+>
+> **§3's composites were chosen from a defective leaderboard.** D323's
+> `rank_single` shorted the *least* extreme names of its own gate; the corrected
+> re-run moves the ranking substantially and **`rev_21` falls from 2nd (+0.498) to
+> 9th (+0.207)**. It appears in **C2** and **C4**, and both are therefore built on
+> a candidate that is no longer a leader.
+>
+> ### The corrected top four
+>
+> | | net Sharpe | k | dv | held ½s | p |
+> |---|--:|--:|--:|--:|--:|
+> | **retrace_leg** | **+0.625** | 20 | n | 19.76 | 0.0198 |
+> | **rsi** | **+0.585** | 10 | n | 14.55 | 0.0099 |
+> | **macd_hist** | **+0.482** | 40 | Y | 20.01 | 0.0396 |
+> | **skew_63** | **+0.467** | 40 | n | 8.29 | 0.0198 |
+> | *(incumbent)* | *+0.549* | 10 | Y | — | — |
+> | *hist_L alone* | *+0.293* | 40 | Y | 20.01 | 0.0792 |
+>
+> ### The substitution is MECHANICAL, and the roles are unchanged
+>
+> **`rev_21` → `skew_63`, and nothing else moves.** Each composite keeps the
+> structural role §3 assigned it, so this is a substitution rather than a fresh
+> search over the corrected table.
+>
+> | # | primary | pair | role — unchanged |
+> |--:|---|---|---|
+> | **C0** | hist_L | macd_hist, rsi | the incumbent |
+> | **C1** | retrace_leg | macd_hist, rsi | swap the primary, hold the pair |
+> | **C2′** | **skew_63** | macd_hist, rsi | swap the primary, hold the pair *(was rev_21)* |
+> | **C3′** | hist_L | retrace_leg, **skew_63** | hold the primary, swap the pair *(was rev_21)* |
+> | **C4′** | retrace_leg | **skew_63**, rsi | all three strong *(was rev_21)* |
+> | **C5′** | rsi | retrace_leg, **skew_63** | strongest pair member promoted *(was rev_21)* |
+>
+> ### The caveat this creates, stated rather than buried
+>
+> **The original set was chosen on defective numbers; this set is chosen on the
+> corrected numbers, which are the same numbers the study will score against.**
+> There is selection either way and the mechanical substitution limits it without
+> removing it. **Any cell that wins here is the product of a set chosen with
+> knowledge of the leaderboard**, and its confirmation must be on a construction
+> this set was not drawn from.
+>
+> ### And one prediction is now nearly settled before the run
+>
+> **The incumbent is a WEAK primary carrying two STRONG pair members.** `hist_L`
+> is 7th at +0.293 while `macd_hist` (+0.482) and `rsi` (+0.585) are both top
+> four. **That is the repair hypothesis visible in the leaderboard**, and Q3 —
+> that the premium shrinks as the primary strengthens — is now the prediction to
+> beat rather than a speculation. It stays load-bearing and against.
+
 ---
 
 ## 0. A closure I claimed and withdrew
