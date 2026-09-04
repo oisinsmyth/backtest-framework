@@ -155,3 +155,32 @@ convention I had over-specified, and the failure was the finding.
 ## 11. Files
 
 `data/d327_rank_profile.json` · `scripts/run_d327_rank_profile.py`
+
+---
+
+## 12. AMENDMENT, 2026-09-04 — §3 and §4 are both superseded by D328
+
+Appended, not edited. The body above stands as written.
+
+**§3 is wrong in its interpretation, and the measurement that replaces it is
+plain.** `macd_hist` is computed on **raw closes** and is denominated in
+**dollars**, so its extreme ranks are a **price sort**: median price **$2,706**
+at rank 0 and **$3,020** at the opposite extreme, against a **$22** middle. Its
+−35 at bucket 0 and −79 at bucket 19 are one expensive-name effect measured
+twice, not "an inverted long end with information in the middle." Its middle `t`
+of +9.62 is real; the story about a composite *reaching a hidden depth* is not.
+**The composite works on it because a 25-name gate compresses the price
+dispersion its full-cross-section extremes were sorting on.**
+
+**§4's declared defect was described correctly and inferred from wrongly.** The
+buckets *were* averaging the extremes away — at rank 0–1 the edges are **1.1× to
+8.8×** what the top-5% bucket showed. But fixing it did not repair the lens
+disagreement: **ρ went from −0.200 to −0.900.** Resolution was not the
+explanation.
+
+**§2 survives unchanged** — `hist_L`'s short end is still positive at single-rank
+resolution, **+21 bp** at rank 0 from the short end.
+
+See
+[D328 RESULT](D328-RESULT-the-lenses-are-inverted-and-two-signals-rank-price.md)
+and [FINDINGS §14](../FINDINGS.md#14-a-cross-sectional-ranking-on-a-quantity-that-carries-units-ranks-those-units).

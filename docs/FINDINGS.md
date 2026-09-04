@@ -910,3 +910,70 @@ for the smallest p moves from 0.00526 to 0.020-0.033, and the cell clears.
 cells and reported its 25-point fine sweep separately as a count against chance.
 **Correct a sweep for its effective width, not its nominal one -- and say which
 you used.**
+
+## 14. A cross-sectional ranking on a quantity that carries units ranks those units
+
+**From [D328](decisions/D328-RESULT-the-lenses-are-inverted-and-two-signals-rank-price.md),
+2026-09-04.**
+
+`macd_hist` is `ema(12) - ema(26)` minus its signal line, computed on **raw
+closes** (`research/macd.py:185`) and returned unchanged. It is denominated in
+**dollars**. A $3,000 stock's histogram is ~100x a $30 stock's for the same
+*percentage* move, so **ranking it across names ranks price**, and most
+strongly exactly where a concentrated book looks -- the extremes.
+
+Median price by rank bucket, over the whole live cross-section:
+
+```
+rank        L0     L1   L2-3   MID   S2-3     S1     S0
+macd_hist 2706    798    438    22    477   1002   3020
+```
+
+**Both tails are the expensive names and the middle is the cheap ones.** The
+demeaned forward edge follows: **-531 bp at L0 and -723 at S0, t = -10.29 and
+-9.61** -- one number, measured twice, in a book that longs one end and shorts
+the other. Its real information sits in the **middle**, at t = +9.62.
+
+**The test is dimensional, and it is free:** before ranking a score across names,
+ask what units it carries. A price-denominated score, a dollar-volume-denominated
+score and a variance-denominated score all rank their denominator at the extremes.
+`hist_L` passes it -- built entirely on **log** high/low/close
+(`run_activation_threshold.py:69`), it is scale-free.
+
+### Passing it is not enough: `hist_L` is dimensionless and still tilts
+
+Same measurement on the incumbent's own primary:
+
+```
+rank          L0    L1   L8-15   MID   S8-15    S1    S0
+price ($)     10    10      17    41      17     9     8
+half (bp)   46.7  39.4    28.4  11.3    28.1  38.5  40.9
+```
+
+Scale-free, and its extremes are still **$8-10** names at **4x its own middle's
+spread** and 3.3x the **14.2 bp** universe median -- a **volatility** tilt,
+because percentage moves are largest in the cheapest names. **Dimensionlessness
+buys you the absence of one artefact, not the absence of tilt.** The three
+signals that hold near the universe in both price and spread -- $19-27, 9.6-16.4
+bp -- are the three whose books realise their measured spread.
+
+**Measure the price and the spread of what each rank bucket HOLDS**, not only
+what it returns. Section 3 of the D328 record is the worked case, and it is
+[section 13](#13-reach-a-tilt-through-a-well-measured-variable-not-through-the-noisy-one)
+arriving from a third direction: **what an input is made of decides more than
+what it is called.**
+
+### The open question this leaves
+
+**The depth-free extreme-rank edge and the per-trade book measurement are
+ANTI-correlated on this programme, rho = -0.900 over five signals**, and
+sharpening the resolution from D327's 20 percentile bins to single ranks made it
+*worse* (-0.200 -> -0.900). What orders the books perfectly, at **rho = -1.000**,
+is the fraction of the depth-free spread each signal **fails to realise** --
+2.92x and 2.76x for the two losing books, 1.09x to 1.22x for the three winners.
+
+**Nothing yet explains that ratio.** The standing candidate is persistence: the
+path-invariant book holds **5.9 to 13.9** names per bar, not 2, so a name that
+enters rank 0-1 and stays pays one round trip over a long run. **A depth-free
+lens cannot see it, having removed the path by construction** -- see
+[section 10](#10-the-book-has-no-bench-so-most-of-its-turnover-is-unpriced).
