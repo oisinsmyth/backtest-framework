@@ -1203,3 +1203,46 @@ half-spread is exactly **zero**, and D322's breakeven divides by it. That is
 D302's clamp arriving as a blind spot. They are recorded as degenerate and
 excluded, with the count beside every rank. Until the spread estimator's zero
 clamp is fixed, any partner whose leg lands there is unscoreable.
+
+## 16. The fixture contains pinned takeover targets, and a range-based spread estimator prices them as free
+
+**From [D329 section 10](decisions/D329-RESULT-the-short-leg-is-specific-and-the-long-leg-is-not.md),
+2026-09-05.** Diagnostic, not pre-registered.
+
+`skew_63` -- sample skewness of the last 63 daily log returns -- is on 63
+observations a **single-jump detector**: the name it ranks first from the short
+end has a +41% day in its window and is otherwise quieter than the universe.
+**29% of its short leg's trades are in a name that leaves the tape within 60
+bars**, against 1% for the universe -- and **96% of those end within +/-5% of
+the entry price with a median daily range of 0.28%**, zero below -30%. Those
+are cash takeovers: a gap on announcement, two months pinned at the offer,
+delisting at the deal price.
+
+**Three things follow, and the second is the one that reaches back:**
+
+1. **A short earns nothing on a pinned name** -- -5.6 bp per trade gross on
+   the 297 -- and in practice cannot be put on: announced deal targets are the
+   most crowded short in the market, borrow is scarce, and the residual risk is
+   a deal break, which gaps *up* against the short.
+2. **Corwin-Schultz estimates the spread from the daily range, and a pinned
+   stock has none.** 6.2 bp on the dying names against 9.0 on the survivors.
+   **This is D326's unexplained 4.5x cost coverage, D327/D328's "cheapest names
+   in the study," and section 15's three zero-spread cells** -- one cause. A
+   range-based estimator reads the least tradeable names on the tape as the
+   cheapest.
+3. **`max_ret_21` is the same detector by construction** and inherits all of
+   it. Any short leg built on a biggest-day score does.
+
+**The edge that survives is real and it is a two-sided lottery.** The 727
+survivor trades earn +47.3 bp gross -- a genuine post-jump reversal -- but on
+the whole leg the top 1% of trades is 159% of the P&L and the bottom 1% is
+-203%; the mean (+32) is a quarter of the median (+126). The symmetric trim at
++46.8 is the honest central estimate (rule 2) and it is positive, but the book
+lives in its tails.
+
+**What a pre-registration must now carry for any jump-detecting short:** a
+declared exclusion -- no name whose window holds a single day above +X%, or an
+event-driven deal filter, which this fixture cannot supply (its event file has
+dividends and splits only) -- **and a borrow-cost term**, which no runner here
+has. Both sit beside [section 10](#10-the-book-has-no-bench-so-most-of-its-turnover-is-unpriced)'s
+unpriced turnover as costs the model does not charge.

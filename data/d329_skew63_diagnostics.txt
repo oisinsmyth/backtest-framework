@@ -1,0 +1,37 @@
+# d329_skew63_anatomy.py -- 2026-09-05
+
+WHAT THE EXTREME-RANK NAMES ARE  (medians over 3127 bars)
+bucket           max 63d day   min 63d day   skew_63  still live +60
+S0 (shorted)          +41.4%         -3.6%      6.90             61%
+S1                    +32.5%         -4.2%      5.93             75%
+L0 (longed)            +6.5%        -36.2%     -6.57             95%
+universe               +5.4%         -5.2%     -0.07             99%
+
+cross-sectional Spearman with skew_63, median over bars:
+  max_ret_21   +0.22
+  rev_21       +0.21
+  rev_5        +0.06
+  rvol21       +0.05
+  cs_spread    +0.08
+  mom_252_21   +0.06
+  price_log    -0.05
+
+
+
+# d329_skew63_short_leg.py -- 2026-09-05
+
+skew_63 SHORT leg, invariant, k=20: 1024 trades, 2c = 15.3 bp
+  mean   +32.0  median  +126.3  win 73%  skew -3.23  kurt +83.4
+  ex-top-1%   -19.0   ex-bottom-1%   +97.6   trimmed-both   +46.8
+  top 1% of trades = 159% of P&L; top 5% = 326%; bottom 1% = -203%
+
+  trades whose name is DEAD within 60 bars of entry: 297 of 1024 (29%)
+  dies within 60  n= 297  P&L/trade    -5.6  median daily range 0.29%  half-spread   6.2 bp  bars to death 24 (median)
+  survives        n= 727  P&L/trade   +47.3  median daily range 1.61%  half-spread   9.0 bp  bars to death -
+
+  for the dying names, return from entry to the last live bar:
+    median +0.4%   p25 +0.1%   p75 +1.2%
+    |return| < 5% (PINNED, deal-like): 284 of 297 (96%)  -- their short-leg P&L/trade +14.0, daily range 0.28%
+    return < -30% (COLLAPSE):           0 of 297 (0%)  -- their short-leg P&L/trade +nan, daily range nan%
+
+

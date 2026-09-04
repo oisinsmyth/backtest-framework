@@ -184,3 +184,104 @@ again — I was about to fan a 25-second job across eight processes.
 ## 9. Files
 
 `data/d329_legwise.json` · `scripts/run_d329_legwise.py`
+
+---
+
+## 10. ADDENDUM, 2026-09-05 — what `skew_63`'s short leg actually shorts, and 29% of it is a takeover target pinned at the deal price
+
+Appended after two diagnostics run on the question "where does `skew_63`'s
+edge come from" (`scripts/d329_skew63_anatomy.py`,
+`scripts/d329_skew63_short_leg.py`, outputs in
+`data/d329_skew63_diagnostics.txt`). Not pre-registered; a diagnostic of a
+result, filed as one.
+
+### 10.1 The score is a one-day jump detector
+
+`skew_63` is the sample skewness of the last 63 daily log returns. On 63
+observations the third moment is the largest single |return|. The name it
+ranks first from the short end has, at the median, a **+41.4%** single day in
+its window and a worst day of **−3.6%** — quieter than the universe's −5.2%.
+The name it ranks first from the long end has a **−36.2%** day. Both extremes
+are "the stock that gapped last quarter."
+
+### 10.2 The shorted names are delisting-adjacent — and they are DEALS, not collapses
+
+| | still live 60 bars later |
+|---|--:|
+| rank 0 from the short end | **61%** |
+| rank 1 | 75% |
+| universe | 99% |
+
+**297 of the short leg's 1,024 trades at k=20 (29%) are in a name that leaves
+the tape within 60 bars.** For those, the return from entry to the last live
+bar: median **+0.4%**, p25 +0.1%, p75 +1.2%. **284 of 297 (96%) end within
+±5% of where they were shorted. Zero end below −30%.** Their median daily range
+while held is **0.28%** against 1.61% for the survivors.
+
+That is a cash takeover: a +40% gap on announcement, two months pinned at the
+offer, delisting at the deal price. **Not one of the 297 is a collapse.**
+
+Three consequences, in order of severity:
+
+1. **The short earns nothing on them** — −5.6 bp per trade gross across the
+   297, +14.0 on the 284 pinned ones, which is the market's drift collected by
+   being short a zero-return name in a demeaned P&L. Not edge.
+2. **They are the reason the leg looked cheap.** Corwin–Schultz estimates the
+   spread from the daily range, and a pinned stock has almost none: **6.2 bp**
+   on the dying names against 9.0 on the survivors. D326's unexplained 4.5×
+   cost coverage, D327/D328's "cheapest names in the study," and the three
+   zero-spread degenerate cells in §5 are all this. **A range-based spread
+   estimator prices a pinned takeover target as nearly free to trade.**
+3. **They are the names a short cannot actually be put on.** Announced deal
+   targets are the most crowded shorts in the market (merger arbitrage), borrow
+   is scarce and expensive, and the residual risk — a deal break — is a gap
+   *up* against the short. None of that is in the cost model, which charges
+   6.2 bp.
+
+### 10.3 The edge that remains is in the survivors, and it is a two-sided lottery
+
+The 727 trades whose name survives earn **+47.3 bp per trade gross** — a real
+post-jump reversal in names that gapped +30–40% and stayed listed. But
+reporting rule 2 on the whole leg:
+
+```
+mean +32.0   median +126.3   win 73%   skew -3.23   kurtosis +83.4
+ex-top-1%  -19.0     ex-bottom-1%  +97.6     trimmed-both  +46.8
+top 1% of trades = 159% of P&L    top 5% = 326%    bottom 1% = -203%
+```
+
+**The mean is a quarter of the median** — the tell that a tail is doing the
+work, and here it is *both* tails. Ten trades make 159% of the P&L and ten
+lose 203%; the bottom 1% for a short leg is the squeezes. The symmetric trim
+at **+46.8** is the honest central number (CLAUDE.md: dropping only winners is
+a flag, not a verdict), and it is positive — but the book will live in its
+tails, and 29% of its trades are in names it cannot borrow.
+
+### 10.4 What this does to §1–§6
+
+- **§3's "skew_63 owns the short leg, first of 44" stands as measured** and
+  is now explained: it owns it because it is the best jump detector in the
+  set, and the enumeration control shares the cost model's blind spot, so the
+  ranking is fair among the 44 and mis-costed for all of them.
+- **§1's +63.26 per trade and 120 bp round trip are overstated** by whatever a
+  borrow-cost model would charge on the 29%. Not quantified here; the record
+  does not promote and this is a further reason it should not.
+- **The construction finding stands** — leg ownership is real and exact —
+  and the specific short leg needs a filter that a pre-registration must
+  declare: *no name whose window contains a single day above +X%*, or an
+  event-driven exclusion of announced deals, which this fixture cannot supply
+  (its event file carries dividends and splits only).
+- **`max_ret_21` carries the same signature by construction** (Spearman +0.22
+  with `skew_63`, and it *is* the biggest-day score). Any short leg built on it
+  inherits this.
+
+### 10.5 Two errors in my own diagnostics, for the record
+
+The first anatomy script reduced a 414M-element rolling window along a 12 KB
+stride and was killed at ten minutes; transposed so the window axis is
+contiguous it takes one second. The second re-read `z["skew_63"]` from the
+compressed archive on every loop iteration — 12,500 decompressions of a 53 MB
+array — and took 690 s on a job that is otherwise instant. Both were inline
+`python -c` blocks rather than scratchpad scripts, which is the habit CLAUDE.md's
+"Write tool over long heredocs" exists to stop, and both ran in the foreground
+past the two-minute rule. The committed scripts have neither defect.
