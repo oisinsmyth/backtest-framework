@@ -183,3 +183,106 @@ ran it, so the ρ is over the **five** signals D327's Q5 used, asserted to be fi
 ## 8. Files
 
 `data/d328_profile_at_depth.json` · `scripts/run_d328_profile_at_depth.py`
+
+---
+
+## 9. CORRECTION, 2026-09-04 — the first run scored the WRONG QUANTITY, and §1–§2 above are largely artefact
+
+Appended, not edited. §1–§7 stand as the record of what was reported.
+
+**`fwd_demeaned`, inherited from D327, SUMS simple daily returns over the k-bar
+window. A held position COMPOUNDS.** Neither D327 nor D328 ran the right-quantity
+assertion CLAUDE.md requires of every runner, and on the bouncy $8 names at the
+extremes the two quantities differ by up to **112 bp** at k=20. The runner now
+scores `prod(1+r) − 1`, asserts it differs from the summed grid (`[RQ]`), keeps
+`[1]` on the summed quantity so it still reproduces D327 exactly, and writes to
+`data/d328b_profile_at_depth_compounded.json`. The first run's file is kept.
+
+**A second defect was in my analysis, not the runner.** D326's
+`net_per_trade = gross − two_c`, so a D326 "trade" is one **name**. §2 compared
+a two-leg pair spread to a one-leg gross — a factor of ~2 before anything else.
+
+### 9.1 What the compounded profile shows, k=20
+
+| signal | L0 | L1 | L2-3 | MID | S2-3 | S1 | S0 | rank-0/1 spread | t(L0) |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| hist_L | +210 | +205 | +180 | −2 | −20 | −27 | **−91** | +267 | +2.96 |
+| retrace_leg | +112 | +17 | +49 | +9 | −11 | −69 | +19 | +89 | +2.74 |
+| skew_63 | −47 | +20 | −30 | +8 | +89 | −41 | −98 | +56 | −1.14 |
+| rsi | +57 | +75 | +156 | +6 | +7 | −77 | −18 | +114 | +1.14 |
+| **macd_hist** | **−557** | −165 | −54 | +22 | −47 | −109 | **−650** | **+18** | **−12.58** |
+| price_log | +107 | +17 | +473 | −12 | −196 | −305 | −605 | +518 | +1.49 |
+
+### 9.2 What falls
+
+1. **"The lenses are inverted, ρ = −0.900."** Compounded: **ρ = 0.000.** The
+   inversion was the summing artefact, largest in the highest-vol names. The
+   lenses are not inverted; they are **uncorrelated**. Q6 still fails and D329
+   still does not run — but §1's framing is withdrawn.
+2. **§2's "unrealised ratio", ρ = −1.000, and the price-deviation hypothesis
+   built on it (§7.2, and FINDINGS §14 as first written).** Both defects stacked.
+   Properly scaled and compounded, per-leg rank-0/1 edge against D326 per-name
+   gross is hist_L 1.42, rsi 0.74, retrace_leg 0.55, skew_63 0.46, macd_hist
+   0.21 — **four of five books realise MORE per name than the snapshot**. There
+   is no unrealised-ratio phenomenon. Withdrawn entirely, including the proposed
+   test on D290's 51 signals.
+3. **Q5, and D327 §2.** `hist_L`'s short end is **−91 bp** compounded, not +21.
+   The names it shorts **fall**. "The incumbent's short leg is actively harmful"
+   was the summing artefact on $8 names; **Q5 is FALSIFIED** and D327 §2 is
+   superseded.
+4. **§1's "1.1× to 8.8× larger at rank 0–1."** Compounded it is mixed: hist_L
+   4.1×, retrace_leg 2.3×, rsi 1.3×, `price_log` **0.33×** — its rank-0 names
+   are sub-$1 and dominated by bounce; its tilt sits at ranks 2–3 (+473). Q2 is
+   falsified on three signals, not one.
+5. **The flat-per-bar diagnostic (§5.4)** is narrower than stated. `macd_hist`
+   is still flat (−23.7, −27.9, −24.0 per bar). `price_log` at L0 is **not**
+   (7.4, 5.4, 2.1) for the same sub-$1 reason. It separates `macd_hist` from the
+   four signals; it is not a general instrument.
+6. **Assertion `[5]` as pre-registered** — "the t must fall when the sample is
+   halved" — **fired on the compounded run**: hist_L's rank-0 t is 2.96 full and
+   **3.00 on the first half alone**. That asserted a property of the data, the
+   third time that shape of error has appeared here (D324 `[S]`, D327 `[1]`).
+   Replaced with the code property it was reaching for: MID has 991,600
+   name-bars over 3,187 bars and L0 exactly one per bar. The halving stays as a
+   printed diagnostic — **first-half concentration is itself a finding**
+   (FINDINGS §6).
+
+### 9.3 What stands, and is now cleaner
+
+1. **`macd_hist` is dimensional and its extremes rank price** — a code fact and
+   a price measurement, untouched by the return quantity. Compounded, it is the
+   cleanest demonstration this programme has: **−557 at one end, −650 at the
+   other, spread +18.** The price effect cancels almost exactly between the legs,
+   and what is left is nothing, carrying 146 bp of round trip.
+2. **The ∪ / ∩ shape, the independence-not-correlation point, and the mechanism:
+   return cancels between the legs, cost adds across them.** All price and
+   spread measurements. §3 stands.
+3. **`hist_L`'s extremes are $8–10 names at 4× its own middle's spread.** Stands.
+4. **Resolution was not the explanation for D327's Q5.** ρ moved −0.200 → 0.000,
+   still nowhere near +0.7. Stands.
+5. **`hist_L` is a real, short-lived signal**: rank-0 edge +201 (k=10), +210
+   (k=20), **+80 (k=40, t=0.84)**. The summed version showed +298 at k=40 and
+   hid the reversal.
+
+### 9.4 The statistic for price-independence, mechanism-derived
+
+Since the book trades the two ends, decompose their prices against the **live
+universe median** ($30.7), not the profile's own middle — `macd_hist`'s middle is
+its cheap tail. Common mode is the symmetric tilt (cost without return);
+differential is the factor bet. Measured on the cost channel directly:
+
+```
+common-mode half-spread at the ends, x universe median 14.2 bp
+   hist_L 2.91   macd_hist 2.22  |  retrace_leg 1.17   skew_63 0.83   rsi 0.82
+```
+
+**A threshold near 2× separates the two losing books from the three winners.**
+It is a separation on n=5, not a ranking, and the ordering within either group
+is noise. Neither a rank–price correlation (passes a ∪) nor a local-neighbour
+deviation (passes a *smooth* ∪, which `macd_hist`'s is) can see it.
+
+## 10. Files, amended
+
+`data/d328b_profile_at_depth_compounded.json` (the result) ·
+`data/d328_profile_at_depth.json` (the first run, superseded, kept) ·
+`scripts/run_d328_profile_at_depth.py` (`--summed` reproduces the first run)

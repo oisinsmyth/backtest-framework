@@ -184,3 +184,23 @@ resolution, **+21 bp** at rank 0 from the short end.
 See
 [D328 RESULT](D328-RESULT-the-lenses-are-inverted-and-two-signals-rank-price.md)
 and [FINDINGS §14](../FINDINGS.md#14-a-cross-sectional-ranking-on-a-quantity-that-carries-units-ranks-those-units).
+
+## 13. SECOND AMENDMENT, same day — §2 does NOT survive; this study scored the wrong quantity
+
+`fwd_demeaned` **sums** simple daily returns over the k-bar window. A held
+position compounds. This runner has no right-quantity assertion, and on the $8
+names at `hist_L`'s short extreme the two differ by **112 bp** at k=20.
+
+**Compounded, `hist_L`'s short end is −91 bp, not +21.** The names it shorts
+fall. §2 — "the short leg is ACTIVELY HARMFUL", "a good long signal paired with a
+short leg that gives most of it back", "D283's finding arriving inside the
+incumbent's own primary" — **is the summing artefact and is withdrawn.** §8.2
+with it. Assertion `[1]`'s "bucket 19 is POSITIVE" was the same artefact seen
+at 5% resolution.
+
+**What survives of this record:** Q2 (no monotone profile), the cost profile in
+§5, and the `price_log` control's shape. **The return numbers in §1 are the
+summed quantity and should not be quoted**; D328 §9.1 has the compounded ones.
+The runner is left as it ran — its data file is evidence of what was reported —
+and D328's runner carries the corrected quantity with `--summed` to reproduce
+this one.

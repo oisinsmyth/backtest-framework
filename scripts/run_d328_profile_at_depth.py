@@ -57,7 +57,11 @@ SIGNALS = P.SIGNALS
 KS = P.KS
 # log-spaced rank edges from EACH end; powers of two, not tuned
 EDGES = (0, 1, 2, 4, 8, 16, 32, 64, 128, 256)
-OUT = REPO / "data" / "d328_profile_at_depth.json"
+# The first run scored SUMMED simple returns and wrote `d328_profile_at_depth.json`.
+# That file stays as the record of what was reported. The compounded re-run --
+# the right quantity -- writes beside it, and `--summed` reproduces the first.
+OUT_SUMMED = REPO / "data" / "d328_profile_at_depth.json"
+OUT = REPO / "data" / "d328b_profile_at_depth_compounded.json"
 
 
 _E = np.asarray(EDGES)
@@ -87,13 +91,37 @@ LABELS = ([f"L{EDGES[i]}" + ("" if i == len(EDGES) - 1 else
            for i in range(len(EDGES) - 1, -1, -1)])
 
 
-def profile(z, base, finT, r1T, HALF, CLOSE, sig, k, lag=True, costs=True):
+def fwd_compounded_demeaned(r1T, finT, k):
+    """Forward k-bar COMPOUNDED return, prod(1+r) - 1, cross-sectionally demeaned.
+
+    THE RIGHT QUANTITY, AND D327/D328's FIRST RUN SCORED THE WRONG ONE. Their
+    `fwd_demeaned` SUMS simple daily returns over the window. A held position
+    compounds, and on the bouncy $8 names at hist_L's extremes the two differ by
+    60-110 bp at k=20: the short end goes from +21 (summed) to -91 (compounded),
+    which reverses D327 section 2 and D328 Q5 outright. Same window, same
+    demeaning, same masks -- only the aggregation over the k bars changes.
+    """
+    x = np.where(finT, np.log1p(np.nan_to_num(r1T, nan=0.0)), 0.0)
+    cs = np.concatenate([np.zeros((1, x.shape[1])), np.cumsum(x, axis=0)])
+    T = x.shape[0]
+    hi = np.minimum(np.arange(T) + 1 + k, T)
+    lo = np.minimum(np.arange(T) + 1, T)
+    out = np.expm1(cs[hi] - cs[lo])
+    out[~finT] = np.nan
+    m = np.nanmean(np.where(finT, out, np.nan), axis=1, keepdims=True)
+    return np.where(finT, out - m, np.nan)
+
+
+def profile(z, base, finT, r1T, HALF, CLOSE, sig, k, lag=True, costs=True,
+            compound=True):
     """Edge, t, half-spread, price and ratio by log-spaced rank bucket.
 
     IT ALSO ACCUMULATES D327's 20 EQUAL PERCENTILE BINS over the SAME name-bars,
     in the same pass and through the same `np.add.at` call D327 makes, so
     assertion [1] is a real aggregation check rather than a re-run of a separate
-    loop that happens to agree.
+    loop that happens to agree. Those bins are ALWAYS accumulated on the SUMMED
+    quantity, because that is what D327 scored and [1] proves the harness is the
+    same harness -- the scored profile is compounded unless `compound=False`.
 
     TWO EDGES ARE REPORTED AND THE DIFFERENCE IS NOT COSMETIC:
       `edge_pooled`  the name-bar mean. That is D327's statistic, and the one
@@ -104,9 +132,11 @@ def profile(z, base, finT, r1T, HALF, CLOSE, sig, k, lag=True, costs=True):
     Bucket L0 holds exactly one name per bar, so for it the two coincide.
     """
     _, cnt, pos = R.ranked(z[sig], base)
-    fwd = P.fwd_demeaned(r1T, finT, k)
+    fwd_s = P.fwd_demeaned(r1T, finT, k)            # D327's quantity, for [1]
+    fwd = fwd_compounded_demeaned(r1T, finT, k) if compound else fwd_s
     if not lag:
         fwd = np.roll(fwd, 1, axis=0)
+        fwd_s = np.roll(fwd_s, 1, axis=0)
     T = finT.shape[0]
     nb = 2 * len(EDGES) + 1
     per_bar = [[] for _ in range(nb)]               # bar means, for a real t
@@ -119,13 +149,14 @@ def profile(z, base, finT, r1T, HALF, CLOSE, sig, k, lag=True, costs=True):
         if c < 100:
             continue
         p = pos[t]
-        live = np.flatnonzero((p < c) & finT[t] & np.isfinite(fwd[t]))
+        live = np.flatnonzero((p < c) & finT[t] & np.isfinite(fwd_s[t]))
         if live.size < 100:
             continue
         f = fwd[t][live]
-        # D327's bins, its expression, its ordering -- so [1] can demand equality
+        # D327's bins, its expression, its ordering, ITS QUANTITY -- so [1] can
+        # demand equality regardless of what the profile itself scores
         q = np.minimum((p[live] * P.NB) // c, P.NB - 1)
-        np.add.at(qsum, q, f)
+        np.add.at(qsum, q, fwd_s[t][live])
         np.add.at(qcnt, q, 1)
         b = bucket_of(p[live], c)
         np.add.at(psum, b, f)
@@ -167,10 +198,16 @@ def profile(z, base, finT, r1T, HALF, CLOSE, sig, k, lag=True, costs=True):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--summed", action="store_true",
+                    help="score SUMMED simple returns, reproducing the first run")
     a = ap.parse_args()
     t0 = time.time()
+    compound = not a.summed
+    out = OUT_SUMMED if a.summed else OUT
+    prof = lambda *args, **kw: profile(*args, compound=compound, **kw)
 
-    print("D328  the profile at the depth the book trades")
+    print("D328  the profile at the depth the book trades  "
+          f"[{'COMPOUNDED' if compound else 'SUMMED -- the first run'}]")
     D.build_cache(verbose=False)
     A = D.load_cache(mmap=True)
     r1T, finT = np.asarray(A["r1T"]), np.asarray(A["finT"])
@@ -204,7 +241,7 @@ def main() -> int:
     assert mm < 1e-12, f"[3] demeaning leaves {mm:.2e}"
     print(f"    [3] the cross-sectional mean is zero to {mm:.1e} at every bar")
 
-    pr = profile(z, base, finT, r1T, HALF, CLOSE, "hist_L", 20)
+    pr = prof(z, base, finT, r1T, HALF, CLOSE, "hist_L", 20)
 
     # 1. AGGREGATION. The name-bars this study reads must be exactly the ones
     #    D327 read. Accumulating them into D327's 20 equal percentile bins, in
@@ -228,24 +265,58 @@ def main() -> int:
     print(f"    [1] AGGREGATION: the same {tot_ours:,} name-bars, and binned "
           f"D327's way they reproduce D327 to {dd:.1e} bp")
 
+    # RQ. RIGHT QUANTITY -- the compounded grid must DIFFER from the summed one
+    #     the first run scored (CLAUDE.md, runner assertion 3), and a spot check
+    #     must reproduce prod(1+r) - 1 from the raw daily series.
+    if compound:
+        ps = profile(z, base, finT, r1T, HALF, CLOSE, "hist_L", 20, costs=False,
+                     compound=False)
+        gap = np.abs(np.array(pr["edge_bp"]) - np.array(ps["edge_bp"]))
+        assert np.nanmax(gap) > 1.0, "[RQ] compounding changes nothing"
+        fc = fwd_compounded_demeaned(r1T, finT, 20)
+        t_, i_ = 2000, int(np.flatnonzero(finT[2000])[0])
+        raw = np.prod(1.0 + np.nan_to_num(r1T[2001:2021, i_], nan=0.0)) - 1.0
+        cm = np.nanmean(np.where(finT[t_], np.expm1(np.log1p(np.where(
+            finT[2001:2021], np.nan_to_num(r1T[2001:2021], nan=0.0), 0.0))
+            .sum(axis=0)), np.nan))
+        assert abs(fc[t_, i_] - (raw - cm)) < 1e-12, "[RQ] spot check fails"
+        print(f"    [RQ] RIGHT QUANTITY: compounded differs from summed by up to "
+              f"{np.nanmax(gap):.0f} bp (S0 {ps['edge_bp'][-1]:+.0f} -> "
+              f"{pr['edge_bp'][-1]:+.0f}); spot check reproduces prod(1+r)-1")
+
     # 4. CAUSALITY.
-    pk = profile(z, base, finT, r1T, HALF, CLOSE, "hist_L", 20, lag=False)
+    pk = prof(z, base, finT, r1T, HALF, CLOSE, "hist_L", 20, lag=False)
     d = np.nanmax(np.abs(np.array(pk["edge_bp"]) - np.array(pr["edge_bp"])))
     assert d > 1e-9, "[4] peeking gives the same profile"
     print(f"    [4] CAUSALITY: peeking moves the profile by up to {d:.1f} bp")
 
-    # 5. THE t IS REAL -- computed from the per-bar series, so halving the number
-    #    of BARS must cut it. A t taken over pooled name-bars would barely move,
-    #    because the name-bar count is what a wide bucket has too much of.
+    # 5. THE t IS REAL -- its sample is BARS, not name-bars.
+    #
+    #    THE PRE-REGISTERED FORM ASSERTED THAT HALVING THE SAMPLE MUST CUT THE t,
+    #    AND IT FIRED ON THE COMPOUNDED RUN: hist_L's rank-0 t is 2.96 on the
+    #    full sample and 3.00 on the first half alone. That is not a bug -- the
+    #    effect is concentrated in the first half -- and the assertion was a
+    #    property of the DATA, not of the code. Third time this shape of error
+    #    has appeared here (D324 [S], D327 [1]). The code property it was
+    #    reaching for: the series the t is computed on has one entry per BAR,
+    #    so a wide bucket's name-bar count must vastly exceed its bar count, and
+    #    L0's must equal it. The halving is kept as a printed diagnostic.
+    T_ = finT.shape[0]
+    bars, n = np.array(pr["bars"]), np.array(pr["n"])
+    assert bars[10] < T_ and n[10] > 100 * bars[10], \
+        f"[5] MID: {n[10]} name-bars over {bars[10]} bars -- the t is not per-bar"
+    assert n[0] == bars[0] and n[-1] == bars[-1], \
+        f"[5] L0/S0 hold {n[0]}/{n[-1]} name-bars over {bars[0]}/{bars[-1]} bars"
     t_full = np.array(pr["t"])[0]
     fin_half = finT.copy()
-    fin_half[finT.shape[0] // 2:] = False
-    ph = profile(z, base, fin_half, r1T, HALF, CLOSE, "hist_L", 20, costs=False)
+    fin_half[T_ // 2:] = False
+    ph = prof(z, base, fin_half, r1T, HALF, CLOSE, "hist_L", 20, costs=False)
     t_half = np.array(ph["t"])[0]
-    assert abs(t_half) < abs(t_full), \
-        f"[5] halving the sample did not cut the t: {t_full:.2f} -> {t_half:.2f}"
-    print(f"    [5] the t is computed from the per-bar series -- halving the "
-          f"sample cuts it {t_full:+.2f} -> {t_half:+.2f}")
+    print(f"    [5] the t's sample is bars: MID has {n[10]:,} name-bars over "
+          f"{bars[10]:,} bars, L0 exactly one per bar")
+    print(f"        diagnostic: hist_L rank-0 t on the full sample {t_full:+.2f}, "
+          f"on the FIRST HALF alone {t_half:+.2f}"
+          + ("  <- first-half concentrated" if abs(t_half) >= abs(t_full) else ""))
 
     # C. COST DIMENSIONS.
     r = np.array(pr["ratio"])
@@ -273,7 +344,7 @@ def main() -> int:
     res = {}
     for s in SIGNALS:
         for k in KS:
-            res[f"{s}/k{k}"] = profile(z, base, finT, r1T, HALF, CLOSE, s, k)
+            res[f"{s}/k{k}"] = prof(z, base, finT, r1T, HALF, CLOSE, s, k)
     print(f"  {len(res)} profiles ({time.time() - t0:.0f}s)")
 
     show = [0, 1, 2, 3, 4, 6, 10, 14, 16, 17, 18, 19, 20]
@@ -343,9 +414,12 @@ def main() -> int:
           "  ".join("%s %+.0f" % (s, top2(s, 20)) for s in SIGNALS))
     print("    universe median half-spread %.1f bp" % med)
 
-    OUT.write_text(json.dumps(dict(
+    out.write_text(json.dumps(dict(
         note="D328: log-spaced rank buckets. NO PATH -- never quote in bp/bar "
              "(FINDINGS section 10).",
+        quantity="compounded prod(1+r)-1" if compound else
+                 "SUMMED simple returns -- the first run's quantity, kept as "
+                 "the record of what was reported; superseded",
         edges=list(EDGES), labels=LABELS, signals=list(SIGNALS), ks=list(KS),
         profiles=res, spearman_vs_d326=rho,
         top2_spread={s: top2(s, 20) for s in SIGNALS},

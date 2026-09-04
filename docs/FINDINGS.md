@@ -930,9 +930,9 @@ macd_hist 2706    798    438    22    477   1002   3020
 ```
 
 **Both tails are the expensive names and the middle is the cheap ones.** The
-demeaned forward edge follows: **-531 bp at L0 and -723 at S0, t = -10.29 and
--9.61** -- one number, measured twice, in a book that longs one end and shorts
-the other. Its real information sits in the **middle**, at t = +9.62.
+demeaned compounded forward edge follows: **-557 bp at L0 and -650 at S0, t =
+-12.58 and -4.61 at ranks 0 and 1** -- one number, measured twice, in a book that
+longs one end and shorts the other. **Long-minus-short leaves +18 bp.**
 
 **The test is dimensional, and it is free:** before ranking a score across names,
 ask what units it carries. A price-denominated score, a dollar-volume-denominated
@@ -955,7 +955,7 @@ spread** and 3.3x the **14.2 bp** universe median -- a **volatility** tilt,
 because percentage moves are largest in the cheapest names. **Dimensionlessness
 buys you the absence of one artefact, not the absence of tilt.** The three
 signals that hold near the universe in both price and spread -- $19-27, 9.6-16.4
-bp -- are the three whose books realise their measured spread.
+bp -- are the three whose books make money.
 
 **Measure the price and the spread of what each rank bucket HOLDS**, not only
 what it returns. Section 3 of the D328 record is the worked case, and it is
@@ -1001,70 +1001,95 @@ A **symmetric** price relation pays **nothing** and costs **double**. Both legs
 carry the same price penalty, so long-minus-short differences it away exactly:
 
 ```
-macd_hist  long leg  (rank 0)   -531  =  signal  +69  +  price penalty -600
-           short leg (rank 0')  -723  =  signal -123  +  price penalty -600
-           book spread = -531 - (-723) = +192 = +69 - (-123)   <- the -600 CANCELS
+macd_hist  long leg  (rank 0)   -557  =  signal  +43  +  price penalty -600
+           short leg (rank 0')  -650  =  signal  -50  +  price penalty -600
+           book spread = -557 - (-650) = +93 = +43 - (-50)   <- the -600 CANCELS
+           averaged over ranks 0 and 1 the spread is +18
 ```
 
 The exposure was carried on both legs and collected on neither. **The spread it
 must pay does not cancel, it sums**: 2 x 32.7 + 2 x 40.2 = **146 bp** of round
-trip against a book realising **+43.7** gross per trade. `hist_L` is the same
-shape: 2 x 46.7 + 2 x 40.9 = **175 bp** against **+94**.
+trip against **+18 bp** of spread. `hist_L` is the same shape: 2 x 46.7 +
+2 x 40.9 = **175 bp** against a book realising **+94** gross per name.
 
 **A symmetric tilt is the worst available structure -- all of the cost, none of
-the return.** And note what it does to the reading of `macd_hist`: its +192
-spread is NOT the price effect, which cancelled. It is a genuine weak signal
-buried under 146 bp of cost the construction dragged in with it.
+the return.** `macd_hist` at its extremes is, once compounded, **nothing at all**
+carrying 146 bp of cost. Whatever information it holds is in the middle of its
+ranking (t = +9.6 there), where a composite's 25-name gate compresses the price
+dispersion that its full-cross-section extremes sort on.
 
-### The open question this leaves
+### The return quantity must be COMPOUNDED, and two studies scored the sum
 
-**The depth-free extreme-rank edge and the per-trade book measurement are
-ANTI-correlated on this programme, rho = -0.900 over five signals**, and
-sharpening the resolution from D327's 20 percentile bins to single ranks made it
-*worse* (-0.200 -> -0.900). What orders the books perfectly, at **rho = -1.000**,
-is the fraction of the depth-free spread each signal **fails to realise** --
-2.92x and 2.76x for the two losing books, 1.09x to 1.22x for the three winners.
+D327 and the first run of D328 summed simple daily returns over the k-bar
+window. A held position compounds. On the bouncy $8 names at the extremes the
+two differ by **up to 112 bp at k=20**, always in the direction of flattering
+the sum, and largest exactly where the price tilt is largest. Three findings
+were the artefact:
 
-**Persistence was the obvious candidate and it is measured WRONG.** The
-path-invariant book holds 5.9 to 13.9 names per bar rather than 2, so a name that
-enters rank 0-1 and stays should pay one round trip over a long run. It does not
-order anything: **rho(unrealised, trade count) = -0.400** and **rho(unrealised,
-holding run) = +0.000**.
+- **"`hist_L`'s short leg is actively harmful"** (D327 section 2, D328 Q5):
+  +21 summed, **-91 compounded**. The names it shorts fall. Withdrawn.
+- **"The lenses are inverted, rho = -0.900"**: compounded, **rho = 0.000**.
+  The depth-free extreme-rank edge and the per-trade book are *uncorrelated*
+  on these five signals, not opposed. Withdrawn.
+- **"The unrealised ratio orders the books perfectly, and price deviation
+  orders the unrealised ratio"**: the sum artefact stacked on a scale error --
+  a two-leg pair spread compared to D326's one-name gross. Properly scaled and
+  compounded, four of five books realise MORE per name than the snapshot.
+  **Withdrawn entirely, including the proposed test on D290's 51 signals.**
 
-**What orders it perfectly is how far the rank-0 names sit from the universe in
-PRICE** -- read with the shape caveat above, since it is a *symmetric* deviation
-that is fatal and a monotone one that is not:
+**CLAUDE.md's right-quantity assertion exists for this.** Neither runner had it.
+D328's now asserts the compounded grid differs from the summed one, keeps the
+summed one only to reproduce D327 bit-for-bit, and the first run's data file is
+kept as evidence of what was reported.
 
-```
-                macd_hist  hist_L    rsi   skew_63  retrace_leg
-|log dev|            4.82    1.43   0.66      0.58         0.40
-unrealised           2.92    2.76   1.22      1.22         1.09
-```
+### What the per-bar edge across horizons can and cannot say
 
-**rho = +1.000, five of five** -- and the same five order D326's net per trade at
-rho = -1.000. **The two constructions whose extremes sit furthest from the
-universe in price are the two losing books.**
-
-**This is a hypothesis, not a result, and it must not be cited as one.** It is
-five points, the measure was chosen after seeing them, and a perfect Spearman on
-n=5 is p = 0.017 two-sided at best. **It needs a pre-registered test on D290's 51
-signals**, where the price deviation at rank 0 is computable before any book is
-run and can therefore be a genuine out-of-these-five prediction.
-
-**The supporting diagnostic is cleaner and is a result.** Edge per bar at rank 0
-across k = 10, 20, 40 separates a forecast from a standing tilt:
+Edge per bar at rank 0, compounded, across k = 10, 20, 40:
 
 ```
               k=10    k=20    k=40
-macd_hist    -20.0   -26.6   -26.5   <- CONSTANT: a static tilt, not a forecast
-price_log    +18.5   +19.4   +17.4   <- CONSTANT: the known-bad control, as designed
-hist_L       +22.4   +13.6    +7.4      decaying: a real signal with a short life
-rsi          +13.9    +3.6    +3.5      decaying
-retrace_leg  +11.0    +5.6    -0.6      decaying
-skew_63       +5.8    -1.9    -4.8      decaying
+macd_hist    -23.7   -27.9   -24.0   <- CONSTANT: a standing tilt, not a forecast
+hist_L       +20.1   +10.5    +2.0      decaying: real, and reversing by k=40
+retrace_leg   +9.9    +5.6    -2.2      decaying
+rsi          +13.1    +2.9    +3.2      decaying
+skew_63       +5.1    -2.4    -4.8      decaying
+price_log     +7.4    +5.4    +2.1      NOT flat at rank 0 -- sub-$1 bounce
 ```
 
-**A constant per-bar edge at a fixed rank is the signature of a standing tilt**:
-the same names sit there day after day drifting at a constant rate, and nothing
-is being forecast. `macd_hist` matches the known-bad control and not the four
-signals. **Run this before trusting any extreme-rank edge.**
+A constant per-bar edge at a fixed rank means the same names sit there day after
+day drifting at a constant rate. **It separates `macd_hist` from the four
+signals.** It is **not** a general instrument: the known-bad control's rank-0
+names are sub-$1 and dominated by bounce, and its tilt shows at ranks 2-3
+(+473 bp at k=20), not rank 0.
+
+### What the depth-free lens has established, and what it has not
+
+**Established:** which constructions rank price at the depth the book trades,
+what those names cost, and why a symmetric tilt cannot pay. All of that is
+measured on price and spread, and none of it moved when the return quantity was
+corrected.
+
+**Not established:** any relation between a signal's extreme-rank *return* edge
+and its book. rho = 0.000 on five signals is a clean null and a small sample.
+The lens that says what the #1 name returns has so far said nothing about which
+book makes money; the things that separate the books are the tilt structure and
+the cost, which are not return measurements. **D329 -- a composite predicted
+from single-signal profiles -- does not run on this basis.**
+
+### The statistic for price-independence, derived from the mechanism
+
+The book trades the two ends, so decompose their prices against the **live
+universe median** ($30.7) -- never the profile's own middle, which for
+`macd_hist` is its cheap tail. The **common mode** is the symmetric tilt, cost
+without return; the **differential** is the factor bet. Measured directly on the
+cost channel:
+
+```
+common-mode half-spread at ranks 0-1, both ends, x the 14.2 bp universe median
+   hist_L 2.91   macd_hist 2.22   |   retrace_leg 1.17   skew_63 0.83   rsi 0.82
+```
+
+**A threshold near 2x separates the two losing books from the three winners.**
+On n=5 that is a separation, not a ranking; ordering within either group is
+noise. Neither a rank-price correlation (blind to a U) nor a deviation from
+neighbouring buckets (blind to a *smooth* U, which `macd_hist`'s is) can see it.
