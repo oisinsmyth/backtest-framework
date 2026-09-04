@@ -1143,3 +1143,63 @@ common-mode half-spread at ranks 0-1, both ends, x the 14.2 bp universe median
 On n=5 that is a separation, not a ranking; ordering within either group is
 noise. Neither a rank-price correlation (blind to a U) nor a deviation from
 neighbouring buckets (blind to a *smooth* U, which `macd_hist`'s is) can see it.
+
+## 15. A signal can own ONE leg, and the two legs of a spread book need not come from the same signal
+
+**From [D329](decisions/D329-RESULT-the-short-leg-is-specific-and-the-long-leg-is-not.md),
+2026-09-04.**
+
+Every composite before D329 re-ranked one gate symmetrically. D329 handed the
+long leg to `hist_L` and the short leg to `skew_63`. **The simulator processes
+the two sides independently, so the leg-wise book is bit-identically the union
+of its parents' legs in both lenses** -- per-leg additivity is an assertion,
+not a finding, and everything that is a sum over trades composes exactly. What
+does not compose is the book's path, and the partner enumeration.
+
+At the operating point, k=20, on both lenses:
+
+```
+                     invariant net/trade    variant net Sharpe    round trip
+hist_L symmetric              -0.89              -0.082              189.9
+skew_63 symmetric            +44.83              +0.421               32.3
+hist_L long / skew_63 short  +63.26              +0.434              120.0
+the reverse pairing          -29.63              -0.062              102.3
+```
+
+**It beats both parents on both lenses at k=20 and k=40, and loses to
+`skew_63` at k=10.** Every pre-registered "every k" form failed on that one
+cell, and the record says so rather than re-cutting the claim.
+
+### The short leg is SPECIFIC; the long leg is not
+
+`hist_L`-long was paired with each of 44 costable partners short: **`skew_63`
+is first of 44 on both lenses, above the control's p95 on both** (+63.26
+against p50 +5.47 / p95 +54.82; Sharpe +0.434 against +0.099 / +0.362). Then
+each of 45 costable partners long was paired with `skew_63`-short: **`hist_L`
+is fifth per trade and fourteenth as a book.** Its long leg has the highest
+gross per trade of any leg measured here, +201.7, and pays 52.3 bp a name for
+it in $10.8 stocks. Thirteen cheaper long legs make a better book on top of
+`skew_63`'s short.
+
+**The construction is real; the long-leg choice is open**, and having seen all
+45, any choice from that table is post-hoc. It needs its own pre-registration
+from the profile side.
+
+### The rebalancing premium per TRADE is a third of the rank-0 snapshot's
+
+D328 section 11 put it at +78 / -85 bp on `hist_L`'s legs from a fixed-window
+rank-0 profile; per trade it is **+23.5 / -45.9**. The profile counts a
+persistent name once per bar it sits at rank 0, the ledger once per entry, so
+**the premium concentrates in the persistent names.** Every leg has the
+predicted sign. `hist_L`'s short leg nets **-98.4 per trade**, the worst leg in
+the study; `skew_63`'s short leg is the cheapest at 7.7 bp and still pays
+-23.5 -- cheap is not un-bouncy.
+
+### A leg the cost model cannot price is not a free leg
+
+Three enumeration cells -- `cs_spread`'s long leg, `on_share`'s and
+`dist_52w_high`'s short legs -- select names whose held median Corwin-Schultz
+half-spread is exactly **zero**, and D322's breakeven divides by it. That is
+D302's clamp arriving as a blind spot. They are recorded as degenerate and
+excluded, with the count beside every rank. Until the spread estimator's zero
+clamp is fixed, any partner whose leg lands there is unscoreable.
