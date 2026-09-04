@@ -3,6 +3,55 @@
 **What each layer actually contributed, which contributions are measurable, and
 where the next one should go.** Written 2026-09-04, after D315a.
 
+> ## CORRECTION, 2026-09-04, same day — §3 applied the wrong bar
+>
+> **The principal challenged §3's "decoration" verdict: the standard here is
+> beating your own pre-registered matched null, with an out-of-sample test as a
+> separate later gate. That is correct and §3 did not apply it.** §3 invented a
+> *paired difference between books*, applied it retrospectively to components
+> that were never scored that way, and read every non-significant result as a
+> null result. Two things are wrong with that.
+>
+> **1. The paired test is structurally blind at the operating point.** Minimum
+> detectable effect, against a book whose entire net is **+4.37 bp/bar**:
+>
+> | comparison | diff | t | **MDE** | 95% CI |
+> |---|--:|--:|--:|---|
+> | the target, at N_eff = 2 | +1.56 | +0.17 | **18.3** | [−16.3, +19.4] |
+> | `hard` vs `exp`, at N_eff = 2 | +3.84 | +0.70 | **11.0** | [−6.9, +14.6] |
+>
+> **The MDE is 2.5× to 4.2× the whole book's net.** No component that could
+> exist would register. Those `t` values are a statement about the test's
+> resolution, not about the components. **Absence of evidence, read as evidence
+> of absence.**
+>
+> **2. The components DID clear the programme's standard, and §3 omitted it.**
+>
+> | component | its own matched null | study |
+> |---|---|---|
+> | the confluence signal | min z **+2.58** across three nulls | D293 |
+> | **the exit target** | **+4.95 bp/bar, t +2.58, p = 0.0050** vs a rate- and persistence-matched null (p50 +1.49, p95 +3.11) | **D295** |
+> | concentration | p = **0.0050** at every depth vs rank rotation | D300 |
+>
+> **The target is not decoration. It cleared the bar this programme actually
+> uses, and nothing since has overturned it** — D307 discounted its *net*
+> advantage as a round-trip measurement artefact, which is a statement about cost
+> accounting, not about the rule.
+>
+> **What genuinely closed still stands**, because those six studies failed their
+> *own pre-registered* tests rather than a bar invented afterwards: D299, D308,
+> D311, D312, D313 and D315a. **All six varied width or risk OVER TIME. None
+> removed a component already in the book.**
+>
+> **The one thing §3's test does establish** is where it has power. MDE falls to
+> **3.4–4.3 bp at N_eff = 19**, and there the target is bounded to
+> **[−3.9, +2.7]** — small. **And the resolution limit is itself the finding:
+> this fixture cannot separate components at the operating point, which is a
+> reason to spend the next study on a big effect rather than a refinement.** That
+> conclusion in §5 survives; the route §3 took to it does not.
+>
+> §3 is left standing below, uncorrected in place, so the error is legible.
+
 Every number here names its study. Companion to
 [FINDINGS.md](FINDINGS.md) (substantive results) and
 [decisions/](decisions/README.md) (one call each).

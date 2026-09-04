@@ -59,9 +59,18 @@ def series(A, G, scheme, level, rt, use_target):
 
 
 def paired(a, b, label):
+    """Paired difference AND what the test could have detected.
+
+    A |t| under 2 is NOT evidence of no effect. `se` fixes the resolution, and
+    `mde` -- the smallest true difference this test would call significant -- is
+    the number that says whether a non-result means anything. Reporting t alone
+    is how absence of evidence gets read as evidence of absence.
+    """
     d = a - b
-    t = float(d.mean() / (d.std(ddof=1) / np.sqrt(d.size)))
-    return dict(label=label, diff=float(d.mean()), t=t,
+    se = float(d.std(ddof=1) / np.sqrt(d.size))
+    m = float(d.mean())
+    return dict(label=label, diff=m, se=se, t=m / se, mde=2.0 * se,
+                ci_lo=m - 1.96 * se, ci_hi=m + 1.96 * se,
                 corr=float(np.corrcoef(a, b)[0, 1]), win=float((d > 0).mean()))
 
 
@@ -85,27 +94,46 @@ def main() -> int:
 
     rows = []
     print("1. HARD minus EXP at the same N_eff, `none` family")
-    print("%6s %10s %10s %10s %8s %8s %9s" % (
-        "N_eff", "hard net", "exp net", "diff", "t", "corr", "win rate"))
-    print("-" * 66)
+    print("%6s %10s %10s %10s %7s %7s %19s" % (
+        "N_eff", "hard net", "exp net", "diff", "t", "MDE", "95% CI"))
+    print("-" * 74)
     for n in WIDTHS:
         a, b = S[("none", "hard", n)], S[("none", "exp", n)]
         r = paired(a, b, f"hard{n}-exp{n}")
         rows.append(r)
-        print("%6d %+10.2f %+10.2f %+10.3f %+8.2f %8.4f %8.1f%%" % (
-            n, a.mean(), b.mean(), r["diff"], r["t"], r["corr"], 100 * r["win"]))
+        print("%6d %+10.2f %+10.2f %+10.3f %+7.2f %7.1f  [%+7.1f, %+7.1f]" % (
+            n, a.mean(), b.mean(), r["diff"], r["t"], r["mde"],
+            r["ci_lo"], r["ci_hi"]))
 
     print("\n2. THE TARGET's contribution, paired, at each width and shape")
-    print("%6s %8s %10s %8s %8s" % ("N_eff", "scheme", "diff", "t", "win rate"))
-    print("-" * 46)
+    print("%6s %8s %10s %7s %7s %19s" % (
+        "N_eff", "scheme", "diff", "t", "MDE", "95% CI"))
+    print("-" * 62)
     tg = []
     for sch in ("hard", "exp"):
         for n in WIDTHS:
             r = paired(S[("target", sch, n)], S[("none", sch, n)],
                        f"target-none/{sch}{n}")
             tg.append(r)
-            print("%6d %8s %+10.3f %+8.2f %8.1f%%" % (
-                n, sch, r["diff"], r["t"], 100 * r["win"]))
+            print("%6d %8s %+10.3f %+7.2f %7.1f  [%+7.1f, %+7.1f]" % (
+                n, sch, r["diff"], r["t"], r["mde"], r["ci_lo"], r["ci_hi"]))
+
+    # THE POWER QUESTION, and it is the one that decides how to read section 2.
+    base = S[("none", "exp", 2)].mean()
+    print("\n3. WHAT COULD THIS TEST HAVE DETECTED? The book's own net is "
+          "%+.2f bp/bar." % base)
+    print("   %-22s %9s %9s %11s" % (
+        "comparison", "MDE", "vs book", "verdict"))
+    print("   " + "-" * 56)
+    for r in [x for x in rows if x["label"] == "hard2-exp2"] + \
+             [x for x in tg if x["label"] == "target-none/exp2"]:
+        ratio = r["mde"] / abs(base)
+        print("   %-22s %9.1f %8.1fx %11s" % (
+            r["label"], r["mde"], ratio,
+            "BLIND" if ratio > 1.0 else "usable"))
+    print("\n   An MDE larger than the entire book's net means NO component that")
+    print("   could exist would register. A |t| under 2 here is a statement")
+    print("   about this test's resolution, NOT about the component.")
 
     best = max(rows, key=lambda r: r["diff"])
     print("\n  largest shape gain: %s at %+.3f bp/bar, t = %+.2f"
