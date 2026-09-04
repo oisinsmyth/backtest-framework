@@ -1246,3 +1246,38 @@ event-driven deal filter, which this fixture cannot supply (its event file has
 dividends and splits only) -- **and a borrow-cost term**, which no runner here
 has. Both sit beside [section 10](#10-the-book-has-no-bench-so-most-of-its-turnover-is-unpriced)'s
 unpriced turnover as costs the model does not charge.
+
+### Where the pinned names are, mapped across all 46 signals (D330 A)
+
+**Short legs: median 1.5% pinned. `skew_63` is 21%**, the next signal 12%,
+and `hist_L` 1.2%. The artefact on the short side is one signal's.
+
+**Long legs: every volatility score is 24-35% pinned** -- `atr_norm` 35%,
+`park_vol_21` 34%, `rvol21` 31%, `ivol_21` 31%, `max_ret_21` 29%,
+`range_frac` 29% -- **and their surviving names carry a held half-spread of
+exactly 0.0.** The lowest-volatility name on the tape is a stock pinned at a
+deal price, so the "quiet" end of any vol ranking selects takeover targets
+almost by definition. Those legs net -45 to -60 per trade. **Axis E's long
+side was never a book, and every D290 reading of it is a reading of deals.**
+
+**Collapses -- the short edge a dead-inclusive fixture exists to include --
+are 0-4% of trades, pay +1,300 to +3,500 each, and sit in the high-vol short
+legs.** `skew_63` has none.
+
+### The tape cannot separate a deal from a reversal (D330 B)
+
+A causal filter -- a +20% day between 5 and 63 bars ago and a median 5-bar
+range under 0.75%, acting on the score so the removed name is replaced --
+**catches 71% of the pinned trades and removes 39% of the survivors.** "A jump,
+then quiet" is the signature of a pinned deal and of a post-jump reversal
+candidate that has calmed, and on price and range alone they are the same
+object. The filtered `skew_63` short leg nets **-8.0** per trade at an honest
+11.1 bp; the unfiltered one +16.6 at a fictitious 7.7.
+
+**So the leg-wise book's number is a bound**: net per trade **+51.05 to
++63.26**, Sharpe **+0.224 to +0.434** -- and it beats both parents at either
+end, which is what says leg ownership was not the artefact. **`skew_63`'s short
+leg is unresolved, not retired**: the filter's bluntness confounds the
+separability test, and only a deal-event source can settle it. Until one
+exists, no short leg built on a jump detector can be costed honestly on this
+fixture.

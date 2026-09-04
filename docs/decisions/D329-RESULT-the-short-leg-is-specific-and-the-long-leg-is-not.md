@@ -275,6 +275,16 @@ tails, and 29% of its trades are in names it cannot borrow.
   with `skew_63`, and it *is* the biggest-day score). Any short leg built on it
   inherits this.
 
+### 10.4a AMENDMENT, 2026-09-05 — §1's +63.26 is the top of a bound
+
+D330 B applied a causal pinned-name filter to `skew_63`'s short leg. It
+caught 71% of the pinned trades and also removed 39% of the survivors, so the
+filtered book is *over*-filtered and the unfiltered one is deal-contaminated.
+**The honest per-trade number for LW at k=20 is between +51.05 and +63.26, and
+its net Sharpe between +0.224 and +0.434.** At either end it beats both
+parents, so §3's leg-ownership finding stands; §1's point estimate does not.
+See [D330 RESULT](D330-RESULT-the-tape-cannot-separate-deals-from-reversals.md).
+
 ### 10.5 Two errors in my own diagnostics, for the record
 
 The first anatomy script reduced a 414M-element rolling window along a 12 KB
