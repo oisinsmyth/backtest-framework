@@ -20,7 +20,7 @@ signal        the D293 confluence          min z +2.58 across three nulls
 construction  factor-neutral spread        removes -mu - sigma^2          (D285)
 width         N_eff = 2, FIXED             +21 bp over N=19, basis-immune (D300)
 exit          the target, or nothing       +0.69 bp/bar, and only at N <= 3
-overlay       OUT at this width            -3.37 bp/bar at N=2 -- but see D319
+overlay       CLOSED at this width         negative at all 12 thresholds (D319)
 ```
 
 **Charged its own held-name spread and IBKR per-share commission (D318):**
@@ -132,14 +132,18 @@ about the component.
 
 ## 5. Next
 
-**D319 — the overlay at concentration, pre-registered and running first.** The
-overlay is the largest Sharpe effect this programme has produced and it is ruled
-out at the operating point by **a single cell at a single threshold**. Its trigger
-is `drawdown >= X × trailing_vol(book)`, and D312 measured that denominator as
-**noise at N_eff = 2 (ρ = −0.016) and usable at N=19 (+0.347)** — a named
-mechanism for why it fails there, and D313 has already measured a replacement.
+**D319 ran and CLOSED the overlay at this width.** Swept across D297's own twelve
+thresholds, the overlay is negative on gross Sharpe at **every** X at N_eff = 2,
+while D297's hump reproduces exactly at N = 19 (peak +0.212 at X = 12, giving
+0.724 against D297's published 0.728). **D306's single cell was not a threshold
+artefact.** And my mechanism hypothesis was wrong: replacing the noisy own-book
+denominator with D313's universe predictor made it **worse at every width**.
+Nothing survives BH over 144 cells. **The largest Sharpe effect this programme has
+produced is unavailable where the book actually runs** — and D297's +0.728 was a
+*gross* Sharpe on a book netting **−15.51**, so the overlay has never operated on
+a profitable book.
 
-**Then B — the tilt filters.** D304's unrun study. Held names cost **26.31 bp**
+**Next: B — the tilt filters.** D304's unrun study. Held names cost **26.31 bp**
 half-spread against the universe's **13.20**; concentration alone already moved
 held price **$23.72 → $75.95**. Mandatory: a price-matched control (D284 died of
 discovering the price level) and a persistence-matched random exclusion (a per-bar
