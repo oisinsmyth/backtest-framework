@@ -8,6 +8,65 @@ committed before this file existed (R8).
 **No holdout testing. Holdout reads spent: 0. Programme total: 0.**
 **Nothing is promoted.**
 
+> ## CORRECTION, 2026-09-04 — every single-candidate row here was VOID, and the title is wrong
+>
+> **`rank_single` shorted the LEAST extreme names of its own gate.** `legs_rows`
+> returns the short leg as the last N finite entries in **ascending** rank, so
+> stored position 0 is the least extreme; the code assigned `arange()` in stored
+> order. D295's composite uses `v = −avg` on that leg — most extreme first — and
+> that is the convention every published result rests on.
+>
+> **D325's assertion [1b] caught it**, which is what it was written for: a
+> composite whose pair is `(primary, primary)` must reproduce that primary's
+> single book, and it differed by 12 bp. Compared directly, the long leg was
+> identical and the short leg was the **exact reverse**. Fixed at `461d188`;
+> [1b] now passes at 0.0e+00 for all four singles.
+>
+> **The incumbent rows in this record are unaffected** — the composite path goes
+> through D303's `rankT` and `W.build_gate` and never touches `rank_single`.
+> **Every single-candidate row is re-run below.**
+>
+> ### The corrected leaderboard
+>
+> | candidate | as published | **corrected** | change |
+> |---|--:|--:|--:|
+> | **retrace_leg** | +0.557 | **+0.625** | +0.068 |
+> | **rsi** | +0.481 | **+0.585** | +0.104 |
+> | **macd_hist** | −0.010 | **+0.482** | **+0.492** |
+> | **skew_63** | +0.177 | **+0.467** | +0.290 |
+> | price_log | +0.116 | +0.387 | +0.271 |
+> | dist_lvn | +0.062 | +0.379 | +0.317 |
+> | hist_L | +0.262 | +0.293 | +0.031 |
+> | **rev_21** | +0.498 | **+0.207** | **−0.291** |
+> | choch_dist | +0.196 | +0.057 | −0.139 |
+> | macd_line | −0.478 | −0.266 | +0.212 |
+>
+> ### §1's headline is WITHDRAWN — the ranking does not invert
+>
+> **Spearman ρ against D290's order is +0.214, not −0.225.** The inversion was an
+> artefact of the defect. Q3 still confirms on its stated bar (ρ below +0.7, so
+> the ranking *moves*), but **"it inverts" is withdrawn** and the record's title
+> is wrong.
+>
+> ### §2 changes in the study's favour, and §3 does not change at all
+>
+> **Two candidates now beat the incumbent's +0.549: `retrace_leg` at +0.625
+> (+0.076) and `rsi` at +0.585 (+0.036).** The +0.008 tie I declined to call a
+> win is now a +0.076 margin. §2's reasoning about margins inside the noise
+> stands, but it no longer applies to `retrace_leg`.
+>
+> **§3 is untouched** — the incumbent's `k` table is composite-path only, so
+> `k = 10` beating `k = 5` by +0.12 survives unchanged, as does §4's composite
+> premium against the corrected `hist_L` (+0.549 − 0.293 = **+0.256**, against the
+> published +0.287).
+>
+> **Two cells dropped** (`price_log` at k=5 and k=10 with dv28) for producing no
+> usable book, and are named rather than silently omitted.
+>
+> **Consequences:** D324's candidate rows are void and re-run separately; **D325's
+> pre-registered composite set names `rev_21` as a leader and it is not one**, so
+> that record needs an amendment before it runs.
+
 ---
 
 ## 1. Q3 confirms emphatically — the premise was right
