@@ -1,159 +1,171 @@
 D331 EDGAR M&A-announcement pull -- coverage report
-pulled_on: 2026-09-05   runtime: 1083s   complete: True
+pulled_on: 2026-09-05   runtime: 99s   complete: True
 user_agent: BacktestFramework research script research@backtest-framework.org
-requests fetched: 6999   served from temp/edgar cache: 177
+requests fetched: 500   served from temp/edgar cache: 8489
 
 SYMBOL -> CIK RESOLUTION
   symbols total      : 1573   (dead 562, alive 1011)
-  resolved high      : 1117
-  resolved low       : 348
-  unresolved         : 108   of which dead names: 88, alive: 20
+  resolved high      : 1138
+  resolved low       : 392
+  unresolved         : 43   of which dead names: 43, alive: 0
   by method:
     company_tickers.json             943
     efts_ticker_agree                310
     ticker.txt                       174
-    None                             108
-    efts_ticker_context_dominant     33
+    efts_ticker_yearly               46
+    None                             43
+    efts_ticker_context_dominant     31
+    company_tickers.json(successor)  17
+    ticker.txt(successor)            4
     efts_ticker_agree(base)          3
     efts_ticker_bare_dominant        2
   confidence x cohort:
-    high       alive 980
-    high       dead  137
-    low        alive 11
-    low        dead  337
-    unresolved alive 20
-    unresolved dead  88
+    high       alive 997
+    high       dead  141
+    low        alive 14
+    low        dead  378
+    unresolved dead  43
+  symbols mapped to >1 CIK over time (ticker migrated between registrants): 28
+    AESI: 0001910950[2022..2024,low] -> 0001984060[2022..2026,high]
+    AGN: 0000850693[2009..2015,low] -> 0001578845[2014..2020,low]
+    ANGI: 0001491778[2011..2018,low] -> 0001705110[2017..2026,high]
+    APA: 0000006769[2009..2022,low] -> 0001841666[2021..2026,high]
+    APO: 0001411494[2010..2022,low] -> 0001858681[2021..2026,high]
+    ARCT: 0001410997[2012..2013,low] -> 0001566049[2017..2020,low] -> 0001768224[2019..2026,high]
+    BSMX: 0001551975[2011..2018,low] -> 0001698287[2017..2023,high]
+    BUD: 0001140467[2009..2017,low] -> 0001668717[2016..2026,high]
+    CATM: 0001277856[2009..2016,low] -> 0001671013[2015..2021,low]
+    CFFN: 0001074433[2009..2011,low] -> 0001490906[2009..2026,high]
+    CMLP: 0001389030[2010..2013,low] -> 0001304464[2013..2015,low]
+    CNIT: 0001350684[2010..2013,low] -> 0001552670[2012..2018,low]
+    DIS: 0001001039[2009..2019,low] -> 0001744489[2018..2026,high]
+    EEQ: 0000880285[2009..2012,low] -> 0000895728[2017..2018,low]
+    ENR: 0001096752[2009..2016,low] -> 0001632790[2015..2026,high]
+    EQGP: 0001632933[2014..2016,low] -> 0000033213[2016..2018,low]
+    ESRX: 0000885721[2009..2013,low] -> 0001532063[2012..2018,low]
+    GCI: 0000039899[2009..2014,low] -> 0001579684[2013..2019,high]
+    GOOG: 0001288776[2013..2016,low] -> 0001652044[2015..2026,high]
+    HESM: 0001619739[2016..2020,low] -> 0001789832[2019..2026,high]
+    ISBC: 0001326807[2009..2014,low] -> 0001594012[2013..2022,high]
+    LEAF: 0001584207[2012..2016,low] -> 0001365038[2018..2021,low]
+    NCNO: 0001566895[2019..2023,low] -> 0001902733[2022..2026,high]
+    PFSI: 0001568669[2012..2019,low] -> 0001745916[2018..2026,high]
+    SNR: 0001175483[2013..2015,low] -> 0001610114[2015..2021,low]
+    STE: 0000815065[2009..2016,low] -> 0001624899[2015..2019,low] -> 0001757898[2018..2026,high]
+    WMGI: 0001137861[2009..2016,low] -> 0001492658[2015..2020,low]
+    XERS: 0001346302[2017..2022,low] -> 0001867096[2021..2026,high]
+  symbols whose window is only PARTIALLY covered by mapped entities: 35
+    ANGI: uncovered [['2010-11-17', '2010-12-31']]
+    ARCT: uncovered [['2014-01-01', '2016-12-31']]
+    AT: uncovered [['2009-01-04', '2010-12-31'], ['2014-01-01', '2021-05-14']]
+    AVP: uncovered [['2009-01-04', '2014-12-31']]
+    BEL: uncovered [['2009-01-04', '2013-12-31']]
+    CHU: uncovered [['2009-01-04', '2016-01-01'], ['2023-01-01', '2026-08-26']]
+    CNIT: uncovered [['2009-01-04', '2009-12-31']]
+    CODE: uncovered [['2009-05-18', '2012-12-31']]
+    DATA: uncovered [['2019-01-01', '2019-08-19']]
+    DATE: uncovered [['2010-05-10', '2010-12-31']]
+    EEQ: uncovered [['2012-12-31', '2016-12-31']]
+    EQGP: uncovered [['2019-01-01', '2019-01-18']]
+    ESIO: uncovered [['2009-01-04', '2013-12-31'], ['2019-01-01', '2019-02-01']]
+    ETN: uncovered [['2009-01-04', '2012-06-21']]
+    FDC: uncovered [['2014-10-15', '2017-12-31']]
+    FIT: uncovered [['2020-12-31', '2021-01-14']]
+    GLA: uncovered [['2009-01-04', '2016-01-01']]
+    GSM: uncovered [['2009-01-04', '2015-05-05']]
+    ISP: uncovered [['2009-01-04', '2016-01-01']]
+    JOY: uncovered [['2009-01-04', '2009-12-31']]
+    KMR: uncovered [['2012-01-01', '2014-12-04']]
+    LEAF: uncovered [['2010-01-27', '2012-01-01'], ['2016-12-31', '2017-12-31']]
+    NKA: uncovered [['2015-01-01', '2016-07-27']]
+    NSM: uncovered [['2011-03-09', '2012-01-01']]
+    ONCE: uncovered [['2018-01-01', '2023-12-26']]
+    OPB: uncovered [['2013-04-16', '2018-12-31']]
+    OS: uncovered [['2026-01-01', '2026-08-26']]
+    PX: uncovered [['2015-01-01', '2018-10-30']]
+    SBSW: uncovered [['2012-02-12', '2019-10-03']]
+    TAOP: uncovered [['2009-01-04', '2012-06-20']]
+    TGP: uncovered [['2009-01-04', '2012-01-01']]
+    TPCO: uncovered [['2013-07-24', '2017-12-31']]
+    TRTN: uncovered [['2009-01-04', '2015-12-23']]
+    WEB: uncovered [['2014-11-10', '2016-01-01']]
+    WR: uncovered [['2019-01-01', '2026-08-26']]
 
 UNRESOLVED SYMBOLS (reason of the last candidate tried)
-  AGN    dead  2010-01-04..2020-05-08 | full-text ticker queries did not agree on a dominant entity
   AIMCV  dead  2010-01-04..2018-10-01 | full-text ticker queries did not agree on a dominant entity
-  ANGI   alive 2011-11-17..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001705110:company_tickers.json
   ANRZQ  dead  2010-01-04..2016-07-27 | full-text ticker queries did not agree on a dominant entity
-  APA    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001841666:company_tickers.json
   APL    dead  2010-01-04..2015-02-27 | full-text ticker queries did not agree on a dominant entity
-  APO    alive 2011-03-30..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001858681:company_tickers.json
-  ARCT   alive 2013-05-22..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001768224:company_tickers.json
-  ARUN   dead  2010-01-04..2015-05-18 | full-text ticker queries did not agree on a dominant entity
-  AT     dead  2010-01-04..2021-05-14 | full-text ticker queries did not agree on a dominant entity
-  AVP    dead  2010-01-04..2020-01-03 | full-text ticker queries did not agree on a dominant entity
   AVV    dead  2011-11-25..2016-11-08 | full-text ticker queries did not agree on a dominant entity
   BCF    dead  2010-01-04..2014-12-10 | full-text ticker queries did not agree on a dominant entity
-  BEL    dead  2010-01-04..2019-04-17 | full-text ticker queries did not agree on a dominant entity
-  BHI    dead  2010-01-04..2017-07-05 | full-text ticker queries did not agree on a dominant entity
-  BSMX   dead  2012-09-26..2023-07-26 | entity's earliest filing 2017-02-17 is after first_bar+365d (2013-09-26); ticker recycled? | tried 0001698287:ticker.txt, 0001698287:efts_ticker_agree
   BTTGY  dead  2010-01-04..2019-09-23 | full-text ticker queries did not agree on a dominant entity
-  BUD    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001668717:company_tickers.json
-  CATM   dead  2010-01-04..2021-06-21 | full-text ticker queries did not agree on a dominant entity
   CBG    dead  2010-01-04..2018-03-19 | full-text ticker queries did not agree on a dominant entity
-  CBI    dead  2010-01-04..2018-05-11 | full-text ticker queries did not agree on a dominant entity
-  CHU    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity
-  CIE    dead  2010-01-04..2017-12-14 | full-text ticker queries did not agree on a dominant entity
   CLNS   dead  2014-06-27..2018-06-22 | full-text ticker queries did not agree on a dominant entity
-  CMLP   dead  2011-12-16..2015-10-08 | full-text ticker queries did not agree on a dominant entity
-  CNIT   dead  2010-01-04..2018-06-04 | entity's earliest filing 2012-06-21 is after first_bar+365d (2011-01-04); ticker recycled? | tried 0001552670:efts_ticker_agree
   CNW    dead  2010-01-04..2015-10-30 | full-text ticker queries did not agree on a dominant entity
-  CODE   dead  2010-05-18..2015-03-12 | full-text ticker queries did not agree on a dominant entity
-  CORE   dead  2010-01-04..2021-09-01 | full-text ticker queries did not agree on a dominant entity
   CPV    dead  2010-01-04..2013-03-04 | full-text ticker queries did not agree on a dominant entity
   CTU    dead  2012-08-03..2018-08-31 | full-text ticker queries did not agree on a dominant entity
   CTY    dead  2013-05-24..2020-12-11 | full-text ticker queries did not agree on a dominant entity
   CTZ    dead  2015-09-22..2020-10-23 | full-text ticker queries did not agree on a dominant entity
-  DATA   dead  2013-05-17..2019-08-19 | full-text ticker queries did not agree on a dominant entity
-  DATE   dead  2011-05-10..2016-05-16 | full-text ticker queries did not agree on a dominant entity
-  DIS    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001744489:company_tickers.json
   DKT    dead  2010-01-04..2019-12-27 | full-text ticker queries did not agree on a dominant entity
   DKTCL  dead  2010-01-04..2019-12-26 | full-text ticker queries did not agree on a dominant entity
   DRUA   dead  2016-07-25..2021-08-30 | full-text ticker queries did not agree on a dominant entity
-  EEQ    dead  2010-01-04..2018-12-20 | full-text ticker queries did not agree on a dominant entity
-  ENR    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001632790:company_tickers.json
-  EQGP   dead  2015-05-12..2019-01-18 | full-text ticker queries did not agree on a dominant entity
-  ESIO   dead  2010-01-04..2019-02-01 | full-text ticker queries did not agree on a dominant entity
-  ESRX   dead  2010-01-04..2018-12-20 | full-text ticker queries did not agree on a dominant entity
-  ETN    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001551182:company_tickers.json
-  FDC    dead  2015-10-15..2019-08-05 | full-text ticker queries did not agree on a dominant entity
-  FIT    dead  2015-06-18..2021-01-14 | full-text ticker queries did not agree on a dominant entity
-  GCI    dead  2010-01-04..2019-11-19 | full-text ticker queries did not agree on a dominant entity | tried 0001579684:ticker.txt
   GEB    dead  2012-10-12..2018-02-28 | full-text ticker queries did not agree on a dominant entity
   GEK    dead  2013-05-21..2018-05-29 | full-text ticker queries did not agree on a dominant entity
-  GLA    dead  2010-01-04..2017-08-01 | full-text ticker queries did not agree on a dominant entity
-  GOOG   alive 2014-03-27..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001652044:company_tickers.json
   GSF    dead  2011-03-29..2015-10-22 | full-text ticker queries did not agree on a dominant entity
-  GSM    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001639877:company_tickers.json
   HAWKQ  dead  2010-01-04..2012-10-15 | full-text ticker queries did not agree on a dominant entity
-  HESM   alive 2017-04-05..2026-08-26 | entity's earliest filing 2019-10-04 is after first_bar+365d (2018-04-05); ticker recycled? | tried 0001789832:company_tickers.json, 0001789832:efts_ticker_agree
-  HOME   dead  2016-08-04..2021-07-27 | full-text ticker queries did not agree on a dominant entity
   HSEA   dead  2010-01-04..2018-06-01 | full-text ticker queries did not agree on a dominant entity
   HSEB   dead  2010-06-21..2018-06-01 | full-text ticker queries did not agree on a dominant entity
   IRF    dead  2010-01-04..2015-01-13 | full-text ticker queries did not agree on a dominant entity
-  ISBC   dead  2010-01-04..2022-09-16 | entity's earliest filing 2013-12-10 is after first_bar+365d (2011-01-04); ticker recycled? | tried 0001594012:ticker.txt, 0001594012:efts_ticker_agree
   ISF    dead  2010-01-04..2019-06-14 | full-text ticker queries did not agree on a dominant entity
-  ISP    dead  2010-01-04..2017-10-13 | full-text ticker queries did not agree on a dominant entity
-  JOBS   dead  2010-01-04..2022-09-08 | full-text ticker queries did not agree on a dominant entity
-  JOY    dead  2010-01-04..2017-04-13 | full-text ticker queries did not agree on a dominant entity
-  KCI    dead  2010-01-04..2012-11-12 | full-text ticker queries did not agree on a dominant entity
-  KMR    dead  2010-01-04..2014-12-04 | full-text ticker queries did not agree on a dominant entity
-  LEAF   dead  2011-01-27..2021-06-14 | full-text ticker queries did not agree on a dominant entity
   LPT    dead  2010-01-04..2020-02-03 | full-text ticker queries did not agree on a dominant entity
   MILE   dead  2020-11-09..2022-09-07 | full-text ticker queries did not agree on a dominant entity
   MINI   dead  2010-01-04..2020-07-01 | full-text ticker queries did not agree on a dominant entity
   MTU    dead  2010-01-04..2018-03-29 | full-text ticker queries did not agree on a dominant entity
-  NCNO   alive 2020-07-14..2026-08-26 | entity's earliest filing 2022-01-10 is after first_bar+365d (2021-07-14); ticker recycled? | tried 0001902733:company_tickers.json, 0001902733:efts_ticker_agree
-  NKA    dead  2010-05-11..2016-07-27 | full-text ticker queries did not agree on a dominant entity
-  NSM    dead  2012-03-08..2018-07-31 | full-text ticker queries did not agree on a dominant entity
-  OKS    dead  2010-01-04..2017-07-03 | full-text ticker queries did not agree on a dominant entity
-  ONCE   dead  2015-01-30..2023-12-26 | full-text ticker queries did not agree on a dominant entity
-  OPB    dead  2014-04-16..2020-06-01 | full-text ticker queries did not agree on a dominant entity
-  OS     alive 2024-07-24..2026-08-26 | full-text ticker queries did not agree on a dominant entity
-  PFSI   alive 2013-05-09..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001745916:company_tickers.json
   PPS    dead  2010-01-04..2016-12-08 | full-text ticker queries did not agree on a dominant entity
   PPX    dead  2013-03-18..2021-07-19 | full-text ticker queries did not agree on a dominant entity
   PSTH   dead  2020-09-11..2022-07-26 | full-text ticker queries did not agree on a dominant entity
-  PX     dead  2010-01-04..2018-10-30 | full-text ticker queries did not agree on a dominant entity | tried 0001841968:ticker.txt
-  SBSW   alive 2013-02-11..2026-08-26 | entity's earliest filing 2019-10-04 is after first_bar+365d (2014-02-11); ticker recycled? | tried 0001786909:company_tickers.json, 0001786909:efts_ticker_context_dominant
   SDOCQ  dead  2010-01-04..2016-10-12 | full-text ticker queries did not agree on a dominant entity
-  SNR    dead  2014-10-27..2021-09-21 | full-text ticker queries did not agree on a dominant entity
   SOJA   dead  2015-10-09..2020-10-19 | full-text ticker queries did not agree on a dominant entity
   SOJB   dead  2016-09-20..2021-10-15 | full-text ticker queries did not agree on a dominant entity
-  SPF    dead  2010-01-04..2015-09-30 | full-text ticker queries did not agree on a dominant entity
-  STE    alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity | tried 0001757898:company_tickers.json
+  STO    dead  2010-01-04..2018-05-16 | context query dominant but the entity's own filings never say 'symbol SYM' | tried 0001140625:efts_ticker_context_dominant
   SWU    dead  2011-05-10..2015-11-24 | full-text ticker queries did not agree on a dominant entity
-  TAOP   alive 2010-01-04..2026-08-26 | entity's earliest filing 2012-06-21 is after first_bar+365d (2011-01-04); ticker recycled? | tried 0001552670:company_tickers.json, 0001552670:efts_ticker_agree
   TFCFA  dead  2010-01-04..2019-03-20 | full-text ticker queries did not agree on a dominant entity
-  TGP    dead  2010-01-04..2022-01-12 | full-text ticker queries did not agree on a dominant entity
   TI     dead  2010-01-04..2019-08-07 | full-text ticker queries did not agree on a dominant entity
-  TPCO   dead  2014-07-24..2021-08-23 | full-text ticker queries did not agree on a dominant entity
-  TRTN   dead  2010-01-04..2023-09-27 | entity's earliest filing 2015-12-24 is after first_bar+365d (2011-01-04); ticker recycled? | tried 0001660734:ticker.txt, 0001660734:efts_ticker_agree
   TWX    dead  2010-01-04..2018-06-15 | full-text ticker queries did not agree on a dominant entity
   VIAC   dead  2010-01-04..2019-12-04 | full-text ticker queries did not agree on a dominant entity
-  WAG    dead  2010-01-04..2014-12-30 | full-text ticker queries did not agree on a dominant entity
-  WEB    dead  2015-11-10..2018-10-11 | full-text ticker queries did not agree on a dominant entity
   WFTIQ  dead  2010-01-04..2019-12-13 | entity's earliest filing 2014-04-02 is after first_bar+365d (2011-01-04); ticker recycled? | tried 0001603923:efts_ticker_agree
-  WMGI   dead  2010-01-04..2020-11-11 | full-text ticker queries did not agree on a dominant entity
   WPPGY  dead  2010-01-04..2017-11-27 | full-text ticker queries did not agree on a dominant entity
   WPXP   dead  2015-07-30..2018-07-27 | full-text ticker queries did not agree on a dominant entity
-  WR     alive 2010-01-04..2026-08-26 | full-text ticker queries did not agree on a dominant entity
-  XERS   alive 2018-06-21..2026-08-26 | entity's earliest filing 2021-07-02 is after first_bar+365d (2019-06-21); ticker recycled? | tried 0001867096:company_tickers.json, 0001867096:efts_ticker_agree
 
 DEAL FILINGS
-  symbols with >= 1 deal filing : 1271 of 1465 resolved (dead 436, alive 835)
-  total deal filings            : 24387
+  symbols with >= 1 deal filing : 1327 of 1530 resolved (dead 474, alive 853)
+  total deal filings            : 26540
   by form type:
-    425        14345
-    8-K        8389
-    SC TO-C    633
-    DEFM14A    423
-    PREM14A    277
-    SC TO-T    207
-    SC 14D9    113
-  8-K Item 1.01 hits by matched query: {'merger': 3476, 'tender': 5040, 'acquisition': 3740}
-  8-Ks with merger language but NO Item 1.01 (kept aside, not deals): 10316 across 1110 symbols
-  deal filings by year: 2009:715, 2010:732, 2011:1172, 2012:986, 2013:1712, 2014:2480, 2015:1657, 2016:1387, 2017:1189, 2018:1562, 2019:1202, 2020:1307, 2021:2408, 2022:807, 2023:1266, 2024:1465, 2025:1429, 2026:911
+    425        15995
+    8-K        8789
+    SC TO-C    659
+    DEFM14A    468
+    PREM14A    291
+    SC TO-T    218
+    SC 14D9    120
+  8-K Item 1.01 hits by matched query: {'acquisition': 3916, 'tender': 5262, 'merger': 3699}
+  8-K Item 1.01 hits by matched-query combination (a 'tender'-only hit is usually a DEBT tender):
+    tender                         2921
+    acquisition                    1585
+    merger                         1392
+    acquisition+merger+tender      1197
+    acquisition+tender             584
+    merger+tender                  560
+    acquisition+merger             550
+  8-Ks with merger language but NO Item 1.01 (kept aside, not deals): 10862 across 1162 symbols
+  deal filings by year: 2009:771, 2010:799, 2011:1250, 2012:1041, 2013:1822, 2014:2658, 2015:2010, 2016:1667, 2017:1478, 2018:1833, 2019:1394, 2020:1341, 2021:2524, 2022:812, 2023:1290, 2024:1489, 2025:1440, 2026:921
 
 TOP 20 SYMBOLS BY NUMBER OF DEAL FILINGS
+  BHI     405  Baker Hughes Holdings LLC                425=395 8-K=8 DEFM14A=2
   AAL     337  American Airlines Group Inc.             425=314 8-K=23
   AAMRQ   321  American Airlines Group Inc.             425=314 8-K=7
   AET     312  AETNA INC /PA/                           425=296 8-K=15 DEFM14A=1
   COV     294  Covidien plc                             425=287 8-K=6 DEFM14A=1
+  AGN     254  Allergan plc                             425=207 8-K=27 SC TO-C=9 SC TO-T=6 DEFM14A=3 SC 14D9=1 PREM14A=1
   TMUS    192  T-Mobile US, Inc.                        425=167 8-K=23 PREM14A=1 DEFM14A=1
   VRX     190  Bausch Health Companies Inc.             425=137 8-K=25 SC TO-C=22 SC TO-T=5 PREM14A=1
   CMCSA   174  COMCAST CORP                             425=162 8-K=12
@@ -166,54 +178,18 @@ TOP 20 SYMBOLS BY NUMBER OF DEAL FILINGS
   ETR     123  ENTERGY CORP /DE/                        425=119 8-K=4
   TRH     123  TRANSATLANTIC HOLDINGS INC               425=114 8-K=5 DEFM14A=2 SC TO-T=1 SC 14D9=1
   ECL     120  ECOLAB INC.                              425=106 8-K=14
-  KMI     115  KINDER MORGAN, INC.                      425=105 8-K=10
-  FNB     114  FNB CORP/PA/                             425=102 8-K=12
-  FMBI    110  FIRST MIDWEST BANCORP INC                425=106 8-K=3 DEFM14A=1
-  CEQP    108  Crestwood Equity Partners LP             425=74 8-K=31 DEFM14A=2 PREM14A=1
+  ESRX    118  Express Scripts Holding Co.              425=100 8-K=16 DEFM14A=2
+  CBI     115  CHICAGO BRIDGE & IRON CO N V             425=106 8-K=5 SC TO-C=1 DEFM14A=1 SC 14D9=1 SC TO-T=1
 
 ERRORS / RATE-LIMIT EVENTS
-  total events: 274   by kind: {'HTTP': 274}
-  2026-09-04T23:50:52+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:03+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:03+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:08+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:09+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"tender offer"', 'dateRange': 'custom', 'startdt': '2012-08-01', 'enddt': '2026-08-26', 'forms': '8-K', 'ciks': '000
-  2026-09-04T23:51:12+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:20+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:51:20+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol APO" OR "NYSE APO" OR "NASDAQ APO" OR "NYSE MKT APO" OR "NYSE American APO" OR "NASDAQ Global Select Market 
-  2026-09-04T23:52:03+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:52:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:52:05+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:52:07+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:52:07+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:52:11+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"BCF"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '2015-12-10'} attempt=0 body='{"message": "Internal
-  2026-09-04T23:52:14+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol BEL" OR "NYSE BEL" OR "NASDAQ BEL" OR "NYSE MKT BEL" OR "NYSE American BEL" OR "NASDAQ Global Select Market 
-  2026-09-04T23:52:21+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:52:26+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:52:26+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:52:26+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"tender offer"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '2026-08-26', 'forms': '8-K', 'ciks': '000
-  2026-09-04T23:52:27+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"tender offer"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '2026-08-26', 'forms': '8-K', 'ciks': '000
-  2026-09-04T23:52:27+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:52:28+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"tender offer"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '2026-08-26', 'forms': '8-K', 'ciks': '000
-  2026-09-04T23:52:30+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:52:31+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:52:33+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:53:44+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol CLMS" OR "NYSE CLMS" OR "NASDAQ CLMS" OR "NYSE MKT CLMS" OR "NYSE American CLMS" OR "NASDAQ Global Select Ma
-  2026-09-04T23:53:53+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:53:57+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:53:57+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:53:58+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:53:58+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:54:02+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:54:03+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol CODE" OR "NYSE CODE" OR "NASDAQ CODE" OR "NYSE MKT CODE" OR "NYSE American CODE" OR "NASDAQ Global Select Ma
-  2026-09-04T23:54:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"acquisition agreement" OR "stock purchase agreement" OR "share purchase agreement"', 'dateRange': 'custom', 'startd
-  2026-09-04T23:54:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"tender offer"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '2026-08-26', 'forms': '8-K', 'ciks': '000
-  2026-09-04T23:54:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"CNW"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '2016-10-29'} attempt=0 body='{"message": "Internal
-  2026-09-04T23:54:07+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  2026-09-04T23:54:08+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR "agreement and plan of reorganization"',
-  ... 234 more in the JSON's fetch_events
+  total events: 34   by kind/status: {'HTTP 500': 34}
+  unrecovered (GIVEUP/ABORT/no-result/worker/404): 0
+  all events (retried 500s included) are in the JSON's fetch_events; first 5:
+  2026-09-05T00:30:01+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol PX" OR "NYSE PX" OR "NASDAQ PX" OR "NYSE MKT PX" OR "NYSE American P
+  2026-09-05T00:30:02+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol PX" OR "NYSE PX" OR "NASDAQ PX" OR "NYSE MKT PX" OR "NYSE American P
+  2026-09-05T00:30:03+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol RVBD"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '20
+  2026-09-05T00:30:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol PX" OR "NYSE PX" OR "NASDAQ PX" OR "NYSE MKT PX" OR "NYSE American P
+  2026-09-05T00:30:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol RVBD"', 'dateRange': 'custom', 'startdt': '2009-01-04', 'enddt': '20
 
 NOTES FOR DOWNSTREAM
   - Dates are FILING dates. 425 / SC TO-C often precede the 8-K by a day or trail it; take the earliest per episode.

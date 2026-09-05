@@ -25,8 +25,11 @@ Pipeline
                       are taken only when the submissions index lists Item
                       1.01 AND EDGAR full-text search (same CIK, same window,
                       forms=8-K) matches merger language.
-4. Output             data/fixtures/us_shorts_daily_raw_deals.json
-                      data/d331_edgar_coverage.txt (also printed)
+4. Output             written to temp/edgar_out/ first, then copied to
+                      data/fixtures/us_shorts_daily_raw_deals.json and
+                      data/d331_edgar_coverage.txt (also printed) ONLY when
+                      the run covered every symbol (no --limit/--symbols)
+                      and did not abort. A smoke test never touches data/.
 
 SEC fair-access: descriptive User-Agent with a project contact address (the
 SEC edge returns 403 to any User-Agent without an email-shaped token; this is
@@ -49,6 +52,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import sys
 import threading
 import time
@@ -64,6 +68,7 @@ EVENTS = os.path.join(ROOT, "data", "fixtures", "us_shorts_daily_raw_events.json
 OUT_JSON = os.path.join(ROOT, "data", "fixtures", "us_shorts_daily_raw_deals.json")
 OUT_REPORT = os.path.join(ROOT, "data", "d331_edgar_coverage.txt")
 CACHE_DIR = os.path.join(ROOT, "temp", "edgar")
+OUT_TMP_DIR = os.path.join(ROOT, "temp", "edgar_out")   # outputs land here; copied to data/ only when complete
 
 USER_AGENT = "BacktestFramework research script research@backtest-framework.org"
 HEADERS = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip, deflate"}
@@ -97,6 +102,17 @@ EFTS_TICKER_QUERIES = {
 AGREE_MIN_DOCS, AGREE_MIN_SHARE = 3, 0.25   # context query top entity, when bare query agrees
 BARE_MIN_DOCS, BARE_MIN_SHARE = 5, 0.60     # bare query alone (context query returned nothing)
 CTX_MIN_DOCS, CTX_MIN_SHARE = 10, 0.50      # context query alone (bare query is noise for short tickers)
+
+# Second pass (per-year, issuer forms only). Large-cap tickers are swamped in
+# the unrestricted index by banks' structured-note prospectuses ("NYSE: DIS"),
+# so the yearly pass looks only at forms an issuer files about itself. It
+# yields a SEQUENCE of CIKs when a ticker migrated to a new registrant
+# (holding-company reorganisation: Alphabet, APA Corp, Allergan plc ...).
+ISSUER_FORMS = "10-K,10-Q,8-K,DEF 14A,20-F,40-F,6-K,S-1,S-4,10-K405,10-KSB,10-QSB"
+YEAR_MIN_DOCS, YEAR_MIN_SHARE = 3, 0.50     # a year is assigned to its top entity when ...
+YEAR_ALT_MIN_DOCS, YEAR_ALT_RATIO = 5, 2.0  # ... or when it has >= 5 docs and 2x the runner-up
+CIK_MIN_YEARS, CIK_MIN_DOCS = 2, 5          # an entity needs 2 assigned years or 5 docs in total
+SEGMENT_PAD_DAYS = 365                      # filings taken from first assigned year - 1y .. last + 1y
 
 MAX_EFTS_PAGES = 100  # 100 hits/page; efts caps at 10,000 anyway
 
@@ -354,6 +370,67 @@ def resolve_by_efts(F: Fetcher, sym: str, span: dict) -> tuple[str | None, str, 
     return None, "efts_ticker_none", detail
 
 
+def resolve_yearly(F: Fetcher, sym: str, ws: str, we: str) -> tuple[dict, list]:
+    """Per-year ticker-context query over issuer forms only.
+
+    Returns ({cik: {"years", "docs", "from", "to"}}, per-year rows). Each year
+    goes to its top entity when the year rule holds; an entity is kept when it
+    owns >= CIK_MIN_YEARS years or >= CIK_MIN_DOCS docs. Its filing window is
+    the assigned years padded by SEGMENT_PAD_DAYS, clipped to [ws, we]."""
+    q = EFTS_TICKER_QUERIES["efts_ticker_context"].format(sym=sym)
+    rows, per_cik = [], collections.defaultdict(lambda: {"years": [], "docs": 0})
+    for y in range(int(ws[:4]), int(we[:4]) + 1):
+        s, e = max(ws, f"{y}-01-01"), min(we, f"{y}-12-31")
+        if s > e:
+            continue
+        _, agg, _ = efts_search(F, q, ISSUER_FORMS, s, e, None, kind="efts_ticker_year", max_pages=1)
+        if not agg:
+            rows.append({"year": y, "top_cik": None})
+            continue
+        sm = _agg_summary(q, agg)
+        ru = sm["runner_up"][0][1] if sm["runner_up"] else 0
+        ok = (sm["top_docs"] >= YEAR_MIN_DOCS and sm["share"] >= YEAR_MIN_SHARE) or \
+             (sm["top_docs"] >= YEAR_ALT_MIN_DOCS and sm["top_docs"] >= YEAR_ALT_RATIO * ru)
+        rows.append({"year": y, "top_cik": sm["top_cik"], "docs": sm["top_docs"], "share": sm["share"],
+                     "runner_up_docs": ru, "assigned": ok})
+        if ok:
+            per_cik[sm["top_cik"]]["years"].append(y)
+            per_cik[sm["top_cik"]]["docs"] += sm["top_docs"]
+    segs = {}
+    for cik, d in per_cik.items():
+        if len(d["years"]) >= CIK_MIN_YEARS or d["docs"] >= CIK_MIN_DOCS:
+            y0, y1 = min(d["years"]), max(d["years"])
+            f = (dt.date(y0, 1, 1) - dt.timedelta(days=SEGMENT_PAD_DAYS)).isoformat()
+            t = (dt.date(y1, 12, 31) + dt.timedelta(days=SEGMENT_PAD_DAYS)).isoformat()
+            segs[cik] = {"years": d["years"], "docs": d["docs"], "from": max(ws, f), "to": min(we, t), "query": q,
+                         "forms": ISSUER_FORMS}
+    return segs, rows
+
+
+def symbol_phrase_docs(F: Fetcher, sym: str, cik: str, start: str, end: str) -> int:
+    """Confirmation: how many of the entity's OWN issuer-form documents in the
+    window contain the phrase "symbol SYM". Real issuers say 'under the symbol
+    "DIS"' in their 10-Ks; the false positives seen in testing (investor
+    presentations, S-4s of unrelated small caps) matched only the exchange
+    phrasing and never this one."""
+    q = f'"symbol {sym}"'
+    _, _, total = efts_search(F, q, ISSUER_FORMS, start, end, cik, kind="efts_confirm", max_pages=1)
+    return total
+
+
+def merge_windows(entries: list[dict], ws: str, we: str) -> list[list[str]]:
+    """Gaps in [ws, we] not covered by any entry's [from, to]."""
+    ivs = sorted((e["from"], e["to"]) for e in entries)
+    gaps, cur = [], ws
+    for f, t in ivs:
+        if f > cur:
+            gaps.append([cur, (dt.date.fromisoformat(f) - dt.timedelta(days=1)).isoformat()])
+        cur = max(cur, (dt.date.fromisoformat(t) + dt.timedelta(days=1)).isoformat())
+    if cur <= we:
+        gaps.append([cur, we])
+    return gaps
+
+
 # --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
@@ -432,49 +509,119 @@ def main():
             if cik:
                 sub = get_sub(cik, ws, we)
                 ok, why = span_consistent(sub, span)
-                tried.append({"cik": cik, "method": method, "ok": ok, "why": why, "entity": sub["name"] if sub else None, "efts": detail})
+                n_conf = symbol_phrase_docs(F, sym, cik, ws, we)
+                if ok and n_conf == 0 and method.startswith("efts_ticker_context_dominant"):
+                    ok, why = False, "context query dominant but the entity's own filings never say 'symbol SYM'"
+                tried.append({"cik": cik, "method": method, "ok": ok, "why": why, "entity": sub["name"] if sub else None,
+                              "efts": detail, "symbol_phrase_docs": n_conf})
                 if ok:
                     chosen = (cik, method, "low", sub)
             else:
                 tried.append({"cik": None, "method": method, "ok": False,
                               "why": "full-text ticker queries did not agree on a dominant entity", "efts": detail})
-        if chosen is None:
+        # ---- mapping: an ordered list of {cik, from, to, method, confidence} ----
+        # A ticker can belong to a SEQUENCE of registrants (holding-company
+        # reorganisation). Pass 1 gives the single best entity; the per-year
+        # pass fills the rest of the window, and the record says what covers what.
+        mapping: list[dict] = []
+        yearly_rows = None
+        pred_until = None            # search predecessors before this date
+        if chosen is not None:
+            cik, method, conf, sub = chosen
+            mapping.append({"cik": cik, "entity": sub["name"], "method": method, "confidence": conf,
+                            "from": ws, "to": we, "entity_earliest_filing": sub["earliest"],
+                            "symbol_phrase_docs": tried[-1].get("symbol_phrase_docs")})
+            if sub["earliest"] and sub["earliest"] > span["first_bar"]:
+                # entity started filing after the symbol's series began: look for a predecessor
+                pred_until = sub["earliest"]
+        else:
+            # a current-map entity that exists only in the LATER part of the window
+            # is a successor registrant: keep it for its own part
+            for t in tried:
+                if t.get("cik") and t["method"] in ("company_tickers.json", "ticker.txt") and "after first_bar" in t["why"]:
+                    sub = get_sub(t["cik"], ws, we)
+                    if sub and sub["filings"]:
+                        mapping.append({"cik": t["cik"], "entity": sub["name"], "method": t["method"] + "(successor)",
+                                        "confidence": "high", "from": sub["earliest"], "to": we,
+                                        "entity_earliest_filing": sub["earliest"]})
+                        pred_until = sub["earliest"]
+                        break
+            pred_until = pred_until or we
+        if pred_until is not None and pred_until > ws:
+            segs, yearly_rows = resolve_yearly(F, sym, ws, pred_until)
+            known = {m["cik"] for m in mapping}
+            found, rejected = [], []
+            for cik2, seg in sorted(segs.items(), key=lambda kv: kv[1]["years"][0]):
+                if cik2 in known:
+                    continue
+                sub2 = get_sub(cik2, seg["from"], seg["to"])
+                if sub2 is None or not sub2["filings"]:
+                    continue
+                n_conf = symbol_phrase_docs(F, sym, cik2, seg["from"], seg["to"])
+                entry = {"cik": cik2, "entity": sub2["name"], "method": "efts_ticker_yearly", "confidence": "low",
+                         "from": seg["from"], "to": seg["to"], "years": seg["years"], "docs": seg["docs"],
+                         "symbol_phrase_docs": n_conf, "entity_earliest_filing": sub2["earliest"]}
+                if n_conf == 0:
+                    entry["why_rejected"] = "entity's own filings never say 'symbol SYM'"
+                    rejected.append(entry)
+                    continue
+                found.append(entry)
+            if rejected:
+                res["yearly_rejected"] = rejected
+            if found and mapping:
+                # the latest predecessor hands over to the known entity: let it run up to the handover + pad
+                latest = max(found, key=lambda m: m["to"])
+                latest["to"] = min(we, (dt.date.fromisoformat(pred_until) + dt.timedelta(days=SEGMENT_PAD_DAYS)).isoformat())
+            mapping.extend(found)
+        if not mapping:
+            res["yearly"] = yearly_rows
             return sym, res, [], []
-        cik, method, conf, sub = chosen
-        res.update({"cik": cik, "method": method, "confidence": conf, "entity": sub["name"],
-                    "entity_tickers_now": sub["tickers"], "window": [ws, we]})
 
-        # direct forms
-        out = []
-        for fl in sub["filings"]:
-            if fl["form"] in DIRECT_FORMS:
-                out.append(mk_deal(cik, fl, matched=None))
-        # 8-K: Item 1.01 in the index AND merger language in full text
-        eightk = {fl["adsh"]: fl for fl in sub["filings"] if fl["form"] == "8-K"}
-        matched: dict[str, set] = collections.defaultdict(set)
-        if eightk:
-            for tag, q in EFTS_8K_QUERIES.items():
-                hits, _, _ = efts_search(F, q, "8-K", ws, we, cik, kind="efts_8k")
-                for h in hits:
-                    adsh = h["_source"].get("adsh")
-                    if adsh in eightk:
-                        matched[adsh].add(tag)
-        other = []
-        for adsh, tags in matched.items():
-            fl = eightk[adsh]
-            items = [x.strip() for x in fl["items"].split(",") if x.strip()]
-            rec = mk_deal(cik, fl, matched=sorted(tags))
-            if "1.01" in items:
-                out.append(rec)
-            else:
-                other.append(rec)
+        mapping.sort(key=lambda m: (m["to"], m["from"]))
+        primary = mapping[-1]                                   # the entity holding the ticker latest
+        gaps = merge_windows(mapping, ws, we)
+        res.update({"cik": primary["cik"], "method": primary["method"], "confidence": primary["confidence"],
+                    "entity": primary["entity"], "window": [ws, we], "ciks": mapping,
+                    "coverage": "full" if not gaps else "partial", "uncovered": gaps})
+        if yearly_rows is not None:
+            res["yearly"] = yearly_rows
+
+        # ---- filings from every mapped entity inside its own window -----------
+        out, other, seen = [], [], set()
+        for m in mapping:
+            cik = m["cik"]
+            sub = get_sub(cik, m["from"], m["to"])
+            if sub is None:
+                continue
+            for fl in sub["filings"]:
+                if fl["form"] in DIRECT_FORMS and fl["adsh"] not in seen:
+                    seen.add(fl["adsh"])
+                    out.append(mk_deal(cik, fl, matched=None))
+            # 8-K: Item 1.01 in the index AND merger language in full text
+            eightk = {fl["adsh"]: fl for fl in sub["filings"] if fl["form"] == "8-K"}
+            matched: dict[str, set] = collections.defaultdict(set)
+            if eightk:
+                for tag, q in EFTS_8K_QUERIES.items():
+                    hits, _, _ = efts_search(F, q, "8-K", m["from"], m["to"], cik, kind="efts_8k")
+                    for h in hits:
+                        adsh = h["_source"].get("adsh")
+                        if adsh in eightk:
+                            matched[adsh].add(tag)
+            for adsh, tags in matched.items():
+                if adsh in seen:
+                    continue
+                seen.add(adsh)
+                fl = eightk[adsh]
+                items = [x.strip() for x in fl["items"].split(",") if x.strip()]
+                rec = mk_deal(cik, fl, matched=sorted(tags))
+                (out if "1.01" in items else other).append(rec)
         out.sort(key=lambda r: (r["date"], r["form"], r["accession"]))
         other.sort(key=lambda r: (r["date"], r["accession"]))
         return sym, res, out, other
 
     def mk_deal(cik, fl, matched):
         adsh = fl["adsh"]
-        rec = {"date": fl["date"], "form": fl["form"], "accession": adsh,
+        rec = {"date": fl["date"], "form": fl["form"], "cik": cik, "accession": adsh,
                "url": URL_FILING_INDEX.format(cik_int=int(cik), adsh_nodash=adsh.replace("-", ""), adsh=adsh)}
         if fl["form"] == "8-K":
             rec["items"] = fl["items"]
@@ -521,6 +668,13 @@ def main():
                 "efts_ticker_bare_dominant": f"context query empty; bare top_docs >= {BARE_MIN_DOCS} and share >= {BARE_MIN_SHARE}",
                 "efts_ticker_context_dominant": f"queries disagree (bare query is noise for short tickers); context top_docs >= {CTX_MIN_DOCS} and share >= {CTX_MIN_SHARE}",
                 "(base)": "5-letter ticker ending in Q (bankruptcy suffix) also tried without the Q",
+                "efts_ticker_yearly": f"second pass: context query per calendar year restricted to forms {ISSUER_FORMS}; "
+                                      f"a year is assigned to its top entity when top_docs >= {YEAR_MIN_DOCS} and share >= {YEAR_MIN_SHARE}, "
+                                      f"or top_docs >= {YEAR_ALT_MIN_DOCS} and >= {YEAR_ALT_RATIO}x the runner-up; an entity is kept with "
+                                      f">= {CIK_MIN_YEARS} assigned years or >= {CIK_MIN_DOCS} docs; its filing window is its assigned years "
+                                      f"padded by {SEGMENT_PAD_DAYS}d",
+                "(successor)": "current-map entity whose EDGAR history starts after first_bar+365d: kept from its earliest filing; "
+                               "predecessors searched with the yearly pass before that date",
             },
         },
         "endpoints": [URL_COMPANY_TICKERS, URL_TICKER_TXT, URL_SUBMISSIONS.format(name="CIK##########.json"),
@@ -529,6 +683,10 @@ def main():
             "high": "ticker found in a current SEC ticker map AND the entity's filing history is consistent with the fixture span",
             "low": "ticker resolved by full-text search for the ticker string (dominant entity) AND span-consistent; a text match, not a map",
             "unresolved": "no candidate passed the span-consistency check",
+            "note": "top-level cik/method/confidence describe the PRIMARY entity (the one holding the ticker latest). "
+                    "resolution[sym].ciks lists every mapped entity with its own window, method and confidence; "
+                    "coverage is 'partial' when some of [window] is covered by none, and 'uncovered' lists the gaps. "
+                    "Every deal record carries the cik it came from.",
         },
         "span_consistency": "entity's earliest filing <= first_bar + 365d AND >= 1 filing inside the window",
         "complete": not F.abort,
@@ -537,15 +695,31 @@ def main():
         "eightk_merger_language_without_item_101": {s: eightk_no_101[s] for s in sorted(eightk_no_101)},
         "fetch_events": F.events,
     }
-    os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
-    with open(OUT_JSON, "w", encoding="utf-8") as f:
+    # Write to temp/edgar_out/ first; the data/ paths are replaced only by a
+    # COMPLETE full run (every symbol, no --limit/--symbols, no abort), so a
+    # smoke test or a cut-short run can never leave a partial output in data/.
+    os.makedirs(OUT_TMP_DIR, exist_ok=True)
+    tmp_json = os.path.join(OUT_TMP_DIR, os.path.basename(OUT_JSON))
+    tmp_report = os.path.join(OUT_TMP_DIR, os.path.basename(OUT_REPORT))
+    with open(tmp_json, "w", encoding="utf-8") as f:
         json.dump(out_json, f, indent=1)
 
     report = build_report(symbols, dead, meta, spans, resolution, deals, eightk_no_101, F, pulled_on, t0)
-    with open(OUT_REPORT, "w", encoding="utf-8") as f:
+    with open(tmp_report, "w", encoding="utf-8") as f:
         f.write(report)
     print(report)
-    print(f"wrote {OUT_JSON}\nwrote {OUT_REPORT}")
+    print(f"wrote {tmp_json}\nwrote {tmp_report}")
+
+    full_run = not args.limit and not args.symbols
+    all_done = set(resolution) == set(spans) and set(deals) == set(spans)
+    if full_run and all_done and not F.abort:
+        os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
+        shutil.copyfile(tmp_json, OUT_JSON)
+        shutil.copyfile(tmp_report, OUT_REPORT)
+        print(f"complete full run: copied to {OUT_JSON}\n                   and {OUT_REPORT}")
+    else:
+        print(f"NOT copied to data/ (full_run={full_run} all_done={all_done} abort={F.abort}); "
+              f"output stays in {OUT_TMP_DIR}")
 
 
 def build_report(symbols, dead, meta, spans, resolution, deals, eightk_no_101, F, pulled_on, t0) -> str:
@@ -573,6 +747,18 @@ def build_report(symbols, dead, meta, spans, resolution, deals, eightk_no_101, F
     P("  confidence x cohort:")
     for (c, d), k in sorted(hd.items()):
         P(f"    {c:10s} {'dead' if d else 'alive':5s} {k}")
+    multi = [s for s in symbols if s in resolution and len(resolution[s].get("ciks") or []) > 1]
+    partial = [s for s in symbols if s in resolution and resolution[s].get("coverage") == "partial"]
+    P(f"  symbols mapped to >1 CIK over time (ticker migrated between registrants): {len(multi)}")
+    for s in multi[:60]:
+        P("    " + s + ": " + " -> ".join(f"{m['cik']}[{m['from'][:4]}..{m['to'][:4]},{m['confidence']}]" for m in resolution[s]["ciks"]))
+    if len(multi) > 60:
+        P(f"    ... {len(multi)-60} more in the JSON")
+    P(f"  symbols whose window is only PARTIALLY covered by mapped entities: {len(partial)}")
+    for s in partial[:40]:
+        P(f"    {s}: uncovered {resolution[s]['uncovered']}")
+    if len(partial) > 40:
+        P(f"    ... {len(partial)-40} more in the JSON")
     P("")
     P("UNRESOLVED SYMBOLS (reason of the last candidate tried)")
     for s in unres:
@@ -592,6 +778,10 @@ def build_report(symbols, dead, meta, spans, resolution, deals, eightk_no_101, F
         P(f"    {fm:10s} {c}")
     tags = collections.Counter(t for v in deals.values() for r in v if r["form"] == "8-K" for t in r["matched_queries"])
     P(f"  8-K Item 1.01 hits by matched query: {dict(tags)}")
+    combos = collections.Counter("+".join(r["matched_queries"]) for v in deals.values() for r in v if r["form"] == "8-K")
+    P("  8-K Item 1.01 hits by matched-query combination (a 'tender'-only hit is usually a DEBT tender):")
+    for k, c in combos.most_common():
+        P(f"    {k:30s} {c}")
     P(f"  8-Ks with merger language but NO Item 1.01 (kept aside, not deals): "
       f"{sum(len(v) for v in eightk_no_101.values())} across {len(eightk_no_101)} symbols")
     yrs = collections.Counter(r["date"][:4] for v in deals.values() for r in v)
@@ -605,12 +795,15 @@ def build_report(symbols, dead, meta, spans, resolution, deals, eightk_no_101, F
           + " ".join(f"{k}={v}" for k, v in fcs.most_common()))
     P("")
     P("ERRORS / RATE-LIMIT EVENTS")
-    ec = collections.Counter(e.split(" ", 2)[1] for e in F.events)
-    P(f"  total events: {len(F.events)}   by kind: {dict(ec)}")
-    for e in F.events[:40]:
-        P("  " + e[:200])
-    if len(F.events) > 40:
-        P(f"  ... {len(F.events)-40} more in the JSON's fetch_events")
+    ec = collections.Counter(" ".join(e.split(" ", 3)[1:3]) for e in F.events)
+    P(f"  total events: {len(F.events)}   by kind/status: {dict(ec)}")
+    hard = [e for e in F.events if e.split(" ", 2)[1] in ("GIVEUP", "ABORT", "EFTS", "WORKER", "404")]
+    P(f"  unrecovered (GIVEUP/ABORT/no-result/worker/404): {len(hard)}")
+    for e in hard[:40]:
+        P("  " + e[:220])
+    P(f"  all events (retried 500s included) are in the JSON's fetch_events; first 5:")
+    for e in F.events[:5]:
+        P("  " + e[:160])
     P("")
     P("NOTES FOR DOWNSTREAM")
     P("  - Dates are FILING dates. 425 / SC TO-C often precede the 8-K by a day or trail it; take the earliest per episode.")
