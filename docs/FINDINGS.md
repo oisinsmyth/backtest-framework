@@ -1282,6 +1282,38 @@ separability test, and only a deal-event source can settle it. Until one
 exists, no short leg built on a jump detector can be costed honestly on this
 fixture.
 
+### The event source settled it (D331): `skew_63` is retired as a short
+
+SEC EDGAR was pulled for all 1,573 names (1,465 resolved). **Target-specific
+deal forms -- DEFM14A, PREM14A, SC 14D9, SC TO-T, SC TO-C -- find 84% of the
+pinned trades in resolved names, with a median lead of 28 bars before entry**,
+and exclude only 2.4% of the universe. (An 8-K Item 1.01 with merger language
+is NOT a deal filter: it excludes a quarter of all live name-bars, because
+every acquirer's bolt-on and every credit facility files one.)
+
+**And a 60-bar survival window does not identify a non-deal.** A quarter of
+the "survivors" above carry a target-specific form within 63 bars of entry --
+pinned targets whose deal had not closed yet. The "+47.3 gross survivor edge"
+was partly deals.
+
+With the deals removed by target forms, `skew_63`'s short leg nets **-24 to
+-30 per trade at the old cost basis and -61 to -65 at the published one**
+(second and first EDGAR passes); the cheap half-spread doubles, and the top
+tail -- deal breaks, a short leg's lottery tickets -- leaves with the pinned
+names. **Its +16.6 net, its 7.7 bp
+half-spread, its first-of-44 in D329 and its 4.53x coverage in D326 were the
+takeover targets, entirely. Retired as a short signal.** It remains the best
+takeover-target detector in the 51, which is a different instrument.
+
+**The leg-wise construction stands with its short leg vacant.** Under the deal
+filter and the published convention the `hist_L`/`skew_63` pairing is +20 per
+trade and **-10.8 bp/bar** -- a long leg carrying a losing short. D329's
+enumeration is re-run under those before any partner is named.
+
+**Two rules from this:** a name's death date is not a deal label -- use the
+filings; and **a jump-detecting short on a dead-inclusive fixture must be run
+with the target-form exclusion from the first study, not after.**
+
 ## 17. The spread estimator has a published convention, and the programme was not using it
 
 **From [D332](decisions/D332-RESULT-under-the-published-convention-the-incumbent-is-negative.md),

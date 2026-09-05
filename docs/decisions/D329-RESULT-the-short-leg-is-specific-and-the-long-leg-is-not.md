@@ -285,6 +285,20 @@ its net Sharpe between +0.224 and +0.434.** At either end it beats both
 parents, so §3's leg-ownership finding stands; §1's point estimate does not.
 See [D330 RESULT](D330-RESULT-the-tape-cannot-separate-deals-from-reversals.md).
 
+### 10.4b AMENDMENT, 2026-09-05 — `skew_63` is retired as a short; the pairing's short leg is vacant
+
+D331 applied SEC EDGAR target-specific deal filings to the score. With the
+deals removed, `skew_63`'s short leg nets **−24 to −30 per trade at the old
+cost basis and −61 to −65 at the published one** (second and first EDGAR
+passes); its symmetric book is −9 to −11 bp/bar.
+Its +16.6, its 7.7 bp half-spread, its "first of 44" in §3, and D326's 4.53×
+coverage were the pinned deal targets, entirely. **`skew_63` is retired as a
+short signal.** The leg-wise *construction* stands — `[L]` and the enumeration
+method are unchanged — and §3's Direction A must be re-run under the deal
+filter and the published spread convention before any short partner is named
+for `hist_L`-long. Under those, LW_F1 is +20.04 per trade and **−10.80
+bp/bar**: a losing book whose long leg carries a losing short leg.
+
 ### 10.5 Two errors in my own diagnostics, for the record
 
 The first anatomy script reduced a 414M-element rolling window along a 12 KB

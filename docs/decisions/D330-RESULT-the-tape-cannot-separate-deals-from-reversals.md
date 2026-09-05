@@ -170,3 +170,21 @@ with contiguous windows, and neither re-reads the score archive inside a loop.
 
 `data/d330a_pinned_decomposition.json` · `data/d330b_causal_filter.json` ·
 `scripts/run_d330a_pinned_decomposition.py` · `scripts/run_d330b_causal_filter.py`
+
+---
+
+## AMENDMENT, 2026-09-05 — Part A's "survivor" label does not mean "not a deal"
+
+Appended after D331 ran the event source against these labels. Part A called
+a trade a *survivor* if its name was still trading 60 bars after entry. A US
+public deal takes four to six months to close. **D331 finds a target-specific
+deal form (DEFM14A, tender offer) within 63 bars of entry for 27.1% of the
+727 "survivors" in `skew_63`'s short leg** — pinned targets whose deal had not
+yet closed. Part A's "+47.3 bp gross on the survivors, a genuine post-jump
+reversal" is therefore partly deals, and the D330 B survivor-removal test
+(39%) was measured against a contaminated denominator. **The instrument that
+labels a non-deal is the event source, not the tape's death date.** §What this
+establishes item 5 and FINDINGS §16's "the edge that survives is real" are
+amended by D331 §1–2: with the deals removed by target-specific filings, the
+short leg nets −24 to −30 (PB) / −61 to −65 (PUB) per trade across the two
+EDGAR passes, and `skew_63` is retired as a short signal.

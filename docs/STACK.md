@@ -65,14 +65,19 @@ signal.
 deal-contaminated). Under PUB the leg-wise book is a +36 per-trade edge and a
 roughly break-even bp/bar book; it still beats both parents in both.*
 
-**The number is a bound because a fifth of `skew_63`'s short trades are
-takeover targets pinned at the deal price** (D329 §10, D330): the short earns
-nothing on them, cannot borrow them, and the spread estimator reads them as
-nearly free. The low end is over-filtered, the high end is contaminated, and
-at either end it beats both parents. `skew_63` is **first of 44** short
-partners for `hist_L`-long on both lenses; `hist_L` is **fourteenth of 45**
-long partners for `skew_63`-short — **the short leg is settled, the long leg is
-not.**
+**The bound existed because a fifth of `skew_63`'s short trades were takeover
+targets pinned at the deal price** (D329 §10, D330). **D331 removed them by SEC
+filing and `skew_63` is RETIRED as a short.** Target-specific forms find 84% of
+the pinned trades in resolved names with a month's lead and exclude 2.4% of
+the universe; with them gone the short leg nets **−24 to −30 / −61 to −65 per
+trade** (PB / PUB, across the two EDGAR passes), the symmetric book is
+−9 to −11 bp/bar, and the `hist_L`/`skew_63` book is **−11 bp/bar** under the
+published convention. Every number that made
+`skew_63` look special — +16.6, 7.7 bp, first of 44, D326's 4.53× coverage —
+was the deals. It remains the best takeover-target *detector* in the 51.
+**The leg-wise construction stands with its short leg vacant**; D329's
+enumeration is re-run under the deal filter and PUB before any partner is
+named. `hist_L`'s long leg is still +62.5 per trade under PUB.
 
 **Status: a construction, not a candidate.** Nothing clears R8. Book: empty.
 
@@ -213,11 +218,11 @@ deal-event source is required; an EDGAR pull is in progress (D331).
 **The next four studies are infrastructure. Another signal result now is
 another upper bound on a cost model known to be wrong in three places.**
 
-1. **Deal events — DATA PULLED (D331).** 1,465 of 1,573 names resolved,
-   24,387 filings, 1,053 target-specific forms. **The study that uses it is
-   next**: an event-driven exclusion on `skew_63`'s short leg, validated
-   against D330 A's pinned labels (the test D330 B's tape filter failed), with
-   the role ambiguity of form 425 declared.
+1. **Deal events — DONE (D331).** 1,530 of 1,573 names resolved after the
+   second pass; target-specific forms find 84% of the pinned trades with a
+   month's lead and exclude 2.4% of the universe. **`skew_63` retired as a
+   short.** What remains: **D329's enumeration re-run under the deal filter
+   and PUB**, so the leg-wise book's short leg can be chosen honestly.
 2. **The spread convention — DONE (D332).** The floor was the wrong study;
    the convention was the finding. **What remains is Part C**: quoted BID_ASK
    bars from the principal's IBKR session on a stratified sample of live
