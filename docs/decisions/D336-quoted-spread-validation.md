@@ -83,6 +83,55 @@ only; `--plan`, `--compare`, `--selftest` run without a broker library. **Out:**
 estimator beyond the three; intraday quotes; dead names (IBKR's history excludes them —
 the convention is validated on live names and applied to all, which is stated).
 
+## 8a. Built and dry-tested, 2026-09-05 — the pull is pending on the principal's session
+
+`scripts/d336_ibkr_quoted_spreads.py` (1,047 lines) built by an agent; `--plan` and an
+18-case `--selftest` pass. **Nothing here changes the design or the predictions**; it
+records what the dry test found before any quote is seen.
+
+**The sample** (`data/d336_sample.json`, written before any quote): 1,573 → 1,011 alive →
+1,010 with last bar 2026-08-26 → 642 with no split → **602 eligible** → **100 sampled**
+(NYSE 51, NASDAQ 49). Price and dollar volume correlate, so the cell grid is diagonal;
+three cells were short and **nine fills** came from the nearest price quintile in the
+same dollar-volume quintile — cell (4,0), the dearest-and-thinnest, had **zero** natives.
+All fills are recorded per row. Deterministic across runs.
+
+**Three things the record should know before the pull:**
+
+1. **Abdi–Ranaldo clamps to exactly zero on 28 of the 100 names** over this window on
+   the fixture OHLC (PB: 12 names below 1 bp; PUB: none). Under the declared 1 bp floor
+   each such name contributes |log err| ≈ 3, so **Q2 will be decided by the floor, not the
+   estimator, unless AR's non-zero names are very good.** The rule is not changed; the
+   RESULT must read Q2 with that in mind and report MALE(AR) on the non-clamped subset
+   beside the declared one.
+2. **Q3's second clause is vacuous on this sample**: no sampled name has a per-bar
+   zero rate below 25% (median 0.42; 12 above 50%). The script reports it as
+   not-evaluable rather than pretending.
+3. **OHLC-side medians on the sample, no quote seen:** PB 20.0, PUB 41.4, AR 29.5 bp.
+   The mocked pull recovered an injected 20 bp quoted half-spread at 19.9, confirming
+   `(close − open) / 2 / mid` on the BID_ASK bar convention.
+
+**Implementation notes:** `ib_async` 2.1.0 has `client.setConnectOptions`, not the
+dossier's `setConnectionOptions`; the script tries both and records which was used.
+`uv add --group ibkr ib_async` also pinned `tzdata` from 2026.3 to 2025.3 in the shared
+lock (ib_async requires `<2026.0`); no numeric dependency moved. Error 10167 is a
+warning that can arrive *with* bars; those bars are real quotes and are kept.
+`.gitignore` gains `data/raw/ibkr/` (already covered by `/data/raw/`, made explicit).
+
+**The principal's commands**, in order, on a machine with TWS or Gateway running (paper
+7497 / live 7496; Gateway 4002 / 4001), then `--compare`:
+
+```bash
+uv run --group ibkr python scripts/d336_ibkr_quoted_spreads.py --pull --host 127.0.0.1 --port <PORT> --client-id 336
+```
+
+```bash
+uv run python scripts/d336_ibkr_quoted_spreads.py --compare
+```
+
+`--group ibkr` is required — uv's default groups are `dev` only. The pull is resumable
+and ~35 minutes for 100 names under the pacing bucket.
+
 ## 8. Files
 
 `docs/decisions/D336-quoted-spread-validation.md` (this record) ·

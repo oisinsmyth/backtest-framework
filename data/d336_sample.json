@@ -1,0 +1,1106 @@
+{
+ "record": "D336",
+ "written_before_any_quote_was_seen": true,
+ "window_start": "2025-08-26",
+ "window_end": "2026-08-26",
+ "window_bars": 252,
+ "dv_bars": 63,
+ "dv_window_start": "2026-05-28",
+ "seed": 336,
+ "n_quintiles": 5,
+ "per_cell": 4,
+ "eligibility": {
+  "n_meta_symbols": 1573,
+  "n_alive": 1011,
+  "n_alive_last_bar_2026_08_26": 1010,
+  "n_alive_last_bar_no_splits": 642,
+  "n_of_those_in_fixture_window": 642,
+  "n_eligible_252_finite_closes": 602,
+  "n_sampled": 100
+ },
+ "price_quintile_edges": [
+  0.5348999999999999,
+  9.495000000000001,
+  20.448999999999998,
+  43.70500000000006,
+  98.77400000000002,
+  4588.665
+ ],
+ "dv_quintile_edges": [
+  0.0,
+  5488055.833396825,
+  22496866.253301587,
+  62351116.188158855,
+  176092312.06292072,
+  11044516618.712225
+ ],
+ "cell_counts": {
+  "0,0": 62,
+  "0,1": 39,
+  "0,2": 12,
+  "0,3": 6,
+  "0,4": 2,
+  "1,0": 41,
+  "1,1": 35,
+  "1,2": 25,
+  "1,3": 11,
+  "1,4": 8,
+  "2,0": 14,
+  "2,1": 31,
+  "2,2": 41,
+  "2,3": 25,
+  "2,4": 9,
+  "3,0": 4,
+  "3,1": 14,
+  "3,2": 29,
+  "3,3": 38,
+  "3,4": 35,
+  "4,0": 0,
+  "4,1": 1,
+  "4,2": 13,
+  "4,3": 40,
+  "4,4": 67
+ },
+ "fills": [
+  {
+   "cell": [
+    0,
+    4
+   ],
+   "n_native": 2,
+   "filled": [
+    {
+     "symbol": "HBAN",
+     "from_cell": [
+      1,
+      4
+     ]
+    },
+    {
+     "symbol": "NCLH",
+     "from_cell": [
+      1,
+      4
+     ]
+    }
+   ],
+   "unfilled": 0
+  },
+  {
+   "cell": [
+    4,
+    0
+   ],
+   "n_native": 0,
+   "filled": [
+    {
+     "symbol": "SMC",
+     "from_cell": [
+      2,
+      0
+     ]
+    },
+    {
+     "symbol": "DMLP",
+     "from_cell": [
+      2,
+      0
+     ]
+    },
+    {
+     "symbol": "ACGLO",
+     "from_cell": [
+      2,
+      0
+     ]
+    },
+    {
+     "symbol": "INVN",
+     "from_cell": [
+      2,
+      0
+     ]
+    }
+   ],
+   "unfilled": 0
+  },
+  {
+   "cell": [
+    4,
+    1
+   ],
+   "n_native": 1,
+   "filled": [
+    {
+     "symbol": "CMPR",
+     "from_cell": [
+      3,
+      1
+     ]
+    },
+    {
+     "symbol": "ICFI",
+     "from_cell": [
+      3,
+      1
+     ]
+    },
+    {
+     "symbol": "NBTB",
+     "from_cell": [
+      3,
+      1
+     ]
+    }
+   ],
+   "unfilled": 0
+  }
+ ],
+ "rows": [
+  {
+   "symbol": "FINV",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 0,
+   "dv_q": 0,
+   "price_med": 5.165,
+   "dv_mean": 2930727.817142857
+  },
+  {
+   "symbol": "FNKO",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 0,
+   "price_med": 3.97,
+   "dv_mean": 5162544.502539681
+  },
+  {
+   "symbol": "TNYA",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 0,
+   "price_med": 0.78825,
+   "dv_mean": 1952127.7490587304
+  },
+  {
+   "symbol": "TTEC",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 0,
+   "price_med": 2.91,
+   "dv_mean": 1202026.2981746027
+  },
+  {
+   "symbol": "AMCX",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 1,
+   "price_med": 8.35,
+   "dv_mean": 6736388.806111109
+  },
+  {
+   "symbol": "HUMA",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 1,
+   "price_med": 1.08,
+   "dv_mean": 8883514.472771429
+  },
+  {
+   "symbol": "LAR",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 0,
+   "dv_q": 1,
+   "price_med": 6.715,
+   "dv_mean": 14343123.197777772
+  },
+  {
+   "symbol": "SABR",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 1,
+   "price_med": 1.73,
+   "dv_mean": 8790661.121428568
+  },
+  {
+   "symbol": "ABSI",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 2,
+   "price_med": 3.565,
+   "dv_mean": 44444857.72833335
+  },
+  {
+   "symbol": "CMPS",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 2,
+   "price_med": 6.8100000000000005,
+   "dv_mean": 47296965.76293651
+  },
+  {
+   "symbol": "CRSR",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 2,
+   "price_med": 6.91,
+   "dv_mean": 29058007.542619053
+  },
+  {
+   "symbol": "GNW",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 0,
+   "dv_q": 2,
+   "price_med": 8.795,
+   "dv_mean": 27309680.801269844
+  },
+  {
+   "symbol": "COMP",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 0,
+   "dv_q": 3,
+   "price_med": 9.405000000000001,
+   "dv_mean": 142828825.94365084
+  },
+  {
+   "symbol": "HTZ",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 3,
+   "price_med": 5.18,
+   "dv_mean": 73212473.7725397
+  },
+  {
+   "symbol": "IBRX",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 3,
+   "price_med": 6.96,
+   "dv_mean": 83585249.69841272
+  },
+  {
+   "symbol": "RXT",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 3,
+   "price_med": 1.475,
+   "dv_mean": 82636331.53198414
+  },
+  {
+   "symbol": "AUR",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 4,
+   "price_med": 5.1850000000000005,
+   "dv_mean": 184965778.5814286
+  },
+  {
+   "symbol": "HBAN",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 0,
+   "dv_q": 4,
+   "price_med": 17.04,
+   "dv_mean": 411852208.444127,
+   "filled_from_cell": [
+    1,
+    4
+   ],
+   "native_price_q": 1
+  },
+  {
+   "symbol": "NCLH",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 0,
+   "dv_q": 4,
+   "price_med": 20.26,
+   "dv_mean": 318527835.3895238,
+   "filled_from_cell": [
+    1,
+    4
+   ],
+   "native_price_q": 1
+  },
+  {
+   "symbol": "RIG",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 0,
+   "dv_q": 4,
+   "price_med": 5.14,
+   "dv_mean": 208889250.08238098
+  },
+  {
+   "symbol": "DHCNL",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 0,
+   "price_med": 18.325049999999997,
+   "dv_mean": 384287.17849523824
+  },
+  {
+   "symbol": "NPCT",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 0,
+   "price_med": 10.31,
+   "dv_mean": 1108100.6409523808
+  },
+  {
+   "symbol": "RMR",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 0,
+   "price_med": 16.525,
+   "dv_mean": 3073606.217301587
+  },
+  {
+   "symbol": "SD",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 0,
+   "price_med": 14.34,
+   "dv_mean": 4618404.429365079
+  },
+  {
+   "symbol": "ANRO",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 1,
+   "price_med": 19.475,
+   "dv_mean": 14462795.57793651
+  },
+  {
+   "symbol": "AVNS",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 1,
+   "price_med": 13.71,
+   "dv_mean": 16014966.63746032
+  },
+  {
+   "symbol": "ODD",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 1,
+   "price_med": 17.71,
+   "dv_mean": 17749319.80198412
+  },
+  {
+   "symbol": "PLAY",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 1,
+   "price_med": 14.16,
+   "dv_mean": 18284320.774761908
+  },
+  {
+   "symbol": "ALKT",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 2,
+   "price_med": 18.985,
+   "dv_mean": 29506384.53015872
+  },
+  {
+   "symbol": "APLE",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 2,
+   "price_med": 12.385000000000002,
+   "dv_mean": 48619992.45603176
+  },
+  {
+   "symbol": "GO",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 2,
+   "price_med": 9.88,
+   "dv_mean": 25347361.997936513
+  },
+  {
+   "symbol": "MGNI",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 2,
+   "price_med": 15.825,
+   "dv_mean": 57696974.89206348
+  },
+  {
+   "symbol": "BKD",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 3,
+   "price_med": 12.93,
+   "dv_mean": 71451159.10698414
+  },
+  {
+   "symbol": "CPRI",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 3,
+   "price_med": 20.195,
+   "dv_mean": 62906459.9973016
+  },
+  {
+   "symbol": "XP",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 3,
+   "price_med": 17.88,
+   "dv_mean": 85439448.87968253
+  },
+  {
+   "symbol": "XPEV",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 3,
+   "price_med": 17.96,
+   "dv_mean": 100087915.61873017
+  },
+  {
+   "symbol": "AAL",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 4,
+   "price_med": 13.44,
+   "dv_mean": 1658848148.7309527
+  },
+  {
+   "symbol": "HST",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 4,
+   "price_med": 19.15,
+   "dv_mean": 233972970.19190466
+  },
+  {
+   "symbol": "NVTS",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 1,
+   "dv_q": 4,
+   "price_med": 9.864999999999998,
+   "dv_mean": 391781462.1237302
+  },
+  {
+   "symbol": "PR",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 1,
+   "dv_q": 4,
+   "price_med": 17.945,
+   "dv_mean": 199993529.3736508
+  },
+  {
+   "symbol": "CDLR",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 0,
+   "price_med": 22.425,
+   "dv_mean": 1961196.278730159
+  },
+  {
+   "symbol": "GIC",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 0,
+   "price_med": 32.215,
+   "dv_mean": 4461387.543968254
+  },
+  {
+   "symbol": "NNNN",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 0,
+   "price_med": 25.845,
+   "dv_mean": 846954.2431746032
+  },
+  {
+   "symbol": "SEG",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 0,
+   "price_med": 23.270000000000003,
+   "dv_mean": 1873173.7850793656
+  },
+  {
+   "symbol": "CYD",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 1,
+   "price_med": 41.72,
+   "dv_mean": 8280514.356190475
+  },
+  {
+   "symbol": "FCPT",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 1,
+   "price_med": 24.814999999999998,
+   "dv_mean": 20088246.798412696
+  },
+  {
+   "symbol": "GTY",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 1,
+   "price_med": 32.1,
+   "dv_mean": 17462722.527619056
+  },
+  {
+   "symbol": "TRMK",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 1,
+   "price_med": 42.53,
+   "dv_mean": 19339020.906507943
+  },
+  {
+   "symbol": "CARG",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 2,
+   "price_med": 35.004999999999995,
+   "dv_mean": 39885376.08896827
+  },
+  {
+   "symbol": "EWTX",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 2,
+   "price_med": 29.740000000000002,
+   "dv_mean": 58382007.888888896
+  },
+  {
+   "symbol": "FHB",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 2,
+   "price_med": 26.275,
+   "dv_mean": 59122584.85555553
+  },
+  {
+   "symbol": "KBR",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 2,
+   "price_med": 40.175,
+   "dv_mean": 61518100.47444446
+  },
+  {
+   "symbol": "AROC",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 3,
+   "price_med": 32.760000000000005,
+   "dv_mean": 70715220.69015871
+  },
+  {
+   "symbol": "CTRE",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 3,
+   "price_med": 37.56,
+   "dv_mean": 108016954.85936512
+  },
+  {
+   "symbol": "RARE",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 3,
+   "price_med": 26.125,
+   "dv_mean": 65937940.32492063
+  },
+  {
+   "symbol": "SSRM",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 3,
+   "price_med": 26.03,
+   "dv_mean": 94068178.6038095
+  },
+  {
+   "symbol": "JD",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 4,
+   "price_med": 29.615000000000002,
+   "dv_mean": 243313391.92809525
+  },
+  {
+   "symbol": "MOS",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 4,
+   "price_med": 24.865000000000002,
+   "dv_mean": 195198593.0155556
+  },
+  {
+   "symbol": "U",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 2,
+   "dv_q": 4,
+   "price_med": 33.36,
+   "dv_mean": 331275697.920635
+  },
+  {
+   "symbol": "VIAV",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 2,
+   "dv_q": 4,
+   "price_med": 29.185,
+   "dv_mean": 290919890.2895238
+  },
+  {
+   "symbol": "BATRA",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 0,
+   "price_med": 47.239999999999995,
+   "dv_mean": 3512230.626984127
+  },
+  {
+   "symbol": "BITW",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 0,
+   "price_med": 50.583600000000004,
+   "dv_mean": 2442669.7534634927
+  },
+  {
+   "symbol": "NC",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 0,
+   "price_med": 48.485,
+   "dv_mean": 676878.8138095238
+  },
+  {
+   "symbol": "SBR",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 0,
+   "price_med": 73.325,
+   "dv_mean": 2668619.9431746025
+  },
+  {
+   "symbol": "ASTE",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 1,
+   "price_med": 48.915,
+   "dv_mean": 11767595.232539684
+  },
+  {
+   "symbol": "STC",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 1,
+   "price_med": 68.85499999999999,
+   "dv_mean": 15627978.633968258
+  },
+  {
+   "symbol": "STRK",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 1,
+   "price_med": 78.53999999999999,
+   "dv_mean": 8936823.120396825
+  },
+  {
+   "symbol": "WMK",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 1,
+   "price_med": 70.295,
+   "dv_mean": 12947144.17555556
+  },
+  {
+   "symbol": "GGAL",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 2,
+   "price_med": 48.175,
+   "dv_mean": 54141307.9847619
+  },
+  {
+   "symbol": "GOLF",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 2,
+   "price_med": 89.995,
+   "dv_mean": 38115227.48571429
+  },
+  {
+   "symbol": "OGS",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 2,
+   "price_med": 80.395,
+   "dv_mean": 48748155.08412698
+  },
+  {
+   "symbol": "PFSI",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 2,
+   "price_med": 92.18,
+   "dv_mean": 47227706.869523816
+  },
+  {
+   "symbol": "BFAM",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 3,
+   "price_med": 82.91499999999999,
+   "dv_mean": 64210585.11968254
+  },
+  {
+   "symbol": "CGON",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 3,
+   "price_med": 56.1,
+   "dv_mean": 68646428.41777778
+  },
+  {
+   "symbol": "GLPI",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 3,
+   "price_med": 45.364999999999995,
+   "dv_mean": 117312346.14650792
+  },
+  {
+   "symbol": "KYMR",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 3,
+   "dv_q": 3,
+   "price_med": 80.47999999999999,
+   "dv_mean": 89872890.46936508
+  },
+  {
+   "symbol": "DOCN",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 4,
+   "price_med": 62.83,
+   "dv_mean": 464751600.87619054
+  },
+  {
+   "symbol": "MP",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 4,
+   "price_med": 59.82,
+   "dv_mean": 324669732.8531746
+  },
+  {
+   "symbol": "NI",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 4,
+   "price_med": 44.230000000000004,
+   "dv_mean": 226414740.1563492
+  },
+  {
+   "symbol": "SO",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 3,
+   "dv_q": 4,
+   "price_med": 93.25999999999999,
+   "dv_mean": 550863272.1249206
+  },
+  {
+   "symbol": "ACGLO",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 0,
+   "price_med": 20.515,
+   "dv_mean": 636713.111531746,
+   "filled_from_cell": [
+    2,
+    0
+   ],
+   "native_price_q": 2
+  },
+  {
+   "symbol": "DMLP",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 0,
+   "price_med": 25.57,
+   "dv_mean": 5177006.737619046,
+   "filled_from_cell": [
+    2,
+    0
+   ],
+   "native_price_q": 2
+  },
+  {
+   "symbol": "INVN",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 0,
+   "price_med": 21.0268,
+   "dv_mean": 107342.82304126983,
+   "filled_from_cell": [
+    2,
+    0
+   ],
+   "native_price_q": 2
+  },
+  {
+   "symbol": "SMC",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 0,
+   "price_med": 28.835,
+   "dv_mean": 1794107.5033333332,
+   "filled_from_cell": [
+    2,
+    0
+   ],
+   "native_price_q": 2
+  },
+  {
+   "symbol": "ALX",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 1,
+   "price_med": 239.47,
+   "dv_mean": 9079420.848095242
+  },
+  {
+   "symbol": "CMPR",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 1,
+   "price_med": 74.34,
+   "dv_mean": 19828151.393809523,
+   "filled_from_cell": [
+    3,
+    1
+   ],
+   "native_price_q": 3
+  },
+  {
+   "symbol": "ICFI",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 1,
+   "price_med": 80.095,
+   "dv_mean": 19465968.407619048,
+   "filled_from_cell": [
+    3,
+    1
+   ],
+   "native_price_q": 3
+  },
+  {
+   "symbol": "NBTB",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 1,
+   "price_med": 44.015,
+   "dv_mean": 18254986.47841269,
+   "filled_from_cell": [
+    3,
+    1
+   ],
+   "native_price_q": 3
+  },
+  {
+   "symbol": "CVSA",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 2,
+   "price_med": 117.655,
+   "dv_mean": 44131968.34190475
+  },
+  {
+   "symbol": "OSIS",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 2,
+   "price_med": 251.265,
+   "dv_mean": 53808131.042222224
+  },
+  {
+   "symbol": "SAIC",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 2,
+   "price_med": 100.60499999999999,
+   "dv_mean": 60128953.52650794
+  },
+  {
+   "symbol": "SAM",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 2,
+   "price_med": 207.07999999999998,
+   "dv_mean": 50815528.88841272
+  },
+  {
+   "symbol": "ECG",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 3,
+   "price_med": 109.71000000000001,
+   "dv_mean": 86729840.96857145
+  },
+  {
+   "symbol": "EG",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 3,
+   "price_med": 339.01,
+   "dv_mean": 141864649.4815873
+  },
+  {
+   "symbol": "TKR",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 3,
+   "price_med": 99.69,
+   "dv_mean": 131818688.8247619
+  },
+  {
+   "symbol": "WEX",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 3,
+   "price_med": 154.64499999999998,
+   "dv_mean": 109165917.27984127
+  },
+  {
+   "symbol": "FN",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 4,
+   "price_med": 487.64,
+   "dv_mean": 549908626.2492063
+  },
+  {
+   "symbol": "GH",
+   "exchange": "NASDAQ",
+   "primaryExchange": "NASDAQ",
+   "price_q": 4,
+   "dv_q": 4,
+   "price_med": 99.97,
+   "dv_mean": 393522567.81968254
+  },
+  {
+   "symbol": "IQV",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 4,
+   "price_med": 198.345,
+   "dv_mean": 309561293.80888885
+  },
+  {
+   "symbol": "LYV",
+   "exchange": "NYSE",
+   "primaryExchange": "NYSE",
+   "price_q": 4,
+   "dv_q": 4,
+   "price_med": 157.95999999999998,
+   "dv_mean": 400359847.88412696
+  }
+ ]
+}

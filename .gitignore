@@ -49,6 +49,7 @@ data/raw/alphavantage/
 # Exchange-licensed data: cache locally, never commit (see docs/research/futures-data/00-SYNTHESIS.md)
 data/raw/databento/
 data/raw/futures/
+data/raw/ibkr/
 data/fixtures/*futures*
 data/fixtures/*glbx*
 
