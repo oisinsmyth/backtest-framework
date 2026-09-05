@@ -117,6 +117,19 @@ def gate_starved(rankT, finT, keep):
     return _Y.gate_from(rankT, finT, keep)
 
 
+def floor_mask_v2(RAW_CLOSE, DV, finT, px_min=PX_MIN, dv_pct=DV_PCT):
+    """D343: the re-listing clause. keep_v2 = keep_v1 AND isfinite(DV).
+
+    D320's keep_mask never excludes a name with no estimate, so a spread filter
+    cannot become a liveness proxy. A LIQUIDITY floor must: a name with fewer
+    than 21 trailing observations of dollar volume has no demonstrated tape.
+    D342 found NBIS's relisting day (4.4% of the candidate's P&L) passing the
+    floor with a NaN estimate. keep_v2 is a subset of keep_v1 by construction;
+    floor_mask (v1) stays for every identity that quotes it. From D343 on, the
+    declared universe is keep_v2."""
+    return floor_mask(RAW_CLOSE, DV, finT, px_min, dv_pct) & np.isfinite(DV)
+
+
 def floor_share(keep, finT):
     """Share of LIVE name-bars failing the floor."""
     return float((~keep & finT).sum() / finT.sum())
