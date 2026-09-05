@@ -111,8 +111,19 @@ def assert_gates_passed(fixture: Path) -> dict:
     return meta
 
 
+# D333 -- a dividend of at least this fraction of the close is applied only if
+# the price fell at least DIV_BOUND_FRAC of what the distribution implies.
+# A spin-off or merger consideration booked as a cash dividend with the price
+# left at its post-transaction level fails that test (PNK 2016-04-29: a $38.86
+# "dividend" on an $11.04 close, price +0.9%, would have been a +356% day).
+# Both parameters are round and pre-registered, not fitted.
+DIV_BOUND_RATIO = 0.10
+DIV_BOUND_FRAC = 0.5
+
+
 def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
-                require_gates: bool = True) -> tuple[RaggedPanel, dict]:
+                require_gates: bool = True,
+                dividend_bound: bool = True) -> tuple[RaggedPanel, dict]:
     if require_gates:
         assert_gates_passed(fixture)
     rows: dict[str, list] = {}
@@ -154,6 +165,7 @@ def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
 
     total = log_returns.copy()
     div_count = 0
+    dropped: list[dict] = []
     if events is not None and Path(events).exists():
         ev = json.loads(Path(events).read_text(encoding="utf-8"))
         payload = ev.get("dividends", ev) if isinstance(ev, dict) else ev
@@ -162,6 +174,7 @@ def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
             i = index_by_symbol.get(s)
             if i is None:
                 continue
+            own = np.flatnonzero(live[i])
             for it in items:
                 # two shapes in the wild: ["2016-11-08T00:00:00", 0.09] and
                 # {"date": ..., "amount": ...}. Both handled, neither assumed.
@@ -173,7 +186,21 @@ def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
                 t = pos_of.get(d)
                 if t is None or amt <= 0.0 or not live[i, t] or np.isnan(closes[i, t]):
                     continue
-                total[i, t] += math.log1p(amt / closes[i, t])
+                ratio = amt / closes[i, t]
+                if dividend_bound and ratio >= DIV_BOUND_RATIO:
+                    # D333: the distribution came OUT of the price, so the price
+                    # must have fallen by about it. If it did not, the "dividend"
+                    # is a corporate action already reflected in the price.
+                    k = int(np.searchsorted(own, t))
+                    prev = closes[i, own[k - 1]] if k > 0 else np.nan
+                    move = closes[i, t] / prev - 1.0 if np.isfinite(prev) and prev > 0 else np.nan
+                    implied = -ratio / (1.0 + ratio)
+                    if not (np.isfinite(move) and move <= DIV_BOUND_FRAC * implied):
+                        dropped.append(dict(symbol=s, date=d, amount=amt, close=float(closes[i, t]),
+                                            ratio=float(ratio), move=float(move) if np.isfinite(move) else None,
+                                            implied=float(implied)))
+                        continue
+                total[i, t] += math.log1p(ratio)
                 div_count += 1
 
     meta = {
@@ -181,6 +208,8 @@ def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
         "symbols_with_internal_holes": len(holes),
         "worst_hole_count": max(holes.values()) if holes else 0,
         "dividends_applied": div_count,
+        "dividends_dropped": len(dropped),        # D333
+        "dividends_dropped_list": dropped,
         "median_bars_per_symbol": int(np.median(live.sum(axis=1))),
         "min_bars_per_symbol": int(live.sum(axis=1).min()),
         "names_live_at_start": int(live[:, 0].sum()),
@@ -188,6 +217,10 @@ def load_ragged(fixture: Path, events: Path | None, *, fee_bps: float,
     }
     panel = RaggedPanel(symbols, grid, closes, log_returns, total,
                         np.full(n, fee_bps / 1e4), live, index_of)
+    # `meta` above was never attached; the D333 audit needs the dropped list.
+    panel.meta = meta
+    panel.dividends_applied = div_count
+    panel.dividends_dropped = dropped
     return panel, cleaned
 
 
