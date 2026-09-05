@@ -23,6 +23,11 @@ width         N_eff = 2, FIXED                     +21 bp over N=19, basis-immun
 exit          the target, or nothing               +0.69 bp/bar, and only at N <= 3
 overlay       CLOSED at this width                 negative at all 12 thresholds        (D319)
 tilt          CLOSED, one variant carried          dv28, p = 0.0100, unconfirmed        (D320/D321)
+universe      FLOOR, declared: as-traded close     removes 29% of live name-bars; the
+              >= $5 at t-1 AND dv28 pass, the      tail it removes was not edge          (D339)
+              name REPLACED
+fill          NEXT OPEN, declared for new studies  the same-close fill was 13.8 of the
+                                                   best book's 18.9 bp/bar               (D340)
 ```
 
 **The incumbent book, under BOTH spread conventions** (D332). `PB` is the
@@ -59,7 +64,26 @@ largest trades are sub-$2 names in the bottom 7% of the universe by dollar
 volume, all below dv28's cut.** It beats every one of 200 rotations on every
 statistic (+32.4 gross against a null max of +15.2), the symmetric trim clears
 cost by 1.85×, and the ex-top-1% mean equals the round trip. **Not declared a
-candidate**; the cell under dv28 is the owed pre-registration.
+candidate.**
+
+**Then D339 and D340, the same day, took the 18.93 apart.** A census of all 47
+books found 25 take more than half their P&L below a $5 / dv28 floor and 35 have
+a top trade that fails it — nine names supply the top trade of 30 books — so the
+floor is a **universe definition** from here. Under it, `retrace_leg` is **+3.14
+bp/bar PUB** (Sharpe 0.16, −24.5 a trade on the invariant lens, both legs
+negative); it still orders the liquid gate — above its rotation null's maximum
+on gross — and the floor *improves* `rsi` (−2.55 → +4.05) and `hist_L` (−26.8 →
+−11.6) while leaving the incumbent's net unchanged and replacing its top trade.
+And the **same-close fill** every D300-family book is scored under — signal at
+the close, filled at that close, credited the overnight gap — was worth **13.8
+bp/bar** of the 18.93: under a next-open fill `retrace_leg` is **+5.14** PUB,
+inside its null on Sharpe, negative per trade; both its legs were flattered
+(+44.8 bp per long entry, +27.2 per short — larger than the published
+half-spread); the incumbent loses 3.2 bp/bar and D318's re-costing is
+re-opened. **Honestly scored — floor and open fill together, not yet run — the
+best book in the programme is at or below zero.** `retrace_leg` under the floor
+is a formal candidate by D339's letter and D339 itself recommends no
+out-of-sample read until its open-fill companion exists.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -166,7 +190,7 @@ worth **+0.69 bp/bar at N=2**, reproduced three ways (D305, D307, D318). Stops,
 displacement, idle conditions, the ladder: dead. `sel = rank < N_SLOTS` pins the
 family: a price exit beside a signal exit is arithmetically inert.
 
-## 3. Cost — wrong twice, fixed twice, two holes measured, one still open
+## 3. Cost — wrong twice, fixed twice, and the fill convention was the largest hole of all
 
 **Fixed (D317, D318):** the spread basis — per-cell across widths, common
 within a width — and commission, which was never charged before D318.
@@ -185,7 +209,9 @@ position size and is the PM's to add, the maximum binds only below ~$0.50.
 | **The spread CONVENTION** | The per-bar Corwin–Schultz estimate is clamped to zero on **43%** of live name-bars, uniformly, uncorrelated bar to bar; PB takes the median of that coin flip at entry, so a leg above 50% zeros is charged nothing. The authors average daily estimates over a month (`cs_spread`), which reads **2.03×** PB at the median across legs | incumbent +14.57 → **−5.16** bp/bar; every net level falls 8–20 bp/bar; relative findings unchanged | **D332. PUB is the default; which is TRUE needs quoted spreads.** D336 built the test — 100 live names, 5×5 price × dollar-volume strata, PB vs PUB vs Abdi–Ranaldo by lowest median absolute log error — and **the pull waits on the principal's IBKR session** |
 | **Borrow** | Announced deal targets are the most crowded short in the market; any post-jump or sub-$5 name may be hard to borrow. PUB does not touch this | **MEASURED as a stress (D337):** GC 50 bp/yr, HTB 500 on F0-window or sub-$5 names → **0.25 bp/bar** on the incumbent (3% of its short bars HTB), 1.19 at the house 300. `hist_L` k=20 is 39% HTB and pays 10 bp a short trade | charged under new keys; does not decide any book |
 | **Daily rebalancing** | The book is equal-weight, rebalanced daily, and earns the *sum* of one-bar returns; a rebalanced short pays a variance premium | **MEASURED (D337):** constant shares is worth **+45.85 bp** a trade on `hist_L`'s short leg and the leg still loses 53–135. **The premium is what the target exit SELECTS, not how long the book holds** — the fixed 20-bar hold's is −33.8 against the target's −45.8 | `simulate(accumulate="compound")` exists; the trades that realise the rebalance are still free (the cost side of this hole is open) |
-| **Opportunity cost** | `sel = rank < N_SLOTS`: the refill pool is the slot count, so a per-trade edge spread over more slots earns less per bar. Every D335 pairing beats the symmetric book per trade and loses to it per bar | 4 bp/bar between the best pairing and `retrace_leg` symmetric, at 19–22 names vs 14 | **open, unmeasured** (FINDINGS §10) |
+| **The FILL convention** | Signal at close t−1, position opened at bar t **earning close[t−1] → close[t]**: a fill at the signal's own close, the overnight gap credited to a position that could not have existed before the open. Every D300-family book, since D300 | **`retrace_leg` +18.93 → +5.14 PUB bp/bar; the incumbent −12.68 → −15.90**; +44.8 bp per long entry and +27.2 per short on `retrace_leg` — larger than the published half-spread; only 378 of 1,256 trades recur across fills | **MEASURED (D340).** `simulate(fill="open")` exists; default stays `"close"` so every identity reproduces; **every net number in this document is a same-close-fill number** and carries an open-fill companion where next quoted; D318's re-costing re-opened |
+| **Liquidity** | No price or volume floor on a dead-inclusive universe; cost in bp scales with 1/price but *fillability* scales with dollar volume, which no cost model charges | 25 of 47 books take more than half their P&L below $5 / dv28; `retrace_leg` +18.93 → +3.14 under the floor; the floor improves `rsi` and `hist_L` | **DECLARED UNIVERSE (D339)**: as-traded close ≥ $5 at t−1 and the dv28 pass, the name replaced; a study on the unfloored universe says so and reports both |
+| **Opportunity cost** | `sel = rank < N_SLOTS`: the refill pool is the slot count, so a per-trade edge spread over more slots earns less per bar | **its sign is now visible**: the floored `retrace_leg` is +3.14 bp/bar on the variant lens and **−24.5 a trade** on the invariant one; the two lenses disagree in sign (D339) | **open, unmeasured** (FINDINGS §10) |
 
 *The "floor at zero" hole the previous version listed was a symptom of the
 convention, not a hole of its own: under PUB the half-tick floor moves nothing
@@ -270,10 +296,12 @@ deal-event source is required; an EDGAR pull is in progress (D331).
 
 ## 6. Next, in order, and why the order
 
-**The four infrastructure items are done (D334–D337), bar one pull.** What
-they returned: the cost model's two remaining mechanisms are measured and
-small; the short side fails on cost under every signal; the leg-wise book is
-per-trade only; `retrace_leg` symmetric under F0 is the book.
+**D334–D340 are done, bar one pull.** What they returned: borrow and rebalancing
+are measured and small; the short side fails on cost under every signal; the
+leg-wise book is per-trade only; the fixture's illiquid tail was every book's
+top trade and none of their edge, so the universe now has a floor; and **the fill
+convention was worth more than any cost term the programme argued about** —
+every number quoted before D340 is a same-close-fill number.
 
 1. **Score cache — DONE (D334).** Rebuilt under the dividend bound; 48 of 51
    bit-identical; `beta_63` had been stale on a third of its cells.
@@ -288,27 +316,35 @@ per-trade only; `retrace_leg` symmetric under F0 is the book.
 4. **Constant shares and borrow — DONE (D337).** Worth 46 bp on the short leg,
    not enough; borrow 0.25 bp/bar; the leg-wise book negative at every scheme.
 
+5. **`retrace_leg` under F0 — DONE (D338), not declared.** Five names, a $0.18
+   top trade at 15.9%, four of five top trades below the dollar-volume cut.
+6. **The census and the universe floor — DONE (D339).** The floor is the
+   declared universe; `retrace_leg` +3.14 under it, a formal candidate by the
+   record's letter with its own recommendation against an OOS read.
+7. **The execution lag — DONE (D340).** The next-open fill exists as a flag;
+   `retrace_leg` +5.14 under it; the incumbent −15.90.
+
 **Next, in this order:**
 
-1. **Opportunity cost, measured** (FINDINGS §10). It is now the one hole with a
-   visible size — 4 bp/bar between the best pairing and the symmetric book — and
-   the thing every per-trade-vs-per-bar disagreement in D329/D335 turns on.
-   Pre-register: hold the slot count fixed and vary the refill pool, or the
-   reverse, on `retrace_leg` and the D335 pairings.
+1. **The stack under floor AND open fill together, as one pre-registered
+   re-costing** — D318 re-opened. `retrace_leg` (F0, floor, open), the
+   incumbent, `rsi` and `hist_L` under the floor, each with its gross-null and
+   the matched-cost net null beside it. This is the number the programme has
+   been trying to quote since D300 and has never had. Prediction to commit
+   before running: `retrace_leg` is **at or below zero** PUB; if it is not, it
+   is the first candidate that survives every convention this programme owns,
+   and D339 §7's out-of-sample design becomes live.
 2. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
-3. **`retrace_leg` under F0 — DONE (D338), not declared.** Three of nine
-   predictions; above its null's maximum on every statistic and a five-name
-   book whose top trade could not have been bought. **Owed from it, in order:
-   the cell under dv28** (with and without, threshold fixed at 28), predicted
-   in advance from D338 §1; **the null's teeth clause moved to the gross null**
-   with the matched-cost net null beside it; **a one-bar execution lag** for
-   the whole D300 family (three of the five top trades are one-bar holds under
-   a same-close fill).
-4. **The mixed convention** — rebalanced long, constant-shares short — as a
-   *predicted* arm, if anyone wants the leg-wise book back (+1.87 PUB per trade
-   after borrow, post-hoc, D337 §5). A compounding *bar series* would be needed
-   first; the runner does not have one.
+3. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on the
+   floored `retrace_leg`: +3.14 variant, −24.5 invariant. Pre-register: hold the
+   slot count fixed and vary the refill pool, or the reverse.
+4. **The rotation null's resolution.** It has 24 distinct values (D340 §5); any
+   record quoting p = 0.005 means "above all 24". A finer null — rotation by
+   name *and* by time, or a bootstrap over the gate — is owed before another
+   p is quoted as if it had 200 draws.
+5. **The mixed convention** — rebalanced long, constant-shares short — only if
+   anyone wants the leg-wise book back (D337 §5, post-hoc).
 
 **Then, signal-side, each with a mechanism behind it:** `macd_hist` normalised
 and D325 re-run; collapse capture in the high-vol short legs — 0–4% of trades
@@ -368,6 +404,17 @@ Kept legible rather than quietly fixed.
     15.9%, four of five top trades below the dollar-volume cut the programme
     already has. **A cell in a table is not a book until the top trade is
     named and its liquidity printed** — FINDINGS §18's rule, extended.
+12. **Every net number in this document before D340 was a same-close-fill
+    number, and no record questioned the fill.** Forty studies scored a
+    position from the close its signal was computed at. The convention was
+    inherited from D295 and D303's "mark with r1[:, t]" and never named as a
+    choice. It was worth 13.8 of the best book's 18.9 bp/bar and 3.2 of the
+    incumbent's. **A simulator's timing convention is part of the cost model
+    and is declared like one.**
+13. **"p = 0.0050" on a null with 24 distinct values.** The rotation null draws
+    a shift from 1 to 24; 200 draws are 24 books. Every D300-family p below
+    0.04 means "above all 24", nothing finer. Not wrong, but quoted with a
+    precision it never had.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

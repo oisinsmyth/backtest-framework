@@ -1537,3 +1537,115 @@ the five names. It is **not declared a candidate.**
    Nothing about it was wrong; nothing about it was a book until the top trade
    was named. The order of work is: four groups and the top trade first, then
    the comparisons.
+
+## 21. The fill convention credited the overnight gap to every entry, and it was worth more than the spread
+
+**From [D340](decisions/D340-RESULT-the-same-close-fill-was-three-quarters-of-the-best-book.md),
+2026-09-05.** Pre-registered; four of six.
+
+Every D300-family book computes its signal at the close of t-1, ranks on it,
+and opens the position at bar t **earning close[t-1] -> close[t]**: a fill at
+the signal's own close. No book can do that; the earliest honest fill is the
+next open, and the gap between the two accrues to a position that could not
+have existed. With a `fill="open"` flag on the simulator -- entry bar earns
+close[t]/open[t] - 1 against an open-to-close market, every later bar as
+before, default bit-identical -- the same cell, gate and exit rule give:
+
+```
+                                   close fill     OPEN fill
+retrace_leg F0 k=20, PUB net         +18.93         +5.14     bp/bar   (-73%)
+  gross                              +32.37        +18.06
+  invariant PUB per trade            +10.02        -18.27
+  long leg per trade                 +46.23        -12.03
+incumbent C0, PUB net                -12.68        -15.90              (-3.2)
+```
+
+**The gap credited per entry was +44.8 bp on retrace_leg's long leg and +27.2
+on its short** -- larger than the published half-spread on either leg. Both legs
+were flattered: names that broke below their swing low gap UP at the next open,
+names above their swing high gap DOWN. **A structure-breakdown signal at the
+close is partly a forecast of the next open**, and the convention booked the
+forecast as if it were tradeable. The incumbent's premium is +20.6 per long
+entry; at 2.4x the turnover it costs nearly as much per bar.
+
+**It is not only the entry-bar mark.** Only 378 of 1,256 trades recur across
+fills: the target reads the accumulated excess, the entry bar's excess differs,
+the first exit fires on a different day, a slot frees on a different day, and
+the books walk apart. D338's top trade is not held under the open fill at all --
+both long slots were taken. The gaps left and the squeezes stayed: the top-5
+share ROSE from 42% to 54%. Under the open fill the cell is above its null on
+gross bp/bar and inside it on Sharpe.
+
+**Three rules:**
+
+1. **A simulator's timing convention is part of the cost model and is declared
+   like one.** Forty studies inherited "mark with r1[:, t]" from D295 without
+   naming it as a choice. Every net number before D340 is a same-close-fill
+   number and carries an open-fill companion where it is next quoted.
+2. **Test the fill on the top trades first.** Three of D338's five largest
+   trades were one-bar holds; the question "what did the entry bar earn, and
+   from which price?" answers itself off the bar the top-trade rule already
+   prints. Section 18's rule now includes it.
+3. **The family's rotation null has 24 distinct values.** `shift` runs 1..24,
+   so 200 draws are 24 books and p95 is the maximum whenever the top value
+   recurs. "p = 0.005" means "above all 24" and its floor is 1/25. A finer null
+   is owed before another p is quoted at three decimals.
+
+## 22. The illiquid tail was every book's top trade and none of their edge; the universe now has a floor
+
+**From the D339 census and [D339](decisions/D339-RESULT-the-ordering-survives-the-floor-and-the-book-is-three-basis-points.md),
+2026-09-05.** Census: stage 0, no predictions. Study: pre-registered, six of nine.
+
+**The census** cut every trade of 46 symmetric F0 books and the incumbent on an
+as-traded prior close below $5 and on the dv28 cut at entry. **25 of 47 books
+take more than half their P&L below the floor; 35 of 47 top trades fail it;
+nine names -- VSA, TAOP, AHT, RLOC, PRMW, WATT, CYCN, KODK, DRYS -- supply the
+top trade of 30 books.** The floor fails 29.3% of live name-bars; the sub-$5
+share of the universe went from 3% in 2010 to 13% in 2025. That is a property
+of a dead-inclusive fixture with no floor, not of any signal: an extreme-rank
+selector finds the junk tail first, and the junk tail gaps.
+
+**The floor** -- as-traded close at t-1 >= $5 (the adjusted close times the
+split ratios dated after the bar; a floor on the ADJUSTED close would look
+through future reverse splits, and VSA's $90.55 was $0.18) AND the dv28 pass,
+both inherited round numbers -- applied to the score before ranking so the name
+is REPLACED:
+
+```
+                              unfloored     floored      maxDD
+retrace_leg F0 k=20, PUB     +18.93         +3.14       13,829 -> 8,406
+rsi F0 k=20                   -2.55         +4.05       30,751 -> 6,751
+hist_L F0 k=20               -26.79        -11.56       50,981 -> 19,880
+incumbent C0                 -12.68        -13.02       top trade VSA -> KODK
+```
+
+**The tail the floor removes was not edge.** Three books improve, the fourth is
+unchanged on net and loses its fabricated-looking top trade. `retrace_leg`
+loses five-sixths of its net and still orders the liquid gate -- above its
+rotation null's maximum on gross -- but at +3.14 bp/bar, Sharpe 0.16, seven of
+fourteen years positive, and **-24.5 a trade on the invariant lens with both
+legs negative**: the two lenses disagree in sign, which is section 10's
+opportunity cost with its sign finally visible. It is the first book here whose
+LEFT tail does the work (mean +75 below median +223, bottom 1% -49% against top
++44%), reporting rule 2's tell seen in the direction it was written for.
+
+**Replace beats starve.** A universe definition fills the vacated slot with the
+next liquid name and is worth 3-6 bp/bar over dv28's hole. **From D339 on the
+floor is the declared universe**; a study on the unfloored one says so and
+reports both.
+
+**And with section 21 beside it: the best book in the programme, scored under
+the floor AND an honest fill, is at or below zero.** Neither study has run the
+two together; that re-costing is the next pre-registration, and its prediction
+is written in STACK section 6 before it runs.
+
+**Two rules:**
+
+1. **Fillability is a cost no spread model charges.** Cost in bp scales with
+   1/price; whether a book can exist at all scales with dollar volume. The
+   four-group report prints the top trades' entry-day dollar-volume percentile
+   and as-traded price beside the bar, and a held MEDIAN says nothing about it.
+2. **Run the census before the study.** Twenty minutes of stage-0 measurement
+   turned "is this one book's problem?" into a number (25 of 47) before any
+   prediction was written, fixed two of the predictions, and made the floor a
+   definition rather than a variant. [[stage-0-premise-check]] applied.
