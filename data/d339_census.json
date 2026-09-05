@@ -1,0 +1,2309 @@
+{
+ "note": "D339 DIAGNOSTIC census. Stage-0 measurement only: no predictions, no verdicts, nothing promoted. Each of the 46 signals as a symmetric F0 book (depth 2, k=20, variant lens, PUB) plus the incumbent C0 (k=5, unfiltered); cuts on the entry bar: (a) as-traded prior close < $5 (CLOSE x product of later split ratios), (b) fails the dv28 keep mask at entry, (c) either. P&L shares are contribution-based; means are raw trade P&L. Universe shares are over live name-bars.",
+ "cell": {
+  "depth": 2,
+  "k": 20,
+  "filter": "F0",
+  "lens": "variant",
+  "convention": "PUB",
+  "price_floor": 5.0,
+  "dv_pct": 28.0
+ },
+ "f0": {
+  "applied": 1719,
+  "drops": {
+   "after_death": 0,
+   "before_first": 37,
+   "after_fixture": 0,
+   "unknown_symbol": 0
+  },
+  "excluded_live_pct": 2.5358699364479547
+ },
+ "identity_worst": 0.0,
+ "keep28_fail_share_live": 0.27558016348584163,
+ "books": {
+  "hist_L": {
+   "gross_bp_bar": 5.007157107066844,
+   "net_bp_bar": -26.785754640761702,
+   "trades": 1123,
+   "total_contrib_bp": 18256.762896792035,
+   "total_raw_pnl_bp": 36515.628698539505,
+   "names": 366,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.4835262689225289,
+     "n": 543,
+     "pnl_share": 1.2355676820495693,
+     "mean_bp_in": 70.67259446335807,
+     "mean_bp_out": -3.2061898190756724
+    },
+    "b": {
+     "trade_share": 0.5013357079252003,
+     "n": 563,
+     "pnl_share": 0.644806863077819,
+     "mean_bp_in": 45.58468527630127,
+     "mean_bp_out": 19.37759087139622
+    },
+    "c": {
+     "trade_share": 0.6153161175422974,
+     "n": 691,
+     "pnl_share": 0.11768152237810162,
+     "mean_bp_in": 8.871615009046392,
+     "mean_bp_out": 70.33644149835294
+    }
+   },
+   "top_trade": {
+    "symbol": "PRMW",
+    "side": "long",
+    "entry": "2015-02-25",
+    "hold": 1,
+    "pnl_bp": 12746.695921666715,
+    "share_raw_pnl": 0.3490750776030466,
+    "raw_px_prev": 4.06,
+    "dv_pct_at_entry": 0.15995975855130784,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "md": {
+   "gross_bp_bar": 10.353387004059705,
+   "net_bp_bar": -27.564700737123694,
+   "trades": 1233,
+   "total_contrib_bp": 34209.539449869306,
+   "total_raw_pnl_bp": 67584.06580042762,
+   "names": 269,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.5150040551500406,
+     "n": 635,
+     "pnl_share": 1.6261442770299221,
+     "mean_bp_in": 140.23365613234122,
+     "mean_bp_out": -35.8934880327911
+    },
+    "b": {
+     "trade_share": 0.5182481751824818,
+     "n": 639,
+     "pnl_share": 1.381659673699032,
+     "mean_bp_in": 139.8807014141234,
+     "mean_bp_out": -36.69983569561826
+    },
+    "c": {
+     "trade_share": 0.6358475263584753,
+     "n": 784,
+     "pnl_share": 1.6185544018204225,
+     "mean_bp_in": 121.60130261974477,
+     "mean_bp_out": -61.80702773597404
+    }
+   },
+   "top_trade": {
+    "symbol": "AHT",
+    "side": "long",
+    "entry": "2020-11-03",
+    "hold": 5,
+    "pnl_bp": 22019.133671465555,
+    "share_raw_pnl": 0.3258036256132764,
+    "raw_px_prev": 1.4300000000000004,
+    "dv_pct_at_entry": 0.12399193548387097,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "trailing_return": {
+   "gross_bp_bar": 2.6714002766680673,
+   "net_bp_bar": -34.5578474037624,
+   "trades": 1220,
+   "total_contrib_bp": 9391.194343895757,
+   "total_raw_pnl_bp": 18611.125724778183,
+   "names": 333,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.5139344262295082,
+     "n": 627,
+     "pnl_share": 1.5752771627580286,
+     "mean_bp_in": 22.917806480378616,
+     "mean_bp_out": 7.152885432682566
+    },
+    "b": {
+     "trade_share": 0.5065573770491804,
+     "n": 618,
+     "pnl_share": 0.6206667111898725,
+     "mean_bp_in": -8.691112668804342,
+     "mean_bp_out": 39.83759693371967
+    },
+    "c": {
+     "trade_share": 0.6319672131147541,
+     "n": 771,
+     "pnl_share": -0.4387411841991987,
+     "mean_bp_in": -31.975599376782906,
+     "mean_bp_out": 96.35704419660976
+    }
+   },
+   "top_trade": {
+    "symbol": "AHT",
+    "side": "long",
+    "entry": "2020-10-26",
+    "hold": 11,
+    "pnl_bp": 20564.656712626198,
+    "share_raw_pnl": 1.1049657617028052,
+    "raw_px_prev": 1.7600000000000002,
+    "dv_pct_at_entry": 0.12449392712550607,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "rsi": {
+   "gross_bp_bar": 11.050036138196193,
+   "net_bp_bar": -2.5488900067685876,
+   "trades": 1243,
+   "total_contrib_bp": 35619.843569789315,
+   "total_raw_pnl_bp": 71445.44312562418,
+   "names": 663,
+   "names_to_half": 3,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.1922767497988737,
+     "n": 239,
+     "pnl_share": 1.170656141619784,
+     "mean_bp_in": 291.44413782742225,
+     "mean_bp_out": 1.7831615387153787
+    },
+    "b": {
+     "trade_share": 0.3934030571198713,
+     "n": 489,
+     "pnl_share": 1.4647054467142415,
+     "mean_bp_in": 190.2217220532893,
+     "mean_bp_out": -28.611377928957925
+    },
+    "c": {
+     "trade_share": 0.43041029766693484,
+     "n": 535,
+     "pnl_share": 1.1045306938733652,
+     "mean_bp_in": 121.34731637625079,
+     "mean_bp_out": 9.215577491991523
+    }
+   },
+   "top_trade": {
+    "symbol": "PRMW",
+    "side": "long",
+    "entry": "2014-03-27",
+    "hold": 2,
+    "pnl_bp": 11441.290539849077,
+    "share_raw_pnl": 0.16014024183084133,
+    "raw_px_prev": 3.97,
+    "dv_pct_at_entry": 0.16856256463288521,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "upper_wick": {
+   "gross_bp_bar": -7.567566644437264,
+   "net_bp_bar": -23.0816726207649,
+   "trades": 1305,
+   "total_contrib_bp": -23800.78947628646,
+   "total_raw_pnl_bp": -47463.983526189324,
+   "names": 475,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.25134099616858235,
+     "n": 328,
+     "pnl_share": 0.28563324186794464,
+     "mean_bp_in": -36.52562951195422,
+     "mean_bp_out": -36.31891202279258
+    },
+    "b": {
+     "trade_share": 0.5547892720306513,
+     "n": 724,
+     "pnl_share": 0.4270235237214504,
+     "mean_bp_in": -19.12940121871216,
+     "mean_bp_out": -57.85593294981364
+    },
+    "c": {
+     "trade_share": 0.5731800766283525,
+     "n": 748,
+     "pnl_share": 0.42014002573496906,
+     "mean_bp_in": -19.73458293372708,
+     "mean_bp_out": -58.711877004957756
+    }
+   },
+   "top_trade": {
+    "symbol": "BRSWQ",
+    "side": "short",
+    "entry": "2019-07-23",
+    "hold": 3,
+    "pnl_bp": 3341.25074763292,
+    "share_raw_pnl": -0.07039549779443416,
+    "raw_px_prev": 0.095,
+    "dv_pct_at_entry": 0.017507723995880537,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "lower_wick": {
+   "gross_bp_bar": 9.663621076456709,
+   "net_bp_bar": -6.3859639866937155,
+   "trades": 1421,
+   "total_contrib_bp": 30981.92233044493,
+   "total_raw_pnl_bp": 61858.83979619098,
+   "names": 535,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.21534130893736805,
+     "n": 306,
+     "pnl_share": 0.21755374409107708,
+     "mean_bp_in": 80.23133233362374,
+     "mean_bp_out": 33.460136414441365
+    },
+    "b": {
+     "trade_share": 0.517945109078114,
+     "n": 736,
+     "pnl_share": 0.4013452212142936,
+     "mean_bp_in": 42.894159741637075,
+     "mean_bp_out": 44.21713609685563
+    },
+    "c": {
+     "trade_share": 0.5369458128078818,
+     "n": 763,
+     "pnl_share": 0.4633096507885506,
+     "mean_bp_in": 43.279656473142055,
+     "mean_bp_out": 43.82441019328815
+    }
+   },
+   "top_trade": {
+    "symbol": "AHT",
+    "side": "long",
+    "entry": "2020-11-03",
+    "hold": 5,
+    "pnl_bp": 22019.133671465555,
+    "share_raw_pnl": 0.35595775387984896,
+    "raw_px_prev": 1.4300000000000004,
+    "dv_pct_at_entry": 0.12399193548387097,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "wick_asym": {
+   "gross_bp_bar": -6.726220525384178,
+   "net_bp_bar": -22.91736142965709,
+   "trades": 1327,
+   "total_contrib_bp": -20765.52435394508,
+   "total_raw_pnl_bp": -41562.06997844707,
+   "names": 632,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.3006782215523738,
+     "n": 399,
+     "pnl_share": 0.8463741330014498,
+     "mean_bp_in": -106.25352034686307,
+     "mean_bp_out": 0.8977205171889048
+    },
+    "b": {
+     "trade_share": 0.5915599095704597,
+     "n": 785,
+     "pnl_share": 0.9049397851438059,
+     "mean_bp_in": -58.9933490796704,
+     "mean_bp_out": 8.759610791686713
+    },
+    "c": {
+     "trade_share": 0.613413715146948,
+     "n": 814,
+     "pnl_share": 0.9702978853897125,
+     "mean_bp_in": -61.92928738846986,
+     "mean_bp_out": 17.248284514166482
+    }
+   },
+   "top_trade": {
+    "symbol": "PQUEQ",
+    "side": "short",
+    "entry": "2018-12-13",
+    "hold": 2,
+    "pnl_bp": 5160.575936978262,
+    "share_raw_pnl": -0.1241655177341839,
+    "raw_px_prev": 0.011,
+    "dv_pct_at_entry": 0.0,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "body_frac": {
+   "gross_bp_bar": 12.749954120621124,
+   "net_bp_bar": -4.916493900132261,
+   "trades": 1480,
+   "total_contrib_bp": 41057.185447085925,
+   "total_raw_pnl_bp": 81912.14445754014,
+   "names": 600,
+   "names_to_half": 8,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.31013513513513513,
+     "n": 459,
+     "pnl_share": 0.4933941035972268,
+     "mean_bp_in": 104.47337525211226,
+     "mean_bp_out": 33.26039688229247
+    },
+    "b": {
+     "trade_share": 0.6574324324324324,
+     "n": 973,
+     "pnl_share": 0.5774068859104469,
+     "mean_bp_in": 52.507539709252484,
+     "mean_bp_out": 60.793507535379604
+    },
+    "c": {
+     "trade_share": 0.6831081081081081,
+     "n": 1011,
+     "pnl_share": 0.5154329140866366,
+     "mean_bp_in": 48.4113806853895,
+     "mean_bp_out": 70.29475177955513
+    }
+   },
+   "top_trade": {
+    "symbol": "PQUEQ",
+    "side": "short",
+    "entry": "2018-07-30",
+    "hold": 3,
+    "pnl_bp": 7081.850080431637,
+    "share_raw_pnl": 0.08645665581496985,
+    "raw_px_prev": 0.25,
+    "dv_pct_at_entry": 0.002028397565922921,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "close_in_range": {
+   "gross_bp_bar": 27.199584235186325,
+   "net_bp_bar": 8.50474358217068,
+   "trades": 1535,
+   "total_contrib_bp": 86435.79281311425,
+   "total_raw_pnl_bp": 172754.22238214992,
+   "names": 460,
+   "names_to_half": 12,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.3433224755700326,
+     "n": 527,
+     "pnl_share": 0.8227157251825926,
+     "mean_bp_in": 254.91190212449527,
+     "mean_bp_out": 38.11076385172712
+    },
+    "b": {
+     "trade_share": 0.6175895765472312,
+     "n": 948,
+     "pnl_share": 0.9244127739882378,
+     "mean_bp_in": 165.45054041804295,
+     "mean_bp_out": 27.098995001439903
+    },
+    "c": {
+     "trade_share": 0.6592833876221499,
+     "n": 1012,
+     "pnl_share": 0.9613254202734641,
+     "mean_bp_in": 161.5357844860575,
+     "mean_bp_out": 17.74380206933031
+    }
+   },
+   "top_trade": {
+    "symbol": "AHT",
+    "side": "long",
+    "entry": "2020-03-09",
+    "hold": 9,
+    "pnl_bp": 6575.247405128247,
+    "share_raw_pnl": 0.03806128333340027,
+    "raw_px_prev": 1.8500000000000005,
+    "dv_pct_at_entry": 0.06340956340956341,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "range_frac": {
+   "gross_bp_bar": 6.258431656313753,
+   "net_bp_bar": -9.918522503316233,
+   "trades": 1354,
+   "total_contrib_bp": 23169.764738929764,
+   "total_raw_pnl_bp": 46188.71808372622,
+   "names": 357,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.37149187592319055,
+     "n": 503,
+     "pnl_share": 1.0502098646457851,
+     "mean_bp_in": 157.1755959972072,
+     "mean_bp_out": -38.62585981535723
+    },
+    "b": {
+     "trade_share": 0.7710487444608567,
+     "n": 1044,
+     "pnl_share": 0.07668901324683658,
+     "mean_bp_in": 2.784174786292153,
+     "mean_bp_out": 139.61948260270077
+    },
+    "c": {
+     "trade_share": 0.8168389955686853,
+     "n": 1106,
+     "pnl_share": 0.5308940599922818,
+     "mean_bp_in": 24.064391213383956,
+     "mean_bp_out": 78.92540887791762
+    }
+   },
+   "top_trade": {
+    "symbol": "RLOC",
+    "side": "long",
+    "entry": "2016-06-06",
+    "hold": 17,
+    "pnl_bp": 17072.29513886223,
+    "share_raw_pnl": 0.36962045813688327,
+    "raw_px_prev": 1.7699,
+    "dv_pct_at_entry": 0.004965243296921549,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "gap_frac": {
+   "gross_bp_bar": 3.505563639670849,
+   "net_bp_bar": -17.67058442542621,
+   "trades": 1195,
+   "total_contrib_bp": 11518.49547885567,
+   "total_raw_pnl_bp": 22668.652176978576,
+   "names": 552,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.34560669456066945,
+     "n": 413,
+     "pnl_share": -0.2831871848751074,
+     "mean_bp_in": -27.208874811402225,
+     "mean_bp_out": 43.35795073412751
+    },
+    "b": {
+     "trade_share": 0.44435146443514645,
+     "n": 531,
+     "pnl_share": -0.7460860755565185,
+     "mean_bp_in": -36.4189020588812,
+     "mean_bp_out": 63.2636885094044
+    },
+    "c": {
+     "trade_share": 0.502092050209205,
+     "n": 600,
+     "pnl_share": -0.13581030283151302,
+     "mean_bp_in": -18.89847920990754,
+     "mean_bp_out": 57.155865046929655
+    }
+   },
+   "top_trade": {
+    "symbol": "PRMW",
+    "side": "long",
+    "entry": "2014-03-27",
+    "hold": 2,
+    "pnl_bp": 11441.290539849077,
+    "share_raw_pnl": 0.504718606581666,
+    "raw_px_prev": 3.97,
+    "dv_pct_at_entry": 0.16856256463288521,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "rel_vol": {
+   "gross_bp_bar": 20.52875834965779,
+   "net_bp_bar": -2.7262289722104,
+   "trades": 1191,
+   "total_contrib_bp": 66728.48723127904,
+   "total_raw_pnl_bp": 133258.92673445362,
+   "names": 469,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.42317380352644834,
+     "n": 504,
+     "pnl_share": 0.6754356558085747,
+     "mean_bp_in": 178.97285707082844,
+     "mean_bp_out": 62.67337230095506
+    },
+    "b": {
+     "trade_share": 0.6759026028547439,
+     "n": 805,
+     "pnl_share": 0.7429888896640483,
+     "mean_bp_in": 123.46843655278815,
+     "mean_bp_out": 87.73791530947969
+    },
+    "c": {
+     "trade_share": 0.6994122586062133,
+     "n": 833,
+     "pnl_share": 0.5346994595137904,
+     "mean_bp_in": 88.96853201773722,
+     "mean_bp_out": 165.2182669376495
+    }
+   },
+   "top_trade": {
+    "symbol": "TAOP",
+    "side": "long",
+    "entry": "2020-07-28",
+    "hold": 3,
+    "pnl_bp": 31921.66397288764,
+    "share_raw_pnl": 0.2395461584085714,
+    "raw_px_prev": 0.3841000000000004,
+    "dv_pct_at_entry": 0.004149377593360996,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "vol_z": {
+   "gross_bp_bar": -5.487507536744223,
+   "net_bp_bar": -19.887519465924747,
+   "trades": 1251,
+   "total_contrib_bp": -16050.103209196868,
+   "total_raw_pnl_bp": -32208.16546328457,
+   "names": 725,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.16546762589928057,
+     "n": 207,
+     "pnl_share": 0.009402678265951703,
+     "mean_bp_in": -28.710338131392117,
+     "mean_bp_out": -25.15816615908658
+    },
+    "b": {
+     "trade_share": 0.3517186250999201,
+     "n": 440,
+     "pnl_share": -0.11044692978479644,
+     "mean_bp_in": -41.85560701210506,
+     "mean_bp_out": -17.005793314375257
+    },
+    "c": {
+     "trade_share": 0.3828936850519584,
+     "n": 479,
+     "pnl_share": -0.2201804951790592,
+     "mean_bp_in": -36.652467354367694,
+     "mean_bp_out": -18.97880000070263
+    }
+   },
+   "top_trade": {
+    "symbol": "GME",
+    "side": "long",
+    "entry": "2021-02-17",
+    "hold": 6,
+    "pnl_bp": 9502.009181909789,
+    "share_raw_pnl": -0.29501864031161673,
+    "raw_px_prev": 49.51,
+    "dv_pct_at_entry": 0.9951314508276533,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "dollar_vol": {
+   "gross_bp_bar": 27.227134932608262,
+   "net_bp_bar": 2.884326391917501,
+   "trades": 1202,
+   "total_contrib_bp": 87951.759257541,
+   "total_raw_pnl_bp": 176155.25031330864,
+   "names": 475,
+   "names_to_half": 4,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.4301164725457571,
+     "n": 517,
+     "pnl_share": 0.7303350179462318,
+     "mean_bp_in": 253.28363569220218,
+     "mean_bp_out": 65.99651191305126
+    },
+    "b": {
+     "trade_share": 0.6655574043261231,
+     "n": 800,
+     "pnl_share": 0.8757836791834607,
+     "mean_bp_in": 185.90409201583287,
+     "mean_bp_out": 68.23874801154815
+    },
+    "c": {
+     "trade_share": 0.6955074875207987,
+     "n": 836,
+     "pnl_share": 0.6901827923077293,
+     "mean_bp_in": 141.61857060888914,
+     "mean_bp_out": 157.82001443791626
+    }
+   },
+   "top_trade": {
+    "symbol": "TAOP",
+    "side": "long",
+    "entry": "2020-07-28",
+    "hold": 3,
+    "pnl_bp": 31921.66397288764,
+    "share_raw_pnl": 0.18121324181999665,
+    "raw_px_prev": 0.3841000000000004,
+    "dv_pct_at_entry": 0.004149377593360996,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "vol_trend": {
+   "gross_bp_bar": 2.51430259415674,
+   "net_bp_bar": -19.273071955358503,
+   "trades": 1099,
+   "total_contrib_bp": 8245.936937559067,
+   "total_raw_pnl_bp": 16793.144375644813,
+   "names": 438,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.4103730664240218,
+     "n": 451,
+     "pnl_share": 0.9056974824782202,
+     "mean_bp_in": 17.222813224133244,
+     "mean_bp_out": 13.928480882038134
+    },
+    "b": {
+     "trade_share": 0.643312101910828,
+     "n": 707,
+     "pnl_share": 1.7820798023918931,
+     "mean_bp_in": 32.36982424999827,
+     "mean_bp_out": -15.541636145673387
+    },
+    "c": {
+     "trade_share": 0.6733393994540491,
+     "n": 740,
+     "pnl_share": 0.34696237495076415,
+     "mean_bp_in": 3.192104516778553,
+     "mean_bp_out": 40.197735468603575
+    }
+   },
+   "top_trade": {
+    "symbol": "KALA",
+    "side": "long",
+    "entry": "2022-12-07",
+    "hold": 15,
+    "pnl_bp": 20182.505538684753,
+    "share_raw_pnl": 1.2018300496454701,
+    "raw_px_prev": 4.91,
+    "dv_pct_at_entry": 0.11742777260018639,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "signed_vol": {
+   "gross_bp_bar": 15.05795719960309,
+   "net_bp_bar": -3.524377988752656,
+   "trades": 1200,
+   "total_contrib_bp": 48232.67706017171,
+   "total_raw_pnl_bp": 96384.59846585327,
+   "names": 555,
+   "names_to_half": 4,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.3233333333333333,
+     "n": 388,
+     "pnl_share": 0.19380280043459122,
+     "mean_bp_in": 75.32161311263513,
+     "mean_bp_out": 82.70912879082614
+    },
+    "b": {
+     "trade_share": 0.5608333333333333,
+     "n": 673,
+     "pnl_share": 0.8495597638538754,
+     "mean_bp_in": 121.43244558157313,
+     "mean_bp_out": 27.81890434431599
+    },
+    "c": {
+     "trade_share": 0.5858333333333333,
+     "n": 703,
+     "pnl_share": 0.4757617022633527,
+     "mean_bp_in": 70.27034619410456,
+     "mean_bp_out": 94.53630803098136
+    }
+   },
+   "top_trade": {
+    "symbol": "RLOC",
+    "side": "long",
+    "entry": "2016-06-07",
+    "hold": 16,
+    "pnl_bp": 16921.39985997257,
+    "share_raw_pnl": 0.17556124245272872,
+    "raw_px_prev": 1.82,
+    "dv_pct_at_entry": 0.004970178926441352,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "dist_hvn": {
+   "gross_bp_bar": 4.080462840066573,
+   "net_bp_bar": -8.733063494484501,
+   "trades": 1225,
+   "total_contrib_bp": 13629.28038654404,
+   "total_raw_pnl_bp": 26981.224550668467,
+   "names": 559,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.12244897959183673,
+     "n": 150,
+     "pnl_share": 0.1687655687830399,
+     "mean_bp_in": -58.85612511966191,
+     "mean_bp_out": 33.31129611034209
+    },
+    "b": {
+     "trade_share": 0.2587755102040816,
+     "n": 317,
+     "pnl_share": -0.5311357051933135,
+     "mean_bp_in": -59.198071568966,
+     "mean_bp_out": 50.382173169637326
+    },
+    "c": {
+     "trade_share": 0.29714285714285715,
+     "n": 364,
+     "pnl_share": 0.189606467825301,
+     "mean_bp_in": -20.03936269100774,
+     "mean_bp_out": 39.8090041465683
+    }
+   },
+   "top_trade": {
+    "symbol": "PMT",
+    "side": "long",
+    "entry": "2020-03-25",
+    "hold": 1,
+    "pnl_bp": 7725.245105973264,
+    "share_raw_pnl": 0.2863192918270223,
+    "raw_px_prev": 5.72,
+    "dv_pct_at_entry": 0.49323621227887615,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "dist_lvn": {
+   "gross_bp_bar": 5.1315507172416,
+   "net_bp_bar": -10.103561570664919,
+   "trades": 1292,
+   "total_contrib_bp": 16441.31308510961,
+   "total_raw_pnl_bp": 33435.30866684779,
+   "names": 448,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.17337461300309598,
+     "n": 224,
+     "pnl_share": 1.252864130599852,
+     "mean_bp_in": 107.16042525161537,
+     "mean_bp_out": 8.830873979855761
+    },
+    "b": {
+     "trade_share": 0.2724458204334365,
+     "n": 352,
+     "pnl_share": 1.0267047105327698,
+     "mean_bp_in": 66.52786889695005,
+     "mean_bp_out": 10.656913633107823
+    },
+    "c": {
+     "trade_share": 0.3204334365325077,
+     "n": 414,
+     "pnl_share": 0.9464369269645501,
+     "mean_bp_in": 35.759639345947136,
+     "mean_bp_out": 21.219610452876616
+    }
+   },
+   "top_trade": {
+    "symbol": "NKA",
+    "side": "long",
+    "entry": "2015-06-10",
+    "hold": 3,
+    "pnl_bp": 19149.03101336672,
+    "share_raw_pnl": 0.5727188345760245,
+    "raw_px_prev": 1.46,
+    "dv_pct_at_entry": 0.01104417670682731,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "mass_here": {
+   "gross_bp_bar": 8.053333892272015,
+   "net_bp_bar": -5.302341222580122,
+   "trades": 1410,
+   "total_contrib_bp": 26418.494605544896,
+   "total_raw_pnl_bp": 52721.871247286974,
+   "names": 505,
+   "names_to_half": 4,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.08439716312056737,
+     "n": 119,
+     "pnl_share": 0.18541521110337514,
+     "mean_bp_in": 93.69824573494577,
+     "mean_bp_out": 32.20122386121489
+    },
+    "b": {
+     "trade_share": 0.16808510638297872,
+     "n": 237,
+     "pnl_share": -0.03384408667218906,
+     "mean_bp_in": 33.87747636714975,
+     "mean_bp_out": 38.10137199341218
+    },
+    "c": {
+     "trade_share": 0.19148936170212766,
+     "n": 270,
+     "pnl_share": 0.09021044482378011,
+     "mean_bp_in": 54.712309475765565,
+     "mean_bp_out": 33.289076920026545
+    }
+   },
+   "top_trade": {
+    "symbol": "SST",
+    "side": "long",
+    "entry": "2026-03-13",
+    "hold": 11,
+    "pnl_bp": 10566.403035745128,
+    "share_raw_pnl": 0.20041783012944306,
+    "raw_px_prev": 2.1,
+    "dv_pct_at_entry": 0.007021063189568706,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "mass_imbalance": {
+   "gross_bp_bar": -0.6514910700028114,
+   "net_bp_bar": -13.93324399201913,
+   "trades": 1349,
+   "total_contrib_bp": 1578.6633505522186,
+   "total_raw_pnl_bp": 3215.7470214384443,
+   "names": 684,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.15122312824314307,
+     "n": 204,
+     "pnl_share": -1.7477858181211328,
+     "mean_bp_in": 12.530261732936793,
+     "mean_bp_out": 0.5760468366107723
+    },
+    "b": {
+     "trade_share": 0.33432171979243885,
+     "n": 451,
+     "pnl_share": 6.188552011144514,
+     "mean_bp_in": 42.218797676986405,
+     "mean_bp_out": -17.622417294969303
+    },
+    "c": {
+     "trade_share": 0.3654558932542624,
+     "n": 493,
+     "pnl_share": 4.609235182739829,
+     "mean_bp_in": 33.125808357474504,
+     "mean_bp_out": -15.321584694855725
+    }
+   },
+   "top_trade": {
+    "symbol": "TRGP",
+    "side": "short",
+    "entry": "2020-03-10",
+    "hold": 6,
+    "pnl_bp": 3368.675897095957,
+    "share_raw_pnl": 1.047556251980638,
+    "raw_px_prev": 13.12,
+    "dv_pct_at_entry": 0.760914760914761,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "atr_norm": {
+   "gross_bp_bar": 3.571279892916968,
+   "net_bp_bar": -1.8475227079191883,
+   "trades": 1332,
+   "total_contrib_bp": 12622.601287574947,
+   "total_raw_pnl_bp": 25407.77127476722,
+   "names": 216,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.3686186186186186,
+     "n": 491,
+     "pnl_share": 0.3309888788814601,
+     "mean_bp_in": 73.40360640703582,
+     "mean_bp_out": -12.643756802719803
+    },
+    "b": {
+     "trade_share": 0.7545045045045045,
+     "n": 1005,
+     "pnl_share": -1.8820893478512064,
+     "mean_bp_in": -48.28048220876254,
+     "mean_bp_out": 226.08457460114244
+    },
+    "c": {
+     "trade_share": 0.8445945945945946,
+     "n": 1125,
+     "pnl_share": 0.3659135059939844,
+     "mean_bp_in": 16.164414650928112,
+     "mean_bp_out": 34.892776775232534
+    }
+   },
+   "top_trade": {
+    "symbol": "DRYS",
+    "side": "short",
+    "entry": "2016-11-17",
+    "hold": 1,
+    "pnl_bp": 8524.567586511645,
+    "share_raw_pnl": 0.33551024583480493,
+    "raw_px_prev": 73.00000000000013,
+    "dv_pct_at_entry": 0.375751503006012,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "cs_spread": {
+   "gross_bp_bar": -12.931970087165917,
+   "net_bp_bar": -17.64998760918594,
+   "trades": 1360,
+   "total_contrib_bp": -40491.34688976851,
+   "total_raw_pnl_bp": -80907.00066726892,
+   "names": 207,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.44191176470588234,
+     "n": 601,
+     "pnl_share": 0.8309160579987187,
+     "mean_bp_in": -59.962634225680496,
+     "mean_bp_out": -59.1165447926679
+    },
+    "b": {
+     "trade_share": 0.7161764705882353,
+     "n": 974,
+     "pnl_share": 1.0878011195871011,
+     "mean_bp_in": -83.492070226124,
+     "mean_bp_out": 1.073253194238001
+    },
+    "c": {
+     "trade_share": 0.7676470588235295,
+     "n": 1044,
+     "pnl_share": 1.228076551410709,
+     "mean_bp_in": -82.41529183876105,
+     "mean_bp_out": 16.248620292397582
+    }
+   },
+   "top_trade": {
+    "symbol": "GME",
+    "side": "short",
+    "entry": "2021-02-01",
+    "hold": 2,
+    "pnl_bp": 9449.155867108058,
+    "share_raw_pnl": -0.11679033691988945,
+    "raw_px_prev": 325.0,
+    "dv_pct_at_entry": 0.9950980392156863,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "rvol21": {
+   "gross_bp_bar": -2.248674904648553,
+   "net_bp_bar": -6.987150582436101,
+   "trades": 1301,
+   "total_contrib_bp": -6302.787609836167,
+   "total_raw_pnl_bp": -12280.437820437613,
+   "names": 276,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.2890084550345888,
+     "n": 376,
+     "pnl_share": -1.2061792917400658,
+     "mean_bp_in": 113.24979126285632,
+     "mean_bp_out": -59.31065874083417
+    },
+    "b": {
+     "trade_share": 0.7025365103766333,
+     "n": 914,
+     "pnl_share": 1.8444618379172182,
+     "mean_bp_in": -33.475695939660106,
+     "mean_bp_out": 47.329065293053524
+    },
+    "c": {
+     "trade_share": 0.7878554957724827,
+     "n": 1025,
+     "pnl_share": 0.8140265050107692,
+     "mean_bp_in": -2.7634489826699267,
+     "mean_bp_out": -34.231531207249844
+    }
+   },
+   "top_trade": {
+    "symbol": "KODK",
+    "side": "short",
+    "entry": "2020-07-30",
+    "hold": 8,
+    "pnl_bp": 10049.104320670283,
+    "share_raw_pnl": -0.8183017957182396,
+    "raw_px_prev": 33.2,
+    "dv_pct_at_entry": 0.8661825726141079,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "vol_ratio": {
+   "gross_bp_bar": 3.219669767729155,
+   "net_bp_bar": -7.806970022870987,
+   "trades": 1170,
+   "total_contrib_bp": 9938.27449778241,
+   "total_raw_pnl_bp": 20344.284425213136,
+   "names": 575,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.15726495726495726,
+     "n": 184,
+     "pnl_share": 0.43776474774158003,
+     "mean_bp_in": 98.36143723845952,
+     "mean_bp_out": 2.2776673157571774
+    },
+    "b": {
+     "trade_share": 0.3623931623931624,
+     "n": 424,
+     "pnl_share": 0.27638214956363083,
+     "mean_bp_in": 13.571094788479856,
+     "mean_bp_out": 19.557828733106817
+    },
+    "c": {
+     "trade_share": 0.38974358974358975,
+     "n": 456,
+     "pnl_share": 0.883595938635442,
+     "mean_bp_in": 36.50729995772805,
+     "mean_bp_out": 5.17780902589516
+    }
+   },
+   "top_trade": {
+    "symbol": "SDOCQ",
+    "side": "short",
+    "entry": "2016-01-12",
+    "hold": 10,
+    "pnl_bp": 6445.465525184075,
+    "share_raw_pnl": 0.3168194757047372,
+    "raw_px_prev": 0.07,
+    "dv_pct_at_entry": 0.2213359920239282,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "range_over_atr": {
+   "gross_bp_bar": 6.874352895749626,
+   "net_bp_bar": -5.989518379597953,
+   "trades": 1209,
+   "total_contrib_bp": 22639.962691645676,
+   "total_raw_pnl_bp": 45284.851047474054,
+   "names": 619,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.1968569065343259,
+     "n": 238,
+     "pnl_share": 1.1564400801133174,
+     "mean_bp_in": 177.16287182110455,
+     "mean_bp_out": 3.213272455253523
+    },
+    "b": {
+     "trade_share": 0.49627791563275436,
+     "n": 600,
+     "pnl_share": 0.3590334062352758,
+     "mean_bp_in": 29.31489334686172,
+     "mean_bp_out": 45.47769300387031
+    },
+    "c": {
+     "trade_share": 0.5128205128205128,
+     "n": 620,
+     "pnl_share": 0.381801261078986,
+     "mean_bp_in": 29.835668257062594,
+     "mean_bp_out": 45.47833060797156
+    }
+   },
+   "top_trade": {
+    "symbol": "RLOC",
+    "side": "long",
+    "entry": "2016-06-06",
+    "hold": 17,
+    "pnl_bp": 17072.29513886223,
+    "share_raw_pnl": 0.37699793074210647,
+    "raw_px_prev": 1.7699,
+    "dv_pct_at_entry": 0.004965243296921549,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "on_mean": {
+   "gross_bp_bar": 7.213003123226776,
+   "net_bp_bar": -27.328004974369755,
+   "trades": 1121,
+   "total_contrib_bp": 24357.913643389675,
+   "total_raw_pnl_bp": 49256.06525299824,
+   "names": 353,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.5735950044603033,
+     "n": 643,
+     "pnl_share": 0.4729054392587574,
+     "mean_bp_in": 28.69870456174308,
+     "mean_bp_out": 64.44100045982725
+    },
+    "b": {
+     "trade_share": 0.576271186440678,
+     "n": 646,
+     "pnl_share": 1.1093289739843457,
+     "mean_bp_in": 70.5358312425365,
+     "mean_bp_out": 7.7682489901465726
+    },
+    "c": {
+     "trade_share": 0.6743978590544157,
+     "n": 756,
+     "pnl_share": 0.3684956501440748,
+     "mean_bp_in": 11.594450657521715,
+     "mean_bp_out": 110.93331659153922
+    }
+   },
+   "top_trade": {
+    "symbol": "VSA",
+    "side": "long",
+    "entry": "2025-01-07",
+    "hold": 17,
+    "pnl_bp": 20130.293499637613,
+    "share_raw_pnl": 0.4086865931381369,
+    "raw_px_prev": 0.8,
+    "dv_pct_at_entry": 0.0,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "id_mean": {
+   "gross_bp_bar": 24.350088831007152,
+   "net_bp_bar": -19.353860847569376,
+   "trades": 1269,
+   "total_contrib_bp": 78660.01873230317,
+   "total_raw_pnl_bp": 157654.57480133776,
+   "names": 302,
+   "names_to_half": 3,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.6619385342789598,
+     "n": 840,
+     "pnl_share": 0.7540239586727298,
+     "mean_bp_in": 137.231817160068,
+     "mean_bp_out": 98.78752537734417
+    },
+    "b": {
+     "trade_share": 0.6808510638297872,
+     "n": 864,
+     "pnl_share": 0.8639572369281026,
+     "mean_bp_in": 146.9462759897717,
+     "mean_bp_out": 75.78516628685183
+    },
+    "c": {
+     "trade_share": 0.7848699763593381,
+     "n": 996,
+     "pnl_share": 0.5940332393743504,
+     "mean_bp_in": 91.46147168407792,
+     "mean_bp_out": 243.8056740073118
+    }
+   },
+   "top_trade": {
+    "symbol": "CYCN",
+    "side": "long",
+    "entry": "2024-11-29",
+    "hold": 4,
+    "pnl_bp": 27078.348823007953,
+    "share_raw_pnl": 0.17175745681423882,
+    "raw_px_prev": 2.16,
+    "dv_pct_at_entry": 0.10714285714285714,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "on_share": {
+   "gross_bp_bar": 12.935437608833894,
+   "net_bp_bar": 2.1577773385909857,
+   "trades": 1300,
+   "total_contrib_bp": 42103.89246873811,
+   "total_raw_pnl_bp": 84025.80253192123,
+   "names": 380,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.14923076923076922,
+     "n": 194,
+     "pnl_share": 0.46546244596258285,
+     "mean_bp_in": 142.56148326714893,
+     "mean_bp_out": 50.9664328915862
+    },
+    "b": {
+     "trade_share": 0.45384615384615384,
+     "n": 590,
+     "pnl_share": 0.9731503841871159,
+     "mean_bp_in": 111.46641348867999,
+     "mean_bp_out": 25.719181089577482
+    },
+    "c": {
+     "trade_share": 0.48307692307692307,
+     "n": 628,
+     "pnl_share": 1.0590050890970493,
+     "mean_bp_in": 119.58897141165328,
+     "mean_bp_out": 13.2796554842306
+    }
+   },
+   "top_trade": {
+    "symbol": "TAOP",
+    "side": "long",
+    "entry": "2020-07-21",
+    "hold": 8,
+    "pnl_bp": 31371.047640533405,
+    "share_raw_pnl": 0.3733501697721436,
+    "raw_px_prev": 0.4000000000000004,
+    "dv_pct_at_entry": 0.004153686396677051,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "on_minus_id": {
+   "gross_bp_bar": -4.594542637323535,
+   "net_bp_bar": -48.30110864048965,
+   "trades": 1260,
+   "total_contrib_bp": -10681.983359555783,
+   "total_raw_pnl_bp": -21131.024158087614,
+   "names": 259,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.7246031746031746,
+     "n": 913,
+     "pnl_share": 3.2998546495913126,
+     "mean_bp_in": -76.78587833580625,
+     "mean_bp_out": 141.13683793228665
+    },
+    "b": {
+     "trade_share": 0.7047619047619048,
+     "n": 888,
+     "pnl_share": 2.779315517117078,
+     "mean_bp_in": -65.87675437029148,
+     "mean_bp_out": 100.45035946970752
+    },
+    "c": {
+     "trade_share": 0.8238095238095238,
+     "n": 1038,
+     "pnl_share": -0.018163576903409997,
+     "mean_bp_in": -6.776990430256443,
+     "mean_bp_out": -63.49778419586233
+    }
+   },
+   "top_trade": {
+    "symbol": "CYCN",
+    "side": "long",
+    "entry": "2026-03-23",
+    "hold": 8,
+    "pnl_bp": 30642.06704994026,
+    "share_raw_pnl": -1.450098529096254,
+    "raw_px_prev": 1.59,
+    "dv_pct_at_entry": 0.14341463414634145,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "on_persist": {
+   "gross_bp_bar": 1.1201686090081955,
+   "net_bp_bar": -12.755676981786383,
+   "trades": 1391,
+   "total_contrib_bp": 4165.553559733549,
+   "total_raw_pnl_bp": 8392.33912890586,
+   "names": 606,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.11358734723220705,
+     "n": 158,
+     "pnl_share": -4.653393126810878,
+     "mean_bp_in": -156.60384319758245,
+     "mean_bp_out": 26.87408463432595
+    },
+    "b": {
+     "trade_share": 0.29475197699496763,
+     "n": 410,
+     "pnl_share": -6.027138305110736,
+     "mean_bp_in": -85.88365733150309,
+     "mean_bp_out": 44.44917292030799
+    },
+    "c": {
+     "trade_share": 0.3120057512580877,
+     "n": 434,
+     "pnl_share": -5.011224668124152,
+     "mean_bp_in": -60.9818080862044,
+     "mean_bp_out": 36.42470620513957
+    }
+   },
+   "top_trade": {
+    "symbol": "WATT",
+    "side": "short",
+    "entry": "2024-12-31",
+    "hold": 15,
+    "pnl_bp": 12490.586868450775,
+    "share_raw_pnl": 1.4883319985758512,
+    "raw_px_prev": 2.6499999999999972,
+    "dv_pct_at_entry": 0.3281703775411423,
+    "fails_a": true,
+    "fails_b": false
+   }
+  },
+  "max_ret_21": {
+   "gross_bp_bar": 3.1907177659601555,
+   "net_bp_bar": -1.7548085495368038,
+   "trades": 1248,
+   "total_contrib_bp": 10136.837695215965,
+   "total_raw_pnl_bp": 20503.447277989162,
+   "names": 323,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.22596153846153846,
+     "n": 282,
+     "pnl_share": 0.09015908242155672,
+     "mean_bp_in": 95.27354978504732,
+     "mean_bp_out": -6.5876747012362
+    },
+    "b": {
+     "trade_share": 0.6875,
+     "n": 858,
+     "pnl_share": -2.2202846017797717,
+     "mean_bp_in": -46.483834614168956,
+     "mean_bp_out": 154.83737788960548
+    },
+    "c": {
+     "trade_share": 0.7387820512820513,
+     "n": 922,
+     "pnl_share": -0.5595728640800296,
+     "mean_bp_in": 0.21879645980833434,
+     "mean_bp_out": 62.27520534369903
+    }
+   },
+   "top_trade": {
+    "symbol": "KODK",
+    "side": "short",
+    "entry": "2020-07-30",
+    "hold": 8,
+    "pnl_bp": 10049.104320670283,
+    "share_raw_pnl": 0.4901177926044752,
+    "raw_px_prev": 33.2,
+    "dv_pct_at_entry": 0.8661825726141079,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "ivol_21": {
+   "gross_bp_bar": 0.40939526786509617,
+   "net_bp_bar": -4.613516517492586,
+   "trades": 1286,
+   "total_contrib_bp": 2348.8038410666577,
+   "total_raw_pnl_bp": 4960.118704227519,
+   "names": 282,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.2822706065318818,
+     "n": 363,
+     "pnl_share": 6.176336136121189,
+     "mean_bp_in": 158.11169229086912,
+     "mean_bp_out": -56.80869512173132
+    },
+    "b": {
+     "trade_share": 0.6835147744945568,
+     "n": 879,
+     "pnl_share": -4.114854748009897,
+     "mean_bp_in": -26.422864392181594,
+     "mean_bp_out": 69.25262040529512
+    },
+    "c": {
+     "trade_share": 0.7620528771384136,
+     "n": 980,
+     "pnl_share": 0.026550509783735073,
+     "mean_bp_in": 11.074388611789221,
+     "mean_bp_out": -19.257457958581504
+    }
+   },
+   "top_trade": {
+    "symbol": "KODK",
+    "side": "short",
+    "entry": "2020-07-30",
+    "hold": 8,
+    "pnl_bp": 10049.104320670283,
+    "share_raw_pnl": 2.0259806105255933,
+    "raw_px_prev": 33.2,
+    "dv_pct_at_entry": 0.8661825726141079,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "beta_63": {
+   "gross_bp_bar": -4.792791905844204,
+   "net_bp_bar": -40.16253911212342,
+   "trades": 1301,
+   "total_contrib_bp": -12840.812495139415,
+   "total_raw_pnl_bp": -25598.508176599593,
+   "names": 236,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.47809377401998465,
+     "n": 622,
+     "pnl_share": 2.422079712749195,
+     "mean_bp_in": -107.30028756766669,
+     "mean_bp_out": 60.59244578864369
+    },
+    "b": {
+     "trade_share": 0.4242890084550346,
+     "n": 552,
+     "pnl_share": 2.3634081614006264,
+     "mean_bp_in": -121.78967793889704,
+     "mean_bp_out": 55.57996534802609
+    },
+    "c": {
+     "trade_share": 0.5810914681014604,
+     "n": 756,
+     "pnl_share": 2.6692584755392326,
+     "mean_bp_in": -98.51184585409965,
+     "mean_bp_out": 89.68155465889858
+    }
+   },
+   "top_trade": {
+    "symbol": "CYCN",
+    "side": "long",
+    "entry": "2024-11-29",
+    "hold": 4,
+    "pnl_bp": 27078.348823007953,
+    "share_raw_pnl": -1.0578096440698497,
+    "raw_px_prev": 2.16,
+    "dv_pct_at_entry": 0.10714285714285714,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "rev_5": {
+   "gross_bp_bar": 16.132889807456333,
+   "net_bp_bar": -10.74076132622351,
+   "trades": 1102,
+   "total_contrib_bp": 52949.55991277117,
+   "total_raw_pnl_bp": 105930.64849690156,
+   "names": 459,
+   "names_to_half": 3,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.426497277676951,
+     "n": 470,
+     "pnl_share": 0.4279175010589243,
+     "mean_bp_in": 72.28337575777742,
+     "mean_bp_out": 113.85674349801614
+    },
+    "b": {
+     "trade_share": 0.5245009074410163,
+     "n": 578,
+     "pnl_share": 0.5920670431885078,
+     "mean_bp_in": 102.52603098248353,
+     "mean_bp_out": 89.06603547524064
+    },
+    "c": {
+     "trade_share": 0.6206896551724138,
+     "n": 684,
+     "pnl_share": 0.5268188387617244,
+     "mean_bp_in": 71.91346493591207,
+     "mean_bp_out": 135.7460250735352
+    }
+   },
+   "top_trade": {
+    "symbol": "NKA",
+    "side": "long",
+    "entry": "2015-06-04",
+    "hold": 7,
+    "pnl_bp": 18761.545757637174,
+    "share_raw_pnl": 0.1771115916295551,
+    "raw_px_prev": 1.54,
+    "dv_pct_at_entry": 0.012084592145015106,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "rev_21": {
+   "gross_bp_bar": 1.3467796025644387,
+   "net_bp_bar": -32.56907685166029,
+   "trades": 1149,
+   "total_contrib_bp": 4145.232195543129,
+   "total_raw_pnl_bp": 8372.165316707658,
+   "names": 372,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.4978241949521323,
+     "n": 572,
+     "pnl_share": 5.80693373647873,
+     "mean_bp_in": 68.18159340449925,
+     "mean_bp_out": -53.08094646562549
+    },
+    "b": {
+     "trade_share": 0.546562228024369,
+     "n": 628,
+     "pnl_share": 2.5694137616803054,
+     "mean_bp_in": 30.990703985763957,
+     "mean_bp_out": -21.2859823154551
+    },
+    "c": {
+     "trade_share": 0.6544821583986075,
+     "n": 752,
+     "pnl_share": -4.3131363377114935,
+     "mean_bp_in": -50.71578610097993,
+     "mean_bp_out": 117.15475180011224
+    }
+   },
+   "top_trade": {
+    "symbol": "PRMW",
+    "side": "long",
+    "entry": "2015-02-25",
+    "hold": 1,
+    "pnl_bp": 12746.695921666715,
+    "share_raw_pnl": 1.5225088659237482,
+    "raw_px_prev": 4.06,
+    "dv_pct_at_entry": 0.15995975855130784,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "mom_252_21": {
+   "gross_bp_bar": 0.9419298900734041,
+   "net_bp_bar": -37.03293841087534,
+   "trades": 1349,
+   "total_contrib_bp": 8129.11382763451,
+   "total_raw_pnl_bp": 15694.31477588877,
+   "names": 161,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.4551519644180875,
+     "n": 614,
+     "pnl_share": 3.8230904153179495,
+     "mean_bp_in": 72.37922518411432,
+     "mean_bp_out": -39.11092447232304
+    },
+    "b": {
+     "trade_share": 0.49295774647887325,
+     "n": 665,
+     "pnl_share": 9.174499071812011,
+     "mean_bp_in": 215.150423625389,
+     "mean_bp_out": -186.22911832601594
+    },
+    "c": {
+     "trade_share": 0.5893254262416605,
+     "n": 795,
+     "pnl_share": 6.248578378046305,
+     "mean_bp_in": 104.23039511953507,
+     "mean_bp_out": -121.24341036848668
+    }
+   },
+   "top_trade": {
+    "symbol": "DRYS",
+    "side": "long",
+    "entry": "2016-11-11",
+    "hold": 2,
+    "pnl_bp": 22710.588302195723,
+    "share_raw_pnl": 1.4470582899921236,
+    "raw_px_prev": 11.900000000000022,
+    "dv_pct_at_entry": 0.09428284854563691,
+    "fails_a": false,
+    "fails_b": true
+   }
+  },
+  "skew_63": {
+   "gross_bp_bar": -5.024034035821952,
+   "net_bp_bar": -19.318701380658105,
+   "trades": 1226,
+   "total_contrib_bp": -14703.064520493448,
+   "total_raw_pnl_bp": -30066.244714256914,
+   "names": 312,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.1533442088091354,
+     "n": 188,
+     "pnl_share": -1.1191319745116266,
+     "mean_bp_in": 144.03701371861703,
+     "mean_bp_out": -55.05318236354229
+    },
+    "b": {
+     "trade_share": 0.2707993474714519,
+     "n": 332,
+     "pnl_share": 0.1861943682543869,
+     "mean_bp_in": -10.10767287031651,
+     "mean_bp_out": -29.87751378222799
+    },
+    "c": {
+     "trade_share": 0.3181076672104405,
+     "n": 390,
+     "pnl_share": 0.2013674997417003,
+     "mean_bp_in": -21.16755771026467,
+     "mean_bp_out": -26.089589960829763
+    }
+   },
+   "top_trade": {
+    "symbol": "KALA",
+    "side": "short",
+    "entry": "2023-01-05",
+    "hold": 5,
+    "pnl_bp": 6787.125169088747,
+    "share_raw_pnl": -0.22573903836651754,
+    "raw_px_prev": 42.09,
+    "dv_pct_at_entry": 0.664179104477612,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "dist_52w_high": {
+   "gross_bp_bar": 9.041644357134736,
+   "net_bp_bar": -10.100244076842898,
+   "trades": 1354,
+   "total_contrib_bp": 29826.714309719326,
+   "total_raw_pnl_bp": 59604.35470884843,
+   "names": 452,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.3988183161004431,
+     "n": 540,
+     "pnl_share": 0.06024721758380718,
+     "mean_bp_in": -35.68950522774027,
+     "mean_bp_out": 96.90010753295846
+    },
+    "b": {
+     "trade_share": 0.5,
+     "n": 677,
+     "pnl_share": 1.567789736199933,
+     "mean_bp_in": 140.76222619476803,
+     "mean_bp_out": -52.720343316114544
+    },
+    "c": {
+     "trade_share": 0.5923190546528804,
+     "n": 802,
+     "pnl_share": 0.6347547343501508,
+     "mean_bp_in": 41.165426363781165,
+     "mean_bp_out": 48.1697151541593
+    }
+   },
+   "top_trade": {
+    "symbol": "DRYS",
+    "side": "long",
+    "entry": "2016-11-11",
+    "hold": 2,
+    "pnl_bp": 22710.588302195723,
+    "share_raw_pnl": 0.381022299681474,
+    "raw_px_prev": 11.900000000000022,
+    "dv_pct_at_entry": 0.09428284854563691,
+    "fails_a": false,
+    "fails_b": true
+   }
+  },
+  "fvg_dist": {
+   "gross_bp_bar": 7.957439910703784,
+   "net_bp_bar": -32.87499550928869,
+   "trades": 1295,
+   "total_contrib_bp": 25544.828873445633,
+   "total_raw_pnl_bp": 51072.03706040356,
+   "names": 341,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.572972972972973,
+     "n": 742,
+     "pnl_share": 1.9472493576276741,
+     "mean_bp_in": 109.19511416495565,
+     "mean_bp_out": -54.16046591318905
+    },
+    "b": {
+     "trade_share": 0.6764478764478764,
+     "n": 876,
+     "pnl_share": 0.9954594777892484,
+     "mean_bp_in": 57.85622420813796,
+     "mean_bp_out": 0.9307509643787659
+    },
+    "c": {
+     "trade_share": 0.7351351351351352,
+     "n": 952,
+     "pnl_share": 1.631722496029457,
+     "mean_bp_in": 80.94204015805771,
+     "mean_bp_out": -75.75739116637733
+    }
+   },
+   "top_trade": {
+    "symbol": "WATT",
+    "side": "short",
+    "entry": "2024-12-31",
+    "hold": 15,
+    "pnl_bp": 12490.586868450775,
+    "share_raw_pnl": 0.24456801779177118,
+    "raw_px_prev": 2.6499999999999972,
+    "dv_pct_at_entry": 0.3281703775411423,
+    "fails_a": true,
+    "fails_b": false
+   }
+  },
+  "fvg_signed": {
+   "gross_bp_bar": 3.3463787176371382,
+   "net_bp_bar": -9.884263413985183,
+   "trades": 1294,
+   "total_contrib_bp": 11650.52717991878,
+   "total_raw_pnl_bp": 23308.143291010234,
+   "names": 154,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.07341576506955177,
+     "n": 95,
+     "pnl_share": 0.6690941540321468,
+     "mean_bp_in": 188.16834371933908,
+     "mean_bp_out": 4.53056767112012
+    },
+    "b": {
+     "trade_share": 0.19860896445131376,
+     "n": 257,
+     "pnl_share": 0.7896606983888979,
+     "mean_bp_in": 46.343967414882975,
+     "mean_bp_out": 10.991073929976189
+    },
+    "c": {
+     "trade_share": 0.21638330757341576,
+     "n": 280,
+     "pnl_share": 1.0054601263193652,
+     "mean_bp_in": 61.49389098990873,
+     "mean_bp_out": 6.005772991948512
+    }
+   },
+   "top_trade": {
+    "symbol": "AAOI",
+    "side": "long",
+    "entry": "2023-08-02",
+    "hold": 3,
+    "pnl_bp": 6334.304844157772,
+    "share_raw_pnl": 0.27176359631360525,
+    "raw_px_prev": 7.03,
+    "dv_pct_at_entry": 0.4265267175572519,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "struct_trend": {
+   "gross_bp_bar": 7.28844795013331,
+   "net_bp_bar": -8.097579156785686,
+   "trades": 1377,
+   "total_contrib_bp": 24740.580850979157,
+   "total_raw_pnl_bp": 49761.69869783329,
+   "names": 64,
+   "names_to_half": 2,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.07407407407407407,
+     "n": 102,
+     "pnl_share": -0.04408162592107878,
+     "mean_bp_in": -13.446466940090376,
+     "mean_bp_out": 40.1045006476255
+    },
+    "b": {
+     "trade_share": 0.20697167755991286,
+     "n": 285,
+     "pnl_share": 0.022484892578816723,
+     "mean_bp_in": 1.996390987803708,
+     "mean_bp_out": 45.04828504240773
+    },
+    "c": {
+     "trade_share": 0.2345679012345679,
+     "n": 323,
+     "pnl_share": -0.03998782195300364,
+     "mean_bp_in": -6.435780669645466,
+     "mean_bp_out": 49.18449322023604
+    }
+   },
+   "top_trade": {
+    "symbol": "XNPT",
+    "side": "short",
+    "entry": "2015-09-01",
+    "hold": 10,
+    "pnl_bp": 2704.2235408679016,
+    "share_raw_pnl": 0.05434347322603856,
+    "raw_px_prev": 6.75,
+    "dv_pct_at_entry": 0.16650049850448653,
+    "fails_a": false,
+    "fails_b": true
+   }
+  },
+  "retrace_leg": {
+   "gross_bp_bar": 32.374262965444025,
+   "net_bp_bar": 18.926776672726543,
+   "trades": 1256,
+   "total_contrib_bp": 103659.7306398388,
+   "total_raw_pnl_bp": 207312.34062873974,
+   "names": 673,
+   "names_to_half": 5,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.12181528662420382,
+     "n": 153,
+     "pnl_share": 0.6125411665542415,
+     "mean_bp_in": 805.3239099940282,
+     "mean_bp_out": 76.24458966423703
+    },
+    "b": {
+     "trade_share": 0.3160828025477707,
+     "n": 397,
+     "pnl_share": 0.5827828902217013,
+     "mean_bp_in": 324.3055227665023,
+     "mean_bp_out": 91.45872885964879
+    },
+    "c": {
+     "trade_share": 0.33837579617834396,
+     "n": 425,
+     "pnl_share": 0.5850664596590799,
+     "mean_bp_in": 293.7745803239274,
+     "mean_bp_out": 99.2276100975579
+    }
+   },
+   "top_trade": {
+    "symbol": "VSA",
+    "side": "long",
+    "entry": "2025-01-31",
+    "hold": 1,
+    "pnl_bp": 33034.65139847015,
+    "share_raw_pnl": 0.15934725013610962,
+    "raw_px_prev": 0.1811,
+    "dv_pct_at_entry": 0.041586073500967116,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "choch_dist": {
+   "gross_bp_bar": 8.750808876034027,
+   "net_bp_bar": -22.391359229708556,
+   "trades": 1262,
+   "total_contrib_bp": 30444.957721121256,
+   "total_raw_pnl_bp": 60427.19213104502,
+   "names": 206,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.4500792393026941,
+     "n": 568,
+     "pnl_share": 2.361844142895399,
+     "mean_bp_in": 222.4282272397166,
+     "mean_bp_out": -94.97412239353606
+    },
+    "b": {
+     "trade_share": 0.4706814580031696,
+     "n": 594,
+     "pnl_share": 1.9457713360083602,
+     "mean_bp_in": 183.15118330021824,
+     "mean_bp_out": -72.40211190012661
+    },
+    "c": {
+     "trade_share": 0.563391442155309,
+     "n": 711,
+     "pnl_share": 1.9380466634466174,
+     "mean_bp_in": 151.1409876998519,
+     "mean_bp_out": -85.36125249283064
+    }
+   },
+   "top_trade": {
+    "symbol": "WATT",
+    "side": "long",
+    "entry": "2024-12-03",
+    "hold": 19,
+    "pnl_bp": 54694.34677769,
+    "share_raw_pnl": 0.9051280532624696,
+    "raw_px_prev": 0.4800999999999995,
+    "dv_pct_at_entry": 0.010628019323671498,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "park_vol_21": {
+   "gross_bp_bar": 13.045711982855831,
+   "net_bp_bar": 8.036761098709203,
+   "trades": 1403,
+   "total_contrib_bp": 42216.017112394526,
+   "total_raw_pnl_bp": 84680.28424307928,
+   "names": 192,
+   "names_to_half": 1,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.3848895224518888,
+     "n": 540,
+     "pnl_share": 1.1112040292707774,
+     "mean_bp_in": 231.72849840583027,
+     "mean_bp_out": -46.874976704599156
+    },
+    "b": {
+     "trade_share": 0.7647897362794013,
+     "n": 1073,
+     "pnl_share": 0.5572157945555235,
+     "mean_bp_in": 41.5533018048527,
+     "mean_bp_out": 121.4957315347647
+    },
+    "c": {
+     "trade_share": 0.8510334996436208,
+     "n": 1194,
+     "pnl_share": 1.0182354170548171,
+     "mean_bp_in": 80.97140252350428,
+     "mean_bp_out": -57.414212296578086
+    }
+   },
+   "top_trade": {
+    "symbol": "KODK",
+    "side": "short",
+    "entry": "2020-07-30",
+    "hold": 8,
+    "pnl_bp": 10049.104320670283,
+    "share_raw_pnl": 0.11867112174333039,
+    "raw_px_prev": 33.2,
+    "dv_pct_at_entry": 0.8661825726141079,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "gk_minus_cc": {
+   "gross_bp_bar": -30.42549074338013,
+   "net_bp_bar": -72.69100035421695,
+   "trades": 1194,
+   "total_contrib_bp": -94960.0801590406,
+   "total_raw_pnl_bp": -189926.4303296879,
+   "names": 329,
+   "names_to_half": null,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.644891122278057,
+     "n": 770,
+     "pnl_share": 1.0294549330815523,
+     "mean_bp_in": -233.5190385381487,
+     "mean_bp_out": -23.86030814932403
+    },
+    "b": {
+     "trade_share": 0.7093802345058626,
+     "n": 847,
+     "pnl_share": 0.8620491662769598,
+     "mean_bp_in": -157.83887650726433,
+     "mean_bp_out": -162.06599979260795
+    },
+    "c": {
+     "trade_share": 0.7763819095477387,
+     "n": 927,
+     "pnl_share": 0.9755298096657469,
+     "mean_bp_in": -184.00605803153363,
+     "mean_bp_out": -72.48245143991097
+    }
+   },
+   "top_trade": {
+    "symbol": "CHK",
+    "side": "long",
+    "entry": "2020-06-08",
+    "hold": 1,
+    "pnl_bp": 17825.044972770655,
+    "share_raw_pnl": -0.09385236663390485,
+    "raw_px_prev": 24.8,
+    "dv_pct_at_entry": 0.6089676746611054,
+    "fails_a": false,
+    "fails_b": false
+   }
+  },
+  "gap_reversal": {
+   "gross_bp_bar": 11.74013505954606,
+   "net_bp_bar": -17.060070687114024,
+   "trades": 1286,
+   "total_contrib_bp": 38773.50461993376,
+   "total_raw_pnl_bp": 77534.5092258151,
+   "names": 515,
+   "names_to_half": 3,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.42457231726283046,
+     "n": 546,
+     "pnl_share": 0.33891390511623837,
+     "mean_bp_in": 57.822117314947555,
+     "mean_bp_out": 62.113017799802385
+    },
+    "b": {
+     "trade_share": 0.5505443234836703,
+     "n": 708,
+     "pnl_share": 0.0662146566234919,
+     "mean_bp_in": 27.319500283568487,
+     "mean_bp_out": 100.67872495683154
+    },
+    "c": {
+     "trade_share": 0.6283048211508554,
+     "n": 808,
+     "pnl_share": 0.308695865659567,
+     "mean_bp_in": 36.72271070447609,
+     "mean_bp_out": 100.13087652008038
+    }
+   },
+   "top_trade": {
+    "symbol": "LIDR",
+    "side": "long",
+    "entry": "2025-07-18",
+    "hold": 5,
+    "pnl_bp": 14916.411146033164,
+    "share_raw_pnl": 0.19238415635791176,
+    "raw_px_prev": 1.22,
+    "dv_pct_at_entry": 0.0801564027370479,
+    "fails_a": true,
+    "fails_b": true
+   }
+  },
+  "C0_incumbent(k5,unfilt)": {
+   "gross_bp_bar": 25.36312526588693,
+   "net_bp_bar": -12.68201705274226,
+   "trades": 3066,
+   "total_contrib_bp": 80409.63120582898,
+   "total_raw_pnl_bp": 160869.6389463676,
+   "names": 718,
+   "names_to_half": 7,
+   "n_rawpx_nan": 0,
+   "cuts": {
+    "a": {
+     "trade_share": 0.1177429876060013,
+     "n": 361,
+     "pnl_share": 0.15732497233572726,
+     "mean_bp_in": 52.83846138272675,
+     "mean_bp_out": 52.41957648325444
+    },
+    "b": {
+     "trade_share": 0.22211350293542073,
+     "n": 681,
+     "pnl_share": 0.3523388054082672,
+     "mean_bp_in": 73.25669430175503,
+     "mean_bp_out": 46.53326210770333
+    },
+    "c": {
+     "trade_share": 0.24690150032615785,
+     "n": 757,
+     "pnl_share": 0.3300203552267868,
+     "mean_bp_in": 61.80016067752478,
+     "mean_bp_out": 49.40966535880526
+    }
+   },
+   "top_trade": {
+    "symbol": "VSA",
+    "side": "long",
+    "entry": "2025-01-29",
+    "hold": 3,
+    "pnl_bp": 28785.13819069113,
+    "share_raw_pnl": 0.1789345607985595,
+    "raw_px_prev": 0.29,
+    "dv_pct_at_entry": 0.039651837524177946,
+    "fails_a": true,
+    "fails_b": true
+   }
+  }
+ },
+ "order": [
+  "retrace_leg",
+  "close_in_range",
+  "park_vol_21",
+  "dollar_vol",
+  "on_share",
+  "max_ret_21",
+  "atr_norm",
+  "rsi",
+  "rel_vol",
+  "signed_vol",
+  "ivol_21",
+  "body_frac",
+  "mass_here",
+  "range_over_atr",
+  "lower_wick",
+  "rvol21",
+  "vol_ratio",
+  "struct_trend",
+  "dist_hvn",
+  "fvg_signed",
+  "range_frac",
+  "dist_52w_high",
+  "dist_lvn",
+  "rev_5",
+  "C0_incumbent(k5,unfilt)",
+  "on_persist",
+  "mass_imbalance",
+  "gap_reversal",
+  "cs_spread",
+  "gap_frac",
+  "vol_trend",
+  "skew_63",
+  "id_mean",
+  "vol_z",
+  "choch_dist",
+  "wick_asym",
+  "upper_wick",
+  "hist_L",
+  "on_mean",
+  "md",
+  "rev_21",
+  "fvg_dist",
+  "trailing_return",
+  "mom_252_21",
+  "beta_63",
+  "on_minus_id",
+  "gk_minus_cc"
+ ],
+ "universe": {
+  "overall": {
+   "a": 0.0772984108483943,
+   "b": 0.27558016348584163,
+   "c": 0.29296204546075294
+  },
+  "by_year": {
+   "2010": {
+    "a": 0.031559968198682516,
+    "b": 0.21034299992428257,
+    "c": 0.23140664041796016,
+    "live_name_bars": 211312
+   },
+   "2011": {
+    "a": 0.039828788638942,
+    "b": 0.2791088692728037,
+    "c": 0.2943361943890765,
+    "live_name_bars": 221247
+   },
+   "2012": {
+    "a": 0.055994991314162766,
+    "b": 0.2793224165145543,
+    "c": 0.2951641490965847,
+    "live_name_bars": 226806
+   },
+   "2013": {
+    "a": 0.04186642176480996,
+    "b": 0.2787162873777246,
+    "c": 0.28953465838718645,
+    "live_name_bars": 237374
+   },
+   "2014": {
+    "a": 0.03611600924337947,
+    "b": 0.2785252461814698,
+    "c": 0.2888274273935763,
+    "live_name_bars": 248394
+   },
+   "2015": {
+    "a": 0.058963569925811095,
+    "b": 0.27904282076023856,
+    "c": 0.2929868548017147,
+    "live_name_bars": 252868
+   },
+   "2016": {
+    "a": 0.07357659170272976,
+    "b": 0.27927416621341467,
+    "c": 0.2941329486603448,
+    "live_name_bars": 253722
+   },
+   "2017": {
+    "a": 0.06886468886816609,
+    "b": 0.2792402282318355,
+    "c": 0.2914816102672715,
+    "live_name_bars": 253076
+   },
+   "2018": {
+    "a": 0.0646584927461805,
+    "b": 0.2791877968930543,
+    "c": 0.2923273205803056,
+    "live_name_bars": 249248
+   },
+   "2019": {
+    "a": 0.0800039173600258,
+    "b": 0.2791935135046906,
+    "c": 0.2944834593553494,
+    "live_name_bars": 245063
+   },
+   "2020": {
+    "a": 0.09701950648196761,
+    "b": 0.27808246839788375,
+    "c": 0.30076733572957476,
+    "live_name_bars": 247610
+   },
+   "2021": {
+    "a": 0.045892425088404985,
+    "b": 0.27749488181648985,
+    "c": 0.2898715801228364,
+    "live_name_bars": 268650
+   },
+   "2022": {
+    "a": 0.10971631906691708,
+    "b": 0.27996514850325266,
+    "c": 0.3039401960030605,
+    "live_name_bars": 273159
+   },
+   "2023": {
+    "a": 0.13318597970607493,
+    "b": 0.2798268090244004,
+    "c": 0.3013129359579437,
+    "live_name_bars": 264217
+   },
+   "2024": {
+    "a": 0.1286475998411098,
+    "b": 0.27936795306627554,
+    "c": 0.3040455892687995,
+    "live_name_bars": 261816
+   },
+   "2025": {
+    "a": 0.12654346242114656,
+    "b": 0.27988638090451085,
+    "c": 0.30844701087485926,
+    "live_name_bars": 256647
+   },
+   "2026": {
+    "a": 0.11029934349213998,
+    "b": 0.279226645786906,
+    "c": 0.2972836234415467,
+    "live_name_bars": 166030
+   }
+  }
+ },
+ "summary": {
+  "books_majority_in_cut": {
+   "a": 25,
+   "b": 30,
+   "c": 25
+  },
+  "n_books": 47
+ }
+}
