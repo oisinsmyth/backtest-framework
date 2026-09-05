@@ -1806,3 +1806,62 @@ pattern: a parameter that hurts every trade and helps the book.
 is written into the out-of-sample design as such and quoted beside k=20 and
 never alone. Sharpe 0.27 still cannot be told from zero on any holdout this
 fixture has.
+
+## 26. The event book failed as calibrated, and taught three things the slot book could not
+
+**From [D345](decisions/D345-RESULT-the-event-book-fails-as-calibrated-and-the-target-exit-was-the-wrong-exit.md),
+2026-09-06.** Pre-registered; five of ten; the load-bearing prediction failed.
+Axis C reopened at the principal's decision and closed again.
+
+The construction: flat by default, long when the floored `rsi` at t-1 is at or
+below a threshold, short when at or above its mirror, filled at the next open,
+at most two per side (most extreme first), a unit of capital per position on a
+base of four, cash otherwise; three exit arms. The threshold was calibrated on
+exposure -- two concurrent positions per side under a fixed hold -- and never on
+return. **It landed at 11 / 89**: on this universe the oversold tail is rare and
+the overbought tail is not, so the book was short three times as often as long,
+fired nine times a year, and could not be separated from a per-name time
+rotation of its own signal dates (gross Sharpe at the null's median). Deployed
+PUB Sharpe -0.25 against the slot book's +0.27 at k=40.
+
+```
+arm                lens       trades  mean/trade  net/trade   TOTAL net  DEPLOYED net
+target             variant       192      +52.6       -2.2       -1.66        -5.87
+invalidation       variant       146     +237.6     +182.4       +0.69        -0.09
+cap                variant       126     +209.0     +155.0       -0.01        +1.13
+target             invariant     279      +68.3      +12.9       -1.45       -10.60
+```
+
+**Three things the slot book could never have shown:**
+
+1. **The target exit belongs to the always-invested construction.** D303's
+   rule fires at the first move; in the slot book that freed a slot for the
+   next name. In a book with no refill it cuts the winner: +52.6 a trade under
+   the target, +237.6 under signal invalidation, +209.0 under a bare cap.
+   **D295's "stops, displacement, idle conditions, the ladder: dead" is a fact
+   about a book that refills behind every exit**, not about exits. Amended.
+2. **A threshold entry cannot be calibrated to a slot book's exposure.** Two per
+   side is a property of always being invested; asking a threshold to produce it
+   sends the threshold to where the signal barely fires. A threshold is
+   calibrated on an entry rate.
+3. **A capital series for an unbalanced book must carry the hedge its ledger
+   carries.** Every ledger P&L here is `sgn * sum(v - m)`; the slot book's bar
+   series is hedged by being two-and-two; the event book's raw signed sum was
+   not, and its 0.31-long / 0.81-short tilt hid a market drag of roughly 0.8 to
+   1.3 bp/bar. The per-trade lens and the per-bar lens disagreed in sign partly
+   for that reason.
+
+**What is kept.** The event kernel, proven bit-identical to the slot
+simulator's uncapped lens on 4,021 trades -- the slot book's invariant lens IS
+an event book whose signal is "ranked in the top two this bar". **The first
+positive invariant lens in the programme**: every `rsi <= 11 / >= 89` signal,
+held to the target or 40 bars, nets +12.9 a trade under PUB, at p = 0.055
+against the first null here with more than 24 values (200 distinct per-name
+rotations). Thin, borderline, honest. And a null construction -- rotate the
+signal per name in time -- that fits the slot book too.
+
+**The rule:** a closure is a fact about the construction it was measured on
+(D344's 1/k, D295's exits), and a pre-registration protects against reading a
+result, not against designing a study that answers the wrong question. If the
+event book is retried it is a new record with three changes: threshold on
+trade count, hedged series, invalidation exit.

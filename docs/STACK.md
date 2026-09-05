@@ -112,6 +112,20 @@ k=20 (+3.10) and never alone. Under a target exit k is a cap, so turnover follow
 the realised hold and not 1/k. D342's recommendation against spending the read
 stands until the null has more than 24 values. Book: still empty.
 
+**D345 tried the construction the principal asked for — flat by default, enter
+on a signal, exit on a condition — and it failed as calibrated.** Setting the
+`rsi` threshold to match the slot book's exposure sent it to 11 / 89, where the
+signal fires nine times a year; the book ran net short with an unhedged capital
+series; and D303's target exit, built for a book that refills, cut the winners
+at the first move (−2 net a trade against +182 under the invalidation exit).
+Axis C closes again, for those three reasons and not for a fourth. What
+survives: an event kernel proven bit-identical to the slot simulator's uncapped
+lens, **the first positive invariant lens in the programme** (+12.9 net on
+every signal, p = 0.055 against a 200-value null), and the amendment that
+**exits were inert only because the slot refilled behind them**. A retry —
+threshold on trade count, hedged series, invalidation exit — is a new
+pre-registration and is not run.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -204,18 +218,27 @@ flattered concentration most. **Concentration still wins, by 23.** The "+21"
 this document has quoted since D300 was measured on the unbounded panel and
 is not to be quoted again without the D333 tag.
 
-### Axis C — which CONSTRUCTION? **D300/D306's, not D310's.**
+### Axis C — which CONSTRUCTION? **D300/D306's, not D310's — and not, as calibrated, an event book (D345).**
 
 D310 turned over 1.73× more and its width result flipped sign under the correct
 basis (D317). D311–D316's *relative* results survive; their absolute nets do not.
+**Reopened once at the principal's decision (D345)** for a flat-by-default,
+enter-on-signal, exit-on-condition book, and closed again: the exposure
+calibration put the threshold where the signal barely fires, the capital series
+were unhedged, and the target exit was the slot book's. The kernel is kept and
+trusted; a retry is a new pre-registration.
 
-## 2. The exit work — unchanged
+## 2. The exit work — amended by D345
 
 Target +4.95 bp/bar, p = 0.0050 (D295); trailing overlay p = 0.0150 at N=19 and
 **negative at every threshold at N=2** (D319). Costed correctly the target is
 worth **+0.69 bp/bar at N=2**, reproduced three ways (D305, D307, D318). Stops,
-displacement, idle conditions, the ladder: dead. `sel = rank < N_SLOTS` pins the
-family: a price exit beside a signal exit is arithmetically inert.
+displacement, idle conditions, the ladder: dead **in the slot book**, because
+`sel = rank < N_SLOTS` refills behind any exit and makes a price exit beside a
+signal exit arithmetically inert. **D345 showed that is a property of the
+construction, not of exits**: in a book with no refill, D303's target cuts
+winners at the first move (−2 net a trade) and a signal-invalidation exit is
+worth +185 bp a trade over it.
 
 ## 3. Cost — wrong twice, fixed twice, and the fill convention was the largest hole of all
 
@@ -367,23 +390,31 @@ every number quoted before D340 is a same-close-fill number.
     above all 24 rotations on every statistic; k=10 negative and inside its
     null. The candidate cell is k=40, multiplicity three, quoted beside k=20.
 
+12. **The event-driven book — DONE (D345), failed as calibrated.** Axis C
+    closed again; the kernel kept; the exit amendment made; the first positive
+    invariant lens recorded at p = 0.055.
+
 **Next, in this order:**
 
 1. **The rotation null's resolution.** 24 distinct values is the ceiling every
    D300-family p has been quoted against; `rsi` at k=40 clears it by 2.6 bp/bar
-   on gross. A finer null — rotation by name and by time, or a bootstrap over
-   the gate — pre-registered on the k=40 cell, before any read.
-2. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
+   on gross. D345's per-name time rotation of the *signal* has 200 distinct
+   values and fits the slot book too (rotate the score, re-rank) —
+   pre-registered on the k=40 cell, before any read.
+2. **If the principal wants the event book retried:** θ on trade count, a
+   hedged capital series, the invalidation exit as the primary arm — three
+   changes, one pre-registration, the D345 kernel unchanged.
+3. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
    composite): their left tails share two names of twelve; one cell, one
    prediction on the blend's Sharpe against each parent's.
-3. **Re-base the two stale references** — `d300_width.json` and D331's cells —
+4. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
-4. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
+5. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
    both candidates: `rsi` is +3.52 a bar on the variant lens and **−4.8 a trade
    on the invariant one, both legs negative** — the book IS the slot cap.
    Pre-register: hold the slot count fixed and vary the refill pool, or the
    reverse.
-5. **The mixed convention** — rebalanced long, constant-shares short — only if
+6. **The mixed convention** — rebalanced long, constant-shares short — only if
    anyone wants the leg-wise book back (D337 §5, post-hoc).
 
 **Then, signal-side, each with a mechanism behind it:** `macd_hist` normalised
@@ -469,6 +500,17 @@ Kept legible rather than quietly fixed.
     right; the check was vacuous; it was found only because D342 wrote the same
     check without the fallback and tripped. **A fallback in an assertion is a
     way of making it unable to fail** — raise on a missing key.
+16. **"Stops, displacement, idle conditions, the ladder: dead."** *(§2, every
+    version since D295)* Dead in a book that refills behind every exit. D345's
+    event book, with no refill, found the target exit costing 185 bp a trade
+    against a signal-invalidation exit. **A closure is a fact about the
+    construction it was measured on**, the same lesson as D344's 1/k.
+17. **D345 calibrated a threshold entry to the slot book's exposure and
+    scored an unbalanced book on an unhedged series.** Both were design
+    choices made in the pre-registration without asking what the construction
+    would do with them; both were wrong in ways the first run showed. A
+    pre-registration protects against reading; it does not protect against a
+    design that answers the wrong question.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
