@@ -137,10 +137,11 @@ def main() -> int:
     RAW_CLOSE = CLOSE * RAW
     keep = UF.floor_mask(RAW_CLOSE, DV, finT)
     share = UF.floor_share(keep, finT)
-    cen_share = census["universe"]["all"]["c"] if "universe" in census and "all" in census["universe"] else None
-    if cen_share is None:  # fall back to D339's recorded value
-        cen_share = json.loads(D339_JSON.read_text())["floor"].get("share_live_fail", share)
-    assert abs(share - float(cen_share)) < 1e-9, f"[R] floor share {share:.6f} != census {cen_share}"
+    # D339 recorded the census's cut-(c) share as floor.census_c; a missing key must RAISE, not default.
+    # (The first version of this line fell back to `share` itself when its key was absent -- a check that
+    # could not fail. Found while building D342; the printed value was right, the check was vacuous.)
+    cen_share = json.loads(D339_JSON.read_text())["floor"]["census_c"]
+    assert abs(share - float(cen_share)) < 1e-9, f"[R] floor share {share:.8f} != census {cen_share:.8f}"
     print(f"    [R] RAW PRICE and FLOOR: module factor == census factor on the full grid; floor fails "
           f"{100 * share:.4f}% of live name-bars == census ({el()})")
     A2, fbmask, FBREP = FL.with_open_fill(A, panel, g)
