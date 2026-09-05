@@ -88,7 +88,8 @@ def cache_key(fixture):
               "ragged_price_scores.py", "ragged_profile.py",
               "ragged_vol_scores.py", "ragged_session_scores.py",
               "ragged_anomaly_scores.py", "ragged_structure_scores.py",
-              "d285_spread_estimate.py"):
+              "d285_spread_estimate.py",
+              "ragged_panel.py"):  # D334
         parts.append(f"{f}:{int((REPO / 'scripts' / f).stat().st_mtime)}")
     parts.append("|".join(CANDIDATES))
     return "\n".join(parts)

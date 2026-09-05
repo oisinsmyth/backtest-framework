@@ -52,7 +52,38 @@ now also keyed on `ragged_panel.py` and rebuild when next used.
 
 ## 4. Results
 
-*(filled from the agent's report)*
+**Rebuilt 2026-09-05, 420 s wall-clock** (8 processes, 294–327 s per chunk; fast
+families 52 s; 2.69 GB). `--verify` passed first: chunk == whole on all 27 slow-family
+scores, bit-identical including the NaN pattern. `--reuse-chunks` was not used.
+
+| | |
+|---|---|
+| **[K]** | new key == `cache_key(FIXTURE)`; `ragged_panel.py` in the new key, absent from the old |
+| **[W]** | `warm` bit-identical, (1573, 4187) |
+| **[U]** | **48 of 48** other scores bit-identical (`equal_nan=True`) |
+| **[M]** | merge is a partition — all 1,573 rows written exactly once |
+| **[V]** | `run_stage1_rerun.py`'s key check passes on the new npz |
+
+**[Δ] — and the footprint of the three is very unequal:**
+
+| score | finite cells | changed | share | max \|Δ\| | names touched |
+|---|--:|--:|--:|--:|--:|
+| `signed_vol` | 4,089,807 | 86 | **0.00%** | 3.82 | 19 |
+| `ivol_21` | 4,105,779 | 521,962 | **12.7%** | 0.0024 | 1,573 |
+| `beta_63` | 4,039,713 | 1,222,296 | **30.3%** | 0.16 | 1,573 |
+
+`signed_vol` reads a name's own returns, so thirty bad cells moved 86 cells — the
+thirty plus their rolling shadow. **`beta_63` and `ivol_21` go through the
+cross-sectional market return**, so thirty fabricated days moved the market factor on
+those bars and re-priced **every name**: a third of all beta cells, with a max shift of
+0.16 in a beta. **The forty runners that never checked the key were reading a beta and
+idiosyncratic-vol panel that was stale everywhere, not on thirty cells.** Any study that
+ranked on `beta_63` or `ivol_21` before this rebuild (D290's screen, D330 A's long-leg
+table for those two) is to be read with that in mind; neither was in D323's thirteen.
+
+NaN patterns are unchanged for all three. Old npz kept at
+`temp/d290_scores_pre_d333.npz` (2,693,752,677 B; the new one is 108 bytes longer — the
+extra key line). Files: `scripts/d334_cache_diff.py`, `data/d334_cache_diff.txt`.
 
 ## 5. Files
 

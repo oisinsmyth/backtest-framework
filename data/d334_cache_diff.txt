@@ -1,0 +1,24 @@
+D334 cache diff  old=temp\d290_scores_pre_d333.npz (2,693,752,677 B)
+                 new=temp\d290_scores.npz (2,693,752,785 B)
+
+[K] new key == cache_key(FIXTURE): PASS
+    'ragged_panel.py' in key: True
+    old key had ragged_panel.py: False
+
+[W] warm bit-identical: PASS  shape=(1573, 4187) dtype=bool
+
+[U] 51 candidates in CANDIDATES; 48 must be unchanged
+    unchanged: 48 of 48
+    PASS
+
+[D] the three scores that read total_log_returns
+    score         finite_old  finite_new  nan_pat_diff  both_finite   changed     frac       max|d|   rows
+    beta_63        4,039,713   4,039,713             0    4,039,713 1,222,296   30.26%       0.1606   1573   differs
+    ivol_21        4,105,779   4,105,779             0    4,105,779   521,962   12.71%     0.002354   1573   differs
+    signed_vol     4,089,807   4,089,807             0    4,089,807        86    0.00%         3.82     19   differs
+
+[V] run_stage1_rerun.py key check on BC.CACHE
+    BC.CACHE = temp\d290_scores.npz  (same file as new: True)
+    PASS  (no raise)
+
+RESULT: ALL ASSERTIONS PASS

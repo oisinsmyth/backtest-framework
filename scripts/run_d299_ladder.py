@@ -121,7 +121,8 @@ def cache_key():
             st = p.stat()
             h.update(f"{st.st_size}:{int(st.st_mtime)}".encode())
     for f in ("run_d293_candidate.py", "run_d295_exits.py", "run_d299_ladder.py",
-              "d285_spread_estimate.py"):
+              "d285_spread_estimate.py",
+              "ragged_panel.py"):  # D334
         st = (REPO / "scripts" / f).stat()
         h.update(f"{f}:{st.st_size}:{int(st.st_mtime)}".encode())
     h.update(f"{N_FULL}:{BASE_HOLD}:{VOL_WIN}".encode())
