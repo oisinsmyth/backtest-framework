@@ -32,16 +32,22 @@ both. **PUB is the default until quoted spreads decide** (D332 §4).
 
 | N=2 / target, k=5 | net bp/bar | net Sharpe | held ½-spread |
 |---|--:|--:|--:|
-| **PB** (D321's costing) | +14.57 | +0.334 | 18.3 |
-| **PUB** | **−5.16** | **−0.118** | 38.8 |
-| PB, D318's costing | +11.36 | +0.261 | 18.3 |
+| PB, as reported D318–D332 | +14.57 | +0.334 | 18.3 |
+| **PB, post-D333** | **+7.15** | **+0.187** | 18.3 |
+| PUB, as reported D332 | −5.16 | −0.118 | 38.8 |
+| **PUB, post-D333** | **−12.68** | **−0.332** | 38.8 |
 
-**Under the published convention the incumbent loses money.** Its short leg
-alone nets −180.8 bp per trade. What survives the swap is every *relative*
-finding — concentration (+32 bp N2−N19), the leg-wise construction, the D323
-order — and one absolute one: **`retrace_leg` at k=20, +16.06 bp/bar and
-Sharpe +0.480 under PUB, is the best symmetric book in the programme under
-either convention.**
+**D333 found thirty fabricated return days in the fixture** — corporate
+actions booked as cash dividends with the price left flat, applied by the
+panel without a bound (PNK +356% on a +0.9% day) — and **the incumbent's
+headline was half of them.** Under the published spread convention it loses
+money at either level. What survives is every *relative* finding at a lower
+level — concentration (**+23 bp** N2−N19, down from 30), the leg-wise
+construction, the D323 order — and one absolute one: **`retrace_leg` at k=20,
++18.78 bp/bar PB and +13.76 PUB (Sharpe +0.568 / +0.416), is the best
+symmetric book in the programme under either convention and the only one
+above +10 under the published one.** The runner-up on both conventions is
+now `price_log`, the known-bad control.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists the holes that remain — borrow and rebalancing — each with a measured
@@ -106,10 +112,16 @@ D299, D308, D311, D312, D313. **D314 explains all five at once**: with
 ρ = 0.0020, `Sharpe = √N·net/σ`, net is monotone down in width, so the optimum
 is a **corner**, and a rule that varies N can only move away from one.
 
-### Axis B — which FIXED width? **N_eff = 2, basis-immune.**
+### Axis B — which FIXED width? **N_eff = 2, basis-immune — and a quarter of its premium was fabricated data.**
 
 In D300/D306's construction turnover is `1/k` at every depth, so the cost basis
-cancels: **concentration wins by ~21 bp whatever round trip is charged.**
+cancels: concentration wins whatever round trip is charged, and D332 confirmed
+that under the published spread convention too. **But D333 cut the premium
+from +29.6 to +22.9 bp/bar**: a +356% fabricated day is +178% on the bar in a
+two-name book and +19% in a nineteen-name one, so the thirty bad days
+flattered concentration most. **Concentration still wins, by 23.** The "+21"
+this document has quoted since D300 was measured on the unbounded panel and
+is not to be quoted again without the D333 tag.
 
 ### Axis C — which CONSTRUCTION? **D300/D306's, not D310's.**
 
@@ -147,6 +159,12 @@ position size and is the PM's to add, the maximum binds only below ~$0.50.
 *The "floor at zero" hole the previous version listed was a symptom of the
 convention, not a hole of its own: under PUB the half-tick floor moves nothing
 by more than 1 bp (D332 Q7).*
+
+**And one that was not a cost at all — CLOSED (D333):**
+
+| hole | mechanism | size | status |
+|---|---|---|---|
+| **Corporate actions booked as dividends** | The panel applied every event-file dividend as `log1p(amount / close)` with no bound; thirty spin-offs, mergers and splits are recorded as cash dividends with the price left flat, and became +9% to +356% return days | incumbent −7.4 bp/bar (half its book); concentration premium −6.7; every reversal-type signal −5 | **fixed in `load_ragged`**: a dividend ≥ 10% of price is applied only if the price fell ≥ half the implied move. Score cache stale for `beta_63`, `ivol_21`, `signed_vol` — owed |
 
 **And one that is not a cost but decides which leg pays it — the rebalancing
 premium.** A rebalanced long on a bouncy name harvests volatility; a rebalanced
@@ -270,6 +288,12 @@ Kept legible rather than quietly fixed.
    "unexplained" for three studies.** It was takeover targets read as free.
    **Measure the price and the spread of what each leg HOLDS** — FINDINGS §14
    — would have found it in D326.
+8. **D322 reported "six names of 718 make half the P&L" and "top-1% of trades
+   = 96.3% of P&L", and nobody asked which six.** PNK was one of them, and its
+   bar was a $38.86 dividend on an $11 stock with the price flat. Reporting
+   rule 3 was followed and stopped one question short. **A concentration
+   report is not finished until the top trade is named and its bar is looked
+   at** (FINDINGS §18). Fifteen studies were run on the unbounded panel.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

@@ -1371,3 +1371,55 @@ advance. **Until then every net number in this programme is a PB / PUB pair.**
 3. **The published convention does not fix the pinned-name problem** (section
    16). A deal stock's spread really is tiny; the estimator is right about
    what it measures and silent about borrow.
+
+## 18. The fixture carried thirty fabricated return days, and a concentration report is not finished until the top trade is named
+
+**From [D333](decisions/D333-RESULT-thirty-fabricated-days-and-half-the-incumbent.md),
+2026-09-05.**
+
+`load_ragged` applied every event-file dividend as `log1p(amount / close)`
+with no bound. The events file records corporate actions -- spin-off
+consideration, merger consideration, 2-for-1 splits, returns of value on
+stitched series -- as cash dividends with the price left at its
+post-transaction level. **Thirty of them, 0.08% of 35,713 dividends, became
+return days of +9% to +356%**: PNK 2016-04-29 closed 10.94 to 11.04 and was
+paid +356%; TMUS 2013-05-01 rose 39.5% on the tape and was paid 49% more.
+
+**The rule (pre-registered, two round parameters):** a dividend of at least
+10% of the close is applied only if the price fell at least half of what the
+distribution implies (`-r/(1+r)`); otherwise it is dropped and logged. It drops
+the thirty, keeps every real distribution (HLSS -96% on a 24.8x payout, PENN,
+BAX), and names one borderline case (IDT 2013-08-01, 48% of the implied move).
+
+**What thirty days were worth, same trades, thirty bars corrected:**
+
+```
+                                  before      after
+incumbent N=2/target, PB         +14.57      +7.15   bp/bar   -- half its book
+incumbent, PUB                    -5.16     -12.68
+concentration N2 - N19           +29.59     +22.93            -- a quarter of the premium
+hist_L's long leg, per trade      +97.0      +63.9
+skew_63 / dist_lvn / rev_21 / rev_5   -5 bp/bar each
+retrace_leg k=20, PB / PUB       +20.91     +18.78  /  +16.06 -> +13.76
+```
+
+**`retrace_leg` remains the best symmetric book under either convention and
+the only one above +10 under the published one.** The incumbent's headline
+since D318 was half fabricated; concentration's premium was a quarter
+fabricated and still wins by 23.
+
+**The rule this leaves, and it is about reporting, not data.** D322 -- the
+four-group report -- said "six names of 718 make half the P&L" and "top-1% of
+trades = 96.3% of P&L". Reporting rule 3 was followed. **Nobody asked which
+six, and one of them was PNK.** Fifteen studies then ran on the unbounded
+panel. **A concentration report is not finished until the top trade is named,
+its bar is printed -- open, high, low, close, volume, return -- and any event
+on that bar is shown beside it.** A +356% day with a +0.9% price move is
+visible in one line, and would have been in D322.
+
+**Two more, on the data:** an events file's total-return adjustment must be
+checked against the price -- a distribution that came out of the price moved
+the price, and one that did not is not a distribution; and **a derived-array
+cache must be keyed on the panel builder**, or a data fix reproduces the old
+numbers silently. `run_d303_reference` now is; `d290_build_cache` is not, and
+`beta_63`, `ivol_21` and `signed_vol` are stale until it is rebuilt.
