@@ -177,6 +177,44 @@ record.
 
 ---
 
+## 11. ADDENDUM, same day — the filter on the incumbent, and what it found instead
+
+Asked how the incumbent performs under the deal filter, I ran F0 on the cells
+D331 did not (`d331_filter_on_incumbent.py`, `72f3e89`). It touches 2.6–3.3%
+of entries:
+
+| cell | PB bp/bar | +F0 | PUB bp/bar | +F0 |
+|---|--:|--:|--:|--:|
+| incumbent C0, N=2/target, k=5 | +14.57 | **+6.05** | −5.16 | −11.32 |
+| `hist_L` symmetric, k=20 | −3.97 | −12.20 | −18.58 | −26.54 |
+| **`retrace_leg`, k=20** | +20.91 | **+26.33** (Sharpe 0.625 → **0.747**) | +16.06 | **+21.76** (0.480 → **0.618**) |
+
+**The incumbent loses more than half its book to a filter that removes 2.6%
+of its entries, and `retrace_leg` improves.** Splitting the incumbent's ledger
+by deal window: the 56 in-window long trades earned +618 bp each on average
+and +80 at the median — the same median as everyone else — with **one trade
+at 103% of their P&L.** Ranking the whole ledger:
+
+| trade | share of P&L | biggest day | the tape |
+|---|--:|--:|---|
+| **PNK long 2016-04-29** | **14.1%** | +356% | close 10.94 → 11.04; a **$38.86 "dividend"** |
+| VSA long 2025-01-29 | 11.4% | +330% | 90.55 → 389.20 on 500× volume — real |
+| AHT long 2020-03-18 | 6.0% | +155% | 490 → 1,250, March 2020 — no split on file, plausibly real |
+| **GCI long 2015-06-24** | **5.0%** | +120% | close 14.90 → 14.13; an **$18.58 "dividend"** |
+| DRYS short 2016-11-17 | 3.4% | −85% | the collapse — real |
+
+**Top 1 / 5 / 10 trades = 14.1% / 39.8% / 54.2% of the incumbent's P&L.** Two
+of the top four are corporate actions booked as cash dividends with the price
+left flat — the Pinnacle/GLPI consideration and the Gannett/TEGNA spin-off —
+and the panel applies every dividend as `log1p(amount / close)` with no bound.
+**19.1% of the incumbent's P&L since D318 is a data defect**, and another
+third is eight lottery days. The deal filter "halved the book" because the PNK
+trade sits inside a target-form window. **D333 pre-registers the fix.**
+
+`retrace_leg`'s improvement is a path effect — its per-trade net fell slightly
+while its bp/bar rose — consistent with deal-window names occupying capped
+slots at low return. Not further explained here.
+
 ## 10. REVISION, same day — re-run on the EDGAR second pass (`c524dbf`)
 
 §1–§8 were run on the first pass one minute before the second landed. The
