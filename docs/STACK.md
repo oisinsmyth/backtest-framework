@@ -102,8 +102,15 @@ observations (`keep_v2`, the universe from here; 30.9% of live name-bars fail)
 all 24 rotations on gross by 1.3 bp/bar (v1's margin was 0.09), drawdown down
 a fifth, seven of fourteen years positive, the short leg positive per trade for
 the first time. The 35 trades the hole had admitted across three books lost 134
-bp a trade on net. D342's recommendation against spending the read stands until
-the null has more than 24 values. Book: still empty.
+bp a trade on net. **D344 then found the hold is a cost lever: at k=40 the same
+cell is +5.14 PUB, +4.93 after borrow, Sharpe 0.27, drawdown down a quarter,
+nine of fourteen years positive, above all 24 rotations on every statistic** —
+the only cell in the programme to manage that; k=10 is −5.89 and inside its
+null. **The candidate is now `rsi` at k=40**, a choice made after seeing three
+cells and written into the out-of-sample design as such; k=40 is quoted beside
+k=20 (+3.10) and never alone. Under a target exit k is a cap, so turnover follows
+the realised hold and not 1/k. D342's recommendation against spending the read
+stands until the null has more than 24 values. Book: still empty.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -356,13 +363,20 @@ every number quoted before D340 is a same-close-fill number.
     +3.10 under it, above all 24 rotations by 1.3; the hole's 35 trades lost
     134 bp each on net. `retrace_leg` bit-identical; the incumbent +0.12.
 
+11. **The hold-length check — DONE (D344).** k=40 nets +5.14 PUB, Sharpe 0.27,
+    above all 24 rotations on every statistic; k=10 negative and inside its
+    null. The candidate cell is k=40, multiplicity three, quoted beside k=20.
+
 **Next, in this order:**
 
 1. **The rotation null's resolution.** 24 distinct values is the ceiling every
-   D300-family p has been quoted against; `rsi` clears it by 1.3 bp/bar on
-   gross under `keep_v2`. A finer null — rotation by name and by time, or a
-   bootstrap over the gate — pre-registered on the `rsi` cell, before any read.
-2. **Re-base the two stale references** — `d300_width.json` and D331's cells —
+   D300-family p has been quoted against; `rsi` at k=40 clears it by 2.6 bp/bar
+   on gross. A finer null — rotation by name and by time, or a bootstrap over
+   the gate — pre-registered on the k=40 cell, before any read.
+2. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
+   composite): their left tails share two names of twelve; one cell, one
+   prediction on the blend's Sharpe against each parent's.
+3. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
 4. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
    both candidates: `rsi` is +3.52 a bar on the variant lens and **−4.8 a trade

@@ -1754,3 +1754,55 @@ principal's; the programme total stays at zero reads.
 same assertion found that the first's could not fail -- D341's floor-share check
 had a fallback that defaulted to the value under test. **An assertion with a
 default is an assertion that cannot fail.** Raise on a missing key.
+
+## 25. The hold is a cost lever, and under a target exit k is a cap, not a hold
+
+**From [D344](decisions/D344-RESULT-the-hold-is-a-cost-lever-k40-nets-5-and-turnover-is-not-1-over-k.md),
+2026-09-05.** Pre-registered; four of eight; the load-bearing one held.
+
+The candidate pays 11.3 of its 14.4 gross in cost at k=20. At **k=40 it pays
+7.6**, gives up 1.7 of gross, and nets **+5.14 PUB bp/bar, +4.93 after borrow,
+Sharpe 0.27**, with drawdown down a quarter, nine of fourteen years positive,
+and the ordering **above all 24 rotations of its gate on every statistic** --
+gross, gross Sharpe, both net Sharpes -- the only cell in the programme to
+manage that. k=10 is -5.89 and inside its null. D323 had ranked rsi's holds the
+other way on the unfloored universe with the same-close fill and the per-bar
+spread; under honest costs the arithmetic reverses.
+
+```
+rsi, keep_v2, open fill          k=10      k=20      k=40
+gross bp/bar                   +11.52    +14.36    +12.70
+cost bp/bar PUB                 17.40     11.26      7.56
+NET bp/bar PUB                  -5.89     +3.10     +5.14
+NET Sharpe PUB                  -0.29     +0.16     +0.27
+turnover per bar               0.1480    0.0955    0.0664
+invariant PUB per trade         -16.6      -3.7     -11.8
+above k of 24 on gross         22 of 24  24 of 24  24 of 24
+```
+
+**Both mechanism predictions were wrong, for one reason.** Turnover was
+predicted to scale as 1/k (D296) and gross to fall monotonically in k. Turnover
+ratios came in at 1.55 and 1.44, and gross PEAKS at k=20. D296's 1/k is a
+fixed-hold result; here **k is a cap under the D303 target exit**, most
+positions close before it, the realised hold rises sub-linearly in the cap
+(roughly 7, 10 and 15 bars), and a ten-bar cap truncates the reversion before
+it completes. Cost per bar is the round trip over the REALISED hold.
+
+**The two lenses disagree in direction on k.** Per trade, k=40 is worse than
+k=20 (-11.8 against -3.7); per bar it is better, because it pays the round trip
+a third less often. Section 10's opportunity cost again, with a new sign
+pattern: a parameter that hurts every trade and helps the book.
+
+**Two rules:**
+
+1. **A cost lever that needs no new data comes before any signal work.** The
+   hold moved the candidate more than anything since the floor, and cost half
+   of one study.
+2. **Read a mechanism on the construction it was measured on.** 1/k is true of
+   a fixed hold and false of a cap; the pre-registration carried it across
+   without checking which one the book had.
+
+**Multiplicity three.** k=40 was chosen from three cells after seeing them; it
+is written into the out-of-sample design as such and quoted beside k=20 and
+never alone. Sharpe 0.27 still cannot be told from zero on any holdout this
+fixture has.
