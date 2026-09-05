@@ -23,9 +23,9 @@ width         N_eff = 2, FIXED                     +21 bp over N=19, basis-immun
 exit          the target, or nothing               +0.69 bp/bar, and only at N <= 3
 overlay       CLOSED at this width                 negative at all 12 thresholds        (D319)
 tilt          CLOSED, one variant carried          dv28, p = 0.0100, unconfirmed        (D320/D321)
-universe      FLOOR, declared: as-traded close     removes 29% of live name-bars; the
-              >= $5 at t-1 AND dv28 pass, the      tail it removes was not edge          (D339)
-              name REPLACED
+universe      FLOOR, declared: as-traded close     removes 31% of live name-bars; the
+              >= $5 at t-1 AND dv28 pass WITH its  tail it removes was not edge, and the
+              21 observations, the name REPLACED   re-listing hole cost money    (D339, D343)
 fill          NEXT OPEN, declared for new studies  the same-close fill was 13.8 of the
                                                    best book's 18.9 bp/bar               (D340)
 ```
@@ -95,11 +95,15 @@ scoring. **D342 gave it the candidate record and it passed: above all 24
 rotations of its gate on gross and on PUB net Sharpe, +3.32 after borrow, a
 5.5% top trade that is a real eighteen-bar decline in a liquid name. `rsi` under
 the deal filter, the floor and the open fill is the personal track's DECLARED
-CANDIDATE.** Its out-of-sample design is written and not run; D342 recommends
-against spending the read until the null has more than 24 values and the
-floor's re-listing hole (NBIS, 4.4% of the book, no dollar-volume estimate at
-entry) is closed. Every one of its trades loses money uncapped — the book is the
-slot cap — and eight of fourteen years are positive. Book: still empty.
+CANDIDATE.** Its out-of-sample design is written and not run. **D343 closed the
+floor's re-listing hole** — the dollar-volume clause now requires its 21
+observations (`keep_v2`, the universe from here; 30.9% of live name-bars fail)
+— and `rsi` under it is **+3.10 PUB, +2.90 after borrow, Sharpe 0.16**, above
+all 24 rotations on gross by 1.3 bp/bar (v1's margin was 0.09), drawdown down
+a fifth, seven of fourteen years positive, the short leg positive per trade for
+the first time. The 35 trades the hole had admitted across three books lost 134
+bp a trade on net. D342's recommendation against spending the read stands until
+the null has more than 24 values. Book: still empty.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -348,18 +352,17 @@ every number quoted before D340 is a same-close-fill number.
 9. **`rsi` candidate record — DONE (D342). Declared.** Six of eight; above all
    24 rotations on gross and PUB net Sharpe; the OOS design written, not run.
 
+10. **The re-listing clause — DONE (D343).** `keep_v2` is the universe; `rsi`
+    +3.10 under it, above all 24 rotations by 1.3; the hole's 35 trades lost
+    134 bp each on net. `retrace_leg` bit-identical; the incumbent +0.12.
+
 **Next, in this order:**
 
-1. **Close the floor's re-listing hole** — a pre-registered amendment to the
-   universe definition: a name passes the dollar-volume clause only with its
-   21 observations (D320's missing-estimate rule stays for the *spread*, not
-   for a *liquidity* floor). Re-run D342's cell under it as an identity study;
-   NBIS leaves and 4.4% of the book with it.
-2. **The rotation null's resolution.** 24 distinct values is the ceiling every
-   D300-family p has been quoted against; `rsi` clears it by 0.09 bp/bar on
-   gross. A finer null — rotation by name and by time, or a bootstrap over the
-   gate — pre-registered on the `rsi` cell, before any read.
-3. **Re-base the two stale references** — `d300_width.json` and D331's cells —
+1. **The rotation null's resolution.** 24 distinct values is the ceiling every
+   D300-family p has been quoted against; `rsi` clears it by 1.3 bp/bar on
+   gross under `keep_v2`. A finer null — rotation by name and by time, or a
+   bootstrap over the gate — pre-registered on the `rsi` cell, before any read.
+2. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
 4. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
    both candidates: `rsi` is +3.52 a bar on the variant lens and **−4.8 a trade

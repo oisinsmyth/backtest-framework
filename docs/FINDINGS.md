@@ -1726,12 +1726,22 @@ candidate**. Its out-of-sample design is written and not run.
    shorts (MSTR in the bitcoin run, SMCI in the AI run) and cheap longs; two of
    the twelve are shared with `retrace_leg`'s left tail, so the two candidates
    lose on different events.
-3. **The floor leaks at re-listings.** NBIS's first day back after an
-   eight-month halt is 4.4% of the book. Its trailing dollar volume had fewer
-   than 21 observations, and D320's rule -- a missing estimate never excludes,
-   written so a filter cannot become a liveness proxy -- passed it into a
-   liquidity-floored universe. The universe definition needs the 21-observation
-   clause for the dollar-volume floor; pre-registered next.
+3. **The floor leaked at re-listings, and the leak cost money.** NBIS's first
+   day back after an eight-month halt was 4.4% of the book. Its trailing dollar
+   volume had fewer than 21 observations, and D320's rule -- a missing estimate
+   never excludes, written so a filter cannot become a liveness proxy -- passed
+   it into a liquidity-floored universe. **D343 closed it**: the dollar-volume
+   clause now requires its 21 observations (`keep_v2`, 30.9% of live name-bars
+   fail, the universe from here). The 35 trades the hole had admitted across
+   three books **lost 134 bp a trade on net** -- the one relisting pop was
+   outweighed by names re-entering the tape against the book. `rsi` under
+   `keep_v2` is +3.10 PUB, +2.90 after borrow, Sharpe 0.16, and its margin over
+   the null's best rotation widened from 0.09 to 1.3 bp/bar, because the best
+   rotation had held a relisting pop too. `retrace_leg` is bit-identical under
+   the clause. A rule from the record: **a prediction about a symbol is not a
+   prediction about a trade** -- the fixture stitches Yandex and Nebius under
+   one ticker, and "NBIS is not in the ledger" was false for eight Yandex trades
+   from 2022 the clause was never meant to touch.
 
 **On the read.** A 0.18-Sharpe book whose annual nets are noise around +3.5 bp
 cannot be distinguished from zero on one holdout of a few years, and the holdout
