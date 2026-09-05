@@ -91,7 +91,15 @@ letter it is the first cell that survives every convention the programme owns
 and its out-of-sample design is live; **D341 recommends against spending the
 read on it.** `rsi` under the same two conventions is **+3.52**, Sharpe 0.18,
 fourteen names to half, no gap dependence — the first book to *gain* from honest
-scoring, and the next candidate record.
+scoring. **D342 gave it the candidate record and it passed: above all 24
+rotations of its gate on gross and on PUB net Sharpe, +3.32 after borrow, a
+5.5% top trade that is a real eighteen-bar decline in a liquid name. `rsi` under
+the deal filter, the floor and the open fill is the personal track's DECLARED
+CANDIDATE.** Its out-of-sample design is written and not run; D342 recommends
+against spending the read until the null has more than 24 values and the
+floor's re-listing hole (NBIS, 4.4% of the book, no dollar-volume estimate at
+entry) is closed. Every one of its trades loses money uncapped — the book is the
+slot cap — and eight of fourteen years are positive. Book: still empty.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -337,24 +345,27 @@ every number quoted before D340 is a same-close-fill number.
    −10.28. The prediction "at or below zero" was falsified: the two corrections
    overlapped by 13 bp/bar. Seventy published numbers reproduced to 0.0.
 
+9. **`rsi` candidate record — DONE (D342). Declared.** Six of eight; above all
+   24 rotations on gross and PUB net Sharpe; the OOS design written, not run.
+
 **Next, in this order:**
 
-1. **`rsi` under the floor and the open fill as a pre-registered candidate
-   record** — four groups, the top trade named with its liquidity, a null with
-   its resolution stated, GC+HTB. It is +3.52 with a 0.18 Sharpe, fourteen names
-   to half, a 5.5% top trade and no gap premium on either leg; it was first per
-   trade in D335 and its unfloored book was negative. Predict before running
-   whether it clears +3 under every convention and whether its left tail (−54%)
-   is the same names as `retrace_leg`'s.
-2. **Re-base the two stale references** — `d300_width.json` and D331's cells —
+1. **Close the floor's re-listing hole** — a pre-registered amendment to the
+   universe definition: a name passes the dollar-volume clause only with its
+   21 observations (D320's missing-estimate rule stays for the *spread*, not
+   for a *liquidity* floor). Re-run D342's cell under it as an identity study;
+   NBIS leaves and 4.4% of the book with it.
+2. **The rotation null's resolution.** 24 distinct values is the ceiling every
+   D300-family p has been quoted against; `rsi` clears it by 0.09 bp/bar on
+   gross. A finer null — rotation by name and by time, or a bootstrap over the
+   gate — pre-registered on the `rsi` cell, before any read.
+3. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
-3. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on the
-   floored `retrace_leg`: +3.14 variant, −24.5 invariant. Pre-register: hold the
-   slot count fixed and vary the refill pool, or the reverse.
-4. **The rotation null's resolution.** It has 24 distinct values (D340 §5); any
-   record quoting p = 0.005 means "above all 24". A finer null — rotation by
-   name *and* by time, or a bootstrap over the gate — is owed before another
-   p is quoted as if it had 200 draws.
+4. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
+   both candidates: `rsi` is +3.52 a bar on the variant lens and **−4.8 a trade
+   on the invariant one, both legs negative** — the book IS the slot cap.
+   Pre-register: hold the slot count fixed and vary the refill pool, or the
+   reverse.
 5. **The mixed convention** — rebalanced long, constant-shares short — only if
    anyone wants the leg-wise book back (D337 §5, post-hoc).
 
@@ -435,6 +446,12 @@ Kept legible rather than quietly fixed.
     or predict nothing.** The `hist_L` square adds a second warning: with a
     target exit, a fill change makes a different book, and its effect can have
     the opposite sign to the per-entry premium.
+15. **D341's floor-share assertion compared a number to itself for one
+    commit.** Its fallback `.get(key, share)` defaulted to the value under
+    test when the key was absent, and the key was absent. The printed value was
+    right; the check was vacuous; it was found only because D342 wrote the same
+    check without the fallback and tripped. **A fallback in an assertion is a
+    way of making it unable to fail** — raise on a missing key.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

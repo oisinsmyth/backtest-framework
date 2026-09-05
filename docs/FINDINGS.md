@@ -1697,3 +1697,50 @@ next candidate record.
    what the convention credited; only the re-run says what it did.
 3. **Say the null's resolution on every line.** "Above 24 of 24" is the
    ceiling of a 24-shift rotation and the honest form of p = 0.005.
+
+## 24. The programme has a declared candidate, and it is three and a half basis points a bar whose every trade loses money uncapped
+
+**From [D342](decisions/D342-RESULT-rsi-is-the-declared-candidate-at-three-and-a-half-basis-points.md),
+2026-09-05.** Pre-registered; six of eight; the two that decide held.
+
+`rsi` symmetric at k=20 -- under the deal filter, the dividend bound, the
+published spread, the universe floor, a next-open fill and GC+HTB borrow -- is
+**+3.52 PUB bp/bar, +3.32 after borrow, Sharpe 0.18**, above all 24 rotations of
+its liquid gate on gross (+14.72 against a null maximum of +14.64) and on PUB
+net Sharpe (+0.181 against +0.149, with the matched-cost null's p95 negative).
+Fourteen names to half the P&L, a 5.5% top trade that is a real eighteen-bar
+decline in a liquid biotech, no overnight-gap premium on either leg, eight of
+fourteen years positive. It is the personal track's first **declared
+candidate**. Its out-of-sample design is written and not run.
+
+**Three things about it that a candidate record must say:**
+
+1. **Every trade loses money uncapped.** The invariant lens is -4.8 bp a trade
+   with both legs negative (-7.9 long, -1.6 short); the variant book is +3.5 a
+   bar. The book earns through the slot cap's selection of the two most extreme
+   names per side -- D300's concentration finding, now the whole edge. Section
+   10's opportunity cost has its sign on both candidates, and it is the book.
+2. **The left tail does the work, more than on any book before it.** Skew
+   -1.69, the bottom 1% of trades -54% of P&L against +40% for the top, a 0.51
+   payoff carried by a 72% win rate. The twelve worst trades are squeezed
+   shorts (MSTR in the bitcoin run, SMCI in the AI run) and cheap longs; two of
+   the twelve are shared with `retrace_leg`'s left tail, so the two candidates
+   lose on different events.
+3. **The floor leaks at re-listings.** NBIS's first day back after an
+   eight-month halt is 4.4% of the book. Its trailing dollar volume had fewer
+   than 21 observations, and D320's rule -- a missing estimate never excludes,
+   written so a filter cannot become a liveness proxy -- passed it into a
+   liquidity-floored universe. The universe definition needs the 21-observation
+   clause for the dollar-volume floor; pre-registered next.
+
+**On the read.** A 0.18-Sharpe book whose annual nets are noise around +3.5 bp
+cannot be distinguished from zero on one holdout of a few years, and the holdout
+has one read. D342 recommends against spending it until the rotation null has
+more than 24 values and the cell still clears it, and until the re-listing hole
+is closed. Both are owed before the read, not after. The decision is the
+principal's; the programme total stays at zero reads.
+
+**One rule, from the way this record was built:** a second runner writing the
+same assertion found that the first's could not fail -- D341's floor-share check
+had a fallback that defaulted to the value under test. **An assertion with a
+default is an assertion that cannot fail.** Raise on a missing key.
