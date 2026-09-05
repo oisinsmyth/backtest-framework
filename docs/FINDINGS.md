@@ -1634,10 +1634,10 @@ next liquid name and is worth 3-6 bp/bar over dv28's hole. **From D339 on the
 floor is the declared universe**; a study on the unfloored one says so and
 reports both.
 
-**And with section 21 beside it: the best book in the programme, scored under
-the floor AND an honest fill, is at or below zero.** Neither study has run the
-two together; that re-costing is the next pre-registration, and its prediction
-is written in STACK section 6 before it runs.
+**And with section 21 beside it, run together (D341): the best book in the
+programme, scored under the floor AND an honest fill, is +2.68 bp/bar PUB.** The
+prediction written in STACK section 6 before the run said "at or below zero";
+section 23 is about why it was wrong.
 
 **Two rules:**
 
@@ -1649,3 +1649,51 @@ is written in STACK section 6 before it runs.
    turned "is this one book's problem?" into a number (25 of 47) before any
    prediction was written, fixed two of the predictions, and made the floor a
    definition rather than a variant. [[stage-0-premise-check]] applied.
+
+## 23. Corrections that share a cause do not add: the honest number is +2.7, not zero
+
+**From [D341](decisions/D341-RESULT-honestly-scored-retrace-leg-is-2-7-bp-a-bar.md),
+2026-09-05.** Pre-registered; five of eight; the load-bearing prediction wrong.
+
+Sections 21 and 22 each moved `retrace_leg` from +18.93 to about +4. STACK
+predicted that together they would take it to zero or below. **Together they
+take it to +2.68 bp/bar PUB, +2.46 after borrow** -- the two corrections overlap
+by 13.3 bp/bar. The overnight gap the fill credited was three-quarters in the
+sub-$5, bottom-decile-volume names the floor removes: the long-leg premium per
+entry falls from +44.8 to +11.2 once the floor is on. The short leg's does not
+(+27.2 -> +29.2): liquid names above their swing high still gap down at the next
+open, and a floored book pays that under an honest fill.
+
+```
+PUB net bp/bar          none/close  floor/close  none/open  FLOOR/OPEN  interaction
+retrace_leg F0 k=20        +18.93       +3.14      +5.14       +2.68       +13.33
+incumbent C0               -12.68      -13.02     -15.90      -13.41        +2.82
+rsi F0 k=20                 -2.55       +4.05      -3.85       +3.52        +0.77
+hist_L F0 k=20             -26.79      -11.56     -14.88      -10.28       -10.63
+```
+
+**What the honest retrace_leg is:** gross +13.87 against a rotation null whose
+maximum over all 24 distinct shifts is +12.28 -- the ordering of the liquid gate
+is real and this is the strongest statement the family's null can make -- and a
+book with a 0.14 Sharpe, -27 bp a trade on both legs, nine names to half its
+P&L, CHK's bankruptcy at 9.9%, and 44% of its P&L in names that later delisted.
+By D339's letter it is the first cell to survive every convention the programme
+owns; D341 recommends against spending the one holdout read on it.
+
+**`rsi` is the better liquid book.** +3.52 under both conventions, Sharpe 0.18,
+fourteen names to half, a 5.5% top trade, and NO gap premium on either leg once
+floored (+0.7 / -7.7) -- the open fill barely touches it. Its unfloored book was
+negative. It is the first book here to gain from honest scoring, and it gets the
+next candidate record.
+
+**Three rules:**
+
+1. **Corrections with a common mechanism do not add.** Predict the interaction
+   or predict nothing; a sum of marginal effects is a prediction that the
+   mechanisms are disjoint, and here they were the same names.
+2. **A fill change makes a different book when the exit reads the mark.**
+   `hist_L`'s unfloored book IMPROVED by 12 bp/bar under the open fill though
+   its long leg had been credited +92 bp a trade. The per-entry premium says
+   what the convention credited; only the re-run says what it did.
+3. **Say the null's resolution on every line.** "Above 24 of 24" is the
+   ceiling of a 24-shift rotation and the honest form of p = 0.005.

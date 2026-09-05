@@ -80,10 +80,18 @@ bp/bar** of the 18.93: under a next-open fill `retrace_leg` is **+5.14** PUB,
 inside its null on Sharpe, negative per trade; both its legs were flattered
 (+44.8 bp per long entry, +27.2 per short — larger than the published
 half-spread); the incumbent loses 3.2 bp/bar and D318's re-costing is
-re-opened. **Honestly scored — floor and open fill together, not yet run — the
-best book in the programme is at or below zero.** `retrace_leg` under the floor
-is a formal candidate by D339's letter and D339 itself recommends no
-out-of-sample read until its open-fill companion exists.
+re-opened. **Honestly scored — floor and open fill together (D341) — the best
+book in the programme is +2.68 bp/bar PUB, +2.46 after borrow, Sharpe 0.14.**
+This document predicted "at or below zero" and was wrong: the two corrections
+overlapped by 13 bp/bar, because the gap the fill credited lived in the names
+the floor removed. The ordering is real — above all 24 rotations of the liquid
+gate on gross — and the book is −27 bp a trade on both legs, nine names to half
+its P&L, a tenth of it one bankruptcy, 44% in names that later died. By D339's
+letter it is the first cell that survives every convention the programme owns
+and its out-of-sample design is live; **D341 recommends against spending the
+read on it.** `rsi` under the same two conventions is **+3.52**, Sharpe 0.18,
+fourteen names to half, no gap dependence — the first book to *gain* from honest
+scoring, and the next candidate record.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -324,16 +332,20 @@ every number quoted before D340 is a same-close-fill number.
 7. **The execution lag — DONE (D340).** The next-open fill exists as a flag;
    `retrace_leg` +5.14 under it; the incumbent −15.90.
 
+8. **The stack under floor AND open fill — DONE (D341).** `retrace_leg` +2.68
+   PUB (+2.46 after borrow), the incumbent −13.41, `rsi` **+3.52**, `hist_L`
+   −10.28. The prediction "at or below zero" was falsified: the two corrections
+   overlapped by 13 bp/bar. Seventy published numbers reproduced to 0.0.
+
 **Next, in this order:**
 
-1. **The stack under floor AND open fill together, as one pre-registered
-   re-costing** — D318 re-opened. `retrace_leg` (F0, floor, open), the
-   incumbent, `rsi` and `hist_L` under the floor, each with its gross-null and
-   the matched-cost net null beside it. This is the number the programme has
-   been trying to quote since D300 and has never had. Prediction to commit
-   before running: `retrace_leg` is **at or below zero** PUB; if it is not, it
-   is the first candidate that survives every convention this programme owns,
-   and D339 §7's out-of-sample design becomes live.
+1. **`rsi` under the floor and the open fill as a pre-registered candidate
+   record** — four groups, the top trade named with its liquidity, a null with
+   its resolution stated, GC+HTB. It is +3.52 with a 0.18 Sharpe, fourteen names
+   to half, a 5.5% top trade and no gap premium on either leg; it was first per
+   trade in D335 and its unfloored book was negative. Predict before running
+   whether it clears +3 under every convention and whether its left tail (−54%)
+   is the same names as `retrace_leg`'s.
 2. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
 3. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on the
@@ -415,6 +427,14 @@ Kept legible rather than quietly fixed.
     a shift from 1 to 24; 200 draws are 24 books. Every D300-family p below
     0.04 means "above all 24", nothing finer. Not wrong, but quoted with a
     precision it never had.
+14. **"Honestly scored, the best book is at or below zero."** *(this document's
+    §6, the version before D341)* It is +2.68. I summed two corrections that
+    share a cause — the overnight gap the fill removed was in the names the
+    floor removed — and the sum overstated the damage by 13 bp/bar.
+    **Corrections with a common mechanism do not add; predict the interaction,
+    or predict nothing.** The `hist_L` square adds a second warning: with a
+    target exit, a fill change makes a different book, and its effect can have
+    the opposite sign to the per-entry premium.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
