@@ -31,6 +31,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import math
 import sys
 import time
 from pathlib import Path
@@ -111,13 +112,20 @@ def build_gate(A, verbose=True):
 
 # --------------------------------------------------------------------------
 def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
-             legacy=False):
+             legacy=False, *, accumulate="sum"):
     """D295's bar order at an arbitrary depth. The overlay is NOT here -- it
     scales the returns afterwards and does not touch the holdings.
 
     `slots=False` is the PATH-INVARIANT lens: no slot cap, every eligible name
     held. Not a tradeable book; scored per trade only.
+
+    `accumulate` (D337): "sum" is the daily-rebalanced ledger every runner here
+    uses; "compound" holds the NAME in constant shares (the market hedge stays
+    daily-rebalanced) and books `sum - sgn*(sum_v - expm1(sum_log1p))`. The
+    exit rule reads the SUMMED slot in both modes; only the closed P&L differs.
     """
+    if accumulate not in ("sum", "compound"):
+        raise ValueError(f"accumulate must be 'sum' or 'compound', got {accumulate!r}")
     r1T, mkt, vxT, finT = A["r1T"], A["mkt"], A["vxT"], A["finT"]
     rankT = A["rankT"]
     gF, gR, gO = G["gateF"], G["gateR"], G["gateO"]
@@ -135,7 +143,7 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
             held = open_[side]
             sgn = 1.0 if side == 0 else -1.0
             for row in list(held):
-                age, cx, e0, tgt = held[row]
+                age, cx, e0, tgt = held[row][:4]
                 trig = False
                 if runs is not None:
                     trig = age >= tgt
@@ -147,7 +155,9 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
                 if ((trig or cap) and age > 0) or not fint[row]:
                     st = held.pop(row)
                     if st[0] > 0:
-                        trades.append((row, st[2], st[0], st[1], side))
+                        pnl = (st[1] if accumulate == "sum"
+                               else st[1] - sgn * (st[4] - math.expm1(st[5])))
+                        trades.append((row, st[2], st[0], pnl, side))
             free = (10 ** 9 if not slots else depth - len(held))
             if free > 0:
                 if legacy:
@@ -174,7 +184,7 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
                                 continue
                             tg = (int(rng.choice(runs)) if runs is not None
                                   else BASE_HOLD)
-                            held[r] = [0, 0.0, t, max(1, tg)]
+                            held[r] = [0, 0.0, t, max(1, tg), 0.0, 0.0]
                             ent[t] += 1
                             free -= 1
             k = 0
@@ -182,6 +192,8 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
                 v = r1t[row]
                 st[0] += 1
                 st[1] += sgn * (v - mt)
+                st[4] += v
+                st[5] += math.log1p(v)
                 buf[k] = v
                 k += 1
             if k:
