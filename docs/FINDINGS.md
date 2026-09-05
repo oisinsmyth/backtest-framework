@@ -1421,5 +1421,72 @@ visible in one line, and would have been in D322.
 checked against the price -- a distribution that came out of the price moved
 the price, and one that did not is not a distribution; and **a derived-array
 cache must be keyed on the panel builder**, or a data fix reproduces the old
-numbers silently. `run_d303_reference` now is; `d290_build_cache` is not, and
-`beta_63`, `ivol_21` and `signed_vol` are stale until it is rebuilt.
+numbers silently. `run_d303_reference` now is; `d290_build_cache` was not, and
+D334 rebuilt it: 48 of 51 scores bit-identical, `signed_vol` moved on 86 cells,
+`ivol_21` on 12.7% of all cells and `beta_63` on **30.3%** (max 0.16 in a beta)
+-- thirty fabricated days reached every name through the cross-sectional
+market return. The three symmetric books moved by under half a basis point per
+bar (D335 Q6). Two published references are still on the unbounded panel --
+`d300_width.json` and D331's `S_F0` cells -- and are owed a re-base beside the
+old file (D337 §9-10).
+
+## 19. The short side of this programme is a cost failure, and neither sizing nor borrow changes the verdict
+
+**From [D335](decisions/D335-RESULT-one-short-leg-pays-and-no-pairing-beats-the-symmetric-book.md)
+and [D337](decisions/D337-RESULT-constant-shares-is-worth-46-bp-and-does-not-rescue-the-short-leg.md),
+2026-09-05.** Both pre-registered.
+
+**Every one of the 46 dimensionless signals, symmetric at depth 2 and k=20, F0
+deal windows removed, published spread convention, per trade: one short leg in
+forty-six nets above zero** -- `close_in_range`, at +4.9 bp against a p95 of
+-13.3 and a p50 of -132.9. The long legs' p50 is -57.8 with six positive. Under
+the old per-bar median six of the top ten shorts were positive; **PUB alone
+turns the short side from a signal question into a cost question**, and it is
+the first time that has been stated across every signal at once.
+
+**Sizing does not change it.** Section 12's mechanism -- a rebalanced short
+pays a variance premium -- is exactly measured: holding the name in constant
+shares is worth **+45.85 bp a trade** on `hist_L`'s short leg (the identity
+compound = summed - premium holds to 2e-14) and the leg still nets **-53 PB /
+-135 PUB**. Where the premium is largest, 55-58 bp on `skew_63`'s fixed-hold
+short, the leg is retired for takeover targets. **And the premium is a property
+of what the target exit SELECTS, not of how long the book holds**: the fixed
+20-bar hold's premium is -33.8 against the target exit's -45.8 at 11 bars. The
+exit fires on the paths that moved, and those are the paths a rebalanced short
+pays on. D328/D329 wrote it as a duration effect; withdrawn.
+
+**Borrow does not change it either.** At declared stress rates -- GC 50 bp/yr,
+hard-to-borrow 500 on names in an F0 deal window or below $5 at entry -- the
+incumbent pays **0.25 bp/bar**; the house 300 bp/yr flat is 1.19. D332's
+convention gap on the same book is 20. The F0 filter removes most of the
+hard-to-borrow cohort from a jump-detecting short by itself (44% -> 7% of
+`skew_63`'s short bars).
+
+**The leg-wise construction is a per-trade result without a book** (D331,
+D335, D337). Every top-3 x top-3 pairing beats `retrace_leg` symmetric per
+trade and none beats it per bar (+14.80 best against +18.93): pairings hold
+19-22 names a bar against 14, so section 10's opportunity cost -- still
+unmeasured -- eats the per-trade edge. Under compound accumulation the
+`hist_L`/`skew_63`-F0 book falls further, because the flag applies to both
+legs and the long leg gives back its +25 bp harvest. Only a mixed convention
+-- rebalanced long, constant-shares short -- puts it above zero, at +1.87 PUB
+after borrow; post-hoc, and not a result.
+
+**What stands: `retrace_leg` symmetric at k=20 under F0 and PUB, +18.93
+bp/bar, Sharpe +0.546** -- the best book in the programme for the third study
+running. `hist_L`'s long leg is third-best per trade (+44.8 PUB) and zero as a
+book, at 69 bp a name in $11 stocks. `rsi`'s long leg is first per trade
+(+63.9) and its book is -2.55. **The leg that wins per trade is not the leg
+that makes a book**; the two lenses are never compared on the same statistic,
+and the book is the one that trades.
+
+**Three rules:**
+
+1. **Charge the published convention before ranking legs.** The per-bar
+   median made six short legs look positive that are not.
+2. **A mechanism's size is not its sign.** The rebalancing premium was named
+   in D328, measured in D329 and tested in D337, and at every step it was
+   real; it never decided a leg. Test whether a mechanism *orders the
+   outcome* before building on it.
+3. **A per-trade winner needs a book-level check in the same study.** D329
+   and D335 both produced per-trade results whose books were flat or negative.
