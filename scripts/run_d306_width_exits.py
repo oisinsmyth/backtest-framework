@@ -112,7 +112,7 @@ def build_gate(A, verbose=True):
 
 # --------------------------------------------------------------------------
 def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
-             legacy=False, *, accumulate="sum"):
+             legacy=False, *, accumulate="sum", fill="close"):
     """D295's bar order at an arbitrary depth. The overlay is NOT here -- it
     scales the returns afterwards and does not touch the holdings.
 
@@ -123,9 +123,24 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
     uses; "compound" holds the NAME in constant shares (the market hedge stays
     daily-rebalanced) and books `sum - sgn*(sum_v - expm1(sum_log1p))`. The
     exit rule reads the SUMMED slot in both modes; only the closed P&L differs.
+
+    `fill` (D340): "close" marks a position's entry bar with r1T -- a fill at
+    the same close the signal was computed from; "open" marks the ENTRY bar
+    with A["ocT"] = close[t]/open[t] - 1 against A["mkt_oc"][t] and every later
+    bar with r1T/mkt as before. Price only: a dividend with ex-date t belongs to
+    the holder of close[t-1]. Gate, exit rule, slots and ledger untouched.
     """
     if accumulate not in ("sum", "compound"):
         raise ValueError(f"accumulate must be 'sum' or 'compound', got {accumulate!r}")
+    if fill not in ("close", "open"):
+        raise ValueError(f"fill must be 'close' or 'open', got {fill!r}")
+    open_fill = fill == "open"
+    if open_fill:
+        if "ocT" not in A or "mkt_oc" not in A:
+            raise KeyError("fill='open' needs A['ocT'] and A['mkt_oc'] -- build them with d340_fill.with_open_fill")
+        ocT, mkt_oc = A["ocT"], A["mkt_oc"]
+        if ocT.shape != A["r1T"].shape or mkt_oc.shape != A["mkt"].shape:
+            raise ValueError("ocT / mkt_oc shapes do not match r1T / mkt")
     r1T, mkt, vxT, finT = A["r1T"], A["mkt"], A["vxT"], A["finT"]
     rankT = A["rankT"]
     gF, gR, gO = G["gateF"], G["gateR"], G["gateO"]
@@ -139,6 +154,8 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
 
     for t in range(1, T):
         r1t, fint, mt, vxt = r1T[t], finT[t], mkt[t], vxT[t]
+        if open_fill:
+            oct_, mot = ocT[t], mkt_oc[t]
         for side in (0, 1):
             held = open_[side]
             sgn = 1.0 if side == 0 else -1.0
@@ -189,9 +206,12 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
                             free -= 1
             k = 0
             for row, st in held.items():
-                v = r1t[row]
+                if open_fill and st[2] == t:      # D340: the entry bar earns open->close
+                    v, m_ = oct_[row], mot
+                else:
+                    v, m_ = r1t[row], mt
                 st[0] += 1
-                st[1] += sgn * (v - mt)
+                st[1] += sgn * (v - m_)
                 st[4] += v
                 st[5] += math.log1p(v)
                 buf[k] = v
