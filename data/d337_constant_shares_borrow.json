@@ -1,0 +1,4214 @@
+{
+ "note": "D337: constant-shares accumulation (compound) vs the daily-rebalanced sum, per trade; borrow stress charge on short position-bars under NEW keys (net_bp and mean_over_2c untouched). Variant bp/bar, invariant per trade, never compared (FINDINGS section 10). D333-bounded panel.",
+ "schemes": {
+  "gc_bps": 50.0,
+  "htb_bps": 500.0,
+  "house_bps": 300.0,
+  "px_htb": 5.0,
+  "ann": 252.0,
+  "htb_rule": "short and (F0 exclusion at e0-1 or close at e0 < px_htb)"
+ },
+ "arms": {
+  "H": {
+   "k": 20,
+   "depth": 2
+  },
+  "S": {
+   "k": 20,
+   "depth": 2
+  },
+  "S_F0": {
+   "k": 20,
+   "depth": 2
+  },
+  "LW_F0": {
+   "k": 20,
+   "depth": 2
+  },
+  "C0": {
+   "k": 5,
+   "depth": 2
+  }
+ },
+ "f0_filings_applied": 1719,
+ "f0_drops": {
+  "after_death": 0,
+  "before_first": 37,
+  "after_fixture": 0,
+  "unknown_symbol": 0
+ },
+ "cells": {
+  "H/target/sum/PB": {
+   "variant": {
+    "net_bp_bar": -4.088004410037765,
+    "gross_bp_bar": 12.923168970522983,
+    "sharpe_net": -0.08424719896608138,
+    "maxdd_bp": 43955.93686604384,
+    "round_trip": 171.18357953140585,
+    "held_half": 42.795894882851464,
+    "turnover": 0.08817069344210857,
+    "trade_mean_bp": 78.07872713514578,
+    "trade_net_mean_bp": -18.38854966885262,
+    "trades": 1120,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -4.088004410037765
+     },
+     "gc_htb": {
+      "borrow_bp": 0.8921100602148612,
+      "net_bp_borrow": -4.9801144702526265
+     },
+     "house": {
+      "borrow_bp": 1.1873010892464921,
+      "net_bp_borrow": -5.275305499284258
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -17.59313167287335,
+    "gross_per_trade": 77.33604541344958,
+    "median_per_trade": 438.6160153878822,
+    "t_per_trade": -0.39263029123018656,
+    "mean_over_2c": 0.8146709766916528,
+    "round_trip": 189.9132366122824,
+    "trades": 2830,
+    "held_per_bar": 9.919046124882334,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -17.59313167287335
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.477817039654496,
+      "net_per_trade_borrow": -22.070948712527848
+     },
+     "house": {
+      "borrow_per_trade": 6.7520612485276805,
+      "net_per_trade_borrow": -24.345192921401033
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 168.54760720832527,
+     "net": 63.88365739147356,
+     "two_c": 104.66394981685171,
+     "half_bp": 52.331974908425856,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.6940579694594593,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 63.88365739147356,
+      "gc_htb": 63.88365739147356,
+      "house": 63.88365739147356
+     }
+    },
+    "1": {
+     "trades": 1419,
+     "gross": -13.361286293787618,
+     "net": -98.6105730892183,
+     "two_c": 85.24928679543069,
+     "half_bp": 42.624643397715346,
+     "price": 9.839255,
+     "premium_bp": -45.8464897248436,
+     "t": -0.2084292488078829,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.930389162947304,
+      "house": 13.466055907916374
+     },
+     "net_borrow": {
+      "none": -98.6105730892183,
+      "gc_htb": -107.54096225216561,
+      "house": -112.07662899713468
+     }
+    }
+   }
+  },
+  "H/target/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -18.77498631144588,
+    "gross_bp_bar": 12.923168970522983,
+    "sharpe_net": -0.3869222849862883,
+    "maxdd_bp": 43955.93686604384,
+    "round_trip": 337.75799703954704,
+    "held_half": 84.43949925988676,
+    "turnover": 0.08817069344210857,
+    "trade_mean_bp": 78.07872713514578,
+    "trade_net_mean_bp": -101.6757584229232,
+    "trades": 1120,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -18.77498631144588
+     },
+     "gc_htb": {
+      "borrow_bp": 0.8921100602148612,
+      "net_bp_borrow": -19.66709637166074
+     },
+     "house": {
+      "borrow_bp": 1.1873010892464921,
+      "net_bp_borrow": -19.96228740069237
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -76.11414583920391,
+    "gross_per_trade": 77.33604541344958,
+    "median_per_trade": 384.17077609373655,
+    "t_per_trade": -1.6979928953310324,
+    "mean_over_2c": 0.5039814208254516,
+    "round_trip": 306.82019811387784,
+    "trades": 2830,
+    "held_per_bar": 9.919046124882334,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -76.11414583920391
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.477817039654496,
+      "net_per_trade_borrow": -80.59196287885841
+     },
+     "house": {
+      "borrow_per_trade": 6.7520612485276805,
+      "net_per_trade_borrow": -82.8662070877316
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 168.54760720832527,
+     "net": 29.32012238542532,
+     "two_c": 139.22748482289995,
+     "half_bp": 69.61374241144998,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.6940579694594593,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 29.32012238542532,
+      "gc_htb": 29.32012238542532,
+      "house": 29.32012238542532
+     }
+    },
+    "1": {
+     "trades": 1419,
+     "gross": -13.361286293787618,
+     "net": -180.95399958476548,
+     "two_c": 167.59271329097785,
+     "half_bp": 83.79635664548893,
+     "price": 9.839255,
+     "premium_bp": -45.8464897248436,
+     "t": -0.2084292488078829,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.930389162947304,
+      "house": 13.466055907916374
+     },
+     "net_borrow": {
+      "none": -180.95399958476548,
+      "gc_htb": -189.8843887477128,
+      "house": -194.42005549268185
+     }
+    }
+   }
+  },
+  "H/target/compound/PB": {
+   "variant": {
+    "net_bp_bar": -4.088004410037765,
+    "gross_bp_bar": 12.923168970522983,
+    "sharpe_net": -0.08424719896608138,
+    "maxdd_bp": 43955.93686604384,
+    "round_trip": 171.18357953140585,
+    "held_half": 42.795894882851464,
+    "turnover": 0.08817069344210857,
+    "trade_mean_bp": 109.11592510575191,
+    "trade_net_mean_bp": 12.64864830175351,
+    "trades": 1120,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -4.088004410037765
+     },
+     "gc_htb": {
+      "borrow_bp": 0.8921100602148612,
+      "net_bp_borrow": -4.9801144702526265
+     },
+     "house": {
+      "borrow_bp": 1.1873010892464921,
+      "net_bp_borrow": -5.275305499284258
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -7.156907236659433,
+    "gross_per_trade": 87.77226984966349,
+    "median_per_trade": 432.1258038764308,
+    "t_per_trade": -0.1655540463694515,
+    "mean_over_2c": 0.9246079292339024,
+    "round_trip": 189.9132366122824,
+    "trades": 2830,
+    "held_per_bar": 9.919046124882334,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -7.156907236659433
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.477817039654496,
+      "net_per_trade_borrow": -11.634724276313928
+     },
+     "house": {
+      "borrow_per_trade": 6.7520612485276805,
+      "net_per_trade_borrow": -13.908968485187113
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 143.37279943719292,
+     "net": 38.70884962034121,
+     "two_c": 104.66394981685171,
+     "half_bp": 52.331974908425856,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.5986735944320567,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 38.70884962034121,
+      "gc_htb": 38.70884962034121,
+      "house": 38.70884962034121
+     }
+    },
+    "1": {
+     "trades": 1419,
+     "gross": 32.48520343105598,
+     "net": -52.76408336437471,
+     "two_c": 85.24928679543069,
+     "half_bp": 42.624643397715346,
+     "price": 9.839255,
+     "premium_bp": -45.8464897248436,
+     "t": 0.4884429977376229,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.930389162947304,
+      "house": 13.466055907916374
+     },
+     "net_borrow": {
+      "none": -52.76408336437471,
+      "gc_htb": -61.69447252732202,
+      "house": -66.23013927229108
+     }
+    }
+   }
+  },
+  "H/target/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -18.77498631144588,
+    "gross_bp_bar": 12.923168970522983,
+    "sharpe_net": -0.3869222849862883,
+    "maxdd_bp": 43955.93686604384,
+    "round_trip": 337.75799703954704,
+    "held_half": 84.43949925988676,
+    "turnover": 0.08817069344210857,
+    "trade_mean_bp": 109.11592510575191,
+    "trade_net_mean_bp": -70.63856045231707,
+    "trades": 1120,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -18.77498631144588
+     },
+     "gc_htb": {
+      "borrow_bp": 0.8921100602148612,
+      "net_bp_borrow": -19.66709637166074
+     },
+     "house": {
+      "borrow_bp": 1.1873010892464921,
+      "net_bp_borrow": -19.96228740069237
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -65.67792140299002,
+    "gross_per_trade": 87.77226984966349,
+    "median_per_trade": 379.3372350593008,
+    "t_per_trade": -1.5188701451346074,
+    "mean_over_2c": 0.5719919221550382,
+    "round_trip": 306.82019811387784,
+    "trades": 2830,
+    "held_per_bar": 9.919046124882334,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -65.67792140299002
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.477817039654496,
+      "net_per_trade_borrow": -70.15573844264452
+     },
+     "house": {
+      "borrow_per_trade": 6.7520612485276805,
+      "net_per_trade_borrow": -72.4299826515177
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 143.37279943719292,
+     "net": 4.145314614292971,
+     "two_c": 139.22748482289995,
+     "half_bp": 69.61374241144998,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.5986735944320567,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 4.145314614292971,
+      "gc_htb": 4.145314614292971,
+      "house": 4.145314614292971
+     }
+    },
+    "1": {
+     "trades": 1419,
+     "gross": 32.48520343105598,
+     "net": -135.1075098599219,
+     "two_c": 167.59271329097785,
+     "half_bp": 83.79635664548893,
+     "price": 9.839255,
+     "premium_bp": -45.8464897248436,
+     "t": 0.4884429977376229,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.930389162947304,
+      "house": 13.466055907916374
+     },
+     "net_borrow": {
+      "none": -135.1075098599219,
+      "gc_htb": -144.0378990228692,
+      "house": -148.57356576783826
+     }
+    }
+   }
+  },
+  "H/fixed/sum/PB": {
+   "variant": {
+    "net_bp_bar": 9.298170992570167,
+    "gross_bp_bar": 19.311628844139324,
+    "sharpe_net": 0.1899958091462853,
+    "maxdd_bp": 40344.55535333852,
+    "round_trip": 175.19817333905277,
+    "held_half": 43.79954333476319,
+    "turnover": 0.050753059303420146,
+    "trade_mean_bp": 195.0593561973984,
+    "trade_net_mean_bp": 96.41054577096592,
+    "trades": 643,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 9.298170992570167
+     },
+     "gc_htb": {
+      "borrow_bp": 0.915363007455885,
+      "net_bp_borrow": 8.382807985114283
+     },
+     "house": {
+      "borrow_bp": 1.1839392173562238,
+      "net_bp_borrow": 8.114231775213943
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -7.414810792237398,
+    "gross_per_trade": 86.81828458545957,
+    "median_per_trade": -27.698567221106035,
+    "t_per_trade": -0.10912559921861094,
+    "mean_over_2c": 0.9213141544112716,
+    "round_trip": 188.6531568319997,
+    "trades": 2228,
+    "held_per_bar": 13.930342014433636,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -7.414810792237398
+     },
+     "gc_htb": {
+      "borrow_per_trade": 7.6946368014590645,
+      "net_per_trade_borrow": -15.109447593696462
+     },
+     "house": {
+      "borrow_per_trade": 11.957125758741558,
+      "net_per_trade_borrow": -19.371936550978955
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 250.03059174951989,
+     "net": 145.2900028665763,
+     "two_c": 104.74058888294361,
+     "half_bp": 52.370294441471806,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.69056629283605,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 145.2900028665763,
+      "gc_htb": 145.2900028665763,
+      "house": 145.2900028665763
+     }
+    },
+    "1": {
+     "trades": 1124,
+     "gross": -73.48988899916912,
+     "net": -157.4024569482252,
+     "two_c": 83.91256794905607,
+     "half_bp": 41.956283974528034,
+     "price": 10.765,
+     "premium_bp": -33.77647038895122,
+     "t": -0.7432373167437256,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 15.252358357340569,
+      "house": 23.70149127266565
+     },
+     "net_borrow": {
+      "none": -157.4024569482252,
+      "gc_htb": -172.65481530556576,
+      "house": -181.10394822089086
+     }
+    }
+   }
+  },
+  "H/fixed/sum/PUB": {
+   "variant": {
+    "net_bp_bar": 0.9729255741089737,
+    "gross_bp_bar": 19.311628844139324,
+    "sharpe_net": 0.0198804455026324,
+    "maxdd_bp": 40344.55535333852,
+    "round_trip": 339.23252974483836,
+    "held_half": 84.80813243620959,
+    "turnover": 0.050753059303420146,
+    "trade_mean_bp": 195.0593561973984,
+    "trade_net_mean_bp": 14.393367568073131,
+    "trades": 643,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 0.9729255741089737
+     },
+     "gc_htb": {
+      "borrow_bp": 0.915363007455885,
+      "net_bp_borrow": 0.05756256665308879
+     },
+     "house": {
+      "borrow_bp": 1.1839392173562238,
+      "net_bp_borrow": -0.21101364324725003
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -59.380035307594945,
+    "gross_per_trade": 86.81828458545957,
+    "median_per_trade": -88.57781267602883,
+    "t_per_trade": -0.8735709271148847,
+    "mean_over_2c": 0.5938391402101476,
+    "round_trip": 292.144651343219,
+    "trades": 2228,
+    "held_per_bar": 13.930342014433636,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -59.380035307594945
+     },
+     "gc_htb": {
+      "borrow_per_trade": 7.6946368014590645,
+      "net_per_trade_borrow": -67.074672109054
+     },
+     "house": {
+      "borrow_per_trade": 11.957125758741558,
+      "net_per_trade_borrow": -71.3371610663365
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 250.03059174951989,
+     "net": 117.99402234687949,
+     "two_c": 132.0365694026404,
+     "half_bp": 66.0182847013202,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.69056629283605,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 117.99402234687949,
+      "gc_htb": 117.99402234687949,
+      "house": 117.99402234687949
+     }
+    },
+    "1": {
+     "trades": 1124,
+     "gross": -73.48988899916912,
+     "net": -233.5979709397477,
+     "two_c": 160.1080819405786,
+     "half_bp": 80.0540409702893,
+     "price": 10.765,
+     "premium_bp": -33.77647038895122,
+     "t": -0.7432373167437256,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 15.252358357340569,
+      "house": 23.70149127266565
+     },
+     "net_borrow": {
+      "none": -233.5979709397477,
+      "gc_htb": -248.85032929708828,
+      "house": -257.29946221241335
+     }
+    }
+   }
+  },
+  "H/fixed/compound/PB": {
+   "variant": {
+    "net_bp_bar": 9.298170992570167,
+    "gross_bp_bar": 19.311628844139324,
+    "sharpe_net": 0.1899958091462853,
+    "maxdd_bp": 40344.55535333852,
+    "round_trip": 175.19817333905277,
+    "held_half": 43.79954333476319,
+    "turnover": 0.050753059303420146,
+    "trade_mean_bp": 166.41102601168294,
+    "trade_net_mean_bp": 67.76221558525047,
+    "trades": 643,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 9.298170992570167
+     },
+     "gc_htb": {
+      "borrow_bp": 0.915363007455885,
+      "net_bp_borrow": 8.382807985114283
+     },
+     "house": {
+      "borrow_bp": 1.1839392173562238,
+      "net_bp_borrow": 8.114231775213943
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -17.76117571988404,
+    "gross_per_trade": 76.47191965781292,
+    "median_per_trade": -48.32471665794114,
+    "t_per_trade": -0.24882375462867312,
+    "mean_over_2c": 0.8115187063664288,
+    "round_trip": 188.6531568319997,
+    "trades": 2228,
+    "held_per_bar": 13.930342014433636,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -17.76117571988404
+     },
+     "gc_htb": {
+      "borrow_per_trade": 7.6946368014590645,
+      "net_per_trade_borrow": -25.455812521343105
+     },
+     "house": {
+      "borrow_per_trade": 11.957125758741558,
+      "net_per_trade_borrow": -29.718301478625598
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 194.7620647785254,
+     "net": 90.02147589558179,
+     "two_c": 104.74058888294361,
+     "half_bp": 52.370294441471806,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.043285668949423,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 90.02147589558179,
+      "gc_htb": 90.02147589558179,
+      "house": 90.02147589558179
+     }
+    },
+    "1": {
+     "trades": 1124,
+     "gross": -39.71341861021785,
+     "net": -123.62598655927391,
+     "two_c": 83.91256794905607,
+     "half_bp": 41.956283974528034,
+     "price": 10.765,
+     "premium_bp": -33.77647038895122,
+     "t": -0.3745307963886692,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 15.252358357340569,
+      "house": 23.70149127266565
+     },
+     "net_borrow": {
+      "none": -123.62598655927391,
+      "gc_htb": -138.87834491661448,
+      "house": -147.32747783193958
+     }
+    }
+   }
+  },
+  "H/fixed/compound/PUB": {
+   "variant": {
+    "net_bp_bar": 0.9729255741089737,
+    "gross_bp_bar": 19.311628844139324,
+    "sharpe_net": 0.0198804455026324,
+    "maxdd_bp": 40344.55535333852,
+    "round_trip": 339.23252974483836,
+    "held_half": 84.80813243620959,
+    "turnover": 0.050753059303420146,
+    "trade_mean_bp": 166.41102601168294,
+    "trade_net_mean_bp": -14.25496261764232,
+    "trades": 643,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 0.9729255741089737
+     },
+     "gc_htb": {
+      "borrow_bp": 0.915363007455885,
+      "net_bp_borrow": 0.05756256665308879
+     },
+     "house": {
+      "borrow_bp": 1.1839392173562238,
+      "net_bp_borrow": -0.21101364324725003
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -69.72640023524158,
+    "gross_per_trade": 76.47191965781292,
+    "median_per_trade": -96.64975675200904,
+    "t_per_trade": -0.9765759065287928,
+    "mean_over_2c": 0.5230697569832055,
+    "round_trip": 292.144651343219,
+    "trades": 2228,
+    "held_per_bar": 13.930342014433636,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -69.72640023524158
+     },
+     "gc_htb": {
+      "borrow_per_trade": 7.6946368014590645,
+      "net_per_trade_borrow": -77.42103703670065
+     },
+     "house": {
+      "borrow_per_trade": 11.957125758741558,
+      "net_per_trade_borrow": -81.68352599398314
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 194.7620647785254,
+     "net": 62.725495375885004,
+     "two_c": 132.0365694026404,
+     "half_bp": 66.0182847013202,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.043285668949423,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 62.725495375885004,
+      "gc_htb": 62.725495375885004,
+      "house": 62.725495375885004
+     }
+    },
+    "1": {
+     "trades": 1124,
+     "gross": -39.71341861021785,
+     "net": -199.82150055079643,
+     "two_c": 160.1080819405786,
+     "half_bp": 80.0540409702893,
+     "price": 10.765,
+     "premium_bp": -33.77647038895122,
+     "t": -0.3745307963886692,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 15.252358357340569,
+      "house": 23.70149127266565
+     },
+     "net_borrow": {
+      "none": -199.82150055079643,
+      "gc_htb": -215.073858908137,
+      "house": -223.52299182346206
+     }
+    }
+   }
+  },
+  "S/target/sum/PB": {
+   "variant": {
+    "net_bp_bar": 7.022752209844091,
+    "gross_bp_bar": 11.285883997268272,
+    "sharpe_net": 0.3144723277483779,
+    "maxdd_bp": 19894.79710907979,
+    "round_trip": 33.65700847158098,
+    "held_half": 8.414252117895245,
+    "turnover": 0.10378098525258864,
+    "trade_mean_bp": 56.10788402897931,
+    "trade_net_mean_bp": 35.56880465404225,
+    "trades": 1319,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 7.022752209844091
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9786471329458466,
+      "net_bp_borrow": 6.044105076898244
+     },
+     "house": {
+      "borrow_bp": 1.1837524466956533,
+      "net_bp_borrow": 5.838999763148438
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 20.051051285600675,
+    "gross_per_trade": 36.152427696676185,
+    "median_per_trade": 137.85193404313264,
+    "t_per_trade": 0.6752927075583323,
+    "mean_over_2c": 2.2453004497061695,
+    "round_trip": 32.29137367979473,
+    "trades": 1946,
+    "held_per_bar": 5.851270787574522,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 20.051051285600675
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.396482813749001,
+      "net_per_trade_borrow": 15.654568471851674
+     },
+     "house": {
+      "borrow_per_trade": 5.732148974697792,
+      "net_per_trade_borrow": 14.318902310902882
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 923,
+     "gross": 40.7818934142588,
+     "net": 23.773925629488417,
+     "two_c": 17.007967784770386,
+     "half_bp": 8.503983892385193,
+     "price": 23.58,
+     "premium_bp": -2.405336892732582,
+     "t": 0.8264822627242968,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 23.773925629488417,
+      "gc_htb": 23.773925629488417,
+      "house": 23.773925629488417
+     }
+    },
+    "1": {
+     "trades": 1023,
+     "gross": 31.975500172405646,
+     "net": 16.6920942773813,
+     "two_c": 15.283405895024343,
+     "half_bp": 7.641702947512171,
+     "price": 29.97,
+     "premium_bp": -23.54093939420615,
+     "t": 0.9192908007047019,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.363201911589009,
+      "house": 10.903970581389936
+     },
+     "net_borrow": {
+      "none": 16.6920942773813,
+      "gc_htb": 8.328892365792292,
+      "house": 5.788123695991365
+     }
+    }
+   }
+  },
+  "S/target/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -0.5824503662442595,
+    "gross_bp_bar": 11.285883997268272,
+    "sharpe_net": -0.026081586961587223,
+    "maxdd_bp": 19894.79710907979,
+    "round_trip": 106.93828015712467,
+    "held_half": 26.734570039281166,
+    "turnover": 0.10378098525258864,
+    "trade_mean_bp": 56.10788402897931,
+    "trade_net_mean_bp": -1.0718311887295897,
+    "trades": 1319,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -0.5824503662442595
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9786471329458466,
+      "net_bp_borrow": -1.561097499190106
+     },
+     "house": {
+      "borrow_bp": 1.1837524466956533,
+      "net_bp_borrow": -1.7662028129399128
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -16.294283655908394,
+    "gross_per_trade": 36.152427696676185,
+    "median_per_trade": 108.80762493499549,
+    "t_per_trade": -0.5487277828840109,
+    "mean_over_2c": 0.6893173425809963,
+    "round_trip": 107.0524682910565,
+    "trades": 1946,
+    "held_per_bar": 5.851270787574522,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -16.294283655908394
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.396482813749001,
+      "net_per_trade_borrow": -20.690766469657397
+     },
+     "house": {
+      "borrow_per_trade": 5.732148974697792,
+      "net_per_trade_borrow": -22.026432630606188
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 923,
+     "gross": 40.7818934142588,
+     "net": -33.75185428195314,
+     "two_c": 74.53374769621195,
+     "half_bp": 37.26687384810597,
+     "price": 23.58,
+     "premium_bp": -2.405336892732582,
+     "t": 0.8264822627242968,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -33.75185428195314,
+      "gc_htb": -33.75185428195314,
+      "house": -33.75185428195314
+     }
+    },
+    "1": {
+     "trades": 1023,
+     "gross": 31.975500172405646,
+     "net": -0.5432204224389068,
+     "two_c": 32.51872059484455,
+     "half_bp": 16.259360297422276,
+     "price": 29.97,
+     "premium_bp": -23.54093939420615,
+     "t": 0.9192908007047019,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.363201911589009,
+      "house": 10.903970581389936
+     },
+     "net_borrow": {
+      "none": -0.5432204224389068,
+      "gc_htb": -8.906422334027916,
+      "house": -11.447191003828843
+     }
+    }
+   }
+  },
+  "S/target/compound/PB": {
+   "variant": {
+    "net_bp_bar": 7.022752209844091,
+    "gross_bp_bar": 11.285883997268272,
+    "sharpe_net": 0.3144723277483779,
+    "maxdd_bp": 19894.79710907979,
+    "round_trip": 33.65700847158098,
+    "held_half": 8.414252117895245,
+    "turnover": 0.10378098525258864,
+    "trade_mean_bp": 51.18224295464651,
+    "trade_net_mean_bp": 30.643163579709455,
+    "trades": 1319,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 7.022752209844091
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9786471329458466,
+      "net_bp_borrow": 6.044105076898244
+     },
+     "house": {
+      "borrow_bp": 1.1837524466956533,
+      "net_bp_borrow": 5.838999763148438
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 33.56724190855291,
+    "gross_per_trade": 49.66861831962844,
+    "median_per_trade": 137.27947511255087,
+    "t_per_trade": 1.3264741897186283,
+    "mean_over_2c": 3.084743630082661,
+    "round_trip": 32.29137367979473,
+    "trades": 1946,
+    "held_per_bar": 5.851270787574522,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 33.56724190855291
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.396482813749001,
+      "net_per_trade_borrow": 29.170759094803905
+     },
+     "house": {
+      "borrow_per_trade": 5.732148974697792,
+      "net_per_trade_borrow": 27.835092933855115
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 923,
+     "gross": 43.18723030699139,
+     "net": 26.179262522221002,
+     "two_c": 17.007967784770386,
+     "half_bp": 8.503983892385193,
+     "price": 23.58,
+     "premium_bp": -2.405336892732582,
+     "t": 0.9992473313169196,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 26.179262522221002,
+      "gc_htb": 26.179262522221002,
+      "house": 26.179262522221002
+     }
+    },
+    "1": {
+     "trades": 1023,
+     "gross": 55.516439566611815,
+     "net": 40.23303367158747,
+     "two_c": 15.283405895024343,
+     "half_bp": 7.641702947512171,
+     "price": 29.97,
+     "premium_bp": -23.54093939420615,
+     "t": 1.9655526188214278,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.363201911589009,
+      "house": 10.903970581389936
+     },
+     "net_borrow": {
+      "none": 40.23303367158747,
+      "gc_htb": 31.869831759998462,
+      "house": 29.329063090197536
+     }
+    }
+   }
+  },
+  "S/target/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -0.5824503662442595,
+    "gross_bp_bar": 11.285883997268272,
+    "sharpe_net": -0.026081586961587223,
+    "maxdd_bp": 19894.79710907979,
+    "round_trip": 106.93828015712467,
+    "held_half": 26.734570039281166,
+    "turnover": 0.10378098525258864,
+    "trade_mean_bp": 51.18224295464651,
+    "trade_net_mean_bp": -5.997472263062392,
+    "trades": 1319,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -0.5824503662442595
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9786471329458466,
+      "net_bp_borrow": -1.561097499190106
+     },
+     "house": {
+      "borrow_bp": 1.1837524466956533,
+      "net_bp_borrow": -1.7662028129399128
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -2.7780930329561477,
+    "gross_per_trade": 49.66861831962844,
+    "median_per_trade": 106.69473908543564,
+    "t_per_trade": -0.10975142531266668,
+    "mean_over_2c": 0.9470301767010745,
+    "round_trip": 107.0524682910565,
+    "trades": 1946,
+    "held_per_bar": 5.851270787574522,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -2.7780930329561477
+     },
+     "gc_htb": {
+      "borrow_per_trade": 4.396482813749001,
+      "net_per_trade_borrow": -7.1745758467051495
+     },
+     "house": {
+      "borrow_per_trade": 5.732148974697792,
+      "net_per_trade_borrow": -8.51024200765394
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 923,
+     "gross": 43.18723030699139,
+     "net": -31.34651738922056,
+     "two_c": 74.53374769621195,
+     "half_bp": 37.26687384810597,
+     "price": 23.58,
+     "premium_bp": -2.405336892732582,
+     "t": 0.9992473313169196,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -31.34651738922056,
+      "gc_htb": -31.34651738922056,
+      "house": -31.34651738922056
+     }
+    },
+    "1": {
+     "trades": 1023,
+     "gross": 55.516439566611815,
+     "net": 22.997718971767263,
+     "two_c": 32.51872059484455,
+     "half_bp": 16.259360297422276,
+     "price": 29.97,
+     "premium_bp": -23.54093939420615,
+     "t": 1.9655526188214278,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 8.363201911589009,
+      "house": 10.903970581389936
+     },
+     "net_borrow": {
+      "none": 22.997718971767263,
+      "gc_htb": 14.634517060178254,
+      "house": 12.093748390377327
+     }
+    }
+   }
+  },
+  "S/fixed/sum/PB": {
+   "variant": {
+    "net_bp_bar": 0.5772328930802841,
+    "gross_bp_bar": 2.236016792137892,
+    "sharpe_net": 0.02844936359494483,
+    "maxdd_bp": 13345.856348682379,
+    "round_trip": 25.094102885822156,
+    "held_half": 6.273525721455539,
+    "turnover": 0.05216504549733292,
+    "trade_mean_bp": 20.27790835978723,
+    "trade_net_mean_bp": 4.378527047617016,
+    "trades": 661,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 0.5772328930802841
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9827560874783969,
+      "net_bp_borrow": -0.4055231943981128
+     },
+     "house": {
+      "borrow_bp": 1.1865540066042104,
+      "net_bp_borrow": -0.6093211135239263
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 7.838698549937686,
+    "gross_per_trade": 23.902940710581067,
+    "median_per_trade": 4.689231612755639,
+    "t_per_trade": 0.14941259595140213,
+    "mean_over_2c": 1.4879594363400517,
+    "round_trip": 32.24745599629701,
+    "trades": 1166,
+    "held_per_bar": 7.02541575149043,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 7.838698549937686
+     },
+     "gc_htb": {
+      "borrow_per_trade": 8.346776389229218,
+      "net_per_trade_borrow": -0.5080778392915315
+     },
+     "house": {
+      "borrow_per_trade": 11.358531405701216,
+      "net_per_trade_borrow": -3.5198328557635294
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 561,
+     "gross": 12.728373109262868,
+     "net": -4.971729582770635,
+     "two_c": 17.700102692033504,
+     "half_bp": 8.850051346016752,
+     "price": 24.09,
+     "premium_bp": 15.073087462484118,
+     "t": 0.15055298647546403,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -4.971729582770635,
+      "gc_htb": -4.971729582770635,
+      "house": -4.971729582770635
+     }
+    },
+    "1": {
+     "trades": 605,
+     "gross": 34.26481248634886,
+     "net": 19.71745918208535,
+     "two_c": 14.547353304263508,
+     "half_bp": 7.273676652131754,
+     "price": 30.7,
+     "premium_bp": -57.4647253408135,
+     "t": 0.5360351361441585,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 16.08651449560541,
+      "house": 21.890987800078708
+     },
+     "net_borrow": {
+      "none": 19.71745918208535,
+      "gc_htb": 3.630944686479939,
+      "house": -2.173528617993359
+     }
+    }
+   }
+  },
+  "S/fixed/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -4.184601418671621,
+    "gross_bp_bar": 2.236016792137892,
+    "sharpe_net": -0.20624127399329092,
+    "maxdd_bp": 13345.856348682379,
+    "round_trip": 116.37810860945115,
+    "held_half": 29.094527152362787,
+    "turnover": 0.05216504549733292,
+    "trade_mean_bp": 20.27790835978723,
+    "trade_net_mean_bp": -41.26347581419748,
+    "trades": 661,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -4.184601418671621
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9827560874783969,
+      "net_bp_borrow": -5.167357506150018
+     },
+     "house": {
+      "borrow_bp": 1.1865540066042104,
+      "net_bp_borrow": -5.371155425275831
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -30.583600552648665,
+    "gross_per_trade": 23.902940710581067,
+    "median_per_trade": -29.375261336078346,
+    "t_per_trade": -0.5828836819228935,
+    "mean_over_2c": 0.438694403359238,
+    "round_trip": 110.41360340960541,
+    "trades": 1166,
+    "held_per_bar": 7.02541575149043,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -30.583600552648665
+     },
+     "gc_htb": {
+      "borrow_per_trade": 8.346776389229218,
+      "net_per_trade_borrow": -38.93037694187788
+     },
+     "house": {
+      "borrow_per_trade": 11.358531405701216,
+      "net_per_trade_borrow": -41.94213195834988
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 561,
+     "gross": 12.728373109262868,
+     "net": -61.565330297223674,
+     "two_c": 74.29370340648654,
+     "half_bp": 37.14685170324327,
+     "price": 24.09,
+     "premium_bp": 15.073087462484118,
+     "t": 0.15055298647546403,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -61.565330297223674,
+      "gc_htb": -61.565330297223674,
+      "house": -61.565330297223674
+     }
+    },
+    "1": {
+     "trades": 605,
+     "gross": 34.26481248634886,
+     "net": -1.8550875167700127,
+     "two_c": 36.11990000311887,
+     "half_bp": 18.059950001559436,
+     "price": 30.7,
+     "premium_bp": -57.4647253408135,
+     "t": 0.5360351361441585,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 16.08651449560541,
+      "house": 21.890987800078708
+     },
+     "net_borrow": {
+      "none": -1.8550875167700127,
+      "gc_htb": -17.941602012375423,
+      "house": -23.74607531684872
+     }
+    }
+   }
+  },
+  "S/fixed/compound/PB": {
+   "variant": {
+    "net_bp_bar": 0.5772328930802841,
+    "gross_bp_bar": 2.236016792137892,
+    "sharpe_net": 0.02844936359494483,
+    "maxdd_bp": 13345.856348682379,
+    "round_trip": 25.094102885822156,
+    "held_half": 6.273525721455539,
+    "turnover": 0.05216504549733292,
+    "trade_mean_bp": 17.404081770864625,
+    "trade_net_mean_bp": 1.504700458694412,
+    "trades": 661,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 0.5772328930802841
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9827560874783969,
+      "net_bp_borrow": -0.4055231943981128
+     },
+     "house": {
+      "borrow_bp": 1.1865540066042104,
+      "net_bp_borrow": -0.6093211135239263
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 30.40315546652307,
+    "gross_per_trade": 46.46739762716648,
+    "median_per_trade": -13.355665206110398,
+    "t_per_trade": 0.6632644053815062,
+    "mean_over_2c": 2.8925981793905766,
+    "round_trip": 32.24745599629701,
+    "trades": 1166,
+    "held_per_bar": 7.02541575149043,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 30.40315546652307
+     },
+     "gc_htb": {
+      "borrow_per_trade": 8.346776389229218,
+      "net_per_trade_borrow": 22.056379077293855
+     },
+     "house": {
+      "borrow_per_trade": 11.358531405701216,
+      "net_per_trade_borrow": 19.044624060821853
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 561,
+     "gross": -2.344714353221278,
+     "net": -20.04481704525478,
+     "two_c": 17.700102692033504,
+     "half_bp": 8.850051346016752,
+     "price": 24.09,
+     "premium_bp": 15.073087462484118,
+     "t": -0.03028862296056186,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -20.04481704525478,
+      "gc_htb": -20.04481704525478,
+      "house": -20.04481704525478
+     }
+    },
+    "1": {
+     "trades": 605,
+     "gross": 91.72953782716237,
+     "net": 77.18218452289886,
+     "two_c": 14.547353304263508,
+     "half_bp": 7.273676652131754,
+     "price": 30.7,
+     "premium_bp": -57.4647253408135,
+     "t": 1.7814958793516957,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 16.08651449560541,
+      "house": 21.890987800078708
+     },
+     "net_borrow": {
+      "none": 77.18218452289886,
+      "gc_htb": 61.09567002729345,
+      "house": 55.29119672282016
+     }
+    }
+   }
+  },
+  "S/fixed/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -4.184601418671621,
+    "gross_bp_bar": 2.236016792137892,
+    "sharpe_net": -0.20624127399329092,
+    "maxdd_bp": 13345.856348682379,
+    "round_trip": 116.37810860945115,
+    "held_half": 29.094527152362787,
+    "turnover": 0.05216504549733292,
+    "trade_mean_bp": 17.404081770864625,
+    "trade_net_mean_bp": -44.13730240312009,
+    "trades": 661,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -4.184601418671621
+     },
+     "gc_htb": {
+      "borrow_bp": 0.9827560874783969,
+      "net_bp_borrow": -5.167357506150018
+     },
+     "house": {
+      "borrow_bp": 1.1865540066042104,
+      "net_bp_borrow": -5.371155425275831
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -8.019143636063271,
+    "gross_per_trade": 46.46739762716648,
+    "median_per_trade": -45.12057016203943,
+    "t_per_trade": -0.17487113338630722,
+    "mean_over_2c": 0.8528234046400193,
+    "round_trip": 110.41360340960541,
+    "trades": 1166,
+    "held_per_bar": 7.02541575149043,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -8.019143636063271
+     },
+     "gc_htb": {
+      "borrow_per_trade": 8.346776389229218,
+      "net_per_trade_borrow": -16.36592002529249
+     },
+     "house": {
+      "borrow_per_trade": 11.358531405701216,
+      "net_per_trade_borrow": -19.377675041764487
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 561,
+     "gross": -2.344714353221278,
+     "net": -76.63841775970782,
+     "two_c": 74.29370340648654,
+     "half_bp": 37.14685170324327,
+     "price": 24.09,
+     "premium_bp": 15.073087462484118,
+     "t": -0.03028862296056186,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -76.63841775970782,
+      "gc_htb": -76.63841775970782,
+      "house": -76.63841775970782
+     }
+    },
+    "1": {
+     "trades": 605,
+     "gross": 91.72953782716237,
+     "net": 55.6096378240435,
+     "two_c": 36.11990000311887,
+     "half_bp": 18.059950001559436,
+     "price": 30.7,
+     "premium_bp": -57.4647253408135,
+     "t": 1.7814958793516957,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 16.08651449560541,
+      "house": 21.890987800078708
+     },
+     "net_borrow": {
+      "none": 55.6096378240435,
+      "gc_htb": 39.52312332843809,
+      "house": 33.7186500239648
+     }
+    }
+   }
+  },
+  "S_F0/target/sum/PB": {
+   "variant": {
+    "net_bp_bar": -10.62502795995265,
+    "gross_bp_bar": -5.024034035821952,
+    "sharpe_net": -0.3447672702008387,
+    "maxdd_bp": 41681.4572099129,
+    "round_trip": 50.90137449787685,
+    "held_half": 12.725343624469213,
+    "turnover": 0.096485723250706,
+    "trade_mean_bp": -24.523853763667955,
+    "trade_net_mean_bp": -53.548841790016795,
+    "trades": 1226,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -10.62502795995265
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -10.94966649646756
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -11.808033324006022
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 2.1740275148730674,
+    "gross_per_trade": 22.244772059241516,
+    "median_per_trade": 167.86619937596677,
+    "t_per_trade": 0.06417989807477452,
+    "mean_over_2c": 1.1083182295538243,
+    "round_trip": 39.96167536674132,
+    "trades": 1886,
+    "held_per_bar": 5.967994979604644,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 2.1740275148730674
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.7891859819219313,
+      "net_per_trade_borrow": 0.3848415329511361
+     },
+     "house": {
+      "borrow_per_trade": 6.218754734131192,
+      "net_per_trade_borrow": -4.0447272192581245
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 914,
+     "gross": 46.5941808870327,
+     "net": 29.536866304383427,
+     "two_c": 17.057314582649273,
+     "half_bp": 8.528657291324636,
+     "price": 25.334899999999998,
+     "premium_bp": -2.291698352605584,
+     "t": 0.9369976633809924,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 29.536866304383427,
+      "gc_htb": 29.536866304383427,
+      "house": 29.536866304383427
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": -0.6516885051629295,
+     "net": -23.556049289254975,
+     "two_c": 22.904360784092045,
+     "half_bp": 11.452180392046023,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": -0.014105944321710242,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": -23.556049289254975,
+      "gc_htb": -27.027659126605553,
+      "house": -35.62248080013093
+     }
+    }
+   }
+  },
+  "S_F0/target/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -19.318701380658105,
+    "gross_bp_bar": -5.024034035821952,
+    "sharpe_net": -0.6268647916917435,
+    "maxdd_bp": 41681.4572099129,
+    "round_trip": 141.00458487767617,
+    "held_half": 35.25114621941904,
+    "turnover": 0.096485723250706,
+    "trade_mean_bp": -24.523853763667955,
+    "trade_net_mean_bp": -98.60044697991646,
+    "trades": 1226,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -19.318701380658105
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -19.643339917173016
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -20.501706744711477
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -45.990778908124106,
+    "gross_per_trade": 22.244772059241516,
+    "median_per_trade": 122.37108204064143,
+    "t_per_trade": -1.3578447605662272,
+    "mean_over_2c": 0.3259997427130077,
+    "round_trip": 136.9468501818921,
+    "trades": 1886,
+    "held_per_bar": 5.967994979604644,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -45.990778908124106
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.7891859819219313,
+      "net_per_trade_borrow": -47.77996489004604
+     },
+     "house": {
+      "borrow_per_trade": 6.218754734131192,
+      "net_per_trade_borrow": -52.209533642255295
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 914,
+     "gross": 46.5941808870327,
+     "net": -29.61425449826931,
+     "two_c": 76.20843538530201,
+     "half_bp": 38.104217692651005,
+     "price": 25.334899999999998,
+     "premium_bp": -2.291698352605584,
+     "t": 0.9369976633809924,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -29.61425449826931,
+      "gc_htb": -29.61425449826931,
+      "house": -29.61425449826931
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": -0.6516885051629295,
+     "net": -61.39010330175301,
+     "two_c": 60.73841479659008,
+     "half_bp": 30.36920739829504,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": -0.014105944321710242,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": -61.39010330175301,
+      "gc_htb": -64.86171313910359,
+      "house": -73.45653481262896
+     }
+    }
+   }
+  },
+  "S_F0/target/compound/PB": {
+   "variant": {
+    "net_bp_bar": -10.62502795995265,
+    "gross_bp_bar": -5.024034035821952,
+    "sharpe_net": -0.3447672702008387,
+    "maxdd_bp": 41681.4572099129,
+    "round_trip": 50.90137449787685,
+    "held_half": 12.725343624469213,
+    "turnover": 0.096485723250706,
+    "trade_mean_bp": -6.499493203417949,
+    "trade_net_mean_bp": -35.52448122976679,
+    "trades": 1226,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -10.62502795995265
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -10.94966649646756
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -11.808033324006022
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 17.144649325734544,
+    "gross_per_trade": 37.215393870102986,
+    "median_per_trade": 166.7459663066296,
+    "t_per_trade": 0.5734577354994098,
+    "mean_over_2c": 1.8542109281414312,
+    "round_trip": 39.96167536674132,
+    "trades": 1886,
+    "held_per_bar": 5.967994979604644,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 17.144649325734544
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.7891859819219313,
+      "net_per_trade_borrow": 15.355463343812612
+     },
+     "house": {
+      "borrow_per_trade": 6.218754734131192,
+      "net_per_trade_borrow": 10.925894591603353
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 914,
+     "gross": 48.885879239638285,
+     "net": 31.828564656989013,
+     "two_c": 17.057314582649273,
+     "half_bp": 8.528657291324636,
+     "price": 25.334899999999998,
+     "premium_bp": -2.291698352605584,
+     "t": 1.1230805885707924,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 31.828564656989013,
+      "gc_htb": 31.828564656989013,
+      "house": 31.828564656989013
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": 26.24129548763874,
+     "net": 3.336934703546696,
+     "two_c": 22.904360784092045,
+     "half_bp": 11.452180392046023,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": 0.6380999755994596,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": 3.336934703546696,
+      "gc_htb": -0.13467513380388274,
+      "house": -8.72949680732926
+     }
+    }
+   }
+  },
+  "S_F0/target/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -19.318701380658105,
+    "gross_bp_bar": -5.024034035821952,
+    "sharpe_net": -0.6268647916917435,
+    "maxdd_bp": 41681.4572099129,
+    "round_trip": 141.00458487767617,
+    "held_half": 35.25114621941904,
+    "turnover": 0.096485723250706,
+    "trade_mean_bp": -6.499493203417949,
+    "trade_net_mean_bp": -80.57608641966645,
+    "trades": 1226,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -19.318701380658105
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -19.643339917173016
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -20.501706744711477
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -31.020157097262643,
+    "gross_per_trade": 37.215393870102986,
+    "median_per_trade": 120.58682610101255,
+    "t_per_trade": -1.037627031101364,
+    "mean_over_2c": 0.5453959606466964,
+    "round_trip": 136.9468501818921,
+    "trades": 1886,
+    "held_per_bar": 5.967994979604644,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -31.020157097262643
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.7891859819219313,
+      "net_per_trade_borrow": -32.80934307918457
+     },
+     "house": {
+      "borrow_per_trade": 6.218754734131192,
+      "net_per_trade_borrow": -37.238911831393835
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 914,
+     "gross": 48.885879239638285,
+     "net": -27.322556145663725,
+     "two_c": 76.20843538530201,
+     "half_bp": 38.104217692651005,
+     "price": 25.334899999999998,
+     "premium_bp": -2.291698352605584,
+     "t": 1.1230805885707924,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -27.322556145663725,
+      "gc_htb": -27.322556145663725,
+      "house": -27.322556145663725
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": 26.24129548763874,
+     "net": -34.49711930895134,
+     "two_c": 60.73841479659008,
+     "half_bp": 30.36920739829504,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": 0.6380999755994596,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": -34.49711930895134,
+      "gc_htb": -37.96872914630192,
+      "house": -46.5635508198273
+     }
+    }
+   }
+  },
+  "S_F0/fixed/sum/PB": {
+   "variant": {
+    "net_bp_bar": -4.541761264518776,
+    "gross_bp_bar": -2.014675998841636,
+    "sharpe_net": -0.20596148180842114,
+    "maxdd_bp": 23767.04669694009,
+    "round_trip": 43.1520597808872,
+    "held_half": 10.7880149452218,
+    "turnover": 0.05051772827110135,
+    "trade_mean_bp": -20.653245065514607,
+    "trade_net_mean_bp": -45.66511072300854,
+    "trades": 640,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -4.541761264518776
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": -4.879318105056476
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": -5.726634335177852
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -24.246513305733444,
+    "gross_per_trade": -4.511998402087474,
+    "median_per_trade": 2.852046494836209,
+    "t_per_trade": -0.4115526662151855,
+    "mean_over_2c": -0.22863487773159685,
+    "round_trip": 39.42426530117966,
+    "trades": 1161,
+    "held_per_bar": 7.215249450894258,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -24.246513305733444
+     },
+     "gc_htb": {
+      "borrow_per_trade": 3.463591867984633,
+      "net_per_trade_borrow": -27.710105173718077
+     },
+     "house": {
+      "borrow_per_trade": 12.25441942496206,
+      "net_per_trade_borrow": -36.5009327306955
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 549,
+     "gross": 29.365941351968885,
+     "net": 10.066281650556661,
+     "two_c": 19.299659701412224,
+     "half_bp": 9.649829850706112,
+     "price": 25.34,
+     "premium_bp": 15.267967269326835,
+     "t": 0.3412702587183648,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 10.066281650556661,
+      "gc_htb": 10.066281650556661,
+      "house": 10.066281650556661
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": -34.90250318146156,
+     "net": -55.02710878122899,
+     "two_c": 20.12460559976743,
+     "half_bp": 10.062302799883716,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": -0.43157272543223124,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": -55.02710878122899,
+      "gc_htb": -61.597746295493955,
+      "house": -78.27446327858348
+     }
+    }
+   }
+  },
+  "S_F0/fixed/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -9.639013088413375,
+    "gross_bp_bar": -2.014675998841636,
+    "sharpe_net": -0.4371135564455377,
+    "maxdd_bp": 23767.04669694009,
+    "round_trip": 144.05231793462684,
+    "held_half": 36.01307948365671,
+    "turnover": 0.05051772827110135,
+    "trade_mean_bp": -20.653245065514607,
+    "trade_net_mean_bp": -96.11523979987837,
+    "trades": 640,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -9.639013088413375
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": -9.976569928951076
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": -10.823886159072451
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -72.68866332512225,
+    "gross_per_trade": -4.511998402087474,
+    "median_per_trade": -48.607018507512436,
+    "t_per_trade": -1.2338655473903122,
+    "mean_over_2c": -0.06618097859701862,
+    "round_trip": 137.19610480639673,
+    "trades": 1161,
+    "held_per_bar": 7.215249450894258,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -72.68866332512225
+     },
+     "gc_htb": {
+      "borrow_per_trade": 3.463591867984633,
+      "net_per_trade_borrow": -76.15225519310688
+     },
+     "house": {
+      "borrow_per_trade": 12.25441942496206,
+      "net_per_trade_borrow": -84.94308275008432
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 549,
+     "gross": 29.365941351968885,
+     "net": -46.99768032853004,
+     "two_c": 76.36362168049892,
+     "half_bp": 38.18181084024946,
+     "price": 25.34,
+     "premium_bp": 15.267967269326835,
+     "t": 0.3412702587183648,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -46.99768032853004,
+      "gc_htb": -46.99768032853004,
+      "house": -46.99768032853004
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": -34.90250318146156,
+     "net": -95.73498630735938,
+     "two_c": 60.83248312589781,
+     "half_bp": 30.416241562948905,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": -0.43157272543223124,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": -95.73498630735938,
+      "gc_htb": -102.30562382162434,
+      "house": -118.98234080471387
+     }
+    }
+   }
+  },
+  "S_F0/fixed/compound/PB": {
+   "variant": {
+    "net_bp_bar": -4.541761264518776,
+    "gross_bp_bar": -2.014675998841636,
+    "sharpe_net": -0.20596148180842114,
+    "maxdd_bp": 23767.04669694009,
+    "round_trip": 43.1520597808872,
+    "held_half": 10.7880149452218,
+    "turnover": 0.05051772827110135,
+    "trade_mean_bp": -28.11310929747109,
+    "trade_net_mean_bp": -53.124974954965026,
+    "trades": 640,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -4.541761264518776
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": -4.879318105056476
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": -5.726634335177852
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -2.3752937477228246,
+    "gross_per_trade": 17.359221155923166,
+    "median_per_trade": -8.878905161252096,
+    "t_per_trade": -0.04486898686817045,
+    "mean_over_2c": 0.8796375913307111,
+    "round_trip": 39.42426530117966,
+    "trades": 1161,
+    "held_per_bar": 7.215249450894258,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -2.3752937477228246
+     },
+     "gc_htb": {
+      "borrow_per_trade": 3.463591867984633,
+      "net_per_trade_borrow": -5.838885615707458
+     },
+     "house": {
+      "borrow_per_trade": 12.25441942496206,
+      "net_per_trade_borrow": -14.629713172684886
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 549,
+     "gross": 14.097974082642015,
+     "net": -5.20168561877021,
+     "two_c": 19.299659701412224,
+     "half_bp": 9.649829850706112,
+     "price": 25.34,
+     "premium_bp": 15.267967269326835,
+     "t": 0.17899732611375185,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -5.20168561877021,
+      "gc_htb": -5.20168561877021,
+      "house": -5.20168561877021
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": 20.284751618719454,
+     "net": 0.16014601895202318,
+     "two_c": 20.12460559976743,
+     "half_bp": 10.062302799883716,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": 0.2839734834350776,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": 0.16014601895202318,
+      "gc_htb": -6.410491495312942,
+      "house": -23.08720847840247
+     }
+    }
+   }
+  },
+  "S_F0/fixed/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -9.639013088413375,
+    "gross_bp_bar": -2.014675998841636,
+    "sharpe_net": -0.4371135564455377,
+    "maxdd_bp": 23767.04669694009,
+    "round_trip": 144.05231793462684,
+    "held_half": 36.01307948365671,
+    "turnover": 0.05051772827110135,
+    "trade_mean_bp": -28.11310929747109,
+    "trade_net_mean_bp": -103.57510403183485,
+    "trades": 640,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -9.639013088413375
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": -9.976569928951076
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": -10.823886159072451
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -50.817443767111605,
+    "gross_per_trade": 17.359221155923166,
+    "median_per_trade": -58.48529631822926,
+    "t_per_trade": -0.9599185373562602,
+    "mean_over_2c": 0.2546211548411783,
+    "round_trip": 137.19610480639673,
+    "trades": 1161,
+    "held_per_bar": 7.215249450894258,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -50.817443767111605
+     },
+     "gc_htb": {
+      "borrow_per_trade": 3.463591867984633,
+      "net_per_trade_borrow": -54.28103563509624
+     },
+     "house": {
+      "borrow_per_trade": 12.25441942496206,
+      "net_per_trade_borrow": -63.071863192073664
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 549,
+     "gross": 14.097974082642015,
+     "net": -62.26564759785691,
+     "two_c": 76.36362168049892,
+     "half_bp": 38.18181084024946,
+     "price": 25.34,
+     "premium_bp": 15.267967269326835,
+     "t": 0.17899732611375185,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -62.26564759785691,
+      "gc_htb": -62.26564759785691,
+      "house": -62.26564759785691
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": 20.284751618719454,
+     "net": -40.547731507178355,
+     "two_c": 60.83248312589781,
+     "half_bp": 30.416241562948905,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": 0.2839734834350776,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": -40.547731507178355,
+      "gc_htb": -47.11836902144332,
+      "house": -63.79508600453285
+     }
+    }
+   }
+  },
+  "LW_F0/target/sum/PB": {
+   "variant": {
+    "net_bp_bar": -0.2038940438848993,
+    "gross_bp_bar": 6.362002954379646,
+    "sharpe_net": -0.0044682254668651205,
+    "maxdd_bp": 36196.63486589275,
+    "round_trip": 61.03763987792517,
+    "held_half": 15.259409969481293,
+    "turnover": 0.09389708189519924,
+    "trade_mean_bp": 35.73363328456726,
+    "trade_net_mean_bp": 0.7703689011602322,
+    "trades": 1193,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -0.2038940438848993
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -0.5285325803998087
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -1.3868994079382706
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 28.217944049606928,
+    "gross_per_trade": 99.53303925469096,
+    "median_per_trade": 219.54089364157795,
+    "t_per_trade": 0.678910087574968,
+    "mean_over_2c": 1.3956798202184169,
+    "round_trip": 127.56831060094376,
+    "trades": 2383,
+    "held_per_bar": 7.979918418575463,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 28.217944049606928
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.4160322122974245,
+      "net_per_trade_borrow": 26.801911837309504
+     },
+     "house": {
+      "borrow_per_trade": 4.92176728013908,
+      "net_per_trade_borrow": 23.29617676946785
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 168.54760720832527,
+     "net": 63.88365739147356,
+     "two_c": 104.66394981685171,
+     "half_bp": 52.331974908425856,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.6940579694594593,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 63.88365739147356,
+      "gc_htb": 63.88365739147356,
+      "house": 63.88365739147356
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": -0.6516885051629295,
+     "net": -23.556049289254975,
+     "two_c": 22.904360784092045,
+     "half_bp": 11.452180392046023,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": -0.014105944321710242,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": -23.556049289254975,
+      "gc_htb": -27.027659126605553,
+      "house": -35.62248080013093
+     }
+    }
+   }
+  },
+  "LW_F0/target/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -13.220552699453735,
+    "gross_bp_bar": 6.362002954379646,
+    "sharpe_net": -0.2897211175578954,
+    "maxdd_bp": 36196.63486589275,
+    "round_trip": 199.66451083965578,
+    "held_half": 49.916127709913944,
+    "turnover": 0.09389708189519924,
+    "trade_mean_bp": 35.73363328456726,
+    "trade_net_mean_bp": -68.54306657970507,
+    "trades": 1193,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -13.220552699453735
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -13.545191235968645
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -14.403558063507107
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -7.679600387523633,
+    "gross_per_trade": 99.53303925469096,
+    "median_per_trade": 183.07609578150465,
+    "t_per_trade": -0.18476431234835927,
+    "mean_over_2c": 0.9283703823247738,
+    "round_trip": 199.96589961949002,
+    "trades": 2383,
+    "held_per_bar": 7.979918418575463,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -7.679600387523633
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.4160322122974245,
+      "net_per_trade_borrow": -9.095632599821059
+     },
+     "house": {
+      "borrow_per_trade": 4.92176728013908,
+      "net_per_trade_borrow": -12.601367667662714
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 168.54760720832527,
+     "net": 29.32012238542532,
+     "two_c": 139.22748482289995,
+     "half_bp": 69.61374241144998,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.6940579694594593,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 29.32012238542532,
+      "gc_htb": 29.32012238542532,
+      "house": 29.32012238542532
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": -0.6516885051629295,
+     "net": -61.39010330175301,
+     "two_c": 60.73841479659008,
+     "half_bp": 30.36920739829504,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": -0.014105944321710242,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": -61.39010330175301,
+      "gc_htb": -64.86171313910359,
+      "house": -73.45653481262896
+     }
+    }
+   }
+  },
+  "LW_F0/target/compound/PB": {
+   "variant": {
+    "net_bp_bar": -0.2038940438848993,
+    "gross_bp_bar": 6.362002954379646,
+    "sharpe_net": -0.0044682254668651205,
+    "maxdd_bp": 36196.63486589275,
+    "round_trip": 61.03763987792517,
+    "held_half": 15.259409969481293,
+    "turnover": 0.09389708189519924,
+    "trade_mean_bp": 64.93872753023876,
+    "trade_net_mean_bp": 29.975463146831736,
+    "trades": 1193,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -0.2038940438848993
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -0.5285325803998087
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -1.3868994079382706
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 24.281027002160656,
+    "gross_per_trade": 95.59612220724468,
+    "median_per_trade": 212.98637146598887,
+    "t_per_trade": 0.6612886990998107,
+    "mean_over_2c": 1.3404752799156279,
+    "round_trip": 127.56831060094376,
+    "trades": 2383,
+    "held_per_bar": 7.979918418575463,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 24.281027002160656
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.4160322122974245,
+      "net_per_trade_borrow": 22.864994789863232
+     },
+     "house": {
+      "borrow_per_trade": 4.92176728013908,
+      "net_per_trade_borrow": 19.359259722021577
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 143.37279943719292,
+     "net": 38.70884962034121,
+     "two_c": 104.66394981685171,
+     "half_bp": 52.331974908425856,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.5986735944320567,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 38.70884962034121,
+      "gc_htb": 38.70884962034121,
+      "house": 38.70884962034121
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": 26.24129548763874,
+     "net": 3.336934703546696,
+     "two_c": 22.904360784092045,
+     "half_bp": 11.452180392046023,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": 0.6380999755994596,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": 3.336934703546696,
+      "gc_htb": -0.13467513380388274,
+      "house": -8.72949680732926
+     }
+    }
+   }
+  },
+  "LW_F0/target/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -13.220552699453735,
+    "gross_bp_bar": 6.362002954379646,
+    "sharpe_net": -0.2897211175578954,
+    "maxdd_bp": 36196.63486589275,
+    "round_trip": 199.66451083965578,
+    "held_half": 49.916127709913944,
+    "turnover": 0.09389708189519924,
+    "trade_mean_bp": 64.93872753023876,
+    "trade_net_mean_bp": -39.337972334033566,
+    "trades": 1193,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -13.220552699453735
+     },
+     "gc_htb": {
+      "borrow_bp": 0.3246385365149093,
+      "net_bp_borrow": -13.545191235968645
+     },
+     "house": {
+      "borrow_bp": 1.1830053640533713,
+      "net_bp_borrow": -14.403558063507107
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -11.616517434969918,
+    "gross_per_trade": 95.59612220724468,
+    "median_per_trade": 175.72183370462193,
+    "t_per_trade": -0.31637054642415935,
+    "mean_over_2c": 0.8916497394921339,
+    "round_trip": 199.96589961949002,
+    "trades": 2383,
+    "held_per_bar": 7.979918418575463,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -11.616517434969918
+     },
+     "gc_htb": {
+      "borrow_per_trade": 1.4160322122974245,
+      "net_per_trade_borrow": -13.032549647267341
+     },
+     "house": {
+      "borrow_per_trade": 4.92176728013908,
+      "net_per_trade_borrow": -16.538284715108997
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1411,
+     "gross": 143.37279943719292,
+     "net": 4.145314614292971,
+     "two_c": 139.22748482289995,
+     "half_bp": 69.61374241144998,
+     "price": 10.77,
+     "premium_bp": 25.17480777113234,
+     "t": 2.5986735944320567,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 4.145314614292971,
+      "gc_htb": 4.145314614292971,
+      "house": 4.145314614292971
+     }
+    },
+    "1": {
+     "trades": 972,
+     "gross": 26.24129548763874,
+     "net": -34.49711930895134,
+     "two_c": 60.73841479659008,
+     "half_bp": 30.36920739829504,
+     "price": 32.2575,
+     "premium_bp": -26.892983992801675,
+     "t": 0.6380999755994596,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 3.4716098373505786,
+      "house": 12.066431510875956
+     },
+     "net_borrow": {
+      "none": -34.49711930895134,
+      "gc_htb": -37.96872914630192,
+      "house": -46.5635508198273
+     }
+    }
+   }
+  },
+  "LW_F0/fixed/sum/PB": {
+   "variant": {
+    "net_bp_bar": 1.4025584693614048,
+    "gross_bp_bar": 5.712125231308627,
+    "sharpe_net": 0.03561698682074958,
+    "maxdd_bp": 28431.817667406645,
+    "round_trip": 74.69062196457375,
+    "held_half": 18.672655491143438,
+    "turnover": 0.05090994665829934,
+    "trade_mean_bp": 55.795192093520505,
+    "trade_net_mean_bp": 13.469801429958729,
+    "trades": 645,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 1.4025584693614048
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": 1.0650016288237045
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": 0.21768539870232884
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 73.84823577540095,
+    "gross_per_trade": 148.4110963545545,
+    "median_per_trade": -24.361079838487363,
+    "t_per_trade": 1.112086834848731,
+    "mean_over_2c": 1.9904158075722713,
+    "round_trip": 124.86519448271105,
+    "trades": 1716,
+    "held_per_bar": 10.64637590210229,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 73.84823577540095
+     },
+     "gc_htb": {
+      "borrow_per_trade": 2.3433742183742186,
+      "net_per_trade_borrow": 71.50486155702673
+     },
+     "house": {
+      "borrow_per_trade": 8.291014541014542,
+      "net_per_trade_borrow": 65.5572212343864
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 250.03059174951989,
+     "net": 145.2900028665763,
+     "two_c": 104.74058888294361,
+     "half_bp": 52.370294441471806,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.69056629283605,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 145.2900028665763,
+      "gc_htb": 145.2900028665763,
+      "house": 145.2900028665763
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": -34.90250318146156,
+     "net": -55.02710878122899,
+     "two_c": 20.12460559976743,
+     "half_bp": 10.062302799883716,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": -0.43157272543223124,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": -55.02710878122899,
+      "gc_htb": -61.597746295493955,
+      "house": -78.27446327858348
+     }
+    }
+   }
+  },
+  "LW_F0/fixed/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -5.598197357159431,
+    "gross_bp_bar": 5.712125231308627,
+    "sharpe_net": -0.14216228830779992,
+    "maxdd_bp": 28431.817667406645,
+    "round_trip": 212.20315705931583,
+    "held_half": 53.05078926482896,
+    "turnover": 0.05090994665829934,
+    "trade_mean_bp": 55.795192093520505,
+    "trade_net_mean_bp": -55.28646611741231,
+    "trades": 645,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -5.598197357159431
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": -5.935754197697131
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": -6.783070427818506
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 41.768991288374714,
+    "gross_per_trade": 148.4110963545545,
+    "median_per_trade": -62.22578224300544,
+    "t_per_trade": 0.6289497944910581,
+    "mean_over_2c": 1.3916744822549574,
+    "round_trip": 192.8690525285382,
+    "trades": 1716,
+    "held_per_bar": 10.64637590210229,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 41.768991288374714
+     },
+     "gc_htb": {
+      "borrow_per_trade": 2.3433742183742186,
+      "net_per_trade_borrow": 39.4256170700005
+     },
+     "house": {
+      "borrow_per_trade": 8.291014541014542,
+      "net_per_trade_borrow": 33.477976747360174
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 250.03059174951989,
+     "net": 117.99402234687949,
+     "two_c": 132.0365694026404,
+     "half_bp": 66.0182847013202,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.69056629283605,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 117.99402234687949,
+      "gc_htb": 117.99402234687949,
+      "house": 117.99402234687949
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": -34.90250318146156,
+     "net": -95.73498630735938,
+     "two_c": 60.83248312589781,
+     "half_bp": 30.416241562948905,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": -0.43157272543223124,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": -95.73498630735938,
+      "gc_htb": -102.30562382162434,
+      "house": -118.98234080471387
+     }
+    }
+   }
+  },
+  "LW_F0/fixed/compound/PB": {
+   "variant": {
+    "net_bp_bar": 1.4025584693614048,
+    "gross_bp_bar": 5.712125231308627,
+    "sharpe_net": 0.03561698682074958,
+    "maxdd_bp": 28431.817667406645,
+    "round_trip": 74.69062196457375,
+    "held_half": 18.672655491143438,
+    "turnover": 0.05090994665829934,
+    "trade_mean_bp": 51.80788625953951,
+    "trade_net_mean_bp": 9.482495595977731,
+    "trades": 645,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 1.4025584693614048
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": 1.0650016288237045
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": 0.21768539870232884
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 57.973029575944615,
+    "gross_per_trade": 132.53589015509812,
+    "median_per_trade": -95.2883708853841,
+    "t_per_trade": 0.8731068834142138,
+    "mean_over_2c": 1.7775054380377793,
+    "round_trip": 124.86519448271105,
+    "trades": 1716,
+    "held_per_bar": 10.64637590210229,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 57.973029575944615
+     },
+     "gc_htb": {
+      "borrow_per_trade": 2.3433742183742186,
+      "net_per_trade_borrow": 55.6296553575704
+     },
+     "house": {
+      "borrow_per_trade": 8.291014541014542,
+      "net_per_trade_borrow": 49.682015034930075
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 194.7620647785254,
+     "net": 90.02147589558179,
+     "two_c": 104.74058888294361,
+     "half_bp": 52.370294441471806,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.043285668949423,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 90.02147589558179,
+      "gc_htb": 90.02147589558179,
+      "house": 90.02147589558179
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": 20.284751618719454,
+     "net": 0.16014601895202318,
+     "two_c": 20.12460559976743,
+     "half_bp": 10.062302799883716,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": 0.2839734834350776,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": 0.16014601895202318,
+      "gc_htb": -6.410491495312942,
+      "house": -23.08720847840247
+     }
+    }
+   }
+  },
+  "LW_F0/fixed/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -5.598197357159431,
+    "gross_bp_bar": 5.712125231308627,
+    "sharpe_net": -0.14216228830779992,
+    "maxdd_bp": 28431.817667406645,
+    "round_trip": 212.20315705931583,
+    "held_half": 53.05078926482896,
+    "turnover": 0.05090994665829934,
+    "trade_mean_bp": 51.80788625953951,
+    "trade_net_mean_bp": -59.27377195139331,
+    "trades": 645,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -5.598197357159431
+     },
+     "gc_htb": {
+      "borrow_bp": 0.33755684053770035,
+      "net_bp_borrow": -5.935754197697131
+     },
+     "house": {
+      "borrow_bp": 1.184873070659076,
+      "net_bp_borrow": -6.783070427818506
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 25.893785088918303,
+    "gross_per_trade": 132.53589015509812,
+    "median_per_trade": -125.91758642089403,
+    "t_per_trade": 0.3899598426099703,
+    "mean_over_2c": 1.2428101458879608,
+    "round_trip": 192.8690525285382,
+    "trades": 1716,
+    "held_per_bar": 10.64637590210229,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 25.893785088918303
+     },
+     "gc_htb": {
+      "borrow_per_trade": 2.3433742183742186,
+      "net_per_trade_borrow": 23.550410870544084
+     },
+     "house": {
+      "borrow_per_trade": 8.291014541014542,
+      "net_per_trade_borrow": 17.60277054790376
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 1104,
+     "gross": 194.7620647785254,
+     "net": 62.725495375885004,
+     "two_c": 132.0365694026404,
+     "half_bp": 66.0182847013202,
+     "price": 11.401250000000001,
+     "premium_bp": 55.26852697099451,
+     "t": 2.043285668949423,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": 62.725495375885004,
+      "gc_htb": 62.725495375885004,
+      "house": 62.725495375885004
+     }
+    },
+    "1": {
+     "trades": 612,
+     "gross": 20.284751618719454,
+     "net": -40.547731507178355,
+     "two_c": 60.83248312589781,
+     "half_bp": 30.416241562948905,
+     "price": 32.72,
+     "premium_bp": -55.18725480018099,
+     "t": 0.2839734834350776,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 6.570637514264965,
+      "house": 23.247354497354493
+     },
+     "net_borrow": {
+      "none": -40.547731507178355,
+      "gc_htb": -47.11836902144332,
+      "house": -63.79508600453285
+     }
+    }
+   }
+  },
+  "C0/target/sum/PB": {
+   "variant": {
+    "net_bp_bar": 7.145853523298886,
+    "gross_bp_bar": 25.36312526588693,
+    "sharpe_net": 0.1869434192149891,
+    "maxdd_bp": 13477.538602016974,
+    "round_trip": 72.81712807869725,
+    "held_half": 18.204282019674313,
+    "turnover": 0.24082208973956698,
+    "trade_mean_bp": 52.468897242781345,
+    "trade_net_mean_bp": 14.645806009147407,
+    "trades": 3066,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 7.145853523298886
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25182910733585356,
+      "net_bp_borrow": 6.894024415963032
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": 5.955937644804407
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 0.44649159393140614,
+    "gross_per_trade": 41.748422654484116,
+    "median_per_trade": 57.200908374957365,
+    "t_per_trade": 0.02881299277918223,
+    "mean_over_2c": 1.0108104290154571,
+    "round_trip": 82.63602585472285,
+    "trades": 4921,
+    "held_per_bar": 6.3473486037025415,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 0.44649159393140614
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.5378230002290153,
+      "net_per_trade_borrow": -0.09133140629760916
+     },
+     "house": {
+      "borrow_per_trade": 2.48231582818049,
+      "net_per_trade_borrow": -2.0358242342490835
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2447,
+     "gross": 33.51411305477375,
+     "net": -10.734969004650331,
+     "two_c": 44.24908205942408,
+     "half_bp": 22.12454102971204,
+     "price": 66.15,
+     "premium_bp": 3.1047959177801476,
+     "t": 1.4944833939056166,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -10.734969004650331,
+      "gc_htb": -10.734969004650331,
+      "house": -10.734969004650331
+     }
+    },
+    "1": {
+     "trades": 2474,
+     "gross": 49.892867113049704,
+     "net": 11.505923317750934,
+     "two_c": 38.38694379529877,
+     "half_bp": 19.193471897649385,
+     "price": 68.9,
+     "premium_bp": -5.13844120589716,
+     "t": 2.3308480687781614,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.069776468927641,
+      "house": 4.937540901566771
+     },
+     "net_borrow": {
+      "none": 11.505923317750934,
+      "gc_htb": 10.436146848823293,
+      "house": 6.568382416184163
+     }
+    }
+   }
+  },
+  "C0/target/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -12.68201705274226,
+    "gross_bp_bar": 25.36312526588693,
+    "sharpe_net": -0.33177557063721447,
+    "maxdd_bp": 13477.538602016974,
+    "round_trip": 155.15123039249937,
+    "held_half": 38.78780759812484,
+    "turnover": 0.24082208973956698,
+    "trade_mean_bp": 52.468897242781345,
+    "trade_net_mean_bp": -26.521245147753653,
+    "trades": 3066,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -12.68201705274226
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25182910733585356,
+      "net_bp_borrow": -12.933846160078113
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": -13.871932931236739
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -34.481550974555745,
+    "gross_per_trade": 41.748422654484116,
+    "median_per_trade": 22.806798449382626,
+    "t_per_trade": -2.2252108436702405,
+    "mean_over_2c": 0.5476641361263704,
+    "round_trip": 152.46390811079647,
+    "trades": 4921,
+    "held_per_bar": 6.3473486037025415,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -34.481550974555745
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.5378230002290153,
+      "net_per_trade_borrow": -35.01937397478476
+     },
+     "house": {
+      "borrow_per_trade": 2.48231582818049,
+      "net_per_trade_borrow": -36.963866802736234
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2447,
+     "gross": 33.51411305477375,
+     "net": -43.078792041717726,
+     "two_c": 76.59290509649148,
+     "half_bp": 38.29645254824574,
+     "price": 66.15,
+     "premium_bp": 3.1047959177801476,
+     "t": 1.4944833939056166,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -43.078792041717726,
+      "gc_htb": -43.078792041717726,
+      "house": -43.078792041717726
+     }
+    },
+    "1": {
+     "trades": 2474,
+     "gross": 49.892867113049704,
+     "net": -25.978135901255285,
+     "two_c": 75.87100301430499,
+     "half_bp": 37.935501507152495,
+     "price": 68.9,
+     "premium_bp": -5.13844120589716,
+     "t": 2.3308480687781614,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.069776468927641,
+      "house": 4.937540901566771
+     },
+     "net_borrow": {
+      "none": -25.978135901255285,
+      "gc_htb": -27.047912370182928,
+      "house": -30.915676802822055
+     }
+    }
+   }
+  },
+  "C0/target/compound/PB": {
+   "variant": {
+    "net_bp_bar": 7.145853523298886,
+    "gross_bp_bar": 25.36312526588693,
+    "sharpe_net": 0.1869434192149891,
+    "maxdd_bp": 13477.538602016974,
+    "round_trip": 72.81712807869725,
+    "held_half": 18.204282019674313,
+    "turnover": 0.24082208973956698,
+    "trade_mean_bp": 57.26709862562802,
+    "trade_net_mean_bp": 19.444007391994084,
+    "trades": 3066,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 7.145853523298886
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25182910733585356,
+      "net_bp_borrow": 6.894024415963032
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": 5.955937644804407
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 1.4859282800890057,
+    "gross_per_trade": 42.787859340641724,
+    "median_per_trade": 59.16525006686158,
+    "t_per_trade": 0.10032880957376103,
+    "mean_over_2c": 1.0359772107970084,
+    "round_trip": 82.63602585472285,
+    "trades": 4921,
+    "held_per_bar": 6.3473486037025415,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 1.4859282800890057
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.5378230002290153,
+      "net_per_trade_borrow": 0.9481052798599904
+     },
+     "house": {
+      "borrow_per_trade": 2.48231582818049,
+      "net_per_trade_borrow": -0.9963875480914841
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2447,
+     "gross": 30.4093171369936,
+     "net": -13.839764922430483,
+     "two_c": 44.24908205942408,
+     "half_bp": 22.12454102971204,
+     "price": 66.15,
+     "premium_bp": 3.1047959177801476,
+     "t": 1.5685776615557026,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -13.839764922430483,
+      "gc_htb": -13.839764922430483,
+      "house": -13.839764922430483
+     }
+    },
+    "1": {
+     "trades": 2474,
+     "gross": 55.031308318946856,
+     "net": 16.644364523648086,
+     "two_c": 38.38694379529877,
+     "half_bp": 19.193471897649385,
+     "price": 68.9,
+     "premium_bp": -5.13844120589716,
+     "t": 2.4606479756538455,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.069776468927641,
+      "house": 4.937540901566771
+     },
+     "net_borrow": {
+      "none": 16.644364523648086,
+      "gc_htb": 15.574588054720445,
+      "house": 11.706823622081316
+     }
+    }
+   }
+  },
+  "C0/target/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -12.68201705274226,
+    "gross_bp_bar": 25.36312526588693,
+    "sharpe_net": -0.33177557063721447,
+    "maxdd_bp": 13477.538602016974,
+    "round_trip": 155.15123039249937,
+    "held_half": 38.78780759812484,
+    "turnover": 0.24082208973956698,
+    "trade_mean_bp": 57.26709862562802,
+    "trade_net_mean_bp": -21.723043764906976,
+    "trades": 3066,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -12.68201705274226
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25182910733585356,
+      "net_bp_borrow": -12.933846160078113
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": -13.871932931236739
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -33.44211428839814,
+    "gross_per_trade": 42.787859340641724,
+    "median_per_trade": 23.897553825664602,
+    "t_per_trade": -2.258062575417799,
+    "mean_over_2c": 0.5612996739164772,
+    "round_trip": 152.46390811079647,
+    "trades": 4921,
+    "held_per_bar": 6.3473486037025415,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -33.44211428839814
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.5378230002290153,
+      "net_per_trade_borrow": -33.979937288627156
+     },
+     "house": {
+      "borrow_per_trade": 2.48231582818049,
+      "net_per_trade_borrow": -35.92443011657863
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2447,
+     "gross": 30.4093171369936,
+     "net": -46.18358795949788,
+     "two_c": 76.59290509649148,
+     "half_bp": 38.29645254824574,
+     "price": 66.15,
+     "premium_bp": 3.1047959177801476,
+     "t": 1.5685776615557026,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -46.18358795949788,
+      "gc_htb": -46.18358795949788,
+      "house": -46.18358795949788
+     }
+    },
+    "1": {
+     "trades": 2474,
+     "gross": 55.031308318946856,
+     "net": -20.839694695358133,
+     "two_c": 75.87100301430499,
+     "half_bp": 37.935501507152495,
+     "price": 68.9,
+     "premium_bp": -5.13844120589716,
+     "t": 2.4606479756538455,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.069776468927641,
+      "house": 4.937540901566771
+     },
+     "net_borrow": {
+      "none": -20.839694695358133,
+      "gc_htb": -21.909471164285776,
+      "house": -25.777235596924903
+     }
+    }
+   }
+  },
+  "C0/fixed/sum/PB": {
+   "variant": {
+    "net_bp_bar": 3.142738684682751,
+    "gross_bp_bar": 21.041143966594603,
+    "sharpe_net": 0.10211401670268021,
+    "maxdd_bp": 14705.576786511332,
+    "round_trip": 86.7395325332989,
+    "held_half": 21.684883133324725,
+    "turnover": 0.20026670850329464,
+    "trade_mean_bp": 52.23023009749754,
+    "trade_net_mean_bp": 7.543808136312208,
+    "trades": 2549,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 3.142738684682751
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25294973129927634,
+      "net_bp_borrow": 2.8897889533834746
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": 1.9528228061882722
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": 0.8920821607755607,
+    "gross_per_trade": 41.73832582706323,
+    "median_per_trade": -16.186938312034588,
+    "t_per_trade": 0.0528528359515992,
+    "mean_over_2c": 1.0218400048744711,
+    "round_trip": 81.76218843169363,
+    "trades": 4708,
+    "held_per_bar": 7.389080640100408,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": 0.8920821607755607
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.6449255573087349,
+      "net_per_trade_borrow": 0.24715660346682577
+     },
+     "house": {
+      "borrow_per_trade": 3.016142735768904,
+      "net_per_trade_borrow": -2.124060574993343
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2321,
+     "gross": 29.68667655379562,
+     "net": -13.680423530603399,
+     "two_c": 43.36710008439902,
+     "half_bp": 21.68355004219951,
+     "price": 65.56,
+     "premium_bp": 12.221855678280214,
+     "t": 1.2986484323751455,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -13.680423530603399,
+      "gc_htb": -13.680423530603399,
+      "house": -13.680423530603399
+     }
+    },
+    "1": {
+     "trades": 2387,
+     "gross": 53.45674977480272,
+     "net": 15.061661427508099,
+     "two_c": 38.39508834729462,
+     "half_bp": 19.19754417364731,
+     "price": 68.73,
+     "premium_bp": -1.906559257086809,
+     "t": 2.1568884061157227,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.272019071558242,
+      "house": 5.948889819857562
+     },
+     "net_borrow": {
+      "none": 15.061661427508099,
+      "gc_htb": 13.789642355949857,
+      "house": 9.112771607650537
+     }
+    }
+   }
+  },
+  "C0/fixed/sum/PUB": {
+   "variant": {
+    "net_bp_bar": -10.307133478744635,
+    "gross_bp_bar": 21.041143966594603,
+    "sharpe_net": -0.33489987740152527,
+    "maxdd_bp": 14705.576786511332,
+    "round_trip": 153.8993329012473,
+    "held_half": 38.474833225311826,
+    "turnover": 0.20026670850329464,
+    "trade_mean_bp": 52.23023009749754,
+    "trade_net_mean_bp": -26.036092047661995,
+    "trades": 2549,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -10.307133478744635
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25294973129927634,
+      "net_bp_borrow": -10.560083210043912
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": -11.497049357239113
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -34.1549454968678,
+    "gross_per_trade": 41.73832582706323,
+    "median_per_trade": -51.18521643271054,
+    "t_per_trade": -2.023608056331386,
+    "mean_over_2c": 0.5499608212816898,
+    "round_trip": 151.7952129120414,
+    "trades": 4708,
+    "held_per_bar": 7.389080640100408,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -34.1549454968678
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.6449255573087349,
+      "net_per_trade_borrow": -34.799871054176535
+     },
+     "house": {
+      "borrow_per_trade": 3.016142735768904,
+      "net_per_trade_borrow": -37.171088232636706
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2321,
+     "gross": 29.68667655379562,
+     "net": -46.520169324621264,
+     "two_c": 76.20684587841689,
+     "half_bp": 38.10342293920844,
+     "price": 65.56,
+     "premium_bp": 12.221855678280214,
+     "t": 1.2986484323751455,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -46.520169324621264,
+      "gc_htb": -46.520169324621264,
+      "house": -46.520169324621264
+     }
+    },
+    "1": {
+     "trades": 2387,
+     "gross": 53.45674977480272,
+     "net": -22.131617258821805,
+     "two_c": 75.58836703362452,
+     "half_bp": 37.79418351681226,
+     "price": 68.73,
+     "premium_bp": -1.906559257086809,
+     "t": 2.1568884061157227,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.272019071558242,
+      "house": 5.948889819857562
+     },
+     "net_borrow": {
+      "none": -22.131617258821805,
+      "gc_htb": -23.403636330380046,
+      "house": -28.080507078679368
+     }
+    }
+   }
+  },
+  "C0/fixed/compound/PB": {
+   "variant": {
+    "net_bp_bar": 3.142738684682751,
+    "gross_bp_bar": 21.041143966594603,
+    "sharpe_net": 0.10211401670268021,
+    "maxdd_bp": 14705.576786511332,
+    "round_trip": 86.7395325332989,
+    "held_half": 21.684883133324725,
+    "turnover": 0.20026670850329464,
+    "trade_mean_bp": 55.030038151045275,
+    "trade_net_mean_bp": 10.343616189859944,
+    "trades": 2549,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": 3.142738684682751
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25294973129927634,
+      "net_bp_borrow": 2.8897889533834746
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": 1.9528228061882722
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -4.16653510401249,
+    "gross_per_trade": 36.67970856227518,
+    "median_per_trade": -15.754785702092962,
+    "t_per_trade": -0.2663461411129778,
+    "mean_over_2c": 0.8979946567901584,
+    "round_trip": 81.76218843169363,
+    "trades": 4708,
+    "held_per_bar": 7.389080640100408,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -4.16653510401249
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.6449255573087349,
+      "net_per_trade_borrow": -4.811460661321225
+     },
+     "house": {
+      "borrow_per_trade": 3.016142735768904,
+      "net_per_trade_borrow": -7.182677839781394
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2321,
+     "gross": 17.46482087551541,
+     "net": -25.90227920888361,
+     "two_c": 43.36710008439902,
+     "half_bp": 21.68355004219951,
+     "price": 65.56,
+     "premium_bp": 12.221855678280214,
+     "t": 0.8888106437832355,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -25.90227920888361,
+      "gc_htb": -25.90227920888361,
+      "house": -25.90227920888361
+     }
+    },
+    "1": {
+     "trades": 2387,
+     "gross": 55.36330903188952,
+     "net": 16.968220684594904,
+     "two_c": 38.39508834729462,
+     "half_bp": 19.19754417364731,
+     "price": 68.73,
+     "premium_bp": -1.906559257086809,
+     "t": 2.2855878172710127,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.272019071558242,
+      "house": 5.948889819857562
+     },
+     "net_borrow": {
+      "none": 16.968220684594904,
+      "gc_htb": 15.696201613036662,
+      "house": 11.019330864737341
+     }
+    }
+   }
+  },
+  "C0/fixed/compound/PUB": {
+   "variant": {
+    "net_bp_bar": -10.307133478744635,
+    "gross_bp_bar": 21.041143966594603,
+    "sharpe_net": -0.33489987740152527,
+    "maxdd_bp": 14705.576786511332,
+    "round_trip": 153.8993329012473,
+    "held_half": 38.474833225311826,
+    "turnover": 0.20026670850329464,
+    "trade_mean_bp": 55.030038151045275,
+    "trade_net_mean_bp": -23.23628399411426,
+    "trades": 2549,
+    "borrow": {
+     "none": {
+      "borrow_bp": 0.0,
+      "net_bp_borrow": -10.307133478744635
+     },
+     "gc_htb": {
+      "borrow_bp": 0.25294973129927634,
+      "net_bp_borrow": -10.560083210043912
+     },
+     "house": {
+      "borrow_bp": 1.1899158784944788,
+      "net_bp_borrow": -11.497049357239113
+     }
+    }
+   },
+   "invariant": {
+    "net_per_trade": -39.213562761655865,
+    "gross_per_trade": 36.67970856227518,
+    "median_per_trade": -51.70621771218843,
+    "t_per_trade": -2.5068269920911646,
+    "mean_over_2c": 0.48330646343754535,
+    "round_trip": 151.7952129120414,
+    "trades": 4708,
+    "held_per_bar": 7.389080640100408,
+    "borrow": {
+     "none": {
+      "borrow_per_trade": 0.0,
+      "net_per_trade_borrow": -39.213562761655865
+     },
+     "gc_htb": {
+      "borrow_per_trade": 0.6449255573087349,
+      "net_per_trade_borrow": -39.8584883189646
+     },
+     "house": {
+      "borrow_per_trade": 3.016142735768904,
+      "net_per_trade_borrow": -42.22970549742477
+     }
+    }
+   },
+   "legs": {
+    "0": {
+     "trades": 2321,
+     "gross": 17.46482087551541,
+     "net": -58.74202500290147,
+     "two_c": 76.20684587841689,
+     "half_bp": 38.10342293920844,
+     "price": 65.56,
+     "premium_bp": 12.221855678280214,
+     "t": 0.8888106437832355,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 0.0,
+      "house": 0.0
+     },
+     "net_borrow": {
+      "none": -58.74202500290147,
+      "gc_htb": -58.74202500290147,
+      "house": -58.74202500290147
+     }
+    },
+    "1": {
+     "trades": 2387,
+     "gross": 55.36330903188952,
+     "net": -20.225058001735,
+     "two_c": 75.58836703362452,
+     "half_bp": 37.79418351681226,
+     "price": 68.73,
+     "premium_bp": -1.906559257086809,
+     "t": 2.2855878172710127,
+     "borrow_per_trade": {
+      "none": 0.0,
+      "gc_htb": 1.272019071558242,
+      "house": 5.948889819857562
+     },
+     "net_borrow": {
+      "none": -20.225058001735,
+      "gc_htb": -21.49707707329324,
+      "house": -26.173947821592563
+     }
+    }
+   }
+  }
+ },
+ "borrow": {
+  "H/target/variant": {
+   "htb_share": 0.389806512505899,
+   "n_short": 545,
+   "n_htb": 220,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 10.433595456531238,
+    "house": 13.885976408912189
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.8921100602148612,
+    "house": 1.1873010892464921
+   },
+   "open_tail_bars": 9
+  },
+  "H/target/invariant": {
+   "htb_share": 0.3310074138682948,
+   "n_short": 1419,
+   "n_htb": 479,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 8.930389162947304,
+    "house": 13.466055907916374
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.7997913979244385,
+    "house": 1.1865291038494676
+   },
+   "open_tail_bars": 16
+  },
+  "H/fixed/variant": {
+   "htb_share": 0.40432244833569964,
+   "n_short": 320,
+   "n_htb": 131,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 18.23288690476191,
+    "house": 23.582589285714285
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.915363007455885,
+    "house": 1.1839392173562238
+   },
+   "open_tail_bars": 20
+  },
+  "H/fixed/invariant": {
+   "htb_share": 0.3179015104120118,
+   "n_short": 1124,
+   "n_htb": 359,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 15.252358357340569,
+    "house": 23.70149127266565
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.7802269592494392,
+    "house": 1.1852368287551394
+   },
+   "open_tail_bars": 20
+  },
+  "S/target/variant": {
+   "htb_share": 0.4400441779741243,
+   "n_short": 704,
+   "n_htb": 352,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 8.8606488997114,
+    "house": 10.71766774891775
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.9786471329458466,
+    "house": 1.1837524466956533
+   },
+   "open_tail_bars": 20
+  },
+  "S/target/invariant": {
+   "htb_share": 0.400213447171825,
+   "n_short": 1023,
+   "n_htb": 480,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 8.363201911589009,
+    "house": 10.903970581389936
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.9518221227060712,
+    "house": 1.1838894118467382
+   },
+   "open_tail_bars": 20
+  },
+  "S/fixed/variant": {
+   "htb_share": 0.441051471745632,
+   "n_short": 342,
+   "n_htb": 160,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 18.31604474148334,
+    "house": 22.114313561681982
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.9827560874783969,
+    "house": 1.1865540066042104
+   },
+   "open_tail_bars": 11
+  },
+  "S/fixed/invariant": {
+   "htb_share": 0.3787865168539326,
+   "n_short": 605,
+   "n_htb": 251,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 16.08651449560541,
+    "house": 21.890987800078708
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.9153592612622602,
+    "house": 1.18468007430982
+   },
+   "open_tail_bars": 18
+  },
+  "S_F0/target/variant": {
+   "htb_share": 0.07183454373223871,
+   "n_short": 618,
+   "n_htb": 49,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 3.3482945497508605,
+    "house": 12.201417783942055
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.3246385365149093,
+    "house": 1.1830053640533713
+   },
+   "open_tail_bars": 20
+  },
+  "S_F0/target/invariant": {
+   "htb_share": 0.08069427527405602,
+   "n_short": 972,
+   "n_htb": 82,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 3.4716098373505786,
+    "house": 12.066431510875956
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.34249395989612946,
+    "house": 1.1832543916007987
+   },
+   "open_tail_bars": 20
+  },
+  "S_F0/fixed/variant": {
+   "htb_share": 0.07881462799495587,
+   "n_short": 322,
+   "n_htb": 25,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 6.6819481415754725,
+    "house": 23.454599230996745
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.33755684053770035,
+    "house": 1.184873070659076
+   },
+   "open_tail_bars": 20
+  },
+  "S_F0/fixed/invariant": {
+   "htb_share": 0.07731570579867794,
+   "n_short": 612,
+   "n_htb": 48,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 6.570637514264965,
+    "house": 23.247354497354493
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.33789480649492304,
+    "house": 1.1849664559893613
+   },
+   "open_tail_bars": 18
+  },
+  "LW_F0/target/variant": {
+   "htb_share": 0.07183454373223871,
+   "n_short": 618,
+   "n_htb": 49,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 3.3482945497508605,
+    "house": 12.201417783942055
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.3246385365149093,
+    "house": 1.1830053640533713
+   },
+   "open_tail_bars": 20
+  },
+  "LW_F0/target/invariant": {
+   "htb_share": 0.08069427527405602,
+   "n_short": 972,
+   "n_htb": 82,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 3.4716098373505786,
+    "house": 12.066431510875956
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.34249395989612946,
+    "house": 1.1832543916007987
+   },
+   "open_tail_bars": 20
+  },
+  "LW_F0/fixed/variant": {
+   "htb_share": 0.07881462799495587,
+   "n_short": 322,
+   "n_htb": 25,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 6.6819481415754725,
+    "house": 23.454599230996745
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.33755684053770035,
+    "house": 1.184873070659076
+   },
+   "open_tail_bars": 20
+  },
+  "LW_F0/fixed/invariant": {
+   "htb_share": 0.07731570579867794,
+   "n_short": 612,
+   "n_htb": 48,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 6.570637514264965,
+    "house": 23.247354497354493
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.33789480649492304,
+    "house": 1.1849664559893613
+   },
+   "open_tail_bars": 18
+  },
+  "C0/target/variant": {
+   "htb_share": 0.029979595040025113,
+   "n_short": 1512,
+   "n_htb": 43,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 1.061612916771647,
+    "house": 5.016219450743259
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.25182910733585356,
+    "house": 1.1899158784944788
+   },
+   "open_tail_bars": 2
+  },
+  "C0/target/invariant": {
+   "htb_share": 0.03333008478705779,
+   "n_short": 2474,
+   "n_htb": 77,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 1.069776468927641,
+    "house": 4.937540901566771
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.2579627447673976,
+    "house": 1.1890567334558548
+   },
+   "open_tail_bars": 5
+  },
+  "C0/fixed/variant": {
+   "htb_share": 0.030607439962329303,
+   "n_short": 1275,
+   "n_htb": 39,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 1.2645502645502646,
+    "house": 5.948646125116713
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.25294973129927634,
+    "house": 1.1899158784944788
+   },
+   "open_tail_bars": 2
+  },
+  "C0/fixed/invariant": {
+   "htb_share": 0.031438631790744465,
+   "n_short": 2387,
+   "n_htb": 75,
+   "short_borrow_per_trade": {
+    "none": 0.0,
+    "gc_htb": 1.272019071558242,
+    "house": 5.948889819857562
+   },
+   "bar_bp_masked_mean": {
+    "none": 0.0,
+    "gc_htb": 0.2567807533012159,
+    "house": 1.1890567334558548
+   },
+   "open_tail_bars": 5
+  }
+ },
+ "reproduction": {
+  "H/long": {
+   "gain_bp": -25.17480777113235,
+   "minus_premium_bp": -25.17480777113234
+  },
+  "H/short": {
+   "gain_bp": 45.84648972484359,
+   "minus_premium_bp": 45.8464897248436
+  },
+  "S/long": {
+   "gain_bp": 2.405336892732585,
+   "minus_premium_bp": 2.405336892732582
+  },
+  "S/short": {
+   "gain_bp": 23.54093939420617,
+   "minus_premium_bp": 23.54093939420615
+  },
+  "C0/long": {
+   "gain_bp": -3.1047959177801516,
+   "minus_premium_bp": -3.1047959177801476
+  },
+  "C0/short": {
+   "gain_bp": 5.138441205897152,
+   "minus_premium_bp": 5.13844120589716
+  },
+  "S_F0 old/long": {
+   "gain_bp": 2.8601898389198936,
+   "minus_premium_bp": 2.8601898389199127
+  },
+  "S_F0 old/short": {
+   "gain_bp": 26.866187855883076,
+   "minus_premium_bp": 26.86618785588308
+  },
+  "S_F0 new/long": {
+   "gain_bp": 2.291698352605586,
+   "minus_premium_bp": 2.291698352605584
+  },
+  "S_F0 new/short": {
+   "gain_bp": 26.89298399280167,
+   "minus_premium_bp": 26.892983992801675
+  }
+ },
+ "audits": {
+  "P_recomputed": 1.1102230246251565e-15,
+  "P_sum_minus_premium": 8.881784197001252e-16,
+  "s_f0_bound_shift_per_trade": {
+   "PB": -6.756539613393407,
+   "PUB": -6.895631593661747
+  },
+  "identity": 0.0,
+  "reconcile": 7.275957614183426e-12,
+  "house_flat": 2.220446049250313e-16,
+  "reproduction": 2.1316282072803006e-14
+ },
+ "q_values": {
+  "q1_hist_L_short_compound": {
+   "PB": -52.76408336437471,
+   "PUB": -135.1075098599219
+  },
+  "q2_hist_L_fixed_short_premium": -33.77647038895122,
+  "q3_C0_fixed_premiums": {
+   "0": 12.221855678280214,
+   "1": -1.906559257086809
+  },
+  "q4_htb_share": {
+   "C0": {
+    "variant": 0.029979595040025113,
+    "invariant": 0.03333008478705779
+   },
+   "H": {
+    "variant": 0.389806512505899,
+    "invariant": 0.3310074138682948
+   }
+  },
+  "q5": {
+   "net_pb": 7.145853523298886,
+   "gc_htb_bp": 0.25182910733585356,
+   "house_bp": 1.1899158784944788,
+   "net_house": 5.955937644804407
+  },
+  "q6_lw_f0_pub_compound_gc": -13.032549647267341
+ },
+ "predictions": {
+  "Q1": true,
+  "Q2": false,
+  "Q3": false,
+  "Q4": true,
+  "Q5": true,
+  "Q6": false
+ }
+}
