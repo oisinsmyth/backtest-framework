@@ -1490,3 +1490,50 @@ and the book is the one that trades.
    outcome* before building on it.
 3. **A per-trade winner needs a book-level check in the same study.** D329
    and D335 both produced per-trade results whose books were flat or negative.
+
+## 20. The best book in the programme is five names, and four of them could not have been bought
+
+**From [D338](decisions/D338-RESULT-five-names-and-a-18-cent-stock.md), 2026-09-05.**
+Pre-registered; three of nine predictions.
+
+`retrace_leg` symmetric at k=20 under the deal filter -- +18.93 bp/bar PUB,
+Sharpe 0.546, the best book for three studies running -- got its four-group
+report. **It orders the gate**: +32.4 bp/bar gross against a rank-rotation
+null whose maximum in 200 draws is +15.2, gross Sharpe 0.94 against 0.65, above
+every draw on every statistic. **And what it orders the gate toward is the
+illiquid tail.** Five names of 673 are half the P&L. The top trade is VSA, long,
+2025-01-31, one bar, +330%, **15.9% of the ledger**: a real move with no
+dividend, in a stock trading at about $0.18 (two later reverse splits inflate
+the adjusted close to $90.55) on **2,738 shares the day before**, at the 4th
+percentile of the universe by dollar volume. Four of the five largest trades
+are sub-$2 names in the bottom 7% by dollar volume, bought at the close on the
+day before a +68% to +330% gap, three of them held one bar. All four fall below
+dv28's cut -- **which is why D323 found `retrace_leg` peaks with dv28 OFF.**
+
+The core pays: the symmetric 1% trim is +125.9 bp a trade against a 68 bp round
+trip. The headline needs the tails: the ex-top-1% mean is +70.3, at breakeven.
+Eight of fourteen years are net-positive; 2016-2019 are four losing years in a
+row; the second half of the sample is 76% of the P&L and 2025-2026 carry two of
+the five names. It is **not declared a candidate.**
+
+**Three things that generalise:**
+
+1. **Cost in bp scales with 1/price; fillability scales with dollar volume, and
+   no cost model here charges it.** A rank book on a dead-inclusive universe
+   with no price or volume floor will find the sub-$2 names on the day they gap,
+   and a same-close fill will book the gap. The held *median* dollar volume
+   ($20.5M here) says nothing; the top trades' entry-day dollar-volume
+   percentile says everything. **The four-group report now prints it beside the
+   top trade's bar** -- section 18's rule, extended.
+2. **A null's teeth requirement belongs on the statistic that tests the
+   signal.** Under the published cost convention, a matched-cost rotation null
+   goes negative at p95 on net Sharpe because a random 4-name book does not pay
+   13 bp/bar -- the cost is large, the null is not broken. D338 put the teeth
+   clause on net under both conventions and a correct null failed a correct
+   test. Gross null for the signal; matched-cost net null beside it for the
+   cost; R7's flag on the gross null's p95.
+3. **A cell in another study's table is not a book.** `retrace_leg` was "the
+   best book in the programme" in three records off a bp/bar and a Sharpe.
+   Nothing about it was wrong; nothing about it was a book until the top trade
+   was named. The order of work is: four groups and the top trade first, then
+   the comparisons.

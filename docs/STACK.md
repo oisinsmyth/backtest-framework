@@ -51,7 +51,15 @@ now `price_log`, the known-bad control.
 
 **Under the F0 deal filter, the same book is +18.93 bp/bar PUB, Sharpe
 +0.546** (D335) — the filter removes the pinned names `retrace_leg` was
-shorting at a fictitious spread. That is the number to quote for it now.
+shorting at a fictitious spread. **And D338 gave it the four-group report it
+never had: five names of 673 are half the P&L, the top trade is VSA at 15.9%
+of the ledger — a real +330% day in a stock trading at about $0.18 on 2,738
+shares, bought at the close and sold at the next — and four of the five
+largest trades are sub-$2 names in the bottom 7% of the universe by dollar
+volume, all below dv28's cut.** It beats every one of 200 rotations on every
+statistic (+32.4 gross against a null max of +15.2), the symmetric trim clears
+cost by 1.85×, and the ex-top-1% mean equals the round trip. **Not declared a
+candidate**; the cell under dv28 is the owed pre-registration.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -289,10 +297,14 @@ per-trade only; `retrace_leg` symmetric under F0 is the book.
    reverse, on `retrace_leg` and the D335 pairings.
 2. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
-3. **`retrace_leg` symmetric under F0 as a pre-registered candidate**, its
-   four-group report with the top trade named and its bar printed, under GC+HTB
-   borrow and both conventions, before anything else is built on it. It has
-   been the best book for three studies without a record of its own.
+3. **`retrace_leg` under F0 — DONE (D338), not declared.** Three of nine
+   predictions; above its null's maximum on every statistic and a five-name
+   book whose top trade could not have been bought. **Owed from it, in order:
+   the cell under dv28** (with and without, threshold fixed at 28), predicted
+   in advance from D338 §1; **the null's teeth clause moved to the gross null**
+   with the matched-cost net null beside it; **a one-bar execution lag** for
+   the whole D300 family (three of the five top trades are one-bar holds under
+   a same-close fill).
 4. **The mixed convention** — rebalanced long, constant-shares short — as a
    *predicted* arm, if anyone wants the leg-wise book back (+1.87 PUB per trade
    after borrow, post-hoc, D337 §5). A compounding *bar series* would be needed
@@ -350,6 +362,12 @@ Kept legible rather than quietly fixed.
     moved, and those are the paths a rebalanced short pays on (D337 §3). Two
     pre-registered predictions were wrong in the same direction for the same
     reason.
+11. **"`retrace_leg` is the best book in the programme"** — said for three
+    studies (D333, D335, D337) off cells in other studies' tables, without a
+    four-group report. D338 gave it one: five names, a $0.18 top trade at
+    15.9%, four of five top trades below the dollar-volume cut the programme
+    already has. **A cell in a table is not a book until the top trade is
+    named and its liquidity printed** — FINDINGS §18's rule, extended.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
