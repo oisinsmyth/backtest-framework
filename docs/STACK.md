@@ -25,16 +25,27 @@ overlay       CLOSED at this width                 negative at all 12 thresholds
 tilt          CLOSED, one variant carried          dv28, p = 0.0100, unconfirmed        (D320/D321)
 ```
 
-**The incumbent book, D318's costing** (per-name spread from the OHLC, IBKR
-per-share commission):
+**The incumbent book, under BOTH spread conventions** (D332). `PB` is the
+per-bar median the programme has used since D318; `PUB` is the estimator as
+its authors specify it, a trailing 21-bar mean. IBKR per-share commission in
+both. **PUB is the default until quoted spreads decide** (D332 §4).
 
-| | net bp/bar | net Sharpe | gross Sharpe |
+| N=2 / target, k=5 | net bp/bar | net Sharpe | held ½-spread |
 |---|--:|--:|--:|
-| N=2 / target | +11.36 | +0.261 | +0.754 |
-| N=2 / none | +10.67 | +0.288 | +0.770 |
+| **PB** (D321's costing) | +14.57 | +0.334 | 18.3 |
+| **PUB** | **−5.16** | **−0.118** | 38.8 |
+| PB, D318's costing | +11.36 | +0.261 | 18.3 |
 
-**Every net number in this document is an UPPER BOUND.** §3 lists three holes
-in the cost model, each with a measured mechanism. None has been closed yet.
+**Under the published convention the incumbent loses money.** Its short leg
+alone nets −180.8 bp per trade. What survives the swap is every *relative*
+finding — concentration (+32 bp N2−N19), the leg-wise construction, the D323
+order — and one absolute one: **`retrace_leg` at k=20, +16.06 bp/bar and
+Sharpe +0.480 under PUB, is the best symmetric book in the programme under
+either convention.**
+
+**Every net number in this document is an UPPER BOUND even under PUB.** §3
+lists the holes that remain — borrow and rebalancing — each with a measured
+mechanism.
 
 ### The best construction the programme has, and its bound
 
@@ -44,11 +55,15 @@ its long ledger *is* `hist_L`'s and its short ledger *is* `skew_63`'s,
 bit-identically in both lenses — so what it adds is the pairing, not a new
 signal.
 
-| k=20 | net per trade (invariant) | net Sharpe (variant) | round trip |
-|---|--:|--:|--:|
-| `hist_L` symmetric | −0.89 | −0.082 | 189.9 |
-| `skew_63` symmetric | +44.83 | +0.421 | 32.3 |
-| **leg-wise** | **+51 to +63** | **+0.22 to +0.43** | 120–127 |
+| k=20 | net per trade, PB | **net per trade, PUB** | net Sharpe, PB | net bp/bar, PUB |
+|---|--:|--:|--:|--:|
+| `hist_L` symmetric | −0.89 | −59.39 | −0.082 | −18.58 |
+| `skew_63` symmetric | +44.83 | +8.14 | +0.421 | +4.97 |
+| **leg-wise** | **+51 to +63** | **+17 to +36** | +0.22 to +0.43 | −4.0 to +5.6 |
+
+*The range on each leg-wise cell is the D330 filter bound (over-filtered to
+deal-contaminated). Under PUB the leg-wise book is a +36 per-trade edge and a
+roughly break-even bp/bar book; it still beats both parents in both.*
 
 **The number is a bound because a fifth of `skew_63`'s short trades are
 takeover targets pinned at the deal price** (D329 §10, D330): the short earns
@@ -118,11 +133,15 @@ position size and is the PM's to add, the maximum binds only below ~$0.50.
 
 **Open, each with a mechanism:**
 
-| hole | mechanism | size | found |
+| hole | mechanism | size | status |
 |---|---|---|---|
-| **Spread estimator floors at zero on pinned and quiet names** | Corwin–Schultz reads the spread from the daily range; a stock pinned at a deal price has none. Three D329 cells divided by zero; every volatility score's long leg is 24–35% pinned targets at a measured half-spread of **0.0** | `skew_63`'s short leg priced at 7.7 bp, honest ≥ 11.1 | D329 §5, D330 |
-| **No borrow cost** | Announced deal targets are the most crowded short in the market; any post-jump name may be hard to borrow | unquantified; the fixture has no borrow data | D329 §10 |
-| **Daily rebalancing is uncosted** | The book is equal-weight, rebalanced daily, and earns the *sum* of one-bar returns; the trades that realise that sum are free. On `hist_L`'s $8–10 names, ~5%/day of notional at 46.7 bp | ~30 bp/name/hold against a `two_c` of 96 | D328 §11 |
+| **The spread CONVENTION** | The per-bar Corwin–Schultz estimate is clamped to zero on **43%** of live name-bars, uniformly, uncorrelated bar to bar; PB takes the median of that coin flip at entry, so a leg above 50% zeros is charged nothing. The authors average daily estimates over a month (`cs_spread`), which reads **2.03×** PB at the median across legs | incumbent +14.57 → **−5.16** bp/bar; every net level falls 8–20 bp/bar; relative findings unchanged | **D332. PUB is the default; which is TRUE needs quoted spreads (Part C, on IBKR)** |
+| **No borrow cost** | Announced deal targets are the most crowded short in the market; any post-jump name may be hard to borrow. PUB does not touch this — a pinned deal stock's *spread* really is tiny; its cost is borrow | unquantified; the fixture has no borrow data. Deal dates now exist (D331) | open |
+| **Daily rebalancing is uncosted** | The book is equal-weight, rebalanced daily, and earns the *sum* of one-bar returns; the trades that realise that sum are free. On `hist_L`'s $8–10 names, ~5%/day of notional at 46.7 bp | ~30 bp/name/hold against a `two_c` of 96 | open, D328 §11 |
+
+*The "floor at zero" hole the previous version listed was a symptom of the
+convention, not a hole of its own: under PUB the half-tick floor moves nothing
+by more than 1 bp (D332 Q7).*
 
 **And one that is not a cost but decides which leg pays it — the rebalancing
 premium.** A rebalanced long on a bouncy name harvests volatility; a rebalanced
@@ -194,15 +213,21 @@ deal-event source is required; an EDGAR pull is in progress (D331).
 **The next four studies are infrastructure. Another signal result now is
 another upper bound on a cost model known to be wrong in three places.**
 
-1. **Deal events (D331, running).** Settles `skew_63`'s short leg and
-   disqualifies every low-vol long leg properly.
-2. **The spread estimator's floor (D332).** The zero-range names are the
-   pinned deals; a hard floor at half a tick over price is exact, not fitted.
-   Reprices every cell measured since D318.
+1. **Deal events — DATA PULLED (D331).** 1,465 of 1,573 names resolved,
+   24,387 filings, 1,053 target-specific forms. **The study that uses it is
+   next**: an event-driven exclusion on `skew_63`'s short leg, validated
+   against D330 A's pinned labels (the test D330 B's tape filter failed), with
+   the role ambiguity of form 425 declared.
+2. **The spread convention — DONE (D332).** The floor was the wrong study;
+   the convention was the finding. **What remains is Part C**: quoted BID_ASK
+   bars from the principal's IBKR session on a stratified sample of live
+   names, to decide PB vs PUB vs Abdi–Ranaldo. A data task, not a study I can
+   run.
 3. **Constant-shares sizing on the short leg.** The direct test of the
    rebalancing mechanism, and if it holds it rescues the incumbent's short leg
    rather than dropping it.
-4. **A borrow stress charge**, declared, since no borrow data exists.
+4. **A borrow stress charge**, declared, since no borrow data exists — now
+   with deal dates to anchor the highest-rate cohort.
 
 **Then, signal-side, each with a mechanism behind it:** the long leg for the
 leg-wise book, chosen from the profile side and *predicted* (the enumeration's

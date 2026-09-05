@@ -1281,3 +1281,61 @@ leg is unresolved, not retired**: the filter's bluntness confounds the
 separability test, and only a deal-event source can settle it. Until one
 exists, no short leg built on a jump detector can be costed honestly on this
 fixture.
+
+## 17. The spread estimator has a published convention, and the programme was not using it
+
+**From [D332](decisions/D332-RESULT-under-the-published-convention-the-incumbent-is-negative.md),
+2026-09-05.**
+
+The single two-day Corwin-Schultz estimate is **clamped to exactly zero on
+43.2% of all live name-bars**, uniformly across price and uncorrelated bar to
+bar. That is the authors' own convention -- a negative estimate is set to
+zero -- applied to an estimate that is negative nearly half the time on every
+kind of stock. **The zeros are noise, not a property of any name.** Every
+runner since D318 has charged the *median at entry* of that coin flip, so a
+leg whose entries land above 50% zeros is charged nothing, and a leg near 50%
+is charged by which side it fell.
+
+**Corwin and Schultz never use the single estimate. They average the clamped
+daily estimates over a month.** This codebase already computes that as the
+axis-E score `cs_spread`. Its universe median is **31.7 bp per side against
+14.2** for the per-bar median -- and across the 92 legs D329 and D330
+measured, the published convention charges **2.03x** the programme's at the
+median (p10 1.40x, p90 3.31x). D285 reported the mean (33.8 held); later
+runners used the per-bar median; no record explains the switch.
+
+Repriced with one array swapped and every ledger bit-identical:
+
+```
+                                   PB (used since D318)   PUB (published)
+incumbent N=2/target, k=5              +14.57 bp/bar         -5.16
+incumbent N=19                         -15.02                -37.09
+retrace_leg k=20                       +20.91                +16.06
+skew_63 k=20                           +12.60                 +4.97
+leg-wise hist_L/skew_63, per trade     +63.26                +35.99
+```
+
+**The incumbent's headline was a cost-convention artefact.** Every relative
+finding survives -- concentration (+32 bp N2-N19, basis-immune as Axis B
+said), the leg-wise book beating its parents, the D323 order -- and every level
+falls 8 to 20 bp/bar. `retrace_leg` at k=20 is the only cell above +10 that
+stays above +10.
+
+**Which convention is TRUE is not decided**, and cannot be from OHLC alone.
+The default is the published one, because it is what the estimator's authors
+specify and the other was adopted without a record. The test that decides it
+is quoted BID_ASK bars from IBKR on a stratified sample of live names, against
+PB, PUB and Abdi-Ranaldo, by lowest median absolute log error, declared in
+advance. **Until then every net number in this programme is a PB / PUB pair.**
+
+**Three generalisations:**
+
+1. **An estimator's convention is part of the cost model and must be
+   recorded.** A programme that had written down "per-bar median at entry"
+   would have had to say why, and the 43% would have come out then.
+2. **A clamp at zero on a noisy estimate turns a median into a coin flip.**
+   Check the clamp rate before summarising with a median; if it is anywhere
+   near half, the median is measuring the clamp.
+3. **The published convention does not fix the pinned-name problem** (section
+   16). A deal stock's spread really is tiny; the estimator is right about
+   what it measures and silent about borrow.

@@ -65,7 +65,10 @@ def half_floor(CLOSE):
 
 
 def with_floor(HALF, FLOOR):
-    return np.where(np.isfinite(HALF), np.maximum(HALF, FLOOR), np.nan)
+    """A floor with no information (NaN close) leaves the value untouched.
+    `np.maximum` propagates NaN; `fmax` ignores it. The first version used
+    `maximum` and [F] fired on the name-bars where the close is missing."""
+    return np.where(np.isfinite(HALF), np.fmax(HALF, FLOOR), np.nan)
 
 
 def main() -> int:
@@ -165,10 +168,15 @@ def main() -> int:
     for k_ in ("PB", "PUB"):
         Hf, H0 = HALF[k_ + "+f"], HALF[k_]
         m = np.isfinite(H0)
-        assert (Hf[m] >= FLOOR[m] - 1e-12).all()
-        above = m & (H0 > FLOOR)
-        assert np.array_equal(Hf[above], H0[above])
-    print("    [F] FLOOR: applied values are >= half a tick over price everywhere, and untouched above it")
+        mf = m & np.isfinite(FLOOR)
+        assert (Hf[mf] >= FLOOR[mf] - 1e-12).all(), f"[F] {k_}: a value sits below the floor"
+        above = mf & (H0 > FLOOR)
+        assert np.array_equal(Hf[above], H0[above]), f"[F] {k_}: a value above the floor was changed"
+        nofl = m & ~np.isfinite(FLOOR)
+        assert np.array_equal(Hf[nofl], H0[nofl]), f"[F] {k_}: a floor with no close changed a value"
+        assert np.array_equal(np.isfinite(Hf), m), f"[F] {k_}: the floor changed which cells are finite"
+    print("    [F] FLOOR: >= half a tick over price wherever a close exists, untouched above it, "
+          "untouched where no close exists, and no cell's finiteness changes")
     # 1. identity under PB against D329 and D323
     cell = {}
     worst = 0.0
