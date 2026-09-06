@@ -1,0 +1,1560 @@
+{
+ "note": "D363: the cost lines on D362's A2 (unchanged, [ID] to 1e-9) -- PUB / PB as D362, EW (three-bar windows around the gap and the exit) and EW1 (the single pair) from the record's own Corwin-Schultz per-bar estimate ([CS] to 1e-9 against HALF_PUB / HALF_PB); the execution bounds and participation; INV and U sizing with a within-name weight permutation null. Every line is an OHLC estimator; D336 (quoted spreads) is not pre-empted. Nothing is a book; nothing promoted.",
+ "study": 363,
+ "ledger": {
+  "arm": "A2",
+  "cap": 10,
+  "events": 3529,
+  "events_removed": 1045,
+  "trades": 3079,
+  "source": "run_d362 A2 (base -> features -> hit_grids -> arm_signal -> run_short)"
+ },
+ "conventions": {
+  "per_bar_estimate": "hs_bar[t, i] = the Corwin-Schultz pair (t-1, t) assigned to its SECOND day t, half-spread bp/side, clamped at 0 per pair; NaN where either day is not live",
+  "PUB": "HALF_PUB[t] = nanmean of hs_bar over the name's 21 own live bars ending at t-1, >= 17 finite (asserted [CS]); both sides of the trade",
+  "PB": "HALF_PB[t] = hs_bar[t+1] = the pair (t, t+1): the entry day and the day after (asserted [CS]); both sides; PUB where NaN (no day after; counted)",
+  "EW": "entry = nanmean of hs_bar over g-1, g, t (pairs (g-2,g-1), (g-1,g), (g,t)); exit = nanmean over e-1, e, e+1; PUB where no pair is finite (counted)",
+  "EW1": "entry = hs_bar[t] (the pair (g, t)); exit = hs_bar[e] (the pair (e-1, e)); PUB where NaN (counted)",
+  "clamp": "every pair clamped at 0 before averaging (as cs_spread); EW zero-clamped = the window mean is exactly 0; EW1 zero-clamped = its pair was negative",
+  "two_c_per_trade": "entry + exit + 2 x 0.005 / RAW_CLOSE[e0, row] x 1e4 (the as-traded close); net = gross - 2c - borrow (D337 gc_htb)",
+  "two_c_ledger_median": "D362's V47.two_c: 2 x median half-spread + commission at the median panel CLOSE; reproduced for [ID], not used in the tables",
+  "participation": "position / (CLOSE x VOL) in the fixture's frame; prices divided and volumes multiplied by the split factor, so this equals as-traded close x as-traded shares",
+  "quintiles": "rank-based equal-count bins of PUB at entry over the ledger, ties by ledger order",
+  "INV": "1 / 2c_PUB per trade, mean 1, capped at 5.0 and re-normalised to a fixed point",
+  "U": "(1.0, 0.5, 0.5, 0.5, 1.0) on q0..q4, mean 1",
+  "weighted_stat": "sum w x / sum w; t = m / se, se = sqrt(sum w^2 (x - m)^2) / sum w; capital used = sum w / n"
+ },
+ "ID": {
+  "trades": 3079,
+  "mean_bp": 61.70833763090267,
+  "stored_mean_bp": 61.70833763090267,
+  "median_bp": 32.937207872202855,
+  "two_c_ledger_median": {
+   "PB": 38.6961664269707,
+   "PUB": 88.7685193101672
+  },
+  "stored_two_c": {
+   "PB": 38.6961664269707,
+   "PUB": 88.7685193101672
+  },
+  "held_half": {
+   "PB": 17.90090521059099,
+   "PUB": 42.93708165218925
+  },
+  "held_price": 34.55,
+  "stored_commission_bp": 2.8943560057887123,
+  "stored_borrow_mean_bp": 2.7326048964567966,
+  "stored_net_borrow": {
+   "PB": 20.279566307475175,
+   "PUB": -29.792786575721333
+  }
+ },
+ "CS": {
+  "sampled": 300,
+  "worst_pub": 5.684341886080802e-14,
+  "nan_sampled": 4,
+  "worst_pb": 0.0,
+  "pb_nan_sampled": 0,
+  "finite_cells": 4135181,
+  "zero_share": 0.43201131945614957,
+  "universe_median_bp": 14.24619426572209,
+  "pub_universe_median_bp": 31.69211318665386,
+  "pb_universe_median_bp": 14.24619426572209
+ },
+ "EW": {
+  "sampled": 300,
+  "worst": 1.4210854715202004e-14,
+  "fallbacks_in_sample": 0,
+  "zeros_in_sample": 81,
+  "bars": 2394
+ },
+ "PART": {
+  "sampled": 300,
+  "worst_rel": 0.0
+ },
+ "inv": {
+  "cap": 5.0,
+  "binding": 19,
+  "uncapped_max": 11.488376527187466,
+  "min": 0.11583317104253749,
+  "max": 5.000000000000002
+ },
+ "lines": {
+  "gross_mean": 61.70833763090267,
+  "commission_mean": 4.232345397116667,
+  "borrow_mean": 2.7326048964567966,
+  "htb_n": 134,
+  "breakeven_half_spread_bp_side": 27.3716936686646,
+  "price_median": 35.2,
+  "lines": {
+   "PUB": {
+    "entry_median": 42.93708165218925,
+    "exit_median": 42.93708165218925,
+    "entry_mean": 51.70741451194789,
+    "exit_mean": 51.70741451194789,
+    "two_c_mean": 107.64717442101247,
+    "net_mean": -48.67144168656659,
+    "net_median": -56.3953671309754,
+    "net_t": -2.521247861262436,
+    "spread_coverage": 0.5293572290747568,
+    "net_half_mean": 3.035972825381301,
+    "share_net_pos": 0.46183825917505683
+   },
+   "PB": {
+    "entry_median": 17.90090521059099,
+    "exit_median": 17.90090521059099,
+    "entry_mean": 60.43829623266677,
+    "exit_mean": 60.43829623266677,
+    "two_c_mean": 125.10893786245022,
+    "net_mean": -66.13320512800436,
+    "net_median": -72.47657914433582,
+    "net_t": -3.362149152399483,
+    "spread_coverage": 0.4528865864003337,
+    "net_half_mean": -5.6949088953375835,
+    "share_net_pos": 0.4501461513478402,
+    "fallback_to_PUB": 2
+   },
+   "EW": {
+    "entry_median": 34.58440624174702,
+    "exit_median": 36.000292358722945,
+    "entry_mean": 52.34651603477563,
+    "exit_mean": 48.50857571254273,
+    "two_c_mean": 105.08743714443504,
+    "net_mean": -46.111704409989166,
+    "net_median": -53.829954807078906,
+    "net_t": -2.384353244446562,
+    "spread_coverage": 0.5427924995049621,
+    "net_half_mean": 4.315841463670017,
+    "share_net_pos": 0.4654108476778175,
+    "fallback_in": 0,
+    "fallback_out": 0,
+    "zero_in": 473,
+    "zero_out": 313,
+    "zero_in_share": 0.15362130561870738,
+    "zero_out_share": 0.10165638194218903,
+    "entry_pairs_finite_mean": 3.0,
+    "exit_pairs_finite_mean": 2.995777849951283,
+    "entry_pairs_clamped_share": 0.5631698603442676,
+    "exit_pairs_clamped_share": 0.46693408499566347,
+    "entry_median_ex_fallback": 34.58440624174702,
+    "exit_median_ex_fallback": 36.000292358722945
+   },
+   "EW1": {
+    "entry_median": 29.529392909571126,
+    "exit_median": 8.0435678379325,
+    "entry_mean": 73.15583352376851,
+    "exit_mean": 46.887600125545504,
+    "two_c_mean": 124.27577904643069,
+    "net_mean": -65.3000463119848,
+    "net_median": -65.74009569572378,
+    "net_t": -3.3650029180730305,
+    "spread_coverage": 0.45602983581136536,
+    "net_half_mean": -5.278329487327808,
+    "share_net_pos": 0.45534264371549205,
+    "fallback_in": 0,
+    "fallback_out": 0,
+    "zero_in": 1311,
+    "zero_out": 1451,
+    "zero_in_share": 0.42578759337447225,
+    "zero_out_share": 0.4712569015914258
+   }
+  },
+  "net_auction_mean": 54.7433873373292
+ },
+ "quintiles": {
+  "by_q": [
+   {
+    "q": 0,
+    "n": 616,
+    "pub_median": 19.88489653661544,
+    "pub_min": 2.1678972841950475,
+    "pub_max": 25.93965267912813,
+    "ew_in_median": 17.068801291490495,
+    "ew_out_median": 21.10072266572866,
+    "pb_median": 8.195770995329692,
+    "price_median": 52.870000071999996,
+    "gross_mean": 43.41890596736047,
+    "gross_median": 41.070067494810466,
+    "borrow_mean": 3.0293367346938775,
+    "comm_mean": 2.8272871185519177,
+    "lines": {
+     "PUB": {
+      "two_c_mean": 39.94789844354979,
+      "net_mean": 0.4416707891168119,
+      "net_t": 0.017093029696023117
+     },
+     "PB": {
+      "two_c_mean": 70.0621385401951,
+      "net_mean": -29.672569307528498,
+      "net_t": -1.125891877298897
+     },
+     "EW": {
+      "two_c_mean": 51.789942798375,
+      "net_mean": -11.400373565708396,
+      "net_t": -0.43958774257964606
+     },
+     "EW1": {
+      "two_c_mean": 67.38367675691609,
+      "net_mean": -26.994107524249497,
+      "net_t": -1.0317653932381214
+     }
+    }
+   },
+   {
+    "q": 1,
+    "n": 616,
+    "pub_median": 31.8676290499263,
+    "pub_min": 25.941989138449355,
+    "pub_max": 37.117036840556736,
+    "ew_in_median": 26.298588614509207,
+    "ew_out_median": 29.774319183649446,
+    "pb_median": 20.152006299690495,
+    "price_median": 41.47500021255,
+    "gross_mean": 16.770686259003845,
+    "gross_median": 9.177242603503323,
+    "borrow_mean": 2.737837559266131,
+    "comm_mean": 3.2630985171991833,
+    "lines": {
+     "PUB": {
+      "two_c_mean": 66.71503396727012,
+      "net_mean": -52.6821852675324,
+      "net_t": -1.9330790319778803
+     },
+     "PB": {
+      "two_c_mean": 99.00262433854283,
+      "net_mean": -84.96977563880512,
+      "net_t": -3.0744627440637875
+     },
+     "EW": {
+      "two_c_mean": 74.28301994850064,
+      "net_mean": -60.250171248762925,
+      "net_t": -2.216954143745095
+     },
+     "EW1": {
+      "two_c_mean": 93.14361269444596,
+      "net_mean": -79.11076399470826,
+      "net_t": -2.9037304950309695
+     }
+    }
+   },
+   {
+    "q": 2,
+    "n": 616,
+    "pub_median": 42.95799745921833,
+    "pub_min": 37.13045640068047,
+    "pub_max": 50.15996125203055,
+    "ew_in_median": 36.067996920544175,
+    "ew_out_median": 37.568660488949924,
+    "pb_median": 32.01371973074161,
+    "price_median": 36.32,
+    "gross_mean": -3.270750068575092,
+    "gross_median": -9.0052212108758,
+    "borrow_mean": 2.418960008245723,
+    "comm_mean": 3.723234310808208,
+    "lines": {
+     "PUB": {
+      "two_c_mean": 90.08938464763061,
+      "net_mean": -95.77909472445141,
+      "net_t": -2.319574714863962
+     },
+     "PB": {
+      "two_c_mean": 120.50586613015962,
+      "net_mean": -126.19557620698042,
+      "net_t": -2.969221798683225
+     },
+     "EW": {
+      "two_c_mean": 92.65019328337199,
+      "net_mean": -98.3399033601928,
+      "net_t": -2.36651693054358
+     },
+     "EW1": {
+      "two_c_mean": 113.09266322283491,
+      "net_mean": -118.78237329965572,
+      "net_t": -2.8339876504760597
+     }
+    }
+   },
+   {
+    "q": 3,
+    "n": 616,
+    "pub_median": 59.306805965540725,
+    "pub_min": 50.20582360531532,
+    "pub_max": 72.3027458321241,
+    "ew_in_median": 47.471503761832004,
+    "ew_out_median": 45.152004561764514,
+    "pb_median": 13.032010883550605,
+    "price_median": 30.03,
+    "gross_mean": 26.763439400136328,
+    "gross_median": 12.726092058159473,
+    "borrow_mean": 2.7668264275407135,
+    "comm_mean": 5.02829557451301,
+    "lines": {
+     "PUB": {
+      "two_c_mean": 125.03582605011677,
+      "net_mean": -101.03921307752118,
+      "net_t": -2.4410550561600655
+     },
+     "PB": {
+      "two_c_mean": 131.7573959714197,
+      "net_mean": -107.76078299882411,
+      "net_t": -2.587500219978462
+     },
+     "EW": {
+      "two_c_mean": 120.71236216231623,
+      "net_mean": -96.7157491897206,
+      "net_t": -2.3244571932999216
+     },
+     "EW1": {
+      "two_c_mean": 140.74997280666577,
+      "net_mean": -116.75335983407015,
+      "net_t": -2.765847263520224
+     }
+    }
+   },
+   {
+    "q": 4,
+    "n": 615,
+    "pub_median": 94.03264474184093,
+    "pub_min": 72.33592332641682,
+    "pub_max": 316.1943813549864,
+    "ew_in_median": 77.99565262266886,
+    "ew_out_median": 66.45497263363754,
+    "pb_median": 27.006712627539056,
+    "price_median": 20.2,
+    "gross_mean": 225.12469288758882,
+    "gross_median": 175.77025796568233,
+    "borrow_mean": 2.7100271002710032,
+    "comm_mean": 6.323205718279138,
+    "lines": {
+     "PUB": {
+      "two_c_mean": 216.62464046734948,
+      "net_mean": 5.790025319968396,
+      "net_t": 0.0865087254365508
+     },
+     "PB": {
+      "two_c_mean": 204.34529478147778,
+      "net_mean": 18.069371005840082,
+      "net_t": 0.2647148465635466
+     },
+     "EW": {
+      "two_c_mean": 186.13323538389616,
+      "net_mean": 36.28143040342172,
+      "net_t": 0.542810705492981
+     },
+     "EW1": {
+      "two_c_mean": 207.1434952646319,
+      "net_mean": 15.27117052268598,
+      "net_t": 0.22930643048922517
+     }
+    }
+   }
+  ],
+  "middle_pooled": {
+   "n": 1848,
+   "gross_mean": 13.421125196855032,
+   "lines": {
+    "PUB": {
+     "net_mean": -83.16683102316833
+    },
+    "PB": {
+     "net_mean": -106.30871161486986
+    },
+    "EW": {
+     "net_mean": -85.10194126622545
+    },
+    "EW1": {
+     "net_mean": -104.88216570947803
+    }
+   }
+  }
+ },
+ "participation": {
+  "entry": {
+   "dollar_volume_bad": 0,
+   "dollar_volume_median": 64753248.0,
+   "10000": {
+    "median": 0.00015443240777667246,
+    "p90": 0.0008310104225686222,
+    "p99": 0.0024302289881086734,
+    "share_under_1pct": 0.9993504384540435,
+    "share_under_5pct": 0.9993504384540435,
+    "n": 3079
+   },
+   "25000": {
+    "median": 0.00038608101944168115,
+    "p90": 0.0020775260564215555,
+    "p99": 0.006075572470271684,
+    "share_under_1pct": 0.9977265345891523,
+    "share_under_5pct": 0.9993504384540435,
+    "n": 3079
+   },
+   "50000": {
+    "median": 0.0007721620388833623,
+    "p90": 0.004155052112843111,
+    "p99": 0.012151144940543368,
+    "share_under_1pct": 0.9818122767132186,
+    "share_under_5pct": 0.9993504384540435,
+    "n": 3079
+   }
+  },
+  "exit": {
+   "dollar_volume_bad": 9,
+   "dollar_volume_median": 40254307.379999995,
+   "10000": {
+    "median": 0.00024498722464273774,
+    "p90": 0.0013033514018291478,
+    "p99": 0.0034819651870577548,
+    "share_under_1pct": 0.9986970684039088,
+    "share_under_5pct": 0.9993485342019544,
+    "n": 3070
+   },
+   "25000": {
+    "median": 0.0006124680616068443,
+    "p90": 0.0032583785045728697,
+    "p99": 0.008704912967644387,
+    "share_under_1pct": 0.9928338762214983,
+    "share_under_5pct": 0.9990228013029316,
+    "n": 3070
+   },
+   "50000": {
+    "median": 0.0012249361232136886,
+    "p90": 0.0065167570091457395,
+    "p99": 0.017409825935288774,
+    "share_under_1pct": 0.957328990228013,
+    "share_under_5pct": 0.9986970684039088,
+    "n": 3070
+   }
+  }
+ },
+ "arms": {
+  "EQ": {
+   "arm": "EQ",
+   "n": 3079,
+   "capital_used": 1.0,
+   "sum_w": 3079.0,
+   "gross": {
+    "mean": 61.70833763090267,
+    "se": 19.369843068143215,
+    "t": 3.1857944028669927
+   },
+   "comm": 4.232345397116667,
+   "borrow": 2.7326048964567966,
+   "net_auction": {
+    "mean": 54.7433873373292,
+    "se": 19.369084045398832,
+    "t": 2.826328142777284
+   },
+   "lines": {
+    "PUB": {
+     "two_c": 107.64717442101247,
+     "spread": 103.41482902389578,
+     "net": {
+      "mean": -48.67144168656659,
+      "se": 19.30450489790238,
+      "t": -2.521247861262436
+     },
+     "net_half": {
+      "mean": 3.035972825381301,
+      "se": 19.327104483868414,
+      "t": 0.15708368669064268
+     }
+    },
+    "PB": {
+     "two_c": 125.10893786245022,
+     "spread": 120.87659246533354,
+     "net": {
+      "mean": -66.13320512800436,
+      "se": 19.66992008097164,
+      "t": -3.362149152399483
+     },
+     "net_half": {
+      "mean": -5.6949088953375835,
+      "se": 19.4537544029575,
+      "t": -0.29274086520141335
+     }
+    },
+    "EW": {
+     "two_c": 105.08743714443504,
+     "spread": 100.85509174731834,
+     "net": {
+      "mean": -46.111704409989166,
+      "se": 19.33929232901573,
+      "t": -2.384353244446562
+     },
+     "net_half": {
+      "mean": 4.315841463670017,
+      "se": 19.336275530354378,
+      "t": 0.22319921211791505
+     }
+    },
+    "EW1": {
+     "two_c": 124.27577904643069,
+     "spread": 120.04343364931401,
+     "net": {
+      "mean": -65.3000463119848,
+      "se": 19.405643294175473,
+      "t": -3.3650029180730305
+     },
+     "net_half": {
+      "mean": -5.278329487327808,
+      "se": 19.341403814911622,
+      "t": -0.2729031221228306
+     }
+    }
+   },
+   "weight_min": 1.0,
+   "weight_max": 1.0,
+   "deployed": {
+    "trades": 3079,
+    "entries": 3079,
+    "entries_w": 3079.0,
+    "open_at_end": 0,
+    "bars_defined": 4124,
+    "bars_deployed": 1027,
+    "exposure": 0.24903006789524734,
+    "mean_positions_deployed": 29.915287244401167,
+    "mean_capital_deployed": 29.915287244401167,
+    "max_positions": 77,
+    "entries_per_year": 188.14451988360815,
+    "turnover_definition": "sum of w over entries / mean over deployed bars of (sum of w over open positions) / bars",
+    "PB": {
+     "hedged": {
+      "gross_bp": 7.275606175418513,
+      "vol_bp": 104.52446878854575,
+      "net_bp": -0.4805046489568925,
+      "sharpe_gross": 1.1049725370819166,
+      "sharpe_net": -0.07297597316790057,
+      "round_trip": 71.60362084236397,
+      "commission_rt": 5.788712011577425,
+      "cost_bp": 7.756110824375406,
+      "turnover": 0.1002180776616867,
+      "held_per_bar": 29.915287244401167,
+      "fill": 7.478821811100292,
+      "held_half_spread": 17.90090521059099,
+      "held_price": 34.55,
+      "held_dv": 42111439.8563494,
+      "maxdd_bp": 2152.9436969295793,
+      "entries": 3079.0,
+      "bars": 1027,
+      "trades": 3079,
+      "breakeven_half_spread_bp_side": 16.702257570943168
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 35.80181042118198,
+      "commission_rt": 2.8943560057887123,
+      "cost_bp": 3.878055412187703,
+      "net_bp": 3.3975507632308104,
+      "sharpe_net": 0.5159982819570079,
+      "breakeven_half_spread_bp_side": 34.8516931447807
+     }
+    },
+    "PUB": {
+     "hedged": {
+      "gross_bp": 7.275606175418513,
+      "vol_bp": 104.52446878854575,
+      "net_bp": -10.51681454886003,
+      "sharpe_gross": 1.1049725370819166,
+      "sharpe_net": -1.5972265367160856,
+      "round_trip": 171.748326608757,
+      "commission_rt": 5.788712011577425,
+      "cost_bp": 17.792420724278543,
+      "turnover": 0.1002180776616867,
+      "held_per_bar": 29.915287244401167,
+      "fill": 7.478821811100292,
+      "held_half_spread": 42.93708165218925,
+      "held_price": 34.55,
+      "held_dv": 42111439.8563494,
+      "maxdd_bp": 2152.9436969295793,
+      "entries": 3079.0,
+      "bars": 1027,
+      "trades": 3079,
+      "breakeven_half_spread_bp_side": 16.702257570943168
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 85.8741633043785,
+      "commission_rt": 2.8943560057887123,
+      "cost_bp": 8.896210362139271,
+      "net_bp": -1.6206041867207581,
+      "sharpe_net": -0.24612699981708458,
+      "breakeven_half_spread_bp_side": 34.8516931447807
+     }
+    }
+   },
+   "D362_W": {
+    "side": "short",
+    "weighted": true,
+    "trades": 3079,
+    "mean_bp": 61.70833763090267,
+    "se_bp": 19.369843068143215,
+    "t": 3.1857944028669927,
+    "unweighted_mean_bp": 61.70833763090267,
+    "median_bp": 32.937207872202855,
+    "capital_used": 1.0,
+    "sum_w": 3079.0,
+    "hold_mean": 9.978239688210458,
+    "hold_median": 10.0,
+    "two_c": {
+     "PB": 38.6961664269707,
+     "PUB": 88.7685193101672
+    },
+    "held_half": {
+     "PB": 17.90090521059099,
+     "PUB": 42.93708165218925
+    },
+    "held_price": 34.55,
+    "commission_bp": 2.8943560057887123,
+    "borrow": {
+     "scheme": "gc_htb",
+     "mean_bp": 2.7326048964567966,
+     "htb_share": 0.043520623579084115,
+     "htb_n": 134,
+     "unweighted_mean_bp": 2.7326048964567966
+    },
+    "net_per_trade": {
+     "PB": 23.01217120393197,
+     "PUB": -27.060181679264538
+    },
+    "net_per_trade_borrow": {
+     "PB": 20.279566307475175,
+     "PUB": -29.792786575721333
+    },
+    "breakeven_half_spread_bp_side": 28.040688364328577,
+    "era1_mean_bp": 58.75104014102821,
+    "era2_mean_bp": 63.05015202550575,
+    "era1_n": 961,
+    "era2_n": 2118,
+    "era1_capital": 1.0,
+    "era2_capital": 1.0,
+    "down_years_mean_bp": 71.71315346090907,
+    "down_years_n": 1459,
+    "by_year": {
+     "2011": {
+      "n": 328,
+      "mean_bp": 67.06867679925837,
+      "capital": 1.0
+     },
+     "2012": {
+      "n": 45,
+      "mean_bp": 33.944768872066525,
+      "capital": 1.0
+     },
+     "2014": {
+      "n": 53,
+      "mean_bp": -83.74930318516141,
+      "capital": 1.0
+     },
+     "2015": {
+      "n": 295,
+      "mean_bp": 139.61955122522892,
+      "capital": 1.0
+     },
+     "2016": {
+      "n": 240,
+      "mean_bp": -15.897273152085829,
+      "capital": 1.0
+     },
+     "2018": {
+      "n": 202,
+      "mean_bp": 47.555562668967816,
+      "capital": 1.0
+     },
+     "2019": {
+      "n": 122,
+      "mean_bp": 109.2751668062443,
+      "capital": 1.0
+     },
+     "2020": {
+      "n": 324,
+      "mean_bp": 127.66386325852898,
+      "capital": 1.0
+     },
+     "2021": {
+      "n": 69,
+      "mean_bp": 386.8696106737117,
+      "capital": 1.0
+     },
+     "2022": {
+      "n": 962,
+      "mean_bp": 55.96205782629138,
+      "capital": 1.0
+     },
+     "2023": {
+      "n": 217,
+      "mean_bp": -37.005697946920705,
+      "capital": 1.0
+     },
+     "2025": {
+      "n": 216,
+      "mean_bp": -0.9852249564503128,
+      "capital": 1.0
+     },
+     "2026": {
+      "n": 6,
+      "mean_bp": -507.85357258981054,
+      "capital": 1.0
+     }
+    },
+    "weight_distribution": {
+     "0": 3079
+    }
+   },
+   "W_check": {
+    "worst_unit": 3.469446951953614e-18,
+    "worst_loop": 2.220446049250313e-16,
+    "mean_w_bp": 61.70833763090267,
+    "capital": 1.0,
+    "sum_w": 3079.0,
+    "n": 3079
+   }
+  },
+  "INV": {
+   "arm": "INV",
+   "n": 3079,
+   "capital_used": 1.0,
+   "sum_w": 3079.0,
+   "gross": {
+    "mean": 29.685145418130922,
+    "se": 16.341996443231373,
+    "t": 1.8164944241207504
+   },
+   "comm": 3.4673341932666784,
+   "borrow": 2.946501311285895,
+   "net_auction": {
+    "mean": 23.27130991357835,
+    "se": 16.349687585863723,
+    "t": 1.4233489044585295
+   },
+   "lines": {
+    "PUB": {
+     "two_c": 74.04646575980036,
+     "spread": 70.57913156653369,
+     "net": {
+      "mean": -47.30782165295533,
+      "se": 16.318099262075407,
+      "t": -2.899101230674737
+     },
+     "net_half": {
+      "mean": -12.018255869688494,
+      "se": 16.32705799622604,
+      "t": -0.736094394499394
+     }
+    },
+    "PB": {
+     "two_c": 98.32886101481706,
+     "spread": 94.8615268215504,
+     "net": {
+      "mean": -71.59021690797205,
+      "se": 16.560257475688502,
+      "t": -4.323013516732513
+     },
+     "net_half": {
+      "mean": -24.159453497196843,
+      "se": 16.40479474038369,
+      "t": -1.4727068445253697
+     }
+    },
+    "EW": {
+     "two_c": 78.52100967487478,
+     "spread": 75.0536754816081,
+     "net": {
+      "mean": -51.78236556802976,
+      "se": 16.406676955424217,
+      "t": -3.1561763365438833
+     },
+     "net_half": {
+      "mean": -14.255527827225698,
+      "se": 16.365792774970096,
+      "t": -0.8710563565871465
+     }
+    },
+    "EW1": {
+     "two_c": 95.52805762755182,
+     "spread": 92.06072343428514,
+     "net": {
+      "mean": -68.78941352070677,
+      "se": 16.462297810066854,
+      "t": -4.1786033951251556
+     },
+     "net_half": {
+      "mean": -22.75905180356422,
+      "se": 16.37339239888797,
+      "t": -1.3900022212324152
+     }
+    }
+   },
+   "weight_min": 0.11583317104253749,
+   "weight_max": 5.000000000000002,
+   "deployed": {
+    "trades": 3079,
+    "entries": 3079,
+    "entries_w": 3079.0,
+    "open_at_end": 0,
+    "bars_defined": 4124,
+    "bars_deployed": 1027,
+    "exposure": 0.24903006789524734,
+    "mean_positions_deployed": 29.915287244401167,
+    "mean_capital_deployed": 29.77014782254165,
+    "max_positions": 77,
+    "entries_per_year": 188.14451988360815,
+    "turnover_definition": "sum of w over entries / mean over deployed bars of (sum of w over open positions) / bars",
+    "PB": {
+     "hedged": {
+      "gross_bp": 5.754490535829894,
+      "vol_bp": 90.7638590382483,
+      "net_bp": -2.039433921438385,
+      "sharpe_gross": 1.0064546202204685,
+      "sharpe_net": -0.35669494633550414,
+      "round_trip": 71.60362084236397,
+      "commission_rt": 5.788712011577425,
+      "cost_bp": 7.793924457268279,
+      "turnover": 0.10070667429004053,
+      "held_per_bar": 29.77014782254165,
+      "fill": 7.442536955635412,
+      "held_half_spread": 17.90090521059099,
+      "held_price": 34.55,
+      "held_dv": 42111439.8563494,
+      "maxdd_bp": 2028.8578868906793,
+      "entries": 3079.0,
+      "bars": 1027,
+      "trades": 3079,
+      "breakeven_half_spread_bp_side": 12.838097964159868
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 35.80181042118198,
+      "commission_rt": 2.8943560057887123,
+      "cost_bp": 3.8969622286341394,
+      "net_bp": 1.8575283071957545,
+      "sharpe_net": 0.3248798369424822,
+      "breakeven_half_spread_bp_side": 27.12337393121409
+     }
+    },
+    "PUB": {
+     "hedged": {
+      "gross_bp": 5.754490535829894,
+      "vol_bp": 90.7638590382483,
+      "net_bp": -12.12467418692647,
+      "sharpe_gross": 1.0064546202204685,
+      "sharpe_net": -2.12059334846749,
+      "round_trip": 171.748326608757,
+      "commission_rt": 5.788712011577425,
+      "cost_bp": 17.879164722756364,
+      "turnover": 0.10070667429004053,
+      "held_per_bar": 29.77014782254165,
+      "fill": 7.442536955635412,
+      "held_half_spread": 42.93708165218925,
+      "held_price": 34.55,
+      "held_dv": 42111439.8563494,
+      "maxdd_bp": 2028.8578868906793,
+      "entries": 3079.0,
+      "bars": 1027,
+      "trades": 3079,
+      "breakeven_half_spread_bp_side": 12.838097964159868
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 85.8741633043785,
+      "commission_rt": 2.8943560057887123,
+      "cost_bp": 8.939582361378182,
+      "net_bp": -3.1850918255482883,
+      "sharpe_net": -0.557069364123511,
+      "breakeven_half_spread_bp_side": 27.12337393121409
+     }
+    }
+   },
+   "D362_W": {
+    "side": "short",
+    "weighted": true,
+    "trades": 3079,
+    "mean_bp": 29.685145418130922,
+    "se_bp": 16.341996443231373,
+    "t": 1.8164944241207504,
+    "unweighted_mean_bp": 61.70833763090267,
+    "median_bp": 32.937207872202855,
+    "capital_used": 1.0,
+    "sum_w": 3079.0,
+    "hold_mean": 9.929828455261537,
+    "hold_median": 10.0,
+    "two_c": {
+     "PB": 38.6961664269707,
+     "PUB": 88.7685193101672
+    },
+    "held_half": {
+     "PB": 17.90090521059099,
+     "PUB": 42.93708165218925
+    },
+    "held_price": 34.55,
+    "commission_bp": 2.8943560057887123,
+    "borrow": {
+     "scheme": "gc_htb",
+     "mean_bp": 2.946501311285895,
+     "htb_share": 0.05970911395558256,
+     "htb_n": 134,
+     "unweighted_mean_bp": 2.7326048964567966
+    },
+    "net_per_trade": {
+     "PB": -9.011021008839776,
+     "PUB": -59.083373892036285
+    },
+    "net_per_trade_borrow": {
+     "PB": -11.95752232012567,
+     "PUB": -62.02987520332218
+    },
+    "breakeven_half_spread_bp_side": 11.922144050528157,
+    "era1_mean_bp": 37.92382429761207,
+    "era2_mean_bp": 25.454378472670136,
+    "era1_n": 961,
+    "era2_n": 2118,
+    "era1_capital": 1.087071853487712,
+    "era2_capital": 0.9604928936724783,
+    "down_years_mean_bp": 27.56563304208695,
+    "down_years_n": 1459,
+    "by_year": {
+     "2011": {
+      "n": 328,
+      "mean_bp": 46.03659619057758,
+      "capital": 1.0182680244327447
+     },
+     "2012": {
+      "n": 45,
+      "mean_bp": 31.205569663236,
+      "capital": 1.4982538435449833
+     },
+     "2014": {
+      "n": 53,
+      "mean_bp": -126.71720233965533,
+      "capital": 1.0547217166238003
+     },
+     "2015": {
+      "n": 295,
+      "mean_bp": 73.65825068636771,
+      "capital": 1.1973104580059197
+     },
+     "2016": {
+      "n": 240,
+      "mean_bp": 13.688661334268458,
+      "capital": 0.9756495005642456
+     },
+     "2018": {
+      "n": 202,
+      "mean_bp": 60.571647730952634,
+      "capital": 1.1422247683563989
+     },
+     "2019": {
+      "n": 122,
+      "mean_bp": 186.42896265711298,
+      "capital": 1.1522663951265497
+     },
+     "2020": {
+      "n": 324,
+      "mean_bp": -29.329418518326527,
+      "capital": 0.7595624588158824
+     },
+     "2021": {
+      "n": 69,
+      "mean_bp": 282.4765533306832,
+      "capital": 0.8369418737746227
+     },
+     "2022": {
+      "n": 962,
+      "mean_bp": 0.9262148459721501,
+      "capital": 0.932436959921971
+     },
+     "2023": {
+      "n": 217,
+      "mean_bp": -7.855133664158116,
+      "capital": 1.295493160023711
+     },
+     "2025": {
+      "n": 216,
+      "mean_bp": 24.745872646121274,
+      "capital": 0.8176585820613654
+     },
+     "2026": {
+      "n": 6,
+      "mean_bp": -110.28823933645496,
+      "capital": 0.7383657571243724
+     }
+    },
+    "weight_distribution": {
+     "-2": 87,
+     "-1": 473,
+     "0": 1300,
+     "1": 973,
+     "2": 233,
+     "3": 13
+    }
+   },
+   "W_check": {
+    "worst_unit": 3.469446951953614e-18,
+    "worst_loop": 2.220446049250313e-16,
+    "mean_w_bp": 29.685145418130922,
+    "capital": 1.0,
+    "sum_w": 3079.0,
+    "n": 3079
+   }
+  },
+  "U": {
+   "arm": "U",
+   "n": 3079,
+   "capital_used": 1.0000000000000002,
+   "sum_w": 3079.0000000000005,
+   "gross": {
+    "mean": 82.41246027083768,
+    "se": 22.57426140242073,
+    "t": 3.6507267636229397
+   },
+   "comm": 4.3298774615990405,
+   "borrow": 2.77179317202519,
+   "net_auction": {
+    "mean": 75.31078963721346,
+    "se": 22.571432523278016,
+    "t": 3.3365533870987196
+   },
+   "lines": {
+    "PUB": {
+     "two_c": 113.52151029488257,
+     "spread": 109.19163283328355,
+     "net": {
+      "mean": -33.88084319607007,
+      "se": 22.47307809670377,
+      "t": -1.5076191632618199
+     },
+     "net_half": {
+      "mean": 20.7149732205717,
+      "se": 22.506804664808268,
+      "t": 0.9203871242087829
+     }
+    },
+    "PB": {
+     "two_c": 128.54780819254137,
+     "spread": 124.2179307309423,
+     "net": {
+      "mean": -48.907141093728846,
+      "se": 22.91635222768285,
+      "t": -2.134159075921745
+     },
+     "net_half": {
+      "mean": 13.201824271742312,
+      "se": 22.665429774015223,
+      "t": 0.5824652081769718
+     }
+    },
+    "EW": {
+     "two_c": 109.03451589155696,
+     "spread": 104.70463842995792,
+     "net": {
+      "mean": -29.39384879274446,
+      "se": 22.483066940403138,
+      "t": -1.3073771861579222
+     },
+     "net_half": {
+      "mean": 22.958470422234498,
+      "se": 22.50392336019072,
+      "t": 1.0201985695902196
+     }
+    },
+    "EW1": {
+     "two_c": 127.96907613781181,
+     "spread": 123.63919867621276,
+     "net": {
+      "mean": -48.3284090389993,
+      "se": 22.484222757157948,
+      "t": -2.1494364986939005
+     },
+     "net_half": {
+      "mean": 13.491190299107076,
+      "se": 22.471061526491578,
+      "t": 0.6003806399266918
+     }
+    }
+   },
+   "weight_min": 0.714385150812065,
+   "weight_max": 1.42877030162413,
+   "deployed": {
+    "trades": 3079,
+    "entries": 3079,
+    "entries_w": 3079.0,
+    "open_at_end": 0,
+    "bars_defined": 4124,
+    "bars_deployed": 1027,
+    "exposure": 0.24903006789524734,
+    "mean_positions_deployed": 29.915287244401167,
+    "mean_capital_deployed": 29.88731488782002,
+    "max_positions": 77,
+    "entries_per_year": 188.14451988360815,
+    "turnover_definition": "sum of w over entries / mean over deployed bars of (sum of w over open positions) / bars",
+    "PB": {
+     "hedged": {
+      "gross_bp": 8.727954654375967,
+      "vol_bp": 112.23464137542047,
+      "net_bp": 0.9645846734494743,
+      "sharpe_gross": 1.2344850317195215,
+      "sharpe_net": 0.1364312016220685,
+      "round_trip": 71.60362084236397,
+      "commission_rt": 5.788712011577425,
+      "cost_bp": 7.763369980926493,
+      "turnover": 0.10031187450542298,
+      "held_per_bar": 29.88731488782002,
+      "fill": 7.471828721955005,
+      "held_half_spread": 17.90090521059099,
+      "held_price": 34.55,
+      "held_dv": 42111439.8563494,
+      "maxdd_bp": 1982.6041639012171,
+      "entries": 3079.0,
+      "bars": 1027,
+      "trades": 3079,
+      "breakeven_half_spread_bp_side": 20.304869542344477
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 35.80181042118198,
+      "commission_rt": 2.8943560057887123,
+      "cost_bp": 3.8816849904632464,
+      "net_bp": 4.846269663912721,
+      "sharpe_net": 0.685458116670795,
+      "breakeven_half_spread_bp_side": 42.056917087583315
+     }
+    },
+    "PUB": {
+     "hedged": {
+      "gross_bp": 8.727954654375967,
+      "vol_bp": 112.23464137542047,
+      "net_bp": -9.081118483771451,
+      "sharpe_gross": 1.2344850317195215,
+      "sharpe_net": -1.2844366502141118,
+      "round_trip": 171.748326608757,
+      "commission_rt": 5.788712011577425,
+      "cost_bp": 17.80907313814742,
+      "turnover": 0.10031187450542298,
+      "held_per_bar": 29.88731488782002,
+      "fill": 7.471828721955005,
+      "held_half_spread": 42.93708165218925,
+      "held_price": 34.55,
+      "held_dv": 42111439.8563494,
+      "maxdd_bp": 1982.6041639012171,
+      "entries": 3079.0,
+      "bars": 1027,
+      "trades": 3079,
+      "breakeven_half_spread_bp_side": 20.304869542344477
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 85.8741633043785,
+      "commission_rt": 2.8943560057887123,
+      "cost_bp": 8.90453656907371,
+      "net_bp": -0.1765819146977421,
+      "sharpe_net": -0.024975809247295148,
+      "breakeven_half_spread_bp_side": 42.056917087583315
+     }
+    }
+   },
+   "D362_W": {
+    "side": "short",
+    "weighted": true,
+    "trades": 3079,
+    "mean_bp": 82.41246027083768,
+    "se_bp": 22.57426140242073,
+    "t": 3.6507267636229397,
+    "unweighted_mean_bp": 61.70833763090267,
+    "median_bp": 32.937207872202855,
+    "capital_used": 1.0000000000000002,
+    "sum_w": 3079.0000000000005,
+    "hold_mean": 9.96890951276102,
+    "hold_median": 10.0,
+    "two_c": {
+     "PB": 38.6961664269707,
+     "PUB": 88.7685193101672
+    },
+    "held_half": {
+     "PB": 17.90090521059099,
+     "PUB": 42.93708165218925
+    },
+    "held_price": 34.55,
+    "commission_bp": 2.8943560057887123,
+    "borrow": {
+     "scheme": "gc_htb",
+     "mean_bp": 2.77179317202519,
+     "htb_share": 0.04640371229698375,
+     "htb_n": 134,
+     "unweighted_mean_bp": 2.7326048964567966
+    },
+    "net_per_trade": {
+     "PB": 43.716293843866985,
+     "PUB": -6.356059039329523
+    },
+    "net_per_trade_borrow": {
+     "PB": 40.944500671841794,
+     "PUB": -9.127852211354712
+    },
+    "breakeven_half_spread_bp_side": 38.373155546511896,
+    "era1_mean_bp": 81.47550502319737,
+    "era2_mean_bp": 82.82025264801582,
+    "era1_n": 961,
+    "era2_n": 2118,
+    "era1_capital": 0.9715935401783236,
+    "era2_capital": 1.0128888611372195,
+    "down_years_mean_bp": 99.44616598339209,
+    "down_years_n": 1459,
+    "by_year": {
+     "2011": {
+      "n": 328,
+      "mean_bp": 103.74333074306415,
+      "capital": 0.9191174806179616
+     },
+     "2012": {
+      "n": 45,
+      "mean_bp": 55.18432619379548,
+      "capital": 1.047764887857695
+     },
+     "2014": {
+      "n": 53,
+      "mean_bp": -104.57364946463143,
+      "capital": 0.876132732128004
+     },
+     "2015": {
+      "n": 295,
+      "mean_bp": 169.79660914940496,
+      "capital": 0.997717566557867
+     },
+     "2016": {
+      "n": 240,
+      "mean_bp": -11.965736232159117,
+      "capital": 1.0179988399071926
+     },
+     "2018": {
+      "n": 202,
+      "mean_bp": 78.56835271035975,
+      "capital": 0.993773402862328
+     },
+     "2019": {
+      "n": 122,
+      "mean_bp": 104.2943020691628,
+      "capital": 1.0013103343349437
+     },
+     "2020": {
+      "n": 324,
+      "mean_bp": 133.93093755252576,
+      "capital": 1.0803972959812094
+     },
+     "2021": {
+      "n": 69,
+      "mean_bp": 392.04381222472745,
+      "capital": 1.0456942062611387
+     },
+     "2022": {
+      "n": 962,
+      "mean_bp": 82.05134502426851,
+      "capital": 0.9869208580345472
+     },
+     "2023": {
+      "n": 217,
+      "mean_bp": 0.45045234065021095,
+      "capital": 1.0238423129149872
+     },
+     "2025": {
+      "n": 216,
+      "mean_bp": 0.23351518066432345,
+      "capital": 1.031889662284094
+     },
+     "2026": {
+      "n": 6,
+      "mean_bp": -710.5729313054766,
+      "capital": 0.9525135344160867
+     }
+    },
+    "weight_distribution": {
+     "-1": 1231,
+     "0": 1848
+    }
+   },
+   "W_check": {
+    "worst_unit": 3.469446951953614e-18,
+    "worst_loop": 2.220446049250313e-16,
+    "mean_w_bp": 82.41246027083768,
+    "capital": 1.0000000000000002,
+    "sum_w": 3079.0000000000005,
+    "n": 3079
+   }
+  }
+ },
+ "perm_observed": {
+  "net_PUB": -33.88084319607007,
+  "net_PB": -48.907141093728846,
+  "net_EW": -29.39384879274446,
+  "gross": 82.41246027083768,
+  "deployed_net_PUB": -9.081118483771451
+ },
+ "perm": {
+  "parts": [
+   {
+    "file": "d363_perm_p0.json",
+    "part": 0,
+    "draws": 200,
+    "seed": [
+     20260903,
+     363,
+     1,
+     0
+    ],
+    "seconds_per_draw": 0.0591599178314209,
+    "rss": "rss 1,059 MB, peak working set 1,365 MB",
+    "redraws": 39352
+   }
+  ],
+  "draws": 200,
+  "groups": {
+   "names": 995,
+   "single": 284,
+   "constant": 255,
+   "variable": 456
+  },
+  "notes": {
+   "statistic": "net per unit capital under PUB, per-trade convention (own PUB at entry x 2 + own commission at the as-traded close + own borrow)",
+   "PERM": "within each name its trades' U-weights permuted; single-trade and constant-weight names keep theirs; a permutation equal to the observed on a name with >= 2 distinct weights is redrawn",
+   "deployed": "deployed_net_PUB = D362's costed_w on the weighted hedged series (ledger-median PUB, 4 crossings)"
+  },
+  "net_PUB": {
+   "p50": -44.54832111322611,
+   "p95": -35.575001190355614,
+   "max": -30.19988546646943,
+   "draws": 200,
+   "distinct": 200,
+   "above": true
+  },
+  "net_PB": {
+   "p50": -61.82281841779956,
+   "p95": -53.048426564933514,
+   "max": -46.54626618856968,
+   "draws": 200,
+   "distinct": 200,
+   "above": true
+  },
+  "net_EW": {
+   "p50": -41.85157576165079,
+   "p95": -32.90878934623327,
+   "max": -27.657003240278364,
+   "draws": 200,
+   "distinct": 200,
+   "above": true
+  },
+  "gross": {
+   "p50": 67.6561105252801,
+   "p95": 76.20423796814904,
+   "max": 81.77288962434679,
+   "draws": 200,
+   "distinct": 200,
+   "above": true
+  },
+  "deployed_net_PUB": {
+   "p50": -11.331913635114818,
+   "p95": -10.410739040097965,
+   "max": -9.718559947455152,
+   "draws": 200,
+   "distinct": 200,
+   "above": true
+  }
+ },
+ "d362_stored_per_trade": {
+  "side": "short",
+  "trades": 3079,
+  "mean_bp": 61.70833763090267,
+  "median_bp": 32.937207872202855,
+  "t": 3.1852770184700985,
+  "share_pos": 0.5235466060409224,
+  "hold_mean": 9.978239688210458,
+  "hold_median": 10.0,
+  "mean_per_bar_held_bp": 6.1842909730673865,
+  "two_c": {
+   "PB": 38.6961664269707,
+   "PUB": 88.7685193101672
+  },
+  "held_half": {
+   "PB": 17.90090521059099,
+   "PUB": 42.93708165218925
+  },
+  "held_price": 34.55,
+  "commission_bp": 2.8943560057887123,
+  "net_per_trade": {
+   "PB": 23.01217120393197,
+   "PUB": -27.060181679264538
+  },
+  "mean_over_2c": {
+   "PB": 1.5946886559773736,
+   "PUB": 0.6951601548662402
+  },
+  "era1_mean_bp": 58.75104014102821,
+  "era2_mean_bp": 63.05015202550575,
+  "era1_n": 961,
+  "era2_n": 2118,
+  "down_years_mean_bp": 71.71315346090907,
+  "down_years_n": 1459,
+  "by_year": {
+   "2011": {
+    "n": 328,
+    "mean_bp": 67.06867679925837
+   },
+   "2012": {
+    "n": 45,
+    "mean_bp": 33.944768872066525
+   },
+   "2014": {
+    "n": 53,
+    "mean_bp": -83.74930318516141
+   },
+   "2015": {
+    "n": 295,
+    "mean_bp": 139.61955122522892
+   },
+   "2016": {
+    "n": 240,
+    "mean_bp": -15.897273152085829
+   },
+   "2018": {
+    "n": 202,
+    "mean_bp": 47.555562668967816
+   },
+   "2019": {
+    "n": 122,
+    "mean_bp": 109.2751668062443
+   },
+   "2020": {
+    "n": 324,
+    "mean_bp": 127.66386325852898
+   },
+   "2021": {
+    "n": 69,
+    "mean_bp": 386.8696106737117
+   },
+   "2022": {
+    "n": 962,
+    "mean_bp": 55.96205782629138
+   },
+   "2023": {
+    "n": 217,
+    "mean_bp": -37.005697946920705
+   },
+   "2025": {
+    "n": 216,
+    "mean_bp": -0.9852249564503128
+   },
+   "2026": {
+    "n": 6,
+    "mean_bp": -507.85357258981054
+   }
+  },
+  "borrow": {
+   "scheme": "gc_htb",
+   "mean_bp": 2.7326048964567966,
+   "median_bp": 1.9841269841269842,
+   "htb_share": 0.043520623579084115,
+   "htb_n": 134,
+   "gc_bps": 50.0,
+   "htb_bps": 500.0,
+   "px_htb": 5.0
+  },
+  "net_per_trade_borrow": {
+   "PB": 20.279566307475175,
+   "PUB": -29.792786575721333
+  },
+  "breakeven_half_spread_bp_side": 28.040688364328577,
+  "four_groups": {
+   "count": 3079,
+   "mean_bp": 61.70833763090267,
+   "median_bp": 32.937207872202855,
+   "win_rate": 0.5235466060409224,
+   "payoff": 1.0868801748900947,
+   "hold_mean": 9.978239688210458,
+   "hold_median": 10.0,
+   "skew": 0.34176520117241527,
+   "kurtosis_excess": 11.071484803676107,
+   "trim_k": 30,
+   "mean_ex_top_bp": 15.146215030351375,
+   "mean_ex_bottom_bp": 103.31654364670122,
+   "mean_trimmed_bp": 56.70519365378753,
+   "names_to_half_pnl": 11,
+   "n_names": 995,
+   "top_name_share": {
+    "1": 0.12742476183789755,
+    "5": 0.32428156588151924,
+    "10": 0.48269925621409504
+   },
+   "profitable_years_share": 0.6153846153846154,
+   "years": 13,
+   "top_trade": {
+    "symbol": "NBIS",
+    "entry_date": "2022-02-16",
+    "as_traded_price": 53.58,
+    "hold": 10,
+    "pnl_bp": 8772.195717919853,
+    "share_of_pnl": 0.046169458056437004,
+    "dv_percentile_at_entry": 76.1348897535668
+   },
+   "split_dead_alive": {
+    "dead_n": 690,
+    "dead_mean_bp": 59.52469954311151,
+    "alive_n": 2389,
+    "alive_mean_bp": 62.33902422804619
+   },
+   "split_price": {
+    "median_price": 35.2,
+    "low_n": 1540,
+    "low_mean_bp": 79.58463825482386,
+    "high_n": 1539,
+    "high_mean_bp": 43.8204214770114
+   }
+  }
+ },
+ "predictions": {
+  "Q1": false,
+  "Q2": false,
+  "Q3": false,
+  "Q4": true,
+  "Q5": false,
+  "Q6": false,
+  "Q7": true,
+  "Q8": false,
+  "check": true
+ },
+ "prereg": {
+  "trades": 3079,
+  "mean_bp": 61.71,
+  "two_c_PUB": 88.77,
+  "two_c_PB": 38.7,
+  "q1_ratio": 0.75,
+  "q3_tol": 0.1,
+  "q4_share": 0.9,
+  "q4_position": 25000,
+  "q8_ew1": 0.3,
+  "q8_ew": 0.15,
+  "perm_draws": 200
+ },
+ "seeds": {
+  "PERM": [
+   20260903,
+   363,
+   1,
+   "part"
+  ],
+  "samples": [
+   20260903,
+   363,
+   97
+  ],
+  "raw_sample": [
+   20260903,
+   363,
+   98
+  ]
+ },
+ "borrow": {
+  "scheme": "gc_htb",
+  "gc_bps": 50.0,
+  "htb_bps": 500.0,
+  "px_htb": 5.0
+ },
+ "guard": "274 file opens audited in this process, 2 under data/fixtures (us_shorts_daily_raw.csv.gz x1, us_shorts_daily_raw_events.json x1); none containing 'holdout' opened (1 refused: the probe)",
+ "rss": "rss 1,111 MB, peak working set 1,365 MB"
+}
