@@ -161,3 +161,27 @@ asserts it.
 `data/d349_ctrl_*.json` (nine part files) · `data/d349_short_signal_controls.json` ·
 `scripts/run_d349_short_signal_controls.py` · reuses `scripts/d348_prep.py`,
 `scripts/d345_event_book.py`, `scripts/run_d347_long_signal_controls.py`, `scripts/d337_borrow.py`
+
+---
+
+## Amendment — D351, 2026-09-06: the verdict stands; the timing values are withdrawn
+
+This record's control A used D347's `rotate_confined` and carries its defect: 8–12% of the
+rotated events landed off the floor, on bars where a short loses +251 to +319 bp per forty
+bars. D351 reproduced the stored draws to 0.0 and rotated within the floored universe (A′):
+
+| short, cap, bp/trade | observed | A as run p50 | **A′** p50 / p95 | above A′ | timing as stated → **timing′** |
+|---|--:|--:|--:|---|--:|
+| `on_share` | −40.9 | −66.6 | **−41.4 / −22.3** | no | +25.6 → **+0.4** |
+| `skew_63` | −3.6 | −70.5 | −33.1 / −0.3 | no | +66.9 → +29.5 |
+| `close_in_range` | −11.5 | −56.3 | −22.7 / −16.4 | yes | +44.9 → +11.2 |
+| `rsi` decile | −1.8 | −67.0 | −35.2 / −23.9 | yes | +65.2 → +33.4 |
+| `rsi` turn | −18.6 | −69.1 | −37.0 / −20.3 | yes | +50.5 → +18.4 |
+
+**Withdrawn:** §1's "every one beats control A by 26 to 67 bp", §2's "the timing is real
+and large", §5's second stop condition as stated, and §9 item 2. `on_share`'s timing is
+zero; two of five are inside A′. **Stands:** Q1's failure and the verdict — every short is
+negative in mean before cost and none beats control C; the mirrors pay; the interaction
+reversal on the short side (§3, no rotation involved); the borrow finding; the erratum on
+bucket 9 (§6). The names these shorts touch rise 22 to 41 bp at random eligible times, not
+56 to 70. See D351's result and FINDINGS §32.

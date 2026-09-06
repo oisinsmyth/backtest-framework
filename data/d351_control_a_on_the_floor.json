@@ -1,0 +1,284 @@
+{
+ "note": "D351: control A' rotates within the floored universe; A as run rotated within finT (D347/D349's defect)",
+ "rows": {
+  "d347:hist_L": {
+   "study": "d347",
+   "signal": "hist_L",
+   "side": "long",
+   "observed": 60.3965566003991,
+   "trades": 15889,
+   "A_stored": {
+    "p50": 70.82412518843802,
+    "p95": 90.77832222474774,
+    "max": 97.93783985069359,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": 23.880191193862853,
+    "p95": 41.82475182849735,
+    "max": 51.63341839520934,
+    "draws": 100,
+    "distinct": 100,
+    "above": true
+   },
+   "above_A_stored": false,
+   "above_B": true,
+   "above_C": true,
+   "timing_stored": -10.427568588038916,
+   "timing_prime": 36.51636540653625,
+   "off_floor_share": 0.1309497128201967,
+   "off_floor_meanF_bp": 302.5375252582069,
+   "on_floor_meanF_bp": 31.86472815196354,
+   "repro_worst": 0.0
+  },
+  "d347:rev_21": {
+   "study": "d347",
+   "signal": "rev_21",
+   "side": "long",
+   "observed": 46.465770488934034,
+   "trades": 15655,
+   "A_stored": {
+    "p50": 59.63340310606732,
+    "p95": 80.09923148011316,
+    "max": 98.25615296171881,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": 12.944624991493555,
+    "p95": 26.476635499080253,
+    "max": 34.65984785672839,
+    "draws": 100,
+    "distinct": 100,
+    "above": true
+   },
+   "above_A_stored": false,
+   "above_B": true,
+   "above_C": true,
+   "timing_stored": -13.167632617133286,
+   "timing_prime": 33.52114549744048,
+   "off_floor_share": 0.13344583958872602,
+   "off_floor_meanF_bp": 316.4481742528528,
+   "on_floor_meanF_bp": 29.52600510646271,
+   "repro_worst": 0.0
+  },
+  "d347:rsi_turn": {
+   "study": "d347",
+   "signal": "rsi_turn",
+   "side": "long",
+   "observed": 16.018196753865983,
+   "trades": 11795,
+   "A_stored": {
+    "p50": 45.2129414084911,
+    "p95": 60.257135072701615,
+    "max": 76.08200203248275,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": 6.948891231392006,
+    "p95": 27.965503082753656,
+    "max": 37.62973775083424,
+    "draws": 100,
+    "distinct": 100,
+    "above": false
+   },
+   "above_A_stored": false,
+   "above_B": false,
+   "above_C": false,
+   "timing_stored": -29.194744654625115,
+   "timing_prime": 9.069305522473977,
+   "off_floor_share": 0.10813130588995905,
+   "off_floor_meanF_bp": 225.71578222313352,
+   "on_floor_meanF_bp": 15.096235971965232,
+   "repro_worst": 0.0
+  },
+  "d347:rsi_decile": {
+   "study": "d347",
+   "signal": "rsi_decile",
+   "side": "long",
+   "observed": 30.360917698069905,
+   "trades": 18463,
+   "A_stored": {
+    "p50": 47.9674689002417,
+    "p95": 65.84533208324346,
+    "max": 75.95790541245032,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": 10.587910642789808,
+    "p95": 24.3882042949693,
+    "max": 30.280581362870826,
+    "draws": 100,
+    "distinct": 100,
+    "above": true
+   },
+   "above_A_stored": false,
+   "above_B": true,
+   "above_C": true,
+   "timing_stored": -17.606551202171794,
+   "timing_prime": 19.773007055280097,
+   "off_floor_share": 0.10985474494092025,
+   "off_floor_meanF_bp": 306.54326058195784,
+   "on_floor_meanF_bp": 13.348264973645154,
+   "repro_worst": 0.0
+  },
+  "d349:on_share": {
+   "study": "d349",
+   "signal": "on_share",
+   "side": "short",
+   "observed": -40.92954501482315,
+   "trades": 11102,
+   "A_stored": {
+    "p50": -66.55615077918957,
+    "p95": -48.46240207908769,
+    "max": -38.379164112970976,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": -41.35352103731415,
+    "p95": -22.348086299842237,
+    "max": -13.577920821607295,
+    "draws": 100,
+    "distinct": 100,
+    "above": false
+   },
+   "above_A_stored": true,
+   "above_B": false,
+   "above_C": false,
+   "timing_stored": 25.626605764366417,
+   "timing_prime": 0.4239760224910043,
+   "off_floor_share": 0.078745971151592,
+   "off_floor_meanF_bp": 318.48103203118177,
+   "on_floor_meanF_bp": 47.701100972509785,
+   "repro_worst": 0.0
+  },
+  "d349:skew_63": {
+   "study": "d349",
+   "signal": "skew_63",
+   "side": "short",
+   "observed": -3.6164264568736604,
+   "trades": 5499,
+   "A_stored": {
+    "p50": -70.50891604506748,
+    "p95": -40.8638558455361,
+    "max": -23.362501758084136,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": -33.088662615585434,
+    "p95": -0.33130884577480335,
+    "max": 21.298105795032804,
+    "draws": 100,
+    "distinct": 100,
+    "above": false
+   },
+   "above_A_stored": true,
+   "above_B": false,
+   "above_C": false,
+   "timing_stored": 66.89248958819383,
+   "timing_prime": 29.472236158711773,
+   "off_floor_share": 0.11861639831555837,
+   "off_floor_meanF_bp": 301.25593241491697,
+   "on_floor_meanF_bp": 28.88552607794778,
+   "repro_worst": 0.0
+  },
+  "d349:close_in_range": {
+   "study": "d349",
+   "signal": "close_in_range",
+   "side": "short",
+   "observed": -11.489693513815164,
+   "trades": 38313,
+   "A_stored": {
+    "p50": -56.3475721930237,
+    "p95": -46.81098460255645,
+    "max": -37.30854631021738,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": -22.729021287050134,
+    "p95": -16.403336571426003,
+    "max": -11.03513709381496,
+    "draws": 100,
+    "distinct": 100,
+    "above": true
+   },
+   "above_A_stored": true,
+   "above_B": true,
+   "above_C": false,
+   "timing_stored": 44.85787867920854,
+   "timing_prime": 11.23932777323497,
+   "off_floor_share": 0.1060394384569215,
+   "off_floor_meanF_bp": 250.58875309885207,
+   "on_floor_meanF_bp": 32.12831204126893,
+   "repro_worst": 0.0
+  },
+  "d349:rsi_decile": {
+   "study": "d349",
+   "signal": "rsi_decile",
+   "side": "short",
+   "observed": -1.8003517969965512,
+   "trades": 18467,
+   "A_stored": {
+    "p50": -67.02282304570463,
+    "p95": -54.07229739461402,
+    "max": -42.40820524327341,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": -35.16318187428679,
+    "p95": -23.92487642690532,
+    "max": -9.247258431603212,
+    "draws": 100,
+    "distinct": 100,
+    "above": true
+   },
+   "above_A_stored": true,
+   "above_B": true,
+   "above_C": false,
+   "timing_stored": 65.22247124870808,
+   "timing_prime": 33.36283007729024,
+   "off_floor_share": 0.09582426265293745,
+   "off_floor_meanF_bp": 278.0762905993685,
+   "on_floor_meanF_bp": 47.24741681812259,
+   "repro_worst": 0.0
+  },
+  "d349:rsi_turn": {
+   "study": "d349",
+   "signal": "rsi_turn",
+   "side": "short",
+   "observed": -18.59924913775652,
+   "trades": 14989,
+   "A_stored": {
+    "p50": -69.08669852169226,
+    "p95": -50.66444818849917,
+    "max": -38.749236591526596,
+    "draws": 100
+   },
+   "A_prime": {
+    "p50": -36.97184925758593,
+    "p95": -20.300484119295767,
+    "max": -17.026537158507498,
+    "draws": 100,
+    "distinct": 100,
+    "above": true
+   },
+   "above_A_stored": true,
+   "above_B": false,
+   "above_C": false,
+   "timing_stored": 50.48744938393574,
+   "timing_prime": 18.37260011982941,
+   "off_floor_share": 0.09900706955686102,
+   "off_floor_meanF_bp": 303.56466951992985,
+   "on_floor_meanF_bp": 49.02017192008081,
+   "repro_worst": 0.0
+  }
+ },
+ "predictions": {
+  "Q1": true,
+  "Q2": false,
+  "Q3": true,
+  "Q4": false,
+  "Q5": true,
+  "Q6": false,
+  "Q7": false
+ }
+}

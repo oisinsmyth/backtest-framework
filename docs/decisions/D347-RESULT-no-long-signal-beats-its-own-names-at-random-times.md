@@ -191,3 +191,31 @@ Zero of eight.
 
 `data/d347_long_signal_controls.json` · `data/d347_ctrl_*.json` (five control files) ·
 `scripts/run_d347_long_signal_controls.py` · reuses `scripts/d345_event_book.py`
+
+---
+
+## Amendment — D351, 2026-09-06: the headline is withdrawn; control A was the null trading the excluded tail
+
+**Control A as run here was defective.** It rolled each name's events within `finT` — every
+priced bar — while the observed events are confined to the floored universe. 11–13% of the
+rotated events landed on bars the strategy may not trade (the name's own sub-$5 and
+illiquid spells), and those bars carry **+226 to +316 bp** of forward hedged excess per
+forty bars. The kernel traded them because it checks `finT` and not `keep`. D351 reproduced
+this record's stored control-A draws to 0.0 from its own seeds by its own code path, then
+rotated within the floored universe (A′):
+
+| long, cap, bp/trade | observed | A as run p50 / p95 | **A′** p50 / p95 | above A′ / B / C |
+|---|--:|--:|--:|---|
+| `hist_L` | +60.4 | +70.8 / +90.8 | **+23.9 / +41.8** | **yes** / yes / yes |
+| `rev_21` | +46.5 | +59.6 / +80.1 | **+12.9 / +26.5** | **yes** / yes / yes |
+| `rsi` turn | +16.0 | +45.2 / +60.3 | +6.9 / +28.0 | no / no / no |
+| `rsi` decile | +30.4 | +48.0 / +65.8 | **+10.6 / +24.4** | **yes** / yes / yes |
+
+**Withdrawn:** §1's verdict ("no long signal beats its own names at random times"), §3's
+"the hedge for cohort drift is control A itself" at the scale stated, and §10's items 1 and
+5. **Stands:** Q1 as pre-registered is now **confirmed** — `hist_L` and `rev_21` are above
+the p95 of all three controls; the cohort premium of the names is real but a quarter of what
+this record reported (A′ centred +7 to +24 over a universe base rate of +1.7); §5's
+interaction reversal (it used no rotation); the `rsi` turn's failure; §6 the erratum on
+bucket 9 (D349 §6). The [A] assertion checked counts and the hedge confinement, never
+eligibility of the landings. See D351's result and FINDINGS §32.

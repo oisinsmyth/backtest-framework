@@ -150,3 +150,16 @@ report 76 s including the three rank rotations.
 
 `data/d348_ctrl_{rsi_40,hist_L_40,retrace_leg_20}_p{0,1}.json` · `data/d348_score_rotation_null.json`
 · `scripts/run_d348_score_rotation_null.py` · `scripts/d348_prep.py` · `scripts/memo_load.py`
+
+---
+
+## Amendment — D351, 2026-09-06: the numbers stand; §2's mechanism is withdrawn
+
+Every number in this record stands: the rotation here was of a score already masked to
+the floor, so its null lived in the tradeable universe. **What is withdrawn is §2's
+explanation of why D347 and D348 disagreed.** They disagreed because D347's control A was
+rotating events onto sub-$5 and illiquid bars the floor excludes (D351), not because "cohort
+drift is a property of the decile-entry event". Under a control confined to the floor, the
+event ledger and the slot book agree: the long side has timing, on both lenses. §8 item 2 is
+narrowed to its first sentence; §8 item 3 (the rank rotation is the harder null on a slot
+book) stands. STACK §7 item 19 and FINDINGS §29 are corrected in the same commit.
