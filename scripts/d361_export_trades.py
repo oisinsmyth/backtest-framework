@@ -22,8 +22,16 @@ SKIPPED ('held': the name already carries a position) differs between the runs b
 so a name free in the gated run can be held in the ungated one and vice versa. A trade's hold and P&L depend only on (row, e0): identical
 in every run that takes it (asserted).
 
+TWO PERCENTILES PER SCORE. `pct_<score>` is run_d358.pct_of: the score behind the programme's SHARED base (P['base'] = the cache's `warm`
+& live, i.e. signals_ragged's need = max(impulse_warm_up_bars 1,000, warm_up_bars 393, U.WINDOW 252) of the name's OWN bars) -- so every
+score is NaN for a name's first 1,000 bars whatever its own window, and 42% of rows carry no pct_ at all (100% in 2010-2013). `pcto_<score>`
+is the SAME construction without P['base']: the score's own NaN pattern, as its builder wrote it, governs (own_warm_declared: read from the
+family modules' constants, verified against the cache by [WARM]). The cross-section is larger, so the values differ; the record's studies
+use pct_ and the two are not interchangeable for reproducing one. hist_L / md are the one family whose builder used the shared warm (the
+Impulse IIR burn-in), so their pcto_ equals their pct_ (asserted).
+
 ASSERTIONS (every one prints; any failure aborts before anything is written under --out-dir):
-  [N] [XD] [GATE] [LEDGER] [REPLAY] [PATH] [LAG] [SB] [FIX] [6]
+  [N] [XD] [GATE] [LEDGER] [REPLAY] [PATH] [LAG] [WARM] [OWN-LAG] [OWN-SUB] [SB] [FIX] [SAME] [6]
 """
 
 from __future__ import annotations
@@ -33,8 +41,10 @@ import csv
 import datetime as dt
 import gzip
 import importlib.util
+import io
 import json
 import math
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -56,6 +66,9 @@ def _load(name, filename):
 V61 = _load("d361r", "run_d361_regime_gated_short.py")       # loads d348_prep FIRST (memo_load installed there), then run_d360, run_d359
 PREP, V60, V59, V58, V49, V47, V50 = V61.PREP, V61.V60, V61.V59, V61.V58, V61.V49, V61.V47, V61.V50
 EB, BR = V61.EB, V61.BR
+UF = PREP.UF                                                 # d339_universe_floor: apply_floor_replace (the floor as pct_of applies it)
+BC = PREP.R.BC                                               # d290_build_cache: the family modules (B, PS, RF, PR, VS, SS, AN, ST), AXES, AXIS_OF
+IMPULSE = ("hist_L", "md")                                   # the one family whose builder used the SHARED warm (signals_ragged's need)
 SEED, STUDY = V61.SEED, V61.STUDY
 CAP = 10
 HORIZON = 20
@@ -139,6 +152,106 @@ def fmt(x):
     if isinstance(x, (int, np.integer)):
         return str(int(x))
     return "" if x is None else str(x)
+
+
+# ------------------------------------------------------------------ the scores' OWN warm-up (pcto_): declared by the builders, verified against the cache
+def own_warm_declared():
+    """Per score: the builder's own warm-up as the first admissible OWN-BAR index (0-based: how many of the name's live bars must precede
+    the value), the module that wrote the cache grid, and the rule -- read from the family modules' constants, never typed here. A score's
+    builder may withhold a value LATER than this by its own rule (no level yet, a zero-range bar, |gap| below 50 bp): that is the score's
+    NaN pattern, not a warm-up, and pcto_ carries it as pct_ does."""
+    B, PS, RF, PR, VS, SS, AN, ST = BC.B, BC.PS, BC.RF, BC.PR, BC.VS, BC.SS, BC.AN, BC.ST
+    need = max(B.M.impulse_warm_up_bars(), B.M.warm_up_bars(), B.U.WINDOW)
+    prof = PR.VolumeProfileSensor(PR.LOOKBACK_BARS, PR.BUCKET_ATR, PR.VOLUME_UNITS, atr_window=PR.ATR_WINDOW).warm_up_bars() + 1
+    W = {}
+
+    def add(s, bars, module, rule):
+        W[s] = dict(axis=BC.AXIS_OF[s], module=module, warm_bars=int(bars), rule=rule)
+
+    for s in IMPULSE:
+        add(s, need, "run_book_single_names.signals_ragged (run_activation_threshold.log_parts)",
+            f"the family's SHARED need = max(M.impulse_warm_up_bars() {B.M.impulse_warm_up_bars()}, M.warm_up_bars() {B.M.warm_up_bars()}, U.WINDOW "
+            f"{B.U.WINDOW}) own bars, written as the cache's `warm` member (warm[i, at[need:]]); the raw grid seeds earlier (the zlema / SMA seed, "
+            "an unburned IIR) but the family declares the burn-in, so pcto_ is masked at need and equals pct_")
+    for s, b in PS.WARM_UP_BARS.items():
+        add(s, b, "ragged_price_scores.price_scores", "WARM_UP_BARS[score] (the score's own seed + IIR burn-in), warm[k][i, at[need:]]; the cache is "
+            "already NaN before it (np.where(pwarm, price, nan) in d290_build_cache)")
+    for s in RF.INTRABAR_SCORES:
+        add(s, 1 if s == "gap_frac" else 0, "ragged_features.intrabar_scores", "per-bar shape, no window" + ("; needs the previous live close"
+            if s == "gap_frac" else "") + "; NaN on a zero-range or malformed bar")
+    for s in RF.VOL_SCORES:
+        add(s, RF.LOOKBACK_SESSIONS + (RF.TREND_BARS - 1 if s == "vol_trend" else 0), "ragged_features.volume_scores",
+            f"the {RF.LOOKBACK_SESSIONS} PRIOR own sessions (j < LOOKBACK_SESSIONS: continue)" +
+            (f", then {RF.TREND_BARS} finite rel_vol bars" if s == "vol_trend" else ""))
+    for s in PR.PROFILE_SCORES:
+        add(s, prof, "ragged_profile.build_profile_scores", f"VolumeProfileSensor(lookback {PR.LOOKBACK_BARS}, atr_window {PR.ATR_WINDOW}).warm_up_bars() "
+            f"+ 1 = {prof}; NaN where no HVN / LVN level exists")
+    trail = (f"ragged_vol_scores._trail over the name's OWN bars: a w-bar window ending at the bar, NaN-padded before it, needs ceil(MIN_FRAC x w) "
+             f"finite values (MIN_FRAC {VS.MIN_FRAC}) -- first at own bar w-1; a return-based window then holds w-1 returns (bar 0 has no prior close), "
+             "the same partial-window rule pct_ carries across internal holes")
+    for s, w in (("atr_norm", VS.ATR_BARS), ("cs_spread", VS.CS_BARS), ("rvol21", VS.RVOL_BARS), ("vol_ratio", VS.SLOW_BARS), ("range_over_atr", VS.ATR_BARS)):
+        add(s, w - 1, "ragged_vol_scores.vol_level_scores", f"w = {w}; " + trail)
+    for s in SS.SESSION_SCORES:
+        add(s, SS.WINDOW - 1, "ragged_session_scores.session_scores", f"w = WINDOW {SS.WINDOW}; " + trail + "; overnight legs only on consecutive own bars")
+    for s, w in (("max_ret_21", AN.MAX_BARS), ("ivol_21", AN.IVOL_BARS), ("beta_63", AN.BETA_BARS), ("rev_5", AN.REV_FAST), ("rev_21", AN.REV_SLOW),
+                 ("mom_252_21", AN.MOM_LONG), ("skew_63", AN.SKEW_BARS), ("amihud_21", AN.AMIHUD_BARS), ("dist_52w_high", AN.HIGH_BARS)):
+        add(s, w - 1, "ragged_anomaly_scores.anomaly_scores", f"w = {w}; " + trail)
+    add("price_log", 0, "ragged_anomaly_scores.anomaly_scores", "log of the as-traded close, per bar")
+    for s in ("fvg_dist", "fvg_signed"):
+        add(s, ST.ATR_BARS - 1, "ragged_structure_scores.structure_scores", f"the price ATR (w = {ST.ATR_BARS}; " + trail + ") AND a live fair-value gap "
+            f"at most {ST.FRESH_BARS} bars old -- the first gap forms per name, later than the ATR")
+    add("struct_trend", 0, "ragged_structure_scores.structure_scores", "market_structure's trend state, defined from bar 0")
+    add("retrace_leg", ST.ATR_BARS - 1, "ragged_structure_scores.structure_scores", f"the price ATR (w = {ST.ATR_BARS}) AND confirmed pivots (K = {ST.K}) "
+        f"within {ST.FRESH_BARS} bars with a leg > 0.5 ATR -- later than the ATR per name")
+    add("choch_dist", ST.ATR_BARS - 1, "ragged_structure_scores.structure_scores", f"the price ATR (w = {ST.ATR_BARS}) AND a live change-of-character level "
+        f"within {ST.FRESH_BARS} bars -- the first CHoCH forms per name, later than the ATR (the earliest name at own bar 15)")
+    for s in ("park_vol_21", "gk_minus_cc"):
+        add(s, ST.VOL_BARS - 1, "ragged_structure_scores.structure_scores", f"w = VOL_BARS {ST.VOL_BARS}; " + trail)
+    add("gap_reversal", 1, "ragged_structure_scores.structure_scores", "consecutive own bars with |open / prev close - 1| > 50 bp: the first such gap per name")
+    return W
+
+
+def own_lagged(P, raw, s):
+    """run_d350.lagged WITHOUT the shared base: floored, deal-filtered, lagged one bar -> (T, n). The score's own NaN pattern governs; the
+    Impulse family (hist_L, md) keeps P['base'], which IS its builder's declared warm."""
+    sc = UF.apply_floor_replace(np.where(P["excl"], np.nan, raw), P["keep"])
+    if s in IMPULSE:
+        sc = np.where(P["base"], sc, np.nan)
+    out = np.full((P["T"], P["n"]), np.nan)
+    out[1:] = sc[:, :-1].T
+    return out
+
+
+def own_subset_check(pct, pcto, s):
+    """[OWN-SUB]: wherever pct_<s> is finite pcto_<s> is finite. Returns (n_pct, n_pcto, n_both, mean |diff| on both, share of both with |diff| > 5)."""
+    fp, fo = np.isfinite(pct), np.isfinite(pcto)
+    bad = int((fp & ~fo).sum())
+    assert bad == 0, f"[OWN-SUB] pcto_{s} is NaN on {bad} rows where pct_{s} is finite"
+    both = fp & fo
+    d = np.abs(pct[both] - pcto[both])
+    return int(fp.sum()), int(fo.sum()), int(both.sum()), (float(d.mean()) if both.any() else 0.0), (float((d > 5.0).mean()) if both.any() else 0.0)
+
+
+def assert_same_as_committed(C, old_cols, N):
+    """[SAME]: every pre-existing column, formatted as the writer formats it, equals the committed file cell for cell (git show HEAD:...csv.gz);
+    the header of the committed file is exactly old_cols. The new columns are appended after them, so the written file is the committed one
+    with columns added at the end of every line."""
+    rel = f"data/{STEM}.csv.gz"
+    out = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=str(REPO), capture_output=True)
+    assert out.returncode == 0, f"[SAME] git show HEAD:{rel} failed: {out.stderr.decode(errors='replace')[:300]}"
+    rows = list(csv.reader(io.StringIO(gzip.decompress(out.stdout).decode("utf-8"))))
+    head, body = rows[0], rows[1:]
+    assert head == old_cols, f"[SAME] the committed header differs from the pre-existing columns: {[c for c in head if c not in old_cols]} / {[c for c in old_cols if c not in head]}"
+    assert len(body) == N, f"[SAME] committed rows {len(body)} != {N}"
+    n_cells = 0
+    for j, c in enumerate(old_cols):
+        mine = [fmt(x) for x in C[c]]
+        theirs = [r[j] for r in body]
+        if mine != theirs:
+            k = next(i for i in range(N) if mine[i] != theirs[i])
+            raise AssertionError(f"[SAME] column {c} differs from the committed file at row {k}: {mine[k]!r} vs {theirs[k]!r}")
+        n_cells += N
+    return len(old_cols), n_cells, len(out.stdout)
 
 
 def build(P, out_dir, t0):
@@ -296,6 +409,18 @@ def build(P, out_dir, t0):
     rng = np.random.default_rng([SEED, STUDY, 99])
     samp = rng.choice(np.flatnonzero(ok), size=300, replace=False)
     worst_lag = 0
+    # the scores' OWN warm-up (pcto_): the builders' declarations, and the cache's first finite own bar per name to check them against
+    WD = own_warm_declared()
+    assert set(WD) == set(scores), f"[WARM] declared {sorted(set(WD) ^ set(scores))}"
+    live = np.asarray(P["live"])                                  # (n, T)
+    base = np.asarray(P["base"])                                  # (n, T): the cache's warm & live
+    keep = np.asarray(P["keep"])                                  # (T, n)
+    own_idx = np.cumsum(live, axis=1) - 1                         # own-bar index at every column (valid where live)
+    nbars = live.sum(axis=1)
+    samp_names = np.random.default_rng([SEED, STUDY, 98]).choice(np.flatnonzero(nbars >= 1100), size=20, replace=False)
+    assert (own_idx[base].min() if base.any() else -1) == WD["hist_L"]["warm_bars"] and not (base & ~live).any(), "[WARM] P['base'] is not own bar >= need"
+    C2 = {}                                                       # the pcto_ columns, appended after everything else
+    OW = {}                                                       # the per-score table for the dictionary
     for s in scores:
         pct = V58.pct_of(P, s)
         col = pct[es, rows].astype(float)
@@ -307,6 +432,66 @@ def build(P, out_dir, t0):
         C[f"pct_{s}"] = col
         V58._PCT.pop(s, None)
         del pct, L
+        # ---- [WARM]: the raw cache grid's first finite OWN bar per name against the builder's declared warm-up
+        raw = np.asarray(P["score"](s), float)                    # (n, T), the cache member as written
+        fin = np.isfinite(raw)
+        assert not (fin & ~live).any(), f"[WARM] {s} finite off a live bar"
+        has = fin.any(axis=1)
+        fo = np.where(has, own_idx[np.arange(n), np.argmax(fin, axis=1)], -1)
+        decl = WD[s]["warm_bars"]
+        early = int((fo[has] < decl).sum())
+        if s in IMPULSE:                                          # the primitive's seed precedes the family's declared burn-in: masked at need
+            assert early == int(has.sum()) and fo[has].min() < decl, f"[WARM] {s}: expected every name's seed before need {decl}, got min {fo[has].min()}"
+            masked_at = decl
+        else:
+            assert early == 0, f"[WARM] {s}: {early} names carry a value before the declared warm-up {decl} own bars (min {fo[has].min()})"
+            masked_at = None
+        sample20 = [int(x) for x in fo[samp_names]]
+        # ---- pcto_: the same percentile without P['base']
+        own = own_lagged(P, raw, s)
+        pcto = V47.percentile_grid(own)
+        colo = pcto[es, rows].astype(float)
+        del own, pcto
+        # [OWN-LAG]: a direct recomputation on the sampled rows -- the column at es-1 built from the raw member, the exclusions, the floor (and
+        # for the Impulse family the shared base), then pct_direct's counting; never own_lagged
+        for i in samp:
+            e, r = int(es[i]), int(rows[i])
+            colr = raw[:, e - 1].copy()
+            colr[excl[:, e - 1]] = np.nan
+            colr[~keep[e - 1]] = np.nan
+            if s in IMPULSE:
+                colr[~base[:, e - 1]] = np.nan
+            d, _k = V58.pct_direct(colr, r)
+            same = (math.isnan(d) and math.isnan(colo[i])) or d == colo[i]
+            assert same, f"[OWN-LAG] pcto_{s} at row {i} ({symbols[r]} {dates[e]}): column {colo[i]} != direct {d}"
+        if s in IMPULSE:
+            assert np.array_equal(col, colo, equal_nan=True), f"[OWN-SUB] pcto_{s} != pct_{s} although the family's own warm is the shared one"
+        n_p, n_o, n_b, mad, gt5 = own_subset_check(col, colo, s)
+        C2[f"pcto_{s}"] = colo
+        OW[s] = dict(axis=WD[s]["axis"], module=WD[s]["module"], warm_bars_declared=decl, rule=WD[s]["rule"],
+                     first_finite_own_bar=dict(min_over_names=int(fo[has].min()), names_with_a_value=int(has.sum()), sample20=sample20,
+                                               sample20_all_equal_declared=bool(all(x == decl for x in sample20))),
+                     masked_at_own_bar=masked_at, rows_pct=n_p, rows_pcto=n_o, cov_pct=n_p / N, cov_pcto=n_o / N, rows_both=n_b,
+                     mean_abs_diff_both=mad, share_both_diff_gt_5=gt5)
+        del raw, fin
+    n_eq = sum(1 for s in scores if OW[s]["first_finite_own_bar"]["min_over_names"] == OW[s]["warm_bars_declared"])
+    later = [s for s in scores if s not in IMPULSE and OW[s]["first_finite_own_bar"]["min_over_names"] > OW[s]["warm_bars_declared"]]
+    s20 = sum(1 for s in scores if OW[s]["first_finite_own_bar"]["sample20_all_equal_declared"])
+    print(f"    [WARM] per score, the cache's first finite OWN bar per name (own_idx = cumsum(live) - 1, so a hole does not count) vs the builder's declared "
+          f"warm-up (own_warm_declared, from the family modules' constants): NO name carries a value before its declared warm-up on any of the {len(scores) - len(IMPULSE)} "
+          f"non-Impulse scores; the minimum over names EQUALS the declared value on {n_eq} of {len(scores)} scores and is later on {later} (the builder's own "
+          f"value rule, not a warm-up); on 20 sampled names (>= 1,100 bars) every name's first finite bar equals the declared value on {s20} scores. "
+          f"{'/'.join(IMPULSE)}: the raw grid seeds at own bar {OW['hist_L']['first_finite_own_bar']['min_over_names']} / {OW['md']['first_finite_own_bar']['min_over_names']} "
+          f"(the zlema / SMA seed of an IIR the family declares burned in at {WD['hist_L']['warm_bars']}): masked at {WD['hist_L']['warm_bars']} = P['base'], so pcto_ == pct_ ({el(t0)})")
+    worst_mad = max(scores, key=lambda s: OW[s]["mean_abs_diff_both"])
+    worst_gt5 = max(scores, key=lambda s: OW[s]["share_both_diff_gt_5"])
+    tot_p, tot_o = sum(OW[s]["rows_pct"] for s in scores), sum(OW[s]["rows_pcto"] for s in scores)
+    print(f"    [OWN-LAG] {len(scores)} pcto_<score> columns (the same percentile WITHOUT the shared base) equal a direct recomputation from the raw cache member at "
+          f"bar_entry - 1 (exclusions, floor, pct_direct's counting; the Impulse family also the shared base) EXACTLY on the same 300 sampled rows for every score ({el(t0)})")
+    print(f"    [OWN-SUB] wherever pct_<score> is finite pcto_<score> is finite, all {len(scores)} scores; pct_ finite on {tot_p:,} score-rows, pcto_ on {tot_o:,} "
+          f"({tot_o / tot_p:.3f}x); where both are finite the mean |pcto - pct| is {np.mean([OW[s]['mean_abs_diff_both'] for s in scores]):.3f} points (worst {worst_mad} "
+          f"{OW[worst_mad]['mean_abs_diff_both']:.3f}) and {np.mean([OW[s]['share_both_diff_gt_5'] for s in scores]):.2%} of rows differ by > 5 points (worst {worst_gt5} "
+          f"{OW[worst_gt5]['share_both_diff_gt_5']:.2%}); {'/'.join(IMPULSE)} identical to pct_ ({el(t0)})")
     # gap / rv on the sampled rows against D360's direct forms (rv_direct: a per-name window loop; the gap: OPEN[g] / CLOSE[g-1] - 1 on the same grids)
     VOLa = np.asarray(VOL)
     for i in samp:
@@ -485,10 +670,20 @@ def build(P, out_dir, t0):
     except AssertionError as ex:
         assert "[REPLAY]" in str(ex)
         broke.append("REPLAY")
-    assert broke == ["PATH", "GATE", "REPLAY"], broke
-    print("    [6] [PATH] raises on a P&L moved by 1e-4 bp; [GATE] raises on one G2_on flag flipped; [REPLAY] raises on a one-bar hold rule (every 'held' skip vanishes)")
+    try:
+        po = C2["pcto_rsi"].copy()
+        po[int(np.flatnonzero(np.isfinite(C["pct_rsi"]))[0])] = np.nan                  # one own-percentile removed where the shared one exists
+        own_subset_check(C["pct_rsi"], po, "rsi")
+    except AssertionError as ex:
+        assert "[OWN-SUB]" in str(ex)
+        broke.append("OWN-SUB")
+    assert broke == ["PATH", "GATE", "REPLAY", "OWN-SUB"], broke
+    print("    [6] [PATH] raises on a P&L moved by 1e-4 bp; [GATE] raises on one G2_on flag flipped; [REPLAY] raises on a one-bar hold rule (every 'held' skip vanishes); "
+          "[OWN-SUB] raises on one pcto_rsi value blanked where pct_rsi is finite")
+    C.update(C2)                                                  # the pcto_ columns, after every pre-existing column
     return C, scores, dict(N=N, n_excluded=int(bad.sum()), taken={k: int(C[f"taken_{k}"].sum()) for k in RUNS}, worst_path=worst_p, n_path_checked=n_p,
-                           stored=dict(g2_mean=stored["g2"]["mean_bp"], g2_trades=stored["g2"]["trades"], ung_mean=stored["ung"]["mean_bp"], ung_trades=stored["ung"]["trades"]))
+                           stored=dict(g2_mean=stored["g2"]["mean_bp"], g2_trades=stored["g2"]["trades"], ung_mean=stored["ung"]["mean_bp"], ung_trades=stored["ung"]["trades"]),
+                           own_warm=OW)
 
 
 # ------------------------------------------------------------------ the dictionary
@@ -581,6 +776,12 @@ def dictionary(scores):
     add("delist_date", "the meta's delistingDate ('' if none)", "hindsight", True)
     add("last_live_date", "the date of the name's last priced bar in the panel", "hindsight", True)
     add("bars_to_last_live", "last_live[row] - bar_entry: bars from the entry to the name's last priced bar", "hindsight", True)
+    for s in scores:
+        add(f"pcto_{s}", f"as pct_{s} but WITHOUT the programme's shared 1,000-bar base (P['base']): the '{s}' score floored, deal-filtered, LAGGED one bar, as an "
+            "average-rank percentile among the names finite at bar_entry under the score's OWN warm-up (own_warm in the dictionary; " +
+            ("identical to pct_ -- the Impulse family's own warm IS the shared one" if s in IMPULSE else
+             "a larger cross-section, so the value differs from pct_ where both are finite") + "). NaN under 50 names or where the name is undefined. "
+            "The record's studies use pct_; the two are not interchangeable for reproducing one", "t-1")
     return D
 
 
@@ -608,12 +809,18 @@ def write_outputs(C, D, out_dir, info, t0):
                          entry="a label of bar_entry", path="an OUTCOME from the entry open", hindsight="the span end"),
         floats="written with Python repr (round-trip exact); '' is NaN; flags are 0/1",
         stored_reference=info["stored"], taken=info["taken"], path_check=dict(trades=info["n_path_checked"], worst_bp=info["worst_path"]),
+        own_warm=dict(
+            what="per score: the builder's own warm-up (warm_bars_declared = the first admissible OWN-BAR index, 0-based, counted in the name's live bars), "
+                 "the module that wrote the cache grid, the rule, the cache's first finite own bar per name ([WARM]: min over names, a 20-name sample), where "
+                 "pcto_ is masked (the Impulse family only, at the shared need), and the row coverage of pct_<score> vs pcto_<score> with the value gap where both "
+                 "are finite. pct_ sits behind P['base'] = own bar >= 1,000 (signals_ragged's need) for every score; pcto_ does not",
+            scores=info["own_warm"]),
         columns=D), indent=1))
     f_md = out_dir / f"{STEM}.README.md"
     f_md.write_text("\n".join([
         f"# {STEM}",
         "",
-        f"One row per raw T2 candidate of D361's cell G2:T2 -- D360's gap-up fade (a gap in the top 2% of day g on top-decile relative volume, eligible at g+1) entered SHORT at the open of g+1: {N:,} rows = 24,736 events + 14 excluded on an ex-distribution day (`excluded_reason`, in no run). Sorted by (bar_g, row). Built by `scripts/d361_export_trades.py` from the committed runners (run_d361 / run_d360 / run_d359 / d348_prep) and D345's kernel; every column is asserted ([N] [XD] [GATE] [LEDGER] [REPLAY] [PATH] [LAG] [SB] [FIX] [6]).",
+        f"One row per raw T2 candidate of D361's cell G2:T2 -- D360's gap-up fade (a gap in the top 2% of day g on top-decile relative volume, eligible at g+1) entered SHORT at the open of g+1: {N:,} rows = 24,736 events + 14 excluded on an ex-distribution day (`excluded_reason`, in no run). Sorted by (bar_g, row). Built by `scripts/d361_export_trades.py` from the committed runners (run_d361 / run_d360 / run_d359 / d348_prep) and D345's kernel; every column is asserted ([N] [XD] [GATE] [LEDGER] [REPLAY] [PATH] [LAG] [WARM] [OWN-LAG] [OWN-SUB] [SB] [FIX] [SAME] [6]).",
         "",
         "**Sign.** Positive P&L means the short made money: `pnl_cap10_bp_*` = -(sum over the held bars of v - m), the entry bar on ocT - m_f_oc, later bars on r1T - m_f, in bp; `h_k` is the hedged per-bar return the short earns *minus* (-h_k), `u_k` the name's own, `m_k` the floored market's. `pnl_path10_bp` is the same sum over min(10, n_path) bars and equals the kernel's P&L on every closed trade to 1e-9.",
         "",
@@ -622,6 +829,8 @@ def write_outputs(C, D, out_dir, info, t0):
         "**Three runs, one kernel.** `taken_ungated` / `taken_G2` / `taken_G1` are the same cap-10 kernel on the whole trigger, on the G2-gated arm and on the G1-gated arm. The runs SKIP different events (`skip_reason_* = held`): an event is skipped when its name already carries a position in THAT run's book, and the books differ because the gate removes positions -- so a name free in the gated run can be held in the ungated one and vice versa. A trade's hold and P&L depend only on (row, bar_entry) and are identical across the runs that take it; `pnl_cap10_bp` collects it. `n_open_at_entry_*` is the book carried into the entry bar (after exits, before entries).",
         "",
         f"**Reference.** The G2-gated ledger: {info['stored']['g2_trades']:,} trades, mean {info['stored']['g2_mean']:+.4f} bp; the ungated: {info['stored']['ung_trades']:,}, {info['stored']['ung_mean']:+.4f} (data/d361_regime_gated_short.json, reproduced to 1e-9). Gross, hedged, before the 2c and borrow. Nothing here is a result; the 14 excluded rows and the never-taken rows are data, not trades.",
+        "",
+        f"**Two percentiles per score: `pct_` and `pcto_`.** `pct_<score>` is run_d358.pct_of, the percentile the record's studies use: the score behind the programme's SHARED base (P['base'] = the cache's `warm` & live, i.e. signals_ragged's need = max(impulse_warm_up_bars 1,000, warm_up_bars 393, U.WINDOW 252) of the name's OWN bars), so every score is NaN for a name's first 1,000 live bars whatever its own window -- {info['pct_nan_rows']:,} of the {N:,} rows ({info['pct_nan_rows'] / N:.1%}) carry no `pct_` at all (every row of 2010-2013). `pcto_<score>` is the same construction (floor, deal filter, one-bar lag, average-rank percentile among >= 50 finite names) WITHOUT that base: the score's own warm-up, as its builder wrote it, governs (`own_warm` in the dictionary gives each score's declared warm-up in own bars, the module, and the coverage before / after; [WARM] verified the cache's first finite bar against the declaration on every name). The cross-section is larger, so where both are finite the values DIFFER (mean gap {info['mad_mean']:.2f} points, {info['gt5_mean']:.1%} of rows by more than 5); `hist_L` / `md` are the one family whose builder used the shared warm, and their `pcto_` equals their `pct_`. The two are not interchangeable for reproducing a study: a study quoting pct_ ranks are reproduced from `pct_`, and a result on `pcto_` is a result on a different (earlier, larger) cross-section.",
         "",
         "Floats are Python repr (round-trip exact); empty = NaN; flags 0/1. Dictionary: `" + f_dict.name + "`.",
         "",
@@ -641,9 +850,40 @@ def main() -> int:
     print("\nASSERTIONS")
     C, scores, info = build(P, Path(a.out_dir), t0)
     D = dictionary(scores)
+    cols = [d["column"] for d in D]
+    old_cols = [c for c in cols if not c.startswith("pcto_")]
+    assert cols[:len(old_cols)] == old_cols, "the pcto_ columns are not all at the end"
+    n_old, n_cells, gz_bytes = assert_same_as_committed(C, old_cols, info["N"])
+    print(f"    [SAME] all {n_old} pre-existing columns equal the committed file (git show HEAD:data/{STEM}.csv.gz, {gz_bytes / 2**20:.1f} MB) cell for cell on all "
+          f"{info['N']:,} rows ({n_cells:,} cells, the writer's own formatting on both sides; the header identical); the {len(cols) - n_old} pcto_ columns are appended "
+          f"after them ({el(t0)})")
+    OW = info["own_warm"]
+    pct_cols = np.array([C[f"pct_{s}"] for s in scores])
+    info["pct_nan_rows"] = int((~np.isfinite(pct_cols)).all(axis=0).sum())
+    info["mad_mean"] = float(np.mean([OW[s]["mean_abs_diff_both"] for s in scores]))
+    info["gt5_mean"] = float(np.mean([OW[s]["share_both_diff_gt_5"] for s in scores]))
+    del pct_cols
     f_csv, f_dict, f_md = write_outputs(C, D, Path(a.out_dir), info, t0)
     print(f"\nOK  every assertion passed; wrote {f_csv} ({f_csv.stat().st_size / 2**20:.1f} MB), {f_dict.name}, {f_md.name}  ({el(t0)})  {PREP.rss_line()}")
-    print(f"\nROWS {info['N']:,}; taken " + ", ".join(f"{k} {v:,}" for k, v in info["taken"].items()) + f"; columns {len(D)}")
+    print(f"\nROWS {info['N']:,}; taken " + ", ".join(f"{k} {v:,}" for k, v in info["taken"].items()) + f"; columns {len(D)} ({len(old_cols)} pre-existing + {len(cols) - len(old_cols)} pcto_)")
+    print(f"\nOWN WARM-UP (per score: the builder's declared warm-up in OWN bars [the cache's first finite own bar: min over names / 20-name sample all equal], "
+          f"module; rows with pct_ -> rows with pcto_ of {info['N']:,}; mean |pcto - pct| where both finite, share > 5 points)")
+    print(f"  {'score':16s} {'ax':2s} {'decl':>5s} {'min':>5s} {'s20':>3s} {'mask':>5s}  {'pct rows':>9s} {'%':>6s}  {'pcto rows':>9s} {'%':>6s}  {'mad':>6s} {'>5':>6s}  module")
+    for s in scores:
+        o = OW[s]
+        ff = o["first_finite_own_bar"]
+        print(f"  {s:16s} {o['axis']:2s} {o['warm_bars_declared']:5d} {ff['min_over_names']:5d} {'yes' if ff['sample20_all_equal_declared'] else 'no':>3s} "
+              f"{(str(o['masked_at_own_bar']) if o['masked_at_own_bar'] is not None else '-'):>5s}  {o['rows_pct']:9,d} {o['cov_pct']:6.1%}  {o['rows_pcto']:9,d} {o['cov_pcto']:6.1%}  "
+              f"{o['mean_abs_diff_both']:6.2f} {o['share_both_diff_gt_5']:6.1%}  {o['module']}")
+    print(f"  rows with NO pct_ on any score: {info['pct_nan_rows']:,} ({info['pct_nan_rows'] / info['N']:.1%}); rows with no pcto_ on any score: "
+          f"{int((~np.isfinite(np.array([C[f'pcto_{s}'] for s in scores]))).all(axis=0).sum()):,}")
+    print("\nCOVERAGE BY YEAR (rows with a finite value / rows in the year)")
+    yrs = np.asarray(C["year"])
+    show_c = ["pct_rsi", "pcto_rsi", "pct_rev_5", "pcto_rev_5", "pct_mom_252_21", "pcto_mom_252_21", "pct_hist_L", "pcto_hist_L"]
+    print("  year   rows  " + "  ".join(f"{c:>15s}" for c in show_c))
+    for y in np.unique(yrs):
+        m = yrs == y
+        print(f"  {y}  {int(m.sum()):5d}  " + "  ".join(f"{int(np.isfinite(C[c][m]).sum()):6d} {np.isfinite(C[c][m]).mean():7.1%}" for c in show_c))
     print("\nDICTIONARY (column: definition [measured_at, hindsight?])")
     for d in D:
         print(f"  {d['column']:28s} {d['definition']} [{d['measured_at']}{', HINDSIGHT' if d['hindsight'] else ''}]")
