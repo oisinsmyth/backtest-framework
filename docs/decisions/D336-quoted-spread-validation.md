@@ -137,3 +137,65 @@ and ~35 minutes for 100 names under the pacing bucket.
 `docs/decisions/D336-quoted-spread-validation.md` (this record) ·
 `scripts/d336_ibkr_quoted_spreads.py`, `data/d336_sample.json` (to follow) ·
 `data/d336_comparison.json` and a RESULT record after the principal's pull.
+
+---
+
+## Addendum — verification and handover, 2026-09-07 (the pull is still unrun)
+
+Re-verified today, a year of programme time after the script was built and after D363 made
+the pull the binding constraint on every net number in the record. **Nothing was pulled; no
+broker session was opened; `--pull` was not run.**
+
+**What was re-run, offline:**
+
+| | |
+|---|---|
+| `--selftest` | **PASSED in 7 s.** All five blocks, including the mocked pull-and-compare (20 CSVs, one unresolved name, one subscription error, resume re-requesting only the errored name, the injected 20 bp half recovered at 19.9) and all eighteen deliberately-broken cases raising with their own tag |
+| `--plan` | reproduces `data/d336_sample.json` **byte-identically** (md5 `d5c3a4b7…`, `git status` clean): 100 names, NYSE 51 / NASDAQ 49, the same nine documented cell fills |
+
+So the instrument is intact and the sample is unchanged. The only thing missing is a session.
+
+**Why it now matters more than when it was written.** D363 costed D362's two-sink fade four
+ways and found the estimator's *timing* is not the lever — the entry-day spread moves the
+round trip by 3 bp — while the **convention** and the **level** are. Charging each trade its
+own spread rather than the ledger median moves the round trip from 89 to 108 bp under PUB and
+from 39 to 125 under PB. The fade's net is −49 or −66 depending on which estimator is right,
+and **that difference is larger than the strategy's whole gross**. `STACK.md`: *"Until it
+runs, every net number here is a PB / PUB pair."* The pull therefore unblocks a re-costing of
+STACK §0 and the D363 lines together, not a one-array swap.
+
+**The two commands, unchanged** (§7a), on a machine with TWS or Gateway running:
+
+```bash
+uv run --group ibkr python scripts/d336_ibkr_quoted_spreads.py --pull --host 127.0.0.1 --port <PORT> --client-id 336
+```
+
+```bash
+uv run python scripts/d336_ibkr_quoted_spreads.py --compare
+```
+
+| | |
+|---|---|
+| **ports** | TWS paper 7497, TWS live 7496, Gateway paper 4002, Gateway live 4001. There are **no defaults** — all three flags are required or the script exits |
+| **`--group ibkr`** | required; uv's default groups are `dev` only |
+| **permissions** | the connection is `readonly=True`, so **no trading permission is exercised and no order can be placed**. Paper or live account both work |
+| **market data** | needs the account's US-equity **historical quote** subscription. Without it IBKR returns 354 / 10167 and no bars; 10167 can also arrive *with* bars, and those are kept |
+| **time** | ~35 min for 100 names — BID_ASK counts double against the 60-per-10-min limit, so the bucket is 30 per 600 s plus `+PACEAPI` |
+| **resumable** | a name whose CSV already exists is skipped, so an interrupted pull is restarted with the same command |
+
+**Three edges that will abort a run, so they are not a surprise at minute thirty:**
+
+1. **The bar-semantics gate.** If any name's bars have `close ≥ open` on under 99% of days the
+   pull stops with `SystemExit` — open is the time-averaged bid and close the time-averaged
+   ask, and a name that violates that is not returning what the record assumes.
+2. **Ten consecutive subscription errors** abort with the subscription message. One or two are
+   recorded per name and skipped; ten in a row means the entitlement is missing, not the name.
+3. **`--compare` aborts on any name with fewer than 200 quoted days** (`[N]`), and on a name
+   whose IBKR mid differs from the fixture close by ≥ 5% (`[G]`, the adjusted-vs-unadjusted
+   guard). These raise rather than dropping the name, so one bad name stops the comparison.
+
+**Still owed after the pull:** a D336 RESULT record which, per §8a, must report `MALE(AR)` on
+the non-clamped subset beside the declared Q2 (Abdi–Ranaldo clamps to zero on 28 of the 100
+names, so Q2 as written will be decided by the 1 bp floor rather than by the estimator), and
+must mark Q3's second clause not evaluable (no sampled name has a per-bar zero rate under
+25%).
