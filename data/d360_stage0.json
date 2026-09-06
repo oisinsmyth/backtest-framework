@@ -1,0 +1,170 @@
+{
+ "study": 360,
+ "note": "D360 Stage 0: the mean hedged forward 10/20-bar return of the name after the primary cell's events (long convention; the short earns the negative), beside the no-volume arm and the same names on random eligible days (one A' draw).",
+ "primary": "2:10",
+ "aprime_seed": [
+  20260903,
+  360,
+  0,
+  0
+ ],
+ "table": {
+  "primary_events": {
+   "events": 23332,
+   "F10_span": {
+    "n": 23291,
+    "bp": -1.6060206752439432,
+    "undefined": 41
+   },
+   "F10_era1": {
+    "n": 11326,
+    "bp": 1.3339171198390583,
+    "undefined": 0
+   },
+   "F10_era2": {
+    "n": 11965,
+    "bp": -4.388948837977751,
+    "undefined": 41
+   },
+   "F10_down_years": {
+    "n": 4512,
+    "bp": 16.760290920726714,
+    "undefined": 0
+   },
+   "F20_span": {
+    "n": 23191,
+    "bp": 6.95944047852195,
+    "undefined": 141
+   },
+   "F20_era1": {
+    "n": 11326,
+    "bp": 1.0506046957182438,
+    "undefined": 0
+   },
+   "F20_era2": {
+    "n": 11865,
+    "bp": 12.599851272962288,
+    "undefined": 141
+   },
+   "F20_down_years": {
+    "n": 4512,
+    "bp": 37.71258203314009,
+    "undefined": 0
+   }
+  },
+  "no_volume_arm": {
+   "events": 12681,
+   "F10_span": {
+    "n": 12636,
+    "bp": 13.354456625077615,
+    "undefined": 45
+   },
+   "F10_era1": {
+    "n": 5627,
+    "bp": -11.021906836602327,
+    "undefined": 0
+   },
+   "F10_era2": {
+    "n": 7009,
+    "bp": 32.924409143107724,
+    "undefined": 45
+   },
+   "F10_down_years": {
+    "n": 2402,
+    "bp": 3.833321079919536,
+    "undefined": 0
+   },
+   "F20_span": {
+    "n": 12621,
+    "bp": 33.376979626144035,
+    "undefined": 60
+   },
+   "F20_era1": {
+    "n": 5627,
+    "bp": -16.313007194409167,
+    "undefined": 0
+   },
+   "F20_era2": {
+    "n": 6994,
+    "bp": 73.35489724685503,
+    "undefined": 60
+   },
+   "F20_down_years": {
+    "n": 2402,
+    "bp": 15.763916438636656,
+    "undefined": 0
+   }
+  },
+  "random_eligible_days": {
+   "events": 23332,
+   "F10_span": {
+    "n": 23264,
+    "bp": -7.325924659939126,
+    "undefined": 68
+   },
+   "F10_era1": {
+    "n": 10923,
+    "bp": -11.74015419526344,
+    "undefined": 0
+   },
+   "F10_era2": {
+    "n": 12341,
+    "bp": -3.4188969300673593,
+    "undefined": 68
+   },
+   "F10_down_years": {
+    "n": 4487,
+    "bp": -6.998034407598428,
+    "undefined": 0
+   },
+   "F20_span": {
+    "n": 23207,
+    "bp": -25.98042474906065,
+    "undefined": 125
+   },
+   "F20_era1": {
+    "n": 10923,
+    "bp": -25.68594267781632,
+    "undefined": 0
+   },
+   "F20_era2": {
+    "n": 12284,
+    "bp": -26.242279817784343,
+    "undefined": 125
+   },
+   "F20_down_years": {
+    "n": 4487,
+    "bp": -26.29514456640547,
+    "undefined": 0
+   }
+  }
+ },
+ "counts": {
+  "primary": {
+   "arm": "cell 2:10",
+   "raw": 23754,
+   "xd": 422,
+   "v0": 0,
+   "nf": 0,
+   "excluded": 422,
+   "events": 23332
+  },
+  "no_volume": {
+   "arm": "no-volume 2",
+   "raw": 13307,
+   "xd": 624,
+   "v0": 2,
+   "nf": 0,
+   "excluded": 626,
+   "events": 12681
+  }
+ },
+ "check_worst": 2.842170943040401e-14,
+ "era_midpoint_bar": 2093,
+ "era_midpoint_date": "2018-04-27",
+ "down_years": [
+  2015,
+  2018,
+  2022
+ ]
+}
