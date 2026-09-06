@@ -2222,3 +2222,107 @@ carried for three records. The check was one line on the cached grid:
 3. **When two studies disagree about the same signal, check the nulls are the
    same object on the same universe** before explaining the disagreement by
    construction.
+
+## 33. No short event at any extreme beats random direction: the short side's timing is real and worth less than its names' rise
+
+**From D352, 2026-09-06.** Pre-registered; two of eight, the load-bearing one
+falsified.
+
+139 short events -- 46 scores at the top 2%, 5% and 10% of the lagged floored
+percentile, plus the rsi turn -- on the negated grid against the corrected time
+rotation and a same-day same-bucket name from the defined-percentile pool. 23
+beat their own names at random eligible times against 7-9 from false
+discovery; BH rejects 13; four pass the gate. Under the kernel every survivor
+is above the time rotation, two are above the same-day name, and **none is
+above random direction**: the means are -11.5 to +25.6 bp a trade.
+
+| short, cap, bp/trade | n | mean | A' p50 | B p50 | C p95 | above A'/B/C |
+|---|--:|--:|--:|--:|--:|---|
+| retrace_leg top decile | 23,108 | -3.8 | -30.2 | -10.8 | +14.6 | yes / no / no |
+| on_persist top 2% | 5,968 | +25.6 | -21.0 | -19.2 | +30.3 | yes / yes / no |
+| close_in_range top decile | 38,313 | -11.5 | -22.7 | -16.7 | +11.4 | yes / no / no |
+| wick_asym top 2% | 20,660 | +2.6 | -17.9 | -18.3 | +17.0 | yes / yes / no |
+
+**What it says.** A short on the signal's day is 11 to 47 bp better than a short
+on the same name on a random day, and the same name's rise takes all of it. The
+one positive member, on_persist at the top 2%, has six names to half its P&L
+and a $4.95 top trade worth 13%. **on_share and skew_63 pass at no shape**: the
+slot book's short leg at depth 2 (D346, +21 to +31 a trade) has no counterpart
+in any event on the same score, as D348 found for the long leg. Cost is not the
+problem; the means are near zero before it.
+
+**Rules:**
+
+1. **The short side of this universe has no event trigger.** Any pair book's
+   short leg is the ranking's own extreme or nothing.
+2. **The slot book's leg and the event on the same score are different
+   objects on both sides.** Neither speaks for the other.
+
+## 34. rev_5 entering the bottom decile is real at 200 draws on every control; a slot cap on it is a sample of its most extreme events
+
+**From D353, 2026-09-06.** Pre-registered; seven of nine, the load-bearing one
+held.
+
+**The signal:** +43.4 bp a trade on 27,316 cap-exit trades, above its own names
+at random eligible times (A' p95 +28.6 at 200 draws), a same-day same-bucket
+name (B +35.8), and random direction (C +15.2); mean equal to median; symmetric
+trim +35.3; 27 names to half the P&L; ten of fourteen years; positive in every
+down-year; beta-adjusted +37.2. **-18.6 net under PUB, +17.9 under PB** on the
+cap exit; negative under PUB at every exit. The invalidation exit holds 6.6
+bars for +24 a trade -- +3.7 per bar held against the cap's +1.1. The fifth
+table: the interaction is -65 in the bottom 2% by rsi and +66 / +150 in
+(75, 95].
+
+**The slot-capped event book on it, hedged.** The kernel's capital series is
+now hedged as its ledger is (an additive option, every existing output
+bit-identical, reconciled per bar to 1e-15 -- the second of D345's three retry
+changes). At K=2 the book loses (-1.75 gross, -5.8 PUB), inside its own time
+rotation: a two-slot cap on 72,677 events admits 161 entries in sixteen years,
+**most extreme first** -- the deepest crashes each day a slot is free, the
+events the interaction table says do worst. At K=4 it nets +3.5 PUB (Sharpe
+0.31) on 322 entries, above its null, one cell of four.
+
+**Rules:**
+
+1. **A slot cap small against the event count samples the signal's extreme,
+   not the signal.** Read every capped event book against its skipped share
+   (99.8% here), and declare the K grid before the run.
+2. **rev_5/E1 is a real long trigger and does not pay the published spread.**
+   Its tradeability is D336's question, not another study's.
+
+## 35. Hedging a trigger with the ranking's opposite extreme costs the pair most of what the trigger earns, and the ranking chooses no hedge
+
+**From D354, 2026-09-06.** Pre-registered; two of seven, the load-bearing one
+falsified; long arm only (D352 found no short trigger).
+
+The principal's pair book: a rev_5 trigger long, hedged with a short
+equal-weight basket of the three highest-rsi names that day, exiting together
+on the trigger's cap or invalidation, slot-capped, costed per leg with borrow,
+no market term. Two nulls that keep the membership: the trigger rotated in time
+within eligible bars, and a random partner from the same-day 25-name gate.
+
+| long arm, deployed | pairs | gross | net PUB | net PB | vol | per pair | trigger leg | basket leg | above N1 / N2 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|---|
+| K=2, cap | 159 | -1.4 | **-4.9** | -4.0 | 285 | -55 | +126 | **-181** | no / no |
+| K=4, cap | 318 | +9.6 | +5.9 | +7.2 | 222 | +381 | +488 | -107 | yes / no |
+
+**The basket costs the pair 107-181 bp per pair** whichever gate names fill it:
+the random-partner null is centred within a basis point of the extreme basket
+at both K. The top 2% by rsi earns +11 long at random times (D349's corrected
+base rate) and more on the days a five-day crash fires. **The pair is more
+volatile than a market hedge** (285 vs 232 bp/bar): three names are not a
+market. At K=2 the book is negative under both cost lines. At K=4 it nets
+positive and sits inside the random-partner null, so what it earns is the
+trigger.
+
+**Rules:**
+
+1. **The ranking chooses no hedge.** A random name from its top gate hedges as
+   well as its three most extreme; the "move the basket to the (90, 98] band"
+   retry is not written.
+2. **Hedge a trigger with the market, not with a few names.** The pair
+   construction added cost, vol and a losing leg to a real signal. Any retry of
+   a pair design starts from the kernel and the random-partner null that are
+   now in the tree.
+3. **The pair book is closed on this construction; what survives of it is the
+   trigger** (§34).

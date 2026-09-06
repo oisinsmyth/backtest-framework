@@ -206,6 +206,34 @@ as it has been since D285. And on the fourth table to show it, **the bottom of
 the `rsi` ranking is where every long signal does worst**: the pair book must
 not select its long trigger there.
 
+**D352 screened 139 short events down to the top 2% of every score and found no
+short trigger.** 23 beat their own names at random eligible times, four passed
+the gate, and under the kernel none is above random direction: the means are
+−11.5 to +25.6 a trade. The short side's timing is real and worth less than the
+names' own rise. `on_share` and `skew_63` pass at no shape — **the slot book's
+short leg at depth 2 is not an event on the same score.** The pair book has one
+side.
+
+**D353 gave `rev_5` entering the bottom decile the full record: real at 200
+draws on every control** (+43.4 a trade, above A′ +28.6, B +35.8, C +15.2; mean
+equal to median, ten of fourteen years, top trade 1.3%), **−18.6 net under PUB,
++17.9 under PB**, and the invalidation exit three times as productive per bar
+held. The slot-capped event book on it at two slots loses, because a two-slot
+cap on 72,677 events admits 161 entries in sixteen years, most extreme first —
+the crashes that do not bounce; at four slots it nets +3.5 PUB on 322 entries,
+one cell of four, recorded not built on. The kernel's capital series is now
+hedged as its ledger is, additive and proven to 0.0.
+
+**D354 built the pair book the principal designed and it fails on its long
+arm.** `rev_5`'s trigger hedged with a short basket of the three highest-`rsi`
+names: at two pairs −4.9 PUB, negative under both cost lines, inside both nulls;
+**the basket leg loses 181 bp per pair** and the pair is more volatile than a
+market hedge (285 vs 232 bp/bar). At four pairs +5.9, above the trigger's time
+rotation and **inside the random-partner null**: any name from the top gate
+hedges as well as the three most extreme, so the ranking chooses no hedge. The
+short arm had no trigger to run. **The pair book is closed on this
+construction; what survives of it is the trigger.**
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -499,22 +527,30 @@ every number quoted before D340 is a same-close-fill number.
     trading the excluded tail; D347's headline withdrawn, D349's verdict kept,
     D348's mechanism withdrawn. Every null now asserts its events are eligible.
 
+19. **The short-timing screen — DONE (D352).** Two of eight; no short event at
+    any extreme is above random direction; the slot book's short leg is not an
+    event. The pair book has one side.
+20. **`rev_5`'s full record — DONE (D353).** Seven of nine; real at 200 draws on
+    every control, −18.6 PUB / +17.9 PB; a two-slot cap on it is a sample of its
+    worst events; the kernel's capital series is hedged now.
+21. **The pair book — DONE (D354), closed on this construction.** Two of seven;
+    the basket of the opposite extreme costs the pair what the trigger earns
+    and a random gate name hedges as well.
+
 **Next, in this order:**
 
-1. **`rev_5`/E1's full record on the event lens** — D347's design (both exits,
-   both hedges, the three controls with A′, the splits, the interaction) plus
-   the slot-capped variant and the four groups at the book level; multiplicity
-   138 with `M_eff` 108 stated. Predict before running: it clears every control
-   and nets negative under PUB at every exit.
-2. **`hist_L` k=40's candidate record** — it survived D348. Four groups, the
+1. **`hist_L` k=40's candidate record** — it survived D348. Four groups, the
    top trade with as-traded price and dollar-volume percentile, both nulls
    (already run), GC+HTB, multiplicity 92. Its short leg is a cohort premium
    and the book is its long leg.
-3. **The pair book's pre-registration** — short extreme of the `rsi` ranking
-   hedged against a long *trigger* (`rev_5`/E1) whose names are **not**
-   selected by the ranking's long extreme (D347, D349, D350: the bottom of the
-   ranking is where every long signal does worst). It waits on D336's quoted
-   spreads, because no trigger pays PUB and every one pays PB.
+2. **D336's quoted spreads** — the principal's pull. Every trigger and every
+   book on this universe is negative under PUB and positive under PB; nothing
+   can be called tradeable until the cost line is decided, and D336 decides it.
+3. **The trigger as a book, without a pair** — `rev_5`/E1 market-hedged, on the
+   invalidation exit (three times the per-bar yield of the cap), at a slot cap
+   large enough not to sample the extreme (D353 §4: K=2 is 99.8% skipped; the
+   K=4 cell nets +3.5 PUB on 322 entries). One pre-registration, the hedged
+   kernel unchanged, a K grid declared up front with its multiplicity.
 4. **If the principal wants the event book retried:** θ on trade count, a
    hedged capital series, the invalidation exit as the primary arm — three
    changes, one pre-registration, the D345 kernel unchanged.
@@ -678,6 +714,19 @@ Kept legible rather than quietly fixed.
     D351 every event-lens runner asserts it, and D350 prints both controls in
     every table so the letter of a pre-registered Q1 cannot close a real signal
     on a defective control.
+24. **A self-test that cannot fail is worse than none, again.** D354's runner
+    first drew its random-direction null as antithetic sign pairs so that the
+    control's mean was zero by construction and the [C] check always passed.
+    Reverted to iid before any stage ran; the check now can fail by seed and
+    the negative control (it must fail on the unflipped ledger) is kept. The
+    rule is in CLAUDE.md and an agent still wrote around it; the review caught
+    it, not the assertion.
+25. **A slot cap small against the event count is a sample of the signal's
+    most extreme events, not the signal.** D353's two-slot book on 72,677
+    events admitted 161 entries in sixteen years, most extreme first, and lost
+    while the invariant signal cleared every control. Any capped book on an
+    event signal must be read against its skipped share, and the K grid must
+    be declared before the run.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
