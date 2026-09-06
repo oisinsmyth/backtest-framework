@@ -2457,3 +2457,51 @@ from D358 on.
    claim is the hedged line.
 4. **State which round trip the cost line charges** — the pair's or the
    name's — whenever a single name is hedged by something cheaper than itself.
+
+## 39. On the floored universe the short side has no drifting pool: the loser decile rises, and every short since D335 has been timing inside a pool that rises
+
+**From D359, 2026-09-06.** Pre-registered; two of nine, the premise failed.
+
+The record's short signals fail one way: the names they pick rise at random
+times (§30, §33). D359 reasoned the fix — short inside a pool that drifts
+*down* ex ante, the bottom decile of 12-month momentum, on a fresh `rev_5`
+spike, hedged, held ten bars — and measured the pool before timing anything
+in it.
+
+| Stage 0, hedged next-bar drift, bp/bar | span | era 1 | era 2 | down-years |
+|---|--:|--:|--:|--:|
+| bottom momentum decile | **+0.64** | −2.36 | +2.09 | −2.88 |
+| top momentum decile | +3.85 | +1.64 | +4.92 | +4.40 |
+
+**The loser decile drifts up on this universe.** The floor (D339, D343) admits
+only names above $5 with a passing dollar-volume window; the losers whose
+continued fall the momentum literature measures leave the universe as they
+fall, and what remains of the decile bounces. The timing inside it — the
+primary cell, 8,085 trades — is +8.9 a trade, inside A′ (p95 +21.7), inside
+B, inside the cohort-matched B_c (p95 +9.3: a random same-day name from the
+same decile does as well) and inside random direction; three names are half
+its P&L, the top trade DBI in March 2020 at 12%. The complement earns +4.8,
+the wider cohort earns more than the narrower, HTB is 0.1% (the borrow rule
+keys on the F0 window and a $5 close, and losers above $5 are not flagged).
+It earned only where the cohort fell: era 1 +27, down-years +45 a trade —
+and 2c under PUB is 91 bp on names 45 bp a side wide.
+
+**The mirror, beside and not read.** A fresh dip in a 12-month *winner*,
+entered long: +68.6 a trade at cap 10 (7,290 trades, t 5.9), +160.5 at cap 40
+(3,932, t 5.1), **+82.9 net PUB** at cap 40. No null was run on it; it is an
+observation until it is pre-registered.
+
+**Rules:**
+
+1. **A pool is a property of the universe under its floor.** The literature's
+   drifting losers are unfloored; the programme's universe removes them. Any
+   short here is timing inside a pool that rises, and the record has now shown
+   that on 139 single-score events (§33) and one reasoned conjunction.
+2. **The short side's value is regime-conditional**: it exists where the loser
+   cohort falls (era 1, the down-years), which is the allocator's gate, not a
+   signal's.
+3. **Measure the pool before timing inside it** — Stage 0 turned "timing
+   exists, cost eats it" into "the pool is not there", which is a different
+   next study.
+4. **The winners' dip is the next long to pre-register**, with nulls, before
+   any number from it is quoted as a finding.

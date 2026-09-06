@@ -270,6 +270,23 @@ negative under PUB (`hist_L` 2% is +0.70 PB); both wait on D336. Twelve per-bar
 series are in `data/` for an allocator to condition on era: per trade the
 trigger is −26 in era 1 and +127 in era 2.
 
+**D359 reasoned a short signal from why the others failed — short a rally
+inside a pool that drifts down, the bottom decile of 12-month momentum — and
+measured the pool before timing anything in it. The pool is not there.** On
+the floored universe the loser decile drifts **up**, +0.64 bp/bar hedged over
+the span, down only in era 1 (−2.4) and the down-years (−2.9): the $5 / dv28
+floor removes the names whose fall a short needs, and what remains of the
+loser decile bounces. The spike inside it is +8.9 a trade on 8,085, inside
+every control including a random same-day name from the same cohort, three
+names half its P&L, on names 45 bp a side wide. It earned only where the
+cohort fell: era 1 +27, down-years +45 a trade — a regime fact, not a signal.
+**Every short signal since D335 has been timing inside a pool that rises**, and
+that is now a statement about the universe, not about any signal. Beside it,
+unpre-registered and without nulls: the mirror — a fresh dip in a 12-month
+winner, long — is **+68.6 a trade at cap 10 and +160 at cap 40, +83 net PUB**,
+the best per-trade long number in the record, and it is the next
+pre-registration, not a result.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -583,8 +600,22 @@ every number quoted before D340 is a same-close-fill number.
     of eight; every cell deployed on 100% of bars; the hedged alpha +1.1 to
     +2.9 bp/bar against the names' round trip of 1.6 to 2.0; `rev_5` 10% and
     `hist_L` 2% above both nulls and negative under PUB. The series are written.
+25. **The loser-cohort rally short — DONE (D359), the premise failed.** Two of
+    nine; the bottom momentum decile drifts up on the floored universe; the
+    spike inside it is inside every control; the short side has no drifting
+    pool here. The mirror (winners' dip, long) is +68.6 / +160 a trade beside,
+    without nulls.
 
 **Next, in this order:**
+
+0. **The winners'-dip long, pre-registered** — the bottom decile of `rev_5` is
+   D353's trigger; D359's mirror restricts a fresh dip to the top decile of
+   12-month momentum and it is +160 a trade at cap 40, +83 net PUB, on 3,932
+   trades, with no null run. One pre-registration: the four cells' mirrors,
+   A′, B, the cohort-matched B_c and C, both exits, the four groups with the
+   top trade named, the deployed base. This is the three-layer design's long
+   entry with momentum as the ranking, and it is the first per-trade number in
+   the record that clears the published round trip by more than its own size.
 
 1. **D357 — the out-of-sample read**, pre-registered, runner built and proven
    on the mining fixture to 0.0, the holdout's caches built by a dry stage that
@@ -807,6 +838,16 @@ Kept legible rather than quietly fixed.
     if the record fixes it, it is not a prediction. And the same day a [C]
     check was pre-registered at 2 SE on an iid null, which fails one cell in
     twenty on the seed — weakened to 3 SE in the runner and recorded (item 24).
+29. **A pool reasoned from the literature was not a pool on this universe.**
+    D359 argued that 12-month losers drift down and shorted their rallies; the
+    floored universe's loser decile drifts up, because the floor removes the
+    names whose fall the literature measures. The premise was pre-registered
+    as its own stage and it caught this before the timing result was read,
+    which is the process working — but the argument in §0 of that record
+    could have been checked against D339's census (the tail the floor removed
+    was where every short's top trade lived) before it was written. A pool
+    must be measured under the programme's own floor; the literature's pools
+    are unfloored.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
