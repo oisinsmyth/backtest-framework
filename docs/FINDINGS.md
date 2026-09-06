@@ -2505,3 +2505,45 @@ observation until it is pre-registered.
    next study.
 4. **The winners' dip is the next long to pre-register**, with nulls, before
    any number from it is quoted as a finding.
+
+## 40. A tape-identified news day reverses, in both directions: the short side has no tape signal on the floored universe
+
+**From D360, 2026-09-06.** Pre-registered; zero of nine, the check held.
+
+The last kind of short the tape can express: an event in an ordinary name. A
+gap in the bottom 2% of the day on top-decile relative volume, in a name still
+above the floor after the gap, shorted at the next open, hedged, held ten
+bars — the post-announcement drift read off the tape.
+
+| the NAME's hedged forward return, bp per event | 10 bars | 20 bars | 10, down-years | 20, down-years |
+|---|--:|--:|--:|--:|
+| after a volume gap down (23,332 events) | −1.6 | **+7.0** | **+16.8** | **+37.7** |
+| after a no-volume gap down (12,681) | +13.4 | +33.4 | +3.8 | +15.8 |
+| the same names, random eligible days | −7.3 | −26.0 | −7.0 | −26.3 |
+
+**The gapped name bounces against its own baseline** by 6 bp at ten bars and 33
+at twenty, hardest in crashes; the gap *up* on volume reverses as well (the
+mirror, long, −15 a trade on every cell, t −2 to −4). The short is −0.4 a trade
+on 20,059, inside A′ (p95 +14.4), inside the same-day control and inside random
+direction; no cell, exit or arm is above any control. The names are what was
+argued — $35, 31 bp a side under PUB, 97% general collateral — and there is
+nothing to earn in them. `rev_5`'s own bottom-decile long earns 6.75 bp less
+on entries that arrived by a volume gap, so the gap is a slightly worse *long*
+entry, not a short.
+
+**Three constructions, one universe, one answer.** Levels select the wide
+names whose drift is smaller than their cost (§33); loser rallies sit inside a
+pool that rises (§39); news gaps reverse (this). Every short the tape can
+express has been timing inside names that rise or bounce.
+
+**Rules:**
+
+1. **The short side has no tape signal on the floored universe.** A short
+   sleeve here is a regime gate — the loser cohort falls in era 1 and the
+   down-years (§39) — or information from outside the tape. No further
+   single-fixture tape short is worth a pre-registration.
+2. **A sharp move bounces, gap or no gap.** The long side's rule (§29, §34,
+   §38) covers tape-identified news days; an argued exemption must be tested
+   as the premise before the timing is read (STACK §7 item 30).
+3. **On clustered events the same-day name control runs out of pool** (21%
+   kept here); report the shortfall and let A′ and C carry the verdict.

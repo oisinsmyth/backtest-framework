@@ -287,6 +287,21 @@ winner, long — is **+68.6 a trade at cap 10 and +160 at cap 40, +83 net PUB**,
 the best per-trade long number in the record, and it is the next
 pre-registration, not a result.
 
+**D360 tried the last kind of short the tape can express — an event in an
+ordinary name, a gap in the bottom 2% of the day on top-decile volume, the
+drift after bad news — and there is no drift: the gapped name bounces.** Zero
+of nine. The primary cell is −0.4 a trade on 20,059; its own names at random
+times earn the short +6.3, so the day after a volume gap down is a *better*
+day to be long the name than a random day, by 6 bp at ten bars and 33 at
+twenty, and by 17 to 38 in the down-years. The gap up on volume reverses too
+(the mirror, long, −15 a trade on every cell). The names are ordinary — $35,
+31 bp a side, general collateral — and it does not matter. **The short side
+has no tape signal on the floored universe**: levels select the wide names
+whose drift is smaller than their cost (D352), loser rallies sit inside a pool
+that rises (D359), news gaps reverse (D360). What remains for a short sleeve
+is a regime gate — the only place any short paid before cost is where the
+loser cohort falls — or information that is not on the tape.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -605,6 +620,10 @@ every number quoted before D340 is a same-close-fill number.
     spike inside it is inside every control; the short side has no drifting
     pool here. The mirror (winners' dip, long) is +68.6 / +160 a trade beside,
     without nulls.
+26. **The news-gap short — DONE (D360), zero of nine.** A volume gap down
+    reverses (the name beats its own random days by 6 to 33 bp), the volume
+    gap up reverses too, the names are ordinary and there is nothing to earn.
+    The short side closes on tape signals: a regime gate or outside data.
 
 **Next, in this order:**
 
@@ -848,6 +867,19 @@ Kept legible rather than quietly fixed.
     was where every short's top trade lived) before it was written. A pool
     must be measured under the programme's own floor; the literature's pools
     are unfloored.
+30. **An exception to the record's own finding was argued from the
+    literature, and the finding held.** D347, D350 and D358 say a sharp fall
+    in a name that is not beaten down bounces. D360 argued that a *gap* on
+    volume is informational and would continue instead, and pre-registered
+    nine predictions on it; all nine failed, and the bounce after a volume gap
+    is larger than after a drift. Two records in a row (item 29, this) reasoned
+    a short from outside the record and were answered by what the record
+    already said. **When a proposed signal contradicts a finding the record
+    holds at 200 draws, the pre-registration must say why this case is
+    exempt in the record's own quantities, and the premise stage must test
+    that exemption first.** Also from D360: the same-day same-bucket control
+    keeps 21% of clustered events for want of a pool; on event signals that
+    cluster in time, B's p95 is a weak bar and A′ and C carry the verdict.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
