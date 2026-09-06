@@ -2605,3 +2605,48 @@ four, the primary failed, and the p95 margins are 5 to 6 bp.**
    Whether to write it is the principal's (R15).
 4. **A gated event book is flat by default** (28 to 42% exposure here), which
    the ungated books never were (§38).
+
+## 42. Two of five losing conditions found in the trade export are timing and beat a name-matched rotation of their own flags; the calm-market one takes over part of the gate's job
+
+**From D362, 2026-09-06.** Pre-registered; eight of ten, the load-bearing one
+held. Within-sample with nulls — the five conditions were selected from about
+forty entry-time features on this same sample's trades (the D361 export) with
+thresholds fixed from era 1 — and the holdout was not read.
+
+| gated gap-up fade, cap 10, short | trades | gross | t | trim 1% | era 1 / era 2 | net PB / PUB |
+|---|--:|--:|--:|--:|--:|--:|
+| unfiltered (D361) | 3,977 | +42.3 | 2.5 | +35 | +19 / +55 | +3 / −47 |
+| **sinks 1–2 removed, re-simulated** | 3,079 | **+61.7** | 3.2 | +57 | +59 / +63 | **+20 / −30** |
+| all five removed | 1,868 | +83.6 | 3.9 | | +75 / +88 | +44 / 0 |
+| every trade, size 0.5 per hit | 3,977 | +66.1 per unit capital | 3.9 | | +50 / +74 | +27 / −24 |
+
+**The filter's own nulls.** Two-sink arm: above 200 removals of the same
+number of events at random (p95 +55.7, p50 +41.8) and above 200 rotations of
+each name's hit flags across its own events (p95 +54.3, p50 +43.4) — the
+right events and the right times within a name. Five-sink arm: above the
+random removal, inside the flag rotation (p95 +89.8) — high beta, a thin
+volume node and overnight-driven volatility describe *names*, and rotating a
+name's flags removes much the same trades. Re-simulation and row-drop agree
+to 0.7 bp: concurrency carries nothing.
+
+**The gate, after the filter.** Unfiltered, the 200-day gate was worth about
++27 a trade over a random gate of the same shape (§41). With the calm-market
+sink on, the filtered cell is **inside the gate rotation's p95** (+79.3, p50
++30.6): a calm-market condition is a market state, and it does part of what
+the gate did. Which of the two is the state variable is one cell the record
+has not run — the trigger with the calm-market condition alone and no gate.
+
+**Rules:**
+
+1. **A filter found by screening a ledger needs two nulls, not one**: the
+   same number of events removed at random (does it remove the right events)
+   and each name's flags rotated in time (does it remove the right times,
+   not the right names). D362's five-sink arm passes the first and fails the
+   second.
+2. **A filter on a market-level variable is a gate**, and it must be tested
+   against the gate it sits behind; the two can explain the same trades.
+3. **Sizing per hit is the safer form of a screened filter** — every trade
+   kept, the highest t, two thirds of the gain — because it does not bet on
+   a threshold.
+4. **Screen numbers quoted in a pre-registration must be computed under the
+   thresholds the record fixes** (STACK §7 item 32).

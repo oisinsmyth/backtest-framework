@@ -325,6 +325,22 @@ bp at the p95s, and it is not yet its own record. The gated arms are the
 first flat-by-default constructions in the record (28 to 42% exposure).
 Status: the principal's decision (R15).
 
+**D362 took every trade of that cell into a file, screened forty entry-time
+features for the losing edges, and put the five that survived back through
+the kernel with their own nulls.** Removing events that hit either of the
+first two — a name trading below most of its own volume history, or a calm
+market — gives **+61.7 gross a trade on 3,079** (t 3.2) against +42.3, above
+200 random removals of the same size (p95 +55.7) and 200 rotations of each
+name's own flags in time (+54.3); both eras improve, the 1% trim rises from
++35 to +57, eleven names to half, **+20 net under PB, −30 under PUB**.
+Removing all five is +83.6 on 1,868 and inside the flag rotation: the three
+extra sinks are names, not timing. Halving size per hit keeps every trade at
++66 per unit of capital and t 3.9. **And with the calm-market sink on, the
+200-day gate is inside its own rotation's p95** — the filter took over part of
+what the gate did; which of the two is the state variable is the next cell,
+listed and not run. Within-sample with nulls: the five came from this
+sample's own trades; the holdout was not read. The principal decides.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -655,6 +671,12 @@ every number quoted before D340 is a same-close-fill number.
     Its own record, the neighbours (100/150-bar means, the 5% gap), the
     loser cohort as a post-drawdown LONG, and a volatility gate are listed
     untested; the principal decides.
+28. **The sink filter — DONE (D362), eight of ten.** Two sinks (below the
+    volume history; calm market) lift the gated fade to +61.7 a trade above
+    a random and a name-matched removal; five sinks to +83.6 but inside the
+    flag rotation; sizing per hit t 3.9. With the calm-market sink on, the
+    gate is inside its own rotation. Next cell listed: the calm-market
+    condition alone, no 200-day gate, against the same rotation.
 
 **Next, in this order:**
 
@@ -923,6 +945,15 @@ Kept legible rather than quietly fixed.
     came out with the opposite sign, which is the process working; the
     reasoning in D361 §0 that motivated the study should have asked for the
     number before the design was written.
+32. **A pre-registration quoted screen numbers from one threshold set and
+    fixed another.** D362 §0 gave +77 on 2,641 and +87 on 1,654 for the
+    row-drop arms, from the export screen's full-sample quintiles, and then
+    fixed the era-1 thresholds in §1, under which the same arms are +61 on
+    3,028 and +86 on 1,832. No prediction depended on the §0 figures and the
+    §4 check reproduced, but a reader comparing §0 to the result would find a
+    16 bp gap with no explanation. **Every number a pre-registration quotes
+    must be computed under the parameters the record fixes**, or labelled as
+    coming from elsewhere.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
