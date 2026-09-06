@@ -1,0 +1,1152 @@
+{
+ "file": "d361_trades_gap_up_fade.csv",
+ "rows": 24750,
+ "n_columns": 186,
+ "study": 361,
+ "cell": "G2:T2",
+ "kernel": "d345_event_book.simulate_event via run_d359.run_short (cap 10, no slot cap, hedged by the floored market)",
+ "sign": "pnl > 0: the SHORT made money. pnl = -sum over held bars of (v - m); the entry bar on ocT - m_f_oc, later bars on r1T - m_f",
+ "row": "one raw T2 candidate (pct_gap >= 98 & pct_rv >= 90 on day g, eligible at g+1); 24,736 events + 14 excluded ([XD])",
+ "runs": "ungated / G2 / G1: the same kernel on the whole trigger, on the G2-gated arm, on the G1-gated arm; skips differ because the books differ",
+ "measured_at": {
+  "g": "the gap day, known at its close",
+  "t-1": "information to the close of bar_entry - 1 (the kernel's lag)",
+  "entry": "a label of bar_entry",
+  "path": "an OUTCOME from the entry open",
+  "hindsight": "the span end"
+ },
+ "floats": "written with Python repr (round-trip exact); '' is NaN; flags are 0/1",
+ "stored_reference": {
+  "g2_mean": 42.32955827116933,
+  "g2_trades": 3977,
+  "ung_mean": 14.755486311135034,
+  "ung_trades": 20621
+ },
+ "taken": {
+  "ungated": 20670,
+  "G2": 3977,
+  "G1": 5609
+ },
+ "path_check": {
+  "trades": 30207,
+  "worst_bp": 0.0
+ },
+ "columns": [
+  {
+   "column": "symbol",
+   "definition": "ticker (P['symbols'][row])",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "row",
+   "definition": "the panel column index of the name",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "bar_g",
+   "definition": "the gap day's bar index g",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "date_g",
+   "definition": "the gap day (YYYY-MM-DD)",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "bar_entry",
+   "definition": "the event / entry bar index t = g + 1; the fill is the OPEN of this bar (D340)",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "date_entry",
+   "definition": "the entry bar's date",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "year",
+   "definition": "calendar year of bar_entry",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "era",
+   "definition": "1 if bar_entry < T // 2 else 2 (the runners' era split; T = 4187)",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "down_year",
+   "definition": "1 if year in the floored market's down-years (2015, 2018, 2022)",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "weekday_entry",
+   "definition": "weekday of date_entry, 0 = Monday .. 4 = Friday",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "excluded_reason",
+   "definition": "'' for a T2 event; 'xd' / 'v0' / 'nf' (joined by +) for a raw candidate D360 excluded on day g: ex-distribution >= 1% of the prior close / zero volume / no prior close. Excluded rows are in no arm and no run",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "G1_on",
+   "definition": "1 if G1 is on at bar_entry: the floored market's trailing 63-bar COMPOUNDED return over bars t-63..t-1 < 0 (run_d361.gate_pack); 0 where off or undefined",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "G1_defined",
+   "definition": "1 if bar_entry >= m_start + 63 (the window fits)",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "level_63",
+   "definition": "prod(1 + m_f[t-63..t-1]) - 1, the G1 level; NaN where undefined",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "episode_id_G1",
+   "definition": "index (0-based, in time order) of the G1 on-episode containing bar_entry; -1 if off",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "episode_len_G1",
+   "definition": "bars in that episode (0 if off). NOTE the episode's END is hindsight; its start and id are not",
+   "measured_at": "t-1",
+   "hindsight": true
+  },
+  {
+   "column": "G2_on",
+   "definition": "1 if G2 is on at bar_entry: index[t-1] < mean(index[t-200..t-1]) with index = cumprod(1 + m_f) from m_start; the cell's gate",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "G2_defined",
+   "definition": "1 if bar_entry >= m_start + 200",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "level_200",
+   "definition": "index[t-1] / mean(index[t-200..t-1]) - 1, the G2 level; NaN where undefined",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "episode_id_G2",
+   "definition": "index of the G2 on-episode containing bar_entry; -1 if off",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "episode_len_G2",
+   "definition": "bars in that G2 episode (0 if off); the episode's end is hindsight",
+   "measured_at": "t-1",
+   "hindsight": true
+  },
+  {
+   "column": "mkt_ret_20",
+   "definition": "prod(1 + m_f[t-20..t-1]) - 1: the floored market's trailing 20-bar compounded return (fraction); NaN where the window precedes m_start",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "mkt_vol_20",
+   "definition": "sd (ddof = 1) of m_f over bars t-20..t-1, in bp",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "gap",
+   "definition": "OPEN[g] / CLOSE[g-1] - 1 (split-adjusted frame, the fixture's; run_d360.signal_grids)",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "pct_gap",
+   "definition": "average-rank percentile of gap among the day-g cross-section cs (eligible at g+1, finite gap and rv); the trigger needs >= 98",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "rv",
+   "definition": "VOL[g] / median(VOL[g-21..g-1]) (run_d360.relative_volume); NaN unless all 21 prior volumes are finite and the median > 0",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "pct_rv",
+   "definition": "percentile of rv on the same cross-section; the trigger needs >= 90",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "kernel_score",
+   "definition": "100 - pct_gap, the score the kernel orders entries by at bar_entry (highest first, ties by row descending)",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "ret_g_cc",
+   "definition": "r1T[g]: the name's close(g-1) -> close(g) simple TOTAL return (fraction)",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "ret_g_oc",
+   "definition": "ocT[g]: the name's open(g) -> close(g) return on the gap day (fraction): did the gap extend or fade intraday",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "vol_g",
+   "definition": "shares traded on day g (the fixture's volume)",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "dollar_vol_g",
+   "definition": "CLOSE[g] x VOL[g] (split-adjusted close x volume, DV's construction), dollars",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "range_g",
+   "definition": "(high - low) / open on day g, from the raw fixture's bars (streamed; open/close asserted equal to the grids)",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "close_loc_g",
+   "definition": "(close - low) / (high - low) on day g; NaN when high == low",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "price_close_g",
+   "definition": "the AS-TRADED close on day g (RAW_CLOSE = CLOSE x the split factor)",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "price_adj_close_g",
+   "definition": "CLOSE[g], split-adjusted",
+   "measured_at": "g",
+   "hindsight": false
+  },
+  {
+   "column": "price_open_entry",
+   "definition": "the as-traded open of bar_entry (the fill price): OPEN[t] x RAW[t]",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "price_adj_open_entry",
+   "definition": "OPEN[t], split-adjusted",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "dv_63_lagged",
+   "definition": "P['DV'][t]: trailing 63-bar mean of CLOSE x VOL, lagged one bar (dollars)",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "dv_pct",
+   "definition": "share (x100) of eligible names at bar_entry with finite DV whose DV[t] is strictly below this name's -- the record's four_groups convention (P['DV'] at e0 among elig[e0]); DV is itself lagged",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "half_spread_PUB_bp",
+   "definition": "P['HALF']['PUB'][t, row]: the public-quote half-spread estimate at bar_entry (bp/side), what the ledger's 2c PUB uses",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "half_spread_PB_bp",
+   "definition": "P['HALF']['PB'][t, row]: the Corwin-Schultz half-spread (bp/side), the 2c PB input",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "f0_window_at_entry",
+   "definition": "1 if the name is inside a D331 deal-filing (F0) exclusion window at t-1 (P['excl'][row, t-1]); the HTB rule's first leg",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "rsi_bucket",
+   "definition": "P['bucket_rsi'][t, row]: bucket 0..9 of the lagged rsi percentile (edges 0,2,5,10,25,50,75,90,95,98,100); -1 where undefined",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "elig_entry",
+   "definition": "1 if the name is eligible at bar_entry (priced, floored, deal-filtered; always 1 here)",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_hist_L",
+   "definition": "run_d358.pct_of(P, 'hist_L')[t, row]: the 'hist_L' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_md",
+   "definition": "run_d358.pct_of(P, 'md')[t, row]: the 'md' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_macd_line",
+   "definition": "run_d358.pct_of(P, 'macd_line')[t, row]: the 'macd_line' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_macd_hist",
+   "definition": "run_d358.pct_of(P, 'macd_hist')[t, row]: the 'macd_hist' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_trailing_return",
+   "definition": "run_d358.pct_of(P, 'trailing_return')[t, row]: the 'trailing_return' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_rsi",
+   "definition": "run_d358.pct_of(P, 'rsi')[t, row]: the 'rsi' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_impulse_nodz",
+   "definition": "run_d358.pct_of(P, 'impulse_nodz')[t, row]: the 'impulse_nodz' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_upper_wick",
+   "definition": "run_d358.pct_of(P, 'upper_wick')[t, row]: the 'upper_wick' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_lower_wick",
+   "definition": "run_d358.pct_of(P, 'lower_wick')[t, row]: the 'lower_wick' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_wick_asym",
+   "definition": "run_d358.pct_of(P, 'wick_asym')[t, row]: the 'wick_asym' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_body_frac",
+   "definition": "run_d358.pct_of(P, 'body_frac')[t, row]: the 'body_frac' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_close_in_range",
+   "definition": "run_d358.pct_of(P, 'close_in_range')[t, row]: the 'close_in_range' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_range_frac",
+   "definition": "run_d358.pct_of(P, 'range_frac')[t, row]: the 'range_frac' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_gap_frac",
+   "definition": "run_d358.pct_of(P, 'gap_frac')[t, row]: the 'gap_frac' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_rel_vol",
+   "definition": "run_d358.pct_of(P, 'rel_vol')[t, row]: the 'rel_vol' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_vol_z",
+   "definition": "run_d358.pct_of(P, 'vol_z')[t, row]: the 'vol_z' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_dollar_vol",
+   "definition": "run_d358.pct_of(P, 'dollar_vol')[t, row]: the 'dollar_vol' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_vol_trend",
+   "definition": "run_d358.pct_of(P, 'vol_trend')[t, row]: the 'vol_trend' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_signed_vol",
+   "definition": "run_d358.pct_of(P, 'signed_vol')[t, row]: the 'signed_vol' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_dist_hvn",
+   "definition": "run_d358.pct_of(P, 'dist_hvn')[t, row]: the 'dist_hvn' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_dist_lvn",
+   "definition": "run_d358.pct_of(P, 'dist_lvn')[t, row]: the 'dist_lvn' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_mass_here",
+   "definition": "run_d358.pct_of(P, 'mass_here')[t, row]: the 'mass_here' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_mass_imbalance",
+   "definition": "run_d358.pct_of(P, 'mass_imbalance')[t, row]: the 'mass_imbalance' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_atr_norm",
+   "definition": "run_d358.pct_of(P, 'atr_norm')[t, row]: the 'atr_norm' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_cs_spread",
+   "definition": "run_d358.pct_of(P, 'cs_spread')[t, row]: the 'cs_spread' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_rvol21",
+   "definition": "run_d358.pct_of(P, 'rvol21')[t, row]: the 'rvol21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_vol_ratio",
+   "definition": "run_d358.pct_of(P, 'vol_ratio')[t, row]: the 'vol_ratio' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_range_over_atr",
+   "definition": "run_d358.pct_of(P, 'range_over_atr')[t, row]: the 'range_over_atr' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_on_mean",
+   "definition": "run_d358.pct_of(P, 'on_mean')[t, row]: the 'on_mean' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_id_mean",
+   "definition": "run_d358.pct_of(P, 'id_mean')[t, row]: the 'id_mean' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_on_share",
+   "definition": "run_d358.pct_of(P, 'on_share')[t, row]: the 'on_share' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_on_minus_id",
+   "definition": "run_d358.pct_of(P, 'on_minus_id')[t, row]: the 'on_minus_id' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_on_persist",
+   "definition": "run_d358.pct_of(P, 'on_persist')[t, row]: the 'on_persist' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_max_ret_21",
+   "definition": "run_d358.pct_of(P, 'max_ret_21')[t, row]: the 'max_ret_21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_ivol_21",
+   "definition": "run_d358.pct_of(P, 'ivol_21')[t, row]: the 'ivol_21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_beta_63",
+   "definition": "run_d358.pct_of(P, 'beta_63')[t, row]: the 'beta_63' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_rev_5",
+   "definition": "run_d358.pct_of(P, 'rev_5')[t, row]: the 'rev_5' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_rev_21",
+   "definition": "run_d358.pct_of(P, 'rev_21')[t, row]: the 'rev_21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_mom_252_21",
+   "definition": "run_d358.pct_of(P, 'mom_252_21')[t, row]: the 'mom_252_21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_skew_63",
+   "definition": "run_d358.pct_of(P, 'skew_63')[t, row]: the 'skew_63' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_amihud_21",
+   "definition": "run_d358.pct_of(P, 'amihud_21')[t, row]: the 'amihud_21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_price_log",
+   "definition": "run_d358.pct_of(P, 'price_log')[t, row]: the 'price_log' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_dist_52w_high",
+   "definition": "run_d358.pct_of(P, 'dist_52w_high')[t, row]: the 'dist_52w_high' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_fvg_dist",
+   "definition": "run_d358.pct_of(P, 'fvg_dist')[t, row]: the 'fvg_dist' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_fvg_signed",
+   "definition": "run_d358.pct_of(P, 'fvg_signed')[t, row]: the 'fvg_signed' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_struct_trend",
+   "definition": "run_d358.pct_of(P, 'struct_trend')[t, row]: the 'struct_trend' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_retrace_leg",
+   "definition": "run_d358.pct_of(P, 'retrace_leg')[t, row]: the 'retrace_leg' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_choch_dist",
+   "definition": "run_d358.pct_of(P, 'choch_dist')[t, row]: the 'choch_dist' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_park_vol_21",
+   "definition": "run_d358.pct_of(P, 'park_vol_21')[t, row]: the 'park_vol_21' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_gk_minus_cc",
+   "definition": "run_d358.pct_of(P, 'gk_minus_cc')[t, row]: the 'gk_minus_cc' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "pct_gap_reversal",
+   "definition": "run_d358.pct_of(P, 'gap_reversal')[t, row]: the 'gap_reversal' score's floored, deal-filtered, warm-based value LAGGED one bar, as an average-rank percentile (0..100) among finite names at bar_entry; NaN if undefined or fewer than 50 names",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "hold_cap10",
+   "definition": "bars the kernel marks a position opened at bar_entry: cap 10, or fewer if an unpriced bar / the panel end comes first (the same in every run that takes the event; asserted against the kernel's age on every closed trade). The would-be hold on skipped rows",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "exit_reason_cap10",
+   "definition": "'cap' (held 10 bars), 'delist' (exit on the first unpriced bar, after the name's last live bar), 'hole' (an unpriced bar with later bars priced), 'open_at_end' (still open at the panel end: NOT in the ledger, pnl_cap10_bp NaN), 'unpriced' (bar_entry unpriced; never here)",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "taken_ungated",
+   "definition": "1 if the kernel opened a position on this event in the UNGATED T2 run (every event), cap 10, no slot cap",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "skip_reason_ungated",
+   "definition": "why not taken in the UNGATED T2 run (every event): 'held' (the name already carries a position in THAT run's book), 'unpriced', 'gate_off' (not in the arm), 'excluded'; '' if taken",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "pnl_cap10_bp_ungated",
+   "definition": "the closed trade's hedged P&L in bp in the UNGATED T2 run (every event): -sum over the held bars of (v - m), positive = the short made money; NaN if not taken or open at the end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "n_open_at_entry_ungated",
+   "definition": "positions in the UNGATED T2 run (every event)'s book carried into bar_entry after that bar's exits, before its entries (held[t] - ent[t])",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "n_entries_bar_ungated",
+   "definition": "entries the kernel made on bar_entry in the UNGATED T2 run (every event) (this one included if taken)",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "taken_G2",
+   "definition": "1 if the kernel opened a position on this event in the G2-GATED run (the cell: events with G2_on), cap 10, no slot cap",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "skip_reason_G2",
+   "definition": "why not taken in the G2-GATED run (the cell: events with G2_on): 'held' (the name already carries a position in THAT run's book), 'unpriced', 'gate_off' (not in the arm), 'excluded'; '' if taken",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "pnl_cap10_bp_G2",
+   "definition": "the closed trade's hedged P&L in bp in the G2-GATED run (the cell: events with G2_on): -sum over the held bars of (v - m), positive = the short made money; NaN if not taken or open at the end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "n_open_at_entry_G2",
+   "definition": "positions in the G2-GATED run (the cell: events with G2_on)'s book carried into bar_entry after that bar's exits, before its entries (held[t] - ent[t])",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "n_entries_bar_G2",
+   "definition": "entries the kernel made on bar_entry in the G2-GATED run (the cell: events with G2_on) (this one included if taken)",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "taken_G1",
+   "definition": "1 if the kernel opened a position on this event in the G1-GATED run (events with G1_on), cap 10, no slot cap",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "skip_reason_G1",
+   "definition": "why not taken in the G1-GATED run (events with G1_on): 'held' (the name already carries a position in THAT run's book), 'unpriced', 'gate_off' (not in the arm), 'excluded'; '' if taken",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "pnl_cap10_bp_G1",
+   "definition": "the closed trade's hedged P&L in bp in the G1-GATED run (events with G1_on): -sum over the held bars of (v - m), positive = the short made money; NaN if not taken or open at the end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "n_open_at_entry_G1",
+   "definition": "positions in the G1-GATED run (events with G1_on)'s book carried into bar_entry after that bar's exits, before its entries (held[t] - ent[t])",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "n_entries_bar_G1",
+   "definition": "entries the kernel made on bar_entry in the G1-GATED run (events with G1_on) (this one included if taken)",
+   "measured_at": "entry",
+   "hindsight": false
+  },
+  {
+   "column": "pnl_cap10_bp",
+   "definition": "the kernel's P&L (bp) where the event was taken and closed in ANY run (identical across runs); NaN otherwise",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "htb",
+   "definition": "1 if hard-to-borrow under D337's rule: an F0 window at t-1 or an as-traded close < $5 at bar_entry",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "borrow_rate_bp_annual",
+   "definition": "50 bp (GC) or 500 bp (HTB), the gc_htb scheme",
+   "measured_at": "t-1",
+   "hindsight": false
+  },
+  {
+   "column": "borrow_bp_cap10",
+   "definition": "borrow charged per trade, bp = rate x hold / 252, with hold = hold_cap10 where the event was taken in any run and 10 otherwise",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_1",
+   "definition": "hedged per-bar return in bp on forward bar 1 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_2",
+   "definition": "hedged per-bar return in bp on forward bar 2 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_3",
+   "definition": "hedged per-bar return in bp on forward bar 3 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_4",
+   "definition": "hedged per-bar return in bp on forward bar 4 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_5",
+   "definition": "hedged per-bar return in bp on forward bar 5 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_6",
+   "definition": "hedged per-bar return in bp on forward bar 6 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_7",
+   "definition": "hedged per-bar return in bp on forward bar 7 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_8",
+   "definition": "hedged per-bar return in bp on forward bar 8 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_9",
+   "definition": "hedged per-bar return in bp on forward bar 9 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_10",
+   "definition": "hedged per-bar return in bp on forward bar 10 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_11",
+   "definition": "hedged per-bar return in bp on forward bar 11 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_12",
+   "definition": "hedged per-bar return in bp on forward bar 12 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_13",
+   "definition": "hedged per-bar return in bp on forward bar 13 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_14",
+   "definition": "hedged per-bar return in bp on forward bar 14 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_15",
+   "definition": "hedged per-bar return in bp on forward bar 15 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_16",
+   "definition": "hedged per-bar return in bp on forward bar 16 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_17",
+   "definition": "hedged per-bar return in bp on forward bar 17 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_18",
+   "definition": "hedged per-bar return in bp on forward bar 18 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_19",
+   "definition": "hedged per-bar return in bp on forward bar 19 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "h_20",
+   "definition": "hedged per-bar return in bp on forward bar 20 from the entry open: k=1 is ocT[t] - m_f_oc[t] (open -> close of the entry bar against the floored market's open-to-close); k>=2 is r1T[t+k-1] - m_f[t+k-1]. The SHORT earns -h_k. NaN beyond the last consecutively priced bar or the panel end",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_1",
+   "definition": "the name's own (unhedged) return on forward bar 1, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_2",
+   "definition": "the name's own (unhedged) return on forward bar 2, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_3",
+   "definition": "the name's own (unhedged) return on forward bar 3, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_4",
+   "definition": "the name's own (unhedged) return on forward bar 4, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_5",
+   "definition": "the name's own (unhedged) return on forward bar 5, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_6",
+   "definition": "the name's own (unhedged) return on forward bar 6, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_7",
+   "definition": "the name's own (unhedged) return on forward bar 7, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_8",
+   "definition": "the name's own (unhedged) return on forward bar 8, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_9",
+   "definition": "the name's own (unhedged) return on forward bar 9, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_10",
+   "definition": "the name's own (unhedged) return on forward bar 10, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_11",
+   "definition": "the name's own (unhedged) return on forward bar 11, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_12",
+   "definition": "the name's own (unhedged) return on forward bar 12, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_13",
+   "definition": "the name's own (unhedged) return on forward bar 13, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_14",
+   "definition": "the name's own (unhedged) return on forward bar 14, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_15",
+   "definition": "the name's own (unhedged) return on forward bar 15, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_16",
+   "definition": "the name's own (unhedged) return on forward bar 16, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_17",
+   "definition": "the name's own (unhedged) return on forward bar 17, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_18",
+   "definition": "the name's own (unhedged) return on forward bar 18, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_19",
+   "definition": "the name's own (unhedged) return on forward bar 19, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "u_20",
+   "definition": "the name's own (unhedged) return on forward bar 20, bp: ocT[t] for k=1, r1T[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_1",
+   "definition": "the floored market's return on forward bar 1, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_2",
+   "definition": "the floored market's return on forward bar 2, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_3",
+   "definition": "the floored market's return on forward bar 3, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_4",
+   "definition": "the floored market's return on forward bar 4, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_5",
+   "definition": "the floored market's return on forward bar 5, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_6",
+   "definition": "the floored market's return on forward bar 6, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_7",
+   "definition": "the floored market's return on forward bar 7, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_8",
+   "definition": "the floored market's return on forward bar 8, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_9",
+   "definition": "the floored market's return on forward bar 9, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_10",
+   "definition": "the floored market's return on forward bar 10, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_11",
+   "definition": "the floored market's return on forward bar 11, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_12",
+   "definition": "the floored market's return on forward bar 12, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_13",
+   "definition": "the floored market's return on forward bar 13, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_14",
+   "definition": "the floored market's return on forward bar 14, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_15",
+   "definition": "the floored market's return on forward bar 15, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_16",
+   "definition": "the floored market's return on forward bar 16, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_17",
+   "definition": "the floored market's return on forward bar 17, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_18",
+   "definition": "the floored market's return on forward bar 18, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_19",
+   "definition": "the floored market's return on forward bar 19, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "m_20",
+   "definition": "the floored market's return on forward bar 20, bp: m_f_oc[t] for k=1, m_f[t+k-1] for k>=2",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "n_path",
+   "definition": "priced forward bars available, 1..20: the count of consecutive bars from bar_entry with finT True (the kernel's truncation), capped at 20",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "pnl_path10_bp",
+   "definition": "-(h_1 + .. + h_K) with K = min(10, n_path): the short's cumulative hedged P&L over the cap-10 hold, bp (equals pnl_cap10_bp where closed)",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "pnl_path20_bp",
+   "definition": "the same over K = min(20, n_path)",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "mfe10_bp",
+   "definition": "max over k = 1..min(10, n_path) of the short's cumulative hedged P&L -(h_1 + .. + h_k), bp (the best close-to-close mark; 0 is NOT included)",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "mae10_bp",
+   "definition": "min over the same k of the cumulative short P&L, bp (the worst mark)",
+   "measured_at": "path",
+   "hindsight": false
+  },
+  {
+   "column": "status_meta",
+   "definition": "the fixture meta's status: delisted / collapsed (final close >= 90% below its in-span peak) / survived",
+   "measured_at": "hindsight",
+   "hindsight": true
+  },
+  {
+   "column": "delist_date",
+   "definition": "the meta's delistingDate ('' if none)",
+   "measured_at": "hindsight",
+   "hindsight": true
+  },
+  {
+   "column": "last_live_date",
+   "definition": "the date of the name's last priced bar in the panel",
+   "measured_at": "hindsight",
+   "hindsight": true
+  },
+  {
+   "column": "bars_to_last_live",
+   "definition": "last_live[row] - bar_entry: bars from the entry to the name's last priced bar",
+   "measured_at": "hindsight",
+   "hindsight": true
+  }
+ ]
+}
