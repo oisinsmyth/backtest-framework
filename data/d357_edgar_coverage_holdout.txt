@@ -1,0 +1,155 @@
+D331 EDGAR M&A-announcement pull -- coverage report
+pulled_on: 2026-09-06   runtime: 681s   complete: True
+user_agent: BacktestFramework research script research@backtest-framework.org
+requests fetched: 4380   served from temp/edgar cache: 101
+
+SYMBOL -> CIK RESOLUTION
+  symbols total      : 803   (dead 272, alive 531)
+  resolved high      : 589
+  resolved low       : 198
+  unresolved         : 16   of which dead names: 15, alive: 1
+  by method:
+    company_tickers.json             495
+    efts_ticker_agree                155
+    ticker.txt                       84
+    efts_ticker_yearly               28
+    None                             16
+    efts_ticker_context_dominant     14
+    company_tickers.json(successor)  9
+    ticker.txt(successor)            1
+    efts_ticker_agree(base)          1
+  confidence x cohort:
+    high       alive 520
+    high       dead  69
+    low        alive 10
+    low        dead  188
+    unresolved alive 1
+    unresolved dead  15
+  symbols mapped to >1 CIK over time (ticker migrated between registrants): 16
+    APLP: 0001389050[2014..2018,low] -> 0001367064[2015..2018,low]
+    CI: 0000701221[2009..2019,low] -> 0001739940[2018..2026,high]
+    DKNG: 0001772757[2019..2022,low] -> 0001883685[2021..2026,high]
+    FTI: 0001135152[2010..2017,low] -> 0001681459[2016..2026,high]
+    GAS: 0000072020[2009..2011,low] -> 0001004155[2011..2016,low]
+    HHH: 0000825171[2011..2024,low] -> 0001981792[2023..2026,high]
+    KNX: 0000929452[2009..2011,low] -> 0001492691[2009..2026,high]
+    MTGE: 0000817473[2012..2014,low] -> 0001516973[2011..2018,low]
+    MYL: 0000069499[2009..2015,low] -> 0001623613[2014..2020,low]
+    NE: 0001458891[2020..2022,low] -> 0001895262[2020..2026,high]
+    PS: 0001725579[2017..2025,low] -> 0002026053[2024..2026,high]
+    PXP: 0000891456[2010..2013,low] -> 0000831259[2012..2013,low]
+    RP: 0001286225[2009..2012,low] -> 0001205059[2012..2019,low]
+    SC: 0000811830[2015..2020,low] -> 0001580608[2013..2021,low]
+    SEP: 0001394074[2009..2014,low] -> 0001373835[2014..2016,low]
+    SOGO: 0001734107[2018..2021,low] -> 0001713947[2020..2021,low]
+  symbols whose window is only PARTIALLY covered by mapped entities: 26
+    CAA: uncovered [['2009-01-04', '2013-12-31']]
+    CAM: uncovered [['2018-01-01', '2026-08-26']]
+    CDK: uncovered [['2013-09-24', '2013-12-31']]
+    CHG: uncovered [['2010-07-07', '2021-12-05']]
+    DAY: uncovered [['2017-04-26', '2022-12-31']]
+    DBRG: uncovered [['2013-06-27', '2016-07-28']]
+    DEP: uncovered [['2009-01-04', '2009-12-31']]
+    DINO: uncovered [['2009-01-04', '2022-03-13']]
+    DKNG: uncovered [['2018-07-25', '2018-12-31']]
+    FTI: uncovered [['2009-01-04', '2009-12-31']]
+    HHH: uncovered [['2009-11-05', '2010-12-31']]
+    LBTYA: uncovered [['2009-01-04', '2013-03-06']]
+    LBTYK: uncovered [['2009-01-04', '2013-03-06']]
+    LQ: uncovered [['2020-01-01', '2026-08-26']]
+    MGP: uncovered [['2015-04-21', '2016-12-31'], ['2020-01-01', '2022-05-19']]
+    MTGE: uncovered [['2010-08-04', '2010-12-31']]
+    OA: uncovered [['2009-01-04', '2012-12-31']]
+    ONE: uncovered [['2009-06-16', '2012-01-01'], ['2015-01-01', '2016-08-04']]
+    PXP: uncovered [['2009-01-04', '2009-12-31']]
+    RP: uncovered [['2020-01-01', '2021-04-22']]
+    SC: uncovered [['2022-01-01', '2022-01-28']]
+    SEP: uncovered [['2016-12-31', '2018-12-14']]
+    SOGO: uncovered [['2016-11-09', '2017-12-31']]
+    STAY: uncovered [['2015-01-01', '2021-06-16']]
+    TBRG: uncovered [['2009-01-04', '2022-12-31']]
+    YHOO: uncovered [['2009-01-04', '2009-12-31']]
+
+UNRESOLVED SYMBOLS (reason of the last candidate tried)
+  AEH    dead  2010-01-04..2019-12-13 | full-text ticker queries did not agree on a dominant entity
+  AEK    dead  2012-02-07..2018-05-14 | full-text ticker queries did not agree on a dominant entity
+  AXIA   dead  2010-01-04..2026-08-07 | entity's earliest filing 2020-10-23 is after first_bar+365d (2011-01-04); ticker recycled? | tried 0001828852:efts_ticker_context_dominant
+  DTJ    dead  2016-06-01..2021-06-29 | full-text ticker queries did not agree on a dominant entity
+  EXCU   dead  2014-07-03..2017-06-01 | full-text ticker queries did not agree on a dominant entity
+  FCAM   dead  2014-12-11..2016-12-22 | full-text ticker queries did not agree on a dominant entity
+  GSJ    dead  2012-05-09..2016-10-31 | full-text ticker queries did not agree on a dominant entity
+  HGH    dead  2012-04-25..2022-05-13 | full-text ticker queries did not agree on a dominant entity
+  IND    alive 2010-01-04..2026-08-26 | context query dominant but the entity's own filings never say 'symbol SYM' | tried 0001023731:efts_ticker_context_dominant
+  INZ    dead  2010-01-04..2017-02-21 | full-text ticker queries did not agree on a dominant entity
+  MOGA   dead  2010-01-04..2018-07-27 | full-text ticker queries did not agree on a dominant entity
+  MSK    dead  2010-01-04..2016-07-27 | full-text ticker queries did not agree on a dominant entity
+  NEEPK  dead  2016-06-09..2021-12-21 | full-text ticker queries did not agree on a dominant entity
+  TMUSP  dead  2015-10-27..2017-12-15 | full-text ticker queries did not agree on a dominant entity
+  UPLM   dead  2017-04-13..2019-08-07 | full-text ticker queries did not agree on a dominant entity
+  WFM    dead  2010-01-04..2017-08-29 | full-text ticker queries did not agree on a dominant entity
+
+DEAL FILINGS
+  symbols with >= 1 deal filing : 672 of 787 resolved (dead 233, alive 439)
+  total deal filings            : 12603
+  by form type:
+    425        7323
+    8-K        4319
+    SC TO-C    377
+    DEFM14A    245
+    PREM14A    154
+    SC TO-T    132
+    SC 14D9    53
+  8-K Item 1.01 hits by matched query: {'acquisition': 1974, 'merger': 1830, 'tender': 2536}
+  8-K Item 1.01 hits by matched-query combination (a 'tender'-only hit is usually a DEBT tender):
+    tender                         1385
+    acquisition                    827
+    merger                         687
+    acquisition+merger+tender      601
+    acquisition+tender             277
+    merger+tender                  273
+    acquisition+merger             269
+  8-Ks with merger language but NO Item 1.01 (kept aside, not deals): 5196 across 581 symbols
+  deal filings by year: 2009:336, 2010:580, 2011:553, 2012:410, 2013:508, 2014:864, 2015:904, 2016:906, 2017:746, 2018:932, 2019:672, 2020:732, 2021:1277, 2022:660, 2023:596, 2024:561, 2025:839, 2026:527
+
+TOP 20 SYMBOLS BY NUMBER OF DEAL FILINGS
+  KSU     265  KANSAS CITY SOUTHERN                     425=250 8-K=13 DEFM14A=2
+  MYL     221  Mylan II B.V.                            425=192 8-K=24 DEFM14A=3 PREM14A=1 SC TO-T=1
+  NSC     215  NORFOLK SOUTHERN CORP                    425=212 8-K=2 DEFM14A=1
+  CI      213  Cigna Group                              425=196 8-K=14 DEFM14A=2 PREM14A=1
+  BHC     212  Bausch Health Companies Inc.             425=137 8-K=42 SC TO-C=26 SC TO-T=6 PREM14A=1
+  CBOE    132  Cboe Global Markets, Inc.                425=122 8-K=10
+  DJT     131  Trump Media & Technology Group Corp.     425=113 8-K=18
+  QCOM    127  QUALCOMM INC/DE                          425=99 8-K=21 SC TO-C=5 SC TO-T=2
+  KND     120  KINDRED HEALTHCARE, INC                  425=93 8-K=21 SC TO-C=3 SC TO-T=1 PREM14A=1 DEFM14A=1
+  AVGO    101  UBS AG                                   425=99 SC 14D9=1 SC TO-T=1
+  ODP      98  ODP Corp                                 425=70 8-K=18 SC TO-C=6 PREM14A=2 DEFM14A=2
+  AMCR     97  Amcor plc                                425=91 8-K=6
+  NOK      90  NOKIA CORP                               425=88 SC TO-T=1 SC TO-C=1
+  NE       88  Noble Corp plc                           425=76 8-K=11 DEFM14A=1
+  GAS      85  SOUTHERN CO GAS                          425=73 8-K=11 PREM14A=1
+  LSXMA    85  Liberty Media Corp                       425=70 8-K=9 PREM14A=3 DEFM14A=3
+  MLM      82  MARTIN MARIETTA MATERIALS INC            425=65 8-K=16 SC TO-T=1
+  NRGV     82  Energy Vault Holdings, Inc.              425=74 8-K=8
+  UAL      81  United Airlines Holdings, Inc.           425=59 8-K=21 DEFM14A=1
+  FTI      79  TechnipFMC plc                           425=71 8-K=7 DEFM14A=1
+
+ERRORS / RATE-LIMIT EVENTS
+  total events: 43   by kind/status: {'HTTP 500': 43}
+  unrecovered (GIVEUP/ABORT/no-result/worker/404): 0
+  all events (retried 500s included) are in the JSON's fetch_events; first 5:
+  2026-09-06T16:37:04+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"agreement and plan of merger" OR "merger agreement" OR "plan of merger" OR 
+  2026-09-06T16:37:09+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol APLP"', 'dateRange': 'custom', 'startdt': '2015-01-01', 'enddt': '20
+  2026-09-06T16:37:22+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"tender offer"', 'dateRange': 'custom', 'startdt': '2017-06-22', 'enddt': '2
+  2026-09-06T16:37:27+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol AXE" OR "NYSE AXE" OR "NASDAQ AXE" OR "NYSE MKT AXE" OR "NYSE Americ
+  2026-09-06T16:38:15+00:00Z HTTP 500 https://efts.sec.gov/LATEST/search-index {'q': '"symbol CAM" OR "NYSE CAM" OR "NASDAQ CAM" OR "NYSE MKT CAM" OR "NYSE Americ
+
+NOTES FOR DOWNSTREAM
+  - Dates are FILING dates. 425 / SC TO-C often precede the 8-K by a day or trail it; take the earliest per episode.
+  - 8-K Item 1.01 covers every material definitive agreement (credit facilities, licences, supply deals). The
+    full-text filter keeps only 8-Ks whose text matches the merger/tender/acquisition phrases; an 8-K about a
+    credit agreement that mentions an earlier merger agreement will still pass. matched_queries says which.
+  - Direct forms are taken by exact form type; amendments (/A) are excluded. SC TO-I (issuer self-tender) excluded.
+  - Submissions list filings where the entity is the SUBJECT too (bidder-filed SC TO-T appears under the target).
+  - 425 is filed by acquirers as well; a fixture name that is the BUYER also gets hits. Role is not recorded.
+  - 'low' resolutions came from the ticker string appearing in filing text; verify before relying on one name.
+  - EDGAR full-text search covers 2001 onward; the fixture starts 2010, so no window is truncated by it.
