@@ -352,14 +352,28 @@ the ledger's median** — the per-trade convention from here, the median
 printed beside — gives 108 bp under PUB (D362: 89) and 125 under PB (39),
 because PB's single pair is zero on 43% of bars with a fat right tail; the
 net is **−49 / −66**, not −30 / +20. Full crossing −46 to −66 a trade, one
-side crossing about zero, neither side +55; at $25k a position the trade
-is 0.04% of the day's dollar volume, so liquidity is not the constraint —
-**what the opening and closing auctions cost is the number the programme
-does not have**, and daily bars cannot supply it. Only the widest quintile
-pays at full crossing (+6 PUB, +36 on the entry-window line, names at $20
-with a 94 bp half-spread). Inverse-cost sizing halves the gross; the U
-shape is above its permutation null by 1.7 bp and still negative. D336 on
-hold at the principal's instruction; nothing here pre-empts it.
+side crossing about zero, neither side +55; **what the opening and closing
+auctions cost is the number the programme does not have**, and daily bars
+cannot supply it. Only the widest quintile pays at full crossing (+6 PUB,
++36 on the entry-window line, names at $20 with a 94 bp half-spread).
+Inverse-cost sizing halves the gross; the U shape is above its permutation
+null by 1.7 bp and still negative. D336 on hold at the principal's
+instruction; nothing here pre-empts it.
+
+**D364 measured the denominator that last claim rested on, and it was the
+wrong one.** One-minute bars with extended hours on a stratified sample of
+the fade's own trades: the **09:30 minute is a median 1.44% of the whole
+day** and the **16:00 minute 7.85%**, so the honest denominator is 69×
+smaller at the open and 13× at the close. The same $25k order is **2.5% of
+the opening minute**; two thirds of entries are above 1% of it and a third
+above 5%; and the widest PUB quintile, which carries the entire edge, is
+the **thinnest at 4.2%**. Both minute bars are upper bounds on the auction
+itself, so true participation is larger. This measures no impact and claims
+none — it withdraws the reason for believing the +55 was reachable. The
+three bounds stand as arithmetic. The sentence that stood here, *"at $25k a
+position the trade is 0.04% of the day's dollar volume, so liquidity is not
+the constraint"*, is **withdrawn**; FINDINGS §43 carries the same amendment
+and §44 the measurement.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
@@ -704,6 +718,16 @@ every number quoted before D340 is a same-close-fill number.
     What can: D336's quoted spreads (on hold) for the level; fills or
     intraday quotes on names like these for the auction. Sizing does not
     rescue the net.
+30. **The execution measurements and instruments — DONE (D336 addendum,
+    D364).** D336 re-verified offline and handed over, still unrun, still
+    the principal's one command. D364 measured auction participation: the
+    order is 2.5% of the opening minute, not 0.04% of the day, and the
+    widest quintile is the thinnest. A daily watchlist reproduces the
+    ledger on eight dates and prices what the live eligibility rule cannot
+    know (one A2 event in twenty). A fill log and a slippage tool wait on
+    the principal's own orders. Databento for equities is a $199/mo
+    subscription question, not a data purchase: its free tier reaches 6 of
+    3,028 trades.
 
 **Next, in this order:**
 

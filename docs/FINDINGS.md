@@ -2680,11 +2680,18 @@ small and its mean is the largest line. The net is −49 / −66, not D362's
 **Execution is the open question.** If both sides cross the spread the fade
 loses 46 to 66 a trade; if one side does, about zero; if neither does —
 the kernel's fills are the opening and closing prints, which are auction
-prints — +55 before impact. Impact is unmodelled and liquidity is not the
-constraint: at $25k a position the trade is 0.04% of the entry day's
-dollar volume at the median and under 1% on 99.8% of trades. The number
-the programme does not have is what an auction order in a name like these
-costs, and daily bars cannot supply it.
+prints — +55 before impact. Impact is unmodelled. The number the programme
+does not have is what an auction order in a name like these costs, and
+daily bars cannot supply it.
+
+> **Amended by §44, 2026-09-07.** This section originally read *"liquidity
+> is not the constraint: at $25k a position the trade is 0.04% of the entry
+> day's dollar volume at the median and under 1% on 99.8% of trades."* The
+> whole-day figure is correct and it is **the wrong denominator for a fill
+> that happens in an auction**. The opening minute is a median 1.44% of the
+> day, so the same $25k order is **2.5% of it**, and 4.2% in the widest
+> quintile that carries the edge. The clause is withdrawn; the three bounds
+> stand.
 
 **Sizing does not rescue the net.** Inverse-cost sizing halves the gross
 (+30 per unit capital, t 1.8): the edge is not cheap. The in-sample U shape
@@ -2704,4 +2711,62 @@ negative under every line at full crossing.
    estimation.** A spread ceiling removes the signal; the entry-day estimate
    moves 3 bp; crossing against the auction is 100 bp. That needs quoted
    spreads for the level (D336) and fills or intraday quotes for the
-   auction, and it is the principal's to pursue.
+   auction, and it is the principal's to pursue. *(The "liquidity is not the
+   constraint" clause that stood here is withdrawn — see §44.)*
+
+## 44. The opening minute is 1.4% of the day and the closing minute 7.9%, so the fade's order is 2.5% of the auction it actually fills in
+
+**From D364, 2026-09-07.** A measurement, not a hypothesis test: no predictions
+were registered. One-minute bars with extended hours for a stratified sample of
+the fade's own trades (100 drawn, 20 per PUB half-spread quintile, **78 complete
+on all four measures**), reading the 09:30 bar (opening auction plus a minute of
+continuous trade) and the 16:00 bar (closing auction plus a minute). **Both are
+upper bounds on the auction's own size, so every figure below is a lower bound
+on the truth.**
+
+| minute / whole-day dollar volume | p25 | median | p75 | p90 |
+|---|--:|--:|--:|--:|
+| 09:30 minute | 0.88% | **1.44%** | 2.36% | 4.09% |
+| 16:00 minute | 2.73% | **7.85%** | 13.58% | 28.44% |
+
+| at $25k a position, median participation | entry | exit |
+|---|--:|--:|
+| whole day (§43's denominator) | 0.024% | 0.053% |
+| **the minute the fill happens in** | **2.494%** | **0.645%** |
+
+Two thirds of entries are above 1% of the opening minute at $25k and a third
+above 5%; at $50k it is 81% and 50%. **And the widest PUB quintile — the one
+carrying the whole edge (+225 gross a trade against +13 for the middle three,
+§43) — is the thinnest**: 4.20% median participation, 87% above 1%, 47% above
+5%, on an opening minute of $596k against $1.3M in the tightest quintile.
+
+**What it does not say.** Participation is not slippage. This record has no
+fills and makes no claim about what a print moves by. What it removes is the
+premise: §43's +55 is the arithmetic of a fill *at the print with no impact*,
+and "0.04% of the day" was the argument that such a fill was plausible. At
+2.5% of the opening minute it is not, so **the auction cost is unmeasured and
+is not zero**.
+
+**What the measurement costs itself**, all stated: the endpoint carries a
+median 82% of the consolidated day (86% on complete sessions), so participation
+is overstated by about 1.22× — which runs the same way through both
+denominators and does not touch the ratio; the extreme share-ratio outliers are
+the split frame (`dollar / share` recovers the factor: ORLY 14.86, MSTR 10.2)
+and the assertion uses the split-invariant dollar ratio; the intraday endpoint
+refuses delisted tickers so 22.3% of the arm is unreachable, though the tilt is
+small (gross +61.31 kept against +59.81 excluded, half-spread 51.95 against
+50.81); 17 of 97 exit sessions have no 16:00 bar and are dropped and named,
+never replaced by 15:59.
+
+**Rules:**
+
+1. **Measure participation against the bar the fill happens in**, not the day.
+   A whole-day denominator understates an auction fill by 69× at the open and
+   13× at the close on this universe.
+2. **An execution bound that assumes a fill at the print must state its
+   participation** at that print, or it is arithmetic wearing a claim.
+3. **Where the edge is, the auction is thinnest** — the widest-spread names
+   have the smallest opening minute. Spread and depth are the same problem
+   here, and a spread ceiling that removes the signal (§43) removes the depth
+   problem with it.
+4. **The next number is a fill, not another estimate.**

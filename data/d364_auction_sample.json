@@ -1,0 +1,2633 @@
+{
+ "arm": {
+  "construction": "taken_G2 == 1 & ~(S1 | S2) on the export's own columns == D362's ROW-DROP A2, not its re-simulated arm",
+  "mean_bp": 60.972681756848566,
+  "median_bp": 27.201977203157988,
+  "resim_minus_rowdrop_bp": 0.7356558740541033,
+  "resim_minus_rowdrop_trades": 51,
+  "source": "d362_sink_filter.json",
+  "stored_resim_mean_bp": 61.70833763090267,
+  "stored_resim_trades": 3079,
+  "stored_rowdrop_mean_bp": 60.97268175684856,
+  "stored_rowdrop_trades": 3028,
+  "trades": 3028
+ },
+ "axis": {
+  "axis": 4187,
+  "first": "2010-01-04",
+  "last": "2026-08-26",
+  "pairs": 49500
+ },
+ "draw": {
+  "K_per_quintile": 20,
+  "budget": 150,
+  "cached_at_plan": 0,
+  "eta_minutes": 2.212121212121212,
+  "kmax": 440,
+  "n_requests": 146,
+  "n_trades": 100,
+  "next_K_requests": [
+   21,
+   154
+  ],
+  "note": "Alpha Vantage bills one request per (symbol, month); a trade needs its entry month AND its exit month",
+  "requests_per_min": 66
+ },
+ "export": "d361_trades_gap_up_fade.csv",
+ "fixture": "us_shorts_daily_raw.csv.gz",
+ "guard": "41 file opens audited in this process, 1 under data/fixtures (us_shorts_daily_raw.csv.gz x1); none containing 'holdout' opened (1 refused: the probe)",
+ "payload_sha256": "201f311daaa22790b0656a6c1ef0b3500a8be268f2955096d958742f27ef915f",
+ "purpose": "the sample for D364's auction-print participation bound; MEASUREMENT ONLY",
+ "requests": [
+  [
+   "AAL",
+   "2020-06"
+  ],
+  [
+   "ALHC",
+   "2022-08"
+  ],
+  [
+   "ALHC",
+   "2022-09"
+  ],
+  [
+   "AMRC",
+   "2025-05"
+  ],
+  [
+   "ARGX",
+   "2022-07"
+  ],
+  [
+   "ARLP",
+   "2022-08"
+  ],
+  [
+   "ASB",
+   "2015-10"
+  ],
+  [
+   "AU",
+   "2025-03"
+  ],
+  [
+   "AU",
+   "2025-04"
+  ],
+  [
+   "AXTI",
+   "2026-03"
+  ],
+  [
+   "AXTI",
+   "2026-04"
+  ],
+  [
+   "BBY",
+   "2022-03"
+  ],
+  [
+   "BCRX",
+   "2025-05"
+  ],
+  [
+   "BDC",
+   "2022-05"
+  ],
+  [
+   "BTI",
+   "2022-01"
+  ],
+  [
+   "BTI",
+   "2022-02"
+  ],
+  [
+   "BUD",
+   "2015-09"
+  ],
+  [
+   "C",
+   "2011-08"
+  ],
+  [
+   "C",
+   "2011-09"
+  ],
+  [
+   "CAKE",
+   "2020-04"
+  ],
+  [
+   "CAKE",
+   "2020-05"
+  ],
+  [
+   "CALM",
+   "2022-03"
+  ],
+  [
+   "CALM",
+   "2022-04"
+  ],
+  [
+   "CG",
+   "2016-02"
+  ],
+  [
+   "CG",
+   "2016-03"
+  ],
+  [
+   "CMRE",
+   "2022-03"
+  ],
+  [
+   "CRDO",
+   "2023-05"
+  ],
+  [
+   "CRDO",
+   "2023-06"
+  ],
+  [
+   "CSCO",
+   "2018-11"
+  ],
+  [
+   "CSTM",
+   "2022-02"
+  ],
+  [
+   "CSTM",
+   "2022-03"
+  ],
+  [
+   "CWT",
+   "2022-09"
+  ],
+  [
+   "CWT",
+   "2022-10"
+  ],
+  [
+   "EGO",
+   "2022-09"
+  ],
+  [
+   "EL",
+   "2011-08"
+  ],
+  [
+   "EL",
+   "2015-11"
+  ],
+  [
+   "EQNR",
+   "2022-08"
+  ],
+  [
+   "EQNR",
+   "2022-09"
+  ],
+  [
+   "ERAS",
+   "2022-04"
+  ],
+  [
+   "ERAS",
+   "2022-05"
+  ],
+  [
+   "FDX",
+   "2011-12"
+  ],
+  [
+   "FHI",
+   "2018-10"
+  ],
+  [
+   "FHI",
+   "2018-11"
+  ],
+  [
+   "FIVE",
+   "2015-12"
+  ],
+  [
+   "FIVE",
+   "2016-01"
+  ],
+  [
+   "FIVE",
+   "2022-05"
+  ],
+  [
+   "FIVE",
+   "2022-06"
+  ],
+  [
+   "FMS",
+   "2022-02"
+  ],
+  [
+   "FMS",
+   "2022-03"
+  ],
+  [
+   "FORM",
+   "2025-05"
+  ],
+  [
+   "FSS",
+   "2022-10"
+  ],
+  [
+   "GIII",
+   "2022-03"
+  ],
+  [
+   "GRDN",
+   "2026-03"
+  ],
+  [
+   "GRDN",
+   "2026-04"
+  ],
+  [
+   "GVA",
+   "2023-11"
+  ],
+  [
+   "HASI",
+   "2022-08"
+  ],
+  [
+   "HDB",
+   "2022-04"
+  ],
+  [
+   "HOG",
+   "2022-07"
+  ],
+  [
+   "HOG",
+   "2022-08"
+  ],
+  [
+   "HSBC",
+   "2018-10"
+  ],
+  [
+   "HSBC",
+   "2018-11"
+  ],
+  [
+   "HTH",
+   "2022-01"
+  ],
+  [
+   "HTH",
+   "2022-02"
+  ],
+  [
+   "HUYA",
+   "2020-05"
+  ],
+  [
+   "HUYA",
+   "2020-06"
+  ],
+  [
+   "IR",
+   "2018-11"
+  ],
+  [
+   "JD",
+   "2018-12"
+  ],
+  [
+   "JD",
+   "2019-01"
+  ],
+  [
+   "JD",
+   "2020-03"
+  ],
+  [
+   "KEP",
+   "2011-11"
+  ],
+  [
+   "KEP",
+   "2011-12"
+  ],
+  [
+   "KFRC",
+   "2022-02"
+  ],
+  [
+   "KYNB",
+   "2016-02"
+  ],
+  [
+   "LBRDK",
+   "2019-02"
+  ],
+  [
+   "LULU",
+   "2022-12"
+  ],
+  [
+   "LULU",
+   "2023-01"
+  ],
+  [
+   "MKSI",
+   "2014-10"
+  ],
+  [
+   "MKSI",
+   "2014-11"
+  ],
+  [
+   "MOS",
+   "2022-03"
+  ],
+  [
+   "MSTR",
+   "2023-03"
+  ],
+  [
+   "MTUS",
+   "2016-03"
+  ],
+  [
+   "MTUS",
+   "2016-04"
+  ],
+  [
+   "NCLH",
+   "2022-10"
+  ],
+  [
+   "NTES",
+   "2023-03"
+  ],
+  [
+   "NTES",
+   "2023-04"
+  ],
+  [
+   "NTRA",
+   "2022-05"
+  ],
+  [
+   "OKE",
+   "2020-03"
+  ],
+  [
+   "OKE",
+   "2020-04"
+  ],
+  [
+   "OLN",
+   "2016-02"
+  ],
+  [
+   "ORLY",
+   "2016-01"
+  ],
+  [
+   "ORLY",
+   "2016-02"
+  ],
+  [
+   "PAG",
+   "2020-05"
+  ],
+  [
+   "PAG",
+   "2020-06"
+  ],
+  [
+   "PFGC",
+   "2022-11"
+  ],
+  [
+   "PGEN",
+   "2016-02"
+  ],
+  [
+   "PGEN",
+   "2016-03"
+  ],
+  [
+   "PRAA",
+   "2011-12"
+  ],
+  [
+   "PRAA",
+   "2012-01"
+  ],
+  [
+   "PRLB",
+   "2016-03"
+  ],
+  [
+   "PSMT",
+   "2025-04"
+  ],
+  [
+   "QNST",
+   "2011-08"
+  ],
+  [
+   "RCUS",
+   "2022-11"
+  ],
+  [
+   "RCUS",
+   "2022-12"
+  ],
+  [
+   "RH",
+   "2016-04"
+  ],
+  [
+   "RH",
+   "2022-03"
+  ],
+  [
+   "RH",
+   "2022-04"
+  ],
+  [
+   "RMD",
+   "2016-01"
+  ],
+  [
+   "RMD",
+   "2016-02"
+  ],
+  [
+   "RNG",
+   "2022-05"
+  ],
+  [
+   "ROK",
+   "2019-01"
+  ],
+  [
+   "ROK",
+   "2019-02"
+  ],
+  [
+   "SAP",
+   "2023-10"
+  ],
+  [
+   "SAP",
+   "2023-11"
+  ],
+  [
+   "SBR",
+   "2022-08"
+  ],
+  [
+   "SBR",
+   "2022-09"
+  ],
+  [
+   "SJM",
+   "2015-11"
+  ],
+  [
+   "SJM",
+   "2015-12"
+  ],
+  [
+   "SKYW",
+   "2020-05"
+  ],
+  [
+   "SLB",
+   "2022-10"
+  ],
+  [
+   "SLB",
+   "2022-11"
+  ],
+  [
+   "SPLK",
+   "2021-12"
+  ],
+  [
+   "SPLK",
+   "2022-10"
+  ],
+  [
+   "STRA",
+   "2020-04"
+  ],
+  [
+   "SUN",
+   "2020-03"
+  ],
+  [
+   "TEX",
+   "2023-05"
+  ],
+  [
+   "THC",
+   "2022-07"
+  ],
+  [
+   "THC",
+   "2022-08"
+  ],
+  [
+   "TITN",
+   "2011-09"
+  ],
+  [
+   "TMUS",
+   "2018-11"
+  ],
+  [
+   "TROX",
+   "2020-03"
+  ],
+  [
+   "TROX",
+   "2020-04"
+  ],
+  [
+   "TTEK",
+   "2025-05"
+  ],
+  [
+   "UAA",
+   "2015-12"
+  ],
+  [
+   "UAA",
+   "2016-01"
+  ],
+  [
+   "UAA",
+   "2016-02"
+  ],
+  [
+   "UFPI",
+   "2015-10"
+  ],
+  [
+   "UNM",
+   "2022-05"
+  ],
+  [
+   "UTHR",
+   "2026-03"
+  ],
+  [
+   "UTHR",
+   "2026-04"
+  ],
+  [
+   "VNET",
+   "2022-07"
+  ],
+  [
+   "VNET",
+   "2022-08"
+  ],
+  [
+   "WAT",
+   "2014-10"
+  ],
+  [
+   "WAT",
+   "2014-11"
+  ],
+  [
+   "WDC",
+   "2011-12"
+  ],
+  [
+   "WSM",
+   "2019-06"
+  ],
+  [
+   "XP",
+   "2020-07"
+  ]
+ ],
+ "sample": [
+  {
+   "bar_entry": 406,
+   "bar_exit": 415,
+   "bar_g": 405,
+   "csv_row": 1790,
+   "date_entry": "2011-08-12",
+   "date_exit": "2011-08-25",
+   "dollar_vol_g": 20549835.0,
+   "era": 1,
+   "gross_bp": 2176.8818509241896,
+   "hold": 10,
+   "pb_bp": 223.17837316326737,
+   "pub_bp": 85.60679271083822,
+   "quintile": 4,
+   "row": 1142,
+   "status": "survived",
+   "symbol": "QNST",
+   "year": 2011
+  },
+  {
+   "bar_entry": 409,
+   "bar_exit": 418,
+   "bar_g": 408,
+   "csv_row": 1802,
+   "date_entry": "2011-08-17",
+   "date_exit": "2011-08-30",
+   "dollar_vol_g": 234640120.81932092,
+   "era": 1,
+   "gross_bp": -181.17270758279625,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 21.890848864651947,
+   "quintile": 0,
+   "row": 459,
+   "status": "survived",
+   "symbol": "EL",
+   "year": 2011
+  },
+  {
+   "bar_entry": 416,
+   "bar_exit": 425,
+   "bar_g": 415,
+   "csv_row": 1827,
+   "date_entry": "2011-08-26",
+   "date_exit": "2011-09-09",
+   "dollar_vol_g": 2792627923.0,
+   "era": 1,
+   "gross_bp": 1099.726892956376,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 83.19562340547533,
+   "quintile": 4,
+   "row": 241,
+   "status": "survived",
+   "symbol": "C",
+   "year": 2011
+  },
+  {
+   "bar_entry": 426,
+   "bar_exit": 435,
+   "bar_g": 425,
+   "csv_row": 1865,
+   "date_entry": "2011-09-12",
+   "date_exit": "2011-09-23",
+   "dollar_vol_g": 26061581.0,
+   "era": 1,
+   "gross_bp": 151.02377142071057,
+   "hold": 10,
+   "pb_bp": 22.593069300830237,
+   "pub_bp": 63.06494854345814,
+   "quintile": 3,
+   "row": 1372,
+   "status": "survived",
+   "symbol": "TITN",
+   "year": 2011
+  },
+  {
+   "bar_entry": 480,
+   "bar_exit": 489,
+   "bar_g": 479,
+   "csv_row": 2115,
+   "date_entry": "2011-11-28",
+   "date_exit": "2011-12-09",
+   "dollar_vol_g": 10086853.0,
+   "era": 1,
+   "gross_bp": 667.9290108296832,
+   "hold": 10,
+   "pb_bp": 32.45314780351074,
+   "pub_bp": 12.047762367626861,
+   "quintile": 0,
+   "row": 768,
+   "status": "survived",
+   "symbol": "KEP",
+   "year": 2011
+  },
+  {
+   "bar_entry": 485,
+   "bar_exit": 494,
+   "bar_g": 484,
+   "csv_row": 2138,
+   "date_entry": "2011-12-05",
+   "date_exit": "2011-12-16",
+   "dollar_vol_g": 419516490.07553035,
+   "era": 1,
+   "gross_bp": -100.05581575295533,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 43.278666155814975,
+   "quintile": 2,
+   "row": 1501,
+   "status": "survived",
+   "symbol": "WDC",
+   "year": 2011
+  },
+  {
+   "bar_entry": 494,
+   "bar_exit": 503,
+   "bar_g": 493,
+   "csv_row": 2179,
+   "date_entry": "2011-12-16",
+   "date_exit": "2011-12-30",
+   "dollar_vol_g": 765461635.3117969,
+   "era": 1,
+   "gross_bp": 385.419150366472,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 31.035292005566557,
+   "quintile": 1,
+   "row": 521,
+   "status": "survived",
+   "symbol": "FDX",
+   "year": 2011
+  },
+  {
+   "bar_entry": 503,
+   "bar_exit": 512,
+   "bar_g": 502,
+   "csv_row": 2214,
+   "date_entry": "2011-12-30",
+   "date_exit": "2012-01-13",
+   "dollar_vol_g": 5609791.017862201,
+   "era": 1,
+   "gross_bp": 685.6857261791948,
+   "hold": 10,
+   "pb_bp": 103.28303312187253,
+   "pub_bp": 28.59718965990792,
+   "quintile": 1,
+   "row": 1112,
+   "status": "survived",
+   "symbol": "PRAA",
+   "year": 2011
+  },
+  {
+   "bar_entry": 1209,
+   "bar_exit": 1218,
+   "bar_g": 1208,
+   "csv_row": 6340,
+   "date_entry": "2014-10-22",
+   "date_exit": "2014-11-04",
+   "dollar_vol_g": 240368485.07,
+   "era": 1,
+   "gross_bp": -139.72984685944735,
+   "hold": 10,
+   "pb_bp": 95.66353209646012,
+   "pub_bp": 14.566400849229412,
+   "quintile": 0,
+   "row": 1492,
+   "status": "survived",
+   "symbol": "WAT",
+   "year": 2014
+  },
+  {
+   "bar_entry": 1211,
+   "bar_exit": 1220,
+   "bar_g": 1210,
+   "csv_row": 6354,
+   "date_entry": "2014-10-24",
+   "date_exit": "2014-11-06",
+   "dollar_vol_g": 16514299.92,
+   "era": 1,
+   "gross_bp": 97.34288864423083,
+   "hold": 10,
+   "pb_bp": 9.161037816631117,
+   "pub_bp": 34.27390107742448,
+   "quintile": 1,
+   "row": 891,
+   "status": "survived",
+   "symbol": "MKSI",
+   "year": 2014
+  },
+  {
+   "bar_entry": 1436,
+   "bar_exit": 1445,
+   "bar_g": 1435,
+   "csv_row": 7676,
+   "date_entry": "2015-09-17",
+   "date_exit": "2015-09-30",
+   "dollar_vol_g": 1255407099.3100002,
+   "era": 1,
+   "gross_bp": 13.38344475857168,
+   "hold": 10,
+   "pb_bp": 62.77321019339246,
+   "pub_bp": 18.580277033880833,
+   "quintile": 0,
+   "row": 229,
+   "status": "survived",
+   "symbol": "BUD",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1457,
+   "bar_exit": 1466,
+   "bar_g": 1456,
+   "csv_row": 7786,
+   "date_entry": "2015-10-16",
+   "date_exit": "2015-10-29",
+   "dollar_vol_g": 47045008.08501,
+   "era": 1,
+   "gross_bp": -466.6910982779278,
+   "hold": 10,
+   "pb_bp": 53.10950507305243,
+   "pub_bp": 20.291999479052237,
+   "quintile": 0,
+   "row": 1427,
+   "status": "survived",
+   "symbol": "UFPI",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1458,
+   "bar_exit": 1467,
+   "bar_g": 1457,
+   "csv_row": 7789,
+   "date_entry": "2015-10-19",
+   "date_exit": "2015-10-30",
+   "dollar_vol_g": 28423178.15,
+   "era": 1,
+   "gross_bp": -391.02911283469217,
+   "hold": 10,
+   "pb_bp": 62.01958164291951,
+   "pub_bp": 14.973736812019427,
+   "quintile": 0,
+   "row": 117,
+   "status": "survived",
+   "symbol": "ASB",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1469,
+   "bar_exit": 1478,
+   "bar_g": 1468,
+   "csv_row": 7875,
+   "date_entry": "2015-11-03",
+   "date_exit": "2015-11-16",
+   "dollar_vol_g": 743790921.9,
+   "era": 1,
+   "gross_bp": 222.58421721991266,
+   "hold": 10,
+   "pb_bp": 10.076592654633957,
+   "pub_bp": 11.413048104952644,
+   "quintile": 0,
+   "row": 459,
+   "status": "survived",
+   "symbol": "EL",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1482,
+   "bar_exit": 1491,
+   "bar_g": 1481,
+   "csv_row": 7977,
+   "date_entry": "2015-11-20",
+   "date_exit": "2015-12-04",
+   "dollar_vol_g": 443209512.96,
+   "era": 1,
+   "gross_bp": -103.55561100368702,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 24.008372657797715,
+   "quintile": 0,
+   "row": 1250,
+   "status": "survived",
+   "symbol": "SJM",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1501,
+   "bar_exit": 1510,
+   "bar_g": 1500,
+   "csv_row": 8061,
+   "date_entry": "2015-12-18",
+   "date_exit": "2016-01-04",
+   "dollar_vol_g": 94242373.64999999,
+   "era": 1,
+   "gross_bp": -428.042770281165,
+   "hold": 10,
+   "pb_bp": 62.18490152557592,
+   "pub_bp": 56.46767906700985,
+   "quintile": 3,
+   "row": 531,
+   "status": "survived",
+   "symbol": "FIVE",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1505,
+   "bar_exit": 1514,
+   "bar_g": 1504,
+   "csv_row": 8080,
+   "date_entry": "2015-12-24",
+   "date_exit": "2016-01-08",
+   "dollar_vol_g": 337591119.33,
+   "era": 1,
+   "gross_bp": -12.601348471291372,
+   "hold": 10,
+   "pb_bp": 102.34620968303928,
+   "pub_bp": 43.450332838482424,
+   "quintile": 2,
+   "row": 1422,
+   "status": "collapsed",
+   "symbol": "UAA",
+   "year": 2015
+  },
+  {
+   "bar_entry": 1524,
+   "bar_exit": 1533,
+   "bar_g": 1523,
+   "csv_row": 8163,
+   "date_entry": "2016-01-25",
+   "date_exit": "2016-02-05",
+   "dollar_vol_g": 233067136.41,
+   "era": 1,
+   "gross_bp": 0.8539717206631353,
+   "hold": 10,
+   "pb_bp": 31.659208636755373,
+   "pub_bp": 19.735862956224796,
+   "quintile": 0,
+   "row": 1177,
+   "status": "survived",
+   "symbol": "RMD",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1525,
+   "bar_exit": 1534,
+   "bar_g": 1524,
+   "csv_row": 8168,
+   "date_entry": "2016-01-26",
+   "date_exit": "2016-02-08",
+   "dollar_vol_g": 339749494.19478005,
+   "era": 1,
+   "gross_bp": 225.81570205158167,
+   "hold": 10,
+   "pb_bp": 89.55236920282216,
+   "pub_bp": 29.08752278771238,
+   "quintile": 1,
+   "row": 1049,
+   "status": "survived",
+   "symbol": "ORLY",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1528,
+   "bar_exit": 1537,
+   "bar_g": 1527,
+   "csv_row": 8187,
+   "date_entry": "2016-01-29",
+   "date_exit": "2016-02-11",
+   "dollar_vol_g": 1561885583.58,
+   "era": 1,
+   "gross_bp": 858.8946552918693,
+   "hold": 10,
+   "pb_bp": 80.46701724783334,
+   "pub_bp": 22.109058631776183,
+   "quintile": 0,
+   "row": 1422,
+   "status": "collapsed",
+   "symbol": "UAA",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1529,
+   "bar_exit": 1538,
+   "bar_g": 1528,
+   "csv_row": 8192,
+   "date_entry": "2016-02-01",
+   "date_exit": "2016-02-12",
+   "dollar_vol_g": 113656897.2,
+   "era": 1,
+   "gross_bp": 1795.9405695904943,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 81.73617737573326,
+   "quintile": 4,
+   "row": 1032,
+   "status": "survived",
+   "symbol": "OLN",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1530,
+   "bar_exit": 1539,
+   "bar_g": 1529,
+   "csv_row": 8196,
+   "date_entry": "2016-02-02",
+   "date_exit": "2016-02-16",
+   "dollar_vol_g": 115363217.82348719,
+   "era": 1,
+   "gross_bp": 10.18572339525469,
+   "hold": 10,
+   "pb_bp": 417.99886848074334,
+   "pub_bp": 141.32188278860684,
+   "quintile": 4,
+   "row": 1076,
+   "status": "survived",
+   "symbol": "PGEN",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1538,
+   "bar_exit": 1547,
+   "bar_g": 1537,
+   "csv_row": 8255,
+   "date_entry": "2016-02-12",
+   "date_exit": "2016-02-26",
+   "dollar_vol_g": 22715467.650000002,
+   "era": 1,
+   "gross_bp": 257.7107550947928,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 107.85479781438599,
+   "quintile": 4,
+   "row": 800,
+   "status": "collapsed",
+   "symbol": "KYNB",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1541,
+   "bar_exit": 1550,
+   "bar_g": 1540,
+   "csv_row": 8275,
+   "date_entry": "2016-02-18",
+   "date_exit": "2016-03-02",
+   "dollar_vol_g": 30743899.439999998,
+   "era": 1,
+   "gross_bp": -636.5624992471885,
+   "hold": 10,
+   "pb_bp": 102.36988461633146,
+   "pub_bp": 66.88427183978972,
+   "quintile": 3,
+   "row": 275,
+   "status": "survived",
+   "symbol": "CG",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1550,
+   "bar_exit": 1559,
+   "bar_g": 1549,
+   "csv_row": 8339,
+   "date_entry": "2016-03-02",
+   "date_exit": "2016-03-15",
+   "dollar_vol_g": 88954408.0376196,
+   "era": 1,
+   "gross_bp": 31.010485599853865,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 142.82771442022778,
+   "quintile": 4,
+   "row": 1076,
+   "status": "survived",
+   "symbol": "PGEN",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1553,
+   "bar_exit": 1562,
+   "bar_g": 1552,
+   "csv_row": 8359,
+   "date_entry": "2016-03-07",
+   "date_exit": "2016-03-18",
+   "dollar_vol_g": 299361006.0,
+   "era": 1,
+   "gross_bp": -148.17160911883332,
+   "hold": 10,
+   "pb_bp": 40.83350068398822,
+   "pub_bp": 45.377980952792974,
+   "quintile": 2,
+   "row": 1116,
+   "status": "survived",
+   "symbol": "PRLB",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1563,
+   "bar_exit": 1572,
+   "bar_g": 1562,
+   "csv_row": 8416,
+   "date_entry": "2016-03-21",
+   "date_exit": "2016-04-04",
+   "dollar_vol_g": 47908223.58,
+   "era": 1,
+   "gross_bp": 138.10838806635323,
+   "hold": 10,
+   "pb_bp": 145.02686223073866,
+   "pub_bp": 106.94632632586799,
+   "quintile": 4,
+   "row": 929,
+   "status": "survived",
+   "symbol": "MTUS",
+   "year": 2016
+  },
+  {
+   "bar_entry": 1574,
+   "bar_exit": 1583,
+   "bar_g": 1573,
+   "csv_row": 8463,
+   "date_entry": "2016-04-06",
+   "date_exit": "2016-04-19",
+   "dollar_vol_g": 212835118.24,
+   "era": 1,
+   "gross_bp": 265.3664512917743,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 64.93747558817131,
+   "quintile": 3,
+   "row": 1165,
+   "status": "survived",
+   "symbol": "RH",
+   "year": 2016
+  },
+  {
+   "bar_entry": 2221,
+   "bar_exit": 2230,
+   "bar_g": 2220,
+   "csv_row": 12427,
+   "date_entry": "2018-10-29",
+   "date_exit": "2018-11-09",
+   "dollar_vol_g": 53780927.34,
+   "era": 2,
+   "gross_bp": 203.03025770784836,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 38.61077609901708,
+   "quintile": 2,
+   "row": 526,
+   "status": "survived",
+   "symbol": "FHI",
+   "year": 2018
+  },
+  {
+   "bar_entry": 2222,
+   "bar_exit": 2231,
+   "bar_g": 2221,
+   "csv_row": 12439,
+   "date_entry": "2018-10-30",
+   "date_exit": "2018-11-12",
+   "dollar_vol_g": 162907841.18,
+   "era": 2,
+   "gross_bp": 283.7743532615256,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 13.328402629165264,
+   "quintile": 0,
+   "row": 668,
+   "status": "survived",
+   "symbol": "HSBC",
+   "year": 2018
+  },
+  {
+   "bar_entry": 2224,
+   "bar_exit": 2233,
+   "bar_g": 2223,
+   "csv_row": 12460,
+   "date_entry": "2018-11-01",
+   "date_exit": "2018-11-14",
+   "dollar_vol_g": 631509265.9499999,
+   "era": 2,
+   "gross_bp": 110.8915386911058,
+   "hold": 10,
+   "pb_bp": 15.977172524009529,
+   "pub_bp": 23.99848077846436,
+   "quintile": 0,
+   "row": 1384,
+   "status": "survived",
+   "symbol": "TMUS",
+   "year": 2018
+  },
+  {
+   "bar_entry": 2231,
+   "bar_exit": 2240,
+   "bar_g": 2230,
+   "csv_row": 12527,
+   "date_entry": "2018-11-12",
+   "date_exit": "2018-11-26",
+   "dollar_vol_g": 88010807.4,
+   "era": 2,
+   "gross_bp": 394.19785655517956,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 69.72271327328176,
+   "quintile": 3,
+   "row": 729,
+   "status": "survived",
+   "symbol": "IR",
+   "year": 2018
+  },
+  {
+   "bar_entry": 2235,
+   "bar_exit": 2244,
+   "bar_g": 2234,
+   "csv_row": 12543,
+   "date_entry": "2018-11-16",
+   "date_exit": "2018-11-30",
+   "dollar_vol_g": 2150639782.86,
+   "era": 2,
+   "gross_bp": -178.9429709993472,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 36.93417896425516,
+   "quintile": 1,
+   "row": 351,
+   "status": "survived",
+   "symbol": "CSCO",
+   "year": 2018
+  },
+  {
+   "bar_entry": 2260,
+   "bar_exit": 2269,
+   "bar_g": 2259,
+   "csv_row": 12657,
+   "date_entry": "2018-12-26",
+   "date_exit": "2019-01-09",
+   "dollar_vol_g": 553737642.75,
+   "era": 2,
+   "gross_bp": -451.1785901047012,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 39.07358050579739,
+   "quintile": 2,
+   "row": 750,
+   "status": "survived",
+   "symbol": "JD",
+   "year": 2018
+  },
+  {
+   "bar_entry": 2283,
+   "bar_exit": 2292,
+   "bar_g": 2282,
+   "csv_row": 12774,
+   "date_entry": "2019-01-30",
+   "date_exit": "2019-02-12",
+   "dollar_vol_g": 420339477.96,
+   "era": 2,
+   "gross_bp": 374.5896340654802,
+   "hold": 10,
+   "pb_bp": 119.11765355637313,
+   "pub_bp": 33.92920786932558,
+   "quintile": 1,
+   "row": 1185,
+   "status": "survived",
+   "symbol": "ROK",
+   "year": 2019
+  },
+  {
+   "bar_entry": 2285,
+   "bar_exit": 2294,
+   "bar_g": 2284,
+   "csv_row": 12787,
+   "date_entry": "2019-02-01",
+   "date_exit": "2019-02-14",
+   "dollar_vol_g": 150202542.1314456,
+   "era": 2,
+   "gross_bp": -108.83194683225041,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 37.49947861022668,
+   "quintile": 2,
+   "row": 806,
+   "status": "survived",
+   "symbol": "LBRDK",
+   "year": 2019
+  },
+  {
+   "bar_entry": 2368,
+   "bar_exit": 2377,
+   "bar_g": 2367,
+   "csv_row": 13332,
+   "date_entry": "2019-06-03",
+   "date_exit": "2019-06-14",
+   "dollar_vol_g": 634384822.5,
+   "era": 2,
+   "gross_bp": -131.2886285073005,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 43.657438243890105,
+   "quintile": 2,
+   "row": 1533,
+   "status": "survived",
+   "symbol": "WSM",
+   "year": 2019
+  },
+  {
+   "bar_entry": 2557,
+   "bar_exit": 2566,
+   "bar_g": 2556,
+   "csv_row": 14501,
+   "date_entry": "2020-03-03",
+   "date_exit": "2020-03-16",
+   "dollar_vol_g": 1982901676.8,
+   "era": 2,
+   "gross_bp": -1441.839065050191,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 29.440065806680938,
+   "quintile": 1,
+   "row": 750,
+   "status": "survived",
+   "symbol": "JD",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2566,
+   "bar_exit": 2575,
+   "bar_g": 2565,
+   "csv_row": 14541,
+   "date_entry": "2020-03-16",
+   "date_exit": "2020-03-27",
+   "dollar_vol_g": 29678342.0,
+   "era": 2,
+   "gross_bp": 937.8851394694292,
+   "hold": 10,
+   "pb_bp": 173.73509282081875,
+   "pub_bp": 71.86020336820016,
+   "quintile": 3,
+   "row": 1320,
+   "status": "survived",
+   "symbol": "SUN",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2570,
+   "bar_exit": 2579,
+   "bar_g": 2569,
+   "csv_row": 14561,
+   "date_entry": "2020-03-20",
+   "date_exit": "2020-04-02",
+   "dollar_vol_g": 320352093.41999996,
+   "era": 2,
+   "gross_bp": 498.22803700909344,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 93.27233414497935,
+   "quintile": 4,
+   "row": 1028,
+   "status": "survived",
+   "symbol": "OKE",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2575,
+   "bar_exit": 2584,
+   "bar_g": 2574,
+   "csv_row": 14602,
+   "date_entry": "2020-03-27",
+   "date_exit": "2020-04-09",
+   "dollar_vol_g": 19465850.85,
+   "era": 2,
+   "gross_bp": 667.2288200895509,
+   "hold": 10,
+   "pb_bp": 339.21638433808283,
+   "pub_bp": 180.2113087136757,
+   "quintile": 4,
+   "row": 1399,
+   "status": "survived",
+   "symbol": "TROX",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2589,
+   "bar_exit": 2598,
+   "bar_g": 2588,
+   "csv_row": 14680,
+   "date_entry": "2020-04-17",
+   "date_exit": "2020-04-30",
+   "dollar_vol_g": 30828066.0,
+   "era": 2,
+   "gross_bp": 73.69775854578084,
+   "hold": 10,
+   "pb_bp": 78.25709968247209,
+   "pub_bp": 110.09720545012725,
+   "quintile": 4,
+   "row": 1314,
+   "status": "survived",
+   "symbol": "STRA",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2591,
+   "bar_exit": 2600,
+   "bar_g": 2590,
+   "csv_row": 14688,
+   "date_entry": "2020-04-21",
+   "date_exit": "2020-05-04",
+   "dollar_vol_g": 109529831.85,
+   "era": 2,
+   "gross_bp": -487.6101634565572,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 191.63143634985687,
+   "quintile": 4,
+   "row": 245,
+   "status": "survived",
+   "symbol": "CAKE",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2605,
+   "bar_exit": 2614,
+   "bar_g": 2604,
+   "csv_row": 14779,
+   "date_entry": "2020-05-11",
+   "date_exit": "2020-05-22",
+   "dollar_vol_g": 52090305.949999996,
+   "era": 2,
+   "gross_bp": 85.88338807520223,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 63.320803254576106,
+   "quintile": 3,
+   "row": 1254,
+   "status": "survived",
+   "symbol": "SKYW",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2612,
+   "bar_exit": 2621,
+   "bar_g": 2611,
+   "csv_row": 14811,
+   "date_entry": "2020-05-20",
+   "date_exit": "2020-06-03",
+   "dollar_vol_g": 82026693.75,
+   "era": 2,
+   "gross_bp": 2206.2057898188145,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 35.648895849024164,
+   "quintile": 1,
+   "row": 680,
+   "status": "collapsed",
+   "symbol": "HUYA",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2612,
+   "bar_exit": 2621,
+   "bar_g": 2611,
+   "csv_row": 14813,
+   "date_entry": "2020-05-20",
+   "date_exit": "2020-06-03",
+   "dollar_vol_g": 19881783.66,
+   "era": 2,
+   "gross_bp": -166.07122227588422,
+   "hold": 10,
+   "pb_bp": 59.40317559657155,
+   "pub_bp": 28.63795357297232,
+   "quintile": 1,
+   "row": 1061,
+   "status": "survived",
+   "symbol": "PAG",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2629,
+   "bar_exit": 2638,
+   "bar_g": 2628,
+   "csv_row": 14912,
+   "date_entry": "2020-06-15",
+   "date_exit": "2020-06-26",
+   "dollar_vol_g": 2696844165.4799995,
+   "era": 2,
+   "gross_bp": 2015.021791805834,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 26.048228553584703,
+   "quintile": 1,
+   "row": 1,
+   "status": "survived",
+   "symbol": "AAL",
+   "year": 2020
+  },
+  {
+   "bar_entry": 2643,
+   "bar_exit": 2652,
+   "bar_g": 2642,
+   "csv_row": 14975,
+   "date_entry": "2020-07-06",
+   "date_exit": "2020-07-17",
+   "dollar_vol_g": 280862279.13,
+   "era": 2,
+   "gross_bp": 879.4326394878906,
+   "hold": 10,
+   "pb_bp": 140.1884750240729,
+   "pub_bp": 52.58266852626651,
+   "quintile": 3,
+   "row": 1549,
+   "status": "survived",
+   "symbol": "XP",
+   "year": 2020
+  },
+  {
+   "bar_entry": 3001,
+   "bar_exit": 3010,
+   "bar_g": 3000,
+   "csv_row": 17308,
+   "date_entry": "2021-12-03",
+   "date_exit": "2021-12-16",
+   "dollar_vol_g": 646485405.24,
+   "era": 2,
+   "gross_bp": 498.4025138493582,
+   "hold": 10,
+   "pb_bp": 285.62529902880334,
+   "pub_bp": 43.12089678570831,
+   "quintile": 2,
+   "row": 1287,
+   "status": "survived",
+   "symbol": "SPLK",
+   "year": 2021
+  },
+  {
+   "bar_entry": 3036,
+   "bar_exit": 3045,
+   "bar_g": 3035,
+   "csv_row": 17483,
+   "date_entry": "2022-01-25",
+   "date_exit": "2022-02-07",
+   "dollar_vol_g": 671447553.89,
+   "era": 2,
+   "gross_bp": 22.84227729725809,
+   "hold": 10,
+   "pb_bp": 92.85342692849417,
+   "pub_bp": 10.258035624483204,
+   "quintile": 0,
+   "row": 225,
+   "status": "survived",
+   "symbol": "BTI",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3040,
+   "bar_exit": 3049,
+   "bar_g": 3039,
+   "csv_row": 17503,
+   "date_entry": "2022-01-31",
+   "date_exit": "2022-02-11",
+   "dollar_vol_g": 35842610.38,
+   "era": 2,
+   "gross_bp": -110.32572825801854,
+   "hold": 10,
+   "pb_bp": 103.4672646263364,
+   "pub_bp": 47.94767579902084,
+   "quintile": 2,
+   "row": 674,
+   "status": "survived",
+   "symbol": "HTH",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3047,
+   "bar_exit": 3056,
+   "bar_g": 3046,
+   "csv_row": 17552,
+   "date_entry": "2022-02-09",
+   "date_exit": "2022-02-23",
+   "dollar_vol_g": 15998411.8,
+   "era": 2,
+   "gross_bp": -124.13978732636315,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 55.856801095673966,
+   "quintile": 3,
+   "row": 772,
+   "status": "survived",
+   "symbol": "KFRC",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3056,
+   "bar_exit": 3065,
+   "bar_g": 3055,
+   "csv_row": 17625,
+   "date_entry": "2022-02-23",
+   "date_exit": "2022-03-08",
+   "dollar_vol_g": 29776573.5,
+   "era": 2,
+   "gross_bp": 674.2160928480872,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 16.64845348682061,
+   "quintile": 0,
+   "row": 539,
+   "status": "survived",
+   "symbol": "FMS",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3057,
+   "bar_exit": 3066,
+   "bar_g": 3056,
+   "csv_row": 17630,
+   "date_entry": "2022-02-24",
+   "date_exit": "2022-03-09",
+   "dollar_vol_g": 39269065.45,
+   "era": 2,
+   "gross_bp": 1090.935533656858,
+   "hold": 10,
+   "pb_bp": 112.29458849796386,
+   "pub_bp": 45.6751532465566,
+   "quintile": 2,
+   "row": 356,
+   "status": "survived",
+   "symbol": "CSTM",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3063,
+   "bar_exit": 3072,
+   "bar_g": 3062,
+   "csv_row": 17666,
+   "date_entry": "2022-03-04",
+   "date_exit": "2022-03-17",
+   "dollar_vol_g": 2021367148.98,
+   "era": 2,
+   "gross_bp": 1042.0388382297608,
+   "hold": 10,
+   "pb_bp": 223.44996094885235,
+   "pub_bp": 33.67732115646815,
+   "quintile": 1,
+   "row": 158,
+   "status": "survived",
+   "symbol": "BBY",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3068,
+   "bar_exit": 3077,
+   "bar_g": 3067,
+   "csv_row": 17697,
+   "date_entry": "2022-03-11",
+   "date_exit": "2022-03-24",
+   "dollar_vol_g": 32990130.2025755,
+   "era": 2,
+   "gross_bp": -189.9671759809063,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 39.174533933451514,
+   "quintile": 2,
+   "row": 310,
+   "status": "survived",
+   "symbol": "CMRE",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3068,
+   "bar_exit": 3077,
+   "bar_g": 3067,
+   "csv_row": 17701,
+   "date_entry": "2022-03-11",
+   "date_exit": "2022-03-24",
+   "dollar_vol_g": 1143582618.51,
+   "era": 2,
+   "gross_bp": -892.2901162459881,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 31.54444959849344,
+   "quintile": 1,
+   "row": 905,
+   "status": "survived",
+   "symbol": "MOS",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3073,
+   "bar_exit": 3082,
+   "bar_g": 3072,
+   "csv_row": 17736,
+   "date_entry": "2022-03-18",
+   "date_exit": "2022-03-31",
+   "dollar_vol_g": 45805999.14,
+   "era": 2,
+   "gross_bp": 1201.8754577322513,
+   "hold": 10,
+   "pb_bp": 180.21706776078025,
+   "pub_bp": 42.028801707848565,
+   "quintile": 2,
+   "row": 591,
+   "status": "survived",
+   "symbol": "GIII",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3081,
+   "bar_exit": 3090,
+   "bar_g": 3080,
+   "csv_row": 17768,
+   "date_entry": "2022-03-30",
+   "date_exit": "2022-04-12",
+   "dollar_vol_g": 938453579.89,
+   "era": 2,
+   "gross_bp": -407.1819662938908,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 62.32910788336039,
+   "quintile": 3,
+   "row": 1165,
+   "status": "survived",
+   "symbol": "RH",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3082,
+   "bar_exit": 3091,
+   "bar_g": 3081,
+   "csv_row": 17770,
+   "date_entry": "2022-03-31",
+   "date_exit": "2022-04-13",
+   "dollar_vol_g": 112439835.81,
+   "era": 2,
+   "gross_bp": -334.92217163575714,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 42.892935478268015,
+   "quintile": 2,
+   "row": 247,
+   "status": "survived",
+   "symbol": "CALM",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3085,
+   "bar_exit": 3094,
+   "bar_g": 3084,
+   "csv_row": 17779,
+   "date_entry": "2022-04-05",
+   "date_exit": "2022-04-19",
+   "dollar_vol_g": 270694278.37,
+   "era": 2,
+   "gross_bp": 1737.6611557042293,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 29.258505082576672,
+   "quintile": 1,
+   "row": 639,
+   "status": "survived",
+   "symbol": "HDB",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3095,
+   "bar_exit": 3104,
+   "bar_g": 3094,
+   "csv_row": 17817,
+   "date_entry": "2022-04-20",
+   "date_exit": "2022-05-03",
+   "dollar_vol_g": 10545758.72,
+   "era": 2,
+   "gross_bp": 745.9746281682538,
+   "hold": 10,
+   "pb_bp": 216.8498718633916,
+   "pub_bp": 74.90480597432173,
+   "quintile": 4,
+   "row": 478,
+   "status": "survived",
+   "symbol": "ERAS",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3106,
+   "bar_exit": 3115,
+   "bar_g": 3105,
+   "csv_row": 17884,
+   "date_entry": "2022-05-05",
+   "date_exit": "2022-05-18",
+   "dollar_vol_g": 37965043.239999995,
+   "era": 2,
+   "gross_bp": -492.6353041280159,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 56.05425994311527,
+   "quintile": 3,
+   "row": 166,
+   "status": "survived",
+   "symbol": "BDC",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3108,
+   "bar_exit": 3117,
+   "bar_g": 3107,
+   "csv_row": 17900,
+   "date_entry": "2022-05-09",
+   "date_exit": "2022-05-20",
+   "dollar_vol_g": 105103709.92,
+   "era": 2,
+   "gross_bp": -1608.5021094958363,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 125.00710909963337,
+   "quintile": 4,
+   "row": 1001,
+   "status": "survived",
+   "symbol": "NTRA",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3108,
+   "bar_exit": 3117,
+   "bar_g": 3107,
+   "csv_row": 17902,
+   "date_entry": "2022-05-09",
+   "date_exit": "2022-05-20",
+   "dollar_vol_g": 205597096.32000002,
+   "era": 2,
+   "gross_bp": 400.0541142854323,
+   "hold": 10,
+   "pb_bp": 55.891640204888525,
+   "pub_bp": 32.526575717549946,
+   "quintile": 1,
+   "row": 1435,
+   "status": "survived",
+   "symbol": "UNM",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3110,
+   "bar_exit": 3119,
+   "bar_g": 3109,
+   "csv_row": 17912,
+   "date_entry": "2022-05-11",
+   "date_exit": "2022-05-24",
+   "dollar_vol_g": 313871383.16999996,
+   "era": 2,
+   "gross_bp": 1466.626197401012,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 99.02392785793961,
+   "quintile": 4,
+   "row": 1180,
+   "status": "survived",
+   "symbol": "RNG",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3122,
+   "bar_exit": 3131,
+   "bar_g": 3121,
+   "csv_row": 17976,
+   "date_entry": "2022-05-27",
+   "date_exit": "2022-06-10",
+   "dollar_vol_g": 254506842.7,
+   "era": 2,
+   "gross_bp": 212.6617557402611,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 67.00738696905428,
+   "quintile": 3,
+   "row": 531,
+   "status": "survived",
+   "symbol": "FIVE",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3151,
+   "bar_exit": 3160,
+   "bar_g": 3150,
+   "csv_row": 18102,
+   "date_entry": "2022-07-12",
+   "date_exit": "2022-07-25",
+   "dollar_vol_g": 157258388.64999998,
+   "era": 2,
+   "gross_bp": 304.0156199490209,
+   "hold": 10,
+   "pb_bp": 79.73089539513609,
+   "pub_bp": 24.054458757414587,
+   "quintile": 0,
+   "row": 107,
+   "status": "survived",
+   "symbol": "ARGX",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3160,
+   "bar_exit": 3169,
+   "bar_g": 3159,
+   "csv_row": 18151,
+   "date_entry": "2022-07-25",
+   "date_exit": "2022-08-05",
+   "dollar_vol_g": 256018317.84,
+   "era": 2,
+   "gross_bp": 323.8881745900411,
+   "hold": 10,
+   "pb_bp": 96.78273569593118,
+   "pub_bp": 38.53606504575667,
+   "quintile": 2,
+   "row": 1361,
+   "status": "survived",
+   "symbol": "THC",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3163,
+   "bar_exit": 3172,
+   "bar_g": 3162,
+   "csv_row": 18168,
+   "date_entry": "2022-07-28",
+   "date_exit": "2022-08-10",
+   "dollar_vol_g": 18161072.8,
+   "era": 2,
+   "gross_bp": 475.9985626940547,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 54.91960922430992,
+   "quintile": 3,
+   "row": 1466,
+   "status": "survived",
+   "symbol": "VNET",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3164,
+   "bar_exit": 3173,
+   "bar_g": 3163,
+   "csv_row": 18173,
+   "date_entry": "2022-07-29",
+   "date_exit": "2022-08-11",
+   "dollar_vol_g": 135928309.44,
+   "era": 2,
+   "gross_bp": -104.62853508753848,
+   "hold": 10,
+   "pb_bp": 126.37341233210913,
+   "pub_bp": 53.54655858729439,
+   "quintile": 3,
+   "row": 657,
+   "status": "survived",
+   "symbol": "HOG",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3166,
+   "bar_exit": 3175,
+   "bar_g": 3165,
+   "csv_row": 18183,
+   "date_entry": "2022-08-02",
+   "date_exit": "2022-08-15",
+   "dollar_vol_g": 28844839.36,
+   "era": 2,
+   "gross_bp": 728.5263631380107,
+   "hold": 10,
+   "pb_bp": 42.105106621953375,
+   "pub_bp": 84.67431244861147,
+   "quintile": 4,
+   "row": 109,
+   "status": "survived",
+   "symbol": "ARLP",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3171,
+   "bar_exit": 3180,
+   "bar_g": 3170,
+   "csv_row": 18234,
+   "date_entry": "2022-08-09",
+   "date_exit": "2022-08-22",
+   "dollar_vol_g": 116061451.10000001,
+   "era": 2,
+   "gross_bp": 649.1065629431803,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 40.50830745487937,
+   "quintile": 2,
+   "row": 634,
+   "status": "survived",
+   "symbol": "HASI",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3181,
+   "bar_exit": 3190,
+   "bar_g": 3180,
+   "csv_row": 18301,
+   "date_entry": "2022-08-23",
+   "date_exit": "2022-09-06",
+   "dollar_vol_g": 11490230.4,
+   "era": 2,
+   "gross_bp": -165.07692251010474,
+   "hold": 10,
+   "pb_bp": 17.081896483263115,
+   "pub_bp": 36.67895918775819,
+   "quintile": 1,
+   "row": 59,
+   "status": "survived",
+   "symbol": "ALHC",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3181,
+   "bar_exit": 3190,
+   "bar_g": 3180,
+   "csv_row": 18303,
+   "date_entry": "2022-08-23",
+   "date_exit": "2022-09-06",
+   "dollar_vol_g": 159040999.0,
+   "era": 2,
+   "gross_bp": -0.20324675229294736,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 20.782486503827656,
+   "quintile": 0,
+   "row": 477,
+   "status": "survived",
+   "symbol": "EQNR",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3186,
+   "bar_exit": 3195,
+   "bar_g": 3185,
+   "csv_row": 18341,
+   "date_entry": "2022-08-30",
+   "date_exit": "2022-09-13",
+   "dollar_vol_g": 6772250.220000001,
+   "era": 2,
+   "gross_bp": -549.5297787390718,
+   "hold": 10,
+   "pb_bp": 134.96684340997686,
+   "pub_bp": 52.217161198823256,
+   "quintile": 3,
+   "row": 1212,
+   "status": "survived",
+   "symbol": "SBR",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3192,
+   "bar_exit": 3201,
+   "bar_g": 3191,
+   "csv_row": 18360,
+   "date_entry": "2022-09-08",
+   "date_exit": "2022-09-21",
+   "dollar_vol_g": 23139777.21,
+   "era": 2,
+   "gross_bp": -494.29353429947935,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 46.96207544655242,
+   "quintile": 2,
+   "row": 453,
+   "status": "survived",
+   "symbol": "EGO",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3200,
+   "bar_exit": 3209,
+   "bar_g": 3199,
+   "csv_row": 18396,
+   "date_entry": "2022-09-20",
+   "date_exit": "2022-10-03",
+   "dollar_vol_g": 26350788.8,
+   "era": 2,
+   "gross_bp": -104.25761834443034,
+   "hold": 10,
+   "pb_bp": 45.35826850321634,
+   "pub_bp": 32.218621056964565,
+   "quintile": 1,
+   "row": 379,
+   "status": "survived",
+   "symbol": "CWT",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3214,
+   "bar_exit": 3223,
+   "bar_g": 3213,
+   "csv_row": 18441,
+   "date_entry": "2022-10-10",
+   "date_exit": "2022-10-21",
+   "dollar_vol_g": 12998791.2,
+   "era": 2,
+   "gross_bp": -697.1341544382577,
+   "hold": 10,
+   "pb_bp": 38.887887235253686,
+   "pub_bp": 21.26908417013716,
+   "quintile": 0,
+   "row": 560,
+   "status": "survived",
+   "symbol": "FSS",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3217,
+   "bar_exit": 3226,
+   "bar_g": 3216,
+   "csv_row": 18457,
+   "date_entry": "2022-10-13",
+   "date_exit": "2022-10-26",
+   "dollar_vol_g": 523684226.56,
+   "era": 2,
+   "gross_bp": -1655.6898355672386,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 42.8109524591711,
+   "quintile": 2,
+   "row": 952,
+   "status": "survived",
+   "symbol": "NCLH",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3220,
+   "bar_exit": 3229,
+   "bar_g": 3219,
+   "csv_row": 18472,
+   "date_entry": "2022-10-18",
+   "date_exit": "2022-10-31",
+   "dollar_vol_g": 453890521.68000007,
+   "era": 2,
+   "gross_bp": -409.0852022402461,
+   "hold": 10,
+   "pb_bp": 132.90375375076863,
+   "pub_bp": 42.5626426514289,
+   "quintile": 2,
+   "row": 1287,
+   "status": "survived",
+   "symbol": "SPLK",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3224,
+   "bar_exit": 3233,
+   "bar_g": 3223,
+   "csv_row": 18501,
+   "date_entry": "2022-10-24",
+   "date_exit": "2022-11-04",
+   "dollar_vol_g": 1782063620.31,
+   "era": 2,
+   "gross_bp": -334.67711851954476,
+   "hold": 10,
+   "pb_bp": 42.659078248306365,
+   "pub_bp": 52.47664536983489,
+   "quintile": 3,
+   "row": 1255,
+   "status": "survived",
+   "symbol": "SLB",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3237,
+   "bar_exit": 3246,
+   "bar_g": 3236,
+   "csv_row": 18612,
+   "date_entry": "2022-11-10",
+   "date_exit": "2022-11-23",
+   "dollar_vol_g": 123195430.19,
+   "era": 2,
+   "gross_bp": 6.425483979757285,
+   "hold": 10,
+   "pb_bp": 72.22174082855761,
+   "pub_bp": 40.565376809294555,
+   "quintile": 2,
+   "row": 1072,
+   "status": "survived",
+   "symbol": "PFGC",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3249,
+   "bar_exit": 3258,
+   "bar_g": 3248,
+   "csv_row": 18689,
+   "date_entry": "2022-11-29",
+   "date_exit": "2022-12-12",
+   "dollar_vol_g": 52121716.64,
+   "era": 2,
+   "gross_bp": -929.918504882314,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 72.67142935494641,
+   "quintile": 4,
+   "row": 1154,
+   "status": "survived",
+   "symbol": "RCUS",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3266,
+   "bar_exit": 3275,
+   "bar_g": 3265,
+   "csv_row": 18766,
+   "date_entry": "2022-12-22",
+   "date_exit": "2023-01-06",
+   "dollar_vol_g": 736383124.6800001,
+   "era": 2,
+   "gross_bp": -206.81634210514665,
+   "hold": 10,
+   "pb_bp": 41.595245097747636,
+   "pub_bp": 27.423847553166375,
+   "quintile": 1,
+   "row": 843,
+   "status": "survived",
+   "symbol": "LULU",
+   "year": 2022
+  },
+  {
+   "bar_entry": 3320,
+   "bar_exit": 3329,
+   "bar_g": 3319,
+   "csv_row": 19129,
+   "date_entry": "2023-03-14",
+   "date_exit": "2023-03-27",
+   "dollar_vol_g": 342094237.8,
+   "era": 2,
+   "gross_bp": -329.5653919409221,
+   "hold": 10,
+   "pb_bp": 58.03732828759962,
+   "pub_bp": 61.453632775031565,
+   "quintile": 3,
+   "row": 922,
+   "status": "survived",
+   "symbol": "MSTR",
+   "year": 2023
+  },
+  {
+   "bar_entry": 3331,
+   "bar_exit": 3340,
+   "bar_g": 3330,
+   "csv_row": 19196,
+   "date_entry": "2023-03-29",
+   "date_exit": "2023-04-12",
+   "dollar_vol_g": 115654417.67999999,
+   "era": 2,
+   "gross_bp": 271.4574151002232,
+   "hold": 10,
+   "pb_bp": 55.52985631194443,
+   "pub_bp": 29.816104680062367,
+   "quintile": 1,
+   "row": 1000,
+   "status": "survived",
+   "symbol": "NTES",
+   "year": 2023
+  },
+  {
+   "bar_entry": 3355,
+   "bar_exit": 3364,
+   "bar_g": 3354,
+   "csv_row": 19361,
+   "date_entry": "2023-05-03",
+   "date_exit": "2023-05-16",
+   "dollar_vol_g": 157492342.5,
+   "era": 2,
+   "gross_bp": 627.0486994725214,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 11.502173786157904,
+   "quintile": 0,
+   "row": 1354,
+   "status": "survived",
+   "symbol": "TEX",
+   "year": 2023
+  },
+  {
+   "bar_entry": 3372,
+   "bar_exit": 3381,
+   "bar_g": 3371,
+   "csv_row": 19487,
+   "date_entry": "2023-05-26",
+   "date_exit": "2023-06-09",
+   "dollar_vol_g": 47679225.96,
+   "era": 2,
+   "gross_bp": -2892.929746224195,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 50.75121729182943,
+   "quintile": 3,
+   "row": 343,
+   "status": "survived",
+   "symbol": "CRDO",
+   "year": 2023
+  },
+  {
+   "bar_entry": 3473,
+   "bar_exit": 3482,
+   "bar_g": 3472,
+   "csv_row": 20121,
+   "date_entry": "2023-10-20",
+   "date_exit": "2023-11-02",
+   "dollar_vol_g": 277247669.4,
+   "era": 2,
+   "gross_bp": -352.74478859939074,
+   "hold": 10,
+   "pb_bp": 64.13108359860924,
+   "pub_bp": 18.145888034858526,
+   "quintile": 0,
+   "row": 1208,
+   "status": "survived",
+   "symbol": "SAP",
+   "year": 2023
+  },
+  {
+   "bar_entry": 3481,
+   "bar_exit": 3490,
+   "bar_g": 3480,
+   "csv_row": 20180,
+   "date_entry": "2023-11-01",
+   "date_exit": "2023-11-14",
+   "dollar_vol_g": 45161471.519999996,
+   "era": 2,
+   "gross_bp": -628.6968625492665,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 31.248748513427298,
+   "quintile": 1,
+   "row": 627,
+   "status": "survived",
+   "symbol": "GVA",
+   "year": 2023
+  },
+  {
+   "bar_entry": 3833,
+   "bar_exit": 3842,
+   "bar_g": 3832,
+   "csv_row": 22540,
+   "date_entry": "2025-03-31",
+   "date_exit": "2025-04-11",
+   "dollar_vol_g": 145259695.78,
+   "era": 2,
+   "gross_bp": -2064.564758815334,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 9.5411782970334,
+   "quintile": 0,
+   "row": 128,
+   "status": "survived",
+   "symbol": "AU",
+   "year": 2025
+  },
+  {
+   "bar_entry": 3842,
+   "bar_exit": 3851,
+   "bar_g": 3841,
+   "csv_row": 22571,
+   "date_entry": "2025-04-11",
+   "date_exit": "2025-04-25",
+   "dollar_vol_g": 64653178.400000006,
+   "era": 2,
+   "gross_bp": -180.5993124696379,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 50.748181513288294,
+   "quintile": 3,
+   "row": 1126,
+   "status": "survived",
+   "symbol": "PSMT",
+   "year": 2025
+  },
+  {
+   "bar_entry": 3856,
+   "bar_exit": 3865,
+   "bar_g": 3855,
+   "csv_row": 22664,
+   "date_entry": "2025-05-02",
+   "date_exit": "2025-05-15",
+   "dollar_vol_g": 54491556.05,
+   "era": 2,
+   "gross_bp": -474.2456662012961,
+   "hold": 10,
+   "pb_bp": 103.08624315129555,
+   "pub_bp": 83.37293705507457,
+   "quintile": 4,
+   "row": 548,
+   "status": "survived",
+   "symbol": "FORM",
+   "year": 2025
+  },
+  {
+   "bar_entry": 3858,
+   "bar_exit": 3867,
+   "bar_g": 3857,
+   "csv_row": 22676,
+   "date_entry": "2025-05-06",
+   "date_exit": "2025-05-19",
+   "dollar_vol_g": 290108798.84999996,
+   "era": 2,
+   "gross_bp": 1187.677737725384,
+   "hold": 10,
+   "pb_bp": 0.0,
+   "pub_bp": 75.28729507122898,
+   "quintile": 4,
+   "row": 165,
+   "status": "survived",
+   "symbol": "BCRX",
+   "year": 2025
+  },
+  {
+   "bar_entry": 3859,
+   "bar_exit": 3868,
+   "bar_g": 3858,
+   "csv_row": 22682,
+   "date_entry": "2025-05-07",
+   "date_exit": "2025-05-20",
+   "dollar_vol_g": 27739959.0,
+   "era": 2,
+   "gross_bp": -749.8919453708814,
+   "hold": 10,
+   "pb_bp": 331.45598595149914,
+   "pub_bp": 132.1279783358212,
+   "quintile": 4,
+   "row": 75,
+   "status": "survived",
+   "symbol": "AMRC",
+   "year": 2025
+  },
+  {
+   "bar_entry": 3861,
+   "bar_exit": 3870,
+   "bar_g": 3860,
+   "csv_row": 22705,
+   "date_entry": "2025-05-09",
+   "date_exit": "2025-05-22",
+   "dollar_vol_g": 229148729.28000003,
+   "era": 2,
+   "gross_bp": 5.548589598487405,
+   "hold": 10,
+   "pb_bp": 8.28639051098876,
+   "pub_bp": 54.31947791707807,
+   "quintile": 3,
+   "row": 1412,
+   "status": "survived",
+   "symbol": "TTEK",
+   "year": 2025
+  },
+  {
+   "bar_entry": 4084,
+   "bar_exit": 4093,
+   "bar_g": 4083,
+   "csv_row": 24181,
+   "date_entry": "2026-03-31",
+   "date_exit": "2026-04-14",
+   "dollar_vol_g": 1106604066.09,
+   "era": 2,
+   "gross_bp": -2271.275811843773,
+   "hold": 10,
+   "pb_bp": 438.4724730744052,
+   "pub_bp": 186.96058919898047,
+   "quintile": 4,
+   "row": 143,
+   "status": "survived",
+   "symbol": "AXTI",
+   "year": 2026
+  },
+  {
+   "bar_entry": 4084,
+   "bar_exit": 4093,
+   "bar_g": 4083,
+   "csv_row": 24183,
+   "date_entry": "2026-03-31",
+   "date_exit": "2026-04-14",
+   "dollar_vol_g": 28344456.25,
+   "era": 2,
+   "gross_bp": 612.2874532362886,
+   "hold": 10,
+   "pb_bp": 130.85808916046398,
+   "pub_bp": 42.9233489034709,
+   "quintile": 2,
+   "row": 615,
+   "status": "survived",
+   "symbol": "GRDN",
+   "year": 2026
+  },
+  {
+   "bar_entry": 4084,
+   "bar_exit": 4093,
+   "bar_g": 4083,
+   "csv_row": 24185,
+   "date_entry": "2026-03-31",
+   "date_exit": "2026-04-14",
+   "dollar_vol_g": 1013291242.8000001,
+   "era": 2,
+   "gross_bp": 773.9686179031495,
+   "hold": 10,
+   "pb_bp": 195.3753278660451,
+   "pub_bp": 32.43406970005274,
+   "quintile": 1,
+   "row": 1444,
+   "status": "survived",
+   "symbol": "UTHR",
+   "year": 2026
+  }
+ ],
+ "seed": 364,
+ "sink_source": "scripts/run_d362_sink_filter.py",
+ "sinks": [
+  [
+   "S1",
+   "pcto_mass_imbalance",
+   ">=",
+   86.84
+  ],
+  [
+   "S2",
+   "mkt_vol_20",
+   "<=",
+   99.03
+  ]
+ ],
+ "strata": {
+  "bounds": {
+   "0": [
+    2.1678972841950475,
+    25.941989138449355
+   ],
+   "1": [
+    25.948959563119296,
+    37.11657571429209
+   ],
+   "2": [
+    37.117036840556736,
+    50.05654257461826
+   ],
+   "3": [
+    50.067080062487015,
+    72.12621358757907
+   ],
+   "4": [
+    72.33592332641682,
+    316.1943813549864
+   ]
+  },
+  "column": "half_spread_PUB_bp",
+  "counts": {
+   "0": 606,
+   "1": 606,
+   "2": 605,
+   "3": 606,
+   "4": 605
+  },
+  "eligible": {
+   "0": 481,
+   "1": 480,
+   "2": 471,
+   "3": 440,
+   "4": 480
+  },
+  "rule": "rank-based equal-count quintiles of half_spread_PUB_bp over all A2 trades, ties by ledger order (D363's rule)"
+ },
+ "study": 364,
+ "survivorship": {
+  "delta_gross_bp": 1.4911203942268187,
+  "delta_pub_bp": 1.1418633772948965,
+  "eligible_status": [
+   "survived",
+   "collapsed"
+  ],
+  "excluded": {
+   "by_quintile": {
+    "0": 125,
+    "1": 126,
+    "2": 134,
+    "3": 166,
+    "4": 125
+   },
+   "dollar_vol_g_median": 71104744.35499999,
+   "gross_mean_bp": 59.81445349818888,
+   "gross_median_bp": 39.52340399150069,
+   "n": 676,
+   "pub_mean_bp": 50.80887699034065,
+   "pub_median_bp": 45.238613177420234,
+   "share": 0.22324966974900926
+  },
+  "kept": {
+   "by_quintile": {
+    "0": 481,
+    "1": 480,
+    "2": 471,
+    "3": 440,
+    "4": 480
+   },
+   "dollar_vol_g_median": 117249978.525,
+   "gross_mean_bp": 61.3055738924157,
+   "gross_median_bp": 24.452399809412036,
+   "n": 2352,
+   "pub_mean_bp": 51.95074036763555,
+   "pub_median_bp": 42.467242872406146,
+   "share": 0.7767503302509907
+  },
+  "statement": "SURVIVOR-ONLY AND NOT BY CHOICE. TIME_SERIES_INTRADAY serves nothing for a delisted ticker (PICKUP.md, probed 2026-09-01, four for four), so every delisted name is unreachable at this frequency and the sample is restricted to names still listed at the span end. The sample is therefore biased toward the liquid half; the numbers above are the size of that bias on this arm, measured rather than assumed.",
+  "status_counts": {
+   "collapsed": 179,
+   "delisted": 676,
+   "survived": 2173
+  }
+ },
+ "written_at_utc": "2026-09-06T23:15:26+00:00"
+}
