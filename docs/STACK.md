@@ -306,6 +306,25 @@ queued as D361: a regime gate on the triggers the record has — the only
 place any short paid before cost is where the loser cohort falls — and the
 gap-up fade under its own controls.
 
+**D361 made the regime the signal and found the regime points the other
+way.** With the floored market's 63-day return negative, the loser cohort
+rises +96 bp over the next 20 bars (−16 otherwise) and the market +188
+(+80), block correlation −0.23 against a shuffled p95 of 0.16: **a negative
+trailing market return is a rebound forecast**, and D359's era-1 and
+down-year splits were averages over both halves of a drawdown, not states
+one can be in at the time. The gated loser rally is −4.5 a trade inside
+every control; gate off it is +22.5. **But one cell of four is above every
+control**: the gap-up fade — D360's mirror entered short, a gap in the top 2%
+of the day on top-decile volume — with the market **below its 200-day mean**,
+**+42.3 gross a trade on 3,977** (t 2.5), above the 200-draw gate rotation
+(p95 +36.0), its own names at random gate-on times (+25.8), the same-day
+name (+37.7) and random direction (+25.2); +3.3 net PB, −47 PUB, breakeven
+18 bp a side; era 2 +55, down-years +50. It is the first short in the
+record to clear all its nulls, on a non-primary cell with margins of 5 to 6
+bp at the p95s, and it is not yet its own record. The gated arms are the
+first flat-by-default constructions in the record (28 to 42% exposure).
+Status: the principal's decision (R15).
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -628,6 +647,14 @@ every number quoted before D340 is a same-close-fill number.
     reverses (the name beats its own random days by 6 to 33 bp), the volume
     gap up reverses too, the names are ordinary and there is nothing to earn.
     The short side closes on tape signals: a regime gate or outside data.
+    *(Amended: not a closure — R15.)*
+27. **The regime-gated short — DONE (D361), two of eight.** The 63-day gate
+    forecasts a rebound (+96 bp per 20 bars in the loser cohort), the gated
+    loser rally fails every control, and the gap-up fade below the 200-day
+    mean is +42.3 gross a trade above all four controls on one cell of four.
+    Its own record, the neighbours (100/150-bar means, the 5% gap), the
+    loser cohort as a post-drawdown LONG, and a volatility gate are listed
+    untested; the principal decides.
 
 **Next, in this order:**
 
@@ -884,6 +911,18 @@ Kept legible rather than quietly fixed.
     that exemption first.** Also from D360: the same-day same-bucket control
     keeps 21% of clustered events for want of a pool; on event signals that
     cluster in time, B's p95 is a weak bar and A′ and C carry the verdict.
+31. **An era split was read as a forecastable state.** D359 reported the
+    loser cohort falling in era 1 and the down-years and the rally short
+    paying there, and D361 built a gate on it. A year's average contains the
+    fall and the rebound; the gate that fires on the fall is also on for the
+    rebound, and on this universe the rebound is larger (+96 bp per 20 bars
+    in the cohort, market +188 against +80). **A split by era or by year is
+    a description of the past; a gate is a forecast, and its premise is the
+    correlation of its level with the target over the next horizon, on
+    non-overlapping blocks.** D361 pre-registered that number as Q0 and it
+    came out with the opposite sign, which is the process working; the
+    reasoning in D361 §0 that motivated the study should have asked for the
+    number before the design was written.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

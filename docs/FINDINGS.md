@@ -2551,3 +2551,57 @@ express has been timing inside names that rise or bounce.
    as the premise before the timing is read (STACK §7 item 30).
 3. **On clustered events the same-day name control runs out of pool** (21%
    kept here); report the shortfall and let A′ and C carry the verdict.
+
+## 41. A negative trailing market return forecasts a rebound, not a fall; and the gap-up fade with the market below its 200-day mean is the first short above every control
+
+**From D361, 2026-09-06.** Pre-registered; two of eight, the premise and the
+load-bearing prediction failed, a non-primary cell passed every control.
+
+**The regime, as a state.** Gate on = the floored market's 63-bar compounded
+return below zero (28.5% of bars, 98 episodes, median run 3 bars).
+
+| hedged forward-20 return, bp | gate on | gate off |
+|---|--:|--:|
+| loser cohort (bottom decile of 12-month momentum), per name-bar | **+96.2** | −15.9 |
+| the floored market itself | +188 | +80 |
+
+Block correlation of the gate's level with the cohort's forward drift −0.23
+on 159 non-overlapping 20-bar blocks; shuffled |r| p95 0.16. **The gate
+forecasts, and what it forecasts is a rebound.** D359's era and down-year
+splits were averages over both halves of drawdowns; the gated loser-rally
+short is −4.5 a trade inside every control (+22.5 with the gate off), and by
+episode it is +47,206 bp in the second half of 2015 and −44,591 in the first
+quarter of 2016: it pays while the market falls and gives it back when the
+market turns, and the gate is on for both.
+
+**The cell that passed.** The gap-up fade — a gap in the top 2% of the day on
+top-decile volume, shorted at the next open, held ten bars — with the market
+**below its 200-day mean**:
+
+| G2 × gap-up fade, cap 10 | n | gross | t | ROT p95 (200) | A′ p95 | B p95 | C p95 | net PB | net PUB | exposure |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| gated | 3,977 | **+42.3** | 2.5 | +36.0 | +25.8 | +37.7 | +25.2 | **+3.3** | −47.2 | 28% |
+| gate off | 16,808 | +9.6 | 1.3 | | | | | | | |
+
+A random gate of the same shape earns the fade +14.7 at the median (the
+ungated number) and +36.0 at the p95; the gate is worth about +27 a trade
+over chance and the trigger about +40 over its own names in the regime.
+Era 2 +55, down-years +50; 2020 +208, 2021 +209, 2022 +46, 2023 −69. Held
+names 42 bp a side under PUB, 19 under PB, general collateral on 96%. **It is
+the first short in the record above all its nulls, it is the third cell of
+four, the primary failed, and the p95 margins are 5 to 6 bp.**
+
+**Rules:**
+
+1. **A split by era or year is not a state.** A gate's premise is the block
+   correlation of its level with the target over the next horizon, measured
+   before the design is written (STACK §7 item 31).
+2. **On this universe a negative trailing market return is a long-side
+   object** — the loser cohort's +96 bp per 20 bars after it is unmeasured
+   against controls and is listed, not read.
+3. **The gap-up fade below the 200-day mean is a candidate for its own
+   record**, multiplicity one, with its neighbours (the 100- and 150-bar
+   means; the 5% gap) reported beside so a cell can be told from a region.
+   Whether to write it is the principal's (R15).
+4. **A gated event book is flat by default** (28 to 42% exposure here), which
+   the ungated books never were (§38).
