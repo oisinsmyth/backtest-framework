@@ -2650,3 +2650,58 @@ has not run — the trigger with the calm-market condition alone and no gate.
    a threshold.
 4. **Screen numbers quoted in a pre-registration must be computed under the
    thresholds the record fixes** (STACK §7 item 32).
+
+## 43. The entry-day spread does not move the fade's cost; charging each trade its own spread does; and the remaining cost question is what the auctions cost
+
+**From D363, 2026-09-06.** Pre-registered; two of eight. D362's two-sink ledger
+(3,079 trades, +61.7 gross), unchanged, costed four ways on the record's own
+Corwin–Schultz; no quoted spread (D336 on hold); the holdout not read.
+
+| per-trade line, bp | entry ½-spread median / mean | round trip | net | net at half crossing | net at auction |
+|---|--:|--:|--:|--:|--:|
+| PUB, trailing 21 bars | 42.9 / 51.7 | 107.7 | −48.7 | +3.0 | +54.7 |
+| PB, the single pair | 17.9 / 60.4 | 125.1 | −66.1 | −5.7 | +54.7 |
+| EW, three bars around entry | 34.6 / 52.4 | 105.1 | −46.1 | +4.3 | +54.7 |
+
+**The estimator's day is not the lever.** On top-decile volume days the
+spread is a fifth narrower at the median and unchanged at the mean; the
+wide tail — where this ledger's gross is (the widest quintile +225 a trade
+on names at $20 with a 94 bp half-spread; the middle three quintiles +13)
+— does not compress. Three bp on the round trip.
+
+**The convention is.** The record's per-trade `2c` has charged every trade
+the ledger's median half-spread since D285. Charging each trade its own
+spread at its own entry and exit bars costs this ledger 108 under PUB
+against the median's 89, and 125 under PB against 39: PB's single-pair
+estimate is zero on 43% of bars with a fat right tail, so its median is
+small and its mean is the largest line. The net is −49 / −66, not D362's
+−30 / +20.
+
+**Execution is the open question.** If both sides cross the spread the fade
+loses 46 to 66 a trade; if one side does, about zero; if neither does —
+the kernel's fills are the opening and closing prints, which are auction
+prints — +55 before impact. Impact is unmodelled and liquidity is not the
+constraint: at $25k a position the trade is 0.04% of the entry day's
+dollar volume at the median and under 1% on 99.8% of trades. The number
+the programme does not have is what an auction order in a name like these
+costs, and daily bars cannot supply it.
+
+**Sizing does not rescue the net.** Inverse-cost sizing halves the gross
+(+30 per unit capital, t 1.8): the edge is not cheap. The in-sample U shape
+is above 200 within-name permutations of its weights by 1.7 bp and is still
+negative under every line at full crossing.
+
+**Rules:**
+
+1. **A per-trade net charges each trade its own spread at its own bars**,
+   with the ledger-median line printed beside for comparability with the
+   record. The median flatters any ledger whose gross is concentrated by
+   spread (STACK §7 item 33).
+2. **PB is not a per-trade charge.** The single-pair estimate is a
+   distribution with a 43% zero mass and a fat tail; use it only through a
+   window statistic.
+3. **Cost engineering on this fade is order placement, not selection or
+   estimation.** A spread ceiling removes the signal; the entry-day estimate
+   moves 3 bp; crossing against the auction is 100 bp. That needs quoted
+   spreads for the level (D336) and fills or intraday quotes for the
+   auction, and it is the principal's to pursue.

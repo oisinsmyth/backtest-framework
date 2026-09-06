@@ -341,6 +341,26 @@ what the gate did; which of the two is the state variable is the next cell,
 listed and not run. Within-sample with nulls: the five came from this
 sample's own trades; the holdout was not read. The principal decides.
 
+**D363 asked where the two-sink fade's 89 bp round trip could move, and
+the answer is: not in the estimator, and not in the sizing — in the
+execution.** The Corwin–Schultz spread on the three bars around the entry
+is a fifth narrower than the trailing month at the median (34.6 against
+42.9 a side) and no narrower at the mean (52.4 against 51.7): the wide
+tail, where the gross lives, does not compress on volume days, and the
+round trip moves 3 bp. **Charging each trade its own spread rather than
+the ledger's median** — the per-trade convention from here, the median
+printed beside — gives 108 bp under PUB (D362: 89) and 125 under PB (39),
+because PB's single pair is zero on 43% of bars with a fat right tail; the
+net is **−49 / −66**, not −30 / +20. Full crossing −46 to −66 a trade, one
+side crossing about zero, neither side +55; at $25k a position the trade
+is 0.04% of the day's dollar volume, so liquidity is not the constraint —
+**what the opening and closing auctions cost is the number the programme
+does not have**, and daily bars cannot supply it. Only the widest quintile
+pays at full crossing (+6 PUB, +36 on the entry-window line, names at $20
+with a 94 bp half-spread). Inverse-cost sizing halves the gross; the U
+shape is above its permutation null by 1.7 bp and still negative. D336 on
+hold at the principal's instruction; nothing here pre-empts it.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -677,6 +697,13 @@ every number quoted before D340 is a same-close-fill number.
     flag rotation; sizing per hit t 3.9. With the calm-market sink on, the
     gate is inside its own rotation. Next cell listed: the calm-market
     condition alone, no 200-day gate, against the same rotation.
+29. **The cost lines — DONE (D363), two of eight.** The entry-day spread
+    moves the round trip 3 bp; the per-trade convention raises it a fifth
+    over the ledger median; the fade is a 100 bp question of order placement
+    (crossing −48, one side +3, auction +55) that daily bars cannot answer.
+    What can: D336's quoted spreads (on hold) for the level; fills or
+    intraday quotes on names like these for the auction. Sizing does not
+    rescue the net.
 
 **Next, in this order:**
 
@@ -954,6 +981,17 @@ Kept legible rather than quietly fixed.
     16 bp gap with no explanation. **Every number a pre-registration quotes
     must be computed under the parameters the record fixes**, or labelled as
     coming from elsewhere.
+33. **Every per-trade net since D285 charged the ledger's MEDIAN
+    half-spread to every trade.** That is fine on a book whose spread is
+    symmetric around its median and wrong on one whose gross sits in its
+    widest names: on D362's fade the per-trade charge is 108 bp a round trip
+    under PUB against the median's 89, and 125 under PB against 39 — PB's
+    single-pair estimate is zero on 43% of bars and has a fat right tail, so
+    it was never a per-trade charge and the median hid that. D363 carries
+    both conventions; **a per-trade net must charge each trade its own
+    spread at its own bars, and print the ledger median beside it for
+    comparability.** Earlier per-trade nets (D285 onward) are median-based
+    and read as upper bounds on any spread-concentrated ledger.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
