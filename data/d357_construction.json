@@ -1,0 +1,10 @@
+{
+  "note": "D357 frozen construction, named in the pre-registration's addendum after D355 (the target stays) and D356 (the blend's Q2 held). The hurdles GATE the blend; each parent's hurdles are reported beside and gate nothing.",
+  "cells": [
+    {"sig": "rsi", "k": 40, "arm": "target"},
+    {"sig": "hist_L", "k": 40, "arm": "target"}
+  ],
+  "blend": true,
+  "gate": "blend",
+  "require_deals": true
+}

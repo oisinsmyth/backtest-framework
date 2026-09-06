@@ -92,3 +92,34 @@ addendum to follow) · `scripts/run_d357_holdout_read.py` (stages `--prep`, `--d
 `scripts/run_d303_reference.py`, `scripts/d331_edgar_deals.py`, `scripts/run_d331_deal_filter.py`,
 `scripts/d339_census.py`, `scripts/d339_universe_floor.py`, `scripts/d340_fill.py`,
 `scripts/d348_prep.py`, `scripts/run_d348_score_rotation_null.py`, `scripts/run_d355_exit_swap.py`.
+
+---
+
+## Addendum — the frozen construction, 2026-09-06 (committed before the read; the read has not run)
+
+**D355** kept the target exit (zero of seven). **D356** held its load-bearing prediction: the
+50/50 blend nets +8.78 PUB at a Sharpe of 0.442 above both parents and both paired nulls.
+The principal chose the blend. The construction, frozen in `data/d357_construction.json`:
+
+- **Cells:** `rsi` k=40 and `hist_L` k=40, depth 2, D303's target exit, `keep_v2`, F0 (the
+  holdout's filings from the EDGAR pull), next-open fill, PUB with GC/HTB, PB beside.
+- **The blend:** 50/50 capital, each book at its own cost per bar, on the shared mask.
+- **The hurdles gate the blend.** Each parent's six hurdles are computed and reported from
+  the same read and gate nothing.
+- **Hurdle definitions as the runner computes them:** H3 is the symmetric 1% trimmed mean of
+  the pooled ledger with each trade charged its own book's `2c` under PUB (the stricter
+  trimmed-minus-full-round-trip printed beside); H4 requires positive total P&L and no
+  trade above 10% of it; H5 counts names to half the P&L on the contribution basis
+  (raw-P&L basis beside); H6 is the PUB net Sharpe before borrow (after-borrow beside).
+- **Nulls:** 24 rank rotations and 200 time rotations of the score per parent; the blend's
+  paired versions of each.
+
+**In-sample status of the same six hurdles on the mining fixture**, from the rehearsal of
+the read path (which reproduces D356's blend to 1.8e-15), stated so the read is spent
+knowing it: `rsi` passes all six; **`hist_L` alone fails H5 (nine names to half)**; the
+blend passes all six (fourteen names to half, top trade 5.7% of P&L). The blend is the
+construction the read gates; `hist_L` alone would not have been a sound target.
+
+**The read runs once**, `--read --spend-the-holdout`, after this addendum is committed and
+the principal gives the word; the runner writes its receipt before any holdout return is
+read and refuses a second run.

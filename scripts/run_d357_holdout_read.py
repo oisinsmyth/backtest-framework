@@ -939,7 +939,11 @@ def stage_rehearse(a):
     """The read's code path on the MINING fixture with tiny draw counts, writing only to temp/. Not a result: it proves the read
     stage executes end to end (both arms, the blend, the hurdle table, the JSON) before its one execution on the holdout."""
     t0 = time.time()
-    cons = dict(cells=[dict(sig="rsi", k=40, arm="target"), dict(sig="hist_L", k=40, arm="invalidation")], blend=True, require_deals=True)
+    if CONSTRUCTION.exists():                                   # the frozen construction, once the addendum names it: rehearse THAT
+        cons = json.loads(CONSTRUCTION.read_text())
+        cons = dict(cells=cons["cells"], blend=bool(cons.get("blend", False)), require_deals=bool(cons.get("require_deals", True)))
+    else:                                                       # before it exists: an arbitrary two-arm construction that exercises every path
+        cons = dict(cells=[dict(sig="rsi", k=40, arm="target"), dict(sig="hist_L", k=40, arm="invalidation")], blend=True, require_deals=True)
     print(f"D357  REHEARSAL on the mining fixture -- not a result; draws {a.draws} / {a.blend_draws}; construction {json.dumps(cons)}")
     print("\nASSERTIONS")
     P, _OBS, pipe_worst = stage_pipe(verbose=True)
