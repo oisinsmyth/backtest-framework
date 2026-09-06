@@ -207,6 +207,13 @@ def prep(need_grids=True):
     ocT, mkt_oc = A2["ocT"], A2["mkt_oc"]
     m_f, m_f_oc = floored_market(r1T, ocT, keep, finT)
     A3 = dict(A2, r1T=r1T, finT=finT, vxT=np.asarray(A["vxT"]), mkt=m_f, mkt_oc=m_f_oc)
+    # the hedge is undefined until the floored universe has 20 names (the first weeks, before any
+    # dollar-volume estimate exists); every signal -- observed and rotated -- is confined to bars
+    # from the first bar after which the hedge is defined on every bar, so no trade can carry a NaN.
+    m_ok = np.isfinite(m_f) & np.isfinite(m_f_oc)
+    m_start = int(T - np.argmax(~m_ok[::-1])) if (~m_ok).any() else 0
+    assert m_ok[m_start:].all(), "[H] hedge undefined after m_start"
+    print(f"  hedge defined from bar {m_start} ({panel.dates[m_start]}) onward; {int((~m_ok[:m_start]).sum())} earlier bars undefined")
 
     # lagged floored scores and their percentiles
     def lagged(sig):
@@ -219,6 +226,7 @@ def prep(need_grids=True):
     PCT = {s: percentile_grid(LAG[s]) for s in LAG}
     print(f"  lagged scores and percentiles built ({el()})")
     elig = finT & keep
+    elig[:m_start] = False
 
     def events_for(sig):
         """(sig_long, sig_short, score_for_exit)"""
@@ -249,7 +257,15 @@ def prep(need_grids=True):
     print(f"  floored market by year: " + " ".join(f"{y}:{100 * v:+.0f}%" for y, v in sorted(yr_ret.items())) + f"; down-years {down_years} ({el()})")
     return dict(A=A, A3=A3, r1T=r1T, finT=finT, ocT=ocT, m_f=m_f, m_f_oc=m_f_oc, keep=keep, elig=elig, base=base, z=z, n=n, T=T,
                 panel=panel, HALF=HALF, CLOSE=CLOSE, RAW_CLOSE=RAW_CLOSE, DV=DV, years=years, down_years=down_years, yr_ret=yr_ret,
-                LAG=LAG, PCT=PCT, EVENTS=EVENTS, beta=beta, F=F, bucket_rsi=bucket_rsi, excl=excl, t0=t0)
+                LAG=LAG, PCT=PCT, EVENTS=EVENTS, beta=beta, F=F, bucket_rsi=bucket_rsi, excl=excl, t0=t0, m_start=m_start)
+
+
+def rotate_confined(P, lo, hi, sc, rng):
+    """Control A: per-name time rotation, then confined to bars where the hedge is defined."""
+    sl_, ss_, sc_ = EB.rotate_signals(lo, hi, sc, P["finT"], rng)
+    sl_[:P["m_start"]] = False
+    ss_[:P["m_start"]] = False
+    return sl_, ss_, sc_
 
 
 def run_events(P, sig_long, sig_short, score_T, exit_):
@@ -335,10 +351,14 @@ def stage_selftest(P):
     assert (pnl[ex > 0] > 0).all() and (pnl[ex < 0] < 0).all(), "[S] sign"
     print(f"    [S] SIGN IN MONEY: every hist_L cap-exit trade equals the open-fill recomputation against the floored market to {worst:.1e}; "
           f"favourable paths pay positively ({len(tr):,} trades)")
-    # [A] control A keeps every name's event count
-    sl_, ss_, sc_ = EB.rotate_signals(lo, hi, sc, finT, rng)
-    assert np.array_equal(sl_.sum(axis=0), lo.sum(axis=0)) and np.array_equal(ss_.sum(axis=0), hi.sum(axis=0)), "[A]"
-    print("    [A] control A keeps every name's event count exactly")
+    # [A] control A keeps every name's event count up to the hedge-defined confinement, and produces no NaN P&L
+    sl_, ss_, sc_ = rotate_confined(P, lo, hi, sc, rng)
+    lost = int(lo.sum() - sl_.sum())
+    assert (sl_.sum(axis=0) <= lo.sum(axis=0)).all() and lost < 0.02 * lo.sum(), f"[A] lost {lost}"
+    rA = run_events(P, sl_, np.zeros_like(lo), sc_, "cap")
+    assert np.isfinite(pnl_bp(rA)).all(), "[A] a rotated trade carries NaN"
+    print(f"    [A] control A keeps every name's event count except {lost} of {int(lo.sum()):,} rotated onto bars before the hedge is "
+          f"defined ({100 * lost / lo.sum():.2f}%); no rotated trade carries a NaN")
     # [B] control B keeps every event's date and rsi bucket and changes its name
     sigB = control_b_signal(P, lo, rng)
     assert np.array_equal(sigB.sum(axis=1), lo.sum(axis=1)), "[B] dates changed"
@@ -415,9 +435,11 @@ def stage_controls(P, sig, draws, part=0):
     A_, B_ = [], []
     ts = time.time()
     for d in range(draws):
-        sl_, ss_, sc_ = EB.rotate_signals(lo, hi, sc, P["finT"], rngA)
+        sl_, ss_, sc_ = rotate_confined(P, lo, hi, sc, rngA)
         rA = run_events(P, sl_, np.zeros_like(lo), sc_, "cap")
-        A_.append(float(pnl_bp(rA).mean()))
+        pa = pnl_bp(rA)
+        assert np.isfinite(pa).all(), "[A] NaN in a rotated draw"
+        A_.append(float(pa.mean()))
         sB = control_b_signal(P, lo, rngB)
         rB = run_events(P, sB, np.zeros_like(lo), sc, "cap")
         B_.append(float(pnl_bp(rB).mean()))
