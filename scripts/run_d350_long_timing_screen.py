@@ -893,24 +893,35 @@ def stage_kernel(P, member, draws, part):
     print(f"\n  {member} part {part}: {int(lo.sum()):,} events -> {len(res['trades']):,} trades; observed mean hedged excess (cap exit) {obs:+.2f} bp")
     rngA = np.random.default_rng([SEED, 350, 4, mi, part])
     rngB = np.random.default_rng([SEED, 350, 5, mi, part])
-    A_, B_ = [], []
+    rngA2 = np.random.default_rng([SEED, 350, 6, mi, part])
+    A_, B_, A2_ = [], [], []
     ts = time.time()
     for d in range(draws):
-        sl_, ss_, sc_ = V47.rotate_confined(P, lo, hi, sc, rngA)
+        sl_, ss_, sc_ = V47.rotate_confined(P, lo, hi, sc, rngA)          # control A as pre-registered: D347's, within finT
         rA = V47.run_events(P, sl_, np.zeros_like(lo), sc_, "cap")
         pa = V47.pnl_bp(rA)
         assert np.isfinite(pa).all(), "[A] NaN in a rotated draw"
         A_.append(float(pa.mean()))
+        # control A' (D351): the same rotation WITHIN THE FLOORED UNIVERSE -- every rotated event is a bar the strategy could trade.
+        # D347's finT rotation lands ~13% of hist_L's events on sub-$5 / illiquid bars whose forward excess averages +65 bp.
+        sl2, ss2, sc2 = PREP.EB.rotate_signals(lo, hi, sc, elig, rngA2)
+        assert not (sl2 & ~elig).any(), "[A'] a rotated event landed off the floor"
+        assert np.array_equal(sl2.sum(axis=0), lo.sum(axis=0)), "[A'] per-name event count changed"
+        rA2 = V47.run_events(P, sl2, np.zeros_like(lo), sc2, "cap")
+        pa2 = V47.pnl_bp(rA2)
+        assert np.isfinite(pa2).all(), "[A'] NaN in a rotated draw"
+        A2_.append(float(pa2.mean()))
         sB = V47.control_b_signal(P, lo, rngB)
         rB = V47.run_events(P, sB, np.zeros_like(lo), sc, "cap")
         B_.append(float(V47.pnl_bp(rB).mean()))
         if (d + 1) % 10 == 0 or d + 1 == draws:
             print(f"    {member}: {d + 1}/{draws} ({time.time() - ts:.0f}s)", flush=True)
-    out = dict(member=member, draws=draws, part=part, observed=obs, trades=len(res["trades"]), events=int(lo.sum()), control_A=A_, control_B=B_)
+    out = dict(member=member, draws=draws, part=part, observed=obs, trades=len(res["trades"]), events=int(lo.sum()), control_A=A_, control_B=B_,
+               control_A_elig=A2_)
     f = ctrl_path(member, part)
     f.write_text(json.dumps(out))
-    print(f"  wrote {f.name}: A p50 {np.median(A_):+.2f} p95 {np.quantile(A_, .95):+.2f}; B p50 {np.median(B_):+.2f} p95 {np.quantile(B_, .95):+.2f} "
-          f"({time.time() - P['t0']:.0f}s)")
+    print(f"  wrote {f.name}: A p50 {np.median(A_):+.2f} p95 {np.quantile(A_, .95):+.2f}; A' (floored) p50 {np.median(A2_):+.2f} p95 "
+          f"{np.quantile(A2_, .95):+.2f}; B p50 {np.median(B_):+.2f} p95 {np.quantile(B_, .95):+.2f} ({time.time() - P['t0']:.0f}s)")
 
 
 def four_groups(tr, pnl, P, elig):
@@ -1028,11 +1039,15 @@ def stage_report(P):
                 assert abs(c["observed"] - obs) < 1e-9, f"observed differs between stages for {member}"
             A_ = np.concatenate([np.array(c["control_A"]) for c in cs_])
             B_ = np.concatenate([np.array(c["control_B"]) for c in cs_])
+            A2_ = np.concatenate([np.array(c["control_A_elig"]) for c in cs_ if "control_A_elig" in c]) if any("control_A_elig" in c for c in cs_) else None
             R_["controls"] = dict(draws=int(sum(c["draws"] for c in cs_)), parts=[p.name for p in parts],
                                   A=dict(p50=float(np.median(A_)), p95=float(np.quantile(A_, .95)), max=float(A_.max()),
                                          distinct=int(len(set(A_.tolist()))), above=bool(obs > np.quantile(A_, .95))),
                                   B=dict(p50=float(np.median(B_)), p95=float(np.quantile(B_, .95)), max=float(B_.max()),
                                          distinct=int(len(set(B_.tolist()))), above=bool(obs > np.quantile(B_, .95))))
+            if A2_ is not None and A2_.size:
+                R_["controls"]["A_elig"] = dict(p50=float(np.median(A2_)), p95=float(np.quantile(A2_, .95)), max=float(A2_.max()),
+                                                distinct=int(len(set(A2_.tolist()))), above=bool(obs > np.quantile(A2_, .95)))
         R_["grid"] = by_member[member]
         REPORT[member] = R_
 
@@ -1100,8 +1115,28 @@ def stage_report(P):
         sel = [inter[b] for b in buckets if b in inter]
         return (sum(v["n"] * v["interaction"] for v in sel) / sum(v["n"] for v in sel)) if sel else None
 
+    def kernel_above_all_elig(member):
+        """Q1 under control A' (D351): the rotation within the floored universe, beside the pre-registered finT rotation."""
+        R_ = REPORT[member]
+        c = R_.get("controls")
+        return bool(c and "A_elig" in c and c["A_elig"]["above"] and c["B"]["above"] and R_["long/cap"]["control_C"]["above"])
+
     kernel_surv = [m for m in survivors if kernel_above_all(m)]
     gate_kernel = [m for m in kernel_surv if not fallback]
+    kernel_surv_elig = [m for m in survivors if kernel_above_all_elig(m)]
+    print("\n  CONTROL A (pre-registered, D347's rotation within finT) beside A' (D351: within the floored universe), kernel, cap exit, bp per trade:")
+    for m in survivors:
+        c = REPORT[m].get("controls")
+        if not c:
+            print(f"    {m:18s} controls not run")
+            continue
+        obs = REPORT[m]["long/cap"]["mean_bp"]
+        a2 = c.get("A_elig")
+        print(f"    {m:18s} observed {obs:+7.1f} | A p50 {c['A']['p50']:+7.1f} p95 {c['A']['p95']:+7.1f} above {'yes' if c['A']['above'] else 'NO '} | "
+              + (f"A' p50 {a2['p50']:+7.1f} p95 {a2['p95']:+7.1f} above {'yes' if a2['above'] else 'NO '} | " if a2 else "A' not run | ")
+              + f"B p50 {c['B']['p50']:+7.1f} p95 {c['B']['p95']:+7.1f} above {'yes' if c['B']['above'] else 'NO '} | "
+              f"C p95 {REPORT[m]['long/cap']['control_C']['p95']:+6.1f} above {'yes' if REPORT[m]['long/cap']['control_C']['above'] else 'NO '}")
+    print(f"  above A, B and C: {kernel_surv}; above A', B and C: {kernel_surv_elig}")
     q = grid_predictions(screen["members"], screen["m_eff"]["li_ji"], screen["m_eff"]["cheverud_nyholt"], screen["grid_max"]["p_max"], screen["bh"]["n_reject"])
     q["Q1"] = bool(len(gate_kernel) > 0)
     q["Q7"] = bool(any((inter_mean(m, (4, 5)) or -1e9) > 0 and (inter_mean(m, (0, 1, 2)) or 1e9) < 0 for m in survivors))
@@ -1121,7 +1156,7 @@ def stage_report(P):
     out = dict(note="D350: a long-timing screen. Stage 1 (the grid, data/d350_screen.json) scored 138 members against their own names at "
                     "random times; stage 2 ran D347's kernel on the survivors. Every event taken; nothing is a book; nothing promoted. "
                     "E2's kernel score is 100 - pct so the invalidation exit is the percentile crossing back through the median.",
-               survivors=survivors, fallback=fallback, kernel_survivors=kernel_surv, gate_and_kernel_survivors=gate_kernel, cap=CAP, decile=DECILE,
+               survivors=survivors, fallback=fallback, kernel_survivors=kernel_surv, gate_and_kernel_survivors=gate_kernel, kernel_survivors_elig=kernel_surv_elig, cap=CAP, decile=DECILE,
                bucket_edges=BUCKET_EDGES, base_rate_all_bp=E_all, base_rate_by_bucket_bp=E_b, down_years=P["down_years"],
                floored_market_by_year=P["yr_ret"], report=REPORT, screen=dict(m_eff=screen["m_eff"], bh=screen["bh"], grid_max=screen["grid_max"],
                                                                               gate=screen["gate"], n_pA_le_05=n_p05, d347_ranks=screen["d347_ranks"]),
