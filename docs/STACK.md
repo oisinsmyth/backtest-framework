@@ -234,6 +234,25 @@ hedges as well as the three most extreme, so the ranking chooses no hedge. The
 short arm had no trigger to run. **The pair book is closed on this
 construction; what survives of it is the trigger.**
 
+**D355 put the invalidation exit on the two candidate books and the target
+stays.** Zero of seven: exiting on the signal's median crossing takes `rsi`
+k=40 from +5.14 to +0.54 and `hist_L` k=40 from +12.42 to +10.34, because on a
+refilled slot book the target already fires first (15 bars against 27) and the
+invalidation exit holds through what the target would have banked; exiting on
+either cuts `hist_L` to −7.75 on churn. The event lens's exit finding (D345,
+D353) does not transfer, for a stated mechanism: **the target is the exit that
+matches the refill.** The slot simulator now has a signal exit, additive and
+proven identical to the event kernel's.
+
+**D356 blended the two books and the blend is the best thing in the record:
++8.78 bp/bar net under PUB at a Sharpe of 0.442** against 0.268 and 0.401, on a
+correlation of 0.21, above 100 of 100 paired time rotations and 24 of 24 paired
+rank rotations. The two books hold the same name on the same side on 46% of
+bars and their worst 1% of bars overlap on two dates; the drawdown sits between
+the parents'. A linear blend's Sharpe is arithmetic, so the only prediction
+worth making about a blend is the correlation. **The blend is the construction
+D357's one holdout read is spent on**, with both parents reported beside.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -537,21 +556,32 @@ every number quoted before D340 is a same-close-fill number.
     the basket of the opposite extreme costs the pair what the trigger earns
     and a random gate name hedges as well.
 
+22. **The exit swap — DONE (D355).** Zero of seven; the target fires first on a
+    refilled slot book and the invalidation exit gives back gross on both
+    cells. The target stays.
+23. **The two-book blend — DONE (D356).** Four of six; Sharpe 0.442 above both
+    parents and both paired nulls on a correlation of 0.21; the blend is the
+    construction the holdout read is spent on.
+
 **Next, in this order:**
 
-1. **`hist_L` k=40's candidate record** — it survived D348. Four groups, the
-   top trade with as-traded price and dollar-volume percentile, both nulls
-   (already run), GC+HTB, multiplicity 92. Its short leg is a cohort premium
-   and the book is its long leg.
-2. **D336's quoted spreads** — the principal's pull. Every trigger and every
-   book on this universe is negative under PUB and positive under PB; nothing
-   can be called tradeable until the cost line is decided, and D336 decides it.
-3. **The trigger as a book, without a pair** — `rev_5`/E1 market-hedged, on the
-   invalidation exit (three times the per-bar yield of the cap), at a slot cap
-   large enough not to sample the extreme (D353 §4: K=2 is 99.8% skipped; the
-   K=4 cell nets +3.5 PUB on 322 entries). One pre-registration, the hedged
-   kernel unchanged, a K grid declared up front with its multiplicity.
-4. **If the principal wants the event book retried:** θ on trade count, a
+1. **D357 — the out-of-sample read**, pre-registered, runner built and proven
+   on the mining fixture to 0.0, the holdout's caches built by a dry stage that
+   reads no return, the EDGAR pull for its 803 names' filings running. The
+   construction is frozen in the addendum: the 50/50 blend of `rsi` k=40 and
+   `hist_L` k=40 on the target exit, hurdles gating the blend, parents beside.
+   **It runs once, on the principal's word, after the pull lands.** Whichever
+   way it goes, it is the programme's first holdout read.
+2. **`hist_L` k=40's candidate record** — owed regardless of the read: four
+   groups, the top trade with liquidity, both nulls (run), multiplicity 92; its
+   short leg is a cohort premium and the book is its long leg.
+3. **D336's quoted spreads** — the principal's pull; the cost line every net
+   number in this document is measured on.
+4. **The trigger as a book, without a pair** — `rev_5`/E1 market-hedged, on the
+   invalidation exit (three times the per-bar yield of the cap on the event
+   lens; D355 says nothing about an event book), at a slot cap wide enough not
+   to sample the extreme (D353 §4). One pre-registration, a K grid declared.
+5. **If the principal wants the event book retried:** θ on trade count, a
    hedged capital series, the invalidation exit as the primary arm — three
    changes, one pre-registration, the D345 kernel unchanged.
 4. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
@@ -727,6 +757,21 @@ Kept legible rather than quietly fixed.
     while the invariant signal cleared every control. Any capped book on an
     event signal must be read against its skipped share, and the K grid must
     be declared before the run.
+26. **Two pre-registered predictions were identities.** D355's Q4 ("gross
+    rises by more than cost rises") restates Q1 because cost is gross minus
+    net; D356's Q6 ("the blend beats the arithmetic") cannot hold because a
+    linear blend's Sharpe *is* the arithmetic with the measured correlation.
+    Both were written by the same hand on the same day as the constructions
+    they describe. **A prediction must be checkable against something the
+    construction does not define**; write each one out in the quantities the
+    runner computes before committing it.
+27. **The event lens's exit finding was carried to the slot book on
+    mechanism alone.** D345 and D353 showed the invalidation exit beating the
+    cap on an event book; STACK §6 then listed the swap as "the cheapest thing
+    in the queue that could move a net number by more than the spread". On a
+    refilled slot book the target already fires first, and the swap cost both
+    cells. Item 16's rule again: a closure or an opening is a fact about the
+    construction it was measured on.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

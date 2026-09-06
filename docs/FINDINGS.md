@@ -2326,3 +2326,74 @@ trigger.
    now in the tree.
 3. **The pair book is closed on this construction; what survives of it is the
    trigger** (§34).
+
+## 36. On a refilled slot book the target fires first: a signal-invalidation exit lengthens the hold and gives back gross
+
+**From D355, 2026-09-06.** Pre-registered; zero of seven.
+
+The slot simulator gained a signal exit -- leave when the name's lagged floored
+percentile crosses back through the median -- added additively (every published
+cell reproduces to 0.0 with it absent) and proven identical to the event
+kernel's invalidation exit bit-for-bit on the invariant lens. On the two
+candidate books it loses to the target:
+
+| PUB net bp/bar | target | invalidation | both |
+|---|--:|--:|--:|
+| rsi k=40 | **+5.14** | +0.54 | +2.04 |
+| hist_L k=40 | **+12.42** | +10.34 | -7.75 |
+
+**The mechanism.** On the event lens (§26, §34) the invalidation exit beat the
+cap because there was no target: the cap sat through thirty bars after the
+reversal had paid. On the slot book the target already fires on the first move
+-- a median hold of 15 bars on rsi -- and the slot refills; the median crossing
+comes at 27. The swap lengthens the hold, halves the entries, and holds through
+the part of the path the target would have banked; the long leg's mean per
+trade rises (+39 to +62) and its mean per bar held falls. Exiting on whichever
+fires first gives the shortest holds and the most entries, and on hist_L the
+churn's cost (17.7 bp/bar) exceeds its gross (9.9). **The target is the exit
+that matches the refill.** rsi under invalidation falls inside the rank
+rotation (15 of 24); hist_L under invalidation stays above both nulls -- a real
+book, worse than the target.
+
+**Rules:**
+
+1. **On a refilled slot book, an exit that fires later than the target only
+   delays a refill the book wanted, and one that fires earlier adds a round
+   trip.** D295's closure of the exit family is reinstated for the slot book
+   with its mechanism; D345's amendment stands for the event book.
+2. **An exit finding, like a selection finding, belongs to its construction**
+   (§29, §33). The event lens and the slot book have now disagreed on
+   selection, on both sides, and on exits.
+
+## 37. The two candidate books blend to a higher Sharpe than either: the covariance is real and the arithmetic is exact
+
+**From D356, 2026-09-06.** Pre-registered; four of six, the load-bearing one
+held.
+
+| PUB, bp/bar | gross | cost | net | vol | net Sharpe | max DD (net) |
+|---|--:|--:|--:|--:|--:|--:|
+| rsi k=40 | 12.70 | 7.56 | +5.14 | 305 | 0.268 | 10,471 |
+| hist_L k=40 | 26.73 | 14.31 | +12.42 | 491 | 0.401 | 23,208 |
+| **blend 50/50** | 19.71 | 10.93 | **+8.78** | 315 | **0.442** | 15,004 |
+
+The 50/50 capital blend, each book at its own cost per bar, on a correlation of
+the gross series of **+0.21**: net Sharpe 0.442 against 0.268 and 0.401, above
+100 of 100 paired time rotations (p95 -0.45) and 24 of 24 paired rank
+rotations. The worst 1% of bars overlap on two dates; the worst 1% of trades
+share one name; **the two books hold the same name on the same side on 46% of
+bars** and still correlate at 0.21 -- the diversification is in timing, not in
+names. The drawdown sits between the parents' (capital blending halves hist_L's
+left tail, it does not remove it). The arithmetic prediction from the parents'
+net, vol and correlation reproduces the realised Sharpe to four decimals,
+because a linear blend's Sharpe IS that arithmetic; the pre-registered
+prediction that the blend would beat it was an identity and is recorded as an
+error.
+
+**Rules:**
+
+1. **A portfolio of two books that each clear both nulls is a Sharpe lever
+   with no new look**; the only prediction worth making about it is the
+   correlation, and 0.21 between two reversal selectors on the same universe
+   is the number to remember.
+2. **The blend is the construction the holdout read is spent on** (D357), with
+   both parents reported beside; nothing is admitted until that read.
