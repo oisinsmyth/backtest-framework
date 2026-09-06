@@ -83,3 +83,11 @@ Q2 is load-bearing. Q6 is against.
 follow) · `scripts/run_d356_blend.py` (stages `--selftest`, `--null --arm A --draws N --part
 p`, `--report`) · `data/d356_*.json` (to follow). Reuses `scripts/run_d348_score_rotation_null.py`,
 `scripts/d348_prep.py`, `scripts/d322_four_group_report.py`.
+
+---
+
+## Addendum — the secondary arm, 2026-09-06 (committed before any secondary-arm stage; none runs)
+
+D355's Q1 failed on both cells: the target stays. By this record's §1 the secondary arm
+exists only if D355 selects the invalidation exit, so **no secondary arm runs** and the
+result reports the target arm alone.
