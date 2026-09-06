@@ -111,3 +111,13 @@ The short arm's predictions are written in the addendum with its trigger.
 `scripts/d345_event_book.py`, `scripts/run_d323_shortlist_at_operating_point.py`
 (`rank_single`, `gate_from`), `scripts/run_d329_legwise.py`, `scripts/d322_four_group_report.py`,
 `scripts/d337_borrow.py`.
+
+---
+
+## Addendum — the short arm, 2026-09-06 (committed before any short-arm stage; none runs)
+
+D352's Q1 failed: no short event at the top 2%, 5% or 10% of any score, nor the `rsi` turn,
+is above random direction under the kernel. By D352's stop condition and this record's
+§0, **the short arm has no trigger and is not run.** The long arm's eight stages ran as
+pre-registered before this addendum, from the committed runner; the result reports the long
+arm only and records the short side as the ranking's own extreme or nothing.
