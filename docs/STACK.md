@@ -253,6 +253,23 @@ the parents'. A linear blend's Sharpe is arithmetic, so the only prediction
 worth making about a blend is the correlation. **The blend is the construction
 D357's one holdout read is spent on**, with both parents reported beside.
 
+**D358 built the flat-by-default sleeve the principal's multi-strategy book
+wants — a real trigger, a market hedge, no slot cap, scored on the capital it
+asks for — and it is never flat.** A fresh entry into the bottom 2% of ~1,000
+names fires five times a bar; a 40-bar hold stacks 120 open positions and every
+cell, both scores, three rarities, is deployed on 100% of bars. Flatness cannot
+come from a cross-sectional trigger at any rarity worth trading; it has to
+come from a time-series gate, which is the allocator's job. What the sleeve
+earns while on: **+1.1 to +2.9 bp/bar of hedged alpha on the deployed base**,
+at or below the held names' own round trip on five cells of six, and about 30%
+of what the same names earn unhedged. `rev_5` at 2% is −1.93 net PUB, above
+all 100 time rotations and inside the same-day same-bucket name's p95 on net
+alone — the trigger selects wide names (36 bp a side PUB) and a random name in
+its bucket is cheaper. `rev_5` 10% and `hist_L` 2% clear both nulls and net
+negative under PUB (`hist_L` 2% is +0.70 PB); both wait on D336. Twelve per-bar
+series are in `data/` for an allocator to condition on era: per trade the
+trigger is −26 in era 1 and +127 in era 2.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -562,6 +579,10 @@ every number quoted before D340 is a same-close-fill number.
 23. **The two-book blend — DONE (D356).** Four of six; Sharpe 0.442 above both
     parents and both paired nulls on a correlation of 0.21; the blend is the
     construction the holdout read is spent on.
+24. **The flat-by-default sleeve — DONE (D358), and it is never flat.** Four
+    of eight; every cell deployed on 100% of bars; the hedged alpha +1.1 to
+    +2.9 bp/bar against the names' round trip of 1.6 to 2.0; `rev_5` 10% and
+    `hist_L` 2% above both nulls and negative under PUB. The series are written.
 
 **Next, in this order:**
 
@@ -577,13 +598,18 @@ every number quoted before D340 is a same-close-fill number.
    short leg is a cohort premium and the book is its long leg.
 3. **D336's quoted spreads** — the principal's pull; the cost line every net
    number in this document is measured on.
-4. **The trigger as a book, without a pair** — `rev_5`/E1 market-hedged, on the
-   invalidation exit (three times the per-bar yield of the cap on the event
-   lens; D355 says nothing about an event book), at a slot cap wide enough not
-   to sample the extreme (D353 §4). One pre-registration, a K grid declared.
-5. **If the principal wants the event book retried:** θ on trade count, a
-   hedged capital series, the invalidation exit as the primary arm — three
-   changes, one pre-registration, the D345 kernel unchanged.
+4. **The time-gated sleeve** — D358 says a cross-sectional trigger is always
+   on, so a flat-by-default sleeve is the trigger behind a *time-series* gate.
+   The gate is the principal's era detector; the record's part is the series
+   D358 wrote and one pre-registration that names a gate the allocator would
+   actually use (the floored market's trailing return, or its vol) and
+   predicts the deployed net conditional on it, with the gate's own null
+   (rotate the gate in time, keep the trigger). Not the trigger's rarity
+   again, at any p.
+5. **The hedge priced as itself.** D345's cost convention charges the market
+   hedge at the single name's spread (four crossings); the names' own round
+   trip halves the cost line and moves `hist_L` 2% to +0.90 PUB. One line in
+   the costing, stated per record, once D336 fixes the names' spread.
 4. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
    composite): their left tails share two names of twelve; one cell, one
    prediction on the blend's Sharpe against each parent's. Lower priority
@@ -772,6 +798,15 @@ Kept legible rather than quietly fixed.
     refilled slot book the target already fires first, and the swap cost both
     cells. Item 16's rule again: a closure or an opening is a fact about the
     construction it was measured on.
+28. **An exposure prediction was written without dividing the event count by
+    the bar count.** D358's Q4 said the 2% cells would be deployed on fewer
+    than half the bars; D350's own file held 16,509 events on 3,185 bars — five
+    a bar — and a 40-bar hold makes that 120 open positions, every bar. The
+    division took ten seconds and was not done. Item 26's rule extends: before
+    committing a prediction, compute it from what the record already holds;
+    if the record fixes it, it is not a prediction. And the same day a [C]
+    check was pre-registered at 2 SE on an iid null, which fails one cell in
+    twenty on the seed — weakened to 3 SE in the runner and recorded (item 24).
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

@@ -2397,3 +2397,63 @@ error.
    is the number to remember.
 2. **The blend is the construction the holdout read is spent on** (D357), with
    both parents reported beside; nothing is admitted until that read.
+
+## 38. A cross-sectional trigger on a wide universe is always on: the flat-by-default sleeve has to be gated in time, and its hedged alpha is half its own round trip
+
+**From D358, 2026-09-06.** Pre-registered; four of eight, the load-bearing one
+failed. Six cells: `rev_5` and `hist_L` entering the bottom 2%, 5% and 10%,
+every event long at the next open, no slot cap, hedged by the floored market,
+scored on the deployed base (hedged return per bar over open positions).
+
+| cap exit, deployed base, PUB | exposure | open | entries/yr | gross | cost | net | net PB | per trade |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| `rev_5` 2% | **100%** | 120 | 762 | +1.85 | 3.78 | −1.93 | −0.22 | +78 |
+| `rev_5` 10% | 100% | 345 | 2,191 | +1.11 | 3.12 | −2.01 | −0.17 | +43 |
+| `hist_L` 2% | 100% | 58 | 370 | +2.89 | 3.98 | −1.09 | **+0.70** | +123 |
+| `hist_L` 10% | 100% | 200 | 1,271 | +1.46 | 3.20 | −1.73 | +0.10 | +60 |
+
+**The arithmetic.** A fresh entry into the bottom 2% of ~1,000 eligible names
+fires 5.2 times a bar; entries per bar × hold = open positions, so a 40-bar
+hold is 120 open on the average bar and never zero. To be flat half the time
+the product would have to be 0.7 — five entries a year — which is not a
+signal. Under the 7-bar invalidation exit the book still holds 30 names on
+every bar. **Rarity in the cross-section says which names; it cannot say
+when.** Flatness has to come from a time-series condition, and in a
+multi-strategy book that condition is the allocator's; the sleeve's series
+tells it what the trigger earns while on.
+
+**What it earns while on.** The hedged alpha is +1.1 to +2.9 bp/bar on the
+deployed base — the trigger's per-trade mean spread over its hold — against the
+held names' own round trip of 1.6 to 2.0 bp/bar at that turnover. The unhedged
+series is +5.8 to +7.6 gross: **about 70% of a long-only sleeve's gross is the
+floored market**, and the hedged Sharpe is below the unhedged on every cell
+because what the hedge removes paid over this span. Per trade the trigger is a
+post-2019 result: −26 bp in era 1 and +127 in era 2 at 2%.
+
+**The trigger selects wide names.** Held half-spread 30–38 bp a side under PUB
+(the names have just fallen hard). A random same-day same-`rsi`-bucket name
+earns less gross (p95 +1.19 against +1.85), less per trade (+50 against +78)
+and a lower Sharpe, and holds cheaper names: on net PUB alone the two are
+inside each other's p95 at 2% and 5%. The cost line decides, and D336's quoted
+spreads decide the cost line.
+
+**The cost convention on a hedged single name, stated.** D345's `costed_event`
+and the slot books' `G22.costed` charge each entry a *paired* round trip — four
+crossings at the held names' median half-spread — which on a hedged single
+name prices the market hedge at the name's spread. At the names' own round
+trip (two crossings, the per-trade `2c`) the deployed cost halves and `hist_L`
+2% is +0.90 PUB; the other five stay at or below zero. Both lines are printed
+from D358 on.
+
+**Rules:**
+
+1. **A cross-sectional trigger on a wide universe is always on.** Any
+   "flat-by-default" construction must name its time-series gate and test
+   the gate with its own null (rotate the gate, keep the trigger).
+2. **Compute a pre-registered exposure from the record before predicting it**:
+   entries per bar × hold. D350's file already held the number.
+3. **A long-only sleeve's gross is mostly the market's.** Report hedged and
+   unhedged side by side and let the allocator size the beta; the sleeve's
+   claim is the hedged line.
+4. **State which round trip the cost line charges** — the pair's or the
+   name's — whenever a single name is hedged by something cheaper than itself.
