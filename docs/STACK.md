@@ -137,6 +137,20 @@ cell of 92, unnulled, no top trade named: it gets the next candidate record
 before anything is built on it, and `rsi` stays the declared candidate until it
 does.
 
+**D347 asked whether any long signal is real against controls that carry the
+drift, and none is.** `hist_L`, `rev_21` and two `rsi` references as events,
+every event taken, hedged against the floored market: each earns +16 to +60 bp
+a trade, and **each earns less than its own names held at random times**
+(per-name time rotation, medians +45 to +71). The excess is *which names*, a
+cohort that pays whenever it is held; the signals' timing is worth −10 to −29
+against it. Neither the floored hedge nor a rolling beta removes cohort drift.
+**And the pairing design is reversed on its own terms**: `hist_L` on names in
+the bottom 2% by `rsi` earns +1 bp, on neutral names +103 — the extreme of the
+ranking is where the long signals do worst. **The per-name time rotation has
+never been applied to the slot books' cells** — their nulls rotate names within
+the gate on the same day, which these signals beat — so every per-trade
+positive in D335, D344 and D346 is unmeasured against it. It goes there next.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -409,36 +423,36 @@ every number quoted before D340 is a same-close-fill number.
     legs pay uncapped; the table compressed; `hist_L` at k=40 is the best book
     (+12.42, Sharpe 0.40), one cell of 92.
 
+14. **The long-signal controls — DONE (D347).** Zero of eight; no long signal
+    beats its own names at random times; the extreme `rsi` rank is where long
+    signals do worst. The pair book waits.
+
 **Next, in this order:**
 
-1. **`hist_L` symmetric at k=40 under `keep_v2` and the open fill — the
-   candidate record.** Four groups, the top trade with as-traded price and
-   dollar-volume percentile, a per-name signal-rotation null (200+ values),
-   GC+HTB, multiplicity 92 stated. Predict before running whether it clears
-   its null, whether its top trade is under 7%, and whether its long leg's +44
-   a trade survives the top-trade print. If it does, it replaces `rsi` as the
-   declared candidate; if not, the table's maximum was the table's noise.
-2. **The rotation null's resolution** on whichever cell is the candidate after
-   1: D345's per-name time rotation of the signal has 200 distinct values and
-   fits the slot book (rotate the score, re-rank).
-3. **The conditional-profile study**, with `hist_L` and `rev_21` as the long
-   signals conditioned on `rsi` rank and `rsi`'s own turn as the reference —
-   `retrace_leg` and `rev_5` are out, their long legs do not pay uncapped.
-4. **If the principal wants the event book retried:** θ on trade count, a
+1. **Control A on the slot books.** The per-name time rotation of the *score*
+   — each name's score series rolled within its priced bars, then re-ranked
+   and re-simulated — applied to `rsi` k=40 and `hist_L` k=40 under `keep_v2`
+   and the open fill, 100+ distinct draws each. This is the null the candidate
+   has never faced and the one D347 says matters. Predict before running:
+   the per-trade long-leg positives of D346 do not survive it; whether the
+   slot-capped book's bp/bar does is the open question.
+2. **`hist_L` k=40's candidate record** only if it survives 1 — four groups,
+   top trade with liquidity, multiplicity 92.
+3. **If the principal wants the event book retried:** θ on trade count, a
    hedged capital series, the invalidation exit as the primary arm — three
    changes, one pre-registration, the D345 kernel unchanged.
-5. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
+4. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
    composite): their left tails share two names of twelve; one cell, one
    prediction on the blend's Sharpe against each parent's. Lower priority
    after D346: `retrace_leg` is −1.18 at k=40.
-6. **Re-base the two stale references** — `d300_width.json` and D331's cells —
+5. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
-7. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
+6. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
    both candidates: `rsi` is +3.52 a bar on the variant lens and **−4.8 a trade
    on the invariant one, both legs negative** — the book IS the slot cap.
    Pre-register: hold the slot count fixed and vary the refill pool, or the
    reverse.
-8. **The mixed convention** — rebalanced long, constant-shares short — only if
+7. **The mixed convention** — rebalanced long, constant-shares short — only if
    anyone wants the leg-wise book back (D337 §5, post-hoc).
 
 **Then, signal-side, each with a mechanism behind it:** `macd_hist` normalised
@@ -535,6 +549,14 @@ Kept legible rather than quietly fixed.
     would do with them; both were wrong in ways the first run showed. A
     pre-registration protects against reading; it does not protect against a
     design that answers the wrong question.
+18. **Every per-trade "long leg pays" in this document was measured against
+    the wrong null.** The slot books' rotation null rotates *names within the
+    gate on the same day*; D347's control B is that null and the long signals
+    beat it. The per-name *time* rotation — the same names, random dates — is
+    the control that carries cohort drift, and no slot cell has faced it. D290
+    had it (its "rotation" null) and the programme dropped it when it moved to
+    the gate-rotation family at D300. **A null that rotates names is not a null
+    that rotates time, and cohort drift only shows against the second.**
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and

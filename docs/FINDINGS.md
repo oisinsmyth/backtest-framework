@@ -1916,3 +1916,68 @@ signals are hist_L and rev_21.
 you were looking at. Four cells had been re-measured under the corrections and
 they happened to be four that fell; the other 42 mostly rose, and the best book
 in the programme was among them.
+
+## 28. The long excess is cohort membership, not timing: no long signal beats its own names at random times
+
+**From [D347](decisions/D347-RESULT-no-long-signal-beats-its-own-names-at-random-times.md),
+2026-09-06.** Pre-registered; zero of eight.
+
+Four long signals as events on the floored, deal-filtered universe -- hist_L
+and rev_21 entering their bottom decile, rsi's turn and decile as references --
+every event taken at the next open, hedged against the floored universe's own
+equal-weight return, held 40 bars. Each earns a positive excess per trade
+(hist_L +60 bp, t 4.8, 15,889 trades). Then three controls that each carry the
+drift:
+
+```
+                     observed   A: same names, random dates   B: same day, same rsi bucket, random name   C: random side
+hist_L                 +60.4    p50 +70.8  p95 +90.8  NO       p50 +24.0  p95 +39.7  yes                  p95 +21.7  yes
+rev_21                 +46.5    p50 +59.6  p95 +80.1  NO       p50 +29.0  p95 +42.0  yes                  p95 +21.5  yes
+rsi turn               +16.0    p50 +45.2  p95 +60.3  NO       p50 +26.3  p95 +36.7  NO                   p95 +20.5  NO
+rsi decile             +30.4    p50 +48.0  p95 +65.9  NO       p50 +20.2  p95 +26.4  yes                  p95 +18.1  yes
+```
+
+**Every signal earns less than its own names held at random times.** The names
+these signals touch are a cohort that earns +45 to +71 bp per forty bars over
+the floored market whenever it is held; the signals' timing subtracts 10 to 29
+of it. Three of four beat a random same-day, same-bucket name -- the name
+selection is real -- and control A says it is STATIC. **A market hedge cannot
+remove a per-name mean**: neither the floored equal-weight hedge nor a rolling
+63-bar beta (which moved hist_L from +60 to +52 and lifted the rsi references)
+took the cohort's excess out. The hedge for cohort drift is the name's own
+unconditional excess, which is what control A measures.
+
+**The pairing design is reversed on its own terms.** The interaction with the
+rsi ranking -- E[signal, bucket] - E[bucket] - E[signal] + E[all] -- is most
+negative in the most oversold rsi bucket for every signal and positive in the
+middle: hist_L's events on names in the bottom 2% by rsi earn +1 bp, on names
+in the middle half +103. A momentum-histogram extreme on a name that is also
+deeply oversold is a name in free fall; on a neutral name it is a pullback.
+Running the long signal on the top of the rsi ranking would run it where it
+does worst.
+
+**And the rsi ranking's own profile is a base rate.** Forward-40 hedged excess
+of every floored name-bar, by rsi percentile: +23, +10, +21, +32, +27, +22
+below the 75th percentile; +6, -8, -12, -31 above. Low-rsi names earn 20-30 bp
+over forty bars with no signal firing at all. That is the slot book's long side
+as a cohort property, and whether it survives ITS control A is the next study.
+
+**What this does to the record so far.** The slot books' null since D300
+rotates names within the gate on the same day -- D347's control B, which these
+signals beat. The per-name time rotation -- D290's original "rotation" null --
+was dropped when the programme moved to the gate family, and **no slot cell has
+faced it**: every per-trade "long leg pays" in D335, D344 and D346, and both
+candidates' bp/bar, are unmeasured against cohort drift. D290's long-only
+verdict stands for long signals, sharpened: not market drift (the ledger is
+hedged) but cohort drift.
+
+**Three rules:**
+
+1. **A null that rotates names is not a null that rotates time.** Cohort drift
+   only shows against the second. Every candidate carries both from here.
+2. **Hedging is not a substitute for a control.** The market hedge and the beta
+   hedge left a 45-70 bp per-name mean in place; the control found it in one
+   run.
+3. **Test the interaction before designing around it.** The pair book's
+   premise -- a long signal is best on the extreme of the ranking -- was
+   measurable in one table and false.
