@@ -1989,6 +1989,14 @@ timing. The base-rate line "+6, -8, -12, -31 above" carries an artefact: the
 -31 was names with no rsi rank digitised into the top bucket; the top 2% earns
 +11 long (D349 §6).
 
+**Withdrawn by §32 (D351, 2026-09-06).** The headline of this section is
+withdrawn: control A rotated events within every priced bar and 11-13% of
+them landed on the excluded tail at +226 to +316 bp per forty bars. Rotated
+within the floor, hist_L, rev_21 and the rsi decile are ABOVE their own names
+at random times, B and C. The cohort premium is +7 to +24, not +45 to +71. The
+interaction reversal and the rsi turn's failure stand. Rules 1 and 3 stand;
+rule 2's numbers do not.
+
 ## 29. The slot books survive the time rotation: the depth-2 long leg is timing, and on a slot book the rank rotation is the harder null
 
 **From D348, 2026-09-06.** Pre-registered; four of seven, the load-bearing one
@@ -2013,8 +2021,12 @@ entries across ~1,500 names, weighted by how often each fired -- while this
 rotates the *score* and re-ranks: at a random date the depth-2 gate selects
 whichever names' rotated scores are most extreme, which over-selects names
 with long extreme stretches held at moments unrelated to their true state, and
-those lose. **Cohort drift is a property of the decile-entry event, not of the
-depth-2 selection.** §28's scope claim is narrowed accordingly.
+those lose. ~~**Cohort drift is a property of the decile-entry event, not of the
+depth-2 selection.**~~ **Withdrawn by §32:** D347 and D348 disagreed because
+D347's null was rotating events onto the excluded tail, not because the
+constructions differ; under a null confined to the floor, the event ledger and
+the slot book agree that the long side has timing. The numbers of this section
+stand; this paragraph's mechanism does not.
 
 **The rank rotation is the harder null on a slot book.** Its p95 on gross is
 above the time rotation's on all three cells (+8.5 vs +4.5, +10.1 vs +8.1,
@@ -2060,10 +2072,11 @@ open, hedged against the floored market, 40-bar cap, PUB and borrow in the net.
 | `rsi` decile | -1.8 | -67.0 | -9.4 | +65.2 | +1.8 |
 | `rsi` turn | -18.6 | -69.1 | -11.1 | +50.5 | +18.6 |
 
-**Every one beats control A** (above all 100 draws) **and every one loses in
-mean before cost.** The names the short signals touch rise 56-70 bp per forty
-bars at random times -- §28's cohort drift from the other side -- and the
-signals' timing recovers 26-67 of it. Not enough: none beats the
+~~**Every one beats control A** (above all 100 draws)~~ **Amended by §32:**
+control A here carried D347's defect; within the floor the names rise 22-41 bp
+at random eligible times (not 56-70), on_share's timing is +0.4, skew_63 is
+inside A', and three of five are above it by 11-33. **Every one loses in mean
+before cost** -- that stands, and so does the rest of this section. Not enough: none beats the
 random-direction control, and the long of every short event pays. This is
 D238's "real skill, cannot be traded" in the current conventions, with the
 reason corrected: **it is the cohort's rise that eats the timing, not the
@@ -2098,3 +2111,114 @@ untouched. D349 masks the NaNs and asserts it.
 2. **Mask NaNs before `digitize`.** A bucket that silently collects the
    undefined is a cohort of its own -- here, young listings -- and it will
    look like a signal.
+
+## 31. Three long triggers beat every honest control, and none pays the published spread
+
+**From D350, 2026-09-06.** Pre-registered; one of eight on the letter, every
+failure the one §32 predicts.
+
+**The screen.** 46 scores x 3 percentile-event shapes = 138 long events, each
+scored on the cached forward-40 hedged grid against its own names at random
+ELIGIBLE times (control A, 1,000 draws) and a random same-day same-rsi-bucket
+name (B, 1,000). 43 of 138 above A at p <= 0.05 against 7-9 from false
+discovery (M_eff Li-Ji 108, Cheverud-Nyholt 136); BH at q = 0.10 rejects 34;
+the family-wise grid-max p of the best member is 0.000; the oracle clears and
+the noise does not. **Every E1 member on a reversal-type score has positive
+timing** (hist_L +46, md +56, rsi +23, rev_5 +42, rev_21 +38, mom_252_21 +39,
+dist_52w_high +123 bp over its own names at random times).
+
+**The kernel, on the five gate survivors.** Under the pre-registered control
+(D347's rotation within every priced bar) none passes; under the same rotation
+confined to the floor, three pass A', B and C:
+
+| long, cap, bp/trade | n | mean / median | t | A' p50 / p95 | trimmed | net PUB / PB |
+|---|--:|--:|--:|--:|--:|--:|
+| **rev_5/E1** | 27,316 | +43.4 / +41.8 | 4.8 | +19 / +30 | +35 | -19 / +18 |
+| gap_reversal/E1 | 18,714 | +47.1 / +27.0 | 4.0 | +27 / +42 | +38 | -22 / +17 |
+| cs_spread/E2 | 7,812 | +71.6 / +31.1 | 3.4 | +12 / +46 | +61 | -35 / +28 |
+
+**rev_5/E1 is the cleanest signal on the programme's event record**: a
+one-week reversal entering the bottom decile, mean equal to median, 27 names
+to half the P&L, ten of fourteen years, positive in the down-years, top trade
+1.3%. gap_reversal/E1's top trade -- and two other survivors' -- is GME in
+January 2021; it earns +95 below the median price and -1 above, and its top 1%
+carries more than all of it (symmetric trim +38). cs_spread/E2 is a name
+entering the top decile of SPREAD: the floor's own illiquid edge, half its P&L
+in twelve names.
+
+**None nets positive after the PUB round trip** (62-106 bp); all three do under
+PB. The invalidation exit is worse for every one. The long side's problem is
+cost, as it has been since D285.
+
+**The interaction, fourth table.** rev_5/E1 is -65 in the bottom 2% by rsi and
++66 / +150 in the (75, 95] buckets: a one-week reversal on a name that is not
+oversold on the two-week rsi is a pullback; on one oversold on both it is a
+falling knife. On every long signal in D347 and here, the bottom of the rsi
+ranking is where the signal does worst. **The pair book's long trigger must
+not be selected by the ranking's long extreme.**
+
+**Rules:**
+
+1. **Print both controls when a pre-registered one is found defective before
+   the result is read.** The letter of Q1 closed a real signal; the record
+   takes the corrected control and prints the defective one beside it in every
+   table, and says why.
+2. **A screen on a cached grid with sparse nulls costs seconds per member**;
+   the kernel confirms the ranking. Screen wide, confirm narrow.
+
+## 32. A null must live in the universe the strategy trades: D347's control A was trading the excluded tail
+
+**From D351, 2026-09-06.** Pre-registered; four of seven, the load-bearing one
+held.
+
+**The defect.** D347's `rotate_confined` rolled each name's events within
+finT -- every priced bar -- while the observed events sat on elig = finT &
+keep_v2 after the hedge is defined. A rotated event could land on a bar the
+strategy is forbidden to trade (close under $5, dollar volume below the cut,
+no dollar-volume estimate yet), and the kernel traded it because it checks
+finT and not keep. On the names these signals touch, those bars earn **+226 to
++318 bp** per forty bars -- the rebounds of cheap names, the tail D339 found to
+be every book's top trade and none of its edge -- and 8-13% of every signal's
+rotated events landed there. Reproduced to 0.0 from the studies' own seeds by
+their own code path.
+
+| kernel, cap, bp/trade | side | observed | A as run p50 | **A' p50 / p95** | above A' / B / C |
+|---|---|--:|--:|--:|---|
+| hist_L | long | +60.4 | +70.8 | **+23.9 / +41.8** | **yes / yes / yes** |
+| rev_21 | long | +46.5 | +59.6 | **+12.9 / +26.5** | **yes / yes / yes** |
+| rsi turn | long | +16.0 | +45.2 | +6.9 / +28.0 | no / no / no |
+| rsi decile | long | +30.4 | +48.0 | **+10.6 / +24.4** | **yes / yes / yes** |
+| on_share | short | -40.9 | -66.6 | -41.4 / -22.3 | no / no / no |
+| skew_63 | short | -3.6 | -70.5 | -33.1 / -0.3 | no / no / no |
+| close_in_range | short | -11.5 | -56.3 | -22.7 / -16.4 | yes / yes / no |
+| rsi decile | short | -1.8 | -67.0 | -35.2 / -23.9 | yes / yes / no |
+| rsi turn | short | -18.6 | -69.1 | -37.0 / -20.3 | yes / no / no |
+
+**What changes.** §28's headline is withdrawn: three of four long signals beat
+their own names at random eligible times, a same-day same-bucket name, and a
+random direction; the cohort premium is +7 to +24 over a universe base rate of
++1.7, not +45 to +71. §30's verdict stands with its timing values cut (on_share
++0.4; skew_63 inside A'). §29's numbers stand and its mechanism is withdrawn:
+D348 and D347 disagreed because one null was broken. D290 is not re-opened:
+its rotation and its universe agreed. hist_L still nets -3.1 after PUB (+33.4
+after PB): the edge is real and the published spread eats it.
+
+**Why the assertions missed it.** [A] checked that every name's event count
+was kept and that no trade carried a NaN; it never asked whether a rotated
+event was a bar the observed events could have occupied. The tell -- a null
+centred at +45 to +71 over a base rate of +1.7 -- was explained by a mechanism
+("cohort drift") that this document, STACK item 18, and a memory rule then
+carried for three records. The check was one line on the cached grid:
+`mean(F[fin & ~elig])`.
+
+**Rules:**
+
+1. **Every null asserts `null_events ⊆ elig`** -- the same mask the observed
+   events satisfy -- and reports the share that would not have been. Rotation,
+   permutation, replacement, all of them.
+2. **A null centred far from the base rate is the first thing to explain.**
+   Suspect the null before writing the mechanism; never carry a mechanism into
+   a rule until the null has passed its own construction check.
+3. **When two studies disagree about the same signal, check the nulls are the
+   same object on the same universe** before explaining the disagreement by
+   construction.

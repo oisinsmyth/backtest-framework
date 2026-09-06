@@ -178,6 +178,34 @@ trigger on either side under the current conventions.** Erratum to D347: its
 top-bucket base rate of −31 was names with no `rsi` rank digitised into bucket
 9; the top 2% earns +11 long.
 
+**D351 withdrew D347's headline and the two paragraphs above it are amended
+by it.** D347's and D349's control A rolled each name's events within *every
+priced bar*, so 8–13% of the rotated events landed on the name's own sub-$5
+and illiquid spells — bars the floor forbids — worth **+226 to +318 bp** per
+forty bars. The null was trading the excluded tail. Reproduced to 0.0 from the
+studies' seeds, then rotated within the floor: control A for `hist_L` is **+24,
+not +71**, and `hist_L`, `rev_21` and the `rsi` decile are **above it, above B
+and above C**. Three of D347's four long signals are real against
+drift-matched controls; the cohort premium is +7 to +24, not +45 to +71.
+D349's verdict stands (every short negative in mean, none above C) with its
+timing values cut to +0 to +33; D348's numbers stand and its "disagreement"
+with D347 was the broken null, not the construction. **What D347 called
+cohort drift was the tail D339 removed, seen through a null that did not
+respect the removal.**
+
+**D350 screened 138 long events and, under the corrected control, named three
+triggers.** 43 of 138 members beat their own names at random eligible times
+against 7–9 from false discovery; BH rejects 34; every reversal-type score has
+timing. Under the kernel, **`rev_5`/E1** (+43 a trade, t 4.8 on 27,316 trades,
+mean equal to median, ten of fourteen years, its top trade 1.3%),
+`gap_reversal`/E1 (+47, three top trades GME in January 2021, +95 below the
+median price and −1 above) and `cs_spread`/E2 (+72, the floor's own illiquid
+edge) are above A′, B and C. **None nets positive after the published spread**
+(−19 to −35 a trade; +17 to +28 under PB). The long side's problem is cost,
+as it has been since D285. And on the fourth table to show it, **the bottom of
+the `rsi` ranking is where every long signal does worst**: the pair book must
+not select its long trigger there.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -464,18 +492,30 @@ every number quoted before D340 is a same-close-fill number.
     56–70, mean negative before cost, mirrors positive. D347's top-bucket base
     rate corrected.
 
+17. **The long-timing screen — DONE (D350).** One of eight as pre-registered,
+    every failure the one D351 predicts; under the corrected control `rev_5`/E1,
+    `gap_reversal`/E1 and `cs_spread`/E2 beat A′, B and C; none pays PUB.
+18. **The erratum study — DONE (D351).** D347's and D349's control A was
+    trading the excluded tail; D347's headline withdrawn, D349's verdict kept,
+    D348's mechanism withdrawn. Every null now asserts its events are eligible.
+
 **Next, in this order:**
 
-1. **`hist_L` k=40's candidate record** — it survived D348. Four groups, the
+1. **`rev_5`/E1's full record on the event lens** — D347's design (both exits,
+   both hedges, the three controls with A′, the splits, the interaction) plus
+   the slot-capped variant and the four groups at the book level; multiplicity
+   138 with `M_eff` 108 stated. Predict before running: it clears every control
+   and nets negative under PUB at every exit.
+2. **`hist_L` k=40's candidate record** — it survived D348. Four groups, the
    top trade with as-traded price and dollar-volume percentile, both nulls
-   (rank rotation and time rotation, both already run), GC+HTB, multiplicity
-   92. The one thing the record must say plainly: its short leg is a cohort
-   premium, and the book is its long leg.
-2. **D350's verdict** (the long-timing screen, running) decides whether any
-   percentile-event long trigger exists on this family. If not, the pair book
-   is closed on the event lens, and the only long timing this programme has is
-   the slot book's depth-2 selection itself.
-3. **If the principal wants the event book retried:** θ on trade count, a
+   (already run), GC+HTB, multiplicity 92. Its short leg is a cohort premium
+   and the book is its long leg.
+3. **The pair book's pre-registration** — short extreme of the `rsi` ranking
+   hedged against a long *trigger* (`rev_5`/E1) whose names are **not**
+   selected by the ranking's long extreme (D347, D349, D350: the bottom of the
+   ranking is where every long signal does worst). It waits on D336's quoted
+   spreads, because no trigger pays PUB and every one pays PB.
+4. **If the principal wants the event book retried:** θ on trade count, a
    hedged capital series, the invalidation exit as the primary arm — three
    changes, one pre-registration, the D345 kernel unchanged.
 4. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
@@ -620,6 +660,24 @@ Kept legible rather than quietly fixed.
     twice on D348's first launch. `memo_load.py` executes each script once
     (0.2 s, ~1 GB) and was verified bit-identical on every cached array and on
     D348's identity check. **Profile the import before blaming the data.**
+22. **Items 18 and 19 were both written on a broken null.** D347's control A
+    rotated events within every priced bar while the observed events lived on
+    the floored universe; 8–13% of rotated events landed on the names' sub-$5
+    and illiquid spells at +226 to +318 bp per forty bars, and "cohort drift"
+    was that. Item 19's explanation of why D348 disagreed with D347 — "a
+    control's finding belongs to its construction" — was true as a rule and
+    wrong as applied: the constructions did not disagree; one null did not
+    respect the universe. **A null centred at +45 to +71 over a base rate of
+    +1.7 was the thing to explain first, and the check took one line on the
+    cached grid.** This document wrote a mechanism, a scope claim and a memory
+    rule on it across three records before anyone ran that line.
+23. **Every null must live in the universe the strategy trades.** Rotation,
+    permutation, replacement: assert `null_events ⊆ elig` with the same mask
+    the observed events satisfy, and report the share that would not have been.
+    D347's [A] checked counts and the hedge; it never checked eligibility. From
+    D351 every event-lens runner asserts it, and D350 prints both controls in
+    every table so the letter of a pre-registered Q1 cannot close a real signal
+    on a defective control.
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
