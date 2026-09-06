@@ -112,9 +112,13 @@ def build_gate(A, verbose=True):
 
 # --------------------------------------------------------------------------
 def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
-             legacy=False, *, accumulate="sum", fill="close"):
+             legacy=False, *, accumulate="sum", fill="close", invalidation=None):
     """D295's bar order at an arbitrary depth. The overlay is NOT here -- it
     scales the returns afterwards and does not touch the holdings.
+
+    `invalidation` (D355): None, or a (T, n) LAGGED percentile grid; when given, a
+    long also exits at the first bar with age > 0 on which its entry is >= 50.0
+    (a short: <= 50.0), ORed into the existing exit decision and nothing else.
 
     `slots=False` is the PATH-INVARIANT lens: no slot cap, every eligible name
     held. Not a tradeable book; scored per trade only.
@@ -141,6 +145,11 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
         ocT, mkt_oc = A["ocT"], A["mkt_oc"]
         if ocT.shape != A["r1T"].shape or mkt_oc.shape != A["mkt"].shape:
             raise ValueError("ocT / mkt_oc shapes do not match r1T / mkt")
+    inv = None
+    if invalidation is not None:
+        inv = np.asarray(invalidation)
+        if inv.shape != A["r1T"].shape:
+            raise ValueError(f"invalidation shape {inv.shape} does not match r1T {A['r1T'].shape}")
     r1T, mkt, vxT, finT = A["r1T"], A["mkt"], A["vxT"], A["finT"]
     rankT = A["rankT"]
     gF, gR, gO = G["gateF"], G["gateR"], G["gateO"]
@@ -154,6 +163,8 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
 
     for t in range(1, T):
         r1t, fint, mt, vxt = r1T[t], finT[t], mkt[t], vxT[t]
+        if inv is not None:
+            invt = inv[t]
         if open_fill:
             oct_, mot = ocT[t], mkt_oc[t]
         for side in (0, 1):
@@ -168,6 +179,10 @@ def simulate(A, G, depth, use_target, slots=True, shift=0, runs=None, rng=None,
                     u = vxt[row]
                     if u == u and u > 0.0:
                         trig = cx >= X_TARGET * u
+                if inv is not None:
+                    s = invt[row]
+                    if s == s:
+                        trig = trig or ((s >= 50.0) if side == 0 else (s <= 50.0))
                 cap = (runs is None) and age >= BASE_HOLD
                 if ((trig or cap) and age > 0) or not fint[row]:
                     st = held.pop(row)
