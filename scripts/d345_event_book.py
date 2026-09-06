@@ -21,6 +21,13 @@ Returned dict:
   book_dep    sum(signed v) / n_held, NaN when flat                    (DEPLOYED capital)
   book_tot    sum(signed v) / U, 0.0 when flat                          (TOTAL capital)
   defined     bars where the signal is defined (>= MIN_DEFINED finite scores)
+
+With hedged_series=True (D353; default False leaves the returned dict EXACTLY as above)
+the mark loop also accumulates the HEDGED signed sum sgn * (v - m) per bar -- the same
+term the ledger's per-trade pnl sums -- and three keys are ADDED:
+  signed_x    sum over held positions of sgn * (v - m) per bar (0.0 when flat)
+  book_dep_x  signed_x / n_held, NaN when flat                          (DEPLOYED, hedged)
+  book_tot_x  signed_x / U over defined bars, NaN elsewhere              (TOTAL, hedged)
 """
 
 from __future__ import annotations
@@ -36,7 +43,7 @@ def defined_bars(score_T, min_defined=MIN_DEFINED):
 
 
 def simulate_event(A2, sig_long, sig_short, score_T, *, exit, cap, n_max=None, x_target=0.9627, U=4,
-                   first_bar=1):
+                   first_bar=1, hedged_series=False):
     if exit not in EXITS:
         raise ValueError(f"exit must be one of {EXITS}, got {exit!r}")
     r1T, mkt, vxT, finT = A2["r1T"], A2["mkt"], A2["vxT"], A2["finT"]
@@ -46,6 +53,7 @@ def simulate_event(A2, sig_long, sig_short, score_T, *, exit, cap, n_max=None, x
     cnt = {0: np.zeros(T, np.int32), 1: np.zeros(T, np.int32)}
     ret = {0: np.full(T, np.nan), 1: np.full(T, np.nan)}
     signed_sum = np.zeros(T)
+    signed_x = np.zeros(T) if hedged_series else None      # D353: the hedged signed sum, additive option
     ent = np.zeros(T, np.int32)
     skipped = np.zeros(T, np.int32)
     trades = []
@@ -109,6 +117,8 @@ def simulate_event(A2, sig_long, sig_short, score_T, *, exit, cap, n_max=None, x
                         v, m_ = r1t[row], mt
                     st[0] += 1
                     st[1] += sgn * (v - m_)
+                    if hedged_series:
+                        signed_x[t] += sgn * (v - m_)
                     buf[k] = v
                     k += 1
                 ret[side][t] = float(np.mean(buf[:k]))
@@ -120,9 +130,13 @@ def simulate_event(A2, sig_long, sig_short, score_T, *, exit, cap, n_max=None, x
     book_dep = np.where(n_held > 0, signed_sum / np.maximum(n_held, 1), np.nan)
     defined = defined_bars(score_T)
     book_tot = np.where(defined, signed_sum / float(U), np.nan)
-    return dict(trades=trades, cnt0=cnt[0], cnt1=cnt[1], ent=ent, skipped=skipped, held=n_held,
-                book_slot=book_slot, mask_slot=ok_slot, book_dep=book_dep, mask_dep=n_held > 0,
-                book_tot=book_tot, defined=defined, U=U, exit=exit, cap=cap, n_max=n_max)
+    out = dict(trades=trades, cnt0=cnt[0], cnt1=cnt[1], ent=ent, skipped=skipped, held=n_held,
+               book_slot=book_slot, mask_slot=ok_slot, book_dep=book_dep, mask_dep=n_held > 0,
+               book_tot=book_tot, defined=defined, U=U, exit=exit, cap=cap, n_max=n_max)
+    if hedged_series:
+        out.update(signed_x=signed_x, book_dep_x=np.where(n_held > 0, signed_x / np.maximum(n_held, 1), np.nan),
+                   book_tot_x=np.where(defined, signed_x / float(U), np.nan))
+    return out
 
 
 # ------------------------------------------------------------------ calibration
