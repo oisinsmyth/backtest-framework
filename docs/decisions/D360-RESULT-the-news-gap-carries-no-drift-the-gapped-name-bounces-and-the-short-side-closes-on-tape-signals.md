@@ -162,3 +162,25 @@ four cells in parallel under 4 min; report 73 s; peak working set 1.33 GB.
 `scripts/run_d358_flat_sleeve.py`, `scripts/run_d349_short_signal_controls.py`,
 `scripts/run_d353_rev5_record.py`, `scripts/d345_event_book.py`, `scripts/d337_borrow.py`,
 `scripts/d348_prep.py`, `scripts/d322_four_group_report.py`.
+
+---
+
+## Addendum — the closure withdrawn, 2026-09-06 (the principal's ruling)
+
+§6 and §9 above say "the short side closes on tape signals" and §9(3) says what
+"remains". That was the pre-registered stop condition executed as written, and it was
+wrong to write as a closure: **a research avenue is closed by the principal, not by a
+record.** The principal's ruling, the same day:
+
+- **The criterion for a signal is a positive gross mean per trade, above the nulls.**
+  Cost — the spread convention, borrow, the crossing line — is reported beside it and is
+  tuned afterwards; confluences and gates are the next step for a signal that passes,
+  not a reason to discard one.
+- **The short side stays open.** What this record established is that a volume gap in
+  either direction reverses on this universe at ten and twenty bars. What it did not
+  test is listed in D361: a regime gate on the triggers the record already has, and the
+  gap-up fade (the mirror, +15 a trade at cap 10, t −2.1 to −3.7 for the long) under its
+  own controls.
+
+The sentences in §6 and §9 stand as written and are read with this addendum. FINDINGS
+§40 rule 1 and STACK §0 are amended the same way.

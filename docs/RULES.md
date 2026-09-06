@@ -615,3 +615,20 @@ real difference in robustness that a single-cell summary hides. And the
 multiplicity a grid-max null prices is the search for max `t`; **selecting k on
 any other criterion is a different search over the same grid and needs its own
 null.**
+
+## R15. A signal is a positive gross mean per trade above its nulls; cost is tuned afterwards, and only the principal closes an avenue
+
+*Added 2026-09-06 at the principal's ruling, after D360.*
+
+**The criterion for a signal at the signal stage is gross:** a positive mean per
+trade, above the p95 of its pre-registered controls. The cost line — spread
+convention, borrow, the crossing convention — is reported beside it in full and
+**decides nothing at that stage**; cost is engineered afterwards (hold, floor,
+fill, spread ceiling), and confluences and gates are the next step for a signal
+that passes, not grounds for discarding one that nets negative.
+
+**A research avenue is closed by the principal, never by a record.** A stop
+condition says what the construction showed and lists what was not tested. It
+does not say the axis is closed, that "what remains" is X, or that no further
+study is worth writing. Three constructions failing is three constructions.
+D360's §6 and §9 were written against this rule and carry an addendum.

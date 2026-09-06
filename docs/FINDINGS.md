@@ -2538,10 +2538,14 @@ express has been timing inside names that rise or bounce.
 
 **Rules:**
 
-1. **The short side has no tape signal on the floored universe.** A short
-   sleeve here is a regime gate — the loser cohort falls in era 1 and the
-   down-years (§39) — or information from outside the tape. No further
-   single-fixture tape short is worth a pre-registration.
+1. **No unconditional tape short has cleared its controls on the floored
+   universe** — levels (§33), loser rallies (§39), news gaps (this). *Amended
+   the same day at the principal's ruling:* this is a statement of what was
+   tested, not a closure; the avenue is the principal's to close. Untested
+   and queued: the regime gate on the existing triggers (the loser cohort
+   falls in era 1 and the down-years, §39) and the gap-up fade under its own
+   controls (D361). **The criterion for a signal is a positive gross mean per
+   trade above the nulls; cost is tuned afterwards.**
 2. **A sharp move bounces, gap or no gap.** The long side's rule (§29, §34,
    §38) covers tape-identified news days; an argued exemption must be tested
    as the premise before the timing is read (STACK §7 item 30).

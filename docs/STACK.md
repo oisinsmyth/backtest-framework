@@ -298,9 +298,13 @@ twenty, and by 17 to 38 in the down-years. The gap up on volume reverses too
 31 bp a side, general collateral — and it does not matter. **The short side
 has no tape signal on the floored universe**: levels select the wide names
 whose drift is smaller than their cost (D352), loser rallies sit inside a pool
-that rises (D359), news gaps reverse (D360). What remains for a short sleeve
-is a regime gate — the only place any short paid before cost is where the
-loser cohort falls — or information that is not on the tape.
+that rises (D359), news gaps reverse (D360). *Amended the same day at the
+principal's ruling: that is what was tested, not a closure — the avenue is
+the principal's to close, and the criterion for a signal is a positive
+GROSS mean per trade above the nulls, cost tuned afterwards.* Untested and
+queued as D361: a regime gate on the triggers the record has — the only
+place any short paid before cost is where the loser cohort falls — and the
+gap-up fade under its own controls.
 
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
