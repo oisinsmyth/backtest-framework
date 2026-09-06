@@ -126,6 +126,17 @@ every signal, p = 0.055 against a 200-value null), and the amendment that
 threshold on trade count, hedged series, invalidation exit — is a new
 pre-registration and is not run.
 
+**D346 re-ran all 46 legs under the floor and the open fill.** Two long legs
+pay their cost uncapped at k=20 (`hist_L` +30.9, `rev_21` +5.9) and three at
+k=40; none of `rsi`, `retrace_leg`, `rev_5` does. The corrections *compressed*
+the table: 29 of 46 long legs improved, the best fell hardest, the long-leg p95
+went from +42 to −6. And at k=40 **`hist_L` symmetric — the incumbent's own
+primary — is +12.42 bp/bar with a Sharpe of 0.40**, two and a half times the
+candidate's, with `id_mean` +9.61 and `dollar_vol` +8.47 also above `rsi`. One
+cell of 92, unnulled, no top trade named: it gets the next candidate record
+before anything is built on it, and `rsi` stays the declared candidate until it
+does.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -394,27 +405,40 @@ every number quoted before D340 is a same-close-fill number.
     closed again; the kernel kept; the exit amendment made; the first positive
     invariant lens recorded at p = 0.055.
 
+13. **The 46 legs under the floor and the open fill — DONE (D346).** Two long
+    legs pay uncapped; the table compressed; `hist_L` at k=40 is the best book
+    (+12.42, Sharpe 0.40), one cell of 92.
+
 **Next, in this order:**
 
-1. **The rotation null's resolution.** 24 distinct values is the ceiling every
-   D300-family p has been quoted against; `rsi` at k=40 clears it by 2.6 bp/bar
-   on gross. D345's per-name time rotation of the *signal* has 200 distinct
-   values and fits the slot book too (rotate the score, re-rank) —
-   pre-registered on the k=40 cell, before any read.
-2. **If the principal wants the event book retried:** θ on trade count, a
+1. **`hist_L` symmetric at k=40 under `keep_v2` and the open fill — the
+   candidate record.** Four groups, the top trade with as-traded price and
+   dollar-volume percentile, a per-name signal-rotation null (200+ values),
+   GC+HTB, multiplicity 92 stated. Predict before running whether it clears
+   its null, whether its top trade is under 7%, and whether its long leg's +44
+   a trade survives the top-trade print. If it does, it replaces `rsi` as the
+   declared candidate; if not, the table's maximum was the table's noise.
+2. **The rotation null's resolution** on whichever cell is the candidate after
+   1: D345's per-name time rotation of the signal has 200 distinct values and
+   fits the slot book (rotate the score, re-rank).
+3. **The conditional-profile study**, with `hist_L` and `rev_21` as the long
+   signals conditioned on `rsi` rank and `rsi`'s own turn as the reference —
+   `retrace_leg` and `rev_5` are out, their long legs do not pay uncapped.
+4. **If the principal wants the event book retried:** θ on trade count, a
    hedged capital series, the invalidation exit as the primary arm — three
    changes, one pre-registration, the D345 kernel unchanged.
-3. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
+5. **The `rsi` + `retrace_leg` blend** as a portfolio of two books (not a
    composite): their left tails share two names of twelve; one cell, one
-   prediction on the blend's Sharpe against each parent's.
-4. **Re-base the two stale references** — `d300_width.json` and D331's cells —
+   prediction on the blend's Sharpe against each parent's. Lower priority
+   after D346: `retrace_leg` is −1.18 at k=40.
+6. **Re-base the two stale references** — `d300_width.json` and D331's cells —
    under the bounded panel, old files kept beside (D337 §9–10).
-5. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
+7. **Opportunity cost, measured** (FINDINGS §10). Its sign is now visible on
    both candidates: `rsi` is +3.52 a bar on the variant lens and **−4.8 a trade
    on the invariant one, both legs negative** — the book IS the slot cap.
    Pre-register: hold the slot count fixed and vary the refill pool, or the
    reverse.
-6. **The mixed convention** — rebalanced long, constant-shares short — only if
+8. **The mixed convention** — rebalanced long, constant-shares short — only if
    anyone wants the leg-wise book back (D337 §5, post-hoc).
 
 **Then, signal-side, each with a mechanism behind it:** `macd_hist` normalised

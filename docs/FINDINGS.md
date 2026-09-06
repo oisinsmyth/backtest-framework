@@ -1865,3 +1865,54 @@ signal per name in time -- that fits the slot book too.
 result, not against designing a study that answers the wrong question. If the
 event book is retried it is a new record with three changes: threshold on
 trade count, hedged series, invalidation exit.
+
+## 27. The corrections compressed the signal table rather than shifting it, and the incumbent's primary is the best book under honest scoring
+
+**From [D346](decisions/D346-RESULT-two-long-legs-pay-uncapped-and-hist-L-at-k40-is-the-best-book.md),
+2026-09-06.** Pre-registered; five of seven. Multiplicity 46 per leg per hold,
+92 books; every number below is one of 92.
+
+D335's per-leg table -- every dimensionless signal's long and short leg per
+trade -- re-run under the universe floor and the next-open fill, at k=20 and
+k=40:
+
+```
+PUB net per trade, invariant        k=20                          k=40
+long legs positive of 46            2  (hist_L +31, rev_21 +6)    3  (rev_21 +60, hist_L +44, trailing_return +30)
+long-leg p50 / p95                  -47 / -6                      -45 / +22
+short legs positive of 46           2  (on_share +21, rsi +4)     1  (on_share +31)
+best variant book, PUB bp/bar       rsi +3.10 (Sharpe 0.16)       hist_L +12.42 (Sharpe 0.40)
+variant books positive of 46        4                             6
+```
+
+**Two things, neither predicted.**
+
+1. **The corrections compressed the table.** Twenty-nine of 46 long legs
+   IMPROVED against D335 (median +7.9 bp a trade) while the best legs fell
+   hardest: rsi +64 -> -11, id_mean +35 -> -67, retrace_leg +46 -> -23. The
+   long-leg 95th percentile fell from +42 to -6 and the median rose from -58 to
+   -47. The legs that looked best were harvesting the sub-$5 tail and the
+   overnight gap; the legs that looked worst were losing in the same tail.
+   **A ranking of signals measured on the unfloored, same-close universe was
+   mostly a ranking of exposure to one tail**, and D290's tier list -- the
+   programme's map of signal quality since the shortlist -- was drawn on it.
+2. **The incumbent's primary comes back at the longer hold.** hist_L -- the
+   signal D338 called "a per-trade signal in names too expensive to hold" and
+   D341 found at -11.6 bp/bar -- is, at k=40 under the floor and the open fill,
+   **+12.42 bp/bar with a Sharpe of 0.40**, its long leg +44 a trade uncapped,
+   holding $23 names instead of $11. Two and a half times the declared
+   candidate. It is the maximum of 46 at one of two holds, unnulled, with no
+   top trade named; FINDINGS section 20 says what that is not yet, and it gets
+   the next candidate record before anything is built on it.
+
+**Two smaller things.** The hold is signal-specific: k=40 hurt rsi's per-trade
+lens (D344) and helped hist_L's and rev_21's. And of the three signals proposed
+for the event book -- rsi's turn, retrace_leg's reclaim, rev_5's reversal --
+none has a long leg that pays uncapped; rev_5's grosses +71 a trade at t = 3.0
+and pays 90 of it in spread on $12 names. The conditional-profile study's long
+signals are hist_L and rev_21.
+
+**The rule:** re-run the whole table when the conventions change, not the cells
+you were looking at. Four cells had been re-measured under the corrections and
+they happened to be four that fell; the other 42 mostly rose, and the best book
+in the programme was among them.
