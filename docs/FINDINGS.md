@@ -1981,3 +1981,120 @@ hedged) but cohort drift.
 3. **Test the interaction before designing around it.** The pair book's
    premise -- a long signal is best on the extreme of the ranking -- was
    measurable in one table and false.
+
+**Amended by §29 and §30 (2026-09-06).** The scope claim above -- that every
+slot-book positive was unmeasured against the time rotation and might fall to
+it -- was tested in D348: the slot books survive it, and their long legs are
+timing. The base-rate line "+6, -8, -12, -31 above" carries an artefact: the
+-31 was names with no rsi rank digitised into the top bucket; the top 2% earns
++11 long (D349 §6).
+
+## 29. The slot books survive the time rotation: the depth-2 long leg is timing, and on a slot book the rank rotation is the harder null
+
+**From D348, 2026-09-06.** Pre-registered; four of seven, the load-bearing one
+held.
+
+**The null.** Each name's score rolled in time within its own finite bars --
+the NaN pattern, the floor, the deal filter and every per-bar count untouched
+-- then the unchanged pipeline: lag, rank, gate, both simulates, both costings.
+200 draws, offsets independent per name. Beside it, the 24-shift rank
+rotation the slot books have always faced.
+
+**The result.** `rsi` k=40 (+5.14 PUB), `hist_L` k=40 (+12.42) and
+`retrace_leg` k=20 (+2.68) are above every one of 200 draws on gross bp/bar,
+PUB and PB net, net after borrow, gross and net Sharpe, and both legs' per-trade
+means. Control A's PUB net is centred at -11 to -14 bp/bar with a p95 of -4 to
+-9; the zero-offset draw reproduces D346 and D343 to 0.0.
+
+**The long leg is timing.** Control A's long leg is centred at -13 (`rsi`) and
+-10 (`hist_L`) bp a trade against observed +39 and +141. D347 found the
+opposite on the event ledger because it rotated *events* -- 23,491 decile
+entries across ~1,500 names, weighted by how often each fired -- while this
+rotates the *score* and re-ranks: at a random date the depth-2 gate selects
+whichever names' rotated scores are most extreme, which over-selects names
+with long extreme stretches held at moments unrelated to their true state, and
+those lose. **Cohort drift is a property of the decile-entry event, not of the
+depth-2 selection.** §28's scope claim is narrowed accordingly.
+
+**The rank rotation is the harder null on a slot book.** Its p95 on gross is
+above the time rotation's on all three cells (+8.5 vs +4.5, +10.1 vs +8.1,
++11.3 vs +4.5) because it keeps the day -- the gate, the cross-section, the
+regime -- and permutes only the preference order inside it; the time rotation
+breaks those too. Both are carried from here; the rank rotation binds.
+
+**`hist_L`'s short leg is a cohort premium.** Under control A it is centred
+at +17 and the observed +33 sits at the 70th percentile: names with the
+highest `hist_L` fall at random times. `hist_L`'s book is its long leg, and
+its candidate record must say so.
+
+**Turnover as a signature.** The observed cells enter less often than any
+rotated book (847 against 901-985 for `rsi`; 771 against 914-995 for
+`hist_L`): an aligned score holds to the cap or the target, a rotated one is
+displaced sooner. Noted, not built on.
+
+**Rules:**
+
+1. **A control's finding belongs to the construction it was measured on.**
+   The same words -- "the same names at random times" -- named two different
+   nulls in D347 and D348, and they gave opposite answers about the same
+   signals. Say which object is rotated.
+2. **On a slot book, carry both rotations and expect the rank rotation to
+   bind.** The time rotation is the one that carries per-name drift; the rank
+   rotation is the one that carries the day.
+
+## 30. Every short signal beats its own names at random times and still loses: the names it shorts rise
+
+**From D349, 2026-09-06.** Pre-registered; three of eight, the load-bearing
+one falsified.
+
+**Five short events** -- `on_share`, `skew_63`, `close_in_range`, the `rsi`
+decile and the `rsi` turn, each a fresh entry into the top decile of the lagged
+floored percentile (or the cross down through 70) -- every event taken, next
+open, hedged against the floored market, 40-bar cap, PUB and borrow in the net.
+
+| short, cap, bp/trade | observed | A p50 | B p50 | timing (obs - A p50) | mirror (long) |
+|---|--:|--:|--:|--:|--:|
+| `on_share` | -40.9 | -66.6 | -23.7 | +25.6 | +40.9 |
+| `skew_63` | -3.6 | -70.5 | -17.7 | +66.9 | +3.6 |
+| `close_in_range` | -11.5 | -56.3 | -17.1 | +44.9 | +11.5 |
+| `rsi` decile | -1.8 | -67.0 | -9.4 | +65.2 | +1.8 |
+| `rsi` turn | -18.6 | -69.1 | -11.1 | +50.5 | +18.6 |
+
+**Every one beats control A** (above all 100 draws) **and every one loses in
+mean before cost.** The names the short signals touch rise 56-70 bp per forty
+bars at random times -- §28's cohort drift from the other side -- and the
+signals' timing recovers 26-67 of it. Not enough: none beats the
+random-direction control, and the long of every short event pays. This is
+D238's "real skill, cannot be traded" in the current conventions, with the
+reason corrected: **it is the cohort's rise that eats the timing, not the
+cost.** Borrow is 8 bp a trade; HTB is structurally rare (0.0-0.1% of trades,
+because F0 windows are removed from the score and the floor removes sub-$5
+names); no half-spread makes a cap-exit short pay.
+
+**The extreme of the ranking is where a signal does worst on both sides.**
+`on_share`'s interaction with the `rsi` ranking is +52 in the middle buckets
+and -46 in the top 2%; `skew_63`'s is -107 there. §28's reversal was not a
+long-side fact. The pair book as designed -- a signal at the extreme of the
+ranking, hedged with the extreme of the other side -- fails on the short side
+too. **It has no trigger on either side under these conventions.**
+
+**The event lens and the slot lens disagree on the short leg as they did on
+the long.** D346's `on_share` short leg paid +21 and +31 a trade at depth 2;
+the decile-entry event on the same score loses 41. Neither record speaks for
+the other (§29).
+
+**Erratum to D347.** `np.digitize` sends NaN to the last bin: 961,819 eligible
+name-bars with no `rsi` percentile (nearly all off the warm base) were counted
+in the top bucket's base rate and drawn into its control-B pool. Confined to
+defined ranks, the (98, 100] bucket earns +11 bp long, not -31; (90, 95] and
+(95, 98] are -8 and -12. D347's events sat in buckets 0-2, so its verdict is
+untouched. D349 masks the NaNs and asserts it.
+
+**Rules:**
+
+1. **A short's control A is not centred at zero, so report "beats its own
+   names" and "pays" separately.** Here every signal does the first and none
+   does the second.
+2. **Mask NaNs before `digitize`.** A bucket that silently collects the
+   undefined is a cohort of its own -- here, young listings -- and it will
+   look like a signal.

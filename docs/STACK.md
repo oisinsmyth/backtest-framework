@@ -151,6 +151,33 @@ never been applied to the slot books' cells** — their nulls rotate names withi
 the gate on the same day, which these signals beat — so every per-trade
 positive in D335, D344 and D346 is unmeasured against it. It goes there next.
 
+**D348 put that time rotation on the slot books, and they survive it.** Each
+name's *score* rolled within its own finite bars, re-ranked, re-simulated, 200
+draws: `rsi` k=40 (+5.14 PUB), `hist_L` k=40 (+12.42) and `retrace_leg` k=20
+(+2.68) are above **every** draw on gross, net, both Sharpes and both legs.
+**The slot book's long leg is timing, not cohort drift**: the same kind of
+names selected at random times lose 10–13 bp a trade against observed +39 and
++141. D347's cohort finding was a property of the decile-entry event it tested
+— any of ~1,500 names entering the bottom decile — not of the depth-2 book.
+**And on a slot book the time rotation is the *easier* null**: its p95 is
+below the rank rotation's on all three cells, because the rank rotation keeps
+the day. Both are carried; the rank rotation stays binding. The `hist_L` k=40
+candidate record is now owed. `hist_L`'s short leg is a cohort premium (A
+centred +17, observed at the 70th percentile); its book is its long leg.
+
+**D349 asked the same three controls of the short signals, and none is
+real.** `on_share`, `skew_63`, `close_in_range` and two `rsi` references as
+top-decile events: every one beats its own names shorted at random times by
+26–67 bp — the timing is real — and every one still loses in mean before cost,
+because those names *rise* 56–70 bp at random times. None beats the
+random-direction control; the long of every short event pays. The cost is not
+what loses it: borrow is 8 bp a trade and HTB is structurally rare. The
+extreme of the `rsi` ranking is where a signal does worst on the short side
+too (`on_share` −46 in the top 2%, +52 in the middle). **The pair book has no
+trigger on either side under the current conventions.** Erratum to D347: its
+top-bucket base rate of −31 was names with no `rsi` rank digitised into bucket
+9; the top 2% earns +11 long.
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -427,17 +454,27 @@ every number quoted before D340 is a same-close-fill number.
     beats its own names at random times; the extreme `rsi` rank is where long
     signals do worst. The pair book waits.
 
+15. **Control A on the slot books — DONE (D348).** Four of seven, the
+    load-bearing one held: all three candidate cells above 200 of 200 time
+    rotations on every statistic. The slot book's long leg is timing; the
+    rank rotation is the harder null on a slot book. The prep is cached and
+    the load chain memoised (164–460 s and 5–7.5 GB a process → 0.2 s, 1 GB).
+16. **The short-signal controls — DONE (D349).** Three of eight; no short
+    signal is real: timing +26 to +67 against its own names, cohort rise
+    56–70, mean negative before cost, mirrors positive. D347's top-bucket base
+    rate corrected.
+
 **Next, in this order:**
 
-1. **Control A on the slot books.** The per-name time rotation of the *score*
-   — each name's score series rolled within its priced bars, then re-ranked
-   and re-simulated — applied to `rsi` k=40 and `hist_L` k=40 under `keep_v2`
-   and the open fill, 100+ distinct draws each. This is the null the candidate
-   has never faced and the one D347 says matters. Predict before running:
-   the per-trade long-leg positives of D346 do not survive it; whether the
-   slot-capped book's bp/bar does is the open question.
-2. **`hist_L` k=40's candidate record** only if it survives 1 — four groups,
-   top trade with liquidity, multiplicity 92.
+1. **`hist_L` k=40's candidate record** — it survived D348. Four groups, the
+   top trade with as-traded price and dollar-volume percentile, both nulls
+   (rank rotation and time rotation, both already run), GC+HTB, multiplicity
+   92. The one thing the record must say plainly: its short leg is a cohort
+   premium, and the book is its long leg.
+2. **D350's verdict** (the long-timing screen, running) decides whether any
+   percentile-event long trigger exists on this family. If not, the pair book
+   is closed on the event lens, and the only long timing this programme has is
+   the slot book's depth-2 selection itself.
 3. **If the principal wants the event book retried:** θ on trade count, a
    hedged capital series, the invalidation exit as the primary arm — three
    changes, one pre-registration, the D345 kernel unchanged.
@@ -557,6 +594,32 @@ Kept legible rather than quietly fixed.
     had it (its "rotation" null) and the programme dropped it when it moved to
     the gate-rotation family at D300. **A null that rotates names is not a null
     that rotates time, and cohort drift only shows against the second.**
+19. **Item 18 was too wide, and D347 §10's "it may take them" was a
+    prediction dressed as a scope claim.** D348 ran the time rotation on the
+    slot books and every cell is above every draw; the slot book's long leg
+    is timing, and the time rotation turned out to be the *easier* null on a
+    slot book because the rank rotation keeps the day. Cohort drift was a
+    property of the event definition D347 tested — a decile entry on any of
+    ~1,500 names — not of a depth-2 selection. **A control's finding belongs
+    to the construction it was measured on, exactly as a closure does (item
+    16).** The rule in item 18 stands — both nulls are carried — but the
+    binding one on a slot book is the rank rotation.
+20. **D347's `bucket_of` digitised an undefined `rsi` percentile into the top
+    bucket**, so its top-bucket base rate (−31 bp) was names with no rank —
+    961,819 name-bars, nearly all off the warm base — and its control-B pool
+    for that bucket drew from them. The top 2% by `rsi` earns +11 long. D347's
+    events sat in the bottom buckets, so its verdict stands; the sentence
+    "high-`rsi` names lose it" holds for the 90th–98th percentiles only. **A
+    `digitize` on a grid with NaNs needs the NaNs masked first**; D349 asserts
+    it.
+21. **The load chain was the memory.** D347 §8 read six concurrent processes
+    taking 50 minutes to load as "memory, not GIL" and left it there. The
+    cause was 190 identical `_load` calls with no memoisation: every process
+    re-executed `d285_spread_estimate.py` 151 times and held 5–7.5 GB before
+    building anything. Five such processes paged the machine to a standstill
+    twice on D348's first launch. `memo_load.py` executes each script once
+    (0.2 s, ~1 GB) and was verified bit-identical on every cached array and on
+    D348's identity check. **Profile the import before blaming the data.**
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
