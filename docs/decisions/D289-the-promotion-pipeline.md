@@ -470,3 +470,132 @@ the peak alongside `t`**, so breadth cannot masquerade as strength.
 
 **And a peak at max k means the grid may be too short to contain the maximum.**
 Either extend the sweep or record the result as horizon-unresolved.
+
+---
+
+# SIXTH AMENDMENT, 2026-09-08 — NO GATE IS AN ADMISSION ON ITS OWN: each is half of a pair
+
+**This amendment adds no gate and moves no threshold. It names a property the set
+already has**, so that the standard check on a hurdle becomes *"what is it paired
+with?"* rather than *"is the number right?"* — the question that found two defects
+this record did not know it had.
+
+## What prompted it
+
+The principal's challenge, 2026-09-08: **correlation does not bound a difference in
+means.** ρ is computed on mean-removed, volatility-normalised series, so it
+constrains the co-movement of *deviations* and is silent on *levels*. Two books can
+correlate at 0.92 and earn +12 bp and +1 bp a bar; where that happens the right
+action is to hold the better one, not to call them the same strategy.
+
+Auditing the stage-1 set for that error turned up something better than a list of
+defects: **the set is mostly immune, and the reason is structural rather than
+lucky.**
+
+## The property
+
+> **THE STATISTIC IN A GATE IS ALWAYS BLIND TO SOMETHING. A gate is safe when
+> another gate sees exactly what it is blind to. No gate in stage 1 is an
+> admission on its own; each is half of a (SIGNIFICANCE, SIZE) pair, and a gate
+> without its partner is a gate that can be passed — or failed — for the wrong
+> reason.**
+
+**This is not new to this record; it is twice-instantiated in it already, and this
+amendment only generalises what those two passages assert:**
+
+- **Second amendment:** *"1e and 1f together, never 1f alone. That pairing is the
+  whole content of this amendment."*
+- **Fifth amendment, gate 1i:** *"`t` rises with N through averaging, not through a
+  larger edge … Report the per-name effect at the peak alongside `t`, **so breadth
+  cannot masquerade as strength**."*
+
+Both say the same thing about different pairs. The property is the pattern.
+
+## The audit, gate by gate
+
+| gate | statistic | blind to | its partner | status |
+|---|---|---|---|---|
+| **1a** | t vs its own null | **size** — scale-invariant, and grows as √n | **1c** | paired |
+| **1b** | qualitative | — | — | procedural |
+| **1c** | mean move ÷ measured round trip | **holding period** — *monotone* in it | **none** | **⚠ UNPAIRED** |
+| **1d** | correlation to book arms | **level** | **none** | **⚠ UNPAIRED** |
+| **1e** | open-entry t | size | **1c**; and retention beside it | paired |
+| **1e** | retention ≥ 50% | level of both edges | 1a / 1c supply the level | paired |
+| **1f** | name-split CV > 0 | **magnitude** — a sign test | **1e** (second amendment) | paired, and already flagged *necessary, not sufficient* |
+| **1g** | turnover, holding run, dead share | — | reporting, no bar | n/a |
+| **1h** | direction declared | — | procedural | n/a |
+| **1i** | interior vs edge peak | **height of the peak** | the per-name effect at the peak, required by the fifth amendment | paired |
+
+**Eight of ten are paired, and the two that are not are exactly where defects were
+found.** That is the evidence for the property rather than a restatement of it.
+
+## The two unpaired gates — IDENTIFIED HERE, NOT FIXED HERE
+
+**Neither replacement is adopted by this amendment.** Both change what a gate
+*does* and therefore need their own pre-registration; D375 already has 1d awaiting
+one. They are recorded so the gap is not rediscovered.
+
+**1d is blind to level.** It can only reject, and it rejects on shape. A candidate
+correlating above the bar with an existing arm is turned away **whatever it
+earns** — including when it earns materially more, where the correct outcome is to
+**replace** the incumbent rather than reject the candidate. The partner it needs is
+a **paired difference of means on matched bars**, and the arithmetic is favourable:
+`Var(A − B) = σ²_A + σ²_B − 2ρσ_Aσ_B` is *small* at high ρ, so that test is **most
+powerful exactly where 1d goes blind.** A high correlation does not obstruct
+comparing levels; it sharpens the comparison.
+
+**1c and 2c are monotone in holding period.** `mean move per trade ÷ round trip`
+rises mechanically as the hold lengthens — the numerator accumulates with holding
+time while the denominator stays one round trip per trade. **A candidate can clear
+1c by holding longer while its per-bar edge falls.** `CLAUDE.md` states the
+mechanism (*"a longer hold lifts breakeven by amortising one round trip; per-bar
+edge usually falls … say which moved"*) and D373's segmentation diagnostic
+confirmed it on a different per-trade statistic: re-cutting one book's own stored
+paths, identical exposure and only the trade boundaries changed, took the
+`mean > median > 0` chain from **PASS at 40 bars to FAIL at 100.** The partner it
+needs is the **per-bar edge on the deployed base at the same hold**, which gate 1i's
+horizon profile already produces.
+
+**No past verdict is disturbed by either.** 1d has been applied once (D373 H7),
+where the means evidence agreed independently; 1c and 2c have been applied at a
+**fixed cap within each study**, so their comparisons were internally valid. The
+exposure in both cases is *forward* — and, for 1c, *cross-study*.
+
+## What this amendment requires
+
+1. **A pre-registration that quotes a stage-1 gate must name that gate's partner
+   and report both**, or state that the gate is unpaired and what is being done
+   about it.
+2. **A candidate cleared on one half of a pair is recorded as UNRESOLVED on that
+   gate**, never as clearing it — the same convention D369's SE band and gate 1i's
+   edge peak already use.
+3. **A new gate is not admissible until its blind spot is named and its partner
+   identified.** Writing down what a statistic cannot see is now part of proposing
+   it.
+
+## What this amendment does NOT do
+
+- **It adopts no threshold and retires no gate.** 1c, 1d and 2c stand as written.
+- **It does not adopt 1d″ or 1c′/2c′.** Those are the principal's, and belong in
+  D375's outstanding calibration pre-registration.
+- **It makes no claim about stages 2–5**, whose gates were not audited.
+- **It does not touch `docs/FINDINGS.md`.** A related loose clause in §52's
+  corollary — *"at ρ ≈ 0.92 two such constructions are the same strategy for
+  portfolio purposes"* — carries the same overreach and is raised, with a proposed
+  replacement, in `working/FINDINGS-52-corollary-NOTE.md` for the principal to
+  accept or decline. **§52's substance is unaffected: it stands on `B_c` and the
+  cohort hedge, which are level measurements.**
+
+## Stage 1's gates, restated with their pairs
+
+| | gate | paired with |
+|---|---|---|
+| **1a** | t-based best-of-N floor | **1c** |
+| **1b** | mechanism and numeric shape declared before the run, with a falsifier | — *(procedural)* |
+| **1c** | mean move vs the **measured** round trip — reported, not binding | **⚠ unpaired on holding period** |
+| **1d** | correlation to existing book arms | **⚠ unpaired on level** |
+| **1e** | **CAPTURABILITY — open-entry `t` ≥ 2 and retention ≥ 50%** | **1c**, and **1f** |
+| **1f** | **name-split CV > 0** — necessary, and explicitly **not sufficient** | **1e** |
+| **1g** | turnover and holding run, **reported** | — |
+| **1h** | both directions, **declared then disclosed** | — |
+| **1i** | interior vs edge peak, **and the per-name effect at the peak** | self-paired by the fifth amendment |
