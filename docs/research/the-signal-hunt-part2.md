@@ -576,6 +576,12 @@ is guarded by equality against the per-window loop it replaced, **probed on a ti
 
 ## 7d. STAGE 0 RESULT — C1: dispersion has a premise, breadth does not, and **nothing forecasts the winner cohort**
 
+> **⚠ READ §7e FIRST. This section's dispersion finding is WITHDRAWN.** C1 compared dispersion
+> only against *direction* measures and never against *volatility*. It is 0.774 correlated with
+> the cross-sectional median of `rvol21`, and its premise falls from +0.224 to **+0.011** when
+> volatility is partialled out. **Dispersion is the volatility tilt.** Everything else in this
+> section stands, including the winner-cohort negative, which §7e strengthens.
+
 **Run 2026-09-07, `scripts/c1_gate_stage0.py`, artifact `data/c1_gate_stage0.json`.** Descriptive:
 no cell scored, no book built, no trade simulated. It reads forward returns because a premise
 check must — but as a **cohort drift**, never as a strategy's P&L, exactly as D361's Stage 0 did.
@@ -672,13 +678,92 @@ R15 nothing here is a signal.
 
 ---
 
+## 7e. C1b — the volatility control. **§7d's dispersion finding is WITHDRAWN, and the state it was standing in front of is realised volatility**
+
+**Run 2026-09-07, `scripts/c1b_dispersion_vol_confound.py`, artifact
+`data/c1b_dispersion_vol_confound.json`.** Run because §7d named the hole itself: it compared
+dispersion against three *direction* states and never against **volatility**.
+
+**[REG]** reproduces C1's published DISPERSION block correlation **+0.20471 on 159 blocks to
+0.0** before reading anything new, so the two records are the same object. The partial-correlation
+machinery is validated first on planted data: it strips a pure confound (+0.884 → −0.001) and
+keeps a real effect (+0.976 → +0.763).
+
+**Two volatility states, declared before the run, both lagged and over eligible names only:**
+**VOL_XS** = the cross-sectional *median* of `rvol21` (median, not mean, for the reason C1 used an
+IQR — on this fixture a mean is a GME detector); **VOL_MKT** = the trailing 21-bar standard
+deviation of the floored market's own return.
+
+### Q1 — dispersion is not direction, but it very much is volatility
+
+| level Spearman, 3,186 bars | DISPERSION | VOL_XS | VOL_MKT | G1 | G2 |
+|---|--:|--:|--:|--:|--:|
+| **DISPERSION** | 1.000 | **+0.774** | +0.523 | −0.076 | −0.070 |
+| **VOL_XS** | +0.774 | 1.000 | +0.840 | −0.189 | −0.250 |
+| **VOL_MKT** | +0.523 | +0.840 | 1.000 | −0.337 | −0.436 |
+
+**§7d was right that dispersion is orthogonal to the direction family and wrong to conclude it
+was therefore new.** *Distinct from direction is not distinct.*
+
+### Q2 — volatility alone is decisive, and more strongly than dispersion was
+
+| state | target | corr | shuffled p95 | |
+|---|---|--:|--:|---|
+| **VOL_XS** | loser cohort | **+0.288** | 0.152 | **YES — the strongest premise in the whole exercise** |
+| **VOL_MKT** | loser cohort | +0.221 | 0.151 | YES |
+| **VOL_MKT** | all eligible | +0.163 | 0.126 | YES |
+| VOL_XS | **winner cohort** | +0.052 | 0.165 | no |
+| VOL_MKT | **winner cohort** | +0.048 | 0.162 | no |
+
+VOL_XS's **+0.288** beats dispersion's +0.205 and G1's −0.231.
+
+### Q3 — the test that decides, and dispersion fails it
+
+| control | raw | r(disp, vol) | r(vol, y) | **partial** | residual | shuffled p95 | |
+|---|--:|--:|--:|--:|--:|--:|---|
+| **VOL_XS** | +0.224 | +0.752 | +0.288 | **+0.011** | +0.011 | 0.152 | **FAILS** |
+| **VOL_MKT** | +0.205 | +0.524 | +0.221 | +0.107 | +0.104 | 0.164 | **FAILS** |
+
+**Partial out the typical name's own realised volatility and dispersion's premise goes from
++0.224 to +0.011 — essentially all of it was volatility.** Against market volatility it retains
++0.107, still inside its own shuffle.
+
+### What is withdrawn, and what replaces it
+
+- **WITHDRAWN:** §7d's *"DISPERSION is the only genuinely new state on the page, and it is the one
+  that clears."* It is not new; it is `rvol21` at ρ +0.774, and it adds nothing over it.
+- **STANDS, and is stronger:** *there is a decisive state on the loser cohort, and it is
+  **realised volatility**, not dispersion and not market direction.* The finding is relocated,
+  not destroyed.
+- **STANDS, and is now on six states:** **nothing forecasts the winner cohort.** G1, G2, BREADTH,
+  DISPERSION, VOL_XS, VOL_MKT — all six inside their own shuffles, |corr| 0.048 to 0.133. **This
+  is the result of the C1 sequence.**
+
+### And the programme already owns this, from the opposite direction
+
+**PICKUP §5 item 5:** D280 part 4's volatility tilt `zh + zv + za + zr` reaches IC **−0.01373
+(t −5.07)**, *"the only directional statistic in that record that clears its own multiplicity"* —
+and it is recorded there as needing its own pre-registration and **was never run.** C1b has
+re-found the same object from a completely different instrument (a block premise on a cohort
+drift, rather than a cross-sectional IC), which is the kind of convergence that makes a state
+worth believing.
+
+**Two standing cautions attach to it before anything is built.** FINDINGS §1b: the σ² tax took
+**59%** of D264's gross, so a volatility-tilted book pays for its tilt. And PICKUP §3.3:
+overnight drift is a property of *volatility*, not of equities — high-vol names ran +13.81%
+overnight against −8.97% intraday. **A volatility state is not a free gate; it is a tilt with a
+known bill.**
+
+---
+
 ## 8. Order of work
 
 | | what | why here |
 |---|---|---|
 | ~~**1**~~ | ~~**A1 Stage 0** (§7)~~ | **DONE 2026-09-07 — clears K1/K2/K3, §7a. ER is a distinct input and is not yet a signal** |
 | ~~**2**~~ | ~~**C1 Stage 0**~~ | **DONE 2026-09-07, §7d. Dispersion has a premise and is a new state; breadth has neither; NOTHING forecasts the winner cohort** |
-| **3** | **C2** — D362's unrun cell | **promoted by §7d.** Dispersion is the likely object behind D362's calm-market sink, and this is the cell that tells them apart. Cheapest owed measurement in the record |
+| **3** | **C2** — D362's unrun cell | **still owed, and §7e sharpens it.** The candidate object behind D362's calm-market sink is now **realised volatility**, not dispersion — a calm market *is* a low-volatility market. Cheapest owed measurement in the record |
+| **3a** | **The volatility tilt's own pre-registration** | **raised by §7e.** PICKUP §5 item 5 has carried it since D280 and it has never been run; C1b re-found it independently. It is the only state in this record with a decisive premise, and it arrives with the σ² tax attached (FINDINGS §1b: 59% of D264's gross) |
 | **4** | **B1** — undercut-and-reclaim, with its reclaim-vs-level control built | strongest candidate; needs a control that does not exist yet |
 | **5** | **A1 use (i)** as a cohort state, if Stage 0 clears — and immediately if D373's B_c fails | the successor is one state swap rather than a new construction |
 | **6** | **B2**, then **A2**, then **B3** (mechanism-specified, count disclosed), then **A3** | ranked; A3 gated on its own effective-input test |

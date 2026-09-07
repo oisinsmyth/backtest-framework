@@ -1,0 +1,215 @@
+{
+ "purpose": "C1b: is DISPERSION a new state or volatility renamed? C1 compared it only against direction measures. Descriptive; scores nothing.",
+ "reproduces": {
+  "c1_dispersion_bottom_10": 0.20470744112660394,
+  "recomputed": 0.20470744112660394
+ },
+ "states": {
+  "VOL_XS": "cross-sectional median of rvol21 over eligible names at t-1",
+  "VOL_MKT": "trailing 21-bar std of the floored market return at t-1",
+  "gate_rule": "above its own trailing 252-bar median, causal (C1's rule)"
+ },
+ "horizon": 20,
+ "targets": [
+  "bottom_10",
+  "top_10",
+  "elig_all"
+ ],
+ "seed": 20260907,
+ "q1_level_spearman": {
+  "bars": 3186,
+  "states": [
+   "DISPERSION",
+   "VOL_XS",
+   "VOL_MKT",
+   "G1",
+   "G2"
+  ],
+  "matrix": [
+   [
+    1.0,
+    0.7744959807904687,
+    0.5227245922794045,
+    -0.07587806735205628,
+    -0.0702757581152027
+   ],
+   [
+    0.7744959807904687,
+    1.0,
+    0.84003899082149,
+    -0.1891862166487213,
+    -0.24995760914775125
+   ],
+   [
+    0.5227245922794045,
+    0.84003899082149,
+    1.0,
+    -0.33699494348103914,
+    -0.43617646363440987
+   ],
+   [
+    -0.07587806735205628,
+    -0.1891862166487213,
+    -0.33699494348103914,
+    1.0,
+    0.748352683886948
+   ],
+   [
+    -0.0702757581152027,
+    -0.24995760914775125,
+    -0.43617646363440987,
+    0.748352683886948,
+    1.0
+   ]
+  ]
+ },
+ "q2_volatility_alone": {
+  "VOL_XS": {
+   "bottom_10": {
+    "n_blocks": 159,
+    "empty_blocks": 0,
+    "horizon": 20,
+    "corr": 0.2881443664864167,
+    "corr_shuffled": -0.10536158050334521,
+    "se": 0.079555728417573,
+    "z_shuffled": -1.3243745308989212,
+    "shuffle_seed": [
+     20260907,
+     1,
+     0
+    ],
+    "shuffle_p50": -0.002812321934708276,
+    "shuffle_p95": 0.15184804398109758,
+    "x_mean": 0.0177793212150311,
+    "y_mean_bp": 13.51602619332056,
+    "decisive": true
+   },
+   "top_10": {
+    "n_blocks": 159,
+    "empty_blocks": 0,
+    "horizon": 20,
+    "corr": 0.05190640333008568,
+    "corr_shuffled": 0.09507327337647309,
+    "se": 0.079555728417573,
+    "z_shuffled": 1.195052515608322,
+    "shuffle_seed": [
+     20260907,
+     1,
+     1
+    ],
+    "shuffle_p50": 0.000676299787330258,
+    "shuffle_p95": 0.1653219876554372,
+    "x_mean": 0.0177793212150311,
+    "y_mean_bp": 65.89575567890962,
+    "decisive": false
+   },
+   "elig_all": {
+    "n_blocks": 159,
+    "empty_blocks": 0,
+    "horizon": 20,
+    "corr": -0.04369259739028501,
+    "corr_shuffled": 0.020172329833617036,
+    "se": 0.079555728417573,
+    "z_shuffled": 0.25356225421928497,
+    "shuffle_seed": [
+     20260907,
+     1,
+     2
+    ],
+    "shuffle_p50": 0.0027370194042538815,
+    "shuffle_p95": 0.16376186458618627,
+    "x_mean": 0.0177793212150311,
+    "y_mean_bp": 1.8404003552754988,
+    "decisive": false
+   }
+  },
+  "VOL_MKT": {
+   "bottom_10": {
+    "n_blocks": 159,
+    "empty_blocks": 46,
+    "horizon": 20,
+    "corr": 0.22098435800210853,
+    "corr_shuffled": -0.12567896574232013,
+    "se": 0.079555728417573,
+    "z_shuffled": -1.5797601032908022,
+    "shuffle_seed": [
+     20260907,
+     1,
+     0
+    ],
+    "shuffle_p50": -0.005574756753592659,
+    "shuffle_p95": 0.1506254823890916,
+    "x_mean": 0.010571055194572616,
+    "y_mean_bp": 12.049414337716728,
+    "decisive": true
+   },
+   "top_10": {
+    "n_blocks": 159,
+    "empty_blocks": 46,
+    "horizon": 20,
+    "corr": 0.0480061231291447,
+    "corr_shuffled": 0.04468597969313099,
+    "se": 0.079555728417573,
+    "z_shuffled": 0.5616940549973061,
+    "shuffle_seed": [
+     20260907,
+     1,
+     1
+    ],
+    "shuffle_p50": 0.00017469087164390267,
+    "shuffle_p95": 0.16246208229380132,
+    "x_mean": 0.010571055194572616,
+    "y_mean_bp": 70.25975698859223,
+    "decisive": false
+   },
+   "elig_all": {
+    "n_blocks": 205,
+    "empty_blocks": 0,
+    "horizon": 20,
+    "corr": 0.16295092671060066,
+    "corr_shuffled": 0.003005275106199193,
+    "se": 0.07001400420140048,
+    "z_shuffled": 0.0429239141580061,
+    "shuffle_seed": [
+     20260907,
+     1,
+     2
+    ],
+    "shuffle_p50": -0.008062066019147602,
+    "shuffle_p95": 0.1258587804055877,
+    "x_mean": 0.01076118043576562,
+    "y_mean_bp": 0.9746079772376769,
+    "decisive": true
+   }
+  }
+ },
+ "q3_partial": {
+  "VOL_XS": {
+   "n_blocks": 159,
+   "empty_blocks": 0,
+   "d0": 1001,
+   "raw_corr": 0.22370083592713205,
+   "corr_disp_vol": 0.7515256280450903,
+   "corr_vol_y": 0.2881443664864167,
+   "partial_corr": 0.011322921885569038,
+   "residual_corr": 0.010842682571975529,
+   "shuffle_p95": 0.152160941909174,
+   "shuffle_p50": 0.0018519667881021146,
+   "survives": false
+  },
+  "VOL_MKT": {
+   "n_blocks": 159,
+   "empty_blocks": 46,
+   "d0": 84,
+   "raw_corr": 0.20470744112660394,
+   "corr_disp_vol": 0.5243074830534163,
+   "corr_vol_y": 0.22098435800210853,
+   "partial_corr": 0.10697911267709424,
+   "residual_corr": 0.10433430574168072,
+   "shuffle_p95": 0.16372701105050835,
+   "shuffle_p50": -0.0016485828279186982,
+   "survives": false
+  }
+ },
+ "verdict": "DISPERSION DOES NOT SURVIVE at least one volatility control"
+}
