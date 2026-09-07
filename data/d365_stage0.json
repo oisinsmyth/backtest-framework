@@ -1,0 +1,107 @@
+{
+ "study": 365,
+ "stage": "stage0",
+ "note": "D365 Stage 0 -- the top decile's drift against the equal-weight floored market and against a DV-decile-matched hedge, the rank-band profile of both, and a two-factor decomposition. OHLCV only; the holdout fixture is not read.",
+ "score": "mom_252_21",
+ "top_decile": {
+  "ew_hedge_bp": 3.8683471658226836,
+  "ew_name_bars": 189544,
+  "dv_matched_bp": 3.965523770183274,
+  "dv_name_bars": 189544,
+  "dv_share_of_ew": 1.02512096257005
+ },
+ "bands": {
+  "(0,10]": {
+   "lo": 0.0,
+   "hi": 10.0,
+   "name_bars": 189284,
+   "ew_bp": 0.640368612711654,
+   "dv_bp": 0.6329550426373127,
+   "dv_name_bars": 189284,
+   "median_price": 26.44,
+   "median_half_spread_PUB": 40.61640311861694,
+   "median_dv": 40152878.885476306,
+   "mean_beta": 1.3102579016209448
+  },
+  "(10,25]": {
+   "lo": 10.0,
+   "hi": 25.0,
+   "name_bars": 284639,
+   "ew_bp": -0.740507882472165,
+   "dv_bp": -0.7687756845120147,
+   "dv_name_bars": 284639,
+   "median_price": 40.07,
+   "median_half_spread_PUB": 28.899748753145456,
+   "median_dv": 45763148.09904747,
+   "mean_beta": 1.0094917482075823
+  },
+  "(25,50]": {
+   "lo": 25.0,
+   "hi": 50.0,
+   "name_bars": 474782,
+   "ew_bp": -0.24675174843061867,
+   "dv_bp": -0.30577819221012054,
+   "dv_name_bars": 474782,
+   "median_price": 50.34,
+   "median_half_spread_PUB": 25.440859228585857,
+   "median_dv": 49888611.320627004,
+   "mean_beta": 0.8844550232789153
+  },
+  "(50,75]": {
+   "lo": 50.0,
+   "hi": 75.0,
+   "name_bars": 474087,
+   "ew_bp": -0.048432510632555686,
+   "dv_bp": -0.08961583895331007,
+   "dv_name_bars": 474087,
+   "median_price": 60.570000315,
+   "median_half_spread_PUB": 24.93089930851605,
+   "median_dv": 56230229.13539705,
+   "mean_beta": 0.8657833655494189
+  },
+  "(75,90]": {
+   "lo": 75.0,
+   "hi": 90.0,
+   "name_bars": 284444,
+   "ew_bp": 0.7820617400793536,
+   "dv_bp": 0.7672779216949227,
+   "dv_name_bars": 284444,
+   "median_price": 65.59,
+   "median_half_spread_PUB": 27.140577487366755,
+   "median_dv": 60631821.20523834,
+   "mean_beta": 0.9272914536935611
+  },
+  "(90,100]": {
+   "lo": 90.0,
+   "hi": 100.0,
+   "name_bars": 189544,
+   "ew_bp": 3.8683471658226836,
+   "dv_bp": 3.965523770183274,
+   "dv_name_bars": 189544,
+   "median_price": 54.13,
+   "median_half_spread_PUB": 36.43245480454161,
+   "median_dv": 52474190.8878571,
+   "mean_beta": 1.1494876645426526
+  }
+ },
+ "two_factor": {
+  "bars": 3186,
+  "intercept_bp": 2.8562055972114946,
+  "se_ols_bp": 1.637811263047109,
+  "t_ols": 1.7439162018568561,
+  "se_nw5_bp": 1.5403730056068874,
+  "t_nw5": 1.854229843560642,
+  "beta_market": 0.08237919993565367,
+  "se_market": 0.01324793273139976,
+  "beta_size": 0.392604246486794,
+  "se_size": 0.02293163807221672,
+  "definition": "y = EW return of eligible pct>90 names minus m_f; regressors m_f and EW(top DV decile) - EW(bottom DV decile) over the same eligible universe"
+ },
+ "sz": {
+  "sampled": 300,
+  "worst": 1.3877787807814457e-17,
+  "empty_pool_name_bars": 0,
+  "defined_name_bars": 2858599
+ },
+ "holdout_guard": "264 file opens audited in this process, 0 under data/fixtures (none); none containing 'holdout' opened (0 refused: the probe)"
+}
