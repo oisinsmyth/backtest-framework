@@ -3335,8 +3335,15 @@ missing measurement is the same profile for B_c**: if a random cohort name on th
   change in hold length moves breakeven and per-bar edge in *opposite* directions. Any result here
   must say which moved.
 
-**Status.** The winners'-dip avenue is **retired** (§52), so running A′_c would mean the principal
-**reopening** it — theirs to decide under [R15](RULES.md#r15), not something this file assumes. The
-design is recorded now so that it does not have to be re-derived, and so that the retirement is on
-record as resting on the *level* evidence of D373 and D377 rather than on a claim about timing that
-was never tested.
+**Status — REOPENED 2026-09-08.** The principal has reopened the avenue **narrowly**, under
+[R15](RULES.md#r15), to authorise exactly this test and nothing else:
+**[D378](decisions/D378-does-the-entry-day-matter-inside-the-cohort.md)**, pre-registered before its
+runner existed.
+
+**The reopening does not disturb §52.** The level evidence — D373's `B_c` centre of +126.54 and
+D377's collapse to +34.08 — stands unchanged, and so does the rule and its corollary. What is
+reopened is the one question that evidence never addressed. **If D378 fails, §52's retirement stands
+as written.**
+
+**Scope of the authorisation:** mining prefix only, no holdout read, no book touched, one
+pre-registered test.

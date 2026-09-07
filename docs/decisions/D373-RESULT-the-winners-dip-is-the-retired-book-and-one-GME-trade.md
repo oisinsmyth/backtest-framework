@@ -327,6 +327,30 @@ increment, not on a failed null.
 **Nothing was in either book, so no book is amended.** `docs/BOOK.md` remains S1 and S2; the prop
 book remains empty.
 
+### SECOND AMENDMENT, 2026-09-08 — **THE AVENUE IS REOPENED, NARROWLY**
+
+**REOPENED 2026-09-08 by the principal (R15), on one specific question that the retirement did not
+answer and could not have.**
+
+The retirement above rests on **level** evidence — D373's `B_c` centre and D377's hedge — and those
+stand unchanged. What it did **not** rest on is any measurement of **entry timing inside the
+cohort**, because no control in the programme tests it:
+
+- **A′** rotates to any eligible bar, most of them outside the top decile, so it conflates timing
+  with cohort membership.
+- **B_c** holds the day fixed by construction and is silent on day choice.
+
+The reopening also corrects a claim in this record's own lineage: **ρ = 0.923 between cohort books
+bounds their co-movement, not their means.** Two books can correlate that highly and earn very
+differently, so the covariance evidence never spoke to whether a better-timed entry earns more. That
+is recorded at [FINDINGS §52's correction](../FINDINGS.md) and set out as a gap at §52a.
+
+**The reopening is narrow and it is not a reprieve.** It authorises exactly one pre-registered test —
+**[D378](D378-does-the-entry-day-matter-inside-the-cohort.md)**, the cohort-conditioned time rotation
+`A′_c` — on the already-spent mining prefix. It does not restore the construction, does not touch
+either book, and does not authorise a holdout read. **If D378 fails, the retirement above stands as
+written and this amendment expires with it.**
+
 For whatever the decision is, the ledger of what this study cost: **one best-of-5 search** on the
 already-spent mining prefix, priced in §7 and taken under the principal's ruling of 2026-09-07 that a
 brand-new construction may mine spent in-sample data so long as nothing crosses into a holdout.
