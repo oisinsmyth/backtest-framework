@@ -64,3 +64,8 @@ data/d361_trades_gap_up_fade.csv
 # Anything worth keeping is quoted into docs/youtube-lessons.md or a decision record.
 # The raw transcripts are disposable and are not ours to redistribute.
 docs/Youtube Transcrips/
+
+# D377 ensemble: 136 MB of reconstructed book series, 4x the largest tracked file.
+# Exactly reproducible: `uv run python scripts/run_d377_hedge.py --build --draws 500` (~10 min, deterministic seeds).
+# Every number the record quotes lives in the committed data/d377_hedge.json.
+data/d377_ensemble.npz
