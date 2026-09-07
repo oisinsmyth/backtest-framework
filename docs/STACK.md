@@ -863,6 +863,39 @@ every number quoted before D340 is a same-close-fill number.
     from the treatment's own outcome is not a control, and the selection must
     happen inside every draw.
 
+40. **THE HOLDOUT IS SPENT AND THE CONSTRUCTION FAILED — DONE (D371).**
+    **Reads spent: 1. Programme total: 1.** Both gates, one read, 803 names
+    disjoint from the mining set, twelve predictions committed before the
+    fixture was touched. **Four of six hurdles failed on both arms; S6 and C9
+    are RETIRED and neither enters BOOK.md.** Net **+8.11 → +3.19** bp/bar,
+    Sharpe **0.887 → 0.344**, annualised +20.4% → **+8.0%**. **Both nulls
+    fail**: A′ at the 96.2nd percentile (clears the conventional p95, fails
+    the pre-registered p97.5) and GATE-ROT at the 93.9th — so the trigger is
+    borderline, not intact, against 164 SE and 0-of-10,000 in sample. **The
+    top five names are 142% of P&L**, meaning everything outside them loses
+    money; two names of 255 reach half; one trade (CAR, 2021-04-19) is 30%.
+    The 1% trimmed mean per trade is **+63.9 against a 94.8 round trip**.
+    The combined 50/50 with mining returns Sharpe 0.716 against mining's
+    0.911 — the two disjoint universes correlate **+0.545**. Era 1 was fine
+    (+2.98 vs +3.31), the one surprise in its favour.
+41. **THE LESSON THAT SUPERSEDES BOTH §36 AND §39: in-sample null strength
+    does not forecast out-of-sample survival.** This construction cleared its
+    time rotation at 164 SE with zero of 10,000 draws beating it, cleared a
+    best-of-ten multiplicity control at 32.3 SE, and cleared a symmetric
+    winner-removal test at 10.3 SE. **It still failed.** Permutation nulls
+    test whether a pattern is real in the data you have; they say nothing
+    about whether it recurs. Three studies were spent making the in-sample
+    verdicts precise and unbiased, and precision and unbiasedness were both
+    necessary and neither was sufficient.
+42. **A ONE-SHOT MEASUREMENT MUST PERSIST ITS RESULT BEFORE IT RENDERS IT.**
+    D371's first execution computed its evidence and then lost the JSON to a
+    KeyError in the print loop — a formatting typo destroyed the artifact of
+    an irreversible read, and the console had printed only each hurdle's
+    boolean, never the null distributions, so the loss was total rather than
+    partial. Recovered only because the seeds are per-draw and deterministic.
+    **Write the file first; print second; and print the numbers, not the
+    verdict.**
+
 **PRECISION WAS SETTLED BY D369 — AND D370 SHOWED IT WAS THE SMALLER PROBLEM.** What follows
 supersedes the paragraph below, which is kept for the record.
 **PRECISION WAS THE BINDING CONSTRAINT, NOT MORE SWEEPS.** D368 measured

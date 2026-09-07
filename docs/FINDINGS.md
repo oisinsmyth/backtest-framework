@@ -3097,6 +3097,65 @@ The sets genuinely differ — a draw's own ten overlaps the observed book's on a
    fresh top ten still takes 45% (§47 Q8, unaffected) — but the gate's *timing* does not depend on
    which ten they are.
 
+## 51. The momentum book did not travel: on 803 unseen names its top five contribute 142% of P&L, and everything outside them loses money
+
+**From D371, 2026-09-07. THE PROGRAMME'S FIRST HOLDOUT READ. Reads spent: 1.** Pre-registered with
+twelve predictions committed before the fixture was touched — eight mine, four the principal's.
+**Both constructions failed four of six hurdles and are RETIRED.**
+
+| | in sample (1,573 names) | **holdout (803 names)** |
+|---|--:|--:|
+| net PUB bp/bar | +8.11 | **+3.19** |
+| Sharpe | 0.887 | **0.344** |
+| annualised | +20.4% | **+8.0%** |
+| max drawdown | 3,158 bp | 6,234 bp |
+| names to half the P&L | 12 of 515 | **2 of 255** |
+| top 1 / 5 / 10 name share | 11 / 30 / 45% | **36 / 142 / 231%** |
+
+**THE TOP-NAME SHARES ABOVE 100% ARE THE FINDING.** The top five names contribute 142% of total
+P&L, so **everything outside them is net negative**; outside the top ten the remainder loses 131% of
+what the book makes. One trade — CAR, entered 2021-04-19, held to the 252-bar cap for +19,325 bp —
+is **30% of all P&L**. And the 1% trimmed mean per trade is **+63.9 against a 94.8 bp round trip**:
+strip both tails and the average trade does not cover its own costs.
+
+**BOTH NULLS FAIL, NOT JUST THE GATE.** I predicted in writing, twice, that the time rotation would
+clear and only the gate rotation would fail — that the trigger travelled and the overlay did not.
+It did not travel:
+
+| null | p95 | p97.5 (the pre-registered bar) | observed | percentile | in sample |
+|---|--:|--:|--:|--:|--:|
+| A′ time rotation | +2.804 | +3.513 | +3.187 | **96.2nd** | 100th, 164 SE |
+| GATE-ROT | +3.388 | +3.927 | +3.187 | **93.9th** | 99.4th, 32.9 SE |
+
+The trigger clears the *conventional* p95 and fails only the Bonferroni p97.5 fixed in advance for
+testing two constructions on one sample. It is **borderline, not intact**. The gate fails below even
+the unadjusted bar.
+
+**AND POOLING WITH THE TRAINING SET DOES NOT RESCUE IT.** The date-aligned 50/50 of the two books
+returns Sharpe **0.716** against mining-alone's 0.911 — better than the holdout, worse than the
+fixture it was selected on. The reason is that two universes sharing **zero names** over the same
+days still correlate **+0.545**, both being long US-equity momentum: far too correlated for
+diversification to offset a holdout mean less than half the mining mean.
+
+**One surprise in the construction's favour:** era 1 was fine (+2.98 vs era 2's +3.31). The
+in-sample era-1 weakness that no gate could fix did not reappear.
+
+**What it means.**
+
+1. **In-sample null strength does not forecast out-of-sample survival.** This construction cleared
+   its time rotation at **164 standard errors with zero of 10,000 draws beating it** (§49), cleared
+   a best-of-ten multiplicity control, and cleared a symmetric winner-removal test (§50). It still
+   failed. Permutation nulls test whether a pattern is real *in the data you have*; they say nothing
+   about whether it recurs.
+2. **Report the top-name share, not just names-to-half.** "Two names to half the P&L" understates
+   it; "the top five are 142% of P&L" says the rest of the book loses money, which is a different
+   and worse fact.
+3. **A trimmed mean below the round trip is disqualifying on its own.** It says the edge lives
+   entirely in the tails, and tails are exactly what does not repeat.
+4. **Pooling a failed holdout with its training set is not evidence and cannot be**, because the
+   pooled mean is pinned between the two by arithmetic. Declare that arm as context *before* the
+   read, or the temptation is available afterwards.
+
 ---
 
 ## 51. Every cross-sectional book is equal-weighted and nothing has ever been run against it: sizing was never chosen

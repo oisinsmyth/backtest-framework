@@ -354,6 +354,12 @@ def main() -> int:
         R = evaluate(P, "holdout", a.draws, t0)
         print_table("HOLDOUT ALONE -- THE EVIDENCE", R)
         comb = combined(R, mine) if mine else None
+        # WRITE BEFORE RENDERING. The first execution of this read produced its evidence and then lost the JSON
+        # to a KeyError in the print loop below -- a formatting typo destroyed the artifact of a one-shot,
+        # irreversible measurement. Persist first; a display bug must never cost the result.
+        (OUT / "d371_read.json").write_text(json.dumps(V65.clean(
+            dict(study=STUDY, arms=R, combined=comb, holdout_reads_spent=1)), indent=1))
+        print(f"\n  wrote {(OUT / 'd371_read.json').name} BEFORE printing anything")
         if comb:
             print(f"\n  COMBINED -- context, not evidence. The two books are ranked WITHIN their own universes "
                   f"and their per-bar series pooled; merging the universes would rank across 2,376 names and be "
@@ -362,7 +368,7 @@ def main() -> int:
                   f"construction was selected on them)")
             for arm in ARMS:
                 c = comb[arm]
-                print(f"  {arm:<5}{c['bars']:8,}{c['net']:+9.3f}{c['sharpe']:+9.3f}")
+                print(f"  {arm:<5}{c['shared_bars']:8,}{c['net']:+9.3f}{c['sharpe']:+9.3f}")
         (OUT / "d371_read.json").write_text(json.dumps(V65.clean(
             dict(study=STUDY, arms=R, combined=comb, holdout_reads_spent=1)), indent=1))
         print(f"\n  HOLDOUT READS SPENT: 1.  Programme total: 1.")
