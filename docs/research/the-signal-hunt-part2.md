@@ -826,6 +826,62 @@ it could not resolve; for this class of null the answer is not more draws but **
 
 ---
 
+## 7g. C2b — the exhaustive rotation audit on all four of D361's cells: **every verdict stands, and every 200-draw p95 was too low**
+
+**Run 2026-09-07, `scripts/c2b_rotation_audit.py`, artifact `data/c2b_rotation_audit.json`.**
+26 minutes, 16,000 re-simulations. **[ID]** each cell's observed gated per-trade mean and trade
+count reproduce D361's published values to 1e-9 *before* its null is read; **[E]** the offsets
+scored are asserted to be exactly {1 … Td−1} as a set.
+
+| cell | observed | p50 pub | **p50 exact** | Δ | p95 pub | **p95 exact** | Δ | margin | verdict |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|---|
+| G1:T1 | −4.48 | +9.41 | +8.05 | −1.36 | +56.54 | **+56.82** | **+0.27** | −61.29 | inside |
+| G1:T2 | +15.57 | +14.26 | +14.06 | −0.19 | +35.04 | **+36.08** | **+1.04** | −20.51 | inside |
+| G2:T1 | +4.18 | +6.51 | +6.69 | +0.18 | +61.60 | **+68.51** | **+6.91** | −64.33 | inside |
+| G2:T2 | +42.33 | +14.66 | +14.78 | +0.12 | +35.95 | **+41.81** | **+5.86** | **+0.52** | **ABOVE** |
+
+### The reassuring result: no verdict changed
+
+**All four of D361's rotation verdicts stand.** Three cells fail by 20 to 64 bp — margins no exact
+p95 could close — and G2:T2 clears. The audit does not overturn D361; it prices its one surviving
+cell precisely.
+
+### The result that generalises: the tail was understated in **4 of 4** cells
+
+| | mean Δ | mean \|Δ\| | direction |
+|---|--:|--:|---|
+| **p50** — the centre | −0.31 | 0.46 | mixed, small |
+| **p95** — what every verdict uses | **+3.52** | 3.52 | **positive in 4 of 4** |
+
+**The centre is estimated well at 200 draws and the tail is estimated badly, in a direction.**
+That contrast is the finding, and it has a mechanism rather than being a count: the sample 95th
+percentile of n = 200 draws sits at about the 190th order statistic, and on a **right-skewed**
+null — which every one of these is, p50 ≈ +7 to +15 against a max of +70 to +105 — a sample
+quantile that far out **systematically underestimates** the population value. Four of four
+positive is what that mechanism predicts; with n = 4 cells it corroborates the mechanism rather
+than measuring its size in general.
+
+**A correction to this record's own interim reading.** After two cells (Δ +0.27, +1.04) the
+pattern looked like variance rather than bias, with G2:T2's +5.86 an outlier. **The last two cells
+falsified that**: G2:T1 came in at **+6.91**, larger than G2:T2's. Two cells are near zero and two
+are near +6, all four positive.
+
+### The rule, stated at what the evidence supports
+
+> **A 200-draw rotation p95 on this class of null is optimistic by roughly 0 to 7 bp per trade.
+> Any verdict whose margin is smaller than that is not safe at 200 draws, and where the offset
+> population is finite the fix is not more draws but ALL of them** — 330 to 520 seconds a cell
+> here, with the reported SE then exactly 0.
+
+**This is D369's lesson with the prescription sharpened.** D369 asked for more draws generally;
+C2b says the draw count only needs to grow **when the margin is small relative to the null's
+spread**, and that enumeration settles it outright when the group is finite. The one cell in
+D361 whose margin was inside that band — G2:T2, published margin +6.4 — is exactly the one whose
+margin collapsed to **+0.52** when enumerated. It survived; it was the only one that could have
+failed to.
+
+---
+
 ## 8. Order of work
 
 | | what | why here |

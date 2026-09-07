@@ -1,0 +1,178 @@
+{
+ "purpose": "C2b: the exhaustive rotation audit on all four of D361's cells. The null is a finite group of Td-1 offsets, so enumerating it gives an EXACT p95 (SE 0). Descriptive; scores no new construction and admits nothing (R15).",
+ "cap": 10,
+ "exit": "cap10",
+ "cells": {
+  "G1:T1": {
+   "observed": -4.478686290029808,
+   "trades": 2516,
+   "gate": "G1",
+   "trigger": "T1",
+   "exact": {
+    "draws": 4060,
+    "offsets_available": 4060,
+    "p50": 8.051340193837634,
+    "p95": 56.816112202108975,
+    "p05": -37.7288040978484,
+    "maxv": 103.29439434142097,
+    "se": 0.0,
+    "above_p95": false,
+    "margin": -61.29479849213878,
+    "pct_of": 33.029556650246306,
+    "offsets": 4060,
+    "scored": 4060,
+    "wrap_splits": 1058,
+    "seconds": 336.22022318840027
+   },
+   "published": {
+    "draws": 200,
+    "p50": 9.407893470227993,
+    "p95": 56.542746002060404,
+    "maxv": 71.14834316447187,
+    "above": false,
+    "margin": -61.02143229209021
+   },
+   "delta": {
+    "p50": -1.3565532763903594,
+    "p95": 0.2733662000485708,
+    "verdict_changed": false
+   }
+  },
+  "G1:T2": {
+   "observed": 15.570521032375437,
+   "trades": 5609,
+   "gate": "G1",
+   "trigger": "T2",
+   "exact": {
+    "draws": 4060,
+    "offsets_available": 4060,
+    "p50": 14.064889101963866,
+    "p95": 36.07978802801106,
+    "p05": -7.580792261028405,
+    "maxv": 67.23289602203496,
+    "se": 0.0,
+    "above_p95": false,
+    "margin": -20.50926699563562,
+    "pct_of": 54.65517241379311,
+    "offsets": 4060,
+    "scored": 4060,
+    "wrap_splits": 1058,
+    "seconds": 519.2379791736603
+   },
+   "published": {
+    "draws": 200,
+    "p50": 14.25802945628897,
+    "p95": 35.04103783387645,
+    "maxv": 47.24805580499509,
+    "above": false,
+    "margin": -19.470516801501013
+   },
+   "delta": {
+    "p50": -0.193140354325104,
+    "p95": 1.0387501941346073,
+    "verdict_changed": false
+   }
+  },
+  "G2:T1": {
+   "observed": 4.182442287475081,
+   "trades": 1931,
+   "gate": "G2",
+   "trigger": "T1",
+   "exact": {
+    "draws": 3923,
+    "offsets_available": 3923,
+    "p50": 6.687743140977051,
+    "p95": 68.50799120490566,
+    "p05": -42.85362405953721,
+    "maxv": 122.86143838786154,
+    "se": 0.0,
+    "above_p95": false,
+    "margin": -64.32554891743058,
+    "pct_of": 46.80091766505225,
+    "offsets": 3923,
+    "scored": 3923,
+    "wrap_splits": 789,
+    "seconds": 328.27182698249817
+   },
+   "published": {
+    "draws": 200,
+    "p50": 6.508062042129023,
+    "p95": 61.599889423042086,
+    "maxv": 105.40735656994617,
+    "above": false,
+    "margin": -57.417447135567
+   },
+   "delta": {
+    "p50": 0.17968109884802796,
+    "p95": 6.908101781863579,
+    "verdict_changed": false
+   }
+  },
+  "G2:T2": {
+   "observed": 42.32955827116933,
+   "trades": 3977,
+   "gate": "G2",
+   "trigger": "T2",
+   "exact": {
+    "draws": 3923,
+    "offsets_available": 3923,
+    "p50": 14.783951362018085,
+    "p95": 41.81022325344938,
+    "p05": -13.428549365927621,
+    "maxv": 79.81760794707763,
+    "se": 0.0,
+    "above_p95": true,
+    "margin": 0.5193350177199534,
+    "pct_of": 95.25873056334439,
+    "offsets": 3923,
+    "scored": 3923,
+    "wrap_splits": 789,
+    "seconds": 387.3229196071625
+   },
+   "published": {
+    "draws": 200,
+    "p50": 14.660128125596048,
+    "p95": 35.95497250960398,
+    "maxv": 69.54538309995701,
+    "above": true,
+    "margin": 6.374585761565356
+   },
+   "delta": {
+    "p50": 0.1238232364220373,
+    "p95": 5.855250743845403,
+    "verdict_changed": false
+   }
+  }
+ },
+ "paired_comparison": {
+  "cells": [
+   "G1:T1",
+   "G1:T2",
+   "G2:T1",
+   "G2:T2"
+  ],
+  "p50_delta": {
+   "values": [
+    -1.3565532763903594,
+    -0.193140354325104,
+    0.17968109884802796,
+    0.1238232364220373
+   ],
+   "mean": -0.31154732386134953,
+   "mean_abs": 0.46329949149638217
+  },
+  "p95_delta": {
+   "values": [
+    0.2733662000485708,
+    1.0387501941346073,
+    6.908101781863579,
+    5.855250743845403
+   ],
+   "mean": 3.51886722997304,
+   "mean_abs": 3.51886722997304
+  },
+  "understates": 4,
+  "of": 4,
+  "verdicts_changed": []
+ }
+}
