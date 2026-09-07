@@ -1,0 +1,90 @@
+{
+ "study": 380,
+ "stage": 0,
+ "purpose": "Score zr alone -- the measurement D280 declared unrecoverable from its own artefacts. Descriptive: no book, no cell, nothing admitted (R15).",
+ "prereg": "docs\\decisions\\D380-the-volatility-tilt-zr-scored-alone.md",
+ "identity": {
+  "published": {
+   "mean_ic": -0.013726971628895052,
+   "t": -5.074622980176188
+  },
+  "recomputed_unbounded": {
+   "mean_ic": -0.013726971628895052,
+   "t": -5.074622980176188,
+   "bars": 2173
+  },
+  "recomputed_today": {
+   "mean_ic": -0.013728429384348652,
+   "t": -5.075204374497607,
+   "bars": 2173
+  },
+  "note": "D280's artifact predates D333's dividend bound in load_ragged (commit 3849274, 2026-09-05). [ID] is EXACT on the unbounded panel D280 measured on; Stage 0 is measured on today's bounded panel and both are reported. The shift is a repricing, not float noise.",
+  "relative_shift": 0.00010619643523790881
+ },
+ "zr_unbounded": {
+  "mean_ic": -0.01856244734101952,
+  "t": -4.47182655870389,
+  "bars": 2173
+ },
+ "bars": {
+  "S0A_MIN_ABS_IC": 0.006,
+  "S0B_MIN_ABS_T": 2.86
+ },
+ "results": {
+  "ALL": {
+   "zr_alone": {
+    "mean_ic": -0.018563342116348792,
+    "t": -4.472098379727982,
+    "bars": 2173
+   },
+   "composite": {
+    "mean_ic": -0.013728429384348652,
+    "t": -5.075204374497607,
+    "bars": 2173
+   },
+   "zh": {
+    "mean_ic": -0.0052483180852903105,
+    "t": -1.794032531177748,
+    "bars": 2173
+   },
+   "money": {
+    "bars": 2173,
+    "top_decile_ret_bp": 11.4206869166855,
+    "bottom_decile_ret_bp": 2.8809688505743902,
+    "spread_bp": 8.539718066111114
+   }
+  },
+  "QUAL": {
+   "zr_alone": {
+    "mean_ic": -0.00515204807956493,
+    "t": -1.159758012228484,
+    "bars": 2147
+   },
+   "composite": {
+    "mean_ic": -0.0018510844857608478,
+    "t": -0.6008318179106675,
+    "bars": 2147
+   },
+   "zh": {
+    "mean_ic": 0.004624637603851133,
+    "t": 1.4312998519227553,
+    "bars": 2147
+   },
+   "money": {
+    "bars": 2047,
+    "top_decile_ret_bp": 10.299995873060292,
+    "bottom_decile_ret_bp": 2.2010672383335335,
+    "spread_bp": 8.098928634726754
+   }
+  }
+ },
+ "verdict": {
+  "S0a": true,
+  "S0b": true,
+  "zr_share_of_composite": 1.352182510951491,
+  "implied_short_end": "HIGH-zr (VOLATILE)",
+  "money_agrees_with_ic": false,
+  "Q3prime_ic_negative": true,
+  "stage0_clears": false
+ }
+}
