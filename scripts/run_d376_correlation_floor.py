@@ -69,6 +69,7 @@ D373_LEDGER = dict(trades=3932, mean_bp=160.55, median_bp=51.55)
 H7_RHO = 0.9346373668783634                 # data/d373_winners_dip_long.json, committed 9162a64 -- the [SER] anchor
 GATE_1D = 0.50                              # D289 section 92
 MIN_COMMON_BARS = 500                       # pre-reg s5 [MASK]
+UNRESOLVED_SE = 2.0                         # a margin within 2 SE of its bar is UNRESOLVED, never passed -- programme convention
 DEGENERATE_MAX = 0.20                       # pre-reg s5 [DEG]
 ARMS = ("A", "B", "Bc")
 
@@ -257,6 +258,41 @@ def pair_block(X, M, label, window=None):
                 common_bars_min=int(min(bars)), common_bars_median=float(np.median(bars)))
 
 
+def corr_matrix(X, M):
+    """The full book x book correlation matrix, each entry on its own mask intersection. NaN where undefined."""
+    n = len(X)
+    C = np.full((n, n), np.nan)
+    for i in range(n):
+        C[i, i] = 1.0
+        for j in range(i + 1, n):
+            r, _b = corr_masked(X[i], M[i], X[j], M[j])
+            C[i, j] = C[j, i] = np.nan if r is None else r
+    return C
+
+
+def book_bootstrap(C, q=95, reps=400, seed_tag=31):
+    """[CLU] the SE of a percentile, RESAMPLING BOOKS rather than pairs.
+
+    124,750 pairs come from 500 independent books, so a bootstrap over pairs would treat one book's series as ~499 independent
+    observations and understate the SE by roughly sqrt(n/2). This resamples BOOKS with replacement and recomputes the percentile
+    over the pairs among them, dropping self-pairs (a book drawn twice would contribute rho = 1 and bias the tail upward).
+    """
+    n = C.shape[0]
+    rng = np.random.default_rng([V47.SEED, STUDY, seed_tag, q])
+    out = []
+    for _ in range(reps):
+        idx = rng.integers(0, n, size=n)
+        sub = C[np.ix_(idx, idx)]
+        iu = np.triu_indices(n, 1)
+        same = idx[iu[0]] == idx[iu[1]]                       # self-pairs: the same book sampled twice
+        v = sub[iu][~same]
+        v = v[np.isfinite(v)]
+        if v.size:
+            out.append(np.percentile(v, q))
+    a = np.asarray(out, float)
+    return dict(reps=int(a.size), se=float(a.std(ddof=1)), p025=float(np.percentile(a, 2.5)), p975=float(np.percentile(a, 97.5)))
+
+
 def vs_observed(ox, om, X, M):
     rs = [corr_masked(ox, om, X[i], M[i])[0] for i in range(len(X))]
     v = np.asarray([r for r in rs if r is not None], float)
@@ -277,10 +313,11 @@ def stage_report(P, paths):
     dirc = assert_DIR(P, res)
     ox, om = z["obs_x"], z["obs_m"]
 
-    pairs, pairs_cw, obs_vs, refusals = {}, {}, {}, {}
+    pairs, pairs_cw, obs_vs, refusals, CM = {}, {}, {}, {}, {}
     for a in ARMS:
         X, M = z[f"{a}_x"], z[f"{a}_m"]
         assert_MASK(X[0], M[0], X[1], M[1])                       # [MASK] on a representative pair; pair_block carries the min
+        CM[a] = corr_matrix(X, M)
         pairs[a] = pair_block(X, M, a)
         pairs_cw[a] = pair_block(X, M, a, window=om)              # secondary: all three arms on the OBSERVED book's window
         obs_vs[a] = vs_observed(ox, om, X, M)
@@ -299,10 +336,18 @@ def stage_report(P, paths):
               verdict=("UNRESOLVED" if "p05" not in BC else
                        ("COHORT-BLIND -- every pair inside this cohort fails 1d automatically; SCOPE the gate" if BC["p05"] > GATE_1D
                         else "the cohort does not force failure")))
+    # [CLU] the SE of the percentiles that the verdicts turn on, clustered on BOOKS. L3's margin is small enough that a
+    # pair-level bootstrap would be actively misleading, so this is computed before L3 is decided, not after.
+    clu = {a: dict(p95=book_bootstrap(CM[a], 95), p50=book_bootstrap(CM[a], 50), p05=book_bootstrap(CM[a], 5)) for a in ARMS}
+    m3 = H7_RHO - BC["p95"] if "p95" in BC else None
+    se3 = clu["Bc"]["p95"]["se"]
     L3 = dict(question="does D373's H7 survive?", arm="B_c", h7=H7_RHO, p95=BC.get("p95"),
+              margin=m3, se_p95_book_clustered=se3, margin_in_se=(None if m3 is None or not se3 else m3 / se3),
               verdict=("UNRESOLVED" if "p95" not in BC else
-                       ("H7 STANDS -- D373 is closer to D365 than two arbitrary cohort books are" if H7_RHO > BC["p95"]
-                        else "H7 CORRECTED -- 0.935 is inside the cohort's own pair distribution")))
+                       ("UNRESOLVED -- 0.935 is above the cohort p95 but within 2 book-clustered SE of it"
+                        if (H7_RHO > BC["p95"] and se3 and m3 / se3 < UNRESOLVED_SE) else
+                        ("H7 STANDS -- D373 is closer to D365 than two arbitrary cohort books are" if H7_RHO > BC["p95"]
+                         else "H7 CORRECTED -- 0.935 is inside the cohort's own pair distribution"))))
     L4 = dict(replacement="1d': correlation at or below the p95 of the same-universe pair distribution on the study's own draws",
               applies=bool(L1["verdict"].startswith("GATE UNREACHABLE") or L2["verdict"].startswith("COHORT-BLIND")),
               thresholds_for_this_universe={a: pairs[a].get("p95") for a in ARMS})
@@ -314,7 +359,7 @@ def stage_report(P, paths):
                                    "books deploy on more bars than B/B_c books, so the primary blocks are measured over different "
                                    "windows and are not directly comparable arm-to-arm. The pre-registered primary still decides "
                                    "L1-L4; this block re-runs every pair on the observed book's own mask."),
-               L1=L1, L2=L2, L3=L3, L4=L4, predictions=preds, rss=PREP.rss_line())
+               book_clustered_se=clu, L1=L1, L2=L2, L3=L3, L4=L4, predictions=preds, rss=PREP.rss_line())
     paths["dir"].mkdir(parents=True, exist_ok=True)
     paths["report"].write_text(json.dumps(clean(out)))            # [P] PERSIST BEFORE RENDERING
     print(f"  wrote {paths['report']}")
@@ -374,8 +419,16 @@ def print_report(out):
         if v.get("n"):
             print(f"    {a:<3} n {v['n']:>4}  p50 {v['p50']:+.4f}  p95 {v['p95']:+.4f}  max {v['max']:+.4f}")
     print("\n  DECISIONS")
+    for a in ARMS:
+        c = out["book_clustered_se"][a]
+        print(f"    [CLU] {a:<3} se(p05) {c['p05']['se']:.4f}   se(p50) {c['p50']['se']:.4f}   se(p95) {c['p95']['se']:.4f}"
+              "   -- resampling BOOKS, not pairs")
     for k in ("L1", "L2", "L3"):
         print(f"    {k}  {out[k]['verdict']}")
+    l3 = out["L3"]
+    if l3.get("margin") is not None:
+        print(f"         H7 {l3['h7']:.4f} vs B_c p95 {l3['p95']:.4f}   margin {l3['margin']:+.4f}  "
+              f"({l3['margin_in_se']:+.2f} book-clustered SE)")
     print(f"    L4  replacement applies: {out['L4']['applies']}   p95 by arm {out['L4']['thresholds_for_this_universe']}")
     print("\n  PREDICTIONS")
     for k, v in out["predictions"].items():
