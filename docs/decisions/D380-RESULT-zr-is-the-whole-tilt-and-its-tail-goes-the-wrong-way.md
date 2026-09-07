@@ -170,6 +170,9 @@ abandoned rather than re-pointed at the long side.
 1. **A published IC is not reproducible without naming its panel.** D280's number needed
    `dividend_bound=False` to reproduce exactly. **Any record re-deriving a pre-D333 quantity must
    say which panel it is on**, and D333's flag makes that cheap.
+   **This is now [R16](../RULES.md#r16)**, added 2026-09-08 — the lesson is general (every study
+   here inherits numbers, and the pipeline has moved under them at least twice on record), so it
+   is a standing rule rather than a footnote to this result.
 2. **`zr` alone beats the composite that was built around it.** A unit-weight combination can be
    *worse* than its best component, and D280's own framing — that its combination was the finding —
    understated `zr` and overstated the sum.

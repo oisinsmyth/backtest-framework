@@ -739,3 +739,70 @@ condition says what the construction showed and lists what was not tested. It
 does not say the axis is closed, that "what remains" is X, or that no further
 study is worth writing. Three constructions failing is three constructions.
 D360's §6 and §9 were written against this rule and carry an addendum.
+
+---
+
+## R16. A published number is not reproducible without naming the build it was computed on — reproduce it EXACTLY on that build, or do not inherit it
+
+*Added 2026-09-08, after D380's `[ID]` gate.*
+
+**A quantity quoted from an earlier record is not a constant. It is the output of
+a pipeline that has since moved.** Reproducing it is the only way to know whether
+the object being extended is the object that was published — and the check must be
+**exact on the original build**, never approximate on today's.
+
+### What happened, and it is the whole of the rule
+
+D380 rebuilt D280's part-4C composite in order to score one of its terms alone.
+`[ID]` required the composite to reproduce D280's published mean IC before the new
+term was read. **It failed:**
+
+```
+D280 published, 2026-09-02   mean IC  -0.013726972    t -5.074623
+recomputed, today's default  mean IC  -0.013728429    t -5.075204
+relative difference          1.06e-04
+```
+
+**1.06e-04 is not float noise.** A summation-order artefact is ~1e-16; this is
+twelve orders larger. The cause was found by `git log` on the dependency, not by
+staring at the numbers: **`ragged_panel.load_ragged` gained a `dividend_bound`
+argument on 2026-09-05 (D333, `3849274`), three days after D280's artifact was
+committed, and it defaults to `True`.** D280's numbers live on the *unbounded*
+panel, which no longer exists by default.
+
+**Under `dividend_bound=False` the composite reproduces to 1e-9.** The object was
+D280's all along; the build was not.
+
+### The rule
+
+1. **Name the build.** A record that re-derives, extends or checks a published
+   quantity states which panel, fixture, cache and estimator version it is on.
+   *"Reproduces D280's IC"* is not a claim until that sentence exists.
+2. **Reproduce on the ORIGINAL build, exactly.** The identity check runs on the
+   configuration the number was published under, at 1e-9 or bit-equality — not on
+   today's, and never at a tolerance chosen after seeing the gap.
+3. **Then measure on today's, and report BOTH with the delta attributed.** D333's
+   own convention: it repriced the stack *"under both panels"* and asserted
+   *"identity with D332 under the unbounded panel."* A pipeline change that moves
+   a number is a finding about the record, not an inconvenience.
+4. **DO NOT WIDEN THE TOLERANCE.** A failing identity check is evidence. Loosening
+   it converts a discoverable fact — *this published number is no longer
+   reproducible* — into a silent one. If the original build cannot be
+   reconstructed, say so and mark the inherited quantity **UNVERIFIED**; do not
+   quote it as though it were checked.
+
+### Why it is a standing rule and not a D380 footnote
+
+**Every study here inherits numbers.** The pipeline has changed under them at
+least twice in recorded memory — D334 added `ragged_panel.py` to a cache key for
+exactly this reason, and D333 changed what a return *is*. **Any quantity published
+before 2026-09-05 and derived from `load_ragged` is on the unbounded panel**, and
+that includes D256, D279, D280, D281, D283 and D284. None is wrong; each is
+conditional on a build, and R16 is what makes that condition visible instead of
+assumed.
+
+**The cheap form of this rule is one line in a runner**: an assertion that
+reproduces the inherited number before anything new is computed. D380's `[ID]`,
+D373's `[MIR]`, D362's `[ID]` and D377's `[REC]` are the same instrument, and
+**D377 already set the precedent for what to do when it cannot be met exactly —
+correct the record, do not quietly loosen the bar.**
