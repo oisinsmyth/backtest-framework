@@ -79,6 +79,40 @@ Nothing is retracted, but the ranking changes:
 > **Group C stops being optional. Every candidate in Groups A and B now needs a named
 > time-series gate before it is a proposal at all, and the gate needs its own null.**
 
+#### 2a′. AMENDMENT, same day — the shape chain is confounded with holding period
+
+**Added after commit `7aa95aa` (D373 DIAGNOSTIC), which landed while this file was being
+written and corrects the premise of the row above.**
+
+D365 (retired) and D373 (the candidate) share **70.1% of their held name-bars**, yet D365
+fails the `mean > median > 0` chain (+334.85 / −141.37) and D373 passes (+160.55 / +51.55).
+That looked like the criterion discriminating. **It is not.** Re-cutting D365's *own* stored
+per-bar hedged paths — identical exposure, nothing changed but the trade boundaries:
+
+```
+cut  20 bars   mean  +61.11   median  +22.68   PASS
+cut  40 bars   mean +111.18   median  +10.73   PASS      <- D373's hold
+cut  60 bars   mean +152.28   median   +3.57   PASS
+cut 100 bars   mean +213.05   median  −43.41   FAIL
+as stored ~99  mean +334.85   median −141.37   FAIL
+```
+
+**Summing fat-tailed returns over a longer window raises the mean and lowers the median, so
+any long-hold construction eventually fails the chain and any short-hold one eventually
+passes, edge or no edge.** At equal segmentation the two books agree.
+
+**What this does and does not do to this record.** The diagnostic's own scope statement holds:
+within-study null comparisons keep segmentation fixed on both sides, so a candidate's chain
+against **its own controls** stays fair. What breaks is **cross-construction comparison of a
+per-trade median between books that hold for different lengths.**
+
+> **Consequence for §4: every "predicted shape" below is a within-study, fixed-cap prediction
+> and must be read at a stated hold. None of them is a claim that one candidate's median beats
+> another's.** Where §6 compares four cells, they are all cap-40 readings and that is why the
+> comparison is admissible; any cell at a different cap must be re-cut before it joins that
+> table. This is `CLAUDE.md` §10 biting exactly where it says it will — a per-trade criterion
+> inherits whatever the exit rule does to trade boundaries.
+
 ### 2b. What this costs, stated honestly
 
 The record already prices the gated form, and it is not free:
@@ -465,9 +499,12 @@ chance of closing its own candidate.**
 | **5** | **A1 use (i)** as a cohort state, if Stage 0 clears — and immediately if D373's B_c fails | the successor is one state swap rather than a new construction |
 | **6** | **B2**, then **A2**, then **B3** (mechanism-specified, count disclosed), then **A3** | ranked; A3 gated on its own effective-input test |
 
-**Nothing on this list spends a holdout read.** The second slice (`order[5100:]`, never fetched,
-never scored) is not cut for a stage-1 signal test, and D357's short candidate has a prior claim
-on it.
+**Nothing on this list spends a holdout read.** **Holdout #2 now exists** — commit `59f021e`
+built `data/fixtures/us_shorts_daily_holdout2.csv.gz` from `order[5100:6300]` of the same
+pinned permutation, **unspent**, while this file was being written. That changes nothing here:
+it is not cut for a stage-1 signal test, and D357's short candidate has a prior claim on it.
+Availability is not authorisation — **no holdout read without explicit, specific authorisation
+from the principal.**
 
 ---
 
