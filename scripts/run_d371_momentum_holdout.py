@@ -333,14 +333,17 @@ def main() -> int:
     elif a.pipe:
         V57.stage_pipe()
     elif a.dry:
+        V65.allow_holdout("D371 --dry: counts only, no return becomes a statistic")
         V57.repoint("holdout")
         V57.stage_dry("holdout")
     elif a.read:
         print("D371 READ -- this spends the programme's one clean holdout read.")
         mine = json.loads((REPO / "temp" / "d371_mining_series.json").read_text()) \
             if (REPO / "temp" / "d371_mining_series.json").exists() else None
+        V65.allow_holdout("D371 --read --spend-the-holdout: the principal's explicit authorisation, 2026-09-07")
         V57.repoint("holdout")
         P = PREP.prep(need_grids=False, verbose=True)
+        V65.assert_HOLDOUT_GUARD()
         R = evaluate(P, "holdout", a.draws, t0)
         print_table("HOLDOUT ALONE -- THE EVIDENCE", R)
         comb = combined(R, mine) if mine else None

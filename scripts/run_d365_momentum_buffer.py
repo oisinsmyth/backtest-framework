@@ -92,7 +92,21 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
 # ------------------------------------------------------------------ the holdout guard: before ANY module of the chain executes
-_OPENED = dict(n=0, fixtures=Counter(), refused=0)
+_OPENED = dict(n=0, fixtures=Counter(), refused=0, allowed=0, holdout=Counter())
+
+# DEFAULT-DENY. An audit hook cannot be removed once installed (CPython has no removeaudithook), so a process
+# that legitimately reads the holdout -- D371's --dry and --read, on the principal's explicit authorisation --
+# cannot simply drop the guard. It calls `allow_holdout(why)` instead: the deny becomes an ALLOW-AND-LOG, every
+# holdout path opened is counted by name, and `assert_HOLDOUT_GUARD` reports them. Nothing else in the programme
+# calls it, so every other runner keeps the hard refusal it has always had.
+_ALLOW = dict(on=False, why=None)
+
+
+def allow_holdout(why):
+    """Deliberately unlock the holdout guard for THIS process. Loud, reasoned, and logged."""
+    _ALLOW["on"], _ALLOW["why"] = True, why
+    print(f"    [HOLDOUT-GUARD] *** UNLOCKED *** {why}\n"
+          f"    every holdout path opened from here is counted and reported.", flush=True)
 
 
 def _audit(event, args):
@@ -107,8 +121,11 @@ def _audit(event, args):
     low = s.replace("\\", "/").lower()
     _OPENED["n"] += 1
     if "holdout" in low:
-        _OPENED["refused"] += 1
-        raise RuntimeError(f"[HOLDOUT-GUARD] refused to open {s}")
+        if not _ALLOW["on"]:
+            _OPENED["refused"] += 1
+            raise RuntimeError(f"[HOLDOUT-GUARD] refused to open {s}")
+        _OPENED["allowed"] += 1
+        _OPENED["holdout"][low.rsplit("/", 1)[-1]] += 1
     if "data/fixtures/" in low:
         _OPENED["fixtures"][low.rsplit("/", 1)[-1]] += 1
 
@@ -187,14 +204,24 @@ def guard_line():
 
 
 def assert_HOLDOUT_GUARD():
+    """Armed: assert the hook refuses. UNLOCKED: assert it does NOT, and report every holdout file opened --
+    a study that has spent the read must account for what it touched, not pretend it touched nothing."""
     probe = DATA / "fixtures" / "holdout_probe_that_does_not_exist.txt"
     assert not probe.exists()
+    raised = None
     try:
         open(probe)
     except RuntimeError as e:
-        assert "[HOLDOUT-GUARD]" in str(e), str(e)
-    else:
-        raise AssertionError("[HOLDOUT-GUARD] the audit hook did not fire")
+        raised = str(e)
+    except OSError:
+        raised = None
+    if _ALLOW["on"]:
+        assert raised is None, "[HOLDOUT-GUARD] unlocked, yet the hook still refused"
+        opened = ", ".join(f"{k} x{v}" for k, v in sorted(_OPENED["holdout"].items())) or "none yet"
+        print(f"    [HOLDOUT-GUARD] UNLOCKED ({_ALLOW['why']}); {_OPENED['allowed']} holdout opens so far: "
+              f"{opened}")
+        return
+    assert raised and "[HOLDOUT-GUARD]" in raised, "[HOLDOUT-GUARD] the audit hook did not fire"
     assert not any("holdout" in k for k in _OPENED["fixtures"]), "[HOLDOUT-GUARD] a holdout fixture was opened"
     print(f"    [HOLDOUT-GUARD] {guard_line()}")
 
