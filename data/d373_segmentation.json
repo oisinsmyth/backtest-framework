@@ -1,0 +1,101 @@
+{
+  "study": 373,
+  "kind": "POST-HOC DIAGNOSTIC, not pre-registered",
+  "question": "is `mean > median > 0` a property of the edge or of the trade segmentation?",
+  "source": "data\\d365_trade_paths_95_80.csv.gz",
+  "d365": {
+    "trades": 1709,
+    "name_bars": 169953,
+    "mean_hold_bars": 99.44587478057343
+  },
+  "recut": [
+    {
+      "cut": 5,
+      "n": 34694,
+      "mean_bp": 16.494246703330834,
+      "median_bp": 10.336486355000005,
+      "chain_passes": true
+    },
+    {
+      "cut": 10,
+      "n": 17789,
+      "mean_bp": 32.168834399087075,
+      "median_bp": 13.595043390000006,
+      "chain_passes": true
+    },
+    {
+      "cut": 20,
+      "n": 9365,
+      "mean_bp": 61.105327829723436,
+      "median_bp": 22.67751536999994,
+      "chain_passes": true
+    },
+    {
+      "cut": 40,
+      "n": 5147,
+      "mean_bp": 111.18154169911793,
+      "median_bp": 10.733734959999998,
+      "chain_passes": true
+    },
+    {
+      "cut": 60,
+      "n": 3758,
+      "mean_bp": 152.27551759589144,
+      "median_bp": 3.569573064999967,
+      "chain_passes": true
+    },
+    {
+      "cut": 100,
+      "n": 2686,
+      "mean_bp": 213.0496631144304,
+      "median_bp": -43.41196039500001,
+      "chain_passes": false
+    },
+    {
+      "cut": null,
+      "n": 1709,
+      "mean_bp": 334.8457549007373,
+      "median_bp": -141.37223024,
+      "chain_passes": false
+    }
+  ],
+  "d373_own_grid": [
+    {
+      "cap": 5,
+      "mean_bp": 39.11,
+      "median_bp": 15.98,
+      "n": 8665,
+      "chain_passes": true
+    },
+    {
+      "cap": 10,
+      "mean_bp": 68.62,
+      "median_bp": 36.64,
+      "n": 7290,
+      "chain_passes": true
+    },
+    {
+      "cap": 20,
+      "mean_bp": 122.36,
+      "median_bp": 52.5,
+      "n": 5450,
+      "chain_passes": true
+    },
+    {
+      "cap": 40,
+      "mean_bp": 160.55,
+      "median_bp": 51.55,
+      "n": 3932,
+      "chain_passes": true
+    },
+    {
+      "cap": 60,
+      "mean_bp": 235.73,
+      "median_bp": 134.4,
+      "n": 3210,
+      "chain_passes": true
+    }
+  ],
+  "finding": "D365's own exposure PASSES the chain at a 40-bar cut and FAILS at its native ~99-bar hold. At equal segmentation the two books agree. The criterion is confounded with holding period and cannot compare constructions that hold for different lengths.",
+  "scope": "Does NOT invalidate D373's within-study null comparisons, which hold segmentation fixed on both sides. Does invalidate cross-construction comparison of a per-trade median."
+}
