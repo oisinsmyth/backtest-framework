@@ -131,6 +131,82 @@ Where an incumbent's series is unavailable the gate degrades to 1d′ and should
 
 ---
 
+# The rest of the stage-1 gates, audited for the same one-sided error
+
+**The error class, stated first so the audit is a test and not an impression:**
+
+> **A gate commits it when its statistic is INVARIANT TO — or MONOTONE IN — a quantity the
+> decision actually depends on.** ρ is invariant to the mean, and was used to decide about return.
+> The audit question for each gate is therefore: *what is this statistic blind to, and does the
+> decision depend on any of it?*
+
+Applied to D375's table ([D289](../docs/decisions/D289-the-promotion-pipeline.md) + amendments):
+
+| gate | statistic | blind to | does the decision depend on it? | verdict |
+|---|---|---|---|---|
+| **1a** | t vs its own null | **size** — t is scale-invariant and grows as √n | yes, but **1c is the complement** | **sound as a PAIR** |
+| **1c** | mean move ÷ round trip | **holding period** — monotone in it | **YES, and unpaired** | **⚠ see below** |
+| **1d** | correlation | **level** | yes | **⚠ addressed above (1d″)** |
+| **1e** t | open-entry t | size | yes, paired with 1c | sound as a pair |
+| **1e** retention | ratio of two edges | **level of both** | no — "does it survive open entry" is genuinely a ratio question | sound |
+| **1f** | name-split CV t > 0 | **magnitude** — a sign test | yes — **already documented**: D289 calls it *necessary, not sufficient*, and half of pure noise passes | known, not new |
+| **1g** | turnover / hold / dead share | — | reporting, no bar | n/a |
+| **1h** | direction declared | — | procedural | n/a |
+| **1i** | interior vs edge peak | **height of the peak** | no — "is the horizon resolved" is a shape question | sound |
+| **2c** | ≥ 1.5× round trip | **holding period** | **YES, and unpaired** | **⚠ same as 1c** |
+| **H4′** | names-to-half share vs A′ p05 | P&L level | no — concentration is a shape question, and D374 already fixed the denominator problem | sound |
+
+## The finding: the set is safe because the gates come in COMPLEMENTARY PAIRS
+
+**1a is one-sided — it tests whether an edge is distinguishable from its null, not whether it is
+big enough to matter — and a large trade count makes a trivial edge significant.** That would be a
+clean instance of the error if 1a stood alone. It does not: **1c is its complement**, and asks the
+size question 1a cannot. The same is true of 1e's t and its retention ratio.
+
+**So the rule the set already embodies, and which should be written down:** *no gate in this stack
+is an admission on its own; each is half of a pair, and the pairs are (significance, size).*
+**The two places the pairing breaks are exactly where the errors are** — 1d had no partner at all
+(fixed above as 1d″), and 1c/2c have no partner on the axis below.
+
+## ⚠ 1c and 2c are monotone in holding period, and nothing pairs with that
+
+**`mean move per trade ÷ round-trip cost` rises mechanically as the hold lengthens**: the numerator
+accumulates with holding time while the denominator is one round trip per trade regardless. **A
+candidate can clear 1c by holding longer while its per-bar edge falls.**
+
+**This is not speculation and it is not new doctrine** — `CLAUDE.md` already states it:
+
+> *"A longer hold lifts breakeven by amortising one round trip; per-bar edge usually falls, so
+> Sharpe can drop as cost coverage rises. Say which moved."*
+
+**and it was confirmed on a different per-trade statistic four commits ago.** D373's segmentation
+diagnostic (`7aa95aa`) re-cut D365's own stored paths — identical exposure, only the trade
+boundaries changed — and the `mean > median > 0` chain **passed at 40 bars and failed at 100**.
+Per-trade statistics inherit whatever the exit rule does to trade boundaries. **1c and 2c are
+per-trade statistics.**
+
+**What is missing is not the knowledge, it is the encoding.** The doctrine says "say which moved";
+the gate does not require it, and **D375's audit marked 1c and 2c SOUND without noting the
+dimension.** Their soundness *as cost tests* is not in question — the claim being flagged is
+narrower:
+
+> **"Clears 1c" is not comparable across candidates with different holding periods, and a
+> candidate that clears it by lengthening its hold has not improved.**
+
+**Proposed 1c′ / 2c′ — a pairing, not a re-thresholding**, in the same shape as 1d″ and H4′:
+
+> The per-trade cost ratio is reported **beside the per-bar edge on the deployed base at the same
+> hold**, and a candidate that clears the ratio while its per-bar edge falls versus a shorter hold
+> is recorded as **HOLD-DRIVEN**, not as clearing. The horizon profile 1i already requires
+> supplies both numbers, so the cost is a column and not a new run.
+
+**Scope, stated honestly.** 1c has been applied to D290's 51 candidates and 2c across D264–D284,
+so this is the most-used gate in the set — but the flag does not overturn any past verdict, because
+those comparisons were made **at a fixed cap within each study**. The exposure is *cross-study*
+comparison and any future candidate whose hold is a free parameter.
+
+---
+
 ## What the principal is asked to decide
 
 1. Replace the clause, or leave it and let this note stand as the qualification?
@@ -145,3 +221,11 @@ Where an incumbent's series is unavailable the gate degrades to 1d′ and should
    history, and D375 already has it flagged UNDER-TESTED and awaiting a calibration
    pre-registration. **If 1d″ is wanted, that pre-registration is the place to put it** rather
    than amending a gate in a research note.
+5. **Do 1c and 2c gain the HOLD-DRIVEN qualifier** (1c′/2c′ above)? It is a reporting column
+   rather than a new measurement — 1i's horizon profile already produces both numbers — and it
+   costs nothing to add to the next pre-registration that uses them.
+6. **Should "no gate is an admission on its own; each is half of a (significance, size) pair" be
+   written into D289 as a standing property of the stack?** It is what makes 1a and 1e safe, it is
+   currently implicit, and both errors found in this audit are places where the pairing was
+   missing rather than where a threshold was wrong. Writing it down turns "check the threshold"
+   into "check the pair", which is the test that found them.
