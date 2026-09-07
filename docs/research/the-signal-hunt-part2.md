@@ -204,23 +204,72 @@ The principal named two uses. There are three, and they are not equally good:
 
 | use | form | assessment |
 |---|---|---|
-| **(i) confirmation / cohort state** | ER as the **state** in a D373-shaped construction: `top decile of mom_252_21 **AND** top half of ER`, trigger unchanged | **RECOMMENDED, and it is where I would spend the first run** |
-| **(ii) standalone reversal detection** | low ER = chop = mean-reverting; rank on ER directly, or an E1 crossing into the bottom decile | **second, and scored on the same screen rather than asserted** |
-| **(iii) exhaustion** | **high** ER that stalls — an efficient move whose efficiency breaks down | **third; it is a compound (§4.6's hazard applies) and needs a mechanism before a threshold** |
+| ~~**(i) confirmation / cohort state**~~ | ~~ER as the state in a D373-shaped construction: `top decile of mom_252_21 AND top half of ER`~~ | **RETIRED 2026-09-08 with the avenue it served — see §4.1a** |
+| **(ii) standalone cross-sectional axis** | ER ranked over the **whole floored universe**, defining its own pool rather than refining someone else's | **NOW PRIMARY, and §4.1a is why** |
+| **(iii) exhaustion** | **high** ER that stalls — an efficient move whose efficiency breaks down | third; it is a compound (§4.6's hazard applies) and needs a mechanism before a threshold |
 
-**Why (i) first, and it is a reason about ER's own shape, not a preference.** ER is a windowed
-ratio — slow, smooth, and with a denominator that is a sum of absolute moves. A percentile
-crossing on a quantity like that fires on denominator noise, which is the exact defect that
-produced `retrace_leg` over [−2295, +1207] and `fvg_dist` at 829 ATRs before both were
-rebuilt. **A slow smooth ratio is a state variable; treating it as a trigger is a known way to
-select on noise in this repo.**
+**ER is a state variable, not a trigger, and that has not changed.** It is a windowed ratio —
+slow, smooth, denominator a sum of absolute moves. A percentile crossing on a quantity like that
+fires on denominator noise, which is the defect that produced `retrace_leg` over [−2295, +1207]
+and `fvg_dist` at 829 ATRs before both were rebuilt. Whatever ER is used for, it ranks; it does
+not trigger.
 
-**And there is a live reason to want (i) specifically.** [D373](../decisions/D373-the-winners-dip-long-and-the-median-criterion.md)
-is pre-registered with Q1 load-bearing: that the winners' dip carries timing **inside** the
-winner pool and is not the cohort's own **+3.85 bp/bar** drift re-expressed (D359 §7). **If
-B_c fails, ER is the ready successor** — it re-slices the same cohort on an axis that is not
-momentum, so the follow-up is one state swap rather than a new construction. That is worth
-having built before D373 reports, not after.
+#### 4.1a. AMENDMENT, 2026-09-08 — use (i) is retired, and the reason strengthens the case for ER rather than weakening it
+
+**The principal retired the winners'-dip avenue on 2026-09-08 (`91dc41f`, R15), and
+[FINDINGS §52](../FINDINGS.md) records why:** three unrelated methods agree that **~80% of that
+edge was momentum-decile exposure, not the dip.** D373's same-day same-cohort swap centres at
+**+126.54** of the observed +160.55; two books sharing *nothing but cohort membership* correlate
+at **ρ +0.923**; and subtracting the cohort's own return takes the gross mean to +34.08 with the
+**median to −30.74**.
+
+**§52's rule lands directly on use (i), and it disqualifies it as framed:**
+
+> *A construction that selects inside a narrow cohort inherits that cohort's return and that
+> cohort's covariance. Before crediting a selector, measure what a random member of the same pool
+> on the same day earns — and if the answer is most of it, the selector is a rounding error on a
+> factor exposure.*
+
+Use (i) was **exactly** a cohort selector: refine the momentum top decile by a second variable.
+Whatever ER added there would have been measured against a pool whose own drift supplies most of
+the return, and §52's corollary is worse than that — **at ρ ≈ 0.92 two winner-selection variants
+are the same strategy for portfolio purposes**, so an ER-refined winner book could not have
+diversified the one it was refining. **My §7a recommendation to hold ER ready as D373's successor
+is withdrawn.** It was written before the retirement and it pointed at a closed avenue.
+
+**What survives, and it is not a consolation.** ER's Stage 0 result is untouched: it is a
+genuinely new input, orthogonal to both volatility and momentum (§7a). **§52 makes that property
+more valuable, not less** — its corollary says *independence inside a cohort must be established
+some other way, or not claimed*, and ER_63 at **ρ +0.025 against `mom_252_21`** is a candidate for
+exactly that "some other way". The distinction that matters:
+
+| | what it is | §52's verdict |
+|---|---|---|
+| ER **refining** the momentum cohort | a second cut inside someone else's pool | **retired** — inherits that pool's return and covariance |
+| ER **defining** its own pool | a cross-sectional rank over the whole floored universe | **live** — a different pool, and one built on a non-momentum axis |
+
+**So use (ii) is promoted to primary**, in the specific form of *ER ranked over the floored
+universe*, not as the E1-crossing trigger §4.1's original table described.
+
+**Three things it owes from day one, and §52 is why they come first rather than last:**
+
+1. **The same-pool control is the FIRST null, not the last.** What does a random name in ER's own
+   selected decile, on the same day, earn? §52 makes this the question that decides whether there
+   is a selector at all. It is D373's `B_c` promoted to the front of the queue.
+2. **The book-level independence claim must be measured, not inferred from the input.** ER's input
+   orthogonality (§7a) is not book orthogonality. D376 built the instrument — the pairwise
+   correlation floor for books in this universe, **+0.48 for unrelated pairs and +0.92 for cohort
+   pairs** — so an ER book's ρ against the existing books is readable against a known baseline.
+   Anything near 0.92 is a cohort book wearing a new label.
+3. **The deal filter and the named tail are not optional here.** §7b found ER's extreme is
+   **exactly 1.0000** — a perfectly monotone tape, the pinned-takeover shape FINDINGS §16 records
+   this fixture as containing (RLD, KCI). **A top-decile ER selector selects that population**,
+   which is a stronger argument against ER's top extreme than anything in §7a.
+
+**And the honest gap, unchanged by any of this:** an ER book still has **no gate**, so it does not
+meet P1. §7d tested six market states and none forecasts the winner cohort; §7e found the one
+decisive state is realised volatility. **ER gives a candidate axis and not a flat-by-default
+sleeve**, and nothing in §7 closes that distance.
 
 #### The short side of the reversal, priced before it is proposed (P2)
 
@@ -518,9 +567,11 @@ distinct input is not a signal: nothing here reads a forward return.
 1. **ER_252's +0.238 against `mom_252_21` is the one number to watch, and it is a shared-window
    artifact** — the two read the same 252 bars, one as displacement and one as displacement over
    travel. It is well inside the bar, but ER_252 is the window least able to claim independence
-   from the cohort it would condition, which is exactly the use §4.1 proposes. **Prefer ER_63
-   for the D373-shaped state**: ρ +0.025 against `mom_252_21`, so it re-slices the cohort on an
-   axis the cohort does not already contain.
+   from momentum. **Prefer ER_63: ρ +0.025 against `mom_252_21`.**
+   *(Amended 2026-09-08: this originally read "prefer ER_63 for the D373-shaped state". That use
+   is retired with its avenue — see §4.1a. The window preference stands and its reason is now
+   stronger, because [FINDINGS §52](../FINDINGS.md)'s corollary makes non-momentum independence
+   the property an ER book has to claim.)*
 2. **K3 clearing is a cost, not only a pass.** 2.82 effective inputs of 3 means the three windows
    are three tests, not one — **any screen across them carries multiplicity 3** and must say so.
 3. **The catalogue is more redundant than the candidate.** In the same matrix
@@ -936,7 +987,7 @@ only one that could have failed to.
 | ~~**3**~~ | ~~**C2** — D362's unrun cell~~ | **DONE 2026-09-07, §7f. The 200-day gate is the state variable, not the calm-market condition — and the gate's exact margin over its own rotation is +0.52 bp, not the published +6.3** |
 | **3a** | **The volatility tilt's own pre-registration** | **raised by §7e.** PICKUP §5 item 5 has carried it since D280 and it has never been run; C1b re-found it independently. It is the only state in this record with a decisive premise, and it arrives with the σ² tax attached (FINDINGS §1b: 59% of D264's gross) |
 | **4** | **B1** — undercut-and-reclaim, with its reclaim-vs-level control built | strongest candidate; needs a control that does not exist yet |
-| **5** | **A1 use (i)** as a cohort state, if Stage 0 clears — and immediately if D373's B_c fails | the successor is one state swap rather than a new construction |
+| **5** | **A1 use (ii)** — ER_63 ranked over the **whole floored universe**, with the same-pool control as its FIRST null and D376's correlation floor read on day one | **rewritten 2026-09-08.** Use (i) is retired with its avenue (§4.1a); what ER offers now is a pool of its own on a non-momentum axis, which is the property [FINDINGS §52](../FINDINGS.md)'s corollary says must be established rather than claimed |
 | **6** | **B2**, then **A2**, then **B3** (mechanism-specified, count disclosed), then **A3** | ranked; A3 gated on its own effective-input test |
 
 **Nothing on this list spends a holdout read.** **Holdout #2 now exists** — commit `59f021e`
