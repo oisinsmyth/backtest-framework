@@ -788,6 +788,14 @@ D310's); D318's re-costing detaches D300/D306's null p-values from their exit
 cells; dv28 on a separate construction at a threshold fixed at 28; a guard on
 `log1p` in `simulate` before any fixture with a zero close (D337 §10).
 
+**Deferred, and not in this queue:** [`future-strategies.md`](future-strategies.md)
+holds three short-side ideas reasoned from D361–D364's constraint — that a
+reversal edge is denominated in the spread and so cannot be crossed into. Each
+needs an auxiliary data source, and **the principal has deferred starting on
+auxiliary data sources** (2026-09-07). **None of the three has been tested or
+shown to be viable**; each carries the one number that would kill it, and none
+has been measured. That file is a note, not a plan.
+
 ## 7. What earlier versions of this document got wrong
 
 Kept legible rather than quietly fixed.
