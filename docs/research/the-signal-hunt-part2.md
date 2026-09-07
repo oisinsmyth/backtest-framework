@@ -488,11 +488,97 @@ chance of closing its own candidate.**
 
 ---
 
+## 7a. STAGE 0 RESULT — ER clears K1, K2 and K3
+
+**Run 2026-09-07, `scripts/a1_er_stage0.py`, artifact `data/a1_er_stage0.json`.** The bar in §7
+was committed in `ed967bd` **before this runner existed** (R8). Descriptive: no cell scored, no
+book built, **no forward return read**. 1,573 names × 4,187 bars; 2,858,599 eligible name-bars;
+the within-bar lens averages 3,187 bars carrying ≥50 eligible names with all nine scores finite.
+
+**WITHIN-BAR SPEARMAN, mean over bars — the operative lens** (selection ranks names against each
+other on one day):
+
+| | rvol21 | atr_norm | vol_ratio | mom_252_21 | trailing_return | max_ret_21 |
+|---|--:|--:|--:|--:|--:|--:|
+| **ER_21** | +0.008 | +0.027 | −0.069 | −0.011 | +0.070 | +0.015 |
+| **ER_63** | +0.014 | +0.030 | −0.044 | +0.025 | +0.136 | +0.044 |
+| **ER_252** | +0.082 | +0.087 | +0.001 | **+0.238** | +0.125 | +0.099 |
+
+| | verdict |
+|---|---|
+| **K1** volatility, \|ρ\| > 0.5 | **CLEARS.** Largest is ER_252 vs `atr_norm` at **+0.087** |
+| **K2** momentum, \|ρ\| > 0.5 | **CLEARS.** Largest is ER_252 vs `mom_252_21` at **+0.238** |
+| **K3** ≥ 2.0 effective inputs among the three windows | **CLEARS.** Participation ratio **2.82** of 3 (Li-Ji 3.00, Cheverud-Nyholt 2.96) |
+
+**ER is a new input on this universe, and that is all this measurement says.** Under R15 a
+distinct input is not a signal: nothing here reads a forward return.
+
+**Three things to carry, none of them the verdict:**
+
+1. **ER_252's +0.238 against `mom_252_21` is the one number to watch, and it is a shared-window
+   artifact** — the two read the same 252 bars, one as displacement and one as displacement over
+   travel. It is well inside the bar, but ER_252 is the window least able to claim independence
+   from the cohort it would condition, which is exactly the use §4.1 proposes. **Prefer ER_63
+   for the D373-shaped state**: ρ +0.025 against `mom_252_21`, so it re-slices the cohort on an
+   axis the cohort does not already contain.
+2. **K3 clearing is a cost, not only a pass.** 2.82 effective inputs of 3 means the three windows
+   are three tests, not one — **any screen across them carries multiplicity 3** and must say so.
+3. **The catalogue is more redundant than the candidate.** In the same matrix
+   `rvol21`↔`atr_norm` is **+0.889**, `rvol21`↔`max_ret_21` **+0.810**, `atr_norm`↔`max_ret_21`
+   **+0.726** — three separately-named scores are one volatility factor, and **`max_ret_21`, a
+   published anomaly, is a realised-volatility proxy on this universe**. All nine together carry
+   **5.94 effective inputs**, against D268's 2.87 for nine price scores; the three ER windows
+   supply most of the difference.
+
+### 7b. The extreme tail, named — and it is a caution about the state
+
+Per D322 (*a concentration report is not finished until the top trade is named*), applied to a
+score rather than a ledger:
+
+| | top cell | ER | close |
+|---|---|--:|--:|
+| ER_21 | **RLD**, 2016-03-30 | **1.0000** | $11.00 |
+| ER_63 | **KCI**, 2012-02-01 | **1.0000** | $68.47 |
+| ER_252 | **GME**, 2021-01-27 | 0.7892 | $86.88 |
+
+**ER = 1.0000 exactly is a perfectly monotone run — a tape that only ticks one way — and that is
+the pinned-takeover shape FINDINGS §16 already found this fixture contains.** The F0 deal filter
+removes filing bars, not the drift into them. **Anything that selects ER's top extreme must be
+checked against the deal list before it is believed**, and this is a stronger reason to use ER as
+a half-cohort state (top *half*, as §4.1 proposes) than as a top-decile selector.
+
+### 7c. The guard was aimed at the wrong failure, and the right one fired anyway
+
+§7 asked for a **denominator floor**, reasoning from `retrace_leg`'s [−2295, +1207] and
+`fvg_dist`'s 829 ATRs. **That analogy was wrong: ER cannot explode.** The triangle inequality
+bounds it in [0, 1], and the degenerate case is the opposite one — a frozen tape where numerator
+and denominator are both a tick. The floor implemented is therefore a **minimum-travel** floor
+and it costs 1.1% of live cells at w=21.
+
+**But the assert built for that wrong reason caught a real defect on its first contact with the
+fixture, and it was mine.** The denominator was first computed as a difference of cumulative
+sums — faster, and **a reordering of a float sum, which `CLAUDE.md` forbids by name.** [B]
+found **329 of 11.86M cells above 1.0**, breaking the triangle inequality by up to **3.2e-12**:
+
+```
+LKM, 2019-01-29, w=21     travel over the window   $0.0039
+                          accumulated cumsum       $414.67   <- the window is 0.0009% of it
+   den, direct sum        0.0039000000000000146  ->  ER 1.00000000000000000
+   den, cumsum difference 0.003899999999987358   ->  ER 1.00000000000324518
+```
+
+**Fixed by exactness, not tolerance** (`sliding_window_view(...).sum(axis=-1)`), and the rewrite
+is guarded by equality against the per-window loop it replaced, **probed on a tie-heavy input**
+(226 zero steps) — `CLAUDE.md`'s own prescription. The effect on any verdict here is nil at
+1e-12; the point is that the invariant was checkable, was checked, and was wrong the first time.
+
+---
+
 ## 8. Order of work
 
 | | what | why here |
 |---|---|---|
-| **1** | **A1 Stage 0** (§7) | P2, and it can close A1 in minutes |
+| ~~**1**~~ | ~~**A1 Stage 0** (§7)~~ | **DONE 2026-09-07 — clears K1/K2/K3, §7a. ER is a distinct input and is not yet a signal** |
 | **2** | **C1 Stage 0** — block correlation of breadth and dispersion against forward drift | P1 makes a gate a precondition for *every* candidate; the premise check must precede the design (§41 rule 1) |
 | **3** | **C2** — D362's unrun cell | cheapest owed measurement in the record; resolves an ambiguity in a published headline |
 | **4** | **B1** — undercut-and-reclaim, with its reclaim-vs-level control built | strongest candidate; needs a control that does not exist yet |
