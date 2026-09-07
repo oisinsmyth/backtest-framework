@@ -3273,8 +3273,29 @@ books are**, which is the same finding by a fourth route.
 
 > **A construction that selects inside a narrow cohort inherits that cohort's return and that
 > cohort's covariance. Before crediting a selector, measure what a random member of the same pool on
-> the same day earns — and if the answer is most of it, the selector is a rounding error on a factor
-> exposure.**
+> the same day earns — and if the answer is most of it, the cohort is the strategy.**
+
+#### AMENDMENT to the rule, 2026-09-08 — the original wording said *"the selector is a rounding error on a factor exposure."* **That was too strong and is withdrawn.**
+
+**[D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md)
+measured the selector directly** with the cohort-conditioned rotation §52a specified, and it is not a
+rounding error:
+
+| | |
+|---|---|
+| A′_c's centre | **+116.91** of the observed +160.55 — a **third** independent measurement that most of the return is cohort (73%, against D373's 79% and D377's 79%) |
+| the increment | **+15.98 bp per trade, +26.9 SE** above A′_c's p95 |
+| **leave-one-out** | **survives** — dropping GME still clears p95 by **+9.8 SE**. Not one trade |
+| per-bar rate at cap 5 | **3.9×** the control's, and the decay across the horizon belongs to **the dip**, not the cohort |
+
+**The level claim stands and the dismissal does not.** A real effect that is small relative to cost is
+**a small real effect**, not a rounding error, and the two must not be written as the same thing.
+D378 §4 puts the increment at **0.19–0.47× a round trip under PUB** and **0.50–1.21× under PB** — so
+whether it can fund itself turns on a spread measurement nobody has taken (D336).
+
+**What survives unchanged:** the level evidence, the corollary below about diversification, and the
+instruction to measure the pool before crediting the selector. **What changes is the verdict on what
+the measurement then means.**
 
 **The corollary closes a style of work rather than one book.** Variations on winner-selection cannot
 diversify each other: at ρ ≈ 0.92 two such constructions are the same strategy for portfolio
@@ -3335,15 +3356,22 @@ missing measurement is the same profile for B_c**: if a random cohort name on th
   change in hold length moves breakeven and per-bar edge in *opposite* directions. Any result here
   must say which moved.
 
-**Status — REOPENED 2026-09-08.** The principal has reopened the avenue **narrowly**, under
-[R15](RULES.md#r15), to authorise exactly this test and nothing else:
-**[D378](decisions/D378-does-the-entry-day-matter-inside-the-cohort.md)**, pre-registered before its
-runner existed.
+**Status — ANSWERED 2026-09-08 by
+[D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md).**
+A′_c was built as specified above, run over 2,000 draws, and **the entry day does matter.**
 
-**The reopening does not disturb §52.** The level evidence — D373's `B_c` centre of +126.54 and
-D377's collapse to +34.08 — stands unchanged, and so does the rule and its corollary. What is
-reopened is the one question that evidence never addressed. **If D378 fails, §52's retirement stands
-as written.**
+| | |
+|---|---|
+| A′_c centre | **+116.91** vs observed **+160.55** |
+| **T1** mean per trade > p95 | **PASS** — margin +15.98, **+26.9 SE** |
+| **T3** the same with the largest trade removed | **PASS** — +150.41, **+9.8 SE**. Not one trade |
+| **T2** the same on the **median** | **FAIL** — +51.55 against p95 +64.00 |
+| **the front-loading question this section asked** | **ANSWERED: it is the dip's.** The observed per-bar rate halves from 7.82 to 3.94 across caps 5→60 while A′_c's barely moves, 2.01 → 2.75 |
 
-**Scope of the authorisation:** mining prefix only, no holdout read, no book touched, one
-pre-registered test.
+**So the mechanism proposed here was right, and the caution recorded beside it was also right.** The
+gain is **in the mean, not the median** — dip timing makes the good trades bigger, it does not lift
+the typical trade, and **win rate is the median's neighbour.** The pre-registration's own warning
+that win rate is a dial on the exit stands: nothing here shows a better win rate is available.
+
+**The reopening's abandon condition did not fire** — it required T1 to fail outright. Under
+[R15](RULES.md#r15) the avenue's status is the principal's, and this file does not presume it.
