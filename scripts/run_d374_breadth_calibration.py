@@ -442,7 +442,9 @@ def print_report(out):
     print(f"    K4  replacement applies: {out['K4']['applies']}   thresholds {out['K4']['thresholds_for_this_ledger']}")
     print("\n  PREDICTIONS")
     for k, v in out["predictions"].items():
-        print(f"    {k}  {'HELD' if v['held'] else ('FALSIFIED' if v['held'] is not None else 'UNRESOLVED')}   {v['claim']}")
+        tag = "HELD" if v["held"] else ("FALSIFIED" if v["held"] is not None else "UNRESOLVED")
+        sub = [f"{kk} {vv}" for kk, vv in v.items() if kk.endswith("_held") and kk != "held"]
+        print(f"    {k}  {tag}   {v['claim']}" + (f"   [{'; '.join(sub)}]" if sub else ""))
 
 
 # ------------------------------------------------------------------ [X] the self-test that must RAISE

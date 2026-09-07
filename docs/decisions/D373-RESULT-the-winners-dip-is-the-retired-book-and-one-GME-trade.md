@@ -170,6 +170,29 @@ checked.
 here, or the bar is mis-calibrated. D373 cannot distinguish those, and I am not going to argue for
 whichever reading suits the candidate.
 
+### AMENDMENT, 2026-09-07 — **H4 is corrected from FAIL to PASS. It was the bar.**
+
+The doubt above was settled the same day by
+**[D374](D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md)**,
+which computed the concentration family **per null draw** on this exact ledger.
+
+- Across **4,952 defined draws in three arms**, the most diversified random book reached **2.98%**.
+  The median reached **0.63%**. **Nothing came within a factor of three of the 10% bar.**
+- This book's **2.2613% sits at the 100.00th percentile of its own nulls** — above A′'s *maximum*,
+  with **0 of 1,971** A′ draws and **0 of 981** B draws as diversified.
+- **The 10% threshold was unreachable by construction**, and D373 §5 states where it came from:
+  "calibrated to exclude the shape that just failed".
+
+**H4 → PASS** under the replacement hurdle H4′ (`names_to_half_share ≥ the study's own A′ p05`,
+here 0.2488%). The **top-1 and top-5 bars are dropped entirely** — D374 §4 shows the statistic is
+unbounded above and explodes in ~12% of draws, so the 5.74% and 20.62% "passes" recorded above were
+near-worthless too.
+
+**D373's overall verdict is unchanged.** H2, H3 and H7 still fail, H7 at ρ = 0.935, and §9's abandon
+condition is still met. What changes is that **one of the five failures was the hurdle's fault, not
+the book's** — by its own null this was the best-diversified book available. The table in §0 and the
+figures in this section are left exactly as first committed; this amendment supersedes the H4 row.
+
 ---
 
 ## 6. The four groups, in full
