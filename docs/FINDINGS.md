@@ -3051,3 +3051,48 @@ noise and is superseded by "undecidable".
    nothing reads, index sparsely into a pre-zeroed buffer *of the same shape* so the dense sum reduces
    the same values in the same order. Summing only the held entries reorders a float sum: pairwise
    summation groups by index block, and interspersed zeros change how the non-zeros are parenthesised.
+
+## 50. Removing a book's best names tests nothing unless every null draw loses ITS OWN best names — the verdict reverses when it does
+
+**From D370, 2026-09-07.** Pre-registered; every prediction confirmed, including the one written
+*against* the earlier conclusion. **§47's claim that "the trigger survives and the overlay does not"
+is RETRACTED.**
+
+D367 removed the ten names the observed book earned most from and compared what remained against
+rotated gates that never produced those names. Made symmetric — **each draw losing its own ten** —
+the verdict flips:
+
+| test | draws | p50 | p95 | observed | margin | in SE | verdict |
+|---|--:|--:|--:|--:|--:|--:|---|
+| **symmetric**, each draw loses its own ten | 2,000 | +0.679 | +3.617 | **+4.219** | **+0.602** | **+10.3** | **CLEARS** |
+| asymmetric, every draw loses the same ten | 10,000 | +1.562 | +4.230 | +3.919 | −0.311 | −15.8 | FAILS |
+
+**Two separate defects, both measured.**
+
+1. **The hedge was shorting names the book could not trade — worth +0.300 bp/bar.** D367 and D369
+   rebuilt the *ranking* on the reduced universe but left the dollar-volume hedge spanning the full
+   one. A third of the margin by which the book was judged to fail was that inconsistency.
+2. **The null was spared the penalty the observed book paid.** Removing one book's winners takes its
+   whole tail and only part of every other book's. Once each draw loses its own, the null's p95 falls
+   from +4.230 to +3.617 and its median from +1.562 to +0.679.
+
+The sets genuinely differ — a draw's own ten overlaps the observed book's on a **median of 5 of 10**
+— so the earlier test was not absurd, merely unfair. The gate's premium survives at **83% retained**
+(+3.54 against the full universe's +4.288), not the 57% §47 reported.
+
+**What it means.**
+
+1. **A control set selected from the treatment's own outcome is not a control.** Ask, before running:
+   *would this comparison be different if the null had produced this result?* If yes, the selection
+   has to happen inside every draw.
+2. **PRECISION CANNOT DETECT BIAS.** §49 ran this exact test at 10,000 draws and returned a confident,
+   well-resolved, tightly-bounded, **wrong** answer at −15.8 standard errors. More draws make a biased
+   estimator more precisely biased. Spend effort on whether the comparison is fair before spending it
+   on how many draws it gets.
+3. **When a reduced universe is tested, reduce everything the universe touches** — the ranking, the
+   eligibility *and* the hedge. Leave the market index alone: the market still contains those names
+   whether or not this book trades them, and reducing it per draw would make the gate a different
+   object in every draw.
+4. **Concentration and timing are separable after all.** Twelve names still reach half the P&L and a
+   fresh top ten still takes 45% (§47 Q8, unaffected) — but the gate's *timing* does not depend on
+   which ten they are.

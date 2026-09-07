@@ -842,7 +842,28 @@ every number quoted before D340 is a same-close-fill number.
     inconsistency that the gate's index and the hedge still span the full
     universe including the removed names.
 
-**PRECISION IS NOW SPENT AS A CONSTRAINT — D369 SETTLED IT.** What follows
+38. **The symmetric top-ten removal — DONE (D370), every prediction
+    confirmed, and D367 Q7 is RETRACTED.** Made symmetric — each draw losing
+    **its own** ten rather than the observed book's — the verdict **reverses**:
+    observed **+4.219** against a p95 of +3.617, **+10.3 SE**, 33 of 2,000
+    beating it, where the asymmetric test gave −15.8 SE. Two defects, both
+    measured: the hedge was **shorting names the book could not trade**
+    (+0.300 bp/bar of the 0.311 shortfall), and the null was spared the
+    penalty the observed book paid (its p95 falls 4.230 → 3.617, median
+    1.562 → 0.679 once each draw loses its own tail). The sets genuinely
+    differ — median overlap **5 of 10**. **The gate's premium is 83%
+    retained, not 57%**, and "the trigger survives, the overlay does not" is
+    withdrawn. Concentration (§33 Q8) is unaffected.
+39. **THE LESSON THAT OUTRANKS THE PRECISION ONE: precision cannot detect
+    bias.** D369 ran the asymmetric test at **10,000 draws** and returned a
+    confident, tightly-bounded, well-resolved, **wrong** answer at −15.8 SE.
+    More draws make a biased estimator more precisely biased. **Before
+    spending draws, ask whether the comparison is fair**: would it read
+    differently if the null had produced this result? A control set selected
+    from the treatment's own outcome is not a control, and the selection must
+    happen inside every draw.
+
+**PRECISION WAS SETTLED BY D369 — AND D370 SHOWED IT WAS THE SMALLER PROBLEM.** What follows
 supersedes the paragraph below, which is kept for the record.
 **PRECISION WAS THE BINDING CONSTRAINT, NOT MORE SWEEPS.** D368 measured
 the same gate under two independent 200-draw rotations differing only in a dead

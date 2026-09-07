@@ -1,0 +1,60 @@
+{
+ "study": 370,
+ "observed_full": 8.10630904438023,
+ "observed_reduced": 4.219041078465181,
+ "own_ten": [
+  "GME",
+  "AXTI",
+  "LITE",
+  "MSTR",
+  "NBIS",
+  "RNG",
+  "GDXU",
+  "SEDG",
+  "BGFV",
+  "RH"
+ ],
+ "symmetric": {
+  "draws": 2000,
+  "p50": 0.6787097488813802,
+  "p95": 3.6169556015332,
+  "p95_se": 0.05864593798657475,
+  "max": 5.377645816274039,
+  "min": -4.752918418391991,
+  "observed": 4.219041078465181,
+  "margin": 0.6020854769319808,
+  "margin_in_se": 10.266448071302234,
+  "verdict": "CLEARS",
+  "draws_beating_observed": 33,
+  "pct_rank": 98.35000000000001
+ },
+ "asymmetric": {
+  "draws": 10000,
+  "p50": 1.5623651985761102,
+  "p95": 4.230236803710478,
+  "p95_se": 0.019687456926112668,
+  "max": 7.146697977852239,
+  "min": -4.82130456822189,
+  "observed": 3.919426668964922,
+  "margin": -0.3108101347455561,
+  "margin_in_se": -15.787215987927306,
+  "verdict": "FAILS",
+  "draws_beating_observed": 757,
+  "pct_rank": 92.43,
+  "parts": 8
+ },
+ "overlap": {
+  "median": 5.0,
+  "mean": 5.261,
+  "min": 2,
+  "max": 9
+ },
+ "predictions": {
+  "Q1": true,
+  "Q2": true,
+  "Q3": true,
+  "Q5": true,
+  "Q6": true
+ },
+ "note": "D370: every draw removes its OWN top ten; hedge rebuilt on the reduced universe; the gate's index is NOT reduced."
+}
