@@ -3096,3 +3096,57 @@ The sets genuinely differ — a draw's own ten overlaps the observed book's on a
 4. **Concentration and timing are separable after all.** Twelve names still reach half the P&L and a
    fresh top ten still takes 45% (§47 Q8, unaffected) — but the gate's *timing* does not depend on
    which ten they are.
+
+---
+
+## 51. Every cross-sectional book is equal-weighted and nothing has ever been run against it: sizing was never chosen
+
+**From [D372](decisions/D372-equal-weight-is-the-incumbent-sizing-and-the-hurdle.md), 2026-09-07.
+PRE-REGISTRATION ONLY. No cell has been scored under any sizing scheme but the incumbent, and
+D372's stage-0 diagnostic has not been run. This section records a verified property of the code
+and a declared gap — it is NOT a result.**
+
+The kernel sizes by equal weight within each leg, renormalised per bar
+([`scripts/run_d306_width_exits.py:240`](../scripts/run_d306_width_exits.py)):
+
+> the book is `mean(long) - mean(short)`, so a trade's weight at bar t is **`1/n_t` for its own
+> leg, NOT `1/depth`** — the two differ whenever a delisting leaves the leg short of its slots.
+
+`1/n_t` rather than `1/depth` is load-bearing on a dead-inclusive fixture (D252): a leg thinned by
+a delisting must not silently hold cash at the dead name's weight. **That is the only sizing
+decision this programme has ever made.** Every number in this file — every null, every cost
+convention, every era split — was produced under equal weight, and no record selected it.
+
+**The two lineages have never met.** Inverse-volatility sizing is built and swept in the
+breakout/crypto work — D110's `InverseVolatilityWeight` brick, D118's swept target, D119's
+risk-equalised benchmark — and has never been run on a single-name cross-sectional book.
+
+**Why it is worth naming rather than assuming.** Equal weight ignores volatility, ignores
+correlation entirely, ignores conviction (rank 1 and rank 20 take identical weight though the
+score is continuous), and — the one specific to this programme — **ignores price, and therefore
+cost. Cost in bp scales inversely with price (§ the D284 kill), so equal weight is unequal cost
+drag**: the cheap names carry the heaviest bp burden for the same notional.
+
+**And why the prior still favours it.** It has no parameters, so it cannot be overfit, needs no
+multiplicity correction and no null of its own; a swept challenger needs all three. Estimation
+error in a covariance matrix routinely exceeds the optimisation gain (DeMiguel, Garlappi and
+Uppal 2009: `1/N` beat fourteen optimised models out of sample across seven datasets).
+
+**The confound that makes this non-obvious.** Low price correlates with high realised volatility,
+so inverse-vol sizing *partially re-implements the D339 floor* by shrinking the same names the
+floor excludes. A win for vol sizing may be the floor arriving a second time under a new name.
+D372 §5 forces a price-rank-only comparison to separate them.
+
+**What is actually next, and it may end the question.** D372's stage 0 is a volatility-decile
+split of contribution P&L on the existing census machinery — a diagnostic with no predictions.
+D339's census already found `retrace_leg` taking **61.3% of its P&L from the 12.2% of trades
+entered below $5** (+805 bp against +76). Those are the high-volatility names. If P&L is monotone
+increasing in volatility decile, inverse-vol sizing is arithmetically guaranteed to remove most of
+the book's earnings, nothing needs building, and **the books are harvesting a volatility premium
+rather than exercising selection skill** — a different object, priced differently, with different
+capacity. D210 ("nothing survives holding leg size constant") is the precedent for that outcome.
+
+**The rule.** *An implicit default is not a decision, and it has never been tested.* Equal weight
+was not chosen over alternatives; it is what the kernel happened to do. Anything that has never
+been named cannot have been beaten, and the absence of a challenger is not evidence the incumbent
+won.
