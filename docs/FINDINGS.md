@@ -2891,3 +2891,65 @@ not driven by the GME trade: the sweep has the same shape with that name removed
 4. **A swept parameter's neighbours are part of its result.** A single-point optimum with no
    plateau is a draw from a jagged surface, not the value of a constant, and reporting it
    without the neighbours overstates it.
+
+## 47. Six of a nine-condition gate were logically implied by the seventh, and an entry gate does not reduce exposure
+
+**From D367, 2026-09-07.** Pre-registered; five of eight, one load-bearing prediction held and
+one failed. Forty-six gates — nine single conditions, all thirty-six pairs, the combined gate —
+each against its own time rotation, plus a shared-offset control pricing the best of forty-six.
+
+**Each gate is scored on its TIMING PREMIUM — net less the median of its OWN rotation** — because
+the nine conditions have on-shares from 9.5% to 89.1% and raw net cannot compare them. A gate does
+two things at once: it chooses *when* to hold and it rations *how often* holding may begin. Only
+the first is a forecast, and only the rotation separates them.
+
+**The redundancy is the finding.** D366's gate was the conjunction of nine conditions. Six of them
+change the result *identically* — to the last decimal — because they are implied by the ninth:
+
+| gate | open% | net | premium |
+|---|--:|--:|--:|
+| C9 alone, index at a 252-bar high | 9.5% | +6.93 | +2.91 |
+| C9 + any of the six trend conditions | 9.5% | **+6.93** | **+2.91** |
+| C9 + index 12-month momentum > 0 | 9.3% | +8.06 | +4.14 |
+| all nine | 9.2% | +8.09 | +4.15 |
+
+An index at a 252-bar high is *necessarily* above its 200- and 50-day means, has positive 63- and
+21-day returns, is not in a crash state, and has broad participation. **The nine-condition gate is
+one condition plus one more, and the whole difference between them is ten gate-open bars and about
+twenty trades.** The added condition has *negative* standalone timing content — 113 of 200 randomly
+timed versions of it beat the real one.
+
+**Multiplicity splits the two.** Against a shared-offset best-of-46 null (p95 +2.96), the full gate
+clears at +4.15 with 0 of 200 draws beating it; the one-condition gate at +2.91 falls 0.05 short.
+**The cheaper construction is weaker in evidence, and the same ten bars decide both verdicts.**
+
+**An entry gate does not reduce exposure — the correction this study forced.** The gate is shut on
+90.8% of bars, and the book is invested **91.6%** of them, holding 22.5 names on average, because
+the gate blocks *entry* only and positions run to the 252-bar cap. Every earlier description of
+this construction as flat most of the time was wrong. Decomposed properly: ungated **+1.85** → a
+randomly timed gate **+4.10** → the real gate **+8.09**; a third is entry rationing any gate of that
+shape delivers, two thirds is this gate's timing.
+
+**And the gate's edge is the same thing as the P&L concentration.** Removing the ten best names —
+a look-ahead diagnostic, with the universe genuinely re-ranked — leaves a book that still beats its
+rank rotation 0-for-24 and its time rotation 0-for-200, but **fails its gate rotation** (+3.91
+against a p95 of +4.47, 30 of 200 draws beating it). The real gate lost 4.18 bp/bar when those names
+went; a random gate lost 2.45. **43% of the gate's timing value lived in ten names.** The trigger
+survives; the overlay does not.
+
+**Concentration is a property of the signal, not of those names.** The reduced universe's own new
+top ten take **45% of its P&L — identical to the full universe's 45%**, 12 names to half the P&L
+against 12 before. It cannot be diversified away by removing whoever happened to win.
+
+**What it means.**
+
+1. **Check a conjunction for logical implication before searching over it.** Six conditions here
+   were not weak, they were *entailed*; a ladder that adds them looks monotone and informative and
+   is neither. One line of set algebra — is this gate a subset of that one? — would have shown it
+   before ninety constructions were searched.
+2. **Score a gate on its own rotation, never on raw net.** On-share is a nuisance parameter and
+   conditions differ on it by a factor of nine here.
+3. **A gate that blocks entry is not a flatness mechanism.** If flatness is the goal, the exit has
+   to be gated too; entry gating changes which trades are taken, not how long capital is deployed.
+4. **Concentration and timing can be one finding rather than two.** When both point at the same
+   names, fixing either by diversification is unavailable.

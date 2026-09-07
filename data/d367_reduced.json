@@ -1,0 +1,237 @@
+{
+ "study": 367,
+ "removed": [
+  "GME",
+  "AXTI",
+  "LITE",
+  "MSTR",
+  "NBIS",
+  "RNG",
+  "BGFV",
+  "SEDG",
+  "RH",
+  "GDXU"
+ ],
+ "look_ahead": true,
+ "observed": {
+  "gross": 5.463930726860055,
+  "cost": 1.5559274260858806,
+  "net": 3.9080033007741743,
+  "vol": 129.6815525789558,
+  "sharpe": 0.47838438009320483,
+  "ann_bp": 984.816831795092,
+  "maxdd": 5071.123551051156,
+  "maxdd_pct": 42.34479025159574,
+  "bars_under": 1353,
+  "peak": "2016-03-10",
+  "trough": "2020-06-08",
+  "recovery": "2022-03-01",
+  "calmar": 0.19420091462590308,
+  "era1": 0.2782532263786257,
+  "era2": 5.8713503539321525,
+  "bars": 2863,
+  "members": 24.747816975200838,
+  "cost_parts": {
+   "long": 1.3329021501080116,
+   "borrow": 0.1984126984126984,
+   "rebalance": 0.024612577565170563,
+   "total": 1.5559274260858806,
+   "trades": 995,
+   "pos_bars": 70853,
+   "reb_rate": 0.024612577565170563,
+   "per_trade": {
+    "entry_half_nan": 0,
+    "exit_half_nan": 0,
+    "mean_two_c": 94.91468948904819,
+    "median_two_c": 82.56804271578535,
+    "median_entry_half": 36.41460069844984,
+    "median_exit_half": 39.95179573398809,
+    "median_price": 40.22
+   }
+  }
+ },
+ "full_universe": {
+  "gross": 9.647150504761582,
+  "cost": 1.5587337174760645,
+  "net": 8.08841678728552,
+  "vol": 144.81840633130287,
+  "sharpe": 0.8866251132652546,
+  "ann_bp": 2038.2810303959513,
+  "maxdd": 3157.9158582018144,
+  "maxdd_pct": 29.381932636870346,
+  "bars_under": 1021,
+  "peak": "2016-03-10",
+  "trough": "2020-03-18",
+  "recovery": "2020-08-05",
+  "calmar": 0.6454513425688906,
+  "era1": 0.46193320327309895,
+  "era2": 12.095011665452,
+  "bars": 2918,
+  "members": 24.5301576422207,
+  "cost_parts": {
+   "long": 1.336587741880434,
+   "borrow": 0.1984126984126984,
+   "rebalance": 0.023733277182932153,
+   "total": 1.5587337174760645,
+   "trades": 988,
+   "pos_bars": 71579,
+   "reb_rate": 0.023733277182932153,
+   "per_trade": {
+    "entry_half_nan": 0,
+    "exit_half_nan": 0,
+    "mean_two_c": 96.83361738467569,
+    "median_two_c": 85.14247763530511,
+    "median_entry_half": 37.30854332554763,
+    "median_exit_half": 41.369158755663946,
+    "median_price": 41.489999999999995
+   }
+  }
+ },
+ "nulls": {
+  "ROT": {
+   "p50": -10.697813063196959,
+   "p95": -4.2295519514947495,
+   "max": 0.056604943973684166,
+   "min": -17.355705797797594,
+   "draws": 24,
+   "distinct": 24,
+   "above_p95": true,
+   "draws_beating_observed": 0,
+   "pct_rank": 100.0
+  },
+  "APRIME": {
+   "p50": -0.3490952891897724,
+   "p95": 1.817484905812051,
+   "max": 3.8705531149365653,
+   "min": -5.72265046694775,
+   "draws": 200,
+   "distinct": 200,
+   "above_p95": true,
+   "draws_beating_observed": 0,
+   "pct_rank": 100.0
+  },
+  "GATEROT": {
+   "p50": 1.653070360023133,
+   "p95": 4.4740659197069315,
+   "max": 5.971282162087827,
+   "min": -3.767462208818711,
+   "draws": 200,
+   "distinct": 194,
+   "above_p95": false,
+   "draws_beating_observed": 30,
+   "pct_rank": 85.0
+  },
+  "C": {
+   "p50": -0.19597114502256086,
+   "p95": 3.756470742394959,
+   "max": 7.821245982177359,
+   "min": -6.944646578687597,
+   "draws": 1000,
+   "distinct": 1000,
+   "above_p95": true,
+   "draws_beating_observed": 47,
+   "pct_rank": 95.3
+  }
+ },
+ "four_groups": {
+  "count": 995,
+  "mean_bp": 269.5959757679081,
+  "median_bp": -55.445396420553934,
+  "win_rate": 0.4793969849246231,
+  "payoff": 1.5037791082413883,
+  "hold_mean": 71.20904522613066,
+  "hold_median": 48.0,
+  "skew": 1.6549403752935163,
+  "kurtosis_excess": 6.674961670815481,
+  "trim_k": 9,
+  "mean_ex_top_bp": 152.37148383196867,
+  "mean_ex_bottom_bp": 339.4922990338198,
+  "mean_trimmed_bp": 221.83182601494266,
+  "names_to_half_pnl": 12,
+  "n_names": 514,
+  "top_name_share": {
+   "1": 0.05218960158819098,
+   "5": 0.24369775538301422,
+   "10": 0.445948389129212
+  },
+  "profitable_years_share": 0.7692307692307693,
+  "years": 13,
+  "top_trade": {
+   "symbol": "PLTR",
+   "entry_date": "2024-09-30",
+   "as_traded_price": 37.2,
+   "hold": 252,
+   "pnl_bp": 15579.247207108428,
+   "share_of_pnl": 0.05807777670611593,
+   "dv_percentile_at_entry": 98.88423988842399
+  },
+  "split_dead_alive": {
+   "dead_n": 191,
+   "dead_mean_bp": 335.96126394419866,
+   "alive_n": 804,
+   "alive_mean_bp": 253.8300926315007
+  },
+  "split_price": {
+   "median_price": 40.22,
+   "low_n": 498,
+   "low_mean_bp": 263.936651545454,
+   "high_n": 497,
+   "high_mean_bp": 275.2666869606285
+  }
+ },
+ "open_at_end": 42,
+ "new_top10": [
+  {
+   "symbol": "SHOP",
+   "pnl_bp": 13999.75603228118,
+   "share": 0.052189601588191
+  },
+  {
+   "symbol": "PLTR",
+   "pnl_bp": 13857.518235372076,
+   "share": 0.05165935420856873
+  },
+  {
+   "symbol": "CVNA",
+   "pnl_bp": 12629.933713661616,
+   "share": 0.04708304966753456
+  },
+  {
+   "symbol": "IMGN",
+   "pnl_bp": 12469.048813151458,
+   "share": 0.04648328786884179
+  },
+  {
+   "symbol": "WDC",
+   "pnl_bp": 12415.177689691705,
+   "share": 0.04628246204987824
+  },
+  {
+   "symbol": "NVTS",
+   "pnl_bp": 11252.188550068327,
+   "share": 0.0419469622234254
+  },
+  {
+   "symbol": "SMCI",
+   "pnl_bp": 11245.643130653218,
+   "share": 0.04192256159596343
+  },
+  {
+   "symbol": "ANF",
+   "pnl_bp": 10983.049823463818,
+   "share": 0.04094364167404911
+  },
+  {
+   "symbol": "DVN",
+   "pnl_bp": 10530.43419103801,
+   "share": 0.039256338732882
+  },
+  {
+   "symbol": "VSAT",
+   "pnl_bp": 10242.011474488221,
+   "share": 0.03818112951987799
+  }
+ ],
+ "new_top10_share": 0.44594838912921225,
+ "note": "D367: the ten names were chosen by knowing which turned out best. LOOK-AHEAD DIAGNOSTIC, not a strategy; no version of this book is proposable."
+}

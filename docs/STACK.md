@@ -771,6 +771,34 @@ every number quoted before D340 is a same-close-fill number.
     principal's (R15).** Its out-of-sample design is owed and is now the
     same question as D365's.
 
+33. **The gate deconstructed and the book without its winners — DONE (D367),
+    five of eight.** Forty-six gates, each against its own time rotation,
+    scored on TIMING PREMIUM (net less its own rotation's median) because
+    on-shares run 9.5%–89.1%. **Six of the nine conditions are logically
+    IMPLIED by the ninth** and change the result identically: an index at a
+    252-bar high is necessarily above its 200- and 50-day means, positive over
+    63 and 21 bars, not in a crash state, and broad. The gate is C9 (+6.93,
+    premium +2.91) plus C4 (→ +8.09, +4.15), and **that difference is ten
+    gate-open bars and ~20 trades**; C4 alone has NEGATIVE timing content
+    (113 of 200 rotations beat it). Against the shared-offset best-of-46 null
+    (p95 +2.96) the full gate clears at 0-of-200; **C9 alone falls 0.05
+    short** — the cheaper construction is weaker in evidence. 20 of 36 pairs
+    clear their own p95, so that bar is low. **Q7 falsified**: the book minus
+    its ten best names still beats ROT 0-of-24 and A′ 0-of-200 but **fails
+    GATE-ROT** (+3.91 vs p95 +4.47, 30 of 200) — the trigger survives, the
+    overlay does not, and 43% of the gate's timing value was in ten names.
+    Concentration is the signal's, not those names': the reduced universe's
+    own new top ten take **exactly the same 45%**. **Nothing promoted (R15).**
+34. **TWO CORRECTIONS D367 forced on this document and on D366.** (a) **An
+    entry gate does not reduce exposure.** The gate is shut 90.8% of bars and
+    the book is invested **91.6%** of them at 22.5 names, because it blocks
+    entry only and positions run to the cap. Every earlier description of this
+    construction as flat most of the time — §31, §32 and D358's framing — was
+    wrong; read "exposure reduction" as **entry rationing**. Matched properly
+    the decomposition is ungated +1.85 → random gate +4.10 → real gate +8.09.
+    (b) **The dual exit rank is dead**: exit 90 everywhere gives +8.11 at the
+    same Sharpe, so the 80-open/90-shut split is not a degree of freedom.
+
 **Next, in this order:**
 
 0. **The winners'-dip long, pre-registered** — the bottom decile of `rev_5` is
@@ -1088,6 +1116,21 @@ Kept legible rather than quietly fixed.
     the code that produced it; reproduce the probe bit-for-bit, then state the
     difference between the probe and the construction rather than widening a
     tolerance until they agree.**
+
+36. **A conjunction was searched for ninety constructions without anyone
+    checking it for logical implication.** Six of D366's nine gate conditions
+    are entailed by the ninth and contribute *identically* nothing; the
+    seven-step ladder that added them looked monotone and informative and was
+    neither. **One line of set algebra — is this gate a subset of that one? —
+    would have shown it before the search started.** Ask what a condition
+    excludes that the others do not, before measuring what it adds.
+37. **"Shut 90% of the time" was repeated for a whole session and meant
+    nothing like what it was taken to mean.** The gate blocks ENTRY; holds run
+    to a 252-bar cap; the book is invested 91.6% of bars. A flat-by-default
+    construction was the stated goal and was never achieved, and no one
+    measured deployment until D367 — the gate's on-share was quoted in its
+    place. **Report the quantity the goal is stated in** (bars invested), not
+    the one the mechanism is written in (bars the gate is open).
 
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
