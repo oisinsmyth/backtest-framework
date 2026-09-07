@@ -853,14 +853,35 @@ VOL_XS's **+0.288** beats dispersion's +0.205 and G1's −0.231.
   DISPERSION, VOL_XS, VOL_MKT — all six inside their own shuffles, |corr| 0.048 to 0.133. **This
   is the result of the C1 sequence.**
 
-### And the programme already owns this, from the opposite direction
+### And the programme owns a SEPARATE volatility result — which is not the same object
 
 **PICKUP §5 item 5:** D280 part 4's volatility tilt `zh + zv + za + zr` reaches IC **−0.01373
-(t −5.07)**, *"the only directional statistic in that record that clears its own multiplicity"* —
-and it is recorded there as needing its own pre-registration and **was never run.** C1b has
-re-found the same object from a completely different instrument (a block premise on a cohort
-drift, rather than a cross-sectional IC), which is the kind of convergence that makes a state
-worth believing.
+(t −5.07)**, *"the only directional statistic in that record that clears its own multiplicity"*,
+recorded there as needing its own pre-registration and **never run.**
+
+> #### CORRECTION, 2026-09-08 — the "convergence" claimed here was wrong, and it is the ρ error again
+>
+> **This paragraph first read that C1b "has re-found the same object from a completely different
+> instrument … the kind of convergence that makes a state worth believing." That is false, and it
+> is the same mistake as §4.1a's: asserting two things are one object because they share a word.**
+>
+> | | axis | what it ranks / states | direction |
+> |---|---|---|---|
+> | **D280's tilt** | **cross-sectional**, name-level | ranks NAMES within a bar by a z-scored composite | `+zr` pushes high-range names *out* of an ascending short, so the book **shorts the QUIETER names** |
+> | **C1b's VOL_XS** | **time-series**, market-level | one number per bar: the median name's realised vol | **high market vol forecasts a HIGHER forward drift for the loser cohort** |
+>
+> **Different axes, different objects, and not obviously even the same sign of story.** One says
+> *within today's cross-section, short the calm names*; the other says *when the whole market is
+> volatile, beaten-down names bounce harder*. Nothing measured here connects them.
+>
+> **What this costs:** the volatility tilt has **one** reason to be run, not two — D280's own
+> t −5.07 clearing a best-of-161 correction. That is still the best-documented unrun candidate in
+> the record, but it is a single instrument and this record should not have implied otherwise.
+> **The two findings are two leads, not one corroborated lead.**
+
+**And D280 names its own gap, which is the right Stage 0 for anything built on it:** *"`zr` alone
+was never scored, so this record CANNOT say how much of −0.01373 is the volatility term by itself.
+That is not recoverable from the artefacts and needs its own measurement."*
 
 **Two standing cautions attach to it before anything is built.** FINDINGS §1b: the σ² tax took
 **59%** of D264's gross, so a volatility-tilted book pays for its tilt. And PICKUP §3.3:

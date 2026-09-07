@@ -599,3 +599,76 @@ exposure in both cases is *forward* — and, for 1c, *cross-study*.
 | **1g** | turnover and holding run, **reported** | — |
 | **1h** | both directions, **declared then disclosed** | — |
 | **1i** | interior vs edge peak, **and the per-name effect at the peak** | self-paired by the fifth amendment |
+
+---
+
+# SEVENTH AMENDMENT, 2026-09-08 — gates 1c and 2c gain their partner: HOLD-DRIVEN
+
+**The sixth amendment identified 1c and 2c as unpaired on holding period and deferred the fix to
+the principal. The principal has adopted it. This amendment supplies the partner and changes no
+threshold.**
+
+## The defect, restated in one line
+
+**`mean move per trade ÷ measured round trip` rises mechanically as the hold lengthens** — the
+numerator accumulates with holding time while the denominator stays one round trip per trade.
+**A candidate can clear 1c by holding longer while its per-bar edge falls.**
+
+The mechanism is already doctrine — `CLAUDE.md`: *"a longer hold lifts breakeven by amortising one
+round trip; per-bar edge usually falls, so Sharpe can drop as cost coverage rises. **Say which
+moved**"* — and it was confirmed on a different per-trade statistic by D373's segmentation
+diagnostic, which re-cut one book's own stored paths with **identical exposure and only the trade
+boundaries changed** and took `mean > median > 0` from **PASS at 40 bars to FAIL at 100.**
+**Per-trade statistics inherit whatever the exit rule does to trade boundaries, and 1c and 2c are
+per-trade statistics.**
+
+## GATE 1c′ / 2c′ — the ratio keeps its threshold and gains a companion number
+
+> **The per-trade cost ratio is reported beside the PER-BAR EDGE ON THE DEPLOYED BASE AT THE SAME
+> HOLD. A candidate that clears the ratio while its per-bar edge FALLS relative to a shorter hold
+> in its own profile is recorded HOLD-DRIVEN, not as clearing.**
+
+**The threshold is unchanged** — 1.0× for 1c, 1.5× for 2c. What changes is that a pass now carries
+the direction of the per-bar number with it.
+
+**It costs nothing to compute.** Gate 1i already requires the horizon profile, and the deployed
+base is already reported under 1g. **This is a column, not a run.**
+
+## Why HOLD-DRIVEN rather than a failure
+
+**Lengthening the hold is a legitimate deployment choice** — R14's fourth amendment of 2026-09-03
+makes the holding period a deployment variable, not a research one, precisely because it trades
+gross against edge density. A HOLD-DRIVEN pass is therefore **not a defect to be failed**; it is a
+pass whose provenance must travel with it, so that a later reader can tell *"this cleared cost"*
+from *"this cleared cost by holding four times as long."*
+
+**The convention matches the ones already in use:** gate 1i's edge peak is *unresolved*, not
+failed; D369's 2-SE band is *unresolved*, not failed. **HOLD-DRIVEN is the third member of that
+family.**
+
+## Scope, and what is not disturbed
+
+- **No past verdict changes.** 1c was applied across D290's 51 candidates and 2c across
+  D264–D284, but **each comparison was made at a fixed cap within its own study**, so every one
+  was internally valid. **The exposure this closes is cross-study comparison, and any future
+  candidate whose hold is a free parameter.**
+- **This amendment does not touch 1d.** The sixth amendment identified 1d as unpaired on level and
+  proposed 1d″; that remains the principal's, and D375's outstanding calibration pre-registration
+  is where it belongs.
+
+## Stage 1's gates, restated
+
+| | gate | paired with |
+|---|---|---|
+| **1a** | t-based best-of-N floor | **1c′** |
+| **1b** | mechanism and numeric shape declared before the run, with a falsifier | — *(procedural)* |
+| **1c′** | mean move vs the **measured** round trip, **beside the per-bar edge at the same hold**; a pass on a lengthened hold is **HOLD-DRIVEN** | **the per-bar edge** ✔ |
+| **1d** | correlation to existing book arms | **⚠ still unpaired on level — see the sixth amendment** |
+| **1e** | **CAPTURABILITY — open-entry `t` ≥ 2 and retention ≥ 50%** | **1c′**, and **1f** |
+| **1f** | **name-split CV > 0** — necessary, and explicitly **not sufficient** | **1e** |
+| **1g** | turnover and holding run, **reported** | — |
+| **1h** | both directions, **declared then disclosed** | — |
+| **1i** | interior vs edge peak, **and the per-name effect at the peak** | self-paired by the fifth amendment |
+| **2c′** | ≥ 1.5× round trip, **beside the per-bar edge at the same hold** | **the per-bar edge** ✔ |
+
+**One of the two gaps the sixth amendment found is now closed. 1d remains open.**
