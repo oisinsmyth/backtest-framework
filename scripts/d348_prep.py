@@ -181,10 +181,14 @@ def _assert_F0(n_ok, pct_f0):
 
 
 def _assert_R(factor_equal, share, el):
+    # Mining compares to D343's STORED full-precision share, so 1e-9 is the right bar. A re-pointed fixture's
+    # expectation is transcribed from its own --dry printout at six decimals, so the lock is held to the
+    # precision actually recorded -- demanding 1e-9 of a 6-dp constant fails on the digits it never had.
     want = (float(json.loads(V47.D343_JSON.read_text())["floor"]["v2_share_live_fail"])
             if EXPECT is None else EXPECT["floor_share"])
+    tol = 1e-9 if EXPECT is None else 1e-6
     assert factor_equal, "[R] factor"
-    assert abs(share - want) < 1e-9, f"[R] keep_v2 share {share} != {want}"
+    assert abs(share - want) < tol, f"[R] keep_v2 share {share} != {want} (tol {tol:g})"
     print(f"    [R] RAW PRICE and FLOOR: factor == census factor; keep_v2 fails {100 * share:.4f}%"
           + (" == D343" if EXPECT is None else f" == {EXPECT['tag']}'s own --dry count") + f" ({el()})")
 
