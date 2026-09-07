@@ -146,6 +146,64 @@ establishes is that they did not travel.
 4. **`m_start` would have produced a confident, meaningless result** on a 65-bar sample with every check green
    (fixed in `ce2947c`). It was caught only because the score cache was also incomplete and forced a closer look.
 
+## 6a. ADDENDUM, 2026-09-07 — THE DATA PARTITION IS CONFIRMED SOUND, and one hurdle is not
+
+**The principal asked how each universe was chosen**, on the reasoning that if the mining set had been selected on
+some characteristic, the holdout would be its systematically different complement and D371's failure would be a
+partition artefact rather than a strategy failure. **It is not.** Audited from the builder and re-measured from
+both fixtures.
+
+**How the split was made.** `scripts/fetch_short_universe.py`: the eligible pool is sorted alphabetically — a
+deterministic input — then shuffled **once** with `POOL_SEED = 20260828`. **Mining is `order[:3400]`** fetched,
+1,573 after the screen; **the holdout is `order[3400:5100]`**, the next 1,700 of the *same permutation*, 803 after
+the screen. Same seed, same eligibility rule, same per-symbol pre-live screen (252 bars, $1M/day, $3 floor, 126
+minimum live bars), same span, same gates. The builder states the intent in terms: *"construction-identical by
+design — no symbol enters or leaves because of anything learned since. A holdout on a differently-built fixture
+makes a failure ambiguous, and ambiguity is the one thing a holdout must not produce."*
+
+**The realised characteristics agree.** Measured on both fixtures, no strategy involved:
+
+| | mining | holdout | ratio |
+|---|---|---|---|
+| price p25 / median / p75 | 23.54 / 42.66 / 77.62 | 22.68 / 43.78 / 83.78 | **0.96 / 1.03 / 1.08** |
+| dollar volume p25 / median / p90 | 17.3M / 42.5M / 279M | 16.5M / 40.0M / 296M | **0.95 / 0.94 / 1.06** |
+| median PUB half-spread | 28.65 | 28.58 | **1.00** |
+| bars per name | 2,630 | 2,685 | **1.02** |
+| `m_start` | 63 | 63 | **1.00** |
+| **cross-sectional dispersion of `mom_252_21`** | 0.45 | 0.44 | **0.99** |
+| names / eligible per bar | 1,573 / 704 | 803 / 369 | **0.51 / 0.52** |
+
+Price, liquidity, spread, history length, and — most relevantly for a ranking strategy — **the dispersion of the
+score itself** all match within a few percent. **The only material difference is size.**
+
+**But size is not nothing, and it lands on two of the four failed hurdles.** The top 5% of eligible names is 35
+in mining and **18** in the holdout; the book held **24.5 names in sample and 12.7 out of sample — half the
+breadth**. Two hurdles are breadth-sensitive and were written as absolute counts:
+
+- **H5 (≥10 names to half the P&L) is MIS-SPECIFIED, and this record says so.** At 12.7 names held, reaching ten
+  names to half the P&L demands near-equal contribution from almost every position — a far harder bar than at
+  24.5 names. It should have been stated relative to book breadth (names-to-half as a *share* of names held),
+  not as a flat count. **The failure of H5 is therefore partly mechanical and should not be read at full
+  strength.**
+- **H4 (no trade above 10% of P&L)** leans the same way, less severely.
+
+**The verdict does not rest on either.** H2 and H3 are size-neutral:
+
+- **H2** compares net against rotation nulls computed *on the same universe*, so breadth cancels on both sides.
+- **H3** is a per-trade statistic. **The 1% trimmed mean per trade at +63.9 against a 94.8 bp round trip — the
+  average trade failing to cover its own costs — has nothing to do with how many names are held.**
+
+**Conclusion: the partition is confirmed sound and the retirement stands on H2 and H3.** What the audit changes
+is the weight H4 and H5 carry, and it identifies a hurdle specification to fix before any future read.
+
+**Owed follow-up, not yet run:** the mining book restricted to a random half of its names, matched to ~803, to
+measure how much of the H4/H5 failure is mechanical breadth and how much is out-of-sample decay. That is an
+in-sample test and needs no holdout.
+
+**One hazard found during the audit, unrelated to the result:** `V58.pct_of` memoises purely by score name, so a
+process that touches both fixtures gets the **wrong percentile grid** back for the second. D371's read used one
+fixture per process and was not affected; any future cross-fixture work must clear `_PCT` between re-points.
+
 ## 7. Files
 
 `docs/decisions/D371-the-momentum-holdout-protocol.md` (pre-registration + addendum) ·

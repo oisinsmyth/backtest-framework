@@ -878,6 +878,23 @@ every number quoted before D340 is a same-close-fill number.
     The combined 50/50 with mining returns Sharpe 0.716 against mining's
     0.911 — the two disjoint universes correlate **+0.545**. Era 1 was fine
     (+2.98 vs +3.31), the one surprise in its favour.
+40a. **THE PARTITION IS CONFIRMED SOUND — and one hurdle is not.** The
+    principal asked whether the mining set had been selected on a
+    characteristic, which would make D371's failure a partition artefact.
+    It was not: one alphabetical sort, one shuffle at `POOL_SEED = 20260828`,
+    mining `order[:3400]` and holdout `order[3400:5100]` of the SAME
+    permutation, identical screens. Re-measured on both fixtures, price,
+    dollar volume, half-spread, bars per name, `m_start` and the **dispersion
+    of `mom_252_21` itself** all match within a few percent (ratios 0.94–1.08).
+    **The only material difference is SIZE** — 704 vs 369 eligible per bar,
+    so the book held 24.5 names in sample and **12.7** out of sample.
+    **That makes H5 (≥10 names to half the P&L) MIS-SPECIFIED**: an absolute
+    count applied to books of half the breadth. It should have been a share of
+    names held. H4 leans the same way. **The retirement stands on H2 and H3,
+    which are size-neutral** — the rotation nulls are computed on the same
+    universe, and a per-trade trimmed mean below the round trip does not care
+    how many names are held. Owed: the mining book at a random ~803 names, to
+    separate mechanical breadth from out-of-sample decay.
 41. **THE LESSON THAT SUPERSEDES BOTH §36 AND §39: in-sample null strength
     does not forecast out-of-sample survival.** This construction cleared its
     time rotation at 164 SE with zero of 10,000 draws beating it, cleared a
