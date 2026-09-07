@@ -138,9 +138,10 @@ All on the primary exit, per cell. Every null's events must satisfy **the observ
 eligibility mask** — D351's correction, and the standing trap: a null centred far from the base
 rate is a broken null, not a mechanism.
 
-- **A′** — each name's events rotated in time within its **eligible** bars (D351). **10,000 draws.**
+- **A′** — each name's events rotated in time within its **eligible** bars (D351). **2,000 draws**
+  (see the amendment below).
 - **B_c** — **load-bearing.** Each event's name replaced by a random eligible name **in the same
-  top-decile cohort** that day (`pct_mom ≥ 90`, and not itself an event name); **10,000 draws.**
+  top-decile cohort** that day (`pct_mom ≥ 90`, and not itself an event name); **2,000 draws.**
   This is the null that asks whether the **dip** carries information or whether **being a
   12-month winner is the whole story**. Given that the momentum book has just failed out of
   sample, a candidate that turns out to be the winner cohort wearing a trigger is the single most
@@ -159,6 +160,45 @@ is D369's actual lesson and it is cheap to honour.
 **The distribution, not the percentile alone**: p50 and p95 reported for every null, with a
 statement of whether the null is decisive (four cases in this programme of a *losing* random
 control at the 100th percentile — R7).
+
+### AMENDMENT to §4, 2026-09-07 — the draw counts, set before the runner was built and before any result
+
+**This record was drafted asking for 10,000 draws on A′ and B_c. That was not costed, and it is
+not affordable.** D359's own artifacts measure the same null machinery at **0.54 s/draw (A′),
+0.69 (B), 0.35 (B_c)** at cap 10. Cap 40 holds four times as long, and the best-of-5 floor
+multiplies by five cells: 10,000 draws lands near **40 hours serial**, roughly 5 on eight
+processes, for a margin that does not need it.
+
+**Revised: A′ and B_c at 2,000 draws, B at 1,000, C at 2,000.** The basis is D369's own
+arithmetic rather than a preference. D369 measured the p95's bootstrap SE at **0.301 on 200
+draws**, falling to 0.020–0.056 at 10,000 — SE scales as `1/sqrt(n)`, so 2,000 draws sits at
+roughly **0.095** on a bp/bar statistic. D369's problem was a **0.1 bp/bar** margin, where that
+SE is fatal. **This study's primary margin is per TRADE and roughly 140 bp** (+160.5 observed
+against a null centred near the cohort's own drift), which is hundreds of SE at any draw count
+above a few hundred. Spending 5 hours to move a 200-SE verdict to a 400-SE one buys nothing.
+
+**Where the precision actually matters is H3**, whose observed era-1 value is +16.9 on half the
+trades, and 2,000 draws is chosen for that hurdle rather than for H1.
+
+**The guard is unchanged and it is the real one:** every reported p95 carries its bootstrap SE,
+and any hurdle whose margin falls within **2 SE** of its bar is recorded **UNRESOLVED**, never
+passed. If H3 lands inside that band at 2,000 draws, the answer is to spend more draws on that
+one hurdle, and the record will say so rather than rounding it to a verdict.
+
+**Nothing else in the pre-registration is touched.** No hurdle, statistic, cell, prediction or
+construction changes; this is a resource decision, made before the runner existed and before any
+number was seen.
+
+### NOTE on the null implementation, same date
+
+`CLAUDE.md` directs every runner to be built on `scripts/fast_null.py`. **It does not apply
+here, and the reason is the rule's own.** `fast_null` accelerates *rotation nulls over a position
+matrix* — the D256–D285 book lineage. This study's controls are the **event-signal** family
+(`EB.rotate_signals`, `EB.simulate_event`, `V47.control_b_signal`) that D348, D351, D358 and D359
+established and D371 used. Re-implementing them on different machinery would risk exactly what
+`assert_matches_scorer` exists to prevent: **a null that is not comparable to the study it
+controls, or to D359's published draws.** The established path is used unchanged, and this
+paragraph is the disclosure.
 
 ## 5. The hurdles — pre-registered, and H2/H3 are the new ones
 
