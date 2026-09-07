@@ -22,7 +22,7 @@ UNCHANGED.**
 | **Prop book** — `docs/BOOK_PROP.md` | **none**, and the candidate list C1–C4 is **exhausted** (D379 §6) |
 | **Holdout reads spent, programme total** | **1** (D371, 2026-09-07) |
 | **Retired 2026-09-07** | **S6** (nine-condition gate), **C9** (252-bar high alone) |
-| **The winners'-dip avenue** | **RETIRED 2026-09-08, then REOPENED NARROWLY the same day** for one test. **D378 ran it and the gate PASSED**, so the reopening's abandon condition never fired. **STATUS IS THE PRINCIPAL'S — neither the retirement nor the reopening is now automatic.** [FINDINGS §52](docs/FINDINGS.md) |
+| **The winners'-dip avenue** | **RETIRED 2026-09-08, then REOPENED NARROWLY** for one test. **D378's gate PASSED** so the abandon condition never fired; **D380 then closed the exit half — no overlay beats not cutting.** The timing picture is complete: **the entry day carries information, the exit does not, and neither is large enough to matter after cost.** **STATUS IS THE PRINCIPAL'S.** [FINDINGS §52](docs/FINDINGS.md) |
 | **Hurdles retired or replaced** | **H4 → H4′** (D374) · **1d → 1d′** (D376) · **hedge H0 → H1** for future studies (D377) · **P1 restated as a SIZING RULE, not a filter** (D375 → R11, 2026-09-08) |
 | **Nothing is queued.** | No pre-registration is awaiting a runner |
 
@@ -262,10 +262,18 @@ after D378's pass, and whether to **re-base past records** onto D377's H1 hedge 
 2. **Where does the remaining 0.44 correlation floor come from?** D377 ruled out per-name beta error
    and price exposure; D376 established it is a **per-bar** effect. **Untested: shared slot
    mechanics, equal-weighting, the eligibility floor.** Free, in-sample, upstream of every study.
-3. **Exit timing — still owed, and D378 deliberately did not test it.** [R7](docs/RULES.md) requires
-   a **matched-count random-exit** control, not a rotation: D235 cleared a rotation null at p95
-   −0.284 and then landed at the **63rd percentile** against the right one. Needs its own
-   pre-registration, and is **not** covered by the D378 reopening.
+3. ~~Exit timing~~ — **DONE, [D380](docs/decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+   (`43db0df`). NO EXIT OVERLAY BEATS NOT CUTTING.** Baseline +160.55/trade; invalidation +26.96,
+   target +200 → +62.43, stop −200 → +13.99. Only the target beat its own control, and §2 shows why
+   that pass is near-mechanical. **Two things to carry:**
+   - **R7's strict control INHERITS the rule's trade selection.** Its p50 runs +11.95 (rule fires on
+     winners) → +83.69 (fires on everything) → **+181.11** (fires on losers, i.e. *harder than doing
+     nothing*). **U1 verdicts are not comparable across rules.** Report every overlay against **both**
+     its matched-count control **and the un-overlaid baseline** — my pre-registration omitted the
+     baseline and its own numbers found the gap.
+   - **A better win rate is available and is not worth having.** Invalidation doubles the median
+     (+51.55 → +111.05) and destroys 83% of the mean; the target quintuples it and destroys 61%.
+     Both flip mean below median — the tell that the tail is carrying the return.
 4. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
    anything is fetched. **It must not select inside a narrow cohort** — [FINDINGS §52](docs/FINDINGS.md)
    closes winner-selection variants as a family.
