@@ -132,6 +132,21 @@ basis point a bar and Sharpe from 0.735 to 0.922 — a range comparable to the w
 252 is not even the local maximum; 242 is. A parameter whose neighbours disagree this much is riding noise, and the
 +8.09 headline should be read as one draw from a jagged surface rather than as the value of a chosen constant.
 
+### AMENDMENT, 2026-09-07 — the cap is a declared constraint, not a fitted parameter
+
+**The principal has ruled that the 252-bar cap stays as it is, and why: a hold approaching a full year is already
+at the limit of what is comfortable, and lengthening it would need a strong reason that does not exist.**
+
+This changes how §6 should be read. The jagged sweep was written up as evidence that the cap is riding noise, and
+that reading holds *only* if the cap is claimed to be an optimum. It is not. Under this declaration the cap is a
+**constraint the strategy is given** — the longest tolerable holding period — and the fact that 242 scores higher
+is irrelevant rather than awkward, because 242 was never a candidate on its own merits and would not have been
+adopted had it won by more. What §6 still establishes, and what remains worth carrying, is that **the +8.09
+headline is one draw from a jagged surface**: it is a fair number for the declared constraint, not evidence that
+252 bars is a discovered horizon.
+
+No number in this record changes. D367 does not tune the cap.
+
 ## 7. Assertions
 
 All pass; `--selftest` runs in 3 s. Building `[ID]` as an *exact* identity rather than an approximate one exposed
