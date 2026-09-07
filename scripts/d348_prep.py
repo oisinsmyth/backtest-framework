@@ -194,10 +194,24 @@ def _assert_R(factor_equal, share, el):
 
 
 def _m_start_of(m_f, m_f_oc, T):
+    """The end of the market's WARM-UP PREFIX, and what is undefined before and after it.
+
+    The old version took the bar after the LAST undefined bar, which is right only when every undefined bar is
+    part of a leading warm-up. On the mining fixture that holds and this is a no-op (m_start stays 63). On a
+    fixture with INTERIOR gaps it is badly wrong: the holdout has three bars with fewer than 20 live names
+    (2026-02-16, 2026-04-03, 2026-05-25 -- US market holidays), and the old rule pushed m_start to bar 4125 of
+    4190, leaving a 65-bar sample. It would not have raised; it would have produced a confident number on a
+    sample two orders of magnitude too small.
+
+    Interior gaps need no special handling downstream -- `book_of` gives a NaN market a NaN excess, so those
+    bars carry no weight and drop out of the mask. They are counted and reported rather than asserted away."""
     m_ok = np.isfinite(m_f) & np.isfinite(m_f_oc)
-    m_start = int(T - np.argmax(~m_ok[::-1])) if (~m_ok).any() else 0
-    assert m_ok[m_start:].all(), "[H] hedge undefined after m_start"
-    return m_start, int((~m_ok[:m_start]).sum())
+    if m_ok.all():
+        return 0, 0, 0
+    assert m_ok.any(), "[H] the hedge is undefined on every bar"
+    m_start = int(np.argmax(m_ok))                      # first defined bar == end of the warm-up prefix
+    interior = int((~m_ok[m_start:]).sum())             # gaps AFTER the warm-up: tolerated, counted, reported
+    return m_start, m_start, interior
 
 
 # ------------------------------------------------------------------ BUILD: D347's prep(), line for line, with the extras kept
@@ -248,8 +262,9 @@ def _build(el):
     A2, fbmask, FBREP = FL.with_open_fill(A, panel, g)
     ocT, mkt_oc = A2["ocT"], A2["mkt_oc"]
     m_f, m_f_oc = V47.floored_market(r1T, ocT, keep, finT)
-    m_start, n_undef = _m_start_of(m_f, m_f_oc, T)
-    print(f"  hedge defined from bar {m_start} ({panel.dates[m_start]}) onward; {n_undef} earlier bars undefined")
+    m_start, n_undef, n_gap = _m_start_of(m_f, m_f_oc, T)
+    print(f"  hedge defined from bar {m_start} ({panel.dates[m_start]}) onward; {n_undef} earlier bars undefined"
+          + (f"; {n_gap} INTERIOR bars undefined and skipped by the book" if n_gap else ""))
 
     def lagged(sig):
         sc = UF.apply_floor_replace(np.where(excl, np.nan, z[sig]), keep)
@@ -369,9 +384,10 @@ def prep(need_grids=True, mmap=True, verbose=True, force_build=False):
         arrays, meta = _load_cache(d, mmap)
         _assert_F0(meta["f0_n_ok"], meta["f0_pct"])
         _assert_R(meta["r_factor_equal"], meta["r_share"], el)
-        m_start, n_undef = _m_start_of(arrays["m_f"], arrays["m_f_oc"], meta["T"])
+        m_start, n_undef, n_gap = _m_start_of(arrays["m_f"], arrays["m_f_oc"], meta["T"])
         assert m_start == meta["m_start"] and n_undef == meta["n_hedge_undefined"], "[H] cached hedge != meta"
-        print(f"  hedge defined from bar {m_start} ({meta['m_start_date']}) onward; {n_undef} earlier bars undefined")
+        print(f"  hedge defined from bar {m_start} ({meta['m_start_date']}) onward; {n_undef} earlier bars "
+              f"undefined" + (f"; {n_gap} INTERIOR bars undefined and skipped by the book" if n_gap else ""))
         for s in SIGNALS:
             c = meta["event_counts"][s]
             assert (int(arrays[f"EV_{s}_lo"].sum()), int(arrays[f"EV_{s}_hi"].sum())) == tuple(c), f"[E] cached events {s} != meta"
