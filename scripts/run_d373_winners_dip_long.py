@@ -252,43 +252,73 @@ def assert_S_long(P, lo, sc, res, rng, k=300, tag="[S]"):
 
 
 # ------------------------------------------------------------------ H5 capturability, H7 independence
+def close_fill_panel(P):
+    """The SAME-CLOSE fill panel, for H5's denominator.
+
+    V59.rebuild states the kernel's convention: 'the entry bar on ocT (- m_f_oc), later bars on r1T (- m_f)'. The study's fill is
+    therefore already the NEXT OPEN (D340). The same-close fill is the same kernel with the entry bar credited the FULL close-to-close
+    return instead -- which is exactly `ocT := r1T` and `mkt_oc := m_f`. D340 measured that difference at 13.8 of the best book's 18.9
+    bp/bar, so it is the right denominator for a capturability ratio and not a cosmetic one."""
+    A3 = P["A3"]
+    return dict(A3, ocT=np.asarray(P["r1T"]), mkt_oc=np.asarray(P["m_f"]))
+
+
 def capturability(P, c, s, e, cap):
-    """[H5] gate 1e: the same signal entered at open[t] rather than at the close[t-1] that generated it. The kernel already fills at the
-    NEXT OPEN (D340), so the comparison is against a same-close fill; retention = open-entry mean / close-entry mean."""
+    """[H5] gate 1e: what survives entering at the open rather than at the close that generated the signal.
+    retention = open-entry mean / close-entry mean; the gate is open-entry t >= 2.0 AND retention >= 50%."""
     lo, sc = mirror(P, c, s), V59.grids(P)[1]
     res_open = run_long(P, lo, sc, e, cap)
     pnl_o = V47.pnl_bp(res_open)
     t_open = float(pnl_o.mean() / (pnl_o.std(ddof=1) / np.sqrt(pnl_o.size))) if pnl_o.size > 1 else float("nan")
-    close = P.get("A3_close")
-    if close is None:
-        return dict(open_entry_t=t_open, open_entry_mean_bp=float(pnl_o.mean()), close_entry_mean_bp=None, retention=None,
-                    note="no same-close panel in prep; retention not computable here -- reported as unavailable, not as a pass")
-    res_close = run_long(P, lo, sc, e, cap, A3=close)
+    res_close = run_long(P, lo, sc, e, cap, A3=close_fill_panel(P))
     pnl_c = V47.pnl_bp(res_close)
-    ret = float(pnl_o.mean() / pnl_c.mean()) if pnl_c.mean() != 0 else float("nan")
-    return dict(open_entry_t=t_open, open_entry_mean_bp=float(pnl_o.mean()), close_entry_mean_bp=float(pnl_c.mean()), retention=ret)
+    mo, mc = float(pnl_o.mean()), float(pnl_c.mean())
+    # [Q] the two fills must actually differ, or the "comparison" is the same book twice and the gate is vacuous.
+    assert abs(mo - mc) > 1e-9, "[H5] the open-fill and close-fill books are identical -- the capturability test is not testing anything"
+    return dict(open_entry_t=t_open, open_entry_mean_bp=mo, close_entry_mean_bp=mc,
+                retention=float(mo / mc) if mc != 0 else float("nan"),
+                gap_bp=mc - mo, note="close fill = the same kernel with the entry bar on r1T rather than ocT (D340's convention)")
 
 
 def independence(P, res):
-    """[H7] correlation of this arm's deployed hedged bar series to the RETIRED momentum books (D371's S6/C9) where their series are on
-    disk, measured on the SHARED defined bars. Missing series are reported as unavailable, never as a pass."""
+    """[H7] correlation of this arm's deployed hedged bar series to the RETIRED momentum lineage, ALIGNED BY DATE.
+
+    The comparison must be same-fixture. `data/d365_series_95_80.csv` is the momentum buffer book's per-bar series on the MINING
+    fixture, dated, and is the right target. D371's stored series is the HOLDOUT read (803 unseen names, 2,734 bars) -- a different
+    universe -- so it is reported as not-comparable rather than correlated against a mining book, which would be meaningless.
+    Alignment is by DATE, never by index: the two series start at different bars."""
     mine = np.asarray(res["book_dep_x"], float)
     mask = np.asarray(res["mask_dep"], bool)
-    out = {}
-    f = DATA / "d371_read.json"
-    if not f.exists():
-        return dict(note=f"{f.name} absent -- correlation to the retired books not computable", arms={})
-    d = json.loads(f.read_text())
-    for arm, blk in d.get("arms", {}).items():
-        ser = blk.get("series", {})
-        for key, v in ser.items():
-            v = np.asarray(v, float)
-            if v.ndim != 1 or v.size != mine.size:
-                out[f"{arm}/{key}"] = dict(note=f"length {v.size} != {mine.size}; not aligned, not compared")
-                continue
-            m = mask & np.isfinite(v) & np.isfinite(mine)
-            out[f"{arm}/{key}"] = dict(bars=int(m.sum()), corr=float(np.corrcoef(mine[m], v[m])[0, 1]) if m.sum() > 2 else None)
-    return dict(arms=out)
+    dates = [str(x) for x in P["dates"]]
+    ix = {d: i for i, d in enumerate(dates)}
+    out, notes = {}, []
+
+    f = DATA / "d365_series_95_80.csv"
+    if f.exists():
+        rows = [l.split(",") for l in f.read_text().strip().splitlines()]
+        hdr = rows[0]
+        cd, cn = hdr.index("date"), hdr.index("net_PUB_bp")
+        pairs = [(ix[r[cd]], float(r[cn])) for r in rows[1:] if r[cd] in ix]
+        if len(pairs) > 2:
+            idx = np.array([p[0] for p in pairs])
+            oth = np.array([p[1] for p in pairs])
+            keep = mask[idx] & np.isfinite(oth) & np.isfinite(mine[idx])
+            out["d365_momentum_buffer/net_PUB"] = dict(
+                bars=int(keep.sum()), matched_dates=len(pairs), of_rows=len(rows) - 1,
+                corr=float(np.corrcoef(mine[idx][keep], oth[keep])[0, 1]) if keep.sum() > 2 else None)
+        else:
+            notes.append(f"{f.name}: only {len(pairs)} dates matched the mining panel -- not compared")
+    else:
+        notes.append(f"{f.name} absent -- the retired lineage's mining series is not on disk")
+
+    d371 = DATA / "d371_read.json"
+    if d371.exists():
+        d = json.loads(d371.read_text())
+        for arm in d.get("arms", {}):
+            n = len(d["arms"][arm].get("series", {}).get("net", []))
+            notes.append(f"D371 {arm}: {n} holdout bars on 803 UNSEEN names -- a different universe from this mining book; "
+                         "not correlated, because a cross-fixture correlation would not mean what H7 asks")
+    return dict(arms=out, notes=notes)
 
 
 # ------------------------------------------------------------------ the hurdles
@@ -333,7 +363,9 @@ def hurdle_H4(groups):
     to_half = groups.get("names_to_half_pnl")
     share = (to_half / n_names) if (to_half and n_names) else None
     top = groups.get("top_name_share") or {}
-    t1, t5 = top.get("top1"), top.get("top5")
+    def _k(n):                                   # keyed by int in memory, by str once round-tripped through JSON
+        return top.get(n, top.get(str(n), top.get(f"top{n}")))
+    t1, t5 = _k(1), _k(5)
     legs = dict(names_to_half_share=dict(value=share, bar=H4_NAMES_TO_HALF_SHARE, holds=bool(share is not None and share >= H4_NAMES_TO_HALF_SHARE)),
                 top1_share=dict(value=t1, bar=H4_TOP1_SHARE, holds=bool(t1 is not None and t1 <= H4_TOP1_SHARE)),
                 top5_share=dict(value=t5, bar=H4_TOP5_SHARE, holds=bool(t5 is not None and t5 <= H4_TOP5_SHARE)))
@@ -656,7 +688,8 @@ def stage_report(P, paths):
         H4=H4,
         H5=dict(**H5, verdict=("UNRESOLVED" if H5.get("retention") is None else
                                ("PASS" if (H5["open_entry_t"] >= H5_OPEN_T and H5["retention"] >= H5_RETENTION) else "FAIL"))),
-        H7=dict(**H7, bar=H7_CORR),
+        H7=dict(**H7, bar=H7_CORR, max_abs_corr=_h7_max(H7),
+                verdict=("UNRESOLVED" if _h7_max(H7) is None else ("PASS" if _h7_max(H7) <= H7_CORR else "FAIL"))),
     )
     predictions = score_predictions(hurdles, obs, pnl, dep, H7)
     out = dict(study=STUDY, cell=CELL_NAME[PRIMARY_IX], observed=obs, four_groups=groups, deployed=dep,
@@ -668,6 +701,12 @@ def stage_report(P, paths):
     print_report(out)
     print(f"  ({time.time() - t0:.0f}s)  {PREP.rss_line()}")
     return out
+
+
+def _h7_max(H7):
+    """[H7] the largest |corr| over whatever arms were computable; None if none were."""
+    c = [v.get("corr") for v in H7.get("arms", {}).values() if isinstance(v, dict) and v.get("corr") is not None]
+    return max((abs(x) for x in c), default=None)
 
 
 def _worst(vs):
@@ -708,9 +747,15 @@ def print_report(out):
         print(f"    {k}  {v}")
         if k in ("H1", "H3"):
             for arm, d in h[k]["legs"].items():
-                if isinstance(d, dict) and "p95" in d:
+                if not isinstance(d, dict) or "p95" not in d:
+                    continue
+                if "observed" in d:                       # A / B / B_c: verdict() shape
                     print(f"         {arm:<3} obs {d['observed']:+8.2f}  p50 {d['p50']:+8.2f}  p95 {d['p95']:+8.2f}  "
                           f"SE {d['se_p95']:.3f}  margin {d['margin']:+8.2f} ({d['margin_in_se']:+.1f} SE)  {d['verdict']}")
+                else:                                     # C: V58.control_C shape -- direction null on the ledger, no `observed` key
+                    print(f"         {arm:<3} obs {out['observed']['trade_mean_bp']:+8.2f}  p50 {d['p50']:+8.2f}  p95 {d['p95']:+8.2f}  "
+                          f"SE {d['se']:.3f}  max {d['max']:+8.2f}  {d['distinct']:,}/{d['draws']:,} distinct  "
+                          f"{'PASS' if d['above'] else 'FAIL'}")
         if k == "H2":
             for arm, d in h[k]["legs"].items():
                 l = d["legs"]["median_above_nulls"]
@@ -718,7 +763,9 @@ def print_report(out):
                       f"({l['margin_in_se']:+.1f} SE)  mean>median {d['legs']['mean_exceeds_median']['holds']}  {d['verdict']}")
     print("\n  PREDICTIONS")
     for k, v in out["predictions"].items():
-        print(f"    {k}  {v.get('outcome')}   {v['claim']}")
+        held = v.get("prediction_held")
+        tag = v.get("outcome") if held is None else ("HELD" if held else "FALSIFIED")
+        print(f"    {k}  {tag}   {v['claim']}")
     print("\n  NULL CENTRES vs the cohort's own base rate [N]")
     print(f"    {out['null_centres']}")
 

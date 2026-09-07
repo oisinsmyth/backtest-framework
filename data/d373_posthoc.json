@@ -1,0 +1,121 @@
+{
+  "study": 373,
+  "kind": "POST-HOC, not pre-registered",
+  "observed": {
+    "trades": 3932,
+    "mean_bp": 160.54991332895335
+  },
+  "probe1_h1_margin_sensitivity": {
+    "Bc_p95": 155.60459687821574,
+    "A_p95": 105.75687729924603,
+    "rows": [
+      {
+        "cut": "observed",
+        "removed": 0,
+        "n": 3932,
+        "mean_bp": 160.54991332895335,
+        "vs_Bc_p95": 4.945316450737607,
+        "above_Bc": true,
+        "vs_A_p95": 54.793036029707324,
+        "above_A": true
+      },
+      {
+        "cut": "drop top 1 trades",
+        "removed": 1,
+        "n": 3931,
+        "mean_bp": 150.40778966614977,
+        "vs_Bc_p95": -5.196807212065977,
+        "above_Bc": false,
+        "vs_A_p95": 44.65091236690374,
+        "above_A": true
+      },
+      {
+        "cut": "drop top 2 trades",
+        "removed": 2,
+        "n": 3930,
+        "mean_bp": 146.9559950281935,
+        "vs_Bc_p95": -8.648601850022231,
+        "above_Bc": false,
+        "vs_A_p95": 41.199117728947485,
+        "above_A": true
+      },
+      {
+        "cut": "drop top 3 trades",
+        "removed": 3,
+        "n": 3929,
+        "mean_bp": 143.52135925331007,
+        "vs_Bc_p95": -12.083237624905678,
+        "above_Bc": false,
+        "vs_A_p95": 37.76448195406404,
+        "above_A": true
+      },
+      {
+        "cut": "drop top 5 trades",
+        "removed": 5,
+        "n": 3927,
+        "mean_bp": 136.7644947103544,
+        "vs_Bc_p95": -18.840102167861346,
+        "above_Bc": false,
+        "vs_A_p95": 31.00761741110837,
+        "above_A": true
+      },
+      {
+        "cut": "drop top 10 trades",
+        "removed": 10,
+        "n": 3922,
+        "mean_bp": 124.56122923514225,
+        "vs_Bc_p95": -31.043367643073495,
+        "above_Bc": false,
+        "vs_A_p95": 18.80435193589622,
+        "above_A": true
+      },
+      {
+        "cut": "drop top 20 trades",
+        "removed": 20,
+        "n": 3912,
+        "mean_bp": 103.90784642999085,
+        "vs_Bc_p95": -51.69675044822489,
+        "above_Bc": false,
+        "vs_A_p95": -1.8490308692551736,
+        "above_A": false
+      },
+      {
+        "cut": "drop all GME",
+        "removed": 10,
+        "n": 3922,
+        "mean_bp": 151.72040547829403,
+        "vs_Bc_p95": -3.8841913999217184,
+        "above_Bc": false,
+        "vs_A_p95": 45.963528179048,
+        "above_A": true
+      },
+      {
+        "cut": "drop entries 2020-11-01..2021-03-31",
+        "removed": 156,
+        "n": 3776,
+        "mean_bp": 144.280557351626,
+        "vs_Bc_p95": -11.324039526589758,
+        "above_Bc": false,
+        "vs_A_p95": 38.52368005237996,
+        "above_A": true
+      }
+    ]
+  },
+  "probe2_h7_decomposition": {
+    "bars": 3185,
+    "corr_raw": 0.9346373668783634,
+    "corr_D373_market": 0.1449912031812279,
+    "corr_D365_market": 0.08026251439072966,
+    "corr_partial_controlling_market": 0.935876929847022,
+    "d365_name_bars": 169953,
+    "d373_name_bars": 157053,
+    "intersection": 110060,
+    "share_of_d373": 0.7007825383787638,
+    "share_of_d365": 0.6475908045165428,
+    "jaccard": 0.5073151844237737,
+    "names_d365": 709,
+    "names_d373": 796,
+    "names_shared": 683,
+    "unmatched_d365_symbols": 0
+  }
+}
