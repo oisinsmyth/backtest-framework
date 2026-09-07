@@ -375,6 +375,25 @@ position the trade is 0.04% of the day's dollar volume, so liquidity is not
 the constraint"*, is **withdrawn**; FINDINGS §43 carries the same amendment
 and §44 the measurement.
 
+**D365 turned the cost work around and built the shape it implies, and it is the
+first broad book this record has ever run.** The toll is paid per round trip and
+the edge accrues per bar, so the winning shape is broad, slow and reluctant to
+trade — the opposite of everything above. D359's Stage 0 had measured the top
+decile of twelve-month momentum drifting **+3.87 bp/bar hedged** as a premise
+check for a short and walked past it. Refreshed daily that decile **loses 1.5% a
+year** to its own 5.93%-a-day turnover; behind a rank buffer — enter above the
+95th, hold until the 80th — turnover falls to 1.01%, the toll falls sixfold, the
+gross falls a tenth, and it earns **+2.59 bp/bar net PUB, Sharpe 0.417, +6.5% a
+year** on 53 names held 99 bars. It is above the p95 of the rank rotation, 200
+per-name time rotations, random direction and a grid-max null, and **it is not
+size**: against a dollar-volume-matched hedge 103% survives, and the identical
+construction ranked on volume earns −0.99. **What it costs to say honestly:** the
+two-factor intercept is +2.856 bp/bar at **t = 1.74**, era 1 is −0.38 against era
+2's +3.99, nine of thirteen years are positive, and **thirteen names are half the
+P&L** — the same concentration as the two-name books. A six-year result with a
+seven-year null attached. **D300's two-name convention, imported from a spread
+construction, is why the record could not see this for sixteen months.**
+
 **Every net number in this document is an UPPER BOUND even under PUB.** §3
 lists what remains — the spread convention, undecided until quoted spreads
 land; opportunity cost, unmeasured. Borrow and rebalancing are now
@@ -728,6 +747,12 @@ every number quoted before D340 is a same-close-fill number.
     the principal's own orders. Databento for equities is a $199/mo
     subscription question, not a data purchase: its free tier reaches 6 of
     3,028 trades.
+31. **The momentum buffer book — DONE (D365), five of eight.** The first broad
+    book in the record: +2.59 bp/bar net PUB at a Sharpe of 0.417 on 53 names,
+    above every null, not size, not beta. The same signal refreshed daily
+    loses. Era 1 pays nothing, thirteen names are half the P&L, and the
+    intercept's t is 1.74. Its own out-of-sample design is owed and does not
+    touch D357's frozen read.
 
 **Next, in this order:**
 

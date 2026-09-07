@@ -2770,3 +2770,60 @@ never replaced by 15:59.
    here, and a spread ceiling that removes the signal (§43) removes the depth
    problem with it.
 4. **The next number is a fill, not another estimate.**
+
+## 45. The cost problem is a turnover problem: the same momentum signal loses 1.5% a year refreshed daily and earns 6.5% behind a rank buffer
+
+**From D365, 2026-09-07.** Pre-registered; five of eight, the load-bearing one held. A
+within-sample confirmation — the cell came from an eleven-combination screen on the same
+fixture — with nulls, in the shape of §42. Cross-sectional momentum is the most published
+anomaly there is; what is new to *this record* is the shape.
+
+**The construction.** Buy the top 5% of twelve-month momentum, hold until a name falls out
+of the top 20%, equal-weight, hedged, next-open fill. No stop, no target, no clock, no slot
+cap. About 53 names, 99-bar holds, 1% of the book replaced a day.
+
+| primary cell 95/80, open fill | gross | cost | net PUB | net PB | Sharpe | %/yr |
+|---|--:|--:|--:|--:|--:|--:|
+| behind the buffer | +3.37 | 0.77 | **+2.59** | +3.05 | 0.417 | +6.5 |
+| the same signal, refreshed daily | +3.84 | 4.43 | **−0.59** | +2.03 | −0.109 | −1.5 |
+
+**That is the finding.** Turnover falls from 5.93% a day to 1.01%, so the toll falls sixfold
+while the gross falls a tenth. The jitter across the rank boundary was noise, not
+information. It is the same arithmetic as §43 read the other way: the toll is paid per round
+trip and the edge accrues per bar, so the shape that survives is broad, slow and reluctant
+to trade. A corollary: the next-open fill costs this book 1.8% of its gross, where it cost
+the event books 13.8 bp/bar — **a slow book is nearly immune to the convention that
+destroyed the fast ones.**
+
+**It clears every null**: above the p95 of 24 rank rotations (−2.75, and on gross +0.72
+against +3.37), 200 per-name time rotations (+1.78), random direction (+2.85), and a
+grid-max null under shared offsets (p = 0.040).
+
+**It is not size and not beta.** Against a dollar-volume-decile-matched hedge that excludes
+the name itself, the top-decile drift is +3.97 against +3.87 — **103% survives**. The
+identical buffer construction ranked on volume earns −0.99 gross, and on the volume *level*
+−0.10. Beta is 1.15 and beta-adjusting leaves the drift unchanged.
+
+**What it costs to say so honestly.** The two-factor intercept is +2.856 bp/bar at **t =
+1.74**, missing conventional significance: a Sharpe of 0.42 over twelve years cannot reach
+it. Era 1 is −0.38 and era 2 is +3.99, so this is a six-year result with a seven-year null
+attached. Nine of thirteen years are positive. And **thirteen names are half the P&L of 709
+that traded** — holding 53 names produced the same concentration as this record's two-name
+books. The median trade *loses* 141 bp while the mean makes 335, with skew +3.85; the
+symmetric trim is +216 and the ex-top-1% mean is +138, still 1.4× the round trip. Top trade
+GME, entered November 2020 at $11.49, held 305 bars, 8.6% of the P&L — the buffer working as
+designed, on the most anomalous episode in the sample.
+
+**Rules:**
+
+1. **Attack turnover before attacking the signal.** When gross is small against a fixed
+   round trip, hysteresis on the selection boundary is worth more than any improvement to
+   the selection rule. Enter on one rank, exit on a lower one.
+2. **A programme's construction conventions can hide a result.** D300 fixed the book at two
+   names per side for a *spread* construction and it propagated into everything after; a
+   diversified premium cannot be seen through a two-name window. When importing a
+   convention, ask which construction earned it (STACK §7 item 16).
+3. **Breadth of holdings is not breadth of outcome.** Fifty-three names produced thirteen
+   names to half the P&L. Report the concentration of the P&L, never the position count.
+4. **Permutation nulls and a time-series t ask different questions.** This cell clears every
+   null and has a t of 1.74. Report both; the flattering one alone is not a result.
