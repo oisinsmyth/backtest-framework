@@ -223,6 +223,66 @@ report 61 s; peak working set 1.55 GB.
    years does not reach conventional significance however it is sliced, and the permutation
    nulls it clears are a different question from that one.
 
+---
+
+## Addendum — drawdown and exposure, 2026-09-07
+
+From `scripts/d365_export_trades.py --risk`, on the same cell and fill. Every headline is
+asserted against this record's own JSON before anything is computed, including the gross
+series' max drawdown, which the runner already stored.
+
+### The drawdown, and why the era split hides the answer
+
+| window, net PUB | max DD | peak | trough | recovery | bars under | compounded |
+|---|--:|---|---|---|--:|--:|
+| era 1 | 1,726 bp | 2015-09-23 | 2017-08-10 | **not recovered in era 1** | 652 | 16.5% |
+| era 2 | 2,952 bp | 2018-09-04 | 2020-06-08 | 2020-12-22 | 579 | 26.8% |
+| **combined** | **3,600 bp** | **2015-09-23** | **2020-06-08** | 2021-01-22 | **1,341** | **32.2%** |
+
+**The combined worst drawdown spans the era boundary and neither half sees it whole.** It
+opens in September 2015, four and a half years before the boundary, troughs in June 2020, and
+does not recover until January 2021 — **1,341 bars, more than five years underwater**, on a
+book whose Sharpe is 0.417. That is 648 bp deeper than the worse of the two halves. Anyone
+reading §3's era split as "era 1 was flat, era 2 paid" would never see it, which is exactly
+why the pre-registration asked for the undivided window.
+
+The compounded convention agrees on the ordering and puts the combined fall at **32.2%** of
+the running peak. Calmar on the combined window is **0.187**.
+
+**The book is in its second-worst drawdown now.** From 2026-05-13 it is **2,835 bp** down,
+72 bars and **not recovered** at the fixture's last bar. The next four are 2,089 bp
+(Oct 2022 to Oct 2023, recovered Jun 2024), 1,700 (Jan to Mar 2025, recovered Aug 2025),
+1,646 (Jun to Aug 2022) and, in era 1, 796 (Jul to Oct 2014).
+
+### Exposure, both lenses, kept apart
+
+**Path-variant — the book, in bp per bar.** Deployed on **100% of its 3,186 defined bars**:
+it is never flat, because something always qualifies. Members mean **53.3**, median 53, range
+28 to 69 — **7.5% of an eligible universe averaging 712 names**. Entries 135 a year, exits
+131. Turnover **1.0056% of the book per bar**, which is 253% of the book a year.
+
+**Path-invariant — per trade.** 1,709 trades over **709 distinct names**. Holding period mean
+99.4 bars, **median 70**, p10 11, p90 231, max **866**. Position-bars 169,953, which equals
+the book's summed members exactly — the one number the two lenses share, and it is asserted.
+Concurrency mean 53.3, max 69. **58.5% of trades are a name being bought back** (1,000 of
+1,709; 433 names traded more than once), so the book returns to its winners. A name spends
+**7.49% of its eligible life** held.
+
+**Exit reasons**, which the pre-registration did not ask for and which matter: `rank` 1,376
+(80.5%), **`ineligible` 260 (15.2%)**, `open_at_end` 58, `delist` 15. **One exit in seven is
+the floor, not the signal** — the name fell below $5, failed the dollar-volume window, or hit
+the deal filter. That is a construction dependency worth naming: the universe definition is
+doing a sixth of the exiting.
+
+### The files
+
+`data/d365_trades_95_80.csv` (1,709 rows, one per trade, with every entry-time feature
+lagged and the outcomes and hindsight columns marked) · `data/d365_trade_paths_95_80.csv.gz`
+(169,953 rows, one per bar of each trade) · `data/d365_series_95_80.csv` (3,186 rows, the
+book's own per-bar series and equity curve) · `data/d365_risk_report.json` ·
+`data/d365_trades_95_80.README.md`. They reconcile: every trade's bars sum to its P&L to
+0.0, and the open trades' mean equals the book's gross on every deployed bar to 2.1e-17.
+
 ## 10. Files
 
 `data/d365_stage0.json` · `data/d365_ctrl_95_80_p0.json` · `data/d365_momentum_buffer.json` ·

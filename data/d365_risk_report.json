@@ -1,0 +1,563 @@
+{
+ "study": 365,
+ "cell": "95:80",
+ "fill": "open",
+ "note": "D365's book, exported. Drawdown on era 1, era 2 and the undivided series, two conventions; exposure on both lenses, never mixed. Nothing re-derived: run_d365's own functions build the book and [ID] holds every headline to data/d365_momentum_buffer.json.",
+ "drawdown": {
+  "era 1|net": {
+   "add": {
+    "peak_i": 439,
+    "trough_i": 913,
+    "end_i": 1091,
+    "recovered": false,
+    "depth_bp": 1726.4684209599995,
+    "peak_date": "2015-09-23",
+    "trough_date": "2017-08-10",
+    "recovery_date": "NOT RECOVERED",
+    "bars_to_trough": 474,
+    "bars_under": 652
+   },
+   "top": [
+    {
+     "peak_i": 439,
+     "trough_i": 913,
+     "end_i": 1091,
+     "recovered": false,
+     "depth_bp": 1726.4684209599995,
+     "peak_date": "2015-09-23",
+     "trough_date": "2017-08-10",
+     "recovery_date": "NOT RECOVERED",
+     "bars_to_trough": 474,
+     "bars_under": 652
+    },
+    {
+     "peak_i": 149,
+     "trough_i": 202,
+     "end_i": 238,
+     "recovered": true,
+     "depth_bp": 795.9939359299999,
+     "peak_date": "2014-07-30",
+     "trough_date": "2014-10-14",
+     "recovery_date": "2014-12-05",
+     "bars_to_trough": 53,
+     "bars_under": 89
+    },
+    {
+     "peak_i": 275,
+     "trough_i": 338,
+     "end_i": 395,
+     "recovered": true,
+     "depth_bp": 664.6986159100001,
+     "peak_date": "2015-01-29",
+     "trough_date": "2015-04-30",
+     "recovery_date": "2015-07-23",
+     "bars_to_trough": 63,
+     "bars_under": 120
+    },
+    {
+     "peak_i": 46,
+     "trough_i": 75,
+     "end_i": 130,
+     "recovered": true,
+     "depth_bp": 547.3069151700001,
+     "peak_date": "2014-03-04",
+     "trough_date": "2014-04-14",
+     "recovery_date": "2014-07-03",
+     "bars_to_trough": 29,
+     "bars_under": 84
+    },
+    {
+     "peak_i": 9,
+     "trough_i": 29,
+     "end_i": 39,
+     "recovered": true,
+     "depth_bp": 394.54477226,
+     "peak_date": "2014-01-08",
+     "trough_date": "2014-02-06",
+     "recovery_date": "2014-02-24",
+     "bars_to_trough": 20,
+     "bars_under": 30
+    }
+   ],
+   "comp": {
+    "peak_i": 439,
+    "trough_i": 913,
+    "depth_pct": 16.540542826002323,
+    "peak_date": "2015-09-23",
+    "trough_date": "2017-08-10",
+    "recovery_date": "NOT RECOVERED",
+    "recovered": false,
+    "bars_under": 652
+   },
+   "ann_bp": -68.65512672230777,
+   "calmar": -0.03976622212651432,
+   "longest_uw": 652,
+   "n": 1092
+  },
+  "era 1|gross": {
+   "add": {
+    "peak_i": 439,
+    "trough_i": 882,
+    "end_i": 1091,
+    "recovered": false,
+    "depth_bp": 1381.2161925200005,
+    "peak_date": "2015-09-23",
+    "trough_date": "2017-06-27",
+    "recovery_date": "NOT RECOVERED",
+    "bars_to_trough": 443,
+    "bars_under": 652
+   },
+   "top": [
+    {
+     "peak_i": 439,
+     "trough_i": 882,
+     "end_i": 1091,
+     "recovered": false,
+     "depth_bp": 1381.2161925200005,
+     "peak_date": "2015-09-23",
+     "trough_date": "2017-06-27",
+     "recovery_date": "NOT RECOVERED",
+     "bars_to_trough": 443,
+     "bars_under": 652
+    },
+    {
+     "peak_i": 149,
+     "trough_i": 202,
+     "end_i": 236,
+     "recovered": true,
+     "depth_bp": 754.9372791800002,
+     "peak_date": "2014-07-30",
+     "trough_date": "2014-10-14",
+     "recovery_date": "2014-12-03",
+     "bars_to_trough": 53,
+     "bars_under": 87
+    },
+    {
+     "peak_i": 309,
+     "trough_i": 338,
+     "end_i": 386,
+     "recovered": true,
+     "depth_bp": 627.6435902200001,
+     "peak_date": "2015-03-19",
+     "trough_date": "2015-04-30",
+     "recovery_date": "2015-07-10",
+     "bars_to_trough": 29,
+     "bars_under": 77
+    },
+    {
+     "peak_i": 46,
+     "trough_i": 75,
+     "end_i": 112,
+     "recovered": true,
+     "depth_bp": 524.84195205,
+     "peak_date": "2014-03-04",
+     "trough_date": "2014-04-14",
+     "recovery_date": "2014-06-09",
+     "bars_to_trough": 29,
+     "bars_under": 66
+    },
+    {
+     "peak_i": 9,
+     "trough_i": 29,
+     "end_i": 39,
+     "recovered": true,
+     "depth_bp": 379.05169424999997,
+     "peak_date": "2014-01-08",
+     "trough_date": "2014-02-06",
+     "recovery_date": "2014-02-24",
+     "bars_to_trough": 20,
+     "bars_under": 30
+    }
+   ],
+   "comp": {
+    "peak_i": 439,
+    "trough_i": 882,
+    "depth_pct": 13.572933915536446,
+    "peak_date": "2015-09-23",
+    "trough_date": "2017-06-27",
+    "recovery_date": "NOT RECOVERED",
+    "recovered": false,
+    "bars_under": 652
+   },
+   "ann_bp": 126.55765645846157,
+   "calmar": 0.09162769531941248,
+   "longest_uw": 652,
+   "n": 1092
+  },
+  "era 2|net": {
+   "add": {
+    "peak_i": 89,
+    "trough_i": 531,
+    "end_i": 668,
+    "recovered": true,
+    "depth_bp": 2952.079701460001,
+    "peak_date": "2018-09-04",
+    "trough_date": "2020-06-08",
+    "recovery_date": "2020-12-22",
+    "bars_to_trough": 442,
+    "bars_under": 579
+   },
+   "top": [
+    {
+     "peak_i": 89,
+     "trough_i": 531,
+     "end_i": 668,
+     "recovered": true,
+     "depth_bp": 2952.079701460001,
+     "peak_date": "2018-09-04",
+     "trough_date": "2020-06-08",
+     "recovery_date": "2020-12-22",
+     "bars_to_trough": 442,
+     "bars_under": 579
+    },
+    {
+     "peak_i": 2021,
+     "trough_i": 2073,
+     "end_i": 2093,
+     "recovered": false,
+     "depth_bp": 2835.1769111200083,
+     "peak_date": "2026-05-13",
+     "trough_date": "2026-07-29",
+     "recovery_date": "NOT RECOVERED",
+     "bars_to_trough": 52,
+     "bars_under": 72
+    },
+    {
+     "peak_i": 1131,
+     "trough_i": 1380,
+     "end_i": 1540,
+     "recovered": true,
+     "depth_bp": 2088.6031877400023,
+     "peak_date": "2022-10-24",
+     "trough_date": "2023-10-20",
+     "recovery_date": "2024-06-12",
+     "bars_to_trough": 249,
+     "bars_under": 409
+    },
+    {
+     "peak_i": 1693,
+     "trough_i": 1725,
+     "end_i": 1827,
+     "recovered": true,
+     "depth_bp": 1700.1516485500006,
+     "peak_date": "2025-01-22",
+     "trough_date": "2025-03-10",
+     "recovery_date": "2025-08-06",
+     "bars_to_trough": 32,
+     "bars_under": 134
+    },
+    {
+     "peak_i": 1035,
+     "trough_i": 1077,
+     "end_i": 1119,
+     "recovered": true,
+     "depth_bp": 1646.4436513000005,
+     "peak_date": "2022-06-07",
+     "trough_date": "2022-08-08",
+     "recovery_date": "2022-10-07",
+     "bars_to_trough": 42,
+     "bars_under": 84
+    }
+   ],
+   "comp": {
+    "peak_i": 89,
+    "trough_i": 531,
+    "depth_pct": 26.84448979002363,
+    "peak_date": "2018-09-04",
+    "trough_date": "2020-06-08",
+    "recovery_date": "2021-01-20",
+    "recovered": true,
+    "bars_under": 597
+   },
+   "ann_bp": 1057.3233856313466,
+   "calmar": 0.358162208529949,
+   "longest_uw": 579,
+   "n": 2094
+  },
+  "era 2|gross": {
+   "add": {
+    "peak_i": 2021,
+    "trough_i": 2073,
+    "end_i": 2093,
+    "recovered": false,
+    "depth_bp": 2794.8949082200033,
+    "peak_date": "2026-05-13",
+    "trough_date": "2026-07-29",
+    "recovery_date": "NOT RECOVERED",
+    "bars_to_trough": 52,
+    "bars_under": 72
+   },
+   "top": [
+    {
+     "peak_i": 2021,
+     "trough_i": 2073,
+     "end_i": 2093,
+     "recovered": false,
+     "depth_bp": 2794.8949082200033,
+     "peak_date": "2026-05-13",
+     "trough_date": "2026-07-29",
+     "recovery_date": "NOT RECOVERED",
+     "bars_to_trough": 52,
+     "bars_under": 72
+    },
+    {
+     "peak_i": 89,
+     "trough_i": 531,
+     "end_i": 611,
+     "recovered": true,
+     "depth_bp": 2609.6826770100006,
+     "peak_date": "2018-09-04",
+     "trough_date": "2020-06-08",
+     "recovery_date": "2020-10-01",
+     "bars_to_trough": 442,
+     "bars_under": 522
+    },
+    {
+     "peak_i": 1131,
+     "trough_i": 1380,
+     "end_i": 1514,
+     "recovered": true,
+     "depth_bp": 1895.7143662600038,
+     "peak_date": "2022-10-24",
+     "trough_date": "2023-10-20",
+     "recovery_date": "2024-05-06",
+     "bars_to_trough": 249,
+     "bars_under": 383
+    },
+    {
+     "peak_i": 1693,
+     "trough_i": 1725,
+     "end_i": 1826,
+     "recovered": true,
+     "depth_bp": 1675.362723709999,
+     "peak_date": "2025-01-22",
+     "trough_date": "2025-03-10",
+     "recovery_date": "2025-08-05",
+     "bars_to_trough": 32,
+     "bars_under": 133
+    },
+    {
+     "peak_i": 1035,
+     "trough_i": 1077,
+     "end_i": 1118,
+     "recovered": true,
+     "depth_bp": 1613.9081874600006,
+     "peak_date": "2022-06-07",
+     "trough_date": "2022-08-08",
+     "recovery_date": "2022-10-06",
+     "bars_to_trough": 42,
+     "bars_under": 83
+    }
+   ],
+   "comp": {
+    "peak_i": 2021,
+    "trough_i": 2073,
+    "depth_pct": 25.56113676311771,
+    "peak_date": "2026-05-13",
+    "trough_date": "2026-07-29",
+    "recovery_date": "NOT RECOVERED",
+    "recovered": false,
+    "bars_under": 72
+   },
+   "ann_bp": 1252.53616881043,
+   "calmar": 0.44815143679521674,
+   "longest_uw": 522,
+   "n": 2094
+  },
+  "COMBINED|net": {
+   "add": {
+    "peak_i": 439,
+    "trough_i": 1623,
+    "end_i": 1780,
+    "recovered": true,
+    "depth_bp": 3599.7817048800007,
+    "peak_date": "2015-09-23",
+    "trough_date": "2020-06-08",
+    "recovery_date": "2021-01-22",
+    "bars_to_trough": 1184,
+    "bars_under": 1341
+   },
+   "top": [
+    {
+     "peak_i": 439,
+     "trough_i": 1623,
+     "end_i": 1780,
+     "recovered": true,
+     "depth_bp": 3599.7817048800007,
+     "peak_date": "2015-09-23",
+     "trough_date": "2020-06-08",
+     "recovery_date": "2021-01-22",
+     "bars_to_trough": 1184,
+     "bars_under": 1341
+    },
+    {
+     "peak_i": 3113,
+     "trough_i": 3165,
+     "end_i": 3185,
+     "recovered": false,
+     "depth_bp": 2835.1769111200074,
+     "peak_date": "2026-05-13",
+     "trough_date": "2026-07-29",
+     "recovery_date": "NOT RECOVERED",
+     "bars_to_trough": 52,
+     "bars_under": 72
+    },
+    {
+     "peak_i": 2223,
+     "trough_i": 2472,
+     "end_i": 2632,
+     "recovered": true,
+     "depth_bp": 2088.6031877400032,
+     "peak_date": "2022-10-24",
+     "trough_date": "2023-10-20",
+     "recovery_date": "2024-06-12",
+     "bars_to_trough": 249,
+     "bars_under": 409
+    },
+    {
+     "peak_i": 2785,
+     "trough_i": 2817,
+     "end_i": 2919,
+     "recovered": true,
+     "depth_bp": 1700.1516485500006,
+     "peak_date": "2025-01-22",
+     "trough_date": "2025-03-10",
+     "recovery_date": "2025-08-06",
+     "bars_to_trough": 32,
+     "bars_under": 134
+    },
+    {
+     "peak_i": 2127,
+     "trough_i": 2169,
+     "end_i": 2211,
+     "recovered": true,
+     "depth_bp": 1646.4436513,
+     "peak_date": "2022-06-07",
+     "trough_date": "2022-08-08",
+     "recovery_date": "2022-10-07",
+     "bars_to_trough": 42,
+     "bars_under": 84
+    }
+   ],
+   "comp": {
+    "peak_i": 439,
+    "trough_i": 1623,
+    "depth_pct": 32.24248814028579,
+    "peak_date": "2015-09-23",
+    "trough_date": "2020-06-08",
+    "recovery_date": "2021-01-29",
+    "recovered": true,
+    "bars_under": 1346
+   },
+   "ann_bp": 671.3947806438418,
+   "calmar": 0.18650985967667805,
+   "longest_uw": 1341,
+   "n": 3186
+  },
+  "COMBINED|gross": {
+   "add": {
+    "peak_i": 3113,
+    "trough_i": 3165,
+    "end_i": 3185,
+    "recovered": false,
+    "depth_bp": 2794.8949082200033,
+    "peak_date": "2026-05-13",
+    "trough_date": "2026-07-29",
+    "recovery_date": "NOT RECOVERED",
+    "bars_to_trough": 52,
+    "bars_under": 72
+   },
+   "top": [
+    {
+     "peak_i": 3113,
+     "trough_i": 3165,
+     "end_i": 3185,
+     "recovered": false,
+     "depth_bp": 2794.8949082200033,
+     "peak_date": "2026-05-13",
+     "trough_date": "2026-07-29",
+     "recovery_date": "NOT RECOVERED",
+     "bars_to_trough": 52,
+     "bars_under": 72
+    },
+    {
+     "peak_i": 439,
+     "trough_i": 1623,
+     "end_i": 1703,
+     "recovered": true,
+     "depth_bp": 2682.5914854000016,
+     "peak_date": "2015-09-23",
+     "trough_date": "2020-06-08",
+     "recovery_date": "2020-10-01",
+     "bars_to_trough": 1184,
+     "bars_under": 1264
+    },
+    {
+     "peak_i": 2223,
+     "trough_i": 2472,
+     "end_i": 2606,
+     "recovered": true,
+     "depth_bp": 1895.7143662600038,
+     "peak_date": "2022-10-24",
+     "trough_date": "2023-10-20",
+     "recovery_date": "2024-05-06",
+     "bars_to_trough": 249,
+     "bars_under": 383
+    },
+    {
+     "peak_i": 2785,
+     "trough_i": 2817,
+     "end_i": 2918,
+     "recovered": true,
+     "depth_bp": 1675.3627237100009,
+     "peak_date": "2025-01-22",
+     "trough_date": "2025-03-10",
+     "recovery_date": "2025-08-05",
+     "bars_to_trough": 32,
+     "bars_under": 133
+    },
+    {
+     "peak_i": 2127,
+     "trough_i": 2169,
+     "end_i": 2210,
+     "recovered": true,
+     "depth_bp": 1613.9081874600006,
+     "peak_date": "2022-06-07",
+     "trough_date": "2022-08-08",
+     "recovery_date": "2022-10-06",
+     "bars_to_trough": 42,
+     "bars_under": 83
+    }
+   ],
+   "comp": {
+    "peak_i": 439,
+    "trough_i": 1623,
+    "depth_pct": 25.731773317967477,
+    "peak_date": "2015-09-23",
+    "trough_date": "2020-06-08",
+    "recovery_date": "2020-12-22",
+    "recovered": true,
+    "bars_under": 1321
+   },
+   "ann_bp": 866.607563823503,
+   "calmar": 0.3100680319945994,
+   "longest_uw": 1264,
+   "n": 3186
+  }
+ },
+ "exposure_book": {
+  "bars": 3186,
+  "members_mean": 53.343691148775896,
+  "members_max": 69.0,
+  "turnover": 0.010055721287650116,
+  "entries_per_year": 135.17514124293785
+ },
+ "exposure_trade": {
+  "trades": 1709,
+  "names": 709,
+  "hold_mean": 99.44587478057343,
+  "hold_median": 70.0,
+  "position_bars": 169953.0,
+  "re_entries": 1000
+ }
+}
