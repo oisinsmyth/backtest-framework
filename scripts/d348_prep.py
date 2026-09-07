@@ -161,16 +161,32 @@ def _assert_K():
     print("    [K] SCORE CACHE: key matches cache_key() with ragged_panel.py in the tuple; npz newer than the builder")
 
 
+# Fixture-aware expectations. None => the MINING constants, cross-checked against D335's filing count and D343's
+# stored floor share -- independent prior records, so on the mining fixture these are real checks.
+#
+# A caller re-pointed at another fixture sets EXPECT to that fixture's own universe constants. Those come from
+# the counts-only --dry stage, which reads no return, so they are facts about how the UNIVERSE was built, never
+# about how the strategy performed. But there is no prior record to cross-check them against, so on another
+# fixture these assertions are a REGRESSION LOCK -- they pin the numbers so a later change is caught -- and NOT
+# an independent verification. Stated here rather than left for a reader to assume.
+EXPECT = None
+
+
 def _assert_F0(n_ok, pct_f0):
-    assert n_ok == V35.EXPECT_APPLIED and abs(pct_f0 - V35.EXPECT_PCT) < 0.02, f"[F0] {n_ok} / {pct_f0:.3f}%"
-    print(f"    [F0] F0 MASK: {n_ok:,} filings applied, {pct_f0:.2f}% of live name-bars excluded")
+    want_n = V35.EXPECT_APPLIED if EXPECT is None else EXPECT["f0_applied"]
+    want_p = V35.EXPECT_PCT if EXPECT is None else EXPECT["f0_pct"]
+    assert n_ok == want_n and abs(pct_f0 - want_p) < 0.02, f"[F0] {n_ok} / {pct_f0:.3f}% (want {want_n} / {want_p})"
+    print(f"    [F0] F0 MASK: {n_ok:,} filings applied, {pct_f0:.2f}% of live name-bars excluded"
+          + ("" if EXPECT is None else f"  [{EXPECT['tag']}: regression lock, not an independent check]"))
 
 
 def _assert_R(factor_equal, share, el):
-    d343 = json.loads(V47.D343_JSON.read_text())
+    want = (float(json.loads(V47.D343_JSON.read_text())["floor"]["v2_share_live_fail"])
+            if EXPECT is None else EXPECT["floor_share"])
     assert factor_equal, "[R] factor"
-    assert abs(share - float(d343["floor"]["v2_share_live_fail"])) < 1e-9, "[R] keep_v2 share != D343"
-    print(f"    [R] RAW PRICE and FLOOR: factor == census factor; keep_v2 fails {100 * share:.4f}% == D343 ({el()})")
+    assert abs(share - want) < 1e-9, f"[R] keep_v2 share {share} != {want}"
+    print(f"    [R] RAW PRICE and FLOOR: factor == census factor; keep_v2 fails {100 * share:.4f}%"
+          + (" == D343" if EXPECT is None else f" == {EXPECT['tag']}'s own --dry count") + f" ({el()})")
 
 
 def _m_start_of(m_f, m_f_oc, T):

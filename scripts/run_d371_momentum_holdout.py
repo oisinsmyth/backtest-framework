@@ -42,6 +42,11 @@ ARMS = ("S6", "C9")
 CONSTRUCTION = REPO / "data" / "d371_construction.json"
 OUT = REPO / "data"
 
+# The holdout universe's own construction constants, taken from the counts-only --dry stage (which reads no
+# return). Used as a REGRESSION LOCK inside prep, not as an independent check -- there is no prior record for
+# this fixture to cross-check against. See d348_prep.EXPECT.
+HOLDOUT_EXPECT = dict(tag="holdout", f0_applied=951, f0_pct=2.70, floor_share=0.310516)
+
 
 def el(t0):
     return f"{time.time() - t0:.0f}s"
@@ -335,6 +340,7 @@ def main() -> int:
     elif a.dry:
         V65.allow_holdout("D371 --dry: counts only, no return becomes a statistic")
         V57.repoint("holdout")
+        PREP.EXPECT = HOLDOUT_EXPECT
         V57.stage_dry("holdout")
     elif a.read:
         print("D371 READ -- this spends the programme's one clean holdout read.")
@@ -342,6 +348,7 @@ def main() -> int:
             if (REPO / "temp" / "d371_mining_series.json").exists() else None
         V65.allow_holdout("D371 --read --spend-the-holdout: the principal's explicit authorisation, 2026-09-07")
         V57.repoint("holdout")
+        PREP.EXPECT = HOLDOUT_EXPECT
         P = PREP.prep(need_grids=False, verbose=True)
         V65.assert_HOLDOUT_GUARD()
         R = evaluate(P, "holdout", a.draws, t0)
