@@ -21,7 +21,8 @@ BOOKS ARE UNCHANGED.**
 | **Prop book** — `docs/BOOK_PROP.md` | **none.** An empty book with stated standards beats a populated one with borrowed ones |
 | **Holdout reads spent, programme total** | **1** (D371, 2026-09-07) |
 | **Retired 2026-09-07** | **S6** (nine-condition gate), **C9** (252-bar high alone) |
-| **Latest study** | **D373 — 5 of 7 hurdles fail.** Avenue NOT closed; that is the principal's under R15 |
+| **Latest study** | **D374 — the breadth bar was unreachable. H4 RETIRED and replaced by H4′; D373's H4 corrected FAIL → PASS** |
+| **Before it** | **D373 — 4 of 7 hurdles fail** (H4 was the fifth and it was the bar's fault). Avenue NOT closed; that is the principal's under R15 |
 
 **For D285 → D364 read [`docs/STACK.md`](docs/STACK.md) §0 and §§32–42**, not this file. That is the
 layer-by-layer statement of what the stack earns once costed, and its §7 records what earlier
@@ -103,6 +104,41 @@ entered long, 40-bar cap. 3,932 trades, 796 names.
 
 ---
 
+## 0c2. D374 — the breadth hurdle was unreachable, and H4 is retired
+
+**[D374](docs/decisions/D374-is-the-breadth-hurdle-reachable.md)** pre-registered (`4c0816c`),
+runner (`c2f7887`), **[RESULT](docs/decisions/D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md)**
+(`520dd40`). A METHODOLOGY study: it adjudicates a hurdle, not a strategy, and adds no looks to any
+multiplicity ledger.
+
+**Across 4,952 defined null draws in three arms, the most diversified random book reached 2.98%. The
+median reached 0.63%. The bar was 10%.** D373's book, at 2.2613%, sits at the **100.00th percentile
+of its own nulls** — above A′'s *maximum*, with 0 of 1,971 A′ draws and 0 of 981 B draws as
+diversified. A′ holds the name set and each name's trade count exactly fixed, so this is what a
+fat-tailed return distribution does to any ~800-name book here; selection has nothing to do with it.
+
+**H4 IS RETIRED. Its replacement, in force for all future studies:**
+
+> **H4′** — `names_to_half_share` at or above the **p05 of A′ computed on that study's own ledger**,
+> with the degenerate-draw count reported beside it. **The threshold comes from the study's own null,
+> never fixed in advance of the universe.**
+>
+> **The top-1 and top-5 name-share bars are DROPPED, not re-thresholded.** The statistic is unbounded
+> above: **233 of 1,971 A′ draws (11.8%) have a top-5 share over 100%**, with maxima to 37,546%,
+> because a small positive denominator explodes it while it stays technically "defined". D371's
+> real-world 142% was not exceptional. Any percentile of it is contaminated.
+
+**Two lessons wider than this hurdle:**
+
+1. **"Has anything ever passed this?" is a cheap and powerful test, and it has not been run on the
+   rest of the hurdle set.** H4 had never once been cleared, by anything, and nobody had checked
+   whether it could be.
+2. **A threshold fitted to one observed failure carries no information about the next book.** D373 §5
+   said in writing that H4's bars were "calibrated to exclude the shape that just failed". That was
+   honest about provenance and fatal as evidence.
+
+---
+
 ## 0d. WHAT IS LIVE NOW, RANKED
 
 **Nothing is pre-registered and awaiting a runner. The queue is empty.** What follows is candidates,
@@ -110,19 +146,24 @@ not commitments.
 
 1. **The D373 avenue is not closed.** Its §9 abandon condition (H7 > 0.5) is met at 0.935, and under
    R15 only the principal closes an avenue. **This is the first thing to put to them.**
-2. **Make the breadth hurdles breadth-relative** — D371 §6a found its own H5 mis-specified as a flat
-   count. D373's H4 already does this. **Precondition for any future read**, and cheap.
-3. **Is the 10% names-to-half bar calibrated?** *Nothing in this programme has ever cleared it.*
-   That is either a real property of every construction tried here or a bad bar, and no study so far
-   can tell the two apart. Answering it is free.
-4. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
+2. **Audit the REST of the hurdle set the way D374 audited H4** — for each absolute threshold in the
+   programme, ask whether any book has ever cleared it and what a null draw scores. **Free, and D374
+   shows what it can turn up.** This is now the strongest free candidate.
+3. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374.** H4′ is null-relative by
+   construction, which is the general form of what D371 §6a asked for.
+4. ~~Is the 10% names-to-half bar calibrated?~~ — **ANSWERED, D374. It was not.**
+5. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
    anything is fetched. **It must not select inside `mom_252_21`'s top decile** — D373 shows where
    that lands.
-5. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
+6. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study and that book lived
+   in a different universe at roughly half the breadth; **its A′ distribution has never been
+   computed.** D371's retirement rested on five other failing hurdles, so this changes nothing
+   material — but the record should not be read as saying its breadth was bad.
+7. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
    momentum. It needs holdout #2 or a later slice.
-6. **D336's quoted-spread pull** needs the principal's TWS session. Until then every net number is a
+8. **D336's quoted-spread pull** needs the principal's TWS session. Until then every net number is a
    PB/PUB pair and PUB is the default (D332 §4).
-7. **Prop track:** hurdle P (R11), all six, plus a separate pre-registered out-of-sample test.
+9. **Prop track:** hurdle P (R11), all six, plus a separate pre-registered out-of-sample test.
    Untouched.
 
 **The breadth test the 2026-09-07 handoff ranked first was dropped, with the principal's agreement.**
