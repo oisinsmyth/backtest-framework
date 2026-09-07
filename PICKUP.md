@@ -11,18 +11,19 @@ handoff said so in writing. It is current again as of this line.
 
 ## 0. THE ONE-LINE STATE, 2026-09-07
 
-**THE MOMENTUM BOOK FAILED OUT OF SAMPLE AND WAS RETIRED. ITS SUCCESSOR TURNED OUT TO BE THE SAME
-BOOK, AND THE COHORT — NOT THE SIGNAL — WAS ~80% OF ITS EDGE. THE AVENUE IS RETIRED. HOLDOUT #1 IS
-SPENT; HOLDOUT #2 IS BUILT AND UNSPENT. BOTH BOOKS ARE UNCHANGED.**
+**THE MOMENTUM BOOK FAILED OUT OF SAMPLE AND WAS RETIRED. ITS SUCCESSOR WAS THE SAME BOOK, AND THE
+COHORT — NOT THE SIGNAL — IS ~73–80% OF ITS EDGE. THE REMAINING ~27% IS A REAL ENTRY-TIMING EFFECT
+WORTH AT MOST HALF A ROUND TRIP. HOLDOUT #1 IS SPENT; HOLDOUT #2 IS BUILT AND UNSPENT. BOTH BOOKS ARE
+UNCHANGED.**
 
 | | |
 |---|---|
 | **Personal book** — `docs/BOOK.md` | **S1, S2 only, neither at capital** |
-| **Prop book** — `docs/BOOK_PROP.md` | **none.** An empty book with stated standards beats a populated one with borrowed ones |
+| **Prop book** — `docs/BOOK_PROP.md` | **none**, and the candidate list C1–C4 is **exhausted** (D379 §6) |
 | **Holdout reads spent, programme total** | **1** (D371, 2026-09-07) |
 | **Retired 2026-09-07** | **S6** (nine-condition gate), **C9** (252-bar high alone) |
-| **RETIRED 2026-09-08 by the principal (R15)** | **the winners'-dip avenue** — timing an entry inside the `mom_252_21` top decile. [FINDINGS §52](docs/FINDINGS.md) |
-| **Hurdles retired or replaced** | **H4 → H4′** (D374), **1d → 1d′** (D376), **hedge H0 → H1** for future studies (D377) |
+| **The winners'-dip avenue** | **RETIRED 2026-09-08, then REOPENED NARROWLY the same day** for one test. **D378 ran it and the gate PASSED**, so the reopening's abandon condition never fired. **STATUS IS THE PRINCIPAL'S — neither the retirement nor the reopening is now automatic.** [FINDINGS §52](docs/FINDINGS.md) |
+| **Hurdles retired or replaced** | **H4 → H4′** (D374) · **1d → 1d′** (D376) · **hedge H0 → H1** for future studies (D377) · **P1 restated as a SIZING RULE, not a filter** (D375 → R11, 2026-09-08) |
 | **Nothing is queued.** | No pre-registration is awaiting a runner |
 
 **For D285 → D364 read [`docs/STACK.md`](docs/STACK.md) §0 and §§32–42**, not this file. That is the
@@ -199,33 +200,89 @@ the only threshold nothing had ever cleared.** What the audit did find:
 
 ---
 
+## 0c4. D378 — the entry day DOES matter, and D379 — the prop account is a barrier option
+
+**[D378](docs/decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md)
+(`7117478`).** The one test the narrow reopening authorised. **A′_c**: for each observed entry, a
+replacement bar drawn from the days **that same name** was eligible **and** in the top decile — name,
+cohort and per-name count fixed, **only the day moves**. 2,000 draws.
+
+| | | |
+|---|---|---|
+| **T1** | mean per trade > A′_c p95 | **PASS** — +160.55 vs +144.57, **+26.9 SE** |
+| **T2** | *reported* — the **median** | **FAIL** — +51.55 vs +64.00 |
+| **T3** | **GATE** — largest trade removed | **PASS** — **+150.41**, **+9.8 SE** |
+
+- **A′_c's centre is +116.91**, so **73% is still cohort** — a third independent measurement beside
+  D373's 79% and D377's 79%.
+- **The front-loading is the dip's.** Observed bp/bar halves across caps 5→60 (7.82 → 3.94) while
+  A′_c's barely moves (2.01 → 2.75). At cap 5 the observed runs at **3.9×** the control's rate.
+- **The gain is in the mean, not the median.** Timing makes good trades bigger; it does not lift the
+  typical trade. **Win rate is the median's neighbour — nothing shows a better one is available.**
+- **Cost decides it and cost is unresolved:** the increment is **0.19–0.47× a round trip under PUB**,
+  **0.50–1.21× under PB**. Which convention is right is **D336's quoted-spread pull**, which needs
+  the principal's TWS session.
+- **FINDINGS §52's corollary was amended** — it called the selector "a rounding error on a factor
+  exposure" and that is withdrawn. **A real effect small relative to cost is a small real effect.**
+
+**[D379](docs/decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+(`861ec8f`, amended `7b4e58f`) — FRAMING, from a session other than the one that ran D373–D378.** No
+measurement on any fixture; one toy Monte Carlo, labelled as illustration and deliberately not
+committed to `data/`.
+
+- **A funded prop account is a down-and-out call**, component for component: fee = premium, P&L =
+  underlying, **drawdown limit = knock-out barrier monitored continuously on OPEN equity — which is
+  P1 exactly.** Accounts are purchasable in quantity, so `fee / P(pass)` is the acquisition cost of
+  one funded account.
+- **Hurdle P has six screens and no objective function behind them.** It admits candidates; it never
+  ranks them. `E[payout]` would.
+- **Measured consequence:** at zero edge on a Topstep-like eval, a **static** floor gives the
+  optional-stopping **40.0%** pass rate and the **trailing** floor **26.5%** — the ratchet costs ~13
+  points.
+- **It changes nothing yet.** No candidate reopened, no threshold loosened, and its own bound is
+  stated: *"this is a valuation framework, not an edge… the prop candidate list is exhausted, so
+  there is currently nothing to value."*
+
+---
+
 ## 0d. WHAT IS LIVE NOW, RANKED
 
 **Nothing is pre-registered and awaiting a runner. The queue is empty.** What follows is candidates,
 not commitments.
 
-1. **Where does the remaining 0.44 correlation floor come from?** D377 ruled out per-name beta error
+**Two decisions are the principal's and block nothing else:** the **winners'-dip avenue's status**
+after D378's pass, and whether to **re-base past records** onto D377's H1 hedge (D377 §4 argues not
+— the benefit is 0.032 on a 0.47 floor).
+
+1. **D336's quoted-spread pull — now the highest-value item, and it needs the principal's TWS
+   session.** D378 put the entry-timing increment at **0.19–0.47× a round trip under PUB** and
+   **0.50–1.21× under PB**. **The same measurement decides whether that effect is deployable and
+   whether the incumbent book is positive at all** (D332: PUB post-D333 is −12.68 bp/bar). Nothing
+   else on this list changes as many conclusions.
+2. **Where does the remaining 0.44 correlation floor come from?** D377 ruled out per-name beta error
    and price exposure; D376 established it is a **per-bar** effect. **Untested: shared slot
-   mechanics, equal-weighting, the eligibility floor.** Free, in-sample, and upstream of every future
-   study — this is the strongest candidate.
-2. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
+   mechanics, equal-weighting, the eligibility floor.** Free, in-sample, upstream of every study.
+3. **Exit timing — still owed, and D378 deliberately did not test it.** [R7](docs/RULES.md) requires
+   a **matched-count random-exit** control, not a rotation: D235 cleared a rotation null at p95
+   −0.284 and then landed at the **63rd percentile** against the right one. Needs its own
+   pre-registration, and is **not** covered by the D378 reopening.
+4. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
    anything is fetched. **It must not select inside a narrow cohort** — [FINDINGS §52](docs/FINDINGS.md)
-   is the rule, and it closes winner-selection variants as a family, not just D373.
-3. **Restate P1 in R11 as a sizing rule rather than a hurdle**, and decide whether P3/P4/P5 are worth
-   computing before a prop candidate exists. Cheap; D375 §5.
-4. ~~The D373 avenue~~ — **RETIRED 2026-09-08 by the principal.**
-5. ~~Audit the rest of the hurdle set~~ — **DONE, D375.**
-6. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374** (H4′), and again in D376 (1d′).
-7. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study; that book lived in
+   closes winner-selection variants as a family.
+5. **P5 should be computed** on anything reaching the prop track, ahead of the other uncomputed legs
+   (D379 §6). **P3 and P4 remain uncomputed** and under R6 that is a live defect.
+6. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study; that book lived in
    a different universe at roughly half the breadth and **its A′ distribution has never been
-   computed.** D371's retirement rested on five other failing hurdles, so nothing material changes —
-   but the record should not be read as saying its breadth was bad.
-8. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
+   computed.** Nothing material changes — but the record should not be read as saying its breadth
+   was bad.
+7. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
    momentum. It needs holdout #2 or a later slice.
-9. **D336's quoted-spread pull** needs the principal's TWS session. Until then every net number is a
-   PB/PUB pair and PUB is the default (D332 §4).
-10. **Prop track:** hurdle P (R11), all six, plus a separate pre-registered out-of-sample test.
-    Untouched, and see item 3.
+8. **C1's size sweep is unfinished** — extend below 0.48× and locate the value peak against D379 §4's
+   ladder cap. Needs MyFundedFutures' payout ladder terms, which no record holds.
+9. ~~Restate P1 as a sizing rule~~ — **DONE 2026-09-08**, R11.
+10. ~~The D373 avenue~~ — retired, reopened, tested; **status is the principal's** (see §0 table).
+11. ~~Audit the rest of the hurdle set~~ — **DONE, D375.**
+12. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374** (H4′) and **D376** (1d′).
 
 **The breadth test the 2026-09-07 handoff ranked first was dropped, with the principal's agreement.**
 It targets a retired object, and the H5 mis-specification it was partly meant to expose is a
