@@ -298,6 +298,35 @@ momentum book has been read out of sample and retired. Nothing further is owed."
 **H7 = 0.935. The condition is met.** Under R15 the avenue is the principal's to close, so this
 record states the condition is met and stops there.
 
+### AMENDMENT, 2026-09-08 — **THE AVENUE IS RETIRED BY THE PRINCIPAL**
+
+**RETIRED 2026-09-08.** The winners'-dip long, and the wider avenue of *timing an entry inside the
+`mom_252_21` top decile*, are closed. Recorded here in writing rather than by quiet edit; nothing
+above this line has moved.
+
+**The evidence the decision rests on is broader than this record's own.** By the time it was taken,
+**three unrelated methods had measured the same thing** — see
+[FINDINGS §52](../FINDINGS.md):
+
+| | lens | measurement |
+|---|---|---|
+| **this record** | return per trade | `B_c` centres at **+126.54** of the observed **+160.55** |
+| **[D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)** | covariance | two books sharing only cohort membership correlate at **+0.923** |
+| **[D377](D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md)** | hedge | removing the cohort takes the gross mean to **+34.08** and the median to **−30.74** |
+
+**Roughly 80% of the edge was exposure to the momentum decile.** And D376 showed the excess over the
+cohort baseline was **+0.011**, not the +0.43 that H7's 0.935 against a 0.50 bar implied — D373 was
+not unusually similar to D365; it was **as similar as any two cohort books are**.
+
+**What the retirement does NOT do.** It does not withdraw a measurement. H1 cleared its four controls
+as pre-registered and that stands; so do H5, the nulls, and the segmentation diagnostic of §3a. The
+H4 correction of D374 stands too — **that failure was the bar's fault, and by its own null this was
+the best-diversified book available.** The avenue closes on the **size and provenance** of the
+increment, not on a failed null.
+
+**Nothing was in either book, so no book is amended.** `docs/BOOK.md` remains S1 and S2; the prop
+book remains empty.
+
 For whatever the decision is, the ledger of what this study cost: **one best-of-5 search** on the
 already-spent mining prefix, priced in §7 and taken under the principal's ruling of 2026-09-07 that a
 brand-new construction may mine spent in-sample data so long as nothing crosses into a holdout.

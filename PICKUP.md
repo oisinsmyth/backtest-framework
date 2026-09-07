@@ -1,8 +1,8 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-07**, end of the session that spent the programme's first holdout read and then
-ran D373. **D365 → D373.** Everything below §7 is older strata, newest first, kept because the traps
-in them still bite.
+**Updated 2026-09-08.** **D365 → D377.** The session that spent the programme's first holdout read,
+then ran D373, then audited the hurdles that judged it. Everything below §7 is older strata, newest
+first, kept because the traps in them still bite.
 
 **This file had been stale since 2026-09-02** (D264→D284) and both `STACK.md` and the 2026-09-07
 handoff said so in writing. It is current again as of this line.
@@ -11,9 +11,9 @@ handoff said so in writing. It is current again as of this line.
 
 ## 0. THE ONE-LINE STATE, 2026-09-07
 
-**THE MOMENTUM BOOK CLEARED EVERY IN-SAMPLE CONTROL AND FAILED OUT OF SAMPLE. ITS SUCCESSOR TURNED
-OUT TO BE THE SAME BOOK AT ρ = 0.935. HOLDOUT #1 IS SPENT; HOLDOUT #2 IS BUILT AND UNSPENT. BOTH
-BOOKS ARE UNCHANGED.**
+**THE MOMENTUM BOOK FAILED OUT OF SAMPLE AND WAS RETIRED. ITS SUCCESSOR TURNED OUT TO BE THE SAME
+BOOK, AND THE COHORT — NOT THE SIGNAL — WAS ~80% OF ITS EDGE. THE AVENUE IS RETIRED. HOLDOUT #1 IS
+SPENT; HOLDOUT #2 IS BUILT AND UNSPENT. BOTH BOOKS ARE UNCHANGED.**
 
 | | |
 |---|---|
@@ -21,12 +21,17 @@ BOOKS ARE UNCHANGED.**
 | **Prop book** — `docs/BOOK_PROP.md` | **none.** An empty book with stated standards beats a populated one with borrowed ones |
 | **Holdout reads spent, programme total** | **1** (D371, 2026-09-07) |
 | **Retired 2026-09-07** | **S6** (nine-condition gate), **C9** (252-bar high alone) |
-| **Latest study** | **D374 — the breadth bar was unreachable. H4 RETIRED and replaced by H4′; D373's H4 corrected FAIL → PASS** |
-| **Before it** | **D373 — 4 of 7 hurdles fail** (H4 was the fifth and it was the bar's fault). Avenue NOT closed; that is the principal's under R15 |
+| **RETIRED 2026-09-08 by the principal (R15)** | **the winners'-dip avenue** — timing an entry inside the `mom_252_21` top decile. [FINDINGS §52](docs/FINDINGS.md) |
+| **Hurdles retired or replaced** | **H4 → H4′** (D374), **1d → 1d′** (D376), **hedge H0 → H1** for future studies (D377) |
+| **Nothing is queued.** | No pre-registration is awaiting a runner |
 
 **For D285 → D364 read [`docs/STACK.md`](docs/STACK.md) §0 and §§32–42**, not this file. That is the
 layer-by-layer statement of what the stack earns once costed, and its §7 records what earlier
 versions of it got wrong. This section deliberately does not restate it.
+
+**One defect to fix in the truth file:** `docs/FINDINGS.md` has **two sections numbered §51** (the
+holdout read, and equal-weight sizing). The new section was added as §52; the collision is upstream
+and untouched.
 
 ---
 
@@ -139,32 +144,88 @@ fat-tailed return distribution does to any ~800-name book here; selection has no
 
 ---
 
+## 0c3. D375 → D377 — the hurdle audit and what it turned up
+
+**[D375](docs/decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+(`1732fd0`), a REVIEW.** I predicted H4's disease would be widespread. **It is not**, and the reason
+is structural: most stage-1 gates are built on **t-statistics, whose null centre is zero by
+construction**, so `t ≥ 2` means the same thing in every universe and cannot be unreachable. **H4 was
+the only threshold nothing had ever cleared.** What the audit did find:
+
+- **Three of hurdle P's six thresholds have never been computed on anything** — **P3, P4, P5**. D266
+  says outright P4 is *"not calculable from these artifacts"*. Under [R6](docs/RULES.md) the prop
+  track carries three hurdles nobody has run.
+- **P1 cannot fail.** It is applied by scaling until drawdown reaches 4%, so it is a **sizing rule
+  that converts to a return penalty**, not a filter. R11's table lists it as one. **Recommended
+  restatement, not yet made.**
+- **P5 is the only surviving threshold with H4's disease** — a ratio whose denominator
+  (trailing-year profit) **can cross zero**.
+
+**[D376](docs/decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)
+(`ca8a89c`) — the correlation floor.** 500 draws, 280,625 pairs.
+
+| | p50 | p95 |
+|---|---:|---:|
+| A′ identical name set | +0.448 | +0.485 |
+| **B unrelated books** | **+0.476** | **+0.526** |
+| B_c same cohort | **+0.923** | +0.930 |
+
+- **It is TIME, not names.** A′ books hold the *identical* names and correlate **less** than B books,
+  which hold different names on the **same days**. The residual factor is a **per-bar** effect.
+- **Gate 1d measures POOL OVERLAP, not independence** — same pool ≈ 0.42–0.53, different pools ≈ 0 or
+  negative (the observed book sits at **−0.091** against B draws), same cohort ≈ 0.92. **1d′ therefore
+  SCOPES: compare to the p95 of the candidate's OWN pool, and NAME THE POOL.** A raw correlation
+  without it is uninterpretable.
+- **[CLU]** — cluster the bootstrap on **books**, not pairs. 280,625 pairs came from 1,250 books.
+
+**[D377](docs/decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md)
+(`cd97e4f`) — the hedge.** The incumbent assumed **beta exactly 1 for every name**; a lagged
+`roll_beta(63, 21)` existed unused.
+
+| hedge | B p50 | M1 | gross/trade | kept | M2 |
+|---|---:|:--|---:|---:|:--|
+| H0 unit market | +0.4728 | baseline | +160.55 | 100% | baseline |
+| **H1 per-name beta — ADOPTED** | **+0.4404** | PASS (10.6 SE) | +156.57 | 97.5% | PASS |
+| H2 cohort | +0.3242 | PASS (38.8 SE) | **+34.08** | **21.2%** | **FAIL** |
+| H3 price decile | +0.4439 | PASS (9.7 SE) | +160.47 | 99.9% | PASS |
+
+- **H1 binds for future studies. It fixes ~7% of the problem** — the floor falls 0.473 → 0.440,
+  decisive but small. **Past records stay on H0 and must be labelled**; re-basing them is the
+  principal's call and is not obviously worth it.
+- **The common factor is mostly NOT unhedged beta.** Untested and now the open question: **shared
+  slot mechanics, equal-weighting, the eligibility floor itself.**
+- **H1 and H3 are a near-tie and whether they are complementary was NOT tested** — a combined hedge
+  was not in the pre-registered grid.
+
+---
+
 ## 0d. WHAT IS LIVE NOW, RANKED
 
 **Nothing is pre-registered and awaiting a runner. The queue is empty.** What follows is candidates,
 not commitments.
 
-1. **The D373 avenue is not closed.** Its §9 abandon condition (H7 > 0.5) is met at 0.935, and under
-   R15 only the principal closes an avenue. **This is the first thing to put to them.**
-2. **Audit the REST of the hurdle set the way D374 audited H4** — for each absolute threshold in the
-   programme, ask whether any book has ever cleared it and what a null draw scores. **Free, and D374
-   shows what it can turn up.** This is now the strongest free candidate.
-3. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374.** H4′ is null-relative by
-   construction, which is the general form of what D371 §6a asked for.
-4. ~~Is the 10% names-to-half bar calibrated?~~ — **ANSWERED, D374. It was not.**
-5. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
-   anything is fetched. **It must not select inside `mom_252_21`'s top decile** — D373 shows where
-   that lands.
-6. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study and that book lived
-   in a different universe at roughly half the breadth; **its A′ distribution has never been
-   computed.** D371's retirement rested on five other failing hurdles, so this changes nothing
-   material — but the record should not be read as saying its breadth was bad.
-7. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
+1. **Where does the remaining 0.44 correlation floor come from?** D377 ruled out per-name beta error
+   and price exposure; D376 established it is a **per-bar** effect. **Untested: shared slot
+   mechanics, equal-weighting, the eligibility floor.** Free, in-sample, and upstream of every future
+   study — this is the strongest candidate.
+2. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
+   anything is fetched. **It must not select inside a narrow cohort** — [FINDINGS §52](docs/FINDINGS.md)
+   is the rule, and it closes winner-selection variants as a family, not just D373.
+3. **Restate P1 in R11 as a sizing rule rather than a hurdle**, and decide whether P3/P4/P5 are worth
+   computing before a prop candidate exists. Cheap; D375 §5.
+4. ~~The D373 avenue~~ — **RETIRED 2026-09-08 by the principal.**
+5. ~~Audit the rest of the hurdle set~~ — **DONE, D375.**
+6. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374** (H4′), and again in D376 (1d′).
+7. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study; that book lived in
+   a different universe at roughly half the breadth and **its A′ distribution has never been
+   computed.** D371's retirement rested on five other failing hurdles, so nothing material changes —
+   but the record should not be read as saying its breadth was bad.
+8. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
    momentum. It needs holdout #2 or a later slice.
-8. **D336's quoted-spread pull** needs the principal's TWS session. Until then every net number is a
+9. **D336's quoted-spread pull** needs the principal's TWS session. Until then every net number is a
    PB/PUB pair and PUB is the default (D332 §4).
-9. **Prop track:** hurdle P (R11), all six, plus a separate pre-registered out-of-sample test.
-   Untouched.
+10. **Prop track:** hurdle P (R11), all six, plus a separate pre-registered out-of-sample test.
+    Untouched, and see item 3.
 
 **The breadth test the 2026-09-07 handoff ranked first was dropped, with the principal's agreement.**
 It targets a retired object, and the H5 mis-specification it was partly meant to expose is a
@@ -186,6 +247,19 @@ were necessary. Neither was sufficient.
 **And the successor built to replace it was the same book.** D373's H7 says a construction can be
 re-derived from different-sounding premises and still hold 70% of the same name-bars. **Measure
 independence on day one, not at stage 5.**
+
+**Two more, earned across D374–D377 and worth as much as the above:**
+
+**A threshold you have never calibrated is not a hurdle, it is a guess.** H4 was unreachable by a
+factor of four and failed the most diversified book in its own null. Gate 1d was measuring pool
+overlap. Both had adjudicated real studies. **The cheap test — "has anything ever passed this, and
+what does a null draw score?" — takes minutes and should run when the hurdle is written, not five
+studies later.**
+
+**Direction right, scale wrong — four times running.** D374, D376, D377 and D373's own predictions
+all had the sign of the effect correct and the magnitude badly off, always in the same direction:
+**I under-estimate how much of these books is structure and over-estimate how much a correction will
+move.** Weight point estimates accordingly.
 
 ---
 

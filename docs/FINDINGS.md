@@ -3209,3 +3209,58 @@ capacity. D210 ("nothing survives holding leg size constant") is the precedent f
 was not chosen over alternatives; it is what the kernel happened to do. Anything that has never
 been named cannot have been beaten, and the absence of a challenger is not evidence the incumbent
 won.
+
+---
+
+## 52. The cohort was the strategy: three independent methods agree that ~80% of the winners'-dip edge is momentum-decile exposure, and the avenue is retired
+
+**From [D373](decisions/D373-RESULT-the-winners-dip-is-the-retired-book-and-one-GME-trade.md),
+[D376](decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)
+and [D377](decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md),
+2026-09-07. AVENUE RETIRED BY THE PRINCIPAL, 2026-09-08 (R15).**
+
+The winners'-dip long entered a fresh `rev_5` dip inside the `mom_252_21` **top** decile. It posted
+a gross **+160.55 bp per trade** over 3,932 trades, and the question was always what that number was
+paying for.
+
+**Three unrelated methods answered it the same way.**
+
+| study | lens | measurement |
+|---|---|---|
+| **D373** | **return**, per trade | the same-day same-cohort swap `B_c` centres at **+126.54** of the observed **+160.55** — available to a *random* name drawn from the same decile on the same day |
+| **D376** | **covariance**, per bar | two books sharing **nothing but cohort membership** — different names, different days, different timing — correlate at **ρ = +0.923** (p05 +0.916; 124,750 pairs from 500 books) |
+| **D377** | **hedge** | subtracting the cohort's own equal-weight return collapses the gross mean to **+34.08** and the **median to −30.74**: with the cohort removed, the typical trade loses money |
+
+**The three are not restatements of one another.** D373 asks what a random cohort name earns, D376
+asks what two cohort books share, D377 asks what is left when the cohort is subtracted. Different
+statistics, different nulls, different arithmetic — and they agree that **roughly 80% of the edge is
+exposure to the momentum decile, not to the dip.**
+
+**The dip timing survives as a real but marginal increment.** D373's H1 passed: +160.55 cleared
+`B_c`'s p95 of +155.60. But the margin was **+4.95 bp**, and removing the single largest trade — GME
+entered 2021-01-04 at $17.25, +40,029 bp, 6.34% of the ledger — takes the mean to +150.41, **below
+that p95**. An increment one January-2021 squeeze can carry is not a signal.
+
+**And it was the retired book.** D373's H7 measured ρ = **0.9346** against D365's momentum buffer,
+which D371 retired out of sample. D376 then showed the *excess* over the cohort baseline is only
+**+0.011** — so D373 was not unusually similar to D365, it was **about as similar as any two cohort
+books are**, which is the same finding by a fourth route.
+
+### The rule
+
+> **A construction that selects inside a narrow cohort inherits that cohort's return and that
+> cohort's covariance. Before crediting a selector, measure what a random member of the same pool on
+> the same day earns — and if the answer is most of it, the selector is a rounding error on a factor
+> exposure.**
+
+**The corollary closes a style of work rather than one book.** Variations on winner-selection cannot
+diversify each other: at ρ ≈ 0.92 two such constructions are the same strategy for portfolio
+purposes, and gate 1d′ is **blind** in that region — it rejects every pair on structure alone
+(D376 L2). **Independence inside a cohort must be established some other way, or not claimed.**
+
+**What is NOT retired.** The in-sample measurements stand as made. The `rev_5` dip's *existence*
+inside the winner pool is not disproved — D373's H1 cleared its controls as pre-registered, and this
+section retires the **avenue** on the size and provenance of the increment, not on a failed null.
+The four nulls, the capturability pass (H5: open-entry t 5.11, retention 98.7%) and the segmentation
+diagnostic all stand. So does D374's correction: **D373's H4 breadth failure was the bar's fault**,
+and by its own null it was the best-diversified book available.
