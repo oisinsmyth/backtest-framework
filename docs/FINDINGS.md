@@ -3233,8 +3233,31 @@ paying for.
 
 **The three are not restatements of one another.** D373 asks what a random cohort name earns, D376
 asks what two cohort books share, D377 asks what is left when the cohort is subtracted. Different
-statistics, different nulls, different arithmetic — and they agree that **roughly 80% of the edge is
-exposure to the momentum decile, not to the dip.**
+statistics, different nulls, different arithmetic.
+
+### CORRECTION, 2026-09-08 — two of these measure the LEVEL, one measures CO-MOVEMENT, and the section's first heading over-claimed
+
+*Raised by the principal, and the objection is right.*
+
+**Correlation does not bound a difference in means.** Two series can correlate at ρ = 0.92 and have
+very different average returns — ρ is computed after removing each series' mean and dividing by its
+own volatility, so it is a statement about **shape**, not **level**. D376 therefore does **not**
+measure "80% of anything".
+
+| | what it actually establishes |
+|---|---|
+| **D373** (+126.54 of +160.55) | **LEVEL.** A random cohort name on the same day earns most of the return |
+| **D377** (+160.55 → +34.08) | **LEVEL.** Removing the cohort's own return removes ~79% of the mean |
+| **D376** (ρ = +0.923) | **CO-MOVEMENT ONLY.** Two cohort books rise and fall together; it says nothing about whether one earns more than the other |
+
+**So the "~80%" rests on D373 and D377 — two measurements, not three.** D376 supports a different and
+narrower claim: **cohort books cannot diversify one another**, because a portfolio of two of them
+carries almost the risk of one. Both conclusions stand; they are not the same conclusion, and the
+heading of this section states the level claim as though all three supported it. **They do not.**
+
+**What this leaves open, explicitly:** ρ = 0.92 is fully compatible with one cohort book earning
+materially more per trade than another. **Nothing here shows that entry and exit timing inside the
+cohort cannot raise per-trade return.** See §52a.
 
 **The dip timing survives as a real but marginal increment.** D373's H1 passed: +160.55 cleared
 `B_c`'s p95 of +155.60. But the margin was **+4.95 bp**, and removing the single largest trade — GME
@@ -3264,3 +3287,56 @@ section retires the **avenue** on the size and provenance of the increment, not 
 The four nulls, the capturability pass (H5: open-entry t 5.11, retention 98.7%) and the segmentation
 diagnostic all stand. So does D374's correction: **D373's H4 breadth failure was the bar's fault**,
 and by its own null it was the best-diversified book available.
+
+## 52a. The null that was never run: does the entry DAY matter, holding the name and the cohort fixed?
+
+**Declared gap, 2026-09-08. NOT a result — nothing here has been measured.** Raised by the principal
+against §52 and the objection survives scrutiny.
+
+**Neither existing control answers it.**
+
+| control | rotates | holds fixed | why it cannot answer |
+|---|---|---|---|
+| **A′** per-name time rotation | the entry time, to **any** eligible bar | the name, its trade count | a random eligible bar is usually one where the name was **not** in the top decile, so A′ conflates *timing* with *cohort membership*. Its centre is +59.42 for exactly that reason |
+| **B_c** same-day same-cohort swap | the **name** | the **day**, cohort membership | it never varies the day, so it is silent on day choice by construction |
+
+**The missing control, and it is one line of new logic:**
+
+> **A′_c — a COHORT-CONDITIONED time rotation.** Rotate each entry to a random **other** bar on which
+> **that same name** was eligible **and in the `mom_252_21` top decile**. Name fixed, cohort
+> membership fixed, trade count fixed; **only the day moves.**
+
+If the observed book beats A′_c, entry timing adds something **inside** the cohort and §52's rule
+does not reach it. If it does not, the dip is picking days that a dart would have picked.
+
+**There is already a reason to think the answer is not trivially "no."** D373's own horizon profile,
+converted to a per-bar rate:
+
+| cap | trades | mean bp | hold | **bp per bar held** |
+|---:|---:|---:|---:|---:|
+| 5 | 8,665 | +39.11 | 5.0 | **+7.82** |
+| 10 | 7,290 | +68.62 | 10.0 | +6.86 |
+| 20 | 5,450 | +122.36 | 20.0 | +6.12 |
+| 40 | 3,932 | +160.55 | 39.9 | +4.02 |
+| 60 | 3,210 | +235.73 | 59.8 | +3.94 |
+
+**The per-bar rate halves from entry to bar 60.** The edge is **front-loaded**, which is what an
+entry-timing effect looks like and is not what pure exposure to a drifting cohort looks like. **The
+missing measurement is the same profile for B_c**: if a random cohort name on the same day is
+*equally* front-loaded, the decay is a property of the cohort and not of the dip.
+
+**Two cautions that bound how much this could be worth.**
+
+- **Win rate is a dial on the exit, not evidence.** D373 sits at 51.6% with payoff 1.195. Any
+  cap-and-target structure can raise win rate by taking profits earlier, at a matching cost in
+  payoff. **The per-trade mean already nets the two**, so "raise the win rate" is not a goal — raise
+  the mean per unit of exposure, against the cohort's own mean per unit of exposure at the same hold.
+- **`CLAUDE.md`'s standing warning applies directly:** cost-cutting is not edge-sharpening, and a
+  change in hold length moves breakeven and per-bar edge in *opposite* directions. Any result here
+  must say which moved.
+
+**Status.** The winners'-dip avenue is **retired** (§52), so running A′_c would mean the principal
+**reopening** it — theirs to decide under [R15](RULES.md#r15), not something this file assumes. The
+design is recorded now so that it does not have to be re-derived, and so that the retirement is on
+record as resting on the *level* evidence of D373 and D377 rather than on a claim about timing that
+was never tested.

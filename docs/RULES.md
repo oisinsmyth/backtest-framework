@@ -191,14 +191,44 @@ what a funded account is actually judged on.
 
 | | standard | why |
 |---|---|---|
-| **P1** | **Trailing drawdown ≤ 4%**, measured on **OPEN** equity | Apex trails on unrealised intraday equity; open profit lifts the floor before anything is closed. Our closed-equity max-DD is a different and gentler statistic |
+| **P1** | **SIZING RULE, NOT A FILTER — see the 2026-09-08 restatement below.** Size the account so trailing drawdown ≤ 4% on **OPEN** equity, then carry the resulting return forward | Apex trails on unrealised intraday equity; open profit lifts the floor before anything is closed. Our closed-equity max-DD is a different and gentler statistic |
 | **P2** | **No exposure across the VENUE'S FLATTEN TIME** — see the amendment below; this is venue-specific, not universal | Topstep 3:10pm CT, Apex 4:59pm ET, MyFundedFutures 4:10pm ET |
 | **P3** | **Worst single day ≤ 2%** | Daily loss limits run 2–3% |
 | **P4** | **Expected time-to-breach > 3 years** | Against a trailing barrier and positive drift, ruin is certain eventually; the question is only when. At Sharpe 0.9 a 20-account book died every ~3.85 years |
 | **P5** | **No single day > 40% of trailing-year profit** | Consistency rules cap a single day at 30–50%, so a lumpy-but-profitable strategy is ineligible for payout while up |
 | **P6** | **Venue permits automation at the FUNDED stage** | Apex: *"No Automation or Algorithm Usage allowed"* on Performance Accounts, penalty *"forfeiture of all funds and balances"*. Take Profit Trader bans EAs throughout. **Only Topstep and MyFundedFutures permit it.** Third-party comparison tables contradict both firms' own terms and must not be relied on |
 
-**Because:** the committed book fails P1 by roughly sevenfold (−29.82% at deployed size against 4%)
+### RESTATEMENT, 2026-09-08 — **P1 is a sizing rule and cannot fail. It was listed as a filter and it is not one.**
+
+*From [D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) §5,
+which audited every absolute threshold in the programme for whether anything had ever cleared or
+failed it. P1 is the one that can do neither.*
+
+**[D266](decisions/D266-the-prop-cross-screen.md) applies P1 by scaling the strategy until max
+drawdown reaches 4%** — *"none of it helps, because P1 is a sizing constraint"*. A constraint
+satisfied **by construction** rejects nothing. It converts into a **return penalty**: D266's best
+cell fell to **+0.535%/yr** after P1 sizing, and the best P2-compliant one to **+0.413%/yr**.
+
+**So P1 is not a hurdle, and listing it as one alongside P2–P6 has two costs.** It implies a
+candidate can *fail* P1, which no candidate can; and it hides that P1's real output is a **number**
+— the post-sizing return — which is the thing that actually decides whether a prop candidate is
+worth anything. **Under [R6](#r6), a hurdle that names a test is not cleared until that test is run;
+P1 names no test, because there is nothing to pass.**
+
+**P1 as it now stands:**
+
+> **Size the account so trailing drawdown ≤ 4% on OPEN equity. Report the post-sizing return, and
+> judge the candidate on that number.** P1 is never reported as PASS or FAIL. **The verdicts belong
+> to P2–P6, of which P2 and P6 are structural facts and P3, P4 and P5 have never been computed on
+> anything (D375 §5).**
+
+**What does not change.** The 4% figure, the open-equity basis, and the reason for both are
+unchanged; the committed book's −29.82% at deployed size is still the measurement that shows how far
+it is from prop-viable. What changes is that this is stated as a **sizing outcome**, not as a gate
+the book failed.
+
+**Because:** the committed book requires roughly sevenfold de-sizing under P1 (−29.82% at deployed
+size against 4%)
 and **fails P2 structurally** — it holds overnight, and [D247](decisions/D247-the-short-side-at-fifteen-minutes.md)
 measured that **86.6% of its return is timing that accrues overnight**. **No amount of position
 sizing fixes P2.**
@@ -358,7 +388,7 @@ genuinely new construction starts a new document and a new ledger, with this one
 had all three — equities not crypto, independence of an input not directional signal from a map.
 
 **The ETF programme's 45,783 — NOT carried into the single-name intraday work.**
-[D218](decisions/D218-impulse-macd.md) states its own floor as *"+1.42 Sharpe at 45,803 looks — no
+[D218](decisions/D218-the-impulse-macd-replication.md) states its own floor as *"+1.42 Sharpe at 45,803 looks — no
 arm anyone runs on **this fixture** can clear it"*, scoped in its own words to the 57-ETF **daily**
 fixture. That count accumulates pairs studies, breakouts, the MACD ladder and structure work:
 hypotheses the single-name 15-minute search is not testing, on universes it does not use.
