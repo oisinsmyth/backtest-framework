@@ -3,6 +3,24 @@
 **STATUS: NOT APPLIED. `docs/FINDINGS.md` is untouched by the session that wrote this.**
 Raised by the principal, 2026-09-08. §52's *substance* is unaffected; one sentence is loose.
 
+> ### UPDATE, 2026-09-08 — the principal corrected §52 upstream, and **the clause this note is about survived**
+>
+> Commit **`d9ee2dd`** ("R11: P1 restated as a SIZING RULE, and FINDINGS §52 corrected —
+> correlation does not bound a difference in means") reached the same conclusion independently and
+> applied it. **What it fixed:** §52's *heading*, which claimed three independent methods measure
+> the ~80%, when only two measure a **level** (D373 +126.54/+160.55 and D377 → +34.08); D376's
+> ρ +0.923 is co-movement only. It also opened **§52a** as a declared gap and authorised D378's
+> A′_c.
+>
+> **What it did not fix, and this note therefore remains live:** the corollary sentence itself.
+> `docs/FINDINGS.md` on `master` still reads at line 3280 —
+> *"at ρ ≈ 0.92 two such constructions are **the same strategy for portfolio purposes**"* —
+> which is the clause below. **The heading is corrected; the corollary is not.**
+>
+> **Superseded by `d9ee2dd`:** the diagnosis, and the level/co-movement split. **Still open:** the
+> replacement sentence, the paired-difference-of-means addition, and everything in the two gate
+> sections, none of which appears upstream.
+
 ## The clause
 
 §52's corollary currently reads:

@@ -235,6 +235,26 @@ whatever ER added there would have been measured against a pool already supplyin
 return. **My §7a recommendation to hold ER ready as D373's successor is withdrawn.** It was
 written before the retirement and it pointed at a closed avenue.
 
+##### The avenue was NARROWLY REOPENED the same day, and it does not revive use (i)
+
+**`738e482`, 2026-09-08: the principal reopened the winners'-dip avenue for exactly one
+pre-registered test** — D378's **A′_c**, a *cohort-conditioned time rotation*: each entry rotated
+to a random other bar on which **that same name** was eligible **and** in the top decile. Name
+fixed, cohort fixed, count fixed, **only the day moves.** The reopening is explicitly *"narrow and
+not a reprieve"*: no holdout read, no book restored, and if D378 fails the retirement stands.
+
+**It does not touch use (i), and the reason is which axis each one lives on:**
+
+| | axis | governing control | status |
+|---|---|---|---|
+| **D378's reopening** | **WHEN** — does the entry *day* matter inside the cohort? | **A′_c** — new, and the gap §52a declares | **live, one test** |
+| **ER as a cohort refiner (use i)** | **WHICH NAME** — a second cut on the pool's membership | **B_c** — which *holds the day fixed by construction* | **still disqualified** |
+
+**B_c is the control that governs name selection inside a pool, and the reopening leaves it
+untouched** — its centre of **+126.54 against +160.55** is the level evidence the retirement rests
+on, and `738e482` states that evidence is unchanged. **A′_c could vindicate day-choice and would
+still say nothing about name-choice.** Use (i) stays withdrawn on its own axis.
+
 ##### CORRECTION, 2026-09-08, at the principal's challenge — ρ does not bound a difference in means
 
 **This amendment first read: "§52's corollary is worse than that — at ρ ≈ 0.92 two
