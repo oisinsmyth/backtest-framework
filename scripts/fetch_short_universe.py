@@ -253,6 +253,28 @@ HOLDOUT_SIZE = 1700
 _HOLDOUT = False              # set by --holdout in main(); see `_prefix`
 
 # ---------------------------------------------------------------------------
+# THE SECOND HOLDOUT SLICE. Authorised by the principal on 2026-09-07, the day
+# after D371 spent the first one. It is the NEXT contiguous block of the SAME
+# permutation -- `order[5100:6300]` -- so nothing is re-shuffled, re-sorted or
+# re-picked, and every constant above (seed, screen, span, gates, delisting
+# contradiction rule, MIN_DEAD_SHARE) is used UNCHANGED. A holdout built to a
+# different recipe makes a failure ambiguous, and that is the one thing a
+# holdout must not produce.
+#
+# SMALLER THAN THE FIRST, on purpose and with permission. At the measured 47.2%
+# screen pass rate 1,200 fetched lands ~570 selected against holdout #1's 803.
+# Holdout #1 already carried 369 eligible names per bar against the mining
+# fixture's 704, and that halved breadth is a known problem (D371 RESULT §6a);
+# 1,200 is the size that keeps the read affordable without collapsing breadth
+# further.
+#
+# 3,501 eligible names remain unfetched beyond `order[5100]`, so this slice does
+# not exhaust the pool either.
+HOLDOUT2_START = HOLDOUT_START + HOLDOUT_SIZE   # 5100
+HOLDOUT2_SIZE = 1200
+_HOLDOUT2 = False             # set by --holdout2 in main(); see `_prefix`
+
+# ---------------------------------------------------------------------------
 # THE SCREEN — pre-live, per symbol. See the header for why it is per-symbol.
 # ---------------------------------------------------------------------------
 SCREEN_BARS = 252            # each symbol's first 252 in-span sessions = its warm-up
@@ -603,6 +625,12 @@ def _prefix(limit: int | None) -> list[dict]:
     length back out of the pool file instead silently pinned the budget to whatever it
     was when `--plan` last ran, which is how the first full fetch stopped at 2,600."""
     pool = json.loads(POOL.read_text(encoding="utf-8"))
+    if _HOLDOUT2:
+        # The SECOND slice. Everything before HOLDOUT2_START is the mining
+        # fixture plus holdout #1 and must never appear here; `--holdout2`
+        # asserts disjointness from BOTH rather than trusting this line.
+        end = HOLDOUT2_START + (limit or HOLDOUT2_SIZE)
+        return pool["order"][HOLDOUT2_START:end]
     if _HOLDOUT:
         # A SLICE, not a prefix. Everything before HOLDOUT_START is the mining
         # fixture and must never appear here; `--holdout --plan` asserts the two
@@ -1524,16 +1552,63 @@ def main() -> int:
     ap.add_argument("--holdout", action="store_true",
                     help="D288's holdout SLICE of the same permutation, "
                          "order[3400:5100], into a separate fixture triple")
+    ap.add_argument("--holdout2", action="store_true",
+                    help="the SECOND holdout SLICE of the same permutation, "
+                         "order[5100:6300], into a separate fixture triple")
     ap.add_argument("--limit", type=int, default=None,
                     help="fetch only the first N of the pinned pool order")
     args = ap.parse_args()
+
+    # ONE declaration for both slice blocks below. Python forbids a second
+    # `global` for a name already assigned in this scope, so it is hoisted here
+    # rather than repeated -- the blocks themselves are unchanged in what they
+    # swap.
+    global _HOLDOUT, _HOLDOUT2, FIXTURE, EVENTS, META, SELECTION, EVENTS_FULL
+
+    if args.holdout and args.holdout2:
+        raise SystemExit("--holdout and --holdout2 are different fixtures; pick one")
+
+    if args.holdout2:
+        # ONE PLACE swaps the slice and every output path together, exactly as
+        # `--holdout` does. Three constants where two get swapped is the pattern
+        # that hides the one you forget.
+        _HOLDOUT2 = True
+        FIXTURE = REPO / "data" / "fixtures" / "us_shorts_daily_holdout2.csv.gz"
+        EVENTS = REPO / "data" / "fixtures" / "us_shorts_daily_holdout2_events.json"
+        META = REPO / "data" / "fixtures" / "us_shorts_daily_holdout2.meta.json"
+        SELECTION = CACHE / "_selection_holdout2.json"
+        EVENTS_FULL = CACHE / "_events_full_holdout2.json"
+        pool = json.loads(POOL.read_text(encoding="utf-8"))["order"]
+        mine = {e["symbol"] for e in pool[:HOLDOUT_START]}
+        hold1 = {e["symbol"] for e in pool[HOLDOUT_START:HOLDOUT_START + HOLDOUT_SIZE]}
+        hold2 = {e["symbol"] for e in
+                 pool[HOLDOUT2_START:HOLDOUT2_START + HOLDOUT2_SIZE]}
+        # ASSERTED against BOTH spent sets, not trusted. The whole value of this
+        # fixture is that no name in it has ever been scored -- by the mining
+        # work OR by D371's holdout read -- and a silent overlap would destroy
+        # that without any visible symptom.
+        if mine & hold2:
+            raise SystemExit(
+                f"HOLDOUT2 OVERLAPS THE MINING SET on {len(mine & hold2)} symbols "
+                f"-- refusing to build a holdout that is not one")
+        if hold1 & hold2:
+            raise SystemExit(
+                f"HOLDOUT2 OVERLAPS HOLDOUT #1 on {len(hold1 & hold2)} symbols "
+                f"-- refusing to build a holdout that is not one")
+        if len(hold2) != HOLDOUT2_SIZE:
+            raise SystemExit(
+                f"HOLDOUT2 slice is {len(hold2)} symbols, not {HOLDOUT2_SIZE} "
+                f"-- the pool is shorter than the slice or carries duplicates")
+        print(f"holdout2  order[{HOLDOUT2_START}:{HOLDOUT2_START + HOLDOUT2_SIZE}]  "
+              f"{len(hold2):,} symbols, disjoint from the {len(mine):,} mined "
+              f"AND from holdout #1's {len(hold1):,}")
+        print(f"fixture   {FIXTURE.name}")
 
     if args.holdout:
         # ONE PLACE swaps the slice and every output path together. Three
         # constants where two get swapped is the pattern that hides the one you
         # forget, which is why `fetch_single_name_intraday.py` does it this way
         # too. `_HOLDOUT` steers `_prefix`; the rest are the artefacts.
-        global _HOLDOUT, FIXTURE, EVENTS, META, SELECTION, EVENTS_FULL
         _HOLDOUT = True
         FIXTURE = REPO / "data" / "fixtures" / "us_shorts_daily_holdout.csv.gz"
         EVENTS = REPO / "data" / "fixtures" / "us_shorts_daily_holdout_events.json"
