@@ -756,13 +756,83 @@ known bill.**
 
 ---
 
+## 7f. C2 — D362's unrun cell, answered: the gate is the state variable, and its margin is **+0.52 bp**, not the published +6.3
+
+**Run 2026-09-07, `scripts/c2_calm_vs_gate.py`, artifact `data/c2_calm_vs_gate.json`.** The cell
+[D362](../decisions/D362-RESULT-the-two-sink-filter-beats-a-random-and-a-name-matched-removal-and-the-gate-explains-less-once-it-is-on.md)
+named in writing and did not run: *the trigger with the calm-market condition alone and no gate.*
+D362's calm-market sink is **S2 = `mkt_vol_20 <= 99.03`** — the floored market's own 20-bar
+volatility — which is why §7e made this the successor question rather than bookkeeping.
+
+**[ID] before anything new is read:** GATED reproduces D361's published **+42.32956 on 3,977
+trades to 1e-9**, and GATED_A2 lands on D362's **+61.71**. **[S2]** the calm flag equals D362's
+own `hit_grids` row 1 on all 6,586,151 cells, with the threshold read from D362's `SINKS` tuple
+rather than retyped.
+
+### The five cells — gap-up fade, short, cap 10, bp per TRADE
+
+| cell | trades | gross | median | t | era 1 | era 2 | net PB | net PUB |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| UNG — no gate, no filter | 20,621 | +14.76 | +16.04 | +2.13 | +9.09 | +19.92 | −21.70 | −55.16 |
+| **UNG_S2 — calm removed, NO gate** | 9,409 | **+28.18** | +26.15 | +2.51 | +16.07 | +35.14 | −9.50 | −51.59 |
+| GATED — D361's cell | 3,977 | +42.33 | +16.90 | +2.53 | +18.87 | +55.13 | +5.93 | −44.61 |
+| GATED_S2 | 3,560 | +49.48 | +22.58 | +2.74 | +18.48 | +64.08 | +11.03 | −39.41 |
+| GATED_A2 — D362's arm | 3,079 | +61.71 | +32.94 | +3.19 | +58.75 | +63.05 | +23.01 | −27.06 |
+
+**The calm-market condition alone recovers about half of what the gate buys** — +13.4 bp of the
+gate's +27.6 over ungated — and **stacking it on the gate adds only +7.2**. The two states overlap
+heavily: **Jaccard 0.407, φ +0.466**.
+
+### The rotation null was ENUMERATED, not sampled — and that is the method contribution
+
+A circular shift of a market-level gate has exactly **Td−1** admissible offsets. That is a
+**finite group of about 4,000**, so it can be **exhausted**: every offset scored, no sampling, and
+a p95 with **zero** standard error. D369 found a 200-draw p95 carrying an SE that decided verdicts
+it could not resolve; for this class of null the answer is not more draws but **all** of them.
+
+| state | draws | of | p50 | **p95 (exact)** | SE | observed | margin | |
+|---|--:|--:|--:|--:|--:|--:|--:|---|
+| **ROT_S2** | 4,103 | 4,103 | +13.93 | **+28.60** | 0.00 | +28.18 | **−0.41** | **inside** |
+| **ROT_G2** | 3,923 | 3,923 | +14.78 | **+41.81** | 0.00 | +42.33 | **+0.52** | **ABOVE** |
+
+### What this answers, and what it costs D361
+
+1. **D362's question is answered: the 200-day gate is the state variable, not the calm-market
+   condition.** The gate is above its exact rotation; the calm condition is not. That is the
+   cleanest possible form of the comparison — identical machinery, identical trigger, both nulls
+   exhausted.
+2. **But the gate's margin is +0.52 bp, not the +6.3 its own record implies.** D361 published the
+   rotation p95 at **+36.0** on 200 draws against +42.33; **the exact p95 is +41.81**. The verdict
+   **survives** — D361's conclusion stands — but the margin is roughly **twelve times smaller**
+   than published, and the cell sits at the **95.3rd percentile** of its own null rather than
+   comfortably beyond it.
+   **This record does not fully attribute that gap.** My 200-draw pass on the same machinery gave
+   +42.78 and the exhaustive value is +41.81, so sampling explains most of the distance from
+   +42.78 but I did **not** reproduce D361's own draw set (different seed), and the residual
+   difference to its +36.0 is unexplained here. What is certain is the exact number.
+3. **A prediction failed, and it was one of the two load-bearing ones.** Q2 (*UNG_S2 above its own
+   rotation*) is **FALSIFIED**. Q1, Q3 and Q4 held.
+4. **The whole family still fails the published spread.** Every cell is negative under PUB, the
+   best at **−27.06**. C2 changes nothing about that; §41's verdict that the long and short sides
+   of this record are cost failures is untouched.
+
+### The rule this earns
+
+> **A rotation null over a market-level state is a finite group of Td−1 offsets. Enumerate it.**
+> A sampled p95 on ~4,000 available offsets buys nothing but sampling error, and this record found
+> a published verdict whose margin was 12× smaller than reported once the null was exhausted.
+> D369 asked for more draws; where the population is finite and affordable, the answer is **all**
+> of them, and the reported SE is then exactly 0.
+
+---
+
 ## 8. Order of work
 
 | | what | why here |
 |---|---|---|
 | ~~**1**~~ | ~~**A1 Stage 0** (§7)~~ | **DONE 2026-09-07 — clears K1/K2/K3, §7a. ER is a distinct input and is not yet a signal** |
 | ~~**2**~~ | ~~**C1 Stage 0**~~ | **DONE 2026-09-07, §7d. Dispersion has a premise and is a new state; breadth has neither; NOTHING forecasts the winner cohort** |
-| **3** | **C2** — D362's unrun cell | **still owed, and §7e sharpens it.** The candidate object behind D362's calm-market sink is now **realised volatility**, not dispersion — a calm market *is* a low-volatility market. Cheapest owed measurement in the record |
+| ~~**3**~~ | ~~**C2** — D362's unrun cell~~ | **DONE 2026-09-07, §7f. The 200-day gate is the state variable, not the calm-market condition — and the gate's exact margin over its own rotation is +0.52 bp, not the published +6.3** |
 | **3a** | **The volatility tilt's own pre-registration** | **raised by §7e.** PICKUP §5 item 5 has carried it since D280 and it has never been run; C1b re-found it independently. It is the only state in this record with a decisive premise, and it arrives with the σ² tax attached (FINDINGS §1b: 59% of D264's gross) |
 | **4** | **B1** — undercut-and-reclaim, with its reclaim-vs-level control built | strongest candidate; needs a control that does not exist yet |
 | **5** | **A1 use (i)** as a cohort state, if Stage 0 clears — and immediately if D373's B_c fails | the successor is one state swap rather than a new construction |
