@@ -799,6 +799,32 @@ every number quoted before D340 is a same-close-fill number.
     (b) **The dual exit rank is dead**: exit 90 everywhere gives +8.11 at the
     same Sharpe, so the 80-open/90-shut split is not a degree of freedom.
 
+35. **The relaxation sweep — DONE (D368), one of eight.** C9 relaxed to
+    *within d% of the 252-bar high*, d = 0…10, three families, 18 gates each
+    against its own rotation. **Not a knife-edge** (the against-prediction
+    failed: half a percent of relaxation nearly doubles the on-share and keeps
+    83% of the premium) **and not a smooth curve** (only d=0 clears its own
+    p95; the premium wanders +3.11 → +2.58 → +1.91 → +2.33 → +2.39 → +0.08).
+    **Capacity closes negatively**: nothing at 26%, 38%, 60% or 76% on-share
+    clears. The eight discarded conditions add **−0.04** at d=5 where they
+    genuinely bind, against +1.13 at d=0 where they are entailed — not useful
+    at any d where they are not redundant. C4's contribution wanders
+    +1.10/+1.40/+0.83/+0.74/−0.55/+0.10, confirming it is noise. Only Q5 held:
+    the best gate still clears the best-of-18 multiplicity control.
+    **Nothing promoted (R15).**
+
+**PRECISION IS NOW THE BINDING CONSTRAINT, NOT MORE SWEEPS.** D368 measured
+the same gate under two independent 200-draw rotations differing only in a dead
+parameter: **the null's p95 moved 0.40 bp/bar** (+6.43 → +6.83) and its median
+0.18. D366→D367 showed the same gate's p95 move +7.02 → +6.42, draws-beating
+2 → 0. The verdicts these studies turned on were decided by margins of **0.05
+to 0.56** — C9 clearing its rotation, C9 failing the best-of-46, the reduced
+universe failing GATE-ROT — **all inside the null's own run-to-run spread.**
+Before any further gate work: **rerun the decisive comparisons at 2,000+ draws
+and quote the p95's standard error beside it.** Three sweeps on this fixture
+have produced three wandering surfaces (the cap, C4's ten bars, the relaxation
+curve); a fourth would produce a fourth.
+
 **Next, in this order:**
 
 0. **The winners'-dip long, pre-registered** — the bottom decile of `rev_5` is

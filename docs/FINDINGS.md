@@ -2953,3 +2953,55 @@ against 12 before. It cannot be diversified away by removing whoever happened to
    to be gated too; entry gating changes which trades are taken, not how long capital is deployed.
 4. **Concentration and timing can be one finding rather than two.** When both point at the same
    names, fixing either by diversification is unavailable.
+
+## 48. A 200-draw rotation null cannot resolve a 0.1 bp/bar margin, and three studies decided verdicts on exactly that
+
+**From D368, 2026-09-07.** Pre-registered; one of eight, the load-bearing one failed and the
+one written *against* the construction failed too. One parameter swept: D367's surviving gate
+condition — the index at a 252-bar high — relaxed to *within d% of the high*, d = 0 … 10.
+
+**Neither of the two outcomes the record was written to distinguish.** Relaxing by half a percent
+nearly doubles the on-share (9.5% → 18.1%) and keeps **83%** of the timing premium, so the gate is
+**not** a knife-edge at the high. But only d = 0 clears its own rotation, and the premium curve
+wanders rather than decaying: **+3.11 → +2.58 → +1.91 → +2.33 → +2.39 → +0.08**.
+
+| d% | 0 | 0.5 | 1 | 2 | 5 | 10 |
+|---|--:|--:|--:|--:|--:|--:|
+| on-share | 9.5 | 18.1 | 25.5 | 38.1 | 60.3 | 76.1 |
+| net | +6.95 | +6.01 | +5.30 | +5.46 | +5.04 | +2.29 |
+| clears own p95 | **YES** | no | no | no | no | no |
+
+**THE METHODOLOGICAL FINDING, which matters more than the sweep.** The same gate, the same 200-draw
+rotation design, two independent runs differing only in a **dead** parameter (net moves 0.02):
+
+| | net | rot p50 | rot p95 | margin |
+|---|--:|--:|--:|--:|
+| D367's C9 | +6.93 | +4.02 | **+6.43** | clears by 0.50 |
+| D368's C9 | +6.95 | +3.84 | **+6.83** | clears by 0.12 |
+
+**The null's p95 moved 0.40 bp/bar purely from redrawing 200 rotations** — and D366→D367 showed the
+same gate's p95 move from +7.02 to +6.42 with the draws beating it going 2 → 0. Meanwhile the
+verdicts these studies turned on were decided by margins of **0.05 to 0.56**: C9 clearing its
+rotation (0.12), C9 *failing* the best-of-46 control (0.05), the reduced universe *failing* its gate
+rotation (0.56). **Every one of those sits inside the null statistic's own run-to-run spread.**
+
+**Capacity closes negatively.** No relaxation with an on-share of 20% or more clears its rotation —
+not at 26%, 38%, 60% or 76%. The effect is demonstrable only while the gate is nearly shut.
+
+**And the discarded conditions are not useful at any d where they are not redundant.** At d = 0 the
+eight others add +1.13 while being logically entailed (§47); at d = 5, where they genuinely bind and
+exclude a fifth of the sample, they add **−0.04**.
+
+**What it means.**
+
+1. **Report a null's p95 with its own sampling error, or run enough draws that it has none worth
+   reporting.** 200 draws is fine for a verdict decided by 3 bp/bar and useless for one decided by
+   0.1. This programme has been using one draw count for both.
+2. **A verdict inside the null's own spread is not a verdict.** "Clears p95" and "fails p95" printed
+   identically for margins of 0.05 and for margins of 3.0; the rank and the draws-beating count
+   (§46) help, but only the draw count fixes it.
+3. **Three sweeps on this fixture have produced three wandering surfaces** — the 252-bar cap, the
+   ten-bar C4 contribution, and now the relaxation curve. A fourth sweep would produce a fourth.
+   Sweeping is no longer informative here; precision and out-of-sample are.
+4. **A relaxation sweep is the right test for "is this a point effect?"** and it answered cleanly in
+   the construction's favour even as everything else failed. Keep the instrument.
