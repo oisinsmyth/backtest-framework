@@ -116,6 +116,70 @@ prediction written now and reported after would be indistinguishable from one wr
 When the read is authorised, an addendum will state — **before** the run — the expected direction on each hurdle,
 so the read is scored against something and not merely described.
 
+---
+
+## ADDENDUM, 2026-09-07 — the read is authorised; predictions committed BEFORE it runs
+
+**The principal has authorised the first holdout read.** §6 committed that an addendum would state the expected
+direction on each hurdle *before* the run, so the read is scored rather than merely described. That is this
+section, and it is committed before the fixture is touched by anything that reads a return.
+
+**The construction is frozen in `data/d371_construction.json`**, committed in the same commit as this addendum.
+**H4 is unchanged.** I flagged before the read that it will probably fail and that this is the moment to change it
+if it is the wrong hurdle; it is retained exactly as written, because relaxing a criterion after seeing that the
+candidate fails it — and before the test that would confirm it — is the clearest possible case of tuning the
+hurdle to the candidate.
+
+### P1–P8, for the HOLDOUT-ALONE arm
+
+| | prediction | reasoning |
+|---|---|---|
+| **P1** | **S6's net is > 0.** | The trigger cleared its time rotation at 164 SE with 0 of 10,000 draws beating it. Cross-sectional momentum is the most replicated anomaly there is. |
+| **P2** | *(load-bearing)* **S6 clears BOTH nulls at p97.5.** | A′ should be comfortable. GATE-ROT is the genuine uncertainty: the gate is the searched part of the construction, and this is the first evidence multiplicity does not price. |
+| **P3** | **S6's net is BELOW the in-sample +8.106.** | Roughly a hundred constructions were searched on the mining fixture. The survivor is likelier to be noise, so shrinkage is expected. A holdout number *above* in-sample would be a surprise worth investigating rather than celebrating. |
+| **P4** | **H4 FAILS — the top trade exceeds 10% of P&L.** | Stated publicly before the read. A right-tail book on 803 names concentrates wherever it is pointed; in sample the figure is 11.7% and a smaller universe should concentrate harder, not less. |
+| **P5** | **Neither arm passes all six hurdles**, and the binding failure is H4. | P4 plus the expectation that H1, H3, H5, H6 pass. |
+| **P6** | **C9's GATE-ROT margin, in SE, is smaller than S6's.** | C9 is the weaker gate in sample (3.2 SE vs 32.9) and undecidable against multiplicity. |
+| **P7** | **Era 2's net exceeds era 1's**, as it does in sample (+12.10 vs +0.46). | The weak-premium era-1 regime is a property of the period, not of the mining names, so it should reappear on a disjoint universe over the same span. |
+| **P8** | **S6's gate is open on 5–15% of holdout bars.** | The gate is a market condition — an index at a 252-bar high — computed from the holdout universe's *own* floored market. That index is a different series from the mining one, so the on-share will differ from 9.2%, but not wildly. |
+
+### P9–P12 — THE PRINCIPAL'S OWN PREDICTIONS, in their words, entered before the read
+
+The principal asked to put their prediction into the record. Stated: *"I think we will see ann return drop to 16%
+and drawdown increase slightly. Not much of a prediction I know but I think it will generalise but lower its
+performance. On the combined holdout + mined data I think it will perform better than on the mined data."*
+
+| | prediction | scored as |
+|---|---|---|
+| **P9** | **annualised net falls to ≈16%** from the in-sample +20.4% | the point estimate is recorded; P9 counts as held if holdout annualised net is in **[12%, 20%]** |
+| **P10** | **max drawdown increases slightly** | holdout maxDD **> 3,158 bp** and **< 2×** it |
+| **P11** | **it generalises, at lower performance** | holdout net **> 0** and **< +8.106** bp/bar |
+| **P12** | **the COMBINED book beats the MINING-only book** | combined 50/50 Sharpe **> 0.887**, the mining-only figure; combined net reported beside |
+
+**P12 is the sharpest of the four and it is not implied by the others.** If the holdout's mean is lower (P11),
+the combined *mean* must sit between the two books — so P12 can only hold on a **risk-adjusted** basis, through
+the two disjoint universes being imperfectly correlated. It is a prediction about diversification, and it is the
+reason the combined arm is computed as a date-aligned 50/50 portfolio rather than as a concatenation.
+
+**A note on where P9–P12 sit against P1–P8.** They are compatible: P3 and P11 say the same thing, and P9 is a
+sharper version of it. P12 is the only one making a claim nothing in P1–P8 addresses.
+
+### How the result will be reported
+
+**The holdout-alone arm is the evidence. The combined arm is context and is labelled as contaminated**, because
+its mining half is the fixture the construction was selected on.
+
+**One declared deviation from D367 §5's wording.** "Combined data" cannot mean one merged universe: ranking across
+the union of 2,376 names is a *different strategy* from the one being read, with a different top 5% on every bar.
+What is combined is the **P&L** — the same construction run on each universe, each ranked within itself, the two
+per-bar series pooled. That is what holding both books would have earned. The mining series is computed and
+stored **before** the read (`--mining-series`, already run) so that nothing about the combined arm depends on
+anything learned from the holdout.
+
+**Whatever the six hurdles return, the read is spent and is not repeated.** A failure retires the construction; it
+does not license a search for a better one followed by a second read. R8's one-read discipline is the whole point
+of the asset.
+
 ## 7. Assertions
 
 | | |

@@ -1,0 +1,35 @@
+{
+ "study": 371,
+ "frozen": "2026-09-07",
+ "note": "The two-arm construction for the momentum book's ONE holdout read. Frozen before the fixture is touched. The runner refuses --read unless this file exists.",
+ "score": "mom_252_21",
+ "universe": "keep_v2 floor, F0 deal filter, lagged, cross-sectional percentile within the fixture's own eligible names",
+ "entry": "not held AND rank > 95 AND gate open",
+ "hold": "rank > 90",
+ "exit": "rank <= 90, ineligible, or a 252-bar cap",
+ "cap": 252,
+ "cap_status": "a DECLARED holding-period constraint set by the principal, not a tuned parameter",
+ "exit_rank": 90,
+ "exit_rank_status": "single value; D367 measured the 80/90 gate-state split at 0.02 bp/bar, so it is not a degree of freedom",
+ "book": "long, equal-weight over whatever qualifies",
+ "hedge": "short the eligible universe, dollar-volume weighted, REBUILT on whatever universe is traded (D370)",
+ "fill": "next open, both legs (D340)",
+ "costs": "per-trade round trip (own half-spread at own entry and exit bars + commission at own as-traded price), plus hedge borrow at GC 50 bp/yr and measured rebalancing",
+ "convention": "PUB primary, PB reported beside",
+ "arms": [
+  {
+   "name": "S6",
+   "gate": "all nine conditions; equivalently C9 AND C4, the other seven being logically entailed or inert",
+   "in_sample_standing": "clears its own rotation at 32.9 SE, best-of-ten multiplicity at 32.3 SE, symmetric winner-removal at 10.3 SE"
+  },
+  {
+   "name": "C9",
+   "gate": "the index at a 252-bar high, alone",
+   "in_sample_standing": "clears its own rotation at 3.2 SE; UNRESOLVED against multiplicity at -1.0 SE, where the margin equals its own standard error"
+  }
+ ],
+ "multiplicity": "TWO arms on ONE read is two tests: each must clear the p97.5 of its nulls, a Bonferroni split of alpha = 0.05. The unadjusted p95 is reported beside and labelled.",
+ "nulls_per_arm": ["GATEROT (gate circularly shifted, on-share and circular run-length multiset preserved)", "APRIME (per-name time rotation within eligible bars)"],
+ "hurdles": ["H1 net PUB > 0", "H2 above the p97.5 of BOTH nulls", "H3 symmetric 1% trimmed mean per trade > per-trade round trip", "H4 no single trade above 10% of ledger P&L", "H5 at least 10 names to half the P&L", "H6 net PUB Sharpe > 0"],
+ "h4_note": "H4 is RETAINED although the in-sample book fails it at 11.7% (GME, 2020-11-16). Dropping a hurdle the candidate is known to fail is tuning the hurdle to the candidate."
+}

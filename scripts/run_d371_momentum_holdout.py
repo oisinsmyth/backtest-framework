@@ -137,10 +137,14 @@ def evaluate(P, label, draws, t0):
              for k, w in enumerate(("GATEROT", "APRIME"))}
         H, g4, led = hurdles(P, s, gate, elig, cc, oc, N)
         res[arm] = dict(net=s["net"], gross=s["gross"], cost=s["cost"], sharpe=s["sharpe"],
-                        maxdd=s["maxdd"], members=s["members"], trades=led["n"],
+                        maxdd=s["maxdd"], members=s["members"], trades=led["n"], era1=s["era1"],
+                        era2=s["era2"], vol=s["vol"], bars=s["bars"],
                         open_share=float(gate[P["m_start"]:].mean()), nulls=N, hurdles=H,
                         four_groups=g4, ledger=led,
-                        passed=all(h["ok"] for h in H.values()))
+                        passed=all(h["ok"] for h in H.values()),
+                        # the per-bar net series and its dates, so the COMBINED arm is computable afterwards
+                        series=dict(dates=[P["dates"][t] for t in range(P["T"]) if s["mask"][t]],
+                                    net=[float(x - s["cost"]) for x in s["v"][s["mask"]]]))
         print(f"    {label}/{arm}: net {s['net']:+.3f} sharpe {s['sharpe']:+.3f} trades {led['n']} -- "
               f"{sum(h['ok'] for h in H.values())}/6 hurdles ({el(t0)})", flush=True)
     return res
@@ -245,6 +249,58 @@ def stage_rehearse(draws, t0):
     print(f"\n  wrote {f.relative_to(REPO)}  ({el(t0)})  {PREP.rss_line()}   HOLDOUT READS SPENT: 0")
 
 
+def combined(R, mining):
+    """The COMBINED arm, per D367 section 5 -- and a stated deviation from the literal wording.
+
+    'Combined data' cannot mean one merged universe here: ranking across the union of 2,376 names is a DIFFERENT
+    strategy from the one being read, with a different top 5% on every bar. What is combined is the P&L.
+
+    AND IT IS COMBINED DATE BY DATE, NOT CONCATENATED. Both fixtures span the same 2010-2026 calendar, so
+    appending one series to the other would count every trading day twice and treat the two as independent
+    observations of different periods. They are not: they are two disjoint universes over the SAME days. The
+    combined book is therefore the 50/50 portfolio held simultaneously -- the mean of the two books' returns on
+    each shared date -- which is what actually holding both would have earned, and which can beat either on
+    Sharpe through diversification even when one book's mean is lower. The correlation between the two is
+    reported so that effect is visible rather than implied.
+
+    It is CONTEXT, never evidence: the mining half is the fixture the construction was selected on."""
+    out = {}
+    for arm in ARMS:
+        md = dict(zip(mining[arm]["dates"], mining[arm]["net"]))
+        hd = dict(zip(R[arm]["series"]["dates"], R[arm]["series"]["net"]))
+        both = sorted(set(md) & set(hd))
+        a = np.array([md[d] for d in both], float)          # mining book, on the shared dates
+        b = np.array([hd[d] for d in both], float)          # holdout book, same dates
+        x = 0.5 * (a + b)                                   # the 50/50 portfolio, held simultaneously
+        sh = lambda y: (float(np.mean(y) / np.std(y, ddof=1) * np.sqrt(252.0))
+                        if np.std(y, ddof=1) > 0 else None)
+        out[arm] = dict(shared_bars=len(both), mining_only_bars=len(md), holdout_only_bars=len(hd),
+                        net=float(np.mean(x)), vol=float(np.std(x, ddof=1)), sharpe=sh(x),
+                        ann_pct=float(np.mean(x) * 252.0 / 100.0),
+                        mining_net=float(np.mean(a)), mining_sharpe=sh(a),
+                        holdout_net=float(np.mean(b)), holdout_sharpe=sh(b),
+                        correlation=float(np.corrcoef(a, b)[0, 1]) if len(both) > 2 else None)
+    return out
+
+
+def stage_mining_series(t0):
+    """Store the MINING per-bar series for both arms, so the combined arm is computable after the read
+    without re-running anything. Reads no holdout data."""
+    V57.repoint("mining")
+    P = PREP.prep(need_grids=False, verbose=False)
+    pct, elig, G, cc, oc = build(P)
+    zeros = np.zeros((P["T"], P["n"]), float)
+    out = {}
+    for arm in ARMS:
+        s = run_primary(P, G[arm], pct, elig, cc, oc, zeros)
+        out[arm] = dict(dates=[P["dates"][t] for t in range(P["T"]) if s["mask"][t]],
+                        net=[float(x - s["cost"]) for x in s["v"][s["mask"]]], mean=s["net"])
+        print(f"    mining/{arm}: {len(out[arm]['net']):,} bars, mean {s['net']:+.4f}")
+    f = REPO / "temp" / "d371_mining_series.json"
+    f.write_text(json.dumps(out, indent=1))
+    print(f"  wrote {f.relative_to(REPO)}  ({el(t0)})")
+
+
 def guard(a):
     if getattr(a, "read", False) and not getattr(a, "spend_the_holdout", False):
         print("REFUSED: --read requires --spend-the-holdout. The holdout is one clean read (RULES.md R8).")
@@ -261,6 +317,7 @@ def main() -> int:
     ap.add_argument("--pipe", action="store_true")
     ap.add_argument("--dry", action="store_true")
     ap.add_argument("--rehearse", action="store_true")
+    ap.add_argument("--mining-series", action="store_true")
     ap.add_argument("--read", action="store_true")
     ap.add_argument("--spend-the-holdout", action="store_true")
     ap.add_argument("--draws", type=int, default=2000)
@@ -271,6 +328,8 @@ def main() -> int:
         stage_selftest(t0)
     elif a.rehearse:
         stage_rehearse(min(a.draws, 50), t0)
+    elif a.mining_series:
+        stage_mining_series(t0)
     elif a.pipe:
         V57.stage_pipe()
     elif a.dry:
@@ -278,11 +337,25 @@ def main() -> int:
         V57.stage_dry("holdout")
     elif a.read:
         print("D371 READ -- this spends the programme's one clean holdout read.")
+        mine = json.loads((REPO / "temp" / "d371_mining_series.json").read_text()) \
+            if (REPO / "temp" / "d371_mining_series.json").exists() else None
         V57.repoint("holdout")
         P = PREP.prep(need_grids=False, verbose=True)
         R = evaluate(P, "holdout", a.draws, t0)
         print_table("HOLDOUT ALONE -- THE EVIDENCE", R)
-        (OUT / "d371_read.json").write_text(json.dumps(V65.clean(dict(study=STUDY, arms=R)), indent=1))
+        comb = combined(R, mine) if mine else None
+        if comb:
+            print(f"\n  COMBINED -- context, not evidence. The two books are ranked WITHIN their own universes "
+                  f"and their per-bar series pooled; merging the universes would rank across 2,376 names and be "
+                  f"a different strategy.")
+            print(f"  {'arm':<5}{'bars':>8}{'net':>9}{'Sharpe':>9}   (mining bars are contaminated: the "
+                  f"construction was selected on them)")
+            for arm in ARMS:
+                c = comb[arm]
+                print(f"  {arm:<5}{c['bars']:8,}{c['net']:+9.3f}{c['sharpe']:+9.3f}")
+        (OUT / "d371_read.json").write_text(json.dumps(V65.clean(
+            dict(study=STUDY, arms=R, combined=comb, holdout_reads_spent=1)), indent=1))
+        print(f"\n  HOLDOUT READS SPENT: 1.  Programme total: 1.")
     else:
         ap.error("one of --selftest, --pipe, --dry, --rehearse, --read")
     return 0
