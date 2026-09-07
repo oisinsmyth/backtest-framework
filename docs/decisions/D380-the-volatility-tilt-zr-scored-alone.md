@@ -94,6 +94,44 @@ universes D280 reported, plus the floor D339 imposed after D280 was written.
 **Stage 0 spends no cells and proposes no rule.** Under R13 it inherits D280's 161 comparisons,
 because D280 shaped this search.
 
+### AMENDMENT to §2, 2026-09-08 — S0-c's direction is AMBIGUOUS IN THE SOURCE, and the measurement must settle it
+
+**Found while reading D280's script to build the runner, before any number was produced. Recorded
+rather than resolved in my favour.**
+
+S0-c as drafted says *"the sign is as D280 states — the tilt shorts the calmer names."*
+**D280 states that inside a construction the same record later corrected as wrong-signed**, so the
+two halves of the source disagree:
+
+| D280 says | in which construction |
+|---|---|
+| *"a `+zr` term pushes high-range names **out** of an **ascending** short ranking, so the book shorts the **quieter** names"* | an **ascending** short — short the LOWEST scores |
+| *"parts 3–5 asserted that a negative IC was the tradeable direction for an ascending short — **a self-contradictory claim**, since negative correlation means a low score goes with a **HIGH** forward return"* | the correction, which implies a **descending** short — short the HIGHEST scores |
+
+**Read through the correction, a negative IC on a composite containing `+zr` means the short takes
+the HIGH-score end, which is the HIGH-range end — the VOLATILE names, not the quiet ones.**
+Read through the earlier sentence, it is the reverse. **The source cannot be quoted for a
+direction, and I nearly did.**
+
+**S0-c is therefore restated, before the run:**
+
+> **S0-c′.** The direction is **not asserted from D280's prose**. Stage 0 measures the **sign of
+> `zr`'s own IC**, which is a fact rather than a reading, and the short's end follows mechanically
+> and is printed **in money, not in prose**: a **negative** IC means short the **high-`zr`
+> (volatile)** names; a **positive** IC means short the **low-`zr` (calm)** names. **The runner
+> prints the implied end and the P&L sign of a one-name probe at each end**, so the direction is
+> demonstrated rather than argued. *(D280's own lesson: "a sign asserted in prose inverted D280"
+> — and it is being applied to D280 itself.)*
+
+**Q3 is correspondingly withdrawn as written and replaced:**
+
+> **Q3′.** `zr`'s own IC is **negative**, so the implied short is on the **volatile** end — the
+> reading that survives D280's sign correction rather than the one its part-4C prose states.
+> **This is declared as the prediction, and D280's prose is the falsifier.**
+
+**Nothing else in the record changes.** S0-a, S0-b, the frozen §3 construction, `B_v` and every
+hurdle stand as committed.
+
 ---
 
 ## 3. Stage 1 — the construction, frozen before Stage 0 runs
