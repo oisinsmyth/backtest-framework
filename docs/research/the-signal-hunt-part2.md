@@ -574,13 +574,111 @@ is guarded by equality against the per-window loop it replaced, **probed on a ti
 
 ---
 
+## 7d. STAGE 0 RESULT — C1: dispersion has a premise, breadth does not, and **nothing forecasts the winner cohort**
+
+**Run 2026-09-07, `scripts/c1_gate_stage0.py`, artifact `data/c1_gate_stage0.json`.** Descriptive:
+no cell scored, no book built, no trade simulated. It reads forward returns because a premise
+check must — but as a **cohort drift**, never as a strategy's P&L, exactly as D361's Stage 0 did.
+
+**The statistic is D361 rule 1's, not a new one:** the block correlation of the state's **level**
+at the start of each non-overlapping 20-bar block against that group's mean forward-20 hedged
+drift, against its own shuffled |r| p95. **A split by era or year is not a state.**
+
+**[REG] the implementation is validated before any new number is read.** This file's independent
+block-correlation code reproduces D361's published **G1 −0.23112** and **G2 −0.09366** on 159
+blocks **to 0.0**, from D361's own artifact and its own recorded shuffle seed. G1 and G2 are then
+carried as the reference frame, because −0.2 means nothing until it sits beside the two states
+the programme already owns.
+
+**The two new states, declared before the run.** Both from the existing panel, over **eligible
+names only** (D351), from the cross-section at t−1: **BREADTH** = share of eligible names above
+their own trailing 50-bar mean; **DISPERSION** = cross-sectional IQR of the 21-bar return.
+571–778 eligible names carry each defined bar.
+
+| state | target | blocks | corr | shuffled p95 | decisive |
+|---|---|--:|--:|--:|---|
+| **G1** | loser cohort | 159 | **−0.231** | 0.161 | **YES** *(D361's, reproduced)* |
+| **G1** | all eligible | 203 | **−0.182** | 0.144 | **YES** — a target D361 never reported |
+| G1 | **winner cohort** | 159 | +0.133 | 0.139 | no |
+| G2 | loser cohort | 159 | −0.094 | 0.153 | no |
+| G2 | **winner cohort** | 159 | +0.113 | 0.154 | no |
+| G2 | all eligible | 196 | −0.084 | 0.147 | no |
+| **BREADTH** | loser cohort | 159 | −0.145 | 0.154 | **no** |
+| BREADTH | **winner cohort** | 159 | +0.063 | 0.157 | no |
+| BREADTH | all eligible | 206 | −0.117 | 0.136 | no |
+| **DISPERSION** | loser cohort | 159 | **+0.205** | 0.151 | **YES** |
+| DISPERSION | **winner cohort** | 159 | +0.072 | 0.157 | no |
+| DISPERSION | all eligible | 206 | +0.119 | 0.138 | no |
+
+### The load-bearing result is the negative one
+
+> **NOTHING FORECASTS THE WINNER COHORT.** Four states × the top decile of `mom_252_21`:
+> |corr| **0.063 to 0.133** against shuffled p95s of **0.139 to 0.157**. Every one is inside its
+> own shuffle, and the two nearest (G1 +0.133 vs 0.139; G2 +0.113 vs 0.154) are the closest
+> misses in the table rather than marginal passes.
+
+**A1 (§4.1's recommended use) and D373 both live in the winner cohort.** Under §2 a
+flat-by-default sleeve must name a time-series gate, and **this measurement did not find one for
+that cohort among the four states tested.** That is not a closure — four states is not the space,
+and only the principal closes an avenue (R15) — but it is the honest position: *the gate A1's
+sleeve needs does not yet exist, and it was not found where it was most likely to be.*
+
+### Are these four states distinct? Three are one state; dispersion is not
+
+**Computed after the block table was read, and disclosed as such** — without it a decisive
+DISPERSION cannot be told from G1 restated, which is §3a's defect and the question
+[D362](../decisions/D362-RESULT-the-two-sink-filter-beats-a-random-and-a-name-matched-removal-and-the-gate-explains-less-once-it-is-on.md)
+left unrun. Spearman of the levels over the 3,924 bars where all four are defined; Jaccard of the
+gated bars beside it.
+
+| | G1 | G2 | BREADTH | DISPERSION |
+|---|--:|--:|--:|--:|
+| **G1** | 1.000 | 0.734 | 0.658 | **−0.133** |
+| **G2** | 0.734 | 1.000 | 0.557 | **−0.167** |
+| **BREADTH** | 0.658 | 0.557 | 1.000 | **−0.105** |
+| **DISPERSION** | −0.133 | −0.167 | −0.105 | 1.000 |
+
+*Jaccard of the ON bars: G1↔G2 0.56, G1↔BREADTH 0.51, G2↔BREADTH 0.38; DISPERSION against all three 0.28–0.32.*
+
+**G1, G2 and BREADTH are one family — "is the market down", in three sets of clothes.**
+BREADTH's failure is therefore doubly uninformative: it carries no premise *and* it is 0.658 of
+G1 anyway. **DISPERSION is the only genuinely new state on the page**, and it is the one that
+clears.
+
+### Four things to carry
+
+1. **DISPERSION is a new, decisive state on the loser cohort (+0.205 against a 0.151 shuffle),
+   and it is not the market-direction family.** It is also the obvious candidate for the object
+   behind D362's calm-market sink — **which D362 named as unrun, and this does not settle it**;
+   the deciding cell is still §4.8's.
+2. **G1 is decisive on ALL ELIGIBLE names at −0.182, which D361 never reported.** Its premise is
+   broader than the loser cohort it was built for.
+3. **G2's premise is not decisive on any of the three targets** — and G2 is the gate the one
+   surviving short in the record (the gated gap-up fade, §41) actually uses. This reproduces
+   D361's own −0.094 rather than contradicting it: D361's primary was G1 and it failed, and the
+   fade's cell was the third of four. **It means the surviving short's gate is chosen, not
+   premised**, and any record that builds on it owes that sentence.
+4. **Premise and flatness do not co-occur, which is the direct problem for P1.** The state that
+   clears most broadly is on **28.5%** of bars (G1 — usable), but the new one is on **49.0%**
+   (DISPERSION — a coin flip, not a flat-by-default sleeve), and the flattest (G2, **21.7%**) has
+   no premise at all. **A gate that is both decisive and rare has not been found here.**
+
+### What this does NOT say
+
+It does not say dispersion works. A decisive premise means the state's level moves with what
+follows it — **it is a licence to design a gate, not a gate**, and §38 rule 1 still requires any
+gate built from it to be tested against its own null (rotate the gate, keep the trigger). Under
+R15 nothing here is a signal.
+
+---
+
 ## 8. Order of work
 
 | | what | why here |
 |---|---|---|
 | ~~**1**~~ | ~~**A1 Stage 0** (§7)~~ | **DONE 2026-09-07 — clears K1/K2/K3, §7a. ER is a distinct input and is not yet a signal** |
-| **2** | **C1 Stage 0** — block correlation of breadth and dispersion against forward drift | P1 makes a gate a precondition for *every* candidate; the premise check must precede the design (§41 rule 1) |
-| **3** | **C2** — D362's unrun cell | cheapest owed measurement in the record; resolves an ambiguity in a published headline |
+| ~~**2**~~ | ~~**C1 Stage 0**~~ | **DONE 2026-09-07, §7d. Dispersion has a premise and is a new state; breadth has neither; NOTHING forecasts the winner cohort** |
+| **3** | **C2** — D362's unrun cell | **promoted by §7d.** Dispersion is the likely object behind D362's calm-market sink, and this is the cell that tells them apart. Cheapest owed measurement in the record |
 | **4** | **B1** — undercut-and-reclaim, with its reclaim-vs-level control built | strongest candidate; needs a control that does not exist yet |
 | **5** | **A1 use (i)** as a cohort state, if Stage 0 clears — and immediately if D373's B_c fails | the successor is one state swap rather than a new construction |
 | **6** | **B2**, then **A2**, then **B3** (mechanism-specified, count disclosed), then **A3** | ranked; A3 gated on its own effective-input test |
