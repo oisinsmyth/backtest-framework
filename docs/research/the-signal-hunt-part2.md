@@ -230,12 +230,48 @@ at **ρ +0.923**; and subtracting the cohort's own return takes the gross mean t
 > on the same day earns — and if the answer is most of it, the selector is a rounding error on a
 > factor exposure.*
 
-Use (i) was **exactly** a cohort selector: refine the momentum top decile by a second variable.
-Whatever ER added there would have been measured against a pool whose own drift supplies most of
-the return, and §52's corollary is worse than that — **at ρ ≈ 0.92 two winner-selection variants
-are the same strategy for portfolio purposes**, so an ER-refined winner book could not have
-diversified the one it was refining. **My §7a recommendation to hold ER ready as D373's successor
-is withdrawn.** It was written before the retirement and it pointed at a closed avenue.
+Use (i) was **exactly** a cohort selector: refine the momentum top decile by a second variable, and
+whatever ER added there would have been measured against a pool already supplying most of the
+return. **My §7a recommendation to hold ER ready as D373's successor is withdrawn.** It was
+written before the retirement and it pointed at a closed avenue.
+
+##### CORRECTION, 2026-09-08, at the principal's challenge — ρ does not bound a difference in means
+
+**This amendment first read: "§52's corollary is worse than that — at ρ ≈ 0.92 two
+winner-selection variants are the same strategy for portfolio purposes, so an ER-refined winner
+book could not have diversified the one it was refining." The first clause is wrong and the
+second is a different claim.**
+
+**ρ is computed on mean-removed, volatility-normalised series.** It is a statement about the shape
+of the deviations, not about the level. Two books can correlate at **0.92 and earn very
+differently** — one at +12 bp a bar and one at +1 — and nothing in ρ registers the gap. Where that
+happens the correct action is to hold the better one, which is the opposite of treating them as
+interchangeable. **"Same strategy" does not follow from ρ, and I asserted it.**
+
+**What survives, split into the two claims I ran together:**
+
+| claim | statistic that settles it | status |
+|---|---|---|
+| ER-refining adds little **RETURN** over the pool | a **difference in means**: D373's `B_c` (+126.54 of +160.55) and D377's cohort hedge (mean → +34.08, **median → −30.74**) | **holds — and it is the disqualification** |
+| an ER-refined book would not **DIVERSIFY** the book it refines | ρ = +0.923 (D376) | **holds, and ρ is the right instrument for it** |
+
+**The retirement is unaffected**, because two of §52's three legs — `B_c` and the hedge — are
+*level* measurements and they are the load-bearing ones. What is withdrawn is my promotion of
+D376's ρ to do work it cannot: **ρ bounds the diversification benefit of holding both books; it
+cannot tell you that one adds no return over the other.**
+
+**And the correction cuts constructively.** With ρ high, `Var(A − B) = σ²_A + σ²_B − 2ρσ_Aσ_B` is
+*small*, so a **paired** comparison of the two books' means on the same bars has a tight standard
+error. **A high correlation does not obstruct comparing levels — it makes the comparison more
+powerful.** So the test for "does this selector add anything over its pool" is a paired difference
+of means on matched bars, and it should be run *because* ρ is high, not abandoned because of it.
+
+**A flag on `docs/FINDINGS.md` §52, raised and not acted on.** Its corollary carries the same
+sentence — *"at ρ ≈ 0.92 two such constructions are the same strategy for portfolio purposes"* —
+and inherits the same overreach. §52's *substance* stands on `B_c` and the hedge; only that clause
+is loose. **FINDINGS is the truth file and this record does not edit it**; the correction is
+offered in `working/FINDINGS-48-amendment-DRAFT.md`'s sibling note for the principal to accept or
+decline.
 
 **What survives, and it is not a consolation.** ER's Stage 0 result is untouched: it is a
 genuinely new input, orthogonal to both volatility and momentum (§7a). **§52 makes that property
@@ -256,11 +292,18 @@ universe*, not as the E1-crossing trigger §4.1's original table described.
 1. **The same-pool control is the FIRST null, not the last.** What does a random name in ER's own
    selected decile, on the same day, earn? §52 makes this the question that decides whether there
    is a selector at all. It is D373's `B_c` promoted to the front of the queue.
-2. **The book-level independence claim must be measured, not inferred from the input.** ER's input
-   orthogonality (§7a) is not book orthogonality. D376 built the instrument — the pairwise
-   correlation floor for books in this universe, **+0.48 for unrelated pairs and +0.92 for cohort
-   pairs** — so an ER book's ρ against the existing books is readable against a known baseline.
-   Anything near 0.92 is a cohort book wearing a new label.
+2. **Two separate claims, two separate statistics — do not let one stand in for the other.**
+   ER's *input* orthogonality (§7a) is neither book-level independence nor added return.
+   - **Diversification** is ρ's question, and D376 built the baseline: **+0.48 for unrelated
+     pairs, +0.92 for cohort pairs** in this universe. An ER book's ρ against the existing books
+     says whether both can be held.
+   - **Added return** is a *difference in means* and ρ cannot see it — see the correction above.
+     A book at ρ 0.92 with a materially higher mean is **not** "a cohort book wearing a new
+     label"; it is the one to hold. That comparison is a **paired** test on matched bars, and a
+     high ρ makes it *more* powerful, not less.
+
+   **An earlier draft of this item ended "anything near 0.92 is a cohort book wearing a new
+   label." That is the same error and it is withdrawn.**
 3. **The deal filter and the named tail are not optional here.** §7b found ER's extreme is
    **exactly 1.0000** — a perfectly monotone tape, the pinned-takeover shape FINDINGS §16 records
    this fixture as containing (RLD, KCI). **A top-decile ER selector selects that population**,
