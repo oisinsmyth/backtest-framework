@@ -1,11 +1,223 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-02, end of the session that closed every directional short this programme can
-build.** D264 -> D284, plus standing rule R13.
+**Updated 2026-09-07**, end of the session that spent the programme's first holdout read and then
+ran D373. **D365 → D373.** Everything below §7 is older strata, newest first, kept because the traps
+in them still bite.
+
+**This file had been stale since 2026-09-02** (D264→D284) and both `STACK.md` and the 2026-09-07
+handoff said so in writing. It is current again as of this line.
 
 ---
 
-## 0. THE ONE-LINE STATE
+## 0. THE ONE-LINE STATE, 2026-09-07
+
+**THE MOMENTUM BOOK CLEARED EVERY IN-SAMPLE CONTROL AND FAILED OUT OF SAMPLE. ITS SUCCESSOR TURNED
+OUT TO BE THE SAME BOOK AT ρ = 0.935. HOLDOUT #1 IS SPENT; HOLDOUT #2 IS BUILT AND UNSPENT. BOTH
+BOOKS ARE UNCHANGED.**
+
+| | |
+|---|---|
+| **Personal book** — `docs/BOOK.md` | **S1, S2 only, neither at capital** |
+| **Prop book** — `docs/BOOK_PROP.md` | **none.** An empty book with stated standards beats a populated one with borrowed ones |
+| **Holdout reads spent, programme total** | **1** (D371, 2026-09-07) |
+| **Retired 2026-09-07** | **S6** (nine-condition gate), **C9** (252-bar high alone) |
+| **Latest study** | **D373 — 5 of 7 hurdles fail.** Avenue NOT closed; that is the principal's under R15 |
+
+**For D285 → D364 read [`docs/STACK.md`](docs/STACK.md) §0 and §§32–42**, not this file. That is the
+layer-by-layer statement of what the stack earns once costed, and its §7 records what earlier
+versions of it got wrong. This section deliberately does not restate it.
+
+---
+
+## 0a. THE HOLDOUT LEDGER — READ BEFORE ANYTHING ELSE
+
+| fixture | slice of the pinned permutation | names | state |
+|---|---|---:|---|
+| mining prefix | `order[:3400]` | — | spent many times over; free to mine further (see the ruling below) |
+| `us_shorts_daily_holdout.csv.gz` | `order[3400:5100]` | 803 | **SPENT 2026-09-07 (D371). Never read again.** |
+| `us_shorts_daily_holdout2.csv.gz` | `order[5100:6300]` | **576** | **BUILT `59f021e`, UNSPENT.** 1,532,631 rows, 2010-01-04 → 2026-08-26, dead share 32.6%, gates clean |
+| remaining unfetched | `order[6300:]` | **2,301** | never fetched, never scored |
+
+The permutation is deterministic — alphabetical sort, one shuffle at `POOL_SEED = 20260828` — so any
+further slice can be cut without re-picking anything.
+
+**The 5,201 figure in the 2026-09-07 handoff was wrong.** It counted from the end of the *mining*
+prefix and therefore included holdout #1 itself. The true remainder at that moment was **3,501**.
+Corrected here; verified directly against `data/raw/alphavantage/daily_adjusted/_pool.json`.
+
+**The guard is default-deny.** `run_d365_momentum_buffer.py` installs an audit hook refusing any path
+containing "holdout", metadata included; an authorised process calls `V65.allow_holdout(why)`, which
+prints loudly and logs every holdout file opened. CPython has no `removeaudithook`, so this is the
+only way through. **Building and rehearsing on a holdout is fine. Reading is not, without explicit
+specific authorisation from the principal.**
+
+**Breadth is the unsolved problem with holdout #2.** Panel coverage per bar: mining **1,008**,
+holdout #1 **534**, holdout #2 **369**. On D371's stricter study-eligibility mask holdout #1 gave
+369, so holdout #2 should land near **255** — about **0.69×** holdout #1's breadth. D371 already
+failed a breadth hurdle. **Decide what breadth a read needs before spending this fixture, not
+after.**
+
+---
+
+## 0b. THE PRINCIPAL'S RULING ON MINING SPENT DATA, 2026-09-07
+
+*Quoted because it governs every study that follows:* a **brand-new construction** may mine the
+already-spent in-sample fixture, **provided nothing crosses into a holdout**. The contamination cost
+rises slowly on its own as a share, and is accepted for now. D373 was run under this ruling and
+nothing crossed.
+
+---
+
+## 0c. D373 — the last study, and what it settled
+
+**[D373](docs/decisions/D373-the-winners-dip-long-and-the-median-criterion.md)** pre-registered
+(`aa7bc2f`, amended `462f894`), **[RESULT](docs/decisions/D373-RESULT-the-winners-dip-is-the-retired-book-and-one-GME-trade.md)**
+(`9162a64`). The winners' dip long: a fresh `rev_5` dip inside the `mom_252_21` **top** decile,
+entered long, 40-bar cap. 3,932 trades, 796 names.
+
+| | | |
+|---|---|---|
+| **H1** signal vs A′/B/B_c/C | **PASS** | +160.55 vs p95s +105.76 / +51.92 / **+155.60** / +52.72 |
+| **H2** `mean > median > 0` | **FAIL** | median **+51.55**, below A′'s p95 +81.42 and B_c's +87.43 |
+| **H3** era 1 standalone | **FAIL** | +16.86 vs p95s +64.60 / +77.24 |
+| **H4** breadth | **FAIL** | 18 of 796 names = **2.26%** to half the P&L; bar 10% |
+| **H5** capturability | **PASS** | open-entry t 5.11, retention 98.7% |
+| **H7** independence | **FAIL** | **ρ = 0.9346** to the retired D365 book |
+
+**Three things from it that outlive it:**
+
+1. **`B_c` is the control that matters and its p50 is +126.54.** Most of the observed +160.55 is
+   available to a random name drawn from the same momentum decile on the same day. **Any study
+   selecting inside a cohort must null against a same-day same-cohort swap, or it is measuring
+   cohort membership.**
+2. **The H1 margin was one trade wide.** Top trade: **GME, entered 2021-01-04 at $17.25, held 40
+   bars, +40,029 bp — 6.34% of the ledger.** Drop it and the mean falls to +150.41, **below B_c's
+   p95**. So does dropping all ten GME trades, and so does dropping Nov-2020→Mar-2021 entirely.
+   `scripts/d373_posthoc_probes.py`, post-hoc and labelled so.
+3. **`mean > median > 0` IS CONFOUNDED WITH HOLDING PERIOD.** Re-cutting D365's *own* stored paths:
+   PASS at 20/40/60 bars, FAIL at 100 and at its native ~99. D373 and D365 **agree** at equal
+   segmentation. The mechanism is arithmetic — summing fat-tailed returns over a longer window lifts
+   the mean and drops the median. **Within-study null comparisons hold segmentation fixed on both
+   sides and stay fair; cross-construction median comparison does not.**
+   `scripts/d373_segmentation_probe.py`, `docs/decisions/D373-RESULT-*.md` §3a.
+
+---
+
+## 0d. WHAT IS LIVE NOW, RANKED
+
+**Nothing is pre-registered and awaiting a runner. The queue is empty.** What follows is candidates,
+not commitments.
+
+1. **The D373 avenue is not closed.** Its §9 abandon condition (H7 > 0.5) is met at 0.935, and under
+   R15 only the principal closes an avenue. **This is the first thing to put to them.**
+2. **Make the breadth hurdles breadth-relative** — D371 §6a found its own H5 mis-specified as a flat
+   count. D373's H4 already does this. **Precondition for any future read**, and cheap.
+3. **Is the 10% names-to-half bar calibrated?** *Nothing in this programme has ever cleared it.*
+   That is either a real property of every construction tried here or a bad bar, and no study so far
+   can tell the two apart. Answering it is free.
+4. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
+   anything is fetched. **It must not select inside `mom_252_21`'s top decile** — D373 shows where
+   that lands.
+5. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
+   momentum. It needs holdout #2 or a later slice.
+6. **D336's quoted-spread pull** needs the principal's TWS session. Until then every net number is a
+   PB/PUB pair and PUB is the default (D332 §4).
+7. **Prop track:** hurdle P (R11), all six, plus a separate pre-registered out-of-sample test.
+   Untouched.
+
+**The breadth test the 2026-09-07 handoff ranked first was dropped, with the principal's agreement.**
+It targets a retired object, and the H5 mis-specification it was partly meant to expose is a
+definition fix rather than an empirical question.
+
+---
+
+## 0e. THE LESSON THAT OUTRANKS BOTH RESULTS
+
+**In-sample null strength does not forecast out-of-sample survival.** The momentum construction
+cleared its time rotation at **164 standard errors with zero of 10,000 draws beating it**, cleared a
+best-of-ten multiplicity control, and cleared a symmetric winner-removal test. **It still failed.**
+Permutation nulls test whether a pattern is real *in the data you have*; they say nothing about
+whether it recurs.
+
+Three studies went into making those in-sample verdicts precise (D369) and unbiased (D370). Both
+were necessary. Neither was sufficient.
+
+**And the successor built to replace it was the same book.** D373's H7 says a construction can be
+re-derived from different-sounding premises and still hold 70% of the same name-bars. **Measure
+independence on day one, not at stage 5.**
+
+---
+
+## 0f. TRAPS, 2026-09-07 — all cost real time
+
+- **Persist before you render.** D371's first execution computed its evidence and lost the JSON to a
+  `KeyError` in the print loop; the console had printed only booleans. D373 hit the *same shape*
+  twice more (arm C's dict differs from `verdict()`'s) and lost nothing, because the artifact is
+  written first. **Keep that ordering.**
+- **Three D373 hurdles reported the wrong verdict from lookup faults, not from bad data.** H4 read
+  `top_name_share` by `"top1"` when it is keyed by `int`, so it returned UNRESOLVED with two null
+  legs; H7 was stored with no verdict and rendered as `-`, entering no roll-up. **A hurdle that
+  cannot fail loudly is as bad as no hurdle** — check the roll-up actually consumes it.
+- **Cumulative s/draw in a progress log is not the marginal rate.** D373's five parts printed 7.09
+  s/draw at draw 130 and 5.73 at draw 400; the marginal rate was ~3.9 throughout. The numerator
+  carries one-time prep. **Estimate remaining time from the last two lines, not the running mean.**
+- **`_m_start_of` took the bar after the LAST undefined market bar** — correct only when every gap is
+  a warm-up prefix. Holdout #1's 3 interior holiday bars gave `m_start` 4,125 of 4,190, **a 65-bar
+  sample with every check green.** Fixed `ce2947c`.
+- **`V58.pct_of` memoises by score NAME only.** A process touching two fixtures gets the **wrong**
+  percentile grid for the second. Clear `V58._PCT` between re-points.
+- **`np.savez` appends `.npz`** unless the name already ends in it; **`np.load` returns a lazy
+  handle** Windows will not let you replace until closed.
+- **Backticks in `git commit -m` are command substitution.** Use `-F <file>` written with the Write
+  tool — the heredoc hook blocks heredocs for exactly this reason.
+- **Never pipe a background command through `tail`/`grep`** — the pipe buffers and progress is
+  invisible. Redirect to `temp/<job>.log` and tail the file.
+
+---
+
+## 0g. STANDING CONSTRAINTS FROM THE PRINCIPAL — these bind
+
+- **R15: a signal is a positive GROSS mean per trade above its nulls.** Costs and confluences come
+  later. **ONLY THE PRINCIPAL CLOSES A RESEARCH AVENUE.**
+- **No holdout read without explicit, specific authorisation.**
+- **Costs are IBKR's official costs.**
+- **No subagents unless the work is genuinely parallel.** Build and run sequential work directly.
+- **R8:** pre-registration committed *before* the runner exists; the result committed **separately**.
+- **Clearing a study's hurdles does not admit a strategy.** R8 needs a separate pre-registered
+  out-of-sample test on a fixture it has never seen; the prop book also needs hurdle P (R11), all six.
+
+---
+
+## 0h. WHERE TO READ
+
+| | |
+|---|---|
+| how to work here | `CLAUDE.md` |
+| rules | `docs/RULES.md` — **R8, R13, R14 + amendments, R15** |
+| substantive truth | `docs/FINDINGS.md` — **§§46–51** newest |
+| where the programme stands, D285→D364 | `docs/STACK.md` **§0, §§32–42, 40a**; **§7 is what earlier versions got wrong** |
+| the momentum session | `docs/HANDOFF-2026-09-07-momentum-holdout.md`, `docs/decisions/D366…D371*` |
+| the holdout read itself | `data/d371_read.json`; construction frozen in `data/d371_construction.json` |
+| the last study | `docs/decisions/D373*` · `data/d373_winners_dip_long.json`, `data/d373_posthoc.json` |
+| the two books | `docs/BOOK.md` (S1, S2), `docs/BOOK_PROP.md` (**admitted arms: none**) |
+
+---
+---
+
+# OLDER STRATA — newest first
+
+**Everything below predates 2026-09-05 and describes the short-side and futures work. It is kept for
+the traps and the standing data constraints, not for its state claims.** Where it disagrees with §0
+above, §0 wins.
+
+---
+
+
+## THE 2026-09-02 SESSION — D264 → D284, the directional shorts
+
+*Superseded as a state file by §0 above; the closures and traps below still stand.*
+
+### 0-2026-09-02. THE ONE-LINE STATE, AS IT WAS
 
 **EIGHT CONSTRUCTIONS, FIVE UNIVERSES, TWO FREQUENCIES, BOTH DIRECTIONS. NOTHING SURVIVES.**
 
