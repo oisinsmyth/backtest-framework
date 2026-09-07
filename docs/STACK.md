@@ -753,6 +753,23 @@ every number quoted before D340 is a same-close-fill number.
     loses. Era 1 pays nothing, thirteen names are half the P&L, and the
     intercept's t is 1.74. Its own out-of-sample design is owed and does not
     touch D357's frozen read.
+32. **The gated momentum buffer against its nulls — DONE (D366), six of
+    eight, and the one written *against* the construction also held.** The
+    endpoint of ~89 further constructions searched on this fixture, frozen and
+    run against five nulls for the first time: **+8.09 bp/bar net PUB, Sharpe
+    0.887, +20.4%/yr, maxDD 3,158 bp**, gate shut 90.8% of bars, hedge borrow
+    and rebalancing charged. **The trigger is decisive** — the rank rotation's
+    entire distribution is negative and the time rotation's p95 is +1.98.
+    **The gate is half ornament**: rotated in time with its on-share and run
+    structure preserved it still earns **+4.10**, and 2 of 200 random gates
+    beat the real one. **The margin over a random gate is ten names** — drop
+    the top ten of 515 and the book returns +4.60, the random gate's median.
+    Top trade **GME, 2020-11-16, held to the cap, 11.7% of all P&L**; twelve
+    names reach half of it. The searched 252-bar cap has **no plateau** (242
+    is better; ±10 bars swings Sharpe 0.735–0.922). Era 1 still pays +0.46
+    against era 2's +12.10. **Nothing promoted; the avenue is the
+    principal's (R15).** Its out-of-sample design is owed and is now the
+    same question as D365's.
 
 **Next, in this order:**
 
@@ -1050,6 +1067,30 @@ Kept legible rather than quietly fixed.
     comparability.** Earlier per-trade nets (D285 onward) are median-based
     and read as upper bounds on any spread-concentrated ledger.
 
+34. **A self-test probe that could not fail, and a jackknife that could not
+    speak — both in D366, both caught only by asking what the number meant.**
+    The causality probe multiplied one already-high volatility observation by
+    100 and asserted the expanding 80th percentile moved; it does not, and
+    correctly so, because scaling a value already above the threshold leaves
+    its *rank* alone. The jackknife passed a grid of zeros as its return grid,
+    so every name scored +0, the "top ten" were the first ten alphabetically,
+    and the ex-GME column never dropped GME — the two columns matched exactly
+    and that was nearly read as evidence the cap was robust to that trade.
+    **Perturb the quantity the statistic actually keys on** (rank, not level),
+    and **assert a control differs from its treatment before reading their
+    agreement as a finding.**
+35. **Every number in a pre-registration's check line came from a probe with
+    two defects in it.** D366 §3 fixed net +8.10, Sharpe 0.887 and maxDD 3,024
+    from a scratchpad probe that hedged entry bars close-to-close while
+    filling the long leg at the next open, and that rounded the hedge's
+    rebalance charge. Building `[ID]` as an *exact* identity rather than an
+    approximate one is what exposed both. **A check figure is only as good as
+    the code that produced it; reproduce the probe bit-for-bit, then state the
+    difference between the probe and the construction rather than widening a
+    tolerance until they agree.**
+
 The common thread has not changed: reading a non-result as a null result,
 ranking cells off a published table instead of measuring the difference, and
-filing a mechanism before checking the statistic orders the outcome.
+filing a mechanism before checking the statistic orders the outcome. D366 adds
+a fourth: **accepting a passing assertion without asking whether it could have
+failed.**

@@ -2827,3 +2827,67 @@ designed, on the most anomalous episode in the sample.
    names to half the P&L. Report the concentration of the P&L, never the position count.
 4. **Permutation nulls and a time-series t ask different questions.** This cell clears every
    null and has a t of 1.74. Report both; the flattering one alone is not a result.
+
+## 46. A gate found by search clears its own rotation null, and half of what it buys is being out of the market rather than being out at the right times
+
+**From D366, 2026-09-07.** Pre-registered; six of eight, the load-bearing one held — and so
+did the one written *against* the construction. Five nulls. Still within sample: the
+construction is the endpoint of roughly a hundred constructions searched on this one fixture
+(D365's eleven plus this session's eighty-nine), and this record exists to price that search.
+
+**The construction.** D365's momentum buffer — buy the top 5% of twelve-month momentum, hold
+until a name falls out of the top 20%, equal-weight, next-open fill — plus a nine-condition
+market gate that must be open to *enter* but never forces a liquidation, a 252-bar cap on the
+holding period, and a short of the eligible universe **dollar-volume weighted**, with the
+hedge's own borrow and rebalancing charged. The gate is shut on 90.8% of bars.
+
+| | gross | cost | net PUB | Sharpe | %/yr | maxDD | era 1 | era 2 |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| gated, capped | +9.65 | 1.56 | **+8.09** | 0.887 | +20.4 | 3,158 | +0.46 | +12.10 |
+| ungated (D365's cell) | +3.37 | 0.77 | +2.59 | 0.417 | +6.5 | — | — | — |
+
+**The trigger is real and the nulls are decisive about it.** The rank rotation's *entire*
+distribution is negative — its best of 24 shifts is −0.24 against the observed +8.09 — and the
+per-name time rotation centres on zero with a p95 of +1.98. Neither comes close.
+
+**The gate is a different story, and it is the finding.** Rotate the gate in time, preserving
+its on-share and its circular run structure exactly and leaving the trigger untouched, and it
+still earns **+4.10 bp/bar at the median** — half the observed. The real gate clears that
+null's p95 (+8.09 against +7.02), so it is not nothing; but two of two hundred randomly-timed
+gates beat it outright. **Roughly half of what a market-timing gate appears to buy here is not
+timing at all: it is the mechanical effect of holding a concentrated momentum book only 9% of
+the time, in runs of that shape.**
+
+**And the margin over a random gate is ten names.** Removing the top ten names of 515 from the
+eligible universe and rebuilding the book — so the freed slot refills — leaves **+4.60**,
+which *is* the random gate's median. The single largest contributor is **GME, entered
+2020-11-16 at $12.06 five weeks before the squeeze and held to the 252-bar cap for +55,259 bp,
+11.7% of all P&L**. Twelve names of 515 reach half the P&L, against a pre-registered ≥15.
+
+**The typical trade loses.** Median −28.3 bp against a mean of +477.5, a 48.6% win rate,
+skew +5.3, excess kurtosis +62 — the mirror of §33's tell, with the *right* tail carrying the
+book. Trimming 1% from both tails leaves +342.8 against a 96.8 bp round trip, so the edge is
+not one or two trades even though the concentration is real.
+
+**The searched cap has no plateau.** The 252-bar cap beats no cap (Sharpe 0.887 vs 0.678), but
+moving it ten bars either way swings Sharpe from 0.735 to 0.922 — a range comparable to the
+whole gate-rotation null — and the frozen value is not even the local maximum (242 is). This is
+not driven by the GME trade: the sweep has the same shape with that name removed.
+
+**What it means.**
+
+1. **A gate needs a rotation null, and it needs one because a gate does two things at once.**
+   It picks *when* to be in, and it decides *how much* to be in at all. Only the first is a
+   forecast; the second is exposure reduction wearing a forecast's clothes. Rotating the gate
+   in time holds the second fixed and prices the first, and here the first is worth about half
+   the headline. A matched-count control is not enough — a gate's nuisance is its on-share
+   **and** its run structure (R7).
+2. **Report a null's rank, not just "above p95".** Clearing a control by two draws in two
+   hundred and clearing it by all two hundred are different results, and "above p95" prints
+   the same for both. Rank separates them.
+3. **A ladder null whose observed is the ladder's own maximum tests nothing.** Report the
+   ladder's shape instead. Here it is monotone across all seven steps, which is a pattern to
+   be suspicious of rather than reassured by.
+4. **A swept parameter's neighbours are part of its result.** A single-point optimum with no
+   plateau is a draw from a jagged surface, not the value of a constant, and reporting it
+   without the neighbours overstates it.
