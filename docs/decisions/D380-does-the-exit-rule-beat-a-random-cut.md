@@ -61,6 +61,45 @@ per-trade comparison is like-for-like by construction. `[OVL]` proves this rathe
 names, not on its own signal reverting."* E1 keys on the name's own signal reverting, which is the
 version worth testing.
 
+### AMENDMENT to §2, 2026-09-08 — **`[OVL]` fired. "Invalidation" names two different objects and only one of them is an overlay.**
+
+*Written before any result, under §9's instruction: "`[OVL]` fails → what is being tested is a
+different book, not an overlay, and R7 does not govern it. **Re-scope before running.**"*
+
+**The kernel's `("invalidation", 40)` run does not share the baseline's entries.** Measured:
+
+| | |
+|---|---:|
+| signal events in the cell | **10,270** |
+| baseline trades (40-bar cap) | **3,932** |
+| **kernel invalidation trades** | **7,945** |
+| entries in both | 3,810 |
+| **only in the invalidation run** | **4,135** |
+| mean hold, shared entries | baseline **39.94** · invalidation **6.32** |
+
+**The cause is re-entry, not the exit.** Under a 40-bar cap a signal firing while the name is still
+held is suppressed; exiting at a mean of 6.32 bars frees the name to take signals the cap swallowed.
+**Invalidation more than doubles the book.**
+
+**So the record must separate two objects that share a name:**
+
+1. **E1, THE OVERLAY — what this study tests.** Apply the invalidation condition to **the baseline's
+   own 3,932 trades**, cutting early, **allowing no new entries**. Trade count fixed, `[OVL]` holds,
+   and **R7's matched-count control is the right control**.
+2. **The full invalidation BOOK — a different construction.** 7,945 trades, mean hold 6.32. **R7 does
+   not govern it**, a random-cut control would be meaningless for it, and it needs a rotation or
+   cohort control of its own. **It is REPORTED here with NO control and NO verdict**, and it is owed
+   its own pre-registration.
+
+**The re-cut is validated against the kernel rather than trusted.** On all **3,810 shared entries**
+the re-cut invalidation hold equals the kernel's, **zero mismatches** — so object 1 uses the kernel's
+own exit logic, re-applied without re-entry. `[CUT]` covers the arithmetic; this covers the rule.
+
+**This is not a loosening.** The pre-registered question — *does the exit rule beat a random cut of
+the same trades* — is answerable only about object 1, because object 2 has no "same trades" to cut.
+**Object 2 is the more interesting candidate** and D378's front-loading result points straight at it;
+that is a reason to pre-register it properly, not to smuggle it in here without a control.
+
 **E2 and E3 are exploratory and priced as such.** Their ±200 bp thresholds are **declared in this
 record**, round, symmetric, and roughly the observed mean per trade — **not swept**. Any claim
 resting on all three is scored against a **best-of-3 floor** (the max over the three rules within
