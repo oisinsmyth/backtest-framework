@@ -418,3 +418,40 @@ as though it had been predicted.
 **[D258](decisions/D258-the-prop-track-candidates.md) fixed four candidates in advance and all four
 are now resolved.** A fifth would need a new mechanism, not a new parameter — and it would need to
 clear a bar that has now rejected three constructions on **shape** rather than on return.
+
+---
+
+## The hurdles admit; nothing here has ever ranked — D379, 2026-09-08
+
+**[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+is a FRAMING note, not a measurement, and it reopens no candidate.** It records that a funded account
+is a **down-and-out call** — component for component, with P1 as the knock-out barrier and P5 as a
+constraint on the payoff path — so its value is `E[payouts | survival] × P(survival)`, **non-linear
+in size with an interior optimum.** Hurdle P is six thresholds on components of that expression and
+**never states the expression.** Every candidate above was screened pass/fail; **nothing in this
+track has ever ordered two eligible candidates.**
+
+**Three consequences that land on what is already written on this page:**
+
+1. **C1's size sweep is unfinished, and the table above is why.** Its **"profit before breach"**
+   column *is* `E[payout]`, measured on our own fixture — and it falls monotonically across every
+   size tested (**28.20% → 1.75%**) while annual return rises monotonically (**+4.41% → +13.04%**).
+   The value maximum therefore lies **at or below 0.48x, the boundary of the sweep.** The sweep
+   stopped where P4 was cleared, so **the value-maximising size for C1 was never searched.**
+2. **The payout ladder is the missing input, and it stops the answer being "size to zero".** This
+   page already notes that 28.20% "comfortably exceeds the payout ladders these firms cap at" — so
+   the payoff is **capped**, and past the ladder extra survival buys nothing. **The right size is the
+   smallest that reaches the ladder with high probability, not the smallest that survives.** **No
+   record here holds MyFundedFutures' ladder terms**, and §4 of D379 is not computable without them.
+3. **P5 has a mechanism, and it is not venue friction.** Near the barrier the account's convexity
+   inverts — variance becomes free once the option is nearly worthless — so **P3 and P5 are the
+   firm's defence against a risk-shifting incentive the instrument creates.** A construction
+   exploiting it would **clear P1 and P4 and be killed by P5**, which is an argument for computing
+   P5 ahead of the other legs
+   [D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+   lists as never computed.
+
+**This amends no hurdle and loosens no threshold.** Under [R8](RULES.md#r8) each of the three needs a
+pre-registration before it runs. **And the binding limit is unchanged: a valuation framework
+allocates an edge, it does not supply one — the candidate list is exhausted, so there is nothing to
+value.**

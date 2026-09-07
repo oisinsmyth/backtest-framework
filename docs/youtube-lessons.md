@@ -85,3 +85,37 @@ has never met the single-name books.
 declared as the baseline, the four ways it is dumb, why it is still hard to beat, the challengers,
 the confounding with the D339 floor, and the hurdle. Stage 0 there is a volatility-decile split of
 contribution P&L, which may end the question before any sizing scheme is built.
+
+---
+
+## 3. A prop account is a down-and-out call, so hurdle P is six screens with no objective behind them
+
+**Source:** `[EXTRACTED] How Quant Finance Made Me $1.6M Trading Prop Firms.txt`. **The video's own
+record is worthless as evidence** — it derives `t = SR·√T` correctly on screen, then offers a
+**16-month** live record as proof, which by its own arithmetic is **t = 1.15** against the t = 2 it
+calls the loosest defensible bar. Its author states he ran "thousands" of uncounted backtests
+selecting patterns that had already worked and never corrects for it; every strategy claim in it
+carries no number; it ends in a mentorship pitch. **Its loss-streak and t-stat arithmetic is exactly
+right** — P(≥4 losses in 100 at a 50% win rate) = 0.973 against the claimed 97%, 0.810 against 81%,
+0.546 against 55% — **and that is the only part that checks out.**
+
+**One idea in it is not recycled.** A funded account is a **down-and-out call**, component for
+component: the drawdown limit is a knock-out barrier monitored continuously on open equity, the
+payout ladder caps the payoff, and consistency rules constrain its path. So value is
+`E[payouts | survival] × P(survival)` — **non-linear in size, with an interior optimum** — where own
+capital has no second factor and is linear.
+
+**Written up properly as
+[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md).**
+It survives the bar for this file for one reason: **it checks out against our own committed
+artifacts, not the video's.** [BOOK_PROP.md](BOOK_PROP.md)'s C1 table already carries `E[payout]`
+under the name **"profit before breach"**, falling monotonically (28.20% → 1.75%) while annual return
+rises (+4.41% → +13.04%) — so **C1's value peak sits at or below 0.48x, the boundary of the sweep,
+and was never searched.** D379 also gives P3 and P5 a mechanism they were adopted without: near the
+barrier the account's convexity inverts and variance becomes free, so the consistency rules are the
+firm's defence against a risk-shifting incentive the instrument creates.
+
+**Status:** framing only. No cell scored, no candidate reopened, no hurdle amended. The three things
+it recommends each owe a pre-registration ([R8](RULES.md#r8)), and the binding limit is that a
+valuation framework allocates an edge rather than supplying one — **the prop candidate list is
+exhausted, so there is nothing to value.**
