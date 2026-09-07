@@ -98,8 +98,29 @@ the mean of each candidate hedge over the held names — and all four hedged ser
 afterwards without re-running the book. **Cost is one D376 run, not four.**
 
 **`[REC]` is therefore load-bearing:** the reconstructed **H0** series must equal the kernel's own
-`book_dep_x` **bit-for-bit** on every defined bar. If reconstruction does not reproduce the incumbent
-exactly, nothing downstream means anything and the study stops.
+`book_dep_x` on every defined bar. If reconstruction does not reproduce the incumbent, nothing
+downstream means anything and the study stops.
+
+#### AMENDMENT to §2a, 2026-09-07 — `[REC]` cannot be bit-for-bit, and here is why
+
+*Written before the runner existed and before any result. The original clause said "bit-for-bit"; it
+is unachievable and the record is corrected rather than quietly loosened.*
+
+The kernel forms the hedged series as **`Σᵢ(vᵢ − m) / N`**. Reconstruction forms it as
+**`Σᵢvᵢ / N − m`**. Those are identical in exact arithmetic and **different in floating point** — a
+different association order over the same addends. `CLAUDE.md` is explicit that a rewrite may hoist,
+skip or vectorise but **never reorder a float sum**, so forcing bit-equality would mean
+reimplementing the kernel's summation, which is precisely the circularity `[REC]` exists to prevent.
+
+**`[REC]` is therefore: `max |reconstructed − kernel|` over all defined bars must be `< 1e-12`, and
+the actual maximum is reported in the artifact rather than merely compared to the bound.** A
+reconstruction that is right will land near machine epsilon on a series measured in returns; one that
+is wrong — a mis-specified entry-bar convention, a wrong mask, a dropped name — will miss by orders
+of magnitude, so the test retains all its power to reject.
+
+**One consequence worth stating now:** the entry bar uses the open-to-close market `m_f_oc`, not
+`m_f`, because the kernel fills at the next open (D340). Reconstruction must carry that distinction
+per name-bar, and `[REC]` is what will catch it if it does not.
 
 ---
 
@@ -161,7 +182,7 @@ signal — and it would bear directly on the D373 avenue, which is still open an
 | tag | what it proves |
 |---|---|
 | **`[MIR]`** | the inherited cell reproduces D373's committed 3,932 / +160.55 / +51.55 before anything else |
-| **`[REC]`** | the reconstructed **H0** series equals the kernel's `book_dep_x` **bit-for-bit** on every defined bar (§2a) |
+| **`[REC]`** | the reconstructed **H0** series matches the kernel's `book_dep_x` on every defined bar to **< 1e-12**, with the actual maximum deviation reported — see §2a's amendment for why bit-for-bit is unachievable |
 | **`[LAG]`** | every hedge is rebuilt from **t−1** information by a **second implementation that never calls the hedge builder**, and must match bit-for-bit. `roll_beta`'s window already ends at t−1; H2 and H3 use decile membership at t−1. This is the runner lag audit applied to the hedge, and it is the assertion this study most needs |
 | **`[INV]`** | the **unhedged** per-trade mean is identical across all four hedges — the hedge must not touch the trades |
 | **`[DIR]`** | both directions at once: a duplicated book scores **above** the correlation p95; a return-zeroed book scores **below** the edge floor (§4) |
