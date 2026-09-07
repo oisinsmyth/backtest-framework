@@ -3005,3 +3005,49 @@ exclude a fifth of the sample, they add **−0.04**.
    Sweeping is no longer informative here; precision and out-of-sample are.
 4. **A relaxation sweep is the right test for "is this a point effect?"** and it answered cleanly in
    the construction's favour even as everything else failed. Keep the instrument.
+
+## 49. At 10,000 draws the ranking clears its null by 164 standard errors and the gate by 3.2, and one verdict is undecidable at any draw count
+
+**From D369, 2026-09-07.** Pre-registered; seven of eight. **These verdicts supersede the 200-draw ones in
+D366, D367 and D368**, as committed before any number was seen. Seven arms at 10,000 draws each,
+on the two gates that remained live — not on D368's sweep settings, which nobody plans to trade.
+
+**§48's precision problem is fixed and quantified.** The rotation p95's own bootstrap standard error is
+**0.301 bp/bar at 200 draws** and **0.020–0.056 at 10,000**. D368's two independent 200-draw runs of
+the same gate differed by 0.40 — exactly what a 0.30 SE predicts.
+
+**THE FINDING IS THE GAP BETWEEN TWO KINDS OF EVIDENCE.** Same construction, same draws:
+
+| | margin over its null's p95, in SEs of that p95 | draws beating it |
+|---|--:|--:|
+| the trigger, per-name time rotation | **143 – 164** | **0 of 10,000** |
+| the nine-condition gate, time-rotated | 32.9 | 62 of 10,000 |
+| the one-condition gate, time-rotated | **3.2** | 439 of 10,000 |
+| the one-condition gate vs best-of-ten | **−1.0 — UNRESOLVED** | 522 of 10,000 |
+
+**Cross-sectional 12-month momentum on this floored universe is established and needs no further null
+work.** Everything unresolved is the market-timing overlay.
+
+**AND ONE VERDICT CANNOT BE REACHED BY ADDING DRAWS.** The one-condition gate clears its own rotation
+but ties a best-of-ten multiplicity control at −0.034 with an SE of 0.035. **The margin and the
+standard error are the same size — so this is not sampling noise that precision removes; the effect
+and the multiplicity penalty are the same magnitude.** A gate chosen as the best of ten conditions
+performs exactly like the best of ten conditions at random timing. D367's "it fails by 0.05" was
+noise and is superseded by "undecidable".
+
+**What it means.**
+
+1. **Report a margin in standard errors of the null statistic, and create the UNRESOLVED category
+   BEFORE seeing numbers.** Written after the fact it is special pleading; written before, it caught
+   exactly the case it was built for. "Clears p95" printed identically for a 164-SE result and a
+   1-SE one.
+2. **Precision cannot rescue a comparison whose effect equals its multiplicity penalty.** Ask what
+   draw count would settle a margin before spending it: if the SE needed is smaller than the effect,
+   no count is enough and the question has to change instead.
+3. **Distinguish what is established from what is not, and stop re-proving the established part.**
+   Four studies re-ran the trigger's null; it was never in doubt at any draw count. The draws belonged
+   on the gate.
+4. **A null kernel can be made 2.7x faster and stay BIT-IDENTICAL** — hoist the invariant, skip what
+   nothing reads, index sparsely into a pre-zeroed buffer *of the same shape* so the dense sum reduces
+   the same values in the same order. Summing only the held entries reorders a float sum: pairwise
+   summation groups by index block, and interspersed zeros change how the non-zeros are parenthesised.

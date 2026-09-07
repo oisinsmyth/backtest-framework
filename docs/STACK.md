@@ -813,7 +813,38 @@ every number quoted before D340 is a same-close-fill number.
     the best gate still clears the best-of-18 multiplicity control.
     **Nothing promoted (R15).**
 
-**PRECISION IS NOW THE BINDING CONSTRAINT, NOT MORE SWEEPS.** D368 measured
+36. **The null precision rerun — DONE (D369), seven of eight.** Seven arms
+    at 10,000 draws on the two live gates. **Its verdicts SUPERSEDE the
+    200-draw ones in D366/D367/D368**, as committed before any number was
+    seen. The p95's bootstrap SE falls from **0.301 to 0.020–0.056**.
+    **THE TRIGGER IS ESTABLISHED AND NEEDS NO FURTHER NULL WORK**: both gates
+    clear the time rotation at **143–164 SE with 0 of 10,000** draws beating
+    them. The **nine-condition gate clears everything** — its own rotation at
+    32.9 SE and a best-of-ten multiplicity control at 32.3 — despite six of
+    its nine conditions being logically inert (§33). **The one-condition gate
+    is UNDECIDABLE**: it clears its own rotation at only 3.2 SE (439 of 10,000
+    random gates beat it) and ties multiplicity at **−1.0 SE**, where the
+    margin (0.034) equals the SE (0.035) — so no draw count settles it; the
+    effect and the multiplicity penalty are the same size. D367's "C9 fails
+    the best-of-46 by 0.05" was noise and is superseded by "unresolved".
+    D367's reduced-universe FAIL stands, now at −15.8 SE. **Nothing promoted
+    (R15).**
+37. **The reduced-universe test needs its symmetric version — the principal's
+    objection, measured.** Removing the top ten names is **asymmetric**: the
+    observed book drops 4.187 bp/bar, the median rotated gate only 2.256, so
+    the real gate is penalised 1.85x by a set defined from its own P&L. Only
+    partly mechanical — those ten are 45.1% of the observed book's P&L and a
+    median ~40% of a rotated book's, because a 252-bar hold catches the same
+    runs whenever it starts. And the premium is **55% retained** (+2.357 vs
+    +4.288), at the 92nd percentile of its own rotation: D367's "the trigger
+    survives and the overlay does not" was too strong. **The symmetric test —
+    each rotation draw loses ITS OWN top ten — is owed**, and so is fixing the
+    inconsistency that the gate's index and the hedge still span the full
+    universe including the removed names.
+
+**PRECISION IS NOW SPENT AS A CONSTRAINT — D369 SETTLED IT.** What follows
+supersedes the paragraph below, which is kept for the record.
+**PRECISION WAS THE BINDING CONSTRAINT, NOT MORE SWEEPS.** D368 measured
 the same gate under two independent 200-draw rotations differing only in a dead
 parameter: **the null's p95 moved 0.40 bp/bar** (+6.43 → +6.83) and its median
 0.18. D366→D367 showed the same gate's p95 move +7.02 → +6.42, draws-beating
