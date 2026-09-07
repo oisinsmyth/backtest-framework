@@ -866,19 +866,64 @@ pattern looked like variance rather than bias, with G2:T2's +5.86 an outlier. **
 falsified that**: G2:T1 came in at **+6.91**, larger than G2:T2's. Two cells are near zero and two
 are near +6, all four positive.
 
-### The rule, stated at what the evidence supports
+### The rule, scoped — the direction generalises, the magnitude does not, the fix is narrow
 
-> **A 200-draw rotation p95 on this class of null is optimistic by roughly 0 to 7 bp per trade.
-> Any verdict whose margin is smaller than that is not safe at 200 draws, and where the offset
-> population is finite the fix is not more draws but ALL of them** — 330 to 520 seconds a cell
-> here, with the reported SE then exactly 0.
+**An earlier draft of this box read "a 200-draw rotation p95 is optimistic by roughly 0 to 7 bp
+per trade" and let that sound portable. It is not.** Three parts, three different reaches:
 
-**This is D369's lesson with the prescription sharpened.** D369 asked for more draws generally;
-C2b says the draw count only needs to grow **when the margin is small relative to the null's
-spread**, and that enumeration settles it outright when the group is finite. The one cell in
-D361 whose margin was inside that band — G2:T2, published margin +6.4 — is exactly the one whose
-margin collapsed to **+0.52** when enumerated. It survived; it was the only one that could have
-failed to.
+**1. THE DIRECTION GENERALISES, and it is a theorem rather than a count.** The general statement
+is not "a p95 is too low" but:
+
+> **A sample extreme quantile is biased TOWARD THE CENTRE of its own distribution. The p95 of n
+> draws is about the ⌈0.95n⌉-th order statistic, which on a right-skewed null sits below the true
+> 95th percentile — so every finite-draw null threshold is easier to beat than it appears, and
+> every such test is more lenient than its nominal level.**
+
+This reaches **every** null in the programme — A′, B, B_c, C, ROT, GATE-ROT, DROP, FROT — because
+they share one shape: an observed value against a *sample* quantile of draws. It reverses sign
+where the low tail is the bar: for a short scored negative against a p05, the sample threshold is
+too *high*, and leniently again. **4 of 4 here is what the mechanism predicts; on its own 4 of 4
+is p ≈ 0.06 one-sided and would not carry this claim without the mechanism.**
+
+**2. THE MAGNITUDE DOES NOT GENERALISE, in any units.** "0 to 7 bp per trade" is specific to this
+statistic, this null family, this trigger's skew and n = 200. Normalising by each null's own
+spread does not stabilise it either:
+
+| | G1:T1 | G1:T2 | G2:T2 | G2:T1 |
+|---|--:|--:|--:|--:|
+| bias as % of that null's own (p95 − p50) | **0.6%** | **4.7%** | **22%** | **11%** |
+
+**Four cells pin the direction and not the size.** Any study quoting a number here outside this
+null family is quoting a coincidence.
+
+**3. THE FIX IS NARROW.** Enumeration needs a group that is finite *and* small, which is one
+family — a time rotation of a **single market-level series**:
+
+| null | group | enumerable |
+|---|---|---|
+| time rotation of a market-level gate | Td − 1 ≈ 4,000 | **yes** |
+| A′ — per-name event rotation | product over names | no |
+| rank / score rotation | vast | no |
+| B, B_c — same-day replacement | vast | no |
+| C — random direction | 2^trades | no |
+| DROP, FROT | combinatorial | no |
+
+**So the warning is broad and the cure is one corner** — which happens to be the corner D361 and
+D362 decided their gate verdicts in. For the rest the bias cannot be enumerated away, and the
+options are, cheapest first: **(i)** report the p95's bootstrap SE and record anything within 2 SE
+as UNRESOLVED — [D373](../decisions/D373-the-winners-dip-long-and-the-median-criterion.md)
+pre-registered exactly this, so the precedent exists and is simply not universal; **(ii)** use a
+bias-reduced quantile estimator (Harrell–Davis, or interpolated order statistics) instead of the
+plain empirical one, which attacks the bias at the *same* draw count and is therefore strictly
+cheaper than more draws — **unmeasured here, and worth measuring before it is recommended**;
+**(iii)** more draws, which is the expensive answer and the one D369 reached for.
+
+**This is D369's lesson with the prescription sharpened, not replaced.** D369 asked for more draws
+generally; C2b says the count only needs to grow **when the margin is small relative to the null's
+spread**, and that enumeration settles it outright where the group is finite. Note which cell that
+criterion picks out: G2:T2 was the only one of the four whose published margin (+6.4) sat inside
+the band, and it is exactly the one whose margin collapsed — to **+0.52**. It survived. It was the
+only one that could have failed to.
 
 ---
 

@@ -66,7 +66,16 @@ a result.
    D284).
 4. **Nulls: the distribution, not the percentile alone** — report **p50 and
    p95** beside the score and say whether the null is decisive. Four cases here
-   of a *losing* random control at the 100th (R7).
+   of a *losing* random control at the 100th (R7). **A SAMPLE p95 IS BIASED
+   TOWARD THE CENTRE, so every finite-draw null is more lenient than it looks:**
+   carry the p95's bootstrap SE and record a margin within 2 SE as UNRESOLVED
+   (D373's rule), and **where the null's group is finite and small — a time
+   rotation of ONE market-level series is `Td-1` offsets, ~4,000 — enumerate it
+   instead of sampling** (SE then exactly 0; ~6 min a cell). C2b: all four of
+   D361's exact p95s came in above their published 200-draw values, and the one
+   cell whose margin was thin fell from +6.4 to +0.52. Per-name rotations, B/B_c
+   and C are NOT enumerable — there the bias stands and only (i) or more draws
+   touch it.
 
 **Where a path exists, both lenses.** Path-invariant (every candidate trade, no
 slot cap, scored per TRADE) and path-variant (the slot-limited book, scored in
