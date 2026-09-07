@@ -241,10 +241,14 @@ def gate_rotate(gate, defined, rng):
 
 
 def dist_of(x, obs):
+    """The distribution, not the percentile alone (CLAUDE.md) -- and the observed's own RANK inside it, because
+    'above p95' hides the difference between beating every draw and squeaking past the 190th of 200."""
     x = np.asarray([v for v in x if v is not None and np.isfinite(v)], float)
+    beat = int((x >= obs).sum())
     return dict(p50=float(np.median(x)), p95=float(np.quantile(x, 0.95)), max=float(np.max(x)),
                 min=float(np.min(x)), draws=int(x.size), distinct=int(np.unique(x).size),
-                above=bool(obs > np.quantile(x, 0.95)))
+                above=bool(obs > np.quantile(x, 0.95)), draws_beating_observed=beat,
+                pct_rank=float(100.0 * (x < obs).mean()), values=[float(v) for v in x])
 
 
 # ================================================================== stages
@@ -461,18 +465,18 @@ def stage_null(P, arm, draws, part, t0):
     m0 = P["m_start"]
     obs = run_cell(P, S6, pct, elig, mkt_cc, mkt_oc, zeros)
     rng = np.random.default_rng([SEED, STUDY, ARM_IX[arm], part])
-    vals, extra = [], {}
+    vals, e1s, e2s, extra = [], [], [], {}
     if arm == "ROT":
         for sh in range(1, V65.N_BASE):
             r = rank_rotate(pct, elig, sh)
             s = run_cell(P, S6, r, elig, mkt_cc, mkt_oc, zeros)
-            vals.append(s["net"])
+            vals.append(s["net"]); e1s.append(s["era1"]); e2s.append(s["era2"])
         extra["shifts"] = V65.N_BASE - 1
     elif arm == "APRIME":
         for d in range(draws):
             r = V65.aprime_draw(pct, elig, rng)
             s = run_cell(P, S6, r, elig, mkt_cc, mkt_oc, zeros)
-            vals.append(s["net"])
+            vals.append(s["net"]); e1s.append(s["era1"]); e2s.append(s["era2"])
             if (d + 1) % 25 == 0:
                 print(f"    {arm}: {d+1}/{draws} ({el(t0)})")
     elif arm == "GATEROT":
@@ -483,7 +487,7 @@ def stage_null(P, arm, draws, part, t0):
             g, k = gate_rotate(S6, defined, rng)
             ks.append(k)
             s = run_cell(P, g, pct, elig, mkt_cc, mkt_oc, zeros)
-            vals.append(s["net"])
+            vals.append(s["net"]); e1s.append(s["era1"]); e2s.append(s["era2"])
             if (d + 1) % 25 == 0:
                 print(f"    {arm}: {d+1}/{draws} ({el(t0)})")
         extra["distinct_shifts"] = int(len(set(ks)))
@@ -491,7 +495,7 @@ def stage_null(P, arm, draws, part, t0):
         for nm, g in ladder.items():
             s = run_cell(P, g, pct, elig, mkt_cc, mkt_oc, zeros)
             extra[nm] = s["net"]
-            vals.append(s["net"])
+            vals.append(s["net"]); e1s.append(s["era1"]); e2s.append(s["era2"])
         extra["max_step"] = max(ladder, key=lambda k: extra[k])
     else:                                                # C
         b = obs["v"][obs["mask"]] - obs["cost_parts"]["total"]
@@ -501,11 +505,79 @@ def stage_null(P, arm, draws, part, t0):
     d = dist_of(vals, obs["net"])
     out = dict(study=STUDY, arm=arm, part=part, draws=len(vals), observed=obs["net"],
                observed_sharpe=obs["sharpe"], dist=d, extra=extra,
+               observed_era1=obs["era1"], observed_era2=obs["era2"],
+               dist_era1=(dist_of(e1s, obs["era1"]) if e1s else None),
+               dist_era2=(dist_of(e2s, obs["era2"]) if e2s else None),
                note="D366: the frozen S6 construction, dollar-volume hedge, hedge costs charged.")
     p = REPO / "data" / f"d366_null_{arm}_p{part}.json"
     p.write_text(json.dumps(V65.clean(out), indent=1))
     print(f"  wrote {p.name}: {arm} p50 {d['p50']:+.2f} p95 {d['p95']:+.2f} max {d['max']:+.2f} vs observed "
           f"{obs['net']:+.2f} -- {'ABOVE' if d['above'] else 'NOT above'} p95  ({el(t0)})  {PREP.rss_line()}")
+
+
+def stage_jackknife(P, t0):
+    """What the winners depend on, tested rather than described. The top trade is GME entered five weeks before the
+    January 2021 squeeze and held to the 252-bar CAP -- and the cap was itself picked by a sweep in the same search.
+    So: drop the biggest contributors from the UNIVERSE (not from the ledger -- dropping a name from the ledger
+    leaves its slot unfilled and flatters the rest) and re-run the whole book, and re-run the cap sweep without GME."""
+    pct, elig, C, ladder, vq, mkt_cc, mkt_oc, zeros = prepare(P)
+    S6 = ladder["S6"]
+    obs = run_cell(P, S6, pct, elig, mkt_cc, mkt_oc, zeros)
+    ret = np.where(obs["ent"], np.asarray(P["ocT"], float), np.asarray(P["r1T"], float)) - \
+        np.where(obs["ent"], mkt_oc[:, None], mkt_cc[:, None])
+    trades, _oe, _nb = V65.trades_of(obs["hold"], ret)
+    assert any(p != 0.0 for _r, _e, _a, p, _s in trades), "[JK] the ledger is empty of P&L -- wrong return grid"
+    per = {}
+    for r, _e, _a, p, _s in trades:
+        per[r] = per.get(r, 0.0) + p * 1e4
+    order = [r for r, _ in sorted(per.items(), key=lambda kv: -kv[1])]
+    tot = sum(per.values())
+    print(f"\n  top 10 names by P&L (total {tot:+,.0f} bp): "
+          + ", ".join(f"{P['symbols'][r]} {per[r]:+,.0f} ({100*per[r]/tot:.1f}%)" for r in order[:10]))
+
+    rows = []
+    for lbl, drop in [("all names", [])] + [(f"drop top {k}", order[:k]) for k in (1, 2, 3, 5, 10)]:
+        e2 = elig.copy()
+        for r in drop:
+            e2[:, r] = False
+        s = run_cell(P, S6, pct, e2, mkt_cc, mkt_oc, zeros)
+        rows.append((lbl, ", ".join(P["symbols"][r] for r in drop) or "-", s))
+    print(f"\n  NAME JACKKNIFE -- the name is removed from the ELIGIBLE UNIVERSE and the book rebuilt, so its slot refills")
+    print(f"  {'':<14} {'dropped':<34} {'gross':>7} {'net':>7} {'Sharpe':>7} {'ann':>8} {'maxDD':>6} {'trades':>7} "
+          f"{'era2':>7}")
+    for lbl, dr, s in rows:
+        print(f"  {lbl:<14} {dr[:34]:<34} {s['gross']:+7.2f} {s['net']:+7.2f} {s['sharpe']:+7.3f} "
+              f"{s['ann_bp']/100:+7.1f}% {s['maxdd']:6.0f} {s['cost_parts']['trades']:7d} {s['era2']:+7.2f}")
+
+    gme = [i for i, s in enumerate(P["symbols"]) if s == "GME"]
+    assert gme, "[JK] GME is not in the universe -- the cap sweep below would compare a column with itself"
+    e_no = elig.copy()
+    for r in gme:
+        e_no[:, r] = False
+    assert not np.array_equal(e_no, elig), "[JK] dropping GME changed nothing"
+    print(f"\n  THE CAP SWEEP, WITH AND WITHOUT GME -- the 252-bar cap came from a sweep in the same search, and the "
+          f"top trade held exactly 252 bars. If the cap was picked BY that trade, the sweep's shape changes when it goes.")
+    print(f"  {'cap':>6} {'net all':>9} {'Sharpe':>8} | {'net ex-GME':>11} {'Sharpe':>8}")
+    sweep = {}
+    for cap in (63, 126, 189, 210, 231, 242, 252, 262, 273, 294, 315, 378, 504, None):
+        a = run_cell(P, S6, pct, elig, mkt_cc, mkt_oc, zeros, cap=cap)
+        b = run_cell(P, S6, pct, e_no, mkt_cc, mkt_oc, zeros, cap=cap)
+        sweep[str(cap)] = dict(net=a["net"], sharpe=a["sharpe"], net_ex=b["net"], sharpe_ex=b["sharpe"])
+        print(f"  {str(cap):>6} {a['net']:+9.2f} {a['sharpe']:+8.3f} | {b['net']:+11.2f} {b['sharpe']:+8.3f}")
+    best_all = max(sweep, key=lambda k: sweep[k]["sharpe"])
+    best_ex = max(sweep, key=lambda k: sweep[k]["sharpe_ex"])
+    print(f"  best cap by Sharpe: {best_all} with every name, {best_ex} without GME"
+          + ("  -- THE SAME, so the cap was not picked by that one trade" if best_all == best_ex else
+             "  -- DIFFERENT: the cap the search chose is partly a property of that one trade"))
+
+    out = dict(study=STUDY, top10=[dict(symbol=P["symbols"][r], pnl_bp=per[r]) for r in order[:10]],
+               jackknife=[dict(label=l, dropped=d, gross=s["gross"], net=s["net"], sharpe=s["sharpe"],
+                               maxdd=s["maxdd"], trades=s["cost_parts"]["trades"], era2=s["era2"]) for l, d, s in rows],
+               cap_sweep=sweep, best_cap_all=best_all, best_cap_ex_gme=best_ex,
+               note="D366 jackknife: names dropped from the ELIGIBLE UNIVERSE so the slot refills.")
+    p = REPO / "data" / "d366_jackknife.json"
+    p.write_text(json.dumps(V65.clean(out), indent=1))
+    print(f"\nwrote {p.name}  ({el(t0)})  {PREP.rss_line()}")
 
 
 def stage_report(P, t0):
@@ -521,8 +593,8 @@ def stage_report(P, t0):
     ret = np.where(ent, np.asarray(P["ocT"], float), np.asarray(P["r1T"], float)) - \
         np.where(ent, mkt_oc[:, None], mkt_cc[:, None])
     trades, open_end, _nb = V65.trades_of(obs["hold"], ret)
-    g4 = V50.four_groups(P, trades) if hasattr(V50, "four_groups") else None
     pnl = np.array([p * 1e4 for _r, _e, _a, p, _s in trades])
+    g4 = V50.four_groups(trades, pnl, P, elig)
     k = max(1, int(0.01 * len(pnl)))
     trim = float(np.sort(pnl)[k:-k].mean())
     HALF = np.asarray(P["HALF"]["PUB"], float)
@@ -557,26 +629,51 @@ def stage_report(P, t0):
           f"{obs['cost_parts']['rebalance']:.3f} = {obs['cost_parts']['total']:.3f} bp/bar")
 
     print(f"\n  NULLS (net PUB bp/bar; the observed is {obs['net']:+.2f})")
-    print(f"  {'arm':<10} {'draws':>6} {'p50':>8} {'p95':>8} {'max':>8}  above p95?")
+    print(f"  {'arm':<10} {'draws':>6} {'p50':>8} {'p95':>8} {'max':>8} {'rank%':>7} {'beat obs':>9}  above p95?")
     for a in ARMS:
         if N[a] is None:
             print(f"  {a:<10} {'NOT RUN':>6}")
             continue
         d = N[a]["dist"]
-        print(f"  {a:<10} {d['draws']:>6} {d['p50']:+8.2f} {d['p95']:+8.2f} {d['max']:+8.2f}  "
-              f"{'YES' if d['above'] else 'no'}")
+        print(f"  {a:<10} {d['draws']:>6} {d['p50']:+8.2f} {d['p95']:+8.2f} {d['max']:+8.2f} "
+              f"{d['pct_rank']:6.1f}% {d['draws_beating_observed']:9d}  {'YES' if d['above'] else 'no'}")
     if N["LADDER"]:
         print("    ladder steps: " + ", ".join(f"{k} {v:+.2f}" for k, v in N["LADDER"]["extra"].items()
                                                if k != "max_step"))
+        print("    NOTE: S6 IS the ladder's own maximum, so 'above the p95 of LADDER-MAX' is close to automatic and "
+              "Q6 is a weak test by construction. The informative reading is the ladder's SHAPE, printed above.")
+    print(f"\n  ERA 2 vs its rotation null (Q3): observed {obs['era2']:+.2f}"
+          + (f"; A' era-2 p50 {N['APRIME']['dist_era2']['p50']:+.2f} p95 {N['APRIME']['dist_era2']['p95']:+.2f}, "
+             f"{N['APRIME']['dist_era2']['draws_beating_observed']} of {N['APRIME']['dist_era2']['draws']} draws beat it"
+             if N["APRIME"] and N["APRIME"].get("dist_era2") else " -- A' era split NOT RECORDED"))
+    print(f"    era 1 observed {obs['era1']:+.2f}"
+          + (f"; A' era-1 p50 {N['APRIME']['dist_era1']['p50']:+.2f} p95 {N['APRIME']['dist_era1']['p95']:+.2f}"
+             if N["APRIME"] and N["APRIME"].get("dist_era1") else "")
+          + " -- era 1 was explicitly NOT predicted to clear anything (§3 Q3)")
 
     print(f"\n  FOUR GROUPS per trade: n {len(pnl):,} mean {pnl.mean():+.1f} median {np.median(pnl):+.1f} "
-          f"win {(pnl>0).mean():.1%} trimmed(1%) {trim:+.1f} round trip {rt:.1f}")
-    print(f"    names to half the P&L {half_n} of {len(names)}; open at end {open_end}")
+          f"win {(pnl>0).mean():.1%} payoff {g4['payoff']:.2f} hold mean {g4['hold_mean']:.0f} median "
+          f"{g4['hold_median']:.0f} skew {g4['skew']:+.1f} kurt {g4['kurtosis_excess']:+.0f}")
+    print(f"    trims (k={g4['trim_k']}): ex-top {g4['mean_ex_top_bp']:+.1f}, ex-bottom {g4['mean_ex_bottom_bp']:+.1f}, "
+          f"BOTH {g4['mean_trimmed_bp']:+.1f}; round trip {rt:.1f}. The mean sits FAR ABOVE the median, so the RIGHT "
+          f"tail carries this book")
+    print(f"    names to half the P&L {half_n} of {len(names)}; top 1/5/10 share "
+          + "/".join(f"{100*g4['top_name_share'][k]:.0f}%" for k in ("1", "5", "10"))
+          + f"; profitable years {100*g4['profitable_years_share']:.0f}% of {g4['years']}; open at end {open_end}")
+    tt = g4["top_trade"]
+    print(f"    TOP TRADE NAMED: {tt['symbol']} entered {tt['entry_date']} at ${tt['as_traded_price']:.2f}, held "
+          f"{tt['hold']} bars, {tt['pnl_bp']:+,.0f} bp = {100*tt['share_of_pnl']:.1f}% of all P&L, dollar volume at "
+          f"the {tt['dv_percentile_at_entry']:.0f}th percentile of that day's eligible names")
+    sd, sp = g4["split_dead_alive"], g4["split_price"]
+    print(f"    dead {sd['dead_n']} at {sd['dead_mean_bp']:+.0f} vs alive {sd['alive_n']} at {sd['alive_mean_bp']:+.0f}; "
+          f"below ${sp['median_price']:.2f} {sp['low_n']} at {sp['low_mean_bp']:+.0f} vs above {sp['high_n']} at "
+          f"{sp['high_mean_bp']:+.0f}")
 
     q = {}
     q["Q1"] = bool(obs["net"] > 0 and all(N[a] and N[a]["dist"]["above"] for a in ("ROT", "APRIME", "C")))
     q["Q2"] = bool(N["GATEROT"] and N["GATEROT"]["dist"]["above"])
-    q["Q3"] = None
+    a2 = N["APRIME"].get("dist_era2") if N["APRIME"] else None
+    q["Q3"] = bool(a2 and obs["era2"] > a2["p95"])
     q["Q4"] = bool(half_n >= 15)
     q["Q5"] = bool(trim > rt)
     q["Q6"] = bool(N["LADDER"] and N["LADDER"]["dist"]["above"])
@@ -588,6 +685,9 @@ def stage_report(P, t0):
           + ", ".join(f"{a} p95 {N[a]['dist']['p95']:+.2f}" for a in ("ROT", "APRIME", "C") if N[a]))
     print(f"  Q2 above the p95 of GATE-ROT (a random gate of the same shape): {v_(q['Q2'])}"
           + (f" -- p95 {N['GATEROT']['dist']['p95']:+.2f}, p50 {N['GATEROT']['dist']['p50']:+.2f}" if N["GATEROT"] else ""))
+    print(f"  Q3 era 2 above the p95 of A' restricted to era 2: {v_(q['Q3'])}"
+          + (f" -- {obs['era2']:+.2f} vs p95 {a2['p95']:+.2f}" if a2 else " -- NOT RECORDED")
+          + f". Era 1 ({obs['era1']:+.2f}) was not predicted to clear anything and its failure is not counted.")
     print(f"  Q4 at least 15 names to half the P&L: {v_(q['Q4'])} -- {half_n} of {len(names)}")
     print(f"  Q5 the 1% trimmed mean per trade exceeds the round trip: {v_(q['Q5'])} -- {trim:+.1f} vs {rt:.1f}")
     print(f"  Q6 above the p95 of LADDER-MAX: {v_(q['Q6'])}"
@@ -597,10 +697,11 @@ def stage_report(P, t0):
     print(f"  Q8 the cap's Sharpe exceeds the uncapped: {v_(q['Q8'])} -- {obs['sharpe']:+.3f} vs {unc['sharpe']:+.3f}")
 
     out = dict(study=STUDY, construction="S6 + 252-bar cap, dollar-volume hedge, hedge costs charged",
-               observed={k: v for k, v in obs.items() if k not in ("hold", "v", "mask", "ent")},
-               uncapped={k: v for k, v in unc.items() if k not in ("hold", "v", "mask", "ent")},
+               observed={k: v for k, v in obs.items() if k not in ("hold", "v", "mask", "ent", "cn")},
+               uncapped={k: v for k, v in unc.items() if k not in ("hold", "v", "mask", "ent", "cn")},
                nulls={a: (N[a]["dist"] if N[a] else None) for a in ARMS},
                ladder=(N["LADDER"]["extra"] if N["LADDER"] else None),
+               four_groups_full=g4,
                four_groups=dict(n=len(pnl), mean=float(pnl.mean()), median=float(np.median(pnl)),
                                 win=float((pnl > 0).mean()), trimmed=trim, round_trip=rt,
                                 names_to_half=half_n, names=len(names), open_at_end=open_end),
@@ -619,6 +720,7 @@ def main() -> int:
     ap.add_argument("--draws", type=int, default=200)
     ap.add_argument("--part", type=int, default=0)
     ap.add_argument("--report", action="store_true")
+    ap.add_argument("--jackknife", action="store_true")
     a = ap.parse_args()
     t0 = time.time()
     print("D366  the gated momentum buffer against its nulls")
@@ -627,10 +729,12 @@ def main() -> int:
         stage_selftest(P, t0)
     elif a.null:
         stage_null(P, a.null, a.draws, a.part, t0)
+    elif a.jackknife:
+        stage_jackknife(P, t0)
     elif a.report:
         stage_report(P, t0)
     else:
-        ap.error("one of --selftest, --null ARM, --report")
+        ap.error("one of --selftest, --null ARM, --jackknife, --report")
     return 0
 
 
