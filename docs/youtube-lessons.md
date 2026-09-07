@@ -119,3 +119,42 @@ firm's defence against a risk-shifting incentive the instrument creates.
 it recommends each owe a pre-registration ([R8](RULES.md#r8)), and the binding limit is that a
 valuation framework allocates an edge rather than supplying one — **the prop candidate list is
 exhausted, so there is nothing to value.**
+
+---
+
+## 4. The account is purchasable, so price the portfolio — and backtest the barrier, not the curve
+
+**Source:** `[EXTRACTED] The EXACT Trading Strategy That Made Me $1,200,000 in the Last 12 Months.txt`
+— **same author as §3, second video.** Recorded as a separate entry because it adds a separate term.
+
+**Its evidence is worse than §3's, and it gives more away.** He states **twice** that the strategy has
+no live edge — *"it would probably break even"*, *"I haven't even done it"* — while presenting $1.2M
+of payouts, and **does** supply the denominator the first video omitted: **$200–250k of evaluation
+fees.** The two cannot both stand: at zero edge, extraction per funded account is bounded near the
+drawdown allowance, so the plan is a thin spread set by the counterparty, not a 4.8× return. The
+evidence offered is **one selected week, ~16 trades, 11–12 wins** (t = 2.35–2.86, nominally past a
+t = 2 bar), and it deflates §3's sample claim: *"20 trades a day, over 7,000 trades"* is **~3.2 setups
+a day replicated across five copy-traded accounts** — roughly **1,400 independent decisions**, since
+copies of one decision have correlation 1.
+
+**The one term worth taking** is his backtesting instruction, which is right: *don't backtest the
+equity curve, simulate the barrier — find your **pass rate**, then cost per funded account is
+`fee ÷ pass rate`.* That is the acquisition cost of the option in §3, amortised over the evaluations
+that fail, and it makes the object a **portfolio** — `V = N × [P(pass) × E[payout|funded] − fee]`
+with `N` purchasable.
+
+**Written up as the 2026-09-08 amendment to
+[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md).**
+It survives the bar here for the same reason §3 did: **`P(pass)` is computable from machinery
+[D259](decisions/D259-the-extended-session-and-the-overnight-interior.md) already built** — the same
+ratcheting-floor simulation, stopped at a target. The amendment also measures what the **trailing**
+floor costs: at zero edge on a +3,000/−2,000 eval, static gives the optional-stopping **40.0%** and
+trailing gives **26.5%**.
+
+**What it must not be read as licensing.** He claims pass rate is the only thing worth optimising and
+that "strategies that do not work on live will work on prop firms". **Both are false** — `P(pass)` is
+a function of edge, cost and the firm's geometry, and at zero edge it is pinned by optional stopping
+whatever the strategy. [R15](RULES.md#r15) stands.
+
+**Status:** framing only, folded into D379. Nothing scored, nothing reopened, and the amendment's one
+new recommendation owes a pre-registration like the rest.

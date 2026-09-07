@@ -212,3 +212,118 @@ is neither. **Both tables are reproducible from their stated parameters** (400k 
 and 7, GBM, 252 days, 4% trailing DD, 90% split). **§3 and §4 quote
 [BOOK_PROP.md](../BOOK_PROP.md) and [D260](D260-the-vol-targeted-overnight-hold.md), which carry
 their own artifacts.**
+
+---
+
+# AMENDMENT, 2026-09-08 — the account is purchasable, so the object is a PORTFOLIO of options with an acquisition cost
+
+**Same kind: FRAMING. Same author as §0's transcript, second video** —
+`[EXTRACTED] The EXACT Trading Strategy That Made Me $1,200,000 in the Last 12 Months.txt`. **Its
+evidence is worse than the first video's**, and §A4 says how. **One term in it is not in the record
+above, and it is the term §4 said was missing.**
+
+## A1. What it adds
+
+The record above values **one** account. Accounts are **bought**, in quantity, at a known price. So
+the object is a portfolio:
+
+```
+V  =  N × [ P(pass) × E[payout | funded]  −  fee ]        with N purchasable
+```
+
+**`fee ÷ P(pass)` is the acquisition cost of one funded account** — the option premium properly
+amortised over the evaluations that fail. The source states it operationally and correctly:
+
+> Don't backtest the equity curve. Simulate the **barrier** — one trade per day, trail the drawdown,
+> find your **pass rate**. Then cost per funded account = fee ÷ pass rate.
+
+**This is where BOOK_PROP's unpriced *"20 accounts needed for $50k"* line actually lives**, and
+**`P(pass)` is computable from machinery [D259](D259-the-extended-session-and-the-overnight-interior.md)
+already built** — it is the same MAE-against-a-ratcheting-floor simulation, stopped at a profit
+target instead of run to breach.
+
+## A2. Illustration — the TRAILING floor costs ~13 points of pass rate at zero edge
+
+**Toy again: no fixture, 200k paths, seed 20260908.** Topstep-like geometry as the source describes
+it — start 50,000, target +3,000, **trailing** 2,000 floor that locks at the start balance; one trade
+per day; win +1.5R or lose −1R. **Zero edge is p = 0.40**, the win rate that makes 1:1.5 a martingale.
+
+| risk/trade | trades to bust | **pass rate** |
+|---:|---:|---:|
+| $250 | 8.0 | **26.5%** |
+| $500 | 4.0 | 27.5% |
+| $1,000 | 2.0 | 29.4% |
+| **$2,000 — the whole buffer on one trade** | 1.0 | **40.0%** |
+
+**Optional stopping against a STATIC floor gives `DD/(target+DD)` = 40.0%.** The trailing floor takes
+that to **26.5%**, and the 40% is recoverable only by betting the entire buffer at once — where the
+floor has no room to ratchet.
+
+**Two things follow, and the second is the one that matters here.**
+
+1. **The source's central technical claim is false.** It says a +3,000-before−2,000 eval "is the exact
+   same as a 1-to-1.5 risk-to-reward" that you can "compact the entire challenge into". That
+   equivalence holds only against a static floor, and only for the single all-in trade it does not
+   take.
+2. **Bold play is optimal at zero edge — which is §5's convexity arriving from the eval side.** §5
+   found variance becomes free once the option is nearly worthless. This is the same result at a
+   different point: **when the edge is zero, variance is the only thing that can reach the target,
+   so the knock-out rewards it.** Both are the instrument, not the toy.
+
+**And the cost sensitivity is real at the boundary**, which is the source's own "the equity curve
+teleports" point: at all-in with a $10 round turn the winning trade lands at **+$2,990**, misses the
+target, and pass rate falls to **25.5%**.
+
+**At a $150 fee, `fee ÷ P(pass)` is roughly $600 per funded account at zero edge** across every
+sizing above.
+
+## A3. What it gets backwards, and it bears on how a prop candidate is screened
+
+> "You do not need your Sharpe ratio, your expected profit per trade, your win rate. That does not
+> matter. The only thing that matters is [pass rate]." … "A whole group of strategies that do not
+> work on live will work on prop firms."
+
+**False, and the direction matters for this programme.** `P(pass)` is not a free parameter — it is a
+**function of** per-trade edge, cost, and the barrier geometry the *firm* sets. At zero edge it is
+pinned by optional stopping and **no strategy changes it.** Prop rules can only make a
+live-profitable strategy fail; they cannot make a zero-edge one pass.
+
+**So the amendment does not license screening a candidate on pass rate instead of on edge.**
+`P(pass)` is a term in the valuation, downstream of the edge — **[R15](../RULES.md#r15) is
+untouched: a signal is still a positive gross mean per trade above its nulls.**
+
+## A4. Why the source's own record cannot support any of this
+
+**Stated for the same reason §0 is.** He says twice that the strategy has no live edge — *"it would
+probably break even"*, *"I haven't even done it"* — and offers **$1.2M of payouts against a stated
+$200–250k of evaluation fees**, which is the denominator the first video omitted and is to his
+credit. **The two cannot both stand.** At zero edge, expected extraction per funded account is
+bounded near the drawdown allowance, so the plan is a thin spread between acquisition cost and
+bounded extraction, **both set by the counterparty** — not a 4.8× return. Either he has edge and has
+mis-stated it, or this is the right tail of forty accounts.
+
+**The evidence offered is one week, ~16 trades, 11–12 of them wins**, which is an expectancy of
+**+0.72 to +0.88 R per trade** at 1:1.5 and lands at **t = 2.35 to 2.86** — nominally past a t = 2
+bar, on a week he chose to record. **And it deflates the first video's sample:** "20 trades a day,
+over 7,000 trades" is **~3.2 setups a day replicated across five copy-traded accounts**, so roughly
+**1,400 independent decisions**, not 7,000. **Copies of one decision have correlation 1.**
+
+**Nothing above rests on any of it.** A2's numbers are ours; A1's term stands because it is
+arithmetic.
+
+## A5. What this changes
+
+**Nothing in §6 is withdrawn and no hurdle moves.** One item is added to that list, and it is the
+cheapest of the five:
+
+5. **`P(pass)` is computable now, for any prop candidate, from D259's existing machinery** — same
+   ratcheting-floor simulation, stopped at a target. It supplies `fee ÷ P(pass)`, and it is the
+   missing half of §4's ladder question. **Owed a pre-registration ([R8](../RULES.md#r8)) like the
+   rest.**
+
+**The binding limit is unchanged and now sharper: this prices a portfolio of lottery tickets, and a
+portfolio of tickets is worth building only on top of a measured edge.** The prop candidate list is
+exhausted.
+
+**Artifacts:** A2 is a toy with no fixture, **not committed to `data/`** for the reason stated above,
+and reproducible from its stated parameters (200k paths, seed 20260908, geometry as tabulated).

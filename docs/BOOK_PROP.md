@@ -455,3 +455,29 @@ track has ever ordered two eligible candidates.**
 pre-registration before it runs. **And the binding limit is unchanged: a valuation framework
 allocates an edge, it does not supply one — the candidate list is exhausted, so there is nothing to
 value.**
+
+### The account is PURCHASABLE, so the object is a portfolio — D379 amendment, 2026-09-08
+
+**The framing above values one account. Accounts are bought, in quantity, at a known price**, so the
+full object is `V = N × [ P(pass) × E[payout | funded] − fee ]` with `N` purchasable, and
+**`fee ÷ P(pass)` is the acquisition cost of one funded account** — the premium amortised over the
+evaluations that fail. **This is where the "20 accounts needed for $50k" line above actually lives.**
+
+**`P(pass)` is computable now, from machinery [D259](decisions/D259-the-extended-session-and-the-overnight-interior.md)
+already built** — the same MAE-against-a-ratcheting-floor simulation, stopped at a profit target
+instead of run to breach. **It is the cheapest of the open items and it is the missing half of the
+ladder question above.** Owed a pre-registration like the rest.
+
+**One measured consequence for P1, from the amendment's illustration.** At zero edge, on a
+Topstep-like +3,000/−2,000 eval, a **static** floor gives the optional-stopping 40.0% while the
+**trailing** floor gives **26.5%** — the ratchet costs roughly **13 points of pass rate**, and the
+40% is recoverable only by betting the entire buffer on one trade. **That is this page's own P1
+objection quantified from the eval side**, and it is the same convexity D379 §5 found near the
+barrier: **when the edge is low, the knock-out rewards variance.**
+
+**What it does NOT license.** The source claims pass rate is the only thing worth optimising and that
+"strategies that do not work on live will work on prop firms". **Both are false**: `P(pass)` is a
+function of edge, cost and the firm's geometry, and at zero edge it is pinned by optional stopping
+regardless of strategy. **Prop rules can make a live-profitable strategy fail; they cannot make a
+zero-edge one pass.** [R15](RULES.md#r15) is untouched — **a candidate is still screened on gross
+mean per trade above its nulls, and `P(pass)` sits downstream of that.**
