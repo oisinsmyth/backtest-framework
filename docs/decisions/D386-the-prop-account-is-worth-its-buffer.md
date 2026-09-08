@@ -61,15 +61,20 @@ List prices, 2026-09-08, zero edge. `E[payout|funded] = b × P(reach the lock)`.
 | `E[extracted]` | $1,974 | $3,902 | $2,000 |
 | × P(reach the lock) | 0.3743 | 0.3936 | 0.3911 |
 | **`E[payout │ funded]`** | **$739** | **$1,536** | **$782** |
-| zero-edge P(pass) | 0.2495 | 0.2100 | 0.2664 |
+| zero-edge P(pass) | 0.2495 | **0.1348** | 0.2664 |
 | fees (eval + activation) | $550 + $139 | $1,890 + $159 | $49/mo + $149 |
-| **V per evaluation** | **−$400** | **−$1,601** | **+$120** |
+| **V per evaluation** | **−$400** | **−$1,706** | **+$120** |
 | **break-even P(pass)** | **0.9167** | **1.3725** | 0.0774 |
 
-**Apex 150K at list price is negative at ANY edge.** Break-even is **1.3725 — above one**. A trader
-who passed *every* evaluation still loses $513 per account, because $2,049 of fees exceeds the $1,536
-the account can return. That is arithmetic on the firm's own published terms, not a claim about
-skill.
+> **⚠ TWO NUMBERS IN THIS TABLE ARE WRONG AND ONE CONCLUSION DRAWN FROM IT IS FALSE.
+> See [§2a](#2a-correction-2026-09-08-the-break-even-pass-rate-was-the-wrong-question).** Apex 150K's
+> zero-edge P(pass) is **0.1348**, not 0.2100, and its V per evaluation is **−$1,706**, not −$1,601.
+> The claim below that it is "negative at any edge" is **WITHDRAWN**. The rest of the table stands.
+
+**~~Apex 150K at list price is negative at ANY edge.~~ WITHDRAWN — see §2a.** Break-even *pass rate*
+is 1.3725, above one, and I read that as impossible. It is not: the break-even pass rate holds
+`E[extracted]` at its zero-edge value, and **edge raises both terms.** The account needs an annual
+Sharpe of about **1.60**, which is demanding but finite.
 
 **The discount is not a promotion, it is the price.** At the ~90% codes standing on Apex's own pages,
 break-even falls to 0.0917 and 0.1373 against zero-edge pass rates of 0.2495 and 0.2100 — from
@@ -84,6 +89,71 @@ zero-edge 0.2664 — positive, but marginal.
 completion at **16.8%** against a zero-edge **26.6–31.7%** at the true geometry — **86 to 124 standard
 errors below a coin flip.** The marginal buyer has negative edge, so every V above is an
 overstatement.
+
+## 2a. CORRECTION, 2026-09-08 — the break-even pass rate was the wrong question
+
+**Appended the same day, after computing the required edge. Nothing above this heading was edited
+except the withdrawal marks.**
+
+### The error of substance
+
+§2 reported a **break-even P(pass)** per account and read Apex 150K's value of 1.3725 as meaning the
+account is "negative at any edge". **That is false, and the mistake is structural rather than
+arithmetic.**
+
+`breakeven_pass_rate()` solves `fee = P × (E[extracted] − activation)` for `P` **while holding
+`E[extracted]` at its zero-edge value.** But you cannot raise `P(pass)` without drift, and drift
+raises `E[extracted]` too — each payout cycle survives more often. So the quantity being solved for
+describes a state of the world that cannot occur: a trader with a high pass rate and no edge in the
+funded account. **A break-even pass rate above 1 does not mean "impossible"; it means "unreachable by
+moving one term while pretending the other is fixed".**
+
+**The right question is what EDGE is required**, with all three terms — `P(pass)`, `P(reach the
+lock)` and `E[extracted]` — recomputed at that edge. Edge is stated as an annual Sharpe on the
+account's own P&L, and **it is conditional on the risk level**, because the barrier is a fixed dollar
+amount while Sharpe is dimensionless.
+
+### The required edge, at the risk levels stated
+
+| Sharpe | Apex 50K @ $250/day | Apex 150K @ $750/day | Topstep 50K @ $250/day |
+|---:|---:|---:|---:|
+| 0.0 | −$400 | −$1,706 | +$120 |
+| 0.5 | −$78 | −$1,462 | +$511 |
+| 1.0 | +$656 | −$1,001 | +$1,470 |
+| 1.5 | +$1,937 | −$227 | +$3,358 |
+| 2.0 | +$3,680 | +$953 | +$6,302 |
+| **break-even Sharpe, LIST** | **≈ 0.55** | **≈ 1.60** | **below zero** |
+| **break-even Sharpe, discounted** | below zero | **≈ 0.01** | n/a |
+
+### The error of fact
+
+**Apex 150K's zero-edge `P(pass)` was entered as 0.2100 and never computed.** The correct value for
+its actual geometry — a flat 6% target of $9,000 against a 2.67% drawdown of $4,005 — is **0.1348**.
+That is the failure this programme's own memory names: *my runner asserts encode data expectations*.
+Every other pass rate in §2 was computed and checks out (Apex 50K 0.2495 vs 0.2497; Topstep 0.2664 vs
+0.2668).
+
+Corrected: Apex 150K zero-edge `P(pass)` **0.1348**, V per evaluation at list **−$1,706**, cost per
+funded account **$14,180**.
+
+### What survives unchanged
+
+- **`E[extracted] = b` at zero edge.** Untouched — it is a martingale identity and no sweep bears on
+  it. But it is a **zero-edge** statement, and this record's title should be read as such: at Sharpe
+  1.0 Apex 50K's `E[extracted]` is **$4,640** against a $2,000 buffer. **The account is worth its
+  buffer to a trader with no edge, and more to one with an edge.**
+- **The payout ladder is decoration** — also a zero-edge statement, on the same footing.
+- **The discount is the price.** Strengthened, if anything: at list the two Apex products need a
+  sustained annual Sharpe of 0.55 and 1.60; at the ~90% codes they need none.
+- **The direction of every comparison.** The bigger account is still the harder one; Topstep is still
+  the best of the three; the observed 16.8% is still far below the zero-edge baseline.
+
+**And the scale that matters:** an annual Sharpe of 1.60 sustained on a single futures account is not
+a number this programme has ever produced. [D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md)
+put its entry-timing increment at **0.19–0.47× a round trip**, and both admitted arms of
+[BOOK.md](../BOOK.md) are not at capital.
+
+---
 
 ## 3. What it changes in D379
 

@@ -119,7 +119,7 @@ APEX_150K_EOD = Account(
     name="Apex 150K EOD",
     fee_eval=1890.0, fee_activation=159.0, buffer=4005.0,
     caps=(2500.0, 3000.0, 3000.0, 3000.0, 4000.0, 5000.0),
-    lifetime_cap=20500.0, pass_rate=0.2100, discount=0.90,
+    lifetime_cap=20500.0, pass_rate=0.1348, discount=0.90,
     note="drawdown 2.67% of 150K against a flat 6% target, so the ratio is 2.25 and the eval "
          "is harder than the 50K's",
 )

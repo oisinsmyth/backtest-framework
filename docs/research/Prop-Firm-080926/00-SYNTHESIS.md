@@ -35,17 +35,35 @@ they let you lose** — and you only reach the payout regime at all with probabi
 | `E[extracted]` (= buffer, less the ladder cap) | $1,974 | $3,902 | $2,000 |
 | × P(reach the lock) | **0.3743** | **0.3936** | **0.3911** |
 | = `E[payout │ funded]` | **$739** | **$1,536** | **$782** |
-| zero-edge P(pass) | 0.2495 | 0.2100 | 0.2664 |
+| zero-edge P(pass) | 0.2495 | **0.1348** | 0.2664 |
 | evaluation fee + activation | $550 + $139 | $1,890 + $159 | $49/mo + $149 |
-| **V per evaluation, at list** | **−$400** | **−$1,601** | **+$120** |
+| **V per evaluation, at list** | **−$400** | **−$1,706** | **+$120** |
 | **break-even P(pass) at list** | **0.9167** | **1.3725** | 0.0774 |
 
 **Two things fall straight out.**
 
-**1. Apex 150K at list price is negative at ANY edge.** Its break-even pass rate is **1.3725** — above
-one. A trader who passed *every single evaluation* would still lose $513 per account, because
-$1,890 + $159 of fees exceeds the $1,536 maximum the account can return. That is not a statement
-about skill. It is arithmetic on the firm's own published terms.
+**1. ~~Apex 150K at list price is negative at ANY edge.~~ WITHDRAWN — see
+[D386 §2a](../../decisions/D386-the-prop-account-is-worth-its-buffer.md).** The break-even *pass
+rate* is 1.3725, above one, and I read that as impossible. **It is not.** That quantity holds
+`E[extracted]` at its zero-edge value, but **edge raises both terms** — you cannot lift `P(pass)`
+without drift, and drift also makes each payout cycle survive more often. A break-even pass rate
+above 1 means "unreachable by moving one term while pretending the other is fixed", not
+"impossible".
+
+**The right question is what edge is required**, with all three terms recomputed at that edge:
+
+| break-even annual Sharpe | Apex 50K @ $250/day | Apex 150K @ $750/day | Topstep 50K @ $250/day |
+|---|---:|---:|---:|
+| at list price | **≈ 0.55** | **≈ 1.60** | below zero |
+| at the ~90% discount | below zero | ≈ 0.01 | n/a |
+
+**Also corrected:** Apex 150K's zero-edge `P(pass)` was entered as 0.2100 and never computed. Its
+true value at a $9,000 target against a $4,005 drawdown is **0.1348**, which makes V per evaluation
+**−$1,706**, not −$1,601. Every other pass rate in the table was computed and checks out.
+
+**For scale:** a sustained annual Sharpe of 1.60 on a single futures account is not a number this
+programme has ever produced. D378 put its entry-timing increment at 0.19–0.47× a round trip, and
+both admitted arms of BOOK.md are not at capital.
 
 **2. The discount is not a promotion, it is the price.** At the ~90% codes standing on Apex's own
 pages, break-even falls to 0.0917 and 0.1373 against a zero-edge pass rate of 0.2495 and 0.2100 — so
