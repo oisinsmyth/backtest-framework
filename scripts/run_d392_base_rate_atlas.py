@@ -72,6 +72,12 @@ CONC_LEVELS = (1.0, 0.25, 0.05)    # share of eligible names the events may land
 # three in common use -- 60,000 x cap 60 already cost 1.03 s/draw and the cost is ~linear in n.
 EXT_COUNTS = (100_000, 150_000)
 EXT_CAPS = (10, 20, 40)
+
+# THE SHORT-HOLD EXTENSION. D391's addendum found its entire ledger was BAR ONE -- +47.19 long and
+# +49.32 short at cap 1, with bars 2-20 netting negative -- and the v1 grid started at cap 5, so
+# the one horizon where that effect lives has no floor at all. Over the FULL count grid, because a
+# one-bar event book on this universe reaches ~130,000 trades (events barely collapse at cap 1).
+SHORT_CAPS = (1, 2, 3)
 SEED = 20260908
 BOOT = 1_000
 
@@ -180,6 +186,13 @@ def cell_key(kind, n, cap, side, pool="ALL", conc=1.0):
 def plan(part):
     """Every cell, CHEAPEST FIRST -- the 30k and 60k rows run last so a partial atlas is useful."""
     cells = []
+    if part == "shortcap":
+        for n in COUNTS + EXT_COUNTS:
+            for cap in SHORT_CAPS:
+                for side in SIDES:
+                    cells.append(dict(kind="uncond", n=n, cap=cap, side=side, pool="ALL",
+                                      conc=1.0, draws=DRAWS_UNCOND))
+        return sorted(cells, key=lambda c: (c["n"] * c["cap"], c["n"]))
     if part == "extend":
         for n in EXT_COUNTS:
             for cap in EXT_CAPS:
@@ -239,7 +252,7 @@ def main() -> int:
     ap.add_argument("--calibrate", action="store_true")
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--part", default="all",
-                    choices=["uncond", "cond", "conc", "all", "extend"])
+                    choices=["uncond", "cond", "conc", "all", "extend", "shortcap"])
     ap.add_argument("--lookup", nargs=3, metavar=("N", "CAP", "SIDE"))
     a = ap.parse_args()
 
