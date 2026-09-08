@@ -3465,3 +3465,16 @@ needs. **Recorded as unexplained. No mechanism is filed.**
 
 **Nothing admitted to either book. No hurdle cleared. No holdout read. No multiplicity ledger touched
 (R13) — the study scored no strategy cell.**
+
+---
+
+**AMENDED 2026-09-08 — §53 IS WITHDRAWN PENDING A RE-RUN.** The principal asked what was being
+compared to the nulls. **It was one density per cell, at the final mining bar — not the per-bar
+sampled-and-pooled statistic §4 of the pre-registration declared.** The measurement path called
+`density_direct`, which is the ground-truth helper for `[REC]`/`[FRAME]`, instead of
+`density_recursive`. Effective sample size of the compared density is **14.5 bars at half-life 5**
+(94% of mass in the last 20) rising to 461.6 at half-life 160, on a 481-point grid — so P1 failed for
+want of power and "no shape" is not established. **The family is NOT closed.** What survives:
+§53.2 (P3, computed from `x`), §53.3 (P4, ditto), §53.4 (the reference-distribution trap), §53.6
+(construction proved). What is withdrawn: §53 headline, §53.1. See the amendment in
+`docs/decisions/D384-RESULT-the-density-carries-no-shape-the-shuffle-cannot-produce.md`.

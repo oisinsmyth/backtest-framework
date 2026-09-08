@@ -261,3 +261,77 @@ ledger is untouched under R13: this study scored no strategy cell.
 
 *Result committed 2026-09-08, separately from the pre-registration, per R8. The reserved window
 (2020-01-01 onward, 1,671 bars) remains unread.*
+
+---
+
+## AMENDMENT, 2026-09-08 — THE CLOSE IS WITHDRAWN. THE STUDY DID NOT COMPUTE THE PRE-REGISTERED STATISTIC.
+
+**Raised by the principal, asking what was being compared to the nulls. The answer is: not what §4
+declared.**
+
+**§4 specifies** *"the total-variation distance between the observed density `f_t` and the null's mean
+density `g_t`, **sampled over bars** and pooled per name."* Subscript `t`.
+
+**The runner computed ONE density per cell**, via `density_direct(x[WARMUP:], hl, h)` — an
+exponentially-weighted KDE over the whole history with the largest weight on the **final mining bar**,
+2019-12-31. One density, one bar, per (name, half-life, bandwidth). No sampling over bars, no pooling.
+
+**How it happened:** `density_direct` was written as the **ground-truth helper for `[REC]` and
+`[FRAME]`** — its own docstring says exactly that. `density_recursive` is the function that produces
+the per-bar series §4 asks for. The assertion's helper was wired into the measurement path.
+
+### The consequence is a power failure, not a null result
+
+The exponential weights give the compared density an effective sample size of:
+
+```
+   hl       lam     n_eff  last bar wt  top-20 bars
+    5   0.87055      14.5       0.1294        0.938
+   10   0.93303      28.9       0.0670        0.750
+   20   0.96594      57.7       0.0341        0.500
+   40   0.98282     115.4       0.0172        0.293
+   80   0.99137     230.8       0.0086        0.159
+  160   0.99568     461.6       0.0043        0.083
+```
+
+**At half-life 5 the density is 14.5 effective bars on a 481-point grid, 94% of its mass in the last
+20 bars.** The comparison stays FAIR — observed and null share `n_eff` — but a fair test with no
+power fails by construction. **"No shape a shuffle cannot produce" and "not enough data in the
+statistic I accidentally computed" are indistinguishable on this evidence.**
+
+**The tell was in the committed output and I walked past it:** the null's own coefficient of variation,
+reported as `sd/p50 = 0.30–0.68`. A null total-variation distance that noisy *is* the small-`n_eff`
+signature. It was printed and not interrogated.
+
+### What is withdrawn, and what stands
+
+**WITHDRAWN:**
+- **§1's verdict, §2's grid, and §10's close.** The family is **NOT closed**. §9's abandon condition
+  is not established, because the condition names P1 and P1 was not run.
+- **§3's excess-mass and mode readings** — computed from the same single-bar density.
+- **Q1, Q2, Q3 and Q6's scoring** in §9, all of which depend on P1.
+
+**STANDS, because none of it depends on the pooling:**
+- **§6's assertions.** `[REC]` 3.44e-16 and `[FRAME]` 0.00e+00 test `density_direct` against the
+  recursion; that is what `density_direct` is *for*, and both are unaffected. `[NULL]` likewise.
+- **§7's trap** — the missing leave-one-out reference, and the rule that a distance needs a reference
+  distribution of the same distance. Independent of which density is compared.
+- **§4's P3 result** — cross-name CV 0.61 vs 1.08, and the 357× residual volatility spread. Computed
+  from `x` directly, not from the density.
+- **§5's P4 result** — the monotone stationarity, and the finding that return-blind selection of a
+  memory parameter is vacuous here. Computed from `x` directly.
+- **§8's post-hoc displacement** *as an observation*, with a caveat now attached: the sign test draws
+  its power from n = 60 **names**, not from `n_eff`, so it is the least damaged number in the study —
+  and it runs **opposite** to the power story, being strongest at half-life 10 where `n_eff` is
+  smallest. That does not rescue anything, but it is worth carrying into the re-run.
+
+### What the re-run must do
+
+Compute `f_t` at many bars via `density_recursive`, pool the TV distances per name as §4 states, and
+carry the same leave-one-out null reference. **`n_eff` per bar is unchanged by pooling** — it is a
+property of the exponential weighting — so the re-run must **report `n_eff` beside every cell** and
+state whether the half-life is resolvable at all on a 481-point grid. A half-life whose density is 14
+effective bars may simply not be testable at this grid resolution, and if so that is the finding.
+
+**Under R15 the family's status is the principal's. Nothing here reopens or closes it; this amendment
+only records that the committed close rested on a statistic the record did not declare.**
