@@ -131,6 +131,69 @@ contracts in the opening half-hour; 20 contracts is **0.02%** of it. **Impact sc
 drawdown constraint scales N — they cannot cross in the retail range.** The size scissors confirmed
 from a third independent direction, with no execution-side fix available.
 
+## THE WHOLE PROP QUESTION REDUCES TO ONE NUMBER (lane 20)
+
+> **Calmar ≥ 18.9, measured on OPEN equity.**
+
+It is **leverage-invariant**, verified empirically against Crabel's own 1× and 1.5× versions of the
+same book (0.458 vs 0.410). **Sizing, micros and funding level cannot move it.** Every other framing
+in this review — the scissors, the required Sharpe, the $150/day rule against the $2,000 floor — is a
+restatement of it.
+
+**The answer, from the audited population: no.**
+
+| | |
+|---|---:|
+| best true **intraday CME** programme in the verified population (Soaring Pelican FRS, 54 mo) | **1.07** |
+| best in the entire 199-programme audited IASG database (Hyperion, 71 mo, *not* intraday) | **5.88** |
+| **required** | **18.9** |
+
+Nearest miss anywhere: a 2023 World Cup account at 491.9% net / −26.2% DD over 10.85 months = **23.5
+annualised** — but it is multi-asset rather than intraday-CME, its drawdown is **month-end only**, and
+the *same manager's* 32-month account sits at **1.57** while his firm's 17-year record is ~23%/yr.
+
+### And a high ratio is a property of RECORD LENGTH, not of strategy
+
+Three independent populations say the same thing:
+
+- **Collective2, 993 systems by age:** median Calmar **9.76** under 180 days → **0.75** at 5 years+.
+  **Every system ≥18 is under 370 days old. Zero of 37 older than two years.**
+- **World Cup Advisor real-money accounts** decay 5.89 → 23.5 → 4.30 → 1.57 → **1.08** as records
+  lengthen.
+- **Inside IASG**, the top seven ratios all come from 38–71-month records; the only 20-year entry in
+  the top eight sits at **1.52**.
+
+**So a candidate presenting a Calmar above 18 is presenting a short record.** That is a screening rule
+in its own right, and it applies to anything either book ever looks at.
+
+### Three more numbers worth keeping
+
+- **The gap, at the right object.** Lane 14's 19×–60× is confirmed and **widened at the programme
+  level** — median **71×**, p90 21×, p25 155× — but it **breaks at the index level** (7.5× for a
+  diversified index). Lane 14 did not distinguish the two. Also corrected: **NilssonHedge's
+  short-term index returns 3.50%/yr, not 6.3%** — its VAMI starts Jan-2019, not Jan-2023, and the
+  recomputation reproduces all eight of the publisher's annual YTDs exactly.
+- **A cost test from CTAs' own disclosed turnover.** IASG publishes round-turns/year/$1M. At $10/RT
+  the retail commission bill is **39%–410% of these intraday programmes' entire annualised return**,
+  and **exceeds the whole return** for four named programmes. **The family is arithmetically insolvent
+  at retail cost.**
+- **The drawdown distribution, 199 programmes:** maxDD p10 9.85% / p50 21.12% / p90 46.47%. **Only 5
+  of 199 (2.5%) have maxDD ≤ 4%** — and those earn **$3.50–$13.40/day on $50k.** Diversification is
+  the only lever found (5.6× on Calmar, 3.7× on drawdown) and it is still 7.5× short.
+
+### Survivorship, quantified — every ratio above is an upper bound
+
+**IASG carries 1,707 archived programmes against 270 active: 13.7% alive.** The SG Short Term Traders
+Index has had 48 managers in 19 years, median tenure **3.5 years**, with only three present
+throughout. Bhardwaj–Gorton–Rouwenhorst put backfill plus survivorship at **7.7%/yr**, leaving net CTA
+excess returns **indistinguishable from zero**.
+
+### And the fifth confirmation of the same missing quantity
+
+**Per-programme DAILY return series are `NOT PUBLISHED` at any free tier.** So the intra-month,
+open-equity drawdown distribution — **the exact quantity a trailing floor reads** — is unmeasured
+across the entire verified industry, not merely in our records.
+
 ## And the bound that has not moved all day
 
 **Research allocates an edge; it does not supply one.** Eight lanes across the literature, forums,
