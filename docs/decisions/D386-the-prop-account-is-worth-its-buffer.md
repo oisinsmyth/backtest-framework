@@ -155,6 +155,55 @@ put its entry-timing increment at **0.19–0.47× a round trip**, and both admit
 
 ---
 
+## 2b. THE DISTRIBUTION, 2026-09-08 — the median evaluation returns exactly nothing
+
+**Appended after §2a. [CLAUDE.md](../../CLAUDE.md) reporting group 2: a mean without its median is
+not a result, and §1 asserted "most extract nothing, a few extract several times the buffer" without
+computing it.** Runner: [`scripts/d386_extraction_distribution.py`](../../scripts/d386_extraction_distribution.py),
+five assertions including one that must be able to fail.
+
+**The distribution is exact, not simulated.** Extraction is supported on the partial sums of the cap
+schedule, with `P(exactly k payouts) = (∏_{j≤k} p_j)(1 − p_{k+1})`. `[SUM]` confirms the pmf sums to
+1.000000000000 and `[MEAN]` that it reproduces the closed form to 1e-9.
+
+**Apex only.** Topstep is excluded because a payout there sets the MLL to $0 and "the remaining
+balance becomes your effective loss floor", so the buffer is **not constant across cycles** and the
+renewal model does not describe it. **§2's Topstep column assumed a constant `b = $2,000`; that is a
+stated limitation of it, not a result.**
+
+### Apex 50K EOD, zero edge
+
+| conditioning | P(extract $0) | **median** | mean | p90 | p95 | top-decile share |
+|---|---:|---:|---:|---:|---:|---:|
+| given the floor has **locked** | 42.9% | **$1,500** | $1,974 | $5,000 | $7,500 | 56.6% |
+| given **funded** | 78.6% | **$0** | $739 | $3,000 | $5,000 | 81.4% |
+| **per evaluation purchased** | **94.7%** | **$0** | $184 | $0 | $1,500 | 100.0% |
+| per evaluation, at Sharpe 1.0 | 79.0% | **$0** | $1,271 | $5,000 | $10,000 | 84.1% |
+
+**Apex 150K is worse on every line:** 96.7% of evaluations return $0, and even at Sharpe 1.0 it is
+87.2%.
+
+### What this says that the mean did not
+
+1. **94.7% of Apex 50K evaluations return exactly $0** — 96.7% for the 150K. **The median evaluation
+   returns nothing**, so the entire expected value sits in the top decile, which is why that column
+   reads 100.0%.
+2. **Only 5.3% of evaluations return more than was paid on that path** (3.3% for the 150K). The
+   figure is identical at list and at the discount, because extraction has atoms at $0 and $1,500 and
+   **both fee levels fall in the same gap** — the discount changes the *value*, not the odds.
+3. **Even in the sector's most flattering frame — a funded account whose floor has already locked —
+   the median is below the mean**, $1,500 against $1,974.
+4. **Edge does not fix the median, it fattens the tail.** At Sharpe 1.0 the mean per evaluation goes
+   $184 → $1,271, a 6.9× improvement, while **the median stays at $0**. What a Sharpe of 1.0 buys is
+   a better right tail, not a typical outcome that pays.
+
+**This is the shape CLAUDE.md warns about and it is genuine here**, not a trimming artefact: the mean
+sits above the median because a small right tail carries everything. **Anyone you meet who has taken
+four Apex payouts is the top 5% of this distribution, not evidence against it** — and that is exactly
+the population the marketing selects for.
+
+---
+
 ## 3. What it changes in D379
 
 | | |
