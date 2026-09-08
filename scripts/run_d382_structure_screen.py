@@ -189,6 +189,73 @@ def positions_from(p, live, hold, low_tail=True):
     return np.minimum(pos, 1.0), int(ev.sum())
 
 
+def positions_fast(p, live, hold, low_tail=True):
+    """[POS] the same book as `positions_from`, built by a difference array instead of a per-event loop.
+
+    A null pass rebuilds 152 books per draw, so the loop version is unaffordable. `assert_POS` proves the two agree bit-for-bit
+    before any draw is taken -- the speed is only allowed because the equality is checked, not assumed.
+    """
+    prev = np.full_like(p, np.nan)
+    prev[:, 1:] = p[:, :-1]
+    with np.errstate(invalid="ignore"):
+        ev = ((p <= DECILE) & (prev > DECILE)) if low_tail else ((p >= 100 - DECILE) & (prev < 100 - DECILE))
+    ev &= live
+    n, T = p.shape
+    i, t = np.nonzero(ev)
+    d = np.zeros((n, T + 1))
+    a = np.minimum(t + 1, T)
+    b = np.minimum(t + 1 + hold, T)
+    np.add.at(d, (i, a), 1.0)
+    np.add.at(d, (i, b), -1.0)
+    pos = (np.cumsum(d[:, :T], axis=1) > 0).astype(float)
+    pos[:, :WARMUP] = 0.0
+    return pos, int(ev.sum())
+
+
+def assert_POS(p, live, hold):
+    """[POS] the fast builder equals the loop builder. Checked on a TIE-HEAVY input is not possible here (percentiles are
+    distinct by construction), so it is checked on the real grid, which is the input the study actually uses."""
+    a, na = positions_from(p, live, hold)
+    b, nb = positions_fast(p, live, hold)
+    assert na == nb, f"[POS] event counts differ: {na} vs {nb}"
+    assert np.array_equal(a > 0, b > 0), "[POS] the fast builder disagrees with the loop builder"
+    return True
+
+
+def trade_cumsum(panel):
+    """One cumulative sum of each name's total log return, reused by every draw. A trade [s, e) is C[i, e-1] - C[i, s-1]."""
+    tl = np.where(np.isfinite(panel.total_log_returns), panel.total_log_returns, 0.0) * panel.live
+    return np.cumsum(tl, axis=1)
+
+
+def trades_fast(pos, C):
+    """Per-trade gross return in bp AND each trade's length in bars, from the precomputed cumulative sum.
+
+    THE LENGTH IS RETURNED BECAUSE THE PER-TRADE MEAN IS NOT SAFE ALONE HERE. Overlapping events merge into ONE run -- a name that
+    keeps firing while already held produces a single long trade, not several -- so a "trade" at nominal hold 40 can run far past 40
+    bars and its mean is inflated by event DENSITY as well as by hold. That is D374's segmentation confound one level deeper.
+
+    The within-hold null comparison stays fair because both sides merge identically. What is NOT safe is reading the per-trade number
+    as an economic per-trade quantity, or comparing it across holds. `bp per BAR HELD` is the segmentation-stable companion and is
+    reported beside it everywhere.
+    """
+    a = pos > 0
+    d = np.diff(a.astype(np.int8), axis=1, prepend=0, append=0)
+    si, st = np.nonzero(d == 1)
+    ei, et = np.nonzero(d == -1)
+    if si.size == 0:
+        return np.zeros(0), np.zeros(0)
+    lo = np.where(st > 0, C[si, np.maximum(st - 1, 0)], 0.0)
+    hi = C[ei, np.minimum(et - 1, C.shape[1] - 1)]
+    return np.expm1(hi - lo) * 1e4, (et - st).astype(float)
+
+
+def rate_bp(pnl, ln):
+    """bp per BAR HELD -- total P&L over total bars. Stable under the merging `trades_fast` documents."""
+    tot = ln.sum()
+    return float(pnl.sum() / tot) if tot > 0 else float("nan")
+
+
 def trades_from(pos, panel):
     """Per-TRADE gross return in bp: each contiguous run of exposure, compounded on that name's own total log returns."""
     tl = panel.total_log_returns
@@ -274,12 +341,13 @@ def cell_stats(panel, p, hold, low_tail=True):
     pos, n_ev = positions_from(p, panel.live, hold, low_tail)
     if n_ev < 50:
         return None
-    tr = trades_from(pos, panel)
+    tr, ln = trades_fast(pos, trade_cumsum(panel))
     if tr.size < 30:
         return None
     s = RP.score(panel, pos, WARMUP, ppy=PPY, rf_annual=RF, borrow_annual=BORROW)
     bh = bh_matched(panel, WARMUP, s["exposure_gross"])
     return dict(events=n_ev, trades=int(tr.size), mean_bp=float(tr.mean()), median_bp=float(np.median(tr)),
+                bp_per_bar=rate_bp(tr, ln), mean_run_bars=float(ln.mean()),
                 excess_sharpe=s["excess_sharpe"], cagr=s["cagr"], exposure=s["exposure_gross"],
                 max_drawdown=s["max_drawdown"], entries=s["entries"], clears_E=s["clears_E"],
                 bh_matched_cagr=bh["cagr"], bh_matched_sharpe=bh["excess_sharpe"],
@@ -376,6 +444,120 @@ class _Zero:
         return self.live.sum(axis=0)
 
 
+# ------------------------------------------------------------------ the three nulls, best-of-152 under a shared draw
+def null_rotation(pos, live, off):
+    """Per-name timing rolled WITHIN each name's own live window. Rolling across the whole grid would place exposure on bars the
+    name did not trade (ragged_panel.rotation_null's own reasoning, and D351's)."""
+    out = np.zeros_like(pos)
+    n, T = pos.shape
+    for i in range(n):
+        w = np.flatnonzero(live[i])
+        if w.size < 2:
+            continue
+        s = pos[i, w]
+        out[i, w] = np.roll(s, int(off[i]) % w.size)
+    return out
+
+
+def null_permute_bar(p, ok, order, liveorder):
+    """The percentile permuted ACROSS NAMES inside each bar, vectorised.
+
+    `order` puts live rows first in RANDOM order (the key is +inf off-mask), `liveorder` puts them first in ROW order. Gathering by
+    the second and scattering by the first is a within-column permutation of exactly the live values, with NaN left everywhere else.
+    """
+    src = np.take_along_axis(np.where(ok, p, np.nan), liveorder, axis=0)
+    out = np.full_like(p, np.nan)
+    np.put_along_axis(out, order, src, axis=0)
+    return out
+
+
+def perm_indices(ok, rng):
+    """One shared permutation per bar, reused by every feature in the draw."""
+    n = ok.shape[0]
+    key = rng.random(ok.shape)
+    key[~ok] = np.inf
+    order = np.argsort(key, axis=0)
+    liveorder = np.argsort(np.where(ok, np.arange(n)[:, None], n + 1), axis=0)
+    return order, liveorder
+
+
+def stage_nulls(paths, draws):
+    print(f"\nNULLS -- {draws} draws x 3 families, best-of-152 floor under a SHARED draw (pre-reg s5 as amended 886c9fe)")
+    t0 = time.time()
+    panel, cleaned, sp = load_mined()
+    z = np.load(paths["scores"], allow_pickle=False)
+    names = [str(x) for x in z["_names"]]
+    live = panel.live
+    C = trade_cumsum(panel)
+    obs = json.loads(paths["observed"].read_text())["cells"]
+
+    P = {k: pct_rank(z[k], live) for k in names}
+    assert_POS(P[names[0]], live, HOLDS[0])
+    print(f"  [POS] the fast builder equals the loop builder on {names[0]}")
+
+    cells = [(k, h, tail) for k in names for h in HOLDS for tail in (True, False)]
+    cells = [c for c in cells if f"{c[0]}|{c[1]}|{'lo' if c[2] else 'hi'}" in obs]
+    print(f"  {len(cells)} cells carried forward from the observed pass")
+
+    base = {}
+    for k, h, tail in cells:
+        pos, _ = positions_fast(P[k], live, h, tail)
+        base[(k, h, tail)] = pos
+    print(f"  base books built ({time.time() - t0:.0f}s)")
+
+    n, T = live.shape
+    ok = live & np.isfinite(P[names[0]])
+    rng = np.random.default_rng([SEED, STUDY])
+
+    # THE FLOOR IS TAKEN WITHIN A HOLD, not across all 152 cells. A 40-bar hold earns roughly four times a 10-bar hold PER TRADE by
+    # construction, so a max over cells spanning four holds is always set by the longest one and is not like-for-like -- D374's
+    # segmentation lesson, which cost that study a retracted claim. Each hold gets its own best-of-38 floor (19 features x 2 tails)
+    # and is compared only to observed cells at the SAME hold.
+    by_hold = {h: [c for c in cells if c[1] == h] for h in HOLDS}
+    floors = {f"{fam}|{h}": [] for fam in ("rotation", "permutation") for h in HOLDS}
+    rates = {k: [] for k in floors}
+    for d in range(draws):
+        off = rng.integers(0, T, size=n)                       # ONE offset vector, shared by every cell in the draw
+        for h in HOLDS:
+            m = r = -np.inf
+            for key in by_hold[h]:
+                tr, ln = trades_fast(null_rotation(base[key], live, off), C)
+                if tr.size >= 30:
+                    m = max(m, float(tr.mean()))
+                    r = max(r, rate_bp(tr, ln))
+            floors[f"rotation|{h}"].append(m)
+            rates[f"rotation|{h}"].append(r)
+
+        order, liveorder = perm_indices(ok, rng)               # ONE permutation set, shared by every feature in the draw
+        permuted = {k: null_permute_bar(P[k], ok, order, liveorder) for k in names}
+        for h in HOLDS:
+            m = r = -np.inf
+            for k, hh, tail in by_hold[h]:
+                pos, _ = positions_fast(permuted[k], live, hh, tail)
+                tr, ln = trades_fast(pos, C)
+                if tr.size >= 30:
+                    m = max(m, float(tr.mean()))
+                    r = max(r, rate_bp(tr, ln))
+            floors[f"permutation|{h}"].append(m)
+            rates[f"permutation|{h}"].append(r)
+        if (d + 1) % 10 == 0 or d + 1 == draws:
+            print(f"    {d + 1}/{draws} ({time.time() - t0:.0f}s, {(time.time() - t0) / (d + 1):.1f} s/draw)", flush=True)
+
+    out = dict(study=STUDY, draws=draws, cells=len(cells), split=sp,
+               floors={k: dict(n=len(v), p50=float(np.percentile(v, 50)), p95=float(np.percentile(v, 95)),
+                               max=float(np.max(v))) for k, v in floors.items() if v},
+               rate_floors={k: dict(p50=float(np.percentile(v, 50)), p95=float(np.percentile(v, 95)))
+                            for k, v in rates.items() if v},
+               note=("best-of-38 WITHIN EACH HOLD, under one shared offset / permutation per draw. The floor is NOT taken across "
+                     "holds: a 40-bar hold earns ~4x a 10-bar hold per trade by construction, so a cross-hold max is always set by "
+                     "the longest hold and is not like-for-like (D374)."))
+    paths["nulls"].write_text(json.dumps(out, indent=1))
+    print(f"  wrote {paths['nulls']} ({time.time() - t0:.0f}s)")
+    for k, v in out["floors"].items():
+        print(f"    {k:<12} p50 {v['p50']:+9.2f}  p95 {v['p95']:+9.2f}  max {v['max']:+9.2f} bp")
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     for f in ("selftest", "scores", "observed", "nulls", "report"):
@@ -389,10 +571,12 @@ def main() -> int:
         stage_scores(paths)
     elif a.observed:
         stage_observed(paths)
+    elif a.nulls:
+        stage_nulls(paths, a.draws)
     elif a.selftest:
         stage_selftest(paths)
     else:
-        ap.error("one of --selftest, --scores, --observed")
+        ap.error("one of --selftest, --scores, --observed, --nulls")
     return 0
 
 
