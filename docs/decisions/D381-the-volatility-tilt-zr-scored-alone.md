@@ -1,4 +1,4 @@
-# D380 — the volatility tilt: `zr` scored alone, the measurement D280 said it could not make
+# D381 — the volatility tilt: `zr` scored alone, the measurement D280 said it could not make
 
 **Status:** PRE-REGISTERED. Committed **before the runner exists** (R8). **Nothing here is a
 result.** No cell has been scored, no null has been run, no book is proposed.
@@ -8,7 +8,7 @@ result.** No cell has been scored, no null has been run, no book is proposed.
 2026-09-07). `data/fixtures/us_shorts_daily_holdout2.csv.gz` exists and is **unspent**; this record
 does not touch it, and D357's short candidate retains its prior claim.
 
-**Number.** `D380` was free at the time of writing. A concurrent session is active on `master`; if
+**Number.** `D381` was free at the time of writing. A concurrent session is active on `master`; if
 this number collides at merge, renumber this file — nothing references it yet.
 
 ---

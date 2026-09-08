@@ -1,9 +1,9 @@
-"""D380 STAGE 0 -- `zr` scored alone: the measurement D280 said it could not make.
+"""D381 STAGE 0 -- `zr` scored alone: the measurement D280 said it could not make.
 
-    uv run python scripts/run_d380_volatility_tilt.py --selftest
-    uv run python scripts/run_d380_volatility_tilt.py --stage0
+    uv run python scripts/run_d381_volatility_tilt.py --selftest
+    uv run python scripts/run_d381_volatility_tilt.py --stage0
 
-Pre-registration: docs/decisions/D380-the-volatility-tilt-zr-scored-alone.md
+Pre-registration: docs/decisions/D381-the-volatility-tilt-zr-scored-alone.md
 (committed BEFORE this file existed, R8; amended once, also before this file existed).
 
 DESCRIPTIVE. Stage 0 scores no book, ranks nothing into a portfolio and admits nothing (R15). It
@@ -70,9 +70,9 @@ def _load(name, filename):
     return m
 
 
-OUT = REPO / "data" / "d380_stage0.json"
+OUT = REPO / "data" / "d381_stage0.json"
 D280_JSON = REPO / "data" / "d280_combined_forecast.json"
-PREREG = REPO / "docs" / "decisions" / "D380-the-volatility-tilt-zr-scored-alone.md"
+PREREG = REPO / "docs" / "decisions" / "D381-the-volatility-tilt-zr-scored-alone.md"
 
 S0A_MIN_ABS_IC = 0.006          # pre-reg section 2
 S0B_MIN_ABS_T = 2.86            # D280's own best-of-161 median largest |t|
@@ -158,7 +158,7 @@ def decile_money(score, total, mask, k=DECILE):
 
 # ---------------------------------------------------------------------- self-test
 def selftest(V) -> int:
-    print("D380 STAGE 0 SELF-TEST -- the IC's direction, and two breaks that must be caught\n")
+    print("D381 STAGE 0 SELF-TEST -- the IC's direction, and two breaks that must be caught\n")
     rng = np.random.default_rng(380)
     n, T = 200, 400
     live = np.ones((n, T), dtype=bool)
@@ -272,7 +272,7 @@ def main() -> int:
     share = abs(zA["mean_ic"]) / abs(R["ALL"]["composite"]["mean_ic"])
 
     payload = dict(
-        study=380, stage=0,
+        study=381, stage=0,
         purpose="Score zr alone -- the measurement D280 declared unrecoverable from its own "
                 "artefacts. Descriptive: no book, no cell, nothing admitted (R15).",
         prereg=str(PREREG.relative_to(REPO)),
