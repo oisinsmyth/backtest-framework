@@ -85,6 +85,268 @@ def effective_inputs(Rm):
                 cheverud_nyholt=float(1.0 + (M - 1) * (1.0 - np.var(lam) / M)))
 
 
+PROBE_OUT = REPO / "data" / "d393_probe.json"
+SURVIVORS = ("up_run_21", "sign_flips_21")      # cleared K1 on 2026-09-08; the principal's ruling
+REFERENCE = "up_frac_21"                        # K1 killed it; carried as a POSITIVE CONTROL only
+
+# An axis counts as TILTED when its dominant tercile holds more than this share of the events
+# (uniform is 1/3). Set here, before any number was seen, so "which floor is operative" is a rule
+# and not a choice made after looking. 0.45 is one third plus a third of a third.
+TILT_SHARE = 0.45
+
+
+# ---------------------------------------------------------------------- the probe
+def probe(LA) -> int:
+    """ONE CELL, in money: E1, cap 20, long, the declared direction. NOT Stage 1.
+
+    WHAT THIS IS. Stage 0 read no forward returns. Before spending ~2.5 hours of nulls (section 4's
+    7,000 draws over a 10-cell best-of floor) on a score with no measured edge, this asks the cheap
+    question: does the cell the pre-registration ALREADY declared primary earn anything gross, and
+    how does that sit against the D392 atlas floor?
+
+    WHY THIS IS NOT CELL-PICKING. Section 3 froze `PRIMARY_CAP = 20` and E1 before the runner
+    existed, and section 3's atlas pool was declared there too. Nothing here is chosen after
+    looking. What IS true, and is recorded rather than hidden: seeing this number before the other
+    nine cells means the full grid, if it is ever run, is no longer being read blind.
+
+    THE POOL QUESTION, which section 3 anticipated. It declared pool ALL, `if Stage 0's
+    correlations say otherwise the conditional pool is used instead and the record says the pool
+    changed and why`. K1 put `up_run_21` at rho +0.370 to `rev_21`, so its floor may be a momentum
+    floor rather than the unconditional one. This does not guess: it MEASURES where the events sit
+    on the three tercile axes the atlas conditions on, and reports every floor that applies.
+
+    THE DIRECTION DEFECT, found here and reported rather than worked around. Section 1 declared one
+    mechanism for all three scores -- `a low value is a name under sustained one-sided selling`.
+    That is true of `up_run_21` and `up_frac_21`. **It is false of `sign_flips_21`**, which is
+    blind to direction by construction: a low flip count is a name that TRENDED, up or down. So E1
+    on it does not isolate sustained selling, and the diagnostic split by trailing-return sign is
+    reported beside it -- as a diagnostic, never as a candidate cell."""
+    t0 = time.time()
+    npz_before = (NPZ.stat().st_size, int(NPZ.stat().st_mtime)) if NPZ.exists() else None
+    PREP = _load("d348p", "d348_prep.py")
+    SG = _load("ragged_sign_scores", "ragged_sign_scores.py")
+    V50 = _load("d350r", "run_d350_long_timing_screen.py")
+    V59 = _load("d359r", "run_d359_loser_rally_short.py")
+    ATL = _load("d392a", "run_d392_base_rate_atlas.py")
+    P = PREP.prep(need_grids=True)
+    M = PREP.M
+    panel, cleaned = M.RP.load_ragged(M.B.FIXTURE, M.B.EVENTS, fee_bps=M.B.FEE_BPS)
+    g = M.P1.build_grids(panel, cleaned)
+    live = panel.live
+    T, n = P["T"], P["n"]
+    elig = np.asarray(P["elig"])
+    print(f"  prep in {time.time() - t0:.0f}s | {n} names x {T} bars", flush=True)
+
+    raw = SG.sign_scores(g, live)
+    print(f"    sign scores built in-process ({time.time() - t0:.0f}s); the cache is not touched",
+          flush=True)
+
+    def lagged_from(arr):
+        """`run_d350.lagged` with the array passed in -- identical to the Stage 0 path."""
+        sc = np.where(P["excl"], np.nan, arr)
+        sc = PREP.UF.apply_floor_replace(sc, P["keep"])
+        sc = np.where(P["base"], sc, np.nan)
+        out = np.full((T, n), np.nan)
+        out[1:] = sc[:, :-1].T
+        return out, sc
+
+    cols, proc = {}, {}
+    for k in SIGN:
+        cols[k], proc[k] = lagged_from(raw[k])
+    rev21, _ = lagged_from(np.asarray(P["score"]("rev_21")))
+
+    # ---- [L] the lag, in a SECOND implementation that never calls percentile_grid ----------
+    #      Two separate claims, because they can fail separately:
+    #        L1  the grid the mask is built from carries NO bar-t information
+    #        L2  the percentile the decile test reads agrees with direct counting
+    rng = np.random.default_rng(393)
+    for k in SIGN:
+        assert np.isnan(cols[k][0]).all(), f"[L1] {k} row 0 is not empty"
+        assert np.array_equal(cols[k][1:], proc[k][:, :-1].T, equal_nan=True), \
+            f"[L1] {k} column t is not the processed score at t-1"
+    # the negative control: hand the SAME grid in as its own unshifted source, which is what a
+    # missing lag looks like, and require the check to raise
+    LA.raises_on_broken(_assert_no_bar_t, cols["up_run_21"], cols["up_run_21"])
+    print(f"    [L1] all three grids are the processed score at t-1, row 0 empty; and the check "
+          f"RAISES on an unshifted grid", flush=True)
+
+    pct = {k: PREP.V47.percentile_grid(cols[k]) for k in SIGN}
+    masks = {k: V50.shape_masks(pct[k], elig)["E1"][0] for k in SIGN}
+    checked = 0
+    for k in SIGN:
+        ts, iis = LA.sample_events(masks[k], 400, rng)
+        for t, i in zip(ts, iis):
+            assert LA.pct_direct(cols[k][t], i) <= V50.DECILE + 1e-9, f"[L2] {k} event not in decile"
+            assert elig[t, i], f"[E] {k} event on an ineligible bar"
+            checked += 1
+    print(f"    [L2] {checked:,} sampled events re-derived by DIRECT COUNTING from the lagged "
+          f"column, and every one sits on an eligible bar [E]", flush=True)
+
+    # ---- where the events actually sit, on the atlas's own three axes ----------------------
+    tp = time.time()
+    pools = ATL.tercile_pools(P, elig)
+    print(f"    tercile pools built in {time.time() - tp:.0f}s (the atlas's OWN construction, so "
+          f"the comparison is like-for-like)", flush=True)
+    placement = {}
+    for k in SIGN:
+        m_ = masks[k]
+        tot = int(m_.sum())
+        placement[k] = {ax: {b: float((m_ & pools[f"{ax}_{b}"]).sum()) / max(1, tot)
+                             for b in ("lo", "mid", "hi")} for ax in ("price", "vol", "mom")}
+
+    # ---- the cell, in money ----------------------------------------------------------------
+    atlas = json.loads(ATLAS.read_text())
+    out = {}
+    for k in SIGN:
+        m_ = masks[k]
+        sc = np.where(np.isfinite(cols[k]), cols[k], 50.0)
+        res = V59.run_mirror(P, m_, sc, "cap", PRIMARY_CAP)
+        # [SC] with exit="cap" and n_max=None the score is inert; a constant must give the same ledger
+        res2 = V59.run_mirror(P, m_, np.full((T, n), 17.0), "cap", PRIMARY_CAP)
+        assert len(res["trades"]) == len(res2["trades"]), f"[SC] the score moved {k}'s cap ledger"
+        pnl = PREP.V47.pnl_bp(res)
+        trd = V59.trade_block(P, res, elig, 0, True)
+        dep = V59.deployed_block(res, P)
+        tr = res["trades"]
+        j = int(np.argmax(pnl))
+        top = dict(symbol=P["symbols"][tr[j][0]], entry_bar=int(tr[j][1]),
+                   entry_date=str(P["dates"][tr[j][1]]), held=int(tr[j][2]),
+                   pnl_bp=float(pnl[j]),
+                   share_of_total=float(pnl[j] / pnl.sum()) if pnl.sum() != 0 else None)
+
+        floors = {"ALL": _floor(ATL, atlas, len(tr), "ALL")}
+        tilted = []
+        for ax in ("price", "vol", "mom"):
+            b = max(placement[k][ax], key=placement[k][ax].get)
+            if placement[k][ax][b] > TILT_SHARE:
+                tilted.append(f"{ax}_{b}")
+                floors[f"{ax}_{b}"] = _floor(ATL, atlas, len(tr), f"{ax}_{b}")
+        ok = [v["p95"] for v in floors.values() if "p95" in v]
+        operative = max(ok) if ok else None
+
+        out[k] = dict(role=("candidate" if k in SURVIVORS else "REFERENCE ONLY -- K1 killed it"),
+                      events=int(m_.sum()), trades=len(tr), groups=group_stats_local(pnl),
+                      per_trade=trd, deployed=dep, top_trade=top, placement=placement[k],
+                      floors=floors, tilted_axes=tilted, operative_floor=operative,
+                      margin=(float(pnl.mean()) - operative) if operative is not None else None)
+        print(f"    {k:<14s} {len(tr):>7,} trades, gross {pnl.mean():+8.2f} bp/trade "
+              f"({time.time() - t0:.0f}s)", flush=True)
+
+    # ---- the direction diagnostic sign_flips_21 needs and the other two do not -------------
+    k = "sign_flips_21"
+    m_ = masks[k]
+    with np.errstate(invalid="ignore"):
+        dn = m_ & (rev21 < 0)
+        up = m_ & (rev21 > 0)
+    diag = {}
+    for nm, mm in (("trailing_down", dn), ("trailing_up", up)):
+        r_ = V59.run_mirror(P, mm, np.where(np.isfinite(cols[k]), cols[k], 50.0), "cap", PRIMARY_CAP)
+        p_ = PREP.V47.pnl_bp(r_)
+        diag[nm] = dict(trades=len(r_["trades"]), mean_bp=float(p_.mean()),
+                        median_bp=float(np.median(p_)))
+
+    npz_after = (NPZ.stat().st_size, int(NPZ.stat().st_mtime)) if NPZ.exists() else None
+    assert npz_before == npz_after, f"[C] the score cache CHANGED: {npz_before} -> {npz_after}"
+
+    payload = dict(
+        study=393, stage="probe", cap=PRIMARY_CAP, shape="E1", side="long",
+        purpose="D393 cheap single-cell probe: the pre-registered PRIMARY cell in money, against "
+                "the D392 atlas floor. NOT Stage 1: no null was run. Admits nothing (R15).",
+        prereg="docs/decisions/D393-the-sign-sequence-family.md",
+        ruling="Per-score reading of the split K1, given by the principal 2026-09-08: up_frac_21 "
+               "is dropped as a candidate and carried as a positive control only.",
+        tilt_share_rule=TILT_SHARE, survivors=list(SURVIVORS), reference=REFERENCE,
+        cells=out, sign_flips_direction_diagnostic=diag,
+        caveat="Seeing this cell before the other nine means the full 10-cell grid is no longer "
+               "being read blind, and any later Stage 1 must say so.")
+    PROBE_OUT.write_text(json.dumps(_clean(payload), indent=1))
+    print(f"\n  [P] wrote {PROBE_OUT.relative_to(REPO)} BEFORE rendering", flush=True)
+
+    _render(out, diag)
+    print(f"\n  ({time.time() - t0:.0f}s)  NO NULL WAS RUN. This is not Stage 1 and admits nothing.")
+    return 0
+
+
+def _assert_no_bar_t(col, unshifted):
+    """The negative control for [L1]: an UNSHIFTED grid must fail the same test the real one passes."""
+    assert np.isnan(col[0]).all() and not np.array_equal(col, unshifted, equal_nan=True), \
+        "[L1] the grid carries bar-t information"
+
+
+def _floor(ATL, atlas, n_trades, pool):
+    try:
+        return ATL.lookup(atlas, n_trades, PRIMARY_CAP, "long", pool)
+    except (ValueError, KeyError) as e:
+        return {"error": str(e)[:90]}
+
+
+def group_stats_local(pnl):
+    p = np.asarray(pnl, float)
+    lo, hi = np.percentile(p, 1), np.percentile(p, 99)
+    return dict(n=int(p.size), mean_bp=float(p.mean()), median_bp=float(np.median(p)),
+                win_rate=float((p > 0).mean()),
+                t=float(p.mean() / (p.std(ddof=1) / np.sqrt(p.size))) if p.size > 1 else None,
+                trim_ex_top_bp=float(p[p <= hi].mean()), trim_ex_bottom_bp=float(p[p >= lo].mean()),
+                trim_both_bp=float(p[(p >= lo) & (p <= hi)].mean()))
+
+
+def _clean(o):
+    if isinstance(o, dict):
+        return {str(k): _clean(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [_clean(v) for v in o]
+    if isinstance(o, (np.integer,)):
+        return int(o)
+    if isinstance(o, (np.floating,)):
+        return float(o)
+    if isinstance(o, (np.bool_,)):
+        return bool(o)
+    return o
+
+
+def _render(out, diag):
+    print(f"\nTHE PRE-REGISTERED PRIMARY CELL IN MONEY -- E1, cap {PRIMARY_CAP}, LONG, "
+          f"every event taken\n")
+    for k, d in out.items():
+        g = d["groups"]
+        t_ = d["per_trade"]
+        print(f"  {k}   [{d['role']}]")
+        print(f"      {d['trades']:,} trades from {d['events']:,} events | "
+              f"GROSS {g['mean_bp']:+.2f} bp/trade, median {g['median_bp']:+.2f}, "
+              f"win {100 * g['win_rate']:.1f}%, t {g['t']:+.2f}")
+        print(f"      trim: ex-top {g['trim_ex_top_bp']:+.2f} | ex-bottom "
+              f"{g['trim_ex_bottom_bp']:+.2f} | BOTH {g['trim_both_bp']:+.2f}")
+        rt = t_["two_c"]["PUB"]
+        print(f"      round trip (PUB, MEASURED Corwin-Schultz) {rt:.2f} bp -> "
+              f"NET {t_['net_per_trade']['PUB']:+.2f}, gross/2c {t_['mean_over_2c']['PUB']:.2f}x, "
+              f"breakeven half-spread {t_['breakeven_half_spread_bp_side']:+.2f} bp/side")
+        print(f"      hold {t_['hold_mean']:.1f} bars, held price ${t_['held_price']:.2f}, "
+              f"era1 {t_['era1_mean_bp']:+.1f} / era2 {t_['era2_mean_bp']:+.1f}")
+        print(f"      TOP TRADE: {d['top_trade']['symbol']} entered {d['top_trade']['entry_date']} "
+              f"(bar {d['top_trade']['entry_bar']}), held {d['top_trade']['held']}, "
+              f"{d['top_trade']['pnl_bp']:+,.0f} bp = "
+              f"{100 * (d['top_trade']['share_of_total'] or 0):.2f}% of the ledger")
+        pl = d["placement"]
+        print("      where the events sit: " + " | ".join(
+            f"{ax} " + "/".join(f"{100 * pl[ax][b]:.0f}" for b in ("lo", "mid", "hi"))
+            for ax in ("price", "vol", "mom")) + "   (lo/mid/hi %, uniform = 33/33/33)")
+        fl = " ".join(f"{p} {v['p95']:+.2f}+/-{v['se_p95']:.2f}" if "p95" in v else f"{p} n/a"
+                      for p, v in d["floors"].items())
+        print(f"      atlas floors: {fl}")
+        if d["operative_floor"] is not None:
+            verdict = "ABOVE" if d["margin"] > 0 else "BELOW"
+            print(f"      OPERATIVE FLOOR {d['operative_floor']:+.2f} "
+                  f"(tilted axes: {d['tilted_axes'] or 'none'}) -> margin "
+                  f"{d['margin']:+.2f} bp, {verdict}")
+        print()
+    print("SIGN_FLIPS_21 DIRECTION DIAGNOSTIC -- not a candidate cell, and not pre-registered.\n"
+          "  A low flip count is a name that TRENDED; the score cannot say which way, so section\n"
+          "  1's 'sustained one-sided selling' does not describe this score's E1 set.\n")
+    for nm, d in diag.items():
+        print(f"      {nm:<14s} {d['trades']:>7,} trades, mean {d['mean_bp']:+8.2f} bp, "
+              f"median {d['median_bp']:+8.2f}")
+
+
 # ---------------------------------------------------------------------- self-test
 def selftest(LA) -> int:
     print("D393 STAGE 0 SELF-TEST -- the direction, the lag, and two breaks that must be caught\n")
@@ -126,12 +388,17 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--stage0", action="store_true")
+    ap.add_argument("--probe", action="store_true",
+                    help="the pre-registered PRIMARY cell in money; no null, not stage 1")
     a = ap.parse_args()
     LA = _load("lag_audit", "lag_audit.py")
     if a.selftest:
         return selftest(LA)
+    if a.probe:
+        selftest(LA)
+        return probe(LA)
     if not a.stage0:
-        ap.error("pass --stage0 (stage 1 is not authorised; K1 may stop the record)")
+        ap.error("pass --stage0 or --probe (stage 1 is not authorised; K1 may stop the record)")
     selftest(LA)
 
     t0 = time.time()

@@ -1,0 +1,1138 @@
+{
+ "study": 393,
+ "stage": "probe",
+ "cap": 20,
+ "shape": "E1",
+ "side": "long",
+ "purpose": "D393 cheap single-cell probe: the pre-registered PRIMARY cell in money, against the D392 atlas floor. NOT Stage 1: no null was run. Admits nothing (R15).",
+ "prereg": "docs/decisions/D393-the-sign-sequence-family.md",
+ "ruling": "Per-score reading of the split K1, given by the principal 2026-09-08: up_frac_21 is dropped as a candidate and carried as a positive control only.",
+ "tilt_share_rule": 0.45,
+ "survivors": [
+  "up_run_21",
+  "sign_flips_21"
+ ],
+ "reference": "up_frac_21",
+ "cells": {
+  "up_run_21": {
+   "role": "candidate",
+   "events": 26236,
+   "trades": 20785,
+   "groups": {
+    "n": 20785,
+    "mean_bp": 22.056417616197663,
+    "median_bp": 13.378751006246688,
+    "win_rate": 0.506422901130623,
+    "t": 3.0889321710176962,
+    "trim_ex_top_bp": -19.82387072411584,
+    "trim_ex_bottom_bp": 60.292847798625715,
+    "trim_both_bp": 18.375349850730103
+   },
+   "per_trade": {
+    "side": "long",
+    "trades": 20785,
+    "mean_bp": 22.056417616197663,
+    "median_bp": 13.378751006246688,
+    "t": 3.0889321710176962,
+    "share_pos": 0.506422901130623,
+    "hold_mean": 19.98624007697859,
+    "hold_median": 20.0,
+    "mean_per_bar_held_bp": 1.1035801396983935,
+    "two_c": {
+     "PB": 24.57113587469327,
+     "PUB": 61.18549967154047
+    },
+    "held_half": {
+     "PB": 11.169994532616604,
+     "PUB": 29.477176431040203
+    },
+    "held_price": 44.82,
+    "commission_bp": 2.2311468094600624,
+    "net_per_trade": {
+     "PB": -2.5147182584956056,
+     "PUB": -39.129082055342806
+    },
+    "mean_over_2c": {
+     "PB": 0.8976555959268612,
+     "PUB": 0.36048439147514033
+    },
+    "era1_mean_bp": 16.485468389485394,
+    "era2_mean_bp": 24.826642548627767,
+    "era1_n": 6903,
+    "era2_n": 13882,
+    "down_years_mean_bp": 22.492135777324123,
+    "down_years_n": 4520,
+    "by_year": {
+     "2013": {
+      "n": 97,
+      "mean_bp": -91.02602278197527
+     },
+     "2014": {
+      "n": 1636,
+      "mean_bp": 7.710461083393126
+     },
+     "2015": {
+      "n": 1417,
+      "mean_bp": 18.98803719340424
+     },
+     "2016": {
+      "n": 1446,
+      "mean_bp": 41.813467123894824
+     },
+     "2017": {
+      "n": 1724,
+      "mean_bp": 17.08486995352426
+     },
+     "2018": {
+      "n": 1681,
+      "mean_bp": -12.582706630351533
+     },
+     "2019": {
+      "n": 1703,
+      "mean_bp": 25.955778855589436
+     },
+     "2020": {
+      "n": 1619,
+      "mean_bp": -4.867989857354058
+     },
+     "2021": {
+      "n": 1828,
+      "mean_bp": 124.85079199375811
+     },
+     "2022": {
+      "n": 1422,
+      "mean_bp": 67.44721157248398
+     },
+     "2023": {
+      "n": 1572,
+      "mean_bp": 22.379303634805815
+     },
+     "2024": {
+      "n": 1872,
+      "mean_bp": 4.631227361129615
+     },
+     "2025": {
+      "n": 1542,
+      "mean_bp": -36.921575153495915
+     },
+     "2026": {
+      "n": 1226,
+      "mean_bp": 9.470872293389068
+     }
+    },
+    "breakeven_half_spread_bp_side": 9.9126354033688,
+    "four_groups": {
+     "count": 20785,
+     "mean_bp": 22.056417616197663,
+     "median_bp": 13.378751006246688,
+     "win_rate": 0.506422901130623,
+     "payoff": 1.039897588096223,
+     "hold_mean": 19.98624007697859,
+     "hold_median": 20.0,
+     "skew": 2.89129515514109,
+     "kurtosis_excess": 103.14687685507892,
+     "trim_k": 207,
+     "mean_ex_top_bp": -19.687923384319706,
+     "mean_ex_bottom_bp": 60.15758803916768,
+     "mean_trimmed_bp": 18.37622694589328,
+     "names_to_half_pnl": 15,
+     "n_names": 1103,
+     "top_name_share": {
+      "1": 0.09256697227161596,
+      "5": 0.23476411800693486,
+      "10": 0.3898319271904547
+     },
+     "profitable_years_share": 0.7142857142857143,
+     "years": 14,
+     "top_trade": {
+      "symbol": "GME",
+      "entry_date": "2020-12-29",
+      "as_traded_price": 19.38,
+      "hold": 20,
+      "pnl_bp": 38435.270532104536,
+      "share_of_pnl": 0.08383877756071076,
+      "dv_percentile_at_entry": 82.31197771587743
+     },
+     "split_dead_alive": {
+      "dead_n": 3231,
+      "dead_mean_bp": 19.513523746078487,
+      "alive_n": 17554,
+      "alive_mean_bp": 22.524464220638535
+     },
+     "split_price": {
+      "median_price": 46.359999824,
+      "low_n": 10393,
+      "low_mean_bp": 38.88430307982574,
+      "high_n": 10392,
+      "high_mean_bp": 5.226912841035363
+     }
+    }
+   },
+   "deployed": {
+    "trades": 20785,
+    "entries": 20966,
+    "open_at_end": 181,
+    "bars_defined": 4187,
+    "bars_deployed": 3185,
+    "deployed_outside_defined": 0,
+    "exposure": 0.7606878433245761,
+    "mean_positions_deployed": 130.9287284144427,
+    "mean_positions_defined": 99.59589204681156,
+    "max_positions": 305,
+    "entries_per_year": 1261.8657750179127,
+    "PB": {
+     "hedged": {
+      "gross_bp": 1.0790372461265565,
+      "vol_bp": 32.375652512628776,
+      "net_bp": -1.3916992133601638,
+      "sharpe_gross": 0.5290761397034266,
+      "sharpe_net": -0.682381308037379,
+      "round_trip": 44.67997813046642,
+      "commission_rt": 4.462293618920125,
+      "cost_bp": 2.4707364594867203,
+      "turnover": 0.05027721290718644,
+      "held_per_bar": 130.9287284144427,
+      "fill": 32.732182103610675,
+      "held_half_spread": 11.169994532616604,
+      "held_price": 44.82,
+      "held_dv": 47801714.79365176,
+      "maxdd_bp": 1304.5645382449088,
+      "entries": 20966,
+      "bars": 3185,
+      "trades": 20785,
+      "breakeven_half_spread_bp_side": 4.249865447849658
+     },
+     "unhedged": {
+      "gross_bp": 5.594250763726927,
+      "vol_bp": 127.25513079140293,
+      "net_bp": 3.1235143042402065,
+      "sharpe_gross": 0.6978577382541746,
+      "sharpe_net": 0.38964442600521826,
+      "round_trip": 44.67997813046642,
+      "commission_rt": 4.462293618920125,
+      "cost_bp": 2.4707364594867203,
+      "turnover": 0.05027721290718644,
+      "held_per_bar": 130.9287284144427,
+      "fill": 32.732182103610675,
+      "held_half_spread": 11.169994532616604,
+      "held_price": 44.82,
+      "held_dv": 47801714.79365176,
+      "maxdd_bp": 5116.910394031899,
+      "entries": 20966,
+      "bars": 3185,
+      "trades": 20785,
+      "breakeven_half_spread_bp_side": 26.701455624176745
+     },
+     "total": {
+      "gross_bp": 27.51368385298833,
+      "vol_bp": 837.4136834038578,
+      "net_bp": -34.00511657080186,
+      "cost_bp": 61.51880042379019,
+      "sharpe_gross": 0.521565624509774,
+      "sharpe_net": -0.6446210531292266,
+      "maxdd_bp": 38670.56711832136,
+      "bars": 4187,
+      "breakeven_half_spread_bp_side": 4.379027105260532,
+      "turnover": 1.2518509672796752,
+      "exposure": 0.7606878433245761,
+      "flat_share": 0.23931215667542394,
+      "mean_positions": 99.59589204681156,
+      "mean_positions_long": 99.59589204681156,
+      "mean_positions_short": 0.0,
+      "max_positions": 305
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 22.33998906523321,
+      "commission_rt": 2.2311468094600624,
+      "cost_bp": 1.2353682297433601,
+      "net_bp": -0.15633098361680364,
+      "sharpe_net": -0.0766525841669762,
+      "breakeven_half_spread_bp_side": 9.615304300429347
+     },
+     "unhedged_2x": {
+      "crossings": 2,
+      "round_trip": 22.33998906523321,
+      "commission_rt": 2.2311468094600624,
+      "cost_bp": 1.2353682297433601,
+      "net_bp": 4.358882533983566,
+      "sharpe_net": 0.5437510821296964,
+      "breakeven_half_spread_bp_side": 54.518484653083526
+     }
+    },
+    "PUB": {
+     "hedged": {
+      "gross_bp": 1.0790372461265565,
+      "vol_bp": 32.375652512628776,
+      "net_bp": -5.073435541510696,
+      "sharpe_gross": 0.5290761397034266,
+      "sharpe_net": -2.4876191261907725,
+      "round_trip": 117.90870572416081,
+      "commission_rt": 4.462293618920125,
+      "cost_bp": 6.152472787637252,
+      "turnover": 0.05027721290718644,
+      "held_per_bar": 130.9287284144427,
+      "fill": 32.732182103610675,
+      "held_half_spread": 29.477176431040203,
+      "held_price": 44.82,
+      "held_dv": 47801714.79365176,
+      "maxdd_bp": 1304.5645382449088,
+      "entries": 20966,
+      "bars": 3185,
+      "trades": 20785,
+      "breakeven_half_spread_bp_side": 4.249865447849658
+     },
+     "unhedged": {
+      "gross_bp": 5.594250763726927,
+      "vol_bp": 127.25513079140293,
+      "net_bp": -0.558222023910325,
+      "sharpe_gross": 0.6978577382541746,
+      "sharpe_net": -0.06963569841660085,
+      "round_trip": 117.90870572416081,
+      "commission_rt": 4.462293618920125,
+      "cost_bp": 6.152472787637252,
+      "turnover": 0.05027721290718644,
+      "held_per_bar": 130.9287284144427,
+      "fill": 32.732182103610675,
+      "held_half_spread": 29.477176431040203,
+      "held_price": 44.82,
+      "held_dv": 47801714.79365176,
+      "maxdd_bp": 5116.910394031899,
+      "entries": 20966,
+      "bars": 3185,
+      "trades": 20785,
+      "breakeven_half_spread_bp_side": 26.701455624176745
+     },
+     "total": {
+      "gross_bp": 27.51368385298833,
+      "vol_bp": 837.4136834038578,
+      "net_bp": -125.67657004162805,
+      "cost_bp": 153.19025389461638,
+      "sharpe_gross": 0.521565624509774,
+      "sharpe_net": -2.3823992123427953,
+      "maxdd_bp": 38670.56711832136,
+      "bars": 4187,
+      "breakeven_half_spread_bp_side": 4.379027105260532,
+      "turnover": 1.2518509672796752,
+      "exposure": 0.7606878433245761,
+      "flat_share": 0.23931215667542394,
+      "mean_positions": 99.59589204681156,
+      "mean_positions_long": 99.59589204681156,
+      "mean_positions_short": 0.0,
+      "max_positions": 305
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 58.954352862080405,
+      "commission_rt": 2.2311468094600624,
+      "cost_bp": 3.076236393818626,
+      "net_bp": -1.9971991476920694,
+      "sharpe_net": -0.979271493243673,
+      "breakeven_half_spread_bp_side": 9.615304300429347
+     },
+     "unhedged_2x": {
+      "crossings": 2,
+      "round_trip": 58.954352862080405,
+      "commission_rt": 2.2311468094600624,
+      "cost_bp": 3.076236393818626,
+      "net_bp": 2.518014369908301,
+      "sharpe_net": 0.3141110199187869,
+      "breakeven_half_spread_bp_side": 54.518484653083526
+     }
+    }
+   },
+   "top_trade": {
+    "symbol": "GME",
+    "entry_bar": 2766,
+    "entry_date": "2020-12-29",
+    "held": 20,
+    "pnl_bp": 38435.270532104536,
+    "share_of_total": 0.08383877756071076
+   },
+   "placement": {
+    "price": {
+     "lo": 0.3431163287086446,
+     "mid": 0.3275651776185394,
+     "hi": 0.32931849367281596
+    },
+    "vol": {
+     "lo": 0.33846622960817196,
+     "mid": 0.34746150327793873,
+     "hi": 0.3140722671138893
+    },
+    "mom": {
+     "lo": 0.33911419423692635,
+     "mid": 0.3328632413477664,
+     "hi": 0.3280225644153072
+    }
+   },
+   "floors": {
+    "ALL": {
+     "p95": 12.666969332293064,
+     "p50": 1.418183335275987,
+     "se_p95": 0.930024787238868,
+     "interpolated": true,
+     "between": [
+      9337.774,
+      24946.3
+     ],
+     "pool": "ALL"
+    }
+   },
+   "tilted_axes": [],
+   "operative_floor": 12.666969332293064,
+   "margin": 9.3894482839046
+  },
+  "sign_flips_21": {
+   "role": "candidate",
+   "events": 38097,
+   "trades": 21086,
+   "groups": {
+    "n": 21086,
+    "mean_bp": -4.504100408704716,
+    "median_bp": -5.689112046568139,
+    "win_rate": 0.49677511144835435,
+    "t": -0.6738046938160144,
+    "trim_ex_top_bp": -44.43469891360956,
+    "trim_ex_bottom_bp": 32.686269070108274,
+    "trim_both_bp": -7.2723098995906765
+   },
+   "per_trade": {
+    "side": "long",
+    "trades": 21086,
+    "mean_bp": -4.504100408704716,
+    "median_bp": -5.689112046568139,
+    "t": -0.6738046938160144,
+    "share_pos": 0.49677511144835435,
+    "hold_mean": 19.987622118941477,
+    "hold_median": 20.0,
+    "mean_per_bar_held_bp": -0.2253444847967362,
+    "two_c": {
+     "PB": 24.552835468158275,
+     "PUB": 52.46254765890422
+    },
+    "held_half": {
+     "PB": 11.271392608450997,
+     "PUB": 25.22624870382397
+    },
+    "held_price": 49.75,
+    "commission_bp": 2.0100502512562812,
+    "net_per_trade": {
+     "PB": -29.05693587686299,
+     "PUB": -56.966648067608936
+    },
+    "mean_over_2c": {
+     "PB": -0.18344522426120308,
+     "PUB": -0.08585363482515238
+    },
+    "era1_mean_bp": -6.230135254598429,
+    "era2_mean_bp": -3.6622123899603922,
+    "era1_n": 6913,
+    "era2_n": 14173,
+    "down_years_mean_bp": 16.25551113219279,
+    "down_years_n": 4818,
+    "by_year": {
+     "2013": {
+      "n": 55,
+      "mean_bp": -140.38702256289082
+     },
+     "2014": {
+      "n": 1601,
+      "mean_bp": -8.609716896932767
+     },
+     "2015": {
+      "n": 1571,
+      "mean_bp": 4.807213526051366
+     },
+     "2016": {
+      "n": 1600,
+      "mean_bp": -21.42833978491058
+     },
+     "2017": {
+      "n": 1613,
+      "mean_bp": 19.98159439836906
+     },
+     "2018": {
+      "n": 1554,
+      "mean_bp": 5.8799903998542
+     },
+     "2019": {
+      "n": 1649,
+      "mean_bp": -9.172059664627405
+     },
+     "2020": {
+      "n": 1636,
+      "mean_bp": 6.666782106296545
+     },
+     "2021": {
+      "n": 1730,
+      "mean_bp": 15.476166217157612
+     },
+     "2022": {
+      "n": 1693,
+      "mean_bp": 36.40248972481082
+     },
+     "2023": {
+      "n": 1819,
+      "mean_bp": -20.028161282891205
+     },
+     "2024": {
+      "n": 1751,
+      "mean_bp": -36.640784388123315
+     },
+     "2025": {
+      "n": 1811,
+      "mean_bp": -15.370571588511824
+     },
+     "2026": {
+      "n": 1003,
+      "mean_bp": -43.73139748679135
+     }
+    },
+    "breakeven_half_spread_bp_side": -3.2570753299804984,
+    "four_groups": {
+     "count": 21086,
+     "mean_bp": -4.504100408704716,
+     "median_bp": -5.689112046568139,
+     "win_rate": 0.49677511144835435,
+     "payoff": 0.9992958335559723,
+     "hold_mean": 19.987622118941477,
+     "hold_median": 20.0,
+     "skew": 0.1422260946512911,
+     "kurtosis_excess": 8.431376396755278,
+     "trim_k": 210,
+     "mean_ex_top_bp": -44.29985846310693,
+     "mean_ex_bottom_bp": 32.5562498289365,
+     "mean_trimmed_bp": -7.267304395093034,
+     "names_to_half_pnl": null,
+     "n_names": 1088,
+     "top_name_share": {
+      "1": null,
+      "5": null,
+      "10": null
+     },
+     "profitable_years_share": 0.42857142857142855,
+     "years": 14,
+     "top_trade": {
+      "symbol": "AAOI",
+      "entry_date": "2026-02-13",
+      "as_traded_price": 44.46,
+      "hold": 20,
+      "pnl_bp": 10192.981649268087,
+      "share_of_pnl": null,
+      "dv_percentile_at_entry": 66.9985775248933
+     },
+     "split_dead_alive": {
+      "dead_n": 3081,
+      "dead_mean_bp": -18.38983556394475,
+      "alive_n": 18005,
+      "alive_mean_bp": -2.127985439901906
+     },
+     "split_price": {
+      "median_price": 52.11,
+      "low_n": 10544,
+      "low_mean_bp": 7.025298047555557,
+      "high_n": 10542,
+      "high_mean_bp": -16.03568619155505
+     }
+    }
+   },
+   "deployed": {
+    "trades": 21086,
+    "entries": 21221,
+    "open_at_end": 135,
+    "bars_defined": 4187,
+    "bars_deployed": 3185,
+    "deployed_outside_defined": 0,
+    "exposure": 0.7606878433245761,
+    "mean_positions_deployed": 132.8248037676609,
+    "mean_positions_defined": 101.03821351803201,
+    "max_positions": 193,
+    "entries_per_year": 1277.2132791975162,
+    "PB": {
+     "hedged": {
+      "gross_bp": -0.18896529170199514,
+      "vol_bp": 28.286756365477828,
+      "net_bp": -2.6522174668493745,
+      "sharpe_gross": -0.10604718939279012,
+      "sharpe_net": -1.4884225853570974,
+      "round_trip": 45.08557043380399,
+      "commission_rt": 4.0201005025125625,
+      "cost_bp": 2.4632521751473795,
+      "turnover": 0.050162275113639854,
+      "held_per_bar": 132.8248037676609,
+      "fill": 33.20620094191523,
+      "held_half_spread": 11.271392608450997,
+      "held_price": 49.75,
+      "held_dv": 53019162.91126993,
+      "maxdd_bp": 1581.2307139347804,
+      "entries": 21221,
+      "bars": 3185,
+      "trades": 21086,
+      "breakeven_half_spread_bp_side": -1.9467950676508297
+     },
+     "unhedged": {
+      "gross_bp": 4.3516333206769975,
+      "vol_bp": 127.55598339271103,
+      "net_bp": 1.888381145529618,
+      "sharpe_gross": 0.5415664208243532,
+      "sharpe_net": 0.23501148712997838,
+      "round_trip": 45.08557043380399,
+      "commission_rt": 4.0201005025125625,
+      "cost_bp": 2.4632521751473795,
+      "turnover": 0.050162275113639854,
+      "held_per_bar": 132.8248037676609,
+      "fill": 33.20620094191523,
+      "held_half_spread": 11.271392608450997,
+      "held_price": 49.75,
+      "held_dv": 53019162.91126993,
+      "maxdd_bp": 5759.2046432406505,
+      "entries": 21221,
+      "bars": 3185,
+      "trades": 21086,
+      "breakeven_half_spread_bp_side": 20.682753742149554
+     },
+     "total": {
+      "gross_bp": -5.7072461512189685,
+      "vol_bp": 806.7577970945947,
+      "net_bp": -67.9278959565434,
+      "cost_bp": 62.22064980532443,
+      "sharpe_gross": -0.11230102051596591,
+      "sharpe_net": -1.3366117099738009,
+      "maxdd_bp": 57945.727604006126,
+      "bars": 4187,
+      "breakeven_half_spread_bp_side": -2.1310907980824934,
+      "turnover": 1.2670766658705517,
+      "exposure": 0.7606878433245761,
+      "flat_share": 0.23931215667542394,
+      "mean_positions": 101.03821351803201,
+      "mean_positions_long": 101.03821351803201,
+      "mean_positions_short": 0.0,
+      "max_positions": 193
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 22.542785216901994,
+      "commission_rt": 2.0100502512562812,
+      "cost_bp": 1.2316260875736897,
+      "net_bp": -1.4205913792756848,
+      "sharpe_net": -0.7972348873749437,
+      "breakeven_half_spread_bp_side": -2.8885650096735187
+     },
+     "unhedged_2x": {
+      "crossings": 2,
+      "round_trip": 22.542785216901994,
+      "commission_rt": 2.0100502512562812,
+      "cost_bp": 1.2316260875736897,
+      "net_bp": 3.1200072331033075,
+      "sharpe_net": 0.3882889539771658,
+      "breakeven_half_spread_bp_side": 42.37053260992725
+     }
+    },
+    "PUB": {
+     "hedged": {
+      "gross_bp": -0.18896529170199514,
+      "vol_bp": 28.286756365477828,
+      "net_bp": -5.452246789358788,
+      "sharpe_gross": -0.10604718939279012,
+      "sharpe_net": -3.059797080615194,
+      "round_trip": 100.90499481529588,
+      "commission_rt": 4.0201005025125625,
+      "cost_bp": 5.263281497656792,
+      "turnover": 0.050162275113639854,
+      "held_per_bar": 132.8248037676609,
+      "fill": 33.20620094191523,
+      "held_half_spread": 25.22624870382397,
+      "held_price": 49.75,
+      "held_dv": 53019162.91126993,
+      "maxdd_bp": 1581.2307139347804,
+      "entries": 21221,
+      "bars": 3185,
+      "trades": 21086,
+      "breakeven_half_spread_bp_side": -1.9467950676508297
+     },
+     "unhedged": {
+      "gross_bp": 4.3516333206769975,
+      "vol_bp": 127.55598339271103,
+      "net_bp": -0.9116481769797948,
+      "sharpe_gross": 0.5415664208243532,
+      "sharpe_net": -0.11345580012729214,
+      "round_trip": 100.90499481529588,
+      "commission_rt": 4.0201005025125625,
+      "cost_bp": 5.263281497656792,
+      "turnover": 0.050162275113639854,
+      "held_per_bar": 132.8248037676609,
+      "fill": 33.20620094191523,
+      "held_half_spread": 25.22624870382397,
+      "held_price": 49.75,
+      "held_dv": 53019162.91126993,
+      "maxdd_bp": 5759.2046432406505,
+      "entries": 21221,
+      "bars": 3185,
+      "trades": 21086,
+      "breakeven_half_spread_bp_side": 20.682753742149554
+     },
+     "total": {
+      "gross_bp": -5.7072461512189685,
+      "vol_bp": 806.7577970945947,
+      "net_bp": -138.65538609265752,
+      "cost_bp": 132.94813994143854,
+      "sharpe_gross": -0.11230102051596591,
+      "sharpe_net": -2.728310807991869,
+      "maxdd_bp": 57945.727604006126,
+      "bars": 4187,
+      "breakeven_half_spread_bp_side": -2.1310907980824934,
+      "turnover": 1.2670766658705517,
+      "exposure": 0.7606878433245761,
+      "flat_share": 0.23931215667542394,
+      "mean_positions": 101.03821351803201,
+      "mean_positions_long": 101.03821351803201,
+      "mean_positions_short": 0.0,
+      "max_positions": 193
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 50.45249740764794,
+      "commission_rt": 2.0100502512562812,
+      "cost_bp": 2.631640748828396,
+      "net_bp": -2.820606040530391,
+      "sharpe_net": -1.582922135003992,
+      "breakeven_half_spread_bp_side": -2.8885650096735187
+     },
+     "unhedged_2x": {
+      "crossings": 2,
+      "round_trip": 50.45249740764794,
+      "commission_rt": 2.0100502512562812,
+      "cost_bp": 2.631640748828396,
+      "net_bp": 1.7199925718486013,
+      "sharpe_net": 0.2140553103485305,
+      "breakeven_half_spread_bp_side": 42.37053260992725
+     }
+    }
+   },
+   "top_trade": {
+    "symbol": "AAOI",
+    "entry_bar": 4053,
+    "entry_date": "2026-02-13",
+    "held": 20,
+    "pnl_bp": 10192.981649268087,
+    "share_of_total": -0.10732452538374863
+   },
+   "placement": {
+    "price": {
+     "lo": 0.2801532929102029,
+     "mid": 0.34364910622883693,
+     "hi": 0.37619760086096016
+    },
+    "vol": {
+     "lo": 0.37202404388797017,
+     "mid": 0.3404992519095992,
+     "hi": 0.28747670420243066
+    },
+    "mom": {
+     "lo": 0.332388377037562,
+     "mid": 0.34569651153634146,
+     "hi": 0.3219151114260965
+    }
+   },
+   "floors": {
+    "ALL": {
+     "p95": 12.571746188780288,
+     "p50": 1.4292121092524572,
+     "se_p95": 0.930024787238868,
+     "interpolated": true,
+     "between": [
+      9337.774,
+      24946.3
+     ],
+     "pool": "ALL"
+    }
+   },
+   "tilted_axes": [],
+   "operative_floor": 12.571746188780288,
+   "margin": -17.075846597485004
+  },
+  "up_frac_21": {
+   "role": "REFERENCE ONLY -- K1 killed it",
+   "events": 40020,
+   "trades": 21317,
+   "groups": {
+    "n": 21317,
+    "mean_bp": 21.61993757871323,
+    "median_bp": 8.390938864631979,
+    "win_rate": 0.5056058544823381,
+    "t": 3.0801064956746624,
+    "trim_ex_top_bp": -20.425824413039145,
+    "trim_ex_bottom_bp": 61.38689612309747,
+    "trim_both_bp": 19.317788641482654
+   },
+   "per_trade": {
+    "side": "long",
+    "trades": 21317,
+    "mean_bp": 21.61993757871323,
+    "median_bp": 8.390938864631979,
+    "t": 3.0801064956746624,
+    "share_pos": 0.5056058544823381,
+    "hold_mean": 19.98297133743022,
+    "hold_median": 20.0,
+    "mean_per_bar_held_bp": 1.0819180598140976,
+    "two_c": {
+     "PB": 23.174077537792016,
+     "PUB": 60.74931139043947
+    },
+    "held_half": {
+     "PB": 10.40220464567326,
+     "PUB": 29.189821571996987
+    },
+    "held_price": 42.2,
+    "commission_bp": 2.3696682464454972,
+    "net_per_trade": {
+     "PB": -1.5541399590787854,
+     "PUB": -39.12937381172624
+    },
+    "mean_over_2c": {
+     "PB": 0.9329362751745215,
+     "PUB": 0.35588778018833156
+    },
+    "era1_mean_bp": 13.092699043431836,
+    "era2_mean_bp": 25.73177176326173,
+    "era1_n": 6935,
+    "era2_n": 14382,
+    "down_years_mean_bp": 40.11540328137938,
+    "down_years_n": 4980,
+    "by_year": {
+     "2013": {
+      "n": 60,
+      "mean_bp": -152.41245595611844
+     },
+     "2014": {
+      "n": 1577,
+      "mean_bp": -14.957211193680298
+     },
+     "2015": {
+      "n": 1501,
+      "mean_bp": -11.58076729965322
+     },
+     "2016": {
+      "n": 1659,
+      "mean_bp": 57.36269092934984
+     },
+     "2017": {
+      "n": 1625,
+      "mean_bp": 19.00482495412454
+     },
+     "2018": {
+      "n": 1630,
+      "mean_bp": 23.38090153282979
+     },
+     "2019": {
+      "n": 1635,
+      "mean_bp": 27.902408468102742
+     },
+     "2020": {
+      "n": 1651,
+      "mean_bp": 39.53636316582983
+     },
+     "2021": {
+      "n": 1645,
+      "mean_bp": 92.9340078597683
+     },
+     "2022": {
+      "n": 1849,
+      "mean_bp": 96.83427288238846
+     },
+     "2023": {
+      "n": 1755,
+      "mean_bp": -24.76249413666391
+     },
+     "2024": {
+      "n": 1781,
+      "mean_bp": -35.23957281863864
+     },
+     "2025": {
+      "n": 1873,
+      "mean_bp": 15.553474506566591
+     },
+     "2026": {
+      "n": 1076,
+      "mean_bp": -17.56597777016048
+     }
+    },
+    "breakeven_half_spread_bp_side": 9.625134666133867,
+    "four_groups": {
+     "count": 21317,
+     "mean_bp": 21.61993757871323,
+     "median_bp": 8.390938864631979,
+     "win_rate": 0.5056058544823381,
+     "payoff": 1.040437247473411,
+     "hold_mean": 19.98297133743022,
+     "hold_median": 20.0,
+     "skew": 0.17826575916260953,
+     "kurtosis_excess": 8.709924965107952,
+     "trim_k": 213,
+     "mean_ex_top_bp": -20.28758852137694,
+     "mean_ex_bottom_bp": 61.253831155039165,
+     "mean_trimmed_bp": 19.323123602286937,
+     "names_to_half_pnl": 17,
+     "n_names": 1113,
+     "top_name_share": {
+      "1": 0.042523490665619564,
+      "5": 0.1833066475872719,
+      "10": 0.33452237110501765
+     },
+     "profitable_years_share": 0.5714285714285714,
+     "years": 14,
+     "top_trade": {
+      "symbol": "TDS",
+      "entry_date": "2023-07-14",
+      "as_traded_price": 7.64,
+      "hold": 20,
+      "pnl_bp": 10755.855819581402,
+      "share_of_pnl": 0.0233380438243196,
+      "dv_percentile_at_entry": 26.928281461434374
+     },
+     "split_dead_alive": {
+      "dead_n": 3438,
+      "dead_mean_bp": 10.743148774386883,
+      "alive_n": 17879,
+      "alive_mean_bp": 23.7114639453598
+     },
+     "split_price": {
+      "median_price": 43.19,
+      "low_n": 10661,
+      "low_mean_bp": 39.618102440284254,
+      "high_n": 10656,
+      "high_mean_bp": 3.613327632278482
+     }
+    }
+   },
+   "deployed": {
+    "trades": 21317,
+    "entries": 21497,
+    "open_at_end": 180,
+    "bars_defined": 4187,
+    "bars_deployed": 3185,
+    "deployed_outside_defined": 0,
+    "exposure": 0.7606878433245761,
+    "mean_positions_deployed": 134.34222919937207,
+    "mean_positions_defined": 102.19250059708622,
+    "max_positions": 191,
+    "entries_per_year": 1293.8246954860283,
+    "PB": {
+     "hedged": {
+      "gross_bp": 1.203284026369169,
+      "vol_bp": 34.18666067705792,
+      "net_bp": -1.1252807339838036,
+      "sharpe_gross": 0.5587425435475354,
+      "sharpe_net": -0.5225218699265348,
+      "round_trip": 41.60881858269304,
+      "commission_rt": 4.7393364928909945,
+      "cost_bp": 2.3285647603529727,
+      "turnover": 0.05024072169767224,
+      "held_per_bar": 134.34222919937207,
+      "fill": 33.58555729984302,
+      "held_half_spread": 10.40220464567326,
+      "held_price": 42.2,
+      "held_dv": 46814422.34642828,
+      "maxdd_bp": 1112.4458306528945,
+      "entries": 21497,
+      "bars": 3185,
+      "trades": 21317,
+      "breakeven_half_spread_bp_side": 4.802759136334865
+     },
+     "unhedged": {
+      "gross_bp": 5.87659019230231,
+      "vol_bp": 136.6053579082333,
+      "net_bp": 3.5480254319493376,
+      "sharpe_gross": 0.6829013053639267,
+      "sharpe_net": 0.4123056261633512,
+      "round_trip": 41.60881858269304,
+      "commission_rt": 4.7393364928909945,
+      "cost_bp": 2.3285647603529727,
+      "turnover": 0.05024072169767224,
+      "held_per_bar": 134.34222919937207,
+      "fill": 33.58555729984302,
+      "held_half_spread": 10.40220464567326,
+      "held_price": 42.2,
+      "held_dv": 46814422.34642828,
+      "maxdd_bp": 5858.6998055965105,
+      "entries": 21497,
+      "bars": 3185,
+      "trades": 21317,
+      "breakeven_half_spread_bp_side": 28.057332359104002
+     },
+     "total": {
+      "gross_bp": 28.258443710712083,
+      "vol_bp": 1012.2031342592531,
+      "net_bp": -31.232020204969192,
+      "cost_bp": 59.490463915681275,
+      "sharpe_gross": 0.44318069347399647,
+      "sharpe_net": -0.48981566411547184,
+      "maxdd_bp": 42567.91435552795,
+      "bars": 4187,
+      "breakeven_half_spread_bp_side": 4.319101487176446,
+      "turnover": 1.2835562455218534,
+      "exposure": 0.7606878433245761,
+      "flat_share": 0.23931215667542394,
+      "mean_positions": 102.19250059708622,
+      "mean_positions_long": 102.19250059708622,
+      "mean_positions_short": 0.0,
+      "max_positions": 191
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 20.80440929134652,
+      "commission_rt": 2.3696682464454972,
+      "cost_bp": 1.1642823801764863,
+      "net_bp": 0.03900164619268276,
+      "sharpe_net": 0.01811033681050033,
+      "breakeven_half_spread_bp_side": 10.79035239589248
+     },
+     "unhedged_2x": {
+      "crossings": 2,
+      "round_trip": 20.80440929134652,
+      "commission_rt": 2.3696682464454972,
+      "cost_bp": 1.1642823801764863,
+      "net_bp": 4.7123078121258235,
+      "sharpe_net": 0.5476034657636389,
+      "breakeven_half_spread_bp_side": 57.299498841430754
+     }
+    },
+    "PUB": {
+     "hedged": {
+      "gross_bp": 1.203284026369169,
+      "vol_bp": 34.18666067705792,
+      "net_bp": -4.900894467415431,
+      "sharpe_gross": 0.5587425435475354,
+      "sharpe_net": -2.2757205949492225,
+      "round_trip": 116.75928628798795,
+      "commission_rt": 4.7393364928909945,
+      "cost_bp": 6.1041784937846,
+      "turnover": 0.05024072169767224,
+      "held_per_bar": 134.34222919937207,
+      "fill": 33.58555729984302,
+      "held_half_spread": 29.189821571996987,
+      "held_price": 42.2,
+      "held_dv": 46814422.34642828,
+      "maxdd_bp": 1112.4458306528945,
+      "entries": 21497,
+      "bars": 3185,
+      "trades": 21317,
+      "breakeven_half_spread_bp_side": 4.802759136334865
+     },
+     "unhedged": {
+      "gross_bp": 5.87659019230231,
+      "vol_bp": 136.6053579082333,
+      "net_bp": -0.2275883014822897,
+      "sharpe_gross": 0.6829013053639267,
+      "sharpe_net": -0.026447368811151433,
+      "round_trip": 116.75928628798795,
+      "commission_rt": 4.7393364928909945,
+      "cost_bp": 6.1041784937846,
+      "turnover": 0.05024072169767224,
+      "held_per_bar": 134.34222919937207,
+      "fill": 33.58555729984302,
+      "held_half_spread": 29.189821571996987,
+      "held_price": 42.2,
+      "held_dv": 46814422.34642828,
+      "maxdd_bp": 5858.6998055965105,
+      "entries": 21497,
+      "bars": 3185,
+      "trades": 21317,
+      "breakeven_half_spread_bp_side": 28.057332359104002
+     },
+     "total": {
+      "gross_bp": 28.258443710712083,
+      "vol_bp": 1012.2031342592531,
+      "net_bp": -127.69187238198883,
+      "cost_bp": 155.95031609270092,
+      "sharpe_gross": 0.44318069347399647,
+      "sharpe_net": -2.0026075438751345,
+      "maxdd_bp": 42567.91435552795,
+      "bars": 4187,
+      "breakeven_half_spread_bp_side": 4.319101487176446,
+      "turnover": 1.2835562455218534,
+      "exposure": 0.7606878433245761,
+      "flat_share": 0.23931215667542394,
+      "mean_positions": 102.19250059708622,
+      "mean_positions_long": 102.19250059708622,
+      "mean_positions_short": 0.0,
+      "max_positions": 191
+     },
+     "hedged_2x": {
+      "crossings": 2,
+      "round_trip": 58.379643143993974,
+      "commission_rt": 2.3696682464454972,
+      "cost_bp": 3.0520892468923,
+      "net_bp": -1.848805220523131,
+      "sharpe_net": -0.8584890257008436,
+      "breakeven_half_spread_bp_side": 10.79035239589248
+     },
+     "unhedged_2x": {
+      "crossings": 2,
+      "round_trip": 58.379643143993974,
+      "commission_rt": 2.3696682464454972,
+      "cost_bp": 3.0520892468923,
+      "net_bp": 2.8245009454100103,
+      "sharpe_net": 0.3282269682763876,
+      "breakeven_half_spread_bp_side": 57.299498841430754
+     }
+    }
+   },
+   "top_trade": {
+    "symbol": "TDS",
+    "entry_bar": 3404,
+    "entry_date": "2023-07-14",
+    "held": 20,
+    "pnl_bp": 10755.855819581402,
+    "share_of_total": 0.0233380438243196
+   },
+   "placement": {
+    "price": {
+     "lo": 0.36219390304847576,
+     "mid": 0.3319590204897551,
+     "hi": 0.3058470764617691
+    },
+    "vol": {
+     "lo": 0.31986506746626686,
+     "mid": 0.3446276861569215,
+     "hi": 0.3355072463768116
+    },
+    "mom": {
+     "lo": 0.3589705147426287,
+     "mid": 0.32636181909045475,
+     "hi": 0.31466766616691655
+    }
+   },
+   "floors": {
+    "ALL": {
+     "p95": 12.49958535161587,
+     "p50": 1.437569799764244,
+     "se_p95": 0.930024787238868,
+     "interpolated": true,
+     "between": [
+      9337.774,
+      24946.3
+     ],
+     "pool": "ALL"
+    }
+   },
+   "tilted_axes": [],
+   "operative_floor": 12.49958535161587,
+   "margin": 9.12035222709736
+  }
+ },
+ "sign_flips_direction_diagnostic": {
+  "trailing_down": {
+   "trades": 10778,
+   "mean_bp": 3.431204915069223,
+   "median_bp": -3.418010388804727
+  },
+  "trailing_up": {
+   "trades": 13081,
+   "mean_bp": -8.225682376656652,
+   "median_bp": -8.902212807702751
+  }
+ },
+ "caveat": "Seeing this cell before the other nine means the full 10-cell grid is no longer being read blind, and any later Stage 1 must say so."
+}
