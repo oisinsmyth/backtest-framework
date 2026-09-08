@@ -81,9 +81,12 @@ break-even falls to 0.0917 and 0.1373 against zero-edge pass rates of 0.2495 and
 *impossible* to *positive with no skill at all*. The list price exists to make the discount look like
 a deal. *(The 90% is claims-tier observation, not a published term.)*
 
-**Topstep looks best and the model flatters it:** its $49 is **monthly** and is charged once here. At
-the ~58-day mean resolution the true cost is nearer $147, lifting break-even to ~0.23 against a
-zero-edge 0.2664 — positive, but marginal.
+**~~Topstep looks best and the model flatters it.~~ WITHDRAWN — see [§2c](#2c-full-lifecycle-2026-09-08--under-every-rule-and-two-of-this-records-own-recommendations-are-withdrawn),
+where the full rules put Topstep LAST of the four firms at Sharpe 1.5.** The caution itself was
+right and understated: the $49 is **monthly**, not one-time, and is charged once here, so at the
+~58-day mean resolution the true cost is nearer $147. But the fee was never the binding term. Under
+the payout rules Topstep averages **0.52 payouts per evaluation** against MFFU's **4.03**, because a
+payout sets its MLL to $0 and destroys the buffer.
 
 **And zero edge flatters the real population.** Topstep's own 2025 disclosure puts per-Combine
 completion at **16.8%** against a zero-edge **26.6–31.7%** at the true geometry — **86 to 124 standard
@@ -201,6 +204,90 @@ stated limitation of it, not a result.**
 sits above the median because a small right tail carries everything. **Anyone you meet who has taken
 four Apex payouts is the top 5% of this distribution, not evidence against it** — and that is exactly
 the population the marketing selects for.
+
+---
+
+## 2c. FULL LIFECYCLE, 2026-09-08 — under EVERY rule, and two of this record's own recommendations are withdrawn
+
+**Appended after §2b.** §§1–2b modelled the barrier and the payout ladder but **not the rules that
+decide whether a payout may be REQUESTED.** The principal named the omission: every firm gates
+payouts on a minimum number of days each clearing a minimum **profit**, and most add a consistency
+rule. Those bind hardest on exactly the small-size play that maximises survival, so the earlier
+sections recommended a policy the terms do not permit.
+
+Runner: [`scripts/d386_full_lifecycle.py`](../../scripts/d386_full_lifecycle.py), seven assertions.
+It simulates each path day by day through the evaluation and the funded phase under that phase's
+**own** geometry, with the qualifying-day counter at the firm's threshold, the consistency rule, the
+cap schedule, the payout count limit, the minimum withdrawal, the safety net, the post-payout floor
+change, and **monthly billing** — so a slow pass stops being free. Risk size is a choice, so `V` is
+maximised over a grid of daily vols, which makes **break-even Sharpe** well-defined: the lowest
+Sharpe at which *some* risk level makes `V` positive.
+
+### Results — V per evaluation purchased, 8,000 paths, 600 days
+
+| firm | size | fee | V @ 1.0 | V @ 1.5 | V @ 2.0 | best risk | **BE Sharpe** |
+|---|---|---|---:|---:|---:|---:|---:|
+| **MFFU Rapid** | 150K | $463 | 1,784 | **4,309** | 8,360 | 0.2% | **0.00** |
+| **MFFU Rapid EOD** | 50K | $209 | 1,311 | **3,015** | 5,556 | 0.4% | **0.00** |
+| MFFU Rapid | 100K | $356 | 1,158 | 2,819 | 5,596 | 0.2% | 0.12 |
+| MFFU Rapid | 50K | $209 | 1,279 | 2,942 | 5,429 | 0.4% | 0.00 |
+| MFFU Rapid EOD | 25K | $145 | 592 | 1,450 | 2,800 | 0.4% | 0.20 |
+| Take Profit Trader | 150K | $360/mo+$130 | 1,242 | 4,290 | 9,049 | 0.4% | 0.00 |
+| Take Profit Trader | 100K | $330/mo+$130 | 640 | 2,957 | 6,795 | 0.4% | 0.00 |
+| Take Profit Trader | 50K | $170/mo+$130 | 916 | 2,214 | 4,460 | 0.7% | 0.00 |
+| Take Profit Trader | 25K | $150/mo+$130 | 980 | 2,458 | 4,801 | 0.7% | 0.00 |
+| Apex | 50K | $550+$139 | 689 | 1,910 | 3,378 | 0.4% | **0.59** |
+| Apex | 25K | $450+$119 | 112 | 675 | 1,320 | 0.4% | **0.90** |
+| Apex | 100K | $990+$149 | 103 | 1,564 | 3,944 | 0.2% | **0.90** |
+| Apex | 150K | $1,890+$159 | **−426** | 1,608 | 4,195 | 0.2% | **1.13** |
+| **Topstep** | 50K | $49/mo+$149 | 551 | **916** | 1,571 | 1.1% | 0.00 |
+
+### WITHDRAWN: "Topstep looks best of the three"
+
+§2 said so, and §2a repeated it. **It is wrong, and it was wrong because it priced the fee and
+ignored the payout mechanics.** Under the full rules Topstep returns **$916 at Sharpe 1.5 against
+MFFU Rapid EOD's $3,015 on the same 50K account** — last of the four firms. The cause is in the
+detail table: Topstep averages **0.52 payouts per evaluation** against MFFU's **4.03**. Lane 02's
+finding that *a payout sets the MLL to $0 and destroys the buffer* turns out to dominate the
+economics, and the cheap $49 fee does not come close to compensating. **Topstep's approximation in
+this model is deliberately generous to Topstep, so its last place is if anything understated.**
+
+### WITHDRAWN: "a bigger account is a harder evaluation" as a statement about VALUE
+
+§4 point 3 is correct about the **pass rate** and was over-read as being about profitability.
+Payouts scale with size too, and at MFFU and Take Profit Trader the second effect wins at every
+Sharpe — MFFU Rapid 150K is the single best cell in the table. **It is only at Apex that bigger is
+worse, because there the fee scales faster than the payout:** Apex 150K is **−$426 at Sharpe 1.0**
+and needs Sharpe **1.13** merely to break even.
+
+### What the table establishes
+
+1. **MFFU Rapid EOD is the vehicle.** Break-even at essentially zero edge, the cheapest one-time fee,
+   **$0 activation**, no payout cap, a **$150** qualifying threshold against Apex's $250, and **no
+   funded consistency rule**. It beats Rapid by $73 at the 50K, the same direction as §2's standalone
+   intraday-vs-EOD finding.
+2. **Apex is the most demanding by a wide margin** — break-even Sharpe 0.59 to 1.13, against ~0
+   everywhere else. Large one-time fees against the harshest qualifying threshold in the sector.
+3. **Timid play survives the qualifying-day rules, but only where the threshold is low.** The optimum
+   sits at **0.2–0.4%** daily risk at the one-time-fee firms, because $150/day is reachable there. It
+   does not survive Apex's $250 or Take Profit Trader's $500, which is why TPT's optimum is 0.7%.
+4. **The median is still $0 at most firms even at Sharpe 1.5.** Only the 100K/150K accounts have a
+   positive median. §2b's finding is softened, not overturned.
+
+### Assumptions, and the direction each biases
+
+- Take Profit Trader's qualifying threshold is published for 25K ($250) and 50K ($500); **100K and
+  150K are ASSUMED $500** — lane 04 has no larger-size row. If it scales like Apex's, TPT's two best
+  cells fall.
+- Topstep's "50% of balance up to the cap" is approximated by the cap plus withdrawal to the start
+  level — **generous to Topstep**.
+- Daily P&L is Gaussian. Real P&L is fat-tailed, which **raises** the chance of clearing a high daily
+  threshold at small size and **lowers** survival. Both unmodelled, and they oppose.
+- The self-test's `[BUFFER]` check shows the discrete step **overshoots** the floor, so `E[paid]`
+  lands ~7% above the martingale identity at k=16 and converges from above. **Every V here carries a
+  few per cent of optimistic bias from that alone.**
+- The 7-day and 30-day inactivity rules are not modelled; they clear comfortably at every risk level
+  tested.
 
 ---
 
