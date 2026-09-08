@@ -161,6 +161,78 @@ presume it. What it removes is the open question that D378 left.
 
 ---
 
+## 6a. CORRECTION, 2026-09-08 — **±200 bp was not a stop and not a target. The thresholds were mis-scaled and E2/E3's verdicts do not mean what their names say.**
+
+**Raised by the principal: a stop that triggers on 79% of trades is not a stop for this strategy, and
+the same goes for an 81% target. That objection is correct and it invalidates the framing of two of
+the three arms.**
+
+§2 declared ±200 bp *"round, symmetric, and roughly the observed mean per trade — not swept"*. The
+instinct — declare rather than sweep — was right. **The scale was wrong.** The fire rate is set by
+the **path's excursion distribution**, not by the **terminal** mean, and those differ by an order of
+magnitude:
+
+| the baseline's own paths | p50 | p75 / p25 | p90 / p10 |
+|---|---:|---:|---:|
+| **max favourable** excursion | **+839.4** | +1,641.2 | +2,837.6 |
+| **max adverse** excursion | **−772.5** | −1,492.8 | −2,510.8 |
+
+**The median trade swings +839 up and −773 down at some point in its life.** A ±200 bp threshold sits
+at roughly **a quarter of the median excursion** — inside the ordinary wander of almost every path.
+It does not select a tail; it fires on the first meaningful move. **What E2 and E3 actually tested is
+"exit as soon as the trade moves at all", not a target or a stop.**
+
+**What the thresholds would have to be**, from the same paths:
+
+| fire rate | target | stop |
+|---:|---:|---:|
+| 5% | +3,798.8 | −3,229.4 |
+| **10%** | **+2,837.6** | **−2,510.8** |
+| 20% | +1,881.2 | −1,743.0 |
+| the declared ±200 | fires **81.0%** | fires **79.5%** |
+
+**This is [D374](D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md)'s
+lesson landing on my own parameter.** D374 retired a hurdle for having a threshold fixed in advance of
+the universe; ±200 was fixed in advance of the **path distribution**, which is the same error one
+level down. **A threshold should have been declared as a FIRE RATE and converted to basis points from
+the data — not declared in basis points and left to fire wherever it landed.**
+
+### What survives this correction, and what does not
+
+- **E1's verdict is untouched.** It has no threshold: it is the kernel's own invalidation condition,
+  it fires on 99.6% of trades **because that is what the rule does**, and it fails both its controls.
+  **Q1 stands.**
+- **§2's methodological finding is untouched and is in fact reinforced.** The control's centre ranged
+  +11.95 → +181.11 *because of which trades each rule selected* — and ±200's selection was "almost
+  everything", which is precisely why E1's and E2's controls sit where they do.
+- **§0's headline is untouched:** no overlay tested beat the baseline. But **"a properly-scaled stop
+  or target was tested and failed" is NOT established**, and this record must not be read as saying it.
+- **E2 and E3 are downgraded to what they are:** two very tight exit thresholds, reported, failing to
+  beat the baseline. **Their names oversell them.**
+
+### The one part of the median argument that does survive
+
+A fair objection to §3 is that a mean carried by the tail is fragile, so a rule that lifts the median
+might still be the better book. **Tested on the baseline's own trades, it does not rescue the target:**
+
+| | |
+|---|---:|
+| E0 mean | **+160.55** |
+| E0 trimmed 1% both tails | +131.70 |
+| **E0 mean excluding its top 1% of trades** | **+73.24** |
+| **E2's full-sample mean** | **+62.43** |
+
+**Strip the baseline of its best 1% of trades and it still beats the target arm.** The median
+improvement is real; it is not paid for out of a fragile tail, it is paid for out of the whole
+distribution.
+
+*(Calibration computed post-hoc from the same stored paths; it is a descriptive property of the book
+and adjudicates nothing. A corrected study is owed and would pre-register **fire rates** — 5%, 10%,
+20% — converted to basis points from the paths, with the un-overlaid baseline in the comparison per
+§2.)*
+
+---
+
 ## 7. What this did not settle
 
 - **Whether a cheaper short-hold implementation works.** §4's book is the naive version at 6.4× turnover.
