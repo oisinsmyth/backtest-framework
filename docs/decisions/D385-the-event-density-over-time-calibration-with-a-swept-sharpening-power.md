@@ -214,3 +214,34 @@ A third look at a window already mined; under the principal's ruling of 2026-09-
 *Pre-registered 2026-09-08. Runner does not exist at the time of this commit (R8). Stage 0: scores no
 cell, admits nothing. The decay-coherence fork of §3 is OPEN and is the principal's. The narrowing to
 dense event types in §3 is mine and is flagged for objection.*
+
+---
+
+## AMENDMENT, 2026-09-08 — events are defined on CLOSES, because the null must be able to regenerate them
+
+**Written before the runner exists, so still a pre-registration under R8.**
+
+§3 named the event types as *swing low/high* and *lowest low / highest high in 20*, which read the
+intrabar **high** and **low**. **N2 cannot produce those.** It bootstraps standardised returns and
+rescales by the observed volatility path, which yields a synthetic **close** path and nothing else.
+
+That leaves two options and they are not equally clean:
+
+- **Synthesise a range** — carry the observed `high/close` and `low/close` ratios onto the null path.
+  This **imports observed intrabar structure into the null**, which is exactly the leak that makes a
+  null stop being a null. **Rejected.**
+- **Define every event on closes.** `swing low` becomes a 2-bar local minimum of the close;
+  `lowest low in 20` becomes the lowest close in 20. The null regenerates closes, so it regenerates
+  events by the identical code path. **Adopted.**
+
+**The observed and the null must compute events with the same function on the same input type, or the
+comparison is not a comparison.** That is the whole reason for the change, and it outranks the mild
+loss of realism in defining a swing on closes rather than on lows.
+
+**Consequence for §3's rate table, which was measured on highs/lows and is now superseded**: a 2-bar
+local minimum of the close is a roughly 1-in-3 event rather than 21 per 100 bars, so the dense types
+get denser and `n_eff` is if anything better. **The runner measures and reports the realised rates
+rather than assuming these** — the §3 numbers are no longer the operative ones.
+
+`[NULL]` gains one clause: **the event-extraction function called on the observed path and on every
+null path is literally the same function object**, asserted rather than assumed.
