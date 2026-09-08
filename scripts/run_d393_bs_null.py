@@ -65,6 +65,8 @@ def _load(name, filename):
 OVL_OUT = REPO / "data" / "d393_overlap.json"
 BS_OUT = REPO / "data" / "d393_bs_null.json"
 AP_OUT = REPO / "data" / "d393_aprime_null.json"
+B_OUT = REPO / "data" / "d393_b_null.json"
+C_OUT = REPO / "data" / "d393_c_null.json"
 NPZ = REPO / "temp" / "d290_scores.npz"
 
 CAP = 20
@@ -184,7 +186,12 @@ def build(PREP, V50, SG):
     dec = np.full(pct[REF].shape, -1, np.int8)
     fin = np.isfinite(pct[REF])
     dec[fin] = np.clip((pct[REF][fin] // 10.0).astype(np.int8), 0, 9)
-    return P, elig, cols, masks, dec, T, n
+    # B's group: the rsi bucket at t-1 (`V47.bucket_of` over `PCT["rsi"]`), already built by prep.
+    # Its pool is eligible AND a DEFINED rsi percentile -- D359's `elig_b` -- because a name with
+    # no rsi percentile has no bucket to be swapped inside.
+    bucket = np.asarray(P["bucket_rsi"]).astype(np.int16)
+    elig_b = elig & np.isfinite(np.asarray(P["PCT"]["rsi"]))
+    return P, elig, cols, masks, dec, T, n, bucket, elig_b
 
 
 def held_grid(res, T, n):
@@ -204,7 +211,7 @@ def jac(a, b):
 # ------------------------------------------------------------------ the overlap check
 def overlap(PREP, V50, SG, V59) -> int:
     t0 = time.time()
-    P, elig, cols, masks, dec, T, n = build(PREP, V50, SG)
+    P, elig, cols, masks, dec, T, n, bucket, elig_b = build(PREP, V50, SG)
     print(f"  prep + scores in {time.time() - t0:.0f}s", flush=True)
 
     res, pnl, held, keys = {}, {}, {}, {}
@@ -268,16 +275,37 @@ def overlap(PREP, V50, SG, V59) -> int:
 def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
        shard=None, nshards=NSHARDS, verify_shard=False, null_kind="Bs", V73=None) -> int:
     t0 = time.time()
-    P, elig, cols, masks, dec, T, n = build(PREP, V50, SG)
+    P, elig, cols, masks, dec, T, n, bucket, elig_b = build(PREP, V50, SG)
     print(f"  prep + scores in {time.time() - t0:.0f}s", flush=True)
 
-    obs = {}
+    obs, ledger = {}, {}
     for k in (CANDIDATE, CONTROL):
         sc = np.where(np.isfinite(cols[k]), cols[k], 50.0)
         r = V59.run_mirror(P, masks[k], sc, "cap", CAP)
-        obs[k] = float(PREP.V47.pnl_bp(r).mean())
+        ledger[k] = PREP.V47.pnl_bp(r)
+        obs[k] = float(ledger[k].mean())
     print(f"  observed: {CANDIDATE} {obs[CANDIDATE]:+.2f} | {CONTROL} "
           f"{obs[CONTROL]:+.2f} (the null's positive control)", flush=True)
+
+    # ---- C: random direction on the EXISTING ledger, so no re-simulation ---
+    #      C asks whether the SIGN of the edge is real given this exact set of trades and holds.
+    #      It re-uses the observed per-trade P&L and flips each trade's direction at random, so it
+    #      costs milliseconds rather than 0.8 s a draw -- no shards, no fan.
+    if null_kind == "C":
+        rngc = np.random.default_rng(SEED)
+        draws = {}
+        for k in (CANDIDATE, CONTROL):
+            p_ = np.asarray(ledger[k], float)
+            sgn = rngc.integers(0, 2, size=(n_draws, p_.size)) * 2 - 1
+            draws[k] = list((sgn * p_).mean(axis=1))
+        # [C] a null centred on zero is the whole point; assert it before scoring
+        for k in draws:
+            c_ = float(np.mean(draws[k]))
+            assert abs(c_) < 0.5, f"[C] {k}'s direction null is centred at {c_:+.3f}, not ~0"
+        print(f"    [C] {n_draws:,} sign-flip draws on the observed ledgers "
+              f"({ledger[CANDIDATE].size:,} and {ledger[CONTROL].size:,} trades); both nulls "
+              f"centred on zero as a direction null must be", flush=True)
+        return _score_and_report(draws, obs, n_draws, null_kind, t0)
 
     # ---- the null's own assertions on one draw, and the negative control ---
     rng0 = np.random.default_rng(SEED)
@@ -294,6 +322,22 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
             pass
         print(f"    [Bs] {nrep:,} replacements, {kept0:,} kept for a short pool; and the "
               f"assertion RAISES on an ineligible replacement", flush=True)
+    elif null_kind == "B":
+        sig0, kept0 = control_bs_signal(masks[CANDIDATE], bucket, elig_b, rng0)
+        nrep = assert_Bs(sig0, masks[CANDIDATE], bucket, elig_b, kept0)
+        bad = sig0.copy()
+        j = np.flatnonzero(bad.any(axis=1))[0]
+        off = np.flatnonzero(~elig_b[j])
+        assert off.size, "no ineligible name on that bar to break the draw with"
+        bad[j, off[0]] = True
+        try:
+            assert_Bs(bad, masks[CANDIDATE], bucket, elig_b, kept0)
+            raise SystemExit("[X] assert_Bs did NOT fire on an ineligible replacement")
+        except AssertionError:
+            pass
+        print(f"    [B] {nrep:,} replacements inside the event's own rsi bucket, {kept0:,} kept "
+              f"for a short pool; and the assertion RAISES on an ineligible replacement",
+              flush=True)
     else:
         # A' -- D373's own three assertions (no short leg, nothing off the floor, per-name count
         # preserved) fire inside aprime_draw_long. What is checked HERE is that they can fail, and
@@ -330,6 +374,12 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
         if null_kind == "A":
             sc = np.where(np.isfinite(cols[k]), cols[k], 50.0)
             sig, sc_ = V73.aprime_draw_long(masks[k], sc, elig, rng)
+        elif null_kind == "B":
+            # SAME per-group swap as B_s, with the group changed from the rev_21 decile to the
+            # rsi bucket and the pool restricted to names with a DEFINED rsi percentile. The
+            # function is generic in its grouping array, so there is no second copy.
+            sig, _ = control_bs_signal(masks[k], bucket, elig_b, rng)
+            sc_ = np.full((T, n), 17.0)
         else:
             sig, _ = control_bs_signal(masks[k], dec, elig, rng)
             sc_ = np.full((T, n), 17.0)
@@ -383,7 +433,13 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
         return 0
 
     draws = merge_shards(n_draws, nshards, null_kind)
+    return _score_and_report(draws, obs, n_draws, null_kind, t0)
 
+
+def _score_and_report(draws, obs, n_draws, null_kind, t0):
+    """p50/p95 with a bootstrap SE, the 2-SE UNRESOLVED band, persist, then render.
+
+    Shared by the sharded nulls (A', B, B_s) and by C, which needs no simulation at all."""
     rngb = np.random.default_rng(7)
     stats = {}
     for k in (CANDIDATE, CONTROL):
@@ -399,23 +455,35 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
                         verdict=("UNRESOLVED (within 2 SE)" if abs(margin) <= 2 * se
                                  else "ABOVE" if margin > 0 else "BELOW"))
 
-    NAME = {"Bs": "B_s", "A": "A_prime"}[null_kind]
+    NAME = {"Bs": "B_s", "A": "A_prime", "B": "B", "C": "C"}[null_kind]
+    PURPOSE = {
+        "Bs": "each event's name swapped for an eligible name in the same rev_21 DECILE that "
+              "day, section 4's load-bearing null.",
+        "A": "each name's events rotated within its own eligible bars, the score rotated with "
+             "them -- a TIMING null: names and per-name counts held fixed.",
+        "B": "each event's name swapped for an eligible name in the same rsi BUCKET that day, "
+             "among names with a defined rsi percentile.",
+        "C": "the direction of each trade in the OBSERVED ledger flipped at random -- the trades "
+             "and holds are the real ones, only the sign is drawn.",
+    }[null_kind]
+    CTL_NOTE = {
+        "Bs": f"{CONTROL} IS the rev_21 decile (rho +0.601), so it MUST die here; a B_s that "
+              f"spares it has no power and its verdict on {CANDIDATE} would be worthless.",
+        "A": f"{CONTROL} SHOULD survive here: rev_21's own E1 timing is real and published at "
+             f"+38 bp (FINDINGS 31). Its survival checks the null, it does not fail it.",
+        "B": f"{CONTROL} has no declared expectation under B; the rsi bucket is not the axis "
+             f"either score is suspected of riding.",
+        "C": f"Neither score has a declared expectation under C beyond a null centred on zero, "
+             f"which is asserted before scoring.",
+    }[null_kind]
     payload = dict(study=393, stage=NAME, cap=CAP, shape="E1", side="long", n_draws=n_draws,
                    seed=SEED,
-                   purpose=("B_s on ONE cell: each event's name swapped for an eligible name "
-                            "in the same rev_21 decile that day, section 4's load-bearing null."
-                            if null_kind == "Bs" else
-                            "A prime on ONE cell: each name's events rotated within its own "
-                            "eligible bars, the score rotated with them. Tests whether the "
-                            "TIMING carries the edge or the decile-crossing SHAPE does.")
-                           + " Admits nothing (R15).",
+                   purpose=f"{NAME} on ONE cell: {PURPOSE} Admits nothing (R15).",
                    scope_change=f"Section 4 declared {NAME} over the 10-cell grid; this runs the "
                                 "PRIMARY cell only. Narrowed by the principal 2026-09-08.",
-                   positive_control=f"{CONTROL} is the score K1 killed as a rev_21 proxy. If {NAME} "
-                                    f"does not kill it, the null is broken and its verdict on "
-                                    f"{CANDIDATE} proves nothing.",
+                   control_expectation=CTL_NOTE,
                    stats=stats, draws={k: v for k, v in draws.items()})
-    OUTP = BS_OUT if null_kind == "Bs" else AP_OUT
+    OUTP = {"Bs": BS_OUT, "A": AP_OUT, "B": B_OUT, "C": C_OUT}[null_kind]
     OUTP.write_text(json.dumps(payload, indent=1))
     print(f"\n  [P] wrote {OUTP.relative_to(REPO)} BEFORE rendering", flush=True)
 
@@ -426,14 +494,18 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
     #   A'  destroys TIMING and keeps the names. rev_21's own E1 timing is real and published at
     #        +38 bp (FINDINGS 31), so up_frac_21 SHOULD survive A'. Its survival is a sanity check
     #        on the null, not a failure of it.
-    head = ("B_s -- swap the name inside the same rev_21 decile" if null_kind == "Bs" else
-            "A' -- rotate each name's events within its own eligible bars, score rotated with them")
+    head = {"Bs": "B_s -- swap the name inside the same rev_21 decile",
+            "A": "A' -- rotate each name's events within its own eligible bars, score rotated too",
+            "B": "B -- swap the name inside the same rsi bucket, defined-percentile pool",
+            "C": "C -- flip each trade's direction at random on the OBSERVED ledger"}[null_kind]
     print(f"\n{head}, {n_draws:,} draws, E1 cap {CAP} long\n")
     print(f"  {'score':<16s} {'obs':>8s} {'p50':>8s} {'p95':>8s} {'SE':>6s} {'margin':>8s}   verdict")
     for k in (CANDIDATE, CONTROL):
         s = stats[k]
-        ctl = ("  <- CONTROL: must DIE here (it is the decile)" if null_kind == "Bs" else
-               "  <- CONTROL: should SURVIVE here (rev_21 timing is real, FINDINGS 31)")
+        ctl = {"Bs": "  <- CONTROL: must DIE here (it IS the decile)",
+               "A": "  <- CONTROL: should SURVIVE (rev_21 timing is real, FINDINGS 31)",
+               "B": "  <- CONTROL: no declared expectation under B",
+               "C": "  <- CONTROL: no declared expectation under C"}[null_kind]
         tag = ctl if k == CONTROL else "  <- the candidate"
         print(f"  {k:<16s} {s['observed']:+8.2f} {s['p50']:+8.2f} {s['p95']:+8.2f} "
               f"{s['se_p95']:6.2f} {s['margin']:+8.2f}   {s['verdict']}{tag}")
@@ -476,8 +548,10 @@ def main() -> int:
     ap.add_argument("--overlap", action="store_true")
     ap.add_argument("--calibrate", action="store_true")
     ap.add_argument("--bs", action="store_true", help="merge the shards and score")
-    ap.add_argument("--null", choices=("Bs", "A"), default="Bs",
-                    help="Bs: same-rev_21-decile name swap. A: per-name time rotation (A prime)")
+    ap.add_argument("--null", choices=("Bs", "A", "B", "C"), default="Bs",
+                    help="Bs: same-rev_21-decile name swap. A: per-name time rotation. "
+                         "B: same-rsi-bucket name swap. C: random direction on the observed "
+                         "ledger (no simulation, no shards needed)")
     ap.add_argument("--shard", type=int, help="run only draws where idx %% nshards == shard")
     ap.add_argument("--nshards", type=int, default=NSHARDS)
     ap.add_argument("--verify-shard", action="store_true",
