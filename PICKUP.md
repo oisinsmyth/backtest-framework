@@ -7,6 +7,15 @@
 **Not merged. Rebased onto master, never merged — the principal's standing choice.** This block is
 the whole state of that branch; everything below it is master's strata, unchanged.
 
+> **⚠ D390 IS A THREE-WAY COLLISION AND IT IS NOT FIXED.** Master holds **two** D390s already —
+> `D390-PREREG-the-D163-recost.md` and `D390-is-D280s-overnight-gap-…` — and this branch adds a
+> third, `D390-the-volatility-tilt-zr-scored-alone.md` (+ its RESULT). **The branch's reserved
+> D390–D399 block was claimed before master took D390, and the rebase of 2026-09-09 exposed it.**
+> **It was deliberately NOT renumbered:** the chain is retired, the branch is never merged, and a
+> blanket rename previously corrupted a link to a *different* record in `RULES.md`. **If this
+> branch is ever merged, renumber the branch's D390 FIRST and grep for leftovers afterwards** —
+> D391–D396 are branch-only and do not collide.
+
 **THE ONE LINE: eight candidates, zero admitted, zero holdout reads, and the chain RETIRED by the
 principal on 2026-09-09.** [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the
 retirement record and the place to start.
