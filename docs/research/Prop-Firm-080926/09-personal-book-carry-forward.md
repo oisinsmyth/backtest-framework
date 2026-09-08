@@ -188,6 +188,94 @@ any of these effects**, and the personal book has never measured it either.
 
 ---
 
+---
+
+## 7. ADDED 2026-09-08 (later) — lanes 16/17/18, and §6's "strongest" entry is WITHDRAWN
+
+### WITHDRAWN: intraday momentum on ES/NQ
+
+§6 called it the strongest of the seven. **Lane 16 dismantled it, with code, and the paper's author
+answered in writing.** Three independent QuantConnect reimplementations of Zarattini's *Beat the
+Market* (published Sharpe 1.33) return **Sharpe 0.399**, with fees of **$27,317.98 — "16.7% of your
+return"** on 6,940 orders. **The entire gap was isolated to the bid/ask spread** by a mid-price fill
+experiment: swap the fill model and the paper reappears. The author now recommends slippage of
+**$0.005/share against the paper's $0.001**, and reports live commission of **$0.012 against
+$0.0035**.
+
+Two further blows: **QuantConnect's own research library runs the BARE Gao rule on ETFs 2015–2020 and
+gets Sharpe −0.628** against a 0.582 benchmark, *before costs* — so the JFE citation may be
+supporting an overlay it never tested. And **the live record does not run the published rule**
+(*"more sophisticated trailing methods"*), so it cannot support the paper.
+
+**It stays on this list only as a cautionary entry.** Any future pre-registration of it must carry
+**the bare rule as its own arm**.
+
+### C6 — short-horizon direction confined to LARGE-TICK CME outrights · **the one real lead**
+
+**CFM's result is not "short-term trend is dead". It is "short-term trend is dead on SMALL-TICK
+contracts."** Kurth, Eisler, Rej & Bouchaud, ~100 futures 1995–2025: across the 2009 break the
+fastest signal goes **0.84 → 0.12**, but on **large-tick** contracts post-break Sharpes hold at
+**1.0–1.2 at every horizon including the fastest.** The discriminating variable is
+**volatility-normalised tick size**, ranked monthly and applied causally.
+
+| contract | tick ÷ daily σ | tier |
+|---|---:|---|
+| **ZB** | **0.045** | **large** |
+| **ZN** | **0.041** | **large** |
+| 6E | 0.009 | small |
+| CL | 0.007 | small |
+| **ES / MES** | **0.0034 / 0.0034** | **small — identical for the micro** |
+| GC | 0.003 | small |
+
+**The mechanism is physical and has an observable**, which is what separates it from a fitted curve:
+trend is a self-fulfilling impact loop that needs aggressive execution against a *dense* book.
+Post-crisis market makers withdraw ahead of predictable directional flow; in a sparse small-tick book
+that removes the residual depth and breaks the loop, in a dense large-tick book the depth survives
+and the loop holds.
+
+**The falsifier, computable on our own fixture with no new data:** compute `τ_i = tick_i / σ_i` for
+every CME outright we hold, rank monthly, split at the median, and run the *same* short-horizon
+directional rule on both tiers. **C6 survives iff the large-tick tier's gross mean per trade exceeds
+the small-tick tier's by more than the bootstrap SE of the difference, post-2009.** If the tiers are
+indistinguishable here, CFM's cross-sectional claim does not replicate and C6 dies.
+
+**Why it is personal-book and not prop:** ZN's entire daily range is ~20–25 ticks ≈ **$310–390**.
+Extracting $150/day needs a large share of that range or several contracts, and several ZN against a
+$2,000 open-equity floor is the same size scissors. **The tick-size screen changes which instrument
+has an edge; it does not change the barrier arithmetic.**
+
+### C5 — Carver's diversified multi-instrument futures system
+
+Trend at several speeds plus carry across ~35 weakly-correlated contracts at a 20–25% vol target.
+The mechanism is **diversification stated as such**, not an indicator. Carver's is the only cost
+convention in this tier that is both stated and scale-free — cost per trade in **Sharpe-ratio
+units**, with a per-instrument annual budget of ~0.10–0.13 SR units.
+
+**And it carries its own warning:** a retail ES round turn crossing a full tick costs **2.6–3.5 bp
+per side against Carver's cheapest-equity-index benchmark of 0.2 bp** — **13× to 17×** — because a
+retail account cannot post and cannot net internally. **Any Sharpe quoted at institutional cost
+assumptions is not the Sharpe available to us.** Fails prop on breadth and holding period, not on
+merit.
+
+### Two methodological imports worth more than either candidate
+
+**1. Drawdown is 17× more persistent out-of-sample than Sharpe.** Quantopian's 888-algorithm
+version-locked dataset: in-sample → out-of-sample **R² = 0.02 for Sharpe**, 0.015 and *negative* for
+annual return, under 0.005 for IR/Calmar/alpha — against **0.67 for volatility and 0.34 for max
+drawdown**. **The statistics the barrier reads are the ones that survive; the statistic we screen on
+is the one that does not.** That inverts the usual ordering and it applies to the personal book too:
+a risk screen on a backtest is better founded than an edge screen on the same backtest.
+
+**2. Year-instability, not cost, is the modal failure** (lane 16). Our screens carry no per-year
+sign-stability gate. This programme's own D386 premise check found exactly that shape hours earlier —
+a t = −5.17 that was carried entirely by 2020–2021 and vanished elsewhere. **A per-year sign-stability
+gate should be added to the standard screen.**
+
+And one open question worth a single cheap run: **momentum that lives inside the bar is unreachable by
+any bar-close rule.** Checkable once on our 15-minute fixture, and it would retire a whole class.
+
+---
+
 ## What did NOT carry, and why the list is short
 
 - **No strategy.** Lanes 01–05 recovered contract terms. Lane 07 surveyed the claims tier and found
