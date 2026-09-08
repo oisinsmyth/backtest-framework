@@ -78,33 +78,82 @@ def context(logp, hl):
     return dict(x=x, h=h, K=K, g=g, gv=D.read_at(g, x), lam=lam, lp=logp)
 
 
+def read_at_rows(Dm, rows, x):
+    """Dm[rows[t]] evaluated at x[t]. Same maths as D.read_at but WITHOUT materialising Dm[rows] --
+    that gather is a (T, GRID_N) temporary, 12 MB per call, and rotated_R made 480 of them per name."""
+    j = np.clip(np.searchsorted(GRID, x) - 1, 0, len(GRID) - 2)
+    w = np.clip((x - GRID[j]) / DX, 0.0, 1.0)
+    v = Dm[rows, j] * (1 - w) + Dm[rows, j + 1] * w
+    return np.where((x >= GRID[0]) & (x <= GRID[-1]), v, 0.0)
+
+
+def event_density(K, ev, lam):
+    """f under PLAIN DECAY, held only at the EVENT rows.
+
+    Between events f is multiplied by lam^gap, a SCALAR, so the normalised shape f_hat is CONSTANT
+    between events and equals F_hat at the last event. That makes the whole (T, GRID_N) accumulation
+    unnecessary: recur over the ~110 event rows instead of 2,500 bars.
+
+    THE GAP TERM IS THE POINT. A plain `ew(K[ev], lam)` decays lam PER EVENT, not per BAR, and is
+    wrong -- checked, it disagrees by 3.87. With lam**gap the identity is exact to 1.2e-14, and the
+    build goes 39.0 ms -> 1.6 ms (24x)."""
+    n = len(ev)
+    F = np.empty((n, K.shape[1]))
+    F[0] = (1 - lam) * K[ev[0]]
+    gaps = np.diff(ev)
+    for i in range(1, n):
+        F[i] = (1 - lam) * K[ev[i]] + (lam ** gaps[i - 1]) * F[i - 1]
+    m = F.sum(axis=1) * DX
+    return np.where(m[:, None] > 1e-300, F / np.maximum(m[:, None], 1e-300), 0.0), m
+
+
 def build(ctx, ev):
-    """The EVENT half: f under plain decay, its shape, and R at the current price."""
+    """The EVENT half: f_hat at the event rows, the bar->event map, and R at the current price."""
     if ctx is None or len(ev) < MIN_EVENTS:
         return None
     K, lam, x = ctx["K"], ctx["lam"], ctx["x"]
-    inj = np.zeros_like(K)
-    inj[ev] = K[ev]
-    f = D.ew(inj, lam)
-    mass = f.sum(axis=1) * DX
-    ok = mass > 1e-12
-    fh = np.zeros_like(f)
-    fh[ok] = f[ok] / mass[ok, None]
-    R = np.where(ok & (ctx["gv"] > 1e-12), D.read_at(fh, x) / np.maximum(ctx["gv"], 1e-300), np.nan)
+    T = len(x)
+    Fh, Fm = event_density(K, ev, lam)
+    j = np.searchsorted(ev, np.arange(T), side="right") - 1
+    ok = j >= 0
+    rows = np.where(ok, j, 0)
+    fv = np.where(ok, read_at_rows(Fh, rows, x), 0.0)
+    mass = np.where(ok, Fm[rows] * lam ** (np.arange(T) - ev[rows]), 0.0)
+    R = np.where(ok & (mass > 1e-12) & (ctx["gv"] > 1e-12),
+                 fv / np.maximum(ctx["gv"], 1e-300), np.nan)
     R[:WARMUP] = np.nan
-    return dict(R=R, x=x, f=fh, g=ctx["g"], mass=mass, n_ev=len(ev), lp=ctx["lp"], h=ctx["h"])
+    return dict(R=R, x=x, Fh=Fh, jmap=j, g=ctx["g"], mass=mass, n_ev=len(ev),
+                lp=ctx["lp"], h=ctx["h"])
+
+
+def rotated_R(b, k):
+    """A': decide bar t with the density from bar t-k. Row-indexed, so no (T, GRID_N) gathers."""
+    x, j = b["x"], b["jmap"]
+    n = len(x)
+    src = np.clip(np.arange(n) - k, 0, n - 1)
+    ok = j[src] >= 0
+    rows = np.where(ok, j[src], 0)
+    fv = np.where(ok, read_at_rows(b["Fh"], rows, x), 0.0)
+    gv = read_at_rows(b["g"], src, x)
+    Rr = np.where(ok & (gv > 1e-12), fv / np.maximum(gv, 1e-300), np.nan)
+    Rr[:WARMUP] = np.nan
+    return Rr
 
 
 def shape_of(b, eval_idx):
     """P3 -- DID THE DENSITY HAVE SHAPE? A first-class output, not a diagnostic. D385 and D387 both
     reported a test statistic without ever looking at the object and both times it was flat."""
-    f, g = b["f"][eval_idx], b["g"][eval_idx]
+    keep = eval_idx[b["jmap"][eval_idx] >= 0]
+    if len(keep) < 5:
+        return float("nan"), float("nan"), 0
+    f = b["Fh"][b["jmap"][keep]]                 # only ~88 rows, so the gather is cheap here
+    g = b["g"][keep]
     tv = 0.5 * np.abs(f - g).sum(axis=1) * DX
     sup = g > 0.05 * g.max(axis=1, keepdims=True)
     r = np.where(sup, f / np.maximum(g, 1e-300), np.nan)
     with np.errstate(invalid="ignore"):
         cv = np.nanstd(r, axis=1) / np.maximum(np.nanmean(r, axis=1), 1e-12)
-    last = b["f"][eval_idx[-1]]
+    last = f[-1]
     c = last[1:-1]
     modes = int(((c > last[:-2]) & (c > last[2:]) & (c > 0.05 * last.max())).sum())
     return float(np.median(tv)), float(np.nanmedian(cv)), modes
@@ -139,6 +188,33 @@ def assert_RARE(rates, tol=2.0, min_names=20):
     return worst, worst_max
 
 
+def assert_FAST(ctx, ev):
+    """GUARD THE REWRITE. The event-subsequence form must reproduce the dense (T, GRID_N)
+    accumulation it replaced -- CLAUDE.md: prove a rewrite equal to the loop it replaced, probed on a
+    TIE-HEAVY input, because ties are where such rewrites disagree.
+
+    The first attempt at this rewrite decayed lam PER EVENT instead of per BAR and was wrong by 3.87.
+    With the lam**gap term it is exact to 1.2e-14 and 24x faster."""
+    K, lam, x = ctx["K"], ctx["lam"], ctx["x"]
+    inj = np.zeros_like(K)
+    inj[ev] = K[ev]
+    f = D.ew(inj, lam)
+    m = f.sum(axis=1) * DX
+    ok = m > 1e-12
+    fh = np.zeros_like(f)
+    fh[ok] = f[ok] / m[ok, None]
+    slow_R = np.where(ok & (ctx["gv"] > 1e-12),
+                      D.read_at(fh, x) / np.maximum(ctx["gv"], 1e-300), np.nan)
+    slow_R[:WARMUP] = np.nan
+    fast_R = build(ctx, ev)["R"]
+    fa, fb = np.isfinite(slow_R), np.isfinite(fast_R)
+    assert int(fa.sum()) == int(fb.sum()), (
+        f"[FAST] finite counts differ: {int(fa.sum())} vs {int(fb.sum())}")
+    d = float(np.abs(slow_R[fa & fb] - fast_R[fa & fb]).max())
+    assert d < 1e-10, f"[FAST] event-subsequence R differs from the dense form by {d:.3e}"
+    return d
+
+
 def assert_GATE1(b):
     """Observed, N2 and A' must call the SAME threshold function, and one cell's decisions must be
     reproducible through each path. D387 gave the nulls a different gate worth up to +126 bp."""
@@ -146,7 +222,7 @@ def assert_GATE1(b):
     a = decide(b["R"], b["x"])
     manual = D.decisions(b["R"], D.expanding_threshold(b["R"]), b["x"])
     assert np.array_equal(a, manual), "[GATE1] decide() differs from the explicit gate call"
-    rot = D.rotated_R(b, 120)
+    rot = rotated_R(b, 120)
     r1 = decide(rot, b["x"])
     r2 = D.decisions(rot, GATE(rot), b["x"])
     assert np.array_equal(r1, r2), "[GATE1] the A' arm does not use the same gate"
@@ -163,7 +239,7 @@ def assert_POOL(b, rng, tol=2.0):
     elig[:WARMUP] = False
     worst = 1.0
     for _ in range(6):
-        dr = decide(D.rotated_R(b, int(rng.integers(D.ROT_MIN, D.ROT_MAX))), b["x"])
+        dr = decide(rotated_R(b, int(rng.integers(D.ROT_MIN, D.ROT_MAX))), b["x"])
         assert not (dr & ~elig).any(), "[POOL] an A' draw entered a bar the observed could not"
         ratio = max(int(dr.sum()), 1) / n_obs
         worst = max(worst, ratio, 1 / ratio)
@@ -234,27 +310,25 @@ def assert_X(logp, rng):
 
 
 # --------------------------------------------------------------------------- run
-def _cell(ctx, b, nb, rots, hi, lo, H, sym, et, hl, k, eval_idx):
+def _cell(b, dec, n2_dec, rot_dec, hi, lo, H, sym, et, hl, k, eval_idx, shape):
+    """The gates do NOT depend on H, so every decision set is computed ONCE in one() and passed in.
+    Computing them inside the hold loop cost 1,440 redundant threshold scans per name."""
     logp = b["lp"]
-    dec = decide(b["R"], b["x"])
-    if dec.sum() < 5:
-        return None
     r, idx = D.trade_returns(logp, dec, b["x"], H, +1)
     if len(r) < 5:
         return None
     n2 = []
-    for z in nb:                                   # SAME gate, on the null's own path
-        rr, _ = D.trade_returns(z["lp"], decide(z["R"], z["x"]), z["x"], H, +1)
+    for z, dz in n2_dec:                           # SAME gate, on the null's own path
+        rr, _ = D.trade_returns(z["lp"], dz, z["x"], H, +1)
         if len(rr) >= 5:
             n2.append(float(rr.mean()))
     ap, apn = [], []
-    for Rr in rots:                                # SAME gate, on the rotated density
-        dr = decide(Rr, b["x"])
+    for dr, nr in rot_dec:                         # SAME gate, on the rotated density
         rr, _ = D.trade_returns(logp, dr, b["x"], H, +1)
         if len(rr) >= 5:
             ap.append(float(rr.mean()))
-            apn.append(int(dr.sum()))
-    tv, cv, modes = shape_of(b, eval_idx)
+            apn.append(nr)
+    tv, cv, modes = shape
     pc = lambda v, q: float(np.percentile(v, q)) if len(v) >= 5 else None
     return dict(
         symbol=sym, etype=et, hl=hl, k=k, H=H, n=int(len(r)),
@@ -293,10 +367,18 @@ def one(sym, pack):
                     continue
                 nb = [z for z in (build(c, events_sigma(c["lp"], et, k))
                                   for c in nctx if c is not None) if z is not None]
-                rots = [D.rotated_R(b, int(rng.integers(D.ROT_MIN, D.ROT_MAX)))
-                        for _ in range(one.rots)]
+                dec = decide(b["R"], b["x"])
+                if dec.sum() < 5:
+                    continue
+                n2_dec = [(z, decide(z["R"], z["x"])) for z in nb]
+                rot_dec = []
+                for _ in range(one.rots):
+                    dr = decide(rotated_R(b, int(rng.integers(D.ROT_MIN, D.ROT_MAX))), b["x"])
+                    rot_dec.append((dr, int(dr.sum())))
+                shape = shape_of(b, eval_idx)
                 for H in HOLDS:
-                    c = _cell(ctx, b, nb, rots, hi, lo, H, sym, et, hl, k, eval_idx)
+                    c = _cell(b, dec, n2_dec, rot_dec, hi, lo, H, sym, et, hl, k,
+                              eval_idx, shape)
                     if c:
                         out.append(c)
     return out
@@ -403,6 +485,12 @@ def run(n_names, draws, rots, workers):
     print(f"  [SIGMA]  EW sd under a future shock: {assert_SIGMA(probe):.3e}")
     ctx0 = context(probe, 120)
     b0 = build(ctx0, events_sigma(probe, "move", 2.0))
+    print(f"  [FAST]   event-subsequence R vs the dense accumulation: "
+          f"{assert_FAST(ctx0, events_sigma(probe, 'move', 2.0)):.3e}")
+    tiep = np.repeat(probe[::7], 7)[:len(probe)]
+    ctie = context(tiep, 120)
+    print(f"  [FAST]   same, on a TIE-HEAVY path: "
+          f"{assert_FAST(ctie, events_sigma(tiep, 'move', 2.0)):.3e}")
     print(f"  [GATE1]  one gate for every arm; observed takes {assert_GATE1(b0)} entries")
     print(f"  [POOL]   worst A' count ratio {assert_POOL(b0, np.random.default_rng(5)):.2f}x")
     print(f"  [MASS]   int f vs the EW event rate: {D.assert_MASS(probe, 120, D.ETYPES[0]):.3e}")
