@@ -3375,3 +3375,93 @@ that win rate is a dial on the exit stands: nothing here shows a better win rate
 
 **The reopening's abandon condition did not fire** — it required T1 to fail outright. Under
 [R15](RULES.md#r15) the avenue's status is the principal's, and this file does not presume it.
+
+---
+
+## 53. The EMA-centred log-space density is closed: no shape a volatility-matched shuffle cannot produce, and a distance compared to a point estimate is a guaranteed false positive
+
+**D384**, stage 0, 60 ETFs × 2,516 daily bars × 6 half-lives × 3 bandwidths × 25 null draws.
+Pre-registration `0b492cd`, result `docs/decisions/D384-RESULT-the-density-carries-no-shape-the-shuffle-cannot-produce.md`.
+
+**THE RESULT: 0 of 1,080 name-cells clear the pre-registered bar** (observed total-variation distance
+> the N2 null's p95 by more than 2 SE). Dropping the 2 SE margin: 46/1,080 = **4.3%**, against a
+chance rate of 5.0%. Against the *loose* null N1 the clearing rate is **2.8%** — lower still. The
+best single name anywhere in the study reaches +1.27 SE against a bar of +3.65.
+
+**N2 is the load-bearing null and it did what it claimed** — `|r|` autocorrelation observed 0.1426,
+N2 keeps 0.0943, N1 destroys 0.0294 — so this is not a null failing to preserve the clustering it
+was built to preserve.
+
+### 53.1 What the diagnostics say that the distance alone does not
+
+**The excess mass is one-sided and positive at every half-life** (peak at u = +0.88% to +2.44%, never
+below the EMA). A one-sided excess above a moving average is drift, which D382 already found and
+retired on daily ETFs. It is not the bimodality-with-price-in-a-valley the study was built to detect.
+
+**The mode count runs the wrong way.** At long half-lives the *shuffle* is more multimodal than the
+market: observed 1.45 vs null 1.73 at half-life 160. Volatility clustering alone produces a second
+mode, and the market produces less of it than the shuffle does.
+
+### 53.2 The coordinate is price-invariant and volatility-VARIANT — the residual is scale
+
+P3 passes as written: the cross-name coefficient of variation of `x`'s spread is **0.61** against
+**1.08** for absolute price. But at half-life 20 the widest name's `x` spread is **357×** the
+tightest (SHV 0.03%, ELON 11.57%), still **8.2×** ex-tails. **Pooling or ranking densities in this
+coordinate would be dominated by which names are volatile** — the objection the coordinate was built
+to answer, displaced one level down rather than removed.
+
+### 53.3 Return-blind stationarity is a VACUOUS selector for a memory parameter
+
+The pre-registration's §2 claimed a genuine interior optimum in half-life, on the argument that a
+fast EMA makes `x` stationary and trivial while a slow one makes it informative and non-stationary.
+**That is wrong on this data.** Both quantities are strictly monotone — AC1 0.852 → 0.990 and spread
+1.97% → 9.90% across half-lives 5 → 160. Nothing trades off against anything, so the criterion
+selects nothing. **Any successor proposing to pick a memory parameter return-blind should be shown
+this before it designs around the idea.**
+
+### 53.4 THE TRAP, and it nearly produced a spectacular fake result
+
+The first completed run compared the observed distance to the null's **mean density** with **no null
+reference distribution** — one number against one number. It would have been reported as **~27 SE of
+structure at every half-life.** The bias is fixed, silent, and one-directional in favour of the
+hypothesis: the observed density is *one draw* and the null mean is an average of 25, so the observed
+is **guaranteed** to sit further from the mean than the mean sits from itself.
+
+**The tell was in a diagnostic, not the headline: the null mean had MORE modes (4.47) than the
+observed density (3.03).** A null more structured than the market is not a null that is losing.
+Fixed in `bf17839` with a leave-one-out null reference; **the reading inverted from decisive pass to
+decisive fail.**
+
+**The general rule: a distance needs a reference distribution of the SAME distance, computed the SAME
+way.** Comparing an observed statistic to a null *point estimate* rather than to the null's own
+*spread* is not a weak test — it is a test that cannot fail.
+
+### 53.5 One disclosed post-hoc observation, which changes nothing
+
+The observed density is inside the null's spread but is **not centred on it**: 43/60 names sit above
+the null's centre at half-life 10 (sign test p = 5.3e-04, surviving Bonferroni over the 18 cells),
+decaying monotonically to 28/60 (p = 0.74) at half-life 160. **Roughly +0.4 SE per name, against a
+P1 bar of 3.65 SE.**
+
+**This is post hoc and did not reopen the family.** The sign test was not pre-registered; reading a
+weaker second test as a rescue after the declared one fails is what a pre-registration exists to
+prevent.
+
+**And the obvious mechanism does not survive the check.** Short-horizon serial dependence would
+predict the displacement to order across names by their own return autocorrelation. At half-life 10,
+where the displacement is *strongest*, `corr(return AC1, displacement)` is **−0.024**; at half-life 5
+it is +0.270 (n = 60) and in the **momentum** direction, not the mean-reversion direction the story
+needs. **Recorded as unexplained. No mechanism is filed.**
+
+### 53.6 What survives
+
+- **The construction is proved**: `[REC]` 3.4e-16, `[FRAME]` exact. A successor wanting the
+  current-frame form inherits a proved component.
+- **Translating a density every bar with `np.interp` is DIFFUSIVE** — 7.4e-03 over 900 bars. The
+  scalar-offset form (accumulate in a fixed frame, carry an offset, interpolate once at read time) is
+  exact.
+- **Five of seven pre-registered predictions were falsified**, including both assertions predicted to
+  hold on the first run.
+
+**Nothing admitted to either book. No hurdle cleared. No holdout read. No multiplicity ledger touched
+(R13) — the study scored no strategy cell.**
