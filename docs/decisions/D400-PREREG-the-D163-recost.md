@@ -1,4 +1,4 @@
-# D390 PRE-REGISTRATION — re-costing D163's sub-hourly closure at futures commission
+# D400 PRE-REGISTRATION — re-costing D163's sub-hourly closure at futures commission
 
 **Status:** Pre-registered — committed before the runner exists (CLAUDE.md habit, R8's discipline)
 **Date:** 2026-09-08

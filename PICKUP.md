@@ -1,18 +1,35 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-09.** **D365 → D390.** **Three** sessions: the first spent the programme's first
-holdout read, ran D373 and audited the hurdles that judged it; the second built and **retired the
-density line (D384 → D388)** and **answered the correlation floor (D389)**; the third **priced the
-prop instrument end to end (D386)**, **settled the D383 debt by running it**, and **discharged R11's
-re-costing corollary (D390)**. Everything below §7 is older strata, newest first, kept because the
-traps in them still bite.
+**Updated 2026-09-09.** **D365 → D401.** **Three** sessions on master, plus one on a branch: the
+first spent the programme's first holdout read, ran D373 and audited the hurdles that judged it; the
+second built and **retired the density line (D384 → D388)** and **answered the correlation floor
+(D389)**; the third **priced the prop instrument end to end (D386)**, **settled the D383 debt by
+running it**, **discharged R11's re-costing corollary (D400)**, and recorded the principal's
+**closure of two avenues (D401)**. Everything below §7 is older strata, newest first, kept because
+the traps in them still bite.
 
-> **⚠ A DECISION-NUMBER COLLISION HAPPENED AND IT WILL HAPPEN AGAIN.** Two concurrent sessions both
-> took **D389** — the D163 re-cost pre-registered at 23:17 (`7d04812`) and the correlation floor at
-> 00:24 (`5bd7d97`). The re-cost had the number first by commit time but was **renumbered to D390**,
-> because the other had already propagated `D389 = correlation floor` into this file. **Two sessions
-> pick the next free number from the same list and neither sees the other's uncommitted work.**
-> **Run `git log --all` for your intended number immediately before committing a pre-registration.**
+> ## ⚠ READ THIS BEFORE YOU PICK A DECISION NUMBER
+>
+> **`ls docs/decisions/` IS NOT SUFFICIENT AND WILL COLLIDE.** It happened **twice within the hour**
+> on 2026-09-09 — the second time *while fixing the first*:
+>
+> 1. Two sessions both took **D389** — the D163 re-cost pre-registered 23:17 (`7d04812`), the
+>    correlation floor 00:24 (`5bd7d97`). The re-cost had it first by commit time but was renumbered,
+>    because the other had already propagated `D389 = correlation floor` into this file.
+> 2. It was renumbered to **D390 — which was already RESERVED.** The `worktree-signal-hunt-part2`
+>    branch reserved **D390–D399** at 2026-09-08 12:27 (`fb2af62`), after master took D380, D381 and
+>    D382 out from under it twice. **That reservation is a commit message on another branch** —
+>    invisible to `ls`, and invisible to `git log` run on master alone.
+>
+> **Both records were then moved clear of the block: the re-cost is `D400`, the closure `D401`.**
+>
+> **THE PROCEDURE IS THREE COMMANDS, NOT ONE:**
+> ```
+> git log --all --oneline | grep -iE "\bD<n>\b"    # usage on ANY branch
+> git log --all --oneline | grep -i "RESERVE"      # reserved blocks
+> git branch -a --format="%(refname:short) %(committerdate:relative)"  # who is live right now
+> ```
+> **D390–D399 belongs to `worktree-signal-hunt-part2`. Master takes D400 and upward.**
 
 **This file had been stale since 2026-09-02** (D264→D284) and both `STACK.md` and the 2026-09-07
 handoff said so in writing. It is current again as of this line.
@@ -277,7 +294,7 @@ committed to `data/`.
 EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not commitments.
 
 **TWO AVENUES WERE CLOSED BY THE PRINCIPAL ON 2026-09-09 —
-[D396](docs/decisions/D396-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md):
+[D401](docs/decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md):
 the WINNERS' DIP and the 15-MINUTE TIME-SERIES STRUCTURE SCREEN.** Both are shut and neither will be
 reopened. **What outlives them and must not be closed with them:** D378's entry-timing finding stands
 as truth (T1 at **+26.9 SE**, largest-trade-removed gate at **+9.8 SE**); D383's **`n_eff` instruments
@@ -332,8 +349,8 @@ onto D377's H1 hedge (D377 §4 argues not — the benefit is 0.032 on a 0.47 flo
      window, on open equity.** Absent from the literature, the code, the published drawdowns, the best
      retail record, and every verified CTA database.
 
-1c. **R11's RE-COSTING COROLLARY IS DISCHARGED FOR ONE CONSTRUCTION — [D390](docs/decisions/D390-RESULT-the-D163-recost.md)
-   (`7e39fe3`, renumbered from D389).** D163's *"~315% of capital a year in fees"* is a **crypto taker
+1c. **R11's RE-COSTING COROLLARY IS DISCHARGED FOR ONE CONSTRUCTION — [D400](docs/decisions/D400-RESULT-the-D163-recost.md)
+   (`7e39fe3`, renumbered D389 -> D390 -> D400).** D163's *"~315% of capital a year in fees"* is a **crypto taker
    number and is wrong by ~400×** at futures commission (0.786%/yr) — **but the closure survives on
    SIGNAL, not cost.** Gross first: BTC Design B at 15m is **−1.4 bp/trade at the 2.4th percentile of
    its own null**, below its p05. **Left to the principal: the 30m–2h band**, where cost moves three

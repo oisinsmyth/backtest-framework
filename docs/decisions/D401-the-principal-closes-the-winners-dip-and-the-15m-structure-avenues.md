@@ -1,4 +1,4 @@
-# D396 — the principal closes two avenues: the winners' dip, and the 15-minute time-series structure screen
+# D401 — the principal closes two avenues: the winners' dip, and the 15-minute time-series structure screen
 
 **Status:** CLOSURE, on the principal's instruction, 2026-09-09.
 **Category:** Book construction · research direction

@@ -3220,7 +3220,7 @@ and [D377](decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-pe
 2026-09-07. AVENUE RETIRED BY THE PRINCIPAL, 2026-09-08 (R15).**
 
 > **CLOSED DEFINITIVELY BY THE PRINCIPAL, 2026-09-09 —
-> [D396](decisions/D396-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md).** The
+> [D401](decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md).** The
 > avenue was retired on 2026-09-08, **reopened narrowly** for
 > [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md),
 > and its exit half was then closed by

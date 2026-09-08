@@ -1,10 +1,10 @@
-"""D390 — re-costing D163's sub-hourly closure at futures commission.
+"""D400 — re-costing D163's sub-hourly closure at futures commission.
 
-Pre-registered in `docs/decisions/D390-PREREG-the-D163-recost.md`; read that first.
-Result goes to `docs/decisions/D390-RESULT-the-D163-recost.md`. **D163 is not edited.**
+Pre-registered in `docs/decisions/D400-PREREG-the-D163-recost.md`; read that first.
+Result goes to `docs/decisions/D400-RESULT-the-D163-recost.md`. **D163 is not edited.**
 
-    .venv/Scripts/python.exe scripts/run_d390_recost.py            # full study
-    .venv/Scripts/python.exe scripts/run_d390_recost.py --selftest # assertions only
+    .venv/Scripts/python.exe scripts/run_d400_recost.py            # full study
+    .venv/Scripts/python.exe scripts/run_d400_recost.py --selftest # assertions only
 
 WHAT THIS IS. The Donchian long-or-flat breakout (D109) down the frequency ladder
 15m -> 1d, on the 8.4-year Binance 15m base (BTCUSDT/ETHUSDT), scored GROSS first
@@ -33,7 +33,7 @@ import psutil
 
 REPO = Path(__file__).resolve().parent.parent
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
-SUMMARY = REPO / "data" / "d390_recost_summary.json"
+SUMMARY = REPO / "data" / "d400_recost_summary.json"
 TEMP = REPO / "temp"
 
 SYMBOLS = ("BTCUSDT", "ETHUSDT")
@@ -690,8 +690,8 @@ def main() -> None:
               f"{pd.Timestamp(base[symbol]['ts'][0])} -> {pd.Timestamp(base[symbol]['ts'][-1])}")
 
     out: dict = {
-        "record": "D390",
-        "prereg": "docs/decisions/D390-PREREG-the-D163-recost.md",
+        "record": "D400",
+        "prereg": "docs/decisions/D400-PREREG-the-D163-recost.md",
         "fixture": FIXTURE.name,
         "cost_conventions_bp_per_side": COST_CONVENTIONS,
         "reference_gross_sharpe_2015_2025_daily": REFERENCE_GROSS_SHARPE,
