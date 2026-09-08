@@ -41,6 +41,29 @@ established. It will be filed as **D386**.
   C1–C4 is exhausted, so the realistic output is the grid, the baselines and a filter — **not a
   strategy.**
 
+### The principal's standing instruction, 2026-09-08 — this binds the synthesis
+
+> **A strategy that surfaces here and cannot pass the prop constraints IS STILL WORTH KEEPING if it
+> is a candidate for the personal book.**
+
+**Nothing is discarded for failing hurdle P alone.** The two books have different objectives and
+only one of them has a barrier:
+
+| | objective | shape in size |
+|---|---|---|
+| **personal** — [BOOK.md](../../BOOK.md) | mean per trade above its nulls ([R15](../../RULES.md#r15)) | **linear** |
+| **prop** — [BOOK_PROP.md](../../BOOK_PROP.md) | `E[payouts │ survival] × P(survival)` (D379) | **non-linear, interior optimum** |
+
+So the prop constraints are a property of **the instrument**, not of the strategy. A candidate can
+be killed by a trailing floor, a consistency rule or a payout cap while remaining perfectly sound
+where no barrier exists — and rejecting it on hurdle P alone would conflate the two objectives.
+
+**Practically:** every candidate this research surfaces is dispositioned on **both** books
+separately. Anything prop-ineligible but personal-book-plausible goes to a `09-personal-book-carry-
+forward.md` lane file with the reason it failed prop stated explicitly, so the distinction is on the
+record rather than in someone's memory. It still owes R15 and a pre-registration like anything
+else — being carried forward is **not** admission.
+
 ---
 
 ## 1. The firm grid — lanes 01–05
