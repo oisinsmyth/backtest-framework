@@ -3478,3 +3478,90 @@ want of power and "no shape" is not established. **The family is NOT closed.** W
 §53.2 (P3, computed from `x`), §53.3 (P4, ditto), §53.4 (the reference-distribution trap), §53.6
 (construction proved). What is withdrawn: §53 headline, §53.1. See the amendment in
 `docs/decisions/D384-RESULT-the-density-carries-no-shape-the-shuffle-cannot-produce.md`.
+
+---
+
+## 54. Event mass over time spent carries no excess structure either — and the one emphatic signal in it was an artefact of the study's own tying rule
+
+**D385**, stage 0, 60 ETFs × 2,516 daily bars × 4 event types × 4 sharpening powers × 3 event
+half-lives × 25 draws. Pre-registration `63bf19a`, amendment `1fdd865`, runner `787fb24`, result
+`docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the-close-condition-is-met.md`.
+
+**THE RESULT: 1 of 2,592 name-cells clears the pre-registered bar** (observed TV > N2 p95 by >2 SE).
+188/2,592 = 7.3% exceed p95 alone against a 5.0% chance rate; 4.6% against the loose null N1.
+
+**AND `n_eff` WAS ADEQUATE, WHICH IS WHAT MAKES IT READABLE.** 57.7 / 115.4 / 227.6 across the three
+half-lives, spread 0.1188 inside the 0.12 bound the `n ≥ 4·hl_ev` filter entails. **[§53](#53) failed
+at `n_eff` 14.5 and could not tell "no shape" from "no data". This one can.** The pre-registered
+close condition is met; under R15 the family's status is the principal's.
+
+### 54.1 THE ARTEFACT, and the prediction that caught it
+
+Against the null's *centre*, `highest in 20` looks emphatic — **44/51 names above centre at half-life
+80, sign test p = 6.1e-08** — while `lowest in 20` shows nothing (21/59, p = 0.99).
+
+**Prediction Q4 had said in advance: "lows and highs behave the SAME. If they differ I will suspect a
+sign or masking error before I believe a directional claim."** They differed, so it was checked, and
+it is an artefact **created by the study's own tying rule**:
+
+```
+        swing low: rate  24.0/100  ->  centring EMA half-life  167 bars
+       swing high: rate  23.3/100  ->  centring EMA half-life  171 bars
+     lowest in 20: rate   6.7/100  ->  centring EMA half-life  600 bars
+    highest in 20: rate  18.3/100  ->  centring EMA half-life  218 bars
+```
+
+In a decade-long bull market **20-bar highs outnumber 20-bar lows 2.60×** (57 of 59 matched names).
+Because `hl_bars = hl_ev / rate`, that rate gap becomes a **600-bar vs 218-bar centring EMA**, so the
+two types are measured **in different coordinates** and were never the symmetric pair the comparison
+assumed.
+
+**The control is decisive: the swing types have a matched rate ratio of 1.000× and near-identical
+tied half-lives (167 vs 171), and they behave IDENTICALLY — both 39/58 above centre at half-life 80,
+p = 6.0e-03.** Where the two directions are genuinely comparable they agree; the asymmetry lives
+entirely where the construction made them incomparable. **No directional mechanism is filed.**
+
+**Carry forward: tying a centring half-life to an event rate makes rare and common event types
+mutually incomparable.** Anything comparing types must fix the centring span across them.
+
+### 54.2 A read-time power on a RATIO amplifies the thin denominator, not the overlaps
+
+`s = normalise((f/g)^p)` was built to make coincident events beat isolated ones superlinearly, and on
+synthetic data it does (pair/solo 1.60 → 120.76 across `p ∈ {1,2,4,8}`). **On real data it walks the
+peak into the tail instead:**
+
+```
+  swing low, hl_ev 20:  p=1 peak -1.00%  |  p=2 -2.50%  |  p=4 -6.56%  |  p=8 -11.38%
+```
+
+`f/g` is largest where `g` is *smallest*, so the power preferentially amplifies the thin-denominator
+tail. **A `g > 0.05·max g` support floor is not strong enough to contain it, and the synthetic checks
+missed it because they used a smooth Gaussian `g` with no thin tail to amplify.** Displacement decays
+monotonically in `p` (0.73 → 0.61 → 0.41 → 0.44): **the sharpening never helps at any point.**
+
+**Any successor using a read-time power on a ratio needs a stronger denominator floor declared in
+advance, and should treat `p > 2` as suspect without one.**
+
+### 54.3 What the assertions caught before a number was read
+
+- **`[STAT]`** (the assertion §53 died for not having) fired at **8.5e+01**: `scipy.lfilter` starts
+  from zero state, so the log-price EMA began at 0.0153 against a log price of 3.456, and the
+  transient outlived the warm-up — **14.3% of bars landed off the grid** where the kernel underflows
+  to zeros and the bar silently vanishes.
+- **`[CAUSAL]`** fired at **5.16**: `rate`, `hl_bars` and `h_eff` were full-sample, so shocking a
+  future bar moved the event count → the tied half-life → the EMA → `x` at **every** bar. Fixed by
+  warm-up-only estimation, which makes the construction causal rather than merely descriptive.
+- **`[NEFF]`'s tolerance was derived, not fitted.** It fired at 0.068 against an arbitrary 0.02.
+  `n_eff(n) = (1+λ)/(1−λ)·(1−λⁿ)²/(1−λ²ⁿ)`, and `n ≥ 4·hl_ev` pins `λⁿ = 0.0625`, entailing a
+  worst-case 11.8% deficit. **0.12 is what the filter guarantees; it was not tuned to the observed
+  0.068.**
+
+### 54.4 What this does NOT establish
+
+Rare event types (reversals 2.4/100, moves >2% 4.0/100) were **excluded by a narrowing I declared and
+flagged for objection, and were never tested**. `lowest in 20` at half-life 80 kept **7 of 60 names**
+and is not evidence. The principal's decay-coherence fork was parked with a scaffold and remains
+open.
+
+**Nothing admitted to either book. No hurdle cleared. No holdout read. No multiplicity ledger touched
+(R13).**
