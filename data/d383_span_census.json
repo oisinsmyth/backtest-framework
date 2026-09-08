@@ -1,0 +1,387 @@
+{
+ "study": "D383",
+ "diagnostic": "D194 bucket-span census",
+ "fixture": "etf_intraday_15m_panel.csv.gz",
+ "window": "MINING ONLY, first bar .. 2023-12-31",
+ "reserved_untouched": "2024-01-01 onward, cut from the bar lists before sampling",
+ "sensor": {
+  "lookback_bars": 180,
+  "bucket_atr": 0.5,
+  "atr_window": 182,
+  "volume_units": "shares",
+  "source": "scripts/ragged_profile.py, == run_volume_profile.py (D272)"
+ },
+ "sampling": {
+  "per_symbol": 800,
+  "seed": 0
+ },
+ "shape": {
+  "panel_symbols": 57,
+  "panel_bars": 55726,
+  "panel_first": "2018-01-02T09:30:00",
+  "panel_last": "2026-08-26T15:45:00",
+  "load_ragged_would_be_bars": 2156,
+  "bars_per_session": 25.85,
+  "mining_bars_per_symbol": 38648,
+  "reserved_rows_cut": 973446,
+  "mining_last_bar_date": "2023-12-29"
+ },
+ "verdict": "NOT DEGENERATE -- the median span is above 1, so a bar's volume is genuinely spread across buckets and the map is a volume profile rather than a close-price histogram. D194's invalidating condition does NOT fire.",
+ "n_densities": 45600,
+ "n_density_none": 0,
+ "contributing_bars": 8208000,
+ "pooled_span": {
+  "mean": 2.8472871588693955,
+  "p1": 1.0,
+  "p5": 2.0,
+  "p10": 2.0,
+  "p25": 2.0,
+  "p50": 3.0,
+  "p75": 3.0,
+  "p90": 4.0,
+  "p95": 5.0,
+  "p99": 7.0,
+  "share_span_1": 0.03759454191033138,
+  "share_span_le_2": 0.4481753167641326,
+  "histogram": {
+   "1": 308576,
+   "2": 3370047,
+   "3": 2901267,
+   "4": 1025958,
+   "5": 349873,
+   "6": 135057,
+   "7": 58033,
+   "8": 28139,
+   "9": 14222,
+   "10": 7322,
+   "11": 3943,
+   "12": 2160,
+   "13": 1290,
+   "14": 698,
+   "15": 456,
+   "16": 303,
+   "17": 190,
+   "18": 112,
+   "19": 62,
+   "20": 44,
+   "21": 45,
+   "22": 35,
+   "23": 20,
+   "24": 9
+  }
+ },
+ "median_span": {
+  "mean": 2.81343201754386,
+  "p1": 2.0,
+  "p5": 2.0,
+  "p10": 2.0,
+  "p25": 3.0,
+  "p50": 3.0,
+  "p75": 3.0,
+  "p90": 3.0,
+  "p95": 3.0,
+  "p99": 3.0,
+  "share_at_or_below_1": 0.0
+ },
+ "single_bucket_share": {
+  "mean": 0.03759454191033138,
+  "p1": 0.0,
+  "p5": 0.005555555555555556,
+  "p10": 0.011111111111111112,
+  "p25": 0.016666666666666666,
+  "p50": 0.03333333333333333,
+  "p75": 0.05,
+  "p90": 0.07222222222222222,
+  "p95": 0.08888888888888889,
+  "p99": 0.1388888888888889
+ },
+ "per_symbol": {
+  "AGG": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "DIA": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "EEM": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "EFA": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "EWA": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.044444444444444446
+  },
+  "EWC": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03888888888888889
+  },
+  "EWG": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.05555555555555555
+  },
+  "EWH": {
+   "n": 800,
+   "median_span": 2.0,
+   "single_bucket_share": 0.06111111111111111
+  },
+  "EWJ": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03888888888888889
+  },
+  "EWL": {
+   "n": 800,
+   "median_span": 2.0,
+   "single_bucket_share": 0.07222222222222222
+  },
+  "EWQ": {
+   "n": 800,
+   "median_span": 2.0,
+   "single_bucket_share": 0.07777777777777778
+  },
+  "EWT": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.044444444444444446
+  },
+  "EWU": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.05
+  },
+  "EWY": {
+   "n": 800,
+   "median_span": 2.0,
+   "single_bucket_share": 0.05
+  },
+  "EWZ": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.016666666666666666
+  },
+  "FXI": {
+   "n": 800,
+   "median_span": 2.0,
+   "single_bucket_share": 0.05
+  },
+  "GDX": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "GDXJ": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "GLD": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.05
+  },
+  "HYG": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03888888888888889
+  },
+  "IBB": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "IEF": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "ITB": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "IWM": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "IYR": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "IYT": {
+   "n": 800,
+   "median_span": 2.0,
+   "single_bucket_share": 0.11666666666666667
+  },
+  "KBE": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "KRE": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "LQD": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "MDY": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03888888888888889
+  },
+  "OIH": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "QQQ": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "SHY": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.0
+  },
+  "SLV": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.044444444444444446
+  },
+  "SMH": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "SPY": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "TIP": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "TLT": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "UNG": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.05
+  },
+  "USO": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.05
+  },
+  "VIG": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "VNQ": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.016666666666666666
+  },
+  "VYM": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "XBI": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "XHB": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "XLB": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "XLE": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "XLF": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.016666666666666666
+  },
+  "XLI": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "XLK": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "XLP": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.016666666666666666
+  },
+  "XLU": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.016666666666666666
+  },
+  "XLV": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "XLY": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.027777777777777776
+  },
+  "XME": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.03333333333333333
+  },
+  "XOP": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  },
+  "XRT": {
+   "n": 800,
+   "median_span": 3.0,
+   "single_bucket_share": 0.022222222222222223
+  }
+ },
+ "worst_symbol_median_span": 2.0,
+ "best_symbol_median_span": 3.0
+}
