@@ -69,3 +69,14 @@ docs/Youtube Transcrips/
 # Exactly reproducible: `uv run python scripts/run_d377_hedge.py --build --draws 500` (~10 min, deterministic seeds).
 # Every number the record quotes lives in the committed data/d377_hedge.json.
 data/d377_ensemble.npz
+
+# D382 scores: 114 MB of per-cell structure scores, 400x the largest tracked .npz in data/.
+# Same treatment as d377_ensemble.npz above, and the same reasons.
+# Exactly reproducible: `uv run python scripts/run_d382_structure_screen.py` (fixed SEED, gated fixture e22350a).
+# Its two sibling artifacts ARE tracked -- data/d382_observed.json and data/d382_nulls.json -- and
+# every number D382's record quotes lives in those.
+data/d382_scores.npz
+
+# Claude Code's own worktree state for the signal-hunt-part2 branch. Machine-local tooling,
+# not project content, and it points at paths that exist only on this machine.
+.claude/worktrees/
