@@ -65,6 +65,13 @@ DRAWS_COND = 200
 COND_COUNTS = (3_000, 10_000, 30_000)
 COND_CAP = 20
 CONC_LEVELS = (1.0, 0.25, 0.05)    # share of eligible names the events may land on
+
+# THE EXTENSION (D392 RESULT section 7's first owed item). The v1 grid topped out at 42,874
+# TRADES and D391 reported 61,835, so the lookup correctly refused the one size a wide event
+# study actually reaches. These counts push the trade axis past it. Caps are restricted to the
+# three in common use -- 60,000 x cap 60 already cost 1.03 s/draw and the cost is ~linear in n.
+EXT_COUNTS = (100_000, 150_000)
+EXT_CAPS = (10, 20, 40)
 SEED = 20260908
 BOOT = 1_000
 
@@ -173,6 +180,13 @@ def cell_key(kind, n, cap, side, pool="ALL", conc=1.0):
 def plan(part):
     """Every cell, CHEAPEST FIRST -- the 30k and 60k rows run last so a partial atlas is useful."""
     cells = []
+    if part == "extend":
+        for n in EXT_COUNTS:
+            for cap in EXT_CAPS:
+                for side in SIDES:
+                    cells.append(dict(kind="uncond", n=n, cap=cap, side=side, pool="ALL",
+                                      conc=1.0, draws=DRAWS_UNCOND))
+        return sorted(cells, key=lambda c: (c["n"] * c["cap"], c["n"]))
     if part in ("uncond", "all"):
         for n in COUNTS:
             for cap in CAPS:
@@ -224,7 +238,8 @@ def main() -> int:
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--calibrate", action="store_true")
     ap.add_argument("--run", action="store_true")
-    ap.add_argument("--part", default="all", choices=["uncond", "cond", "conc", "all"])
+    ap.add_argument("--part", default="all",
+                    choices=["uncond", "cond", "conc", "all", "extend"])
     ap.add_argument("--lookup", nargs=3, metavar=("N", "CAP", "SIDE"))
     a = ap.parse_args()
 
@@ -265,27 +280,28 @@ def main() -> int:
     # ---- calibration: cost the grid before spending it (D373's precedent) --
     if a.calibrate:
         print("\n  CALIBRATION -- one draw per (n, cap), measured. Nothing is spent.\n")
-        print(f"  {'n':>7s} {'cap':>4s} {'trades':>9s} {'s/draw':>8s}")
+        print(f"  {'n':>8s} {'cap':>4s} {'trades':>9s} {'s/draw':>8s}")
+        cells = plan(a.part)
+        pairs = sorted({(c["n"], c["cap"]) for c in cells})
+        calfile = REPO / "data" / "d392_calibration.json"
         per = {}
-        for n in COUNTS:
-            for cap in CAPS:
-                m = draw_mask(np.random.default_rng([SEED, n, cap]), idx, (T, N), n)
-                t1 = time.time()
-                _mu, ntr = score_once(V59, P, m, cap, "long", sc)
-                dt = time.time() - t1
-                per[(n, cap)] = dt
-                print(f"  {n:>7,} {cap:>4d} {ntr:>9,} {dt:>8.3f}", flush=True)
-        total = 0.0
-        for c in plan("all"):
-            total += per[(c["n"], c["cap"])] * c["draws"]
-        print(f"\n  PROJECTED TOTAL: {total / 3600:.2f} h over {len(plan('all'))} cells "
-              f"({sum(c['draws'] for c in plan('all')):,} kernel runs)")
-        print(f"  uncond {sum(per[(c['n'], c['cap'])] * c['draws'] for c in plan('uncond')) / 3600:.2f} h | "
-              f"cond {sum(per[(c['n'], c['cap'])] * c['draws'] for c in plan('cond')) / 3600:.2f} h | "
-              f"conc {sum(per[(c['n'], c['cap'])] * c['draws'] for c in plan('conc')) / 3600:.2f} h")
-        (REPO / "data" / "d392_calibration.json").write_text(json.dumps(
-            {f"{n}|{cap}": v for (n, cap), v in per.items()}, indent=1))
-        print(f"  wrote data/d392_calibration.json")
+        if calfile.exists():                      # keep what was already measured
+            per = {tuple(int(x) for x in k.split("|")): v
+                   for k, v in json.loads(calfile.read_text()).items()}
+        for n, cap in pairs:
+            if (n, cap) in per:
+                continue
+            m = draw_mask(np.random.default_rng([SEED, n, cap]), idx, (T, N), n)
+            t1 = time.time()
+            _mu, ntr = score_once(V59, P, m, cap, "long", sc)
+            dt = time.time() - t1
+            per[(n, cap)] = dt
+            print(f"  {n:>8,} {cap:>4d} {ntr:>9,} {dt:>8.3f}", flush=True)
+        total = sum(per[(c["n"], c["cap"])] * c["draws"] for c in cells)
+        print(f"\n  PROJECTED for --part {a.part}: {total / 3600:.2f} h over {len(cells)} cells "
+              f"({sum(c['draws'] for c in cells):,} kernel runs)")
+        calfile.write_text(json.dumps({f"{n}|{cap}": v for (n, cap), v in per.items()}, indent=1))
+        print(f"  wrote {calfile.relative_to(REPO)}")
         return 0
 
     # ---- the run: incremental, resumable ----------------------------------
