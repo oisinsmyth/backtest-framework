@@ -87,6 +87,46 @@ trade alone (GME, 2021-01-28) is **8.38%** of the ledger.
 - **The cap is always still in force.** Every arm is the exit rule **OR** the cap, whichever fires
   first, exactly as the kernel already ORs `cap_hit` with its trigger.
 
+### 2a′. AMENDMENT, 2026-09-08, BEFORE THE RUNNER EXISTS — D380 already built this, and it changes the fill and the null
+
+**Found while looking for the kernel's exit hooks: `scripts/run_d380_exit_rules.py` and
+[D380 RESULT](D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+already exist**, on master, dated the same day. Three consequences, all adopted here.
+
+**1. The kernel is not touched at all.** D380 established that per-trade P&L is the sum of a trade's
+own per-bar path, so **every rule is a re-cut of one stored cumulative-sum matrix** — no kernel
+re-run per cell, and no new exit mode in `d345_event_book`. `trade_paths`, `pnl_at`, `assert_CUT`,
+`assert_OVL` and the control machinery are **imported from D380, not reimplemented.**
+
+**2. THE FILL CONVENTION CHANGES, and §2's "next open" was not implementable.** The re-cut matrix is
+close-to-close; **a next-open exit is not representable in it.** D380's convention is
+`hold = first_breach_index + 1` — **exit at the CLOSE of the bar the rule fires on**, a
+market-on-close order. That is adopted, because the alternative is a second convention for the same
+quantity. **It is mildly more favourable than next-open**, so the sensitivity — holding one further
+bar — is reported for the best cell.
+
+**3. THE NULL IS R7's CONTROL, not a bare best-of-63.** D380's pre-registration establishes that an
+overlay must be nulled against a control that **keeps the base book and randomises only the
+overlay's decisions, matched on how many it makes.** The best-of-63 floor of §3 still prices the
+*search*; R7's control prices each *rule*. Both apply, and the search floor is the binding one.
+
+**4. D380'S WARNING IS INHERITED, and it constrains how §4's answers may be read:**
+
+> *"R7's strict control is not a fixed benchmark. It inherits whichever trades the rule selects, so
+> its difficulty varies by a factor of fifteen across rules and U1 verdicts are NOT comparable
+> between them."*
+
+**So no cell of the 63 may be ranked against another by its control verdict.** They are ranked on
+gross ÷ 2c, which is a fixed bar, and their controls are read one at a time.
+
+**5. D380's RESULT IS PRIOR EVIDENCE FOR §4's PREDICTIONS, and it is disclosed under R13.** On
+D373's winners'-dip long at a 40-bar cap it found: ***"Every exit overlay destroys value against
+simply not cutting"*** — baseline **+160.55**/trade, best overlay **+62.43**, a **−200 bp stop
+collapsing to +13.99**. **That is a different construction and a different hold**, so it does not
+decide this record — but Q1, Q2 and Q3 were written before it was found and it points the same way.
+
+---
+
 ### 2a. INTRABAR STOPS ARE OUT OF SCOPE, and the reason is a defect this programme has already shipped
 
 `d345_event_book.simulate_event` reads `r1T` (close-to-close) and `ocT` (open-to-close). **It has no
