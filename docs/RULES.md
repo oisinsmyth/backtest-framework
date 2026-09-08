@@ -493,6 +493,52 @@ correlation is worth discussing.
 **Scope:** binding from 2026-09-02. Full statement of the stage gates in
 [D289](decisions/D289-the-promotion-pipeline.md).
 
+### ADDITION to R14, 2026-09-08 — a FUNCTION choice is a free parameter too, and a worse one, because it cannot be swept
+
+**The principal's argument, recorded because it corrects a bias in how this programme has been
+reasoning about parameters.**
+
+The received position here has been that free parameters are the danger and parameter-free
+constructions are safer. **That is half the picture, and the missing half is the more useful one.**
+
+> **A swept parameter is dangerous but DIAGNOSABLE.** Sweep it and the shape tells you what you have:
+> monotone progression or regression, a smooth hump, or a knife-edge. Those shapes are evidence in
+> their own right.
+>
+> **A parameter-free function forfeits that diagnostic** — you cannot sweep what does not exist — and
+> **the choice of function is itself a free parameter**, drawn from a large discrete space, undeclared
+> and un-swept. It is *less* diagnosable than a continuous one, because functions have no natural
+> neighbourhood: `lower_wick`'s neighbour is not `upper_wick` in any sense that makes a shape readable.
+
+**The record supports this and I had it backwards.** This programme's most informative results have
+come from *swept* parameters, and its parameter-related *failures* were about thresholds that were
+never swept at all:
+
+| | |
+|---|---|
+| [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md) | stops hurt **monotonically in fire rate** — 5% → 10% → 20% gave +142.79, +126.06, +109.86. **The monotonicity was the finding**: it said the damage was mechanical, not a bad threshold. A parameter-free stop could not have said that |
+| [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md) | the horizon profile, 7.82 → 3.94 bp/bar across caps 5→60, **carried the front-loading result** — a shape, not a point |
+| [D368](decisions/D368-RESULT-the-relaxation-sweep.md) | asked the shape question directly and answered "**neither knife-edge nor curve**" — only reachable by sweeping |
+| **against** | [D374](decisions/D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md) and [D376](decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md) retired H4's 10% bar and gate 1d's 0.50 — **both fixed in advance and NEVER swept.** The defect was un-calibration, not parameterisation |
+
+**So the rule is not "prefer fewer parameters". It is:**
+
+> **Declare the parameter, sweep it over a stated grid, report the whole grid, and read the SHAPE as
+> evidence.** A result that survives only at one grid point is a knife-edge and is reported as
+> unresolved. A result that moves monotonically, or peaks smoothly in the interior, has told you
+> something a single point could not.
+>
+> **And when a construction has no tunable parameter, say what discrete space its FUNCTION was chosen
+> from and price that**, because that is the free parameter you actually used.
+
+**The multiplicity cost of a dense sweep is much smaller than the cell count implies**, and this is
+what makes the rule affordable. Neighbouring grid points are near-duplicates, so the max over them
+grows far more slowly than the max over the same number of independent tests. Measured here:
+[D382](decisions/D382-RESULT-nothing-clears-on-the-stable-statistic-and-the-books-are-the-market.md)'s
+best-of-38 rotation floor at hold 20 ran **p50 +185.02, p95 +190.01, max +192.32** over 50 draws —
+**a 4% spread from median to maximum across 38 correlated cells.** Adding grid points to a continuous
+parameter is cheap; adding independent hypotheses is not.
+
 ### AMENDMENT to R14, 2026-09-02 — both "tightenings" were wrong, and the principal was right
 
 R14 was written the same day and is corrected here rather than rewritten, because the
