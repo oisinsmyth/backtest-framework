@@ -66,6 +66,47 @@ mass accumulated at `t−1` sits in a stale frame and the recursion above is *no
 EMA's own log-change. Translating a density is an index shift, not a re-accumulation, so the
 recursion and the stationarity both survive. `[FRAME]` proves it.
 
+### AMENDMENT to §1, 2026-09-08 (second) — **`[REC/FRAME]` fired at 2.1e-01 and found that the paragraph above conflates TWO DIFFERENT OBJECTS. Stage 0 tests the one that needs no frame shift.**
+
+*Written before any result. The assertion did exactly what §6 said it was for: "the moving-origin fix
+of §1 is where this construction is most likely to be quietly wrong."*
+
+**There are two constructions here and §1 describes both at once:**
+
+| | where a past bar's mass sits | the question it answers |
+|---|---|---|
+| **(A) own-time deviation** | at `x_{t−k}` — its deviation from the EMA **as it stood then** | *"what does this name's deviation distribution look like?"* — a **shape** question, stationary by construction |
+| **(B) current-frame deviation** | at `x_{t−k} − (log EMA_t − log EMA_{t−k})` — re-expressed against **today's** EMA | *"where does old price sit relative to where the EMA is now?"* — a **level** question |
+
+**Only (B) needs the frame shift. (A) needs none at all, because each observation is already measured
+against its own contemporaneous origin.** The recursion as first written —
+`f_t(u) = λ f_{t−1}(u) + (1−λ) K(u − x_t)`, with no shift — **is exactly (A), and is correct as it
+stands.**
+
+**STAGE 0 TESTS (A), and the reason is that P1 is a shape question.** *Does the deviation distribution
+have shape a volatility-matched shuffle cannot produce?* That is asked most cleanly on the stationary
+object, with no frame mechanics layered on top to get wrong. And it is a sharp question: the spread of
+`log(P) − log(EMA)` depends directly on serial structure — momentum widens it, mean reversion narrows
+it — so **N2, which keeps volatility clustering and destroys only ordering, tests precisely the thing
+the premise rests on.**
+
+**And (A) already supports the natural signal, which simplifies the whole design.** If the density is
+the name's own deviation distribution and price now sits at `x_t`, then *"is `x_t` in a high-density
+region of where this name has historically traded, or made its lows?"* is well-posed, price-invariant,
+comparable across names — **and needs no frame shift whatsoever.** The frame machinery is not required
+for the family as proposed.
+
+**(B) is kept, not discarded.** It answers a different and legitimate question — whether *today's*
+price sits where old structure actually is — and a study that wants it will need the shift validated.
+So `[FRAME]` remains as a **standalone** check that the shifted recursion equals a from-scratch
+re-accumulation in the current frame, **even though stage 0 does not consume its output.** Validating
+machinery this record does not use costs one assertion and leaves the successor a proved component
+rather than an unproved one.
+
+**`[REC]` is correspondingly sharpened:** the unshifted recursion must equal the direct
+exponentially-weighted sum **exactly** (to floating tolerance), because for (A) they are the same sum
+in the same frame — a much tighter bar than the 2e-03 the first version asked for.
+
 **The bandwidth is not a free parameter.** Silverman's rule on the trailing distribution of `x`,
 recomputed on the same exponential weights. Declared, not swept.
 
