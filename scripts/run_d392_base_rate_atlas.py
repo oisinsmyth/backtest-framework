@@ -352,18 +352,50 @@ def main() -> int:
     return 0
 
 
-def lookup(atlas, n, cap, side, pool="ALL"):
-    """atlas.floor(n, cap, side, pool): p95 and its SE, log-linear in n, RAISING outside the grid."""
-    got = [(c["n"], c) for c in atlas["cells"].values()
+def lookup(atlas, n, cap, side, pool="ALL", by="trades", conc=1.0):
+    """atlas.floor(n, cap, side, pool): p95 and its SE, log-linear, RAISING outside the grid.
+
+    `by="trades"` IS THE DEFAULT AND IT IS A CORRECTION. The atlas is INDEXED on event count, but
+    the statistic depends on the TRADE count -- the kernel holds one position per name at a time,
+    so 60,000 events become 42,874 trades at cap 20 and 26,958 at cap 60. A candidate reporting
+    61,835 trades (D391) must be read against the trade axis, not against the cell labelled
+    n=60,000. The concentration cells made this unmissable: at 5% of names, 10,000 events collapse
+    to 4,116 trades, less than half the 9,337 the same event count gives unconstrained.
+
+    Pass `by="events"` only when the caller genuinely has an event count and wants the event axis.
+    Outside the grid this RAISES rather than extrapolating -- the atlas states what it measured."""
+    key = (lambda c: c["trades_mean"]) if by == "trades" else (lambda c: c["n"])
+    # conc must be filtered or the concentration cells -- which are pool="ALL" -- pollute the
+    # main curve. Caught by testing the lookup rather than by reading it.
+    got = [(key(c), c) for c in atlas["cells"].values()
            if c.get("cap") == cap and c.get("side") == side and c.get("pool") == pool
-           and c.get("status") != "EMPTY"]
+           and c.get("conc", 1.0) == conc and c.get("status") != "EMPTY"]
     if not got:
         raise KeyError(f"no cells for cap={cap} side={side} pool={pool}")
+    # the conc=1.0 CONTROL cell duplicates the unconditional cell at fewer draws, so the curve
+    # would carry two points at the same n. Keep the better-sampled one.
     got.sort()
+    merged = []
+    for k, c in got:
+        if merged and abs(k - merged[-1][0]) <= 0.01 * max(k, 1.0):      # within 1% == the same point
+            if c["draws"] > merged[-1][1]["draws"]:
+                merged[-1] = (k, c)
+            continue
+        merged.append((k, c))
+    got = merged
     ns = [x[0] for x in got]
+    # the endpoints are MEANS over draws, so a caller quoting a rounded trade count must not fall
+    # off the end by 0.4 of a trade. 0.1% tolerance, then clamp.
+    tol = 1e-3
+    if ns[0] * (1 - tol) <= n < ns[0]:
+        n = ns[0]
+    if ns[-1] < n <= ns[-1] * (1 + tol):
+        n = ns[-1]
     if n < ns[0] or n > ns[-1]:
-        raise ValueError(f"n={n} outside the atlas grid [{ns[0]}, {ns[-1]}] -- "
-                         "the atlas does not extrapolate")
+        raise ValueError(f"{by}={n:,.0f} outside the atlas grid "
+                         f"[{ns[0]:,.0f}, {ns[-1]:,.0f}] for cap={cap} {side} pool={pool} -- "
+                         "the atlas does not extrapolate. Extend the grid or report the nearest "
+                         "in-grid floor AS the nearest, saying so.")
     for (n0, c0), (n1, c1) in zip(got, got[1:]):
         if n0 <= n <= n1:
             w = 0.0 if n1 == n0 else (np.log(n) - np.log(n0)) / (np.log(n1) - np.log(n0))

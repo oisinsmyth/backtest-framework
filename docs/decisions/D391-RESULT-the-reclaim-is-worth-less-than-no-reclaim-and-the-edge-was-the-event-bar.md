@@ -146,8 +146,23 @@ The reclaim does not carry information beyond the level — **it carries less.**
    one. The state machine updates it on every confirmed pivot, so in a downtrend "below the last
    pivot low" is nearly continuous — **it is a moving average of lows wearing a structural name**,
    and any future study using it must state the base rate first.
-4. **Two opposite constructions earning +43 bp is a base rate, not two signals.** Where a long and
-   its mirror both pay the same, the number belongs to the hold and the universe.
+4. ~~**Two opposite constructions earning +43 bp is a base rate, not two signals.** Where a long
+   and its mirror both pay the same, the number belongs to the hold and the universe.~~
+
+   > **WITHDRAWN 2026-09-08 by [D392](D392-RESULT-the-base-rate-atlas.md).** The atlas measured
+   > the base rate this claim asserted, and it is **+8.27 bp** at 42,874 trades (cap 20, long,
+   > unconditional), implying roughly **+6.9** at this ledger's 61,835. **+43.02 is about five
+   > times the unconditional floor, not at it.** I attributed the number to the hold and the
+   > universe on no evidence.
+   >
+   > **What replaces it is narrower and honest:** a uniform random draw does not share this
+   > event's nuisance (D291), and these events plausibly skew cheap (+19.22 base rate) and
+   > high-volatility (+6.35). The right comparator is a pool the atlas does not carry — *names at
+   > a fresh pivot undercut* — **which is exactly this record's own `B_r`.**
+   >
+   > **The verdict is untouched:** the reclaim arm returned **+6.0** against that pool's **+13.5**.
+   > `B_r` holds day, pool and structure fixed and remains a better control than any atlas floor.
+   > Only the explanation of the +43 was wrong.
 
 ---
 
