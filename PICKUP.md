@@ -2,19 +2,25 @@
 
 ---
 
-## BRANCH `worktree-signal-hunt-part2` — D390 → D396, CHAIN RETIRED 2026-09-09
+## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED 2026-09-09, MERGED
 
-**Not merged. Rebased onto master, never merged — the principal's standing choice.** This block is
-the whole state of that branch; everything below it is master's strata, unchanged.
+**Merged to `master` on 2026-09-09** on the principal's instruction, reversing the branch's
+standing rebase-only rule. [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the
+retirement record and the place to start.
 
-> **⚠ D390 IS A THREE-WAY COLLISION AND IT IS NOT FIXED.** Master holds **two** D390s already —
-> `D390-PREREG-the-D163-recost.md` and `D390-is-D280s-overnight-gap-…` — and this branch adds a
-> third, `D390-the-volatility-tilt-zr-scored-alone.md` (+ its RESULT). **The branch's reserved
-> D390–D399 block was claimed before master took D390, and the rebase of 2026-09-09 exposed it.**
-> **It was deliberately NOT renumbered:** the chain is retired, the branch is never merged, and a
-> blanket rename previously corrupted a link to a *different* record in `RULES.md`. **If this
-> branch is ever merged, renumber the branch's D390 FIRST and grep for leftovers afterwards** —
-> D391–D396 are branch-only and do not collide.
+> **THE D390 COLLISION WAS RESOLVED BEFORE THE MERGE, NOT CARRIED INTO IT.** Master had taken
+> `D390` **twice** — the D163 re-cost and the D280 overnight-gap pre-registration — while this
+> branch was running on a reserved D390–D399 block. **The branch's D390 (the volatility tilt) was
+> renumbered to [D397](docs/decisions/D397-the-volatility-tilt-zr-scored-alone.md)**, along with
+> its RESULT, its runner (`scripts/run_d397_volatility_tilt.py`) and its artifact
+> (`data/d397_stage0.json`).
+>
+> **Every reference was moved by explicit, count-asserted replacement — never a blanket sed** —
+> because a blanket rename once corrupted a link to a *different* record in `RULES.md`. Nine
+> references were updated across `RULES.md` (R16's three), `D392`, `D393`, `run_d392` and the
+> renamed files themselves; the three *"reserved D390–D399 block"* mentions in D393/D394/D395 were
+> deliberately **left alone**, since they name the block and not the study. **A leftover grep after
+> the rename shows every remaining `D390` belongs to master.** D391–D397 do not collide.
 
 **THE ONE LINE: eight candidates, zero admitted, zero holdout reads, and the chain RETIRED by the
 principal on 2026-09-09.** [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the

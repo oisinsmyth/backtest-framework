@@ -1,4 +1,4 @@
-# D390 — the volatility tilt: `zr` scored alone, the measurement D280 said it could not make
+# D397 — the volatility tilt: `zr` scored alone, the measurement D280 said it could not make
 
 **Status:** PRE-REGISTERED. Committed **before the runner exists** (R8). **Nothing here is a
 result.** No cell has been scored, no null has been run, no book is proposed.
@@ -8,8 +8,12 @@ result.** No cell has been scored, no null has been run, no book is proposed.
 2026-09-07). `data/fixtures/us_shorts_daily_holdout2.csv.gz` exists and is **unspent**; this record
 does not touch it, and D357's short candidate retains its prior claim.
 
-**Number.** `D390` was free at the time of writing. A concurrent session is active on `master`; if
-this number collides at merge, renumber this file — nothing references it yet.
+**Number.** ~~`D390` was free at the time of writing.~~ **IT COLLIDED. Renumbered to `D397` on
+2026-09-09, before the merge to `master`** — master had taken `D390` twice over (the D163 re-cost
+and the D280 overnight-gap pre-registration) while this branch was running. The clause above
+anticipated exactly this and is the reason the rename was cheap. Every reference was updated by
+explicit, asserted replacement rather than a blanket sed, because a blanket rename once corrupted
+a link to a *different* record in `RULES.md`.
 
 ---
 

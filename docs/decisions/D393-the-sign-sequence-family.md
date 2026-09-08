@@ -64,7 +64,7 @@ principal's reservation and mine, and **Q1 below is written to expect exactly it
 
 ## 2. Stage 0 — the kill conditions, committed before the runner
 
-Instrument: `scripts/d268_score_independence.py`'s method, as D390's Stage 0 used it — the
+Instrument: `scripts/d268_score_independence.py`'s method, as D397's Stage 0 used it — the
 correlation structure **within each bar over eligible names** (the operative lens, since selection
 is cross-sectional), with the pooled within-name reading beside it for comparability.
 

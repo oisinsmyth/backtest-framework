@@ -29,7 +29,7 @@ Five candidates died on 2026-09-07/08 and **not one of them died on cost:**
 | C1 dispersion | volatility (ρ 0.774) |
 | C1 breadth | G1 restated (ρ 0.658) |
 | C2 the fade's gate | a random gate of the same shape, to within **+0.52 bp** |
-| [D390](D390-RESULT-zr-is-the-whole-tilt-and-its-tail-goes-the-wrong-way.md) `zr` | the whole cross-section — a negative rank IC with **both tails rising** |
+| [D397](D397-RESULT-zr-is-the-whole-tilt-and-its-tail-goes-the-wrong-way.md) `zr` | the whole cross-section — a negative rank IC with **both tails rising** |
 | [D391](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge-was-the-event-bar.md) undercut-reclaim | the pool and the hold — the long paid **+43.02** and its own **mirror paid +43.73** |
 
 **Each rediscovered a base rate at the price of a full pre-registration.** D391's mirror is the
@@ -71,7 +71,7 @@ real candidate selects on something.** So the atlas also draws from **conditione
 primary cap (20) and *n* ∈ {3,000, 10,000, 30,000}, both sides, **200 draws**:
 
 - **price tercile** (the axis that killed D284)
-- **volatility tercile** (the axis that killed C1 and D390)
+- **volatility tercile** (the axis that killed C1 and D397)
 - **momentum tercile** (the axis that killed D373 and produced FINDINGS §52)
 
 **This makes §52's rule mechanical**: a candidate holding high-volatility names is compared to

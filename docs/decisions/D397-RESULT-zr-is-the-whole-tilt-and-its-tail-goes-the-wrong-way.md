@@ -1,10 +1,10 @@
-# D390 RESULT — Stage 0: `zr` is *more* than the whole tilt, and the tail a book would trade goes the wrong way
+# D397 RESULT — Stage 0: `zr` is *more* than the whole tilt, and the tail a book would trade goes the wrong way
 
 **Status:** RESULT. Stage 0 only. **STAGE 1 IS NOT AUTHORISED AND WAS NOT RUN.**
 **Date:** 2026-09-08 · **Area:** signal research · **personal track**
-Pre-registration: [D390](D390-the-volatility-tilt-zr-scored-alone.md), committed before the runner
+Pre-registration: [D397](D397-the-volatility-tilt-zr-scored-alone.md), committed before the runner
 existed and amended once, also before it existed.
-Runner: `scripts/run_d390_volatility_tilt.py` · Artifact: `data/d390_stage0.json`
+Runner: `scripts/run_d397_volatility_tilt.py` · Artifact: `data/d397_stage0.json`
 
 **Holdout reads spent: 0. Programme total: 1** (D371). Nothing was fetched, no book was scored, and
 under R15 nothing here is a signal.

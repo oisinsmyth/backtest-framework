@@ -222,7 +222,7 @@ def plan(part):
 
 def tercile_pools(P, elig):
     """Cross-sectional terciles per bar, among ELIGIBLE names, for the three axes that killed
-    things: price (D284), volatility (C1/D390) and momentum (D373/FINDINGS 52)."""
+    things: price (D284), volatility (C1/D397) and momentum (D373/FINDINGS 52)."""
     out = {}
     CLOSE = np.asarray(P["CLOSE"])                                  # (T, n)
     src = {"price": CLOSE,
