@@ -47,6 +47,100 @@ overnight gap — **all clean**, with three flagged moves adjudicated against ev
 **the bar lists are cut as well as the grids**, because the structure machine and the gap scan read
 `cleaned` rather than the grids. R14 puts the holdout at stage 4 or not at all, and this is stage 1.
 
+### AMENDMENT to §1, 2026-09-08 — **the fixture and the loader named above are the wrong pair, and the pairing FAILS SILENTLY. The fixture is the PANEL and the loader is `load_panel`.**
+
+*Written before the runner exists, so it is still a pre-registration under R8 rather than a
+correction to a result. §1 above is left standing because it has already been quoted.*
+
+**THE DEFECT.** §1 names `etf_intraday_15m_raw.csv.gz` and the design assumes
+`ragged_panel.load_ragged`. **`load_ragged` builds its date grid from `timestamp[:10]`** —
+
+```python
+rows.setdefault(r["symbol"], []).append((r["timestamp"][:10], ...))
+grid = sorted({d for s in symbols for d, *_ in rows[s]})
+```
+
+— the **calendar date**. Fed a 15-minute fixture it collapses every intraday bar of a session into
+**one grid slot and keeps the last write.** Counted directly, distinct timestamps against distinct
+dates:
+
+| | symbols | union **timestamps** | union **dates** | bars per symbol | through `load_ragged` |
+|---|---:|---:|---:|---:|---:|
+| `etf_intraday_15m_raw` | 57 | **56,056** | **2,156** | 55,778 – 56,056, **ragged** | **57 × 2,156** |
+| `etf_intraday_15m_panel` | 57 | **55,726** | **2,156** | 55,726, **rectangular** | **57 × 2,156** |
+
+**2,156 is the trading-day count.** So `load_ragged` on either file returns a **daily panel of
+session closes** — one bar in 25.8 discarded — **with no error, no warning, and every assertion in
+§6 still passing.** `[LAG]`, `[TS]` and `[SPLIT]` are all true statements about a daily grid. A
+15-minute study would have been run, reported and believed at daily resolution. **`assert_gates_passed`
+already records why this class of defect lives at the loader — "THE LOADER IS THE CHOKEPOINT EVERY
+STUDY GOES THROUGH" — and this is the same chokepoint failing on FREQUENCY rather than on gates.
+`load_ragged`'s whole contract is written in dates (`RaggedPanel.dates`, "a symbol contributes only
+between its own first and last bar", "no forward-filling"), it was built for D252's daily
+dead-inclusive fixture, and it has no notion of a bar that is not a session. Nothing downstream can
+notice.**
+
+**THE CORRECTION.** Both lines of §1 are replaced, and nothing else in this record is:
+
+| | **§1 as written** | **as amended** |
+|---|---|---|
+| fixture | `data/fixtures/etf_intraday_15m_raw.csv.gz` | **`data/fixtures/etf_intraday_15m_panel.csv.gz`** |
+| events | `..._raw_events.json` | **`etf_intraday_15m_panel_events.json`** |
+| loader | `ragged_panel.load_ragged` | **`run_macd_ladder.load_panel`** |
+
+**`load_panel` is the right loader because it refuses what `load_ragged` accepts.** It requires
+equal bar counts across symbols and raises otherwise — which is precisely why
+`scripts/build_intraday_panel.py` exists and why it iterates its cleaned timestamp intersection to a
+**fixed point** (removing a bar can change whether its neighbours clean). Verified by running it:
+**57 × 55,726, 1,955 dividends matched and 0 unmatched.**
+
+**Two things about `load_panel` that this study must handle rather than inherit:**
+
+1. **It does NOT call `assert_gates_passed`.** `load_ragged` does; `load_panel` does not. So `[GATE]`
+   in §6 is **an explicit call in the runner**, not a property of the load. It is not a weakening of
+   the check — never `require_gates=False`, and the panel now has a gate to check (below).
+2. **`panel.dates` is date-only** — `b.timestamp.date().isoformat()`, so it has the right length
+   (55,726) and each value repeats ~26 times, losing the time of day. The 2023-12-31 boundary is a
+   date comparison and is safe on it, but **anything needing bar-of-session or a calendar hold in
+   §5.3 must read `cleaned[sym][j].timestamp`, never `panel.dates[t]`.**
+
+**THE GATES. `3c9d57c` is unaffected and is not being reinterpreted.** `scripts/gate_intraday_fixture.py`
+reads the CSV directly with its own row reader, so it genuinely saw all 3,194,849 raw rows; its
+verdict on the raw fixture stands exactly as §1 records it. **What was missing is that the panel —
+the file this study will actually load — carried no meta at all, so no loader would accept it.** It
+now carries its own gate, recomputed from the panel and never read from a meta (D256), **with the
+gate script unmodified**:
+
+> 57 symbols, **3,176,382 rows**; `gate_i1` grid **0**, `gate_i2` OHLC **0**, `gate_i3` intra-session
+> move **0**, `gate_i5` overnight gap **0**. Session shape, reported and not gated: 122,892 sessions,
+> **median 26.0 bars**, p05 25.0, short-session rate **0.000%**.
+
+**No new adjudication was required, and that was checked rather than assumed.** Re-run with the
+allow-list emptied, the panel flags **exactly four** moves — GDXJ 2020-03-19 (|log| 0.168), USO
+2020-04-02 (0.159), OIH 2020-03-09 (0.277), XOP 2020-03-09 (0.277) — **every one already adjudicated
+against evidence for the raw fixture** and every one naming what corroborates it. Nothing was
+excluded, no threshold was widened, and the fifth entry (USO 2020-03-09) is carried but inert here
+because the cleaned intersection dropped the bar pair that produced it.
+
+**THE SPLIT, RE-STATED AGAINST THE PANEL'S OWN BAR GRID.** The boundary is unchanged; what changes
+is that it is now quoted in bars that exist:
+
+| | | bars per symbol | sessions |
+|---|---|---:|---:|
+| **MINING** | first bar → **2023-12-31** (last bar present: 2023-12-29 15:45) | **38,648** | **1,497** |
+| **RESERVED** | **2024-01-01 → 2026-08-26 15:45. Untouched.** | **17,078** | **659** |
+| | | 55,726 | 2,156 |
+
+**`[SPLIT]` stays default-deny with no override** — there is no flag that widens it. The **bar lists**
+are cut, not merely the grids, and the cut must be **proved to have bitten** (a cut that removes
+nothing guards nothing) and proved to have left nothing on or after 2024-01-01. Both checks, and
+their deliberate failures, are already exercised in `scripts/d383_span_census.py --selftest`.
+
+**Everything else in this record is unchanged**: the hypothesis, the 25 feature-directions × 6
+windows × 4 holds, the two nulls, the §5 reporting set, the §6 assertions and the §7 predictions.
+What changes is the object they are computed on — **57 × 55,726 fifteen-minute bars, not 57 × 2,156
+daily closes.**
+
 ---
 
 ## 2. The construction
