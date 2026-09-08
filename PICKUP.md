@@ -1,5 +1,46 @@
 # PICKUP - handoff for the next session
 
+---
+
+## BRANCH `worktree-signal-hunt-part2` — D390 → D396, CHAIN RETIRED 2026-09-09
+
+**Not merged. Rebased onto master, never merged — the principal's standing choice.** This block is
+the whole state of that branch; everything below it is master's strata, unchanged.
+
+**THE ONE LINE: eight candidates, zero admitted, zero holdout reads, and the chain RETIRED by the
+principal on 2026-09-09.** [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the
+retirement record and the place to start.
+
+| | |
+|---|---|
+| **Retired 2026-09-09** | **D393** sign sequences (+ 6 addenda), **D394** exit rules, **D395** the CHOP cell |
+| **How far it got** | `up_run_21` E1/cap 20 cleared **all four** nulls (B the binding one at **+0.91**, resolved ABOVE only at 4,000 draws) — and **never cleared H1**, whose best-of-10 floor was never computed |
+| **The one cell that reached 1.00× coverage** | cap-20 CHOP, **net −0.44** — found by searching 36 cells, at a hold that was not the declared primary, whose own primary **failed the search floor by 22 SE**. Retired with the rest |
+| **Books** | **unchanged.** S1, S2, neither at capital; prop book empty |
+
+**The instruments are the durable output and they outlive the chain:**
+`scripts/lag_audit.py` (the shared `[L]` audit, built because D391 shipped a look-ahead that cost
+82% of its result) · `data/d392_atlas.json` + `run_d392_base_rate_atlas.py` (193 measured base-rate
+cells; `lookup` **raises** outside the grid) · **the exact permutation floor** in
+`run_d395_chop.py` (best-of-N for a cell picked from a grid — no independence assumption, 10,000
+draws in 44 s; **should replace normal-approximation floors programme-wide**) ·
+`scripts/ragged_sign_scores.py` (Axis I; `sign_flips_21` is the most orthogonal score measured,
+max |ρ| 0.025) · the shard/merge pattern with one `item_at()` and `[SHARD]` bit-identity.
+
+**Six findings worth carrying** (full list in D396 §2): base rates are large enough to look like
+signals (price tercile **36.8 bp** for a *random* long) · **the edge lives where trading is
+dearest**, measured three independent ways · a clairvoyant delisting filter would **lose** money ·
+hit rate is immovable at **50.1–50.8%** · eleven observables all predict both tails equally · no
+exit rule closes a cost gap (126 cells, best recovered 2.53 bp of 50.88).
+
+**Open and NOT closed by the retirement:** `sign_flips_21` as an independent *input* (retired as a
+signal, not as a variable) · `working/SLEEVE-VS-ALLOCATOR-PROPOSAL.md` (three questions) ·
+`working/FINDINGS-52-corollary-NOTE.md` (six questions) · the FINDINGS §48 amendment draft ·
+three atlas floor gaps (cap 5 both sides, cap 1 short) · a `docs/research/the-signal-hunt-part2.md`
+§2a correction already made in place.
+
+---
+
 **Updated 2026-09-09.** **D365 → D401.** **Three** sessions on master, plus one on a branch: the
 first spent the programme's first holdout read, ran D373 and audited the hurdles that judged it; the
 second built and **retired the density line (D384 → D388)** and **answered the correlation floor

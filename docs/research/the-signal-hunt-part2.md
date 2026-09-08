@@ -1117,6 +1117,22 @@ from the principal.**
 
 ---
 
+## 8b. RETIRED 2026-09-09 BY THE PRINCIPAL
+
+**The chain this record opened -- D393 (sign sequences), D394 (exit rules) and D395 (the CHOP
+cell) -- is RETIRED.** The ruling is the principal's and only the principal can make it (R15).
+
+**Eight candidates enumerated here, three carried to a pre-registration, zero admitted to a book,
+zero holdout reads spent.** [D396](../decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the
+retirement record: what it established, what instruments outlive it, and what the retirement does
+NOT close.
+
+**Retirement means no further work, not deletion.** Every measurement below and in the D393-D395
+records stands and is quotable. **Groups A1, A3, B2 and the rest of the enumeration were never
+run** and are neither retired nor endorsed by this line.
+
+---
+
 ## 9. What this record does not claim
 
 - **No candidate here is a signal.** R15's bar is a positive gross mean per trade above its
