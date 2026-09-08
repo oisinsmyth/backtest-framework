@@ -1,0 +1,127 @@
+============================================================================
+0. IS ES A LARGE-TICK BOOK?  (the load-bearing premise)
+============================================================================
+arXiv 2508.06788 Table 1: average spread p1..p75 = 0.25, p95 = 0.26,
+p99 = 0.30, mean 0.25 sd 0.01.  The ES spread IS one tick, essentially
+always. So the mid moves on queue depletion, in half-tick increments,
+and a taker's round turn costs one FULL tick against the mid.
+
+============================================================================
+1. THE ONE-SECOND MOVE, IN TICKS AND DOLLARS
+============================================================================
+paper's era, index ~1250     1 tick = 2.000 bp | 1-sec SD 0.91 bp =  0.46 ticks = $  5.69
+today, index ~6700           1 tick = 0.373 bp | 1-sec SD 0.91 bp =  2.44 ticks = $ 30.49
+
+NOTE: holding SD_1S_BP fixed across eras assumes similar RELATIVE vol.
+The 2008-2013 sample spans the GFC, so its 0.91bp is a HIGH-vol read;
+carrying it to today therefore FAVOURS the strategy. Both are shown.
+
+And the median one-second ES mid move is EXACTLY ZERO:
+  Table 1 percentiles 25%/50%/75% of the 1-sec mid return = 0.00 bp.
+  A majority of seconds contain no mid-price move to predict at all.
+
+============================================================================
+2. E[gross move | imbalance signal] vs THE ROUND TURN
+============================================================================
+E[r | s] = rho * sigma * s, with rho = sqrt(R2_OS).
+R2 is imported from Nasdaq EQUITIES (Kolm et al.); no published ES
+equivalent exists. ES is large-tick/deep-queue/high-update, which is
+exactly the profile where Kolm finds the BEST R2 -- so the transfer
+is GENEROUS to the strategy, and the conclusion survives it anyway.
+
+-- index 2008-2013 (sigma_1s = $5.69) --
+R2                         signal    E[gross]$   cost$(4)  shortfall
+typical R2_OS 1%           1 sd           0.57      16.50      29.0x
+typical R2_OS 1%           2 sd           1.14      16.50      14.5x
+typical R2_OS 1%           3 sd           1.71      16.50       9.7x
+best large-tick R2_OS 5%   1 sd           1.27      16.50      13.0x
+best large-tick R2_OS 5%   2 sd           2.54      16.50       6.5x
+best large-tick R2_OS 5%   3 sd           3.82      16.50       4.3x
+
+-- index today (sigma_1s = $30.49) --
+R2                         signal    E[gross]$   cost$(4)  shortfall
+typical R2_OS 1%           1 sd           3.05      16.50       5.4x
+typical R2_OS 1%           2 sd           6.10      16.50       2.7x
+typical R2_OS 1%           3 sd           9.15      16.50       1.8x
+best large-tick R2_OS 5%   1 sd           6.82      16.50       2.4x
+best large-tick R2_OS 5%   2 sd          13.63      16.50       1.2x
+best large-tick R2_OS 5%   3 sd          20.45      16.50       0.8x
+
+============================================================================
+2b. THE ONE CELL THAT CLEARS, STRESSED
+============================================================================
+Only R2=5% x 3sd x today's index clears ($20.45 vs $16.50). It stacks
+five favourable choices. Two are checkable:
+
+(i) VOLATILITY. 0.91 bp/sec is a 2008-2013 read spanning the GFC.
+    Implied annualised vol = sd * sqrt(seconds per RTH year):
+    0.91 bp/sec -> 22% ann. vol | sigma_1s $30.49 | best-cell E[gross] $20.45 vs cost $16.50 -> CLEARS
+    0.75 bp/sec -> 18% ann. vol | sigma_1s $25.13 | best-cell E[gross] $16.85 vs cost $16.50 -> CLEARS
+    0.62 bp/sec -> 15% ann. vol | sigma_1s $20.77 | best-cell E[gross] $13.93 vs cost $16.50 -> FAILS
+    At anything below ~0.85 bp/sec -- i.e. below ~21%% annualised --
+    the last surviving cell fails too.
+
+(ii) LINEAR EXTRAPOLATION TO 3sd. E[r|s] = rho*sigma*s is linear and
+     OVERSTATES at the extreme: Gould-Bonart's fitted relation
+     SATURATES at P(up) ~ 0.8-0.9. Section 5 uses that measured
+     conditional probability instead of extrapolating, and at the
+     one-second horizon it loses in every cell. Where the two methods
+     disagree, the saturating one is the correct one.
+
+============================================================================
+3. REQUIRED HIT RATE, TAKER, over 1-3 mid-price changes
+============================================================================
+E = gross*(2p-1) - cost = 0  ->  p_req = 0.5 + cost/(2*gross)
+granularity: the mid moves in HALF ticks on a pinned book; a FULL tick
+per mid-price change is carried as the generous alternative.
+
+-- retail $4.00/RT : round-turn cost vs mid = $16.50 = 1.32 ES ticks --
+granularity              horizon     gross$     cost$     p_req
+half-tick moves          1 chg         6.25     16.50     1.820  IMPOSSIBLE (>1)
+half-tick moves          2 chg        12.50     16.50     1.160  IMPOSSIBLE (>1)
+half-tick moves          3 chg        18.75     16.50     0.940
+full-tick (generous)     1 chg        12.50     16.50     1.160  IMPOSSIBLE (>1)
+full-tick (generous)     2 chg        25.00     16.50     0.830
+full-tick (generous)     3 chg        37.50     16.50     0.720
+
+-- screen convention $10.00/RT : round-turn cost vs mid = $22.50 = 1.80 ES ticks --
+granularity              horizon     gross$     cost$     p_req
+half-tick moves          1 chg         6.25     22.50     2.300  IMPOSSIBLE (>1)
+half-tick moves          2 chg        12.50     22.50     1.400  IMPOSSIBLE (>1)
+half-tick moves          3 chg        18.75     22.50     1.100  IMPOSSIBLE (>1)
+full-tick (generous)     1 chg        12.50     22.50     1.400  IMPOSSIBLE (>1)
+full-tick (generous)     2 chg        25.00     22.50     0.950
+full-tick (generous)     3 chg        37.50     22.50     0.800
+
+============================================================================
+4. THE HIT RATE THE LITERATURE ACTUALLY DOCUMENTS
+============================================================================
+typical R2_OS 1%             -> directional accuracy 0.532
+best large-tick R2_OS 5%     -> directional accuracy 0.572
+Gould-Bonart 2016 out-of-sample AUC, large-tick: 0.752 - 0.805
+  (AUC is not a hit rate. Their local-logistic P(up) at EXTREME
+   imbalance is 'about 0.8 to 0.9' -- the practitioner's best case.)
+
+============================================================================
+5. BEST CASE: p = 0.85 SUSTAINED over the whole horizon
+============================================================================
+half-tick moves        h=1 gross $  6.25 |  EV $ -12.12 (retail)  EV $ -18.12 (screen)
+half-tick moves        h=2 gross $ 12.50 |  EV $  -7.75 (retail)  EV $ -13.75 (screen)
+half-tick moves        h=3 gross $ 18.75 |  EV $  -3.38 (retail)  EV $  -9.38 (screen)
+full-tick (generous)   h=1 gross $ 12.50 |  EV $  -7.75 (retail)  EV $ -13.75 (screen)
+full-tick (generous)   h=2 gross $ 25.00 |  EV $  +1.00 (retail)  EV $  -5.00 (screen)
+full-tick (generous)   h=3 gross $ 37.50 |  EV $  +9.75 (retail)  EV $  +3.75 (screen)
+
+only surviving cells need FULL-tick moves AND h>=2 AND retail $4.
+best cell EV = $9.75/RT  ->  15.4 round turns/day for $150,
+each needing a fresh 85%-accurate 3-price-change forecast, at a
+horizon the same literature says is dead after 2-3 price changes.
+
+============================================================================
+6. MICROS ARE WORSE, NOT SAFER
+============================================================================
+ES : spread $12.50 + $4.00 = $16.50 = 1.32 ES ticks
+MES: spread $1.25 + $1.00 = $2.25 = 1.80 MES ticks
+MES: spread $1.25 + $1.50 = $2.75 = 2.20 MES ticks
+Commission is a LARGER fraction of the micro tick, so sizing down
+into MES raises the cost hurdle by 36-67%.
