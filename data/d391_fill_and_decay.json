@@ -1,0 +1,149 @@
+{
+ "study": 391,
+ "addendum": "fill and decay",
+ "caps": [
+  1,
+  2,
+  3,
+  5,
+  10,
+  20
+ ],
+ "decay": {
+  "long": [
+   {
+    "cap": 1,
+    "mean_bp": 47.186504656037705,
+    "trades": 144620,
+    "increment_bp": 47.186504656037705
+   },
+   {
+    "cap": 2,
+    "mean_bp": 47.47315697485907,
+    "trades": 118540,
+    "increment_bp": 0.28665231882136766
+   },
+   {
+    "cap": 3,
+    "mean_bp": 45.04989957735259,
+    "trades": 106691,
+    "increment_bp": -2.4232573975064824
+   },
+   {
+    "cap": 5,
+    "mean_bp": 43.11855624141695,
+    "trades": 94230,
+    "increment_bp": -1.9313433359356438
+   },
+   {
+    "cap": 10,
+    "mean_bp": 42.2978126054747,
+    "trades": 78830,
+    "increment_bp": -0.8207436359422502
+   },
+   {
+    "cap": 20,
+    "mean_bp": 43.01641496346223,
+    "trades": 61835,
+    "increment_bp": 0.7186023579875354
+   }
+  ],
+  "short": [
+   {
+    "cap": 1,
+    "mean_bp": 49.31852617823662,
+    "trades": 167236,
+    "increment_bp": 49.31852617823662
+   },
+   {
+    "cap": 2,
+    "mean_bp": 50.04288703392184,
+    "trades": 135993,
+    "increment_bp": 0.7243608556852266
+   },
+   {
+    "cap": 3,
+    "mean_bp": 48.63153106248925,
+    "trades": 121764,
+    "increment_bp": -1.4113559714325916
+   },
+   {
+    "cap": 5,
+    "mean_bp": 44.097311723038715,
+    "trades": 106943,
+    "increment_bp": -4.534219339450537
+   },
+   {
+    "cap": 10,
+    "mean_bp": 39.27883879242015,
+    "trades": 87915,
+    "increment_bp": -4.818472930618562
+   },
+   {
+    "cap": 20,
+    "mean_bp": 43.73196128271462,
+    "trades": 67397,
+    "increment_bp": 4.453122490294469
+   }
+  ]
+ },
+ "fill": {
+  "long": {
+   "next_open": 43.01641496346223,
+   "same_close": 20.26412745694626,
+   "gap_bp": -22.752287506515973
+  },
+  "short": {
+   "next_open": 43.73196128271462,
+   "same_close": 24.007364246211523,
+   "gap_bp": -19.7245970365031
+  }
+ },
+ "pool_by_horizon": {
+  "1": {
+   "reclaim": {
+    "n": 144620,
+    "bp": -0.07991988841950051
+   },
+   "no_reclaim": {
+    "n": 448352,
+    "bp": 1.682070903322354
+   },
+   "diff_bp": -1.7619907917418545
+  },
+  "2": {
+   "reclaim": {
+    "n": 144590,
+    "bp": 0.6833582481015658
+   },
+   "no_reclaim": {
+    "n": 448242,
+    "bp": 4.021089897397688
+   },
+   "diff_bp": -3.337731649296122
+  },
+  "5": {
+   "reclaim": {
+    "n": 144483,
+    "bp": 3.9626407702253656
+   },
+   "no_reclaim": {
+    "n": 447821,
+    "bp": 7.235480503139642
+   },
+   "diff_bp": -3.272839732914276
+  },
+  "20": {
+   "reclaim": {
+    "n": 143985,
+    "bp": 5.950897556759477
+   },
+   "no_reclaim": {
+    "n": 446462,
+    "bp": 13.505202526924387
+   },
+   "diff_bp": -7.55430497016491
+  }
+ },
+ "note": "D392 6a's hypothesis as written was wrong: D391 enters at the NEXT OPEN, so the close->open gap is excluded by construction. Restated as (1) where in the hold the return accrues and (2) how large the excluded gap is on these particular bars."
+}

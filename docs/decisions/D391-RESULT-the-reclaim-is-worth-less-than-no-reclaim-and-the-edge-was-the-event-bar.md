@@ -166,6 +166,84 @@ The reclaim does not carry information beyond the level — **it carries less.**
 
 ---
 
+## 8. ADDENDUM, 2026-09-08 — the fill-and-decay probe: H3 holds at every horizon, and D392's hypothesis was wrong
+
+`scripts/d391_fill_and_decay.py` · `data/d391_fill_and_decay.json`. `[ID]` reproduces this
+record's +43.02 on 61,835 trades before anything is read.
+
+### The question it was run to answer, and the answer is NO
+
+D392 §6a asked whether D391's +43 was an artifact of the entry convention, hypothesising that
+*"the next open may gap in the direction of that close, crediting both books."* **That hypothesis
+was wrong on its face and is withdrawn: D391 ENTERS AT THE NEXT OPEN, so the close→open gap is
+excluded by construction** — it is precisely what D340's convention removed. I proposed a
+mechanism without checking which side of it the construction sat on.
+
+### 1. The whole ledger is bar one
+
+| cap | long cum | increment | short cum | increment |
+|---|--:|--:|--:|--:|
+| **1** | **+47.19** | **+47.19** | **+49.32** | **+49.32** |
+| 2 | +47.47 | +0.29 | +50.04 | +0.72 |
+| 3 | +45.05 | −2.42 | +48.63 | −1.41 |
+| 5 | +43.12 | −1.93 | +44.10 | −4.53 |
+| 10 | +42.30 | −0.82 | +39.28 | −4.82 |
+| 20 | +43.02 | +0.72 | +43.73 | +4.45 |
+
+**Bar 1 alone is 110% of the long's twenty-bar total and 113% of the short's.** Bars 2–20 net
+*negative* on both sides. **The 20-bar hold was diluting a one-bar effect** — and the cap grid
+this record froze started at 5, so it could not have seen that.
+
+### 2. The gap runs AGAINST the event on both sides
+
+| side | next-open (D391) | same-close | the gap |
+|---|--:|--:|--:|
+| long | +43.02 | +20.26 | **−22.75** |
+| short | +43.73 | +24.01 | **−19.72** |
+
+**Both event families gap against their own direction overnight and recover intraday.** This does
+not propose reverting D340's convention — that is settled — it measures what the excluded gap is
+worth on bars chosen for a large intrabar range, and it is large.
+
+### 3. H3 fails at EVERY horizon — the verdict was not a horizon artifact
+
+**This is the decisive table, and it is why the candidate stays closed.** If the effect is one bar,
+§0's H3 test at h=20 was run at the wrong horizon and diluted 20:1. It was not:
+
+| horizon | reclaim | no-reclaim | difference |
+|---|--:|--:|--:|
+| **1** | −0.08 | +1.68 | **−1.76** |
+| 2 | +0.68 | +4.02 | −3.34 |
+| 5 | +3.96 | +7.24 | −3.27 |
+| 20 | +5.95 | +13.51 | −7.55 |
+
+**The reclaim underperforms its own same-bar pool at every horizon tested, including h = 1.**
+§0's verdict stands and is now stronger than when it was written.
+
+### 4. An unreconciled discrepancy, headed rather than buried
+
+The **ledger** at cap 1 earns +47.19 per trade; the **drift** at h = 1 on nominally the same
+events is −0.08 bp per name-bar. §2 measures the gap between the two fill conventions at −22.75,
+which leaves roughly **24 bp unexplained**.
+
+**These are the two lenses `CLAUDE.md` §10 forbids comparing on the same statistic** — one is
+path-variant per trade, the other path-invariant per name-bar — so the gap is not necessarily an
+error. **But it is not explained**, and the candidate causes are nameable: the kernel hedges the
+entry bar with `mkt_oc` while the drift uses `m_f` throughout; the trade population is not the
+name-bar population once overlaps collapse; and delisting truncation differs. **The check is to
+decompose one ledger trade by hand against its drift cell.** Recorded as owed, not resolved.
+
+### What this changes
+
+**Nothing about the verdict.** The candidate is closed on §3 and closed harder than before.
+**What it adds is a lead that belongs to no record yet:** a one-bar, open-to-close effect worth
++47/+49 on *both* sides of a high-range bar, with a ~20 bp adverse gap in front of it. **It has no
+atlas floor — cap 1 is not in D392's grid** — so it cannot be called a signal, and its turnover
+would be one round trip per day against a 50–70 bp cost line. **It is a measurement, not a
+candidate, until someone pre-registers it.**
+
+---
+
 **Status footer.** No null was run. Stage 1 was not run and is not authorised. `docs/BOOK.md`
 holds S1 and S2, neither at capital; `docs/BOOK_PROP.md` is empty. Nothing in this record is a
 signal (R15).
