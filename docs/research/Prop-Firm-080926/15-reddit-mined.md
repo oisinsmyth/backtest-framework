@@ -40,7 +40,7 @@ model and a bootstrap CI. It independently re-kills four avenues this project ha
 (intraday mean reversion, ORB, gap-fade, volume/order-flow levels) and adds six that were *not* on
 the closed list: cross-asset lead-lag (ZN/DX/Gold→NQ), GEX as a regime filter, permutation entropy,
 composite voting across weak signals, meta-labelling over no-edge signals, and overnight momentum
-follow-through. **That is worth more to the ledger than any of the six candidates.**
+follow-through. **That is worth more to the ledger than any of the seven candidates.**
 
 ### The route finding, which is itself a deliverable
 
@@ -383,13 +383,17 @@ mandatory entries and every failed mirror route is logged.
 | 25 | [r/algotrading — earnings vs momentum, two XGBoost models](https://reddit.com/r/algotrading/comments/1u19hnl/how_earnings_impact_my_momentum_strategy_a_backtest/) | 2026-09-08 | claims | cross-sectional equity candidate | **YIELDED C4.** Baseline acts as a genuine control; the hard filter *underperformed*. No cost convention — a falsifier. |
 | 26 | [r/algotrading — Donchian gold trend system](https://reddit.com/r/algotrading/comments/1unk44b/stairway_to_heaven_a_trendfollowing_breakout/) · [LDM QQQ/QLD/TQQQ](https://reddit.com/r/algotrading/comments/1vb4ajj/leverage_dual_momentum_ldm_a_24year_backtested/) | 2026-09-08 | claims | payoff-driven and rotation candidates | **YIELDED C5 and C6.** C5's win/loss arithmetic reproduces to rounding; its falsifier is a random-entry control against the same trailing stop. C6's claimed Sharpe gain (0.16) is inside one standard error (~0.235) on its own 24-year sample. |
 | 27 | Live-vs-backtest cluster: [midpoint fills](https://reddit.com/r/algotrading/comments/1tnl249/the_single_biggest_gap_between_my_backtests_and/) · [fill-quality tracker](https://reddit.com/r/algotrading/comments/1rvk302/i_built_a_fill_quality_tracker_and_discovered/) · [commission-free broker switch](https://reddit.com/r/algotrading/comments/1v4rzv2/on_switching_to_a_commissionfree_broker_for_algo_trading/) · [survivorship-bias correction](https://reddit.com/r/algotrading/comments/1ukhgxe/title_2_years_building_a_multistrategy_algo/) | 2026-09-08 | claims | the divergence genre the brief asked for | **YIELDED NO CANDIDATE — logged as one cluster because that is the finding.** Four independent posts, all cost/bias calibration, none a signal. Quantities kept in "calibration worth keeping" above. |
+| 28 | **arctic-shift full-text on `r/Daytrading`** (`query=years profitable`, n=100) | 2026-09-08 | claims | retrospectives the top listing missed | **YIELDED C7 AND THREE REJECTS — and overturned source 17.** The population is disjoint from the top listing: the Gotobi study, the 130,201-configuration SMC teardown, the SMC prior-art piece, and the $2.1-trillion reductio. **The single most productive job in the lane, on the sub I had already dismissed.** |
+| 29 | `arctic-shift…?subreddit=options&query=volatility+risk+premium` | 2026-09-08 | claims | VRP structures beyond C3 | **BLOCKED — HTTP 422 "Timeout. Maybe slow down a bit"** after 5 backoff retries. Not recovered. The r/options full-text tier is therefore **unsampled**; C3 came from the listing route instead. |
 
 **Searches run that produced nothing new, so they are not repeated:** arctic full-text on
 `r/algotrading` for `slippage`, `live results`, `stopped working`, `post mortem`, `years of`
-(5 × 100 posts, all already surfaced or below the screen); `r/quant` for `retail`; `r/options` for
-`volatility risk premium`; `r/Daytrading` for `years profitable`; reddit search RSS for
-`why my strategy failed` and `after years what worked` (both 200, both zero new candidates — these
-two plus sources 17 and 19 are the four consecutive zero-yield sources that triggered saturation).
+(5 × 100 posts, all already surfaced or below the screen); `r/quant` for `retail`; `r/systematictrading`
+undated sweep (n=34, exhausts the sub); `r/FuturesTrading` for `backtest`; reddit search RSS for
+`why my strategy failed` and `after years what worked` (both HTTP 200, both zero new candidates).
+**Note two entries that are NOT in this list and must not be read into it:** `r/Daytrading` for
+`years profitable` **yielded C7 and three rejects** (source 28), and `r/options` for
+`volatility risk premium` **was blocked, not empty** (source 29, HTTP 422).
 
 **Not attempted, and why:** `reveddit.com` (removed content — the screen wants substance, not
 deletions, and no thread here was missing); Google/Bing cache (WebSearch cannot return reddit.com at
@@ -412,7 +416,15 @@ on both working routes made it uneconomic — this is the one genuine gap, and i
    else about it survives, including a $10 round turn.
 4. **C2 needs a ruling from the principal before any work**, because it is adjacent to a closed
    avenue in construction but opposite in sign.
-5. **`r/Daytrading` and `r/thewallstreet` should not be re-mined the same way** — the first has no
-   quantitative content at all, the second has it all in comments.
-6. **Nothing here is admitted to either book.** Every candidate still owes R15, a pre-registration,
+5. **C7 is the only candidate whose mechanism is documented outside Reddit** (Ito & Yamada, NBER WP
+   22820). If exactly one thing here gets worked, it should be that one — and the first test is the
+   cheap discriminator, not a backtest: **decompose the reported return into price-move-into-the-fix
+   versus accrued swap carry.** The author flagged the confound and did not test it, and the fact that
+   the *longest-holding* configuration was the sole survivor is what carry predicts.
+6. **`r/thewallstreet` is NOT MINED** — its content is in daily-thread comments and needs per-thread
+   fetches. **`r/Daytrading` must be mined by full-text search, never by its top listing** (see the
+   header correction).
+7. **The r/options full-text tier is unsampled** — that job 422'd and was not recovered. C3 came from
+   the listing route. A resumed lane should start there.
+8. **Nothing here is admitted to either book.** Every candidate still owes R15, a pre-registration,
    and — for anything reaching the prop book — all six of hurdle P.
