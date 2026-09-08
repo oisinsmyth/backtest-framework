@@ -1,5 +1,5 @@
 {
- "study": 382,
+ "study": 391,
  "stage": 0,
  "cap_primary": 20,
  "caps": [
@@ -10,7 +10,7 @@
   60
  ],
  "K": 3,
- "purpose": "D382 Stage 0: exposure, the pool's own drift, the split, and the four groups. No null is run; nothing is admitted (R15).",
+ "purpose": "D391 Stage 0: exposure, the pool's own drift, the split, and the four groups. No null is run; nothing is admitted (R15).",
  "build": "load_ragged(dividend_bound=True), D333's default (R16)",
  "counts": {
   "event": 144657,
@@ -134,307 +134,307 @@
   }
  },
  "groups": {
-  "n": 61835,
-  "mean_bp": 43.01641496346223,
-  "median_bp": 31.12705288977882,
-  "win_rate": 0.5183310422899652,
-  "t": 10.471161998031166,
-  "skew": 0.9785856386589672,
-  "kurtosis": 27.84660631597106,
-  "trim_ex_top_bp": 0.57769536552551,
-  "trim_ex_bottom_bp": 81.65501434530219,
-  "trim_both_bp": 39.17747641619786
+  "n": 61818,
+  "mean_bp": 7.998155440873494,
+  "median_bp": 6.197303704708198,
+  "win_rate": 0.5037205991782329,
+  "t": 1.9640761951173724,
+  "skew": 0.7794969849390608,
+  "kurtosis": 27.20364510024442,
+  "trim_ex_top_bp": -33.317761877780654,
+  "trim_ex_bottom_bp": 47.093353379084,
+  "trim_both_bp": 5.754100022820152
  },
  "per_trade": {
   "side": "long",
-  "trades": 61835,
-  "mean_bp": 43.01641496346223,
-  "median_bp": 31.12705288977882,
-  "t": 10.471161998031166,
-  "share_pos": 0.5183310422899652,
-  "hold_mean": 19.979995148378748,
+  "trades": 61818,
+  "mean_bp": 7.998155440873494,
+  "median_bp": 6.197303704708198,
+  "t": 1.9640761951173724,
+  "share_pos": 0.5037205991782329,
+  "hold_mean": 19.97872787861141,
   "hold_median": 20.0,
-  "mean_per_bar_held_bp": 2.15297424468858,
+  "mean_per_bar_held_bp": 0.4003335692577336,
   "two_c": {
-   "PB": 33.284787337871194,
-   "PUB": 60.113742731744196
+   "PB": 24.78029798049557,
+   "PUB": 59.7734633269468
   },
   "held_half": {
-   "PB": 15.39208109079106,
-   "PUB": 28.806558787727564
+   "PB": 11.140148990247784,
+   "PUB": 28.6367316634734
   },
-  "held_price": 39.99,
-  "commission_bp": 2.500625156289072,
+  "held_price": 40.0,
+  "commission_bp": 2.5,
   "net_per_trade": {
-   "PB": 9.731627625591038,
-   "PUB": -17.097327768281964
+   "PB": -16.782142539622075,
+   "PUB": -51.77530788607331
   },
   "mean_over_2c": {
-   "PB": 1.2923746373022027,
-   "PUB": 0.7155837086275216
+   "PB": 0.322762682158576,
+   "PUB": 0.13380779690019737
   },
-  "era1_mean_bp": 37.25689062348097,
-  "era2_mean_bp": 48.24988959137125,
-  "era1_n": 29438,
+  "era1_mean_bp": 8.89882822622109,
+  "era2_mean_bp": 7.180218779524865,
+  "era1_n": 29421,
   "era2_n": 32397,
-  "down_years_mean_bp": 40.25015254267711,
-  "down_years_n": 12557,
+  "down_years_mean_bp": 3.4432536590546565,
+  "down_years_n": 12543,
   "by_year": {
    "2010": {
-    "n": 2347,
-    "mean_bp": -12.034893399920618
+    "n": 2336,
+    "mean_bp": -24.876877967387788
    },
    "2011": {
-    "n": 3459,
-    "mean_bp": 46.36274379416827
+    "n": 3467,
+    "mean_bp": 6.158914956910232
    },
    "2012": {
-    "n": 3493,
-    "mean_bp": 44.38516475344187
+    "n": 3457,
+    "mean_bp": 17.29137880021291
    },
    "2013": {
-    "n": 3376,
-    "mean_bp": 22.59441567154439
+    "n": 3411,
+    "mean_bp": -4.374275777802227
    },
    "2014": {
-    "n": 3763,
-    "mean_bp": 10.380866056499073
+    "n": 3760,
+    "mean_bp": -16.756993220538746
    },
    "2015": {
-    "n": 4103,
-    "mean_bp": 40.82150538352191
+    "n": 4101,
+    "mean_bp": 6.038259694297237
    },
    "2016": {
-    "n": 3803,
-    "mean_bp": 84.95081904834468
+    "n": 3793,
+    "mean_bp": 58.23202715657097
    },
    "2017": {
-    "n": 3832,
-    "mean_bp": 33.333032297318226
+    "n": 3843,
+    "mean_bp": 7.103188486185376
    },
    "2018": {
-    "n": 3971,
-    "mean_bp": 32.13630948852442
+    "n": 3973,
+    "mean_bp": 1.9680424611140594
    },
    "2019": {
-    "n": 3381,
-    "mean_bp": 36.55123320332136
+    "n": 3367,
+    "mean_bp": 8.89175779353171
    },
    "2020": {
-    "n": 3565,
-    "mean_bp": 100.39235610709139
+    "n": 3569,
+    "mean_bp": 45.35720958318949
    },
    "2021": {
-    "n": 4240,
-    "mean_bp": 67.47876257305805
+    "n": 4252,
+    "mean_bp": 26.396016242630832
    },
    "2022": {
-    "n": 4483,
-    "mean_bp": 46.914397481792484
+    "n": 4469,
+    "mean_bp": 2.3734157398083386
    },
    "2023": {
-    "n": 3793,
-    "mean_bp": 31.016244428137743
+    "n": 3800,
+    "mean_bp": -18.27109820473281
    },
    "2024": {
-    "n": 4037,
-    "mean_bp": 31.85499841177036
+    "n": 4029,
+    "mean_bp": -7.691890977208057
    },
    "2025": {
     "n": 3849,
-    "mean_bp": 52.451220585343414
+    "mean_bp": 21.046282064109207
    },
    "2026": {
-    "n": 2340,
-    "mean_bp": 36.529971118794606
+    "n": 2342,
+    "mean_bp": -11.383832965071331
    }
   },
-  "breakeven_half_spread_bp_side": 20.257894903586582
+  "breakeven_half_spread_bp_side": 2.749077720436747
  },
  "deployed": {
-  "trades": 61835,
-  "entries": 62105,
-  "open_at_end": 270,
+  "trades": 61818,
+  "entries": 62084,
+  "open_at_end": 266,
   "bars_defined": 4187,
-  "bars_deployed": 4124,
+  "bars_deployed": 4123,
   "deployed_outside_defined": 0,
-  "exposure": 0.9849534272748985,
-  "mean_positions_deployed": 300.30116391852573,
-  "mean_positions_defined": 295.78266061619297,
+  "exposure": 0.9847145927871984,
+  "mean_positions_deployed": 300.27504244482174,
+  "mean_positions_defined": 295.68521614521137,
   "max_positions": 513,
-  "entries_per_year": 3737.869596369716,
+  "entries_per_year": 3736.6056842608077,
   "PB": {
    "hedged": {
-    "gross_bp": 1.987662132626794,
-    "vol_bp": 16.929715987714737,
-    "net_bp": -1.3506479660592816,
-    "sharpe_gross": 1.863773626385796,
-    "sharpe_net": -1.2664637597870658,
-    "round_trip": 61.56832436316424,
-    "commission_rt": 5.001250312578144,
-    "cost_bp": 3.3383100986860756,
-    "turnover": 0.050147685559759764,
-    "held_per_bar": 300.30116391852573,
-    "fill": 75.07529097963143,
-    "held_half_spread": 15.39208109079106,
-    "held_price": 39.99,
-    "held_dv": 41369720.3926985,
-    "maxdd_bp": 397.6197043437507,
-    "entries": 62105,
-    "bars": 4124,
-    "trades": 61835,
-    "breakeven_half_spread_bp_side": 8.658729636067653
+    "gross_bp": 0.32906358701102945,
+    "vol_bp": 16.55046385338379,
+    "net_bp": -2.156263988517731,
+    "sharpe_gross": 0.31562393337273653,
+    "sharpe_net": -2.0681976016481594,
+    "round_trip": 44.56059596099114,
+    "commission_rt": 5.0,
+    "cost_bp": 2.4853275755287605,
+    "turnover": 0.05014724959088361,
+    "held_per_bar": 300.27504244482174,
+    "fill": 75.06876061120543,
+    "held_half_spread": 11.140148990247784,
+    "held_price": 40.0,
+    "held_dv": 41439262.39857138,
+    "maxdd_bp": 626.6507963699717,
+    "entries": 62084,
+    "bars": 4123,
+    "trades": 61818,
+    "breakeven_half_spread_bp_side": 0.39048671510217137
    },
    "unhedged": {
-    "gross_bp": 7.711027206045047,
-    "vol_bp": 127.08888286218067,
-    "net_bp": 4.372717107358971,
-    "sharpe_gross": 0.9631744278768626,
-    "sharpe_net": 0.5461904342454011,
-    "round_trip": 61.56832436316424,
-    "commission_rt": 5.001250312578144,
-    "cost_bp": 3.3383100986860756,
-    "turnover": 0.050147685559759764,
-    "held_per_bar": 300.30116391852573,
-    "fill": 75.07529097963143,
-    "held_half_spread": 15.39208109079106,
-    "held_price": 39.99,
-    "held_dv": 41369720.3926985,
-    "maxdd_bp": 4559.873835957795,
-    "entries": 62105,
-    "bars": 4124,
-    "trades": 61835,
-    "breakeven_half_spread_bp_side": 37.19127809534729
+    "gross_bp": 5.389707810159798,
+    "vol_bp": 126.69997080218475,
+    "net_bp": 2.904380234631038,
+    "sharpe_gross": 0.6752879143397306,
+    "sharpe_net": 0.36389595506391303,
+    "round_trip": 44.56059596099114,
+    "commission_rt": 5.0,
+    "cost_bp": 2.4853275755287605,
+    "turnover": 0.05014724959088361,
+    "held_per_bar": 300.27504244482174,
+    "fill": 75.06876061120543,
+    "held_half_spread": 11.140148990247784,
+    "held_price": 40.0,
+    "held_dv": 41439262.39857138,
+    "maxdd_bp": 4695.3047211701905,
+    "entries": 62084,
+    "bars": 4123,
+    "trades": 61818,
+    "breakeven_half_spread_bp_side": 25.61940886155602
    },
    "total": {
-    "gross_bp": 160.77900595611226,
-    "vol_bp": 1228.5885728853377,
-    "net_bp": -86.07455478170604,
-    "cost_bp": 246.8535607378183,
-    "sharpe_gross": 2.077414401475534,
-    "sharpe_net": -1.1121633613838937,
-    "maxdd_bp": 26744.513119827006,
+    "gross_bp": 30.18905513515109,
+    "vol_bp": 1190.0960264963053,
+    "net_bp": -153.52960020531785,
+    "cost_bp": 183.71865534046893,
+    "sharpe_gross": 0.40268716351625516,
+    "sharpe_net": -2.047907725024422,
+    "maxdd_bp": 44883.906208092005,
     "bars": 4187,
-    "breakeven_half_spread_bp_side": 9.589099674302803,
-    "turnover": 3.708203964652496,
-    "exposure": 0.9849534272748985,
-    "flat_share": 0.015046572725101504,
-    "mean_positions": 295.78266061619297,
-    "mean_positions_long": 295.78266061619297,
+    "breakeven_half_spread_bp_side": 0.7859766421441532,
+    "turnover": 3.7069500835920706,
+    "exposure": 0.9847145927871984,
+    "flat_share": 0.015285407212801529,
+    "mean_positions": 295.68521614521137,
+    "mean_positions_long": 295.68521614521137,
     "mean_positions_short": 0.0,
     "max_positions": 513
    },
    "hedged_2x": {
     "crossings": 2,
-    "round_trip": 30.78416218158212,
-    "commission_rt": 2.500625156289072,
-    "cost_bp": 1.6691550493430378,
-    "net_bp": 0.3185070832837562,
-    "sharpe_net": 0.29865493329936516,
-    "breakeven_half_spread_bp_side": 18.56777185027984
+    "round_trip": 22.28029798049557,
+    "commission_rt": 2.5,
+    "cost_bp": 1.2426637877643802,
+    "net_bp": -0.9136002007533508,
+    "sharpe_net": -0.8762868341377114,
+    "breakeven_half_spread_bp_side": 2.0309734302043427
    },
    "unhedged_2x": {
     "crossings": 2,
-    "round_trip": 30.78416218158212,
-    "commission_rt": 2.500625156289072,
-    "cost_bp": 1.6691550493430378,
-    "net_bp": 6.041872156702009,
-    "sharpe_net": 0.7546824310611319,
-    "breakeven_half_spread_bp_side": 75.63286876883913
+    "round_trip": 22.28029798049557,
+    "commission_rt": 2.5,
+    "cost_bp": 1.2426637877643802,
+    "net_bp": 4.147044022395418,
+    "sharpe_net": 0.5195919347018217,
+    "breakeven_half_spread_bp_side": 52.48881772311204
    }
   },
   "PUB": {
    "hedged": {
-    "gross_bp": 1.987662132626794,
-    "vol_bp": 16.929715987714737,
-    "net_bp": -4.041468004036809,
-    "sharpe_gross": 1.863773626385796,
-    "sharpe_net": -3.789568334660294,
-    "round_trip": 115.22623515091026,
-    "commission_rt": 5.001250312578144,
-    "cost_bp": 6.029130136663603,
-    "turnover": 0.050147685559759764,
-    "held_per_bar": 300.30116391852573,
-    "fill": 75.07529097963143,
-    "held_half_spread": 28.806558787727564,
-    "held_price": 39.99,
-    "held_dv": 41369720.3926985,
-    "maxdd_bp": 397.6197043437507,
-    "entries": 62105,
-    "bars": 4124,
-    "trades": 61835,
-    "breakeven_half_spread_bp_side": 8.658729636067653
+    "gross_bp": 0.32906358701102945,
+    "vol_bp": 16.55046385338379,
+    "net_bp": -5.66588598172483,
+    "sharpe_gross": 0.31562393337273653,
+    "sharpe_net": -5.434479201533472,
+    "round_trip": 114.5469266538936,
+    "commission_rt": 5.0,
+    "cost_bp": 5.994949568735859,
+    "turnover": 0.05014724959088361,
+    "held_per_bar": 300.27504244482174,
+    "fill": 75.06876061120543,
+    "held_half_spread": 28.6367316634734,
+    "held_price": 40.0,
+    "held_dv": 41439262.39857138,
+    "maxdd_bp": 626.6507963699717,
+    "entries": 62084,
+    "bars": 4123,
+    "trades": 61818,
+    "breakeven_half_spread_bp_side": 0.39048671510217137
    },
    "unhedged": {
-    "gross_bp": 7.711027206045047,
-    "vol_bp": 127.08888286218067,
-    "net_bp": 1.681897069381444,
-    "sharpe_gross": 0.9631744278768626,
-    "sharpe_net": 0.21008358604665262,
-    "round_trip": 115.22623515091026,
-    "commission_rt": 5.001250312578144,
-    "cost_bp": 6.029130136663603,
-    "turnover": 0.050147685559759764,
-    "held_per_bar": 300.30116391852573,
-    "fill": 75.07529097963143,
-    "held_half_spread": 28.806558787727564,
-    "held_price": 39.99,
-    "held_dv": 41369720.3926985,
-    "maxdd_bp": 4559.873835957795,
-    "entries": 62105,
-    "bars": 4124,
-    "trades": 61835,
-    "breakeven_half_spread_bp_side": 37.19127809534729
+    "gross_bp": 5.389707810159798,
+    "vol_bp": 126.69997080218475,
+    "net_bp": -0.605241758576061,
+    "sharpe_gross": 0.6752879143397306,
+    "sharpe_net": -0.07583202266544041,
+    "round_trip": 114.5469266538936,
+    "commission_rt": 5.0,
+    "cost_bp": 5.994949568735859,
+    "turnover": 0.05014724959088361,
+    "held_per_bar": 300.27504244482174,
+    "fill": 75.06876061120543,
+    "held_half_spread": 28.6367316634734,
+    "held_price": 40.0,
+    "held_dv": 41439262.39857138,
+    "maxdd_bp": 4695.3047211701905,
+    "entries": 62084,
+    "bars": 4123,
+    "trades": 61818,
+    "breakeven_half_spread_bp_side": 25.61940886155602
    },
    "total": {
-    "gross_bp": 160.77900595611226,
-    "vol_bp": 1228.5885728853377,
-    "net_bp": -285.0490322997957,
-    "cost_bp": 445.828038255908,
-    "sharpe_gross": 2.077414401475534,
-    "sharpe_net": -3.6830988057477048,
-    "maxdd_bp": 26744.513119827006,
+    "gross_bp": 30.18905513515109,
+    "vol_bp": 1190.0960264963053,
+    "net_bp": -412.96543461767493,
+    "cost_bp": 443.154489752826,
+    "sharpe_gross": 0.40268716351625516,
+    "sharpe_net": -5.508482420266937,
+    "maxdd_bp": 44883.906208092005,
     "bars": 4187,
-    "breakeven_half_spread_bp_side": 9.589099674302803,
-    "turnover": 3.708203964652496,
-    "exposure": 0.9849534272748985,
-    "flat_share": 0.015046572725101504,
-    "mean_positions": 295.78266061619297,
-    "mean_positions_long": 295.78266061619297,
+    "breakeven_half_spread_bp_side": 0.7859766421441532,
+    "turnover": 3.7069500835920706,
+    "exposure": 0.9847145927871984,
+    "flat_share": 0.015285407212801529,
+    "mean_positions": 295.68521614521137,
+    "mean_positions_long": 295.68521614521137,
     "mean_positions_short": 0.0,
     "max_positions": 513
    },
    "hedged_2x": {
     "crossings": 2,
-    "round_trip": 57.61311757545513,
-    "commission_rt": 2.500625156289072,
-    "cost_bp": 3.0145650683318017,
-    "net_bp": -1.0269029357050077,
-    "sharpe_net": -0.9628973541372493,
-    "breakeven_half_spread_bp_side": 18.56777185027984
+    "round_trip": 57.2734633269468,
+    "commission_rt": 2.5,
+    "cost_bp": 2.9974747843679297,
+    "net_bp": -2.6684111973569005,
+    "sharpe_net": -2.559427634080368,
+    "breakeven_half_spread_bp_side": 2.0309734302043427
    },
    "unhedged_2x": {
     "crossings": 2,
-    "round_trip": 57.61311757545513,
-    "commission_rt": 2.500625156289072,
-    "cost_bp": 3.0145650683318017,
-    "net_bp": 4.696462137713246,
-    "sharpe_net": 0.5866290069617576,
-    "breakeven_half_spread_bp_side": 75.63286876883913
+    "round_trip": 57.2734633269468,
+    "commission_rt": 2.5,
+    "cost_bp": 2.9974747843679297,
+    "net_bp": 2.3922330257918687,
+    "sharpe_net": 0.2997279458371451,
+    "breakeven_half_spread_bp_side": 52.48881772311204
    }
   }
  },
  "top_trade": {
   "symbol": "GME",
-  "entry_bar": 2773,
-  "entry_date": "2021-01-08",
+  "entry_bar": 2774,
+  "entry_date": "2021-01-11",
   "held": 20,
-  "pnl_bp": 30813.5613432277,
-  "share_of_total": 0.011584393936677189
+  "pnl_bp": 29148.198810175498,
+  "share_of_total": 0.058953138764478615
  },
  "mirror": {
-  "trades": 67397,
-  "mean_bp": 43.73196128271462,
-  "median_bp": 30.838518475730773
+  "trades": 67350,
+  "mean_bp": 5.633456006834769,
+  "median_bp": 1.2031668507896285
  }
 }

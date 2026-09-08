@@ -166,7 +166,83 @@ The reclaim does not carry information beyond the level — **it carries less.**
 
 ---
 
-## 8. ADDENDUM, 2026-09-08 — the fill-and-decay probe: H3 holds at every horizon, and D392's hypothesis was wrong
+## 9. CORRECTION, 2026-09-08 — **THE LEDGER WAS LOOK-AHEAD. EVERY PER-TRADE NUMBER IN §3 AND §8 IS WITHDRAWN.**
+
+**`scripts/d391_reconcile.py` and `temp/which_bar.py`. This is D279's error, committed by me, in a
+runner whose own pre-registration required the audit that would have caught it.**
+
+### What was wrong
+
+`EB.simulate_event` treats the mask it is given as **the bar the position opens on**, and books
+that bar's open-to-close. D359 and D361 pass their signals straight in because theirs are built
+from percentile grids **already lagged to t−1**. **This study's event is defined by bar t's own low
+and close, and I passed it unlagged.** Measured:
+
+```
+EV[t[1], i] True                 : 100.00%     <- the trade's bar IS the signal bar
+kernel pnl == excess on that bar : True
+mean excess on the SIGNAL bar    : +47.19 bp
+mean excess on the bar AFTER it  :  +0.61 bp
+```
+
+**The book was earning the very bar whose close defines the event** — a bar selected for closing
+strongly above a level it pierced. The long and the short mirror both "earned" ~+48 for the same
+reason, in opposite directions, which is exactly the symmetry §3 could not explain.
+
+### The corrected numbers
+
+| | published (look-ahead) | **corrected** |
+|---|--:|--:|
+| long ledger, cap 20 | +43.02 | **+8.00** (61,818 trades, median +6.20, t +1.96) |
+| short mirror, cap 20 | +43.73 | **+5.63** |
+| top trade share | 1.2% | **5.9%** (GME, 2021-01-11) |
+| symmetric 1% trim | +39.18 | **+5.75** |
+| deployed gross | — | **+0.329 bp/bar**, net PUB **−5.666** |
+
+**And §8's entire narrative evaporates with it.** The corrected decay:
+
+| cap | 1 | 2 | 3 | 5 | 10 | 20 |
+|---|--:|--:|--:|--:|--:|--:|
+| long | +0.60 | +1.05 | +2.90 | +4.97 | +6.50 | **+8.00** |
+| short | +1.06 | +2.06 | +2.36 | +2.89 | +1.99 | **+5.63** |
+
+**Bar 1 is 8% of the long's total, not 110%.** The return accrues gradually. The "one-bar effect
+worth +47/+49 on both sides", recorded in §8 as *"a lead that belongs to no record"*, **did not
+exist — it was the look-ahead, and it is withdrawn in full.** The overnight gaps likewise fall from
+−22.75/−19.72 to **−0.37/−1.12**.
+
+**The two lenses now reconcile exactly**, which is the check that found the defect: corrected cap-1
+ledger **+0.60** against drift h=1 of **−0.08**, a difference of **+0.69** — precisely the
+market-gap-minus-name-gap the identity in `d391_reconcile.py` predicted before the numbers were
+seen. §8.4's "~24 unexplained bp" was the look-ahead, and there is nothing left unexplained.
+
+### What does NOT change
+
+**The verdict.** §0's H3 test used `forward_h(..., start=1)` on the event bar — **correctly lagged
+all along** — so §3's horizon table stands untouched, and the reclaim still underperforms its own
+same-bar pool at every horizon including h = 1. **The candidate was dead for the right reason and
+remains dead.** The corrected +8.00 also sits barely above its atlas floor of +6.38 (D392), well
+inside any sensible margin.
+
+### The process failure, named
+
+**This record's own pre-registration, §7, required:**
+
+> *[L] Lag audit — the held set re-derived from the event mask at t−1 in a second implementation
+> that never calls the selection function. ~93% of D279's apparent edge was this bug, and it
+> entered one layer above the function everything was watching.*
+
+**I wrote that requirement and did not implement it.** The runner carried `[E]`, `[POOL]`, `[PIV]`
+and `[SC]`; there was no `[L]`. `[PIV]` proved the *pivot levels* were causal and I took that as
+covering causality — **it does not: a causal level can still be traded on the wrong bar.** The
+defect surfaced only because the atlas gave a floor absurd enough (57×) to force a reconciliation.
+
+**The runner now carries `lag1_mask` and an `[L]` assertion that the position mask is the signal
+mask shifted exactly one bar.**
+
+---
+
+## 8. ADDENDUM, 2026-09-08 — the fill-and-decay probe *(SUPERSEDED BY §9 — every per-trade number below is look-ahead and is retained only to show what was withdrawn)*
 
 `scripts/d391_fill_and_decay.py` · `data/d391_fill_and_decay.json`. `[ID]` reproduces this
 record's +43.02 on 61,835 trades before anything is read.

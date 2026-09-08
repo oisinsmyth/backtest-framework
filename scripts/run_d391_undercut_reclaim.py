@@ -124,6 +124,24 @@ def build_pivots(V, MS, panel, cleaned, live):
     return out
 
 
+def lag1_mask(m):
+    """Shift a SIGNAL mask one bar forward, to a POSITION mask. **This is not optional and its
+    absence was a look-ahead defect in the first version of this file.**
+
+    The kernel (`EB.simulate_event` via `run_d359`) treats the mask it is given as the bar the
+    position OPENS ON, and books that bar's open-to-close. D359 and D361 can pass their signals
+    straight in because those are built from percentile grids ALREADY LAGGED to t-1, so entering
+    at bar t's open uses only information through t-1.
+
+    **This study's event is defined by bar t's OWN low and close.** Passing it unlagged made the
+    kernel book the very bar whose close defines the event: measured, the signal bar's own excess
+    is +47.19 bp and the next bar's is +0.61. The whole of the first reported ledger was that one
+    bar. D279's error, in a new place, caught by `temp/which_bar.py`."""
+    out = np.zeros_like(m)
+    out[1:] = m[:-1]
+    return np.ascontiguousarray(out)
+
+
 def event_masks(PV, g, atr, eligT):
     """(T, n) masks: the EVENT (undercut + reclaim), the B_r pool (undercut + close below), and
     their parent (any qualifying undercut). Everything on eligible bars only [E]."""
@@ -334,8 +352,17 @@ def main() -> int:
 
     # ---- 4. the ledger and the four groups, TOP TRADE NAMED ---------------
     sc = np.full((T, n), 50.0)                                    # unused under exit="cap"; asserted
-    res = V59.run_mirror(P, EV, sc, "cap", PRIMARY_CAP)
-    res2 = V59.run_mirror(P, EV, np.full((T, n), 17.0), "cap", PRIMARY_CAP)
+    # THE MASK MUST BE LAGGED BEFORE IT REACHES THE KERNEL -- see lag1_mask.
+    EV_POS, MIRROR_POS = lag1_mask(EV), lag1_mask(MIRROR)
+    # [L] the lag audit the pre-registration required and the first version omitted: no position
+    # may open on a bar that is itself an event bar for that name.
+    assert np.array_equal(EV_POS[1:], EV[:-1]) and not EV_POS[0].any(), \
+        "[L] the position mask is not the signal mask shifted exactly one bar"
+    print(f"    [L] positions open one bar AFTER the signal: {int(EV_POS.sum()):,} long, "
+          f"{int(MIRROR_POS.sum()):,} short (signal bars {int(EV.sum()):,} / "
+          f"{int(MIRROR.sum()):,})", flush=True)
+    res = V59.run_mirror(P, EV_POS, sc, "cap", PRIMARY_CAP)
+    res2 = V59.run_mirror(P, EV_POS, np.full((T, n), 17.0), "cap", PRIMARY_CAP)
     assert len(res["trades"]) == len(res2["trades"]), "[SC] the score changed the cap-exit ledger"
     pnl = PREP.V47.pnl_bp(res)
     trd = V59.trade_block(P, res, np.asarray(P["elig"]), 0, False)
@@ -348,7 +375,7 @@ def main() -> int:
                entry_date=P["dates"][tr[k][1]], held=int(tr[k][2]), pnl_bp=float(pnl[k]),
                share_of_total=float(pnl[k] / pnl.sum()) if pnl.sum() != 0 else None)
     # the mirror, mechanism check only
-    resm = V59.run_short(P, MIRROR, sc, "cap", PRIMARY_CAP)
+    resm = V59.run_short(P, MIRROR_POS, sc, "cap", PRIMARY_CAP)
     pnlm = PREP.V47.pnl_bp(resm)
 
     # ---- [P] PERSIST BEFORE ANY OF SECTION 4 IS RENDERED -------------------

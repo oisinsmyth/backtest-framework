@@ -80,20 +80,25 @@ def main() -> int:
                                        g["low"][i, at], g["close"][i, at])
     elig = np.asarray(P["elig"])
     EV, POOL, UNDER, MIRROR = D391.event_masks(PV, g, atr, elig)
+    # THE LOOK-AHEAD FIX. The first version of this probe passed the SIGNAL masks straight to the
+    # kernel, which books the mask bar's own open-to-close -- the bar whose close defines the
+    # event. Every ledger number it produced was that one bar. Positions now open one bar later.
+    EV_POS, MIRROR_POS = D391.lag1_mask(EV), D391.lag1_mask(MIRROR)
     sc = np.full((T, n), 50.0)
     print(f"  rebuilt D391's masks in {time.time() - t0:.0f}s | event {int(EV.sum()):,} "
           f"mirror {int(MIRROR.sum()):,}", flush=True)
 
-    # [ID] the primary cell must reproduce D391's published ledger before anything is read
-    r0 = V59.run_mirror(P, EV, sc, "cap", PRIMARY)
+    # [ID] the primary cell must reproduce the CORRECTED ledger before anything is read.
+    #      The published +43.02 was the look-ahead value and is no longer the reference.
+    r0 = V59.run_mirror(P, EV_POS, sc, "cap", PRIMARY)
     m0 = float(PREP.V47.pnl_bp(r0).mean())
-    assert abs(m0 - 43.02) < 0.01 and abs(len(r0["trades"]) - 61835) < 2, \
-        f"[ID] {m0:+.2f} on {len(r0['trades']):,} != D391's published +43.02 on 61,835"
-    print(f"    [ID] reproduces D391's +43.02 on {len(r0['trades']):,} trades", flush=True)
+    assert abs(m0 - 8.00) < 0.05, f"[ID] {m0:+.2f} != the corrected +8.00"
+    print(f"    [ID] reproduces the CORRECTED +8.00 on {len(r0['trades']):,} trades "
+          f"(the look-ahead value was +43.02)", flush=True)
 
     # ---- 1. WHERE IN THE HOLD -------------------------------------------
     decay = {}
-    for side, mask in (("long", EV), ("short", MIRROR)):
+    for side, mask in (("long", EV_POS), ("short", MIRROR_POS)):
         run = V59.run_mirror if side == "long" else V59.run_short
         prev, rows = 0.0, []
         for cap in CAPS:
@@ -117,7 +122,7 @@ def main() -> int:
     # ---- 2. the gap D340 excludes, on THESE bars -------------------------
     A3c = dict(P["A3"], ocT=np.asarray(P["r1T"]), mkt_oc=np.asarray(P["m_f"]))
     fill = {}
-    for side, mask in (("long", EV), ("short", MIRROR)):
+    for side, mask in (("long", EV_POS), ("short", MIRROR_POS)):
         run = V59.run_mirror if side == "long" else V59.run_short
         openf = float(PREP.V47.pnl_bp(run(P, mask, sc, "cap", PRIMARY)).mean())
         closef = float(PREP.V47.pnl_bp(run(P, mask, sc, "cap", PRIMARY, A3=A3c)).mean())

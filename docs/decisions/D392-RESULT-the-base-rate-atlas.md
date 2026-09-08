@@ -166,8 +166,29 @@ to 75,340.**
 
 | | observed | atlas floor p95 | ratio |
 |---|--:|--:|--:|
-| **D391 long** (undercut-and-reclaim) | +43.02 | **+6.38 ± 0.39** | **6.7×** |
-| **D391 mirror** (failed breakout, short) | +43.73 | **+3.54** | **12.4×** |
+| ~~**D391 long**~~ | ~~+43.02~~ | +6.38 ± 0.39 | ~~6.7×~~ |
+| ~~**D391 mirror**~~ | ~~+43.73~~ | +3.54 | ~~12.4×~~ |
+
+> ### THE ATLAS FOUND A LOOK-AHEAD — corrected 2026-09-08, and this is the record's first real use
+>
+> **A 6.7× margin is not something this programme produces, and it was not one.**
+> [D391 §9](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge-was-the-event-bar.md)
+> traced it: the ledger booked **the signal bar's own open-to-close**, the bar whose close defines
+> the event. The kernel treats its mask as the bar the position *opens on*, and D391's mask was
+> passed unlagged.
+>
+> | | look-ahead | **corrected** | floor | |
+> |---|--:|--:|--:|---|
+> | D391 long | +43.02 | **+8.00** | +6.38 ± 0.39 | barely above |
+> | D391 mirror | +43.73 | **+5.63** | +3.54 | barely above |
+>
+> **The absurdity of the margin is what forced the reconciliation**, and the reconciliation found
+> the bug. That is the atlas doing the job it was built for — not admitting a candidate, but
+> making a number impossible to accept quietly.
+
+**The §6a hypothesis below was also wrong**, and doubly so: it supposed the entry convention was
+crediting the gap, when the convention excludes it *and* the real defect was a missing lag. Both
+are recorded rather than deleted.
 
 **This confirms the withdrawal in §3 with a measured number rather than an extrapolation: +43 was
 never the base rate.** But it makes the real question sharper, because **both** sides clear their

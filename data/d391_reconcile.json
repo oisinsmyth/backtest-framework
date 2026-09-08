@@ -1,0 +1,16 @@
+{
+ "study": 391,
+ "addendum": "reconciliation",
+ "kernel_mean_bp": 47.186504656037705,
+ "my_formula_on_kernel_trades_bp": 47.186504656037705,
+ "formula_matches_kernel": true,
+ "event_bar_mean_ledger_excess_bp": 0.6082005840950848,
+ "events_used": 144612,
+ "ledger_excess_bp": 0.6082005840950848,
+ "drift_excess_bp": -0.07992430962318649,
+ "difference_bp": 0.6881248937182712,
+ "name_overnight_gap_bp": 3.2891133384490665,
+ "market_overnight_gap_bp": 3.977238232167337,
+ "identity": "ledger - drift == market_gap - name_gap, exact",
+ "note": "The ledger hedges the ENTRY BAR open-to-close (m_f_oc) while the drift hedges it close-to-close (m_f). The floored market's own overnight move is therefore in one lens and not the other, and is credited to every trade."
+}
