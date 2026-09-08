@@ -371,7 +371,7 @@ def stage_run(paths, n_names, draws):
                 if h is None or not np.isfinite(h) or h <= 0:
                     continue
                 f = density_direct(x[WARMUP:], hl, h)
-                acc = {}
+                acc, ref = {}, {}
                 for kind in ("N1", "N2"):
                     gs = []
                     for _ in range(draws):
@@ -380,13 +380,27 @@ def stage_run(paths, n_names, draws):
                             continue
                         xn, _dn, _en = coordinate(p, hl)
                         gs.append(density_direct(xn[WARMUP:], hl, h))
-                    acc[kind] = np.mean(gs, axis=0) if gs else None
-                if acc["N2"] is None:
+                    if not gs:
+                        acc[kind] = ref[kind] = None
+                        continue
+                    G = np.array(gs)
+                    acc[kind] = G.mean(axis=0)
+                    # THE REFERENCE DISTRIBUTION P1 ACTUALLY ASKS FOR. Comparing one noisy observed density to a MEAN of 
+                    # nulls measures partly "one realisation vs an average", which is positive even under a perfect null. The
+                    # leave-one-out TV of each null draw against the mean of the others is the SAME statistic computed under the
+                    # null, and is what the observed must beat.
+                    n = len(G)
+                    ref[kind] = [tv(G[i], (G.sum(axis=0) - G[i]) / (n - 1)) for i in range(n)] if n > 1 else None
+                if acc["N2"] is None or not ref["N2"]:
                     continue
                 xw = x[WARMUP:]
                 xw = xw[np.isfinite(xw)]
                 rows.append(dict(symbol=sym, half_life=hl, bw_mult=m, bandwidth=h,
                                  tv_N1=tv(f, acc["N1"]), tv_N2=tv(f, acc["N2"]),
+                                 null_tv_N2_p50=float(np.percentile(ref["N2"], 50)),
+                                 null_tv_N2_p95=float(np.percentile(ref["N2"], 95)),
+                                 null_tv_N2_sd=float(np.std(ref["N2"], ddof=1)),
+                                 null_tv_N1_p95=float(np.percentile(ref["N1"], 95)) if ref.get("N1") else None,
                                  modes_obs=n_modes(f), modes_N2=n_modes(acc["N2"]),
                                  x_sd=float(xw.std()), x_ac1=float(np.corrcoef(xw[:-1], xw[1:])[0, 1]),
                                  excess_peak_u=float(GRID[np.argmax(f - acc["N2"])]),
@@ -407,7 +421,7 @@ def stage_run(paths, n_names, draws):
 def print_report(o):
     rows = o["rows"]
     print(f"\n  P1 -- TV distance to the LOAD-BEARING null (N2), and to the loose bound (N1)")
-    print(f"    {'half-life':>9} {'bw':>5} {'n':>4} {'TV vs N2':>20} {'TV vs N1':>10} {'modes':>7} {'x AC1':>7}")
+    print(f"    {'half-life':>9} {'bw':>5} {'n':>4} {'obs TV':>8}  {'null p95':>8}  {'CLEARS':>7} {'TV N1':>8} {'modes':>6} {'AC1':>6}")
     for hl in o["half_lives"]:
         for m in o["bw_mult"]:
             r = [q for q in rows if q["half_life"] == hl and q["bw_mult"] == m]
@@ -415,10 +429,12 @@ def print_report(o):
                 continue
             t2 = np.array([q["tv_N2"] for q in r])
             t1 = np.array([q["tv_N1"] for q in r])
+            n95 = np.array([q["null_tv_N2_p95"] for q in r])
+            clears = int((t2 > n95).sum())
             md = np.array([q["modes_obs"] for q in r], float)
             ac = np.array([q["x_ac1"] for q in r])
-            print(f"    {hl:>9} {m:>5.1f} {len(r):>4} {t2.mean():>8.4f} +/- {t2.std(ddof=1)/np.sqrt(len(r)):<7.4f} "
-                  f"{t1.mean():>10.4f} {md.mean():>7.2f} {ac.mean():>7.3f}")
+            print(f"    {hl:>9} {m:>5.1f} {len(r):>4} {t2.mean():>8.4f}  {n95.mean():>8.4f}  "
+                  f"{clears:>3}/{len(r):<3} {t1.mean():>8.4f} {md.mean():>6.2f} {ac.mean():>6.3f}")
     print("\n  P4 -- the RETURN-BLIND criterion: stationarity of x itself (lag-1 autocorrelation, lower = more stationary)")
     for hl in o["half_lives"]:
         r = [q for q in rows if q["half_life"] == hl and q["bw_mult"] == 1.0]
