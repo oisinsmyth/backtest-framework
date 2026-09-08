@@ -1,10 +1,10 @@
-"""D382 STAGE 0 -- the undercut-and-reclaim: the four things that must be read before any null.
+"""D391 STAGE 0 -- the undercut-and-reclaim: the four things that must be read before any null.
 
-    uv run python scripts/run_d382_undercut_reclaim.py --selftest
-    uv run python scripts/run_d382_undercut_reclaim.py --stage0
-    uv run python scripts/run_d382_undercut_reclaim.py --build-pivots     (cache only; --stage0 does it)
+    uv run python scripts/run_d391_undercut_reclaim.py --selftest
+    uv run python scripts/run_d391_undercut_reclaim.py --stage0
+    uv run python scripts/run_d391_undercut_reclaim.py --build-pivots     (cache only; --stage0 does it)
 
-Pre-registration: docs/decisions/D382-the-undercut-and-reclaim.md (committed BEFORE this file, R8).
+Pre-registration: docs/decisions/D391-the-undercut-and-reclaim.md (committed BEFORE this file, R8).
 
 THE EVENT, section 1 frozen, on fresh confirmed pivots from research.structure.market_structure
 with K = 3 (ragged_structure_scores.K, taken and not chosen):
@@ -66,8 +66,8 @@ def _load(name, filename):
     return m
 
 
-OUT = REPO / "data" / "d382_stage0.json"
-CACHE_DIR = REPO / "temp" / "d382_pivots"
+OUT = REPO / "data" / "d391_stage0.json"
+CACHE_DIR = REPO / "temp" / "d391_pivots"
 K = 3                    # ragged_structure_scores.K
 FRESH_BARS = 252         # ragged_structure_scores.FRESH_BARS
 LEG_ATR = 0.5            # the retrace_leg guard
@@ -185,7 +185,7 @@ def group_stats(pnl):
 
 # ---------------------------------------------------------------------- self-test
 def selftest(MS) -> int:
-    print("D382 STAGE 0 SELF-TEST -- the event, its mirror pool, and two breaks that must be caught\n")
+    print("D391 STAGE 0 SELF-TEST -- the event, its mirror pool, and two breaks that must be caught\n")
     # a hand case: level 100; a bar that dips to 99 and closes 101 is an EVENT; closes 99 is POOL
     lastlow = np.array([[100.0, 100.0, 100.0]])
     low = np.array([[99.0, 99.0, 101.0]])
@@ -271,7 +271,7 @@ def main() -> int:
           f"pool {int(POOL.sum()):,} = undercut {int(UNDER.sum()):,}", flush=True)
 
     # ---- [PIV] the level is causal ----------------------------------------
-    rng = np.random.default_rng(382)
+    rng = np.random.default_rng(391)
     checked = 0
     for i in rng.choice(np.flatnonzero(live.sum(axis=1) > 400), size=6, replace=False):
         at = np.flatnonzero(live[i])
@@ -356,8 +356,8 @@ def main() -> int:
     #      KeyError in the print loop -- D371's exact failure, reproduced by the file whose own
     #      assertion list forbids it. The write now precedes every print that reads the ledger.
     payload = dict(
-        study=382, stage=0, cap_primary=PRIMARY_CAP, caps=list(CAPS), K=K,
-        purpose="D382 Stage 0: exposure, the pool's own drift, the split, and the four groups. "
+        study=391, stage=0, cap_primary=PRIMARY_CAP, caps=list(CAPS), K=K,
+        purpose="D391 Stage 0: exposure, the pool's own drift, the split, and the four groups. "
                 "No null is run; nothing is admitted (R15).",
         build="load_ragged(dividend_bound=True), D333's default (R16)",
         counts=dict(event=int(EV.sum()), pool=int(POOL.sum()), undercut=int(UNDER.sum()),

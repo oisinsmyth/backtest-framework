@@ -1,9 +1,9 @@
-# D382 RESULT — Stage 0: the reclaim is worth LESS than no reclaim, and the apparent edge was the event bar itself
+# D391 RESULT — Stage 0: the reclaim is worth LESS than no reclaim, and the apparent edge was the event bar itself
 
 **Status:** RESULT. Stage 0 only. **NO NULL WAS RUN. STAGE 1 IS NOT AUTHORISED AND WAS NOT RUN.**
 **Date:** 2026-09-08 · **Area:** signal research · **personal track**
-Pre-registration: [D382](D382-the-undercut-and-reclaim.md), committed before the runner existed.
-Runner: `scripts/run_d382_undercut_reclaim.py` · Artifact: `data/d382_stage0.json`
+Pre-registration: [D391](D391-the-undercut-and-reclaim.md), committed before the runner existed.
+Runner: `scripts/run_d391_undercut_reclaim.py` · Artifact: `data/d391_stage0.json`
 **Build (R16):** today's panel, `load_ragged(dividend_bound=True)`. Nothing inherited.
 
 **Holdout reads spent: 0. Programme total: 1** (D371).

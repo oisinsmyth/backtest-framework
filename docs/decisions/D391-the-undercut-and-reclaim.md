@@ -1,4 +1,4 @@
-# D382 — the undercut-and-reclaim: does the RECLAIM carry information, or only the LEVEL?
+# D391 — the undercut-and-reclaim: does the RECLAIM carry information, or only the LEVEL?
 
 **Status:** PRE-REGISTERED. Committed **before the runner exists** (R8). **Nothing here is a
 result.** No cell has been scored, no null has been run, no book is proposed.
@@ -8,8 +8,8 @@ result.** No cell has been scored, no null has been run, no book is proposed.
 `us_shorts_daily_holdout2.csv.gz` is unspent and this record does not touch it; D357's short
 candidate retains its prior claim.
 
-**Number.** `D382` was free at the time of writing. A concurrent session is active on `master` and
-took `D380` from this branch already; if `D382` collides at merge, renumber — nothing references
+**Number.** `D391` was free at the time of writing. A concurrent session is active on `master` and
+took `D380` from this branch already; if `D391` collides at merge, renumber — nothing references
 it yet.
 
 **Build (R16).** Everything is computed on **today's panel: `load_ragged(..., dividend_bound=True)`**,

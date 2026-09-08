@@ -744,7 +744,7 @@ D360's §6 and §9 were written against this rule and carry an addendum.
 
 ## R16. A published number is not reproducible without naming the build it was computed on — reproduce it EXACTLY on that build, or do not inherit it
 
-*Added 2026-09-08, after D381's `[ID]` gate.*
+*Added 2026-09-08, after D390's `[ID]` gate.*
 
 **A quantity quoted from an earlier record is not a constant. It is the output of
 a pipeline that has since moved.** Reproducing it is the only way to know whether
@@ -753,7 +753,7 @@ the object being extended is the object that was published — and the check mus
 
 ### What happened, and it is the whole of the rule
 
-D381 rebuilt D280's part-4C composite in order to score one of its terms alone.
+D390 rebuilt D280's part-4C composite in order to score one of its terms alone.
 `[ID]` required the composite to reproduce D280's published mean IC before the new
 term was read. **It failed:**
 
@@ -802,7 +802,7 @@ conditional on a build, and R16 is what makes that condition visible instead of
 assumed.
 
 **The cheap form of this rule is one line in a runner**: an assertion that
-reproduces the inherited number before anything new is computed. D381's `[ID]`,
+reproduces the inherited number before anything new is computed. D390's `[ID]`,
 D373's `[MIR]`, D362's `[ID]` and D377's `[REC]` are the same instrument, and
 **D377 already set the precedent for what to do when it cannot be met exactly —
 correct the record, do not quietly loosen the bar.**
