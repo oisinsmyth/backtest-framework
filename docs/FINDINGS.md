@@ -3565,3 +3565,18 @@ open.
 
 **Nothing admitted to either book. No hurdle cleared. No holdout read. No multiplicity ledger touched
 (R13).**
+
+---
+
+**AMENDED 2026-09-08 — §54'S CLOSE CONDITION SHOULD NOT BE ACTED ON.** The principal asked whether
+the D385 failure meant bad design rather than a dead idea. It means bad design, and worse than §54.1
+and §54.2 record: **the stage-0 statistic cannot answer the question the family is for.** TV(density,
+shuffle density) is a functional of the DENSITY ALONE; the signal is a functional of (DENSITY,
+FORWARD RETURNS). Demonstrated by holding a real path -- hence the density, hence TV = 0.3288 -- 
+exactly fixed and attaching two forward-return processes: one blind to the density (t = +0.25), one
+depending on it (**t = +4.62**). **The statistic is identical in both and clears in neither.** So a
+null TV licenses NO conclusion about the signal. What survives is the narrow claim that at p=1, on
+the properly-matched swing types with adequate n_eff, the density's SHAPE is not unusual -- and every
+measured design fault, which is mine. **The family needs a direct signal test (condition on the
+density, measure forward returns, score per R15), not another premise check.** See the amendment in
+`docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the-close-condition-is-met.md`.

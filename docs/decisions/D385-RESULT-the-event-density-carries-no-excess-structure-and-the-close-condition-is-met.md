@@ -188,3 +188,69 @@ predates the change, so its own log carries no `[SPEED]` line.
 
 *Result committed 2026-09-08, separately from the pre-registration, per R8. §10's close condition is
 met; under R15 the decision to close the family is the principal's.*
+
+---
+
+## AMENDMENT, 2026-09-08 — THE CLOSE CONDITION SHOULD NOT BE ACTED ON. THE STAGE-0 STATISTIC CANNOT ANSWER THE FAMILY'S QUESTION.
+
+**Raised by the principal: "It seems our idea didn't work as intended, I would take that to mean bad
+design not doesn't work?" He is right, and more strongly than §1 and §8 of this record admit.**
+
+**Two different questions were conflated across D384 and D385, both by me:**
+
+| | |
+|---|---|
+| what the premise check **asks** | is the density's **SHAPE** distinguishable from a volatility-matched shuffle's? |
+| what the family is **for** | does price **BEHAVE DIFFERENTLY** near high-density regions? |
+
+**TV(density, shuffle density) is a functional of the DENSITY ALONE. The signal is a functional of
+(DENSITY, FORWARD RETURNS). The statistic never looks at a return.**
+
+Demonstrated in `temp/d385_statistic_blindness.py`, holding the real RZV path — and therefore the
+density, and therefore the statistic — **exactly fixed**, and attaching two different forward-return
+processes:
+
+```
+  D385 statistic on the real path:  observed TV 0.3288   null p95 0.4390   -> does NOT clear
+
+  returns blind to the density      corr +0.095   top-vs-bottom quintile   +14.4 bp   t = +0.25
+  returns DEPEND on the density     corr +0.551   top-vs-bottom quintile  +289.6 bp   t = +4.62
+```
+
+**TV is 0.3288 in both worlds and clears in neither.** One of them has a density that predicts
+forward returns at t = +4.6. **The statistic cannot tell them apart.**
+
+**Caveat, stated so this is not overclaimed:** the demonstration attaches returns exogenously to a
+fixed path, whereas in reality path and returns are the same object, so a genuine predictive
+relationship would leave *some* trace in the density. The claim is **not** that TV is provably blind.
+The claim is that the mapping from (density, returns) to TV is **many-to-one**, TV was never designed
+to detect the second argument, and therefore **a null TV licenses no conclusion about the signal.**
+
+### What this changes
+
+**WITHDRAWN: the framing of §1 and §8 that §10's close condition being met is a verdict on the
+family.** It is a verdict on the *declared statistic*, and the declared statistic is the wrong
+instrument for the question. **The close condition should NOT be acted on.** Under R15 the decision
+was always the principal's; this amendment removes my implicit recommendation to take it.
+
+**STANDS, and is not affected:**
+- Every measured defect in §3 and §4 — the tying rule making event types incomparable (600 vs 218
+  bar coordinates), the read-time power amplifying the thin denominator, the 2.60× rate asymmetry
+  and the artefact it generated. **These are design faults, and they are mine.**
+- Every assertion in §6, and the two real bugs `[STAT]` and `[CAUSAL]` caught.
+- The **construction itself is proved and fast**: `[REC]` bit-identical, `[STAT]` and `[CAUSAL]` at
+  0.000e+00. The apparatus works; it was pointed at the wrong question.
+- The narrow negative that survives: **at `p=1`, on the properly-matched swing types, with adequate
+  `n_eff`, the density's SHAPE is not unusual.** That is true and it is a small claim.
+
+### What the family actually needs
+
+**A direct signal test, not a premise check**: condition on the density — is price near a
+high-density region of its own event distribution — and measure **forward returns**, against a null
+that shuffles, scored as R15 requires (positive gross mean per trade above the nulls). That needs its
+own pre-registration under R8, and it is the principal's call whether to spend one.
+
+**And the stage-0 instinct that produced D384 and D385 was a misapplication of my own rule.** The
+memory says *measure the conditioner's own persistence before designing a study that conditions on
+it.* **Persistence is not the same as distinguishability-from-a-shuffle**, and I substituted the
+second for the first across two studies and roughly 110 minutes of compute.
