@@ -44,13 +44,36 @@ was tried.** The stopping rules declared in `00-SCHEMA.md` before searching were
 
 | host | behaviour | the route that worked |
 |---|---|---|
-| `apextraderfunding.com`, `support.apextraderfunding.com` | **403 to every automated fetch** — WebFetch, curl with a browser UA, the Zendesk public API | **Internet Archive snapshots of Apex's own pages** (2026-03-25 → 2026-08-17). Every lane-03 cell carries its snapshot date: the content is Apex's verbatim, the currency is the snapshot |
+| ~~`apextraderfunding.com`~~ | **THIS ENTRY WAS WRONG — corrected 2026-09-08 by lane 10.** See below | — |
 | both Take Profit Trader hosts | **403 to WebFetch** | browser pane, and the **public Zendesk Help Center API** (87 articles) |
 | `ftmo.com` objectives and futures pages | **JavaScript-gated** — a plain fetch returns a near-empty page | rendered DOM via the browser pane |
 | `cftc.gov` press releases, `propfirmmatch.com/payouts`, `canlii.org`, `osc.ca` | 403 | cftc.gov's own **hosted court documents** were reachable even where its press pages were not |
 | CourtListener search | rate-limited | — |
 | NFA BASIC | JavaScript SPA | **unresolved** — see open items |
 | SSRN | 403 | arXiv, journal abstract pages |
+
+### CORRECTION, 2026-09-08 — Apex is NOT blocked, and the recorded workaround could not have worked
+
+**Lane 03 recorded that `apextraderfunding.com` 403s every automated fetch and that it read Apex
+through Internet Archive snapshots. Lane 10 falsified both halves.**
+
+- **The site is reachable.** `curl --compressed` with a desktop Chrome user agent plus `Accept` and
+  `Accept-Language` headers returned **HTTP 200 on 28 of 28 help-centre pages, first try.** Two bare
+  probes did 403 and then succeeded on retry with headers, so **the block is header-sensitive or
+  rate-based, not standing.**
+- **The Internet Archive route could not have obtained the rule pages at all.** All five dedicated
+  conduct-rule pages have **zero Wayback captures**, confirmed through both the CDX and availability
+  APIs.
+- **`help-center-sitemap.xml` carries a per-article `lastmod`**, which closes lane 03's ambiguity #8
+  ("every rule page is undated").
+
+**The lesson is about this ledger, not about Apex.** A dead-end entry that is wrong is worse than no
+entry, because it is trusted and it redirects the next session onto a route that cannot reach the
+material. **A recorded block should say what was sent, not just that it failed** — "403 to WebFetch"
+and "403 to a browser-headered curl" are different findings and only the second justifies a
+workaround.
+
+---
 
 ### Things that are genuinely not published
 
