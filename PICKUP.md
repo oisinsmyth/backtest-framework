@@ -609,6 +609,16 @@ construction:**
 
 ## 1a. THE EDGE IS ENTIRELY OVERNIGHT - [D280](docs/decisions/D280-the-forecast-precheck.md)
 
+**TESTED FOR STALE OPENING PRINTS 2026-09-09 AND IT SURVIVED — [D390](docs/decisions/D390-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md).**
+The gap is formed entirely from the vendor open and that had never been checked. **17.6% of
+out-of-sample bars DO carry a detectable print artefact** —  exactly on
+5.84% — with a **-0.1564** gap-to-intraday reversal confined to them and **+0.0082** on the rest.
+**But the edge is not there:** on CLEAN bars the IC is **-0.01746 (1.14x the committed value)**,
+and it is **1.8x STRONGER in the most liquid $-volume quintile than the thinnest**. A print
+artefact must concentrate where prints are unreliable; this concentrates where they are most
+reliable. **The measurement stands. The money question below is untouched.**
+
+
 **D280 is a MEASUREMENT record - it scores no cell, ranks no name and proposes no rule, and its
 ledger is 0.** It ran BEFORE any pre-registration because it decides whether there is anything to
 pre-register.

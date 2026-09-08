@@ -3907,3 +3907,71 @@ equality between two estimators that genuinely differ for A′ (per-pair mask in
 common mask, up to 3 bars of 4,124). **The study reads the arm's MEDIAN, so the guard now bounds the
 median gap (9.87e-04), reports the worst pair, and demands exactness only where masks are identical
 — where it gets 8.9e-16.** *Guard the statistic you actually use, not a stricter one you do not.*
+
+---
+
+## 58. D280's overnight gap is not an opening-print artefact — and 17.6% of bars carry one anyway
+
+**D390**, measurement record, reusing D280's own module for fixture, signal, split and `ic_series`.
+Pre-registration `6843a39`, result
+`docs/decisions/D390-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md`.
+Prompted by the prop-firm research folder's own prerequisite for its C19-2 row — *"run the
+stale-price / closing-auction contamination test first"* — which had never been required of ours.
+
+**`[REP]` reproduced D280's committed gap IC to five decimals before any filter: ALL −0.01531
+(t −4.71), QUAL −0.01255 (t −3.45).**
+
+### 58.1 The contamination is real, common, and detectable
+
+```
+  flagged share of 2,232,440 out-of-sample bars
+    S1 open == prior close        5.84%     S4 zero/absent volume    0.54%
+    S2 open==high==low==close     0.51%     S1-S4 combined          17.58%
+    S3 open at session extreme   13.16%
+
+  corr(gap, intraday)   contaminated -0.1564  (n 392,539)
+                        clean        +0.0082  (n 1,838,232)
+```
+
+**One bar in seventeen has an opening print bit-identical to the previous close.** A stale print is
+corrected by the first real trade, so an artefactual gap must reverse — and **the reversal is
+confined almost exactly to the flagged bars.** This also explains D280's pooled
+`corr(gap, body) = −0.0429`: it is the contaminated 17.6% showing through a pooled average.
+
+**That is a reusable data-quality fact about this fixture, independent of D280.**
+
+### 58.2 But the edge is not there — it is STRONGER without them
+
+```
+    ALL  CLEAN (neither S1-S4 nor S5-S6)  -0.01746  t -4.49  1.14x committed  n 1,349,269
+   QUAL  CLEAN                            -0.01507  t -3.75  1.20x committed  n   327,060
+```
+
+**Removing every contaminated bar makes the edge larger, on 60% of the original sample.**
+
+### 58.3 THE DISCRIMINATING TEST: the gradient runs the other way
+
+```
+    $ volume quintile:      Q1        Q2        Q3        Q4        Q5
+                      -0.01231  -0.01154  -0.01616  -0.01543  -0.02194
+```
+
+**The gap IC is 1.8× stronger in the most liquid quintile than the thinnest**, and stronger in dear
+names than cheap. **A print artefact must concentrate where prints are unreliable; this concentrates
+where they are most reliable.** The two hypotheses predicted opposite gradients and the
+pre-registration said so in advance.
+
+**This falsified my own against-myself prediction** — I expected the gradient to invert, because
+D284 was killed by exactly that. **Where the effect is strongest is new information and it is the
+opposite of what the universe's cheap tail would suggest.**
+
+### 58.4 What it does NOT touch, and the limit of the test
+
+**Nothing about tradeability.** D280's own runner already records that the IC does not survive into
+money at N=25 — *"the ascending short LOSES 11–18 bp per night overnight"*, and *"a rank IC describes
+the WHOLE cross-section; a top-N book lives in ONE TAIL."* **That correction stands untouched. This
+removes a doubt about the measurement, not about the money.**
+
+**And S1 and S4's own ICs are unmeasured** — their bars are too scattered for a cross-sectional IC to
+carry enough names per day. The 5.84% of `open == prior close` bars are excluded by the CLEAN cut,
+but what they would have scored is not known.
