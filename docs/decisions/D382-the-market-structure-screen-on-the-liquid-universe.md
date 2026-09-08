@@ -90,6 +90,29 @@ number can be quoted without selection.
 
 **19 features × 4 holds = 76 cells.** Priced in §5.
 
+### AMENDMENT to §2, 2026-09-08 — **gate 1h was under-specified. The direction was declared for the BOOK and not for each FEATURE, so the grid is 152 cells and the floor is best-of-152.**
+
+*Written after the observed pass and before any null, because the defect is in this record's own design and pricing it correctly changes the floor every verdict is measured against.*
+
+§2 declared the book **LONG** and said an event is the percentile *"crossing into its extreme decile."*
+**"Extreme" has two ends and I did not say which one each feature's mechanism points at.** Gate 1h
+requires that *the mechanism must declare WHICH END GOES LONG, before the run* — and for a feature
+like `lower_wick` (a high value is a rejection of the lows) versus `gap_frac` (a low value is a gap
+down to buy, a high value is momentum to follow) the two ends are different hypotheses.
+
+**So the runner scored both tails, and that is a best-of-2 search per feature, not a declared
+direction.** The consequences, all of them adverse to the study and none of them optional:
+
+1. **The grid is 19 × 4 × 2 = 152 cells, not 76.** §5's floor is **best-of-152**, and the null draws
+   take their max over all 152 within each draw.
+2. **Gate 1h is NOT met by this study.** It is reported as failed rather than quietly reinterpreted.
+3. **Assigning each feature its "natural" end now would be exactly the post-hoc rationalisation gate
+   1h exists to prevent.** I am not doing it. A future study that wants the tighter best-of-76 floor
+   must declare the ends in its own pre-registration, before its own run.
+
+**What this does not change:** the split, the nulls, the buy-and-hold hurdle, gate 1e, and every
+assertion in §6. The observed numbers are what they are; what changes is the bar they must clear.
+
 ---
 
 ## 3. What is measured
