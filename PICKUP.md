@@ -1,20 +1,27 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-08.** **D365 → D377.** The session that spent the programme's first holdout read,
-then ran D373, then audited the hurdles that judged it. Everything below §7 is older strata, newest
-first, kept because the traps in them still bite.
+**Updated 2026-09-09.** **D365 → D389.** Two sessions: the first spent the programme's first
+holdout read, ran D373 and audited the hurdles that judged it; the second built and **retired the
+density line (D384 → D388)** and **answered the correlation floor (D389)**. Everything below §7 is
+older strata, newest first, kept because the traps in them still bite.
 
 **This file had been stale since 2026-09-02** (D264→D284) and both `STACK.md` and the 2026-09-07
 handoff said so in writing. It is current again as of this line.
 
 ---
 
-## 0. THE ONE-LINE STATE, 2026-09-07
+## 0. THE ONE-LINE STATE, 2026-09-09
 
 **THE MOMENTUM BOOK FAILED OUT OF SAMPLE AND WAS RETIRED. ITS SUCCESSOR WAS THE SAME BOOK, AND THE
 COHORT — NOT THE SIGNAL — IS ~73–80% OF ITS EDGE. THE REMAINING ~27% IS A REAL ENTRY-TIMING EFFECT
 WORTH AT MOST HALF A ROUND TRIP. HOLDOUT #1 IS SPENT; HOLDOUT #2 IS BUILT AND UNSPENT. BOTH BOOKS ARE
 UNCHANGED.**
+
+**AS OF 2026-09-09: the density line is RETIRED — the object works, the conditioner is inert. The
+0.44 correlation floor is ONE unidentified factor and none of the four named candidates explains it.
+NOTHING IS PRE-REGISTERED AND UNRUN EXCEPT D383, WHICH IS A DEBT. The single highest-value item in
+the programme — D336's quoted-spread pull — is BLOCKED ON THE PRINCIPAL'S TWS SESSION, and it decides
+whether the incumbent book is positive at all.**
 
 | | |
 |---|---|
@@ -255,12 +262,19 @@ committed to `data/`.
 after D378's pass, and whether to **re-base past records** onto D377's H1 hedge (D377 §4 argues not
 — the benefit is 0.032 on a 0.47 floor).
 
-1. **D336's quoted-spread pull — now the highest-value item, and it needs the principal's TWS
+1. **D383 IS A DEBT AND SHOULD BE SETTLED FIRST, EITHER WAY — it is the only thing blocking a
+   clean slate.** The 15-minute time-series structure screen is pre-registered (`af91504`, amended
+   `cb864cb`) with a gated fixture (`3c9d57c`) and **was deliberately not built**. Under R8 that is a
+   commitment nobody has discharged. **D382 already closed the DAILY version of that family as market
+   drift**, so the expectation is that it goes the same way — but leaving it dangling is worse than
+   either running it or retiring it in writing. **Cheapest item on this list; one decision.**
+
+2. **D336's quoted-spread pull — the highest-value item in the programme, and it needs the principal's TWS
    session.** D378 put the entry-timing increment at **0.19–0.47× a round trip under PUB** and
    **0.50–1.21× under PB**. **The same measurement decides whether that effect is deployable and
    whether the incumbent book is positive at all** (D332: PUB post-D333 is −12.68 bp/bar). Nothing
    else on this list changes as many conclusions.
-2. ~~Where does the remaining 0.44 correlation floor come from?~~ — **ANSWERED, and the answer is a
+3. ~~Where does the remaining 0.44 correlation floor come from?~~ — **ANSWERED, and the answer is a
    sharp negative. [D389](docs/decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md).**
    **It is ONE factor** — PC1 reproduces the pairwise rho to three decimals (0.449 vs 0.449), PC2 is
    0.006, all 500 books load the same sign. **And it is none of the four candidates**: slot mechanics
@@ -273,7 +287,7 @@ after D378's pass, and whether to **re-base past records** onto D377's H1 hedge 
    - **Where a successor should look:** the factor lives in **which days get traded**, not in the
      market on them — i.e. the **entry-condition distribution**, which no driver here could reach.
 
-3. ~~Exit timing~~ — **DONE. [D380](docs/decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+4. ~~Exit timing~~ — **DONE. [D380](docs/decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
    (`43db0df`) and [D381](docs/decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
    (`eac6650`). NINE ARMS, NONE BEATS HOLDING TO THE CAP** — on **gross mean per trade**, which is the
    unconstrained objective. D380's first pair were mis-scaled (±200 bp fired on ~80% of trades, caught
@@ -291,23 +305,31 @@ after D378's pass, and whether to **re-base past records** onto D377's H1 hedge 
      drawdown rather than mean, and an overlay can win there while losing here (D381 §5a gives each
      arm's exact drawdown hurdle). **That is for an individual strategy and book to assess at its own
      test stage** — the principle is recorded under R7 and is not being pursued on this construction.
-4. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
+5. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
    anything is fetched. **It must not select inside a narrow cohort** — [FINDINGS §52](docs/FINDINGS.md)
    closes winner-selection variants as a family.
-5. **P5 should be computed** on anything reaching the prop track, ahead of the other uncomputed legs
+   - **AND IT MUST HAVE ITS PERSISTENT-SELECTOR CONTROL DESIGNED IN AT PRE-REGISTRATION.** The density
+     line (D384 → D388) beat a path-shuffle null at `p` = 7.2e-11 and a rotated-density null at
+     nothing. **Beating a path shuffle is nearly free.** Four of five studies there would have
+     reported a headline without the A′-equivalent.
+   - **The most promising open lead in the programme is [FINDINGS §57](docs/FINDINGS.md)'s**: two
+     unrelated books co-move at 0.476 and **98.5% of it is unexplained**, and the disagreement between
+     the arms says the cause is **which days get traded** — the entry-condition distribution — not the
+     market on them. That is a target, not a construction, and nothing has been built against it.
+6. **P5 should be computed** on anything reaching the prop track, ahead of the other uncomputed legs
    (D379 §6). **P3 and P4 remain uncomputed** and under R6 that is a live defect.
-6. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study; that book lived in
+7. **D371's 0.8% breadth failure is NOT retroactively cleared.** H4′ is per-study; that book lived in
    a different universe at roughly half the breadth and **its A′ distribution has never been
    computed.** Nothing material changes — but the record should not be read as saying its breadth
    was bad.
-7. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
+8. **The short side** (`hist_L` k=40, D357) lost its clean fixture when D371 spent holdout #1 on
    momentum. It needs holdout #2 or a later slice.
-8. **C1's size sweep is unfinished** — extend below 0.48× and locate the value peak against D379 §4's
+9. **C1's size sweep is unfinished** — extend below 0.48× and locate the value peak against D379 §4's
    ladder cap. Needs MyFundedFutures' payout ladder terms, which no record holds.
-9. ~~Restate P1 as a sizing rule~~ — **DONE 2026-09-08**, R11.
-10. ~~The D373 avenue~~ — retired, reopened, tested; **status is the principal's** (see §0 table).
-11. ~~Audit the rest of the hurdle set~~ — **DONE, D375.**
-12. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374** (H4′) and **D376** (1d′).
+10. ~~Restate P1 as a sizing rule~~ — **DONE 2026-09-08**, R11.
+11. ~~The D373 avenue~~ — retired, reopened, tested; **status is the principal's** (see §0 table).
+12. ~~Audit the rest of the hurdle set~~ — **DONE, D375.**
+13. ~~Make the breadth hurdles breadth-relative~~ — **DONE, D374** (H4′) and **D376** (1d′).
 
 **The breadth test the 2026-09-07 handoff ranked first was dropped, with the principal's agreement.**
 It targets a retired object, and the H5 mis-specification it was partly meant to expose is a
