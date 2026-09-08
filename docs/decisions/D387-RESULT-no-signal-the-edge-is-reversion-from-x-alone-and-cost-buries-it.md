@@ -195,3 +195,74 @@ cluster."*
 
 *Result committed 2026-09-08, separately from the pre-registration, per R8. §10's close condition is
 met; under R15 the decision is the principal's.*
+
+---
+
+## AMENDMENT, 2026-09-08 — THE EVENTS WERE NOT RARE ON THIS UNIVERSE, AND THE DENSITY WAS FLAT ON HALF OF IT
+
+**The principal asked the same question he asked of D385: did the object do what it was designed to
+do, and did the density have shape? D385 reported TV statistics and never looked. THIS RECORD
+REPORTED `R` STATISTICS AND NEVER LOOKED. Same mistake, one study later.**
+
+Looking (`temp/d387_were_the_events_rare.py`, `temp/d387_look_at_the_object.py`):
+
+### The event thresholds are ABSOLUTE; volatility is not
+
+```
+          type     p10   median     p90     max  names>30%  names>50%
+  reversal >1%     8.4     17.0    29.0    37.7         46          0
+      move >2%    12.5     28.3    53.8    71.9        282         88
+```
+
+**§2 justified these two types from a measurement made on ETFs** — 5.0 and 7.0 per 100 bars — **and
+then carried the same absolute thresholds to single names, where daily volatility is 3–5× higher.**
+`move >2%` fires on a **median 28.3% of bars**, and on **282 of 600 names it fires on more than 30%**.
+On two profiled names it fired on **91%**. A threshold in percent is not a threshold in rarity.
+
+### And the density flattens exactly where that happens
+
+```
+      event rate  names   TV(f,g)  ratio CV  bandwidth h   h/DX  daily vol
+           0-15%     45    0.1570     0.487       0.0212    8.5     1.47%
+          15-30%     45    0.0825     0.262       0.0386   15.4     2.17%
+          30-50%     45    0.0649     0.192       0.0546   21.8     3.38%
+         50-101%     45    0.0389     0.096       0.0882   35.3     5.07%
+```
+
+`TV(f,g)` collapses **4×**, ratio CV **5×**. When the event fires on half the bars, **`f` IS `g`** —
+the numerator reproduces its own calibration at ratio CV 0.096. **That is D385 §54's swing-low
+failure verbatim, re-entered through a different door.**
+
+**A second effect compounds it.** Silverman scales with `sd(x)`, so on volatile names the bandwidth is
+also **4× wider — 8.5 to 35.3 grid cells**. On exactly the names where the event is common, the smudge
+is widest. One profiled name had `h = 0.174` (a 17%-wide kernel) and **zero modes**: a featureless
+blob.
+
+### What this does to §1's verdict
+
+**The construction DOES produce shape — on the quarter of the universe where the event is genuinely
+rare** (TV 0.157, ratio CV 0.487, 3–5× the flat cases). The study then averaged that against a
+universe where nearly half the names had none. **`R` at entry of 1.5–2.0× median is the average of a
+real conditioner on some names and noise on others.**
+
+**"No signal" STANDS on the trading evidence** — net negative in all 18 cells against a measured
+spread, and A′ matching the observed once the gates are matched (§3). **But this is not a clean test
+of the idea; it is a test of the idea diluted across an unsuitable universe**, and §9's "establishes"
+list is qualified accordingly.
+
+**Caveat, and it is the same one this line has been caught by before:** rarer events also mean fewer
+events, hence a noisier `f`, which inflates `TV(f,g)` mechanically. **The flattening at HIGH rates is
+certain** — `f → g` is definitional when the event is most bars. **Whether the low-rate bucket's shape
+is REAL rather than sampling noise is NOT established here**; that needs the count-matched control
+built for the cousins diagnostic, which was not run on this fixture.
+
+### The fix, and the pattern
+
+**Threshold in the name's OWN volatility units** — a move beyond 2σ of its own returns — which makes
+the event equally rare on every name by construction, and remove the bandwidth's dependence on
+`sd(x)` or accept that it co-varies.
+
+**This is the third time in this line that the event definition was not matched to the instrument:**
+D385 used events firing on 24% of ETF bars; D387 used ETF-calibrated thresholds on single names; and
+in between, a first draft of D387 measured a definitional tautology at 28–34 SE. **The density
+machinery has never yet been fed an event that was rare on the venue it was tested on.**

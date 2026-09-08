@@ -3672,3 +3672,14 @@ O(n²) scan called 126× per name; giving the nulls the matched-count gate they 
 20 of 21 scans and took the projection from **3.7 hours to ~50 minutes**.
 
 **Nothing admitted to either book. No hurdle cleared. No holdout read.**
+
+**AMENDED 2026-09-08 — THE EVENTS WERE NOT RARE ON THIS UNIVERSE.** The principal asked whether the
+density had shape. It did not, on half the sample. §2 justified the two event types from an **ETF**
+measurement (5.0 and 7.0 per 100 bars) and then carried the same **absolute** thresholds to single
+names at 3-5x the volatility: `move >2%` fires on a **median 28.3% of bars**, and on **282 of 600
+names it exceeds 30%**. TV(f,g) then collapses 4x and ratio CV 5x as the event rate rises
+(0.157/0.487 at a 0-15% rate, 0.039/0.096 above 50%) — **f IS g when the event is most bars**, which
+is §54.1 verbatim. Silverman compounds it: bandwidth widens 4x on exactly those names (8.5 to 35.3
+grid cells), one profiled name showing a 17%-wide kernel and ZERO modes. **"No signal" stands on the
+trading evidence, but the study tested the idea DILUTED.** Fix: threshold in the name's own
+volatility units. **Third time in this line the event definition was not matched to the instrument.**
