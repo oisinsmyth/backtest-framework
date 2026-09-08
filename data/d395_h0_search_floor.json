@@ -1,0 +1,37 @@
+{
+ "study": 395,
+ "stage": "H0_search_floor",
+ "prereg": "docs/decisions/D395-the-chop-cell.md",
+ "purpose": "H0: the exact best-of-36 LABEL PERMUTATION floor. Binding hurdle; section 5 stops the record if it fails. Admits nothing (R15).",
+ "method": "36 real cell definitions held fixed; per-trade P&L shuffled across trades; max of the 36 cell means; 10,000 permutations.",
+ "replaces": "Addendum 4's normal approximation over 36 INDEPENDENT subsets, which ignored that the four ER windows are correlated and was too strict.",
+ "results": {
+  "5": {
+   "n_cells": 36,
+   "observed_chop": 28.392715392786172,
+   "best_cell": "21|hivol|loER",
+   "best_observed": 28.392715392786172,
+   "perm_p50": 22.93075992210734,
+   "perm_p95": 31.261851662845125,
+   "se_p95": 0.12569425352017746,
+   "margin": -2.869136270058952,
+   "verdict": "FAIL",
+   "n_perm": 10000,
+   "trades_in_cell": 2573
+  },
+  "20": {
+   "n_cells": 36,
+   "observed_chop": 90.42676045332499,
+   "best_cell": "63|hivol|hiER",
+   "best_observed": 125.17840646457695,
+   "perm_p50": 63.61119781574064,
+   "perm_p95": 83.53873093468287,
+   "se_p95": 0.2816814339833791,
+   "margin": 6.888029518642114,
+   "verdict": "PASS",
+   "n_perm": 10000,
+   "trades_in_cell": 2150
+  }
+ },
+ "h0_passes": false
+}
