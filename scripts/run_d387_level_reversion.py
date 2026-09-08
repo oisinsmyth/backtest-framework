@@ -287,7 +287,12 @@ def assert_LAG(R, thr, x):
     got = np.zeros(n, bool)
     seen = []
     for t in range(n):
-        if t >= WARMUP and len(seen) >= WARMUP:
+        # THR_MIN, not WARMUP -- expanding_threshold opens the gate at THR_MIN settled observations.
+        # This audit used WARMUP and therefore opened ~100 bars LATER than the rule it was auditing;
+        # it passed on D387's probe only because no crossing fell in the gap. D388 caught it at 5
+        # bars. The decisions themselves were causal either way; the ASSERTION was checking the
+        # wrong rule.
+        if t >= WARMUP and len(seen) >= THR_MIN:
             s = np.sort(np.array(seen))
             th = s[int(QUANT * (len(s) - 1))]
             if np.isfinite(R[t]) and R[t] > th and np.isfinite(x[t]) and abs(x[t]) > 1e-9:
