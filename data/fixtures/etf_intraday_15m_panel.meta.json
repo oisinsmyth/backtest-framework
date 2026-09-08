@@ -1,0 +1,45 @@
+{
+ "gates": {
+  "gate_i1": {
+   "definition": "every timestamp on the 15-minute grid, strictly increasing, no duplicates",
+   "failures": [],
+   "n_failures": 0
+  },
+  "gate_i2": {
+   "definition": "low <= min(open, close), high >= max(open, close), high >= low, every price > 0",
+   "failures": [],
+   "n_failures": 0
+  },
+  "gate_i3": {
+   "definition": "no |log(close/prev_close)| WITHIN a session above 0.15 unless documented",
+   "threshold": 0.15,
+   "failures": [],
+   "n_failures": 0
+  },
+  "gate_i5": {
+   "definition": "no |log(open/prev_close)| ACROSS a session boundary above 0.25 unless documented -- unadjusted intraday data shows a split as exactly this",
+   "threshold": 0.25,
+   "failures": [],
+   "n_failures": 0
+  },
+  "session_shape_REPORTED_NOT_GATED": {
+   "note": "a short session is a calendar fact, not a data defect (D192): reported so a reader can see it",
+   "sessions": 122892,
+   "median_bars": 26.0,
+   "p05_bars": 25.0,
+   "short_session_rate": 0.0
+  },
+  "documented_moves": {
+   "USO|2020-03-09": "Saudi-Russia oil price war. wide_extended_15m_raw.meta.json documents it; WTI fell ~25% that session.",
+   "USO|2020-04-02": "Rebound from the same episode; documented in wide_extended_15m_raw.meta.json.",
+   "XOP|2020-03-09": "Same oil-war session. wide_extended_15m_raw.meta.json records D226 documenting XOP -36.9% as REAL.",
+   "OIH|2020-03-09": "Same oil-war session. wide_extended_15m_raw.meta.json records D226 documenting OIH -32.2% as REAL.",
+   "GDXJ|2020-03-19": "March 2020, junior gold miners. The 15:45 bar falls 30.53 -> 25.79 and the next session opens 28.57, which looks like a print until it is checked against the daily cache: daily 2020-03-19 is o 25.07 h 31.81 l 24.05 c 25.82 -- matching the intraday close to 3 cents -- and daily 2020-03-20 opens 28.57, matching exactly. Split coefficient 1.0, so no corporate action. Two independent series agree bar for bar; the move is REAL."
+  }
+ },
+ "gated_by": {
+  "script": "scripts/gate_intraday_fixture.py",
+  "at_utc": "2026-09-08T15:55:43Z",
+  "note": "the fetcher's own keys are preserved; only `gates` was added"
+ }
+}
