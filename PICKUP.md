@@ -2,17 +2,19 @@
 
 ---
 
-## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED 2026-09-09, READY TO MERGE
+## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED AND **MERGED** 2026-09-09
 
-**The principal authorised the merge on 2026-09-09**, reversing the branch's standing rebase-only
-rule. **The branch is rebased onto `master` and is a clean FAST-FORWARD — 55 commits ahead, 0
-behind, no conflicts and no decision-number collisions left.**
+**Merged to `master` as a clean fast-forward** (`483ac82..e89e821`, 84 files, +53,818) on the
+principal's instruction, reversing the branch's standing rebase-only rule. **The principal ran the
+merge from the main checkout**, because `master` was checked out there with another session
+actively committing to it — git refuses to update a branch checked out elsewhere, and forcing it
+would have desynced that worktree's index under a live session.
 
-**It was NOT merged from this session, and that is deliberate.** `master` is checked out in the
-main worktree and **another session is actively committing to it** — four commits landed there
-during the final minutes of this one. Git refuses to update a branch checked out elsewhere, and
-forcing it would desync that worktree's index under a live session. **The merge is one
-fast-forward command from the main checkout; it is recorded in the handoff rather than forced.**
+**Shared programme records touched by this merge, and only these three:** `CLAUDE.md` (the
+sampled-p95 bias clause), `docs/RULES.md` (**R16** — a published number is not reproducible without
+naming the build), and `docs/decisions/D289-the-promotion-pipeline.md` (its **sixth** and
+**seventh** amendments). **`docs/FINDINGS.md`, `docs/BOOK.md` and `docs/BOOK_PROP.md` are
+UNTOUCHED** — nothing was admitted and no finding was published without the principal's ruling.
 
 [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the retirement record and the
 place to start.
