@@ -69,6 +69,82 @@ recursion and the stationarity both survive. `[FRAME]` proves it.
 **The bandwidth is not a free parameter.** Silverman's rule on the trailing distribution of `x`,
 recomputed on the same exponential weights. Declared, not swept.
 
+### AMENDMENT to §1 and §2, 2026-09-08 — the additive term was under-defined, and the bandwidth should not have been fixed
+
+*Written before the runner exists, so this is still a pre-registration under R8. Both paragraphs above
+are left standing. Raised by the principal, and both points are theirs.*
+
+#### (a) THE ADDITIVE TERM. §1 defines only the simplest member and calls it "the density"
+
+The recursion above places **one unit of mass per bar at the close's deviation** — a *time* density,
+how long price spent at each percentage from its EMA. **The proposal was a family**, and each member
+is a different additive term. The general form, with the frame shift moved into the equation where it
+belongs:
+
+```
+f_t(u)  =  λ · f_{t−1}(u + δ_t)  +  (1 − λ) · w̃_t · A(u ; c_t)
+δ_t     =  log(EMA_t) − log(EMA_{t−1})
+```
+
+**A type is a (weight, location) pair.** `w̃_t` is *how much* mass the bar contributes; `A(u; c_t)` is
+*where* it goes.
+
+| type | weight `w_t` | location |
+|---|---|---|
+| **time** (the base case) | 1 | the close's deviation |
+| volume profile | volume | **the bar's range** in deviation space |
+| dollar volume | close × volume | range |
+| swing low / swing high | 1 on a confirmed pivot (`k ∈ SWING_K`) | the pivot's deviation |
+| N-bar lowest low / highest high | 1 when the bar is the extreme of N | that low/high's deviation |
+| gap | 1 on a gap | the gap's span |
+| wide-range | 1 above a range threshold | range |
+
+**`w̃_t` is the weight NORMALISED per name** — `w_t` divided by its own exponentially-weighted mean.
+Without this a high-volume name yields a "denser" density than a low-volume one and **§4.5's
+comparability claim, which is the entire point of the coordinate, fails.**
+
+**The range-spread and the kernel compose in closed form.** For a bar covering `[a, b]` in deviation
+space with bandwidth `h`, the additive term is a uniform convolved with a Gaussian:
+
+```
+A(u) = [ Φ((u − a)/h) − Φ((u − b)/h) ] / (b − a)
+```
+
+Exact, no numerical convolution — **and as `b → a` it converges to the plain kernel `K(u − a)/h`.**
+So the point-mass types are the degenerate case of the range-spread ones, **one code path covers the
+whole family**, and `[REC]`/`[FRAME]` need proving only once.
+
+**What this stage 0 actually tests is the base case — the time density, unit weight, point location.**
+P1 asks whether the *coordinate* carries shape a shuffle cannot produce, and that question is cleanest
+on the simplest member. **The family is enumerated here so that a later screen inherits it rather than
+inventing it**: under [R14's addition](../RULES.md#r14) the choice of function is itself a free
+parameter, so types picked after seeing this result would be fitted, and these are declared.
+
+#### (b) THE BANDWIDTH SHOULD BE SWEPT, AND FIXING IT RISKS A FALSE NEGATIVE
+
+§2 declares the bandwidth fixed and sweeps only `λ`. **That is the wrong call**, for a reason that
+does not affect fairness but does affect what the study can see.
+
+**If the smudge is too wide, the observed density and the null density both collapse into smooth
+hills, the distance between them goes to nearly zero, and P1 fails — because of the bandwidth, not
+because the market has no structure.** Too narrow and both are spiky and the distance is dominated by
+sampling noise. The comparison stays *fair* at any bandwidth, since observed and null share it. **The
+risk is blindness, not bias**, and a fixed bandwidth would leave it undetectable.
+
+**Amended: bandwidth is swept as a multiplier on the Silverman baseline — {0.5×, 1×, 2×} — reported
+and never picked**, and P2's shape reading applies to it as it does to `λ`. Three correlated points,
+so the floor cost is close to nothing.
+
+**And the baseline is floored at the bar's own resolution:**
+
+```
+h  =  max(  Silverman(σ_EW of x),  median bar range in deviation units  )
+```
+
+Both terms come from the data and neither is chosen. **The floor has a physical meaning: we do not
+claim to resolve structure finer than a single bar can locate**, which is the same concern D194's span
+census measures for the incumbent buckets.
+
 ---
 
 ## 2. Parameters — one swept, everything else declared or tied
