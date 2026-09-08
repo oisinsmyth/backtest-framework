@@ -3763,3 +3763,56 @@ path-invariant, gross and net — negative in all 36. **What has not:** a slot-l
 cross-sectional ranking (neither can create information a per-trade mean lacks), and the **R response
 curve** — only the top decile in one direction was ever traded, so the low end of R and any monotone
 gradient remain untested. That is the one live successor, and it is a THIRD look under R13.
+
+---
+
+## THE DENSITY LINE IS RETIRED — the principal's decision, 2026-09-09
+
+**Retired by the principal after D388, under R15.** D384 → D388, five studies. **Written here rather
+than edited in anywhere, per the append-only rule.**
+
+### What was tested and what closed it
+
+| | |
+|---|---|
+| **the idea** | the principal's: a price-structure density centred on a moving average, in log space, so it is price-invariant and reads in percentages |
+| **the object** | **works.** Given a genuinely rare event it produces a smooth, causal, price-invariant, multi-modal density — TV(f,g) 0.18–0.51, ratio CV 0.51–1.31, 2–3 modes, proved bit-identical against an explicit loop |
+| **what closed it** | **the conditioner is INERT.** It beats a shuffled-path null in 34/36 cells at `p` to 7.2e-11 and beats a **rotated-density** null in 0/36. `corr(density shape, edge)` across all 36 cells: **mean −0.027, positive in 10/36 — below chance.** Net negative in all 36 against a measured spread |
+
+**The distinction that decided it:** N2 destroys the price path; A′ destroys only the density's
+**alignment** with the current price. Beating the first and not the second means the edge was
+reversion from `x` alone. **Without A′ this line reports a 7.2e-11 headline and admits a signal that
+is not there.**
+
+### What it cost, stated plainly
+
+**Five studies and roughly 4.5 hours of compute, of which three were spent measuring the wrong
+thing:**
+
+- **D384** — measured a statistic (TV against a shuffle) that is a functional of the density **alone**
+  and cannot see whether the density predicts returns. Close withdrawn.
+- **D385** — measured a **flat object**: swing lows fire on 24% of ETF bars, so `f` reproduced its own
+  calibration. Close withdrawn.
+- **D387** — measured a flat object on **half** its universe (absolute thresholds carried from ETFs to
+  single names at 3–5× the volatility) with **mismatched gates** worth up to 126 bp.
+- **D388** — the clean test. Object shaped, one gate, rare events. **Still inert.**
+
+**The principal had to ask "did the density have shape?" twice before it was looked at.** Both times
+the answer was no, and both times a test statistic had already been reported as though it were.
+
+### What survives and is worth keeping
+
+- **The construction, proved and fast.** `[REC]`, `[MASS]` 5e-16, `[CAUSAL]`, `[FAST]` 3.6e-15.
+  `scripts/run_d387_level_reversion.py` and `scripts/run_d388_rare_event_levels.py` stay.
+- **`f̂` is constant between events under plain decay** — `λ^gap` is a scalar and cancels in the
+  normalisation, so the dense (T, GRID_N) accumulation is unnecessary. **39.0 ms → 1.6 ms, 24×.**
+  The naive form decays λ per *event* rather than per *bar* and is wrong by 3.87.
+- **A threshold in percent is not a threshold in rarity.** σ units collapsed the cross-name rarity
+  spread 4.37× → 1.37×.
+- **Rarity improves the OBJECT, not the P&L.** Q4 held on the A′ margin at every λ and hold and was
+  falsified on gross.
+- **Beating a path-shuffle null is nearly free.** The persistent-selector control is the test.
+
+**Nothing was admitted to either book. No hurdle was cleared. No holdout was read. The R13 ledger
+carries two looks at "price reverts at levels where its own rare events cluster" and the line is
+closed on both.**

@@ -24,9 +24,8 @@ UNCHANGED.**
 | **Retired 2026-09-07** | **S6** (nine-condition gate), **C9** (252-bar high alone) |
 | **The winners'-dip avenue** | **RETIRED 2026-09-08, then REOPENED NARROWLY** for one test. **D378's gate PASSED** so the abandon condition never fired; **D380 then closed the exit half — no overlay beats not cutting.** The timing picture is complete: **the entry day carries information, the exit does not, and neither is large enough to matter after cost.** **STATUS IS THE PRINCIPAL'S.** [FINDINGS §52](docs/FINDINGS.md) |
 | **Hurdles retired or replaced** | **H4 → H4′** (D374) · **1d → 1d′** (D376) · **hedge H0 → H1** for future studies (D377) · **P1 restated as a SIZING RULE, not a filter** (D375 → R11, 2026-09-08) |
-| **The market-structure avenue** | **D382 closed the daily ETF screen** — the family is market drift. **D384 WITHDRAWN** (wrong statistic, n_eff 14.5). **D385 re-ran it properly and P1 failed with n_eff ADEQUATE — but its close condition is WITHDRAWN too:** the stage-0 statistic is a functional of the density ALONE and cannot see whether the density predicts returns (t=+4.62 signal, identical TV). **The density family is NOT closed and needs a DIRECT SIGNAL TEST, not a third premise check.** [FINDINGS §54](docs/FINDINGS.md) + amendment |
-| **THE DENSITY LINE HAS ITS CLEAN TEST: D388** | rare events in sigma units + ONE gate. **The density HAS shape** (TV 0.18-0.51, ratio CV 0.51-1.31, 2-3 modes, vs D387s 0.039/0.096/0) and rarity is monotonically the mechanism. **But it STILL adds nothing to x**: 34/36 cells beat the path-shuffle null at p to 7.2e-11, and 0/36 significantly beat the ROTATED DENSITY. Net negative in all 36. **Close condition MET; the decision is the PRINCIPALS (R15).** [FINDINGS 56](docs/FINDINGS.md) |
-| **Two caveats D387 discloses about itself** | its pre-registered bar was **unreachable** (1,975 bp against an 88 bp observed — D384's H4 problem again), and the treatment and nulls used **different gates**, worth up to 126 bp. Gate-matched, the conclusion survives on 8 cells |
+| **THE DENSITY LINE — RETIRED 2026-09-09 by the principal (R15)** | D384 -> D388, five studies. **The OBJECT works** (TV 0.18-0.51, ratio CV 0.51-1.31, 2-3 modes, causal, proved). **The CONDITIONER is inert**: beats the path-shuffle null 34/36 at p to 7.2e-11, beats the ROTATED-DENSITY null 0/36, and corr(density shape, edge) is -0.027 across all 36 cells - positive in 10/36, below chance. Net negative in all 36. [FINDINGS 56](docs/FINDINGS.md) |
+| **What the density line cost, and what survives** | **~4.5 h of compute, three of five studies measuring the wrong thing** (D384 wrong statistic; D385 flat object; D387 flat on half its universe with mismatched gates). Survives: the proved construction, `f_hat` constant between events under plain decay (24x), sigma-unit thresholds (rarity spread 4.37x -> 1.37x), and **beating a path-shuffle null is nearly free - the persistent-selector control is the test** |
 | **ONE PRE-REGISTRATION IS AWAITING A RUNNER** | **D383** — the time-series structure screen at 15 minutes (`af91504`, amended `cb864cb`). Fixture gated `3c9d57c`. **The runner does not exist and was deliberately not built.** |
 
 **For D285 → D364 read [`docs/STACK.md`](docs/STACK.md) §0 and §§32–42**, not this file. That is the
@@ -250,8 +249,7 @@ committed to `data/`.
 
 ## 0d. WHAT IS LIVE NOW, RANKED
 
-**Nothing is pre-registered and awaiting a runner. The queue is empty.** What follows is candidates,
-not commitments.
+**RE-RANKED 2026-09-09, after the density line was retired.** One pre-registration is awaiting a runner (**D383**, deliberately unbuilt) and it is a DEBT: run it or retire it in writing, because a dangling pre-registration under R8 is a commitment nobody has discharged. What follows is candidates, not commitments.
 
 **Two decisions are the principal's and block nothing else:** the **winners'-dip avenue's status**
 after D378's pass, and whether to **re-base past records** onto D377's H1 hedge (D377 §4 argues not
