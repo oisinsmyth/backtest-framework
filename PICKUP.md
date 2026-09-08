@@ -262,18 +262,24 @@ after D378's pass, and whether to **re-base past records** onto D377's H1 hedge 
 2. **Where does the remaining 0.44 correlation floor come from?** D377 ruled out per-name beta error
    and price exposure; D376 established it is a **per-bar** effect. **Untested: shared slot
    mechanics, equal-weighting, the eligibility floor.** Free, in-sample, upstream of every study.
-3. ~~Exit timing~~ — **DONE, [D380](docs/decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
-   (`43db0df`). NO EXIT OVERLAY BEATS NOT CUTTING.** Baseline +160.55/trade; invalidation +26.96,
-   target +200 → +62.43, stop −200 → +13.99. Only the target beat its own control, and §2 shows why
-   that pass is near-mechanical. **Two things to carry:**
-   - **R7's strict control INHERITS the rule's trade selection.** Its p50 runs +11.95 (rule fires on
-     winners) → +83.69 (fires on everything) → **+181.11** (fires on losers, i.e. *harder than doing
-     nothing*). **U1 verdicts are not comparable across rules.** Report every overlay against **both**
-     its matched-count control **and the un-overlaid baseline** — my pre-registration omitted the
-     baseline and its own numbers found the gap.
-   - **A better win rate is available and is not worth having.** Invalidation doubles the median
-     (+51.55 → +111.05) and destroys 83% of the mean; the target quintuples it and destroys 61%.
-     Both flip mean below median — the tell that the tail is carrying the return.
+3. ~~Exit timing~~ — **DONE. [D380](docs/decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+   (`43db0df`) and [D381](docs/decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
+   (`eac6650`). NINE ARMS, NONE BEATS HOLDING TO THE CAP** — on **gross mean per trade**, which is the
+   unconstrained objective. D380's first pair were mis-scaled (±200 bp fired on ~80% of trades, caught
+   by the principal); D381 re-ran them at declared **fire rates** of 5/10/20% and every arm still lost.
+   - **A stop is a LATE trigger by construction.** Don't cut +160.55 · cut the worst 5% at a **random**
+     bar **+226.52** · cut them at −3,229 **+142.79**. The threshold is only reached *after* the
+     adverse move, and these losers recover.
+   - **The median/mean exchange rate is fixed at ~0.44** and flat from a 20% to an 81% fire rate. The
+     dose is free; the price is not. **A better win rate is available and costs about two basis points
+     of mean for every four of median.**
+   - **The R7 lessons are now in [RULES.md](docs/RULES.md) under R7** and bind future overlay studies:
+     report against the baseline as well as the control; the control's difficulty is inherited from
+     the rule's trade selection; the control is a null and never a policy.
+   - **NOT queued, deliberately.** Under a hard drawdown limit the criterion is return per unit of
+     drawdown rather than mean, and an overlay can win there while losing here (D381 §5a gives each
+     arm's exact drawdown hurdle). **That is for an individual strategy and book to assess at its own
+     test stage** — the principle is recorded under R7 and is not being pursued on this construction.
 4. **A genuinely new construction**, designed from in-sample reasoning only and pre-registered before
    anything is fetched. **It must not select inside a narrow cohort** — [FINDINGS §52](docs/FINDINGS.md)
    closes winner-selection variants as a family.

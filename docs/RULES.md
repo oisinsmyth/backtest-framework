@@ -91,6 +91,37 @@ the same tell that surfaced D224's look-ahead defect.
 **Scope:** binding on every study applying an overlay. Introduced by
 [D235](decisions/D235-stops-and-targets-on-the-recovery-rule.md).
 
+### ADDITION, 2026-09-08 — the control is a NULL, not a POLICY, and the verdict depends on the objective
+
+*Three things [D380](decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+and [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
+found by running R7's control properly. They bind future overlay studies; they do not reopen anything.*
+
+**1. Report the overlay against the UN-OVERLAID BASELINE as well as the control.** R7's control
+answers *"does the rule beat random cutting?"* It does not answer *"does the rule beat not cutting?"*,
+and those can have opposite answers. D380 had an overlay clear its control while earning **61% less
+per trade than doing nothing**.
+
+**2. The control's difficulty is inherited from the rule's trade selection, so control-only verdicts
+are not comparable between rules.** Measured across six properly-scaled arms, the control's own
+centre ran from **+11.95** (rule fires on winners) to **+290.58** (fires on losers) against a
+baseline of **+160.55** — a loser-firing rule is graded against a control **better than doing
+nothing**. **State which trades the rule selects whenever a control-relative verdict is quoted.**
+
+**3. The control is a NULL and never a POLICY.** When the rule's trade selection is knowable only
+**ex post** — which paths *will* breach a threshold — the control's level is unattainable and must
+not be quoted as an achievable alternative.
+
+**And the verdict depends on the objective, which is the strategy's to declare.** An overlay judged
+on **mean per trade** is being judged for an unconstrained book. Under a hard drawdown limit the
+criterion is **return per unit of drawdown**, because the drawdown caps size ([R11](#r11)'s P1 is the
+sharpest case, restated as a sizing rule in
+[D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) §5).
+**An overlay that cuts drawdown by more than it cuts mean wins on that criterion and loses on the
+other.** Which objective applies is **a property of the individual strategy and book, assessed at its
+own test stage** — not something a methodology record settles in advance. **What binds here is only
+that the study must say which objective it is testing against.**
+
 ## R8. Admission to the book requires a pre-registered out-of-sample test
 
 A strategy enters [`BOOK.md`](BOOK.md) only after a test whose **hurdles were committed before
