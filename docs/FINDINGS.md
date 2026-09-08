@@ -3593,3 +3593,82 @@ for every type — so the narrowing selected exactly the events least able to ca
 corrected: the `modes` field in `data/d385_event_density.json` (mean 24.9) is an artefact of
 averaging `s` across bars with differing support cuts and does NOT describe the density. **The family
 is UNTESTED, not refuted.**
+
+---
+
+## 55. The density line's first real signal test: no signal, the edge is reversion from `x` alone, and the two nulls disagreeing is the entire finding
+
+**D387**, signal test under R15, path-invariant lens. 600 US single names, 2010-01-04 → 2026-08-26,
+2 rare event types × 3 λ × 3 holds, N2 20 draws + A′ 40 rotations, 20,062 cells.
+Pre-registration `b83ad16`, runner `b92d554`, result
+`docs/decisions/D387-RESULT-no-signal-the-edge-is-reversion-from-x-alone-and-cost-buries-it.md`.
+
+**0 of 18 cells clear. Best margin −1.18 SE.** Gross is positive at long holds (up to **88.1 bp**) but
+**net is negative in all 18 cells**, −54 to −148 bp, against a **Corwin–Schultz spread of 127.9–142.1
+bp measured on the names actually held**.
+
+### 55.1 THE FINDING: beating a shuffled PATH is not beating a rotated DENSITY
+
+```
+        type  lam   H    n  gross bp   N2 p50  z vs N2    sign p    A p50  z vs A
+reversal >1%  120  20  579      50.2    -28.9     0.36  1.16e-18     23.1    0.01
+    move >2%  250  20  508      88.1     -5.7     0.28  1.53e-10    129.0    0.06
+```
+
+**Against N2 the displacement is overwhelming — sign tests to p = 1.2e-18 across 579 names. Against
+A′ it vanishes, and A′ is often ahead.**
+
+**N2 destroys the real price path. A′ destroys only the density's ALIGNMENT with the current price,
+on the same real path.** Beating the first and not the second says the edge is **not in the
+alignment**: it is trading a real path at extreme `x` and betting on reversion. A *misaligned* density
+picks a different set of extreme-`x` bars and does just as well. **The event-density conditioner adds
+nothing to what `x` already carries.**
+
+**Without the persistent-selector control this study would have reported a 1e-18 headline.** That is
+what R7 is for, and this is the cleanest demonstration of it in the programme.
+
+### 55.2 Two defects the record discloses about itself
+
+**THE PRE-REGISTERED BAR WAS UNREACHABLE.** N2's per-name draw-mean spread is **415 bp**, so
+"p95 + 2 SE" sits at **1,975 bp** against an observed 88.1 bp. **N2 at 20 draws is not decisive at
+the margin the bar demands** — D384's H4 problem again, a hurdle nothing could reach. The 0/18
+carries less information than it looks like; the null-centre comparison is where the result lives.
+
+**THE ARMS USED DIFFERENT GATES.** The observed used the pre-registered causal expanding quantile;
+the nulls used a matched-count top-`R` gate introduced while optimising and called "conservative"
+without measurement. **Measured: the top-n gate is worth up to +126 bp — larger than the entire
+claimed edge.** Re-checked gate-matched on 98–117 names, **A′ still beats the observed in 6 of 8
+cells**, so §55.1 survives on weaker evidence. **A clean re-run gives every arm one gate.**
+
+### 55.3 A pre-registered test that was VACUOUS BY CONSTRUCTION
+
+§3 declared continuation as a second look and §10 said that if it "clears equally, the conditioner
+marks volatility, not direction." **For a symmetric signed trade it cannot**: `direction = −1` flips
+the sign on the *same* decision bars, so continuation is the exact arithmetic negative —
+`max |revert + continue| = 0.000e+00` across 10,025 cells. **The abandon condition could never fire.**
+The right test is `|return|` or dispersion at eligible bars, and it was not run. **Check that a
+declared alternative is not the arithmetic negative of the primary before pre-registering it.**
+
+### 55.4 What the trades depend on
+
+```
+  mean 88.1 bp < median 134.0 bp   -- the LEFT tail is doing the work
+  ex-top 1% 48.3   ex-bottom 1% 133.6   trimmed 93.8   win 54.3%   skew -0.172
+  30 of 508 names to half the P&L; top-10 21.5%; 61.6% of names profitable
+  ALIVE 366 names +142.4 bp    DEAD 142 names -51.8 bp   (28.0% dead)
+  cheap half +106.0 bp   dear half +70.3 bp   (median price $31.38)
+```
+
+**Concentration is not the problem — survivorship is.** The whole edge sits in names still alive; the
+dead 28% lose money. And the cheap half earns more while paying more in bp, so cost erodes it fastest
+exactly where it is largest.
+
+### 55.5 Speed, recorded because it was the reason for a rule
+
+**3,044 s at 5.98× on 6 workers — 100% efficiency**, against D385's 55%. `parallel_map`'s `[SPEED]`
+report (`dc30d00`) stayed silent, which is what passing looks like. The optimisation that got it
+there was profile-driven: the bottleneck was **not** the densities but `expanding_threshold`, an
+O(n²) scan called 126× per name; giving the nulls the matched-count gate they already needed removed
+20 of 21 scans and took the projection from **3.7 hours to ~50 minutes**.
+
+**Nothing admitted to either book. No hurdle cleared. No holdout read.**
