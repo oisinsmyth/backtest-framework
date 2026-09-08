@@ -254,3 +254,69 @@ own pre-registration under R8, and it is the principal's call whether to spend o
 memory says *measure the conditioner's own persistence before designing a study that conditions on
 it.* **Persistence is not the same as distinguishability-from-a-shuffle**, and I substituted the
 second for the first across two studies and roughly 110 minutes of compute.
+
+---
+
+## AMENDMENT 3, 2026-09-08 — THE OBJECT WAS BUILT CORRECTLY AND FED THE WRONG INPUT. The events were too common to differ from their own calibration.
+
+**The principal asked whether the indicator did what it was designed to do — a continuous density of
+smudged events — or whether that got lost. Neither this record nor D384 had ever LOOKED at the
+object; both reported only TV statistics against a null.**
+
+### A correction: the stored `modes` field is an artefact of my own diagnostic
+
+```
+  modes of s at a SINGLE bar                   : median 2, range 1-3
+  modes of the TIME-AVERAGED s (what is stored):  39
+```
+
+`modes` was computed on `s` averaged across ~89 evaluation bars, and each bar carries a **different
+support cut**, so every support edge becomes a step in the average. **The `modes` column in
+`data/d385_event_density.json` (mean 24.9) does not describe the density and must not be read as
+doing so.** The per-bar object is smooth.
+
+### The construction worked
+
+`f` is a continuous, smooth, price-invariant kernel density of smudged events — **1 to 3 modes**,
+bandwidth ~19 grid cells, causal, and bit-identical to an explicit loop. **Nothing was lost in the
+smudging.** The design of §1 was realised.
+
+### But the object it produced was nearly FLAT, and that is why nothing could clear
+
+```
+           type  rate/100  ratio median  ratio CV  max/median   TV(f,g)
+      swing low      24.0         0.974     0.208        1.46    0.0610
+     swing high      24.0         0.986     0.223        1.39    0.0646
+  highest in 20      18.0         0.918     0.654        3.51    0.1850
+   lowest in 20       7.7         1.036     0.628        2.33    0.2140
+```
+
+**For the swing types the event density REPRODUCES ITS OWN CALIBRATION** — ratio median 0.974, CV
+0.21, peak just 1.46× the median. A 2-bar swing low on closes occurs on **24% of bars**; an event
+that common cannot be distributed differently from time. `s ≈ 1` everywhere, so P1 was scoring a flat
+object against a null and could not have cleared whatever the market did.
+
+**And `TV(f, g)` rises monotonically as the event gets rarer** — 0.061 → 0.065 → 0.185 → 0.214, with
+ratio CV tripling. **Rarity is what makes an event informative.**
+
+### This indicts §3's narrowing, which was mine
+
+§3 excluded reversals (2.4/100) and moves >2% (4.0/100) **because they were rare**, to protect
+`n_eff`. **`n_eff` was never the constraint** — event-time decay had already fixed it at ~115 for
+every type regardless of rate. **I optimised the event selection for statistical power and thereby
+selected exactly the events least able to carry information.** The two types §3 most protected are
+the two flattest in the table above, and the excluded types are rarer than anything tested.
+
+**Caveat, not skipped:** rarer types also receive a longer tied `hl_bars` (519 vs 167 bars), so `g`
+spans a different window. **"Rarer ⇒ more informative" is NOT separated from "different denominator
+span" by this table.** It is the same defect as §4's — tying `hl_bars` to the event rate — and fixing
+the centring span across types would test both at once.
+
+### Standing summary of what D385 established
+
+- **The apparatus is correct**: smooth, causal, price-invariant, proved. It can be reused.
+- **The input was wrong**: events at 18–24% of bars are not events, and their density is their own
+  calibration.
+- **The statistic could not have seen a signal anyway** (Amendment 2).
+- **Therefore the family is untested**, not refuted. Three of these are design faults and all three
+  are mine.

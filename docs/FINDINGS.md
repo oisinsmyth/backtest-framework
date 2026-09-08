@@ -3580,3 +3580,16 @@ the properly-matched swing types with adequate n_eff, the density's SHAPE is not
 measured design fault, which is mine. **The family needs a direct signal test (condition on the
 density, measure forward returns, score per R15), not another premise check.** See the amendment in
 `docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the-close-condition-is-met.md`.
+
+**AMENDED AGAIN 2026-09-08 — THE OBJECT WAS BUILT CORRECTLY AND FED THE WRONG INPUT.** Neither D384
+nor D385 ever LOOKED at the density; both reported only TV against a null. Looking: the per-bar `f`
+is smooth and continuous (1-3 modes, ~19-cell bandwidth) — **the smudged-density construction worked
+as designed.** But for the swing types the event density **reproduces its own calibration** — ratio
+median 0.974, CV 0.21, peak 1.46x the median — because a 2-bar swing low on closes happens on **24%
+of bars**, and an event that common cannot be distributed differently from time. `TV(f,g)` rises
+monotonically as the event gets rarer (0.061 / 0.065 / 0.185 / 0.214). **§54 excluded the rare types
+to protect `n_eff`, which was never the constraint — event-time decay had already fixed it at ~115
+for every type — so the narrowing selected exactly the events least able to carry information.** Also
+corrected: the `modes` field in `data/d385_event_density.json` (mean 24.9) is an artefact of
+averaging `s` across bars with differing support cuts and does NOT describe the density. **The family
+is UNTESTED, not refuted.**
