@@ -71,13 +71,47 @@ new shape criterion.
 | **Concentration in NAMES** | a handful of names carry the P&L; the median trade loses | **the defect.** D371: mean +114.97, median −36.57, top-5 share 142%, **2 of 255 names to half the P&L**. This is what failed out of sample |
 | **Concentration in TIME** | the sleeve is flat most bars and on in a minority of episodes | **the requirement (P1).** D361's gated fade runs **28% exposure**; §41 rule 4 records gated event books at 28–42% |
 
-**These are compatible: many names, few days.** A gate supplies the flatness; the trigger
-supplies the breadth. My earlier framing — "signals that fire on common mild conditions" —
-was about the *name* axis and was silent on the *time* axis; P1 is about the time axis.
-Nothing is retracted, but the ranking changes:
+**These are compatible: many names, few days.** ~~A gate supplies the flatness; the trigger
+supplies the breadth.~~ **— WITHDRAWN 2026-09-08, see §2a″: that sentence contradicts a published
+FINDINGS section, and the striking is the correction.** My earlier framing — "signals that fire on
+common mild conditions" — was about the *name* axis and was silent on the *time* axis; P1 is about
+the time axis. Nothing else here is retracted, but the ranking changes:
 
 > **Group C stops being optional. Every candidate in Groups A and B now needs a named
 > time-series gate before it is a proposal at all, and the gate needs its own null.**
+
+#### 2a″. CORRECTION 2026-09-08 — an entry gate is not a flatness mechanism
+
+**`docs/FINDINGS.md` §47 rule 3 already said the opposite of the struck sentence, and this file was
+written without checking it:**
+
+> *"**A gate that blocks entry is not a flatness mechanism.** If flatness is the goal, the exit has
+> to be gated too; entry gating changes which trades are taken, not how long capital is deployed."*
+
+**D367 measured it.** A gate **shut on 90.8% of bars** left a book invested **91.6%** of them,
+holding 22.5 names on average — because the gate blocks *entry* while positions ran to a 252-bar
+cap. §47's own words: *"Every earlier description of this construction as flat most of the time was
+wrong."*
+
+**The correct statement — which also explains why the table's D361 row is nonetheless right**, its
+28% exposure being real because its hold is 10 bars:
+
+> **Entry gating delivers flatness only when the HOLD is short relative to the gate's off-periods.
+> At long holds it delivers almost none. A flat-by-default sleeve needs a gate AND a short hold, or
+> a gated EXIT — and a gated exit has never been tested in this programme.**
+
+**What this changes for the ranking above:** "needs a named time-series gate" was never sufficient.
+A candidate claiming flatness must state its **hold** beside its gate, and the exposure arithmetic
+(entries/bar × hold, §38 rule 2) decides the claim — not the gate's duty cycle.
+
+**What it does not change:** the gate still needs its own null (rotate the gate, keep the trigger),
+and §2's requirement that a flat construction *name* its time-series condition stands.
+
+**Whether flat-by-default should be a requirement of this hunt at all is a separate question**, put
+to the principal in `working/SLEEVE-VS-ALLOCATOR-PROPOSAL.md` — which records that the programme
+assigns flatness to the allocator in two places (D358 §2, FINDINGS §39 rule 2) and that D289 has no
+exposure gate at any stage. **That is a proposal, not a change; nothing under `docs/` follows from
+it without a ruling.**
 
 #### 2a′. AMENDMENT, same day — the shape chain is confounded with holding period
 
