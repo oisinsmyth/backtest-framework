@@ -1,0 +1,64 @@
+{
+ "base": {
+  "A": {
+   "p50": 0.44876213749560895,
+   "pairs": 124750
+  },
+  "B": {
+   "p50": 0.47588598570894936,
+   "pairs": 31125
+  },
+  "Bc": {
+   "p50": 0.9233407396145334,
+   "pairs": 124750
+  }
+ },
+ "arms": {
+  "A": {
+   "share": 0.44874396146314965,
+   "pc2": 0.006485230182882351,
+   "gap": 1.817603245929389e-05,
+   "ident": {
+    "m (equal-weight market)": 0.4802532689658172,
+    "|m| (NONLINEAR market)": -0.070380708245634,
+    "m^2 (NONLINEAR market)": -0.0657113424308636,
+    "nlive (eligibility floor)": 0.028997677621189984,
+    "d nlive (breadth change)": 0.053235201880799124,
+    "cross-sectional dispersion": -0.0083420466084599,
+    "1/nlive (equal-weighting)": -0.03146720475525433
+   },
+   "decomp": {
+    "nothing (baseline)": 0.44876213749560895,
+    "m (equal-weight market)": 0.38524652100607265,
+    "+ |m| (NONLINEAR market)": 0.38535906534649933,
+    "ALL market terms": 0.38367804646735687,
+    "EVERYTHING": 0.382927635069521
+   },
+   "se": 0.001420103767184603,
+   "bars": 4124
+  },
+  "B": {
+   "share": 0.4782311976474094,
+   "pc2": 0.013976611005808028,
+   "gap": 0.0023452119384600456,
+   "ident": {
+    "m (equal-weight market)": 0.13750032972969403,
+    "|m| (NONLINEAR market)": 0.08660568816685153,
+    "m^2 (NONLINEAR market)": 0.009164724613661447,
+    "nlive (eligibility floor)": 0.053509234658424686,
+    "d nlive (breadth change)": 0.0009381100802358426,
+    "cross-sectional dispersion": 0.05909987195962871,
+    "1/nlive (equal-weighting)": -0.05211823824024469
+   },
+   "decomp": {
+    "nothing (baseline)": 0.47588598570894936,
+    "m (equal-weight market)": 0.4721107260804507,
+    "+ |m| (NONLINEAR market)": 0.46917744712665005,
+    "ALL market terms": 0.4690350801726981,
+    "EVERYTHING": 0.4687571037345034
+   },
+   "se": 0.0016984393508255643,
+   "bars": 3185
+  }
+ }
+}

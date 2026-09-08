@@ -3816,3 +3816,80 @@ the answer was no, and both times a test statistic had already been reported as 
 **Nothing was admitted to either book. No hurdle was cleared. No holdout was read. The R13 ledger
 carries two looks at "price reverts at levels where its own rare events cluster" and the line is
 closed on both.**
+
+---
+
+## 57. The 0.44 correlation floor is ONE factor, it is none of the four candidates, and in the arm that matters it is 98.5% unexplained
+
+**D389**, mechanism decomposition on the committed `data/d376_series.npz` (500 A′ + 250 B + 500 B_c
+books × 4,187 bars). Pre-registration `5bd7d97`, result
+`docs/decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md`.
+No cell scored, nothing admitted, no holdout read, nothing fetched.
+
+### 57.1 It is ONE factor, and that makes the search well-posed
+
+```
+  [A'] PC1 variance share 0.449 vs pairwise rho 0.449   PC2 0.006   sign agreement 1.00
+  [B]  PC1 variance share 0.478 vs pairwise rho 0.476   PC2 0.014   sign agreement 1.00
+```
+
+**PC1's variance share reproduces the observed pairwise correlation to three decimals in both arms**,
+PC2 is an order of magnitude smaller, and all 500 books load with the same sign. **The floor is not
+four small mechanisms adding up — a single correct identification would explain the whole thing.**
+
+### 57.2 And it is NONE of the four candidates
+
+```
+                        driver     A' |corr|       B |corr|
+       m (equal-weight market)         0.480          0.138
+        |m| , m^2  (NONLINEAR)    0.070/0.066    0.087/0.009
+     nlive (eligibility floor)         0.029          0.054
+      d nlive (breadth change)         0.053          0.001
+    cross-sectional dispersion         0.008          0.059
+     1/nlive (equal-weighting)         0.031          0.052
+
+  floor after removing EVERYTHING:  A' 0.4488 -> 0.3829     B 0.4759 -> 0.4688
+```
+
+**PICKUP's three named candidates — slot mechanics, equal-weighting, the eligibility floor — score
+≤ 0.052, and so does the fourth D389 added, the shared hedge term.** Unattributed: **85% in A′,
+98.5% in B**, against book-clustered SEs of 0.0014 and 0.0017. **We still do not know what the floor
+is.**
+
+### 57.3 THE FINDING WORTH CARRYING: the two arms disagree by 9×, and backwards
+
+**A′** (same names, rotated times) correlates **0.480** with the equal-weight market.
+**B** (same days, swapped names) correlates **0.138**, and with nothing else.
+
+**A′ books share market exposure because they hold the same names on a similar schedule — a quarter
+of their common factor. B books share the trading DAYS, and their common factor is almost entirely
+something about those days that is NOT the market.**
+
+**B is the arm that matters** — "two unrelated constructions", the arm [gate 1d′](#52) is calibrated
+against — **and its floor is 98.5% unexplained.**
+
+**Where to look next, and it follows directly:** the factor lives in **which days get traded**, not
+in the market's behaviour on them. That points at the **entry-condition distribution** — what makes a
+bar eligible — rather than at anything in the return generating process. It is a different object
+from every driver tested here.
+
+### 57.4 Gate 1d′ needs no restating — and why that was in doubt
+
+The worry was that the floor might be an artefact of the scorer's own arithmetic, in which case 1d′
+would be calibrated against nothing. **It is not: `1/nlive`, the denominator every book divides by,
+scores 0.031 and 0.052.** So the gate measures something real. **It is calibrated against an
+unidentified factor, which is not a defect — the pool-relative form of 1d′ is exactly the right shape
+for a floor whose cause is unknown.**
+
+### 57.5 Two guards fired, and the second was itself wrong
+
+**`[SER]` fired first and caught MY error, not the data's**: the runner estimated the floor from a
+capped 1,770-pair subsample and missed D376's committed B p50 by 0.008, pure sampling. Replaced with
+the exact full-pair computation — **one matrix product**, because B and B_c masks are identical
+across every book.
+
+**`[FASTC]` then fired at 9.9e-3 and the guard was mis-specified.** It demanded individual-pair
+equality between two estimators that genuinely differ for A′ (per-pair mask intersection against a
+common mask, up to 3 bars of 4,124). **The study reads the arm's MEDIAN, so the guard now bounds the
+median gap (9.87e-04), reports the worst pair, and demands exactness only where masks are identical
+— where it gets 8.9e-16.** *Guard the statistic you actually use, not a stricter one you do not.*

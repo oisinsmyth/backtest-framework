@@ -260,9 +260,19 @@ after D378's pass, and whether to **re-base past records** onto D377's H1 hedge 
    **0.50–1.21× under PB**. **The same measurement decides whether that effect is deployable and
    whether the incumbent book is positive at all** (D332: PUB post-D333 is −12.68 bp/bar). Nothing
    else on this list changes as many conclusions.
-2. **Where does the remaining 0.44 correlation floor come from?** D377 ruled out per-name beta error
-   and price exposure; D376 established it is a **per-bar** effect. **Untested: shared slot
-   mechanics, equal-weighting, the eligibility floor.** Free, in-sample, upstream of every study.
+2. ~~Where does the remaining 0.44 correlation floor come from?~~ — **ANSWERED, and the answer is a
+   sharp negative. [D389](docs/decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md).**
+   **It is ONE factor** — PC1 reproduces the pairwise rho to three decimals (0.449 vs 0.449), PC2 is
+   0.006, all 500 books load the same sign. **And it is none of the four candidates**: slot mechanics
+   0.029, equal-weighting 0.031, eligibility floor 0.052, shared hedge term likewise. **Unattributed:
+   85% in A-prime, 98.5% in B.**
+   - **The arms disagree by 9x and backwards.** A-prime (same names) correlates 0.480 with the market;
+     **B (same days) only 0.138 and with nothing else.** B is the arm gate 1d-prime is calibrated
+     against, and its floor is **98.5% unexplained**.
+   - **Gate 1d-prime needs NO restating.** The floor is not a scorer artefact — 1/nlive scores 0.031.
+   - **Where a successor should look:** the factor lives in **which days get traded**, not in the
+     market on them — i.e. the **entry-condition distribution**, which no driver here could reach.
+
 3. ~~Exit timing~~ — **DONE. [D380](docs/decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
    (`43db0df`) and [D381](docs/decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
    (`eac6650`). NINE ARMS, NONE BEATS HOLDING TO THE CAP** — on **gross mean per trade**, which is the
