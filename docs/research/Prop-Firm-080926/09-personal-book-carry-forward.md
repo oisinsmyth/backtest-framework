@@ -147,6 +147,47 @@ two.**
 
 ---
 
+---
+
+## 6. ADDED 2026-09-08 — the strategy lanes carried seven more, and gave the file its reason
+
+**§0 said "no strategy surfaced, and none was prop-rejected, so the carry-forward list is empty of
+strategies." That is now out of date.** Lanes 13 and 14 screened ten strategy families against the
+prop instrument, **rejected all of them, and several were rejected PURELY by the barrier or a
+conduct rule** — which is exactly the case this file exists for.
+
+| candidate | why it fails PROP | why that does not touch the personal book |
+|---|---|---|
+| **market intraday momentum, ES/NQ** (Baltussen, Da, Lammers & Martens, *JFE* 142, 2021) | the size scissors: the $150/day rule needs more contracts than the $2,000 open-equity floor permits, by 4.5× on ES | **the linear objective has no barrier, so the scissors does not exist.** Strongest of the seven |
+| **spread / curve / calendar trading** | terminal on the hedging and one-direction rules — a rule, not a return | no such rule; and D261 closed *index* spreads here, not the family |
+| **short-term systematic trend** | drawdowns 2.5–7.5× the barrier | drawdown is a preference, not an absorbing boundary |
+| Lou–Polk–Skouras tug-of-war | same scissors | linear objective |
+| Treasury auction cycle | same | linear objective |
+| VIX-futures intraday momentum | same | useful as a **mechanism cross-check** on the above |
+| turn-of-month | same | linear objective |
+
+### The reason this file exists, stated properly at last
+
+Lane 13 supplied the mechanism, and it is better than the ownership argument in §1. These strategies
+run **36–38% win rates at 2.1–2.25 payoff**. Low win rate × high payoff is precisely the P&L shape a
+**trailing drawdown destroys**, because the floor marks the worst point of an excursion before the
+trade resolves.
+
+> **The prop instrument selects AGAINST positive skew. The personal book's
+> [R15](../../RULES.md#r15) objective — a positive gross mean per trade above its nulls — is happy to
+> buy exactly that tail.** The two books want **opposite third moments.**
+
+That is the principal's standing instruction derived from the literature rather than from the
+rulebooks, and it means prop-ineligibility is **positively informative** about personal-book fit for
+a whole class of candidate, not merely uninformative.
+
+**Status unchanged: nothing scored, nothing admitted.** Every row owes R15 and a pre-registration.
+The cheapest next measurement serves both books — `P(MAE ≤ $2,000/contract)` on the last-30-minute
+trade, ~$8 of Databento data — because MAE within the holding window **is not published anywhere for
+any of these effects**, and the personal book has never measured it either.
+
+---
+
 ## What did NOT carry, and why the list is short
 
 - **No strategy.** Lanes 01–05 recovered contract terms. Lane 07 surveyed the claims tier and found

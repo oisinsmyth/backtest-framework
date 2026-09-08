@@ -32,6 +32,11 @@ saves the next session time.
 | 07 | [statistics & claims](07-statistics-and-claims.md) | 20 | **20-source cap** (saturation also reached at 16–19) |
 | 08 | [academic literature](08-academic-literature.md) | 51 | **saturation at probes 30–34** |
 | 09 | [personal-book carry-forward](09-personal-book-carry-forward.md) | — | derived, no new sources |
+| 10 | [Apex conduct rules](10-apex-conduct-rules.md) | ~30 | all four named rules resolved |
+| 11 | [cross-firm policy](11-cross-firm-policy.md) | ~40 | all five firms checked |
+| 12 | internal prior art (reported into [D386](../../decisions/D386-the-prop-account-is-worth-its-buffer.md)) | — | repo-only, no web |
+| 13 | [documented intraday effects](13-documented-intraday-effects.md) | 35 | **saturation** |
+| 14 | [practitioner tier, screened](14-practitioner-tier-screened.md) | 25 | **25-source cap** (saturation reached earlier on the "what do passers run" sub-question) |
 
 **Grid outcome: 24 fields × 5 firms = 120 cells. All filled or explicitly `NOT PUBLISHED` with what
 was tried.** The stopping rules declared in `00-SCHEMA.md` before searching were the ones that bound.

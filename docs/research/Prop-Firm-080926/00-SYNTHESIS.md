@@ -169,6 +169,142 @@ does not list**, and that **Broadie–Glasserman–Kou puts a number (0.5826 dai
 
 ---
 
+---
+
+# PART TWO — lanes 10–14, added 2026-09-08
+
+The first nine lanes priced **the instrument**. These five ask whether anything can be **put in it**,
+and what the conduct rules permit.
+
+## The strategy search: zero families survive, and the reason is geometric
+
+Two lanes searched independently — [13](13-documented-intraday-effects.md) the evidenced tier,
+[14](14-practitioner-tier-screened.md) the practitioner tier — against a seven-point screen (CME
+tradeable · directional not hedged · intraday-closable · MAE-bounded · produces $150+ days ·
+survives ~$10/round turn · has a mechanism). **Both returned zero survivors and the same single
+conditional near-miss.**
+
+**The expected killer was wrong. Cost is the screen these effects pass most easily** — the
+best-documented clears a $10–22.50 round turn by **3.8–8.6×**.
+
+**What kills them is that two screens are the blades of a scissors.** Position size scales mean and
+standard deviation together while the drawdown stays fixed at ~$2,000:
+
+| | |
+|---|---|
+| the **$150+ qualifying-day rule** | sets a **lower** bound on contracts |
+| the **4% trailing MLL on open equity** | sets an **upper** bound |
+| **for every effect found** | **the lower bound EXCEEDS the upper bound — by 4.5× on ES** |
+
+Closing it needs per-trade Sharpe **0.225** (annualised 3.57). Gao et al. document **0.068**
+(annualised 1.08) — a **3.3× shortfall**. The best cell is one ES contract at ~8% survival to a
+$3,000 target, and that is optimistic: Gaussian, close-only, ignoring kurtosis of 15.65.
+
+**Lane 14's independent framing: the rule set is a vice, not a hurdle series.** The open-equity floor
+kills **negative** skew by marking the worst point of an excursion before it resolves; the
+consistency rule kills **positive** skew by capping the best day at 50% of total profit. What
+survives in the middle is near-symmetric low-variance daily P&L — exactly what a fixed-dollar round
+turn destroys. Its scale-free check: **P&L per unit of drawdown budget per day**, where the prop
+account demands **0.075** and the verified short-term CTA tier delivers **0.00125** — a **19×–60×
+gap**, falsifiable by any audited intraday CME programme with return ÷ maxDD ≥ 18.
+
+**The near-miss, converged on from three directions:** market intraday momentum on ES/NQ, flat at the
+cash close — Baltussen, Da, Lammers & Martens (*JFE* 142, 2021), 60+ futures 1974–2020, ES β = 6.18,
+t = 4.97, **out-of-sample R² 2.29%**, 30-minute hold, gamma-hedging mechanism validated against an
+option net-gamma measure. Two traps in how it is cited: the headline **Sharpe 1.73 is a 17-market 1/N
+portfolio** a $50k account cannot hold (single-market ES ≈ 1.08), and **the authors explicitly
+decline to cost it**. Lane 12 found D258 had already flagged this same literature as clearing futures
+cost by an order of magnitude and never testing it.
+
+### The blocking gap is structural, not a search failure
+
+**Maximum adverse excursion within the holding window is not published for any candidate, anywhere** —
+four targeted probes. Finance reports means, SDs and Sharpes because no academic objective is
+path-dependent *inside* a trade. **The one quantity the funded account is priced on is the one
+quantity the literature does not measure.** Every screen-4 verdict is therefore a σ-based lower bound
+on severity, not a measurement.
+
+**The cheapest thing that would change the answer: `P(MAE ≤ $2,000/contract)` for the
+last-30-minute trade — one query against ~$8 of Databento `GLBX.MDP3`, inside the existing signup
+credit.**
+
+### A prior on decay, and an independent check on D379
+
+Three documented corpses: the 2–3am overnight drift, once 3.7% p.a., **whose original FRBNY authors
+published its death in July 2026** ("close to zero" since 2021; the ETFs built to harvest it closed
+in 14 months); the pre-FOMC drift, gone after 2015; and **187 of 188 calendar anomalies** in index
+futures (Carchano & Pardo).
+
+And lane 13's survival probability came out **non-monotone in size** — 8.1% at N=1, 0.5% at N=2–3,
+back to 7.8% at N=10 — reproducing D379 §2's interior optimum from an entirely separate calculation.
+
+### The two books want opposite third moments
+
+These strategies run **36–38% win rates at 2.1–2.25 payoff**. Low win rate × high payoff is precisely
+the P&L shape a trailing drawdown kills, so **the prop instrument selects against positive skew — the
+same tail the personal book's R15 objective is happy to buy.** The principal's standing instruction
+of 2026-09-08, derived independently from the literature rather than from the rulebooks.
+
+## Conduct: what the rules actually permit
+
+**Apex's one-direction rule** ([lane 10](10-apex-conduct-rules.md)) is the binding constraint on
+running more than one account. Every open position **and every resting order** you control must point
+the same way in any correlated market — in that account, **your other accounts, and your
+household's**. It names cross-account, correlated (*"you may not be short NQ while long ES"*),
+cross-size (*"long Micro ES while short Mini ES"*), and *"opposite positions with other traders in
+the same household."* **It reaches orders, so a two-sided bracket violates it before anything fills.**
+Penalty: account closure. It binds evaluations and was the only one of Apex's four conduct rules to
+survive the 4.0 reset. **Different strategies across your own accounts are explicitly encouraged;
+only opposing sign is banned.** Cap: **20 active PAs per household.**
+
+**Cross-firm** ([lane 11](11-cross-firm-policy.md)): four of five firms never mention a competitor.
+**FTMO is the exception** and bans opposite positions *"between connected accounts, accounts held
+with various operators/providers…"*. FTMO's clause and Topstep's §27 are the same boilerplate with
+one variable slot — FTMO widened it, Topstep narrowed it to its own affiliates and **then published
+the unnarrowed form** in the help centre carrying "final and cannot be appealed". **Same-direction
+replication across firms is prohibited by nobody in writing**, and no firm requires disclosure of
+funding elsewhere. So a multi-firm book is **un-prohibited and un-protected** — an unpriced
+discretionary tail rather than a modellable constraint.
+
+### Corrections to Part One
+
+- **Topstep's hedging penalty is a graduated ladder, not a first-strike kill.** Rewritten
+  2026-07-27: warning modal with cure window → same-day liquidation → forced typed acknowledgement →
+  immediate liquidation → day-long violation → permanent closure only *"after numerous warnings"*.
+  The unappealable language attaches to a **confirmed** violation. **Apex's one-direction closure has
+  no such ladder.**
+- **Topstep's ToU now reads "Last updated: September 8, 2026"** — newer than every source lane 02
+  used. That lane may already be stale.
+- **Apex is the third of five firms whose governing contract is unpublished** (its User Agreement
+  *"shall prevail"*, 403 live and **zero Wayback captures**), joining MFFU's Simulated Trader
+  Agreement and FTMO's Account T&C.
+- **`SOURCES.md`'s Apex dead-end entry was wrong** and is corrected there.
+
+## Prior art: what this programme has already closed
+
+[Lane 12](../../decisions/D386-the-prop-account-is-worth-its-buffer.md) audited our own records.
+**No study in this repo has ever read a CME futures price bar** — every prop result ran on ETF,
+index-ETF or crypto proxies, so C1–C4 failed **on proxies**.
+
+**Do not propose:** intraday mean reversion (C2, negative in all seven asset classes), opening-range
+breakouts (C3, skew −0.51 to −0.80 — and lane 14 independently killed it on a placebo-controlled
+replication), index spreads (D261, category closed), overnight gaps as a short trigger (D250),
+volume-at-price levels (D189/D194/D196), weekly COT sorts (D263), or **anything single-name** — no
+futures contract exists on the names our equity books trade, so that lineage is out permanently.
+
+**Three things worth more than the exclusion list:**
+
+1. **D163's cost wall is stale by ~400×.** It killed the 15-minute breakout at *"~315% of capital a
+   year in fees"* — a **crypto taker fee of 40 bp/side**. At ES cost (~0.1 bp/side) the same 786×
+   turnover costs **~0.8%/yr**. R11 carries a standing corollary requiring re-costing, undischarged.
+2. **The prop track has been screening at a third of the available breadth** — a diversified futures
+   complex is **3.00** effective against **1.17** for four equity indices, worth **1.6× on IR**. C1
+   and C2 were both screened at 1.17.
+3. **D383 is designed, pre-registered and unrun** — 600 cells at 15 minutes, reserved window
+   untouched. The only intraday directional screen this programme has built and not executed.
+
+---
+
 ## The honest bounds
 
 - **`E[extracted] = b` assumes zero edge and a static floor after the lock.** With positive edge it
