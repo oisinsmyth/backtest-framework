@@ -155,3 +155,55 @@ the **second look** at this hypothesis; the ledger carries both.
 
 *Result committed 2026-09-09, separately from the pre-registration, per R8. §6's fourth abandon
 condition is met — the close is available and, under R15, it is the principal's to take.*
+
+---
+
+## ADDENDUM, 2026-09-09 — the conditioner is INERT, not weak: density shape does not predict edge at all
+
+**The principal asked whether these pass their nulls and whether they have been traded. Both answers
+are in §2 and §3, but they invite a sharper test than either: if the conditioner carries information,
+names whose density is MORE structured should show MORE edge over A′.**
+
+Measured on the committed rows, per name, within each cell:
+
+```
+      type     k  lam   H    n  corr(TV, edge)  corr(CV, edge)  top-tercile TV edge   bottom
+      move   2.0  120  20  597           0.017           0.041               -0.190   -0.294
+      move   2.5  120  20  570          -0.060          -0.036               -0.206   -0.034
+  reversal   1.0  120  20  577           0.109           0.092                0.128   -0.087
+  reversal   1.5  120  20  207           0.029           0.030                0.315    0.189
+
+  ACROSS ALL 36 CELLS
+    mean -0.027   median -0.022   range -0.122 to +0.109
+    cells with a positive correlation: 10/36  -- BELOW chance
+```
+
+**How much shape a name's density has is unrelated to whether its trades work.**
+
+**This is a mechanism test, and it is stronger than §2's outcome test.** A weak-but-real conditioner
+would still produce a gradient: the names where the density resolves structure best would earn most.
+There is no gradient. **The conditioner is INERT, not merely small** — and that holds across the
+whole cross-section of density quality, not only at the top decile of `R` that §2 traded.
+
+### What has and has not been traded
+
+**Traded:** top-decile `R`, reversion direction, three holds, path-invariant lens, scored per trade,
+gross and net against a Corwin–Schultz spread measured on the held names. **Net negative in all 36
+cells.**
+
+**Not traded, and now ranked by whether it could change anything:**
+
+- **A slot-limited book (path-variant lens) — NOT worth running.** It changes opportunity cost and
+  slot mechanics; it cannot create information a per-trade mean does not have. FINDINGS §10 keeps the
+  lenses separate precisely so a book is not mistaken for evidence about a signal.
+- **Cross-sectional ranking — NOT worth running.** Same reason, and it additionally requires `R` to be
+  comparable across names, which this programme has not established.
+- **The `R` RESPONSE CURVE — the only remaining live test.** Only the top decile was ever traded, and
+  only in one direction. The low end of `R` (levels carrying FEWER past events than their time-share
+  predicts — "air pockets") is untouched, as is whether returns vary monotonically across `R`
+  quintiles. **The correlation above weakens this but does not close it**: "how structured a density
+  is" does not predict edge, which is not the same claim as "where in `R` price stands" not
+  predicting returns.
+
+**Any such test is a THIRD look at this hypothesis and the R13 ledger must carry all three.** My
+expectation is that it is null; it is recorded as available, not recommended.

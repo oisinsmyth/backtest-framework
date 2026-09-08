@@ -3751,3 +3751,15 @@ fell in the gap on its probe name (fixed `36bab8c`; the decisions were causal ei
 stands). **Both now raise, and both have their own `[X]` break.**
 
 **Nothing admitted to either book. No hurdle cleared. No holdout read.**
+
+**ADDENDUM 2026-09-09 — THE CONDITIONER IS INERT, NOT WEAK.** The principal asked whether these pass
+their nulls and whether they have been traded. A sharper test than either: if the conditioner carries
+information, names whose density is MORE structured should show MORE edge over A-prime. Measured per
+name within each of the 36 cells, **corr(density shape, edge) has mean -0.027, median -0.022, range
+-0.122 to +0.109, and is positive in only 10 of 36 cells — below chance.** A weak-but-real conditioner
+would still show a gradient; there is none, across the whole cross-section of density quality rather
+than only at the traded top decile. **What has been traded:** top-decile R, reversion, three holds,
+path-invariant, gross and net — negative in all 36. **What has not:** a slot-limited book and
+cross-sectional ranking (neither can create information a per-trade mean lacks), and the **R response
+curve** — only the top decile in one direction was ever traded, so the low end of R and any monotone
+gradient remain untested. That is the one live successor, and it is a THIRD look under R13.
