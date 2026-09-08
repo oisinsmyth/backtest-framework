@@ -28,6 +28,19 @@ probed on a **tie-heavy** input (ties are where rewrites disagree). Sparse
 `bincount` over events beats masked full-array sums. Check with
 `fast_null.py --verify`. **Profile first:** every guess here has been wrong.
 
+**Per-call cost is not scaling, and backgrounding is not a licence.** `parallel_map`
+now always prints `[SPEED] sum(item time)/wall` and shouts below 70% — because
+D385 ran **92 minutes at 3.28× on 6 workers (55%)** while I profiled two call
+timings, called the cost inherent, and launched. The tell was one division
+available at the sixth item. **Threads are right only while the work releases the
+GIL; that is a property of the workload, not of the choice.** Under the floor, go
+to processes over `items[i::N]`.
+
+**Before launching anything projected over ~10 min: state the projected wall time,
+do one optimisation pass, and say what you did.** `run_in_background` exists so the
+agent does not block — not so the number stops mattering. It is the principal's
+machine and iteration loop.
+
 ## Reporting a result
 
 **All four groups, always.** A number without what makes it interpretable is not

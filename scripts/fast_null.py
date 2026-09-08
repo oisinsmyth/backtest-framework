@@ -209,18 +209,37 @@ def rotation_null(ctx, position, start=0, *, n_sims, seed, ppy, rf_annual,
     return sh, mn
 
 
+EFFICIENCY_FLOOR = 0.70
+
+
 def parallel_map(fn, items, workers=None, progress=None):
     """Threaded fan-out for ANY independent per-item work -- building books,
     scoring cells, computing per-cell diagnostics, not only nulls.
 
     Threads rather than processes: measured at 2.28x against 2.23x for processes
     on this workload, with no pickling, no per-worker panel reload and no spawn.
-    `fn` must not mutate shared state; every context here is read-only."""
+    `fn` must not mutate shared state; every context here is read-only.
+
+    ALWAYS REPORTS ACHIEVED PARALLEL EFFICIENCY, and says so loudly below
+    EFFICIENCY_FLOOR. Threads are the right call ONLY while the work releases the
+    GIL, and that is a property of the workload, not of the decision -- D288 got
+    0.24 of 16 cores, and D385 ran 92 minutes at 3.28x on 6 workers (55%) because
+    nothing measured the scaling. Per-call cost is not scaling: the number below
+    is sum(item time) / wall, which no amount of profiling one call will reveal.
+    Under the floor, the fix is usually processes over `items[i::N]`."""
     items = list(items)
     workers = workers or max(1, min(len(items), DEFAULT_WORKERS))
-    out, done, t0 = {}, 0, time.time()
+    out, done, t0, spent = {}, 0, time.time(), []
+
+    def _timed(k, v):
+        s = time.time()
+        try:
+            return fn(k, v)
+        finally:
+            spent.append(time.time() - s)          # list.append is atomic under the GIL
+
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        futs = {ex.submit(fn, k, v): k for k, v in items}
+        futs = {ex.submit(_timed, k, v): k for k, v in items}
         for f in futs:
             k = futs[f]
             out[k] = f.result()
@@ -228,6 +247,21 @@ def parallel_map(fn, items, workers=None, progress=None):
             if progress:
                 print(f"    [{done}/{len(items)}] {k:24s} "
                       f"{time.time() - t0:6.0f}s", flush=True)
+
+    wall = max(time.time() - t0, 1e-9)
+    work = sum(spent)
+    speedup = work / wall
+    eff = speedup / max(workers, 1)
+    if work < 5.0 or workers < 2:
+        return out                                 # too small to measure; a ratio here is noise
+    if progress or eff < EFFICIENCY_FLOOR:
+        print(f"    [SPEED] {work:.0f}s of work in {wall:.0f}s wall on {workers} workers "
+              f"-- {speedup:.2f}x, {100*eff:.0f}% efficiency", flush=True)
+    if eff < EFFICIENCY_FLOOR:
+        print(f"    [SPEED] BELOW THE {100*EFFICIENCY_FLOOR:.0f}% FLOOR: "
+              f"{workers - speedup:.1f} of {workers} workers are idle. This work does not "
+              f"release the GIL as assumed -- use processes over items[i::N], and prove the "
+              f"chunked result matches the whole bit-identically first.", flush=True)
     return out
 
 
