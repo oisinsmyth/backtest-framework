@@ -1,7 +1,11 @@
 # D393 ADDENDUM — the pre-registered primary cell in money: `up_run_21` clears the base-rate floor, and earns what the score K1 KILLED earns
 
-**Status:** ADDENDUM to [D393 RESULT](D393-RESULT-the-sign-sequence-family.md). **NO NULL WAS RUN.
-This is not Stage 1 and admits nothing (R15).**
+**Status:** ADDENDUM to [D393 RESULT](D393-RESULT-the-sign-sequence-family.md). **NO NULL WAS RUN
+IN THIS FILE. This is not Stage 1 and admits nothing (R15).**
+> **AMENDED SAME DAY. §2's central reading was REFUTED by the overlap check §7 asked for — see the
+> amendment block at §2 and [Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md). Everything
+> MEASURED in this file stands; one INFERENCE in §2 does not. Do not quote §2 without the
+> amendment.**
 **Date:** 2026-09-08 · Runner: `scripts/run_d393_sign_sequences.py --probe` · Artifact:
 `data/d393_probe.json` · **52 s**
 **Holdout reads: 0.** Verified structurally, not assumed — see §5.
@@ -50,12 +54,42 @@ the floor.
 
 ## 2. THE FINDING, and it is not the one the margin suggests
 
-> **AMENDED 2026-09-08 by [Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md) §1. The
-> "parsimonious reading" offered below — that `up_run_21` is `rev_21`'s effect at lower fidelity —
-> was tested by §7 of this file and REFUTED: the two books share 2.9% of their trades, and
-> deleting every trade `rev_21` takes leaves 20,182 of 20,785 at +19.56 bp. The OBSERVATION that
-> the two scores earn the same is unchanged and is stranger than the explanation given here. Read
-> §2 as the hypothesis it was.**
+> ### AMENDMENT, 2026-09-08 — the reading below was tested and REFUTED
+>
+> **The overlap check §7 called for was authorised and run the same day
+> ([Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md) §1,
+> `scripts/run_d393_bs_null.py --overlap`, `data/d393_overlap.json`).**
+>
+> | pair | events J | held-bar J | held/a | shared trades | **trades/a** |
+> |---|--:|--:|--:|--:|--:|
+> | `up_run_21` ∣ `rev_21` | 0.020 | 0.201 | 0.322 | 603 | **2.9%** |
+> | `up_run_21` ∣ `up_frac_21` | 0.037 | 0.302 | 0.470 | 1,221 | **5.9%** |
+> | `up_frac_21` ∣ `rev_21` | 0.059 | 0.278 | 0.414 | 1,629 | 7.6% |
+>
+> **These are not the same book.** D365/D373's precedent found **70.1%** shared held name-bars;
+> this finds 20–30%, and **2.9% at trade level**. And the deciding split — `up_run_21`'s trades by
+> whether `rev_21`'s own E1 takes them:
+>
+> | | n | mean | median |
+> |---|--:|--:|--:|
+> | shared with `rev_21` E1 | 603 | +105.59 | +50.20 |
+> | **disjoint from `rev_21` E1** | **20,182** | **+19.56** | **+12.57** |
+>
+> **Delete every trade `rev_21` also takes and 97.1% of the book survives at +19.56 bp**, still
+> above the +12.67 floor. **So "the same reversal effect at lower fidelity" is WRONG as stated.**
+>
+> **What survives, and it is stranger than the refuted explanation:** the two scores do earn the
+> same (+22.06 and +21.62) **while sharing 5.9% of their trades**. Two nearly disjoint books, one
+> of them K1-killed, converging on one mean. That raised the live question — whether ~+20 bp
+> belongs to the **E1 decile-crossing shape** rather than to either score — which **A′ is the null
+> for and A′ is unrun.**
+>
+> **What still stands from §2 below:** the *observation* that K1 sorted two scores into different
+> buckets while the money did not agree with the sort. That was measured. Only the *explanation*
+> offered for it failed. **Read the rest of this section as the hypothesis it was.**
+>
+> A free consistency check from the same run: **`rev_21`'s own E1 books +40.53 bp** against
+> FINDINGS §31's **+38**. The machinery reproduces the record.
 
 > **`up_run_21` (+22.06) and `up_frac_21` (+21.62) earn the same thing, on ~21,000 trades each.**
 
@@ -184,21 +218,38 @@ which is the programme's stated signal criterion, on the gross leg.
 
 ---
 
-## 7. The cheapest decisive next measurement, not run and not authorised
+## 7. The cheapest decisive next measurements — ~~not run and not authorised~~ BOTH RUN
+
+> **SUPERSEDED 2026-09-08.** Both were authorised by the principal and run the same day. This
+> section is left standing because it is the record of what was proposed *before* the answers were
+> known, and because §2's amendment is only meaningful against it.
 
 **§2's reading is a hypothesis and it is directly testable two ways, both cheap:**
 
 1. **Held-set overlap.** The share of held name-bars `up_run_21` shares with `up_frac_21` and with
    `rev_21`'s own E1. D365/D373 used exactly this and found **70.1%**. Minutes, no nulls.
+   → **RUN. 2.9% of trades, 20–30% of held name-bars. §2's hypothesis REFUTED** (see the amendment
+   at §2, and [Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md) §1).
 2. **`B_s` on the one cell** — swap each event's name for another in the **same `rev_21` decile**
    that day. §4 already declared this null **load-bearing** for precisely this failure mode. At
    ~0.7 s/draw for one cell at cap 20, **2,000 draws is roughly 23 minutes**, not 19 hours.
+   → **RUN, 2,000 draws.** `up_run_21` **+22.06 against a p95 of +18.97, ABOVE by +3.09** (~10 SE);
+   the positive control `up_frac_21` **BELOW by −7.14**, its null centring at +20.72 against an
+   observed +21.62. **The estimate was wrong on cost**: threads ran 0.37× (slower than serial), and
+   8 processes took **11.5 minutes**, not 23. See [Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md)
+   §2–§3, §6.
 
 **Neither is authorised by this file**, and the second is a change to §4's scope (one cell, one
-null, rather than the full grid) that only the principal can make.
+null, rather than the full grid) that only the principal can make. **Both were subsequently
+authorised, on 2026-09-08.**
+
+**Still unrun after both: A′, B and C** — and A′ is the null for the question the overlap check
+opened. **H1 remains uncleared**, because §7 of the pre-registration requires a best-of-10 floor
+and this is one cell (Addendum 2 §5).
 
 ---
 
-**Status footer.** No null run. Stage 1 not run and not authorised. `docs/BOOK.md` holds S1 and S2,
-neither at capital; `docs/BOOK_PROP.md` is empty. **Nothing admitted, no avenue closed, no holdout
-read.**
+**Status footer.** No null run **in this file** — B_s was run the same day and is reported in
+[Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md), where A′, B and C remain unrun and **H1
+remains uncleared**. Stage 1 not run and not authorised. `docs/BOOK.md` holds S1 and S2, neither at
+capital; `docs/BOOK_PROP.md` is empty. **Nothing admitted, no avenue closed, no holdout read.**
