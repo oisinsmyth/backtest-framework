@@ -150,6 +150,56 @@ reporting 61,835 trades must be read against the trade axis**; the event axis re
 
 ---
 
+## 6a. ADDENDUM, 2026-09-08 — the grid is extended, D391 now has an exact floor, and it deepens rather than closes the question
+
+**§7's first owed item is done.** Twelve cells at n ∈ {100,000, 150,000} × cap ∈ {10, 20, 40},
+500 draws, 1.6 h, calibrated first. **The atlas now holds 139 cells and the cap-20 trade axis runs
+to 75,340.**
+
+| cap 20, long, ALL | trades | p50 | p95 |
+|---|--:|--:|--:|
+| n = 60,000 | 42,874 | +1.36 | +8.27 |
+| **n = 100,000** | **60,149** | +0.92 | **+6.49 ± 0.39** |
+| **n = 150,000** | **75,340** | +1.23 | **+5.60 ± 0.23** |
+
+**D391 no longer falls outside the grid.** At **61,835 trades** the interpolated floor is:
+
+| | observed | atlas floor p95 | ratio |
+|---|--:|--:|--:|
+| **D391 long** (undercut-and-reclaim) | +43.02 | **+6.38 ± 0.39** | **6.7×** |
+| **D391 mirror** (failed breakout, short) | +43.73 | **+3.54** | **12.4×** |
+
+**This confirms the withdrawal in §3 with a measured number rather than an extrapolation: +43 was
+never the base rate.** But it makes the real question sharper, because **both** sides clear their
+floors by wide margins — a long and a short, on opposite signals, each 6.7× and 12.4× above a
+uniform draw.
+
+### A hypothesis, named as one, with the test that settles it
+
+**Neither the price nor the volatility tercile explains it.** Scaled to 61,835 trades those floors
+land near +19 (cheap) and +11.5 (high-vol) — still far under +43.
+
+**The candidate explanation is the ENTRY CONVENTION, not the pool.** Both event families are
+defined by a bar with a **large intrabar range**: the long closes above a level it pierced, the
+short closes below one it exceeded. **The next open after such a bar may gap systematically in the
+direction of that close**, which would credit *both* books mechanically.
+
+The programme has already measured that this convention is enormous —
+[D340](D340-RESULT-the-same-close-fill-was-three-quarters-of-the-best-book.md): *the same-close
+fill was three quarters of the best book* — and FINDINGS §21: *the fill convention credited the
+overnight gap to every entry, and it was worth more than the spread.*
+
+**This is a hypothesis and this record does not assert it.** The test is cheap and specific:
+**re-score D391's two ledgers under a same-close fill and compare.** If the +43 collapses on both
+sides, the number was the entry gap on high-range bars, and *the atlas cannot see it because
+uniform draws land on ordinary bars.* If it survives, something real sits in that event family and
+D391's `B_r` failure means only that the reclaim is the wrong half of it.
+
+**Recorded as the next owed measurement, not as a finding.** Two mechanisms were asserted and
+withdrawn in this programme today; this one is written as a question with a named experiment.
+
+---
+
 ## 7. What is owed
 
 - **Extend the grid past 42,874 trades.** D391 sat outside it, which is precisely the size a wide
