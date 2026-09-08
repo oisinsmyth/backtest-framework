@@ -50,6 +50,13 @@ the floor.
 
 ## 2. THE FINDING, and it is not the one the margin suggests
 
+> **AMENDED 2026-09-08 by [Addendum 2](D393-ADDENDUM-2-the-overlap-and-B_s.md) §1. The
+> "parsimonious reading" offered below — that `up_run_21` is `rev_21`'s effect at lower fidelity —
+> was tested by §7 of this file and REFUTED: the two books share 2.9% of their trades, and
+> deleting every trade `rev_21` takes leaves 20,182 of 20,785 at +19.56 bp. The OBSERVATION that
+> the two scores earn the same is unchanged and is stranger than the explanation given here. Read
+> §2 as the hypothesis it was.**
+
 > **`up_run_21` (+22.06) and `up_frac_21` (+21.62) earn the same thing, on ~21,000 trades each.**
 
 `up_frac_21` is not a candidate. K1 killed it at **ρ +0.601** to `rev_21`, and the Stage 0 RESULT

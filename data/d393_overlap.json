@@ -1,0 +1,54 @@
+{
+ "study": 393,
+ "stage": "overlap",
+ "cap": 20,
+ "shape": "E1",
+ "side": "long",
+ "purpose": "Is up_run_21 rev_21's E1 book wearing a new label? Set algebra plus the candidate's mean off the reference's book. No null. Admits nothing (R15).",
+ "trades": {
+  "up_run_21": 20785,
+  "up_frac_21": 21317,
+  "rev_21": 19279
+ },
+ "gross_bp": {
+  "up_run_21": 22.056417616197663,
+  "up_frac_21": 21.61993757871323,
+  "rev_21": 40.53434277898669
+ },
+ "overlap": {
+  "up_run_21|rev_21": {
+   "events_jaccard": 0.019935156704630478,
+   "held_namebars_jaccard": 0.20070888171211126,
+   "held_share_of_a": 0.32224720399408785,
+   "trades_shared": 603,
+   "trade_share_of_a": 0.029011306230454656
+  },
+  "up_run_21|up_frac_21": {
+   "events_jaccard": 0.03714603259083011,
+   "held_namebars_jaccard": 0.3021645195837486,
+   "held_share_of_a": 0.4699961965653541,
+   "trades_shared": 1221,
+   "trade_share_of_a": 0.05874428674524898
+  },
+  "up_frac_21|rev_21": {
+   "events_jaccard": 0.059095522724709595,
+   "held_namebars_jaccard": 0.2778860101015669,
+   "held_share_of_a": 0.41421015688640467,
+   "trades_shared": 1629,
+   "trade_share_of_a": 0.07641788244124408
+  }
+ },
+ "candidate_split": {
+  "shared_with_rev21_E1": {
+   "n": 603,
+   "mean_bp": 105.59470722456243,
+   "median_bp": 50.20023425992809
+  },
+  "DISJOINT_from_rev21_E1": {
+   "n": 20182,
+   "mean_bp": 19.560451476377825,
+   "median_bp": 12.568526815200524
+  }
+ },
+ "caveat": "candidate_split is a DIAGNOSTIC conditional split, not a candidate cell and not pre-registered."
+}
