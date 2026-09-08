@@ -135,9 +135,55 @@ effective at any dose.**
 
 ---
 
+## 5a. QUALIFICATION, 2026-09-08 — **this closes exits for an UNCONSTRAINED book. Under a drawdown constraint the objective is different and was not measured.**
+
+**Raised by the principal, and it is right: under strict risk constraints this avenue may be worth
+it.** §0's verdict is stated against the **mean per trade**, which is the correct criterion for
+own capital, where P&L is linear in size and the book has no barrier. **It is the wrong criterion
+under a hard drawdown limit.**
+
+**Where a barrier exists, return scales as `mean ÷ drawdown`**, because the drawdown is what caps
+size. [D379](D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+made this structural — a funded account is a **down-and-out call**, and
+[P1](../RULES.md#r11) is its knock-out barrier monitored continuously on open equity — and
+[D375 §5](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+restated P1 as a **sizing rule**: scale until trailing drawdown hits 4%, then judge the post-sizing
+return. **Under that rule an overlay that cuts drawdown by more than it cuts mean WINS, however
+clearly it loses here.**
+
+**Each arm's hurdle is exact and computable from what is already measured:**
+
+| arm | mean | mean ÷ baseline | **its drawdown must fall below** | **i.e. a drawdown cut of at least** |
+|---|---:|---:|---:|---:|
+| T05 | +142.58 | 0.888 | **0.888×** | **11.2%** |
+| T10 | +140.59 | 0.876 | 0.876× | 12.4% |
+| T20 | +133.22 | 0.830 | 0.830× | 17.0% |
+| S05 | +142.79 | 0.889 | **0.889×** | **11.1%** |
+| S10 | +126.06 | 0.785 | 0.785× | 21.5% |
+| S20 | +109.86 | 0.684 | 0.684× | 31.6% |
+
+Against the baseline's committed **2,989 bp** hedged maximum drawdown.
+
+**None of those drawdowns is measured, and this study could not measure them.** §4 of D380
+pre-registered the reason: the per-trade re-cut is exact, but **an earlier exit frees a slot and
+changes what the book holds next, so a re-cut cannot produce a valid deployed path.** Every number in
+this record is path-invariant, per trade. **Drawdown is path-variant and needs a genuine kernel run
+per arm.**
+
+**So the honest scope of §0 and §6 is narrower than they read:** *no arm beats the baseline on gross
+mean per trade.* Whether any arm beats it **per unit of drawdown** is **open, cheap, and the natural
+successor** — six kernel runs and a deployed block each, no new controls, no holdout.
+
+**And S05 is the arm to watch.** It loses only 11.1% of the mean while truncating every trade's loss
+at −3,229 bp, which is exactly the shape a barrier rewards. **The stops looked worst here and could
+look best there** — which is the whole content of the principal's objection.
+
+---
+
 ## 6. What this closes
 
-**Exits on this construction are closed, properly scaled.** Nine arms across two studies — a
+**Exits on this construction are closed FOR AN UNCONSTRAINED BOOK, properly scaled — see §5a for the
+constraint that is not covered.** Nine arms across two studies — a
 parameter-free signal invalidation, three targets, three stops, and D380's two mis-scaled
 thresholds — **and not one beats holding to the 40-bar cap.** The scaling objection that reopened the
 question has been tested and answered: correct thresholds change the size of the loss, not its sign.
