@@ -216,6 +216,31 @@ ledger **+0.60** against drift h=1 of **−0.08**, a difference of **+0.69** —
 market-gap-minus-name-gap the identity in `d391_reconcile.py` predicted before the numbers were
 seen. §8.4's "~24 unexplained bp" was the look-ahead, and there is nothing left unexplained.
 
+### The corrected ledger against every atlas floor
+
+D392's short-hold extension (caps 1–3, 193 cells) was commissioned to floor the "one-bar effect".
+**It now serves to prove that effect never existed:**
+
+| cap | side | trades | corrected | atlas p95 | |
+|---|---|--:|--:|--:|---|
+| **1** | long | 144,582 | **+0.60** | **+0.83** | **inside** |
+| **2** | long | 118,498 | +1.05 | +1.48 | **inside** |
+| 3 | long | 106,657 | +2.90 | +1.76 | above |
+| 5 | long | 94,198 | +4.97 | — | *no floor* |
+| 10 | long | 78,808 | +6.50 | +3.72 | above |
+| **20** | long | 61,818 | **+8.00** | **+6.38** | above, by 1.62 |
+| 2 | short | 135,945 | +2.06 | +1.20 | above |
+| 10 | short | 87,881 | +1.99 | +3.05 | **inside** |
+| 20 | short | 67,350 | +5.63 | +3.54 | above |
+
+**At the horizon the phantom lived at, the corrected book is INSIDE its floor.** The longer caps
+sit above a *uniform* floor — but `B_r`, the **same-pool** control, is the better instrument and it
+says the reclaim underperforms at every horizon. A uniform draw does not share this event's
+nuisance (D291); the pool comparison does.
+
+**Three cells have no floor** — cap 5 either side, and cap 1 short at 167,179 trades — because the
+grid's trade axis does not reach there at those caps. **Named rather than interpolated past.**
+
 ### What does NOT change
 
 **The verdict.** §0's H3 test used `forward_h(..., start=1)` on the event bar — **correctly lagged
