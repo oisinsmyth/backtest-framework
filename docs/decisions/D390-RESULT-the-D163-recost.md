@@ -1,12 +1,23 @@
-# D389 RESULT — D163's cost arithmetic is wrong by ~400×, and the sub-hourly closure survives anyway, on signal
+# D390 RESULT — D163's cost arithmetic is wrong by ~400×, and the sub-hourly closure survives anyway, on signal
 
 **Status:** Committed
 **Date:** 2026-09-08
 **Category:** Validation & research integrity
-**Pre-registration:** [`D389-PREREG`](D389-PREREG-the-D163-recost.md), committed before the runner existed
-**Runner:** `scripts/run_d389_recost.py` · **Artifact:** `data/d389_recost_summary.json`
+**Pre-registration:** [`D390-PREREG`](D390-PREREG-the-D163-recost.md), committed before the runner existed
+**Runner:** `scripts/run_d390_recost.py` · **Artifact:** `data/d390_recost_summary.json`
 **Discharges:** [R11](../RULES.md#r11)'s standing corollary for the Donchian breakout ladder
 **D163 is NOT edited.** Under [R8](../RULES.md#r8) a result is a separate record.
+
+> **RENUMBERED FROM D389, 2026-09-09.** This study was pre-registered and committed as **D389** at
+> 2026-09-08 23:17 (`7d04812`), and a **concurrent session independently used D389** for the
+> correlation-floor study, pre-registering it at 2026-09-09 00:24 (`5bd7d97`). By commit time this
+> study had the number first, but the other had already propagated **D389 = the correlation floor**
+> into `PICKUP.md`, which is the file every session reads. **This one was renumbered because that was
+> the smaller correction, not because it was second.** Runner and artifact were renamed with it.
+>
+> **The underlying hazard is worth recording: two sessions working the same repo pick the next free
+> decision number from the same list and neither sees the other's uncommitted work.** Check
+> `git log --all` for the intended number immediately before committing a pre-registration.
 
 ---
 
@@ -71,7 +82,7 @@ D163 named its own blocker and declined it: *"Exchange APIs — Binance and Krak
 scope here."* **That blocker was discharged by a later study and the fixture has been sitting
 committed since 2026-08-22.**
 
-| | D163 | **D389** |
+| | D163 | **D390** |
 |---|---|---|
 | fixture | `crypto_intraday_1h/30m/15m_raw` (yfinance) | **`crypto_binance_15m_raw`** (Binance 1m archives → 15m, D161) |
 | sub-hourly span | **60 days**, turnover only, **no return claim possible** | **3,066 complete UTC days**, 294,336 bars/symbol |

@@ -1,9 +1,18 @@
 # PICKUP - handoff for the next session
 
-**Updated 2026-09-09.** **D365 → D389.** Two sessions: the first spent the programme's first
+**Updated 2026-09-09.** **D365 → D390.** **Three** sessions: the first spent the programme's first
 holdout read, ran D373 and audited the hurdles that judged it; the second built and **retired the
-density line (D384 → D388)** and **answered the correlation floor (D389)**. Everything below §7 is
-older strata, newest first, kept because the traps in them still bite.
+density line (D384 → D388)** and **answered the correlation floor (D389)**; the third **priced the
+prop instrument end to end (D386)**, **settled the D383 debt by running it**, and **discharged R11's
+re-costing corollary (D390)**. Everything below §7 is older strata, newest first, kept because the
+traps in them still bite.
+
+> **⚠ A DECISION-NUMBER COLLISION HAPPENED AND IT WILL HAPPEN AGAIN.** Two concurrent sessions both
+> took **D389** — the D163 re-cost pre-registered at 23:17 (`7d04812`) and the correlation floor at
+> 00:24 (`5bd7d97`). The re-cost had the number first by commit time but was **renumbered to D390**,
+> because the other had already propagated `D389 = correlation floor` into this file. **Two sessions
+> pick the next free number from the same list and neither sees the other's uncommitted work.**
+> **Run `git log --all` for your intended number immediately before committing a pre-registration.**
 
 **This file had been stale since 2026-09-02** (D264→D284) and both `STACK.md` and the 2026-09-07
 handoff said so in writing. It is current again as of this line.
@@ -19,9 +28,17 @@ UNCHANGED.**
 
 **AS OF 2026-09-09: the density line is RETIRED — the object works, the conditioner is inert. The
 0.44 correlation floor is ONE unidentified factor and none of the four named candidates explains it.
-NOTHING IS PRE-REGISTERED AND UNRUN EXCEPT D383, WHICH IS A DEBT. The single highest-value item in
-the programme — D336's quoted-spread pull — is BLOCKED ON THE PRINCIPAL'S TWS SESSION, and it decides
-whether the incumbent book is positive at all.**
+D383 IS RUN AND THE QUEUE IS NOW EMPTY — nothing is pre-registered and unrun. The single highest-value
+item in the programme — D336's quoted-spread pull — is BLOCKED ON THE PRINCIPAL'S TWS SESSION, and it
+decides whether the incumbent book is positive at all.**
+
+**AND THE PROP INSTRUMENT IS NOW PRICED, WHICH IT NEVER WAS. [D386](docs/decisions/D386-the-prop-account-is-worth-its-buffer.md):
+at zero edge a funded account is worth EXACTLY ITS DRAWDOWN BUFFER — you cannot extract more in
+expectation than the amount they let you lose — and the whole question reduces to one
+leverage-invariant number, CALMAR ≥ 18.9 ON OPEN EQUITY. The best audited intraday CME programme in a
+199-programme database is 1.07. Twenty-two research lanes found ONE prop-eligible candidate, with a
+known contamination risk. THE PROP TRACK IS NOT BLOCKED ON VALUATION ANY MORE; IT IS BLOCKED ON
+HAVING A STRATEGY, and the shape it needs is now known.**
 
 | | |
 |---|---|
@@ -256,18 +273,62 @@ committed to `data/`.
 
 ## 0d. WHAT IS LIVE NOW, RANKED
 
-**RE-RANKED 2026-09-09, after the density line was retired.** One pre-registration is awaiting a runner (**D383**, deliberately unbuilt) and it is a DEBT: run it or retire it in writing, because a dangling pre-registration under R8 is a commitment nobody has discharged. What follows is candidates, not commitments.
+**RE-RANKED 2026-09-09 (later), after D383 was run and the prop instrument was priced. THE QUEUE IS
+EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not commitments.
 
-**Two decisions are the principal's and block nothing else:** the **winners'-dip avenue's status**
-after D378's pass, and whether to **re-base past records** onto D377's H1 hedge (D377 §4 argues not
-— the benefit is 0.032 on a 0.47 floor).
+**Three decisions are the principal's and block nothing else:** the **winners'-dip avenue's status**
+after D378's pass; whether to **re-base past records** onto D377's H1 hedge (D377 §4 argues not —
+the benefit is 0.032 on a 0.47 floor); and **D383's §8 abandon condition, which is MET**.
 
-1. **D383 IS A DEBT AND SHOULD BE SETTLED FIRST, EITHER WAY — it is the only thing blocking a
-   clean slate.** The 15-minute time-series structure screen is pre-registered (`af91504`, amended
-   `cb864cb`) with a gated fixture (`3c9d57c`) and **was deliberately not built**. Under R8 that is a
-   commitment nobody has discharged. **D382 already closed the DAILY version of that family as market
-   drift**, so the expectation is that it goes the same way — but leaving it dangling is worse than
-   either running it or retiring it in writing. **Cheapest item on this list; one decision.**
+1. ~~D383 is a debt~~ — **SETTLED. [D383 RESULT](docs/decisions/D383-RESULT-the-time-series-screen-clears-nothing-and-its-ten-passes-are-buy-and-hold.md)
+   (`c5dc05a`). 0 OF 572 CELLS CLEAR**, and the best cell at every hold sits **−0.06 to −0.95 SE of
+   the floor's own CENTRE** — on the median, not near the bar. **§8's abandon condition is met; the
+   close is the principal's.**
+   - **THE PRE-REGISTRATION CAUGHT EXACTLY WHAT IT WAS WRITTEN FOR.** Ten cells clear on the primary
+     PER-TRADE statistic and **all ten are buy-and-hold** — hold 78, exposure 1.000, 57 trades on 57
+     names, median run **37,643 of 37,648** available bars, **`n_eff` trades = 1**, excess over B&H at
+     matched exposure **0.00%**. That is the confound §5.1 nominated bp-per-bar to catch: **48 of 143
+     hold-78 cells run >10× nominal against 0 of 143 at hold 26**, the hold nominated primary in
+     advance. Choosing the primary statistic *and* the primary hold before seeing anything is what
+     separated the artefact from the result.
+   - **`n_eff` INSTRUMENTS = 2.17 OF 57 AT 15 MINUTES** — first measurement at this frequency, and it
+     confirms FINDINGS §4's ~2.2 daily figure. **26× more sampling buys no breadth.** This constrains
+     every intraday study this programme might design.
+   - **Q3 falsified in an interesting direction: bp/bar RISES with hold at 15m** — the edge is **not**
+     front-loaded, opposite to D378 daily. Q2 also fell (32 interior humps, not flat).
+   - Recorded but **not claimed**: 111 of 572 beat their own *uncorrected* p95, and at the primary hold
+     they are one coherent family — the low tail of `park_vol_21` / `gk_minus_cc` / `range_frac`, a
+     volatility-timing tilt with an undeclared direction and confounded with spread.
+
+1b. **THE PROP INSTRUMENT IS PRICED — [D386](docs/decisions/D386-the-prop-account-is-worth-its-buffer.md),
+   22 lanes, `docs/research/Prop-Firm-080926/`.** Read
+   [00-SYNTHESIS](docs/research/Prop-Firm-080926/00-SYNTHESIS.md),
+   [23-method-lessons](docs/research/Prop-Firm-080926/23-method-lessons.md) and
+   [24-candidate-ledger-both-books](docs/research/Prop-Firm-080926/24-candidate-ledger-both-books.md).
+   - **At zero edge `E[extracted] = the drawdown buffer`, exactly** (optional stopping), so **the
+     payout ladder is decoration** and **you cannot extract more in expectation than the amount they
+     let you lose**. **94.7% of evaluations return exactly $0.**
+   - **The whole question reduces to CALMAR ≥ 18.9 ON OPEN EQUITY**, leverage-invariant — verified on
+     one manager's own 1× and 1.5× versions of the same book. **Best audited intraday CME programme:
+     1.07. Best in a 199-programme database: 5.88.**
+   - **A Calmar above 18 is a property of RECORD LENGTH, not strategy** — every Collective2 system ≥18
+     is under 370 days old, zero of 37 older than two years. **That is a screening rule for both books.**
+   - **The scissors close on LONG WINDOWS, not small edges.** Every rejection is a *size* rejection;
+     cost is 15–20% of gross and never binding. **The binding variable is the hold.**
+   - **D379 gains an uncomputed term**: the barrier is administered against a market that **can suspend
+     your exit** (CME Velocity Logic halts on a rolling-millisecond move), and a floor on open equity
+     keeps moving through those windows.
+   - **The one quantity nobody publishes, confirmed five independent ways: MAE within the holding
+     window, on open equity.** Absent from the literature, the code, the published drawdowns, the best
+     retail record, and every verified CTA database.
+
+1c. **R11's RE-COSTING COROLLARY IS DISCHARGED FOR ONE CONSTRUCTION — [D390](docs/decisions/D390-RESULT-the-D163-recost.md)
+   (`7e39fe3`, renumbered from D389).** D163's *"~315% of capital a year in fees"* is a **crypto taker
+   number and is wrong by ~400×** at futures commission (0.786%/yr) — **but the closure survives on
+   SIGNAL, not cost.** Gross first: BTC Design B at 15m is **−1.4 bp/trade at the 2.4th percentile of
+   its own null**, below its p05. **Left to the principal: the 30m–2h band**, where cost moves three
+   rungs per symbol from ruin to profit and the nulls disagree (ETH 1h clears at 96.4, BTC 1h fails at
+   79.8, both fail at 2h). **R11 itself was NOT edited** — a standing-rule change is the principal's.
 
 2. **D336's quoted-spread pull — the highest-value item in the programme, and it needs the principal's TWS
    session.** D378 put the entry-timing increment at **0.19–0.47× a round trip under PUB** and
