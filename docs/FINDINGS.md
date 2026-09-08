@@ -3683,3 +3683,71 @@ is §54.1 verbatim. Silverman compounds it: bandwidth widens 4x on exactly those
 grid cells), one profiled name showing a 17%-wide kernel and ZERO modes. **"No signal" stands on the
 trading evidence, but the study tested the idea DILUTED.** Fix: threshold in the name's own
 volatility units. **Third time in this line the event definition was not matched to the instrument.**
+
+---
+
+## 56. The clean test: the density finally had shape, and the conditioner still adds nothing to `x`
+
+**D388**, signal test under R15, 600 US single names, 2 event types × 2 σ-multiples × 3 λ × 3 holds,
+N2 20 draws + A′ 40 rotations, 17,511 cells. Pre-registration `1c168f3`, runner `8f1dced`/`85e9171`,
+result `docs/decisions/D388-RESULT-the-density-finally-had-shape-and-the-conditioner-still-adds-nothing.md`.
+
+**This is the first clean test in the density line.** D384 measured the wrong statistic, D385 measured
+a flat object, D387 measured a flat object on half its universe with mismatched gates. D388 fixes all
+of it: rare events in σ units, one gate for every arm, and the density's shape reported as a
+first-class output.
+
+### 56.1 THE OBJECT WORKS — rarity is the mechanism for shape
+
+```
+      type     k  lam  rate/100   TV(f,g)  ratio CV  modes
+      move   2.0   60      5.16    0.2573     0.727    3.0
+      move   2.5   60      2.67    0.3615     0.964    3.0
+  reversal   1.0   60      3.86    0.2720     0.766    2.0
+  reversal   1.5   60      1.17    0.5104     1.307    2.0
+```
+
+Against [§55](#55)'s worst bucket — **TV 0.039, CV 0.096, 0 modes** — this is **4.5–13× the structure
+with 2–3 modes everywhere**, and it rises **monotonically with rarity** at every λ. **The σ threshold
+was the right diagnosis:** rarity spread across names collapses 4.37× → 1.37×, and the flat density
+of §54 and §55 was an artefact of events that were not rare.
+
+### 56.2 AND IT STILL ADDS NOTHING — the A′ result replicates on a shaped density
+
+**Against N2** (shuffled path): positive in **34 of 36 cells**, sign tests to **7.2e-11**.
+**Against A′** (rotated density, same path): **6 of 36 cells positive, best +0.19 SE, none
+significant** (best `p` = 0.079) — and **all six sit in the thinnest cell**, `reversal k=1.5`, where
+`MIN_EVENTS` drops 375 of 582 names and **the survivors are the most event-rich** (median 166 events
+against 85 dropped). The only positive cells are the ones with a filtered sample.
+
+**N2 destroys the price path; A′ destroys only the density's ALIGNMENT with the current price.
+Beating the first and not the second means the edge is trading a real path at extreme `x` and betting
+on reversion — a misaligned density does just as well.** Cost settles it regardless: **net negative in
+all 36 cells**, best gross 61.2 bp against a ~110–130 bp measured spread.
+
+**Two studies now agree on this with different event definitions, different universes and different
+gates. It is the most replicated negative in the programme.**
+
+### 56.3 The generalisable lessons
+
+- **A threshold in percent is not a threshold in rarity.** Express event thresholds in the
+  instrument's own units or measure the realised rate per name and report the spread.
+- **Rarity improves the OBJECT, not the P&L.** Q4 held on the A′ margin at every λ and H, and was
+  falsified on gross. A better-shaped conditioner did not become a better predictor.
+- **Beating a path-shuffle null is nearly free; beating a persistent-selector null is the test.**
+  Without A′ this study reports a 7.2e-11 headline. R7 exists for exactly this.
+- **`f̂` is constant between events under plain decay.** `f` is scaled by `λ^gap`, a scalar, which
+  cancels in the normalisation — so the dense (T, GRID_N) accumulation is unnecessary and the
+  recursion runs over the ~110 event rows. **39.0 ms → 1.6 ms, 24×, exact to 1.2e-14.** The naive
+  version of this (decaying λ per *event* rather than per *bar*) is wrong by 3.87 and `[FAST]`
+  catches it.
+
+### 56.4 Two self-tests that passed when they should have failed
+
+**`[RARE]`** returned "spread 0.00, max 0.0%" when every key had fewer names than its minimum — it
+skipped them all and reported success. **D387's `[LAG]`** opened its independent re-derivation at
+`WARMUP` while the runner opened at `THR_MIN`, ~100 bars apart; it passed only because no crossing
+fell in the gap on its probe name (fixed `36bab8c`; the decisions were causal either way, so §55
+stands). **Both now raise, and both have their own `[X]` break.**
+
+**Nothing admitted to either book. No hurdle cleared. No holdout read.**
