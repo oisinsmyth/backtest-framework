@@ -305,6 +305,88 @@ futures contract exists on the names our equity books trade, so that lineage is 
 
 ---
 
+---
+
+# PART THREE — the strategy sweep, lanes 15–19
+
+Eight lanes were sent at the strategy question across Reddit, quant forums, open source, practitioner
+research, and non-English communities. **Five have landed. The prop verdict did not change; the
+useful output is a set of tools and one shape constraint.**
+
+## The tool that makes every claim comparable
+
+**Per-trade Sharpe is recoverable from any published t-statistic as `t/√N`.** That makes lane 13's
+threshold of **0.225** applicable to every claim in the review, not just those reporting per-trade
+moments:
+
+| candidate | per-trade Sharpe | vs 0.225 |
+|---|---:|---|
+| Gao et al. intraday momentum — lane 13's best | 0.068 | **0.30× — fails** |
+| **C19-2, last 15 min, CSI 300** (t = 10.1, N ≈ 945) | **0.329** | **1.46× — clears** |
+
+## The shape constraint — the first actionable one in the review
+
+**C19-2 clears structurally, not by having a bigger edge.** A 15-minute window carries ~18 bp of
+standard deviation, so **one ES contract makes a $150 day and the fixed $2,000 floor sits 3.4σ away.**
+
+> **The scissors close on LONG WINDOWS, not on small edges.**
+
+Every prop rejection so far has been a *size* rejection driven by a short holding window forcing
+contract count up against a fixed floor. **Widening the window relaxes the lower bound without
+touching the upper one.** That is the first structural guidance the review has produced on what
+*shape* of effect can pass hurdle P.
+
+*Largest threat, stated: C19-2 is measured on the INDEX, not the future. Stale-price and
+closing-auction contamination is the falsifier to run first.*
+
+## The finding that bears on our own C1
+
+**China runs the natural experiment the US cannot.** Haitong measures the overnight return on **T+1
+cash** and **T+0 futures** — same underlying, same days, 2016-01-11 → 2019-11-29 — and gets
+**opposite signs, both significant**: index **−0.073% (t = −4.03)**, IF future **+0.055% (t = +3.19)**.
+The Chinese literature names the mechanism with an A/H same-company design behind it.
+
+**Claim: the overnight drift is a property of the SETTLEMENT RULE, not of the passage of time.**
+
+C1 — this programme's session-boundary hold — was an overnight *futures* hold measured on *equity*
+extended-hours bars. **If the drift is a T+1 settlement artefact it does not exist in a T+0 future at
+all, and C1's premise was never the thing its proxy measured.** Falsifier computable on any fixture
+holding both SPX and ES.
+
+## The calibration specimen worth more than most candidates
+
+**C19-4: a clock-effect replication at 0.781 basis points per half-hour leg, with t = 62.71.** The
+cleanest specimen in the review of *statistically overwhelming and economically dead*. Keep it as a
+size calibration — **anything in that family reporting more than ~2 bp should be reconciled against
+it before being believed.**
+
+## What the sweep says about the sources themselves
+
+- **The one prop candidate that survived lanes 13/14 was dismantled by lane 16** — three independent
+  reimplementations returning Sharpe 0.399 against a published 1.33, **with the paper's author
+  answering in writing**, and the entire gap isolated to the bid/ask spread.
+- **Cost was never the binding constraint** (lane 17): every prop rejection is a *size* rejection;
+  cost is 15–20% of the gross mean.
+- **Drawdown is 17× more persistent out-of-sample than Sharpe** (Quantopian's 888 algorithms:
+  R² = 0.02 for Sharpe, 0.34 for max drawdown). **The statistics the barrier reads are the ones that
+  survive.**
+- **Year-instability, not cost, is the modal failure**, and our screens carry no per-year
+  sign-stability gate.
+- **The regional-fashion premise was half right** (lane 19): the Russian, Japanese, German, French and
+  Nordic *retail* layers publish the same effects with *worse* disclosure than the English claims
+  tier. Only the Chinese **sell-side research and academic** tier is a genuinely different literature,
+  and it did not saturate.
+
+## And the ledger lesson, which was learned twice
+
+**Two recorded "this host blocks us" entries turned out to be USER-AGENT exclusions rather than
+blocks** — Apex returned HTTP 200 on 28 of 28 pages to a browser-headered `curl`, and Reddit is
+reachable by RSS. In both cases the wrong entry sent a later lane down a route that could not reach
+the material. The rule is recorded in [`SOURCES.md`](SOURCES.md): **a logged block must name the tool
+and the headers that failed, never just the host.**
+
+---
+
 ## The honest bounds
 
 - **`E[extracted] = b` assumes zero edge and a static floor after the lock.** With positive edge it
