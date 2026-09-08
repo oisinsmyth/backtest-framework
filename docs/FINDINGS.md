@@ -3219,6 +3219,20 @@ won.
 and [D377](decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md),
 2026-09-07. AVENUE RETIRED BY THE PRINCIPAL, 2026-09-08 (R15).**
 
+> **CLOSED DEFINITIVELY BY THE PRINCIPAL, 2026-09-09 —
+> [D396](decisions/D396-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md).** The
+> avenue was retired on 2026-09-08, **reopened narrowly** for
+> [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md),
+> and its exit half was then closed by
+> [D380](decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+> and [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md).
+> **It is now shut in both directions and will not be reopened again.**
+>
+> **The entry-timing finding is NOT withdrawn and stands as truth**: D378's T1 passed at **+26.9 SE**
+> and its largest-trade-removed gate at **+9.8 SE**. What is closed is the avenue, not the fact. The
+> increment's deployability turns on cost — **D336's quoted-spread pull** — which is a separate,
+> still-open item that this closure does not touch and whose answer does not reopen this.
+
 The winners'-dip long entered a fresh `rev_5` dip inside the `mom_252_21` **top** decile. It posted
 a gross **+160.55 bp per trade** over 3,932 trades, and the question was always what that number was
 paying for.

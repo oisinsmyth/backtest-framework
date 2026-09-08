@@ -276,9 +276,19 @@ committed to `data/`.
 **RE-RANKED 2026-09-09 (later), after D383 was run and the prop instrument was priced. THE QUEUE IS
 EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not commitments.
 
-**Three decisions are the principal's and block nothing else:** the **winners'-dip avenue's status**
-after D378's pass; whether to **re-base past records** onto D377's H1 hedge (D377 §4 argues not —
-the benefit is 0.032 on a 0.47 floor); and **D383's §8 abandon condition, which is MET**.
+**TWO AVENUES WERE CLOSED BY THE PRINCIPAL ON 2026-09-09 —
+[D396](docs/decisions/D396-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md):
+the WINNERS' DIP and the 15-MINUTE TIME-SERIES STRUCTURE SCREEN.** Both are shut and neither will be
+reopened. **What outlives them and must not be closed with them:** D378's entry-timing finding stands
+as truth (T1 at **+26.9 SE**, largest-trade-removed gate at **+9.8 SE**); D383's **`n_eff` instruments
+= 2.17 of 57 at 15 minutes** is a property of the universe and constrains any future intraday design;
+and D383's **bp/bar RISES with hold** at 15m, opposite to daily, so a successor assuming daily
+front-loading transfers would be wrong. D383's 111 uncorrected-p95 survivors — a volatility-timing
+tilt with an undeclared direction — remain **recorded and unclaimed**, and closing the avenue does not
+license mining them without a fresh pre-registration.
+
+**ONE decision remains the principal's and blocks nothing else:** whether to **re-base past records**
+onto D377's H1 hedge (D377 §4 argues not — the benefit is 0.032 on a 0.47 floor).
 
 1. ~~D383 is a debt~~ — **SETTLED. [D383 RESULT](docs/decisions/D383-RESULT-the-time-series-screen-clears-nothing-and-its-ten-passes-are-buy-and-hold.md)
    (`c5dc05a`). 0 OF 572 CELLS CLEAR**, and the best cell at every hold sits **−0.06 to −0.95 SE of
