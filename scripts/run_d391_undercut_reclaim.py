@@ -66,6 +66,8 @@ def _load(name, filename):
     return m
 
 
+LA = _load("lag_audit", "lag_audit.py")     # the shared [L] audit; see its docstring for why
+
 OUT = REPO / "data" / "d391_stage0.json"
 CACHE_DIR = REPO / "temp" / "d391_pivots"
 K = 3                    # ragged_structure_scores.K
@@ -125,21 +127,20 @@ def build_pivots(V, MS, panel, cleaned, live):
 
 
 def lag1_mask(m):
-    """Shift a SIGNAL mask one bar forward, to a POSITION mask. **This is not optional and its
-    absence was a look-ahead defect in the first version of this file.**
+    """Shift a SIGNAL mask one bar forward, to a POSITION mask.
+
+    **MIGRATED 2026-09-08 to `scripts/lag_audit.py`.** This wrapper is kept so nothing that
+    imports `D391.lag1_mask` breaks, but the body now lives in the shared module — because the
+    absence of this shift was a look-ahead defect in the first version of this file, and a
+    correction that lives in one runner is a correction the next runner does not get.
 
     The kernel (`EB.simulate_event` via `run_d359`) treats the mask it is given as the bar the
-    position OPENS ON, and books that bar's open-to-close. D359 and D361 can pass their signals
-    straight in because those are built from percentile grids ALREADY LAGGED to t-1, so entering
-    at bar t's open uses only information through t-1.
-
-    **This study's event is defined by bar t's OWN low and close.** Passing it unlagged made the
-    kernel book the very bar whose close defines the event: measured, the signal bar's own excess
-    is +47.19 bp and the next bar's is +0.61. The whole of the first reported ledger was that one
-    bar. D279's error, in a new place, caught by `temp/which_bar.py`."""
-    out = np.zeros_like(m)
-    out[1:] = m[:-1]
-    return np.ascontiguousarray(out)
+    position OPENS ON and books that bar's open-to-close (`d345_event_book.py:11`). D359/D360/D361
+    pass their signals straight in because theirs are built from percentile grids ALREADY LAGGED
+    to t-1. **This study's event is defined by bar t's OWN low and close**, and passing it unlagged
+    made the kernel book the very bar whose close defines the event: the signal bar's own excess is
+    +47.19 bp against the next bar's +0.61."""
+    return LA.lag1_mask(m)
 
 
 def event_masks(PV, g, atr, eligT):
@@ -356,11 +357,13 @@ def main() -> int:
     EV_POS, MIRROR_POS = lag1_mask(EV), lag1_mask(MIRROR)
     # [L] the lag audit the pre-registration required and the first version omitted: no position
     # may open on a bar that is itself an event bar for that name.
-    assert np.array_equal(EV_POS[1:], EV[:-1]) and not EV_POS[0].any(), \
-        "[L] the position mask is not the signal mask shifted exactly one bar"
-    print(f"    [L] positions open one bar AFTER the signal: {int(EV_POS.sum()):,} long, "
-          f"{int(MIRROR_POS.sum()):,} short (signal bars {int(EV.sum()):,} / "
-          f"{int(MIRROR.sum()):,})", flush=True)
+    kept_l = LA.assert_mask_is_lagged(EV_POS, EV)
+    kept_s = LA.assert_mask_is_lagged(MIRROR_POS, MIRROR)
+    # and the audit must be able to FAIL: handing the raw signal mask over is D391's own defect
+    LA.raises_on_broken(LA.assert_mask_is_lagged, EV, EV)
+    print(f"    [L] positions open one bar AFTER the signal: {kept_l:,} long, {kept_s:,} short "
+          f"(signal bars {int(EV.sum()):,} / {int(MIRROR.sum()):,}); and the audit RAISES on the "
+          f"raw mask, which is the defect this study shipped", flush=True)
     res = V59.run_mirror(P, EV_POS, sc, "cap", PRIMARY_CAP)
     res2 = V59.run_mirror(P, EV_POS, np.full((T, n), 17.0), "cap", PRIMARY_CAP)
     assert len(res["trades"]) == len(res2["trades"]), "[SC] the score changed the cap-exit ledger"
