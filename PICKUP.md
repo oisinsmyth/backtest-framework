@@ -2,11 +2,20 @@
 
 ---
 
-## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED 2026-09-09, MERGED
+## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED 2026-09-09, READY TO MERGE
 
-**Merged to `master` on 2026-09-09** on the principal's instruction, reversing the branch's
-standing rebase-only rule. [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the
-retirement record and the place to start.
+**The principal authorised the merge on 2026-09-09**, reversing the branch's standing rebase-only
+rule. **The branch is rebased onto `master` and is a clean FAST-FORWARD — 55 commits ahead, 0
+behind, no conflicts and no decision-number collisions left.**
+
+**It was NOT merged from this session, and that is deliberate.** `master` is checked out in the
+main worktree and **another session is actively committing to it** — four commits landed there
+during the final minutes of this one. Git refuses to update a branch checked out elsewhere, and
+forcing it would desync that worktree's index under a live session. **The merge is one
+fast-forward command from the main checkout; it is recorded in the handoff rather than forced.**
+
+[D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the retirement record and the
+place to start.
 
 > **THE D390 COLLISION WAS RESOLVED BEFORE THE MERGE, NOT CARRIED INTO IT.** Master had taken
 > `D390` **twice** — the D163 re-cost and the D280 overnight-gap pre-registration — while this
