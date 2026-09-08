@@ -64,6 +64,7 @@ def _load(name, filename):
 
 OVL_OUT = REPO / "data" / "d393_overlap.json"
 BS_OUT = REPO / "data" / "d393_bs_null.json"
+AP_OUT = REPO / "data" / "d393_aprime_null.json"
 NPZ = REPO / "temp" / "d290_scores.npz"
 
 CAP = 20
@@ -75,8 +76,8 @@ N_DRAWS = 2000                        # section 4's count, on one cell rather th
 NSHARDS = 8
 
 
-def SHARD(i):
-    return REPO / "temp" / f"d393_bs_shard_{i}.json"
+def SHARD(i, kind="Bs"):
+    return REPO / "temp" / f"d393_{kind}_shard_{i}.json"
 
 
 def item_at(idx, n_draws):
@@ -90,11 +91,11 @@ def item_at(idx, n_draws):
     return CONTROL, SEED + 1 + (idx - n_draws)
 
 
-def merge_shards(n_draws, nshards):
+def merge_shards(n_draws, nshards, kind="Bs"):
     """Reassemble the strided shards, ASSERTING full coverage before anything is scored."""
     got = {}
     for i in range(nshards):
-        p = SHARD(i)
+        p = SHARD(i, kind)
         assert p.exists(), f"shard {i} missing: {p}"
         d = json.loads(p.read_text())
         assert d["n_draws"] == n_draws and d["nshards"] == nshards, f"shard {i} ran a different fan"
@@ -265,7 +266,7 @@ def overlap(PREP, V50, SG, V59) -> int:
 
 # ------------------------------------------------------------------ the B_s null
 def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
-       shard=None, nshards=NSHARDS, verify_shard=False) -> int:
+       shard=None, nshards=NSHARDS, verify_shard=False, null_kind="Bs", V73=None) -> int:
     t0 = time.time()
     P, elig, cols, masks, dec, T, n = build(PREP, V50, SG)
     print(f"  prep + scores in {time.time() - t0:.0f}s", flush=True)
@@ -278,28 +279,61 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
     print(f"  observed: {CANDIDATE} {obs[CANDIDATE]:+.2f} | {CONTROL} "
           f"{obs[CONTROL]:+.2f} (the null's positive control)", flush=True)
 
-    # ---- [Bs] on one draw, and the negative control -----------------------
+    # ---- the null's own assertions on one draw, and the negative control ---
     rng0 = np.random.default_rng(SEED)
-    sig0, kept0 = control_bs_signal(masks[CANDIDATE], dec, elig, rng0)
-    nrep = assert_Bs(sig0, masks[CANDIDATE], dec, elig, kept0)
-    bad = sig0.copy()
-    j = np.flatnonzero(bad.any(axis=1))[0]
-    bad[j, np.flatnonzero(~elig[j])[0]] = True          # an ineligible replacement
-    try:
-        assert_Bs(bad, masks[CANDIDATE], dec, elig, kept0)
-        raise SystemExit("[X] assert_Bs did NOT fire on an ineligible replacement")
-    except AssertionError:
-        pass
-    print(f"    [Bs] {nrep:,} replacements, {kept0:,} kept for a short pool; and the assertion "
-          f"RAISES on an ineligible replacement", flush=True)
+    if null_kind == "Bs":
+        sig0, kept0 = control_bs_signal(masks[CANDIDATE], dec, elig, rng0)
+        nrep = assert_Bs(sig0, masks[CANDIDATE], dec, elig, kept0)
+        bad = sig0.copy()
+        j = np.flatnonzero(bad.any(axis=1))[0]
+        bad[j, np.flatnonzero(~elig[j])[0]] = True      # an ineligible replacement
+        try:
+            assert_Bs(bad, masks[CANDIDATE], dec, elig, kept0)
+            raise SystemExit("[X] assert_Bs did NOT fire on an ineligible replacement")
+        except AssertionError:
+            pass
+        print(f"    [Bs] {nrep:,} replacements, {kept0:,} kept for a short pool; and the "
+              f"assertion RAISES on an ineligible replacement", flush=True)
+    else:
+        # A' -- D373's own three assertions (no short leg, nothing off the floor, per-name count
+        # preserved) fire inside aprime_draw_long. What is checked HERE is that they can fail, and
+        # that the rotation actually MOVED the events rather than returning them unchanged.
+        sc0 = np.where(np.isfinite(cols[CANDIDATE]), cols[CANDIDATE], 50.0)
+        sig0, _sc0 = V73.aprime_draw_long(masks[CANDIDATE], sc0, elig, rng0)
+        assert int(sig0.sum()) == int(masks[CANDIDATE].sum()), "[A'] total event count changed"
+        assert np.array_equal(sig0.sum(axis=0), masks[CANDIDATE].sum(axis=0)), \
+            "[A'] per-name event count changed"
+        assert not (sig0 & ~elig).any(), "[A'] a rotated event landed off the eligible mask"
+        moved = int((sig0 & ~masks[CANDIDATE]).sum())
+        assert moved > 0.5 * int(masks[CANDIDATE].sum()), \
+            f"[A'] only {moved} events moved -- the rotation is barely rotating"
+        try:
+            V73.aprime_draw_long(masks[CANDIDATE], sc0, np.zeros_like(elig), rng0)
+            raise SystemExit("[X] aprime_draw_long did NOT fire on an all-ineligible mask")
+        except AssertionError:
+            pass
+        print(f"    [A'] {moved:,} of {int(masks[CANDIDATE].sum()):,} events moved to a new bar; "
+              f"per-name counts preserved, nothing off the floor; and the rotation RAISES when "
+              f"handed an empty eligible mask", flush=True)
 
     # `parallel_map(fn, items)` calls `fn(k, v)` over (key, value) pairs and returns {key: result},
     # so the key must be unique per draw -- "<score>:<i>", not the score name.
+    #
+    # A' REUSES D373's `aprime_draw_long` RATHER THAN REIMPLEMENTING THE ROTATION. That function
+    # carries D351's three assertions -- no short leg appears, no rotated event lands off the
+    # floor, the per-name event count is preserved -- and a second copy here would be a second
+    # thing to keep right. The score is rotated WITH the events, which is what makes it a timing
+    # null rather than a different book.
     def one(_key, v):
         k, s = v
         rng = np.random.default_rng(s)
-        sig, _ = control_bs_signal(masks[k], dec, elig, rng)
-        r = V59.run_mirror(P, sig, np.full((T, n), 17.0), "cap", CAP)
+        if null_kind == "A":
+            sc = np.where(np.isfinite(cols[k]), cols[k], 50.0)
+            sig, sc_ = V73.aprime_draw_long(masks[k], sc, elig, rng)
+        else:
+            sig, _ = control_bs_signal(masks[k], dec, elig, rng)
+            sc_ = np.full((T, n), 17.0)
+        r = V59.run_mirror(P, sig, sc_, "cap", CAP)
         return float(PREP.V47.pnl_bp(r).mean())
 
     if calibrate:
@@ -328,9 +362,9 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
             got[i] = one(f"{k}:{i}", (k, s))
             if c % 50 == 0:
                 print(f"    shard {shard}: {c}/{len(idxs)} ({time.time() - t0:.0f}s)", flush=True)
-        SHARD(shard).write_text(json.dumps({"n_draws": n_draws, "nshards": nshards,
+        SHARD(shard, null_kind).write_text(json.dumps({"n_draws": n_draws, "nshards": nshards,
                                             "shard": shard, "values": got}))
-        print(f"  shard {shard}: {len(idxs)} draws -> {SHARD(shard).name} "
+        print(f"  shard {shard}: {len(idxs)} draws -> {SHARD(shard, null_kind).name} "
               f"({time.time() - t0:.0f}s)", flush=True)
         return 0
 
@@ -348,7 +382,7 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
               f"BIT-IDENTICALLY -- each draw is a pure function of its index", flush=True)
         return 0
 
-    draws = merge_shards(n_draws, nshards)
+    draws = merge_shards(n_draws, nshards, null_kind)
 
     rngb = np.random.default_rng(7)
     stats = {}
@@ -365,26 +399,42 @@ def bs(PREP, V50, SG, V59, FN, n_draws, calibrate,
                         verdict=("UNRESOLVED (within 2 SE)" if abs(margin) <= 2 * se
                                  else "ABOVE" if margin > 0 else "BELOW"))
 
-    payload = dict(study=393, stage="B_s", cap=CAP, shape="E1", side="long", n_draws=n_draws,
+    NAME = {"Bs": "B_s", "A": "A_prime"}[null_kind]
+    payload = dict(study=393, stage=NAME, cap=CAP, shape="E1", side="long", n_draws=n_draws,
                    seed=SEED,
-                   purpose="B_s on ONE cell: each event's name swapped for an eligible name in "
-                           "the same rev_21 decile that day. Section 4 declared this null "
-                           "load-bearing. Admits nothing (R15).",
-                   scope_change="Section 4 declared B_s over the 10-cell grid; this runs the "
+                   purpose=("B_s on ONE cell: each event's name swapped for an eligible name "
+                            "in the same rev_21 decile that day, section 4's load-bearing null."
+                            if null_kind == "Bs" else
+                            "A prime on ONE cell: each name's events rotated within its own "
+                            "eligible bars, the score rotated with them. Tests whether the "
+                            "TIMING carries the edge or the decile-crossing SHAPE does.")
+                           + " Admits nothing (R15).",
+                   scope_change=f"Section 4 declared {NAME} over the 10-cell grid; this runs the "
                                 "PRIMARY cell only. Narrowed by the principal 2026-09-08.",
-                   positive_control=f"{CONTROL} is the score K1 killed as a rev_21 proxy. If B_s "
+                   positive_control=f"{CONTROL} is the score K1 killed as a rev_21 proxy. If {NAME} "
                                     f"does not kill it, the null is broken and its verdict on "
                                     f"{CANDIDATE} proves nothing.",
                    stats=stats, draws={k: v for k, v in draws.items()})
-    BS_OUT.write_text(json.dumps(payload, indent=1))
-    print(f"\n  [P] wrote {BS_OUT.relative_to(REPO)} BEFORE rendering", flush=True)
+    OUTP = BS_OUT if null_kind == "Bs" else AP_OUT
+    OUTP.write_text(json.dumps(payload, indent=1))
+    print(f"\n  [P] wrote {OUTP.relative_to(REPO)} BEFORE rendering", flush=True)
 
-    print(f"\nB_s -- swap the name inside the same rev_21 decile, {n_draws:,} draws, "
-          f"E1 cap {CAP} long\n")
+    # THE CONTROL'S EXPECTED DIRECTION IS NOT THE SAME UNDER THE TWO NULLS, and labelling it as
+    # though it were is how a reader draws the wrong conclusion from a right number.
+    #   B_s holds the rev_21 decile fixed. up_frac_21 IS that decile (rho +0.601), so it MUST die;
+    #        a B_s that spares it has no power and its verdict on the candidate is worthless.
+    #   A'  destroys TIMING and keeps the names. rev_21's own E1 timing is real and published at
+    #        +38 bp (FINDINGS 31), so up_frac_21 SHOULD survive A'. Its survival is a sanity check
+    #        on the null, not a failure of it.
+    head = ("B_s -- swap the name inside the same rev_21 decile" if null_kind == "Bs" else
+            "A' -- rotate each name's events within its own eligible bars, score rotated with them")
+    print(f"\n{head}, {n_draws:,} draws, E1 cap {CAP} long\n")
     print(f"  {'score':<16s} {'obs':>8s} {'p50':>8s} {'p95':>8s} {'SE':>6s} {'margin':>8s}   verdict")
     for k in (CANDIDATE, CONTROL):
         s = stats[k]
-        tag = "  <- POSITIVE CONTROL: must be killed" if k == CONTROL else "  <- the candidate"
+        ctl = ("  <- CONTROL: must DIE here (it is the decile)" if null_kind == "Bs" else
+               "  <- CONTROL: should SURVIVE here (rev_21 timing is real, FINDINGS 31)")
+        tag = ctl if k == CONTROL else "  <- the candidate"
         print(f"  {k:<16s} {s['observed']:+8.2f} {s['p50']:+8.2f} {s['p95']:+8.2f} "
               f"{s['se_p95']:6.2f} {s['margin']:+8.2f}   {s['verdict']}{tag}")
     print(f"\n  ({time.time() - t0:.0f}s)")
@@ -426,6 +476,8 @@ def main() -> int:
     ap.add_argument("--overlap", action="store_true")
     ap.add_argument("--calibrate", action="store_true")
     ap.add_argument("--bs", action="store_true", help="merge the shards and score")
+    ap.add_argument("--null", choices=("Bs", "A"), default="Bs",
+                    help="Bs: same-rev_21-decile name swap. A: per-name time rotation (A prime)")
     ap.add_argument("--shard", type=int, help="run only draws where idx %% nshards == shard")
     ap.add_argument("--nshards", type=int, default=NSHARDS)
     ap.add_argument("--verify-shard", action="store_true",
@@ -443,8 +495,10 @@ def main() -> int:
         return overlap(PREP, V50, SG, V59)
     if a.calibrate or a.bs or a.shard is not None or a.verify_shard:
         FN = _load("fast_null", "fast_null.py")
+        V73 = _load("d373r", "run_d373_winners_dip_long.py") if a.null == "A" else None
         return bs(PREP, V50, SG, V59, FN, a.draws, a.calibrate,
-                  shard=a.shard, nshards=a.nshards, verify_shard=a.verify_shard)
+                  shard=a.shard, nshards=a.nshards, verify_shard=a.verify_shard,
+                  null_kind=a.null, V73=V73)
     ap.error("pass --overlap, --calibrate, --shard, --verify-shard or --bs")
 
 
