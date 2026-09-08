@@ -1,0 +1,374 @@
+{
+ "study": 394,
+ "stage": "asymmetry_candidates",
+ "score": "up_run_21",
+ "shape": "E1",
+ "window": 21,
+ "purpose": "Do distress, one-sided events or SIGNED path efficiency separate the left tail from the right? Descriptive; nothing selected, fitted or admitted (R15).",
+ "criterion": "asymmetry = spread_left - spread_right (Addendum 2)",
+ "look_ahead_warning": "delisting_diagnostic uses last_live and is NOT usable as a filter. Diagnostic only.",
+ "results": {
+  "5": {
+   "trades": 24777,
+   "mean_bp": 4.722453778184972,
+   "round_trip": 61.47763305130496,
+   "candidates": {
+    "ER_signed_21": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 8259,
+       "p_left": 0.10860879041046131,
+       "p_right": 0.10945635064777819,
+       "mean_bp": 5.804592842732595,
+       "mean_if_dropped": 4.181384245911164,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "mid",
+       "n": 8259,
+       "p_left": 0.09904346773217096,
+       "p_right": 0.10219154861363361,
+       "mean_bp": 8.719283093941426,
+       "mean_if_dropped": 2.724039120306749,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "hi",
+       "n": 8259,
+       "p_left": 0.09238406586753845,
+       "p_right": 0.08838842474875892,
+       "mean_bp": -0.3565146021191001,
+       "mean_if_dropped": 7.261937968337009,
+       "kept_if_dropped": 16518
+      }
+     ],
+     "spread_left": 0.01622472454292287,
+     "spread_right": 0.021067925899019263,
+     "asymmetry": -0.004843201356096394,
+     "best_drop_band": "hi",
+     "best_mean_if_dropped": 7.261937968337009,
+     "covers_cost": false
+    },
+    "ER_21": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 8259,
+       "p_left": 0.09759050732534205,
+       "p_right": 0.10037534810509748,
+       "mean_bp": 7.314884219314882,
+       "mean_if_dropped": 3.42623855762002,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "mid",
+       "n": 8259,
+       "p_left": 0.09916454776607338,
+       "p_right": 0.09371594624046495,
+       "mean_bp": 1.5862114998655303,
+       "mean_if_dropped": 6.290574917344695,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "hi",
+       "n": 8259,
+       "p_left": 0.1032812689187553,
+       "p_right": 0.10594502966460831,
+       "mean_bp": 5.266265615374509,
+       "mean_if_dropped": 4.4505478595902055,
+       "kept_if_dropped": 16518
+      }
+     ],
+     "spread_left": 0.005690761593413252,
+     "spread_right": 0.012229083424143361,
+     "asymmetry": -0.006538321830730109,
+     "best_drop_band": "mid",
+     "best_mean_if_dropped": 6.290574917344695,
+     "covers_cost": false
+    },
+    "DD_252": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 8259,
+       "p_left": 0.15365056302215765,
+       "p_right": 0.1557089235984986,
+       "mean_bp": 9.08179921888073,
+       "mean_if_dropped": 2.542781057837096,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "mid",
+       "n": 8259,
+       "p_left": 0.08415062356217459,
+       "p_right": 0.08257658312144327,
+       "mean_bp": -1.4389427927295506,
+       "mean_if_dropped": 7.803152063642235,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "hi",
+       "n": 8259,
+       "p_left": 0.06223513742583848,
+       "p_right": 0.06175081729022884,
+       "mean_bp": 6.524504908403744,
+       "mean_if_dropped": 3.8214282130755897,
+       "kept_if_dropped": 16518
+      }
+     ],
+     "spread_left": 0.09141542559631918,
+     "spread_right": 0.09395810630826977,
+     "asymmetry": -0.0025426807119505873,
+     "best_drop_band": "mid",
+     "best_mean_if_dropped": 7.803152063642235,
+     "covers_cost": false
+    },
+    "DV_spike": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 8259,
+       "p_left": 0.1046131492916818,
+       "p_right": 0.10558178956290108,
+       "mean_bp": 4.114098517438931,
+       "mean_if_dropped": 5.026631408557993,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "mid",
+       "n": 8259,
+       "p_left": 0.09008354522339267,
+       "p_right": 0.08633006417241797,
+       "mean_bp": -2.7620317613288305,
+       "mean_if_dropped": 8.464696547941875,
+       "kept_if_dropped": 16518
+      },
+      {
+       "band": "hi",
+       "n": 8259,
+       "p_left": 0.10533962949509626,
+       "p_right": 0.10812447027485168,
+       "mean_bp": 12.815294578444817,
+       "mean_if_dropped": 0.6760333780550496,
+       "kept_if_dropped": 16518
+      }
+     ],
+     "spread_left": 0.015256084271703593,
+     "spread_right": 0.021794406102433717,
+     "asymmetry": -0.006538321830730123,
+     "best_drop_band": "mid",
+     "best_mean_if_dropped": 8.464696547941875,
+     "covers_cost": false
+    }
+   },
+   "delisting_diagnostic": [
+    {
+     "band": "soon",
+     "n": 8270,
+     "median_bars_to_delist": 384.0,
+     "p_left": 0.11934703748488512,
+     "p_right": 0.1207980652962515,
+     "mean_bp": 7.281222739332478
+    },
+    {
+     "band": "mid",
+     "n": 8237,
+     "median_bars_to_delist": 1291.0,
+     "p_left": 0.10841325725385456,
+     "p_right": 0.11241957023188054,
+     "mean_bp": 5.973622744274312
+    },
+    {
+     "band": "far",
+     "n": 8270,
+     "median_bars_to_delist": 2395.0,
+     "p_left": 0.07230955259975816,
+     "p_right": 0.06686819830713422,
+     "mean_bp": 0.9175084236060463
+    }
+   ]
+  },
+  "20": {
+   "trades": 20785,
+   "mean_bp": 22.056417616197663,
+   "round_trip": 61.18549967154047,
+   "candidates": {
+    "ER_signed_21": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 6928,
+       "p_left": 0.11128752886836028,
+       "p_right": 0.11229792147806004,
+       "mean_bp": 23.094727303315537,
+       "mean_if_dropped": 21.53730023780749,
+       "kept_if_dropped": 13857
+      },
+      {
+       "band": "mid",
+       "n": 6929,
+       "p_left": 0.09640640785106076,
+       "p_right": 0.10333381440323279,
+       "mean_bp": 38.948653276973126,
+       "mean_if_dropped": 13.609080657947581,
+       "kept_if_dropped": 13856
+      },
+      {
+       "band": "hi",
+       "n": 6928,
+       "p_left": 0.09237875288683603,
+       "p_right": 0.08443995381062355,
+       "mean_bp": 4.123434012579614,
+       "mean_if_dropped": 31.022262344917145,
+       "kept_if_dropped": 13857
+      }
+     ],
+     "spread_left": 0.018908775981524253,
+     "spread_right": 0.027857967667436492,
+     "asymmetry": -0.008949191685912239,
+     "best_drop_band": "hi",
+     "best_mean_if_dropped": 31.022262344917145,
+     "covers_cost": false
+    },
+    "ER_21": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 6928,
+       "p_left": 0.09526558891454966,
+       "p_right": 0.09887413394919169,
+       "mean_bp": 31.64108084968944,
+       "mean_if_dropped": 17.264431841381242,
+       "kept_if_dropped": 13857
+      },
+      {
+       "band": "mid",
+       "n": 6929,
+       "p_left": 0.10203492567470053,
+       "p_right": 0.09366430942415933,
+       "mean_bp": 9.468669266257915,
+       "mean_if_dropped": 28.35120026030365,
+       "kept_if_dropped": 13856
+      },
+      {
+       "band": "hi",
+       "n": 6928,
+       "p_left": 0.10277136258660508,
+       "p_right": 0.10753464203233257,
+       "mean_bp": 25.061319670917847,
+       "mean_if_dropped": 20.554075014256302,
+       "kept_if_dropped": 13857
+      }
+     ],
+     "spread_left": 0.0075057736720554186,
+     "spread_right": 0.013870332608173233,
+     "asymmetry": -0.0063645589361178145,
+     "best_drop_band": "mid",
+     "best_mean_if_dropped": 28.35120026030365,
+     "covers_cost": false
+    },
+    "DD_252": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 6928,
+       "p_left": 0.1535796766743649,
+       "p_right": 0.15805427251732102,
+       "mean_bp": 33.656310958005214,
+       "mean_if_dropped": 16.256889502461448,
+       "kept_if_dropped": 13857
+      },
+      {
+       "band": "mid",
+       "n": 6929,
+       "p_left": 0.08991196420839948,
+       "p_right": 0.08024245922932602,
+       "mean_bp": -5.49751370185682,
+       "mean_if_dropped": 35.83537186726575,
+       "kept_if_dropped": 13856
+      },
+      {
+       "band": "hi",
+       "n": 6928,
+       "p_left": 0.05658198614318707,
+       "p_right": 0.0617782909930716,
+       "mean_bp": 38.0144327765263,
+       "mean_if_dropped": 14.077985846640269,
+       "kept_if_dropped": 13857
+      }
+     ],
+     "spread_left": 0.09699769053117782,
+     "spread_right": 0.09627598152424942,
+     "asymmetry": 0.0007217090069284032,
+     "best_drop_band": "mid",
+     "best_mean_if_dropped": 35.83537186726575,
+     "covers_cost": false
+    },
+    "DV_spike": {
+     "bands": [
+      {
+       "band": "lo",
+       "n": 6928,
+       "p_left": 0.101905311778291,
+       "p_right": 0.10450346420323325,
+       "mean_bp": 32.32964830181483,
+       "mean_if_dropped": 16.92017296079204,
+       "kept_if_dropped": 13857
+      },
+      {
+       "band": "mid",
+       "n": 6929,
+       "p_left": 0.0951075191225285,
+       "p_right": 0.08933468032905181,
+       "mean_bp": -1.5862710551925734,
+       "mean_if_dropped": 33.879468266028994,
+       "kept_if_dropped": 13856
+      },
+      {
+       "band": "hi",
+       "n": 6928,
+       "p_left": 0.10306004618937645,
+       "p_right": 0.10623556581986143,
+       "mean_bp": 35.42928823024316,
+       "mean_if_dropped": 15.370464840408731,
+       "kept_if_dropped": 13857
+      }
+     ],
+     "spread_left": 0.007952527066847945,
+     "spread_right": 0.01690088549080962,
+     "asymmetry": -0.008948358423961675,
+     "best_drop_band": "mid",
+     "best_mean_if_dropped": 33.879468266028994,
+     "covers_cost": false
+    }
+   },
+   "delisting_diagnostic": [
+    {
+     "band": "soon",
+     "n": 6943,
+     "median_bars_to_delist": 403.0,
+     "p_left": 0.11997695520668299,
+     "p_right": 0.12156128474722742,
+     "mean_bp": 21.03431529873742
+    },
+    {
+     "band": "mid",
+     "n": 6914,
+     "median_bars_to_delist": 1317.0,
+     "p_left": 0.10717385015909749,
+     "p_right": 0.11050043390222737,
+     "mean_bp": 29.465113222180328
+    },
+    {
+     "band": "far",
+     "n": 6928,
+     "median_bars_to_delist": 2420.0,
+     "p_left": 0.07289260969976906,
+     "p_right": 0.0679849884526559,
+     "mean_bp": 15.687008691596384
+    }
+   ]
+  }
+ }
+}
