@@ -65,19 +65,28 @@ def gather(A, rows, cols, T):
     return np.where(ok, A[np.clip(rows, 0, T - 1), cols], np.nan), ok
 
 
-def build_zones(P, cand, atr, life, verbose=False):
-    """Candidates -> ARMED zones. Returns a flat event table; every field is causal."""
+def build_zones(P, cand, atr, life, verbose=False, delta=0.0):
+    """Candidates -> ARMED zones. Returns a flat event table; every field is causal.
+
+    `delta` is D413's distance gate (f48e21b is D412's record; 6374e5c is D413's): the close must
+    clear the zone by delta * ATR, measured at the CREATION bar, not merely sit outside it.
+
+    delta = 0.0 IS D412's RULE EXACTLY. The pad is then a scalar zero rather than `0 * atr`, so a
+    bar whose ATR is still NaN behaves as it did before this parameter existed -- `C > H + NaN`
+    would be False and would have silently changed D412's committed result."""
     T, n = P["CL"].shape
     u, i = np.where(cand)
     if verbose:
         print(f"      candidates {len(u):,}")
     lo_z, hi_z = P["LO"][u, i], P["HI"][u, i]
-    # ---- arming: first bar within ARM_MAX whose CLOSE is fully outside the zone
+    # ---- arming: first bar within ARM_MAX whose CLOSE clears the zone by delta * ATR
+    pad = 0.0 if delta == 0 else delta * atr[u, i]
+    hi_a, lo_a = hi_z + pad, lo_z - pad
     off = np.arange(1, ARM_MAX + 1)
     rows = u[:, None] + off[None, :]
     cols = np.repeat(i[:, None], ARM_MAX, axis=1)
     Cw, okw = gather(P["CL"], rows, cols, T)
-    out = ((Cw > hi_z[:, None]) | (Cw < lo_z[:, None])) & okw
+    out = ((Cw > hi_a[:, None]) | (Cw < lo_a[:, None])) & okw
     armed = out.any(axis=1)
     k = np.argmax(out, axis=1)
     a = u + 1 + k
@@ -90,8 +99,11 @@ def build_zones(P, cand, atr, life, verbose=False):
     wid = hi_z - lo_z
     at = atr[a, i]
     ok = np.isfinite(at) & (at > 0) & (dist > 0) & (wid > 0) & P["elig"][a, i] & P["elig"][u, i]
+    # atr_u is the ATR the ARMING RULE used (measured at the creation bar). [DIST] must read the
+    # same quantity the gate read; dividing by atr[a] instead compares against a different number
+    # and fires spuriously whenever volatility moved between creation and arming.
     return dict(u=u[ok], i=i[ok], lo=lo_z[ok], hi=hi_z[ok], a=a[ok], side=side[ok],
-                dist=dist[ok], wid=wid[ok], Ca=Ca[ok], atr=at[ok])
+                dist=dist[ok], wid=wid[ok], Ca=Ca[ok], atr=at[ok], atr_u=atr[u, i][ok])
 
 
 def touch_windows(P, Z, life):
@@ -293,7 +305,7 @@ def candidates(P, atr, kind, theta=THETA):
     raise ValueError(kind)
 
 
-def run_arm(P, atr, kind, theta, life, h, verbose=False, cap=None, seed=9):
+def run_arm(P, atr, kind, theta, life, h, verbose=False, cap=None, seed=9, delta=0.0):
     cand, _ = candidates(P, atr, kind, theta)
     if cap is not None and cand.sum() > cap:
         # ORD's pool is ~3.5x the departure pool and its windows would allocate ~1 GB. A uniform
@@ -304,7 +316,7 @@ def run_arm(P, atr, kind, theta, life, h, verbose=False, cap=None, seed=9):
         drop = np.random.default_rng(seed).choice(w, w.size - cap, replace=False)
         cand = cand.copy()
         cand.ravel()[drop] = False
-    Z = build_zones(P, cand, atr, life, verbose=verbose)
+    Z = build_zones(P, cand, atr, life, verbose=verbose, delta=delta)
     if len(Z["u"]) < MIN_EVENTS:
         return None
     HIw, LOw, ok, rows, cols = touch_windows(P, Z, life)
