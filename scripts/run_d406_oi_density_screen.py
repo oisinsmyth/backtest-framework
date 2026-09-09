@@ -183,8 +183,19 @@ def sigma_and_fwd(P):
 
 
 # ------------------------------------------------------------------ the screen
-def build_rows(P, chains, sig, lg, w, horizons):
-    """One row per (name, snapshot) clearing the density floor."""
+def set_dates(which):
+    """The snapshot dates belonging to ONE set.
+
+    The chain cache under data/raw/ now holds THREE disjoint sets (d406, oos, expiry) in one
+    directory tree, so a screen that walked it unfiltered would silently pool 22,672 chains
+    instead of its own 7,559 and give a different answer than the one D406 committed. Every
+    screen filters to its own manifest."""
+    p = CACHE / ("_manifest.json" if which == "d406" else f"_manifest_{which}.json")
+    return set(json.loads(p.read_text(encoding="utf-8"))["dates"])
+
+
+def build_rows(P, chains, sig, lg, w, horizons, allowed=None):
+    """One row per (name, snapshot) clearing the density floor, within `allowed` dates."""
     rows = []
     align = []
     for s, byd in chains.items():
@@ -192,6 +203,8 @@ def build_rows(P, chains, sig, lg, w, horizons):
         if i is None:
             continue
         for d, c in byd.items():
+            if allowed is not None and d not in allowed:
+                continue
             t = P["pos"].get(d)
             if t is None or c["dense"] < MIN_DENSE_STRIKES or c["total"] <= 0:
                 continue
@@ -248,11 +261,12 @@ def quintile_table(rows, h, field, strat=None):
                 monotone_inc=bool(all(means[j] <= means[j + 1] for j in range(NQ - 1))))
 
 
-def screen():
+def screen(which="d406"):
     t0 = time.time()
     print("D406 SCREEN  open-interest density at spot")
     print("      the bar was committed in 478fb72 BEFORE this ran\n")
-    man = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    allowed = set_dates(which)
+    man = json.loads((CACHE / ("_manifest.json" if which == "d406" else f"_manifest_{which}.json")).read_text(encoding="utf-8"))
     print(f"  manifest {len(man['symbols'])} names x {len(man['dates'])} snapshots, "
           f"fetch stats {man['stats']}")
     chains = summarise_chains()
@@ -262,7 +276,7 @@ def screen():
 
     res = {}
     for w in WS:
-        rows, align = build_rows(P, chains, sig, lg, w, HZ)
+        rows, align = build_rows(P, chains, sig, lg, w, HZ, allowed)
         if w == WS[0]:
             med = float(np.median(align)) if align.size else float("nan")
             bad = float(np.mean(np.abs(align - 1.0) > 0.10)) if align.size else float("nan")
@@ -320,17 +334,19 @@ def screen():
               + f"   spread {sgn['spread']:+.4f}")
     verdict = bool(T1 and T2 and T3)
     print(f"\n  VERDICT: {'CLEARS -- write a pre-registration' if verdict else 'FAILS -- D406 CLOSES'}")
-    OUT.write_text(json.dumps(dict(bar=dict(T1=T1, T2=T2, T3=T3, clears=verdict),
+    out_p = OUT if which == "d406" else OUT.with_name(f"d406_oi_density_screen_{which}.json")
+    out_p.write_text(json.dumps(dict(snapshot_set=which, bar=dict(T1=T1, T2=T2, T3=T3, clears=verdict),
                                    cells=res, horizons=list(HZ), windows=list(WS)),
                               indent=1, default=float), encoding="utf-8")
-    print(f"  wrote {OUT.relative_to(REPO)}  in {time.time()-t0:.0f}s")
+    print(f"  wrote {out_p.relative_to(REPO)}  in {time.time()-t0:.0f}s")
     return verdict
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--screen", action="store_true")
+    ap.add_argument("--set", default="d406", choices=("d406", "oos", "expiry"))
     a = ap.parse_args()
     if not a.screen:
         ap.error("pass --screen")
-    screen()
+    screen(a.set)
