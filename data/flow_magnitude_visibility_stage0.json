@@ -1,0 +1,207 @@
+{
+ "design": {
+  "cutoff_exclusive": "2024-01-01",
+  "fit_frac": 0.3,
+  "n_ret_lags": 4,
+  "z_window": 2000,
+  "residualised_on": "abs(return) and its lags",
+  "bar": {
+   "M1_residual_corr": 0.3,
+   "M2_top_bucket_recall": 0.4
+  }
+ },
+ "results": {
+  "BTCUSDT": {
+   "n_bars": 203808,
+   "n_reported": 142586,
+   "proxies": {
+    "range_frac": {
+     "corr_raw": -0.03332827578793726,
+     "corr_residual": -0.0641881409656233,
+     "recall_q5": 0.09538726603492834,
+     "recall_q1": 0.07557631561260837,
+     "is_lambda": false
+    },
+    "abs_bar_dir": {
+     "corr_raw": 0.1550202349683758,
+     "corr_residual": 0.16336043412409693,
+     "recall_q5": 0.3092254679301433,
+     "recall_q1": 0.2554271120370993,
+     "is_lambda": false
+    },
+    "abs_close_pos": {
+     "corr_raw": 0.06960412654591126,
+     "corr_residual": 0.07016359181845963,
+     "recall_q5": 0.28181533401206044,
+     "recall_q1": 0.24961354929766785,
+     "is_lambda": false
+    },
+    "lambda_kyle": {
+     "corr_raw": 0.06561647107652431,
+     "corr_residual": 0.09789255196126079,
+     "recall_q5": 0.14723157647427362,
+     "recall_q1": 0.09042946434572216,
+     "is_lambda": true
+    },
+    "lambda_range": {
+     "corr_raw": -0.015407306941313688,
+     "corr_residual": -0.03930328996609324,
+     "recall_q5": 0.10231811418278644,
+     "recall_q1": 0.09217689360844143,
+     "is_lambda": true
+    }
+   }
+  },
+  "BTGUSDT": {
+   "n_bars": 52896,
+   "n_reported": 36275,
+   "proxies": {
+    "range_frac": {
+     "corr_raw": -0.2220027380258559,
+     "corr_residual": -0.16790429377416136,
+     "recall_q5": 0.03176522312596175,
+     "recall_q1": 0.07518045530260967,
+     "is_lambda": false
+    },
+    "abs_bar_dir": {
+     "corr_raw": 0.21011149987128028,
+     "corr_residual": 0.2307427635897007,
+     "recall_q5": 0.43339195427566496,
+     "recall_q1": 0.29561354802887285,
+     "is_lambda": false
+    },
+    "abs_close_pos": {
+     "corr_raw": 0.18468685534565507,
+     "corr_residual": 0.18100729755374714,
+     "recall_q5": 0.47351066168388656,
+     "recall_q1": 0.3033870072182121,
+     "is_lambda": false
+    },
+    "lambda_kyle": {
+     "corr_raw": -0.03208145278611295,
+     "corr_residual": 0.1186499484778766,
+     "recall_q5": 0.15453945922180698,
+     "recall_q1": 0.07295946696279844,
+     "is_lambda": true
+    },
+    "lambda_range": {
+     "corr_raw": -0.17997079199424507,
+     "corr_residual": -0.07142140684323364,
+     "recall_q5": 0.08749175642998461,
+     "recall_q1": 0.07473625763464742,
+     "is_lambda": true
+    }
+   }
+  },
+  "ETHUSDT": {
+   "n_bars": 203808,
+   "n_reported": 142586,
+   "proxies": {
+    "range_frac": {
+     "corr_raw": -0.09767663352082896,
+     "corr_residual": -0.08189084733492014,
+     "recall_q5": 0.09009774755631109,
+     "recall_q1": 0.07736981986415986,
+     "is_lambda": false
+    },
+    "abs_bar_dir": {
+     "corr_raw": 0.11084974369352507,
+     "corr_residual": 0.1427071983942555,
+     "recall_q5": 0.2973766564926786,
+     "recall_q1": 0.25642287626734916,
+     "is_lambda": false
+    },
+    "abs_close_pos": {
+     "corr_raw": 0.041546638106050006,
+     "corr_residual": 0.04825423344488615,
+     "recall_q5": 0.27237955414751,
+     "recall_q1": 0.2518292482855924,
+     "is_lambda": false
+    },
+    "lambda_kyle": {
+     "corr_raw": -0.002760253756487889,
+     "corr_residual": -0.02235814188126696,
+     "recall_q5": 0.1103426959780551,
+     "recall_q1": 0.04708468681300653,
+     "is_lambda": true
+    },
+    "lambda_range": {
+     "corr_raw": -0.08316469865088079,
+     "corr_residual": -0.11242948571844702,
+     "recall_q5": 0.09214542363713635,
+     "recall_q1": 0.08583522000196869,
+     "is_lambda": true
+    }
+   }
+  },
+  "XEMUSDT": {
+   "n_bars": 107712,
+   "n_reported": 73316,
+   "proxies": {
+    "range_frac": {
+     "corr_raw": -0.23077388460499948,
+     "corr_residual": -0.14976994211376274,
+     "recall_q5": 0.04580736210749147,
+     "recall_q1": 0.096804615555309,
+     "is_lambda": false
+    },
+    "abs_bar_dir": {
+     "corr_raw": 0.15696726850777543,
+     "corr_residual": 0.1714090496732261,
+     "recall_q5": 0.3924497236269552,
+     "recall_q1": 0.2873626983246422,
+     "is_lambda": false
+    },
+    "abs_close_pos": {
+     "corr_raw": 0.206608197330598,
+     "corr_residual": 0.19028192431953275,
+     "recall_q5": 0.28525226390685643,
+     "recall_q1": 0.27876400754465774,
+     "is_lambda": false
+    },
+    "lambda_kyle": {
+     "corr_raw": -0.10690480729989199,
+     "corr_residual": 0.05754269952567266,
+     "recall_q5": 0.16823474067976008,
+     "recall_q1": 0.15605236880062132,
+     "is_lambda": true
+    },
+    "lambda_range": {
+     "corr_raw": -0.224686368156495,
+     "corr_residual": -0.14493927726030764,
+     "recall_q5": 0.05268728683993885,
+     "recall_q1": 0.10579163430600244,
+     "is_lambda": true
+    }
+   }
+  }
+ },
+ "verdict": {
+  "range_frac": {
+   "M1_corr": false,
+   "M2_recall": false,
+   "PASSES": false
+  },
+  "abs_bar_dir": {
+   "M1_corr": false,
+   "M2_recall": false,
+   "PASSES": false
+  },
+  "abs_close_pos": {
+   "M1_corr": false,
+   "M2_recall": false,
+   "PASSES": false
+  },
+  "lambda_kyle": {
+   "M1_corr": false,
+   "M2_recall": false,
+   "PASSES": false
+  },
+  "lambda_range": {
+   "M1_corr": false,
+   "M2_recall": false,
+   "PASSES": false
+  },
+  "ANY_PROXY_PASSES": false
+ }
+}
