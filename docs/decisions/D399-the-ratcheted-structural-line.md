@@ -88,6 +88,41 @@ trend confirmation), so it does not decide this record. **It is disclosed search
 warning: this pair of overlays has already produced a cell that looked good and did not survive its
 own search floor.**
 
+### 1d′. The STRUCTURE programme's 86 looks, and why this record does not inherit them
+
+**Found while checking for a decision-number collision**, in the R13 ledger of
+`D403-the-wick-stack-potential-map-read-at-15-minutes.md` — a **concurrent record on master doing
+the same architecture, daily-built and 15-minute-read.** Its ledger lists five prior looks at a
+price-level map, and one of them is the module this record is built on.
+
+| | scope | ledger | bears on D399? |
+|---|---|--:|---|
+| **STRUCTURE, D173 + D204–D211** | the five `STRUCTURE_MODEL.md` components | **86 looks**, CLOSED by D211 | **the components are shared** — see below |
+| TERRAIN, D189–D203 | volume-at-price, supply/demand bands | 259 looks, CLOSED terminal | adjacent, **not counted** — a fitted trendline is not a level map |
+| D272 / D273 | `dist_hvn` / `dist_lvn` as scores | run and closed | no |
+
+**D211's closure is scope-limited and says so in its own first line:** *"closed on **BTC/ETH 15m
+bars** as a source of tradeable directional signal."* And its "What is not closed" is explicit:
+
+> *"The components are reusable and several are pinned by test: the BOS/CHoCH state machine with
+> D173's lag, the fair-value-gap detector, the R-unit excursion, and the two matched controls."*
+
+**The programme has already acted on that reading.** D211 closed on 2026-08-24; **D240 admitted S2
+to `docs/BOOK.md` on 2026-08-28 using `pivots` from the same module.** Reuse outside D211's scope
+is established practice, not a novelty introduced here.
+
+> **THE JUDGEMENT, STATED SO IT CAN BE OVERRULED: the 86 looks do NOT transfer.** D211's hypothesis
+> was a five-component discretionary price-action model on crypto 15-minute bars; this record's is
+> a two-sided trend state and a retracement on US single names on daily bars. Different hypothesis,
+> different universe, different frequency, and the shared detector is explicitly blessed for reuse.
+> **This record's R13 count is its own 48 cells (§6). If the principal reads the ledger as
+> transferring, the hurdles must be reset before the runner exists, not after.**
+
+**And the concurrent record is flagged deliberately.** D403 and D399 are different objects — a wick
+stack read at 15 minutes against a fitted trendline read at 15 minutes — but they share one open
+question, **the 15-minute fill convention (§7)**, and it should not be decided twice, differently,
+in two live records.
+
 ### 1e. Cost, which killed the last thing tried at this frequency
 
 **D247 failed on cost at 15 minutes on 57 ETFs: 334 turnover units per symbol-year, breakeven
