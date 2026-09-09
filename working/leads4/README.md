@@ -1,9 +1,9 @@
-# working/leads4/ — round 4, **PREPARED AND NOT COMMISSIONED**
+# working/leads4/ — round 4, **COMMISSIONED**
 
-**Prepared 2026-09-09**, after round 3's six briefs landed and were consolidated into
-[`docs/research/the-plumbing-round.md`](../../docs/research/the-plumbing-round.md). **No agent has
-been dispatched and no brief exists in this directory.** The same quarantine contract as
-[`../leads/README.md`](../leads/README.md) applies and is not repeated. Under
+**Prepared and commissioned 2026-09-09**, after round 3's six briefs landed and were consolidated
+into [`docs/research/the-plumbing-round.md`](../../docs/research/the-plumbing-round.md). **Six
+agents, one lane each, running in parallel**; briefs land here as `H1`–`H6`. The same quarantine
+contract as [`../leads/README.md`](../leads/README.md) applies and is not repeated. Under
 [R15](../../docs/RULES.md#r15) nothing here closes or admits anything.
 
 **Cross-round index:** [`docs/research/README.md`](../../docs/research/README.md).
@@ -309,7 +309,38 @@ carry:
 
 **And a contact-string rule**, earned by round 3's privacy slip: **any fetch requiring a contact
 address in the User-Agent must use the project mailbox** that `scripts/d331_edgar_deals.py` already
-uses — **never a personal address.**
+uses — **never a personal address, and never one found in the environment.**
+
+### Lane-specific instructions actually issued, recorded because they are the durable part
+
+- **`H1`** is told the three spent item codes **with D331's numbers**, and told to **derive its own
+  look-ahead rule from primary documentation** rather than inherit one, **because this programme's
+  own puller has two unrepaired bugs.** It is also asked a question the slate did not contain:
+  **for each code, is the SIGN determinable from the filing alone**, without reading narrative text?
+  A code whose sign needs NLP is far more expensive here than one whose sign is structural.
+- **`H2`** is told to **start from the objection** — a class action is filed because the price fell —
+  and that **if the filing leg is contaminated beyond repair it should say so early and spend its
+  effort on the resolution leg.** It is told not to register for PACER.
+- **`H3`** carries three constraints: **no medical advice or clinical judgement of any kind**; the
+  reminder that **the obvious instrument for a binary event is options, which are permanently
+  excluded** — with permission to conclude *"only tradeable through options"* and stop; and a
+  requirement to state plainly **whether a PDUFA date is known in advance and public at all.**
+- **`H4`** is told **the code check is not its job and it cannot do it.** Its bar is a **stated
+  convention with a citation**, with methodology sentences **quoted verbatim** — *a paraphrase of a
+  convention is not a convention* — and it is told that **"the literature does not state it" is
+  itself the headline if that is what it finds.** The summariser rule is flagged as mattering more
+  here than anywhere else, because a summariser paraphrases away exactly the sentence it needs.
+- **`H5`** is given **named dead tickers to probe live** (SHLD, BBBY, TWTR, SVB Financial) and told
+  to **report what actually came back, including failures**, and to **recommend nothing it did not
+  probe.** It is told a **negative is as useful as a positive**, and that if no free source serves
+  delisted daily bars it should spend its remaining effort on **what can be asserted about a single
+  series without a second one.** It is warned that **a second source keyed on a recycled ticker is
+  worse than no second source** — round 3 measured 28 of 425 reused, two with overlapping windows.
+- **`H6`** is told **the block bootstrap itself is not the subject** and that drifting into
+  multiple-testing means it is in the wrong lane. It is given the programme's own precedent trail
+  (20, 21, the {1,5,20,60} ladder, and the record that says the sensitivity was never pursued), the
+  **26-offset finding** as the sharpest instance of a group with no resolving power, and explicit
+  permission to **confirm the inherited choice and end there, plainly and without padding.**
 
 ---
 
