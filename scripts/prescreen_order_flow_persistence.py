@@ -82,9 +82,18 @@ B2  IT LEADS PRICE.  Forward return is monotone across the five e-quintiles, in
     DIRECTION IS DECLARED HERE, +1, so a reversal cannot be re-read as a result
     (D246 Constraint 3, the guard D263 needed).
 
-B3  IT DOES NOT FULLY REVERT.  The top-quintile event-time path retains >= 50%
-    of its peak at k = 8 bars (2 hours).
+B3  IT DOES NOT FULLY REVERT.  The event-time Q5-Q1 path retains >= 50% of its
+    running peak AT THE END OF THE WINDOW (k = 16 bars, 4 hours).
     Full reversion is transient impact -- priced, not an edge.
+
+    CORRECTED IN PLACE BEFORE ANY VERDICT WAS REPORTED. The first implementation
+    compared k=8 against the peak over k=1..16. Both observed paths RISE to the
+    right edge, so that peak sits at k=16 and the ratio measured HOW MUCH HAD
+    ARRIVED BY HALFWAY, not whether anything decayed -- the criterion's name was
+    right and the scalar it compared was wrong. Under the original code a path
+    that never reverts at all could score 0.22 and "fail" a reversion test. The
+    comparison is now END vs PEAK, which is the quantity the docstring names.
+    The bar itself (>= 50%, reject transient impact) is unchanged.
 
 FAILING ANY ONE CLOSES THIS CONSTRUCTION, NOT THE AXIS. 15-minute aggregated
 aggressor imbalance is one construction; trade-SIZE decomposition from the
@@ -401,8 +410,12 @@ def main():
             fwd = forward_cum_return_shift(b["r"], k)
             mm = bucket_means(q, fwd)
             path.append((mm[4] - mm[0]) * 1e4)
-        peak = max(path, key=abs)
-        ret8 = path[7]
+        # B3 tests DECAY: the end of the window against the running peak. Using
+        # k=8 against a peak that sits at k=16 measured build-up instead.
+        peak = max(path)
+        peak_k = int(np.argmax(path)) + 1
+        end = path[-1]
+        retention = (end / peak) if peak > 0 else float("nan")
 
         b1_acf = a_res[0]
         b1_hl = half_life(a_res)
@@ -412,7 +425,7 @@ def main():
             and b1_acf >= B1_ACF_FLOOR
             and b1_hl >= B1_HALFLIFE_MIN
         )
-        b3 = bool(peak != 0 and (ret8 / peak) >= B3_RETENTION)
+        b3 = bool(np.isfinite(retention) and retention >= B3_RETENTION)
 
         res[sym] = {
             "n_bars": n,
@@ -426,8 +439,9 @@ def main():
             "horizons": per_h,
             "event_path_spread_bp": path,
             "peak_bp": peak,
-            "k8_bp": ret8,
-            "retention_k8": (ret8 / peak) if peak else float("nan"),
+            "peak_k": peak_k,
+            "end_bp": end,
+            "retention_end_over_peak": retention,
             "B1_object_exists": b1,
             "B3_no_full_reversion": b3,
         }
@@ -494,8 +508,9 @@ def main():
             h = r["horizons"][str(k)]
             print(f"  k={k:<2} " + " ".join(f"{v:+7.2f}" for v in h["quintile_bp"])
                   + f"  | Q5-Q1 {h['spread_q5_q1_bp']:+7.2f} bp  mono={h['monotone']}")
-        print(f"  path peak={r['peak_bp']:+.2f} bp  k8={r['k8_bp']:+.2f} bp"
-              f"  retention={r['retention_k8']:+.2f}")
+        print(f"  path k=1..16: " + " ".join(f"{v:+.2f}" for v in r["event_path_spread_bp"]))
+        print(f"  peak={r['peak_bp']:+.2f} bp at k={r['peak_k']}  end={r['end_bp']:+.2f} bp"
+              f"  retention(end/peak)={r['retention_end_over_peak']:+.2f}")
         print(f"  B1={r['B1_object_exists']}  B3={r['B3_no_full_reversion']}")
     print(f"\nVERDICT {json.dumps(verdict)}")
     print(f"wrote {OUT.name}")
