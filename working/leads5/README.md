@@ -1,8 +1,9 @@
-# working/leads5/ — round 5, **PREPARED AND NOT COMMISSIONED**
+# working/leads5/ — round 5, **COMMISSIONED**
 
-**Prepared 2026-09-09**, after round 4's six briefs landed and were consolidated into
-[`docs/research/the-timestamp-round.md`](../../docs/research/the-timestamp-round.md). **No agent has
-been dispatched and no brief exists in this directory.** The quarantine contract of
+**Prepared 2026-09-09** after round 4 was consolidated into
+[`docs/research/the-timestamp-round.md`](../../docs/research/the-timestamp-round.md), and
+**commissioned 2026-09-10 on the principal's instruction.** **Six agents, one lane each, running in
+parallel**; briefs land here as `J1`–`J6`. The quarantine contract of
 [`../leads/README.md`](../leads/README.md) applies unchanged. Cross-round index:
 [`docs/research/README.md`](../../docs/research/README.md). Under [R15](../../docs/RULES.md#r15)
 nothing here closes or admits anything.
@@ -340,6 +341,43 @@ rule:**
 > common reason a lane dies in this programme.
 
 ---
+
+## Lane-specific instructions actually issued, recorded because they are the durable part
+
+- **`J1`** is given **the selection argument itself** — that it was chosen because a split cannot
+  happen in a cheap stock — so it knows which killer is off the table and which four are not. It is
+  told the count is **the live risk** for this lane, warned that **an existing split feed's dates are
+  EX-dates and must not be mistaken for announcement dates**, and told that **route (b) converts a
+  cost problem into a signal problem, so a large move is not sufficient.**
+- **`J2`** carries the non-pooling instruction as **non-negotiable**, with the reason: initiations
+  sit above the floor and **cuts do not**, and pooling would hide the exact interaction that has
+  killed seven lanes. It is also told to address **the earnings confound** (dividend declarations
+  often coincide with earnings, which is excluded ground) and that **the dividend cash is already in
+  the return series**, so any tradeable effect must be a repricing at the announcement.
+- **`J3`** is told **the comparison is a measurement and is not its job** — it cannot run it and
+  must not pretend to. Its bar is a **like-for-like specification**: a named series, its documented
+  construction quoted verbatim, and the enumerated adjustments needed before comparison. It is asked
+  **which statistic would actually catch a broken fixture** rather than merely produce a number, and
+  to settle whether **any published figure exists for the daily autocorrelation of an equal-weighted
+  US portfolio** — an absence a previous round searched for and could not fill.
+- **`J4`** is told the eject-or-carry question is **settled and spent**, and that its subject is the
+  **level**. It carries the framing that makes the lane worth running: under per-share commissions
+  the floor **is a cost-model parameter wearing a data-quality costume**. It is asked to derive
+  explicitly **the price below which a trade cannot pay** given a commission and an expected edge,
+  and told that is **the most valuable part of the lane if it exists** — and to state the
+  breadth cost of raising the floor rather than only the direction.
+- **`J5`** is told it is **the panel, not the screen**, and that the delisting-return literature is
+  known background rather than territory. The summariser rule is flagged as **acute here**, with the
+  round-4 instance quoted — a summariser said a code file *"does not contain explicit price
+  screens"* when it does, which would have inverted that brief. It is told the programme forbids
+  forward-filling, so **a source recommending it is interesting to REPORT, not to adopt.**
+- **`J6`** is given **the eight breaks already found by accident** so its incremental content is
+  visible, and told to **rank ruthlessly** — *a break with no stated mechanism is trivia*, and better
+  twenty rows that each name a mechanism than eighty that do not. It must distinguish
+  **adopted / effective / compliance** dates and flag rules **vacated, delayed or exempted**, because
+  this programme has already commissioned research premised on a rule a court vacated before it
+  produced data. **Law-firm alerts may find a rule but may never be the citation for its date.**
+  Excluded *territories* may still contribute **dated rule changes**, and that is stated per entry.
 
 ## What this file does not claim
 
