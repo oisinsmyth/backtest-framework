@@ -498,6 +498,54 @@ definition fix rather than an empirical question.
 
 ---
 
+## 0d2. PARKED — SUPPLY AND DEMAND: THE IDEAS NOT TAKEN, 2026-09-09
+
+**D403 was closed by the principal** — *"this construction is dead, I don't think this accurately
+captures supply and demand."* The wick-stack potential map is finished and will not be reopened.
+Its durable findings are in its own record; what follows is the design work that came out of the
+close and is **not** spent.
+
+**THE DIAGNOSIS THAT OUTLIVES D403, and it explains all six price-level failures at once:**
+
+> **A wick is evidence that interest was ABSORBED, not that it REMAINS.** If price spiked to 110 and
+> came back, the sellers at 110 were filled — the zone is spent. The same is true of a volume node
+> (TERRAIN S1), a swing band (S5), a signed inventory field (S6), a flipped level (D211), a fair
+> value gap, and D403's potential. Every one is a trace of trading that already completed, read as a
+> forecast of trading still to come.
+
+And the mechanical corollary that predicts the failure **before** a study is built: **all six maps
+are pure functions of the past price path.** That is exactly why the rotation control kills them —
+rotating preserves the path and destroys only the alignment, and the alignment carries nothing. **Any
+candidate that is another function of OHLC alone will die the same way.** Require of a seventh that
+it carry information the price path cannot.
+
+**THE PRINCIPAL CHOSE (2) ON 2026-09-09 and it is drafted, not committed** — see
+`docs/decisions/DRAFT-capital-gains-overhang.md`, uncommitted, **no decision number taken** (the
+three-command procedure runs at commit time, not before). The other three are parked here:
+
+**(1) RESTING LIQUIDITY — the order book.** Literally supply and demand, and the honest ceiling on
+every approximation below it. **Blocked, not rejected.** D336's quoted-spread pull needs the
+principal's TWS session and is top-of-book only; `scripts/d364_databento_equity_plan.py` is an
+arithmetic-only cost plan with no submit path. **If the TWS blocker ever clears, this outranks
+everything in this section.**
+
+**(3) OPTIONS OPEN INTEREST / DEALER GAMMA.** Genuinely forward-looking and size-carrying — resting
+*obligations* at specific strikes, which is the property every price-history map lacks. Nothing in the
+repo. Alpha Vantage serves `HISTORICAL_OPTIONS` on the existing key, so it is reachable at request
+cost and no new vendor. **Do not spend this until (2) has reported** — it is a real acquisition and
+(2) tests the same "unfilled interest" thesis for free.
+
+**(4) EXECUTION ANCHORS — VWAP and the closing auction.** Weak as *zones*, but they hold the one
+property nothing else here does: somebody is **obliged** to trade there. `scripts/d364_auction_bound.py`
+already documents the 1-minute call shape. Cheapest of the four; lowest ceiling.
+
+**MULTIPLICITY: any of these is look #7 on price-level maps.** The R13 ledger carries 259 terrain
+looks and 86 structure looks in, and D403 makes six programmes with six written closes. **None of
+them paid.** That base rate is the reason (2) is drafted as a stage-0 discriminator with an abandon
+condition rather than as a study with a sweep.
+
+---
+
 ## 0e. THE LESSON THAT OUTRANKS BOTH RESULTS
 
 **In-sample null strength does not forecast out-of-sample survival.** The momentum construction
