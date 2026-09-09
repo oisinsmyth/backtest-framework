@@ -230,6 +230,12 @@ withdrawn in this programme today; this one is written as a question with a name
   standing axes, and a candidate whose pool is not among them still owes a bespoke control.
 - **Deferred from the spec and still deferred:** sector, dead-vs-alive, era, the intraday fixtures.
 
+**2026-09-09 — the first bullet is now finished, and the three cells §6a left uncovered are
+pre-registered in [ADDENDUM 2](D392-ADDENDUM-2-the-last-three-floor-gaps.md):** cap 5 either side
+and cap 1 short, the three counts D391 could only mark *"no floor"*. That addendum also records a
+defect in this runner's seeding — `hash()` on a `str` is salted per process, so **the 193 cells
+below are not bit-reproducible** — and fixes it for every cell written after it.
+
 ---
 
 **Status footer.** A measurement. No strategy was scored, nothing was admitted, and no avenue is
