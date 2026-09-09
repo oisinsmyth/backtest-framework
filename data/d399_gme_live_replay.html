@@ -133,6 +133,37 @@ points on the chart to lay one down.</div></div>
 
   let cur = D.start_at, kind = 'support', pending = null, lines = [], db = null, revising = null;
 
+  // HISTORY IS APPEND-ONLY, and the per-bar series is SNAPSHOTTED rather than derived.
+  //
+  // Deriving the state at bar t from the CURRENT geometry loses what was believed at t as soon
+  // as a line is deleted or altered -- and what was believed at t IS the data here. So two
+  // structures, neither ever rewritten:
+  //
+  //   events    every action, stamped with the bar it happened on. Append-only. A delete is
+  //             itself an event; it retracts a line going forward, it does not unsay the bars
+  //             where the line was believed.
+  //   snaps     the live slopes as they stood at each bar, captured while the cursor was there
+  //             and never recomputed from later geometry.
+  //
+  // The saved g_* series is built from `snaps`, so no later edit can reach back and change it.
+  let events = [];
+  let snaps = {};                       // bar -> {support: [g...], resistance: [g...]}
+  let seq = 0;
+
+  function logEvent(action, extra) {
+    events.push(Object.assign({ n: ++seq, at_bar: cur, at_date: D.dates[cur], action }, extra || {}));
+  }
+
+  function snapshot() {
+    const st = { support: [], resistance: [] };
+    for (const L of lines) {
+      if (L.drawn_at > cur) continue;
+      if (L.ended_at != null && L.ended_at < cur) continue;
+      st[L.kind].push(slope(seg(L, cur)));
+    }
+    snaps[cur] = st;
+  }
+
   // A LINE IS A SEQUENCE OF SEGMENTS, not one pair of points. `revise` appends a segment that
   // takes effect from the current bar, so the trend keeps its identity while its slope changes --
   // which is the distinction the whole exercise turns on: revising a line is not ending a trend.
@@ -244,14 +275,23 @@ points on the chart to lay one down.</div></div>
         </tr>`;
       }).join('') + '</tbody>';
     t.querySelectorAll('[data-end]').forEach(b => b.onclick = () => {
-      lines[+b.dataset.end].ended_at = cur; revising = null; draw(); save();
+      const L = lines[+b.dataset.end];
+      L.ended_at = cur;
+      logEvent('end', { line_id: L.id, kind: L.kind, lived_bars: cur - L.drawn_at + 1 });
+      revising = null; snapshot(); draw(); save();
     });
     t.querySelectorAll('[data-rev]').forEach(b => b.onclick = () => {
       revising = +b.dataset.rev; pending = null;
       hint('revising — click two points for the new slope'); draw();
     });
     t.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
-      lines.splice(+b.dataset.del, 1); revising = null; pending = null; draw(); save();
+      const L = lines[+b.dataset.del];
+      // a delete retracts the line GOING FORWARD; the snapshots of the bars where it was
+      // believed are already written and are not touched
+      logEvent('delete', { line_id: L.id, kind: L.kind, drawn_at: L.drawn_at,
+                           was_live_bars: cur - L.drawn_at + 1 });
+      lines.splice(+b.dataset.del, 1);
+      revising = null; pending = null; snapshot(); draw(); save();
     });
   }
 
@@ -270,16 +310,27 @@ points on the chart to lay one down.</div></div>
     const a = pending.i < q.i ? pending : q, b = pending.i < q.i ? q : pending;
     const sg = { i0: a.i, p0: a.p, i1: b.i, p1: b.p, from_bar: cur };
     if (revising != null && lines[revising] && lines[revising].ended_at == null) {
-      lines[revising].segs.push(sg);           // SAME trend, new slope from this bar on
+      const L = lines[revising];
+      L.segs.push(sg);                         // SAME trend, new slope from this bar on
+      logEvent('revise', { line_id: L.id, kind: L.kind, segment: sg, g_per_bar: slope(sg) });
       revising = null;
     } else {
-      lines.push({ kind, segs: [sg], drawn_at: cur, ended_at: null });
+      const L = { id: 'L' + (++seq) + '-' + cur, kind, segs: [sg], drawn_at: cur, ended_at: null };
+      lines.push(L);
+      logEvent('draw', { line_id: L.id, kind, segment: sg, g_per_bar: slope(sg) });
     }
-    pending = null; hint('click a start point'); draw(); save();
+    pending = null; hint('click a start point'); snapshot(); draw(); save();
   });
 
   function hint(t) { document.getElementById('hint').textContent = t; }
-  function step(k) { cur = Math.min(N - 1, cur + k); pending = null; draw(); }
+  function step(k) {
+    snapshot();                                   // lock in what was believed leaving this bar
+    const from = cur;
+    cur = Math.min(N - 1, cur + k);
+    for (let t = from + 1; t <= cur; t++) { const s = cur; cur = t; snapshot(); cur = s; }
+    if (cur !== from) logEvent('step', { from_bar: from, to_bar: cur });
+    pending = null; draw(); save();
+  }
   document.getElementById('f1').onclick = () => step(1);
   document.getElementById('f5').onclick = () => step(5);
   document.addEventListener('keydown', e => {
@@ -310,7 +361,8 @@ points on the chart to lay one down.</div></div>
     }
     clearTimeout(armTimer); armed = false;
     e.currentTarget.textContent = 'Reset all'; e.currentTarget.classList.remove('on');
-    lines = []; pending = null; revising = null; cur = D.start_at;
+    logEvent('reset', { cleared_lines: lines.length, from_bar: cur });
+    lines = []; pending = null; revising = null; cur = D.start_at; snaps = {};
     hint('reset — click a start point'); draw(); save();
   };
 
@@ -334,15 +386,21 @@ points on the chart to lay one down.</div></div>
       //
       // Both are only meaningful for bars 0..seen_through; past the cursor the answer is
       // unknown, not N/A.
+      // AS-KNOWN comes from the SNAPSHOTS, never re-derived: a later delete or revision cannot
+      // reach back and change what a bar's row says was believed at the time.
       const st = { support: new Array(N).fill(null), resistance: new Array(N).fill(null) };
-      const fin = { support: new Array(N).fill(null), resistance: new Array(N).fill(null) };
       const lv = { support: new Array(N).fill(0), resistance: new Array(N).fill(0) };
+      for (const b of Object.keys(snaps)) {
+        const t = +b, s = snaps[b];
+        for (const k of ['support', 'resistance']) {
+          lv[k][t] = s[k].length;
+          st[k][t] = s[k].length ? s[k][s[k].length - 1] : null;
+        }
+      }
+      // FINAL is the retrospective view and IS derived from the surviving geometry, by design.
+      const fin = { support: new Array(N).fill(null), resistance: new Array(N).fill(null) };
       for (const L of lines) {
         const r = rightEdge(L);
-        for (let t = L.drawn_at; t <= r && t < N; t++) {
-          st[L.kind][t] = slope(seg(L, t));
-          lv[L.kind][t] += 1;
-        }
         const anchor = Math.min(L.segs[0].i0, L.segs[0].from_bar);
         for (let t = anchor; t <= r && t < N; t++) fin[L.kind][t] = slope(seg(L, Math.max(t, L.drawn_at)));
       }
@@ -357,6 +415,13 @@ points on the chart to lay one down.</div></div>
           symbol: D.symbol, start_bar: D.start_bar, n: N,
           first_date: D.dates[0], last_date: D.dates[N - 1],
           seen_through: cur, snap: false, mode: 'causal replay, forward only',
+          events: events, n_events: events.length,
+          snapshots: snaps,
+          snapshot_bars: Object.keys(snaps).map(Number).sort((x, y) => x - y),
+          history_note: 'events is APPEND-ONLY and g_* is built from per-bar SNAPSHOTS taken '
+                      + 'while the cursor was on each bar. A later delete or revision cannot '
+                      + 'rewrite what an earlier bar says was believed at the time. g_*_final is '
+                      + 'the only series derived from surviving geometry, deliberately.',
           per_bar_note: 'g_* is AS-KNOWN (a trend counts from the bar it was DRAWN on) and is '
                       + 'the series a causal construction must be scored against. g_*_final is '
                       + 'RETROSPECTIVE (a trend counts from its earliest anchor), so bars that '
@@ -390,13 +455,18 @@ points on the chart to lay one down.</div></div>
     db = d;
     db.doc('drawn/gme_live').get().then(s => {
       const v = s && s.exists ? s.data() : null;
-      if (v && Array.isArray(v.lines) && v.lines.length && !lines.length) {
-        lines = v.lines.map(L => ({
-          kind: L.kind, drawn_at: L.drawn_at, ended_at: L.ended_at,
-          segs: (L.segments || [{ i0: L.i0, p0: L.p0, i1: L.i1, p1: L.p1,
-                                  from_bar: L.drawn_at }])
-                  .map(s => ({ i0: s.i0, p0: s.p0, i1: s.i1, p1: s.p1, from_bar: s.from_bar }))
-        }));
+      if (v && !lines.length && !events.length) {
+        if (Array.isArray(v.events)) { events = v.events.slice(); seq = events.length; }
+        if (v.snapshots && typeof v.snapshots === 'object') snaps = v.snapshots;
+        if (Array.isArray(v.lines) && v.lines.length) {
+          lines = v.lines.map(L => ({
+            id: L.id || ('L' + (++seq)),
+            kind: L.kind, drawn_at: L.drawn_at, ended_at: L.ended_at,
+            segs: (L.segments || [{ i0: L.i0, p0: L.p0, i1: L.i1, p1: L.p1,
+                                    from_bar: L.drawn_at }])
+                    .map(s => ({ i0: s.i0, p0: s.p0, i1: s.i1, p1: s.p1, from_bar: s.from_bar }))
+          }));
+        }
         if (typeof v.seen_through === 'number') cur = Math.max(cur, v.seen_through);
         draw();
       }
