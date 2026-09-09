@@ -221,6 +221,7 @@ def main() -> int:
     V59 = _load("d359r", "run_d359_loser_rally_short.py")
     AT = _load("d392a", "run_d392_base_rate_atlas.py")
     V47 = V59.V47
+    UF = _load("d339uf", "d339_universe_floor.py")
 
     t0 = time.time()
     P = PREP.prep(need_grids=False, verbose=False)
@@ -289,6 +290,21 @@ def main() -> int:
         assert not (m & ~elig_nT).any(), f"[E] {nm} event on an ineligible bar"
     print(f"    [W][E] every event is past its name's own {UO.WINDOW}th bar and eligible",
           flush=True)
+
+    # ---- [$5] the universe is ALREADY the minimum-$5 one, proved not cited -----
+    # d339_universe_floor.PX_MIN = 5.0, and keep_v2 = price floor at t-1 AND the 28th-percentile
+    # dollar-volume floor AND isfinite(DV) (D343's re-listing clause). `elig` = finT & keep, and
+    # every event above is intersected with it. Asserted from the prices rather than the constant.
+    RAWc = np.ascontiguousarray(np.asarray(P["RAW_CLOSE"]).T)     # (n, T), as-traded
+    raw_lag = np.full_like(RAWc, np.nan)
+    raw_lag[:, 1:] = RAWc[:, :-1]                                  # the floor binds at t-1
+    for nm, m in EV.items():
+        v_ = raw_lag[m]
+        v_ = v_[np.isfinite(v_)]
+        assert v_.min() >= 5.0, f"[$5] {nm}: an event sits on a name at ${v_.min():.2f} at t-1"
+        print(f"    [$5] {nm}: min as-traded close at t-1 over {int(m.sum()):,} events is "
+              f"${v_.min():.2f}; median ${np.median(v_):.2f} "
+              f"(PX_MIN={UF.PX_MIN:g}, dv floor {UF.DV_PCT:g}th pct, keep_v2)", flush=True)
 
     # ---- [L] THE LAG AUDIT, and it is the one this file got wrong first time --
     # The event condition reads bar t's own close, so the mask handed to the kernel must be
@@ -384,9 +400,20 @@ def main() -> int:
                 # event -- which is D391's look-ahead, and the first run of this file had it.
                 mask = LA.lag1_mask(raw)
                 LA.assert_mask_is_lagged(mask, raw)
-                for cap in CAPS:
+                # AMENDMENT 5a: the state-end exit is PRIMARY -- the principal's construction has
+                # no cap, and its exits are all 15-minute objects, so the daily analogue is "hold
+                # while the state holds". Implemented through the kernel's `invalidation` mode: a
+                # score that flips when the state ends, LAGGED like the mask because score_T[t] is
+                # what is known at the close of t-1. The nominal cap is T, so it never binds.
+                st_lag = LA.lag1_mask(np.ascontiguousarray(S_h[nm].T))
+                sc_end = (np.where(st_lag, 0.0, 100.0) if side == "long"
+                          else np.where(st_lag, 100.0, 0.0))
+                for cap in ("state",) + CAPS:
                     run = V59.run_mirror if side == "long" else V59.run_short
-                    r_ = run(P, mask, sc, "cap", cap)
+                    if cap == "state":
+                        r_ = run(P, mask, sc_end, "invalidation", T)
+                    else:
+                        r_ = run(P, mask, sc, "cap", cap)
                     tr = r_["trades"]
                     if not tr:
                         continue
@@ -400,9 +427,14 @@ def main() -> int:
                     rows = np.array([t_[0] for t_ in tr], int)
                     d_ = dead[rows]
                     tot = float(p_.sum())
+                    # AMENDMENT 5a: THE ATLAS CANNOT FLOOR THE STATE-END EXIT. D392 measures a
+                    # FIXED-CAP random book and its grid stops at cap 60; a state-end book has a
+                    # VARIABLE hold the cap axis does not describe. Cap 60 is reported AS THE
+                    # NEAREST, saying so (D392 section 5's own rule) -- it is not a pass.
+                    look_cap = 60 if cap == "state" else cap
                     try:
                         fl = AT.lookup(json.loads((REPO / "data" / "d392_atlas.json").read_text()),
-                                       len(tr), cap, side)
+                                       len(tr), look_cap, side)
                         fp, fse = fl["p95"], fl["se_p95"]
                     except (ValueError, KeyError):
                         fp, fse = None, None
@@ -416,14 +448,24 @@ def main() -> int:
                         median_bp=float(np.median(p_)), win_rate=float((p_ > 0).mean()),
                         mean_age=float(age.mean()),
                         bp_per_bar=float(gross / age.mean()) if age.mean() else None,
-                        # Q6: the return-side survivorship question D398 could not answer
+                        # Q6: the return-side survivorship question D398 could not answer.
+                        # A SHARE OF GROSS IS UNDEFINED WHEN GROSS IS NEAR ZERO -- on the DOWN
+                        # state-end cells the total is ~0 and the share explodes to -3,000%, which
+                        # is a division artifact and not a finding. Absolute bp per trade for each
+                        # cohort is reported instead, and the share only where the total is large
+                        # enough to carry one (|total| > 10% of the gross the trades actually made).
                         dead_share_of_trades=float(d_.mean()),
-                        dead_share_of_gross=(float(p_[d_].sum() / tot) if tot else None),
-                        atlas_p95=fp, atlas_se=fse,
+                        dead_bp_per_trade=(float(p_[d_].mean()) if d_.any() else None),
+                        alive_bp_per_trade=(float(p_[~d_].mean()) if (~d_).any() else None),
+                        gross_abs_sum=float(np.abs(p_).sum()),
+                        dead_share_of_gross=(float(p_[d_].sum() / tot)
+                                             if abs(tot) > 0.10 * np.abs(p_).sum() else None),
+                        atlas_p95=fp, atlas_se=fse, atlas_cap_used=look_cap,
+                        atlas_is_nearest_only=bool(cap == "state"),
                         clears_atlas=(None if fp is None else bool(gross > fp)),
                         margin_in_se=(None if not fse else float((gross - fp) / fse)))
                     c_ = res["cells"][key]
-                    print(f"  {nm:>5s} {f'er{w}>={lv} band<={x}':>22s} {cap:>4d} {len(tr):>8,} "
+                    print(f"  {nm:>5s} {f'er{w}>={lv} band<={x}':>22s} {str(cap):>5s} {len(tr):>8,} "
                           f"{gross:>+8.2f} {cost:>7.2f} {c_['net_bp']:>+8.2f} "
                           f"{(c_['ratio'] or 0):>6.2f} "
                           f"{(fp if fp is not None else float('nan')):>+10.2f} "

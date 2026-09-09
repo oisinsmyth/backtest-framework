@@ -307,6 +307,38 @@ FINDINGS §5 — the best of 600 levels chosen with hindsight was worth **+0.017
 single names *"all nine take-profit cells still hurt"*. **The caps match D393/D394's so the atlas
 floors exist without interpolation.**
 
+> ### AMENDMENT 5a, 2026-09-09, AFTER THE FIRST STAGE 0 RUN — THE CAP WAS MINE, NOT THE PRINCIPAL'S
+>
+> **The principal's specification was *"entries, stop losses and take profits at the 15m
+> timeframe"*. It contains no cap. I introduced one, made it PRIMARY, and relegated "the state
+> ends" — the natural daily analogue of a construction whose exits are all 15-minute objects — to
+> a non-primary line that the first runner then did not compute at all.**
+>
+> **What this contaminates, named precisely:** §2a of the RESULT reports **14 of 16 cell-families
+> as HOLD-DRIVEN** and rests the cost verdict on it. **That is a statement about MY cap grid, not
+> about the principal's construction.** Under a state-end exit there is one hold, so
+> cost-amortisation-versus-edge does not arise in the same form.
+>
+> **What it does NOT contaminate:** the look-ahead correction (§0), the event counts (§1), the
+> atlas comparison at fixed caps, and **Q6's 72.4%** — that last is a P&L attribution and holds at
+> every cap tested (42.8 / 72.4 / 53.9%).
+>
+> **THE STATE-END EXIT IS PROMOTED TO PRIMARY** and run. Declared before it is computed:
+>
+> - **Exit when the state ends**, i.e. the bar the held gradients stop clearing ±δ. Implemented
+>   through the kernel's `invalidation` mode with a score encoding the state, **lagged like the
+>   mask** (`score_T[t]` is what is known at the close of `t−1`), and a nominal cap of `T` so the
+>   cap never binds. The realised hold distribution is reported, not assumed.
+> - **The caps stay, reported beside it**, because they are what the atlas can floor.
+>
+> **AND THE HONEST LIMIT, STATED BEFORE THE NUMBER: THE ATLAS CANNOT FLOOR THIS EXIT.** D392
+> measures a **fixed-cap** random book; its grid runs to cap 60 and `lookup` raises beyond. D398
+> measured the median episode at δ=1e-3 as **122 bars held (UP)** and 65 (DOWN), so a state-end
+> book sits outside the grid *and* has a variable hold the grid's cap axis does not describe.
+> **The cap-60 floor is reported AS THE NEAREST, saying so (D392 §5's own rule), and it is not a
+> pass.** A state-end book's proper comparator is a **matched-hold** null — A′ or B_s — which is
+> H4 and is not spent unless H3 clears.
+
 ---
 
 ## 6. Hurdles

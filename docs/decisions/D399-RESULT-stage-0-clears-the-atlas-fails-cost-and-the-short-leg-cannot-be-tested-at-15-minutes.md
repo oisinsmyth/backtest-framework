@@ -171,3 +171,85 @@ price returns to.
 
 **Status footer.** Stage 0 of a pre-registered record. `docs/BOOK.md` holds S1 and S2, neither at
 capital; `docs/BOOK_PROP.md` is empty. Nothing was admitted and no holdout read was spent.
+
+---
+---
+
+# RESULT, AMENDMENT 5a — the cap was mine; on the principal's own exit the long side clears cost for the first time, and the short side turns out to BE the delisting trade
+
+**Appended 2026-09-09**, after the principal pointed out that **the construction he specified has
+no cap** — its exits are *"stop losses and take profits at the 15m timeframe"*. I introduced
+`cap ∈ {5,10,20}`, made it primary, and relegated "the state ends" to a non-primary line the first
+runner never computed. **Amendment 5a promotes the state-end exit to primary and runs it.**
+
+## A5.1 The primary cell, both exits, both sides
+
+| dir | exit | trades | **gross** | 2c | **net** | **ratio** | mean hold | **bp/bar** |
+|---|---|--:|--:|--:|--:|--:|--:|--:|
+| **UP** | **state ends** | 2,699 | **+185.99** | 65.52 | **+120.47** | **2.84×** | **135.3** | **1.37** |
+| UP | cap 5 | 20,493 | +16.88 | 66.37 | −49.50 | 0.25× | 5.0 | 3.38 |
+| UP | cap 10 | 13,768 | +31.13 | 66.26 | −35.13 | 0.47× | 10.0 | 3.12 |
+| UP | cap 20 | 9,585 | +58.02 | 66.20 | −8.19 | 0.88× | 20.0 | 2.90 |
+| **DOWN** | **state ends** | 1,807 | **−5.11** | 84.38 | −89.49 | **−0.06×** | 127.1 | −0.04 |
+| DOWN | cap 10 | 8,656 | +15.03 | 81.91 | −66.88 | 0.18× | 10.0 | 1.50 |
+
+**All eight UP state-end cells clear H3**, at **1.66× to 3.72×**. **The short side collapses**: six
+of eight are negative, the best is 0.68×.
+
+> ### AND THE COST COVERAGE IS AMORTISATION, NOT EDGE — the same finding as §2a, larger
+>
+> **Per-bar edge falls from 3.38 (cap 5) to 1.37 (state ends), a 59% drop, while gross per trade
+> rises 11-fold.** Cost is one round trip whatever the hold, so spreading it over 135 bars instead
+> of 5 is what clears H3. CLAUDE.md: *"Say which moved: edge per unit exposure, or cost per
+> trade."* **Cost per trade moved. Edge per bar fell.**
+>
+> **This is not a reason to dismiss it** — a 135-bar hold that nets +120 bp a trade is a real
+> object, and unlike the capped cells it is the construction the principal actually specified.
+> **It is a reason not to report 2.84× as though it were edge.**
+
+## A5.2 Q6 again, and at this exit it is unmistakable
+
+The first run's `dead % of gross` column divided by a near-zero total on the DOWN state cells and
+produced values like **−3,103%**. **That is a division artifact, not a finding, and it is not
+reported.** Absolute bp per trade per cohort is reported instead, and the share only where the
+total is large enough to carry one.
+
+| dir | exit | **dead bp/trade** | **alive bp/trade** | dead % of trades |
+|---|---|--:|--:|--:|
+| **UP** | state ends | +72.8 | **+219.0** | 19% |
+| **DOWN** | **state ends** | **+682.8** | **−213.4** | 21% |
+| DOWN | cap 20 | +92.3 | +21.3 | 21% |
+
+> **At the exit the principal specified, the short book earns +682.8 bp per trade on names that
+> delist and LOSES −213.4 bp per trade on names that live.** The two nearly cancel, which is why
+> the headline gross is −5.11.
+>
+> **The short leg is the delisting trade and nothing else.** A Stage 1 short measured on 48
+> survivors would measure **−213.4** — a losing strategy — and would be correct about survivors
+> while having measured none of what makes the book work. **§3's conclusion is not merely
+> confirmed, it is sharpened: the short leg is not testable at 15 minutes, and on this fixture it
+> is not a trend strategy at all.**
+
+**The long side is the mirror and it is clean:** +219.0 on survivors against +72.8 on the dead, so
+the long leg does not depend on delistings and **is** carryable to a survivor-only fixture.
+
+## A5.3 What Amendment 5a does NOT establish
+
+- **The atlas cannot floor this exit and does not.** D392 measures a **fixed-cap** book; its grid
+  stops at cap 60 and the mean hold here is 116–145 bars. **Cap 60 is reported as the NEAREST,
+  saying so** (D392 §5's rule) — `+54.45 ± 5.26` against `+185.99` — and **it is not a pass.**
+  A variable-hold book's comparator is a **matched-hold** null (A′ / B_s), which is H4.
+- **H1 and H4 are still unspent.** No best-of-8 floor, no null. The eight UP state cells span
+  1.66×–3.72× and the best of eight has no floor beneath it.
+- **No Sharpe, no volatility, no maximum drawdown.** A 135-bar-hold book at 1.37 bp/bar has risk
+  properties this record has not measured, and CLAUDE.md's first reporting group asks for them.
+  **`gross ÷ 2c ≥ 1.0` is a cost bar, not a verdict.**
+- **The `[$5]` question, answered from the data:** the universe was already the minimum-$5 one.
+  `d339_universe_floor.PX_MIN = 5.0` and `keep_v2` = the price floor at t−1 AND the 28th-percentile
+  dollar-volume floor AND `isfinite(DV)` (D343). Asserted from the prices, not cited: **the minimum
+  as-traded close at t−1 over all 264,501 UP and 152,612 DOWN events is exactly $5.00**, median
+  $45.06 and $27.17.
+- **The minimum absolute gradient the principal asked for is δ**, already in force at **1e-3** on
+  both slopes — a 28.7%/yr trend — fixed by him on D398's sweep and not swept here.
+
+**Nothing is retired, nothing is admitted, and no avenue is closed (R15).**
