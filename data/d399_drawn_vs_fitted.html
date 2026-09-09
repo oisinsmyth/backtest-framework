@@ -1,0 +1,214 @@
+<title>Drawn Against Fitted</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --panel:#fff; --panel-2:#eef1f5; --edge:#d8dee7; --edge-soft:#e7ecf2;
+  --ink:#181d27; --ink-2:#4a5567; --muted:#7b8698;
+  --up:#17845f; --down:#c0432f; --wick:#98a2b2;
+  --human:#7038a8; --machine:#0d8f8f;
+  --lo:#2563b0; --hi:#a35c07;
+  --grid:#e6eaf0; --accent:#2563b0;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11141a; --panel:#171b23; --panel-2:#1d222c; --edge:#2b323e; --edge-soft:#232935;
+  --ink:#e7eaf0; --ink-2:#b3bcca; --muted:#818c9d;
+  --up:#2ea87c; --down:#e0654e; --wick:#69737f;
+  --human:#b98ae8; --machine:#3ec9c9;
+  --lo:#5b9bea; --hi:#d9932f;
+  --grid:#242a35; --accent:#5b9bea;
+}}
+:root[data-theme="dark"]{
+  --bg:#11141a; --panel:#171b23; --panel-2:#1d222c; --edge:#2b323e; --edge-soft:#232935;
+  --ink:#e7eaf0; --ink-2:#b3bcca; --muted:#818c9d;
+  --up:#2ea87c; --down:#e0654e; --wick:#69737f;
+  --human:#b98ae8; --machine:#3ec9c9;
+  --lo:#5b9bea; --hi:#d9932f;
+  --grid:#242a35; --accent:#5b9bea;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:36px 22px 66px;display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-direction:column;gap:11px;border-bottom:1px solid var(--edge);padding-bottom:20px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:500}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(26px,4vw,37px);line-height:1.15;
+  margin:0;letter-spacing:-.01em}
+.lede{font-size:15px;color:var(--ink-2);max-width:74ch;margin:0}
+.key{display:flex;flex-wrap:wrap;gap:18px;align-items:center;font-size:12.5px;color:var(--ink-2);
+  padding:2px 2px}
+.key span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:24px;height:0;border-top:3px solid;display:inline-block}
+.sw.d{border-top-style:dashed}
+h2{font-family:var(--serif);font-size:19px;margin:0;font-weight:600}
+.panel{background:var(--panel);border:1px solid var(--edge);border-radius:4px;overflow:hidden}
+.phead{padding:14px 18px 12px;border-bottom:1px solid var(--edge-soft);display:flex;
+  flex-wrap:wrap;gap:10px 18px;align-items:baseline}
+.ptag{font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:3px;font-weight:600}
+.ptag.h{background:color-mix(in srgb,var(--human) 16%,transparent);color:var(--human)}
+.ptag.m{background:color-mix(in srgb,var(--machine) 16%,transparent);color:var(--machine)}
+.psub{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.svgwrap{overflow-x:auto}
+svg{display:block;width:100%;height:auto;min-width:840px}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;
+  font-variant-numeric:tabular-nums}
+th{text-align:right;padding:8px 10px;color:var(--muted);font-weight:500;font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--edge)}
+th:first-child,td:first-child{text-align:left}
+td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--edge-soft);color:var(--ink-2)}
+td.k{color:var(--ink);font-weight:600}
+.tblwrap{background:var(--panel);border:1px solid var(--edge);border-radius:4px;
+  padding:4px 16px 12px;overflow-x:auto}
+.note{border-left:2px solid var(--accent);background:var(--panel-2);padding:14px 16px;
+  display:flex;flex-direction:column;gap:10px}
+.note p{margin:0;font-size:13.5px;color:var(--ink-2);max-width:78ch}
+.note b{color:var(--ink);font-weight:600}
+footer{border-top:1px solid var(--edge);padding-top:18px;font-size:12.5px;color:var(--muted);
+  display:flex;flex-direction:column;gap:6px}
+footer code{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">D399 · oracle benchmark · GME 2019-08-28 → 2020-09-08</div>
+  <h1>Drawn Against Fitted</h1>
+  <p class="lede">The same 260 daily bars three ways: the lines drawn by hand with the whole
+  window in view, the lines the construction fitted causally, and the two together. Identical
+  axes throughout, log price.</p>
+  <div class="key">
+    <span><i class="sw" style="border-color:var(--human)"></i> drawn by hand</span>
+    <span><i class="sw d" style="border-color:var(--machine)"></i> fitted by the construction</span>
+    <span><i class="sw" style="border-color:var(--up);border-top-width:9px;height:9px"></i> both on</span>
+  </div>
+</header>
+
+<section class="note">
+  <p><b>The hand-drawn lines had hindsight; the fitted ones did not.</b> This is an oracle
+  benchmark — it bounds what a causal rule could recover and measures how close this one gets. It
+  cannot say a causal rule <i>should</i> have got there, and a shortfall here refutes nothing.</p>
+  <p><b>The human did not call a trend everywhere either</b> — 62% of bars, not 100%. That is the
+  realistic ceiling, and it reframes the construction's 40% as much closer than a raw
+  "state on 10% of bars" would suggest.</p>
+</section>
+
+<div id="panels"></div>
+
+<div class="tblwrap"><table id="tbl"></table></div>
+
+<footer>
+  <div>GME daily, <code>us_shorts_daily_raw</code> · dividend-bound, <code>keep_v2</code> floor,
+  F0 · dynamic windows, <code>min_piv 3</code>, <code>h 4%/yr</code>, <code>δ 1e-3</code>.</div>
+  <div>Ground truth: <code>data/d399_drawn_ground_truth.json</code>, kept independent of this
+  construction so a different one can be scored against the same target.</div>
+</footer>
+</div>
+
+<script id="chart-data" type="application/json">{"symbol":"GME","start":2429,"n":260,"branch":"E","min_piv":3,"h_annual_pct":4.0,"h":0.00016,"delta":0.001,"dates":["2019-08-28","2019-08-29","2019-08-30","2019-09-03","2019-09-04","2019-09-05","2019-09-06","2019-09-09","2019-09-10","2019-09-11","2019-09-12","2019-09-13","2019-09-16","2019-09-17","2019-09-18","2019-09-19","2019-09-20","2019-09-23","2019-09-24","2019-09-25","2019-09-26","2019-09-27","2019-09-30","2019-10-01","2019-10-02","2019-10-03","2019-10-04","2019-10-07","2019-10-08","2019-10-09","2019-10-10","2019-10-11","2019-10-14","2019-10-15","2019-10-16","2019-10-17","2019-10-18","2019-10-21","2019-10-22","2019-10-23","2019-10-24","2019-10-25","2019-10-28","2019-10-29","2019-10-30","2019-10-31","2019-11-01","2019-11-04","2019-11-05","2019-11-06","2019-11-07","2019-11-08","2019-11-11","2019-11-12","2019-11-13","2019-11-14","2019-11-15","2019-11-18","2019-11-19","2019-11-20","2019-11-21","2019-11-22","2019-11-25","2019-11-26","2019-11-27","2019-11-29","2019-12-02","2019-12-03","2019-12-04","2019-12-05","2019-12-06","2019-12-09","2019-12-10","2019-12-11","2019-12-12","2019-12-13","2019-12-16","2019-12-17","2019-12-18","2019-12-19","2019-12-20","2019-12-23","2019-12-24","2019-12-26","2019-12-27","2019-12-30","2019-12-31","2020-01-02","2020-01-03","2020-01-06","2020-01-07","2020-01-08","2020-01-09","2020-01-10","2020-01-13","2020-01-14","2020-01-15","2020-01-16","2020-01-17","2020-01-21","2020-01-22","2020-01-23","2020-01-24","2020-01-27","2020-01-28","2020-01-29","2020-01-30","2020-01-31","2020-02-03","2020-02-04","2020-02-05","2020-02-06","2020-02-07","2020-02-10","2020-02-11","2020-02-12","2020-02-13","2020-02-14","2020-02-18","2020-02-19","2020-02-20","2020-02-21","2020-02-24","2020-02-25","2020-02-26","2020-02-27","2020-02-28","2020-03-02","2020-03-03","2020-03-04","2020-03-05","2020-03-06","2020-03-09","2020-03-10","2020-03-11","2020-03-12","2020-03-13","2020-03-16","2020-03-17","2020-03-18","2020-03-19","2020-03-20","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-20","2020-04-21","2020-04-22","2020-04-23","2020-04-24","2020-04-27","2020-04-28","2020-04-29","2020-04-30","2020-05-01","2020-05-04","2020-05-05","2020-05-06","2020-05-07","2020-05-08","2020-05-11","2020-05-12","2020-05-13","2020-05-14","2020-05-15","2020-05-18","2020-05-19","2020-05-20","2020-05-21","2020-05-22","2020-05-26","2020-05-27","2020-05-28","2020-05-29","2020-06-01","2020-06-02","2020-06-03","2020-06-04","2020-06-05","2020-06-08","2020-06-09","2020-06-10","2020-06-11","2020-06-12","2020-06-15","2020-06-16","2020-06-17","2020-06-18","2020-06-19","2020-06-22","2020-06-23","2020-06-24","2020-06-25","2020-06-26","2020-06-29","2020-06-30","2020-07-01","2020-07-02","2020-07-06","2020-07-07","2020-07-08","2020-07-09","2020-07-10","2020-07-13","2020-07-14","2020-07-15","2020-07-16","2020-07-17","2020-07-20","2020-07-21","2020-07-22","2020-07-23","2020-07-24","2020-07-27","2020-07-28","2020-07-29","2020-07-30","2020-07-31","2020-08-03","2020-08-04","2020-08-05","2020-08-06","2020-08-07","2020-08-10","2020-08-11","2020-08-12","2020-08-13","2020-08-14","2020-08-17","2020-08-18","2020-08-19","2020-08-20","2020-08-21","2020-08-24","2020-08-25","2020-08-26","2020-08-27","2020-08-28","2020-08-31","2020-09-01","2020-09-02","2020-09-03","2020-09-04","2020-09-08"],"open":[0.925,0.9825,1.065,0.9925,0.97,1.02,1.06,1.0875,1.2175,1.0475,1.15,1.155,1.075,1.075,1.0825,1.16,1.1475,1.17,1.285,1.2725,1.2975,1.3125,1.3575,1.41,1.3875,1.325,1.3575,1.37,1.3575,1.3125,1.255,1.285,1.33,1.4,1.395,1.4725,1.5075,1.495,1.4825,1.5825,1.625,1.58,1.595,1.5525,1.44,1.4075,1.3625,1.475,1.47,1.475,1.545,1.5425,1.5125,1.5075,1.4775,1.4875,1.5,1.4625,1.3925,1.385,1.365,1.3975,1.4175,1.5075,1.525,1.5825,1.5875,1.51,1.5425,1.58,1.5975,1.6625,1.5725,1.3125,1.365,1.3675,1.3475,1.375,1.515,1.5525,1.515,1.5125,1.4125,1.3675,1.355,1.47,1.52,1.535,1.5525,1.45,1.4425,1.3725,1.455,1.39,1.3575,1.195,1.165,1.1525,1.145,1.1875,1.1375,1.1375,1.16,1.05,1.075,1.055,1.025,0.9775,0.97,1.0075,1.0375,1.05,1.0275,0.9625,0.995,1.0325,1.03,1.0275,1.0025,1.015,1.04,1.03,0.975,0.9425,0.895,0.8075,0.835,0.9,0.97,0.9275,0.925,0.96,0.8975,0.985,1.035,0.925,1.0325,0.9825,1.1,1.025,0.9275,1.02,0.895,0.9875,1.0375,1.06,1.235,1.055,0.9075,0.8625,0.815,0.7125,0.715,0.8475,0.8075,0.9,1.0625,1.3025,1.415,1.28,1.305,1.2125,1.3075,1.285,1.1875,1.195,1.2125,1.48,1.4575,1.4675,1.4125,1.46,1.3875,1.35,1.2075,1.22,1.23,1.195,1.135,1.0375,1.0125,1.1,1.145,1.125,1.1125,1.115,1.085,1.1425,1.1875,1.0825,1.03,1.0675,1.06,1.11,1.0725,1.07,1.25,1.195,1.16,1.15,1.125,1.2375,1.135,1.1675,1.2375,1.1975,1.2375,1.2075,1.0825,1.12,1.0875,1.0825,1.0775,1.1225,1.0775,1.05,1.025,1.0675,1.05,1.0875,1.055,1.0325,1.0475,1.04,0.9875,0.975,1.005,1.0225,1.015,1.005,0.99,0.985,1.0,1.015,1.0075,1.0325,1.125,1.15,1.0975,1.05,1.1075,1.1,1.13,1.15,1.195,1.1525,1.2,1.155,1.15,1.275,1.22,1.2425,1.2775,1.325,1.4425,1.825,1.95,1.97,1.945,1.8875],"high":[0.9925,1.0725,1.09,1.0175,1.0,1.06,1.09,1.23,1.275,1.2375,1.2025,1.1925,1.1175,1.085,1.1725,1.1675,1.2,1.3,1.375,1.3875,1.335,1.3625,1.41,1.455,1.3875,1.37,1.39,1.395,1.36,1.325,1.2875,1.3725,1.3975,1.4775,1.4775,1.5125,1.5125,1.54,1.61,1.655,1.6375,1.6075,1.6225,1.5625,1.4575,1.4225,1.5,1.505,1.55,1.5475,1.58,1.57,1.5225,1.5175,1.4925,1.5275,1.5025,1.4625,1.415,1.385,1.395,1.4625,1.515,1.565,1.5975,1.5975,1.615,1.545,1.6225,1.63,1.67,1.73,1.635,1.4525,1.4275,1.405,1.3975,1.52,1.5675,1.56,1.555,1.5175,1.4175,1.3775,1.495,1.5625,1.5975,1.6175,1.5625,1.4775,1.4575,1.4625,1.455,1.4,1.4025,1.25,1.1825,1.1775,1.1875,1.1875,1.16,1.16,1.16,1.0875,1.075,1.08,1.03,0.985,0.995,1.0625,1.1025,1.075,1.0325,1.025,1.06,1.1275,1.065,1.0475,1.02,1.0675,1.075,1.045,0.9825,0.9475,0.905,0.9075,0.93,0.9625,0.9725,0.9575,0.9975,1.0175,0.9925,1.065,1.0625,1.01,1.1625,1.1425,1.1625,1.0625,1.05,1.02,0.965,1.0525,1.1225,1.1775,1.2725,1.0675,0.95,0.8725,0.8375,0.735,0.8,0.86,0.9175,1.0625,1.19,1.6175,1.4175,1.36,1.32,1.475,1.325,1.2925,1.2225,1.2125,1.4975,1.51,1.5225,1.495,1.545,1.4825,1.4075,1.35,1.2325,1.2975,1.24,1.23,1.135,1.0475,1.1125,1.1575,1.1875,1.1725,1.1625,1.1225,1.1525,1.1775,1.19,1.105,1.09,1.0775,1.13,1.18,1.1025,1.285,1.25,1.3825,1.225,1.195,1.1925,1.2375,1.2075,1.2375,1.27,1.2375,1.2475,1.21,1.135,1.125,1.13,1.1275,1.125,1.1275,1.085,1.0625,1.0725,1.08,1.095,1.1375,1.0775,1.0725,1.05,1.0575,1.015,1.0225,1.03,1.07625,1.0575,1.03,1.01225,1.045,1.0575,1.04,1.0625,1.18437,1.19,1.16375,1.1,1.1425,1.1425,1.1575,1.1775,1.2075,1.195,1.2175,1.21,1.17,1.4,1.2825,1.3125,1.305,1.34498,1.39125,1.7875,1.955,2.0125,2.1125,1.98,2.07],"low":[0.9175,0.9375,0.98,0.915,0.9625,1.0175,1.035,1.0875,1.1275,0.9925,1.1075,1.0925,1.0675,1.0325,1.0825,1.105,1.125,1.1525,1.245,1.27,1.27,1.305,1.35,1.3725,1.31,1.3075,1.3425,1.3525,1.29,1.24,1.24,1.285,1.305,1.3975,1.395,1.45,1.4425,1.455,1.4825,1.5575,1.5075,1.5625,1.5425,1.4475,1.38,1.3275,1.3575,1.4425,1.465,1.455,1.51,1.5125,1.4425,1.4675,1.4525,1.475,1.4625,1.4025,1.3625,1.34,1.3375,1.375,1.4075,1.5025,1.505,1.56,1.5225,1.4825,1.53,1.56,1.5975,1.5475,1.53,1.295,1.3525,1.31,1.3475,1.3725,1.4825,1.5075,1.49,1.385,1.36,1.3125,1.3475,1.44,1.4975,1.5175,1.46,1.4,1.36,1.3525,1.37,1.345,1.3325,1.1325,1.1375,1.13,1.1275,1.1375,1.115,1.115,1.0625,1.04,1.045,1.0325,0.97,0.9575,0.9625,0.9925,1.035,1.035,0.9425,0.935,0.9875,1.0175,1.0175,1.005,0.99,0.98,1.0275,0.9975,0.925,0.8875,0.84,0.795,0.835,0.8475,0.875,0.865,0.8975,0.94,0.875,0.95,1.0,0.87,0.9625,0.975,1.0275,0.875,0.8875,0.9125,0.875,0.9725,1.01,1.06,1.0375,0.9125,0.875,0.78,0.7125,0.6425,0.7075,0.775,0.8,0.8725,1.04,1.285,1.225,1.22,1.1075,1.195,1.19,1.2075,1.145,1.165,1.2025,1.265,1.3625,1.41,1.3625,1.35,1.3375,1.225,1.1625,1.205,1.1875,1.115,1.0175,0.99,1.01,1.09,1.0925,1.085,1.1,1.0325,1.0825,1.09,1.075,1.0125,1.005,1.015,1.05,1.0925,1.0225,1.0675,1.1375,1.17,1.045,1.0975,1.105,1.1275,1.1325,1.1625,1.1725,1.18,1.2,1.095,1.075,1.0675,1.075,1.05,1.0775,1.0725,1.0475,1.015,1.0075,1.0325,1.045,1.065,1.0175,1.0325,1.0225,0.985,0.9425,0.97,0.98,1.015,1.0025,0.9875,0.98,0.98,0.9925,0.9975,0.99875,1.0325,1.06125,1.09502,1.015,1.045,1.085,1.09,1.12415,1.13625,1.13875,1.10875,1.16,1.1275,1.14875,1.14,1.22,1.22998,1.255,1.30375,1.4225,1.6925,1.7775,1.81,1.7925,1.87],"close":[0.97,1.0575,0.9925,0.9525,0.995,1.0575,1.0775,1.19,1.2725,1.1475,1.145,1.1025,1.0875,1.0825,1.15,1.11,1.175,1.255,1.2525,1.3,1.32,1.335,1.38,1.395,1.33,1.355,1.3875,1.3725,1.3075,1.2475,1.2625,1.3425,1.395,1.4025,1.47,1.5075,1.485,1.4825,1.5975,1.6075,1.605,1.5875,1.5475,1.4525,1.4325,1.36,1.46,1.4625,1.4775,1.5225,1.555,1.5225,1.505,1.48,1.485,1.495,1.47,1.405,1.375,1.365,1.375,1.415,1.5075,1.525,1.5875,1.585,1.5425,1.53,1.6075,1.6,1.67,1.5825,1.6275,1.3825,1.395,1.3625,1.375,1.515,1.54,1.515,1.4975,1.4025,1.36,1.35,1.475,1.5325,1.52,1.5775,1.47,1.4625,1.38,1.43,1.3875,1.3575,1.3575,1.1775,1.1525,1.155,1.1875,1.1475,1.14,1.155,1.08,1.07,1.0525,1.0325,0.9825,0.96,0.9875,1.0175,1.045,1.035,0.9525,0.985,1.005,1.0475,1.0275,1.005,1.015,1.0375,1.035,1.01,0.925,0.89,0.8475,0.8675,0.9,0.9575,0.9075,0.9425,0.99,0.98,0.925,1.0575,1.035,0.995,1.1475,1.0925,1.0575,0.9425,1.0475,0.94,0.9525,1.04,1.0425,1.1025,1.055,0.9125,0.875,0.8125,0.7125,0.7,0.7725,0.8175,0.8525,0.9725,1.185,1.4875,1.3175,1.2575,1.22,1.4025,1.195,1.2225,1.175,1.1925,1.455,1.41,1.51,1.4325,1.5125,1.37,1.3475,1.2325,1.2175,1.245,1.19,1.135,1.0525,1.0325,1.055,1.145,1.11,1.1075,1.11,1.045,1.105,1.1725,1.0825,1.015,1.0325,1.045,1.11,1.1175,1.035,1.2525,1.24,1.2675,1.0925,1.18,1.1725,1.16,1.19,1.2375,1.22,1.2175,1.2075,1.1025,1.115,1.0875,1.095,1.085,1.11,1.0725,1.06,1.0225,1.065,1.0525,1.085,1.065,1.02,1.0475,1.0425,0.99,0.9625,1.0025,1.0275,1.0275,1.0075,1.0025,0.985,1.015,1.025,1.0025,1.0375,1.1075,1.1575,1.1075,1.04,1.0825,1.0875,1.13,1.16,1.1875,1.1575,1.2025,1.18,1.1525,1.2575,1.2175,1.245,1.2775,1.3125,1.3475,1.67,1.9125,1.9275,1.955,1.9125,1.925],"drawn":[{"kind":"support","i0":3,"i1":60,"date0":"2019-09-03","date1":"2019-11-21","p0":0.915,"p1":1.3375,"g_per_bar":0.00666,"annualised":4.35687},{"kind":"support","i0":106,"i1":151,"date0":"2020-01-30","date1":"2020-04-03","p0":0.97,"p1":0.6425,"g_per_bar":-0.00915,"annualised":-0.90042},{"kind":"support","i0":179,"i1":224,"date0":"2020-05-14","date1":"2020-07-20","p0":0.99,"p1":0.9425,"g_per_bar":-0.00109,"annualised":-0.24069},{"kind":"support","i0":239,"i1":249,"date0":"2020-08-10","date1":"2020-08-24","p0":1.045,"p1":1.14,"g_per_bar":0.0087,"annualised":7.95925},{"kind":"resistance","i0":8,"i1":40,"date0":"2019-09-10","date1":"2019-10-24","p0":1.275,"p1":1.6375,"g_per_bar":0.00782,"annualised":6.17439},{"kind":"resistance","i0":87,"i1":138,"date0":"2020-01-02","date1":"2020-03-17","p0":1.6175,"p1":1.1625,"g_per_bar":-0.00648,"annualised":-0.80448},{"kind":"resistance","i0":157,"i1":235,"date0":"2020-04-14","date1":"2020-08-04","p0":1.6175,"p1":1.18437,"g_per_bar":-0.004,"annualised":-0.63466}],"machine":{"support":{"line":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.07098,1.08412,1.09743,1.1109,1.12453,1.13833,1.1523,1.16644,1.18076,1.19525,1.20991,1.22476,1.23979,1.24,1.24,1.25522,1.27062,1.28621,1.302,1.31798,1.33415,1.35052,1.3671,1.38388,1.40086,1.41805,1.43545,1.4475,1.38,1.3275,1.34379,1.36028,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.35848,1.3606,1.36272,1.295,1.29702,1.29904,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.83953,0.82966,0.8199,0.81026,0.80073,0.79131,0.78201,0.77281,0.76372,0.75474,0.74587,0.7371,0.72843,0.71986,0.7114,0.70303,0.69477,0.6866,0.67852,0.67054,0.66266,0.65486,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.26057,1.32144,1.38526,1.3625,1.35,1.3375,1.225,1.1625,1.205,1.1875,1.115,1.0175,0.99,1.01,1.05877,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.0194,1.02072,1.02204,1.02336,1.02469,1.02601,1.02734,1.02867,1.03,1.03134,1.03267,1.03401,1.03535,1.03669,1.015,1.0075,1.0088,1.01011,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.09282,1.10092,1.10908,1.1173,1.12559,1.13393,1.14234,1.15081,1.15934,1.16794,1.1766,1.18532],"g":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,0.0122,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.00156,0.00156,0.00156,0.00156,0.00156,0.00156,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,-0.01183,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,0.04716,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,0.00129,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739,0.00739],"anchor":[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]},"resistance":{"line":[null,null,null,null,null,1.13123,1.13914,1.23,1.275,1.28391,1.29288,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.74212,1.75871,1.77546,1.79237,1.80944,1.82667,1.84407,1.86163,1.87936,1.89726,1.91533,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.76978,1.77381,1.77784,1.78189,1.78594,1.79001,1.79408,1.79816,1.80226,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.34894,1.34553,1.34214,1.33875,1.33538,1.33201,1.32865,1.32529,1.32195,1.31862,1.31529,1.31197,1.30866,1.30536,1.30207,1.29878,1.29551,1.29224,1.28898,1.28573,1.28248,1.27925,1.27602,1.2728,1.26959,1.26639,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.56508,1.56186,1.55864,1.55544,1.55224,1.54904,1.54586,1.54268,1.5395,1.53634,1.53318,1.53002,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.44836,1.45511,1.4619,1.46872,1.47557,1.48246,1.48937,1.49632,1.5033,1.51031,1.51735,1.52443,1.53154,1.53869,1.54586,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.5122,1.53134,1.55072,1.7875,1.955,2.0125,2.1125,2.13924,2.16632],"g":[null,null,null,null,null,0.00696,0.00696,0.00696,0.00696,0.00696,0.00696,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.00948,0.00948,0.00948,0.00948,0.00948,0.00948,0.00948,0.00948,0.00948,0.00948,0.00948,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.00227,0.00227,0.00227,0.00227,0.00227,0.00227,0.00227,0.00227,0.00227,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,-0.00253,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,-0.00206,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,0.00465,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.01258,0.01258,0.01258,0.01258,0.01258,0.01258,0.01258,0.01258,0.01258],"anchor":[false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]}},"ribbon":{"support":{"human":[0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0],"machine":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"human_bars":161,"machine_bars":105,"both":77},"resistance":{"human":[0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"machine":[0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1],"human_bars":164,"machine_bars":88,"both":49}}}</script>
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById('chart-data').textContent);
+  const n = D.n;
+  const W = 1180, H = 330, ML = 8, MR = 60, MT = 14, MB = 40, RIB = 14;
+  const iw = W - ML - MR, ih = H - MT - MB;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  let lo = Infinity, hi = -Infinity;
+  for (let k = 0; k < n; k++) {
+    if (D.low[k] != null && D.low[k] > 0) lo = Math.min(lo, D.low[k]);
+    if (D.high[k] != null) hi = Math.max(hi, D.high[k]);
+  }
+  for (const s of ['support', 'resistance']) for (const v of D.machine[s].line)
+    if (v != null && v > 0) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
+  for (const L of D.drawn) { lo = Math.min(lo, L.p0, L.p1); hi = Math.max(hi, L.p0, L.p1); }
+  const A = Math.log(lo) - (Math.log(hi) - Math.log(lo)) * 0.06;
+  const B = Math.log(hi) + (Math.log(hi) - Math.log(lo)) * 0.06;
+  const Y = p => MT + ih - ((Math.log(p) - A) / (B - A)) * ih;
+  const X = i => ML + (i + 0.5) * (iw / n);
+  const bw = Math.max(1.5, (iw / n) * 0.62);
+
+  let CAND = '', AXES = '';
+  for (let t = 0; t <= 5; t++) {
+    const p = Math.exp(A + (B - A) * t / 5), yy = Y(p);
+    AXES += `<line x1="${ML}" y1="${yy.toFixed(1)}" x2="${ML + iw}" y2="${yy.toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`
+         +  `<text x="${ML + iw + 8}" y="${(yy + 3.5).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">${p.toFixed(2)}</text>`;
+  }
+  for (let t = 0; t < 6; t++) {
+    const k = Math.round(t * (n - 1) / 5);
+    AXES += `<text x="${X(k).toFixed(1)}" y="${(MT + ih + 30).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="10" text-anchor="middle">${esc(String(D.dates[k]).slice(0, 7))}</text>`;
+  }
+  for (let k = 0; k < n; k++) {
+    const o = D.open[k], h = D.high[k], l = D.low[k], c = D.close[k];
+    if ([o, h, l, c].some(v => v == null || !(v > 0))) continue;
+    const col = c >= o ? 'var(--up)' : 'var(--down)', x = X(k);
+    CAND += `<line x1="${x.toFixed(1)}" y1="${Y(h).toFixed(1)}" x2="${x.toFixed(1)}" y2="${Y(l).toFixed(1)}" stroke="var(--wick)" stroke-width="1"/>`
+         +  `<rect x="${(x - bw / 2).toFixed(1)}" y="${Math.min(Y(o), Y(c)).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1, Math.abs(Y(c) - Y(o))).toFixed(1)}" fill="${col}" opacity="0.85"/>`;
+  }
+
+  const drawnPath = () => D.drawn.map(L => {
+    const col = L.kind === 'support' ? 'var(--human)' : 'var(--human)';
+    const dash = L.kind === 'resistance' ? ' stroke-dasharray="1 0"' : '';
+    return `<line x1="${X(L.i0).toFixed(1)}" y1="${Y(L.p0).toFixed(1)}" x2="${X(L.i1).toFixed(1)}" y2="${Y(L.p1).toFixed(1)}" stroke="${col}" stroke-width="2.4" stroke-linecap="round"${dash}/>`
+      +  `<circle cx="${X(L.i0).toFixed(1)}" cy="${Y(L.p0).toFixed(1)}" r="3" fill="${col}"/>`
+      +  `<circle cx="${X(L.i1).toFixed(1)}" cy="${Y(L.p1).toFixed(1)}" r="3" fill="${col}"/>`;
+  }).join('');
+
+  const machinePath = () => ['support', 'resistance'].map(s => {
+    const arr = D.machine[s].line;
+    let d = '', pen = false, out = '';
+    for (let k = 0; k < n; k++) {
+      const v = arr[k];
+      if (v == null || !(v > 0)) { if (pen) { out += `<path d="${d}" fill="none" stroke="var(--machine)" stroke-width="2.2" stroke-dasharray="5 3"/>`; d = ''; pen = false; } continue; }
+      d += (pen ? 'L' : 'M') + X(k).toFixed(1) + ' ' + Y(v).toFixed(1) + ' '; pen = true;
+    }
+    if (pen) out += `<path d="${d}" fill="none" stroke="var(--machine)" stroke-width="2.2" stroke-dasharray="5 3"/>`;
+    return out;
+  }).join('');
+
+  // coverage ribbon: one row per side, human above machine, both-on picked out
+  function ribbon(yTop) {
+    let s = '';
+    ['support', 'resistance'].forEach((side, si) => {
+      const r = D.ribbon[side], y = yTop + si * (RIB + 5);
+      s += `<text x="${ML}" y="${(y - 3).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="9.5">${side}</text>`;
+      for (let k = 0; k < n; k++) {
+        const hu = r.human[k], ma = r.machine[k];
+        if (!hu && !ma) continue;
+        const col = hu && ma ? 'var(--up)' : (hu ? 'var(--human)' : 'var(--machine)');
+        const yy = hu && ma ? y : (hu ? y : y + RIB / 2);
+        const hh = hu && ma ? RIB : RIB / 2;
+        s += `<rect x="${(ML + k * (iw / n)).toFixed(1)}" y="${yy.toFixed(1)}" width="${(iw / n + 0.4).toFixed(1)}" height="${hh}" fill="${col}" opacity="${hu && ma ? 0.75 : 0.5}"/>`;
+      }
+    });
+    return s;
+  }
+
+  const HR = D.ribbon.support, RR = D.ribbon.resistance;
+  const panels = [
+    { tag: 'h', label: 'drawn by hand', sub: `${D.drawn.length} lines · with the whole window in view`, body: drawnPath() },
+    { tag: 'm', label: 'fitted by the construction', sub: `dynamic windows · causal · min_piv 3 · h 4%/yr`, body: machinePath() },
+    { tag: 'b', label: 'both together', sub: `solid = drawn · dashed = fitted · the ribbon shows where each is on`, body: drawnPath() + machinePath(), rib: true }
+  ].map(p => `<div class="panel" style="margin-bottom:20px">
+      <div class="phead">
+        <span class="ptag ${p.tag === 'b' ? 'm' : p.tag}" ${p.tag === 'b' ? 'style="background:var(--panel-2);color:var(--ink)"' : ''}>${esc(p.label)}</span>
+        <span class="psub">${esc(p.sub)}</span>
+      </div>
+      <div class="svgwrap"><svg viewBox="0 0 ${W} ${p.rib ? H + 44 : H}" role="img" aria-label="GME candles with the ${esc(p.label)} trendlines">
+        ${AXES}${CAND}${p.body}${p.rib ? ribbon(MT + ih + 40) : ''}
+      </svg></div>
+    </div>`).join('');
+  document.getElementById('panels').innerHTML = panels;
+
+  const rows = ['support', 'resistance'].map(s => {
+    const r = D.ribbon[s];
+    const rec = Math.round(100 * r.both / r.human_bars), pre = Math.round(100 * r.both / r.machine_bars);
+    return `<tr><td class="k">${s}</td><td>${r.human_bars}</td><td>${r.machine_bars}</td>
+      <td>${r.both}</td><td>${rec}%</td><td>${pre}%</td></tr>`;
+  }).join('');
+  document.getElementById('tbl').innerHTML =
+    `<thead><tr><th>side</th><th>drawn bars</th><th>fitted bars</th><th>both</th>
+     <th>recall</th><th>precision</th></tr></thead><tbody>${rows}</tbody>`;
+})();
+</script>
