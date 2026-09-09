@@ -508,6 +508,102 @@ separates them is the deferral and the cost of being wrong.
 
 ---
 
+## 9a. EXTERNAL EVIDENCE, 2026-09-09 — all seven briefs are in, and the ranking inverts
+
+Seven agents researched the published literature and primary data documentation, one per lead,
+in parallel. Briefs in `working/leads/`, under that directory's quarantine contract. **Every
+claim below that concerns THIS programme's own data or methods was re-measured here before
+being recorded; every claim about the outside world is attributed and marked as unread.**
+
+### The three findings that are not about any lead, and are worth more than the leads
+
+**1. A BEST-OF-N FLOOR PRICES SELECTION AND IS BLIND TO SIGN-FITTING.** `[MEASURED HERE]` —
+`scripts/probe_signfit_floor.py` → `data/signfit_floor_probe.json`, closed form and a
+200,000-draw simulation that agree. Signing `k` worthless signals in sample gives the composite
+a null centred at `√(2/π)·√k` with sd `√(1−2/π)`, free of `k`. At `k` = 16:
+
+```
+best-of-16 |t|  -- what the D395 floor prices : p95 = 2.95
+sign-fitted equal-weight composite, pure noise: p95 = 4.23
+signs PRE-DECLARED in writing                 : p95 = 1.65
+```
+
+**A composite of sixteen pure-noise signals clears the selection floor by +1.28.** `CLAUDE.md`
+says the exact permutation floor should replace normal-approximation floors programme-wide;
+this scopes that — **it is correct for what it prices and must be EXTENDED wherever a
+construction orients its own components in sample.** And pre-declaring the signs is worth a
+factor of ~2 in the hurdle for no computation at all.
+
+**2. THIS RECORD'S OWN GLOSS ON D280 WAS WRONG, AND IT INVERTS C1's RANK.** The programme's
+written position was that sixteen independent useless inputs are sixteen independent sources of
+noise "with no redundancy left to average away". **Orthogonality multiplies detectability by
+`√k`** — 3.7–4.0× for the OHLC family at 13.5–15.8 effective inputs, against 1.69× for the nine
+price scores at 2.87. **By the programme's own numbers the family it dismissed is the better
+combination candidate.** C1 scored 13/21 partly on "it cannot name its own form"; it now can —
+16 OHLC terms, equal-weight cross-sectional rank average, every sign declared in writing,
+floored against a sign-fitting null.
+
+**3. `etf_wide_daily_raw` IS NOT AN ETF FIXTURE, AND ITS MORTALITY COHORT IS FUND WIND-UPS.**
+`[MEASURED HERE]` — `scripts/probe_etf_fixture_composition.py` →
+`data/etf_fixture_composition.json`. Found by the V1 agent in passing, on a fixture **D382,
+D384 and D385 have already run on**:
+
+| | |
+|---|---|
+| CEF distribution signature (≥10 payments/yr **and** ≥5% yield) | **150 of 551 = 27.2%** — a deliberately strict proxy, so a **lower bound**; the brief's independent count was 172 = 31.2% |
+| the mortality cohort | **23 of its 24 dead names are closed-end funds by inspection.** The single exception is `ELON`, which paid nothing |
+| distributions absent from `close` | whole fixture median **3.06%/yr**; CEF cohort median **10.54%/yr** |
+| terminal-wealth understatement over 16 years | **5.37×** on the CEF cohort — the brief said 3.71×, so **worse than reported** |
+
+> **A "dead-inclusive" fixture whose deaths are CEF term maturities and mergers is not measuring
+> delisting risk at all.** Its `purpose` field also reads *"US single-name equity base for
+> SHORT-SIDE research"*, a copy-paste artefact this record flagged in §6.2 before knowing the
+> fixture was mis-composed as well as mis-labelled.
+
+**What is and is not at stake.** All three studies pass the events file to `load_ragged`, so
+their **P&L used total return and is not affected**. What is affected is anything reading
+`closes` as a price LEVEL — which is exactly the log-price axis D384 and D385 built their
+density on, bled by ~10.5%/yr across a quarter of the universe. **That line is retired, so the
+live stake is the fixture itself and any future study that opens it.**
+
+### The leads, re-ranked
+
+| lead | external verdict | disposition |
+|---|---|---|
+| **C1** | the gloss was backwards; a concrete hurdle exists (**4.20** sign-fitted, **1.96** pre-declared) and reproduces HLZ 3.0 / HXZ 2.78 / CGS 3.4 | **RISES to first of the unregistered leads.** One disciplined test, not a search |
+| **R1** | horizon claim recorded, not adopted; two construction defects measured, one **false**, one confirmed, one new | **pre-registered as D404, amended §12a** |
+| **X1** | residualising lifts gross 1.5–3.5× and net goes **−1.28 → −0.80%/mo** — still 80bp under water. Mechanism is *not* ours: raw reversal accidentally shorts industry momentum and PEAD. Clustering's own negative: out-of-sample within-minus-outside correlation spread **0.13 large-cap vs 0.02 small-cap**, and ours is the small-cap case | **falls.** The cluster step is the weakest part |
+| **N1** | borrow fee close to fatal (**+0.14%/mo gross → −0.01% net** across 162 anomalies); free exchange-listed FINRA short interest **starts June 2021** (~31% of the fixture) and members **omit a security once its symbol is deleted** | **falls hard.** Better free route flagged: FINRA daily short-sale volume + SEC FTD file, which carries **CUSIP** and doubles as a symbol crosswalk |
+| **K1** | location kills it before decay does — on FOMC days the CAPM *works*, α insignificant, adj-R² 64%. **Equal weighting, the thing that made K1 attractive, is what shrinks it**: 36bp VW → 25bp EW → 20bp smallest decile | **falls hard.** Keep only as a gross descriptive measurement |
+| **V1** | Flynn (462 CEFs, 1985–2001) runs this exact hedged trade and finds **zero significantly positive alphas**, already net of spreads; the edge is **front-loaded into month one**, killing the "slow and large" thesis | **falls.** But its by-product is finding 3 above |
+| **X2** | **the dismissal stands.** The daily large→small effect is measured into a decile averaging **$47m** cap and is strongest when large-cap spreads are widest | **confirmed dead** |
+
+### The convergence worth noticing
+
+**Two agents that never communicated arrived at the same construction** as the only cost-surviving
+thing in the area: **industry-relative reversal in liquid names with a low-volatility screen**
+(+0.31%/mo, t = 2.73, value-weighted, large-cap). X2 reached it from the lead–lag literature,
+X1 from the reversal literature. **And in both accounts it is the COST FILTER doing the
+rescuing, not the residualisation** — which is the same lesson this programme has now paid for
+several times over. It is not a lead in this record and it would need its own pre-registration.
+
+### What the briefs could not establish, carried rather than smoothed over
+
+Five of the seven hit paywalls or 403s on at least one load-bearing source — SSRN, ScienceDirect
+and Oxford blocked repeatedly. **Named gaps:** exact per-variable OOS R² in Goyal–Welch (R1);
+five calendar papers read at abstract level only, including a 2026 paper directly on
+data-mining artefacts (K1); Blitz et al. 2013, the one paper claiming net-of-cost reversal
+survival, unobtainable and Robeco-authored with a replication by two of its own authors (X1);
+Hou's and Boudoukh's own tables (X2). **Every figure from those is tagged `[UNVERIFIED]` in the
+briefs and none is relied on above.**
+
+**And the standing suspicion held.** R1's brief was the one that read most confidently, and its
+two headline construction claims were **the ones that did not survive measurement** — the
+alleged 2–5%/yr drift was −0.92%/yr and ran the opposite way. `working/leads/README.md`'s rule
+was written before that was known and it paid for itself immediately.
+
+---
+
 ## 10. What this record does not claim
 
 - **No number here is new except the six tagged `[MEASURED HERE]`**, which are fixture
