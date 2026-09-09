@@ -51,16 +51,26 @@ def _load(name, filename):
 
 
 def human_mask(lines, n, kind):
-    """Bars the human called trending on one side, and the drawn slope at each."""
+    """Bars the human called trending on one side, the drawn slope, and the drawn LINE LEVEL.
+
+    THE LEVEL MATTERS AND THE FIRST VERSION OF THIS FILE OMITTED IT. Branches B, C and D all take
+    `rolling_fit`'s fixed-window gradient and differ ONLY in where the intercept sits, so a scorer
+    that compares gradients alone reports them as identical -- which it did, and which is a flaw in
+    the scorer rather than a fact about the constructions. `lvl` is the drawn line's price at every
+    bar it spans, so `|log(fitted) - log(drawn)|` can separate them."""
     on = np.zeros(n, bool)
     g = np.full(n, np.nan)
+    lvl = np.full(n, np.nan)
     for L in lines:
         if L["kind"] != kind:
             continue
         a, b = int(L["i0"]), int(L["i1"])
+        gg = float(L["g_per_bar"])
+        idx = np.arange(a, b + 1)
         on[a:b + 1] = True
-        g[a:b + 1] = float(L["g_per_bar"])
-    return on, g
+        g[a:b + 1] = gg
+        lvl[a:b + 1] = np.exp(np.log(float(L["p0"])) + gg * (idx - a))
+    return on, g, lvl
 
 
 def main() -> int:
@@ -99,17 +109,42 @@ def main() -> int:
     for kind, sign, widen, px in (("support", -1, -1, lo), ("resistance", +1, +1, hi)):
         pidx = np.array([p.index for p in ps if p.sign == sign], dtype=int)
         ppx = np.log([p.price for p in ps if p.sign == sign]) if pidx.size else np.array([])
-        G, L, anc, win = DR.segment_windows(pidx, ppx, np.log(px), m, UO.K, h, widen,
-                                            min_piv=a.min_piv, max_window=UO.WINDOW)
+        if a.branch == "E":
+            G, L, anc, win = DR.segment_windows(pidx, ppx, np.log(px), m, UO.K, h, widen,
+                                                min_piv=a.min_piv, max_window=UO.WINDOW)
+        else:
+            # B, C and D all take rolling_fit's FIXED 252-bar gradient and differ only in the
+            # intercept rule, so they share this preparation.
+            g_fix, c_fix = UO.rolling_fit(m, pidx, ppx, UO.K)
+            cnt, _sp = DR.pivot_support(m, pidx, UO.K, UO.WINDOW)
+            ok = cnt >= a.min_piv
+            if a.branch == "B":
+                G, L, anc, _pu, _gv = DR.ratchet_corrected(g_fix, c_fix, np.log(px), h, widen, ok)
+            else:
+                RT = DR.ratchet_reset if a.branch == "D" else DR.ratchet_tight
+                G, L, anc, _pu, _gv = RT(g_fix, np.log(px), h, widen, UO.WINDOW, ok)
+            win = np.full(m, -1, int)
         sl = slice(start, start + n)
-        Gw, ancw = G[sl], anc[sl]
-        hon, hg = human_mask(gt["lines"], n, kind)
+        Gw, Lw, ancw = G[sl], np.exp(L[sl]), anc[sl]
+        hon, hg, hlvl = human_mask(gt["lines"], n, kind)
         mon = np.isfinite(Gw)
 
         both = hon & mon
         d = Gw[both] - hg[both]
         segs = int(ancw.sum())
         hsegs = sum(1 for L_ in gt["lines"] if L_["kind"] == kind)
+
+        # DOES THE LINE START WHERE THE WINDOW STARTS? Measured, because it is the whole
+        # question behind the recall gap: a window opens with no gradient and cannot draw a
+        # line until it has earned min_piv pivots.
+        lags = []
+        if a.branch == "E":
+            opens = np.flatnonzero(anc)
+            for oi, o0 in enumerate(opens):
+                o1 = opens[oi + 1] if oi + 1 < opens.size else m
+                seg = np.flatnonzero(np.isfinite(G[o0:o1]))
+                lags.append(int(seg[0]) if seg.size else int(o1 - o0))
+        lag_med = float(np.median(lags)) if lags else None
 
         cell = dict(
             human_bars_on=int(hon.sum()), machine_bars_on=int(mon.sum()),
@@ -118,10 +153,19 @@ def main() -> int:
             recall=round(float((hon & mon).sum() / max(hon.sum(), 1)), 4),
             precision=round(float((hon & mon).sum() / max(mon.sum(), 1)), 4),
             human_segments=hsegs, machine_segments=segs,
+            window_open_to_first_line_median=lag_med,
+            window_open_to_first_line=lags or None,
             slope_abs_err_median=(round(float(np.median(np.abs(d))), 6) if d.size else None),
             slope_abs_err_p90=(round(float(np.quantile(np.abs(d), .9)), 6) if d.size else None),
             sign_agreement=(round(float((np.sign(Gw[both]) == np.sign(hg[both])).mean()), 4)
                             if d.size else None),
+            # the measure that separates B, C and D: how far the fitted line sits from the drawn
+            # one, in log price, at bars where both exist. 0.05 is a line 5% away from the drawn one.
+            level_gap_median=(round(float(np.median(np.abs(np.log(Lw[lvok]) - np.log(hlvl[lvok])))), 5)
+                              if (lvok := both & np.isfinite(Lw) & np.isfinite(hlvl)).any() else None),
+            level_gap_p90=(round(float(np.quantile(np.abs(np.log(Lw[lvok]) - np.log(hlvl[lvok])), .9)), 5)
+                           if lvok.any() else None),
+            level_bars=int(lvok.sum()),
             median_machine_ann=(round(float(np.expm1(BARS_PER_YEAR * np.median(Gw[both]))), 4)
                                 if d.size else None),
             median_human_ann=(round(float(np.expm1(BARS_PER_YEAR * np.median(hg[both]))), 4)
@@ -133,6 +177,9 @@ def main() -> int:
               f"{hsegs} lines")
         print(f"    machine {cell['machine_bars_on']:>4d}/{n} bars on ({100*cell['machine_share']:.0f}%), "
               f"{segs} windows")
+        if lag_med is not None:
+            print(f"    the line does NOT start at the window: median {lag_med:.0f} bars from a "
+                  f"window opening to its first drawn point")
         print(f"    overlap {cell['overlap_bars']:>4d} bars -- recall {100*cell['recall']:.0f}% "
               f"of what the human drew, precision {100*cell['precision']:.0f}%")
         if d.size:
@@ -141,6 +188,9 @@ def main() -> int:
                   f"{100*cell['sign_agreement']:.0f}%")
             print(f"    annualised, median: machine {100*cell['median_machine_ann']:+.0f}% vs "
                   f"human {100*cell['median_human_ann']:+.0f}%")
+        if cell["level_gap_median"] is not None:
+            print(f"    LINE POSITION: median {100*cell['level_gap_median']:.1f}% away from the "
+                  f"drawn line (p90 {100*cell['level_gap_p90']:.1f}%), over {cell['level_bars']} bars")
         print()
 
     OUT.write_text(json.dumps(res, indent=1))
