@@ -42,8 +42,25 @@ that was rejected; they are about a code path that is in use.
 
 **Bug one — `filingDate` is a look-ahead.** The SEC moved the 13D/G EDGAR cut-off from **5:30 pm to
 10:00 pm ET on 2024-02-05**, so **a filing dated `D` can be accepted six hours after `D`'s close.**
-`acceptanceDateTime` exists in the submissions API (in UTC); the brief reports that
-`d331_edgar_deals.py` **uses `filingDate` only and never touches acceptance.**
+`acceptanceDateTime` exists in the submissions API; the brief reports that `d331_edgar_deals.py`
+**uses `filingDate` only and never touches acceptance.**
+
+> **AMENDED 2026-09-09 BY ROUND 4's `H1`, ON TWO COUNTS.**
+>
+> **(a) THE 22:00 EXTENSION IS FOR SCHEDULE 13D/13G ONLY.** `H1` checked the primary source: SEC's
+> current filer guidance lists the same-day-after-17:30 exception forms verbatim — **Forms 3/4/5,
+> 144 and the MEF registration forms. Form 8-K is not among them.** The paragraph above is correct
+> for the form `G4` was researching and **wrong as a general rule** — a generalisation I made, not
+> `G4`. **The bug survives in a smaller form:** even under the ordinary 17:30 rule, a filing accepted
+> after the **16:00 market close** still carries that day as `filingDate`, so a runner entering on
+> `filingDate`'s close uses information that did not exist. The error above is in the **conservative**
+> direction.
+>
+> **(b) THE FIX NAMED HERE IS ITSELF BROKEN.** `acceptanceDateTime` is **timezone-inconsistent** —
+> serialised with a `Z`, but on a 60-filing hand-check **35 are ET mislabelled as `Z` and 25 are
+> genuine UTC, mixed within the same day and the same filer agent.** **Key on the SGML
+> `<ACCEPTANCE-DATETIME>` header instead**, which reproduced `filingDate` on 60 of 60. Full detail
+> and the resulting 30.7–65.7% bracket: [`the-timestamp-round.md`](the-timestamp-round.md) §1.1–§1.2.
 
 **Bug two — a form-type string changed and will silently zero the modern sample.** Verified four
 ways in the brief: the EDGAR index string is **`SC 13D` in 2015 and `SCHEDULE 13D` in 2025**; an
