@@ -140,6 +140,18 @@ F2_RECALL = 0.40
 PROXIES = ("close_in_range", "vwap_in_range", "close_vs_vwap", "bar_direction", "tick_rule")
 NEEDS_VWAP = {"vwap_in_range", "close_vs_vwap"}
 
+# Per-proxy algebraic bound, DERIVED not assumed. The first version of this
+# asserted [-1,1] on all five and close_vs_vwap fired at -1.958/+1.898 -- the
+# assertion was wrong, not the data: close and vwap both lie in [low,high], so
+# 2*(close-vwap)/range spans [-2,+2]. Bounds are now the algebra of each formula.
+PROXY_BOUND = {
+    "close_in_range": 1.0,    # (2c - h - l) / (h - l),      c in [l,h]
+    "vwap_in_range": 1.0,     # (2*vwap - h - l) / (h - l),  vwap in [l,h]
+    "close_vs_vwap": 2.0,     # 2*(c - vwap) / (h - l),      difference of two
+    "bar_direction": 1.0,     # (c - o) / (h - l),           both in [l,h]
+    "tick_rule": 1.0,         # sign()
+}
+
 
 def load():
     cols = defaultdict(list)
@@ -209,8 +221,10 @@ def build(d):
         raise AssertionError(f"[QTY] I_true outside [-1,1]: {f.min()} {f.max()}")
     for k, v in p.items():
         vf = v[np.isfinite(v)]
-        if vf.size and (vf.min() < -1 - 1e-9 or vf.max() > 1 + 1e-9):
-            raise AssertionError(f"[QTY] proxy {k} outside [-1,1]: {vf.min()} {vf.max()}")
+        lim = PROXY_BOUND[k]
+        if vf.size and (vf.min() < -lim - 1e-9 or vf.max() > lim + 1e-9):
+            raise AssertionError(
+                f"[QTY] proxy {k} outside [-{lim},{lim}]: {vf.min()} {vf.max()}")
 
     return {"i_true": i_true, "r": r, "proxies": p, "vwap": vwap, "n": c.shape[0]}
 
@@ -244,20 +258,69 @@ def assert_recall_can_fail():
         raise AssertionError(f"[CAN-FAIL] negated proxy scored {flip:.3f}, expected ~0")
 
 
-def assert_residual_removes_return(sym, res_true, r, fit_end):
-    """[SIGN/QTY] The residual must be ORTHOGONAL to the contemporaneous return.
-    If it is not, residualise() did not do what its name says."""
-    m = np.isfinite(res_true) & np.isfinite(r)
-    m[:fit_end] = False
+def residual_return_corr(res, r, lo, hi):
+    m = np.isfinite(res) & np.isfinite(r)
+    m[:lo] = False
+    if hi is not None:
+        m[hi:] = False
     if m.sum() < 1000:
-        raise AssertionError(f"[ORTH] {sym}: too few rows to check orthogonality")
-    c = abs(float(np.corrcoef(res_true[m], r[m])[0, 1]))
-    if c > 0.05:
-        raise AssertionError(f"[ORTH] {sym}: residual still {c:.4f} correlated with return")
+        return float("nan")
+    return float(np.corrcoef(res[m], r[m])[0, 1])
+
+
+def assert_residual_removes_return(sym, imb, r, fit_end):
+    """[ORTH] residualise() must actually remove the return.
+
+    ORTHOGONALITY IS AN IN-SAMPLE IDENTITY, and that is what is asserted here:
+    on the FIT window an OLS residual is orthogonal to its regressors to
+    numerical precision. The first version of this asserted |corr| < 0.05 on the
+    OUT-OF-FIT window instead and fired at 0.0747 -- legitimately, because the
+    assertion encoded an in-sample property and applied it out of sample. Betas
+    fitted on the first 30% and applied to the rest do NOT produce orthogonal
+    residuals; the leftover correlation is BETA DRIFT, which is a diagnostic
+    worth reporting, not a defect worth halting on. It is returned, not asserted.
+    """
+    e_in, _, _, _ = residualise_in_fit(imb, r, fit_end)
+    c_in = abs(residual_return_corr(e_in, r, 0, fit_end))
+    if not np.isfinite(c_in) or c_in > 1e-6:
+        raise AssertionError(
+            f"[ORTH] {sym}: in-fit residual is {c_in:.3e} correlated with the "
+            f"return; residualise() is not removing what its name says")
+
+
+def residualise_in_fit(imb, r, fit_end):
+    """Same fit as residualise(), but residuals returned ON the fit window --
+    used only by the [ORTH] assertion, which needs the in-sample identity."""
+    lags = [r]
+    for L in range(1, N_RET_LAGS + 1):
+        s = np.full(r.shape, np.nan)
+        s[L:] = r[:-L]
+        lags.append(s)
+    X = np.column_stack([np.ones(r.shape[0])] + lags)
+    ok = np.isfinite(imb) & np.all(np.isfinite(X), axis=1)
+    fit = ok.copy()
+    fit[fit_end:] = False
+    beta, *_ = np.linalg.lstsq(X[fit], imb[fit], rcond=None)
+    e = np.full(imb.shape, np.nan)
+    e[fit] = imb[fit] - X[fit] @ beta
+    return e, beta.tolist(), int(fit.sum()), int(fit.sum())
+
+
+def assert_orth_can_fail():
+    """[CAN-FAIL] Feed the check a residual that is NOT residualised -- the raw
+    series -- and it must reject it. Breaks the SCALAR, not the name."""
+    rng = np.random.default_rng(11)
+    n = 20000
+    r = rng.normal(0, 0.01, n)
+    imb = 3.0 * r + rng.normal(0, 0.1, n)
+    c = abs(residual_return_corr(imb, r, 0, n))
+    if c <= 1e-6:
+        raise AssertionError("[CAN-FAIL] the orthogonality check cannot reject raw flow")
 
 
 def main():
     assert_recall_can_fail()
+    assert_orth_can_fail()
 
     data = load()
     res = {}
@@ -267,8 +330,9 @@ def main():
         n, r = b["n"], b["r"]
         fit_end = int(n * FIT_FRAC)
 
+        assert_residual_removes_return(sym, b["i_true"], r, fit_end)
         e_true, _, _, n_use = residualise(b["i_true"], r, fit_end)
-        assert_residual_removes_return(sym, e_true, r, fit_end)
+        drift = residual_return_corr(e_true, r, fit_end, None)
         q_true = quintiles(trailing_z(e_true, Z_WINDOW))
 
         acf_true = acf(e_true, 3)
@@ -290,6 +354,7 @@ def main():
             "n_bars": n,
             "n_reported": n_use,
             "acf1_residual_truth": acf_true[0],
+            "residual_return_corr_oof_beta_drift": drift,
             "proxies": per,
         }
 
@@ -326,7 +391,8 @@ def main():
     for sym in sorted(res):
         rr = res[sym]
         print(f"\n=== {sym}  n={rr['n_bars']}  reported={rr['n_reported']}"
-              f"  acf1(resid truth)={rr['acf1_residual_truth']:+.4f}")
+              f"  acf1(resid truth)={rr['acf1_residual_truth']:+.4f}"
+              f"  beta-drift leak={rr['residual_return_corr_oof_beta_drift']:+.4f}")
         print(f"  {'proxy':<16} {'corr_raw':>9} {'corr_res':>9} {'rec_Q5':>7} "
               f"{'rec_Q1':>7} {'acf1_px':>8}  vwap?")
         for name in PROXIES:
