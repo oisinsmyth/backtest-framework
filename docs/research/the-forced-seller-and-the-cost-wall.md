@@ -5,9 +5,16 @@
 record of what round 2 was kept off. Round 1 is [`the-negative-space-scan.md`](the-negative-space-scan.md)
 §9a–§9b.
 
-**STATUS: PARTIAL — three of the briefs are in (`F2`, `F3`, `F4`); `F1`, `F5`, `F6` are still
-running.** This record is written now rather than held, and will be extended in place as the rest
-land. **Sections for the outstanding three do not exist yet; their absence is not a verdict.**
+**STATUS: COMPLETE — all six briefs are in.** The record was opened when three had landed and
+extended in place as the rest arrived; §§2–4c carry one territory each.
+
+**THE HEADLINE, AND IT IS THE SAME SHAPE AS ROUND 1: the most valuable returns are not leads.**
+Four of the six most consequential findings below are about **method, data or cost** — a biased
+spread estimator, a survivors-only identifier trap, a spin-off adjustment that explains a defect
+already on our record, and a hard auction cut-off — and **not one of them is a strategy.** Of the
+four signal territories, **`F1`'s premise was inverted, `F3`'s window sits inside the claimed dead
+zone, `F2`'s anomaly has no cost-honest post-2010 survival, and `F6` ranks three of its four
+families as resolving overnight, where daily bars cannot reach them.**
 
 **The reading rule, unchanged from round 1.** Every claim about *this programme's* data or methods
 is re-measured here before being recorded. **Every claim about the outside world is attributed, and
@@ -69,6 +76,68 @@ The book runs at **Sharpe 0.92** ([`FINDINGS.md`](../FINDINGS.md) §7, from the 
 **No sizing rule closes that gap, because no sizing rule can.** This is a structural answer to a
 question the programme has asked repeatedly, and it says the prop track needs a different *payoff*,
 not a better *fraction*.
+
+### 1.4 AN OUTSIDE ACCOUNT OF A DEFECT ALREADY ON OUR RECORD — and it names the correct fix
+
+`F6` went looking for spin-off *returns* and came back with something better: **a mechanical
+account of the spin-off price defect this programme has already been bitten by.**
+
+**The defect.** At the ex-date the parent gaps down by the distributed stub. **That is a fake crash,
+and a reversal book will buy it.** The programme's own version of this is on the record — one name
+sat at **5× its own prices**, and `raw_price_factor` could not repair it.
+
+**Why a scalar cannot fix it, stated mechanically.** The correct adjustment is a **multiplicative
+step applied to all PRIOR bars**, `f = (P_cum − r·P_child) / P_cum` — **date-dependent by
+construction**, which is exactly what a single scalar factor cannot express. And **the child has no
+pre-when-issued history at all**, so for the child it is missing data rather than mis-scaled data.
+
+**The mechanism behind the 5× shape.** Vendors log spin-off factors in the **split table**. A
+distribution ratio read as a split ratio **shifts the whole series by a clean integer** — which is
+the shape the programme observed and could not explain.
+
+`[Sourced from CRSP's *Factor to Adjust Price* documentation and the Nasdaq corporate-actions
+manual; the Nasdaq PDF would not render for the agent and is `[not read]`.]` **This is an
+explanation, not a measurement — no fixture was touched. Whether to act on it is the principal's
+call.**
+
+### 1.5 ONE BRIEF ANSWERED ANOTHER'S OPEN QUESTION
+
+`F6` lists as unverified: *"whether `data.sec.gov` submissions JSON exposes 8-K item codes — not
+checked live."* **`F3` checked it live and it does** — the `items` field carries `"2.02,8.01,9.01"`
+alongside `reportDate` and `acceptanceDateTime`. Recorded here so the gap is not re-researched.
+
+### 1.6 THE HOUSE SPREAD ESTIMATOR IS BIASED IN THE DIRECTION THAT MATTERS MOST
+
+**`CLAUDE.md` instructs estimating the spread of held names with Corwin–Schultz off the OHLC**, and
+that instruction is load-bearing — it is how D285's **33.8 bp/side** was obtained, and that number
+is the cost bar used in §2 and §4 of this record.
+
+**Ardia, Guidotti & Kroencke (JFE 2024) find Corwin–Schultz UNDERESTIMATES effective spreads for
+small, illiquid stocks** — exactly this programme's tail, and exactly the population where its leads
+keep dying. **If that holds here, 33.8 bp/side is a FLOOR rather than an estimate, and every
+breakeven comparison in the record is more lenient than it looks.**
+
+**There is a closed-form drop-in replacement on the same OHLC inputs — EDGE, with published code
+(`bidask` on PyPI).** `F5`'s recommended order of work, and it is right: **recompute D285's 33.8 bp
+under EDGE before anything else, because it sets the SIGN of every cost conclusion downstream** —
+including `F5`'s own savings estimate.
+
+**`[NOT COMPUTED — this record is research only.]`** This is a finding about an estimator, not a
+measurement. **Whether to re-open D285 is the principal's call.**
+
+### 1.7 A HARD OPERATIONAL CONSTRAINT ON ANY CLOSE-DECIDED BOOK
+
+**The NYSE MOC/LOC hard cut-off is 3:50 pm** (Nasdaq: MOC 3:55, LOC 3:58, IO 4:00), from the
+exchanges' own fact sheets. **A signal computed FROM the close cannot fill IN that close.**
+
+The programme's edge is overnight and a fill convention has already inverted a result once (D280).
+**This is a constraint on construction, not a preference**, and it should be checked against any
+book that decides at the close and assumes it trades there.
+
+**Related, and unpriced here:** opening auctions carry the **largest price impact of the three
+mechanisms** (Goyal, Jegadeesh & Wu, JFQA 2026) — **close beats open**. Their pooled figure is
+**square-root impact 17.7 bp at 1% ADV against 2.35 bp modelled linearly**; the per-size-bucket
+figures are `[UNVERIFIED]` and are not used.
 
 ---
 
@@ -215,6 +284,156 @@ exists.** `[NOT COMPUTED — this record is research only.]`
 
 ---
 
+## 4a. `F6` — corporate supply events
+
+**Ranking returned: (1) buyback EXECUTION, (2) lockup expiries, (3) SEOs, (4) spin-offs — dead.**
+
+**Three of the four fail on the same wall, and it is not decay — the supply event resolves
+OVERNIGHT.** Buyback announcement (**2-day CAR 1.7% since 2000, down from 4.7% in 1999**), SEO
+(**−2 to −3%**) and spin-off (**~3%**) all land in the open. **On daily bars we are a bar late by
+construction.** This is the same structural fact that `F3` measured from the earnings side and that
+D280 found from ours — **and here it cuts against us rather than for us**, because it is the
+*announcement* that is overnight, not the *drift*.
+
+**MY COMMISSIONING PREMISE FOR BUYBACKS WAS WRONG, AND THIS IS THE CORRECTION.** I sent `F6` to look
+at granular buyback disclosure. **The 2023 rule that would have produced it — daily table, Item
+601(b)(26), Inline XBRL — was VACATED by the Fifth Circuit on 2023-12-19 before producing usable
+data**, with technical amendments (Rel. 34-99778) effective 2024-04-08. **The entire fixture is
+governed by pre-existing Item 703: monthly aggregate, HTML, untagged, filed 40–45 days after
+quarter end.** Everything I assumed about the resolution of this data was wrong.
+
+**And the long-run drift is refuted by the literature the lead rests on.** Fu & Huang (*Management
+Science* 2016) `[snippet/abstract]`: post-repurchase **and** post-SEO drift *"disappear for the
+events in 2003–2012."* Mitchell & Stafford kills the methodology behind the older results.
+**Spin-offs have a direct peer-reviewed refutation of their own mechanism** — Abarbanell, Bushee &
+Raedy (*J. Business* 2003) found the mandate-driven rebalancing **is not associated with abnormal
+price movement**, which is the forced-selling story this lane was commissioned on.
+
+**Event counts, `F6`'s in-universe estimates against a 100-event gate:**
+
+| family | US-wide 2010–2026 | in-universe estimate | verdict |
+|---|--:|--:|---|
+| buyback **execution** | — | **~15–35k firm-quarters** | it is a **STATE, not an event** |
+| buyback announcements | ~12–20k | 2,000–5,000 | passes |
+| SEOs | ~15k FROs | 500–1,500 | passes |
+| lockups | ~4,000 IPOs | 200–500, **usable 100–250** | **passes, barely** |
+| spin-offs | ~250–400 | **50–150** | **fails the gate** |
+
+**The cost regime splits them.** Lockups and SEOs both concentrate in the **sub-$10 tail** — where
+cost in bp is worst and where this programme has been killed before. **Buybacks are the one family
+on the right side: profitable, higher-priced mid/large caps.**
+
+**Lockups have no post-2010 US replication.** Field & Hanka is **1988–1997**, −1.5% over three days
+with over half on unlock day `[paper not opened — SSRN 403, JF paywalled]`. `F6` found **no
+post-2010 US peer-reviewed replication and says so as a gap in the literature rather than as
+evidence the effect died.** Worse for construction: **modern deals engineer the single date away**
+(staggered tranches, 20–50% price triggers, blackout pull-forward), so **"+180 days" is often simply
+the wrong date.**
+
+**The one lane it recommends, and it is a conditioner rather than a signal.** Buyback *execution* as
+a **state** on the existing reversal book. Premise check: `P(repurchase > 0 in q+1 | q)` against the
+base rate, flagged-bar coverage under an acceptance-timestamp+1 rule, price/ADV/dead-alive
+composition, and repurchase dollars as a share of quarterly dollar volume. **Data route:** XBRL
+`PaymentsForRepurchaseOfCommonStock` is free, tagged and dead-inclusive **but contaminated by RSU
+tax-withholding retirements**; Item 703 column (c) is the clean discriminator and is **HTML-only**.
+**A free bonus:** the Item 703 footnote gives plan announcement dates **retrospectively** —
+look-ahead-safe, and it removes the need to hunt 8-Ks.
+
+---
+
+## 4b. `F5` — retail execution cost
+
+**Verdict: honestly saveable, 0.5–1.5 bp/side as the programme currently executes. Not 5, not
+10.** That is the answer to the question the lane was commissioned on — *a basis point saved is
+worth as much as a basis point found* — and **the honest answer is that there are not many to
+save.**
+
+**Why the published price-improvement numbers do not apply to us, and this is the good part.** Two
+peer-reviewed effective/quoted measures exist: a population Rule 605 study (Dyhrberg, Shkilko &
+Werner, JFE 2025) giving **0.97 at exchanges and 0.76 at wholesalers**, and a **real-money
+85,000-order broker experiment** (Schwarz, Barber, Huang, Jorion & Odean, JF 2025) putting **IBKR
+Pro at E/Q ≈ 0.62** — the worst price-improver of five brokers tested, but far better than pure
+exchange execution.
+
+**None of it reaches an auction-only book.** IBKR's own Rule 606 filing states it receives **no
+order-flow payment for On Open and On Close orders**, and that the auction print *"typically
+match[es] pre-close bid or ask"* — **a full half-spread. The cost model's full-half-spread charge is
+therefore CORRECT at the auction**, and the programme's existing assumption survives contact with
+the literature.
+
+**The one concrete, actionable change: switch Fixed → Tiered.** 0.0035/share + venue against
+0.0050/share; at auctions Tiered is 0.0047 (NYSE MOC/MOO) against 0.0050 Fixed. **The real win is
+the per-order minimum — $0.35 against $1.00.**
+
+**And this corrects a number already recorded in this programme.** The recorded lead says the
+minimum binds below *"$2,100 notional"*. **The rule is a SHARE COUNT, not a notional**: Fixed binds
+below **200 shares**, Tiered below **100 shares**. `$2,100` is right only at a $10.50 share price.
+While binding, commission in bp is `10,000 / notional` — so **a $2,000 order pays 5.0 bp Fixed
+against 1.75 bp Tiered.**
+
+**Would any verdict move? Two go UNRESOLVED and neither flips.** D285's 11.36 bp breakeven (E/Q 0.62
+gives 10.5 bp — **but only under continuous execution, and only if Corwin–Schultz is unbiased,
+which §1.6 says it is not**) and the widest-two-deciles cell (216.6 bp round trip → ~134 bp).
+**The 1.92 bp intraday cell STANDS: Tiered gives 1.81 bp against a 1.06 bp bar. It still loses at a
+zero spread.**
+
+**A dated freebie, and it is weeks away.** Amended Rule 605 compliance was **1 August 2026**;
+IBKR's **first broker-level report (August 2026), with E/Q by order size and an S&P/non-S&P split,
+is due published before the end of September 2026.** That is a free, primary, broker-specific
+measurement of the exact quantity this lane had to estimate.
+
+**One thing that will NOT arrive:** the tick-size and access-fee amendments are **delayed to
+November 2027** and exclude stocks quoted wider than 1.5 cents — **i.e. precisely the programme's
+problem names.**
+
+---
+
+## 4c. `F1` — index reconstitution
+
+**Verdict: the territory's premise is INVERTED, and that inversion is the result.**
+
+**I commissioned this lane on the reasoning that forced index flow happens in large, liquid,
+high-priced names — the one population our per-share cost model can trade.** The evidence says
+**large-and-liquid is exactly where the effect is dead, and where it survives is exactly where our
+cost model is worst.** That is my premise, not the agent's, and it was wrong.
+
+**The decay is real and sourced.** Greenwood & Sammon, *Journal of Finance* 80(2), April 2025: S&P
+500 additions **7.4% (1990s) → 0.3% (2010–2020)**; deletions from large negative → **+0.1%**.
+Announcement→effective return in 2010–2020 was **+0.209%, insignificant**, against +3.68% in the
+1990s. **The leg that died is the forced-flow leg.** The only significant residual is the
+announcement jump, which requires anticipating a discretionary committee.
+
+**Two non-obvious findings survive, and they are why this is not simply a negative.**
+
+1. **The S&P 500 zero is a COMPOSITION ARTEFACT.** Over 80% of changes are now MidCap↔500
+   migrations that net out. **Direct additions still averaged +5.40% and direct deletions −6.86% in
+   2010–2020.**
+2. **The effect lives down-cap.** In the 2010s: **S&P SmallCap 600 additions +6.03%, deletions
+   −12.18%; MidCap additions +5.67%; Russell 2000 direct additions +3.15%** — all significant, while
+   Russell 1000 additions (t = 1.67) and the Nasdaq 100 are not.
+
+**Four reasons `F1` gives for not reading that as a green light, and they are good ones.** The
+windows **start before the announcement**, so they contain the selection that caused the index
+change; **nothing is net of costs**; the flow is a **closing-auction event** — roughly **30% of the
+month's volume on one print** — which **daily bars cannot resolve**; and the one bullish
+"hundreds of bp" claim is **a game-theory model, not a measurement**.
+
+**THE GENUINE GAP, and it is ours specifically.** Every modern study **excludes names "delisted for
+reasons other than acquisition" — which drops ~66% of S&P 500 deletions.** Greenwood & Sammon say
+outright they skip Russell 3000 deletions *"as these are often firms that are delisting."*
+**A dead-inclusive fixture is the right instrument for a question nobody has published** — and it
+lands directly on round 3's `G2`. **The `$5` floor probably removes the sample anyway**, which is
+the count to get before anything else.
+
+**Data: free and dead-inclusive for S&P, not for Russell.** `press.spglobal.com` carries
+announcement date, effective date and removed names **from 2012**; PR Newswire via the **Wayback CDX
+API** fills 2010–2011; Wikipedia's *Historical components* page is the skeleton — **its
+`List of S&P 500 companies` sibling is current-members-only and useless**, which is the same
+survivorship trap as §1.1. Siblis sells the history at ~$576/yr. **For Russell there is no free
+announcement archive and no name lists before ~2015. The repo holds none of this.**
+
+---
+
 ## 5. Sources
 
 **Tags:** `[PEER-REVIEWED]` · `[WORKING PAPER]` · `[PRIMARY DATA DOC]` · `[SALES INSTRUMENT]` ·
@@ -333,6 +552,113 @@ pursued.**
 ReSolve/Invest Resolve · QuantPedia · Alpha Architect. **`F4` notes this area is unusually thick
 with them** — vendor material dominated the first page of results for all seven of its questions.
 
+### F6 — corporate supply events
+
+**Primary regulatory, and this is where the lane's premise was corrected.** **17 CFR 240.10b-18**
+and the SEC's Rule 10b-18 staff FAQ · **Item 703 of Reg S-K, 17 CFR 229.703** — the rule that
+actually governs our whole span · **Rel. 34-97424** (Share Repurchase Disclosure Modernization,
+adopted 2023-05-03) · **SEC Corp Fin announcement of 2024-02-09 following the vacatur** · **Rel.
+34-99778**, technical amendments reflecting the vacatur, **effective 2024-04-08** · CRS R47397 on
+the 1% repurchase excise tax · **SEC free statistics: Follow-on Registered Offerings 2000Q1–2026Q1
+and IPOs 2000Q1–2026Q2, both xlsx** · EDGAR Filer Manual Vol. II ch.10 (**17:30 ET cutoff**) · Form
+25 / exchange delistings · Form 10-12B `[UNVERIFIED — Wikipedia]`.
+
+**Peer-reviewed — the negatives are the strong ones.** **Mitchell & Stafford, *J. Business* 73(3)
+— the strongest methodological negative** · **Fu & Huang, *Management Science* 62(4) 2016 — the
+strongest empirical negative, covering repurchases AND SEOs** · **Abarbanell, Bushee & Raedy,
+*J. Business* 76(2) 2003 — the direct refutation of the spin-off forced-selling mechanism** ·
+Ikenberry, Lakonishok & Vermaelen · Manconi, Peyer & Vermaelen, JFQA 54(5) `[non-US sample]` ·
+Ben-Rephael, Oded & Wohl · Dittmar & Field, JFE `[abstract only]` · Hillert, Maug & Obernberger,
+JFE 119(1) · Busch & Obernberger, RFS 30(1) · Cusatis, Miles & Woolridge, JFE 1993 · McConnell &
+Ovtchinnikov, JOIM 2(3) · Veld & Veld-Merkoulova, IJMR 2009 · Loughran & Ritter, JF 1997 · Corwin,
+JF 2003 `[via secondary]` · **Field & Hanka, JF 56(2) — the lockup canon, `[paper NOT opened: SSRN
+403, JF paywalled]`** · Brav & Gompers, RFS 16(1) · Bradley, Jordan, Roten & Yi, JFR · Ofek &
+Richardson · Gibbs & Hao, JBF 88 `[PDF unreadable]` · a JRFM 13(8) paper `[low-tier,
+single-sourced]`.
+
+**Corporate-action documentation — the source of §1.4.** **CRSP, *Factor to Adjust Price*, and CRSP
+Calculations** · Nasdaq *Corporate Actions and Events Manual — Equities* `[not read — PDF
+unreadable]` and its spin-off index handling page `[fetch failed]` · Xignite/QUODD corporate-actions
+handling `[VENDOR DOC]`.
+
+**`[PRACTITIONER]`, on deal terms rather than returns.** Cooley CapitalXchange on early lock-up
+releases · Mayer Brown lock-up market trends `[not read]` · Debevoise on the Fifth Circuit vacatur.
+
+**`[SALES INSTRUMENT]` / `[UNVERIFIED]`, none used for a number.** Wall Street Horizon's
+Birinyi-derived buyback counts (**figures unreconciled — `F6` says do not cite**) ·
+stockanalysis.com spin-off lists (counts only) · assorted spin-off explainers · a CBS student
+lockup study.
+
+**`F6`'s own nine unverified items** include Field & Hanka's sample size (1,948 vs 3,217 — three
+PDFs would not render), Ritter's per-year IPO counts, US buyback announcement counts per year
+(**the only figures found were vendor-derived and mutually inconsistent**), and the share of a broad
+US panel repurchasing in a given quarter — **which is one of the things its own premise check
+measures.**
+
+### F5 — execution cost
+
+**Primary regulatory, all fetched 2026-09-09.** SEC press release 2024-32 and **final rule 34-99679**
+(Rule 605 amendments) · **SEC staff Rule 605 FAQ, dated 2026-04-01, compliance 2026-08-01** ·
+Federal Register extension of the compliance date · **fact sheet and final rule 34-101070** (tick
+sizes, access fees) and the small-entity guide · **exemptive order 34-104172** · **Chairman Atkins'
+statement of 2026-06-11 moving compliance to the first business day of November 2027** ·
+**NYSE *Opening and Closing Auctions Fact Sheet* — the 3:50 pm MOC/LOC cut-off** · **Nasdaq
+*Closing Cross FAQ* — MOC 3:55, LOC 3:58, IO 4:00**.
+
+**Broker official documentation `[BROKER OFFICIAL DOC]`, all fetched 2026-09-09.** **IBKR's Rule
+606a report, Q2 2025 — the source of "no payments … for executions resulting from On Open and On
+Close orders"** · the US stock commission schedule (Fixed/Tiered/Lite, minimums, maximums,
+pass-through fees) · per-venue fee pages for NYSE, NASDAQ/INET, Arca, IEX and the IBKR ATS ·
+alternate-exchange commissions · MidPrice and Adaptive Algo pages · the Rule 605 report index.
+
+**Peer-reviewed.** **Dyhrberg, Shkilko & Werner, *The Retail Execution Quality Landscape*, JFE 2025
+— E/Q 0.76 wholesalers against 0.97 exchanges** · **Schwarz, Barber, Huang, Jorion & Odean, *The
+"Actual Retail Price" of Equity Trades*, JF 80(5) 2025 — 85,417 REAL orders; IBKR Pro E/Q ≈ 0.62;
+round-trip 7.0–46.2 bp across brokers** · **Ardia, Guidotti & Kroencke, JFE 2024 — EDGE, and the
+finding behind §1.6**, with code at `bidask` on PyPI · Goyal, Jegadeesh & Wu, JFQA 2026 (auction
+price impact) · Bogousslavsky & Muravyev, *Who trades at the close?*, JFM 66 2023 · Battalio,
+Corwin & Jennings, JF 71(5) 2016 · **Corwin & Schultz, JF 2012 — the estimator currently in use.**
+
+**`[SALES INSTRUMENT]`, and the contradiction is recorded.** IBKR's own *Dedicated to Best Price
+Execution* page claims total trading cost of **0.021% of trade value** for August 2026 — **but
+benchmarked to daily VWAP**, at an average trade size of $22,288. IBKR/TAG price-improvement
+marketing is **inconsistent with the JF 2025 experiment** and is not used.
+
+**`[UNVERIFIED]`.** Per-size-bucket auction impact figures (only the pooled 17.7 bp is confirmed) ·
+whether IBKR flags this account's orders as retail-designated, and whether IEX routing can be forced
+from the API · **any quantified price improvement for MidPrice, Pegged-to-Midpoint, D-Peg or the
+Adaptive Algo — IBKR publishes none** · current-year SEC Section 31 and FINRA TAF rates, taken from
+IBKR's page rather than the regulators' own advisories.
+
+### F1 — index reconstitution
+
+**Read at source (PDF text extracted).** **Greenwood & Sammon, *The Disappearing Index Effect* —
+three vintages, and the distinction matters.** Published in *Journal of Finance* **80(2), April
+2025, 657–698** `[abstract only — Wiley 403]`; **HBS WP 23-025, revised November 2023 — READ AT
+SOURCE**, and the source of the Russell/MidCap/SmallCap table in §4c; **NBER w30748, December 2022 —
+READ AT SOURCE**, and the source of the decay tables. **The user-recalled "7.6% → under 1%" is the
+earlier NBER vintage and the 7.4% → 0.3% is the published one — both correct, different
+revisions.** · Tasitsiomi, arXiv 2506.21775 `[WORKING PAPER — a game-theory MODEL, not an empirical
+study; this is the "hundreds of bp" claim and it is labelled]` · a Columbia student paper, arXiv
+2412.12539 `[F1 recommends discarding it]`.
+
+**Primary data documentation — FTSE Russell / LSEG.** *Russell US Equity Indexes, Construction &
+Methodology* v7.2, August 2026 · the reconstitution calendar and June 2026 summary-of-changes ·
+**two press releases that disagree on the semi-annual date — 2025-01-16 says November, the December
+2025 update says December.** Recorded because a phase counter that takes the wrong date is wrong
+for everything after it.
+
+**Peer-reviewed.** Madhavan, FAJ 59(4) 2003 `[not read at source]` · Chang, Hong & Liskovich, RFS
+28(1) 2015 `[not read at source — SSRN 403]` · **Wei & Young, *Critical Finance Review* 13(1–2) —
+the strongest published negative on the Russell identification**, with replication files on OSF ·
+Appel, Gormley & Keim.
+
+**Membership history, and the survivorship trap repeats.** `press.spglobal.com` from 2012
+`[PRIMARY]` · PR Newswire via the **Wayback CDX API** for 2010–2011 · Wikipedia *Historical
+components of the S&P 500* as a skeleton — **and its `List of S&P 500 companies` sibling is
+current-members-only and must not be used**, the same failure mode as §1.1's
+`company_tickers.json` · Siblis Research at ~$576/yr `[SALES INSTRUMENT]`.
+
 ---
 
 ## 6. Blocks encountered — the tool and the response, not the host
@@ -372,7 +698,12 @@ no forms submitted, no accounts created, no credentials entered.
 - **Nothing was backtested, no null was drawn, no cell was scored, no candidate exists.**
 - **The premise numbers named in §2, §3 and §4 have NOT been computed.** They are stated so that
   whoever runs a lane knows what would kill it before designing anything.
-- **`F1`, `F5` and `F6` are missing and their absence is not a verdict.** This record will be
-  extended in place.
+- **No territory below is closed.** `F1`'s premise being inverted kills *my reasoning for choosing
+  it*, not the territory — and `F1` itself names a question **nobody has published**, on deletions
+  of names that delist, for which a dead-inclusive fixture is the right instrument. Under
+  [R15](../RULES.md#r15) closure is the principal's, not mine.
+- **Two of my own commissioning premises were WRONG and are recorded as such**: the buyback
+  granular-disclosure rule was vacated before producing data (§4a), and index flow does not live in
+  large liquid names (§4c).
 - **Both books are unchanged. Nothing is closed and nothing is admitted** — that remains the
   principal's call under [R15](../RULES.md#r15).
