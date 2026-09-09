@@ -158,6 +158,15 @@ pools were not needed** — which matters, because they only span 2,827–19,241
 these cells sit at ~21,000. **Had a tilt appeared, the honest floor would not have existed.** That
 gap is now the most urgent of the three atlas gaps owed.
 
+> **AMENDMENT, 2026-09-09 — that last sentence conflated two different gaps, and only one of them
+> is now closed.** The *"three atlas gaps"* D391 named are cap 5 either side and cap 1 short on the
+> **unconditional** curve, and [D392 ADDENDUM 2](D392-ADDENDUM-2-the-last-three-floor-gaps.md)
+> closed all three (199 cells). **The gap this paragraph is actually describing is a different
+> one** — the *conditional* pools span only 2,827–19,241 trades at cap 20 and stop there — and it
+> **remains open**. It was never one of D391's three. The paragraph's substantive point stands
+> untouched: no axis was tilted, `ALL` is the operative floor, and had a tilt appeared there would
+> have been no honest floor to read.
+
 ---
 
 ## 5. Assertions, and what was taken on trust

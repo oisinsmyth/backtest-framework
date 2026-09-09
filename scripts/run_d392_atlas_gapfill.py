@@ -289,6 +289,45 @@ def merge(AT, plan_name="gaps") -> int:
     return 0
 
 
+# ------------------------------------------------------------------ reporting only
+def d391_table(AT) -> int:
+    """Added AFTER the run, and it measures NOTHING -- it reads data/d392_atlas.json and
+    data/d391_fill_and_decay.json and prints whether every cell D391 reported now has a floor.
+    D391 is the only record in the programme that ever hit a missing one (grep "no floor")."""
+    atlas = json.loads(ATLAS.read_text())
+    decay = json.loads((REPO / "data" / "d391_fill_and_decay.json").read_text())["decay"]
+    print("\n  D391's CORRECTED LEDGER against the atlas, every cell -- the completeness check\n")
+    print(f"  {'cap':>4s} {'side':>6s} {'trades':>9s} {'observed':>9s} {'floor p95':>10s} "
+          f"{'+/-':>5s} {'ratio':>7s} {'null p05..max':>18s}  status")
+    missing = []
+    for side in ("long", "short"):
+        for row in decay[side]:
+            cap, tr, obs = row["cap"], row["trades"], row["mean_bp"]
+            try:
+                f = AT.lookup(atlas, tr, cap, side)
+            except (ValueError, KeyError) as e:
+                missing.append((cap, side, tr, str(e)))
+                print(f"  {cap:>4d} {side:>6s} {tr:>9,} {obs:>+9.2f} {'NO FLOOR':>10s}")
+                continue
+            lo, hi = f["between"]
+            ends = [c for c in atlas["cells"].values()
+                    if c.get("cap") == cap and c.get("side") == side and c.get("pool") == "ALL"
+                    and c.get("conc", 1.0) == 1.0 and c.get("status") != "EMPTY"
+                    and (abs(c["trades_mean"] - lo) < 1.0 or abs(c["trades_mean"] - hi) < 1.0)]
+            assert ends, f"[B] could not re-find the bracketing cells for cap {cap} {side}"
+            p05 = min(c["p05"] for c in ends)
+            mx = max(c["max"] for c in ends)
+            inside = obs <= mx
+            print(f"  {cap:>4d} {side:>6s} {tr:>9,} {obs:>+9.2f} {f['p95']:>+10.2f} "
+                  f"{f['se_p95']:>5.2f} {obs / f['p95']:>6.2f}x  {p05:>+7.2f}..{mx:<+7.2f}  "
+                  + ("INSIDE the null's observed range" if inside else "above every one of 500 draws"))
+    assert not missing, f"[B] cells still without a floor: {missing}"
+    print("\n  [B] EVERY cell D391 reported now has an in-grid floor. Nothing is interpolated past.")
+    print("\n  The `ratio` column is gross-vs-uniform-draw and it is NOT a verdict: D391 died on")
+    print("  B_r, its SAME-POOL control, which a uniform draw does not share (D291).")
+    return 0
+
+
 # ------------------------------------------------------------------ main
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -296,6 +335,7 @@ def main() -> int:
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--merge", action="store_true")
+    ap.add_argument("--d391table", action="store_true")
     ap.add_argument("--cell", type=int)
     ap.add_argument("--plan", default="gaps", choices=sorted(PLANS))
     a = ap.parse_args()
@@ -306,6 +346,8 @@ def main() -> int:
         return AT.selftest()
     if a.verify:
         return verify(AT)
+    if a.d391table:
+        return d391_table(AT)
 
     if a.cell is not None:
         c = plan_of(a.plan)[a.cell]
@@ -325,7 +367,7 @@ def main() -> int:
         return merge(AT, a.plan)
 
     if not a.run:
-        ap.error("pass --selftest, --verify, --run, --merge or --cell I")
+        ap.error("pass --selftest, --verify, --run, --merge, --d391table or --cell I")
 
     cells = plan_of(a.plan)
     SHARDS.mkdir(parents=True, exist_ok=True)

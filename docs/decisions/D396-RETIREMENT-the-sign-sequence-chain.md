@@ -101,6 +101,13 @@ search floor by 22 SE.** It is retired with the rest.
   `working/FINDINGS-52-corollary-NOTE.md` hold nine open questions for the principal; three atlas
   floor gaps remain (cap 5 both sides, cap 1 short).
 
+  > **AMENDMENT, 2026-09-09 — the three atlas floor gaps are CLOSED.**
+  > [D392 ADDENDUM 2](D392-ADDENDUM-2-the-last-three-floor-gaps.md), on the principal's
+  > instruction: six cells, 199 in the atlas, every cell D391 reported now has an in-grid floor.
+  > **A measurement, admitting nothing and closing no avenue.** What remains owed on the atlas is
+  > the *conditional*-pool trade range, cap 60 above 26,991 trades, and the pools it cannot
+  > pre-compute — listed in that addendum's §R7. **The rest of this bullet stands.**
+
 ---
 
 ## 5. The ledger for the whole hunt

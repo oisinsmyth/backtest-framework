@@ -2,6 +2,40 @@
 
 ---
 
+## AFTER THE RETIREMENT — the three atlas floor gaps are CLOSED, 2026-09-09
+
+On the principal's instruction, and **outside the retired chain**:
+[**D392 ADDENDUM 2**](docs/decisions/D392-ADDENDUM-2-the-last-three-floor-gaps.md) — six cells,
+**193 → 199**, `data/d392_atlas.json`. Runner `scripts/run_d392_atlas_gapfill.py`.
+**A MEASUREMENT: admits nothing, closes no avenue, spends no holdout read.**
+
+| gap | trades | **floor p95** | ± SE | D391's observed | ratio |
+|---|--:|--:|--:|--:|--:|
+| cap 5, long | 94,198 | **+2.43** | 0.19 | +4.97 | 2.05× |
+| cap 5, short | 106,888 | **+2.21** | 0.11 | +2.89 | 1.31× |
+| cap 1, short | 167,179 | **+0.83** | 0.05 | +1.06 | 1.28× |
+
+**Three things worth carrying:**
+
+1. **The atlas seed was never reproducible.** Each cell was seeded through `hash(side) % 97`, and
+   `hash()` on a `str` is **salted per interpreter process**. Nothing is biased — every draw is
+   uniform over the same eligible index either way — but **the 193 cells written before today
+   cannot be reproduced bit-identically, and no record said so.** Fixed to an explicit code map;
+   cells written from here on reproduce exactly. The 193 were not recomputed.
+2. **Printing the null's SPREAD reframes D391's table.** Nine of its twelve cells sit above their
+   p95 floor; **eleven of twelve sit inside the range 500 uniform draws actually produced.** Only
+   cap-5 long exceeds every draw. `--d391table` regenerates it. **It changes no verdict** — D391
+   died on `B_r`, a same-pool control.
+3. **My extrapolation failed (Q3), against interest.** I read a straight line through a bend: the
+   p95 curve flattens above ~90,000 trades, so the cap-5 short floor came in **higher** than
+   predicted and D391's margin **thinner** (1.31× where I said 1.5×–2.4×).
+
+**Still owed on the atlas** (§R7): the *conditional*-pool trade range (2,827–19,241 at cap 20),
+cap 60 above 26,991 trades, and the pools it cannot pre-compute — including the one D391 actually
+needed, *names on a large-intrabar-range bar*.
+
+---
+
 ## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED AND **MERGED** 2026-09-09
 
 **Merged to `master` as a clean fast-forward** (`483ac82..e89e821`, 84 files, +53,818) on the
@@ -70,8 +104,9 @@ exit rule closes a cost gap (126 cells, best recovered 2.53 bp of 50.88).
 **Open and NOT closed by the retirement:** `sign_flips_21` as an independent *input* (retired as a
 signal, not as a variable) · `working/SLEEVE-VS-ALLOCATOR-PROPOSAL.md` (three questions) ·
 `working/FINDINGS-52-corollary-NOTE.md` (six questions) · the FINDINGS §48 amendment draft ·
-three atlas floor gaps (cap 5 both sides, cap 1 short) · a `docs/research/the-signal-hunt-part2.md`
-§2a correction already made in place.
+~~three atlas floor gaps (cap 5 both sides, cap 1 short)~~ **— CLOSED 2026-09-09, see the block at
+the top of this file** · a `docs/research/the-signal-hunt-part2.md` §2a correction already made in
+place.
 
 ---
 

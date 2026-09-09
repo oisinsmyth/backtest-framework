@@ -221,3 +221,140 @@ programme's standing choice.
 
 **Status footer.** No runner exists. `docs/BOOK.md` holds S1 and S2, neither at capital;
 `docs/BOOK_PROP.md` is empty. Nothing here is a result.
+
+---
+---
+
+# RESULT — the gaps are closed, and eleven of D391's twelve cells turn out to sit inside the null's own spread
+
+**Status:** RESULT, appended 2026-09-09. Runner: `scripts/run_d392_atlas_gapfill.py` ·
+Artifact: `data/d392_atlas.json` (**193 → 199 cells**).
+**6 cells, 3,000 kernel runs, 6.1 minutes** against a serial projection of 24.6.
+**Holdout reads: 0.** A MEASUREMENT: **admits nothing (R15). Ledger contribution: 0.**
+
+## R1. The six cells, all of them (R14)
+
+| n | cap | side | trades | p05 | p50 | **p95** | ± SE | max |
+|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| 100,000 | 5 | long | 87,672 | −2.34 | +0.02 | **+2.52** | 0.19 | +4.49 |
+| 100,000 | 5 | short | 87,676 | −2.58 | −0.19 | **+2.20** | 0.11 | +4.03 |
+| 150,000 | 5 | long | 123,936 | −2.28 | −0.00 | **+2.09** | 0.08 | +3.70 |
+| 150,000 | 5 | short | 123,937 | −2.18 | −0.04 | **+2.22** | 0.09 | +3.75 |
+| 200,000 | 1 | long | 199,950 | −0.64 | +0.00 | **+0.64** | 0.05 | +1.19 |
+| 200,000 | 1 | short | 199,950 | −0.68 | −0.03 | **+0.78** | 0.04 | +1.22 |
+
+**Every p50 is within 0.19 bp of zero**, which is the atlas's standing finding restated at sizes it
+had never reached: *the p95 rises with cap but the centre is ~0* (D392 Q4).
+
+## R2. The three gaps, closed
+
+`lookup` raised on all three of these yesterday. It now interpolates between two measured cells:
+
+| | observed (D391, corrected) | **floor p95** | ± SE | ratio | bracketed by |
+|---|--:|--:|--:|--:|---|
+| **cap 5, long** | +4.97 | **+2.43** | 0.19 | **2.05×** | 87,672 – 123,936 |
+| **cap 5, short** | +2.89 | **+2.21** | 0.11 | **1.31×** | 87,676 – 123,937 |
+| **cap 1, short** | +1.06 | **+0.83** | 0.05 | **1.28×** | 149,962 – 199,950 |
+
+**[X] the lookup still raises outside the grid** — `lookup(400,000, cap 5, long)` was asserted to
+throw. The atlas states what it measured and does not extrapolate.
+
+## R3. Predictions: four held, one split, one FAILED
+
+| | verdict | |
+|---|---|---|
+| **Q1** p95 falls monotonically on all four new curves | **SPLIT** | three of four fall. **cap 5 short RISES** 55,304→87,676→123,937 as +3.00 → +2.20 → **+2.22**. The +0.02 is inside 1 SE (0.09–0.11) so the two cells are indistinguishable, but **the prediction as written says "monotonically" and it is not** |
+| | | the sub-clause also missed: cap 5 long at 123,936 was predicted below +2.0 and came in at **+2.09** |
+| **Q2** cap 5 long ∈ [+2.0, +3.0]; D391 at 1.7×–2.5× | **HELD** | **+2.43**, ratio **2.05×** |
+| **Q3** cap 5 short ∈ [+1.2, +1.9]; D391 at 1.5×–2.4× | **FAILED, both halves** | **+2.21**, above the band; ratio **1.31×**, below it |
+| **Q4** cap 1 short ∈ [+0.78, +0.86]; D391 at 1.2×–1.4× | **HELD** | **+0.83**, ratio **1.28×** |
+| **Q5** sides differ < 0.3 bp at cap 1, < 1.5 at cap 5 | **HELD** | 0.14 at cap 1; 0.32 and 0.13 at cap 5 |
+| **Q6** every `se_p95` below 0.30 | **HELD** | 0.04 – 0.19 |
+
+**Q3 is the informative failure and it went against D391, not for it.** My extrapolation took the
+slope from the 28,761 → 55,304 leg, which is the steep part; **the p95 curve flattens above
+~90,000 trades** and I read a straight line through a bend. The floor came in *higher* than
+predicted and D391's cap-5 short margin *thinner* — **1.31× where I said 1.5×–2.4×.**
+
+## R4. The completeness check, and it reframes D391's whole table
+
+`--d391table` reads the merged atlas against `data/d391_fill_and_decay.json`. **Every cell D391
+reported now has an in-grid floor; nothing is interpolated past.** But printing the null's *spread*
+beside its p95 — CLAUDE.md: *"the distribution, not the percentile alone"* — changes how the table
+reads:
+
+| cap | side | trades | observed | floor p95 | ratio | the null's p05 … max | |
+|--:|---|--:|--:|--:|--:|---|---|
+| 1 | long | 144,582 | +0.60 | +0.83 | 0.73× | −0.98 … +1.75 | inside |
+| 2 | long | 118,498 | +1.05 | +1.48 | 0.71× | −1.52 … +3.40 | inside |
+| 3 | long | 106,657 | +2.90 | +1.76 | 1.65× | −2.08 … +5.33 | inside |
+| **5** | **long** | **94,198** | **+4.97** | **+2.43** | **2.05×** | −2.34 … **+4.49** | **above all 500 draws** |
+| 10 | long | 78,808 | +6.50 | +3.72 | 1.74× | −3.09 … +7.00 | inside |
+| 20 | long | 61,818 | +8.00 | +6.38 | 1.25× | −4.23 … +13.02 | inside |
+| 1 | short | 167,179 | +1.06 | +0.83 | 1.28× | −0.74 … +1.66 | inside |
+| 2 | short | 135,945 | +2.06 | +1.20 | 1.72× | −1.56 … +2.53 | inside |
+| 3 | short | 121,730 | +2.36 | +1.60 | 1.48× | −1.80 … +4.56 | inside |
+| 5 | short | 106,888 | +2.89 | +2.21 | 1.31× | −2.58 … +4.03 | inside |
+| 10 | short | 87,881 | +1.99 | +3.05 | 0.65× | −3.80 … +5.65 | inside |
+| 20 | short | 67,350 | +5.63 | +3.54 | 1.59× | −6.71 … +10.40 | inside |
+
+> **Nine of twelve cells sit above their p95 floor — and ELEVEN of twelve sit inside the range 500
+> uniform draws actually produced.** Only cap-5 long exceeds every draw.
+
+**What that does and does not license.** Being below the max of 500 draws is a weak statement on
+its own — the max is roughly a 99.8th percentile and almost anything short of a real edge fits under
+it. **The p95 is the decision threshold and by that threshold nine of twelve are above it.** The
+column is here because *"1.25× the floor"* reads like a margin and **+8.00 against a null that
+produced +13.02 in 500 tries** does not. Both are true; only together are they honest.
+
+**None of this moves D391's verdict, and the addendum said in advance it would not.** D391 died on
+`B_r`, its **same-pool** control — undercut-and-reclaim against undercut-and-closed-below, a
+**−7.6 bp** difference at every horizon. A uniform draw does not share that event family's nuisance
+(D291), and D392 §6a already named the reason the uniform ratios look wide: these events sit on
+**large-intrabar-range bars**, which is a pool the atlas does not carry. **The gap-fill buys
+reporting completeness, not a re-litigation.**
+
+## R5. Cost, against the projection
+
+| | projected | actual |
+|---|--:|--:|
+| serial work | 24.6 min | **30.9 min** |
+| wall, 6 processes | ~5 min | **6.1 min** |
+| speed-up | 5.0× | **5.08×** |
+| efficiency | 82% | **85%** |
+| peak WS per worker | — | **0.28–0.32 GB** |
+| total Python WS, machine-wide, mid-run | ≤ 10 GB budget | **1.78 GB** |
+
+The per-cell work came in 26% above the one-draw calibration — a single draw underestimates,
+because the trades list grows through the cell. **The efficiency floor was cleared with margin and
+the principal's 10 GB headroom was never approached.**
+
+## R6. Assertions, all of them discharged
+
+| | |
+|---|---|
+| **[SELFTEST]** | the parent's own `selftest()` called, not copied: `[N]` exactly n cells drawn, `[E]` none off the eligible mask, `[SE]` no p95 without its SE, `[X]` both proved to raise |
+| **[K]** | `score_once` == `run_d359`'s own path to 0.0 (1,966 trades, **−22.892659 bp**); a changed score does not change a cap-exit ledger |
+| **[G]** | `prep(need_grids=False)` **bit-identical** to `need_grids=True` at cap 20 long, cap 5 short and cap 1 short on the same 2,000-event probe |
+| **[SHARD]** | the tiny plan as subprocesses == the same plan as one serial loop, every field but wall time, to 0.0 — **and a p95 perturbed by 1e-12 IS CAUGHT** |
+| **[P]** | every shard written before anything was rendered |
+| **[M]** | **all 193 pre-existing cells byte-identical** after the merge; count 193 → 199 |
+| **[B]** | all three targets resolve; `lookup(400,000, cap 5, long)` still raises |
+| **guard** | `--merge` **refuses** any plan but `gaps`, so the 20-draw proof cells can never reach `data/` |
+
+## R7. What is still owed on the atlas
+
+- **Cap 60 above 26,991 trades.** Deliberately not run: no record has asked for it. Named in §2 so
+  the omission stays deliberate.
+- **Pools the atlas lacks**, unchanged from D392 §7 — including the one D391 actually needed,
+  *names on a large-intrabar-range bar*. **The atlas cannot pre-compute every pool.**
+- **The 193 cells written before 2026-09-09 remain non-reproducible** (§3a). They were not
+  recomputed and this record does not propose recomputing them; the defect is now on the record in
+  both this addendum and D392 RESULT §7.
+- **Sector, dead-vs-alive, era, the intraday fixtures** — deferred since the spec, still deferred.
+
+---
+
+**Status footer, 2026-09-09.** A measurement. No strategy was scored, nothing was admitted, no
+avenue was opened or closed (**R15 — only the principal does that**), and **no holdout read was
+spent.** `docs/BOOK.md` holds S1 and S2, neither at capital; `docs/BOOK_PROP.md` is empty.

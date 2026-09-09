@@ -241,6 +241,27 @@ nuisance (D291); the pool comparison does.
 **Three cells have no floor** — cap 5 either side, and cap 1 short at 167,179 trades — because the
 grid's trade axis does not reach there at those caps. **Named rather than interpolated past.**
 
+> ### AMENDMENT, 2026-09-09 — the three cells now have floors, and the whole table reads differently
+>
+> [D392 ADDENDUM 2](D392-ADDENDUM-2-the-last-three-floor-gaps.md) added six cells (cap 5 at
+> n = 100,000/150,000, cap 1 at n = 200,000, both sides). **The paragraph above is superseded on
+> its facts and kept on the page**, because it is the reason the addendum exists.
+>
+> | | trades | observed | **floor p95** | ± SE | ratio |
+> |---|--:|--:|--:|--:|--:|
+> | cap 5, long | 94,198 | +4.97 | **+2.43** | 0.19 | **2.05×** |
+> | cap 5, short | 106,888 | +2.89 | **+2.21** | 0.11 | **1.31×** |
+> | cap 1, short | 167,179 | +1.06 | **+0.83** | 0.05 | **1.28×** |
+>
+> **And the null's SPREAD, which this record never printed, changes how every row above should be
+> read.** Nine of the twelve cells sit above their p95 floor — **but eleven of twelve sit inside the
+> range 500 uniform draws actually produced.** Only cap-5 long exceeds every draw. The cap-20 long
+> row reads *"above, by 1.62"*; the same null produced **+13.02** in 500 tries.
+>
+> **The verdict below is untouched and this changes none of it.** `B_r` is the instrument that
+> decided D391 and it is a same-pool control; a uniform draw was never going to settle a family
+> defined by a large-intrabar-range bar. See the addendum's §R4 for the full twelve-cell table.
+
 ### What does NOT change
 
 **The verdict.** §0's H3 test used `forward_h(..., start=1)` on the event bar — **correctly lagged
