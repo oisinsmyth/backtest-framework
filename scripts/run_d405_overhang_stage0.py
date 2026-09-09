@@ -210,19 +210,24 @@ def load_daily(verbose=True):
     elig = (finT & keep).T
     if verbose:
         print(f"  daily loaded {time.time()-t0:.0f}s   {n:,} names   floor rejects "
-              f"{100*UF.floor_share(keep, finT):.2f}% of live name-bars")
+              f"{100*UF.floor_share(keep, finT):.2f}% of live name-bars", flush=True)
     return panel, cleaned, g, VOL, elig, ev, RAWF
 
 
-def assert_SPLITVOL(g, VOL, panel, ev, win=20):
-    """[SPLITVOL] -- VOLUME must be split-adjusted in the SAME direction as price.
-
-    If it is not, dollar volume jumps by the split ratio on the split date and the map plants a
-    fabricated mountain there. D403's [ALIGN] caught a 5x error of exactly this family and nothing
-    else would have seen it."""
+def _split_jumps(g, VOL, panel, ev, win=20, seed=405):
+    """Log jump in median dollar volume across each split date, and across a matched random date
+    in the same name. Returns (jumps, log_ratios, reference_jumps)."""
     dpos = {d: t for t, d in enumerate(panel.dates)}
     sidx = {s: i for i, s in enumerate(panel.symbols)}
-    jumps, checked, worst = [], 0, None
+    DV = g["close"] * VOL
+    rng = np.random.default_rng(seed)
+
+    def jump(i, t):
+        a, b = DV[i, t - win:t], DV[i, t + 1:t + 1 + win]
+        a, b = a[np.isfinite(a) & (a > 0)], b[np.isfinite(b) & (b > 0)]
+        return float(np.log(np.median(b) / np.median(a))) if a.size >= 5 and b.size >= 5 else None
+
+    J, LR, REF = [], [], []
     for s, sp in ev["splits"].items():
         i = sidx.get(s)
         if i is None:
@@ -231,25 +236,59 @@ def assert_SPLITVOL(g, VOL, panel, ev, win=20):
             t = dpos.get(d[:10])
             if t is None or t < win or t + win >= len(panel.dates):
                 continue
-            dv = g["close"][i] * VOL[i]
-            a, b = dv[t - win:t], dv[t + 1:t + 1 + win]
-            a, b = a[np.isfinite(a) & (a > 0)], b[np.isfinite(b) & (b > 0)]
-            if a.size < 5 or b.size < 5:
+            j = jump(i, t)
+            if j is None:
                 continue
-            j = float(np.log(np.median(b) / np.median(a)))
-            lr = abs(float(np.log(float(ratio))))
-            checked += 1
-            jumps.append(j)
-            if lr > 0.2 and abs(j) > 0.5 * lr:
-                if worst is None or abs(j) > abs(worst[2]):
-                    worst = (s, d[:10], j, float(ratio))
-    assert checked > 50, f"[SPLITVOL] only {checked} splits checkable -- the test is vacuous"
-    frac = float(np.mean(np.abs(jumps) > 0.5))
-    assert worst is None, (f"[SPLITVOL] dollar volume jumps at a split: {worst[0]} {worst[1]} "
-                           f"log-jump {worst[2]:+.3f} against split ratio {worst[3]} -- "
-                           f"volume is not adjusted with price")
-    return dict(splits_checked=checked, median_log_jump=float(np.median(jumps)),
-                share_gt_0p5=frac)
+            J.append(j); LR.append(abs(float(np.log(float(ratio)))))
+            fin = np.flatnonzero(np.isfinite(DV[i]) & (DV[i] > 0))
+            if fin.size > 3 * win:
+                r = jump(i, int(rng.choice(fin[win:-win])))
+                if r is not None:
+                    REF.append(r)
+    return np.array(J), np.array(LR), np.array(REF)
+
+
+def assert_SPLITVOL(g, VOL, panel, ev, RAWF, win=20):
+    """[SPLITVOL] -- VOLUME must be split-adjusted in the SAME direction as price, or dollar volume
+    jumps by the split ratio and the map plants a fabricated mountain there. D403's [ALIGN] lesson.
+
+    THE TEST IS DISTRIBUTIONAL, NOT A MAGNITUDE THRESHOLD. A first version asserted that no split
+    date carried a jump above half the split's log-ratio, and it fired on DRYS 2016-11-01 -- a
+    genuine 400x squeeze that happens to sit on a reverse-split date, where the VOLUME moved +5.471
+    against a mis-adjustment signature of -2.708: the opposite sign and twice the size. A check that
+    fires on real market events is a check that cries wolf.
+
+    What mis-adjustment actually looks like is a jump CLUSTERED at +-log(ratio). So: split dates
+    must not differ materially from random dates in the same names, and the signature must not
+    outweigh the at-zero mass. Measured on this fixture: 8.4% at the signature against 36.9% at
+    zero, and price carries the ratio in 0.9% -- which is what proves the instrument works."""
+    J, LR, REF = _split_jumps(g, VOL, panel, ev, win)
+    assert J.size > 50, f"[SPLITVOL] only {J.size} splits checkable -- the test is vacuous"
+    assert REF.size > 50, f"[SPLITVOL] only {REF.size} reference dates -- no baseline to compare to"
+    big = LR > 0.2
+    sig = float(np.mean(np.abs(np.abs(J[big]) - LR[big]) < 0.2 * LR[big]))
+    zero = float(np.mean(np.abs(J[big]) < 0.2 * LR[big]))
+    ratio = float(np.median(np.abs(J)) / max(np.median(np.abs(REF)), 1e-12))
+    assert sig < zero, (f"[SPLITVOL] the split-ratio signature ({100*sig:.1f}%) outweighs the "
+                        f"at-zero mass ({100*zero:.1f}%) -- volume is not adjusted with price")
+    assert ratio < 2.0, (f"[SPLITVOL] |jump| at splits is {ratio:.2f}x the same statistic at random "
+                         f"dates in the same names -- something systematic happens at splits")
+    return dict(splits=int(J.size), real_splits=int(big.sum()), share_at_signature=round(sig, 4),
+                share_at_zero=round(zero, 4), abs_jump_vs_random=round(ratio, 3),
+                median_jump=round(float(np.median(J)), 4))
+
+
+def assert_SPLITVOL_bites(g, VOL, panel, ev, RAWF, win=20):
+    """[X] -- the assertion must CATCH an actual mis-adjustment, not merely pass on clean data.
+
+    Correct adjusted volume is raw_volume * factor, so dividing by the factor un-adjusts it and
+    reproduces exactly the bug [SPLITVOL] exists to find. This must raise."""
+    bad = VOL / np.maximum(RAWF.T, 1e-12)
+    try:
+        assert_SPLITVOL(g, bad, panel, ev, RAWF, win)
+    except AssertionError as e:
+        return str(e)[:130]
+    raise AssertionError("[X] [SPLITVOL] PASSED on deliberately un-adjusted volume -- it is inert")
 
 
 def assert_MASS(q):
@@ -379,19 +418,109 @@ def calibrate(verbose=True):
 
 # =====================================================================  the gates
 def half_life(x):
-    """Bars for the autocorrelation to fall to 0.5. NaN if it never does within 60."""
+    """Bars for the autocorrelation to fall to 0.5, and the lag-1 autocorrelation beside it.
+
+    INTERPOLATES BELOW ONE BAR. The first version floored the answer at 1.0 whenever ac1 was
+    already under 0.5 -- which put the floor exactly on the abandon threshold and made gate 6.3
+    unable to fail. A self-test that cannot fail is worse than none."""
     v = x[np.isfinite(x)]
     if v.size < 500:
-        return np.nan
+        return np.nan, np.nan
     v = v - v.mean()
     d = float((v * v).mean())
     if d <= 0:
-        return np.nan
-    for L in range(1, 61):
+        return np.nan, np.nan
+    ac1 = float((v[1:] * v[:-1]).mean() / d)
+    if ac1 < 0.5:                       # decays faster than one bar -- solve ac1^h = 0.5
+        return (float(np.log(0.5) / np.log(ac1)) if 0.0 < ac1 < 1.0 else 0.0), ac1
+    for L in range(2, 61):
         r = float((v[L:] * v[:-L]).mean() / d)
         if r < 0.5:
-            return float(L - 1 + (1.0 if L == 1 else 0.0))
-    return 60.0
+            return float(L - 1), ac1
+    return 60.0, ac1
+
+
+def grid_check(n_names=150, grids=(128, 256, 512, 1024), verbose=True):
+    """[GRID] -- section 3.5's requirement, which the first runner declared and did not build.
+
+    FP is F[j]/max(F) read on a GRID_N-cell axis, and price moving one cell changes j. So FP's
+    low persistence and its de-correlation from the volume-shuffled twin could BOTH be
+    discretisation noise rather than information. This is the check that tells them apart:
+
+        REAL       -> ac1 and the shuffle correlation are FLAT in grid size
+        GRID NOISE -> both RISE as the grid coarsens, because coarser cells average it away
+
+    The same name set is used at every resolution."""
+    q = bar_quantiles()
+    panel, cleaned, G, VOL, elig, ev, RAWF = load_daily(verbose=False)
+    lp = np.log(np.where(G["close"] > 0, G["close"], np.nan))
+    lo = np.log(np.where(G["low"] > 0, G["low"], np.nan))
+    hi = np.log(np.where(G["high"] > 0, G["high"], np.nan))
+    bb = np.log(np.where(np.minimum(G["open"], G["close"]) > 0, np.minimum(G["open"], G["close"]), np.nan))
+    bt = np.log(np.where(np.maximum(G["open"], G["close"]) > 0, np.maximum(G["open"], G["close"]), np.nan))
+    n = panel.closes.shape[0]
+    KI = KS.index(60)
+    sel = []
+    for i in range(n):
+        if len(sel) >= n_names:
+            break
+        m = panel.live[i] & np.isfinite(lp[i]) & np.isfinite(VOL[i]) & (VOL[i] > 0)
+        if m.sum() >= MIN_BARS:
+            sel.append(i)
+    out = {}
+    if verbose:
+        print(f"  [GRID] {len(sel)} names at {grids}")
+        print(f"    {'grid':>6s} {'FP ac1':>9s} {'FP hl':>7s} {'FP shuf':>9s} | "
+              f"{'g ac1':>8s} {'g shuf':>8s} | {'OS ac1':>8s} {'OS shuf':>8s}", flush=True)
+    for gn in grids:
+        acc = {k: [] for k in ("fp_ac1", "fp_hl", "fp_sh", "g_ac1", "g_sh", "os_ac1", "os_sh")}
+        rng = np.random.default_rng(SEED)
+        for i in sel:
+            a = overhang_series(lp[i], lo[i], bb[i], bt[i], hi[i], VOL[i], panel.live[i], q, KS, n=gn)
+            if a is None:
+                continue
+            mm = panel.live[i] & np.isfinite(lp[i]) & np.isfinite(VOL[i]) & (VOL[i] > 0)
+            v2 = VOL[i].copy()
+            idx = np.flatnonzero(mm)
+            v2[idx] = VOL[i][rng.permutation(idx)]
+            b = overhang_series(lp[i], lo[i], bb[i], bt[i], hi[i], v2, panel.live[i], q, KS, n=gn)
+            if b is None:
+                continue
+            for key, tag in (("FP", "fp"), ("g", "g"), ("OS", "os")):
+                u, w = a[key][KI], b[key][KI]
+                e = elig[i] & np.isfinite(u) & np.isfinite(w)
+                if e.sum() < 250:
+                    continue
+                hl, ac1 = half_life(np.where(elig[i], u, np.nan))
+                if np.isfinite(ac1):
+                    acc[f"{tag}_ac1"].append(ac1)
+                    if tag == "fp":
+                        acc["fp_hl"].append(hl)
+                if u[e].std() > 0 and w[e].std() > 0:
+                    acc[f"{tag}_sh"].append(float(np.corrcoef(u[e], w[e])[0, 1]))
+        md = {k: (float(np.median(v)) if v else float("nan")) for k, v in acc.items()}
+        out[str(gn)] = md
+        if verbose:
+            print(f"    {gn:6d} {md['fp_ac1']:+9.4f} {md['fp_hl']:7.2f} {md['fp_sh']:+9.4f} | "
+                  f"{md['g_ac1']:+8.4f} {md['g_sh']:+8.4f} | {md['os_ac1']:+8.4f} {md['os_sh']:+8.4f}",
+                  flush=True)
+    lo_g, hi_g = str(grids[0]), str(grids[-1])
+    drift = {t: round(out[hi_g][f"{t}_ac1"] - out[lo_g][f"{t}_ac1"], 4) for t in ("fp", "g", "os")}
+    dsh = {t: round(out[hi_g][f"{t}_sh"] - out[lo_g][f"{t}_sh"], 4) for t in ("fp", "g", "os")}
+    res = dict(names=len(sel), grids=list(grids), by_grid=out, ac1_drift=drift, shuf_drift=dsh,
+               verdict=("FP is GRID NOISE: both statistics move monotonically with resolution while "
+                        "g and OS are flat" if abs(drift["fp"]) > 5 * max(abs(drift["g"]), 1e-4)
+                        else "FP is resolution-stable"))
+    p = REPO / "data" / "d405_grid_check.json"
+    p.write_text(json.dumps(res, indent=1), encoding="utf-8")
+    if verbose:
+        print(f"\n    ac1 drift {grids[0]}->{grids[-1]}:  FP {drift['fp']:+.4f}   g {drift['g']:+.4f}   "
+              f"OS {drift['os']:+.4f}")
+        print(f"    shuf drift {grids[0]}->{grids[-1]}: FP {dsh['fp']:+.4f}   g {dsh['g']:+.4f}   "
+              f"OS {dsh['os']:+.4f}")
+        print(f"    VERDICT: {res['verdict']}")
+        print(f"    wrote {p.relative_to(REPO)}")
+    return res
 
 
 def run(verbose=True):
@@ -399,12 +528,13 @@ def run(verbose=True):
     print("D405 STAGE 0  the capital-gains overhang -- three gates, no forward return\n")
     q = bar_quantiles()
     assert q is not None, "no calibration on disk -- run --calibrate first (section 3.2)"
-    print(f"  bar shape (MEASURED, section 3.2): low {q[0]:.4f}  body {q[1]:.4f}  high {q[2]:.4f}")
-    print(f"  [MASS]  {assert_MASS(q)}")
-    print(f"  [DECAY] {assert_DECAY()}")
+    print(f"  bar shape (MEASURED, section 3.2): low {q[0]:.4f}  body {q[1]:.4f}  high {q[2]:.4f}", flush=True)
+    print(f"  [MASS]  {assert_MASS(q)}", flush=True)
+    print(f"  [DECAY] {assert_DECAY()}", flush=True)
 
     panel, cleaned, G, VOL, elig, ev, RAWF = load_daily()
-    print(f"  [SPLITVOL] {assert_SPLITVOL(G, VOL, panel, ev)}")
+    print(f"  [SPLITVOL] {assert_SPLITVOL(G, VOL, panel, ev, RAWF)}", flush=True)
+    print(f"  [X]        it bites on un-adjusted volume: {assert_SPLITVOL_bites(G, VOL, panel, ev, RAWF)}")
 
     n, T = panel.closes.shape
     live = panel.live
@@ -458,21 +588,27 @@ def run(verbose=True):
                       mean=float(cs.mean()), share_above_gate=float(np.mean(np.abs(cs) > SHUF_GATE)))
     print("\n  --- GATE 6.1  VOL-SHUF (abandon if corr > 0.90) ---")
     for k, v in g61.items():
+        v["passes"] = bool(v["p50"] <= SHUF_GATE)
         print(f"    {k:3s}  n {v['names']:4d}  corr p50 {v['p50']:+.4f}  p90 {v['p90']:+.4f}  "
-              f"share>|0.90| {v['share_above_gate']:.4f}")
-    pass61 = all(v["p50"] <= SHUF_GATE for v in g61.values())
+              f"share>|0.90| {v['share_above_gate']:.4f}   {'PASS' if v['passes'] else 'ABANDON'}")
+    pass61 = all(v["passes"] for v in g61.values())
 
     # ---- 6.3 PERSIST ------------------------------------------------------
     g63 = {}
     for k in ("g", "OS", "FP"):
-        hl = np.array([half_life(np.where(elig[i], real[k][i], np.nan)) for i in range(n)])
-        hl = hl[np.isfinite(hl)]
-        g63[k] = dict(names=int(hl.size), p50=float(np.median(hl)) if hl.size else np.nan,
-                      p10=float(np.percentile(hl, 10)) if hl.size else np.nan)
+        hh = [half_life(np.where(elig[i], real[k][i], np.nan)) for i in range(n)]
+        hl = np.array([a for a, _ in hh]); a1 = np.array([b for _, b in hh])
+        m = np.isfinite(hl)
+        hl, a1 = hl[m], a1[m]
+        g63[k] = dict(names=int(hl.size), p50=float(np.median(hl)), p10=float(np.percentile(hl, 10)),
+                      ac1_p50=float(np.median(a1)), share_under_1_bar=float(np.mean(hl < HL_GATE)),
+                      passes=bool(np.median(hl) >= HL_GATE))
     print("\n  --- GATE 6.3  PERSIST (abandon if half-life < 1 bar) ---")
     for k, v in g63.items():
-        print(f"    {k:3s}  n {v['names']:4d}  half-life p10 {v['p10']:.1f}  p50 {v['p50']:.1f} bars")
-    pass63 = all(v["p50"] >= HL_GATE for v in g63.values())
+        print(f"    {k:3s}  n {v['names']:4d}  half-life p10 {v['p10']:6.2f}  p50 {v['p50']:6.2f} bars   "
+              f"ac1 p50 {v['ac1_p50']:+.4f}   under 1 bar {100*v['share_under_1_bar']:5.1f}%   "
+              f"{'PASS' if v['passes'] else 'ABANDON'}")
+    pass63 = all(v["passes"] for v in g63.values())
 
     # ---- 6.2 A1 independence ---------------------------------------------
     print("\n  --- GATE 6.2  A1 independence (abandon if |rho| > 0.50) ---", flush=True)
@@ -544,8 +680,8 @@ def run(verbose=True):
 def selftest():
     print("D405 STAGE 0 SELF-TEST\n")
     q = bar_quantiles() or (0.25, 0.5, 0.25)
-    print(f"  [MASS]  {assert_MASS(q)}")
-    print(f"  [DECAY] {assert_DECAY()}")
+    print(f"  [MASS]  {assert_MASS(q)}", flush=True)
+    print(f"  [DECAY] {assert_DECAY()}", flush=True)
     assert _OPENED["n"] > 0, "[SPLIT] hook not installed"
     mod = sys.modules[__name__]
     assert not hasattr(mod, "allow_holdout") and not hasattr(mod, "_ALLOW"), "[SPLIT] an unlock exists"
@@ -563,12 +699,15 @@ if __name__ == "__main__":
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--calibrate", action="store_true")
     ap.add_argument("--run", action="store_true")
+    ap.add_argument("--grid", action="store_true")
     a = ap.parse_args()
     if a.selftest:
         selftest()
     elif a.calibrate:
         calibrate()
+    elif a.grid:
+        grid_check()
     elif a.run:
         run()
     else:
-        ap.error("pass --selftest, --calibrate or --run")
+        ap.error("pass --selftest, --calibrate, --grid or --run")
