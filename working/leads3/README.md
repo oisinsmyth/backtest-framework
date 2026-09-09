@@ -178,9 +178,14 @@ names that pass `keep_v2` at resumption. D343 surfaced exactly one by accident.
 thin-universe problem again and the lane dies on arithmetic.** D264 ran on **eight names** and said
 so itself: *"eight names is thin"*. Ask for the count before anything else.
 
-*(Correction to a committed record, made here because it was found here: the scan record's `X3`
-entry calls this "forty names is D264's problem again". **D264 is eight names, not forty.** The
-argument `X3` was making is unaffected; the number is wrong and is corrected on the record.)*
+*(**A correction I asserted here and then withdrew, left visible on purpose.** I recorded that the
+scan record's `X3` entry misstated D264 as forty names. It does not. `X3` reads *"**if** the answer
+is forty names, this is D264's concentration problem again"* — a hypothetical count of names
+surviving a liquidity restriction, not a claim about D264's own universe, which is eight and which
+`X3` never states. **The scan record was right and I was wrong**; the commit that introduced this
+paragraph, `2e89d37`, carries the false claim in its message and is corrected by the commit that
+removed it. The lesson is the one already on the record twice: **read the sentence before
+correcting it.**)*
 
 **The honest risk.** `keep_v2` was written specifically to exclude names with no demonstrated
 liquidity, which is precisely the state a resuming name is in — **the floor and the lane are in
