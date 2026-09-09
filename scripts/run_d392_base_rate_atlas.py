@@ -81,6 +81,24 @@ SHORT_CAPS = (1, 2, 3)
 SEED = 20260908
 BOOT = 1_000
 
+# THE SEED WAS NEVER REPRODUCIBLE, fixed 2026-09-09 (D392 ADDENDUM 2 section 3a). Until today the
+# per-cell seed went through `hash(c["side"]) % 97` -- and `hash()` on a `str` is SALTED PER
+# INTERPRETER PROCESS, so two runs of the same command drew different events for the same cell.
+# Nothing was biased by it: every draw is uniform over the same eligible index either way, which is
+# all the atlas claims. But THE 193 CELLS WRITTEN BEFORE THIS DATE ARE NOT BIT-REPRODUCIBLE, and
+# the record did not say so until the addendum. Explicit codes below; cells written from here on
+# reproduce exactly. Stored cells are never recomputed -- the run loop skips any key already
+# present -- so this changes no published number.
+SIDE_CODE = {"long": 0, "short": 1}
+POOL_CODE = {"ALL": 0, "price_lo": 1, "price_mid": 2, "price_hi": 3,
+             "vol_lo": 4, "vol_mid": 5, "vol_hi": 6, "mom_lo": 7, "mom_mid": 8, "mom_hi": 9}
+
+
+def cell_seed(n, cap, side, pool, conc=1.0):
+    """The one definition of a cell's RNG stream. No `hash()`: see the note above."""
+    return np.random.default_rng([SEED, int(n), int(cap), SIDE_CODE[side], POOL_CODE[pool],
+                                  int(round(conc * 1000))])
+
 
 # ------------------------------------------------------------------ the draw
 def eligible_index(elig):
@@ -344,8 +362,7 @@ def main() -> int:
             rngn = np.random.default_rng([SEED, 99])
             k = max(1, int(round(c["conc"] * N)))
             names_allowed = rngn.choice(np.arange(N), size=k, replace=False)
-        rng = np.random.default_rng([SEED, c["n"], c["cap"], hash(c["side"]) % 97,
-                                     hash(c["pool"]) % 97])
+        rng = cell_seed(c["n"], c["cap"], c["side"], c["pool"], c["conc"])
         vals, trades, t1, skipped = [], [], time.time(), 0
         for d in range(c["draws"]):
             m = draw_mask(rng, idx, (T, N), c["n"], name_pool=pool_idx, names_allowed=names_allowed)
