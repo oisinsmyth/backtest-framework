@@ -366,6 +366,96 @@ best-of; the other twenty are descriptive.**
 
 ---
 
+## 12a. AMENDMENT, 2026-09-09, BEFORE THE RUNNER EXISTS — one alleged defect is FALSE, one is CONFIRMED, and the measurement found a THIRD that neither party had
+
+An external-evidence brief was commissioned on this lead
+(`working/leads/R1-cross-asset-regime.md`) and alleged two mechanical defects in §4's
+construction. **They are claims about OUR construction, not about the literature, so they were
+measured here rather than accepted.** Probe: `scripts/probe_d404_construction.py` →
+`data/d404_construction_probe.json`. **All three findings below are `[MEASURED HERE]`.**
+
+### (i) The distribution-drift claim is FALSE as stated, and it runs the OTHER WAY
+
+The brief alleged `log(HYG/IEF)` drifts down **2–5%/yr** on unadjusted closes, biasing the gate
+toward risk-off. Measured over the fixture's own 16.6 years:
+
+| state | drift %/yr | above its own trailing 252-bar median |
+|---|---:|---:|
+| `CREDIT` | **−0.92%** | **56.8%** |
+| `CURVE` | **−0.00%** | **49.8%** |
+
+**The drift is a fifth of the low end of the alleged range, and the resulting imbalance is
+56.8% risk-ON — the opposite direction to the one predicted.** `CURVE` is as close to balanced
+as a measured series gets. **The brief's figures came from current dividend-yield aggregators it
+tagged `[UNVERIFIED]`, and they do not transfer to the realised 2010–2026 path** — IEF yielded
+far less for most of that decade than it does now. *A quoted yield is not a measured drift.*
+
+**But the distribution question is NOT closed, and the reason is a flaw in my own check.** The
+probe compared the price ratio against "cumulated log-return differences" and got **identical**
+numbers — because for price series those two objects are *algebraically the same thing*. **That
+comparison isolated nothing.** The fixture carries an events file with dividend records for
+every leg (`HYG` 233, `IEF` 289, `SHY` 289, `XLU` 108, `XLP` 107, `XLY` 107, `XLK` 84), and the
+real test is to rebuild the states on total return and re-measure. **That remains open and the
+runner must do it.**
+
+### (ii) The price-sum defect is CONFIRMED, and it is severe
+
+`(XLU+XLP)/(XLY+XLK)` sums **share prices**, so each leg's weight is whatever its price happens
+to be:
+
+```
+XLU 33.5% / XLP 66.5%  of the defensive leg      XLY 39.1% / XLK 60.9%  of the cyclical leg
+```
+
+**A synthetic 2-for-1 split of `XLY` alone moves the level by 0.338 log units on average.** That
+is not a state variable, it is a price-weighted index — **FINDINGS §14's problem, committed in a
+pre-registration that cites §14 as its reason for using ratios.** §4 is amended: `DEFENSIVE`
+becomes the cumulated **equal-weighted log-return difference**
+`0.5(r_XLU + r_XLP) − 0.5(r_XLY + r_XLK)`, which is split-invariant by construction, and the
+runner asserts invariance under a synthetic split of each leg.
+
+### (iii) THE DEFECT NEITHER PARTY HAD, and it is the one that matters most
+
+**Equal-weighting does not fix `DEFENSIVE`'s imbalance, and that is the finding.** The
+price-sum version sits above its trailing median on **28.5%** of bars; the corrected
+equal-weighted version sits above it on **28.7%**. The imbalance is not a construction artefact
+at all — **it is a real 16-year trend** (−7.6%/yr price-sum, −7.9%/yr equal-weighted: cyclicals
+beat defensives over this entire fixture).
+
+> **A TRAILING-MEDIAN RULE APPLIED TO A TRENDING SERIES IS A TREND RULE, NOT A STATE
+> CLASSIFIER.** On a series drifting at −7.9%/yr the "gate" spends 71% of its life on one side,
+> and what it is mostly reading is *"tech has outperformed staples since 2010"* — a momentum
+> signal wearing a regime label. **This is the programme's own §14 failure in the time domain
+> rather than the cross-section**, and it applies to any state built as a ratio of two
+> differently-trending assets.
+
+**Consequence, and it is a genuine tightening of the design.** §4's threshold rule was inherited
+from C1 unchanged *for comparability*, and that inheritance was wrong for this class of state.
+**The runner must report, for every state, the drift per year and the above-median share, and
+`[BAL]` must FAIL any state whose above-median share falls outside 40–60%** — a state that
+cannot spend a comparable amount of time on each side is not a classifier. **On today's numbers
+`DEFENSIVE` fails that assertion and `CREDIT` and `CURVE` pass it**, which is exactly the
+information a pre-registration is supposed to surface before the runner exists rather than after.
+
+### (iv) The horizon question, recorded but NOT yet acted on
+
+The brief's headline is that the documented predictability of credit spreads and the curve lives
+at **quarters to years**, not weeks, and that a 20-day gate sits an order of magnitude inside
+that band. **That is a literature claim, not a measurement, and none of the cited papers has
+been read here** — under `working/leads/README.md`'s rule an agent's summary of a paper is not a
+reading of it. **It is therefore recorded, not adopted.**
+
+**One addition from it IS adopted, because it costs nothing and converts a pass/fail into a
+test that can agree or disagree with the outside world:** the runner reports the block
+correlation at **h ∈ {5, 10, 20, 40, 60, 125, 252}**, not at h = 20 alone. **h = 20 remains the
+declared primary** for comparability with G1/G2/BREADTH/DISPERSION, and the curve is
+descriptive. **A new pre-declared reading, added to §8: if h = 20 is the PEAK of that curve,
+that is an overfitting flag, not a confirmation** — nothing in the outside evidence predicts a
+20-day peak, and a rise into 125 days would be the strongest corroboration this fixture can
+offer.
+
+---
+
 ## 13. What this record does not claim
 
 - **Nothing has been run.** The runner does not exist. Every number above is quoted from a
