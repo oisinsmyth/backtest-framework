@@ -383,13 +383,26 @@ def sweep_h(sym, pcts, a, UO, PV, RP, panel, cleaned):
     r_lo = np.log(cl if a.on_close else lo)
     r_hi = np.log(cl if a.on_close else hi)
 
+    plo = np.array([p.index for p in ps if p.sign < 0], dtype=int)
+    phi = np.array([p.index for p in ps if p.sign > 0], dtype=int)
+    xlo = np.log([p.price for p in ps if p.sign < 0]) if plo.size else np.array([])
+    xhi = np.log([p.price for p in ps if p.sign > 0]) if phi.size else np.array([])
+
     start, w = a.start, min(a.bars, m)
     sl = slice(start, start + w)
     for pct in pcts:
         hh = h_of_annual(pct)
-        RT = ratchet_reset if a.branch == "D" else ratchet_tight
-        G_lo, L_lo, anc_lo, push_lo, gov_lo = RT(fits["lo"][0], r_lo, hh, -1, UO.WINDOW, ok_lo)
-        G_hi, L_hi, anc_hi, push_hi, gov_hi = RT(fits["hi"][0], r_hi, hh, +1, UO.WINDOW, ok_hi)
+        if a.branch == "E":
+            G_lo, L_lo, anc_lo, win_lo = segment_windows(
+                plo, xlo, r_lo, m, UO.K, hh, -1, min_piv=a.min_piv, max_window=UO.WINDOW)
+            G_hi, L_hi, anc_hi, win_hi = segment_windows(
+                phi, xhi, r_hi, m, UO.K, hh, +1, min_piv=a.min_piv, max_window=UO.WINDOW)
+            push_lo = np.zeros(m); push_hi = np.zeros(m)
+            gov_lo, gov_hi = win_lo, win_hi
+        else:
+            RT = ratchet_reset if a.branch == "D" else ratchet_tight
+            G_lo, L_lo, anc_lo, push_lo, gov_lo = RT(fits["lo"][0], r_lo, hh, -1, UO.WINDOW, ok_lo)
+            G_hi, L_hi, anc_hi, push_hi, gov_hi = RT(fits["hi"][0], r_hi, hh, +1, UO.WINDOW, ok_hi)
         st = np.where((G_lo > DELTA) & (G_hi > DELTA), 1,
                       np.where((G_lo < -DELTA) & (G_hi < -DELTA), -1, 0))
         st[:UO.WINDOW] = 0
@@ -429,6 +442,11 @@ def main() -> int:
                          "E = DYNAMIC WINDOWS, the gradient fitted on its own window")
     ap.add_argument("--h-annual", type=float, default=4.0,
                     help="gradient update band, in %% of annual trend drift")
+    ap.add_argument("--min-piv", type=int, default=2,
+                    help="pivots a window needs before it has a gradient. TWO is the minimum that "
+                         "defines a slope at all -- and under DYNAMIC windows a 2-pivot fit is "
+                         "PROVISIONAL, re-fitted as pivots arrive and closed when the slope moves, "
+                         "which is not the same object as a 2-point fit frozen over 252 bars")
     a = ap.parse_args()
     a.h = h_of_annual(a.h_annual)
 
@@ -458,7 +476,7 @@ def main() -> int:
     # a mean-reverter and a decliner. All are in the 48 that have 15-minute bars.
     WANT = ["MSFT", "GME", "INTC", "F", "WYNN", "DVN"]
     out = {"delta": DELTA, "h": H, "respect": "close" if a.on_close else "wick",
-           "min_piv": MIN_PIV, "min_run": MIN_RUN, "branch": a.branch,
+           "min_piv": a.min_piv, "min_run": MIN_RUN, "branch": a.branch,
            "h": a.h, "h_annual_pct": a.h_annual,
            "note": "DIAGNOSTIC ONLY -- no score, no hurdle, no null. D399's corrected ratchet.",
            "charts": []}
@@ -490,8 +508,8 @@ def main() -> int:
             assert np.array_equal(got[UO.WINDOW:], want[UO.WINDOW:]), \
                 f"{sym}/{key}: pivot_support disagrees with rolling_fit about which fits exist"
 
-        ok_lo = sup["lo"][0] >= MIN_PIV
-        ok_hi = sup["hi"][0] >= MIN_PIV
+        ok_lo = sup["lo"][0] >= a.min_piv
+        ok_hi = sup["hi"][0] >= a.min_piv
         respect_lo = np.log(cl if a.on_close else lo)
         respect_hi = np.log(cl if a.on_close else hi)
         if a.branch == "B":
@@ -505,9 +523,9 @@ def main() -> int:
             xlo = np.log([p.price for p in ps if p.sign < 0]) if plo.size else np.array([])
             xhi = np.log([p.price for p in ps if p.sign > 0]) if phi.size else np.array([])
             G_lo, L_lo, anc_lo, win_lo = segment_windows(
-                plo, xlo, respect_lo, m, UO.K, a.h, -1, max_window=UO.WINDOW)
+                plo, xlo, respect_lo, m, UO.K, a.h, -1, min_piv=a.min_piv, max_window=UO.WINDOW)
             G_hi, L_hi, anc_hi, win_hi = segment_windows(
-                phi, xhi, respect_hi, m, UO.K, a.h, +1, max_window=UO.WINDOW)
+                phi, xhi, respect_hi, m, UO.K, a.h, +1, min_piv=a.min_piv, max_window=UO.WINDOW)
             push_lo = np.zeros(m); push_hi = np.zeros(m)
             gov_lo, gov_hi = win_lo, win_hi
         else:
