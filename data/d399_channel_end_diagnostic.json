@@ -1,0 +1,158 @@
+{
+ "symbol": "GME",
+ "start_bar": 2429,
+ "n": 260,
+ "tolerances": [
+  0.0,
+  0.01,
+  0.03
+ ],
+ "note": "DIAGNOSTIC. Channels from the principal's own drawn lines. Nothing scored.",
+ "pairs": [
+  {
+   "support": "2019-09-03",
+   "resistance": "2019-09-10",
+   "overlap_bars": 33,
+   "i_open": 8,
+   "i_last_click": 60,
+   "g_support": 0.006660235324467372,
+   "g_resistance": 0.007819515934902516,
+   "width_open_pct": 29.847621569466824,
+   "converging": false,
+   "breaks": {
+    "0": {
+     "first_break": 73,
+     "bars_past_last_click": 13,
+     "side": "support",
+     "date": "2019-12-11",
+     "width_at_break_pct": 37.38294553729526,
+     "breaks_inside": 2,
+     "channel_life": 66
+    },
+    "0.01": {
+     "first_break": 73,
+     "bars_past_last_click": 13,
+     "side": "support",
+     "date": "2019-12-11",
+     "width_at_break_pct": 37.38294553729526,
+     "breaks_inside": 2,
+     "channel_life": 66
+    },
+    "0.03": {
+     "first_break": 73,
+     "bars_past_last_click": 13,
+     "side": "support",
+     "date": "2019-12-11",
+     "width_at_break_pct": 37.38294553729526,
+     "breaks_inside": 0,
+     "channel_life": 66
+    }
+   }
+  },
+  {
+   "support": "2020-01-30",
+   "resistance": "2020-01-02",
+   "overlap_bars": 33,
+   "i_open": 106,
+   "i_last_click": 151,
+   "g_support": -0.009153983438401191,
+   "g_resistance": -0.006476644880657728,
+   "width_open_pct": 38.828470214513025,
+   "converging": false,
+   "breaks": {
+    "0": {
+     "first_break": 155,
+     "bars_past_last_click": 4,
+     "side": "resistance",
+     "date": "2020-04-09",
+     "width_at_break_pct": 51.94742914745599,
+     "breaks_inside": 5,
+     "channel_life": 50
+    },
+    "0.01": {
+     "first_break": 155,
+     "bars_past_last_click": 4,
+     "side": "resistance",
+     "date": "2020-04-09",
+     "width_at_break_pct": 51.94742914745599,
+     "breaks_inside": 3,
+     "channel_life": 50
+    },
+    "0.03": {
+     "first_break": 156,
+     "bars_past_last_click": 5,
+     "side": "resistance",
+     "date": "2020-04-13",
+     "width_at_break_pct": 52.21516300323032,
+     "breaks_inside": 2,
+     "channel_life": 51
+    }
+   }
+  },
+  {
+   "support": "2020-05-14",
+   "resistance": "2020-04-14",
+   "overlap_bars": 46,
+   "i_open": 179,
+   "i_last_click": 235,
+   "g_support": -0.0010926449734771058,
+   "g_resistance": -0.0039957789711417896,
+   "width_open_pct": 40.30249458813007,
+   "converging": true,
+   "breaks": {
+    "0": {
+     "first_break": 236,
+     "bars_past_last_click": 1,
+     "side": "resistance",
+     "date": "2020-08-05",
+     "width_at_break_pct": 23.754630801441365,
+     "breaks_inside": 2,
+     "channel_life": 58
+    },
+    "0.01": {
+     "first_break": 242,
+     "bars_past_last_click": 7,
+     "side": "resistance",
+     "date": "2020-08-13",
+     "width_at_break_pct": 22.012750402842556,
+     "breaks_inside": 0,
+     "channel_life": 64
+    },
+    "0.03": {
+     "first_break": 243,
+     "bars_past_last_click": 8,
+     "side": "resistance",
+     "date": "2020-08-14",
+     "width_at_break_pct": 21.722437003076077,
+     "breaks_inside": 0,
+     "channel_life": 65
+    }
+   }
+  },
+  {
+   "support": "2020-08-10",
+   "resistance": null,
+   "overlap": 0
+  }
+ ],
+ "summary": {
+  "0": {
+   "channels": 3,
+   "never_broken": 0,
+   "median_bars_past_last_click": 4.0,
+   "median_channel_life": 58.0
+  },
+  "0.01": {
+   "channels": 3,
+   "never_broken": 0,
+   "median_bars_past_last_click": 7.0,
+   "median_channel_life": 64.0
+  },
+  "0.03": {
+   "channels": 3,
+   "never_broken": 0,
+   "median_bars_past_last_click": 8.0,
+   "median_channel_life": 65.0
+  }
+ }
+}
