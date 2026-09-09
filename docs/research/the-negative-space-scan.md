@@ -460,21 +460,55 @@ audit found the gap, and the gap is real, but the design is not available.
 
 ## 8. The scored list
 
-| # | lead | NEW | DATA | COST | BRD | KILL | BASE | CEIL | **total** |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| **R1** | cross-asset regime state as the gate | 3 | 3 | 3 | 1 | 3 | 3 | 2 | **18** |
-| **X1** | cluster-residual reversal | 2 | 3 | 1 | 3 | 3 | 2 | 3 | **17** |
-| **K1** | the calendar screen (3 declared) | 3 | 3 | 3 | 1 | 3 | 3 | 1 | **17** |
-| **N1** | short interest / days-to-cover | 3 | 1 | 2 | 3 | 3 | 2 | 3 | **17** |
-| **V1** | the closed-end fund discount | 3 | 1 | 2 | 2 | 3 | 2 | 3 | **16** |
-| **X2** | lead–lag between size cohorts | 3 | 3 | 0 | 3 | 3 | 1 | 2 | **15** |
-| **C1** | combination of independent inputs | 2 | 3 | 1 | 3 | 1 | 1 | 2 | **13** |
+**ELEVEN LEADS.** The seven this record scanned, plus the four §9b's briefs surfaced. **The
+`prior` column was added 2026-09-09 and is the only column that reflects external evidence** —
+the seven axis scores are the record's own judgement as first written and are **deliberately
+left unrevised**, so the scan's calibration can be audited against what the literature said
+rather than quietly conformed to it.
+
+| # | lead | NEW | DATA | COST | BRD | KILL | BASE | CEIL | **total** | prior after §9a/§9b |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| **R1** | cross-asset regime state as the gate | 3 | 3 | 3 | 1 | 3 | 3 | 2 | **18** | **standing**, horizon in doubt → D404 |
+| **X1** | cluster-residual reversal | 2 | 3 | 1 | 3 | 3 | 2 | 3 | **17** | **fell** — net −0.80%/mo; superseded by **X3** |
+| **K1** | the calendar screen (3 declared) | 3 | 3 | 3 | 1 | 3 | 3 | 1 | **17** | **fell** — EW shrinks it; superseded by **R2** |
+| **N1** | short interest / days-to-cover | 3 | 1 | 2 | 3 | 3 | 2 | 3 | **17** | **fell** — borrow fee; superseded by **N2** |
+| **X3** | **industry-relative reversal, LIQUID names + low-vol screen** ⭐ | 2 | 2 | 2 | 3 | 3 | 2 | 3 | **17** | **standing — strongest of the eleven** |
+| **R2** | **the even-week FOMC cycle** | 3 | 2 | 3 | 1 | 3 | 3 | 2 | **17** | **standing** |
+| **N2** | **FINRA daily short-sale volume + SEC FTD crosswalk** | 3 | 2 | 2 | 3 | 3 | 2 | 2 | **17** | **standing — an INPUT, not a signal** |
+| **V1** | the closed-end fund discount | 3 | 1 | 2 | 2 | 3 | 2 | 3 | **16** | **fell** — Flynn: zero significant alphas |
+| **X2** | lead–lag between size cohorts | 3 | 3 | 0 | 3 | 3 | 1 | 2 | **15** | **dead** — $47m median cap |
+| **X4** | **geographic lead–lag** | 3 | 1 | 1 | 3 | 3 | 2 | 2 | **15** | **standing**, weak prior — no cost test, sample ends 2013 |
+| **C1** | combination of independent inputs | 2 | 3 | 1 | 3 | 1 | 1 | 2 | **13** | **ROSE to first of the unregistered** — §9a finding 2 |
+
+**The score column did not predict the outcome, and that is worth recording against this
+record's own method.** C1 scored **lowest of the seven and now ranks first**; K1 and N1 scored
+17 and both fell hard. **The axis that failed was `KILL`** — C1 scored 1 there because I could
+not name a cheap number that killed it, when the real situation was that I could not name its
+*form*; a hurdle existed in the literature all along. **`KILL` was measuring my knowledge, not
+the lead.**
 
 **The total is a summary, not a ranking, and the order of work below differs from it.** Three
 leads sit within one point of each other and the arithmetic does not separate them; what
 separates them is the deferral and the cost of being wrong.
 
-### Order of work, and why this order
+### Order of work — REVISED 2026-09-09 after the briefs
+
+**The list below the rule is the ORIGINAL order, left standing so the revision is auditable.**
+
+**Revised order: X3, then C1, then R1** — with R2 and N2 behind them, and X4 recorded but not
+recommended.
+
+1. **X3** — industry-relative reversal in liquid names. Two independent convergences, and its
+   Stage 0 is a **count** (how many names survive a liquid-large restriction on a $5-floored
+   equal-weighted fixture) that costs minutes and can end it.
+2. **C1** — the 16-term OHLC composite, now that §9a finding 2 has removed the argument against
+   it and §59 supplies the floor it needs. **One pre-specified form, signs declared in writing,
+   no sweep.**
+3. **R1 / D404** — pre-registered and amended; the horizon curve must be reported.
+4. **R2** and **N2** — both cheap, both behind the above.
+5. **X4** recorded, not recommended. **X1, K1, N1, V1 superseded or fallen. X2 dead.**
+
+### Order of work as ORIGINALLY written, kept for audit
 
 1. ~~**R1 first.**~~ — **PRE-REGISTERED as [D404](../decisions/D404-the-cross-asset-state.md),
    2026-09-09. The runner does not exist and nothing has been run.** It needs no fetch, it is
@@ -586,6 +620,178 @@ thing in the area: **industry-relative reversal in liquid names with a low-volat
 X1 from the reversal literature. **And in both accounts it is the COST FILTER doing the
 rescuing, not the residualisation** — which is the same lesson this programme has now paid for
 several times over. It is not a lead in this record and it would need its own pre-registration.
+
+## 9b. FOUR LEADS THE BRIEFS SURFACED THAT THIS RECORD DID NOT CONTAIN
+
+**These were not in the original seven.** Each came back from an agent sent to check something
+else, and **two of them are better founded than the lead they were found while checking.** They
+are written up here to the same anatomy as §§3–7 so they are leads on the record rather than
+sentences in a brief, and they are slotted into this record's own groups rather than given a new
+taxonomy.
+
+**All four carry the same caveat and it is not a formality:** every magnitude below is quoted
+from a paper measured on **someone else's universe, era and cost assumption**, and none of those
+papers has been read here. **A quoted effect size is a prior, not a prediction.**
+
+### 9b.1 R2 — the even-week FOMC cycle
+
+**Score: NEW 3 · DATA 2 · COST 3 · BREADTH 1 · KILL 3 · BASE 3 · CEIL 2 = 17/21**
+
+**Where it came from.** The K1 brief, sent to check the **pre-FOMC announcement drift**, reported
+that Cieslak–Morse–Vissing-Jorgensen (JF 2019) is **better founded than the object it was sent to
+check** — *"far more events, causal evidence, no published OOS failure I could find."*
+
+**The quantity.** Equity returns are claimed to accrue in **even weeks** of the FOMC cycle
+(week 0, 2, 4, 6 from a meeting) and not in odd weeks. **It is a phase counter on a known
+calendar, not a window around an announcement.**
+
+**Why it is not in the catalogue.** §1: no score reads `panel.dates`. And it is untouched by
+K1's failure — **K1c measured a 24-hour window and this is a fortnightly phase**, so the
+location argument that killed K1 (α insignificant on announcement days, beta on a schedule) does
+not transfer without being re-measured.
+
+**Why it survives K1's own killer.** K1 died partly because **equal weighting shrinks the
+pre-FOMC effect** (36 bp VW → 25 EW → 20 smallest decile). **Nothing in the brief says the same
+of the even-week cycle**, and that is the first thing to check rather than assume.
+
+**BASE scores 3 and COST 3 for K1's reasons, unchanged:** a phase counter **selects no names**,
+so it cannot inherit D392's 36.8 bp price-tercile base rate, and it changes only *when*.
+
+**Data.** The same FOMC date list K1 needs: `federalreserve.gov/monetarypolicy/fomccalendars.htm`
+plus the per-year historical pages. **HTML only, no official CSV/JSON/iCal — it must be
+scraped**, and unscheduled meetings are labelled inline (`"March 15 (unscheduled) Meeting -
+2020"`, alongside `(cancelled)` and `(notation vote)`). **A phase counter that miscounts an
+unscheduled meeting has the wrong phase for every subsequent week**, so the parse is
+load-bearing in a way K1c's window was not.
+
+**The premise number that kills it.** Mean forward drift of the equal-weighted floored universe
+in even versus odd cycle weeks, **split 2010–2015 / 2016–2026**, with the exactly-enumerated
+market-level rotation null. **And the EW-versus-VW comparison beside it**, because that is what
+killed K1.
+
+**The honest risk.** One market-level series, so BREADTH is 1 as it is for every gate here. The
+paper's sample ends well before ours. And **this record has now been handed a "better founded
+cousin" by an agent whose primary lead failed** — that is exactly the shape of a consolation
+prize, and it should be treated with the suspicion `working/leads/README.md` requires.
+
+### 9b.2 X3 — industry-relative reversal in LIQUID names, with a low-volatility screen ⭐ the strongest of the eleven
+
+**Score: NEW 2 · DATA 2 · COST 2 · BREADTH 3 · KILL 3 · BASE 2 · CEIL 3 = 17/21**
+
+**Where it came from, and why that matters.** **Two agents that never communicated converged on
+it** — X1 from the reversal literature, X2 from the lead–lag literature — each naming it as the
+only cost-surviving construction in its area. **Independent convergence is the strongest
+positive signal this exercise produced**, and it is the reason this entry exists.
+
+**The quantity.** Industry-relative short-term reversal, restricted to **liquid, large names**,
+with a **low-volatility screen**, value-weighted. Reported at **+0.31%/mo, t = 2.73**,
+net of costs, in Novy-Marx–Velikov's cost framework.
+
+**Why NEW scores 2, stated first because it is the weakest part.** [D285](../decisions/D285-the-factor-neutral-book.md)
+ran plain cross-sectional reversal on this fixture to **zero survivors across 18 cells**, and
+§5.1's X1 already proposed residualising it. **What is genuinely new is neither the reversal nor
+the residualisation — it is the LIQUIDITY AND VOLATILITY RESTRICTION**, and the record must say
+that plainly rather than present a screened variant as a fresh idea.
+
+> **THE FINDING INSIDE THE FINDING, AND IT IS THE WHOLE ENTRY: IN BOTH INDEPENDENT ACCOUNTS THE
+> COST FILTER DOES THE RESCUING, NOT THE RESIDUALISATION.** X1's own table has industry-relative
+> reversal at **−0.80%/mo net** against raw reversal's −1.28 — residualising added +0.61 gross
+> and +0.13 cost and left it 80 bp under water. **What turned −0.80 into +0.31 was screening out
+> the expensive names.** That is this programme's own repeated lesson arriving from outside.
+
+**And it is therefore a test of a hypothesis this record already holds**, not a new punt: the
+cost wall is a *price* effect, and a construction that removes the cheap, wide, volatile names
+before ranking should survive where one that ranks them cannot.
+
+**The premise number that kills it, and it is a COUNT before it is a return.** The published
+result is **value-weighted large-cap**; this fixture is **equal-weighted and floored at $5**.
+**How many names in this universe would survive a liquid-large restriction, and what is the
+breadth of what remains?** If the answer is forty names, this is D264's concentration problem
+again and the study is not worth writing. **That count comes first, before any design.**
+
+**Data.** An industry map. GICS is paid. Free routes: **SEC N-PORT ETF holdings** (monthly,
+Oct 2019 → Jun 2026 — *too short*), or the panel's own correlation clustering. **X1's brief
+supplies the decisive number for the clustering route: out-of-sample within-minus-outside
+correlation spread is 0.13 in large caps against 0.02 in small.** Since this lead is restricted
+to large caps, **clustering is viable here where it was not for X1** — which is a real
+difference between the two entries and the reason X3 is not simply X1 rescored.
+
+**The honest risk.** It is a high-turnover reversal payoff, so it lives closest to the cost wall
+of anything standing. And it is **somebody else's published result** — the appropriate prior is
+post-publication decay, which McLean–Pontiff puts at 58%, concentrated in low-liquidity names.
+
+### 9b.3 X4 — geographic lead–lag
+
+**Score: NEW 3 · DATA 1 · COST 1 · BREADTH 3 · KILL 3 · BASE 2 · CEIL 2 = 15/21**
+
+**Where it came from.** The X2 brief, sent to **confirm or refute this record's dismissal of
+lead–lag**. It confirmed the dismissal — and then named the one variant that escapes the reason
+for it.
+
+**The quantity.** Firms headquartered in the same city but operating in **different sectors**
+lead one another, at a reported **5–6%/yr**.
+
+**Why it escapes what killed X2.** X2 died because the effect lives in $47m-cap names, inside
+the cost wall. **The geographic effect is explicitly reported as unrelated to size, trading
+volume and analyst coverage** — the mechanism offered is that analysts specialise by *sector*,
+so information crossing sector lines within a city is slow regardless of how large the firms
+are. **That is a different mechanism, not a different parameter**, which is the only thing that
+reopens a dismissed axis under R13.
+
+**Data.** Headquarters location per name, **including delisted names**. SEC EDGAR carries a
+business address on filings and is free, but assembling a point-in-time HQ for 1,573 names of
+which 43.5% are dead is real work — **and HQ moves**, so a current address applied historically
+is a look-ahead. **This sits behind the principal's auxiliary-data deferral.**
+
+**The premise number that kills it.** A **count**: how many cities carry enough names, in
+enough different sectors, to form a pair at all on this universe? If the answer is three cities,
+the study is not worth writing.
+
+**The honest risk, and DATA and COST both score 1 for it.** The result is **monthly**, its
+sample **ends 2013**, and **the paper carries no cost test**. A 5–6%/yr gross effect with no
+cost treatment, in an era we cannot observe, is a weak prior — this is a lead worth recording
+and not one worth taking first.
+
+### 9b.4 N2 — FINRA daily short-sale volume, with the SEC FTD file as the crosswalk
+
+**Score: NEW 3 · DATA 2 · COST 2 · BREADTH 3 · KILL 3 · BASE 2 · CEIL 2 = 17/21**
+
+**Where it came from.** The N1 brief, after establishing that **short interest itself is not
+reachable on this fixture** — free exchange-listed FINRA short interest starts **June 2021**
+(~31% of the fixture) and members **omit a security once its symbol is deleted**, so the
+terminal observation of every dying name is missing by rule.
+
+**The quantity.** **Daily** short-sale volume as a share of total volume — a flow, not a stock.
+FINRA publishes it consolidated from **2018-08** and per-venue back to **2009**, at a **one-day
+lag**, point-in-time.
+
+**Why this is the better route, and it is a coverage argument rather than a signal argument.**
+Short interest is a **twice-monthly stock with a seven-business-day publication lag** — it cannot
+key a daily entry and it is missing exactly where this fixture is dense. Daily short-sale volume
+is **point-in-time, daily, and published the next day.** **N1's three killers were coverage,
+lag and delisted-name loss; this addresses all three.**
+
+**And the crosswalk is the part worth recording separately.** The **SEC failures-to-deliver
+file runs from 2004 and carries CUSIP**, where the FINRA files carry **symbol only**. That makes
+the FTD file usable as a **symbol-to-CUSIP crosswalk for delisted names** — which is the
+programme's standing ticker-reuse hazard (*a delisted ticker can be reassigned to a different
+company*) answered by a free primary source. **That is useful independently of whether any short
+signal works.**
+
+**CEIL is 2 and the entry says why: this is an INPUT, not a signal.** Nothing here proposes a
+strategy. It proposes a variable the programme could hold, of a kind it has never had.
+
+**The premise number that kills it.** The **join rate on the delisted cohort** — the exact test
+N1 failed. Using the FTD crosswalk, what fraction of the fixture's 684 dead names can be matched
+to short-sale volume records covering their final year? **If the dead cannot be joined, this
+reintroduces the survivorship bias the fixture exists to remove**, and it dies where N1 died.
+
+**The honest risk.** Short-sale volume is **not short interest** — a high short-volume share can
+mean market-making inventory rather than directional conviction, and the literature on its
+predictive content is thinner than on short interest. And it is a **new provider under the
+deferral.**
+
+---
 
 ### What the briefs could not establish, carried rather than smoothed over
 

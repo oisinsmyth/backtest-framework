@@ -423,6 +423,16 @@ EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not co
 >
 > **Ranked for a next step: #4, then #5, then #1.**
 >
+> **ALL ELEVEN ARE RECORDED AS LEADS WITH FULL ANATOMY** — the quantity, why it is not in the
+> catalogue, the mechanism, the data, **the premise number that kills it**, and the honest risk —
+> in [the scan record](docs/research/the-negative-space-scan.md) **§§3–7** for the original seven
+> and **§9b** for the four the briefs surfaced. **§8's scored table carries all eleven**, with the
+> seven axis scores **deliberately left unrevised** so the scan's own calibration can be audited
+> against what the literature said. **That audit is unflattering and is recorded there: the score
+> did not predict the outcome** — C1 scored lowest of seven and now ranks first, while K1 and N1
+> scored 17 and both fell hard. **The axis that failed was `KILL`, and it was measuring my
+> knowledge rather than the lead.**
+>
 > **The three findings that outlive the scan, and each was RE-MEASURED here rather than quoted:**
 >
 > 1. **[FINDINGS §59](docs/FINDINGS.md) — a best-of-N floor prices SELECTION and is blind to
