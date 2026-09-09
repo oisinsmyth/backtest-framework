@@ -82,18 +82,35 @@ not a better *fraction*.
 `F6` went looking for spin-off *returns* and came back with something better: **a mechanical
 account of the spin-off price defect this programme has already been bitten by.**
 
+> **CORRECTION, 2026-09-09, made after this section was first written and kept visible rather than
+> silently edited.** This section originally said the mechanism below explained D403's **5×
+> ServiceNow shape**. **IT DOES NOT.** D403 measured **NOW at 15m ÷ daily = 0.20000 flat, which is
+> a genuine 5:1 SPLIT read across two fixtures on different corporate-action bases** — a basis
+> mismatch, not a misfiled distribution. **The spin-off in that same measurement is ILMN at
+> 0.97276, the GRAIL spin-off, and it is NOT an integer** — which is exactly why `raw_price_factor`
+> fixes NOW and leaves ILMN 2.7% out. I tied a new claim to an existing record without reading the
+> object it pointed at. **The integer mechanism below is a real hazard that we have NOT observed
+> here.** The correction previously existed only in commit `7611123`'s message; it belongs in the
+> research record, which is where it now is.
+
 **The defect.** At the ex-date the parent gaps down by the distributed stub. **That is a fake crash,
-and a reversal book will buy it.** The programme's own version of this is on the record — one name
-sat at **5× its own prices**, and `raw_price_factor` could not repair it.
+and a reversal book will buy it.** The programme has an observed version of the *scalar-factor*
+half: `raw_price_factor` could not repair a spin-off, leaving **ILMN 2.7% out** while fixing a name
+whose discrepancy was a true split.
 
 **Why a scalar cannot fix it, stated mechanically.** The correct adjustment is a **multiplicative
 step applied to all PRIOR bars**, `f = (P_cum − r·P_child) / P_cum` — **date-dependent by
 construction**, which is exactly what a single scalar factor cannot express. And **the child has no
 pre-when-issued history at all**, so for the child it is missing data rather than mis-scaled data.
 
-**The mechanism behind the 5× shape.** Vendors log spin-off factors in the **split table**. A
-distribution ratio read as a split ratio **shifts the whole series by a clean integer** — which is
-the shape the programme observed and could not explain.
+**A hazard we have NOT observed, and it would look like an integer.** Vendors log spin-off factors
+in the **split table**. A distribution ratio read as a split ratio **shifts the whole series by a
+clean integer multiple.** **This is not what happened in D403** (see the correction above) — but it
+is worth knowing that **an integer discrepancy has two possible causes**, a real split on a
+different basis and a misfiled distribution, **and the number alone does not distinguish them.**
+Round 3's `G6` later found the same forcing from the schema side: a two-field corporate-action
+schema has **only one place to put a spin-off's value**
+([`the-plumbing-round.md`](the-plumbing-round.md) §7).
 
 `[Sourced from CRSP's *Factor to Adjust Price* documentation and the Nasdaq corporate-actions
 manual; the Nasdaq PDF would not render for the agent and is `[not read]`.]` **This is an
