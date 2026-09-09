@@ -366,7 +366,13 @@ committed to `data/`.
 **RE-RANKED 2026-09-09 (later), after D383 was run and the prop instrument was priced. THE QUEUE IS
 EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not commitments.
 
-> ### 0d0. THE NEGATIVE-SPACE SCAN AND ITS SEVEN EXTERNAL BRIEFS, 2026-09-09 — **NO STRATEGY WAS FOUND, AND THE THREE THINGS WORTH KEEPING ARE NOT STRATEGIES**
+> ### 0d0. THE NEGATIVE-SPACE SCAN AND ITS SEVEN EXTERNAL BRIEFS, 2026-09-09 — **ELEVEN LEADS, THREE STILL STANDING AFTER THE EVIDENCE, AND THREE METHOD FINDINGS ALONGSIDE THEM**
+>
+> **THIS WAS COMMISSIONED AS A LEAD SCAN AND ITS DELIVERABLE IS LEADS.** An earlier version of
+> this section led with *"no strategy was found"*, which measured a lead scan against a bar
+> nobody set for it — a lead that survives a smell test and a costed literature check **is** the
+> product here. **What follows is the inventory; §0d0a ranks it.** Testing is a separate act
+> under R8 and none has occurred.
 >
 > **[`docs/research/the-negative-space-scan.md`](docs/research/the-negative-space-scan.md)**
 > (`bbc2790`, consolidated `00eaccb`). A scan of the categories the record had **never** put in a
@@ -374,8 +380,48 @@ EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not co
 > agents researched the published literature, one per lead, briefs in `working/leads/` under that
 > directory's quarantine contract.**
 >
-> **NOTHING WAS BACKTESTED. NO CANDIDATE EXISTS. NO CELL WAS SCORED, NO NULL DRAWN, NO HOLDOUT
-> TOUCHED, AND BOTH BOOKS ARE UNCHANGED.** One lead was pre-registered; the rest are leads.
+> **Status of every item below: a LEAD.** None has been tested — that is R8's separate act and it
+> has not happened. Both books are unchanged.
+>
+> ### 0d0a. THE INVENTORY — eleven leads, by category
+>
+> **REGIME DETECTORS**
+> 1. **Cross-asset state** — `log(HYG/IEF)`, `log(IEF/SHY)`, defensive-vs-cyclical, as a
+>    market-level time gate. **The only gate this programme could build that is not a function of
+>    the equity universe it trades.** → [D404](docs/decisions/D404-the-cross-asset-state.md).
+>    **STANDING**, with the horizon in doubt.
+> 2. **Even-week FOMC cycle** (Cieslak–Morse–Vissing-Jorgensen, JF 2019) — surfaced by the K1
+>    brief as **better founded than the pre-FOMC drift it was sent to check**: far more events,
+>    causal evidence, no published OOS failure found. **STANDING, and untouched by the K1 verdict.**
+> 3. Turn-of-month / day-of-week / pre-FOMC window. **FELL** — location, not decay: on FOMC days
+>    the CAPM works, α insignificant, and equal weighting *shrinks* it (36→25→20 bp).
+>
+> **CROSS-SECTIONAL SIGNALS**
+> 4. **Industry-relative reversal in liquid names + a low-volatility screen** — +0.31%/mo,
+>    t=2.73, VW large-cap. **Two agents that never communicated converged on it** from different
+>    literatures. **STANDING and it is the strongest of the eleven** — but it is *someone else's
+>    published result*, never tested here, and in both accounts **the cost filter does the
+>    rescuing, not the residualisation.**
+> 5. **Combining the 16 OHLC terms** — equal-weight cross-sectional rank average, every sign
+>    declared in writing, floored against a sign-fitting null. **ROSE FROM LAST TO FIRST** of the
+>    unregistered leads once §59 showed our own reasoning against it was backwards.
+> 6. Cluster-residual reversal. **FELL** — net moves −1.28 → −0.80%/mo, still 80 bp under water,
+>    and correlation clusters give a 0.02 out-of-sample spread in small caps, which is our case.
+> 7. Closed-end fund discount. **FELL** — Flynn ran the exact hedged trade on 462 CEFs, zero
+>    significant alphas, and the edge is front-loaded into month one, killing the "slow" thesis.
+> 8. Lead–lag between size cohorts. **DEAD** — measured into a decile averaging $47m cap.
+> 9. **Geographic lead–lag** (co-HQ, different sectors), 5–6%/yr, **explicitly unrelated to size,
+>    volume and coverage** — the one liquid-name variant the X2 brief found real. **STANDING as a
+>    lead**, monthly, sample ends 2013, no cost test in the paper.
+>
+> **INDICATORS / DATA ROUTES**
+> 10. Short interest and days-to-cover. **FELL** — borrow fee takes 162 anomalies from +0.14%/mo
+>     gross to −0.01% net, and free FINRA exchange-listed data starts June 2021.
+> 11. **FINRA daily short-sale volume + the SEC FTD file** — the replacement route the N1 brief
+>     found: one-day lag, point-in-time, consolidated from 2018-08, and **the FTD file carries
+>     CUSIP so it doubles as a delisted-symbol crosswalk.** **STANDING as an input, not a signal.**
+>
+> **Ranked for a next step: #4, then #5, then #1.**
 >
 > **The three findings that outlive the scan, and each was RE-MEASURED here rather than quoted:**
 >
