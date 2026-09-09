@@ -26,6 +26,7 @@ quarterly expiry where open interest mechanically collapses.
 import argparse
 import datetime
 import gzip
+import http.client
 import importlib.util
 import json
 import os
@@ -110,7 +111,11 @@ def fetch(symbol, date, key):
             with urllib.request.urlopen(url, timeout=TIMEOUT) as r:
                 payload = json.loads(r.read().decode("utf-8", errors="replace"))
             break
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+        # http.client.IncompleteRead is an HTTPException, NOT an OSError, so the first version
+        # of this tuple did not catch it -- and it killed a two-hour pull at file 174. A long
+        # paced pull must treat every transport failure as retryable; the cache makes it cheap.
+        except (urllib.error.URLError, OSError, http.client.HTTPException,
+                TimeoutError, json.JSONDecodeError) as e:
             if attempt == RETRIES - 1:
                 return f"error: {type(e).__name__}", 0
             time.sleep(2.0 * (attempt + 1))
