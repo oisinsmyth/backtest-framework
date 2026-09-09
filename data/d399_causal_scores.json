@@ -1,0 +1,268 @@
+{
+ "ground_truth": "data\\d399_live_ground_truth.json",
+ "symbol": "GME",
+ "first_seen": 39,
+ "seen_through": 259,
+ "beta": 0.5,
+ "note": "Causal: the drawn lines never saw the future, so there is no oracle caveat.",
+ "constructions": {
+  "B": {
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1106,
+    "score": 0.0602
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0456,
+    "score": 0.0256
+   },
+   "SCORE": 0.0429,
+   "null": {
+    "support": {
+     "draws": 220,
+     "p50": 0.0917,
+     "p95": 0.138,
+     "max": 0.1442
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.0575,
+     "p95": 0.083,
+     "max": 0.0866
+    }
+   },
+   "null_p50": 0.0746,
+   "null_p95": 0.1105,
+   "clears_null": false,
+   "excess": -0.883
+  },
+  "C": {
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1106,
+    "score": 0.0602
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0456,
+    "score": 0.0256
+   },
+   "SCORE": 0.0429,
+   "null": {
+    "support": {
+     "draws": 220,
+     "p50": 0.0917,
+     "p95": 0.138,
+     "max": 0.1442
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.0575,
+     "p95": 0.083,
+     "max": 0.0866
+    }
+   },
+   "null_p50": 0.0746,
+   "null_p95": 0.1105,
+   "clears_null": false,
+   "excess": -0.883
+  },
+  "D": {
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1106,
+    "score": 0.0602
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0456,
+    "score": 0.0256
+   },
+   "SCORE": 0.0429,
+   "null": {
+    "support": {
+     "draws": 220,
+     "p50": 0.0917,
+     "p95": 0.138,
+     "max": 0.1442
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.0575,
+     "p95": 0.083,
+     "max": 0.0866
+    }
+   },
+   "null_p50": 0.0746,
+   "null_p95": 0.1105,
+   "clears_null": false,
+   "excess": -0.883
+  },
+  "E": {
+   "support": {
+    "TP": 45,
+    "FP": 37,
+    "FN": 63,
+    "TN": 76,
+    "precision": 0.5488,
+    "recall": 0.4167,
+    "f_beta": 0.5161,
+    "quality": 0.4052,
+    "score": 0.2091
+   },
+   "resistance": {
+    "TP": 39,
+    "FP": 43,
+    "FN": 73,
+    "TN": 66,
+    "precision": 0.4756,
+    "recall": 0.3482,
+    "f_beta": 0.4432,
+    "quality": 0.28,
+    "score": 0.1241
+   },
+   "SCORE": 0.1666,
+   "null": {
+    "support": {
+     "draws": 220,
+     "p50": 0.0716,
+     "p95": 0.1785,
+     "max": 0.2329
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.0873,
+     "p95": 0.1493,
+     "max": 0.184
+    }
+   },
+   "null_p50": 0.0794,
+   "null_p95": 0.1639,
+   "clears_null": true,
+   "excess": 1.032
+  },
+  "segmentation": {
+   "support": {
+    "TP": 53,
+    "FP": 31,
+    "FN": 55,
+    "TN": 82,
+    "precision": 0.631,
+    "recall": 0.4907,
+    "f_beta": 0.5968,
+    "quality": 0.5602,
+    "score": 0.3344
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   },
+   "SCORE": 0.3175,
+   "null": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1074,
+     "p95": 0.3167,
+     "max": 0.374
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1191,
+     "p95": 0.2844,
+     "max": 0.3348
+    }
+   },
+   "null_p50": 0.1132,
+   "null_p95": 0.3005,
+   "clears_null": true,
+   "excess": 1.09
+  },
+  "two-pivot": {
+   "support": {
+    "TP": 47,
+    "FP": 43,
+    "FN": 61,
+    "TN": 70,
+    "precision": 0.5222,
+    "recall": 0.4352,
+    "f_beta": 0.5021,
+    "quality": 0.5462,
+    "score": 0.2743
+   },
+   "resistance": {
+    "TP": 46,
+    "FP": 58,
+    "FN": 66,
+    "TN": 51,
+    "precision": 0.4423,
+    "recall": 0.4107,
+    "f_beta": 0.4356,
+    "quality": 0.5169,
+    "score": 0.2252
+   },
+   "SCORE": 0.2497,
+   "null": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1136,
+     "p95": 0.2598,
+     "max": 0.2917
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.0894,
+     "p95": 0.2482,
+     "max": 0.3216
+    }
+   },
+   "null_p50": 0.1015,
+   "null_p95": 0.254,
+   "clears_null": false,
+   "excess": 0.972
+  }
+ }
+}
