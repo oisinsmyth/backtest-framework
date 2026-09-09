@@ -24,6 +24,7 @@ SNAPSHOT DATES are mid-quarter (15 Feb / May / Aug / Nov), DELIBERATELY away fro
 quarterly expiry where open interest mechanically collapses.
 """
 import argparse
+import datetime
 import gzip
 import importlib.util
 import json
@@ -47,7 +48,22 @@ EVJ = REPO / "data/fixtures/us_shorts_daily_raw_events.json"
 
 N_NAMES = 210
 YEARS = range(2015, 2024)
-MONTHS = (2, 5, 8, 11)
+
+# Three DISJOINT snapshot sets on the same 210 names, so a result on one can be confirmed on
+# another that was never looked at.
+#
+#   d406   mid-quarter, 15 Feb/May/Aug/Nov -- deliberately AWAY from the third Friday. SPENT.
+#   oos    mid-quarter, 15 Jan/Apr/Jul/Oct -- same cadence, same years, DISJOINT DATES. The
+#          confirmation slice for D406's w=2.0 cell, which cleared T2 and was monotone on
+#          three of four steps but was declared as SHAPE and therefore did not count.
+#   expiry Monday of the third-Friday week, Mar/Jun/Sep/Dec -- the case D406 excluded BY
+#          DESIGN. Pinning is classically claimed AT expiry, and D406 sampled away from it.
+SETS = {
+    "d406": dict(kind="midmonth", months=(2, 5, 8, 11)),
+    "oos": dict(kind="midmonth", months=(1, 4, 7, 10)),
+    "expiry": dict(kind="expiry_week_monday", months=(3, 6, 9, 12)),
+}
+MONTHS = SETS["d406"]["months"]                 # kept: D406's manifest quotes it
 MIN_INTERVAL = 60.0 / 66.0
 TIMEOUT = 60
 RETRIES = 3
@@ -110,7 +126,7 @@ def fetch(symbol, date, key):
     return "ok", len(rows)
 
 
-def universe_and_dates(verbose=True):
+def universe_and_dates(which="d406", verbose=True):
     s = importlib.util.spec_from_file_location("rp", REPO / "scripts" / "ragged_panel.py")
     RP = importlib.util.module_from_spec(s)
     sys.modules["rp"] = RP
@@ -126,18 +142,30 @@ def universe_and_dates(verbose=True):
     syms = sorted(liq, key=lambda x: -liq[x])[:N_NAMES]
     grid = list(panel.dates)
     arr = np.array(grid)
+    spec = SETS[which]
     dates = []
     for y in YEARS:
-        for m in MONTHS:
-            want = f"{y}-{m:02d}-15"
-            j = int(np.searchsorted(arr, want, side="right")) - 1   # nearest PRIOR trading day
+        for m in spec["months"]:
+            if spec["kind"] == "midmonth":
+                want = f"{y}-{m:02d}-15"
+                j = int(np.searchsorted(arr, want, side="right")) - 1   # nearest PRIOR trading day
+            else:
+                # Monday of the third-Friday week: the snapshot is taken while the expiring
+                # open interest still matters, and the outcome is measured INTO the expiry.
+                d0 = datetime.date(y, m, 1)
+                fri = d0 + datetime.timedelta(days=(4 - d0.weekday()) % 7)
+                third = fri + datetime.timedelta(days=14)
+                mon = third - datetime.timedelta(days=4)
+                j = int(np.searchsorted(arr, mon.isoformat(), side="left"))
+                if j >= len(grid) or grid[j] > (third - datetime.timedelta(days=2)).isoformat():
+                    j = -1
             if 0 <= j < len(grid):
                 dates.append(grid[j])
     dates = sorted(set(dates))
     if verbose:
-        print(f"  universe {len(syms)} names of {len(liq):,} rankable   "
+        print(f"  [{which}] universe {len(syms)} names of {len(liq):,} rankable   "
               f"median $vol {np.median([liq[x] for x in syms]):,.0f}")
-        print(f"  snapshots {len(dates)}  {dates[0]} -> {dates[-1]}")
+        print(f"  [{which}] snapshots {len(dates)}  {dates[0]} -> {dates[-1]}")
     return syms, dates
 
 
@@ -145,9 +173,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--plan", action="store_true")
     ap.add_argument("--pull", action="store_true")
+    ap.add_argument("--set", default="d406", choices=sorted(SETS))
     a = ap.parse_args()
     print("AV OPTIONS SNAPSHOT PULL -- acquisition only, no statistic, no bar\n")
-    syms, dates = universe_and_dates()
+    syms, dates = universe_and_dates(a.set)
     todo = [(s, d) for s in syms for d in dates if not path_of(s, d).exists()]
     total = len(syms) * len(dates)
     print(f"  {total:,} pairs, {total - len(todo):,} already cached, {len(todo):,} to fetch")
@@ -168,10 +197,11 @@ def main():
             el = time.time() - t0
             print(f"    {done:,}/{len(todo):,}  {el/60:.0f}m elapsed, "
                   f"{(len(todo)-done)*el/done/60:.0f}m left   {stats}", flush=True)
-    MANIFEST.write_text(json.dumps(dict(symbols=syms, dates=dates, stats=stats,
+    man_path = CACHE / f"_manifest_{a.set}.json"
+    man_path.write_text(json.dumps(dict(set=a.set, symbols=syms, dates=dates, stats=stats,
                                         n_pairs=total, fetched=len(todo)), indent=1), encoding="utf-8")
     print(f"\n  done in {(time.time()-t0)/60:.0f}m   {stats}")
-    print(f"  wrote {MANIFEST.relative_to(REPO)}")
+    print(f"  wrote {man_path.relative_to(REPO)}")
     return 0
 
 
