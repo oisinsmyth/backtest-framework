@@ -133,6 +133,16 @@ under each lead so a disagreement can be located rather than asserted.
 
 **Score: NEW 3 · DATA 3 · COST 3 · BREADTH 1 · KILL 3 · BASE 3 · CEIL 2 = 18/21**
 
+> **PRE-REGISTERED 2026-09-09 as [D404](../decisions/D404-the-cross-asset-state.md).** The runner
+> does not exist and nothing has been run. **Three things the pre-registration established that
+> this entry did not know:** the two fixture grids are **identical bar for bar** (4,187 dates, zero
+> on either side only), so the join needs no new convention; the whole of the new code is the `raw`
+> array, because `state_pack` / `block_corr` / `forward20` are reused unchanged; and **the decisive
+> bar is measured, not guessed — |r| ≈ 0.15–0.16, which two of the four existing states do not
+> clear.** D404 also carries the Q4 that this entry only gestured at: `data/d376_series.npz`
+> already holds the 500-book matrix on the same grid, so testing the state against D389's
+> unexplained factor costs almost nothing.
+
 **The quantity.** Three states, each a ratio of two series the fixture already holds, each
 reduced to its own trailing percentile so it carries no units:
 
@@ -466,9 +476,10 @@ separates them is the deferral and the cost of being wrong.
 
 ### Order of work, and why this order
 
-1. **R1 first.** It needs no fetch, it is bar-aligned already, its null is exactly
-   enumerable, and **it aims at the programme's largest documented open negative** — D389's
-   98.5%-unexplained factor, whose four tested candidates were all internal. It is the only
+1. ~~**R1 first.**~~ — **PRE-REGISTERED as [D404](../decisions/D404-the-cross-asset-state.md),
+   2026-09-09. The runner does not exist and nothing has been run.** It needs no fetch, it is
+   bar-aligned already, and **it aims at the programme's largest documented open negative** —
+   D389's 98.5%-unexplained factor, whose four tested candidates were all internal. It is the only
    lead here that answers an existing question rather than opening a new one.
 2. **K1 second, in the same session.** Same runner shape as R1 (a market-level time gate,
    the same enumerated rotation null), and it is the cheapest measurement in this record.
