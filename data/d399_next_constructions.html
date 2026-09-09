@@ -1,0 +1,180 @@
+<title>Why They All Fragment</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --panel:#fff; --panel-2:#eef1f5; --edge:#d8dee7; --edge-soft:#e7ecf2;
+  --ink:#181d27; --ink-2:#4a5567; --muted:#7b8698;
+  --up:#17845f; --down:#c0432f; --wick:#98a2b2;
+  --human:#7038a8; --seg:#0d8f8f; --pair:#c2560a;
+  --grid:#e6eaf0; --accent:#2563b0; --bad:#c0432f;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11141a; --panel:#171b23; --panel-2:#1d222c; --edge:#2b323e; --edge-soft:#232935;
+  --ink:#e7eaf0; --ink-2:#b3bcca; --muted:#818c9d;
+  --up:#2ea87c; --down:#e0654e; --wick:#69737f;
+  --human:#b98ae8; --seg:#3ec9c9; --pair:#f0913f;
+  --grid:#242a35; --accent:#5b9bea; --bad:#e0654e;
+}}
+:root[data-theme="dark"]{
+  --bg:#11141a; --panel:#171b23; --panel-2:#1d222c; --edge:#2b323e; --edge-soft:#232935;
+  --ink:#e7eaf0; --ink-2:#b3bcca; --muted:#818c9d;
+  --up:#2ea87c; --down:#e0654e; --wick:#69737f;
+  --human:#b98ae8; --seg:#3ec9c9; --pair:#f0913f;
+  --grid:#242a35; --accent:#5b9bea; --bad:#e0654e;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:36px 22px 66px;display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-direction:column;gap:11px;border-bottom:1px solid var(--edge);padding-bottom:20px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:500}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(26px,4vw,37px);line-height:1.15;
+  margin:0;letter-spacing:-.01em}
+p{margin:0;font-size:15px;color:var(--ink-2);max-width:76ch}
+p b{color:var(--ink);font-weight:600}
+.callout{border-left:2px solid var(--bad);background:var(--panel-2);padding:15px 17px;
+  display:flex;flex-direction:column;gap:10px}
+.panel{background:var(--panel);border:1px solid var(--edge);border-radius:4px;overflow:hidden;
+  margin-bottom:18px}
+.phead{padding:13px 18px 11px;border-bottom:1px solid var(--edge-soft);display:flex;
+  flex-wrap:wrap;gap:9px 18px;align-items:baseline}
+.ptag{font-family:var(--mono);font-size:13px;font-weight:600}
+.psub{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.stat{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:var(--panel-2);
+  border-radius:3px;padding:3px 8px;margin-left:auto}
+.stat b{color:var(--ink);font-weight:600}
+.svgwrap{overflow-x:auto}
+svg{display:block;width:100%;height:auto;min-width:840px}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;
+  font-variant-numeric:tabular-nums}
+th{text-align:right;padding:9px 11px;color:var(--muted);font-weight:500;font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--edge)}
+th:first-child,td:first-child{text-align:left}
+td{text-align:right;padding:8px 11px;border-bottom:1px solid var(--edge-soft);color:var(--ink-2)}
+td.k{color:var(--ink);font-weight:600}
+tr.you td{color:var(--ink);font-weight:600}
+.tblwrap{background:var(--panel);border:1px solid var(--edge);border-radius:4px;
+  padding:4px 16px 12px;overflow-x:auto}
+footer{border-top:1px solid var(--edge);padding-top:18px;font-size:12.5px;color:var(--muted)}
+footer code{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">D399 · the next two constructions · GME 2019-08-28 → 2020-09-08</div>
+  <h1>Why They All Fragment</h1>
+  <p>The hull was rejected for anchoring on ancient history. The next two by score do the opposite
+  and fail for the opposite reason — they chop the series into pieces far too short to be
+  trendlines. Same bars, same axes, your lines on top for scale.</p>
+</header>
+
+<div class="callout">
+  <p><b>Every construction that scores well produces roughly four times too many lines, each
+  roughly five times too short.</b> That is not a coincidence between two methods; it is what the
+  score rewards. Per-bar gradient agreement is completely indifferent to whether a gradient comes
+  from one 46-bar line or from five 9-bar ones.</p>
+  <p><b>It is the same root cause as the null failure.</b> The metric measures the slope
+  <i>marginal</i>, not the structure — so fragmenting is free, and a construction can win by
+  producing the right spread of slopes without ever committing to a line.</p>
+</div>
+
+<div class="tblwrap"><table id="tbl"></table></div>
+
+<div id="panels"></div>
+
+<footer>
+  GME daily, <code>us_shorts_daily_raw</code> · log price axis · segmentation from
+  <code>scripts/d399_alt_segment.py</code>, two-pivot from
+  <code>scripts/d399_alt_pivotpair.py</code>, ground truth
+  <code>data/d399_drawn_ground_truth.json</code>. Nothing here is scored or admitted.
+</footer>
+</div>
+
+<script id="chart-data" type="application/json">{"n":260,"dates":["2019-08-28","2019-08-29","2019-08-30","2019-09-03","2019-09-04","2019-09-05","2019-09-06","2019-09-09","2019-09-10","2019-09-11","2019-09-12","2019-09-13","2019-09-16","2019-09-17","2019-09-18","2019-09-19","2019-09-20","2019-09-23","2019-09-24","2019-09-25","2019-09-26","2019-09-27","2019-09-30","2019-10-01","2019-10-02","2019-10-03","2019-10-04","2019-10-07","2019-10-08","2019-10-09","2019-10-10","2019-10-11","2019-10-14","2019-10-15","2019-10-16","2019-10-17","2019-10-18","2019-10-21","2019-10-22","2019-10-23","2019-10-24","2019-10-25","2019-10-28","2019-10-29","2019-10-30","2019-10-31","2019-11-01","2019-11-04","2019-11-05","2019-11-06","2019-11-07","2019-11-08","2019-11-11","2019-11-12","2019-11-13","2019-11-14","2019-11-15","2019-11-18","2019-11-19","2019-11-20","2019-11-21","2019-11-22","2019-11-25","2019-11-26","2019-11-27","2019-11-29","2019-12-02","2019-12-03","2019-12-04","2019-12-05","2019-12-06","2019-12-09","2019-12-10","2019-12-11","2019-12-12","2019-12-13","2019-12-16","2019-12-17","2019-12-18","2019-12-19","2019-12-20","2019-12-23","2019-12-24","2019-12-26","2019-12-27","2019-12-30","2019-12-31","2020-01-02","2020-01-03","2020-01-06","2020-01-07","2020-01-08","2020-01-09","2020-01-10","2020-01-13","2020-01-14","2020-01-15","2020-01-16","2020-01-17","2020-01-21","2020-01-22","2020-01-23","2020-01-24","2020-01-27","2020-01-28","2020-01-29","2020-01-30","2020-01-31","2020-02-03","2020-02-04","2020-02-05","2020-02-06","2020-02-07","2020-02-10","2020-02-11","2020-02-12","2020-02-13","2020-02-14","2020-02-18","2020-02-19","2020-02-20","2020-02-21","2020-02-24","2020-02-25","2020-02-26","2020-02-27","2020-02-28","2020-03-02","2020-03-03","2020-03-04","2020-03-05","2020-03-06","2020-03-09","2020-03-10","2020-03-11","2020-03-12","2020-03-13","2020-03-16","2020-03-17","2020-03-18","2020-03-19","2020-03-20","2020-03-23","2020-03-24","2020-03-25","2020-03-26","2020-03-27","2020-03-30","2020-03-31","2020-04-01","2020-04-02","2020-04-03","2020-04-06","2020-04-07","2020-04-08","2020-04-09","2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17","2020-04-20","2020-04-21","2020-04-22","2020-04-23","2020-04-24","2020-04-27","2020-04-28","2020-04-29","2020-04-30","2020-05-01","2020-05-04","2020-05-05","2020-05-06","2020-05-07","2020-05-08","2020-05-11","2020-05-12","2020-05-13","2020-05-14","2020-05-15","2020-05-18","2020-05-19","2020-05-20","2020-05-21","2020-05-22","2020-05-26","2020-05-27","2020-05-28","2020-05-29","2020-06-01","2020-06-02","2020-06-03","2020-06-04","2020-06-05","2020-06-08","2020-06-09","2020-06-10","2020-06-11","2020-06-12","2020-06-15","2020-06-16","2020-06-17","2020-06-18","2020-06-19","2020-06-22","2020-06-23","2020-06-24","2020-06-25","2020-06-26","2020-06-29","2020-06-30","2020-07-01","2020-07-02","2020-07-06","2020-07-07","2020-07-08","2020-07-09","2020-07-10","2020-07-13","2020-07-14","2020-07-15","2020-07-16","2020-07-17","2020-07-20","2020-07-21","2020-07-22","2020-07-23","2020-07-24","2020-07-27","2020-07-28","2020-07-29","2020-07-30","2020-07-31","2020-08-03","2020-08-04","2020-08-05","2020-08-06","2020-08-07","2020-08-10","2020-08-11","2020-08-12","2020-08-13","2020-08-14","2020-08-17","2020-08-18","2020-08-19","2020-08-20","2020-08-21","2020-08-24","2020-08-25","2020-08-26","2020-08-27","2020-08-28","2020-08-31","2020-09-01","2020-09-02","2020-09-03","2020-09-04","2020-09-08"],"open":[0.925,0.9825,1.065,0.9925,0.97,1.02,1.06,1.0875,1.2175,1.0475,1.15,1.155,1.075,1.075,1.0825,1.16,1.1475,1.17,1.285,1.2725,1.2975,1.3125,1.3575,1.41,1.3875,1.325,1.3575,1.37,1.3575,1.3125,1.255,1.285,1.33,1.4,1.395,1.4725,1.5075,1.495,1.4825,1.5825,1.625,1.58,1.595,1.5525,1.44,1.4075,1.3625,1.475,1.47,1.475,1.545,1.5425,1.5125,1.5075,1.4775,1.4875,1.5,1.4625,1.3925,1.385,1.365,1.3975,1.4175,1.5075,1.525,1.5825,1.5875,1.51,1.5425,1.58,1.5975,1.6625,1.5725,1.3125,1.365,1.3675,1.3475,1.375,1.515,1.5525,1.515,1.5125,1.4125,1.3675,1.355,1.47,1.52,1.535,1.5525,1.45,1.4425,1.3725,1.455,1.39,1.3575,1.195,1.165,1.1525,1.145,1.1875,1.1375,1.1375,1.16,1.05,1.075,1.055,1.025,0.9775,0.97,1.0075,1.0375,1.05,1.0275,0.9625,0.995,1.0325,1.03,1.0275,1.0025,1.015,1.04,1.03,0.975,0.9425,0.895,0.8075,0.835,0.9,0.97,0.9275,0.925,0.96,0.8975,0.985,1.035,0.925,1.0325,0.9825,1.1,1.025,0.9275,1.02,0.895,0.9875,1.0375,1.06,1.235,1.055,0.9075,0.8625,0.815,0.7125,0.715,0.8475,0.8075,0.9,1.0625,1.3025,1.415,1.28,1.305,1.2125,1.3075,1.285,1.1875,1.195,1.2125,1.48,1.4575,1.4675,1.4125,1.46,1.3875,1.35,1.2075,1.22,1.23,1.195,1.135,1.0375,1.0125,1.1,1.145,1.125,1.1125,1.115,1.085,1.1425,1.1875,1.0825,1.03,1.0675,1.06,1.11,1.0725,1.07,1.25,1.195,1.16,1.15,1.125,1.2375,1.135,1.1675,1.2375,1.1975,1.2375,1.2075,1.0825,1.12,1.0875,1.0825,1.0775,1.1225,1.0775,1.05,1.025,1.0675,1.05,1.0875,1.055,1.0325,1.0475,1.04,0.9875,0.975,1.005,1.0225,1.015,1.005,0.99,0.985,1.0,1.015,1.0075,1.0325,1.125,1.15,1.0975,1.05,1.1075,1.1,1.13,1.15,1.195,1.1525,1.2,1.155,1.15,1.275,1.22,1.2425,1.2775,1.325,1.4425,1.825,1.95,1.97,1.945,1.8875],"high":[0.9925,1.0725,1.09,1.0175,1.0,1.06,1.09,1.23,1.275,1.2375,1.2025,1.1925,1.1175,1.085,1.1725,1.1675,1.2,1.3,1.375,1.3875,1.335,1.3625,1.41,1.455,1.3875,1.37,1.39,1.395,1.36,1.325,1.2875,1.3725,1.3975,1.4775,1.4775,1.5125,1.5125,1.54,1.61,1.655,1.6375,1.6075,1.6225,1.5625,1.4575,1.4225,1.5,1.505,1.55,1.5475,1.58,1.57,1.5225,1.5175,1.4925,1.5275,1.5025,1.4625,1.415,1.385,1.395,1.4625,1.515,1.565,1.5975,1.5975,1.615,1.545,1.6225,1.63,1.67,1.73,1.635,1.4525,1.4275,1.405,1.3975,1.52,1.5675,1.56,1.555,1.5175,1.4175,1.3775,1.495,1.5625,1.5975,1.6175,1.5625,1.4775,1.4575,1.4625,1.455,1.4,1.4025,1.25,1.1825,1.1775,1.1875,1.1875,1.16,1.16,1.16,1.0875,1.075,1.08,1.03,0.985,0.995,1.0625,1.1025,1.075,1.0325,1.025,1.06,1.1275,1.065,1.0475,1.02,1.0675,1.075,1.045,0.9825,0.9475,0.905,0.9075,0.93,0.9625,0.9725,0.9575,0.9975,1.0175,0.9925,1.065,1.0625,1.01,1.1625,1.1425,1.1625,1.0625,1.05,1.02,0.965,1.0525,1.1225,1.1775,1.2725,1.0675,0.95,0.8725,0.8375,0.735,0.8,0.86,0.9175,1.0625,1.19,1.6175,1.4175,1.36,1.32,1.475,1.325,1.2925,1.2225,1.2125,1.4975,1.51,1.5225,1.495,1.545,1.4825,1.4075,1.35,1.2325,1.2975,1.24,1.23,1.135,1.0475,1.1125,1.1575,1.1875,1.1725,1.1625,1.1225,1.1525,1.1775,1.19,1.105,1.09,1.0775,1.13,1.18,1.1025,1.285,1.25,1.3825,1.225,1.195,1.1925,1.2375,1.2075,1.2375,1.27,1.2375,1.2475,1.21,1.135,1.125,1.13,1.1275,1.125,1.1275,1.085,1.0625,1.0725,1.08,1.095,1.1375,1.0775,1.0725,1.05,1.0575,1.015,1.0225,1.03,1.07625,1.0575,1.03,1.01225,1.045,1.0575,1.04,1.0625,1.18437,1.19,1.16375,1.1,1.1425,1.1425,1.1575,1.1775,1.2075,1.195,1.2175,1.21,1.17,1.4,1.2825,1.3125,1.305,1.34498,1.39125,1.7875,1.955,2.0125,2.1125,1.98,2.07],"low":[0.9175,0.9375,0.98,0.915,0.9625,1.0175,1.035,1.0875,1.1275,0.9925,1.1075,1.0925,1.0675,1.0325,1.0825,1.105,1.125,1.1525,1.245,1.27,1.27,1.305,1.35,1.3725,1.31,1.3075,1.3425,1.3525,1.29,1.24,1.24,1.285,1.305,1.3975,1.395,1.45,1.4425,1.455,1.4825,1.5575,1.5075,1.5625,1.5425,1.4475,1.38,1.3275,1.3575,1.4425,1.465,1.455,1.51,1.5125,1.4425,1.4675,1.4525,1.475,1.4625,1.4025,1.3625,1.34,1.3375,1.375,1.4075,1.5025,1.505,1.56,1.5225,1.4825,1.53,1.56,1.5975,1.5475,1.53,1.295,1.3525,1.31,1.3475,1.3725,1.4825,1.5075,1.49,1.385,1.36,1.3125,1.3475,1.44,1.4975,1.5175,1.46,1.4,1.36,1.3525,1.37,1.345,1.3325,1.1325,1.1375,1.13,1.1275,1.1375,1.115,1.115,1.0625,1.04,1.045,1.0325,0.97,0.9575,0.9625,0.9925,1.035,1.035,0.9425,0.935,0.9875,1.0175,1.0175,1.005,0.99,0.98,1.0275,0.9975,0.925,0.8875,0.84,0.795,0.835,0.8475,0.875,0.865,0.8975,0.94,0.875,0.95,1.0,0.87,0.9625,0.975,1.0275,0.875,0.8875,0.9125,0.875,0.9725,1.01,1.06,1.0375,0.9125,0.875,0.78,0.7125,0.6425,0.7075,0.775,0.8,0.8725,1.04,1.285,1.225,1.22,1.1075,1.195,1.19,1.2075,1.145,1.165,1.2025,1.265,1.3625,1.41,1.3625,1.35,1.3375,1.225,1.1625,1.205,1.1875,1.115,1.0175,0.99,1.01,1.09,1.0925,1.085,1.1,1.0325,1.0825,1.09,1.075,1.0125,1.005,1.015,1.05,1.0925,1.0225,1.0675,1.1375,1.17,1.045,1.0975,1.105,1.1275,1.1325,1.1625,1.1725,1.18,1.2,1.095,1.075,1.0675,1.075,1.05,1.0775,1.0725,1.0475,1.015,1.0075,1.0325,1.045,1.065,1.0175,1.0325,1.0225,0.985,0.9425,0.97,0.98,1.015,1.0025,0.9875,0.98,0.98,0.9925,0.9975,0.99875,1.0325,1.06125,1.09502,1.015,1.045,1.085,1.09,1.12415,1.13625,1.13875,1.10875,1.16,1.1275,1.14875,1.14,1.22,1.22998,1.255,1.30375,1.4225,1.6925,1.7775,1.81,1.7925,1.87],"close":[0.97,1.0575,0.9925,0.9525,0.995,1.0575,1.0775,1.19,1.2725,1.1475,1.145,1.1025,1.0875,1.0825,1.15,1.11,1.175,1.255,1.2525,1.3,1.32,1.335,1.38,1.395,1.33,1.355,1.3875,1.3725,1.3075,1.2475,1.2625,1.3425,1.395,1.4025,1.47,1.5075,1.485,1.4825,1.5975,1.6075,1.605,1.5875,1.5475,1.4525,1.4325,1.36,1.46,1.4625,1.4775,1.5225,1.555,1.5225,1.505,1.48,1.485,1.495,1.47,1.405,1.375,1.365,1.375,1.415,1.5075,1.525,1.5875,1.585,1.5425,1.53,1.6075,1.6,1.67,1.5825,1.6275,1.3825,1.395,1.3625,1.375,1.515,1.54,1.515,1.4975,1.4025,1.36,1.35,1.475,1.5325,1.52,1.5775,1.47,1.4625,1.38,1.43,1.3875,1.3575,1.3575,1.1775,1.1525,1.155,1.1875,1.1475,1.14,1.155,1.08,1.07,1.0525,1.0325,0.9825,0.96,0.9875,1.0175,1.045,1.035,0.9525,0.985,1.005,1.0475,1.0275,1.005,1.015,1.0375,1.035,1.01,0.925,0.89,0.8475,0.8675,0.9,0.9575,0.9075,0.9425,0.99,0.98,0.925,1.0575,1.035,0.995,1.1475,1.0925,1.0575,0.9425,1.0475,0.94,0.9525,1.04,1.0425,1.1025,1.055,0.9125,0.875,0.8125,0.7125,0.7,0.7725,0.8175,0.8525,0.9725,1.185,1.4875,1.3175,1.2575,1.22,1.4025,1.195,1.2225,1.175,1.1925,1.455,1.41,1.51,1.4325,1.5125,1.37,1.3475,1.2325,1.2175,1.245,1.19,1.135,1.0525,1.0325,1.055,1.145,1.11,1.1075,1.11,1.045,1.105,1.1725,1.0825,1.015,1.0325,1.045,1.11,1.1175,1.035,1.2525,1.24,1.2675,1.0925,1.18,1.1725,1.16,1.19,1.2375,1.22,1.2175,1.2075,1.1025,1.115,1.0875,1.095,1.085,1.11,1.0725,1.06,1.0225,1.065,1.0525,1.085,1.065,1.02,1.0475,1.0425,0.99,0.9625,1.0025,1.0275,1.0275,1.0075,1.0025,0.985,1.015,1.025,1.0025,1.0375,1.1075,1.1575,1.1075,1.04,1.0825,1.0875,1.13,1.16,1.1875,1.1575,1.2025,1.18,1.1525,1.2575,1.2175,1.245,1.2775,1.3125,1.3475,1.67,1.9125,1.9275,1.955,1.9125,1.925],"drawn":[{"kind":"support","i0":3,"i1":60,"date0":"2019-09-03","date1":"2019-11-21","p0":0.915,"p1":1.3375,"g_per_bar":0.00666,"annualised":4.35687},{"kind":"support","i0":106,"i1":151,"date0":"2020-01-30","date1":"2020-04-03","p0":0.97,"p1":0.6425,"g_per_bar":-0.00915,"annualised":-0.90042},{"kind":"support","i0":179,"i1":224,"date0":"2020-05-14","date1":"2020-07-20","p0":0.99,"p1":0.9425,"g_per_bar":-0.00109,"annualised":-0.24069},{"kind":"support","i0":239,"i1":249,"date0":"2020-08-10","date1":"2020-08-24","p0":1.045,"p1":1.14,"g_per_bar":0.0087,"annualised":7.95925},{"kind":"resistance","i0":8,"i1":40,"date0":"2019-09-10","date1":"2019-10-24","p0":1.275,"p1":1.6375,"g_per_bar":0.00782,"annualised":6.17439},{"kind":"resistance","i0":87,"i1":138,"date0":"2020-01-02","date1":"2020-03-17","p0":1.6175,"p1":1.1625,"g_per_bar":-0.00648,"annualised":-0.80448},{"kind":"resistance","i0":157,"i1":235,"date0":"2020-04-14","date1":"2020-08-04","p0":1.6175,"p1":1.18437,"g_per_bar":-0.004,"annualised":-0.63466}],"seg":{"cfg":"slide / abs / tau=0.08 / carry=3 / min_piv=5 / delta-gate","sides":{"support":{"line":[0.9175,0.90612,0.89488,0.88378,0.87281,0.86199,null,null,null,null,null,null,null,null,null,null,1.10211,1.1092,1.11634,1.12353,1.13076,1.13804,1.14536,1.15274,1.16016,1.16763,1.17514,1.18271,1.19032,1.19798,1.20569,1.21345,1.22126,1.22912,1.23704,1.245,1.25301,1.26108,1.2692,1.27737,1.28559,1.29386,1.30219,1.31057,1.31901,1.3275,1.33604,1.34464,1.38737,1.39802,1.40875,1.41956,1.43046,1.44144,1.4525,1.28449,1.29492,1.30544,1.31604,1.32673,1.3375,1.34836,1.35931,null,null,null,null,null,null,null,1.26851,1.2767,1.28494,1.29324,1.30159,1.31,null,null,null,null,null,null,null,null,null,null,1.01717,1.01424,1.01133,1.00842,1.00552,1.00263,0.99975,0.99688,0.99401,0.99115,0.9883,0.98546,0.98263,0.97981,0.97699,0.97418,0.97138,0.96859,0.9658,0.96303,0.96026,0.9575,0.95475,0.952,null,null,null,null,null,null,0.86869,0.86017,0.85174,0.8434,0.83513,0.82695,0.81884,0.81082,0.80287,0.795,0.78721,0.77949,0.87388,0.865,0.85621,0.84751,0.83889,0.83037,0.82193,0.81357,0.8053,0.79712,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.02672,1.0225,1.01829,1.0141,1.00993,1.00577,1.00164,0.99751,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"segments":[{"i0":0,"i1":5,"g":-0.01248,"bars":6,"annualised":-0.95696},{"i0":16,"i1":47,"g":0.00642,"bars":32,"annualised":4.03746},{"i0":48,"i1":54,"g":0.00765,"bars":7,"annualised":5.86771},{"i0":55,"i1":62,"g":0.00809,"bars":8,"annualised":6.67706},{"i0":70,"i1":75,"g":0.00644,"bars":6,"annualised":4.06461},{"i0":86,"i1":109,"g":-0.00288,"bars":24,"annualised":-0.51587},{"i0":116,"i1":127,"g":-0.00985,"bars":12,"annualised":-0.91642},{"i0":128,"i1":137,"g":-0.01022,"bars":10,"annualised":-0.9238},{"i0":193,"i1":200,"g":-0.00412,"bars":8,"annualised":-0.64621}],"n_segments":9,"bars_on":113,"median_len":8.0},"resistance":{"line":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.39,1.40572,1.42162,1.43769,null,null,null,null,null,null,null,null,null,null,null,null,1.6225,1.63881,1.65528,1.67192,1.68872,1.7057,1.72284,1.74016,1.75765,1.77532,1.79316,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.54462,1.55031,1.55602,1.56175,1.5675,1.57327,1.57907,null,null,null,null,null,null,null,null,null,1.46089,1.4625,1.46412,1.46573,1.46735,1.46897,1.4706,1.47222,1.47385,1.47548,1.47711,1.47874,1.48037,1.48201,1.48365,1.48528,1.48693,1.48857,1.49021,1.49186,1.49351,1.49516,1.49681,null,null,null,null,null,1.09799,1.08644,1.075,1.06368,1.05249,1.61227,1.59577,1.57943,1.56326,1.54726,1.53142,1.51574,1.50023,1.48487,1.46967,1.45462,1.43973,1.425,1.41041,1.39597,1.38168,1.36754,1.35354,1.33968,1.32597,1.31239,1.29896,1.28566,1.2725,1.25947,1.24658,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.47696,1.48821,1.49956,1.51098,1.5225,1.5341,1.5458,1.55758,1.56945,1.35,1.35955,1.36917,1.37886,1.38862,1.39845,1.40834,1.41831,1.42835,1.43845,1.44863,1.45888,null,null,null,null,null,null,1.4698,1.45487,1.4401,1.42548,1.41101,1.39668,1.3825,1.36846,1.35457,null,null,null,null,null,null,null,1.21,1.20586,1.20172,1.19761,1.19351,1.18942,1.18534,1.18128,1.17724,1.1732,1.16918,1.16518,1.16119,1.15721,1.15325,1.09811,1.0937,1.08931,1.08494,1.08059,1.07625,1.07193,1.06763,1.22221,1.21678,1.21138,1.206,1.20064,1.19531,1.19,1.18472,1.17945,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"segments":[{"i0":26,"i1":29,"g":0.01124,"bars":4,"annualised":16.00889},{"i0":42,"i1":52,"g":0.01,"bars":11,"annualised":11.43252},{"i0":74,"i1":80,"g":0.00368,"bars":7,"annualised":1.52549},{"i0":90,"i1":112,"g":0.0011,"bars":23,"annualised":0.32084},{"i0":118,"i1":122,"g":-0.01058,"bars":5,"annualised":-0.93053},{"i0":123,"i1":148,"g":-0.01029,"bars":26,"annualised":-0.9252},{"i0":164,"i1":172,"g":0.00759,"bars":9,"annualised":5.77562},{"i0":173,"i1":184,"g":0.00705,"bars":12,"annualised":4.91198},{"i0":191,"i1":199,"g":-0.01021,"bars":9,"annualised":-0.92359},{"i0":207,"i1":221,"g":-0.00343,"bars":15,"annualised":-0.57882},{"i0":222,"i1":229,"g":-0.00402,"bars":8,"annualised":-0.63707},{"i0":230,"i1":238,"g":-0.00445,"bars":9,"annualised":-0.67425}],"n_segments":12,"bars_on":138,"median_len":9.0}}},"pair":{"cfg":"b_far / refresh / tol=0% / lookback=42","sides":{"support":{"line":[null,null,null,null,null,null,0.94998,0.96193,0.97404,0.98629,0.99871,1.01127,null,null,null,null,1.07135,1.08462,1.09806,1.11166,1.12544,1.13938,1.15349,1.16778,1.18225,1.1969,1.21173,1.22674,1.24193,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.36326,1.37539,1.38763,1.39998,1.41244,1.42501,1.43769,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.3178,1.31957,1.32134,1.32311,1.32489,1.32667,1.32845,1.33024,1.33202,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.93233,0.92408,0.91591,0.90782,0.89979,0.89183,0.92395,0.92029,0.91665,0.91303,0.90942,0.90582,0.90224,null,null,null,null,null,0.77074,0.76281,0.75497,0.74721,0.73953,0.73193,0.7244,0.71696,0.70959,0.70229,0.89385,0.90195,0.91011,0.91835,0.92667,0.93506,0.94353,0.95208,0.9607,null,null,null,null,null,null,null,0.6269,0.62179,0.61672,0.61169,0.6067,0.60175,0.59684,0.59197,0.58714,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0.93718,0.93541,0.93364,0.93188,0.93012,0.92837,0.92662,0.92487,0.92312,0.92138,0.91964,0.91791,0.91618,0.91445,1.03125,1.03672,1.04222,1.04775,1.05332,1.05891,1.06453,1.15153,1.16616,1.18097,1.19597,1.21116,1.22654,1.24212,1.2579,1.27387,1.29005,1.30643,1.32303],"segments":[{"i0":6,"i1":11,"g":0.01251,"bars":6,"annualised":22.36583},{"i0":16,"i1":28,"g":0.01231,"bars":13,"annualised":21.25907},{"i0":48,"i1":54,"g":0.00886,"bars":7,"annualised":8.32568},{"i0":86,"i1":94,"g":0.00134,"bars":9,"annualised":0.40251},{"i0":110,"i1":115,"g":-0.00888,"bars":6,"annualised":-0.89332},{"i0":116,"i1":122,"g":-0.00396,"bars":7,"annualised":-0.63165},{"i0":128,"i1":137,"g":-0.01033,"bars":10,"annualised":-0.92601},{"i0":138,"i1":146,"g":0.00902,"bars":9,"annualised":8.69691},{"i0":154,"i1":162,"g":-0.00819,"bars":9,"annualised":-0.87308},{"i0":227,"i1":240,"g":-0.00189,"bars":14,"annualised":-0.37867},{"i0":241,"i1":247,"g":0.00529,"bars":7,"annualised":2.79598},{"i0":248,"i1":259,"g":0.01262,"bars":12,"annualised":23.05655}],"n_segments":12,"bars_on":109,"median_len":9.0},"resistance":{"line":[1.06692,1.06803,1.06914,1.07025,1.07136,null,null,null,null,null,null,1.30247,1.31175,1.32111,1.33053,1.34001,1.34957,1.35919,1.36888,1.37864,1.38847,1.39837,1.40834,1.41838,1.42849,1.43868,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.69545,1.70916,1.72297,1.7369,1.75093,1.76508,1.77935,1.79373,1.80823,1.82284,1.83758,1.56014,1.55358,1.54704,1.54053,1.53405,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.7372,1.73961,1.74202,1.74444,1.74685,1.74928,1.7517,null,null,null,null,null,null,null,null,null,1.59724,1.59054,1.58387,1.57722,1.57061,1.56402,1.55746,1.55093,1.54443,1.53795,1.5315,1.52508,1.51868,1.51232,1.50597,1.49966,1.49337,1.48711,1.48087,1.47466,1.46848,1.46232,1.45618,null,null,null,null,null,1.08474,1.07085,1.05713,1.0436,1.03023,1.0358,1.02306,1.01047,0.99804,0.98576,0.97363,0.96165,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.28749,1.29252,1.29757,1.30265,1.30774,1.31286,1.31799,1.32314,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.52874,1.52335,1.51799,1.51264,1.50732,1.50201,1.49672,1.49145,1.4862,1.48096,1.47575,1.47055,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1.36553,1.35993,1.35434,1.34878,1.34324,1.33772,1.33222,1.22463,1.20987,1.19529,1.18089,1.16665,1.15259,1.1387,1.12498,1.11142,1.09803,1.08479,null,null,null,null,1.10764,1.09786,1.08817,1.07857,1.06905,1.05961,1.05026,1.04099,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"segments":[{"i0":0,"i1":4,"g":0.00104,"bars":5,"annualised":0.29897},{"i0":11,"i1":25,"g":0.0071,"bars":15,"annualised":4.99163},{"i0":42,"i1":52,"g":0.00805,"bars":11,"annualised":6.60285},{"i0":53,"i1":57,"g":-0.00422,"bars":5,"annualised":-0.65439},{"i0":74,"i1":80,"g":0.00139,"bars":7,"annualised":0.41768},{"i0":90,"i1":112,"g":-0.0042,"bars":23,"annualised":-0.65321},{"i0":118,"i1":122,"g":-0.01289,"bars":5,"annualised":-0.96114},{"i0":123,"i1":129,"g":-0.01238,"bars":7,"annualised":-0.95584},{"i0":149,"i1":156,"g":0.0039,"bars":8,"annualised":1.67368},{"i0":173,"i1":184,"g":-0.00353,"bars":12,"annualised":-0.58891},{"i0":200,"i1":206,"g":-0.00412,"bars":7,"annualised":-0.64556},{"i0":207,"i1":217,"g":-0.01213,"bars":11,"annualised":-0.9529},{"i0":222,"i1":229,"g":-0.00887,"bars":8,"annualised":-0.89294}],"n_segments":13,"bars_on":124,"median_len":8.0}}}}</script>
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById('chart-data').textContent);
+  const n = D.n;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let lo = Infinity, hi = -Infinity;
+  for (let k = 0; k < n; k++) {
+    if (D.low[k] > 0) lo = Math.min(lo, D.low[k]);
+    if (D.high[k] > 0) hi = Math.max(hi, D.high[k]);
+  }
+  for (const src of [D.seg, D.pair]) for (const s of ['support','resistance'])
+    for (const v of src.sides[s].line) if (v != null && v > 0) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
+  for (const L of D.drawn) { lo = Math.min(lo, L.p0, L.p1); hi = Math.max(hi, L.p0, L.p1); }
+  const A = Math.log(lo) - (Math.log(hi) - Math.log(lo)) * 0.06;
+  const B = Math.log(hi) + (Math.log(hi) - Math.log(lo)) * 0.06;
+  const W = 1160, H = 340, ML = 8, MR = 58, MT = 12, MB = 28;
+  const iw = W - ML - MR, ih = H - MT - MB;
+  const Y = p => MT + ih - ((Math.log(p) - A) / (B - A)) * ih;
+  const X = i => ML + (i + 0.5) * (iw / n);
+  const bw = Math.max(1.4, (iw / n) * 0.6);
+
+  let BASE = '';
+  for (let t = 0; t <= 4; t++) {
+    const p = Math.exp(A + (B - A) * t / 4), yy = Y(p);
+    BASE += `<line x1="${ML}" y1="${yy.toFixed(1)}" x2="${ML + iw}" y2="${yy.toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`
+         +  `<text x="${ML + iw + 7}" y="${(yy + 3.5).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="10">${p.toFixed(2)}</text>`;
+  }
+  for (let k = 0; k < n; k++) {
+    const o = D.open[k], h = D.high[k], l = D.low[k], c = D.close[k];
+    if ([o,h,l,c].some(v => v == null || !(v > 0))) continue;
+    BASE += `<line x1="${X(k).toFixed(1)}" y1="${Y(h).toFixed(1)}" x2="${X(k).toFixed(1)}" y2="${Y(l).toFixed(1)}" stroke="var(--wick)" stroke-width="1" opacity="0.55"/>`
+         +  `<rect x="${(X(k)-bw/2).toFixed(1)}" y="${Math.min(Y(o),Y(c)).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1,Math.abs(Y(c)-Y(o))).toFixed(1)}" fill="${c>=o?'var(--up)':'var(--down)'}" opacity="0.6"/>`;
+  }
+  for (let t = 0; t < 6; t++) {
+    const k = Math.round(t * (n - 1) / 5);
+    BASE += `<text x="${X(k).toFixed(1)}" y="${(MT+ih+20).toFixed(1)}" fill="var(--muted)" font-family="var(--mono)" font-size="10" text-anchor="middle">${esc(String(D.dates[k]).slice(0,7))}</text>`;
+  }
+
+  const drawn = () => D.drawn.map(L =>
+    `<line x1="${X(L.i0).toFixed(1)}" y1="${Y(L.p0).toFixed(1)}" x2="${X(L.i1).toFixed(1)}" y2="${Y(L.p1).toFixed(1)}" stroke="var(--human)" stroke-width="2.6" stroke-linecap="round"/>`).join('');
+
+  const series = (arr, col) => {
+    let d = '', pen = false, out = '';
+    for (let k = 0; k < n; k++) {
+      const v = arr[k];
+      if (v == null || !(v > 0)) { if (pen) { out += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" stroke-linecap="round"/>`; d=''; pen=false; } continue; }
+      d += (pen ? 'L' : 'M') + X(k).toFixed(1) + ' ' + Y(v).toFixed(1) + ' '; pen = true;
+    }
+    if (pen) out += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" stroke-linecap="round"/>`;
+    return out;
+  };
+
+  const P = [
+    { key: 'drawn', tag: 'you drew this', col: 'var(--human)', sub: '4 support + 3 resistance · median 46 / 52 bars', body: drawn(),
+      stat: `<b>7</b> lines` },
+    { key: 'seg', tag: 'piecewise segmentation', col: 'var(--seg)', sub: esc(D.seg.cfg) + ' · best of 672',
+      body: series(D.seg.sides.support.line,'var(--seg)') + series(D.seg.sides.resistance.line,'var(--seg)'),
+      stat: `<b>${D.seg.sides.support.n_segments + D.seg.sides.resistance.n_segments}</b> lines · median <b>${D.seg.sides.support.median_len}</b> / <b>${D.seg.sides.resistance.median_len}</b> bars` },
+    { key: 'pair', tag: 'chartist two-pivot line', col: 'var(--pair)', sub: esc(D.pair.cfg) + ' · best of 195',
+      body: series(D.pair.sides.support.line,'var(--pair)') + series(D.pair.sides.resistance.line,'var(--pair)'),
+      stat: `<b>${D.pair.sides.support.n_segments + D.pair.sides.resistance.n_segments}</b> lines · median <b>${D.pair.sides.support.median_len}</b> / <b>${D.pair.sides.resistance.median_len}</b> bars` }
+  ];
+  document.getElementById('panels').innerHTML = P.map(p => `<div class="panel">
+      <div class="phead"><span class="ptag" style="color:${p.col}">${p.tag}</span>
+      <span class="psub">${p.sub}</span><span class="stat">${p.stat}</span></div>
+      <div class="svgwrap"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(p.tag)}">
+        ${BASE}${p.key !== 'drawn' ? drawn().replace(/stroke-width="2.6"/g,'stroke-width="1.6" opacity="0.35"') : ''}${p.body}
+      </svg></div></div>`).join('');
+
+  const row = (name, s, r, cls) =>
+    `<tr class="${cls||''}"><td class="k">${name}</td><td>${s.n}</td><td>${s.med}</td>
+     <td>${r.n}</td><td>${r.med}</td><td>${s.n + r.n}</td></tr>`;
+  document.getElementById('tbl').innerHTML =
+    `<thead><tr><th></th><th>support lines</th><th>median bars</th>
+     <th>resistance lines</th><th>median bars</th><th>total</th></tr></thead><tbody>` +
+    row('you drew', {n:4, med:46}, {n:3, med:52}, 'you') +
+    row('segmentation', {n:D.seg.sides.support.n_segments, med:D.seg.sides.support.median_len},
+                        {n:D.seg.sides.resistance.n_segments, med:D.seg.sides.resistance.median_len}) +
+    row('two-pivot', {n:D.pair.sides.support.n_segments, med:D.pair.sides.support.median_len},
+                     {n:D.pair.sides.resistance.n_segments, med:D.pair.sides.resistance.median_len}) +
+    '</tbody>';
+})();
+</script>
