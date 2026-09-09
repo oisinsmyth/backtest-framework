@@ -3912,9 +3912,9 @@ median gap (9.87e-04), reports the worst pair, and demands exactness only where 
 
 ## 58. D280's overnight gap is not an opening-print artefact — and 17.6% of bars carry one anyway
 
-**D390**, measurement record, reusing D280's own module for fixture, signal, split and `ic_series`.
+**D402**, measurement record, reusing D280's own module for fixture, signal, split and `ic_series`.
 Pre-registration `6843a39`, result
-`docs/decisions/D390-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md`.
+`docs/decisions/D402-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md`.
 Prompted by the prop-firm research folder's own prerequisite for its C19-2 row — *"run the
 stale-price / closing-auction contamination test first"* — which had never been required of ours.
 

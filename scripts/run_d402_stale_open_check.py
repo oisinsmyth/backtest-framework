@@ -1,9 +1,10 @@
-"""D390 -- is D280's overnight gap a real repricing, or a stale opening print?
+"""D402 -- is D280's overnight gap a real repricing, or a stale opening print?
 
-    uv run python scripts/run_d390_stale_open_check.py --run
+    uv run python scripts/run_d402_stale_open_check.py --run
 
 MEASUREMENT record. Scores no cell, ranks no name, proposes no rule, admits nothing, reads no
-holdout, fetches nothing. Pre-registration 6843a39 predates this file (R8).
+holdout, fetches nothing. Pre-registration 6843a39 predates this file (R8). Pre-registered as D390 and RENUMBERED to
+D402: D390-D399 is reserved for the worktree-signal-hunt-part2 branch (fb2af62).
 
 D280 tested the dividend confound exhaustively and it survived. It never tested whether the OPENING
 PRINT IS REAL -- and gap(t+1) = open(t+1)/close(t) - 1 is formed entirely from the vendor's `open`,
@@ -55,7 +56,7 @@ _s.loader.exec_module(D280)
 
 B, C, P1, RP = D280.B, D280.C, D280.P1, D280.RP
 SPLIT_DATE = D280.SPLIT_DATE
-OUT = REPO / "data" / "d390_stale_open_check.json"
+OUT = REPO / "data" / "d402_stale_open_check.json"
 
 COMMITTED = {"ALL": -0.01531, "QUAL": -0.01255}    # [REP] -- D280's committed gap IC
 TOL_REP = 5e-4
@@ -181,7 +182,7 @@ def assert_X(O, Cl, nxt, oos, hs, h, gap):
 # ------------------------------------------------------------------------------------ run
 def run():
     t0 = time.time()
-    print("\nRUN -- D390. Reusing D280's own module for fixture, signal, split and ic_series.")
+    print("\nRUN -- D402. Reusing D280's own module for fixture, signal, split and ic_series.")
     panel, cleaned = RP.load_ragged(B.FIXTURE, B.EVENTS, fee_bps=C.FEE)
     md, hs_raw, g_lo, g_hi, i_lo, atr, warm = B.signals_ragged(panel, cleaned, 0)
     live = panel.live
@@ -292,7 +293,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", action="store_true")
     a = ap.parse_args()
-    print("D390  is D280's overnight gap a real repricing, or a stale opening print?")
+    print("D402  is D280's overnight gap a real repricing, or a stale opening print?")
     if a.run:
         run()
     else:

@@ -1,4 +1,6 @@
-# D390 PRE-REGISTRATION — is D280's overnight gap a real repricing, or a stale opening print?
+# D402 PRE-REGISTRATION — is D280's overnight gap a real repricing, or a stale opening print?
+
+**Number.** Pre-registered as `D390` and **renumbered to `D402` on 2026-09-09**. `D390-D399` is reserved for the `worktree-signal-hunt-part2` branch (`fb2af62`), which master had already stepped out of once — the D163 re-cost went D389 -> D390 -> D400. I took D390 anyway, having checked `ls docs/decisions/`, which PICKUP's own warning says is insufficient and will collide. **Master takes D400 and upward.** The commit hashes below are historical and unchanged: pre-registration `6843a39`, result `c6c63f6`.
 
 **R8: committed before the runner exists. Result separately.** A **measurement record**, like D280
 itself: it scores no cell, ranks no name, proposes no rule, admits nothing, reads no holdout, and

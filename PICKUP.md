@@ -30,6 +30,14 @@ place to start.
 > renamed files themselves; the three *"reserved D390–D399 block"* mentions in D393/D394/D395 were
 > deliberately **left alone**, since they name the block and not the study. **A leftover grep after
 > the rename shows every remaining `D390` belongs to master.** D391–D397 do not collide.
+>
+> **BOTH OF MASTER'S TWO `D390`s HAVE NOW MOVED OUT OF THE RESERVED BLOCK.** The D163 re-cost went
+> `D389 → D390 → D400`. The **D280 overnight-gap check went `D390 → D402`** on 2026-09-09 — records,
+> runner (`scripts/run_d402_stale_open_check.py`) and artifact (`data/d402_stale_open_check.json`),
+> by the same count-asserted replacement, with the nine collision-history mentions of `D390` in this
+> file deliberately left alone. **It was taken after checking `ls docs/decisions/`, which this file
+> already warned is insufficient and will collide.** Commit hashes are historical and unchanged:
+> pre-registration `6843a39`, result `c6c63f6`.
 
 **THE ONE LINE: eight candidates, zero admitted, zero holdout reads, and the chain RETIRED by the
 principal on 2026-09-09.** [D396](docs/decisions/D396-RETIREMENT-the-sign-sequence-chain.md) is the
@@ -674,7 +682,7 @@ construction:**
 
 ## 1a. THE EDGE IS ENTIRELY OVERNIGHT - [D280](docs/decisions/D280-the-forecast-precheck.md)
 
-**TESTED FOR STALE OPENING PRINTS 2026-09-09 AND IT SURVIVED — [D390](docs/decisions/D390-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md).**
+**TESTED FOR STALE OPENING PRINTS 2026-09-09 AND IT SURVIVED — [D402](docs/decisions/D402-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md).**
 The gap is formed entirely from the vendor open and that had never been checked. **17.6% of
 out-of-sample bars DO carry a detectable print artefact** — `open == prior close` exactly on
 5.84% — with a **-0.1564** gap-to-intraday reversal confined to them and **+0.0082** on the rest.

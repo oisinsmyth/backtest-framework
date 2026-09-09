@@ -1,9 +1,11 @@
-# D390 RESULT — the overnight gap SURVIVES: the contamination is real, detectable, and not where the edge lives
+# D402 RESULT — the overnight gap SURVIVES: the contamination is real, detectable, and not where the edge lives
 
 **V1 — SURVIVES, decisively.** D280's structural claim stands. The gap IC gets **stronger** on clean
 bars (−0.01746 against a committed −0.01531, **1.14×**) and is **1.8× stronger in the most liquid
 quintile** than the thinnest. **The stale-open hypothesis is refuted, and by the test designed to
 discriminate it.**
+
+**Number.** Pre-registered as `D390` and **renumbered to `D402` on 2026-09-09**. `D390-D399` is reserved for the `worktree-signal-hunt-part2` branch (`fb2af62`), which master had already stepped out of once — the D163 re-cost went D389 -> D390 -> D400. I took D390 anyway, having checked `ls docs/decisions/`, which PICKUP's own warning says is insufficient and will collide. **Master takes D400 and upward.** The commit hashes below are historical and unchanged: pre-registration `6843a39`, result `c6c63f6`.
 
 Pre-registration `6843a39` predates this file (R8). Measurement only: no cell scored, nothing
 admitted, no holdout read, nothing fetched. Reuses D280's own module for fixture, signal, split and
