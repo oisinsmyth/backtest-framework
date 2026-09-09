@@ -1,0 +1,26 @@
+{
+ "what": "TRENDLINES DRAWN BY HAND BY THE PRINCIPAL. Ground truth, not a fit.",
+ "drawn_by": "the principal, 2026-09-09, on the blank chart at artifact 94caf801-7b29-4398-b5dc-666071a71ae5",
+ "symbol": "GME",
+ "fixture": "us_shorts_daily_raw.csv.gz via load_ragged(dividend_bound=True), keep_v2 floor, F0",
+ "start_bar": 2429,
+ "n": 260,
+ "first_date": "2019-08-28",
+ "last_date": "2020-09-08",
+ "axis": "log price; g_per_bar is d(log price)/d(bar), annualised = expm1(252 * g)",
+ "snap": "endpoints snapped to the bar's wick -- low for support, high for resistance",
+ "principal_note": "'I may have misclicked slightly, but it is the best I could do.' Treated as ground truth with that caveat: the endpoints carry click precision, roughly one bar and one tick.",
+ "USE_AND_LIMIT": "These lines were drawn with the WHOLE WINDOW IN VIEW. Every construction scored against them is CAUSAL and sees only bars through t. This is therefore an ORACLE benchmark in D394's sense -- it bounds what a causal rule could recover and measures how close one gets. IT CANNOT SAY A CAUSAL RULE SHOULD HAVE GOT THERE, and a construction that falls short is not thereby refuted.",
+ "STANDING": "The principal's instruction: 'even if our construction cant accomplish this it doesn't mean another one cant get close'. This file is therefore INDEPENDENT of D399 and of any branch in it. It is scored by scripts/d399_score_against_drawn.py, which takes the construction as an argument, so a future construction can be measured against the same target without touching the target.",
+ "lines": [
+  {"kind": "support",    "i0": 3,   "i1": 60,  "date0": "2019-09-03", "date1": "2019-11-21", "p0": 0.915,   "p1": 1.3375,  "g_per_bar": 0.006660235324467372,   "annualised": 4.356867066981657},
+  {"kind": "support",    "i0": 106, "i1": 151, "date0": "2020-01-30", "date1": "2020-04-03", "p0": 0.97,    "p1": 0.6425,  "g_per_bar": -0.009153983438401191,  "annualised": -0.9004209847127734},
+  {"kind": "support",    "i0": 179, "i1": 224, "date0": "2020-05-14", "date1": "2020-07-20", "p0": 0.99,    "p1": 0.9425,  "g_per_bar": -0.0010926449734771058, "annualised": -0.2406910482203386},
+  {"kind": "support",    "i0": 239, "i1": 249, "date0": "2020-08-10", "date1": "2020-08-24", "p0": 1.045,   "p1": 1.14,    "g_per_bar": 0.008701137698962974,   "annualised": 7.9592516306953},
+  {"kind": "resistance", "i0": 8,   "i1": 40,  "date0": "2019-09-10", "date1": "2019-10-24", "p0": 1.275,   "p1": 1.6375,  "g_per_bar": 0.007819515934902516,   "annualised": 6.174391972853765},
+  {"kind": "resistance", "i0": 87,  "i1": 138, "date0": "2020-01-02", "date1": "2020-03-17", "p0": 1.6175,  "p1": 1.1625,  "g_per_bar": -0.006476644880657728,  "annualised": -0.80448428319542},
+  {"kind": "resistance", "i0": 157, "i1": 235, "date0": "2020-04-14", "date1": "2020-08-04", "p0": 1.6175,  "p1": 1.18437, "g_per_bar": -0.0039957789711417896, "annualised": -0.634663451933072}
+ ],
+ "saved_at": "2026-09-09T10:57:43.146Z",
+ "source_version": 25
+}

@@ -1,0 +1,46 @@
+{
+ "ground_truth": "data\\d399_drawn_ground_truth.json",
+ "symbol": "GME",
+ "start_bar": 2429,
+ "n": 260,
+ "branch": "E",
+ "min_piv": 5,
+ "h_annual_pct": 4.0,
+ "h": 0.00015563775060825912,
+ "delta": 0.001,
+ "note": "ORACLE benchmark: the drawn lines have hindsight, the construction is causal. Falling short of it does not refute the construction.",
+ "sides": {
+  "support": {
+   "human_bars_on": 161,
+   "machine_bars_on": 41,
+   "human_share": 0.6192,
+   "machine_share": 0.1577,
+   "overlap_bars": 22,
+   "recall": 0.1366,
+   "precision": 0.5366,
+   "human_segments": 4,
+   "machine_segments": 4,
+   "slope_abs_err_median": 0.001679,
+   "slope_abs_err_p90": 0.012637,
+   "sign_agreement": 0.8182,
+   "median_machine_ann": -0.5026,
+   "median_human_ann": -0.2407
+  },
+  "resistance": {
+   "human_bars_on": 164,
+   "machine_bars_on": 66,
+   "human_share": 0.6308,
+   "machine_share": 0.2538,
+   "overlap_bars": 28,
+   "recall": 0.1707,
+   "precision": 0.4242,
+   "human_segments": 3,
+   "machine_segments": 4,
+   "slope_abs_err_median": 0.004097,
+   "slope_abs_err_p90": 0.008594,
+   "sign_agreement": 0.8929,
+   "median_machine_ann": -0.9304,
+   "median_human_ann": -0.8045
+  }
+ }
+}
