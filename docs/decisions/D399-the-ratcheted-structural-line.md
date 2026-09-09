@@ -349,13 +349,24 @@ reachable within the session. A daily bar cannot resolve any of that; 26 bars a 
 ## 8. Assertions the runner must carry
 
 - **[S2]** the state's slope grids reproduce `run_uptrend_onset`'s path bit-identically at δ = 0
-  and `h` = ∞ — the pin D398 already carries, re-asserted so this record's ragged scatter is proved
+  and `h` = 0 — the pin D398 already carries, re-asserted so this record's ragged scatter is proved
   and not assumed.
-- **[D0]** at δ = 0 and `h` = ∞ the state reproduces **D398 §1 bar-for-bar** on all four cells.
-- **[R]** the ratchet is **monotone between re-anchors**: on every non-re-anchor bar
-  `L[t] − L[t−1] == G` exactly (the line advances at the held gradient) **and** the offset
-  `c_held` moves only in the widening direction — both asserted over the whole grid, so a line
-  that crept toward price or that stopped advancing would raise.
+- **[D0]** at δ = 0 and `h` = 0 the state reproduces **D398 §1 bar-for-bar** on all four cells.
+- **[R]** the ratchet is **monotone between re-anchors**: the offset `c_held = L[t] − G·t` moves
+  only in the widening direction (non-increasing for the low line, non-decreasing for the high
+  line), asserted over the whole grid, so a line that crept toward price would raise.
+
+> **TWO CORRECTIONS TO THIS SECTION, made in writing before the runner existed rather than
+> silently:**
+>
+> 1. **`h` = ∞ was written where `h` = 0 is meant**, in both [S2] and [D0]. `h` = ∞ means
+>    `|g − G| > h` is never true, which **freezes the gradient at its first value forever** — the
+>    opposite of the control. **`h` = 0 re-anchors every bar, so `G ≡ g`**, which is what
+>    reproduces D398 and S2.
+> 2. **[R]'s "`L[t] − L[t−1] == G` exactly" was wrong** and contradicted §3c's own `min`/`max`. The
+>    line advances at exactly `G` **only when the fresh fit does not widen it further**; when the
+>    ratchet binds, `L` drops below `L[t−1] + G`. **The invariant that actually holds is the offset
+>    monotonicity above**, and that is what is asserted.
 - **[L]** the state, the line and the event at bar `t` recomputed from a panel **truncated at `t`**
   equal their full-panel values; `lag_audit.raises_on_broken` on a shifted grid.
 - **[X]** the self-test RAISES on (a) a ratchet allowed to move toward price and (b) an event
