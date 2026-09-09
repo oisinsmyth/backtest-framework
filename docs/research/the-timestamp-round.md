@@ -150,7 +150,10 @@ so probing it alone yields the false conclusion that MIDAS stopped; and **a sche
 stable across the archive.**
 
 **Kenneth French's daily factors** — 1926 to 2026-07-31, header reading *"created by using the 202607
-CRSP database"*, i.e. survivorship-free. **Aggregate only.**
+CRSP database"*. **Aggregate only.** *(The "i.e. survivorship-free" gloss originally written here was
+an INFERENCE from that header, not a quotation from it — round 5's `J3` censused `surviv` across four
+daily files and the landing page and found **zero hits in all five**. The property is inherited from
+CRSP and is nowhere asserted by French. Corrected 2026-09-10.)*
 
 **Two one-call items that are worth more than the lane's verdict.** The vendor's own documentation
 describes **`LISTING_STATUS` with a `date=` parameter that "travels back in time"** — **a

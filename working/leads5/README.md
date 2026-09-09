@@ -158,10 +158,23 @@ is partly already in the return series.
 
 ## J3 — validate the fixture against survivorship-free public aggregates *(data)*
 
-**Created by round 4's `H5` four hours ago.** It found that **Kenneth French's daily factor library
-is free, runs 1926 to 2026-07-31, and its own header declares it built from a survivorship-free
-database** — but that it is **aggregate only**. For a *fixture-level sanity check*, aggregate-only is
+**Created by round 4's `H5`.** It found that **Kenneth French's daily factor library is free, runs
+1926 to 2026-07-31, and is aggregate only.** For a *fixture-level sanity check*, aggregate-only is
 not a limitation. **It is exactly the right shape.**
+
+> **CORRECTED 2026-09-10 BY `J3`, AND THE ERROR WAS MINE.** This section as first written said the
+> library's **"own header declares it built from a survivorship-free database."** **IT DOES NOT.**
+> `J3` censused the string `surviv` across four daily files and the library landing page — **zero
+> hits in all five.** What the headers actually say, verbatim, is *"This file was created by using
+> the 202607 CRSP database."* **The survivorship property is INHERITED FROM CRSP and is nowhere
+> asserted by French.** `H5` quoted that header correctly and drew the inference; **I promoted the
+> inference into a declaration**, here and in `J3`'s own commissioning prompt. **The lane was sent
+> out carrying my error and corrected it — which is the brief doing its job.**
+>
+> **And `J3` found something the error was hiding:** the only documented statement about names
+> leaving a French portfolio describes a convention that **CHANGED IN MAY 2015 — inside this
+> programme's window.** That is a structural break in a candidate reference series, and it belongs in
+> **`J6`'s calendar.**
 
 **The question.** Does this programme's dead-inclusive, `$5`-floored, equal-weighted universe behave
 like a published survivorship-free equal-weighted US aggregate over the same window? **If it does
