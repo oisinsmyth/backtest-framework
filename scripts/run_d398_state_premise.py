@@ -102,8 +102,30 @@ def state_grids(panel, cleaned, UO, PV):
     return g_lo, g_hi
 
 
-def states(g_lo, g_hi):
+def warm_mask(live, w):
+    """True where a name has at least `w` of its OWN live bars behind it.
+
+    WHY THIS IS NEEDED AND WHY [W] CAUGHT ITS ABSENCE. `rolling_fit` clips the window's lower
+    edge to 0 (`lo = np.clip(t - WINDOW, 0, n_bars)`), so before a name's 252nd bar it fits an
+    EXPANDING window and emits a slope as soon as MIN_PIVOTS=3 pivots exist -- possibly over
+    thirty bars. That is not "a confirmed structural trend over the past year".
+
+    S2 carries exactly this guard: `signals` zeroes `up[:, :start]` and `build` asserts
+    `WINDOW < start`. Its `start` is a PANEL-WIDE bar index, shared with S1 so both books score
+    identical bars; on a ragged panel where names begin at different times the faithful analogue
+    is PER-NAME, which is also what this record's section 2 and [W] declared."""
+    out = np.zeros_like(live)
+    for i in range(live.shape[0]):
+        at = np.flatnonzero(live[i])
+        if at.size > w:
+            out[i, at[w:]] = True
+    return out
+
+
+def states(g_lo, g_hi, warm=None):
     ok = np.isfinite(g_lo) & np.isfinite(g_hi)
+    if warm is not None:
+        ok = ok & warm
     return {"UP": (g_lo > 0) & (g_hi > 0) & ok, "DOWN": (g_lo < 0) & (g_hi < 0) & ok}
 
 
@@ -161,9 +183,19 @@ def selftest() -> int:
     assert np.isnan(s2[0, 5]), "[E] the SMA wrote a value on a bar the name was not live"
     print("    [E] with an internal hole the SMA writes only on the name's OWN live bars")
 
+    lv3 = np.ones((1, 8), bool)
+    lv3[0, 2] = False                                   # a hole: own bars are 0,1,3,4,5,6,7
+    wm = warm_mask(lv3, 3)
+    assert list(wm[0]) == [False, False, False, False, True, True, True, True], wm
+    print(f"    [W] warm_mask(w=3) with a hole at bar 2 opens at grid bar 4, "
+          f"i.e. after THREE of the name's OWN bars, not three grid bars")
+
     g_lo = np.array([[0.1, -0.1, 0.1, np.nan]])
     g_hi = np.array([[0.2, -0.2, -0.2, 0.1]])
     S = states(g_lo, g_hi)
+    Sw = states(g_lo, g_hi, np.array([[False, True, True, True]]))
+    assert not Sw["UP"][0, 0] and S["UP"][0, 0], "[W] the warm-up mask does not gate the state"
+    print("    [W] a warm-up mask removes a state bar that the unmasked call keeps")
     assert list(S["UP"][0]) == [True, False, False, False], S["UP"]
     assert list(S["DOWN"][0]) == [False, True, False, False], S["DOWN"]
     print("    [H] UP and DOWN are exclusive, and a NaN slope is in neither")
@@ -296,7 +328,7 @@ G_LO_CACHE = None
 
 
 # ------------------------------------------------------------------ the measurement
-def summarise(mask, elig, live, cohort_dead, er, band):
+def summarise(mask, elig, live, warm, cohort_dead, er, band):
     """Every quantity section 4 asks for, for one direction on one universe.
 
     EVERY GRID IS ALREADY ROW-SLICED TO THIS UNIVERSE. The first version re-indexed the full
@@ -314,11 +346,14 @@ def summarise(mask, elig, live, cohort_dead, er, band):
     lens = np.concatenate(lens_all) if lens_all else np.empty(0, int)
     bars = int(m.sum())
     denom = int((elig & live).sum())
+    addr = int((elig & live & warm).sum())
     out = dict(
         names=n_rows,
         bars_in_state=bars,
         eligible_live_bars=denom,
+        addressable_bars=addr,
         share_of_eligible=round(bars / denom, 5) if denom else None,
+        share_of_addressable=round(bars / addr, 5) if addr else None,
         episodes=int(onsets),
         names_with_an_episode=int(sum(1 for x in per_name if x > 0)),
         episode_len=dict(
@@ -332,10 +367,24 @@ def summarise(mask, elig, live, cohort_dead, er, band):
             median=float(np.median(per_name)) if per_name else None,
             max=int(max(per_name)) if per_name else None),
     )
-    # Q6: how much of the state do DEAD names carry, against their share of headcount?
+    # Q6: how much of the state do DEAD names carry?
+    #
+    # THE HEADCOUNT SHARE IS THE WRONG DENOMINATOR AND Q6 USED IT. A dead name is short-lived,
+    # and the state costs 252 of its OWN bars in warm-up before it can be in any state at all, so
+    # the dead cohort contributes far fewer ADDRESSABLE bars than names. Comparing a share of
+    # state bars against a share of NAMES therefore measures lifespan, not downtrend. The
+    # denominator that answers the design question is the dead cohort's share of eligible
+    # post-warm-up bars -- what a book could have traded -- and both are reported.
     nd = int(cohort_dead.sum())
+    addressable = elig & live & warm            # what a book could have traded at all
     out["dead_share_of_names"] = round(nd / n_rows, 4) if n_rows else None
     out["dead_share_of_state_bars"] = round(int(m[cohort_dead].sum()) / bars, 4) if bars and nd else None
+    dn = int(addressable.sum())
+    out["dead_share_of_addressable_bars"] = \
+        round(int(addressable[cohort_dead].sum()) / dn, 4) if dn and nd else None
+    if out["dead_share_of_state_bars"] is not None and out["dead_share_of_addressable_bars"]:
+        out["dead_tilt"] = round(out["dead_share_of_state_bars"] /
+                                 out["dead_share_of_addressable_bars"], 4)
 
     # retention under each overlay, and the intersection (section 3c: counts, never P&L)
     ret = {}
@@ -392,22 +441,35 @@ def main() -> int:
     t1 = time.time()
     g_lo, g_hi = state_grids(panel, cleaned, UO, PV)
     G_LO_CACHE = g_lo
-    S = states(g_lo, g_hi)
+    warm = warm_mask(live, UO.WINDOW)
+    raw = states(g_lo, g_hi)
+    S = states(g_lo, g_hi, warm)
+    cut = {k: int(raw[k].sum()) - int(S[k].sum()) for k in S}
     print(f"  state grids in {time.time() - t1:.0f}s "
           f"(k={UO.K}, window={UO.WINDOW}, min_pivots={UO.MIN_PIVOTS}, all imported from S2)",
           flush=True)
+    print(f"    warm-up: rolling_fit's window EXPANDS below {UO.WINDOW} bars, so it emits a slope "
+          f"on as few as {UO.MIN_PIVOTS} pivots. Masking each name's first {UO.WINDOW} own bars "
+          f"removes UP {cut['UP']:,} and DOWN {cut['DOWN']:,} state bars "
+          f"({100 * cut['UP'] / max(int(raw['UP'].sum()), 1):.1f}% / "
+          f"{100 * cut['DOWN'] / max(int(raw['DOWN'].sum()), 1):.1f}%)", flush=True)
 
     caus = causality(panel, cleaned, UO, PV, LA, np.random.default_rng(398))
     print(f"    [L] {caus['probes']} truncated-panel recomputes equal the full-panel slope; "
           f"[X] a shifted grid IS CAUGHT", flush=True)
 
-    # [W] no state bar before the name's own WINDOW-th bar
+    # [W] no state bar before the name's own WINDOW-th bar. This FIRED on the first run
+    # (AA in UP before its own 252nd bar) and the fix was to implement the guard the
+    # pre-registration declared, not to relax the assertion. S2's own `build` carries the
+    # same invariant as `assert WINDOW < start`.
     for nm, msk in S.items():
         for i in range(n):
             at = np.flatnonzero(live[i])
             early = msk[i, at[:UO.WINDOW]] if at.size else np.empty(0, bool)
             assert not early.any(), f"[W] {panel.symbols[i]} is in {nm} before its own {UO.WINDOW}th bar"
-    print(f"    [W] no state bar precedes a name's own {UO.WINDOW}th bar, on either side", flush=True)
+    assert raw["UP"].sum() > S["UP"].sum(), "[X] the warm-up removed NOTHING -- the guard is vacuous"
+    print(f"    [W] no state bar precedes a name's own {UO.WINDOW}th bar, on either side "
+          f"(and the guard is not vacuous: it removes {cut['UP']:,} UP bars)", flush=True)
 
     # the overlays
     t2 = time.time()
@@ -446,13 +508,19 @@ def main() -> int:
                       span=[panel.dates[0], panel.dates[-1]]),
         intraday_reachable=dict(declared=len(reach), present=int(slice15.size), missing=missing,
                                 names=[panel.symbols[i] for i in slice15]),
+        warmup=dict(bars=UO.WINDOW, per="each name's own live bars",
+                    removed_UP=cut["UP"], removed_DOWN=cut["DOWN"],
+                    note="rolling_fit's window expands below WINDOW and emits a slope on as few "
+                         "as MIN_PIVOTS pivots; [W] caught the guard's absence on the first run "
+                         "(AA in UP before its own 252nd bar) and it was implemented, not relaxed"),
         causality=caus, cells={})
     for universe, rows in (("all_1573", all_rows), ("reachable_15m", slice15)):
-        el_u, lv_u, dd_u = elig[rows], live[rows], dead[rows]
+        el_u, lv_u, wm_u, dd_u = elig[rows], live[rows], warm[rows], dead[rows]
         er_u = {w: g[rows] for w, g in er.items()}
         bd_u = {x: b[rows] for x, b in band.items()}
         for nm, msk in S.items():
-            res["cells"][f"{universe}|{nm}"] = summarise(msk[rows], el_u, lv_u, dd_u, er_u, bd_u)
+            res["cells"][f"{universe}|{nm}"] = summarise(msk[rows], el_u, lv_u, wm_u, dd_u,
+                                                         er_u, bd_u)
 
     # [P] persist BEFORE rendering
     OUT.write_text(json.dumps(res, indent=1))
@@ -467,20 +535,27 @@ def render(res):
     C = res["cells"]
     print("  THE STATE -- counts and durations, both directions, both universes\n")
     print(f"  {'universe':>14s} {'dir':>5s} {'names':>6s} {'episodes':>9s} {'bars in state':>14s} "
-          f"{'% of elig':>10s} {'med len':>8s} {'p90':>6s} {'max':>6s} {'names hit':>10s}")
+          f"{'% of addr':>10s} {'med len':>8s} {'p90':>6s} {'max':>6s} {'names hit':>10s}")
     for k, c in C.items():
         u, d = k.split("|")
         el = c["episode_len"]
         print(f"  {u:>14s} {d:>5s} {c['names']:>6,} {c['episodes']:>9,} {c['bars_in_state']:>14,} "
-              f"{100 * (c['share_of_eligible'] or 0):>9.2f}% {el['median'] or 0:>8.0f} "
+              f"{100 * (c['share_of_addressable'] or 0):>9.2f}% {el['median'] or 0:>8.0f} "
               f"{el['p90'] or 0:>6.0f} {el['max'] or 0:>6,} {c['names_with_an_episode']:>10,}")
 
-    print("\n  SURVIVORSHIP -- what share of the state do DEAD names carry? (Q6)\n")
-    print(f"  {'universe':>14s} {'dir':>5s} {'dead % of names':>16s} {'dead % of state bars':>21s}")
+    print("\n  SURVIVORSHIP (Q6) -- and the headcount denominator Q6 used is the WRONG one:\n"
+          "  a dead name is short-lived and spends 252 of its own bars in warm-up, so its share\n"
+          "  of NAMES overstates the bars it could ever contribute. Both are shown; the tilt\n"
+          "  column is state share / addressable share, and 1.00 means no tilt at all.\n")
+    print(f"  {'universe':>14s} {'dir':>5s} {'dead % names':>13s} {'dead % addressable':>19s} "
+          f"{'dead % of state':>16s} {'TILT':>6s}")
     for k, c in C.items():
         u, d = k.split("|")
-        dn, db = c["dead_share_of_names"], c["dead_share_of_state_bars"]
-        print(f"  {u:>14s} {d:>5s} {100 * (dn or 0):>15.1f}% {100 * (db or 0):>20.1f}%")
+        dn, da, db = (c["dead_share_of_names"], c.get("dead_share_of_addressable_bars"),
+                      c["dead_share_of_state_bars"])
+        tl = c.get("dead_tilt")
+        print(f"  {u:>14s} {d:>5s} {100 * (dn or 0):>12.1f}% {100 * (da or 0):>18.1f}% "
+              f"{100 * (db or 0):>15.1f}% {tl if tl is not None else float('nan'):>6.2f}")
 
     print("\n  RETENTION -- what each overlay leaves of the state (counts, never P&L)\n")
     keys = [f"er{w}>={lv}" for w in ER_WINDOWS for lv in ER_LEVELS] + [f"band<={x}" for x in BAND_X]
@@ -490,8 +565,10 @@ def render(res):
         print(f"  {u:>14s} {d:>5s} " +
               " ".join(f"{100 * (c['retention'].get(x) or 0):>12.1f}%" for x in keys))
 
-    print("\n  INDEPENDENCE (Q5) -- intersection against the product of the marginals\n")
+    print("\n  INDEPENDENCE (Q5) -- intersection against the product of the marginals.\n"
+          "  ONLY cells breaching 5 pp are listed; an empty table means Q5 HELD everywhere.\n")
     print(f"  {'universe':>14s} {'dir':>5s} {'cell':>26s} {'inter':>8s} {'product':>9s} {'gap pp':>8s}")
+    breaches = 0
     for k, c in C.items():
         u, d = k.split("|")
         R = c["retention"]
@@ -504,8 +581,12 @@ def render(res):
                         continue
                     gap = 100 * (i - a * b)
                     if abs(gap) >= 5.0:
+                        breaches += 1
                         print(f"  {u:>14s} {d:>5s} {f'er{w}>={lv} x band<={x}':>26s} "
                               f"{100 * i:>7.1f}% {100 * a * b:>8.1f}% {gap:>+7.1f}")
+    n_pairs = len(C) * len(ER_WINDOWS) * len(ER_LEVELS) * len(BAND_X)
+    print(f"    {breaches} of {n_pairs} intersections breach 5 pp -- "
+          f"Q5 {'FAILS' if breaches else 'HOLDS'} on all of them")
 
     print("\n  ONSET vs STATE -- the fork the design turns on\n")
     for k, c in C.items():
