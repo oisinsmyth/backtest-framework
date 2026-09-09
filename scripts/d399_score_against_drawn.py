@@ -15,7 +15,27 @@ how this file should be used: a construction failing to reproduce these lines do
 construction can. The ground truth is therefore stored on its own, in its own file, scored by a
 runner that takes the construction as an argument -- not folded into D399's branches.
 
-THREE THINGS ARE COMPARED, and they fail differently:
+THE SCORE, set by the principal 2026-09-09: **gradient agreement where the construction overlaps
+the ground truth, with coverage counting only slightly.**
+
+    per overlapping bar i:
+        rel_i   = |g_fit(i) - g_drawn(i)| / max(|g_drawn(i)|, DELTA)
+        agree_i = max(0, 1 - rel_i)        1 = exact; 0 once the error is as big as the slope
+    AGREEMENT = mean(agree_i)              the quality of the lines it does draw
+    RECALL    = overlap_bars / drawn_bars  the share of the drawn trend it speaks on
+    SCORE     = AGREEMENT * RECALL ** 0.25
+
+The exponent is 0.25 because the principal's rule is that LESS COVERAGE IS NOT A BAD THING and
+should cost only a little: halving coverage costs 16% of the score, quartering it costs 29%. A
+construction that is silent but right beats one that is loud and wrong, which is the whole point --
+branches B, C and D score 100% recall only because they declare a trend on every one of 260 bars.
+
+The error is scaled by the DRAWN slope, not taken absolutely, because the drawn slopes span
+0.0011 to 0.0092 per bar: an absolute tolerance would be lenient on the steep legs and impossible
+on the shallow one. `DELTA` floors the denominator so a near-flat drawn line cannot make the
+denominator vanish.
+
+THREE THINGS ARE ALSO REPORTED, and they fail differently:
   COVERAGE  what share of the bars the human called trending does the construction also call
             trending? A construction can pick the right lines and still be silent most of the time.
   COUNT     how many segments does each side cut the series into? Too many is churn, too few is a
@@ -40,6 +60,22 @@ sys.path.insert(0, str(REPO / "scripts"))
 GT = REPO / "data" / "d399_drawn_ground_truth.json"
 OUT = REPO / "data" / "d399_vs_drawn.json"
 BARS_PER_YEAR = 252
+COVERAGE_EXPONENT = 0.25     # the principal's weighting: coverage counts, but only a little
+
+
+def score_side(g_fit, g_drawn, both, drawn_bars, delta):
+    """AGREEMENT * RECALL**0.25 -- see the module docstring. Returns the parts as well as the
+    total, so the weighting can be re-argued without re-running anything."""
+    if not both.any() or drawn_bars == 0:
+        return dict(agreement=None, recall=0.0, score=0.0, overlap_bars=0)
+    gd = g_drawn[both]
+    rel = np.abs(g_fit[both] - gd) / np.maximum(np.abs(gd), delta)
+    agree = float(np.clip(1.0 - rel, 0.0, None).mean())
+    recall = float(both.sum() / drawn_bars)
+    return dict(agreement=round(agree, 4), recall=round(recall, 4),
+                score=round(agree * recall ** COVERAGE_EXPONENT, 4),
+                overlap_bars=int(both.sum()),
+                share_within_delta=round(float((np.abs(g_fit[both] - gd) <= delta).mean()), 4))
 
 
 def _load(name, filename):
@@ -149,8 +185,6 @@ def main() -> int:
         cell = dict(
             human_bars_on=int(hon.sum()), machine_bars_on=int(mon.sum()),
             human_share=round(float(hon.mean()), 4), machine_share=round(float(mon.mean()), 4),
-            overlap_bars=int(both.sum()),
-            recall=round(float((hon & mon).sum() / max(hon.sum(), 1)), 4),
             precision=round(float((hon & mon).sum() / max(mon.sum(), 1)), 4),
             human_segments=hsegs, machine_segments=segs,
             window_open_to_first_line_median=lag_med,
@@ -166,6 +200,7 @@ def main() -> int:
             level_gap_p90=(round(float(np.quantile(np.abs(np.log(Lw[lvok]) - np.log(hlvl[lvok])), .9)), 5)
                            if lvok.any() else None),
             level_bars=int(lvok.sum()),
+            **score_side(Gw, hg, both, int(hon.sum()), DR.DELTA),
             median_machine_ann=(round(float(np.expm1(BARS_PER_YEAR * np.median(Gw[both]))), 4)
                                 if d.size else None),
             median_human_ann=(round(float(np.expm1(BARS_PER_YEAR * np.median(hg[both]))), 4)
@@ -192,6 +227,16 @@ def main() -> int:
             print(f"    LINE POSITION: median {100*cell['level_gap_median']:.1f}% away from the "
                   f"drawn line (p90 {100*cell['level_gap_p90']:.1f}%), over {cell['level_bars']} bars")
         print()
+
+    tot = float(np.mean([res["sides"][k]["score"] for k in ("support", "resistance")]))
+    res["SCORE"] = round(tot, 4)
+    print(f"  {'':>12s} {'agreement':>10s} {'recall':>8s} {'within tol':>10s} {'SCORE':>8s}")
+    for k in ("support", "resistance"):
+        c = res["sides"][k]
+        print(f"  {k:>12s} {c['agreement'] if c['agreement'] is not None else 0:>10.3f} "
+              f"{c['recall']:>8.3f} {c['share_within_delta'] or 0:>10.3f} {c['score']:>8.3f}")
+    print(f"  {'OVERALL':>12s} {'':>10s} {'':>8s} {'':>10s} {tot:>8.3f}"
+          f"   (branch {a.branch}, min_piv {a.min_piv}, h {a.h_annual:g}%/yr)\n")
 
     OUT.write_text(json.dumps(res, indent=1))
     print(f"  [P] {OUT.relative_to(REPO)} written")
