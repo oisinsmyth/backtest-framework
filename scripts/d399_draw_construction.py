@@ -109,6 +109,86 @@ def enforce_min_run(state, min_run):
     return out
 
 
+def segment_windows(piv_idx, piv_logpx, px_respect, n_bars, k, h, widen,
+                    min_piv=None, max_window=None):
+    """BRANCH E -- DYNAMIC WINDOWS. The bars are PARTITIONED, and each window carries its own trend.
+
+    Every branch before this fitted the gradient over a FIXED trailing 252 bars, so a fit could
+    straddle two regimes and describe neither. Branch D reset the intercept's window at a
+    re-anchor but left the GRADIENT still reading a year back. The principal's correction: a
+    window starts where a trend starts and ends when the gradient updates, and the gradient is
+    fitted on the CURRENT WINDOW only.
+
+        open a window at bar s, with no gradient yet
+        as bars arrive, accumulate the pivots CONFIRMED inside it (index p usable at p + k)
+        once the window holds >= min_piv pivots, fit G once -- that is the window's gradient
+        keep re-fitting g over [s, j] as the window grows; when |g - G| > h the trend has
+            CHANGED, so CLOSE the window and open the next one at j
+        the line is the tightest offset at slope G over the window's own bars
+
+    Before a window has its min_piv pivots there is NO gradient and therefore no trend -- which is
+    the principal's "in those spaces we just don't trend", now arising from the construction rather
+    than bolted on.
+
+    Sums are accumulated and reset per window rather than differenced out of a global prefix: a
+    running sum reset at each boundary is the same arithmetic a fresh fit would do, where a
+    difference of global prefixes would reintroduce the history the window exists to discard."""
+    min_piv = MIN_PIV if min_piv is None else min_piv
+    G = np.full(n_bars, np.nan)
+    L = np.full(n_bars, np.nan)
+    anc = np.zeros(n_bars, bool)
+    win = np.full(n_bars, -1, int)
+    order = np.argsort(piv_idx, kind="stable")
+    pidx, ppx = piv_idx[order], piv_logpx[order]
+    ptr = 0
+    s = 0                                   # current window start
+    n_p = sx = sy = sxx = sxy = 0.0
+    Gh = np.nan
+    anc[0] = True
+
+    def fit():
+        den = n_p * sxx - sx * sx
+        if n_p < min_piv or den <= 0:
+            return np.nan
+        return (n_p * sxy - sx * sy) / den
+
+    def reopen(at):
+        nonlocal s, n_p, sx, sy, sxx, sxy, Gh, ptr
+        s, Gh = at, np.nan
+        n_p = sx = sy = sxx = sxy = 0.0
+        ptr = int(np.searchsorted(pidx, at, "left"))   # pivots before the new window are discarded
+
+    for j in range(n_bars):
+        while ptr < pidx.size and pidx[ptr] <= j - k:  # confirmed, and inside this window
+            x, y = float(pidx[ptr]), float(ppx[ptr])
+            n_p += 1.0; sx += x; sy += y; sxx += x * x; sxy += x * y
+            ptr += 1
+        g_now = fit()
+        if np.isfinite(g_now):
+            if not np.isfinite(Gh):
+                Gh = g_now                             # the window's gradient, fixed once
+            elif abs(g_now - Gh) > h:
+                reopen(j)                              # THE TREND CHANGED: close, open at j
+                anc[j] = True
+                continue
+        if max_window is not None and j - s + 1 > max_window:
+            reopen(j)
+            anc[j] = True
+            continue
+        win[j] = s
+        if not np.isfinite(Gh):
+            continue                                   # no gradient yet -> no trend here
+        idx = np.arange(s, j + 1)
+        det = px_respect[idx] - Gh * (idx - j)
+        fin = np.isfinite(det)
+        if not fin.any():
+            continue
+        det = det[fin]
+        G[j] = Gh
+        L[j] = det.min() if widen < 0 else det.max()
+    return G, L, anc, win
+
+
 def ratchet_reset(g, px_respect, h, widen, window, ok=None):
     """BRANCH D -- C's tightening, but the window RESETS at every re-anchor.
 
@@ -343,9 +423,10 @@ def main() -> int:
     ap.add_argument("--on-close", action="store_true",
                     help="respect the CLOSE instead of the wick, for comparison")
     ap.add_argument("--bars", type=int, default=260)
-    ap.add_argument("--branch", default="D", choices=["B", "C", "D"],
+    ap.add_argument("--branch", default="E", choices=["B", "C", "D", "E"],
                     help="B = one-way ratchet (drifts); C = tightest offset over a fixed trailing "
-                         "window; D = C but the window RESETS at every re-anchor")
+                         "window; D = C but the intercept window RESETS at a re-anchor; "
+                         "E = DYNAMIC WINDOWS, the gradient fitted on its own window")
     ap.add_argument("--h-annual", type=float, default=4.0,
                     help="gradient update band, in %% of annual trend drift")
     a = ap.parse_args()
@@ -418,6 +499,17 @@ def main() -> int:
                 fits["lo"][0], fits["lo"][1], respect_lo, H, -1, ok_lo)
             G_hi, L_hi, anc_hi, push_hi, gov_hi = ratchet_corrected(
                 fits["hi"][0], fits["hi"][1], respect_hi, H, +1, ok_hi)
+        elif a.branch == "E":
+            plo = np.array([p.index for p in ps if p.sign < 0], dtype=int)
+            phi = np.array([p.index for p in ps if p.sign > 0], dtype=int)
+            xlo = np.log([p.price for p in ps if p.sign < 0]) if plo.size else np.array([])
+            xhi = np.log([p.price for p in ps if p.sign > 0]) if phi.size else np.array([])
+            G_lo, L_lo, anc_lo, win_lo = segment_windows(
+                plo, xlo, respect_lo, m, UO.K, a.h, -1, max_window=UO.WINDOW)
+            G_hi, L_hi, anc_hi, win_hi = segment_windows(
+                phi, xhi, respect_hi, m, UO.K, a.h, +1, max_window=UO.WINDOW)
+            push_lo = np.zeros(m); push_hi = np.zeros(m)
+            gov_lo, gov_hi = win_lo, win_hi
         else:
             RT = ratchet_reset if a.branch == "D" else ratchet_tight
             G_lo, L_lo, anc_lo, push_lo, gov_lo = RT(
