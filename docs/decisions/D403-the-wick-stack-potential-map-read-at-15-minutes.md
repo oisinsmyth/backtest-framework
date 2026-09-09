@@ -126,6 +126,66 @@ to be wrong about.
 - A day with `p_u` or `p_l` undefined (no positive `M_raw` on one side of `C_ref`) is
   **dropped from the breakout arm and reported as a count**, not silently skipped.
 
+### 3.5 AMENDMENT, 2026-09-09 — the clamped plateau with a tail
+
+**Committed before the amended construction was run. No statistic on it existed when this
+was written**, and §5.1's object dump on G1 is the only thing that had been computed.
+
+§5.1 did its job and killed the original object. The bare wick stack is **not bimodal and
+not a potential — it is a comb of ~96 teeth**:
+
+```
+modes_raw_p10_50_90                    [89, 96, 103]
+unimodal_share                         0.0
+peaks_after_pedestal_p10_50_90         [53, 92, 101]
+n_breakpoints                          ~385 of a possible 400
+max level                              15-22 of a possible 200
+
+BMY   2021-01-04  C_ref  62.00  p_l  61.94  p_u  62.01   tau 17 of max 22
+ILMN  2021-01-04  C_ref 359.89  p_l 297.18  p_u 362.63   tau  1 of max 15
+```
+
+Daily wicks are a few tenths of a percent thick; 100 days of price span 10–25%. Two hundred
+zones on that axis barely overlap. BMY's two "peaks" land **7 cents apart**, straddling the
+current price, because the densest teeth are always the recent bars adjacent to it — while
+ILMN's well is 18% wide on the same day. The peak anchoring was picking a tooth, not a
+barrier.
+
+**The principal's ruling: clamp the wick's thickness at one and let a distribution take over
+from the edge.** Each zone contributes
+
+```
+K_i(p) = 1                          for p in [a_i, b_i]        the wick's own span, height 1
+         g(dist(p, [a_i, b_i]))     otherwise,   g(0) = 1      the tail beyond each edge
+```
+
+so overlapping wicks pool instead of standing apart, the wick's span still sets the core,
+and `K_i` is continuous at the edge. `M_raw = SUM_i K_i` as before, and the pedestal of §3.1
+is unchanged.
+
+**This buys a bandwidth, which is the cost, and it is swept rather than chosen.** `h` is set
+in units of the **average true range over the map's own window** `D−W … D−1` — causal by
+construction, and never a fixed percentage, which is D387's error. D384's warning applies
+directly and is why `h` is not estimated from the whole sample: a Silverman bandwidth scaled
+with `sd(x)`, so the smudge was widest on volatile names, exactly where events were common.
+
+| parameter | values | primary |
+|---|---|---|
+| tail `g` | `gauss` exp(−d²/2h²), `exp` exp(−d/h), `tri` max(1−d/h, 0) | `gauss` |
+| `h` | `c × ATR_W`, `c` in {0.25, 0.5, 1.0, 2.0} | `c = 0.5` |
+
+A **function** choice is a free parameter (R14), so all three tails are swept and the record
+reports the shape across them, not the best cell.
+
+**The field is no longer piecewise-constant, so a grid returns** — the one thing §3.2
+avoided. It is therefore made an assertion rather than an assumption: `[GRID]` recomputes
+every §5.1 statistic at double resolution and requires agreement, so grid resolution is
+demonstrated not to carry the result.
+
+**`M_raw` mode count against `h` is itself reported.** The comb collapsing towards a small
+number of modes as `h` grows is the evidence that the amended object is the potential the
+construction was reaching for; if it never does, the map has no scale at which it is one.
+
 ### 3.4 Free parameters, swept and read as a SHAPE (R14)
 
 | parameter | values |
