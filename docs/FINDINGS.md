@@ -4105,3 +4105,109 @@ checked, was **what kind of instrument died and why.** This is the third place t
 been caught by an unexamined corporate-action or instrument basis, after the 15m-vs-daily
 adjustment split and the thirty fabricated dividend days of §18. **Census the instrument types
 and the death causes when a fixture is built, not when an unrelated agent trips over them.**
+
+---
+
+## 61. The house spread estimator is biased in the direction that matters most: Corwin–Schultz UNDERSTATES the effective spread exactly where this programme's leads die
+
+**From round 2's external evidence**, [`research/the-forced-seller-and-the-cost-wall.md`](research/the-forced-seller-and-the-cost-wall.md)
+§1.6, sourced to **Ardia, Guidotti & Kroencke, *Efficient Estimation of Bid-Ask Spreads from Open,
+High, Low, and Close Prices*, JFE 2024**. **`[EXTERNAL — NOT MEASURED HERE.]`**
+
+`CLAUDE.md` instructs *"estimate the spread of the names HELD (Corwin-Schultz off the OHLC) rather
+than trusting a fee assumption"*, and that instruction has been right about the thing it was written
+for — D285 missed a guessed 15 bp/side bar by 0.65 and the held names measured **33.8**. **The
+instruction stands. What is new is its BIAS.**
+
+**Corwin–Schultz underestimates effective spreads for small, illiquid stocks.** That is not a
+peripheral population here — it is the sub-$10 tail where cost in bp is worst, where the `$5` floor
+sits, and where lead after lead has died. **If the finding holds on this fixture, every
+Corwin–Schultz number in this file is a LOWER BOUND on the true spread, and every breakeven
+comparison built on one is more lenient than it looks.**
+
+**The reach is wide, so it is stated rather than left to be discovered.** Corwin–Schultz carries
+D285's **33.8 bp/side**, §55's **127.9–142.1 bp** spread against an 18-cell negative, `dist_52w_high`'s
+held-median selection (§ above), the pinned-name analysis, and the two-day clamped-estimate
+machinery. **None of those is withdrawn and no verdict is changed here** — a bias that makes costs
+*larger* cannot rescue a losing cell, and the cells above lost. **What it can change is any cell
+that PASSED narrowly, and any breakeven quoted as a margin.**
+
+**There is a closed-form drop-in on the same OHLC inputs.** EDGE, from the same paper, with
+published code (`bidask` on PyPI). **The order of work is not optional: recompute D285's 33.8 bp
+under EDGE FIRST.** It sets the sign of every cost conclusion downstream, including the round-2
+execution work of §62.
+
+> **A cost estimator is not a neutral instrument.** This programme replaced a fee *assumption* with
+> a *measurement* and then stopped asking questions of the measurement. **An estimator has a bias,
+> the bias has a direction, and the direction here points at the exact population the programme
+> keeps trying to trade.**
+
+**Nothing was computed. Whether to re-open D285 is the principal's call.**
+
+---
+
+## 62. A signal computed FROM the close cannot fill IN that close — the auction cut-off is 3:50 pm
+
+**From round 2**, §1.7, sourced to the **NYSE *Opening and Closing Auctions Fact Sheet*** and the
+**Nasdaq *Closing Cross FAQ***, both primary exchange documentation.
+**`[EXTERNAL — NOT MEASURED HERE.]`**
+
+```
+NYSE   MOC / LOC hard cut-off   15:50
+Nasdaq MOC 15:55 · LOC 15:58 · IO 16:00
+```
+
+**This is a constraint on construction, not a preference.** The programme's edge is overnight
+(§1a, D280), its books are close-to-close, and **a fill convention has already inverted a result
+here once.** Any construction that computes a score from bar `t`'s close and assumes it transacts
+in bar `t`'s closing auction is **unfillable as specified** — the order had to exist ten minutes
+earlier.
+
+**Two consequences.** First, **any close-decided book must state which close it trades** — `t`'s
+auction requires a 15:50 decision on incomplete information, and `t+1`'s open or close is a
+different instrument with a different cost. Second, **the opening auction is the more expensive
+end**: Goyal, Jegadeesh & Wu (JFQA 2026) measure **square-root price impact of 17.7 bp at 1% ADV
+against 2.35 bp modelled linearly**, with the opening auction dearest of the three mechanisms.
+**Close beats open, and neither is priced in this file's cost model.**
+
+**And the auction is where our fill convention is honest.** IBKR's own Rule 606 filing states it
+receives **no order-flow payment for On Open and On Close orders**, and that the auction print
+*"typically match[es] pre-close bid or ask"* — **a full half-spread. The cost model's
+full-half-spread charge at the auction is CORRECT**, and the retail price-improvement literature
+(E/Q ≈ 0.62 for this broker on continuous orders) **does not reach an auction-only book.**
+
+---
+
+## 63. A spin-off is not a split, and a scalar price factor cannot repair one — the mechanism behind the 5× shape
+
+**From round 2**, §1.4, sourced to **CRSP's *Factor to Adjust Price*** documentation and the Nasdaq
+corporate-actions manual (the latter **`[not read]`** — the PDF would not render).
+**`[EXTERNAL — NOT MEASURED HERE.]`**
+
+This programme has already been bitten by this and could not explain it: a name sat at **5× its own
+prices**, and `raw_price_factor` could not repair it. **§60 called the unexamined corporate-action
+basis the third such incident. This is the mechanism.**
+
+**What happens.** At the ex-date **the parent gaps down by the distributed stub**. Nothing is wrong
+with the tape — **but it is a fake crash, and a reversal book will buy it.**
+
+**Why a scalar cannot fix it.** The correct adjustment is a **multiplicative step applied to all
+PRIOR bars**:
+
+```
+f = (P_cum − r · P_child) / P_cum
+```
+
+**That factor is date-dependent by construction**, which is precisely what a single scalar cannot
+express. And **the child has no pre-when-issued history at all** — for the child this is *missing
+data*, not *mis-scaled data*, and no factor of any kind repairs missing data.
+
+**Why the error looks like a clean integer.** **Vendors log spin-off factors in the SPLIT table.**
+A distribution ratio read as a split ratio **shifts the whole series by a clean integer multiple** —
+which is exactly the shape observed and not explained at the time.
+
+> **The rule this earns, and it is §60's rule pointed at a second field:** a corporate-action table
+> tells you the NUMBER and not the EVENT TYPE. **A split table containing spin-offs will silently
+> mis-scale a price series, and the tell is an integer.** Check the event type, not just the factor.
+
+**No fixture was touched and nothing was repaired. Whether to act on this is the principal's call.**
