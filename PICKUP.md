@@ -465,6 +465,70 @@ EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not co
 > was the one whose two headline construction claims did NOT survive measurement.** Treat an
 > enthusiastic brief with more suspicion than a damning one.
 
+> ### 0d0b. ROUND 2 — SIX NEW TERRITORIES, ALL SIX BRIEFS IN, 2026-09-09
+>
+> **[`docs/research/the-forced-seller-and-the-cost-wall.md`](docs/research/the-forced-seller-and-the-cost-wall.md)**
+> (`335fcc0`, completed `20a083a`). Territories and the exclusion list that kept round 2 off round
+> 1's ground: [`working/leads2/README.md`](working/leads2/README.md) (`f31535d`).
+>
+> **THE SAME SHAPE AS ROUND 1: the most valuable returns are not leads.** Four of the six most
+> consequential findings are method, data or cost.
+>
+> 1. **THE HOUSE SPREAD ESTIMATOR IS BIASED THE WRONG WAY.** `CLAUDE.md` mandates Corwin–Schultz;
+>    **Ardia–Guidotti–Kroencke (JFE 2024) find CS UNDERESTIMATES effective spreads for small,
+>    illiquid stocks** — our tail. **D285's 33.8 bp/side may be a FLOOR, not an estimate**, which
+>    would make every breakeven in the record more lenient than it looks. **EDGE is a closed-form
+>    drop-in on the same OHLC inputs (`bidask` on PyPI). Recompute D285 under EDGE FIRST — it sets
+>    the SIGN of every cost conclusion downstream.** Not computed; re-opening D285 is the
+>    principal's call.
+> 2. **A CLOSE-DECIDED BOOK CANNOT FILL AT THAT CLOSE.** NYSE MOC/LOC hard cut-off **3:50 pm**
+>    (Nasdaq MOC 3:55, LOC 3:58). A constraint on construction, not a preference.
+> 3. **THE SPIN-OFF DEFECT HAS A NAMED FIX.** The correct adjustment is a multiplicative step on
+>    all PRIOR bars, `f = (P_cum − r·P_child)/P_cum` — **date-dependent, which is exactly why a
+>    scalar `raw_price_factor` cannot fix it**; the child has no pre-WI history at all. **Vendors
+>    log spin-off factors in the SPLIT table, so a distribution ratio read as a split ratio shifts
+>    the series by a clean integer — that is the 5× shape.**
+> 4. **THE SURVIVORS-ONLY IDENTIFIER TRAP, TWICE.** `company_tickers.json` and Wikipedia's
+>    `List of S&P 500 companies` are both survivors-only. **The free fix: `ISSUERTRADINGSYMBOL` is
+>    NOT NULL inside every Form 4**, so dead names carry their own point-in-time ticker forever.
+>    Join on `(ticker, date-in-listing-interval)`.
+>
+> **The four signal territories, none closed.** `F1` index reconstitution — **my premise was
+> INVERTED**: large-and-liquid is where the effect is dead (S&P 500 adds 7.4% → 0.3%), and where it
+> survives (SmallCap 600, MidCap, Russell 2000) is where our per-share cost is worst; **but the
+> 500's zero is a composition artefact — direct adds still ran +5.40%**, and **deletions of names
+> that DELIST are unpublished because every study drops them, which a dead-inclusive fixture is the
+> right instrument for.** `F2` insiders — data excellent, **no cost-honest post-2010 survival**;
+> the one positive assumes 10 bp/side against our measured 33.8. `F3` earnings — PEAD dead outside
+> microcaps since 2006, premium's published US window **ends 2004**, **but its timing split (34.6%
+> pre-open / 45.4% post-close, four corroborating sources) independently corroborates D280's
+> overnight finding** — and carries a day-0 lag hazard `[L]`. `F6` supply events — **three of four
+> families resolve overnight, so daily bars are a bar late by construction**; only buyback
+> *execution*, as a **state**, is recommended.
+>
+> **`F5` cost: 0.5–1.5 bp/side saveable, not 5.** Published price-improvement numbers **do not
+> reach an auction-only book** — IBKR takes no order-flow payment on On Open/On Close and the
+> auction print is a full half-spread, **so our cost model is CORRECT there**. One actionable
+> change: **Fixed → Tiered**, and it corrects a recorded number — **the minimum binds on a SHARE
+> COUNT (200 Fixed, 100 Tiered), not on "$2,100 notional"**. **The 1.92 bp intraday cell still
+> loses at a zero spread.** **Dated freebie: IBKR's first amended-Rule-605 broker-level report,
+> with E/Q by order size, is due published before end-September 2026.**
+>
+> **TWO OF MY OWN COMMISSIONING PREMISES WERE WRONG**: the 2023 granular buyback rule was **vacated
+> by the Fifth Circuit 2023-12-19** before producing data (our span is Item 703 — monthly, HTML,
+> untagged, 40–45 days late), and index flow does not live in large liquid names.
+>
+> ### 0d0c. ROUND 3 — PREPARED, NOT COMMISSIONED
+>
+> **[`working/leads3/README.md`](working/leads3/README.md)** (`2e89d37`, withdrawal `4f3e2e3`).
+> Six lanes written up; **no agent dispatched**, deliberately — round 2's returns had to extend the
+> exclusion list first. **`G1`** fund/ETF flows as the forced seller · **`G2`** the death process,
+> which [`FINDINGS.md`](docs/FINDINGS.md) §60's own rule demands and which `F1` independently
+> pointed at · **`G3`** halts/LULD, where D343 met the event as 4.4% of D342's P&L and excluded it
+> as hygiene · **`G4`** 13D/13G · **`G5`** the revenue side of a long book · **`G6`** documented
+> defects in data we own. **`G2` and `G3` are route (b)** — the first round to ask it; round 2's
+> four signal lanes were all route (a), which was my omission.
+>
 > ### 0d1. D404 — THE CROSS-ASSET STATE, PRE-REGISTERED AND AMENDED, RUNNER DOES NOT EXIST
 >
 > **[D404](docs/decisions/D404-the-cross-asset-state.md)** (`fd4275e`, amended `c88673a`). All 52
