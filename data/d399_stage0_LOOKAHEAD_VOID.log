@@ -1,0 +1,102 @@
+D399 SELF-TEST -- the ratchet, the hysteresis, and three breaks that must be caught
+
+    [H] low line, h=1.0: one anchor then min(advance, fresh) -> [0.0, 0.01, 0.02, 0.03, 0.01, 0.02]
+    [R] its offset is non-increasing: [0.0, 0.0, 0.0, 0.0, -0.03, -0.03]
+    [H] high line is the mirror: [0.0, 0.05, 0.06, 0.3, 0.31, 0.4]
+    [D0] h=0 gives G == g exactly ([np.float64(0.01), np.float64(0.011), np.float64(0.03), np.float64(0.03), np.float64(-0.02)]) -- the control the spec corrected
+    [H] h=0.005: 0.011 is inside the band and held at 0.010; 0.03 and -0.02 re-anchor
+    [X] a ratchet moving TOWARD price IS CAUGHT
+    [X] an under-exercised audit IS CAUGHT
+    [X] h=inf FAILS as the control (it freezes G at the first value) -- the spec's own corrected error
+
+SELF-TEST PASSED
+
+    [K] d348_prep cache HIT 9c32c4a296b69a04
+    [K] SCORE CACHE: key matches cache_key() with ragged_panel.py in the tuple; npz newer than the builder
+    [F0] F0 MASK: 1,719 filings applied, 2.54% of live name-bars excluded
+    [R] RAW PRICE and FLOOR: factor == census factor; keep_v2 fails 30.9056% == D343 (0s)
+  hedge defined from bar 63 (2010-04-06) onward; 63 earlier bars undefined
+  events hist_L    : long 23,491, mirror 23,161
+  events rev_21    : long 35,108, mirror 35,213
+  events rsi_turn  : long 23,001, mirror 32,917
+  events rsi_decile: long 44,661, mirror 45,290
+  loaded in 19s | 1573 x 4187 | 2,858,599 eligible
+  fits in 7s (k=3, window=252, min_pivots=3, imported from S2)
+    [D0] at delta=0, h=0 the state reproduces D398 section 1 bar-for-bar (UP 1,554,580, DOWN 961,005)
+  ratchet in 21s (h=0.001)
+    [R] the offset never moves toward price: 4,027,363 low and 4,029,147 high non-anchor bars checked
+    [W][E] every event is past its name's own 252th bar and eligible
+
+  EVENTS -- raw touch, then the PRIMARY cell (er10>=0.3 AND band<=0.25)
+
+       UP:  264,501 touches ->   60,698 primary events ( 4,218 on the 48 with 15m bars)
+     DOWN:  152,612 touches ->   39,792 primary events ( 3,156 on the 48 with 15m bars)
+
+    dir                   cell  cap   trades    gross      2c      net  ratio  atlas p95   +/-  vs floor
+     UP   er10>=0.3 band<=0.25    5   20,501   -35.48   66.74  -102.22  -0.53      +6.03  0.41    inside
+     UP   er10>=0.3 band<=0.25   10   13,779   -34.91   66.75  -101.66  -0.52     +10.40  1.05    inside
+     UP   er10>=0.3 band<=0.25   20    9,593   -21.53   66.62   -88.15  -0.32     +17.79  0.93    inside
+     UP    er10>=0.3 band<=0.5    5   32,067   -35.08   67.67  -102.76  -0.52      +4.45  0.26    inside
+     UP    er10>=0.3 band<=0.5   10   20,508   -32.64   67.62  -100.26  -0.48      +8.78  1.05    inside
+     UP    er10>=0.3 band<=0.5   20   13,318   -20.54   67.62   -88.16  -0.30     +15.61  0.93    inside
+     UP   er10>=0.5 band<=0.25    5   10,702   -42.02   65.94  -107.96  -0.64      +8.64  0.41    inside
+     UP   er10>=0.5 band<=0.25   10    8,225   -33.59   65.98   -99.57  -0.51     +13.15  1.36    inside
+     UP   er10>=0.5 band<=0.25   20    6,588   -20.59   66.38   -86.97  -0.31     +21.73  2.43    inside
+     UP    er10>=0.5 band<=0.5    5   16,879   -40.60   66.66  -107.26  -0.61      +6.81  0.41    inside
+     UP    er10>=0.5 band<=0.5   10   12,508   -29.47   67.06   -96.53  -0.44     +10.80  1.05    inside
+     UP    er10>=0.5 band<=0.5   20    9,508   -14.04   67.22   -81.26  -0.21     +17.85  0.93    inside
+     UP   er21>=0.3 band<=0.25    5   10,411   -41.93   67.75  -109.69  -0.62      +8.75  0.41    inside
+     UP   er21>=0.3 band<=0.25   10    7,398   -46.55   67.60  -114.15  -0.69     +14.01  1.36    inside
+     UP   er21>=0.3 band<=0.25   20    5,651   -28.45   66.68   -95.14  -0.43     +23.39  2.43    inside
+     UP    er21>=0.3 band<=0.5    5   17,083   -38.20   67.73  -105.93  -0.56      +6.76  0.41    inside
+     UP    er21>=0.3 band<=0.5   10   11,624   -45.10   67.54  -112.64  -0.67     +11.09  1.05    inside
+     UP    er21>=0.3 band<=0.5   20    8,366   -32.43   67.27   -99.70  -0.48     +19.15  2.43    inside
+     UP   er21>=0.5 band<=0.25    5    2,136   -62.05   67.00  -129.05  -0.93     +18.54  1.70    inside
+     UP   er21>=0.5 band<=0.25   10    1,672   -50.31   66.78  -117.09  -0.75     +29.12  2.01    inside
+     UP   er21>=0.5 band<=0.25   20    1,474   -65.14   65.90  -131.04  -0.99     +43.43  2.93    inside
+     UP    er21>=0.5 band<=0.5    5    3,756   -50.73   67.42  -118.15  -0.75     +14.16  1.14    inside
+     UP    er21>=0.5 band<=0.5   10    2,847   -51.91   67.17  -119.08  -0.77     +21.94  2.01    inside
+     UP    er21>=0.5 band<=0.5   20    2,449   -55.97   66.26  -122.23  -0.84     +33.86  2.93    inside
+   DOWN   er10>=0.3 band<=0.25    5   13,029   -57.34   82.05  -139.38  -0.70      +6.62  0.43    inside
+   DOWN   er10>=0.3 band<=0.25   10    8,662   -61.09   82.86  -143.96  -0.74     +12.00  1.14    inside
+   DOWN   er10>=0.3 band<=0.25   20    5,984   -67.11   83.34  -150.44  -0.81     +20.03  1.50    inside
+   DOWN    er10>=0.3 band<=0.5    5   19,744   -53.80   81.33  -135.12  -0.66      +5.55  0.43    inside
+   DOWN    er10>=0.3 band<=0.5   10   12,424   -54.41   82.10  -136.51  -0.66      +9.87  0.73    inside
+   DOWN    er10>=0.3 band<=0.5   20    7,931   -53.76   82.92  -136.67  -0.65     +17.01  1.50    inside
+   DOWN   er10>=0.5 band<=0.25    5    7,055   -70.29   80.65  -150.94  -0.87      +9.53  0.81    inside
+   DOWN   er10>=0.5 band<=0.25   10    5,285   -83.42   81.61  -165.03  -1.02     +16.22  1.14    inside
+   DOWN   er10>=0.5 band<=0.25   20    4,159   -88.90   82.39  -171.28  -1.08     +23.93  1.50    inside
+   DOWN    er10>=0.5 band<=0.5    5   10,846   -67.42   79.90  -147.32  -0.84      +7.09  0.43    inside
+   DOWN    er10>=0.5 band<=0.5   10    7,827   -72.29   80.67  -152.97  -0.90     +12.86  1.14    inside
+   DOWN    er10>=0.5 band<=0.5   20    5,771   -71.46   81.73  -153.19  -0.87     +20.42  1.50    inside
+   DOWN   er21>=0.3 band<=0.25    5    7,735   -69.62   80.79  -150.41  -0.86      +8.93  0.81    inside
+   DOWN   er21>=0.3 band<=0.25   10    5,304   -76.42   81.92  -158.34  -0.93     +16.19  1.14    inside
+   DOWN   er21>=0.3 band<=0.25   20    3,876   -65.18   83.04  -148.22  -0.78     +24.69  1.50    inside
+   DOWN    er21>=0.3 band<=0.5    5   12,197   -69.73   79.68  -149.41  -0.88      +6.79  0.43    inside
+   DOWN    er21>=0.3 band<=0.5   10    8,030   -73.44   80.64  -154.08  -0.91     +12.64  1.14    inside
+   DOWN    er21>=0.3 band<=0.5   20    5,530   -77.74   81.88  -159.61  -0.95     +20.87  1.50    inside
+   DOWN   er21>=0.5 band<=0.25    5    2,031  -101.69   78.71  -180.40  -1.29     +19.29  1.57    inside
+   DOWN   er21>=0.5 band<=0.25   10    1,515  -101.94   79.16  -181.10  -1.29     +29.71  1.83    inside
+   DOWN   er21>=0.5 band<=0.25   20    1,250  -119.42   80.29  -199.71  -1.49     +44.59  2.65    inside
+   DOWN    er21>=0.5 band<=0.5    5    3,399   -96.43   75.87  -172.29  -1.27     +14.34  0.81    inside
+   DOWN    er21>=0.5 band<=0.5   10    2,483   -85.02   76.53  -161.55  -1.11     +23.41  1.83    inside
+   DOWN    er21>=0.5 band<=0.5   20    2,010   -63.61   78.23  -141.83  -0.81     +35.16  2.65    inside
+
+  [P] data\d399_stage0.json written before the verdict is rendered
+
+  THE PRIMARY CELL, both sides
+
+       UP  13,779 trades  gross -34.91  2c 66.75  net -101.66  ratio -0.52x  atlas +10.40 +/- 1.05  margin -43.0 SE
+     DOWN  8,662 trades  gross -61.09  2c 82.86  net -143.96  ratio -0.74x  atlas +12.00 +/- 1.14  margin -64.0 SE
+
+  Q3/Q4 -- does either side clear its atlas floor at the primary cap?
+       UP: gross -34.91 vs floor +10.40 -> does NOT clear
+     DOWN: gross -61.09 vs floor +12.00 -> does NOT clear
+
+  Q5 -- the best of the 8 cells at the primary cap, per side
+       UP: best is er10>=0.5 band<=0.5 at -29.47 on 12,508 trades (primary was -34.91)
+     DOWN: best is er10>=0.3 band<=0.5 at -54.41 on 12,424 trades (primary was -61.09)
+      A best-of-8 FLOOR is NOT computed here: H1 is only spent if H2 and H3 clear,
+      and section 6 orders the hurdles so nulls are never drawn on a failing cell.
+
+This is STAGE 0. No 15-minute bar was read, no null was drawn, nothing is admitted (R15).

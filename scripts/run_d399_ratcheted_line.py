@@ -290,6 +290,19 @@ def main() -> int:
     print(f"    [W][E] every event is past its name's own {UO.WINDOW}th bar and eligible",
           flush=True)
 
+    # ---- [L] THE LAG AUDIT, and it is the one this file got wrong first time --
+    # The event condition reads bar t's own close, so the mask handed to the kernel must be
+    # bar t-1's events. Proved here on the real grids, in a second implementation that never
+    # calls lag1_mask, and proved to RAISE on the unlagged mask the first run actually used.
+    for nm in ("UP", "DOWN"):
+        raw_T = np.ascontiguousarray(EV[nm].T)
+        pos_T = LA.lag1_mask(raw_T)
+        assert np.array_equal(pos_T[1:], raw_T[:-1]), f"[L] {nm} mask is not shifted one bar"
+        assert not pos_T[0].any(), f"[L] {nm} opens a position on bar 0"
+        LA.raises_on_broken(LA.assert_mask_is_lagged, raw_T, raw_T)
+    print(f"    [L] the event reads bar t's OWN close, so every mask is shifted before the "
+          f"kernel sees it; [X] the UNLAGGED mask RAISES", flush=True)
+
     # Q2: hysteresis against D398's raw-gradient state
     S_h = {"UP": UP, "DOWN": DOWN}
     q2 = {}
@@ -327,10 +340,10 @@ def main() -> int:
             is15[pos[s]] = True
 
     # ---- K0, on the primary --------------------------------------------------
-    (pw, pl), pb = PRIMARY
-    prim = {nm: EV[nm] & (er[pw] >= pl) & band[pb] for nm in EV}
+    (pw, pl), pb_ = PRIMARY
+    prim = {nm: EV[nm] & (er[pw] >= pl) & band[pb_] for nm in EV}
     k0 = {nm: int(prim[nm].sum()) for nm in prim}
-    print(f"\n  EVENTS -- raw touch, then the PRIMARY cell (er{pw}>={pl} AND band<={pb})\n")
+    print(f"\n  EVENTS -- raw touch, then the PRIMARY cell (er{pw}>={pl} AND band<={pb_})\n")
     for nm in ("UP", "DOWN"):
         print(f"    {nm:>5s}: {int(EV[nm].sum()):>8,} touches -> {k0[nm]:>8,} primary events "
               f"({int(prim[nm][is15].sum()):>6,} on the 48 with 15m bars)")
@@ -338,7 +351,7 @@ def main() -> int:
     res = dict(study=399, stage=0, spec="docs/decisions/D399-the-ratcheted-structural-line.md",
                build="us_shorts_daily_raw via load_ragged(dividend_bound=True); keep_v2 + F0; F0; "
                      "next-open fill (D340); EB.simulate_event via run_d359 (R16)",
-               delta=DELTA, h=H, primary=dict(er_window=pw, er_level=pl, band=pb, cap=PRIMARY_CAP),
+               delta=DELTA, h=H, primary=dict(er_window=pw, er_level=pl, band=pb_, cap=PRIMARY_CAP),
                hysteresis_vs_raw=q2,
                touches={k: int(m.sum()) for k, m in EV.items()},
                primary_events=k0,
@@ -364,7 +377,13 @@ def main() -> int:
         for (w, lv) in ER_CELLS:
             for x in BANDS:
                 m_nT = EV[nm] & (er[w] >= lv) & band[x]
-                mask = np.ascontiguousarray(m_nT.T)          # kernel masks are (T, n)
+                raw = np.ascontiguousarray(m_nT.T)           # kernel masks are (T, n)
+                # [L] THE EVENT READS BAR t'S OWN CLOSE, so it MUST be shifted before the
+                # kernel sees it. `simulate_event` treats its mask as the bar the position
+                # OPENS ON. Handing it the raw mask books the very down-move that created the
+                # event -- which is D391's look-ahead, and the first run of this file had it.
+                mask = LA.lag1_mask(raw)
+                LA.assert_mask_is_lagged(mask, raw)
                 for cap in CAPS:
                     run = V59.run_mirror if side == "long" else V59.run_short
                     r_ = run(P, mask, sc, "cap", cap)
@@ -374,6 +393,13 @@ def main() -> int:
                     p_ = V59.V47.pnl_bp(r_)
                     cost, half, px = V47.two_c(tr, P["HALF"]["PUB"], P["CLOSE"])
                     gross = float(p_.mean())
+                    # HOLD-DRIVEN or not (D289 seventh amendment): cost is ONE round trip
+                    # regardless of cap, so a longer hold raises gross per TRADE while per-BAR
+                    # edge may fall. Reporting only the trade figure hides which one moved.
+                    age = np.array([t_[2] for t_ in tr], float)
+                    rows = np.array([t_[0] for t_ in tr], int)
+                    d_ = dead[rows]
+                    tot = float(p_.sum())
                     try:
                         fl = AT.lookup(json.loads((REPO / "data" / "d392_atlas.json").read_text()),
                                        len(tr), cap, side)
@@ -388,6 +414,11 @@ def main() -> int:
                         net_bp=gross - float(cost),
                         ratio=gross / float(cost) if cost else None,
                         median_bp=float(np.median(p_)), win_rate=float((p_ > 0).mean()),
+                        mean_age=float(age.mean()),
+                        bp_per_bar=float(gross / age.mean()) if age.mean() else None,
+                        # Q6: the return-side survivorship question D398 could not answer
+                        dead_share_of_trades=float(d_.mean()),
+                        dead_share_of_gross=(float(p_[d_].sum() / tot) if tot else None),
                         atlas_p95=fp, atlas_se=fse,
                         clears_atlas=(None if fp is None else bool(gross > fp)),
                         margin_in_se=(None if not fse else float((gross - fp) / fse)))
@@ -408,10 +439,10 @@ def main() -> int:
 
 def render(res, dead, prim, is15, EV, er, band):
     C = res["cells"]
-    (pw, pl), pb = PRIMARY
+    (pw, pl), pb_ = PRIMARY
     print("\n  THE PRIMARY CELL, both sides\n")
     for nm in ("UP", "DOWN"):
-        k = f"{nm}|er{pw}>={pl}|band<={pb}|cap{PRIMARY_CAP}"
+        k = f"{nm}|er{pw}>={pl}|band<={pb_}|cap{PRIMARY_CAP}"
         c = C.get(k)
         if not c:
             print(f"    {nm}: no trades")
@@ -423,13 +454,40 @@ def render(res, dead, prim, is15, EV, er, band):
 
     print("\n  Q3/Q4 -- does either side clear its atlas floor at the primary cap?")
     for nm in ("UP", "DOWN"):
-        k = f"{nm}|er{pw}>={pl}|band<={pb}|cap{PRIMARY_CAP}"
+        k = f"{nm}|er{pw}>={pl}|band<={pb_}|cap{PRIMARY_CAP}"
         c = C.get(k)
         if c and c["atlas_p95"] is not None:
             v = "CLEARS" if c["clears_atlas"] else "does NOT clear"
             unres = abs(c["margin_in_se"] or 0) < 2.0
             print(f"    {nm:>5s}: gross {c['gross_bp']:+.2f} vs floor {c['atlas_p95']:+.2f} "
                   f"-> {v}" + ("  [UNRESOLVED: inside 2 SE, D369/D373]" if unres else ""))
+
+    print("\n  IS THE CAP GAIN HOLD-DRIVEN? (D289 seventh amendment)\n")
+    print(f"  {'dir':>5s} {'cell':>22s} " + " ".join(f"{'cap' + str(c):>18s}" for c in CAPS))
+    for nm in ("UP", "DOWN"):
+        for (w, lv) in ER_CELLS:
+            for x in BANDS:
+                row = []
+                for c in CAPS:
+                    k = f"{nm}|er{w}>={lv}|band<={x}|cap{c}"
+                    cc = C.get(k)
+                    row.append(f"{cc['gross_bp']:+7.2f} /{cc['bp_per_bar']:5.2f}bpb"
+                               if cc else f"{'-':>18s}")
+                pb = [C[f"{nm}|er{w}>={lv}|band<={x}|cap{c}"]["bp_per_bar"] for c in CAPS
+                      if f"{nm}|er{w}>={lv}|band<={x}|cap{c}" in C]
+                tag = "  HOLD-DRIVEN" if len(pb) == len(CAPS) and pb[-1] < pb[0] else ""
+                print(f"  {nm:>5s} {f'er{w}>={lv} band<={x}':>22s} " + " ".join(row) + tag)
+
+    print("\n  Q6 -- does the SHORT side's P&L live in the names that delist?\n")
+    print(f"  {'dir':>5s} {'cell':>22s} {'cap':>4s} {'dead % trades':>14s} {'dead % of gross':>16s}")
+    for nm in ("UP", "DOWN"):
+        for c in CAPS:
+            k = f"{nm}|er{pw}>={pl}|band<={pb_}|cap{c}"
+            cc = C.get(k)
+            if cc and cc["dead_share_of_gross"] is not None:
+                print(f"  {nm:>5s} {f'PRIMARY':>22s} {c:>4d} "
+                      f"{100 * cc['dead_share_of_trades']:>13.1f}% "
+                      f"{100 * cc['dead_share_of_gross']:>15.1f}%")
 
     print("\n  Q5 -- the best of the 8 cells at the primary cap, per side")
     for nm in ("UP", "DOWN"):
@@ -439,7 +497,7 @@ def render(res, dead, prim, is15, EV, er, band):
         b = max(cs, key=lambda c: c["gross_bp"])
         print(f"    {nm:>5s}: best is er{b['er_window']}>={b['er_level']} band<={b['band']} "
               f"at {b['gross_bp']:+.2f} on {b['trades']:,} trades "
-              f"(primary was {C[f'{nm}|er{pw}>={pl}|band<={pb}|cap{PRIMARY_CAP}']['gross_bp']:+.2f})")
+              f"(primary was {C[f'{nm}|er{pw}>={pl}|band<={pb_}|cap{PRIMARY_CAP}']['gross_bp']:+.2f})")
     print("      A best-of-8 FLOOR is NOT computed here: H1 is only spent if H2 and H3 clear,")
     print("      and section 6 orders the hurdles so nulls are never drawn on a failing cell.")
 
