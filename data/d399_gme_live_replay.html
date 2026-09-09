@@ -66,6 +66,9 @@ td{text-align:right;padding:6px 9px;border-bottom:1px solid var(--edge-soft);col
 td.k{color:var(--ink);font-weight:600}
 tr.ended td{color:var(--muted)}
 button.tiny{padding:3px 8px;font-size:11.5px}
+button.danger{color:var(--ink-2)}
+button.danger:hover:not(:disabled){border-color:var(--down);color:var(--down)}
+button#reset.on{background:var(--down);border-color:var(--down);color:#fff}
 .tblwrap{background:var(--panel);border:1px solid var(--edge);border-radius:4px;
   padding:4px 14px 10px;overflow-x:auto}
 .empty{padding:18px 12px;color:var(--muted);font-size:13.5px;text-align:center}
@@ -93,9 +96,15 @@ footer code{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
   <button id="sup" class="sup on">Support</button>
   <button id="res" class="res">Resistance</button>
   <button id="undo">Undo</button>
+  <button id="reset" class="danger">Reset all</button>
   <span class="status" id="status">local only</span>
   <span class="hint" id="hint">click a start point</span>
 </div>
+
+<p class="lede" style="font-size:13.5px">Each line you draw gets its own row below, with
+<b>revise</b> (keep the trend, change its slope from here), <b>end here</b> (the trend is over at
+this bar) and <b>delete</b> (it was a mistake — remove it entirely). <b>Reset all</b> clears
+everything and returns to the first bar.</p>
 
 <div class="chart"><svg id="c" viewBox="0 0 1240 480" role="img"
   aria-label="GME daily candles revealed one bar at a time, for drawing trendlines on"></svg></div>
@@ -230,7 +239,8 @@ points on the chart to lay one down.</div></div>
           <td>${rightEdge(L) - L.drawn_at + 1} bars</td>
           <td>${live ? '<i>live</i>' : 'bar ' + L.ended_at}</td>
           <td>${live ? `<button class="tiny" data-rev="${ix}">revise</button>
-                        <button class="tiny" data-end="${ix}">end here</button>` : ''}</td>
+                        <button class="tiny" data-end="${ix}">end here</button>` : ''}
+              <button class="tiny danger" data-del="${ix}">delete</button></td>
         </tr>`;
       }).join('') + '</tbody>';
     t.querySelectorAll('[data-end]').forEach(b => b.onclick = () => {
@@ -239,6 +249,9 @@ points on the chart to lay one down.</div></div>
     t.querySelectorAll('[data-rev]').forEach(b => b.onclick = () => {
       revising = +b.dataset.rev; pending = null;
       hint('revising — click two points for the new slope'); draw();
+    });
+    t.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+      lines.splice(+b.dataset.del, 1); revising = null; pending = null; draw(); save();
     });
   }
 
@@ -280,7 +293,26 @@ points on the chart to lay one down.</div></div>
   }
   document.getElementById('sup').onclick = () => setKind('support');
   document.getElementById('res').onclick = () => setKind('resistance');
-  document.getElementById('undo').onclick = () => { lines.pop(); pending = null; draw(); save(); };
+  document.getElementById('undo').onclick = () => {
+    lines.pop(); pending = null; revising = null; draw(); save();
+  };
+  // two-step, because it throws away a replay that takes a while to build
+  let armed = false, armTimer = null;
+  document.getElementById('reset').onclick = e => {
+    if (!armed) {
+      armed = true; e.currentTarget.textContent = 'Reset all — click again';
+      e.currentTarget.classList.add('on');
+      armTimer = setTimeout(() => {
+        armed = false; e.currentTarget.textContent = 'Reset all';
+        e.currentTarget.classList.remove('on');
+      }, 4000);
+      return;
+    }
+    clearTimeout(armTimer); armed = false;
+    e.currentTarget.textContent = 'Reset all'; e.currentTarget.classList.remove('on');
+    lines = []; pending = null; revising = null; cur = D.start_at;
+    hint('reset — click a start point'); draw(); save();
+  };
 
   draw();
 
