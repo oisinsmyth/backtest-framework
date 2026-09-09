@@ -3975,3 +3975,133 @@ removes a doubt about the measurement, not about the money.**
 **And S1 and S4's own ICs are unmeasured** — their bars are too scattered for a cross-sectional IC to
 carry enough names per day. The 5.84% of `open == prior close` bars are excluded by the CLEAN cut,
 but what they would have scored is not known.
+
+---
+
+## 59. A best-of-N permutation floor prices SELECTION and is blind to SIGN-FITTING: a composite of sixteen pure-noise signals clears it by 1.28
+
+**Measured 2026-09-09.** `scripts/probe_signfit_floor.py` → `data/signfit_floor_probe.json`.
+Closed form **and** a 200,000-draw simulation, required to agree. **No fixture is involved** —
+this is sampling theory about a method, not a result about any data.
+
+**Provenance, stated because it matters to how the finding should be weighted.** The claim
+arrived in an external-evidence brief commissioned for lead C1 of
+[`the-negative-space-scan.md`](../docs/research/the-negative-space-scan.md)
+(`working/leads/C1-combination.md`). **It is recorded here because it was re-derived and
+verified here, not because the brief said it.** The underlying algebra is attributed in the
+brief to Novy-Marx (2016), which has **not** been read by this programme.
+
+### The mechanism
+
+For `k` uncorrelated, equal-volatility signals combined equal-weight,
+`t_combo = √k · mean(t_i)`. **Orthogonality therefore multiplies detectability by `√k`.**
+Signing each signal by its own in-sample `t` replaces `t_i` with `|t_i|`, so under the null of
+`k` **worthless** signals:
+
+```
+E[t_combo] = √(2/π) · √k         sd[t_combo] = √(1 − 2/π) ≈ 0.603,  FREE OF k
+```
+
+The sd is `k`-free because the `√k` multiplier and the `1/√k` of the mean cancel exactly.
+
+### The number that matters, at k = 16
+
+| | p95 under pure noise |
+|---|---:|
+| **best-of-16 `\|t\|`** — what a best-of-N floor prices | **2.95** |
+| **sign-fitted equal-weight composite** | **4.23** |
+| signs **pre-declared in writing** | **1.65** |
+
+> **A COMPOSITE OF SIXTEEN PURE-NOISE SIGNALS CLEARS THE SELECTION FLOOR BY +1.28.** Selection
+> and sign-fitting are **different biases**, and a floor for one is not a floor for the other.
+> The second exists **even when nothing is selected**.
+
+### What this does and does not say about the D395 floor
+
+**It does not say the floor is wrong.** [`CLAUDE.md`](../CLAUDE.md) records the exact
+permutation floor in `run_d395_chop.py` — best-of-N for a cell picked from a grid, no
+independence assumption — and says it should replace normal-approximation floors programme-wide.
+**That stands. It is correct for what it prices.**
+
+**It says the floor must be EXTENDED wherever a construction orients its own components in
+sample:** the null must draw synthetic components and **sign them the same way the treatment
+does**. Any composite, any voting rule, any "z-score the inputs and add them" construction is in
+scope.
+
+**And pre-declaring every sign in writing is worth a factor of ~2 in the hurdle (4.23 → 1.65)
+for no computation at all** — the cheapest hurdle reduction this programme has been offered, and
+a writing discipline rather than a method.
+
+### The correction it forces on §-adjacent reasoning about D280
+
+**[D280](decisions/D280-the-forecast-precheck.md)'s gloss on its own independence result was
+backwards, and this record says so plainly.** The written position was that sixteen OHLC
+derivative terms carrying 13.50–15.76 *effective* inputs and no individual predictive power were
+*"sixteen independent sources of noise, with no redundancy left to average away."*
+
+**Orthogonality is the thing that helps.** At 13.5–15.8 effective inputs the `√k` multiplier is
+**3.7–4.0×**; the nine price scores at D268's **2.87** effective inputs buy only **1.69×**.
+**By this programme's own two measurements, the family it dismissed is the better combination
+candidate and the family it kept is the worse one.**
+
+**What remains true from D280 is the empirical part** — those sixteen terms carry no predictive
+power *as levels*, measured. **What is withdrawn is the inference** that independence makes
+combination hopeless. **Nothing here says a combination works; it says the argument given for
+why it could not was wrong, and that the honest test needs the sign-fitting null above.**
+
+### Scope, so this is not over-read
+
+The closed form assumes **uncorrelated, equal-volatility** components. Real signals are neither
+— this programme's own catalogue collapses nine price scores to 2.87 effective inputs. **These
+are calibration values for how a floor must be built, not a verdict on any actual study**, and
+no study in this record has been re-floored against them.
+
+---
+
+## 60. `etf_wide_daily_raw` is not an ETF fixture: a quarter of it is closed-end funds and 23 of its 24 deaths are fund wind-ups
+
+**Measured 2026-09-09.** `scripts/probe_etf_fixture_composition.py` →
+`data/etf_fixture_composition.json`. **Found in passing** by an external-evidence agent working
+on an unrelated lead, on a fixture **D382, D384 and D385 have already run on**.
+
+### What was measured
+
+The fixture carries no instrument-type field, so classification used a **distribution
+signature** — closed-end funds characteristically pay **monthly** and at **high yields**, because
+a managed-distribution policy is the product. **The rule was declared before the counts were
+read** (≥10 payments/yr **and** ≥5% annualised yield) and is deliberately strict, so **every
+count below is a LOWER BOUND.**
+
+| | |
+|---|---|
+| CEF distribution signature | **150 of 551 = 27.2%** *(an independent count in the brief, using exchange listing flags, gave **172 = 31.2%**)* |
+| the mortality cohort | **23 of 24 dead names are closed-end funds by inspection.** The single exception, `ELON`, paid no distributions at all |
+| distributions absent from `close` | whole fixture median **3.06%/yr**, mean 5.15%; **CEF cohort median 10.54%/yr** |
+| terminal-wealth understatement, 16 years | **5.37×** on the CEF cohort |
+
+> **A "DEAD-INCLUSIVE" FIXTURE WHOSE DEATHS ARE FUND TERM MATURITIES AND MERGERS IS NOT
+> MEASURING DELISTING RISK AT ALL.** The cohort that was supposed to remove survivorship bias is
+> made of orderly fund wind-ups, which are not the failure mode the bias is about.
+
+The fixture's `purpose` field also reads *"US single-name equity base for SHORT-SIDE research"* —
+a copy-paste artefact from the equity fixture, on a file of 551 funds.
+
+### What is at stake, checked rather than assumed
+
+**All three studies pass the events file to `load_ragged`, so their P&L used `total_log_returns`
+and is NOT affected.** What is affected is **anything reading `closes` as a price LEVEL** — which
+is exactly the log-price axis [D384](decisions/D384-the-EMA-centred-log-space-structure-density.md)
+and D385 built their density on, **bled by ~10.5%/yr across a quarter of the universe.**
+
+**That line is retired**, so the live stake is **the fixture itself and any future study that
+opens it.** No record is withdrawn here and no metadata was edited — **a correction to the
+fixture, and any re-read of those three records, is the principal's call.**
+
+### The rule this earns
+
+**A fixture's NAME is not its composition, and a status count is not a cause of death.** The
+`status_counts` field said `delisted: 22` and was believed; what it did not say, and what nothing
+checked, was **what kind of instrument died and why.** This is the third place the programme has
+been caught by an unexamined corporate-action or instrument basis, after the 15m-vs-daily
+adjustment split and the thirty fabricated dividend days of §18. **Census the instrument types
+and the death causes when a fixture is built, not when an unrelated agent trips over them.**

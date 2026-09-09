@@ -366,6 +366,74 @@ committed to `data/`.
 **RE-RANKED 2026-09-09 (later), after D383 was run and the prop instrument was priced. THE QUEUE IS
 EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not commitments.
 
+> ### 0d0. THE NEGATIVE-SPACE SCAN AND ITS SEVEN EXTERNAL BRIEFS, 2026-09-09 — **NO STRATEGY WAS FOUND, AND THE THREE THINGS WORTH KEEPING ARE NOT STRATEGIES**
+>
+> **[`docs/research/the-negative-space-scan.md`](docs/research/the-negative-space-scan.md)**
+> (`bbc2790`, consolidated `00eaccb`). A scan of the categories the record had **never** put in a
+> runner, scored on seven axes drawn from what has actually killed studies here. **Then seven
+> agents researched the published literature, one per lead, briefs in `working/leads/` under that
+> directory's quarantine contract.**
+>
+> **NOTHING WAS BACKTESTED. NO CANDIDATE EXISTS. NO CELL WAS SCORED, NO NULL DRAWN, NO HOLDOUT
+> TOUCHED, AND BOTH BOOKS ARE UNCHANGED.** One lead was pre-registered; the rest are leads.
+>
+> **The three findings that outlive the scan, and each was RE-MEASURED here rather than quoted:**
+>
+> 1. **[FINDINGS §59](docs/FINDINGS.md) — a best-of-N floor prices SELECTION and is blind to
+>    SIGN-FITTING.** At k=16 a composite of **pure noise** clears the selection floor by **+1.28**
+>    (2.95 vs 4.23). **Pre-declaring every sign in writing is worth a factor of ~2 in the hurdle
+>    (4.23 → 1.65) for no computation** — the cheapest hurdle reduction on offer here. The D395
+>    floor is *not* wrong; it must be **extended** wherever a construction orients its own
+>    components in sample.
+> 2. **[FINDINGS §60](docs/FINDINGS.md) — `etf_wide_daily_raw` IS NOT AN ETF FIXTURE.** **≥27.2%
+>    closed-end funds** and **23 of its 24 deaths are fund wind-ups**, on a fixture **D382, D384
+>    and D385 already ran on**. Their P&L used total return and is unaffected; what is affected is
+>    anything reading `closes` as a **level**. **A metadata correction and any re-read is the
+>    principal's call** — nothing was edited.
+> 3. **D280's own gloss was backwards.** Orthogonality **multiplies** detectability by `√k`
+>    (3.7–4.0× for the OHLC family against 1.69× for the nine price scores). The empirical part of
+>    D280 stands; **the inference that independence makes combination hopeless is withdrawn.**
+>
+> **The leads, after the evidence.** **C1** (combining the 16 OHLC terms) **rose from last to
+> first** — it now has a nameable form and a concrete hurdle. **X2 is dead** on measurement.
+> **K1, N1, V1 and X1 all fell hard**, each on a specific published quantity, not a vibe.
+> **R1 is [D404](docs/decisions/D404-the-cross-asset-state.md), pre-registered and amended.**
+>
+> **One construction surfaced that is NOT ours and has never been tested here:** two agents that
+> never communicated converged on **industry-relative reversal in liquid names with a
+> low-volatility screen** (+0.31%/mo, t=2.73, value-weighted, large-cap) as the only cost-surviving
+> thing in the area — **and in both accounts it is the COST FILTER doing the rescuing, not the
+> residualisation.** It would need its own pre-registration.
+>
+> **The quarantine rule paid for itself immediately: the brief that read most confidently (R1's)
+> was the one whose two headline construction claims did NOT survive measurement.** Treat an
+> enthusiastic brief with more suspicion than a damning one.
+
+> ### 0d1. D404 — THE CROSS-ASSET STATE, PRE-REGISTERED AND AMENDED, RUNNER DOES NOT EXIST
+>
+> **[D404](docs/decisions/D404-the-cross-asset-state.md)** (`fd4275e`, amended `c88673a`). All 52
+> catalogue scores are functions of one name's own OHLCV; the one exception builds its market
+> return from the panel's own cross-section. **No study has ever gated an equity book on another
+> asset class.** The two fixtures' grids are **identical bar for bar** (4,187 dates), so the join
+> needs no fetch — **the whole of the new code is the `raw` array.**
+>
+> **Its second question is why it exists:** D389's factor is **98.5% unexplained in arm B** and all
+> four tested candidates were *internal* to the book's machinery. `data/d376_series.npz` already
+> holds the 500-book matrix on the same grid, so testing a market-level state against it is nearly
+> free.
+>
+> **§12a amendment, before the runner exists.** One alleged defect **false** (drift −0.92%/yr, not
+> 2–5%, and the imbalance runs the other way), one **confirmed** (`(XLU+XLP)/(XLY+XLK)` is a sum of
+> share prices; a synthetic split moves it 0.338 log units), and **one found that neither party
+> had: a trailing-median rule on a TRENDING series is a TREND RULE, not a state classifier.**
+> `DEFENSIVE` sits on one side 71% of the time and equal-weighting does not fix it. **A new `[BAL]`
+> assertion fails any state outside 40–60%; `DEFENSIVE` fails it today.**
+>
+> **Recorded, not adopted:** the literature places credit/curve predictability at **quarters to
+> years**, not the 20 days D404 inherited. None of those papers has been read here. **The runner
+> must report the whole horizon curve h ∈ {5…252}, and if h=20 is the PEAK that is an overfitting
+> flag, not a confirmation.**
+
 **TWO AVENUES WERE CLOSED BY THE PRINCIPAL ON 2026-09-09 —
 [D401](docs/decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md):
 the WINNERS' DIP and the 15-MINUTE TIME-SERIES STRUCTURE SCREEN.** Both are shut and neither will be
