@@ -185,3 +185,65 @@ each.** The runner now asserts that number is non-zero, so the guard cannot quie
 **Status footer.** A measurement. No strategy was scored, no return was computed, no operating
 point was chosen, no 15-minute bar was read, nothing was admitted, and no holdout read was spent.
 `docs/BOOK.md` holds S1 and S2, neither at capital; `docs/BOOK_PROP.md` is empty.
+
+---
+---
+
+# RESULT, AMENDMENT 9 — the level dead band cuts the 95%, and it is a pure filter: it buys no onsets
+
+**Appended 2026-09-09.** Pre-registered in [D398 §9](D398-the-structural-state-premise-check.md),
+committed before the sweep's runner existed. **1 second.** Still a measurement: no P&L, nothing
+admitted, no holdout read.
+
+**[D0] δ = 0 reproduces §1 bar-for-bar on all four cells**, asserted — without it the sweep would
+be measuring a different object.
+
+## A9.1 The sweep
+
+| δ | ann. | dir | **all 1,573 — % addr** | episodes | med len | **the 48 — % addr** | episodes | med len |
+|--:|--:|---|--:|--:|--:|--:|--:|--:|
+| 0 | 0.0% | UP | **58.49%** | 9,580 | 99 | **58.26%** | 452 | 175 |
+| 0 | 0.0% | DOWN | **36.16%** | 9,155 | 60 | **36.45%** | 524 | 92 |
+| 1e-4 | 2.5% | UP | 55.24% | 9,377 | 103 | 55.33% | 457 | 169 |
+| 1e-4 | 2.5% | DOWN | 33.24% | 8,830 | 56 | 33.41% | 503 | 87 |
+| 2e-4 | 5.2% | UP | 51.92% | 9,290 | 99 | 52.21% | 456 | 166 |
+| 2e-4 | 5.2% | DOWN | 30.43% | 8,473 | 53 | 30.63% | 478 | 84 |
+| 5e-4 | 13.4% | UP | 41.95% | 8,749 | 89 | 42.73% | 444 | 141 |
+| 5e-4 | 13.4% | DOWN | 23.11% | 7,012 | 51 | 23.20% | 387 | 82 |
+| **1e-3** | **28.7%** | **UP** | **26.69%** | **6,915** | 73 | **26.97%** | **392** | 106 |
+| **1e-3** | **28.7%** | **DOWN** | **14.59%** | **5,253** | 41 | **15.19%** | **317** | 59 |
+| 2e-3 | 65.5% | UP | 9.62% | 3,270 | 55 | 8.82% | **170** | 70 |
+| 2e-3 | 65.5% | DOWN | 5.93% | 2,755 | 28 | 6.02% | **172** | 38 |
+
+## A9.2 What it says
+
+**The level band does what hysteresis could not.** At **δ = 1e-3 — a trend of 28.7% a year — the
+combined state frequency falls from ~95% to ~42%** (UP 26.7%, DOWN 14.6%), and on the 48
+15m-reachable names it still leaves **709 onsets** (392 UP + 317 DOWN) across 48 and 46 names.
+
+**δ = 2e-3 is too far.** It drops names entirely — 48 → 40 for UP and 39 for DOWN — which is a
+selection effect on top of a filter, and onsets collapse to ~170 a side.
+
+## A9.3 Predictions
+
+| | verdict |
+|---|---|
+| **Q7** at δ = 1e-4, UP still above 50% | **HELD** — 55.24% and 55.33% |
+| **Q8** the halving δ lies in [5e-4, 2e-3] | **HELD** — between 5e-4 (41.95%) and 1e-3 (26.69%) on both universes |
+| **Q9** episode count peaks in the interior | **FAILED on three of four cells.** Monotone falling everywhere except the 48's UP, which peaks at δ = 1e-4 by **5 episodes out of 452** — noise, not a peak |
+| **Q10** DOWN reaches a given frequency at smaller δ | **HELD** — 25% needs δ ≈ 4.5e-4 for DOWN against ≈ 1e-3 for UP |
+
+> **Q9's failure is the useful one, and it changes the entry design.** I predicted a level
+> threshold would *fragment* long episodes before eliminating them, which would have bought onsets
+> while removing bars. **It does not: median episode length falls monotonically too** (UP 99 → 55
+> on the 1,573). **The band is a pure filter — every onset it removes is gone, and it creates
+> none.** So δ is paid for entirely in sample size, and it must be chosen once, on the frequency it
+> buys, and never swept against an outcome.
+
+## A9.4 What this does NOT settle
+
+- **The hysteresis and the ratchet are still unbuilt.** §9a's distinction stands: a band on the
+  gradient's *change* stabilises the line and leaves frequency alone. It belongs in the
+  construction record, with its own mechanism.
+- **δ is not chosen here.** 1e-3 is where the arithmetic points; the choice is the principal's.
+- **Nothing about return, cost, or the short leg's P&L.** All still open.

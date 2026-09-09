@@ -122,11 +122,51 @@ def warm_mask(live, w):
     return out
 
 
-def states(g_lo, g_hi, warm=None):
+def states(g_lo, g_hi, warm=None, delta=0.0):
+    """`delta` is the LEVEL dead band of amendment 9 -- both slopes must clear it in the state's
+    own direction. delta=0.0 is the section 1 definition exactly and is the sweep's control.
+
+    NOT to be confused with a dead band on the gradient's CHANGE (hysteresis), which stabilises
+    the line and leaves the frequency alone. Amendment 9a is the distinction."""
     ok = np.isfinite(g_lo) & np.isfinite(g_hi)
     if warm is not None:
         ok = ok & warm
-    return {"UP": (g_lo > 0) & (g_hi > 0) & ok, "DOWN": (g_lo < 0) & (g_hi < 0) & ok}
+    return {"UP": (g_lo > delta) & (g_hi > delta) & ok,
+            "DOWN": (g_lo < -delta) & (g_hi < -delta) & ok}
+
+
+# the level dead band, in log-return per bar, frozen in amendment 9b before any cell was computed
+DELTAS = (0.0, 1e-4, 2e-4, 5e-4, 1e-3, 2e-3)
+BARS_PER_YEAR = 252
+
+
+def delta_sweep(g_lo, g_hi, warm, elig, live, rows_by_universe):
+    """Amendment 9: frequency, episodes and durations at each level dead band."""
+    out = {}
+    for uni, rows in rows_by_universe.items():
+        addr = int((elig & live & warm)[rows].sum())
+        for d in DELTAS:
+            S = states(g_lo, g_hi, warm, d)
+            for nm, msk in S.items():
+                m = (msk & elig)[rows]
+                lens = []
+                eps = 0
+                for i in range(m.shape[0]):
+                    st, ln = episodes_of(m[i])
+                    eps += st.size
+                    lens.append(ln)
+                L = np.concatenate(lens) if lens else np.empty(0, int)
+                bars = int(m.sum())
+                out[f"{uni}|{nm}|{d:g}"] = dict(
+                    universe=uni, direction=nm, delta=d,
+                    annualised=round(float(np.expm1(BARS_PER_YEAR * d)), 4),
+                    bars_in_state=bars,
+                    share_of_addressable=round(bars / addr, 5) if addr else None,
+                    episodes=int(eps),
+                    median_len=float(np.median(L)) if L.size else None,
+                    p90_len=float(np.quantile(L, .90)) if L.size else None,
+                    names_hit=int((m.sum(axis=1) > 0).sum()))
+    return out
 
 
 def sma_own(v_nT, live_nT, w):
@@ -522,6 +562,19 @@ def main() -> int:
             res["cells"][f"{universe}|{nm}"] = summarise(msk[rows], el_u, lv_u, wm_u, dd_u,
                                                          er_u, bd_u)
 
+    # amendment 9 -- the LEVEL dead band sweep
+    t3 = time.time()
+    res["delta_sweep"] = delta_sweep(g_lo, g_hi, warm, elig, live,
+                                     {"all_1573": all_rows, "reachable_15m": slice15})
+    # the control MUST reproduce section 1 exactly, or the sweep is measuring a different object
+    for uni in ("all_1573", "reachable_15m"):
+        for nm in ("UP", "DOWN"):
+            a = res["delta_sweep"][f"{uni}|{nm}|0"]["bars_in_state"]
+            b = res["cells"][f"{uni}|{nm}"]["bars_in_state"]
+            assert a == b, f"[D0] delta=0 gives {a:,} bars for {uni}|{nm}, section 1 gives {b:,}"
+    print(f"  delta sweep in {time.time() - t3:.0f}s | [D0] delta=0 reproduces section 1 "
+          f"bar-for-bar on all four cells", flush=True)
+
     # [P] persist BEFORE rendering
     OUT.write_text(json.dumps(res, indent=1))
     print(f"\n  [P] {OUT.relative_to(REPO)} written before anything is rendered "
@@ -594,6 +647,31 @@ def render(res):
         print(f"    {u:>14s} {d:>5s}: {c['episodes']:>8,} onsets  vs  "
               f"{c['bars_in_state']:>10,} bars in state  "
               f"({c['bars_in_state'] / max(c['episodes'], 1):.0f} bars per episode)")
+
+    D = res.get("delta_sweep")
+    if D:
+        print("\n  THE LEVEL DEAD BAND (amendment 9) -- does a steeper bar cut the 95%?\n")
+        for uni in ("all_1573", "reachable_15m"):
+            print(f"    {uni}")
+            print(f"      {'delta':>8s} {'ann %/yr':>9s} {'dir':>5s} {'bars':>11s} {'% addr':>8s} "
+                  f"{'episodes':>9s} {'med len':>8s} {'p90':>6s} {'names':>6s}")
+            for d in DELTAS:
+                for nm in ("UP", "DOWN"):
+                    c = D[f"{uni}|{nm}|{d:g}"]
+                    print(f"      {d:>8.4g} {100 * c['annualised']:>8.1f}% {nm:>5s} "
+                          f"{c['bars_in_state']:>11,} "
+                          f"{100 * (c['share_of_addressable'] or 0):>7.2f}% {c['episodes']:>9,} "
+                          f"{c['median_len'] or 0:>8.0f} {c['p90_len'] or 0:>6.0f} "
+                          f"{c['names_hit']:>6,}")
+            print()
+        print("    Q9 -- does the EPISODE COUNT peak in the interior?")
+        for uni in ("all_1573", "reachable_15m"):
+            for nm in ("UP", "DOWN"):
+                seq = [D[f"{uni}|{nm}|{d:g}"]["episodes"] for d in DELTAS]
+                top = int(np.argmax(seq))
+                interior = 0 < top < len(DELTAS) - 1
+                print(f"      {uni:>14s} {nm:>5s}: {seq}  peak at delta="
+                      f"{DELTAS[top]:g} -> {'INTERIOR, Q9 holds' if interior else 'at an END, Q9 fails'}")
 
     print("\nThis is a MEASUREMENT. No return was computed, no operating point was chosen,")
     print("no 15-minute bar was read, and it admits nothing (R15).")
