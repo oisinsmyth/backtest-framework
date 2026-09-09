@@ -255,6 +255,14 @@ is exactly ρ̄ = 0.0994** under the design-effect formula — internally consis
 **A citation hazard:** a 1999 paper's stationary-bootstrap variance is **wrong** (sign error), and a
 2004 paper's bound plus **all four of its simulation tables** are superseded.
 
+> **THE ONE INPUT THAT DECIDES WHETHER ANY OF §1.7 BITES, AND `H6` COULD NOT GET IT.** Its own
+> chief unverified item: **there is no citable modern figure for the daily autocorrelation of an
+> equal-weighted US book.** Everything above is a ρ-table; **without that ρ, this programme cannot
+> be placed on it.** `H6`'s two halves point in opposite directions — 20 is harmlessly too long on
+> returns and dangerously too short on persistent state — so **which half applies is not a matter
+> of judgement, it is a matter of one number nobody has.** It is measurable here in minutes and is
+> **not measured**, because this record is research only.
+
 ### 1.8 ROUTE (b) GOT ITS FIRST CLEAN TEST, AND THE RESULT IS NOT A VERDICT ON ROUTE (b)
 
 **From `H3`.** Route (b) — *the move is large and slow relative to the spread, so the toll is a
@@ -333,8 +341,11 @@ and exchange**, verified on a 1996 dismissed case and a later-bankrupt 2004 sett
 dates are free on public case pages but **prefixed *"On or around"***, corroborating the
 date-imprecision diagnosis exactly. **SEC AAERs carry no CIK or ticker.**
 
-**A domain trap worth keeping:** in this field *"event study"* means the **expert-witness damages
-exercise**, so searches return law-firm marketing rather than research.
+**A domain trap worth keeping, because it wastes a researcher's whole budget.** In securities
+litigation *"event study"* is a **term of art for the expert-witness damages exercise** — the
+`Halliburton II` price-impact calculation — **not for the empirical method of that name.** Searching
+the obvious phrase returns **law-firm marketing**, not research. `H2` names this explicitly so the
+next agent does not lose the same hours.
 
 ## 4. `H3` — FDA and trial calendars · **CLOSED ON RETURNS AND SEPARATELY BLOCKED ON DATA**
 

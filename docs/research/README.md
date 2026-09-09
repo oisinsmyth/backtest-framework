@@ -172,6 +172,10 @@ reached for one.
 13. **Does this session's regime-conditioner calibration need re-blocking?** It used ~26 bars per
     block on correlations of slow-moving conditioners, where the selector wants ~157. **Flagged,
     not checked.**
+14. **MEASURE THE DAILY AUTOCORRELATION OF AN EQUAL-WEIGHTED BOOK.** This is the single input that
+    decides whether #12's block-length finding bites at all — the two halves point in opposite
+    directions and **which one applies is one number, not a judgement.** `H6` searched and found
+    **no citable modern figure for it.** Minutes to compute here.
 
 ---
 
