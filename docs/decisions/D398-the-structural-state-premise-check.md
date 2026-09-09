@@ -196,3 +196,61 @@ rather than what the market did.
 
 **Status footer.** No runner exists. `docs/BOOK.md` holds S1 and S2, neither at capital;
 `docs/BOOK_PROP.md` is empty. Nothing here is a result.
+
+---
+
+## 9. AMENDMENT, 2026-09-09 — the LEVEL dead band, declared before its runner exists
+
+**Committed after the §1–§8 result, before any δ cell is computed.** Still a MEASUREMENT: counts
+and durations, no P&L, admits nothing.
+
+### 9a. Why, and the distinction it turns on
+
+The result found the state is on **58.5% (UP) / 36.2% (DOWN)** of addressable bars — together ~95%.
+The principal's response was to ask for stricter lines via **a dead band on the gradient's CHANGE**
+(hysteresis, so the held gradient does not update until a refit moves it by more than the band).
+
+**Hysteresis does not reduce state frequency, and the record should say so before it is built.**
+`UP := g_lo > 0 AND g_hi > 0`. Making `g` stickier does not make it less often positive. Two
+different objects share the name "dead band":
+
+| dead band on | effect |
+|---|---|
+| **Δg — the change** | reduces line churn; **stabilises the level**. State frequency essentially unchanged |
+| **\|g\| — the level** | **this is what cuts the 95%**: the trend must be *steep*, not merely positive |
+
+**This amendment measures the second.** The first is a state machine that belongs in the
+construction record, not here.
+
+### 9b. The sweep, frozen
+
+```
+    UP(δ)   := g_lo >  δ  AND  g_hi >  δ
+    DOWN(δ) := g_lo < -δ  AND  g_hi < -δ
+```
+
+**δ ∈ {0, 1e-4, 2e-4, 5e-4, 1e-3, 2e-3}**, in log-return per bar — δ = 0 reproduces §1 exactly and
+is the control. Annualised equivalents (`exp(252δ) − 1`) are reported beside every row so the grid
+is readable: **0%, 2.6%, 5.2%, 13.4%, 28.7%, 65.3% per year.**
+
+Reported per δ, per direction, per universe: bars-in-state, share of addressable, episodes, median
+and p90 episode length. **Same two universes, same warm-up, same eligibility.**
+
+### 9c. Predictions
+
+| | prediction |
+|---|---|
+| **Q7** | **δ has to be large before it bites**: at δ = 1e-4 (2.6%/yr) UP is still on **more than 50%** of addressable bars |
+| **Q8** | the δ that **halves** UP frequency (to ≈29%) lies between **5e-4 and 2e-3** |
+| **Q9** | **episode COUNT rises before it falls** — a level threshold fragments long episodes before it eliminates them, so the count peaks at an *interior* δ rather than falling monotonically |
+| **Q10** | **DOWN needs a smaller δ than UP** to reach any given frequency, since DOWN starts rarer |
+
+**Q9 is the one that is not arithmetic.** Frequency must fall monotonically in δ because the masks
+are nested — that is a tautology and is not predicted. **Episode count need not**, and if it peaks
+in the interior then a level dead band *buys* onsets while it removes bars, which changes what the
+entry rule should be.
+
+### 9d. What this does not do
+
+It does not implement the hysteresis or the ratchet, does not choose δ, computes no return, and
+opens or closes nothing (R15).
