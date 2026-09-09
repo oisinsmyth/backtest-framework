@@ -1,0 +1,260 @@
+{
+ "symbol": "GME",
+ "start_bar": 2429,
+ "n": 260,
+ "tolerances": [
+  0.0,
+  0.01,
+  0.03
+ ],
+ "note": "DIAGNOSTIC. Asks the principal's own lines what ended them. Nothing scored.",
+ "lines": [
+  {
+   "kind": "support",
+   "i0": 3,
+   "i1": 60,
+   "span": 58,
+   "date0": "2019-09-03",
+   "date1": "2019-11-21",
+   "g_per_bar": 0.006660235324467372,
+   "breaks": {
+    "0": {
+     "first_break_after_end": 73,
+     "bars_past_end": 13,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 71
+    },
+    "0.01": {
+     "first_break_after_end": 73,
+     "bars_past_end": 13,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 71
+    },
+    "0.03": {
+     "first_break_after_end": 73,
+     "bars_past_end": 13,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 71
+    }
+   }
+  },
+  {
+   "kind": "support",
+   "i0": 106,
+   "i1": 151,
+   "span": 46,
+   "date0": "2020-01-30",
+   "date1": "2020-04-03",
+   "g_per_bar": -0.009153983438401191,
+   "breaks": {
+    "0": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 2,
+     "first_break_inside": 107,
+     "life_under_break_rule": 154
+    },
+    "0.01": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 1,
+     "first_break_inside": 125,
+     "life_under_break_rule": 154
+    },
+    "0.03": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 154
+    }
+   }
+  },
+  {
+   "kind": "support",
+   "i0": 179,
+   "i1": 224,
+   "span": 46,
+   "date0": "2020-05-14",
+   "date1": "2020-07-20",
+   "g_per_bar": -0.0010926449734771058,
+   "breaks": {
+    "0": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 81
+    },
+    "0.01": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 81
+    },
+    "0.03": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 81
+    }
+   }
+  },
+  {
+   "kind": "support",
+   "i0": 239,
+   "i1": 249,
+   "span": 11,
+   "date0": "2020-08-10",
+   "date1": "2020-08-24",
+   "g_per_bar": 0.008701137698962974,
+   "breaks": {
+    "0": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 21
+    },
+    "0.01": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 21
+    },
+    "0.03": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 21
+    }
+   }
+  },
+  {
+   "kind": "resistance",
+   "i0": 8,
+   "i1": 40,
+   "span": 33,
+   "date0": "2019-09-10",
+   "date1": "2019-10-24",
+   "g_per_bar": 0.007819515934902516,
+   "breaks": {
+    "0": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 2,
+     "first_break_inside": 23,
+     "life_under_break_rule": 252
+    },
+    "0.01": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 2,
+     "first_break_inside": 23,
+     "life_under_break_rule": 252
+    },
+    "0.03": {
+     "first_break_after_end": null,
+     "bars_past_end": null,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 252
+    }
+   }
+  },
+  {
+   "kind": "resistance",
+   "i0": 87,
+   "i1": 138,
+   "span": 52,
+   "date0": "2020-01-02",
+   "date1": "2020-03-17",
+   "g_per_bar": -0.006476644880657728,
+   "breaks": {
+    "0": {
+     "first_break_after_end": 144,
+     "bars_past_end": 6,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 58
+    },
+    "0.01": {
+     "first_break_after_end": 145,
+     "bars_past_end": 7,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 59
+    },
+    "0.03": {
+     "first_break_after_end": 145,
+     "bars_past_end": 7,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 59
+    }
+   }
+  },
+  {
+   "kind": "resistance",
+   "i0": 157,
+   "i1": 235,
+   "span": 79,
+   "date0": "2020-04-14",
+   "date1": "2020-08-04",
+   "g_per_bar": -0.0039957789711417896,
+   "breaks": {
+    "0": {
+     "first_break_after_end": 236,
+     "bars_past_end": 1,
+     "breaks_inside_span": 3,
+     "first_break_inside": 170,
+     "life_under_break_rule": 80
+    },
+    "0.01": {
+     "first_break_after_end": 242,
+     "bars_past_end": 7,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 86
+    },
+    "0.03": {
+     "first_break_after_end": 243,
+     "bars_past_end": 8,
+     "breaks_inside_span": 0,
+     "first_break_inside": null,
+     "life_under_break_rule": 87
+    }
+   }
+  }
+ ],
+ "summary": {
+  "0": {
+   "median_bars_past_end": 6.0,
+   "n_broken_at_or_within_5": 1,
+   "median_life_under_break_rule": 80.0,
+   "lines_with_a_break_inside": 3,
+   "median_breaks_inside": 0.0
+  },
+  "0.01": {
+   "median_bars_past_end": 7.0,
+   "n_broken_at_or_within_5": 0,
+   "median_life_under_break_rule": 81.0,
+   "lines_with_a_break_inside": 2,
+   "median_breaks_inside": 0.0
+  },
+  "0.03": {
+   "median_bars_past_end": 8.0,
+   "n_broken_at_or_within_5": 0,
+   "median_life_under_break_rule": 81.0,
+   "lines_with_a_break_inside": 0,
+   "median_breaks_inside": 0.0
+  }
+ }
+}
