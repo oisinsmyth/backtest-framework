@@ -3,10 +3,10 @@
 **Slate:** [`R1-00-slate.md`](R1-00-slate.md) · **campaign contract:**
 [`00-SCHEMA.md`](00-SCHEMA.md) · **previous campaign:** [`../README.md`](../README.md).
 
-**STATUS: PARTIAL — `A2`, `A3` and `A4` are in; `A1` (free fundamentals) is still running.**
-This record is written now rather than held and **will be extended in place.** **`A1`'s absence is
-not a verdict**, and it is the lane the other three depend on: `A2` states its prize *"needs data
-that lane A1 must deliver first."*
+**STATUS: COMPLETE — all four lanes in.** This record was opened when three had landed and
+**extended in place** when `A1` arrived. `A1` was the lane the others depended on: `A2` stated its
+prize *"needs data that lane A1 must deliver first."* **It delivers one of `A2`'s two families and
+cannot deliver the other** (§2, `A1`).
 
 **Under [R15](../../RULES.md#r15) nothing here closes or admits anything.** Nothing in this folder is
 elevated out of `docs/research/`.
@@ -52,6 +52,77 @@ when it wrote. **Neither brief is revised; both stand as written.**
 ---
 
 ## 2. What each lane returned
+
+### `A1` — free, point-in-time, dead-inclusive fundamentals
+
+**`A1`'s verdict in one line: the data gap IS closable, but the obvious endpoint is a silent
+look-ahead and the cost is engineering rather than bandwidth.**
+
+**The point-in-time question was TESTED, which is what the lane was set, and the answer splits the
+three products apart.**
+
+> **The `frames` endpoint is RESTATED and therefore unusable.** Kraft Heinz's FY2016 operating cash
+> flow returns **2,648,000,000** carrying an accession **filed 2019-06-07**, against the
+> **5,238,000,000** knowable on 2017-02-23 — **a 98% error, 2.3 years early.** Another issuer's
+> 2020Q2 `Assets` return a 10-K/A value from 2022. **And `frames` rows carry no `filed` and no
+> `form`, so the substitution is UNDETECTABLE.** SEC's own wording is the tell: it aggregates one
+> fact per entity *"that is last filed"*.
+
+**`companyfacts` is point-in-time RECONSTRUCTIBLE** — every vintage stamped with accession, form and
+filing date — and `A1` rebuilt one issuer's balance sheet on **six named as-of dates**, getting the
+right vintage each time. **The Financial Statement Data Sets are PIT by construction** (*"All numeric
+data is 'as filed'"*) and are **the only product carrying an acceptance TIME.**
+
+**A residual trap nobody warns about.** `filed` is a **date**, and **57.5% of recent 10-K/10-Q
+submissions are accepted at or after 16:00 ET carrying that same day's `filed`** — up from **39.3% in
+2012q2**. **For an overnight book on daily bars that is a same-session look-ahead in the majority of
+cases.**
+
+**Dead issuers are fully retained** — three named dead probes return 200 with histories to within
+weeks of death, and two older failures 404 **only because they died pre-XBRL**. Every negative
+control returned a genuine 404 with an XML `NoSuchKey` body. **So the binding gap is the TICKER, not
+the fundamentals:** `company_tickers.json` is survivors-only for the **seventh** measured time,
+`submissions.json` returns an empty `tickers` array for all three probes, and `companyfacts` reports
+one dead issuer's name as **the successor shell**. The free bridge is **a union of two heuristics at
+94.5–97.4%, whose false-positive rate `A1` could not measure and says so.**
+
+**Two hard negatives.**
+
+```
+XBRL submissions   2010q1    478
+                   2011q2  1,625
+                   2011q3  6,980   -> small/mid names DO NOT EXIST before 2011q3, so
+                                      ~21% of this programme's window is large-accelerated-only
+
+SalesRevenueNet    2015  2,085 filers  ->  2019     1
+CostOfGoodsSold    2015  1,296 filers  ->  2019     0
+                   86-91% of distinct tags in any quarter are FILER-INVENTED EXTENSIONS
+                                      -> a single-tag panel COLLAPSES at FY2018
+```
+
+**A new defect class for this programme, found unexpectedly.** One CIK's `Assets` at 2015-12-31 read
+**23.4bn and then 3.4bn across vintages with NO restatement**, because the company became a different
+company after a spin-off. **`companyfacts` shows only the current name and gives no warning; the
+Financial Statement Data Sets do.** **No adjustment factor repairs a CIK whose contents changed
+identity.**
+
+**And one piece of evidence cutting AGAINST pessimism**, downloaded and read rather than taken from a
+summariser. Du, Huddart & Jiang (2021) `[read in full]`, built on exactly these free products plus
+the FASB calculation linkbase, find the accruals hedge pays **0.673%/month AS-FILED against
+0.296%/month and insignificant on Compustat**, with four further named anomalies affected and 15 of
+19 unaffected. **The as-filed data gives the STRONGER result, which is the opposite of the usual
+assumption.** `A1` is explicit that this establishes the free data are **research-grade — not that
+anything is profitable for this book.**
+
+**The payoff, and a direct interaction with `A2` that matters.** Computable: **asset growth,
+accruals, gross and operating profitability, investment, book-to-market, NOA growth, F-score and
+distress, taxable income.** **NOT computable: net share issuance, because there is no split history
+anywhere in XBRL** — and `A2` named the share-issuance family as its **cheapest non-free candidate**,
+needing *"only a split-adjusted share count."*
+
+> **OF `A2`'s TWO SURVIVING FAMILIES, `A1` UNLOCKS PROFITABILITY AND CANNOT DELIVER THE OTHER.**
+
+Nothing segment-level and nothing needing pre-2011 small-cap fundamentals is reachable either.
 
 ### `A2` — the persistent-characteristic family
 
@@ -226,12 +297,15 @@ independently called theirs "the tenth" — recorded rather than silently renumb
 |---|---|---|
 | **D1** | **does the long leg pay?** | **§1 — the round's central conflict.** `A3`: fails gross, Var(t) = 0.98 against the VW market · `A2`: Var(t) = 1.35–1.81 and signal share 0.26–0.45 against each sort's own name-weighted universe. **The benchmark is the crux** |
 | **D2** | **what does the `$5` screen cost?** | `A3`: it **cuts short-leg alpha 77% and the spread 68% while leaving the long leg untouched** · `A2`: it **costs ~23% of the median premium**, and for share issuance **over half the premium is in sub-`$5` names (1.06 → 0.48)**. Different signals, opposite-pointing implications |
-| **D3** | **the `acceptanceDateTime` timezone defect rate** | prior rounds: **35/60 (58%)** and **32/51 (62.7%)** · `A4`: **1/11 (9%)**. `A4` weights the priors on sample size and breadth, **confirms the defect is present, and says its own n is too small to rate it** |
+| **D3** | **the `acceptanceDateTime` timezone defect rate** | prior rounds: **35/60 (58%)** and **32/51 (62.7%)** · `A4`: **1/11 (9%)**, weighting the priors on sample size while confirming the defect is present · **`A1`: 37/92 (40.2%) in 2021q2 and 0/88 in 2026q2**, settled with 26 late filings whose `filed` rolled. **`A1` is the first reading to offer a MECHANISM that could reconcile the others — the defect may be ERA-DEPENDENT and may have been fixed. RECORDED AS A CANDIDATE EXPLANATION, NOT AN ADJUDICATION. All four readings stand.** |
 | **D4** | **does SEC ignore `Range` headers?** | round 6: yes, flatly · `A4`: **path-dependent** — `master.idx` returns 200 with the full 32 MB **despite advertising `Accept-Ranges: bytes`**, while the feed tarball honours 206 |
 | **D5** | **the 35% vs 85% replication split** | `K6` (round 6): **weights neither**, because neither applies costs · `A2`: **reaches its own view**, naming which it weights and on which specific liquidity-category cell |
 | **D6** | **do the canonical low-turnover survivors survive?** | the canonical list: eight cost-honest low-turnover survivors · `A2`, measured on 2010–2024: **five of the eight are negative or zero in this programme's own window** |
 | **D7** | **`A3`'s own five internal conflicts** | logged unadjudicated inside its brief — including one supportive paper whose **own test cannot reject a 50/50 split**, and a **long-short shop's reproduction** putting the optimal short weight at **30%, not zero** |
 | **D8** | **one paper disagreeing with itself** | its **draft and published abstract differ in SIGN** (+0.02% → −0.01%), and **its prose disagrees with its own tables** on three high-fee shares. `A3` recorded all three readings |
+
+| **D9** | **is `A2`'s cheapest candidate reachable?** | `A2`: the share-issuance family is the cheapest non-free candidate, needing **"only a split-adjusted share count"** · `A1`: **net share issuance is NOT computable — there is no split history anywhere in XBRL.** **Not a contradiction but a DEPENDENCY FAILURE** — the two lanes are right about different halves, and together they close that route unless a split source is found elsewhere |
+| **D10** | **does as-filed data weaken a result?** | the usual assumption, and this programme's own worry: vendor-standardised data is cleaner · `A1` `[read in full]`: the accruals hedge pays **0.673%/month AS-FILED against 0.296%/month and INSIGNIFICANT on Compustat** — **the free data gives the STRONGER result on that signal**, with 4 of 19 anomalies affected and 15 unaffected |
 
 **Two CORROBORATIONS, recorded so they are not mistaken for conflicts.** `A4`'s **60.2%** against
 round 5's **62.2%** — different method, different granularity, two points apart, **with the recall
@@ -243,8 +317,6 @@ programme's own measurement.
 
 ## 5. What this record does not claim
 
-- **`A1` is still running and its absence is not a verdict.** It is also the lane the others depend
-  on: `A2`'s prize **"needs data that lane A1 must deliver first."**
 - **Nothing here was measured on this programme's fixture.** `[MEASURED IN BRIEF]` means a public
   file or endpoint. Figures restated from our own record — 33.8 bp/side, the 67.6 bp round trip, the
   `$5` floor, ~10 effective instruments, 67% phrase-match precision — are quoted, not recomputed.
