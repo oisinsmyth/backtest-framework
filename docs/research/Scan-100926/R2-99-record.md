@@ -4,9 +4,10 @@
 [`00-SCHEMA.md`](00-SCHEMA.md) · **round 1:** [`R1-99-record.md`](R1-99-record.md) ·
 **previous campaign:** [`../README.md`](../README.md).
 
-**STATUS: PARTIAL — `B1`, `B2` and `B3` are in; `B4` is still running.** This record will be
-**extended in place** when `B4` lands, so the order things were learned in stays visible. Round 1's
-record was built the same way.
+**STATUS: COMPLETE — all four lanes in.** This record was opened when three had landed and
+**extended in place** when `B4` arrived, so the order things were learned in stays visible. Round 1's
+record was built the same way. **`B4` is the lane that closes round 1's `D9`, and it closes it on both
+horns** (§2, `B4`).
 
 **Under [R15](../../RULES.md#r15) nothing here closes or admits anything.** Nothing in this folder is
 elevated out of `docs/research/`. **Conflicts below are recorded, not adjudicated** — including the
@@ -15,11 +16,11 @@ disagree about what it says.
 
 ---
 
-## 0. THE SHAPE OF THE ROUND SO FAR
+## 0. THE SHAPE OF THE ROUND
 
-**The round was commissioned to pursue four threads round 1 opened. Three have reported, and all
-three came back with the same structural answer in different subject matter: THE CONSTRUCTION
-DETAIL NOBODY'S NAME CARRIES IS THE THING THAT DECIDES THE ANSWER.**
+**The round was commissioned to pursue four threads round 1 opened. All four reported, and all four
+came back with the same structural answer in different subject matter: THE CONSTRUCTION DETAIL
+NOBODY'S NAME CARRIES IS THE THING THAT DECIDES THE ANSWER.**
 
 - `B1`: the whole `A2`-vs-`A3` disagreement is **one identity**, and the term that separates them is
   measurable — *and its sign flipped in the era this programme trades.*
@@ -28,6 +29,12 @@ DETAIL NOBODY'S NAME CARRIES IS THE THING THAT DECIDES THE ANSWER.**
 - `B3`: the session split of a characteristic premium is **published, twice, and points the other
   way from the lane's hypothesis** — and the distinction is **descriptive rather than actionable**,
   priced at `~38×`.
+- `B4`: net share issuance is split-immune **if the ratio is formed inside one filing**, because
+  restatement puts both periods on the same share basis — *so the split gap everyone was arguing
+  about never had to be closed.*
+
+**And the round's sharpest single line is `B4`'s.** `A2` and `A1` spent round 1 each right about a
+different half of `D9`. **`B4` reports that the half they were arguing about was the wrong half.**
 
 **And one thing round 1 could not do has been done.** `A3`'s number-one self-flagged unverified item
 was that it was **refused the full text** of Blitz, Baltussen & van Vliet (2020) — *"the single most
@@ -241,9 +248,79 @@ intraday-reachable **survivor** subset would **understate the dispersion and cou
 wrong.** **The `$5` floor is not the problem** (Bogousslavsky uses $5 + $100m); **weighting and
 dead-inclusion are.**
 
-### `B4` — shares outstanding and float
+### `B4` — shares outstanding, float, and the split-history gap
 
-**Still running.** This section will be written when it lands.
+**`D9` CLOSES ON BOTH HORNS: the split gap CANNOT be closed from free data, AND THE SIGNAL DOES NOT
+NEED IT.** Round 1 left `A2` and `A1` each right about a different half. `B4`'s answer is that the
+half everyone was arguing about **was the wrong half.**
+
+**`F1` — the same-filing ratio is split-immune by construction, and its error rate is measured.**
+Accounting rules require **every period presented in one filing to be restated onto the current share
+basis**, so a ratio formed from two comparative periods **inside a single filing** has the split factor
+in both numerator and denominator, where it **cancels algebraically**. Evidence:
+[`data/B4-same-filing-ratio-error-rate.csv`](../../../data/B4-same-filing-ratio-error-rate.csv).
+
+| | same-filing ratio | naive cross-filing |
+|---|---|---|
+| **where a level restatement intervened** (n = 58) | **32.8% agreed EXACTLY**, p95 deviation **0.498%**, **ZERO of 58 showed a split-sized error** | **contaminated on 11 of 11 known split events** in the same names, **by factors 0.099 to 1,049** |
+
+**I recomputed all four of those figures from the lane's own CSV before recording them.** 865
+comparisons, n = 58 restated, **19/58 = 32.8% exact**, **0 of 58 at or above a 1.5× error**. The p95
+is **0.4656% by linear interpolation and 0.49778% by nearest rank** — `B4`'s 0.498% reproduces
+exactly under the nearest-rank convention, and the difference is a percentile convention, not a
+discrepancy. **One precision note:** the 865 comparisons come from **92 CIKs that produced repeat
+pairs, out of the 161-CIK cohort** — `B4`'s §5 states the cohort and the pair counts separately and
+correctly; only its summary line compresses the two.
+
+**The residual error is reporting-precision loss, not contamination** — Tesla 0.46%, GE 0.057% — and
+**both tail outliers are one micro-cap reverse-merger shell** (Erin Energy; max deviation 33.08%,
+against a signal whose own interquartile range is 0.98658–1.05200). **The restated rows are the proof:**
+Tesla's level restates by **4.9883×** and NVIDIA's by **4.00493×**, Amazon's by **20.01×** and ODP's by
+**0.09946×**, while the same-filing ratio moves by **0.0046, 0.0016, 0.0008 and 0.0038 in log**.
+
+**`F2` — `A1`'s "no split history anywhere in XBRL" is contradicted, and the route still fails.**
+`us-gaap:StockholdersEquityNoteStockSplitConversionRatio1` **exists**, returns correct ratios for
+Apple (7, 4), NVIDIA (4, 10), Tesla (5, 3), GE (0.125), Citigroup (0.1), Chesapeake (0.005), Rite Aid
+(0.05), and is carried by **2,280 distinct CIKs, 2009–2026.** **Rejected on five measured defects, not
+on absence:** the date is sometimes a board-approval date, sometimes a month-long range, sometimes the
+fiscal year end; **Tesla's same period carries both `val=5` and `val=3`**; **30.8% of non-unit ratios
+predate the issuer's first cover page** (pre-IPO reverse splits, up-C exchange ratios — Duckhorn at
+1,017,134.6); the FSDS shows **38 of 101 rows sit on a `Range=Minimum/Maximum` axis the API strips**,
+so it can hand you an **authorised bound rather than an executed ratio**; and latency is **31–547
+days**. **Conflict with `A1` recorded at E8, not adjudicated.**
+
+**`F3` — the fabrication is named and confirmed against the primary document.** HP Inc's 10-K/A tagged
+its cover-page count **`165228387`**, while the same document reads *"…as of November 30, 2017 was
+**1,645,228,387** shares."* **A single dropped digit in a $30bn issuer.** A jump detector reads it as a
+**1-for-10 reverse in November 2017 and a 10-for-1 forward in January 2018. HP never split.** Across
+80 random CIKs the jump detector fired **157 times** above 20% on untagged names, and **no threshold
+can separate them**: genuine annual share growth reaches **330×** while splits start at **1.5×**.
+Evidence: [`data/B4-split-detector-crosstab.csv`](../../../data/B4-split-detector-crosstab.csv).
+**This is the commissioning requirement discharged on its own terms** — the brief said an inferred
+split is a fabricated corporate action, and `B4` produced one and named it.
+
+**Coverage, for the record.** `dei:EntityCommonStockSharesOutstanding` ∪ a WASO fallback chain reaches
+**91.0% of 6,532 `Assets`-filers**, **7.8% have nothing**, median as-of→filed lag **5 days**, and
+**dead names (Sears, BBBY, SVB) are fully retained on CIK.**
+
+**A 20% multi-class blind spot the lane was not commissioned to find.** Berkshire, Meta, Ford, Comcast,
+Visa, UPS, Accenture and CME have **no non-dimensional cover-page count at all** — the count exists
+only on a share-class axis the company-concept API strips. **WASO survives on 16 of those 20**, so the
+recommended route also has the better coverage. **The FSDS `segments` file is the only free product
+that recovers the dimensioned rows.**
+
+**Three further hazards returned.** A **new wrong-HTTP-200 flavour**: 650 bytes, valid JSON, `units`
+present, **correct unit key present, zero facts** (Expand Energy, Chubb, Ford) — *the catalogue moves
+to twelve.* A **`frames` artefact that inverts a coverage number by 2×**: single-bucket 35.6% against
+union-of-four-quarters 81.4%. And **the successor-entity defect defeats both vintage rules** — CIK
+895126 reports the instant `2019-02-01` as **both 717,376,170 and 3,600,000**, so *"latest filed wins"*
+is **wrong by 199× fourteen months before the split** (E11).
+
+**Scale and discipline:** 1,110 requests, 138.3 MB, **zero 429/403/503**, **twelve negative controls all
+clean.** Two sources not obtained and said so: Pontiff & Woodgate (urllib DNS failure on `www2.bc.edu`,
+HTTP 403 on Wiley) and ASC 260-10-55-12 (login-gated, **not read**). And **a search result purporting
+to be Pontiff–Woodgate fetched at 200 / 360 KB and proved to be Larrain & Urzúa on Chilean data** —
+caught, flagged, correctly attributed.
 
 ---
 
@@ -286,8 +363,15 @@ index — **and `B3` states that it is not claiming the same measurement.**
 | **E6** | **Weighting: three positions, three justifications.** | `S7`: value-weighting *"accurately reflects the wealth effect experienced by investors."* `S10`: equal weighting excluding low-cap stocks is preferable. `S9`: capped value weights, *"a helpful compromise"*, worth **+8.5pp** on replication. **No resolution in the literature.** |
 | **E7** | **Do long legs dominate?** | `S3` (Blitz): yes — combined long Sharpe **1.10 vs 0.69** short, 1963–2018, minus a 50/50 hedge. `S4` (CFM), reproducing it: *"the short leg should be allocated 30% of the weight, and not zero weight… the 'no-short' recommendation is not robust against such minor changes."* **Both are interested parties pointing opposite ways. Both stay.** |
 
-**Round 1's conflicts `D1`–`D10` all still stand.** `D9` — the share-count dependency failure — is
-`B4`'s subject and is unreported.
+| **E8** | **Is there split history in XBRL?** | **`A1`:** *"There is no split history in any XBRL product"* ([`R1-01`](R1-01-free-fundamentals.md) line 745), and every share-count signal therefore requires the corporate-actions feed as a **hard dependency** (line 885). **`B4`:** `us-gaap:StockholdersEquityNoteStockSplitConversionRatio1` **exists and is carried by 2,280 CIKs, 2009–2026**, with correct ratios for seven named issuers. **Both stand.** `B4` then rejects the route on **five measured defects**, so the two lanes' practical conclusions coincide while **their factual claims do not.** |
+| **E9** | **Does the reference dataset divide or multiply by the split factor?** | **`A2`** quotes the source's own `Detailed Definition` *"read in full"*: the share count is **`shrout/cfacshr`** ([`R1-02`](R1-02-persistent-characteristics.md) line 253). **`B4`:** the shipped **code** computes **`shrout*cfacshr`**. **An inverted factor turns a 7:1 split into a 49-fold error.** This is a **documentation-versus-code disagreement in the external source**, not an error by `A2`, which quoted the documentation accurately. **Both stand.** |
+| **E10** | **Does composite equity issuance need a share count?** | **`A2`** lists `CompEquIss` among *"three members that need no financial statement at all — only a split-adjusted share count"*, **while its own gloss of that same entry** says it needs *"market cap and total return"* — an internal tension inside one list. **`B4`:** Daniel & Titman (2006) **p. 1614 states it verbatim** — *"corporate actions such as splits and stock dividends leave ι unchanged"* — and Chen–Zimmermann's `CompEquIss` code takes only `[ret, mve_c]`: **no share count, no split factor.** **Recorded as a tension resolved in `B4`'s direction by a primary source, with `A2`'s entry left standing as written.** |
+| **E11** | **Does "latest filed wins" reconstruct a point-in-time vintage?** | **`A1`:** `companyfacts` is **PIT-reconstructible** — every vintage stamped with accession, form and filing date, verified on six named as-of dates. **`B4`:** CIK 895126 reports the instant `2019-02-01` as **both 717,376,170 and 3,600,000**, so *"latest filed wins"* is **wrong by 199× fourteen months before the split** — the successor-entity defect **defeats both vintage rules**. This extends `A1`'s own spin-off identity defect rather than contradicting its reconstruction method. **Both stand.** |
+
+**Round 1's conflicts `D1`–`D10` all still stand.** **`D9` — the share-count dependency failure — is
+the one round 2 was sent at, and `B4` reports that both its horns fail in the same direction:** the
+split gap cannot be closed from free data, **and the signal does not need it closed.** `D9` is recorded
+as answered by `B4`; **under [R15](../../RULES.md#r15) only the principal closes an avenue.**
 
 ---
 
@@ -311,6 +395,14 @@ index — **and `B3` states that it is not claiming the same measurement.**
    *"a join between the programme's own finding and the only family still standing."* **Two JFE
    papers had already measured the opposite.** The lane's bar was written to accept a confirmed
    absence and instead met its first branch — **which is the bar working, not the premise.**
+4. **I told `B4` the source literature would not state the split-free formulation, and I was wrong
+   twice over.** The brief supposed it *"will not state"* it *"because it assumes split-adjusted vendor
+   data."* **Daniel & Titman (2006) state it on p. 1614 in so many words**, and Chen–Zimmermann's
+   open-source code **already ships it with no share count at all.** I also framed the lane's crux as
+   *"can a split be detected without a split table"* — **`B4`'s answer is that the question was the
+   wrong one**, because the construction that needs no split detection was in the literature the whole
+   time. **The lane answered the question I should have asked, which is the lane's credit and my
+   error.**
 
 ## 6. AN OPEN QUESTION ON `B2`'s MEASUREMENT THAT `B2` DOES NOT RAISE — MINE
 
@@ -327,10 +419,22 @@ defect.**
 
 ## 7. What this record does not claim
 
-**`B4` has not reported**, and §2's `B4` entry and `D9` are both empty. **Nothing here was measured
-on this programme's fixture** — `B1`'s measurement is on Ken French's public files, `B2`'s on SEC
-`frames`, `B3`'s is transcription plus arithmetic on published tables. **No backtest was run, no null
-drawn, no candidate exists, no territory is closed, no avenue is closed** ([R15](../../RULES.md#r15):
-only the principal closes an avenue). **Both books are unchanged**, [`FINDINGS.md`](../../FINDINGS.md)
-and [`PICKUP.md`](../../../PICKUP.md) are untouched, **and nothing in this folder is elevated out of
-`docs/research/`.**
+**Nothing here was measured on this programme's fixture.** `B1`'s measurement is on Ken French's
+public files, `B2`'s and `B4`'s on the SEC's public endpoints, `B3`'s is transcription plus arithmetic
+on published tables. **No backtest was run, no null drawn, no candidate exists, no territory is
+closed, no avenue is closed** ([R15](../../RULES.md#r15): only the principal closes an avenue).
+**Both books are unchanged**, [`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../../PICKUP.md)
+are untouched, **and nothing in this folder is elevated out of `docs/research/`.**
+
+**`B4`'s `F1` is a measured error rate on public filings, not a signal.** It says a construction is
+**split-immune**, which is a statement about arithmetic and accounting rules. **It says nothing
+whatever about whether net share issuance pays on this programme's universe**, and `B4` does not claim
+otherwise. **Three of the four lanes' headline conclusions depend on benchmarks, deflators or session
+boundaries that `B1`, `B2` and `B3` each show move the answer** — which is the round's own reason for
+caution about all of them.
+
+## 8. TOKEN COST OF THE ROUND
+
+**~1.13M subagent tokens across four lanes** (B1 280k, B2 284k, B3 272k, B4 296k), against
+[`00-SCHEMA.md`](00-SCHEMA.md) §2's projected **1.0–1.4M a round**. Round 1 was ~1.14M. **The schema's
+arithmetic holds to within 1% across two rounds, and the per-agent depth is stable at ~250–300k.**
