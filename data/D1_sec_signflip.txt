@@ -1,0 +1,46 @@
+==============================================================================
+D1 MEASUREMENT 2 -- negative-denominator sign flip, SEC XBRL frames API
+==============================================================================
+  Assets               CY2023Q4I  HTTP 200  application/json        855898 bytes  facts  6428
+       label from the file itself: 'Assets'   unit 'USD'   pts 6428
+  StockholdersEquity   CY2023Q4I  HTTP 200  application/json        832483 bytes  facts  6265
+       label from the file itself: "Stockholders' Equity Attributable to Parent"   unit 'USD'   pts 6265
+  GrossProfit          CY2023     HTTP 200  application/json        422623 bytes  facts  2788
+       label from the file itself: 'Gross Profit'   unit 'USD'   pts 2788
+  OperatingIncomeLoss  CY2023     HTTP 200  application/json        818867 bytes  facts  5348
+       label from the file itself: 'Operating Income (Loss)'   unit 'USD'   pts 5348
+  NetIncomeLoss        CY2023     HTTP 200  application/json        973968 bytes  facts  6380
+       label from the file itself: 'Net Income (Loss) Attributable to Parent'   unit 'USD'   pts 6380
+
+NEGATIVE CONTROLS
+  [PASS] C1 impossible period CY1890Q1I returns no facts  (HTTP 404, 320 bytes, facts 0)
+  [**FIRED**] C2 Assets <= 0 is EXACTLY ZERO firms  (found 33 of 6428)
+       examples: [(29952, 0), (790273, 0), (831378, 0), (1043150, 0), (1062506, 0)]
+  [PASS] C3 StockholdersEquity < 0 is NON-zero  (found 1361 of 6265)
+  [PASS] C4 the Assets and StockholdersEquity frames are different documents (fact counts 6428 vs 6265; CIKs in one and not the other: 619)
+
+==============================================================================
+THE CENSUS -- how large is the affected subset, and where does it land?
+period: CY2023Q4I (instantaneous) and CY2023 (duration).  frames = last-filed values.
+==============================================================================
+filers with BOTH StockholdersEquity and OperatingIncomeLoss: 4911
+   be<0                                          1147   23.36%
+   oi<0                                          2894   58.93%
+   be<0 & oi<0 (SIGN FLIP -> positive ratio)     1006   20.48%
+   be<0 & oi>=0 (ratio turns negative)            141    2.87%
+   be>0 & oi<0                                   1888   38.44%
+   be>0 & oi>=0                                  1875   38.18%
+
+   the sign-flipped OP/BE values (numerator<0, denominator<0 -> POSITIVE):
+     n 1006   min +0.000   median +0.599   max +197.660
+     how many exceed +1.00 (i.e. would sit at the very top of an OP/BE sort)? 358
+     how many exceed the 90th percentile of the WELL-DEFINED (BE>0) OP/BE? see below
+   well-defined OP/BE (BE>0): n 3763   p90 +0.356   p99 +2.022
+   sign-flipped firms above the BE>0 p90 cutoff: 633 of 1006 (62.9% of the flips)
+   --> THESE WOULD ENTER THE TOP DECILE OF AN UNFILTERED OP/BE SORT.
+
+THE DEFLATOR-IMMUNITY CLAIM, COUNTED
+   filers with BOTH GrossProfit and Assets: 2614
+   of those, filers whose DENOMINATOR (Assets) is <= 0, i.e. can sign-flip: 2
+   so GP/AT cannot sign-flip and OP/BE can, on this census, 2 vs 1006 firms.
+   NetIncomeLoss < 0 (loss-makers, duration CY2023): 3271 of 6380 = 51.3%
