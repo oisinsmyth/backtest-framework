@@ -10,6 +10,42 @@ decision record without the principal's explicit permission.**
 
 ---
 
+## 0. CAMPAIGN STATE — four rounds run, PAUSED on the principal's word, 2026-09-10
+
+**Sixteen briefs across four rounds, ~5.12M subagent tokens. Nothing is closed, nothing is admitted,
+both books are unchanged, and NOTHING HAS BEEN PROMOTED OUT OF `docs/research/`.** The principal
+promotes; this campaign does not. **Verified mechanically:** `Scan-100926` appears **0 times** in
+[`FINDINGS.md`](../../FINDINGS.md), [`PICKUP.md`](../../../PICKUP.md), [`BOOK.md`](../../BOOK.md),
+[`BOOK_PROP.md`](../../BOOK_PROP.md) and [`RULES.md`](../../RULES.md), and no commit of this campaign
+touched any of them or `docs/decisions/`.
+
+**So this file and the four records are the ONLY state this campaign has.** `PICKUP.md` deliberately
+does not mention it — that is the ruling working as intended, not an omission, **and it means a reader
+of `PICKUP.md` will not know this campaign exists.** The principal decides whether that changes.
+
+| round | record | the one thing to read it for |
+|---|---|---|
+| **1** | [`R1-99-record.md`](R1-99-record.md) | the data gap **is** closable, but the obvious endpoint is a **silent look-ahead**; the field narrows to **two** characteristic families and **one is not computable** |
+| **2** | [`R2-99-record.md`](R2-99-record.md) | **every lane found the construction detail nobody's name carries decides the answer**; `D9` closes on both horns |
+| **3** | [`R3-99-record.md`](R3-99-record.md) | **three lanes independently found that NOBODY REPORTS THE LONG LEG** — and this programme can only hold the long leg |
+| **4** | [`R4-99-record.md`](R4-99-record.md) | **three of four lanes took a finding the campaign was carrying and showed it was something else** |
+
+**THE TWO OPEN QUESTIONS A FIFTH ROUND WOULD START FROM, both recorded and neither adjudicated:**
+
+1. **[`F1`](R3-99-record.md)** — does an equal-weighted profitability long leg beat its own
+   equal-weighted universe? `C3` says `t` **0.45**; `C4` says `t` **3.00–3.56**. Round 4 established the
+   disagreement is **construction, not dataset**, and named **the two things that would settle it**:
+   whether one dataset's quintiles are equal-count ([`G3`](R4-99-record.md)), and **which size segment
+   the answer is read in** — where the published gap **reverses in microcaps**, the segment this
+   programme trades.
+2. **[`G1`](R4-99-record.md)** — does a quarterly sort survive the one-quarter-**lagged** deflator?
+   `C1` says 0.51 [`t` 3.40] from a published table; `D2`'s own measurement says **0.163 [`t` 1.43]**.
+
+**And the standing bind, restated because four rounds have not moved it:** the definition with the
+strongest measured evidence (**0.515, NW6 8.31**) is the one reachable for **nine CIKs** quarterly from
+as-filed data, while the definition that **is** computable (**2,082 CIKs**) is the one whose case is
+**weakest in this programme's own size segment.**
+
 ## 1. Layout
 
 ```

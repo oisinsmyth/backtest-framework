@@ -1,7 +1,15 @@
 # Scan-100926 · Round 4 — slate
 
-**PREPARED, NOT DISPATCHED.** Committed before any agent exists. **No agent has been launched.**
-Campaign contract: [`00-SCHEMA.md`](00-SCHEMA.md). Round 3: [`R3-99-record.md`](R3-99-record.md).
+**DISPATCHED 2026-09-10, and this slate was committed BEFORE any agent existed** (`3dfc89e`), per
+[R8](../../RULES.md#r8)'s spirit: the territory is fixed in writing before the runner. **The lanes have
+since reported — see [`R4-99-record.md`](R4-99-record.md).** The text below is left **exactly as it was
+written before dispatch**, including its predictions about what each lane would find, so it can be read
+against the outcome. Campaign contract: [`00-SCHEMA.md`](00-SCHEMA.md). Round 3:
+[`R3-99-record.md`](R3-99-record.md).
+
+> **Read against the record, two of this slate's own expectations were wrong** — `D4`'s premise (that
+> `C4`'s three-of-132-months measured arrival) and its conjecture (that the legs' bad months offset).
+> Both are recorded as mine in [`R4-99-record.md`](R4-99-record.md) §5.
 
 **Four lanes, and every one is downstream of a round-3 finding — two of them downstream of findings no
 lane was commissioned to make.** Budget, on the contract's now-revised §2: a four-lane round **under the
