@@ -1,0 +1,270 @@
+{
+ "generated_utc": "2026-09-10T22:17:37+00:00",
+ "purpose": "disk projection for a one-month Databento Standard strip-mine; not a study",
+ "record_sizes_bytes": {
+  "ohlcv": 56,
+  "trades": 48,
+  "mbp1": 80,
+  "bbo": 80,
+  "tbbo": 80,
+  "mbp10": 368,
+  "mbo": 56,
+  "definition": 520,
+  "statistics": 80,
+  "status": 40
+ },
+ "zstd": {
+  "bars_encoded": 265273,
+  "uncompressed_bytes": 14855288,
+  "levels": {
+   "3": {
+    "compressed_bytes": 5713706,
+    "ratio": 2.5999391638281706,
+    "bytes_per_record": 21.538965518541275
+   },
+   "9": {
+    "compressed_bytes": 5521461,
+    "ratio": 2.6904632668780963,
+    "bytes_per_record": 20.814259272523024
+   },
+   "19": {
+    "compressed_bytes": 5262310,
+    "ratio": 2.8229594987752527,
+    "bytes_per_record": 19.837337384505773
+   }
+  },
+  "ratio_used": 2.5999391638281706
+ },
+ "anchor": {
+  "query": "get_billable_size(GLBX.MDP3, ESM2, trades, 2022-06-06 -> 2022-06-10T12:10)",
+  "billable_bytes": 99219648,
+  "sessions_covered": 4.0
+ },
+ "measured_on_this_machine": {
+  "free_disk_gib": 151.15365386009216,
+  "download_bytes_per_s": 3040000,
+  "download_note": "two 53 MB pulls from files.pythonhosted.org, 3.09 and 2.99 MB/s"
+ },
+ "assumed": {
+  "liquidity_vs_ES": {
+   "ES": 1.0,
+   "NQ": 0.85,
+   "RTY": 0.12,
+   "YM": 0.1,
+   "MES": 0.3,
+   "MNQ": 0.3,
+   "M2K": 0.05,
+   "MYM": 0.05,
+   "CL": 0.45,
+   "NG": 0.2,
+   "GC": 0.3,
+   "SI": 0.1,
+   "HG": 0.08,
+   "ZN": 0.35,
+   "ZB": 0.15,
+   "ZF": 0.12
+  },
+  "mbp1_events_per_trade": 25.0,
+  "mbo_events_per_trade": 90.0,
+  "l1_recency_uplift": 1.5,
+  "fill_1m": {
+   "ES": 0.98,
+   "NQ": 0.98,
+   "RTY": 0.5389999999999999,
+   "YM": 0.5075,
+   "MES": 0.8225,
+   "MNQ": 0.8225,
+   "M2K": 0.42874999999999996,
+   "MYM": 0.42874999999999996,
+   "CL": 0.98,
+   "NG": 0.665,
+   "GC": 0.8225,
+   "SI": 0.5075,
+   "HG": 0.476,
+   "ZN": 0.90125,
+   "ZB": 0.5862499999999999,
+   "ZF": 0.5389999999999999
+  },
+  "fill_1s": {
+   "ES": 0.74,
+   "NQ": 0.635,
+   "RTY": 0.124,
+   "YM": 0.10999999999999999,
+   "MES": 0.25,
+   "MNQ": 0.25,
+   "M2K": 0.075,
+   "MYM": 0.075,
+   "CL": 0.355,
+   "NG": 0.18,
+   "GC": 0.25,
+   "SI": 0.10999999999999999,
+   "HG": 0.096,
+   "ZN": 0.285,
+   "ZB": 0.145,
+   "ZF": 0.124
+  }
+ },
+ "years_available": {
+  "ES": 16.26,
+  "NQ": 16.26,
+  "YM": 16.26,
+  "CL": 16.26,
+  "NG": 16.26,
+  "GC": 16.26,
+  "SI": 16.26,
+  "HG": 16.26,
+  "ZN": 16.26,
+  "ZB": 16.26,
+  "ZF": 16.26,
+  "RTY": 9.17,
+  "MES": 7.35,
+  "MNQ": 7.35,
+  "M2K": 7.35,
+  "MYM": 7.35
+ },
+ "projection": {
+  "trades_per_session_es": 516769.0,
+  "items": {
+   "L0 ohlcv-1m, 16 symbols, full history": {
+    "item": "ohlcv-1m x16",
+    "billed_gib": 2.7663010129004717,
+    "disk_gib": 1.0639868237637333,
+    "is_l1": false,
+    "note": "the core fixture; 226 symbol-years"
+   },
+   "L0 ohlcv-1m, tiers 1+3 only": {
+    "item": "ohlcv-1m x8",
+    "billed_gib": 1.1509358531802893,
+    "disk_gib": 0.4426779938518417,
+    "is_l1": false,
+    "note": "what the three gated measurements actually need"
+   },
+   "L0 ohlcv-1s, 16 symbols, full history": {
+    "item": "ohlcv-1s x16",
+    "billed_gib": 60.05089191269875,
+    "disk_gib": 23.09703732616549,
+    "is_l1": false,
+    "note": "60x the slots of 1m, but most seconds never trade"
+   },
+   "L0 ohlcv-1s, tiers 1+3 only": {
+    "item": "ohlcv-1s x8",
+    "billed_gib": 32.712808789730076,
+    "disk_gib": 12.582143938154108,
+    "is_l1": false,
+    "note": "intrabar path for MAE, which is the whole prop question"
+   },
+   "L0 definition, 16 symbols, full history": {
+    "item": "definition",
+    "billed_gib": 1.270002365112305,
+    "disk_gib": 0.4884738776896393,
+    "is_l1": false,
+    "note": "~40 live contract months per root per day; the roll calendar lives here"
+   },
+   "L0 statistics, 16 symbols, full history": {
+    "item": "statistics",
+    "billed_gib": 1.1723098754882812,
+    "disk_gib": 0.45089896402120544,
+    "is_l1": false,
+    "note": "open interest + settlements; rung 3 of the smart-money ladder"
+   },
+   "L1 tbbo, 16 symbols, 12 months": {
+    "item": "tbbo x16 12mo",
+    "billed_gib": 43.8556493639946,
+    "disk_gib": 16.86795213293422,
+    "is_l1": true,
+    "note": "every trade WITH the BBO before it: spread + trades + all OHLCV"
+   },
+   "L1 tbbo, ES+NQ only, 12 months": {
+    "item": "tbbo ES+NQ 12mo",
+    "billed_gib": 17.949767991900444,
+    "disk_gib": 6.903918461488563,
+    "is_l1": true,
+    "note": "the two symbols the spread question is actually about"
+   },
+   "L1 trades, 16 symbols, 12 months": {
+    "item": "trades x16 12mo",
+    "billed_gib": 26.31338961839676,
+    "disk_gib": 10.12077127976053,
+    "is_l1": true,
+    "note": "REDUNDANT if tbbo is taken -- trades derives from it"
+   },
+   "L1 mbp-1, ES only, 12 months": {
+    "item": "mbp-1 ES 12mo",
+    "billed_gib": 242.56443232297897,
+    "disk_gib": 93.29619542552112,
+    "is_l1": true,
+    "note": "ASSUMED 25 book events per trade"
+   },
+   "L3 mbo, ES only, 1 month": {
+    "item": "mbo ES 1mo",
+    "billed_gib": 50.938530787825584,
+    "disk_gib": 19.592201039359434,
+    "is_l1": true,
+    "note": "ASSUMED 90 order events per trade"
+   }
+  },
+  "bundles": {
+   "A. minimum -- what the three gated items in 01-prop-lead need": {
+    "items": [
+     "L0 ohlcv-1m, tiers 1+3 only",
+     "L0 definition, 16 symbols, full history",
+     "L0 statistics, 16 symbols, full history"
+    ],
+    "billed_gib": 3.5932480937808755,
+    "disk_gib": 1.3820508355626864,
+    "disk_gib_uplifted": 1.3820508355626864,
+    "free_disk_gib_after": 149.77160302452947,
+    "fits": true,
+    "download_hours": 0.13559628883751854
+   },
+   "B. core strip-mine -- 16 symbols, every L0 year + the L1 window": {
+    "items": [
+     "L0 ohlcv-1m, 16 symbols, full history",
+     "L0 ohlcv-1s, 16 symbols, full history",
+     "L0 definition, 16 symbols, full history",
+     "L0 statistics, 16 symbols, full history",
+     "L1 tbbo, 16 symbols, 12 months"
+    ],
+    "billed_gib": 109.11515453019442,
+    "disk_gib": 41.96834912457429,
+    "disk_gib_uplifted": 50.4023251910414,
+    "free_disk_gib_after": 100.75132866905076,
+    "fits": true,
+    "download_hours": 4.945091793171596
+   },
+   "C. B + one month of full order book on ES": {
+    "items": [
+     "L0 ohlcv-1m, 16 symbols, full history",
+     "L0 ohlcv-1s, 16 symbols, full history",
+     "L0 definition, 16 symbols, full history",
+     "L0 statistics, 16 symbols, full history",
+     "L1 tbbo, 16 symbols, 12 months",
+     "L3 mbo, ES only, 1 month"
+    ],
+    "billed_gib": 160.05368531802,
+    "disk_gib": 61.560550163933726,
+    "disk_gib_uplifted": 79.79062675008055,
+    "free_disk_gib_after": 71.36302711001161,
+    "fits": true,
+    "download_hours": 7.828447834862453
+   },
+   "D. C + every top-of-book event on ES for a year": {
+    "items": [
+     "L0 ohlcv-1m, 16 symbols, full history",
+     "L0 ohlcv-1s, 16 symbols, full history",
+     "L0 definition, 16 symbols, full history",
+     "L0 statistics, 16 symbols, full history",
+     "L1 tbbo, 16 symbols, 12 months",
+     "L3 mbo, ES only, 1 month",
+     "L1 mbp-1, ES only, 12 months"
+    ],
+    "billed_gib": 402.61811764099895,
+    "disk_gib": 154.85674558945485,
+    "disk_gib_uplifted": 219.73491988836224,
+    "free_disk_gib_after": -68.58126602827008,
+    "fits": false,
+    "download_hours": 21.558714700057013
+   }
+  }
+ }
+}
