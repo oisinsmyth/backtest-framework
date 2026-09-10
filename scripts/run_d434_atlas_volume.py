@@ -86,7 +86,8 @@ def median_split(grid, elig):
     return above, below
 
 
-def volume_pools(P, elig, peek=False):
+def volume_pools_unshifted(P, elig, peek=False):
+    """Pools on the bar the FEATURE is complete (close of t). NOT what the kernel needs -- see volume_pools."""
     F = features(P, peek=peek); out = {}
     for nm in ("rv", "ef", "vt", "uv", "dv"):
         tercile(F[nm], elig, nm, out)
@@ -102,6 +103,26 @@ def volume_pools(P, elig, peek=False):
     return out, F
 
 
+def volume_pools(P, elig, peek=False, shift=True):
+    """ADDENDUM: the kernel enters an event placed at bar t at the OPEN of t (D340: signal from the close of t-1), so a pool
+    computed from bar t's own volume and return must be placed at t+1. mask[t] = unshifted[t-1], re-ANDed with elig."""
+    un, F = volume_pools_unshifted(P, elig, peek=peek)
+    if not shift:
+        return un, F
+    out = {}
+    for k, m in un.items():
+        s = np.zeros_like(m); s[1:] = m[:-1]; out[k] = s & elig
+    return out, F
+
+
+def assert_F(P, elig, pools):
+    """[F] fill alignment: every pool at t equals the unshifted pool at t-1 (on eligible cells), and row 0 is empty."""
+    un, _ = volume_pools_unshifted(P, elig)
+    for k in pools:
+        assert not pools[k][0].any(), f"[F] pool {k} has events on bar 0"
+        assert np.array_equal(pools[k][1:], un[k][:-1] & elig[1:]), f"[F] pool {k} is not the t-1 feature placed at t"
+
+
 def assert_T(pools, elig):
     for nm in ("rv", "ef", "vt", "uv", "dv"):
         lo, mid, hi = pools[f"{nm}_lo"], pools[f"{nm}_mid"], pools[f"{nm}_hi"]
@@ -111,18 +132,19 @@ def assert_T(pools, elig):
 
 
 def assert_C(P, elig, pools, peek=False):
-    """[C] causality: perturbing VOL and CLOSE at bars > t0 leaves every pool at or before t0 unchanged; perturbing bar t0
-    itself (one name's volume) changes some pool at t0. t0 is an ELIGIBLE bar in the middle of the eligible span."""
+    """[C] causality against the FILL: an event placed at t is filled at t's open, so perturbing VOL and CLOSE at bars >= t0
+    must leave every pool at or before t0 unchanged; perturbing bar t0-1 (one name's volume) must change some pool at t0.
+    t0 is an ELIGIBLE bar in the middle of the eligible span."""
     el_bars = np.flatnonzero(elig.any(axis=1)); t0 = int(el_bars[len(el_bars) // 2])
     Q = dict(P); VOL = np.array(P["VOL"], float); CL = np.array(P["CLOSE"], float)
-    V2, C2 = VOL.copy(), CL.copy(); V2[t0 + 1:] *= 7.0; C2[t0 + 1:] *= 1.3
+    V2, C2 = VOL.copy(), CL.copy(); V2[t0:] *= 7.0; C2[t0:] *= 1.3
     Q["VOL"], Q["CLOSE"] = V2, C2
     p2, _ = volume_pools(Q, elig, peek=peek)
     for k in pools:
-        assert np.array_equal(pools[k][:t0 + 1], p2[k][:t0 + 1]), f"[C] pool {k} at or before t0 changed when only later bars were perturbed"
-    j = int(np.flatnonzero(elig[t0])[0]); V3 = VOL.copy(); V3[t0, j] *= 50.0; Q["VOL"], Q["CLOSE"] = V3, CL
+        assert np.array_equal(pools[k][:t0 + 1], p2[k][:t0 + 1]), f"[C] pool {k} at or before t0 changed when bars from t0 on were perturbed -- it reads the fill bar"
+    j = int(np.flatnonzero(elig[t0])[0]); V3 = VOL.copy(); V3[t0 - 1, j] *= 50.0; Q["VOL"], Q["CLOSE"] = V3, CL
     p3, _ = volume_pools(Q, elig, peek=peek)
-    assert any(not np.array_equal(pools[k][t0], p3[k][t0]) for k in ("rv_lo", "rv_mid", "rv_hi", "rv_x3")), "[C] perturbing bar t0's volume changed nothing -- the check cannot fail"
+    assert any(not np.array_equal(pools[k][t0], p3[k][t0]) for k in ("rv_lo", "rv_mid", "rv_hi", "rv_x3")), "[C] perturbing bar t0-1's volume changed nothing at t0 -- the check cannot fail"
 
 
 def selftest():
@@ -131,15 +153,27 @@ def selftest():
     CLOSE = np.exp(np.cumsum(rng.normal(0, 0.02, (T, N)), axis=0)) * 50; VOL = rng.lognormal(12, 0.6, (T, N)); DV = CLOSE * VOL
     rvol = np.full((N, T), 0.02); elig = np.ones((T, N), bool); elig[:65] = False
     P = dict(VOL=VOL, CLOSE=CLOSE, DV=DV, score=lambda nm: rvol)
-    pools, F = volume_pools(P, elig); assert_T(pools, elig); assert_C(P, elig, pools)
-    # [X] the deliberate break: a feature that reads the NEXT bar's volume must be caught by [C]
+    pools, F = volume_pools(P, elig); assert_T(pools, elig); assert_C(P, elig, pools); assert_F(P, elig, pools)
+    # [X] break 1: a feature that reads the NEXT bar's volume must be caught by [C]
     raised = False
     try:
         pk, _ = volume_pools(P, elig, peek=True); assert_C(P, elig, pk, peek=True)
     except AssertionError as e:
         raised = "[C]" in str(e)
     assert raised, "[X] THE SELF-TEST CANNOT FAIL -- a pool that depends on the next bar passed [C]"
-    print("    [T] terciles partition every defined bar;  [C] no pool at t depends on bars after t, and a perturbation at t moves the pools;  [X] a next-bar dependence IS CAUGHT")
+    # [X] break 2: the UNSHIFTED pools (the first run's error -- placed on the bar the kernel fills) must be caught by [C] and by [F]
+    un, _ = volume_pools(P, elig, shift=False); raised_c = raised_f = False
+    try:
+        assert_C(P, elig, un)
+    except AssertionError as e:
+        raised_c = "[C]" in str(e)
+    try:
+        assert_F(P, elig, un)
+    except AssertionError as e:
+        raised_f = "[F]" in str(e)
+    assert raised_c and raised_f, "[X] THE SELF-TEST CANNOT FAIL -- pools placed on the fill bar passed [C] or [F]"
+    print("    [T] terciles partition every defined bar;  [C] no pool at t reads the fill bar or later, and a perturbation at t-1 moves it;  [F] every pool is the t-1 feature placed at t;\n"
+          "    [X] a next-bar dependence IS CAUGHT by [C];  [X] the first run's unshifted pools ARE CAUGHT by [C] and by [F]")
     print("\nSELF-TEST PASSED\n"); return 0
 
 
@@ -156,8 +190,8 @@ def main():
     mk = draw_mask(np.random.default_rng(SEED), idx, (T, N), 2_000); r1 = V59.run_mirror(P, mk, sc, "cap", 20); m1, c1 = score_once(V59, P, mk, 20, "long", sc)
     assert abs(m1 - float(V59.V47.pnl_bp(r1).mean())) < 1e-12 and c1 == len(r1["trades"]), "[K]"
     print(f"  prep {time.time()-t0:.0f}s | {N} names x {T} bars | {idx.size:,} eligible cells | [K] score_once == run_d359's path", flush=True)
-    tp = time.time(); pools, F = volume_pools(P, elig); assert_T(pools, elig); assert_C(P, elig, pools)
-    print(f"  22 volume pools built in {time.time()-tp:.0f}s; [T] [C] on the real panel", flush=True)
+    tp = time.time(); pools, F = volume_pools(P, elig); assert_T(pools, elig); assert_C(P, elig, pools); assert_F(P, elig, pools)
+    print(f"  22 volume pools built in {time.time()-tp:.0f}s; [T] [C] [F] on the real panel (ADDENDUM: pools placed at t+1, filled at t+1's open)", flush=True)
     for k in POOLS_A + POOLS_B:
         print(f"    {k:11s} {int(pools[k].sum()):9,} cells", flush=True)
     halves = ["a", "b"] if a.half == "all" else [a.half]
