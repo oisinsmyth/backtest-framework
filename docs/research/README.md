@@ -17,6 +17,7 @@ Under [R15](../RULES.md#r15) **nothing here closes or admits anything.**
 | **2** | [`the-forced-seller-and-the-cost-wall.md`](the-forced-seller-and-the-cost-wall.md) | index reconstitution · Form 4 · earnings dates · sizing · execution cost · corporate supply | **4 signal verdicts, none surviving cost** · **4 method findings** |
 | **3** | [`the-plumbing-round.md`](the-plumbing-round.md) | fund flows · the death process · halts · 13D/13G · lending revenue · data defects | **6 lanes negative** · **2 live bugs, 1 vendor mechanism, 1 open code check** |
 | **4** | [`the-timestamp-round.md`](the-timestamp-round.md) | 8-K item codes · litigation · FDA calendars · the `$5` floor · a second price source · block length | **3 signal lanes dead** · **round 3's own fix broken; the reference implementation ejects; no second source exists** |
+| **5** | [`the-selection-round.md`](the-selection-round.md) | splits · dividend policy · fixture validation · the floor's level · panel construction · a break calendar | **2 signal lanes dead** · **the selection principle confirmed AND measured wrong; the earnings release is absorbing dated events; first checkable fixture prediction** |
 
 **Commissioning contracts and the exclusion lists** — the durable part, because they record what
 each round was kept off and why: [`working/leads/README.md`](../../working/leads/README.md) ·
@@ -30,12 +31,12 @@ one requires reading the source, because an agent's summary of a paper is not a 
 
 ## THE PATTERN ACROSS ALL THREE ROUNDS
 
-**Four rounds, twenty-five briefs, zero strategies — and eleven things the programme was wrong
-about.** *(Seven briefs in round 1, six in each of rounds 2, 3 and 4; counted, not estimated.)*
+**Five rounds, thirty-one briefs, zero strategies — and sixteen things the programme was wrong
+about.** *(Seven briefs in round 1, six in each of rounds 2–5; counted, not estimated.)*
 
-**Round 4 was the first `3 signal + 3 method` slate**, changed from `4+2` on this evidence. **All
-three signal lanes died; all three method lanes returned, and two broke something the programme
-currently believes.** The design change was correct and the margin was not close. That is not a disappointing result reported apologetically; it is the actual yield, and it
+**The slate has moved `4+2` → `3+3` → `2+4` on signal-versus-method, each time on yield.** Round 5
+was also the first selected by **what kills a lane** rather than by what was untouched — and that
+principle **was confirmed by one lane and measured wrong by another in the same round** (§R5 below). That is not a disappointing result reported apologetically; it is the actual yield, and it
 has been consistent enough across three independent rounds to be treated as the expected shape.
 
 | | what it changed | where |
@@ -51,6 +52,11 @@ has been consistent enough across three independent rounds to be treated as the 
 | **`acceptanceDateTime` has a MIXED timezone** | 35 of 60 are ET mislabelled `Z` — **R3's own recommended fix is unsound** | R4 |
 | the **reference implementation** of the literature **ejects** | on 12-month holds whose papers date the screen to formation, and says so nowhere | R4 |
 | block length 20 is **~6× too short on persistent conditioners** | the direction that makes nulls **easier** | R4 |
+| **relative spread is invariant to price** away from the tick constraint | `50/P` is the **commission**, not the spread — the floor is the wrong lever | R5 |
+| **the earnings release is absorbing dated corporate events** | 60–80% of dividend actions, 36–68% of splits, **rising** | R5 |
+| **odd lots entered consolidated volume 2013-12-09** | **`V` breaks, `OHLC` does not** — hits the dollar-volume screen price-dependently | R5 |
+| the ex-date convention has **three regimes**, a one-day hole and a doubled day | and **FINRA Rule 11140 sets it**, not the SEC settlement releases | R5 |
+| **Corwin–Schultz forward-fills**, by the author's own program | fabricated high/low on exactly the halt/no-trade set | R5 |
 
 **Why it keeps happening this way.** Every lane is commissioned with a *premise number* — a count,
 a rate, an `n_eff` — that must be obtainable **before** any return is measured. Signal territories
@@ -94,6 +100,19 @@ only records what the agents got wrong is not an honest scan.
 10. **Route (b) would rescue a lane by inverting the cost ratio.** It inverts the ratio exactly as
     designed and **converts a cost problem into a signal problem**, which is still a problem
     ([`the-timestamp-round.md`](the-timestamp-round.md) §1.8).
+11. **The killer-1 screen can ask about SIZE.** It cannot — **size and per-share price come apart**
+    wherever an event requires a prior corporate state. `J2` measured initiators and cutters at the
+    **same median price, $28.19 against $28.45.**
+12. **`50/P` is the cost of trading.** It is the **commission**. Relative spread is invariant to
+    price away from the tick constraint, and our names are ~7 ticks wide.
+13. **The `$5` screen is near-universal in the literature.** **81.7% of studies impose no price
+    filter at all**; published levels are bimodal at `$1` and `$5`.
+14. **French's headers declare a survivorship-free database.** They do not — **zero hits for
+    `surviv` across four daily files and the landing page.** I promoted an inference into a
+    declaration.
+15. **A shared scratchpad is harmless.** **263 files, one directory, every agent across five
+    rounds** — and two agents silently overwrote each other's helper script mid-run. **Round 6 must
+    require lane-unique filenames.**
 
 **And one correction I asserted and then withdrew**, kept visible in
 [`working/leads3/README.md`](../../working/leads3/README.md): I claimed the round-1 record misstated
@@ -175,7 +194,18 @@ reached for one.
 14. **MEASURE THE DAILY AUTOCORRELATION OF AN EQUAL-WEIGHTED BOOK.** This is the single input that
     decides whether #12's block-length finding bites at all — the two halves point in opposite
     directions and **which one applies is one number, not a judgement.** `H6` searched and found
-    **no citable modern figure for it.** Minutes to compute here.
+    **no citable modern figure for it**; `J3` found one, from 1964–93 on a universe a floor removes,
+    and rejected it as the wrong vintage, estimator and universe. Minutes to compute here.
+15. **CHECK WHETHER FOUR DATES EXIST AS ROWS** — 2012-10-29, 2012-10-30, 2018-12-05, 2025-01-09. No
+    trade occurred anywhere in US equities on any of them. Our measured **4,187** matches the
+    absent case; **4,191** would mean present. Two lines, and it is the first externally-derived
+    arithmetic prediction about the fixture any round has produced.
+16. **MATCH EITHER `SC 13D` OR `SCHEDULE 13D`.** Both strings coexist through 2024 Q1–Q3 and legacy
+    rows persist into 2025 Q1, so **the obvious fix to round 3's bug is also wrong** — and the daily
+    `form.idx` truncated the value to `SCHEDULE 1` for about a year.
+17. **Measure the compounded-daily-minus-buy-and-hold equal-weighted gap**, which needs **no
+    external series**. `J3` gives a pre-registrable band: **0.3–1.3%/yr if the floor binds,
+    ~6–7%/yr if it does not.**
 
 ---
 
