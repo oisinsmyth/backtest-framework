@@ -86,6 +86,16 @@ INSTRUMENTS_ALL = 650_000       # Databento's own "650,000+ symbols" for CME
 STATS_PER_INSTRUMENT_DAY = 4    # settlement, open, high/low, open interest
 RANGE_LO, RANGE_HI = 0.5, 2.0   # the assumed ratios are quoted to a factor of 2
 
+# What the SAME data would cost with no subscription, on pay-as-you-go.
+# DERIVED, not quoted: Databento publishes two worked examples of one query --
+# get_billable_size = 99,219,648 bytes and get_cost = $2.587353944778 -- and
+# 99,219,648 / 2**30 = 0.0924055 GiB gives EXACTLY $28.00/GiB, which also proves
+# their "GB" means 2**30. Usage-based bills the UNCOMPRESSED size, so the billed
+# column is what is charged, never the on-disk column.
+# One free list_unit_prices(GLBX.MDP3) call settles the rate; until then it is derived.
+USD_PER_GIB = 28.00
+SUBSCRIPTION_USD = 199.00
+
 # Usefulness for the prop track, and it is the point of the exercise.
 #   core       directly serves hurdle P or an open question in 01-prop-lead
 #   valuable   answers something the repo has flagged and never measured
@@ -233,6 +243,10 @@ def main() -> int:
                                  "mbo, top 8 roots, 1 mo")
     USABLE_INTERNAL_GB = 303.0
 
+    print(f"\n  {'item':40}{'BILLED GiB':>12}{'USAGE-BASED $':>15}")
+    for r in sorted(rows, key=lambda r: -r["billed_tib"]):
+        print(f"  {r['item']:40}{r['billed_tib']*1024:12.1f}{r['billed_tib']*1024*USD_PER_GIB:15,.0f}")
+
     print(f"\n  {'bundle':44}{'BILLED TiB':>12}{'DISK TiB':>10}{'HOURS':>8}{'DAYS':>7}  fits 30d")
     for name, (b, d, h) in (
             ("EVERYTHING the entitlement allows", everything),
@@ -245,6 +259,18 @@ def main() -> int:
             ("core only", core)):
         print(f"  {name:44}{b:12.2f}{d:10.2f}{h:8.0f}{h/24:7.1f}  "
               f"{'yes' if d * TIB < pipe else 'NO'}")
+
+    print(f"\n  WHAT EACH BUNDLE WOULD COST WITH NO SUBSCRIPTION, at ${USD_PER_GIB:.2f}/GiB")
+    print(f"  (usage-based bills the UNCOMPRESSED size, so it is the BILLED column that is charged)\n")
+    print(f"  {'bundle':44}{'usage-based $':>15}{'subscription $':>16}{'saving':>12}{'ratio':>8}")
+    for name, (b, d, h) in (("EVERYTHING the entitlement allows", everything),
+                            ("MAXIMAL USEFUL", maximal),
+                            ("LEAN", lean),
+                            ("LEAN MAXIMAL + status", fits_internal),
+                            ("THE 260 GB PLAN (MBO top 8)", fits_internal_wide)):
+        usd = b * 1024 * USD_PER_GIB
+        print(f"  {name:44}{usd:15,.0f}{SUBSCRIPTION_USD:16,.0f}{usd-SUBSCRIPTION_USD:12,.0f}"
+              f"{usd/SUBSCRIPTION_USD:8,.0f}x")
     print("\n  MAXIMAL USEFUL takes the most granular schema in each entitlement window and")
     print("  derives the rest: MBO gives MBP-10/MBP-1/TBBO/BBO/trades/OHLCV for its month,")
     print("  MBP-1 gives TBBO/BBO/trades/OHLCV for its year. Nothing is bought twice.")
