@@ -43,9 +43,31 @@ Derived evidence a record quotes goes to [`data/`](../../../data/) prefixed by l
 | **2** | 4 | **~1.13M** (280k · 284k · 272k · 296k) | 250–300k |
 
 **The projection held to within 1%, twice, and per-lane depth is stable at ~250–300k regardless of how
-broad the lane is.** That is the round-6 lesson confirmed from the other side: **breadth per agent does
-not come free, and it also does not cost extra — an agent spends what an agent spends.** So the lever
-is **the number of lanes**, and a round of four costs **~1.1M**.
+broad the lane is.** So the lever is **the number of lanes**, and a round of four costs **~1.1M**.
+
+### 2a. THE DEPTH MANDATE — the principal's standing instruction, and it OVERRIDES the plateau above
+
+**Fewer agents is a BUDGET decision, not a licence for the round to cover less. Every lane searches
+DEEPER AND WIDER to make up for there being fewer of them.**
+
+**And the flat 250–300k above is the problem, not the plan.** Agents self-limit, and the measured tell
+is *where* they stop: **they stop when they meet the bar.** So depth is written into every prompt as a
+CHECKABLE REQUIREMENT, never as "be thorough":
+
+1. **THE BAR IS A FLOOR, NOT A TARGET. Meeting it is not a reason to stop.** Round 2's single most
+   valuable finding — `B4`'s 20% multi-class blind spot, which changed the recommended route — was
+   found **after** its bar was met and **was not commissioned**.
+2. **A floor on sources READ IN FULL**, not abstract-only — and when a paywall blocks the main text,
+   **go after the appendix, the working-paper version, the author's own page, the institutional
+   repository, the code.** Every round-2 headline came from a full read obtained that way: an Internet
+   Appendix on an author's own site, an open-access copy of a paper another lane was **refused**, a
+   reference implementation's **code comment**.
+3. **At least one independent measurement with a negative control**, wherever public data permits.
+   `B1`, `B2` and `B4` each did this and each found something the literature does not contain.
+4. **Exhaust the sub-questions, then go PAST them** into the adjacent question the slate did not think
+   to ask — and say that you did.
+5. **An explicit "what I did not open" list**, separate from "what I could not verify", so the
+   unexplored edge is visible rather than invisible.
 
 ## 3. WHAT IS INHERITED FROM THE PREVIOUS CAMPAIGN
 

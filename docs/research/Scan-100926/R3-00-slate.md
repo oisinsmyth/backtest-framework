@@ -166,7 +166,15 @@ recorded two overnight ETFs that closed fourteen months after launch.
 
 ## What every lane carries
 
-The nine standing rules in [`00-SCHEMA.md`](00-SCHEMA.md) §4 — **now updated**: the wrong-HTTP-200
+**THE DEPTH MANDATE FIRST** ([`00-SCHEMA.md`](00-SCHEMA.md) §2a, added on the principal's standing
+instruction): **fewer agents is a budget decision, not a licence for the round to cover less, so every
+lane searches DEEPER AND WIDER.** Each prompt carries it as five checkable requirements rather than as
+an exhortation — **the bar is a floor and meeting it is not a reason to stop**; a floor on sources read
+**in full**, chasing appendices, working-paper versions, author pages, repositories and code when the
+main text is gated; **at least one independent measurement with a negative control**; exhaust the
+sub-questions **and then go past them**; and an explicit **"what I did not open"** list.
+
+Then the nine standing rules in [`00-SCHEMA.md`](00-SCHEMA.md) §4 — **now updated**: the wrong-HTTP-200
 catalogue stands at **twelve** flavours, and the summariser rule at **eleven** caught instances, four
 of them from round 2's `B3` alone. Plus the hazards on each lane's own path: `C1` and `C4` get the
 **draft-versus-published sign disagreement** and the **prose-versus-tables disagreement**; `C1` gets
