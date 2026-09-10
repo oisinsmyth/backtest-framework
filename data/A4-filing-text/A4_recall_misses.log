@@ -1,0 +1,64 @@
+MENTIONS  q=dividend           total={'value': 2456, 'relation': 'eq'} collected=2456
+PHRASEFAM q=OR of 8 phrases    total={'value': 493, 'relation': 'eq'} collected=493
+ZERO CTRL                      total={'value': 0, 'relation': 'eq'} collected=0
+
+filings mentioning 'dividend' = 1440; caught by phrase family = 329; phrase-family filings not in mention set = 8
+UPPER-BOUND RECALL of phrase family vs any-mention set = 0.228
+
+--- 1111 missed filings; inspecting 14 at random (seed 7) ---
+
+* 0001213900-21-000315 cik=1357671 ea132647ex10-1_creatdinc.htm HTTP=200 len=240609
+    >> suant to GAAP or disclosed in filings made with the Commission, (iii) the Company has not altered its method of accounting, (iv) the Company has not declared or made any dividend or distribution of cash or other property to its stockholders or purchased, redeemed or made any agreements to purchase or redeem any shares of its capital stock and (v) the Company has not issued any equity s
+    >> ach and every reference to share prices and shares of Common Stock in any Transaction Document shall be subject to adjustment for reverse and forward stock splits, stock dividends, stock combinations and other similar transactions of the Common Stock that occur after the date of this Agreement. 5.22 WAIVER OF JURY TRIAL . IN ANY ACTION, SUIT, OR PROCEEDING IN ANY JURISDICTION BROUGHT B
+
+* 0001104659-21-006713 cik=1657788 tm213811d1_ex99-1.htm HTTP=200 len=20494
+    >> d from Lease Bonuses and Other Income $ 15,916 $ 31,927 SUBSTANTIALLY ALL OF THE DISTRIBUTION TO COMMON UNITHOLDERS FOR THE FOURTH QUARTER OF 2020 EXPECTED TO BE FREE OF DIVIDEND INCOME TAXES AND INSTEAD CONSIDERED A RETURN OF CAPITAL (4) (1) Average monthly commodity prices are from the Energy Information Administration. Crude oil prices are in dollars per barrel and natural gas price
+
+* 0001437749-21-000503 cik=1063197 ex_220444.htm HTTP=200 len=67013
+    >> f the Company, in the form attached hereto as Exhibit A, in the aggregate principal amount of $38,500.00 (together with any note(s) issued in replacement thereof or as a dividend thereon or otherwise with respect thereto in accordance with the terms thereof, the “Note”), convertible into shares of common stock, $0.01 par value per share, of the Company (the “Common Stock”), upon the te
+
+* 0000832988-21-000003 cik=832988 fy21ex991jan14holidayrelea.htm HTTP=200 len=31583
+    >> cial results determined in accordance with GAAP, nor are they necessarily comparable to non-GAAP performance measures that may be presented by other companies. Quarterly Dividend: Signet's Board of Directors has elected to maintain the temporary suspension of the dividend program on the common shares and has elected to pay the February quarterly dividend on its preference shares in kin
+    >> AP performance measures that may be presented by other companies. Quarterly Dividend: Signet's Board of Directors has elected to maintain the temporary suspension of the dividend program on the common shares and has elected to pay the February quarterly dividend on its preference shares in kind. About Signet and Safe Harbor Statement: Signet Jewelers Limited is the world's largest reta
+
+* 0001018399-21-000012 cik=1018399 exhibit31secondamendedandr.htm HTTP=200 len=127468
+    >>  Corporation shall be entitled to recognize the exclusive right of a person registered on its books as the owner of such stock for all purposes, including the payment of dividends and the right to vote, regardless of any transfer, pledge or other disposition of such stock, until the shares have been transferred on the books of the Corporation in accordance with the requirements of thes
+    >> The Board of Directors may fix in advance a time of not more than seventy (70) days before the date of any meeting of the shareholders or the date for the payment of any dividend or the making of any distribution to shareholders or the last day on which the consent or dissent of shareholders may be effectively expressed for any purpose, as the record date for determining the shareholde
+
+* 0001728951-21-000002 cik=1728951 exhibit991january2021.htm HTTP=200 len=56094
+    >> r 30, 2020. 2. Calculations exclude $95, $110, $302 and $377 from the numerator for the three and nine months ended September 30, 2020 and 2019, respectively, related to dividends paid on unvested RSAs and RSUs. Investor Presentation – January 202120 Financial Summary – 3Q’2020 Consolidated Balance Sheets September 30, 2020 December 31, 2019 (in thousands, except share and per share am
+    >>  171,840 $ 235,336 Unsecured term loans, net of deferred financing costs 626,119 445,586 Revolving credit facility — 46,000 Intangible lease liabilities, net 8,589 9,564 Dividend payable 24,242 19,395 Derivative liabilities 43,504 4,083 Accrued liabilities and other payables 15,717 13,371 Total liabilities 890,011 773,334 Commitments and contingencies — — Stockholders' equity: Preferre
+
+* 0001104659-21-000519 cik=1604738 tm211579d1_ex10-1.htm HTTP=200 len=224159
+    >> h, with the giving of notice or the passage of time, or both, would constitute an Event of Default. " Distributions " shall mean, in respect of any applicable Person(s), dividends on, or other payments or distributions on account of, or the setting apart of money for a sinking or other analogous fund for, or the purchase, redemption, retirement or other acquisition of, any Equity Inter
+    >> nt, purchase agreement, counterindemnity or similar obligation issued by the guaranteeing person, in either case guaranteeing or in effect guaranteeing any Debt, leases, dividends or other obligations (the "primary obligations") of the primary obligor in any manner, whether directly or indirectly, including, without limitation, any obligation of the guaranteeing person, whether or not 
+
+* 0001213900-21-004622 cik=1506251 ea133853ex10-1_citius.htm HTTP=200 len=218543
+    >>  have the meaning ascribed to such term in Section 3.1(n). “ Per Share Purchase Price ” equals $1.294 , subject to adjustment for reverse and forward stock splits, stock dividends, stock combinations and other similar transactions of the Common Stock that occur after the date of this Agreement and prior to the Closing Date. “ Person ” means an individual or corporation, partnership, tr
+    >> suant to GAAP or disclosed in filings made with the Commission, (iii) the Company has not altered its method of accounting, (iv) the Company has not declared or made any dividend or distribution of cash or other property to its stockholders or purchased, redeemed or made any agreements to purchase or redeem any shares of its capital stock and (v) the Company has not issued any equity s
+
+* 0000927089-21-000027 cik=1578776 pr.htm HTTP=200 len=181357
+    >> is crisis. We continue to evaluate and implement strategies to enhance shareholder value including stock repurchase programs and the maintenance of our regular quarterly dividends, but with a focus on protecting our capital in these uncertain times.” Highlights for the Quarter Ended December 31, 2020 • Our net loans receivable increased by $17.6 million to $605.9 million at December 31
+    >> ent securities held for sale and in connection with interest rate swap arrangements. These increases were partially offset by stock repurchases totaling $2.0 million and dividend payments totaling $570,000 during the three months ended December 31, 2020. Asset Quality: At December 31, 2020, the Company’s non-performing assets totaled $12.8 million or 1.1% of total assets as compared to
+
+* 0001590750-21-000013 cik=1590750 a202101158kexhibit33.htm HTTP=200 len=90626
+    >>  of stockholders entitled to vote therewith at the adjourned meeting. (b) In order that the Corporation may determine the stockholders entitled to receive payment of any dividend or other distribution or allotment of any rights or the stockholders entitled to exercise any rights in respect of any change, conversion or exchange of stock, or for the purpose of any other lawful action, th
+    >> ning stockholders for any such purpose shall be at the close of business on the day on which the Board of Directors adopts the resolution relating thereto. Section 7.02. Dividends . Subject to limitations contained in Delaware Law and the Certificate of Incorporation, the Board of Directors may declare and pay dividends upon the shares of capital stock of the Corporation, which dividen
+
+* 0001193125-21-000940 cik=1674910 d98159dex41.htm HTTP=200 len=581902
+    >> count, fees, charges and related expenses in connection with a Receivables Facility, and (v) whether or not treated as interest expense in accordance with GAAP, all cash dividends or other distributions accrued (excluding dividends payable solely in Equity Interests (other than Disqualified Stock) of the Company) on any series of Disqualified Stock or any series of Preferred Stock duri
+    >> ion with a Receivables Facility, and (v) whether or not treated as interest expense in accordance with GAAP, all cash dividends or other distributions accrued (excluding dividends payable solely in Equity Interests (other than Disqualified Stock) of the Company) on any series of Disqualified Stock or any series of Preferred Stock during such period, minus (b) to the extent included in 
+
+* 0000732717-21-000009 cik=732717 t-4q2020exhibit993.htm HTTP=200 len=728298
+    >> h U.S. generally accepted accounting principles (GAAP). Free Cash Flow Free cash flow is defined as cash from operations minus capital expenditures. Free cash flow after dividends is defined as cash from operations minus capital expenditures and dividends on common and preferred shares. Free cash flow dividend payout ratio is defined as the percentage of dividends paid on common and pr
+    >> cash flow is defined as cash from operations minus capital expenditures. Free cash flow after dividends is defined as cash from operations minus capital expenditures and dividends on common and preferred shares. Free cash flow dividend payout ratio is defined as the percentage of dividends paid on common and preferred shares to free cash flow. We believe these metrics provide useful in
+
+* 0001091907-21-000003 cik=1091907 wwe-20210125xex99_1.htm HTTP=200 len=55675
+    >> McMahons and the sale, or the perception of possible sales, of those shares could lower our stock price; and the volatility of our Class A common stock. In addition, our dividend is dependent on a number of factors, including, among other things, our liquidity and historical and projected cash flow, strategic plan (including alternative uses of capital), our financial results and condi
+    >> nd projected cash flow, strategic plan (including alternative uses of capital), our financial results and condition, contractual and legal restrictions on the payment of dividends (including under our revolving credit facility), general economic and competitive conditions and such other factors as our Board of Directors may consider relevant. Forward-looking statements made by the Comp
+
+* 0001493152-21-001185 cik=1507605 ex10-1.htm HTTP=200 len=213522
+    >> l have the meaning ascribed to such term in Section 3.1(n). “ Per Share Purchase Price ” equals $20.00, subject to adjustment for reverse and forward stock splits, stock dividends, stock combinations and other similar transactions of the Common Stock that occur after the date of this Agreement. 3 “ Person ” means an individual or corporation, partnership, trust, incorporated or unincor
+    >> suant to GAAP or disclosed in filings made with the Commission, (iii) the Company has not altered its method of accounting, (iv) the Company has not declared or made any dividend or distribution of cash or other property to its stockholders or purchased, redeemed or made any agreements to purchase or redeem any shares of its capital stock and (v) the Company has not issued any equity s
+
+[exited with code 0]

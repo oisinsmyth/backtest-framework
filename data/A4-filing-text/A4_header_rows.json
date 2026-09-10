@@ -1,0 +1,200 @@
+[
+ {
+  "y": 2010,
+  "adsh": "0001193125-10-022203",
+  "cik": "102037",
+  "file_date": "2010-02-04",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20100204162836",
+  "hdr_filing_date": "20100204",
+  "items": []
+ },
+ {
+  "y": 2010,
+  "adsh": "0001144204-10-006506",
+  "cik": "845877",
+  "file_date": "2010-02-10",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20100210171019",
+  "hdr_filing_date": "20100210",
+  "items": []
+ },
+ {
+  "y": 2010,
+  "adsh": "0000059255-10-000008",
+  "cik": "1011657",
+  "file_date": "2010-02-19",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20100218173226",
+  "hdr_filing_date": "20100219",
+  "items": []
+ },
+ {
+  "y": 2012,
+  "adsh": "0000708955-12-000019",
+  "cik": "708955",
+  "file_date": "2012-03-13",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20120313164854",
+  "hdr_filing_date": "20120313",
+  "items": []
+ },
+ {
+  "y": 2012,
+  "adsh": "0001193125-12-104093",
+  "cik": "14272",
+  "file_date": "2012-03-08",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20120308170841",
+  "hdr_filing_date": "20120308",
+  "items": []
+ },
+ {
+  "y": 2012,
+  "adsh": "0001144204-12-006410",
+  "cik": "102037",
+  "file_date": "2012-02-07",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20120207164125",
+  "hdr_filing_date": "20120207",
+  "items": []
+ },
+ {
+  "y": 2014,
+  "adsh": "0001474098-14-000019",
+  "cik": "1474098",
+  "file_date": "2014-03-14",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20140314163649",
+  "hdr_filing_date": "20140314",
+  "items": []
+ },
+ {
+  "y": 2014,
+  "adsh": "0000102037-14-000011",
+  "cik": "102037",
+  "file_date": "2014-02-07",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20140207110448",
+  "hdr_filing_date": "20140207",
+  "items": []
+ },
+ {
+  "y": 2014,
+  "adsh": "0001530950-14-000019",
+  "cik": "1530950",
+  "file_date": "2014-01-09",
+  "hdr_code": 200,
+  "idxhdr_code": 404,
+  "acceptance": "20140109170307",
+  "hdr_filing_date": "20140109",
+  "items": []
+ },
+ {
+  "y": 2018,
+  "adsh": "0001654954-18-001565",
+  "cik": "1169770",
+  "file_date": "2018-02-15",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20180215060046",
+  "hdr_filing_date": "20180215",
+  "items": []
+ },
+ {
+  "y": 2018,
+  "adsh": "0001493152-18-001062",
+  "cik": "752642",
+  "file_date": "2018-01-25",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20180125170624",
+  "hdr_filing_date": "20180125",
+  "items": []
+ },
+ {
+  "y": 2018,
+  "adsh": "0001193125-18-029939",
+  "cik": "755001",
+  "file_date": "2018-02-02",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20180202070055",
+  "hdr_filing_date": "20180202",
+  "items": []
+ },
+ {
+  "y": 2022,
+  "adsh": "0001474098-22-000042",
+  "cik": "1474098",
+  "file_date": "2022-03-15",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20220315163109",
+  "hdr_filing_date": "20220315",
+  "items": []
+ },
+ {
+  "y": 2022,
+  "adsh": "0001493152-22-001109",
+  "cik": "752642",
+  "file_date": "2022-01-13",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20220113090013",
+  "hdr_filing_date": "20220113",
+  "items": []
+ },
+ {
+  "y": 2022,
+  "adsh": "0000883948-22-000010",
+  "cik": "883948",
+  "file_date": "2022-01-28",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20220128160229",
+  "hdr_filing_date": "20220128",
+  "items": []
+ },
+ {
+  "y": 2025,
+  "adsh": "0001474098-25-000048",
+  "cik": "1474098",
+  "file_date": "2025-03-14",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20250314160701",
+  "hdr_filing_date": "20250314",
+  "items": []
+ },
+ {
+  "y": 2025,
+  "adsh": "0000883948-25-000013",
+  "cik": "883948",
+  "file_date": "2025-01-31",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20250131160146",
+  "hdr_filing_date": "20250131",
+  "items": []
+ },
+ {
+  "y": 2025,
+  "adsh": "0001628280-25-003909",
+  "cik": "1176948",
+  "file_date": "2025-02-05",
+  "hdr_code": 200,
+  "idxhdr_code": 200,
+  "acceptance": "20250205061755",
+  "hdr_filing_date": "20250205",
+  "items": []
+ }
+]

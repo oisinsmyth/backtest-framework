@@ -1,0 +1,119 @@
+year  phrase            total relation bytes
+2010  A_div_quarterly        480 eq    60620
+2011  A_div_quarterly        539 eq    60444
+2012  A_div_quarterly        583 eq    61075
+2013  A_div_quarterly        600 eq    60951
+2014  A_div_quarterly        653 eq    60820
+2015  A_div_quarterly        670 eq    60725
+2016  A_div_quarterly        672 eq    60742
+2017  A_div_quarterly        671 eq    60629
+2018  A_div_quarterly        673 eq    60863
+2019  A_div_quarterly        661 eq    60879
+2020  A_div_quarterly        599 eq    60979
+2021  A_div_quarterly        641 eq    61285
+2022  A_div_quarterly        685 eq    61108
+2023  A_div_quarterly        698 eq    61004
+2024  A_div_quarterly        656 eq    61026
+2025  A_div_quarterly        663 eq    61071
+2026  A_div_quarterly        453 eq    60638
+2010  B_div_cash             488 eq    59882
+2011  B_div_cash             527 eq    59888
+2012  B_div_cash             603 eq    60081
+2013  B_div_cash             606 eq    60384
+2014  B_div_cash             659 eq    60299
+2015  B_div_cash             691 eq    60480
+2016  B_div_cash             666 eq    60712
+2017  B_div_cash             654 eq    60471
+2018  B_div_cash             695 eq    60573
+2019  B_div_cash             680 eq    60785
+2020  B_div_cash             657 eq    60667
+2021  B_div_cash             702 eq    60448
+2022  B_div_cash             788 eq    60656
+2023  B_div_cash             779 eq    60845
+2024  B_div_cash             764 eq    60703
+2025  B_div_cash             758 eq    60615
+2026  B_div_cash             511 eq    60184
+2010  C_div_board           1476 eq    60610
+2011  C_div_board           1661 eq    60265
+2012  C_div_board           1900 eq    60461
+2013  C_div_board           1999 eq    60576
+2014  C_div_board           2252 eq    60745
+2015  C_div_board           2396 eq    61078
+2016  C_div_board           2269 eq    61095
+2017  C_div_board           2295 eq    61066
+2018  C_div_board           2364 eq    60613
+2019  C_div_board           2254 eq    60894
+2020  C_div_board           2169 eq    60891
+2021  C_div_board           2380 eq    60994
+2022  C_div_board           2513 eq    60843
+2023  C_div_board           2441 eq    60911
+2024  C_div_board           2392 eq    60891
+2025  C_div_board           2346 eq    61194
+2026  C_div_board           1665 eq    61085
+2010  D_split_forward       5813 eq    59867
+2011  D_split_forward       5722 eq    59799
+2012  D_split_forward       5144 eq    60733
+2013  D_split_forward       5199 eq    60158
+2014  D_split_forward       5515 eq    60922
+2015  D_split_forward       5762 eq    60611
+2016  D_split_forward       5500 eq    60140
+2017  D_split_forward       5700 eq    60727
+2018  D_split_forward       5056 eq    60610
+2019  D_split_forward       5470 eq    60892
+2020  D_split_forward       6392 eq    61097
+2021  D_split_forward       7824 eq    61139
+2022  D_split_forward       7106 eq    61567
+2023  D_split_forward       8188 eq    61347
+2024  D_split_forward       8373 eq    61139
+2025  D_split_forward       8395 eq    61660
+2026  D_split_forward       5524 eq    61580
+2010  E_split_ratio           98 eq    59019
+2011  E_split_ratio          169 eq    59952
+2012  E_split_ratio          146 eq    60611
+2013  E_split_ratio          127 eq    60143
+2014  E_split_ratio          130 eq    60144
+2015  E_split_ratio          104 eq    60008
+2016  E_split_ratio           90 eq    55130
+2017  E_split_ratio           76 eq    47004
+2018  E_split_ratio           88 eq    53886
+2019  E_split_ratio           68 eq    41568
+2020  E_split_ratio           47 eq    29448
+2021  E_split_ratio           41 eq    25800
+2022  E_split_ratio           24 eq    15454
+2023  E_split_ratio           41 eq    26027
+2024  E_split_ratio           41 eq    26911
+2025  E_split_ratio           23 eq    18087
+2026  E_split_ratio           12 eq    8821
+2010  ZERO_CONTROL             0 eq    1074
+2011  ZERO_CONTROL             0 eq    1074
+2012  ZERO_CONTROL             0 eq    1075
+2013  ZERO_CONTROL             0 eq    1074
+2014  ZERO_CONTROL             0 eq    1074
+2015  ZERO_CONTROL             0 eq    1074
+2016  ZERO_CONTROL             0 eq    1074
+2017  ZERO_CONTROL             0 eq    1075
+2018  ZERO_CONTROL             0 eq    1074
+2019  ZERO_CONTROL             0 eq    1074
+2020  ZERO_CONTROL             0 eq    1074
+2021  ZERO_CONTROL             0 eq    1074
+2022  ZERO_CONTROL             0 eq    1074
+2023  ZERO_CONTROL             0 eq    1074
+2024  ZERO_CONTROL             0 eq    1074
+2025  ZERO_CONTROL             0 eq    1074
+2026  ZERO_CONTROL             0 eq    1075
+
+--- whole window 2010-01-01..2026-08-26 ---
+A_div_quarterly    8-K=10000(gte)  all-forms=10000(gte)
+B_div_cash         8-K=10000(gte)  all-forms=10000(gte)
+C_div_board        8-K=10000(gte)  all-forms=10000(gte)
+D_split_forward    8-K=10000(gte)  all-forms=10000(gte)
+E_split_ratio      8-K=1325(eq)  all-forms=10000(gte)
+ZERO_CONTROL       8-K=0(eq)  all-forms=0(eq)
+
+--- query syntax probes ---
+OR of two phrases      94 (eq)
+minus exclusion        212 (eq)
+bare words             864 (eq)
+wildcard               0 (eq)
+
+[exited with code 0]
