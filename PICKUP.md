@@ -2,6 +2,59 @@
 
 ---
 
+## THE SECOND-ZONE LINE — D412 → D433, CLOSED BY THE PRINCIPAL 2026-09-10, BOTH DAILY HOLDOUTS SPENT
+
+**Read this before touching either daily holdout: they are both spent, by this line, on
+2026-09-10.** `us_shorts_daily_holdout` (803 names) was read a second time under the principal's
+ruling that a holdout spent by an unrelated strategy is unseen by a new line (D430);
+`us_shorts_daily_holdout2` (576 names) was read once (D433). There is no unseen daily
+single-name data left for anything descended from a departure-zone touch.
+
+**The line:** D412 departure zones → D413 distance arming + cell 2 (REV/EFF/DV medians) → D414–D416
+entry timing (touch-day close wins) → D417–D419, D423–D425 nine exit constructions (none beats
+`t+5`, no stop) → D420–D422 the second touch (STACK2-ANY, +45 in-sample) → D426 double-down (dead)
+→ D427 five layers → D428/D429 the combined long book at 3 slots, which met the in-sample
+candidate condition → **D430 holdout 1: the long arm −29 gross, everything above the base
+rung gone** → D431 short arm on the union (tail-carried, unbookable) → D432 breadth gate (wrong
+sign), DV lever (+8 bp), gap by half (inverts) → **D433 holdout 2: net Sharpe −0.19; the touch
+effect reproduces a third time.**
+
+**What is TRUE across three disjoint name sets (1,573 / 803 / 576):** a distance-armed
+departure-zone touch entered at the touch-day close and exited at `t+5` earns **+9.8 / +10.1 /
++13.0 bp gross**; cell 2 makes it **+30 / +18 / +18**. Cost is 24–34 bp. **Net Sharpe of the best
+transferable object (cell 2 ∧ top-ADV tercile, 10 slots): +0.05 / −0.03 / −0.19.** File the touch
+effect as a base rate a future study must beat; it is not a trade.
+
+**What did NOT travel, on both unseen sets:** the second-touch rung (+45 → +6 / +17), the cheap
+tercile (+86 → +17 / +28), long-only (+80 → −29 / −21), the gap ordering (inverts), the ADV
+tercile's gross side, every exit, every gate. The short arm's mean was positive on all three
+sets on a median of ~0 and no 2–5 slot book collects it. In-sample nulls (within-day
+permutation, matched random pools) were passed at +5 to +10 SE by selections that did not
+transfer: **they test selection inside the spent names, not transfer.**
+
+**Process disclosure — the door.** `run_d411` installs an unconditional audit hook refusing any
+path containing "holdout" (no `allow` switch; `run_d365`'s `V65.allow_holdout(why)` is the
+designated, logged unlock, but it lives on a module this line's chain does not import). D430's
+ADDENDUM opened each holdout in a **separate hook-free process** (`scripts/d430_oos_loader.py`,
+`scripts/d433_oos2_loader.py`, `--spend-the-holdout`), wrote the panel to a cache named without
+"holdout", printed a receipt with the file's SHA-256, and the runner read the cache. The
+information the designated door would have logged is in the receipts (D430/D433 RESULT); the
+designated function was not called. If the guard is consolidated, the two hooks should become one
+with the `allow` switch, and openers should call it.
+
+**Reusable from this line:** `scripts/run_d430_holdout.py` (a fixture-parametrised pipeline with a
+`--proof` mode that reproduces in-sample bit-identically before any out-of-sample read),
+`run_d431_shorts_union.py::union` (two fixtures on one calendar), the ladder printed on every
+out-of-sample read so a failure is located, Sharpe with a monthly block-bootstrap SE
+(`run_d433_holdout2.py`), and the memory rules written on 2026-09-10 (measure the worker before a
+fan-out; a required book is not utilisation × base; a tail-carried mean does not book; layers
+selected on spent names vanish out of sample).
+
+**The one lever never measured:** execution — passive fills at the zone versus the crossed-spread
+Corwin–Schultz model. Blocked on the TWS session like everything else in 0d2 (1).
+
+---
+
 ## THE SIGNAL HUNT — D391 → D397, CHAIN RETIRED 2026-09-09, READY TO MERGE
 
 **The principal authorised the merge on 2026-09-09**, reversing the branch's standing rebase-only
@@ -157,8 +210,8 @@ and untouched.
 | fixture | slice of the pinned permutation | names | state |
 |---|---|---:|---|
 | mining prefix | `order[:3400]` | — | spent many times over; free to mine further (see the ruling below) |
-| `us_shorts_daily_holdout.csv.gz` | `order[3400:5100]` | 803 | **SPENT 2026-09-07 (D371). Never read again.** |
-| `us_shorts_daily_holdout2.csv.gz` | `order[5100:6300]` | **576** | **BUILT `59f021e`, UNSPENT.** 1,532,631 rows, 2010-01-04 → 2026-08-26, dead share 32.6%, gates clean |
+| `us_shorts_daily_holdout.csv.gz` | `order[3400:5100]` | 803 | **SPENT 2026-09-07 (D371, momentum). READ AGAIN 2026-09-10 (D430, the second-zone line) under the principal's ruling that a holdout spent by an unrelated strategy is unseen by a new line.** Spent for both lines. |
+| `us_shorts_daily_holdout2.csv.gz` | `order[5100:6300]` | **576** | **SPENT 2026-09-10 (D433, the second-zone line).** 1,532,631 rows, dead share 32.6%, gates clean; unseen by every OTHER line — the principal's per-line ruling applies |
 | remaining unfetched | `order[6300:]` | **2,301** | never fetched, never scored |
 
 The permutation is deterministic — alphabetical sort, one shuffle at `POOL_SEED = 20260828` — so any
@@ -726,6 +779,14 @@ cost and no new vendor. **Do not spend this until (2) has reported** — it is a
 **(4) EXECUTION ANCHORS — VWAP and the closing auction.** Weak as *zones*, but they hold the one
 property nothing else here does: somebody is **obliged** to trade there. `scripts/d364_auction_bound.py`
 already documents the 1-minute call shape. Cheapest of the four; lowest ceiling.
+
+**UPDATE 2026-09-10:** (2) the capital-gains overhang ran as D405 and **abandoned at stage 0** (the
+overhang is momentum); (3) options open-interest density ran as D406 and **failed its bar**; the
+departure-zone line (D412–D433, above) was the seventh price-path map and died out of sample twice.
+**Never tested in this repo, and each carries information the price path cannot:** short interest /
+days-to-cover as a *signal* (FINRA bi-monthly, public), insider transactions, share issuance /
+buybacks / lockup expiries (the literal supply of shares), 13F holdings changes, index-inclusion
+flows. Zero decision files on any of them.
 
 **MULTIPLICITY: any of these is look #7 on price-level maps.** The R13 ledger carries 259 terrain
 looks and 86 structure looks in, and D403 makes six programmes with six written closes. **None of

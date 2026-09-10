@@ -4105,3 +4105,42 @@ checked, was **what kind of instrument died and why.** This is the third place t
 been caught by an unexamined corporate-action or instrument basis, after the 15m-vs-daily
 adjustment split and the thirty fabricated dividend days of §18. **Census the instrument types
 and the death causes when a fixture is built, not when an unrelated agent trips over them.**
+
+
+## 61. A departure-zone touch earns +10 to +13 bp gross on three disjoint name sets, and nothing built on it survived a holdout: the second-zone line is closed
+
+**The principal closed the line on 2026-09-10** after D412–D433: twenty-two studies, two holdout
+reads, both daily holdouts spent for the construction. Records: `D430-RESULT-*` (holdout 1) and
+`D433-RESULT-*` (holdout 2).
+
+**What reproduced.** D413's distance-armed departure zone — a ≥1-ATR candle whose zone the close
+then clears by 1 ATR — touched and entered at the touch-day close, exited at `t+5`:
+
+| | in-sample (1,573 names) | holdout 1 (803) | holdout 2 (576) |
+|---|--:|--:|--:|
+| all touches, gross bp | +9.8 | +10.1 | +13.0 |
+| cell 2 (REV ≤ −2.47%, EFF > 0.237, ADV > $44M) | +30.3 | +18.1 | +18.0 |
+| cell 2 ∧ top-ADV tercile | +37.9 | +21.3 | +13.4 |
+| the same, 10-slot book, net Sharpe | +0.05 | −0.03 | −0.19 |
+
+A real short-horizon reversal after a large move on a liquid name, worth a third of a 24–34 bp
+round trip. **File it as a base rate** (a random trade after a zone touch earns ~+12 gross); it
+is not a trade.
+
+**What did not.** Every layer selected on the spent names after one look — the second touch
+(+45 → +6 / +17), the cheap tercile (+86 → +17 / +28), long-only (+80 → −29 / −21), the gap
+ordering, the ADV tercile's gross side, a breadth gate, nine exit constructions — and every
+in-sample null they passed (within-day permutation, matched random pools, +5 to +10 SE). **Those
+nulls test selection inside the spent names, not transfer.** The in-sample 2020 premium was the
+names: on unseen names 2020 was −635 bp per cheap long.
+
+**Two exits worth remembering as facts:** no ATR, structure or zone exit beats `t+5` with nothing
+(inside the hold the expected remaining move is non-negative in every state, including at the
+prior swing); the one exit that carried information — a limit at the *next live* opposite-side
+zone — did so only on events the final construction dropped.
+
+**Method that came out of it:** a fixture-parametrised pipeline with an in-sample `--proof` before
+any out-of-sample read; the ladder printed on the holdout so a failure is located; Sharpe with a
+monthly block-bootstrap SE; and the rule that a prediction on a date-defined subset must have its
+sign computed from spent data before pre-registration — the breadth gate (D432) was pre-registered
+with the wrong sign on a true stage-0 fact.
