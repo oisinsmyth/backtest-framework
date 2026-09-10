@@ -1,0 +1,110 @@
+{
+ "2010Q1": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2010/QTR1/form.idx",
+  "last_data_received": "March 31, 2010",
+  "n_form_8K_exact": 19918,
+  "n_form_8K_other": 716,
+  "n_rows_total": 300562,
+  "bytes": 46887973,
+  "by_filing_year": {
+   "2010": 19918
+  },
+  "secs": 11.7
+ },
+ "2010Q3": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2010/QTR3/form.idx",
+  "last_data_received": "September 30, 2010",
+  "n_form_8K_exact": 18686,
+  "n_form_8K_other": 678,
+  "n_rows_total": 203930,
+  "bytes": 31813385,
+  "by_filing_year": {
+   "2010": 18686
+  },
+  "secs": 5.3
+ },
+ "2015Q1": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2015/QTR1/form.idx",
+  "last_data_received": "March 31, 2015",
+  "n_form_8K_exact": 19252,
+  "n_form_8K_other": 672,
+  "n_rows_total": 318648,
+  "bytes": 49709389,
+  "by_filing_year": {
+   "2015": 19252
+  },
+  "secs": 6.8
+ },
+ "2015Q3": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2015/QTR3/form.idx",
+  "last_data_received": "September 30, 2015",
+  "n_form_8K_exact": 17771,
+  "n_form_8K_other": 512,
+  "n_rows_total": 206986,
+  "bytes": 32290121,
+  "by_filing_year": {
+   "2015": 17771
+  },
+  "secs": 3.7
+ },
+ "2020Q1": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2020/QTR1/form.idx",
+  "last_data_received": "March 31, 2020",
+  "n_form_8K_exact": 17631,
+  "n_form_8K_other": 501,
+  "n_rows_total": 324905,
+  "bytes": 50685481,
+  "by_filing_year": {
+   "2020": 17631
+  },
+  "secs": 5.1
+ },
+ "2023Q1": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2023/QTR1/form.idx",
+  "last_data_received": "March 31, 2023",
+  "n_form_8K_exact": 18122,
+  "n_form_8K_other": 480,
+  "n_rows_total": 348473,
+  "bytes": 54362089,
+  "by_filing_year": {
+   "2023": 18122
+  },
+  "secs": 7.0
+ },
+ "2024Q2": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2024/QTR2/form.idx",
+  "last_data_received": "June 30, 2024",
+  "n_form_8K_exact": 19546,
+  "n_form_8K_other": 435,
+  "n_rows_total": 316032,
+  "bytes": 49301292,
+  "by_filing_year": {
+   "2024": 19546
+  },
+  "secs": 6.7
+ },
+ "2025Q1": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2025/QTR1/form.idx",
+  "last_data_received": "March 31, 2025",
+  "n_form_8K_exact": 16723,
+  "n_form_8K_other": 402,
+  "n_rows_total": 340103,
+  "bytes": 53056369,
+  "by_filing_year": {
+   "2025": 16723
+  },
+  "secs": 6.5
+ },
+ "2026Q1": {
+  "url": "https://www.sec.gov/Archives/edgar/full-index/2026/QTR1/form.idx",
+  "last_data_received": "March 31, 2026",
+  "n_form_8K_exact": 15985,
+  "n_form_8K_other": 358,
+  "n_rows_total": 370056,
+  "bytes": 57729037,
+  "by_filing_year": {
+   "2026": 15985
+  },
+  "secs": 20.0
+ }
+}

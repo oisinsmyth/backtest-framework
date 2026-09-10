@@ -1,0 +1,548 @@
+[
+ {
+  "code": "1.01",
+  "acc": "0001104659-20-128476",
+  "date": "2020-11-23",
+  "json_items": [
+   "1.01"
+  ],
+  "index_page_items": [
+   "1.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920128476/0001104659-20-128476-index.htm"
+ },
+ {
+  "code": "1.02",
+  "acc": "0001193125-13-473821",
+  "date": "2013-12-16",
+  "json_items": [
+   "1.01",
+   "1.02",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.01",
+   "1.02",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000119312513473821/0001193125-13-473821-index.htm"
+ },
+ {
+  "code": "1.03",
+  "acc": "0001104659-20-111583",
+  "date": "2020-10-02",
+  "json_items": [
+   "1.03",
+   "2.01",
+   "3.03",
+   "5.01",
+   "5.02",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.03",
+   "2.01",
+   "3.03",
+   "5.01",
+   "5.02",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/3116/000110465920111583/0001104659-20-111583-index.htm"
+ },
+ {
+  "code": "1.04",
+  "acc": "0000764065-24-000131",
+  "date": "2024-05-03",
+  "json_items": [
+   "1.04"
+  ],
+  "index_page_items": [
+   "1.04"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/764065/000076406524000131/0000764065-24-000131-index.htm"
+ },
+ {
+  "code": "1.05",
+  "acc": "0001437749-26-009193",
+  "date": "2026-03-20",
+  "json_items": [
+   "1.05"
+  ],
+  "index_page_items": [
+   "1.05"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/732026/000143774926009193/0001437749-26-009193-index.htm"
+ },
+ {
+  "code": "2.01",
+  "acc": "0001104659-20-069206",
+  "date": "2020-06-03",
+  "json_items": [
+   "2.01",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "2.01",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920069206/0001104659-20-069206-index.htm"
+ },
+ {
+  "code": "2.02",
+  "acc": "0001104659-20-121833",
+  "date": "2020-11-05",
+  "json_items": [
+   "2.02",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "2.02",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920121833/0001104659-20-121833-index.htm"
+ },
+ {
+  "code": "2.03",
+  "acc": "0001193125-17-214568",
+  "date": "2017-06-27",
+  "json_items": [
+   "1.01",
+   "2.03",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.01",
+   "2.03",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000119312517214568/0001193125-17-214568-index.htm"
+ },
+ {
+  "code": "2.04",
+  "acc": "0001104659-18-019573",
+  "date": "2018-03-22",
+  "json_items": [
+   "1.02",
+   "2.04",
+   "8.01"
+  ],
+  "index_page_items": [
+   "1.02",
+   "2.04",
+   "8.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/1800/000110465918019573/0001104659-18-019573-index.htm"
+ },
+ {
+  "code": "2.05",
+  "acc": "0001104659-10-049239",
+  "date": "2010-09-21",
+  "json_items": [
+   "2.05",
+   "8.01"
+  ],
+  "index_page_items": [
+   "2.05",
+   "8.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/1800/000110465910049239/0001104659-10-049239-index.htm"
+ },
+ {
+  "code": "2.06",
+  "acc": "0001144204-10-067115",
+  "date": "2010-12-17",
+  "json_items": [
+   "2.06"
+  ],
+  "index_page_items": [
+   "2.06"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/3982/000114420410067115/0001144204-10-067115-index.htm"
+ },
+ {
+  "code": "3.01",
+  "acc": "0001104659-16-144094",
+  "date": "2016-09-12",
+  "json_items": [
+   "1.02",
+   "2.01",
+   "3.01",
+   "3.03",
+   "5.01",
+   "5.02",
+   "5.03",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.02",
+   "2.01",
+   "3.01",
+   "3.03",
+   "5.01",
+   "5.02",
+   "5.03",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5768/000110465916144094/0001104659-16-144094-index.htm"
+ },
+ {
+  "code": "3.02",
+  "acc": "0000002488-16-000247",
+  "date": "2016-08-31",
+  "json_items": [
+   "1.01",
+   "3.02"
+  ],
+  "index_page_items": [
+   "1.01",
+   "3.02"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248816000247/0000002488-16-000247-index.htm"
+ },
+ {
+  "code": "3.03",
+  "acc": "0001104659-19-071861",
+  "date": "2019-12-11",
+  "json_items": [
+   "1.01",
+   "3.03",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.01",
+   "3.03",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465919071861/0001104659-19-071861-index.htm"
+ },
+ {
+  "code": "4.02",
+  "acc": "0001171843-16-009846",
+  "date": "2016-05-10",
+  "json_items": [
+   "2.02",
+   "4.02",
+   "5.02",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "2.02",
+   "4.02",
+   "5.02",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/3116/000117184316009846/0001171843-16-009846-index.htm"
+ },
+ {
+  "code": "5.01",
+  "acc": "0001104659-16-144094",
+  "date": "2016-09-12",
+  "json_items": [
+   "1.02",
+   "2.01",
+   "3.01",
+   "3.03",
+   "5.01",
+   "5.02",
+   "5.03",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.02",
+   "2.01",
+   "3.01",
+   "3.03",
+   "5.01",
+   "5.02",
+   "5.03",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5768/000110465916144094/0001104659-16-144094-index.htm"
+ },
+ {
+  "code": "5.02",
+  "acc": "0001104659-20-118179",
+  "date": "2020-10-26",
+  "json_items": [
+   "2.02",
+   "5.02",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "2.02",
+   "5.02",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920118179/0001104659-20-118179-index.htm"
+ },
+ {
+  "code": "5.03",
+  "acc": "0001104659-20-133692",
+  "date": "2020-12-09",
+  "json_items": [
+   "5.03",
+   "9.01"
+  ],
+  "index_page_items": [
+   "5.03",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920133692/0001104659-20-133692-index.htm"
+ },
+ {
+  "code": "5.04",
+  "acc": "0001104659-15-083016",
+  "date": "2015-12-04",
+  "json_items": [
+   "5.04",
+   "9.01"
+  ],
+  "index_page_items": [
+   "5.04",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/1800/000110465915083016/0001104659-15-083016-index.htm"
+ },
+ {
+  "code": "5.05",
+  "acc": "0001193125-18-081791",
+  "date": "2018-03-14",
+  "json_items": [
+   "5.05",
+   "9.01"
+  ],
+  "index_page_items": [
+   "5.05",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000119312518081791/0001193125-18-081791-index.htm"
+ },
+ {
+  "code": "5.06",
+  "acc": "0001477932-23-008923",
+  "date": "2023-12-04",
+  "json_items": [
+   "2.01",
+   "3.02",
+   "5.01",
+   "5.02",
+   "5.06",
+   "9.01"
+  ],
+  "index_page_items": [
+   "2.01",
+   "3.02",
+   "5.01",
+   "5.02",
+   "5.06",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/55234/000147793223008923/0001477932-23-008923-index.htm"
+ },
+ {
+  "code": "5.07",
+  "acc": "0001104659-20-062017",
+  "date": "2020-05-15",
+  "json_items": [
+   "5.03",
+   "5.07",
+   "9.01"
+  ],
+  "index_page_items": [
+   "5.03",
+   "5.07",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920062017/0001104659-20-062017-index.htm"
+ },
+ {
+  "code": "5.08",
+  "acc": "0001193125-17-043498",
+  "date": "2017-02-14",
+  "json_items": [
+   "1.01",
+   "2.02",
+   "5.08",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "1.01",
+   "2.02",
+   "5.08",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000119312517043498/0001193125-17-043498-index.htm"
+ },
+ {
+  "code": "6.01",
+  "acc": "0001104659-25-072037",
+  "date": "2025-07-30",
+  "json_items": [
+   "6.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "6.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/2077602/000110465925072037/0001104659-25-072037-index.htm"
+ },
+ {
+  "code": "6.02",
+  "acc": "0001578443-22-000014",
+  "date": "2022-10-20",
+  "json_items": [
+   "6.02"
+  ],
+  "index_page_items": [
+   "6.02"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/20947/000157844322000014/0001578443-22-000014-index.htm"
+ },
+ {
+  "code": "6.03",
+  "acc": "0001193125-16-427634",
+  "date": "2016-01-12",
+  "json_items": [
+   "6.03",
+   "9.01"
+  ],
+  "index_page_items": [
+   "6.03",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/894327/000119312516427634/0001193125-16-427634-index.htm"
+ },
+ {
+  "code": "6.04",
+  "acc": "0001888524-22-004661",
+  "date": "2022-04-22",
+  "json_items": [
+   "6.04"
+  ],
+  "index_page_items": [
+   "6.04"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/1880187/000188852422004661/0001888524-22-004661-index.htm"
+ },
+ {
+  "code": "6.05",
+  "acc": "0001407200-24-000029",
+  "date": "2024-10-11",
+  "json_items": [
+   "6.05",
+   "8.01"
+  ],
+  "index_page_items": [
+   "6.05",
+   "8.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/894327/000140720024000029/0001407200-24-000029-index.htm"
+ },
+ {
+  "code": "6.06",
+  "acc": "0000073605-18-000006",
+  "date": "2018-05-23",
+  "json_items": [
+   "6.06",
+   "9.01"
+  ],
+  "index_page_items": [
+   "6.06",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/73605/000007360518000006/0000073605-18-000006-index.htm"
+ },
+ {
+  "code": "7.01",
+  "acc": "0001104659-20-089692",
+  "date": "2020-08-03",
+  "json_items": [
+   "2.02",
+   "7.01",
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "2.02",
+   "7.01",
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920089692/0001104659-20-089692-index.htm"
+ },
+ {
+  "code": "8.01",
+  "acc": "0001104659-20-140556",
+  "date": "2020-12-30",
+  "json_items": [
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920140556/0001104659-20-140556-index.htm"
+ },
+ {
+  "code": "9.01",
+  "acc": "0001104659-20-140556",
+  "date": "2020-12-30",
+  "json_items": [
+   "8.01",
+   "9.01"
+  ],
+  "index_page_items": [
+   "8.01",
+   "9.01"
+  ],
+  "match": true,
+  "url": "https://www.sec.gov/Archives/edgar/data/5272/000110465920140556/0001104659-20-140556-index.htm"
+ }
+]
