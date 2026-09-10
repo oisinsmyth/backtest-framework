@@ -99,7 +99,67 @@
    }
   ]
  },
- "generated_utc": "2026-09-10T22:37:09+00:00",
+ "maximal_at_1m": {
+  "tiers": [
+   {
+    "tier": "M0  41 continuous roots (the recommendation)",
+    "multiplier": 1.0,
+    "note": "one stitched series per root; what the runner builds today",
+    "disk_gib": 2.6697036822030067,
+    "billed_gib": 6.941067159175874,
+    "download_hours": 0.26193096685564443,
+    "free_disk_gib_after": 148.48395017788917,
+    "fits": true
+   },
+   {
+    "tier": "M1  all 1,592 continuous roots",
+    "multiplier": 1.0,
+    "note": "every listed future, including the 1,069 with zero open interest",
+    "disk_gib": 5.4612775586262545,
+    "billed_gib": 14.198989409208297,
+    "download_hours": 0.5358189078188615,
+    "free_disk_gib_after": 145.6923763014659,
+    "fits": true
+   },
+   {
+    "tier": "M2  + every contract MONTH, not just the front",
+    "multiplier": 2.5,
+    "note": "ASSUMED 2.5x: CL lists ~120 months, ES 21 quarters, but back months barely trade",
+    "disk_gib": 13.653193896565636,
+    "billed_gib": 35.497473523020744,
+    "download_hours": 1.339547269547154,
+    "free_disk_gib_after": 137.50045996352654,
+    "fits": true
+   },
+   {
+    "tier": "M3  + every calendar SPREAD",
+    "multiplier": 4.25,
+    "note": "ASSUMED +0.7x of outrights: spreads are separate instruments and trade hard at roll",
+    "disk_gib": 23.21042962416158,
+    "billed_gib": 60.34570498913526,
+    "download_hours": 2.277230358230162,
+    "free_disk_gib_after": 127.94322423593059,
+    "fits": true
+   },
+   {
+    "tier": "M4  + every OPTION on a future = true ALL_SYMBOLS",
+    "multiplier": 14.0,
+    "note": "ASSUMED: CME ADV ~30M contracts, options ~5M of them, spread over many strikes",
+    "disk_gib": 76.45788582076756,
+    "billed_gib": 198.78585172891616,
+    "download_hours": 7.501464709464062,
+    "free_disk_gib_after": 74.6957680393246,
+    "fits": true
+   }
+  ],
+  "definition_at_all_symbols": {
+   "instruments": 650000,
+   "billed_gib": 1289.8461520671847,
+   "disk_gib": 496.1062820285399,
+   "warning": "520 B per instrument PER DAY whether or not it trades -- bigger than the bars. Scope definition to the roots you keep."
+  }
+ },
+ "generated_utc": "2026-09-10T22:47:29+00:00",
  "purpose": "disk projection for a one-month Databento Standard strip-mine; not a study",
  "record_sizes_bytes": {
   "ohlcv": 56,

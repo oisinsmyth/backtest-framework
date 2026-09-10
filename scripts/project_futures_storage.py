@@ -342,6 +342,62 @@ def census_projection(sizes: dict[str, int], ratio: float) -> dict:
     return {"bands": rows}
 
 
+# -------------------------------------------------------------- --maximal
+# THE ACTUAL QUESTION: at ohlcv-1m, under Standard only, what is the CEILING?
+#
+# Standard includes 16+ years of L0 for CME Globex MDP 3.0, and ohlcv-1m is L0. So
+# the whole of GLBX.MDP3's 1-minute history is included and the only question is how
+# many INSTRUMENTS you ask for. A continuous symbol is one series per root; Databento
+# advertises "650,000+ symbols" for CME, because the dataset also carries every
+# contract month, every calendar spread, and every option on a future.
+#
+# THE ANCHOR THAT MAKES THIS COMPUTABLE: the rank-band model above prices all 1,592
+# continuous roots. Everything below is a MULTIPLIER on that, and every multiplier is
+# ASSUMED. They are stated here rather than buried because they are the whole answer.
+#
+# ONE FREE CALL REPLACES ALL OF IT:
+#   metadata.get_record_count(GLBX.MDP3, ALL_SYMBOLS, ohlcv-1m, 2010-06-06, today)
+# returns the exact bar count and costs nothing. Every figure here is a placeholder
+# for that call and should be thrown away the moment the key exists.
+MAXIMAL = [
+    ("M0  41 continuous roots (the recommendation)", 41, 1.00,
+     "one stitched series per root; what the runner builds today"),
+    ("M1  all 1,592 continuous roots", 1592, 1.00,
+     "every listed future, including the 1,069 with zero open interest"),
+    ("M2  + every contract MONTH, not just the front", 1592, 2.50,
+     "ASSUMED 2.5x: CL lists ~120 months, ES 21 quarters, but back months barely trade"),
+    ("M3  + every calendar SPREAD", 1592, 4.25,
+     "ASSUMED +0.7x of outrights: spreads are separate instruments and trade hard at roll"),
+    ("M4  + every OPTION on a future = true ALL_SYMBOLS", 1592, 14.0,
+     "ASSUMED: CME ADV ~30M contracts, options ~5M of them, spread over many strikes"),
+]
+# Definition records are 520 B and publish per instrument PER DAY whether or not it
+# trades, so at ALL_SYMBOLS they are bigger than the bars. This is the trap in a
+# maximal pull and it is why definition stays scoped to the roots you care about.
+DEFINITION_INSTRUMENTS_ALL = 650_000
+
+
+def maximal_projection(sizes: dict[str, int], ratio: float, cen: dict) -> dict:
+    base_disk = cen["bands"][-1]["ohlcv_1m_disk_gib"]          # all 1,592 continuous
+    base_41 = cen["bands"][1]["ohlcv_1m_disk_gib"]             # the 41-root list
+    rows = []
+    for label, _n, mult, note in MAXIMAL:
+        disk = base_41 if label.startswith("M0") else base_disk * mult
+        rows.append({"tier": label, "multiplier": mult, "note": note,
+                     "disk_gib": disk, "billed_gib": disk * ratio,
+                     "download_hours": disk * GIB / DOWNLOAD_BYTES_PER_S / 3600,
+                     "free_disk_gib_after": FREE_DISK_GIB - disk,
+                     "fits": disk < FREE_DISK_GIB * 0.85})
+    sess = 16.26 * SESSIONS_PER_YEAR
+    def_bytes = DEFINITION_INSTRUMENTS_ALL * sess * sizes["definition"]
+    return {"tiers": rows,
+            "definition_at_all_symbols": {
+                "instruments": DEFINITION_INSTRUMENTS_ALL,
+                "billed_gib": def_bytes / GIB, "disk_gib": def_bytes / ratio / GIB,
+                "warning": "520 B per instrument PER DAY whether or not it trades -- "
+                           "bigger than the bars. Scope definition to the roots you keep."}}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
@@ -383,9 +439,23 @@ def main() -> int:
               f"{r['ohlcv_1m_plus_1s_ceiling_disk_gib']:10.0f}{r['download_hours_1m_plus_1s']:7.1f}"
               f"  {'yes' if r['fits_1m_plus_1s'] else 'NO'}")
 
+    mx = maximal_projection(sizes, ratio, cen)
+    print(f"\nTHE CEILING AT ohlcv-1m UNDER STANDARD ONLY. Standard includes 16+ years of L0 for")
+    print(f"CME, and ohlcv-1m is L0, so ALL of it is included. Only instrument COUNT varies.")
+    print(f"Every multiplier below is ASSUMED -- one free get_record_count(ALL_SYMBOLS) replaces them.\n")
+    print(f"  {'tier':48}{'BILLED':>8}{'DISK':>7}{'left':>7}{'hours':>7}  fits")
+    for r in mx["tiers"]:
+        print(f"  {r['tier']:48}{r['billed_gib']:8.0f}{r['disk_gib']:7.0f}"
+              f"{r['free_disk_gib_after']:7.0f}{r['download_hours']:7.1f}  "
+              f"{'yes' if r['fits'] else 'NO'}")
+    d = mx["definition_at_all_symbols"]
+    print(f"\n  TRAP: definition at ALL_SYMBOLS = {d['billed_gib']:.0f} GiB billed / "
+          f"{d['disk_gib']:.0f} GiB disk")
+    print(f"  {d['warning']}")
+
     if a.json:
         OUT.write_text(json.dumps({
-            "census_scaling": cen,
+            "census_scaling": cen, "maximal_at_1m": mx,
             "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "purpose": "disk projection for a one-month Databento Standard strip-mine; not a study",
             "record_sizes_bytes": sizes, "zstd": z, "anchor": ANCHOR,
