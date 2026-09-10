@@ -1,0 +1,238 @@
+########## A1_log_probe11.txt ##########
+=== A. SIZE OF THE SAME-DAY LOOK-AHEAD IF YOU TRUST `filed` ALONE (10-K/10-Q only) ===
+  2012q2  n=8638
+     after-close(16:00-17:30)   filed=same day     3341   38.7%
+     intraday(09:30-16:00)      filed=later day       2    0.0%
+     intraday(09:30-16:00)      filed=same day     3934   45.5%
+     late(>=17:30)              filed=later day     640    7.4%
+     late(>=17:30)              filed=same day       54    0.6%
+     pre-open(<09:30)           filed=later day       4    0.0%
+     pre-open(<09:30)           filed=same day      663    7.7%
+     ==> `filed`-only rule is a SAME-SESSION LOOK-AHEAD for 3395/8638 = 39.3% of 10-K/10-Q submissions
+  2021q2  n=6872
+     after-close(16:00-17:30)   filed=same day     3501   50.9%
+     intraday(09:30-16:00)      filed=same day     1757   25.6%
+     late(>=17:30)              filed=later day     634    9.2%
+     late(>=17:30)              filed=same day       60    0.9%
+     pre-open(<09:30)           filed=later day       1    0.0%
+     pre-open(<09:30)           filed=same day      919   13.4%
+     ==> `filed`-only rule is a SAME-SESSION LOOK-AHEAD for 3561/6872 = 51.8% of 10-K/10-Q submissions
+  2026q2  n=6000
+     after-close(16:00-17:30)   filed=same day     3416   56.9%
+     intraday(09:30-16:00)      filed=later day       2    0.0%
+     intraday(09:30-16:00)      filed=same day     1232   20.5%
+     late(>=17:30)              filed=later day     477    8.0%
+     late(>=17:30)              filed=same day       37    0.6%
+     pre-open(<09:30)           filed=later day       1    0.0%
+     pre-open(<09:30)           filed=same day      835   13.9%
+     ==> `filed`-only rule is a SAME-SESSION LOOK-AHEAD for 3453/6000 = 57.5% of 10-K/10-Q submissions
+
+=== B. CROSS-CHECK: FSDS `accepted` vs submissions.json `acceptanceDateTime` (same accession) ===
+  adsh=0001558370-21-007147  FSDS: ('2021q2', '2021-05-14 06:20:00.0', '20210514')
+[200] https://data.sec.gov/submissions/CIK0001093691.json
+  bytes=161861 sha256_12=27f5313f115d ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"cik":"0001093691","entityType":"operating","sic":"3620","sicDescription":"Electrical Industrial Apparatus","ownerOrg":"04 Manufacturing","insiderTransactionForOwnerExists":0,"insiderTransactionForIs'
+      submissions.json: acceptanceDateTime=2021-05-14T10:20:25.000Z filingDate=2021-05-14 reportDate=2020-12-31 form=10-K
+  adsh=0000719739-23-000021  FSDS: None
+      submissions.json: acceptanceDateTime=2023-02-24T16:43:08.000Z filingDate=2023-02-24 reportDate=2022-12-31 form=10-K
+  adsh=0000886158-23-000059  FSDS: None
+      submissions.json: acceptanceDateTime=2023-06-13T20:59:08.000Z filingDate=2023-06-14 reportDate=2023-02-25 form=10-K
+
+=== C. TAXONOMY STABILITY 2010-2026: frames entity counts per tag per calendar year ===
+  Revenues                                                    1812  3101  3858  3879  3751  3600  3377  3630  3875  3268  2839  2762  2775  2792  2677  2500  2227    26
+  SalesRevenueNet                                             1357  2093  2366  2309  2271  2207  2085  1915  1649   121     1     0     0     0     0     0     0     0
+  SalesRevenueGoodsNet                                         778  1168  1340  1316  1275  1267  1208  1113   974    92     2     0     0     0     0     0     0     0
+  RevenueFromContractWithCustomerExcludingAssessedTax            0     0     0     0     0     1    32  1412  2146  2799  3052  3163  3206  3228  3141  2966  2693    61
+  RevenueFromContractWithCustomerIncludingAssessedTax            0     0     0     1     0     2    13   448   855  1030   883   837   817   808   780   752   652    10
+  CostOfGoodsSold                                             1046  1629  1875  1826  1764  1715  1612  1486  1296   113     2     1     0     0     0     0     0     0
+  CostOfGoodsAndServicesSold                                   644   952  1067  1011   988   914   847  1620  2099  2229  2148  2086  2025  2012  1895  1752  1566    49
+  CostOfRevenue                                                694  1184  1401  1382  1417  1424  1375  1413  1540  1444  1446  1508  1606  1692  1673  1622  1458    19
+  OperatingIncomeLoss                                         3232  5378  6204  6121  6025  5873  5575  5360  5231  5141  5234  5381  5846  5748  5348  5012  4621    73
+  NetIncomeLoss                                               4601  6988  7779  7585  7396  7158  6774  6453  6249  6120  6178  6375  6921  6808  6380  6054  5640    92
+  NetCashProvidedByUsedInOperatingActivities                  3910  6653  7466  6946  6148  4948  5079  5902  6313  6318  6404  6597  7062  6961  6516  6182  5738    90
+  NetCashProvidedByUsedInOperatingActivitiesContinuingOperat   816  1273  1810  2903  3515  3806  3657  3280  1759   708   489   471   476   484   457   409   321     3
+  ResearchAndDevelopmentExpense                               1271  2092  2443  2509  2541  2541  2427  2390  2371  2406  2542  2717  2759  2772  2672  2537  2290    50
+  Assets                                                      1425  6512  8166  7851  7722  7494  7018  6672  6483  6305  6180  6849  7190  6870  6428  6263  6139     0
+  Liabilities                                                  882  4837  6116  5998  5998  5901  5602  5400  5343  5309  5284  6005  6395  6122  5745  5621  5507     0
+  StockholdersEquity                                          4350  6379  7928  7634  7404  7201  6770  6480  6369  6402  6448  6931  7149  6752  6265  6002  5743     1
+  StockholdersEquityIncludingPortionAttributableToNoncontrol  2070  2817  2847  2714  2689  2631  2546  2490  2530  2570  2603  2677  2665  2578  2409  2327  2094     0
+  LiabilitiesAndStockholdersEquity                            1316  6443  8144  7844  7731  7492  7019  6673  6470  6293  6176  6834  7147  6806  6352  6165  6021     0
+  CashAndCashEquivalentsAtCarryingValue                       5877  7845  8168  7813  7599  7310  6767  6386  6114  5871  5775  6187  6292  5770  5349  5143  4917     0
+  CashCashEquivalentsRestrictedCashAndRestrictedCashEquivale     0     1     0     2     7   346  1511  2770  3676  4221  4775  5525  6086  5900  5468  5230  4893     1
+  AssetsCurrent                                               1063  4959  6390  6146  6057  5887  5521  5244  5103  5005  4952  5570  5950  5593  5143  4956  4851     0
+  LiabilitiesCurrent                                          1065  4958  6369  6134  6080  5898  5533  5273  5125  5018  4969  5621  5978  5596  5144  4954  4845     0
+  InventoryNet                                                 720  2726  3387  3244  3200  3128  2961  2844  2744  2699  2674  2814  2854  2807  2705  2592  2470     0
+  PropertyPlantAndEquipmentNet                                1184  5167  6349  6120  6037  5935  5578  5332  5200  5143  4990  5160  5110  4959  4669  4467  4201     1
+  OperatingLeaseRightOfUseAsset                                  0     0     1     0     0     0     2     2    49  2068  4358  4508  4769  4872  4708  4545  4301     0
+  Goodwill                                                    1163  2895  3457  3481  3492  3530  3429  3306  3253  3240  3291  3399  3426  3347  3141  3022  2909     0
+  LongTermDebtNoncurrent                                       600  1703  2094  2099  2137  2120  2052  1990  1968  1966  1966  2129  2071  1981  1873  1820  1720     0
+  CommonStockSharesOutstanding                                   0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0
+  ZZZZZZ_NEGATIVE_CONTROL_TAG                                    0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0
+  years: 2009  2010  2011  2012  2013  2014  2015  2016  2017  2018  2019  2020  2021  2022  2023  2024  2025  2026
+########## A1_log_probe12.txt ##########
+=== A. IS THE FSDS `instance` FILENAME A DEAD-INCLUSIVE, POINT-IN-TIME TICKER SOURCE? ===
+  2012q2: instance matches <ticker>-<yyyymmdd>.xml : 8782/9193 = 95.5%  non-matching examples=['cik1518171-20120331.xml', 'worldsonline-20111231.xml', 'cik0000777917-20120331.xml', 'wellscore-20120331.xml', 'ccptiii-20120331.xml', 'cik0001399541-20120331.xml']
+     Sears       name_at_filing=SEARS HOLDINGS CORP                former=SEARS HOLDINGS CORP      changed=20041129 instance=shld-20120428.xml
+     BBBY        name_at_filing=BED BATH & BEYOND INC              former=                         changed=         instance=bbby-20120225.xml
+     SVB         name_at_filing=SVB FINANCIAL GROUP                former=SILICON VALLEY BANCSHARE changed=19920703 instance=sivb-20120331.xml
+     PlugPower   name_at_filing=PLUG POWER INC                     former=                         changed=         instance=plug-20120331.xml
+     Herc/Hertz  name_at_filing=HERTZ GLOBAL HOLDINGS INC          former=                         changed=         instance=htz-20120331.xml
+  2021q2: instance matches <ticker>-<yyyymmdd>.xml : 3527/7810 = 45.2%  non-matching examples=['ae-20210331_htm.xml', 'amd-20210327_htm.xml', 'apd-20210331_htm.xml', 'alx-20210331_htm.xml', 'lng-20210331_htm.xml', 'swks-20210402_htm.xml']
+     BBBY        name_at_filing=BED BATH & BEYOND INC              former=                         changed=         instance=bbby-20210227_htm.xml
+     SVB         name_at_filing=SVB FINANCIAL GROUP                former=SILICON VALLEY BANCSHARE changed=19920703 instance=sivb-20210331_htm.xml
+     PlugPower   name_at_filing=PLUG POWER INC                     former=                         changed=         instance=plug-20201231x10k_htm.xml
+     Herc/Hertz  name_at_filing=HERC HOLDINGS INC                  former=HERTZ GLOBAL HOLDINGS IN changed=20060531 instance=hri-20210331_htm.xml
+  2026q2: instance matches <ticker>-<yyyymmdd>.xml : 0/7714 = 0.0%  non-matching examples=['wddd10q125_htm.xml', 'wdddq22025_htm.xml', 'wdddq32025_htm.xml', 'amd-20260328_htm.xml', 'apd-20260331_htm.xml', 'apd-20260622_htm.xml']
+     PlugPower   name_at_filing=PLUG POWER INC                     former=                         changed=         instance=plug-20260331x10q_htm.xml
+     Herc/Hertz  name_at_filing=HERC HOLDINGS INC                  former=HERTZ GLOBAL HOLDINGS IN changed=20060531 instance=hri-20260331_htm.xml
+
+=== B. TIMEZONE CENSUS: FSDS `accepted` (ET per docs) vs submissions.json acceptanceDateTime (Z) ===
+  sampled 51 submissions across 17 accepted-hours
+  offset hours (submissions_Z minus FSDS_ET): {0: 13, 4: 38}
+     0000040545-21-000026 10-Q  FSDS_ET=2021-04-27 06:27:00 subsZ=2021-04-27T10:26:32.000Z filingDate=2021-04-27 offset=4h
+     0001628280-26-033104 10-Q  FSDS_ET=2026-05-11 06:06:00 subsZ=2026-05-11T10:05:49.000Z filingDate=2026-05-11 offset=4h
+     0001068875-21-000069 10-Q  FSDS_ET=2021-05-05 06:57:00 subsZ=2021-05-05T06:56:57.000Z filingDate=2021-05-05 offset=0h
+     0001104659-21-062743 10-Q  FSDS_ET=2021-05-07 07:10:00 subsZ=2021-05-07T07:09:56.000Z filingDate=2021-05-07 offset=0h
+     0001564590-21-027203 10-Q  FSDS_ET=2021-05-13 07:16:00 subsZ=2021-05-13T07:15:46.000Z filingDate=2021-05-13 offset=0h
+     0001558370-21-006992 10-Q  FSDS_ET=2021-05-13 07:31:00 subsZ=2021-05-13T07:30:49.000Z filingDate=2021-05-13 offset=0h
+     0001004980-21-000013 10-Q  FSDS_ET=2021-04-29 08:52:00 subsZ=2021-04-29T12:52:12.000Z filingDate=2021-04-29 offset=4h
+     0001185185-21-000622 10-Q  FSDS_ET=2021-05-11 08:01:00 subsZ=2021-05-11T12:01:00.000Z filingDate=2021-05-11 offset=4h
+     0001437749-21-009960 10-Q  FSDS_ET=2021-04-28 08:49:00 subsZ=2021-04-28T12:48:41.000Z filingDate=2021-04-28 offset=4h
+     0001654954-21-005652 10-Q  FSDS_ET=2021-05-14 09:33:00 subsZ=2021-05-14T13:32:31.000Z filingDate=2021-05-14 offset=4h
+     0001564590-21-026327 10-Q  FSDS_ET=2021-05-11 09:29:00 subsZ=2021-05-11T13:29:16.000Z filingDate=2021-05-11 offset=4h
+     0001564590-21-030190 10-Q  FSDS_ET=2021-05-27 09:34:00 subsZ=2021-05-27T13:34:27.000Z filingDate=2021-05-27 offset=4h
+     0000894245-21-000033 10-Q  FSDS_ET=2021-05-14 10:14:00 subsZ=2021-05-14T14:13:40.000Z filingDate=2021-05-14 offset=4h
+     0001179929-26-000023 10-Q  FSDS_ET=2026-04-23 10:12:00 subsZ=2026-04-23T14:11:31.000Z filingDate=2026-04-23 offset=4h
+     0000054480-21-000117 10-Q  FSDS_ET=2021-04-16 11:57:00 subsZ=2021-04-16T11:56:41.000Z filingDate=2021-04-16 offset=0h
+     0001213900-21-034950 10-Q  FSDS_ET=2021-06-30 12:16:00 subsZ=2021-06-30T12:16:02.000Z filingDate=2021-06-30 offset=0h
+     0001493152-21-008836 10-K  FSDS_ET=2021-04-15 13:27:00 subsZ=2021-04-15T13:26:34.000Z filingDate=2021-04-15 offset=0h
+     0001493152-21-011120 10-Q  FSDS_ET=2021-05-12 15:36:00 subsZ=2021-05-12T15:35:47.000Z filingDate=2021-05-12 offset=0h
+     0001213900-21-029731 10-Q  FSDS_ET=2021-05-27 19:21:00 subsZ=2021-05-27T19:20:48.000Z filingDate=2021-05-28 offset=0h
+     0001829126-21-003765 10-Q  FSDS_ET=2021-05-11 20:20:00 subsZ=2021-05-11T20:20:28.000Z filingDate=2021-05-12 offset=0h
+     0001213900-21-029184 10-Q  FSDS_ET=2021-05-25 21:16:00 subsZ=2021-05-25T21:15:37.000Z filingDate=2021-05-26 offset=0h
+     0001213900-21-028491 10-Q  FSDS_ET=2021-05-21 22:00:00 subsZ=2021-05-21T21:59:48.000Z filingDate=2021-05-24 offset=0h
+
+=== C. dei:EntityPublicFloat as a PIT market-cap proxy, and dei frames ===
+[200] https://data.sec.gov/api/xbrl/frames/dei/EntityPublicFloat/USD/CY2012Q2I.json
+  bytes=657360 sha256_12=ba50c05e78e2 ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"taxonomy":"dei","tag":"EntityPublicFloat","ccp":"CY2012Q2I","uom":"USD","label":"Entity Public Float","description":"The aggregate market value of the voting and non-voting common equity held by non'
+   CY2012Q2I: n_entities=4987
+[200] https://data.sec.gov/api/xbrl/frames/dei/EntityPublicFloat/USD/CY2016Q1I.json
+  bytes=78850 sha256_12=916ddb7c85f0 ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"taxonomy":"dei","tag":"EntityPublicFloat","ccp":"CY2016Q1I","uom":"USD","label":"Entity Public Float","description":"The aggregate market value of the voting and non-voting common equity held by non'
+   CY2016Q1I: n_entities=599
+[200] https://data.sec.gov/api/xbrl/frames/dei/EntityPublicFloat/USD/CY2020Q1I.json
+  bytes=54362 sha256_12=0017988ea7a5 ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"taxonomy":"dei","tag":"EntityPublicFloat","ccp":"CY2020Q1I","uom":"USD","label":"Entity Public Float","description":"The aggregate market value of the voting and non-voting common equity held by non'
+   CY2020Q1I: n_entities=411
+[200] https://data.sec.gov/api/xbrl/frames/dei/EntityPublicFloat/USD/CY2025Q1I.json
+  bytes=42520 sha256_12=295384dde29c ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"taxonomy":"dei","tag":"EntityPublicFloat","ccp":"CY2025Q1I","uom":"USD","label":"Entity Public Float","description":"The aggregate market value of the voting and non-voting common equity held by non'
+   CY2025Q1I: n_entities=320
+[200] https://data.sec.gov/api/xbrl/frames/dei/EntityCommonStockSharesOutstanding/shares/CY2020Q1I.json
+  bytes=630911 sha256_12=5e1992893e0d ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"taxonomy":"dei","tag":"EntityCommonStockSharesOutstanding","ccp":"CY2020Q1I","uom":"shares","label":"Entity Common Stock, Shares Outstanding","description":"Indicate number of shares or other units '
+   dei/EntityCommonStockSharesOutstanding CY2020Q1I n=4774
+[404] https://data.sec.gov/api/xbrl/companyconcept/CIK0000886158/dei/TradingSymbol.json
+  bytes=331 sha256_12=81c260658506 ctype=application/xml lastmod=None age=None xcache=None
+  head200=b'<?xml version="1.0" encoding="UTF-8"?>\n<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>api/xbrl/companyconcept/CIK0000886158/dei/TradingSymbol.json</Key><RequestI'
+[200] https://data.sec.gov/api/xbrl/companyconcept/CIK0000886158/dei/EntityPublicFloat.json
+  bytes=2885 sha256_12=569551a367be ctype=application/json lastmod=None age=None xcache=None
+  head200=b'{"cik":886158,"taxonomy":"dei","tag":"EntityPublicFloat","label":"Entity Public Float","description":"The aggregate market value of the voting and non-voting common equity held by non-affiliates compu'
+   BBBY EntityPublicFloat [USD] n=17: [('2008-08-30', 7430283934, '2009-10-07'), ('2008-08-30', 7430283934, '2010-01-06'), ('2009-08-29', 9193094656, '2010-04-27'), ('2010-08-28', 9102640840, '2011-04-26'), ('2011-08-27', 12750872956, '2012-04-24'), ('2012-08-25', 14555560334, '2013-04-30'), ('2013-08-31', 15188999047, '2014-04-29'), ('2014-08-30', 11352301919, '2015-04-28')]
+########## A1_log_probe14.txt ##########
+  got A1_fsds_2010q2.zip 3994236 bytes
+  got A1_fsds_2010q3.zip 13745950 bytes
+  got A1_fsds_2010q4.zip 14679781 bytes
+  got A1_fsds_2011q1.zip 19615544 bytes
+  got A1_fsds_2011q2.zip 15001310 bytes
+  got A1_fsds_2011q3.zip 57941919 bytes
+  got A1_fsds_2011q4.zip 64306658 bytes
+  got A1_fsds_2012q1.zip 85474601 bytes
+  got A1_fsds_2013q2.zip 96917655 bytes
+  got A1_fsds_2015q2.zip 78908272 bytes
+  got A1_fsds_2018q2.zip 91972487 bytes
+  got A1_fsds_2019q2.zip 90155728 bytes
+  got A1_fsds_2020q2.zip 82008710 bytes
+  got A1_fsds_2024q2.zip 119119954 bytes
+
+=== XBRL PHASE-IN MEASURED: distinct 10-K/10-Q filers by SEC filer status, per quarter ===
+  2009q2: n_sub=   20 n_cik=   20  LAF=   17 ACC=   2 SRA=   0 NON=    0 SML=    1 blank=   0  small/non-acc share=5.0%
+  2010q1: n_sub=  478 n_cik=  471  LAF=  461 ACC=   7 SRA=   0 NON=    8 SML=    2 blank=   0  small/non-acc share=2.1%
+  2010q2: n_sub=  478 n_cik=  474  LAF=  461 ACC=   9 SRA=   0 NON=    6 SML=    2 blank=   0  small/non-acc share=1.7%
+  2010q3: n_sub= 1368 n_cik= 1345  LAF= 1324 ACC=  28 SRA=   0 NON=   14 SML=    2 blank=   0  small/non-acc share=1.2%
+  2010q4: n_sub= 1438 n_cik= 1428  LAF= 1390 ACC=  31 SRA=   0 NON=   11 SML=    6 blank=   0  small/non-acc share=1.2%
+  2011q1: n_sub= 1460 n_cik= 1437  LAF= 1399 ACC=  40 SRA=   0 NON=   12 SML=    9 blank=   0  small/non-acc share=1.4%
+  2011q2: n_sub= 1625 n_cik= 1594  LAF= 1492 ACC=  65 SRA=   0 NON=   15 SML=   53 blank=   0  small/non-acc share=4.2%
+  2011q3: n_sub= 6980 n_cik= 6880  LAF= 1478 ACC=1437 SRA=   0 NON=  813 SML= 3252 blank=   0  small/non-acc share=58.2%
+  2011q4: n_sub= 7376 n_cik= 7108  LAF= 1492 ACC=1501 SRA=   0 NON=  816 SML= 3567 blank=   0  small/non-acc share=59.4%
+  2012q1: n_sub= 7115 n_cik= 6687  LAF= 1677 ACC=1518 SRA=   0 NON=  670 SML= 3250 blank=   0  small/non-acc share=55.1%
+  2013q2: n_sub= 8394 n_cik= 6858  LAF= 1710 ACC=1548 SRA=   4 NON=  803 SML= 4329 blank=   0  small/non-acc share=61.2%
+  2015q2: n_sub= 7727 n_cik= 6742  LAF= 1966 ACC=1416 SRA=   9 NON=  763 SML= 3573 blank=   0  small/non-acc share=56.2%
+  2018q2: n_sub= 6826 n_cik= 5806  LAF= 1995 ACC=1318 SRA=   6 NON=  555 SML= 2952 blank=   0  small/non-acc share=51.5%
+  2019q2: n_sub= 6622 n_cik= 5626  LAF= 2072 ACC=1245 SRA=  12 NON= 3164 SML=  129 blank=   0  small/non-acc share=49.9%
+  2020q2: n_sub= 5920 n_cik= 5376  LAF= 1989 ACC=1202 SRA=   0 NON= 2727 SML=    2 blank=   0  small/non-acc share=46.1%
+  2021q2: n_sub= 6872 n_cik= 6001  LAF= 1908 ACC= 802 SRA=   0 NON= 4161 SML=    0 blank=   1  small/non-acc share=60.6%
+  2022q1: n_sub= 6353 n_cik= 5897  LAF= 2266 ACC= 619 SRA=   0 NON= 3468 SML=    0 blank=   0  small/non-acc share=54.6%
+  2024q2: n_sub= 6635 n_cik= 5634  LAF= 2130 ACC= 795 SRA=   0 NON= 3710 SML=    0 blank=   0  small/non-acc share=55.9%
+  2026q2: n_sub= 6000 n_cik= 5487  LAF= 2003 ACC= 725 SRA=   0 NON= 3272 SML=    0 blank=   0  small/non-acc share=54.5%
+########## A1_log_probe15.txt ##########
+=== UNSTRATIFIED census: submissions.json acceptanceDateTime 'Z' vs FSDS `accepted` (ET) ===
+  n_compared=180
+  offset hours (subsZ - FSDS_ET): {0: 37, 4: 143, 'ADSH_NOT_IN_RECENT': 2}
+    offset  0h :   37  = 20.6%   e.g. [('0001199835-21-000184', '2021-04-14 14:34:00', '2021-04-14T14:34:04.000Z', '2021-04-14'), ('0001712923-21-000041', '2021-05-05 17:11:00', '2021-05-05T17:10:54.000Z', '2021-05-05')]
+    offset  4h :  143  = 79.4%   e.g. [('0001628280-26-029054', '2026-04-30 18:14:00', '2026-04-30T22:13:31.000Z', '2026-05-01'), ('0001324424-26-000035', '2026-05-07 17:44:00', '2026-05-07T21:44:12.000Z', '2026-05-08')]
+  by quarter: 2026q2:{4: 88}  2021q2:{0: 37, 4: 55}
+  filer-agent prefixes showing BOTH offsets (so it is not an agent property): [('0001628280', {4: 10, 0: 1}), ('0001140361', {4: 3, 0: 1}), ('0001213900', {4: 10, 0: 2}), ('0001193125', {4: 14, 0: 4}), ('0001493152', {4: 9, 0: 3}), ('0001437749', {4: 7, 0: 2}), ('0001558370', {0: 1, 4: 6}), ('0001683168', {4: 2, 0: 2})]
+########## A1_probe20 (PIT build, restatement vintages, identifier union) ##########
+=== A. END-TO-END PIT EXTRACTION from companyfacts: `as_of` filter + latest-filed ===
+  Plug Power Assets, period end 2020-06-30:
+     as_of 2020-09-01: val= 1,030,314,000 filed=2020-08-10 form=10-Q    accn=0001558370-20-010213
+     as_of 2020-12-01: val= 1,030,314,000 filed=2020-08-10 form=10-Q    accn=0001558370-20-010213
+     as_of 2021-03-01: val= 1,030,314,000 filed=2020-08-10 form=10-Q    accn=0001558370-20-010213
+     as_of 2021-06-01: val=   898,719,000 filed=2021-05-14 form=10-K    accn=0001558370-21-007147
+     as_of 2022-06-01: val=   898,719,000 filed=2022-03-14 form=10-K/A  accn=0001558370-22-003577
+     as_of 2026-09-10: val=   898,719,000 filed=2022-03-14 form=10-K/A  accn=0001558370-22-003577
+  Plug Power Assets, period end 2020-09-30:
+     as_of 2020-09-01: NOT YET KNOWABLE
+     as_of 2020-12-01: val= 1,500,629,000 filed=2020-11-09 form=10-Q    accn=0001558370-20-013381
+     as_of 2021-03-01: val= 1,500,629,000 filed=2020-11-09 form=10-Q    accn=0001558370-20-013381
+     as_of 2021-06-01: val= 1,356,093,000 filed=2021-05-14 form=10-K    accn=0001558370-21-007147
+     as_of 2022-06-01: val= 1,356,093,000 filed=2022-03-14 form=10-K/A  accn=0001558370-22-003577
+     as_of 2026-09-10: val= 1,356,093,000 filed=2022-03-14 form=10-K/A  accn=0001558370-22-003577
+  Plug Power Assets, period end 2020-12-31:
+     as_of 2020-09-01: NOT YET KNOWABLE
+     as_of 2020-12-01: NOT YET KNOWABLE
+     as_of 2021-03-01: NOT YET KNOWABLE
+     as_of 2021-06-01: val= 2,251,282,000 filed=2021-05-14 form=10-K    accn=0001558370-21-007147
+     as_of 2022-06-01: val= 2,251,282,000 filed=2022-03-14 form=10-K/A  accn=0001558370-22-003577
+     as_of 2026-09-10: val= 2,251,282,000 filed=2022-03-14 form=10-K/A  accn=0001558370-22-003577
+
+=== B. HOW OFTEN DOES THE PIT VALUE DIFFER FROM THE LATEST-FILED VALUE? ===
+    (restatement exposure: share of (concept,period) cells whose first-filed value
+     differs from the last-filed value, over four named issuers)
+  issuer                 cells cells_n>1  changed %changed med|reldiff| max|reldiff|
+  Plug Power               837       498      154    30.9%      0.0362      1.7561
+  Kraft Heinz              604       336       94    28.0%      0.0089      1.5778
+  Hertz/Herc               601       301       90    29.9%      0.0018      2.0000
+  Bed Bath & Beyond        623       285        8     2.8%      0.0057      0.5639
+  SVB Financial            308       126       44    34.9%      0.0036      0.1804
+  Sears Holdings           458       363       90    24.8%      0.0041      1.7518
+
+=== C. IDENTIFIER BRIDGE: union of instance-prefix and dei:TradingSymbol (2015q2, 2019q2) ===
+  2015q2: n_10K/10Q=7385  instance-prefix=7147 (96.8%)  dei:TradingSymbol=2537 (34.4%)  both=2491 (33.7%)  UNION=7193 (97.4%)  NEITHER=192 (2.6%)
+  2019q2: n_10K/10Q=6440  instance-prefix=5830 (90.5%)  dei:TradingSymbol=3540 (55.0%)  both=3286 (51.0%)  UNION=6084 (94.5%)  NEITHER=356 (5.5%)
+########## A1_probe22 (custom-tag share) ##########
+=== Custom (filer-invented) tags: the standardisation gap, measured ===
+  2012q2: tag.txt rows=93938 custom=85293 standard=8645  (90.8% custom)
+        num.txt facts=2407915  on CUSTOM tags=255673 = 10.6%
+        standard taxonomy versions present (top 12)={'us-gaap/2011': 4261, 'us-gaap/2012': 3169, 'us-gaap/2009': 1204, 'invest/2012': 5, 'invest/2011': 3, 'dei/2011': 2, 'dei/2012': 1}
+  2015q2: tag.txt rows=70490 custom=60215 standard=10275  (85.4% custom)
+        num.txt facts=2588598  on CUSTOM tags=188622 = 7.3%
+        standard taxonomy versions present (top 12)={'us-gaap/2014': 4171, 'us-gaap/2015': 3337, 'us-gaap/2013': 2759, 'invest/2013': 4, 'dei/2014': 3, 'dei/2013': 1}
+  2019q2: tag.txt rows=76812 custom=66238 standard=10574  (86.2% custom)
+        num.txt facts=2816279  on CUSTOM tags=226730 = 8.1%
+        standard taxonomy versions present (top 12)={'us-gaap/2018': 4050, 'us-gaap/2019': 2521, 'us-gaap/2017': 2322, 'ifrs/2018': 1036, 'ifrs/2017': 572, 'ifrs/2019': 64, 'srt/2019': 3, 'invest/2013': 2, 'dei/2018': 2, 'srt/2018': 2}
+  2026q2: tag.txt rows=92731 custom=83190 standard=9541  (89.7% custom)
+        num.txt facts=3608711  on CUSTOM tags=307722 = 8.5%
+        standard taxonomy versions present (top 12)={'us-gaap/2025': 3745, 'us-gaap/2026': 2685, 'us-gaap/2024': 1323, 'ifrs/2025': 1006, 'ifrs/2024': 608, 'us-gaap-ebp/2026': 83, 'us-gaap-ebp/2025': 60, 'us-gaap-ebp/2024': 14, 'srt/2025': 7, 'srt/2026': 7, 'srt/2024': 1, 'dei/2025': 1}
