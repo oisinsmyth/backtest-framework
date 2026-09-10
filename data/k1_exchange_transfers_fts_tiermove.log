@@ -1,0 +1,22 @@
+CONTROL: 'transfer the listing' + impossible, 2010-2026 -> (0, 'eq')
+CONTROL: 'Nasdaq Capital Market' + impossible, 2023 -> (0, 'eq')
+
+year                        all    +Nasdaq Capital Market        +minimum bid price  +New York Stock Exchange            +NYSE American
+2010                         69                        53                        29                        15                         0
+2011                         63                        40                        24                        23                         0
+2012                         66                        48                        24                        18                         0
+2013                         49                        27                         9                        24                         0
+2014                         38                        20                         3                        15                         0
+2015                         31                        19                        10                         8                         0
+2016                         41                        29                        17                        12                         0
+2017                         43                        28                         8                        17                         1
+2018                         42                        19                         8                        20                         6
+2019                         59                        38                        18                        20                         6
+2020                         40                        22                        11                        18                         3
+2021                         54                        23                         4                        43                        10
+2022                        100                        69                        45                        34                         6
+2023                        186                       139                        65                        44                        13
+2024                        153                       119                        64                        32                         4
+2025                        111                        74                        37                        37                         4
+2026                         42                        29                        17                        16                         2
+TOT                        1187                       796                       393                       396                        55
