@@ -368,6 +368,20 @@ index — **and `B3` states that it is not claiming the same measurement.**
 | **E10** | **Does composite equity issuance need a share count?** | **`A2`** lists `CompEquIss` among *"three members that need no financial statement at all — only a split-adjusted share count"*, **while its own gloss of that same entry** says it needs *"market cap and total return"* — an internal tension inside one list. **`B4`:** Daniel & Titman (2006) **p. 1614 states it verbatim** — *"corporate actions such as splits and stock dividends leave ι unchanged"* — and Chen–Zimmermann's `CompEquIss` code takes only `[ret, mve_c]`: **no share count, no split factor.** **Recorded as a tension resolved in `B4`'s direction by a primary source, with `A2`'s entry left standing as written.** |
 | **E11** | **Does "latest filed wins" reconstruct a point-in-time vintage?** | **`A1`:** `companyfacts` is **PIT-reconstructible** — every vintage stamped with accession, form and filing date, verified on six named as-of dates. **`B4`:** CIK 895126 reports the instant `2019-02-01` as **both 717,376,170 and 3,600,000**, so *"latest filed wins"* is **wrong by 199× fourteen months before the split** — the successor-entity defect **defeats both vintage rules**. This extends `A1`'s own spin-off identity defect rather than contradicting its reconstruction method. **Both stand.** |
 
+### 4a. AND EVERY LANE RECORDS FURTHER CONFLICTS INSIDE ITS OWN BRIEF — pointers, so none is invisible
+
+**`E1`–`E11` are the CROSS-LANE conflicts. They are not all of them.**
+
+| lane | where | carries |
+|---|---|---|
+| `B1` | [§4](R2-01-the-benchmark-question.md) *"THE CONFLICT, RECONCILED ARITHMETICALLY"* and §10 | `S3` vs `S4` on whether long legs dominate; **three positions on weighting with three justifications**; a paper's prose against the campaign's own scepticism about prose |
+| `B2` | [§2.4](R2-02-profitability-deep.md) *"the most recent authority says the opposite, and both sides are interested"* | the `CbOP`-subsumption contradiction (= `E3`), and `P5`'s Table 3 against `P5`'s own text (= `E4`) |
+| `B3` | [`R2-03`](R2-03-where-the-premium-accrues.md) **inline at §2.3, §4.2 and §8** rather than in one section | **the same authors disagreeing with themselves** across two papers; a peer-reviewed dissent recorded **with its cost section unread**, which the brief flags as *"recorded with one side unread"* |
+| `B4` | [§4.1](R2-04-shares-outstanding-and-float.md) *"The conflict with `A1`, recorded not adjudicated"* | the split-ratio tag's existence against round 1's finding (= `E8`) |
+
+**Nothing is deleted and nothing is merged away.** Where a brief records a conflict **with one side
+unread**, that asymmetry is stated rather than used to settle it.
+
 **Round 1's conflicts `D1`–`D10` all still stand.** **`D9` — the share-count dependency failure — is
 the one round 2 was sent at, and `B4` reports that both its horns fail in the same direction:** the
 split gap cannot be closed from free data, **and the signal does not need it closed.** `D9` is recorded

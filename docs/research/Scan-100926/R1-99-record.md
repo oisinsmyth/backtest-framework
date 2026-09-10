@@ -315,6 +315,19 @@ programme's own measurement.
 
 ---
 
+### 4a. AND EVERY LANE RECORDS FURTHER CONFLICTS INSIDE ITS OWN BRIEF — pointers, so none is invisible
+
+**`D1`–`D10` are the CROSS-LANE conflicts. They are not all of them.**
+
+| lane | where | carries |
+|---|---|---|
+| `A1` | [§6.3](R1-01-free-fundamentals.md) *"THE DOCUMENTATION IS BEHIND THE DATA. Two measured conflicts."* | two places where **the SEC's own documentation disagrees with the SEC's own data** |
+| `A2` | [§12](R1-02-persistent-characteristics.md) *"CONFLICTS, RECORDED NOT ADJUDICATED — including the one the campaign told me not to inherit"* | five, and the heading is itself a record of a lane **declining to inherit an adjudication** |
+| `A3` | [§8](R1-03-the-long-only-problem.md) *"CONFLICTS — RECORDED, NOT ADJUDICATED"* | `C-A3-1` on whether the surviving return is in the short leg — **five readings, five different statistics and samples**; and `C-A3-2`, **a paper whose sign flipped between draft and publication** |
+| `A4` | [§1.5](R1-04-filing-text-at-scale.md) *"Byte-range behaviour is PATH-DEPENDENT — a conflict with the carried-forward finding"* | a conflict **with this programme's own carried-forward finding**, not with another source |
+
+**Nothing is deleted and nothing is merged away.**
+
 ## 5. What this record does not claim
 
 - **Nothing here was measured on this programme's fixture.** `[MEASURED IN BRIEF]` means a public

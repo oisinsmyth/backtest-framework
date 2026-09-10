@@ -309,6 +309,21 @@ on the other dataset — and `C4` **resolves it on definition rather than declar
 
 **Round 2's `E1`–`E11` and round 1's `D1`–`D10` all still stand.**
 
+### 4a. AND EVERY LANE RECORDS FURTHER CONFLICTS INSIDE ITS OWN BRIEF — pointers, so none is invisible
+
+**`F1`–`F7` are the CROSS-LANE conflicts. They are not all of them.** Each brief carries conflicts this
+record does not restate, and they are listed here by location so a reader of the record knows they exist:
+
+| lane | where | carries |
+|---|---|---|
+| `C1` | [§4.3](R3-01-the-quarterly-variant-and-the-lag.md) *"The conflict, recorded and not adjudicated"* | the five incompatible quarterly lag conventions, **with one author at both ends** |
+| `C2` | [§9](R3-02-how-much-does-the-answer-move.md) *"CONFLICTS, RECORDED AND NOT ADJUDICATED"* | **five**, including whether data vintage changes conclusions or only adds noise; whether equal-weighting **raises or lowers** the premium; and *"sign is remarkably stable"* **against the same paper's own tables** |
+| `C3` | [§10](R3-03-the-shape-of-the-drawdown.md) *"CONFLICTS, RECORDED AND NOT ADJUDICATED"* | whether the **long leg or the spread** has the worse drawdown — two sources give **opposite orderings** (−8.2% vs −3.9% one way, −10.5% vs −24.2% the other), which `C3` dissolves by showing **mean drawdown is a Sharpe statistic and neither paper says so**, while leaving both on the record |
+| `C4` | [§6.4](R3-04-is-it-already-dead.md) | **its own two datasets contradicting each other** (= `F4`), resolved on definition and not ranked |
+
+**Nothing is deleted, nothing is merged away, and where a lane supplies a mechanism that dissolves a
+conflict, BOTH READINGS STILL STAND BESIDE IT.**
+
 ---
 
 ## 5. MY OWN WRONG PREMISES THIS ROUND, RECORDED AS MINE
