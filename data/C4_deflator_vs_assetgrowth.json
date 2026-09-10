@@ -1,0 +1,46 @@
+{
+ "AssetGrowth_signaldoc": {
+  "Sign": "-1.0",
+  "Return": "1.73",
+  "T-Stat": "8.45",
+  "SampleEndYear": "2003",
+  "Year": "2008",
+  "Stock Weight": "EW"
+ },
+ "note": "CZ's portfolio bins are already oriented by Sign, so bin 05 is the predicted-high-return bin; for AssetGrowth (Sign -1) that is the LOW-asset-growth leg, which is the tradeable one.",
+ "windows": {
+  "in_sample_1963_07_2010_12": {
+   "deflator_increment_GP_minus_GPlag": 0.1937,
+   "t": 4.98,
+   "AssetGrowth_long_minus_own_universe": 0.414,
+   "t_AG_long": 3.94,
+   "AssetGrowth_LS": 0.9078,
+   "t_AG_LS": 7.22,
+   "corr_increment_with_AG_long": -0.106,
+   "corr_increment_with_AG_LS": 0.3108,
+   "n_months": 570
+  },
+  "post_pub_2014_2024": {
+   "deflator_increment_GP_minus_GPlag": 0.1491,
+   "t": 1.83,
+   "AssetGrowth_long_minus_own_universe": -0.093,
+   "t_AG_long": -0.43,
+   "AssetGrowth_LS": 0.2994,
+   "t_AG_LS": 1.19,
+   "corr_increment_with_AG_long": -0.2942,
+   "corr_increment_with_AG_LS": 0.1397,
+   "n_months": 132
+  },
+  "programme_window_2010_2024": {
+   "deflator_increment_GP_minus_GPlag": 0.1455,
+   "t": 2.22,
+   "AssetGrowth_long_minus_own_universe": -0.0062,
+   "t_AG_long": -0.04,
+   "AssetGrowth_LS": 0.4196,
+   "t_AG_LS": 2.12,
+   "corr_increment_with_AG_long": -0.225,
+   "corr_increment_with_AG_LS": 0.1907,
+   "n_months": 180
+  }
+ }
+}

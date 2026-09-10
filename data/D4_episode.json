@@ -1,0 +1,675 @@
+{
+ "in-sample 1963-07..2013-12": {
+  "OP Hi10 VW - VW market (LONG)": {
+   "full": {
+    "n": 606,
+    "mean": 0.0648,
+    "t": 0.93
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 570,
+    "n_dropped": 36,
+    "mean": 0.0121,
+    "t": 0.18,
+    "dropped_window_mean": 0.9003,
+    "share_of_total_sum": 0.825
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 570,
+    "mean": 0.1054,
+    "t": 1.52,
+    "share_of_total_sum": -0.529
+   },
+   "EXCL best 12mo": {
+    "n": 594,
+    "n_dropped": 12,
+    "mean": 0.0174,
+    "t": 0.26,
+    "dropped_window_mean": 2.4117,
+    "share_of_total_sum": 0.737
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "1999-03",
+     "2000-02"
+    ],
+    "n": 594,
+    "mean": 0.1028,
+    "t": 1.51,
+    "share_of_total_sum": -0.555
+   }
+  },
+  "OP Hi10 VW - VW universe TRUE (LONG)": {
+   "full": {
+    "n": 606,
+    "mean": 0.0561,
+    "t": 0.83
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 570,
+    "n_dropped": 36,
+    "mean": 0.0107,
+    "t": 0.17,
+    "dropped_window_mean": 0.7736,
+    "share_of_total_sum": 0.82
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1979-04",
+     "1982-03"
+    ],
+    "n": 570,
+    "mean": 0.0937,
+    "t": 1.35,
+    "share_of_total_sum": -0.572
+   },
+   "EXCL best 12mo": {
+    "n": 594,
+    "n_dropped": 12,
+    "mean": 0.0111,
+    "t": 0.17,
+    "dropped_window_mean": 2.2802,
+    "share_of_total_sum": 0.805
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "1999-03",
+     "2000-02"
+    ],
+    "n": 594,
+    "mean": 0.088,
+    "t": 1.33,
+    "share_of_total_sum": -0.538
+   }
+  },
+  "OP Hi10-Lo10 VW (SPREAD)": {
+   "full": {
+    "n": 606,
+    "mean": 0.1922,
+    "t": 1.16
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 570,
+    "n_dropped": 36,
+    "mean": 0.0004,
+    "t": 0.0,
+    "dropped_window_mean": 3.2306,
+    "share_of_total_sum": 0.998
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 570,
+    "mean": 0.3208,
+    "t": 1.99,
+    "share_of_total_sum": -0.569
+   },
+   "EXCL best 12mo": {
+    "n": 594,
+    "n_dropped": 12,
+    "mean": 0.0572,
+    "t": 0.37,
+    "dropped_window_mean": 6.8767,
+    "share_of_total_sum": 0.708
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "1999-03",
+     "2000-02"
+    ],
+    "n": 594,
+    "mean": 0.2975,
+    "t": 1.85,
+    "share_of_total_sum": -0.517
+   }
+  },
+  "RMW published spread": {
+   "full": {
+    "n": 606,
+    "mean": 0.2681,
+    "t": 2.94
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 570,
+    "n_dropped": 36,
+    "mean": 0.1356,
+    "t": 1.75,
+    "dropped_window_mean": 2.3658,
+    "share_of_total_sum": 0.524
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 570,
+    "mean": 0.3583,
+    "t": 4.11,
+    "share_of_total_sum": -0.257
+   },
+   "EXCL best 12mo": {
+    "n": 594,
+    "n_dropped": 12,
+    "mean": 0.1951,
+    "t": 2.28,
+    "dropped_window_mean": 3.8808,
+    "share_of_total_sum": 0.287
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "1999-03",
+     "2000-02"
+    ],
+    "n": 594,
+    "mean": 0.3484,
+    "t": 4.12,
+    "share_of_total_sum": -0.274
+   }
+  },
+  "HML published spread": {
+   "full": {
+    "n": 606,
+    "mean": 0.3816,
+    "t": 3.36
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 570,
+    "n_dropped": 36,
+    "mean": 0.2735,
+    "t": 2.53,
+    "dropped_window_mean": 2.0928,
+    "share_of_total_sum": 0.326
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 570,
+    "mean": 0.4693,
+    "t": 4.08,
+    "share_of_total_sum": -0.157
+   },
+   "EXCL best 12mo": {
+    "n": 594,
+    "n_dropped": 12,
+    "mean": 0.312,
+    "t": 2.85,
+    "dropped_window_mean": 3.8275,
+    "share_of_total_sum": 0.199
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "1999-03",
+     "2000-02"
+    ],
+    "n": 594,
+    "mean": 0.4447,
+    "t": 3.96,
+    "share_of_total_sum": -0.142
+   }
+  },
+  "CONTROL market excess Mkt-RF": {
+   "full": {
+    "n": 606,
+    "mean": 0.501,
+    "t": 2.75
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 570,
+    "n_dropped": 36,
+    "mean": 0.6296,
+    "t": 3.43,
+    "dropped_window_mean": -1.535,
+    "share_of_total_sum": -0.182
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2000-04",
+     "2003-03"
+    ],
+    "n": 570,
+    "mean": 0.6368,
+    "t": 3.47,
+    "share_of_total_sum": -0.196
+   },
+   "EXCL best 12mo": {
+    "n": 594,
+    "n_dropped": 12,
+    "mean": 0.5741,
+    "t": 3.16,
+    "dropped_window_mean": -3.1183,
+    "share_of_total_sum": -0.123
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "1973-10",
+     "1974-09"
+    ],
+    "n": 594,
+    "mean": 0.6096,
+    "t": 3.36,
+    "share_of_total_sum": -0.193
+   }
+  }
+ },
+ "full 1963-07..2026-07": {
+  "OP Hi10 VW - VW market (LONG)": {
+   "full": {
+    "n": 757,
+    "mean": 0.0918,
+    "t": 1.49
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 721,
+    "n_dropped": 36,
+    "mean": 0.0514,
+    "t": 0.87,
+    "dropped_window_mean": 0.9003,
+    "share_of_total_sum": 0.466
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 721,
+    "mean": 0.1252,
+    "t": 2.04,
+    "share_of_total_sum": -0.299
+   }
+  },
+  "OP Hi10 VW - VW universe TRUE (LONG)": {
+   "full": {
+    "n": 757,
+    "mean": 0.082,
+    "t": 1.36
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 721,
+    "n_dropped": 36,
+    "mean": 0.0475,
+    "t": 0.82,
+    "dropped_window_mean": 0.7736,
+    "share_of_total_sum": 0.449
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1979-04",
+     "1982-03"
+    ],
+    "n": 721,
+    "mean": 0.113,
+    "t": 1.84,
+    "share_of_total_sum": -0.313
+   }
+  },
+  "OP Hi10-Lo10 VW (SPREAD)": {
+   "full": {
+    "n": 757,
+    "mean": 0.2517,
+    "t": 1.61
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 721,
+    "n_dropped": 36,
+    "mean": 0.1029,
+    "t": 0.7,
+    "dropped_window_mean": 3.2306,
+    "share_of_total_sum": 0.61
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 721,
+    "mean": 0.3562,
+    "t": 2.31,
+    "share_of_total_sum": -0.348
+   }
+  },
+  "RMW published spread": {
+   "full": {
+    "n": 757,
+    "mean": 0.2571,
+    "t": 3.1
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 721,
+    "n_dropped": 36,
+    "mean": 0.1518,
+    "t": 2.06,
+    "dropped_window_mean": 2.3658,
+    "share_of_total_sum": 0.438
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "1997-03",
+     "2000-02"
+    ],
+    "n": 721,
+    "mean": 0.3279,
+    "t": 4.09,
+    "share_of_total_sum": -0.215
+   }
+  },
+  "HML published spread": {
+   "full": {
+    "n": 757,
+    "mean": 0.299,
+    "t": 2.77
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 721,
+    "n_dropped": 36,
+    "mean": 0.2095,
+    "t": 2.0,
+    "dropped_window_mean": 2.0928,
+    "share_of_total_sum": 0.333
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2017-10",
+     "2020-09"
+    ],
+    "n": 721,
+    "mean": 0.3946,
+    "t": 3.62,
+    "share_of_total_sum": -0.257
+   }
+  },
+  "CONTROL market excess Mkt-RF": {
+   "full": {
+    "n": 757,
+    "mean": 0.5992,
+    "t": 3.7
+   },
+   "EXCL best 36mo dot-com unwind": {
+    "n": 721,
+    "n_dropped": 36,
+    "mean": 0.7058,
+    "t": 4.33,
+    "dropped_window_mean": -1.535,
+    "share_of_total_sum": -0.122
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2000-04",
+     "2003-03"
+    ],
+    "n": 721,
+    "mean": 0.7115,
+    "t": 4.36,
+    "share_of_total_sum": -0.131
+   }
+  }
+ },
+ "post-pub 2014-01..2024-12": {
+  "OP Hi10 VW - VW market (LONG)": {
+   "full": {
+    "n": 132,
+    "mean": 0.2639,
+    "t": 1.93
+   },
+   "EXCL best 12mo 2022 rate shock": {
+    "n": 120,
+    "n_dropped": 12,
+    "mean": 0.1343,
+    "t": 1.01,
+    "dropped_window_mean": 1.5608,
+    "share_of_total_sum": 0.538
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "2020-10",
+     "2021-09"
+    ],
+    "n": 120,
+    "mean": 0.3581,
+    "t": 2.61,
+    "share_of_total_sum": -0.233
+   },
+   "EXCL best 36mo": {
+    "n": 96,
+    "n_dropped": 36,
+    "mean": 0.118,
+    "t": 0.8,
+    "dropped_window_mean": 0.6531,
+    "share_of_total_sum": 0.675
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2015-11",
+     "2018-10"
+    ],
+    "n": 96,
+    "mean": 0.385,
+    "t": 2.24,
+    "share_of_total_sum": -0.061
+   }
+  },
+  "OP Hi10 VW - VW universe TRUE (LONG)": {
+   "full": {
+    "n": 132,
+    "mean": 0.2494,
+    "t": 1.84
+   },
+   "EXCL best 12mo 2022 rate shock": {
+    "n": 120,
+    "n_dropped": 12,
+    "mean": 0.1279,
+    "t": 0.96,
+    "dropped_window_mean": 1.4651,
+    "share_of_total_sum": 0.534
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "2020-10",
+     "2021-09"
+    ],
+    "n": 120,
+    "mean": 0.3453,
+    "t": 2.52,
+    "share_of_total_sum": -0.259
+   },
+   "EXCL best 36mo": {
+    "n": 96,
+    "n_dropped": 36,
+    "mean": 0.1173,
+    "t": 0.8,
+    "dropped_window_mean": 0.6018,
+    "share_of_total_sum": 0.658
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2015-11",
+     "2018-10"
+    ],
+    "n": 96,
+    "mean": 0.3641,
+    "t": 2.14,
+    "share_of_total_sum": -0.062
+   }
+  },
+  "OP Hi10-Lo10 VW (SPREAD)": {
+   "full": {
+    "n": 132,
+    "mean": 0.738,
+    "t": 1.65
+   },
+   "EXCL best 12mo 2022 rate shock": {
+    "n": 120,
+    "n_dropped": 12,
+    "mean": 0.3855,
+    "t": 0.87,
+    "dropped_window_mean": 4.2625,
+    "share_of_total_sum": 0.525
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "2020-02",
+     "2021-01"
+    ],
+    "n": 120,
+    "mean": 1.0122,
+    "t": 2.19,
+    "share_of_total_sum": -0.247
+   },
+   "EXCL best 36mo": {
+    "n": 96,
+    "n_dropped": 36,
+    "mean": 0.2201,
+    "t": 0.46,
+    "dropped_window_mean": 2.1189,
+    "share_of_total_sum": 0.783
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2018-03",
+     "2021-02"
+    ],
+    "n": 96,
+    "mean": 1.1979,
+    "t": 2.19,
+    "share_of_total_sum": -0.181
+   }
+  },
+  "RMW published spread": {
+   "full": {
+    "n": 132,
+    "mean": 0.3585,
+    "t": 1.99
+   },
+   "EXCL best 12mo 2022 rate shock": {
+    "n": 120,
+    "n_dropped": 12,
+    "mean": 0.2774,
+    "t": 1.59,
+    "dropped_window_mean": 1.1692,
+    "share_of_total_sum": 0.296
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "2020-02",
+     "2021-01"
+    ],
+    "n": 120,
+    "mean": 0.4322,
+    "t": 2.31,
+    "share_of_total_sum": -0.096
+   },
+   "EXCL best 36mo": {
+    "n": 96,
+    "n_dropped": 36,
+    "mean": 0.154,
+    "t": 0.83,
+    "dropped_window_mean": 0.9039,
+    "share_of_total_sum": 0.688
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2018-03",
+     "2021-02"
+    ],
+    "n": 96,
+    "mean": 0.5371,
+    "t": 2.37,
+    "share_of_total_sum": -0.09
+   }
+  },
+  "HML published spread": {
+   "full": {
+    "n": 132,
+    "mean": -0.1795,
+    "t": -0.56
+   },
+   "EXCL best 12mo 2022 rate shock": {
+    "n": 120,
+    "n_dropped": 12,
+    "mean": -0.4438,
+    "t": -1.46,
+    "dropped_window_mean": 2.4642,
+    "share_of_total_sum": null
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "2019-10",
+     "2020-09"
+    ],
+    "n": 120,
+    "mean": 0.1505,
+    "t": 0.47,
+    "share_of_total_sum": null
+   },
+   "EXCL best 36mo": {
+    "n": 96,
+    "n_dropped": 36,
+    "mean": -0.4147,
+    "t": -1.23,
+    "dropped_window_mean": 0.4478,
+    "share_of_total_sum": null
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2017-10",
+     "2020-09"
+    ],
+    "n": 96,
+    "mean": 0.3591,
+    "t": 0.96,
+    "share_of_total_sum": null
+   }
+  },
+  "CONTROL market excess Mkt-RF": {
+   "full": {
+    "n": 132,
+    "mean": 0.9805,
+    "t": 2.54
+   },
+   "EXCL best 12mo 2022 rate shock": {
+    "n": 120,
+    "n_dropped": 12,
+    "mean": 1.2244,
+    "t": 3.24,
+    "dropped_window_mean": -1.4592,
+    "share_of_total_sum": -0.135
+   },
+   "MIRROR excl worst 12mo": {
+    "window": [
+     "2022-01",
+     "2022-12"
+    ],
+    "n": 120,
+    "mean": 1.2523,
+    "t": 3.36,
+    "share_of_total_sum": -0.161
+   },
+   "EXCL best 36mo": {
+    "n": 96,
+    "n_dropped": 36,
+    "mean": 1.106,
+    "t": 2.59,
+    "dropped_window_mean": 0.6456,
+    "share_of_total_sum": 0.18
+   },
+   "MIRROR excl worst 36mo": {
+    "window": [
+     "2017-04",
+     "2020-03"
+    ],
+    "n": 96,
+    "mean": 1.2203,
+    "t": 2.73,
+    "share_of_total_sum": 0.095
+   }
+  }
+ },
+ "_CONTROL_n_reduced_by_window_length": true
+}

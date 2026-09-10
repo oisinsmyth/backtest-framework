@@ -1,0 +1,164 @@
+{
+ "Novy-Marx 2012 WP, The Other Side of Value (73pp)": {
+  "chars": 165450,
+  "first_line": "The Other Side of Value:",
+  "counts": {
+   "drawdown": 0,
+   "best/worst month": 0,
+   "months to half": 0,
+   "fraction of months": 0,
+   "concentrat*": 0,
+   "skewness": 0,
+   "kurtosis": 0,
+   "winsorise/trim": 7,
+   "recession/cycle": 1,
+   "regime": 0,
+   "cluster": 0,
+   "few names carry it": 1,
+   "required horizon": 1
+  },
+  "CTRL_pos": {
+   "t-statistic/t-stat": 28,
+   "average/mean return": 86
+  },
+  "CTRL_zero": {
+   "impossible token": 0
+  },
+  "CTRL_PASS": true
+ },
+ "Engelberg/McLean/Pontiff 2017 WP, Anomalies and News": {
+  "chars": 110967,
+  "first_line": "Anomalies and News",
+  "counts": {
+   "drawdown": 0,
+   "best/worst month": 0,
+   "months to half": 0,
+   "fraction of months": 0,
+   "concentrat*": 0,
+   "skewness": 0,
+   "kurtosis": 0,
+   "winsorise/trim": 3,
+   "recession/cycle": 6,
+   "regime": 0,
+   "cluster": 11,
+   "few names carry it": 0,
+   "required horizon": 0
+  },
+  "CTRL_pos": {
+   "t-statistic/t-stat": 12,
+   "average/mean return": 1
+  },
+  "CTRL_zero": {
+   "impossible token": 0
+  },
+  "CTRL_PASS": true
+ },
+ "Hou/Xue/Zhang 2017 NBER WP 23394, Replicating Anomalies": {
+  "chars": 451200,
+  "first_line": "NBER WORKING PAPER SERIES",
+  "counts": {
+   "drawdown": 0,
+   "best/worst month": 0,
+   "months to half": 0,
+   "fraction of months": 1,
+   "concentrat*": 9,
+   "skewness": 32,
+   "kurtosis": 0,
+   "winsorise/trim": 11,
+   "recession/cycle": 15,
+   "regime": 0,
+   "cluster": 2,
+   "few names carry it": 0,
+   "required horizon": 0
+  },
+  "CTRL_pos": {
+   "t-statistic/t-stat": 29,
+   "average/mean return": 95
+  },
+  "CTRL_zero": {
+   "impossible token": 0
+  },
+  "CTRL_PASS": true
+ },
+ "McLean/Pontiff WP, Does Academic Research Destroy...": {
+  "chars": 88157,
+  "first_line": "Does Academic Research Destroy Stock Return Predictability?*",
+  "counts": {
+   "drawdown": 0,
+   "best/worst month": 0,
+   "months to half": 0,
+   "fraction of months": 3,
+   "concentrat*": 1,
+   "skewness": 0,
+   "kurtosis": 0,
+   "winsorise/trim": 1,
+   "recession/cycle": 0,
+   "regime": 1,
+   "cluster": 8,
+   "few names carry it": 0,
+   "required horizon": 0
+  },
+  "CTRL_pos": {
+   "t-statistic/t-stat": 30,
+   "average/mean return": 1
+  },
+  "CTRL_zero": {
+   "impossible token": 0
+  },
+  "CTRL_PASS": true
+ },
+ "Chen/Zimmermann 2021 FEDS 2021-037, Open Source X-Sec AP": {
+  "chars": 174961,
+  "first_line": "Finance and Economics Discussion Series",
+  "counts": {
+   "drawdown": 0,
+   "best/worst month": 0,
+   "months to half": 0,
+   "fraction of months": 0,
+   "concentrat*": 4,
+   "skewness": 16,
+   "kurtosis": 0,
+   "winsorise/trim": 0,
+   "recession/cycle": 11,
+   "regime": 0,
+   "cluster": 0,
+   "few names carry it": 0,
+   "required horizon": 0
+  },
+  "CTRL_pos": {
+   "t-statistic/t-stat": 166,
+   "average/mean return": 45
+  },
+  "CTRL_zero": {
+   "impossible token": 0
+  },
+  "CTRL_PASS": true
+ },
+ "Ilmanen et al 2021 JOIM, How Do Factor Premia Vary Over Time": {
+  "chars": 176110,
+  "first_line": "How Do Factor Premia Vary Over Time?",
+  "counts": {
+   "drawdown": 0,
+   "best/worst month": 6,
+   "months to half": 0,
+   "fraction of months": 1,
+   "concentrat*": 0,
+   "skewness": 2,
+   "kurtosis": 1,
+   "winsorise/trim": 0,
+   "recession/cycle": 36,
+   "regime": 5,
+   "cluster": 0,
+   "few names carry it": 0,
+   "required horizon": 2
+  },
+  "CTRL_pos": {
+   "t-statistic/t-stat": 12,
+   "average/mean return": 5
+  },
+  "CTRL_zero": {
+   "impossible token": 0
+  },
+  "CTRL_PASS": true
+ }
+}

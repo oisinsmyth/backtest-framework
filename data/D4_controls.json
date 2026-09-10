@@ -1,0 +1,116 @@
+{
+ "C0_k_half_selftest": {
+  "constant_1pct_x132_expect_66": 66,
+  "one_month_carries_all_expect_1": 1,
+  "two_equal_months_expect_1": 1,
+  "negative_total_expect_None": null
+ },
+ "C0_PASS": true,
+ "C1_blocks_read": {
+  "D4_Portfolios_Formed_on_OP_CSV.zip :: Average Value Weight Returns -- Monthly": {
+   "header_line_verbatim": "  Average Value Weight Returns -- Monthly",
+   "column_header_verbatim": ",Lo 30,Med 40,Hi 30,Lo 20,Qnt 2,Qnt 3,Qnt 4,Hi 20,Lo 10,2-Dec,3-Dec,4-Dec,5-Dec,6-Dec,7-Dec,8-Dec,9-Dec,Hi 10",
+   "n_columns": 18,
+   "n_monthly_rows": 757,
+   "first_month": "1963-07",
+   "last_month": "2026-07",
+   "sentinel_census": {}
+  },
+  "D4_Portfolios_Formed_on_OP_CSV.zip :: Average Equal Weighted Returns -- Monthly": {
+   "header_line_verbatim": "  Average Equal Weighted Returns -- Monthly",
+   "column_header_verbatim": ",Lo 30,Med 40,Hi 30,Lo 20,Qnt 2,Qnt 3,Qnt 4,Hi 20,Lo 10,2-Dec,3-Dec,4-Dec,5-Dec,6-Dec,7-Dec,8-Dec,9-Dec,Hi 10",
+   "n_columns": 18,
+   "n_monthly_rows": 757,
+   "first_month": "1963-07",
+   "last_month": "2026-07",
+   "sentinel_census": {}
+  },
+  "D4_Portfolios_Formed_on_OP_CSV.zip :: Number of Firms in Portfolios": {
+   "header_line_verbatim": "  Number of Firms in Portfolios",
+   "column_header_verbatim": ",Lo 30,Med 40,Hi 30,Lo 20,Qnt 2,Qnt 3,Qnt 4,Hi 20,Lo 10,2-Dec,3-Dec,4-Dec,5-Dec,6-Dec,7-Dec,8-Dec,9-Dec,Hi 10",
+   "n_columns": 18,
+   "n_monthly_rows": 757,
+   "first_month": "1963-07",
+   "last_month": "2026-07",
+   "sentinel_census": {}
+  },
+  "D4_Portfolios_Formed_on_BE-ME_CSV.zip :: Value Weight Returns -- Monthly": {
+   "header_line_verbatim": "  Value Weight Returns -- Monthly",
+   "column_header_verbatim": ",<= 0,Lo 30,Med 40,Hi 30,Lo 20,Qnt 2,Qnt 3,Qnt 4,Hi 20,Lo 10,2-Dec,3-Dec,4-Dec,5-Dec,6-Dec,7-Dec,8-Dec,9-Dec,Hi 10",
+   "n_columns": 19,
+   "n_monthly_rows": 1201,
+   "first_month": "1926-07",
+   "last_month": "2026-07",
+   "sentinel_census": {
+    "-99.99": 43
+   }
+  },
+  "D4_Portfolios_Formed_on_BE-ME_CSV.zip :: Equal Weight Returns -- Monthly": {
+   "header_line_verbatim": "  Equal Weight Returns -- Monthly",
+   "column_header_verbatim": ",<= 0,Lo 30,Med 40,Hi 30,Lo 20,Qnt 2,Qnt 3,Qnt 4,Hi 20,Lo 10,2-Dec,3-Dec,4-Dec,5-Dec,6-Dec,7-Dec,8-Dec,9-Dec,Hi 10",
+   "n_columns": 19,
+   "n_monthly_rows": 1201,
+   "first_month": "1926-07",
+   "last_month": "2026-07",
+   "sentinel_census": {
+    "-99.99": 43
+   }
+  },
+  "D4_6_Portfolios_ME_OP_2x3_CSV.zip :: Average Value Weighted Returns -- Monthly": {
+   "header_line_verbatim": "  Average Value Weighted Returns -- Monthly",
+   "column_header_verbatim": ",SMALL LoOP,ME1 OP2,SMALL HiOP,BIG LoOP,ME2 OP2,BIG HiOP",
+   "n_columns": 6,
+   "n_monthly_rows": 757,
+   "first_month": "1963-07",
+   "last_month": "2026-07",
+   "sentinel_census": {}
+  },
+  "D4_F-F_Research_Data_5_Factors_2x3_CSV.zip :: monthly factors": {
+   "column_header_verbatim": ",Mkt-RF,SMB,HML,RMW,CMA,RF",
+   "n_monthly_rows": 757,
+   "first_month": "1963-07",
+   "last_month": "2026-07",
+   "sentinel_census": {}
+  },
+  "D4_F-F_Research_Data_Factors_CSV.zip :: monthly factors": {
+   "column_header_verbatim": ",Mkt-RF,SMB,HML,RF",
+   "n_monthly_rows": 1201,
+   "first_month": "1926-07",
+   "last_month": "2026-07",
+   "sentinel_census": {}
+  }
+ },
+ "C2_must_be_zero": {
+  "values_checked": 77346,
+  "sentinels_or_absurd_surviving": 0,
+  "PASS": true
+ },
+ "C3_sentinel_census": {
+  "OP_vw_monthly": {},
+  "OP_ew_monthly": {},
+  "OP_num_firms": {},
+  "BE-ME_vw_monthly": {
+   "-99.99": 43
+  },
+  "BE-ME_ew_monthly": {
+   "-99.99": 43
+  },
+  "6_ME_OP_vw_monthly": {}
+ },
+ "C4_rmw_reconstruction": {
+  "columns_found": [
+   "SMALL LoOP",
+   "ME1 OP2",
+   "SMALL HiOP",
+   "BIG LoOP",
+   "ME2 OP2",
+   "BIG HiOP"
+  ],
+  "n_common_months": 757,
+  "max_abs_diff_pct_pts": 0.005000000000000782,
+  "mean_abs_diff_pct_pts": 0.0025353368560105767,
+  "published_RMW_mean": 0.2570805812417437,
+  "reconstructed_mean": 0.2571826287978864,
+  "PASS_if_max_diff_below_0.02": true
+ }
+}
