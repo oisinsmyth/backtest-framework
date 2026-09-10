@@ -41,9 +41,20 @@ Derived evidence a record quotes goes to [`data/`](../../../data/) prefixed by l
 |---|---|---|---|
 | **1** | 4 | **~1.14M** | 250–300k |
 | **2** | 4 | **~1.13M** (280k · 284k · 272k · 296k) | 250–300k |
+| **3** | 4 | **~1.44M** (368k · 335k · 334k · 407k) — **the first round under §2a** | **334–407k** |
 
-**The projection held to within 1%, twice, and per-lane depth is stable at ~250–300k regardless of how
-broad the lane is.** So the lever is **the number of lanes**, and a round of four costs **~1.1M**.
+**Rounds 1 and 2 held to within 1% of the projection, with per-lane depth stable at ~250–300k
+regardless of how broad the lane was. ROUND 3 BROKE THAT PLATEAU IN ALL FOUR LANES and came in at
+~1.44M — ABOVE THE PROJECTED BAND.** The cause is §2a, added before round 3 was dispatched.
+
+**So the revised expectation, measured rather than projected: a four-lane round UNDER THE DEPTH MANDATE
+costs ~1.3–1.5M.** The pre-mandate ~1.1M figure applies only to rounds 1 and 2 and is kept above as
+the baseline the mandate was measured against. [`R3-99-record.md`](R3-99-record.md) §6 records **which
+of the five requirements bought what**, so the cost can be attributed rather than guessed: the
+answer-changing findings came from *"the bar is a floor"* and *"chase the appendix, the repository, the
+code"*, and the two cheapest requirements — one measurement with a negative control, and the
+"what I did not open" list — **produced two controls that FIRED and the only visible map of the
+unexplored edge.**
 
 ### 2a. THE DEPTH MANDATE — the principal's standing instruction, and it OVERRIDES the plateau above
 

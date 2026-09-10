@@ -53,8 +53,10 @@ hunting a twelfth territory.
 | **1** | [`R1-00-slate.md`](Scan-100926/R1-00-slate.md) | [`R1-99-record.md`](Scan-100926/R1-99-record.md) | free PIT fundamentals · persistent characteristics · the long-only problem · filing text at scale | **the data gap IS closable but the obvious endpoint is a silent look-ahead** · the field narrows to two characteristic families and **one of them is not computable** · **`A2` and `A3` disagree on whether the long leg pays** · conflicts `D1`–`D10` |
 | **2** | [`R2-00-slate.md`](Scan-100926/R2-00-slate.md) | [`R2-99-record.md`](Scan-100926/R2-99-record.md) | the benchmark question · profitability deep · where the premium accrues · shares outstanding and float | **every lane: the construction detail nobody's name carries decides the answer** · the `A2`/`A3` split is **one identity whose sign flipped in this programme's era** · profitability splits on **current vs lagged deflator** · the session split is **published and points the other way** · **`D9` closes on both horns** · conflicts `E1`–`E11` |
 
-**Eight briefs, two rounds, ~2.27M subagent tokens.** Evidence the records quote is in
-[`data/`](../../data/) under `A1_`/`A4-`/`a2_`/`a3_` and `B1_`–`B4-` prefixes.
+| **3** | [`R3-00-slate.md`](Scan-100926/R3-00-slate.md) | [`R3-99-record.md`](Scan-100926/R3-99-record.md) | the quarterly variant and the lag · how much does the answer move · the shape of the drawdown · is it already dead | **THE FIRST ROUND UNDER THE DEPTH MANDATE, and three lanes independently found the same blind spot in three different literatures: NOBODY REPORTS THE LONG LEG** · the field measures construction dispersion and it is **68-96% of the premium** · round 2's deflator collapse is **annual-only** · **it never decayed, but two-thirds of the widening is in the short leg** · conflicts `F1`-`F7`, the central one **between two of its own lanes** |
+
+**Twelve briefs, three rounds, ~3.71M subagent tokens.** Evidence the records quote is in
+[`data/`](../../data/) under `A1_`/`A4-`/`a2_`/`a3_`, `B1_`–`B4-` and `C1_`–`C4_` prefixes.
 
 **THE RULING THAT GOVERNS BOTH CAMPAIGNS, AND IT IS AT THE TOP OF THIS FILE FOR A REASON:**
 **conflicts are RECORDED, NOT ADJUDICATED.** Round 2 carries eleven, including **two lanes that read
