@@ -1,0 +1,225 @@
+{
+ "control_published_IR": {
+  "niq_su": {
+   "published": 0.19,
+   "mine": 0.15909069305193463,
+   "n": 722
+  },
+  "saleq_su": {
+   "published": 0.05,
+   "mine": 0.04970815546627897,
+   "n": 722
+  },
+  "resff3_12_1": {
+   "published": 0.28,
+   "mine": 0.26167688340187306,
+   "n": 860
+  },
+  "qmj_prof": {
+   "published": 0.22,
+   "mine": 0.17407814226792134,
+   "n": 890
+  },
+  "bidaskhl_21d": {
+   "published": -0.09,
+   "mine": -0.01747487933105517,
+   "n": 1187
+  },
+  "zero_trades_21d": {
+   "published": 0.09,
+   "mine": -0.027710449155180283,
+   "n": 1187
+  }
+ },
+ "results": {
+  "Net income / book equity|full overlap|ni_be": {
+   "n": 686,
+   "mean_pct_mo": 0.24476521785459718,
+   "t_plain": 2.193790825770415,
+   "t_nw6": 1.9792229263911045,
+   "ir_monthly": 0.0837593229416406,
+   "ir_ann": 0.29015080588498193,
+   "sd_pct_mo": 2.922244464955114
+  },
+  "Net income / book equity|full overlap|niq_be": {
+   "n": 686,
+   "mean_pct_mo": 0.3383779568377339,
+   "t_plain": 3.295634083380733,
+   "t_nw6": 2.918363834922283,
+   "ir_monthly": 0.1258278940018927,
+   "ir_ann": 0.43588061084133867,
+   "sd_pct_mo": 2.689212590911233
+  },
+  "Net income / book equity|full overlap|niq_be_chg1": {
+   "n": 686,
+   "mean_pct_mo": 0.2478459568132626,
+   "t_plain": 3.8096651562348733,
+   "t_nw6": 3.3251222364478656,
+   "ir_monthly": 0.1454536915608318,
+   "ir_ann": 0.5038663678636262,
+   "sd_pct_mo": 1.7039509561681234
+  },
+  "Net income / book equity|1972-2010 (Novy-Marx window)|ni_be": {
+   "n": 468,
+   "mean_pct_mo": 0.2299371603027451,
+   "t_plain": 1.5969201835310491,
+   "t_nw6": 1.4307605508647891,
+   "ir_monthly": 0.07381766159672516,
+   "ir_ann": 0.2557118807629078,
+   "sd_pct_mo": 3.1149342220960574
+  },
+  "Net income / book equity|1972-2010 (Novy-Marx window)|niq_be": {
+   "n": 468,
+   "mean_pct_mo": 0.3327685190581409,
+   "t_plain": 2.5245305333106702,
+   "t_nw6": 2.1953213753066216,
+   "ir_monthly": 0.11669646518366758,
+   "ir_ann": 0.4042484135236096,
+   "sd_pct_mo": 2.851573254891649
+  },
+  "Net income / book equity|1972-2010 (Novy-Marx window)|niq_be_chg1": {
+   "n": 468,
+   "mean_pct_mo": 0.33283819399587133,
+   "t_plain": 4.196312358246236,
+   "t_nw6": 3.6517002579580806,
+   "ir_monthly": 0.19397460737846173,
+   "ir_ann": 0.671947750715441,
+   "sd_pct_mo": 1.7158853856910992
+  },
+  "Net income / book equity|2010-2024 (programme era)|ni_be": {
+   "n": 180,
+   "mean_pct_mo": 0.2238470965083806,
+   "t_plain": 1.1478633538140666,
+   "t_nw6": 1.0713616679020526,
+   "ir_monthly": 0.08555668293363818,
+   "ir_ann": 0.2963770435362448,
+   "sd_pct_mo": 2.6163601583526446
+  },
+  "Net income / book equity|2010-2024 (programme era)|niq_be": {
+   "n": 180,
+   "mean_pct_mo": 0.29787380707367306,
+   "t_plain": 1.6858422743132457,
+   "t_nw6": 1.5529118816381402,
+   "ir_monthly": 0.12565526415690884,
+   "ir_ann": 0.43528260351650905,
+   "sd_pct_mo": 2.370563693230637
+  },
+  "Net income / book equity|2010-2024 (programme era)|niq_be_chg1": {
+   "n": 180,
+   "mean_pct_mo": 0.11191145880443326,
+   "t_plain": 1.1804004625360434,
+   "t_nw6": 1.1081484368602723,
+   "ir_monthly": 0.0879818558300929,
+   "ir_ann": 0.30477808888384184,
+   "sd_pct_mo": 1.2719833850805817
+  },
+  "Net income / assets|full overlap|niq_at": {
+   "n": 686,
+   "mean_pct_mo": 0.24061639902487456,
+   "t_plain": 2.238968538011868,
+   "t_nw6": 1.944558386886437,
+   "ir_monthly": 0.08548421601027098,
+   "ir_ann": 0.29612601074996436,
+   "sd_pct_mo": 2.814746514092898
+  },
+  "Net income / assets|full overlap|niq_at_chg1": {
+   "n": 686,
+   "mean_pct_mo": 0.2115899264280983,
+   "t_plain": 3.334446048364022,
+   "t_nw6": 2.9788304996170343,
+   "ir_monthly": 0.12730974171082063,
+   "ir_ann": 0.4410138818832241,
+   "sd_pct_mo": 1.6620089207997686
+  },
+  "Net income / assets|1972-2010 (Novy-Marx window)|niq_at": {
+   "n": 468,
+   "mean_pct_mo": 0.30643370824764243,
+   "t_plain": 2.3685478311700994,
+   "t_nw6": 2.0838741133832164,
+   "ir_monthly": 0.10948616222657458,
+   "ir_ann": 0.3792711914043112,
+   "sd_pct_mo": 2.7988350492503113
+  },
+  "Net income / assets|1972-2010 (Novy-Marx window)|niq_at_chg1": {
+   "n": 468,
+   "mean_pct_mo": 0.29791705816380315,
+   "t_plain": 3.755330922794049,
+   "t_nw6": 3.267883846104684,
+   "ir_monthly": 0.1735902333137108,
+   "ir_ann": 0.6013342075941651,
+   "sd_pct_mo": 1.7162086396036464
+  },
+  "Net income / assets|2010-2024 (programme era)|niq_at": {
+   "n": 180,
+   "mean_pct_mo": 0.2451196120723097,
+   "t_plain": 1.229767970060782,
+   "t_nw6": 1.1454186302877472,
+   "ir_monthly": 0.09166149258692781,
+   "ir_ann": 0.3175247245163139,
+   "sd_pct_mo": 2.6741830746411734
+  },
+  "Net income / assets|2010-2024 (programme era)|niq_at_chg1": {
+   "n": 180,
+   "mean_pct_mo": 0.12209948769594764,
+   "t_plain": 1.2501123678904213,
+   "t_nw6": 1.2830906847675216,
+   "ir_monthly": 0.09317787447054024,
+   "ir_ann": 0.32277762544850136,
+   "sd_pct_mo": 1.3103914248929498
+  },
+  "Operating cash flow / assets|full overlap|ocf_at": {
+   "n": 878,
+   "mean_pct_mo": 0.43787403269386044,
+   "t_plain": 5.786747560465696,
+   "t_nw6": 5.1851817975896015,
+   "ir_monthly": 0.19529327087699572,
+   "ir_ann": 0.6765157350705359,
+   "sd_pct_mo": 2.2421357926339036
+  },
+  "Operating cash flow / assets|full overlap|ocf_at_chg1": {
+   "n": 878,
+   "mean_pct_mo": 0.1885721781113165,
+   "t_plain": 5.1291100896148745,
+   "t_nw6": 4.482262930824547,
+   "ir_monthly": 0.17309908124080636,
+   "ir_ann": 0.5996328069051386,
+   "sd_pct_mo": 1.089388671271945
+  },
+  "Operating cash flow / assets|1972-2010 (Novy-Marx window)|ocf_at": {
+   "n": 468,
+   "mean_pct_mo": 0.6089496159759402,
+   "t_plain": 5.454253387548695,
+   "t_nw6": 5.169089737666032,
+   "ir_monthly": 0.2521229520279485,
+   "ir_ann": 0.873379525333315,
+   "sd_pct_mo": 2.4152882991328637
+  },
+  "Operating cash flow / assets|1972-2010 (Novy-Marx window)|ocf_at_chg1": {
+   "n": 468,
+   "mean_pct_mo": 0.24145226690783722,
+   "t_plain": 4.579959727894536,
+   "t_nw6": 4.047444297211161,
+   "ir_monthly": 0.21170871331389549,
+   "ir_ann": 0.7333804957294011,
+   "sd_pct_mo": 1.1404928173638356
+  },
+  "Operating cash flow / assets|2010-2024 (programme era)|ocf_at": {
+   "n": 180,
+   "mean_pct_mo": 0.3341028976801323,
+   "t_plain": 1.868092876305943,
+   "t_nw6": 1.658568803034633,
+   "ir_monthly": 0.1392394219901065,
+   "ir_ann": 0.48233950660677527,
+   "sd_pct_mo": 2.3994849512077954
+  },
+  "Operating cash flow / assets|2010-2024 (programme era)|ocf_at_chg1": {
+   "n": 180,
+   "mean_pct_mo": 0.04730483532038566,
+   "t_plain": 0.5671811357627065,
+   "t_nw6": 0.5005233316579082,
+   "ir_monthly": 0.042275185837364955,
+   "ir_ann": 0.14644553953946465,
+   "sd_pct_mo": 1.1189740360307356
+  }
+ }
+}
