@@ -123,6 +123,10 @@ ITEMS = [
      "the only L3 window that will ever exist without a $4,500/mo plan"),
     ("mbo, ES + NQ only, 1 mo", "L3", "mbo2", "once",
      "the same window scoped to the two symbols the prop track would trade"),
+    ("mbo, top 8 roots, 1 mo", "L3", "mbo8", "once",
+     "ES NQ RTY YM CL GC ZN ZB -- one liquid name per family, for the L3 month"),
+    ("status, 41 roots, 16 yr", "L0", "status41", "core",
+     "halts and auction states: what a breach looks like when you cannot exit"),
 ]
 
 
@@ -148,6 +152,10 @@ def sizes() -> dict[str, float]:
         "mbp10":    L2_L3_SESSIONS * t * MBP10_PER_TRADE * SZ["mbp10"],
         "mboall":   L2_L3_SESSIONS * t * MBO_PER_TRADE * SZ["mbo"],
         "mbo2":     L2_L3_SESSIONS * t * es_nq_share * MBO_PER_TRADE * SZ["mbo"],
+        # ES NQ RTY YM CL GC ZN ZB, summed as ES-equivalents of trade count: 3.32
+        "mbo8":     L2_L3_SESSIONS * t * (ES_TRADES_PER_SESSION * 3.32 / t)
+                    * MBO_PER_TRADE * SZ["mbo"],
+        "status41": l0_sess * 41 * 120 * 0.15 * SZ["status"],
     }
 
 
@@ -212,6 +220,18 @@ def main() -> int:
     lean_max = by_name("ohlcv-1m, ALL_SYMBOLS, 16 yr", "definition, 41 roots, 16 yr",
                        "statistics, 41 roots, 16 yr", "tbbo, ALL_SYMBOLS, 12 mo",
                        "bbo-1m, ALL_SYMBOLS, 12 mo", "mbo, ES + NQ only, 1 mo")
+    # The internal drive was cleared to 414 GB free on 2026-09-11. Keeping 12% of the
+    # 930 GB drive free for the SSD and Windows leaves ~303 GB usable, so these two
+    # are sized to land INSIDE that without any external storage.
+    fits_internal = by_name("ohlcv-1m, ALL_SYMBOLS, 16 yr", "definition, 41 roots, 16 yr",
+                            "statistics, 41 roots, 16 yr", "status, 41 roots, 16 yr",
+                            "tbbo, ALL_SYMBOLS, 12 mo", "bbo-1m, ALL_SYMBOLS, 12 mo",
+                            "mbo, ES + NQ only, 1 mo")
+    fits_internal_wide = by_name("ohlcv-1m, ALL_SYMBOLS, 16 yr", "definition, 41 roots, 16 yr",
+                                 "statistics, 41 roots, 16 yr", "status, 41 roots, 16 yr",
+                                 "tbbo, ALL_SYMBOLS, 12 mo", "bbo-1m, ALL_SYMBOLS, 12 mo",
+                                 "mbo, top 8 roots, 1 mo")
+    USABLE_INTERNAL_GB = 303.0
 
     print(f"\n  {'bundle':44}{'BILLED TiB':>12}{'DISK TiB':>10}{'HOURS':>8}{'DAYS':>7}  fits 30d")
     for name, (b, d, h) in (
@@ -220,6 +240,8 @@ def main() -> int:
             ("MAXIMAL USEFUL: L0 + MBP-1 12mo + MBO 1mo", maximal),
             ("LEAN: same but TBBO instead of MBP-1", lean),
             ("LEAN MAXIMAL: every distinct thing, scoped", lean_max),
+            ("  + status  -> FITS THE INTERNAL DRIVE", fits_internal),
+            ("  + status, MBO widened to top 8 roots", fits_internal_wide),
             ("core only", core)):
         print(f"  {name:44}{b:12.2f}{d:10.2f}{h:8.0f}{h/24:7.1f}  "
               f"{'yes' if d * TIB < pipe else 'NO'}")

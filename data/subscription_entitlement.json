@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-10T23:22:08+00:00",
+ "generated_utc": "2026-09-10T23:33:01+00:00",
  "purpose": "what one month of Databento Standard entitles, in bytes and hours. Not a study.",
  "measured": {
   "zstd_ratio": 2.6,
@@ -176,23 +176,41 @@
    "billed_tib": 0.09206875620293431,
    "disk_tib": 0.03541106007805166,
    "download_hours": 3.5576454959514168
+  },
+  {
+   "item": "mbo, top 8 roots, 1 mo",
+   "level": "L3",
+   "usefulness": "once",
+   "note": "ES NQ RTY YM CL GC ZN ZB -- one liquid name per family, for the L3 month",
+   "billed_tib": 0.16522609221283346,
+   "disk_tib": 0.06354849700493595,
+   "download_hours": 6.384531376518218
+  },
+  {
+   "item": "status, 41 roots, 16 yr",
+   "level": "L0",
+   "usefulness": "core",
+   "note": "halts and auction states: what a breach looks like when you cannot exit",
+   "billed_tib": 0.00011001137900166214,
+   "disk_tib": 4.231206884679313e-05,
+   "download_hours": 0.004250969635627531
   }
  ],
  "bundles": {
   "everything": [
-   16.60835178642525,
-   6.387827610163558,
-   641.7663316523583
+   16.773687890017083,
+   6.45141841923734,
+   648.1551139985122
   ],
   "useful": [
-   1.331692930986311,
-   0.5121895888408888,
-   51.458187916334595
+   1.4970290345781463,
+   0.5757803979146716,
+   57.84697026248845
   ],
   "core": [
-   0.43261742334735886,
-   0.16639131667206108,
-   16.716848267716536
+   0.4327274347263605,
+   0.16643362874090786,
+   16.721099237352163
   ]
  }
 }
