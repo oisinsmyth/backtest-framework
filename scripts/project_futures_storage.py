@@ -89,11 +89,24 @@ SECONDS_PER_SESSION = 1380 * 60
 LIQ = {"ES": 1.00, "NQ": 0.85, "RTY": 0.12, "YM": 0.10,
        "MES": 0.30, "MNQ": 0.30, "M2K": 0.05, "MYM": 0.05,
        "CL": 0.45, "NG": 0.20, "GC": 0.30, "SI": 0.10, "HG": 0.08,
-       "ZN": 0.35, "ZB": 0.15, "ZF": 0.12}
+       "ZN": 0.35, "ZB": 0.15, "ZF": 0.12,
+       # tier 4, the breadth expansion. project_futures_breadth.py measures WHY these
+       # are here: within a family the marginal contract is nearly free of information,
+       # but a new FAMILY moves the participation ratio a lot.
+       "SR3": 0.30, "ZT": 0.15, "UB": 0.10, "TN": 0.05,
+       "RB": 0.15, "HO": 0.12, "BZ": 0.10,
+       "PL": 0.04, "PA": 0.02,
+       "6E": 0.18, "6J": 0.12, "6B": 0.09, "6A": 0.10, "6C": 0.07, "6S": 0.05,
+       "ZC": 0.12, "ZS": 0.12, "ZW": 0.08, "ZL": 0.08, "ZM": 0.06,
+       "LE": 0.04, "HE": 0.03,
+       "NKD": 0.03, "BTC": 0.05, "MBT": 0.02}
 
 # Years of history available per symbol (GLBX.MDP3 starts 2010-06-06; listings differ).
-YEARS = {s: 16.26 for s in ("ES", "NQ", "YM", "CL", "NG", "GC", "SI", "HG", "ZN", "ZB", "ZF")}
-YEARS.update({"RTY": 9.17, "MES": 7.35, "MNQ": 7.35, "M2K": 7.35, "MYM": 7.35})
+YEARS = {s: 16.26 for s in ("ES", "NQ", "YM", "CL", "NG", "GC", "SI", "HG", "ZN", "ZB", "ZF",
+                            "ZT", "UB", "RB", "HO", "BZ", "PL", "PA", "6E", "6J", "6B",
+                            "6A", "6C", "6S", "ZC", "ZS", "ZW", "ZL", "ZM", "LE", "HE", "NKD")}
+YEARS.update({"RTY": 9.17, "MES": 7.35, "MNQ": 7.35, "M2K": 7.35, "MYM": 7.35,
+              "SR3": 8.0, "TN": 10.5, "BTC": 8.7, "MBT": 5.3})
 
 # Fraction of the session's 1-minute slots that actually print a bar. ASSUMED.
 # ohlcv-1m has no bar for a minute with no trade, so this is a liquidity read.
@@ -107,8 +120,12 @@ MBO_PER_TRADE = 90.0
 
 TIERS = {1: ["ES", "NQ", "RTY", "YM"],
          3: ["MES", "MNQ", "M2K", "MYM"],
-         2: ["CL", "NG", "GC", "SI", "HG", "ZN", "ZB", "ZF"]}
+         2: ["CL", "NG", "GC", "SI", "HG", "ZN", "ZB", "ZF"],
+         4: ["SR3", "ZT", "UB", "TN", "RB", "HO", "BZ", "PL", "PA",
+             "6E", "6J", "6B", "6A", "6C", "6S",
+             "ZC", "ZS", "ZW", "ZL", "ZM", "LE", "HE", "NKD", "BTC", "MBT"]}
 ALL16 = TIERS[1] + TIERS[3] + TIERS[2]
+ALL41 = ALL16 + TIERS[4]
 
 # MEASURED on this machine 2026-09-10, not assumed.
 FREE_DISK_GIB = 162.3 * 1e9 / GIB          # 162.3 GB free on C:, the only fixed drive
@@ -131,6 +148,14 @@ BUNDLES = {
         "L0 ohlcv-1m, 16 symbols, full history", "L0 ohlcv-1s, 16 symbols, full history",
         "L0 definition, 16 symbols, full history", "L0 statistics, 16 symbols, full history",
         "L1 tbbo, 16 symbols, 12 months", "L3 mbo, ES only, 1 month"],
+    "E. core strip-mine at FULL BREADTH -- 41 symbols": [
+        "L0 ohlcv-1m, 41 symbols, full history", "L0 ohlcv-1s, 41 symbols, full history",
+        "L0 definition, 16 symbols, full history", "L0 statistics, 16 symbols, full history",
+        "L1 tbbo, 41 symbols, 12 months"],
+    "F. E + one month of full order book on ES": [
+        "L0 ohlcv-1m, 41 symbols, full history", "L0 ohlcv-1s, 41 symbols, full history",
+        "L0 definition, 16 symbols, full history", "L0 statistics, 16 symbols, full history",
+        "L1 tbbo, 41 symbols, 12 months", "L3 mbo, ES only, 1 month"],
     "D. C + every top-of-book event on ES for a year": [
         "L0 ohlcv-1m, 16 symbols, full history", "L0 ohlcv-1s, 16 symbols, full history",
         "L0 definition, 16 symbols, full history", "L0 statistics, 16 symbols, full history",
@@ -234,6 +259,15 @@ def project(sizes: dict[str, int], ratio: float) -> dict:
         "L3 mbo, ES only, 1 month": row(
             "mbo ES 1mo", l1_bytes(["ES"], 1, sizes["mbo"], MBO_PER_TRADE),
             f"ASSUMED {MBO_PER_TRADE:.0f} order events per trade", True),
+        "L0 ohlcv-1m, 41 symbols, full history": row(
+            "ohlcv-1m x41", l0_bytes(ALL41, MINUTES_PER_SESSION, FILL_1M),
+            "the breadth expansion; see project_futures_breadth.py"),
+        "L0 ohlcv-1s, 41 symbols, full history": row(
+            "ohlcv-1s x41", l0_bytes(ALL41, SECONDS_PER_SESSION, FILL_1S),
+            "added roots are far less liquid, so far fewer seconds print"),
+        "L1 tbbo, 41 symbols, 12 months": row(
+            "tbbo x41 12mo", l1_bytes(ALL41, 12, sizes["tbbo"]),
+            "scales with TRADES, so the thin added roots cost little", True),
     }
 
     bundles = {}
