@@ -1,0 +1,64 @@
+OP blocks: ['Average Value Weight Returns -- Monthly', 'Average Equal Weighted Returns -- Monthly', 'Number of Firms in Portfolios', 'Average Firm Size']
+6P blocks: ['Average Value Weighted Returns -- Monthly', 'Average Equal Weighted Returns -- Monthly', 'Number of Firms in Portfolios', 'Average Market Cap', 'and BE(Fiscal Year t-1) is adjusted for net stock issuance to Dec t-1', 'and BE(Fiscal Year t-1) is adjusted for net stock issuance to Jun t', 'Where Mth is a month from June of t to June of t+1']
+F5 blocks: ['The annual TBill return is compounded from the monthly T-bill rates from January to December.']
+
+VW block: 'Average Value Weight Returns -- Monthly' cols ['Lo 30', 'Med 40', 'Hi 30', 'Lo 20', 'Qnt 2', 'Qnt 3', 'Qnt 4', 'Hi 20', 'Lo 10', '2-Dec', '3-Dec', '4-Dec', '5-Dec', '6-Dec', '7-Dec', '8-Dec', '9-Dec', 'Hi 10'] n 757 range 196307 202607
+EW block: 'Average Equal Weighted Returns -- Monthly' cols ['Lo 30', 'Med 40', 'Hi 30', 'Lo 20', 'Qnt 2', 'Qnt 3', 'Qnt 4', 'Hi 20', 'Lo 10', '2-Dec', '3-Dec', '4-Dec', '5-Dec', '6-Dec', '7-Dec', '8-Dec', '9-Dec', 'Hi 10'] n 757 range 196307 202607
+6P VW block: 'Average Value Weighted Returns -- Monthly' cols ['SMALL LoOP', 'ME1 OP2', 'SMALL HiOP', 'BIG LoOP', 'ME2 OP2', 'BIG HiOP'] n 757
+F5 block: 'The annual TBill return is compounded from the monthly T-bill rates from January to December.' cols ['Mkt-RF', 'SMB', 'HML', 'RMW', 'CMA', 'RF'] n 757 range 196307 202607
+
+========================================================================
+NEGATIVE CONTROLS
+========================================================================
+NC1 RMW identity from 6 portfolios vs published RMW: n=757  max|diff|=0.0050  mean|diff|=0.00254
+NC2 self-difference Hi30-Hi30 nonzero months (must be 0): 0 of 757
+NC3 sentinel (-99.99/-999) cells in VW monthly: 0 ; EW monthly: 0 ; dates before 196307: 0 (all must be 0)
+NC4 mean|VW Hi30 - EW Hi30| = 2.2166 pp/month (must be >0; 0 would mean one block read twice)
+NC5 months in VW block outside [196307, 202606]: 1
+
+========================================================================
+THE CONSTRUCTION GRID  (OP = operating profits / book equity, Fama-French defn)
+t is iid:  mean / (sd/sqrt(n)).  Returns in percent per month.
+========================================================================
+VW  tercile 30/70   full 1963-07..2026-06  spread Hi-Lo    mean +0.224  t  +2.37  n  756
+VW  tercile 30/70   full 1963-07..2026-06  long leg - RF   mean +0.701  t  +4.35  n  756
+VW  tercile 30/70   prog 2010-01..2026-06  spread Hi-Lo    mean +0.194  t  +1.03  n  198
+VW  tercile 30/70   prog 2010-01..2026-06  long leg - RF   mean +1.179  t  +3.92  n  198
+VW  quintile 20/80  full 1963-07..2026-06  spread Hi-Lo    mean +0.201  t  +1.74  n  756
+VW  quintile 20/80  full 1963-07..2026-06  long leg - RF   mean +0.687  t  +4.22  n  756
+VW  quintile 20/80  prog 2010-01..2026-06  spread Hi-Lo    mean +0.099  t  +0.40  n  198
+VW  quintile 20/80  prog 2010-01..2026-06  long leg - RF   mean +1.134  t  +3.77  n  198
+VW  decile 10/90    full 1963-07..2026-06  spread Hi-Lo    mean +0.246  t  +1.57  n  756
+VW  decile 10/90    full 1963-07..2026-06  long leg - RF   mean +0.693  t  +4.12  n  756
+VW  decile 10/90    prog 2010-01..2026-06  spread Hi-Lo    mean +0.308  t  +0.93  n  198
+VW  decile 10/90    prog 2010-01..2026-06  long leg - RF   mean +1.242  t  +3.99  n  198
+EW  tercile 30/70   full 1963-07..2026-06  spread Hi-Lo    mean +0.079  t  +0.74  n  756
+EW  tercile 30/70   full 1963-07..2026-06  long leg - RF   mean +0.856  t  +4.11  n  756
+EW  tercile 30/70   prog 2010-01..2026-06  spread Hi-Lo    mean +0.215  t  +0.98  n  198
+EW  tercile 30/70   prog 2010-01..2026-06  long leg - RF   mean +0.971  t  +2.46  n  198
+EW  quintile 20/80  full 1963-07..2026-06  spread Hi-Lo    mean +0.083  t  +0.68  n  756
+EW  quintile 20/80  full 1963-07..2026-06  long leg - RF   mean +0.841  t  +3.91  n  756
+EW  quintile 20/80  prog 2010-01..2026-06  spread Hi-Lo    mean +0.245  t  +0.92  n  198
+EW  quintile 20/80  prog 2010-01..2026-06  long leg - RF   mean +0.937  t  +2.33  n  198
+EW  decile 10/90    full 1963-07..2026-06  spread Hi-Lo    mean +0.113  t  +0.75  n  756
+EW  decile 10/90    full 1963-07..2026-06  long leg - RF   mean +0.830  t  +3.71  n  756
+EW  decile 10/90    prog 2010-01..2026-06  spread Hi-Lo    mean +0.356  t  +1.08  n  198
+EW  decile 10/90    prog 2010-01..2026-06  long leg - RF   mean +0.888  t  +2.13  n  198
+
+2x3 size-OP construction (the RMW convention), same two windows:
+  published RMW            full 1963-07..2026-06   mean +0.243  t  +2.97  n  756
+  VW SMALL HiOP - RF        full 1963-07..2026-06   mean +0.911  t  +4.10  n  756
+  VW BIG HiOP - RF          full 1963-07..2026-06   mean +0.685  t  +4.29  n  756
+  published RMW            prog 2010-01..2026-06   mean +0.126  t  +0.84  n  198
+  VW SMALL HiOP - RF        prog 2010-01..2026-06   mean +1.017  t  +2.26  n  198
+  VW BIG HiOP - RF          prog 2010-01..2026-06   mean +1.184  t  +3.95  n  198
+
+========================================================================
+DISPERSION SUMMARY
+========================================================================
+spread Hi-Lo   full 1963-07..2026-06   n_cells 6  mean range [+0.079, +0.246]  t range [+0.68, +2.37]  negative-mean cells 0  |t|>1.96 cells 1
+spread Hi-Lo   prog 2010-01..2026-06   n_cells 6  mean range [+0.099, +0.356]  t range [+0.40, +1.08]  negative-mean cells 0  |t|>1.96 cells 0
+long leg - RF  full 1963-07..2026-06   n_cells 6  mean range [+0.687, +0.856]  t range [+3.71, +4.35]  negative-mean cells 0  |t|>1.96 cells 6
+long leg - RF  prog 2010-01..2026-06   n_cells 6  mean range [+0.888, +1.242]  t range [+2.13, +3.99]  negative-mean cells 0  |t|>1.96 cells 6
+
+wrote C2_op_grid_results.json

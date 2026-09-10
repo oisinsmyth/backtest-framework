@@ -1,0 +1,218 @@
+[
+ {
+  "weight": "VW",
+  "cut": "tercile 30/70",
+  "window": "full 1963-07..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.22408730158730158,
+  "t": 2.3727946855540862,
+  "n_months": 756
+ },
+ {
+  "weight": "VW",
+  "cut": "tercile 30/70",
+  "window": "full 1963-07..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.7011507936507937,
+  "t": 4.349628591366998,
+  "n_months": 756
+ },
+ {
+  "weight": "VW",
+  "cut": "tercile 30/70",
+  "window": "prog 2010-01..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.1935858585858586,
+  "t": 1.0349081679932615,
+  "n_months": 198
+ },
+ {
+  "weight": "VW",
+  "cut": "tercile 30/70",
+  "window": "prog 2010-01..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 1.1790909090909092,
+  "t": 3.9158654609376518,
+  "n_months": 198
+ },
+ {
+  "weight": "VW",
+  "cut": "quintile 20/80",
+  "window": "full 1963-07..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.20138888888888892,
+  "t": 1.7397760091689147,
+  "n_months": 756
+ },
+ {
+  "weight": "VW",
+  "cut": "quintile 20/80",
+  "window": "full 1963-07..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.686931216931217,
+  "t": 4.222749226323875,
+  "n_months": 756
+ },
+ {
+  "weight": "VW",
+  "cut": "quintile 20/80",
+  "window": "prog 2010-01..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.09909090909090915,
+  "t": 0.39601134143986005,
+  "n_months": 198
+ },
+ {
+  "weight": "VW",
+  "cut": "quintile 20/80",
+  "window": "prog 2010-01..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 1.1344949494949497,
+  "t": 3.7652641123708235,
+  "n_months": 198
+ },
+ {
+  "weight": "VW",
+  "cut": "decile 10/90",
+  "window": "full 1963-07..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.24591269841269842,
+  "t": 1.571973567495467,
+  "n_months": 756
+ },
+ {
+  "weight": "VW",
+  "cut": "decile 10/90",
+  "window": "full 1963-07..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.6926587301587301,
+  "t": 4.1188357561925875,
+  "n_months": 756
+ },
+ {
+  "weight": "VW",
+  "cut": "decile 10/90",
+  "window": "prog 2010-01..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.3075757575757575,
+  "t": 0.9285569556174806,
+  "n_months": 198
+ },
+ {
+  "weight": "VW",
+  "cut": "decile 10/90",
+  "window": "prog 2010-01..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 1.2416161616161616,
+  "t": 3.9933832069542623,
+  "n_months": 198
+ },
+ {
+  "weight": "EW",
+  "cut": "tercile 30/70",
+  "window": "full 1963-07..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.07906084656084654,
+  "t": 0.7423621679500686,
+  "n_months": 756
+ },
+ {
+  "weight": "EW",
+  "cut": "tercile 30/70",
+  "window": "full 1963-07..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.8563492063492063,
+  "t": 4.106832233227792,
+  "n_months": 756
+ },
+ {
+  "weight": "EW",
+  "cut": "tercile 30/70",
+  "window": "prog 2010-01..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.21545454545454548,
+  "t": 0.9772303975649103,
+  "n_months": 198
+ },
+ {
+  "weight": "EW",
+  "cut": "tercile 30/70",
+  "window": "prog 2010-01..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.9712626262626263,
+  "t": 2.4592860952826054,
+  "n_months": 198
+ },
+ {
+  "weight": "EW",
+  "cut": "quintile 20/80",
+  "window": "full 1963-07..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.0832671957671958,
+  "t": 0.6751183360824077,
+  "n_months": 756
+ },
+ {
+  "weight": "EW",
+  "cut": "quintile 20/80",
+  "window": "full 1963-07..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.8412301587301587,
+  "t": 3.914875911576464,
+  "n_months": 756
+ },
+ {
+  "weight": "EW",
+  "cut": "quintile 20/80",
+  "window": "prog 2010-01..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.24479797979797982,
+  "t": 0.9215427686069538,
+  "n_months": 198
+ },
+ {
+  "weight": "EW",
+  "cut": "quintile 20/80",
+  "window": "prog 2010-01..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.9373232323232323,
+  "t": 2.3291184960793236,
+  "n_months": 198
+ },
+ {
+  "weight": "EW",
+  "cut": "decile 10/90",
+  "window": "full 1963-07..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.11330687830687829,
+  "t": 0.7543459388573874,
+  "n_months": 756
+ },
+ {
+  "weight": "EW",
+  "cut": "decile 10/90",
+  "window": "full 1963-07..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.8301455026455027,
+  "t": 3.7112508400112443,
+  "n_months": 756
+ },
+ {
+  "weight": "EW",
+  "cut": "decile 10/90",
+  "window": "prog 2010-01..2026-06",
+  "lens": "spread Hi-Lo",
+  "mean_pct_per_month": 0.3557575757575758,
+  "t": 1.0840032649939086,
+  "n_months": 198
+ },
+ {
+  "weight": "EW",
+  "cut": "decile 10/90",
+  "window": "prog 2010-01..2026-06",
+  "lens": "long leg - RF",
+  "mean_pct_per_month": 0.8883838383838384,
+  "t": 2.13104670651782,
+  "n_months": 198
+ }
+]
