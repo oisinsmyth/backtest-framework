@@ -328,6 +328,23 @@ programme's own measurement.
 
 **Nothing is deleted and nothing is merged away.**
 
+## 4b. WHAT LATER ROUNDS FOUND ABOUT THIS ROUND — added so the record is not a one-way chain
+
+**Nothing below is a repair of this record. It is a forward index**, because a reader here would
+otherwise have no way to learn that three of round 1's findings were later qualified.
+
+| round 1 finding | what happened to it |
+|---|---|
+| `A1`: *"no split history in any XBRL product"* | **Round 2's `B4` found the split-ratio tag, 2,280 CIKs 2009–2026** — then rejected the route on **five measured defects**, so the practical conclusion coincides while the factual claim does not. Conflict [`E8`](R2-99-record.md). |
+| `A1`: the Financial Statement Data Sets are **PIT by construction** | **Round 3's `C1` qualified it:** the files carry **`prevrpt`**, a flag that a submission *was subsequently amended*, so **a vintage file carries knowledge of its own future.** The numeric-data claim stands; one metadata column is hindsight. [`R3-99`](R3-99-record.md) §2.3. |
+| `A1`: the `frames` endpoint is **RESTATED**, with no `filed` and no `form` | **Carried forward and used twice.** Round 2's record §6 flagged `B2`'s tag census as exposed to it; round 3's `C1` addressed it directly. **`A1`'s central negative is the most reused finding of the campaign.** |
+| `A2`: the share count is **`shrout/cfacshr`** (quoted from the source's documentation) | **Round 2's `B4` found the shipped CODE computes `shrout*cfacshr`.** A **documentation-versus-code** disagreement in the external source, **not an error by `A2`**, which quoted the documentation accurately. Conflict [`E9`](R2-99-record.md). |
+| `A2`: composite equity issuance needs *"only a split-adjusted share count"* | **`B4` found Daniel & Titman state the opposite in print** (*"splits and stock dividends leave ι unchanged"*) and the reference code takes **no share count at all.** [`E10`](R2-99-record.md). |
+| `A3`: **CFM attribute the long-leg advantage to SMB from the 2×3 construction** | **Round 2's `B1`, reading CFM in full, says the SMB exposure appears when the hedge is the CAP-WEIGHTED index Blitz explicitly refused.** Conflict [`E1`](R2-99-record.md) — **both stand.** |
+| `A3`: **refused the full text** of its own *"single most important counter-evidence"* | **Obtained twice, independently** — by round 2's `B1` and again by round 3's `C3`, both from the institutional repository. **`A3`'s number-one self-flagged gap is closed.** |
+| `A3`: long leg at **−0.04%/month**, Var(t) 0.98 | The −0.04% is the **cross-sectional mean over ~170 anomalies**, which `A3`'s own line 96 and §7.1 both say. **The compression that dropped the cross-section was MINE, in round 2's slate.** And `B1` reads Var(t) 0.98 as a **benchmark artefact** — conflict [`E2`](R2-99-record.md), both stand. |
+| `A4`: the field's *"~4 bp/month"* summary figure | **Round 3's `C4` established what that number IS:** long–short, net-of-spread, **post-publication AND post-2005 by construction** — so it is not a long-leg figure, and **none of the five decay papers `C4` read reports long-leg decay separately.** |
+
 ## 5. What this record does not claim
 
 - **Nothing here was measured on this programme's fixture.** `[MEASURED IN BRIEF]` means a public

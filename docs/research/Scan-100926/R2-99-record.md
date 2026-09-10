@@ -431,6 +431,19 @@ defect.**
 
 ---
 
+## 6a. WHAT LATER ROUNDS FOUND ABOUT THIS ROUND — a forward index, not a repair
+
+| round 2 finding | what happened to it |
+|---|---|
+| `B1`: the whole benchmark disagreement is **one identity**, middle term measured | **Reproduced and extended three times.** Round 3's `C2` got a sharper version on free data (**+0.971 against cash, −0.322 against the CAPM, same 198 months**); `C3` hit the same finding **without being told to look for it** (`t` 3.73 / 2.08 / 0.45 across three benchmarks); `C4` hit it as a **near-miss** and said a single-benchmark measurement *"would have shipped the wrong sign."* **`B1`'s lane is the most independently confirmed of the campaign.** |
+| `B2`: the **lagged deflator** collapses gross profitability to `t` 1.04–1.85 | **Scoped, then contested.** Round 3's `C1`: the collapse is **annual-only** — quarterly gives 0.51 [`t` 3.40] ([`F2`](R3-99-record.md)). Round 4's `D2`, measuring the same quarterly construction on a different library: **0.163 [`t` 1.43], insignificant, three for three** ([`G1`](R4-99-record.md)). **All three stand.** |
+| `B2`: the lagged convention is *"what the source paper specifies in its own appendix"* | **Wrong, and `B2` had flagged exactly that risk** — it rested on three second-hand restatements after failing to obtain the paper. `C1` obtained the **2014 working paper**: it deflates by **CURRENT** assets ([`F3`](R3-99-record.md)). **`B2` had quoted the disconfirming code comment itself.** |
+| `B2`: **`CbOP` is the one survivor** | **Round 3 and 4 pull both ways.** `C1`: `CbOP` **gains nothing** from the quarterly frequency (0.53 → 0.49) and reaches **nine CIKs** quarterly from as-filed data. `D2`: `cop_at` is **by far the strongest** measured (0.515, NW6 8.31). **So the definition with the best evidence remains the one the data cannot deliver.** |
+| `B2`'s and `B4`'s reliance on a `GP`/`GPlag` **deflator placebo** | **Round 4's `D3` found it is not a clean placebo** — the two halves use different revenue fields and different financial-sector exclusions. |
+| `B3`: the session distinction is **descriptive, not actionable**, priced at ~38× | **Unchallenged by any later lane.** |
+| `B4`: the **same-filing ratio** is split-immune, error rate measured | **Unchallenged by any later lane.** `D9` stays closed on both horns. |
+| `B4`: a **20% multi-class blind spot**, found after its bar | **Became the campaign's standing evidence that the bar is a floor** — quoted in [`00-SCHEMA.md`](00-SCHEMA.md) §2a requirement 1 and in every round-3 and round-4 prompt. |
+
 ## 7. What this record does not claim
 
 **Nothing here was measured on this programme's fixture.** `B1`'s measurement is on Ken French's

@@ -383,6 +383,22 @@ conflict, BOTH READINGS STILL STAND BESIDE IT.**
 
 ---
 
+## 6a. WHAT ROUND 4 FOUND ABOUT THIS ROUND — a forward index, not a repair
+
+| round 3 finding | what happened to it |
+|---|---|
+| `C1`: the quarterly sort **survives the lagged deflator**, 0.51 [`t` 3.40] | **Contested head-on.** Round 4's `D2` measured the same construction — trailing-four-quarter numerator, quarterly-refreshed, one-quarter-lagged deflator — and got **0.163 [`t` 1.43], insignificant, three for three across three definitions.** `C1`'s is read from a published table (1967–2016, NYSE breakpoints, VW deciles); `D2`'s is its own measurement (1963–2010, different library, breakpoints and weighting). **Conflict [`G1`](R4-99-record.md). Both stand.** |
+| `C1`: **obtained** *Deflating profitability* | **Precise, and my summary of it was not.** `C1` read the **6 May 2014 working paper**, tagged it `[WORKING PAPER]`, and listed the **published JFE 117(2) 2015 among what it could NOT verify.** `D3` reports the published article has now **failed in three consecutive rounds.** §2.2's correction block. |
+| `C1`: a single-quarter sort is an **unadjusted seasonal sort** (post-bar) | **Tested and not supported.** `D2` found **the other half of the passage `C1` had only half of**: the seasonality-controlled variant is **stronger** (0.76 [`t` 5.43] vs 0.69 [3.07]). **But the contamination is real and located** — within-firm phase-`R²` gap **+0.0700, Wilcoxon `p` = 1.3 × 10⁻³⁸**, concentrated in **retail and wholesale**, the two industries most non-December fiscal-year-end. |
+| `C2`: winsorise-vs-trim is the cleanest **Type E** node | **Corrected with a proof.** `D1`: **exactly zero for a SORT** (0 of 2,612 filers move) while trimming turns over 8.9–79.4% of the leg. `C2` is **right for a regression.** **`D1`'s generalisation: the node's type depends on the ESTIMATOR, not the node.** [`G2`](R4-99-record.md). |
+| `C2`: **every node examined was non-arbitrary** | **`D1` found a genuinely arbitrary one** on the nodes `C2` did not examine closely: **level vs log of the SORTING VARIABLE** — an exact identity for a sort, among the largest for regressions. |
+| `C2`: *"the deflator ranked FIRST at |Δt| 3.91"* | **A corporate-finance leverage regression's denominator, not `B2`'s deflator.** `D3` found the right rows in **Table 7**: assets→book equity **12.31**, current→lagged **6.73**. §3's correction block. **`C2`'s heading was accurate; its mapping over-claimed; my summary repeated it.** |
+| `C2`'s **"what I did not open"** list | **`D1` used it as a work queue** — opened two of its items and **upgraded one of `C2`'s weakest citations from summariser-sourced to read-in-full.** The requirement paid in a second round. |
+| `C3`: the EW tilt earns **+0.026 [`t` 0.45]** against its own universe | **Independently reproduced.** `D4`, on a different script, got **+0.0262 [`t` +0.45]** — and found that the obvious construction shortcut (the simple mean of ten NYSE-breakpoint deciles) carries a **13.6 bp/month, sign-flipping** error **which `C3` did not make.** **`C3` is vindicated.** |
+| `C4`: **+0.405 [`t` 3.00]** against its own universe | **Open question raised, explicitly not a refutation.** `D4` notes `C4`'s benchmark is the simple mean of five quintiles, *"which for an equal-count sort is its EW universe"* — **the conditional is right, and whether those quintiles are equal-count is unchecked.** [`G3`](R4-99-record.md), and **one of the two things that would settle [`F1`](#1-the-central-conflict--two-of-this-rounds-own-lanes-opposite-verdicts-same-era).** |
+| `C4`: **three of 132 months carry half the total** | **Not a measurement of arrival.** `D4`'s null at the same `T` and `t` gives a median of **4**; the **market's own equity premium is at 2.31% against `C4`'s 2.27%**; all thirteen series measured fall in a band. **But arrival IS clustered** — 73.7% of the long leg's total in twelve months (`p` = 0.003), and the market **lost money** in that window. |
+| `C4`: its two datasets disagree, *"resolving on definition"* | **`D3` confirmed it and went further:** one replication computes **both definitions on one sample**, so **the disagreement is construction and is separable.** And `C4` **already had the comparison numbers in five of its own evidence files** — which `F1`'s framing understated. |
+
 ## 7. What this record does not claim
 
 **Nothing here was measured on this programme's fixture.** Every measurement is on Ken French's public
