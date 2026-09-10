@@ -2,7 +2,7 @@
 prior (rung-1) trade's own return by the same gap. Reads existing arrays only."""
 import importlib.util, json, pathlib, sys
 import numpy as np
-REPO = pathlib.Path(r"C:\Users\O\Desktop\Projects\Backtest Framework")
+REPO = pathlib.Path(__file__).resolve().parents[1]
 def _load(name, fn):
     s = importlib.util.spec_from_file_location(name, REPO / "scripts" / fn); m = importlib.util.module_from_spec(s); sys.modules[name] = m; s.loader.exec_module(m); return m
 RF = _load("d426f", "d426_rung_flags.py")
