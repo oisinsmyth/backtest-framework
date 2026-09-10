@@ -35,6 +35,18 @@ Derived evidence a record quotes goes to [`data/`](../../../data/) prefixed by l
 - **Rounds are dispatched one at a time, on the principal's word.** No round starts because the last
   one finished.
 
+**WHAT IT ACTUALLY COST, NOW MEASURED ACROSS TWO ROUNDS — so round 3 plans on a number, not a guess.**
+
+| round | lanes | subagent tokens | per lane |
+|---|---|---|---|
+| **1** | 4 | **~1.14M** | 250–300k |
+| **2** | 4 | **~1.13M** (280k · 284k · 272k · 296k) | 250–300k |
+
+**The projection held to within 1%, twice, and per-lane depth is stable at ~250–300k regardless of how
+broad the lane is.** That is the round-6 lesson confirmed from the other side: **breadth per agent does
+not come free, and it also does not cost extra — an agent spends what an agent spends.** So the lever
+is **the number of lanes**, and a round of four costs **~1.1M**.
+
 ## 3. WHAT IS INHERITED FROM THE PREVIOUS CAMPAIGN
 
 **The exclusion list is cumulative and carries over in full.** Thirty-seven briefs across six rounds
@@ -80,16 +92,23 @@ environment.** Earned by a privacy slip in round 3.
 **silently overwrote each other's helper script mid-run.**
 
 **The summariser rule.** A figure from a summariser is **weaker than `[snippet only]`, not stronger.**
-Six caught instances: a fabricated table; a code file paraphrased into its opposite; invented
+**Eleven caught instances and counting** — round 2's `B3` alone logged four, one load-bearing: a result
+block claimed a JFE paper decomposes `HML`/`RMW`/`CMA` into sessions when it **conditions market
+betas** and `HML` appears three times in the whole paper. The first campaign's six: a fabricated table; a code file paraphrased into its opposite; invented
 percentages attributed to an undergraduate thesis; a bias reported as 52% where the paper says 97%; a
 reopening date off by a day; a worked number wrong by 20%. **If a document matters, extract it locally
 and read it — a "corrupted PDF" response is not a block, the bytes land on disk.**
 
-**An HTTP 200 can be wrong — NINE measured flavours**, tabulated at
+**An HTTP 200 can be wrong — TWELVE measured flavours.** The first nine are tabulated at
 [`../the-reversal-round.md`](../the-reversal-round.md) §1.9: a cache replaying another query; a
 different company's data; a 404 page at 200; an ignored paging parameter; a field whose name lies; a
 171-byte error body; **two issuers blended in one document**; valid JSON with no data key; a plausible
-shell for a bogus ticker. **Plus two parameters silently ignored by primary sources.**
+shell for a bogus ticker. **Plus two parameters silently ignored by primary sources.** This campaign
+has added three: **a `.pdf` URL served as `text/html`** (a consent page — `B3`); **a genuine,
+well-formed PDF of an entirely different paper** at a guessed identifier, caught only by reading the
+title line (`B2`, `B4`, and twice on a bibliographic API by reading returned titles — `B3`); and
+**650 bytes of valid JSON with `units` present and the correct unit key present and ZERO facts**
+(`B4`). **Assume a thirteenth exists.**
 **So: census a value that MUST return zero, report that control beside every count, and inspect bytes
 rather than status. A harvest with no negative control is not a measurement.**
 

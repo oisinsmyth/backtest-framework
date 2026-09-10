@@ -7,6 +7,10 @@ substitute for that permission; that mistake was made once and reverted (`761112
 
 Under [R15](../RULES.md#r15) **nothing here closes or admits anything.**
 
+**Two campaigns live here.** The **lead scan** — six rounds, thirty-seven briefs, flat files in this
+directory. Then **[`Scan-100926/`](Scan-100926/)** — a fresh campaign numbering from round 1, fewer
+agents each doing more, **inheriting the first campaign's exclusion list in full.**
+
 ---
 
 ## The lead scan — six rounds, 2026-09-08 → 2026-09-10
@@ -33,7 +37,37 @@ one requires reading the source, because an agent's summary of a paper is not a 
 
 ---
 
-## THE PATTERN ACROSS ALL SIX ROUNDS
+## The second campaign — `Scan-100926/`, numbering from round 1, 2026-09-10 →
+
+**A fresh campaign on the principal's instruction**, fewer agents each doing more, because the weekly
+token allowance had just reset and was to be spread across the week. Contract, layout, inherited
+exclusion list and the rules every agent carries:
+[`Scan-100926/00-SCHEMA.md`](Scan-100926/00-SCHEMA.md).
+
+**It changed direction for one reason**, carried over from the last round of the first campaign: **cost
+is not what binds the surviving anomalies.** So this campaign attacks the **constraints** rather than
+hunting a twelfth territory.
+
+| round | slate | record | lanes | outcome |
+|---|---|---|---|---|
+| **1** | [`R1-00-slate.md`](Scan-100926/R1-00-slate.md) | [`R1-99-record.md`](Scan-100926/R1-99-record.md) | free PIT fundamentals · persistent characteristics · the long-only problem · filing text at scale | **the data gap IS closable but the obvious endpoint is a silent look-ahead** · the field narrows to two characteristic families and **one of them is not computable** · **`A2` and `A3` disagree on whether the long leg pays** · conflicts `D1`–`D10` |
+| **2** | [`R2-00-slate.md`](Scan-100926/R2-00-slate.md) | [`R2-99-record.md`](Scan-100926/R2-99-record.md) | the benchmark question · profitability deep · where the premium accrues · shares outstanding and float | **every lane: the construction detail nobody's name carries decides the answer** · the `A2`/`A3` split is **one identity whose sign flipped in this programme's era** · profitability splits on **current vs lagged deflator** · the session split is **published and points the other way** · **`D9` closes on both horns** · conflicts `E1`–`E11` |
+
+**Eight briefs, two rounds, ~2.27M subagent tokens.** Evidence the records quote is in
+[`data/`](../../data/) under `A1_`/`A4-`/`a2_`/`a3_` and `B1_`–`B4-` prefixes.
+
+**THE RULING THAT GOVERNS BOTH CAMPAIGNS, AND IT IS AT THE TOP OF THIS FILE FOR A REASON:**
+**conflicts are RECORDED, NOT ADJUDICATED.** Round 2 carries eleven, including **two lanes that read
+the same paper and disagree about what it says** (`E1`) and **one lane declaring another's statistic an
+artefact** (`E2`). **Both sides of each stand.**
+
+**And each round's record names the commissioning premises that were MINE and wrong** — five in the
+first campaign's round 5, five in its round 6, **four in `Scan-100926` round 2**, the worst being a
+lane commissioned to find something the literature already states.
+
+---
+
+## THE PATTERN ACROSS THE FIRST CAMPAIGN'S SIX ROUNDS
 
 **Six rounds, thirty-seven briefs, zero strategies — and twenty-one things the programme was wrong
 about.** *(Seven briefs in round 1, six in each of rounds 2–6; counted, not estimated.)*
