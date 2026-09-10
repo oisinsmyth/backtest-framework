@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-10T22:56:35+00:00",
+ "generated_utc": "2026-09-10T23:22:08+00:00",
  "purpose": "what one month of Databento Standard entitles, in bytes and hours. Not a study.",
  "measured": {
   "zstd_ratio": 2.6,
@@ -97,6 +97,15 @@
    "download_hours": 29.952631578947376
   },
   {
+   "item": "statistics, 41 roots, 16 yr",
+   "level": "L0",
+   "usefulness": "core",
+   "note": "the same open interest and settlements, scoped -- 150x smaller than ALL_SYMBOLS",
+   "billed_tib": 0.005867273546755315,
+   "disk_tib": 0.002256643671828967,
+   "download_hours": 0.22671838056680163
+  },
+  {
    "item": "status, ALL_SYMBOLS, 16 yr",
    "level": "L0",
    "usefulness": "valuable",
@@ -171,19 +180,19 @@
  ],
  "bundles": {
   "everything": [
-   16.602484512878494,
-   6.385570966491728,
-   641.5396132717914
+   16.60835178642525,
+   6.387827610163558,
+   641.7663316523583
   ],
   "useful": [
-   1.3258256574395557,
-   0.50993294516906,
-   51.23146953576781
+   1.331692930986311,
+   0.5121895888408888,
+   51.458187916334595
   ],
   "core": [
-   0.42675014980060355,
-   0.16413467300023213,
-   16.490129887149735
+   0.43261742334735886,
+   0.16639131667206108,
+   16.716848267716536
   ]
  }
 }

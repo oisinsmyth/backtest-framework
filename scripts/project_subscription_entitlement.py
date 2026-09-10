@@ -105,6 +105,8 @@ ITEMS = [
      "roll calendar, expiries, tick sizes -- the fixture is not buildable without it"),
     ("statistics, ALL_SYMBOLS, 16 yr", "L0", "statall", "valuable",
      "open interest and settlements: rung 3 of the smart-money ladder, free with L0"),
+    ("statistics, 41 roots, 16 yr", "L0", "stat41", "core",
+     "the same open interest and settlements, scoped -- 150x smaller than ALL_SYMBOLS"),
     ("status, ALL_SYMBOLS, 16 yr", "L0", "status", "valuable",
      "halts and auction states -- what a breach looks like when you cannot exit"),
     ("trades, ALL_SYMBOLS, 12 mo", "L1", "trades", "skip",
@@ -137,6 +139,7 @@ def sizes() -> dict[str, float]:
         "defall":   l0_sess * INSTRUMENTS_ALL * SZ["definition"],
         "def41":    l0_sess * 41 * 120 * SZ["definition"],
         "statall":  l0_sess * INSTRUMENTS_ALL * STATS_PER_INSTRUMENT_DAY * SZ["statistics"],
+        "stat41":   l0_sess * 41 * 120 * STATS_PER_INSTRUMENT_DAY * SZ["statistics"],
         "status":   l0_sess * INSTRUMENTS_ALL * 0.15 * SZ["status"],
         "trades":   l1_sess * t * SZ["trades"],
         "tbbo":     l1_sess * t * SZ["tbbo"],
@@ -201,6 +204,14 @@ def main() -> int:
     maximal = by_name(*L0_KEEP, "mbp-1, ALL_SYMBOLS, 12 mo", "mbo, ALL_SYMBOLS, 1 mo")
     lean = by_name(*L0_KEEP, "tbbo, ALL_SYMBOLS, 12 mo", "bbo-1m, ALL_SYMBOLS, 12 mo",
                    "mbo, ALL_SYMBOLS, 1 mo")
+    # LEAN MAXIMAL: keeps every DISTINCT thing the subscription can give and scopes the
+    # two items whose full-universe form is pure bulk. Statistics and MBO carry 81% of
+    # the lean bundle purely because ALL_SYMBOLS drags in every option strike; scoped to
+    # the roots that would actually be traded they nearly vanish, and nothing the prop
+    # track can currently use is lost.
+    lean_max = by_name("ohlcv-1m, ALL_SYMBOLS, 16 yr", "definition, 41 roots, 16 yr",
+                       "statistics, 41 roots, 16 yr", "tbbo, ALL_SYMBOLS, 12 mo",
+                       "bbo-1m, ALL_SYMBOLS, 12 mo", "mbo, ES + NQ only, 1 mo")
 
     print(f"\n  {'bundle':44}{'BILLED TiB':>12}{'DISK TiB':>10}{'HOURS':>8}{'DAYS':>7}  fits 30d")
     for name, (b, d, h) in (
@@ -208,6 +219,7 @@ def main() -> int:
             ("everything MINUS 1-second bars", ex_1s),
             ("MAXIMAL USEFUL: L0 + MBP-1 12mo + MBO 1mo", maximal),
             ("LEAN: same but TBBO instead of MBP-1", lean),
+            ("LEAN MAXIMAL: every distinct thing, scoped", lean_max),
             ("core only", core)):
         print(f"  {name:44}{b:12.2f}{d:10.2f}{h:8.0f}{h/24:7.1f}  "
               f"{'yes' if d * TIB < pipe else 'NO'}")
