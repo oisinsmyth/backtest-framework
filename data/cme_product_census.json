@@ -1,0 +1,85 @@
+{
+ "_provenance": {
+  "source": "https://www.cmegroup.com/CmeWS/mvc/ProductSlate/V2/List?cleared=Futures, paged at 500/page, sortField=oi",
+  "read_utc": "2026-09-10T22:35:09Z",
+  "how": "the page's own XHR, driven in a browser; plain HTTP to cmegroup.com returns 403",
+  "field": "open interest as CME reports it on the product slate, in contracts. The VOLUME field on this endpoint returned empty for every product and is NOT recorded here.",
+  "caveat": "open interest is a POOR proxy for turnover and the ratio differs by an order of magnitude across groups -- SOFR and Treasuries carry huge OI against modest turnover, equity index the reverse. It is used here ONLY to count how many products are alive, never to estimate bar counts.",
+  "why": "answers 'what would 1000 symbols look like' -- whether 1000 tradeable CME futures roots even exist"
+ },
+ "totals": {
+  "futures_products_listed": 1592,
+  "total_open_interest": 64819903,
+  "products_with_oi_zero": 1069,
+  "products_with_oi_at_least_1": 523,
+  "products_with_oi_at_least_100": 398,
+  "products_with_oi_at_least_1000": 246,
+  "products_with_oi_at_least_10000": 131,
+  "products_with_oi_at_least_100000": 54,
+  "products_with_oi_at_least_1000000": 15
+ },
+ "cumulative_oi_share_of_top_n": {
+  "10": 0.6505, "25": 0.84416, "41": 0.92287, "60": 0.96263,
+  "100": 0.98533, "200": 0.99773, "500": 1.0, "1000": 1.0
+ },
+ "rank_landmarks": {
+  "41": {"code": "BZ", "group": "Energy", "oi": 262526},
+  "60": {"code": "PL", "group": "Metals", "oi": 68311},
+  "100": {"code": "A8K", "group": "Energy", "oi": 19464},
+  "200": {"code": "J7", "group": "FX", "oi": 2534},
+  "300": {"code": "AUB", "group": "Energy", "oi": 488},
+  "500": {"code": "AGX", "group": "Energy", "oi": 8},
+  "800": {"code": "H2X", "group": "Weather", "oi": 0},
+  "1000": {"code": "XNB", "group": "Cryptocurrencies", "oi": 0}
+ },
+ "by_group": {
+  "_note": "listed = products CME lists as futures; liquid = of those, how many carry open interest of at least 1,000 contracts",
+  "Energy":           {"listed": 737, "liquid": 70},
+  "Equities":         {"listed": 285, "liquid": 49},
+  "Weather":          {"listed": 179, "liquid": 8},
+  "Agriculture":      {"listed": 103, "liquid": 28},
+  "Cryptocurrencies": {"listed": 79,  "liquid": 9},
+  "Interest Rate":    {"listed": 76,  "liquid": 26},
+  "FX":               {"listed": 63,  "liquid": 33},
+  "Metals":           {"listed": 59,  "liquid": 23},
+  "Real Estate":      {"listed": 11,  "liquid": 0}
+ },
+ "top_60_by_open_interest": [
+  ["SR3", "Interest Rate", 13236942], ["ZF", "Interest Rate", 6324712],
+  ["ZN", "Interest Rate", 5248475], ["ZT", "Interest Rate", 4368150],
+  ["TN", "Interest Rate", 2573551], ["UB", "Interest Rate", 2414766],
+  ["ZQ", "Interest Rate", 2152392], ["ES", "Equities", 2074366],
+  ["CL", "Energy", 1952962], ["NG", "Energy", 1819308],
+  ["ZC", "Agriculture", 1818012], ["ZB", "Interest Rate", 1810742],
+  ["SR1", "Interest Rate", 1237985], ["ASR", "Equities", 1171396],
+  ["ZS", "Agriculture", 1087302], ["6E", "FX", 978759],
+  ["ZM", "Agriculture", 664066], ["ZL", "Agriculture", 611826],
+  ["6J", "FX", 509923], ["ZW", "Agriculture", 487757],
+  ["6A", "FX", 477249], ["HTT", "Energy", 438575],
+  ["RTY", "Equities", 434322], ["GC", "Metals", 414150],
+  ["SDA", "Equities", 410703], ["NN", "Energy", 401238],
+  ["HH", "Energy", 380056], ["RB", "Energy", 369186],
+  ["MES", "Equities", 359589], ["6C", "FX", 340411],
+  ["WTT", "Energy", 332904], ["6M", "FX", 332145],
+  ["KE", "Agriculture", 310218], ["6B", "FX", 309438],
+  ["HG", "Metals", 303317], ["NQ", "Equities", 293507],
+  ["LE", "Agriculture", 290307], ["HE", "Agriculture", 278179],
+  ["HO", "Energy", 271170], ["YIY", "Interest Rate", 268039],
+  ["BZ", "Energy", 262526], ["YIT", "Interest Rate", 240419],
+  ["HP", "Energy", 206309], ["AW", "Agriculture", 201514],
+  ["YIW", "Interest Rate", 194434], ["CSX", "Energy", 194248],
+  ["BK", "Energy", 187718], ["MNQ", "Equities", 187431],
+  ["6S", "FX", 152070], ["6N", "FX", 121883],
+  ["6L", "FX", 112244], ["B0", "Energy", 106449],
+  ["SI", "Metals", 104666], ["NPG", "Energy", 101447],
+  ["YM", "Equities", 89837], ["MGC", "Metals", 85876],
+  ["1OZ", "Metals", 80286], ["YIC", "Interest Rate", 72656],
+  ["RX", "Equities", 68992], ["PL", "Metals", 68311]
+ ],
+ "what_this_settles": [
+  "1000 tradeable CME futures roots DO NOT EXIST: 1,069 of the 1,592 listed products carry zero open interest, and only 246 carry 1,000 contracts or more.",
+  "The 41-root buy list sits at rank 41, which is 92.3% of all CME futures open interest.",
+  "Going to rank 100 adds 6.2 points of open-interest share; rank 100 to rank 500 adds 1.5 and then the products stop trading entirely.",
+  "Energy lists 737 products and only 70 are liquid; Weather lists 179 and 8 are liquid; Real Estate lists 11 and none are."
+ ]
+}

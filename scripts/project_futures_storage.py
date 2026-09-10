@@ -285,6 +285,63 @@ def project(sizes: dict[str, int], ratio: float) -> dict:
     return {"trades_per_session_es": trades_per_session_es, "items": items, "bundles": bundles}
 
 
+# --------------------------------------------------------------- --census
+# "What would 1000 symbols look like?"  data/cme_product_census.json settles the
+# first half: 1,069 of CME's 1,592 listed futures products carry ZERO open interest,
+# so 1000 tradeable roots do not exist to buy. This projects the second half.
+#
+# THE CEILING THAT MAKES THIS TRACTABLE: an ohlcv-1m bar cannot print more than once
+# a minute however heavily a product trades, so cost per symbol-year is BOUNDED ABOVE
+# at 1380 * 252 * 56 B regardless of liquidity. Adding illiquid names cannot blow up
+# 1-minute storage; it can only add near-zero rows. ohlcv-1s carries the same bound
+# 60x larger, which is why IT is the line that moves.
+#
+# ASSUMED, and it is the weak part: the fill schedule by rank. The census's open
+# interest is a poor turnover proxy (SOFR carries 13.2M OI against modest turnover;
+# ES carries 2.1M against the heaviest tape at CME), so fills are set by rank BAND
+# rather than computed from OI. Both a ceiling and a realistic figure are printed so
+# the reader can see how much of the answer rests on the schedule. The conclusion --
+# that the tail is nearly free in bytes and worthless in information -- holds at the
+# ceiling too, which is the point of printing it.
+RANK_BANDS = [
+    # (through_rank, fill_1m, fill_1s, mean_years, label)
+    (10,   0.90, 0.60, 16.0, "the 10 heaviest"),
+    (41,   0.55, 0.20, 14.0, "the rest of the 41-root list"),
+    (100,  0.25, 0.050, 12.0, "rank 42-100, still real products"),
+    (246,  0.10, 0.015, 10.0, "rank 101-246, OI >= 1,000"),
+    (523,  0.03, 0.004,  8.0, "rank 247-523, OI >= 1 but barely trading"),
+    (1592, 0.002, 0.0002, 5.0, "rank 524+, ZERO open interest"),
+]
+
+
+def census_projection(sizes: dict[str, int], ratio: float) -> dict:
+    rows, prev = [], 0
+    cum = {"m_ceil": 0.0, "m_real": 0.0, "s_ceil": 0.0, "s_real": 0.0, "n": 0}
+    for through, f1m, f1s, yrs, label in RANK_BANDS:
+        n = through - prev
+        sess = yrs * SESSIONS_PER_YEAR
+        m_ceil = n * sess * MINUTES_PER_SESSION * sizes["ohlcv"]
+        s_ceil = n * sess * SECONDS_PER_SESSION * sizes["ohlcv"]
+        m_real, s_real = m_ceil * f1m, s_ceil * f1s
+        for k, v in (("m_ceil", m_ceil), ("m_real", m_real),
+                     ("s_ceil", s_ceil), ("s_real", s_real)):
+            cum[k] += v
+        cum["n"] += n
+        rows.append({"through_rank": through, "n_added": n, "label": label,
+                     "fill_1m": f1m, "fill_1s": f1s, "mean_years": yrs,
+                     "cum_n": cum["n"],
+                     "ohlcv_1m_disk_gib": cum["m_real"] / ratio / GIB,
+                     "ohlcv_1m_ceiling_disk_gib": cum["m_ceil"] / ratio / GIB,
+                     "ohlcv_1m_plus_1s_disk_gib": (cum["m_real"] + cum["s_real"]) / ratio / GIB,
+                     "ohlcv_1m_plus_1s_ceiling_disk_gib": (cum["m_ceil"] + cum["s_ceil"]) / ratio / GIB})
+        prev = through
+    for r in rows:
+        r["download_hours_1m_only"] = r["ohlcv_1m_disk_gib"] * GIB / DOWNLOAD_BYTES_PER_S / 3600
+        r["download_hours_1m_plus_1s"] = r["ohlcv_1m_plus_1s_disk_gib"] * GIB / DOWNLOAD_BYTES_PER_S / 3600
+        r["fits_1m_plus_1s"] = r["ohlcv_1m_plus_1s_disk_gib"] < FREE_DISK_GIB * 0.85
+    return {"bands": rows}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
@@ -315,8 +372,20 @@ def main() -> int:
               f"{b['free_disk_gib_after']:7.0f}{b['download_hours']:7.1f}  "
               f"{'yes' if b['fits'] else 'NO'}")
 
+    cen = census_projection(sizes, ratio)
+    print(f"\nSCALING BY HEADCOUNT -- data/cme_product_census.json: of CME's 1,592 listed futures")
+    print(f"products, 1,069 carry ZERO open interest and only 246 carry 1,000 contracts or more.")
+    print(f"An ohlcv-1m bar cannot print twice in a minute, so cost per symbol-year is BOUNDED.\n")
+    print(f"  {'through':>8}{'added':>7}  {'band':38}{'1m disk':>9}{'+1s disk':>10}{'+1s ceil':>10}{'hours':>7}  fits")
+    for r in cen["bands"]:
+        print(f"  {r['through_rank']:>8}{r['n_added']:>7}  {r['label']:38}"
+              f"{r['ohlcv_1m_disk_gib']:9.1f}{r['ohlcv_1m_plus_1s_disk_gib']:10.1f}"
+              f"{r['ohlcv_1m_plus_1s_ceiling_disk_gib']:10.0f}{r['download_hours_1m_plus_1s']:7.1f}"
+              f"  {'yes' if r['fits_1m_plus_1s'] else 'NO'}")
+
     if a.json:
         OUT.write_text(json.dumps({
+            "census_scaling": cen,
             "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "purpose": "disk projection for a one-month Databento Standard strip-mine; not a study",
             "record_sizes_bytes": sizes, "zstd": z, "anchor": ANCHOR,
