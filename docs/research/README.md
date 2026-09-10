@@ -9,7 +9,7 @@ Under [R15](../RULES.md#r15) **nothing here closes or admits anything.**
 
 ---
 
-## The lead scan — three rounds, 2026-09-08 → 2026-09-09
+## The lead scan — six rounds, 2026-09-08 → 2026-09-10
 
 | round | record | territories | outcome |
 |---|---|---|---|
@@ -18,26 +18,35 @@ Under [R15](../RULES.md#r15) **nothing here closes or admits anything.**
 | **3** | [`the-plumbing-round.md`](the-plumbing-round.md) | fund flows · the death process · halts · 13D/13G · lending revenue · data defects | **6 lanes negative** · **2 live bugs, 1 vendor mechanism, 1 open code check** |
 | **4** | [`the-timestamp-round.md`](the-timestamp-round.md) | 8-K item codes · litigation · FDA calendars · the `$5` floor · a second price source · block length | **3 signal lanes dead** · **round 3's own fix broken; the reference implementation ejects; no second source exists** |
 | **5** | [`the-selection-round.md`](the-selection-round.md) | splits · dividend policy · fixture validation · the floor's level · panel construction · a break calendar | **2 signal lanes dead** · **the selection principle confirmed AND measured wrong; the earnings release is absorbing dated events; first checkable fixture prediction** |
+| **6** | [`the-reversal-round.md`](the-reversal-round.md) | listing transfers · sector reclassification · the earnings-absorption census · corporate-action sources · the EW rebalancing bias · what the survivors share | **COST IS NOT WHAT BINDS THE SURVIVORS, and 33.8 bp/side IS the cost-honest literature's number** · zero survivors computable from permitted data · two free PIT data routes built |
 
 **Commissioning contracts and the exclusion lists** — the durable part, because they record what
 each round was kept off and why: [`working/leads/README.md`](../../working/leads/README.md) ·
 [`working/leads2/README.md`](../../working/leads2/README.md) ·
-[`working/leads3/README.md`](../../working/leads3/README.md). **The briefs themselves** sit beside
-them in `working/leads/`, `working/leads2/` and `working/leads3/`, under a quarantine contract: a
+[`working/leads3/README.md`](../../working/leads3/README.md) ·
+[`working/leads4/README.md`](../../working/leads4/README.md) ·
+[`working/leads5/README.md`](../../working/leads5/README.md) ·
+[`working/leads6/README.md`](../../working/leads6/README.md). **The briefs themselves** sit beside
+them in `working/leads/` … `working/leads6/`, under a quarantine contract: a
 brief is evidence about the outside world and **never** a measurement on this fixture, and citing
 one requires reading the source, because an agent's summary of a paper is not a reading of it.
 
 ---
 
-## THE PATTERN ACROSS ALL THREE ROUNDS
+## THE PATTERN ACROSS ALL SIX ROUNDS
 
-**Five rounds, thirty-one briefs, zero strategies — and sixteen things the programme was wrong
-about.** *(Seven briefs in round 1, six in each of rounds 2–5; counted, not estimated.)*
+**Six rounds, thirty-seven briefs, zero strategies — and twenty-one things the programme was wrong
+about.** *(Seven briefs in round 1, six in each of rounds 2–6; counted, not estimated.)*
 
 **The slate has moved `4+2` → `3+3` → `2+4` on signal-versus-method, each time on yield.** Round 5
 was also the first selected by **what kills a lane** rather than by what was untouched — and that
-principle **was confirmed by one lane and measured wrong by another in the same round** (§R5 below). That is not a disappointing result reported apologetically; it is the actual yield, and it
-has been consistent enough across three independent rounds to be treated as the expected shape.
+principle **was confirmed by one lane and measured wrong by another in the same round.** That is not
+a disappointing result reported apologetically; it is the actual yield, and it has been consistent
+across six independent rounds — so it is the expected shape, not an anomaly.
+
+**Round 6 is where it turned on the programme's own premises.** Five of the twenty-one entries below
+are corrections to things *I* asserted, including the cost assumption the last five rounds were
+reasoned from.
 
 | | what it changed | where |
 |---|---|---|
@@ -57,12 +66,17 @@ has been consistent enough across three independent rounds to be treated as the 
 | **odd lots entered consolidated volume 2013-12-09** | **`V` breaks, `OHLC` does not** — hits the dollar-volume screen price-dependently | R5 |
 | the ex-date convention has **three regimes**, a one-day hole and a doubled day | and **FINRA Rule 11140 sets it**, not the SEC settlement releases | R5 |
 | **Corwin–Schultz forward-fills**, by the author's own program | fabricated high/low on exactly the halt/no-trade set | R5 |
+| **cost is NOT what binds the surviving anomalies** | and **33.8 bp/side IS the cost-honest literature's own number**, not above it | R6 |
+| **zero published survivors are computable from permitted free data** | 7 of 10 need fundamentals, 2 are excluded ground, 1 needs options | R6 |
+| the EW bias is paid **per rebalance, not per bar** | so a multi-bar hold does not carry the large version — and `J3` reconciles to **2%** | R6 |
+| **a second source for the EX-DATE cannot exist** from EDGAR | 10b-17 does not require the issuer to state it; the exchange designates it | R6 |
+| **item-code absorption is small, and cannot speak to round 5** | dividend and split announcements **have no 8-K item code at all** | R6 |
 
 **Why it keeps happening this way.** Every lane is commissioned with a *premise number* — a count,
 a rate, an `n_eff` — that must be obtainable **before** any return is measured. Signal territories
 die on that number. **Method and data lanes have no premise number to die on**, so what they return
 is whatever is actually true about the plumbing. Rounds 2 and 3 each deliberately commissioned two
-non-signal lanes for this reason, and both times those lanes outproduced the four beside them.
+non-signal lanes for this reason, and every time those lanes outproduced the ones beside them.
 
 **The scoring frame did NOT predict this.** Round 1 scored its leads on seven axes; the
 lowest-scoring lead ranked first after evidence, and the failing axis was `KILL`, **which was
@@ -79,8 +93,8 @@ preference between sources is reported **as that agent's preference**, never ado
 the record. **The strength of one agent's method is evidence about its method, not a ruling on
 another's.**
 
-**The conflict table lives at [`the-selection-round.md`](the-selection-round.md) §11** and currently
-carries eight entries — including two cases where **two primary sources disagree with each other**,
+**The conflict tables live at [`the-selection-round.md`](the-selection-round.md) §11 (C1–C8) and
+[`the-reversal-round.md`](the-reversal-round.md) §10 (C9–C17)** — seventeen entries — including two cases where **two primary sources disagree with each other**,
 one where **a vendor's API documentation contradicts its own support FAQ**, and one where an earlier
 round found no published figure and a later round found one. **None is settled.**
 
@@ -220,6 +234,20 @@ reached for one.
 17. **Measure the compounded-daily-minus-buy-and-hold equal-weighted gap**, which needs **no
     external series**. `J3` gives a pre-registrable band: **0.3–1.3%/yr if the floor binds,
     ~6–7%/yr if it does not.**
+18. **DOES THE WEIGHT ARRAY GET RECOMPUTED FROM THE CURRENT BAR'S CLOSE FOR NAMES ALREADY HELD, OR
+    ONLY AT ENTRY?** `K5` shows the equal-weight bias is paid **per rebalance, not per bar**, so this
+    one property decides whether a multi-bar-hold book carries the large version or ~`1/H` of it.
+19. **Assert the two declared ex-dividend holes are empty** — 2017-09-05 and 2024-05-28. `K4`'s
+    discriminator: **a recomputed ex-date column cannot produce them; a published one cannot avoid
+    them.** The cheapest high-value check on the corporate-action file.
+20. **Does a 2010-12-15 amendment to Rule 10b-17 create a FOURTH ex-date regime boundary** eleven
+    days after the first bar? One primary document away (`K4`).
+21. **`acceptanceDateTime` needs a PER-FILING header check, not a rule** — `K3` reproduced the defect
+    at 62.7% and found neither filer agent nor era predicts it.
+22. **Treat any 8-K Item 7.01 filing as earnings-contaminated by default** (`K3`: 12.85% → 24.04%,
+    up in 16 of 16 steps).
+23. **A text-level measurement is what would generalise round 5's earnings-absorption finding** —
+    `K3`'s item-code census cannot, because dividend and split announcements carry no item code.
 
 ---
 
