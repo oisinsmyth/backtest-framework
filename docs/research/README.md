@@ -71,6 +71,19 @@ territories with a clear premise number.
 
 ---
 
+## CONFLICTS ARE RECORDED, NOT ADJUDICATED
+
+**Standing instruction from the principal, 2026-09-10: where briefs disagree, ALL readings are
+recorded side by side and NOTHING is ruled out on the strength of a conflict.** An agent's own
+preference between sources is reported **as that agent's preference**, never adopted as a finding of
+the record. **The strength of one agent's method is evidence about its method, not a ruling on
+another's.**
+
+**The conflict table lives at [`the-selection-round.md`](the-selection-round.md) §11** and currently
+carries eight entries — including two cases where **two primary sources disagree with each other**,
+one where **a vendor's API documentation contradicts its own support FAQ**, and one where an earlier
+round found no published figure and a later round found one. **None is settled.**
+
 ## MY OWN COMMISSIONING PREMISES THAT WERE WRONG
 
 Recorded together because the pattern matters more than any one of them, and because a scan that
@@ -195,7 +208,8 @@ reached for one.
     decides whether #12's block-length finding bites at all — the two halves point in opposite
     directions and **which one applies is one number, not a judgement.** `H6` searched and found
     **no citable modern figure for it**; `J3` found one, from 1964–93 on a universe a floor removes,
-    and rejected it as the wrong vintage, estimator and universe. Minutes to compute here.
+    and judged it the wrong vintage, estimator and universe — **`J3`'s judgement, recorded as such;
+    see the conflict table.** Minutes to compute here.
 15. **CHECK WHETHER FOUR DATES EXIST AS ROWS** — 2012-10-29, 2012-10-30, 2018-12-05, 2025-01-09. No
     trade occurred anywhere in US equities on any of them. Our measured **4,187** matches the
     absent case; **4,191** would mean present. Two lines, and it is the first externally-derived

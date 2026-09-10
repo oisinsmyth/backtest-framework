@@ -317,7 +317,7 @@ vacatur and it produced none.** That last corroborates and sharpens round 2's `F
 
 ---
 
-## 2. `J1` — stock splits · **THE PRINCIPLE HELD; THE LANE DIED ON THE OTHER FOUR KILLERS**
+## 2. `J1` — stock splits · **THE PRINCIPLE HELD; `J1` RECOMMENDS AGAINST OPENING IT AS A SIGNAL LANE**
 
 **Killer 1 genuinely absent**: the 2024 cohort sits at $120, $175, $54, $55 post-split, and even the
 small regional banks that make up much of the count split from $20–30. **`50/P` = 0.04–0.9 bp. The
@@ -356,12 +356,10 @@ per-company route scored **10/16 within a day, 5/16 wrong by 8–264 days**. And
 **`company_tickers.json` is not dead-inclusive** — Enron and Lehman absent — **the fourth independent
 confirmation of that trap.**
 
-**`J1` corrected its own error mid-brief** on a tick-tier compliance date; **`J6` resolves the
-underlying question differently again — the amendments were STAYED, not merely delayed.** The exact
-date should be taken from `J6`'s primary reading, not from either of the two figures this programme
-has been carrying.
+**`J1` corrected its own error mid-brief** on a tick-tier compliance date. **All readings of that
+question are recorded unresolved in §11 rather than adjudicated here.**
 
-## 3. `J2` — dividend policy · **DEAD ON THE EARNINGS CONFOUND, NOT ON COST**
+## 3. `J2` — dividend policy · **`J2` FINDS THE BINDING PROBLEM IS THE EARNINGS CONFOUND, NOT COST**
 
 Findings in §1.1 and §1.2. What remains:
 
@@ -457,6 +455,33 @@ host.**
 **`J6` did NOT hit the federalregister.gov interstitial** that round 4 logged — the JSON API and
 govinfo PDF endpoints worked throughout, **so that earlier block was route-specific, not
 host-wide.**
+
+---
+
+## 11. CONFLICTS BETWEEN BRIEFS — RECORDED UNRESOLVED, NOT ADJUDICATED
+
+**On the principal's instruction: where briefs disagree, ALL readings are recorded side by side and
+NOTHING is ruled out on the strength of a conflict.** An agent's own preference between sources is
+reported as the agent's preference, not adopted as this record's finding. **None of these is
+settled, and settling them is not this record's job.**
+
+| # | question | readings, as reported |
+|---|---|---|
+| **C1** | **tick-size / access-fee amendments — status and date** | `H3` (R4): *delayed to the first business day of **November 2027*** · `J1` (R5): *compliance postponed to **November 2026***, given as its own mid-brief correction · `J6` (R5): the amendments were ***STAYED*, not merely delayed** — read from primary documents with no summariser |
+| **C2** | **MEMX first trading day** | **2020-09-21** — MEMX's own two rule filings and its trader alerts · **2020-09-29** — an NYSE rule filing. The sub-agent preferred 09-21 as better-sourced and noted 09-29 was MEMX's first symbol *expansion*; **both readings stand here** |
+| **C3** | **Bats → Cboe rename effective date** | **2017-10-16** — the BZX notice's own filing date · **2017-10-17** — the LULD Plan amendment's statement. Delaware effective date **not stated in any primary source**; bracketed 10-16 to 10-20 |
+| **C4** | **NYSE Alternext → NYSE Amex** | **2009-03-18** — the exchange's own operating agreement · **2009-03-03** — the SEC's own 2012 notice. **Two primary sources disagree.** Both pre-window, so immaterial to this fixture, **recorded because the disagreement is the point** |
+| **C5** | **is there a published daily autocorrelation for an equal-weighted US portfolio?** | `H6` (R4): searched and found **none citable** · `J3` (R5): found **one — ρ = 20.22%, CRSP EW index, daily, 1964–93** — and judged it a within-month 20-observation average, 33 years stale, on a universe a floor removes. **A figure exists; whether it is usable is the open question, and `J3`'s rejection is `J3`'s judgement, not a fact** |
+| **C6** | **the vendor's own daily adjustment basis** | The API documentation says the daily-adjusted endpoint returns **raw as-traded OHLCV** with adjustment confined to a separate column · **the same vendor's support FAQ says it adjusts open, high, low, close and volume.** `G6` (R3) found both. **The vendor contradicts itself and neither statement has been tested against the data here** |
+| **C7** | **what is wrong with Corwin–Schultz** | `H4`/round 4: it **understates** effective spreads for small, illiquid names, so 33.8 bp/side may be a **floor** · `J5`/round 5: the author's own program **fabricates the high and low** on no-trade days by re-anchoring the prior-day range. **Not necessarily contradictory — but they push the interpretation of 33.8 in different directions, and neither has been checked here** |
+| **C8** | **the fixture's bar count** | **4,187** if four unscheduled-closure dates are absent as rows · **4,191** if present. This programme's recorded measurement is **4,187**; the `~4,190` `J6` reasoned from **was my rounding, not the measurement.** **Both branches stand until the four dates are checked directly** |
+
+**Two notes on how to read this table.** First, **a conflict is not a reason to discard either
+side** — several of these are two primary sources disagreeing, which is a fact about the record
+rather than an error by an agent. Second, **where an agent stated a preference it is preserved as a
+preference**; the strongest methodological claim available (`J6` read every Tier 1 date from a
+primary document with no summariser in the loop) **is evidence about that agent's method, not a
+ruling on the others.**
 
 ---
 
