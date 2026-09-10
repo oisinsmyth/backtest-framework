@@ -55,8 +55,10 @@ hunting a twelfth territory.
 
 | **3** | [`R3-00-slate.md`](Scan-100926/R3-00-slate.md) | [`R3-99-record.md`](Scan-100926/R3-99-record.md) | the quarterly variant and the lag · how much does the answer move · the shape of the drawdown · is it already dead | **THE FIRST ROUND UNDER THE DEPTH MANDATE, and three lanes independently found the same blind spot in three different literatures: NOBODY REPORTS THE LONG LEG** · the field measures construction dispersion and it is **68-96% of the premium** · round 2's deflator collapse is **annual-only** · **it never decayed, but two-thirds of the widening is in the short leg** · conflicts `F1`-`F7`, the central one **between two of its own lanes** |
 
-**Twelve briefs, three rounds, ~3.71M subagent tokens.** Evidence the records quote is in
-[`data/`](../../data/) under `A1_`/`A4-`/`a2_`/`a3_`, `B1_`–`B4-` and `C1_`–`C4_` prefixes.
+| **4** | [`R4-00-slate.md`](Scan-100926/R4-00-slate.md) | [`R4-99-record.md`](Scan-100926/R4-99-record.md) | the nine unexamined nodes · is the quarterly advantage seasonal · are these two signals the same signal · when does the premium arrive | **THREE OF FOUR LANES TOOK A FINDING THE CAMPAIGN WAS CARRYING AND SHOWED IT WAS SOMETHING ELSE** · the long-leg blind spot proven **from source code** · outlier treatment is **exactly zero for a sort** and **the node's type depends on the estimator** · the seasonal hypothesis **not supported, the contamination real anyway** · `F1` **separable — construction, not dataset** · **two errors in round 3's record, both mine, corrected in place** · conflicts `G1`–`G6` |
+
+**Sixteen briefs, four rounds, ~5.12M subagent tokens.** Evidence the records quote is in
+[`data/`](../../data/) under `A1_`/`A4-`/`a2_`/`a3_`, `B1_`–`B4-`, `C1_`–`C4_` and `D1_`–`D4_` prefixes.
 
 **THE RULING THAT GOVERNS BOTH CAMPAIGNS, AND IT IS AT THE TOP OF THIS FILE FOR A REASON:**
 **conflicts are RECORDED, NOT ADJUDICATED.** Round 2 carries eleven, including **two lanes that read
