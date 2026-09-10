@@ -1,0 +1,37 @@
+ 
+ Kenneth R. French - Detail for BE/ME Breakpoints. 
+ Dimensional Fund Advisors 
+ Dimensional Fund Advisors 
+ 2 
+ 1 
+ 2008-08-28T22:18:00Z 
+ 2008-08-28T22:19:00Z 
+ 1 
+ 514 
+ 2931 
+ Dimensional Fund Advisors 
+ 24 
+ 6 
+ 3439 
+ 11.8132 
+ false 
+ false 
+ false 
+ MicrosoftInternetExplorer4 
+ Detail for Operating Profitability Breakpoints 
+ Annual Breakpoints: 
+ 1964-2026 
+ Construction: 
+ We compute Operating Profitability 
+ breakpoints at the end of each June. 
+ OP for June of year t is annual revenues minus cost of goods sold, interest expense, and selling, general, and administrative expenses divided by book equity for the last fiscal year end in t-1. 
+ Please be aware that some of the value-weight averages of operating profitability for deciles 1 and 10 are extreme. These are driven by extraordinary values of OP for individual firms. We have spot checked the accounting data that produce the extraordinary values and all the numbers we examined accurately reflect the data in the firm's accounting statements. 
+ Stocks: 
+ The breakpoints for year t use all NYSE stocks for which we have 
+ (positive) book equity data for t-1, non-missing revenues data for t-1, and 
+ non-missing data for at least one of the following: cost of goods sold, selling, general and administrative expenses, or interest expense for t-1. 
+ Percentiles: 
+ The file contains every fifth 
+ percentile of OP, from 5% to 100%. 
+ Copyright 
+ Eugene F. Fama and Kenneth R. French 

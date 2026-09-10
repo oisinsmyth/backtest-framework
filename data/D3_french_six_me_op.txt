@@ -1,0 +1,28 @@
+ 
+ Kenneth R. French - Detail for 6 Portfolios Formed on Size and 
+ Book-to-Market 
+ Detail for 
+ 6 
+ Portfolios Formed on Size and Operating Profitability 
+ Daily Returns: 
+ July 1, 1963-May 31, 2014 
+ Weekly Returns: 
+ July 5, 1963-May 31, 2014 
+ --> 
+ Monthly Returns: 
+ July 1963 - July 2026 
+ Annual Returns: 
+ 1964 - 2025 
+ Construction: 
+ The 
+ portfolios, which are constructed at the end of each June, are the intersections of 2 portfolios formed on size (market equity, ME) 
+ and 3 portfolios formed on profitability (OP). The size breakpoint for year t is the median NYSE market equity at the end of June 
+ of year t. 
+ OP for June of year t is annual revenues minus cost of goods sold, interest expense, and selling, general, and administrative expenses 
+ divided by book equity for the last fiscal year end in t-1. The OP breakpoints are the 30th and 70th NYSE percentiles. 
+ Please be aware that some of the value-weight averages of operating profitability for deciles 1 and 10 are extreme. These are driven by extraordinary values of OP for individual firms. We have spot checked the accounting data that produce the extraordinary values and all the numbers we examined accurately reflect the data in the firm's accounting statements. 
+ Stocks: 
+ The portfolios for July of year t to June of t+1 include all NYSE, AMEX, and NASDAQ stocks 
+ for which we have market equity data for June of t, (positive) book equity data for t-1, 
+ non-missing revenues data for t-1, and non-missing data for at least one of the following: 
+ cost of goods sold, selling, general and administrative expenses, or interest expense for t-1. 

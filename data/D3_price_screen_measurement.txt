@@ -1,0 +1,27 @@
+NA returns dropped: price_gt_5 0   quintilesEW 0
+
+=== how much does the $5 screen move GP's own series? (both files, GP) ===
+  GP        corr(price>5 file, forcedEW file) = +0.4445   max|diff| = 13.2503   n=882
+  OperProf  corr(price>5 file, forcedEW file) = +0.9510   max|diff| = 9.7362   n=738
+
+=== price>5 file, ORIGINAL-PAPER construction per signal (GP=VW, OperProf=EW) ===
+[full overlap]
+   GP           nq= 5  long-uni +0.2078 [t +3.42, n 882]   LS +0.4257 [t +4.29]
+   OperProf     nq= 5  long-uni +0.1267 [t +2.87, n 738]   LS +0.3813 [t +3.38]
+   OperProfRD   nq=10  long-uni +0.1559 [t +1.84, n 738]   LS +0.3738 [t +2.44]
+   CBOperProf   nq=10  long-uni +0.2399 [t +3.03, n 750]   LS +0.4761 [t +3.48]
+   corr(GP LS, OperProf LS) = +0.1896  n=738
+[2010-01 onward]
+   GP           nq= 5  long-uni +0.2661 [t +2.22, n 180]   LS +0.7037 [t +3.14]
+   OperProf     nq= 5  long-uni +0.1147 [t +1.59, n 180]   LS +0.2766 [t +1.35]
+   OperProfRD   nq=10  long-uni +0.4269 [t +2.44, n 180]   LS +0.7406 [t +2.21]
+   CBOperProf   nq=10  long-uni +0.4529 [t +2.61, n 180]   LS +0.4870 [t +1.45]
+   corr(GP LS, OperProf LS) = +0.1109  n=180
+[2014-01 onward]
+   GP           nq= 5  long-uni +0.3488 [t +2.27, n 132]   LS +0.9247 [t +3.20]
+   OperProf     nq= 5  long-uni +0.1072 [t +1.16, n 132]   LS +0.3022 [t +1.12]
+   OperProfRD   nq=10  long-uni +0.6528 [t +3.04, n 132]   LS +1.1156 [t +2.64]
+   CBOperProf   nq=10  long-uni +0.6145 [t +2.82, n 132]   LS +0.6656 [t +1.53]
+   corr(GP LS, OperProf LS) = +0.0820  n=132
+
+wrote D3_price_screen_measurement.json

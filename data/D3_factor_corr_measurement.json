@@ -1,0 +1,176 @@
+{
+ "french_op_blocks": [
+  {
+   "i": 0,
+   "label": "Average Value Weight Returns -- Monthly",
+   "n": 757,
+   "keylen": 6,
+   "first": "196307",
+   "last": "202607",
+   "ncols": 18
+  },
+  {
+   "i": 1,
+   "label": "Average Equal Weighted Returns -- Monthly",
+   "n": 757,
+   "keylen": 6,
+   "first": "196307",
+   "last": "202607",
+   "ncols": 18
+  },
+  {
+   "i": 2,
+   "label": "Value Weight Returns -- Annual from January to December",
+   "n": 62,
+   "keylen": 4,
+   "first": "1964",
+   "last": "2025",
+   "ncols": 18
+  },
+  {
+   "i": 3,
+   "label": "Equal Weight Returns -- Annual from January to December",
+   "n": 62,
+   "keylen": 4,
+   "first": "1964",
+   "last": "2025",
+   "ncols": 18
+  },
+  {
+   "i": 4,
+   "label": "Number of Firms in Portfolios",
+   "n": 757,
+   "keylen": 6,
+   "first": "196307",
+   "last": "202607",
+   "ncols": 18
+  },
+  {
+   "i": 5,
+   "label": "Average Firm Size",
+   "n": 757,
+   "keylen": 6,
+   "first": "196307",
+   "last": "202607",
+   "ncols": 18
+  },
+  {
+   "i": 6,
+   "label": "Value Weight Average of OP",
+   "n": 64,
+   "keylen": 4,
+   "first": "1963",
+   "last": "2026",
+   "ncols": 18
+  }
+ ],
+ "french_op_sentinels": 0,
+ "P3_compound_vs_annual_worst_pp": 0.032462446585157956,
+ "P3_compound_vs_annual_years": 62,
+ "N5_wrongblock_worst_pp": 37.487008850309834,
+ "rmw_n": 757,
+ "rmw_range": [
+  "1963-07",
+  "2026-07"
+ ],
+ "rmw_mean": 0.2570805812417437,
+ "rmw_corr": {
+  "CZ VW quintiles|OperProf|full overlap": {
+   "corr": 0.758400378929089,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|OperProf|2010-01 onward": {
+   "corr": 0.6762123690416505,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|GP|full overlap": {
+   "corr": 0.45984480839411035,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|GP|2010-01 onward": {
+   "corr": 0.5539984329044433,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|OperProfRD|full overlap": {
+   "corr": 0.5574227257274572,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|OperProfRD|2010-01 onward": {
+   "corr": 0.5995404746806794,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|CBOperProf|full overlap": {
+   "corr": 0.440679141294144,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ VW quintiles|CBOperProf|2010-01 onward": {
+   "corr": 0.5771861409790164,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|OperProf|full overlap": {
+   "corr": 0.8348056342010317,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|OperProf|2010-01 onward": {
+   "corr": 0.786939838728948,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|GP|full overlap": {
+   "corr": 0.5284515004871944,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|GP|2010-01 onward": {
+   "corr": 0.5896608471492719,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|OperProfRD|full overlap": {
+   "corr": 0.5114980605896868,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|OperProfRD|2010-01 onward": {
+   "corr": 0.6276420750112249,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|CBOperProf|full overlap": {
+   "corr": 0.4583111665982481,
+   "n": 738,
+   "first": "1963-07",
+   "last": "2024-12"
+  },
+  "CZ EW quintiles|CBOperProf|2010-01 onward": {
+   "corr": 0.6094530372488622,
+   "n": 180,
+   "first": "2010-01",
+   "last": "2024-12"
+  }
+ },
+ "control_failures": []
+}

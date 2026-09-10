@@ -94,8 +94,20 @@ the 2012 draft and the published JFE, so the draft-versus-published check ran an
 
 `B2` could not obtain Ball–Gerakos–Linnainmaa–Nikolaev's *Deflating profitability* — **four named
 routes with byte counts, flagged as item 1 of its own "could not verify"** — and rested the
-construction on **three second-hand restatements that agreed with each other.** `C1` obtained it:
-**the 2015 paper deflates by CURRENT assets, not lagged.**
+construction on **three second-hand restatements that agreed with each other.** `C1` obtained it and
+read it in full: **it deflates by CURRENT assets, not lagged.**
+
+> **CORRECTION, ADDED IN ROUND 4, AND IT IS MINE NOT `C1`'s.** This section originally said *"`C1`
+> obtained it: the **2015 paper** deflates by CURRENT assets."* **`C1` read the 6 May 2014 Chicago
+> Booth working paper**, which it tagged `[WORKING PAPER]`, cited by number, page count and URL, and
+> listed **the published JFE 117(2) 2015 among the versions it could NOT verify** (its §9 item 6).
+> **I collapsed the working paper into the published article in my own summary.** Round 4's `D3`
+> caught it, and reports that **the published article has now failed in three consecutive rounds** —
+> five routes logged with byte counts, including a Wayback **wrong-200 serving a 404 page at a `.pdf`
+> URL**, with two bibliographic APIs both returning `closed`. **Everything this campaign holds from
+> that paper is the 2014 working paper.** That distinction is exactly the draft-versus-published
+> hazard this campaign has caught four times in other people's papers, and I made it myself in a
+> record. `C1` was precise; the record was not.
 
 **And `B2` had quoted the disconfirming evidence itself.** Its own line 183 carries the reference
 implementation's code comment verbatim: *"OP 2016 JFE seems to lag assets, but 2015 JFE does not"* —
@@ -156,9 +168,19 @@ mean premium **0.28 %/mo**, non-standard error **0.19 (0.27 weighted)** — **68
 Positive in **90%** of paths, **significant in only 50%**, monotonic in 45%; for originally-significant
 variables, 57%.
 
-**Round 2's three nodes are ranked 1–3, and there are NINE MORE.** One ranked list puts **the deflator
-first** (mean |Δt| = **3.91**, largest of twelve) — **independently confirming `B2` from a source `B2`
-never read.** Second, and **absent from round 2 entirely: OUTLIER TREATMENT** (3.74; **12.86** on
+**Round 2's three nodes are ranked 1–3, and there are NINE MORE.** One ranked list puts **a
+denominator change first** (mean |Δt| = **3.91**, largest of twelve).
+
+> **CORRECTION, ADDED IN ROUND 4.** This record originally called that row *"the deflator… independently
+> confirming `B2`"*. **It is not `B2`'s deflator.** `C2`'s own section heading is accurate — *"Corporate
+> finance: Mitton's **Table 8**, average |Δt| over **65 real hypotheses**"* — but its mapping column said
+> *"yes — `B2`'s deflator, ranked FIRST"*, and **I repeated that mapping.** A corporate-finance leverage
+> regression's book-versus-market denominator is **not** assets-versus-lagged-assets. Round 4's `D3`
+> found the right rows, in **Mitton's Table 7, the profitability column**: **`ROA`→`ROE`
+> (assets→book equity) at |Δt| 12.31**, and **end-year→begin-year denominator (current→lagged) at
+> 6.73**. **So the corrected evidence is STRONGER for `B2` than the figure I misattributed — 6.73, not
+> 3.91 — and the 12.31 row is the assets-versus-equity node that bears on `F1`.** `C2`'s heading was
+> right, its mapping over-claimed, and my summary repeated the over-claim. Second, and **absent from round 2 entirely: OUTLIER TREATMENT** (3.74; **12.86** on
 quasi-random profitability ratios), where **winsorising vs trimming at the same cutoff** moves `t` by
 0.99. The #1 node for profitability specifically is **dropping loss-makers**. New traps: rebalancing
 frequency, **data vintage**, dividend-reinvestment timing inside the return series, level-vs-log,
