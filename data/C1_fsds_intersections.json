@@ -1,0 +1,80 @@
+{
+ "2013": {
+  "n_10Q": 5675,
+  "Assets_current_qend": 5571,
+  "Assets_prior_qend_in_same_filing": 296,
+  "Assets_prior_qend_pct_of_current": 5.31,
+  "GrossProfit_q1": 1913,
+  "GrossProfit_q2_YTD": 1632,
+  "GrossProfit_YTD_only_no_q1": 35,
+  "revenue_family_q1": 3996,
+  "cost_family_q1": 2334,
+  "component_route_q1 (rev AND cost)": 2287,
+  "either_route_q1": 2505,
+  "component_route_adds_over_GrossProfit": 592,
+  "GROSS_PROF_computable_q1 = either_route AND Assets_current": 2490,
+  "GROSS_PROF_with_ONE_QUARTER_LAGGED_deflator_same_filing": 172,
+  "XSGA_q1": 1692,
+  "OPER_PROF_computable_q1": 1285,
+  "CbOP_strict_all_bs_terms_q1": 11,
+  "CbOP_HXZ_style_4_terms_q1": 179,
+  "control_invented_tags": {
+   "ZZZZNotATagC1Control": 0,
+   "AssetsZZZZ": 0
+  },
+  "control_SalesRevenueNet_q1": 1448,
+  "control_ddate_never_in_future": 0
+ },
+ "2019": {
+  "n_10Q": 4789,
+  "Assets_current_qend": 4746,
+  "Assets_prior_qend_in_same_filing": 201,
+  "Assets_prior_qend_pct_of_current": 4.24,
+  "GrossProfit_q1": 1605,
+  "GrossProfit_q2_YTD": 1361,
+  "GrossProfit_YTD_only_no_q1": 6,
+  "revenue_family_q1": 3860,
+  "cost_family_q1": 2232,
+  "component_route_q1 (rev AND cost)": 2210,
+  "either_route_q1": 2301,
+  "component_route_adds_over_GrossProfit": 696,
+  "GROSS_PROF_computable_q1 = either_route AND Assets_current": 2296,
+  "GROSS_PROF_with_ONE_QUARTER_LAGGED_deflator_same_filing": 127,
+  "XSGA_q1": 1481,
+  "OPER_PROF_computable_q1": 1143,
+  "CbOP_strict_all_bs_terms_q1": 12,
+  "CbOP_HXZ_style_4_terms_q1": 178,
+  "control_invented_tags": {
+   "ZZZZNotATagC1Control": 0,
+   "AssetsZZZZ": 0
+  },
+  "control_SalesRevenueNet_q1": 0,
+  "control_ddate_never_in_future": 0
+ },
+ "2025": {
+  "n_10Q": 4765,
+  "Assets_current_qend": 4727,
+  "Assets_prior_qend_in_same_filing": 166,
+  "Assets_prior_qend_pct_of_current": 3.51,
+  "GrossProfit_q1": 1554,
+  "GrossProfit_q2_YTD": 1362,
+  "GrossProfit_YTD_only_no_q1": 6,
+  "revenue_family_q1": 3526,
+  "cost_family_q1": 2013,
+  "component_route_q1 (rev AND cost)": 1996,
+  "either_route_q1": 2083,
+  "component_route_adds_over_GrossProfit": 529,
+  "GROSS_PROF_computable_q1 = either_route AND Assets_current": 2082,
+  "GROSS_PROF_with_ONE_QUARTER_LAGGED_deflator_same_filing": 105,
+  "XSGA_q1": 1419,
+  "OPER_PROF_computable_q1": 1066,
+  "CbOP_strict_all_bs_terms_q1": 9,
+  "CbOP_HXZ_style_4_terms_q1": 183,
+  "control_invented_tags": {
+   "ZZZZNotATagC1Control": 0,
+   "AssetsZZZZ": 0
+  },
+  "control_SalesRevenueNet_q1": 0,
+  "control_ddate_never_in_future": 0
+ }
+}

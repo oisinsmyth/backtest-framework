@@ -1,0 +1,110 @@
+{
+ "C1_fsds_2013q2.zip": {
+  "submissions": 8954,
+  "10-Q": 6349,
+  "10-K": 1467,
+  "10-Q/A": 344,
+  "10-K/A": 234,
+  "10-Q later amended (prevrpt=1)": 153,
+  "pct_10Q_later_amended": 2.41,
+  "10-Q/A as pct of 10-Q": 5.42,
+  "10-Q multi-registrant (nciks>1)": 110,
+  "10-Q not fully detail-tagged (detail=0)": 168
+ },
+ "C1_fsds_2013q3.zip": {
+  "submissions": 8038,
+  "10-Q": 6507,
+  "10-K": 671,
+  "10-Q/A": 354,
+  "10-K/A": 117,
+  "10-Q later amended (prevrpt=1)": 155,
+  "pct_10Q_later_amended": 2.38,
+  "10-Q/A as pct of 10-Q": 5.44,
+  "10-Q multi-registrant (nciks>1)": 117,
+  "10-Q not fully detail-tagged (detail=0)": 147
+ },
+ "C1_fsds_2013q4.zip": {
+  "submissions": 7846,
+  "10-Q": 6467,
+  "10-K": 597,
+  "10-Q/A": 317,
+  "10-K/A": 134,
+  "10-Q later amended (prevrpt=1)": 124,
+  "pct_10Q_later_amended": 1.92,
+  "10-Q/A as pct of 10-Q": 4.9,
+  "10-Q multi-registrant (nciks>1)": 118,
+  "10-Q not fully detail-tagged (detail=0)": 125
+ },
+ "C1_fsds_2019q2.zip": {
+  "submissions": 7232,
+  "10-Q": 5385,
+  "10-K": 998,
+  "10-Q/A": 135,
+  "10-K/A": 104,
+  "10-Q later amended (prevrpt=1)": 76,
+  "pct_10Q_later_amended": 1.41,
+  "10-Q/A as pct of 10-Q": 2.51,
+  "10-Q multi-registrant (nciks>1)": 118,
+  "10-Q not fully detail-tagged (detail=0)": 40
+ },
+ "C1_fsds_2019q3.zip": {
+  "submissions": 6274,
+  "10-Q": 5343,
+  "10-K": 443,
+  "10-Q/A": 103,
+  "10-K/A": 41,
+  "10-Q later amended (prevrpt=1)": 43,
+  "pct_10Q_later_amended": 0.8,
+  "10-Q/A as pct of 10-Q": 1.93,
+  "10-Q multi-registrant (nciks>1)": 117,
+  "10-Q not fully detail-tagged (detail=0)": 11
+ },
+ "C1_fsds_2019q4.zip": {
+  "submissions": 6211,
+  "10-Q": 5384,
+  "10-K": 414,
+  "10-Q/A": 113,
+  "10-K/A": 41,
+  "10-Q later amended (prevrpt=1)": 55,
+  "pct_10Q_later_amended": 1.02,
+  "10-Q/A as pct of 10-Q": 2.1,
+  "10-Q multi-registrant (nciks>1)": 115,
+  "10-Q not fully detail-tagged (detail=0)": 19
+ },
+ "C1_fsds_2025q2.zip": {
+  "submissions": 7009,
+  "10-Q": 5224,
+  "10-K": 624,
+  "10-Q/A": 33,
+  "10-K/A": 80,
+  "10-Q later amended (prevrpt=1)": 1,
+  "pct_10Q_later_amended": 0.02,
+  "10-Q/A as pct of 10-Q": 0.63,
+  "10-Q multi-registrant (nciks>1)": 95,
+  "10-Q not fully detail-tagged (detail=0)": 7
+ },
+ "C1_fsds_2025q3.zip": {
+  "submissions": 6541,
+  "10-Q": 5249,
+  "10-K": 382,
+  "10-Q/A": 65,
+  "10-K/A": 56,
+  "10-Q later amended (prevrpt=1)": 0,
+  "pct_10Q_later_amended": 0.0,
+  "10-Q/A as pct of 10-Q": 1.24,
+  "10-Q multi-registrant (nciks>1)": 92,
+  "10-Q not fully detail-tagged (detail=0)": 5
+ },
+ "C1_fsds_2025q4.zip": {
+  "submissions": 6304,
+  "10-Q": 5278,
+  "10-K": 353,
+  "10-Q/A": 65,
+  "10-K/A": 23,
+  "10-Q later amended (prevrpt=1)": 0,
+  "pct_10Q_later_amended": 0.0,
+  "10-Q/A as pct of 10-Q": 1.23,
+  "10-Q multi-registrant (nciks>1)": 85,
+  "10-Q not fully detail-tagged (detail=0)": 4
+ }
+}
