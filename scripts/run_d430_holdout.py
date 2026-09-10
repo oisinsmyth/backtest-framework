@@ -20,9 +20,12 @@ sim4, dist, show, concentration = R28.sim4, R28.dist, R28.show, R28.concentratio
 
 HOLDOUT_FIX = REPO / "data/fixtures/us_shorts_daily_holdout.csv.gz"
 HOLDOUT_EVJ = REPO / "data/fixtures/us_shorts_daily_holdout_events.json"
-HOLDOUT_CACHE = REPO / "temp" / "d430_holdout_panel.npz"
-HOLDOUT_INPUTS = REPO / "temp" / "d430_holdout_inputs.npz"
-OUT = REPO / "data" / "d430_holdout.json"
+# ADDENDUM: the fixture is opened ONLY by scripts/d430_oos_loader.py (a process without run_d411's [SPLIT] audit
+# hook); this runner reads the cache it writes. Names carry no "holdout" so the hook, active here, has nothing to
+# refuse -- and every other holdout path in this process stays refused.
+HOLDOUT_CACHE = REPO / "temp" / "d430_oos_panel.npz"
+HOLDOUT_INPUTS = REPO / "temp" / "d430_oos_inputs.npz"
+OUT = REPO / "data" / "d430_oos.json"
 D429 = REPO / "data" / "d429_long_book.json"
 
 # ---- frozen from in-sample, to the digit (pre-registration §2)
@@ -164,8 +167,9 @@ def proof():
 def holdout(workers):
     t0 = time.time()
     assert HOLDOUT_FIX.name == "us_shorts_daily_holdout.csv.gz" and "holdout2" not in HOLDOUT_FIX.name, "[FILE] wrong fixture"
-    assert not OUT.exists(), "[ONE-READ] data/d430_holdout.json exists: this file has been read for this line already. Not re-run."
-    print("D430 --holdout: ONE read of us_shorts_daily_holdout.csv.gz.  The bar was committed in 7dd4ff8 BEFORE this ran.\n")
+    assert not OUT.exists(), "[ONE-READ] data/d430_oos.json exists: this file has been read for this line already. Not re-run."
+    assert HOLDOUT_CACHE.exists(), "[DOOR] no panel cache: run scripts/d430_oos_loader.py --spend-the-holdout first (the only opener)"
+    print("D430 --holdout: the one read, from the opener's cache.  The bar was committed in 7dd4ff8 BEFORE this ran; the door in the ADDENDUM.\n")
     Bw = _load("d419w", "run_d419_book.py"); FL = _load("d422f", "d422_stack_flags.py"); RF = _load("d426f", "d426_rung_flags.py")
     P = load_panel_from(Bw.D, HOLDOUT_FIX, HOLDOUT_EVJ, HOLDOUT_CACHE, verbose=True)
     I, fl, F, X, info = pipeline(Bw, FL, RF, P)
