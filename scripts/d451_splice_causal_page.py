@@ -1,13 +1,13 @@
-"""THE GROW-RIGHT PAGE: D440's causal construction alone, every one of ITS dials, twelve names.
+"""THE GROW-RIGHT PAGE: D451's causal construction alone, every one of ITS dials, twelve names.
 
-    uv run python scripts/d440_splice_causal_page.py            (reuses temp/d399_live_bars.json)
+    uv run python scripts/d451_splice_causal_page.py            (reuses temp/d399_live_bars.json)
 
-The oracle page (D439, `d439_splice_oracle_page.py`) carries four hindsight splitters and the
+The oracle page (D450, `d450_splice_oracle_page.py`) carries four hindsight splitters and the
 causal walk side by side; the principal asked for a page with the causal walk only, its dials
 only, and the baseline he chose as the defaults. The JavaScript here is the same port, function
 for function, minus the splitters: `envFit`/`fitWindow` (the envelope and the filters),
 `splitParallel` (every candidate window grows at once, the longest survivor is drawn) and
-`splitChain` (the oracle's restart made online, kept for comparison). `scripts/d440_causal_grow.py`
+`splitChain` (the oracle's restart made online, kept for comparison). `scripts/d451_causal_grow.py`
 is the Python side; the two are held to parity by the `#parity` hook and `--dump`.
 """
 from __future__ import annotations
@@ -18,7 +18,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SRC = REPO / "temp" / "d399_live_bars.json"
-OUT = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else REPO / "temp" / "d440_causal_page.html")
+OUT = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else REPO / "temp" / "d451_causal_page.html")
 
 HTML = r"""<title>Grow Right</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -89,7 +89,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 </style>
 
 <div class="wrap">
-  <div class="eyebrow">D440 &middot; the causal construction rebuilt from the oracle</div>
+  <div class="eyebrow">D451 &middot; the causal construction rebuilt from the oracle</div>
   <h1>Grow right</h1>
   <p class="lede">The oracle's left-to-right search with its two hindsight leaks removed. A window
     is a stretch of bars with a support line no low pierces and a resistance line no high pierces,
@@ -383,7 +383,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   function causalWalk(lo, hi, cl, a0, a1, P){
     return P.grow === 'chain' ? splitChain(lo, hi, cl, a0, a1, P) : splitParallel(lo, hi, cl, a0, a1, P);
   }
-  window.__d440 = {splitChain: splitChain, splitParallel: splitParallel, causalWalk: causalWalk, fitWindow: fitWindow, BUDGET: BUDGET};
+  window.__d451 = {splitChain: splitChain, splitParallel: splitParallel, causalWalk: causalWalk, fitWindow: fitWindow, BUDGET: BUDGET};
 
   // PARITY HOOK: open with #parity and a digest per name is written into <pre id="parity">.
   function parityDigest(P){

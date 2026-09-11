@@ -1,8 +1,8 @@
-"""D440 -- THE CAUSAL CONSTRUCTION REBUILT FROM THE ORACLE: grow right, one bar at a time.
+"""D451 -- THE CAUSAL CONSTRUCTION REBUILT FROM THE ORACLE: grow right, one bar at a time.
 
-    uv run python scripts/d440_causal_grow.py --proof        twelve live names, audits, timing
+    uv run python scripts/d451_causal_grow.py --proof        twelve live names, audits, timing
 
-WHY. D439's oracle is greedy left-to-right growth: seed a minimum-length window, extend it while
+WHY. D450's oracle is greedy left-to-right growth: seed a minimum-length window, extend it while
 it passes every filter, stop at the first bar that fails, restart past it. At every bar during
 growth the decision "the window [a0, t] is valid" reads only bars <= t. Only two things in the
 oracle see the future:
@@ -31,7 +31,7 @@ AUDITS.
        greedy channels when the oracle grows one bar at a time -- so the only differences between
        the two line sources are the two hindsight leaks above, and nothing else.
   [F]  truncating the series at any bar t and recomputing gives the same lines up to t -- the
-       construction reads nothing after the bar. The trader-side [F] in D439 tested the RULE; this
+       construction reads nothing after the bar. The trader-side [F] in D450 tested the RULE; this
        tests the LINES.
 """
 from __future__ import annotations
@@ -86,7 +86,7 @@ SETTINGS_LINE = ("split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=w
 # = close) or its wick (`bon` = wick); a price beyond it by more than `brk` per cent is a break;
 # `bbars` consecutive breaks kill the window. -1 = off. Checked BEFORE the refit, so a broken
 # window is never re-fitted into validity.
-# the oracle line it replaced, kept so [O] and the D439 comparison can still be reproduced
+# the oracle line it replaced, kept so [O] and the D450 comparison can still be reproduced
 ORACLE_LINE = ("split=causal grow=chain back=0 atmax=end tol=1.75 mt=3 basis=wick minlen=20 "
                "maxlen=1000 mw=0 maxw=24 maxoff=-1 mintd=35 tau=0.4")
 
@@ -120,7 +120,7 @@ def _load(name, filename):
 
 
 def fit_window(RC, lo, hi, a, b, P):
-    """One window, fitted and filtered: D439's `fit_window` with the constants made parameters.
+    """One window, fitted and filtered: D450's `fit_window` with the constants made parameters.
     Same tests in the same order, same clamp of a negative offset to zero, same touch count."""
     m = b - a + 1
     if m < 2:
@@ -315,7 +315,7 @@ def _push(run, f):
 
 
 def oracle_onebar(RC, lo, hi, P, a0=0, a1=None):
-    """D439's greedy oracle (slack 0) with the stride growth replaced by one bar at a time. The
+    """D450's greedy oracle (slack 0) with the stride growth replaced by one bar at a time. The
     reference for [O]: its channels' (start, end) must equal the online walk's windows."""
     n = lo.size if a1 is None else a1
     segs, a = [], a0
@@ -337,7 +337,7 @@ def oracle_onebar(RC, lo, hi, P, a0=0, a1=None):
 
 
 def causal_lines(RC, bars, P, runs=None):
-    """The per-bar view the trader is given, shaped exactly like D434's `build_lines` and D439's
+    """The per-bar view the trader is given, shaped exactly like D434's `build_lines` and D450's
     `oracle_lines` so the same rule and walk read it: a level and a gradient per side on drawn
     bars, nan elsewhere, plus `proj`/`gproj`/`seen`/`drawn`."""
     m = len(bars)

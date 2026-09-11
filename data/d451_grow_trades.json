@@ -1,5 +1,5 @@
 {
- "what": "D440: trading the grow-right lines in-sample -- in while a trend, out when not",
+ "what": "D451: trading the grow-right lines in-sample -- in while a trend, out when not",
  "grow_line": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=-1 bbars=1 bon=close",
  "gmin_pct": [
   0.0,

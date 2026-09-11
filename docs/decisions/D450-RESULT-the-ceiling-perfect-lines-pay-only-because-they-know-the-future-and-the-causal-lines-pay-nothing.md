@@ -1,6 +1,6 @@
-# RESULT D439 — the ceiling: perfect lines pay only because they know the future, the causal lines pay nothing, and steeper trends are *worse* in real time
+# RESULT D450 — the ceiling: perfect lines pay only because they know the future, the causal lines pay nothing, and steeper trends are *worse* in real time
 
-*Runner `scripts/run_d439_oracle_ceiling.py`; numbers `data/d439_oracle_ceiling.json`; the oracle
+*Runner `scripts/run_d450_oracle_ceiling.py`; numbers `data/d450_oracle_ceiling.json`; the oracle
 page the settings were chosen on is artifact 3216fed4 ("Perfect Hindsight"). Sequel to
 [D434](D434-RESULT-the-channel-traded-is-worse-than-re-timing-its-own-trades.md). Nothing is
 admitted; nothing is closed — only the principal closes an avenue.*
@@ -89,7 +89,7 @@ Spread of the names held: 74 bp long, 84 bp short round-trip (Corwin-Schultz).
 
 It does not say the D399 lines carry no information — only that their *direction*, traded by
 holding while the channel exists, carries none in real time on this panel, on two rules now
-(D434 with a target and trail, D439 without). It does not close the avenue.
+(D434 with a target and trail, D450 without). It does not close the avenue.
 
 It does say that another exit overlay is the wrong next move, and it says the oracle-as-ceiling
 design needs the fit window and the test window to be disjoint before it can bound anything.

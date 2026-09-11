@@ -1,11 +1,11 @@
-"""D440 -- TRADING THE GROW-RIGHT LINES, IN-SAMPLE. Spec: docs/decisions/D440-trading-the-grow-right-lines-in-sample.md
+"""D451 -- TRADING THE GROW-RIGHT LINES, IN-SAMPLE. Spec: docs/decisions/D451-trading-the-grow-right-lines-in-sample.md
 
-    uv run python scripts/run_d440_grow_trades.py --proof        three names, audits, no file
-    uv run python scripts/run_d440_grow_trades.py                the panel; ~20 min over 12 processes
+    uv run python scripts/run_d451_grow_trades.py --proof        three names, audits, no file
+    uv run python scripts/run_d451_grow_trades.py                the panel; ~20 min over 12 processes
 
-THE SAME RULE AS D439 (in while a trend, out when not; minimum gradient swept), on two causal
-line sources in one run: GROW (D440's construction, the principal's line below, from bar 0 of
-each name) and CAUSAL (D399's CELL_FINAL, D439's causal arm, so its numbers must reproduce).
+THE SAME RULE AS D450 (in while a trend, out when not; minimum gradient swept), on two causal
+line sources in one run: GROW (D451's construction, the principal's line below, from bar 0 of
+each name) and CAUSAL (D399's CELL_FINAL, D450's causal arm, so its numbers must reproduce).
 Both are causal, so both get nulls: a within-name time rotation of the trend-state series per
 trade (200 draws) and D434's book rotation null on the headline books.
 
@@ -15,7 +15,7 @@ once in an initializer -- the panel never leaves the parent (D427's lesson: meas
 before the fan-out; one worker here is numpy plus one module).
 
 EXACTNESS. The per-trade null needs a vectorised trade extractor; [V] asserts it returns the
-same (entry, exit, side) list as D439's loop on every real state series, and the same gross
+same (entry, exit, side) list as D450's loop on every real state series, and the same gross
 per trade to 1e-9 bp (the log of a ratio versus a difference of cumulative sums is not the
 same float; the tolerance is stated, not hidden).
 """
@@ -33,7 +33,7 @@ from pathlib import Path
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "d440_grow_trades.json"
+OUT = REPO / "data" / "d451_grow_trades.json"
 
 LINE = ("split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 "
         "mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=-1 bbars=1 bon=close")
@@ -65,11 +65,11 @@ def _init(line):
     # to a file the parent can read.
     try:
         _W["RC"] = _load("d399rc", "d399_recalc_segment.py")
-        _W["CG"] = _load("d440cg", "d440_causal_grow.py")
+        _W["CG"] = _load("d451cg", "d451_causal_grow.py")
         _W["P"] = _W["CG"].parse_line(line)
     except BaseException:
         import traceback
-        (REPO / "temp" / "d440_worker.err").write_text(traceback.format_exc())
+        (REPO / "temp" / "d451_worker.err").write_text(traceback.format_exc())
         raise
 
 
@@ -78,7 +78,7 @@ def _grow(args):
         return _grow_inner(args)
     except BaseException:
         import traceback
-        (REPO / "temp" / "d440_worker.err").write_text(f"{args[0]}\n" + traceback.format_exc())
+        (REPO / "temp" / "d451_worker.err").write_text(f"{args[0]}\n" + traceback.format_exc())
         raise
 
 
@@ -101,7 +101,7 @@ def _grow_inner(args):
 # ----------------------------------------------------------------------------- vectorised trades
 def trades_np(state, cl, lcl, cum_dv, cum_jump):
     """Every maximal run of a non-zero state -> (e, x, d, gross, split). Same trades as
-    D439's `trend_trades`: enter at the close of the run's first bar, exit at the close of the
+    D450's `trend_trades`: enter at the close of the run's first bar, exit at the close of the
     first bar outside it (or the last bar). `cum_dv` and `cum_jump` are cumulative sums with a
     leading zero, so a segment [e+1, x] sums to cum[x+1] - cum[e+1]."""
     m = state.size
@@ -157,8 +157,8 @@ def main() -> int:
 
     t0 = time.time()
     RC = _load("d399rc", "d399_recalc_segment.py")
-    CG = _load("d440cg", "d440_causal_grow.py")
-    D7 = _load("d439", "run_d439_oracle_ceiling.py")
+    CG = _load("d451cg", "d451_causal_grow.py")
+    D7 = _load("d450", "run_d450_oracle_ceiling.py")
     D4 = _load("d434", "run_d434_channel_trades.py")
     NS = _load("d399ns", "d399_new_sample.py")
     DR = _load("d399draw", "d399_draw_construction.py")
@@ -175,7 +175,7 @@ def main() -> int:
     T, n = len(panel.dates), len(panel.symbols)
     print(f"\n  panel {n} names x {T} dates in {time.time() - t0:.0f}s")
     print(f"  GROW   {LINE}")
-    print(f"  CAUSAL D399 CELL_FINAL (D439's causal arm)")
+    print(f"  CAUSAL D399 CELL_FINAL (D450's causal arm)")
     print(f"  RULE   in while a trend, out when not; minimum gradient swept {list(GMIN_PCT)} %/yr; "
           f"NO target, NO stop; headline {HEAD_GMIN:.0f}")
 
@@ -340,7 +340,7 @@ def main() -> int:
           f"({1e4 * v:+.0f} bp) contributes with the right sign  OK")
 
     # ---- per-trade table
-    print(f"\n  PER TRADE, gross bp -- GROW (D440's lines) vs CAUSAL (D399's), SAME rule")
+    print(f"\n  PER TRADE, gross bp -- GROW (D451's lines) vs CAUSAL (D399's), SAME rule")
     print(f"  {'gmin':>6s} {'side':<6s} {'':<2s}{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} "
           f"{'trim':>8s} {'net':>8s} {'win%':>5s} {'hold':>5s}   |   "
           f"{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} {'net':>8s} {'win%':>5s} {'hold':>5s}")
@@ -469,7 +469,7 @@ def main() -> int:
     print(f"  split-guard rejections: {n_split}")
     if not a.proof and not a.names:              # a partial panel is never the record's file
         OUT.write_text(json.dumps(dict(
-            what="D440: trading the grow-right lines in-sample -- in while a trend, out when not",
+            what="D451: trading the grow-right lines in-sample -- in while a trend, out when not",
             grow_line=LINE, gmin_pct=list(GMIN_PCT), headline_gmin=HEAD_GMIN, n_names=len(syms),
             grow_runs=int(len(rl)), grow_run_len_median=float(np.median(rl)),
             grow_window_median=float(np.median(wl)),

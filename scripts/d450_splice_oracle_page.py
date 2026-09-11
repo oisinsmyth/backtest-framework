@@ -1,10 +1,10 @@
 """THE ORACLE PAGE: perfect-knowledge channels, every parameter adjustable, twelve names.
 
-    uv run python scripts/d439_emit_live_bars.py     (or reuse temp/d399_live_bars.json)
-    uv run python scripts/d439_splice_oracle_page.py
+    uv run python scripts/d450_emit_live_bars.py     (or reuse temp/d399_live_bars.json)
+    uv run python scripts/d450_splice_oracle_page.py
 
 A PORT, NOT A CALL, exactly as the causal page is: `envelope_fit` and the greedy maximal-channel
-search of `run_d439_oracle_ceiling.oracle_channels` are re-implemented in the page's JavaScript,
+search of `run_d450_oracle_ceiling.oracle_channels` are re-implemented in the page's JavaScript,
 function for function. The page ships bars only.
 
 THE ORACLE NEEDS NO HISTORY. The causal construction runs from each name's first bar because its
@@ -24,7 +24,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SRC = REPO / "temp" / "d399_live_bars.json"
-OUT = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else REPO / "temp" / "d439_oracle_page.html")
+OUT = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else REPO / "temp" / "d450_oracle_page.html")
 
 HTML = r"""<title>Perfect Hindsight</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,7 +94,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 </style>
 
 <div class="wrap">
-  <div class="eyebrow">D439 &middot; D440 &middot; perfect-knowledge channels, and the same algorithm made causal</div>
+  <div class="eyebrow">D450 &middot; D451 &middot; perfect-knowledge channels, and the same algorithm made causal</div>
   <h1>Perfect hindsight</h1>
   <p class="lede">The best channel that could ever have been drawn, on the same twelve draws.
     Each one is fitted <b>knowing the whole window</b>: a support line no low pierces, a resistance
@@ -106,7 +106,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     window <b>up to that bar</b>, and nothing is drawn until the window is <em>min length</em>
     long. The solid stepped line is what a trader had; the faint dashed line behind it is the
     window's final fit &mdash; the channel the oracle would have shown. The gap between them is the
-    hindsight. This is D440's candidate to replace D399's pivot construction.</p>
+    hindsight. This is D451's candidate to replace D399's pivot construction.</p>
 
   <div class="dials" id="dials">
     <span class="grp">
@@ -416,7 +416,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     return out;
   }
 
-  // GROW RIGHT, CAUSALLY (D440): the left-to-right oracle with its two hindsight leaks removed.
+  // GROW RIGHT, CAUSALLY (D451): the left-to-right oracle with its two hindsight leaks removed.
   // The oracle seeds a min-length window, grows it while it passes every filter, stops at the
   // first bar that fails and restarts there. Every one of those decisions reads only bars up to
   // the current one. What sees the future is (1) drawing the FINAL fit at every interior bar and
@@ -496,7 +496,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   function causalWalk(lo, hi, a0, a1, P){
     return P.grow === 'chain' ? splitCausal(lo, hi, a0, a1, P) : splitParallel(lo, hi, a0, a1, P);
   }
-  window.__d440 = {splitCausal: splitCausal, splitParallel: splitParallel, causalWalk: causalWalk, fitWindow: fitWindow, BUDGET: BUDGET};
+  window.__d451 = {splitCausal: splitCausal, splitParallel: splitParallel, causalWalk: causalWalk, fitWindow: fitWindow, BUDGET: BUDGET};
   // PARITY HOOK: open the page with #parity and the grow-right walk's digest per name (run
   // count, first windows, sums of the four line parameters) is written into <pre id="parity">,
   // for a headless browser to dump and Python to compare against its own walk.

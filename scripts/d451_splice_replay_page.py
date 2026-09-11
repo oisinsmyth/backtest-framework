@@ -1,7 +1,7 @@
 """THE REPLAY PAGE: what the grow-right algorithm draws at each time step, one name, one bar at a
 time -- the demonstration the principal asked for.
 
-    uv run python scripts/d440_splice_replay_page.py          (reuses temp/d399_live_bars.json)
+    uv run python scripts/d451_splice_replay_page.py          (reuses temp/d399_live_bars.json)
 
 At bar t the page shows only bars <= t, the window the trader is shown (the longest live one:
 its support and resistance fitted on [A, t], projected a few bars forward as a trader would),
@@ -9,11 +9,11 @@ every other live candidate window faintly, the trail of levels the trader was sh
 bars (so the line's movement over time is visible), and the trading rule's state -- in a long,
 in a short, or flat -- with the running P&L of the open trade. Scrub, step or play.
 
-The engine is the D440 page's JavaScript, function for function (`envFit`, `fitWindow`,
+The engine is the D451 page's JavaScript, function for function (`envFit`, `fitWindow`,
 `broken`, the parallel and chain walks); the walk here only records what each bar saw. Opened
 with `#parity` it writes, for every name, the count of shown bars inside the panel and the sums
 of the four line parameters over them, which a headless dump hands to Python for comparison
-with `d440_causal_grow.causal_channels` on the same bars and line.
+with `d451_causal_grow.causal_channels` on the same bars and line.
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 SRC = REPO / "temp" / "d399_live_bars.json"
-OUT = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else REPO / "temp" / "d440_replay_page.html")
+OUT = (Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else REPO / "temp" / "d451_replay_page.html")
 
 HTML = r"""<title>Step by Step</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,7 +90,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 </style>
 
 <div class="wrap">
-  <div class="eyebrow">D440 &middot; what the trader saw, bar by bar</div>
+  <div class="eyebrow">D451 &middot; what the trader saw, bar by bar</div>
   <h1>Step by step</h1>
   <p class="lede">The grow-right construction replayed one bar at a time. At each step the page
     shows <b>only the bars up to that step</b>, the window the trader is shown &mdash; the longest
@@ -183,7 +183,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   var D = JSON.parse(document.getElementById('payload').textContent);
   var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close bside=trend surv=loose stol=4 smaxw=40';
 
-  // ---------------------------------------------------------------- the engine (the D440 page's, verbatim)
+  // ---------------------------------------------------------------- the engine (the D451 page's, verbatim)
   function hullEdges(x, y, lower){
     var n = x.length, h = [], EPS = 1e-9, p;
     if (n < 2) return [];

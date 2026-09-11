@@ -1,7 +1,7 @@
-"""D439 -- THE CEILING: the same trading rule, with PERFECT lines.
+"""D450 -- THE CEILING: the same trading rule, with PERFECT lines.
 
-    uv run python -u scripts/run_d439_oracle_ceiling.py --proof
-    uv run python -u scripts/run_d439_oracle_ceiling.py
+    uv run python -u scripts/run_d450_oracle_ceiling.py --proof
+    uv run python -u scripts/run_d450_oracle_ceiling.py
 
 WHAT THIS IS. D434 traded the D399 channel and failed: long +7.6 +- 6.5 bp/trade, short -73 bp,
 and a book below its own rotation null's p50. Two explanations survive that result -- the LINES
@@ -50,7 +50,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "scripts"))
 
-OUT = REPO / "data" / "d439_oracle_ceiling.json"
+OUT = REPO / "data" / "d450_oracle_ceiling.json"
 
 # THE PRINCIPAL'S SETTINGS LINE, 2026-09-10, dialled in by eye on the twelve names and
 # transcribed field for field:
@@ -502,7 +502,7 @@ def main() -> int:
     print(f"  split-guard rejections: {n_split}")
     if not a.proof:
         OUT.write_text(json.dumps(dict(
-            what="D439: the ceiling -- in while a trend, out when not, on perfect vs causal lines",
+            what="D450: the ceiling -- in while a trend, out when not, on perfect vs causal lines",
             oracle_settings=SETTINGS_LINE, gmin_pct=list(GMIN_PCT), headline_gmin=HEAD_GMIN,
             n_names=len(syms), oracle_channels=seg_n,
             oracle_len_median=float(np.median(sl)),

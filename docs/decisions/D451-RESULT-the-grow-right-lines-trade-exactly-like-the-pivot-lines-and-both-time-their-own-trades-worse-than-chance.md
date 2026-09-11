@@ -1,7 +1,7 @@
-# RESULT D440 — the grow-right lines trade exactly like the pivot lines, and both time their own trades worse than chance
+# RESULT D451 — the grow-right lines trade exactly like the pivot lines, and both time their own trades worse than chance
 
-*Runner `scripts/run_d440_grow_trades.py`; numbers `data/d440_grow_trades.json`; log
-`temp/d440_full.log`; spec [D440](D440-trading-the-grow-right-lines-in-sample.md). In-sample,
+*Runner `scripts/run_d451_grow_trades.py`; numbers `data/d451_grow_trades.json`; log
+`temp/d451_full.log`; spec [D451](D451-trading-the-grow-right-lines-in-sample.md). In-sample,
 the mining panel, 1,573 names. Nothing is admitted; nothing is closed — only the principal
 closes an avenue.*
 
@@ -10,7 +10,7 @@ closes an avenue.*
 The principal, before the run: *"I predict that there won't be much of an increase on what was
 done before."* Correct. Cell for cell:
 
-| | GROW (D440's lines) | CAUSAL (D399's, D439's arm) |
+| | GROW (D451's lines) | CAUSAL (D399's, D450's arm) |
 |---|---|---|
 | both lines drawn on | **57%** of bars | 28% |
 | long, gmin 25: n | 63,340 | 28,740 |
@@ -24,10 +24,10 @@ done before."* Correct. Cell for cell:
 
 The rebuilt construction draws lines on twice as many bars and produces twice as many trades,
 and the mean gross per trade does not move: +1 bp long, −45 short, both within two SE of the
-pivot construction's cells. CAUSAL reproduced D439 to the last digit (P4). Split-guard
+pivot construction's cells. CAUSAL reproduced D450 to the last digit (P4). Split-guard
 rejections 1,267 (GROW's shorter, denser trades put more of them across a halving).
 
-## 1. The sweep repeats D439's pattern (P3)
+## 1. The sweep repeats D450's pattern (P3)
 
 GROW long gross by minimum gradient, %/yr: 0 → +9.9, 10 → +5.2, 25 → +1.0, 50 → −2.5,
 100 → −4.5, 200 → −11.2 (SE 3–5). Monotone down again. The steeper the confirmed channel, the
@@ -64,8 +64,8 @@ collapsing name, on the side whose total is negative. Nothing here is a strategy
 
 The oracle's algorithm, made causal and dialled in by the principal's eye, is a better
 *drawing* — twice the coverage, windows that are the oracle's own windows minus hindsight
-(D440's audits [O], [F], [I]) — and an identical *trade*. Two constructions, two rules
-(D434's target-and-trail, D439/D440's hold-while-trend), four causal cells, all within noise of
+(D451's audits [O], [F], [I]) — and an identical *trade*. Two constructions, two rules
+(D434's target-and-trail, D450/D451's hold-while-trend), four causal cells, all within noise of
 zero gross on the long side and negative on the short, all below their own rotation null. The
 direction of a channel is a property of hindsight (memory `oracle-lines-leak-through-their-
 existence`); improving the lines improves the picture, not the number.
@@ -77,7 +77,7 @@ is inside it — is a different quantity from its slope, and this study did not 
 ## 5. Audits carried
 
 [V] the vectorised trade extractor used by the null returned the same (entry, exit, side) list
-as D439's loop on all 166,170 real trades, gross within 1.9e-12 bp; [XV] it rejects a one-bar
+as D450's loop on all 166,170 real trades, gross within 1.9e-12 bp; [XV] it rejects a one-bar
 shift. [F] nine states on AA unchanged with every future level deleted. [S] the largest up-bar
 inside a long trade (+3,987 bp) contributes with the right sign. [M] `assert_matches_scorer` on
 every scored book. [N] 63,340 / 49,981 trades at the headline. [SPEED] the grow walk ran 709 s

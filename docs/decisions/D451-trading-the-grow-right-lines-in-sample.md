@@ -1,17 +1,17 @@
-# D440 — trading the grow-right lines, in-sample: does the construction rebuilt from the oracle change what the channel's direction is worth?
+# D451 — trading the grow-right lines, in-sample: does the construction rebuilt from the oracle change what the channel's direction is worth?
 
 *Pre-registration. Written before the runner exists (R8). Sequel to
-[D439](D439-RESULT-the-ceiling-perfect-lines-pay-only-because-they-know-the-future-and-the-causal-lines-pay-nothing.md)
+[D450](D450-RESULT-the-ceiling-perfect-lines-pay-only-because-they-know-the-future-and-the-causal-lines-pay-nothing.md)
 and [D434](D434-RESULT-the-channel-traded-is-worse-than-re-timing-its-own-trades.md). In-sample
-only, by the principal's instruction: the mining panel, the same 1,573 names D434 and D439 used;
+only, by the principal's instruction: the mining panel, the same 1,573 names D434 and D450 used;
 no holdout is read.*
 
-## 1. What changed since D439
+## 1. What changed since D450
 
-D439 found that the channel's direction, traded by holding while the channel exists, is worth
+D450 found that the channel's direction, traded by holding while the channel exists, is worth
 nothing in real time on D399's pivot construction (long +16.8 ± 5.5 bp gross, net −58; short
 −41.9 ± 6.5), and that raising the gradient floor makes it *worse*. The principal then asked for
-the causal construction to be rebuilt from the oracle's algorithm. That is `scripts/d440_causal_grow.py`
+the causal construction to be rebuilt from the oracle's algorithm. That is `scripts/d451_causal_grow.py`
 and the page "Grow Right" (artifact 6670af44): the oracle's left-to-right search with its two
 hindsight leaks removed — the window grows one bar at a time, the line at bar t is the fit on
 [A, t], nothing is drawn under the minimum length — every candidate window growing in parallel
@@ -31,7 +31,7 @@ On the twelve page names that line draws both lines on 62% of bars (D399's `CELL
 
 ## 2. The question
 
-The same trading rule as D439, on the new lines: **in while there is a trend, out when there is
+The same trading rule as D450, on the new lines: **in while there is a trend, out when there is
 not.** A trend at bar t is both lines drawn, gradients of the same sign, both steeper than the
 minimum `gmin`, read at the close of t. Enter at that close; exit at the close of the first bar
 no longer in the trend, or flipped. No target, no stop, no holding cap. `gmin` swept over
@@ -41,15 +41,15 @@ Two line sources, same run, same panel, same eligibility (keep_v2 floor), same s
 (|log return| > 0.40 inside a trade rejects it), same Corwin–Schultz spread of the names held:
 
 - **GROW** — the line above, from bar 0 of each name.
-- **CAUSAL** — D399's `CELL_FINAL` paired construction, exactly D439's causal arm, so the two
-  columns are comparable cell for cell and D439's causal numbers should reproduce.
+- **CAUSAL** — D399's `CELL_FINAL` paired construction, exactly D450's causal arm, so the two
+  columns are comparable cell for cell and D450's causal numbers should reproduce.
 
-The rule's own gradient-similarity gate is not applied (as in D439): parallelism is inside the
+The rule's own gradient-similarity gate is not applied (as in D450): parallelism is inside the
 construction (`tau` = 1.0).
 
 ## 3. Nulls
 
-D439 ran none because its oracle made the question empty. Here both sources are causal, so:
+D450 ran none because its oracle made the question empty. Here both sources are causal, so:
 
 1. **Per-trade, within-name time rotation of the state series** (200 draws, seed 0). For each
    name the +1/−1/0 trend-state series is rolled by a random offset and re-masked to the
@@ -65,18 +65,18 @@ D439 ran none because its oracle made the question empty. Here both sources are 
 The principal's, verbatim: *"I predict that there won't be much of an increase on what was done
 before."*
 
-Mine, written to be checkable against `data/d440_grow_trades.json`:
+Mine, written to be checkable against `data/d451_grow_trades.json`:
 
 - P1. GROW long at `gmin` 25: gross mean per trade between −10 and +40 bp (within 2 SE of
-  D439's causal +16.8 ± 5.5); GROW short at `gmin` 25: negative. Neither side clears its
+  D450's causal +16.8 ± 5.5); GROW short at `gmin` 25: negative. Neither side clears its
   per-trade null p95 after the 2-SE margin.
 - P2. Trade count: GROW draws both lines on roughly twice as many bars as CAUSAL, so GROW's long
   trade count at `gmin` 25 exceeds CAUSAL's 28,740 — but the mean gross does not rise with it
-  (P1). Median gross per trade negative on both sides (a tail-carried mean, as D439).
-- P3. The monotone pattern of D439 repeats: GROW's long gross falls as `gmin` rises from 25 to
+  (P1). Median gross per trade negative on both sides (a tail-carried mean, as D450).
+- P3. The monotone pattern of D450 repeats: GROW's long gross falls as `gmin` rises from 25 to
   200, because a confirmed steep channel is a late one. If it *rises* instead, that is the one
   result that would say the construction changed what the direction is worth.
-- P4. CAUSAL reproduces D439 cell for cell (same code path, same panel): long +16.8, short −41.9
+- P4. CAUSAL reproduces D450 cell for cell (same code path, same panel): long +16.8, short −41.9
   at `gmin` ≤ 25.
 - P5. Books: GROW long Sharpe below 0.5 and within the book null's p95; short negative.
 
@@ -90,7 +90,7 @@ the number, and the direction of a channel stays a property of hindsight.
 
 ## 6. Audits carried
 
-[F] trader-side: states unchanged when every future level is deleted (D439's). [S] sign, in
+[F] trader-side: states unchanged when every future level is deleted (D450's). [S] sign, in
 money. [N] ≥ 100 trades a side at the headline. [V] the vectorised trade extractor used by the
 null equals the loop extractor bit for bit on every real state series. [M] the book null's
 `assert_matches_scorer`. [P] the projected wall time is stated before launch: the GROW walk is
