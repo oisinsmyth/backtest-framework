@@ -2,6 +2,21 @@
 
 ---
 
+## D443 — NET SHARE ISSUANCE, STAGE 0: ABANDONED ON A1 (THE VENDOR SERVES NO DEAD NAME), 2026-09-11
+
+The first non-price-path line after the volume line's close. Alpha Vantage `BALANCE_SHEET` +
+`CASH_FLOW` on all 1,573 names (51 min, cached under `data/raw/alphavantage/fundamentals/`):
+**0 of 562 dead names are served**, so the pre-registered abandon condition A1 (dead coverage
+< 50%) fired and the line ends on this vendor. On the 988 survivors the object itself is good:
+one-year persistence 0.44, rank R² on the six tested axes 0.10, momentum correlation +0.07,
+tilted to small/cheap/volatile/thin names and 62% of name-quarters net repurchasers. **If the
+principal wants issuance, the source is EDGAR's XBRL `companyfacts` API (by CIK, dead-inclusive,
+with filing dates)** — a data acquisition record, not a study. Records: spec `0fa0d5c`, RESULT
+in `docs/decisions/D443-RESULT-…md`. Memory: the vendor's three quirks (gross flow fields
+empty; shares restated for later splits on half the names; delisted tickers empty).
+
+---
+
 ## THE VOLUME LINE — D434 → D441, PARKED ON A COST MEASUREMENT 2026-09-11; THE PULL IS THE PRINCIPAL'S
 
 **State in one line:** a real, state-conditional volume effect (B: a 3× volume bar in a top-price
