@@ -123,6 +123,9 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     <label>break depth <input type="number" id="brk" value="-1" min="-1" step="0.25" title="a close (or wick) beyond the line the trader had by more than this kills the window and every window older than restart back. -1 = off">%</label>
     <label>break bars <input type="number" id="bbars" value="1" min="1" max="10" step="1"></label>
     <label>break on <select id="bon"><option value="close" selected>close</option><option value="wick">wick</option></select></label>
+    <label>survive <select id="surv" title="strict: a live window must keep passing every birth filter. loose: born under the full set, it survives under containment alone and ends only on a break, the survive width cap, or max length"><option value="strict">strict</option><option value="loose" selected>loose</option></select></label>
+    <label>survive tol <input type="number" id="stol" value="4" min="0" step="0.5" title="loose only: the pierce tolerance a live window is re-fitted with; it decides which hull edge wins, by touches">%</label>
+    <label>survive max width <input type="number" id="smaxw" value="-1" min="-1" step="1" title="loose only: a width cap that still ends a live window. -1 = off">%</label>
   </div>
   <div class="bar">
     <button id="copy" type="button">copy settings</button>
@@ -154,6 +157,14 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     <span id="parity" style="margin-left:auto"></span>
   </div>
 
+  <p class="note"><b>Strict to be born, loose to survive.</b> Under the trading line, 58% of
+    shown-window deaths were the two hull lines pinching under the minimum width, 21% exceeding
+    the maximum, 19% the gradient gap &mdash; not one was a bar through a line &mdash; and half were
+    followed within five bars by a same-direction window overlapping the dead one: a gradient
+    update dressed as an end. With <em>survive</em> = loose a window is born under the full filter
+    set and then survives under containment alone; it ends only on a break of the line the trader
+    had, the survive width cap, or max length. The gradient still updates every bar. With the
+    break rule off nothing ends before max length, and the footer says so.</p>
   <p class="note"><b>How to read it.</b> A window is a stretch of bars whose lows all sit above
     one line and whose highs all sit below another, passing the filters in the settings line. The
     walk keeps every such window alive and grows each by one bar per step; a window dies the bar
@@ -169,7 +180,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 <script>
 (function(){
   var D = JSON.parse(document.getElementById('payload').textContent);
-  var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=-1 bbars=1 bon=close';
+  var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close surv=loose stol=4 smaxw=-1';
 
   // ---------------------------------------------------------------- the engine (the D440 page's, verbatim)
   function hullEdges(x, y, lower){
@@ -239,11 +250,22 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     if (P.bon === 'close') return cl[t] < sl - P.brk || cl[t] > rl + P.brk;
     return lo[t] < sl - P.brk || hi[t] > rl + P.brk;
   }
+  // HYSTERESIS: the filter set a LIVE window is re-fitted under. Strict = the birth set. Loose =
+  // containment only: `stol` as the tolerance (it decides which hull edge wins, by touches), the
+  // width, gap, offset and touch tests off, only the looser width cap `smaxw` kept. A hull edge
+  // contains every point by construction, so under loose survival a window never dies of
+  // containment -- the break rule IS the death.
+  function survivalParams(P){
+    if (P.surv !== 'loose') return P;
+    var Q = {}, k; for (k in P) Q[k] = P[k];
+    Q.tol = P.stol; Q.mt = 2; Q.mw = 0; Q.maxw = P.smaxw; Q.maxoff = -1; Q.mintd = -1; Q.tau = -1;
+    return Q;
+  }
 
   // ---------------------------------------------------------------- the walks, recording what each bar saw
   // rec[t] = {shown: fit|null, A: start|-1, live: [{A, f}...]}  for t in [a0, a1)
   function walkParallel(lo, hi, cl, a0, a1, P){
-    var rec = new Array(a1), live = [], shown = null, shownNb = 0, bound = a0, t, k;
+    var rec = new Array(a1), live = [], shown = null, shownNb = 0, bound = a0, t, k, PS = survivalParams(P);
     for (t = a0; t < a1 && !BUDGET.hit; t++){
       shownNb = broken(lo, hi, cl, t, shown, P) ? shownNb + 1 : 0;
       var purged = false;
@@ -254,7 +276,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
         if (P.brk >= 0 && nb >= P.bbars) continue;
         if (t - A + 1 > P.maxlen){ if (P.atmax !== 'slide') continue; A = t - P.maxlen + 1; }
         if (keep.length && keep[keep.length - 1].A === A) continue;
-        f = fitWindow(lo, hi, A, t, P);
+        f = fitWindow(lo, hi, A, t, PS);            // a LIVE window: the survival set
         if (!f) continue;
         keep.push({A: A, f: f, nb: nb});
         if (!best) best = keep[keep.length - 1];
@@ -271,15 +293,15 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     return rec;
   }
   function walkChain(lo, hi, cl, a0, a1, P){
-    var rec = new Array(a1), A = -1, bound = a0, t = a0, fprev = null, nb = 0;
+    var rec = new Array(a1), A = -1, bound = a0, t = a0, fprev = null, nb = 0, PS = survivalParams(P);
     while (t < a1 && !BUDGET.hit){
       var f = null, purged = false;
       if (A >= 0){
         nb = broken(lo, hi, cl, t, fprev, P) ? nb + 1 : 0;
         var dead = P.brk >= 0 && nb >= P.bbars, L = t - A + 1;
         if (dead){ purged = true; }
-        else if (L <= P.maxlen) f = fitWindow(lo, hi, A, t, P);
-        else if (P.atmax === 'slide'){ A = t - P.maxlen + 1; f = fitWindow(lo, hi, A, t, P); }
+        else if (L <= P.maxlen) f = fitWindow(lo, hi, A, t, PS);
+        else if (P.atmax === 'slide'){ A = t - P.maxlen + 1; f = fitWindow(lo, hi, A, t, PS); }
         if (f){ rec[t] = {shown: f, A: A, live: [{A: A, f: f}], purged: false}; fprev = f; t++; continue; }
         A = -1; bound = t - P.back; fprev = null; nb = 0;
       }
@@ -297,16 +319,17 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   // ---------------------------------------------------------------- settings
   function parseLine(line){
     var P = {tol: Math.log(1.02), mt: 2, basis: 'wick', minlen: 30, maxlen: 1000, mw: 0, maxw: Math.log(1.55),
-             maxoff: -1, mintd: -1, tau: 1.05, grow: 'parallel', back: 9, atmax: 'end', brk: -1, bbars: 1, bon: 'close'};
+             maxoff: -1, mintd: -1, tau: 1.05, grow: 'parallel', back: 9, atmax: 'end', brk: -1, bbars: 1, bon: 'close',
+             surv: 'strict', stol: Math.log(1.04), smaxw: -1};
     line.split(/\s+/).forEach(function(tok){
       var m = tok.match(/^([a-z]+)=(.+)$/); if (!m) return;
       var k = m[1], v = m[2], x = parseFloat(v);
-      if (k === 'tol' || k === 'mw') P[k] = Math.log(1 + x / 100);
-      else if (k === 'maxw' || k === 'maxoff' || k === 'brk') P[k] = x >= 0 ? Math.log(1 + x / 100) : -1;
+      if (k === 'tol' || k === 'mw' || k === 'stol') P[k] = Math.log(1 + x / 100);
+      else if (k === 'maxw' || k === 'maxoff' || k === 'brk' || k === 'smaxw') P[k] = x >= 0 ? Math.log(1 + x / 100) : -1;
       else if (k === 'mintd') P[k] = x >= 0 ? x / 100 : -1;
       else if (k === 'mt' || k === 'minlen' || k === 'maxlen' || k === 'back' || k === 'bbars') P[k] = parseInt(v, 10);
       else if (k === 'tau') P[k] = x;
-      else if (k === 'basis' || k === 'atmax' || k === 'grow' || k === 'bon') P[k] = v;
+      else if (k === 'basis' || k === 'atmax' || k === 'grow' || k === 'bon' || k === 'surv') P[k] = v;
     });
     P.maxlen = Math.min(P.maxlen, 1000);
     return P;
@@ -391,7 +414,8 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     }
     document.getElementById('pos').max = n - 1;
     var ms = Math.round(performance.now() - t0);
-    document.getElementById('parity').textContent = 'walked ' + n + ' bars (+' + (st0 - lo0) + ' of run-in) in ' + ms + ' ms' + (BUDGET.hit ? ' -- SEARCH TRUNCATED, lower max length' : '');
+    document.getElementById('parity').textContent = 'walked ' + n + ' bars (+' + (st0 - lo0) + ' of run-in) in ' + ms + ' ms' + (BUDGET.hit ? ' -- SEARCH TRUNCATED, lower max length' : '') +
+      (P.surv === 'loose' && P.brk < 0 && P.smaxw < 0 ? ' -- LOOSE SURVIVAL WITH THE BREAK RULE OFF: windows end only at max length' : '');
     if (t > n - 1) t = n - 1;
     draw();
   }

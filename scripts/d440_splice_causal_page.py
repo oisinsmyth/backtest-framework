@@ -127,6 +127,11 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
       <label>break depth <input type="number" id="brk" value="-1" min="-1" step="0.25" title="a bar beyond the line the trader HAD (the previous bar's line, projected one bar) by more than this kills the window. -1 = off: the envelope re-tilts around every bar and nothing ever breaks">%</label>
       <label>break bars <input type="number" id="bbars" value="1" min="1" max="10" step="1" title="consecutive breaking bars needed"></label>
       <label>break on <select id="bon" title="which price must be beyond the line"><option value="close" selected>close</option><option value="wick">wick</option></select></label>
+    </span>
+    <span class="grp">
+      <label>survive <select id="surv" title="strict: a live window must keep passing every birth filter. loose: born under the full set, it survives under containment alone and ends only on a break, the survive width cap, or max length"><option value="strict" selected>strict</option><option value="loose">loose</option></select></label>
+      <label>survive tol <input type="number" id="stol" value="4" min="0" step="0.5" title="loose only: the pierce tolerance a live window is re-fitted with; it decides which hull edge wins, by touches">%</label>
+      <label>survive max width <input type="number" id="smaxw" value="-1" min="-1" step="1" title="loose only: a width cap that still ends a live window. -1 = off">%</label>
       <label><input type="checkbox" id="shade" checked> window's final fit</label>
     </span>
     <span class="tot" id="tot">&mdash;</span>
@@ -169,6 +174,13 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     <em>restart back</em> &minus; 1 bars; raise <em>restart back</em> to shorten that gap. The
     Python side asserts that no shown line survives its own break, and that the assertion
     rejects a walk with the rule off.</p>
+  <p class="note"><b>Strict to be born, loose to survive.</b> Under the trading line, 58% of
+    shown-window deaths were the two hull lines pinching under the minimum width, 21% exceeding
+    the maximum, 19% the gradient gap &mdash; not one was a bar through a line &mdash; and half were
+    followed within five bars by a same-direction window overlapping the dead one: a gradient
+    update dressed as an end. With <em>survive</em> = loose a window is born under the full filter
+    set and then survives under containment alone; it ends only on a break of the line the trader
+    had, the <em>survive max width</em> cap, or max length. The Python side asserts it.</p>
   <p class="note"><b>A line can still move without a break.</b> The support line is the edge of
     the lows' hull with the most touches. A new bar can hand that title to a different edge
     &mdash; often an older, lower one &mdash; and the line steps to it although no bar went
@@ -283,9 +295,21 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     return lo[t] < sl - P.brk || hi[t] > rl + P.brk;
   }
 
+  // HYSTERESIS: the filter set a LIVE window is re-fitted under. Strict = the birth set. Loose =
+  // containment only: `stol` as the tolerance (it decides which hull edge wins, by touches), the
+  // width, gap, offset and touch tests off, only the looser width cap `smaxw` kept. A hull edge
+  // contains every point by construction, so under loose survival a window never dies of
+  // containment -- the break rule IS the death.
+  function survivalParams(P){
+    if (P.surv !== 'loose') return P;
+    var Q = {}, k; for (k in P) Q[k] = P[k];
+    Q.tol = P.stol; Q.mt = 2; Q.mw = 0; Q.maxw = P.smaxw; Q.maxoff = -1; Q.mintd = -1; Q.tau = -1;
+    return Q;
+  }
+
   // PARALLEL: every candidate grows at once; the longest survivor is drawn.
   function splitParallel(lo, hi, cl, a0, a1, P){
-    var out = [], run = null, live = [], t, k;      // live: {A, f, nb}, oldest first
+    var out = [], run = null, live = [], t, k, PS = survivalParams(P);   // live: {A, f, nb}, oldest first
     var shown = null, shownNb = 0;                  // the line the trader SAW at the previous bar
     var bound = a0;                                 // no window may start before this (set by a break)
     for (t = a0; t < a1 && !BUDGET.hit; t++){
@@ -304,7 +328,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
         if (P.brk >= 0 && nb >= P.bbars) continue;    // the bar broke the line the trader had
         if (t - A + 1 > P.maxlen){ if (P.atmax !== 'slide') continue; A = t - P.maxlen + 1; }
         if (keep.length && keep[keep.length - 1].A === A) continue;
-        f = fitWindow(lo, hi, A, t, P);
+        f = fitWindow(lo, hi, A, t, PS);            // a LIVE window: the survival set
         if (!f) continue;
         keep.push({A: A, f: f, nb: nb});
         if (!best) best = [A, f];
@@ -327,15 +351,15 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   // CHAIN: the oracle's restart made online. One window at a time; when it breaks at t the next
   // search starts at t - back.
   function splitChain(lo, hi, cl, a0, a1, P){
-    var out = [], run = null, A = -1, bound = a0, t = a0, fprev = null, nb = 0;
+    var out = [], run = null, A = -1, bound = a0, t = a0, fprev = null, nb = 0, PS = survivalParams(P);
     while (t < a1 && !BUDGET.hit){
       var f = null;
       if (A >= 0){
         nb = broken(lo, hi, cl, t, fprev, P) ? nb + 1 : 0;
         var dead = P.brk >= 0 && nb >= P.bbars, L = t - A + 1;
         if (dead){ }
-        else if (L <= P.maxlen) f = fitWindow(lo, hi, A, t, P);
-        else if (P.atmax === 'slide'){ A = t - P.maxlen + 1; f = fitWindow(lo, hi, A, t, P); }
+        else if (L <= P.maxlen) f = fitWindow(lo, hi, A, t, PS);
+        else if (P.atmax === 'slide'){ A = t - P.maxlen + 1; f = fitWindow(lo, hi, A, t, PS); }
         if (f){ push(run, f, A); fprev = f; t++; continue; }
         out.push(run); run = null; A = -1; bound = t - P.back; fprev = null; nb = 0;
       }
@@ -465,6 +489,8 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
       grow: v('grow'), back: parseInt(v('back'), 10), atmax: v('atmax'),
       brk: parseFloat(v('brk')) >= 0 ? Math.log(1 + parseFloat(v('brk')) / 100) : -1,
       bbars: parseInt(v('bbars'), 10), bon: v('bon'),
+      surv: v('surv'), stol: Math.log(1 + parseFloat(v('stol')) / 100),
+      smaxw: parseFloat(v('smaxw')) >= 0 ? Math.log(1 + parseFloat(v('smaxw')) / 100) : -1,
       shade: document.getElementById('shade').checked
     };
   }

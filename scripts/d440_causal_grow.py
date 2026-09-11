@@ -55,9 +55,23 @@ LIVE = REPO / "temp" / "d399_live_bars.json"
 DEFAULTS = dict(tol=math.log1p(0.02), mt=2, basis="wick", minlen=30, maxlen=1000,
                 mw=0.0, maxw=math.log1p(0.55), maxoff=-1.0, mintd=-1.0, tau=1.05,
                 grow="parallel", back=9, atmax="end",
-                brk=-1.0, bbars=1, bon="close")
+                brk=-1.0, bbars=1, bon="close",
+                surv="strict", stol=math.log1p(0.04), smaxw=-1.0)
 SETTINGS_LINE = ("split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 "
-                 "maxlen=1000 mw=0 maxw=55 maxoff=-1 mintd=-1 tau=1.05 brk=-1 bbars=1 bon=close")
+                 "maxlen=1000 mw=0 maxw=55 maxoff=-1 mintd=-1 tau=1.05 brk=-1 bbars=1 bon=close "
+                 "surv=strict stol=4 smaxw=-1")
+# HYSTERESIS (`surv`, `stol`, `smaxw`). Under the trading line, 58% of shown-window deaths were
+# the two hull lines pinching under the minimum width, 21% exceeding the maximum, 19% the gradient
+# gap -- and not one was a bar through a line. Half were followed within five bars by a
+# same-direction window overlapping the dead one: a gradient update dressed as an end. Birth and
+# survival used the same test, so a window's life was bounded by the stability of the hull's
+# SHAPE, not by whether price respected the trend. With `surv` = loose a window is BORN under the
+# full filter set and SURVIVES under containment alone: the refit each bar uses `stol` as its
+# pierce tolerance (it decides which hull edge wins, by touches), the width, gap, offset and
+# touch tests are off, and only `smaxw` (a looser width cap, -1 = off), max length and the break
+# rule can end it. A hull edge contains every point by construction, so under loose survival a
+# window never dies of containment: the break rule IS the death. With `brk` off nothing ends
+# before max length -- the page says so.
 # THE BREAK RULE (`brk`, `bbars`, `bon`). The envelope contains every wick by construction, so a
 # bar through the line never fails the fit -- the hull simply re-tilts around it, and a window
 # can live for hundreds of bars while the line it shows is redrawn under the trader's feet. The
@@ -76,9 +90,9 @@ def parse_line(line):
     P = dict(DEFAULTS)
     for tok in line.split():
         k, v = tok.split("=", 1)
-        if k in ("tol", "mw"):
+        if k in ("tol", "mw", "stol"):
             P[k] = math.log1p(float(v) / 100)
-        elif k in ("maxw", "maxoff", "brk"):
+        elif k in ("maxw", "maxoff", "brk", "smaxw"):
             P[k] = math.log1p(float(v) / 100) if float(v) >= 0 else -1.0
         elif k == "mintd":
             P[k] = float(v) / 100 if float(v) >= 0 else -1.0
@@ -86,7 +100,7 @@ def parse_line(line):
             P[k] = int(v)
         elif k == "tau":
             P[k] = float(v)
-        elif k in ("basis", "atmax", "grow", "bon"):
+        elif k in ("basis", "atmax", "grow", "bon", "surv"):
             P[k] = v
     return P
 
@@ -154,6 +168,14 @@ def causal_channels(RC, lo, hi, P, a0=0, a1=None, cl=None):
     return _grow_chain(RC, lo, hi, P, a0, a1, cl)
 
 
+def survival_params(P):
+    """The filter set a LIVE window is re-fitted under. Strict: the birth set. Loose: containment
+    only -- `stol` as the tolerance, every shape test off except the looser width cap `smaxw`."""
+    if P.get("surv", "strict") != "loose":
+        return P
+    return dict(P, tol=P["stol"], mt=2, mw=0.0, maxw=P["smaxw"], maxoff=-1.0, mintd=-1.0, tau=-1.0)
+
+
 def _broken(lo, hi, cl, t, f, P):
     """Does bar t break the line the trader had (fit `f` from the previous bar, projected to t)?"""
     d = P["brk"]
@@ -168,7 +190,7 @@ def _broken(lo, hi, cl, t, f, P):
 def _grow_parallel(RC, lo, hi, P, a0=0, a1=None, cl=None):
     n = lo.size if a1 is None else a1
     minlen, maxlen, slide, bbars = P["minlen"], P["maxlen"], P["atmax"] == "slide", P["bbars"]
-    back = P["back"]
+    back, PS = P["back"], survival_params(P)
     runs, run, live = [], None, []          # live: [A, last fit, break count], oldest first
     shown, shown_nb = None, 0               # the line the trader SAW at the previous bar
     bound = a0                              # no window may start before this bar (set by a break)
@@ -196,7 +218,7 @@ def _grow_parallel(RC, lo, hi, P, a0=0, a1=None, cl=None):
                 A = t - maxlen + 1
             if keep and keep[-1][0] == A:   # two windows slid onto the same start: one fit
                 continue
-            f = fit_window(RC, lo, hi, A, t, P)
+            f = fit_window(RC, lo, hi, A, t, PS)    # a LIVE window: the survival set
             if f is None:
                 continue
             keep.append([A, f, nb])
@@ -232,6 +254,7 @@ def _grow_parallel(RC, lo, hi, P, a0=0, a1=None, cl=None):
 def _grow_chain(RC, lo, hi, P, a0=0, a1=None, cl=None):
     n = lo.size if a1 is None else a1
     minlen, maxlen, back, bbars = P["minlen"], P["maxlen"], P["back"], P["bbars"]
+    PS = survival_params(P)
     runs, run, A, bound, t, fprev, nb = [], None, -1, a0, a0, None, 0
     while t < n:
         f = None
@@ -242,10 +265,10 @@ def _grow_chain(RC, lo, hi, P, a0=0, a1=None, cl=None):
             if dead:
                 pass
             elif L <= maxlen:
-                f = fit_window(RC, lo, hi, A, t, P)
+                f = fit_window(RC, lo, hi, A, t, PS)    # a LIVE window: the survival set
             elif P["atmax"] == "slide":
                 A = t - maxlen + 1
-                f = fit_window(RC, lo, hi, A, t, P)
+                f = fit_window(RC, lo, hi, A, t, PS)
             if f is not None:
                 run["As"].append(A)
                 _push(run, f)
@@ -406,6 +429,40 @@ def audit_break(lo, hi, cl, runs, P):
     return checked
 
 
+def audit_hysteresis(RC, lo, hi, cl, runs, P):
+    """[H] UNDER LOOSE SURVIVAL A SHOWN WINDOW DIES ONLY OF A BREAK, THE WIDTH CAP, OR AGE.
+    For every bar t at which the shown window [A, t] is not shown at t + 1: either bar t + 1
+    broke the line shown at t (the `bbars`-th consecutive time), or t + 2 - A > maxlen, or
+    `smaxw` is set and the window re-fitted to t + 1 is wider than it. Nothing else may have
+    ended it. Under strict survival the same check must FAIL ([XH]), because there the shape
+    filters end windows."""
+    PS = survival_params(P)
+    shown = {}
+    for r in runs:
+        for j, t in enumerate(range(r["a"], r["b"] + 1)):
+            shown[t] = (r["As"][j], dict(gs=r["gs"][j], cs=r["cs"][j], gr=r["gr"][j], cr=r["cr"][j]))
+    checked, nb = 0, 0
+    for t in sorted(shown):
+        A, f = shown[t]
+        nxt = shown.get(t + 1)
+        nb = nb + 1 if (t - 1 in shown and shown[t - 1][0] == A and _broken(lo, hi, cl, t, shown[t - 1][1], P)) else 0
+        if nxt is not None and nxt[0] == A:
+            continue
+        if t + 1 >= lo.size:
+            continue
+        checked += 1
+        by_break = P["brk"] >= 0 and (nb + (1 if _broken(lo, hi, cl, t + 1, f, P) else 0)) >= P["bbars"]
+        by_age = (t + 2 - A) > P["maxlen"] and P["atmax"] != "slide"
+        by_width = False
+        if P["smaxw"] >= 0 and not (by_break or by_age):
+            g = fit_window(RC, lo, hi, A, t + 1, dict(PS, maxw=-1.0))
+            by_width = g is not None and g["w"] > P["smaxw"] or g is None
+        if not (by_break or by_age or by_width):
+            raise AssertionError(f"[H] the window shown at bar {t} (from {A}) ended without a break, "
+                                 f"the width cap or max length")
+    return checked
+
+
 def audit_phase_free(RC, lo, hi, P, t0, cl=None):
     """[I] PATH INDEPENDENCE. Start the walk at bar t0 instead of bar 0. No window is longer than
     `maxlen`, so from bar t0 + maxlen - 1 on, every window the late start can show is one the
@@ -525,6 +582,20 @@ def main() -> int:
             nb = audit_break(lo, hi, cl, strict, QB)
             print(f"  [XB] break audit rejects the no-break walk and passes the 1%/1-bar walk "
                   f"({nb} bars checked, {len(loose)} -> {len(strict)} runs)  OK")
+        # [H] hysteresis: under loose survival with a 2% break, no shown window ends of shape
+        QH = dict(P, surv="loose", brk=math.log1p(0.02), bbars=1, bon="close", grow="parallel")
+        loose_runs = causal_channels(RC, lo, hi, QH, cl=cl)
+        nh = audit_hysteresis(RC, lo, hi, cl, loose_runs, QH)
+        try:
+            audit_hysteresis(RC, lo, hi, cl, causal_channels(RC, lo, hi, dict(QH, surv="strict"), cl=cl),
+                             dict(QH, surv="strict"))
+            raise SystemExit("[XH] the hysteresis audit accepted strict survival")
+        except AssertionError:
+            pass
+        wl_ = [r["b"] - r["A"] + 1 for r in loose_runs]
+        print(f"  [H] loose survival + 2% break: {nh} shown-window ends on {nm['symbol']}, every one a "
+              f"break, the width cap or max length; window median {np.median(wl_):.0f} bars "
+              f"({len(loose_runs)} runs); [XH] the audit rejects strict survival  OK")
         t0 = lo.size // 3
         okp, np_ = audit_phase_free(RC, lo, hi, dict(P, grow="parallel"), t0, cl=cl)
         okc, nc_ = audit_phase_free(RC, lo, hi, dict(P, grow="chain"), t0, cl=cl)
