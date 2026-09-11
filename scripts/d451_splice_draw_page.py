@@ -103,8 +103,9 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   <h1>Draw the lines</h1>
   <p class="lede">Twelve names, <b>the future hidden</b>. Each name has its own cursor: step
     forward a bar at a time; when a line is there to draw, pick a kind and click its two anchors
-    (each click snaps to that bar's wick, the low for support, the high for resistance); when a
-    line breaks, select it and <b>end it here</b>. Every line remembers the bar it was drawn at and
+    (each click snaps to that bar's wick, the low for support, the high for resistance; a plain
+    click always places an anchor, even on top of a line, so an old pivot can be re-used); when a
+    line breaks, <b>Shift+click</b> it and <b>end it here</b>. Every line remembers the bar it was drawn at and
     the bar it was ended at, so the set of lines you had at any bar can be replayed exactly. That
     is what each construction will be scored against, bar by bar.</p>
 
@@ -125,7 +126,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     <span><i class="sw" style="border-color:var(--res)"></i> resistance, live</span>
     <span><i class="sw dot" style="border-color:var(--muted)"></i> projection beyond the last anchor</span>
     <span><i class="sw" style="border-color:var(--sel)"></i> selected</span>
-    <span>keys on the active panel: &larr; &rarr; step &middot; S / R kind &middot; Delete ends &middot; Ctrl+Z &middot; Esc cancels</span>
+    <span><b>Shift+click</b> selects a line &middot; keys on the active panel: &larr; &rarr; step &middot; S / R kind &middot; Delete ends &middot; Ctrl+Z &middot; Esc cancels</span>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -249,9 +250,9 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
         var pe = Math.exp(Math.log(L.p2) + g * (xe - L.x2));
         s += '<line x1="' + x2.toFixed(1) + '" y1="' + y2.toFixed(1) + '" x2="' + S.X(xe - st0).toFixed(1) + '" y2="' + S.Y(pe).toFixed(1) + '" stroke="' + col2 + '" stroke-width="1.2" stroke-dasharray="2 5" opacity=".55"/>';
       }
-      s += '<line class="ln" data-k="' + esc(k) + '" data-j="' + j + '" x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="' + col2 + '" stroke-width="' + (isSel ? 3.2 : 2.2) + '" opacity="' + op + '" stroke-linecap="round"/>';
-      if (isAlive) s += '<line class="ln-hit" data-k="' + esc(k) + '" data-j="' + j + '" x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="transparent" stroke-width="12" style="cursor:pointer"/>';
-      s += '<circle cx="' + x1.toFixed(1) + '" cy="' + y1.toFixed(1) + '" r="3" fill="' + col2 + '" opacity="' + op + '"/><circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="3" fill="' + col2 + '" opacity="' + op + '"/>';
+      s += '<line class="ln" data-k="' + esc(k) + '" data-j="' + j + '" x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="' + col2 + '" stroke-width="' + (isSel ? 3.2 : 2.2) + '" opacity="' + op + '" stroke-linecap="round"' + (isAlive ? '' : ' pointer-events="none"') + '/>';
+      if (isAlive) s += '<line class="ln-hit" data-k="' + esc(k) + '" data-j="' + j + '" x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="transparent" stroke-width="12"/>';
+      s += '<circle cx="' + x1.toFixed(1) + '" cy="' + y1.toFixed(1) + '" r="3" fill="' + col2 + '" opacity="' + op + '" pointer-events="none"/><circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="3" fill="' + col2 + '" opacity="' + op + '" pointer-events="none"/>';
     });
     if (pending && pending.k === k){
       s += '<circle cx="' + S.X(pending.x1 - st0).toFixed(1) + '" cy="' + S.Y(pending.p1).toFixed(1) + '" r="4.5" fill="none" stroke="var(--sel)" stroke-width="2"/>';
@@ -314,7 +315,10 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       setCursor(i2, act === 'first' ? 0 : act === 'back' ? st2.cursor - 1 : act === 'fwd' ? st2.cursor + 1 : st2.cursor + 5);
       return;
     }
-    if (t.classList && (t.classList.contains('ln') || t.classList.contains('ln-hit'))){
+    // SELECTING TAKES SHIFT. A plain click always places an anchor, even on top of a line --
+    // the principal could not re-anchor on an old pivot because the line anchored there ate
+    // the click.
+    if (ev.shiftKey && t.classList && (t.classList.contains('ln') || t.classList.contains('ln-hit'))){
       var svg0 = t.closest('svg');
       active = parseInt(svg0.getAttribute('data-idx'), 10);
       sel = {k: t.getAttribute('data-k'), j: parseInt(t.getAttribute('data-j'), 10)}; pending = null; redrawPanel(active); return;
