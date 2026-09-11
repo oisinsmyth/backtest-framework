@@ -231,15 +231,33 @@ def free_bytes() -> int:
     return shutil.disk_usage(REPO.anchor or "C:\\").free
 
 
-def est_disk_bytes(item: dict, ratio: float) -> int:
-    return int(item["metered_gib"] * GIB / ratio)
+def item_ratio(item: dict, st: dict) -> float:
+    """Compression is PER SCHEMA and the spread is enormous, so a ratio measured on one
+    item is never applied to another.
+
+    Measured 2026-09-11: `status` compressed **28.0x** (15,750,904,720 metered against
+    562,810,781 on disk) because its records are 40 bytes of highly repetitive trading-
+    state transitions. Bars will be nowhere near that -- the OHLCV measurement in
+    data/decode_pipeline_bench.json is 2.6x.
+
+    Had 28x been propagated globally the guard would have estimated the whole 441 GiB
+    plan at ~16 GB, waved every item through, and then been overrun when the bars landed
+    at a tenth of that ratio. THAT IS THE EXACT FAILURE THIS GUARD EXISTS TO PREVENT, so
+    an item uses its own measured ratio or the pessimistic default, never a neighbour's.
+    """
+    r = st["items"].get(item["key"], {}).get("measured_ratio")
+    return float(r) if r else RATIO_PESSIMISTIC
+
+
+def est_disk_bytes(item: dict, st: dict) -> int:
+    return int(item["metered_gib"] * GIB / item_ratio(item, st))
 
 
 def downloaded_bytes(key: str, st: dict) -> int:
     return int(st["items"].get(key, {}).get("bytes_on_disk", 0))
 
 
-def reserve_for(item: dict, manifest: list[dict], st: dict, ratio: float) -> int:
+def reserve_for(item: dict, manifest: list[dict], st: dict) -> int:
     """Space still owed to every HIGHER-ranked item. This is what makes 'protect the
     higher priority stuff' true by construction rather than by hope."""
     total = 0
@@ -249,23 +267,21 @@ def reserve_for(item: dict, manifest: list[dict], st: dict, ratio: float) -> int
         s = st["items"].get(other["key"], {})
         if s.get("state") == "downloaded":
             continue
-        remaining = est_disk_bytes(other, ratio) - downloaded_bytes(other["key"], st)
+        remaining = est_disk_bytes(other, st) - downloaded_bytes(other["key"], st)
         total += max(0, remaining)
     return total
 
 
 def may_download(item: dict, file_size: int, manifest: list[dict], st: dict,
-                 ratio: float, floor_gb: float) -> tuple[bool, str]:
+                 floor_gb: float) -> tuple[bool, str]:
     free = free_bytes()
-    reserve = reserve_for(item, manifest, st, ratio)
+    reserve = reserve_for(item, manifest, st)
     after = free - file_size - reserve
     floor = floor_gb * GB
     if after < floor:
         return False, (f"free {free/GB:.0f} GB - file {file_size/GB:.2f} - reserved for "
                        f"higher ranks {reserve/GB:.0f} = {after/GB:.0f} GB, under the "
                        f"{floor_gb:.0f} GB floor")
-    if free - file_size < floor / HEADROOM * HEADROOM:
-        pass
     return True, ""
 
 
@@ -326,14 +342,24 @@ def do_self_test(floor_gb: float) -> int:
     for it in man:
         st["items"][it["key"]] = {"state": "submitted", "bytes_on_disk": 0}
     rank7 = man[6]
-    res = reserve_for(rank7, man, st, RATIO_PESSIMISTIC)
-    expect = sum(est_disk_bytes(i, RATIO_PESSIMISTIC) for i in man if i["rank"] < 7)
+    res = reserve_for(rank7, man, st)
+    expect = sum(est_disk_bytes(i, st) for i in man if i["rank"] < 7)
     check("rank 7 reserves all six higher ranks", res == expect,
           f"{res/GB:.0f} GB reserved")
-    ok, why = may_download(rank7, 2 * GB, man, st, RATIO_PESSIMISTIC, 10_000.0)
+    ok, why = may_download(rank7, 2 * GB, man, st, 10_000.0)
     check("absurd floor defers everything", not ok, why[:80])
-    ok, _ = may_download(man[0], 2 * GB, man, st, RATIO_PESSIMISTIC, 0.001)
+    ok, _ = may_download(man[0], 2 * GB, man, st, 0.001)
     check("rank 1 reserves nothing above it", ok, "highest rank is never blocked by peers")
+
+    P("  per-schema ratio isolation (the 28x trap):")
+    st2 = {"items": {i["key"]: {"state": "submitted", "bytes_on_disk": 0} for i in man}}
+    st2["items"]["status"]["measured_ratio"] = 28.0
+    bars = next(i for i in man if i["key"] == "ohlcv-1m")
+    check("a 28x measurement on status does NOT leak to bars",
+          abs(item_ratio(bars, st2) - RATIO_PESSIMISTIC) < 1e-9,
+          f"bars still at {item_ratio(bars, st2)}x")
+    check("status itself does use its own 28x",
+          abs(item_ratio(next(i for i in man if i["key"] == "status"), st2) - 28.0) < 1e-9)
 
     P("  state file is atomic:")
     check(".part is replaced, not appended", STATE.with_suffix(".part").name.endswith(".part"))
@@ -430,9 +456,11 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
     RAW.mkdir(parents=True, exist_ok=True)
 
     started = time.monotonic()
-    ratio = st.get("measured_ratio") or RATIO_PESSIMISTIC
+    ratios = st.get("measured_ratios", {})
     P(f"drive start {now()}   floor {floor_gb:.0f} GB   free {free_bytes()/GB:.0f} GB")
-    P(f"compression ratio {'MEASURED ' + f'{ratio:.2f}x' if st.get('measured_ratio') else f'assumed {ratio}x (pessimistic, until the first file lands)'}\n")
+    P(f"compression measured PER SCHEMA: {ratios or 'none yet'}")
+    P(f"unmeasured items assume {RATIO_PESSIMISTIC}x. A ratio is never shared between "
+      f"schemas -- status measured 28x and bars will not.\n")
 
     pending = True
     while pending and time.monotonic() - started < max_seconds:
@@ -486,7 +514,7 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
                 if dest.exists() and dest.stat().st_size == fsize:
                     done_n += 1
                     continue
-                ok, why = may_download(it, fsize, man, st, ratio, floor_gb)
+                ok, why = may_download(it, fsize, man, st, floor_gb)
                 if not ok:
                     s["state"] = "deferred"
                     s["deferred_reason"] = why
@@ -512,12 +540,16 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
                     event(st, key, "warn", f"{fname}: {exc}")
                 save_state(st)
 
-            # measure the real compression ratio from the first item that lands
-            if s.get("bytes_on_disk", 0) > 0 and s.get("billed_size"):
+            # Measure this item's OWN ratio. Never applied to any other item -- see
+            # item_ratio() for the 28x measurement that made that rule necessary.
+            if s.get("bytes_on_disk", 0) > 0 and s.get("billed_size") and done_n == len(data_files):
                 r = float(s["billed_size"]) / float(s["bytes_on_disk"])
-                if 1.0 < r < 20.0 and done_n == len(data_files):
-                    st["measured_ratio"] = ratio = r
-                    P(f"  MEASURED compression {r:.2f}x from {key} -- guard now uses it")
+                if 1.0 < r < 200.0:
+                    s["measured_ratio"] = r
+                    st.setdefault("measured_ratios", {})[key] = r
+                    P(f"  {key:12} compression MEASURED {r:.2f}x "
+                      f"({s['billed_size']/GIB:.1f} GiB metered -> "
+                      f"{s['bytes_on_disk']/GIB:.2f} GiB on disk)")
 
             if done_n == len(data_files) and s.get("state") != "deferred":
                 s["state"] = "downloaded"
@@ -561,7 +593,10 @@ def write_manifest(st: dict, man: list[dict]) -> None:
         "purpose": "what was acquired, what was not, and why. Acquisition only -- no "
                    "fixture was built and no study was run.",
         "dataset": DATASET, "windows": st.get("windows"),
-        "measured_compression_ratio": st.get("measured_ratio"),
+        "measured_compression_ratio_per_schema": st.get("measured_ratios", {}),
+        "compression_note": "measured per schema and never shared between them. status "
+                            "compressed 28.0x on 40-byte repetitive records; bars measure "
+                            "2.6x. Unmeasured items are estimated at 1.5x, pessimistic.",
         "free_gb_now": free_bytes() / GB, "floor_gb": FLOOR_GB,
         "items": rows,
         "events": st.get("events", [])[-200:],
@@ -576,7 +611,7 @@ def do_status(floor_gb: float) -> int:
     man = st.get("manifest", [])
     P(f"state {STATE.relative_to(REPO)}   updated {st.get('updated_utc')}")
     P(f"free {free_bytes()/GB:.0f} GB   floor {floor_gb:.0f} GB   "
-      f"ratio {st.get('measured_ratio') or 'not yet measured'}\n")
+      f"ratios {st.get('measured_ratios') or 'none measured yet'}\n")
     P(f"  {'#':<3}{'schema':12}{'state':12}{'job':26}{'on disk GB':>11}")
     for it in sorted(man, key=lambda i: i["rank"]):
         s = st["items"].get(it["key"], {})
