@@ -1,0 +1,6654 @@
+{
+ "what": "D399: sign the residual, normalise the threshold -- vs the causal ground truth",
+ "ground_truth": "data\\d399_live_ground_truth.json",
+ "symbol": "GME",
+ "held": {
+  "carry": 3,
+  "min_piv": 5,
+  "delta_gate": true
+ },
+ "control_label": "abs/tau=0.08/conf=1(unsigned)",
+ "control_score": 0.3175,
+ "n_cells": 172,
+ "best": {
+  "label": "abs/tau=0.12/conf=2",
+  "cfg": {
+   "mode": "abs",
+   "tau": 0.12,
+   "floor": 0.0,
+   "conf_mult": 2.0,
+   "carry": 3,
+   "min_piv": 5,
+   "gate": true
+  },
+  "conf_mult": 2.0,
+  "control": false,
+  "SCORE": 0.318,
+  "support": {
+   "TP": 96,
+   "FP": 82,
+   "FN": 12,
+   "TN": 31,
+   "precision": 0.5393,
+   "recall": 0.8889,
+   "f_beta": 0.5854,
+   "quality": 0.5215,
+   "score": 0.3053
+  },
+  "resistance": {
+   "TP": 88,
+   "FP": 79,
+   "FN": 24,
+   "TN": 30,
+   "precision": 0.5269,
+   "recall": 0.7857,
+   "f_beta": 0.5641,
+   "quality": 0.5864,
+   "score": 0.3308
+  }
+ },
+ "nulls": [
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1128,
+     "p95": 0.2836,
+     "max": 0.3338
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1545,
+     "p95": 0.3504,
+     "max": 0.3585
+    }
+   },
+   "p50": 0.1336,
+   "p95": 0.317,
+   "label": "abs/tau=0.12/conf=2",
+   "observed": 0.318,
+   "clears": true,
+   "control": false
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1074,
+     "p95": 0.3167,
+     "max": 0.374
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1191,
+     "p95": 0.2844,
+     "max": 0.3348
+    }
+   },
+   "p50": 0.1132,
+   "p95": 0.3005,
+   "label": "abs/tau=0.08/conf=1(unsigned)",
+   "observed": 0.3175,
+   "clears": true,
+   "control": true
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1121,
+     "p95": 0.2811,
+     "max": 0.3021
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.127,
+     "p95": 0.3834,
+     "max": 0.4141
+    }
+   },
+   "p50": 0.1196,
+   "p95": 0.3323,
+   "label": "abs/tau=0.05/conf=4",
+   "observed": 0.3157,
+   "clears": false,
+   "control": false
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.0986,
+     "p95": 0.2481,
+     "max": 0.3115
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1144,
+     "p95": 0.3254,
+     "max": 0.3738
+    }
+   },
+   "p50": 0.1065,
+   "p95": 0.2868,
+   "label": "abs/tau=0.05/conf=2",
+   "observed": 0.3145,
+   "clears": true,
+   "control": false
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1056,
+     "p95": 0.2672,
+     "max": 0.3379
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1545,
+     "p95": 0.3504,
+     "max": 0.3585
+    }
+   },
+   "p50": 0.13,
+   "p95": 0.3088,
+   "label": "abs/tau=0.08/conf=4",
+   "observed": 0.3079,
+   "clears": false,
+   "control": false
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1056,
+     "p95": 0.2672,
+     "max": 0.3379
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1545,
+     "p95": 0.3504,
+     "max": 0.3585
+    }
+   },
+   "p50": 0.13,
+   "p95": 0.3088,
+   "label": "trail100/tau=0.75s/conf=4",
+   "observed": 0.3079,
+   "clears": false,
+   "control": false
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1055,
+     "p95": 0.2647,
+     "max": 0.3084
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1147,
+     "p95": 0.3004,
+     "max": 0.3357
+    }
+   },
+   "p50": 0.1101,
+   "p95": 0.2825,
+   "label": "trail50/tau=1.50s/conf=1(unsigned)",
+   "observed": 0.3072,
+   "clears": true,
+   "control": false
+  },
+  {
+   "sides": {
+    "support": {
+     "draws": 220,
+     "p50": 0.1055,
+     "p95": 0.2647,
+     "max": 0.3084
+    },
+    "resistance": {
+     "draws": 220,
+     "p50": 0.1147,
+     "p95": 0.3004,
+     "max": 0.3357
+    }
+   },
+   "p50": 0.1101,
+   "p95": 0.2825,
+   "label": "trail100/tau=1.50s/conf=1(unsigned)",
+   "observed": 0.3072,
+   "clears": true,
+   "control": false
+  }
+ ],
+ "grid": [
+  {
+   "label": "abs/tau=0.12/conf=2",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.12,
+    "floor": 0.0,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.318,
+   "support": {
+    "TP": 96,
+    "FP": 82,
+    "FN": 12,
+    "TN": 31,
+    "precision": 0.5393,
+    "recall": 0.8889,
+    "f_beta": 0.5854,
+    "quality": 0.5215,
+    "score": 0.3053
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.5864,
+    "score": 0.3308
+   }
+  },
+  {
+   "label": "abs/tau=0.08/conf=1(unsigned)",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.08,
+    "floor": 0.0,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": true,
+   "SCORE": 0.3175,
+   "support": {
+    "TP": 53,
+    "FP": 31,
+    "FN": 55,
+    "TN": 82,
+    "precision": 0.631,
+    "recall": 0.4907,
+    "f_beta": 0.5968,
+    "quality": 0.5602,
+    "score": 0.3344
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "abs/tau=0.05/conf=4",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.05,
+    "floor": 0.0,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.3157,
+   "support": {
+    "TP": 76,
+    "FP": 71,
+    "FN": 32,
+    "TN": 42,
+    "precision": 0.517,
+    "recall": 0.7037,
+    "f_beta": 0.546,
+    "quality": 0.4431,
+    "score": 0.2419
+   },
+   "resistance": {
+    "TP": 87,
+    "FP": 48,
+    "FN": 25,
+    "TN": 61,
+    "precision": 0.6444,
+    "recall": 0.7768,
+    "f_beta": 0.6672,
+    "quality": 0.5839,
+    "score": 0.3896
+   }
+  },
+  {
+   "label": "abs/tau=0.05/conf=2",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.05,
+    "floor": 0.0,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.3145,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 82,
+    "FP": 48,
+    "FN": 30,
+    "TN": 61,
+    "precision": 0.6308,
+    "recall": 0.7321,
+    "f_beta": 0.6487,
+    "quality": 0.5588,
+    "score": 0.3625
+   }
+  },
+  {
+   "label": "abs/tau=0.08/conf=4",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.08,
+    "floor": 0.0,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.3079,
+   "support": {
+    "TP": 91,
+    "FP": 80,
+    "FN": 17,
+    "TN": 33,
+    "precision": 0.5322,
+    "recall": 0.8426,
+    "f_beta": 0.5745,
+    "quality": 0.4961,
+    "score": 0.285
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.5864,
+    "score": 0.3308
+   }
+  },
+  {
+   "label": "trail100/tau=0.75s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.3079,
+   "support": {
+    "TP": 91,
+    "FP": 80,
+    "FN": 17,
+    "TN": 33,
+    "precision": 0.5322,
+    "recall": 0.8426,
+    "f_beta": 0.5745,
+    "quality": 0.4961,
+    "score": 0.285
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.5864,
+    "score": 0.3308
+   }
+  },
+  {
+   "label": "trail50/tau=1.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.3072,
+   "support": {
+    "TP": 69,
+    "FP": 69,
+    "FN": 39,
+    "TN": 44,
+    "precision": 0.5,
+    "recall": 0.6389,
+    "f_beta": 0.5227,
+    "quality": 0.5593,
+    "score": 0.2924
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 70,
+    "FN": 29,
+    "TN": 39,
+    "precision": 0.5425,
+    "recall": 0.7411,
+    "f_beta": 0.5732,
+    "quality": 0.5617,
+    "score": 0.322
+   }
+  },
+  {
+   "label": "trail100/tau=1.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.3072,
+   "support": {
+    "TP": 69,
+    "FP": 69,
+    "FN": 39,
+    "TN": 44,
+    "precision": 0.5,
+    "recall": 0.6389,
+    "f_beta": 0.5227,
+    "quality": 0.5593,
+    "score": 0.2924
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 70,
+    "FN": 29,
+    "TN": 39,
+    "precision": 0.5425,
+    "recall": 0.7411,
+    "f_beta": 0.5732,
+    "quality": 0.5617,
+    "score": 0.322
+   }
+  },
+  {
+   "label": "abs/tau=0.08/conf=2",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.08,
+    "floor": 0.0,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.3066,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 70,
+    "FN": 24,
+    "TN": 39,
+    "precision": 0.557,
+    "recall": 0.7857,
+    "f_beta": 0.5914,
+    "quality": 0.5864,
+    "score": 0.3468
+   }
+  },
+  {
+   "label": "trail100/tau=0.75s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.3044,
+   "support": {
+    "TP": 46,
+    "FP": 31,
+    "FN": 62,
+    "TN": 82,
+    "precision": 0.5974,
+    "recall": 0.4259,
+    "f_beta": 0.5529,
+    "quality": 0.5578,
+    "score": 0.3084
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "trail100/tau=1.25s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.3,
+   "support": {
+    "TP": 89,
+    "FP": 82,
+    "FN": 19,
+    "TN": 31,
+    "precision": 0.5205,
+    "recall": 0.8241,
+    "f_beta": 0.5619,
+    "quality": 0.4792,
+    "score": 0.2693
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.5864,
+    "score": 0.3308
+   }
+  },
+  {
+   "label": "abs/tau=0.12/conf=1(unsigned)",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.12,
+    "floor": 0.0,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2995,
+   "support": {
+    "TP": 69,
+    "FP": 69,
+    "FN": 39,
+    "TN": 44,
+    "precision": 0.5,
+    "recall": 0.6389,
+    "f_beta": 0.5227,
+    "quality": 0.5593,
+    "score": 0.2924
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 79,
+    "FN": 29,
+    "TN": 30,
+    "precision": 0.5123,
+    "recall": 0.7411,
+    "f_beta": 0.5461,
+    "quality": 0.5617,
+    "score": 0.3067
+   }
+  },
+  {
+   "label": "trail50/tau=1.00s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2982,
+   "support": {
+    "TP": 79,
+    "FP": 77,
+    "FN": 29,
+    "TN": 36,
+    "precision": 0.5064,
+    "recall": 0.7315,
+    "f_beta": 0.5396,
+    "quality": 0.4624,
+    "score": 0.2495
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 70,
+    "FN": 24,
+    "TN": 39,
+    "precision": 0.557,
+    "recall": 0.7857,
+    "f_beta": 0.5914,
+    "quality": 0.5864,
+    "score": 0.3468
+   }
+  },
+  {
+   "label": "trail100/tau=1.00s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2982,
+   "support": {
+    "TP": 79,
+    "FP": 77,
+    "FN": 29,
+    "TN": 36,
+    "precision": 0.5064,
+    "recall": 0.7315,
+    "f_beta": 0.5396,
+    "quality": 0.4624,
+    "score": 0.2495
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 70,
+    "FN": 24,
+    "TN": 39,
+    "precision": 0.557,
+    "recall": 0.7857,
+    "f_beta": 0.5914,
+    "quality": 0.5864,
+    "score": 0.3468
+   }
+  },
+  {
+   "label": "trail20/tau=0.75s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2959,
+   "support": {
+    "TP": 80,
+    "FP": 62,
+    "FN": 28,
+    "TN": 51,
+    "precision": 0.5634,
+    "recall": 0.7407,
+    "f_beta": 0.5917,
+    "quality": 0.4141,
+    "score": 0.2451
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 70,
+    "FN": 24,
+    "TN": 39,
+    "precision": 0.557,
+    "recall": 0.7857,
+    "f_beta": 0.5914,
+    "quality": 0.5864,
+    "score": 0.3468
+   }
+  },
+  {
+   "label": "trail50/tau=1.25s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2918,
+   "support": {
+    "TP": 93,
+    "FP": 75,
+    "FN": 15,
+    "TN": 38,
+    "precision": 0.5536,
+    "recall": 0.8611,
+    "f_beta": 0.5962,
+    "quality": 0.4242,
+    "score": 0.2529
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.5864,
+    "score": 0.3308
+   }
+  },
+  {
+   "label": "trail50/tau=0.75s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2892,
+   "support": {
+    "TP": 84,
+    "FP": 80,
+    "FN": 24,
+    "TN": 33,
+    "precision": 0.5122,
+    "recall": 0.7778,
+    "f_beta": 0.5497,
+    "quality": 0.4504,
+    "score": 0.2476
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.5864,
+    "score": 0.3308
+   }
+  },
+  {
+   "label": "trail50/tau=1.25s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2865,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 79,
+    "FN": 29,
+    "TN": 30,
+    "precision": 0.5123,
+    "recall": 0.7411,
+    "f_beta": 0.5461,
+    "quality": 0.5617,
+    "score": 0.3067
+   }
+  },
+  {
+   "label": "trail50/tau=0.75s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2865,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 79,
+    "FN": 29,
+    "TN": 30,
+    "precision": 0.5123,
+    "recall": 0.7411,
+    "f_beta": 0.5461,
+    "quality": 0.5617,
+    "score": 0.3067
+   }
+  },
+  {
+   "label": "trail100/tau=0.75s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2865,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 79,
+    "FN": 29,
+    "TN": 30,
+    "precision": 0.5123,
+    "recall": 0.7411,
+    "f_beta": 0.5461,
+    "quality": 0.5617,
+    "score": 0.3067
+   }
+  },
+  {
+   "label": "trail50/tau=0.75s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2835,
+   "support": {
+    "TP": 47,
+    "FP": 35,
+    "FN": 61,
+    "TN": 78,
+    "precision": 0.5732,
+    "recall": 0.4352,
+    "f_beta": 0.539,
+    "quality": 0.4945,
+    "score": 0.2665
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "trail100/tau=1.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2834,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "trail100/tau=1.25s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2834,
+   "support": {
+    "TP": 64,
+    "FP": 67,
+    "FN": 44,
+    "TN": 46,
+    "precision": 0.4885,
+    "recall": 0.5926,
+    "f_beta": 0.5063,
+    "quality": 0.5262,
+    "score": 0.2664
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "trail20/tau=1.00s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.283,
+   "support": {
+    "TP": 100,
+    "FP": 74,
+    "FN": 8,
+    "TN": 39,
+    "precision": 0.5747,
+    "recall": 0.9259,
+    "f_beta": 0.6219,
+    "quality": 0.409,
+    "score": 0.2544
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5609,
+    "score": 0.3116
+   }
+  },
+  {
+   "label": "trail100/tau=1.50s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2823,
+   "support": {
+    "TP": 93,
+    "FP": 75,
+    "FN": 15,
+    "TN": 38,
+    "precision": 0.5536,
+    "recall": 0.8611,
+    "f_beta": 0.5962,
+    "quality": 0.4242,
+    "score": 0.2529
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5609,
+    "score": 0.3116
+   }
+  },
+  {
+   "label": "trail50/tau=1.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.273,
+   "support": {
+    "TP": 57,
+    "FP": 67,
+    "FN": 51,
+    "TN": 46,
+    "precision": 0.4597,
+    "recall": 0.5278,
+    "f_beta": 0.4719,
+    "quality": 0.52,
+    "score": 0.2454
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.02/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.271,
+   "support": {
+    "TP": 88,
+    "FP": 73,
+    "FN": 20,
+    "TN": 40,
+    "precision": 0.5466,
+    "recall": 0.8148,
+    "f_beta": 0.5851,
+    "quality": 0.3925,
+    "score": 0.2296
+   },
+   "resistance": {
+    "TP": 82,
+    "FP": 80,
+    "FN": 30,
+    "TN": 29,
+    "precision": 0.5062,
+    "recall": 0.7321,
+    "f_beta": 0.5395,
+    "quality": 0.5791,
+    "score": 0.3124
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.04/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.04,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.271,
+   "support": {
+    "TP": 88,
+    "FP": 73,
+    "FN": 20,
+    "TN": 40,
+    "precision": 0.5466,
+    "recall": 0.8148,
+    "f_beta": 0.5851,
+    "quality": 0.3925,
+    "score": 0.2296
+   },
+   "resistance": {
+    "TP": 82,
+    "FP": 80,
+    "FN": 30,
+    "TN": 29,
+    "precision": 0.5062,
+    "recall": 0.7321,
+    "f_beta": 0.5395,
+    "quality": 0.5791,
+    "score": 0.3124
+   }
+  },
+  {
+   "label": "abs/tau=0.05/conf=1(unsigned)",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.05,
+    "floor": 0.0,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2682,
+   "support": {
+    "TP": 40,
+    "FP": 28,
+    "FN": 68,
+    "TN": 85,
+    "precision": 0.5882,
+    "recall": 0.3704,
+    "f_beta": 0.5263,
+    "quality": 0.5594,
+    "score": 0.2944
+   },
+   "resistance": {
+    "TP": 49,
+    "FP": 32,
+    "FN": 63,
+    "TN": 77,
+    "precision": 0.6049,
+    "recall": 0.4375,
+    "f_beta": 0.5619,
+    "quality": 0.4308,
+    "score": 0.2421
+   }
+  },
+  {
+   "label": "trail20/tau=1.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2662,
+   "support": {
+    "TP": 66,
+    "FP": 62,
+    "FN": 42,
+    "TN": 51,
+    "precision": 0.5156,
+    "recall": 0.6111,
+    "f_beta": 0.5323,
+    "quality": 0.424,
+    "score": 0.2257
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 79,
+    "FN": 29,
+    "TN": 30,
+    "precision": 0.5123,
+    "recall": 0.7411,
+    "f_beta": 0.5461,
+    "quality": 0.5617,
+    "score": 0.3067
+   }
+  },
+  {
+   "label": "trail20/tau=1.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2636,
+   "support": {
+    "TP": 85,
+    "FP": 91,
+    "FN": 23,
+    "TN": 22,
+    "precision": 0.483,
+    "recall": 0.787,
+    "f_beta": 0.5234,
+    "quality": 0.4306,
+    "score": 0.2254
+   },
+   "resistance": {
+    "TP": 87,
+    "FP": 78,
+    "FN": 25,
+    "TN": 31,
+    "precision": 0.5273,
+    "recall": 0.7768,
+    "f_beta": 0.5635,
+    "quality": 0.5359,
+    "score": 0.3019
+   }
+  },
+  {
+   "label": "trail50/tau=2.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2633,
+   "support": {
+    "TP": 100,
+    "FP": 111,
+    "FN": 8,
+    "TN": 2,
+    "precision": 0.4739,
+    "recall": 0.9259,
+    "f_beta": 0.5252,
+    "quality": 0.3826,
+    "score": 0.2009
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 78,
+    "FN": 20,
+    "TN": 31,
+    "precision": 0.5412,
+    "recall": 0.8214,
+    "f_beta": 0.5808,
+    "quality": 0.5609,
+    "score": 0.3258
+   }
+  },
+  {
+   "label": "trail20/tau=1.25s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.263,
+   "support": {
+    "TP": 85,
+    "FP": 91,
+    "FN": 23,
+    "TN": 22,
+    "precision": 0.483,
+    "recall": 0.787,
+    "f_beta": 0.5234,
+    "quality": 0.4306,
+    "score": 0.2254
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 64,
+    "FN": 42,
+    "TN": 45,
+    "precision": 0.5224,
+    "recall": 0.625,
+    "f_beta": 0.5401,
+    "quality": 0.5564,
+    "score": 0.3005
+   }
+  },
+  {
+   "label": "mad/tau=1.50s/conf=2",
+   "cfg": {
+    "mode": "mad",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2602,
+   "support": {
+    "TP": 71,
+    "FP": 67,
+    "FN": 37,
+    "TN": 46,
+    "precision": 0.5145,
+    "recall": 0.6574,
+    "f_beta": 0.5379,
+    "quality": 0.3972,
+    "score": 0.2136
+   },
+   "resistance": {
+    "TP": 89,
+    "FP": 85,
+    "FN": 23,
+    "TN": 24,
+    "precision": 0.5115,
+    "recall": 0.7946,
+    "f_beta": 0.5507,
+    "quality": 0.5571,
+    "score": 0.3068
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.02/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2555,
+   "support": {
+    "TP": 63,
+    "FP": 80,
+    "FN": 45,
+    "TN": 33,
+    "precision": 0.4406,
+    "recall": 0.5833,
+    "f_beta": 0.4632,
+    "quality": 0.474,
+    "score": 0.2196
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 68,
+    "FN": 42,
+    "TN": 41,
+    "precision": 0.5072,
+    "recall": 0.625,
+    "f_beta": 0.5271,
+    "quality": 0.553,
+    "score": 0.2915
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.04/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.04,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2555,
+   "support": {
+    "TP": 63,
+    "FP": 80,
+    "FN": 45,
+    "TN": 33,
+    "precision": 0.4406,
+    "recall": 0.5833,
+    "f_beta": 0.4632,
+    "quality": 0.474,
+    "score": 0.2196
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 68,
+    "FN": 42,
+    "TN": 41,
+    "precision": 0.5072,
+    "recall": 0.625,
+    "f_beta": 0.5271,
+    "quality": 0.553,
+    "score": 0.2915
+   }
+  },
+  {
+   "label": "abs/tau=0.12/conf=4",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.12,
+    "floor": 0.0,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2549,
+   "support": {
+    "TP": 84,
+    "FP": 80,
+    "FN": 24,
+    "TN": 33,
+    "precision": 0.5122,
+    "recall": 0.7778,
+    "f_beta": 0.5497,
+    "quality": 0.4504,
+    "score": 0.2476
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 75,
+    "FN": 24,
+    "TN": 34,
+    "precision": 0.5399,
+    "recall": 0.7857,
+    "f_beta": 0.5759,
+    "quality": 0.4553,
+    "score": 0.2622
+   }
+  },
+  {
+   "label": "trail100/tau=2.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2546,
+   "support": {
+    "TP": 88,
+    "FP": 102,
+    "FN": 20,
+    "TN": 11,
+    "precision": 0.4632,
+    "recall": 0.8148,
+    "f_beta": 0.5069,
+    "quality": 0.3368,
+    "score": 0.1707
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 78,
+    "FN": 20,
+    "TN": 31,
+    "precision": 0.5412,
+    "recall": 0.8214,
+    "f_beta": 0.5808,
+    "quality": 0.583,
+    "score": 0.3386
+   }
+  },
+  {
+   "label": "mad/tau=2.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2515,
+   "support": {
+    "TP": 87,
+    "FP": 65,
+    "FN": 21,
+    "TN": 48,
+    "precision": 0.5724,
+    "recall": 0.8056,
+    "f_beta": 0.6075,
+    "quality": 0.3656,
+    "score": 0.2221
+   },
+   "resistance": {
+    "TP": 90,
+    "FP": 90,
+    "FN": 22,
+    "TN": 19,
+    "precision": 0.5,
+    "recall": 0.8036,
+    "f_beta": 0.5409,
+    "quality": 0.5193,
+    "score": 0.2809
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.02/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2511,
+   "support": {
+    "TP": 87,
+    "FP": 87,
+    "FN": 21,
+    "TN": 26,
+    "precision": 0.5,
+    "recall": 0.8056,
+    "f_beta": 0.541,
+    "quality": 0.4427,
+    "score": 0.2395
+   },
+   "resistance": {
+    "TP": 71,
+    "FP": 81,
+    "FN": 41,
+    "TN": 28,
+    "precision": 0.4671,
+    "recall": 0.6339,
+    "f_beta": 0.4931,
+    "quality": 0.5327,
+    "score": 0.2627
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.04/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.04,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2511,
+   "support": {
+    "TP": 87,
+    "FP": 87,
+    "FN": 21,
+    "TN": 26,
+    "precision": 0.5,
+    "recall": 0.8056,
+    "f_beta": 0.541,
+    "quality": 0.4427,
+    "score": 0.2395
+   },
+   "resistance": {
+    "TP": 71,
+    "FP": 81,
+    "FN": 41,
+    "TN": 28,
+    "precision": 0.4671,
+    "recall": 0.6339,
+    "f_beta": 0.4931,
+    "quality": 0.5327,
+    "score": 0.2627
+   }
+  },
+  {
+   "label": "trail20/tau=2.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2485,
+   "support": {
+    "TP": 100,
+    "FP": 111,
+    "FN": 8,
+    "TN": 2,
+    "precision": 0.4739,
+    "recall": 0.9259,
+    "f_beta": 0.5252,
+    "quality": 0.3826,
+    "score": 0.2009
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 93,
+    "FN": 20,
+    "TN": 16,
+    "precision": 0.4973,
+    "recall": 0.8214,
+    "f_beta": 0.5399,
+    "quality": 0.5482,
+    "score": 0.296
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.02/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2481,
+   "support": {
+    "TP": 64,
+    "FP": 66,
+    "FN": 44,
+    "TN": 47,
+    "precision": 0.4923,
+    "recall": 0.5926,
+    "f_beta": 0.5096,
+    "quality": 0.4045,
+    "score": 0.2061
+   },
+   "resistance": {
+    "TP": 73,
+    "FP": 77,
+    "FN": 39,
+    "TN": 32,
+    "precision": 0.4867,
+    "recall": 0.6518,
+    "f_beta": 0.5126,
+    "quality": 0.5659,
+    "score": 0.2901
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.04/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.04,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2481,
+   "support": {
+    "TP": 64,
+    "FP": 66,
+    "FN": 44,
+    "TN": 47,
+    "precision": 0.4923,
+    "recall": 0.5926,
+    "f_beta": 0.5096,
+    "quality": 0.4045,
+    "score": 0.2061
+   },
+   "resistance": {
+    "TP": 73,
+    "FP": 77,
+    "FN": 39,
+    "TN": 32,
+    "precision": 0.4867,
+    "recall": 0.6518,
+    "f_beta": 0.5126,
+    "quality": 0.5659,
+    "score": 0.2901
+   }
+  },
+  {
+   "label": "sd/tau=1.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2459,
+   "support": {
+    "TP": 80,
+    "FP": 89,
+    "FN": 28,
+    "TN": 24,
+    "precision": 0.4734,
+    "recall": 0.7407,
+    "f_beta": 0.5102,
+    "quality": 0.396,
+    "score": 0.2021
+   },
+   "resistance": {
+    "TP": 84,
+    "FP": 78,
+    "FN": 28,
+    "TN": 31,
+    "precision": 0.5185,
+    "recall": 0.75,
+    "f_beta": 0.5526,
+    "quality": 0.524,
+    "score": 0.2896
+   }
+  },
+  {
+   "label": "pred/tau=1.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2459,
+   "support": {
+    "TP": 80,
+    "FP": 89,
+    "FN": 28,
+    "TN": 24,
+    "precision": 0.4734,
+    "recall": 0.7407,
+    "f_beta": 0.5102,
+    "quality": 0.396,
+    "score": 0.2021
+   },
+   "resistance": {
+    "TP": 84,
+    "FP": 78,
+    "FN": 28,
+    "TN": 31,
+    "precision": 0.5185,
+    "recall": 0.75,
+    "f_beta": 0.5526,
+    "quality": 0.524,
+    "score": 0.2896
+   }
+  },
+  {
+   "label": "mad/tau=1.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2436,
+   "support": {
+    "TP": 66,
+    "FP": 55,
+    "FN": 42,
+    "TN": 58,
+    "precision": 0.5455,
+    "recall": 0.6111,
+    "f_beta": 0.5574,
+    "quality": 0.3692,
+    "score": 0.2058
+   },
+   "resistance": {
+    "TP": 76,
+    "FP": 79,
+    "FN": 36,
+    "TN": 30,
+    "precision": 0.4903,
+    "recall": 0.6786,
+    "f_beta": 0.5191,
+    "quality": 0.5422,
+    "score": 0.2814
+   }
+  },
+  {
+   "label": "trail20/tau=0.75s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2434,
+   "support": {
+    "TP": 68,
+    "FP": 80,
+    "FN": 40,
+    "TN": 33,
+    "precision": 0.4595,
+    "recall": 0.6296,
+    "f_beta": 0.4857,
+    "quality": 0.3392,
+    "score": 0.1647
+   },
+   "resistance": {
+    "TP": 83,
+    "FP": 70,
+    "FN": 29,
+    "TN": 39,
+    "precision": 0.5425,
+    "recall": 0.7411,
+    "f_beta": 0.5732,
+    "quality": 0.5617,
+    "score": 0.322
+   }
+  },
+  {
+   "label": "trail50/tau=1.50s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2392,
+   "support": {
+    "TP": 93,
+    "FP": 111,
+    "FN": 15,
+    "TN": 2,
+    "precision": 0.4559,
+    "recall": 0.8611,
+    "f_beta": 0.5032,
+    "quality": 0.3316,
+    "score": 0.1669
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5609,
+    "score": 0.3116
+   }
+  },
+  {
+   "label": "sd/tau=2.00s/conf=2",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2353,
+   "support": {
+    "TP": 88,
+    "FP": 99,
+    "FN": 20,
+    "TN": 14,
+    "precision": 0.4706,
+    "recall": 0.8148,
+    "f_beta": 0.514,
+    "quality": 0.3093,
+    "score": 0.159
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5609,
+    "score": 0.3116
+   }
+  },
+  {
+   "label": "pred/tau=1.50s/conf=2",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2353,
+   "support": {
+    "TP": 88,
+    "FP": 99,
+    "FN": 20,
+    "TN": 14,
+    "precision": 0.4706,
+    "recall": 0.8148,
+    "f_beta": 0.514,
+    "quality": 0.3093,
+    "score": 0.159
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5609,
+    "score": 0.3116
+   }
+  },
+  {
+   "label": "pred/tau=2.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2284,
+   "support": {
+    "TP": 94,
+    "FP": 99,
+    "FN": 14,
+    "TN": 14,
+    "precision": 0.487,
+    "recall": 0.8704,
+    "f_beta": 0.5341,
+    "quality": 0.3383,
+    "score": 0.1807
+   },
+   "resistance": {
+    "TP": 91,
+    "FP": 92,
+    "FN": 21,
+    "TN": 17,
+    "precision": 0.4973,
+    "recall": 0.8125,
+    "f_beta": 0.5391,
+    "quality": 0.5123,
+    "score": 0.2762
+   }
+  },
+  {
+   "label": "sd/tau=2.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2278,
+   "support": {
+    "TP": 76,
+    "FP": 95,
+    "FN": 32,
+    "TN": 18,
+    "precision": 0.4444,
+    "recall": 0.7037,
+    "f_beta": 0.4798,
+    "quality": 0.3578,
+    "score": 0.1717
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5108,
+    "score": 0.2838
+   }
+  },
+  {
+   "label": "pred/tau=2.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2278,
+   "support": {
+    "TP": 76,
+    "FP": 95,
+    "FN": 32,
+    "TN": 18,
+    "precision": 0.4444,
+    "recall": 0.7037,
+    "f_beta": 0.4798,
+    "quality": 0.3578,
+    "score": 0.1717
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5108,
+    "score": 0.2838
+   }
+  },
+  {
+   "label": "pred/tau=3.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2277,
+   "support": {
+    "TP": 88,
+    "FP": 109,
+    "FN": 20,
+    "TN": 4,
+    "precision": 0.4467,
+    "recall": 0.8148,
+    "f_beta": 0.4911,
+    "quality": 0.2957,
+    "score": 0.1452
+   },
+   "resistance": {
+    "TP": 101,
+    "FP": 94,
+    "FN": 11,
+    "TN": 15,
+    "precision": 0.5179,
+    "recall": 0.9018,
+    "f_beta": 0.5661,
+    "quality": 0.5479,
+    "score": 0.3102
+   }
+  },
+  {
+   "label": "trail100/tau=1.00s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2274,
+   "support": {
+    "TP": 84,
+    "FP": 80,
+    "FN": 24,
+    "TN": 33,
+    "precision": 0.5122,
+    "recall": 0.7778,
+    "f_beta": 0.5497,
+    "quality": 0.4504,
+    "score": 0.2476
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.4318,
+    "score": 0.2072
+   }
+  },
+  {
+   "label": "trail50/tau=1.00s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2269,
+   "support": {
+    "TP": 88,
+    "FP": 72,
+    "FN": 20,
+    "TN": 41,
+    "precision": 0.55,
+    "recall": 0.8148,
+    "f_beta": 0.5882,
+    "quality": 0.3258,
+    "score": 0.1916
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 75,
+    "FN": 24,
+    "TN": 34,
+    "precision": 0.5399,
+    "recall": 0.7857,
+    "f_beta": 0.5759,
+    "quality": 0.4553,
+    "score": 0.2622
+   }
+  },
+  {
+   "label": "sd/tau=1.50s/conf=2",
+   "cfg": {
+    "mode": "sd",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2248,
+   "support": {
+    "TP": 73,
+    "FP": 89,
+    "FN": 35,
+    "TN": 24,
+    "precision": 0.4506,
+    "recall": 0.6759,
+    "f_beta": 0.4828,
+    "quality": 0.3338,
+    "score": 0.1612
+   },
+   "resistance": {
+    "TP": 87,
+    "FP": 87,
+    "FN": 25,
+    "TN": 22,
+    "precision": 0.5,
+    "recall": 0.7768,
+    "f_beta": 0.5384,
+    "quality": 0.5359,
+    "score": 0.2885
+   }
+  },
+  {
+   "label": "pred/tau=1.00s/conf=2",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2248,
+   "support": {
+    "TP": 73,
+    "FP": 89,
+    "FN": 35,
+    "TN": 24,
+    "precision": 0.4506,
+    "recall": 0.6759,
+    "f_beta": 0.4828,
+    "quality": 0.3338,
+    "score": 0.1612
+   },
+   "resistance": {
+    "TP": 87,
+    "FP": 87,
+    "FN": 25,
+    "TN": 22,
+    "precision": 0.5,
+    "recall": 0.7768,
+    "f_beta": 0.5384,
+    "quality": 0.5359,
+    "score": 0.2885
+   }
+  },
+  {
+   "label": "pred/tau=1.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2241,
+   "support": {
+    "TP": 76,
+    "FP": 95,
+    "FN": 32,
+    "TN": 18,
+    "precision": 0.4444,
+    "recall": 0.7037,
+    "f_beta": 0.4798,
+    "quality": 0.3578,
+    "score": 0.1717
+   },
+   "resistance": {
+    "TP": 84,
+    "FP": 87,
+    "FN": 28,
+    "TN": 22,
+    "precision": 0.4912,
+    "recall": 0.75,
+    "f_beta": 0.5276,
+    "quality": 0.524,
+    "score": 0.2765
+   }
+  },
+  {
+   "label": "sd/tau=3.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2239,
+   "support": {
+    "TP": 76,
+    "FP": 95,
+    "FN": 32,
+    "TN": 18,
+    "precision": 0.4444,
+    "recall": 0.7037,
+    "f_beta": 0.4798,
+    "quality": 0.3578,
+    "score": 0.1717
+   },
+   "resistance": {
+    "TP": 91,
+    "FP": 92,
+    "FN": 21,
+    "TN": 17,
+    "precision": 0.4973,
+    "recall": 0.8125,
+    "f_beta": 0.5391,
+    "quality": 0.5123,
+    "score": 0.2762
+   }
+  },
+  {
+   "label": "sd/tau=2.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2189,
+   "support": {
+    "TP": 73,
+    "FP": 89,
+    "FN": 35,
+    "TN": 24,
+    "precision": 0.4506,
+    "recall": 0.6759,
+    "f_beta": 0.4828,
+    "quality": 0.3338,
+    "score": 0.1612
+   },
+   "resistance": {
+    "TP": 84,
+    "FP": 87,
+    "FN": 28,
+    "TN": 22,
+    "precision": 0.4912,
+    "recall": 0.75,
+    "f_beta": 0.5276,
+    "quality": 0.524,
+    "score": 0.2765
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.02/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2154,
+   "support": {
+    "TP": 99,
+    "FP": 75,
+    "FN": 9,
+    "TN": 38,
+    "precision": 0.569,
+    "recall": 0.9167,
+    "f_beta": 0.6157,
+    "quality": 0.4448,
+    "score": 0.2739
+   },
+   "resistance": {
+    "TP": 82,
+    "FP": 75,
+    "FN": 30,
+    "TN": 34,
+    "precision": 0.5223,
+    "recall": 0.7321,
+    "f_beta": 0.5541,
+    "quality": 0.2832,
+    "score": 0.1569
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.04/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.04,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.2154,
+   "support": {
+    "TP": 99,
+    "FP": 75,
+    "FN": 9,
+    "TN": 38,
+    "precision": 0.569,
+    "recall": 0.9167,
+    "f_beta": 0.6157,
+    "quality": 0.4448,
+    "score": 0.2739
+   },
+   "resistance": {
+    "TP": 82,
+    "FP": 75,
+    "FN": 30,
+    "TN": 34,
+    "precision": 0.5223,
+    "recall": 0.7321,
+    "f_beta": 0.5541,
+    "quality": 0.2832,
+    "score": 0.1569
+   }
+  },
+  {
+   "label": "trail20/tau=1.25s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2144,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3258,
+    "score": 0.1735
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.4526,
+    "score": 0.2553
+   }
+  },
+  {
+   "label": "trail20/tau=0.75s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.214,
+   "support": {
+    "TP": 90,
+    "FP": 89,
+    "FN": 18,
+    "TN": 24,
+    "precision": 0.5028,
+    "recall": 0.8333,
+    "f_beta": 0.5461,
+    "quality": 0.3037,
+    "score": 0.1659
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 75,
+    "FN": 24,
+    "TN": 34,
+    "precision": 0.5399,
+    "recall": 0.7857,
+    "f_beta": 0.5759,
+    "quality": 0.4553,
+    "score": 0.2622
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.02/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2106,
+   "support": {
+    "TP": 90,
+    "FP": 89,
+    "FN": 18,
+    "TN": 24,
+    "precision": 0.5028,
+    "recall": 0.8333,
+    "f_beta": 0.5461,
+    "quality": 0.3037,
+    "score": 0.1659
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.4526,
+    "score": 0.2553
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.04/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.04,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2106,
+   "support": {
+    "TP": 90,
+    "FP": 89,
+    "FN": 18,
+    "TN": 24,
+    "precision": 0.5028,
+    "recall": 0.8333,
+    "f_beta": 0.5461,
+    "quality": 0.3037,
+    "score": 0.1659
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 79,
+    "FN": 24,
+    "TN": 30,
+    "precision": 0.5269,
+    "recall": 0.7857,
+    "f_beta": 0.5641,
+    "quality": 0.4526,
+    "score": 0.2553
+   }
+  },
+  {
+   "label": "mad/tau=2.00s/conf=2",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2104,
+   "support": {
+    "TP": 71,
+    "FP": 67,
+    "FN": 37,
+    "TN": 46,
+    "precision": 0.5145,
+    "recall": 0.6574,
+    "f_beta": 0.5379,
+    "quality": 0.3972,
+    "score": 0.2136
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.4318,
+    "score": 0.2072
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.02/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2082,
+   "support": {
+    "TP": 78,
+    "FP": 72,
+    "FN": 30,
+    "TN": 41,
+    "precision": 0.52,
+    "recall": 0.7222,
+    "f_beta": 0.5508,
+    "quality": 0.3322,
+    "score": 0.183
+   },
+   "resistance": {
+    "TP": 78,
+    "FP": 73,
+    "FN": 34,
+    "TN": 36,
+    "precision": 0.5166,
+    "recall": 0.6964,
+    "f_beta": 0.5447,
+    "quality": 0.4286,
+    "score": 0.2335
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.04/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.04,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2082,
+   "support": {
+    "TP": 78,
+    "FP": 72,
+    "FN": 30,
+    "TN": 41,
+    "precision": 0.52,
+    "recall": 0.7222,
+    "f_beta": 0.5508,
+    "quality": 0.3322,
+    "score": 0.183
+   },
+   "resistance": {
+    "TP": 78,
+    "FP": 73,
+    "FN": 34,
+    "TN": 36,
+    "precision": 0.5166,
+    "recall": 0.6964,
+    "f_beta": 0.5447,
+    "quality": 0.4286,
+    "score": 0.2335
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.02/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2069,
+   "support": {
+    "TP": 90,
+    "FP": 89,
+    "FN": 18,
+    "TN": 24,
+    "precision": 0.5028,
+    "recall": 0.8333,
+    "f_beta": 0.5461,
+    "quality": 0.3037,
+    "score": 0.1659
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 82,
+    "FN": 20,
+    "TN": 27,
+    "precision": 0.5287,
+    "recall": 0.8214,
+    "f_beta": 0.5693,
+    "quality": 0.4355,
+    "score": 0.2479
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.04/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.04,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2069,
+   "support": {
+    "TP": 90,
+    "FP": 89,
+    "FN": 18,
+    "TN": 24,
+    "precision": 0.5028,
+    "recall": 0.8333,
+    "f_beta": 0.5461,
+    "quality": 0.3037,
+    "score": 0.1659
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 82,
+    "FN": 20,
+    "TN": 27,
+    "precision": 0.5287,
+    "recall": 0.8214,
+    "f_beta": 0.5693,
+    "quality": 0.4355,
+    "score": 0.2479
+   }
+  },
+  {
+   "label": "mad/tau=1.50s/conf=4",
+   "cfg": {
+    "mode": "mad",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.2057,
+   "support": {
+    "TP": 86,
+    "FP": 77,
+    "FN": 22,
+    "TN": 36,
+    "precision": 0.5276,
+    "recall": 0.7963,
+    "f_beta": 0.5658,
+    "quality": 0.3611,
+    "score": 0.2043
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.4318,
+    "score": 0.2072
+   }
+  },
+  {
+   "label": "mad/tau=2.50s/conf=2",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.2016,
+   "support": {
+    "TP": 86,
+    "FP": 85,
+    "FN": 22,
+    "TN": 28,
+    "precision": 0.5029,
+    "recall": 0.7963,
+    "f_beta": 0.5429,
+    "quality": 0.3611,
+    "score": 0.196
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.4318,
+    "score": 0.2072
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.02/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.194,
+   "support": {
+    "TP": 93,
+    "FP": 85,
+    "FN": 15,
+    "TN": 28,
+    "precision": 0.5225,
+    "recall": 0.8611,
+    "f_beta": 0.5671,
+    "quality": 0.2816,
+    "score": 0.1597
+   },
+   "resistance": {
+    "TP": 73,
+    "FP": 73,
+    "FN": 39,
+    "TN": 36,
+    "precision": 0.5,
+    "recall": 0.6518,
+    "f_beta": 0.5244,
+    "quality": 0.4353,
+    "score": 0.2283
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.04/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.04,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.194,
+   "support": {
+    "TP": 93,
+    "FP": 85,
+    "FN": 15,
+    "TN": 28,
+    "precision": 0.5225,
+    "recall": 0.8611,
+    "f_beta": 0.5671,
+    "quality": 0.2816,
+    "score": 0.1597
+   },
+   "resistance": {
+    "TP": 73,
+    "FP": 73,
+    "FN": 39,
+    "TN": 36,
+    "precision": 0.5,
+    "recall": 0.6518,
+    "f_beta": 0.5244,
+    "quality": 0.4353,
+    "score": 0.2283
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.02/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1875,
+   "support": {
+    "TP": 92,
+    "FP": 97,
+    "FN": 16,
+    "TN": 16,
+    "precision": 0.4868,
+    "recall": 0.8519,
+    "f_beta": 0.5324,
+    "quality": 0.3583,
+    "score": 0.1907
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 81,
+    "FN": 20,
+    "TN": 28,
+    "precision": 0.5318,
+    "recall": 0.8214,
+    "f_beta": 0.5721,
+    "quality": 0.3219,
+    "score": 0.1842
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.04/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.04,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1875,
+   "support": {
+    "TP": 92,
+    "FP": 97,
+    "FN": 16,
+    "TN": 16,
+    "precision": 0.4868,
+    "recall": 0.8519,
+    "f_beta": 0.5324,
+    "quality": 0.3583,
+    "score": 0.1907
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 81,
+    "FN": 20,
+    "TN": 28,
+    "precision": 0.5318,
+    "recall": 0.8214,
+    "f_beta": 0.5721,
+    "quality": 0.3219,
+    "score": 0.1842
+   }
+  },
+  {
+   "label": "abs/tau=0.08/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.08,
+    "floor": 0.0,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1875,
+   "support": {
+    "TP": 102,
+    "FP": 101,
+    "FN": 6,
+    "TN": 12,
+    "precision": 0.5025,
+    "recall": 0.9444,
+    "f_beta": 0.5543,
+    "quality": 0.2433,
+    "score": 0.1349
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 67,
+    "FN": 42,
+    "TN": 42,
+    "precision": 0.5109,
+    "recall": 0.625,
+    "f_beta": 0.5303,
+    "quality": 0.4527,
+    "score": 0.2401
+   }
+  },
+  {
+   "label": "trail50/tau=0.75s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1875,
+   "support": {
+    "TP": 102,
+    "FP": 101,
+    "FN": 6,
+    "TN": 12,
+    "precision": 0.5025,
+    "recall": 0.9444,
+    "f_beta": 0.5543,
+    "quality": 0.2433,
+    "score": 0.1349
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 67,
+    "FN": 42,
+    "TN": 42,
+    "precision": 0.5109,
+    "recall": 0.625,
+    "f_beta": 0.5303,
+    "quality": 0.4527,
+    "score": 0.2401
+   }
+  },
+  {
+   "label": "trail100/tau=0.75s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1875,
+   "support": {
+    "TP": 102,
+    "FP": 101,
+    "FN": 6,
+    "TN": 12,
+    "precision": 0.5025,
+    "recall": 0.9444,
+    "f_beta": 0.5543,
+    "quality": 0.2433,
+    "score": 0.1349
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 67,
+    "FN": 42,
+    "TN": 42,
+    "precision": 0.5109,
+    "recall": 0.625,
+    "f_beta": 0.5303,
+    "quality": 0.4527,
+    "score": 0.2401
+   }
+  },
+  {
+   "label": "pred/tau=1.00s/conf=4",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1811,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 92,
+    "FP": 87,
+    "FN": 20,
+    "TN": 22,
+    "precision": 0.514,
+    "recall": 0.8214,
+    "f_beta": 0.5556,
+    "quality": 0.5609,
+    "score": 0.3116
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.02/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1764,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 37,
+    "FP": 39,
+    "FN": 75,
+    "TN": 70,
+    "precision": 0.4868,
+    "recall": 0.3304,
+    "f_beta": 0.4447,
+    "quality": 0.4249,
+    "score": 0.189
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.04/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.04,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1764,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 37,
+    "FP": 39,
+    "FN": 75,
+    "TN": 70,
+    "precision": 0.4868,
+    "recall": 0.3304,
+    "f_beta": 0.4447,
+    "quality": 0.4249,
+    "score": 0.189
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.02/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1764,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 37,
+    "FP": 39,
+    "FN": 75,
+    "TN": 70,
+    "precision": 0.4868,
+    "recall": 0.3304,
+    "f_beta": 0.4447,
+    "quality": 0.4249,
+    "score": 0.189
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.04/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.04,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1764,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 37,
+    "FP": 39,
+    "FN": 75,
+    "TN": 70,
+    "precision": 0.4868,
+    "recall": 0.3304,
+    "f_beta": 0.4447,
+    "quality": 0.4249,
+    "score": 0.189
+   }
+  },
+  {
+   "label": "abs/tau=0.05/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.05,
+    "floor": 0.0,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1746,
+   "support": {
+    "TP": 90,
+    "FP": 71,
+    "FN": 18,
+    "TN": 42,
+    "precision": 0.559,
+    "recall": 0.8333,
+    "f_beta": 0.5984,
+    "quality": 0.1902,
+    "score": 0.1138
+   },
+   "resistance": {
+    "TP": 73,
+    "FP": 69,
+    "FN": 39,
+    "TN": 40,
+    "precision": 0.5141,
+    "recall": 0.6518,
+    "f_beta": 0.5368,
+    "quality": 0.4386,
+    "score": 0.2354
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.02/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1713,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 77,
+    "FP": 58,
+    "FN": 35,
+    "TN": 51,
+    "precision": 0.5704,
+    "recall": 0.6875,
+    "f_beta": 0.5905,
+    "quality": 0.3024,
+    "score": 0.1786
+   }
+  },
+  {
+   "label": "vol/tau=1.25s,fl=0.04/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.25,
+    "floor": 0.04,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1713,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 77,
+    "FP": 58,
+    "FN": 35,
+    "TN": 51,
+    "precision": 0.5704,
+    "recall": 0.6875,
+    "f_beta": 0.5905,
+    "quality": 0.3024,
+    "score": 0.1786
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.02/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1713,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 77,
+    "FP": 58,
+    "FN": 35,
+    "TN": 51,
+    "precision": 0.5704,
+    "recall": 0.6875,
+    "f_beta": 0.5905,
+    "quality": 0.3024,
+    "score": 0.1786
+   }
+  },
+  {
+   "label": "vol/tau=1.50s,fl=0.04/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.5,
+    "floor": 0.04,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1713,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3079,
+    "score": 0.1639
+   },
+   "resistance": {
+    "TP": 77,
+    "FP": 58,
+    "FN": 35,
+    "TN": 51,
+    "precision": 0.5704,
+    "recall": 0.6875,
+    "f_beta": 0.5905,
+    "quality": 0.3024,
+    "score": 0.1786
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.02/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.1703,
+   "support": {
+    "TP": 83,
+    "FP": 84,
+    "FN": 25,
+    "TN": 29,
+    "precision": 0.497,
+    "recall": 0.7685,
+    "f_beta": 0.5348,
+    "quality": 0.3571,
+    "score": 0.191
+   },
+   "resistance": {
+    "TP": 86,
+    "FP": 80,
+    "FN": 26,
+    "TN": 29,
+    "precision": 0.5181,
+    "recall": 0.7679,
+    "f_beta": 0.5541,
+    "quality": 0.2701,
+    "score": 0.1496
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.04/conf=1(unsigned)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.04,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.1703,
+   "support": {
+    "TP": 83,
+    "FP": 84,
+    "FN": 25,
+    "TN": 29,
+    "precision": 0.497,
+    "recall": 0.7685,
+    "f_beta": 0.5348,
+    "quality": 0.3571,
+    "score": 0.191
+   },
+   "resistance": {
+    "TP": 86,
+    "FP": 80,
+    "FN": 26,
+    "TN": 29,
+    "precision": 0.5181,
+    "recall": 0.7679,
+    "f_beta": 0.5541,
+    "quality": 0.2701,
+    "score": 0.1496
+   }
+  },
+  {
+   "label": "sd/tau=1.50s/conf=4",
+   "cfg": {
+    "mode": "sd",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1663,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 88,
+    "FP": 75,
+    "FN": 24,
+    "TN": 34,
+    "precision": 0.5399,
+    "recall": 0.7857,
+    "f_beta": 0.5759,
+    "quality": 0.4553,
+    "score": 0.2622
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.02/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1553,
+   "support": {
+    "TP": 85,
+    "FP": 76,
+    "FN": 23,
+    "TN": 37,
+    "precision": 0.528,
+    "recall": 0.787,
+    "f_beta": 0.5652,
+    "quality": 0.2212,
+    "score": 0.125
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 59,
+    "FN": 49,
+    "TN": 50,
+    "precision": 0.5164,
+    "recall": 0.5625,
+    "f_beta": 0.525,
+    "quality": 0.3538,
+    "score": 0.1857
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.04/conf=2",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.04,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1553,
+   "support": {
+    "TP": 85,
+    "FP": 76,
+    "FN": 23,
+    "TN": 37,
+    "precision": 0.528,
+    "recall": 0.787,
+    "f_beta": 0.5652,
+    "quality": 0.2212,
+    "score": 0.125
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 59,
+    "FN": 49,
+    "TN": 50,
+    "precision": 0.5164,
+    "recall": 0.5625,
+    "f_beta": 0.525,
+    "quality": 0.3538,
+    "score": 0.1857
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.02/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1552,
+   "support": {
+    "TP": 92,
+    "FP": 76,
+    "FN": 16,
+    "TN": 37,
+    "precision": 0.5476,
+    "recall": 0.8519,
+    "f_beta": 0.5897,
+    "quality": 0.1651,
+    "score": 0.0974
+   },
+   "resistance": {
+    "TP": 40,
+    "FP": 39,
+    "FN": 72,
+    "TN": 70,
+    "precision": 0.5063,
+    "recall": 0.3571,
+    "f_beta": 0.4673,
+    "quality": 0.456,
+    "score": 0.2131
+   }
+  },
+  {
+   "label": "vol/tau=0.75s,fl=0.04/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 0.75,
+    "floor": 0.04,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1552,
+   "support": {
+    "TP": 92,
+    "FP": 76,
+    "FN": 16,
+    "TN": 37,
+    "precision": 0.5476,
+    "recall": 0.8519,
+    "f_beta": 0.5897,
+    "quality": 0.1651,
+    "score": 0.0974
+   },
+   "resistance": {
+    "TP": 40,
+    "FP": 39,
+    "FN": 72,
+    "TN": 70,
+    "precision": 0.5063,
+    "recall": 0.3571,
+    "f_beta": 0.4673,
+    "quality": 0.456,
+    "score": 0.2131
+   }
+  },
+  {
+   "label": "abs/tau=0.12/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "abs",
+    "tau": 0.12,
+    "floor": 0.0,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1428,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 70,
+    "FP": 67,
+    "FN": 42,
+    "TN": 42,
+    "precision": 0.5109,
+    "recall": 0.625,
+    "f_beta": 0.5303,
+    "quality": 0.4527,
+    "score": 0.2401
+   }
+  },
+  {
+   "label": "trail20/tau=1.00s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1391,
+   "support": {
+    "TP": 95,
+    "FP": 91,
+    "FN": 13,
+    "TN": 22,
+    "precision": 0.5108,
+    "recall": 0.8796,
+    "f_beta": 0.5575,
+    "quality": 0.3384,
+    "score": 0.1887
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 67,
+    "FN": 49,
+    "TN": 42,
+    "precision": 0.4846,
+    "recall": 0.5625,
+    "f_beta": 0.4984,
+    "quality": 0.1794,
+    "score": 0.0894
+   }
+  },
+  {
+   "label": "mad/tau=2.00s/conf=4",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1389,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.4318,
+    "score": 0.2072
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.02/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1293,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 40,
+    "FP": 39,
+    "FN": 72,
+    "TN": 70,
+    "precision": 0.5063,
+    "recall": 0.3571,
+    "f_beta": 0.4673,
+    "quality": 0.456,
+    "score": 0.2131
+   }
+  },
+  {
+   "label": "vol/tau=1.00s,fl=0.04/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 1.0,
+    "floor": 0.04,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1293,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 40,
+    "FP": 39,
+    "FN": 72,
+    "TN": 70,
+    "precision": 0.5063,
+    "recall": 0.3571,
+    "f_beta": 0.4673,
+    "quality": 0.456,
+    "score": 0.2131
+   }
+  },
+  {
+   "label": "trail50/tau=1.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1293,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 40,
+    "FP": 39,
+    "FN": 72,
+    "TN": 70,
+    "precision": 0.5063,
+    "recall": 0.3571,
+    "f_beta": 0.4673,
+    "quality": 0.456,
+    "score": 0.2131
+   }
+  },
+  {
+   "label": "trail20/tau=0.75s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 0.75,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1289,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.4318,
+    "score": 0.2072
+   }
+  },
+  {
+   "label": "trail100/tau=1.25s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1222,
+   "support": {
+    "TP": 93,
+    "FP": 74,
+    "FN": 15,
+    "TN": 39,
+    "precision": 0.5569,
+    "recall": 0.8611,
+    "f_beta": 0.5992,
+    "quality": 0.3601,
+    "score": 0.2158
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail20/tau=1.50s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1211,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3258,
+    "score": 0.1735
+   },
+   "resistance": {
+    "TP": 28,
+    "FP": 37,
+    "FN": 84,
+    "TN": 72,
+    "precision": 0.4308,
+    "recall": 0.25,
+    "f_beta": 0.3763,
+    "quality": 0.1828,
+    "score": 0.0688
+   }
+  },
+  {
+   "label": "trail100/tau=2.00s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1178,
+   "support": {
+    "TP": 93,
+    "FP": 111,
+    "FN": 15,
+    "TN": 2,
+    "precision": 0.4559,
+    "recall": 0.8611,
+    "f_beta": 0.5032,
+    "quality": 0.3316,
+    "score": 0.1669
+   },
+   "resistance": {
+    "TP": 28,
+    "FP": 37,
+    "FN": 84,
+    "TN": 72,
+    "precision": 0.4308,
+    "recall": 0.25,
+    "f_beta": 0.3763,
+    "quality": 0.1828,
+    "score": 0.0688
+   }
+  },
+  {
+   "label": "pred/tau=2.00s/conf=2",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1132,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 43,
+    "FP": 41,
+    "FN": 69,
+    "TN": 68,
+    "precision": 0.5119,
+    "recall": 0.3839,
+    "f_beta": 0.4799,
+    "quality": 0.3247,
+    "score": 0.1558
+   }
+  },
+  {
+   "label": "mad/tau=2.50s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.1094,
+   "support": {
+    "TP": 71,
+    "FP": 75,
+    "FN": 37,
+    "TN": 38,
+    "precision": 0.4863,
+    "recall": 0.6574,
+    "f_beta": 0.513,
+    "quality": 0.3972,
+    "score": 0.2038
+   },
+   "resistance": {
+    "TP": 59,
+    "FP": 30,
+    "FN": 53,
+    "TN": 79,
+    "precision": 0.6629,
+    "recall": 0.5268,
+    "f_beta": 0.6303,
+    "quality": 0.0237,
+    "score": 0.015
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.02/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1072,
+   "support": {
+    "TP": 85,
+    "FP": 76,
+    "FN": 23,
+    "TN": 37,
+    "precision": 0.528,
+    "recall": 0.787,
+    "f_beta": 0.5652,
+    "quality": 0.2212,
+    "score": 0.125
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 67,
+    "FN": 49,
+    "TN": 42,
+    "precision": 0.4846,
+    "recall": 0.5625,
+    "f_beta": 0.4984,
+    "quality": 0.1794,
+    "score": 0.0894
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.04/conf=4",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.04,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1072,
+   "support": {
+    "TP": 85,
+    "FP": 76,
+    "FN": 23,
+    "TN": 37,
+    "precision": 0.528,
+    "recall": 0.787,
+    "f_beta": 0.5652,
+    "quality": 0.2212,
+    "score": 0.125
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 67,
+    "FN": 49,
+    "TN": 42,
+    "precision": 0.4846,
+    "recall": 0.5625,
+    "f_beta": 0.4984,
+    "quality": 0.1794,
+    "score": 0.0894
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.02/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1072,
+   "support": {
+    "TP": 85,
+    "FP": 76,
+    "FN": 23,
+    "TN": 37,
+    "precision": 0.528,
+    "recall": 0.787,
+    "f_beta": 0.5652,
+    "quality": 0.2212,
+    "score": 0.125
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 67,
+    "FN": 49,
+    "TN": 42,
+    "precision": 0.4846,
+    "recall": 0.5625,
+    "f_beta": 0.4984,
+    "quality": 0.1794,
+    "score": 0.0894
+   }
+  },
+  {
+   "label": "vol/tau=2.00s,fl=0.04/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "vol",
+    "tau": 2.0,
+    "floor": 0.04,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.1072,
+   "support": {
+    "TP": 85,
+    "FP": 76,
+    "FN": 23,
+    "TN": 37,
+    "precision": 0.528,
+    "recall": 0.787,
+    "f_beta": 0.5652,
+    "quality": 0.2212,
+    "score": 0.125
+   },
+   "resistance": {
+    "TP": 63,
+    "FP": 67,
+    "FN": 49,
+    "TN": 42,
+    "precision": 0.4846,
+    "recall": 0.5625,
+    "f_beta": 0.4984,
+    "quality": 0.1794,
+    "score": 0.0894
+   }
+  },
+  {
+   "label": "trail50/tau=2.00s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.1022,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3258,
+    "score": 0.1735
+   },
+   "resistance": {
+    "TP": 85,
+    "FP": 85,
+    "FN": 27,
+    "TN": 24,
+    "precision": 0.5,
+    "recall": 0.7589,
+    "f_beta": 0.5366,
+    "quality": 0.0575,
+    "score": 0.0309
+   }
+  },
+  {
+   "label": "trail50/tau=1.50s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.1015,
+   "support": {
+    "TP": 95,
+    "FP": 101,
+    "FN": 13,
+    "TN": 12,
+    "precision": 0.4847,
+    "recall": 0.8796,
+    "f_beta": 0.5325,
+    "quality": 0.3258,
+    "score": 0.1735
+   },
+   "resistance": {
+    "TP": 45,
+    "FP": 55,
+    "FN": 67,
+    "TN": 54,
+    "precision": 0.45,
+    "recall": 0.4018,
+    "f_beta": 0.4395,
+    "quality": 0.0671,
+    "score": 0.0295
+   }
+  },
+  {
+   "label": "trail50/tau=1.25s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0973,
+   "support": {
+    "TP": 90,
+    "FP": 89,
+    "FN": 18,
+    "TN": 24,
+    "precision": 0.5028,
+    "recall": 0.8333,
+    "f_beta": 0.5461,
+    "quality": 0.3037,
+    "score": 0.1659
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail20/tau=1.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.083,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 97,
+    "FP": 82,
+    "FN": 15,
+    "TN": 27,
+    "precision": 0.5419,
+    "recall": 0.8661,
+    "f_beta": 0.5857,
+    "quality": 0.1973,
+    "score": 0.1155
+   }
+  },
+  {
+   "label": "trail20/tau=1.25s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0734,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.1357,
+    "score": 0.0763
+   }
+  },
+  {
+   "label": "sd/tau=4.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.0726,
+   "support": {
+    "TP": 88,
+    "FP": 109,
+    "FN": 20,
+    "TN": 4,
+    "precision": 0.4467,
+    "recall": 0.8148,
+    "f_beta": 0.4911,
+    "quality": 0.2957,
+    "score": 0.1452
+   },
+   "resistance": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 112,
+    "TN": 109,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   }
+  },
+  {
+   "label": "mad/tau=3.00s/conf=2",
+   "cfg": {
+    "mode": "mad",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.056,
+   "support": {
+    "TP": 42,
+    "FP": 49,
+    "FN": 66,
+    "TN": 64,
+    "precision": 0.4615,
+    "recall": 0.3889,
+    "f_beta": 0.4449,
+    "quality": 0.1782,
+    "score": 0.0793
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0582,
+    "score": 0.0327
+   }
+  },
+  {
+   "label": "mad/tau=2.50s/conf=4",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0507,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 85,
+    "FP": 85,
+    "FN": 27,
+    "TN": 24,
+    "precision": 0.5,
+    "recall": 0.7589,
+    "f_beta": 0.5366,
+    "quality": 0.0575,
+    "score": 0.0309
+   }
+  },
+  {
+   "label": "trail50/tau=2.00s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0507,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 85,
+    "FP": 85,
+    "FN": 27,
+    "TN": 24,
+    "precision": 0.5,
+    "recall": 0.7589,
+    "f_beta": 0.5366,
+    "quality": 0.0575,
+    "score": 0.0309
+   }
+  },
+  {
+   "label": "mad/tau=2.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0507,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 85,
+    "FP": 85,
+    "FN": 27,
+    "TN": 24,
+    "precision": 0.5,
+    "recall": 0.7589,
+    "f_beta": 0.5366,
+    "quality": 0.0575,
+    "score": 0.0309
+   }
+  },
+  {
+   "label": "trail20/tau=1.25s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0507,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 85,
+    "FP": 85,
+    "FN": 27,
+    "TN": 24,
+    "precision": 0.5,
+    "recall": 0.7589,
+    "f_beta": 0.5366,
+    "quality": 0.0575,
+    "score": 0.0309
+   }
+  },
+  {
+   "label": "trail20/tau=1.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.05,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 45,
+    "FP": 55,
+    "FN": 67,
+    "TN": 54,
+    "precision": 0.45,
+    "recall": 0.4018,
+    "f_beta": 0.4395,
+    "quality": 0.0671,
+    "score": 0.0295
+   }
+  },
+  {
+   "label": "sd/tau=2.50s/conf=2",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0498,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0518,
+    "score": 0.0291
+   }
+  },
+  {
+   "label": "sd/tau=3.00s/conf=2",
+   "cfg": {
+    "mode": "sd",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0498,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0518,
+    "score": 0.0291
+   }
+  },
+  {
+   "label": "pred/tau=2.50s/conf=2",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=3.00s/conf=2",
+   "cfg": {
+    "mode": "pred",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "sd/tau=2.50s/conf=4",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "sd/tau=3.00s/conf=4",
+   "cfg": {
+    "mode": "sd",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=2.00s/conf=4",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=2.50s/conf=4",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=3.00s/conf=4",
+   "cfg": {
+    "mode": "pred",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail20/tau=1.50s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "sd/tau=1.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "sd/tau=2.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "sd/tau=3.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=2.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=2.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 2.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=3.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail20/tau=2.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail50/tau=2.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0496,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "mad/tau=3.00s/conf=4",
+   "cfg": {
+    "mode": "mad",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0494,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0503,
+    "score": 0.0283
+   }
+  },
+  {
+   "label": "mad/tau=3.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0494,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0503,
+    "score": 0.0283
+   }
+  },
+  {
+   "label": "sd/tau=2.00s/conf=4",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0492,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0496,
+    "score": 0.0279
+   }
+  },
+  {
+   "label": "pred/tau=1.50s/conf=4",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0492,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0496,
+    "score": 0.0279
+   }
+  },
+  {
+   "label": "sd/tau=2.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0492,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0496,
+    "score": 0.0279
+   }
+  },
+  {
+   "label": "pred/tau=1.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0492,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0496,
+    "score": 0.0279
+   }
+  },
+  {
+   "label": "mad/tau=1.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0492,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0496,
+    "score": 0.0279
+   }
+  },
+  {
+   "label": "mad/tau=2.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0492,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0496,
+    "score": 0.0279
+   }
+  },
+  {
+   "label": "mad/tau=3.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 3.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.0471,
+   "support": {
+    "TP": 42,
+    "FP": 49,
+    "FN": 66,
+    "TN": 64,
+    "precision": 0.4615,
+    "recall": 0.3889,
+    "f_beta": 0.4449,
+    "quality": 0.1782,
+    "score": 0.0793
+   },
+   "resistance": {
+    "TP": 59,
+    "FP": 30,
+    "FN": 53,
+    "TN": 79,
+    "precision": 0.6629,
+    "recall": 0.5268,
+    "f_beta": 0.6303,
+    "quality": 0.0237,
+    "score": 0.015
+   }
+  },
+  {
+   "label": "mad/tau=4.00s/conf=1(unsigned)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": 1.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 1.0,
+   "control": false,
+   "SCORE": 0.0471,
+   "support": {
+    "TP": 42,
+    "FP": 49,
+    "FN": 66,
+    "TN": 64,
+    "precision": 0.4615,
+    "recall": 0.3889,
+    "f_beta": 0.4449,
+    "quality": 0.1782,
+    "score": 0.0793
+   },
+   "resistance": {
+    "TP": 59,
+    "FP": 30,
+    "FN": 53,
+    "TN": 79,
+    "precision": 0.6629,
+    "recall": 0.5268,
+    "f_beta": 0.6303,
+    "quality": 0.0237,
+    "score": 0.015
+   }
+  },
+  {
+   "label": "trail50/tau=1.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0401,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 45,
+    "FP": 55,
+    "FN": 67,
+    "TN": 54,
+    "precision": 0.45,
+    "recall": 0.4018,
+    "f_beta": 0.4395,
+    "quality": 0.0671,
+    "score": 0.0295
+   }
+  },
+  {
+   "label": "trail100/tau=2.00s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0396,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "pred/tau=1.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "pred",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0396,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail100/tau=2.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0394,
+   "support": {
+    "TP": 103,
+    "FP": 105,
+    "FN": 5,
+    "TN": 8,
+    "precision": 0.4952,
+    "recall": 0.9537,
+    "f_beta": 0.5479,
+    "quality": 0.0923,
+    "score": 0.0506
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0503,
+    "score": 0.0283
+   }
+  },
+  {
+   "label": "trail100/tau=1.50s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0371,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail50/tau=1.25s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 50,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0371,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail100/tau=1.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0371,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail100/tau=1.25s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.25,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0371,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail100/tau=1.50s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "trail",
+    "tau": 1.5,
+    "floor": 0.02,
+    "conf_mult": null,
+    "nwin": 100,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0371,
+   "support": {
+    "TP": 75,
+    "FP": 64,
+    "FN": 33,
+    "TN": 49,
+    "precision": 0.5396,
+    "recall": 0.6944,
+    "f_beta": 0.5648,
+    "quality": 0.0805,
+    "score": 0.0455
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0511,
+    "score": 0.0287
+   }
+  },
+  {
+   "label": "trail20/tau=2.00s/conf=2",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0352,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 112,
+    "TN": 109,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   }
+  },
+  {
+   "label": "trail20/tau=2.00s/conf=4",
+   "cfg": {
+    "mode": "trail",
+    "tau": 2.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "nwin": 20,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0352,
+   "support": {
+    "TP": 108,
+    "FP": 113,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.4887,
+    "recall": 1.0,
+    "f_beta": 0.5444,
+    "quality": 0.1296,
+    "score": 0.0705
+   },
+   "resistance": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 112,
+    "TN": 109,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   }
+  },
+  {
+   "label": "sd/tau=4.00s/conf=2",
+   "cfg": {
+    "mode": "sd",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0328,
+   "support": {
+    "TP": 33,
+    "FP": 46,
+    "FN": 75,
+    "TN": 67,
+    "precision": 0.4177,
+    "recall": 0.3056,
+    "f_beta": 0.3892,
+    "quality": 0.1684,
+    "score": 0.0655
+   },
+   "resistance": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 112,
+    "TN": 109,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   }
+  },
+  {
+   "label": "sd/tau=4.00s/conf=4",
+   "cfg": {
+    "mode": "sd",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0328,
+   "support": {
+    "TP": 33,
+    "FP": 46,
+    "FN": 75,
+    "TN": 67,
+    "precision": 0.4177,
+    "recall": 0.3056,
+    "f_beta": 0.3892,
+    "quality": 0.1684,
+    "score": 0.0655
+   },
+   "resistance": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 112,
+    "TN": 109,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   }
+  },
+  {
+   "label": "sd/tau=4.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "sd",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0328,
+   "support": {
+    "TP": 33,
+    "FP": 46,
+    "FN": 75,
+    "TN": 67,
+    "precision": 0.4177,
+    "recall": 0.3056,
+    "f_beta": 0.3892,
+    "quality": 0.1684,
+    "score": 0.0655
+   },
+   "resistance": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 112,
+    "TN": 109,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   }
+  },
+  {
+   "label": "mad/tau=4.00s/conf=2",
+   "cfg": {
+    "mode": "mad",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": 2.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 2.0,
+   "control": false,
+   "SCORE": 0.0153,
+   "support": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 108,
+    "TN": 113,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0543,
+    "score": 0.0306
+   }
+  },
+  {
+   "label": "mad/tau=4.00s/conf=4",
+   "cfg": {
+    "mode": "mad",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": 4.0,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": 4.0,
+   "control": false,
+   "SCORE": 0.0153,
+   "support": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 108,
+    "TN": 113,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0543,
+    "score": 0.0306
+   }
+  },
+  {
+   "label": "mad/tau=4.00s/conf=inf(viol-only)",
+   "cfg": {
+    "mode": "mad",
+    "tau": 4.0,
+    "floor": 0.02,
+    "conf_mult": null,
+    "carry": 3,
+    "min_piv": 5,
+    "gate": true
+   },
+   "conf_mult": "inf",
+   "control": false,
+   "SCORE": 0.0153,
+   "support": {
+    "TP": 0,
+    "FP": 0,
+    "FN": 108,
+    "TN": 113,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f_beta": 0.0,
+    "quality": null,
+    "score": 0.0
+   },
+   "resistance": {
+    "TP": 112,
+    "FP": 109,
+    "FN": 0,
+    "TN": 0,
+    "precision": 0.5068,
+    "recall": 1.0,
+    "f_beta": 0.5622,
+    "quality": 0.0543,
+    "score": 0.0306
+   }
+  }
+ ]
+}

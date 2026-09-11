@@ -1,0 +1,277 @@
+{
+ "what": "D399: the chosen cell on names and dates it has never seen",
+ "seed": 20260910,
+ "n": 12,
+ "window": 260,
+ "split_lr": 0.4,
+ "excluded": [
+  "GME"
+ ],
+ "cell": {
+  "k": 1,
+  "dg": null,
+  "dh": 30.0,
+  "use_body": true,
+  "min_piv": 4,
+  "min_width": 0.0,
+  "break_pivot": true,
+  "anchor_clear": true,
+  "decay_end": 0.8,
+  "carry": 3
+ },
+ "note": "No score: both ground truths are GME's alone.",
+ "names": [
+  {
+   "symbol": "BA",
+   "start": 3017,
+   "date0": "2021-12-28",
+   "date1": "2023-01-09",
+   "coverage": 354,
+   "side_bars": 520,
+   "segments": 13,
+   "median_life": 25.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 246,
+   "syn_ratified": 90,
+   "backproj_rejected": 147,
+   "fired": {
+    "gradient": 0,
+    "height": 102,
+    "body": 246,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "BA",
+   "start": 3783,
+   "date0": "2025-01-16",
+   "date1": "2026-01-29",
+   "coverage": 330,
+   "side_bars": 520,
+   "segments": 16,
+   "median_life": 13.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 246,
+   "syn_ratified": 90,
+   "backproj_rejected": 147,
+   "fired": {
+    "gradient": 0,
+    "height": 102,
+    "body": 246,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "BRO",
+   "start": 3867,
+   "date0": "2025-05-19",
+   "date1": "2026-06-01",
+   "coverage": 237,
+   "side_bars": 520,
+   "segments": 8,
+   "median_life": 28.5,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 173,
+   "syn_ratified": 71,
+   "backproj_rejected": 73,
+   "fired": {
+    "gradient": 0,
+    "height": 61,
+    "body": 173,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "COST",
+   "start": 2737,
+   "date0": "2020-11-16",
+   "date1": "2021-11-26",
+   "coverage": 220,
+   "side_bars": 520,
+   "segments": 8,
+   "median_life": 23.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 173,
+   "syn_ratified": 53,
+   "backproj_rejected": 50,
+   "fired": {
+    "gradient": 0,
+    "height": 69,
+    "body": 173,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "CPRT",
+   "start": 2843,
+   "date0": "2021-04-21",
+   "date1": "2022-04-29",
+   "coverage": 413,
+   "side_bars": 520,
+   "segments": 12,
+   "median_life": 7.5,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 157,
+   "syn_ratified": 70,
+   "backproj_rejected": 101,
+   "fired": {
+    "gradient": 0,
+    "height": 62,
+    "body": 157,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "CRMT",
+   "start": 3134,
+   "date0": "2022-06-15",
+   "date1": "2023-06-28",
+   "coverage": 361,
+   "side_bars": 520,
+   "segments": 24,
+   "median_life": 11.5,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 298,
+   "syn_ratified": 111,
+   "backproj_rejected": 197,
+   "fired": {
+    "gradient": 0,
+    "height": 126,
+    "body": 298,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "HUBB",
+   "start": 2300,
+   "date0": "2025-02-19",
+   "date1": "2026-03-03",
+   "coverage": 378,
+   "side_bars": 520,
+   "segments": 11,
+   "median_life": 25.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 128,
+   "syn_ratified": 51,
+   "backproj_rejected": 20,
+   "fired": {
+    "gradient": 0,
+    "height": 48,
+    "body": 128,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "MKTX",
+   "start": 2408,
+   "date0": "2019-07-30",
+   "date1": "2020-08-07",
+   "coverage": 447,
+   "side_bars": 520,
+   "segments": 18,
+   "median_life": 15.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 246,
+   "syn_ratified": 84,
+   "backproj_rejected": 98,
+   "fired": {
+    "gradient": 0,
+    "height": 101,
+    "body": 246,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "MZTI",
+   "start": 3147,
+   "date0": "2022-07-06",
+   "date1": "2023-07-18",
+   "coverage": 344,
+   "side_bars": 520,
+   "segments": 18,
+   "median_life": 14.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 181,
+   "syn_ratified": 71,
+   "backproj_rejected": 44,
+   "fired": {
+    "gradient": 0,
+    "height": 67,
+    "body": 181,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "PFS",
+   "start": 3670,
+   "date0": "2024-08-05",
+   "date1": "2025-08-18",
+   "coverage": 269,
+   "side_bars": 520,
+   "segments": 9,
+   "median_life": 35.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 228,
+   "syn_ratified": 84,
+   "backproj_rejected": 121,
+   "fired": {
+    "gradient": 0,
+    "height": 89,
+    "body": 228,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "PHLT",
+   "start": 31,
+   "date0": "2012-09-25",
+   "date1": "2013-10-08",
+   "coverage": 368,
+   "side_bars": 520,
+   "segments": 25,
+   "median_life": 13.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 232,
+   "syn_ratified": 91,
+   "backproj_rejected": 393,
+   "fired": {
+    "gradient": 0,
+    "height": 126,
+    "body": 232,
+    "inverted": 0
+   }
+  },
+  {
+   "symbol": "SNPS",
+   "start": 3232,
+   "date0": "2022-11-03",
+   "date1": "2023-11-15",
+   "coverage": 412,
+   "side_bars": 520,
+   "segments": 19,
+   "median_life": 15.0,
+   "through_body": 0,
+   "inverted": 0,
+   "syn_made": 140,
+   "syn_ratified": 58,
+   "backproj_rejected": 94,
+   "fired": {
+    "gradient": 0,
+    "height": 59,
+    "body": 140,
+    "inverted": 0
+   }
+  }
+ ]
+}

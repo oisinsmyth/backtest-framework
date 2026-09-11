@@ -1,0 +1,18 @@
+{
+ "observed": 0.3175,
+ "draws": 500,
+ "incumbent_cuts": {
+  "support": 174,
+  "resistance": 171
+ },
+ "incumbent_eligible": {
+  "support": 387,
+  "resistance": 396
+ },
+ "mean_random_cuts_fired": 345.0,
+ "p50": 0.2218,
+ "p95": 0.2965,
+ "max": 0.4116,
+ "pctile_of_observed": 0.98,
+ "se_p95": 0.0021
+}

@@ -208,6 +208,77 @@ def _pivot_at(bars: Sequence[TimestampedBar], index: int, k: int, sign: int) -> 
     return _is_swing_bars(bars, index, k, sign)
 
 
+TIE_TOLERANT_K = tuple(range(1, 11))
+"""Windows `pivots_tie_tolerant` will accept. WIDER THAN D173's `SWING_K`, deliberately and
+visibly: this function is D399's and no published record was computed with it, so the window is a
+parameter here. Every value outside `SWING_K` is a search step under R13. The upper bound is not
+cosmetic — `k` is also the confirmation lag, and past about 10 bars a daily pivot confirms only
+after the next one has already formed."""
+
+
+def _pivot_at_tie_tolerant(
+    bars: Sequence[TimestampedBar], index: int, k: int, sign: int
+) -> bool:
+    """Is `index` a k-bar fractal pivot, allowing EQUAL extremes to count?
+
+    Deliberately not `_is_swing_bars` with a flag. That function's contract is strict-and-unique,
+    it is pinned by test against `strategies.breakout._is_swing`, and D173's records were computed
+    under it — so it is left exactly as it is and this is a second, separately named test.
+
+    The only difference is the uniqueness clause. `_is_swing_bars` requires the extreme to occur
+    ONCE in the window, so two bars sharing the same high produce no pivot at all; here the
+    extreme is enough. The window, the sign convention, the edge handling and the price read are
+    identical.
+
+    WHY IT EXISTS, measured rather than supposed. D399's pivot ground truth — 53 swings the
+    principal marked stepping forward one bar at a time, with the detector's own output hidden
+    from him — disagreed with the strict rule on nine. Five of those nine were killed by the
+    uniqueness clause alone, and across that 260-bar window the clause discards 11% of qualifying
+    highs and 20% of qualifying lows. Relaxing it takes agreement with him from 81% to 91%; the
+    remaining misses are turns tighter than the window, which is a different parameter.
+    """
+    if index - k < 0 or index + k >= len(bars):
+        return False
+    window = range(index - k, index + k + 1)
+    if sign > 0:
+        values = [bars[j].bar.high for j in window]
+        return bars[index].bar.high == max(values)
+    values = [bars[j].bar.low for j in window]
+    return bars[index].bar.low == min(values)
+
+
+def pivots_tie_tolerant(bars: Sequence[TimestampedBar], k: int) -> list[Pivot]:
+    """`pivots`, with the strict-uniqueness tie rule relaxed. Everything else is identical.
+
+    A bar CAN be both a swing high and a swing low here, which `pivots` documents as impossible
+    under the strict rule — flat bars in a flat window satisfy both. That is a real state and it
+    is returned rather than suppressed; a caller that cannot handle it should say so.
+
+    THE WINDOW IS OPEN HERE, AND THAT IS A DISCLOSED WIDENING. `pivots` restricts `k` to D173's
+    `SWING_K` = (2, 3) because its records were computed under that set and re-picking it after
+    the fact is an unregistered search. This function is D399's own and was never part of those
+    records, so its window is a declared parameter — but every `k` outside `SWING_K` is a search
+    step and is counted as one (R13). `pivots` itself is untouched and still refuses.
+
+    `TIE_TOLERANT_K` bounds it: below 1 there is no window, and above ~10 the confirmation lag
+    (`k` bars, D173) exceeds the median gap between pivots on daily bars, so the detector would
+    confirm a turn only after the next one had already happened."""
+    if k not in TIE_TOLERANT_K:
+        raise ValueError(
+            f"k must be in {TIE_TOLERANT_K}, got {k}. Values outside D173's SWING_K={SWING_K} are "
+            "a disclosed widening of the search, not a free parameter."
+        )
+    out: list[Pivot] = []
+    for i in range(k, len(bars) - k):
+        for sign in (1, -1):
+            if not _pivot_at_tie_tolerant(bars, i, k, sign):
+                continue
+            price = bars[i].bar.high if sign > 0 else bars[i].bar.low
+            out.append(Pivot(index=i, confirmed_at=i + k, sign=sign, price=price))
+    out.sort(key=lambda p: (p.confirmed_at, p.index, -p.sign))
+    return out
+
+
 def pivots(bars: Sequence[TimestampedBar], k: int) -> list[Pivot]:
     """Every fractal pivot in the series, both signs, ordered by the bar it CONFIRMS on.
 
