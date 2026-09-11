@@ -149,11 +149,16 @@ def trade_null(states, cls, lcls, cum_dvs, cum_jumps, eligs, n_sims, seed):
 
 # ----------------------------------------------------------------------------- main
 def main() -> int:
+    global LINE, OUT
     ap = argparse.ArgumentParser()
     ap.add_argument("--proof", action="store_true")
     ap.add_argument("--names", type=int, default=0)
     ap.add_argument("--workers", type=int, default=WORKERS)
+    ap.add_argument("--line", default=LINE, help="the GROW settings line (default: D451's)")
+    ap.add_argument("--out", default=str(OUT), help="the result file (default: D451's)")
+    ap.add_argument("--tag", default="D451", help="the decision the run belongs to")
     a = ap.parse_args()
+    LINE, OUT = a.line, Path(a.out)
 
     t0 = time.time()
     RC = _load("d399rc", "d399_recalc_segment.py")
@@ -469,7 +474,7 @@ def main() -> int:
     print(f"  split-guard rejections: {n_split}")
     if not a.proof and not a.names:              # a partial panel is never the record's file
         OUT.write_text(json.dumps(dict(
-            what="D451: trading the grow-right lines in-sample -- in while a trend, out when not",
+            what=f"{a.tag}: trading the grow-right lines in-sample -- in while a trend, out when not",
             grow_line=LINE, gmin_pct=list(GMIN_PCT), headline_gmin=HEAD_GMIN, n_names=len(syms),
             grow_runs=int(len(rl)), grow_run_len_median=float(np.median(rl)),
             grow_window_median=float(np.median(wl)),
