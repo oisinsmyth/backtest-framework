@@ -2,6 +2,80 @@
 
 ---
 
+## THE VOLUME LINE — D434 → D441, PARKED ON A COST MEASUREMENT 2026-09-11; THE PULL IS THE PRINCIPAL'S
+
+**State in one line:** a real, state-conditional volume effect (B: a 3× volume bar in a top-price
+name, sold short — +21 bp per trade over its state-matched control, +64 SE over the enumerated
+rotation null) that is **not a book at any cost line the repo can justify** (D440: crossed
+−0.63/bar, passive +0.65 ± 0.89, era 2 +1.06 ± 1.48; cap 40 +0.95 ± 0.59). **Both daily holdouts
+are unseen by this line and stay shut**: the D440 candidate condition (T1 ∧ T3 ∧ T4 ∧ T5) failed
+at +0.7 SE. Nothing is admitted. The principal chose, 2026-09-11, to park B and run the quote
+pull rather than refine or spend a holdout.
+
+**The chain:** D434 volume atlas (five axes; flat as a universe average) → D435 conditional atlas
+(the shock is +38 in top-momentum names and −48 in top-price ones — a universe average hid a sign
+flip) → D436 stage 0 → D437 stage 1 (A and B carry a shock increment; every component net-negative
+under the kernel's PUB 52–75 bp) → D438 (the increment lives in the widest spread third; only B at
+every horizon) → D439 (a passive order at the open fills 92%, chase 9 bp, net capture 0.66 —
+**and the modelled half-spread on MSFT-class names is 17–55 bp/side against a quoted 1–2: the
+cost models are range models**) → D440 (B under both lines: not a candidate) → **D441
+pre-registered `a92710a`, runner and sample `295c70f`: the quoted spreads on the 272 names B
+trades, and B re-costed at the quote.**
+
+**WHAT THE NEXT SESSION DOES — in this order, nothing else first:**
+
+1. The principal opens TWS or Gateway (paper 7497 / live 7496; Gateway 4002 / 4001) and runs, from
+   the repo root, **D336 first** (the convention question outranks B's; ~35 min):
+
+   ```bash
+   uv run --group ibkr python scripts/d336_ibkr_quoted_spreads.py --pull --host 127.0.0.1 --port <PORT> --client-id 336
+   ```
+
+   then D441 (~80 min; 17 of its 272 names are already cached by D336 and are skipped):
+
+   ```bash
+   uv run --group ibkr python scripts/run_d441_b_quotes.py --pull --host 127.0.0.1 --port <PORT> --client-id 441
+   ```
+
+   Both are resumable (a name with a CSV is skipped), `readonly=True`, need the US-equity
+   historical-quote subscription, and abort on ten consecutive subscription errors or on a name
+   whose BID_ASK bars violate open ≤ close on 1% of days. Raw bars land in `data/raw/ibkr/`
+   (git-ignored, exchange-licensed, never committed).
+
+2. Then, no session needed:
+
+   ```bash
+   uv run python scripts/d336_ibkr_quoted_spreads.py --compare
+   ```
+
+   ```bash
+   uv run python -u scripts/run_d441_b_quotes.py --compare
+   ```
+
+3. Write the two RESULT records. **D336's is owed since 2026-09-05** and must read Q2 on the
+   non-clamped subset and mark Q3's second clause not evaluable (§8a). D441's bar: T3q ∧ T4q on
+   the **crossed-at-the-quote** line → candidate for a holdout read, only on the principal's word.
+   **X-e already says the book most likely still fails at 2 SE even at a favourable quote** — the
+   pull decides whether B is closed on cost or on its own noise, and whether the wide tercile's
+   +64 passive net is a per-trade object at all. Two known deviations to disclose in D441's RESULT:
+   17 (not 33) names overlap D336's sample; 11 (not 10) padded names were excluded (GOCOQ).
+
+**Two things the pull will hit, known now:** (i) the fixture carries acquired names as `alive`
+with a constant close and zero volume since the acquisition (SPLK at 156.9, SGEN, KRTX, AVNS …;
+the meta counts a delisting after the span end as alive). D441 excludes them by rule; **D336's
+sample has one (AVNS)** — it will come back unresolved and D336's compare counts a missing CSV,
+not a failure. (ii) D441's compare *excludes and lists* a name failing `[N]` or `[G]` where D336's
+aborts; the RESULT reports every exclusion by tag.
+
+**Parked by the principal, not closed** ("keep the rest in mind", 2026-09-11): a calendar-split
+stage 2 (A off-cadence long / B on-cadence short); equal-risk sizing; anything on A, C, D.
+**Method yield of the line, already in memory:** align the event mask to the kernel's fill
+(D434's one-bar look-ahead); condition a new feature on the atlas states before calling it flat
+(D435); read the cost convention the kernel gates on before predicting a net (D437); the cost
+models are range models (D439).
+
+---
+
 ## THE SECOND-ZONE LINE — D412 → D433, CLOSED BY THE PRINCIPAL 2026-09-10, BOTH DAILY HOLDOUTS SPENT
 
 **Read this before touching either daily holdout: they are both spent, by this line, on
