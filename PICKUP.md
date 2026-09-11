@@ -2,6 +2,21 @@
 
 ---
 
+## D446 — ISSUANCE STAGE 1: REAL PER TRADE ON BOTH SIDES, A LOTTERY AS A BOOK, NOT A CANDIDATE, 2026-09-11
+
+The first forward-return look at share supply. Decile slot book (40 a side, cap 126) on D444's
+first-filed counts through the D345 kernel. **Per trade, against state-matched names (price ×
+vol × mom cells), both sides pass by 25 SE:** net issuers shorted +72 vs the cell's −97, net
+repurchasers long +208 vs the cell's +34. **The book does not collect it:** +2.3 ± 1.5 bp/bar
+gross, net crossed +1.0 at 0.6 SE, era 2 flat, **five names to half the P&L, GameStop's
+2021 squeeze trade (entered as a repurchaser 2020-10-15) 29% of the long leg**, three collapsed
+biotechs the short leg. The exact common-offset rotation has p50 +1.1 and p95 +3.8 (a persistent
+selector on the wrong dates still earns its state tilt); the persistent random selector p95 +1.8
+is cleared. **Not a candidate; holdouts shut (they have no EDGAR panel anyway).** Two honest next
+questions in the record §6, neither a refinement of this one. Records: spec `84793d8`
+(numbered D446 because D445 was taken by another session mid-write), RESULT
+`docs/decisions/D446-RESULT-…md`, artefact `data/d446_issuance_book.json`.
+
 ## D444 — THE EDGAR ACQUISITION: THE DEAD ARE SERVED, ISSUANCE HOLDS, A STAGE 1 IS THE NEXT RECORD, 2026-09-11
 
 D443's line, re-sourced from the SEC's XBRL companyfacts (`scripts/fetch_edgar_companyfacts.py`,
