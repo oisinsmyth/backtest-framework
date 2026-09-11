@@ -171,7 +171,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     if (!db){ status('saved in this browser only (database unavailable) -- use copy all as JSON'); return; }
     if (saveTimers[k]) clearTimeout(saveTimers[k]);
     saveTimers[k] = setTimeout(function(){
-      db.doc('lines/' + k).set(b).then(function(){ status('saved ' + k + ' at ' + b.updated.slice(11, 19)); },
+      db.doc('lines/' + k).set(b).then(function(){ if (pending) sayPending(); else status('saved ' + k + ' at ' + b.updated.slice(11, 19)); },
         function(err){ status('save failed (' + (err && err.code) + ') -- copy all as JSON'); });
     }, 400);
   }
@@ -308,7 +308,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     STATE[k].cursor = Math.max(0, Math.min(nm.n - 1, c));
     // a first anchor survives stepping: press it, step until the second pivot shows, click it
     if (sel && sel.k === k) sel = null;
-    active = idx; save(k); redrawPanel(idx);
+    active = idx; save(k); redrawPanel(idx); sayPending();
   }
 
   // ---------------------------------------------------------------- interaction
@@ -324,20 +324,26 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   // fires nothing -- which is why two anchors could not be placed. Pointer events carry both
   // ways of drawing: press on the first anchor and release on the second (a drag, with a
   // rubber band), or press-and-release on the first and again on the second (two clicks).
-  function anchorAt(svg, ev){
+  // the kind is fixed at the FIRST anchor: both anchors snap to the same side of the bar and the
+  // line takes that kind, whatever the kind buttons say by the time the second anchor lands
+  function anchorAt(svg, ev, kk){
     var idx = parseInt(svg.getAttribute('data-idx'), 10), nm = D.names[idx], k = key(nm), S = scales(nm), st = STATE[k];
     var pt = svgPoint(svg, ev), i = S.bar(pt.x), q = nm.start + i, p = S.price(pt.y);
     if (pt.y < PT || pt.y > PT + ih) return null;
-    if (document.getElementById('snap').checked) p = kind === 'support' ? nm.l[q] : nm.h[q];
-    return {idx: idx, k: k, i: i, q: q, p: p, future: i > st.cursor, st: st, nm: nm};
+    if (document.getElementById('snap').checked) p = kk === 'support' ? nm.l[q] : nm.h[q];
+    return {idx: idx, k: k, i: i, q: q, p: p, kind: kk, future: i > st.cursor, st: st, nm: nm};
   }
   function finish(a1, a2){
     var st = a1.st, nm = a1.nm;
     push();
     var x1 = a1.q, p1 = a1.p, x2 = a2.q, p2 = a2.p;
     if (x2 < x1){ var tx = x1, tp = p1; x1 = x2; p1 = p2; x2 = tx; p2 = tp; }
-    st.lines.push({kind: kind, x1: x1, p1: p1, x2: x2, p2: p2, at: nm.start + st.cursor});
+    st.lines.push({kind: a1.kind, x1: x1, p1: p1, x2: x2, p2: p2, at: nm.start + st.cursor});
     pending = null; save(a1.k); redrawPanel(a1.idx);
+    status('drew a ' + a1.kind + ' line on ' + nm.symbol + ' from ' + nm.dates[x1 - nm.start] + ' to ' + nm.dates[x2 - nm.start]);
+  }
+  function sayPending(){
+    if (pending) status('first anchor waiting on ' + pending.nm.symbol + ' at ' + pending.nm.dates[pending.i] + ' (' + pending.kind + ') -- click the second anchor, or Esc to cancel');
   }
   grid.addEventListener('pointerdown', function(ev){
     var t = ev.target;
@@ -351,21 +357,26 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     }
     var svg = t.closest ? t.closest('svg') : null;
     if (!svg) return;
-    var a = anchorAt(svg, ev);
+    // a waiting first anchor on this name fixes the kind; otherwise the kind buttons do
+    var waiting = pending && pending.k === key(D.names[parseInt(svg.getAttribute('data-idx'), 10)]);
+    var a = anchorAt(svg, ev, waiting ? pending.kind : kind);
     if (!a) return;
     ev.preventDefault();
     active = a.idx; sel = null;
     if (a.future){ status('that bar is in the future -- step forward first'); redrawPanel(a.idx); return; }
-    if (pending && pending.k === a.k && a.q !== pending.q){ finish(pending, a); return; }   // second click
+    // NOTHING IS DECIDED ON THE PRESS. A press with a first anchor waiting used to complete that
+    // line at once, so a drag begun for a NEW line was swallowed as the old line's second
+    // anchor. Now the press only records where it landed; the release decides: released on the
+    // same bar it is a click (second anchor of the waiting line, or a new first anchor);
+    // released on another bar it is a drag, a whole new line, and the waiting anchor is dropped.
     down = a; rubber = null;
     try { svg.setPointerCapture(ev.pointerId); } catch (e) {}
     redrawPanel(a.idx);
   });
   grid.addEventListener('pointermove', function(ev){
     if (!down) return;
-    var svg = ev.target.closest ? ev.target.closest('svg') : null;
-    if (!svg) svg = document.querySelector('svg[data-idx="' + down.idx + '"]');
-    var a = anchorAt(svg, ev);
+    var svg = document.querySelector('svg[data-idx="' + down.idx + '"]');
+    var a = anchorAt(svg, ev, down.kind);
     if (!a || a.future) return;
     if (a.q === down.q){ if (rubber){ rubber = null; redrawPanel(down.idx); } return; }
     rubber = a; redrawPanel(down.idx);
@@ -374,10 +385,14 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     if (!down) return;
     var svg = document.querySelector('svg[data-idx="' + down.idx + '"]');
     try { svg.releasePointerCapture(ev.pointerId); } catch (e) {}
-    var a = anchorAt(svg, ev), d = down; down = null; rubber = null;
-    if (a && !a.future && a.q !== d.q){ finish(d, a); return; }          // a drag: done
-    pending = (pending && pending.k === d.k && pending.q === d.q) ? null : d;   // a click: first anchor (again cancels)
-    redrawPanel(d.idx);
+    var a = anchorAt(svg, ev, down.kind), d = down; down = null; rubber = null;
+    if (a && !a.future && a.q !== d.q){ pending = null; finish(d, a); return; }     // a drag: a whole new line
+    if (pending && pending.k === d.k){                                              // a click with an anchor waiting
+      if (pending.q === d.q){ pending = null; status('first anchor cancelled'); }   // the same bar again cancels it
+      else finish(pending, d);                                                      // the second anchor
+      redrawPanel(d.idx); return;
+    }
+    pending = d; sayPending(); redrawPanel(d.idx);                                  // a click: a new first anchor
   });
   grid.addEventListener('pointercancel', function(){ down = null; rubber = null; });
   grid.addEventListener('input', function(ev){
@@ -412,7 +427,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     else if (ev.key === 's' || ev.key === 'S') setKind('support');
     else if (ev.key === 'r' || ev.key === 'R') setKind('resistance');
     else if (ev.key === 'Delete' || ev.key === 'Backspace'){ endSel(); ev.preventDefault(); }
-    else if (ev.key === 'Escape'){ pending = null; down = null; rubber = null; sel = null; redrawPanel(active); }
+    else if (ev.key === 'Escape'){ pending = null; down = null; rubber = null; sel = null; status('cancelled'); redrawPanel(active); }
     else if ((ev.ctrlKey || ev.metaKey) && (ev.key === 'z' || ev.key === 'Z')){ undo(); ev.preventDefault(); }
   });
   document.getElementById('copy').addEventListener('click', function(){
