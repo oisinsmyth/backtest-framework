@@ -127,3 +127,22 @@ than a supply effect should be.
 
 Forty-fourth look by object; look #1 of the issuance line's forward-return ledger; no holdout.
 **Evidence:** `data/d446_issuance_book.json`. Runner `scripts/run_d446_issuance_book.py`.
+
+---
+
+## ADDENDUM, same day — "25 SE" in §2 and §4 is the Monte Carlo precision of the control's p95, not a sampling distance
+
+The `+- 6.5` and `+- 6.9` printed beside C1's p95 are the standard errors of the *estimate* of
+the p95 over 100 draws (D373's margin rule, which the runner applied correctly: the margins are
+10.9× and 6.6× that precision, so the gate is passed cleanly). They are not the spread of the
+control. **In the control's own draw-to-draw standard deviation (65 bp short, 69 bp long) the
+real per-trade mean sits 2.6 SD above the control median on the short side and 2.5 SD on the
+long, and 1.1 / 0.7 SD beyond the p95.** That is a clear pass of the pre-registered gate and a
+p of roughly 0.005–0.01 per side — not "25 SE". The same wording error was made and corrected on
+D425; §2 and §4 above are left as written and this addendum governs.
+
+The deeper reason the per-trade lens overstates and the book lens does not: 1,055 trades of 126
+bars each, 40 at a time, are not 1,055 independent observations — they overlap almost completely
+in calendar time, so the trade-level SE (±97) is not a sampling error of the mean either. The
+book's monthly block bootstrap (±1.5 bp/bar) is the honest measure of the evidence, and on it
+the alignment adds about +1.2 bp/bar over the rotated composition's +1.1: under one SE.

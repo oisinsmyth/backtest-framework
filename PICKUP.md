@@ -6,7 +6,7 @@
 
 The first forward-return look at share supply. Decile slot book (40 a side, cap 126) on D444's
 first-filed counts through the D345 kernel. **Per trade, against state-matched names (price ×
-vol × mom cells), both sides pass by 25 SE:** net issuers shorted +72 vs the cell's −97, net
+vol × mom cells), both sides pass the gate (2.5–2.6 control-SDs above the control median; see the RESULT addendum):** net issuers shorted +72 vs the cell's −97, net
 repurchasers long +208 vs the cell's +34. **The book does not collect it:** +2.3 ± 1.5 bp/bar
 gross, net crossed +1.0 at 0.6 SE, era 2 flat, **five names to half the P&L, GameStop's
 2021 squeeze trade (entered as a repurchaser 2020-10-15) 29% of the long leg**, three collapsed
