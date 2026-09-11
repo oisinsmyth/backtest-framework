@@ -127,6 +127,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
       <label>break depth <input type="number" id="brk" value="-1" min="-1" step="0.25" title="a bar beyond the line the trader HAD (the previous bar's line, projected one bar) by more than this kills the window. -1 = off: the envelope re-tilts around every bar and nothing ever breaks">%</label>
       <label>break bars <input type="number" id="bbars" value="1" min="1" max="10" step="1" title="consecutive breaking bars needed"></label>
       <label>break on <select id="bon" title="which price must be beyond the line"><option value="close" selected>close</option><option value="wick">wick</option></select></label>
+      <label>break side <select id="bside" title="either: a close beyond either line ends the window. trend: only the trend-side line can -- support in an uptrend, resistance in a downtrend; a breakout in the trend's own direction is continuation"><option value="both" selected>either line</option><option value="trend">trend side only</option></select></label>
     </span>
     <span class="grp">
       <label>survive <select id="surv" title="strict: a live window must keep passing every birth filter. loose: born under the full set, it survives under containment alone and ends only on a break, the survive width cap, or max length"><option value="strict" selected>strict</option><option value="loose">loose</option></select></label>
@@ -290,9 +291,15 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   // window. Checked BEFORE the refit, so a broken window is never re-fitted into validity.
   function broken(lo, hi, cl, t, f, P){
     if (P.brk < 0 || !f) return false;
-    var sl = f.gs * t + f.cs, rl = f.gr * t + f.cr;
-    if (P.bon === 'close') return cl[t] < sl - P.brk || cl[t] > rl + P.brk;
-    return lo[t] < sl - P.brk || hi[t] > rl + P.brk;
+    var sl = f.gs * t + f.cs, rl = f.gr * t + f.cr, sb, rb;
+    if (P.bon === 'close'){ sb = cl[t] < sl - P.brk; rb = cl[t] > rl + P.brk; }
+    else { sb = lo[t] < sl - P.brk; rb = hi[t] > rl + P.brk; }
+    if (P.bside === 'trend'){            // only the trend-side line can end the window
+      var g = f.gs + f.gr;
+      if (g > 0) return sb;
+      if (g < 0) return rb;
+    }
+    return sb || rb;
   }
 
   // HYSTERESIS: the filter set a LIVE window is re-fitted under. Strict = the birth set. Loose =
@@ -488,7 +495,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
       mintd: parseFloat(v('mintd')) >= 0 ? parseFloat(v('mintd')) / 100 : -1,
       grow: v('grow'), back: parseInt(v('back'), 10), atmax: v('atmax'),
       brk: parseFloat(v('brk')) >= 0 ? Math.log(1 + parseFloat(v('brk')) / 100) : -1,
-      bbars: parseInt(v('bbars'), 10), bon: v('bon'),
+      bbars: parseInt(v('bbars'), 10), bon: v('bon'), bside: v('bside'),
       surv: v('surv'), stol: Math.log(1 + parseFloat(v('stol')) / 100),
       smaxw: parseFloat(v('smaxw')) >= 0 ? Math.log(1 + parseFloat(v('smaxw')) / 100) : -1,
       shade: document.getElementById('shade').checked

@@ -55,8 +55,14 @@ LIVE = REPO / "temp" / "d399_live_bars.json"
 DEFAULTS = dict(tol=math.log1p(0.02), mt=2, basis="wick", minlen=30, maxlen=1000,
                 mw=0.0, maxw=math.log1p(0.55), maxoff=-1.0, mintd=-1.0, tau=1.05,
                 grow="parallel", back=9, atmax="end",
-                brk=-1.0, bbars=1, bon="close",
+                brk=-1.0, bbars=1, bon="close", bside="both",
                 surv="strict", stol=math.log1p(0.04), smaxw=-1.0)
+# WHICH LINE MAY BREAK (`bside`). Under loose survival with a 2% close break, 28% of the window
+# ends on the twelve names were closes THROUGH THE RESISTANCE OF AN UPTREND or the support of a
+# downtrend -- breakouts in the trend's own direction, which a chartist reads as continuation
+# and re-draws the far line for. `bside` = trend tests only the trend-side line: support when
+# the window's gradients sum positive, resistance when negative (flat: both). `both` is the
+# original rule.
 SETTINGS_LINE = ("split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 "
                  "maxlen=1000 mw=0 maxw=55 maxoff=-1 mintd=-1 tau=1.05 brk=-1 bbars=1 bon=close "
                  "surv=strict stol=4 smaxw=-1")
@@ -100,7 +106,7 @@ def parse_line(line):
             P[k] = int(v)
         elif k == "tau":
             P[k] = float(v)
-        elif k in ("basis", "atmax", "grow", "bon", "surv"):
+        elif k in ("basis", "atmax", "grow", "bon", "surv", "bside"):
             P[k] = v
     return P
 
@@ -183,8 +189,16 @@ def _broken(lo, hi, cl, t, f, P):
         return False
     s_line, r_line = f["gs"] * t + f["cs"], f["gr"] * t + f["cr"]
     if P["bon"] == "close":
-        return cl[t] < s_line - d or cl[t] > r_line + d
-    return lo[t] < s_line - d or hi[t] > r_line + d
+        sb, rb = cl[t] < s_line - d, cl[t] > r_line + d
+    else:
+        sb, rb = lo[t] < s_line - d, hi[t] > r_line + d
+    if P.get("bside", "both") == "trend":
+        g = f["gs"] + f["gr"]
+        if g > 0:
+            return sb                       # an uptrend ends only when its support gives way
+        if g < 0:
+            return rb                       # a downtrend only when its resistance does
+    return sb or rb
 
 
 def _grow_parallel(RC, lo, hi, P, a0=0, a1=None, cl=None):

@@ -123,6 +123,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     <label>break depth <input type="number" id="brk" value="-1" min="-1" step="0.25" title="a close (or wick) beyond the line the trader had by more than this kills the window and every window older than restart back. -1 = off">%</label>
     <label>break bars <input type="number" id="bbars" value="1" min="1" max="10" step="1"></label>
     <label>break on <select id="bon"><option value="close" selected>close</option><option value="wick">wick</option></select></label>
+    <label>break side <select id="bside" title="either: a close beyond either line ends the window. trend: only the trend-side line can -- support in an uptrend, resistance in a downtrend; a breakout in the trend's own direction is continuation"><option value="both">either line</option><option value="trend" selected>trend side only</option></select></label>
     <label>survive <select id="surv" title="strict: a live window must keep passing every birth filter. loose: born under the full set, it survives under containment alone and ends only on a break, the survive width cap, or max length"><option value="strict">strict</option><option value="loose" selected>loose</option></select></label>
     <label>survive tol <input type="number" id="stol" value="4" min="0" step="0.5" title="loose only: the pierce tolerance a live window is re-fitted with; it decides which hull edge wins, by touches">%</label>
     <label>survive max width <input type="number" id="smaxw" value="-1" min="-1" step="1" title="loose only: a width cap that still ends a live window. -1 = off">%</label>
@@ -180,7 +181,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 <script>
 (function(){
   var D = JSON.parse(document.getElementById('payload').textContent);
-  var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close surv=loose stol=4 smaxw=-1';
+  var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close bside=trend surv=loose stol=4 smaxw=-1';
 
   // ---------------------------------------------------------------- the engine (the D440 page's, verbatim)
   function hullEdges(x, y, lower){
@@ -246,9 +247,15 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   }
   function broken(lo, hi, cl, t, f, P){
     if (P.brk < 0 || !f) return false;
-    var sl = f.gs * t + f.cs, rl = f.gr * t + f.cr;
-    if (P.bon === 'close') return cl[t] < sl - P.brk || cl[t] > rl + P.brk;
-    return lo[t] < sl - P.brk || hi[t] > rl + P.brk;
+    var sl = f.gs * t + f.cs, rl = f.gr * t + f.cr, sb, rb;
+    if (P.bon === 'close'){ sb = cl[t] < sl - P.brk; rb = cl[t] > rl + P.brk; }
+    else { sb = lo[t] < sl - P.brk; rb = hi[t] > rl + P.brk; }
+    if (P.bside === 'trend'){            // only the trend-side line can end the window
+      var g = f.gs + f.gr;
+      if (g > 0) return sb;
+      if (g < 0) return rb;
+    }
+    return sb || rb;
   }
   // HYSTERESIS: the filter set a LIVE window is re-fitted under. Strict = the birth set. Loose =
   // containment only: `stol` as the tolerance (it decides which hull edge wins, by touches), the
@@ -320,7 +327,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   function parseLine(line){
     var P = {tol: Math.log(1.02), mt: 2, basis: 'wick', minlen: 30, maxlen: 1000, mw: 0, maxw: Math.log(1.55),
              maxoff: -1, mintd: -1, tau: 1.05, grow: 'parallel', back: 9, atmax: 'end', brk: -1, bbars: 1, bon: 'close',
-             surv: 'strict', stol: Math.log(1.04), smaxw: -1};
+             surv: 'strict', stol: Math.log(1.04), smaxw: -1, bside: 'both'};
     line.split(/\s+/).forEach(function(tok){
       var m = tok.match(/^([a-z]+)=(.+)$/); if (!m) return;
       var k = m[1], v = m[2], x = parseFloat(v);
@@ -329,7 +336,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
       else if (k === 'mintd') P[k] = x >= 0 ? x / 100 : -1;
       else if (k === 'mt' || k === 'minlen' || k === 'maxlen' || k === 'back' || k === 'bbars') P[k] = parseInt(v, 10);
       else if (k === 'tau') P[k] = x;
-      else if (k === 'basis' || k === 'atmax' || k === 'grow' || k === 'bon' || k === 'surv') P[k] = v;
+      else if (k === 'basis' || k === 'atmax' || k === 'grow' || k === 'bon' || k === 'surv' || k === 'bside') P[k] = v;
     });
     P.maxlen = Math.min(P.maxlen, 1000);
     return P;
