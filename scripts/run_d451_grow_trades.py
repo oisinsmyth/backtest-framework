@@ -158,7 +158,7 @@ def main() -> int:
     ap.add_argument("--out", default=str(OUT), help="the result file (default: D451's)")
     ap.add_argument("--tag", default="D451", help="the decision the run belongs to")
     a = ap.parse_args()
-    LINE, OUT = a.line, Path(a.out)
+    LINE, OUT = a.line, Path(a.out).resolve()      # resolved: the final print is repo-relative
 
     t0 = time.time()
     RC = _load("d399rc", "d399_recalc_segment.py")
