@@ -198,9 +198,16 @@ was regime-driven; sizing to volatility removes the regime. **This is D236's fin
 the right criterion** — those six controls "reduced drawdown without improving risk-adjusted
 return", which is exactly what a drawdown constraint wants.
 
-### Does it clear P4?
+### ~~Does it clear P4?~~ — **NO. See the amendment of 2026-09-11 at the foot of this page.**
 
-**Yes, at a 0.4% volatility target:**
+> **The answer below is a PER-HOLD statistic and P4 was ruled on 2026-09-11 to mean the ACCOUNT'S
+> LIFE** ([R11](RULES.md#r11)). **The 6.40 years is `1 / (per-hold breach rate)`. The account's life
+> at the same arm and the same sizing rule is 0.14 years** —
+> [D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md).
+> **Both numbers are correctly computed; only one of them is P4.** The table below is left exactly
+> as it was written.
+
+~~**Yes, at a 0.4% volatility target:**~~
 
 | scheme | avg size | breach | **expected life** | ann return | profit before breach |
 |---|---:|---:|---:|---:|---:|
@@ -481,3 +488,65 @@ function of edge, cost and the firm's geometry, and at zero edge it is pinned by
 regardless of strategy. **Prop rules can make a live-profitable strategy fail; they cannot make a
 zero-edge one pass.** [R15](RULES.md#r15) is untouched — **a candidate is still screened on gross
 mean per trade above its nulls, and `P(pass)` sits downstream of that.**
+
+---
+
+## AMENDMENT, 2026-09-11 — **C1 DOES NOT CLEAR P4, AND THE CANDIDATE LIST IS EXHAUSTED ON THE RIGHT STATISTIC**
+
+**The principal ruled on 2026-09-11 that P4 means the ACCOUNT'S LIFE, not a per-hold breach rate
+inverted** ([R11](RULES.md#r11), RULING). **This page asserted C1 clears P4 at 6.40 years. Under the
+ruling it does not.** Nothing above is deleted; the §"Does it clear P4?" heading carries a pointer
+to here.
+
+**The operative numbers**, from
+[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md),
+MFFU Rapid EOD 50K, SPY, D259's own vol-targeting rule, measured path:
+
+| daily vol, fraction of account | 0.2% | 0.4% | **0.7%** | 1.1% |
+|---|---:|---:|---:|---:|
+| **funded life, years** | **1.01** | 0.31 | **0.14** | 0.06 |
+| `V` per evaluation | −168 | −23 | **+78** | +3 |
+
+> **P4 needs three years. Nothing on the grid clears it, the best cell anywhere is 1.01 years, and
+> that cell's `V` is negative.** Not one simulated path of 3,266 is alive at the 600-day horizon.
+
+**And `V` itself is unresolved, not positive.** Circular block bootstrap on the hold sequence:
+**0.99 / 0.72 / 0.69 SE at `b` = 1 / 20 / 60**, against a 2-SE bar. **2021–2026 alone is `+51 ± 223`.**
+
+### What this does and does not do to C1
+
+- **C1's REOPENING stands as written.** It was a correction to a premature closure, and applying the
+  registered sizing wrapper was completing the registered test. **What has changed is that the
+  reopened candidate fails the hurdle it was reopened to clear.**
+- **The edge is still real and still era-stable.** +9.04%/yr overnight, +8.55% and +8.28% either
+  side of 2020. **Nothing here touches [R15](RULES.md#r15)** — C1 remains a signal that pays gross.
+  **What fails is the INSTRUMENT's geometry against that signal's path.**
+- **It does not close C1**, and under R15 this page cannot. **C1 remains OPEN as a component**, per
+  the 2026-08-29 clarification that a P4 closure closes a standalone book and not a component —
+  **and there is still no partner**, C2 and C3 both having died.
+- **The vol-targeting wrapper remains the track's one durable output.** D440 measured it working
+  exactly as D259 said it does: on the SHUFFLED control, where there is no volatility clustering to
+  exploit, vol targeting **destroys** value (654 → 344). It is an instrument for clustering, it is
+  in the measured number, **and it is not enough.**
+
+### What the track now knows that it did not
+
+**The damage is CLUSTERING, not kurtosis.** D440's two controls separate them: a Gaussian at matched
+mean and vol is worth **$770**; the same holds drawn i.i.d. — fat marginal kept, sequence destroyed —
+**$654**; the historical sequence **$78**. **The fat marginal is 14–18% of the gap on all four
+symbols; serial structure is the other 82–86%.**
+
+> **So the remedy a fifth candidate needs is not a stop, a smaller size or tail insurance — those
+> address the 14–18%. It is anything that reduces exposure during clustered adverse periods.**
+> **`O1` in the [candidate ledger](research/Prop-Firm-080926/24-candidate-ledger-both-books.md) — a
+> volatility-regime day classifier used as an ABSTENTION rule, "and it is not an edge" — is exactly
+> that shape**, and this is the first quantitative reason to run it rather than a general prior that
+> it ought to help.
+
+**And the screening method itself is now on notice.** All four D258 candidates were screened on
+per-trade bars — C1 on per-hold MAE and breach, C2 and C3 on *"worst single trade < 2%"*. **C2's and
+C3's verdicts stand, because they died on edge sign and on skew and those are lens-invariant. The
+bar was still the wrong bar.**
+
+**Admitted arms: still none.** The statement at the top of this page is unchanged, and it is now
+unchanged for a better-measured reason.
