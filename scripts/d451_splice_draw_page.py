@@ -103,8 +103,9 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   <h1>Draw the lines</h1>
   <p class="lede">Twelve names, <b>the future hidden</b>. Each name has its own cursor: step
     forward a bar at a time; when a line is there to draw, pick a kind and click its two anchors
-    (each click snaps to that bar's wick, the low for support, the high for resistance; a plain
-    click always places an anchor, even on top of a line, so an old pivot can be re-used); when a
+    (click the first and then the second, or press on the first and drag to the second; each
+    anchor snaps to that bar's wick, the low for support, the high for resistance, and a plain
+    press always places an anchor even on top of a line, so an old pivot can be re-used); when a
     line breaks, <b>Shift+click</b> it and <b>end it here</b>. Every line remembers the bar it was drawn at and
     the bar it was ended at, so the set of lines you had at any bar can be replayed exactly. That
     is what each construction will be scored against, bar by bar.</p>
@@ -254,8 +255,12 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       if (isAlive) s += '<line class="ln-hit" data-k="' + esc(k) + '" data-j="' + j + '" x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="transparent" stroke-width="12"/>';
       s += '<circle cx="' + x1.toFixed(1) + '" cy="' + y1.toFixed(1) + '" r="3" fill="' + col2 + '" opacity="' + op + '" pointer-events="none"/><circle cx="' + x2.toFixed(1) + '" cy="' + y2.toFixed(1) + '" r="3" fill="' + col2 + '" opacity="' + op + '" pointer-events="none"/>';
     });
-    if (pending && pending.k === k){
-      s += '<circle cx="' + S.X(pending.x1 - st0).toFixed(1) + '" cy="' + S.Y(pending.p1).toFixed(1) + '" r="4.5" fill="none" stroke="var(--sel)" stroke-width="2"/>';
+    var first = (down && down.k === k) ? down : (pending && pending.k === k) ? pending : null;
+    if (first){
+      s += '<circle cx="' + S.X(first.q - st0).toFixed(1) + '" cy="' + S.Y(first.p).toFixed(1) + '" r="4.5" fill="none" stroke="var(--sel)" stroke-width="2"/>';
+      if (rubber && down && down.k === k){
+        s += '<line x1="' + S.X(first.q - st0).toFixed(1) + '" y1="' + S.Y(first.p).toFixed(1) + '" x2="' + S.X(rubber.q - st0).toFixed(1) + '" y2="' + S.Y(rubber.p).toFixed(1) + '" stroke="var(--sel)" stroke-width="2" stroke-dasharray="4 4" opacity=".8"/>';
+      }
     }
     s += '<line x1="' + S.X(c).toFixed(1) + '" x2="' + S.X(c).toFixed(1) + '" y1="' + PT + '" y2="' + (PT + ih) + '" stroke="var(--ink)" opacity=".35"/>';
     for (i = 0; i < n; i += 45){
@@ -301,45 +306,80 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   function setCursor(idx, c){
     var nm = D.names[idx], k = key(nm);
     STATE[k].cursor = Math.max(0, Math.min(nm.n - 1, c));
-    if (pending && pending.k === k) pending = null;
+    // a first anchor survives stepping: press it, step until the second pivot shows, click it
     if (sel && sel.k === k) sel = null;
     active = idx; save(k); redrawPanel(idx);
   }
 
   // ---------------------------------------------------------------- interaction
-  var grid = document.getElementById('grid');
+  var grid = document.getElementById('grid'), down = null, rubber = null;
   grid.addEventListener('click', function(ev){
     var t = ev.target, b = t.closest ? t.closest('button[data-act]') : null;
-    if (b){
-      var i2 = parseInt(b.getAttribute('data-idx'), 10), st2 = STATE[key(D.names[i2])], act = b.getAttribute('data-act');
-      setCursor(i2, act === 'first' ? 0 : act === 'back' ? st2.cursor - 1 : act === 'fwd' ? st2.cursor + 1 : st2.cursor + 5);
-      return;
-    }
-    // SELECTING TAKES SHIFT. A plain click always places an anchor, even on top of a line --
-    // the principal could not re-anchor on an old pivot because the line anchored there ate
-    // the click.
+    if (!b) return;
+    var i2 = parseInt(b.getAttribute('data-idx'), 10), st2 = STATE[key(D.names[i2])], act = b.getAttribute('data-act');
+    setCursor(i2, act === 'first' ? 0 : act === 'back' ? st2.cursor - 1 : act === 'fwd' ? st2.cursor + 1 : st2.cursor + 5);
+  });
+  // ANCHORS BY POINTER, NOT BY CLICK. A click only fires when the pointer goes down and up on
+  // the same element; a drag from one candle to another, or a slight move on a one-pixel wick,
+  // fires nothing -- which is why two anchors could not be placed. Pointer events carry both
+  // ways of drawing: press on the first anchor and release on the second (a drag, with a
+  // rubber band), or press-and-release on the first and again on the second (two clicks).
+  function anchorAt(svg, ev){
+    var idx = parseInt(svg.getAttribute('data-idx'), 10), nm = D.names[idx], k = key(nm), S = scales(nm), st = STATE[k];
+    var pt = svgPoint(svg, ev), i = S.bar(pt.x), q = nm.start + i, p = S.price(pt.y);
+    if (pt.y < PT || pt.y > PT + ih) return null;
+    if (document.getElementById('snap').checked) p = kind === 'support' ? nm.l[q] : nm.h[q];
+    return {idx: idx, k: k, i: i, q: q, p: p, future: i > st.cursor, st: st, nm: nm};
+  }
+  function finish(a1, a2){
+    var st = a1.st, nm = a1.nm;
+    push();
+    var x1 = a1.q, p1 = a1.p, x2 = a2.q, p2 = a2.p;
+    if (x2 < x1){ var tx = x1, tp = p1; x1 = x2; p1 = p2; x2 = tx; p2 = tp; }
+    st.lines.push({kind: kind, x1: x1, p1: p1, x2: x2, p2: p2, at: nm.start + st.cursor});
+    pending = null; save(a1.k); redrawPanel(a1.idx);
+  }
+  grid.addEventListener('pointerdown', function(ev){
+    var t = ev.target;
+    if (ev.button !== 0 || (t.closest && t.closest('button, input'))) return;
+    // SELECTING TAKES SHIFT. A plain press always places an anchor, even on top of a line --
+    // the line anchored on an old pivot used to eat the press meant to re-use it.
     if (ev.shiftKey && t.classList && (t.classList.contains('ln') || t.classList.contains('ln-hit'))){
-      var svg0 = t.closest('svg');
-      active = parseInt(svg0.getAttribute('data-idx'), 10);
-      sel = {k: t.getAttribute('data-k'), j: parseInt(t.getAttribute('data-j'), 10)}; pending = null; redrawPanel(active); return;
+      active = parseInt(t.closest('svg').getAttribute('data-idx'), 10);
+      sel = {k: t.getAttribute('data-k'), j: parseInt(t.getAttribute('data-j'), 10)}; pending = null; redrawPanel(active);
+      ev.preventDefault(); return;
     }
     var svg = t.closest ? t.closest('svg') : null;
     if (!svg) return;
-    var idx = parseInt(svg.getAttribute('data-idx'), 10), nm = D.names[idx], k = key(nm), S = scales(nm), st = STATE[k];
-    active = idx;
-    var pt = svgPoint(svg, ev), i = S.bar(pt.x), q = nm.start + i, p = S.price(pt.y);
-    if (pt.y < PT || pt.y > PT + ih){ redrawPanel(idx); return; }
-    if (i > st.cursor){ status('that bar is in the future -- step forward first'); redrawPanel(idx); return; }
-    if (document.getElementById('snap').checked) p = kind === 'support' ? nm.l[q] : nm.h[q];
-    sel = null;
-    if (!pending || pending.k !== k){ pending = {k: k, x1: q, p1: p}; redrawPanel(idx); return; }
-    if (q === pending.x1){ pending = null; redrawPanel(idx); return; }
-    push();
-    var x1 = pending.x1, p1 = pending.p1, x2 = q, p2 = p;
-    if (x2 < x1){ var tx = x1, tp = p1; x1 = x2; p1 = p2; x2 = tx; p2 = tp; }
-    st.lines.push({kind: kind, x1: x1, p1: p1, x2: x2, p2: p2, at: nm.start + st.cursor});
-    pending = null; save(k); redrawPanel(idx);
+    var a = anchorAt(svg, ev);
+    if (!a) return;
+    ev.preventDefault();
+    active = a.idx; sel = null;
+    if (a.future){ status('that bar is in the future -- step forward first'); redrawPanel(a.idx); return; }
+    if (pending && pending.k === a.k && a.q !== pending.q){ finish(pending, a); return; }   // second click
+    down = a; rubber = null;
+    try { svg.setPointerCapture(ev.pointerId); } catch (e) {}
+    redrawPanel(a.idx);
   });
+  grid.addEventListener('pointermove', function(ev){
+    if (!down) return;
+    var svg = ev.target.closest ? ev.target.closest('svg') : null;
+    if (!svg) svg = document.querySelector('svg[data-idx="' + down.idx + '"]');
+    var a = anchorAt(svg, ev);
+    if (!a || a.future) return;
+    if (a.q === down.q){ if (rubber){ rubber = null; redrawPanel(down.idx); } return; }
+    rubber = a; redrawPanel(down.idx);
+  });
+  grid.addEventListener('pointerup', function(ev){
+    if (!down) return;
+    var svg = document.querySelector('svg[data-idx="' + down.idx + '"]');
+    try { svg.releasePointerCapture(ev.pointerId); } catch (e) {}
+    var a = anchorAt(svg, ev), d = down; down = null; rubber = null;
+    if (a && !a.future && a.q !== d.q){ finish(d, a); return; }          // a drag: done
+    pending = (pending && pending.k === d.k && pending.q === d.q) ? null : d;   // a click: first anchor (again cancels)
+    redrawPanel(d.idx);
+  });
+  grid.addEventListener('pointercancel', function(){ down = null; rubber = null; });
   grid.addEventListener('input', function(ev){
     var t = ev.target;
     if (t.type === 'range') setCursor(parseInt(t.getAttribute('data-idx'), 10), parseInt(t.value, 10));
@@ -372,7 +412,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     else if (ev.key === 's' || ev.key === 'S') setKind('support');
     else if (ev.key === 'r' || ev.key === 'R') setKind('resistance');
     else if (ev.key === 'Delete' || ev.key === 'Backspace'){ endSel(); ev.preventDefault(); }
-    else if (ev.key === 'Escape'){ pending = null; sel = null; redrawPanel(active); }
+    else if (ev.key === 'Escape'){ pending = null; down = null; rubber = null; sel = null; redrawPanel(active); }
     else if ((ev.ctrlKey || ev.metaKey) && (ev.key === 'z' || ev.key === 'Z')){ undo(); ev.preventDefault(); }
   });
   document.getElementById('copy').addEventListener('click', function(){
