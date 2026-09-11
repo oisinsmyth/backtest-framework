@@ -123,10 +123,15 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     <button id="kres" class="kind-res" type="button">resistance (R)</button>
     <label><input type="checkbox" id="snap" checked> snap to wick</label>
     <label><input type="checkbox" id="ext" checked> project to the right</label>
-    <label><input type="checkbox" id="ghost"> show ended lines faintly</label>
+    <label><input type="checkbox" id="ghost" checked> show ended lines faintly</label>
     <button id="del" type="button" title="end the selected line at this bar (Delete)">end selected line here</button>
     <button id="undo" type="button" title="undo the last change (Ctrl+Z)">undo</button>
     <span class="st" id="status">&hellip;</span>
+  </div>
+  <div class="bar" style="position:static;padding:8px 16px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint)">page build <b id="ver">__BUILD__</b></span>
+    <button id="copylog" type="button" title="copy the last events the page saw, for debugging">copy event log</button>
+    <span id="evlog" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);flex-basis:100%;white-space:pre-wrap;max-height:7.5em;overflow:auto"></span>
   </div>
 
   <div class="legend">
@@ -165,6 +170,18 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   var W = 1200, HH = 260, PL = 8, PR = 62, PT = 12, PB = 22, iw = W - PL - PR, ih = HH - PT - PB;
   var kind = 'support', pending = null, sel = null, hist = [], db = null, saveTimers = {}, active = 0;
   var STATE = {};                 // key -> {symbol, start, n, cursor, lines: [{kind,x1,p1,x2,p2,at,until?}]}
+  var dirty = {};                 // key -> true once the viewer changed it in this visit (the database load must not overwrite it)
+  // THE EVENT LOG: the last events the page saw, visible and copyable, because the principal's
+  // browser and mine disagreed and nothing else could say why.
+  var EVLOG = [];
+  function evlog(s){
+    EVLOG.push(new Date().toISOString().slice(11, 23) + ' ' + s);
+    if (EVLOG.length > 40) EVLOG.shift();
+    var el = document.getElementById('evlog');
+    if (el) el.textContent = EVLOG.slice(-8).join('\n');
+  }
+  window.addEventListener('error', function(e){ evlog('ERROR ' + e.message + ' @' + e.lineno + ':' + e.colno); });
+  window.addEventListener('unhandledrejection', function(e){ evlog('REJECTION ' + (e.reason && (e.reason.code || e.reason.message || e.reason))); });
   function esc(s){ return String(s).replace(/[&<>]/g, function(q){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[q]; }); }
   function key(nm){ return nm.symbol + '-' + nm.start; }
   function alive(L, q){ return L.at <= q && (L.until == null || L.until > q); }
@@ -174,12 +191,13 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   function body(k){ var st = STATE[k]; return {symbol: st.symbol, start: st.start, n: st.n, cursor: st.cursor, lines: st.lines, updated: new Date().toISOString()}; }
   function save(k){
     var b = body(k);
+    dirty[k] = true;
     try { localStorage.setItem('draw2:' + k, JSON.stringify(b)); } catch (e) {}
     if (!db){ status('saved in this browser only (database unavailable) -- use copy all as JSON'); return; }
     if (saveTimers[k]) clearTimeout(saveTimers[k]);
     saveTimers[k] = setTimeout(function(){
-      db.doc('lines/' + k).set(b).then(function(){ if (pending) sayPending(); else status('saved ' + k + ' at ' + b.updated.slice(11, 19)); },
-        function(err){ status('save failed (' + (err && err.code) + ') -- copy all as JSON'); });
+      db.doc('lines/' + k).set(b).then(function(){ evlog('saved ' + k + ' (' + b.lines.length + ' lines, ' + b.lines.filter(function(L){ return L.until != null; }).length + ' ended)'); if (pending) sayPending(); else status('saved ' + k + ' at ' + b.updated.slice(11, 19)); },
+        function(err){ evlog('SAVE FAILED ' + k + ' ' + (err && err.code)); status('save failed (' + (err && err.code) + ') -- copy all as JSON'); });
     }, 400);
   }
   function load(){
@@ -198,9 +216,10 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       D.names.forEach(function(nm){
         var k = key(nm);
         db.doc('lines/' + k).get().then(function(snap){
-          if (snap.exists){ var b = snap.data(); if (b && b.lines){ STATE[k].lines = b.lines; STATE[k].cursor = (b.cursor != null) ? b.cursor : 30; } }
-          if (--pend === 0){ render(); status('loaded ' + total() + ' lines from the database'); }
-        }, function(){ if (--pend === 0){ render(); status('database read failed -- showing this browser\'s copy'); } });
+          // the database copy wins only if the viewer has not touched this name in this visit
+          if (snap.exists && !dirty[k]){ var b = snap.data(); if (b && b.lines){ STATE[k].lines = b.lines; STATE[k].cursor = (b.cursor != null) ? b.cursor : 30; } }
+          if (--pend === 0){ render(); status('loaded ' + total() + ' lines from the database'); evlog('database loaded: ' + total() + ' lines'); }
+        }, function(err){ evlog('database read failed ' + (err && err.code)); if (--pend === 0){ render(); status('database read failed -- showing this browser\'s copy'); } });
       });
     }, function(){ status('database unavailable -- saved in this browser only'); });
   }
@@ -345,11 +364,14 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       var j = parseInt(b.getAttribute('data-sel'), 10);
       sel = (sel && sel.k === k2 && sel.j === j) ? null : {k: k2, j: j};
       active = i2; pending = null; redrawPanel(i2);
+      evlog('chip select ' + k2 + ' line ' + j + ' -> ' + (sel ? 'selected' : 'cleared'));
       status(sel ? 'selected a line on ' + D.names[i2].symbol + ' -- end it with the end button, the Delete key, or end selected line here' : 'selection cleared');
       return;
     }
     if (b.hasAttribute('data-end')){
-      sel = {k: k2, j: parseInt(b.getAttribute('data-end'), 10)}; active = i2; endSel(); return;
+      sel = {k: k2, j: parseInt(b.getAttribute('data-end'), 10)}; active = i2;
+      evlog('chip end ' + k2 + ' line ' + sel.j + ' at cursor ' + st2.cursor);
+      endSel(); return;
     }
     var act = b.getAttribute('data-act');
     setCursor(i2, act === 'first' ? 0 : act === 'back' ? st2.cursor - 1 : act === 'fwd' ? st2.cursor + 1 : st2.cursor + 5);
@@ -388,17 +410,21 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     if (ev.shiftKey && t.classList && (t.classList.contains('ln') || t.classList.contains('ln-hit'))){
       active = parseInt(t.closest('svg').getAttribute('data-idx'), 10);
       sel = {k: t.getAttribute('data-k'), j: parseInt(t.getAttribute('data-j'), 10)}; pending = null; redrawPanel(active);
+      evlog('shift-press selected line ' + sel.j + ' on ' + sel.k);
+      status('selected a line -- end it with its chip, the Delete key, or end selected line here');
       ev.preventDefault(); return;
     }
+    if (ev.shiftKey) evlog('shift-press hit ' + t.tagName + (t.getAttribute('class') ? '.' + t.getAttribute('class') : '') + ', not a line');
     var svg = t.closest ? t.closest('svg') : null;
-    if (!svg) return;
+    if (!svg){ evlog('press outside a chart: ' + t.tagName); return; }
     // a waiting first anchor on this name fixes the kind; otherwise the kind buttons do
     var waiting = pending && pending.k === key(D.names[parseInt(svg.getAttribute('data-idx'), 10)]);
     var a = anchorAt(svg, ev, waiting ? pending.kind : kind);
-    if (!a) return;
+    if (!a){ evlog('press off the chart area'); return; }
     ev.preventDefault();
     active = a.idx; sel = null;
-    if (a.future){ status('that bar is in the future -- step forward first'); redrawPanel(a.idx); return; }
+    evlog('press ' + a.nm.symbol + ' bar ' + a.i + ' (' + a.kind + ')' + (ev.shiftKey ? ' shift' : '') + ' target=' + t.tagName + (t.getAttribute('class') ? '.' + t.getAttribute('class') : '') + (waiting ? ' [anchor waiting]' : ''));
+    if (a.future){ evlog('  refused: bar ' + a.i + ' is after the cursor ' + a.st.cursor); status('that bar is in the future -- step forward first'); redrawPanel(a.idx); return; }
     // NOTHING IS DECIDED ON THE PRESS. A press with a first anchor waiting used to complete that
     // line at once, so a drag begun for a NEW line was swallowed as the old line's second
     // anchor. Now the press only records where it landed; the release decides: released on the
@@ -421,13 +447,13 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     var svg = document.querySelector('svg[data-idx="' + down.idx + '"]');
     try { svg.releasePointerCapture(ev.pointerId); } catch (e) {}
     var a = anchorAt(svg, ev, down.kind), d = down; down = null; rubber = null;
-    if (a && !a.future && a.q !== d.q){ pending = null; finish(d, a); return; }     // a drag: a whole new line
+    if (a && !a.future && a.q !== d.q){ evlog('release bar ' + a.i + ': drag -> line'); pending = null; finish(d, a); return; }     // a drag: a whole new line
     if (pending && pending.k === d.k){                                              // a click with an anchor waiting
-      if (pending.q === d.q){ pending = null; status('first anchor cancelled'); }   // the same bar again cancels it
-      else finish(pending, d);                                                      // the second anchor
+      if (pending.q === d.q){ pending = null; evlog('release: same bar as the waiting anchor -> cancelled'); status('first anchor cancelled'); }
+      else { evlog('release bar ' + d.i + ': second anchor -> line'); finish(pending, d); }
       redrawPanel(d.idx); return;
     }
-    pending = d; sayPending(); redrawPanel(d.idx);                                  // a click: a new first anchor
+    pending = d; evlog('release bar ' + d.i + ': first anchor waiting'); sayPending(); redrawPanel(d.idx);   // a click: a new first anchor
   });
   grid.addEventListener('pointercancel', function(){ down = null; rubber = null; });
   grid.addEventListener('input', function(ev){
@@ -442,8 +468,9 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   document.getElementById('ksup').addEventListener('click', function(){ setKind('support'); });
   document.getElementById('kres').addEventListener('click', function(){ setKind('resistance'); });
   function endSel(){
-    if (!sel){ status('nothing selected -- Shift+click a line, or use its chip in the panel header'); return; }
+    if (!sel){ evlog('end requested with nothing selected'); status('nothing selected -- press end on a line\'s chip in the panel header, or Shift+click the line'); return; }
     var st = STATE[sel.k], L = st.lines[sel.j], q = st.start + st.cursor;
+    if (!L){ evlog('end: selected line ' + sel.j + ' missing'); sel = null; return; }
     push();
     var same = L.at >= q;
     if (same) st.lines.splice(sel.j, 1);           // drawn and ended at the same bar: never existed
@@ -451,7 +478,8 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     var k = sel.k; sel = null; save(k);
     var idx = D.names.findIndex(function(nm){ return key(nm) === k; });
     redrawPanel(idx);
-    status(same ? 'that line was drawn at this same bar, so ending it here removes it' : 'ended the line at ' + D.names[idx].dates[st.cursor]);
+    evlog('ended ' + k + ' line at bar ' + q + (same ? ' (same bar as drawn: removed)' : ''));
+    status(same ? 'that line was drawn at this same bar, so ending it here removes it' : 'ended the line at ' + D.names[idx].dates[st.cursor] + ' -- it stays faint; step back to see it live');
   }
   document.getElementById('del').addEventListener('click', endSel);
   document.getElementById('undo').addEventListener('click', undo);
@@ -476,6 +504,14 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   document.getElementById('show').addEventListener('click', function(){
     var ta = document.getElementById('json'); ta.hidden = !ta.hidden; if (!ta.hidden){ ta.value = exportJSON(); ta.select(); }
   });
+  document.getElementById('copylog').addEventListener('click', function(){
+    var s = 'build ' + document.getElementById('ver').textContent + ' | ' + navigator.userAgent + ' | db=' + (db ? 'yes' : 'no') + '\n' + EVLOG.join('\n');
+    var note = document.getElementById('copied');
+    var done = function(ok){ note.textContent = ok ? 'event log copied' : 'log: ' + s; setTimeout(function(){ note.textContent = ''; }, 6000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(s).then(function(){ done(true); }, function(){ done(false); });
+    else done(false);
+  });
+  evlog('page ready, build ' + document.getElementById('ver').textContent);
   load();
 })();
 </script>
@@ -486,7 +522,8 @@ def main() -> int:
     d = json.loads(SRC.read_text())
     payload = json.dumps(d, separators=(",", ":"), allow_nan=False)
     assert "NaN" not in payload and "Infinity" not in payload, "a non-finite value in the bars"
-    out = HTML.replace("__DATA__", payload)
+    import datetime as _dt
+    out = HTML.replace("__DATA__", payload).replace("__BUILD__", _dt.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
     def _bare(t):
         raise ValueError(f"bare {t} -- JSON.parse would throw and the page would render blank")
