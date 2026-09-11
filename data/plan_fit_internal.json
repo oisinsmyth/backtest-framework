@@ -1,0 +1,101 @@
+{
+ "source": "data/plan_cost_probe.json (vendor figures, free metadata calls)",
+ "drive_gb": 930.5,
+ "free_now_gb": 414.2,
+ "keep_free_gb": 64.0,
+ "budget_gb": 350.2,
+ "compression_scenarios": [
+  1.5,
+  2.0,
+  2.6
+ ],
+ "compression_note": "2.60x was measured on OHLCV only; tbbo/mbo/definition/statistics were NOT measured. Plan against 1.5x until one small job settles it.",
+ "priority": [
+  {
+   "rank": 1,
+   "item": "ohlcv-1m  ALL_SYMBOLS  16yr",
+   "metered_gib": 53.38068374991417,
+   "cum_disk_gb": {
+    "1.5": 38.211381824,
+    "2.0": 28.658536368,
+    "2.6": 22.045027975384613
+   },
+   "fits_at_worst_case": true,
+   "why": "1  THE BARS. Every instrument, every contract month, 16 years. The core panel and the thing every study reads first."
+  },
+  {
+   "rank": 2,
+   "item": "definition 41 roots    16yr",
+   "metered_gib": 72.94612299650908,
+   "cum_disk_gb": {
+    "1.5": 90.42825059733335,
+    "2.0": 67.821187948,
+    "2.6": 52.17014457538461
+   },
+   "fits_at_worst_case": true,
+   "why": "2  Roll calendar, expiries, tick sizes. The bars are NOT usable without it -- a continuous series cannot be stitched or a contract priced."
+  },
+  {
+   "rank": 3,
+   "item": "statistics 41 roots    16yr",
+   "metered_gib": 53.05930994451046,
+   "cum_disk_gb": {
+    "1.5": 128.40958409066667,
+    "2.0": 96.307188068,
+    "2.6": 74.08245235999999
+   },
+   "fits_at_worst_case": true,
+   "why": "3  Open interest and settlements, 16 years. Daily, cheap, and the only positioning series in the plan."
+  },
+  {
+   "rank": 4,
+   "item": "status     41 roots    16yr",
+   "metered_gib": 14.669172763824463,
+   "cum_disk_gb": {
+    "1.5": 138.91018697066667,
+    "2.0": 104.182640228,
+    "2.6": 80.14049248307691
+   },
+   "fits_at_worst_case": true,
+   "why": "4  Halts and auction states. Tiny, and it is what a breach looks like when the position cannot be exited."
+  },
+  {
+   "rank": 5,
+   "item": "tbbo      ALL_SYMBOLS  12mo",
+   "metered_gib": 107.32573196291924,
+   "cum_disk_gb": {
+    "1.5": 215.73693843733335,
+    "2.0": 161.802703828,
+    "2.6": 124.46361832923077
+   },
+   "fits_at_worst_case": true,
+   "why": "5  Every trade with the quote before it, 12 months. With 1-second bars excluded this is the ONLY intrabar path in the plan, plus the spread."
+  },
+  {
+   "rank": 6,
+   "item": "bbo-1m    41 roots     12mo",
+   "metered_gib": 30.197642669081688,
+   "cum_disk_gb": {
+    "1.5": 237.3532530506667,
+    "2.0": 178.014939788,
+    "2.6": 136.9345690676923
+   },
+   "fits_at_worst_case": true,
+   "why": "6  Quoted spread per minute including the overnight, 12 months. Answers cost where no trade prints, which tbbo cannot."
+  },
+  {
+   "rank": 7,
+   "item": "mbo       top 8 roots  free",
+   "metered_gib": 109.83997893333435,
+   "cum_disk_gb": {
+    "1.5": 315.9797726026667,
+    "2.0": 236.98482945199999,
+    "2.6": 182.2960226553846
+   },
+   "fits_at_worst_case": true,
+   "why": "7  Full order book, 8 roots. Unrepeatable -- the free L3 window trails the current date -- but the repo has no order-book engine, so it is insurance, not a study input. Last in, first cut."
+  }
+ ],
+ "total_metered_gib": 441.41864302009344,
+ "cut_after_rank": null
+}
