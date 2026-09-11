@@ -86,6 +86,12 @@ button.kind-res.on{border-color:var(--res);color:var(--res);font-weight:600}
 .ph input[type=range]{width:220px;accent-color:var(--sup)}
 .ph .where{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink);min-width:15em;text-align:right;font-variant-numeric:tabular-nums}
 .ph .cnt{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.ph .chips{display:inline-flex;gap:6px;flex-wrap:wrap;flex-basis:100%;order:9}
+.chip{display:inline-flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.chip button{border:none;border-radius:0;padding:2px 8px;font-family:"IBM Plex Mono",monospace;font-size:11.5px}
+.chip.sup button:first-child{color:var(--sup)} .chip.res button:first-child{color:var(--res)}
+.chip button+button{border-left:1px solid var(--rule);color:var(--muted)}
+.chip.on{border-color:var(--sel);box-shadow:0 0 0 1px var(--sel) inset}
 .pb{overflow-x:auto}
 .pb svg{display:block;width:100%;min-width:880px;height:auto;cursor:crosshair;touch-action:none}
 .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);align-items:center}
@@ -106,7 +112,8 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     (click the first and then the second, or press on the first and drag to the second; each
     anchor snaps to that bar's wick, the low for support, the high for resistance, and a plain
     press always places an anchor even on top of a line, so an old pivot can be re-used); when a
-    line breaks, <b>Shift+click</b> it and <b>end it here</b>. Every line remembers the bar it was drawn at and
+    line breaks, press <b>end</b> on its chip in the panel header (or Shift+click the line and
+    <b>end selected line here</b>). Every line remembers the bar it was drawn at and
     the bar it was ended at, so the set of lines you had at any bar can be replayed exactly. That
     is what each construction will be scored against, bar by bar.</p>
 
@@ -268,6 +275,20 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     }
     return s;
   }
+  // THE CHIPS: one per live line, in the panel header, so a line can be selected and ended
+  // without hitting a two-pixel stroke -- the principal could not select a line by clicking it.
+  function chips(nm, idx){
+    var k = key(nm), st = STATE[k], q = nm.start + st.cursor, out = '';
+    st.lines.forEach(function(L, j){
+      if (!alive(L, q)) return;
+      var isSel = sel && sel.k === k && sel.j === j;
+      out += '<span class="chip' + (isSel ? ' on' : '') + (L.kind === 'support' ? ' sup' : ' res') + '">' +
+        '<button type="button" data-sel="' + j + '" data-idx="' + idx + '" title="select this line">' +
+        (L.kind === 'support' ? 'S' : 'R') + ' ' + esc(nm.dates[L.x1 - nm.start].slice(5)) + '&rarr;' + esc(nm.dates[L.x2 - nm.start].slice(5)) + '</button>' +
+        '<button type="button" data-end="' + j + '" data-idx="' + idx + '" title="end this line at the cursor">end</button></span>';
+    });
+    return out;
+  }
   function render(){
     var html = '';
     D.names.forEach(function(nm, idx){
@@ -276,6 +297,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       html += '<div class="panel' + (idx === active ? ' active' : '') + '" data-idx="' + idx + '"><div class="ph"><h2>' + esc(nm.symbol) + '</h2>' +
         '<span class="dt">' + esc(nm.dates[0]) + ' &rarr; ' + esc(nm.dates[nm.n - 1]) + '</span>' +
         '<span class="cnt">' + na + ' live &middot; ' + st.lines.length + ' recorded</span>' +
+        '<span class="chips">' + chips(nm, idx) + '</span>' +
         '<span class="step"><button type="button" data-act="first" data-idx="' + idx + '" title="first bar">&#9198;</button>' +
         '<button type="button" data-act="back" data-idx="' + idx + '" title="one bar back">&#9664;</button>' +
         '<button type="button" data-act="fwd" data-idx="' + idx + '" title="one bar forward">&#9654;</button>' +
@@ -296,7 +318,9 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     panel.querySelector('.where').textContent = nm.dates[st.cursor] + '  bar ' + (st.cursor + 1) + ' / ' + nm.n;
     var na = st.lines.filter(function(L){ return alive(L, q); }).length;
     panel.querySelector('.cnt').innerHTML = na + ' live &middot; ' + st.lines.length + ' recorded';
+    panel.querySelector('.chips').innerHTML = chips(nm, idx);
     document.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('active', parseInt(p.getAttribute('data-idx'), 10) === active); });
+    document.getElementById('json').value = exportJSON();
   }
   function exportJSON(){
     var out = {};
@@ -314,9 +338,20 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   // ---------------------------------------------------------------- interaction
   var grid = document.getElementById('grid'), down = null, rubber = null;
   grid.addEventListener('click', function(ev){
-    var t = ev.target, b = t.closest ? t.closest('button[data-act]') : null;
+    var t = ev.target, b = t.closest ? t.closest('button[data-act], button[data-sel], button[data-end]') : null;
     if (!b) return;
-    var i2 = parseInt(b.getAttribute('data-idx'), 10), st2 = STATE[key(D.names[i2])], act = b.getAttribute('data-act');
+    var i2 = parseInt(b.getAttribute('data-idx'), 10), k2 = key(D.names[i2]), st2 = STATE[k2];
+    if (b.hasAttribute('data-sel')){
+      var j = parseInt(b.getAttribute('data-sel'), 10);
+      sel = (sel && sel.k === k2 && sel.j === j) ? null : {k: k2, j: j};
+      active = i2; pending = null; redrawPanel(i2);
+      status(sel ? 'selected a line on ' + D.names[i2].symbol + ' -- end it with the end button, the Delete key, or end selected line here' : 'selection cleared');
+      return;
+    }
+    if (b.hasAttribute('data-end')){
+      sel = {k: k2, j: parseInt(b.getAttribute('data-end'), 10)}; active = i2; endSel(); return;
+    }
+    var act = b.getAttribute('data-act');
     setCursor(i2, act === 'first' ? 0 : act === 'back' ? st2.cursor - 1 : act === 'fwd' ? st2.cursor + 1 : st2.cursor + 5);
   });
   // ANCHORS BY POINTER, NOT BY CLICK. A click only fires when the pointer goes down and up on
@@ -407,14 +442,16 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   document.getElementById('ksup').addEventListener('click', function(){ setKind('support'); });
   document.getElementById('kres').addEventListener('click', function(){ setKind('resistance'); });
   function endSel(){
-    if (!sel) return;
+    if (!sel){ status('nothing selected -- Shift+click a line, or use its chip in the panel header'); return; }
     var st = STATE[sel.k], L = st.lines[sel.j], q = st.start + st.cursor;
     push();
-    if (L.at >= q) st.lines.splice(sel.j, 1);      // drawn and ended at the same bar: never existed
+    var same = L.at >= q;
+    if (same) st.lines.splice(sel.j, 1);           // drawn and ended at the same bar: never existed
     else L.until = q;
     var k = sel.k; sel = null; save(k);
     var idx = D.names.findIndex(function(nm){ return key(nm) === k; });
     redrawPanel(idx);
+    status(same ? 'that line was drawn at this same bar, so ending it here removes it' : 'ended the line at ' + D.names[idx].dates[st.cursor]);
   }
   document.getElementById('del').addEventListener('click', endSel);
   document.getElementById('undo').addEventListener('click', undo);
