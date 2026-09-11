@@ -101,12 +101,34 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 
   <div class="bar" id="ctl">
     <label>name <select id="name"></select></label>
-    <label>settings <input id="settings" type="text" spellcheck="false" style="width:34em;font-family:'IBM Plex Mono',monospace;font-size:11.5px"></label>
-    <button id="apply" type="button">apply</button>
     <label>min gradient <input type="number" id="gmin" value="25" min="0" step="5" title="the trading rule's floor, % per year: a trend needs both lines steeper than this, same sign">%/yr</label>
     <label><input type="checkbox" id="cands" checked> candidates</label>
     <label><input type="checkbox" id="trail" checked> trail</label>
     <label><input type="checkbox" id="ghost"> ghost the future</label>
+  </div>
+  <div class="bar" id="dials">
+    <label>grow <select id="grow" title="parallel: every candidate window grows at once and the longest survivor is shown. chain: the oracle's rule, one window at a time"><option value="parallel" selected>parallel</option><option value="chain">chain</option></select></label>
+    <label>restart back <input type="number" id="back" value="9" min="0" max="200" step="1" title="after a break, only windows that started within this many bars before the break bar survive (parallel), or the next window may begin this many bars before it (chain)"></label>
+    <label>at max <select id="atmax"><option value="end" selected>end</option><option value="slide">slide</option></select></label>
+    <label>pierce tol <input type="number" id="tol" value="2" min="0" step="0.25">%</label>
+    <label>touches <input type="number" id="mt" value="2" min="2" step="1"></label>
+    <label>contain <select id="basis"><option value="wick" selected>wicks</option><option value="body">bodies</option></select></label>
+    <label>min length <input type="number" id="minlen" value="30" min="3" step="1"></label>
+    <label>max length <input type="number" id="maxlen" value="1000" min="10" max="1000" step="10"></label>
+    <label>min width <input type="number" id="mw" value="5.5" min="0" step="0.5">%</label>
+    <label>max width <input type="number" id="maxw" value="55" min="-1" step="1" title="-1 = off">%</label>
+    <label>max offset <input type="number" id="maxoff" value="6.5" min="-1" step="0.5" title="mean distance from price to the nearer line. -1 = off">%</label>
+    <label>min touched <input type="number" id="mintd" value="10" min="-1" max="100" step="1" title="share of bars within the pierce tolerance of either line. -1 = off">%</label>
+    <label>gradient gap <input type="number" id="tau" value="1" min="-1" step="0.05" title="the two gradients may differ by at most this fraction of the steeper one. -1 = off"></label>
+    <label>break depth <input type="number" id="brk" value="-1" min="-1" step="0.25" title="a close (or wick) beyond the line the trader had by more than this kills the window and every window older than restart back. -1 = off">%</label>
+    <label>break bars <input type="number" id="bbars" value="1" min="1" max="10" step="1"></label>
+    <label>break on <select id="bon"><option value="close" selected>close</option><option value="wick">wick</option></select></label>
+  </div>
+  <div class="bar">
+    <button id="copy" type="button">copy settings</button>
+    <input id="settings" type="text" spellcheck="false" style="flex:1;min-width:280px;font:12px 'IBM Plex Mono',monospace;padding:4px 7px;border:1px solid var(--rule);border-radius:4px;background:var(--chip);color:var(--ink)">
+    <button id="apply" type="button">apply</button>
+    <span id="copied" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint)"></span>
   </div>
   <div class="bar">
     <button id="first" type="button" title="first bar">&#9198;</button>
@@ -299,10 +321,38 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   function Y(p){ return PT + ih - (Math.log(p) - ya) / (yb - ya) * ih; }
   function gpct(g){ return 100 * Math.expm1(g * 252); }
 
+  // ---------------------------------------------------------------- dials <-> settings line
+  var CTRL = Array.prototype.slice.call(document.querySelectorAll('#dials select, #dials input[type=number]'));
+  function params(){
+    document.querySelectorAll('#dials input[type=number]').forEach(function(el){
+      var x = parseFloat(el.value);
+      if (!isFinite(x)) el.value = el.defaultValue;
+      else if (el.min !== '' && x < parseFloat(el.min)) el.value = el.min;
+      else if (el.max !== '' && x > parseFloat(el.max)) el.value = el.max;
+    });
+    return parseLine(line());
+  }
+  function line(){ return 'split=causal ' + CTRL.map(function(el){ return el.id + '=' + el.value; }).join(' '); }
+  function applyLine(s){
+    s.split(/\s+/).forEach(function(tok){
+      var m = tok.match(/^([a-z]+)=(.+)$/); if (!m) return;
+      var el = document.getElementById(m[1]); if (!el || CTRL.indexOf(el) < 0) return;
+      el.value = m[2];
+    });
+  }
+  document.getElementById('copy').addEventListener('click', function(){
+    var s = line(), inp = document.getElementById('settings'), note = document.getElementById('copied');
+    inp.value = s; inp.select();
+    var done = function(ok){ note.textContent = ok ? 'copied' : 'select the line and copy it'; setTimeout(function(){ note.textContent = ''; }, 2500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(s).then(function(){ done(true); }, function(){ done(false); });
+    else done(false);
+  });
+
   function build(){
     var sel = document.getElementById('name');
     nm = D.names[parseInt(sel.value, 10)];
-    P = parseLine(document.getElementById('settings').value);
+    P = params();
+    document.getElementById('settings').value = line();
     st0 = nm.start; n = nm.n;
     var marg = Math.min(P.maxlen, 500);
     lo0 = Math.max(0, st0 - marg);
@@ -445,10 +495,16 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   document.getElementById('pos').addEventListener('input', function(){ stop(); t = parseInt(this.value, 10); draw(); });
   document.getElementById('speed').addEventListener('change', function(){ if (timer){ stop(); playPause(); } });
   ['cands', 'trail', 'ghost'].forEach(function(id){ document.getElementById(id).addEventListener('change', draw); });
-  document.getElementById('apply').addEventListener('click', function(){ stop(); build(); });
+  document.getElementById('apply').addEventListener('click', function(){ stop(); applyLine(document.getElementById('settings').value); build(); });
   document.getElementById('gmin').addEventListener('change', function(){ stop(); build(); });
   document.getElementById('name').addEventListener('change', function(){ stop(); t = 0; build(); });
-  document.getElementById('settings').addEventListener('keydown', function(ev){ if (ev.key === 'Enter'){ ev.preventDefault(); stop(); build(); } });
+  document.getElementById('settings').addEventListener('keydown', function(ev){ if (ev.key === 'Enter'){ ev.preventDefault(); stop(); applyLine(this.value); build(); } });
+  CTRL.forEach(function(el){
+    el.addEventListener('change', function(){ stop(); build(); });
+    if (el.type === 'number') el.addEventListener('keydown', function(ev){ if (ev.key === 'Enter'){ ev.preventDefault(); el.blur(); } });
+  });
+  document.querySelectorAll('#dials select').forEach(function(el){ var o = el.querySelector('option[selected]'); if (o) el.value = o.value; });
+  document.querySelectorAll('#dials input[type=number]').forEach(function(el){ el.value = el.defaultValue; });
   document.addEventListener('keydown', function(ev){
     if (ev.target.tagName === 'INPUT' || ev.target.tagName === 'SELECT') return;
     if (ev.key === 'ArrowRight'){ stop(); if (t < n - 1) t++; draw(); ev.preventDefault(); }
@@ -459,7 +515,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
   var sel = document.getElementById('name');
   D.names.forEach(function(x, i){ var o = document.createElement('option'); o.value = i; o.textContent = x.symbol + '  ' + x.dates[0] + ' → ' + x.dates[x.n - 1]; sel.appendChild(o); });
   sel.value = 0;
-  document.getElementById('settings').value = DEFAULT_LINE;
+  applyLine(DEFAULT_LINE);
   document.getElementById('gmin').value = 25;
   t = 60;                                   // open mid-panel so the first frame shows the lines
   build();
