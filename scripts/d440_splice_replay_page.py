@@ -126,7 +126,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
     <label>break side <select id="bside" title="either: a close beyond either line ends the window. trend: only the trend-side line can -- support in an uptrend, resistance in a downtrend; a breakout in the trend's own direction is continuation"><option value="both">either line</option><option value="trend" selected>trend side only</option></select></label>
     <label>survive <select id="surv" title="strict: a live window must keep passing every birth filter. loose: born under the full set, it survives under containment alone and ends only on a break, the survive width cap, or max length"><option value="strict">strict</option><option value="loose" selected>loose</option></select></label>
     <label>survive tol <input type="number" id="stol" value="4" min="0" step="0.5" title="loose only: the pierce tolerance a live window is re-fitted with; it decides which hull edge wins, by touches">%</label>
-    <label>survive max width <input type="number" id="smaxw" value="-1" min="-1" step="1" title="loose only: a width cap that still ends a live window. -1 = off">%</label>
+    <label>survive max width <input type="number" id="smaxw" value="40" min="-1" step="1" title="loose only: a width cap that still ends a live window. -1 = off">%</label>
   </div>
   <div class="bar">
     <button id="copy" type="button">copy settings</button>
@@ -181,7 +181,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 <script>
 (function(){
   var D = JSON.parse(document.getElementById('payload').textContent);
-  var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close bside=trend surv=loose stol=4 smaxw=-1';
+  var DEFAULT_LINE = 'split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close bside=trend surv=loose stol=4 smaxw=40';
 
   // ---------------------------------------------------------------- the engine (the D440 page's, verbatim)
   function hullEdges(x, y, lower){
