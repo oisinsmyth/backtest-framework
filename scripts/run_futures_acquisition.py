@@ -537,7 +537,53 @@ def do_split(key: str, n: int) -> int:
     return 0 if submitted else 2
 
 
+LOCK = RAW / "drive.lock"
+LOCK_STALE_SECONDS = 7200
+
+
+def acquire_drive_lock() -> bool:
+    """Only one driver at a time.
+
+    Two drivers ran concurrently on 2026-09-11 because a pass was relaunched while an
+    earlier one was still inside its sleep. Nothing was corrupted -- the atomic state
+    write held and file existence, not the state file, decides what is re-fetched -- but
+    the hazard is real: the loser's read-modify-write can overwrite the winner's fresh
+    progress with a stale copy. A lock is cheaper than reasoning about the interleaving.
+
+    A lock older than LOCK_STALE_SECONDS is taken over, because a killed driver (one
+    exited 127 mid-sleep here) cannot clean up after itself and must not block the run
+    forever.
+    """
+    RAW.mkdir(parents=True, exist_ok=True)
+    if LOCK.exists():
+        age = time.time() - LOCK.stat().st_mtime
+        if age < LOCK_STALE_SECONDS:
+            P(f"another driver holds {LOCK.name} (age {age/60:.0f} min). Exiting rather "
+              f"than racing it.")
+            return False
+        P(f"taking over a stale lock (age {age/3600:.1f} h > "
+          f"{LOCK_STALE_SECONDS/3600:.0f} h)")
+    LOCK.write_text(f"{os.getpid()} {now()}\n", encoding="utf-8")
+    return True
+
+
+def release_drive_lock() -> None:
+    try:
+        LOCK.unlink(missing_ok=True)
+    except OSError:
+        pass
+
+
 def do_drive(floor_gb: float, max_seconds: int) -> int:
+    if not acquire_drive_lock():
+        return 4
+    try:
+        return _drive(floor_gb, max_seconds)
+    finally:
+        release_drive_lock()
+
+
+def _drive(floor_gb: float, max_seconds: int) -> int:
     import databento as db
     c = db.Historical(api_key())
     st = load_state()
