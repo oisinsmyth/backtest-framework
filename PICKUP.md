@@ -2,6 +2,20 @@
 
 ---
 
+## D444 — THE EDGAR ACQUISITION: THE DEAD ARE SERVED, ISSUANCE HOLDS, A STAGE 1 IS THE NEXT RECORD, 2026-09-11
+
+D443's line, re-sourced from the SEC's XBRL companyfacts (`scripts/fetch_edgar_companyfacts.py`,
+7 min, 226 MB git-ignored cache; CIKs from D331's resolution). **77% of the 562 dead names now
+carry a point-in-time share series** (first-filed value, available the bar after `filed`; median
+lag 38 days from period end; 0.1% ever restated). D443's tables re-run unchanged on the
+dead-inclusive panel: persistence **0.54** a year out (survivors 0.44), rank R² on the six tested
+axes 0.10, momentum +0.04, net-repurchase share 50%. **None of the three abandon conditions
+fires.** Two gaps to carry: 168 multi-class/foreign filers (11%) have no undimensioned count in
+this API; filer scale errors on 0.2% of rows need a 50× guard in stage 1. **Next, on the
+principal's word: a stage-1 pre-registration** — issuance as a persistent state, slot book both
+sides, state-matched control, enumerated rotation, persistent-selector control, both cost lines.
+Records: spec `f0d97af`, RESULT `docs/decisions/D444-RESULT-…md`; panel `data/d444_issuance_panel.csv.gz`.
+
 ## D443 — NET SHARE ISSUANCE, STAGE 0: ABANDONED ON A1 (THE VENDOR SERVES NO DEAD NAME), 2026-09-11
 
 The first non-price-path line after the volume line's close. Alpha Vantage `BALANCE_SHEET` +
