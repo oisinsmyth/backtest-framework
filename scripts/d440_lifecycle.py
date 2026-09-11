@@ -187,6 +187,12 @@ def sigma_series(r: np.ndarray) -> np.ndarray:
 
 def notional_series(r: np.ndarray, target_dollar_vol: float, rule: str) -> np.ndarray:
     sig_full = r.std(ddof=1)
+    if not (sig_full > 0.0):
+        # A series with no variance carries no position -- the only way to reach this is a
+        # fully-abstained mask (D442 [A6]), and the economically correct notional is zero.
+        # Left unguarded this divided by zero and reached the right answer through NaN
+        # propagation, which is the wrong reason to be right.
+        return np.zeros(len(r))
     base = target_dollar_vol / sig_full
     if rule == "static":
         return np.full(len(r), base)
