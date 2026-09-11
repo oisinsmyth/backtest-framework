@@ -446,6 +446,97 @@ def do_submit(floor_gb: float, dry: bool) -> int:
     return 0 if submitted else 2
 
 
+def do_split(key: str, n: int) -> int:
+    """Route around a job that will not finish by submitting its date range as N
+    narrower jobs.
+
+    WHY THIS MODE EXISTS. The ohlcv-1m job -- ALL_SYMBOLS over 16.3 years, the widest
+    request in the plan -- reached 73% on 2026-09-11, reset to 29%, climbed to 75%, then
+    reset to 0% after 18.3 hours of processing. `ts_process_start` never moved, so
+    Databento never officially restarted it; the pipeline appears to be retrying
+    internally and losing its work each time. The other six jobs, all narrower, finished
+    inside 13 hours.
+
+    Two resets at the same point is a pattern rather than bad luck, so the range is cut
+    into N contiguous jobs. Each is cost-gated at $0.00 exactly like the originals.
+
+    The original job is marked `superseded` so the driver stops waiting on it, but its
+    job id is KEPT: there is no cancel in the client, so it will keep running whatever we
+    do, and if it ever completes its files are still free to fetch for 30 days.
+    """
+    import databento as db
+    import pandas as pd
+    c = db.Historical(api_key())
+    st = load_state()
+    man = st.get("manifest") or []
+    base = next((i for i in man if i["key"] == key), None)
+    if base is None:
+        raise SystemExit(f"{key} is not in the manifest")
+
+    edges = pd.date_range(base["start"], base["end"], periods=n + 1).normalize()
+    slices = [(edges[i].date().isoformat(), edges[i + 1].date().isoformat())
+              for i in range(n)]
+    P(f"splitting {key} {base['start']}..{base['end']} into {n} jobs\n")
+
+    submitted = refused = 0
+    for idx, (s0, e0) in enumerate(slices, 1):
+        skey = f"{key}#{idx}"
+        if st["items"].get(skey, {}).get("job_id"):
+            P(f"  {skey:16} already submitted, skipping")
+            continue
+        item = dict(base, key=skey, start=s0, end=e0,
+                    metered_gib=base["metered_gib"] / n,
+                    why=f"{base['why']} [slice {idx}/{n} of a split; the single job reset "
+                        f"twice at ~74% after 18.3 h]")
+        try:
+            LIMITER.wait()
+            cost = float(c.metadata.get_cost(
+                DATASET, start=s0, end=e0, symbols=item["symbols"],
+                schema=item["schema"], stype_in=item["stype_in"]))
+        except Exception as exc:
+            P(f"  {skey:16} get_cost failed: {exc}"[:150])
+            continue
+        if cost > COST_EPS:          # the money gate, unchanged
+            st["items"][skey] = {"rank": base["rank"], "bytes_on_disk": 0,
+                                 "state": "refused", "quote_usd": cost}
+            event(st, skey, "refused", f"quote ${cost:,.2f} exceeds ${COST_EPS}")
+            refused += 1
+            save_state(st)
+            continue
+        try:
+            LIMITER.wait()
+            job = c.batch.submit_job(
+                dataset=DATASET, symbols=item["symbols"], schema=item["schema"],
+                start=s0, end=e0, encoding="dbn", compression="zstd",
+                split_symbols=False, split_duration=item["split_duration"],
+                stype_in=item["stype_in"], stype_out="instrument_id",
+                delivery="download")
+        except Exception as exc:
+            P(f"  {skey:16} submit failed: {exc}"[:150])
+            continue
+        man.append(item)
+        st["items"][skey] = {"rank": base["rank"], "bytes_on_disk": 0,
+                             "state": "submitted", "job_id": job.get("id"),
+                             "quote_usd": cost, "submitted_utc": now(),
+                             "job_state": job.get("state")}
+        P(f"  {skey:16} {s0}..{e0}  ${cost:.2f}  job {job.get('id')}")
+        submitted += 1
+        save_state(st)
+
+    bs = st["items"].setdefault(key, {})
+    bs["state"] = "superseded"
+    bs["superseded_by"] = [f"{key}#{i}" for i in range(1, n + 1)]
+    bs["superseded_reason"] = ("reset twice at ~74% (73->29, 75->0) over 18.3 h of "
+                               "processing with ts_process_start unchanged; split into "
+                               f"{n} narrower jobs. Job left running -- no cancel exists "
+                               "and its files stay free for 30 days if it ever completes.")
+    event(st, key, "superseded", bs["superseded_reason"])
+    st["manifest"] = man
+    save_state(st)
+    P(f"\n  submitted {submitted}, refused {refused}; {key} marked superseded")
+    return 0 if submitted else 2
+
+
 def do_drive(floor_gb: float, max_seconds: int) -> int:
     import databento as db
     c = db.Historical(api_key())
@@ -469,7 +560,7 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
         for it in man:
             key = it["key"]
             s = st["items"].get(key, {})
-            if not s.get("job_id") or s.get("state") in ("downloaded", "refused", "failed"):
+            if not s.get("job_id") or s.get("state") in ("downloaded", "refused", "failed", "superseded"):
                 continue
             try:
                 LIMITER.wait()
@@ -496,7 +587,7 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
         for it in sorted(man, key=lambda i: i["rank"]):
             key = it["key"]
             s = st["items"].setdefault(key, {"rank": it["rank"], "bytes_on_disk": 0})
-            if s.get("state") in ("downloaded", "refused", "failed"):
+            if s.get("state") in ("downloaded", "refused", "failed", "superseded"):
                 continue
             if not s.get("job_id"):
                 continue
@@ -580,7 +671,7 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
     write_manifest(st, man)
     remaining = [i["key"] for i in man
                  if st["items"].get(i["key"], {}).get("state") not in
-                 ("downloaded", "refused", "failed")]
+                 ("downloaded", "refused", "failed", "superseded")]
     P(f"\ndrive pass end {now()}   still pending: {remaining or 'none'}")
     return 3 if remaining else 0
 
@@ -644,7 +735,12 @@ def main() -> int:
     ap.add_argument("--max-seconds", type=int, default=MAX_DRIVE_SECONDS)
     ap.add_argument("--dry-run", action="store_true",
                     help="--submit: quote every item but submit nothing")
+    ap.add_argument("--split", nargs=2, metavar=("KEY", "N"), default=None,
+                    help="route around a job that will not finish: resubmit its range "
+                         "as N narrower jobs, cost-gated at $0.00")
     a = ap.parse_args()
+    if a.split:
+        return do_split(a.split[0], int(a.split[1]))
     if a.self_test:
         return do_self_test(a.floor_gb)
     if a.submit:
