@@ -526,10 +526,25 @@ def do_split(key: str, n: int) -> int:
     bs = st["items"].setdefault(key, {})
     bs["state"] = "superseded"
     bs["superseded_by"] = [f"{key}#{i}" for i in range(1, n + 1)]
-    bs["superseded_reason"] = ("reset twice at ~74% (73->29, 75->0) over 18.3 h of "
-                               "processing with ts_process_start unchanged; split into "
-                               f"{n} narrower jobs. Job left running -- no cancel exists "
-                               "and its files stay free for 30 days if it ever completes.")
+    # Derive the reason from THIS item. It was hardcoded to the first split's history
+    # ("reset twice at ~74% over 18.3 h") and would have written that same sentence into
+    # the committed manifest for every later split, including one that reset once from
+    # 58% in 90 minutes. A provenance field that describes the wrong event is worse than
+    # an absent one.
+    hrs = ""
+    if bs.get("ts_process_start"):
+        try:
+            import pandas as pd
+            hrs = (f" after {(pd.Timestamp.now(tz='UTC') - pd.Timestamp(bs['ts_process_start'], tz='UTC')).total_seconds()/3600:.1f} h"
+                   f" of processing")
+        except Exception:
+            hrs = ""
+    bs["superseded_reason"] = (
+        f"progress reset to {bs.get('progress')}%{hrs} with ts_process_start unchanged, so "
+        f"Databento never restarted it -- the pipeline retries internally and loses the "
+        f"work. Split into {n} narrower jobs. The job is LEFT RUNNING: there is no cancel "
+        f"in the client, so it proceeds regardless, and its files stay free to fetch for "
+        f"30 days if it ever completes.")
     event(st, key, "superseded", bs["superseded_reason"])
     st["manifest"] = man
     save_state(st)
