@@ -476,6 +476,11 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
                 d = c.batch.get_job_details(job_id=s["job_id"])
                 s["job_state"] = d.get("state")
                 s["billed_size"] = d.get("billed_size")
+                # `progress` is the difference between "healthy but slow" and "stuck",
+                # and without it a full-universe job that is 97% built is indistinguishable
+                # in the log from one that has wedged. Both of these ran 9.6 hours.
+                s["progress"] = d.get("progress")
+                s["ts_process_start"] = str(d.get("ts_process_start"))[:19]
                 st["items"][key] = s
             except Exception as exc:
                 event(st, key, "warn", f"get_job_details: {exc}")
@@ -491,7 +496,9 @@ def do_drive(floor_gb: float, max_seconds: int) -> int:
                 continue
             if s.get("job_state") != "done":
                 pending = True
-                P(f"  {key:12} job {s.get('job_state')}, not ready")
+                pr = s.get("progress")
+                P(f"  {key:12} job {s.get('job_state')}"
+                  f"{f' {pr}%' if pr is not None else ''}, not ready")
                 continue
 
             try:
