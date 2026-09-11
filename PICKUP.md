@@ -2,6 +2,22 @@
 
 ---
 
+## D453 — ISSUANCE STAGE 1b: THE ACCOUNTING FIX HALVES THE LOTTERY AND DOES NOT MOVE THE VERDICT, 2026-09-12
+
+D446's trades re-accounted with a per-name beta hedge and vol-scaled weights ([K2] identity at
+β=1, w=1 asserted). SE 1.52 → 1.17 at the same gross (+2.2 bp/bar); nine names to half the P&L
+(was 5), top 1% 51% (was 85%), GameStop 10% of the long leg (was 29%). **Net crossed +0.86 ±
+1.17; the same four tests fail; T3 passes both sides at 2.2 control-SDs.** The record's own
+prediction failed the informative way: **the rotated selector's base rate did not collapse (C2
+median +1.12 → +1.27) while the name-randomised selector's did (+0.39 → +0.08)** — the deciles'
+composition earns in excess of beta on any dates (a low-vol / quality tilt the six tested axes do
+not name); the alignment to the actual issuance year adds ~+1.0 bp/bar on an SE of 1.2. **The
+issuance line now has two forward-return looks on the same trades and one answer: real per trade,
+unresolvable as a book on thirteen years of one universe.** Not a candidate; holdouts shut. What
+would change it is calendar time or a second universe with its own EDGAR panel — not a factor
+hedge, a shorter hold or another decile (each a new selection on spent data). Records: spec
+`8b7747d`, RESULT `docs/decisions/D453-RESULT-…md`, artefact `data/d453_beta_vol_book.json`.
+
 ## D446 — ISSUANCE STAGE 1: REAL PER TRADE ON BOTH SIDES, A LOTTERY AS A BOOK, NOT A CANDIDATE, 2026-09-11
 
 The first forward-return look at share supply. Decile slot book (40 a side, cap 126) on D444's
