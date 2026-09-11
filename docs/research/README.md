@@ -296,3 +296,28 @@ Earlier work, predating the scan: [`the-signal-hunt-part2.md`](the-signal-hunt-p
 [`futures-data/`](futures-data/) — **includes the overnight-venue survey (Blue Ocean, IBEOS,
 Databento, Tiingo) that is now standing exclusion ground** · [`shorts/`](shorts/) ·
 [`Prop-Firm-080926/`](Prop-Firm-080926/).
+
+---
+
+## THE TOPIC-FIRST VIEW — `consolidated/`, added 2026-09-10
+
+**This directory is organised by CAMPAIGN and ROUND.**
+[`consolidated/`](consolidated/00-INDEX.md) is the same material organised by **SUBJECT**, in 39
+short files averaging ~5 KB, so a reader after one question does not load a 120 KB round record.
+
+**It appends. It replaces nothing, edits nothing, and adjudicates nothing** — every source file above
+stays exactly where it is. Under [R15](../RULES.md#r15) it closes and admits nothing either.
+
+| | |
+|---|---|
+| **[`conflicts/02-versus-repo-measurements.md`](consolidated/conflicts/02-versus-repo-measurements.md)** | **the file to read first** — twelve places research and a study run HERE point different ways |
+| [`conflicts/03-agreements.md`](consolidated/conflicts/03-agreements.md) | eleven places an outside route landed on a number we had already measured |
+| [`conflicts/01-register.md`](consolidated/conflicts/01-register.md) | **all 51 cross-lane conflict IDs** — `C1`–`C17` · `D1`–`D10` · `E1`–`E11` · `F1`–`F7` · `G1`–`G6`, one line each |
+| [`99-open-questions.md`](consolidated/99-open-questions.md) | the 23 open items above, **re-sorted by cost and by what each decides**, plus four the consolidation surfaced |
+| topics | [`signals/`](consolidated/signals/00-index.md) · [`cost/`](consolidated/cost/00-index.md) · [`data/`](consolidated/data/00-index.md) · [`method/`](consolidated/method/00-index.md) · [`venues/`](consolidated/venues/00-index.md) |
+
+**ONE RULE APPLIES THERE THAT DOES NOT APPLY HERE, and it is the principal's instruction of
+2026-09-10:** research-versus-research conflicts stay **RECORDED, NOT ADJUDICATED**, exactly as
+above — but **where research disagrees with a study already run in this repo, THE REPO'S MEASUREMENT
+IS TAKEN AS TRUE and the research reading is KEPT beside it, marked.** Nothing is deleted, and only
+the principal retires either side.
