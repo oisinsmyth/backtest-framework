@@ -56,6 +56,17 @@ the overnight index drift is gross +0.54..+0.64 on ES/NQ/YM and the $3 micro rou
 30–70% of it; treasuries, gold, crude, euro carry no session drift (gross within ±0.3); W2 ⊥ W3
 (ρ 0.00..−0.05); the three index roots are one construction (ρ 0.91).
 
+**D470 stage 0 (`b3671b2`, RESULT): can a state at the entry concentrate the drift?** Four
+declared gates on ES/NQ, both windows, D464's two gate nulls and a family-max null. **The
+principal's continuation and above-average conditions come out with the sign reversed:** the
+drift follows DOWN sessions and DOWN overnight legs on 8 of 8 cells; the cleanest cell (the
+overnight leg after a negative overnight leg) is +$10.66 vs −$1.37 on ES (2.5 SE), +$13.32 vs
+−$1.57 on NQ (2.1 SE), gated net Sharpe +0.70 / +0.62 at micro cost, clears the rotation and
+run-length nulls on both roots — **and fails the family-max p95 on both, because its size lives
+in 2020–2022** (2016–2019: the two sides are equal). A pick, not a component; an in-sample
+stage 1 would re-report it; the unread 2024+ slice (~190 gated nights, SE ≈ $7.8 vs +$10.7
+expected) is the only test and is underpowered — **the principal's call whether to spend it.**
+
 **What stands.** The overnight index drift is real on the futures and **unaffordable at micro
 size** (breakeven cost for C-a on ES-W1 is $1.48 a round trip); the plan's 16:10 flat rule forbids
 holding across sessions; the only lever inside this family is notional per contract, which the

@@ -66,6 +66,8 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 | CL-W1/W2/W3 (1 MCL) | D468 | −0.39 / −0.31 / −0.69; gross −0.09 / +0.14 / −0.30 | C-a; C-c |
 | 6E-W1/W2/W3 (1 M6E) | D468 | −0.72 / −1.17 / −0.85; gross +0.01 / −0.21 / +0.24 | C-a |
 
+| **D470 stage 0 (2026-09-12): four declared gates on ES/NQ W1 and W2** (continuation, prior overnight leg, 200-average, vol tercile), 32 cells | D470 (D467) | best gated component: ES-W2 after a DOWN overnight leg +0.70 (0.26), NQ-W2 +0.62 (0.25); clears N1/N2, **not the family-max p95** | stage 0 — a PICK, not a component: the reversal sign is on 8 of 8 cells but its size is 2020–2022; continuation is the wrong sign everywhere; 200-average clears every null on ES (+0.44) and reverses on NQ; only the unread 2024+ slice can promote it |
+
 **Correction recorded 2026-09-12 (D466 RESULT):** the figures that motivated this ledger (C1 0.62,
 NQ last-30 0.42, equal-risk book 0.91) were computed at full-size cost in basis points (1.1 bp a
 round trip); at the standard's minimum size and $3 they are 0.37 and −0.01 and there is no book.
