@@ -1,10 +1,17 @@
-# D491 RESULT — the tick binds on ZN and ZB and on almost nothing else; lane 21's ES claim is REFUTED on its own terms; and the property that makes them predictable is the property that makes them expensive
+# D510 RESULT — the tick binds on ZN and ZB and on almost nothing else; lane 21's ES claim is REFUTED on its own terms; and the property that makes them predictable is the property that makes them expensive
 
-**Pre-registration:** [`D491`](D491-PRE-REG-the-quoted-spread-census-on-bbo-1m-does-the-tick-BIND-and-does-the-spread-rank-the-roots-the-way-tau-did.md),
-committed before the runner existed. **Runner:** `scripts/d491_spread_census.py`
+> **RENUMBERED D491 -> D510 on 2026-09-12.** This record was committed as **D491** in
+> `299cb5d / 84c740b`; a concurrent session had already taken D491 for an unrelated study, and under this
+> repository's convention the later writer moves. **No stub is left at D491** — that number
+> belongs to the other session's record. Numbers were taken from a reserved block well clear
+> of the active frontier (D496) because three sessions are racing the same counter and the
+> next-free approach is what produced the collision.
+
+**Pre-registration:** [`D510`](D510-PRE-REG-the-quoted-spread-census-on-bbo-1m-does-the-tick-BIND-and-does-the-spread-rank-the-roots-the-way-tau-did.md),
+committed before the runner existed. **Runner:** `scripts/d510_spread_census.py`
 (`--selftest` passes, five checks each shown to fire on a broken input). **Build:** 13 `bbo-1m`
 files, 7.45 GB, **6.7 min** → `data/fixtures/fut_spread_1m.csv.gz`. **Evidence:**
-`data/d491_spread_census.json`. **Window 2025-09-11 → 2026-09-09, 3,169,134 front-contract quoted
+`data/d510_spread_census.json`. **Window 2025-09-11 → 2026-09-09, 3,169,134 front-contract quoted
 minutes. NO RETURN WAS READ.**
 
 **Under [R15](../RULES.md#r15) this record closes nothing and opens nothing.**

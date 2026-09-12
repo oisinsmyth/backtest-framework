@@ -1,4 +1,11 @@
-# D491 — the quoted-spread census on `bbo-1m`: does the tick BIND, and does the spread rank the eight roots the way τ did?
+# D510 — the quoted-spread census on `bbo-1m`: does the tick BIND, and does the spread rank the eight roots the way τ did?
+
+> **RENUMBERED D491 -> D510 on 2026-09-12.** This record was committed as **D491** in
+> `299cb5d / 84c740b`; a concurrent session had already taken D491 for an unrelated study, and under this
+> repository's convention the later writer moves. **No stub is left at D491** — that number
+> belongs to the other session's record. Numbers were taken from a reserved block well clear
+> of the active frontier (D496) because three sessions are racing the same counter and the
+> next-free approach is what produced the collision.
 
 **Pre-registration. Committed before the runner exists ([R8](../RULES.md#r8)).** Result in a
 separate file. **NO RETURN IS READ.** Quoted bid/ask, sizes and order counts only.

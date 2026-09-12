@@ -1,10 +1,17 @@
-# D492 RESULT — three independent measurements order the eight roots IDENTICALLY (ρ = +1.000); ZN needs 261 trades to move one tick while a single NQ trade moves two; and D489's `τ_vol` was better than its own caveat allowed
+# D511 RESULT — three independent measurements order the eight roots IDENTICALLY (ρ = +1.000); ZN needs 261 trades to move one tick while a single NQ trade moves two; and D489's `τ_vol` was better than its own caveat allowed
 
-**Pre-registration:** [`D492`](D492-PRE-REG-the-trade-count-from-tbbo-the-per-trade-tau-D489-declared-it-could-not-compute.md),
-committed before the runner existed. **Runner:** `scripts/d492_trade_count.py` (`--selftest` passes,
+> **RENUMBERED D492 -> D511 on 2026-09-12.** This record was committed as **D492** in
+> `dea4fbf / fd05be9`; a concurrent session had already taken D492 for an unrelated study, and under this
+> repository's convention the later writer moves. **No stub is left at D492** — that number
+> belongs to the other session's record. Numbers were taken from a reserved block well clear
+> of the active frontier (D496) because three sessions are racing the same counter and the
+> next-free approach is what produced the collision.
+
+**Pre-registration:** [`D511`](D511-PRE-REG-the-trade-count-from-tbbo-the-per-trade-tau-D489-declared-it-could-not-compute.md),
+committed before the runner existed. **Runner:** `scripts/d511_trade_count.py` (`--selftest` passes,
 five checks each shown to fire on a broken input). **Build:** 13 `tbbo` files, 34.7 GB,
 **1,439,501,590 records scanned → 365,052,858 front-contract trades, 10.6 min** (projected 10–15)
-→ `data/fixtures/fut_trade_counts.csv.gz`. **Evidence:** `data/d492_trade_count.json`.
+→ `data/fixtures/fut_trade_counts.csv.gz`. **Evidence:** `data/d511_trade_count.json`.
 **Window 2025-09-11 → 2026-09-09. NO RETURN WAS READ; the `side` field was not read.**
 
 **Under [R15](../RULES.md#r15) this record closes nothing and opens nothing.**
@@ -14,7 +21,7 @@ five checks each shown to fire on a broken input). **Build:** 13 `tbbo` files, 3
 ## 0. THE ANSWER
 
 > **`U1` PASSES (ZB rank 2) and `U2` PASSES at ρ = +1.000 — a PERFECT rank agreement between the
-> per-trade τ and D491's quoted-spread census across all eight roots.** Three independent
+> per-trade τ and D510's quoted-spread census across all eight roots.** Three independent
 > measurements of one property — tick against hourly volatility, the quoted spread itself, and tick
 > against per-trade volatility — now order the eight roots the same way.
 >
@@ -52,7 +59,7 @@ content of the ratio and is now shown rather than asserted.
 | | condition | observed | |
 |---|---|---|---|
 | **`U1`** | ZB in the top 3 of 8 on `τ_trade` | **rank 2** (ZN 16.16, **ZB 10.91**, ES 2.94) | **PASSES.** D489's `T1` survives on the quantity D489 said it could not compute |
-| **`U2`** | ρ(`τ_trade` order, D491 `P1` order) ≥ 0.7 | **ρ = +1.000**, zero transpositions | **PASSES** |
+| **`U2`** | ρ(`τ_trade` order, D510 `P1` order) ≥ 0.7 | **ρ = +1.000**, zero transpositions | **PASSES** |
 
 ## 3. `U3` — I predicted D489's `τ_vol` would misrank, and it does not. Saying so, as declared.
 
@@ -108,7 +115,7 @@ below one at all** — that a single trade routinely moves a price more than a f
 
 > **That is the definition of a small-tick book: the tick is so fine relative to the move that it
 > imposes no discretisation at all.** It is the mirror of ZN, where **261 trades are absorbed before
-> the price moves one tick** — 4,863 lots sitting at the touch (D491) being worked through at 18.4
+> the price moves one tick** — 4,863 lots sitting at the touch (D510) being worked through at 18.4
 > contracts a print.
 >
 > **The two regimes are not points on a smooth continuum; they are 1,300× apart**, and every one of
@@ -116,7 +123,7 @@ below one at all** — that a single trade routinely moves a price more than a f
 
 ## 6. POST HOC, decides nothing: what a crossing costs against the move a trade makes
 
-`τ_trade × mean_spread_ticks` (D491's spread) = **the quoted spread in units of per-trade volatility**:
+`τ_trade × mean_spread_ticks` (D510's spread) = **the quoted spread in units of per-trade volatility**:
 
 | root | σ/trade $ | spread $ | **spread / σ_per_trade** |
 |---|---:|---:|---:|
@@ -130,7 +137,7 @@ below one at all** — that a single trade routinely moves a price more than a f
 | YM | 7.865 | 12.91 | 1.64 |
 
 **On ZN you pay sixteen times the per-trade volatility to cross. On the bottom five you pay under
-two.** This is [D491 §6](D491-RESULT-the-tick-binds-on-ZN-and-ZB-and-on-nothing-else-lane-21s-ES-claim-is-refuted-and-the-property-that-makes-them-predictable-is-what-makes-them-expensive.md)'s
+two.** This is [D510 §6](D510-RESULT-the-tick-binds-on-ZN-and-ZB-and-on-nothing-else-lane-21s-ES-claim-is-refuted-and-the-property-that-makes-them-predictable-is-what-makes-them-expensive.md)'s
 tension restated at the trade horizon, and it is sharper here than it was there.
 
 > **The consequence for `C6`, stated as an implication and not as a verdict: a short-horizon
@@ -151,8 +158,8 @@ tension restated at the trade horizon, and it is sharper here than it was there.
 | | measurement | window | ZN/ZB vs the rest |
 |---|---|---|---|
 | **D489** | `τ_1h` = tick / hourly σ | 2016–23 **and** 2025–26 | 3.3× clear of 3rd |
-| **D491** | `P1` = quoted spread census | 2025–26 | 0.998+ vs ES 0.882 |
-| **D492** | `τ_trade` = tick / per-trade σ | 2025–26 | 10.9 vs ES 2.94 |
+| **D510** | `P1` = quoted spread census | 2025–26 | 0.998+ vs ES 0.882 |
+| **D511** | `τ_trade` = tick / per-trade σ | 2025–26 | 10.9 vs ES 2.94 |
 
 **`C6` named the right pair, on three independent quantities, with the per-trade version agreeing
 with the direct census exactly.** Nothing here touches
@@ -163,7 +170,7 @@ instrument, which is precisely what a stage-0 premise check is for.
 ## 8. What was spent
 
 **Trade counts and sizes on 2025-09-11 → 2026-09-09 — the same window and the same non-return
-character as D491's quote census.** No construction was scored, no component line computed, no
+character as D510's quote census.** No construction was scored, no component line computed, no
 signed quantity read. **The 2024+ slice remains unspent for every return-bearing construction.**
 
 **Cost: one pre-registration, one runner, one 10.6-minute build over 34.7 GB, one new committed

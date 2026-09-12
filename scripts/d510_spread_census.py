@@ -1,11 +1,11 @@
-"""D491 -- the quoted-spread census on bbo-1m. Does the tick BIND, and does the spread rank the
+"""D510 -- the quoted-spread census on bbo-1m. Does the tick BIND, and does the spread rank the
 eight roots the way tau did?
 
-    python scripts/d491_spread_census.py --selftest
-    python scripts/d491_spread_census.py --build     # raw bbo-1m -> data/fixtures/fut_spread_1m.csv.gz
-    python scripts/d491_spread_census.py --test
+    python scripts/d510_spread_census.py --selftest
+    python scripts/d510_spread_census.py --build     # raw bbo-1m -> data/fixtures/fut_spread_1m.csv.gz
+    python scripts/d510_spread_census.py --test
 
-PRE-REGISTRATION: docs/decisions/D491-PRE-REG-the-quoted-spread-census-on-bbo-1m-...md
+PRE-REGISTRATION: docs/decisions/D510-PRE-REG-the-quoted-spread-census-on-bbo-1m-...md
 
 NO RETURN IS READ. Quoted bid/ask, sizes and order counts only. Every quantity here is a
 dispersion, a fraction or a depth; none is signed, so no direction can leak out of it.
@@ -49,7 +49,7 @@ RAW = REPO / "data" / "raw" / "databento"
 SESS = REPO / "data" / "fixtures" / "fut_sessions_hourly.csv.gz"
 SPECS = REPO / "data" / "futures_contract_specs.json"
 FIX = REPO / "data" / "fixtures" / "fut_spread_1m.csv.gz"
-OUT = REPO / "data" / "d491_spread_census.json"
+OUT = REPO / "data" / "d510_spread_census.json"
 
 ROOTS = ("ES", "NQ", "YM", "ZN", "ZB", "GC", "CL", "6E")
 ALL_ROOTS = ROOTS + ("RTY",)
@@ -72,7 +72,7 @@ def specs() -> dict:
     for r in ALL_ROOTS:
         d = s.get(r) or (extra.get(r) if isinstance(extra, dict) else None)
         if not isinstance(d, dict) or "tick_points" not in d:
-            raise SystemExit(f"D491: no verified tick_points for {r} in {SPECS.name}")
+            raise SystemExit(f"D510: no verified tick_points for {r} in {SPECS.name}")
         out[r] = {"tick_points": float(d["tick_points"]),
                   "tick_usd": float(d["tick_usd"]), "usd_per_point": float(d["usd_per_point"])}
     return out
@@ -93,7 +93,7 @@ def build() -> int:
     sp = specs()
     fm = front_map()
     files = sorted(RAW.glob("*/*.bbo-1m.dbn.zst"))
-    print(f"D491 build -- {len(files)} bbo-1m files, roots {ALL_ROOTS}\n")
+    print(f"D510 build -- {len(files)} bbo-1m files, roots {ALL_ROOTS}\n")
     t_start = time.time()
     acc = []
     for i, f in enumerate(files, 1):
@@ -148,7 +148,7 @@ def build() -> int:
         if len(d) and frac.max() > 1e-6:
             bad = d.iloc[int(np.argmax(frac))]
             raise SystemExit(
-                f"D491: spread is not an integer number of ticks in {f.name}: "
+                f"D510: spread is not an integer number of ticks in {f.name}: "
                 f"root {bad['root']} {bad['contract']} spread {bad['spread_ticks']:.9f} ticks "
                 f"(tick_points {sp[bad['root']]['tick_points']}). The tick is wrong for that root.")
         d["spread_ticks"] = np.round(d["spread_ticks"]).astype(np.int64)
@@ -208,7 +208,7 @@ def test() -> int:
     c["crossings_per_hour"] = c["ticks_per_hour"] / c["mean_spread_ticks"]
 
     fam = c.loc[[r for r in ROOTS]]
-    print("D491 -- the quoted-spread census on bbo-1m.  NO RETURN IS READ\n")
+    print("D510 -- the quoted-spread census on bbo-1m.  NO RETURN IS READ\n")
     print(f"  {FIX.name}   {g['day'].min()} .. {g['day'].max()}   "
           f"{int(g['n'].sum()):,} front-contract quoted minutes")
     print(f"\n  {'root':<6}{'minutes':>10}{'P1':>8}{'P2':>7}{'P3+':>7}{'mean tk':>9}"

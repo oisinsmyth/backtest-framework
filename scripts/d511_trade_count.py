@@ -1,12 +1,12 @@
-"""D492 -- the trade count from tbbo: the PER-TRADE tau D489 declared it could not compute.
+"""D511 -- the trade count from tbbo: the PER-TRADE tau D489 declared it could not compute.
 
-    python scripts/d492_trade_count.py --selftest
-    python scripts/d492_trade_count.py --build    # raw tbbo -> data/fixtures/fut_trade_counts.csv.gz
-    python scripts/d492_trade_count.py --test
+    python scripts/d511_trade_count.py --selftest
+    python scripts/d511_trade_count.py --build    # raw tbbo -> data/fixtures/fut_trade_counts.csv.gz
+    python scripts/d511_trade_count.py --test
 
-PRE-REGISTRATION: docs/decisions/D492-PRE-REG-the-trade-count-from-tbbo-...md
+PRE-REGISTRATION: docs/decisions/D511-PRE-REG-the-trade-count-from-tbbo-...md
 
-NO RETURN IS READ. Counts, sizes and the quoted prices D491 already censused. The `side` field
+NO RETURN IS READ. Counts, sizes and the quoted prices D510 already censused. The `side` field
 is NOT read -- aggressor direction is a flow quantity and would take this past a count.
 
   sigma_per_trade = sigma_session / sqrt(n)            n = mean TRADES per front-contract session
@@ -19,11 +19,11 @@ is NOT read -- aggressor direction is a flow quantity and would take this past a
 
 DECLARED CONDITIONS (neither gates the other; nothing is abandoned on this record):
   U1  ZB in the TOP 3 of 8 on tau_trade         -- D489's T1 on the quantity it could not compute
-  U2  Spearman rank corr of the tau_trade ordering vs D491's P1 ordering >= 0.7
+  U2  Spearman rank corr of the tau_trade ordering vs D510's P1 ordering >= 0.7
   U3  DESCRIPTIVE, no pass/fail: sqrt(size_bar) per root, and how many rank positions the
       tau_vol ordering differs from the tau_trade ordering
 
-SPEED (pre-registration section 4). Three changes from D491's runner, all required by scale:
+SPEED (pre-registration section 4). Three changes from D510's runner, all required by scale:
   1. cheap PREFIX test before the regex -- 1,339,484 symbols, not 16,309
   2. vectorised np.searchsorted for id -> root/contract, not a Python list comprehension
   3. INTEGER DAY ORDINALS, not strftime -- strftime is Python-level formatting per element and
@@ -48,9 +48,9 @@ sys.path.insert(0, str(REPO / "scripts"))
 RAW = REPO / "data" / "raw" / "databento"
 SESS = REPO / "data" / "fixtures" / "fut_sessions_hourly.csv.gz"
 SPECS = REPO / "data" / "futures_contract_specs.json"
-SPREAD = REPO / "data" / "d491_spread_census.json"
+SPREAD = REPO / "data" / "d510_spread_census.json"
 FIX = REPO / "data" / "fixtures" / "fut_trade_counts.csv.gz"
-OUT = REPO / "data" / "d492_trade_count.json"
+OUT = REPO / "data" / "d511_trade_count.json"
 
 ROOTS = ("ES", "NQ", "YM", "ZN", "ZB", "GC", "CL", "6E")
 ALL_ROOTS = ROOTS + ("RTY",)
@@ -69,7 +69,7 @@ def specs() -> dict:
     for r in ALL_ROOTS:
         d = s.get(r) or (extra.get(r) if isinstance(extra, dict) else None)
         if not isinstance(d, dict) or "tick_usd" not in d:
-            raise SystemExit(f"D492: no verified tick_usd for {r} in {SPECS.name}")
+            raise SystemExit(f"D511: no verified tick_usd for {r} in {SPECS.name}")
         out[r] = {"tick_usd": float(d["tick_usd"]), "usd_per_point": float(d["usd_per_point"])}
     return out
 
@@ -134,7 +134,7 @@ def build() -> int:
     fm = front_map()
     o0, o1 = ord_of(DAY0), ord_of(DAY1)
     files = sorted(RAW.glob("*/*.tbbo.dbn.zst"))
-    print(f"D492 build -- {len(files)} tbbo files, roots {ALL_ROOTS}\n", flush=True)
+    print(f"D511 build -- {len(files)} tbbo files, roots {ALL_ROOTS}\n", flush=True)
     t_start = time.time()
     acc = []
     for i, f in enumerate(files, 1):
@@ -162,7 +162,7 @@ def build() -> int:
             act = np.unique(a["action"])
             if not (len(act) == 1 and act[0] == b"T"):
                 raise SystemExit(
-                    f"D492: tbbo kept records are not all action 'T' in {f.name}: {act}. "
+                    f"D511: tbbo kept records are not all action 'T' in {f.name}: {act}. "
                     f"Counting non-trade records would inflate n for every root.")
 
             # optimisation 3: INTEGER DAY ORDINALS, no strftime.
@@ -238,10 +238,10 @@ def test() -> int:
     # sessions and every ratio below is comparing different denominators.
     lhs, rhs = c["tau_vol"].to_numpy(), (c["tau_trade"] * np.sqrt(c["size_bar"])).to_numpy()
     if np.max(np.abs(lhs - rhs) / np.maximum(lhs, 1e-12)) > 1e-6:
-        raise SystemExit(f"D492: tau_vol != tau_trade * sqrt(size_bar): {lhs} vs {rhs}")
+        raise SystemExit(f"D511: tau_vol != tau_trade * sqrt(size_bar): {lhs} vs {rhs}")
 
     fam = c.loc[list(ROOTS)]
-    print("D492 -- the per-trade tau from tbbo.  NO RETURN IS READ\n")
+    print("D511 -- the per-trade tau from tbbo.  NO RETURN IS READ\n")
     print(f"  {FIX.name}   {g['day'].min()} .. {g['day'].max()}   "
           f"{int(g['trades'].sum()):,} front-contract trades")
     print(f"\n  {'root':<6}{'sess':>6}{'trades/sess':>13}{'size':>7}{'sig_sess $':>12}"
@@ -267,13 +267,13 @@ def test() -> int:
     print("\n  THE DECLARED CONDITIONS")
     print(f"    U1  ZB in the top 3 of 8 on tau_trade:      rank {zb_rank}"
           f"                              -> {'PASSES' if u1 else 'FAILS'}")
-    print(f"    U2  tau_trade ordering vs D491's P1:        rho {rho:+.3f}"
+    print(f"    U2  tau_trade ordering vs D510's P1:        rho {rho:+.3f}"
           f"                        -> {'PASSES' if u2 else 'FAILS'}")
 
     # POST HOC, computed after U1/U2 were decided and DECIDES NOTHING: the QUOTED spread
     # expressed in units of per-trade volatility. tau_trade is tick/sigma_per_trade; multiplying
-    # by D491's mean spread in ticks gives what a crossing actually costs against the move a
-    # single trade makes. It is the C6 cost tension of D491 section 6 restated at the trade horizon.
+    # by D510's mean spread in ticks gives what a crossing actually costs against the move a
+    # single trade makes. It is the C6 cost tension of D510 section 6 restated at the trade horizon.
     msp = {r["root"]: r["mean_spread_ticks"] for r in json.load(SPREAD.open())["table"]}
     fam = fam.assign(spread_per_trade_sigma=fam["tau_trade"] * pd.Series(msp).reindex(fam.index))
     print("\n  POST HOC (decides nothing): the QUOTED spread in units of PER-TRADE volatility")

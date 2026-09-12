@@ -1,11 +1,18 @@
-# D492 — the trade count from `tbbo`: the PER-TRADE τ that D489 declared it could not compute
+# D511 — the trade count from `tbbo`: the PER-TRADE τ that D489 declared it could not compute
+
+> **RENUMBERED D492 -> D511 on 2026-09-12.** This record was committed as **D492** in
+> `dea4fbf / fd05be9`; a concurrent session had already taken D492 for an unrelated study, and under this
+> repository's convention the later writer moves. **No stub is left at D492** — that number
+> belongs to the other session's record. Numbers were taken from a reserved block well clear
+> of the active frontier (D496) because three sessions are racing the same counter and the
+> next-free approach is what produced the collision.
 
 **Pre-registration. Committed before the runner exists ([R8](../RULES.md#r8)).** Result in a
 separate file. **NO RETURN IS READ.** Trade counts, trade sizes and quoted prices only.
 
 **Occasioned by:** the principal's instruction, closing the last gap named in
 [D489's amendment](D489-PRE-REG-stage-0-is-ZB-actually-a-large-tick-instrument-the-premise-C6-has-never-had-checked.md)
-and [D491 §7](D491-RESULT-the-tick-binds-on-ZN-and-ZB-and-on-nothing-else-lane-21s-ES-claim-is-refuted-and-the-property-that-makes-them-predictable-is-what-makes-them-expensive.md).
+and [D510 §7](D510-RESULT-the-tick-binds-on-ZN-and-ZB-and-on-nothing-else-lane-21s-ES-claim-is-refuted-and-the-property-that-makes-them-predictable-is-what-makes-them-expensive.md).
 
 ## 1. The exact quantity D489 could not reach, and why this closes it
 
@@ -24,7 +31,7 @@ D489's amendment said, in writing:
 | **η** | `τ_trade²` — the Dayri–Rosenbaum reading: **how many trades it takes to move one tick** |
 | **`sizē`** | mean contracts per trade |
 
-**σ_session comes from `fut_sessions_hourly` on the SAME window**, the era control D491 established
+**σ_session comes from `fut_sessions_hourly` on the SAME window**, the era control D510 established
 was not a formality (GC's τ fell 5.3× between the two eras). **No quantity here is compared against
 D489's 2016–2023 numbers.**
 
@@ -47,7 +54,7 @@ positions it moved.**
 **Files:** `data/raw/databento/*/glbx-mdp3-*.tbbo.dbn.zst` — 13 files, **34.7 GB compressed**,
 2025-09-11 → 2026-09-10, `stype_in=raw_symbol`, **1,339,484 symbols**, ~**1.4 billion** records.
 Outright front contracts of the eight D467/D468 roots (RTY reported, outside every bar), same
-`^(ROOT)[FGHJKMNQUVXZ][0-9]{1,2}$` filter and same D467 front-contract map as D491.
+`^(ROOT)[FGHJKMNQUVXZ][0-9]{1,2}$` filter and same D467 front-contract map as D510.
 
 > **CAVEAT, stated first: "trade count" means TRADE RECORDS AS PUBLISHED BY MDP3.** CME aggregates
 > an aggressing order's fills, so one sweep across several resting orders may arrive as one record
@@ -60,18 +67,18 @@ Outright front contracts of the eight D467/D468 roots (RTY reported, outside eve
 **The runner asserts `action == 'T'` on every kept record** and raises otherwise — if `tbbo`
 carries non-trade records, counting them would inflate `n̄` for every root silently.
 
-**Session clock:** 18:00 → 17:00 ET, D467's, as in D489 and D491.
+**Session clock:** 18:00 → 17:00 ET, D467's, as in D489 and D510.
 
 ## 4. Speed: the projection and the optimisation pass, before launching
 
 **Profiled:** the smallest file (955 MB) decoded **38,193,225 rows in 7.4 s** (5.1 M rows/s, 80
 bytes a row). 34.7 GB is ~36× that, so **decode alone is ~4.5 min**.
 
-**Three things in D491's runner would not survive this scale, and all three are changed:**
+**Three things in D510's runner would not survive this scale, and all three are changed:**
 
 1. **The per-symbol regex ran on every mapping.** At 16,309 symbols that was free; at **1,339,484**
    it is not. → **cheap prefix test against the root set before the regex.**
-2. **`[ids[int(x)][0] for x in a["instrument_id"]]` is a Python loop.** Fine over D491's ~250k kept
+2. **`[ids[int(x)][0] for x in a["instrument_id"]]` is a Python loop.** Fine over D510's ~250k kept
    rows a file; here the kept set is hundreds of millions. → **vectorised `np.searchsorted` into
    sorted id arrays.**
 3. **`strftime` over the kept timestamps is the real bottleneck** — Python-level formatting per
@@ -87,7 +94,7 @@ chunk, never concatenated.
   TOP 3 of the eight roots on `τ_trade`.** D489's `T1` passed on `τ_1h`; this asks whether it
   survives on the literature's own ratio.
 - **`U2` — three-way agreement.** Spearman rank correlation of the `τ_trade` ordering against
-  **D491's `P1` ordering** on the same window. **`U2` passes iff ρ ≥ 0.7.** `P1` saturates at the
+  **D510's `P1` ordering** on the same window. **`U2` passes iff ρ ≥ 0.7.** `P1` saturates at the
   top (ZN 1.000, ZB 0.998) and `τ_trade` does not, so **if they agree, the large-tick tier is
   robust across three independent measurements; if they disagree, `P1`'s ceiling was hiding the
   ordering.**
@@ -103,9 +110,9 @@ chunk, never concatenated.
 - **`V-a` — `U1` PASSES: ZB in the top 3 on `τ_trade`.** ZN and ZB lead both prior measurements by
   wide margins and `√n̄` would have to differ by more than an order of magnitude to overturn it.
 - **`V-b` — `U2` PASSES with ρ ≥ 0.85.** Three measurements of one property should order eight
-  objects nearly the same way; D491 already got ρ +0.929 against `τ_1h`.
+  objects nearly the same way; D510 already got ρ +0.929 against `τ_1h`.
 - **`V-c` — ES has the HIGHEST trade count of the eight and ZN the highest `sizē`.** ES is the most
-  traded contract here; ZN's 4,863-lot touch (D491) implies large resting size and I expect large
+  traded contract here; ZN's 4,863-lot touch (D510) implies large resting size and I expect large
   prints with it.
 - **`V-d` — `τ_vol`'s ordering differs from `τ_trade`'s by AT LEAST TWO rank positions**, because
   `√sizē` cannot be constant across roots whose touch depth spans 4 to 4,863 lots. **If they turn
@@ -114,7 +121,7 @@ chunk, never concatenated.
 - **`V-e` — η (trades per one-tick move) is of order 100–1,500 on ZN and of order 1–30 on NQ and
   GC.** This is the widest-uncertainty prediction here: **I do not know these trade counts and am
   not pretending to.**
-- **`V-f` — ZB's `n̄` is well below ZN's, by 3–10×.** D491 put ZB's touch at 1,386 lots against ZN's
+- **`V-f` — ZB's `n̄` is well below ZN's, by 3–10×.** D510 put ZB's touch at 1,386 lots against ZN's
   4,863 and ZB's queue at 207 orders against 527.
 - **`V-g` — wall time 10–15 min** (§4).
 
@@ -125,9 +132,9 @@ chunk, never concatenated.
 ## 7. Not in scope
 
 **No return, no signal, no strategy, no cost model, no component line, no book.** Counts, sizes and
-the quoted prices already censused in D491. **The `side` field is NOT read** — aggressor direction
+the quoted prices already censused in D510. **The `side` field is NOT read** — aggressor direction
 is a flow quantity and reading it would take this past a count.
 
-**The 2024+ slice is the same one D491 spent for a quote census and it is spent here for the same
+**The 2024+ slice is the same one D510 spent for a quote census and it is spent here for the same
 kind of quantity.** **It remains unspent for every return-bearing construction**, and this record
 says so explicitly so that a later study cannot claim otherwise.
