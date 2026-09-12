@@ -2,6 +2,21 @@
 
 ---
 
+## D455 — INSIDER PURCHASES, STAGE 1: REAL PER TRADE, ZERO NET AT THE CROSSED LINE, NOT A CANDIDATE, 2026-09-12
+
+The event book (long, cap 63, every event, 7,478 primary filings → 4,086 trades once the kernel
+skips names already held): **+89 bp per trade, median +96, 2.3 control-SDs above state-matched
+names in the same cell (C1 p50 +24)** — a real, contrarian insider effect on the dead-inclusive
+fixture. **The book: +1.11 ± 0.56 bp/bar gross against a rotated-calendar median of +0.66 and
+p95 +1.47; crossed cost 1.03 → net +0.08; passive net +0.62 (1.1 SE); 14 names to half, top 1% =
+70%.** Clusters (+120) beat singles (+54); directors (+101) beat officers (+58), against the
+prediction; value has no gradient; shorting insider sales loses (−23 ± 12). Cap 21 is the
+strongest per bar (+1.89) and the most expensive; every hold nets ≤ 0 crossed. **Two events
+lines in a row now say the same thing: a genuine per-trade effect of +65 to +170 bp over a
+quarter or two, in exactly the small, thin, beaten-down names where the modelled 60–90 bp round
+trip is closest to the truth, and no book at that cost.** Not a candidate; holdouts shut.
+Records: spec `398669b`, RESULT `docs/decisions/D455-RESULT-…md`, artefact `data/d455_insider_book.json`.
+
 ## D454 — INSIDER PURCHASES, STAGE 0: THE DATA IS THERE, DEAD-INCLUSIVE, TWO DAYS OLD, AND SHAPED FOR THE KERNEL, 2026-09-12
 
 The issuance line was parked (real, factor-grade, unbookable on 13 years). Its successor is an
