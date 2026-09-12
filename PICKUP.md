@@ -31,6 +31,19 @@ across seven schemas*, so the roll gates do not transfer.
 
 ---
 
+## D464 — THE PERSONAL ARMS AS GATES ON THE SESSION HOLD: BETTER NIGHTS, INSIDE THE NULL, AND LIFE BOUGHT ONLY BY NOT TRADING, 2026-09-12
+
+S1 and S2 (the book's own code on SPY) gating C1's 18:00→16:00 ES hold, 2,043 nights 2016–2023:
+S1 on 8.7% of nights at +13.8 ± 10.0 bp, S2 on 10.0% at +9.1 ± 4.7, both with a lower MAE
+tail than the average night (321 vs 369 bp) — **and both inside the exact rotation null (p95
++16.7 for a tenth of a 113-bp series).** Hurdle P at whole ES contracts: one contract's
+overnight σ is the 4% floor, zero size at f ≤ 0.7%, a fixed contract breaches on 791 nights; at
+micros the surviving sizes earn +0.2–2.2%/yr and the gates lengthen life to at most 1.94 years
+at +0.8%/yr by removing 90% of the exposure. **Not a candidate; the personal book untouched.**
+**Three prop records in one day say the same thing: the binding constraint is the
+instrument–account pair** (ES σ per hold vs a $50k floor), not the candidate list. Records: spec
+`0391331`, RESULT `docs/decisions/D464-RESULT-…md`; BOOK_PROP updated.
+
 ## D462 / D463 — THE PROP TRACK ON THE FUTURES THEMSELVES: THE DATA LAYER, AND THE FIRST CANDIDATE SCREENED ON ES, 2026-09-12
 
 **The archive** (111 GB, `data/raw/databento/`, moved out of `temp/` by the principal) is now a

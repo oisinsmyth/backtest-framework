@@ -587,6 +587,34 @@ construction at this per-trade σ fails P3/P4 on this account size regardless of
 
 ---
 
+## THE PERSONAL ARMS AS GATES ON THE SESSION HOLD — TESTED ON ES AND CLOSED, 2026-09-12
+
+The principal asked whether S1 and S2 could be tried on the futures data for this book. **They
+cannot be ported as they are** (15-day and 63-day holds across the flatten); the one form the
+venue allows is C1's 18:00 → 16:00 hold taken only on the nights the arm's state is on, the state
+computed on SPY with the book's own functions. [D464](decisions/D464-the-personal-arms-as-gates-on-the-session-hold-S1-and-S2-computed-on-the-index-ETFs-select-which-nights-C1-holds-ES-hurdle-P-at-ES-and-micro-granularity.md),
+2,043 ES holds 2016–2023:
+
+| nights | share | mean bp | MAE p99 bp | exact rotation p95 |
+|---|---:|---:|---:|---:|
+| all | 100% | +5.5 ± 2.0 | 369 | — |
+| S1 on | 8.7% | +13.8 ± 10.0 | 321 | +16.7 |
+| S2 exposure on | 10.0% | +9.1 ± 4.7 | 321 | +16.7 |
+
+**Both arms pick better and calmer nights than average, and not distinguishably from a random
+tenth of the nights.** Hurdle P at whole ES contracts: one contract's overnight σ (~$2,000) is the
+4% floor, so the C4 rule sizes zero up to f = 0.7% and a fixed contract breaches the daily limit
+on 791 of 2,043 nights. At micros the size is expressible: survivable sizing earns **+0.2 to
++2.2% a year**; the gates lengthen the account's life to at most **1.94 years, at +0.8% a year**,
+by removing 90% of the exposure — the ledger's own definition of *an exposure cut with a story*.
+
+**CLOSED.** The personal book's entries are unchanged. **The prop track's binding constraint is
+the instrument–account pair** — an ES position on a $50k account needs a per-holding-period σ
+well under $300 to clear P3 and P4, and neither a night nor a half-hour on the index does that
+at any size worth the evaluation fee. **Admitted arms: still none.**
+
+---
+
 # THE ES CHAIN FOLDED IN — six records, 2026-09-11 to 2026-09-12
 
 **C1 is now measured END TO END ON THE INSTRUMENT.** Everything below was run on ES itself, not on
