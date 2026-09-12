@@ -34,10 +34,22 @@ when C-b was applied.
 
 | # | component | instrument, window, rule | record | window | net Sharpe (SE) | hit | skew | ρ with prior | entered |
 |---|---|---|---|---|---|---|---|---|---|
-| *entries follow D466's scoring* | | | | | | | | | |
+| — | *no entry* | | D466 | 2016–2023 | | | | | *the standard admitted nothing on 2026-09-12* |
 
 ## Scored and NOT entered
 
 | construction | record | net Sharpe | why not |
 |---|---|---|---|
-| *entries follow D466's scoring* | | | |
+| K1 C1: ES hold 18:00→16:00 every same-contract night, 1 MES, $3 | D466 (D449, D465) | **+0.37 (SE 0.32)**; gross +0.63 | C-a. $3 is 41% of the $7.29 gross mean per night; clears C-a only below $1.48 a round trip |
+| K2 last-30-min momentum NQ, 1 MNQ, $3 | D466 (D463) | −0.01 (0.40); gross +0.66 | C-a. cost 102% of the gross mean |
+| K3 last-30-min momentum ES, 1 MES, $3 | D466 (D463) | −0.29 (0.41); gross +0.62 | C-a; ρ(K2,K3) = 0.73 — one construction across roots |
+| K4 last-30-min momentum YM, 1 MYM, $3 | D466 (D463) | −1.12 (0.48); gross +0.08 | C-a; no gross edge |
+| K5 C1 on S1 nights (SPY gate), 1 MES | D466 (D464) | +0.36 (0.40) | C-a; a gated subset of K1 (ρ 0.35) |
+| K6 C1 on S2-exposure nights (SPY gate), 1 MES | D466 (D464) | +0.39 (0.29) | C-a; C-c skew −1.21; a gated subset of K1 (ρ 0.26) |
+
+**Correction recorded 2026-09-12 (D466 RESULT):** the figures that motivated this ledger (C1 0.62,
+NQ last-30 0.42, equal-risk book 0.91) were computed at full-size cost in basis points (1.1 bp a
+round trip); at the standard's minimum size and $3 they are 0.37 and −0.01 and there is no book.
+The gross edges (0.63, 0.66 at micro size) are real; the cost per round trip at micro notional
+(~2 bp) eats them. Every component line from here on is computed by the runner under this
+standard, never in a shell line.

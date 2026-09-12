@@ -132,16 +132,21 @@ it. **A standalone failure of hurdle P is therefore not a verdict on the
 construction** — it is the answer to one of two questions.
 
 On 2026-09-12 three prop-track records (D463, D464 and their predecessor C1)
-were each written as "closed / not a candidate" on standalone bars while the
-constructions were, as components, a net Sharpe of 0.62 and 0.42 at correlation
-0.09 — a 0.91 book between them that nobody had computed. **The principal caught
-it, not the records.** Do not repeat the shape:
+were each written as "closed / not a candidate" on standalone bars without a
+component line. The shell-line figures that exposed it (net Sharpe 0.62 and 0.42
+at ρ 0.09, a 0.91 book) turned out to be at full-size cost in basis points; under
+the ledger's standard (dollars at micro size, $3 a round trip ≈ 2 bp) they are
+0.37 and −0.01 and no book (D466). **Both errors have one shape: a component
+number computed outside the runner, under a cost line other than the one the
+account pays.** The principal caught the first; the pre-registered standard
+caught the second. Do not repeat either:
 
 1. **Every construction tested for either book gets a component line in the
    RESULT, whether or not it clears the standalone bar:** net Sharpe on the
-   in-sample window at the instrument's minimum tradable size, hit rate, skew,
-   and its correlation with every component already in the ledger. The line is
-   not optional and "not a candidate" without it is an incomplete record.
+   in-sample window at the instrument's minimum tradable size and the cost that
+   size pays (in dollars, computed by the runner), hit rate, skew, gross beside
+   net, and its correlation with every component already in the ledger. The line
+   is not optional and "not a candidate" without it is an incomplete record.
 2. **The components ledger is `docs/COMPONENTS_PROP.md`** (append-only, like the
    books): the admission standard for a component is pre-registered there, every
    scored construction is entered with its numbers, and the assembled book is
