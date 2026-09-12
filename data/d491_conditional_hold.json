@@ -1,0 +1,766 @@
+{
+ "generated_utc": "2026-09-12T21:29:35+00:00",
+ "pre_registration": "docs/decisions/D491-PRE-REG-the-conditional-hold-exit-when-the-signal-flips-with-a-minimum-hold-time.md",
+ "purpose": "D491: conditional exit on a MACD sign flip with a minimum hold. Produces a real P&L series, so C-a/C-c/C-d are computed directly.",
+ "cost": {
+  "commission_rt": 3.0,
+  "crossing_ticks": 1.009,
+  "charged": "per completed round trip"
+ },
+ "primary_cells": [
+  {
+   "root": "ES",
+   "variant": "B1",
+   "M": 1,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.1945628997867803,
+   "n_sessions": 1876,
+   "mean_usd": -2.0019782782522078,
+   "daily_sigma_usd": 122.50257070476897,
+   "sharpe": -0.2594265552438278,
+   "skew": -0.4331362473599833,
+   "total_usd": -3755.7112500011417,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B1",
+   "M": 2,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.183368869936034,
+   "n_sessions": 1876,
+   "mean_usd": -2.6772254797446284,
+   "daily_sigma_usd": 123.02381683328504,
+   "sharpe": -0.34545861144832135,
+   "skew": -0.4290068498576317,
+   "total_usd": -5022.475000000923,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B1",
+   "M": 3,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.1647121535181237,
+   "n_sessions": 1876,
+   "mean_usd": -1.7841584488279167,
+   "daily_sigma_usd": 122.02529657703771,
+   "sharpe": -0.23210463834373682,
+   "skew": -0.2828357566242103,
+   "total_usd": -3347.0812500011716,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B1",
+   "M": 5,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.1215351812366738,
+   "n_sessions": 1876,
+   "mean_usd": -2.037937100213663,
+   "daily_sigma_usd": 121.94462665519757,
+   "sharpe": -0.2652945801377459,
+   "skew": -0.19978464281815314,
+   "total_usd": -3823.1700000008323,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B2",
+   "M": 1,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.4381663113006398,
+   "n_sessions": 1876,
+   "mean_usd": -1.7280663646066137,
+   "daily_sigma_usd": 140.25107095829088,
+   "sharpe": -0.19559353744076186,
+   "skew": -0.6400673083838835,
+   "total_usd": -3241.852500002007,
+   "C_a": false,
+   "C_c": false,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B2",
+   "M": 2,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.4067164179104477,
+   "n_sessions": 1876,
+   "mean_usd": -1.832589952026497,
+   "daily_sigma_usd": 139.10875353840765,
+   "sharpe": -0.2091274838522315,
+   "skew": -0.4546180212304165,
+   "total_usd": -3437.9387500017083,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B2",
+   "M": 3,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.3528784648187633,
+   "n_sessions": 1876,
+   "mean_usd": -2.9317977078896327,
+   "daily_sigma_usd": 138.93259917067047,
+   "sharpe": -0.33498866395912075,
+   "skew": -0.4063003008560743,
+   "total_usd": -5500.052500000951,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "ES",
+   "variant": "B2",
+   "M": 5,
+   "micro": "MES",
+   "cost_ticks": 3.409,
+   "trips_per_session": 1.312366737739872,
+   "n_sessions": 1876,
+   "mean_usd": -0.0899240405124704,
+   "daily_sigma_usd": 132.81768528820214,
+   "sharpe": -0.010747814836518346,
+   "skew": -0.12855799726316397,
+   "total_usd": -168.69750000139447,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B1",
+   "M": 1,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.2076882007474639,
+   "n_sessions": 1873,
+   "mean_usd": 5.710262146289729,
+   "daily_sigma_usd": 183.74052608405603,
+   "sharpe": 0.4933457157891376,
+   "skew": -0.29126778576345225,
+   "total_usd": 10695.321000000662,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B1",
+   "M": 2,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.196476241324079,
+   "n_sessions": 1873,
+   "mean_usd": 4.930547517352125,
+   "daily_sigma_usd": 182.85318642279645,
+   "sharpe": 0.4280484080207744,
+   "skew": -0.18240153001701917,
+   "total_usd": 9234.91550000053,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B1",
+   "M": 3,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.1729845168179391,
+   "n_sessions": 1873,
+   "mean_usd": 6.785698611852975,
+   "daily_sigma_usd": 184.7841453615558,
+   "sharpe": 0.5829484222362623,
+   "skew": -0.0383243557758481,
+   "total_usd": 12709.613500000623,
+   "C_a": true,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B1",
+   "M": 5,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.1243993593166044,
+   "n_sessions": 1873,
+   "mean_usd": 5.455965296316231,
+   "daily_sigma_usd": 187.75486626836621,
+   "sharpe": 0.4612970397865103,
+   "skew": 0.028698930849875133,
+   "total_usd": 10219.023000000301,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B2",
+   "M": 1,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.410037373198078,
+   "n_sessions": 1873,
+   "mean_usd": 5.0291593699946535,
+   "daily_sigma_usd": 211.03742410322874,
+   "sharpe": 0.37829986941674065,
+   "skew": -0.0004212861453313256,
+   "total_usd": 9419.615499999985,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B2",
+   "M": 2,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.377469300587293,
+   "n_sessions": 1873,
+   "mean_usd": 4.146497597437291,
+   "daily_sigma_usd": 210.73495461305993,
+   "sharpe": 0.31235258929557774,
+   "skew": 0.018091964037275723,
+   "total_usd": 7766.390000000046,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B2",
+   "M": 3,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.3336892685531234,
+   "n_sessions": 1873,
+   "mean_usd": 2.245466631072903,
+   "daily_sigma_usd": 213.45192099660068,
+   "sharpe": 0.16699628437284106,
+   "skew": -0.12054919213084071,
+   "total_usd": 4205.758999999547,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "NQ",
+   "variant": "B2",
+   "M": 5,
+   "micro": "MNQ",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.2968499733048584,
+   "n_sessions": 1873,
+   "mean_usd": 6.112423651895771,
+   "daily_sigma_usd": 208.80777672308784,
+   "sharpe": 0.464693982510968,
+   "skew": 0.057208052573315515,
+   "total_usd": 11448.569500000778,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B1",
+   "M": 1,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.2020309994655265,
+   "n_sessions": 1871,
+   "mean_usd": -6.039348209513354,
+   "daily_sigma_usd": 96.33182463189326,
+   "sharpe": -0.9952233441660809,
+   "skew": -0.7181424052680321,
+   "total_usd": -11299.620499999484,
+   "C_a": false,
+   "C_c": false,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B1",
+   "M": 2,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.1913415285943345,
+   "n_sessions": 1871,
+   "mean_usd": -6.173720203099652,
+   "daily_sigma_usd": 96.64459328584029,
+   "sharpe": -1.0140740065936014,
+   "skew": -0.7470867057923216,
+   "total_usd": -11551.03049999945,
+   "C_a": false,
+   "C_c": false,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B1",
+   "M": 3,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.1614110101549973,
+   "n_sessions": 1871,
+   "mean_usd": -5.610250400854592,
+   "daily_sigma_usd": 95.97007184742687,
+   "sharpe": -0.9279972642133429,
+   "skew": -0.7520608381780051,
+   "total_usd": -10496.778499998942,
+   "C_a": false,
+   "C_c": false,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B1",
+   "M": 5,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.114377338321753,
+   "n_sessions": 1871,
+   "mean_usd": -4.6054957242111545,
+   "daily_sigma_usd": 94.86699666730085,
+   "sharpe": -0.7706576646354825,
+   "skew": -0.5676071093876939,
+   "total_usd": -8616.88249999907,
+   "C_a": false,
+   "C_c": false,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B2",
+   "M": 1,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.4216996258685195,
+   "n_sessions": 1871,
+   "mean_usd": -5.330021378941593,
+   "daily_sigma_usd": 106.4119354707778,
+   "sharpe": -0.7951313537686531,
+   "skew": -0.5012562439551255,
+   "total_usd": -9972.469999999721,
+   "C_a": false,
+   "C_c": false,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B2",
+   "M": 2,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.3901656867985035,
+   "n_sessions": 1871,
+   "mean_usd": -4.376111437733573,
+   "daily_sigma_usd": 105.53498989507219,
+   "sharpe": -0.6582519741704532,
+   "skew": -0.39334976332822513,
+   "total_usd": -8187.704499999514,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B2",
+   "M": 3,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.3372528059861037,
+   "n_sessions": 1871,
+   "mean_usd": -5.199229823623812,
+   "daily_sigma_usd": 105.18249847940362,
+   "sharpe": -0.7846858168180385,
+   "skew": -0.27297292519439725,
+   "total_usd": -9727.759000000151,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  },
+  {
+   "root": "YM",
+   "variant": "B2",
+   "M": 5,
+   "micro": "MYM",
+   "cost_ticks": 7.009,
+   "trips_per_session": 1.2966328166755745,
+   "n_sessions": 1871,
+   "mean_usd": -2.5811956173169266,
+   "daily_sigma_usd": 102.81002074619917,
+   "sharpe": -0.39855268809774497,
+   "skew": -0.22354321903492985,
+   "total_usd": -4829.416999999969,
+   "C_a": false,
+   "C_c": true,
+   "C_d": true
+  }
+ ],
+ "family_max_observed": 0.5829484222362623,
+ "best_cell": {
+  "root": "NQ",
+  "variant": "B1",
+  "M": 3,
+  "micro": "MNQ",
+  "cost_ticks": 7.009,
+  "trips_per_session": 1.1729845168179391,
+  "n_sessions": 1873,
+  "mean_usd": 6.785698611852975,
+  "daily_sigma_usd": 184.7841453615558,
+  "sharpe": 0.5829484222362623,
+  "skew": -0.0383243557758481,
+  "total_usd": 12709.613500000623,
+  "C_a": true,
+  "C_c": true,
+  "C_d": true
+ },
+ "null_family_max": {
+  "p50": 0.05685309749541747,
+  "p95": 0.510791282129548,
+  "se_of_p95": 0.018251592432354545,
+  "margin_in_se": 3.953470929955761
+ },
+ "verdict": {
+  "signal": true,
+  "component_candidate": true
+ },
+ "secondary_gross_noncostable": [
+  {
+   "root": "ZN",
+   "variant": "B1",
+   "M": 1,
+   "trips_per_session": 2.168915272531031,
+   "gross_ticks_per_session": -0.02752276308678104
+  },
+  {
+   "root": "ZN",
+   "variant": "B1",
+   "M": 2,
+   "trips_per_session": 2.157042633567188,
+   "gross_ticks_per_session": 0.13869141932010323
+  },
+  {
+   "root": "ZN",
+   "variant": "B1",
+   "M": 3,
+   "trips_per_session": 2.141392336751214,
+   "gross_ticks_per_session": -0.08149862924982185
+  },
+  {
+   "root": "ZN",
+   "variant": "B1",
+   "M": 5,
+   "trips_per_session": 2.077172153264976,
+   "gross_ticks_per_session": -0.044799309228228196
+  },
+  {
+   "root": "ZN",
+   "variant": "B1",
+   "M": 8,
+   "trips_per_session": 1.9330814894765245,
+   "gross_ticks_per_session": 0.4031250512681807
+  },
+  {
+   "root": "ZN",
+   "variant": "B2",
+   "M": 1,
+   "trips_per_session": 2.602266594711279,
+   "gross_ticks_per_session": 0.5159173664328373
+  },
+  {
+   "root": "ZN",
+   "variant": "B2",
+   "M": 2,
+   "trips_per_session": 2.539665407447383,
+   "gross_ticks_per_session": 0.26335119266052515
+  },
+  {
+   "root": "ZN",
+   "variant": "B2",
+   "M": 3,
+   "trips_per_session": 2.487857528332434,
+   "gross_ticks_per_session": 0.29897083648145395
+  },
+  {
+   "root": "ZN",
+   "variant": "B2",
+   "M": 5,
+   "trips_per_session": 2.385321100917431,
+   "gross_ticks_per_session": 0.14894281705363835
+  },
+  {
+   "root": "ZN",
+   "variant": "B2",
+   "M": 8,
+   "trips_per_session": 2.140852671343767,
+   "gross_ticks_per_session": 0.5213185105233857
+  },
+  {
+   "root": "ZB",
+   "variant": "B1",
+   "M": 1,
+   "trips_per_session": 2.184723726977248,
+   "gross_ticks_per_session": 0.4398699891658552
+  },
+  {
+   "root": "ZB",
+   "variant": "B1",
+   "M": 2,
+   "trips_per_session": 2.1733477789815816,
+   "gross_ticks_per_session": 0.26543878656566244
+  },
+  {
+   "root": "ZB",
+   "variant": "B1",
+   "M": 3,
+   "trips_per_session": 2.1522210184182016,
+   "gross_ticks_per_session": 0.2578548212351835
+  },
+  {
+   "root": "ZB",
+   "variant": "B1",
+   "M": 5,
+   "trips_per_session": 2.0931744312026,
+   "gross_ticks_per_session": 0.1435536294691727
+  },
+  {
+   "root": "ZB",
+   "variant": "B1",
+   "M": 8,
+   "trips_per_session": 1.952329360780065,
+   "gross_ticks_per_session": 0.21018418201528002
+  },
+  {
+   "root": "ZB",
+   "variant": "B2",
+   "M": 1,
+   "trips_per_session": 2.573131094257855,
+   "gross_ticks_per_session": 0.8992416034670522
+  },
+  {
+   "root": "ZB",
+   "variant": "B2",
+   "M": 2,
+   "trips_per_session": 2.5270855904658722,
+   "gross_ticks_per_session": 0.7941495124594401
+  },
+  {
+   "root": "ZB",
+   "variant": "B2",
+   "M": 3,
+   "trips_per_session": 2.4794149512459374,
+   "gross_ticks_per_session": 0.6218851570963897
+  },
+  {
+   "root": "ZB",
+   "variant": "B2",
+   "M": 5,
+   "trips_per_session": 2.370530877573131,
+   "gross_ticks_per_session": 0.4117009750813312
+  },
+  {
+   "root": "ZB",
+   "variant": "B2",
+   "M": 8,
+   "trips_per_session": 2.1538461538461537,
+   "gross_ticks_per_session": 0.12892741061758792
+  },
+  {
+   "root": "GC",
+   "variant": "B1",
+   "M": 1,
+   "trips_per_session": 2.1160862354892207,
+   "gross_ticks_per_session": 5.224433388612566
+  },
+  {
+   "root": "GC",
+   "variant": "B1",
+   "M": 2,
+   "trips_per_session": 2.1083471531232725,
+   "gross_ticks_per_session": 4.919292426755101
+  },
+  {
+   "root": "GC",
+   "variant": "B1",
+   "M": 3,
+   "trips_per_session": 2.0796019900497513,
+   "gross_ticks_per_session": 5.115533443891819
+  },
+  {
+   "root": "GC",
+   "variant": "B1",
+   "M": 5,
+   "trips_per_session": 2.0199004975124377,
+   "gross_ticks_per_session": 5.2780541735766215
+  },
+  {
+   "root": "GC",
+   "variant": "B1",
+   "M": 8,
+   "trips_per_session": 1.8750690989496959,
+   "gross_ticks_per_session": 4.326147042564849
+  },
+  {
+   "root": "GC",
+   "variant": "B2",
+   "M": 1,
+   "trips_per_session": 2.6141514648977338,
+   "gross_ticks_per_session": 4.045881702598345
+  },
+  {
+   "root": "GC",
+   "variant": "B2",
+   "M": 2,
+   "trips_per_session": 2.5677169707020453,
+   "gross_ticks_per_session": 3.0342730790492
+  },
+  {
+   "root": "GC",
+   "variant": "B2",
+   "M": 3,
+   "trips_per_session": 2.51575456053068,
+   "gross_ticks_per_session": 1.8457711442787696
+  },
+  {
+   "root": "GC",
+   "variant": "B2",
+   "M": 5,
+   "trips_per_session": 2.4068546158098396,
+   "gross_ticks_per_session": 0.7921503593144904
+  },
+  {
+   "root": "GC",
+   "variant": "B2",
+   "M": 8,
+   "trips_per_session": 2.1315644002211167,
+   "gross_ticks_per_session": 3.1680486456604338
+  },
+  {
+   "root": "CL",
+   "variant": "B1",
+   "M": 1,
+   "trips_per_session": 2.192207792207792,
+   "gross_ticks_per_session": -1.388961038960954
+  },
+  {
+   "root": "CL",
+   "variant": "B1",
+   "M": 2,
+   "trips_per_session": 2.1824675324675327,
+   "gross_ticks_per_session": -1.6422077922077598
+  },
+  {
+   "root": "CL",
+   "variant": "B1",
+   "M": 3,
+   "trips_per_session": 2.1603896103896103,
+   "gross_ticks_per_session": -1.4798701298700085
+  },
+  {
+   "root": "CL",
+   "variant": "B1",
+   "M": 5,
+   "trips_per_session": 2.0837662337662337,
+   "gross_ticks_per_session": -0.5168831168831063
+  },
+  {
+   "root": "CL",
+   "variant": "B1",
+   "M": 8,
+   "trips_per_session": 1.9506493506493507,
+   "gross_ticks_per_session": -4.550000000000005
+  },
+  {
+   "root": "CL",
+   "variant": "B2",
+   "M": 1,
+   "trips_per_session": 2.5961038961038962,
+   "gross_ticks_per_session": 7.651948051948066
+  },
+  {
+   "root": "CL",
+   "variant": "B2",
+   "M": 2,
+   "trips_per_session": 2.524025974025974,
+   "gross_ticks_per_session": 7.601298701298675
+  },
+  {
+   "root": "CL",
+   "variant": "B2",
+   "M": 3,
+   "trips_per_session": 2.4740259740259742,
+   "gross_ticks_per_session": 9.350649350649258
+  },
+  {
+   "root": "CL",
+   "variant": "B2",
+   "M": 5,
+   "trips_per_session": 2.362337662337662,
+   "gross_ticks_per_session": 10.527272727272676
+  },
+  {
+   "root": "CL",
+   "variant": "B2",
+   "M": 8,
+   "trips_per_session": 2.1603896103896103,
+   "gross_ticks_per_session": 6.94935064935055
+  }
+ ],
+ "secondary_skipped_no_tick_size": [
+  "6E"
+ ],
+ "trips_by_M": {
+  "1": 1.3123642350611682,
+  "2": 1.2909230075251152,
+  "3": 1.2538213699748417,
+  "5": 1.211026901099223
+ },
+ "sharpe_by_M": {
+  "1": -0.22895486756890757,
+  "2": -0.24775184645804252,
+  "3": -0.25497194612085594,
+  "5": -0.0865436209016689
+ },
+ "variant_means": {
+  "B1_sharpe": -0.23704975657912128,
+  "B2_sharpe": -0.1720613839456162,
+  "B1_trips": 1.1695740249350257,
+  "B2_trips": 1.3644937318951482
+ },
+ "predictions": {
+  "V-a": true,
+  "V-b": false,
+  "V-c": false,
+  "V-d": false,
+  "V-e": true
+ },
+ "limitations": [
+  "only ES/NQ/YM can be costed; the largest D484 edges (GC, CL) remain unpriceable because MGC/MCL/M6E are absent and nothing is guessed",
+  "execution is open-of-next-segment at the measured half-spread: no queue, no partial fills, no slippage on a flip -- fills need mbp-10 (D471), so every figure is an upper bound",
+  "the volume-clock exit (D472, +10.4%) is not applied",
+  "hourly resolution: a flip inside an hour is invisible",
+  "in-sample only; 2024+ sealed",
+  "the index window is 6 hours, so at M=5 the construction is nearly a fixed-H hold -- a feature of the closure, not of the idea"
+ ]
+}
