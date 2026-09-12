@@ -8,6 +8,42 @@ and one failed in SIGN, and the sign failure is the finding.**
 
 ---
 
+## AMENDMENT, 2026-09-12 — **§3 IS WITHDRAWN. A BUG IN THIS RUNNER'S PAIRING EXCLUDED EVERY FRIDAY HOLD.**
+
+**Found by [D450](D450-RESULT-the-entry-print-is-not-stale-and-the-anomaly-it-was-sent-to-explain-was-a-bug-in-D449.md)**,
+which was commissioned by §6 of this record to explain §3 and found that §3's anomaly did not exist.
+
+**The bug.** `days = sorted(set(ev) & set(front))` lists only days carrying 18:00+ bars, and the
+build paired **consecutive entries of that list**. **ES is shut on Friday evening, so a Friday never
+enters `ev` — and every Thursday→Friday hold was silently dropped.** D259's rule excludes
+Friday→**Monday**; it does not exclude Thursday→Friday. **2,068 holds → 3,067 after the fix.**
+
+**What it cost, on an identical window:**
+
+| | n | hold diff | p99 MAE ratio | breach 1× ratio |
+|---|---:|---:|---:|---:|
+| **as published below** | 1,362 | **−1.74%/yr** | 1.05 | 1.00 |
+| **corrected** | 1,808 | **+1.13%/yr** | 0.98 | 0.96 |
+
+**Four consequences:**
+
+1. **§3 — "what it actually flatters is the ENTRY" — is WITHDRAWN.** The −1.74%/yr was the Friday
+   exclusion. **D450 measured the entry step directly at +0.42%/yr, in the opposite direction to
+   staleness, and found D259's fallback branch never fires.**
+2. **`Z3` INVERTS.** Corrected, ES `V` is **167 / 99** against the proxy's **95 / 63** — **ES is
+   worth more, not less.**
+3. **`Z4` was RIGHT and the data was wrong.** The corrected difference is the carry `Z4` predicted.
+4. **§1 and the headline STRENGTHEN.** MAE ratios move from 1.03–1.07 to **0.98–1.02** and the 1×
+   breach ratio from 1.00 to **0.90.** **"The untraded window was not the problem" is more true
+   after the fix, not less.**
+
+**The tables below are left exactly as published.** The corrected figures are in
+`data/d449_es_lifecycle.json` and `data/fixtures/es_c1_holds.csv.gz`, both regenerated, and **that
+fixture now extends to 2024-08-28 because the acquisition landed a further chunk mid-study** —
+D450 §6.
+
+---
+
 ## THE ANSWER
 
 > **D440 section 8a named the 20:00–04:00 window as its largest limitation and said every MAE was

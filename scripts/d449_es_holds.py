@@ -106,13 +106,18 @@ def build() -> int:
     # is the adverse assumption and the right one for a ratcheting barrier.
     ev = {k: v for k, v in df[df["hhmm"] >= ENTRY_HHMM].groupby("day", sort=True)}
     dp = {k: v for k, v in df[df["hhmm"] <= EXIT_HHMM].groupby("day", sort=True)}
-    days = sorted(set(ev) & set(front))
+    # PAIR BY CALENDAR, NOT BY POSITION IN A LIST OF EVENING DAYS. ES is SHUT on Friday evening,
+    # so a Friday has no 18:00+ bars and never appears in `ev`. Pairing consecutive entries of
+    # sorted(ev) therefore skipped Thursday->Friday entirely -- 418 holds, a fifth of the sample,
+    # every one of them a Friday. D259's rule excludes Friday->MONDAY (Globex shut over the
+    # weekend); it does not exclude Thursday->Friday, which is a perfectly tradeable hold.
     rows = []
-    for a, b in zip(days, days[1:]):
-        if front.get(a) != front.get(b) or b not in dp:
+    for b in sorted(dp):
+        a = str((pd.Timestamp(b) - pd.Timedelta(days=1)).date())
+        if a not in ev or a not in front or b not in front:
+            continue
+        if front[a] != front[b]:
             continue                                      # the roll -- dropped, never adjusted
-        if (pd.Timestamp(b) - pd.Timestamp(a)).days != 1:
-            continue                                      # D259's rule: no Friday->Monday
         A, B = ev[a], dp[b]
         if A.empty or B.empty:
             continue
@@ -121,7 +126,9 @@ def build() -> int:
         los = np.concatenate([A["low"].to_numpy(float), B["low"].to_numpy(float)])
         peak = np.maximum.accumulate(np.maximum(his / entry, 1.0))
         dd = 1.0 - (los / entry) / peak
-        rows.append({"symbol": "ES", "day": b, "contract": front[a], "era": _era(b),
+        rows.append({"symbol": "ES", "day": b, "prev_day": a,
+                     "dow": pd.Timestamp(b).day_name(),
+                     "contract": front[a], "era": _era(b),
                      "entry": entry,
                      "d_end": float(B["close"].iloc[-1]) / entry - 1.0,
                      "d_high": float(his.max()) / entry - 1.0,

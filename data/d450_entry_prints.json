@@ -1,0 +1,10 @@
+{
+ "n":1747.0,
+ "hold_diff_bp":0.4412138885,
+ "step_diff_bp":0.1669730495,
+ "full_diff_bp":0.6127431743,
+ "hold_diff_pct_yr":1.111858999,
+ "step_diff_pct_yr":0.4207720848,
+ "full_diff_pct_yr":1.5441127992,
+ "fallback_share":0.0
+}
