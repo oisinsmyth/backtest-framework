@@ -150,6 +150,38 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D504 — STAGE 0, CLOSE: THE ASIAN CHIP CHANNEL IS REAL AND CLEARS ENTIRELY IN THE GAP, 2026-09-13
+
+The principal's direction after D499: make the Asia-into-US question **cross-sectional** (semis
+against Asian tech). Spec `7578140`, amended `0cf06db` **before the run** (the pre-registered
+z-difference failed the known-answer selftest and was replaced by a causal residual; the
+z-difference, kept as `P1_z`, indeed came out at −11.6 bp on real data). Conditioner = the EWT+EWY
+overnight gap relative to QQQ, measured to the close of bar 0 (09:30–09:45); entry at bar 1's open
+(09:45), so the predictor is strictly before the entry — that timing is why the 15-minute ETF
+fixture is used and not the daily one.
+
+**The finding, and it is clean: the channel is real, semis-specific, and fully priced in the gap.**
+A one-sigma Asian chip move is **+25.65 bp (t +4.25) into the semis' relative opening gap and
+−1.65 ± 2.6 bp into the day session**. The traded primary is +8.0 bp on 82 trades against 11.7 bp
+crossed, z +0.96 inside its own exact rotation (p95 +1.63), with yearly means +5 / −27 / +39 / −5.
+**The family maximum is a CONTROL** — transports against QQQ at +27.97 bp, hit 61%, clearing its own
+null at the 0.8th percentile with no mechanism at all; banks and homebuilders also beat semis;
+nothing clears the eleven-cell family p95 of +2.56. Every control behaves (Europe/Brazil/emerging
+all negative and inside; the wrong-window cell −17.3; the partner-randomised spread is ±20 bp and
+QQQ's +8.0 sits mid-pack). **Verdict CLOSE** (the principal closes).
+
+**Two things kept as measurements (FINDINGS §71).** The gap-versus-day decomposition above, which is
+why the ADR-style "closed market" mechanism does not pay at a tradeable horizon. And, from the prop
+arm, a **vehicle** measurement that matters after D503: the unconditional MNQ/MES day-session pair
+has a daily σ of **$128 against one MNQ's $282** ($135 vs $273 in 2023), zero days beyond −$1,000 in
+six years. **A hedged micro pair is the only construction that lowers the dollar σ without leaving
+the micro**, which is the one unexplored answer to the floor problem D503 exposed. Dollar beta of NQ
+on ES is 1.72, so 1:1 under-hedges and 1:2 over-hedges at $9 — sizing it is its own record, not
+started.
+
+**Spent: nothing.** 2024+ on the 15-minute fixtures is unread by this line. Note the futures 2024+
+day session is spent by D503, so the prop arm could never have had a forward read.
+
 ## D499 — THE HOURLY CLOCK CLOSED BY THE PRINCIPAL, 2026-09-13: THE HOUR AFTER A LARGE MOVE IS WORTH A TICK ON EIGHT ROOTS
 
 The principal's direction for the second component: a 24-hour future, a construction that prefers

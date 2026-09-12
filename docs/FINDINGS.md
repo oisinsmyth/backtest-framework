@@ -4504,3 +4504,47 @@ move on *low* relative volume reverts more. It reverts **less**, on seven of eig
 a trade, z −2.1; the rest within 2 SE). A move that arrives on little volume in these markets is
 more often the start of something than an inventory shock. **Whatever the off-hours reversal is, it
 is not thin-book impact** — the one partition built to test that is the one that shows nothing.
+
+## 71. Measurement: the Asian chip channel into US semiconductors is real, semis-specific, and clears ENTIRELY in the opening gap
+
+**A MEASUREMENT, not a verdict** ([R15](RULES.md#r15)). From
+[D504](decisions/D504-RESULT-stage-0-CLOSE-the-Asian-chip-channel-is-real-and-clears-entirely-in-the-gap-25-6-bp-into-the-gap-and-nothing-into-the-day-and-transports-beat-semis.md)
+(1,324 sessions on the 15-minute ETF fixture, 2018-01-02 → 2023-12-29; 2024+ reserved and unread).
+
+**(a) The channel is there and it is sector-specific.** The overnight gap of SMH relative to QQQ
+loads **+0.45 on the EWT gap** (Taiwan, roughly half TSMC), +0.40 on EWY (Korea) and +0.37 on EWJ.
+It is not a market-wide effect dressed up: the same Asian sessions load ≈ **0.50 on BOTH the NQ and
+the ES** Tokyo-hours return, so an index-level or futures-only expression captures the market
+component and only 0.20–0.30 of the tech tilt. **The Asian *level* signal and the Asian *relative*
+signal are different objects and a study must say which it uses.**
+
+**(b) And the gap is where it clears, completely.** One regression, Newey-West(5), n = 1,073, with
+the Asian chip signal standardised causally and measured relative to QQQ:
+
+| | bp per unit z | t |
+|---|---:|---:|
+| into the semis' relative opening GAP | **+25.65** | **+4.25** |
+| into the relative DAY SESSION, 09:45 → 16:00 | **−1.65** | −0.64 |
+
+**Twenty-six basis points of Asian information is in the price by 09:45 and nothing measurable is
+left.** A conditioner measured to the close of the 09:30–09:45 bar, traded from the 09:45 open to
+the close, earns +8.0 ± 8.4 bp before a crossed cost of 11.7 bp, with yearly means of +5, −27,
++39, −5. **This is the cleanest gap-versus-day decomposition in the repo, and it is the reason the
+ADR-style "closed market" mechanism does not pay at a tradeable horizon: the US open is an auction
+that prices exactly this.**
+
+**(c) The control that beat the treatment.** On the same signal, **transports (IYT) against QQQ
+earned +27.97 bp a trade, hit 61%, and cleared its own exact rotation at the 0.8th percentile** —
+with no mechanism from Taiwanese semiconductor gaps whatsoever. Banks and homebuilders also beat
+SMH. The eleven-cell family p95 is +2.56 against IYT's +2.26, so the family bar refuses it; single-
+cell scoring would have called it a find. **Keep a mechanism-free sector control in any study whose
+conditioner is a foreign market** — it is the cheapest way to see the family for what it is.
+
+**(d) A sub-micro exposure exists, and it is a spread.** On the same window, the daily σ of the
+unconditional MNQ/MES day-session pair is **$128 against $282 for one MNQ** ($135 vs $273 in 2023
+alone), with zero days beyond −$1,000 in six years against the single micro's 0.2 a year. D503
+established that one micro no longer fits a $50k account's $2,000 trailing floor at 2026 prices
+([[one-micro-has-grown-into-the-prop-barrier]] in memory; §69 (b) for the identity). **A hedged
+micro pair is the only construction that lowers the dollar σ without leaving the micro** — the
+dollar beta of NQ on ES is 1.72, so 1:1 under-hedges and 1:2 over-hedges at $9 a round trip. This
+closes nothing and sizes nothing; it says the vehicle question has at least one unexplored answer.

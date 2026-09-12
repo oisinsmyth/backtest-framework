@@ -171,6 +171,8 @@ estimate and was held back for the family-bar failure and in-sample selection, t
 its forward read**. So the vault starts empty and no prior verdict is reversed by this amendment.
 The routing rule takes effect for constructions scored from here.
 
+| **D504 stage 0 (2026-09-13): the Asian chip session into the US semiconductor day** — the EWT+EWY overnight gap relative to QQQ, residualised causally on the semis' own relative gap, traded 09:45 → 16:00; twelve declared cells on the 15-minute ETF fixture plus the prop arm MNQ/MES at $6; 2018–2023 | D504 | **P5 (the only prop-eligible expression) gross −$13.76 a trade, net −$19.76 against $6, net Sharpe −0.38, hit 40%, ρ with K8 −0.15**; the cash primary +8.0 ± 8.4 bp against 11.7 bp crossed | **C-a; and by venue the cash pair is personal-book-only (the prop accounts are futures-only).** The channel is real but clears in the GAP (+25.6 bp at t +4.25) and leaves −1.7 ± 2.6 bp for the day; a control sector with no mechanism (transports) was the family maximum; nothing clears the eleven-cell family p95 of +2.56. Vehicle measurement kept: the unconditional MNQ/MES pair's daily σ is $128 against one MNQ's $282 |
+
 **Line closed by the principal, 2026-09-13:** the **hourly clock** (any hourly-horizon construction
 on the eight gated roots at micro cost) is closed for the prop book after D499. The reversal it
 measured is real on the US off-hours clock and worth a tick; the fee is 7–24% of an hourly move on
