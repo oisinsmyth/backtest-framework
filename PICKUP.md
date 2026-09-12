@@ -67,6 +67,22 @@ in 2020–2022** (2016–2019: the two sides are equal). A pick, not a component
 stage 1 would re-report it; the unread 2024+ slice (~190 gated nights, SE ≈ $7.8 vs +$10.7
 expected) is the only test and is underpowered — **the principal's call whether to spend it.**
 
+**D472 (`4290eeb`, RESULT): the pick tested on what the family null had not priced.** On a
+standardised scale the in-sample family bar still refuses it (z 2.78 vs p95 3.13; gated Sharpe
++0.70 vs p95 +0.79 — the rotation null is centred on the drift, so the best of eight random
+45%-gates on a drifting series sits at +0.48 median; eight years cannot beat that). **On SPY and
+IWM cash 2010–2015, a period and instrument outside the family, the same construction (the
+overnight gap after a negative overnight gap) is +5.5 / +7.7 bp vs ≈ 0 on the other side, 1.9 /
+2.0 SE, clears both single-cell nulls, and is on the right side in 11 of 12 symbol-years; over
+2010–2023 it is 24 of 28.** The prior-session variant (NQ-W1's big dollar cell) does not
+replicate in cash. The declared step-3 criterion fails on the family condition alone; whether the
+replication outweighs it is the principal's decision. If yes: one declared component (ES or NQ
+overnight leg after a down leg, one micro, $3, in-sample gated net Sharpe +0.70 / +0.62), promotion
+on the unread 2024+ futures slice (weak alone, ~190 gated nights) plus the cash 2024+ reserve.
+RTY added to the D467 table (nine roots; eight rebuilt bit-identically) and held back on G2
+(a Sunday-session volume flip, 2020-06-14). A difference-between-sides family statistic, centred
+on zero, is the right declaration for any future concentration test (noted in D472 §1, not run).
+
 **What stands.** The overnight index drift is real on the futures and **unaffordable at micro
 size** (breakeven cost for C-a on ES-W1 is $1.48 a round trip); the plan's 16:10 flat rule forbids
 holding across sessions; the only lever inside this family is notional per contract, which the

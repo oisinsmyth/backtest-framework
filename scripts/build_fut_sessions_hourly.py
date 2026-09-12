@@ -18,13 +18,13 @@ import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"; FIX = REPO / "data" / "fixtures"; OUT = FIX / "fut_sessions_hourly.csv.gz"; ROLLS = FIX / "fut_sessions_rolls.csv.gz"; META = FIX / "fut_sessions_hourly.meta.json"
-ROOTS = ("ES", "NQ", "YM", "ZN", "ZB", "GC", "CL", "6E"); OUTRIGHT = re.compile(r"^(ES|NQ|YM|ZN|ZB|GC|CL|6E)([FGHJKMNQUVXZ])(\d{1,2})$"); PX = 1e-9; CHUNK = 10_000_000
+ROOTS = ("ES", "NQ", "YM", "ZN", "ZB", "GC", "CL", "6E", "RTY"); OUTRIGHT = re.compile(r"^(ES|NQ|YM|ZN|ZB|GC|CL|6E|RTY)([FGHJKMNQUVXZ])(\d{1,2})$"); PX = 1e-9; CHUNK = 10_000_000      # RTY added under D472 (ninth root; the first eight rebuild bit-identically)
 SEG = [18, 19, 20, 21, 22, 23] + list(range(0, 17)); SEGN = [f"h{h:02d}" for h in SEG]; PRESENT_MIN = 200; DAY_SEG = [f"h{h:02d}" for h in range(9, 16)]
 MONTH = {c: i + 1 for i, c in enumerate("FGHJKMNQUVXZ")}
-G1_THR = {"ES": 0.010, "NQ": 0.010, "YM": 0.010, "ZN": 0.005, "ZB": 0.0075, "GC": 0.015, "CL": 0.030, "6E": 0.0075}; G1_MAX = 150
-G2_K = {"ES": 4, "NQ": 4, "YM": 4, "ZN": 4, "ZB": 4, "6E": 4, "GC": 6, "CL": 12}; G2_REVERT_MAX = {"GC": 2, "CL": 2}
-G3_P50 = {"ES": 1300, "NQ": 1300, "YM": 1300, "ZN": 1300, "ZB": 1300, "GC": 1200, "CL": 1200, "6E": 1200}; G3_LIST_BELOW = 900
-G4_ETF = {"ES": "SPY", "NQ": "QQQ", "YM": "DIA", "ZN": "IEF", "ZB": "TLT", "GC": "GLD", "CL": "USO", "6E": "FXE"}; G4_MIN = {"ES": 0.99, "NQ": 0.99, "YM": 0.99, "ZN": 0.90, "ZB": 0.90, "GC": 0.95, "CL": 0.85, "6E": 0.90}
+G1_THR = {"ES": 0.010, "NQ": 0.010, "YM": 0.010, "ZN": 0.005, "ZB": 0.0075, "GC": 0.015, "CL": 0.030, "6E": 0.0075, "RTY": 0.015}; G1_MAX = 150
+G2_K = {"ES": 4, "NQ": 4, "YM": 4, "ZN": 4, "ZB": 4, "6E": 4, "GC": 6, "CL": 12, "RTY": 4}; G2_REVERT_MAX = {"GC": 2, "CL": 2}
+G3_P50 = {"ES": 1300, "NQ": 1300, "YM": 1300, "ZN": 1300, "ZB": 1300, "GC": 1200, "CL": 1200, "6E": 1200, "RTY": 1300}; G3_LIST_BELOW = 900
+G4_ETF = {"ES": "SPY", "NQ": "QQQ", "YM": "DIA", "ZN": "IEF", "ZB": "TLT", "GC": "GLD", "CL": "USO", "6E": "FXE", "RTY": "IWM"}; G4_MIN = {"ES": 0.99, "NQ": 0.99, "YM": 0.99, "ZN": 0.90, "ZB": 0.90, "GC": 0.95, "CL": 0.85, "6E": 0.90, "RTY": 0.99}
 ETF_FIX = FIX / "etf_wide_daily_raw.csv.gz"; G5_COVER = 0.97; G5_END = "2026-08-26"
 
 
