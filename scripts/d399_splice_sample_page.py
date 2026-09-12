@@ -91,7 +91,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:34px;margin:
   <p class="lede" id="lede1">Everything up to now was <b>one name over one 260-bar window</b> &mdash; GME,
     picked over and re-picked by eye across several hundred variants. These twelve are the first
     data the construction has met that it was not shaped on.</p>
-  <p class="lede">The draw was <b>seeded and the rule written down before any chart existed</b>:
+  <p class="lede" id="lede2">The draw was <b>seeded and the rule written down before any chart existed</b>:
     every bar must clear D343's price and dollar-volume floor, any window containing a single-bar
     move over 40% in logs is rejected as an unadjusted split, GME is excluded, and twelve
     (name, start) pairs are taken uniformly from the 366,158 that qualify. BA came up twice because
@@ -125,13 +125,16 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:34px;margin:
   if (D.page){
     if (D.page.title) document.getElementById('h1').innerHTML = D.page.title;
     if (D.page.lede1) document.getElementById('lede1').innerHTML = D.page.lede1;
-    if (D.page.lede2) document.getElementById('lede1').innerHTML += ' ' + D.page.lede2;
+    if (D.page.lede2) document.getElementById('lede2').innerHTML = D.page.lede2;
+    if (D.page.eyebrow) document.querySelector('.eyebrow').innerHTML = D.page.eyebrow;
+    if (D.page.cfg) document.getElementById('cfg').textContent = D.page.cfg;
   }
   var c = D.cell;
   document.getElementById('cfg').textContent =
     'k=' + c.k + ' tie-tolerant  ·  height deadband ' + c.dh + '%  ·  gradient deadband off  ·  ' +
     'body break on  ·  min_piv ' + c.min_piv + '  ·  break bar = provisional pivot  ·  ' +
     'intercept from body clearance  ·  age decay ' + c.decay_end + '  ·  seed ' + D.seed;
+  if (D.page && D.page.cfg) document.getElementById('cfg').textContent = D.page.cfg;   // a page may carry its own settings line
 
   document.getElementById('grid').innerHTML = D.charts.map(function(ch){
     var n = ch.n, i, mn = Infinity, mx = -Infinity;

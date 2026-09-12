@@ -149,6 +149,8 @@ def main() -> int:
     CHART.write_text(json.dumps(dict(
         cell=CELL_HAND, seed=None, window=NS.WIN, charts=charts,
         page=dict(title="The hand cell against the hand lines",
+                  eyebrow="D460 &middot; the pivot construction re-dialled against the principal's hand-drawn lines",
+                  cfg=SETTINGS_LINE_HAND,
                   lede1=("D399's pivot construction re-dialled against the principal's hand-drawn lines "
                          "(D460): <b>pair rules off, one-bar pivots, no width kill, one pivot carried across "
                          "a break, a 3% close break, a 4% margin, staleness 25/12</b>. Solid lines are the "
