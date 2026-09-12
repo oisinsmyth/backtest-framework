@@ -136,3 +136,42 @@ This record · `scripts/run_d504_asian_chip_stage0.py` (`--run`, `--selftest`) �
 `data/d504_asian_chip_stage0.json` · trade files per cell · RESULT (separate). Projected runtime
 under two minutes: 1,497 sessions, sixteen symbols, twelve cells, ≈ 1,246 enumerated offsets,
 vectorised over offsets.
+
+---
+
+## AMENDMENT, 2026-09-13 — the primary is a causal RESIDUAL, not a z-difference. Found in the selftest, before any real outcome was read
+
+**What was wrong.** §1 defined the primary conditioner as `D = z(A) − z(G)` and §0/§2 describe its
+intent as the **incremental** quantity: the Asian move the US semis' own gap has not already priced.
+A z-difference is not that quantity. On a synthetic panel built to the record's own hypothesis (the
+Asian factor enters EWT and EWY in full, enters SMH's gap only partly, and the remainder is
+delivered in SMH's 09:45 → 16:00 window) the z-difference **failed to detect a planted effect and
+came out with the wrong sign**, at −24.7 bp on a plant of +3σ.
+
+**Why.** `A` carries a large market-wide component — the predictor-side table in §0 is explicit that
+both NQ and ES load ≈ 0.5 on the Asian session — and that component inflates `sd(A)`, so `z(A)`
+loads *less* on the Asian factor than `z(G)` does. Their difference then points away from the Asian
+direction. The z-difference also conflates two mechanisms under one sign: Asia up with semis not
+following, and Asia flat with semis gapping down hard.
+
+**The amended definitions.** Both are faithful to §0's stated intent and neither has seen an outcome:
+
+1. **`A_rel` = mean(gap EWT, gap EWY) − gap(QQQ)** — the Asian chip complex *relative to the US
+   market benchmark*, which removes the market-wide component the predictor-side table identified.
+2. **`resid_d` = `A_rel_d` − (a + b·`G_d`)**, with `a`, `b` from an OLS fitted on the trailing 250
+   sessions **ending at d−1**, so the fit never sees day d. This is "the Asian move not explained by
+   the US semis' own relative gap", which is what §0 (iii) says the only question worth asking is.
+
+**P1 is now**: trade when `|resid|` is in the top decile of its own trailing 250-session
+distribution, in the direction `sign(resid)`. **The original z-difference is retained as a declared
+secondary cell `P1_z`**, so the record shows both and nothing is hidden. Every control, null,
+decision rule and prediction in §2–§5 is unchanged and now applies to the amended `P1`; the P4
+wrong-conditioner cells use the same residual construction with their own region in place of Asia.
+
+**Prediction X-a is restated in the amended quantities** (it referred to `z(A)`): the incremental
+coefficient on `z(A_rel)` in M1, controlling for `z(G)`, is between −6 and 0 bp per unit z with
+|t| < 2. X-b to X-f stand as written.
+
+**How it was caught.** The known-answer check `[F]` in `--selftest` requires the planted cell to
+clear its own null while the unplanted and wrong-sector cells do not. It failed on the z-difference.
+CLAUDE.md: *a self-test that cannot fail is worse than none* — this is the case it was there for.
