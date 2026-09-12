@@ -31,6 +31,27 @@ across seven schemas*, so the roll gates do not transfer.
 
 ---
 
+## D462 / D463 — THE PROP TRACK ON THE FUTURES THEMSELVES: THE DATA LAYER, AND THE FIRST CANDIDATE SCREENED ON ES, 2026-09-12
+
+**The archive** (111 GB, `data/raw/databento/`, moved out of `temp/` by the principal) is now a
+data layer: **ES, NQ, YM one-minute regular-hours fixtures**, front month by measured volume, no
+stitching, five gates (`scripts/build_fut_index_1m.py`), **usable from 2016-01-04** — the archive
+carries the index futures' evening bars but not their day session on most days before 2016 (21–42%
+of the calendar in 2010–12; a fifth gate had to be added to see it; every earlier ES study's
+2010–2015 numbers rest on 20–85% of days). RTY failed the cross-check on the 2020-03-16
+limit-down open and is not committed. **Records: D462 (`de75a63`, RESULT `d69b59e`).**
+
+**The candidate** — market intraday momentum, the last 30 minutes, lane 13's only near-miss —
+screened on ES 2016–2023 (D463, `dd5801c`): **+1.18 ± 0.86 bp per trade at a 49% hit rate, slope
++1.8 (×100) against the published 6.18, inside the sign null; net +0.07 bp at a $17 round trip.**
+**Hurdle P's P3/P4/P5 computed for the first time**, on the measured 30-minute path through
+D440's lifecycle model: the C4 rule sizes below one contract at f ≤ 0.4%, and at every size that
+trades the worst day breaches 2% on 13–87 days, the funded account lives 0.07–0.48 years, V < 0.
+**Not a candidate; closed on this window; the 2024–2026 slice unread.** The durable output is the
+arithmetic: a single ES contract's 30-minute σ (~$650) on a $50k account puts the floor 3σ away
+per trade, so **no single-contract ES construction at that σ clears P3/P4 on this account size**,
+whatever its edge. Records: RESULT `docs/decisions/D463-RESULT-…md`; BOOK_PROP updated.
+
 ## D457 — THE 8-K ATLAS WITH RETURNS: NO CELL CLEARS, THE DISTRESS ITEMS REBOUND, THE REACTION IS IN THE GAP, 2026-09-12
 
 17 item cells × all/pure × both sides, cap 10, C1 (state-matched, no 8-K within ±5 bars) and

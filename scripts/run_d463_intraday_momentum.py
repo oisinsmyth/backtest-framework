@@ -88,11 +88,12 @@ def block_boot(x, dates, n_boot=1000, seed=7):
 def per_root_stats(d, rng):
     pnl = d["pnl_bp"].to_numpy(); sign = d["side"].to_numpy().astype(float); rlh = d["rLH"].to_numpy() * 1e4; dates = d["day"].to_numpy()
     rot = rotation_null(sign, rlh); s2 = sign_null(rng, rlh); se_boot, mean = block_boot(pnl, dates)
-    beta, t, n = nw_beta(d["rLH"] * 100, d["rROD"] * 100); post = d[d["day"] >= POST]; beta_p, t_p, n_p = nw_beta(post["rLH"] * 100, post["rROD"] * 100)
-    bfh, tfh, _ = nw_beta(d["rLH"] * 100, d["rFH"].fillna(0) * 100)
+    # slopes are dimensionless (both sides in %); Baltussen et al. report beta x 100 (ES 6.18), so every beta here is stored x 100
+    beta, t, n = nw_beta(d["rLH"] * 100, d["rROD"] * 100); beta *= 100; post = d[d["day"] >= POST]; beta_p, t_p, n_p = nw_beta(post["rLH"] * 100, post["rROD"] * 100); beta_p *= 100
+    bfh, tfh, _ = nw_beta(d["rLH"] * 100, d["rFH"].fillna(0) * 100); bfh *= 100
     eras = {}
     for lab, lo, hi in (("2010-14", "2010", "2014"), ("2015-19", "2015", "2019"), ("2020-23", "2020", "2023")):
-        e = d[(d["day"] >= lo) & (d["day"] <= hi + "-12-31")]; eras[lab] = dict(n=int(len(e)), mean_bp=float(e["pnl_bp"].mean()) if len(e) else None, hit=float((e["pnl_bp"] > 0).mean()) if len(e) else None, beta=nw_beta(e["rLH"] * 100, e["rROD"] * 100)[0] if len(e) > 50 else None)
+        e = d[(d["day"] >= lo) & (d["day"] <= hi + "-12-31")]; eras[lab] = dict(n=int(len(e)), mean_bp=float(e["pnl_bp"].mean()) if len(e) else None, hit=float((e["pnl_bp"] > 0).mean()) if len(e) else None, beta=100 * nw_beta(e["rLH"] * 100, e["rROD"] * 100)[0] if len(e) > 50 else None)
     mae = -d["mae_usd"].to_numpy()
     return dict(trades=int(len(d)), first=str(dates[0]), last=str(dates[-1]), mean_bp=float(mean), se_boot_bp=se_boot, median_bp=float(np.median(pnl)), sd_bp=float(pnl.std(ddof=1)), hit=float((pnl > 0).mean()),
                 mean_usd=float(d["pnl_usd"].mean()), sd_usd=float(d["pnl_usd"].std(ddof=1)), cost_bp=float(d["cost_bp"].mean()), net_bp=float(d["net_bp"].mean()), net_usd=float(d["net_usd"].mean()),
@@ -171,7 +172,7 @@ def run():
           + f"  X-c sd 18-28 bp; MAE p50 6-10 bp, p99 50-90, worst > 200; P(>$1,000) 2-6%, P(>$2,000) 0.3-1.5% : sd {R['ES']['sd_bp']:.1f}; MAE bp p50 {R['ES']['mae_bp']['p50']:.1f} p99 {R['ES']['mae_bp']['p99']:.0f} worst {R['ES']['mae_bp']['worst']:.0f}; {100*R['ES']['mae_usd']['p_gt_1000']:.2f}% / {100*R['ES']['mae_usd']['p_gt_2000']:.2f}%\n"
           + f"  X-d cost 0.4-0.6 bp; net > 0                                                     : cost {R['ES']['cost_bp']:.2f}  net {R['ES']['net_bp']:+.2f}\n"
           + f"  X-e f=0.2% sizes 0 on most days; P3 breaches at f >= 0.7%; P4 < 1 yr at every f   : " + "  ".join(f"{('1ct' if k == '1ct' else f'f{100*float(k):.1f}%')}: {c['contracts_mean']:.1f} ct, worst {c['P3_worst_day_pct']:+.1f}%, life {c['P4_fund_life_years'] if c['P4_fund_life_years'] is None else round(c['P4_fund_life_years'], 2)} yr" for k, c in hp.items()) + "\n"
-          + f"  X-f same sign on all four; strongest 2010-14, weakest 2020-23                    : signs {[(r, int(np.sign(R[r]['beta']['full']))) for r in R]};  ES eras " + " ".join(f"{k} {v['mean_bp']:+.2f}" for k, v in R['ES']['eras'].items()))
+          + f"  X-f same sign on all four; strongest 2010-14, weakest 2020-23                    : signs {[(r, int(np.sign(R[r]['beta']['full']))) for r in R]};  ES eras " + " ".join(f"{k} {v['mean_bp']:+.2f}" if v['mean_bp'] is not None else f"{k} (before the usable window)" for k, v in R['ES']['eras'].items()))
     OUT.write_text(json.dumps(res, indent=1, default=float)); print(f"\nwrote {OUT.relative_to(REPO)} and {TRADES.name}   {(time.time()-t0)/60:.1f} min   (2010-2023 only; 2024-2026 unread; no holdout)")
 
 

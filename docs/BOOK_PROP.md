@@ -550,3 +550,37 @@ bar was still the wrong bar.**
 
 **Admitted arms: still none.** The statement at the top of this page is unchanged, and it is now
 unchanged for a better-measured reason.
+
+---
+
+## C-13.1 — MARKET INTRADAY MOMENTUM, SCREENED ON ES ITSELF AND CLOSED, 2026-09-12
+
+**The data.** The CME one-minute archive (D462): ES, NQ and YM regular-hours fixtures, front
+month by measured volume, gated, **usable from 2016-01-04** — the archive lacks the index
+futures' day session on most days before then (21–42% of the calendar in 2010–2012). RTY's
+fixture failed the cross-check gate on the 2020-03-16 limit-down open and is not committed.
+
+**The candidate** (lane 13's only near-miss): the sign of the day's return to 15:30 predicts the
+last thirty minutes; long or short at 15:30, flat at the close. Pre-registered as
+[D463](decisions/D463-market-intraday-momentum-the-last-30-minutes-on-ES-NQ-YM-RTY-the-lane-13-falsification-criteria-and-hurdle-P-computed-for-the-first-time.md)
+with the lane's five criteria, the enumerated sign-rotation and sign-randomisation nulls, futures
+cost as a quote, and **hurdle P's P3, P4 and P5 computed for the first time on anything.**
+
+| ES, 2016–2023, 1,894 trades | |
+|---|---:|
+| mean per trade | **+1.18 ± 0.86 bp**, median 0, hit **49.3%** |
+| slope on rROD (×100) | **+1.8**, t 1.1 (published: 6.18); post-2018 +2.1 |
+| exact rotation p95 / sign null p95 | +1.10 / +1.22 |
+| net of $17 round trip | +0.07 bp |
+| MAE inside the window, one contract | p50 $175, p99 $1,641, worst $4,000; > $1,000 on 4.4% of days |
+
+**Hurdle P** (MFFU Rapid EOD 50K, C4 sizing on the measured path): at f = 0.2–0.4% the rule sizes
+**below one whole contract** on most days; at every size that trades, **P3's worst day is −4% to
+−8% (13–87 breaching days), P4's funded life is 0.07–0.20 years against three, and V is negative.**
+**The size scissors the ledger described, measured: a 30-minute σ of ~$650 per contract on a
+$50k account puts the floor three σ away per trade.**
+
+**CLOSED on this window.** F1 and F3 fail; no f clears hurdle P. The 2024–2026 slice is unread.
+NQ (net +0.92 bp, slope t 1.7) is reported, not selected. **What outlives the candidate:** the
+hurdle-P machinery on an intraday path, and the arithmetic that any single-contract ES
+construction at this per-trade σ fails P3/P4 on this account size regardless of its edge.
