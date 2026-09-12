@@ -255,6 +255,52 @@ def do_self_test() -> int:
     chk("variance ratio detects bid-ask bounce as < 1", vr_of(bounce) < 0.95,
         f"{vr_of(bounce):.3f}")
 
+    # --- the clock abstraction must not know which clock it is
+    px_k = np.array([10., 11., 12., 13., 14., 15.])
+    sec_k = np.array([0, 1, 2, 3, 4, 5], dtype=np.int64)
+    ses_k = np.zeros(6, dtype=np.int64)
+    sz_k = np.ones(6, dtype=np.int64)
+    # VOLUME BEFORE THE TRADE, so the clock starts at 0 like a wall clock does. Using
+    # cumsum(sz) put the first boundary a partial bucket early and made the volume clock
+    # inequivalent to a trade-count clock on unit sizes -- found by this check disagreeing
+    # with the time clock below on data where they MUST agree.
+    cum_k = np.cumsum(sz_k) - sz_k                # 0,1,2,3,4,5
+    pv, _, _ = clock_sample(cum_k, px_k, sec_k, ses_k, 2)
+    pt, _, _ = clock_sample(sec_k, px_k, sec_k, ses_k, 2)
+    chk("volume clock on unit-size trades == every 2nd trade",
+        list(pv) == [11., 13., 15.], f"{list(pv)}")
+    chk("time clock of 2 s on 1 s trades gives the same points",
+        list(pt) == [11., 13., 15.], f"{list(pt)}")
+    chk("THE TWO CLOCKS AGREE where they must (unit sizes, one trade a second)",
+        list(pv) == list(pt), f"{list(pv)} vs {list(pt)}")
+    # and a LUMPY size distribution must REGROUP the trades
+    sz_l = np.array([1, 1, 8, 1, 1, 1], dtype=np.int64)
+    pl, _, _ = clock_sample(np.cumsum(sz_l) - sz_l, px_k, sec_k, ses_k, 2)
+    chk("a lumpy trade regroups the volume buckets", list(pl) != list(pv),
+        f"{list(pl)} against {list(pv)}")
+
+    # clock_cell must compute the SAME numbers as the hand primitives on one window
+    rg2 = np.random.default_rng(99)
+    p_ = np.cumsum(rg2.standard_normal(4000)) + 100.0
+    s_ = np.arange(4000, dtype=np.int64)
+    ss_ = np.zeros(4000, dtype=np.int64)
+    cell = clock_cell(p_, s_, ss_, m=10)
+    chk("clock_cell returns a cell on a synthetic series", cell is not None)
+    if cell:
+        # a driftless walk must read VR ~ 1 and a corrected ratio ~ 1
+        chk("clock_cell VR ~ 1 on a random walk", abs(cell["variance_ratio"] - 1) < 0.12,
+            f"{cell['variance_ratio']:.3f}")
+        chk("clock_cell corrected ratio ~ 1 on a random walk",
+            abs(cell["efficiency_over_corrected_benchmark"] - 1) < 0.12,
+            f"{cell['efficiency_over_corrected_benchmark']:.3f}")
+        chk("clock_cell kurtosis ~ 3 on a Gaussian window return",
+            abs(cell["kurtosis_of_window_return"] - 3.0) < 0.8,
+            f"{cell['kurtosis_of_window_return']:.2f}")
+        # and the identity gate inside it did not raise, which is itself the check
+        chk("clock_cell identity holds (it raises otherwise)", True,
+            f"ratio {cell['efficiency_over_corrected_benchmark']:.6f} "
+            f"= sqrt(VR)*nonGauss")
+
     if fails:
         P(f"\n  SELF-TEST FAILED: {fails}")
         return 1
@@ -286,6 +332,40 @@ def load_grid():
     # session id: the ET calendar date, as an integer
     sess = (et.year.values * 10000 + et.month.values * 100 + et.day.values)
     return uniq[rth], px[last][rth], iid[last][rth], sess[rth]
+
+
+def load_trades_rth():
+    """TRADE-level RTH data. A volume clock must place boundaries inside a second, so it
+    cannot be built from the one-second grid."""
+    import pandas as pd
+    z = np.load(TICKS)
+    if "iid" not in z:
+        raise GateError("[INPUT] cache carries no instrument_id; re-run d465 --extract")
+    px = z["px"].astype(np.float64) * PX_SCALE
+    bid, ask = z["bid"], z["ask"]
+    good = ((px > 0) & (bid != INT64_SENTINEL) & (ask != INT64_SENTINEL)
+            & (bid > 0) & (ask > 0) & (ask >= bid) & (z["sz"] > 0))
+    sec = (z["ts"][good] // 1_000_000_000).astype(np.int64)
+    px, sz = px[good], z["sz"][good].astype(np.int64)
+    et = pd.DatetimeIndex(pd.to_datetime(sec, unit="s", utc=True)) \
+        .tz_convert("America/New_York")
+    etm = et.hour.values * 60 + et.minute.values
+    rth = (etm >= 9 * 60 + 30) & (etm < 16 * 60)
+    sess = et.year.values * 10000 + et.month.values * 100 + et.day.values
+    return sec[rth], px[rth], sz[rth], sess[rth]
+
+
+def clock_sample(key: np.ndarray, px: np.ndarray, sec: np.ndarray, sess: np.ndarray,
+                 step):
+    """Last observation in each `step`-sized bucket of a monotone clock `key`.
+
+    `key` is wall-clock seconds for a time clock and cumulative contracts for a volume
+    clock -- the rest of the pipeline cannot tell which, which is the point.
+    """
+    b = key // step
+    _, f = np.unique(b, return_index=True)
+    l = np.append(f[1:], len(px)) - 1
+    return px[l], sec[l], sess[l]
 
 
 def coarsen(sec: np.ndarray, px: np.ndarray, sess: np.ndarray, delta: int):
@@ -447,6 +527,162 @@ def do_grid_sweep(as_json: bool) -> int:
            "sweep": out}
     if as_json:
         p = REPO / "data" / "d471_path_efficiency_grid_sweep.json"
+        p.write_text(json.dumps(res, indent=1, default=str) + "\n", encoding="utf-8")
+        P(f"wrote {p.relative_to(REPO)}")
+    return 0
+
+
+# ---------------------------------------------------------------- volume clock
+
+def clock_cell(px_c, sec_c, sess_c, m: int, span_key=None, span_target=None,
+               span_tol=0.15):
+    """One cell of the sweep, identical arithmetic for a time clock and a volume clock.
+
+    Returns a dict of every statistic, or None if too few windows survive.
+    """
+    n = len(px_c)
+    starts = np.arange(0, n - m - 1, m, dtype=np.int64)
+    ends = starts + m
+    ok = sess_c[starts] == sess_c[ends]
+    if span_key is not None:                      # a TIME clock also checks its own span
+        ok &= np.abs((span_key[ends] - span_key[starts]) - span_target) \
+            <= span_tol * span_target
+    prev = starts - m
+    okp = np.zeros(len(starts), dtype=bool)
+    okp[1:] = ok[:-1] & (sess_c[np.maximum(prev[1:], 0)] == sess_c[starts[1:]])
+    keep = ok & okp
+    st, en, pv = starts[keep], ends[keep], prev[keep]
+    if len(st) < 300:
+        return None
+
+    cumabs = np.concatenate([[0.0], np.cumsum(np.abs(np.diff(px_c)))])
+    net = np.abs(px_c[en] - px_c[st])
+    path = cumabs[en] - cumabs[st]
+    eff = np.where(path > 0, net / np.maximum(path, 1e-15), np.nan)
+    net_p = np.abs(px_c[pv + m] - px_c[pv])
+    path_p = cumabs[pv + m] - cumabs[pv]
+    eff_p = np.where(path_p > 0, net_p / np.maximum(path_p, 1e-15), np.nan)
+    fin = np.isfinite(eff) & np.isfinite(eff_p)
+    if fin.sum() < 300:
+        return None
+
+    inside = st[fin][:, None] + np.arange(1, m + 1, dtype=np.int64)[None, :]
+    r_in = (px_c[inside] - px_c[inside - 1]).ravel()
+    signed_net = (px_c[en] - px_c[st])[fin]
+    vr = float(np.var(signed_net, ddof=1) / (m * np.var(r_in, ddof=1)))
+
+    e_abs_r, sd_r = float(np.mean(np.abs(r_in))), float(np.std(r_in, ddof=1))
+    C = np.sqrt(2.0 / np.pi) * sd_r / e_abs_r
+    rw_corr = C / np.sqrt(m)
+    eff_rom = float(np.mean(net[fin]) / np.mean(path[fin]))
+    ratio_rom = eff_rom / rw_corr
+
+    sd_net = float(np.std(signed_net, ddof=1))
+    gauss = (float(np.mean(np.abs(signed_net))) / sd_net) / np.sqrt(2.0 / np.pi)
+    pred = np.sqrt(vr) * gauss
+    if abs(ratio_rom - pred) > 1e-9:
+        raise GateError(f"[IDENTITY] m={m}: {ratio_rom:.6f} vs sqrt(VR)*nonGauss "
+                        f"{pred:.6f} -- the two instruments are the same quantity")
+
+    net_t = net[fin] / TICK_PTS
+    kurt = float(np.mean(((signed_net - signed_net.mean()) / sd_net) ** 4))
+    mins = (sec_c[en] - sec_c[st])[fin] / 60.0
+    return {"steps": m, "n_windows": int(fin.sum()),
+            "mean_efficiency": float(np.nanmean(eff[fin])),
+            "efficiency_ratio_of_means": eff_rom,
+            "step_shape_C": float(C),
+            "efficiency_over_corrected_benchmark": float(ratio_rom),
+            "variance_ratio": vr, "sqrt_variance_ratio": float(np.sqrt(vr)),
+            "non_gaussianity_factor": float(gauss),
+            "kurtosis_of_window_return": kurt,
+            "mean_abs_move_ticks": float(net_t.mean()),
+            "breakeven_accuracy_MES": float(breakeven_accuracy(
+                1.009 + COMMISSION_RT_MES / TICK_USD_MES, net_t.mean())),
+            "persistence_rho_eff": float(np.corrcoef(eff_p[fin], eff[fin])[0, 1]),
+            "rho_eff_to_forward_abs": float(np.corrcoef(eff_p[fin], net[fin])[0, 1]),
+            # THE HEADLINE A/B: does the clock keep the VOLATILITY conditioner alive?
+            "persistence_rho_abs_move": float(np.corrcoef(net_p[fin], net[fin])[0, 1]),
+            "se_rho": float(1.0 / np.sqrt(int(fin.sum()))),
+            "wallclock_minutes_mean": float(mins.mean()),
+            "wallclock_minutes_p10": float(np.quantile(mins, .10)),
+            "wallclock_minutes_p90": float(np.quantile(mins, .90))}
+
+
+def do_volume_clock(as_json: bool) -> int:
+    """Path efficiency on a VOLUME clock -- sample every V contracts, not every N seconds.
+
+    The theory is Clark (1973) and the volume-clock literature: price moves on transactions,
+    not on the wall clock, so returns sampled in volume time should be closer to iid
+    Gaussian and time-clock sampling smears structure across quiet and busy periods.
+
+    THERE IS A SHARP PREDICTION AGAINST US HERE, and it is the reason to run it. Volatility
+    clusters IN TIME -- that clustering is exactly why the volatility conditioner reached
+    rho = +0.31 and cut the breakeven bar to 54.8%. A volume clock ABSORBS that clustering
+    by construction: a busy period produces more bars rather than bigger ones. So the volume
+    clock may well destroy the one conditioner that worked. That is measured, not assumed,
+    by carrying `persistence_rho_abs_move` on both clocks in the same run.
+    """
+    sec, px, sz, sess = load_trades_rth()
+    tot = int(sz.sum())
+    P(f"RTH trades {len(px):,}  volume {tot:,} contracts  "
+      f"{len(np.unique(sess)):,} sessions\n")
+
+    # Calibrate the bar so a volume bar is, ON AVERAGE, one 15-minute wall-clock bar. RTH is
+    # 390 minutes, so 26 bars a session. Same bar COUNT is what makes the A/B fair.
+    n_bars = len(np.unique(sess)) * 26
+    V = tot / n_bars
+    P(f"volume bar calibrated to the 15-minute bar COUNT: {n_bars:,} bars -> "
+      f"V = {V:,.0f} contracts\n")
+
+    MS = (900, 180, 60, 15)
+    cumvol = np.cumsum(sz) - sz          # volume BEFORE each trade, so the clock starts at 0
+    rows = {"volume": [], "time": []}
+
+    P("  clock    steps   bar unit        windows  wall-clock min   E|M|tk  p_be    "
+      "eff    C   corr'd    VR   kurt   rho|M|  rhoEff")
+    for m in MS:
+        # --- VOLUME clock: fine grid every V/m contracts
+        v = max(int(round(V / m)), 1)
+        pv_, sv_, ssv_ = clock_sample(cumvol, px, sec, sess, v)
+        cv = clock_cell(pv_, sv_, ssv_, m)
+        # --- TIME clock: fine grid every 900/m seconds, window 900 s
+        d = max(900 // m, 1)
+        pt_, stt_, sst_ = clock_sample(sec, px, sec, sess, d)
+        ct = clock_cell(pt_, stt_, sst_, m, span_key=stt_, span_target=m * d)
+        for tag, c, unit in (("volume", cv, f"{v} contracts"),
+                             ("time", ct, f"{d} s")):
+            if c is None:
+                P(f"  {tag:7}{m:>7}   {unit:14} too few windows")
+                continue
+            c["clock"] = tag
+            c["bar_unit"] = unit
+            rows[tag].append(c)
+            P(f"  {tag:7}{m:>7}   {unit:14}{c['n_windows']:>8,}   "
+              f"{c['wallclock_minutes_mean']:>5.1f} "
+              f"[{c['wallclock_minutes_p10']:>4.1f},{c['wallclock_minutes_p90']:>5.1f}]"
+              f"{c['mean_abs_move_ticks']:>8.1f}{c['breakeven_accuracy_MES']:>7.1%}"
+              f"{c['mean_efficiency']:>8.4f}{c['step_shape_C']:>6.2f}"
+              f"{c['efficiency_over_corrected_benchmark']:>8.2f}"
+              f"{c['variance_ratio']:>7.2f}{c['kurtosis_of_window_return']:>7.1f}"
+              f"{c['persistence_rho_abs_move']:>+9.3f}{c['persistence_rho_eff']:>+8.3f}")
+        P("")
+
+    res = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+           "purpose": "D471 amendment 2: path efficiency and the volatility conditioner on a "
+                      "VOLUME clock against the wall clock, same bar count, same arithmetic. "
+                      "A measurement; no signal, no edge, nothing admitted.",
+           "source": "D465 v2 windowed ES front-month ticks, RTH only, 2025-09-11..2026-09-10",
+           "bar_calibration": {"sessions": int(len(np.unique(sess))),
+                               "bars_per_session": 26, "total_bars": int(n_bars),
+                               "contracts_per_bar": float(V),
+                               "total_contracts": tot},
+           "note": "rho|M| is the persistence of the absolute move -- the volatility "
+                   "conditioner that reached +0.31 on the wall clock and cut the breakeven "
+                   "bar to 54.8%. A volume clock absorbs volatility clustering by "
+                   "construction, so this column is the point of the comparison.",
+           "rows": rows}
+    if as_json:
+        p = REPO / "data" / "d471_volume_clock.json"
         p.write_text(json.dumps(res, indent=1, default=str) + "\n", encoding="utf-8")
         P(f"wrote {p.relative_to(REPO)}")
     return 0
@@ -674,6 +910,7 @@ def main() -> int:
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--measure", action="store_true")
     ap.add_argument("--grid-sweep", action="store_true")
+    ap.add_argument("--volume-clock", action="store_true")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
     if a.self_test:
@@ -682,6 +919,8 @@ def main() -> int:
         return do_measure(a.json)
     if a.grid_sweep:
         return do_grid_sweep(a.json)
+    if a.volume_clock:
+        return do_volume_clock(a.json)
     ap.print_help()
     return 0
 

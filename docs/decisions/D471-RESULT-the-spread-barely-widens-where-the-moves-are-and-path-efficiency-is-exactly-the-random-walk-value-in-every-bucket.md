@@ -231,3 +231,77 @@ is five grids × two windows on one instrument over one year — **not the axis*
 ([[construction-vs-axis]]). Untested: other instruments, grids coarser than 5 minutes, windows
 longer than an hour, and efficiency defined on something other than a last-trade grid (a
 volume or event clock would be the interesting variant, and `mbo` is on disk for it).
+
+---
+
+### AMENDMENT 2, 2026-09-12 — **the volume clock. It does not rescue path efficiency, it halves the volatility conditioner, and it lowers the breakeven bar by 1 pp for free**
+
+`--volume-clock` · artifact [`data/d471_volume_clock.json`](../../data/d471_volume_clock.json).
+93,824,356 RTH trades, 283,323,581 contracts, 258 sessions. Bars calibrated to the
+**15-minute bar COUNT** (26 a session, 6,708 bars) so the A/B is fair: **V = 42,237
+contracts**. Both clocks run through the identical `clock_cell`, which cannot tell which
+clock it is given.
+
+**The clock is doing real work.** A volume bar averages 15.2 min but spans **[5.8, 27.9] min**
+at p10/p90 — it compresses when the market is busy and stretches when it is not.
+
+| steps | clock | bar unit | windows | mins mean [p10,p90] | E\|M\| tk | p_be | C | corr'd | VR | kurt | **ρ\|M\|** | ρ eff |
+|---|---|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 900 | volume | 47 ct | 6,082 | 15.5 [6.0, 27.9] | 27.4 | 56.2% | 1.14 | 0.93 | 0.93 | **4.3** | **+0.142** | −0.006 |
+| 900 | time | 1 s | 4,023 | 15.5 [15.0, 16.4] | 28.9 | 55.9% | 1.21 | 0.83 | 0.82 | **6.5** | **+0.196** | −0.024 |
+| 180 | volume | 235 ct | 6,174 | 15.2 [5.8, 27.4] | 27.2 | **56.3%** | 1.07 | 0.94 | 0.96 | **4.0** | **+0.148** | +0.003 |
+| 180 | time | 5 s | 6,032 | 15.0 | 23.2 | 57.3% | 1.21 | 0.81 | 0.88 | **10.2** | **+0.267** | −0.007 |
+| 60 | volume | 704 ct | 6,197 | 15.2 | 27.1 | **56.3%** | 1.06 | 0.94 | 0.96 | 4.1 | +0.137 | +0.006 |
+| 60 | time | 15 s | 6,083 | 15.0 | 23.5 | 57.3% | 1.19 | 0.84 | 0.97 | 9.9 | +0.285 | −0.017 |
+| 15 | volume | 2,816 ct | 6,197 | 15.2 | 27.0 | 56.3% | 1.04 | 0.94 | 0.98 | 5.1 | +0.140 | +0.005 |
+| 15 | time | 60 s | 6,086 | 15.0 | 24.2 | 57.0% | 1.19 | 0.86 | 1.02 | 8.5 | +0.301 | +0.004 |
+
+**1. CLARK (1973) IS CONFIRMED, AND IT VALIDATES THE CONSTRUCTION.** Kurtosis of the window
+return is **4.0–5.1 on the volume clock against 6.5–10.2 on the wall clock** — volume-time
+returns are far closer to Gaussian, which is the textbook prediction and the reason to believe
+the clock is built right. The step-shape factor `C` follows it down, **1.04–1.14 against a flat
+1.19–1.21**. And the volume clock's results are **grid-invariant** (E|M| 27.0–27.4, p_be
+56.2–56.3%, corrected ratio 0.93–0.94 at every sub-grid) where the wall clock's wander. A
+sampling scheme whose answer does not depend on its own sub-grid is the better instrument.
+
+**2. PATH EFFICIENCY IS DEAD ON THIS CLOCK TOO, and more flatly than before.** ρ = **−0.006 to
++0.006** against the wall clock's −0.024 to +0.004, at SE ≈ 0.013. This was the most promising
+untested variant named in AMENDMENT 1, and the answer is no. Path efficiency is now measured
+as a conditioner on **two different clocks**, five time grids and four volume grids, at two
+window lengths — it does not forecast itself on any of them.
+
+**3. HALF THE VOLATILITY CONDITIONER WAS AN ACTIVITY FORECAST.** This is the finding.
+Persistence of the absolute move falls from **+0.267…+0.301 on the wall clock to
++0.137…+0.148 on the volume clock** — roughly halved. The prediction stated in the runner's
+docstring before it ran was that a volume clock would absorb volatility clustering, and it
+does, by about half.
+
+**What that means, and it is not that the conditioner is fake.** Predictability of |move| in
+wall-clock time is *partly* predictability of **how much will trade**, not of how far price
+moves per contract traded. Since costs are paid per **trade** and holding is measured in
+**time**, the wall-clock conditioner is real and usable — D469's 54.8% stands. But its
+mechanism is now decomposed: about half activity forecasting, about half genuine
+movement-per-unit-activity persistence.
+
+**4. AND A FREE PERCENTAGE POINT, WHICH IS THE PRACTICAL RESULT.** At matched bar count and
+matched mean holding time (≈6,200 bars, 15.2 min against 15.0), a **volume bar captures 15%
+more move**: E|M| **27.1 ticks against 23.5**, and the breakeven bar falls **57.3% → 56.3%**.
+
+The reason is mechanical: a volume bar spends its holding time where price actually moves and
+skips the dead patches, while a 15-minute bar spends 15 minutes either way. **So changing the
+EXIT RULE from "hold 15 minutes" to "hold until 42,237 contracts trade" is worth about 1 pp of
+breakeven accuracy at the same trade frequency** — and by D469's sensitivity table, 1 pp at
+this horizon is worth roughly 1.0 of Sharpe. It needs no forecast of anything; cumulative
+volume is observable in real time.
+
+**Still no trending on either clock.** No cell of either clock reads VR above 1.02. The volume
+clock does lift the fine-grid VR from 0.82 to 0.93, which says a good part of AMENDMENT 1's
+"18% transient variance" was a wall-clock sampling artefact — the one-second grid oversamples
+quiet stretches where the only price action is bid-ask bounce. The remainder (0.93 < 1) is
+genuine bounce.
+
+**What is NOT done.** The 1 pp is an arithmetic consequence of the sampling, measured on
+2025-09→2026-09 RTH; **no rule has been scored on a volume-clock exit**, and the in-sample
+window for a component is 2016–2023. A volume-clock exit also changes the trade's *timing*
+distribution, which interacts with the `adverse/|move| ≈ 0.48` constant of §5 in a way not
+measured here. Nothing opened, closed or admitted (R15).
