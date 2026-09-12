@@ -1,0 +1,331 @@
+{
+ "spec": "0651bb9",
+ "built_utc": "2026-09-12T19:13:38Z",
+ "files": [
+  {
+   "file": "glbx-mdp3-20260301-20260331.tbbo.dbn.zst",
+   "rows_in": 185657611,
+   "rows_kept": 67089817,
+   "secs": 149.2,
+   "rss_mb": 881.0
+  },
+  {
+   "file": "glbx-mdp3-20260601-20260630.tbbo.dbn.zst",
+   "rows_in": 138417264,
+   "rows_kept": 71557233,
+   "secs": 140.4,
+   "rss_mb": 1109.0
+  },
+  {
+   "file": "glbx-mdp3-20260701-20260731.tbbo.dbn.zst",
+   "rows_in": 126729598,
+   "rows_kept": 64131544,
+   "secs": 128.8,
+   "rss_mb": 904.0
+  },
+  {
+   "file": "glbx-mdp3-20260401-20260430.tbbo.dbn.zst",
+   "rows_in": 118209516,
+   "rows_kept": 47233710,
+   "secs": 103.8,
+   "rss_mb": 1119.0
+  },
+  {
+   "file": "glbx-mdp3-20260201-20260228.tbbo.dbn.zst",
+   "rows_in": 118171648,
+   "rows_kept": 49899688,
+   "secs": 107.7,
+   "rss_mb": 1132.0
+  },
+  {
+   "file": "glbx-mdp3-20251001-20251031.tbbo.dbn.zst",
+   "rows_in": 118311064,
+   "rows_kept": 48254983,
+   "secs": 100.4,
+   "rss_mb": 1030.0
+  },
+  {
+   "file": "glbx-mdp3-20260101-20260131.tbbo.dbn.zst",
+   "rows_in": 118585902,
+   "rows_kept": 42441340,
+   "secs": 95.2,
+   "rss_mb": 1073.0
+  },
+  {
+   "file": "glbx-mdp3-20260501-20260531.tbbo.dbn.zst",
+   "rows_in": 114087600,
+   "rows_kept": 49514433,
+   "secs": 106.0,
+   "rss_mb": 1217.0
+  },
+  {
+   "file": "glbx-mdp3-20251101-20251130.tbbo.dbn.zst",
+   "rows_in": 107805876,
+   "rows_kept": 51616262,
+   "secs": 96.0,
+   "rss_mb": 961.0
+  },
+  {
+   "file": "glbx-mdp3-20260801-20260831.tbbo.dbn.zst",
+   "rows_in": 103289759,
+   "rows_kept": 46953420,
+   "secs": 90.5,
+   "rss_mb": 1162.0
+  },
+  {
+   "file": "glbx-mdp3-20251201-20251231.tbbo.dbn.zst",
+   "rows_in": 97062963,
+   "rows_kept": 40511647,
+   "secs": 80.3,
+   "rss_mb": 874.0
+  },
+  {
+   "file": "glbx-mdp3-20250911-20250930.tbbo.dbn.zst",
+   "rows_in": 55979564,
+   "rows_kept": 22743741,
+   "secs": 49.7,
+   "rss_mb": 668.0
+  },
+  {
+   "file": "glbx-mdp3-20260901-20260910.tbbo.dbn.zst",
+   "rows_in": 38193225,
+   "rows_kept": 15963332,
+   "secs": 37.2,
+   "rss_mb": 908.0
+  },
+  {
+   "file": "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
+   "rows_in": 26028907,
+   "secs": 21.4,
+   "rss_mb": 1368.0
+  },
+  {
+   "file": "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
+   "rows_in": 6690321,
+   "secs": 8.6,
+   "rss_mb": 966.0
+  },
+  {
+   "file": "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
+   "rows_in": 21406276,
+   "secs": 20.5,
+   "rss_mb": 1172.0
+  },
+  {
+   "file": "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
+   "rows_in": 28394079,
+   "secs": 23.9,
+   "rss_mb": 1685.0
+  },
+  {
+   "file": "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst",
+   "rows_in": 31964175,
+   "secs": 28.0,
+   "rss_mb": 1496.0
+  }
+ ],
+ "roots": [
+  "ES",
+  "MES",
+  "NQ",
+  "MNQ"
+ ],
+ "span": [
+  "2025-09-11",
+  "2026-09-10"
+ ],
+ "bucket_min": 5,
+ "session": [
+  "18:00",
+  "16:59"
+ ],
+ "front_rule": "E-mini contract with the highest session volume; micro carries the same month",
+ "signing": "tape aggressor side: B buy, A sell, N unsigned",
+ "wall_min": 3.3,
+ "gates": {
+  "T1": {
+   "min_rate": 0.9999895192330263,
+   "threshold": 0.99,
+   "by": {
+    "micro/2025-09": 0.99999,
+    "micro/2025-10": 0.99999,
+    "micro/2025-11": 0.99999,
+    "micro/2025-12": 0.99999,
+    "micro/2026-01": 0.99999,
+    "micro/2026-02": 0.99999,
+    "micro/2026-03": 0.99999,
+    "micro/2026-04": 0.99999,
+    "micro/2026-05": 0.99999,
+    "micro/2026-06": 0.99999,
+    "micro/2026-07": 0.99999,
+    "micro/2026-08": 0.99999,
+    "micro/2026-09": 0.99999,
+    "mini/2025-09": 1.0,
+    "mini/2025-10": 1.0,
+    "mini/2025-11": 1.0,
+    "mini/2025-12": 1.0,
+    "mini/2026-01": 1.0,
+    "mini/2026-02": 1.0,
+    "mini/2026-03": 1.0,
+    "mini/2026-04": 1.0,
+    "mini/2026-05": 1.0,
+    "mini/2026-06": 1.0,
+    "mini/2026-07": 1.0,
+    "mini/2026-08": 1.0,
+    "mini/2026-09": 0.99999
+   }
+  },
+  "T2": {
+   "sessions": 1032,
+   "max_rel": 0.0,
+   "n_bad": 0,
+   "tol": 0.005,
+   "worst": [],
+   "not_covered_by_ohlcv": [
+    {
+     "contract": "ESU6",
+     "session": "2026-09-10"
+    },
+    {
+     "contract": "MESU6",
+     "session": "2026-09-10"
+    },
+    {
+     "contract": "MNQU6",
+     "session": "2026-09-10"
+    },
+    {
+     "contract": "NQU6",
+     "session": "2026-09-10"
+    }
+   ]
+  },
+  "T3": {
+   "sessions": 516,
+   "present": 498,
+   "absent": [
+    {
+     "pair": "ES",
+     "session": "2025-11-27",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "ES",
+     "session": "2025-11-28",
+     "mini": "45",
+     "micro": "45"
+    },
+    {
+     "pair": "ES",
+     "session": "2025-12-24",
+     "mini": "45",
+     "micro": "45"
+    },
+    {
+     "pair": "ES",
+     "session": "2026-01-19",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "ES",
+     "session": "2026-02-16",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "ES",
+     "session": "2026-05-25",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "ES",
+     "session": "2026-06-19",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "ES",
+     "session": "2026-07-03",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "ES",
+     "session": "2026-09-07",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2025-11-27",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2025-11-28",
+     "mini": "45",
+     "micro": "45"
+    },
+    {
+     "pair": "NQ",
+     "session": "2025-12-24",
+     "mini": "45",
+     "micro": "45"
+    },
+    {
+     "pair": "NQ",
+     "session": "2026-01-19",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2026-02-16",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2026-05-25",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2026-06-19",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2026-07-03",
+     "mini": "42",
+     "micro": "42"
+    },
+    {
+     "pair": "NQ",
+     "session": "2026-09-07",
+     "mini": "42",
+     "micro": "42"
+    }
+   ]
+  },
+  "T5": {
+   "ES": {
+    "p10": 0.6842505646668332,
+    "p50": 0.8191298754077813,
+    "p90": 1.050608411245621
+   },
+   "NQ": {
+    "p10": 2.650024579553178,
+    "p50": 3.439485700897724,
+    "p90": 5.042073309202285
+   }
+  }
+ },
+ "gated_utc": "2026-09-12T19:15:10Z"
+}
