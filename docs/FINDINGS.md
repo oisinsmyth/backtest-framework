@@ -3975,3 +3975,43 @@ removes a doubt about the measurement, not about the money.**
 **And S1 and S4's own ICs are unmeasured** — their bars are too scattered for a cross-sectional IC to
 carry enough names per day. The 5.84% of `open == prior close` bars are excluded by the CLEAN cut,
 but what they would have scored is not known.
+
+
+## 59. The daily channel line (D399–D463): its direction is worth nothing by any reading, and its level's one positive cell is a dip with no lines
+
+**Closed by the principal, 2026-09-12** —
+[closing record](decisions/D463-CLOSE-the-daily-channel-line-D399-to-D463.md).
+
+A causal daily channel from confirmed pivots (D399), rebuilt three ways — the oracle's greedy
+window search made causal (D451), with hysteresis and trend-side breaks (D452), and re-dialled
+against the principal's own 140 hand-drawn lines (D460; sign agreement 92 / 87%, recall 69 / 71%)
+— and traded three ways:
+
+- **Direction** (target-and-trail D434; hold-while-a-trend D450, D451, D452, D461): five causal
+  cells, long +1 to +17 bp gross, short −39 to −54, **every one below a within-name time rotation
+  of its own trades** (the null's long p50 +37 to +59 against scores +1 to +17), and worse as the
+  gradient floor rises in every sweep. The cell that draws the principal's lines and confirms
+  five bars before the principal does trades the same (+12.3 ± 3.4). A confirmed direction is a
+  late one however early it is confirmed.
+- **The oracle** (D450): hindsight windows with their boundaries hidden from the trader earn
+  +780 to +1,272 bp a trade at 84–93% win rates — a tautology, since a channel that exists at t
+  was selected by what follows t. Not a ceiling.
+- **Level** (D462): long on a close at or below the bottom tenth of the channel (support 4% under
+  the pivot lows), held 5 bars: **+43.6 ± 5.6 gross, median +58, 41 SE above its null**, 52
+  names to half the P&L, net −34; net +37 at 20 bars, 20 SE above its null there. The first
+  channel cell to meet the programme's signal criterion.
+- **The control** (D463): a close 4% below the previous 30 bars' low with **no lines at all**
+  earns **+47.4 ± 10.1** over 5 bars (above its null), and inside a live channel +45.2. The channel
+  adds nothing beyond the first day. The short side of the dip earns +24. What D462 found is
+  short-horizon reversal after a sharp break of a range, both directions, ~5–9 bp a bar for
+  twenty bars, net negative to ~15 — real here, not new, not the channel's.
+
+**Method findings that outlast the line.** (i) A hindsight channel leaks the future through its
+*existence*, not its boundary. (ii) "By eye" became a labelled set: 140 lines drawn one bar at a
+time with the future hidden, each with its draw and end bar, and a scorecard against them —
+the principal's anchors sit 4% outside the wicks, draw one bar after the second swing, live 26
+bars, and end 45% on a break, 40% by replacement, 15% by drift; on that card the pivot
+envelope over several confirmed pivots matches the eye's gradient and a two-point zigzag line
+does not. (iii) Overstay must be scored only on ends that were ends: 40% of the principal's ends
+were replacements. (iv) A within-name rotation null re-times events; it does not control for
+what the event *is* — the dip control had to break the ingredient.
