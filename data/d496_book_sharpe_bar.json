@@ -1,0 +1,119 @@
+{
+ "generated_utc": "2026-09-12T21:57:33+00:00",
+ "purpose": "D496: the book Sharpe bar implied by the RELAXED P4. A derivation -- no signal, no backtest, nothing admitted.",
+ "model": "account = Brownian motion with drift, killed when the TRAILING drawdown first reaches 4% of the account. E[M_tau] = (sigma^2/2mu)(exp(2 mu D/sigma^2)-1); E[profit] = E[M_tau] - D; E[tau] = E[profit]/mu. Closed form asserted against a simulation and against optional stopping.",
+ "key_finding": "Expected profit before breach is proportional to 1/sigma, so trading SMALLER earns MORE before the account dies. The binding constraint is the one-micro floor, not C-d's 1% cap.",
+ "inputs": {
+  "account": 50000.0,
+  "drawdown": 0.04,
+  "C_d_cap": 0.01,
+  "P5_haircut": 0.3,
+  "candidate": {
+   "root": "NQ",
+   "cell": "B1 M=3 day session",
+   "sharpe": 0.5829,
+   "daily_sigma_usd": 185.0,
+   "honest_sharpe": 0.4913
+  }
+ },
+ "by_size": [
+  {
+   "sigma_frac": 0.01,
+   "sigma_usd": 500.0,
+   "profit_usd": 324.76060479082645,
+   "life_days": 17.688848088676448,
+   "life_years": 0.07019384162173194
+  },
+  {
+   "sigma_frac": 0.0074,
+   "sigma_usd": 370.0,
+   "profit_usd": 455.14760415984455,
+   "life_days": 33.500921406958206,
+   "life_years": 0.13294016431332623
+  },
+  {
+   "sigma_frac": 0.0037,
+   "sigma_usd": 185.0,
+   "profit_usd": 1053.3487976358983,
+   "life_days": 155.06246747734704,
+   "life_years": 0.6153272518942343
+  },
+  {
+   "sigma_frac": 0.0025,
+   "sigma_usd": 125.0,
+   "profit_usd": 1809.64121814927,
+   "life_days": 394.26541434688244,
+   "life_years": 1.5645452950273113
+  },
+  {
+   "sigma_frac": 0.0015,
+   "sigma_usd": 75.0,
+   "profit_usd": 4217.134136331208,
+   "life_days": 1531.3073487917013,
+   "life_years": 6.076616463459132
+  }
+ ],
+ "candidate_at_one_micro": {
+  "best_cell": {
+   "sharpe": 0.5829,
+   "expected_profit_usd": 1053.3487976358983,
+   "expected_life_days": 155.06246747734704
+  },
+  "honest_level": {
+   "sharpe": 0.4913,
+   "expected_profit_usd": 847.1526997124314,
+   "expected_life_days": 147.95971191286696
+  }
+ },
+ "bar_by_fee": {
+  "50": {
+   "sharpe_no_haircut": 0.0361104336606024,
+   "sharpe_with_30pct_haircut": 0.051229935649297356,
+   "life_days_at_haircut_sharpe": 119.64008032967196
+  },
+  "100": {
+   "sharpe_no_haircut": 0.07106983643694073,
+   "sharpe_with_30pct_haircut": 0.10016986780009296,
+   "life_days_at_haircut_sharpe": 122.3751962735473
+  },
+  "200": {
+   "sharpe_no_haircut": 0.13779810756382577,
+   "sharpe_with_30pct_haircut": 0.1918990332722797,
+   "life_days_at_haircut_sharpe": 127.75788417171184
+  },
+  "350": {
+   "sharpe_no_haircut": 0.2307654883001759,
+   "sharpe_with_30pct_haircut": 0.31632262223813057,
+   "life_days_at_haircut_sharpe": 135.6339139167299
+  },
+  "500": {
+   "sharpe_no_haircut": 0.31632262223813057,
+   "sharpe_with_30pct_haircut": 0.42771422511948354,
+   "life_days_at_haircut_sharpe": 143.3002050528866
+  },
+  "750": {
+   "sharpe_no_haircut": 0.4451880301241258,
+   "sharpe_with_30pct_haircut": 0.5905596401752604,
+   "life_days_at_haircut_sharpe": 155.67827191543842
+  },
+  "1000": {
+   "sharpe_no_haircut": 0.5599628820955407,
+   "sharpe_with_30pct_haircut": 0.7312578394374623,
+   "life_days_at_haircut_sharpe": 167.63317357611777
+  },
+  "1500": {
+   "sharpe_no_haircut": 0.7572218534469255,
+   "sharpe_with_30pct_haircut": 0.9651023086193378,
+   "life_days_at_haircut_sharpe": 190.5234365815827
+  }
+ },
+ "fee_covered_best_cell": 500,
+ "fee_covered_honest": 500,
+ "limitations": [
+  "the P5 haircut is applied as a FLAT 30% of profit, which is an upper bound on its bite: the true haircut is max(0, best_day - 0.30*total) and needs the daily P&L series, which D491 did not store. D495's runner should store the best-day share so this becomes exact.",
+  "Brownian motion has no fat tails and no volatility clustering; a real P&L series breaches SOONER than this model says, so every life and profit here is OPTIMISTIC. D440 measured that clustering, not kurtosis, was worth five sixths of the difference.",
+  "the account FEE is a parameter, not a measured input -- the bar is reported against a range and the principal supplies the actual figure",
+  "P3 (worst day <= 2%) and P2 are not modelled here; a construction can clear this bar and still fail those",
+  "one micro is treated as the size floor; a rule that trades only some days has a lower AVERAGE sigma and would sit between the rows"
+ ]
+}
