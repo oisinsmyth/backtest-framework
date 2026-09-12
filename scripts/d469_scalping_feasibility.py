@@ -452,6 +452,70 @@ def do_review(as_json: bool) -> int:
               f"{need_move:.1f} ticks -- about {h_star/60:.0f} minutes "
               f"(E|M| ~ h^{beta:.2f}, fitted on the 1m and 15m rows).")
 
+    # ---------------- does selecting on PREDICTABLE volatility lower the wall? ----------
+    #
+    # p_be = (1 + cost/E|M|)/2 falls when the MOVE grows, not only when accuracy improves.
+    # Volatility is one of the few genuinely forecastable quantities (direction is not), so
+    # the question is whether conditioning on it buys a lower cost bar.
+    #
+    # THE CONDITIONER MUST BE KNOWN AT ENTRY. Bucketing on the window's OWN move is the
+    # look-ahead this review already committed once. Here the bucket is the move over the
+    # PRECEDING h seconds -- observable at t -- and the measured quantity is the move over
+    # the FOLLOWING h seconds.
+    cond = {}
+    for h in (300, 900):
+        pos_f = np.searchsorted(uniq_sec, uniq_sec + h)
+        pos_b = np.searchsorted(uniq_sec, uniq_sec - h)
+        okf = (pos_f < len(uniq_sec)) & (uniq_sec[np.clip(pos_f, 0, len(uniq_sec) - 1)]
+                                         == uniq_sec + h)
+        okb = (pos_b < len(uniq_sec)) & (uniq_sec[np.clip(pos_b, 0, len(uniq_sec) - 1)]
+                                         == uniq_sec - h)
+        jf = np.clip(pos_f, 0, len(uniq_sec) - 1)
+        jb = np.clip(pos_b, 0, len(uniq_sec) - 1)
+        ok = okf & okb & (last_id == last_id[jf]) & (last_id == last_id[jb])
+        past = np.abs(last_px[ok] - last_px[jb[ok]]) / TICK_PTS       # known at t
+        fwd = np.abs(last_px[jf[ok]] - last_px[ok]) / TICK_PTS        # measured after t
+        fwd_s = (last_px[jf[ok]] - last_px[ok]) / TICK_PTS
+        if len(past) < 10_000:
+            continue
+        edges = np.quantile(past, [0, .2, .4, .6, .8, 1.0])
+        be_m = bars["MES"]["breakeven_ticks"]
+        lab = f"{h//60}m"
+        P(f"\n  {lab} forward move, bucketed on the PRECEDING {lab} move (known at entry):")
+        P(f"  {'quintile':>10}{'n':>11}{'past |M|':>10}{'fwd E|M|':>10}"
+          f"{'MES p_be':>10}{'corr':>8}")
+        rowsc = []
+        for k in range(5):
+            m = (past >= edges[k]) & (past <= edges[k + 1] if k == 4 else past < edges[k + 1])
+            if m.sum() < 1000:
+                continue
+            e_f = float(fwd[m].mean())
+            rms_f = float(np.sqrt(np.mean(fwd_s[m] ** 2)))
+            p_b = (1.0 + be_m / e_f) / 2.0
+            # trades a day if this quintile is the only moment traded
+            n_q = (23 * 3600 / h) * (m.sum() / len(past))
+            rowsc.append({"quintile": k + 1, "n": int(m.sum()),
+                          "past_mean_abs_ticks": float(past[m].mean()),
+                          "fwd_mean_abs_ticks": e_f, "fwd_rms_ticks": rms_f,
+                          "trades_per_day_this_quintile_only": n_q,
+                          "MES_breakeven_accuracy": p_b,
+                          # THE SENSITIVITY THAT DECIDES IT. Sharpe against accuracy, held
+                          # at this bucket's own move distribution and trade rate.
+                          "sharpe_by_accuracy": {
+                              f"{p:.3f}": sharpe_of((2 * p - 1) * e_f, be_m, rms_f, n_q)
+                              for p in (0.52, 0.54, 0.55, 0.56, 0.57, 0.58, 0.60)}})
+            P(f"  {k+1:>10}{m.sum():>11,}{past[m].mean():>10.1f}{e_f:>10.1f}"
+              f"{p_b:>10.1%}"
+              f"{'' if k else f'  {np.corrcoef(past, fwd)[0,1]:.3f}':>8}")
+        cond[h] = rowsc
+        # how steep is the cliff? the whole outcome lives in a 1-2 pp band of accuracy.
+        if rowsc:
+            top = rowsc[-1]
+            P(f"\n    top quintile, {lab} hold, {top['trades_per_day_this_quintile_only']:.0f} "
+              f"trades/day -- Sharpe against directional accuracy:")
+            P("      " + "".join(f"{k:>9}" for k in top["sharpe_by_accuracy"]))
+            P("      " + "".join(f"{v:>9.2f}" for v in top["sharpe_by_accuracy"].values()))
+
     # C-d is what FORCES the micro, so it is computed rather than asserted.
     P("\n  C-d, daily sigma at minimum size against 1% of a $50k account ($500):")
     for name in ("ES", "MES"):
@@ -473,6 +537,15 @@ def do_review(as_json: bool) -> int:
            "source": "D465's cached ES front-month ticks, 2025-09-11..2026-09-11",
            "median_price": level, "crossing_bp_round_trip_measured": CROSS_BP_RT,
            "cost_bars": bars, "by_horizon_seconds": rows,
+           "conditioned_on_trailing_move": cond,
+           "note_on_conditioning": "quintiles of the PRECEDING h-second absolute move, "
+                                   "which is observable at entry; the measured quantity is "
+                                   "the FOLLOWING h-second move. Bucketing on the window's "
+                                   "own move would be the look-ahead this review already "
+                                   "made once. Lowering p_be this way needs no directional "
+                                   "skill -- it only needs the trade to happen when moves "
+                                   "are large -- but it selects the moments that are hardest "
+                                   "to get filled in, which this does NOT measure.",
            "identity": "annualised Sharpe = 2*(p - p_be)*sqrt(252*N)*E|M|/RMS, for N "
                        "round trips a day at directional accuracy p, where "
                        "p_be = (1 + cost/E|M|)/2. Inverting it at Sharpe 0.5 gives the "
