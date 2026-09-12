@@ -1,0 +1,319 @@
+{
+ "spec": "ab8b5df",
+ "window": [
+  "2016-01-04",
+  "2023-12-29"
+ ],
+ "cells": {
+  "ES": {
+   "cell": "ES",
+   "n": 1901,
+   "n_traded": 1889,
+   "mean_usd": -1.5991271836950842,
+   "se_usd": 3.218297232359547,
+   "gross_usd": 2.6621228163049233,
+   "median": -3.0112500000000004,
+   "hit": 0.4764425622022234,
+   "trim1": -1.2730004051863915,
+   "worst": -844.26125,
+   "worst_session": "2020-03-17",
+   "cost_usd": 4.26125,
+   "usd_per_point": 5.0,
+   "pick": false
+  },
+  "NQ": {
+   "cell": "NQ",
+   "n": 1892,
+   "n_traded": 1889,
+   "mean_usd": -2.3382744838538976,
+   "se_usd": 4.595321284915216,
+   "gross_usd": 1.166225516146109,
+   "median": -2.5045,
+   "hit": 0.48703017469560617,
+   "trim1": -2.175488654781211,
+   "worst": -1254.0045,
+   "worst_session": "2022-02-24",
+   "cost_usd": 3.5045,
+   "usd_per_point": 2.0,
+   "pick": false
+  },
+  "CL": {
+   "cell": "CL",
+   "n": 1727,
+   "n_traded": 1721,
+   "mean_usd": -7.739389308541545,
+   "se_usd": 2.750333449550851,
+   "gross_usd": -3.7303893085415423,
+   "median": -6.009000000000313,
+   "hit": 0.4642649622312609,
+   "trim1": -7.412675163011257,
+   "worst": -791.0090000000005,
+   "worst_session": "2022-03-09",
+   "cost_usd": 4.009,
+   "usd_per_point": 100.0,
+   "pick": false
+  },
+  "GC": {
+   "cell": "GC",
+   "n": 1880,
+   "n_traded": 1871,
+   "mean_usd": -7.4697161945484005,
+   "se_usd": 1.7692666440766378,
+   "gross_usd": -3.4607161945483953,
+   "median": -7.008999999999546,
+   "hit": 0.44681988241582044,
+   "trim1": -7.438896344790003,
+   "worst": -520.0090000000014,
+   "worst_session": "2020-03-13",
+   "cost_usd": 4.009,
+   "usd_per_point": 10.0,
+   "pick": false
+  }
+ },
+ "controls": {
+  "ES C1 volume": {
+   "cell": "ES C1",
+   "n": 1901,
+   "n_traded": 1889,
+   "mean_usd": -4.692033483324517,
+   "se_usd": 3.3649211894380513,
+   "gross_usd": -0.43078348332451033,
+   "median": -9.26125,
+   "hit": 0.4499735309687665,
+   "trim1": -4.7150587520259375,
+   "worst": -728.01125,
+   "worst_session": "2020-03-13",
+   "cost_usd": 4.26125,
+   "usd_per_point": 5.0
+  },
+  "ES C2 price only": {
+   "cell": "ES C2",
+   "n": 1901,
+   "n_traded": 1889,
+   "mean_usd": -5.1340663049232464,
+   "se_usd": 3.4754365289571982,
+   "gross_usd": -0.8728163049232398,
+   "median": -1.7612500000000004,
+   "hit": 0.490206458443621,
+   "trim1": -4.41724675850892,
+   "worst": -844.26125,
+   "worst_session": "2020-03-17",
+   "cost_usd": 4.26125,
+   "usd_per_point": 5.0
+  },
+  "NQ C1 volume": {
+   "cell": "NQ C1",
+   "n": 1892,
+   "n_traded": 1889,
+   "mean_usd": 1.9560611434621427,
+   "se_usd": 5.484518758115465,
+   "gross_usd": 5.460561143462149,
+   "median": -3.5045,
+   "hit": 0.4806776071995765,
+   "trim1": 0.9252676931388322,
+   "worst": -1036.0045,
+   "worst_session": "2022-08-26",
+   "cost_usd": 3.5045,
+   "usd_per_point": 2.0
+  },
+  "NQ C2 price only": {
+   "cell": "NQ C2",
+   "n": 1892,
+   "n_traded": 1889,
+   "mean_usd": -8.719428533615677,
+   "se_usd": 4.9345410493937525,
+   "gross_usd": -5.214928533615669,
+   "median": -1.5045000000000002,
+   "hit": 0.4923239809422975,
+   "trim1": -7.611739330091854,
+   "worst": -1254.0045,
+   "worst_session": "2022-02-24",
+   "cost_usd": 3.5045,
+   "usd_per_point": 2.0
+  },
+  "CL C1 volume": {
+   "cell": "CL C1",
+   "n": 1727,
+   "n_traded": 1721,
+   "mean_usd": -2.4877914003486428,
+   "se_usd": 2.055041276261171,
+   "gross_usd": 1.5212085996513607,
+   "median": -2.0089999999996877,
+   "hit": 0.4851830331202789,
+   "trim1": -1.965727919383528,
+   "worst": -791.0090000000005,
+   "worst_session": "2022-03-09",
+   "cost_usd": 4.009,
+   "usd_per_point": 100.0
+  },
+  "CL C2 price only": {
+   "cell": "CL C2",
+   "n": 1727,
+   "n_traded": 1721,
+   "mean_usd": -1.8730325392213858,
+   "se_usd": 2.5476227224656944,
+   "gross_usd": 2.135967460778617,
+   "median": -4.009,
+   "hit": 0.4747239976757699,
+   "trim1": -1.2929359810314194,
+   "worst": -791.0090000000005,
+   "worst_session": "2022-03-09",
+   "cost_usd": 4.009,
+   "usd_per_point": 100.0
+  },
+  "GC C1 volume": {
+   "cell": "GC C1",
+   "n": 1880,
+   "n_traded": 1871,
+   "mean_usd": -4.438716729021937,
+   "se_usd": 1.9207447362348398,
+   "gross_usd": -0.4297167290219309,
+   "median": -6.009000000000455,
+   "hit": 0.4564404061998931,
+   "trim1": -4.564919258046947,
+   "worst": -463.00899999999865,
+   "worst_session": "2020-08-19",
+   "cost_usd": 4.009,
+   "usd_per_point": 10.0
+  },
+  "GC C2 price only": {
+   "cell": "GC C2",
+   "n": 1880,
+   "n_traded": 1872,
+   "mean_usd": -2.0848547008547067,
+   "se_usd": 1.8468223111382482,
+   "gross_usd": 1.9241452991452994,
+   "median": -2.0089999999995456,
+   "hit": 0.48504273504273504,
+   "trim1": -1.7963500545256357,
+   "worst": -463.00899999999865,
+   "worst_session": "2020-08-19",
+   "cost_usd": 4.009,
+   "usd_per_point": 10.0
+  }
+ },
+ "quadrants": {
+  "ES": {
+   "price up, OI up": {
+    "n": 653,
+    "mean_move_usd": 5.41156202143951
+   },
+   "price up, OI down": {
+    "n": 384,
+    "mean_move_usd": -6.510416666666666
+   },
+   "price down, OI up": {
+    "n": 485,
+    "mean_move_usd": 3.801546391752577
+   },
+   "price down, OI down": {
+    "n": 367,
+    "mean_move_usd": 2.285422343324251
+   }
+  },
+  "NQ": {
+   "price up, OI up": {
+    "n": 610,
+    "mean_move_usd": 0.27295081967213114
+   },
+   "price up, OI down": {
+    "n": 441,
+    "mean_move_usd": -7.0
+   },
+   "price down, OI up": {
+    "n": 464,
+    "mean_move_usd": 8.600215517241379
+   },
+   "price down, OI down": {
+    "n": 374,
+    "mean_move_usd": 7.86096256684492
+   }
+  },
+  "CL": {
+   "price up, OI up": {
+    "n": 546,
+    "mean_move_usd": -4.217948717948701
+   },
+   "price up, OI down": {
+    "n": 370,
+    "mean_move_usd": 2.6972972972973075
+   },
+   "price down, OI up": {
+    "n": 440,
+    "mean_move_usd": -2.1159090909090765
+   },
+   "price down, OI down": {
+    "n": 365,
+    "mean_move_usd": -11.095890410958887
+   }
+  },
+  "GC": {
+   "price up, OI up": {
+    "n": 650,
+    "mean_move_usd": -1.969230769230853
+   },
+   "price up, OI down": {
+    "n": 334,
+    "mean_move_usd": 10.661676646706626
+   },
+   "price down, OI up": {
+    "n": 328,
+    "mean_move_usd": 0.4908536585364925
+   },
+   "price down, OI down": {
+    "n": 559,
+    "mean_move_usd": -2.6350626118068172
+   }
+  }
+ },
+ "nulls": {
+  "ES": {
+   "p50": -4.104420989941774,
+   "p95": 0.9011375066172513,
+   "n": 1900,
+   "observed": -1.5991271836950842,
+   "above_p95": false
+  },
+  "NQ": {
+   "p50": -3.4616201694018067,
+   "p95": 4.661460825833769,
+   "n": 1891,
+   "observed": -2.3382744838538976,
+   "above_p95": false
+  },
+  "CL": {
+   "p50": -4.2550778617083065,
+   "p95": -0.1654497385241199,
+   "n": 1726,
+   "observed": -7.739389308541545,
+   "above_p95": false
+  },
+  "GC": {
+   "p50": -3.8930192410476137,
+   "p95": -0.8827039016568817,
+   "n": 1879,
+   "observed": -7.4697161945484005,
+   "above_p95": false
+  },
+  "family_max": {
+   "p50": -0.9939941343367837,
+   "p95": 4.6552406034939064,
+   "n_offsets": 1726
+  }
+ },
+ "audits": {
+  "M": true,
+  "S": true,
+  "X_flip_oi": true,
+  "D_window": true,
+  "F_causal": "every input is the fixture's usable-session row, gated by O1 (published before 10:00 ET); the entry is the 10:00 print"
+ },
+ "stale_repeats": {
+  "ES": 29,
+  "NQ": 29,
+  "CL": 27,
+  "GC": 24
+ },
+ "picks": [],
+ "wall_min": 0.0
+}
