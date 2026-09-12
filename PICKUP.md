@@ -79,6 +79,20 @@ replicate in cash. The declared step-3 criterion fails on the family condition a
 replication outweighs it is the principal's decision. If yes: one declared component (ES or NQ
 overnight leg after a down leg, one micro, $3, in-sample gated net Sharpe +0.70 / +0.62), promotion
 on the unread 2024+ futures slice (weak alone, ~190 gated nights) plus the cash 2024+ reserve.
+**D473 (`fb69179`, in-sample RESULT): the component record, K7.** The principal took the pick to
+a component record on the replication. One declared construction, no in-sample sharpening: long the
+NQ overnight leg 18:00→09:00 on nights after a negative overnight leg (prior session's leg ≤ 0),
+one MNQ, $3, NQ chosen on cost share; ES the check root; the 09:30 open a declared secondary exit.
+In-sample line: **+0.62 (0.25)**, gross +0.80, 887 of 2,009 nights, +$13.32 vs −$1.57 (2.1 SE), N1/N2
+cleared, C-a..C-d pass; ES +0.70 (2.5 SE); **the 09:30 exit is worse (−20% mean, +0.45)**; 71% of
+the gated P&L follows prior falls > 1% (16% of nights; the dose–response is monotone on ES, not
+on NQ — recorded, not used); worst night −$794, none below −2% at one micro; ρ(K7, K1) 0.39.
+**Not entered** (the family bar). **The forward read is declared and unrun:**
+`uv run python -u scripts/run_d473_downleg_component.py --forward --principals-word` reads NQ/ES
+futures 2024-01-02→2026-09-09 and SPY/IWM cash 2024-01-02→2026-08-26 and applies the rule
+(PROVISIONAL if diff > 0 on NQ and SPY, pooled z ≥ 1.5, NQ net Sharpe > 0; FULL if also futures
+z ≥ 2 or pooled z ≥ 2.5; REMOVED if futures diff < 0, pooled z < 0.5 or Sharpe < −0.3). **It
+spends the 2024+ slice for this construction; only the principal runs it.**
 RTY added to the D467 table (nine roots; eight rebuilt bit-identically) and held back on G2
 (a Sunday-session volume flip, 2020-06-14). A difference-between-sides family statistic, centred
 on zero, is the right declaration for any future concentration test (noted in D472 §1, not run).
