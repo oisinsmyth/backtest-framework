@@ -2,6 +2,22 @@
 
 ---
 
+## D454 — INSIDER PURCHASES, STAGE 0: THE DATA IS THERE, DEAD-INCLUSIVE, TWO DAYS OLD, AND SHAPED FOR THE KERNEL, 2026-09-12
+
+The issuance line was parked (real, factor-grade, unbookable on 13 years). Its successor is an
+*event*: insider open-market purchases from the SEC's Form 3/4/5 bulk data (81 quarters, 910 MB
+git-ignored, `scripts/fetch_sec_form345.py`), CIK-mapped through D331. **17,270 purchase filings
+2010–2023 on 1,279 names — 76% of the fixture and 71% of the dead cohort — 90% filed within the
+two-business-day rule.** Insiders buy what has fallen (47% after a bottom-tercile 20-day
+return), what is small, cheap and thin (60% in the bottom dollar-volume tercile), and they
+cluster (a second distinct insider within a week on 47%). No abandon condition fires. **Stage 1
+is the next record, and stage 0 fixed four of its choices:** separate 10% owners (18% of filings,
+nine of the ten largest dollar buys: Roche in FMI, Berkshire in BAC); a family-trust guard on
+clusters (Hyster-Yale's 60+ Rankin trusts are every top cluster); the state-matched control is
+required (the buys sit in exactly the cells with their own hedged drift); a declared value floor.
+Records: spec `4ce4b86`, RESULT `docs/decisions/D454-RESULT-…md`, events
+`data/d454_insider_events.csv.gz`. Later quarters 2024q1–2026q1 are cached and unread.
+
 ## D453 — ISSUANCE STAGE 1b: THE ACCOUNTING FIX HALVES THE LOTTERY AND DOES NOT MOVE THE VERDICT, 2026-09-12
 
 D446's trades re-accounted with a per-name beta hedge and vol-scaled weights ([K2] identity at
