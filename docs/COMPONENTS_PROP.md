@@ -74,6 +74,8 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 
 | **D492 (2026-09-12): D490's rule with an hourly RSI(14) confirmation** (long ≤ 30 / short ≥ 70; cell A with the spike, cell B in place of it); development 2016-02→2020 | D492 | ES A **−0.30 (0.38)**, gross −$0.88 on 287 trades; ES B −0.40; NQ A −0.11 (+$1.57); NQ B +0.12 (+$4.49) | C-a on every cell; below the wrong-range control on both roots (NQ N1 p50 +$5.4–5.9); the target reached on 0–3% of trades; 92 long trades on ES (SE ≈ $16); no validation read |
 
+| **D495 stage 0 (2026-09-12): the day session after a daily state, intraday** — cell A fades the next session after a top-decile day (causal), cell B trades it after a daily RSI(2) extreme; 09:30 open + tick → 15:59 close; 1 MES / 1 MNQ, $3; 2016–2023 | D495 | **NQ A long +0.47 (0.25)**, +$42.61 gross on 110 trades, +21.9 bp vs +10.2 on the other side (z +0.78); NQ A short +0.21; ES A +0.08 / +0.09; B long +0.09 / +0.00; B short −0.28 / −0.38 | **NQ A long a PICK** (own null and 0.3 cleared; family-max z p95 +2.45 not cleared: most of it is the day session's drift after any down day, +10.2 bp on 761 days — post hoc, not scored); all other cells closed; 2024+ day session unread |
+
 **Line closed by the principal, 2026-09-12:** the index overnight leg at micro cost (any gate,
 window or size) is closed for the prop book after D466–D473; open for the personal book at full
 size. See BOOK_PROP's closure section.

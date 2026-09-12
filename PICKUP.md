@@ -114,6 +114,22 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D495 — THE DAY SESSION AFTER A BIG DOWN DAY ON NQ PAYS ITS COST AND IS A PICK; MOST OF IT IS THE DRIFT AFTER ANY DOWN DAY, 2026-09-12
+
+Stage 0 (`6d551b9`, RESULT), intraday only (09:30 open + tick → 15:59 close, one micro, $3):
+cell A fades the next day session after a top-decile (causal) day-session move; cell B trades it
+after a daily RSI(2) extreme; ES and NQ; family of eight; the family null is the max of a
+difference-between-sides z under a common rotation (D472's lesson). **NQ cell A long: +$42.61
+gross a trade on 110 trades (+21.9 bp, SE 14.5), hit 56%, sign in 6 of 8 years and both
+sub-periods, net Sharpe +0.47 (0.25), clears its own rotation null — a PICK.** It fails the
+family bar (z +0.78 vs p95 +2.45) because the **other side — long NQ's day session after ANY down
+day — is +10.2 bp on 761 days**: most of the pick is that drift, not a big-day effect. Cell A's
+short side (+0.21) and both RSI(2) cells are closed (the RSI(2) longs are the unconditional
+drift; the shorts lose). **Post hoc observation, not scored:** "long the NQ day session after a
+down day" would trade 38% of sessions at ≈ $20 gross, net Sharpe in the region of 0.5; it is the
+natural single declared cell for a next record, with 2024+ still clean. The cost is not the
+problem in this family for the first time; the sample is.
+
 ## D490 — THE PRINCIPAL'S RANGE-REVERSION RULE LOSES GROSS ON BOTH SIDES; A STALE RANGE BEATS YESTERDAY'S, 2026-09-12
 
 Buy the bottom 5% of yesterday's RTH range on a 2× same-minute volume spike, target the top 5%,
