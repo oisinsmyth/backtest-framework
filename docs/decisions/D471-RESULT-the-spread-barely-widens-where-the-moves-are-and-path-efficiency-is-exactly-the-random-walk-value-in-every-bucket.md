@@ -167,3 +167,67 @@ it is 1/5. The function was right and the expectation was wrong.
   15-minute horizon (§1). `mbp-10` would be the data for it and was not bought
   (`docs/data-available.md`).
 - **Nothing is elevated** into `FINDINGS.md` or `RULES.md`.
+
+---
+
+### AMENDMENT 1, 2026-09-12 — **the grid sweep §8 asked for. My §4 benchmark was wrong by ~20%, the conclusion survives on a better instrument, and coarsening does not rescue efficiency as a conditioner**
+
+`--grid-sweep` · artifact [`data/d471_path_efficiency_grid_sweep.json`](../../data/d471_path_efficiency_grid_sweep.json).
+Grids 1 s → 300 s, windows 15 min and 60 min, RTH only, non-overlapping.
+
+**§4's BENCHMARK WAS WRONG, AND THE 1.00 WAS LUCK.** §4 divided measured efficiency by
+`1/√n`. That is the random-walk value **only for Gaussian steps**. For any iid step
+distribution the truth is
+
+    efficiency = C / sqrt(m),   C = sqrt(2/pi) * sigma_r / E|r|
+
+and `C` is 1 *only* when `σ/E|r|` takes its Gaussian value `√(π/2)`. One-second ES steps are
+nothing like Gaussian — mostly zero, occasionally one tick. **Measured `C` is 1.17–1.21 at
+every grid**, so §4's benchmark ran ~20% low and its comforting "ratio = 1.00" was two errors
+cancelling. **Against the correct benchmark the ratio is 0.78–0.87.**
+
+**The conclusion survives, on an instrument that does not depend on the step shape.** The
+variance ratio `Var(r_k)/(k·Var(r_1))` — 1.00 random walk, >1 trending, <1 mean-reverting:
+
+| grid | VR, 15-min window | VR, 60-min window |
+|---|---:|---:|
+| 1 s | **0.82** | 0.90 |
+| 5 s | 0.88 | 0.94 |
+| 15 s | 0.97 | 0.95 |
+| 60 s | 1.02 | 0.92 |
+| 300 s | — | 0.98 |
+
+**The one-second choppiness §4 reported is bid-ask bounce, and now it is quantified: about
+18% of one-second variance is transient noise.** Past 15 seconds ES is a random walk to within
+a few percent, and **no grid at either window reads above 1.02.** There is no trend structure
+at any sampling rate tested — which is what §4 said, but §4 said it from a benchmark that
+happened to be wrong.
+
+**The two instruments are the same quantity, and that is now asserted rather than eyeballed:**
+
+    efficiency / (C/sqrt(m)) = sqrt(VR) * (E|net| / sigma_net) / sqrt(2/pi)
+
+The second factor is non-Gaussianity of the *window* return — fat tails put `E|X|/σ` below
+`√(2/π)`, which is the rest of the gap between 0.82 and 1.00. A runtime gate raises if the two
+sides differ by more than 1e-9. **It fired on the first run** (0.8196 against 0.7871) because
+VR was computed on the whole RTH series while efficiency came from the subset of windows
+passing the span/session filter — **different populations**. Both now read the steps inside the
+accepted windows and the identity closes to float precision.
+
+**AND THE PRACTICAL ANSWER: COARSENING DOES NOT RESCUE IT.** Efficiency's persistence,
+trailing window to forward window, at every grid and both windows:
+
+    -0.024  -0.007  -0.017  +0.004        (15-min window, grids 1/5/15/60 s)
+    -0.094  -0.020  +0.006  +0.057  +0.006 (60-min window, grids 1/5/15/60/300 s)
+
+**It flips sign and never exceeds 2.5 SE.** Volatility's +0.312 stands unchallenged. The best
+cell for predicting the forward move is +0.088 (60 s grid, 60-min window, 2.9 SE) — 0.8% of
+variance, worth perhaps 0.8 pp on the breakeven bar against volatility's 2.7 pp, before
+accounting for the two conditioners overlapping.
+
+**What is now closed and what is not.** Path efficiency as a **conditioner on ES index
+futures, on grids 1–300 s at 15- and 60-minute windows**, is measured and it is not useful. That
+is five grids × two windows on one instrument over one year — **not the axis**
+([[construction-vs-axis]]). Untested: other instruments, grids coarser than 5 minutes, windows
+longer than an hour, and efficiency defined on something other than a last-trade grid (a
+volume or event clock would be the interesting variant, and `mbo` is on disk for it).

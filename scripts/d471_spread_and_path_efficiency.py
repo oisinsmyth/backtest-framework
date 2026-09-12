@@ -191,10 +191,264 @@ def do_self_test() -> int:
         chk(f"simulated walk efficiency ~ 1/sqrt(n) at n={n}",
             abs(got - want) / want < 0.06, f"{got:.4f} vs 1/sqrt(n) {want:.4f}")
 
+    # --- the coarsening, on a hand-built series
+    s = np.array([0, 1, 2, 5, 6, 10, 11, 14], dtype=np.int64)
+    p_ = np.array([1., 2., 3., 4., 5., 6., 7., 8.])
+    ss = np.zeros(8, dtype=np.int64)
+    sc, pc, _ = coarsen(s, p_, ss, 5)
+    chk("coarsen takes the LAST point in each bucket", list(pc) == [3., 5., 8.],
+        f"{list(pc)} at secs {list(sc)}")
+    chk("coarsen keeps the matching seconds", list(sc) == [2, 6, 14], f"{list(sc)}")
+
+    # --- window runs: non-overlapping, inside one session, spanning ~h
+    sec_c = np.arange(0, 100, 10, dtype=np.int64)          # 10 points, 10 s apart
+    px_c = np.arange(10.0)
+    sess_c = np.zeros(10, dtype=np.int64)
+    st, en, pv = sweep_windows(sec_c, px_c, sess_c, m=3, h=30)
+    chk("runs are non-overlapping and m apart",
+        len(st) > 0 and all(en[:-1] <= st[1:]), f"starts {list(st)} ends {list(en)}")
+    chk("every run has a valid predecessor at start-m",
+        len(st) > 0 and all(pv == st - 3), f"prev {list(pv)}")
+    chk("first run is dropped (it has no predecessor)", 0 not in list(st), f"{list(st)}")
+    # a session boundary must break a run
+    sess_b = np.array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1], dtype=np.int64)
+    st_b, en_b, _ = sweep_windows(sec_c, px_c, sess_b, m=3, h=30)
+    chk("a run may not straddle a session boundary",
+        all(sess_b[a] == sess_b[b] for a, b in zip(st_b, en_b)),
+        f"{[(int(a), int(b)) for a, b in zip(st_b, en_b)]}")
+    # a time gap larger than the tolerance must break a run
+    sec_gap = np.array([0, 10, 20, 30, 40, 50, 60, 70, 80, 500], dtype=np.int64)
+    st_g, en_g, _ = sweep_windows(sec_gap, px_c, sess_c, m=3, h=30)
+    chk("a run whose span is far from h is rejected",
+        all(abs((sec_gap[b] - sec_gap[a]) - 30) <= 0.15 * 30
+            for a, b in zip(st_g, en_g)),
+        f"spans {[int(sec_gap[b]-sec_gap[a]) for a, b in zip(st_g, en_g)]}")
+
+    # --- the variance ratio, on series whose answer is known
+    rg = np.random.default_rng(471471)
+    walk = np.cumsum(rg.standard_normal(200_000))
+    r1 = np.diff(walk)
+    for kk in (5, 20):
+        rk = r1[:(len(r1) // kk) * kk].reshape(-1, kk).sum(axis=1)
+        vr = float(np.var(rk, ddof=1) / (kk * np.var(r1, ddof=1)))
+        chk(f"variance ratio of a random walk ~ 1 at k={kk}", abs(vr - 1.0) < 0.05,
+            f"{vr:.4f}")
+    def vr_of(series, kk=20):
+        r = np.diff(series)
+        rk_ = r[:(len(r) // kk) * kk].reshape(-1, kk).sum(axis=1)
+        return float(np.var(rk_, ddof=1) / (kk * np.var(r, ddof=1)))
+
+    # VR IS BLIND TO DETERMINISTIC DRIFT, and I first asserted the opposite. A constant
+    # drift adds no VARIANCE, so it cannot move a variance ratio: VR reads AUTOCORRELATION,
+    # not trend. The failed check is kept, inverted, because the property matters -- a
+    # market could drift steadily and still read exactly 1.00 here.
+    eps = rg.standard_normal(200_000)
+    chk("variance ratio is UNMOVED by a deterministic drift",
+        abs(vr_of(np.cumsum(eps) + np.arange(200_000) * 0.02) - vr_of(np.cumsum(eps)))
+        < 1e-9, f"{vr_of(np.cumsum(eps) + np.arange(200_000)*0.02):.4f}")
+    # positive return autocorrelation (momentum) must read ABOVE 1
+    mom = np.cumsum(eps[1:] + 0.25 * eps[:-1])
+    chk("variance ratio of positively autocorrelated returns is > 1", vr_of(mom) > 1.05,
+        f"{vr_of(mom):.3f}")
+    # bid-ask bounce -- a random level shift each step -- must read BELOW 1
+    bounce = np.cumsum(rg.standard_normal(200_000)) + rg.choice([-0.5, 0.5], 200_000)
+    chk("variance ratio detects bid-ask bounce as < 1", vr_of(bounce) < 0.95,
+        f"{vr_of(bounce):.3f}")
+
     if fails:
         P(f"\n  SELF-TEST FAILED: {fails}")
         return 1
     P("\n  SELF-TEST PASSED.")
+    return 0
+
+
+# ---------------------------------------------------------------- grid sweep
+
+def load_grid():
+    """The one-second RTH grid, with a session id. Shared by --measure and --grid-sweep."""
+    import pandas as pd
+    z = np.load(TICKS)
+    if "iid" not in z:
+        raise GateError("[INPUT] cache carries no instrument_id; re-run d465 --extract")
+    ts = z["ts"]
+    px = z["px"].astype(np.float64) * PX_SCALE
+    bid, ask = z["bid"], z["ask"]
+    good = ((px > 0) & (bid != INT64_SENTINEL) & (ask != INT64_SENTINEL)
+            & (bid > 0) & (ask > 0) & (ask >= bid))
+    ts, px, iid = ts[good], px[good], z["iid"][good].astype(np.int64)
+    sec = (ts // 1_000_000_000).astype(np.int64)
+    uniq, first = np.unique(sec, return_index=True)
+    last = np.append(first[1:], len(px)) - 1
+    et = pd.DatetimeIndex(pd.to_datetime(uniq, unit="s", utc=True)) \
+        .tz_convert("America/New_York")
+    etm = et.hour.values * 60 + et.minute.values
+    rth = (etm >= 9 * 60 + 30) & (etm < 16 * 60)
+    # session id: the ET calendar date, as an integer
+    sess = (et.year.values * 10000 + et.month.values * 100 + et.day.values)
+    return uniq[rth], px[last][rth], iid[last][rth], sess[rth]
+
+
+def coarsen(sec: np.ndarray, px: np.ndarray, sess: np.ndarray, delta: int):
+    """Last observation in each delta-second bucket. Returns (sec, px, sess) coarsened."""
+    b = sec // delta
+    _, f = np.unique(b, return_index=True)
+    l = np.append(f[1:], len(sec)) - 1
+    return sec[l], px[l], sess[l]
+
+
+def sweep_windows(sec_c, px_c, sess_c, m: int, h: int):
+    """Non-overlapping runs of m steps (m+1 points) inside ONE session, spanning ~h seconds.
+
+    Returns (start_idx, end_idx) for runs that pass, plus the preceding run's start.
+    """
+    n = len(sec_c)
+    starts = np.arange(0, n - m - 1, m, dtype=np.int64)
+    ends = starts + m
+    ok = ((sess_c[starts] == sess_c[ends])
+          & (np.abs((sec_c[ends] - sec_c[starts]) - h) <= 0.15 * h))
+    # the immediately preceding run must also be valid and in the same session
+    prev = starts - m
+    okp = np.zeros(len(starts), dtype=bool)
+    okp[1:] = ok[:-1] & (sess_c[np.maximum(prev[1:], 0)] == sess_c[starts[1:]])
+    keep = ok & okp
+    return starts[keep], ends[keep], prev[keep]
+
+
+def do_grid_sweep(as_json: bool) -> int:
+    """Does path efficiency say anything different on a COARSER grid?
+
+    D471 measured on one-second sampling only and said so. The reason to expect a coarse
+    grid to differ is concrete: at one-second sampling BID-ASK BOUNCE inflates the path
+    length, which is exactly why RTH came in BELOW the random-walk value (ratio 0.87-0.93).
+    Coarsen and that noise averages out, so any genuine trend structure should emerge.
+
+    Two readings per cell, and they are independent instruments that must agree:
+      * efficiency / (1/sqrt(m))  -- 1.00 means indistinguishable from a driftless walk
+      * the VARIANCE RATIO Var(r_k)/(k*Var(r_1)) -- the standard test for the same thing,
+        1.00 random walk, >1 trending, <1 mean-reverting.
+    """
+    sec, px, iid, sess = load_grid()
+    P(f"RTH one-second grid: {len(sec):,} seconds over "
+      f"{len(np.unique(sess)):,} sessions\n")
+
+    GRIDS = (1, 5, 15, 60, 300)
+    WINDOWS = (900, 3600)
+    out = {"grids_seconds": list(GRIDS), "windows_seconds": list(WINDOWS), "cells": []}
+
+    for h in WINDOWS:
+        P(f"=== window {h//60} min, RTH only ===")
+        P(f"  {'grid':>6}{'steps m':>9}{'windows':>10}{'eff':>8}{'1/sqrt m':>11}"
+          f"{'naive':>8}{'C':>7}{'mean-of-r':>10}{'r-o-m':>8}{'sqrt VR':>9}{'VR':>8}"
+          f"{'persist':>11}{'rho->|M|':>10}")
+        for d in GRIDS:
+            m = h // d
+            if m < 8:
+                continue
+            sc, pc, ssc = coarsen(sec, px, sess, d)
+            st, en, pv = sweep_windows(sc, pc, ssc, m, h)
+            if len(st) < 500:
+                P(f"  {d:>6}{m:>9}{len(st):>10}   too few windows")
+                continue
+            cumabs = np.concatenate([[0.0], np.cumsum(np.abs(np.diff(pc)))])
+            net = np.abs(pc[en] - pc[st])
+            path = cumabs[en] - cumabs[st]
+            eff = np.where(path > 0, net / np.maximum(path, 1e-15), np.nan)
+            # the preceding run, known at entry
+            net_p = np.abs(pc[pv + m] - pc[pv])
+            path_p = cumabs[pv + m] - cumabs[pv]
+            eff_p = np.where(path_p > 0, net_p / np.maximum(path_p, 1e-15), np.nan)
+            fin = np.isfinite(eff) & np.isfinite(eff_p)
+            rw = 1.0 / np.sqrt(m)
+            e_mean = float(np.nanmean(eff[fin]))
+
+            # VARIANCE RATIO, ON THE SAME WINDOW POPULATION. The first version took it from
+            # the whole RTH coarse series while efficiency came from the SUBSET of windows
+            # that passed the span/session/predecessor filter -- and the identity gate below
+            # caught the mismatch (0.8196 against 0.7871). Both now read the steps INSIDE
+            # the accepted windows, so the identity closes to float precision instead of to
+            # a tolerance.
+            inside = st[fin][:, None] + np.arange(1, m + 1, dtype=np.int64)[None, :]
+            r_in = (pc[inside] - pc[inside - 1]).ravel()
+            signed_net = (pc[en] - pc[st])[fin]
+            vr = float(np.var(signed_net, ddof=1) / (m * np.var(r_in, ddof=1)))
+
+            # THE 1/sqrt(m) BENCHMARK IS ONLY RIGHT FOR GAUSSIAN STEPS, and one-second ES
+            # steps are mostly ZERO with occasional one-tick jumps. In general, for iid
+            # steps, E[path] = m*E|r| and E|net| = sigma*sqrt(m)*sqrt(2/pi), so
+            #     efficiency = C / sqrt(m),  C = sqrt(2/pi) * sigma_r / E|r|
+            # and C is 1 ONLY when sigma/E|r| takes its Gaussian value sqrt(pi/2). So the
+            # benchmark must be measured per grid, not assumed. The check that this is the
+            # right correction: corrected ratio should equal sqrt(variance ratio).
+            e_abs_r = float(np.mean(np.abs(r_in)))
+            sd_r = float(np.std(r_in, ddof=1))
+            C = np.sqrt(2.0 / np.pi) * sd_r / e_abs_r if e_abs_r > 0 else np.nan
+            rw_corr = C / np.sqrt(m)
+            ratio_corr = e_mean / rw_corr if rw_corr > 0 else np.nan
+
+            # MEAN-OF-RATIOS IS NOT RATIO-OF-MEANS. The derivation above is about E|net| and
+            # E[path]; `eff.mean()` averages the ratio, and for positively correlated
+            # numerator and denominator that sits systematically BELOW E|net|/E[path].
+            # sqrt(VR) is a ratio-of-variances quantity, so the ratio-of-means form is what
+            # it should be compared against -- otherwise the two instruments appear to
+            # disagree by a constant that is purely Jensen.
+            eff_rom = float(np.mean(net[fin]) / np.mean(path[fin]))
+            ratio_rom = eff_rom / rw_corr if rw_corr > 0 else np.nan
+
+            # AND THE LAST LEAK IS FAT TAILS. E|net| = sigma_net*sqrt(2/pi) holds for a
+            # GAUSSIAN net; a leptokurtic one has E|X|/sigma BELOW sqrt(2/pi). So the two
+            # instruments are related by
+            #     efficiency/(C/sqrt(m)) = sqrt(VR) * (E|net|/sigma_net)/sqrt(2/pi)
+            # and that is an IDENTITY, not an approximation -- so it is asserted, and it is
+            # what turns "the two roughly agree" into a closed loop.
+            sd_net = float(np.std(signed_net, ddof=1))
+            gauss = (float(np.mean(np.abs(signed_net))) / sd_net) / np.sqrt(2.0 / np.pi) \
+                if sd_net > 0 else np.nan
+            pred = np.sqrt(vr) * gauss
+            if np.isfinite(pred) and abs(ratio_rom - pred) > 1e-9:
+                raise GateError(
+                    f"[IDENTITY] window {h}s grid {d}s: efficiency/(C/sqrt m) = "
+                    f"{ratio_rom:.4f} but sqrt(VR)*non-Gaussianity = {pred:.4f}. The two "
+                    f"instruments are algebraically the same quantity; a gap means one of "
+                    f"VR, C or the Gaussian factor is computed on a different population")
+
+            rho_p = float(np.corrcoef(eff_p[fin], eff[fin])[0, 1])
+            rho_m = float(np.corrcoef(eff_p[fin], net[fin])[0, 1])
+            P(f"  {d:>6}{m:>9}{int(fin.sum()):>10,}{e_mean:>8.4f}{rw:>11.4f}"
+              f"{e_mean/rw:>8.2f}{C:>7.2f}{ratio_corr:>9.2f}{ratio_rom:>9.2f}"
+              f"{np.sqrt(vr):>9.2f}{vr:>8.2f}{rho_p:>+11.3f}{rho_m:>+10.3f}")
+            out["cells"].append({
+                "window_s": h, "grid_s": d, "steps": int(m),
+                "n_windows": int(fin.sum()), "mean_efficiency": e_mean,
+                "naive_random_walk_efficiency_1_over_sqrt_m": float(rw),
+                "efficiency_over_naive_benchmark": e_mean / rw,
+                "step_shape_C_sqrt2overpi_times_sd_over_meanabs": float(C),
+                "corrected_benchmark_C_over_sqrt_m": float(rw_corr),
+                "efficiency_over_CORRECTED_benchmark": float(ratio_corr),
+                "efficiency_ratio_of_means": eff_rom,
+                "ratio_of_means_over_CORRECTED_benchmark": float(ratio_rom),
+                "sqrt_variance_ratio": float(np.sqrt(vr)),
+                "non_gaussianity_factor_EabsNet_over_sigma_over_sqrt2pi": float(gauss),
+                "identity_sqrtVR_times_nongaussianity": float(pred),
+                "variance_ratio": vr,
+                "persistence_rho_trailing_eff_to_forward_eff": rho_p,
+                "rho_trailing_eff_to_forward_abs_move": rho_m,
+                "se_rho": float(1.0 / np.sqrt(max(int(fin.sum()), 1)))})
+        P("")
+
+    res = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+           "purpose": "D471 amendment: path efficiency on COARSER grids, which D471 left "
+                      "open. Two independent instruments per cell -- efficiency over its "
+                      "random-walk benchmark, and the variance ratio. A measurement; no "
+                      "signal, no edge, nothing admitted.",
+           "source": "D465 v2 windowed ES front-month ticks, RTH only, 2025-09-11..2026-09-10",
+           "note": "efficiency/(1/sqrt(m)) and the variance ratio both read 1.00 for a "
+                   "driftless walk; they are computed from the same prices but are not the "
+                   "same statistic, so agreement between them is the check",
+           "sweep": out}
+    if as_json:
+        p = REPO / "data" / "d471_path_efficiency_grid_sweep.json"
+        p.write_text(json.dumps(res, indent=1, default=str) + "\n", encoding="utf-8")
+        P(f"wrote {p.relative_to(REPO)}")
     return 0
 
 
@@ -419,12 +673,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--measure", action="store_true")
+    ap.add_argument("--grid-sweep", action="store_true")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
     if a.self_test:
         return do_self_test()
     if a.measure:
         return do_measure(a.json)
+    if a.grid_sweep:
+        return do_grid_sweep(a.json)
     ap.print_help()
     return 0
 
