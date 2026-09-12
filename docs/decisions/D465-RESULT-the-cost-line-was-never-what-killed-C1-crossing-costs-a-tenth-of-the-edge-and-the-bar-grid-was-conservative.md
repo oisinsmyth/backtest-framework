@@ -152,6 +152,36 @@ breadth, which is a different quantity and must not be substituted for it.
 **Nothing here reopens C1 as a standalone book, and nothing here admits anything.** It
 records that the standalone verdict was stated as if it were the only verdict.
 
+### AMENDMENT 2, 2026-09-12 — **where the component number is actually settled, and what this record owes it**
+
+Amendment 1 was written before I had read
+[D466](D466-the-components-ledger-standard-and-the-scoring-of-every-futures-construction-tested-so-far-as-a-component.md)
+or [`COMPONENTS_PROP.md`](../COMPONENTS_PROP.md). **Both already existed**, and the
+mechanism is further along than amendment 1 implies:
+
+- **The standard is pre-registered** in D466 §1 — C-a net Sharpe > 0.5 at the instrument's
+  **minimum tradable size** (the micro), C-b ρ < 0.3 against every entered component, C-c
+  skew ≥ −0.5, C-d daily σ ≤ 1% of $50k, C-e provenance. In-sample 2016-01-04 → 2023-12-29;
+  **2024-01 onward unread**.
+- **C1 is `K1` in that scoring** and the principal's figure is **net Sharpe 0.62**, against
+  the last-half-hour NQ trade (`K2`) at **0.42**, ρ = **0.09**, equal-risk combination
+  **0.91**.
+- **D466 §2 declares the scoring and its result belongs to a separate record.** So this
+  record does **not** compute C1's component line: doing so would pre-empt a
+  pre-registration. Amendment 1's component case stands as a *verdict-shape* correction,
+  not as the scoring.
+
+**What this record contributes to that scoring, and it is the reason it matters here:**
+`K1`'s cost line. D466 §2 costs K1 at **$3 per round trip on 1 MES**. This record measures
+the other half — **crossing is 0.366 bp round trip, $12.90 on one ES contract, $1.29 on one
+MES** — so K1's true round trip at micro size is nearer **$4.29 than $3**, and the
+`COMPONENTS_PROP.md` C-e line for K1 should cite this record as its cost provenance.
+
+**The one number in amendment 1 that needs qualifying.** It quoted C1 at +5.52 bp ± 2.02 from
+D464's *ungated* row, which is 2,043 nights on the D462 window. D466 scores K1 on
+`es_c1_holds` over 2016–2023 at 1 MES net of cost — a different unit and a different sizing.
+**The two are not the same statistic and must not be quoted interchangeably.**
+
 ## 4. What this record does NOT claim
 
 - **It does not close C1 or the avenue.** [R15](../RULES.md#r15): that is the principal's.
