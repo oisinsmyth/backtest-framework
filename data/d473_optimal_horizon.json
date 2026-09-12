@@ -1,0 +1,146 @@
+{
+ "generated_utc": "2026-09-12T16:35:32+00:00",
+ "purpose": "D473: the horizon the micro cost structure wants, conditional on a stated directional skill. A cost-geometry calculation -- no entry rule, no signal, no backtest, nothing admitted.",
+ "source": "data/fixtures/fut_ES_rth_1m.csv.gz, 2016-01-04..2023-12-29, RTH, non-overlapping single-contract windows",
+ "cost_ticks": 3.409,
+ "closed_form": "E|M|(h*) = cost / a, equivalently p_be(h*) = 0.5 + a/2: the optimum is where skill is exactly twice the breakeven excess. Verified against a numerical argmax in --self-test.",
+ "scaling": {
+  "k": 3.363571364426568,
+  "beta": 0.5201331285890624,
+  "note": "beta 0.5 is a random walk; D469 fitted 0.50 on ticks"
+ },
+ "rms_over_mean_abs": 1.571795323918168,
+ "by_horizon": {
+  "5": {
+   "n_windows": 155754,
+   "mean_abs_ticks": 8.013591946274254,
+   "rms_ticks": 13.12463625745419,
+   "rms_over_mean_abs": 1.6377969262031375,
+   "trades_per_year_always_in": 19656.0,
+   "breakeven_accuracy": 0.712701122221786
+  },
+  "15": {
+   "n_windows": 51918,
+   "mean_abs_ticks": 13.733791748526523,
+   "rms_ticks": 22.1401133251739,
+   "rms_over_mean_abs": 1.6120903629945662,
+   "trades_per_year_always_in": 6552.0,
+   "breakeven_accuracy": 0.6241099349116659
+  },
+  "30": {
+   "n_windows": 25957,
+   "mean_abs_ticks": 19.55407019301152,
+   "rms_ticks": 31.396589765513653,
+   "rms_over_mean_abs": 1.6056293884397819,
+   "trades_per_year_always_in": 3276.0,
+   "breakeven_accuracy": 0.5871685527961936
+  },
+  "60": {
+   "n_windows": 11982,
+   "mean_abs_ticks": 27.235770322149893,
+   "rms_ticks": 42.524370264978444,
+   "rms_over_mean_abs": 1.5613426667207158,
+   "trades_per_year_always_in": 1638.0,
+   "breakeven_accuracy": 0.5625831390057578
+  },
+  "120": {
+   "n_windows": 5991,
+   "mean_abs_ticks": 39.00968118844934,
+   "rms_ticks": 60.51999811570183,
+   "rms_over_mean_abs": 1.5514097083577714,
+   "trades_per_year_always_in": 819.0,
+   "breakeven_accuracy": 0.5436942817288314
+  },
+  "195": {
+   "n_windows": 3990,
+   "mean_abs_ticks": 53.05288220551378,
+   "rms_ticks": 81.79059238388157,
+   "rms_over_mean_abs": 1.5416804701966047,
+   "trades_per_year_always_in": 504.0,
+   "breakeven_accuracy": 0.5321283204444424
+  },
+  "390": {
+   "n_windows": 1993,
+   "mean_abs_ticks": 78.06522829904667,
+   "rms_ticks": 116.52154498874005,
+   "rms_over_mean_abs": 1.492617744514596,
+   "trades_per_year_always_in": 252.0,
+   "breakeven_accuracy": 0.5218343049413822
+  }
+ },
+ "by_skill": {
+  "0.01": {
+   "skill": 0.01,
+   "accuracy": 0.51,
+   "e_abs_wanted_ticks": 340.9,
+   "optimal_horizon_min": 7184.078675736647,
+   "optimal_horizon_sessions": 18.42071455317089,
+   "p_be_at_optimum": 0.505,
+   "sharpe_at_optimum": 0.023533482671541497,
+   "sharpe_at_15min": -11.459995331374396,
+   "trades_per_year_at_optimum": 13.680251071293075
+  },
+  "0.02": {
+   "skill": 0.02,
+   "accuracy": 0.52,
+   "e_abs_wanted_ticks": 170.45,
+   "optimal_horizon_min": 1895.0270476354165,
+   "optimal_horizon_sessions": 4.8590437118856835,
+   "p_be_at_optimum": 0.51,
+   "sharpe_at_optimum": 0.09166415675799806,
+   "sharpe_at_15min": -10.458116209028397,
+   "trades_per_year_at_optimum": 51.86205659841751
+  },
+  "0.03": {
+   "skill": 0.03,
+   "accuracy": 0.53,
+   "e_abs_wanted_ticks": 113.63333333333333,
+   "optimal_horizon_min": 869.0905963806017,
+   "optimal_horizon_sessions": 2.2284374266169276,
+   "p_be_at_optimum": 0.515,
+   "sharpe_at_optimum": 0.20311498365872543,
+   "sharpe_at_15min": -9.457231933039623,
+   "trades_per_year_at_optimum": 113.08372269737475
+  },
+  "0.05": {
+   "skill": 0.05,
+   "accuracy": 0.55,
+   "e_abs_wanted_ticks": 68.17999999999999,
+   "optimal_horizon_min": 325.4932876872952,
+   "optimal_horizon_sessions": 0.8345981735571671,
+   "p_be_at_optimum": 0.525,
+   "sharpe_at_optimum": 0.5538807827422197,
+   "sharpe_at_15min": -7.456605343690569,
+   "trades_per_year_at_optimum": 301.9417103753569
+  },
+  "0.075": {
+   "skill": 0.075,
+   "accuracy": 0.575,
+   "e_abs_wanted_ticks": 45.45333333333333,
+   "optimal_horizon_min": 149.2765793855086,
+   "optimal_horizon_sessions": 0.3827604599628426,
+   "p_be_at_optimum": 0.5375,
+   "sharpe_at_optimum": 1.2299535124954126,
+   "sharpe_at_15min": -4.953191321040458,
+   "trades_per_year_at_optimum": 658.3752146824767
+  },
+  "0.1": {
+   "skill": 0.1,
+   "accuracy": 0.6,
+   "e_abs_wanted_ticks": 34.089999999999996,
+   "optimal_horizon_min": 85.85910759502538,
+   "optimal_horizon_sessions": 0.2201515579359625,
+   "p_be_at_optimum": 0.55,
+   "sharpe_at_optimum": 2.1701410104678533,
+   "sharpe_at_15min": -2.4400111338892767,
+   "trades_per_year_at_optimum": 1144.6659853903989
+  }
+ },
+ "limitations": [
+  "RTH-only and intraday: horizons past one session are EXTRAPOLATED through the fitted exponent, not measured, and a multi-session hold also collects overnight moves this RTH fixture does not contain",
+  "the +/-|M| outcome model assumes the rule captures the full move signed by its call -- an upper bound on any exit, so every Sharpe here is optimistic",
+  "trades are assumed independent and always-in; a selective rule trades less often and its Sharpe scales by sqrt(its own count), not this one",
+  "skill is assumed constant across horizons, which is the strongest assumption in the file and is almost certainly false",
+  "no slippage beyond the measured half-spread and no queue position"
+ ]
+}
