@@ -589,6 +589,75 @@ def release_drive_lock() -> None:
         pass
 
 
+def do_retry_end(key: str, new_end: str) -> int:
+    """Resubmit one item with a different end date.
+
+    WHY. Three ohlcv-1m jobs stalled and I split them twice on a SIZE hypothesis that the
+    data does not support. Laid out as a 2x2 the real pattern is an INTERACTION:
+
+                        interior end        dataset-edge end (2026-09-11)
+        ohlcv-1m        6 of 6 downloaded   0 of 3
+        other schemas   --                  5 of 5 downloaded
+
+    Every bars job with an interior end succeeded; every bars job ending at the edge
+    stalled at a fixed percentage for hours; and definition, statistics, status, tbbo and
+    bbo-1m all ended at that same edge and were fine. So it is not size and it is not the
+    edge alone -- it is the aggregated bar schema at an open boundary, plausibly waiting
+    on a final partial minute that never closes. mbo was the one schema I had already
+    backed off the edge, and it succeeded.
+
+    n=3 on the failing cell, so this is a well-supported hypothesis rather than a proven
+    mechanism. Backing the end off by a day is the cheap test.
+    """
+    import databento as db
+    c = db.Historical(api_key())
+    st = load_state()
+    man = st.get("manifest") or []
+    base = next((i for i in man if i["key"] == key), None)
+    if base is None:
+        raise SystemExit(f"{key} is not in the manifest")
+    nkey = f"{key}@{new_end}"
+    item = dict(base, key=nkey, end=new_end,
+                why=f"{base['why']} [resubmitted with end {new_end}: the original ended at "
+                    f"the dataset edge and stalled, as did every other ohlcv-1m job that "
+                    f"did, while 6 with interior ends succeeded]")
+    LIMITER.wait()
+    cost = float(c.metadata.get_cost(DATASET, start=item["start"], end=new_end,
+                                     symbols=item["symbols"], schema=item["schema"],
+                                     stype_in=item["stype_in"]))
+    if cost > COST_EPS:                      # the money gate, unchanged
+        st["items"][nkey] = {"rank": base["rank"], "bytes_on_disk": 0,
+                             "state": "refused", "quote_usd": cost}
+        event(st, nkey, "refused", f"quote ${cost:,.2f}")
+        save_state(st)
+        return 2
+    LIMITER.wait()
+    job = c.batch.submit_job(
+        dataset=DATASET, symbols=item["symbols"], schema=item["schema"],
+        start=item["start"], end=new_end, encoding="dbn", compression="zstd",
+        split_symbols=False, split_duration=item["split_duration"],
+        stype_in=item["stype_in"], stype_out="instrument_id", delivery="download")
+    man.append(item)
+    st["items"][nkey] = {"rank": base["rank"], "bytes_on_disk": 0, "state": "submitted",
+                         "job_id": job.get("id"), "quote_usd": cost,
+                         "submitted_utc": now(), "job_state": job.get("state")}
+    old = st["items"].setdefault(key, {})
+    old["state"] = "superseded"
+    old["superseded_by"] = [nkey]
+    old["superseded_reason"] = (
+        f"stalled at {old.get('progress')}% for hours with end={base['end']}, the dataset "
+        f"edge. Every ohlcv-1m job ending at the edge stalled (3 of 3) and every one with "
+        f"an interior end succeeded (6 of 6), while 5 other schemas ending at the same edge "
+        f"were fine. Resubmitted as {nkey} with end {new_end}. Left running; no cancel exists.")
+    event(st, key, "superseded", old["superseded_reason"])
+    st["manifest"] = man
+    save_state(st)
+    P(f"  {nkey}  {item['start']}..{new_end}  ${cost:.2f}  job {job.get('id')}")
+    P(f"  NOTE: ends {new_end} rather than {base['end']}, so the final session(s) of the "
+      f"dataset are not in this pull. That gap is recorded in the manifest.")
+    return 0
+
+
 def do_drive(floor_gb: float, max_seconds: int) -> int:
     if not acquire_drive_lock():
         return 4
@@ -796,10 +865,15 @@ def main() -> int:
     ap.add_argument("--max-seconds", type=int, default=MAX_DRIVE_SECONDS)
     ap.add_argument("--dry-run", action="store_true",
                     help="--submit: quote every item but submit nothing")
+    ap.add_argument("--retry-end", nargs=2, metavar=("KEY", "END"), default=None,
+                    dest="retry_end",
+                    help="resubmit one item with a different end date, cost-gated at $0.00")
     ap.add_argument("--split", nargs=2, metavar=("KEY", "N"), default=None,
                     help="route around a job that will not finish: resubmit its range "
                          "as N narrower jobs, cost-gated at $0.00")
     a = ap.parse_args()
+    if a.retry_end:
+        return do_retry_end(a.retry_end[0], a.retry_end[1])
     if a.split:
         return do_split(a.split[0], int(a.split[1]))
     if a.self_test:
