@@ -212,3 +212,14 @@ a 2016–2023 window is a **price-level artefact** and must be recomputed per ye
 **What is NOT closed:** the constructions. Gross is +$19.68 a trade forward against a $3.50 cost,
 so the signal pays — the barrier no longer fits the contract. Closing an avenue is the
 principal's.
+
+**ENTRY #1 (K8) CLOSED BY THE PRINCIPAL, 2026-09-13.** Tested forward in D503 and it did not
+transfer (gross −$4.46 a trade, net Sharpe −0.160, difference z +0.02). D498 §3's rule returned
+PROVISIONAL; the principal closed it on the negative gross mean, which the rule did not name.
+**The ledger holds no live entry.** See BOOK_PROP's closure section of 2026-09-13.
+
+**Line closed by the principal, 2026-09-13:** **cross-market-into-the-open** — any construction that
+reads a foreign market before the US open and enters at or after it (D494 at index level, D504
+cross-sectionally). The Asian chip channel is real and clears in the gap (+25.65 bp at t +4.25 into
+the gap, −1.65 ± 2.6 bp into the day); a control sector with no mechanism was the family maximum.
+Kept as measurements in FINDINGS §71. Nothing spent on the 15-minute fixtures.

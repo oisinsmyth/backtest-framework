@@ -846,3 +846,34 @@ question about the vehicle, not about a signal, and it is the principal's to dir
 
 **What is NOT closed:** the constructions. Forward gross is **+$19.68 a trade against a $3.50
 cost** — the signal pays. Closing an avenue is the principal's, and nothing here closes one.
+
+---
+
+## TWO CLOSURES BY THE PRINCIPAL, 2026-09-13 — K8, AND THE CROSS-MARKET-INTO-THE-OPEN LINE
+
+**K8 is CLOSED.** It was taken forward in D503 (the one-pass read of 2024-01-02 → 2026-09-09) and
+did not transfer: gross **−$4.46** a trade against **+$17.87** in sample, hit 50.6% against 57%, net
+Sharpe **−0.160**, the after-down minus after-up difference **+0.2 bp at z +0.02** against +2.89.
+D498's own rule returned PROVISIONAL, because REMOVED needed a Sharpe below −0.3 *or* a negative
+difference; the principal has closed it on the reading that a **negative gross mean** is the answer
+the rule failed to name. **The ledger's entry #1 is closed, not parked.** ES K8, dismissed in sample
+as "the same sign at half the size", is the arm that worked forward — which is what noise looks
+like. The slice is spent; nothing may be re-read or re-scored on it.
+
+**The cross-market-into-the-open line is CLOSED** (D494 at index level, D504 cross-sectionally).
+The Asian chip channel into US semiconductors is real and semis-specific — the SMH-minus-QQQ
+overnight gap loads +0.45 on Taiwan — and it clears **entirely in the opening auction**: **+25.65 bp** per unit
+sigma into the relative gap at t +4.25, against **−1.65 ± 2.6 bp** into the 09:45 → 16:00 day session.
+The traded primary earned +8.0 ± 8.4 bp against 11.7 bp crossed, inside its own exact rotation, with
+yearly means +5 / −27 / +39 / −5; the family maximum was a **control sector with no mechanism**
+(transports, +27.97 bp, hit 61%, 0.8th percentile of its own null). The prop-eligible expression
+(MNQ vs MES) was net −$19.76 a trade against $6.
+
+**Closed for the prop book:** any construction that reads a foreign market before the US open and
+enters at or after that open. **What is not closed and is recorded as a measurement** (FINDINGS §71):
+the gap-versus-day decomposition, which says the channel could only ever be traded **in** the gap,
+needing pre-market execution and a different cost model; and the vehicle measurement that the
+unconditional MNQ/MES pair's daily σ is **$128 against one MNQ's $282**, the only construction that
+lowers the dollar σ without leaving the micro. **Spent:** nothing on the 15-minute fixtures.
+
+**This page still admits no arm, and the ledger now holds no live entry.**

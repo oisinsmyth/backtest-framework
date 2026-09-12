@@ -150,6 +150,25 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## TWO CLOSURES BY THE PRINCIPAL, 2026-09-13 — K8 AND THE CROSS-MARKET-INTO-THE-OPEN LINE
+
+**K8 (ledger entry #1) is CLOSED.** D503's forward read had it at gross −$4.46 a trade against
++$17.87 in sample and net Sharpe −0.160; D498's rule said PROVISIONAL and the principal closed it on
+the negative gross mean. **The prop ledger holds no live entry.** The 2024-01-02 → 2026-09-09 futures
+slice is SPENT for K8, the MACD component and the assembled book.
+
+**The cross-market-into-the-open line is CLOSED** (D494 index-level, D504 cross-sectional): any
+construction that reads a foreign market before the US open and enters at or after that open. Kept as
+measurements in FINDINGS §71 — the channel clears in the gap, so it could only be traded IN the gap
+(pre-market execution, a different cost model); and the MNQ/MES pair's daily σ is $128 against one
+MNQ's $282, the only construction that lowers dollar σ without leaving the micro.
+
+**Where the prop book actually stands:** no live component; the binding constraint is the VEHICLE,
+not the signal (one micro is too big for a $50k account's $2,000 floor at 2026 index levels, D503);
+and four unrelated routes to intraday direction have each ended at about one tick (D487, D494, D499,
+D504). The unexplored answers are the hedged micro pair (sizing unstudied) and a larger account or a
+wider floor.
+
 ## D504 — STAGE 0, CLOSE: THE ASIAN CHIP CHANNEL IS REAL AND CLEARS ENTIRELY IN THE GAP, 2026-09-13
 
 The principal's direction after D499: make the Asia-into-US question **cross-sectional** (semis
