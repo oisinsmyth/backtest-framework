@@ -81,6 +81,22 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D490 — THE PRINCIPAL'S RANGE-REVERSION RULE LOSES GROSS ON BOTH SIDES; A STALE RANGE BEATS YESTERDAY'S, 2026-09-12
+
+Buy the bottom 5% of yesterday's RTH range on a 2× same-minute volume spike, target the top 5%,
+trail from the last confirmed swing once past the midpoint, else the close; short symmetric; one
+micro, $3 + fills. Three-way split declared (`738ddfa`): **development 2016-02→2020, validation
+2021→2023 (touched once per declared filter set), final 2024+ (principal's word)**. Development
+RESULT: ES pooled gross **−$3.48/trade**, net Sharpe **−1.14 (0.38)**; NQ −$4.96, −1.03; long hit
+57.6% with median +$10 and mean −$2.70 (skew −1.5, worst MAE −$538); shorts 45% hit; the target is
+reached on 5% of trades, 78% ride to the close. **The wrong-range control (a range 3–22 sessions
+old, same mechanics) has a mean of ≈ 0 — the rule is BELOW it**; random entries with the same
+exits are worse still (−$7.55). Three fifths of the longs are below yesterday's low on a spike: a
+breakdown with flow, not a stretched tape; 2018 (D487's continuation year) is the worst year. No
+split is beyond ~1.3 SE of zero (short on a > 3× spike +3.8 ± 7.2 is the best-looking). Bar not
+cleared; **not taken to validation; both reserves intact.** If the principal wants a filter, the
+splits are on the record; my reading is noise around a negative mean.
+
 ## D487 — THE ORB LINE CLOSED AT STAGE 0: CONTINUATION LIVES IN 2018 AND 2022, NOT IN THE CRASH YEAR, 2026-09-12
 
 The principal asked about opening-range breakouts; the literature says an ORB is a wrapper on
