@@ -74,12 +74,13 @@ transitory-impact mechanism the spec named.
 ## 2. The yardstick (M3): the hourly clock cannot carry $3
 
 Fee A as a share of the expected next-hour move, averaged over the thin / thick hours: **NQ 14.5% /
-7.1%**, ES 21.0% / 10.8%, CL 23.5% / 12.3%, GC 20.3% / 13.6%, YM ~27% / ~12%, 6E 40–65% in the
-thinnest hours. The break-even accuracy in NQ's thin hours is **57.2%** (thick 53.5%); the
-observed conditional hit rates are 49–53%. Against FINDINGS §69's day-session line (2.4% of the
-move, break-even 51.2%), an hourly hold on the Nasdaq micro pays six times the fee per unit of
-move in the thin hours and three times in the thick. On ZN and ZB the crossed tick is $15.6 / $31.3
-against an expected hourly move of 2.8 / 3.3 ticks: fee B is 19–60% of the move every hour.
+7.1%**, ES 21.0% / 10.8%, CL 23.5% / 12.3%, GC 20.3% / 13.6%, YM 26.4% / 13.6%, 6E 44.7% / 26.3%.
+The break-even accuracy in NQ's thin hours is **57.2%** (thick 53.5%), on ES 60.5% / 55.4%; the
+observed conditional hit rates across the sixteen cells are 46.5–53.1%. Against FINDINGS §69's
+day-session line (2.4% of the move, break-even 51.2%), an hourly hold on the Nasdaq micro pays six
+times the fee per unit of move in the thin hours and three times in the thick. On ZN and ZB the
+crossed tick is $15.63 / $31.25 against an expected hourly move of 2.8–4.5 and 3.3–5.6 ticks: fee
+B is 19–80% (ZN) and 14–58% (ZB) of the move in every hour.
 **No hourly-horizon construction on these roots at micro cost can clear C-a on accuracy alone;
 it would need a per-trade move several times the hourly σ, which is a different clock.**
 

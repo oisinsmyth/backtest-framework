@@ -4445,3 +4445,62 @@ control whose window **overlapped the outcome** (it measured spillover and came 
 null), and a roll gate whose threshold its own series made **unreachable**. Both were withdrawn
 in their records rather than reported as passes; CLAUDE.md's *"a self-test that cannot fail is
 worse than none"* applies to gates and controls, not only to the deliberate `[X]` break.
+
+## 70. Measurement: the hourly clock on eight CME roots — the off-hours reversal is real on the US clock, worth a tick, and the fee is 7–24% of the hourly move
+
+**A MEASUREMENT, not a verdict** ([R15](RULES.md#r15)). From
+[D499](decisions/D499-RESULT-stage-0-CLOSE-the-hour-after-a-large-move-reverts-in-the-US-off-hours-on-the-index-roots-and-is-worth-less-than-a-tick-no-cell-of-16-clears-the-family-bar-or-the-fee.md)
+(stage 0 on D467's hourly session tables, eight roots, 2016–2023, 2024+ unread).
+
+**(a) The reversal exists on the US clock and not on the volume partition.** Pooled β of the next
+hour on the last hour, over h18 … h08 ET, against its exact rotation band (±0.014):
+
+| root | off-hours β | day-session β | outside its band |
+|---|---:|---:|---|
+| ES | **−0.043** | +0.004 | yes |
+| YM | **−0.037** | +0.012 | yes |
+| NQ | **−0.028** | +0.007 | yes |
+| CL | **+0.030** | −0.010 | yes — crude **continues** |
+| ZN, ZB, GC, 6E | −0.012 … +0.007 | ≈ 0 | no |
+
+Partition the same 21 entry hours by **volume** instead and the effect vanishes: the pooled β is
+inside its band on seven of eight roots. The reason is that **London (h03, h04, h07, h08) is thick
+by volume on every root** — ZN's h03 trades 45,097 contracts against h00's 7,012 — so the
+volume-thin set and the US-off-hours set are different objects. A study that says "thin book" and
+partitions by clock is not testing thinness.
+
+**(b) And it is worth a tick.** Fading a top-decile hourly move through the off-hours: ES +$2.12 a
+trade (1.7 ticks, +1.3 bp, z +2.10 against an exact-rotation p95 of +1.68), NQ +$2.44 (4.9 ticks,
++1.1 bp, z +1.82 vs +1.56). Both clear their own null; both are **net negative after the $3 fee**
+(−$0.88, −$0.56) and further after the crossed tick. This is the same size as D487's last-half-hour
+reversal and D494's best cross-instrument read: **one tick is what direction at session resolution
+has been worth here, three times now, by three unrelated routes.**
+
+**(c) The fee against the move, per horizon — the number that closes the clock.** Fee ($3, or $6 on
+ZN/ZB) as a share of E|next-hour move|, averaged over the thin / thick hours, with the day-session
+line of §69 beside it:
+
+| | hourly, thin | hourly, thick | day session (§69) |
+|---|---:|---:|---:|
+| MNQ | **14.5%** | 7.1% | 2.4% |
+| MES | 21.0% | 10.8% | 4.7% |
+| MCL | 23.5% | 12.3% | 5.5% |
+| MGC | 20.3% | 13.6% | 6.7% |
+| MYM | 26.4% | 13.6% | 5.0% |
+| M6E | 44.7% | 26.3% | 8.0% |
+
+Break-even accuracy on MNQ's thin hours is **57.2%** (thick 53.5%) against the day session's 51.2%;
+observed conditional hit rates across all sixteen cells are 46.5–53.1%. On ZN and ZB one crossed
+tick is $15.63 / $31.25 against an expected hourly move of 2.8–4.5 and 3.3–5.6 ticks, so
+fee-plus-tick is **19–80% (ZN) and 14–58% (ZB) of the move in every hour**. **Shortening the horizon multiplies the fee against the move
+by 3–6× on the index micros and makes the large-tick roots untradeable; the accuracy needed rises
+past anything measured in this programme.** The corollary of §69 (a) — that selecting bigger moves
+cannot pay when cost/E|M| is already small — runs the other way here: at an hourly horizon the
+ratio is large enough that only a per-trade move several times the hourly σ could carry it, which
+is a different clock, not a better signal.
+
+**(d) A mechanism claim that came out backwards.** The transitory-impact story predicts that a large
+move on *low* relative volume reverts more. It reverts **less**, on seven of eight roots (YM −$6.19
+a trade, z −2.1; the rest within 2 SE). A move that arrives on little volume in these markets is
+more often the start of something than an inventory shock. **Whatever the off-hours reversal is, it
+is not thin-book impact** — the one partition built to test that is the one that shows nothing.
