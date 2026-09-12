@@ -71,6 +71,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:33px;margin:
 button{font:inherit;font-size:12.5px;padding:4px 12px;border:1px solid var(--rule);
   border-radius:4px;background:var(--chip);color:var(--ink);cursor:pointer}
 button:hover{border-color:var(--muted)}
+button.on{border-color:var(--ink);font-weight:600}
 button.kind-sup.on{border-color:var(--sup);color:var(--sup);font-weight:600}
 button.kind-res.on{border-color:var(--res);color:var(--res);font-weight:600}
 .bar input[type=checkbox]{width:15px;height:15px}
@@ -112,13 +113,16 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     (click the first and then the second, or press on the first and drag to the second; each
     anchor snaps to that bar's wick, the low for support, the high for resistance, and a plain
     press always places an anchor even on top of a line, so an old pivot can be re-used); when a
-    line breaks, press <b>end</b> on its chip in the panel header (or Shift+click the line and
-    <b>end selected line here</b>). Every line remembers the bar it was drawn at and
+    line breaks, press <b>end</b> on its chip in the panel header, or switch to the
+    <b>select tool</b>, press the line, and <b>end selected line here</b>. Every line remembers the bar it was drawn at and
     the bar it was ended at, so the set of lines you had at any bar can be replayed exactly. That
     is what each construction will be scored against, bar by bar.</p>
 
   <div class="bar" id="ctl">
-    <label>drawing</label>
+    <label>tool</label>
+    <button id="mdraw" class="on" type="button" title="presses place anchors (D)">draw (D)</button>
+    <button id="msel" type="button" title="presses select a line to end it (E)">select (E)</button>
+    <label>kind</label>
     <button id="ksup" class="kind-sup on" type="button">support (S)</button>
     <button id="kres" class="kind-res" type="button">resistance (R)</button>
     <label><input type="checkbox" id="snap" checked> snap to wick</label>
@@ -139,7 +143,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     <span><i class="sw" style="border-color:var(--res)"></i> resistance, live</span>
     <span><i class="sw dot" style="border-color:var(--muted)"></i> projection beyond the last anchor</span>
     <span><i class="sw" style="border-color:var(--sel)"></i> selected</span>
-    <span><b>Shift+click</b> selects a line &middot; keys on the active panel: &larr; &rarr; step &middot; S / R kind &middot; Delete ends &middot; Ctrl+Z &middot; Esc cancels</span>
+    <span><b>select tool (E)</b> or Shift+click picks a line; <b>draw tool (D)</b> places anchors &middot; &larr; &rarr; step &middot; S / R kind &middot; Delete ends &middot; Ctrl+Z &middot; Esc cancels</span>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -168,7 +172,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
 (function(){
   var D = JSON.parse(document.getElementById('payload').textContent);
   var W = 1200, HH = 260, PL = 8, PR = 62, PT = 12, PB = 22, iw = W - PL - PR, ih = HH - PT - PB;
-  var kind = 'support', pending = null, sel = null, hist = [], db = null, saveTimers = {}, active = 0;
+  var kind = 'support', mode = 'draw', pending = null, sel = null, hist = [], db = null, saveTimers = {}, active = 0;
   var STATE = {};                 // key -> {symbol, start, n, cursor, lines: [{kind,x1,p1,x2,p2,at,until?}]}
   var dirty = {};                 // key -> true once the viewer changed it in this visit (the database load must not overwrite it)
   // THE EVENT LOG: the last events the page saw, visible and copyable, because the principal's
@@ -399,6 +403,21 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     if (document.getElementById('snap').checked) p = kk === 'support' ? nm.l[q] : nm.h[q];
     return {idx: idx, k: k, i: i, q: q, p: p, kind: kk, future: i > st.cursor, st: st, nm: nm};
   }
+  // the live line whose segment passes within 14 px (in SVG units) of the press, if any
+  function nearestLine(svg, ev){
+    if (!svg) return null;
+    var idx = parseInt(svg.getAttribute('data-idx'), 10), nm = D.names[idx], k = key(nm), S = scales(nm), st = STATE[k], q = nm.start + st.cursor;
+    var pt = svgPoint(svg, ev), best = null, bd = 14;
+    st.lines.forEach(function(L, j){
+      if (!alive(L, q)) return;
+      var x1 = S.X(L.x1 - nm.start), y1 = S.Y(L.p1), x2 = S.X(L.x2 - nm.start), y2 = S.Y(L.p2);
+      var dx = x2 - x1, dy = y2 - y1, len2 = dx * dx + dy * dy || 1;
+      var u = Math.max(0, Math.min(1, ((pt.x - x1) * dx + (pt.y - y1) * dy) / len2));
+      var px = x1 + u * dx, py = y1 + u * dy, d = Math.sqrt((pt.x - px) * (pt.x - px) + (pt.y - py) * (pt.y - py));
+      if (d < bd){ bd = d; best = {k: k, j: j}; }
+    });
+    return best;
+  }
   function finish(a1, a2){
     var st = a1.st, nm = a1.nm;
     push();
@@ -416,14 +435,24 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     if (ev.button !== 0 || (t.closest && t.closest('button, input'))) return;
     // SELECTING TAKES SHIFT. A plain press always places an anchor, even on top of a line --
     // the line anchored on an old pivot used to eat the press meant to re-use it.
-    if (ev.shiftKey && t.classList && (t.classList.contains('ln') || t.classList.contains('ln-hit'))){
-      active = parseInt(t.closest('svg').getAttribute('data-idx'), 10);
-      sel = {k: t.getAttribute('data-k'), j: parseInt(t.getAttribute('data-j'), 10)}; pending = null; redrawPanel(active);
-      evlog('shift-press selected line ' + sel.j + ' on ' + sel.k);
-      status('selected a line -- end it with its chip, the Delete key, or end selected line here');
-      ev.preventDefault(); return;
+    var onLine = t.classList && (t.classList.contains('ln') || t.classList.contains('ln-hit'));
+    // SELECT MODE, OR SHIFT: a press on a line selects it; a press elsewhere clears the selection
+    if (mode === 'select' || ev.shiftKey){
+      ev.preventDefault();
+      var svgS = t.closest ? t.closest('svg') : null;
+      if (svgS) active = parseInt(svgS.getAttribute('data-idx'), 10);
+      if (onLine){
+        sel = {k: t.getAttribute('data-k'), j: parseInt(t.getAttribute('data-j'), 10)}; pending = null; redrawPanel(active);
+        evlog((ev.shiftKey ? 'shift-' : 'select-mode ') + 'press selected line ' + sel.j + ' on ' + sel.k);
+        status('selected a line -- end it with its chip, the Delete key, or end selected line here');
+      } else {
+        // not on a line: pick the nearest live line within 14 px of the press, if any
+        var near = nearestLine(svgS, ev);
+        if (near){ sel = near; pending = null; redrawPanel(active); evlog('select press near line ' + sel.j + ' on ' + sel.k); status('selected the nearest line -- end it with its chip, the Delete key, or end selected line here'); }
+        else { sel = null; if (svgS) redrawPanel(active); evlog('select press: no line within reach of ' + t.tagName); status('no line under the press -- press on a line, or use its chip in the panel header'); }
+      }
+      return;
     }
-    if (ev.shiftKey) evlog('shift-press hit ' + t.tagName + (t.getAttribute('class') ? '.' + t.getAttribute('class') : '') + ', not a line');
     var svg = t.closest ? t.closest('svg') : null;
     if (!svg){ evlog('press outside a chart: ' + t.tagName); return; }
     // a waiting first anchor on this name fixes the kind; otherwise the kind buttons do
@@ -474,6 +503,16 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     document.getElementById('ksup').classList.toggle('on', kk === 'support');
     document.getElementById('kres').classList.toggle('on', kk === 'resistance');
   }
+  function setMode(m){
+    mode = m; pending = null; down = null; rubber = null;
+    document.getElementById('mdraw').classList.toggle('on', m === 'draw');
+    document.getElementById('msel').classList.toggle('on', m === 'select');
+    document.querySelectorAll('.pb svg').forEach(function(s){ s.style.cursor = m === 'select' ? 'pointer' : 'crosshair'; });
+    evlog('tool: ' + m);
+    status(m === 'select' ? 'select tool: press on a line to select it, then end it (chip, Delete, or the button)' : 'draw tool: press two anchors, or press and drag');
+  }
+  document.getElementById('mdraw').addEventListener('click', function(){ setMode('draw'); });
+  document.getElementById('msel').addEventListener('click', function(){ setMode('select'); });
   document.getElementById('ksup').addEventListener('click', function(){ setKind('support'); });
   document.getElementById('kres').addEventListener('click', function(){ setKind('resistance'); });
   function endSel(){
@@ -500,6 +539,8 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
     else if (ev.key === 'ArrowLeft'){ setCursor(active, st.cursor - (ev.shiftKey ? 5 : 1)); ev.preventDefault(); }
     else if (ev.key === 's' || ev.key === 'S') setKind('support');
     else if (ev.key === 'r' || ev.key === 'R') setKind('resistance');
+    else if (ev.key === 'd' || ev.key === 'D') setMode('draw');
+    else if (ev.key === 'e' || ev.key === 'E') setMode('select');
     else if (ev.key === 'Delete' || ev.key === 'Backspace'){ endSel(); ev.preventDefault(); }
     else if (ev.key === 'Escape'){ pending = null; down = null; rubber = null; sel = null; status('cancelled'); redrawPanel(active); }
     else if ((ev.ctrlKey || ev.metaKey) && (ev.key === 'z' || ev.key === 'Z')){ undo(); ev.preventDefault(); }
