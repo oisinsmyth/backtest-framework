@@ -114,6 +114,22 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D498 — K8 IS THE LEDGER'S FIRST ENTRY (PROVISIONAL): LONG THE NQ DAY SESSION AFTER A DOWN DAY, NET SHARPE +0.61 AT ONE MICRO, 2026-09-12
+
+Declared as a component candidate from D495's other side (selection stated), with three
+second-clock cells beside it (`b463999`, RESULT). **NQ K8: 871 trades (44% of sessions, about
+twice a week), gross +$17.87 a trade (+11.6 bp, SE 4.0; median +$20.50), hit 57%, skew −0.02,
+positive in 6 of 8 years and both sub-periods; after an up day the day session is −3.1 bp, so
+the difference is z +2.89 against a family p95 of +2.41 (1.5% of common rotations); net Sharpe
++0.61 (0.32); C-a, C-c, C-d pass → PROVISIONAL entry #1 in `docs/COMPONENTS_PROP.md`.** ES is the
+same sign at half the size (+4.9 bp, +0.18, inside its null; ρ ≈ 0.85 with NQ). The second clocks
+are flat: turn-of-month +6.9 bp vs +3.7 other side (z +0.46), pre-FOMC to 14:00 +2.8 bp (z +0.06),
+the first-30 fade +0.4 bp. **Promotion is the declared forward read** (`--forward
+--principals-word`: 2024-01-02 → 2026-09-09, ≈ 300 trades; FULL if gross > 0, net Sharpe > 0 and
+the difference vs after-up days has z ≥ 1; REMOVED if net Sharpe < −0.3 or the difference is
+negative) — **unrun; the principal's word.** A second component needs a different instrument or
+state; every session window and overnight construction on the eight roots is already scored.
+
 ## D495 — THE DAY SESSION AFTER A BIG DOWN DAY ON NQ PAYS ITS COST AND IS A PICK; MOST OF IT IS THE DRIFT AFTER ANY DOWN DAY, 2026-09-12
 
 Stage 0 (`6d551b9`, RESULT), intraday only (09:30 open + tick → 15:59 close, one micro, $3):

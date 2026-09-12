@@ -44,6 +44,7 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 | # | component | instrument, window, rule | record | window | net Sharpe (SE) | hit | skew | ρ with prior | entered |
 |---|---|---|---|---|---|---|---|---|---|
 | — | *no entry* | | D466 | 2016–2023 | | | | | *the standard admitted nothing on 2026-09-12* |
+| **1** | **K8** — long the NQ day session after a down day | NQ, 09:30 open + tick → 15:59 close, one MNQ, $3; fires when yesterday's day session closed below its open (≈ 44% of sessions) | D498 (from D495's other side; selection stated) | 2016–2023 | **+0.61 (0.32)**; gross +$17.87 / +11.6 bp (SE 4.0) a trade; other side −3.1 bp, z +2.89 vs family p95 +2.41 | 56.9% | −0.02 | first entry; ρ with the ungated NQ day session 0.70 | **PROVISIONAL, 2026-09-12** — promotion by the declared forward read (D498 §3) on 2024-01-02 → 2026-09-09, on the principal's word |
 
 ## Scored and NOT entered
 
@@ -75,6 +76,8 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 | **D492 (2026-09-12): D490's rule with an hourly RSI(14) confirmation** (long ≤ 30 / short ≥ 70; cell A with the spike, cell B in place of it); development 2016-02→2020 | D492 | ES A **−0.30 (0.38)**, gross −$0.88 on 287 trades; ES B −0.40; NQ A −0.11 (+$1.57); NQ B +0.12 (+$4.49) | C-a on every cell; below the wrong-range control on both roots (NQ N1 p50 +$5.4–5.9); the target reached on 0–3% of trades; 92 long trades on ES (SE ≈ $16); no validation read |
 
 | **D495 stage 0 (2026-09-12): the day session after a daily state, intraday** — cell A fades the next session after a top-decile day (causal), cell B trades it after a daily RSI(2) extreme; 09:30 open + tick → 15:59 close; 1 MES / 1 MNQ, $3; 2016–2023 | D495 | **NQ A long +0.47 (0.25)**, +$42.61 gross on 110 trades, +21.9 bp vs +10.2 on the other side (z +0.78); NQ A short +0.21; ES A +0.08 / +0.09; B long +0.09 / +0.00; B short −0.28 / −0.38 | **NQ A long a PICK** (own null and 0.3 cleared; family-max z p95 +2.45 not cleared: most of it is the day session's drift after any down day, +10.2 bp on 761 days — post hoc, not scored); all other cells closed; 2024+ day session unread |
+
+| **D498 (2026-09-12): the second-clock cells** — E1 turn-of-month long day sessions, E2 FOMC decision days long 09:30→14:00, E3 the first-30 fade at 15:30; NQ and ES; one micro, $3 | D498 | NQ +0.22 / +0.18 / −0.53; ES +0.15 / +0.02 / −0.94 | C-a on all; E1 +6.9 bp vs +3.7 other side (z +0.46), E2 +2.8 bp (z +0.06), E3 +0.4 bp; none clears its rotation null; ES K8 +0.18 (the check root, below C-a) |
 
 **Line closed by the principal, 2026-09-12:** the index overnight leg at micro cost (any gate,
 window or size) is closed for the prop book after D466–D473; open for the personal book at full
