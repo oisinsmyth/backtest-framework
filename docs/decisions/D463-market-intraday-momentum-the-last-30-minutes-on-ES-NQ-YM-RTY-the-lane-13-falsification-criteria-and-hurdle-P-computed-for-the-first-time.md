@@ -115,3 +115,17 @@ F4 needs. Fiftieth look by object; look #1 of the prop track on the instrument i
 
 This record · `scripts/run_d463_intraday_momentum.py` (`--run`, `--selftest`) ·
 `data/d463_intraday_momentum.json`, `data/d463_trades.csv.gz` · RESULT.
+
+---
+
+## ADDENDUM, 2026-09-12, before the runner runs — the window and the instruments the data allows
+
+D462's build (its ADDENDUM) found the archive lacks the index futures' day session on most days
+before 2016 and declared a usable start per root. **This record's in-sample window is therefore
+the usable start (expected 2016-01-04 for ES, NQ, YM) to 2023-12-29** — about eight years, not
+thirteen and a half — and the runner reads the start from `fut_index_1m.meta.json` rather than
+from a constant. **RTY is not run**: its fixture failed D462's G4 as pre-registered and is not
+committed. Nothing else in §1–§5 changes; X-a's "2010–2023" and the era split's first cell
+(2010–14) become the window's own thirds, and the post-2018 β test in F3 is unchanged (2018–2023
+is inside the usable window). The predictions' sizes were written for the longer window and are
+left as written.

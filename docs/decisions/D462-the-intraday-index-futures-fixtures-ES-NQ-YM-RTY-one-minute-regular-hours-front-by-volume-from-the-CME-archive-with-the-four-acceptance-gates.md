@@ -94,3 +94,29 @@ Any study; the extended session; micros; the other 37 roots; stitching or adjust
 
 This record · `scripts/build_fut_index_1m.py` (`--build`, `--gates`, `--selftest`) · the fixtures
 in §2 · RESULT.
+
+---
+
+## ADDENDUM, 2026-09-12, after the build and before any fixture is committed — a fifth gate, a usable window, and RTY held back
+
+**What the build found that the four gates could not see.** ES, NQ and YM have **3,626 sessions
+against ~4,080 trading days**: 555 days are absent, almost all Tuesday–Friday, almost all before
+2016 (coverage 21% in 2010, 27% in 2011, 42% in 2012, 82–88% in 2013–2015, ≥ 97.6% from 2016). On
+the absent days the archive carries the contract's **evening bars only** (2010-06-08: 189 ES bars,
+all 18:00–20:32 ET, zero in regular hours) while Treasuries and currencies carry full days — the
+early GLBX history lacks the index futures' day session on most days, which is a property of the
+vendor's reconstruction, not of the parse (mappings are one interval per contract; the definition
+schema agrees). **G3 counted bars per *present* session and so could not see a missing session**
+— the gate was mis-specified, and the 4,080-session prediction (X-a) was wrong by 450.
+
+**G5, added:** sessions against the equity fixture's calendar, per year; **usable start** = the
+first year from which every later year has ≥ 97% of the calendar's days as full sessions. The
+fixtures keep every bar the archive has; `fut_index_1m.meta.json` declares the usable window
+and **no study reads a day before it.** Expected: ES/NQ/YM from **2016-01-04**, RTY from its listing.
+
+**RTY's G4 fails as written** (open-to-close correlation with IWM 0.9899 against a 0.99 bar; the
+close-to-close leg passes at 0.9982). The whole shortfall is **2020-03-16**, the limit-down open
+(ES's own worst day on the same test is that day, at 4.2 points of difference); excluding it the
+correlation is 0.9993. **The gate stands as pre-registered: the RTY bar fixture is not committed**,
+and D463 runs on ES, NQ and YM. A documented-event exemption for G4 would be a spec change made
+after seeing the number, and it is not made.
