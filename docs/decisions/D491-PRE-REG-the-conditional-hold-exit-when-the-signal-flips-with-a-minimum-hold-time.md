@@ -44,10 +44,27 @@ in ticks; none of them ever produced a P&L series. This does.
 **The signal is D484's, unaltered — same variants, same published parameters, no re-tuning.**
 Any parameter change makes this a search and a different study.
 
-- **B1 (primary)** log **Impulse MACD**, ZLEMA/SMMA **34**, signal **9**; `md == 0` is a flat
+- **B1 (CO-PRIMARY)** log **Impulse MACD**, ZLEMA/SMMA **34**, signal **9**; `md == 0` is a flat
   signal, which under a conditional exit means **it closes a position** (after the minimum hold)
   rather than merely declining to open one.
-- **B2 (secondary)** plain log MACD histogram, **12/26/9**.
+- **B2 (CO-PRIMARY)** plain log MACD histogram, **12/26/9**.
+
+> **AMENDED before the runner existed, 2026-09-12, directed by the principal:** *"the normal
+> MACD may be better as a conditional hold so test it also."* **B2 is promoted from secondary to
+> co-primary.** Both already occupied the family equally (24 cells = 3 roots × 2 variants × 4 M),
+> so no statistic changes — but the labelling implied a hierarchy that the principal's reasoning
+> undercuts, and it is a good argument:
+>
+> **B1's zero state covers 14.4% of bars (D484). Under a FIXED exit that was inert. Under a
+> CONDITIONAL exit every zero is an extra round trip** — the position closes, and re-opening later
+> pays again. Plain MACD never reaches zero, so it holds until a genuine sign flip and pays
+> fewer fees. **Since commission is 70–86% of cost, a signal that exits more often is penalised
+> exactly where it hurts most.**
+>
+> **This cuts directly against V-c, which I wrote before hearing it.** V-c is left exactly as
+> written rather than revised, and the principal's counter-hypothesis is recorded here as the
+> competing prediction: **B2 beats B1, because B1's zero state buys extra round trips.** Whichever
+> way it falls, one of the two was on the record first.
 
 **The state machine, in full, so nothing about timing is left to the runner's discretion:**
 
