@@ -205,7 +205,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       var k = key(nm), local = null;
       try { local = JSON.parse(localStorage.getItem('draw2:' + k) || 'null'); } catch (e) {}
       // a fresh name opens 30 bars in: nothing can be drawn on one bar, and a chartist looks first
-      STATE[k] = {symbol: nm.symbol, start: nm.start, n: nm.n, cursor: (local && local.cursor != null) ? local.cursor : 30, lines: (local && local.lines) || []};
+      STATE[k] = {symbol: nm.symbol, start: nm.start, n: nm.n, cursor: (local && local.cursor != null) ? local.cursor : 30, lines: (local && local.lines) ? JSON.parse(JSON.stringify(local.lines)) : []};
     });
     render();
     if (!window.claude || !window.claude.use){ status('database unavailable in this view -- saved in this browser only'); return; }
@@ -216,9 +216,18 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
       D.names.forEach(function(nm){
         var k = key(nm);
         db.doc('lines/' + k).get().then(function(snap){
-          // the database copy wins only if the viewer has not touched this name in this visit
-          if (snap.exists && !dirty[k]){ var b = snap.data(); if (b && b.lines){ STATE[k].lines = b.lines; STATE[k].cursor = (b.cursor != null) ? b.cursor : 30; } }
-          if (--pend === 0){ render(); status('loaded ' + total() + ' lines from the database'); evlog('database loaded: ' + total() + ' lines'); }
+          // THE SNAPSHOT IS FROZEN. `snap.data()` and everything inside it are frozen objects;
+          // taking `b.lines` as the working array made every later push throw "Cannot add
+          // property 14, object is not extensible" and every `L.until = q` throw the same --
+          // which is exactly why the principal could draw before the first save existed and
+          // could never end a line after it. Copy, never adopt.
+          // The database copy wins only if the viewer has not touched this name in this visit.
+          if (snap.exists && !dirty[k]){ var b = snap.data(); if (b && b.lines){ STATE[k].lines = JSON.parse(JSON.stringify(b.lines)); STATE[k].cursor = (b.cursor != null) ? b.cursor : 30; } }
+          if (--pend === 0){
+            var frozen = Object.keys(STATE).filter(function(kk){ return Object.isFrozen(STATE[kk].lines) || STATE[kk].lines.some(Object.isFrozen); });
+            if (frozen.length) evlog('BUG: frozen state on ' + frozen.join(','));
+            render(); status('loaded ' + total() + ' lines from the database'); evlog('database loaded: ' + total() + ' lines, state writable');
+          }
         }, function(err){ evlog('database read failed ' + (err && err.code)); if (--pend === 0){ render(); status('database read failed -- showing this browser\'s copy'); } });
       });
     }, function(){ status('database unavailable -- saved in this browser only'); });
