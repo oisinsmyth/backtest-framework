@@ -584,3 +584,68 @@ $50k account puts the floor three σ away per trade.**
 NQ (net +0.92 bp, slope t 1.7) is reported, not selected. **What outlives the candidate:** the
 hurdle-P machinery on an intraday path, and the arithmetic that any single-contract ES
 construction at this per-trade σ fails P3/P4 on this account size regardless of its edge.
+
+---
+
+# THE ES CHAIN FOLDED IN — six records, 2026-09-11 to 2026-09-12
+
+**C1 is now measured END TO END ON THE INSTRUMENT.** Everything below was run on ES itself, not on
+the extended-hours equity proxy, once the Databento acquisition completed
+(`ohlcv-1m`, 2010-06-06 → 2026-09-09; the ES subset is preserved as
+`data/fixtures/es_minute_bars.parquet`, 6.8M rows).
+
+> **C1 FAILS P4 ON THE INSTRUMENT BY ELEVENFOLD. `O1` is resolved and fails. The hold-length
+> curve has no optimum, at any length from 30 minutes to 20 days. The prop candidate ledger is
+> empty of unscreened entries.**
+
+## What each record settled
+
+| | |
+|---|---|
+| **[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)** | D386 valued a **Gaussian** trader at `$770`/evaluation; the measured path is worth **`$78`**. **82–86% of the damage is CLUSTERING, not kurtosis.** `T1` unresolved, `T2` FAIL, `T3` unresolved. *(Already amended into this page 2026-09-11, with the R11 ruling it forced.)* |
+| **[D442](decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md)** | **`O1`, the last unscreened ledger entry, is resolved.** It clears the ledger's own inherited criterion (`G1`: floor-touch −59.4% against P&L −28.6%) and **dies inside an enumerated rotation null** — 70 against a rotation median of 72. **Plus an independent kill: 88 consecutive flat sessions against MFFU's 7-day inactivity rule.** Its [addendum](decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk-fractions.md) found two apparent wins were **selection across four risk fractions**, the premium larger than the effect |
+| **[D451](decisions/D451-RESULT-the-complete-acquisition-T1-is-testable-and-the-cash-futures-gap-tracks-the-RATE-cycle-not-the-settlement-rule.md)** | **The settlement kill-check is closed on all three regimes.** T+1 testable at last (432 pairs); the cash-futures gap **tracks the rate cycle, not the settlement rule** |
+| **[D452](decisions/D452-RESULT-D440-on-the-instrument-same-verdict-and-clustering-explains-94-percent-not-83.md)** | **D440's full study, on ES.** Same verdict. **Clustering explains 94.1%** against the proxy's 82.9% — and ES's kurtosis is *higher* (18.82 vs 14.96), so **more fat tail and less damage from it** |
+| **[D458](decisions/D458-RESULT-the-hold-length-curve-has-no-identifiable-optimum-and-the-observed-argmax-is-below-its-own-nulls-MEDIAN.md)** | **The hold-length curve, 30 min to 22 h.** The PATH bound is real and monotone; the VALUE curve has **no identifiable optimum** — observed argmax 507 against a null median of **917**, `p` = 0.760 |
+| **[D459](decisions/D459-RESULT-beyond-22-hours-the-shape-constraints-lever-does-not-exist-at-the-frequency-the-rules-operate-on.md)** | **Beyond 22 h, to 20 days.** A twentyfold change in hold length moves daily sd **1.042% → 1.065%.** `p` = 0.883 on the argmax |
+
+## The one structural finding, because it retires a standing claim
+
+**The prop research's shape constraint — *"THE SCISSORS CLOSE ON LONG WINDOWS, NOT ON SMALL
+EDGES"* — was the single most actionable claim in that review and the last route to a fifth
+candidate. It has now been tested on its own range and is NOT SUPPORTED.**
+
+> **The argument is about PER-HOLD σ: a longer window carries more standard deviation, so one
+> contract makes the `$150` day, so the contract count stays under the 4% ceiling.**
+> **But the MLL ratchets DAILY and the qualifying threshold is DAILY. Nothing in the rulebook ever
+> sees a hold.** Marked daily, a 20-day hold is twenty ordinary days.
+
+**The lever is real at the frequency the strategy is described in and absent at the frequency the
+account is judged at.**
+
+**It is NOT refuted as an observation about the SEARCH** — every prop rejection in that review
+really was a size rejection, and **[D463](decisions/D463-market-intraday-momentum-the-last-30-minutes-on-ES-NQ-YM-RTY-the-lane-13-falsification-criteria-and-hurdle-P-computed-for-the-first-time.md)
+measured exactly that from the other side**, at a 30-minute σ of ~`$650`/contract putting the floor
+three σ away per trade. **What fails is the inference that widening the window fixes it.**
+
+## Where C1 stands
+
+**Closed standalone on P4, on the instrument.** Funded life **0.27 years against three** at the
+`V`-maximising size, nothing on any grid clearing three years at any hold length. **The edge is
+untouched** — the overnight drift is real, era-stable, and present in ES itself at
+**+5.95%/yr** (D451). **R15 is untouched with it.** **What fails is the instrument's geometry
+against that signal's path**, and it now fails there on the instrument rather than on a proxy.
+
+**C1 remains OPEN as a component** under the 2026-08-29 clarification, **and there is still no
+partner.**
+
+## What the chain leaves
+
+1. **A hold whose length is CONDITIONAL rather than a fixed calendar rule.** Every `k` in D458 and
+   D459 is a clock. **A state-dependent exit is a different object and is untouched.**
+2. **The `q − r` regression** (D451 §6) and the **thin-print explanation** for why the equity proxy
+   *overstates* excursion (D449 amendment 2, D451 §3) — both candidates, both unmeasured.
+3. **A fifth candidate still needs a NEW MECHANISM.** Nothing in the hold length, the gating, the
+   instrument or the settlement rule was hiding one.
+
+**Admitted arms: still none.**
