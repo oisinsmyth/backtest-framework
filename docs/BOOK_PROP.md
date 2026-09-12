@@ -755,3 +755,32 @@ clearing profit-before-breach against that account's own fee.
 
 **This page still records no admitted arm, on either account.** The vault was created empty and
 no prior verdict is reversed by these changes.
+
+---
+
+## THE LEDGER HAS ITS FIRST ENTRY, PROVISIONAL AND PARKED — K8, 2026-09-12
+
+**This page still admits no arm.** What changed is one level below it: [`COMPONENTS_PROP.md`](COMPONENTS_PROP.md)
+entry **#1, K8 — long one MNQ from the 09:30 open plus a tick to the 15:59 close on days after the NQ
+day session closed below its open** (≈ 44% of sessions, about twice a week). In-sample 2016–2023 (D498):
+gross +$17.87 a trade against $3 (+11.6 bp, SE 4.0; median +$20.50), hit 57%, skew −0.02, 6 of 8 years
+and both sub-periods, the other side (after up days) −3.1 bp, difference z +2.89 against the family
+p95 of +2.41, **net Sharpe +0.61 (SE 0.32) at one micro**, no day below −2% of a $50k account.
+
+**Why it is PROVISIONAL and not full.** The cell was seen as a control in D495 before D498 declared it;
+that provenance is selection, and no in-sample bar cures it. The promotion rule is pre-registered in
+D498 §3: a forward read of 2024-01-02 → 2026-09-09 (FULL if the forward gross mean > 0, net Sharpe > 0
+and the after-down minus after-up difference has z ≥ 1; REMOVED if the net Sharpe < −0.3 or the
+difference is negative; otherwise it stays PROVISIONAL).
+
+**The principal parked it on 2026-09-12: the forward read is HELD.** The 2024+ day session is the only
+unseen slice the prop line has on the futures fixtures, and the ledger confirms the *assembled book*
+on that same slice. Reading it for K8 alone would make the book's later confirmation a re-read for K8,
+and one component at ≈ 0.6 is not a book. So the read waits for a second component (a different
+instrument or a different state; ρ < 0.3 with K8), and then K8's promotion, the second component's
+promotion and hurdle P on the assembled book are read together in one pass on 2024+. K8 is not
+sharpened, filtered or re-scored in-sample while it waits. ES is the same sign at half the size
+(+4.9 bp, Sharpe +0.18, inside its null, ρ ≈ 0.85 with NQ) and is not a second component.
+
+**What this page needs before its first arm:** a second ledger entry, then the one-pass forward read,
+then hurdle P (all six) on the assembled book on that account's own floor.

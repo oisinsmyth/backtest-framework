@@ -166,6 +166,13 @@ the difference vs after-up days has z ≥ 1; REMOVED if net Sharpe < −0.3 or t
 negative) — **unrun; the principal's word.** A second component needs a different instrument or
 state; every session window and overnight construction on the eight roots is already scored.
 
+**PARKED by the principal, 2026-09-12: the forward read is HELD, not run.** The 2024+ day session
+is the only unseen slice the prop line has, and the ledger confirms the assembled book on that
+same slice; a K8-only read would make the book's confirmation a re-read for K8. The read waits
+for a second component, then K8's promotion, the second component's promotion and hurdle P on
+the assembled book are read in ONE pass on 2024+. Do not sharpen, filter or re-score K8
+in-sample meanwhile. Noted in `docs/BOOK_PROP.md` (last section) and under the ledger table.
+
 ## D495 — THE DAY SESSION AFTER A BIG DOWN DAY ON NQ PAYS ITS COST AND IS A PICK; MOST OF IT IS THE DRIFT AFTER ANY DOWN DAY, 2026-09-12
 
 Stage 0 (`6d551b9`, RESULT), intraday only (09:30 open + tick → 15:59 close, one micro, $3):

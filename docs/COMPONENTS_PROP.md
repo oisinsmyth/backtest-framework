@@ -46,6 +46,14 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 | — | *no entry* | | D466 | 2016–2023 | | | | | *the standard admitted nothing on 2026-09-12* |
 | **1** | **K8** — long the NQ day session after a down day | NQ, 09:30 open + tick → 15:59 close, one MNQ, $3; fires when yesterday's day session closed below its open (≈ 44% of sessions) | D498 (from D495's other side; selection stated) | 2016–2023 | **+0.61 (0.32)**; gross +$17.87 / +11.6 bp (SE 4.0) a trade; other side −3.1 bp, z +2.89 vs family p95 +2.41 | 56.9% | −0.02 | first entry; ρ with the ungated NQ day session 0.70 | **PROVISIONAL, 2026-09-12** — promotion by the declared forward read (D498 §3) on 2024-01-02 → 2026-09-09, on the principal's word |
 
+**Entry #1 PARKED, 2026-09-12 (the principal).** K8 stays PROVISIONAL and its forward read is
+**held**. Reason: the 2024+ day session is the one unseen slice this line has, and rule 3 above
+confirms the *assembled book* on the same slice, so a K8-only read would make the book's
+confirmation a re-read for K8. The read runs once, together with the second component's promotion
+and hurdle P on the assembled book, when a second entry exists. K8 is not sharpened, filtered or
+re-scored in-sample while parked. ES K8 (+0.18, inside its null, ρ ≈ 0.85) is the same construction
+on another root and is not a second entry. Noted in `BOOK_PROP.md` (last section).
+
 ## Scored and NOT entered
 
 | construction | record | net Sharpe | why not |
