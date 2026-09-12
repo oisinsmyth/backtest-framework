@@ -455,7 +455,7 @@ def recalc_pair(piv, k, body_log, m, carry, min_piv, max_dg, max_dh, use_body, m
                 stale_w=None, stale_d=0.05, stale_stat="mean", fit_tol=None,
                 pair_break=False, pair_draw=False, anchor_mode=None,
                 break_depth=0.0, break_bars=1, max_piv=None, decay_mode="span",
-                anchor_q=0.15):
+                anchor_q=0.15, break_keep=None):
     """BOTH SIDES IN ONE WALK, because support above resistance is not a channel.
 
     `recalc_events` builds each side in a separate pass, and nothing in it -- or anywhere else in
@@ -830,8 +830,13 @@ def recalc_pair(piv, k, body_log, m, carry, min_piv, max_dg, max_dh, use_body, m
             why["chain_cut"] += len(d["bx"]) - len(d["old"])
         d["pending"] = True
         d["reached"] = 0
-        d["bx"] = d["bx"][-carry:] if carry > 0 else []
-        d["by"] = d["by"][-carry:] if carry > 0 else []
+        # ON A BREAK, KEEP FEWER (`break_keep`, D460). The hand-drawn set ends a line on a break
+        # and does not re-fit through the pivots that failed; carrying `carry` of them across the
+        # break re-drew a same-sign line at once and overstayed the principal's end. None = the
+        # old behaviour (carry). Drifts and unfits still keep `carry`.
+        keep = break_keep if (bad == "body" and break_keep is not None) else carry
+        d["bx"] = d["bx"][-keep:] if keep > 0 else []
+        d["by"] = d["by"][-keep:] if keep > 0 else []
         d["walked"] = set()                       # carried points are native to the new segment
         d["ver"] += 1                             # truncated, and syn may change below
         if new_syn is not None:

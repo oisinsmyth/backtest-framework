@@ -1,11 +1,70 @@
 {
- "what": "constructions scored against the principal's hand-drawn lines, bar by bar",
- "lines": {
-  "GROW": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=-1 bbars=1 bon=close",
-  "HYST": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close bside=trend surv=loose stol=4 smaxw=40",
-  "HYST-WIDE": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=4 bbars=2 bon=wick bside=trend surv=loose stol=15.5 smaxw=60"
+ "what": "D460: D399's construction re-dialled against the hand-drawn lines",
+ "settings_line": "k=1 mp=2 maxp=0 carry=7 dh=20 dg=0 mw=0 body=on bdepth=3 bbars=1 bkeep=1 syn=on anchor=quantile aq=0.2 dmode=rank decay=0.76 height=anchored ttl=on walk=on btol=-1 chain=body_only reach=130 stalew=25 staled=12 stalestat=mean fittol=16 pairbreak=off pairdraw=off fit=ols ttol=0.37 mt=1 margin=4",
+ "cell": {
+  "k": 1,
+  "min_piv": 2,
+  "max_piv": null,
+  "carry": 7,
+  "dh": 20.0,
+  "dg": null,
+  "min_width": 0.0,
+  "use_body": true,
+  "break_depth": 3.0,
+  "break_bars": 1,
+  "break_pivot": true,
+  "anchor_clear": true,
+  "anchor_mode": "quantile",
+  "anchor_q": 0.2,
+  "decay_mode": "rank",
+  "decay_end": 0.76,
+  "height_mode": "anchored",
+  "syn_ttl": true,
+  "extend_back": true,
+  "back_tol": null,
+  "walk_chain": "body_only",
+  "max_reach": 130,
+  "stale_w": 25,
+  "stale_d": 12.0,
+  "stale_stat": "mean",
+  "fit_tol": 16.0,
+  "pair_break": false,
+  "pair_draw": false,
+  "fit_mode": "ols",
+  "touch_tol": 0.37,
+  "min_touch": 1,
+  "break_keep": 1
  },
+ "margin": 4.0,
  "score": {
+  "support": {
+   "recall": 0.6859083191850595,
+   "precision": 0.7601128880526811,
+   "sign": 0.9170792079207921,
+   "dgrad_med": 27.481593539589344,
+   "dlevel_med": 3.150535669169253,
+   "lag_med": -5.0,
+   "matched": 0.855072463768116,
+   "overstay": 0.42105263157894735,
+   "n_hand_bars": 2356,
+   "n_cons_bars": 2126,
+   "n_lines": 69
+  },
+  "resistance": {
+   "recall": 0.7064989517819706,
+   "precision": 0.7740009186954525,
+   "sign": 0.8729970326409495,
+   "dgrad_med": 39.7525344634325,
+   "dlevel_med": 4.305395080917172,
+   "lag_med": -5.0,
+   "matched": 0.8591549295774648,
+   "overstay": 0.3125,
+   "n_hand_bars": 2385,
+   "n_cons_bars": 2177,
+   "n_lines": 71
+  }
+ },
+ "others": {
   "PIVOT": {
    "support": {
     "recall": 0.3030560271646859,

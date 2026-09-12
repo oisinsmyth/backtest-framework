@@ -188,7 +188,8 @@ def run_one(bars, st, cell, RC, DR, PVT):
         anchor_mode=cell.get("anchor_mode"),
         break_depth=math.log1p(cell.get("break_depth", 0.0) / 100),
         break_bars=cell.get("break_bars", 1), max_piv=cell.get("max_piv"),
-        decay_mode=cell.get("decay_mode", "span"), anchor_q=cell.get("anchor_q", 0.15))
+        decay_mode=cell.get("decay_mode", "span"), anchor_q=cell.get("anchor_q", 0.15),
+        break_keep=cell.get("break_keep"))
     win = np.zeros(m, bool)
     win[st:st + WIN] = True
     btol = math.log1p(cell.get("break_depth", 0.0) / 100)

@@ -125,6 +125,7 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:34px;margin:
   if (D.page){
     if (D.page.title) document.getElementById('h1').innerHTML = D.page.title;
     if (D.page.lede1) document.getElementById('lede1').innerHTML = D.page.lede1;
+    if (D.page.lede2) document.getElementById('lede1').innerHTML += ' ' + D.page.lede2;
   }
   var c = D.cell;
   document.getElementById('cfg').textContent =
@@ -193,6 +194,22 @@ h1{font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:34px;margin:
         '" width="' + W + '" height="' + ih + '"/></clipPath></defs>' + s;
     s += segLine(ch.segments.support, 'var(--sup)') +
          segLine(ch.segments.resistance, 'var(--res)');
+    // THE PRINCIPAL'S HAND LINES, if the chart carries them: each drawn between its anchors,
+    // thin and dashed, in the side's colour, with a dotted continuation to the bar it was ended
+    if (ch.hand){
+      var hh = '';
+      ch.hand.forEach(function(L){
+        var col = L.kind === 'support' ? 'var(--sup)' : 'var(--res)';
+        var x1 = L.x1 - ch.start_bar, x2 = L.x2 - ch.start_bar, g = (Math.log(L.p2) - Math.log(L.p1)) / (L.x2 - L.x1);
+        function at(q){ return Math.exp(Math.log(L.p1) + g * (q - x1)); }
+        var xe = Math.min(n - 1, (L.until != null ? L.until : ch.start_bar + n - 1) - ch.start_bar);
+        hh += '<path d="M' + X(x1).toFixed(1) + ',' + Y(at(x1)).toFixed(1) + 'L' + X(x2).toFixed(1) + ',' + Y(at(x2)).toFixed(1) +
+              '" fill="none" stroke="' + col + '" stroke-width="1.4" stroke-dasharray="6 4" opacity=".85"/>';
+        if (xe > x2) hh += '<path d="M' + X(x2).toFixed(1) + ',' + Y(at(x2)).toFixed(1) + 'L' + X(xe).toFixed(1) + ',' + Y(at(xe)).toFixed(1) +
+              '" fill="none" stroke="' + col + '" stroke-width="1" stroke-dasharray="1 4" opacity=".6"/>';
+      });
+      s += '<g clip-path="url(#clip' + esc(ch.symbol) + ch.start_bar + ')">' + hh + '</g>';
+    }
     for (i = 0; i < n; i += 45){
       s += '<text x="' + X(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" ' +
            'font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--faint)">' +

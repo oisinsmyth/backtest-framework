@@ -114,7 +114,12 @@ def score(N, rec, acc):
         if found is not None:
             acc[kd]["matched"] += 1
             acc[kd]["lag"].append(found)
-        if "until" in L and L["until"] + 5 < st0 + n:
+        # OVERSTAY IS SCORED ONLY ON ENDS THAT WERE ENDS. 40% of the principal's ends were a
+        # replacement -- a new same-kind line drawn the same bar -- so a construction still
+        # showing a line five bars later is agreeing with the principal, not overstaying.
+        # Only breaks and drifts, where the principal had NO same-kind line within a bar, count.
+        replaced = any(M is not L and M["kind"] == kd and abs(M["at"] - L.get("until", -99)) <= 1 for M in rec["lines"])
+        if "until" in L and L["until"] + 5 < st0 + n and not replaced:
             acc[kd]["ended"] += 1
             t5 = L["until"] + 5
             acc[kd]["overstay"] += bool(N["drawn"][kd][t5]) and (float(N["G"][kd][t5]) > 0) == (g_h > 0)
