@@ -2,6 +2,21 @@
 
 ---
 
+## D457 — THE 8-K ATLAS WITH RETURNS: NO CELL CLEARS, THE DISTRESS ITEMS REBOUND, THE REACTION IS IN THE GAP, 2026-09-12
+
+17 item cells × all/pure × both sides, cap 10, C1 (state-matched, no 8-K within ±5 bars) and
+C2 (exact rotation) on every cell, a family bar with 0.04 cells expected to clear both. **Zero
+clear both; four clear C1 (chance 0.85) — 2.02 earnings, 8.01, 5.07, 3.01 — all LONG.** The
+common finding: a name that filed *any* 8-K drifts +8 to +16 bp over ten bars against a quiet
+name in the same cell, and the rotated calendar earns the same (+0.7 to +1.1 bp/bar): filer
+composition, not filing timing. **Every distress item is long-favoured after the next open**
+(impairments +59, delisting notices +103, auditor changes +92 per trade; medians negative) — the
+fall is in the gap, what follows is a two-sided rebound lottery; every short-side sign prediction
+was wrong. 5.02 officer changes: −5 bp, the one short below the rotation band. Nothing within a
+factor of four of its 51–80 bp round trip. **The line closes at stage 1; the 2024–2026 slice
+stays unread.** Untested: 6-K filers; a same-day construction on the 15m fixtures (its own line).
+Records: spec `0aad00a`, RESULT `docs/decisions/D457-RESULT-…md`, artefact `data/d457_8k_atlas.json`.
+
 ## D456 — THE 8-K ITEM ATLAS, STAGE 0: 155k CORPORATE EVENTS, DEAD-INCLUSIVE, SAME-DAY, 15 CELLS; THE ATLAS WITH RETURNS IS NEXT, 2026-09-12
 
 The insider line was parked (real per trade, zero net at the crossed line — the third line to end
