@@ -1,5 +1,5 @@
 {
- "verified_utc": "2026-09-12T03:46:37+00:00",
+ "verified_utc": "2026-09-12T03:47:42+00:00",
  "items": [
   {
    "key": "ohlcv-1m#1",
@@ -11,8 +11,8 @@
    ],
    "files": 5,
    "size_ok": 5,
-   "hash_ok": 0,
-   "hash_skipped": 5,
+   "hash_ok": 5,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 1610267235,
    "header": {
@@ -33,8 +33,8 @@
    ],
    "files": 5,
    "size_ok": 5,
-   "hash_ok": 0,
-   "hash_skipped": 5,
+   "hash_ok": 5,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 2398017009,
    "header": {
@@ -55,8 +55,8 @@
    ],
    "files": 5,
    "size_ok": 5,
-   "hash_ok": 0,
-   "hash_skipped": 5,
+   "hash_ok": 5,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 3253483622,
    "header": {
@@ -77,8 +77,8 @@
    ],
    "files": 2,
    "size_ok": 2,
-   "hash_ok": 0,
-   "hash_skipped": 2,
+   "hash_ok": 2,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 1083351310,
    "header": {
@@ -99,8 +99,8 @@
    ],
    "files": 2,
    "size_ok": 2,
-   "hash_ok": 0,
-   "hash_skipped": 2,
+   "hash_ok": 2,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 1129030201,
    "header": {
@@ -121,8 +121,8 @@
    ],
    "files": 2,
    "size_ok": 2,
-   "hash_ok": 0,
-   "hash_skipped": 2,
+   "hash_ok": 2,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 1249053246,
    "header": {
@@ -143,8 +143,8 @@
    ],
    "files": 1,
    "size_ok": 1,
-   "hash_ok": 0,
-   "hash_skipped": 1,
+   "hash_ok": 1,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 329623278,
    "header": {
@@ -165,8 +165,8 @@
    ],
    "files": 2,
    "size_ok": 2,
-   "hash_ok": 0,
-   "hash_skipped": 2,
+   "hash_ok": 2,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 373428659,
    "header": {
@@ -187,8 +187,8 @@
    ],
    "files": 1,
    "size_ok": 1,
-   "hash_ok": 0,
-   "hash_skipped": 1,
+   "hash_ok": 1,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 424665597,
    "header": {
@@ -209,8 +209,8 @@
    ],
    "files": 1,
    "size_ok": 1,
-   "hash_ok": 0,
-   "hash_skipped": 1,
+   "hash_ok": 1,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 369212683,
    "header": {
@@ -231,8 +231,8 @@
    ],
    "files": 17,
    "size_ok": 17,
-   "hash_ok": 0,
-   "hash_skipped": 17,
+   "hash_ok": 17,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 2665489392,
    "header": {
@@ -253,8 +253,8 @@
    ],
    "files": 17,
    "size_ok": 17,
-   "hash_ok": 0,
-   "hash_skipped": 17,
+   "hash_ok": 17,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 10872176682,
    "header": {
@@ -275,8 +275,8 @@
    ],
    "files": 17,
    "size_ok": 17,
-   "hash_ok": 0,
-   "hash_skipped": 17,
+   "hash_ok": 17,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 562810781,
    "header": {
@@ -297,8 +297,8 @@
    ],
    "files": 13,
    "size_ok": 13,
-   "hash_ok": 0,
-   "hash_skipped": 13,
+   "hash_ok": 13,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 37302583944,
    "header": {
@@ -319,8 +319,8 @@
    ],
    "files": 13,
    "size_ok": 13,
-   "hash_ok": 0,
-   "hash_skipped": 13,
+   "hash_ok": 13,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 8000707206,
    "header": {
@@ -341,8 +341,8 @@
    ],
    "files": 26,
    "size_ok": 26,
-   "hash_ok": 0,
-   "hash_skipped": 26,
+   "hash_ok": 26,
+   "hash_skipped": 0,
    "header_ok": 1,
    "bytes": 39393800357,
    "header": {
@@ -371,7 +371,7 @@
  "summary": {
   "files": 129,
   "size_ok": 129,
-  "hash_ok": 0,
+  "hash_ok": 129,
   "header_ok": 16,
   "total_bytes": 111017701202,
   "all_passed": true
