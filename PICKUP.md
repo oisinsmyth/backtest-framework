@@ -93,6 +93,16 @@ futures 2024-01-02→2026-09-09 and SPY/IWM cash 2024-01-02→2026-08-26 and app
 (PROVISIONAL if diff > 0 on NQ and SPY, pooled z ≥ 1.5, NQ net Sharpe > 0; FULL if also futures
 z ≥ 2 or pooled z ≥ 2.5; REMOVED if futures diff < 0, pooled z < 0.5 or Sharpe < −0.3). **It
 spends the 2024+ slice for this construction; only the principal runs it.**
+**RUN on the principal's word (forward RESULT): K7 REMOVED.** 2024-01→2026-09: NQ after a down
+leg +$30.76 vs after an up leg +$21.29 (+0.4 SE; in bp −1.0), ES +0.1 SE; SPY cash gap after a
+down gap +0.71 vs +9.22 bp (−1.6 SE), IWM −1.5 SE; pooled z −1.30. The gated nights paid (forward
+net Sharpe +0.76 at one MNQ) because the whole overnight drift was strong (≈ +5.6 bp a night on
+NQ, both sides); the down-then-up structure did not carry, and on cash it reversed. Every forward
+prediction was wrong in the same direction. **Spent: the 2024+ futures slice for the 18:00→09:00
+leg on NQ and ES (both sides read, so the ungated leg too) and the cash 2024+ reserve on SPY/IWM
+(gap and close-to-close). Unread: 2024+ on W1/W3, every other root, the last-30 constructions,
+the single-name and cohort reserves.** The D472 structural claim ("the drift is the post-down
+nights") is withdrawn. The process held: rule first, no sharpening, the rule fired.
 RTY added to the D467 table (nine roots; eight rebuilt bit-identically) and held back on G2
 (a Sunday-session volume flip, 2020-06-14). A difference-between-sides family statistic, centred
 on zero, is the right declaration for any future concentration test (noted in D472 §1, not run).
