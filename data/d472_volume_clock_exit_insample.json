@@ -1,0 +1,253 @@
+{
+ "generated_utc": "2026-09-12T16:10:46+00:00",
+ "purpose": "D472: does D471's volume-clock exit advantage survive the 2016-2023 in-sample window? A sampling measurement -- no entry signal, no directional forecast, no Sharpe of any construction, nothing admitted.",
+ "source": "data/fixtures/fut_ES_rth_1m.csv.gz (ES passes G1-G5), 2016-01-04..2023-12-29, RTH 09:30-15:59",
+ "limitations": [
+  "the volume clock is MINUTE-resolution: no tick data exists before 2025-09, so a boundary lands on a minute edge and a ~13-minute bar carries ~8% granularity -- this BLUNTS the volume clock, so the advantage here is a floor",
+  "V is calibrated causally from the trailing 20 sessions, so bars/session is not exactly 26 on the volume clock and busy days cost more",
+  "MES did not exist before 2019-05-06; breakeven is quoted at MES cost throughout for comparability, but pre-2019 rows are not tradable at that size and C-d forbids one full ES contract in a $50k account",
+  "the crossing of 1.009 ticks is D465's 2025-09..2026-09 measurement ASSUMED for this era; tbbo does not reach back, so it is not measured here",
+  "E|M| in ticks is not comparable ACROSS years (ES ~2,000 in 2016 against ~4,700 in 2023); the exit comparison is read WITHIN each year"
+ ],
+ "cost_ticks": 3.409,
+ "crossing_ticks_assumed": 1.009,
+ "trailing_sessions_for_V": 20,
+ "pooled": {
+  "time": {
+   "n_bars": 52341,
+   "bars_per_session": 25.632223310479922,
+   "mean_minutes": 14.998452456009629,
+   "mean_entry_price": 3273.068483597944,
+   "mean_abs_ticks": 13.590741483731682,
+   "implied_annualised_rth_vol": 0.1053112944209887,
+   "breakeven_accuracy": 0.6254162623901214,
+   "adverse_over_move_ratio_of_means": 0.5228627699609055,
+   "adverse_over_move_mean_of_ratios": 1.349704277592786
+  },
+  "volume": {
+   "n_bars": 52378,
+   "bars_per_session": 25.65034280117532,
+   "mean_minutes": 14.988869372637367,
+   "mean_entry_price": 3274.3658215281225,
+   "mean_abs_ticks": 15.005231203940586,
+   "implied_annualised_rth_vol": 0.1162257573121904,
+   "breakeven_accuracy": 0.6135937178730291,
+   "adverse_over_move_ratio_of_means": 0.4996068422177662,
+   "adverse_over_move_mean_of_ratios": 1.340743948372705
+  },
+  "volume_advantage_pp": 1.1822544517092304,
+  "move_lift_pct": 10.407745021874405
+ },
+ "by_year": {
+  "2016": {
+   "time": {
+    "n_bars": 6117,
+    "bars_per_session": 25.701680672268907,
+    "mean_minutes": 15.0,
+    "mean_entry_price": 2102.5694376328265,
+    "mean_abs_ticks": 6.490273009645251,
+    "implied_annualised_rth_vol": 0.07828877718721236,
+    "breakeven_accuracy": 0.7626237752197678,
+    "adverse_over_move_ratio_of_means": 0.5154781995415733,
+    "adverse_over_move_mean_of_ratios": 1.075940866904997
+   },
+   "volume": {
+    "n_bars": 5956,
+    "bars_per_session": 25.025210084033613,
+    "mean_minutes": 15.405473472128946,
+    "mean_entry_price": 2099.3383143049027,
+    "mean_abs_ticks": 7.164372061786434,
+    "implied_annualised_rth_vol": 0.0865530928147262,
+    "breakeven_accuracy": 0.7379133837969581,
+    "adverse_over_move_ratio_of_means": 0.5046518712943217,
+    "adverse_over_move_mean_of_ratios": 1.1142698680508771
+   },
+   "volume_advantage_pp": 2.471039142280962,
+   "move_lift_pct": 10.386297327391292
+  },
+  "2017": {
+   "time": {
+    "n_bars": 6588,
+    "bars_per_session": 25.634241245136188,
+    "mean_minutes": 15.0,
+    "mean_entry_price": 2446.0603749241045,
+    "mean_abs_ticks": 4.685640558591378,
+    "implied_annualised_rth_vol": 0.04858348779978501,
+    "breakeven_accuracy": 0.8637709676374357,
+    "adverse_over_move_ratio_of_means": 0.530305484466617,
+    "adverse_over_move_mean_of_ratios": 0.9921874802116128
+   },
+   "volume": {
+    "n_bars": 6428,
+    "bars_per_session": 25.011673151750973,
+    "mean_minutes": 15.373366521468576,
+    "mean_entry_price": 2440.605087118855,
+    "mean_abs_ticks": 5.240665836963285,
+    "implied_annualised_rth_vol": 0.05445977564395634,
+    "breakeven_accuracy": 0.8252449312791285,
+    "adverse_over_move_ratio_of_means": 0.52931397868614,
+    "adverse_over_move_mean_of_ratios": 1.0386913189669424
+   },
+   "volume_advantage_pp": 3.8526036358307203,
+   "move_lift_pct": 11.845238050841056
+  },
+  "2018": {
+   "time": {
+    "n_bars": 6579,
+    "bars_per_session": 25.59922178988327,
+    "mean_minutes": 14.995744034047728,
+    "mean_entry_price": 2749.530437756498,
+    "mean_abs_ticks": 11.878096975224198,
+    "implied_annualised_rth_vol": 0.1095658535677101,
+    "breakeven_accuracy": 0.643499417756507,
+    "adverse_over_move_ratio_of_means": 0.5127069843626033,
+    "adverse_over_move_mean_of_ratios": 1.2717455957850499
+   },
+   "volume": {
+    "n_bars": 6910,
+    "bars_per_session": 26.88715953307393,
+    "mean_minutes": 14.277424023154849,
+    "mean_entry_price": 2746.5503256150505,
+    "mean_abs_ticks": 12.787843704775687,
+    "implied_annualised_rth_vol": 0.11808552100224684,
+    "breakeven_accuracy": 0.6332906500384772,
+    "adverse_over_move_ratio_of_means": 0.4913539450454937,
+    "adverse_over_move_mean_of_ratios": 1.2597430542258556
+   },
+   "volume_advantage_pp": 1.020876771802981,
+   "move_lift_pct": 7.659027632533011
+  },
+  "2019": {
+   "time": {
+    "n_bars": 6603,
+    "bars_per_session": 25.593023255813954,
+    "mean_minutes": 15.0,
+    "mean_entry_price": 2912.4585415720126,
+    "mean_abs_ticks": 8.904134484325306,
+    "implied_annualised_rth_vol": 0.07753875980264478,
+    "breakeven_accuracy": 0.6914279263190122,
+    "adverse_over_move_ratio_of_means": 0.5294928053883049,
+    "adverse_over_move_mean_of_ratios": 1.2531086261688018
+   },
+   "volume": {
+    "n_bars": 6443,
+    "bars_per_session": 24.972868217054263,
+    "mean_minutes": 15.372497283873972,
+    "mean_entry_price": 2912.673754462207,
+    "mean_abs_ticks": 10.11687102281546,
+    "implied_annualised_rth_vol": 0.08809297207063607,
+    "breakeven_accuracy": 0.6684809459521655,
+    "adverse_over_move_ratio_of_means": 0.5043953177975853,
+    "adverse_over_move_mean_of_ratios": 1.2488292025822822
+   },
+   "volume_advantage_pp": 2.2946980366846725,
+   "move_lift_pct": 13.61992612111862
+  },
+  "2020": {
+   "time": {
+    "n_bars": 6640,
+    "bars_per_session": 25.637065637065636,
+    "mean_minutes": 14.992018072289156,
+    "mean_entry_price": 3211.5631024096388,
+    "mean_abs_ticks": 19.76852409638554,
+    "implied_annualised_rth_vol": 0.15611501614587744,
+    "breakeven_accuracy": 0.5862229264910904,
+    "adverse_over_move_ratio_of_means": 0.5149432818082781,
+    "adverse_over_move_mean_of_ratios": 1.4622415757919494
+   },
+   "volume": {
+    "n_bars": 6730,
+    "bars_per_session": 25.984555984555985,
+    "mean_minutes": 14.799405646359585,
+    "mean_entry_price": 3212.7897102526003,
+    "mean_abs_ticks": 21.288707280832096,
+    "implied_annualised_rth_vol": 0.16805594559645792,
+    "breakeven_accuracy": 0.5800659230978621,
+    "adverse_over_move_ratio_of_means": 0.5019717602060402,
+    "adverse_over_move_mean_of_ratios": 1.4624341872864393
+   },
+   "volume_advantage_pp": 0.6157003393228333,
+   "move_lift_pct": 7.689917451776296
+  },
+  "2021": {
+   "time": {
+    "n_bars": 6625,
+    "bars_per_session": 25.67829457364341,
+    "mean_minutes": 15.0,
+    "mean_entry_price": 4266.104716981132,
+    "mean_abs_ticks": 14.47667924528302,
+    "implied_annualised_rth_vol": 0.08606455588072397,
+    "breakeven_accuracy": 0.6177410904199858,
+    "adverse_over_move_ratio_of_means": 0.5098219126663052,
+    "adverse_over_move_mean_of_ratios": 1.3626635346438132
+   },
+   "volume": {
+    "n_bars": 6692,
+    "bars_per_session": 25.93798449612403,
+    "mean_minutes": 14.84982068141064,
+    "mean_entry_price": 4251.1566049013745,
+    "mean_abs_ticks": 16.027495517035266,
+    "implied_annualised_rth_vol": 0.09561927616182207,
+    "breakeven_accuracy": 0.6063484933243828,
+    "adverse_over_move_ratio_of_means": 0.5008670843589169,
+    "adverse_over_move_mean_of_ratios": 1.418489077773713
+   },
+   "volume_advantage_pp": 1.139259709560303,
+   "move_lift_pct": 10.712513867830253
+  },
+  "2022": {
+   "time": {
+    "n_bars": 6613,
+    "bars_per_session": 25.631782945736433,
+    "mean_minutes": 15.0,
+    "mean_entry_price": 4100.743006199909,
+    "mean_abs_ticks": 26.05625283532436,
+    "implied_annualised_rth_vol": 0.161152222141072,
+    "breakeven_accuracy": 0.5654161598282166,
+    "adverse_over_move_ratio_of_means": 0.5307701236144159,
+    "adverse_over_move_mean_of_ratios": 1.762268721223816
+   },
+   "volume": {
+    "n_bars": 6670,
+    "bars_per_session": 25.852713178294575,
+    "mean_minutes": 14.871814092953523,
+    "mean_entry_price": 4101.657196401799,
+    "mean_abs_ticks": 28.564167916041978,
+    "implied_annualised_rth_vol": 0.17662375290048854,
+    "breakeven_accuracy": 0.5596726641927746,
+    "adverse_over_move_ratio_of_means": 0.4920035901177286,
+    "adverse_over_move_mean_of_ratios": 1.6522417602187056
+   },
+   "volume_advantage_pp": 0.5743495635441964,
+   "move_lift_pct": 9.62500286041761
+  },
+  "2023": {
+   "time": {
+    "n_bars": 6576,
+    "bars_per_session": 25.587548638132297,
+    "mean_minutes": 15.0,
+    "mean_entry_price": 4305.589073905109,
+    "mean_abs_ticks": 15.870133819951338,
+    "implied_annualised_rth_vol": 0.09348348668604836,
+    "breakeven_accuracy": 0.6074030010923517,
+    "adverse_over_move_ratio_of_means": 0.5362296621375596,
+    "adverse_over_move_mean_of_ratios": 1.5566263358483077
+   },
+   "volume": {
+    "n_bars": 6549,
+    "bars_per_session": 25.48249027237354,
+    "mean_minutes": 15.061841502519469,
+    "mean_entry_price": 4296.6829286914035,
+    "mean_abs_ticks": 17.55794777828676,
+    "implied_annualised_rth_vol": 0.1036399842239786,
+    "breakeven_accuracy": 0.5970785436614574,
+    "adverse_over_move_ratio_of_means": 0.5011349109029717,
+    "adverse_over_move_mean_of_ratios": 1.4748776376703359
+   },
+   "volume_advantage_pp": 1.0324457430894274,
+   "move_lift_pct": 10.635158956338264
+  }
+ },
+ "years_with_positive_advantage": 8,
+ "years": 8
+}
