@@ -10,6 +10,26 @@ for an identifiable reason.**
 
 ---
 
+## AMENDMENT, 2026-09-12 — **§3's `+1.49%/yr` WAS HALF A RATE CYCLE. THE HEADLINE IS UNCHANGED.**
+
+**Re-run on the completed acquisition (2010-06-06 → 2026-09-09) as
+[D451](D451-RESULT-the-complete-acquisition-T1-is-testable-and-the-cash-futures-gap-tracks-the-RATE-cycle-not-the-settlement-rule.md).**
+
+**What changed:** this record's `ES − SPY` overnight of **`+0.59 bp/day, t +3.54`** reads
+**`−0.11 bp/day, t −0.82` — INSIGNIFICANT — on the full sample.** This record ended at 2022-08,
+inside the low-rate era, and therefore measured **one half of a rate cycle.** `q − r` averages to
+about zero across a whole one, which is what a financing spread does and what a settlement effect
+would not. **§3's mechanism stands; its LEVEL does not, and should not be quoted as a standing
+number.**
+
+**What did not change, and is now better supported: the T+1 era is testable at last (432 pairs),
+and the settlement hypothesis fails on it in the direction opposite to its own prediction** —
+the cash-futures gap GROWS as the settlement lag shortens (+1.09 → −0.31 → −1.66 bp/day), and is
+largest exactly where cash is closest to futures. **§4's "the T+1 regime has ZERO pairs" is
+discharged.**
+
+---
+
 ## THE ANSWER
 
 > **ES — the T+0 instrument — carries a POSITIVE overnight drift of +6.55%/yr over the same clock

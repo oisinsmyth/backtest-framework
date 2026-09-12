@@ -8,7 +8,28 @@ and one failed in SIGN, and the sign failure is the finding.**
 
 ---
 
-## AMENDMENT, 2026-09-12 — **§3 IS WITHDRAWN. A BUG IN THIS RUNNER'S PAIRING EXCLUDED EVERY FRIDAY HOLD.**
+## AMENDMENT 2, 2026-09-12 — **ON THE COMPLETE ACQUISITION THE SIGN INVERTS: THE PROXY OVERSTATES THE EXCURSION**
+
+**Re-run through 2026-09-09 as
+[D451](D451-RESULT-the-complete-acquisition-T1-is-testable-and-the-cash-futures-gap-tracks-the-RATE-cycle-not-the-settlement-rule.md).**
+**2,595 matched holds.**
+
+| | ES | proxy | ratio |
+|---|---:|---:|---:|
+| mean MAE | 0.698% | 0.708% | **0.99** |
+| **breach 1×** | **1.195%** | **1.387%** | **0.86** |
+| breach 2× / 3× | 10.906% / 25.279% | 12.100% / 27.784% | 0.90 / 0.91 |
+
+> **§8a's premise is WRONG IN SIGN.** This record said the proxy understates the excursion and every
+> `V` is an upper bound. **On the complete sample ES's MAE is marginally SMALLER and its breach rate
+> is 9–14% LOWER** — the proxy is **conservative**, not optimistic.
+> **Candidate explanation, not measured: SPY's extended-hours bars are built from THIN prints, which
+> widens their high-low range, and that exaggeration exceeds what the invisible window conceals.
+> The proxy's problem was never the window it could not see; it is the prints it could.**
+
+**The headline is unchanged and stronger still: the untraded window was not the problem.**
+
+## AMENDMENT 1, 2026-09-12 — **§3 IS WITHDRAWN. A BUG IN THIS RUNNER'S PAIRING EXCLUDED EVERY FRIDAY HOLD.**
 
 **Found by [D450](D450-RESULT-the-entry-print-is-not-stale-and-the-anomaly-it-was-sent-to-explain-was-a-bug-in-D449.md)**,
 which was commissioned by §6 of this record to explain §3 and found that §3's anomaly did not exist.
