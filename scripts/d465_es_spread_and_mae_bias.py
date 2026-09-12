@@ -56,9 +56,17 @@ from pathlib import Path
 
 import numpy as np
 
+
+class GateError(AssertionError):
+    """A validation gate refused the data. Raising, never a warning."""
+
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"
-CACHE = REPO / "temp" / "d465_es_ticks.npz"
+# v2: the id windows are applied. The v1 cache pooled expiries -- kept on disk under its
+# own name rather than overwritten, so the contaminated and clean MAE can be compared
+# instead of one quietly replacing the other.
+CACHE = REPO / "temp" / "d465_es_ticks_v2.npz"
+CACHE_V1_MIXED = REPO / "temp" / "d465_es_ticks.npz"
 OUT = REPO / "data" / "d465_es_spread_and_mae_bias.json"
 KEY_FILE = Path.home() / ".config" / "databento" / "key"
 
@@ -101,23 +109,42 @@ def do_extract() -> int:
     only sane path keeps every per-record operation inside numpy.
     """
     import databento as db
+    import pandas as pd
     files = sorted(RAW.glob("*/*.tbbo.dbn.zst"))
     if not files:
         raise SystemExit("no tbbo files under data/raw/databento/")
-    ids = np.array(sorted(ES_IDS), dtype=np.uint32)
-    P(f"extracting ES front month from {len(files)} tbbo files, ids {list(ids)}\n")
+    # THE DATE RANGE IS PART OF THE FILTER, NOT A COMMENT.
+    #
+    # The first version of this masked on `np.isin(instrument_id, ids)` alone, admitting
+    # all five expiries at EVERY timestamp. ES trades its deferred contract thinly for
+    # months before the roll, so the cache pooled two expiries priced ~60 index points
+    # apart (the calendar basis). Per-record measurements were unharmed -- a spread reads
+    # bid and ask off the SAME record -- but anything walking a path across records was
+    # not: `maximum.accumulate` took its peak from the deferred contract and its trough
+    # from the near one, manufacturing a ~0.9% excursion out of the basis. That is how a
+    # bug in an EXTRACT reaches a published MAE. Each id is now clipped to its own window.
+    windows = [(np.uint32(i),
+                np.uint64(pd.Timestamp(a, tz="UTC").value),
+                np.uint64(pd.Timestamp(b, tz="UTC").value))
+               for i, (a, b) in sorted(ES_IDS.items())]
+    P(f"extracting ES front month from {len(files)} tbbo files, "
+      f"{len(windows)} id windows\n")
 
-    ts, px, sz, side, bid, ask, bsz, asz = [], [], [], [], [], [], [], []
+    ts, px, sz, side, bid, ask, bsz, asz, iid = [], [], [], [], [], [], [], [], []
     for i, f in enumerate(files, 1):
         store = db.DBNStore.from_file(f)
         kept = seen = 0
         for chunk in store.to_ndarray(count=2_000_000):
             seen += len(chunk)
-            m = np.isin(chunk["instrument_id"], ids)
+            cid, cts = chunk["instrument_id"], chunk["ts_recv"]
+            m = np.zeros(len(chunk), dtype=bool)
+            for wid, w0, w1 in windows:
+                m |= (cid == wid) & (cts >= w0) & (cts < w1)
             if not m.any():
                 continue
             c = chunk[m]
             kept += len(c)
+            iid.append(c["instrument_id"].copy())
             ts.append(c["ts_recv"].copy())
             px.append(c["price"].copy())
             sz.append(c["size"].copy())
@@ -130,9 +157,21 @@ def do_extract() -> int:
 
     arr = {k: np.concatenate(v) for k, v in
            (("ts", ts), ("px", px), ("sz", sz), ("side", side),
-            ("bid", bid), ("ask", ask), ("bsz", bsz), ("asz", asz))}
+            ("bid", bid), ("ask", ask), ("bsz", bsz), ("asz", asz), ("iid", iid))}
     order = np.argsort(arr["ts"], kind="stable")
     arr = {k: v[order] for k, v in arr.items()}
+
+    # PROVE the windowing worked rather than trusting it: at most one expiry may be live
+    # in any one second. This is the assertion whose absence let the basis through.
+    sec = (arr["ts"] // 1_000_000_000).astype(np.int64)
+    _, first = np.unique(sec, return_index=True)
+    hi = np.maximum.reduceat(arr["iid"].astype(np.int64), first)
+    lo = np.minimum.reduceat(arr["iid"].astype(np.int64), first)
+    n_mixed = int((hi != lo).sum())
+    if n_mixed:
+        raise GateError(f"[EXTRACT] {n_mixed:,} seconds carry more than one instrument_id "
+                        f"-- the id windows overlap; the basis will contaminate any path")
+    P(f"  one expiry per second on all {len(first):,} seconds  [EXTRACT ok]")
     CACHE.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(CACHE, **arr)
     P(f"\n  {len(arr['ts']):,} ES trades cached -> {CACHE.relative_to(REPO)} "
@@ -313,10 +352,34 @@ def do_self_test() -> int:
     chk("C bracket is STRICT, not a tie", p3 > o3 + 1e-9,
         f"width {(p3-o3)*100:.1f} pp -- a bracket where every arm agrees is not a test")
 
+    # CASE D -- THE GATE THAT WAS MISSING, and what it costs when it is absent.
+    #
+    # Two expiries 60 index points apart, interleaved in one second, on a path that never
+    # actually moves: each contract sits dead flat at its own price. A correct MAE is 0.
+    near, far = 6900.0, 6960.0
+    mixed = np.array([near, far, near, far, near])
+    e4, _, _ = mae_three_ways(mixed, np.array([far]), np.array([near]))
+    chk("D mixed expiries manufacture an excursion from nothing",
+        e4 > 0.008, f"{e4*100:.3f}% out of two FLAT contracts")
+
+    def mixed_seconds(sec, iid):
+        _, first = np.unique(sec, return_index=True)
+        hi = np.maximum.reduceat(iid, first)
+        lo = np.minimum.reduceat(iid, first)
+        return int((hi != lo).sum())
+
+    sec = np.array([1, 1, 2, 2, 3, 3], dtype=np.int64)
+    chk("D gate PASSES one expiry per second",
+        mixed_seconds(sec, np.array([10, 10, 10, 10, 11, 11], dtype=np.int64)) == 0)
+    chk("D gate FIRES on two expiries in one second",
+        mixed_seconds(sec, np.array([10, 11, 10, 10, 11, 11], dtype=np.int64)) == 1,
+        "1 second flagged -- this is the check whose absence reached a published MAE")
+
     if fails:
         P(f"\n  SELF-TEST FAILED: {fails}")
         return 1
-    P("\n  SELF-TEST PASSED: the bar conventions bracket the tick path.")
+    P("\n  SELF-TEST PASSED: the bar conventions bracket the tick path, and the "
+      "one-expiry-per-second gate fires.")
     return 0
 
 

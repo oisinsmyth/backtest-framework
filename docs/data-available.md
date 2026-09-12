@@ -36,7 +36,7 @@ structure and carry would come from, and it is also why a naive load is not a pa
 headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **tile
 2010-06-06 → 2026-09-10 with zero interior gaps and zero overlaps.**
 
-### Four things that will bite a study reading this
+### Five things that will bite a study reading this
 
 1. **NOT COMMITTED, AND CANNOT BE.** CME's terms forbid redistributing archived data, so
    the bars live in gitignored `data/raw/databento/`. What *is* committed is the re-fetch
@@ -59,6 +59,23 @@ headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **
 4. **`ohlcv-1m` arrived in TEN jobs, not one.** Two wide jobs stalled and were split. The
    slices tile cleanly, but a loader must read all ten directories, and the job-to-window
    map is in the manifest rather than inferable from filenames.
+5. **FILTERING TO "FRONT MONTH" NEEDS ID *WINDOWS*, NOT AN ID SET.** ES trades its deferred
+   contract thinly for months before the roll, so a mask of the form
+   `isin(instrument_id, front_month_ids)` admits **two expiries at once**, priced ~60 index
+   points apart — the calendar basis. This bit twice on 2026-09-12, in
+   [`d465`](../scripts/d465_es_spread_and_mae_bias.py) and again in
+   [`d469`](../scripts/d469_scalping_feasibility.py):
+
+   - **Only 3.9% of records were wrong, and it moved a published number by ~1 pp**, because
+     the statistic was a **running max**. A max reads the extremes, so a *sparse* contaminant
+     dominates it. Per-record measurements (a spread reads bid and ask off the same record)
+     were barely touched; anything walking a path across records was wrecked.
+   - The tell was **a p99 that did not move with the horizon** — 240 ticks at 10 s and at
+     15 min alike, against a median of 2. A constant tail across horizons is a basis, not
+     a move.
+   - **Clip every id to its own date window, then assert at most one `instrument_id` per
+     second**, and drop any pair whose two ends are different contracts. Both scripts now
+     carry that gate and prove it fires.
 
 ### Compression measured per schema, and it spans 10x
 

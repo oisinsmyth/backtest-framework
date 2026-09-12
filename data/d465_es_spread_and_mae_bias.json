@@ -1,171 +1,171 @@
 {
  "spread": {
-  "n_trades": 126574779,
-  "broken_quotes_excluded": 338,
+  "n_trades": 121617002,
+  "broken_quotes_excluded": 270,
   "spread_ticks": {
-   "mean": 1.0320230620351312,
-   "mean_trimmed_0.05pct_both_tails": 1.0294269200244826,
+   "mean": 1.0267216092039502,
+   "mean_trimmed_0.05pct_both_tails": 1.0248016786688048,
    "p50": 1.0,
    "p90": 1.0,
    "p99": 2.0,
-   "p99.9": 4.0,
-   "max": 1075.0,
-   "share_at_one_tick": 0.9738371733597891
+   "p99.9": 3.0,
+   "max": 68.0,
+   "share_at_one_tick": 0.9764381052576843
   },
   "spread_usd_per_contract": {
-   "mean": 12.90028827543914,
+   "mean": 12.834020115049377,
    "p50": 12.5,
    "p99": 25.0
   },
   "half_spread_bp_per_side": {
-   "mean": 0.18320973832562887,
-   "p50": 0.18110364561638626,
-   "p99": 0.36961744594344853
+   "mean": 0.18219682151764224,
+   "p50": 0.18092015993342137,
+   "p99": 0.367147630062048
   },
   "by_et_hour": {
    "0": {
-    "n": 767772,
+    "n": 743471,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18538866696736064
+    "half_spread_bp_mean": 0.18425590427755192
    },
    "1": {
-    "n": 935302,
+    "n": 902706,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18529054316231056
+    "half_spread_bp_mean": 0.18375537518876203
    },
    "2": {
-    "n": 1190003,
+    "n": 1145307,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18462306037292048
+    "half_spread_bp_mean": 0.1832983675242004
    },
    "3": {
-    "n": 1857069,
+    "n": 1785508,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18498216517582372
+    "half_spread_bp_mean": 0.18388175163821346
    },
    "4": {
-    "n": 1943491,
+    "n": 1849025,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.1855190127497064
+    "half_spread_bp_mean": 0.1840355472462146
    },
    "5": {
-    "n": 1515637,
+    "n": 1443581,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18652404605360282
+    "half_spread_bp_mean": 0.18474993714117802
    },
    "6": {
-    "n": 1577775,
+    "n": 1516934,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18817400577585117
+    "half_spread_bp_mean": 0.18588089786442125
    },
    "7": {
-    "n": 2249168,
+    "n": 2162168,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.19813849137610054
+    "half_spread_bp_mean": 0.1953342233432507
    },
    "8": {
-    "n": 3574500,
+    "n": 3406918,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.19425509446626796
+    "half_spread_bp_mean": 0.19196952291049166
    },
    "9": {
-    "n": 17421327,
+    "n": 16766197,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18145044787112496
+    "half_spread_bp_mean": 0.18063531044555195
    },
    "10": {
-    "n": 21017943,
+    "n": 20220297,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.1808364369840227
+    "half_spread_bp_mean": 0.1801445174887027
    },
    "11": {
-    "n": 15265182,
+    "n": 14705351,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18060542936182974
+    "half_spread_bp_mean": 0.17992520375793708
    },
    "12": {
-    "n": 11424466,
+    "n": 11008446,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18117725905854964
+    "half_spread_bp_mean": 0.180340648547214
    },
    "13": {
-    "n": 10068594,
+    "n": 9695577,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.1817067147994777
+    "half_spread_bp_mean": 0.18075393108847546
    },
    "14": {
-    "n": 10060442,
+    "n": 9656003,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18169779008861273
+    "half_spread_bp_mean": 0.18077986746664998
    },
    "15": {
-    "n": 14811389,
+    "n": 14156482,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.1803668040470742
+    "half_spread_bp_mean": 0.1795722735173608
    },
    "16": {
-    "n": 3763933,
+    "n": 3614786,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18958122762090773
+    "half_spread_bp_mean": 0.18849870352464673
    },
    "18": {
-    "n": 1353633,
+    "n": 1285951,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.22884059209931384
+    "half_spread_bp_mean": 0.22491492132635502
    },
    "19": {
-    "n": 1045600,
+    "n": 995990,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.19465243240404076
+    "half_spread_bp_mean": 0.19246621630803845
    },
    "20": {
-    "n": 1607400,
+    "n": 1545028,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18851850729594194
+    "half_spread_bp_mean": 0.18714808577079428
    },
    "21": {
-    "n": 1316215,
+    "n": 1269960,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18825825596997894
+    "half_spread_bp_mean": 0.18680913749996028
    },
    "22": {
-    "n": 998187,
+    "n": 960317,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18616971859641948
+    "half_spread_bp_mean": 0.18468962902625868
    },
    "23": {
-    "n": 809751,
+    "n": 780999,
     "spread_ticks_p50": 1.0,
-    "half_spread_bp_mean": 0.18458853931624045
+    "half_spread_bp_mean": 0.18337329277005623
    }
   },
   "rth_vs_overnight": {
-   "rth_half_spread_bp": 0.18102199200227834,
-   "overnight_half_spread_bp": 0.19057282197465797,
-   "rth_trades": 97581120,
-   "overnight_trades": 28993659
+   "rth_half_spread_bp": 0.18023868861684056,
+   "overnight_half_spread_bp": 0.18880722336207734,
+   "rth_trades": 93824356,
+   "overnight_trades": 27792646
   }
  },
- "updated_utc": "2026-09-12T13:54:33+00:00",
- "purpose": "D458: two instrument/cost measurements on the tick data -- the ES spread, and how wrong a bar-grid MAE is. No return, no edge, no verdict on any candidate.",
+ "updated_utc": "2026-09-12T14:41:38+00:00",
+ "purpose": "D465: two instrument/cost measurements on the tick data -- the ES spread, and how wrong a bar-grid MAE is. No return, no edge, no verdict on any candidate.",
  "source": "data/raw/databento tbbo, ES front month, 2025-09-11..2026-09-11",
  "mae_bias": {
   "sessions": 260,
   "note": "MAE as a fraction of the entry price -- max drawdown from the running peak during an 18:00->16:10 ET hold on ES front month, 1x size. The EXACT column is tick-by-tick and is identical at every grid width, because the ticks do not change; only the bar conventions move.",
   "exact_tick": {
-   "p50": 0.018512418146906528,
-   "p95": 0.03349163294548802,
-   "p99": 0.03907489542646595,
-   "max": 0.05147443075774543,
-   "mean": 0.018428866000453077
+   "p50": 0.007681621151274044,
+   "p95": 0.020254595467857378,
+   "p99": 0.030459179552164404,
+   "max": 0.03594624860022396,
+   "mean": 0.009339440338163819
   },
   "by_grid_minutes": {
    "1": {
-    "bars_per_session_mean": 1315.2115384615386,
+    "bars_per_session_mean": 1315.1461538461538,
     "sessions": 260,
-    "exact_tick_p99": 0.03907489542646595,
-    "optimistic_p99": 0.03907489542646595,
-    "pessimistic_p99": 0.03907489542646595,
+    "exact_tick_p99": 0.030459179552164404,
+    "optimistic_p99": 0.030459179552164404,
+    "pessimistic_p99": 0.030459179552164404,
     "optimistic_understates_pp": 0.0,
     "pessimistic_overstates_pp": 0.0,
     "bracket_holds_every_session": true
@@ -173,41 +173,41 @@
    "5": {
     "bars_per_session_mean": 263.8269230769231,
     "sessions": 260,
-    "exact_tick_p99": 0.03907489542646595,
-    "optimistic_p99": 0.03907489542646595,
-    "pessimistic_p99": 0.04150580022039296,
+    "exact_tick_p99": 0.030459179552164404,
+    "optimistic_p99": 0.030459179552164404,
+    "pessimistic_p99": 0.03236671223956651,
     "optimistic_understates_pp": 0.0,
-    "pessimistic_overstates_pp": 0.2430904793927012,
+    "pessimistic_overstates_pp": 0.19075326874021076,
     "bracket_holds_every_session": true
    },
    "15": {
     "bars_per_session_mean": 87.9423076923077,
     "sessions": 260,
-    "exact_tick_p99": 0.03907489542646595,
-    "optimistic_p99": 0.03907489542646595,
-    "pessimistic_p99": 0.04272983028573075,
+    "exact_tick_p99": 0.030459179552164404,
+    "optimistic_p99": 0.030459179552164404,
+    "pessimistic_p99": 0.03236671223956651,
     "optimistic_understates_pp": 0.0,
-    "pessimistic_overstates_pp": 0.3654934859264797,
+    "pessimistic_overstates_pp": 0.19075326874021076,
     "bracket_holds_every_session": true
    },
    "60": {
     "bars_per_session_mean": 22.795366795366796,
     "sessions": 259,
-    "exact_tick_p99": 0.039112845543168,
-    "optimistic_p99": 0.039112845543168,
-    "pessimistic_p99": 0.042764363894848556,
+    "exact_tick_p99": 0.03048543515630016,
+    "optimistic_p99": 0.03048543515630016,
+    "pessimistic_p99": 0.03237545497233201,
     "optimistic_understates_pp": 0.0,
-    "pessimistic_overstates_pp": 0.36515183516805594,
+    "pessimistic_overstates_pp": 0.1890019816031853,
     "bracket_holds_every_session": true
    },
    "240": {
     "bars_per_session_mean": 6.945945945945946,
     "sessions": 259,
-    "exact_tick_p99": 0.039112845543168,
-    "optimistic_p99": 0.039112845543168,
-    "pessimistic_p99": 0.042764363894848556,
+    "exact_tick_p99": 0.03048543515630016,
+    "optimistic_p99": 0.03048543515630016,
+    "pessimistic_p99": 0.03237545497233201,
     "optimistic_understates_pp": 0.0,
-    "pessimistic_overstates_pp": 0.36515183516805594,
+    "pessimistic_overstates_pp": 0.1890019816031853,
     "bracket_holds_every_session": true
    }
   },

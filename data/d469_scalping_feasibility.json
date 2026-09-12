@@ -1,0 +1,218 @@
+{
+ "generated_utc": "2026-09-12T14:43:28+00:00",
+ "purpose": "D469: the scalping re-cost R13 has owed since D258, on the measured futures cost line. A feasibility review -- no signal, no edge, no Sharpe; nothing admitted or closed.",
+ "source": "D465's cached ES front-month ticks, 2025-09-11..2026-09-11",
+ "median_price": 6919.5,
+ "crossing_bp_round_trip_measured": 0.3664,
+ "cost_bars": {
+  "ES": {
+   "notional_usd": 345975.0,
+   "crossing_usd": 12.676524,
+   "commission_usd": 4.0,
+   "total_usd": 16.676524,
+   "breakeven_ticks": 1.33412192,
+   "crossing_ticks": 1.01412192,
+   "commission_ticks": 0.32
+  },
+  "MES": {
+   "notional_usd": 34597.5,
+   "crossing_usd": 1.2676524,
+   "commission_usd": 3.0,
+   "total_usd": 4.2676524,
+   "breakeven_ticks": 3.4141219200000004,
+   "crossing_ticks": 1.01412192,
+   "commission_ticks": 2.4
+  }
+ },
+ "by_horizon_seconds": {
+  "10": {
+   "n_pairs": 8979405,
+   "mean_abs_ticks": 2.4551886232996516,
+   "rms_ticks": 3.7461341758377977,
+   "fat_tail_ratio_rms_over_mean": 1.5258030036010755,
+   "p50": 2.0,
+   "p90": 6.0,
+   "p99": 13.0,
+   "trades_per_day_always_in": 8280.0,
+   "crossing_only_ticks": 1.01412192,
+   "breakeven_accuracy_at_ZERO_commission": 0.7065262746772325,
+   "ES": {
+    "breakeven_ticks": 1.33412192,
+    "share_exceeding_descriptive_only": 0.5384322235159233,
+    "breakeven_accuracy": 0.771694383751055,
+    "q_ticks_for_sharpe_0p5": 1.3353334378142423,
+    "accuracy_needed_for_sharpe_0p5": 0.7719411097668782,
+    "accuracy_margin_over_breakeven_pp": 0.024672601582320652,
+    "reachable": true
+   },
+   "MES": {
+    "breakeven_ticks": 3.4141219200000004,
+    "share_exceeding_descriptive_only": 0.22433412904307135,
+    "breakeven_accuracy": 1.1952870927309018,
+    "q_ticks_for_sharpe_0p5": 3.414655209464155,
+    "accuracy_needed_for_sharpe_0p5": 1.1953956973120516,
+    "accuracy_margin_over_breakeven_pp": 0.010860458114980709,
+    "reachable": false
+   }
+  },
+  "30": {
+   "n_pairs": 8926403,
+   "mean_abs_ticks": 4.23862243279852,
+   "rms_ticks": 6.39397220794031,
+   "fat_tail_ratio_rms_over_mean": 1.5085024225002122,
+   "p50": 3.0,
+   "p90": 9.0,
+   "p99": 22.0,
+   "trades_per_day_always_in": 2760.0,
+   "crossing_only_ticks": 1.01412192,
+   "breakeven_accuracy_at_ZERO_commission": 0.6196287161782459,
+   "ES": {
+    "breakeven_ticks": 1.33412192,
+    "share_exceeding_descriptive_only": 0.7079614263438476,
+    "breakeven_accuracy": 0.6573768295185419,
+    "q_ticks_for_sharpe_0p5": 1.337870481144268,
+    "accuracy_needed_for_sharpe_0p5": 0.6578190204902196,
+    "accuracy_margin_over_breakeven_pp": 0.04421909716776362,
+    "reachable": true
+   },
+   "MES": {
+    "breakeven_ticks": 3.4141219200000004,
+    "share_exceeding_descriptive_only": 0.4258787106071729,
+    "breakeven_accuracy": 0.9027395662304665,
+    "q_ticks_for_sharpe_0p5": 3.417361884240745,
+    "accuracy_needed_for_sharpe_0p5": 0.9031217616597731,
+    "accuracy_margin_over_breakeven_pp": 0.03821954293066199,
+    "reachable": true
+   }
+  },
+  "60": {
+   "n_pairs": 8909879,
+   "mean_abs_ticks": 5.974876763197347,
+   "rms_ticks": 8.959128414697808,
+   "fat_tail_ratio_rms_over_mean": 1.4994666450498457,
+   "p50": 4.0,
+   "p90": 13.0,
+   "p99": 30.0,
+   "trades_per_day_always_in": 1380.0,
+   "crossing_only_ticks": 1.01412192,
+   "breakeven_accuracy_at_ZERO_commission": 0.5848655093814279,
+   "ES": {
+    "breakeven_ticks": 1.33412192,
+    "share_exceeding_descriptive_only": 0.7884597534938466,
+    "breakeven_accuracy": 0.6116443043827793,
+    "q_ticks_for_sharpe_0p5": 1.3416324564750242,
+    "accuracy_needed_for_sharpe_0p5": 0.6122728141222007,
+    "accuracy_margin_over_breakeven_pp": 0.06285097394214123,
+    "reachable": true
+   },
+   "MES": {
+    "breakeven_ticks": 3.4141219200000004,
+    "share_exceeding_descriptive_only": 0.5538992168131576,
+    "breakeven_accuracy": 0.7857064718915637,
+    "q_ticks_for_sharpe_0p5": 3.4211424708446545,
+    "accuracy_needed_for_sharpe_0p5": 0.7862939778036436,
+    "accuracy_margin_over_breakeven_pp": 0.05875059120798998,
+    "reachable": true
+   }
+  },
+  "120": {
+   "n_pairs": 8870974,
+   "mean_abs_ticks": 8.450791874714097,
+   "rms_ticks": 12.632440127452895,
+   "fat_tail_ratio_rms_over_mean": 1.4948232443459943,
+   "p50": 6.0,
+   "p90": 19.0,
+   "p99": 43.0,
+   "trades_per_day_always_in": 690.0,
+   "crossing_only_ticks": 1.01412192,
+   "breakeven_accuracy_at_ZERO_commission": 0.5600015912730255,
+   "ES": {
+    "breakeven_ticks": 1.33412192,
+    "share_exceeding_descriptive_only": 0.8488153611993452,
+    "breakeven_accuracy": 0.5789347282348695,
+    "q_ticks_for_sharpe_0p5": 1.3491824837534483,
+    "accuracy_needed_for_sharpe_0p5": 0.5798258023482026,
+    "accuracy_margin_over_breakeven_pp": 0.08910741133331124,
+    "reachable": true
+   },
+   "MES": {
+    "breakeven_ticks": 3.4141219200000004,
+    "share_exceeding_descriptive_only": 0.6668922713559977,
+    "breakeven_accuracy": 0.7020001184868552,
+    "q_ticks_for_sharpe_0p5": 3.4287005106900117,
+    "accuracy_needed_for_sharpe_0p5": 0.7028626761563697,
+    "accuracy_margin_over_breakeven_pp": 0.08625576695144854,
+    "reachable": true
+   }
+  },
+  "300": {
+   "n_pairs": 8814598,
+   "mean_abs_ticks": 13.32465326268992,
+   "rms_ticks": 19.864307006497523,
+   "fat_tail_ratio_rms_over_mean": 1.4907935399804473,
+   "p50": 9.0,
+   "p90": 30.0,
+   "p99": 67.0,
+   "trades_per_day_always_in": 276.0,
+   "crossing_only_ticks": 1.01412192,
+   "breakeven_accuracy_at_ZERO_commission": 0.5380543455805946,
+   "ES": {
+    "breakeven_ticks": 1.33412192,
+    "share_exceeding_descriptive_only": 0.904676537716184,
+    "breakeven_accuracy": 0.5500621627331814,
+    "q_ticks_for_sharpe_0p5": 1.3716927426181142,
+    "accuracy_needed_for_sharpe_0p5": 0.5514719863840271,
+    "accuracy_margin_over_breakeven_pp": 0.1409823650845632,
+    "reachable": true
+   },
+   "MES": {
+    "breakeven_ticks": 3.4141219200000004,
+    "share_exceeding_descriptive_only": 0.7828985507904047,
+    "breakeven_accuracy": 0.6281129742249958,
+    "q_ticks_for_sharpe_0p5": 3.451209883474632,
+    "accuracy_needed_for_sharpe_0p5": 0.629504678862387,
+    "accuracy_margin_over_breakeven_pp": 0.13917046373912445,
+    "reachable": true
+   }
+  },
+  "900": {
+   "n_pairs": 8704420,
+   "mean_abs_ticks": 22.83352021157068,
+   "rms_ticks": 33.94478616473547,
+   "fat_tail_ratio_rms_over_mean": 1.4866208035471578,
+   "p50": 16.0,
+   "p90": 51.0,
+   "p99": 115.0,
+   "trades_per_day_always_in": 92.0,
+   "crossing_only_ticks": 1.01412192,
+   "breakeven_accuracy_at_ZERO_commission": 0.5222068675921049,
+   "ES": {
+    "breakeven_ticks": 1.33412192,
+    "share_exceeding_descriptive_only": 0.9442016814445994,
+    "breakeven_accuracy": 0.5292141095117683,
+    "q_ticks_for_sharpe_0p5": 1.445488472246458,
+    "accuracy_needed_for_sharpe_0p5": 0.5316527731784862,
+    "accuracy_margin_over_breakeven_pp": 0.24386636667179662,
+    "reachable": true
+   },
+   "MES": {
+    "breakeven_ticks": 3.4141219200000004,
+    "share_exceeding_descriptive_only": 0.8707469308696042,
+    "breakeven_accuracy": 0.5747611819895805,
+    "q_ticks_for_sharpe_0p5": 3.524986935887181,
+    "accuracy_needed_for_sharpe_0p5": 0.5771888631981705,
+    "accuracy_margin_over_breakeven_pp": 0.2427681208590049,
+    "reachable": true
+   }
+  }
+ },
+ "identity": "annualised Sharpe = 2*(p - p_be)*sqrt(252*N)*E|M|/RMS, for N round trips a day at directional accuracy p, where p_be = (1 + cost/E|M|)/2. Inverting it at Sharpe 0.5 gives the accuracy MARGIN above breakeven that C-a demands.",
+ "assumptions_of_that_identity": [
+  "the trade outcome is the full h-second move, signed by the call -- an upper bound on what any exit rule captures",
+  "trades are independent across the day; overlapping or clustered entries would lower the effective N",
+  "no slippage beyond the measured half-spread, and no queue position",
+  "the move distribution is stationary over the measured year"
+ ],
+ "note_on_accuracy": "breakeven_accuracy uses the UNCONDITIONAL mean absolute move. An earlier version used the mean among pairs that cleared the cost bar, which is look-ahead: no rule can select a trade by the move it turned out to make. share_exceeding is descriptive only and feeds nothing.",
+ "window_caveat": "measured on 2025-09-11..2026-09-11, which is NOT the in-sample window a component is scored on (2016-01-04..2023-12-29, D462). The unconditional move distribution carries no rule and no selection, so it cannot spend the confirmation slice -- but any actual scalp must be scored on the in-sample window."
+}
