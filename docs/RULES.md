@@ -397,6 +397,91 @@ report. A rule that changed recently can change back, which is a business risk o
 research one.
 
 
+### RESTATEMENT, 2026-09-12 — **the principal relaxed P4 and P5. Both were stricter than the objective.**
+
+*Directed by the principal. Recorded as an amendment rather than an edit, because R11's earlier
+text is quoted in closures that were decided under it.*
+
+#### P4 — **no longer a hard hurdle. What matters is profit per account, not the account's survival.**
+
+> *"I don't mind how often the account dies, I only care that it's profitable, and I would
+> ideally like to have an account life of at least 1 year+ but it's not a hard rule."*
+
+**P4 was a survival test, and survival was never the objective.** A prop account is a
+**purchased, replaceable instrument**: it has a price (the evaluation fee, or a reset), and if the
+expected profit extracted before breach exceeds that price, breaching often is not a failure —
+it is a cost of doing business.
+
+**P4 now reads:**
+
+| | |
+|---|---|
+| **binding** | **expected profit before breach > the account's cost** (evaluation fee, or reset fee, per cycle). This is the statistic `BOOK_PROP.md` already computes — the *profit before breach* column, e.g. 28.20% at 0.48× average size. |
+| **preferred, not binding** | account life **≥ 1 year** |
+| **reported always** | expected account life, and expected profit per account cycle in dollars against the fee actually paid |
+
+**Consequences that must be honoured, not glossed:**
+
+1. **Closures that rested on P4 alone are reopened.** A "funded life of 0.07–0.20 years against
+   three" is no longer a disqualification by itself.
+2. **Closures that also failed P3 or had negative value stay closed.** C-13.1 (market intraday
+   momentum, the last thirty minutes) is the case to be careful about: it failed P4 *and* P3
+   (worst day −4% to −8% against ≤ 2%) *and* had negative V. **It stays closed on P3 and V**, and
+   the P4 clause in its verdict is now surplus rather than load-bearing.
+3. **A high-turnover account-burning strategy needs the fee in the arithmetic from the start.**
+   Without it, "profitable" is meaningless — the fee is the whole of the downside once the
+   drawdown limit is treated as a replaceable barrier rather than a catastrophe.
+
+#### P5 — **no longer a screen. It becomes a computed payout number.**
+
+> *"P5 is again too extreme, it does not matter if a single day earns a massive amount of profit
+> so long as the other days earn enough also."*
+
+**The principal's objection is right about strategy design and P5 is not purely ours to relax.**
+The 40% cap came from the *venues'* consistency rules, which gate **withdrawal eligibility** at
+30–50% of trailing profit in a single day. A lumpy-but-profitable strategy is not forbidden; its
+profit is simply **not withdrawable while up**. That is a real constraint and deleting the
+criterion would hide it.
+
+**So P5 becomes a CALCULATION CONVENTION, not a gate.** Refined by the principal the same day:
+
+> *"In that case we will cut the profit at that 30% in a day mark for calculation purposes, it
+> is still not a hard constraint."*
+
+**The 30% haircut, which is now the declared way profit is computed on this track:**
+
+    excess     = max(0, best_single_day - 0.30 * total_profit)
+    RECOGNISED = total_profit - excess
+
+**Any single day's contribution above 30% of the period's profit is not credited.** It is a
+*haircut*, applied whenever a profit figure is quoted for the prop track — including in P4's
+profit-before-breach test, which is therefore tested on **recognised** profit, not gross.
+
+| | |
+|---|---|
+| **the number carried** | **recognised profit**, after the 30% single-day haircut, at every horizon a profit is quoted |
+| **NOT a screen** | nothing is rejected for concentrating profit. **This is not a hard constraint** — a construction that fails the 30% property is still eligible; it simply gets its profit cut for the purpose of judging it |
+| **reported alongside** | uncapped profit, the haircut in dollars, the largest single day as a share of the total, and the number of days whose contribution was cut |
+
+**Two things to be honest about in this convention.**
+
+1. **It is a haircut, not a solve for eligibility.** After the cut, the best day can still exceed
+   30% of what remains (cut $400 from a $2,000 profit whose best day was $1,000 and the best day
+   is 62% of the $1,600 recognised). The venue's actual rule is a *withdrawal* gate that is
+   satisfied by trading on until the total grows; this convention instead prices the lumpiness as
+   a cost up front. **It is deliberately simple and it does not claim to reproduce any firm's
+   payout arithmetic.**
+2. **It bites hardest on exactly the strategies P5 used to reject**, which is the point —
+   the difference is that they are now *discounted* rather than *discarded*, and the discount is
+   visible in the number instead of hidden in a verdict.
+
+#### What did NOT change
+
+**P1, P2, P3 and P6 stand exactly as written.** In particular **P3's worst-day ≤ 2% is
+untouched** — it is a daily *loss limit*, enforced by the venue on the day, and no amount of
+account-replaceability softens it. P6 stands: only Topstep and MyFundedFutures permit automation
+when funded.
+
 ## R12. Two tracks, two standards — and a candidate closed on one is screened against the other before it is discarded
 
 **This programme now serves two books with incompatible constraints**, and a single set of hurdles

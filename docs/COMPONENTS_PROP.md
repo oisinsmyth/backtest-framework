@@ -16,7 +16,7 @@ A construction is a **component** when, on the in-sample window (the D462 usable
 | | bar |
 |---|---|
 | **C-a** net annualised Sharpe of its daily P&L | **> 0.5** |
-| **C-b** correlation of its daily P&L with **every** component already in the ledger | **< 0.3** |
+| **C-b** correlation of its daily P&L with **every** component already in the ledger | **< 0.3** — **no longer a rejection; it ROUTES to the vault. See the amendment of 2026-09-12 at the foot of this page.** |
 | **C-c** skew of its daily P&L | **≥ −0.5** (P1 punishes negative skew; positive is fine) |
 | **C-d** expressible | daily σ at minimum size ≤ 1% of a $50k account, so the assembled book can be sized |
 | **C-e** provenance | a pre-registered record; the window; the cost line; the nulls it was scored against |
@@ -80,3 +80,75 @@ round trip); at the standard's minimum size and $3 they are 0.37 and −0.01 and
 The gross edges (0.63, 0.66 at micro size) are real; the cost per round trip at micro notional
 (~2 bp) eats them. Every component line from here on is computed by the runner under this
 standard, never in a shell line.
+
+---
+
+## AMENDMENT, 2026-09-12 — **C-b no longer rejects. It ROUTES. And a second book gets a second account.**
+
+*Directed by the principal.*
+
+> *"On the ρ < 0.3, I understand where we are going here but they should still be permitted into
+> a secondary strategy 'vault' where we can build a second prop book that can run on a different
+> account."*
+
+### The change
+
+**C-b was the only criterion that failed a construction for something it does not control.** A
+component with a real, independent edge could be discarded purely because something already in
+the ledger moves with it — which says nothing about the construction and everything about the
+order things were tested in.
+
+**C-b is therefore no longer a rejection. It is a routing rule:**
+
+| a construction that… | goes to |
+|---|---|
+| clears **C-a, C-c, C-d, C-e** and has **ρ < 0.3** against every component in **Book 1** | **Book 1's ledger** |
+| clears **C-a, C-c, C-d, C-e** but **ρ ≥ 0.3** against something in Book 1 | **THE VAULT** |
+| fails **C-a, C-c, C-d or C-e** | not a component; recorded in *Scored and NOT entered* as before |
+
+**C-a, C-c, C-d and C-e are unchanged and still reject.** Only C-b's consequence changed.
+
+### Why this is more than a consolation prize — and it is the reason it works
+
+**Each prop account carries its own independent 4% trailing drawdown floor.** Two correlated
+books on ONE account share a floor, and correlation is then fatal: both arms draw down together
+against a single barrier. **Two correlated books on TWO accounts do not share a floor** — a
+breach on account 2 does not touch account 1.
+
+So the vault is not "the leftovers". It is **the set of constructions whose edge is real and
+whose only defect is that it duplicates a risk already taken — which stops being a defect the
+moment it is taken on a separate drawdown budget.**
+
+**What this costs, stated plainly:** a second account is a second fee, and under the amended
+[P4](RULES.md#r11) that fee enters the arithmetic directly. Two accounts must clear **two**
+cost bars, not one. A vault component is worth running only if it clears P4's profit-before-breach
+test **against its own account's fee**.
+
+### The vault's own rules
+
+1. **The vault has its own C-b, applied WITHIN the vault.** Book 2 is built from vault components
+   and needs the same internal decorrelation Book 1 does: a vault entry needs **ρ < 0.3 against
+   every component already in the VAULT**. A construction correlated with Book 1 *and* with the
+   vault goes to a third holding area, and the same logic recurses.
+2. **Order of entry is recorded**, in the vault as in the ledger, because ρ is measured against
+   whatever was already there.
+3. **Cross-book correlation is REPORTED, never screened.** ρ(Book 1, Book 2) at the book level is
+   carried in both books' records. It does not gate anything — the separate floors are the point —
+   but a reader must be able to see how much of the two accounts' risk is the same risk.
+4. **Hurdle P is tested per account, on that account's assembled book.** There is no combined
+   hurdle-P test across accounts, because there is no combined drawdown floor.
+5. **The vault admits nothing to any book by itself.** A vault entry is a component awaiting a
+   second book, exactly as a ledger entry is a component awaiting the first one. Only an
+   assembled book enters `BOOK_PROP.md`, and only on hurdle P.
+
+### The vault
+
+| # | component | instrument, window, rule | record | net Sharpe (SE) | ρ with Book 1 | ρ with prior vault | entered |
+|---|---|---|---|---|---|---|---|
+| — | *no entry* | | | | | | *the vault was created empty on 2026-09-12; nothing has yet cleared C-a to be routed* |
+
+**Note on what this does NOT retroactively admit.** Every construction in *Scored and NOT
+entered* above failed **C-a**, not C-b — with one exception, **K7**, which passed C-a on its point
+estimate and was held back for the family-bar failure and in-sample selection, then **removed on
+its forward read**. So the vault starts empty and no prior verdict is reversed by this amendment.
+The routing rule takes effect for constructions scored from here.

@@ -703,3 +703,55 @@ day leg and full session beyond what the leg implies, every other root, the last
 **Open for the personal book:** the unconditional overnight hold at full size (C1 as a personal
 component; D466's ES lens net +0.48 at one ES and $17) — a separate record, under BOOK.md's
 standards, if the principal takes it there.
+
+---
+
+## AMENDMENT, 2026-09-12 — **the standards moved, and the track now contemplates TWO accounts**
+
+*Directed by the principal. Recorded here because this page restates hurdle P, and that
+restatement is now out of date in two places.*
+
+### P4 and P5 were relaxed — see [R11](RULES.md#r11)'s restatement of 2026-09-12
+
+| | was | now |
+|---|---|---|
+| **P4** | expected account life > **3 years** | **not a hard hurdle.** Binding test: **expected profit before breach > the account's cost** (fee or reset). Account life ≥ 1 year preferred, not binding. Both reported. |
+| **P5** | no single day > **40%** of trailing-year profit | **not a screen and not a hard constraint.** A **30% single-day haircut** is applied to profit for calculation purposes: `recognised = total − max(0, best_day − 0.30 × total)`. Nothing is rejected for lumpiness; it is **discounted** instead, and the discount is visible in the number. |
+
+**P1, P2, P3 and P6 are untouched.** P3's worst-day ≤ 2% in particular is a venue-enforced daily
+loss limit and no amount of account-replaceability softens it.
+
+**The `profit before breach` column in the vol-targeting table above is now a BINDING statistic
+rather than a curiosity** — it was already computed (28.20% at 0.48× average size, 14.71% at
+0.71×) and it is what the amended P4 tests against the fee. **It must be recomputed on
+RECOGNISED profit**, i.e. after P5's 30% single-day haircut, because **P4 and P5 now compose**:
+the profit P4 tests is the profit P5 has already cut. The figures in that table are pre-haircut
+and are therefore upper bounds until recomputed.
+
+**Which closures this touches.** A closure that rested on P4 alone is reopened. **C-13.1 stays
+closed**, because it failed P3 (worst day −4% to −8% against ≤ 2%) and had negative V
+independently of P4; the P4 clause in its verdict is now surplus rather than load-bearing. The
+overnight-leg closure stands on its own terms — K7 was removed on a **forward read**, not on P4
+or P5.
+
+### Two accounts, two books
+
+`COMPONENTS_PROP.md`'s C-b no longer rejects a component for correlating with one already
+entered; it **routes it to a vault**, from which a **second book on a second account** is built.
+
+**The reason is the drawdown floor, not diversification for its own sake.** Each prop account
+carries its **own independent 4% trailing floor**. Two correlated books on one account share a
+floor and correlation is fatal. **On two accounts they do not share a floor**, so a construction
+whose only defect was duplicating a risk already taken becomes viable the moment it is taken on a
+separate budget.
+
+**Hurdle P is tested PER ACCOUNT**, on that account's own assembled book. There is no combined
+hurdle-P test, because there is no combined floor. **Cross-book correlation is reported in both
+books and gates nothing.**
+
+**And a second account is a second fee**, which under the amended P4 enters the arithmetic
+directly: **two accounts must clear two cost bars.** A vault component earns its account only by
+clearing profit-before-breach against that account's own fee.
+
+**This page still records no admitted arm, on either account.** The vault was created empty and
+no prior verdict is reversed by these changes.
