@@ -32,6 +32,15 @@ only the level.
 - Everything else as D490: ES one MES the candidate, NQ the check root, $3 plus the fills, one
   entry per side per day, no initial stop, the no-trail ablation reported.
 
+**ADDENDUM (2026-09-12, before the development run; only the self-test had run):** the principal
+specified a much higher timeframe — the holds run for hours (D490 median ≈ 300 minutes), so a
+five-minute RSI(14), a 70-minute lookback, is not the oscillator meant. **The RSI is Wilder's
+RSI(14) on the regular-hours HOURLY closes** (bucket ends 10:29, 11:29, 12:29, 13:29, 14:29,
+15:29 and the 15:59 half-bucket; seven a session), one continuous series across sessions, so 14
+buckets span about two sessions — the horizon of "yesterday's range". At a trigger bar the RSI is
+that of the last completed hourly bucket at or before the bar. Thresholds unchanged (long ≤ 30,
+short ≥ 70). The five-minute version was never run and is not reported.
+
 ## 2. Statistics, nulls, bar
 
 D490's, unchanged: the ledger's line per side and pooled; the descriptive splits; N1 (the
