@@ -33,7 +33,9 @@ across seven schemas*, so the roll gates do not transfer.
 
 ## PRICE ACTION AND VOLUME — the slate, and the first one reported (D497), 2026-09-12
 
-The principal asked for price-action and volume constructions for the prop book. **The arithmetic
+The principal asked for price-action and volume constructions for the prop book. **The specification
+any prop day-session candidate faces is now FINDINGS §69** (a measurement, closing nothing): the
+cost/move table by micro, the accuracy targets, and the fee-and-barrier identity. **The arithmetic
 that should govern the choice** (committed fixtures, this session): on the NQ day session the
 average 10:00→16:00 move is 286 MNQ ticks against a 7.01-tick round trip, so **the fee is 2.4% of
 the average move**. Break-even is **51.2% directional accuracy**, a component Sharpe of 0.5 needs

@@ -4385,3 +4385,63 @@ envelope over several confirmed pivots matches the eye's gradient and a two-poin
 does not. (iii) Overstay must be scored only on ends that were ends: 40% of the principal's ends
 were replacements. (iv) A within-name rotation null re-times events; it does not control for
 what the event *is* — the dip control had to break the ingredient.
+
+
+## 69. Measurement: what a prop day-session candidate must clear — the fee is 2.4% of the move, the barrier is 3–6 σ, and the two are one constraint
+
+**A MEASUREMENT, not a verdict.** It opens and closes nothing ([R15](RULES.md#r15)); it states,
+in the units the venues use, the specification any future prop candidate faces. Computed on
+committed fixtures (D467's
+hourly session tables and `data/futures_contract_specs.json`) plus
+[D493](decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the-barrier-a-full-contract-dies-in-weeks-at-every-plan-and-nothing-the-programme-holds-is-carryable.md).
+The D467 fixture record is
+`docs/decisions/D467-RESULT-eight-roots-of-hourly-session-tables-pass-five-gates-from-2016-after-two-gate-amendments-on-holiday-prints-and-the-partial-pre-2016-sessions.md`.
+
+**(a) At day-session scale, cost is not the binding constraint.** Average 10:00→16:00 ET move
+against the $3.00 + 1.009-tick round trip, 2016–2023:
+
+| micro | avg move | cost / round trip | cost as a share of the move | daily σ |
+|---|---:|---:|---:|---:|
+| **MNQ** | $143.11 | $3.50 | **2.4%** | $219 |
+| MES | $90.47 | $4.26 | 4.7% | $139 |
+| MYM | $69.44 | $3.50 | 5.0% | $106 |
+| MCL | $72.57 | $4.01 | 5.5% | $103 |
+| MGC | $59.63 | $4.01 | 6.7% | $85 |
+| M6E | $55.36 | $4.26 | 8.0% | $76 |
+
+**The Nasdaq micro is the best hunting ground for any day-session rule, not crude.** Break-even
+there is **51.2% directional accuracy**, and a component Sharpe of 0.5 at one micro needs
+**53.6%** — about $10.40 of gross a session. The log MACD ([D484](decisions/D484-RESULT-the-log-MACD-is-a-real-signal-that-fails-only-on-cost-and-the-off-diagonal-ordering-is-confirmed.md))
+reaches ≈ 50.7%. **The gap is three points of accuracy, not cost.**
+
+**A corollary that kills a plausible lever.** Selecting high-volatility days to raise the move
+against a fixed fee only pays where cost/E|M| is large — scalping, or the 15-minute bar
+([D472](decisions/D472-RESULT-the-volume-clock-exit-replicates-8-of-8-years-but-the-15-minute-horizon-does-not-survive-its-own-scoring-window.md)).
+At 2.4% there is almost nothing to win.
+
+**(b) The fee and the trailing barrier are one constraint, seen from two sides.** D493 ran every
+published plan × ES/NQ × micro/full × 1–5 contracts through D386's lifecycle: **0 of 448 cells
+carry.** Leaving the micro fixes the fee (NQ's last-30 trade goes from a net Sharpe of −0.13 at
+one micro to +0.48 at one full contract) and immediately exposes the barrier — a full contract's
+daily σ is **3–6× the plan's $2,000–$4,500 trailing drawdown**, so funded life is **0.03–0.16
+years on all fourteen plans**. The micro sits ~40 σ from the barrier and loses on the fee.
+**The account's dollar drawdown fixes the σ per contract it can carry, and that σ fixes the fee
+in ticks.** Positive-value cells are lottery tickets: a fast pass, one payout, then the breach.
+
+**(c) What has been measured against this specification, and come up short.** Direction from
+outside the instrument's own price path, at session resolution, is worth **at most one tick a
+day**: eighteen declared cells in [D494](decisions/D494-RESULT-outside-the-price-path-on-the-day-session-eighteen-cells-no-pick-the-largest-is-the-euro-at-one-tick-and-the-release-day-MACD-is-worse-not-better.md)
+— five cross-instrument overnight moves, index-level retail sentiment, and CPI / payroll / FOMC
+gates — produced no pick, the largest being the euro into ES; and the scheduled prints make the
+one real signal on the table earn *less*, because the day leg starts ninety minutes after 08:30.
+The four-quadrant open-interest read ([D497](decisions/D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing-the-open-interest-term-flips-sign-between-index-and-commodity-roots-and-the-textbook-reading-is-backwards-on-gold.md))
+carries nothing on four roots, and on gold the quadrant the textbook says to fade is the most
+positive one.
+
+**Two method notes worth carrying.** Open interest is **distinguishable from volume** — the two
+give answers differing by 3× and flipping sign — so neither may be dismissed as a proxy for the
+other without testing. And twice in one session a check could not do its job: a shifted-predictor
+control whose window **overlapped the outcome** (it measured spillover and came out above its
+null), and a roll gate whose threshold its own series made **unreachable**. Both were withdrawn
+in their records rather than reported as passes; CLAUDE.md's *"a self-test that cannot fail is
+worse than none"* applies to gates and controls, not only to the deliberate `[X]` break.
