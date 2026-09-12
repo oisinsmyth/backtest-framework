@@ -150,6 +150,25 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D499 — STAGE 0, CLOSE: THE HOUR AFTER A LARGE MOVE IS WORTH A TICK ON EIGHT ROOTS; THE HOURLY CLOCK CANNOT CARRY $3, 2026-09-13
+
+The principal's direction for the second component: a 24-hour future, a construction that prefers
+the off-hours. Stage 0 (`467500f`, RESULT) on D467's hourly tables, eight roots, 2016–2023: fade
+the next hour after a top-decile hourly move (causal, per hour-of-day), thin vs thick hours by
+volume, k = 1 primary, exact common rotation per root, 16-cell family maximum. **Best gross cell
++$2.46 a trade (NQ thick) against $3; 15 of 16 component lines negative; family p95 +2.70, observed
+max +1.84 (CL thin, 43% of offsets). CLOSE by the pre-registered rule.** What is real: the
+next-hour reversal on the US-clock off-hours of ES/NQ/YM (pooled β −0.03 to −0.04, outside exact
+rotation bands; the `us_off` fade clears N1 on ES and NQ) at **1.7–4.9 ticks a trade, net negative
+after the fee**; crude continues in the same hours. The volume-thin hours (London h03/h04/h07/h08
+are *thick*) show nothing, and low-relative-volume moves revert *less* — the transitory-impact
+mechanism is backwards here. **The arithmetic closes the clock before any signal: fee A is 14.5% /
+7.1% of the expected hourly move on MNQ (thin / thick; break-even 57.2% / 53.5%), 21% / 11% on MES,
+19–60% on ZN/ZB with the tick.** Nothing spent; 2024+ unread on every root. **Next for a
+24-hour-market component: a session-long hold on a *state*, on a non-index root** — the
+daily-state family (D495/D498's clock) on CL/GC/6E/ZN is unscored and outside the overnight
+closure (which names only the index leg). Not started; the principal's direction.
+
 ## D498 — K8 IS THE LEDGER'S FIRST ENTRY (PROVISIONAL): LONG THE NQ DAY SESSION AFTER A DOWN DAY, NET SHARPE +0.61 AT ONE MICRO, 2026-09-12
 
 Declared as a component candidate from D495's other side (selection stated), with three
