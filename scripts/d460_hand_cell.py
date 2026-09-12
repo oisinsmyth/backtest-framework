@@ -59,27 +59,39 @@ SETTINGS_LINE_HAND = ("k=1 mp=2 maxp=0 carry=7 dh=20 dg=0 mw=0 body=on bdepth=3 
                       "fittol=16 pairbreak=off pairdraw=off fit=ols ttol=0.37 mt=1 margin=4")
 
 
-def hand_lines(RC, DR, PVT, bars, cell, margin):
-    """The per-bar view: drawn level (with the margin) and gradient per side."""
-    m = len(bars)
-    op = np.array([b.bar.open for b in bars], float)
-    cl = np.array([b.bar.close for b in bars], float)
-    hi = np.array([b.bar.high for b in bars], float)
-    lo = np.array([b.bar.low for b in bars], float)
-    with np.errstate(divide="ignore"):
-        body = {"support": np.log(np.minimum(op, cl)), "resistance": np.log(np.maximum(op, cl))}
-        ext = {"support": np.log(lo), "resistance": np.log(hi)}
-    ps = PVT(bars, cell["k"])
+def pivots_of(PVT, bars, k):
+    """The confirmed pivots per side as (bar index array, log price array) -- the one input the
+    construction needs that requires the bar objects, so a worker can be handed arrays only."""
+    ps = PVT(bars, k)
     piv = {}
     for kd, sg in (("support", -1), ("resistance", +1)):
         piv[kd] = (np.array([p.index for p in ps if p.sign == sg], int),
                    np.log(np.array([p.price for p in ps if p.sign == sg], float)))
+    return piv
+
+
+def hand_lines(RC, DR, PVT, bars, cell, margin):
+    """The per-bar view: drawn level (with the margin) and gradient per side."""
+    op = np.array([b.bar.open for b in bars], float)
+    cl = np.array([b.bar.close for b in bars], float)
+    hi = np.array([b.bar.high for b in bars], float)
+    lo = np.array([b.bar.low for b in bars], float)
+    return lines_from_arrays(RC, op, cl, hi, lo, pivots_of(PVT, bars, cell["k"]), cell, margin,
+                             DR.DELTA, RC.INF if cell["dg"] is None else DR.h_of_annual(cell["dg"]))
+
+
+def lines_from_arrays(RC, op, cl, hi, lo, piv, cell, margin, delta, max_dg):
+    """The construction on arrays alone (D461's workers): no bar objects, no fixture modules."""
+    m = op.size
+    with np.errstate(divide="ignore"):
+        body = {"support": np.log(np.minimum(op, cl)), "resistance": np.log(np.maximum(op, cl))}
+        ext = {"support": np.log(lo), "resistance": np.log(hi)}
     G, L, S, why = RC.recalc_pair(
         piv, cell["k"], body, m,
         carry=cell["carry"], min_piv=cell["min_piv"],
-        max_dg=RC.INF if cell["dg"] is None else DR.h_of_annual(cell["dg"]),
+        max_dg=max_dg,
         max_dh=math.log1p(cell["dh"] / 100), use_body=cell["use_body"],
-        min_width=math.log1p(cell["min_width"] / 100), delta=DR.DELTA, ext_log=ext,
+        min_width=math.log1p(cell["min_width"] / 100), delta=delta, ext_log=ext,
         break_pivot=cell["break_pivot"], anchor_clear=cell["anchor_clear"],
         decay_end=cell["decay_end"], extend_back=cell["extend_back"],
         back_tol=None, fit_mode=cell["fit_mode"], touch_tol=cell["touch_tol"],

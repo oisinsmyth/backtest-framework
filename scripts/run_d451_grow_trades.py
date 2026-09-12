@@ -82,6 +82,29 @@ def _grow(args):
         raise
 
 
+def _hand_init():
+    """D461: the hand cell per name in a worker. The pivot construction is GIL-bound Python at
+    ~1-2 s a name; over processes the panel's 1,573 names take minutes, not the better part of
+    an hour. ARRAYS ONLY cross into the worker: the pivots are detected in the parent (the
+    detector needs the bar objects and the fixture modules, and a worker that imported those
+    hung), and the worker loads the estimator module and the cell, nothing else."""
+    _W["RC"] = _load("d399rc", "d399_recalc_segment.py")
+    _W["HC"] = _load("d460hc", "d460_hand_cell.py")
+
+
+def _hand(args):
+    sym, op, cl, hi, lo, piv, delta, max_dg = args
+    try:
+        t0 = time.time()
+        HC = _W["HC"]
+        N = HC.lines_from_arrays(_W["RC"], op, cl, hi, lo, piv, HC.CELL_HAND, HC.MARGIN, delta, max_dg)
+        return sym, N, time.time() - t0
+    except BaseException:
+        import traceback
+        (REPO / "temp" / "d461_worker.err").write_text(f"{sym}\n" + traceback.format_exc())
+        raise
+
+
 def _grow_inner(args):
     sym, o, h, l, c = args
     CG, RC, P = _W["CG"], _W["RC"], _W["P"]
@@ -157,8 +180,14 @@ def main() -> int:
     ap.add_argument("--line", default=LINE, help="the GROW settings line (default: D451's)")
     ap.add_argument("--out", default=str(OUT), help="the result file (default: D451's)")
     ap.add_argument("--tag", default="D451", help="the decision the run belongs to")
+    ap.add_argument("--source", default="grow", choices=("grow", "hand"),
+                    help="what fills the first column: the grow-right walk, or D460's hand cell (D461)")
     a = ap.parse_args()
     LINE, OUT = a.line, Path(a.out).resolve()      # resolved: the final print is repo-relative
+    HC = _load("d460hc", "d460_hand_cell.py") if a.source == "hand" else None
+    LBL = "HAND" if a.source == "hand" else "GROW"
+    if HC is not None:
+        LINE = HC.SETTINGS_LINE_HAND
 
     t0 = time.time()
     RC = _load("d399rc", "d399_recalc_segment.py")
@@ -179,7 +208,7 @@ def main() -> int:
     panel, cleaned = RP.load_ragged(*DR.MINING, fee_bps=0.0, dividend_bound=True)
     T, n = len(panel.dates), len(panel.symbols)
     print(f"\n  panel {n} names x {T} dates in {time.time() - t0:.0f}s")
-    print(f"  GROW   {LINE}")
+    print(f"  {LBL:<6s} {LINE}")
     print(f"  CAUSAL D399 CELL_FINAL (D450's causal arm)")
     print(f"  RULE   in while a trend, out when not; minimum gradient swept {list(GMIN_PCT)} %/yr; "
           f"NO target, NO stop; headline {HEAD_GMIN:.0f}")
@@ -217,27 +246,52 @@ def main() -> int:
         syms = syms[:a.names]
 
     # ---- the GROW walk, over processes; longest names first so the tail is short
-    items = sorted(syms, key=lambda s: -len(cleaned[s]))
-    tot_bars = sum(len(cleaned[s]) for s in items)
-    print(f"  [P] GROW walk: {tot_bars / 1e6:.2f} M bars at ~1 ms/bar over {a.workers} workers "
-          f"-> projected {tot_bars * 1e-3 / a.workers / 60:.0f} min wall")
-    t1 = time.time()
-    grow_runs, cpu = {}, 0.0
-    args = [(s, *(np.array([getattr(b.bar, k) for b in cleaned[s]], float) for k in ("open", "high", "low", "close")))
-            for s in items]
-    if a.workers > 1 and len(items) > 3:
-        with mp.get_context("spawn").Pool(a.workers, initializer=_init, initargs=(LINE,)) as pool:
-            for k, (s, runs, dt) in enumerate(pool.imap_unordered(_grow, args, chunksize=4)):
+    grow_runs, hand_N, cpu, wall = {}, {}, 0.0, 0.0
+    if a.source == "grow":
+        items = sorted(syms, key=lambda s: -len(cleaned[s]))
+        tot_bars = sum(len(cleaned[s]) for s in items)
+        print(f"  [P] GROW walk: {tot_bars / 1e6:.2f} M bars at ~1 ms/bar over {a.workers} workers "
+              f"-> projected {tot_bars * 1e-3 / a.workers / 60:.0f} min wall")
+        t1 = time.time()
+        args = [(s, *(np.array([getattr(b.bar, k) for b in cleaned[s]], float) for k in ("open", "high", "low", "close")))
+                for s in items]
+        if a.workers > 1 and len(items) > 3:
+            with mp.get_context("spawn").Pool(a.workers, initializer=_init, initargs=(LINE,)) as pool:
+                for k, (s, runs, dt) in enumerate(pool.imap_unordered(_grow, args, chunksize=4)):
+                    grow_runs[s], cpu = runs, cpu + dt
+                    if (k + 1) % 200 == 0:
+                        print(f"    grow {k + 1}/{len(items)} names, {time.time() - t1:.0f}s wall")
+        else:
+            _init(LINE)
+            for s, runs, dt in map(_grow, args):
                 grow_runs[s], cpu = runs, cpu + dt
-                if (k + 1) % 200 == 0:
-                    print(f"    grow {k + 1}/{len(items)} names, {time.time() - t1:.0f}s wall")
+        wall = time.time() - t1
+        print(f"  [SPEED] GROW walk {wall:.0f}s wall, sum(item time)/wall = {cpu / max(wall, 1e-9):.2f}x"
+              + ("" if a.workers == 1 or cpu / max(wall, 1e-9) >= 0.7 * a.workers else "  << BELOW 70% EFFICIENCY"))
     else:
-        _init(LINE)
-        for s, runs, dt in map(_grow, args):
-            grow_runs[s], cpu = runs, cpu + dt
-    wall = time.time() - t1
-    print(f"  [SPEED] GROW walk {wall:.0f}s wall, sum(item time)/wall = {cpu / max(wall, 1e-9):.2f}x"
-          + ("" if a.workers == 1 or cpu / max(wall, 1e-9) >= 0.7 * a.workers else "  << BELOW 70% EFFICIENCY"))
+        hand_N = {}
+        if a.workers > 1 and len(syms) > 3:
+            items = sorted(syms, key=lambda s: -len(cleaned[s]))
+            print(f"  [P] HAND cell (D460): the pivot construction on {len(items)} names over {a.workers} workers "
+                  f"(~1.5 s a name single-threaded -> projected {1.5 * len(items) / a.workers / 60:.0f} min wall)")
+            t1 = time.time()
+            max_dg = RC.INF if HC.CELL_HAND["dg"] is None else DR.h_of_annual(HC.CELL_HAND["dg"])
+            hand_args = []
+            for s in items:                      # pivots in the parent: the detector needs the bar objects
+                bb = cleaned[s]
+                hand_args.append((s, *(np.array([getattr(b.bar, q) for b in bb], float) for q in ("open", "close", "high", "low")),
+                                  HC.pivots_of(PVT, bb, HC.CELL_HAND["k"]), DR.DELTA, max_dg))
+            print(f"    pivots detected for {len(items)} names in {time.time() - t1:.0f}s")
+            with mp.get_context("spawn").Pool(a.workers, initializer=_hand_init) as pool:
+                for k, (s, N, dt) in enumerate(pool.imap_unordered(_hand, hand_args, chunksize=2)):
+                    hand_N[s], cpu = N, cpu + dt
+                    if (k + 1) % 200 == 0:
+                        print(f"    hand {k + 1}/{len(items)} names, {time.time() - t1:.0f}s wall")
+            wall = time.time() - t1
+            print(f"  [SPEED] HAND cell {wall:.0f}s wall, sum(item time)/wall = {cpu / max(wall, 1e-9):.2f}x"
+                  + ("" if cpu / max(wall, 1e-9) >= 0.7 * a.workers else "  << BELOW 70% EFFICIENCY"))
+        else:
+            print(f"  [P] HAND cell (D460): the pivot construction per name in the trades loop, single process")
 
     # ---- trades, both sources, every gmin
     GM = {p: math.log1p(p / 100) / 252.0 for p in GMIN_PCT}
@@ -272,9 +326,17 @@ def main() -> int:
         cum_jump = np.concatenate(([0], np.cumsum(jump.astype(int))))
         for sc in SOURCES:
             if sc == "GROW":
-                N, runs = CG.causal_lines(RC, bars, P, runs=grow_runs[s])
-                run_len += [r["b"] - r["a"] + 1 for r in runs]
-                win_len += [r["b"] - r["A"] + 1 for r in runs]
+                if HC is not None:
+                    N = hand_N[s] if s in hand_N else HC.hand_lines(RC, DR, PVT, bars, HC.CELL_HAND, HC.MARGIN)
+                    for kd in ("support", "resistance"):    # drawn-run lengths, from the mask
+                        dr_ = N["drawn"][kd].astype(int)
+                        ch_ = np.flatnonzero(np.diff(np.concatenate(([0], dr_, [0]))))
+                        run_len += list(ch_[1::2] - ch_[0::2])
+                    win_len = run_len
+                else:
+                    N, runs = CG.causal_lines(RC, bars, P, runs=grow_runs[s])
+                    run_len += [r["b"] - r["a"] + 1 for r in runs]
+                    win_len += [r["b"] - r["A"] + 1 for r in runs]
                 if N0 is None:
                     N0, el0 = N, elig
             else:
@@ -331,7 +393,7 @@ def main() -> int:
     print(f"  [XV] the extractor comparison rejects a one-bar shift  OK")
 
     rl, wl = np.array(run_len, float), np.array(win_len, float)
-    print(f"\n  GROW: {len(rl):,} drawn runs | drawn length median {np.median(rl):.0f} p90 "
+    print(f"\n  {LBL}: {len(rl):,} drawn runs | drawn length median {np.median(rl):.0f} p90 "
           f"{np.percentile(rl, 90):.0f} max {rl.max():.0f} | window median {np.median(wl):.0f} | "
           f"both lines drawn on {100 * cover['GROW'][0] / max(1, cover['GROW'][1]):.0f}% of bars "
           f"(CAUSAL {100 * cover['CAUSAL'][0] / max(1, cover['CAUSAL'][1]):.0f}%)")
@@ -341,11 +403,11 @@ def main() -> int:
           f"when every future level is deleted  OK")
     hkey = ("GROW", HEAD_GMIN)
     v, d = D7.audit_sign(rows[hkey], sym_of, tot_by_sym)
-    print(f"  [S] the largest up-bar inside a {'long' if d > 0 else 'short'} GROW trade "
+    print(f"  [S] the largest up-bar inside a {'long' if d > 0 else 'short'} {LBL} trade "
           f"({1e4 * v:+.0f} bp) contributes with the right sign  OK")
 
     # ---- per-trade table
-    print(f"\n  PER TRADE, gross bp -- GROW (D451's lines) vs CAUSAL (D399's), SAME rule")
+    print(f"\n  PER TRADE, gross bp -- {LBL} ({'D460 hand cell' if HC else 'grow-right lines'}) vs CAUSAL (D399's CELL_FINAL), SAME rule")
     print(f"  {'gmin':>6s} {'side':<6s} {'':<2s}{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} "
           f"{'trim':>8s} {'net':>8s} {'win%':>5s} {'hold':>5s}   |   "
           f"{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} {'net':>8s} {'win%':>5s} {'hold':>5s}")
@@ -459,17 +521,17 @@ def main() -> int:
                         top10=float(vals[:10].sum() / tot_p) if tot_p > 0 else np.nan,
                         profitable_years=sum(1 for v in years.values() if v > 0), years=len(years))
         cc = conc[nm]
-        print(f"  [CONC] GROW {nm:<5s} {cc['names']} names, {cc['names_to_half']} to half the P&L, "
+        print(f"  [CONC] {LBL} {nm:<5s} {cc['names']} names, {cc['names_to_half']} to half the P&L, "
               f"top1/5/10 {100 * cc['top1']:.0f}/{100 * cc['top5']:.0f}/{100 * cc['top10']:.0f}%, "
               f"{cc['profitable_years']}/{cc['years']} years profitable")
     top = max(rows[hkey], key=lambda r: r["gross"]) if rows[hkey] else None
     if top:
-        print(f"  TOP TRADE (GROW, gmin {HEAD_GMIN:.0f}%): {top['sym']} {top['date']} "
+        print(f"  TOP TRADE ({LBL}, gmin {HEAD_GMIN:.0f}%): {top['sym']} {top['date']} "
               f"{top['e']}->{top['x']} {'long' if top['dir'] > 0 else 'short'} "
               f"{1e4 * top['gross']:+.0f} bp")
     for side, nm in ((1, "long"), (-1, "short")):
         k = sum(1 for r in rows[hkey] if r["dir"] == side)
-        print(f"  [N] GROW {nm} trades at the headline gmin: {k}"
+        print(f"  [N] {LBL} {nm} trades at the headline gmin: {k}"
               + ("" if k >= MIN_TRADES or a.proof else f"  << {MIN_TRADES}, VACUOUS"))
     print(f"  split-guard rejections: {n_split}")
     if not a.proof and not a.names:              # a partial panel is never the record's file
