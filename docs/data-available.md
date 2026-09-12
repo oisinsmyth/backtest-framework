@@ -37,7 +37,13 @@ headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **
 2010-06-06 → 2026-09-10 with zero interior gaps and zero overlaps.**
 
 **Committed fixtures built over it:** `fut_sessions_hourly.csv.gz` (D467, hourly session tables,
-nine roots, 2016 →) and **`fut_micro_flow_5m.csv.gz` (D485: signed 5-minute order flow of ES/MES
+nine roots, 2016 →); **`fut_open_interest_daily.csv.gz` (D497: daily root-total open interest and
+cleared volume for ES, NQ, CL, GC from the `statistics` schema, keyed on the session each figure
+is first USABLE — published strictly before a 10:00 ET entry; 100% coverage, staleness one session,
+builder `scripts/build_fut_open_interest.py`, 1.8 min). What bites: `ts_ref` is the session START,
+the evening BEFORE the trade date it describes, so a naive read is off by a day; open interest for
+trade date T is first published ≈ 21:00 ET on T itself; and a per-contract series must drop expired
+months or the root total carries dead open interest forever;** and **`fut_micro_flow_5m.csv.gz` (D485: signed 5-minute order flow of ES/MES
 and NQ/MNQ from `tbbo`, exchange aggressor side, front month per session, 259 sessions
 2025-09-11 → 2026-09-10; gates T1–T5 in its meta; builder `scripts/build_fut_micro_flow.py`,
 3.3 min on 8 processes).** What bites: the ohlcv-1m span ends one session before the tbbo span,

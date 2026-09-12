@@ -31,6 +31,40 @@ across seven schemas*, so the roll gates do not transfer.
 
 ---
 
+## PRICE ACTION AND VOLUME — the slate, and the first one reported (D497), 2026-09-12
+
+The principal asked for price-action and volume constructions for the prop book. **The arithmetic
+that should govern the choice** (committed fixtures, this session): on the NQ day session the
+average 10:00→16:00 move is 286 MNQ ticks against a 7.01-tick round trip, so **the fee is 2.4% of
+the average move**. Break-even is **51.2% directional accuracy**, a component Sharpe of 0.5 needs
+**53.6%**, and the log MACD gets ≈ 50.7%. **Cost is not the binding constraint at this horizon;
+direction is.** That also kills the "trade only the wide days" lever, which only pays where
+cost/E|M| is large.
+
+**The slate, ranked, with the dead ones named:** (1) open interest against price — **RUN, see
+below**; (2) volume per unit of overnight range, an absorption read that is not the overnight
+return D494 already killed; (3) where in the session the volume sits (front-loaded against
+building into the close); (4) session-scale signed order flow on the D485 tape fixture (right
+horizon, one year of sample); (5) the prior session's volume point of control, ranked last because
+D490 showed the specific level is where the losses come from. **Already dead, do not re-propose:**
+yesterday's range plus a volume spike (D490, D492), volatility-conditioned continuation (D474,
+D475), opening-range breakouts, path shape (D471), channels (D476–D483), contract size as a
+participant proxy (D485). **Held by the other session:** MACD confluence and the daily-state fades.
+
+**[D497 RESULT](docs/decisions/D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing-the-open-interest-term-flips-sign-between-index-and-commodity-roots-and-the-textbook-reading-is-backwards-on-gold.md)
+— the four-quadrant open-interest read carries nothing.** The `statistics` schema had never been
+read here; it is now a gated fixture (`fut_open_interest_daily.csv.gz`, four roots, 2010→2026,
+100% coverage, causality asserted: open interest for trade date T is first published ≈ 21:00 ET on
+T, so a 10:00 entry on T+1 legitimately knows it). No cell is positive net, none clears its exact
+rotation p95 or the family bar. The open-interest term adds +3.5 and +6.4 gross dollars a session
+on ES and NQ and subtracts 5.9 and 5.4 on CL and GC, with no consistent ordering against a
+cleared-volume version and every difference inside one SE. On gold the "short covering, therefore
+fade" quadrant is the most *positive* (+$10.7 over 334 sessions). **Useful negative: open interest
+is distinguishable from volume**, so neither can be dismissed as the other in a later record.
+One gate could not fire as written and is recorded as amended rather than passed off.
+
+---
+
 ## ALL IN ON THE PROP BOOK — the principal, 2026-09-12; the lane split between sessions
 
 The principal: *"we are going all in on the prop book, so if it doesn't help that then we have to
