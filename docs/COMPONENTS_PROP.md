@@ -175,3 +175,38 @@ The routing rule takes effect for constructions scored from here.
 on the eight gated roots at micro cost) is closed for the prop book after D499. The reversal it
 measured is real on the US off-hours clock and worth a tick; the fee is 7–24% of an hourly move on
 the micros. See BOOK_PROP's closure section and FINDINGS §70. Nothing spent; 2024+ unread.
+
+---
+
+## THE ONE-PASS FORWARD READ IS SPENT — D503, 2026-09-13
+
+**On the principal's word.** The read [BOOK_PROP](BOOK_PROP.md) parked K8 for, taken once on
+**2024-01-02 → 2026-09-09**, 652 union sessions, for K8, the MACD component **and** the assembled
+book together. **The slice is now SPENT for all three. Nothing may be re-read, re-scored or
+sharpened on it.**
+
+| | in-sample | forward | verdict |
+|---|---:|---:|---|
+| **#1 K8** — long 1 MNQ, 09:30+tick → 15:59, after a down day | net Sharpe **+0.595**, gross **+$17.87**/trade, hit 57%, z +2.89 | net Sharpe **−0.160**, gross **−$4.46**/trade, hit 50.6%, z **+0.02**, total **−$2,297** | **PROVISIONAL** by D498 §3's own rule (REMOVED needs Sharpe < −0.3 *or* a negative difference; it reads −0.16 and +0.2 bp). **The rule says PROVISIONAL; a negative GROSS mean says the edge is gone.** Its own N1 null: p95 +7.7 bp against +0.9 bp observed — does not clear |
+| **#2 the MACD component** — 1 MNQ, NQ day session, both log MACDs agree, min hold 5 h, flat 16:00 | net Sharpe **+0.723**, σ $180, skew −0.05, best day 6.7% of total | net Sharpe **+0.736**, σ **$340**, skew **+0.68**, kurtosis **12.1**, best day **84.9%** of total | **FULL** by D503 §3's rule (Sharpe > 0.5, gross > 0) — **and not to be trusted on it**: it does **not** clear its own rotation null (obs +0.736 against p95 +0.758, −0.8 SE, UNRESOLVED), 3 of 632 sessions carry half the P&L, and the **mean per trade ex-top-1% is −$0.59** |
+| **ρ(#1, #2)** | **+0.190** | **+0.197** | C-b cleared on both windows — the most stable number in the read, and it did not help |
+
+**The assembled book is NOT admitted.** Un-netted, 1 MNQ each, summed: net Sharpe **+0.364** —
+**worse than its best arm alone (+0.736)**, because layering only helps when the arms' Sharpes
+are comparable and a −0.16 arm subtracts whatever ρ does. Hurdle P: **P3a 6.96 breaches/yr
+against a bar of 1.0, FAIL**; **C-d σ $534 against $500, FAIL**; worst day **−$2,724 = 136% of
+the account's entire $2,000 loss budget**; **empirical trailing-4% life 31 sessions, 20 deaths**
+in the slice. Book-level alignment null: observed +0.364 against a p50 of **+0.398** — the arms'
+real alignment is worse than random, at −87.5 SE.
+
+**And the load-bearing finding is about the CONTRACT, not either signal.** Daily σ nearly doubled
+on an unchanged strategy ($180 → $340) because **MNQ pays $2 an index point and NQ's level
+roughly doubled** between the windows. At 2026 price levels **one MNQ is too large for a $50k
+account with a $2,000 trailing floor**: the single-arm worst day is 88% of the whole loss budget
+and the book's is 136%, and there is nothing smaller than one micro. D493 found the full contract
+too big; the micro is now too big as well. Every C-d, P3 and P4 figure quoted in this ledger from
+a 2016–2023 window is a **price-level artefact** and must be recomputed per year.
+
+**What is NOT closed:** the constructions. Gross is +$19.68 a trade forward against a $3.50 cost,
+so the signal pays — the barrier no longer fits the contract. Closing an avenue is the
+principal's.

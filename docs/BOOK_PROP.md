@@ -815,3 +815,34 @@ terms: low-relative-volume moves revert **less**, on seven of eight roots.
 **Spent:** nothing — 2024+ is unread on every root under D499.
 **Open:** a session-long hold on a non-index root, gated on a daily state, which the overnight
 closure does not name and whose fee is 4–7% of the move rather than 14%. Not started.
+
+---
+
+## THE FORWARD READ IS TAKEN AND THIS PAGE STILL ADMITS NO ARM — D503, 2026-09-13
+
+**On the principal's word**, the one-pass read this page had been waiting for was taken on
+**2024-01-02 → 2026-09-09** for K8, the MACD component and the assembled two-arm book together.
+**That slice is now SPENT for all three.** Full numbers in
+[`COMPONENTS_PROP.md`](COMPONENTS_PROP.md) and
+[D503](decisions/D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has-grown-into-the-barrier-and-the-book-is-worse-than-its-best-arm.md).
+
+**The book was assembled and it fails hurdle P.** Net Sharpe **+0.364** — *worse than its best
+arm alone at +0.736* — with **P3a at 6.96 breaches a year against a bar of 1.0**, **C-d's σ at
+$534 against $500**, a worst day of **−$2,724 = 136% of the account's entire $2,000 loss budget**,
+and an **empirical trailing-4% life of 31 sessions across 20 deaths**. The single admission gate
+is hurdle P all six, and it fails on P3a. **No arm is admitted.**
+
+**What the read actually established, and it is not about either signal.** Daily σ nearly doubled
+on an unchanged strategy, $180 → $340, because **MNQ pays $2 an index point and NQ's level
+roughly doubled** between the in-sample window and 2026. **At 2026 price levels one MNQ is too
+large for a $50,000 account with a $2,000 trailing floor** — the single-arm worst day is 88% of
+the whole loss budget — and **there is nothing smaller than one micro.** [D493](decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the-barrier-a-full-contract-dies-in-weeks-at-every-plan-and-nothing-the-programme-holds-is-carryable.md)
+found the full contract too big for this floor; the micro is now too big as well.
+
+**So the binding constraint on this page has changed.** It was "find an edge that survives the
+fee". It is now **"find an account whose floor fits one micro at today's index level"** — a
+larger account, a cheaper-per-point instrument, or a venue with a wider drawdown. That is a
+question about the vehicle, not about a signal, and it is the principal's to direct.
+
+**What is NOT closed:** the constructions. Forward gross is **+$19.68 a trade against a $3.50
+cost** — the signal pays. Closing an avenue is the principal's, and nothing here closes one.
