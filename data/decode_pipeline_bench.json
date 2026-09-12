@@ -1,0 +1,39 @@
+{
+ "measured_utc": "2026-09-11",
+ "purpose": "where the Databento decode pipeline bottlenecks on this machine, and therefore what an external drive must sustain to avoid idling the CPU. Not a study; opens and closes nothing.",
+ "reproduce": "uv run python scripts/bench_decode_pipeline.py <scratch-dir>",
+ "machine": {
+  "model": "Dell Precision 7670",
+  "cpu": "12th Gen Intel Core i5-12600HX",
+  "cores_physical": 12,
+  "cores_logical": 16,
+  "ram_gb": 31.7,
+  "ram_config": "2 x 16 GB DDR5-4800",
+  "internal_disk": "KIOXIA EXCERIA PLUS G3, 932 GB NVMe",
+  "thunderbolt": "Thunderbolt(TM) Controller - 1137, status OK",
+  "usb_controllers": ["Intel USB 3.10 eXtensible Host Controller", "Intel USB 3.20 eXtensible Host Controller"]
+ },
+ "payload": {
+  "uncompressed_bytes": 536601520,
+  "records": 9582170,
+  "what": "real market bars from data/fixtures/index_extended_15m_raw.csv.gz packed into the exact 56-byte DBN OHLCV record layout, tiled to 512 MB"
+ },
+ "zstd_ratio_level_3": 2.68,
+ "stages_per_core_mb_s": {
+  "zstd_compress": 217,
+  "zstd_decompress_uncompressed_side": 754,
+  "numpy_parse_frombuffer": 8755,
+  "end_to_end_compressed_bytes_to_float_array": 681
+ },
+ "disk_read_needed_mb_s_by_worker_count": {
+  "1": 254, "4": 1018, "8": 2036, "12": 3053, "16": 4071
+ },
+ "finding": "zstd decompression is the bottleneck, not parsing. numpy parse runs 12x faster than zstd decompress, so the DBN format itself costs almost nothing to read. One worker consumes 254 MB/s of COMPRESSED disk read.",
+ "implication_for_hardware": "a 10 Gbps USB enclosure delivers about 1,000 MB/s and would saturate at 4 of 12 physical cores, idling two thirds of the CPU. Thunderbolt 4 / USB4 at roughly 3,000 MB/s feeds 12 workers. This is the floor, not a luxury.",
+ "why_the_disk_is_in_the_critical_path": "31.7 GB of RAM against a roughly 200 GiB one-minute universe uncompressed. The panel cannot be held in memory, so studies stream from disk rather than loading once.",
+ "caveats": [
+  "the internal NVMe read figure of 2,725 MB/s was measured on a warm page cache and is NOT a clean device measurement; the write figure of 592 MB/s is the more honest of the two",
+  "measured on OHLCV records, the most compressible schema here. MBO and MBP-1 records compress differently and their per-core decode rate was not measured",
+  "single-threaded. Multi-worker scaling was inferred by multiplication, not measured, and real scaling will fall short of linear"
+ ]
+}

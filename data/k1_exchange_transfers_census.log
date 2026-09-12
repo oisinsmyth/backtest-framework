@@ -1,0 +1,385 @@
+pairs considered (|gap|<=45, 2010+): 3117
+resolved rows: 1492  dropped: {'8A_no_exchange_header': 398, '8A_missing': 1223, '25_missing': 4}
+
+=== SELF-TEST: PepsiCo 2017 (known NYSE -> NASDAQ transfer) ===
+  orig=NYSE dest=NASDAQ cls=' Common Stock, par value 1-2/3 cents per share The ' -> PASS
+  deliberate-break check (parser on a doc with no exchange header): PASS (returned None)
+
+of 1492 resolved pairs, 8-A12B registers COMMON EQUITY in 509
+of those, not fund/ETF-named: 508
+DIRECTED transfers among the three operating-company venues: 351
+after de-duplicating repeat filings of the same move within 120d: 343 (8 duplicates removed)
+
+=== TRANSFERS PER YEAR BY DIRECTION (8-A12B date) ===
+year            NASDAQ->NYSE           NYSE->NASDAQ    NYSE_AMERICAN->NYSE  NYSE_AMERICAN->NASDAQ  NASDAQ->NYSE_AMERICAN    NYSE->NYSE_AMERICAN   TOTAL
+2010                       7                      5                      5                      7                      1                      0      25
+2011                      10                      7                      8                      1                      2                      0      28
+2012                      11                      5                      2                      1                      1                      0      20
+2013                       5                      3                      6                      5                      1                      1      21
+2014                       5                      3                      2                      2                      0                      0      12
+2015                       2                      3                      1                      0                      0                      1       7
+2016                       2                     10                      1                      3                      0                      0      16
+2017                       5                      4                      3                      3                      0                      0      15
+2018                       3                     11                      1                      0                      0                      0      15
+2019                       2                      6                      3                      2                      0                      0      13
+2020                       2                     10                      1                      0                      0                      0      13
+2021                      13                     10                      3                      7                      3                      0      36
+2022                      13                      6                      0                      2                      2                      2      25
+2023                      14                      6                      0                      1                      3                      9      33
+2024                       8                      8                      0                      1                      1                      1      19
+2025                      10                     14                      3                      3                      0                      0      30
+2026                       5                      4                      3                      2                      1                      0      15
+ALL                      117                    115                     42                     40                     15                     14     343
+
+=== UP vs DOWN, collapsed ===
+  to_NYSE_from_NASDAQ      117
+  to_NASDAQ_from_NYSE      115
+  from_NYSE_AMERICAN       82
+  to_NYSE_AMERICAN         29
+
+wrote K1_transfers.tsv 343
+
+=== every directed transfer, listed (for eyeball verification) ===
+  2010-01-25  NYSE_AMERICAN -> NYSE          CHINA EDUCATION ALLIANCE INC.                cik=1203900
+  2010-02-17  NYSE_AMERICAN -> NASDAQ        SINOCOKING COAL & COKE CHEMICAL INDUSTRIES,  cik=1099290
+  2010-02-23  NASDAQ        -> NYSE          SCHWAB CHARLES CORP                          cik=316709
+  2010-03-15  NYSE_AMERICAN -> NASDAQ        COFFEE HOLDING CO INC                        cik=1007019
+  2010-03-18  NASDAQ        -> NYSE          Paragon Shipping Inc.                        cik=1401112
+  2010-03-23  NYSE          -> NASDAQ        WINNER MEDICAL GROUP INC                     cik=808011
+  2010-04-19  NYSE_AMERICAN -> NASDAQ        SkyPeople Fruit Juice, Inc                   cik=1066923
+  2010-05-19  NYSE_AMERICAN -> NASDAQ        China MediaExpress Holdings, Inc.            cik=1399067
+  2010-05-20  NASDAQ        -> NYSE          KNIGHT CAPITAL GROUP, INC.                   cik=1060749
+  2010-05-24  NYSE_AMERICAN -> NASDAQ        Shengkai Innovations, Inc.                   cik=1327364
+  2010-05-28  NASDAQ        -> NYSE          MONMOUTH REAL ESTATE INVESTMENT CORP         cik=67625
+  2010-06-01  NYSE_AMERICAN -> NASDAQ        TANDY LEATHER FACTORY INC                    cik=909724
+  2010-07-09  NYSE_AMERICAN -> NASDAQ        UROPLASTY INC                                cik=890846
+  2010-07-26  NASDAQ        -> NYSE_AMERICAN HOUSTON AMERICAN ENERGY CORP                 cik=1156041
+  2010-08-11  NASDAQ        -> NYSE          CORPORATE EXECUTIVE BOARD CO                 cik=1066104
+  2010-09-07  NYSE_AMERICAN -> NYSE          Gerova Financial Group Ltd                   cik=1407437
+  2010-09-13  NYSE          -> NASDAQ        ChinaNet Online Holdings, Inc.               cik=1376321
+  2010-10-04  NASDAQ        -> NYSE          GFI Group Inc.                               cik=1292426
+  2010-10-28  NYSE_AMERICAN -> NYSE          U S GOLD CORP                                cik=314203
+  2010-11-12  NYSE_AMERICAN -> NYSE          KEMET CORP                                   cik=887730
+  2010-12-16  NYSE          -> NASDAQ        POTLATCH CORP                                cik=1338749
+  2010-12-20  NYSE          -> NASDAQ        HASBRO INC                                   cik=46080
+  2010-12-27  NASDAQ        -> NYSE          Triangle Capital CORP                        cik=1379785
+  2010-12-29  NYSE_AMERICAN -> NYSE          MAGNUM HUNTER RESOURCES CORP                 cik=1335190
+  2010-12-30  NYSE          -> NASDAQ        AVIS BUDGET GROUP, INC.                      cik=723612
+  2011-01-31  NYSE_AMERICAN -> NYSE          FIVE STAR QUALITY CARE INC                   cik=1159281
+  2011-02-10  NYSE_AMERICAN -> NYSE          Two Harbors Investment Corp.                 cik=1465740
+  2011-03-09  NYSE_AMERICAN -> NYSE          ENDEAVOUR SILVER CORP                        cik=1277866
+  2011-03-30  NASDAQ        -> NYSE          MILLER PETROLEUM INC                         cik=785968
+  2011-03-31  NYSE_AMERICAN -> NYSE          Armour Residential REIT, Inc.                cik=1428205
+  2011-04-29  NYSE_AMERICAN -> NASDAQ        WESTMORELAND COAL Co                         cik=106455
+  2011-05-13  NASDAQ        -> NYSE          3D SYSTEMS CORP                              cik=910638
+  2011-06-27  NASDAQ        -> NYSE          XO GROUP INC.                                cik=1062292
+  2011-07-08  NYSE_AMERICAN -> NYSE          HYPERDYNAMICS CORP                           cik=937136
+  2011-07-15  NASDAQ        -> NYSE          SuccessFactors, Inc.                         cik=1402305
+  2011-07-21  NASDAQ        -> NYSE          HUDSON VALLEY HOLDING CORP                   cik=722256
+  2011-08-02  NYSE_AMERICAN -> NYSE          Kodiak Oil & Gas Corp                        cik=1322866
+  2011-09-14  NYSE_AMERICAN -> NYSE          Opko Health, Inc.                            cik=944809
+  2011-09-29  NASDAQ        -> NYSE_AMERICAN Electromed, Inc.                             cik=1488917
+  2011-11-02  NASDAQ        -> NYSE          KENEXA CORP                                  cik=1114714
+  2011-11-14  NASDAQ        -> NYSE          JOY GLOBAL INC                               cik=801898
+  2011-11-14  NYSE_AMERICAN -> NYSE          METROPOLITAN HEALTH NETWORKS INC             cik=1009379
+  2011-11-23  NASDAQ        -> NYSE_AMERICAN WILLIAMS CONTROLS INC                        cik=854860
+  2011-11-25  NYSE          -> NASDAQ        Fifth Street Finance Corp                    cik=1414932
+  2011-11-30  NYSE          -> NASDAQ        Viacom Inc.                                  cik=1339947
+  2011-12-09  NYSE          -> NASDAQ        SLM CORP                                     cik=1032033
+  2011-12-14  NYSE          -> NASDAQ        EASTERN CO                                   cik=31107
+  2011-12-14  NYSE          -> NASDAQ        FRONTIER COMMUNICATIONS CORP                 cik=20520
+  2011-12-15  NYSE          -> NASDAQ        TEXAS INSTRUMENTS INC                        cik=97476
+  2011-12-16  NASDAQ        -> NYSE          PROVIDENT NEW YORK BANCORP                   cik=1070154
+  2011-12-22  NASDAQ        -> NYSE          PROSPERITY BANCSHARES INC                    cik=1068851
+  2011-12-22  NASDAQ        -> NYSE          TEAM INC                                     cik=318833
+  2011-12-23  NYSE          -> NASDAQ        Wendy's Co                                   cik=30697
+  2012-02-03  NASDAQ        -> NYSE          KAMAN CORP                                   cik=54381
+  2012-03-21  NYSE          -> NASDAQ        ANALOG DEVICES INC                           cik=6281
+  2012-03-21  NASDAQ        -> NYSE          HALCON RESOURCES CORP                        cik=1282648
+  2012-03-29  NASDAQ        -> NYSE          ARABIAN AMERICAN DEVELOPMENT CO              cik=7039
+  2012-04-16  NASDAQ        -> NYSE          TD AMERITRADE HOLDING CORP                   cik=1173431
+  2012-04-17  NASDAQ        -> NYSE          HERCULES TECHNOLOGY GROWTH CAPITAL INC       cik=1280784
+  2012-05-23  NASDAQ        -> NYSE          TEVA PHARMACEUTICAL INDUSTRIES LTD           cik=818686
+  2012-05-31  NYSE_AMERICAN -> NYSE          ELLIE MAE INC                                cik=1122388
+  2012-05-31  NYSE          -> NASDAQ        WESTERN DIGITAL CORP                         cik=106040
+  2012-06-13  NYSE          -> NASDAQ        ANTARES PHARMA, INC.                         cik=1016169
+  2012-06-18  NASDAQ        -> NYSE          KMG CHEMICALS INC                            cik=1028215
+  2012-06-25  NYSE          -> NASDAQ        KRAFT FOODS INC                              cik=1103982
+  2012-06-25  NYSE_AMERICAN -> NYSE          PIONEER DRILLING CO                          cik=320575
+  2012-08-10  NASDAQ        -> NYSE          U S PHYSICAL THERAPY INC /NV                 cik=885978
+  2012-08-22  NASDAQ        -> NYSE          ON ASSIGNMENT INC                            cik=890564
+  2012-10-19  NASDAQ        -> NYSE          Homeowners Choice, Inc.                      cik=1400810
+  2012-11-02  NASDAQ        -> NYSE          WARWICK VALLEY TELEPHONE CO                  cik=104777
+  2012-11-05  NASDAQ        -> NYSE_AMERICAN WARWICK VALLEY TELEPHONE CO                  cik=104777
+  2012-12-26  NYSE_AMERICAN -> NASDAQ        SALISBURY BANCORP INC                        cik=1060219
+  2012-12-27  NYSE          -> NASDAQ        PILGRIMS PRIDE CORP                          cik=802481
+  2013-01-23  NYSE_AMERICAN -> NASDAQ        PERNIX THERAPEUTICS HOLDINGS, INC.           cik=1024126
+  2013-01-29  NYSE_AMERICAN -> NYSE          WATSCO INC                                   cik=105016
+  2013-04-01  NYSE_AMERICAN -> NYSE          TRAVELCENTERS OF AMERICA LLC                 cik=1378453
+  2013-04-26  NASDAQ        -> NYSE          THOMAS PROPERTIES GROUP INC                  cik=1283709
+  2013-04-29  NYSE_AMERICAN -> NASDAQ        Vringo Inc                                   cik=1410428
+  2013-05-10  NYSE          -> NASDAQ        MONEYGRAM INTERNATIONAL INC                  cik=1273931
+  2013-06-03  NASDAQ        -> NYSE          PERRIGO CO                                   cik=820096
+  2013-06-06  NASDAQ        -> NYSE_AMERICAN Ampio Pharmaceuticals, Inc.                  cik=1411906
+  2013-07-03  NASDAQ        -> NYSE          ORACLE CORP                                  cik=1341439
+  2013-07-19  NASDAQ        -> NYSE          EXAR CORP                                    cik=753568
+  2013-08-02  NYSE_AMERICAN -> NASDAQ        NeoStem, Inc.                                cik=320017
+  2013-08-12  NYSE_AMERICAN -> NASDAQ        RENTECH INC /CO/                             cik=868725
+  2013-08-12  NASDAQ        -> NYSE          POWERSECURE INTERNATIONAL, INC.              cik=882154
+  2013-08-30  NYSE          -> NYSE_AMERICAN SKYLINE CORP                                 cik=90896
+  2013-09-19  NYSE_AMERICAN -> NYSE          MIDSOUTH BANCORP INC                         cik=745981
+  2013-09-30  NYSE_AMERICAN -> NYSE          ARGAN INC                                    cik=100591
+  2013-10-18  NYSE          -> NASDAQ        MARRIOTT INTERNATIONAL INC /MD/              cik=1048286
+  2013-10-30  NYSE          -> NASDAQ        FAIRCHILD SEMICONDUCTOR INTERNATIONAL INC    cik=1036960
+  2013-11-21  NYSE_AMERICAN -> NYSE          UNIVERSAL INSURANCE HOLDINGS, INC.           cik=891166
+  2013-12-02  NYSE_AMERICAN -> NYSE          LANNETT CO INC                               cik=57725
+  2013-12-27  NYSE_AMERICAN -> NASDAQ        TUCOWS INC /PA/                              cik=909494
+  2014-04-03  NYSE_AMERICAN -> NASDAQ        MeetMe, Inc.                                 cik=1078099
+  2014-04-21  NYSE_AMERICAN -> NYSE          GRAHAM CORP                                  cik=716314
+  2014-05-02  NASDAQ        -> NYSE          DECKERS OUTDOOR CORP                         cik=910521
+  2014-05-23  NASDAQ        -> NYSE          BANC OF CALIFORNIA, INC.                     cik=1169770
+  2014-07-08  NASDAQ        -> NYSE          GLOBAL POWER EQUIPMENT GROUP INC.            cik=1136294
+  2014-08-28  NYSE_AMERICAN -> NASDAQ        Fibrocell Science, Inc.                      cik=357097
+  2014-09-26  NYSE          -> NASDAQ        OFFICE DEPOT INC                             cik=800240
+  2014-10-01  NYSE_AMERICAN -> NYSE          Bellatrix Exploration Ltd.                   cik=1483405
+  2014-12-09  NYSE          -> NASDAQ        ADVANCED MICRO DEVICES INC                   cik=2488
+  2014-12-11  NASDAQ        -> NYSE          ASSOCIATED BANC-CORP                         cik=7789
+  2014-12-29  NASDAQ        -> NYSE          Customers Bancorp, Inc.                      cik=1488813
+  2014-12-30  NYSE          -> NASDAQ        Mountain Province Diamonds Inc.              cik=1004530
+  2015-03-12  NYSE          -> NYSE_AMERICAN CENTRUS ENERGY CORP                          cik=1065059
+  2015-07-01  NYSE          -> NASDAQ        Neuralstem, Inc.                             cik=1357459
+  2015-07-13  NYSE_AMERICAN -> NYSE          PREFERRED APARTMENT COMMUNITIES INC          cik=1481832
+  2015-07-14  NASDAQ        -> NYSE          Madison Square Garden Co                     cik=1469372
+  2015-12-01  NYSE          -> NASDAQ        TD AMERITRADE HOLDING CORP                   cik=1173431
+  2015-12-11  NASDAQ        -> NYSE          SUFFOLK BANCORP                              cik=754673
+  2015-12-21  NYSE          -> NASDAQ        CSX CORP                                     cik=277948
+  2016-03-14  NYSE          -> NASDAQ        Scripps Networks Interactive, Inc.           cik=1430602
+  2016-05-02  NYSE          -> NASDAQ        MaxPoint Interactive, Inc.                   cik=1611231
+  2016-06-23  NYSE          -> NASDAQ        Opko Health, Inc.                            cik=944809
+  2016-06-23  NYSE_AMERICAN -> NYSE          OVERSEAS SHIPHOLDING GROUP INC               cik=75208
+  2016-06-30  NYSE          -> NASDAQ        FIVE STAR QUALITY CARE INC                   cik=1159281
+  2016-06-30  NYSE          -> NASDAQ        Select Income REIT                           cik=1537667
+  2016-06-30  NYSE          -> NASDAQ        TRAVELCENTERS OF AMERICA LLC                 cik=1378453
+  2016-07-26  NYSE_AMERICAN -> NASDAQ        ORGANOVO HOLDINGS, INC.                      cik=1497253
+  2016-08-12  NASDAQ        -> NYSE          RR Donnelley & Sons Co                       cik=29669
+  2016-09-23  NYSE          -> NASDAQ        FXCM Inc.                                    cik=1499912
+  2016-09-26  NYSE_AMERICAN -> NASDAQ        Cogint, Inc.                                 cik=1460329
+  2016-10-20  NYSE_AMERICAN -> NASDAQ        MEDGENICS, INC.                              cik=1138776
+  2016-12-07  NYSE          -> NASDAQ        IMPERVA INC                                  cik=1364962
+  2016-12-21  NASDAQ        -> NYSE          PGT Innovations, Inc.                        cik=1354327
+  2016-12-29  NYSE          -> NASDAQ        Evogene Ltd.                                 cik=1574565
+  2016-12-30  NYSE          -> NASDAQ        PUMA BIOTECHNOLOGY, INC.                     cik=1401667
+  2017-04-07  NYSE_AMERICAN -> NYSE          C&J Energy Services, Inc.                    cik=1615817
+  2017-04-27  NYSE_AMERICAN -> NASDAQ        Savara Inc                                   cik=1160308
+  2017-05-03  NYSE_AMERICAN -> NYSE          Midstates Petroleum Company, Inc.            cik=1533924
+  2017-05-04  NYSE_AMERICAN -> NASDAQ        Altimmune, Inc.                              cik=1326190
+  2017-05-05  NYSE_AMERICAN -> NYSE          GORMAN RUPP CO                               cik=42682
+  2017-09-19  NYSE          -> NASDAQ        Workday, Inc.                                cik=1327811
+  2017-10-06  NYSE_AMERICAN -> NASDAQ        TherapeuticsMD, Inc.                         cik=25743
+  2017-11-21  NASDAQ        -> NYSE          WPP plc                                      cik=806968
+  2017-12-01  NASDAQ        -> NYSE          8X8 INC /DE/                                 cik=1023731
+  2017-12-08  NASDAQ        -> NYSE          Norwegian Cruise Line Holdings Ltd.          cik=1513761
+  2017-12-19  NASDAQ        -> NYSE          Spirit Airlines, Inc.                        cik=1498710
+  2017-12-19  NYSE          -> NASDAQ        PEPSICO INC                                  cik=77476
+  2017-12-20  NASDAQ        -> NYSE          QIAGEN NV                                    cik=1015820
+  2017-12-21  NYSE          -> NASDAQ        VISTEON CORP                                 cik=1111335
+  2017-12-29  NYSE          -> NASDAQ        XCEL ENERGY INC                              cik=72903
+  2018-04-23  NASDAQ        -> NYSE          Argo Group International Holdings, Ltd.      cik=1091748
+  2018-05-31  NYSE_AMERICAN -> NYSE          SKYLINE CORP                                 cik=90896
+  2018-06-01  NYSE          -> NASDAQ        E.W. SCRIPPS Co                              cik=832428
+  2018-06-19  NYSE          -> NASDAQ        MARIN SOFTWARE INC                           cik=1389002
+  2018-06-25  NYSE          -> NASDAQ        ESH Hospitality, Inc.                        cik=1507563
+  2018-06-25  NYSE          -> NASDAQ        Extended Stay America, Inc.                  cik=1581164
+  2018-08-15  NYSE          -> NASDAQ        SAGA COMMUNICATIONS INC                      cik=886136
+  2018-09-05  NYSE          -> NASDAQ        United Continental Holdings, Inc.            cik=100517
+  2018-09-24  NYSE          -> NASDAQ        INTREXON CORP                                cik=1356090
+  2018-10-01  NASDAQ        -> NYSE          Acxiom Holdings, Inc.                        cik=733269
+  2018-10-12  NYSE          -> NASDAQ        WEIGHT WATCHERS INTERNATIONAL INC            cik=105319
+  2018-11-26  NYSE          -> NASDAQ        TERADYNE, INC                                cik=97210
+  2018-12-10  NYSE          -> NASDAQ        NEWELL BRANDS INC                            cik=814453
+  2018-12-20  NASDAQ        -> NYSE          UNITED NATURAL FOODS INC                     cik=1020859
+  2018-12-31  NYSE          -> NASDAQ        Sanofi                                       cik=1121404
+  2019-02-25  NYSE          -> NASDAQ        Majesco                                      cik=1626853
+  2019-04-12  NYSE          -> NASDAQ        Zovio Inc                                    cik=1305323
+  2019-05-09  NYSE          -> NASDAQ        REED'S, INC.                                 cik=1140215
+  2019-06-07  NYSE_AMERICAN -> NASDAQ        REXAHN PHARMACEUTICALS, INC.                 cik=1228627
+  2019-06-28  NASDAQ        -> NYSE          IHS Markit Ltd.                              cik=1598014
+  2019-07-11  NYSE_AMERICAN -> NYSE          HEXO Corp.                                   cik=1690947
+  2019-08-09  NASDAQ        -> NYSE          Ubiquiti Networks, Inc.                      cik=1511737
+  2019-11-12  NYSE_AMERICAN -> NYSE          BG Staffing, Inc.                            cik=1474903
+  2019-11-18  NYSE_AMERICAN -> NYSE          Rafael Holdings, Inc.                        cik=1713863
+  2019-12-20  NYSE          -> NASDAQ        CONDUENT Inc                                 cik=1677703
+  2019-12-23  NYSE          -> NASDAQ        Oasis Petroleum Inc.                         cik=1486159
+  2019-12-27  NYSE          -> NASDAQ        NOBLE ENERGY INC                             cik=72207
+  2019-12-31  NYSE_AMERICAN -> NASDAQ        IEC ELECTRONICS CORP                         cik=49728
+  2020-01-30  NASDAQ        -> NYSE          AMBAC FINANCIAL GROUP INC                    cik=874501
+  2020-01-31  NYSE          -> NASDAQ        Intellicheck, Inc.                           cik=1040896
+  2020-02-06  NASDAQ        -> NYSE          CONMED CORP                                  cik=816956
+  2020-07-17  NYSE_AMERICAN -> NYSE          VirnetX Holding Corp                         cik=1082324
+  2020-08-28  NYSE          -> NASDAQ        voxeljet AG                                  cik=1582581
+  2020-09-18  NYSE          -> NASDAQ        Keurig Dr Pepper Inc.                        cik=1418135
+  2020-09-24  NYSE          -> NASDAQ        ASTRAZENECA PLC                              cik=901832
+  2020-09-30  NYSE          -> NASDAQ        AMERICAN ELECTRIC POWER CO INC               cik=4904
+  2020-10-13  NYSE          -> NASDAQ        INPHI Corp                                   cik=1160958
+  2020-10-23  NYSE          -> NASDAQ        Kadmon Holdings, Inc.                        cik=1557142
+  2020-10-30  NYSE          -> NASDAQ        HOST HOTELS & RESORTS, INC.                  cik=1070750
+  2020-11-13  NYSE          -> NASDAQ        Canopy Growth Corp                           cik=1737927
+  2020-12-31  NYSE          -> NASDAQ        ChampionX Corp                               cik=1723089
+  2021-01-04  NYSE          -> NASDAQ        Medley Capital Corp                          cik=1490349
+  2021-01-21  NASDAQ        -> NYSE          Gores Holdings IV, Inc.                      cik=1783398
+  2021-01-27  NASDAQ        -> NYSE          CHART INDUSTRIES INC                         cik=892553
+  2021-01-28  NYSE_AMERICAN -> NYSE          CTO Realty Growth, Inc.                      cik=23795
+  2021-02-02  NYSE_AMERICAN -> NASDAQ        CorMedix Inc.                                cik=1410098
+  2021-02-11  NYSE_AMERICAN -> NASDAQ        Oblong, Inc.                                 cik=746210
+  2021-03-01  NYSE_AMERICAN -> NASDAQ        OncoCyte Corp                                cik=1642380
+  2021-03-08  NASDAQ        -> NYSE_AMERICAN WESTWATER RESOURCES, INC.                    cik=839470
+  2021-03-12  NASDAQ        -> NYSE          INSTEEL INDUSTRIES INC                       cik=764401
+  2021-04-26  NYSE_AMERICAN -> NASDAQ        Bioceres Crop Solutions Corp.                cik=1769484
+  2021-05-10  NYSE          -> NASDAQ        HONEYWELL INTERNATIONAL INC                  cik=773840
+  2021-05-20  NYSE_AMERICAN -> NASDAQ        InspireMD, Inc.                              cik=1433607
+  2021-05-26  NYSE_AMERICAN -> NYSE          INTELLIGENT SYSTEMS CORP                     cik=320340
+  2021-06-08  NASDAQ        -> NYSE_AMERICAN Ocean Power Technologies, Inc.               cik=1378140
+  2021-06-28  NYSE          -> NASDAQ        A. H. Belo Corp                              cik=1413898
+  2021-07-15  NASDAQ        -> NYSE          Builders FirstSource, Inc.                   cik=1316835
+  2021-07-23  NYSE          -> NASDAQ        Churchill Capital Corp IV                    cik=1811210
+  2021-08-11  NYSE          -> NASDAQ        Consonance-HFW Acquisition Corp.             cik=1824893
+  2021-08-12  NYSE_AMERICAN -> NASDAQ        22nd Century Group, Inc.                     cik=1347858
+  2021-08-24  NASDAQ        -> NYSE          Fifth Wall Acquisition Corp. I               cik=1837014
+  2021-09-16  NASDAQ        -> NYSE          Soaring Eagle Acquisition Corp.              cik=1830214
+  2021-09-20  NYSE          -> NASDAQ        Xerox Holdings Corp                          cik=1770450
+  2021-09-30  NASDAQ        -> NYSE          CREE, INC.                                   cik=895419
+  2021-10-15  NASDAQ        -> NYSE          VPC Impact Acquisition Holdings              cik=1820302
+  2021-10-19  NYSE          -> NASDAQ        Navitas Semiconductor Corp                   cik=1821769
+  2021-10-22  NYSE          -> NASDAQ        Palo Alto Networks Inc                       cik=1327567
+  2021-10-22  NYSE_AMERICAN -> NASDAQ        Brooklyn ImmunoTherapeutics, Inc.            cik=748592
+  2021-10-22  NASDAQ        -> NYSE_AMERICAN TELLURIAN INC. /DE/                          cik=61398
+  2021-11-05  NASDAQ        -> NYSE          Nextdoor Holdings, Inc.                      cik=1846069
+  2021-11-10  NYSE          -> NASDAQ        Embark Technology, Inc.                      cik=1827980
+  2021-11-17  NYSE_AMERICAN -> NYSE          Annovis Bio, Inc.                            cik=1477845
+  2021-11-19  NASDAQ        -> NYSE          HOME BANCSHARES INC                          cik=1331520
+  2021-12-06  NYSE          -> NASDAQ        Baker Hughes Co                              cik=1701605
+  2021-12-08  NASDAQ        -> NYSE          Green Brick Partners, Inc.                   cik=1373670
+  2021-12-08  NASDAQ        -> NYSE          Boxed, Inc.                                  cik=1828672
+  2021-12-16  NASDAQ        -> NYSE          Global Indemnity Group, LLC                  cik=1494904
+  2022-01-05  NYSE          -> NASDAQ        VPC Impact Acquisition Holdings III, Inc.    cik=1841408
+  2022-01-12  NASDAQ        -> NYSE          BOSTON OMAHA Corp                            cik=1494582
+  2022-01-25  NYSE          -> NYSE_AMERICAN Yellowstone Acquisition Co                   cik=1823587
+  2022-02-01  NYSE_AMERICAN -> NASDAQ        DAXOR CORP                                   cik=27367
+  2022-02-04  NASDAQ        -> NYSE_AMERICAN HEAT BIOLOGICS, INC.                         cik=1476963
+  2022-04-25  NYSE          -> NASDAQ        Fortress Transportation & Infrastructure Inv cik=1590364
+  2022-05-06  NASDAQ        -> NYSE          Tecnoglass Inc.                              cik=1534675
+  2022-05-09  NASDAQ        -> NYSE          Eve Holding, Inc.                            cik=1823652
+  2022-05-11  NASDAQ        -> NYSE          CareTrust REIT, Inc.                         cik=1590717
+  2022-07-21  NASDAQ        -> NYSE_AMERICAN GENCOR INDUSTRIES INC                        cik=64472
+  2022-07-28  NASDAQ        -> NYSE          SILGAN HOLDINGS INC                          cik=849869
+  2022-07-29  NASDAQ        -> NYSE          Duddell Street Acquisition Corp.             cik=1823466
+  2022-08-03  NYSE_AMERICAN -> NASDAQ        L&F Acquisition Corp.                        cik=1823575
+  2022-08-15  NASDAQ        -> NYSE          Rubicon Technologies, Inc.                   cik=1862068
+  2022-09-08  NASDAQ        -> NYSE          Permian Resources Corp                       cik=1658566
+  2022-09-15  NYSE          -> NYSE_AMERICAN Delwinds Insurance Acquisition Corp.         cik=1812360
+  2022-09-23  NASDAQ        -> NYSE          RBC Bearings INC                             cik=1324948
+  2022-10-06  NASDAQ        -> NYSE          Dream Finders Homes, Inc.                    cik=1825088
+  2022-10-11  NASDAQ        -> NYSE          Kinetik Holdings Inc.                        cik=1692787
+  2022-10-25  NYSE          -> NASDAQ        SAFEGUARD SCIENTIFICS INC                    cik=86115
+  2022-12-09  NASDAQ        -> NYSE          Live Oak Bancshares, Inc.                    cik=1462120
+  2022-12-15  NYSE          -> NASDAQ        Zymeworks Inc.                               cik=1937653
+  2022-12-16  NYSE          -> NASDAQ        CCC Intelligent Solutions Holdings Inc.      cik=1818201
+  2022-12-27  NASDAQ        -> NYSE          Eagle Bulk Shipping Inc.                     cik=1322439
+  2022-12-27  NYSE          -> NASDAQ        Evergy, Inc.                                 cik=1711269
+  2023-01-13  NASDAQ        -> NYSE          Atlantic Union Bankshares Corp               cik=883948
+  2023-02-23  NASDAQ        -> NYSE_AMERICAN Southland Holdings, Inc.                     cik=1883814
+  2023-03-01  NASDAQ        -> NYSE          GUARANTY BANCSHARES INC /TX/                 cik=1058867
+  2023-03-02  NYSE          -> NYSE_AMERICAN Berenson Acquisition Corp. I                 cik=1869673
+  2023-03-20  NYSE          -> NASDAQ        JATT Acquisition Corp                        cik=1855644
+  2023-03-24  NYSE          -> NYSE_AMERICAN Catcha Investment Corp                       cik=1838293
+  2023-03-24  NASDAQ        -> NYSE          Primoris Services Corp                       cik=1361538
+  2023-05-09  NASDAQ        -> NYSE          Origin Bancorp, Inc.                         cik=1516912
+  2023-05-18  NASDAQ        -> NYSE          EQUITY BANCSHARES INC                        cik=1227500
+  2023-05-24  NYSE          -> NYSE_AMERICAN 51Talk Online Education Group                cik=1659494
+  2023-05-25  NASDAQ        -> NYSE          FISERV INC                                   cik=798354
+  2023-05-30  NASDAQ        -> NYSE          Stellar Bancorp, Inc.                        cik=1473844
+  2023-06-09  NYSE          -> NYSE_AMERICAN EVe Mobility Acquisition Corp                cik=1861121
+  2023-06-16  NYSE          -> NYSE_AMERICAN Black Spade Acquisition Co                   cik=1851908
+  2023-06-22  NASDAQ        -> NYSE_AMERICAN Genius Brands International, Inc.            cik=1355848
+  2023-07-05  NYSE          -> NASDAQ        ROPER TECHNOLOGIES INC                       cik=882835
+  2023-07-18  NYSE          -> NASDAQ        Freedom Acquisition I Corp.                  cik=1838987
+  2023-07-21  NASDAQ        -> NYSE          Priveterra Acquisition Corp.                 cik=1837607
+  2023-08-01  NYSE          -> NYSE_AMERICAN Quantum FinTech Acquisition Corp             cik=1830795
+  2023-08-14  NASDAQ        -> NYSE          First Foundation Inc.                        cik=1413837
+  2023-08-23  NASDAQ        -> NYSE          Amerant Bancorp Inc.                         cik=1734342
+  2023-08-25  NASDAQ        -> NYSE_AMERICAN Mobile Infrastructure Corp                   cik=1847874
+  2023-09-22  NYSE          -> NASDAQ        Blue Apron Holdings, Inc.                    cik=1701114
+  2023-09-25  NYSE          -> NASDAQ        COOPER COMPANIES, INC.                       cik=711404
+  2023-09-26  NASDAQ        -> NYSE          RENASANT CORP                                cik=715072
+  2023-10-02  NYSE          -> NYSE_AMERICAN Boqii Holding Ltd                            cik=1815021
+  2023-10-25  NASDAQ        -> NYSE          OVERSTOCK.COM, INC                           cik=1130713
+  2023-11-28  NASDAQ        -> NYSE          SMARTFINANCIAL INC.                          cik=1038773
+  2023-12-01  NYSE          -> NYSE_AMERICAN PROOF Acquisition Corp I                     cik=1853070
+  2023-12-11  NYSE          -> NYSE_AMERICAN Gravitas Education Holdings, Inc.            cik=1708441
+  2023-12-15  NASDAQ        -> NYSE          SouthState Corp                              cik=764038
+  2023-12-26  NYSE          -> NASDAQ        Amneal Pharmaceuticals, Inc.                 cik=1723128
+  2023-12-29  NYSE_AMERICAN -> NASDAQ        enCore Energy Corp.                          cik=1500881
+  2024-01-08  NYSE          -> NASDAQ        REGIS CORP                                   cik=716643
+  2024-01-12  NASDAQ        -> NYSE          VIRTUS INVESTMENT PARTNERS, INC.             cik=883237
+  2024-01-26  NYSE_AMERICAN -> NASDAQ        GRIID Infrastructure Inc.                    cik=1830029
+  2024-03-04  NYSE          -> NASDAQ        Science Applications International Corp      cik=1571123
+  2024-04-11  NASDAQ        -> NYSE_AMERICAN TOP SHIPS INC.                               cik=1296484
+  2024-05-14  NASDAQ        -> NYSE          KFORCE INC                                   cik=930420
+  2024-05-17  NASDAQ        -> NYSE          FIRST BANCSHARES INC /MS/                    cik=947559
+  2024-07-16  NASDAQ        -> NYSE          Ameris Bancorp                               cik=351569
+  2024-07-26  NASDAQ        -> NYSE          UNITED COMMUNITY BANKS INC                   cik=857855
+  2024-07-26  NASDAQ        -> NYSE          COVENANT LOGISTICS GROUP, INC.               cik=928658
+  2024-08-30  NYSE          -> NASDAQ        Currenc Group Inc.                           cik=1862935
+  2024-11-04  NASDAQ        -> NYSE          SOUTHSIDE BANCSHARES INC                     cik=705432
+  2024-11-05  NASDAQ        -> NYSE          COLONY BANKCORP INC                          cik=711669
+  2024-11-06  NYSE          -> NYSE_AMERICAN Hyliion Holdings Corp.                       cik=1759631
+  2024-11-08  NYSE          -> NASDAQ        SJW GROUP                                    cik=766829
+  2024-11-25  NYSE          -> NASDAQ        Palantir Technologies Inc.                   cik=1321655
+  2024-12-20  NYSE          -> NASDAQ        Ouster, Inc.                                 cik=1816581
+  2024-12-31  NYSE          -> NASDAQ        Mister Car Wash, Inc.                        cik=1853513
+  2024-12-31  NYSE          -> NASDAQ        DOMINOS PIZZA INC                            cik=1286681
+  2025-01-15  NASDAQ        -> NYSE          QXO, Inc.                                    cik=1236275
+  2025-01-24  NYSE_AMERICAN -> NYSE          Sky Harbour Group Corp                       cik=1823587
+  2025-02-10  NYSE_AMERICAN -> NASDAQ        Globalstar, Inc.                             cik=1366868
+  2025-02-11  NASDAQ        -> NYSE          HomeTrust Bancshares, Inc.                   cik=1538263
+  2025-02-24  NYSE          -> NASDAQ        THOMSON REUTERS CORP /CAN/                   cik=1075124
+  2025-03-03  NYSE_AMERICAN -> NASDAQ        iBio, Inc.                                   cik=1420720
+  2025-04-07  NYSE_AMERICAN -> NASDAQ        FRIEDMAN INDUSTRIES INC                      cik=39092
+  2025-05-06  NYSE          -> NASDAQ        LIONS GATE ENTERTAINMENT CORP /CN/           cik=929351
+  2025-05-22  NYSE          -> NASDAQ        Mobile Infrastructure Corp                   cik=1847874
+  2025-05-29  NYSE          -> NASDAQ        KIMBERLY CLARK CORP                          cik=55785
+  2025-06-02  NASDAQ        -> NYSE          CSW INDUSTRIALS, INC.                        cik=1624794
+  2025-06-12  NASDAQ        -> NYSE          Virtu Financial, Inc.                        cik=1592386
+  2025-06-27  NYSE_AMERICAN -> NYSE          Seaport Entertainment Group Inc.             cik=2009684
+  2025-08-15  NASDAQ        -> NYSE          Triumph Financial, Inc.                      cik=1539638
+  2025-09-02  NYSE          -> NASDAQ        Beachbody Company, Inc.                      cik=1826889
+  2025-09-18  NASDAQ        -> NYSE          CompoSecure, Inc.                            cik=1823144
+  2025-09-18  NASDAQ        -> NYSE          Resolute Holdings Management, Inc.           cik=2039497
+  2025-09-24  NASDAQ        -> NYSE          Third Coast Bancshares, Inc.                 cik=1781730
+  2025-09-24  NYSE          -> NASDAQ        Kodiak Al, Inc.                              cik=1853138
+  2025-10-09  NASDAQ        -> NYSE          ETSY INC                                     cik=1370637
+  2025-10-20  NYSE          -> NASDAQ        VINCE HOLDING CORP.                          cik=1579157
+  2025-11-03  NYSE          -> NASDAQ        Global Indemnity Group, LLC                  cik=1494904
+  2025-11-10  NYSE          -> NASDAQ        FISERV INC                                   cik=798354
+  2025-11-10  NYSE          -> NASDAQ        FISERV FUNDING UNLIMITED Co                  cik=2065659
+  2025-11-26  NASDAQ        -> NYSE          A-Mark Precious Metals, Inc.                 cik=1591588
+  2025-11-28  NYSE          -> NASDAQ        DiamondRock Hospitality Co                   cik=1298946
+  2025-12-03  NYSE_AMERICAN -> NYSE          CENTRUS ENERGY CORP                          cik=1065059
+  2025-12-08  NYSE          -> NASDAQ        Walmart Inc.                                 cik=104169
+  2025-12-08  NYSE          -> NASDAQ        Fastly, Inc.                                 cik=1517413
+  2025-12-22  NYSE          -> NASDAQ        QuantumScape Corp                            cik=1811414
+  2026-01-02  NYSE_AMERICAN -> NASDAQ        CYBIN INC.                                   cik=1833141
+  2026-01-22  NASDAQ        -> NYSE          ASTRAZENECA PLC                              cik=901832
+  2026-02-13  NASDAQ        -> NYSE          Churchill Capital Corp X/Cayman              cik=2007825
+  2026-03-06  NYSE_AMERICAN -> NYSE          UNITED STATES ANTIMONY CORP                  cik=101538
+  2026-04-08  NYSE_AMERICAN -> NYSE          BITMINE IMMERSION TECHNOLOGIES, INC.         cik=1829311
+  2026-05-07  NASDAQ        -> NYSE          Enhanced Group Inc.                          cik=1956439
+  2026-06-09  NASDAQ        -> NYSE          FIFTH THIRD BANCORP                          cik=35527
+  2026-06-16  NASDAQ        -> NYSE_AMERICAN Nova Minerals Ltd                            cik=1852551
+  2026-06-18  NYSE          -> NASDAQ        LendingClub Corp                             cik=1409970
+  2026-07-06  NYSE_AMERICAN -> NYSE          AZUL SA                                      cik=1432364
+  2026-07-24  NYSE          -> NASDAQ        D-Wave Quantum Inc.                          cik=1907982
+  2026-08-10  NYSE_AMERICAN -> NASDAQ        Collective Mining Ltd.                       cik=1953575
+  2026-08-14  NYSE          -> NASDAQ        NEIGHBORHOOD INTELLIGENCE, INC.              cik=1130713
+  2026-08-28  NYSE          -> NASDAQ        Offerpad Solutions Inc.                      cik=1825024
+  2026-09-08  NASDAQ        -> NYSE          Kraft Heinz Co                               cik=1637459

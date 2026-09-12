@@ -1,8 +1,28 @@
 # Databento: the futures bar provider
 
-**Nothing has been purchased.** This is the reference for a client that exists,
-is tested, and is structurally unable to spend money until someone decides to
-let it.
+> **SUPERSEDED IN PART, 2026-09-12. The purchase happened.** A one-month CME Standard
+> subscription was taken and **111.0 GB is on disk and verified** at
+> `data/raw/databento/`. What is here about the API surface, the traps and the client's
+> guards still stands; the framing below of *"nothing has been purchased"* and the
+> usage-based costing do not.
+>
+> **Two corrections this page's costing got wrong**, both settled against the vendor and
+> recorded in [`data/plan_cost_probe.json`](../data/plan_cost_probe.json):
+>
+> 1. **`list_unit_prices` returns a PER-SCHEMA table, not one rate.** The derived
+>    $28.00/GiB is the **`trades`** rate. Actual: `ohlcv-1d`/`1h` 190.0, `ohlcv-1m`/`1s`
+>    **70.0**, `tbbo`/`trades` 28.0, `bbo` 18.0, `status` 4.0, `definition` 1.7,
+>    `mbo`/`mbp-1` **1.8**, `statistics` 1.0, `mbp-10` 0.5. **Pricing runs inverse to
+>    density** — a 1-minute bar costs 39x more per byte than a raw order-book message.
+> 2. **Roll rule `v` is fine, but there is no continuous series in what was bought.** The
+>    fetch used raw symbols across seven schemas, so the roll must be constructed.
+>
+> What exists on disk: [`data-available.md`](data-available.md). What it cost and how it
+> was verified: [`futures_acquisition_verification.json`](../data/futures_acquisition_verification.json).
+
+**This client was never used for the purchase.** It exists, is tested, and is structurally
+unable to spend money; the acquisition ran through
+[`run_futures_acquisition.py`](../scripts/run_futures_acquisition.py) instead.
 
 Client: [`scripts/fetch_databento.py`](../scripts/fetch_databento.py) ·
 Tests: [`tests/unit/test_databento_client.py`](../tests/unit/test_databento_client.py) ·

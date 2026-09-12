@@ -1,0 +1,45 @@
+{
+  "claim_source": "working/leads/C1-combination.md (external brief), verified here",
+  "E_abs_Z": 0.7978845608028654,
+  "sd_abs_Z": 0.6028102749890869,
+  "draws": 200000,
+  "seed": 20260909,
+  "reproduction_of_brief": {
+    "13.5": {
+      "k": 13.5,
+      "null_mean": 2.9316150714175198,
+      "null_sd": 0.6028102749890869,
+      "crit_5pct": 3.923237973774568,
+      "brief_claim": 3.94,
+      "sim_p95": 4.022550319319046,
+      "sim_mean": 2.985721484168896,
+      "sim_k_used": 14
+    },
+    "16": {
+      "k": 16,
+      "null_mean": 3.1915382432114616,
+      "null_sd": 0.6028102749890869,
+      "crit_5pct": 4.183161145568509,
+      "brief_claim": 4.2,
+      "sim_p95": 4.224458639228517,
+      "sim_mean": 3.189718710434586,
+      "sim_k_used": 16
+    },
+    "52": {
+      "k": 52,
+      "null_mean": 5.753627391751592,
+      "null_sd": 0.6028102749890869,
+      "crit_5pct": 6.74525029410864,
+      "brief_claim": 6.75,
+      "sim_p95": 6.7712125296913115,
+      "sim_mean": 5.755332003083367,
+      "sim_k_used": 52
+    }
+  },
+  "k16": {
+    "best_of_N_p95": 2.9467444473292588,
+    "signfit_composite_p95": 4.228208364248193,
+    "signs_predeclared_p95": 1.646760685331274
+  },
+  "scope": "assumes uncorrelated equal-volatility components, the brief's own assumptions; real signals are neither, so these are calibration values, not a verdict"
+}

@@ -1,0 +1,216 @@
+{
+ "generated_utc": "2026-09-10T23:41:48+00:00",
+ "purpose": "what one month of Databento Standard entitles, in bytes and hours. Not a study.",
+ "measured": {
+  "zstd_ratio": 2.6,
+  "download_bytes_per_s": 3040000,
+  "record_sizes": {
+   "ohlcv": 56,
+   "trades": 48,
+   "mbp1": 80,
+   "bbo": 80,
+   "tbbo": 80,
+   "mbp10": 368,
+   "mbo": 56,
+   "definition": 520,
+   "statistics": 80,
+   "status": 40
+  }
+ },
+ "anchors": {
+  "es_trades_per_session": 517000,
+  "cme_trades_per_session": 12000000,
+  "cme_adv_source": "CME Group press releases, Apr 2026 25.9M .. Mar 2026 41.1M contracts"
+ },
+ "assumed": {
+  "bars_1m_per_trade": 0.07874015748031496,
+  "bars_1s_per_trade": 0.4,
+  "mbp1_per_trade": 25.0,
+  "mbp10_per_trade": 75.0,
+  "mbo_per_trade": 90.0,
+  "instruments_all": 650000,
+  "quoted_to_a_factor_of": 2.0
+ },
+ "entitlement": {
+  "L0_years": 16.26,
+  "L1_years": 1.0,
+  "L2_L3_sessions": 21
+ },
+ "pipe": {
+  "bytes_per_s": 3040000,
+  "days": 30,
+  "compressed_tib": 7.166527211666107
+ },
+ "items": [
+  {
+   "item": "ohlcv-1m, ALL_SYMBOLS, 16 yr",
+   "level": "L0",
+   "usefulness": "core",
+   "note": "the core panel: every root, every contract month, every spread, every option",
+   "billed_tib": 0.19719087203421934,
+   "disk_tib": 0.07584264309008436,
+   "download_hours": 7.619688227230706
+  },
+  {
+   "item": "ohlcv-1s, ALL_SYMBOLS, 16 yr",
+   "level": "L0",
+   "usefulness": "excluded",
+   "note": "EXCLUDED BY THE PRINCIPAL 2026-09-10: 1-minute bars only",
+   "billed_tib": 1.0017296299338343,
+   "disk_tib": 0.38528062689762854,
+   "download_hours": 38.70801619433199
+  },
+  {
+   "item": "ohlcv-1h + 1d, ALL_SYMBOLS, 16 yr",
+   "level": "L0",
+   "usefulness": "skip",
+   "note": "derivable from 1m at zero cost; never pull it",
+   "billed_tib": 0.0034294064701603363,
+   "disk_tib": 0.0013190024885232062,
+   "download_hours": 0.13251631699531663
+  },
+  {
+   "item": "definition, ALL_SYMBOLS, 16 yr",
+   "level": "L0",
+   "usefulness": "skip",
+   "note": "520 B per instrument PER DAY traded or not; scope it to the roots you keep",
+   "billed_tib": 1.25961538287811,
+   "disk_tib": 0.4844674549531192,
+   "download_hours": 48.673026315789485
+  },
+  {
+   "item": "definition, 41 roots, 16 yr",
+   "level": "L0",
+   "usefulness": "core",
+   "note": "roll calendar, expiries, tick sizes -- the fixture is not buildable without it",
+   "billed_tib": 0.009534319513477387,
+   "disk_tib": 0.0036670459667220716,
+   "download_hours": 0.3684173684210527
+  },
+  {
+   "item": "statistics, ALL_SYMBOLS, 16 yr",
+   "level": "L0",
+   "usefulness": "valuable",
+   "note": "open interest and settlements: rung 3 of the smart-money ladder, free with L0",
+   "billed_tib": 0.7751479279249908,
+   "disk_tib": 0.29813381843268877,
+   "download_hours": 29.952631578947376
+  },
+  {
+   "item": "statistics, 41 roots, 16 yr",
+   "level": "L0",
+   "usefulness": "core",
+   "note": "the same open interest and settlements, scoped -- 150x smaller than ALL_SYMBOLS",
+   "billed_tib": 0.005867273546755315,
+   "disk_tib": 0.002256643671828967,
+   "download_hours": 0.22671838056680163
+  },
+  {
+   "item": "status, ALL_SYMBOLS, 16 yr",
+   "level": "L0",
+   "usefulness": "valuable",
+   "note": "halts and auction states -- what a breach looks like when you cannot exit",
+   "billed_tib": 0.014534023648593576,
+   "disk_tib": 0.005590009095612914,
+   "download_hours": 0.5616118421052633
+  },
+  {
+   "item": "trades, ALL_SYMBOLS, 12 mo",
+   "level": "L1",
+   "usefulness": "skip",
+   "note": "a strict subset of TBBO; taking both buys the same bytes twice",
+   "billed_tib": 0.13201497495174408,
+   "disk_tib": 0.050774990366055414,
+   "download_hours": 5.101214574898785
+  },
+  {
+   "item": "tbbo, ALL_SYMBOLS, 12 mo",
+   "level": "L1",
+   "usefulness": "core",
+   "note": "WITH 1s BARS OUT THIS IS THE ONLY 12-MONTH SOURCE OF INTRABAR PATH, plus the spread",
+   "billed_tib": 0.2200249582529068,
+   "disk_tib": 0.08462498394342569,
+   "download_hours": 8.502024291497975
+  },
+  {
+   "item": "bbo-1m, ALL_SYMBOLS, 12 mo",
+   "level": "L1",
+   "usefulness": "valuable",
+   "note": "quoted spread by time of day, including the overnight where C1 lives; 1-MINUTE variant",
+   "billed_tib": 0.017324799862433606,
+   "disk_tib": 0.006663384562474463,
+   "download_hours": 0.6694507316140137
+  },
+  {
+   "item": "mbp-1, ALL_SYMBOLS, 12 mo",
+   "level": "L1",
+   "usefulness": "skip",
+   "note": "THE BIGGEST ITEM ON THE LIST and TBBO answers the spread question at 1/25 of it",
+   "billed_tib": 5.50062395632267,
+   "disk_tib": 2.1156245985856423,
+   "download_hours": 212.5506072874494
+  },
+  {
+   "item": "mbp-10, ALL_SYMBOLS, 1 mo",
+   "level": "L2",
+   "usefulness": "skip",
+   "note": "Databento's own docs say derive it from MBO; pulling both is waste",
+   "billed_tib": 6.3257175497710705,
+   "disk_tib": 2.4329682883734884,
+   "download_hours": 244.43319838056678
+  },
+  {
+   "item": "mbo, ALL_SYMBOLS, 1 mo",
+   "level": "L3",
+   "usefulness": "once",
+   "note": "the only L3 window that will ever exist without a $4,500/mo plan",
+   "billed_tib": 1.1551310308277607,
+   "disk_tib": 0.44428116570298487,
+   "download_hours": 44.635627530364374
+  },
+  {
+   "item": "mbo, ES + NQ only, 1 mo",
+   "level": "L3",
+   "usefulness": "once",
+   "note": "the same window scoped to the two symbols the prop track would trade",
+   "billed_tib": 0.09206875620293431,
+   "disk_tib": 0.03541106007805166,
+   "download_hours": 3.5576454959514168
+  },
+  {
+   "item": "mbo, top 8 roots, 1 mo",
+   "level": "L3",
+   "usefulness": "once",
+   "note": "ES NQ RTY YM CL GC ZN ZB -- one liquid name per family, for the L3 month",
+   "billed_tib": 0.16522609221283346,
+   "disk_tib": 0.06354849700493595,
+   "download_hours": 6.384531376518218
+  },
+  {
+   "item": "status, 41 roots, 16 yr",
+   "level": "L0",
+   "usefulness": "core",
+   "note": "halts and auction states: what a breach looks like when you cannot exit",
+   "billed_tib": 0.00011001137900166214,
+   "disk_tib": 4.231206884679313e-05,
+   "download_hours": 0.004250969635627531
+  }
+ ],
+ "bundles": {
+  "everything": [
+   16.773687890017083,
+   6.45141841923734,
+   648.1551139985122
+  ],
+  "useful": [
+   1.4970290345781463,
+   0.5757803979146716,
+   57.84697026248845
+  ],
+  "core": [
+   0.4327274347263605,
+   0.16643362874090786,
+   16.721099237352163
+  ]
+ }
+}

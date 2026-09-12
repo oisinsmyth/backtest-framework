@@ -1,0 +1,518 @@
+"""D465 -- what the tick data settles: the ES spread, and whether a bar-based MAE is safe.
+
+    uv run python scripts/d465_es_spread_and_mae_bias.py --extract   # TBBO -> cached ES ticks
+    uv run python scripts/d465_es_spread_and_mae_bias.py --self-test # the MAE bounds, on a known path
+    uv run python scripts/d465_es_spread_and_mae_bias.py --spread    # measurement 1
+    uv run python scripts/d465_es_spread_and_mae_bias.py --mae       # measurement 2
+
+**TWO COST/INSTRUMENT MEASUREMENTS, NOT A STUDY.** Neither computes a return, an edge or a
+Sharpe. Nothing is admitted, closed or elevated. What they produce is a spread distribution
+and a measurement-bias bracket -- both properties of the instrument and the sampling grid,
+which is why they need no pre-registration under R8.
+
+MEASUREMENT 1 -- THE SPREAD, WHICH FOUR STUDIES HAVE ASSUMED
+------------------------------------------------------------
+Every futures conclusion in this programme rests on ~0.2 bp round-turn commission, and
+`data-purchase-proposal.md` 6 flagged the hole: one ES tick is 0.25 index points = $12.50,
+and against ~$300k of notional that is ~0.4 bp PER SIDE CROSSED, so the true round trip may
+be nearer 1.0 bp than 0.2. Nobody measured it. `tbbo` carries `bid_px_00` and `ask_px_00`
+immediately before every trade, so the spread is now directly observable -- including
+overnight, where C1 actually lives.
+
+MEASUREMENT 2 -- IS A BAR-BASED MAE SAFE, AND IN WHICH DIRECTION
+-----------------------------------------------------------------
+Hurdle P1 is a 4% trailing drawdown on OPEN equity, and C1's MAE p99 came in at **3.98%**,
+sitting exactly on the floor. That was measured on coarse bars.
+
+**A CLAIM I MADE AND HAVE TO WALK BACK.** I said coarse bars "systematically understate" a
+trailing drawdown. That is not established -- it depends entirely on the convention, and
+there are two, which BRACKET the truth:
+
+    PESSIMISTIC  running max includes bar t's HIGH, drawdown to bar t's LOW.
+                 Assumes high-then-low inside every bar. OVERSTATES.
+    OPTIMISTIC   running max only through bar t-1, drawdown to bar t's LOW.
+                 Assumes low-then-high inside every bar. UNDERSTATES.
+
+The exact tick path sits between them, and **where it sits is the whole question**: if the
+truth is near the pessimistic bound, 3.98% has headroom; if near the optimistic bound, the
+published figure may be the optimistic one and the true p99 could be over 4%. So this
+computes all three on the same holds and reports the bracket, rather than asserting a
+direction.
+
+WHAT IS DELIBERATELY NOT DONE HERE
+----------------------------------
+No return, no P&L, no verdict on C1. The bracket is reported; what it implies for the
+candidate is the principal's call (R15).
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+
+import numpy as np
+
+
+class GateError(AssertionError):
+    """A validation gate refused the data. Raising, never a warning."""
+
+REPO = Path(__file__).resolve().parents[1]
+RAW = REPO / "data" / "raw" / "databento"
+# v2: the id windows are applied. The v1 cache pooled expiries -- kept on disk under its
+# own name rather than overwritten, so the contaminated and clean MAE can be compared
+# instead of one quietly replacing the other.
+CACHE = REPO / "temp" / "d465_es_ticks_v2.npz"
+CACHE_V1_MIXED = REPO / "temp" / "d465_es_ticks.npz"
+OUT = REPO / "data" / "d465_es_spread_and_mae_bias.json"
+KEY_FILE = Path.home() / ".config" / "databento" / "key"
+
+# ES front-month instrument_ids over the tbbo window, from symbology.resolve (free call,
+# 2026-09-12). Recorded rather than re-fetched so --extract is reproducible offline.
+ES_IDS = {
+    14160:    ("2025-09-11", "2025-09-17"),
+    294973:   ("2025-09-17", "2025-12-17"),
+    42140878: ("2025-12-17", "2026-03-18"),
+    42140864: ("2026-03-18", "2026-06-17"),
+    42140870: ("2026-06-17", "2026-09-11"),
+}
+PX_SCALE = 1e-9          # DBN fixed-point
+TICK = 0.25              # ES minimum price increment, index points (CME spec)
+TICK_USD = 12.50         # per contract
+USD_PER_POINT = 50.0
+ET = "America/New_York"
+
+# C1's window, from D259: enter at the 18:00 ET Globex open, exit 16:10 ET the next day.
+ENTRY_MIN = 18 * 60
+EXIT_MIN = 16 * 60 + 10
+
+
+def P(*a, **k):
+    print(*a, **k, flush=True)
+
+
+def now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+# --------------------------------------------------------------- extract
+
+def do_extract() -> int:
+    """Stream tbbo, keep only ES front month, cache a compact array.
+
+    to_ndarray(count=...) yields chunked STRUCTURED numpy, so the filter is vectorised.
+    A Python loop over ~1.4 billion tbbo records would be hopeless -- the profile in
+    data/decode_pipeline_bench.json puts numpy at 8,755 MB/s against zstd's 754, so the
+    only sane path keeps every per-record operation inside numpy.
+    """
+    import databento as db
+    import pandas as pd
+    files = sorted(RAW.glob("*/*.tbbo.dbn.zst"))
+    if not files:
+        raise SystemExit("no tbbo files under data/raw/databento/")
+    # THE DATE RANGE IS PART OF THE FILTER, NOT A COMMENT.
+    #
+    # The first version of this masked on `np.isin(instrument_id, ids)` alone, admitting
+    # all five expiries at EVERY timestamp. ES trades its deferred contract thinly for
+    # months before the roll, so the cache pooled two expiries priced ~60 index points
+    # apart (the calendar basis). Per-record measurements were unharmed -- a spread reads
+    # bid and ask off the SAME record -- but anything walking a path across records was
+    # not: `maximum.accumulate` took its peak from the deferred contract and its trough
+    # from the near one, manufacturing a ~0.9% excursion out of the basis. That is how a
+    # bug in an EXTRACT reaches a published MAE. Each id is now clipped to its own window.
+    windows = [(np.uint32(i),
+                np.uint64(pd.Timestamp(a, tz="UTC").value),
+                np.uint64(pd.Timestamp(b, tz="UTC").value))
+               for i, (a, b) in sorted(ES_IDS.items())]
+    P(f"extracting ES front month from {len(files)} tbbo files, "
+      f"{len(windows)} id windows\n")
+
+    ts, px, sz, side, bid, ask, bsz, asz, iid = [], [], [], [], [], [], [], [], []
+    for i, f in enumerate(files, 1):
+        store = db.DBNStore.from_file(f)
+        kept = seen = 0
+        for chunk in store.to_ndarray(count=2_000_000):
+            seen += len(chunk)
+            cid, cts = chunk["instrument_id"], chunk["ts_recv"]
+            m = np.zeros(len(chunk), dtype=bool)
+            for wid, w0, w1 in windows:
+                m |= (cid == wid) & (cts >= w0) & (cts < w1)
+            if not m.any():
+                continue
+            c = chunk[m]
+            kept += len(c)
+            iid.append(c["instrument_id"].copy())
+            ts.append(c["ts_recv"].copy())
+            px.append(c["price"].copy())
+            sz.append(c["size"].copy())
+            side.append(c["side"].copy())
+            bid.append(c["bid_px_00"].copy())
+            ask.append(c["ask_px_00"].copy())
+            bsz.append(c["bid_sz_00"].copy())
+            asz.append(c["ask_sz_00"].copy())
+        P(f"  [{i}/{len(files)}] {f.name[:46]:46} {seen:>12,} recs -> {kept:>9,} ES")
+
+    arr = {k: np.concatenate(v) for k, v in
+           (("ts", ts), ("px", px), ("sz", sz), ("side", side),
+            ("bid", bid), ("ask", ask), ("bsz", bsz), ("asz", asz), ("iid", iid))}
+    order = np.argsort(arr["ts"], kind="stable")
+    arr = {k: v[order] for k, v in arr.items()}
+
+    # PROVE the windowing worked rather than trusting it: at most one expiry may be live
+    # in any one second. This is the assertion whose absence let the basis through.
+    sec = (arr["ts"] // 1_000_000_000).astype(np.int64)
+    _, first = np.unique(sec, return_index=True)
+    hi = np.maximum.reduceat(arr["iid"].astype(np.int64), first)
+    lo = np.minimum.reduceat(arr["iid"].astype(np.int64), first)
+    n_mixed = int((hi != lo).sum())
+    if n_mixed:
+        raise GateError(f"[EXTRACT] {n_mixed:,} seconds carry more than one instrument_id "
+                        f"-- the id windows overlap; the basis will contaminate any path")
+    P(f"  one expiry per second on all {len(first):,} seconds  [EXTRACT ok]")
+    CACHE.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(CACHE, **arr)
+    P(f"\n  {len(arr['ts']):,} ES trades cached -> {CACHE.relative_to(REPO)} "
+      f"({CACHE.stat().st_size/1e6:.0f} MB)")
+    return 0
+
+
+def load_ticks() -> dict:
+    if not CACHE.exists():
+        raise SystemExit("run --extract first")
+    z = np.load(CACHE)
+    return {k: z[k] for k in z.files}
+
+
+def et_minutes(ts_ns: np.ndarray):
+    """UTC nanos -> (session date as int yyyymmdd, minute-of-day in ET)."""
+    import pandas as pd
+    t = pd.DatetimeIndex(pd.to_datetime(ts_ns, utc=True)).tz_convert(ET).tz_localize(None)
+    mod = (t.hour * 60 + t.minute).to_numpy()
+    # a bar at or after 18:00 ET belongs to the NEXT session date
+    day = t.normalize() + pd.to_timedelta((mod >= ENTRY_MIN).astype(int), unit="D")
+    # NUMERIC, NOT strftime. Measured on this data: strftime is 58x slower and does the
+    # same job -- 6.9 minutes against 7 seconds across 126.6M rows. It is the reason the
+    # first --spread run looked hung.
+    sess = (day.year * 10000 + day.month * 100 + day.day).to_numpy().astype(np.int64)
+    return sess, mod, t
+
+
+# ---------------------------------------------------------------- spread
+
+INT64_SENTINEL = 9223372036854775807   # DBN's "no price". 1e-9 scaled it to 9.2e9.
+
+
+def do_spread() -> int:
+    d = load_ticks()
+    # THE FILTER THAT MATTERS, AND THE FIRST VERSION DID NOT HAVE IT.
+    # `(bid > 0) & (ask > 0) & (ask >= bid)` admits DBN's INT64 sentinel, which scales to
+    # 9.2e9 index points. THREE such records out of 126,575,117 dragged the mean spread to
+    # 875 ticks against a p99 of 2 -- an absurd mean beside a sane median, which is the tell.
+    # 338 records (0.00027%) are excluded and the count is reported, not swallowed.
+    ok = ((d["bid"] != INT64_SENTINEL) & (d["ask"] != INT64_SENTINEL)
+          & (d["bid"] > 0) & (d["ask"] > 0) & (d["ask"] >= d["bid"]))
+    bid = d["bid"].astype(np.float64) * PX_SCALE
+    ask = d["ask"].astype(np.float64) * PX_SCALE
+    mid = 0.5 * (bid + ask)
+    P(f"ES trades cached {len(bid):,}; broken quotes excluded {int((~ok).sum()):,} "
+      f"({(~ok).mean():.8%}); usable {int(ok.sum()):,}")
+    sp_pts = (ask - bid)[ok]
+    mid_ok = mid[ok]
+    sp_ticks = sp_pts / TICK
+    sp_usd = sp_pts * USD_PER_POINT
+    sp_bp_side = 0.5 * sp_pts / mid_ok * 1e4      # half-spread, per side crossed
+    _, mod, _ = et_minutes(d["ts"][ok])
+
+    def q(a, p):
+        return float(np.quantile(a, p))
+
+    lo_t, hi_t = np.quantile(sp_ticks, [.0005, .9995])
+    trimmed = sp_ticks[(sp_ticks >= lo_t) & (sp_ticks <= hi_t)]
+    res = {
+        "n_trades": int(ok.sum()),
+        "broken_quotes_excluded": int((~ok).sum()),
+        "spread_ticks": {"mean": float(sp_ticks.mean()),
+                         "mean_trimmed_0.05pct_both_tails": float(trimmed.mean()),
+                         "p50": q(sp_ticks, .5),
+                         "p90": q(sp_ticks, .9), "p99": q(sp_ticks, .99),
+                         "p99.9": q(sp_ticks, .999), "max": float(sp_ticks.max()),
+                         "share_at_one_tick": float((sp_ticks <= 1.0001).mean())},
+        "spread_usd_per_contract": {"mean": float(sp_usd.mean()), "p50": q(sp_usd, .5),
+                                    "p99": q(sp_usd, .99)},
+        "half_spread_bp_per_side": {"mean": float(sp_bp_side.mean()),
+                                    "p50": q(sp_bp_side, .5), "p99": q(sp_bp_side, .99)},
+    }
+    P(f"\n  spread in TICKS      mean {res['spread_ticks']['mean']:.3f}  "
+      f"p50 {res['spread_ticks']['p50']:.2f}  p90 {res['spread_ticks']['p90']:.2f}  "
+      f"p99 {res['spread_ticks']['p99']:.2f}")
+    P(f"  at exactly one tick  {res['spread_ticks']['share_at_one_tick']:.1%} of trades")
+    P(f"  spread in $/contract mean {res['spread_usd_per_contract']['mean']:.2f}  "
+      f"p99 {res['spread_usd_per_contract']['p99']:.2f}")
+    P(f"  HALF-spread in bp    mean {res['half_spread_bp_per_side']['mean']:.3f} per side "
+      f"crossed  (round trip {2*res['half_spread_bp_per_side']['mean']:.3f} bp)")
+
+    # by hour, because C1 trades the overnight and the assumption was never session-split
+    P(f"\n  {'ET hour':>8}{'trades':>12}{'spr ticks p50':>15}{'half-spr bp mean':>18}")
+    by_hour = {}
+    for h in range(24):
+        m = (mod // 60) == h
+        if m.sum() < 100:
+            continue
+        by_hour[h] = {"n": int(m.sum()), "spread_ticks_p50": q(sp_ticks[m], .5),
+                      "half_spread_bp_mean": float(sp_bp_side[m].mean())}
+        P(f"  {h:>8}{m.sum():>12,}{by_hour[h]['spread_ticks_p50']:>15.2f}"
+          f"{by_hour[h]['half_spread_bp_mean']:>18.3f}")
+    res["by_et_hour"] = by_hour
+
+    rth = ((mod >= 570) & (mod < 960))
+    res["rth_vs_overnight"] = {
+        "rth_half_spread_bp": float(sp_bp_side[rth].mean()),
+        "overnight_half_spread_bp": float(sp_bp_side[~rth].mean()),
+        "rth_trades": int(rth.sum()), "overnight_trades": int((~rth).sum()),
+    }
+    r = res["rth_vs_overnight"]
+    P(f"\n  RTH half-spread {r['rth_half_spread_bp']:.3f} bp on {r['rth_trades']:,} trades")
+    P(f"  OVERNIGHT       {r['overnight_half_spread_bp']:.3f} bp on {r['overnight_trades']:,}"
+      f"   ratio {r['overnight_half_spread_bp']/r['rth_half_spread_bp']:.2f}x")
+    P(f"\n  the programme's standing assumption is ~0.2 bp ROUND TURN commission;")
+    P(f"  crossing alone measures {2*res['half_spread_bp_per_side']['mean']:.3f} bp round trip.")
+    save({"spread": res})
+    return 0
+
+
+# ------------------------------------------------------------- MAE bias
+
+def mae_three_ways(tick_px: np.ndarray, bar_hi: np.ndarray, bar_lo: np.ndarray) -> tuple:
+    """MAE of one long hold, three ways. Returns (exact, pessimistic, optimistic) as
+    fractions of the entry price.
+
+    MAE here is the maximum drawdown from the RUNNING PEAK during the hold, which is what
+    a trailing floor on open equity actually measures (R11's P1).
+    """
+    entry = tick_px[0]
+    run = np.maximum.accumulate(tick_px)
+    exact = float(np.max((run - tick_px) / entry))
+
+    # PESSIMISTIC: peak includes this bar's own high, trough is this bar's low.
+    run_incl = np.maximum.accumulate(bar_hi)
+    pess = float(np.max((run_incl - bar_lo) / entry))
+
+    # OPTIMISTIC: the low came FIRST inside each bar, so the peak available when the low
+    # printed excludes this bar's own high. For the first bar the only peak that exists is
+    # the entry itself.
+    #
+    # A BUG THE SELF-TEST CAUGHT BY BEING WEAK. This previously clamped run_prev up to
+    # bar_hi[0], which forced the first bar's high into every peak and made `optimistic`
+    # collapse onto `pessimistic` whenever the peak sat in bar 0 -- so all three
+    # conventions returned the same number and the bracket looked tight when it was not.
+    # A test where every arm agrees is not a passing test, it is an absent one.
+    run_prev = np.empty_like(bar_hi)
+    run_prev[0] = entry
+    if len(bar_hi) > 1:
+        run_prev[1:] = np.maximum.accumulate(bar_hi)[:-1]
+    opt = float(np.max((run_prev - bar_lo) / entry))
+    return exact, pess, opt
+
+
+def do_self_test() -> int:
+    """The three MAE conventions must BRACKET on a path where the answer is known by hand."""
+    fails = []
+
+    def chk(label, cond, detail=""):
+        P(f"    [{'PASS' if cond else 'FAIL'}] {label:54} {detail}")
+        if not cond:
+            fails.append(label)
+
+    # CASE A -- HIGH THEN LOW inside one bar. entry 100, path 100 -> 110 -> 95.
+    # exact: peak 110, trough 95 -> 15%. pessimistic agrees. optimistic assumes the low
+    # came first, so its peak is only the entry -> 5%. OPTIMISTIC MUST UNDERSTATE HERE.
+    e, p, o = mae_three_ways(np.array([100., 110., 95.]),
+                             np.array([110.]), np.array([95.]))
+    chk("A exact = 15%", abs(e - .15) < 1e-9, f"{e:.4f}")
+    chk("A pessimistic = exact when the high really came first", abs(p - .15) < 1e-9, f"{p:.4f}")
+    chk("A OPTIMISTIC UNDERSTATES: 5% vs 15%", o < e - 1e-9, f"opt {o:.4f} < exact {e:.4f}")
+
+    # CASE B -- LOW THEN HIGH inside one bar. path 100 -> 90 -> 110, same bar H/L.
+    # exact: 10%. optimistic agrees (its assumption is true here). pessimistic assumes
+    # high-then-low -> 20%. PESSIMISTIC MUST OVERSTATE HERE.
+    e2, p2, o2 = mae_three_ways(np.array([100., 90., 110.]),
+                                np.array([110.]), np.array([90.]))
+    chk("B exact = 10%", abs(e2 - .10) < 1e-9, f"{e2:.4f}")
+    chk("B optimistic = exact when the low really came first", abs(o2 - .10) < 1e-9, f"{o2:.4f}")
+    chk("B PESSIMISTIC OVERSTATES: 20% vs 10%", p2 > e2 + 1e-9, f"pess {p2:.4f} > exact {e2:.4f}")
+
+    # CASE C -- two bars, and the bracket must be STRICT on both sides at once.
+    e3, p3, o3 = mae_three_ways(np.array([100., 108., 96., 104., 99.]),
+                                np.array([108., 104.]), np.array([96., 99.]))
+    chk("C bracket holds", o3 <= e3 + 1e-9 and e3 <= p3 + 1e-9,
+        f"opt {o3:.4f} <= exact {e3:.4f} <= pess {p3:.4f}")
+    chk("C bracket is STRICT, not a tie", p3 > o3 + 1e-9,
+        f"width {(p3-o3)*100:.1f} pp -- a bracket where every arm agrees is not a test")
+
+    # CASE D -- THE GATE THAT WAS MISSING, and what it costs when it is absent.
+    #
+    # Two expiries 60 index points apart, interleaved in one second, on a path that never
+    # actually moves: each contract sits dead flat at its own price. A correct MAE is 0.
+    near, far = 6900.0, 6960.0
+    mixed = np.array([near, far, near, far, near])
+    e4, _, _ = mae_three_ways(mixed, np.array([far]), np.array([near]))
+    chk("D mixed expiries manufacture an excursion from nothing",
+        e4 > 0.008, f"{e4*100:.3f}% out of two FLAT contracts")
+
+    def mixed_seconds(sec, iid):
+        _, first = np.unique(sec, return_index=True)
+        hi = np.maximum.reduceat(iid, first)
+        lo = np.minimum.reduceat(iid, first)
+        return int((hi != lo).sum())
+
+    sec = np.array([1, 1, 2, 2, 3, 3], dtype=np.int64)
+    chk("D gate PASSES one expiry per second",
+        mixed_seconds(sec, np.array([10, 10, 10, 10, 11, 11], dtype=np.int64)) == 0)
+    chk("D gate FIRES on two expiries in one second",
+        mixed_seconds(sec, np.array([10, 11, 10, 10, 11, 11], dtype=np.int64)) == 1,
+        "1 second flagged -- this is the check whose absence reached a published MAE")
+
+    if fails:
+        P(f"\n  SELF-TEST FAILED: {fails}")
+        return 1
+    P("\n  SELF-TEST PASSED: the bar conventions bracket the tick path, and the "
+      "one-expiry-per-second gate fires.")
+    return 0
+
+
+def do_mae() -> int:
+    import pandas as pd
+    d = load_ticks()
+    px = d["px"].astype(np.float64) * PX_SCALE
+    good = px > 0
+    px, ts = px[good], d["ts"][good]
+    sess, mod, t = et_minutes(ts)
+
+    # C1's hold: 18:00 ET -> 16:10 ET. Group by session date; a session runs 18:00..16:10.
+    in_hold = (mod >= ENTRY_MIN) | (mod <= EXIT_MIN)
+    px, ts, sess, mod, t = px[in_hold], ts[in_hold], sess[in_hold], mod[in_hold], t[in_hold]
+    P(f"ES ticks in a C1-shaped 18:00->16:10 window: {len(px):,} over "
+      f"{len(np.unique(sess)):,} sessions")
+
+    # SWEEP THE GRID, because one width answers the wrong question.
+    #
+    # At 1 minute all three conventions agree exactly, and that is not a bug: they diverge
+    # only when the running PEAK and the TROUGH fall inside the SAME bar, and over a
+    # 22-hour hold with a multi-percent drawdown they are hours apart. A result where every
+    # arm agrees needs explaining, not quoting.
+    #
+    # But D259's published 3.980% was measured on FIFTEEN-minute bars. So the question is
+    # not "is 1 minute exact" -- it is "at what width does the grid start to lie", and
+    # whether 15 minutes is past it. Widths in minutes:
+    GRIDS = (1, 5, 15, 60, 240)
+    uniq = np.unique(sess)
+    per_grid = {}
+    exact_ref = None
+    for width in GRIDS:
+        bucket = (ts // (width * 60_000_000_000)).astype(np.int64)
+        rows = []
+        for s in uniq:
+            m = sess == s
+            if m.sum() < 200:
+                continue
+            p_, b_ = px[m], bucket[m]
+            _, first = np.unique(b_, return_index=True)
+            hi = np.maximum.reduceat(p_, first)
+            lo = np.minimum.reduceat(p_, first)
+            if len(hi) < 4:
+                continue
+            e, pe, o = mae_three_ways(p_, hi, lo)
+            rows.append((e, pe, o, len(hi)))
+        if not rows:
+            continue
+        a = np.array([(r[0], r[1], r[2]) for r in rows])
+        nbars = float(np.mean([r[3] for r in rows]))
+        ex, pe_, op = a[:, 0], a[:, 1], a[:, 2]
+        if exact_ref is None:
+            exact_ref = ex
+        per_grid[width] = {
+            "bars_per_session_mean": nbars, "sessions": len(rows),
+            "exact_tick_p99": float(np.quantile(ex, .99)),
+            "optimistic_p99": float(np.quantile(op, .99)),
+            "pessimistic_p99": float(np.quantile(pe_, .99)),
+            "optimistic_understates_pp": float((np.quantile(ex, .99) - np.quantile(op, .99)) * 100),
+            "pessimistic_overstates_pp": float((np.quantile(pe_, .99) - np.quantile(ex, .99)) * 100),
+            "bracket_holds_every_session": bool(np.all(op <= ex + 1e-12) and np.all(ex <= pe_ + 1e-12)),
+        }
+
+    def q(x, p):
+        return float(np.quantile(x, p))
+
+    ex = exact_ref
+    res = {"sessions": int(len(ex)),
+           "note": "MAE as a fraction of the entry price -- max drawdown from the running "
+                   "peak during an 18:00->16:10 ET hold on ES front month, 1x size. The "
+                   "EXACT column is tick-by-tick and is identical at every grid width, "
+                   "because the ticks do not change; only the bar conventions move.",
+           "exact_tick": {"p50": q(ex, .5), "p95": q(ex, .95), "p99": q(ex, .99),
+                          "max": float(ex.max()), "mean": float(ex.mean())},
+           "by_grid_minutes": per_grid,
+           "why_conventions_agree_at_one_minute":
+               "the bar conventions differ only when the running peak and the trough sit "
+               "in the SAME bar; across a 22-hour hold they are hours apart, so at fine "
+               "widths every convention picks the same peak bar and the same trough bar."}
+
+    P(f"\n  EXACT tick MAE: p50 {q(ex,.5)*100:.3f}%  p95 {q(ex,.95)*100:.3f}%  "
+      f"p99 {q(ex,.99)*100:.3f}%  max {ex.max()*100:.3f}%   on {len(ex)} sessions")
+    P(f"\n  grid error at p99, same ticks, only the sampling changes:")
+    P(f"  {'bar width':>10}{'bars/sess':>11}{'optimistic':>12}{'EXACT':>9}{'pessimistic':>13}"
+      f"{'understates':>13}{'overstates':>12}")
+    for w, g in per_grid.items():
+        P(f"  {str(w)+' min':>10}{g['bars_per_session_mean']:>11.0f}"
+          f"{g['optimistic_p99']*100:>11.3f}%{g['exact_tick_p99']*100:>8.3f}%"
+          f"{g['pessimistic_p99']*100:>12.3f}%"
+          f"{g['optimistic_understates_pp']:>+12.3f}{g['pessimistic_overstates_pp']:>+12.3f}")
+    if 15 in per_grid:
+        g = per_grid[15]
+        P(f"\n  AT FIFTEEN MINUTES -- the grid D259 used -- the bracket is "
+          f"[{g['optimistic_p99']*100:.3f}%, {g['pessimistic_p99']*100:.3f}%] "
+          f"around an exact {g['exact_tick_p99']*100:.3f}%.")
+    P(f"\n  FOR CONTEXT ONLY, not a verdict: D259 published 3.980% on 15-minute equity-proxy")
+    P(f"  bars against a 4% floor. This is ES futures, 1x size, {len(rows)} sessions of one")
+    P(f"  year -- a different instrument and a far shorter sample. What it settles is the")
+    P(f"  SIZE OF THE GRID ERROR, not C1's fate.")
+    save({"mae_bias": res})
+    return 0
+
+
+def save(payload: dict) -> None:
+    cur = {}
+    if OUT.exists():
+        cur = json.loads(OUT.read_text(encoding="utf-8"))
+    cur.update(payload)
+    cur["updated_utc"] = now()
+    cur["purpose"] = ("D465: two instrument/cost measurements on the tick data -- the ES "
+                      "spread, and how wrong a bar-grid MAE is. No return, no edge, no "
+                      "verdict on any candidate.")
+    cur["source"] = "data/raw/databento tbbo, ES front month, 2025-09-11..2026-09-11"
+    OUT.write_text(json.dumps(cur, indent=1, default=str) + "\n", encoding="utf-8")
+    P(f"\nwrote {OUT.relative_to(REPO)}")
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    for f in ("extract", "self-test", "spread", "mae"):
+        ap.add_argument(f"--{f}", action="store_true")
+    a = ap.parse_args()
+    if a.extract:
+        return do_extract()
+    if a.self_test:
+        return do_self_test()
+    if a.spread:
+        return do_spread()
+    if a.mae:
+        return do_mae()
+    ap.print_help()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

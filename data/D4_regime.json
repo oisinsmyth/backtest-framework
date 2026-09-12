@@ -1,0 +1,182 @@
+{
+ "offset_0mo": {
+  "OP Hi10 VW - VW market (LONG LEG)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.1366,
+   "rec_t": 0.65,
+   "exp_mean": 0.086,
+   "exp_t": 1.34,
+   "diff": 0.0506,
+   "diff_t": 0.23,
+   "ratio": 1.59
+  },
+  "OP Hi10 VW - VW universe TRUE (LONG LEG)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.1045,
+   "rec_t": 0.49,
+   "exp_mean": 0.0791,
+   "exp_t": 1.27,
+   "diff": 0.0254,
+   "diff_t": 0.12,
+   "ratio": 1.32
+  },
+  "OP Hi10-Lo10 VW (SPREAD)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.3971,
+   "rec_t": 0.81,
+   "exp_mean": 0.233,
+   "exp_t": 1.41,
+   "diff": 0.1641,
+   "diff_t": 0.32,
+   "ratio": 1.7
+  },
+  "OP Lo10 VW - VW market (SHORT LEG)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": -0.2605,
+   "rec_t": -0.68,
+   "exp_mean": -0.147,
+   "exp_t": -1.13,
+   "diff": -0.1135,
+   "diff_t": -0.28,
+   "ratio": 1.77
+  },
+  "RMW published spread": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.3747,
+   "rec_t": 1.55,
+   "exp_mean": 0.242,
+   "exp_t": 2.74,
+   "diff": 0.1326,
+   "diff_t": 0.52,
+   "ratio": 1.55
+  },
+  "HML published spread": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.2574,
+   "rec_t": 0.6,
+   "exp_mean": 0.3044,
+   "exp_t": 2.8,
+   "diff": -0.0469,
+   "diff_t": -0.11,
+   "ratio": 0.85
+  },
+  "CONTROL market excess Mkt-RF": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": -0.6374,
+   "rec_t": -0.87,
+   "exp_mean": 0.7577,
+   "exp_t": 4.85,
+   "diff": -1.3952,
+   "diff_t": -1.87,
+   "ratio": -0.84
+  }
+ },
+ "offset_60mo": {
+  "OP Hi10 VW - VW market (LONG LEG)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": -0.1492,
+   "rec_t": -1.18,
+   "exp_mean": 0.1227,
+   "exp_t": 1.81,
+   "diff": -0.2719,
+   "diff_t": -1.89,
+   "ratio": -1.22
+  },
+  "OP Hi10 VW - VW universe TRUE (LONG LEG)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": -0.15,
+   "rec_t": -1.19,
+   "exp_mean": 0.1117,
+   "exp_t": 1.7,
+   "diff": -0.2618,
+   "diff_t": -1.84,
+   "ratio": -1.34
+  },
+  "OP Hi10-Lo10 VW (SPREAD)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.0155,
+   "rec_t": 0.05,
+   "exp_mean": 0.2819,
+   "exp_t": 1.65,
+   "diff": -0.2665,
+   "diff_t": -0.7,
+   "ratio": 0.05
+  },
+  "OP Lo10 VW - VW market (SHORT LEG)": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": -0.1647,
+   "rec_t": -0.53,
+   "exp_mean": -0.1593,
+   "exp_t": -1.19,
+   "diff": -0.0054,
+   "diff_t": -0.02,
+   "ratio": 1.03
+  },
+  "RMW published spread": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.1288,
+   "rec_t": 0.85,
+   "exp_mean": 0.2735,
+   "exp_t": 2.99,
+   "diff": -0.1447,
+   "diff_t": -0.82,
+   "ratio": 0.47
+  },
+  "HML published spread": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.3398,
+   "rec_t": 1.47,
+   "exp_mean": 0.2938,
+   "exp_t": 2.49,
+   "diff": 0.046,
+   "diff_t": 0.18,
+   "ratio": 1.16
+  },
+  "CONTROL market excess Mkt-RF": {
+   "n_total": 757,
+   "n_rec": 86,
+   "n_exp": 671,
+   "rec_mean": 0.8991,
+   "rec_t": 1.69,
+   "exp_mean": 0.5608,
+   "exp_t": 3.3,
+   "diff": 0.3383,
+   "diff_t": 0.61,
+   "ratio": 1.6
+  }
+ },
+ "_CONTROLS": {
+  "C-R1 market excess in recessions must be clearly negative": -0.6374,
+  "C-R1 PASS": true,
+  "C-R2 counts sum": true,
+  "C-R3 wrong dating (+60mo) market-in-recession mean": 0.8991,
+  "C-R3 PASS (the control CAN fail: wrong dating does not give a clearly negative market)": true,
+  "n_recession_months_in_sample": 86
+ }
+}

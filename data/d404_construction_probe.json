@@ -1,0 +1,56 @@
+{
+  "record": "docs/decisions/D404-the-cross-asset-state.md section 12a",
+  "bars": 4187,
+  "span": [
+    "2010-01-04",
+    "2026-08-26"
+  ],
+  "split_adjusted": true,
+  "dividend_records": {
+    "HYG": 233,
+    "IEF": 289,
+    "SHY": 289,
+    "XLU": 108,
+    "XLP": 107,
+    "XLY": 107,
+    "XLK": 84
+  },
+  "states": {
+    "CREDIT": {
+      "drift_pa": -0.009229131096826214,
+      "above_median_share": 0.567725540025413,
+      "defined_bars": 3935,
+      "bal_pass": true
+    },
+    "CURVE": {
+      "drift_pa": -4.792865974087727e-05,
+      "above_median_share": 0.4983481575603558,
+      "defined_bars": 3935,
+      "bal_pass": true
+    },
+    "DEFENSIVE_price_sum": {
+      "drift_pa": -0.07644309264810797,
+      "above_median_share": 0.2846251588310038,
+      "defined_bars": 3935,
+      "bal_pass": false
+    },
+    "DEFENSIVE_equal_weight": {
+      "drift_pa": -0.0792085971582589,
+      "above_median_share": 0.28691232528589583,
+      "defined_bars": 3935,
+      "bal_pass": false
+    }
+  },
+  "price_sum_leg_weights_last_bar": {
+    "XLU": 0.3352596702111265,
+    "XLP": 0.6647403297888734,
+    "XLY": 0.39053333333333334,
+    "XLK": 0.6094666666666667
+  },
+  "synthetic_split_shift_log_units": 0.3380976772172528,
+  "bal_band": [
+    0.4,
+    0.6
+  ],
+  "limitation": "cumulated log-return difference of PRICE series == log price ratio; the distribution question needs total-return series and is left open"
+}

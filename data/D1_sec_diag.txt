@@ -1,0 +1,16 @@
+Assets STRICTLY NEGATIVE: 0 of 6428
+Assets EXACTLY ZERO     : 33 of 6428  (= 0.51%)
+   cik 29952  'CHINA CHANGJIANG MINING & NEW ENERGY COMPANY, LTD.'  assets 0
+   cik 790273  'CONECTISYS CORPORATION'  assets 0
+   cik 831378  'LVPAI GROUP LIMITED'  assets 0
+   cik 1043150  'Eline Entertainment Group, Inc.'  assets 0
+   cik 1062506  'ATLANTICA, INC.'  assets 0
+   cik 1130781  'NEURALBASE AI LTD.'  assets 0
+in GP n AT (2614): assets==0 -> 2  (GP/AT UNDEFINED, not merely extreme)
+   cik 1130781 'NEURALBASE AI LTD.'  GP 0  AT 0
+   cik 1481443 'Techcom, Inc.'  GP 0  AT 0
+StockholdersEquity CY2011Q4I: n 7928  share<0 25.4%
+StockholdersEquity CY2015Q4I: n 6770  share<0 24.7%
+StockholdersEquity CY2019Q4I: n 6448  share<0 24.6%
+StockholdersEquity CY2023Q4I: n 6265  share<0 21.7%
+StockholdersEquity CY2025Q4I: n 5743  share<0 19.5%

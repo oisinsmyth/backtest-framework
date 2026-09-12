@@ -1,0 +1,143 @@
+{
+ "2013": {
+  "n_10Q_current_quarter": 5675,
+  "n_10Q_prior_quarter": 5565,
+  "single_quarter_GP_numerator_ciks": 2505,
+  "with_CURRENT_quarter_Assets (Novy-Marx 2013 deflator)": 2490,
+  "with_PRIOR_quarter_Assets from prior 10-Q (HXZ/OSAP deflator)": 2161,
+  "stitch_rate_pct": 86.27,
+  "control_invented_tag_current": 0,
+  "control_invented_tag_prior": 0,
+  "fiscal_period_spread_in_one_calendar_quarter": {
+   "total_10Q": 6507,
+   "top_periods": [
+    [
+     "20130630",
+     5675,
+     87.2
+    ],
+    [
+     "20130731",
+     439,
+     6.7
+    ],
+    [
+     "20130531",
+     237,
+     3.6
+    ],
+    [
+     "20130331",
+     59,
+     0.9
+    ],
+    [
+     "20130831",
+     23,
+     0.4
+    ],
+    [
+     "20120930",
+     12,
+     0.2
+    ]
+   ],
+   "n_distinct_periods": 26,
+   "share_in_modal_period_pct": 87.2
+  }
+ },
+ "2019": {
+  "n_10Q_current_quarter": 4789,
+  "n_10Q_prior_quarter": 4794,
+  "single_quarter_GP_numerator_ciks": 2301,
+  "with_CURRENT_quarter_Assets (Novy-Marx 2013 deflator)": 2296,
+  "with_PRIOR_quarter_Assets from prior 10-Q (HXZ/OSAP deflator)": 2083,
+  "stitch_rate_pct": 90.53,
+  "control_invented_tag_current": 0,
+  "control_invented_tag_prior": 0,
+  "fiscal_period_spread_in_one_calendar_quarter": {
+   "total_10Q": 5343,
+   "top_periods": [
+    [
+     "20190630",
+     4789,
+     89.6
+    ],
+    [
+     "20190731",
+     277,
+     5.2
+    ],
+    [
+     "20190531",
+     131,
+     2.5
+    ],
+    [
+     "20190331",
+     48,
+     0.9
+    ],
+    [
+     "20190831",
+     19,
+     0.4
+    ],
+    [
+     "20180930",
+     13,
+     0.2
+    ]
+   ],
+   "n_distinct_periods": 31,
+   "share_in_modal_period_pct": 89.6
+  }
+ },
+ "2025": {
+  "n_10Q_current_quarter": 4765,
+  "n_10Q_prior_quarter": 4789,
+  "single_quarter_GP_numerator_ciks": 2083,
+  "with_CURRENT_quarter_Assets (Novy-Marx 2013 deflator)": 2082,
+  "with_PRIOR_quarter_Assets from prior 10-Q (HXZ/OSAP deflator)": 1916,
+  "stitch_rate_pct": 91.98,
+  "control_invented_tag_current": 0,
+  "control_invented_tag_prior": 0,
+  "fiscal_period_spread_in_one_calendar_quarter": {
+   "total_10Q": 5249,
+   "top_periods": [
+    [
+     "20250630",
+     4765,
+     90.8
+    ],
+    [
+     "20250731",
+     230,
+     4.4
+    ],
+    [
+     "20250531",
+     88,
+     1.7
+    ],
+    [
+     "20250331",
+     83,
+     1.6
+    ],
+    [
+     "20250831",
+     21,
+     0.4
+    ],
+    [
+     "20241231",
+     13,
+     0.2
+    ]
+   ],
+   "n_distinct_periods": 26,
+   "share_in_modal_period_pct": 90.8
+  }
+ }
+}

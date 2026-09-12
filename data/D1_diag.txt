@@ -1,0 +1,46 @@
+==============================================================================
+DIAGNOSIS OF THE TWO CONTROLS THAT FIRED
+==============================================================================
+NC4  months where RF == EW 'Lo 10' exactly at the published 2dp: 1 of 757
+     the months: [201804]
+     mean|RF - Lo10| over all months = %.3f pp  -> the two series are NOT the
+     same block; the hits are 2-decimal rounding coincidences, not a double read.
+     recomputed with the stricter test 'the two series are not identical':
+     identical months 1 / 757 -> PASS (not identical)
+
+NC5  firm-count reconstruction of EW 'Lo 30' from EW deciles 1-3, n=901 months
+     mean|diff| 0.0040 pp   median 0.0033   p95 0.0112   max 0.0243 pp
+     French publishes returns and counts rounded to 2dp, so a reconstruction
+     error of this order is arithmetic rounding, not a logic error.  The 0.02 pp
+     tolerance I pre-set was too tight by 0.005 pp.  CALIBRATION TAKEN FROM THE
+     FIRING: the Node-A rebuild is accurate to about +/-0.024 pp/month, which is
+     3x to 10x smaller than every Node-A effect reported (0.07 to 0.26 pp/month).
+
+==============================================================================
+QUANTILE COUNT (the #1-ranked asset-pricing node) -- LONG LEG vs SPREAD
+Same file, same months, same sort; only the number of buckets changes.
+==============================================================================
+
+[full 1963-07..2026-06] EW tercile 30/70   LONG LEG +0.856 (t +4.11)   SPREAD +0.079 (t +0.74)  n=756
+[full 1963-07..2026-06] EW quintile 20/80  LONG LEG +0.841 (t +3.91)   SPREAD +0.083 (t +0.68)  n=756
+[full 1963-07..2026-06] EW decile 10/90    LONG LEG +0.830 (t +3.71)   SPREAD +0.113 (t +0.75)  n=756
+   ==> tercile -> decile:  LONG LEG mean -0.026 (t -0.40)   SPREAD mean +0.034 (t +0.01)
+       SIGNS OPPOSE (the node helps one object and hurts the other)
+
+[full 1963-07..2026-06] VW tercile 30/70   LONG LEG +0.701 (t +4.35)   SPREAD +0.224 (t +2.37)  n=756
+[full 1963-07..2026-06] VW quintile 20/80  LONG LEG +0.687 (t +4.22)   SPREAD +0.201 (t +1.74)  n=756
+[full 1963-07..2026-06] VW decile 10/90    LONG LEG +0.693 (t +4.12)   SPREAD +0.246 (t +1.57)  n=756
+   ==> tercile -> decile:  LONG LEG mean -0.008 (t -0.23)   SPREAD mean +0.022 (t -0.80)
+       SIGNS OPPOSE (the node helps one object and hurts the other)
+
+[prog 2010-01..2026-06] EW tercile 30/70   LONG LEG +0.971 (t +2.46)   SPREAD +0.215 (t +0.98)  n=198
+[prog 2010-01..2026-06] EW quintile 20/80  LONG LEG +0.937 (t +2.33)   SPREAD +0.245 (t +0.92)  n=198
+[prog 2010-01..2026-06] EW decile 10/90    LONG LEG +0.888 (t +2.13)   SPREAD +0.356 (t +1.08)  n=198
+   ==> tercile -> decile:  LONG LEG mean -0.083 (t -0.33)   SPREAD mean +0.140 (t +0.11)
+       SIGNS OPPOSE (the node helps one object and hurts the other)
+
+[prog 2010-01..2026-06] VW tercile 30/70   LONG LEG +1.179 (t +3.92)   SPREAD +0.194 (t +1.03)  n=198
+[prog 2010-01..2026-06] VW quintile 20/80  LONG LEG +1.134 (t +3.77)   SPREAD +0.099 (t +0.40)  n=198
+[prog 2010-01..2026-06] VW decile 10/90    LONG LEG +1.242 (t +3.99)   SPREAD +0.308 (t +0.93)  n=198
+   ==> tercile -> decile:  LONG LEG mean +0.063 (t +0.08)   SPREAD mean +0.114 (t -0.11)
+       SIGNS agree

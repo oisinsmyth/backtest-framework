@@ -1,0 +1,600 @@
+C3 lane (Scan-100926 round 3) - the shape of the drawdown of a LONG-ONLY characteristic tilt
+Independent measurement on Ken French's public data library. Re-runnable.
+
+Endpoint: https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/<file>_CSV.zip
+Files used: Portfolios_Formed_on_OP_CSV.zip, Portfolios_Formed_on_OP_Daily_CSV.zip,
+  Portfolios_Formed_on_BE-ME_CSV.zip, F-F_Research_Data_Factors_CSV.zip,
+  F-F_Research_Data_Factors_daily_CSV.zip, F-F_Research_Data_5_Factors_2x3_CSV.zip,
+  25_Portfolios_ME_OP_5x5_CSV.zip, 6_Portfolios_ME_OP_2x3_CSV.zip
+Source header: 'This file was created using the 202607 CRSP database.' Zip members dated 2026-09-02.
+Span: monthly 196307-202607 (757 months); daily 19630701-20260731 (15,876 days).
+
+NEGATIVE CONTROL on the endpoint: Portfolios_Formed_on_ZZZNOTAFILE_CSV.zip -> HTTP 404,
+  1245 bytes, text/html (not a zip). A value that must return nothing returned nothing.
+SENTINEL CONTROL: French states 'Missing data are indicated by -99.99 or -999.' Every block used
+  is censused for both; see STEP 1 and CONTROL C below.
+Python: project venv, numpy 2.4.6, pandas 3.0.3.
+Generated 2026-09-10T10:20:20Z
+
+
+################ C3_run1.py ################
+====================================================================================================
+STEP 1 - BLOCK PROOF: every block in every file, with its line range
+====================================================================================================
+
+--- OP: Portfolios_Formed_on_OP.csv
+    lines    26-  782  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Average Value Weight Returns -- Monthly'
+    lines   787- 1543  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Average Equal Weighted Returns -- Monthly'
+    lines  1548- 1609  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Value Weight Returns -- Annual from January to December'
+    lines  1614- 1675  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Equal Weight Returns -- Annual from January to December'
+    lines  1680- 2436  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Number of Firms in Portfolios'
+    lines  2441- 3197  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Average Firm Size'
+    lines  3202- 3265  rows    64  1963..2026  sent(-99.99)=    0 sent(-999)=    0  ncols=18  TITLE='Value Weight Average of OP'
+
+--- BEME: Portfolios_Formed_on_BE-ME.csv
+    lines    25- 1225  rows  1201  192607..202607  sent(-99.99)=   43 sent(-999)=    0  ncols=19  TITLE='Value Weight Returns -- Monthly'
+    lines  1230- 2430  rows  1201  192607..202607  sent(-99.99)=   43 sent(-999)=    0  ncols=19  TITLE='Equal Weight Returns -- Monthly'
+    lines  2435- 2533  rows    99  1927..2025  sent(-99.99)=    2 sent(-999)=    0  ncols=19  TITLE='Value Weight Returns -- Annual from January to December'
+    lines  2538- 2636  rows    99  1927..2025  sent(-99.99)=    2 sent(-999)=    0  ncols=19  TITLE='Equal Weight Returns -- Annual from January to December'
+    lines  2641- 3841  rows  1201  192607..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=19  TITLE='Number of Firms in Portfolios'
+    lines  3846- 5046  rows  1201  192607..202607  sent(-99.99)=   43 sent(-999)=    0  ncols=19  TITLE='Average Firm Size'
+    lines  5051- 5150  rows   100  1927..2026  sent(-99.99)=    2 sent(-999)=    0  ncols=19  TITLE='Sum of BE / Sum of ME'
+    lines  5155- 5254  rows   100  1927..2026  sent(-99.99)=    2 sent(-999)=    0  ncols=19  TITLE='Value Weight Average of BE / ME'
+
+--- FF3: F-F_Research_Data_Factors.csv
+    lines     6- 1206  rows  1201  192607..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=4  TITLE='The annual TBill return is compounded from the monthly T-bill rates from January to December.'
+    lines  1210- 1308  rows    99  1927..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=4  TITLE='Annual Factors: January-December'
+
+--- FF5: F-F_Research_Data_5_Factors_2x3.csv
+    lines     6-  762  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='The annual TBill return is compounded from the monthly T-bill rates from January to December.'
+    lines   766-  827  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Annual Factors: January-December'
+
+--- ME_OP_25: 25_Portfolios_ME_OP_5x5.csv
+    lines    24-  780  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Average Value Weighted Returns -- Monthly'
+    lines   785- 1541  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Average Equal Weighted Returns -- Monthly'
+    lines  1546- 1607  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Average Value Weighted Returns -- Annual'
+    lines  1612- 1673  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Average Equal Weighted Returns -- Annual'
+    lines  1678- 2434  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Number of Firms in Portfolios'
+    lines  2439- 3195  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Average Market Cap'
+    lines  3204- 3960  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='and BE(Fiscal Year t-1) is adjusted for net stock issuance to Dec t-1'
+    lines  3969- 4725  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='and BE(Fiscal Year t-1) is adjusted for net stock issuance to Jun t'
+    lines  4733- 5489  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Where Mth is a month from June of t to June of t+1'
+    lines  5497- 6253  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=25  TITLE='Where Mth is a month from June of t to June of t+1'
+
+--- ME_OP_6: 6_Portfolios_ME_OP_2x3.csv
+    lines    24-  780  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Average Value Weighted Returns -- Monthly'
+    lines   785- 1541  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Average Equal Weighted Returns -- Monthly'
+    lines  1546- 1607  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Average Value Weighted Returns -- Annual'
+    lines  1612- 1673  rows    62  1964..2025  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Average Equal Weighted Returns -- Annual'
+    lines  1678- 2434  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Number of Firms in Portfolios'
+    lines  2439- 3195  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Average Market Cap'
+    lines  3204- 3960  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='and BE(Fiscal Year t-1) is adjusted for net stock issuance to Dec t-1'
+    lines  3969- 4725  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='and BE(Fiscal Year t-1) is adjusted for net stock issuance to Jun t'
+    lines  4733- 5489  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Where Mth is a month from June of t to June of t+1'
+    lines  5497- 6253  rows   757  196307..202607  sent(-99.99)=    0 sent(-999)=    0  ncols=6  TITLE='Where Mth is a month from June of t to June of t+1'
+
+################ C3_run2.py ################
+COLS ff3m: ['Mkt-RF', 'SMB', 'HML', 'RF']  ff5m: ['Mkt-RF', 'SMB', 'HML', 'RMW', 'CMA', 'RF']
+COLS op_vw: ['Lo 30', 'Med 40', 'Hi 30', 'Lo 20', 'Qnt 2', 'Qnt 3', 'Qnt 4', 'Hi 20', 'Lo 10', '2-Dec', '3-Dec', '4-Dec', '5-Dec', '6-Dec', '7-Dec', '8-Dec', '9-Dec', 'Hi 10']
+COLS p25_ew: ['SMALL LoOP', 'ME1 OP2', 'ME1 OP3', 'ME1 OP4', 'SMALL HiOP', 'ME2 OP1'] ...
+
+====================================================================================================
+CONTROL A (POSITIVE, internal): compound my monthly VW decile-10 returns by calendar year
+  and compare to FRENCH'S OWN annual VW block. If I read the wrong block or the wrong units,
+  this fails.
+====================================================================================================
+  years checked: 62   max |compounded_monthly - French_annual| = 0.0333 pp
+  PASS (agreement to rounding)
+
+====================================================================================================
+CONTROL B (NEGATIVE): a series whose drawdown MUST be exactly zero -> cumulative RF
+====================================================================================================
+  RF months 1201 192607..202607  min monthly RF = -0.0600%
+  max drawdown of cumulative RF = -0.0899859958%   n episodes = 3
+  *** CONTROL FIRED, AND IT CAUGHT A REAL DATA PROPERTY, NOT A BUG ***
+  French's RF series has 12 NEGATIVE monthly values, all pre-war: [(np.str_('193302'), np.float64(-0.03)), (np.str_('193803'), np.float64(-0.01)), (np.str_('193807'), np.float64(-0.01)), (np.str_('193811'), np.float64(-0.06)), (np.str_('193901'), np.float64(-0.01)), (np.str_('193903'), np.float64(-0.01)), (np.str_('193908'), np.float64(-0.01)), (np.str_('194005'), np.float64(-0.02)), (np.str_('194008'), np.float64(-0.01)), (np.str_('194101'), np.float64(-0.01)), (np.str_('194102'), np.float64(-0.01)), (np.str_('194104'), np.float64(-0.01))]
+  So cumulative RF is NOT monotone over 1926-2026 and its drawdown is not zero.
+  The control is therefore re-stated on the OP sample window (196307-202607), where
+  RF is never negative and the drawdown must be - and is - exactly 0 (see C3_run3.py).
+  restated: maxDD of cumulative RF on 196307-202607 = 0.000000000000%  episodes=0
+
+====================================================================================================
+CONTROL C (SENTINEL CENSUS) on every slice actually used
+====================================================================================================
+  OP VW monthly            -99.99 x   0   -999 x   0
+  OP EW monthly            -99.99 x   0   -999 x   0
+  BE-ME VW monthly         -99.99 x  43   -999 x   0
+  BE-ME EW monthly         -99.99 x  43   -999 x   0
+  FF3 monthly              -99.99 x   0   -999 x   0
+  FF5 monthly              -99.99 x   0   -999 x   0
+  25 ME_OP EW monthly      -99.99 x   0   -999 x   0
+  25 ME_OP VW monthly      -99.99 x   0   -999 x   0
+  BE-ME VW sentinel rows: ['194411', '194412', '194501', '194502', '194503', '194504', '194505', '194506', '194507', '194508', '194509', '194510', '194511', '194512', '194601', '194602', '194603', '194604', '194605', '194606', '196108', '196109', '196110', '196111', '196112', '196201', '196202', '196203', '196204', '196205', '196206', '196207', '196208', '196209', '196210', '196211', '196212', '196301', '196302', '196303', '196304', '196305', '196306']
+  BE-ME VW sentinel cols: ['<= 0']
+
+################ C3_run3.py ################
+[NEG CTRL] cumulative RF max drawdown on 196307-202607 = 0.000000000000%  episodes=0  min monthly RF=0.0000%
+
+======================================================================================================================
+TABLE 1 - FULL SAMPLE drawdown of long-only tilts vs market vs spread   [196307..202607, n=757]
+======================================================================================================================
+series                                      CAGR    vol    maxDD    peak  trough   recov  p->t   t->r    UW #DD>20%
+MKT  value-weighted market (total ret)    10.85%  15.4%  -50.31%  200710  200902  201202    16     36    52       7
+EWUNI equal-wtd all-name universe         12.66%  20.3%  -59.53%  200705  200902  201012    21     22    43      12
+OP d10 VW  (long-only tilt, VW)           11.98%  15.9%  -52.22%  197212  197409  197808    21     47    68       6
+OP d10 EW  (long-only tilt, EW)           12.77%  21.2%  -63.63%  196811  197412  197706    73     30   103      14
+OP top30% VW                              12.24%  15.3%  -47.97%  197212  197409  197807    21     46    67       7
+OP top30% EW                              13.43%  19.8%  -59.99%  196811  197412  197612    73     24    97      12
+OP d1 VW (short leg, held long)            7.20%  22.8%  -82.97%  200002  200902  202011   108    141   249       9
+OP d1 EW (short leg, held long)            9.54%  27.2%  -69.32%  202102  202310   NEVER    32     -1    65      13
+SMALL HiOP EW (small+profitable)          12.06%  24.1%  -74.13%  196812  197412  197803    72     39   111      16
+SMALL HiOP VW                             11.88%  23.6%  -74.43%  196812  197412  197804    72     40   112      17
+BIG HiOP VW                               11.63%  15.1%  -48.54%  197212  197409  197906    21     57    78       7
+SPREAD d10-d1 VW (long-short)              1.93%  14.9%  -61.34%  196506  198305  199010   215     89   304       7
+SPREAD d10-d1 EW (long-short)              0.49%  14.4%  -65.04%  199810  200002  202211    16    273   289       4
+RMW factor (FF 2x3)                        2.81%   7.9%  -41.79%  199808  200002  200107    18     17    35       4
+HML factor                                 3.10%  10.3%  -57.78%  200612  202009   NEVER   165     -1   235       4
+VALUE d10 VW (high BE/ME)                 14.49%  21.7%  -69.81%  200706  200902  201611    20     93   113      12
+VALUE d10 EW (high BE/ME)                 19.02%  23.1%  -69.52%  200706  200902  201210    20     44    64      13
+
+======================================================================================================================
+TABLE 2 - the FIVE WORST episodes of each key series (depth-ranked, distinct episodes)
+======================================================================================================================
+
+  MKT  value-weighted market (total ret)
+     -50.31%  peak 200710 -> trough 200902 ( 16m) -> recover 201202 (36m)  underwater   52m
+     -46.51%  peak 197212 -> trough 197409 ( 21m) -> recover 197612 (27m)  underwater   48m
+     -44.99%  peak 200008 -> trough 200209 ( 25m) -> recover 200609 (48m)  underwater   73m
+     -33.55%  peak 196811 -> trough 197006 ( 19m) -> recover 197201 (19m)  underwater   38m
+     -29.85%  peak 198708 -> trough 198711 (  3m) -> recover 198905 (18m)  underwater   21m
+    LONGEST UNDERWATER:  -44.99%  peak 200008 -> trough 200209 ( 25m) -> recover 200609 (48m)  underwater   73m
+
+  EWUNI equal-wtd all-name universe
+     -59.53%  peak 200705 -> trough 200902 ( 21m) -> recover 201012 (22m)  underwater   43m
+     -56.65%  peak 196812 -> trough 197412 ( 72m) -> recover 197603 (15m)  underwater   87m
+     -36.42%  peak 202106 -> trough 202310 ( 28m) -> recover 202604 (30m)  underwater   58m
+     -33.37%  peak 201808 -> trough 202003 ( 19m) -> recover 202011 (8m)  underwater   27m
+     -33.37%  peak 198708 -> trough 198711 (  3m) -> recover 198908 (21m)  underwater   24m
+    LONGEST UNDERWATER:  -56.65%  peak 196812 -> trough 197412 ( 72m) -> recover 197603 (15m)  underwater   87m
+
+  OP d10 VW  (long-only tilt, VW)
+     -52.22%  peak 197212 -> trough 197409 ( 21m) -> recover 197808 (47m)  underwater   68m
+     -41.19%  peak 200710 -> trough 200902 ( 16m) -> recover 201012 (22m)  underwater   38m
+     -34.20%  peak 198708 -> trough 198711 (  3m) -> recover 198907 (20m)  underwater   23m
+     -31.10%  peak 196811 -> trough 197006 ( 19m) -> recover 197104 (10m)  underwater   29m
+     -30.44%  peak 200010 -> trough 200209 ( 23m) -> recover 200406 (21m)  underwater   44m
+    LONGEST UNDERWATER:  -52.22%  peak 197212 -> trough 197409 ( 21m) -> recover 197808 (47m)  underwater   68m
+
+  OP d10 EW  (long-only tilt, EW)
+     -63.63%  peak 196811 -> trough 197412 ( 73m) -> recover 197706 (30m)  underwater  103m
+     -59.45%  peak 200705 -> trough 200902 ( 21m) -> recover 201012 (22m)  underwater   43m
+     -38.60%  peak 201808 -> trough 202003 ( 19m) -> recover 202011 (8m)  underwater   27m
+     -36.54%  peak 198708 -> trough 198711 (  3m) -> recover 198907 (20m)  underwater   23m
+     -29.80%  peak 198909 -> trough 199010 ( 13m) -> recover 199103 (5m)  underwater   18m
+    LONGEST UNDERWATER:  -63.63%  peak 196811 -> trough 197412 ( 73m) -> recover 197706 (30m)  underwater  103m
+
+  SMALL HiOP EW (small+profitable)
+     -74.13%  peak 196812 -> trough 197412 ( 72m) -> recover 197803 (39m)  underwater  111m
+     -66.01%  peak 200706 -> trough 200902 ( 20m) -> recover 201004 (14m)  underwater   34m
+     -62.62%  peak 201808 -> trough 202003 ( 19m) -> recover 202102 (11m)  underwater   30m
+     -35.75%  peak 198708 -> trough 198711 (  3m) -> recover 198908 (21m)  underwater   24m
+     -33.31%  peak 198909 -> trough 199010 ( 13m) -> recover 199105 (7m)  underwater   20m
+    LONGEST UNDERWATER:  -74.13%  peak 196812 -> trough 197412 ( 72m) -> recover 197803 (39m)  underwater  111m
+
+  SPREAD d10-d1 VW (long-short)
+     -61.34%  peak 196506 -> trough 198305 (215m) -> recover 199010 (89m)  underwater  304m
+     -60.34%  peak 199808 -> trough 200002 ( 18m) -> recover 200109 (19m)  underwater   37m
+     -32.72%  peak 199208 -> trough 199308 ( 12m) -> recover 199610 (38m)  underwater   50m
+     -32.62%  peak 200902 -> trough 201402 ( 60m) -> recover 201705 (39m)  underwater   99m
+     -30.27%  peak 202409 -> trough 202606 ( 21m) -> recover NOT RECOVERED (-m)  underwater   22m
+    LONGEST UNDERWATER:  -61.34%  peak 196506 -> trough 198305 (215m) -> recover 199010 (89m)  underwater  304m
+
+  RMW factor (FF 2x3)
+     -41.79%  peak 199808 -> trough 200002 ( 18m) -> recover 200107 (17m)  underwater   35m
+     -25.86%  peak 202310 -> trough 202606 ( 32m) -> recover NOT RECOVERED (-m)  underwater   33m
+     -23.63%  peak 197301 -> trough 197704 ( 51m) -> recover 198411 (91m)  underwater  142m
+     -23.27%  peak 200209 -> trough 200401 ( 16m) -> recover 200806 (53m)  underwater   69m
+     -12.49%  peak 196711 -> trough 196901 ( 14m) -> recover 196912 (11m)  underwater   25m
+    LONGEST UNDERWATER:  -23.63%  peak 197301 -> trough 197704 ( 51m) -> recover 198411 (91m)  underwater  142m
+
+  HML factor
+     -57.78%  peak 200612 -> trough 202009 (165m) -> recover NOT RECOVERED (-m)  underwater  235m
+     -39.77%  peak 199805 -> trough 200002 ( 21m) -> recover 200102 (12m)  underwater   33m
+     -28.02%  peak 197907 -> trough 198011 ( 16m) -> recover 198202 (15m)  underwater   31m
+     -25.60%  peak 198903 -> trough 199112 ( 33m) -> recover 199302 (14m)  underwater   47m
+     -17.74%  peak 197008 -> trough 197206 ( 22m) -> recover 197304 (10m)  underwater   32m
+    LONGEST UNDERWATER:  -57.78%  peak 200612 -> trough 202009 (165m) -> recover NOT RECOVERED (-m)  underwater  235m
+
+  VALUE d10 VW (high BE/ME)
+     -69.81%  peak 200706 -> trough 200902 ( 20m) -> recover 201611 (93m)  underwater  113m
+     -52.93%  peak 201801 -> trough 202003 ( 26m) -> recover 202103 (12m)  underwater   38m
+     -39.33%  peak 196901 -> trough 197006 ( 17m) -> recover 197201 (19m)  underwater   36m
+     -33.37%  peak 198908 -> trough 199010 ( 14m) -> recover 199202 (16m)  underwater   30m
+     -29.98%  peak 197402 -> trough 197412 ( 10m) -> recover 197504 (4m)  underwater   14m
+    LONGEST UNDERWATER:  -69.81%  peak 200706 -> trough 200902 ( 20m) -> recover 201611 (93m)  underwater  113m
+
+################ C3_run4.py ################
+======================================================================================================================
+TABLE 3 - DRAWDOWN TIME, not just depth: mean drawdown, % of months underwater, % in >20% hole
+   'mean drawdown' = time-average of the drawdown series, the same statistic CFM's A6 reports
+======================================================================================================================
+series            maxDD   meanDD   medDD    %UW  %DD>10%  %DD>20%  %DD>30% worstUW(m)
+MKT(VW mkt)     -50.31%   -7.27%  -2.80%  67.1%    25.8%    12.4%     4.6%         73
+EWUNI           -59.53%   -9.60%  -5.31%  70.9%    35.1%    17.2%     6.7%         87
+OPd10_VW        -52.22%   -6.38%  -2.72%  68.2%    23.6%     8.7%     3.0%         68
+OPd10_EW        -63.63%   -9.44%  -4.62%  71.3%    34.2%    15.3%     7.3%        103
+SMALLHiOP_EW    -74.13%  -14.32%  -8.88%  78.7%    47.6%    28.3%    14.4%        111
+SPREAD_VW       -61.34%  -22.88% -20.72%  94.7%    72.9%    52.0%    29.2%        304
+SPREAD_EW       -65.04%  -30.07% -28.72%  97.8%    86.1%    71.9%    46.1%        328
+RMW             -41.79%   -6.51%  -3.61%  83.5%    28.3%     5.5%     0.5%        142
+HML             -57.78%  -12.21%  -6.09%  82.2%    39.9%    25.5%    12.7%        235
+VALUEd10_VW     -69.81%   -9.62%  -4.02%  68.0%    32.8%    17.0%     9.4%        113
+
+======================================================================================================================
+TABLE 4 - IS THE TILT'S DRAWDOWN THE MARKET'S? drawdown-path overlap and the RELATIVE drawdown
+======================================================================================================================
+
+  OPd10_VW vs MKT: corr(drawdown paths) = 0.792
+    at the tilt's trough (197409): tilt DD -52.22%   MKT DD -46.51%   -> tilt-specific excess hole  -5.71pp
+    RELATIVE drawdown (cumulative OPd10_VW / cumulative MKT) worst = -29.28%
+      rel:  -29.28%  peak 196912 -> trough 198203 (147m) -> recover 200108 (233m)  underwater  380m
+      rel:  -15.42%  peak 200109 -> trough 200612 ( 63m) -> recover 200809 (21m)  underwater   84m
+      rel:  -12.44%  peak 196805 -> trough 196901 (  8m) -> recover 196911 (10m)  underwater   18m
+
+  OPd10_EW vs EWUNI: corr(drawdown paths) = 0.922
+    at the tilt's trough (197412): tilt DD -63.63%   EWUNI DD -56.65%   -> tilt-specific excess hole  -6.98pp
+    RELATIVE drawdown (cumulative OPd10_EW / cumulative EWUNI) worst = -29.14%
+      rel:  -29.14%  peak 201108 -> trough 202102 (114m) -> recover 202310 (32m)  underwater  146m
+      rel:  -28.89%  peak 197109 -> trough 200002 (341m) -> recover 201003 (121m)  underwater  462m
+      rel:  -15.78%  peak 202503 -> trough 202606 ( 15m) -> recover NOT RECOVERED (-m)  underwater   16m
+
+  OPd10_EW vs MKT: corr(drawdown paths) = 0.691
+    at the tilt's trough (197412): tilt DD -63.63%   MKT DD -41.75%   -> tilt-specific excess hole -21.88pp
+    RELATIVE drawdown (cumulative OPd10_EW / cumulative MKT) worst = -52.50%
+      rel:  -52.50%  peak 198307 -> trough 199910 (195m) -> recover 200308 (46m)  underwater  241m
+      rel:  -50.72%  peak 201005 -> trough 202605 (192m) -> recover NOT RECOVERED (-m)  underwater  194m
+      rel:  -48.27%  peak 196812 -> trough 197312 ( 60m) -> recover 197802 (50m)  underwater  110m
+
+  SMALLHiOP_EW vs EWUNI: corr(drawdown paths) = 0.869
+    at the tilt's trough (197412): tilt DD -74.13%   EWUNI DD -56.65%   -> tilt-specific excess hole -17.48pp
+    RELATIVE drawdown (cumulative SMALLHiOP_EW / cumulative EWUNI) worst = -64.20%
+      rel:  -64.20%  peak 196901 -> trough 202003 (614m) -> recover NOT RECOVERED (-m)  underwater  690m
+      rel:  -10.55%  peak 196604 -> trough 196610 (  6m) -> recover 196706 (8m)  underwater   14m
+      rel:   -7.70%  peak t0 -> trough 196406 ( 12m) -> recover 196504 (10m)  underwater   22m
+
+  SPREAD_VW vs MKT: corr(drawdown paths) = -0.108
+    at the tilt's trough (198305): tilt DD -61.34%   MKT DD   0.00%   -> tilt-specific excess hole -61.34pp
+    RELATIVE drawdown (cumulative SPREAD_VW / cumulative MKT) worst = -99.55%
+      rel:  -99.55%  peak 196310 -> trough 202606 (752m) -> recover NOT RECOVERED (-m)  underwater  753m
+      rel:   -4.60%  peak 196307 -> trough 196308 (  1m) -> recover 196310 (2m)  underwater    3m
+
+  RMW vs MKT: corr(drawdown paths) = 0.055
+    at the tilt's trough (200002): tilt DD -41.79%   MKT DD  -1.57%   -> tilt-specific excess hole -40.22pp
+    RELATIVE drawdown (cumulative RMW / cumulative MKT) worst = -99.23%
+      rel:  -99.23%  peak 196307 -> trough 202606 (755m) -> recover NOT RECOVERED (-m)  underwater  756m
+
+======================================================================================================================
+TABLE 5 - STRESS CORRELATION: does the tilt's diversification survive the month it is needed?
+   buckets defined on the VW market's own monthly total return
+======================================================================================================================
+bucket                          n  mktRet |               OPd10_VW |               OPd10_EW |              SPREAD_VW |                    RMW
+                                          |     corr   beta   mean |     corr   beta   mean |     corr   beta   mean |     corr   beta   mean
+all months                    757   0.96% |   0.930   0.96   1.05% |   0.877   1.21   1.20% |  -0.353  -0.34   0.25% |  -0.193  -0.10   0.26%
+market DOWN months            283  -3.43% |   0.864   0.97  -3.09% |   0.835   1.30  -4.05% |  -0.245  -0.34   1.92% |  -0.120  -0.09   0.78%
+worst decile of mkt months     75  -7.67% |   0.799   0.98  -7.17% |   0.800   1.46  -9.37% |  -0.166  -0.28   3.71% |  -0.060  -0.06   1.37%
+worst 5% of mkt months         37  -9.75% |   0.800   1.02  -9.22% |   0.808   1.60 -12.14% |  -0.263  -0.50   3.58% |  -0.082  -0.09   1.36%
+worst 20 mkt months            20 -11.48% |   0.850   1.26 -10.37% |   0.774   1.66 -14.79% |  -0.115  -0.23   5.19% |   0.023   0.03   1.79%
+best decile of mkt months      75   8.28% |   0.782   1.12   8.00% |   0.618   1.47   9.55% |   0.082   0.17  -2.27% |   0.071   0.08  -0.40%
+
+  And the statistic that actually matters for a tilt: EXCESS over the market in each bucket
+    all months                   OPd10_VW-MKT   0.09%   OPd10_EW-EWUNI   0.03%   RMW   0.26%
+    market DOWN months           OPd10_VW-MKT   0.34%   OPd10_EW-EWUNI  -0.25%   RMW   0.78%
+    worst decile of mkt months   OPd10_VW-MKT   0.50%   OPd10_EW-EWUNI  -0.41%   RMW   1.37%
+    worst 5% of mkt months       OPd10_VW-MKT   0.52%   OPd10_EW-EWUNI  -0.70%   RMW   1.36%
+    worst 20 mkt months          OPd10_VW-MKT   1.11%   OPd10_EW-EWUNI  -0.42%   RMW   1.79%
+    best decile of mkt months    OPd10_VW-MKT  -0.29%   OPd10_EW-EWUNI   0.71%   RMW  -0.40%
+
+======================================================================================================================
+TABLE 6 - HOW LONG MUST YOU HOLD? fraction of OVERLAPPING rolling windows that are positive,
+   and the fraction that beat the benchmark. (overlapping windows -> not independent; count only)
+======================================================================================================================
+series / question                                 1y(12m)    3y(36m)    5y(60m)  10y(120m)  15y(180m)  20y(240m)  30y(360m)
+MKT total return > 0                                78.8%      87.5%      91.4%      97.5%     100.0%     100.0%     100.0%
+EWUNI total return > 0                              73.7%      86.7%      94.6%     100.0%     100.0%     100.0%     100.0%
+OPd10_VW total return > 0                           80.2%      88.9%      95.1%      99.7%     100.0%     100.0%     100.0%
+OPd10_EW total return > 0                           75.3%      89.9%      93.6%     100.0%     100.0%     100.0%     100.0%
+SMALLHiOP_EW total return > 0                       71.3%      82.1%      86.5%      99.5%     100.0%     100.0%     100.0%
+MKT beats cash (RF)                                 72.7%      79.6%      77.4%      82.9%      96.9%     100.0%     100.0%
+OPd10_VW beats cash (RF)                            71.8%      79.9%      81.1%      82.8%      90.1%     100.0%     100.0%
+OPd10_EW beats cash (RF)                            70.2%      80.3%      84.4%      92.8%     100.0%     100.0%     100.0%
+OPd10_VW beats MKT                                  55.0%      62.0%      64.0%      70.1%      70.2%      70.7%      80.2%
+OPd10_EW beats EWUNI                                52.0%      51.1%      52.0%      52.8%      55.0%      58.5%      59.3%
+OPd10_EW beats MKT                                  50.8%      49.2%      52.3%      61.1%      71.8%      82.4%      99.0%
+SPREAD_VW cumulative > 0 (additive)                 54.4%      60.2%      68.9%      76.6%      83.6%      91.7%      99.7%
+SPREAD_EW cumulative > 0                            56.8%      61.1%      61.2%      62.9%      77.7%      89.4%      92.0%
+RMW cumulative > 0 (additive)                       68.6%      79.8%      85.5%      90.4%      98.8%     100.0%     100.0%
+HML cumulative > 0 (additive)                       61.5%      69.8%      75.6%      77.7%      83.6%      87.8%     100.0%
+
+################ C3_run5.py ################
+===================================================================================================================
+TABLE 7 - THE LIVE DRAWDOWN as at the data end (202607). What the investor is sitting in NOW.
+===================================================================================================================
+  MKT            current DD   -1.05%  (ONGOING from peak 202605, trough so far 202607 -1.05%, 2m underwater)
+  EWUNI          current DD   -3.08%  (ONGOING from peak 202606, trough so far 202607 -3.08%, 1m underwater)
+  OPd10_VW       current DD   -1.98%  (ONGOING from peak 202605, trough so far 202607 -1.98%, 2m underwater)
+  OPd10_EW       current DD    0.00%  (at/near a high)
+  SMALLHiOP_EW   current DD   -0.12%  (ONGOING from peak 202106, trough so far 202310 -31.19%, 61m underwater)
+  SPREAD_VW      current DD  -27.07%  (ONGOING from peak 202409, trough so far 202606 -30.27%, 22m underwater)
+  SPREAD_EW      current DD  -16.19%  (ONGOING from peak 202503, trough so far 202510 -28.16%, 16m underwater)
+  RMW            current DD  -17.67%  (ONGOING from peak 202310, trough so far 202606 -25.86%, 33m underwater)
+  HML            current DD  -29.57%  (ONGOING from peak 200612, trough so far 202009 -57.78%, 235m underwater)
+  VALUEd10_VW    current DD    0.00%  (at/near a high)
+
+===================================================================================================================
+TABLE 8 - PROGRAMME-ERA SUBSAMPLE 201001..202607 (the window the programme's own fixture spans)
+===================================================================================================================
+series            CAGR    vol    maxDD    peak  trough   recov  UW(m)   meanDD    %UW
+  MKT           14.16%  14.9%  -24.84%  202112  202209  202312     24   -3.26%  52.8%
+  EWUNI         10.66%  19.7%  -36.42%  202106  202310  202604     58   -8.63%  73.4%
+  OPd10_VW      16.14%  15.1%  -19.51%  202001  202003  202006      5   -2.44%  51.8%
+  OPd10_EW      10.62%  20.3%  -38.60%  201808  202003  202011     27   -5.86%  70.9%
+  SMALLHiOP_EW   6.93%  25.6%  -62.62%  201808  202003  202102     30  -13.91%  87.4%
+  SPREAD_VW      2.70%  16.1%  -30.27%  202409  202606   NEVER     22  -10.57%  88.9%
+  SPREAD_EW      3.77%  16.3%  -52.38%  201910  202102  202211     37   -9.97%  84.4%
+  RMW            1.89%   7.7%  -25.86%  202310  202606   NEVER     33   -4.18%  85.9%
+  HML           -0.99%  11.2%  -53.36%  201004  202009   NEVER    195  -23.23%  98.0%
+  VALUEd10_VW   13.28%  25.5%  -52.93%  201801  202003  202103     38  -10.28%  78.9%
+
+===================================================================================================================
+TABLE 9 - SUB-Q2: are PROFITABILITY's worst episodes the SAME episodes as VALUE's?
+===================================================================================================================
+  correlation of DRAWDOWN PATHS
+              RMW        HML  SPREAD_VW   VALUEd10   OPd10_VW        MKT
+  RMW           1.000     -0.142      0.655     -0.262      0.200      0.055
+  HML          -0.142      1.000     -0.309      0.318     -0.208     -0.155
+  SPREAD_VW     0.655     -0.309      1.000     -0.295      0.164     -0.108
+  VALUEd10     -0.262      0.318     -0.295      1.000      0.326      0.469
+  OPd10_VW      0.200     -0.208      0.164      0.326      1.000      0.792
+  MKT           0.055     -0.155     -0.108      0.469      0.792      1.000
+
+  correlation of MONTHLY RETURNS: RMW vs HML = 0.093   SPREAD_VW vs HML = 0.117
+
+  What each factor did inside the OTHER's worst drawdown window:
+  window                         n         MKT       EWUNI    OPd10_VW    OPd10_EW   SPREAD_VW         RMW         HML    VALUEd10
+  RMW worst 199809-200002       18       59.9%       85.1%       25.8%       39.6%      -86.0%      -51.2%      -48.8%       42.8%
+  HML worst 200701-202009      165      232.0%      145.3%      402.1%      122.9%       66.4%       44.2%      -79.1%       -4.8%
+  dot-com 199901-200002         14       23.3%       55.4%       -3.6%       16.9%      -71.7%      -48.5%      -35.5%       17.4%
+  GFC 200711-200902             16      -50.3%      -57.8%      -41.2%      -57.0%       48.3%       25.9%      -16.3%      -67.5%
+  junk rally 200903-201002      12       55.6%      100.6%       52.1%      112.5%      -19.8%       -1.1%       19.0%      104.9%
+  COVID 202002-202003            2      -20.2%      -28.2%      -19.5%      -33.6%       -0.2%       -3.0%      -17.6%      -43.6%
+  meme/rates 202011-202103       5       24.7%       62.5%       18.2%       51.8%       -9.1%       -1.2%       18.2%       61.6%
+  recent 202311-202607          33       85.4%       66.5%       81.2%       60.5%      -21.3%      -17.6%       18.6%      258.8%
+
+===================================================================================================================
+TABLE 10 - GOING PAST THE SUB-QUESTIONS: is the observed maxDD informative, or is it just
+   what ANY series with this mean and vol produces? Bootstrap null of max drawdown.
+   iid resample (destroys autocorrelation) and a 24-month stationary block bootstrap.
+===================================================================================================================
+series          observed |   iid p5  iid p50  iid p95  pct(obs) |   blk p5  blk p50  blk p95  pct(obs)
+MKT              -50.31% |  -56.60%  -39.69%  -28.44%     13.6% |  -66.82%  -50.31%  -33.55%     49.7%
+EWUNI            -59.53% |  -68.95%  -49.74%  -35.96%     18.3% |  -75.61%  -58.58%  -41.87%     46.4%
+OPd10_VW         -52.22% |  -56.41%  -39.51%  -28.22%      9.5% |  -64.54%  -48.20%  -34.20%     32.2%
+OPd10_EW         -63.63% |  -72.60%  -53.20%  -38.80%     17.8% |  -78.06%  -60.08%  -45.85%     35.7%
+SMALLHiOP_EW     -74.13% |  -79.40%  -60.18%  -44.78%     12.1% |  -86.89%  -69.80%  -56.08%     34.8%
+SPREAD_VW        -61.34% |  -83.89%  -61.03%  -41.39%     49.3% |  -87.65%  -66.01%  -45.44%     64.4%
+RMW              -41.79% |  -46.28%  -29.37%  -18.93%     10.7% |  -56.84%  -39.92%  -21.89%     41.2%
+  pct(obs) = fraction of bootstrap draws with a DEEPER maxDD than observed; a low number means
+  the realised drawdown was MILD for this mean/vol, a high number means it was extreme.
+
+################ C3_run6.py ################
+BOOTSTRAP SANITY: does any block draw reproduce the original series exactly?
+  exact reproductions of the original ordering: 0 / 3000 (must be ~0)
+  observed -0.50311707  block p50 -0.50311707  (equality at 2dp was coincidence)
+  n distinct bootstrap maxDD values: 2204
+
+================================================================================================================
+TABLE 11 - TIME TO RECOVERY, the statistic most often omitted: the distribution across ALL
+   drawdown episodes deeper than 10%, and deeper than 20%
+================================================================================================================
+series          thr n eps  median t->r  mean t->r  max t->r  median UW  max UW n unrecovered
+MKT             10%    15          5.0       13.3        48       16.0      73             0
+MKT             20%     7         19.0       23.9        48       38.0      73             0
+EWUNI           10%    19          8.0       10.8        30       18.0      87             0
+EWUNI           20%    12         15.0       14.5        30       23.0      87             0
+OPd10_VW        10%    20          5.5        9.7        47       11.0      68             0
+OPd10_VW        20%     6         20.5       21.3        47       33.5      68             0
+OPd10_EW        10%    23          8.0        9.9        30       15.0     103             0
+OPd10_EW        20%    14         13.0       13.0        30       20.5     103             0
+SMALLHiOP_EW    10%    23          7.0       11.1        39       15.0     111             1
+SMALLHiOP_EW    20%    16         14.0       14.1        39       23.0     111             1
+SPREAD_VW       10%    12         13.0       26.5        89       25.0     304             1
+SPREAD_VW       20%     7         38.5       42.0        89       50.0     304             1
+RMW             10%     7         39.5       44.2        91       36.0     142             1
+RMW             20%     4         53.0       53.7        91       52.0     142             1
+
+================================================================================================================
+TABLE 12 - how often is the TILT's hole DEEPER than the MARKET's at the same moment?
+================================================================================================================
+  OPd10_VW      vs MKT   : tilt hole deeper than benchmark's in  37.9% of all months,  24.5% of months when MKT was >20% down (n=94); mean gap   0.90pp, worst gap -12.29pp
+  OPd10_EW      vs MKT   : tilt hole deeper than benchmark's in  56.8% of all months,  44.7% of months when MKT was >20% down (n=94); mean gap  -2.16pp, worst gap -30.34pp
+  OPd10_EW      vs EWUNI : tilt hole deeper than benchmark's in  39.1% of all months,  50.8% of months when EWUNI was >20% down (n=130); mean gap   0.16pp, worst gap -15.51pp
+  SMALLHiOP_EW  vs EWUNI : tilt hole deeper than benchmark's in  63.9% of all months,  75.4% of months when EWUNI was >20% down (n=130); mean gap  -4.72pp, worst gap -39.64pp
+  SMALLHiOP_EW  vs MKT   : tilt hole deeper than benchmark's in  67.5% of all months,  47.9% of months when MKT was >20% down (n=94); mean gap  -7.04pp, worst gap -46.31pp
+
+################ C3_run7.py ################
+DAILY BLOCK PROOF (titles, line ranges, sentinel census):
+  OP daily   lines     24- 15899 rows  15876 19630701..20260731 sent99=0 sent999=0 ncols=18 TITLE='Average Value Weighted Returns -- Daily'
+  OP daily   lines  15904- 31779 rows  15876 19630701..20260731 sent99=0 sent999=0 ncols=18 TITLE='Average Equal Weighted Returns -- Daily'
+  FF3 daily  lines      6- 26301 rows  26296 19260701..20260731 sent99=0 sent999=0 ncols=4 TITLE='compounds to 1-month TBill rate. The 1-month TBill rate data'
+
+  daily grid: 15876 days 19630701..20260731
+  [NEG CTRL] cumulative daily RF maxDD = 0.000000000000%  min daily RF = 0.000000%
+  [POS CTRL] compounded DAILY -> monthly vs French's MONTHLY file: 757 months, max abs diff 0.2563 pp
+
+================================================================================================================
+TABLE 13 - HOW MUCH DOES MONTHLY SAMPLING HIDE? the same drawdowns at DAILY frequency
+   (the programme trades daily bars; every figure in the literature above is monthly)
+================================================================================================================
+series                    freq    maxDD      peak    trough     recov   p->t   t->r     UW   meanDD
+MKT                      daily  -54.57%  20071009  20090309  20120228    355    750   1105   -8.36%   (p->t/t->r/UW in TRADING DAYS)
+       -54.57%  peak 20071009 -> trough 20090309 (355m) -> recover 20120228 (750m)  underwater 1105m
+       -49.23%  peak 20000324 -> trough 20021009 (637m) -> recover 20061023 (1017m)  underwater 1654m
+       -48.16%  peak 19730111 -> trough 19741003 (436m) -> recover 19761228 (564m)  underwater 1000m
+       -36.82%  peak 19681129 -> trough 19700526 (369m) -> recover 19710427 (233m)  underwater  602m
+OP d10 VW                daily  -54.57%  19730123  19741004  19780802    429    966   1395   -7.64%   (p->t/t->r/UW in TRADING DAYS)
+       -54.57%  peak 19730123 -> trough 19741004 (429m) -> recover 19780802 (966m)  underwater 1395m
+       -45.37%  peak 20070719 -> trough 20090309 (412m) -> recover 20101210 (445m)  underwater  857m
+       -37.90%  peak 19870825 -> trough 19871204 ( 71m) -> recover 19890712 (404m)  underwater  475m
+       -36.60%  peak 19680611 -> trough 19700526 (466m) -> recover 19710427 (233m)  underwater  699m
+OP d10 EW                daily  -62.93%  20070713  20081120  20100309    344    324    668   -8.96%   (p->t/t->r/UW in TRADING DAYS)
+       -62.93%  peak 20070713 -> trough 20081120 (344m) -> recover 20100309 (324m)  underwater  668m
+       -61.81%  peak 19720309 -> trough 19741223 (703m) -> recover 19760709 (390m)  underwater 1093m
+       -53.65%  peak 19681216 -> trough 19700526 (360m) -> recover 19720209 (434m)  underwater  794m
+       -49.11%  peak 20180920 -> trough 20200318 (374m) -> recover 20201105 (162m)  underwater  536m
+SPREAD d10-d1 VW         daily  -63.53%  19981008  20000307  20010917    355    382    737  -22.32%   (p->t/t->r/UW in TRADING DAYS)
+       -63.53%  peak 19981008 -> trough 20000307 (355m) -> recover 20010917 (382m)  underwater  737m
+       -55.52%  peak 19730607 -> trough 19830613 (2531m) -> recover 19871023 (1104m)  underwater 3635m
+       -43.74%  peak 19650629 -> trough 19690204 (881m) -> recover 19730522 (1082m)  underwater 1963m
+       -41.15%  peak 20081121 -> trough 20140227 (1323m) -> recover 20211216 (1966m)  underwater 3289m
+
+  MONTHLY counterparts over the SAME span:
+    MKT                    monthly maxDD  -50.31%  meanDD  -7.27%   -> DAILY is  +4.25pp deeper
+    OP d10 VW              monthly maxDD  -52.22%  meanDD  -6.38%   -> DAILY is  +2.35pp deeper
+    OP d10 EW              monthly maxDD  -63.63%  meanDD  -9.44%   -> DAILY is  -0.70pp deeper
+    SPREAD d10-d1 VW       monthly maxDD  -61.34%  meanDD -22.88%   -> DAILY is  +2.19pp deeper
+
+################ C3_run8.py ################
+==================================================================================================================
+TABLE 14 - BETA AND EXCESS RETURN *INSIDE* THE MARKET'S OWN WORST DRAWDOWN EPISODES
+   (the episode, not scattered worst months: this is 'the moment the diversification is needed')
+==================================================================================================================
+market episode (peak->trough)        n      MKT |                   OPd10_VW |                   OPd10_EW |               SMALLHiOP_EW |                        RMW
+                                                |       tot%   beta   excess |       tot%   beta   excess |       tot%   beta   excess |       tot%   beta   excess
+200710->200902                      16   -50.3% |       -41.2   0.98     9.1 |       -57.0   1.30    -6.7 |       -62.7   1.30   -12.4 |        25.9  -0.12    76.3
+197212->197409                      21   -46.5% |       -52.2   0.85    -5.7 |       -57.5   1.57   -11.0 |       -56.6   1.54   -10.0 |       -13.4   0.05    33.1
+200008->200209                      25   -45.0% |       -26.9   0.62    18.1 |        -4.7   1.05    40.3 |        -2.5   0.97    42.5 |        73.3  -0.61   118.3
+196811->197006                      19   -33.6% |       -31.1   0.97     2.5 |       -50.5   1.29   -17.0 |       -58.0   1.37   -24.4 |         3.9  -0.09    37.4
+198708->198711                       3   -29.9% |       -34.2   1.01    -4.3 |       -36.5   1.39    -6.7 |       -35.7   1.46    -5.9 |        -0.5  -0.18    29.3
+202112->202209                       9   -24.8% |       -19.3   0.97     5.6 |       -25.7   1.09    -0.8 |       -26.2   1.07    -1.4 |        -1.3  -0.06    23.5
+
+==================================================================================================================
+TABLE 15 - MEAN DRAWDOWN IS A SHARPE STATISTIC, NOT A LEG STATISTIC
+   (this is the mechanism behind CFM's LH -8.2% vs LS -3.9% and my own opposite ordering)
+==================================================================================================================
+series          ann.ret  ann.vol  Sharpe*   meanDD    maxDD    %UW
+MKT              10.85%   15.41%     0.42   -7.27%  -50.31%  67.1%
+EWUNI            12.66%   20.28%     0.41   -9.60%  -59.53%  70.9%
+OPd10_VW         11.98%   15.95%     0.47   -6.38%  -52.22%  68.2%
+OPd10_EW         12.77%   21.25%     0.39   -9.44%  -63.63%  71.3%
+SMALLHiOP_EW     12.06%   24.11%     0.32  -14.32%  -74.13%  78.7%
+VALUEd10_VW      14.49%   21.69%     0.46   -9.62%  -69.81%  68.0%
+SPREAD_VW         1.93%   14.90%     0.13  -22.88%  -61.34%  94.7%
+RMW               2.81%    7.91%     0.35   -6.51%  -41.79%  83.5%
+HML               3.10%   10.28%     0.30  -12.21%  -57.78%  82.2%
+
+  corr(Sharpe*, meanDD) across these 9 series = 0.900
+  OLS: meanDD(%) = -26.99 + 44.49 x Sharpe*
+  *Sharpe is excess-of-cash for the funded books, raw for the self-financing spreads.
+
+==================================================================================================================
+TABLE 16 - TIME TO t=2: the closed-form horizon, computed from the MEASURED numbers
+   years = (2/IR)^2 where IR is the annualised information ratio of the stated object
+==================================================================================================================
+  OP d10 VW excess of cash (total Sharpe)      mean  0.691%/mo  IR  0.518  t(realised,63y)   4.11  years to t=2:     14.9
+  OP d10 EW excess of cash (total Sharpe)      mean  0.833%/mo  IR  0.470  t(realised,63y)   3.73  years to t=2:     18.1
+  OP d10 VW MINUS the VW market                mean  0.092%/mo  IR  0.187  t(realised,63y)   1.49  years to t=2:    114.3
+  OP d10 EW MINUS the EW universe              mean  0.026%/mo  IR  0.057  t(realised,63y)   0.45  years to t=2:   1234.6
+  OP d10 EW MINUS the VW market                mean  0.234%/mo  IR  0.262  t(realised,63y)   2.08  years to t=2:     58.2
+  SMALL HiOP EW MINUS the EW universe          mean  0.027%/mo  IR  0.042  t(realised,63y)   0.33  years to t=2:   2318.4
+  OP d10-d1 VW spread                          mean  0.252%/mo  IR  0.203  t(realised,63y)   1.61  years to t=2:     97.4
+  RMW factor                                   mean  0.257%/mo  IR  0.390  t(realised,63y)   3.10  years to t=2:     26.3
+
+################ C3_run9.py ################
+================================================================================================================
+EXTERNAL POSITIVE CONTROL 1 - reproduce a PUBLISHED exhibit
+  Van Hemert, Ganz, Harvey, Rattray, Sanchez Martin & Yawitch, 'Drawdowns', JPM 46(8) 2020,
+  pp.34-50, Exhibit 1 baseline: normal iid monthly returns, 10-year window, 10% annualised
+  volatility, 0.5 annualised Sharpe. Published P(maxDD <= -1s/-2s/-3s/-4s) = 97.1/43.0/9.9/1.5%.
+  Read in full from the published PDF on the author's own page (people.duke.edu/~charvey).
+================================================================================================================
+  P(maxDD <= -1sigma = -10%) mine  97.17%   published  97.1%
+  P(maxDD <= -2sigma = -20%) mine  43.07%   published  43.0%
+  P(maxDD <= -3sigma = -30%) mine   9.89%   published   9.9%
+  P(maxDD <= -4sigma = -40%) mine   1.53%   published   1.5%
+
+================================================================================================================
+EXTERNAL POSITIVE CONTROL 2 - reproduce THREE published numbers at once
+  Arnott, Harvey, Kalesnik & Linnainmaa, 'Reports of Value's Death May Be Greatly Exaggerated',
+  FAJ 77(1) 2021, 44-67 (read in full, published PDF from Harvey's own Duke page):
+   (a) HML drawdown from the 2006/12 peak to 2020/06 = -54.8%
+   (b) their block bootstrap (6-month blocks, pre-2007 HML, 57-year samples, 1e6 draws):
+       median simulated maxDD -32.7%, and P(deeper than -54.8%) = 2.3%
+================================================================================================================
+  (a) mine: HML drawdown at 202006 from the running peak (200612) = -54.59%   published -54.8%
+  (b) mine: resample pool 522 months 196307..200612; B=100000, 6-month blocks, 684-month samples
+      median simulated maxDD -32.49%   published -32.7%
+      P(maxDD deeper than -54.8%)  2.04%   published 2.3%
+
+================================================================================================================
+TABLE 17 - PAST THE SUB-QUESTIONS (a): does CONCENTRATING the tilt change the drawdown?
+   top 10% vs top 20% vs top 30% of the OP sort, both weightings, 196307-202607
+================================================================================================================
+portfolio                       CAGR     vol    maxDD   meanDD    %UW worstUW(m)  excess vs bench
+OP Hi 10%  VW                 11.98%  15.95%  -52.22%   -6.38%  68.2%         68    0.092%/mo vs VW mkt
+OP Hi 20%  VW                 12.02%  15.43%  -49.95%   -6.67%  66.7%         68    0.088%/mo vs VW mkt
+OP Hi 30%  VW                 12.24%  15.29%  -47.97%   -6.15%  63.9%         67    0.102%/mo vs VW mkt
+OP Hi 10%  EW                 12.77%  21.25%  -63.63%   -9.44%  71.3%        103    0.026%/mo vs EW uni
+OP Hi 20%  EW                 13.10%  20.40%  -61.66%   -8.68%  69.5%         62    0.036%/mo vs EW uni
+OP Hi 30%  EW                 13.43%  19.80%  -59.99%   -8.18%  67.9%         97    0.051%/mo vs EW uni
+
+================================================================================================================
+TABLE 18 - PAST THE SUB-QUESTIONS (b): what a COST DRAG does to the drawdown of a
+   cash-funded long-only tilt. Costs charged as a flat annual drag on the monthly series.
+   (Novy-Marx's own estimate for quality strategies: ~0.5%/yr large cap, ~1.5%/yr small cap.)
+================================================================================================================
+series                  drag/yr    CAGR    maxDD   meanDD worstUW(m) vs bench %/mo
+OP d10 VW                  0.0%  11.98%  -52.22%   -6.38%         68        0.092%
+OP d10 VW                  0.5%  11.43%  -52.65%   -6.68%         68        0.050%
+OP d10 VW                  1.5%  10.33%  -53.50%   -7.33%         80       -0.033%
+OP d10 VW                  3.0%   8.69%  -54.76%   -8.63%         92       -0.158%
+OP d10 EW                  0.0%  12.77%  -63.63%   -9.44%        103        0.026%
+OP d10 EW                  0.5%  12.21%  -64.74%   -9.84%        106       -0.015%
+OP d10 EW                  1.5%  11.10%  -66.85%  -10.69%        112       -0.099%
+OP d10 EW                  3.0%   9.46%  -69.80%  -12.05%        113       -0.224%
+SMALL HiOP EW              0.0%  12.06%  -74.13%  -14.32%        111        0.027%
+SMALL HiOP EW              0.5%  11.50%  -74.91%  -14.79%        111       -0.015%
+SMALL HiOP EW              1.5%  10.40%  -76.40%  -15.75%        113       -0.098%
+SMALL HiOP EW              3.0%   8.77%  -78.48%  -17.44%        115       -0.223%
+
+################ C3_run10.py ################
+============================================================================================================
+TABLE 19 - DOES THE CHARACTERISTIC MOVE THE DRAWDOWN AT ALL? all ten OP deciles, 196307-202607
+  French's OP = (sales - COGS - SG&A - interest expense) / book equity, lagged to the prior
+  fiscal year end, portfolios formed end-June. This is Fama-French OP, NOT Novy-Marx GP.
+============================================================================================================
+
+  VALUE-WEIGHTED   (benchmark = VW mkt: maxDD -50.31%, meanDD -7.27%)
+    decile      CAGR     vol   beta    maxDD   meanDD  worstUW   vs bench  DDcorr
+    d1         7.20%  22.81%   1.30  -82.97%  -25.83%     249m    -0.160%   0.638
+    d2         9.15%  18.58%   1.10  -68.19%  -12.32%     160m    -0.085%   0.836
+    d3         8.86%  17.03%   1.03  -56.70%   -9.13%      85m    -0.130%   0.957
+    d4        10.26%  16.02%   0.97  -59.02%   -7.55%      70m    -0.037%   0.851
+    d5        11.64%  15.99%   0.96  -53.20%   -6.24%      65m     0.067%   0.930
+    d6        10.71%  15.72%   0.96  -57.42%   -7.79%      72m    -0.007%   0.921
+    d7        10.24%  15.79%   0.97  -54.34%   -7.29%      66m    -0.042%   0.894
+    d8        12.47%  15.93%   0.98  -42.01%   -5.66%      50m     0.128%   0.850
+    d9        12.27%  15.66%   0.96  -47.70%   -7.72%      85m     0.110%   0.942
+    d10       11.98%  15.95%   0.96  -52.22%   -6.38%      68m     0.092%   0.792
+
+  EQUAL-WEIGHTED   (benchmark = EW uni: maxDD -59.53%, meanDD -9.60%)
+    decile      CAGR     vol   beta    maxDD   meanDD  worstUW   vs bench  DDcorr
+    d1         9.54%  27.24%   1.29  -69.32%  -21.80%     103m    -0.104%   0.758
+    d2        13.59%  19.93%   1.09  -58.74%   -9.35%      86m     0.064%   0.977
+    d3        14.15%  18.77%   1.04  -56.44%   -7.46%      85m     0.086%   0.930
+    d4        13.97%  18.08%   1.02  -56.27%   -7.29%      87m     0.063%   0.922
+    d5        14.23%  17.60%   1.00  -51.99%   -6.23%      46m     0.075%   0.916
+    d6        13.79%  17.93%   1.02  -57.24%   -7.05%      87m     0.048%   0.919
+    d7        14.22%  18.27%   1.05  -56.85%   -6.88%      56m     0.084%   0.922
+    d8        14.04%  18.68%   1.09  -57.18%   -7.41%      96m     0.077%   0.924
+    d9        13.44%  19.67%   1.14  -60.52%   -8.10%      60m     0.049%   0.914
+    d10       12.77%  21.25%   1.21  -63.63%   -9.44%     103m     0.026%   0.922

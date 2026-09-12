@@ -1,0 +1,46 @@
+Portfolios_Formed_on_OP: 7 blocks, sentinel (-99.99/-999) cells censused = 0
+  block 0  n=757   keylen=6  196307..202607  | Average Value Weight Returns -- Monthly
+  block 1  n=757   keylen=6  196307..202607  | Average Equal Weighted Returns -- Monthly
+  block 2  n=62    keylen=4  1964..2025  | Value Weight Returns -- Annual from January to December
+  block 3  n=62    keylen=4  1964..2025  | Equal Weight Returns -- Annual from January to December
+  block 4  n=757   keylen=6  196307..202607  | Number of Firms in Portfolios
+  block 5  n=757   keylen=6  196307..202607  | Average Firm Size
+  block 6  n=64    keylen=4  1963..2026  | Value Weight Average of OP
+
+EW monthly blocks found: 1 ; EW annual blocks found: 1
+  monthly label: Average Equal Weighted Returns -- Monthly
+  annual  label: Equal Weight Returns -- Annual from January to December
+  P3 POSITIVE CONTROL: compounding the MONTHLY EW 'Hi 10' block against French's own
+     ANNUAL EW 'Hi 10' block over 62 years -> worst |diff| = 0.032462 pp  PASS
+     N5 same test against the VALUE-WEIGHTED monthly block (the block I did NOT mean
+        to read): worst |diff| = 37.4870 pp over 62 years -> the test DISCRIMINATES (good)
+
+FF5 file: 2 blocks, sentinels censused = 0
+  block 0 n=757   keylen=6 196307..202607 | The annual TBill return is compounded from the monthly T-bill rates fr
+  block 1 n=62    keylen=4 1964..2025 | Annual Factors: January-December
+  RMW monthly: n=757  1963-07..2026-07  mean=0.2571
+
+================================================================================================
+CROSS-DATASET CORRELATIONS WITH FRENCH'S RMW (monthly, overlapping months only)
+================================================================================================
+  CZ VW quintiles  OperProf     full overlap    corr(RMW, .) = +0.7584   n=738  1963-07..2024-12
+  CZ VW quintiles  OperProf     2010-01 onward  corr(RMW, .) = +0.6762   n=180  2010-01..2024-12
+  CZ VW quintiles  GP           full overlap    corr(RMW, .) = +0.4598   n=738  1963-07..2024-12
+  CZ VW quintiles  GP           2010-01 onward  corr(RMW, .) = +0.5540   n=180  2010-01..2024-12
+  CZ VW quintiles  OperProfRD   full overlap    corr(RMW, .) = +0.5574   n=738  1963-07..2024-12
+  CZ VW quintiles  OperProfRD   2010-01 onward  corr(RMW, .) = +0.5995   n=180  2010-01..2024-12
+  CZ VW quintiles  CBOperProf   full overlap    corr(RMW, .) = +0.4407   n=738  1963-07..2024-12
+  CZ VW quintiles  CBOperProf   2010-01 onward  corr(RMW, .) = +0.5772   n=180  2010-01..2024-12
+  CZ EW quintiles  OperProf     full overlap    corr(RMW, .) = +0.8348   n=738  1963-07..2024-12
+  CZ EW quintiles  OperProf     2010-01 onward  corr(RMW, .) = +0.7869   n=180  2010-01..2024-12
+  CZ EW quintiles  GP           full overlap    corr(RMW, .) = +0.5285   n=738  1963-07..2024-12
+  CZ EW quintiles  GP           2010-01 onward  corr(RMW, .) = +0.5897   n=180  2010-01..2024-12
+  CZ EW quintiles  OperProfRD   full overlap    corr(RMW, .) = +0.5115   n=738  1963-07..2024-12
+  CZ EW quintiles  OperProfRD   2010-01 onward  corr(RMW, .) = +0.6276   n=180  2010-01..2024-12
+  CZ EW quintiles  CBOperProf   full overlap    corr(RMW, .) = +0.4583   n=738  1963-07..2024-12
+  CZ EW quintiles  CBOperProf   2010-01 onward  corr(RMW, .) = +0.6095   n=180  2010-01..2024-12
+
+================================================================================================
+CONTROL SUMMARY: ALL PASS
+================================================================================================
+wrote D3_factor_corr_measurement.json

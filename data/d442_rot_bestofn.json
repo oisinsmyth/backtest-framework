@@ -1,0 +1,30 @@
+[
+ {
+  "symbol":"QQQ",
+  "rule":"static",
+  "treatment":261.7393194735,
+  "f_star":0.004,
+  "p50_fixed":-110.7687046931,
+  "p95_fixed":213.1154488766,
+  "p50_best":79.4358208955,
+  "p95_best":455.0861245709,
+  "max_best":2723.5602695008,
+  "selection_premium":241.9706756942,
+  "G2_selection_honest":"FAIL",
+  "n_offsets":3265
+ },
+ {
+  "symbol":"DIA",
+  "rule":"static",
+  "treatment":249.5154548166,
+  "f_star":0.004,
+  "p50_fixed":-142.6288582708,
+  "p95_fixed":171.1858292509,
+  "p50_best":108.2567854341,
+  "p95_best":419.0488678107,
+  "max_best":2068.3668987736,
+  "selection_premium":247.8630385598,
+  "G2_selection_honest":"FAIL",
+  "n_offsets":3187
+ }
+]

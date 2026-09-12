@@ -1,0 +1,27 @@
+phrase-family documents=493; forms={'8-K': 489, '8-K/A': 4}
+distinct filings=337
+
+hdr.sgml retrieved 337/337 (failed 0)
+item incidence among the 337 phrase-matched filings:
+   9.01     323   95.8%
+   2.02     203   60.2%
+   8.01     151   44.8%
+   7.01     109   32.3%
+   1.01      10    3.0%
+   5.02       9    2.7%
+   5.03       9    2.7%
+   3.02       4    1.2%
+   2.01       3    0.9%
+   5.07       3    0.9%
+   3.03       3    0.9%
+   2.05       1    0.3%
+   5.06       1    0.3%
+   2.03       1    0.3%
+
+ITEM 2.02 (results of operations = earnings release) present: 203/337 = 60.2%
+ITEM 8.01 present: 151/337 = 44.8%
+ITEM 7.01 present: 109/337 = 32.3%
+filings whose only item is 9.01 (no substantive item): 1
+filings where a matched document filename looks like the 8-K body: 106
+
+[exited with code 0]

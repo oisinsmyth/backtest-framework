@@ -1,0 +1,35 @@
+==============================================================================
+D1 MEASUREMENT 3 -- rank invariance of a sort, on a real SEC cross-section
+endpoint: https://data.sec.gov/api/xbrl/frames/us-gaap/{GrossProfit,Assets}/USD/
+==============================================================================
+GP/AT cross-section: n = 2612 filers (CY2023 flow over CY2023Q4I stock)
+  min -2.463  p1 -0.278  p25 +0.108  median +0.244  p75 +0.424  p99 +3.585  max +844.539
+  P3 extremity and ties present?  |max| / p99 = 235.6 ;  tied values = 52
+
+MEMBERSHIP CHANGES vs the raw-characteristic decile sort (J = 10)
+  level -> LOG of the sorting variable (x>0 subsample, n=2401):   0 of 2401 names move
+  level -> SQRT                                               0 of 2401 names move
+  level -> Z-SCORE                                            0 of 2401 names move
+  WINSORISE the characteristic at 1/99, then sort                0 of 2612 names move
+  WINSORISE at 2.5/97.5                                          0 of 2612 names move
+  WINSORISE at 5/95                                              0 of 2612 names move
+  P2 WINSORISE at 20/80 (coarser than a decile)                  520 of 2612 names move  <- must be > 0
+  TRIM the characteristic at 1/99, then sort (n drops 2612 -> 2560)   104 of 2560 SURVIVING names move
+  TRIM at 5/95 (n drops 2612 -> 2352)                                 520 of 2352 surviving names move
+  P1 NON-monotone transform x - 0.5x^2                           559 of 2612 names move  <- must be > 0
+
+TOP-DECILE MEMBERSHIP SPECIFICALLY (the LONG LEG), same comparisons
+  winsorise 1/99           long leg  261 ->  261 names;  entered   0, left   0 (0.0% of the leg turned over)
+  winsorise 5/95           long leg  261 ->  261 names;  entered   0, left   0 (0.0% of the leg turned over)
+  winsorise 20/80          long leg  261 ->  261 names;  entered 116, left 116 (88.9% of the leg turned over)
+  trim 1/99                long leg  235 ->  256 names;  entered  21, left   0 (8.9% of the leg turned over)
+  trim 5/95                long leg  131 ->  235 names;  entered 104, left   0 (79.4% of the leg turned over)
+  non-monotone (control)   long leg  261 ->  261 names;  entered  72, left  72 (55.2% of the leg turned over)
+
+VERDICT
+  A weakly monotone transform of the sorting variable -- log, sqrt, z-score,
+  or winsorisation at a cutoff inside the extreme bucket -- is an EXACT no-op
+  for a quantile sort.  Trimming at the same cutoff is not: it deletes names,
+  moves every breakpoint, and turns over part of the long leg.  The two
+  branches of 'winsorise versus trim at the same cutoff' are therefore NOT
+  practically equivalent for a SORT, whatever they do in a regression.

@@ -1,12 +1,41 @@
 # PICKUP - handoff for the next session
 
+**What data exists, and what bites each dataset: [`docs/data-available.md`](docs/data-available.md).**
+
+## CME FUTURES ARE NOW ON DISK — 111.0 GB, verified, 2026-09-12
+
+Databento `GLBX.MDP3` under a one-month CME Standard subscription. Every job quoted **$0.00**
+against **$7,719** at published rates; total cost was the $199 subscription.
+**`data/raw/databento/<job-id>/*.dbn.zst`** — gitignored, and **NOT in `temp/`**.
+
+| schema | scope | window |
+|---|---|---|
+| `ohlcv-1m` | every instrument | 2010-06-06 → **2026-09-10** |
+| `mbo` order book | ES NQ RTY YM CL GC ZN ZB | 2026-08-11 → 2026-09-10 |
+| `tbbo` trade+quote | every instrument | 2025-09-11 → 2026-09-11 |
+| `statistics` / `definition` / `status` | 41 roots | 2010-06-06 → 2026-09-11 |
+| `bbo-1m` | 41 roots | 2025-09-11 → 2026-09-11 |
+
+**129/129 hashes and byte counts verified, 16/16 DBN headers match the request, and the ten
+`ohlcv-1m` slices tile with zero gaps and zero overlaps**
+([`data/futures_acquisition_verification.json`](data/futures_acquisition_verification.json)).
+
+**Four things before anything reads it.** Prices are **UNADJUSTED raw symbols with no
+continuous series at all** — the roll must be built from `definition`. The pull ends
+**2026-09-10**, so "through 2026-09-11" is wrong by one session. `ohlcv-1m` arrived in **ten
+jobs** and a loader must read all ten. And it is free to re-fetch only to **~2026-10-11**.
+
+**No fixture exists over it yet.** That needs the seven gates in `fetch_futures_1m.py`
+reworked: they assume a *continuous stitched* series and this is *raw-symbol full-universe
+across seven schemas*, so the roll gates do not transfer.
+
 ---
 
 ## THE DAILY CHANNEL LINE IS CLOSED — the principal's decision, 2026-09-12
 
 D399 → D483 on the `worktree-signal-hunt-part2` branch, **no holdout read**.
 [Closing record](docs/decisions/D483-CLOSE-the-daily-channel-line-D399-to-D483.md);
-FINDINGS §59. Direction: five causal cells below their rotation nulls (long +1 to +17 bp gross),
+FINDINGS §68. Direction: five causal cells below their rotation nulls (long +1 to +17 bp gross),
 worse as the gradient floor rises, including the cell that reproduces the principal's own
 hand-drawn lines (D480/D481). Level: +44 bp gross over 5 bars above its null (D482) — and a
 close 4% below the 30-bar low with **no lines** earns +47 (D483). The channel is not the
@@ -15,13 +44,382 @@ ingredient.
 **Kept:** the labelled set `data/d478_hand_drawn_lines.json` and its scorer
 `scripts/d478_score_hand_lines.py`; the hand cell `scripts/d480_hand_cell.py`; the runner
 `scripts/run_d478_grow_trades.py` (three rules, two sources); five pages (Draw the Lines,
-Step by Step, Grow Right, Perfect Hindsight, the hand cell). **Decision numbers on this branch
-collided with master three times** (D432→D476, D435/6→D437/8→D439/40→D477/51); the channel
-line sits at D476 and D477–D483; check master before merging.
+Step by Step, Grow Right, Perfect Hindsight, the hand cell). **The line was renumbered at the
+merge on 2026-09-12** because the branch's numbers collided with master's: the channel line now
+sits at D398, D399, D476 and D477–D483 (the closing record carries the old→new map; master's own
+D434 and D450–D463 are unrelated records). The branch's `docs/FINDINGS.md` §59 became §68.
 
 **Owed to a different line, if picked up:** the reversal after a 4% break of a 30-bar range,
 both directions — the book and a null at the cost-clearing hold (15–20 bars), a
 volatility-matched control, and the literature on one-month reversal.
+
+---
+
+## THE PROP TRACK IS NOW A COMPONENTS SEARCH — D466 / D467 / D468, 2026-09-12
+
+**The principal's correction, and the rule it produced.** Three prop records (C1, D463, D464) were
+written "closed / not a candidate" on standalone hurdle-P bars without a component line. The book
+is built by **layering components with net Sharpe > 0.5 and pairwise ρ < 0.3** to reach the
+account's book-level 1.5–2, never by one strategy; CLAUDE.md now carries the two-altitude rule
+(*score BOTH, every time*), `docs/COMPONENTS_PROP.md` is the append-only ledger with the
+pre-registered standard (C-a net Sharpe > 0.5 at **minimum tradable size and the cost that size
+pays**, C-b ρ < 0.3 with every prior entry, C-c skew ≥ −0.5, C-d σ ≤ 1% of $50k, C-e provenance;
+PROVISIONAL entries below a family-maximum null's p95), and **only the assembled book is tested
+against hurdle P and confirmed on the unread 2024+ slice.**
+
+**The ledger is empty after 30 constructions.** The figures that opened it (C1 0.62, NQ last-30
+0.42, book 0.91) were shell-line numbers at full-size cost in basis points; under the standard
+(dollars, one micro, $3 ≈ 2 bp of notional) they are **+0.37 and −0.01** (D466, `e5ad3bc`). D467
+(`59a151d`, RESULT + fixtures) built **hourly session tables for ES, NQ, YM, ZN, ZB, GC, CL, 6E**
+(`data/fixtures/fut_sessions_hourly.csv.gz`, 18:00→16:59, front by volume, roll nights flagged,
+five gates, usable from 2016-01-04 on all eight after two gate amendments — holiday sessions have
+no 16:00 print, and the pre-2016 index/crude sessions are partial). D468 (`cff45f2`, RESULT)
+scored **24 windows** (full session, overnight leg, day leg × 8 roots, long only): **best ES-W1
++0.39 (SE 0.32) at the 78th percentile of the common-sign family-max null (p50 +0.55, p95 +0.95)**;
+the overnight index drift is gross +0.54..+0.64 on ES/NQ/YM and the $3 micro round trip takes
+30–70% of it; treasuries, gold, crude, euro carry no session drift (gross within ±0.3); W2 ⊥ W3
+(ρ 0.00..−0.05); the three index roots are one construction (ρ 0.91).
+
+**D470 stage 0 (`b3671b2`, RESULT): can a state at the entry concentrate the drift?** Four
+declared gates on ES/NQ, both windows, D464's two gate nulls and a family-max null. **The
+principal's continuation and above-average conditions come out with the sign reversed:** the
+drift follows DOWN sessions and DOWN overnight legs on 8 of 8 cells; the cleanest cell (the
+overnight leg after a negative overnight leg) is +$10.66 vs −$1.37 on ES (2.5 SE), +$13.32 vs
+−$1.57 on NQ (2.1 SE), gated net Sharpe +0.70 / +0.62 at micro cost, clears the rotation and
+run-length nulls on both roots — **and fails the family-max p95 on both, because its size lives
+in 2020–2022** (2016–2019: the two sides are equal). A pick, not a component; an in-sample
+stage 1 would re-report it; the unread 2024+ slice (~190 gated nights, SE ≈ $7.8 vs +$10.7
+expected) is the only test and is underpowered — **the principal's call whether to spend it.**
+
+**D472 (`4290eeb`, RESULT): the pick tested on what the family null had not priced.** On a
+standardised scale the in-sample family bar still refuses it (z 2.78 vs p95 3.13; gated Sharpe
++0.70 vs p95 +0.79 — the rotation null is centred on the drift, so the best of eight random
+45%-gates on a drifting series sits at +0.48 median; eight years cannot beat that). **On SPY and
+IWM cash 2010–2015, a period and instrument outside the family, the same construction (the
+overnight gap after a negative overnight gap) is +5.5 / +7.7 bp vs ≈ 0 on the other side, 1.9 /
+2.0 SE, clears both single-cell nulls, and is on the right side in 11 of 12 symbol-years; over
+2010–2023 it is 24 of 28.** The prior-session variant (NQ-W1's big dollar cell) does not
+replicate in cash. The declared step-3 criterion fails on the family condition alone; whether the
+replication outweighs it is the principal's decision. If yes: one declared component (ES or NQ
+overnight leg after a down leg, one micro, $3, in-sample gated net Sharpe +0.70 / +0.62), promotion
+on the unread 2024+ futures slice (weak alone, ~190 gated nights) plus the cash 2024+ reserve.
+**D473 (`fb69179`, in-sample RESULT): the component record, K7.** The principal took the pick to
+a component record on the replication. One declared construction, no in-sample sharpening: long the
+NQ overnight leg 18:00→09:00 on nights after a negative overnight leg (prior session's leg ≤ 0),
+one MNQ, $3, NQ chosen on cost share; ES the check root; the 09:30 open a declared secondary exit.
+In-sample line: **+0.62 (0.25)**, gross +0.80, 887 of 2,009 nights, +$13.32 vs −$1.57 (2.1 SE), N1/N2
+cleared, C-a..C-d pass; ES +0.70 (2.5 SE); **the 09:30 exit is worse (−20% mean, +0.45)**; 71% of
+the gated P&L follows prior falls > 1% (16% of nights; the dose–response is monotone on ES, not
+on NQ — recorded, not used); worst night −$794, none below −2% at one micro; ρ(K7, K1) 0.39.
+**Not entered** (the family bar). **The forward read is declared and unrun:**
+`uv run python -u scripts/run_d473_downleg_component.py --forward --principals-word` reads NQ/ES
+futures 2024-01-02→2026-09-09 and SPY/IWM cash 2024-01-02→2026-08-26 and applies the rule
+(PROVISIONAL if diff > 0 on NQ and SPY, pooled z ≥ 1.5, NQ net Sharpe > 0; FULL if also futures
+z ≥ 2 or pooled z ≥ 2.5; REMOVED if futures diff < 0, pooled z < 0.5 or Sharpe < −0.3). **It
+spends the 2024+ slice for this construction; only the principal runs it.**
+**RUN on the principal's word (forward RESULT): K7 REMOVED.** 2024-01→2026-09: NQ after a down
+leg +$30.76 vs after an up leg +$21.29 (+0.4 SE; in bp −1.0), ES +0.1 SE; SPY cash gap after a
+down gap +0.71 vs +9.22 bp (−1.6 SE), IWM −1.5 SE; pooled z −1.30. The gated nights paid (forward
+net Sharpe +0.76 at one MNQ) because the whole overnight drift was strong (≈ +5.6 bp a night on
+NQ, both sides); the down-then-up structure did not carry, and on cash it reversed. Every forward
+prediction was wrong in the same direction. **Spent: the 2024+ futures slice for the 18:00→09:00
+leg on NQ and ES (both sides read, so the ungated leg too) and the cash 2024+ reserve on SPY/IWM
+(gap and close-to-close). Unread: 2024+ on W1/W3, every other root, the last-30 constructions,
+the single-name and cohort reserves.** The D472 structural claim ("the drift is the post-down
+nights") is withdrawn. The process held: rule first, no sharpening, the rule fired.
+RTY added to the D467 table (nine roots; eight rebuilt bit-identically) and held back on G2
+(a Sunday-session volume flip, 2020-06-14). A difference-between-sides family statistic, centred
+on zero, is the right declaration for any future concentration test (noted in D472 §1, not run).
+
+**What stands.** The overnight index drift is real on the futures and **unaffordable at micro
+size** (breakeven cost for C-a on ES-W1 is $1.48 a round trip); the plan's 16:10 flat rule forbids
+holding across sessions; the only lever inside this family is notional per contract, which the
+$50k floor forbids (one ES night σ ≈ $1,840). **Next component families must have gross mean per
+round trip large against $3 and their own σ** — anything with more than one round trip a session is
+dead on arrival at micro cost. Unread: 2024-01 onward on every futures fixture. Untried: the
+RTY/other-root event windows on the hourly grid (FOMC 14:00, CPI 08:30 — declared nowhere yet),
+and the TWS quote pull that would pin the cost lines (D336/D441, no TWS listening).
+
+## D464 — THE PERSONAL ARMS AS GATES ON THE SESSION HOLD: BETTER NIGHTS, INSIDE THE NULL, AND LIFE BOUGHT ONLY BY NOT TRADING, 2026-09-12
+
+S1 and S2 (the book's own code on SPY) gating C1's 18:00→16:00 ES hold, 2,043 nights 2016–2023:
+S1 on 8.7% of nights at +13.8 ± 10.0 bp, S2 on 10.0% at +9.1 ± 4.7, both with a lower MAE
+tail than the average night (321 vs 369 bp) — **and both inside the exact rotation null (p95
++16.7 for a tenth of a 113-bp series).** Hurdle P at whole ES contracts: one contract's
+overnight σ is the 4% floor, zero size at f ≤ 0.7%, a fixed contract breaches on 791 nights; at
+micros the surviving sizes earn +0.2–2.2%/yr and the gates lengthen life to at most 1.94 years
+at +0.8%/yr by removing 90% of the exposure. **Not a candidate; the personal book untouched.**
+**Three prop records in one day say the same thing: the binding constraint is the
+instrument–account pair** (ES σ per hold vs a $50k floor), not the candidate list. Records: spec
+`0391331`, RESULT `docs/decisions/D464-RESULT-…md`; BOOK_PROP updated.
+
+## D462 / D463 — THE PROP TRACK ON THE FUTURES THEMSELVES: THE DATA LAYER, AND THE FIRST CANDIDATE SCREENED ON ES, 2026-09-12
+
+**The archive** (111 GB, `data/raw/databento/`, moved out of `temp/` by the principal) is now a
+data layer: **ES, NQ, YM one-minute regular-hours fixtures**, front month by measured volume, no
+stitching, five gates (`scripts/build_fut_index_1m.py`), **usable from 2016-01-04** — the archive
+carries the index futures' evening bars but not their day session on most days before 2016 (21–42%
+of the calendar in 2010–12; a fifth gate had to be added to see it; every earlier ES study's
+2010–2015 numbers rest on 20–85% of days). RTY failed the cross-check on the 2020-03-16
+limit-down open and is not committed. **Records: D462 (`de75a63`, RESULT `d69b59e`).**
+
+**The candidate** — market intraday momentum, the last 30 minutes, lane 13's only near-miss —
+screened on ES 2016–2023 (D463, `dd5801c`): **+1.18 ± 0.86 bp per trade at a 49% hit rate, slope
++1.8 (×100) against the published 6.18, inside the sign null; net +0.07 bp at a $17 round trip.**
+**Hurdle P's P3/P4/P5 computed for the first time**, on the measured 30-minute path through
+D440's lifecycle model: the C4 rule sizes below one contract at f ≤ 0.4%, and at every size that
+trades the worst day breaches 2% on 13–87 days, the funded account lives 0.07–0.48 years, V < 0.
+**Not a candidate; closed on this window; the 2024–2026 slice unread.** The durable output is the
+arithmetic: a single ES contract's 30-minute σ (~$650) on a $50k account puts the floor 3σ away
+per trade, so **no single-contract ES construction at that σ clears P3/P4 on this account size**,
+whatever its edge. Records: RESULT `docs/decisions/D463-RESULT-…md`; BOOK_PROP updated.
+
+## D457 — THE 8-K ATLAS WITH RETURNS: NO CELL CLEARS, THE DISTRESS ITEMS REBOUND, THE REACTION IS IN THE GAP, 2026-09-12
+
+17 item cells × all/pure × both sides, cap 10, C1 (state-matched, no 8-K within ±5 bars) and
+C2 (exact rotation) on every cell, a family bar with 0.04 cells expected to clear both. **Zero
+clear both; four clear C1 (chance 0.85) — 2.02 earnings, 8.01, 5.07, 3.01 — all LONG.** The
+common finding: a name that filed *any* 8-K drifts +8 to +16 bp over ten bars against a quiet
+name in the same cell, and the rotated calendar earns the same (+0.7 to +1.1 bp/bar): filer
+composition, not filing timing. **Every distress item is long-favoured after the next open**
+(impairments +59, delisting notices +103, auditor changes +92 per trade; medians negative) — the
+fall is in the gap, what follows is a two-sided rebound lottery; every short-side sign prediction
+was wrong. 5.02 officer changes: −5 bp, the one short below the rotation band. Nothing within a
+factor of four of its 51–80 bp round trip. **The line closes at stage 1; the 2024–2026 slice
+stays unread.** Untested: 6-K filers; a same-day construction on the 15m fixtures (its own line).
+Records: spec `0aad00a`, RESULT `docs/decisions/D457-RESULT-…md`, artefact `data/d457_8k_atlas.json`.
+
+## D456 — THE 8-K ITEM ATLAS, STAGE 0: 155k CORPORATE EVENTS, DEAD-INCLUSIVE, SAME-DAY, 15 CELLS; THE ATLAS WITH RETURNS IS NEXT, 2026-09-12
+
+The insider line was parked (real per trade, zero net at the crossed line — the third line to end
+at the cost wall). The successor is chosen for *where it lives*: corporate events resolve in days
+and move names by more than their spread. Parsed from D331's cached EDGAR submissions index
+(0 new requests): **154,970 8-Ks 2010–2023 on 82% of the fixture and 81% of the dead** (the 18%
+gap is foreign 6-K filers), median filing lag 0–2 business days, **15 item cells with ≥ 300
+filings** (1.01, 1.02, 2.01, 2.02, 2.03, 2.05, 2.06, 3.01, 3.02, 3.03, 4.01, 5.02, 5.03, 5.07,
+8.01; 4.02 and 2.04 too rare). Every cell sits in the thin half of the universe; **2.06
+impairments are the one distress cell in liquid names**; 3.01 delisting notices are half
+late-filers who survive. **28,492 filings from 2024-01 to 2026-08 are parsed and flagged
+unread — the confirmation slice for the stage-1 atlas** (long and short scored on every cell,
+cap 10, state-matched control per cell, enumerated rotation, both cost lines, reproduction on
+the unread slice as the family's multiplicity control; opened only on the principal's word).
+Records: spec `5f8899e`, RESULT `docs/decisions/D456-RESULT-…md`, events `data/d456_8k_events.csv.gz`.
+
+## D455 — INSIDER PURCHASES, STAGE 1: REAL PER TRADE, ZERO NET AT THE CROSSED LINE, NOT A CANDIDATE, 2026-09-12
+
+The event book (long, cap 63, every event, 7,478 primary filings → 4,086 trades once the kernel
+skips names already held): **+89 bp per trade, median +96, 2.3 control-SDs above state-matched
+names in the same cell (C1 p50 +24)** — a real, contrarian insider effect on the dead-inclusive
+fixture. **The book: +1.11 ± 0.56 bp/bar gross against a rotated-calendar median of +0.66 and
+p95 +1.47; crossed cost 1.03 → net +0.08; passive net +0.62 (1.1 SE); 14 names to half, top 1% =
+70%.** Clusters (+120) beat singles (+54); directors (+101) beat officers (+58), against the
+prediction; value has no gradient; shorting insider sales loses (−23 ± 12). Cap 21 is the
+strongest per bar (+1.89) and the most expensive; every hold nets ≤ 0 crossed. **Two events
+lines in a row now say the same thing: a genuine per-trade effect of +65 to +170 bp over a
+quarter or two, in exactly the small, thin, beaten-down names where the modelled 60–90 bp round
+trip is closest to the truth, and no book at that cost.** Not a candidate; holdouts shut.
+Records: spec `398669b`, RESULT `docs/decisions/D455-RESULT-…md`, artefact `data/d455_insider_book.json`.
+
+## D454 — INSIDER PURCHASES, STAGE 0: THE DATA IS THERE, DEAD-INCLUSIVE, TWO DAYS OLD, AND SHAPED FOR THE KERNEL, 2026-09-12
+
+The issuance line was parked (real, factor-grade, unbookable on 13 years). Its successor is an
+*event*: insider open-market purchases from the SEC's Form 3/4/5 bulk data (81 quarters, 910 MB
+git-ignored, `scripts/fetch_sec_form345.py`), CIK-mapped through D331. **17,270 purchase filings
+2010–2023 on 1,279 names — 76% of the fixture and 71% of the dead cohort — 90% filed within the
+two-business-day rule.** Insiders buy what has fallen (47% after a bottom-tercile 20-day
+return), what is small, cheap and thin (60% in the bottom dollar-volume tercile), and they
+cluster (a second distinct insider within a week on 47%). No abandon condition fires. **Stage 1
+is the next record, and stage 0 fixed four of its choices:** separate 10% owners (18% of filings,
+nine of the ten largest dollar buys: Roche in FMI, Berkshire in BAC); a family-trust guard on
+clusters (Hyster-Yale's 60+ Rankin trusts are every top cluster); the state-matched control is
+required (the buys sit in exactly the cells with their own hedged drift); a declared value floor.
+Records: spec `4ce4b86`, RESULT `docs/decisions/D454-RESULT-…md`, events
+`data/d454_insider_events.csv.gz`. Later quarters 2024q1–2026q1 are cached and unread.
+
+## D453 — ISSUANCE STAGE 1b: THE ACCOUNTING FIX HALVES THE LOTTERY AND DOES NOT MOVE THE VERDICT, 2026-09-12
+
+D446's trades re-accounted with a per-name beta hedge and vol-scaled weights ([K2] identity at
+β=1, w=1 asserted). SE 1.52 → 1.17 at the same gross (+2.2 bp/bar); nine names to half the P&L
+(was 5), top 1% 51% (was 85%), GameStop 10% of the long leg (was 29%). **Net crossed +0.86 ±
+1.17; the same four tests fail; T3 passes both sides at 2.2 control-SDs.** The record's own
+prediction failed the informative way: **the rotated selector's base rate did not collapse (C2
+median +1.12 → +1.27) while the name-randomised selector's did (+0.39 → +0.08)** — the deciles'
+composition earns in excess of beta on any dates (a low-vol / quality tilt the six tested axes do
+not name); the alignment to the actual issuance year adds ~+1.0 bp/bar on an SE of 1.2. **The
+issuance line now has two forward-return looks on the same trades and one answer: real per trade,
+unresolvable as a book on thirteen years of one universe.** Not a candidate; holdouts shut. What
+would change it is calendar time or a second universe with its own EDGAR panel — not a factor
+hedge, a shorter hold or another decile (each a new selection on spent data). Records: spec
+`8b7747d`, RESULT `docs/decisions/D453-RESULT-…md`, artefact `data/d453_beta_vol_book.json`.
+
+## D446 — ISSUANCE STAGE 1: REAL PER TRADE ON BOTH SIDES, A LOTTERY AS A BOOK, NOT A CANDIDATE, 2026-09-11
+
+The first forward-return look at share supply. Decile slot book (40 a side, cap 126) on D444's
+first-filed counts through the D345 kernel. **Per trade, against state-matched names (price ×
+vol × mom cells), both sides pass the gate (2.5–2.6 control-SDs above the control median; see the RESULT addendum):** net issuers shorted +72 vs the cell's −97, net
+repurchasers long +208 vs the cell's +34. **The book does not collect it:** +2.3 ± 1.5 bp/bar
+gross, net crossed +1.0 at 0.6 SE, era 2 flat, **five names to half the P&L, GameStop's
+2021 squeeze trade (entered as a repurchaser 2020-10-15) 29% of the long leg**, three collapsed
+biotechs the short leg. The exact common-offset rotation has p50 +1.1 and p95 +3.8 (a persistent
+selector on the wrong dates still earns its state tilt); the persistent random selector p95 +1.8
+is cleared. **Not a candidate; holdouts shut (they have no EDGAR panel anyway).** Two honest next
+questions in the record §6, neither a refinement of this one. Records: spec `84793d8`
+(numbered D446 because D445 was taken by another session mid-write), RESULT
+`docs/decisions/D446-RESULT-…md`, artefact `data/d446_issuance_book.json`.
+
+## D444 — THE EDGAR ACQUISITION: THE DEAD ARE SERVED, ISSUANCE HOLDS, A STAGE 1 IS THE NEXT RECORD, 2026-09-11
+
+D443's line, re-sourced from the SEC's XBRL companyfacts (`scripts/fetch_edgar_companyfacts.py`,
+7 min, 226 MB git-ignored cache; CIKs from D331's resolution). **77% of the 562 dead names now
+carry a point-in-time share series** (first-filed value, available the bar after `filed`; median
+lag 38 days from period end; 0.1% ever restated). D443's tables re-run unchanged on the
+dead-inclusive panel: persistence **0.54** a year out (survivors 0.44), rank R² on the six tested
+axes 0.10, momentum +0.04, net-repurchase share 50%. **None of the three abandon conditions
+fires.** Two gaps to carry: 168 multi-class/foreign filers (11%) have no undimensioned count in
+this API; filer scale errors on 0.2% of rows need a 50× guard in stage 1. **Next, on the
+principal's word: a stage-1 pre-registration** — issuance as a persistent state, slot book both
+sides, state-matched control, enumerated rotation, persistent-selector control, both cost lines.
+Records: spec `f0d97af`, RESULT `docs/decisions/D444-RESULT-…md`; panel `data/d444_issuance_panel.csv.gz`.
+
+## D443 — NET SHARE ISSUANCE, STAGE 0: ABANDONED ON A1 (THE VENDOR SERVES NO DEAD NAME), 2026-09-11
+
+The first non-price-path line after the volume line's close. Alpha Vantage `BALANCE_SHEET` +
+`CASH_FLOW` on all 1,573 names (51 min, cached under `data/raw/alphavantage/fundamentals/`):
+**0 of 562 dead names are served**, so the pre-registered abandon condition A1 (dead coverage
+< 50%) fired and the line ends on this vendor. On the 988 survivors the object itself is good:
+one-year persistence 0.44, rank R² on the six tested axes 0.10, momentum correlation +0.07,
+tilted to small/cheap/volatile/thin names and 62% of name-quarters net repurchasers. **If the
+principal wants issuance, the source is EDGAR's XBRL `companyfacts` API (by CIK, dead-inclusive,
+with filing dates)** — a data acquisition record, not a study. Records: spec `0fa0d5c`, RESULT
+in `docs/decisions/D443-RESULT-…md`. Memory: the vendor's three quirks (gross flow fields
+empty; shares restated for later splits on half the names; delisted tickers empty).
+
+---
+
+## THE VOLUME LINE — D434 → D441, PARKED ON A COST MEASUREMENT 2026-09-11; THE PULL IS THE PRINCIPAL'S
+
+**State in one line:** a real, state-conditional volume effect (B: a 3× volume bar in a top-price
+name, sold short — +21 bp per trade over its state-matched control, +64 SE over the enumerated
+rotation null) that is **not a book at any cost line the repo can justify** (D440: crossed
+−0.63/bar, passive +0.65 ± 0.89, era 2 +1.06 ± 1.48; cap 40 +0.95 ± 0.59). **Both daily holdouts
+are unseen by this line and stay shut**: the D440 candidate condition (T1 ∧ T3 ∧ T4 ∧ T5) failed
+at +0.7 SE. Nothing is admitted. The principal chose, 2026-09-11, to park B and run the quote
+pull rather than refine or spend a holdout.
+
+**The chain:** D434 volume atlas (five axes; flat as a universe average) → D435 conditional atlas
+(the shock is +38 in top-momentum names and −48 in top-price ones — a universe average hid a sign
+flip) → D436 stage 0 → D437 stage 1 (A and B carry a shock increment; every component net-negative
+under the kernel's PUB 52–75 bp) → D438 (the increment lives in the widest spread third; only B at
+every horizon) → D439 (a passive order at the open fills 92%, chase 9 bp, net capture 0.66 —
+**and the modelled half-spread on MSFT-class names is 17–55 bp/side against a quoted 1–2: the
+cost models are range models**) → D440 (B under both lines: not a candidate) → **D441
+pre-registered `a92710a`, runner and sample `295c70f`: the quoted spreads on the 272 names B
+trades, and B re-costed at the quote.**
+
+**WHAT THE NEXT SESSION DOES — in this order, nothing else first:**
+
+1. The principal opens TWS or Gateway (paper 7497 / live 7496; Gateway 4002 / 4001) and runs, from
+   the repo root, **D336 first** (the convention question outranks B's; ~35 min):
+
+   ```bash
+   uv run --group ibkr python scripts/d336_ibkr_quoted_spreads.py --pull --host 127.0.0.1 --port <PORT> --client-id 336
+   ```
+
+   then D441 (~80 min; 17 of its 272 names are already cached by D336 and are skipped):
+
+   ```bash
+   uv run --group ibkr python scripts/run_d441_b_quotes.py --pull --host 127.0.0.1 --port <PORT> --client-id 441
+   ```
+
+   Both are resumable (a name with a CSV is skipped), `readonly=True`, need the US-equity
+   historical-quote subscription, and abort on ten consecutive subscription errors or on a name
+   whose BID_ASK bars violate open ≤ close on 1% of days. Raw bars land in `data/raw/ibkr/`
+   (git-ignored, exchange-licensed, never committed).
+
+2. Then, no session needed:
+
+   ```bash
+   uv run python scripts/d336_ibkr_quoted_spreads.py --compare
+   ```
+
+   ```bash
+   uv run python -u scripts/run_d441_b_quotes.py --compare
+   ```
+
+3. Write the two RESULT records. **D336's is owed since 2026-09-05** and must read Q2 on the
+   non-clamped subset and mark Q3's second clause not evaluable (§8a). D441's bar: T3q ∧ T4q on
+   the **crossed-at-the-quote** line → candidate for a holdout read, only on the principal's word.
+   **X-e already says the book most likely still fails at 2 SE even at a favourable quote** — the
+   pull decides whether B is closed on cost or on its own noise, and whether the wide tercile's
+   +64 passive net is a per-trade object at all. Two known deviations to disclose in D441's RESULT:
+   17 (not 33) names overlap D336's sample; 11 (not 10) padded names were excluded (GOCOQ).
+
+**Two things the pull will hit, known now:** (i) the fixture carries acquired names as `alive`
+with a constant close and zero volume since the acquisition (SPLK at 156.9, SGEN, KRTX, AVNS …;
+the meta counts a delisting after the span end as alive). D441 excludes them by rule; **D336's
+sample has one (AVNS)** — it will come back unresolved and D336's compare counts a missing CSV,
+not a failure. (ii) D441's compare *excludes and lists* a name failing `[N]` or `[G]` where D336's
+aborts; the RESULT reports every exclusion by tag.
+
+**Parked by the principal, not closed** ("keep the rest in mind", 2026-09-11): a calendar-split
+stage 2 (A off-cadence long / B on-cadence short); equal-risk sizing; anything on A, C, D.
+**Method yield of the line, already in memory:** align the event mask to the kernel's fill
+(D434's one-bar look-ahead); condition a new feature on the atlas states before calling it flat
+(D435); read the cost convention the kernel gates on before predicting a net (D437); the cost
+models are range models (D439).
+
+---
+
+## THE SECOND-ZONE LINE — D412 → D433, CLOSED BY THE PRINCIPAL 2026-09-10, BOTH DAILY HOLDOUTS SPENT
+
+**Read this before touching either daily holdout: they are both spent, by this line, on
+2026-09-10.** `us_shorts_daily_holdout` (803 names) was read a second time under the principal's
+ruling that a holdout spent by an unrelated strategy is unseen by a new line (D430);
+`us_shorts_daily_holdout2` (576 names) was read once (D433). There is no unseen daily
+single-name data left for anything descended from a departure-zone touch.
+
+**The line:** D412 departure zones → D413 distance arming + cell 2 (REV/EFF/DV medians) → D414–D416
+entry timing (touch-day close wins) → D417–D419, D423–D425 nine exit constructions (none beats
+`t+5`, no stop) → D420–D422 the second touch (STACK2-ANY, +45 in-sample) → D426 double-down (dead)
+→ D427 five layers → D428/D429 the combined long book at 3 slots, which met the in-sample
+candidate condition → **D430 holdout 1: the long arm −29 gross, everything above the base
+rung gone** → D431 short arm on the union (tail-carried, unbookable) → D432 breadth gate (wrong
+sign), DV lever (+8 bp), gap by half (inverts) → **D433 holdout 2: net Sharpe −0.19; the touch
+effect reproduces a third time.**
+
+**What is TRUE across three disjoint name sets (1,573 / 803 / 576):** a distance-armed
+departure-zone touch entered at the touch-day close and exited at `t+5` earns **+9.8 / +10.1 /
++13.0 bp gross**; cell 2 makes it **+30 / +18 / +18**. Cost is 24–34 bp. **Net Sharpe of the best
+transferable object (cell 2 ∧ top-ADV tercile, 10 slots): +0.05 / −0.03 / −0.19.** File the touch
+effect as a base rate a future study must beat; it is not a trade.
+
+**What did NOT travel, on both unseen sets:** the second-touch rung (+45 → +6 / +17), the cheap
+tercile (+86 → +17 / +28), long-only (+80 → −29 / −21), the gap ordering (inverts), the ADV
+tercile's gross side, every exit, every gate. The short arm's mean was positive on all three
+sets on a median of ~0 and no 2–5 slot book collects it. In-sample nulls (within-day
+permutation, matched random pools) were passed at +5 to +10 SE by selections that did not
+transfer: **they test selection inside the spent names, not transfer.**
+
+**Process disclosure — the door.** `run_d411` installs an unconditional audit hook refusing any
+path containing "holdout" (no `allow` switch; `run_d365`'s `V65.allow_holdout(why)` is the
+designated, logged unlock, but it lives on a module this line's chain does not import). D430's
+ADDENDUM opened each holdout in a **separate hook-free process** (`scripts/d430_oos_loader.py`,
+`scripts/d433_oos2_loader.py`, `--spend-the-holdout`), wrote the panel to a cache named without
+"holdout", printed a receipt with the file's SHA-256, and the runner read the cache. The
+information the designated door would have logged is in the receipts (D430/D433 RESULT); the
+designated function was not called. If the guard is consolidated, the two hooks should become one
+with the `allow` switch, and openers should call it.
+
+**Reusable from this line:** `scripts/run_d430_holdout.py` (a fixture-parametrised pipeline with a
+`--proof` mode that reproduces in-sample bit-identically before any out-of-sample read),
+`run_d431_shorts_union.py::union` (two fixtures on one calendar), the ladder printed on every
+out-of-sample read so a failure is located, Sharpe with a monthly block-bootstrap SE
+(`run_d433_holdout2.py`), and the memory rules written on 2026-09-10 (measure the worker before a
+fan-out; a required book is not utilisation × base; a tail-carried mean does not book; layers
+selected on spent names vanish out of sample).
+
+**The one lever never measured:** execution — passive fills at the zone versus the crossed-spread
+Corwin–Schultz model. Blocked on the TWS session like everything else in 0d2 (1).
 
 ---
 
@@ -217,8 +615,8 @@ and untouched.
 | fixture | slice of the pinned permutation | names | state |
 |---|---|---:|---|
 | mining prefix | `order[:3400]` | — | spent many times over; free to mine further (see the ruling below) |
-| `us_shorts_daily_holdout.csv.gz` | `order[3400:5100]` | 803 | **SPENT 2026-09-07 (D371). Never read again.** |
-| `us_shorts_daily_holdout2.csv.gz` | `order[5100:6300]` | **576** | **BUILT `59f021e`, UNSPENT.** 1,532,631 rows, 2010-01-04 → 2026-08-26, dead share 32.6%, gates clean |
+| `us_shorts_daily_holdout.csv.gz` | `order[3400:5100]` | 803 | **SPENT 2026-09-07 (D371, momentum). READ AGAIN 2026-09-10 (D430, the second-zone line) under the principal's ruling that a holdout spent by an unrelated strategy is unseen by a new line.** Spent for both lines. |
+| `us_shorts_daily_holdout2.csv.gz` | `order[5100:6300]` | **576** | **SPENT 2026-09-10 (D433, the second-zone line).** 1,532,631 rows, dead share 32.6%, gates clean; unseen by every OTHER line — the principal's per-line ruling applies |
 | remaining unfetched | `order[6300:]` | **2,301** | never fetched, never scored |
 
 The permutation is deterministic — alphabetical sort, one shuffle at `POOL_SEED = 20260828` — so any
@@ -426,6 +824,194 @@ committed to `data/`.
 **RE-RANKED 2026-09-09 (later), after D383 was run and the prop instrument was priced. THE QUEUE IS
 EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not commitments.
 
+> ### 0d0. THE NEGATIVE-SPACE SCAN AND ITS SEVEN EXTERNAL BRIEFS, 2026-09-09 — **ELEVEN LEADS, THREE STILL STANDING AFTER THE EVIDENCE, AND THREE METHOD FINDINGS ALONGSIDE THEM**
+>
+> **THIS WAS COMMISSIONED AS A LEAD SCAN AND ITS DELIVERABLE IS LEADS.** An earlier version of
+> this section led with *"no strategy was found"*, which measured a lead scan against a bar
+> nobody set for it — a lead that survives a smell test and a costed literature check **is** the
+> product here. **What follows is the inventory; §0d0a ranks it.** Testing is a separate act
+> under R8 and none has occurred.
+>
+> **[`docs/research/the-negative-space-scan.md`](docs/research/the-negative-space-scan.md)**
+> (`bbc2790`, consolidated `00eaccb`). A scan of the categories the record had **never** put in a
+> runner, scored on seven axes drawn from what has actually killed studies here. **Then seven
+> agents researched the published literature, one per lead, briefs in `working/leads/` under that
+> directory's quarantine contract.**
+>
+> **Status of every item below: a LEAD.** None has been tested — that is R8's separate act and it
+> has not happened. Both books are unchanged.
+>
+> ### 0d0a. THE INVENTORY — eleven leads, by category
+>
+> **REGIME DETECTORS**
+> 1. **Cross-asset state** — `log(HYG/IEF)`, `log(IEF/SHY)`, defensive-vs-cyclical, as a
+>    market-level time gate. **The only gate this programme could build that is not a function of
+>    the equity universe it trades.** → [D404](docs/decisions/D404-the-cross-asset-state.md).
+>    **STANDING**, with the horizon in doubt.
+> 2. **Even-week FOMC cycle** (Cieslak–Morse–Vissing-Jorgensen, JF 2019) — surfaced by the K1
+>    brief as **better founded than the pre-FOMC drift it was sent to check**: far more events,
+>    causal evidence, no published OOS failure found. **STANDING, and untouched by the K1 verdict.**
+> 3. Turn-of-month / day-of-week / pre-FOMC window. **FELL** — location, not decay: on FOMC days
+>    the CAPM works, α insignificant, and equal weighting *shrinks* it (36→25→20 bp).
+>
+> **CROSS-SECTIONAL SIGNALS**
+> 4. **Industry-relative reversal in liquid names + a low-volatility screen** — +0.31%/mo,
+>    t=2.73, VW large-cap. **Two agents that never communicated converged on it** from different
+>    literatures. **STANDING and it is the strongest of the eleven** — but it is *someone else's
+>    published result*, never tested here, and in both accounts **the cost filter does the
+>    rescuing, not the residualisation.**
+> 5. **Combining the 16 OHLC terms** — equal-weight cross-sectional rank average, every sign
+>    declared in writing, floored against a sign-fitting null. **ROSE FROM LAST TO FIRST** of the
+>    unregistered leads once §59 showed our own reasoning against it was backwards.
+> 6. Cluster-residual reversal. **FELL** — net moves −1.28 → −0.80%/mo, still 80 bp under water,
+>    and correlation clusters give a 0.02 out-of-sample spread in small caps, which is our case.
+> 7. Closed-end fund discount. **FELL** — Flynn ran the exact hedged trade on 462 CEFs, zero
+>    significant alphas, and the edge is front-loaded into month one, killing the "slow" thesis.
+> 8. Lead–lag between size cohorts. **DEAD** — measured into a decile averaging $47m cap.
+> 9. **Geographic lead–lag** (co-HQ, different sectors), 5–6%/yr, **explicitly unrelated to size,
+>    volume and coverage** — the one liquid-name variant the X2 brief found real. **STANDING as a
+>    lead**, monthly, sample ends 2013, no cost test in the paper.
+>
+> **INDICATORS / DATA ROUTES**
+> 10. Short interest and days-to-cover. **FELL** — borrow fee takes 162 anomalies from +0.14%/mo
+>     gross to −0.01% net, and free FINRA exchange-listed data starts June 2021.
+> 11. **FINRA daily short-sale volume + the SEC FTD file** — the replacement route the N1 brief
+>     found: one-day lag, point-in-time, consolidated from 2018-08, and **the FTD file carries
+>     CUSIP so it doubles as a delisted-symbol crosswalk.** **STANDING as an input, not a signal.**
+>
+> **Ranked for a next step: #4, then #5, then #1.**
+>
+> **ALL ELEVEN ARE RECORDED AS LEADS WITH FULL ANATOMY** — the quantity, why it is not in the
+> catalogue, the mechanism, the data, **the premise number that kills it**, and the honest risk —
+> in [the scan record](docs/research/the-negative-space-scan.md) **§§3–7** for the original seven
+> and **§9b** for the four the briefs surfaced. **§8's scored table carries all eleven**, with the
+> seven axis scores **deliberately left unrevised** so the scan's own calibration can be audited
+> against what the literature said. **That audit is unflattering and is recorded there: the score
+> did not predict the outcome** — C1 scored lowest of seven and now ranks first, while K1 and N1
+> scored 17 and both fell hard. **The axis that failed was `KILL`, and it was measuring my
+> knowledge rather than the lead.**
+>
+> **The three findings that outlive the scan, and each was RE-MEASURED here rather than quoted:**
+>
+> 1. **[FINDINGS §59](docs/FINDINGS.md) — a best-of-N floor prices SELECTION and is blind to
+>    SIGN-FITTING.** At k=16 a composite of **pure noise** clears the selection floor by **+1.28**
+>    (2.95 vs 4.23). **Pre-declaring every sign in writing is worth a factor of ~2 in the hurdle
+>    (4.23 → 1.65) for no computation** — the cheapest hurdle reduction on offer here. The D395
+>    floor is *not* wrong; it must be **extended** wherever a construction orients its own
+>    components in sample.
+> 2. **[FINDINGS §60](docs/FINDINGS.md) — `etf_wide_daily_raw` IS NOT AN ETF FIXTURE.** **≥27.2%
+>    closed-end funds** and **23 of its 24 deaths are fund wind-ups**, on a fixture **D382, D384
+>    and D385 already ran on**. Their P&L used total return and is unaffected; what is affected is
+>    anything reading `closes` as a **level**. **A metadata correction and any re-read is the
+>    principal's call** — nothing was edited.
+> 3. **D280's own gloss was backwards.** Orthogonality **multiplies** detectability by `√k`
+>    (3.7–4.0× for the OHLC family against 1.69× for the nine price scores). The empirical part of
+>    D280 stands; **the inference that independence makes combination hopeless is withdrawn.**
+>
+> **The leads, after the evidence.** **C1** (combining the 16 OHLC terms) **rose from last to
+> first** — it now has a nameable form and a concrete hurdle. **X2 is dead** on measurement.
+> **K1, N1, V1 and X1 all fell hard**, each on a specific published quantity, not a vibe.
+> **R1 is [D404](docs/decisions/D404-the-cross-asset-state.md), pre-registered and amended.**
+>
+> **One construction surfaced that is NOT ours and has never been tested here:** two agents that
+> never communicated converged on **industry-relative reversal in liquid names with a
+> low-volatility screen** (+0.31%/mo, t=2.73, value-weighted, large-cap) as the only cost-surviving
+> thing in the area — **and in both accounts it is the COST FILTER doing the rescuing, not the
+> residualisation.** It would need its own pre-registration.
+>
+> **The quarantine rule paid for itself immediately: the brief that read most confidently (R1's)
+> was the one whose two headline construction claims did NOT survive measurement.** Treat an
+> enthusiastic brief with more suspicion than a damning one.
+
+> ### 0d0b. ROUND 2 — SIX NEW TERRITORIES, ALL SIX BRIEFS IN, 2026-09-09
+>
+> **[`docs/research/the-forced-seller-and-the-cost-wall.md`](docs/research/the-forced-seller-and-the-cost-wall.md)**
+> (`335fcc0`, completed `20a083a`). Territories and the exclusion list that kept round 2 off round
+> 1's ground: [`working/leads2/README.md`](working/leads2/README.md) (`f31535d`).
+>
+> **THE SAME SHAPE AS ROUND 1: the most valuable returns are not leads.** Four of the six most
+> consequential findings are method, data or cost.
+>
+> 1. **THE HOUSE SPREAD ESTIMATOR IS BIASED THE WRONG WAY.** `CLAUDE.md` mandates Corwin–Schultz;
+>    **Ardia–Guidotti–Kroencke (JFE 2024) find CS UNDERESTIMATES effective spreads for small,
+>    illiquid stocks** — our tail. **D285's 33.8 bp/side may be a FLOOR, not an estimate**, which
+>    would make every breakeven in the record more lenient than it looks. **EDGE is a closed-form
+>    drop-in on the same OHLC inputs (`bidask` on PyPI). Recompute D285 under EDGE FIRST — it sets
+>    the SIGN of every cost conclusion downstream.** Not computed; re-opening D285 is the
+>    principal's call.
+> 2. **A CLOSE-DECIDED BOOK CANNOT FILL AT THAT CLOSE.** NYSE MOC/LOC hard cut-off **3:50 pm**
+>    (Nasdaq MOC 3:55, LOC 3:58). A constraint on construction, not a preference.
+> 3. **THE SPIN-OFF DEFECT HAS A NAMED FIX.** The correct adjustment is a multiplicative step on
+>    all PRIOR bars, `f = (P_cum − r·P_child)/P_cum` — **date-dependent, which is exactly why a
+>    scalar `raw_price_factor` cannot fix it**; the child has no pre-WI history at all. **Vendors
+>    log spin-off factors in the SPLIT table, so a distribution ratio read as a split ratio shifts
+>    the series by a clean integer — that is the 5× shape.**
+> 4. **THE SURVIVORS-ONLY IDENTIFIER TRAP, TWICE.** `company_tickers.json` and Wikipedia's
+>    `List of S&P 500 companies` are both survivors-only. **The free fix: `ISSUERTRADINGSYMBOL` is
+>    NOT NULL inside every Form 4**, so dead names carry their own point-in-time ticker forever.
+>    Join on `(ticker, date-in-listing-interval)`.
+>
+> **The four signal territories, none closed.** `F1` index reconstitution — **my premise was
+> INVERTED**: large-and-liquid is where the effect is dead (S&P 500 adds 7.4% → 0.3%), and where it
+> survives (SmallCap 600, MidCap, Russell 2000) is where our per-share cost is worst; **but the
+> 500's zero is a composition artefact — direct adds still ran +5.40%**, and **deletions of names
+> that DELIST are unpublished because every study drops them, which a dead-inclusive fixture is the
+> right instrument for.** `F2` insiders — data excellent, **no cost-honest post-2010 survival**;
+> the one positive assumes 10 bp/side against our measured 33.8. `F3` earnings — PEAD dead outside
+> microcaps since 2006, premium's published US window **ends 2004**, **but its timing split (34.6%
+> pre-open / 45.4% post-close, four corroborating sources) independently corroborates D280's
+> overnight finding** — and carries a day-0 lag hazard `[L]`. `F6` supply events — **three of four
+> families resolve overnight, so daily bars are a bar late by construction**; only buyback
+> *execution*, as a **state**, is recommended.
+>
+> **`F5` cost: 0.5–1.5 bp/side saveable, not 5.** Published price-improvement numbers **do not
+> reach an auction-only book** — IBKR takes no order-flow payment on On Open/On Close and the
+> auction print is a full half-spread, **so our cost model is CORRECT there**. One actionable
+> change: **Fixed → Tiered**, and it corrects a recorded number — **the minimum binds on a SHARE
+> COUNT (200 Fixed, 100 Tiered), not on "$2,100 notional"**. **The 1.92 bp intraday cell still
+> loses at a zero spread.** **Dated freebie: IBKR's first amended-Rule-605 broker-level report,
+> with E/Q by order size, is due published before end-September 2026.**
+>
+> **TWO OF MY OWN COMMISSIONING PREMISES WERE WRONG**: the 2023 granular buyback rule was **vacated
+> by the Fifth Circuit 2023-12-19** before producing data (our span is Item 703 — monthly, HTML,
+> untagged, 40–45 days late), and index flow does not live in large liquid names.
+>
+> ### 0d0c. ROUND 3 — PREPARED, NOT COMMISSIONED
+>
+> **[`working/leads3/README.md`](working/leads3/README.md)** (`2e89d37`, withdrawal `4f3e2e3`).
+> Six lanes written up; **no agent dispatched**, deliberately — round 2's returns had to extend the
+> exclusion list first. **`G1`** fund/ETF flows as the forced seller · **`G2`** the death process,
+> which [`FINDINGS.md`](docs/FINDINGS.md) §60's own rule demands and which `F1` independently
+> pointed at · **`G3`** halts/LULD, where D343 met the event as 4.4% of D342's P&L and excluded it
+> as hygiene · **`G4`** 13D/13G · **`G5`** the revenue side of a long book · **`G6`** documented
+> defects in data we own. **`G2` and `G3` are route (b)** — the first round to ask it; round 2's
+> four signal lanes were all route (a), which was my omission.
+>
+> ### 0d1. D404 — THE CROSS-ASSET STATE, PRE-REGISTERED AND AMENDED, RUNNER DOES NOT EXIST
+>
+> **[D404](docs/decisions/D404-the-cross-asset-state.md)** (`fd4275e`, amended `c88673a`). All 52
+> catalogue scores are functions of one name's own OHLCV; the one exception builds its market
+> return from the panel's own cross-section. **No study has ever gated an equity book on another
+> asset class.** The two fixtures' grids are **identical bar for bar** (4,187 dates), so the join
+> needs no fetch — **the whole of the new code is the `raw` array.**
+>
+> **Its second question is why it exists:** D389's factor is **98.5% unexplained in arm B** and all
+> four tested candidates were *internal* to the book's machinery. `data/d376_series.npz` already
+> holds the 500-book matrix on the same grid, so testing a market-level state against it is nearly
+> free.
+>
+> **§12a amendment, before the runner exists.** One alleged defect **false** (drift −0.92%/yr, not
+> 2–5%, and the imbalance runs the other way), one **confirmed** (`(XLU+XLP)/(XLY+XLK)` is a sum of
+> share prices; a synthetic split moves it 0.338 log units), and **one found that neither party
+> had: a trailing-median rule on a TRENDING series is a TREND RULE, not a state classifier.**
+> `DEFENSIVE` sits on one side 71% of the time and equal-weighting does not fix it. **A new `[BAL]`
+> assertion fails any state outside 40–60%; `DEFENSIVE` fails it today.**
+>
+> **Recorded, not adopted:** the literature places credit/curve predictability at **quarters to
+> years**, not the 20 days D404 inherited. None of those papers has been read here. **The runner
+> must report the whole horizon curve h ∈ {5…252}, and if h=20 is the PEAK that is an overfitting
+> flag, not a confirmation.**
+
 **TWO AVENUES WERE CLOSED BY THE PRINCIPAL ON 2026-09-09 —
 [D401](docs/decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md):
 the WINNERS' DIP and the 15-MINUTE TIME-SERIES STRUCTURE SCREEN.** Both are shut and neither will be
@@ -555,6 +1141,62 @@ onto D377's H1 hedge (D377 §4 argues not — the benefit is 0.032 on a 0.47 flo
 **The breadth test the 2026-09-07 handoff ranked first was dropped, with the principal's agreement.**
 It targets a retired object, and the H5 mis-specification it was partly meant to expose is a
 definition fix rather than an empirical question.
+
+---
+
+## 0d2. PARKED — SUPPLY AND DEMAND: THE IDEAS NOT TAKEN, 2026-09-09
+
+**D403 was closed by the principal** — *"this construction is dead, I don't think this accurately
+captures supply and demand."* The wick-stack potential map is finished and will not be reopened.
+Its durable findings are in its own record; what follows is the design work that came out of the
+close and is **not** spent.
+
+**THE DIAGNOSIS THAT OUTLIVES D403, and it explains all six price-level failures at once:**
+
+> **A wick is evidence that interest was ABSORBED, not that it REMAINS.** If price spiked to 110 and
+> came back, the sellers at 110 were filled — the zone is spent. The same is true of a volume node
+> (TERRAIN S1), a swing band (S5), a signed inventory field (S6), a flipped level (D211), a fair
+> value gap, and D403's potential. Every one is a trace of trading that already completed, read as a
+> forecast of trading still to come.
+
+And the mechanical corollary that predicts the failure **before** a study is built: **all six maps
+are pure functions of the past price path.** That is exactly why the rotation control kills them —
+rotating preserves the path and destroys only the alignment, and the alignment carries nothing. **Any
+candidate that is another function of OHLC alone will die the same way.** Require of a seventh that
+it carry information the price path cannot.
+
+**THE PRINCIPAL CHOSE (2) ON 2026-09-09 and it is drafted, not committed** — see
+`docs/decisions/DRAFT-capital-gains-overhang.md`, uncommitted, **no decision number taken** (the
+three-command procedure runs at commit time, not before). The other three are parked here:
+
+**(1) RESTING LIQUIDITY — the order book.** Literally supply and demand, and the honest ceiling on
+every approximation below it. **Blocked, not rejected.** D336's quoted-spread pull needs the
+principal's TWS session and is top-of-book only; `scripts/d364_databento_equity_plan.py` is an
+arithmetic-only cost plan with no submit path. **If the TWS blocker ever clears, this outranks
+everything in this section.**
+
+**(3) OPTIONS OPEN INTEREST / DEALER GAMMA.** Genuinely forward-looking and size-carrying — resting
+*obligations* at specific strikes, which is the property every price-history map lacks. Nothing in the
+repo. Alpha Vantage serves `HISTORICAL_OPTIONS` on the existing key, so it is reachable at request
+cost and no new vendor. **Do not spend this until (2) has reported** — it is a real acquisition and
+(2) tests the same "unfilled interest" thesis for free.
+
+**(4) EXECUTION ANCHORS — VWAP and the closing auction.** Weak as *zones*, but they hold the one
+property nothing else here does: somebody is **obliged** to trade there. `scripts/d364_auction_bound.py`
+already documents the 1-minute call shape. Cheapest of the four; lowest ceiling.
+
+**UPDATE 2026-09-10:** (2) the capital-gains overhang ran as D405 and **abandoned at stage 0** (the
+overhang is momentum); (3) options open-interest density ran as D406 and **failed its bar**; the
+departure-zone line (D412–D433, above) was the seventh price-path map and died out of sample twice.
+**Never tested in this repo, and each carries information the price path cannot:** short interest /
+days-to-cover as a *signal* (FINRA bi-monthly, public), insider transactions, share issuance /
+buybacks / lockup expiries (the literal supply of shares), 13F holdings changes, index-inclusion
+flows. Zero decision files on any of them.
+
+**MULTIPLICITY: any of these is look #7 on price-level maps.** The R13 ledger carries 259 terrain
+looks and 86 structure looks in, and D403 makes six programmes with six written closes. **None of
+them paid.** That base rate is the reason (2) is drafted as a stage-0 discriminator with an abandon
+condition rather than as a study with a sweep.
 
 ---
 

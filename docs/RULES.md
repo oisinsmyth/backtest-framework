@@ -225,7 +225,7 @@ what a funded account is actually judged on.
 | **P1** | **SIZING RULE, NOT A FILTER — see the 2026-09-08 restatement below.** Size the account so trailing drawdown ≤ 4% on **OPEN** equity, then carry the resulting return forward | Apex trails on unrealised intraday equity; open profit lifts the floor before anything is closed. Our closed-equity max-DD is a different and gentler statistic |
 | **P2** | **No exposure across the VENUE'S FLATTEN TIME** — see the amendment below; this is venue-specific, not universal | Topstep 3:10pm CT, Apex 4:59pm ET, MyFundedFutures 4:10pm ET |
 | **P3** | **Worst single day ≤ 2%** | Daily loss limits run 2–3% |
-| **P4** | **Expected time-to-breach > 3 years** | Against a trailing barrier and positive drift, ruin is certain eventually; the question is only when. At Sharpe 0.9 a 20-account book died every ~3.85 years |
+| **P4** | **Expected time-to-breach > 3 years** — **and "time-to-breach" is the ACCOUNT'S LIFE; see the RULING of 2026-09-11 below** | Against a trailing barrier and positive drift, ruin is certain eventually; the question is only when. At Sharpe 0.9 a 20-account book died every ~3.85 years |
 | **P5** | **No single day > 40% of trailing-year profit** | Consistency rules cap a single day at 30–50%, so a lumpy-but-profitable strategy is ineligible for payout while up |
 | **P6** | **Venue permits automation at the FUNDED stage** | Apex: *"No Automation or Algorithm Usage allowed"* on Performance Accounts, penalty *"forfeiture of all funds and balances"*. Take Profit Trader bans EAs throughout. **Only Topstep and MyFundedFutures permit it.** Third-party comparison tables contradict both firms' own terms and must not be relied on |
 
@@ -274,6 +274,56 @@ the "one round trip per day costs 8.90%/yr" arithmetic are **equity** numbers. F
 commission on the instruments these firms offer is roughly an order of magnitude cheaper, so
 **intraday constructions excluded on ETF cost arithmetic must be re-costed before being excluded on
 futures.**
+
+### RULING, 2026-09-11 — **P4 IS THE ACCOUNT'S LIFE. A PER-HOLD BREACH RATE MAY NOT BE INVERTED INTO IT.**
+
+**The principal's ruling, 2026-09-11**, on a question
+[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)
+raised and did not adjudicate.
+
+> **"Expected time-to-breach" means the expected life of the FUNDED ACCOUNT** — a running balance
+> against a floor that **ratchets up on gains and never down**, carried through the evaluation and
+> the funded phase under the venue's own mechanics. **It is NOT `1 / (per-hold breach rate)`.**
+
+**Why the question existed.** D440 computed both on the same arm, the same fixture and the same
+sizing rule, and they are not close:
+
+| | statistic | C1 at the `V`-maximising size |
+|---|---|---|
+| [D259](decisions/D259-the-extended-session-and-the-overnight-interior.md) | `1 / P(a single hold breaches 4%)` | **6.40 years** |
+| [D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md) | the account's life, full lifecycle | **0.14 years** |
+
+**Both were computed correctly. They are different objects, and P4 did not say which.** It does now.
+
+**Four consequences, and the first is the expensive one.**
+
+1. **C1 DOES NOT CLEAR P4.** Its 6.40 years is a per-hold statistic. Under the ruling the operative
+   number is **0.14 years at the `V`-maximising size, and nothing on D440's risk grid clears three
+   years** — the best cell anywhere is **1.01 years**, at a size whose `V` is negative.
+   **[`BOOK_PROP.md`](BOOK_PROP.md) is amended accordingly; C1's reopening stands as a correction to
+   a premature closure, and the reopened candidate now fails the hurdle it was reopened to clear.**
+2. **Every prop candidate to date was screened on per-trade bars.** C1 on per-hold MAE and breach;
+   [C2 and C3](decisions/D258-the-prop-track-candidates.md) on *"`exposure × edge` ≥ 3%/yr, hit rate
+   > 55%, **worst single trade < 2%**"*. **C2 and C3's verdicts stand — they died on edge sign and on
+   skew, which are per-trade facts and lens-invariant — but the bar they were held to was the wrong
+   bar, and a fifth candidate screened that way would inherit the error.**
+3. **This is `CLAUDE.md`'s both-lenses rule, in the prop track.** *"Path-invariant and path-variant,
+   never compared on the same statistic."* **Inverting a per-trade rate into a life in years does
+   exactly that**, and the error it produced here is **more than an order of magnitude**. The rule
+   was written for slot books; it binds here identically.
+4. **P4 now names a computation, so under [R6](#r6) it is not cleared until that computation runs:**
+   a lifecycle simulation against the venue's **actual** floor mechanics — evaluation and funded
+   phases, the lock level, the qualifying-day counter, the safety net and the post-payout floor
+   change — not a closed form on a per-trade rate. `scripts/d440_lifecycle.py` is the reference
+   implementation and `scripts/d386_full_lifecycle.py` supplies the venue geometry.
+
+**What this does NOT change.** **P1 remains a sizing rule that cannot fail** (the 2026-09-08
+restatement). **P2 and P6 remain structural facts about a venue.** **P3 and P5 remain uncomputed**
+([D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)).
+The **account-not-strategy** clarification immediately below stands and this ruling sharpens it: P4
+was already declared a constraint on the account, and what was still open was **which statistic
+measures it.** And a closure on P4 still closes a candidate **as a standalone book, not as a
+component**.
 
 ### CLARIFICATION, 2026-08-29 — hurdle P is measured on the ACCOUNT, not on a strategy
 

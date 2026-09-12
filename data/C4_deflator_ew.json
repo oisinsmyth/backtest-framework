@@ -1,0 +1,524 @@
+{
+ "PLACEBO_GPlag": {
+  "_n_signals_in_file": 114,
+  "_negative_control_bogus_signal_rows": 0,
+  "_requested_present": [
+   "GPlag"
+  ],
+  "GPlag": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.4284,
+    "t_LmM": 3.03,
+    "LS": 0.2129,
+    "t_LS": 1.92,
+    "short_minus_mkt": 0.2154,
+    "t_SmM": 1.54,
+    "n_months": 570,
+    "avg_N_long": 793.9
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.0735,
+    "t_LmM": 0.32,
+    "LS": 0.2034,
+    "t_LS": 0.67,
+    "short_minus_mkt": -0.1299,
+    "t_SmM": -0.36,
+    "n_months": 36,
+    "avg_N_long": 854.9
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": -0.1448,
+    "t_LmM": -0.61,
+    "LS": 0.5987,
+    "t_LS": 2.13,
+    "short_minus_mkt": -0.7436,
+    "t_SmM": -1.76,
+    "n_months": 132,
+    "avg_N_long": 861.0
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": -0.0192,
+    "t_LmM": -0.1,
+    "LS": 0.5363,
+    "t_LS": 2.37,
+    "short_minus_mkt": -0.5555,
+    "t_SmM": -1.69,
+    "n_months": 180,
+    "avg_N_long": 863.3
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": -0.048,
+    "t_LmM": -0.1,
+    "LS": 0.9791,
+    "t_LS": 1.93,
+    "short_minus_mkt": -1.0271,
+    "t_SmM": -1.27,
+    "n_months": 60,
+    "avg_N_long": 889.7
+   }
+  }
+ },
+ "QuintilesEW": {
+  "_n_signals_in_file": 179,
+  "_negative_control_bogus_signal_rows": 0,
+  "_requested_present": [
+   "CBOperProf",
+   "GP",
+   "OperProf",
+   "OperProfRD"
+  ],
+  "CBOperProf": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.6524,
+    "t_LmM": 5.35,
+    "LS": 0.4749,
+    "t_LS": 4.34,
+    "short_minus_mkt": 0.1775,
+    "t_SmM": 0.88,
+    "n_months": 570,
+    "avg_N_long": 602.3
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.0581,
+    "t_LmM": 0.24,
+    "LS": 0.4416,
+    "t_LS": 1.55,
+    "short_minus_mkt": -0.3835,
+    "t_SmM": -0.93,
+    "n_months": 36,
+    "avg_N_long": 637.6
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": 0.0047,
+    "t_LmM": 0.02,
+    "LS": 0.782,
+    "t_LS": 2.33,
+    "short_minus_mkt": -0.7773,
+    "t_SmM": -1.76,
+    "n_months": 132,
+    "avg_N_long": 521.7
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.0902,
+    "t_LmM": 0.58,
+    "LS": 0.6737,
+    "t_LS": 2.64,
+    "short_minus_mkt": -0.5836,
+    "t_SmM": -1.72,
+    "n_months": 180,
+    "avg_N_long": 553.2
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": -0.0386,
+    "t_LmM": -0.11,
+    "LS": 0.5225,
+    "t_LS": 0.82,
+    "short_minus_mkt": -0.5611,
+    "t_SmM": -0.68,
+    "n_months": 60,
+    "avg_N_long": 488.3
+   }
+  },
+  "GP": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.6129,
+    "t_LmM": 4.17,
+    "LS": 0.52,
+    "t_LS": 4.53,
+    "short_minus_mkt": 0.0928,
+    "t_SmM": 0.52,
+    "n_months": 570,
+    "avg_N_long": 704.0
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.1385,
+    "t_LmM": 0.63,
+    "LS": 0.7974,
+    "t_LS": 2.52,
+    "short_minus_mkt": -0.6589,
+    "t_SmM": -1.48,
+    "n_months": 36,
+    "avg_N_long": 673.8
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": -0.1247,
+    "t_LmM": -0.49,
+    "LS": 0.9716,
+    "t_LS": 2.41,
+    "short_minus_mkt": -1.0963,
+    "t_SmM": -2.05,
+    "n_months": 132,
+    "avg_N_long": 703.7
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.0184,
+    "t_LmM": 0.09,
+    "LS": 0.9116,
+    "t_LS": 2.98,
+    "short_minus_mkt": -0.8932,
+    "t_SmM": -2.2,
+    "n_months": 180,
+    "avg_N_long": 698.2
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": -0.007,
+    "t_LmM": -0.01,
+    "LS": 1.1367,
+    "t_LS": 1.71,
+    "short_minus_mkt": -1.1437,
+    "t_SmM": -1.19,
+    "n_months": 60,
+    "avg_N_long": 746.3
+   }
+  },
+  "OperProf": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.3345,
+    "t_LmM": 3.0,
+    "LS": 0.4612,
+    "t_LS": 3.07,
+    "short_minus_mkt": -0.1267,
+    "t_SmM": -0.67,
+    "n_months": 570,
+    "avg_N_long": 370.9
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.2306,
+    "t_LmM": 0.96,
+    "LS": 0.6673,
+    "t_LS": 2.34,
+    "short_minus_mkt": -0.4367,
+    "t_SmM": -0.99,
+    "n_months": 36,
+    "avg_N_long": 378.2
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": -0.199,
+    "t_LmM": -0.93,
+    "LS": 0.4117,
+    "t_LS": 1.42,
+    "short_minus_mkt": -0.6107,
+    "t_SmM": -1.68,
+    "n_months": 132,
+    "avg_N_long": 376.0
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": -0.0422,
+    "t_LmM": -0.25,
+    "LS": 0.4086,
+    "t_LS": 1.85,
+    "short_minus_mkt": -0.4508,
+    "t_SmM": -1.57,
+    "n_months": 180,
+    "avg_N_long": 378.1
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": -0.1255,
+    "t_LmM": -0.3,
+    "LS": 0.6621,
+    "t_LS": 1.26,
+    "short_minus_mkt": -0.7876,
+    "t_SmM": -1.19,
+    "n_months": 60,
+    "avg_N_long": 393.6
+   }
+  },
+  "OperProfRD": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.4945,
+    "t_LmM": 3.88,
+    "LS": 0.2251,
+    "t_LS": 1.63,
+    "short_minus_mkt": 0.2694,
+    "t_SmM": 1.23,
+    "n_months": 570,
+    "avg_N_long": 559.1
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": -0.0871,
+    "t_LmM": -0.37,
+    "LS": 0.2761,
+    "t_LS": 0.91,
+    "short_minus_mkt": -0.3631,
+    "t_SmM": -0.86,
+    "n_months": 36,
+    "avg_N_long": 598.4
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": -0.023,
+    "t_LmM": -0.12,
+    "LS": 0.8904,
+    "t_LS": 2.52,
+    "short_minus_mkt": -0.9134,
+    "t_SmM": -2.05,
+    "n_months": 132,
+    "avg_N_long": 477.7
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.0218,
+    "t_LmM": 0.15,
+    "LS": 0.6863,
+    "t_LS": 2.52,
+    "short_minus_mkt": -0.6645,
+    "t_SmM": -1.93,
+    "n_months": 180,
+    "avg_N_long": 508.9
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": -0.0717,
+    "t_LmM": -0.2,
+    "LS": 0.6377,
+    "t_LS": 0.95,
+    "short_minus_mkt": -0.7094,
+    "t_SmM": -0.84,
+    "n_months": 60,
+    "avg_N_long": 440.2
+   }
+  }
+ },
+ "QuintilesVW": {
+  "_n_signals_in_file": 179,
+  "_negative_control_bogus_signal_rows": 0,
+  "_requested_present": [
+   "CBOperProf",
+   "GP",
+   "OperProf",
+   "OperProfRD"
+  ],
+  "CBOperProf": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.1097,
+    "t_LmM": 1.91,
+    "LS": 0.3668,
+    "t_LS": 3.17,
+    "short_minus_mkt": -0.2571,
+    "t_SmM": -2.93,
+    "n_months": 570,
+    "avg_N_long": 602.3
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.0238,
+    "t_LmM": 0.15,
+    "LS": 0.0555,
+    "t_LS": 0.16,
+    "short_minus_mkt": -0.0317,
+    "t_SmM": -0.15,
+    "n_months": 36,
+    "avg_N_long": 637.6
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": 0.2709,
+    "t_LmM": 2.17,
+    "LS": 0.5704,
+    "t_LS": 1.73,
+    "short_minus_mkt": -0.2995,
+    "t_SmM": -1.18,
+    "n_months": 132,
+    "avg_N_long": 521.7
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.1936,
+    "t_LmM": 1.95,
+    "LS": 0.39,
+    "t_LS": 1.54,
+    "short_minus_mkt": -0.1965,
+    "t_SmM": -1.03,
+    "n_months": 180,
+    "avg_N_long": 553.2
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": 0.2987,
+    "t_LmM": 1.29,
+    "LS": 0.4579,
+    "t_LS": 0.73,
+    "short_minus_mkt": -0.1592,
+    "t_SmM": -0.33,
+    "n_months": 60,
+    "avg_N_long": 488.3
+   }
+  },
+  "GP": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.1926,
+    "t_LmM": 2.47,
+    "LS": 0.303,
+    "t_LS": 2.39,
+    "short_minus_mkt": -0.1104,
+    "t_SmM": -1.5,
+    "n_months": 570,
+    "avg_N_long": 703.6
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.0693,
+    "t_LmM": 0.37,
+    "LS": 0.4379,
+    "t_LS": 1.44,
+    "short_minus_mkt": -0.3686,
+    "t_SmM": -1.76,
+    "n_months": 36,
+    "avg_N_long": 673.7
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": 0.2453,
+    "t_LmM": 1.73,
+    "LS": 1.0242,
+    "t_LS": 2.65,
+    "short_minus_mkt": -0.7789,
+    "t_SmM": -2.32,
+    "n_months": 132,
+    "avg_N_long": 703.7
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.1739,
+    "t_LmM": 1.55,
+    "LS": 0.7934,
+    "t_LS": 2.71,
+    "short_minus_mkt": -0.6194,
+    "t_SmM": -2.45,
+    "n_months": 180,
+    "avg_N_long": 698.2
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": 0.3821,
+    "t_LmM": 1.49,
+    "LS": 1.4823,
+    "t_LS": 1.93,
+    "short_minus_mkt": -1.1002,
+    "t_SmM": -1.63,
+    "n_months": 60,
+    "avg_N_long": 746.3
+   }
+  },
+  "OperProf": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.1333,
+    "t_LmM": 2.11,
+    "LS": 0.2546,
+    "t_LS": 1.52,
+    "short_minus_mkt": -0.1214,
+    "t_SmM": -0.91,
+    "n_months": 570,
+    "avg_N_long": 370.8
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": -0.0012,
+    "t_LmM": -0.01,
+    "LS": 0.2576,
+    "t_LS": 0.56,
+    "short_minus_mkt": -0.2588,
+    "t_SmM": -0.79,
+    "n_months": 36,
+    "avg_N_long": 378.2
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": 0.1432,
+    "t_LmM": 1.38,
+    "LS": 0.4745,
+    "t_LS": 2.1,
+    "short_minus_mkt": -0.3314,
+    "t_SmM": -1.91,
+    "n_months": 132,
+    "avg_N_long": 376.0
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.0848,
+    "t_LmM": 1.0,
+    "LS": 0.2996,
+    "t_LS": 1.52,
+    "short_minus_mkt": -0.2148,
+    "t_SmM": -1.44,
+    "n_months": 180,
+    "avg_N_long": 378.1
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": 0.189,
+    "t_LmM": 1.02,
+    "LS": 0.4664,
+    "t_LS": 1.2,
+    "short_minus_mkt": -0.2773,
+    "t_SmM": -0.99,
+    "n_months": 60,
+    "avg_N_long": 393.6
+   }
+  },
+  "OperProfRD": {
+   "n_bins": 5,
+   "long_port": "05",
+   "short_port": "01",
+   "in_sample_1963_07_2010_12": {
+    "long_minus_mkt": 0.0628,
+    "t_LmM": 0.99,
+    "LS": 0.2622,
+    "t_LS": 1.81,
+    "short_minus_mkt": -0.1994,
+    "t_SmM": -1.7,
+    "n_months": 570,
+    "avg_N_long": 559.1
+   },
+   "post_sample_pre_pub_2011_2013": {
+    "long_minus_mkt": 0.0,
+    "t_LmM": 0.0,
+    "LS": -0.0305,
+    "t_LS": -0.07,
+    "short_minus_mkt": 0.0305,
+    "t_SmM": 0.09,
+    "n_months": 36,
+    "avg_N_long": 598.4
+   },
+   "post_publication_2014_2024": {
+    "long_minus_mkt": 0.3517,
+    "t_LmM": 2.67,
+    "LS": 0.9754,
+    "t_LS": 2.84,
+    "short_minus_mkt": -0.6238,
+    "t_SmM": -2.38,
+    "n_months": 132,
+    "avg_N_long": 477.7
+   },
+   "programme_window_2010_2024": {
+    "long_minus_mkt": 0.2378,
+    "t_LmM": 2.26,
+    "LS": 0.6333,
+    "t_LS": 2.29,
+    "short_minus_mkt": -0.3955,
+    "t_SmM": -1.89,
+    "n_months": 180,
+    "avg_N_long": 508.9
+   },
+   "last_five_2020_2024": {
+    "long_minus_mkt": 0.4319,
+    "t_LmM": 1.76,
+    "LS": 0.8349,
+    "t_LS": 1.28,
+    "short_minus_mkt": -0.403,
+    "t_SmM": -0.82,
+    "n_months": 60,
+    "avg_N_long": 440.2
+   }
+  }
+ }
+}

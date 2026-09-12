@@ -122,16 +122,66 @@ pre-registered out-of-sample test on a fixture it has never seen; the prop book
 also needs hurdle P (R11), all six. **An empty book with stated standards beats
 a populated one with borrowed ones.**
 
+### Two altitudes: candidate and component. Score BOTH, every time.
+
+**The book is built by layering, not by finding one strategy that clears the
+bar.** The prop account's geometry needs a book-level Sharpe of roughly 1.5–2;
+no single construction here has come within half of that, and none has to.
+Five components at net Sharpe 0.4–0.6 with pairwise correlation under 0.3 reach
+it. **A standalone failure of hurdle P is therefore not a verdict on the
+construction** — it is the answer to one of two questions.
+
+On 2026-09-12 three prop-track records (D463, D464 and their predecessor C1)
+were each written as "closed / not a candidate" on standalone bars without a
+component line. The shell-line figures that exposed it (net Sharpe 0.62 and 0.42
+at ρ 0.09, a 0.91 book) turned out to be at full-size cost in basis points; under
+the ledger's standard (dollars at micro size, $3 a round trip ≈ 2 bp) they are
+0.37 and −0.01 and no book (D466). **Both errors have one shape: a component
+number computed outside the runner, under a cost line other than the one the
+account pays.** The principal caught the first; the pre-registered standard
+caught the second. Do not repeat either:
+
+1. **Every construction tested for either book gets a component line in the
+   RESULT, whether or not it clears the standalone bar:** net Sharpe on the
+   in-sample window at the instrument's minimum tradable size and the cost that
+   size pays (in dollars, computed by the runner), hit rate, skew, gross beside
+   net, and its correlation with every component already in the ledger. The line
+   is not optional and "not a candidate" without it is an incomplete record.
+2. **The components ledger is `docs/COMPONENTS_PROP.md`** (append-only, like the
+   books): the admission standard for a component is pre-registered there, every
+   scored construction is entered with its numbers, and the assembled book is
+   the object hurdle P is tested on. **A component is admitted to the ledger on
+   its standard; only the assembled book is admitted to `BOOK_PROP.md`.**
+3. **Choosing components after seeing their Sharpes is selection.** The assembled
+   book is confirmed only on a slice no component has seen (for the futures
+   fixtures, 2024-01 onward), and the ledger records the order in which
+   components were added.
+4. **Two constructions that share an instrument but not a clock diversify**
+   (overnight vs. the last half-hour: ρ = 0.09 on ES). Two that share a clock
+   and a signal do not (a gated subset of C1 is C1). Say which before adding.
+
 ## Files
+
+**What data exists: [`docs/data-available.md`](docs/data-available.md).** Every fixture, its
+span, its symbol count, and the thing that bites a study that reads it unchecked. Read it
+before fetching anything — the answer is often already on disk.
 
 | | tracked | contract |
 |---|---|---|
 | `working/` | yes | in use; losing it costs work now |
+| `data/raw/` | no | **gitignored CACHE, not disposable** — re-fetchable, but losing it costs money or hours |
 | `temp/` | no | **deletable any time, unasked, unread** |
 
 One-way: `working/` → `temp/` → gone. Neither replaces `scripts/`, `data/`,
 `docs/decisions/` — **a file a record quotes is evidence: it belongs in
 `data/`.**
+
+**`temp/` is not a cache, and the distinction is not cosmetic.** 111 GB of CME futures was
+written to `temp/databento/` on 2026-09-11 and moved to `data/raw/databento/` the next day,
+because `temp/README.md` promises *"if deleting a file would cost something, it does not
+belong here"* — and that data is free to re-fetch only until ~2026-10-11, then $7,719.
+**A raw cache goes in `data/raw/` (D191: cache the raw, commit the derived). `temp/` is for
+things you would not mind losing mid-command.**
 
 ## Habits
 

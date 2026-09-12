@@ -1,0 +1,18 @@
+zip                       subs   numlines     kept  CTRLtag  Assets@q1    sec
+D2_fsds_2021q4.zip       7,556  3,389,370   37,097        0          0    5.1
+D2_fsds_2022q1.zip       7,237  3,264,632   20,488        0          0    4.9
+D2_fsds_2022q2.zip       8,509  3,047,158   38,845        0          0    4.7
+D2_fsds_2022q3.zip       7,474  3,229,151   37,597        0          0    4.7
+D2_fsds_2022q4.zip       7,280  3,543,392   37,475        0          0    5.3
+D2_fsds_2023q1.zip       6,754  3,428,670   19,439        0          0    5.1
+D2_fsds_2023q2.zip       8,039  3,393,990   37,283        0          0    5.1
+D2_fsds_2023q3.zip       7,067  3,572,434   35,475        0          0    5.3
+D2_fsds_2023q4.zip       6,882  3,699,124   35,427        0          0    4.7
+D2_fsds_2024q1.zip       6,028  3,428,694   16,993        0          0    4.2
+D2_fsds_2024q2.zip       7,675  3,426,170   35,285        0          0    4.2
+D2_fsds_2024q3.zip       6,699  3,521,878   33,602        0          0    4.3
+D2_fsds_2024q4.zip       6,491  3,705,078   33,549        0          0    4.5
+
+TOTAL kept rows: 418,555   wall 10.0s  (sum item time 62s)
+NEGATIVE CONTROL 1 -- impossible tag rows: 0  <-- MUST BE 0
+NEGATIVE CONTROL 2 -- `Assets` with qtrs=1: 0  <-- must be ~0; Assets is an INSTANT, not a flow

@@ -1,0 +1,17 @@
+quarters: ['2021q4', '2022q1', '2022q2', '2022q3', '2022q4', '2023q1', '2023q2', '2023q3', '2023q4', '2024q1', '2024q2', '2024q3', '2024q4']
+2021q4: HTTP 200 ctype=application/octet-stream bytes=102,642,081 magic=b'PK\x03\x04' zip=True sha1=45d1b4bc71f6 35.1s
+2022q1: HTTP 200 ctype=application/octet-stream bytes=103,669,919 magic=b'PK\x03\x04' zip=True sha1=d3ab3eb33c2e 34.9s
+2022q2: HTTP 200 ctype=application/octet-stream bytes=97,089,251 magic=b'PK\x03\x04' zip=True sha1=8a533f2cd69f 32.8s
+2022q3: HTTP 200 ctype=application/octet-stream bytes=97,589,396 magic=b'PK\x03\x04' zip=True sha1=a5ed0571392b 32.9s
+2022q4: HTTP 200 ctype=application/octet-stream bytes=111,091,525 magic=b'PK\x03\x04' zip=True sha1=462ff11230db 39.5s
+2023q1: HTTP 200 ctype=application/octet-stream bytes=113,974,946 magic=b'PK\x03\x04' zip=True sha1=9b1f5c7058e9 38.7s
+2023q2: HTTP 200 ctype=application/octet-stream bytes=116,914,392 magic=b'PK\x03\x04' zip=True sha1=8eb2ca785b39 40.4s
+2023q3: HTTP 200 ctype=application/octet-stream bytes=117,776,944 magic=b'PK\x03\x04' zip=True sha1=fdcbd665150c 45.0s
+2023q4: HTTP 200 ctype=application/octet-stream bytes=120,272,357 magic=b'PK\x03\x04' zip=True sha1=6a1f97b85222 45.2s
+2024q1: HTTP 200 ctype=application/octet-stream bytes=124,336,804 magic=b'PK\x03\x04' zip=True sha1=30fbe30c872c 45.5s
+2024q2: HTTP 200 ctype=application/octet-stream bytes=119,119,954 magic=b'PK\x03\x04' zip=True sha1=e0712a13e581 42.7s
+2024q3: HTTP 200 ctype=application/octet-stream bytes=118,280,418 magic=b'PK\x03\x04' zip=True sha1=5a2e12cb8707 39.6s
+2024q4: HTTP 200 ctype=application/octet-stream bytes=122,932,548 magic=b'PK\x03\x04' zip=True sha1=1475b14348b5 45.5s
+CONTROL 2099q1: HTTP 404 (expected non-200) OK
+CONTROL 2021q5: HTTP 404 (expected non-200) OK
+TOTAL BYTES 1,465,690,535

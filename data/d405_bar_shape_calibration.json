@@ -1,0 +1,15 @@
+{
+ "sessions": 122892,
+ "measured": {
+  "q_low": 0.24820319314356465,
+  "q_body": 0.5214790117398734,
+  "q_high": 0.23031779511655948
+ },
+ "uniform_null": {
+  "q_low": 0.2800376638285887,
+  "q_body": 0.4712744265456812,
+  "q_high": 0.2486879096257372
+ },
+ "source": "data\\fixtures\\etf_intraday_15m_panel.csv.gz",
+ "note": "daily bar derived from the 15m bars themselves; RTH only; no forward return"
+}

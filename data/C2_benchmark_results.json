@@ -1,0 +1,482 @@
+[
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.7011507936507937,
+  "t": 4.349628591366998,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.11935002611088319,
+  "t": 3.3054558956458933,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.1598593307469646,
+  "t": 4.881984974182576,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.06506076442636996,
+  "t": 3.0176086863526144,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "FF5",
+  "alpha": 0.06842799813349897,
+  "t": 3.1434674017747417,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.686931216931217,
+  "t": 4.222749226323875,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.10664356537878972,
+  "t": 2.4325681561031436,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.15640670990206623,
+  "t": 3.8297419418575585,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.052428789651252375,
+  "t": 1.7054572893912983,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "FF5",
+  "alpha": 0.0482992972643119,
+  "t": 1.5557862523818058,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.6926587301587301,
+  "t": 4.1188357561925875,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.11339605737829161,
+  "t": 1.8243045804245523,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.15297140155671654,
+  "t": 2.4991293512546355,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.023604289368347953,
+  "t": 0.45837117718726095,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "FF5",
+  "alpha": 0.016231068959713137,
+  "t": 0.31213875008756886,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.8563492063492063,
+  "t": 4.106832233227792,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.1662798265027683,
+  "t": 1.7632374233036825,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.03852001261104792,
+  "t": 0.7444175703922702,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": -0.07265935331088189,
+  "t": -1.6815449650745322,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "FF5",
+  "alpha": -0.06441734495058493,
+  "t": -1.4771597387377742,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.22408730158730158,
+  "t": 2.3727946855540862,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "CAPM",
+  "alpha": 0.3183137169683304,
+  "t": 3.4664532021394856,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3",
+  "alpha": 0.39144488420192447,
+  "t": 4.691994207151475,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.10670278264377932,
+  "t": 2.827237741028125,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "FF5",
+  "alpha": 0.0884232090164736,
+  "t": 2.3371990201284327,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.07906084656084654,
+  "t": 0.7423621679500686,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "CAPM",
+  "alpha": 0.1048913555909784,
+  "t": 0.9775420157701459,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3",
+  "alpha": 0.06034685618619271,
+  "t": 0.6176551191565929,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3+RMW",
+  "alpha": -0.20429789028387654,
+  "t": -2.937440218426167,
+  "n": 756
+ },
+ {
+  "window": "full 1963-07..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "FF5",
+  "alpha": -0.20229227744326625,
+  "t": -2.878523911658621,
+  "n": 756
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 1.1790909090909092,
+  "t": 3.9158654609376518,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.12956128561779345,
+  "t": 1.9696444601723548,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.07722334312011088,
+  "t": 1.5058140835645573,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.05074484607190294,
+  "t": 1.2916375559232443,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30 OP long leg",
+  "benchmark": "FF5",
+  "alpha": 0.04795241412507979,
+  "t": 1.2188932495162317,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 1.1344949494949497,
+  "t": 3.7652641123708235,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.09599946776732526,
+  "t": 1.2005534830255775,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.04473555558385771,
+  "t": 0.6545288800085994,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.01613393529548934,
+  "t": 0.2759942668474931,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi20 OP long leg",
+  "benchmark": "FF5",
+  "alpha": 0.00587830814249944,
+  "t": 0.10212860890478503,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 1.2416161616161616,
+  "t": 3.9933832069542623,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": 0.19905824575846132,
+  "t": 1.8186808179081284,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "FF3",
+  "alpha": 0.1439525494500109,
+  "t": 1.3948790298408633,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.11399485425495788,
+  "t": 1.1807135603909316,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi10 OP long leg",
+  "benchmark": "FF5",
+  "alpha": 0.09896313083771095,
+  "t": 1.0365301221105303,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.9712626262626263,
+  "t": 2.4592860952826054,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "CAPM",
+  "alpha": -0.32237393978647333,
+  "t": -1.9962049796436876,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "FF3",
+  "alpha": -0.13353340600875074,
+  "t": -1.595701401602483,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "FF3+RMW",
+  "alpha": -0.17057051962971287,
+  "t": -2.4385017272980862,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30 OP long leg",
+  "benchmark": "FF5",
+  "alpha": -0.16935468158702652,
+  "t": -2.410439745818936,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.1935858585858586,
+  "t": 1.0349081679932615,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "CAPM",
+  "alpha": 0.3986119114813249,
+  "t": 2.164908565683368,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3",
+  "alpha": 0.24520497684536294,
+  "t": 1.5914508340196418,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.13818901689466886,
+  "t": 1.8100375183138027,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "VW Hi30-Lo30 SPREAD",
+  "benchmark": "FF5",
+  "alpha": 0.12032050866040253,
+  "t": 1.626883421771127,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "cash (no benchmark)",
+  "alpha": 0.21545454545454548,
+  "t": 0.9772303975649103,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "CAPM",
+  "alpha": 0.2731282763592882,
+  "t": 1.2008572839962788,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3",
+  "alpha": 0.14206056106081605,
+  "t": 0.7213672130738087,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "FF3+RMW",
+  "alpha": 0.03353469423206541,
+  "t": 0.23430520696673934,
+  "n": 198
+ },
+ {
+  "window": "prog 2010-01..2026-06",
+  "leg": "EW Hi30-Lo30 SPREAD",
+  "benchmark": "FF5",
+  "alpha": 0.038086355956052635,
+  "t": 0.265054113548123,
+  "n": 198
+ }
+]

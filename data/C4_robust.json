@@ -1,0 +1,314 @@
+{
+ "GP": {
+  "post_pub_long_minus_mkt": {
+   "mean": 0.1787,
+   "t": 1.25,
+   "n": 132
+  },
+  "leave_one_year_out_long_minus_mkt": {
+   "2014": {
+    "mean_excl": 0.177,
+    "t_excl": 1.15
+   },
+   "2015": {
+    "mean_excl": 0.1508,
+    "t_excl": 0.98
+   },
+   "2016": {
+    "mean_excl": 0.2658,
+    "t_excl": 1.75
+   },
+   "2017": {
+    "mean_excl": 0.1608,
+    "t_excl": 1.04
+   },
+   "2018": {
+    "mean_excl": 0.1445,
+    "t_excl": 0.97
+   },
+   "2019": {
+    "mean_excl": 0.1855,
+    "t_excl": 1.19
+   },
+   "2020": {
+    "mean_excl": 0.1231,
+    "t_excl": 0.86
+   },
+   "2021": {
+    "mean_excl": 0.1982,
+    "t_excl": 1.35
+   },
+   "2022": {
+    "mean_excl": 0.3027,
+    "t_excl": 2.08
+   },
+   "2023": {
+    "mean_excl": 0.0721,
+    "t_excl": 0.5
+   },
+   "2024": {
+    "mean_excl": 0.1855,
+    "t_excl": 1.23
+   }
+  },
+  "worst_LOO_year": "2023",
+  "long_minus_mkt_excl_2020Q1": {
+   "mean": 0.1071,
+   "t": 0.77,
+   "n": 129
+  },
+  "LS_months_to_half_of_post_pub_sum": {
+   "k": 8,
+   "of_n": 132,
+   "pct_of_months": 6.1,
+   "sum_pct_mo": 122.1
+  },
+  "LmM_months_to_half": {
+   "k": 3,
+   "of_n": 132,
+   "pct_of_months": 2.3,
+   "sum_pct_mo": 23.6
+  },
+  "LmM_trims": {
+   "raw_mean": 0.1787,
+   "ex_top_1": 0.141,
+   "ex_bottom_1": 0.2069,
+   "trimmed_both": 0.1691,
+   "median": 0.1449
+  }
+ },
+ "CBOperProf": {
+  "post_pub_long_minus_mkt": {
+   "mean": 0.4498,
+   "t": 2.7,
+   "n": 132
+  },
+  "leave_one_year_out_long_minus_mkt": {
+   "2014": {
+    "mean_excl": 0.446,
+    "t_excl": 2.47
+   },
+   "2015": {
+    "mean_excl": 0.4407,
+    "t_excl": 2.42
+   },
+   "2016": {
+    "mean_excl": 0.5121,
+    "t_excl": 2.88
+   },
+   "2017": {
+    "mean_excl": 0.4352,
+    "t_excl": 2.44
+   },
+   "2018": {
+    "mean_excl": 0.4479,
+    "t_excl": 2.56
+   },
+   "2019": {
+    "mean_excl": 0.4704,
+    "t_excl": 2.61
+   },
+   "2020": {
+    "mean_excl": 0.4191,
+    "t_excl": 2.49
+   },
+   "2021": {
+    "mean_excl": 0.4495,
+    "t_excl": 2.6
+   },
+   "2022": {
+    "mean_excl": 0.5803,
+    "t_excl": 3.33
+   },
+   "2023": {
+    "mean_excl": 0.3346,
+    "t_excl": 2.01
+   },
+   "2024": {
+    "mean_excl": 0.4121,
+    "t_excl": 2.47
+   }
+  },
+  "worst_LOO_year": "2023",
+  "long_minus_mkt_excl_2020Q1": {
+   "mean": 0.3775,
+   "t": 2.31,
+   "n": 129
+  },
+  "LS_months_to_half_of_post_pub_sum": {
+   "k": 4,
+   "of_n": 132,
+   "pct_of_months": 3.0,
+   "sum_pct_mo": 87.9
+  },
+  "LmM_months_to_half": {
+   "k": 6,
+   "of_n": 132,
+   "pct_of_months": 4.5,
+   "sum_pct_mo": 59.4
+  },
+  "LmM_trims": {
+   "raw_mean": 0.4498,
+   "ex_top_1": 0.4012,
+   "ex_bottom_1": 0.4813,
+   "trimmed_both": 0.4326,
+   "median": 0.3615
+  }
+ },
+ "OperProf": {
+  "post_pub_long_minus_mkt": {
+   "mean": -0.1771,
+   "t": -0.87,
+   "n": 132
+  },
+  "leave_one_year_out_long_minus_mkt": {
+   "2014": {
+    "mean_excl": -0.1567,
+    "t_excl": -0.71
+   },
+   "2015": {
+    "mean_excl": -0.1447,
+    "t_excl": -0.66
+   },
+   "2016": {
+    "mean_excl": -0.2237,
+    "t_excl": -1.03
+   },
+   "2017": {
+    "mean_excl": -0.1875,
+    "t_excl": -0.85
+   },
+   "2018": {
+    "mean_excl": -0.1281,
+    "t_excl": -0.59
+   },
+   "2019": {
+    "mean_excl": -0.1924,
+    "t_excl": -0.89
+   },
+   "2020": {
+    "mean_excl": -0.191,
+    "t_excl": -1.06
+   },
+   "2021": {
+    "mean_excl": -0.2083,
+    "t_excl": -0.98
+   },
+   "2022": {
+    "mean_excl": -0.264,
+    "t_excl": -1.22
+   },
+   "2023": {
+    "mean_excl": -0.1812,
+    "t_excl": -0.88
+   },
+   "2024": {
+    "mean_excl": -0.0705,
+    "t_excl": -0.34
+   }
+  },
+  "worst_LOO_year": "2022",
+  "long_minus_mkt_excl_2020Q1": {
+   "mean": -0.1226,
+   "t": -0.68,
+   "n": 129
+  },
+  "LS_months_to_half_of_post_pub_sum": {
+   "k": 3,
+   "of_n": 132,
+   "pct_of_months": 2.3,
+   "sum_pct_mo": 39.9
+  },
+  "LmM_months_to_half": {
+   "k": 1,
+   "of_n": 132,
+   "pct_of_months": 0.8,
+   "sum_pct_mo": -23.4
+  },
+  "LmM_trims": {
+   "raw_mean": -0.1771,
+   "ex_top_1": -0.2296,
+   "ex_bottom_1": -0.0896,
+   "trimmed_both": -0.1418,
+   "median": -0.1665
+  }
+ },
+ "OperProfRD": {
+  "post_pub_long_minus_mkt": {
+   "mean": 0.4842,
+   "t": 2.87,
+   "n": 132
+  },
+  "leave_one_year_out_long_minus_mkt": {
+   "2014": {
+    "mean_excl": 0.4608,
+    "t_excl": 2.52
+   },
+   "2015": {
+    "mean_excl": 0.505,
+    "t_excl": 2.74
+   },
+   "2016": {
+    "mean_excl": 0.5616,
+    "t_excl": 3.18
+   },
+   "2017": {
+    "mean_excl": 0.4709,
+    "t_excl": 2.62
+   },
+   "2018": {
+    "mean_excl": 0.495,
+    "t_excl": 2.76
+   },
+   "2019": {
+    "mean_excl": 0.488,
+    "t_excl": 2.67
+   },
+   "2020": {
+    "mean_excl": 0.4453,
+    "t_excl": 2.61
+   },
+   "2021": {
+    "mean_excl": 0.4802,
+    "t_excl": 2.75
+   },
+   "2022": {
+    "mean_excl": 0.5997,
+    "t_excl": 3.35
+   },
+   "2023": {
+    "mean_excl": 0.381,
+    "t_excl": 2.25
+   },
+   "2024": {
+    "mean_excl": 0.4385,
+    "t_excl": 2.61
+   }
+  },
+  "worst_LOO_year": "2023",
+  "long_minus_mkt_excl_2020Q1": {
+   "mean": 0.421,
+   "t": 2.53,
+   "n": 129
+  },
+  "LS_months_to_half_of_post_pub_sum": {
+   "k": 7,
+   "of_n": 132,
+   "pct_of_months": 5.3,
+   "sum_pct_mo": 147.3
+  },
+  "LmM_months_to_half": {
+   "k": 6,
+   "of_n": 132,
+   "pct_of_months": 4.5,
+   "sum_pct_mo": 63.9
+  },
+  "LmM_trims": {
+   "raw_mean": 0.4842,
+   "ex_top_1": 0.432,
+   "ex_bottom_1": 0.5196,
+   "trimmed_both": 0.4673,
+   "median": 0.4823
+  }
+ }
+}

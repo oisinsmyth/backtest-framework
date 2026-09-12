@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitionaifl.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>404Handler</title>
+    <script type="text/javascript">
+        location.href = 'http://apps.rotman.utoronto.ca/404handler/?OriginalUrl=' + escape(GetOriginalUrl());
+		
+        function GetOriginalUrl() {
+            var t = getParameterByName('aspxerrorpath');
+			var tempLocation = location.href;
+			var startIndex = tempLocation.indexOf('?404');
+			if (startIndex > -1)
+			{
+				//This part deals with IIS 6.0, where orginal url is concatenated at the end of 404Handler with...
+				//http://fmgmt-03.rotman.utoronto.ca/404Handler.htm?404;http://fmgmt-03.rotman.utoronto.ca/khalid.ghaffar/mypage.asp 
+				startIndex +=5; // get the string after ?404;
+				var lengthOf = tempLocation.length;
+				tempLocation = tempLocation.substring(startIndex);//, lengthOf - startIndex);
+			}
+		    return t.length == 0 ?  tempLocation : location.protocol + '//' + location.host + t;
+        }
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(window.location.search);
+            if (results == null) {
+                return "";
+            }
+            else {
+                return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+        }
+    </script>
+</head>
+<body>
+    This is the error page.
+</body>
+</html>

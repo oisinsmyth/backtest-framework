@@ -1,0 +1,27 @@
+GP aL        OV    0.07  intraday    1.77  total    1.84  intraday/total 0.96
+GP aS        OV    0.32  intraday   -0.89  total   -0.57  intraday/total 1.56
+NI aL        OV    0.09  intraday    0.68  total    0.77  intraday/total 0.88
+NI aS        OV    1.49  intraday   -2.59  total   -1.10  intraday/total 2.35
+IV aL        OV   -1.27  intraday    2.47  total    1.20  intraday/total 2.06
+IV aS        OV    3.79  intraday   -6.41  total   -2.62  intraday/total 2.45
+BM ls a10    OV   -2.69  intraday    2.69  total    0.00  intraday/total n/a
+GP ls a10    OV   -0.09  intraday    2.30  total    2.21  intraday/total 1.04
+NI ls a10    OV   -1.31  intraday    2.92  total    1.61  intraday/total 1.81
+AC ls a10    OV    0.58  intraday    0.23  total    0.81  intraday/total 0.28
+MOM ls a10   OV    6.36  intraday   -1.73  total    4.63  intraday/total -0.37
+SIZE ls a10  OV   -1.10  intraday    2.48  total    1.38  intraday/total 1.80
+GP ls a5t    OV   -1.69  intraday    3.80  total    2.11  intraday/total 1.80
+BM ls a5t    OV   -2.10  intraday    2.76  total    0.66  intraday/total 4.18
+
+GP long-short from legs ($5, midquote): OV -0.25 intraday 2.66
+NI long-short from legs ($5, midquote): OV -1.40 intraday 3.27
+IV long-short from legs ($5, midquote): OV -5.06 intraday 8.88
+
+GP long-leg intraday alpha 1.77 bp/day; 21-day month = 37.2 bp
+daily open/close round trip for 21 days = 1420 bp
+shortfall factor = 38.2x
+one round trip vs one day of intraday alpha = 38.2x
+
+LPS ROE: overnight -0.95%/mo, intraday +1.42%/mo, close-to-close 0.47%
+intraday as share of close-to-close = 302%
+LPS ROE intraday 142 bp/mo vs 21 daily round trips 1420 bp -> short by 10.0x

@@ -1,0 +1,29 @@
+ 
+ Kenneth R. French - Detail for Portfolios Formed on Earnings/Price 
+ Detail 
+ for Portfolios Formed on Operating Profitability 
+ Daily Returns: 
+ July 1, 1963 - July 31, 2026 
+ Monthly Returns: 
+ July 1963 - July 2026 
+ Annual Returns: 
+ 1964 - 2025 
+ Portfolios: 
+ Operating 
+ Profitability 
+ bottom 30%, middle 40%, top 30%; quintiles; deciles. 
+ Construction: 
+ The portfolios are formed on profitability (OP) at the end of each June using 
+ NYSE breakpoints. OP for June of year t is annual revenues minus cost of goods 
+ sold, interest expense, and selling, general, and administrative expenses 
+ divided by book equity for the last fiscal year end in t-1. 
+ Please be aware that some of the value-weight averages of operating profitability for deciles 1 and 10 are extreme. These are driven by extraordinary values of OP for individual firms. We have spot checked the accounting data that produce the extraordinary values and all the numbers we examined accurately reflect the data in the firm's accounting statements. 
+ Stocks: 
+ All NYSE, AMEX, and NASDAQ stocks for which we have market equity data for June 
+ of t, (positive) book equity data for t-1, non-missing revenues data for t-1, 
+ and 
+ non-missing data for at least one of the following: cost of goods sold, selling, general and administrative 
+ expenses, 
+ or interest expense for t-1. 
+ Copyright 
+ Eugene F. Fama and Kenneth R. French 

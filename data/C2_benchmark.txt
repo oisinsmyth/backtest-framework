@@ -1,0 +1,97 @@
+======================================================================================
+WINDOW full 1963-07..2026-06
+======================================================================================
+leg                    benchmark            alpha%/mo        t       n
+VW Hi30 OP long leg    cash (no benchmark)     +0.701    +4.35     756
+VW Hi30 OP long leg    CAPM                    +0.119    +3.31     756
+VW Hi30 OP long leg    FF3                     +0.160    +4.88     756
+VW Hi30 OP long leg    FF3+RMW                 +0.065    +3.02     756
+VW Hi30 OP long leg    FF5                     +0.068    +3.14     756
+
+VW Hi20 OP long leg    cash (no benchmark)     +0.687    +4.22     756
+VW Hi20 OP long leg    CAPM                    +0.107    +2.43     756
+VW Hi20 OP long leg    FF3                     +0.156    +3.83     756
+VW Hi20 OP long leg    FF3+RMW                 +0.052    +1.71     756
+VW Hi20 OP long leg    FF5                     +0.048    +1.56     756
+
+VW Hi10 OP long leg    cash (no benchmark)     +0.693    +4.12     756
+VW Hi10 OP long leg    CAPM                    +0.113    +1.82     756
+VW Hi10 OP long leg    FF3                     +0.153    +2.50     756
+VW Hi10 OP long leg    FF3+RMW                 +0.024    +0.46     756
+VW Hi10 OP long leg    FF5                     +0.016    +0.31     756
+
+EW Hi30 OP long leg    cash (no benchmark)     +0.856    +4.11     756
+EW Hi30 OP long leg    CAPM                    +0.166    +1.76     756
+EW Hi30 OP long leg    FF3                     +0.039    +0.74     756
+EW Hi30 OP long leg    FF3+RMW                 -0.073    -1.68     756
+EW Hi30 OP long leg    FF5                     -0.064    -1.48     756
+
+VW Hi30-Lo30 SPREAD    cash (no benchmark)     +0.224    +2.37     756
+VW Hi30-Lo30 SPREAD    CAPM                    +0.318    +3.47     756
+VW Hi30-Lo30 SPREAD    FF3                     +0.391    +4.69     756
+VW Hi30-Lo30 SPREAD    FF3+RMW                 +0.107    +2.83     756
+VW Hi30-Lo30 SPREAD    FF5                     +0.088    +2.34     756
+
+EW Hi30-Lo30 SPREAD    cash (no benchmark)     +0.079    +0.74     756
+EW Hi30-Lo30 SPREAD    CAPM                    +0.105    +0.98     756
+EW Hi30-Lo30 SPREAD    FF3                     +0.060    +0.62     756
+EW Hi30-Lo30 SPREAD    FF3+RMW                 -0.204    -2.94     756
+EW Hi30-Lo30 SPREAD    FF5                     -0.202    -2.88     756
+
+======================================================================================
+WINDOW prog 2010-01..2026-06
+======================================================================================
+leg                    benchmark            alpha%/mo        t       n
+VW Hi30 OP long leg    cash (no benchmark)     +1.179    +3.92     198
+VW Hi30 OP long leg    CAPM                    +0.130    +1.97     198
+VW Hi30 OP long leg    FF3                     +0.077    +1.51     198
+VW Hi30 OP long leg    FF3+RMW                 +0.051    +1.29     198
+VW Hi30 OP long leg    FF5                     +0.048    +1.22     198
+
+VW Hi20 OP long leg    cash (no benchmark)     +1.134    +3.77     198
+VW Hi20 OP long leg    CAPM                    +0.096    +1.20     198
+VW Hi20 OP long leg    FF3                     +0.045    +0.65     198
+VW Hi20 OP long leg    FF3+RMW                 +0.016    +0.28     198
+VW Hi20 OP long leg    FF5                     +0.006    +0.10     198
+
+VW Hi10 OP long leg    cash (no benchmark)     +1.242    +3.99     198
+VW Hi10 OP long leg    CAPM                    +0.199    +1.82     198
+VW Hi10 OP long leg    FF3                     +0.144    +1.39     198
+VW Hi10 OP long leg    FF3+RMW                 +0.114    +1.18     198
+VW Hi10 OP long leg    FF5                     +0.099    +1.04     198
+
+EW Hi30 OP long leg    cash (no benchmark)     +0.971    +2.46     198
+EW Hi30 OP long leg    CAPM                    -0.322    -2.00     198
+EW Hi30 OP long leg    FF3                     -0.134    -1.60     198
+EW Hi30 OP long leg    FF3+RMW                 -0.171    -2.44     198
+EW Hi30 OP long leg    FF5                     -0.169    -2.41     198
+
+VW Hi30-Lo30 SPREAD    cash (no benchmark)     +0.194    +1.03     198
+VW Hi30-Lo30 SPREAD    CAPM                    +0.399    +2.16     198
+VW Hi30-Lo30 SPREAD    FF3                     +0.245    +1.59     198
+VW Hi30-Lo30 SPREAD    FF3+RMW                 +0.138    +1.81     198
+VW Hi30-Lo30 SPREAD    FF5                     +0.120    +1.63     198
+
+EW Hi30-Lo30 SPREAD    cash (no benchmark)     +0.215    +0.98     198
+EW Hi30-Lo30 SPREAD    CAPM                    +0.273    +1.20     198
+EW Hi30-Lo30 SPREAD    FF3                     +0.142    +0.72     198
+EW Hi30-Lo30 SPREAD    FF3+RMW                 +0.034    +0.23     198
+EW Hi30-Lo30 SPREAD    FF5                     +0.038    +0.27     198
+
+======================================================================================
+BENCHMARK-INDUCED RANGE, same leg same window
+======================================================================================
+full 1963-07..2026-06  VW Hi30 OP long leg    alpha [+0.065, +0.701] (x10.78)  t [+3.02, +4.88]  sign flips no  crosses 1.96 no
+full 1963-07..2026-06  VW Hi20 OP long leg    alpha [+0.048, +0.687] (x14.22)  t [+1.56, +4.22]  sign flips no  crosses 1.96 YES
+full 1963-07..2026-06  VW Hi10 OP long leg    alpha [+0.016, +0.693] (x42.67)  t [+0.31, +4.12]  sign flips no  crosses 1.96 YES
+full 1963-07..2026-06  EW Hi30 OP long leg    alpha [-0.073, +0.856] (xnan)  t [-1.68, +4.11]  sign flips YES  crosses 1.96 YES
+full 1963-07..2026-06  VW Hi30-Lo30 SPREAD    alpha [+0.088, +0.391] (x4.43)  t [+2.34, +4.69]  sign flips no  crosses 1.96 no
+full 1963-07..2026-06  EW Hi30-Lo30 SPREAD    alpha [-0.204, +0.105] (xnan)  t [-2.94, +0.98]  sign flips YES  crosses 1.96 no
+prog 2010-01..2026-06  VW Hi30 OP long leg    alpha [+0.048, +1.179] (x24.59)  t [+1.22, +3.92]  sign flips no  crosses 1.96 YES
+prog 2010-01..2026-06  VW Hi20 OP long leg    alpha [+0.006, +1.134] (x193.00)  t [+0.10, +3.77]  sign flips no  crosses 1.96 YES
+prog 2010-01..2026-06  VW Hi10 OP long leg    alpha [+0.099, +1.242] (x12.55)  t [+1.04, +3.99]  sign flips no  crosses 1.96 YES
+prog 2010-01..2026-06  EW Hi30 OP long leg    alpha [-0.322, +0.971] (xnan)  t [-2.44, +2.46]  sign flips YES  crosses 1.96 YES
+prog 2010-01..2026-06  VW Hi30-Lo30 SPREAD    alpha [+0.120, +0.399] (x3.31)  t [+1.03, +2.16]  sign flips no  crosses 1.96 YES
+prog 2010-01..2026-06  EW Hi30-Lo30 SPREAD    alpha [+0.034, +0.273] (x8.14)  t [+0.23, +1.20]  sign flips no  crosses 1.96 no
+
+wrote C2_benchmark_results.json

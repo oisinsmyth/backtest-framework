@@ -1,0 +1,521 @@
+{
+ "generated_utc": "2026-09-10T22:26:56+00:00",
+ "purpose": "acquisition planning: which CME names add independent information. Not a study; opens and closes nothing.",
+ "fixture": "etf_wide_daily_raw.csv.gz",
+ "window": [
+  "2010-06-09",
+  "2026-08-26"
+ ],
+ "n_days": 4078,
+ "proxy_map": {
+  "ES": {
+   "proxy": "SPY",
+   "family": "equity index"
+  },
+  "NQ": {
+   "proxy": "QQQ",
+   "family": "equity index"
+  },
+  "RTY": {
+   "proxy": "IWM",
+   "family": "equity index"
+  },
+  "YM": {
+   "proxy": "DIA",
+   "family": "equity index"
+  },
+  "EMD": {
+   "proxy": "MDY",
+   "family": "equity index"
+  },
+  "MES": {
+   "proxy": null,
+   "family": "micro"
+  },
+  "MNQ": {
+   "proxy": null,
+   "family": "micro"
+  },
+  "M2K": {
+   "proxy": null,
+   "family": "micro"
+  },
+  "MYM": {
+   "proxy": null,
+   "family": "micro"
+  },
+  "CL": {
+   "proxy": "USO",
+   "family": "energy"
+  },
+  "NG": {
+   "proxy": "UNG",
+   "family": "energy"
+  },
+  "RB": {
+   "proxy": "UGA",
+   "family": "energy"
+  },
+  "HO": {
+   "proxy": null,
+   "family": "energy"
+  },
+  "GC": {
+   "proxy": "GLD",
+   "family": "metals"
+  },
+  "SI": {
+   "proxy": "SLV",
+   "family": "metals"
+  },
+  "PL": {
+   "proxy": "PPLT",
+   "family": "metals"
+  },
+  "PA": {
+   "proxy": "PALL",
+   "family": "metals"
+  },
+  "HG": {
+   "proxy": "DBB",
+   "family": "metals"
+  },
+  "ZT": {
+   "proxy": "SHY",
+   "family": "rates"
+  },
+  "ZF": {
+   "proxy": "IEI",
+   "family": "rates"
+  },
+  "ZN": {
+   "proxy": "IEF",
+   "family": "rates"
+  },
+  "ZB": {
+   "proxy": "TLT",
+   "family": "rates"
+  },
+  "UB": {
+   "proxy": "EDV",
+   "family": "rates"
+  },
+  "6E": {
+   "proxy": "FXE",
+   "family": "FX"
+  },
+  "6J": {
+   "proxy": "FXY",
+   "family": "FX"
+  },
+  "6B": {
+   "proxy": "FXB",
+   "family": "FX"
+  },
+  "6A": {
+   "proxy": "FXA",
+   "family": "FX"
+  },
+  "6C": {
+   "proxy": "FXC",
+   "family": "FX"
+  },
+  "6S": {
+   "proxy": "FXF",
+   "family": "FX"
+  },
+  "ZC": {
+   "proxy": "CORN",
+   "family": "ags"
+  },
+  "ZS": {
+   "proxy": null,
+   "family": "ags"
+  },
+  "ZW": {
+   "proxy": null,
+   "family": "ags"
+  },
+  "AGS_BASKET": {
+   "proxy": "DBA",
+   "family": "ags"
+  },
+  "LE": {
+   "proxy": null,
+   "family": "livestock"
+  },
+  "HE": {
+   "proxy": null,
+   "family": "livestock"
+  },
+  "NKD": {
+   "proxy": "EWJ",
+   "family": "intl equity"
+  },
+  "FT5": {
+   "proxy": "FXI",
+   "family": "intl equity"
+  },
+  "MXEF": {
+   "proxy": "EEM",
+   "family": "intl equity"
+  },
+  "MFS": {
+   "proxy": "EFA",
+   "family": "intl equity"
+  },
+  "BTC": {
+   "proxy": null,
+   "family": "crypto"
+  },
+  "MBT": {
+   "proxy": null,
+   "family": "crypto"
+  }
+ },
+ "unmeasurable": {
+  "MES": "micro",
+  "MNQ": "micro",
+  "M2K": "micro",
+  "MYM": "micro",
+  "HO": "energy",
+  "ZS": "ags",
+  "ZW": "ags",
+  "LE": "livestock",
+  "HE": "livestock",
+  "BTC": "crypto",
+  "MBT": "crypto"
+ },
+ "measures": {
+  "n_eff_rho": "N/(1+(N-1)*rho_bar), the FINDINGS \u00a74 measure",
+  "pr": "(sum lambda)^2/sum(lambda^2), the D251 measure"
+ },
+ "within_family": {
+  "equity index": {
+   "n": 5,
+   "rho_bar": 0.8800284360371808,
+   "n_eff": 1.1061668539807186,
+   "pr": 1.2160593609116686,
+   "proxies": [
+    "DIA",
+    "IWM",
+    "MDY",
+    "QQQ",
+    "SPY"
+   ]
+  },
+  "rates": {
+   "n": 5,
+   "rho_bar": 0.785831379479544,
+   "n_eff": 1.2067601201925988,
+   "pr": 1.4006718230418251,
+   "proxies": [
+    "EDV",
+    "IEF",
+    "IEI",
+    "SHY",
+    "TLT"
+   ]
+  },
+  "metals": {
+   "n": 5,
+   "rho_bar": 0.5184845577959191,
+   "n_eff": 1.6265779023395204,
+   "pr": 2.311567432866215,
+   "proxies": [
+    "DBB",
+    "GLD",
+    "PALL",
+    "PPLT",
+    "SLV"
+   ]
+  },
+  "energy": {
+   "n": 3,
+   "rho_bar": 0.3454282874079271,
+   "n_eff": 1.7742486528324974,
+   "pr": 2.0865262447304316,
+   "proxies": [
+    "UGA",
+    "UNG",
+    "USO"
+   ]
+  },
+  "FX": {
+   "n": 6,
+   "rho_bar": 0.4458792453118234,
+   "n_eff": 1.8579324366130596,
+   "pr": 2.852127370562407,
+   "proxies": [
+    "FXA",
+    "FXB",
+    "FXC",
+    "FXE",
+    "FXF",
+    "FXY"
+   ]
+  },
+  "intl equity": {
+   "n": 4,
+   "rho_bar": 0.7302180874136964,
+   "n_eff": 1.2536613720066407,
+   "pr": 1.515427731759098,
+   "proxies": [
+    "EEM",
+    "EFA",
+    "EWJ",
+    "FXI"
+   ]
+  },
+  "ags": {
+   "n": 2,
+   "rho_bar": 0.565088305071065,
+   "n_eff": 1.2778831670518342,
+   "pr": 1.515926943332583,
+   "proxies": [
+    "CORN",
+    "DBA"
+   ]
+  }
+ },
+ "nested": {
+  "equity index": {
+   "through": "equity index",
+   "n": 5,
+   "rho_bar": 0.8800284360371808,
+   "n_eff": 1.1061668539807186,
+   "delta_n_eff": 0.10616685398071857,
+   "pr": 1.2160593609116686,
+   "proxies": [
+    "DIA",
+    "IWM",
+    "MDY",
+    "QQQ",
+    "SPY"
+   ]
+  },
+  "rates": {
+   "through": "rates",
+   "n": 10,
+   "rho_bar": 0.262647146627781,
+   "n_eff": 2.9728068560490093,
+   "delta_n_eff": 1.8666400020682907,
+   "pr": 2.4674510443492723,
+   "proxies": [
+    "DIA",
+    "EDV",
+    "IEF",
+    "IEI",
+    "IWM",
+    "MDY",
+    "QQQ",
+    "SHY",
+    "SPY",
+    "TLT"
+   ]
+  },
+  "metals": {
+   "through": "metals",
+   "n": 15,
+   "rho_bar": 0.23574892068004594,
+   "n_eff": 3.4879787710803902,
+   "delta_n_eff": 0.5151719150313809,
+   "pr": 4.030505793891664,
+   "proxies": [
+    "DBB",
+    "DIA",
+    "EDV",
+    "GLD",
+    "IEF",
+    "IEI",
+    "IWM",
+    "MDY",
+    "PALL",
+    "PPLT",
+    "QQQ",
+    "SHY",
+    "SLV",
+    "SPY",
+    "TLT"
+   ]
+  },
+  "energy": {
+   "through": "energy",
+   "n": 18,
+   "rho_bar": 0.19146569660115836,
+   "n_eff": 4.230399950803695,
+   "delta_n_eff": 0.7424211797233045,
+   "pr": 5.094126821894799,
+   "proxies": [
+    "DBB",
+    "DIA",
+    "EDV",
+    "GLD",
+    "IEF",
+    "IEI",
+    "IWM",
+    "MDY",
+    "PALL",
+    "PPLT",
+    "QQQ",
+    "SHY",
+    "SLV",
+    "SPY",
+    "TLT",
+    "UGA",
+    "UNG",
+    "USO"
+   ]
+  },
+  "FX": {
+   "through": "FX",
+   "n": 24,
+   "rho_bar": 0.20459643573145828,
+   "n_eff": 4.206306709901102,
+   "delta_n_eff": -0.024093240902592683,
+   "pr": 6.330454604125248,
+   "proxies": [
+    "DBB",
+    "DIA",
+    "EDV",
+    "FXA",
+    "FXB",
+    "FXC",
+    "FXE",
+    "FXF",
+    "FXY",
+    "GLD",
+    "IEF",
+    "IEI",
+    "IWM",
+    "MDY",
+    "PALL",
+    "PPLT",
+    "QQQ",
+    "SHY",
+    "SLV",
+    "SPY",
+    "TLT",
+    "UGA",
+    "UNG",
+    "USO"
+   ]
+  },
+  "intl equity": {
+   "through": "intl equity",
+   "n": 28,
+   "rho_bar": 0.23055890111673608,
+   "n_eff": 3.8753840741824237,
+   "delta_n_eff": -0.3309226357186783,
+   "pr": 5.861565363595185,
+   "proxies": [
+    "DBB",
+    "DIA",
+    "EDV",
+    "EEM",
+    "EFA",
+    "EWJ",
+    "FXA",
+    "FXB",
+    "FXC",
+    "FXE",
+    "FXF",
+    "FXI",
+    "FXY",
+    "GLD",
+    "IEF",
+    "IEI",
+    "IWM",
+    "MDY",
+    "PALL",
+    "PPLT",
+    "QQQ",
+    "SHY",
+    "SLV",
+    "SPY",
+    "TLT",
+    "UGA",
+    "UNG",
+    "USO"
+   ]
+  },
+  "ags": {
+   "through": "ags",
+   "n": 30,
+   "rho_bar": 0.21617610820845,
+   "n_eff": 4.12705431771476,
+   "delta_n_eff": 0.2516702435323359,
+   "pr": 6.457525885936165,
+   "proxies": [
+    "CORN",
+    "DBA",
+    "DBB",
+    "DIA",
+    "EDV",
+    "EEM",
+    "EFA",
+    "EWJ",
+    "FXA",
+    "FXB",
+    "FXC",
+    "FXE",
+    "FXF",
+    "FXI",
+    "FXY",
+    "GLD",
+    "IEF",
+    "IEI",
+    "IWM",
+    "MDY",
+    "PALL",
+    "PPLT",
+    "QQQ",
+    "SHY",
+    "SLV",
+    "SPY",
+    "TLT",
+    "UGA",
+    "UNG",
+    "USO"
+   ]
+  }
+ },
+ "ceiling_1_over_rho": 4.625858094529761,
+ "all_proxies_this_build": {
+  "n": 30,
+  "rho_bar": 0.21617610820845,
+  "n_eff": 4.12705431771476
+ },
+ "drop_one_delta_n_eff": {
+  "CORN": 0.16361889494674964,
+  "DBA": 0.06534944804288667,
+  "DBB": -0.025338332397822683,
+  "DIA": -0.07767742902973485,
+  "EDV": 0.22628162192946188,
+  "EEM": -0.1412261698519499,
+  "EFA": -0.15551533962433428,
+  "EWJ": -0.07145552491759233,
+  "FXA": -0.15066558566609167,
+  "FXB": -0.03785828752602516,
+  "FXC": -0.09053414349492606,
+  "FXE": -0.0241753148368824,
+  "FXF": 0.05200393679623794,
+  "FXI": -0.040520098874423205,
+  "FXY": 0.14020279056682083,
+  "GLD": -0.006089602136719385,
+  "IEF": 0.16675723573122792,
+  "IEI": 0.1343318734598884,
+  "IWM": -0.08845289127079958,
+  "MDY": -0.09358068714395618,
+  "PALL": -0.02060458633521911,
+  "PPLT": -0.05576464236682366,
+  "QQQ": -0.0644009216937853,
+  "SHY": 0.11612978327004164,
+  "SLV": -0.04448235851628812,
+  "SPY": -0.09826050755893423,
+  "TLT": 0.21842775820836557,
+  "UGA": 0.07617483182844964,
+  "UNG": 0.2081735827227802,
+  "USO": 0.0819378829185533
+ }
+}

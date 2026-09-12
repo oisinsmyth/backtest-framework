@@ -237,7 +237,7 @@ it is worth copying rather than trading:
 - **A placebo control that shares the treatment's nuisance:** the NQ confirmation filter was replaced
   with *QQQ's own 09:25 pre-market bar*. Treatment **$0.125/share (t = 2.05)**; placebo
   **$0.079/share (t = 1.27, n.s.)**. This randomises the *partner*, not the *membership* — the
-  construction our own [`no-agents`-adjacent rule](../../CLAUDE.md) demands and D291 was voided for
+  construction our own [`no-agents`-adjacent rule](../../../CLAUDE.md) demands and D291 was voided for
   lacking.
 - **Bootstrap CIs reported as intervals, not percentiles:** NQ filter **[0.05, 1.41]** vs
   buy-and-hold **[−0.03, 1.47]** — *"heavy overlap and no clear portfolio-level edge."* The author
@@ -425,7 +425,7 @@ returns after §1.
 6. **One warning about our own audits, learned the hard way in §6/L-2.** `ict_signals.py` reads as
    riddled with whole-array look-ahead; the **caller's slice** made it sound. **An audit that reads
    the signal function without following the call site produces false accusations.** Our own
-   [rule](../../CLAUDE.md) that a lag audit must re-derive the held set in *a second implementation
+   [rule](../../../CLAUDE.md) that a lag audit must re-derive the held set in *a second implementation
    that never calls the selection function* is the correct construction precisely because it tests
    the composition, not the part.
 7. **`NOT PUBLISHED`, recorded so it is not re-searched:** the magnitude of continuous-contract

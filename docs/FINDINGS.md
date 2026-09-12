@@ -3976,8 +3976,378 @@ removes a doubt about the measurement, not about the money.**
 carry enough names per day. The 5.84% of `open == prior close` bars are excluded by the CLEAN cut,
 but what they would have scored is not known.
 
+---
 
-## 59. The daily channel line (D399–D483): its direction is worth nothing by any reading, and its level's one positive cell is a dip with no lines
+## 59. A best-of-N permutation floor prices SELECTION and is blind to SIGN-FITTING: a composite of sixteen pure-noise signals clears it by 1.28
+
+**Measured 2026-09-09.** `scripts/probe_signfit_floor.py` → `data/signfit_floor_probe.json`.
+Closed form **and** a 200,000-draw simulation, required to agree. **No fixture is involved** —
+this is sampling theory about a method, not a result about any data.
+
+**Provenance, stated because it matters to how the finding should be weighted.** The claim
+arrived in an external-evidence brief commissioned for lead C1 of
+[`the-negative-space-scan.md`](../docs/research/the-negative-space-scan.md)
+(`working/leads/C1-combination.md`). **It is recorded here because it was re-derived and
+verified here, not because the brief said it.** The underlying algebra is attributed in the
+brief to Novy-Marx (2016), which has **not** been read by this programme.
+
+### The mechanism
+
+For `k` uncorrelated, equal-volatility signals combined equal-weight,
+`t_combo = √k · mean(t_i)`. **Orthogonality therefore multiplies detectability by `√k`.**
+Signing each signal by its own in-sample `t` replaces `t_i` with `|t_i|`, so under the null of
+`k` **worthless** signals:
+
+```
+E[t_combo] = √(2/π) · √k         sd[t_combo] = √(1 − 2/π) ≈ 0.603,  FREE OF k
+```
+
+The sd is `k`-free because the `√k` multiplier and the `1/√k` of the mean cancel exactly.
+
+### The number that matters, at k = 16
+
+| | p95 under pure noise |
+|---|---:|
+| **best-of-16 `\|t\|`** — what a best-of-N floor prices | **2.95** |
+| **sign-fitted equal-weight composite** | **4.23** |
+| signs **pre-declared in writing** | **1.65** |
+
+> **A COMPOSITE OF SIXTEEN PURE-NOISE SIGNALS CLEARS THE SELECTION FLOOR BY +1.28.** Selection
+> and sign-fitting are **different biases**, and a floor for one is not a floor for the other.
+> The second exists **even when nothing is selected**.
+
+### What this does and does not say about the D395 floor
+
+**It does not say the floor is wrong.** [`CLAUDE.md`](../CLAUDE.md) records the exact
+permutation floor in `run_d395_chop.py` — best-of-N for a cell picked from a grid, no
+independence assumption — and says it should replace normal-approximation floors programme-wide.
+**That stands. It is correct for what it prices.**
+
+**It says the floor must be EXTENDED wherever a construction orients its own components in
+sample:** the null must draw synthetic components and **sign them the same way the treatment
+does**. Any composite, any voting rule, any "z-score the inputs and add them" construction is in
+scope.
+
+**And pre-declaring every sign in writing is worth a factor of ~2 in the hurdle (4.23 → 1.65)
+for no computation at all** — the cheapest hurdle reduction this programme has been offered, and
+a writing discipline rather than a method.
+
+### The correction it forces on §-adjacent reasoning about D280
+
+**[D280](decisions/D280-the-forecast-precheck.md)'s gloss on its own independence result was
+backwards, and this record says so plainly.** The written position was that sixteen OHLC
+derivative terms carrying 13.50–15.76 *effective* inputs and no individual predictive power were
+*"sixteen independent sources of noise, with no redundancy left to average away."*
+
+**Orthogonality is the thing that helps.** At 13.5–15.8 effective inputs the `√k` multiplier is
+**3.7–4.0×**; the nine price scores at D268's **2.87** effective inputs buy only **1.69×**.
+**By this programme's own two measurements, the family it dismissed is the better combination
+candidate and the family it kept is the worse one.**
+
+**What remains true from D280 is the empirical part** — those sixteen terms carry no predictive
+power *as levels*, measured. **What is withdrawn is the inference** that independence makes
+combination hopeless. **Nothing here says a combination works; it says the argument given for
+why it could not was wrong, and that the honest test needs the sign-fitting null above.**
+
+### Scope, so this is not over-read
+
+The closed form assumes **uncorrelated, equal-volatility** components. Real signals are neither
+— this programme's own catalogue collapses nine price scores to 2.87 effective inputs. **These
+are calibration values for how a floor must be built, not a verdict on any actual study**, and
+no study in this record has been re-floored against them.
+
+---
+
+## 60. `etf_wide_daily_raw` is not an ETF fixture: a quarter of it is closed-end funds and 23 of its 24 deaths are fund wind-ups
+
+**Measured 2026-09-09.** `scripts/probe_etf_fixture_composition.py` →
+`data/etf_fixture_composition.json`. **Found in passing** by an external-evidence agent working
+on an unrelated lead, on a fixture **D382, D384 and D385 have already run on**.
+
+### What was measured
+
+The fixture carries no instrument-type field, so classification used a **distribution
+signature** — closed-end funds characteristically pay **monthly** and at **high yields**, because
+a managed-distribution policy is the product. **The rule was declared before the counts were
+read** (≥10 payments/yr **and** ≥5% annualised yield) and is deliberately strict, so **every
+count below is a LOWER BOUND.**
+
+| | |
+|---|---|
+| CEF distribution signature | **150 of 551 = 27.2%** *(an independent count in the brief, using exchange listing flags, gave **172 = 31.2%**)* |
+| the mortality cohort | **23 of 24 dead names are closed-end funds by inspection.** The single exception, `ELON`, paid no distributions at all |
+| distributions absent from `close` | whole fixture median **3.06%/yr**, mean 5.15%; **CEF cohort median 10.54%/yr** |
+| terminal-wealth understatement, 16 years | **5.37×** on the CEF cohort |
+
+> **A "DEAD-INCLUSIVE" FIXTURE WHOSE DEATHS ARE FUND TERM MATURITIES AND MERGERS IS NOT
+> MEASURING DELISTING RISK AT ALL.** The cohort that was supposed to remove survivorship bias is
+> made of orderly fund wind-ups, which are not the failure mode the bias is about.
+
+The fixture's `purpose` field also reads *"US single-name equity base for SHORT-SIDE research"* —
+a copy-paste artefact from the equity fixture, on a file of 551 funds.
+
+### What is at stake, checked rather than assumed
+
+**All three studies pass the events file to `load_ragged`, so their P&L used `total_log_returns`
+and is NOT affected.** What is affected is **anything reading `closes` as a price LEVEL** — which
+is exactly the log-price axis [D384](decisions/D384-the-EMA-centred-log-space-structure-density.md)
+and D385 built their density on, **bled by ~10.5%/yr across a quarter of the universe.**
+
+**That line is retired**, so the live stake is **the fixture itself and any future study that
+opens it.** No record is withdrawn here and no metadata was edited — **a correction to the
+fixture, and any re-read of those three records, is the principal's call.**
+
+### The rule this earns
+
+**A fixture's NAME is not its composition, and a status count is not a cause of death.** The
+`status_counts` field said `delisted: 22` and was believed; what it did not say, and what nothing
+checked, was **what kind of instrument died and why.** This is the third place the programme has
+been caught by an unexamined corporate-action or instrument basis, after the 15m-vs-daily
+adjustment split and the thirty fabricated dividend days of §18. **Census the instrument types
+and the death causes when a fixture is built, not when an unrelated agent trips over them.**
+
+
+## 61. A departure-zone touch earns +10 to +13 bp gross on three disjoint name sets, and nothing built on it survived a holdout: the second-zone line is closed
+
+**The principal closed the line on 2026-09-10** after D412–D433: twenty-two studies, two holdout
+reads, both daily holdouts spent for the construction. Records: `D430-RESULT-*` (holdout 1) and
+`D433-RESULT-*` (holdout 2).
+
+**What reproduced.** D413's distance-armed departure zone — a ≥1-ATR candle whose zone the close
+then clears by 1 ATR — touched and entered at the touch-day close, exited at `t+5`:
+
+| | in-sample (1,573 names) | holdout 1 (803) | holdout 2 (576) |
+|---|--:|--:|--:|
+| all touches, gross bp | +9.8 | +10.1 | +13.0 |
+| cell 2 (REV ≤ −2.47%, EFF > 0.237, ADV > $44M) | +30.3 | +18.1 | +18.0 |
+| cell 2 ∧ top-ADV tercile | +37.9 | +21.3 | +13.4 |
+| the same, 10-slot book, net Sharpe | +0.05 | −0.03 | −0.19 |
+
+A real short-horizon reversal after a large move on a liquid name, worth a third of a 24–34 bp
+round trip. **File it as a base rate** (a random trade after a zone touch earns ~+12 gross); it
+is not a trade.
+
+**What did not.** Every layer selected on the spent names after one look — the second touch
+(+45 → +6 / +17), the cheap tercile (+86 → +17 / +28), long-only (+80 → −29 / −21), the gap
+ordering, the ADV tercile's gross side, a breadth gate, nine exit constructions — and every
+in-sample null they passed (within-day permutation, matched random pools, +5 to +10 SE). **Those
+nulls test selection inside the spent names, not transfer.** The in-sample 2020 premium was the
+names: on unseen names 2020 was −635 bp per cheap long.
+
+**Two exits worth remembering as facts:** no ATR, structure or zone exit beats `t+5` with nothing
+(inside the hold the expected remaining move is non-negative in every state, including at the
+prior swing); the one exit that carried information — a limit at the *next live* opposite-side
+zone — did so only on events the final construction dropped.
+
+**Method that came out of it:** a fixture-parametrised pipeline with an in-sample `--proof` before
+any out-of-sample read; the ladder printed on the holdout so a failure is located; Sharpe with a
+monthly block-bootstrap SE; and the rule that a prediction on a date-defined subset must have its
+sign computed from spent data before pre-registration — the breadth gate (D432) was pre-registered
+with the wrong sign on a true stage-0 fact.
+
+---
+
+## 62. The repo's half-spread is a range estimator: 17–55 bp a side on names whose quote is one or two, and every net-of-cost verdict since D285 was made against it
+
+**A measurement, D439 (2026-09-11), on the 15-minute fixtures' forty large and mid names.** The
+PUB half-spread the kernel charges (Corwin–Schultz off daily high/low, the D332 convention) reads
+**median 28 bp a side, terciles 22.7 / 35.0, wide tercile 55** on MSFT, JPM, CSCO, INTC, V, PG.
+Their quoted half-spreads are one to two basis points. The estimator reads intraday *range*, and
+range and quote converge only on small illiquid names. **Nothing in the repo has ever compared
+the estimator to a quote** — D336's pull (built and dry-tested 2026-09-05) needs a TWS session
+and has not run; D441 (2026-09-11) extends it to the 272 names one construction trades.
+
+What was measured model-free on those names: a limit at the open that needs a 5 bp trade-through
+**fills 92% of the time**; on the 8% of days it does not, the price is +112 bp away at the
+half-hour, so the chase costs **~9 bp per order**; net of the chase a passive order recovers
+**0.66 of the modelled half-spread** (0.72 in the wide tercile, 0.57 on volume-shock days).
+
+**How to read every "net" in this file after D285:** it is net of a range, not a spread. On
+small, thin, volatile names the two are close and the verdicts likely stand; on liquid names a
+construction has been charged up to ten times its cost. Records since D439 print a second
+"passive at the open" line (modelled half-spread × 0.34 per side + 9 bp chase), **labelled an
+assumption**, beside the crossed line. The quote pull would retire the assumption on all of
+them at once. It is the highest-value unrun measurement in the programme.
+
+---
+
+## 63. A 3× volume bar in a top-price name is followed by a continuation the state alone does not predict, at every horizon — and it is not a book at any cost line the repo can justify
+
+**D434–D440, 2026-09-11, in-sample on the mining fixture; no holdout read; closed by the principal.**
+
+**Volume as a universe average is nearly flat** (D434: five volume axes through the D392 atlas,
+next-open fill, `[F]`-aligned after a first run that was one bar early). **Conditioned on the
+atlas states it is not** (D435): a 3× volume day is **+38 bp** in top-momentum names and **−48 bp**
+in top-price names over the kernel's horizon, and the average hid the sign flip. The principal
+called for the conditional atlas; it is the method finding of the line.
+
+**The one component that survived every stage** — B, `rv_x3 ∧ price_hi`, sold short — carries
+**+13 bp at 5 bars to +37 at 60** above a state-matched control's p95 (random names in the same
+price tercile, same day, no shock), and its increment lives in the widest spread tercile of its
+names (D438). As a book at cap 20 (D440):
+
+| line | per trade | book, bp/bar | SE |
+|---|--:|--:|--:|
+| gross | +38.8 | +2.24 | 0.89 |
+| crossed (PUB 2c + borrow) | −18.3 | −0.63 | |
+| passive at the open (§62's assumption) | +7.1 | +0.65 | 0.89 |
+
+The passive line does what §62 says it does — 2c falls from 52 to 32 per trade — and the book is
++0.65 on an SE of 0.89, with 16 names to half the P&L and the top 1% of trades at 108% of it.
+**Not distinguishable from zero on sixteen years; the object's edge is a median of +14 under a
+mean of +39.** The line is parked on the quote pull (D441): if B's wide names' modelled 42 bp a
+side is a range, the wide tercile's +64 passive net is closer to a crossed net; if it is a quote,
+the line is closed on cost.
+
+---
+
+## 64. Net share issuance predicts the hedged return of the name per trade on both sides, on the dead-inclusive fixture, against the right control — and the book it makes is under one SE on thirteen years
+
+**D443–D453, 2026-09-11/12, in-sample; no holdout read; parked by the principal as real and
+unbookable.**
+
+**The source.** Alpha Vantage's fundamentals serve **0 of 562 dead names** (D443, abandoned on its
+pre-registered coverage condition); the SEC's XBRL companyfacts serve **433 of them** (D444), with
+the filing date of every value and restatement on 0.1% of share counts, so first-filed is
+point-in-time for free. 11% of the fixture (multi-class and foreign filers) has no undimensioned
+share count in that API. Filers mis-scale counts on 0.2% of rows (a 50× guard). The vendor's
+counts agree with the first filing within 1% on only 45% of overlapping name-quarters.
+
+**The object** (one-year log change in split-adjusted shares, usable from the filing date):
+persistence **0.54** a year out on 1,250 names, rank R² on the six axes the repo had tested
+(momentum, 20-day return, price, size, volatility, dollar volume) **0.10**, correlation with
+momentum **+0.04**. It is tilted to small, cheap, volatile, thin names and is not any of them.
+
+**Per trade** (D446: decile slot book, 40 a side, 126-bar hold, 1,055 short / 1,063 long trades),
+against random names in the same price × volatility × momentum cell on the same day:
+
+| side | gross | cell baseline (C1 p50) | increment | distance |
+|---|--:|--:|--:|--:|
+| short, net issuers | +72 | −97 | +169 | 2.6 control-SD |
+| long, net repurchasers | +208 | +34 | +174 | 2.5 control-SD |
+
+**The cell baselines are the finding as much as the increments:** shorting small volatile
+names loses 97 bp a half-year hedged and buying large low-volatility ones earns 34, so the raw
+means overstate on both sides and a study without the cell control would have read +208 as
+edge. The distances are in the control's own draw SD; the per-trade SE is not a sampling error
+here because forty six-month positions overlap almost completely (D446 addendum).
+
+**The book.** +2.30 ± 1.51 bp/bar gross (D446); the score panel rolled in time by a common
+offset, exact on a 21-bar grid, earns **+1.12 with p95 +3.77** — a persistent selector on the
+wrong dates still picks the same kind of name and that composition earns hedged. The name-
+randomised persistent selector earns +0.39. The alignment term is therefore about **+1.2 bp/bar
+on an SE of 1.5**; net of the crossed line +0.97 at 0.6 SE; five names to half the P&L,
+GameStop's January-2021 squeeze (entered 2020-10-15 as a repurchaser) 29% of the long leg.
+
+**Beta-hedging and vol-scaling the same trades (D453)** cut the SE to 1.17 at the same gross,
+halved the lottery (9 names to half, GameStop 10%), and **did not touch the rotated base rate**
+(+1.12 → +1.27) while the name-randomised one fell to +0.08: the composition premium is a factor
+tilt of the deciles' names (low-volatility / quality), not a unit-beta hedge error. Verdict
+unchanged: net +0.86 ± 1.17.
+
+**What it is:** the literature's investment-factor premium, about 2% a year net at a Sharpe near
+0.2 if every number were confirmed, on a sample too short to confirm it. Real; factor-grade; not
+a strategy for either book here.
+
+---
+
+## 65. An insider's open-market purchase is followed by +89 bp hedged over the next quarter, +65 over its cell, in the body of the distribution — and nets zero at the crossed line
+
+**D454–D455, 2026-09-12, in-sample; no holdout read; parked by the principal.**
+
+**The source.** The SEC's Form 3/4/5 bulk data (81 quarterly archives, 2006–2026), mapped by CIK
+through D331's resolution: **17,270 purchase filings 2010–2023 on 76% of the fixture and 71% of
+the dead cohort**, 90% filed within the statutory two business days. Map by CIK, never by ticker
+(17,709 filings match a fixture symbol that belongs to another company). Ten-percent owners are
+18% of filings and nine of the ten largest dollar buys (Roche in FMI, Berkshire in BAC) — a
+different mechanism, set aside. Hyster-Yale's sixty-odd family trusts each file as a reporting
+owner and are every top "cluster" without a guard.
+
+**The shape.** Insiders buy what has fallen (47% of purchases after a bottom-tercile 20-day
+return), what is small, cheap and thin (60% in the bottom dollar-volume tercile), and a second
+insider buys the same name within a week on 47% of filings. Sales outnumber purchases six to one.
+
+**The event study** (D455: non-10%-owner filings ≥ $25k, entered at the next open, 63-bar hold,
+4,086 trades):
+
+| | per trade |
+|---|--:|
+| gross, hedged | +89 (median +96, 1%-trimmed mean +89) |
+| state-matched cell baseline (C1 p50 / p95) | +24 / +72 |
+| increment | +65, 2.35 control-SD above the median |
+| clusters (≥ 2 distinct buyers) / single buyer | +120 / +54 |
+| directors only / officers only | +101 / +58 |
+| sales mirror, shorted | −23 ± 12 (sales carry no information) |
+
+**The book:** +1.11 ± 0.56 bp/bar gross; the rotated calendar earns +0.66 (beaten-down small
+names recover on average, hedged); the alignment adds +0.45; the crossed line costs 1.03; net
+**+0.08**. Passive net +0.62 at 1.1 SE. Shortening the hold to 21 bars triples the gross and the
+cost. The top name is 6% of the P&L across 865 names — this one is not tail-carried.
+
+**Not overstated:** 2.35 SD is a p of roughly 0.01 on one look; the increment is +65 bp a
+quarter; the trade lives where a quarter's round trip costs what the quarter earns.
+
+---
+
+## 66. No 8-K item type carries a ten-day drift after the next open: the reaction to a filed event is in the gap, the distress items rebound, and every 8-K filer drifts up ten basis points against quiet names
+
+**D456–D457, 2026-09-12, in-sample 2010–2023; the 2024–2026 slice parsed and unread; closed at
+stage 1 on its own family bar.**
+
+**The source.** The EDGAR submissions index D331 cached: **154,970 8-Ks on 82% of the fixture and
+81% of the dead** (the gap is foreign 6-K filers), filed the day of the event (earnings) to two
+days after (most items), 15 item cells with ≥ 300 filings.
+
+**The atlas** (17 cells × all/pure × both sides, 10-bar hold, the state-matched control — same
+day, same cell, no 8-K of any item within ±5 bars — and the exact rotation of each cell's
+calendar on every cell; a family of 34 tests with 0.85 chance clears on the first control and
+0.04 on both): **0 cells clear both; 4 clear the first** (earnings 2.02 at z 4.8, other events
+8.01, shareholder votes 5.07, delisting notices 3.01), **all on the long side**.
+
+- **After any 8-K the name does +8 to +16 bp better over ten bars than a quiet name in the same
+  cell** — and the rotated calendar earns the same +0.7 to +1.1 bp/bar, so it is the filers'
+  composition, not the filing's timing. A tenth of the round trip.
+- **The distress items are long-favoured after the next open** — impairments +59, delisting
+  notices +103, auditor changes +92 per trade — with **negative medians**: the fall is in the gap
+  the daily fixture cannot enter; what follows is a two-sided rebound on survival. Every
+  pre-registered short-side sign was wrong.
+- Officer departures (5.02): −5 bp over ten days, the one short below the rotation band; a
+  twelfth of the cost.
+
+**The one-line lesson of §63–§66 together:** on this fixture every information source outside
+the price path — volume conditioned on state, share supply, insider demand, the corporate-event
+calendar — produces a real per-trade effect against a control that was built to kill it, and
+none of them survives either the cost of the names it lives in (a quarter's hold in thin names
+costs ~1 bp/bar, the alignment term is ~1 bp/bar on an SE of 1) or the gap it is priced in. The
+sentence that is true of all four is not "no signal"; it is "no book at this cost model on this
+fixture," and §62 says the cost model is unmeasured.
+
+---
+
+## 67. Method: three controls for a persistent state, and what each one's median means
+
+Out of D446–D457 (2026-09-11/12), a template now used on every line:
+
+1. **State-matched random names, per trade.** Same day, same price × volatility × momentum
+   cell, same count, no event of the kind under study nearby. **Its median is not zero and is
+   the first number to read:** −97 and +34 per half-year trade on the issuance cells, +24 per
+   quarter on insider cells, −3 to +22 per ten days on 8-K cells. Report the real mean's distance
+   in the control's *draw SD*, not in the Monte-Carlo precision of its p95 (D446 addendum: "25
+   SE" was that error; the true distance was 2.6 SD).
+2. **The common-offset rotation of the whole panel or calendar, exact on a grid.** Keeps every
+   name's own persistence and the composition; destroys alignment. **Its median is the
+   composition's base rate** — +1.1 bp/bar on the issuance deciles, +0.7 on 8-K filers — and a
+   beta hedge does not remove it (D453).
+3. **The name-randomised persistent selector** (or per-name shuffle for events). Keeps the
+   churn; destroys which name. The gap between (2)'s and (3)'s medians is the price of the
+   state tilt; predict (2)'s median from (1)'s baselines, not as zero.
+
+And one arithmetic rule from the same studies: with N concurrent positions held H bars, the
+per-trade SE is not a sampling error of the mean — the block-bootstrap SE of the deployed book
+is — and a filing-based event should have its expected crossed cost per bar computed from the
+hold and the names' half-spread *before* it is pre-registered.
+
+## 68. The daily channel line (D399–D483): its direction is worth nothing by any reading, and its level's one positive cell is a dip with no lines
 
 **Closed by the principal, 2026-09-12** —
 [closing record](decisions/D483-CLOSE-the-daily-channel-line-D399-to-D483.md).

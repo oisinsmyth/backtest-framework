@@ -1,0 +1,196 @@
+{
+ "probed_utc": "2026-09-11T00:41:25+00:00",
+ "purpose": "vendor figures for the chosen plan, replacing the estimates in subscription_entitlement.json. Free metadata calls only; nothing submitted.",
+ "dataset": "GLBX.MDP3",
+ "dataset_range": {
+  "start": "2010-06-06",
+  "end": "2026-09-11"
+ },
+ "dataset_range_per_schema": {
+  "mbo": {
+   "start": "2017-05-21",
+   "end": "2026-09-10T16:39:19"
+  },
+  "mbp-1": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "mbp-10": {
+   "start": "2010-06-06",
+   "end": "2026-09-10T16:39:19"
+  },
+  "tbbo": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "trades": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "bbo-1s": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "bbo-1m": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "ohlcv-1s": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "ohlcv-1m": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "ohlcv-1h": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "ohlcv-1d": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "definition": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "statistics": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  },
+  "status": {
+   "start": "2010-06-06",
+   "end": "2026-09-11T00:00:00"
+  }
+ },
+ "windows": {
+  "L0": [
+   "2010-06-06",
+   "2026-09-11"
+  ],
+  "L1": [
+   "2025-09-11",
+   "2026-09-11"
+  ],
+  "L3": [
+   "2026-08-10",
+   "2026-09-10"
+  ]
+ },
+ "measured_free_l3_boundary": {
+  "free_at_days_back": 32,
+  "charged_at_days_back": 35,
+  "charge_observed_usd_per_es_day": 1.21,
+  "method": "ES.FUT mbo, one weekday at a time, get_cost on each"
+ },
+ "est_disk_gib_at_zstd_2_6": 169.7764011615744,
+ "est_download_hours_at_3_04_MBps": 16.657165812809268,
+ "unit_prices_historical": {
+  "mbo": 1.8,
+  "mbp-1": 1.8,
+  "mbp-10": 0.5,
+  "tbbo": 28.0,
+  "trades": 28.0,
+  "bbo-1s": 18.0,
+  "bbo-1m": 18.0,
+  "ohlcv-1s": 70.0,
+  "ohlcv-1m": 70.0,
+  "ohlcv-1h": 190.0,
+  "ohlcv-1d": 190.0,
+  "definition": 1.7,
+  "statistics": 1.0,
+  "status": 4.0
+ },
+ "correction": "the programme's derived $28.00/GiB is the TRADES rate. Rates are per-schema and span 0.5 (mbp-10) to 190.0 (ohlcv-1d). ohlcv-1m is 70.0.",
+ "items": [
+  {
+   "item": "ohlcv-1m  ALL_SYMBOLS  16yr",
+   "schema": "ohlcv-1m",
+   "stype_in": "raw_symbol",
+   "start": "2010-06-06",
+   "end": "2026-09-11",
+   "billable_bytes": 57317072736,
+   "billable_gib": 53.38068374991417,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 70.0,
+   "list_rate_implied_usd": 3736.647862493992
+  },
+  {
+   "item": "tbbo      ALL_SYMBOLS  12mo",
+   "schema": "tbbo",
+   "stype_in": "raw_symbol",
+   "start": "2025-09-11",
+   "end": "2026-09-11",
+   "billable_bytes": 115240127200,
+   "billable_gib": 107.32573196291924,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 28.0,
+   "list_rate_implied_usd": 3005.1204949617386
+  },
+  {
+   "item": "bbo-1m    41 roots     12mo",
+   "schema": "bbo-1m",
+   "stype_in": "parent",
+   "start": "2025-09-11",
+   "end": "2026-09-11",
+   "billable_bytes": 32424471920,
+   "billable_gib": 30.197642669081688,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 18.0,
+   "list_rate_implied_usd": 543.5575680434704
+  },
+  {
+   "item": "mbo       top 8 roots  free",
+   "schema": "mbo",
+   "stype_in": "parent",
+   "start": "2026-08-10",
+   "end": "2026-09-10",
+   "billable_bytes": 117939779328,
+   "billable_gib": 109.83997893333435,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 1.8,
+   "list_rate_implied_usd": 197.71196208000183
+  },
+  {
+   "item": "definition 41 roots    16yr",
+   "schema": "definition",
+   "stype_in": "parent",
+   "start": "2010-06-06",
+   "end": "2026-09-11",
+   "billable_bytes": 78325303160,
+   "billable_gib": 72.94612299650908,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 1.7,
+   "list_rate_implied_usd": 124.00840909406543
+  },
+  {
+   "item": "statistics 41 roots    16yr",
+   "schema": "statistics",
+   "stype_in": "parent",
+   "start": "2010-06-06",
+   "end": "2026-09-11",
+   "billable_bytes": 56972000240,
+   "billable_gib": 53.05930994451046,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 1.0,
+   "list_rate_implied_usd": 53.05930994451046
+  },
+  {
+   "item": "status     41 roots    16yr",
+   "schema": "status",
+   "stype_in": "parent",
+   "start": "2010-06-06",
+   "end": "2026-09-11",
+   "billable_bytes": 15750904320,
+   "billable_gib": 14.669172763824463,
+   "get_cost_usd": 0.0,
+   "list_rate_usd_per_gb": 4.0,
+   "list_rate_implied_usd": 58.67669105529785
+  }
+ ],
+ "total_billable_gib": 441.41864302009344,
+ "total_get_cost_usd": 0.0,
+ "total_at_list_rates_usd": 7718.782297673077,
+ "subscription_covers_plan": true
+}

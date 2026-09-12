@@ -1,0 +1,111 @@
+"""D438 -- where the shock's increment sits against cost: spread terciles and the cap axis, on A and B.
+Spec docs/decisions/D438-where-the-shock-increment-sits-against-cost-the-spread-tercile-and-the-cap-axis.md (committed BEFORE this file).
+A MEASUREMENT; in-sample; no holdout.
+
+    uv run python -u scripts/run_d438_cost_axes.py --run
+"""
+from __future__ import annotations
+import argparse, importlib.util, json, sys, time
+from pathlib import Path
+import numpy as np
+
+REPO = Path(__file__).resolve().parents[1]
+def _load(name, fn):
+    s = importlib.util.spec_from_file_location(name, REPO / "scripts" / fn); m = importlib.util.module_from_spec(s)
+    sys.modules[name] = m; s.loader.exec_module(m); return m
+A34 = _load("d434", "run_d434_atlas_volume.py"); A35 = _load("d435", "run_d435_atlas_conditional.py"); A92 = _load("d392", "run_d392_base_rate_atlas.py"); R37 = _load("d437", "run_d437_stage1.py")
+OUT = REPO / "data" / "d438_cost_axes.json"
+COMP = {"A": ("mom_hi", 0), "B": ("price_hi", 1)}
+CAPS = (5, 10, 20, 40, 60); N_DRAW = 100; SEED = 438
+
+
+def conc(res, pnl, P, yr):
+    tr = res["trades"]; rows = np.array([t[0] for t in tr]); ys = np.array([yr[t[1]] for t in tr]); tot = pnl.sum()
+    by = {}
+    for r, x in zip(rows, pnl): by[int(r)] = by.get(int(r), 0.0) + float(x)
+    v = np.sort(np.array(list(by.values())))[::-1]; k = max(1, int(round(0.01 * pnl.size))); top1 = float(100 * np.sort(pnl)[-k:].sum() / tot) if tot > 0 else float("nan")
+    byy = {int(y): float(pnl[ys == y].mean()) for y in np.unique(ys)}
+    return dict(names=len(by), to_half=int(np.searchsorted(np.cumsum(v), 0.5 * tot) + 1) if tot > 0 else None, top1_share=top1, years_pos=int(sum(x > 0 for x in byy.values())), years=len(byy), by_year=byy)
+
+
+def cell(V59, P, elig, mask, side, cap):
+    r = V59.simulate(P, mask, SC, "cap", cap, side); tb = V59.trade_block(P, r, elig, side, False); db = V59.deployed_block(r, P)
+    borrow = tb.get("borrow", {}).get("mean_bp", 0.0); pnl = V59.V47.pnl_bp(r)
+    return r, pnl, dict(trades=tb["trades"], gross=tb["mean_bp"], median=tb["median_bp"], se=float(pnl.std(ddof=1) / np.sqrt(pnl.size)), two_c_PUB=tb["two_c"]["PUB"], two_c_PB=tb["two_c"]["PB"], borrow=borrow,
+                        net_PUB=tb["mean_bp"] - tb["two_c"]["PUB"] - borrow, net_PB=tb["mean_bp"] - tb["two_c"]["PB"] - borrow, hold=tb["hold_mean"],
+                        dep_gross=db["PUB"]["hedged"]["gross_bp"], dep_cost2=db["PUB"]["hedged_2x"]["cost_bp"], dep_net2=db["PUB"]["hedged_2x"]["net_bp"], turnover=db["PUB"]["hedged"]["turnover"])
+
+
+def control(V59, P, rng, ev, pool, side, cap, T):
+    g = []
+    for d in range(N_DRAW):
+        m = R37.draw_state_matched(rng, ev, pool, T); r = V59.simulate(P, m, SC, "cap", cap, side); g.append(float(V59.V47.pnl_bp(r).mean()))
+    g = np.array(g); return dict(p50=float(np.median(g)), p95=float(np.quantile(g, .95)), se=float(g.std(ddof=1) / np.sqrt(N_DRAW)))
+
+
+def run():
+    global SC
+    t0 = time.time()
+    print("D438 -- where the shock's increment sits against cost: spread terciles and the cap axis, A and B\n      the spec was committed in 91ad967 BEFORE this ran; mining fixture only; no holdout\n")
+    PREP = _load("d348p", "d348_prep.py"); V59 = _load("d359r", "run_d359_loser_rally_short.py")
+    P = PREP.prep(need_grids=True); T, N = P["T"], P["n"]; elig = np.asarray(P["elig"]); dates = np.array([str(x)[:10] for x in P["dates"]]); yr = np.array([int(d[:4]) for d in dates])
+    SC = np.full((T, N), 50.0); idx = A92.eligible_index(elig)
+    mk = A92.draw_mask(np.random.default_rng(A92.SEED), idx, (T, N), 2_000); r1 = V59.run_mirror(P, mk, SC, "cap", 20); m1, c1 = A92.score_once(V59, P, mk, 20, "long", SC)
+    assert abs(m1 - float(V59.V47.pnl_bp(r1).mean())) < 1e-12 and c1 == len(r1["trades"]), "[K]"
+    st = A35.state_pools_unshifted(P, elig); vp, F = A34.volume_pools_unshifted(P, elig)
+    ev = {k: A35.shift(st[s] & vp["rv_x3"], elig) for k, (s, side) in COMP.items()}
+    assert int(ev["A"].sum()) == 13731 and int(ev["B"].sum()) == 12597, "[F] events are not D436's"
+    pools = {k: A35.shift(st[s] & ~vp["rv_x3"] & elig, elig) for k, (s, side) in COMP.items()}
+    HS = np.asarray(P["HALF"]["PUB"], float); hs_prev = np.full_like(HS, np.nan); hs_prev[1:] = HS[:-1]          # the half-spread known at t-1
+    d37 = json.load(open(REPO / "data" / "d437_stage1.json"))["components"]
+    rng = np.random.default_rng(SEED); res = dict(spread={}, cap={}, corners=[], cuts={})
+    print("  [K] kernel probe;  [F] events == D436's;  half-spread grid PUB at t-1 attached\n")
+
+    print("1. AXIS 1 -- the spread tercile of the names held (PUB half-spread at t-1, bp/side); the control shares the tercile")
+    for k, (s, side) in COMP.items():
+        h = hs_prev[ev[k]]; fin = np.isfinite(h); cuts = np.quantile(h[fin], [1 / 3, 2 / 3]); res["cuts"][k] = [float(c) for c in cuts]
+        print(f"  {k} {s}: half-spread terciles at {cuts[0]:.1f} / {cuts[1]:.1f} bp/side; {int((~fin).sum())} events with no spread dropped from the axis")
+        bands = [("narrow", -np.inf, cuts[0]), ("mid", cuts[0], cuts[1]), ("wide", cuts[1], np.inf)]
+        cover = np.zeros_like(ev[k])
+        for nm, lo, hi in bands:
+            band = np.isfinite(hs_prev) & (hs_prev > lo) & (hs_prev <= hi) if nm != "narrow" else np.isfinite(hs_prev) & (hs_prev <= hi)
+            m = ev[k] & band; cover |= m
+            r, pnl, c = cell(V59, P, elig, m, side, 20); ctl = control(V59, P, rng, m, pools[k] & band, side, 20, T)
+            c.update(control=ctl, increment=c["gross"] - ctl["p50"], beats_p95=bool(c["gross"] > ctl["p95"]), net_PUB_t=c["net_PUB"] / c["se"])
+            res["spread"][f"{k}|{nm}"] = c
+            corner = bool(c["net_PUB"] > 0 and c["net_PUB_t"] >= 2 and c["beats_p95"])
+            if corner: res["corners"].append(f"{k}|spread {nm}")
+            print(f"    {k} {nm:6s}  n {c['trades']:6,}  gross {c['gross']:+7.2f} ± {c['se']:.1f}  2c PUB {c['two_c_PUB']:6.1f} PB {c['two_c_PB']:5.1f}  net PUB {c['net_PUB']:+7.2f} ({c['net_PUB_t']:+.1f} SE)  PB {c['net_PB']:+6.2f}  | state-matched p50 {ctl['p50']:+6.2f} p95 {ctl['p95']:+6.2f}  increment {c['increment']:+6.2f} {'> p95' if c['beats_p95'] else '<= p95'}{'   CORNER' if corner else ''}", flush=True)
+        assert (cover == (ev[k] & np.isfinite(hs_prev))).all(), f"[T] {k} terciles do not partition"
+    print("  [T] the three spread terciles partition each component's events with a spread")
+
+    print("\n2. AXIS 2 -- the cap (all events); the control is state-matched at the same cap")
+    for k, (s, side) in COMP.items():
+        for cap in CAPS:
+            r, pnl, c = cell(V59, P, elig, ev[k], side, cap); ctl = control(V59, P, rng, ev[k], pools[k], side, cap, T)
+            c.update(control=ctl, increment=c["gross"] - ctl["p50"], beats_p95=bool(c["gross"] > ctl["p95"]), net_PUB_t=c["net_PUB"] / c["se"], conc=conc(r, pnl, P, yr))
+            if cap == 20:
+                assert abs(c["gross"] - d37[k]["gross"]) < 1e-9, f"[P2] {k} cap 20 gross {c['gross']} != D437 {d37[k]['gross']}"
+            res["cap"][f"{k}|{cap}"] = c
+            corner = bool(c["net_PUB"] > 0 and c["net_PUB_t"] >= 2 and c["beats_p95"])
+            if corner: res["corners"].append(f"{k}|cap {cap}")
+            cc = c["conc"]
+            print(f"    {k} cap {cap:2d}  n {c['trades']:6,}  gross {c['gross']:+7.2f} ± {c['se']:.1f}  2c PUB {c['two_c_PUB']:5.1f}  net PUB {c['net_PUB']:+7.2f} ({c['net_PUB_t']:+.1f} SE)  PB {c['net_PB']:+6.2f}  | ctrl p50 {ctl['p50']:+6.2f} p95 {ctl['p95']:+6.2f}  increment {c['increment']:+6.2f} {'> p95' if c['beats_p95'] else '<= p95'}  | deployed gross {c['dep_gross']:+5.2f} cost2 {c['dep_cost2']:4.2f} net2 {c['dep_net2']:+5.2f}/bar  | names/2 {cc['to_half']} top1% {cc['top1_share']:.0f}% years+ {cc['years_pos']}/{cc['years']}{'   CORNER' if corner else ''}", flush=True)
+    print("  [P2] cap 20 reproduces D437's per-trade gross for A and B to 1e-9")
+    print(f"\n3. CORNERS (net PUB > 0 by 2 SE AND increment > the control's p95): {res['corners'] if res['corners'] else 'NONE'}")
+    S, C = res["spread"], res["cap"]
+    print("\n4. PREDICTIONS")
+    print(f"    X-a 2c PUB 25-35 / 45-60 / 90-130; gross rises with spread : A {S['A|narrow']['two_c_PUB']:.0f}/{S['A|mid']['two_c_PUB']:.0f}/{S['A|wide']['two_c_PUB']:.0f}, gross {S['A|narrow']['gross']:+.0f}/{S['A|mid']['gross']:+.0f}/{S['A|wide']['gross']:+.0f};  B {S['B|narrow']['two_c_PUB']:.0f}/{S['B|mid']['two_c_PUB']:.0f}/{S['B|wide']['two_c_PUB']:.0f}, gross {S['B|narrow']['gross']:+.0f}/{S['B|mid']['gross']:+.0f}/{S['B|wide']['gross']:+.0f}")
+    print(f"    X-b increment flat across terciles (A +8..+14, B +15..+30)  : A {S['A|narrow']['increment']:+.0f}/{S['A|mid']['increment']:+.0f}/{S['A|wide']['increment']:+.0f};  B {S['B|narrow']['increment']:+.0f}/{S['B|mid']['increment']:+.0f}/{S['B|wide']['increment']:+.0f}")
+    print(f"    X-c no spread corner; narrow net PUB A -10..+5, B -5..+10   : A {S['A|narrow']['net_PUB']:+.1f}, B {S['B|narrow']['net_PUB']:+.1f}; corners {[c for c in res['corners'] if 'spread' in c]}")
+    print(f"    X-d increment accrues with cap (A +4/+7/+10/+13/+14; B +10/+16/+22/+28/+30) : A " + "/".join(f"{C[f'A|{c}']['increment']:+.0f}" for c in CAPS) + "  B " + "/".join(f"{C[f'B|{c}']['increment']:+.0f}" for c in CAPS))
+    print(f"    X-e cap 60: A gross +55..+70 net PUB ±15; B gross +65..+85 net PUB +5..+25 > 2 SE : A {C['A|60']['gross']:+.1f} net {C['A|60']['net_PUB']:+.1f};  B {C['B|60']['gross']:+.1f} net {C['B|60']['net_PUB']:+.1f} ({C['B|60']['net_PUB_t']:+.1f} SE)")
+    print(f"    X-f deployed net2 negative at every cap for A; B positive at 40-60 : A " + "/".join(f"{C[f'A|{c}']['dep_net2']:+.2f}" for c in CAPS) + "  B " + "/".join(f"{C[f'B|{c}']['dep_net2']:+.2f}" for c in CAPS))
+    OUT.write_text(json.dumps(res, indent=1, default=float)); print(f"\nwrote {OUT.relative_to(REPO)}   {(time.time()-t0)/60:.1f} min   (no holdout read)")
+
+
+SC = None
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser(); ap.add_argument("--run", action="store_true"); a = ap.parse_args()
+    if a.run:
+        run()

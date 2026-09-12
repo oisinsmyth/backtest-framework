@@ -1,0 +1,33 @@
+=== CONTROLS ===
+  impossible phrase, all years        : (0, 'eq')
+  transfer phrase, 1995 (pre-FTS)     : (0, 'eq')
+  transfer phrase AND impossible      : (0, 'eq')
+  earnings phrase alone, 2015 (sanity): (10000, 'gte')
+
+=== phrase counts in 8-K, by year ===
+                        year        transfer the listing        transfer its listing     transfer of its listing  voluntarily withdraw the l         transfer of listing
+                        2010                          69                          10                           9                           0                         982
+                        2011                          63                          15                           3                           0                         969
+                        2012                          66                          10                           6                           1                         916
+                        2013                          49                          19                          12                           0                         761
+                        2014                          38                           5                           4                           0                         615
+                        2015                          31                           7                           2                           0                         854
+                        2016                          41                           8                           6                           0                        1022
+                        2017                          43                           9                           6                           0                         915
+                        2018                          42                           7                          12                           2                         854
+                        2019                          59                           2                           3                           7                        1063
+                        2020                          40                           9                           2                           9                         960
+                        2021                          54                           5                           6                          28                         867
+                        2022                         100                          30                          11                          10                        1475
+                        2023                         186                          36                          13                          11                        2382
+                        2024                         153                          27                           7                          16                        2317
+                        2025                         111                          24                           8                          13                        1576
+                        2026                          42                           9                           0                          14                         925
+                       TOTAL                        1187                         232                         110                         111                       19453
+
+=== EARNINGS CO-FILING: phrase AND the Item 2.02 heading ===
+  transfer the listing                 alone=1187    with Item 2.02 heading=28      (2.4%)
+  transfer its listing                 alone=232     with Item 2.02 heading=4       (1.7%)
+  transfer of its listing              alone=110     with Item 2.02 heading=4       (3.6%)
+  voluntarily withdraw the listing     alone=111     with Item 2.02 heading=10      (9.0%)
+  transfer of listing                  alone=10000   with Item 2.02 heading=351     (3.5%)

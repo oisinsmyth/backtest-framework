@@ -1,0 +1,355 @@
+{
+ "_A0_avg_firm_size_block": {
+  "header": "  Average Firm Size",
+  "sentinels": {},
+  "n_months": 757
+ },
+ "A_benchmark_catch": {
+  "post-pub 2014-01..2024-12": {
+   "EW long - EW universe TRUE": {
+    "mean": 0.0342,
+    "t": 0.2,
+    "n": 132,
+    "k_half": 1
+   },
+   "EW long - simple mean of deciles": {
+    "mean": -0.1013,
+    "t": -0.87,
+    "n": 132,
+    "k_half": null
+   },
+   "VW long - VW universe TRUE": {
+    "mean": 0.2494,
+    "t": 1.84,
+    "n": 132,
+    "k_half": 5
+   },
+   "VW long - simple mean of deciles": {
+    "mean": 0.3372,
+    "t": 2.0,
+    "n": 132,
+    "k_half": 5
+   },
+   "EW universe TRUE - simple mean (the benchmark error itself)": {
+    "mean": -0.1355,
+    "t": -1.57,
+    "n": 132,
+    "k_half": null
+   },
+   "VW universe TRUE - VW market (size tilt of the sort's universe)": {
+    "mean": 0.0145,
+    "t": 1.83,
+    "n": 132,
+    "k_half": 3
+   }
+  },
+  "post-pub ext ..2026-07": {
+   "EW long - EW universe TRUE": {
+    "mean": -0.001,
+    "t": -0.01,
+    "n": 151,
+    "k_half": null
+   },
+   "EW long - simple mean of deciles": {
+    "mean": -0.1287,
+    "t": -1.17,
+    "n": 151,
+    "k_half": null
+   },
+   "VW long - VW universe TRUE": {
+    "mean": 0.186,
+    "t": 1.42,
+    "n": 151,
+    "k_half": 4
+   },
+   "VW long - simple mean of deciles": {
+    "mean": 0.2504,
+    "t": 1.55,
+    "n": 151,
+    "k_half": 4
+   },
+   "EW universe TRUE - simple mean (the benchmark error itself)": {
+    "mean": -0.1276,
+    "t": -1.5,
+    "n": 151,
+    "k_half": null
+   },
+   "VW universe TRUE - VW market (size tilt of the sort's universe)": {
+    "mean": 0.0139,
+    "t": 1.83,
+    "n": 151,
+    "k_half": 4
+   }
+  },
+  "in-sample 1963-07..2013-12": {
+   "EW long - EW universe TRUE": {
+    "mean": 0.033,
+    "t": 0.56,
+    "n": 606,
+    "k_half": 3
+   },
+   "EW long - simple mean of deciles": {
+    "mean": 0.0063,
+    "t": 0.12,
+    "n": 606,
+    "k_half": 1
+   },
+   "VW long - VW universe TRUE": {
+    "mean": 0.0561,
+    "t": 0.83,
+    "n": 606,
+    "k_half": 3
+   },
+   "VW long - simple mean of deciles": {
+    "mean": 0.0603,
+    "t": 0.78,
+    "n": 606,
+    "k_half": 3
+   },
+   "EW universe TRUE - simple mean (the benchmark error itself)": {
+    "mean": -0.0267,
+    "t": -0.84,
+    "n": 606,
+    "k_half": null
+   },
+   "VW universe TRUE - VW market (size tilt of the sort's universe)": {
+    "mean": 0.0088,
+    "t": 1.1,
+    "n": 606,
+    "k_half": 2
+   }
+  },
+  "full available": {
+   "EW long - EW universe TRUE": {
+    "mean": 0.0262,
+    "t": 0.45,
+    "n": 757,
+    "k_half": 2
+   },
+   "EW long - simple mean of deciles": {
+    "mean": -0.0207,
+    "t": -0.45,
+    "n": 757,
+    "k_half": null
+   },
+   "VW long - VW universe TRUE": {
+    "mean": 0.082,
+    "t": 1.36,
+    "n": 757,
+    "k_half": 6
+   },
+   "VW long - simple mean of deciles": {
+    "mean": 0.0982,
+    "t": 1.41,
+    "n": 757,
+    "k_half": 6
+   },
+   "EW universe TRUE - simple mean (the benchmark error itself)": {
+    "mean": -0.0468,
+    "t": -1.53,
+    "n": 757,
+    "k_half": null
+   },
+   "VW universe TRUE - VW market (size tilt of the sort's universe)": {
+    "mean": 0.0098,
+    "t": 1.49,
+    "n": 757,
+    "k_half": 2
+   }
+  }
+ },
+ "B_calibration_T132": {
+  "T=132 t=0.50": {
+   "T": 132,
+   "t": 0.5,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 1,
+    "p50": 3,
+    "p95": 7,
+    "mean": 3.01
+   },
+   "worst_LOO_over_full": {
+    "p05": -4.618,
+    "p50": 0.429,
+    "p95": 0.817,
+    "frac_below_0.50": 0.556,
+    "frac_below_0.40": 0.474
+   },
+   "drop_best3_over_full": {
+    "p05": -5.442,
+    "p50": 0.328,
+    "p95": 0.746
+   }
+  },
+  "T=132 t=0.75": {
+   "T": 132,
+   "t": 0.75,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 1,
+    "p50": 3,
+    "p95": 7,
+    "mean": 3.35
+   },
+   "worst_LOO_over_full": {
+    "p05": -2.733,
+    "p50": 0.509,
+    "p95": 0.832,
+    "frac_below_0.50": 0.49,
+    "frac_below_0.40": 0.404
+   },
+   "drop_best3_over_full": {
+    "p05": -3.446,
+    "p50": 0.421,
+    "p95": 0.767
+   }
+  },
+  "T=132 t=1.00": {
+   "T": 132,
+   "t": 1.0,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 1,
+    "p50": 3,
+    "p95": 8,
+    "mean": 3.72
+   },
+   "worst_LOO_over_full": {
+    "p05": -2.068,
+    "p50": 0.574,
+    "p95": 0.845,
+    "frac_below_0.50": 0.423,
+    "frac_below_0.40": 0.347
+   },
+   "drop_best3_over_full": {
+    "p05": -2.685,
+    "p50": 0.497,
+    "p95": 0.785
+   }
+  },
+  "T=132 t=1.25": {
+   "T": 132,
+   "t": 1.25,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 1,
+    "p50": 4,
+    "p95": 8,
+    "mean": 4.16
+   },
+   "worst_LOO_over_full": {
+    "p05": -1.477,
+    "p50": 0.629,
+    "p95": 0.859,
+    "frac_below_0.50": 0.357,
+    "frac_below_0.40": 0.283
+   },
+   "drop_best3_over_full": {
+    "p05": -1.891,
+    "p50": 0.56,
+    "p95": 0.801
+   }
+  },
+  "T=132 t=1.50": {
+   "T": 132,
+   "t": 1.5,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 1,
+    "p50": 4,
+    "p95": 9,
+    "mean": 4.64
+   },
+   "worst_LOO_over_full": {
+    "p05": -0.843,
+    "p50": 0.671,
+    "p95": 0.87,
+    "frac_below_0.50": 0.289,
+    "frac_below_0.40": 0.222
+   },
+   "drop_best3_over_full": {
+    "p05": -1.19,
+    "p50": 0.616,
+    "p95": 0.816
+   }
+  },
+  "T=132 t=2.00": {
+   "T": 132,
+   "t": 2.0,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 2,
+    "p50": 6,
+    "p95": 10,
+    "mean": 5.74
+   },
+   "worst_LOO_over_full": {
+    "p05": -0.064,
+    "p50": 0.742,
+    "p95": 0.888,
+    "frac_below_0.50": 0.166,
+    "frac_below_0.40": 0.121
+   },
+   "drop_best3_over_full": {
+    "p05": -0.196,
+    "p50": 0.698,
+    "p95": 0.84
+   }
+  },
+  "T=132 t=2.50": {
+   "T": 132,
+   "t": 2.5,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 3,
+    "p50": 7,
+    "p95": 12,
+    "mean": 7.01
+   },
+   "worst_LOO_over_full": {
+    "p05": 0.403,
+    "p50": 0.793,
+    "p95": 0.903,
+    "frac_below_0.50": 0.078,
+    "frac_below_0.40": 0.05
+   },
+   "drop_best3_over_full": {
+    "p05": 0.331,
+    "p50": 0.755,
+    "p95": 0.859
+   }
+  },
+  "T=132 t=3.00": {
+   "T": 132,
+   "t": 3.0,
+   "years": 11,
+   "draws": 3000,
+   "k_half": {
+    "p05": 4,
+    "p50": 8,
+    "p95": 13,
+    "mean": 8.36
+   },
+   "worst_LOO_over_full": {
+    "p05": 0.589,
+    "p50": 0.829,
+    "p95": 0.915,
+    "frac_below_0.50": 0.027,
+    "frac_below_0.40": 0.015
+   },
+   "drop_best3_over_full": {
+    "p05": 0.552,
+    "p50": 0.796,
+    "p95": 0.874
+   }
+  }
+ }
+}

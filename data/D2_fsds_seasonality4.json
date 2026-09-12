@@ -1,0 +1,54 @@
+{
+ "Revenues (flow)": {
+  "n_firms": 1347,
+  "splithalf_med": 0.4083222553273085,
+  "share_splithalf_gt_0": 64.3652561247216,
+  "share_splithalf_gt_05": 44.84038604305865,
+  "amp_med": 0.1737866758715912,
+  "amp_sur_med": 0.12209222255321678,
+  "amp_ratio_med": 1.3575612936647232,
+  "share_p_under_05": 23.01410541945063,
+  "amp_p90": 0.9937148927138387,
+  "rho_med": 0.20320834736847426,
+  "med_nobs": 16.0
+ },
+ "CostOfGoodsSold (flow)": {
+  "n_firms": 790,
+  "splithalf_med": 0.3945174023335028,
+  "share_splithalf_gt_0": 63.92405063291139,
+  "share_splithalf_gt_05": 45.44303797468354,
+  "amp_med": 0.16438248391956203,
+  "amp_sur_med": 0.1201854869802797,
+  "amp_ratio_med": 1.3504166551644285,
+  "share_p_under_05": 23.037974683544306,
+  "amp_p90": 0.9758368248156721,
+  "rho_med": 0.16593043748805233,
+  "med_nobs": 16.0
+ },
+ "SG&A (flow)": {
+  "n_firms": 1176,
+  "splithalf_med": 0.25580480629489366,
+  "share_splithalf_gt_0": 59.013605442176875,
+  "share_splithalf_gt_05": 38.18027210884354,
+  "amp_med": 0.19978834885978278,
+  "amp_sur_med": 0.17494375583990707,
+  "amp_ratio_med": 1.233742724132623,
+  "share_p_under_05": 12.5,
+  "amp_p90": 1.1726109549190173,
+  "rho_med": 0.037283599376906035,
+  "med_nobs": 16.0
+ },
+ "Assets (INSTANT - NEG CONTROL)": {
+  "n_firms": 6090,
+  "splithalf_med": -0.003481559137557015,
+  "share_splithalf_gt_0": 49.6551724137931,
+  "share_splithalf_gt_05": 26.83087027914614,
+  "amp_med": 0.09177437291395855,
+  "amp_sur_med": 0.09517033710460025,
+  "amp_ratio_med": 0.9902877717940743,
+  "share_p_under_05": 2.528735632183908,
+  "amp_p90": 0.5054137646502086,
+  "rho_med": 0.340039498648349,
+  "med_nobs": 14.0
+ }
+}

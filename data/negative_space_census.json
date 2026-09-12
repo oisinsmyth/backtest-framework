@@ -1,0 +1,230 @@
+{
+  "record": "docs/research/the-negative-space-scan.md",
+  "claims": "the six [MEASURED HERE] facts in sections 1a and 6.2",
+  "equity": {
+    "fixture": "us_shorts_daily_raw.csv.gz",
+    "n_symbols": 1573,
+    "rows": 4137239,
+    "span": {
+      "start": "2010-01-04",
+      "end": "2026-08-26"
+    },
+    "status_counts": {
+      "collapsed": 122,
+      "delisted": 562,
+      "survived": 889
+    },
+    "dead": 684,
+    "dead_share": 0.4348
+  },
+  "etfs": {
+    "fixture": "etf_wide_daily_raw.csv.gz",
+    "n_symbols": 551,
+    "rows": 2215437,
+    "span": {
+      "start": "2010-01-04",
+      "end": "2026-08-26"
+    },
+    "n_spanning_whole_window": 417,
+    "roles": {
+      "curve": {
+        "TLT": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "IEF": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "SHY": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "credit": {
+        "HYG": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "JNK": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "LQD": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "metals": {
+        "GLD": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "SLV": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "fx": {
+        "FXE": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "FXY": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "size": {
+        "SPY": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "QQQ": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "IWM": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "IJR": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "sector": {
+        "XLF": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "XLK": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "XLE": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "XLU": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "XLP": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "XLY": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "geography": {
+        "EEM": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "EFA": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "industry": {
+        "SMH": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        },
+        "KRE": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "cash": {
+        "BIL": {
+          "first": "2010-01-04",
+          "last": "2026-08-26",
+          "bars": 4187
+        }
+      },
+      "OUT_OF_REACH_vol": {
+        "VXX": null,
+        "VIXY": null
+      },
+      "OUT_OF_REACH_dollar": {
+        "UUP": null,
+        "UDN": null
+      },
+      "OUT_OF_REACH_factor": {
+        "MTUM": null,
+        "USMV": null
+      }
+    },
+    "symbols_head_40": [
+      "AAXJ",
+      "ACWI",
+      "ACWX",
+      "ADX",
+      "AFT",
+      "AGD",
+      "AGG",
+      "AGZ",
+      "AIF",
+      "AIVL",
+      "AMLP",
+      "AOD",
+      "ARDC",
+      "ASA",
+      "ASHR",
+      "AVK",
+      "AWF",
+      "AWP",
+      "BAB",
+      "BBH",
+      "BBN",
+      "BCX",
+      "BDJ",
+      "BFOR",
+      "BGB",
+      "BGR",
+      "BGT",
+      "BGY",
+      "BIL",
+      "BIT",
+      "BIV",
+      "BKF",
+      "BKLN",
+      "BKT",
+      "BLV",
+      "BLW",
+      "BND",
+      "BNDS",
+      "BNDX",
+      "BOE"
+    ]
+  },
+  "join_asserted": true
+}
