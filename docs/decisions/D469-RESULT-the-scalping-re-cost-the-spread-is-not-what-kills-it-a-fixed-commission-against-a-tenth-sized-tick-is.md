@@ -200,3 +200,37 @@ checks.
   neither book.
 - **It does not re-cost the microstructure literature**, only the scalping horizon. Owed.
 - **Nothing is elevated** into `FINDINGS.md` or `RULES.md`.
+
+---
+
+### AMENDMENT 1, 2026-09-12 — **§4's flagged fill risk is answered, and the 55.0% needed a session label**
+
+[D471](D471-RESULT-the-spread-barely-widens-where-the-moves-are-and-path-efficiency-is-exactly-the-random-walk-value-in-every-bucket.md)
+measured the thing this record flagged about its own best cell — *"the top volatility quintile
+is exactly where fills are worst … the conditioned rows are the most optimistic cells in the
+table, not the safest."*
+
+**The warning was right in direction and negligible in size.** Paying the spread actually
+quoted in each bucket, at both ends of the window, moves the 15-minute top-quintile bar by
+**0.1 pp** (54.7% → 54.8% in RTH). ES sits at its one-tick minimum 97.6% of the time and stays
+pinned there even in the busiest fifth of the session — the spread has nowhere to widen to.
+**The width worry is closed; the FILL worry is not, and cannot be from `tbbo`** — queue
+position, partial fills and latency need `mbp-10`, which was not bought.
+
+**And this record's 55.0% was an RTH number without saying so.** §2's grid required **both**
+the entry second and the exit second to carry a trade; overnight many seconds carry none, so
+those windows were silently dropped and the sample was activity-weighted toward the day
+session. On non-overlapping windows D471 gets **54.8% in RTH** — agreement — and **57.0%
+all-hours**, because tiling every calendar block includes dead Asian-hours blocks nobody would
+trade. Both are correct for different rules. **A conditional mean is only defined against the
+population it conditions on, and "the" 15-minute mean was two different things.**
+
+**Path efficiency, which the principal proposed as a better conditioner, fails.** It barely
+forecasts itself (ρ = +0.081 against volatility's +0.312), its sign points the wrong way
+(trailing efficiency predicts *smaller* forward moves), and its level is **exactly the
+random-walk value 1/√n in every bucket** — ratio 0.87–1.04 across every cell of every table.
+D471 §3–4.
+
+**One constant to carry forward from D471 §5:** the adverse excursion before the winning move
+is **0.45–0.50 of that move in every cell**, invariant to every conditioner tested. Any rule at
+this horizon needs a stop of roughly half its target, and no selection improves the trade-off.
