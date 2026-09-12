@@ -57,7 +57,7 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
-RAW = REPO / "temp" / "databento"
+RAW = REPO / "data" / "raw" / "databento"   # moved 2026-09-12 out of deletable temp/
 FIX = REPO / "data" / "fixtures" / "es_front_1m_boundaries.csv.gz"
 OUT = REPO / "data" / "d448_direct_settlement_test.json"
 
@@ -89,7 +89,7 @@ def build() -> int:
 
     files = sorted(RAW.glob("*/*.ohlcv-1m.dbn.zst"))
     if not files:
-        raise SystemExit("no ohlcv-1m files under temp/databento/")
+        raise SystemExit("no ohlcv-1m files under data/raw/databento/")
     print(f"D448 build -- {len(files)} ohlcv-1m files\n")
 
     frames = []

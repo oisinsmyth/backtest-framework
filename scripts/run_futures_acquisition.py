@@ -71,7 +71,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 PROBE = REPO / "data" / "plan_cost_probe.json"
-RAW = REPO / "temp" / "databento"
+RAW = REPO / "data" / "raw" / "databento"
 STATE = RAW / "acquisition_state.json"
 MANIFEST = REPO / "data" / "futures_acquisition_manifest.json"
 KEY_FILE = Path.home() / ".config" / "databento" / "key"

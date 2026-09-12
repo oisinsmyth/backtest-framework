@@ -29,7 +29,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-RAW = REPO / "temp" / "databento"
+RAW = REPO / "data" / "raw" / "databento"
 STATE = RAW / "acquisition_state.json"
 OUT = REPO / "data" / "futures_acquisition_verification.json"
 KEY_FILE = Path.home() / ".config" / "databento" / "key"

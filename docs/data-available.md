@@ -13,7 +13,7 @@ without checking.
 
 ## 1. CME futures — NEW, acquired 2026-09-11/12
 
-**111.0 GB, 129 files, `temp/databento/<job-id>/*.dbn.zst`.** Databento `GLBX.MDP3` under a
+**111.0 GB, 129 files, `data/raw/databento/<job-id>/*.dbn.zst`.** Databento `GLBX.MDP3` under a
 one-month CME Standard subscription. Every job quoted **$0.00** against **$7,719** at
 published per-schema rates; the only cost was the $199 subscription.
 
@@ -39,10 +39,15 @@ headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **
 ### Four things that will bite a study reading this
 
 1. **NOT COMMITTED, AND CANNOT BE.** CME's terms forbid redistributing archived data, so
-   the bars live in gitignored `temp/`. What *is* committed is the re-fetch script, the
-   manifest, the verification artifact and the hashes. `temp/` is deletable by contract —
-   **this data is re-downloadable free only until roughly 2026-10-11**, 30 days after each
-   job completed. After that it is a fresh purchase.
+   the bars live in gitignored `data/raw/databento/`. What *is* committed is the re-fetch
+   script, the manifest, the verification artifact and every hash.
+   **It is re-downloadable free only until roughly 2026-10-11**, 30 days after each job
+   completed; after that it is a fresh purchase at $7,719 of published rates.
+
+   > **It was first written to `temp/databento/` and moved on 2026-09-12.** `temp/`'s own
+   > README says *"if deleting a file would cost something, it does not belong here"*, and
+   > 111 GB on a 30-day re-fetch clock costs plenty. `data/raw/` is the repo's established
+   > home for a gitignored raw cache — D191, cache the raw and commit the derived.
 2. **The last session is missing.** The pull ends **2026-09-10**, not 2026-09-11. The final
    bars slice was resubmitted with a backed-off end while chasing a stall. Any study
    quoting "through 2026-09-11" is wrong by one session.
@@ -146,7 +151,7 @@ non-commercial / non-reportable open interest per contract. See [`cftc_cot.md`](
 | `data/raw/edgar` | 1,592 | 1,088 MB | SEC filings behind the 8-K and insider lines |
 | `data/raw/binance` | 279 | 486 MB | crypto |
 | `data/raw/cftc` | 84 | 21 MB | COT |
-| `temp/databento` | 129 | 111 GB | **the futures, above** |
+| `data/raw/databento` | 129 | 111 GB | **the futures, above** |
 
 ---
 

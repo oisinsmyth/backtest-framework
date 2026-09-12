@@ -68,7 +68,7 @@ def state() -> tuple[list, bool]:
 
 
 def coverage() -> str:
-    fs = sorted((REPO / "temp" / "databento").glob("*/*.ohlcv-1m.dbn.zst"))
+    fs = sorted((REPO / "data" / "raw" / "databento").glob("*/*.ohlcv-1m.dbn.zst"))
     if not fs:
         return "no ohlcv-1m files on disk"
     span = sorted(f.name.split("glbx-mdp3-")[1].split(".")[0] for f in fs)

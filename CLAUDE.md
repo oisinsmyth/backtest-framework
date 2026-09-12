@@ -124,14 +124,26 @@ a populated one with borrowed ones.**
 
 ## Files
 
+**What data exists: [`docs/data-available.md`](docs/data-available.md).** Every fixture, its
+span, its symbol count, and the thing that bites a study that reads it unchecked. Read it
+before fetching anything — the answer is often already on disk.
+
 | | tracked | contract |
 |---|---|---|
 | `working/` | yes | in use; losing it costs work now |
+| `data/raw/` | no | **gitignored CACHE, not disposable** — re-fetchable, but losing it costs money or hours |
 | `temp/` | no | **deletable any time, unasked, unread** |
 
 One-way: `working/` → `temp/` → gone. Neither replaces `scripts/`, `data/`,
 `docs/decisions/` — **a file a record quotes is evidence: it belongs in
 `data/`.**
+
+**`temp/` is not a cache, and the distinction is not cosmetic.** 111 GB of CME futures was
+written to `temp/databento/` on 2026-09-11 and moved to `data/raw/databento/` the next day,
+because `temp/README.md` promises *"if deleting a file would cost something, it does not
+belong here"* — and that data is free to re-fetch only until ~2026-10-11, then $7,719.
+**A raw cache goes in `data/raw/` (D191: cache the raw, commit the derived). `temp/` is for
+things you would not mind losing mid-command.**
 
 ## Habits
 

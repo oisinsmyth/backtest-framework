@@ -1,5 +1,34 @@
 # PICKUP - handoff for the next session
 
+**What data exists, and what bites each dataset: [`docs/data-available.md`](docs/data-available.md).**
+
+## CME FUTURES ARE NOW ON DISK — 111.0 GB, verified, 2026-09-12
+
+Databento `GLBX.MDP3` under a one-month CME Standard subscription. Every job quoted **$0.00**
+against **$7,719** at published rates; total cost was the $199 subscription.
+**`data/raw/databento/<job-id>/*.dbn.zst`** — gitignored, and **NOT in `temp/`**.
+
+| schema | scope | window |
+|---|---|---|
+| `ohlcv-1m` | every instrument | 2010-06-06 → **2026-09-10** |
+| `mbo` order book | ES NQ RTY YM CL GC ZN ZB | 2026-08-11 → 2026-09-10 |
+| `tbbo` trade+quote | every instrument | 2025-09-11 → 2026-09-11 |
+| `statistics` / `definition` / `status` | 41 roots | 2010-06-06 → 2026-09-11 |
+| `bbo-1m` | 41 roots | 2025-09-11 → 2026-09-11 |
+
+**129/129 hashes and byte counts verified, 16/16 DBN headers match the request, and the ten
+`ohlcv-1m` slices tile with zero gaps and zero overlaps**
+([`data/futures_acquisition_verification.json`](data/futures_acquisition_verification.json)).
+
+**Four things before anything reads it.** Prices are **UNADJUSTED raw symbols with no
+continuous series at all** — the roll must be built from `definition`. The pull ends
+**2026-09-10**, so "through 2026-09-11" is wrong by one session. `ohlcv-1m` arrived in **ten
+jobs** and a loader must read all ten. And it is free to re-fetch only to **~2026-10-11**.
+
+**No fixture exists over it yet.** That needs the seven gates in `fetch_futures_1m.py`
+reworked: they assume a *continuous stitched* series and this is *raw-symbol full-universe
+across seven schemas*, so the roll gates do not transfer.
+
 ---
 
 ## D457 — THE 8-K ATLAS WITH RETURNS: NO CELL CLEARS, THE DISTRESS ITEMS REBOUND, THE REACTION IS IN THE GAP, 2026-09-12

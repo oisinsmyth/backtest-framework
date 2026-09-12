@@ -100,7 +100,7 @@ PRIOR_TOLERANCE = 2.0           # "if your dry run differs by more than 2x, stop
 OHLCV_MSG_BYTES = 56
 
 KEY_FILE = Path.home() / ".config" / "databento" / "key"
-RAW = REPO / "temp" / "databento"                    # raw downloads: deletable, re-downloadable
+RAW = REPO / "data" / "raw" / "databento"             # moved 2026-09-12: 111 GB is NOT deletable
 FIXTURE_DIR = REPO / "data" / "fixtures"             # glbx_1m_{SYM}.parquet -- gitignored by *glbx*
 META = REPO / "data" / "futures_1m.meta.json"        # committed
 ROLLS = REPO / "data" / "futures_1m_rolls.json"      # committed

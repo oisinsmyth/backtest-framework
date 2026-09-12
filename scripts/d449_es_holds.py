@@ -48,7 +48,7 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
-RAW = REPO / "temp" / "databento"
+RAW = REPO / "data" / "raw" / "databento"   # moved 2026-09-12 out of deletable temp/
 FIX = REPO / "data" / "fixtures" / "es_c1_holds.csv.gz"
 OUT = REPO / "data" / "d449_es_lifecycle.json"
 
