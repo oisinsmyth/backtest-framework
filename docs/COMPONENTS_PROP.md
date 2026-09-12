@@ -30,6 +30,15 @@ when C-b was applied.
 **A gated subset of a component is not a new component** (it shares the clock and the signal).
 **Two windows on one instrument that do not overlap in time are two components** (ρ ≈ 0.1).
 
+**PROVISIONAL entries (added by D468, 2026-09-12).** When a record scores a *family* of declared
+constructions, it reports the sign-randomisation null of the **best net Sharpe across the family**
+(one sign vector per session, common to all members, so the family's correlation is preserved).
+A construction that clears C-a but sits below that null's p95 is entered as **PROVISIONAL**: it
+counts for C-b against later entries, it goes into the assembled book, and only the unread slice
+(2024-01 onward, read under the principal's word) promotes it to a full entry or removes it. With
+~2,000 days the SE of a Sharpe is ≈ 0.35 and the best of 24 draws under no edge sits near +0.6;
+C-a on the point estimate is under that ceiling, and the ledger says so in the row.
+
 ## The ledger
 
 | # | component | instrument, window, rule | record | window | net Sharpe (SE) | hit | skew | ρ with prior | entered |

@@ -114,6 +114,10 @@ and computed from what the record already holds; X-a was computed in a different
   survives being held through the day session is a question C1's own tables answer directly
   (`d_end` on consecutive nights; the day session sits in between and D448 measured the
   T+0 future) — **declared here as a D469 question, not run.**
+  **ADDENDUM (same day, before D468 was written):** withdrawn. The plan requires flat by the
+  16:10 ET close (BOOK_PROP §C1: the 18:00 → 16:10 window is the rule's own shape), so a hold
+  cannot span two sessions and no construction can amortise the round trip; the search is
+  across instruments and within-session windows (D467, D468).
 
 ## 4. Corrections issued by this record
 
