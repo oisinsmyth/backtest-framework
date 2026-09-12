@@ -224,7 +224,7 @@ what a funded account is actually judged on.
 |---|---|---|
 | **P1** | **SIZING RULE, NOT A FILTER — see the 2026-09-08 restatement below.** Size the account so trailing drawdown ≤ 4% on **OPEN** equity, then carry the resulting return forward | Apex trails on unrealised intraday equity; open profit lifts the floor before anything is closed. Our closed-equity max-DD is a different and gentler statistic |
 | **P2** | **No exposure across the VENUE'S FLATTEN TIME** — see the amendment below; this is venue-specific, not universal | Topstep 3:10pm CT, Apex 4:59pm ET, MyFundedFutures 4:10pm ET |
-| **P3** | **Worst single day ≤ 2%** | Daily loss limits run 2–3% |
+| **P3** | **A RATE, not a maximum, since the 2026-09-13 amendment below** — ≤ 1.0 breach of 2% a year **and** ≤ 33% of the account's life lost to enforcing it; the worst day is reported and is no longer a gate | Daily loss limits run 2–3% — **though no such limit appears in our own encoding of the two venues P6 permits; see the amendment** |
 | **P4** | **Expected time-to-breach > 3 years** — **and "time-to-breach" is the ACCOUNT'S LIFE; see the RULING of 2026-09-11 below** | Against a trailing barrier and positive drift, ruin is certain eventually; the question is only when. At Sharpe 0.9 a 20-account book died every ~3.85 years |
 | **P5** | **No single day > 40% of trailing-year profit** | Consistency rules cap a single day at 30–50%, so a lumpy-but-profitable strategy is ineligible for payout while up |
 | **P6** | **Venue permits automation at the FUNDED stage** | Apex: *"No Automation or Algorithm Usage allowed"* on Performance Accounts, penalty *"forfeiture of all funds and balances"*. Take Profit Trader bans EAs throughout. **Only Topstep and MyFundedFutures permit it.** Third-party comparison tables contradict both firms' own terms and must not be relied on |
@@ -481,6 +481,54 @@ profit-before-breach test, which is therefore tested on **recognised** profit, n
 untouched** — it is a daily *loss limit*, enforced by the venue on the day, and no amount of
 account-replaceability softens it. P6 stands: only Topstep and MyFundedFutures permit automation
 when funded.
+
+> **SUPERSEDED for P3 on 2026-09-13.** The sentence above was written on 2026-09-12 and held for
+> one day. See the amendment immediately below — **P3 is no longer a hard cap on the worst day.**
+
+### AMENDMENT, 2026-09-13 — **P3 reads a RATE, not a maximum. The principal's decision.**
+
+> *"I personally think that is fine, P3 needs to be adapted to be a bit more flexible and take
+> frequency into account."* — the principal, on
+> [D501](decisions/D501-the-worst-day-is-a-regime-not-a-habit.md)
+
+**What forced it.** D500 computed P3 for the first time on any cell and read it as a binary
+failure: the candidate's worst day was **−$1,315** against a $1,000 cap. D501 then computed the
+**rate** and the maximum turned out to be the wrong statistic entirely — **two breaches in 1,873
+sessions (0.27 a year, one every 3.7 years), in six of eight years the worst day never reached
+−$550, and 2022 alone held 13 of the 20 days beyond −$500 and both breaches.** A single
+order statistic cannot distinguish that from a construction that breaches monthly.
+
+**The amended standard. P3 is now three numbers, not one:**
+
+| | what is read | the bar |
+|---|---|---|
+| **P3a** | **breaches per year** — days beyond 2% of the account, annualised over the whole in-sample window | **≤ 1.0 a year** |
+| **P3b** | **the life cost of enforcing it** — E[account life] when a day beyond the limit is treated as a death, against E[life] on the trailing drawdown alone | **≤ 33% of the life** |
+| **P3c** | **the worst day, still reported, no longer a gate** | reported in dollars, in daily σ, and as a share of the account's whole 4% loss budget |
+
+**Where those two bars come from, stated honestly: they are calibrated to the one case the
+principal has accepted, and to nothing else.** The candidate reads **0.27 breaches a year** and
+a **22% life cost**, and was accepted on 2026-09-13. The bars sit a little above it — roughly
+3.7× on the rate and 1.5× on the life cost — so that a construction materially worse than the
+accepted one fails. **They are not independently derived from any venue term**, and a second
+accepted case should move them.
+
+**What P3 no longer does.** It does not reject a construction for one bad day. A construction
+that breaches rarely is *priced* through P3b — the life cost feeds P4's expected profit before
+breach — rather than discarded, which is the same treatment P4 and P5 received on 2026-09-12.
+
+**And P3's provenance is now flagged as unverified.** R11 justifies P3 with *"daily loss limits
+run 2–3%"*. **The five MFFU plans and Topstep, as encoded in
+[`scripts/d386_full_lifecycle.py`](../scripts/d386_full_lifecycle.py), carry no daily-loss-limit
+field at all** — only a trailing drawdown, EOD or intraday. Whether a daily limit is a real term
+at either of the two venues P6 permits **has not been checked against the terms pages.** If it is
+not a term, P3 is a prudence rule of ours and P3a/P3b are its entire content.
+
+**One finding that must travel with this amendment:** a same-day stop at the P3 level buys
+**zero** account life. D501 capped every breaching day at −$1,000 — the best such a stop could do
+— and the life was 256 sessions against 256, with 7 deaths against 7. **The extreme days are not
+what kills the account; strings of moderate losses in one regime are.** A stop is therefore worth
+building to satisfy P3 as a *rule* and is worth nothing for survival.
 
 ## R12. Two tracks, two standards — and a candidate closed on one is screened against the other before it is discarded
 
