@@ -96,6 +96,14 @@ breakdown with flow, not a stretched tape; 2018 (D487's continuation year) is th
 split is beyond ~1.3 SE of zero (short on a > 3× spike +3.8 ± 7.2 is the best-looking). Bar not
 cleared; **not taken to validation; both reserves intact.** If the principal wants a filter, the
 splits are on the record; my reading is noise around a negative mean.
+**D492 (`b512918` + addendum `fff18b9`, RESULT): the first declared filter set — an HOURLY RSI(14)
+confirmation (the principal moved it up from five-minute before the run; holds run for hours).**
+It removes 74–77% of the trades and leaves the rest at zero: ES cell A −$0.88 / Sharpe −0.30 on
+287 trades, cell B −1.94 / −0.40; NQ +$1.57 / −0.11 and +$4.49 / +0.12 — **below the wrong-range
+control on both roots** (a stale range does as well); the target is reached on 0–3% of trades;
+92 ES long trades (SE ≈ $16) leave nothing to filter further. No cell cleared; the runner refused
+the validation read; both reserves intact. The family has failed twice for the same reason: a
+print at yesterday's extreme is not where the intraday reversion lives.
 
 ## D487 — THE ORB LINE CLOSED AT STAGE 0: CONTINUATION LIVES IN 2018 AND 2022, NOT IN THE CRASH YEAR, 2026-09-12
 

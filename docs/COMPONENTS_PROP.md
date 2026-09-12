@@ -72,6 +72,8 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 
 | **D490 (2026-09-12): the principal's range-reversion rule** — bottom 5% of yesterday's range on a 2× volume spike, target the top 5%, trail from the last swing past the midpoint; short symmetric; 1 MES / 1 MNQ, $3 + fills; development 2016-02→2020 | D490 | ES pooled **−1.14 (0.38)**, gross −$3.48/trade; NQ −1.03, −$4.96; long −0.60 / short −1.03 | C-a by a wide margin on both roots; below the wrong-range control (≈ $0); 60% of longs are breakdowns below yesterday's low; target reached on 5% of trades; not taken to validation |
 
+| **D492 (2026-09-12): D490's rule with an hourly RSI(14) confirmation** (long ≤ 30 / short ≥ 70; cell A with the spike, cell B in place of it); development 2016-02→2020 | D492 | ES A **−0.30 (0.38)**, gross −$0.88 on 287 trades; ES B −0.40; NQ A −0.11 (+$1.57); NQ B +0.12 (+$4.49) | C-a on every cell; below the wrong-range control on both roots (NQ N1 p50 +$5.4–5.9); the target reached on 0–3% of trades; 92 long trades on ES (SE ≈ $16); no validation read |
+
 **Line closed by the principal, 2026-09-12:** the index overnight leg at micro cost (any gate,
 window or size) is closed for the prop book after D466–D473; open for the personal book at full
 size. See BOOK_PROP's closure section.
