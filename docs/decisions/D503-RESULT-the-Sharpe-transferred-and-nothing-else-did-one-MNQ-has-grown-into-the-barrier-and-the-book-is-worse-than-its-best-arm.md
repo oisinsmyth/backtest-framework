@@ -177,7 +177,77 @@ wrong key into K8's artifact, and dollars passed to a helper that works in accou
 units. Neither touched a number that had already printed; §7's block was produced by completing
 the same pre-registered read with no change to its specification.
 
-## 9. What this does not do
+## 9. CORRECTION, 2026-09-13 — §2 overstated the case against the MACD component
+
+**Added after the principal asked why I thought the component was not a fit.** §2 above stands as
+written for the record, but **three of the things it leans on do not carry the weight I gave
+them**, and one of them is a statistic this repo's own rules tell me not to lead with.
+
+### 9a. I led with the asymmetric trim, which CLAUDE.md calls a flag and not a verdict
+
+> *"Dropping only winners is a flag, not a verdict — on a two-sided fat-tailed book it always
+> frightens."*
+
+| per trade | |
+|---|---:|
+| raw mean | +$16.18 |
+| **ex-top 1%** | **−$0.59** ← what §2 quoted |
+| ex-bottom 1% | +$28.15 |
+| **symmetric trim, both tails** | **+$11.33** |
+| cost | $3.50 |
+
+**The symmetric trim is 70% of the raw mean and 3.2× the cost**, and gross is 5.6× the cost. Both
+tails are large and roughly offsetting — the textbook two-sided fat-tailed book the rule was
+written about. **The edge survives symmetric trimming**, and §2 quoted the one number that
+conceals that.
+
+### 9b. "Does not clear its rotation null" is the absence of evidence, not evidence against
+
+    652 sessions = 2.59 years  ->  Sharpe SE ~ 0.70
+    observed +0.736            ->  1.05 SE from zero
+    rotation null p50 -0.284, p95 +0.758  ->  spread 1.04, which IS that SE
+
+**On 2.59 years a Sharpe of +0.74 cannot be distinguished from noise in either direction.** That
+is a fact about the slice's length, not about the construction, and §2 presented it as though the
+null had returned a verdict.
+
+### 9c. P3a's failure is against a bar calibrated one day earlier from stale prices
+
+The arm reads **P3a 1.16/yr against a bar of 1.0 — a 16% miss** — while **P3b, the substantive
+half of the amended rule, reads 0.0%: the breaches cost the account no life at all.** The 1.0 bar
+was set on 2026-09-13 from an in-sample rate of 0.27/yr measured at roughly **half** today's index
+level (§5's point turned against my own hurdle).
+
+### 9d. And the economics, which §1–§8 never computed
+
+Run as replaceable accounts over the forward slice — profit realised inside each life, every fee
+paid, a breach forfeiting what was still open:
+
+    11 dead lives, realised          +$6,372     (5 of the 11 ended negative)
+    the still-open life              +$3,902
+    11 account fees x $209           -$2,299
+    NET over 2.51 years              +$7,975  =  ~$3,180/yr  =  6.4% on $50k
+    mean realised per dead life         $579  against a $209 fee
+
+**Under the relaxed P4 that is a pass, not a failure**, and no section above said so.
+
+**The caveat that actually decides it:** this accounting assumes profit is *withdrawn* before the
+breach. One life made **$7,671 in 39 sessions** and carries most of the total. Whether it works
+therefore turns on whether MyFundedFutures' withdrawal mechanics permit banking inside a
+~53-session life — **a terms question, not a data question, and those pages have not been read.**
+
+### 9e. The corrected position
+
+**What fails is the vehicle, not the signal.** §5's notional table is the whole argument: one MNQ
+was 0.18× a $50k account in 2016 and is **1.10×** in 2026, behind a stop 3.6% wide. At σ $340 a
+one-year expected life needs a floor of ~$5,400 — a **~$135k account at 4%**.
+
+**So: the component is marginal at $50k/4% and a reasonable fit at roughly $135k-at-4% or any
+floor above ~$5,400. It is not disqualified, and §2 should not have been written as though the
+tail statistics disqualified it.** Full per-year history in
+[D504](D504-the-MACD-arm-across-every-year-the-fixture-holds.md).
+
+## 10. What this does not do
 
 - **It does not close the construction.** Only the principal closes an avenue. What it closes is
   *this account geometry*: one MNQ, $50k, 4% trailing, at 2026 price levels.
