@@ -205,3 +205,74 @@ first bar's high, collapsing it onto the pessimistic bound. Fixed; the test now 
 bound errs in **its own** direction on hand-checkable paths. And the tie at 1 minute was
 still the wrong answer to quote, because **D259 measured on 15-minute bars** — the grid sweep
 is what turned a suspicious tie into a one-directional bound.
+
+---
+
+### AMENDMENT 3, 2026-09-12 — **§2's MAE FIGURES WERE MEASURED ON TWO EXPIRIES AT ONCE. EVERY ONE OF THEM IS WRONG.**
+
+Found while writing [D469](D469-RESULT-the-scalping-re-cost-the-spread-is-not-what-kills-it-a-fixed-commission-against-a-tenth-sized-tick-is.md),
+which reuses this record's tick cache. D469's first run reported a p99 absolute move of
+**exactly 240 ticks at every horizon from 10 seconds to 15 minutes**, against a median of 2.
+A tail that does not move with the horizon is not a move. 240 ticks is 60 index points, which
+is the ES **calendar basis**.
+
+**The cause, in this file.** `do_extract` masked on
+
+    m = np.isin(chunk["instrument_id"], ids)
+
+while `ES_IDS` is a dict of `id -> (start, end)` — **the date ranges were sitting in the same
+literal and were never applied.** ES trades its deferred contract thinly for months before the
+roll, so the cache pooled two expiries ~60 points apart.
+
+**Only 3.9% of records were the wrong contract** (121,617,272 clean against 126,575,117
+pooled) **and it moved the published p99 by 0.861 pp**, because the statistic is a running
+**max**. A max reads the extremes, so a *sparse* contaminant dominates it. This is the general
+lesson and it is worth more than the correction: *the fraction of bad rows does not bound the
+error in an order statistic.*
+
+| exact tick MAE, 260 sessions | **published (pooled)** | **corrected (windowed)** | change |
+|---|---|---|---|
+| p50 | 1.851% | **0.768%** | −1.083 pp |
+| p95 | 3.349% | **2.025%** | −1.324 pp |
+| **p99** | **3.907%** | **3.046%** | **−0.861 pp** |
+| max | 5.147% | **3.595%** | −1.552 pp |
+| mean | 1.843% | **0.934%** | −0.909 pp |
+
+**The grid table in §2 is superseded**, and its *conclusion* is not. Optimistic is still exact
+at every width and only pessimistic drifts; the drift at the 15-minute grid D259 used is
+**+0.191 pp**, not +0.365. The conclusion held because it compares three conventions on one
+shared path — the contamination moved all three together.
+
+**§1's spread survives, and that is not luck.** A spread reads `bid_px_00` and `ask_px_00` off
+**the same record**, so pooling two contracts merely pools two spread populations rather than
+differencing across them. Round-trip crossing **0.3664 → 0.3644 bp**; share at exactly one
+tick **97.384% → 97.641%** (the deferred contract was the wider-quoted half). Every §1
+conclusion stands, including the 1.05× overnight ratio.
+
+**The correction runs in C1's favour.** §2 put the p99 at 3.907% against the 4% MLL — close
+enough to be uncomfortable. The corrected bracket at 15 minutes is **[3.046%, 3.237%]**, well
+clear. Nothing here changes D466's K1 Sharpe of +0.37, which was scored on bar P&L and never
+read this MAE.
+
+**Three gates now exist where none did, and each is proven to fire, not assumed:**
+
+1. `do_extract` raises unless **at most one `instrument_id` occupies any one second**. It
+   passed on all 12,407,675 seconds of the windowed cache.
+2. D469 repeats that check **at its own door** rather than trusting this fix, and additionally
+   drops any pair whose two ends are different contracts — without it the four roll instants a
+   year each read ~240 ticks and land squarely in the p99 the review turns on.
+3. Self-test **case D** measures the mechanism instead of describing it: two contracts 60
+   points apart, **each dead flat**, interleaved in one second, produce a **0.870%** excursion
+   out of nothing. That is the artefact, and it is the size of the error above.
+
+**The v1 cache is kept** at `temp/d465_es_ticks.npz` beside the windowed
+`temp/d465_es_ticks_v2.npz`, so the two are comparable rather than one having quietly replaced
+the other.
+
+**What I should have caught and did not.** The record already says "*a sane median beside an
+insane mean is the tell*" — and I wrote that sentence about the sentinel bug in the same file,
+one section above, without applying it to a p50 of 1.851% sitting beside a max of 5.147% on a
+22-hour hold in a year with no crash in it. A median MAE of 1.85% overnight on ES is not
+plausible and I did not look at it. The second tell was in plain sight too: `ES_IDS` carried
+date ranges that no line of code read, and a comment claiming they were "recorded rather than
+re-fetched so `--extract` is reproducible offline" — recorded for reproducibility, then unused.
