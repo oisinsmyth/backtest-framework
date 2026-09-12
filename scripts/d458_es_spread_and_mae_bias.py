@@ -154,18 +154,32 @@ def et_minutes(ts_ns: np.ndarray):
     mod = (t.hour * 60 + t.minute).to_numpy()
     # a bar at or after 18:00 ET belongs to the NEXT session date
     day = t.normalize() + pd.to_timedelta((mod >= ENTRY_MIN).astype(int), unit="D")
-    return day.strftime("%Y%m%d").astype(np.int64).to_numpy(), mod, t
+    # NUMERIC, NOT strftime. Measured on this data: strftime is 58x slower and does the
+    # same job -- 6.9 minutes against 7 seconds across 126.6M rows. It is the reason the
+    # first --spread run looked hung.
+    sess = (day.year * 10000 + day.month * 100 + day.day).to_numpy().astype(np.int64)
+    return sess, mod, t
 
 
 # ---------------------------------------------------------------- spread
 
+INT64_SENTINEL = 9223372036854775807   # DBN's "no price". 1e-9 scaled it to 9.2e9.
+
+
 def do_spread() -> int:
     d = load_ticks()
+    # THE FILTER THAT MATTERS, AND THE FIRST VERSION DID NOT HAVE IT.
+    # `(bid > 0) & (ask > 0) & (ask >= bid)` admits DBN's INT64 sentinel, which scales to
+    # 9.2e9 index points. THREE such records out of 126,575,117 dragged the mean spread to
+    # 875 ticks against a p99 of 2 -- an absurd mean beside a sane median, which is the tell.
+    # 338 records (0.00027%) are excluded and the count is reported, not swallowed.
+    ok = ((d["bid"] != INT64_SENTINEL) & (d["ask"] != INT64_SENTINEL)
+          & (d["bid"] > 0) & (d["ask"] > 0) & (d["ask"] >= d["bid"]))
     bid = d["bid"].astype(np.float64) * PX_SCALE
     ask = d["ask"].astype(np.float64) * PX_SCALE
     mid = 0.5 * (bid + ask)
-    ok = (bid > 0) & (ask > 0) & (ask >= bid)
-    P(f"ES trades cached {len(bid):,}; usable quote on {ok.sum():,} ({ok.mean():.1%})")
+    P(f"ES trades cached {len(bid):,}; broken quotes excluded {int((~ok).sum()):,} "
+      f"({(~ok).mean():.8%}); usable {int(ok.sum()):,}")
     sp_pts = (ask - bid)[ok]
     mid_ok = mid[ok]
     sp_ticks = sp_pts / TICK
@@ -176,10 +190,16 @@ def do_spread() -> int:
     def q(a, p):
         return float(np.quantile(a, p))
 
+    lo_t, hi_t = np.quantile(sp_ticks, [.0005, .9995])
+    trimmed = sp_ticks[(sp_ticks >= lo_t) & (sp_ticks <= hi_t)]
     res = {
         "n_trades": int(ok.sum()),
-        "spread_ticks": {"mean": float(sp_ticks.mean()), "p50": q(sp_ticks, .5),
+        "broken_quotes_excluded": int((~ok).sum()),
+        "spread_ticks": {"mean": float(sp_ticks.mean()),
+                         "mean_trimmed_0.05pct_both_tails": float(trimmed.mean()),
+                         "p50": q(sp_ticks, .5),
                          "p90": q(sp_ticks, .9), "p99": q(sp_ticks, .99),
+                         "p99.9": q(sp_ticks, .999), "max": float(sp_ticks.max()),
                          "share_at_one_tick": float((sp_ticks <= 1.0001).mean())},
         "spread_usd_per_contract": {"mean": float(sp_usd.mean()), "p50": q(sp_usd, .5),
                                     "p99": q(sp_usd, .99)},
@@ -314,64 +334,84 @@ def do_mae() -> int:
     P(f"ES ticks in a C1-shaped 18:00->16:10 window: {len(px):,} over "
       f"{len(np.unique(sess)):,} sessions")
 
-    # one-minute bars from the SAME ticks, so the only difference is the grid
-    minute = (ts // 60_000_000_000).astype(np.int64)
-    rows = []
+    # SWEEP THE GRID, because one width answers the wrong question.
+    #
+    # At 1 minute all three conventions agree exactly, and that is not a bug: they diverge
+    # only when the running PEAK and the TROUGH fall inside the SAME bar, and over a
+    # 22-hour hold with a multi-percent drawdown they are hours apart. A result where every
+    # arm agrees needs explaining, not quoting.
+    #
+    # But D259's published 3.980% was measured on FIFTEEN-minute bars. So the question is
+    # not "is 1 minute exact" -- it is "at what width does the grid start to lie", and
+    # whether 15 minutes is past it. Widths in minutes:
+    GRIDS = (1, 5, 15, 60, 240)
     uniq = np.unique(sess)
-    for s in uniq:
-        m = sess == s
-        if m.sum() < 200:
+    per_grid = {}
+    exact_ref = None
+    for width in GRIDS:
+        bucket = (ts // (width * 60_000_000_000)).astype(np.int64)
+        rows = []
+        for s in uniq:
+            m = sess == s
+            if m.sum() < 200:
+                continue
+            p_, b_ = px[m], bucket[m]
+            _, first = np.unique(b_, return_index=True)
+            hi = np.maximum.reduceat(p_, first)
+            lo = np.minimum.reduceat(p_, first)
+            if len(hi) < 4:
+                continue
+            e, pe, o = mae_three_ways(p_, hi, lo)
+            rows.append((e, pe, o, len(hi)))
+        if not rows:
             continue
-        p_, mi_ = px[m], minute[m]
-        # bar high/low per minute, vectorised
-        _, first = np.unique(mi_, return_index=True)
-        bounds = np.append(first, len(p_))
-        hi = np.maximum.reduceat(p_, first)
-        lo = np.minimum.reduceat(p_, first)
-        if len(hi) < 10:
-            continue
-        e, pe, o = mae_three_ways(p_, hi, lo)
-        rows.append((int(s), len(p_), len(hi), e, pe, o))
-
-    if not rows:
-        raise SystemExit("no usable sessions")
-    a = np.array([(r[3], r[4], r[5]) for r in rows])
-    exact, pess, opt = a[:, 0], a[:, 1], a[:, 2]
+        a = np.array([(r[0], r[1], r[2]) for r in rows])
+        nbars = float(np.mean([r[3] for r in rows]))
+        ex, pe_, op = a[:, 0], a[:, 1], a[:, 2]
+        if exact_ref is None:
+            exact_ref = ex
+        per_grid[width] = {
+            "bars_per_session_mean": nbars, "sessions": len(rows),
+            "exact_tick_p99": float(np.quantile(ex, .99)),
+            "optimistic_p99": float(np.quantile(op, .99)),
+            "pessimistic_p99": float(np.quantile(pe_, .99)),
+            "optimistic_understates_pp": float((np.quantile(ex, .99) - np.quantile(op, .99)) * 100),
+            "pessimistic_overstates_pp": float((np.quantile(pe_, .99) - np.quantile(ex, .99)) * 100),
+            "bracket_holds_every_session": bool(np.all(op <= ex + 1e-12) and np.all(ex <= pe_ + 1e-12)),
+        }
 
     def q(x, p):
         return float(np.quantile(x, p))
 
-    res = {"sessions": len(rows),
-           "note": "MAE as a fraction of the entry price, max drawdown from the running "
-                   "peak during an 18:00->16:10 ET hold on ES front month, at 1x size",
-           "exact_tick": {"p50": q(exact, .5), "p95": q(exact, .95), "p99": q(exact, .99),
-                          "max": float(exact.max()), "mean": float(exact.mean())},
-           "bar_pessimistic": {"p50": q(pess, .5), "p95": q(pess, .95), "p99": q(pess, .99),
-                               "max": float(pess.max())},
-           "bar_optimistic": {"p50": q(opt, .5), "p95": q(opt, .95), "p99": q(opt, .99),
-                              "max": float(opt.max())},
-           "bracket_holds_every_session": bool(np.all(opt <= exact + 1e-12)
-                                               and np.all(exact <= pess + 1e-12))}
-    P(f"\n  {'convention':22}{'p50':>9}{'p95':>9}{'p99':>9}{'max':>9}")
-    for k, lab in (("bar_optimistic", "bar, optimistic"), ("exact_tick", "EXACT (ticks)"),
-                   ("bar_pessimistic", "bar, pessimistic")):
-        r = res[k]
-        P(f"  {lab:22}{r['p50']*100:>8.3f}%{r['p95']*100:>8.3f}%{r['p99']*100:>8.3f}%"
-          f"{r['max']*100:>8.3f}%")
-    P(f"\n  bracket holds on every session: {res['bracket_holds_every_session']}")
-    ex99, op99, pe99 = res["exact_tick"]["p99"], res["bar_optimistic"]["p99"], res["bar_pessimistic"]["p99"]
-    if pe99 > op99:
-        pos = (ex99 - op99) / (pe99 - op99)
-        res["exact_position_in_bracket_at_p99"] = pos
-        P(f"  at p99 the exact path sits {pos:.0%} of the way from the optimistic bound "
-          f"to the pessimistic one")
-    res["one_minute_bar_error_at_p99"] = {
-        "optimistic_understates_by_pct_points": (ex99 - op99) * 100,
-        "pessimistic_overstates_by_pct_points": (pe99 - ex99) * 100,
-    }
-    P(f"\n  a 1-minute grid on the SAME ticks is wrong by "
-      f"{(ex99-op99)*100:+.4f} pp (optimistic) / "
-      f"{(pe99-ex99)*100:+.4f} pp (pessimistic) at p99")
+    ex = exact_ref
+    res = {"sessions": int(len(ex)),
+           "note": "MAE as a fraction of the entry price -- max drawdown from the running "
+                   "peak during an 18:00->16:10 ET hold on ES front month, 1x size. The "
+                   "EXACT column is tick-by-tick and is identical at every grid width, "
+                   "because the ticks do not change; only the bar conventions move.",
+           "exact_tick": {"p50": q(ex, .5), "p95": q(ex, .95), "p99": q(ex, .99),
+                          "max": float(ex.max()), "mean": float(ex.mean())},
+           "by_grid_minutes": per_grid,
+           "why_conventions_agree_at_one_minute":
+               "the bar conventions differ only when the running peak and the trough sit "
+               "in the SAME bar; across a 22-hour hold they are hours apart, so at fine "
+               "widths every convention picks the same peak bar and the same trough bar."}
+
+    P(f"\n  EXACT tick MAE: p50 {q(ex,.5)*100:.3f}%  p95 {q(ex,.95)*100:.3f}%  "
+      f"p99 {q(ex,.99)*100:.3f}%  max {ex.max()*100:.3f}%   on {len(ex)} sessions")
+    P(f"\n  grid error at p99, same ticks, only the sampling changes:")
+    P(f"  {'bar width':>10}{'bars/sess':>11}{'optimistic':>12}{'EXACT':>9}{'pessimistic':>13}"
+      f"{'understates':>13}{'overstates':>12}")
+    for w, g in per_grid.items():
+        P(f"  {str(w)+' min':>10}{g['bars_per_session_mean']:>11.0f}"
+          f"{g['optimistic_p99']*100:>11.3f}%{g['exact_tick_p99']*100:>8.3f}%"
+          f"{g['pessimistic_p99']*100:>12.3f}%"
+          f"{g['optimistic_understates_pp']:>+12.3f}{g['pessimistic_overstates_pp']:>+12.3f}")
+    if 15 in per_grid:
+        g = per_grid[15]
+        P(f"\n  AT FIFTEEN MINUTES -- the grid D259 used -- the bracket is "
+          f"[{g['optimistic_p99']*100:.3f}%, {g['pessimistic_p99']*100:.3f}%] "
+          f"around an exact {g['exact_tick_p99']*100:.3f}%.")
     P(f"\n  FOR CONTEXT ONLY, not a verdict: D259 published 3.980% on 15-minute equity-proxy")
     P(f"  bars against a 4% floor. This is ES futures, 1x size, {len(rows)} sessions of one")
     P(f"  year -- a different instrument and a far shorter sample. What it settles is the")

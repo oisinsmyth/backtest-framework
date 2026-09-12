@@ -1,0 +1,216 @@
+{
+ "spread": {
+  "n_trades": 126574779,
+  "broken_quotes_excluded": 338,
+  "spread_ticks": {
+   "mean": 1.0320230620351312,
+   "mean_trimmed_0.05pct_both_tails": 1.0294269200244826,
+   "p50": 1.0,
+   "p90": 1.0,
+   "p99": 2.0,
+   "p99.9": 4.0,
+   "max": 1075.0,
+   "share_at_one_tick": 0.9738371733597891
+  },
+  "spread_usd_per_contract": {
+   "mean": 12.90028827543914,
+   "p50": 12.5,
+   "p99": 25.0
+  },
+  "half_spread_bp_per_side": {
+   "mean": 0.18320973832562887,
+   "p50": 0.18110364561638626,
+   "p99": 0.36961744594344853
+  },
+  "by_et_hour": {
+   "0": {
+    "n": 767772,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18538866696736064
+   },
+   "1": {
+    "n": 935302,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18529054316231056
+   },
+   "2": {
+    "n": 1190003,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18462306037292048
+   },
+   "3": {
+    "n": 1857069,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18498216517582372
+   },
+   "4": {
+    "n": 1943491,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.1855190127497064
+   },
+   "5": {
+    "n": 1515637,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18652404605360282
+   },
+   "6": {
+    "n": 1577775,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18817400577585117
+   },
+   "7": {
+    "n": 2249168,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.19813849137610054
+   },
+   "8": {
+    "n": 3574500,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.19425509446626796
+   },
+   "9": {
+    "n": 17421327,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18145044787112496
+   },
+   "10": {
+    "n": 21017943,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.1808364369840227
+   },
+   "11": {
+    "n": 15265182,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18060542936182974
+   },
+   "12": {
+    "n": 11424466,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18117725905854964
+   },
+   "13": {
+    "n": 10068594,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.1817067147994777
+   },
+   "14": {
+    "n": 10060442,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18169779008861273
+   },
+   "15": {
+    "n": 14811389,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.1803668040470742
+   },
+   "16": {
+    "n": 3763933,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18958122762090773
+   },
+   "18": {
+    "n": 1353633,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.22884059209931384
+   },
+   "19": {
+    "n": 1045600,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.19465243240404076
+   },
+   "20": {
+    "n": 1607400,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18851850729594194
+   },
+   "21": {
+    "n": 1316215,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18825825596997894
+   },
+   "22": {
+    "n": 998187,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18616971859641948
+   },
+   "23": {
+    "n": 809751,
+    "spread_ticks_p50": 1.0,
+    "half_spread_bp_mean": 0.18458853931624045
+   }
+  },
+  "rth_vs_overnight": {
+   "rth_half_spread_bp": 0.18102199200227834,
+   "overnight_half_spread_bp": 0.19057282197465797,
+   "rth_trades": 97581120,
+   "overnight_trades": 28993659
+  }
+ },
+ "updated_utc": "2026-09-12T13:54:33+00:00",
+ "purpose": "D458: two instrument/cost measurements on the tick data -- the ES spread, and how wrong a bar-grid MAE is. No return, no edge, no verdict on any candidate.",
+ "source": "data/raw/databento tbbo, ES front month, 2025-09-11..2026-09-11",
+ "mae_bias": {
+  "sessions": 260,
+  "note": "MAE as a fraction of the entry price -- max drawdown from the running peak during an 18:00->16:10 ET hold on ES front month, 1x size. The EXACT column is tick-by-tick and is identical at every grid width, because the ticks do not change; only the bar conventions move.",
+  "exact_tick": {
+   "p50": 0.018512418146906528,
+   "p95": 0.03349163294548802,
+   "p99": 0.03907489542646595,
+   "max": 0.05147443075774543,
+   "mean": 0.018428866000453077
+  },
+  "by_grid_minutes": {
+   "1": {
+    "bars_per_session_mean": 1315.2115384615386,
+    "sessions": 260,
+    "exact_tick_p99": 0.03907489542646595,
+    "optimistic_p99": 0.03907489542646595,
+    "pessimistic_p99": 0.03907489542646595,
+    "optimistic_understates_pp": 0.0,
+    "pessimistic_overstates_pp": 0.0,
+    "bracket_holds_every_session": true
+   },
+   "5": {
+    "bars_per_session_mean": 263.8269230769231,
+    "sessions": 260,
+    "exact_tick_p99": 0.03907489542646595,
+    "optimistic_p99": 0.03907489542646595,
+    "pessimistic_p99": 0.04150580022039296,
+    "optimistic_understates_pp": 0.0,
+    "pessimistic_overstates_pp": 0.2430904793927012,
+    "bracket_holds_every_session": true
+   },
+   "15": {
+    "bars_per_session_mean": 87.9423076923077,
+    "sessions": 260,
+    "exact_tick_p99": 0.03907489542646595,
+    "optimistic_p99": 0.03907489542646595,
+    "pessimistic_p99": 0.04272983028573075,
+    "optimistic_understates_pp": 0.0,
+    "pessimistic_overstates_pp": 0.3654934859264797,
+    "bracket_holds_every_session": true
+   },
+   "60": {
+    "bars_per_session_mean": 22.795366795366796,
+    "sessions": 259,
+    "exact_tick_p99": 0.039112845543168,
+    "optimistic_p99": 0.039112845543168,
+    "pessimistic_p99": 0.042764363894848556,
+    "optimistic_understates_pp": 0.0,
+    "pessimistic_overstates_pp": 0.36515183516805594,
+    "bracket_holds_every_session": true
+   },
+   "240": {
+    "bars_per_session_mean": 6.945945945945946,
+    "sessions": 259,
+    "exact_tick_p99": 0.039112845543168,
+    "optimistic_p99": 0.039112845543168,
+    "pessimistic_p99": 0.042764363894848556,
+    "optimistic_understates_pp": 0.0,
+    "pessimistic_overstates_pp": 0.36515183516805594,
+    "bracket_holds_every_session": true
+   }
+  },
+  "why_conventions_agree_at_one_minute": "the bar conventions differ only when the running peak and the trough sit in the SAME bar; across a 22-hour hold they are hours apart, so at fine widths every convention picks the same peak bar and the same trough bar."
+ }
+}
