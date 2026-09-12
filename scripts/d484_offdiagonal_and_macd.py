@@ -476,6 +476,52 @@ def do_run(as_json: bool) -> int:
         verdicts[fam] = v.strip() or "FAIL on both declared statistics"
         P(f"    **{verdicts[fam]}**")
 
+    # ---- §5 TRADEABLE, and §6's Z-f. BOTH WERE DECLARED AND THE FIRST VERSION OF THIS
+    # RUNNER COMPUTED NEITHER -- the exact failure my own standing note names ("check the
+    # runner computes what the pre-reg declared"). Added here rather than quietly dropped.
+    #
+    # An edge in sigma units only becomes money once multiplied by sigma IN TICKS, so that
+    # conversion is the whole of tradeability.
+    trade = []
+    for r in ROOTS:
+        micro = MICRO_OF.get(r)
+        if micro is None or micro not in spec or r not in spec:
+            continue                      # §5 limits this to ES/NQ/YM
+        tickp = spec[r]["tick_points"]
+        cost = COMMISSION_RT / spec[micro]["tick_usd"] + CROSS_TICKS
+        for H in HOLDS:
+            f = S[r]["_fwd"][H]
+            # sigma of the forward LOG return -> ticks, via price level and tick size
+            lvl = float(np.nanmedian(np.exp(S[r]["log_close"])))
+            sig_ticks = float(np.nanstd(f, ddof=1)) * lvl / tickp
+            for x in rows:
+                if x["root"] != r or x["H"] != H or x["diagonal"]:
+                    continue
+                gross = x["edge_sigma"] * sig_ticks
+                trade.append({"root": r, "micro": micro, "family": x["family"],
+                              "L": x["L"], "H": H, "sigma_ticks": sig_ticks,
+                              "cost_ticks": cost, "gross_ticks": gross,
+                              "net_ticks": gross - cost,
+                              "net_positive": bool(gross - cost > 0),
+                              "gross_over_cost": gross / cost})
+    P(f"\n=== §5 TRADEABILITY (ES/NQ/YM, the roots with a committed micro) ===")
+    P(f"  {'root':>5}{'micro':>6}{'fam':>4}{'L':>4}{'H':>3}{'sigma tk':>10}"
+      f"{'cost tk':>9}{'gross tk':>10}{'net tk':>9}{'gross/cost':>12}")
+    best_by = {}
+    for r in ("ES", "NQ", "YM"):
+        sub = [t for t in trade if t["root"] == r]
+        if not sub:
+            continue
+        b = max(sub, key=lambda z: z["net_ticks"])
+        best_by[r] = b
+        P(f"  {b['root']:>5}{b['micro']:>6}{b['family']:>4}{b['L']:>4}{b['H']:>3}"
+          f"{b['sigma_ticks']:>10.1f}{b['cost_ticks']:>9.3f}{b['gross_ticks']:>10.3f}"
+          f"{b['net_ticks']:>9.3f}{b['gross_over_cost']:>12.2f}")
+    n_pos = sum(1 for t in trade if t["net_positive"])
+    P(f"  cells with POSITIVE net: {n_pos} of {len(trade)}")
+    P(f"  (best cells overall sit on GC and CL, which have no micro in the committed specs, "
+      f"so §5 cannot cost them -- a real limitation, not an omission)")
+
     # ---- §6 predictions
     a_off = np.array([x["edge_sigma"] for x in rows
                       if x["family"] == "A" and not x["diagonal"]], dtype=float)
@@ -499,6 +545,9 @@ def do_run(as_json: bool) -> int:
     P(f"  Z-d B1 zero state >40% and beats B2 {'HELD' if zd else 'BROKEN':>7}  "
       f"zero {zshare:.1%}")
     P(f"  Z-e R2 narrower than R1             {'HELD' if ze else 'BROKEN':>7}")
+    zf = n_pos == 0
+    P(f"  Z-f no cell TRADEABLE at micro cost {'HELD' if zf else 'BROKEN':>7}  "
+      f"{n_pos} of {len(trade)} net positive")
 
     show("A", True)
     show("B1", True)
@@ -517,7 +566,9 @@ def do_run(as_json: bool) -> int:
            "parts": res_parts, "nulls": nulls, "verdicts": verdicts,
            "impulse_zero_state_share_by_root": {r: S[r]["_zero"] for r in ROOTS},
            "predictions": {"Z-a": bool(za), "Z-b": bool(zb), "Z-c": bool(zc),
-                           "Z-d": bool(zd), "Z-e": bool(ze)},
+                           "Z-d": bool(zd), "Z-e": bool(ze), "Z-f": bool(zf)},
+           "tradeability": trade, "tradeability_best_by_root": best_by,
+           "tradeability_cells_net_positive": int(n_pos),
            "cells": rows}
     if as_json:
         OUT.write_text(json.dumps(res, indent=1, default=str) + "\n", encoding="utf-8")
