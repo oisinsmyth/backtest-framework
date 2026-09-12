@@ -31,6 +31,40 @@ across seven schemas*, so the roll gates do not transfer.
 
 ---
 
+## THE PROP TRACK IS NOW A COMPONENTS SEARCH — D466 / D467 / D468, 2026-09-12
+
+**The principal's correction, and the rule it produced.** Three prop records (C1, D463, D464) were
+written "closed / not a candidate" on standalone hurdle-P bars without a component line. The book
+is built by **layering components with net Sharpe > 0.5 and pairwise ρ < 0.3** to reach the
+account's book-level 1.5–2, never by one strategy; CLAUDE.md now carries the two-altitude rule
+(*score BOTH, every time*), `docs/COMPONENTS_PROP.md` is the append-only ledger with the
+pre-registered standard (C-a net Sharpe > 0.5 at **minimum tradable size and the cost that size
+pays**, C-b ρ < 0.3 with every prior entry, C-c skew ≥ −0.5, C-d σ ≤ 1% of $50k, C-e provenance;
+PROVISIONAL entries below a family-maximum null's p95), and **only the assembled book is tested
+against hurdle P and confirmed on the unread 2024+ slice.**
+
+**The ledger is empty after 30 constructions.** The figures that opened it (C1 0.62, NQ last-30
+0.42, book 0.91) were shell-line numbers at full-size cost in basis points; under the standard
+(dollars, one micro, $3 ≈ 2 bp of notional) they are **+0.37 and −0.01** (D466, `e5ad3bc`). D467
+(`59a151d`, RESULT + fixtures) built **hourly session tables for ES, NQ, YM, ZN, ZB, GC, CL, 6E**
+(`data/fixtures/fut_sessions_hourly.csv.gz`, 18:00→16:59, front by volume, roll nights flagged,
+five gates, usable from 2016-01-04 on all eight after two gate amendments — holiday sessions have
+no 16:00 print, and the pre-2016 index/crude sessions are partial). D468 (`cff45f2`, RESULT)
+scored **24 windows** (full session, overnight leg, day leg × 8 roots, long only): **best ES-W1
++0.39 (SE 0.32) at the 78th percentile of the common-sign family-max null (p50 +0.55, p95 +0.95)**;
+the overnight index drift is gross +0.54..+0.64 on ES/NQ/YM and the $3 micro round trip takes
+30–70% of it; treasuries, gold, crude, euro carry no session drift (gross within ±0.3); W2 ⊥ W3
+(ρ 0.00..−0.05); the three index roots are one construction (ρ 0.91).
+
+**What stands.** The overnight index drift is real on the futures and **unaffordable at micro
+size** (breakeven cost for C-a on ES-W1 is $1.48 a round trip); the plan's 16:10 flat rule forbids
+holding across sessions; the only lever inside this family is notional per contract, which the
+$50k floor forbids (one ES night σ ≈ $1,840). **Next component families must have gross mean per
+round trip large against $3 and their own σ** — anything with more than one round trip a session is
+dead on arrival at micro cost. Unread: 2024-01 onward on every futures fixture. Untried: the
+RTY/other-root event windows on the hourly grid (FOMC 14:00, CPI 08:30 — declared nowhere yet),
+and the TWS quote pull that would pin the cost lines (D336/D441, no TWS listening).
+
 ## D464 — THE PERSONAL ARMS AS GATES ON THE SESSION HOLD: BETTER NIGHTS, INSIDE THE NULL, AND LIFE BOUGHT ONLY BY NOT TRADING, 2026-09-12
 
 S1 and S2 (the book's own code on SPY) gating C1's 18:00→16:00 ES hold, 2,043 nights 2016–2023:
