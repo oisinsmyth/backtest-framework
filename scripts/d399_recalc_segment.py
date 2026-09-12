@@ -830,7 +830,7 @@ def recalc_pair(piv, k, body_log, m, carry, min_piv, max_dg, max_dh, use_body, m
             why["chain_cut"] += len(d["bx"]) - len(d["old"])
         d["pending"] = True
         d["reached"] = 0
-        # ON A BREAK, KEEP FEWER (`break_keep`, D460). The hand-drawn set ends a line on a break
+        # ON A BREAK, KEEP FEWER (`break_keep`, D480). The hand-drawn set ends a line on a break
         # and does not re-fit through the pivots that failed; carrying `carry` of them across the
         # break re-drew a same-sign line at once and overstayed the principal's end. None = the
         # old behaviour (carry). Drifts and unfits still keep `carry`.

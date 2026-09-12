@@ -4,20 +4,20 @@
 
 ## THE DAILY CHANNEL LINE IS CLOSED — the principal's decision, 2026-09-12
 
-D399 → D463 on the `worktree-signal-hunt-part2` branch, **no holdout read**.
-[Closing record](docs/decisions/D463-CLOSE-the-daily-channel-line-D399-to-D463.md);
+D399 → D483 on the `worktree-signal-hunt-part2` branch, **no holdout read**.
+[Closing record](docs/decisions/D483-CLOSE-the-daily-channel-line-D399-to-D483.md);
 FINDINGS §59. Direction: five causal cells below their rotation nulls (long +1 to +17 bp gross),
 worse as the gradient floor rises, including the cell that reproduces the principal's own
-hand-drawn lines (D460/D461). Level: +44 bp gross over 5 bars above its null (D462) — and a
-close 4% below the 30-bar low with **no lines** earns +47 (D463). The channel is not the
+hand-drawn lines (D480/D481). Level: +44 bp gross over 5 bars above its null (D482) — and a
+close 4% below the 30-bar low with **no lines** earns +47 (D483). The channel is not the
 ingredient.
 
-**Kept:** the labelled set `data/d451_hand_drawn_lines.json` and its scorer
-`scripts/d451_score_hand_lines.py`; the hand cell `scripts/d460_hand_cell.py`; the runner
-`scripts/run_d451_grow_trades.py` (three rules, two sources); five pages (Draw the Lines,
+**Kept:** the labelled set `data/d478_hand_drawn_lines.json` and its scorer
+`scripts/d478_score_hand_lines.py`; the hand cell `scripts/d480_hand_cell.py`; the runner
+`scripts/run_d478_grow_trades.py` (three rules, two sources); five pages (Draw the Lines,
 Step by Step, Grow Right, Perfect Hindsight, the hand cell). **Decision numbers on this branch
-collided with master three times** (D432→D434, D435/6→D437/8→D439/40→D450/51); the channel
-line sits at D434 and D450–D463; check master before merging.
+collided with master three times** (D432→D476, D435/6→D437/8→D439/40→D477/51); the channel
+line sits at D476 and D477–D483; check master before merging.
 
 **Owed to a different line, if picked up:** the reversal after a 4% break of a 30-bar range,
 both directions — the book and a null at the cost-clearing hold (15–20 bars), a
