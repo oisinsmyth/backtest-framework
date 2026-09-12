@@ -1,9 +1,9 @@
-"""D458 -- what the tick data settles: the ES spread, and whether a bar-based MAE is safe.
+"""D465 -- what the tick data settles: the ES spread, and whether a bar-based MAE is safe.
 
-    uv run python scripts/d458_es_spread_and_mae_bias.py --extract   # TBBO -> cached ES ticks
-    uv run python scripts/d458_es_spread_and_mae_bias.py --self-test # the MAE bounds, on a known path
-    uv run python scripts/d458_es_spread_and_mae_bias.py --spread    # measurement 1
-    uv run python scripts/d458_es_spread_and_mae_bias.py --mae       # measurement 2
+    uv run python scripts/d465_es_spread_and_mae_bias.py --extract   # TBBO -> cached ES ticks
+    uv run python scripts/d465_es_spread_and_mae_bias.py --self-test # the MAE bounds, on a known path
+    uv run python scripts/d465_es_spread_and_mae_bias.py --spread    # measurement 1
+    uv run python scripts/d465_es_spread_and_mae_bias.py --mae       # measurement 2
 
 **TWO COST/INSTRUMENT MEASUREMENTS, NOT A STUDY.** Neither computes a return, an edge or a
 Sharpe. Nothing is admitted, closed or elevated. What they produce is a spread distribution
@@ -58,8 +58,8 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"
-CACHE = REPO / "temp" / "d458_es_ticks.npz"
-OUT = REPO / "data" / "d458_es_spread_and_mae_bias.json"
+CACHE = REPO / "temp" / "d465_es_ticks.npz"
+OUT = REPO / "data" / "d465_es_spread_and_mae_bias.json"
 KEY_FILE = Path.home() / ".config" / "databento" / "key"
 
 # ES front-month instrument_ids over the tbbo window, from symbology.resolve (free call,
@@ -426,7 +426,7 @@ def save(payload: dict) -> None:
         cur = json.loads(OUT.read_text(encoding="utf-8"))
     cur.update(payload)
     cur["updated_utc"] = now()
-    cur["purpose"] = ("D458: two instrument/cost measurements on the tick data -- the ES "
+    cur["purpose"] = ("D465: two instrument/cost measurements on the tick data -- the ES "
                       "spread, and how wrong a bar-grid MAE is. No return, no edge, no "
                       "verdict on any candidate.")
     cur["source"] = "data/raw/databento tbbo, ES front month, 2025-09-11..2026-09-11"
