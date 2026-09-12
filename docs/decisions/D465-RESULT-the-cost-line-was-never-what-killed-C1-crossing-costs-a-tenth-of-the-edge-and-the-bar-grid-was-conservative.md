@@ -102,6 +102,56 @@ conservative on the path.** Neither flattered C1.
 > years. P4 is missed fourfold by the best cell anyone has built, and every rescue —
 > length, exits, gating — has now failed.**
 
+### AMENDMENT 1, 2026-09-12 — **§3 SAID "FAILS P4" WITHOUT SAYING WHICH, AND R11 REQUIRES IT**
+
+*Raised by the principal, who reported another agent working to a 1.5-Sharpe single-strategy
+bar. **No Sharpe threshold exists anywhere in hurdle P** — P1 is a sizing rule, P2 and P6 are
+venue facts, P3 is a daily-loss bound, P4 is account life, P5 is a consistency bound. The
+"Sharpe 0.9" in P4's rationale is illustrative arithmetic, not a gate.*
+
+[R11's clarification of 2026-08-29](../RULES.md#r11) is explicit, and the
+[P4 ruling of 2026-09-11](../RULES.md#r11) repeats it:
+
+> **"A closure on P1/P3/P4 closes a candidate AS A STANDALONE BOOK. It does not close it as
+> a component. A verdict must now say which."**
+
+**§3 above did not say which, and that is the error the clarification was written to
+prevent.** Corrected:
+
+| | verdict |
+|---|---|
+| **C1 as a standalone prop book** | **CLOSED.** P4 missed fourfold; D458–D460 and D464 exhaust length, exits and gating |
+| **C1 as a COMPONENT of a layered book** | **OPEN, and this record's own numbers support it** |
+
+**The component case, on the measurements in this record and D464's table.** The ungated ES
+hold is **+5.52 bp ± 2.02 per night on 2,043 real holds — 2.73 SE from zero** — and it
+**survives its own corrected cost with 90% of the gross intact**. Under
+[R15](../RULES.md#r15) that is a signal: a positive gross mean per trade, and the cost line
+does not erase it.
+
+**And C1 is not the only one.**
+[D460](D460-RESULT-conditional-exits-are-the-first-thing-in-the-chain-to-beat-a-matched-control-and-they-still-fail-P4.md)
+found **five of ten stop cells clearing their time-matched control's p95, three at
+`p` = 0.000 on 60 draws — the first constructions in this chain to beat a control** — and
+reported them as failures because none reached three years *alone*. On R11's own arithmetic,
+`k` uncorrelated arms each sized so the **book** meets the floor run at `1/sqrt(k)` of solo
+size, so a component is never required to carry the floor by itself.
+
+**What is genuinely closed by the control, not by P4:** D464's S1/S2 gating, whose higher
+mean sits **inside the rotation null**. That fails R15's criterion and is dead as a component
+too. The distinction matters: *failing P4 alone* and *failing a control* are not the same
+verdict, and only the second closes a component.
+
+**What is still missing before any of this is a book, and it is not small.** The layering
+arithmetic needs arms that are **uncorrelated with each other**, and no correlation between
+C1 and D460's stop cells has been computed — they are variants of the same overnight hold on
+the same instrument, so the prior should be that they are *highly* correlated and contribute
+far less than `sqrt(k)`. `data/futures_breadth_projection.json` measures **instrument**
+breadth, which is a different quantity and must not be substituted for it.
+
+**Nothing here reopens C1 as a standalone book, and nothing here admits anything.** It
+records that the standalone verdict was stated as if it were the only verdict.
+
 ## 4. What this record does NOT claim
 
 - **It does not close C1 or the avenue.** [R15](../RULES.md#r15): that is the principal's.
