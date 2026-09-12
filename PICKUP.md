@@ -44,6 +44,24 @@ taken at commit time against `docs/decisions/` (D485 → D486 → D492 were take
 inside one hour). The retail line's single-name herding test and the micro proxy are **dropped
 for the prop book**; Robintrack stays on disk for the personal book.
 
+**Both reported the same evening.** [D493 RESULT](docs/decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the-barrier-a-full-contract-dies-in-weeks-at-every-plan-and-nothing-the-programme-holds-is-carryable.md):
+the size lever fixes the fee (NQ last-30 net Sharpe −0.13 at one micro → +0.48 at one full contract)
+and runs into the barrier — a full contract's daily σ is 3–6× the plan's trailing drawdown, funded
+life 0.03–0.16 years on all 14 plans, **0 of 448 cells carry**; the MACD at one round trip a session
+is +0.16, not D486's +0.35 (that lane owns the reconciliation). **A prop signal needs a daily Sharpe
+near 0.1 at the size that makes the fee small; size cannot supply it.**
+[D494 RESULT](docs/decisions/D494-RESULT-outside-the-price-path-on-the-day-session-eighteen-cells-no-pick-the-largest-is-the-euro-at-one-tick-and-the-release-day-MACD-is-worse-not-better.md):
+eighteen day-session cells from outside the price path — five cross-instrument overnight
+predictors, index-level Robintrack sentiment, three release-day gates on the MACD — **no pick**; the
+largest is the euro at one ES tick a session; the MACD earns *less* on CPI and payroll days. The
+shifted-predictor [F] control was mis-designed (it measures spillover) and is withdrawn in the record.
+**Where this leaves the prop book:** nothing the programme holds carries a funded account, and the
+day session on the index futures at hourly resolution does not carry direction from bonds, FX,
+commodities, retail or the calendar. What has not been tried: a component whose gross per session
+is several full-contract ticks by construction — which on D473's arithmetic means a hold of most of
+a session with ~55% accuracy from a source not yet on the table — and the account-size lever is
+closed as a fix on its own.
+
 ---
 
 ## THE RETAIL-FLOW LINE — OPENED 2026-09-12; the futures arm reported (D485), the equity arm drafted
