@@ -135,3 +135,55 @@ guessed at again.
 **No return, no signal, no strategy, no cost model, no session-window re-test.** Ratios and ranks
 only. **Nothing here opens or admits anything**; a stage 0 that clears its abandon conditions earns
 a stage 1, not a candidate. **2024+ is not read.**
+
+---
+
+## AMENDMENT, 2026-09-12 — §4's `τ_trade` NAMED A COLUMN THAT DOES NOT HOLD WHAT I SAID IT HOLDS
+
+**Made before the runner existed and before any number was read. §4 above stands as written; this
+block replaces its `τ_trade` row and nothing else. The abandon conditions `T1`–`T3` and the
+predictions `Q1`–`Q6` are unchanged in substance.**
+
+### The error
+
+§4 defined `τ_trade = tick_usd × √n̄ / σ_session` with *"n̄ the session's trade count"* and said
+*"trade counts `_n` are summed over the session's hours"*. **`_n` is not a trade count.**
+`scripts/build_fut_sessions_hourly.py:60–64` documents the hourly aggregation as *"open at the
+earliest minute, close at the latest, max high, min low, sum volume, **count bars**"*, assigning
+`n=1` per minute row; its own self-test asserts `h09_n == 30` for a half-populated hour.
+**`_n` is a count of populated one-minute bars, capped at 60 an hour.** Using it as `n̄` would have
+computed `tick × √(minutes) / σ`, which is a *horizon* ratio wearing a per-trade label — and it
+would have been almost constant across roots, because every root has ~60 bars an hour.
+
+**Databento's `ohlcv-1m` schema carries no trade count at all**, so no column of this fixture could
+have supplied one. The quantity was not available and I wrote it into the statistic anyway.
+
+### What replaces it
+
+| | definition | status |
+|---|---|---|
+| **`τ_1h`** | `tick_usd / σ_1h`, σ_1h the dollar σ of the hour-to-hour close change | **PRIMARY. `T1`, `T2` and `T3` are decided on this.** Exact and assumption-free: every quantity is read, none is scaled |
+| **`τ_sess`** | `tick_usd / σ_session` | reported; the horizon D468 scored at, so the two records are comparable |
+| **`τ_vol`** | `tick_usd × √v̄ / σ_session`, v̄ the session's **contract volume** | **SECONDARY and FLAGGED.** Volume is not a trade count: it is trades × average trade size, and average trade size differs across roots. It is the nearest available event count and it is reported as a robustness check, not as the literature's ratio |
+
+**`T1`/`T2`/`T3` are evaluated on `τ_1h`.** If `τ_vol` puts ZB on the other side of any of the three
+bars, **that condition is reported UNRESOLVED rather than passed** — the two denominators disagreeing
+is exactly the situation where a rank is an artefact of the event count.
+
+### What this record therefore cannot settle, stated plainly
+
+**The literature's per-trade τ is not computed here.** The proper denominator is the volatility per
+*trade*, and reaching it needs one of two things this record does not spend:
+
+1. **a `trades` or `tbbo` extraction over 2016–2023** — not held; the raw archive has `ohlcv-1m`
+   and `mbo` for that span, and `mbo` is the full order book, which is a large extraction for a
+   stage-0 premise check; or
+2. **the `tbbo` / `bbo-1m` files already on disk** — but those cover **2025-09-11 → 2026-09-10**,
+   inside the slice §8 declares unread. **Those files would answer the question better than any
+   ratio here** (large-tick is *defined* by the quoted spread sitting at one tick, which `bbo-1m`
+   censuses directly rather than estimates). **Reading them is the principal's call under
+   [R15](../RULES.md#r15), not mine, and this record does not touch them.**
+
+**So `Q1`–`Q3` are now predictions about the HOURLY ratio.** Their numbers were computed from
+D468's published session σ and are unchanged; the ordering they predict is the same ordering
+`τ_1h` ranks.
