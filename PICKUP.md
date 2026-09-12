@@ -150,7 +150,7 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
-## D499 — STAGE 0, CLOSE: THE HOUR AFTER A LARGE MOVE IS WORTH A TICK ON EIGHT ROOTS; THE HOURLY CLOCK CANNOT CARRY $3, 2026-09-13
+## D499 — THE HOURLY CLOCK CLOSED BY THE PRINCIPAL, 2026-09-13: THE HOUR AFTER A LARGE MOVE IS WORTH A TICK ON EIGHT ROOTS
 
 The principal's direction for the second component: a 24-hour future, a construction that prefers
 the off-hours. Stage 0 (`467500f`, RESULT) on D467's hourly tables, eight roots, 2016–2023: fade
@@ -168,6 +168,11 @@ mechanism is backwards here. **The arithmetic closes the clock before any signal
 24-hour-market component: a session-long hold on a *state*, on a non-index root** — the
 daily-state family (D495/D498's clock) on CL/GC/6E/ZN is unscored and outside the overnight
 closure (which names only the index leg). Not started; the principal's direction.
+
+**CLOSED BY THE PRINCIPAL, 2026-09-13:** any hourly-horizon construction on the eight gated roots
+at micro cost. Recorded in `docs/BOOK_PROP.md` (closure section), the ledger, FINDINGS §70. The
+US-off-hours reversal stays as a measurement, not a trade. **Open and not started:** a session-long
+hold on a non-index root gated on a daily state (fee 4–7% of the move, not 14%).
 
 ## D498 — K8 IS THE LEDGER'S FIRST ENTRY (PROVISIONAL): LONG THE NQ DAY SESSION AFTER A DOWN DAY, NET SHARPE +0.61 AT ONE MICRO, 2026-09-12
 

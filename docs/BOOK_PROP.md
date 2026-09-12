@@ -784,3 +784,34 @@ sharpened, filtered or re-scored in-sample while it waits. ES is the same sign a
 
 **What this page needs before its first arm:** a second ledger entry, then the one-pass forward read,
 then hurdle P (all six) on the assembled book on that account's own floor.
+
+---
+
+## THE HOURLY CLOCK CLOSED FOR THE PROP BOOK BY THE PRINCIPAL, 2026-09-13
+
+**Closed by the principal, in writing, after D499.** The construction tested was the principal's own
+direction of 2026-09-12: a 24-hour future, a rule not limited to the off-hours but preferring them.
+Stage 0 faded the hour after a top-decile hourly move on all eight gated roots, every entry hour
+from 18:00 to 14:00 ET, thin against thick by volume, with an exact enumerated rotation per root
+and a sixteen-cell family bar. **Fifteen of sixteen component lines are negative at one micro; the
+best gross cell is +$2.46 a trade against a $3 fee; the family p95 of the z is +2.70 and the
+observed maximum +1.84, which 43% of rotations reach.**
+
+**What closes it is arithmetic, not the signal.** The fee is **14.5% of the expected hourly move on
+MNQ's thin hours and 7.1% on its thick hours, against 2.4% for the whole day session**; break-even
+accuracy rises to 57.2% where no cell in the family exceeds 53.1%; on ZN and ZB one crossed tick is
+14–80% of an hourly move in every hour. Shortening the horizon multiplies cost against move by
+three to six times, so the accuracy required passes anything this programme has measured
+(FINDINGS §69, §70).
+
+**What is real and is kept as a measurement, not a trade.** The next-hour reversal of the last hour
+is genuine on the **US clock** and absent on the volume partition: pooled β −0.043 on ES, −0.037 on
+YM, −0.028 on NQ over 18:00 → 08:00, outside exact rotation bands of ±0.014, flat inside the day
+session; crude *continues* at +0.030. Trading it earns 1.7 ticks on ES and 4.9 on NQ, clears its own
+null on both, and is net negative after the fee. The thin-book mechanism is refuted on its own
+terms: low-relative-volume moves revert **less**, on seven of eight roots.
+
+**Closed for the prop book:** any hourly-horizon construction on these eight roots at micro cost.
+**Spent:** nothing — 2024+ is unread on every root under D499.
+**Open:** a session-long hold on a non-index root, gated on a daily state, which the overnight
+closure does not name and whose fee is 4–7% of the move rather than 14%. Not started.

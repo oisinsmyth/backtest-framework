@@ -170,3 +170,8 @@ entered* above failed **C-a**, not C-b — with one exception, **K7**, which pas
 estimate and was held back for the family-bar failure and in-sample selection, then **removed on
 its forward read**. So the vault starts empty and no prior verdict is reversed by this amendment.
 The routing rule takes effect for constructions scored from here.
+
+**Line closed by the principal, 2026-09-13:** the **hourly clock** (any hourly-horizon construction
+on the eight gated roots at micro cost) is closed for the prop book after D499. The reversal it
+measured is real on the US off-hours clock and worth a tick; the fee is 7–24% of an hourly move on
+the micros. See BOOK_PROP's closure section and FINDINGS §70. Nothing spent; 2024+ unread.
