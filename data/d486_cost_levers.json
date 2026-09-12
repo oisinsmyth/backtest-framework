@@ -1,0 +1,259 @@
+{
+ "generated_utc": "2026-09-12T19:16:47+00:00",
+ "purpose": "D486: where cost cutting takes the D484 MACD edge. Pure arithmetic on committed numbers -- no new measurement, no signal, no backtest, nothing admitted.",
+ "inputs": {
+  "crossing_ticks_D465": 1.009,
+  "commission_rt_D466": 3.0,
+  "volume_clock_lift_D472": 0.104,
+  "C_a_sharpe": 0.5,
+  "C_d_fraction": 0.01,
+  "account": 50000.0,
+  "source_edge": "data/d484_offdiagonal_and_macd.json"
+ },
+ "structural_point": "commission is FIXED per contract (beaten by trading less often or paying less); crossing is PROPORTIONAL to notional (beaten by passive execution, not by holding longer). At micro size commission is 70-86% of cost because every CME micro's tick is $0.50 except MES's $1.25.",
+ "sharpe_is_scale_free": "A Sharpe does not care about contract size -- doubling the contract doubles edge and risk alike. Size enters ONLY through the fee's size in ticks, so at zero commission a micro and its full contract give identical Sharpe.",
+ "by_root": {
+  "ES": {
+   "cell": "B1 H=5",
+   "H": 5,
+   "sigma_ticks": 63.670621322515835,
+   "gross_ticks": 0.9223144838468151,
+   "commission_ticks_micro": 2.4,
+   "crossing_ticks": 1.009,
+   "commission_share_of_cost": 0.7040187738339689,
+   "net_ticks_micro": -2.4866855161531847,
+   "breakeven_commission_micro_usd": 0.011543987708605152,
+   "full_daily_sigma_usd": 1706.97836514821,
+   "account_for_C_d_usd": 170697.836514821,
+   "scenarios": [
+    {
+     "scenario": "as measured (micro, $3, crossing)",
+     "gross_ticks": 0.9223144838468151,
+     "cost_ticks": 3.409,
+     "net_ticks": -2.4866855161531847,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -1.3297223336973867,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "+ volume-clock exit (D472)",
+     "gross_ticks": 1.018235190166884,
+     "cost_ticks": 3.409,
+     "net_ticks": -2.390764809833116,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -1.2784299991302335,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "+ passive fills (no crossing paid)",
+     "gross_ticks": 1.018235190166884,
+     "cost_ticks": 2.4,
+     "net_ticks": -1.381764809833116,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.7388805362065057,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "micro at ZERO commission",
+     "gross_ticks": 1.018235190166884,
+     "cost_ticks": 1.009,
+     "net_ticks": 0.009235190166884122,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.004938396327592486,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL contract, $3, crossing",
+     "gross_ticks": 0.9223144838468151,
+     "cost_ticks": 1.2489999999999999,
+     "net_ticks": -0.32668551615318475,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.17469077778534348,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL + volume clock",
+     "gross_ticks": 1.018235190166884,
+     "cost_ticks": 1.2489999999999999,
+     "net_ticks": -0.23076480983311587,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.1233984432181901,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL + volume clock + passive",
+     "gross_ticks": 1.018235190166884,
+     "cost_ticks": 0.24,
+     "net_ticks": 0.778235190166884,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.4161510197055375,
+     "clears_C_a": false
+    }
+   ]
+  },
+  "NQ": {
+   "cell": "B2 H=5",
+   "H": 5,
+   "sigma_ticks": 216.97424235952337,
+   "gross_ticks": 3.848904685718081,
+   "commission_ticks_micro": 6.0,
+   "crossing_ticks": 1.009,
+   "commission_share_of_cost": 0.8560422314167498,
+   "net_ticks_micro": -3.1600953142819193,
+   "breakeven_commission_micro_usd": 1.620095386516381,
+   "full_daily_sigma_usd": 2326.7895290423794,
+   "account_for_C_d_usd": 232678.95290423793,
+   "scenarios": [
+    {
+     "scenario": "as measured (micro, $3, crossing)",
+     "gross_ticks": 3.848904685718081,
+     "cost_ticks": 7.009,
+     "net_ticks": -3.1600953142819193,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.49587382867079616,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "+ volume-clock exit (D472)",
+     "gross_ticks": 4.249190773032762,
+     "cost_ticks": 7.009,
+     "net_ticks": -2.7598092269672385,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.43306199075460744,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "+ passive fills (no crossing paid)",
+     "gross_ticks": 4.249190773032762,
+     "cost_ticks": 6.0,
+     "net_ticks": -1.7508092269672382,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.274732369851218,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "micro at ZERO commission",
+     "gross_ticks": 4.249190773032762,
+     "cost_ticks": 1.009,
+     "net_ticks": 3.240190773032762,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.5084421969761519,
+     "clears_C_a": true
+    },
+    {
+     "scenario": "FULL contract, $3, crossing",
+     "gross_ticks": 3.848904685718081,
+     "cost_ticks": 1.609,
+     "net_ticks": 2.239904685718081,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.3514799402868872,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL + volume clock",
+     "gross_ticks": 4.249190773032762,
+     "cost_ticks": 1.609,
+     "net_ticks": 2.640190773032762,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.414291778203076,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL + volume clock + passive",
+     "gross_ticks": 4.249190773032762,
+     "cost_ticks": 0.6,
+     "net_ticks": 3.6491907730327617,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.5726213991064653,
+     "clears_C_a": true
+    }
+   ]
+  },
+  "YM": {
+   "cell": "B2 H=5",
+   "H": 5,
+   "sigma_ticks": 136.9523316250113,
+   "gross_ticks": 1.977914861269466,
+   "commission_ticks_micro": 6.0,
+   "crossing_ticks": 1.009,
+   "commission_share_of_cost": 0.8560422314167498,
+   "net_ticks_micro": -5.031085138730535,
+   "breakeven_commission_micro_usd": 0.5873090034207453,
+   "full_daily_sigma_usd": 1468.6501390105177,
+   "account_for_C_d_usd": 146865.01390105177,
+   "scenarios": [
+    {
+     "scenario": "as measured (micro, $3, crossing)",
+     "gross_ticks": 1.977914861269466,
+     "cost_ticks": 7.009,
+     "net_ticks": -5.031085138730535,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -1.250752623287255,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "+ volume-clock exit (D472)",
+     "gross_ticks": 2.1836180068414905,
+     "cost_ticks": 7.009,
+     "net_ticks": -4.82538199315851,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -1.1996138049512233,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "+ passive fills (no crossing paid)",
+     "gross_ticks": 2.1836180068414905,
+     "cost_ticks": 6.0,
+     "net_ticks": -3.8163819931585095,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": -0.9487714196412269,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "micro at ZERO commission",
+     "gross_ticks": 2.1836180068414905,
+     "cost_ticks": 1.009,
+     "net_ticks": 1.1746180068414906,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.29201584010326354,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL contract, $3, crossing",
+     "gross_ticks": 1.977914861269466,
+     "cost_ticks": 1.609,
+     "net_ticks": 0.36891486126946593,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.0917140572617831,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL + volume clock",
+     "gross_ticks": 2.1836180068414905,
+     "cost_ticks": 1.609,
+     "net_ticks": 0.5746180068414906,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.14285287559781484,
+     "clears_C_a": false
+    },
+    {
+     "scenario": "FULL + volume clock + passive",
+     "gross_ticks": 2.1836180068414905,
+     "cost_ticks": 0.6,
+     "net_ticks": 1.5836180068414905,
+     "trades_per_year": 1159.1999999999998,
+     "sharpe": 0.393695260907811,
+     "clears_C_a": false
+    }
+   ]
+  }
+ },
+ "limitations": [
+  "the crossing of 1.009 ticks is an ES measurement (D465) assumed for NQ and YM",
+  "passive fills are NOT measured anywhere: D471 measured the QUOTED spread and said explicitly that queue position, partial fills and latency need mbp-10, which was not bought. Every 'passive' row is therefore an UPPER BOUND.",
+  "the volume-clock lift is measured on ES (D472, 8 of 8 years) and assumed to transfer to NQ and YM, which is untested",
+  "D484's edge is in-sample (2016-2023); 2024+ is sealed",
+  "holding longer than H=5 is untested -- D484's grid stopped there and the edge was still rising with H at its edge, which is a ceiling of my design and not of the effect",
+  "no cell of D484 was tradeable as measured; every positive row here is a CONDITIONAL on a cost change that has not been obtained"
+ ]
+}
