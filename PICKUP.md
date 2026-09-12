@@ -81,6 +81,26 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D487 — THE ORB LINE CLOSED AT STAGE 0: CONTINUATION LIVES IN 2018 AND 2022, NOT IN THE CRASH YEAR, 2026-09-12
+
+The principal asked about opening-range breakouts; the literature says an ORB is a wrapper on
+intraday continuation (hedging demand, delayed rebalancing; late in the day; regime-dependent;
+flat in the 0DTE era). The other session had already measured the pooled premise on ES (their
+D471/D473: variance ratio 0.82–1.02; D474: an unresolved volatility gradient; D475: no transfer).
+D487 (`554d916`, RESULT) added the by-year split with a null that destroys both lag-structured
+and day-common dependence (the spec's within-day permutation is blind to a trend day — proved in
+the self-test and amended before the numbers). **CLOSE by the declared rule:** ES clears the
+calm-year pooled null on neither the variance ratio nor the trend-day share; one calm year of five
+clears on each. **Continuation is 2018 and 2022** (VR 1.32 / 1.23 on ES, the same two on NQ);
+**2020 is the most mean-reverting year** (0.88); the **quiet-vol tercile trends most** (1.18);
+rest-of-day → last-30 is +3.1 SE in the calm years and is 2018 alone; **the first half-hour
+reverses into the last** (ES −0.10, −4.3 SE, 2020–2022); **the next-day reversal after
+top-decile days is −24.5 bp on NQ** (2.2 SE, outside its rotation null, calm and stress alike).
+2024+ day session still unread. Both sessions now converge on intraday continuation; the
+first-30 → last-30 reversal and the quiet-tercile trending are measured, unconstructed facts for
+whoever takes that lane. Note: both sessions have a D473 on master (theirs cost-structure, mine
+K7) — a clash recorded, not resolved.
+
 ## THE OVERNIGHT LINE IS CLOSED FOR THE PROP BOOK (PRINCIPAL, 2026-09-12); OPEN FOR THE PERSONAL BOOK
 
 After D466–D473 and the literature read (NY Fed: the index overnight drift was compensation for
