@@ -1,0 +1,379 @@
+{
+ "verified_utc": "2026-09-12T03:46:37+00:00",
+ "items": [
+  {
+   "key": "ohlcv-1m#1",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260911-9HWUUEP58U",
+   "window": [
+    "2010-06-06",
+    "2014-06-30"
+   ],
+   "files": 5,
+   "size_ok": 5,
+   "hash_ok": 0,
+   "hash_skipped": 5,
+   "header_ok": 1,
+   "bytes": 1610267235,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1275782400",
+    "end": "1293840000"
+   }
+  },
+  {
+   "key": "ohlcv-1m#2",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260911-VLQEMCFLUB",
+   "window": [
+    "2014-06-30",
+    "2018-07-24"
+   ],
+   "files": 5,
+   "size_ok": 5,
+   "hash_ok": 0,
+   "hash_skipped": 5,
+   "header_ok": 1,
+   "bytes": 2398017009,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1404086400",
+    "end": "1420070400"
+   }
+  },
+  {
+   "key": "ohlcv-1m#3",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260911-BLBKYJ9XSK",
+   "window": [
+    "2018-07-24",
+    "2022-08-17"
+   ],
+   "files": 5,
+   "size_ok": 5,
+   "hash_ok": 0,
+   "hash_skipped": 5,
+   "header_ok": 1,
+   "bytes": 3253483622,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1532390400",
+    "end": "1546300800"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#1",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260911-NF533R6P5T",
+   "window": [
+    "2022-08-17",
+    "2023-08-23"
+   ],
+   "files": 2,
+   "size_ok": 2,
+   "hash_ok": 0,
+   "hash_skipped": 2,
+   "header_ok": 1,
+   "bytes": 1083351310,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1660694400",
+    "end": "1672531200"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#2",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260911-H8W497MS6J",
+   "window": [
+    "2023-08-23",
+    "2024-08-29"
+   ],
+   "files": 2,
+   "size_ok": 2,
+   "hash_ok": 0,
+   "hash_skipped": 2,
+   "header_ok": 1,
+   "bytes": 1129030201,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1692748800",
+    "end": "1704067200"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#3",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260911-QK63AMNYC5",
+   "window": [
+    "2024-08-29",
+    "2025-09-04"
+   ],
+   "files": 2,
+   "size_ok": 2,
+   "hash_ok": 0,
+   "hash_skipped": 2,
+   "header_ok": 1,
+   "bytes": 1249053246,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1724889600",
+    "end": "1735689600"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#4@2026-09-10#1",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260912-4RLBBNY39K",
+   "window": [
+    "2025-09-04",
+    "2025-12-05"
+   ],
+   "files": 1,
+   "size_ok": 1,
+   "hash_ok": 0,
+   "hash_skipped": 1,
+   "header_ok": 1,
+   "bytes": 329623278,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1756944000",
+    "end": "1764892800"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#4@2026-09-10#2",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260912-9CK98MDQGF",
+   "window": [
+    "2025-12-05",
+    "2026-03-08"
+   ],
+   "files": 2,
+   "size_ok": 2,
+   "hash_ok": 0,
+   "hash_skipped": 2,
+   "header_ok": 1,
+   "bytes": 373428659,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1764892800",
+    "end": "1767225600"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#4@2026-09-10#3",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260912-HHFJ99RPK9",
+   "window": [
+    "2026-03-08",
+    "2026-06-09"
+   ],
+   "files": 1,
+   "size_ok": 1,
+   "hash_ok": 0,
+   "hash_skipped": 1,
+   "header_ok": 1,
+   "bytes": 424665597,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1772928000",
+    "end": "1780963200"
+   }
+  },
+  {
+   "key": "ohlcv-1m#4#4@2026-09-10#4",
+   "schema": "ohlcv-1m",
+   "job_id": "GLBX-20260912-FTF3X6U8RP",
+   "window": [
+    "2026-06-09",
+    "2026-09-10"
+   ],
+   "files": 1,
+   "size_ok": 1,
+   "hash_ok": 0,
+   "hash_skipped": 1,
+   "header_ok": 1,
+   "bytes": 369212683,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "ohlcv-1m",
+    "stype_in": "raw_symbol",
+    "start": "1780963200",
+    "end": "1788998400"
+   }
+  },
+  {
+   "key": "definition",
+   "schema": "definition",
+   "job_id": "GLBX-20260911-LEFUEVLPSR",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "files": 17,
+   "size_ok": 17,
+   "hash_ok": 0,
+   "hash_skipped": 17,
+   "header_ok": 1,
+   "bytes": 2665489392,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "definition",
+    "stype_in": "parent",
+    "start": "1275782400",
+    "end": "1293840000"
+   }
+  },
+  {
+   "key": "statistics",
+   "schema": "statistics",
+   "job_id": "GLBX-20260911-SDNLQ6M99S",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "files": 17,
+   "size_ok": 17,
+   "hash_ok": 0,
+   "hash_skipped": 17,
+   "header_ok": 1,
+   "bytes": 10872176682,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "statistics",
+    "stype_in": "parent",
+    "start": "1275782400",
+    "end": "1293840000"
+   }
+  },
+  {
+   "key": "status",
+   "schema": "status",
+   "job_id": "GLBX-20260911-HSEKYEBHQ4",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "files": 17,
+   "size_ok": 17,
+   "hash_ok": 0,
+   "hash_skipped": 17,
+   "header_ok": 1,
+   "bytes": 562810781,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "status",
+    "stype_in": "parent",
+    "start": "1275782400",
+    "end": "1293840000"
+   }
+  },
+  {
+   "key": "tbbo",
+   "schema": "tbbo",
+   "job_id": "GLBX-20260911-6DA3JPNQE3",
+   "window": [
+    "2025-09-11",
+    "2026-09-11"
+   ],
+   "files": 13,
+   "size_ok": 13,
+   "hash_ok": 0,
+   "hash_skipped": 13,
+   "header_ok": 1,
+   "bytes": 37302583944,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "tbbo",
+    "stype_in": "raw_symbol",
+    "start": "1757548800",
+    "end": "1759276800"
+   }
+  },
+  {
+   "key": "bbo-1m",
+   "schema": "bbo-1m",
+   "job_id": "GLBX-20260911-V8JK3FM76H",
+   "window": [
+    "2025-09-11",
+    "2026-09-11"
+   ],
+   "files": 13,
+   "size_ok": 13,
+   "hash_ok": 0,
+   "hash_skipped": 13,
+   "header_ok": 1,
+   "bytes": 8000707206,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "bbo-1m",
+    "stype_in": "parent",
+    "start": "1757548800",
+    "end": "1759276800"
+   }
+  },
+  {
+   "key": "mbo",
+   "schema": "mbo",
+   "job_id": "GLBX-20260911-NKFKU4AMHN",
+   "window": [
+    "2026-08-11",
+    "2026-09-10"
+   ],
+   "files": 26,
+   "size_ok": 26,
+   "hash_ok": 0,
+   "hash_skipped": 26,
+   "header_ok": 1,
+   "bytes": 39393800357,
+   "header": {
+    "dataset": "GLBX.MDP3",
+    "schema": "mbo",
+    "stype_in": "parent",
+    "start": "1786406400",
+    "end": "1786492800"
+   }
+  }
+ ],
+ "failures": [],
+ "coverage": {
+  "schema": "ohlcv-1m",
+  "slices": 10,
+  "first": "2010-06-06",
+  "last": "2026-09-10",
+  "gaps": [],
+  "overlaps": [],
+  "known_gap_at_end": {
+   "from": "2026-09-10",
+   "to": "2026-09-11",
+   "why": "the final slice was resubmitted ending 2026-09-10 while chasing a stall; the dataset's last session is therefore not in this pull"
+  }
+ },
+ "summary": {
+  "files": 129,
+  "size_ok": 129,
+  "hash_ok": 0,
+  "header_ok": 16,
+  "total_bytes": 111017701202,
+  "all_passed": true
+ }
+}
