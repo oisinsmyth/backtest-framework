@@ -196,7 +196,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   function save(k){
     var b = body(k);
     dirty[k] = true;
-    try { localStorage.setItem('draw2:' + k, JSON.stringify(b)); } catch (e) {}
+    try { localStorage.setItem('draw3:' + k, JSON.stringify(b)); } catch (e) {}
     if (!db){ status('saved in this browser only (database unavailable) -- use copy all as JSON'); return; }
     if (saveTimers[k]) clearTimeout(saveTimers[k]);
     saveTimers[k] = setTimeout(function(){
@@ -207,7 +207,7 @@ textarea{width:100%;min-height:90px;font:12px "IBM Plex Mono",monospace;padding:
   function load(){
     D.names.forEach(function(nm){
       var k = key(nm), local = null;
-      try { local = JSON.parse(localStorage.getItem('draw2:' + k) || 'null'); } catch (e) {}
+      try { local = JSON.parse(localStorage.getItem('draw3:' + k) || 'null'); } catch (e) {}
       // a fresh name opens 30 bars in: nothing can be drawn on one bar, and a chartist looks first
       STATE[k] = {symbol: nm.symbol, start: nm.start, n: nm.n, cursor: (local && local.cursor != null) ? local.cursor : 30, lines: (local && local.lines) ? JSON.parse(JSON.stringify(local.lines)) : []};
     });
