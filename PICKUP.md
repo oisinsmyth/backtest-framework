@@ -55,6 +55,21 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## THE OVERNIGHT LINE IS CLOSED FOR THE PROP BOOK (PRINCIPAL, 2026-09-12); OPEN FOR THE PERSONAL BOOK
+
+After D466–D473 and the literature read (NY Fed: the index overnight drift was compensation for
+closing order imbalances at 2–3 a.m. ET and has been ~zero since 2021 because the imbalances
+compressed), the principal closed **any gate, window or size on the index overnight leg at micro
+cost** for the prop book. The unconditional drift is real (strong even in 2024–2026, both sides)
+and unaffordable at $3 a micro round trip; it is the personal book's at full size if taken there
+(BOOK_PROP closure section). **Next for the prop book, in the order recommended:** (1) the
+account-size lever through D440's lifecycle — which plan and contract size makes a gross-positive
+session hold carryable (the cost is per contract, the floor is per account; 2016–2023, no new
+data); (2) declared calendar/event constructions on the DAY session (turn-of-month, FOMC 14:00
+day, release days) with calendar-matched controls — one stage 0, cells named first, 2024+ on the
+day leg still clean; (3) the closing-imbalance observable measured directly from the last minutes
+of the day session as a dormant-channel monitor, not a strategy.
+
 ## THE PROP TRACK IS NOW A COMPONENTS SEARCH — D466 / D467 / D468, 2026-09-12
 
 **The principal's correction, and the rule it produced.** Three prop records (C1, D463, D464) were

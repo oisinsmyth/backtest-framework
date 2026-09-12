@@ -70,6 +70,10 @@ C-a on the point estimate is under that ceiling, and the ledger says so in the r
 
 | **K7 (candidate, D473): long the NQ overnight leg 18:00→09:00 on nights after a negative overnight leg, 1 MNQ, $3** (ES 1 MES the check root; 09:30 exit the declared secondary) | D473 (D470, D472) | **+0.62 (0.25)**; gross +0.80; 887 of 2,009 nights; diff vs other side +$14.89 (2.1 SE); N1/N2 cleared; ES +0.70 (0.26), 2.5 SE; 09:30 exit +0.45 (worse) | **C-a passes on the point estimate; NOT entered: the D470/D472 family bar failed (z 2.78 vs p95 3.13) and the cell was selected in-sample.** Replicates on SPY/IWM cash 2010–2015. 71% of the gated P&L follows falls > 1% (16% of nights). ρ(K1) 0.39. Worst night −$794 at one micro, none below −2%. **Forward read run 2026-09-12 on the principal's word: REMOVED** — 2024-01→2026-09: NQ gated +$30.76 vs other +$21.29 (+0.4 SE; in bp −1.02), SPY cash gap after a down gap +0.71 vs +9.22 bp (−1.6 SE), IWM −1.5 SE, pooled z −1.30; the gated nights paid (forward net Sharpe +0.76) and so did the others; the reversal structure did not carry. **The 2024+ slice is spent for the overnight leg on NQ/ES and the cash gap on SPY/IWM.** |
 
+**Line closed by the principal, 2026-09-12:** the index overnight leg at micro cost (any gate,
+window or size) is closed for the prop book after D466–D473; open for the personal book at full
+size. See BOOK_PROP's closure section.
+
 **Correction recorded 2026-09-12 (D466 RESULT):** the figures that motivated this ledger (C1 0.62,
 NQ last-30 0.42, equal-risk book 0.91) were computed at full-size cost in basis points (1.1 bp a
 round trip); at the standard's minimum size and $3 they are 0.37 and −0.01 and there is no book.

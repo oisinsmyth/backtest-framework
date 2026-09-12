@@ -677,3 +677,29 @@ partner.**
    instrument or the settlement rule was hiding one.
 
 **Admitted arms: still none.**
+
+## THE OVERNIGHT LINE CLOSED FOR THE PROP BOOK BY THE PRINCIPAL, 2026-09-12 (OPEN FOR THE PERSONAL BOOK)
+
+**Closed by the principal, in writing, after D466–D473.** The chain: the components ledger
+(D466) scored every overnight and session-window construction at minimum size and the cost that
+size pays — the $3 micro round trip is ~2 bp of notional and takes 30–70% of the gross overnight
+mean on ES/NQ, so no window on eight roots clears net Sharpe 0.5 (D468). The one conditioning
+that concentrated the drift in-sample — the leg after a **negative** overnight leg, the
+principal's continuation hypothesis reversed (D470) — cleared the single-cell nulls, failed the
+family-maximum bar on every scale (D472), replicated on SPY/IWM cash 2010–2015, and **failed
+its declared forward test 2024–2026 (D473: REMOVED; the drift was strong on both sides of the
+gate and the cash sign reversed)**. The literature explains it: the index overnight drift was
+compensation for closing order imbalances, concentrated at 2–3 a.m. ET, and has been ~zero since
+2021 because the imbalances compressed (Boyarchenko–Larsen–Whelan, NY Fed, RFS 2023 and
+July 2026). **What the prop book cannot carry is the cost per round trip against a drift whose
+gateable structure is gone**; the unconditional drift is real and is the personal book's to
+consider, at full size, where the cost is 0.34 bp.
+
+**Spent by this line:** the 2024+ futures slice for the 18:00 → 09:00 leg on NQ and ES (both
+sides), the cash 2024+ reserve on SPY and IWM (gap and close-to-close). **Unread:** 2024+ on the
+day leg and full session beyond what the leg implies, every other root, the last-30 constructions.
+
+**Closed for the prop book:** any gate, window or size on the index overnight leg at micro cost.
+**Open for the personal book:** the unconditional overnight hold at full size (C1 as a personal
+component; D466's ES lens net +0.48 at one ES and $17) — a separate record, under BOOK.md's
+standards, if the principal takes it there.
