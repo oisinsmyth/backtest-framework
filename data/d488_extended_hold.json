@@ -1,0 +1,891 @@
+{
+ "generated_utc": "2026-09-12T20:59:09+00:00",
+ "pre_registration": "docs/decisions/D488-PRE-REG-does-the-MACD-edge-keep-growing-with-the-holding-period-and-does-it-cross-its-cost.md",
+ "purpose": "D488: does the D484 MACD edge keep growing with the hold, and does it cross its cost? Signal code imported from D484 unchanged.",
+ "constraints_enforced": {
+  "P2_last_exit_segment_index": 21,
+  "closure_index_roots_day_session_only": true,
+  "index_roots": [
+   "ES",
+   "NQ",
+   "YM"
+  ],
+  "holds_index": [
+   5,
+   7
+  ],
+  "holds_nonindex": [
+   5,
+   8,
+   11,
+   16,
+   22
+  ]
+ },
+ "S1_cells": [
+  {
+   "root": "ES",
+   "family": "B1",
+   "H": 5,
+   "n": 4744,
+   "edge_sigma": 0.016660158703807076,
+   "sigma_log": 0.007042373759267719,
+   "index_root": true,
+   "entries_per_session": 3
+  },
+  {
+   "root": "ES",
+   "family": "B2",
+   "H": 5,
+   "n": 5644,
+   "edge_sigma": 0.018717265299165002,
+   "sigma_log": 0.007042373759267719,
+   "index_root": true,
+   "entries_per_session": 3
+  },
+  {
+   "root": "ES",
+   "family": "B1",
+   "H": 7,
+   "n": 1590,
+   "edge_sigma": 0.019433453921792344,
+   "sigma_log": 0.008898653647301259,
+   "index_root": true,
+   "entries_per_session": 1
+  },
+  {
+   "root": "ES",
+   "family": "B2",
+   "H": 7,
+   "n": 1876,
+   "edge_sigma": -0.004760537627104558,
+   "sigma_log": 0.008898653647301259,
+   "index_root": true,
+   "entries_per_session": 1
+  },
+  {
+   "root": "NQ",
+   "family": "B1",
+   "H": 5,
+   "n": 4714,
+   "edge_sigma": -0.00287957090722559,
+   "sigma_log": 0.008924055260824107,
+   "index_root": true,
+   "entries_per_session": 3
+  },
+  {
+   "root": "NQ",
+   "family": "B2",
+   "H": 5,
+   "n": 5635,
+   "edge_sigma": 0.026849736285692396,
+   "sigma_log": 0.008924055260824107,
+   "index_root": true,
+   "entries_per_session": 3
+  },
+  {
+   "root": "NQ",
+   "family": "B1",
+   "H": 7,
+   "n": 1581,
+   "edge_sigma": -0.024203978582473695,
+   "sigma_log": 0.011387681304813395,
+   "index_root": true,
+   "entries_per_session": 1
+  },
+  {
+   "root": "NQ",
+   "family": "B2",
+   "H": 7,
+   "n": 1873,
+   "edge_sigma": 0.015031614762099174,
+   "sigma_log": 0.011387681304813395,
+   "index_root": true,
+   "entries_per_session": 1
+  },
+  {
+   "root": "YM",
+   "family": "B1",
+   "H": 5,
+   "n": 4691,
+   "edge_sigma": 0.019896323576839972,
+   "sigma_log": 0.006731859933933361,
+   "index_root": true,
+   "entries_per_session": 3
+  },
+  {
+   "root": "YM",
+   "family": "B2",
+   "H": 5,
+   "n": 5630,
+   "edge_sigma": 0.00474968827612258,
+   "sigma_log": 0.006731859933933361,
+   "index_root": true,
+   "entries_per_session": 3
+  },
+  {
+   "root": "YM",
+   "family": "B1",
+   "H": 7,
+   "n": 1576,
+   "edge_sigma": 0.021670363295387005,
+   "sigma_log": 0.00849902488253384,
+   "index_root": true,
+   "entries_per_session": 1
+  },
+  {
+   "root": "YM",
+   "family": "B2",
+   "H": 7,
+   "n": 1871,
+   "edge_sigma": 0.010966467061585024,
+   "sigma_log": 0.00849902488253384,
+   "index_root": true,
+   "entries_per_session": 1
+  },
+  {
+   "root": "ZN",
+   "family": "B1",
+   "H": 5,
+   "n": 28605,
+   "edge_sigma": -0.003476838975870504,
+   "sigma_log": 0.0016619277046280695,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "ZN",
+   "family": "B2",
+   "H": 5,
+   "n": 34311,
+   "edge_sigma": -0.0025031170514528923,
+   "sigma_log": 0.0016619277046280695,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "ZN",
+   "family": "B1",
+   "H": 8,
+   "n": 23833,
+   "edge_sigma": -0.010058091178463588,
+   "sigma_log": 0.0021135270836916964,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "ZN",
+   "family": "B2",
+   "H": 8,
+   "n": 28512,
+   "edge_sigma": -0.006141038349604402,
+   "sigma_log": 0.0021135270836916964,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "ZN",
+   "family": "B1",
+   "H": 11,
+   "n": 18941,
+   "edge_sigma": -0.008613187128701323,
+   "sigma_log": 0.002417469700569803,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "ZN",
+   "family": "B2",
+   "H": 11,
+   "n": 22715,
+   "edge_sigma": -0.01087701880351446,
+   "sigma_log": 0.002417469700569803,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "ZN",
+   "family": "B1",
+   "H": 16,
+   "n": 10855,
+   "edge_sigma": -0.011285794329399365,
+   "sigma_log": 0.0029249148830477554,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "ZN",
+   "family": "B2",
+   "H": 16,
+   "n": 13153,
+   "edge_sigma": -0.016523532562563052,
+   "sigma_log": 0.0029249148830477554,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "ZN",
+   "family": "B1",
+   "H": 22,
+   "n": 1508,
+   "edge_sigma": -0.0233306777080116,
+   "sigma_log": 0.003320238816170361,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "ZN",
+   "family": "B2",
+   "H": 22,
+   "n": 1837,
+   "edge_sigma": -0.027301255357588473,
+   "sigma_log": 0.003320238816170361,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "ZB",
+   "family": "B1",
+   "H": 5,
+   "n": 28799,
+   "edge_sigma": -0.0017214362536004226,
+   "sigma_log": 0.0031881493479228736,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "ZB",
+   "family": "B2",
+   "H": 5,
+   "n": 33843,
+   "edge_sigma": 0.009315568949501238,
+   "sigma_log": 0.0031881493479228736,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "ZB",
+   "family": "B1",
+   "H": 8,
+   "n": 24033,
+   "edge_sigma": -0.007396639361331437,
+   "sigma_log": 0.004032989892760294,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "ZB",
+   "family": "B2",
+   "H": 8,
+   "n": 28140,
+   "edge_sigma": 0.0011824293229584404,
+   "sigma_log": 0.004032989892760294,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "ZB",
+   "family": "B1",
+   "H": 11,
+   "n": 19151,
+   "edge_sigma": -0.014176418546599505,
+   "sigma_log": 0.0046343402757662595,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "ZB",
+   "family": "B2",
+   "H": 11,
+   "n": 22437,
+   "edge_sigma": -0.015129049673365159,
+   "sigma_log": 0.0046343402757662595,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "ZB",
+   "family": "B1",
+   "H": 16,
+   "n": 11055,
+   "edge_sigma": -0.0068305004686907075,
+   "sigma_log": 0.00563757908674802,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "ZB",
+   "family": "B2",
+   "H": 16,
+   "n": 13031,
+   "edge_sigma": -0.029448454634508642,
+   "sigma_log": 0.00563757908674802,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "ZB",
+   "family": "B1",
+   "H": 22,
+   "n": 1564,
+   "edge_sigma": -0.025232397253663306,
+   "sigma_log": 0.006406059866934343,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "ZB",
+   "family": "B2",
+   "H": 22,
+   "n": 1853,
+   "edge_sigma": -0.035597390627465676,
+   "sigma_log": 0.006406059866934343,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "GC",
+   "family": "B1",
+   "H": 5,
+   "n": 27775,
+   "edge_sigma": 0.02842501181033741,
+   "sigma_log": 0.004440906874849738,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "GC",
+   "family": "B2",
+   "H": 5,
+   "n": 33720,
+   "edge_sigma": 0.009094118552667776,
+   "sigma_log": 0.004440906874849738,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "GC",
+   "family": "B1",
+   "H": 8,
+   "n": 23120,
+   "edge_sigma": 0.026674091546910778,
+   "sigma_log": 0.005639281435475963,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "GC",
+   "family": "B2",
+   "H": 8,
+   "n": 28008,
+   "edge_sigma": 0.01670202175641012,
+   "sigma_log": 0.005639281435475963,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "GC",
+   "family": "B1",
+   "H": 11,
+   "n": 18380,
+   "edge_sigma": 0.021845281191456217,
+   "sigma_log": 0.006529467184884684,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "GC",
+   "family": "B2",
+   "H": 11,
+   "n": 22296,
+   "edge_sigma": 0.014744504632438654,
+   "sigma_log": 0.006529467184884684,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "GC",
+   "family": "B1",
+   "H": 16,
+   "n": 10518,
+   "edge_sigma": 0.01607930220494965,
+   "sigma_log": 0.007961390425973394,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "GC",
+   "family": "B2",
+   "H": 16,
+   "n": 12899,
+   "edge_sigma": 0.011216388462750889,
+   "sigma_log": 0.007961390425973394,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "GC",
+   "family": "B1",
+   "H": 22,
+   "n": 1463,
+   "edge_sigma": 0.0042468097251774865,
+   "sigma_log": 0.008907961174999545,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "GC",
+   "family": "B2",
+   "H": 22,
+   "n": 1798,
+   "edge_sigma": 0.015646599321560744,
+   "sigma_log": 0.008907961174999545,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "CL",
+   "family": "B1",
+   "H": 5,
+   "n": 24825,
+   "edge_sigma": 0.015924799027857435,
+   "sigma_log": 0.013371131714513011,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "CL",
+   "family": "B2",
+   "H": 5,
+   "n": 29339,
+   "edge_sigma": 0.0320636540589539,
+   "sigma_log": 0.013371131714513011,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "CL",
+   "family": "B1",
+   "H": 8,
+   "n": 20599,
+   "edge_sigma": 0.019656904367506858,
+   "sigma_log": 0.016602854798100374,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "CL",
+   "family": "B2",
+   "H": 8,
+   "n": 24275,
+   "edge_sigma": 0.029569652437602824,
+   "sigma_log": 0.016602854798100374,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "CL",
+   "family": "B1",
+   "H": 11,
+   "n": 16211,
+   "edge_sigma": 0.014358598631569418,
+   "sigma_log": 0.01943812773570302,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "CL",
+   "family": "B2",
+   "H": 11,
+   "n": 19211,
+   "edge_sigma": 0.021001728494370823,
+   "sigma_log": 0.01943812773570302,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "CL",
+   "family": "B1",
+   "H": 16,
+   "n": 9183,
+   "edge_sigma": 0.027666675207431532,
+   "sigma_log": 0.02378667301103854,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "CL",
+   "family": "B2",
+   "H": 16,
+   "n": 11062,
+   "edge_sigma": 0.010777370578983852,
+   "sigma_log": 0.02378667301103854,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "CL",
+   "family": "B1",
+   "H": 22,
+   "n": 1309,
+   "edge_sigma": 0.029725170053723514,
+   "sigma_log": 0.026844080782314754,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "CL",
+   "family": "B2",
+   "H": 22,
+   "n": 1592,
+   "edge_sigma": 0.008004756866112416,
+   "sigma_log": 0.026844080782314754,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "6E",
+   "family": "B1",
+   "H": 5,
+   "n": 28826,
+   "edge_sigma": 0.0013457189950848653,
+   "sigma_log": 0.0023760479994914697,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "6E",
+   "family": "B2",
+   "H": 5,
+   "n": 34295,
+   "edge_sigma": -0.021026638769685257,
+   "sigma_log": 0.0023760479994914697,
+   "index_root": false,
+   "entries_per_session": 18
+  },
+  {
+   "root": "6E",
+   "family": "B1",
+   "H": 8,
+   "n": 24084,
+   "edge_sigma": -0.0032093364868477983,
+   "sigma_log": 0.0030146752218830086,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "6E",
+   "family": "B2",
+   "H": 8,
+   "n": 28499,
+   "edge_sigma": -0.016809962105718973,
+   "sigma_log": 0.0030146752218830086,
+   "index_root": false,
+   "entries_per_session": 15
+  },
+  {
+   "root": "6E",
+   "family": "B1",
+   "H": 11,
+   "n": 19185,
+   "edge_sigma": -0.00293482456823068,
+   "sigma_log": 0.0035134313341769713,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "6E",
+   "family": "B2",
+   "H": 11,
+   "n": 22703,
+   "edge_sigma": -0.016211089429111675,
+   "sigma_log": 0.0035134313341769713,
+   "index_root": false,
+   "entries_per_session": 12
+  },
+  {
+   "root": "6E",
+   "family": "B1",
+   "H": 16,
+   "n": 11005,
+   "edge_sigma": 0.0015328856622800287,
+   "sigma_log": 0.00417689165891854,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "6E",
+   "family": "B2",
+   "H": 16,
+   "n": 13142,
+   "edge_sigma": -0.008007451825127599,
+   "sigma_log": 0.00417689165891854,
+   "index_root": false,
+   "entries_per_session": 7
+  },
+  {
+   "root": "6E",
+   "family": "B1",
+   "H": 22,
+   "n": 1539,
+   "edge_sigma": 0.010257128671502455,
+   "sigma_log": 0.0045845263188613854,
+   "index_root": false,
+   "entries_per_session": 1
+  },
+  {
+   "root": "6E",
+   "family": "B2",
+   "H": 22,
+   "n": 1842,
+   "edge_sigma": 0.012681430740587842,
+   "sigma_log": 0.0045845263188613854,
+   "index_root": false,
+   "entries_per_session": 1
+  }
+ ],
+ "S2_growth_exponent": {
+  "B1": {
+   "per_root": {
+    "ES": NaN,
+    "NQ": NaN,
+    "YM": NaN,
+    "ZN": NaN,
+    "ZB": NaN,
+    "GC": -0.6408241217686728,
+    "CL": 0.9335639619229164,
+    "6E": 1.5319259693266143
+   },
+   "pooled": 0.6082219364936193
+  },
+  "B2": {
+   "per_root": {
+    "ES": NaN,
+    "NQ": NaN,
+    "YM": NaN,
+    "ZN": NaN,
+    "ZB": NaN,
+    "GC": 0.7050634595581394,
+    "CL": -0.5180741981106868,
+    "6E": NaN
+   },
+   "pooled": 0.09349463072372632
+  }
+ },
+ "nulls": {
+  "B1": {
+   "R1_exponent": {
+    "p50": NaN,
+    "p95": NaN,
+    "se_of_p95": NaN
+   },
+   "R1_longest_edge": {
+    "p50": 0.0001273382191021807,
+    "p95": 0.015744343474175138,
+    "se_of_p95": 0.00036706876805935257
+   }
+  },
+  "B2": {
+   "R1_exponent": {
+    "p50": NaN,
+    "p95": NaN,
+    "se_of_p95": NaN
+   },
+   "R1_longest_edge": {
+    "p50": 0.00030792781120938124,
+    "p95": 0.013580214744923795,
+    "se_of_p95": 0.000360615796144593
+   }
+  }
+ },
+ "verdicts": {
+  "B1": {
+   "edge_grows": false,
+   "edge_survives": false,
+   "exponent": 0.6082219364936193,
+   "exponent_margin_se": NaN,
+   "S2_null_testable": false,
+   "S2_note": "R1 null undefined: the pre-registered statistic takes log(edge_sigma), which does not exist where a null edge is negative. Descriptive only; the bar is unmet-because-ill-posed, never passed.",
+   "longest_edge": 0.0015707340154292758,
+   "longest_margin_se": -38.61295400771902
+  },
+  "B2": {
+   "edge_grows": false,
+   "edge_survives": false,
+   "exponent": 0.09349463072372632,
+   "exponent_margin_se": NaN,
+   "S2_null_testable": false,
+   "S2_note": "R1 null undefined: the pre-registered statistic takes log(edge_sigma), which does not exist where a null edge is negative. Descriptive only; the bar is unmet-because-ill-posed, never passed.",
+   "longest_edge": -0.0006660393575266882,
+   "longest_margin_se": -39.505352385446486
+  }
+ },
+ "S3_tradeability": [
+  {
+   "root": "ES",
+   "family": "B1",
+   "H": 5,
+   "n": 4744,
+   "micro": "MES",
+   "sigma_ticks": 84.7267986977499,
+   "cost_ticks": 3.409,
+   "gross_ticks": 1.411561912770028,
+   "net_ticks": -1.9974380872299717,
+   "gross_over_cost": 0.4140692029246196
+  },
+  {
+   "root": "ES",
+   "family": "B2",
+   "H": 5,
+   "n": 5644,
+   "micro": "MES",
+   "sigma_ticks": 84.7267986977499,
+   "cost_ticks": 3.409,
+   "gross_ticks": 1.5858539691747326,
+   "net_ticks": -1.8231460308252672,
+   "gross_over_cost": 0.4651962361908867
+  },
+  {
+   "root": "ES",
+   "family": "B1",
+   "H": 7,
+   "n": 1590,
+   "micro": "MES",
+   "sigma_ticks": 107.05970203068141,
+   "cost_ticks": 3.409,
+   "gross_ticks": 2.0805397862940653,
+   "net_ticks": -1.3284602137059345,
+   "gross_over_cost": 0.6103079455248065
+  },
+  {
+   "root": "ES",
+   "family": "B2",
+   "H": 7,
+   "n": 1876,
+   "micro": "MES",
+   "sigma_ticks": 107.05970203068141,
+   "cost_ticks": 3.409,
+   "gross_ticks": -0.5096617398636611,
+   "net_ticks": -3.918661739863661,
+   "gross_over_cost": -0.1495047638203758
+  },
+  {
+   "root": "NQ",
+   "family": "B1",
+   "H": 5,
+   "n": 4714,
+   "micro": "MNQ",
+   "sigma_ticks": 297.6083188932232,
+   "cost_ticks": 7.009,
+   "gross_ticks": -0.8569842568332414,
+   "net_ticks": -7.865984256833242,
+   "gross_over_cost": -0.1222691192514255
+  },
+  {
+   "root": "NQ",
+   "family": "B2",
+   "H": 5,
+   "n": 5635,
+   "micro": "MNQ",
+   "sigma_ticks": 297.6083188932232,
+   "cost_ticks": 7.009,
+   "gross_ticks": 7.9907048787112895,
+   "net_ticks": 0.9817048787112892,
+   "gross_over_cost": 1.1400634724941203
+  },
+  {
+   "root": "NQ",
+   "family": "B1",
+   "H": 7,
+   "n": 1581,
+   "micro": "MNQ",
+   "sigma_ticks": 379.767783834222,
+   "cost_ticks": 7.009,
+   "gross_ticks": -9.19189130623701,
+   "net_ticks": -16.20089130623701,
+   "gross_over_cost": -1.3114411907885588
+  },
+  {
+   "root": "NQ",
+   "family": "B2",
+   "H": 7,
+   "n": 1873,
+   "micro": "MNQ",
+   "sigma_ticks": 379.767783834222,
+   "cost_ticks": 7.009,
+   "gross_ticks": 5.7085230256521795,
+   "net_ticks": -1.3004769743478208,
+   "gross_over_cost": 0.8144561314955313
+  },
+  {
+   "root": "YM",
+   "family": "B1",
+   "H": 5,
+   "n": 4691,
+   "micro": "MYM",
+   "sigma_ticks": 179.72046465621878,
+   "cost_ticks": 7.009,
+   "gross_ticks": 3.575776518180161,
+   "net_ticks": -3.4332234818198395,
+   "gross_over_cost": 0.5101692849450935
+  },
+  {
+   "root": "YM",
+   "family": "B2",
+   "H": 5,
+   "n": 5630,
+   "micro": "MYM",
+   "sigma_ticks": 179.72046465621878,
+   "cost_ticks": 7.009,
+   "gross_ticks": 0.8536161839569448,
+   "net_ticks": -6.155383816043056,
+   "gross_over_cost": 0.12178858381465898
+  },
+  {
+   "root": "YM",
+   "family": "B1",
+   "H": 7,
+   "n": 1576,
+   "micro": "MYM",
+   "sigma_ticks": 226.89846728900574,
+   "cost_ticks": 7.009,
+   "gross_ticks": 4.9169722173192385,
+   "net_ticks": -2.092027782680762,
+   "gross_over_cost": 0.7015226447880208
+  },
+  {
+   "root": "YM",
+   "family": "B2",
+   "H": 7,
+   "n": 1871,
+   "micro": "MYM",
+   "sigma_ticks": 226.89846728900574,
+   "cost_ticks": 7.009,
+   "gross_ticks": 2.4882745678490084,
+   "net_ticks": -4.520725432150992,
+   "gross_over_cost": 0.35501135223983565
+  }
+ ],
+ "S3_blocked_no_micro_spec": [
+  "ZN",
+  "ZB",
+  "GC",
+  "CL",
+  "6E"
+ ],
+ "predictions": {
+  "W-a": false,
+  "W-b": true,
+  "W-c": false,
+  "W-d": true
+ },
+ "limitations": [
+  "the volume-clock exit (D472, +10.4%) is NOT applied, so every figure understates by roughly that much",
+  "the 1.009-tick crossing is an ES measurement assumed for other roots",
+  "overlapping holds mean the effective sample is far smaller than the row count; only the rotation null's distribution is used for inference",
+  "H=22 admits one entry per session, so ~2,000 independent observations",
+  "in-sample only; 2024+ sealed",
+  "eight roots are not eight independent draws (ZN/ZB rates, ES/NQ/YM index)",
+  "GC, CL, ZN, ZB and 6E cannot be costed: MGC/MCL/M6E are absent from the committed specs and no tick value is guessed"
+ ]
+}
