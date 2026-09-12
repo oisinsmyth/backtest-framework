@@ -278,9 +278,16 @@ def build_root(root: str, d, tick: float | None) -> dict:
                 continue
             sig_r = (c[:, b0] - o[:, a0]) / scale
             fwd_r = (c[:, b1] - o[:, a1]) / scale
-            # prior volatility: RMS of the PRIOR_SEGS hourly segment returns before a0
+            # prior volatility: RMS of the PRIOR_SEGS hourly segment returns before a0.
+            # Computed EXPLICITLY rather than via nanmean: a session with every prior
+            # segment missing would make nanmean warn and return NaN, and relying on that
+            # NaN to propagate into the `good` mask is implicit behaviour. Require all
+            # PRIOR_SEGS present instead, which is the honest reading of "vol over the 3
+            # segments before t".
             pr = (c[:, a0 - PRIOR_SEGS:a0] - o[:, a0 - PRIOR_SEGS:a0]) / scale
-            vol = np.sqrt(np.nanmean(pr ** 2, axis=1))
+            pr_ok = np.isfinite(pr).all(axis=1)
+            vol = np.where(pr_ok, np.sqrt((np.where(pr_ok[:, None], pr, 0.0) ** 2)
+                                          .mean(axis=1)), np.nan)
             good = (np.isfinite(sig_r) & np.isfinite(fwd_r) & np.isfinite(vol)
                     & (sig_r != 0) & (fwd_r != 0) & (vol > 0))
             rows["h"].append(np.full(int(good.sum()), h))
@@ -370,6 +377,37 @@ def do_run(as_json: bool) -> int:
     P(f"\n  PRIMARY STATISTIC S = mean slope over {n_cells} cells = "
       f"{S:+.4f} pp per quintile")
 
+    # §1: ES is the DISCOVERY root -- reported descriptively, never in S, never in a null,
+    # never in the bar. Without it the reader cannot see discovery against transfer.
+    es_cells = []
+    b = obs[DISCOVERY]
+    for h in HORIZONS:
+        m = b["h"] == h
+        if m.sum() < 1000:
+            continue
+        vol, sig, fwd = b["vol"][m], b["sig"][m], b["fwd"][m]
+        edges = np.quantile(vol, np.linspace(0, 1, NQ_BUCKETS + 1))
+        qr = np.clip(np.searchsorted(edges[1:-1], vol, side="right") + 1, 1, NQ_BUCKETS)
+        ind = (np.sign(fwd) == sig).astype(np.float64)
+        es_cells.append({"root": DISCOVERY, "h": h, "n": int(m.sum()),
+                         "hit_rate": float(ind.mean()),
+                         "slope_pp_per_quintile": trend_slope(ind, qr),
+                         "top_quintile_hit": float(ind[qr == NQ_BUCKETS].mean())})
+    es_S = float(np.nanmean([c["slope_pp_per_quintile"] for c in es_cells]))
+    P(f"\n  DISCOVERY ROOT (descriptive, carries NO evidential weight -- §1):")
+    P(f"  {'root':>5}{'h':>3}{'n':>9}{'hit':>8}{'slope pp/q':>12}{'top-q hit':>11}")
+    for c in es_cells:
+        P(f"  {c['root']:>5}{c['h']:>3}{c['n']:>9,}{c['hit_rate']:>8.2%}"
+          f"{c['slope_pp_per_quintile']:>+12.3f}{c['top_quintile_hit']:>11.2%}")
+    P(f"    ES mean slope {es_S:+.4f} against the 7 unseen roots' {S:+.4f}")
+
+    # the LEVEL, which is a different question from the SLOPE and worth seeing
+    lvl = {r: float(np.mean([c["hit_rate"] for c in cells if c["root"] == r]))
+           for r in PRIMARY}
+    P(f"\n  pooled hit rate by root (the LEVEL, not the gradient) -- "
+      f"50% is a coin flip:")
+    P("    " + "  ".join(f"{r} {v:.2%}" for r, v in lvl.items()))
+
     # ---- §4: two nulls
     rg = np.random.default_rng(SEED)
     n1 = np.empty(N_DRAWS)
@@ -410,10 +448,16 @@ def do_run(as_json: bool) -> int:
     transfer = (S > 0 and nn1["clears_by_2se"] and nn2["clears_by_2se"]
                 and n_pos >= MIN_ROOTS_POSITIVE)
     partial = (S > 0 and nn1["clears_by_2se"] and not nn2["clears_by_2se"])
+    # UNRESOLVED and NO TRANSFER are different states and the first label conflated them:
+    # a statistic sitting just under the null p95 is unresolved, one sitting far BELOW it
+    # (or on the wrong side of zero) is a decisive negative. Say which.
+    near = min(nn1["margin_in_se"], nn2["margin_in_se"]) > -2.0
     verdict = ("TRANSFER CONFIRMED" if transfer else
                "PARTIAL -- clears N1 but not N2: direction predictable, conditioner not the "
                "selector" if partial else
-               "UNRESOLVED / NO TRANSFER")
+               "UNRESOLVED -- within 2 SE of a null p95, neither shown nor excluded" if near
+               else "NO TRANSFER -- the statistic is decisively short of both nulls"
+                    + (" and on the WRONG SIDE OF ZERO" if S <= 0 else ""))
     P(f"\n  **VERDICT: {verdict}**")
 
     # ---- §5 secondary: tradeability, ES/NQ/YM only, where a micro exists
@@ -469,6 +513,8 @@ def do_run(as_json: bool) -> int:
            "roots_excluded": EXCLUDED, "window": list(IN_SAMPLE),
            "root_flags": flags, "n_cells": n_cells, "n_observations": int(len(ind_all)),
            "S_primary": S, "slopes_by_root": by_root, "roots_positive": n_pos,
+           "discovery_root_cells": es_cells, "discovery_root_mean_slope": es_S,
+           "pooled_hit_rate_by_root": lvl,
            "null_N1_sign_randomised": nn1, "null_N2_quintile_shuffled": nn2,
            "verdict": verdict, "tradeability": trade,
            "predictions": {"Y-a": bool(ya), "Y-b": bool(yb), "Y-c": bool(yc),
