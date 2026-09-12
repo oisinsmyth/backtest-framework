@@ -36,6 +36,14 @@ structure and carry would come from, and it is also why a naive load is not a pa
 headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **tile
 2010-06-06 → 2026-09-10 with zero interior gaps and zero overlaps.**
 
+**Committed fixtures built over it:** `fut_sessions_hourly.csv.gz` (D467, hourly session tables,
+nine roots, 2016 →) and **`fut_micro_flow_5m.csv.gz` (D485: signed 5-minute order flow of ES/MES
+and NQ/MNQ from `tbbo`, exchange aggressor side, front month per session, 259 sessions
+2025-09-11 → 2026-09-10; gates T1–T5 in its meta; builder `scripts/build_fut_micro_flow.py`,
+3.3 min on 8 processes).** What bites: the ohlcv-1m span ends one session before the tbbo span,
+so session 2026-09-10 cannot be cross-checked; nine holiday sessions are absent by the presence
+rule and listed.
+
 ### Five things that will bite a study reading this
 
 1. **NOT COMMITTED, AND CANNOT BE.** CME's terms forbid redistributing archived data, so
@@ -169,6 +177,7 @@ non-commercial / non-reportable open interest per contract. See [`cftc_cot.md`](
 | `data/raw/binance` | 279 | 486 MB | crypto |
 | `data/raw/cftc` | 84 | 21 MB | COT |
 | `data/raw/databento` | 129 | 111 GB | **the futures, above** |
+| `data/raw/robintrack` | 8,597 + archive | 4.0 GB | **Robinhood holder counts, hourly, 8,597 tickers, 2018-05-02 → 2020-08-13** (the Barber–Huang–Odean–Schwarz data); two ~10-day site outages ending 2019-01-30 and 2020-01-16; 959 / 512 / 341 names overlap the three daily fixtures; the 504 MB `.tar.gz` from robintrack-data.ameo.design is kept beside the extraction. Re-fetchable while the mirror lives; treat as not |
 
 ---
 

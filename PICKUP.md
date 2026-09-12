@@ -31,6 +31,32 @@ across seven schemas*, so the roll gates do not transfer.
 
 ---
 
+## THE RETAIL-FLOW LINE — OPENED 2026-09-12; the futures arm reported (D485), the equity arm drafted
+
+The principal: *"Lets try using more auxiliary data. Lets hunt retail traders."* Scoping in
+[`docs/research/retail-flow/00-scoping.md`](docs/research/retail-flow/00-scoping.md): the literature
+says the **body** of retail flow is weakly informed *with* it (+10 bp a week, Boehmer et al.) and only
+the **extreme of attention** is contrarian (−4.7% over 20 days for the day's most-herded Robinhood
+stocks, Barber et al. 2022) — "trade against retail" as a blanket rule is not what the evidence says.
+
+**D485 (futures arm, pre-reg `0651bb9`, RESULT):** the micro contracts' signed flow (exact aggressor
+side from `tbbo`; new fixture `fut_micro_flow_5m.csv.gz`) is **not a retail identifier**: within-session
+correlation with the E-mini's imbalance 0.71 (ES) / 0.76 (NQ); micro trades are *not* smaller (NQ's
+E-mini has more one-lots than the micro); no contrarian tilt, no sell bulge into the flatten window,
+no relation between the day's micro flow and the last hour. The declared four-cell read against the
+micro crowd's excess flow: ES/F1 +$26 a session at one MES sits exactly at its own exact-rotation p95
+and at the 58th percentile of the family maximum — **no pick**; the reserve (2026-07 → 2026-09) unread.
+My recommendation: close the futures arm on this record; the principal decides.
+
+**The equity arm:** Robintrack is on disk (`data/raw/robintrack/`, 4.0 GB, 8,597 tickers hourly
+2018-05 → 2020-08, 959 of the mining names covered), pre-reg drafted in
+`working/DRAFT-robintrack-stage-0.md` (top-decile herding, 20-day hedged return, a same-day
+|return|×volume matched control that must take at least half of it). **Needs a decision number and
+a commit before its runner.** The Nasdaq RTAT10 ten-year daily top-10 table needs a Data Link API
+key from the principal (free tier; I cannot create accounts).
+
+---
+
 ## THE DAILY CHANNEL LINE IS CLOSED — the principal's decision, 2026-09-12
 
 D399 → D483 on the `worktree-signal-hunt-part2` branch, **no holdout read**.
