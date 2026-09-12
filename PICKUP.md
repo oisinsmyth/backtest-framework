@@ -31,6 +31,21 @@ across seven schemas*, so the roll gates do not transfer.
 
 ---
 
+## ALL IN ON THE PROP BOOK — the principal, 2026-09-12; the lane split between sessions
+
+The principal: *"we are going all in on the prop book, so if it doesn't help that then we have to
+figure something else out."* Three interactive sessions are open on this repo. **The lane this
+session holds** (D493, D494): the account-size lever through the lifecycle, and one stage 0 for
+direction from outside the price path on the day session (cross-instrument overnight moves,
+index-level retail sentiment, release days as a gate on the MACD). **The lane the MACD/cost session
+holds** (D484, D486 and its §6): extending the MACD hold past five hours, costing GC and CL,
+passive fills, the real commission schedule. Neither touches the other's; decision numbers are
+taken at commit time against `docs/decisions/` (D485 → D486 → D492 were taken by three sessions
+inside one hour). The retail line's single-name herding test and the micro proxy are **dropped
+for the prop book**; Robintrack stays on disk for the personal book.
+
+---
+
 ## THE RETAIL-FLOW LINE — OPENED 2026-09-12; the futures arm reported (D485), the equity arm drafted
 
 The principal: *"Lets try using more auxiliary data. Lets hunt retail traders."* Scoping in
