@@ -107,7 +107,7 @@ def lines_from_arrays(RC, op, cl, hi, lo, piv, cell, margin, delta, max_dg):
     lm = math.log1p(margin / 100)
     L = {"support": L["support"] - lm, "resistance": L["resistance"] + lm}
     drawn = {kd: np.isfinite(L[kd]) for kd in ("support", "resistance")}
-    return dict(m=m, cl=cl, G=G, L=L, drawn=drawn)
+    return dict(m=m, op=op, cl=cl, hi=hi, lo=lo, G=G, L=L, drawn=drawn)
 
 
 def main() -> int:

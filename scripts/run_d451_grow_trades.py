@@ -69,22 +69,60 @@ def level_state(N, elig, hold):
     return state
 
 
-def audit_no_future_level(N, elig, hold, probes):
-    """[F] the level state at bar e depends only on levels at bars <= e: delete every later
-    level and re-derive."""
-    base = level_state(N, elig, hold)
+def dip_state(N, elig, hold, x, n, drawn_only):
+    """D463, THE DIP CONTROL: +1 on a close more than `x` (log) below the lowest low of the
+    previous `n` bars, -1 on a close more than `x` above the highest high of the previous `n`
+    bars, held `hold` bars -- no lines consulted, unless `drawn_only`, which restricts the
+    events to bars on which the source has both lines drawn (the channel's existence without
+    its level)."""
+    m = N["m"]
+    lcl, llo, lhi = np.log(N["cl"]), np.log(N["lo"]), np.log(N["hi"])
+    raw = np.zeros(m, np.int8)
+    for t in range(n, m):
+        if not elig[t]:
+            continue
+        if drawn_only and not (N["drawn"]["support"][t] and N["drawn"]["resistance"][t]):
+            continue
+        lo_n, hi_n = np.nanmin(llo[t - n:t]), np.nanmax(lhi[t - n:t])
+        if lcl[t] < lo_n - x:
+            raw[t] = 1
+        elif lcl[t] > hi_n + x:
+            raw[t] = -1
+    state = np.zeros(m, np.int8)
+    cur, left = 0, 0
+    for t in range(m):
+        if raw[t] != 0:
+            cur, left = int(raw[t]), int(hold)
+            state[t] = cur
+        elif left > 0:
+            state[t] = cur
+            left -= 1
+    return state
+
+
+def audit_no_future_state(N, elig, probes, fn):
+    """[F] the state at bar e depends only on what is known at bars <= e: delete every later
+    level, gradient, drawn flag and PRICE, and re-derive. `fn(N, elig)` is the state function."""
+    base = fn(N, elig)
     checked = 0
     for e in probes:
-        if e < 5 or e >= N["m"]:
+        if e < 35 or e >= N["m"]:
             continue
         N2 = dict(N)
         N2["L"] = {k: v.copy() for k, v in N["L"].items()}
+        N2["G"] = {k: v.copy() for k, v in N["G"].items()}
         N2["drawn"] = {k: v.copy() for k, v in N["drawn"].items()}
         for kd in ("support", "resistance"):
             N2["L"][kd][e + 1:] = np.nan
+            N2["G"][kd][e + 1:] = np.nan
             N2["drawn"][kd][e + 1:] = False
-        if int(level_state(N2, elig, hold)[e]) != int(base[e]):
-            raise AssertionError(f"[F] the level state at bar {e} moves when the future is deleted")
+        for q in ("cl", "lo", "hi"):
+            if q in N:
+                arr = N[q].astype(float).copy()
+                arr[e + 1:] = np.nan
+                N2[q] = arr
+        if int(fn(N2, elig)[e]) != int(base[e]):
+            raise AssertionError(f"[F] the state at bar {e} moves when the future is deleted")
         checked += 1
     assert checked >= max(1, len(probes) // 2), f"[F] VACUOUS: {checked}/{len(probes)}"
     return checked
@@ -231,13 +269,22 @@ def main() -> int:
     ap.add_argument("--tag", default="D451", help="the decision the run belongs to")
     ap.add_argument("--source", default="grow", choices=("grow", "hand"),
                     help="what fills the first column: the grow-right walk, or D460's hand cell (D461)")
-    ap.add_argument("--rule", default="trend", choices=("trend", "level"),
-                    help="trend: in while a trend (D450); level: position in the channel, held HOLD bars (D462)")
+    ap.add_argument("--rule", default="trend", choices=("trend", "level", "dip"),
+                    help="trend: in while a trend (D450); level: position in the channel, held HOLD bars (D462); "
+                         "dip: a close beyond the previous N bars' range by X, no lines (D463)")
+    ap.add_argument("--head", type=float, default=None, help="override the headline sweep value (null and book)")
+    ap.add_argument("--dip-x", type=float, default=4.0, help="dip rule: per cent beyond the previous range")
+    ap.add_argument("--dip-n", type=int, default=30, help="dip rule: bars of previous range")
+    ap.add_argument("--dip-drawn", action="store_true", help="dip rule: only on bars with both lines drawn")
     a = ap.parse_args()
-    LEVEL = a.rule == "level"
+    LEVEL = a.rule != "trend"                      # level and dip share the hold sweep
     SWEEP = HOLDS if LEVEL else GMIN_PCT
-    HEAD = HEAD_HOLD if LEVEL else HEAD_GMIN
+    HEAD = a.head if a.head is not None else (HEAD_HOLD if LEVEL else HEAD_GMIN)
+    if LEVEL:
+        HEAD = int(HEAD)
+    assert HEAD in SWEEP, f"headline {HEAD} not in the sweep {SWEEP}"
     SWNAME = "hold" if LEVEL else "gmin"
+    DIPX = math.log1p(a.dip_x / 100)
     LINE, OUT = a.line, Path(a.out).resolve()      # resolved: the final print is repo-relative
     HC = _load("d460hc", "d460_hand_cell.py") if a.source == "hand" else None
     LBL = "HAND" if a.source == "hand" else "GROW"
@@ -265,9 +312,14 @@ def main() -> int:
     print(f"\n  panel {n} names x {T} dates in {time.time() - t0:.0f}s")
     print(f"  {LBL:<6s} {LINE}")
     print(f"  CAUSAL D399 CELL_FINAL (D450's causal arm)")
-    if LEVEL:
+    if a.rule == "dip":
+        print(f"  RULE   DIP CONTROL: long on a close more than {a.dip_x:g}% below the lowest low of the previous "
+              f"{a.dip_n} bars, short on a close more than {a.dip_x:g}% above the highest high"
+              f"{' -- only on bars with both lines drawn' if a.dip_drawn else ' -- NO LINES'}; "
+              f"held {list(HOLDS)} bars; headline {HEAD}")
+    elif LEVEL:
         print(f"  RULE   LEVEL: long on close at or below {POS_LO:.0%} of the channel, short at or above "
-              f"{POS_HI:.0%}, held {list(HOLDS)} bars; headline {HEAD_HOLD}")
+              f"{POS_HI:.0%}, held {list(HOLDS)} bars; headline {HEAD}")
     else:
         print(f"  RULE   in while a trend, out when not; minimum gradient swept {list(GMIN_PCT)} %/yr; "
               f"NO target, NO stop; headline {HEAD_GMIN:.0f}")
@@ -356,6 +408,8 @@ def main() -> int:
     GM = {p: math.log1p(p / 100) / 252.0 for p in GMIN_PCT}
 
     def state_of(N_, elig_, p_):
+        if a.rule == "dip":
+            return dip_state(N_, elig_, p_, DIPX, a.dip_n, a.dip_drawn)
         return level_state(N_, elig_, p_) if LEVEL else D7.trend_state(N_, elig_, GM[p_])
 
     rows = {(sc, p): [] for sc in SOURCES for p in SWEEP}
@@ -462,7 +516,8 @@ def main() -> int:
           f"(CAUSAL {100 * cover['CAUSAL'][0] / max(1, cover['CAUSAL'][1]):.0f}%)")
 
     pr = [int(v) for v in np.linspace(30, N0["m"] - 2, 9).astype(int)]
-    nf = audit_no_future_level(N0, el0, HEAD, pr) if LEVEL else D7.audit_no_future(N0, el0, GM[HEAD], pr)
+    nf = (audit_no_future_state(N0, el0, pr, lambda N_, e_: state_of(N_, e_, HEAD)) if LEVEL
+          else D7.audit_no_future(N0, el0, GM[HEAD], pr))
     print(f"  [F] {nf} states on {syms[0]} unchanged when every future level is deleted  OK")
     hkey = ("GROW", HEAD)
     v, d = D7.audit_sign(rows[hkey], sym_of, tot_by_sym)
@@ -601,6 +656,7 @@ def main() -> int:
         OUT.write_text(json.dumps(dict(
             what=f"{a.tag}: trading the grow-right lines in-sample -- in while a trend, out when not",
             grow_line=LINE, rule=a.rule, sweep=list(SWEEP), sweep_name=SWNAME, headline=HEAD,
+            dip=dict(x_pct=a.dip_x, n=a.dip_n, drawn_only=a.dip_drawn) if a.rule == "dip" else None,
             gmin_pct=list(GMIN_PCT), headline_gmin=HEAD_GMIN, n_names=len(syms),
             grow_runs=int(len(rl)), grow_run_len_median=float(np.median(rl)),
             grow_window_median=float(np.median(wl)),
