@@ -39,6 +39,55 @@ LINE = ("split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minle
         "mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=-1 bbars=1 bon=close")
 GMIN_PCT = (0.0, 10.0, 25.0, 50.0, 100.0, 200.0)
 HEAD_GMIN = 25.0
+# D462, THE LEVEL RULE: not which way the lines point but where the close sits between them.
+# pos = (log close - support level) / (resistance level - support level), both lines drawn;
+# long on pos <= POS_LO, short on pos >= POS_HI, held HOLD bars after the entry bar (a further
+# qualifying bar inside the hold extends it). The sweep is over the hold.
+HOLDS = (1, 3, 5, 10, 20)
+HEAD_HOLD = 5
+POS_LO, POS_HI = 0.10, 0.90
+
+
+def level_state(N, elig, hold):
+    """+1 / -1 / 0 at each bar's close under the level rule."""
+    ls, lr = N["L"]["support"], N["L"]["resistance"]
+    both = N["drawn"]["support"] & N["drawn"]["resistance"] & elig
+    with np.errstate(invalid="ignore", divide="ignore"):
+        width = lr - ls
+        pos = np.where(both & (width > 0), (np.log(N["cl"]) - ls) / np.where(width > 0, width, 1.0), np.nan)
+        raw = np.where(pos <= POS_LO, 1, np.where(pos >= POS_HI, -1, 0)).astype(np.int8)
+    raw[~np.isfinite(pos)] = 0
+    state = np.zeros(raw.size, np.int8)
+    cur, left = 0, 0
+    for t in range(raw.size):
+        if raw[t] != 0:
+            cur, left = int(raw[t]), int(hold)
+            state[t] = cur
+        elif left > 0:
+            state[t] = cur
+            left -= 1
+    return state
+
+
+def audit_no_future_level(N, elig, hold, probes):
+    """[F] the level state at bar e depends only on levels at bars <= e: delete every later
+    level and re-derive."""
+    base = level_state(N, elig, hold)
+    checked = 0
+    for e in probes:
+        if e < 5 or e >= N["m"]:
+            continue
+        N2 = dict(N)
+        N2["L"] = {k: v.copy() for k, v in N["L"].items()}
+        N2["drawn"] = {k: v.copy() for k, v in N["drawn"].items()}
+        for kd in ("support", "resistance"):
+            N2["L"][kd][e + 1:] = np.nan
+            N2["drawn"][kd][e + 1:] = False
+        if int(level_state(N2, elig, hold)[e]) != int(base[e]):
+            raise AssertionError(f"[F] the level state at bar {e} moves when the future is deleted")
+        checked += 1
+    assert checked >= max(1, len(probes) // 2), f"[F] VACUOUS: {checked}/{len(probes)}"
+    return checked
 N_SIMS_TRADE, N_SIMS_BOOK, NULL_SEED = 200, 300, 0
 PPY, RF, BORROW = 252.0, 0.04, 0.03
 SPLIT_LR = 0.40
@@ -182,7 +231,13 @@ def main() -> int:
     ap.add_argument("--tag", default="D451", help="the decision the run belongs to")
     ap.add_argument("--source", default="grow", choices=("grow", "hand"),
                     help="what fills the first column: the grow-right walk, or D460's hand cell (D461)")
+    ap.add_argument("--rule", default="trend", choices=("trend", "level"),
+                    help="trend: in while a trend (D450); level: position in the channel, held HOLD bars (D462)")
     a = ap.parse_args()
+    LEVEL = a.rule == "level"
+    SWEEP = HOLDS if LEVEL else GMIN_PCT
+    HEAD = HEAD_HOLD if LEVEL else HEAD_GMIN
+    SWNAME = "hold" if LEVEL else "gmin"
     LINE, OUT = a.line, Path(a.out).resolve()      # resolved: the final print is repo-relative
     HC = _load("d460hc", "d460_hand_cell.py") if a.source == "hand" else None
     LBL = "HAND" if a.source == "hand" else "GROW"
@@ -210,8 +265,12 @@ def main() -> int:
     print(f"\n  panel {n} names x {T} dates in {time.time() - t0:.0f}s")
     print(f"  {LBL:<6s} {LINE}")
     print(f"  CAUSAL D399 CELL_FINAL (D450's causal arm)")
-    print(f"  RULE   in while a trend, out when not; minimum gradient swept {list(GMIN_PCT)} %/yr; "
-          f"NO target, NO stop; headline {HEAD_GMIN:.0f}")
+    if LEVEL:
+        print(f"  RULE   LEVEL: long on close at or below {POS_LO:.0%} of the channel, short at or above "
+              f"{POS_HI:.0%}, held {list(HOLDS)} bars; headline {HEAD_HOLD}")
+    else:
+        print(f"  RULE   in while a trend, out when not; minimum gradient swept {list(GMIN_PCT)} %/yr; "
+              f"NO target, NO stop; headline {HEAD_GMIN:.0f}")
 
     CL = np.ascontiguousarray(panel.closes.T)
     live = np.ascontiguousarray(panel.live.T)
@@ -295,7 +354,11 @@ def main() -> int:
 
     # ---- trades, both sources, every gmin
     GM = {p: math.log1p(p / 100) / 252.0 for p in GMIN_PCT}
-    rows = {(sc, p): [] for sc in SOURCES for p in GMIN_PCT}
+
+    def state_of(N_, elig_, p_):
+        return level_state(N_, elig_, p_) if LEVEL else D7.trend_state(N_, elig_, GM[p_])
+
+    rows = {(sc, p): [] for sc in SOURCES for p in SWEEP}
     book = {sc: np.zeros((n, T), dtype=np.float32) for sc in SOURCES}
     cover = {sc: [0, 0] for sc in SOURCES}
     null_in = {sc: dict(states=[], cls=[], lcls=[], cum_dvs=[], cum_jumps=[], eligs=[]) for sc in SOURCES}
@@ -344,10 +407,10 @@ def main() -> int:
             cover[sc][0] += int((N["drawn"]["support"] & N["drawn"]["resistance"]).sum())
             cover[sc][1] += m
             lcl = np.log(N["cl"])
-            for p in GMIN_PCT:
-                state = D7.trend_state(N, elig, GM[p])
+            for p in SWEEP:
+                state = state_of(N, elig, p)
                 loop = D7.trend_trades(state, N["cl"])
-                if p == HEAD_GMIN:
+                if p == HEAD:
                     # [V] the vectorised extractor against the loop, on the real series
                     e, x, d, g, spl = trades_np(state, N["cl"], lcl, cum_dv, cum_jump)
                     if [(int(a_), int(b_), int(c_)) for a_, b_, c_ in zip(e, x, d)] != [(a_, b_, c_) for a_, b_, c_ in loop]:
@@ -376,7 +439,7 @@ def main() -> int:
                     rows[(sc, p)].append(dict(sym=s, e=int(e_), x=int(x_), dir=int(d_),
                                               gross=float(gross), net=float(gross - sp),
                                               spread=sp, date=bars[e_].timestamp[:10]))
-                    if p == HEAD_GMIN and rr[e_ + 1] >= 0 and rr[x_] >= 0:
+                    if p == HEAD and rr[e_ + 1] >= 0 and rr[x_] >= 0:
                         book[sc][i, rr[e_ + 1]:rr[x_] + 1] = d_
         if (c + 1) % 200 == 0:
             print(f"    trades {c + 1}/{len(syms)} names, {time.time() - t2:.0f}s")
@@ -399,20 +462,20 @@ def main() -> int:
           f"(CAUSAL {100 * cover['CAUSAL'][0] / max(1, cover['CAUSAL'][1]):.0f}%)")
 
     pr = [int(v) for v in np.linspace(30, N0["m"] - 2, 9).astype(int)]
-    print(f"  [F] {D7.audit_no_future(N0, el0, GM[HEAD_GMIN], pr)} states on {syms[0]} unchanged "
-          f"when every future level is deleted  OK")
-    hkey = ("GROW", HEAD_GMIN)
+    nf = audit_no_future_level(N0, el0, HEAD, pr) if LEVEL else D7.audit_no_future(N0, el0, GM[HEAD], pr)
+    print(f"  [F] {nf} states on {syms[0]} unchanged when every future level is deleted  OK")
+    hkey = ("GROW", HEAD)
     v, d = D7.audit_sign(rows[hkey], sym_of, tot_by_sym)
     print(f"  [S] the largest up-bar inside a {'long' if d > 0 else 'short'} {LBL} trade "
           f"({1e4 * v:+.0f} bp) contributes with the right sign  OK")
 
     # ---- per-trade table
     print(f"\n  PER TRADE, gross bp -- {LBL} ({'D460 hand cell' if HC else 'grow-right lines'}) vs CAUSAL (D399's CELL_FINAL), SAME rule")
-    print(f"  {'gmin':>6s} {'side':<6s} {'':<2s}{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} "
+    print(f"  {SWNAME:>6s} {'side':<6s} {'':<2s}{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} "
           f"{'trim':>8s} {'net':>8s} {'win%':>5s} {'hold':>5s}   |   "
           f"{'n':>7s} {'gross':>8s} {'+-SE':>6s} {'med':>8s} {'net':>8s} {'win%':>5s} {'hold':>5s}")
     out = {}
-    for p in GMIN_PCT:
+    for p in SWEEP:
         for side, nm in ((1, "long"), (-1, "short")):
             line = f"  {p:>6.0f} {nm:<6s}   "
             for sc in SOURCES:
@@ -443,7 +506,7 @@ def main() -> int:
         for j, nm in enumerate(("long", "short")):
             col = sim[:, j]
             col = col[np.isfinite(col)]
-            sc_ = out[f"{sc}|{HEAD_GMIN}|{nm}"]
+            sc_ = out[f"{sc}|{HEAD}|{nm}"]
             score = sc_["gross_bp"] / 1e4 if sc_["n"] else np.nan
             p95 = float(np.percentile(col, 95)) if col.size else np.nan
             bs = np.array([np.percentile(np.random.default_rng(k).choice(col, col.size), 95)
@@ -526,7 +589,7 @@ def main() -> int:
               f"{cc['profitable_years']}/{cc['years']} years profitable")
     top = max(rows[hkey], key=lambda r: r["gross"]) if rows[hkey] else None
     if top:
-        print(f"  TOP TRADE ({LBL}, gmin {HEAD_GMIN:.0f}%): {top['sym']} {top['date']} "
+        print(f"  TOP TRADE ({LBL}, {SWNAME} {HEAD:.0f}): {top['sym']} {top['date']} "
               f"{top['e']}->{top['x']} {'long' if top['dir'] > 0 else 'short'} "
               f"{1e4 * top['gross']:+.0f} bp")
     for side, nm in ((1, "long"), (-1, "short")):
@@ -537,7 +600,8 @@ def main() -> int:
     if not a.proof and not a.names:              # a partial panel is never the record's file
         OUT.write_text(json.dumps(dict(
             what=f"{a.tag}: trading the grow-right lines in-sample -- in while a trend, out when not",
-            grow_line=LINE, gmin_pct=list(GMIN_PCT), headline_gmin=HEAD_GMIN, n_names=len(syms),
+            grow_line=LINE, rule=a.rule, sweep=list(SWEEP), sweep_name=SWNAME, headline=HEAD,
+            gmin_pct=list(GMIN_PCT), headline_gmin=HEAD_GMIN, n_names=len(syms),
             grow_runs=int(len(rl)), grow_run_len_median=float(np.median(rl)),
             grow_window_median=float(np.median(wl)),
             coverage={sc: 100 * cover[sc][0] / max(1, cover[sc][1]) for sc in SOURCES},
