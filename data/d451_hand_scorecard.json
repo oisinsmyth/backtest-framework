@@ -1,0 +1,122 @@
+{
+ "what": "constructions scored against the principal's hand-drawn lines, bar by bar",
+ "lines": {
+  "GROW": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=-1 bbars=1 bon=close",
+  "HYST": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=2 bbars=1 bon=close bside=trend surv=loose stol=4 smaxw=40",
+  "HYST-WIDE": "split=causal grow=parallel back=9 atmax=end tol=2 mt=2 basis=wick minlen=30 maxlen=1000 mw=5.5 maxw=55 maxoff=6.5 mintd=10 tau=1 brk=4 bbars=2 bon=wick bside=trend surv=loose stol=15.5 smaxw=60"
+ },
+ "score": {
+  "PIVOT": {
+   "support": {
+    "recall": 0.3030560271646859,
+    "precision": 0.7492130115424974,
+    "sign": 0.8753501400560224,
+    "dgrad_med": 29.639764458813506,
+    "dlevel_med": 3.2428643475326906,
+    "lag_med": 6.0,
+    "matched": 0.5362318840579711,
+    "overstay": 0.24561403508771928,
+    "n_hand_bars": 2356,
+    "n_cons_bars": 953,
+    "n_lines": 69
+   },
+   "resistance": {
+    "recall": 0.30230607966457024,
+    "precision": 0.7565582371458552,
+    "sign": 0.9153952843273232,
+    "dgrad_med": 42.95581913351489,
+    "dlevel_med": 5.995380989970886,
+    "lag_med": 4.5,
+    "matched": 0.5633802816901409,
+    "overstay": 0.2033898305084746,
+    "n_hand_bars": 2385,
+    "n_cons_bars": 953,
+    "n_lines": 71
+   }
+  },
+  "GROW": {
+   "support": {
+    "recall": 0.6107809847198642,
+    "precision": 0.7394655704008222,
+    "sign": 0.8033356497567755,
+    "dgrad_med": 49.1562527544634,
+    "dlevel_med": 5.488831160695144,
+    "lag_med": -3.0,
+    "matched": 0.927536231884058,
+    "overstay": 0.40350877192982454,
+    "n_hand_bars": 2356,
+    "n_cons_bars": 1946,
+    "n_lines": 69
+   },
+   "resistance": {
+    "recall": 0.6188679245283019,
+    "precision": 0.7584789311408017,
+    "sign": 0.7926829268292683,
+    "dgrad_med": 70.21640310178465,
+    "dlevel_med": 5.819429279720506,
+    "lag_med": -2.0,
+    "matched": 0.8873239436619719,
+    "overstay": 0.3898305084745763,
+    "n_hand_bars": 2385,
+    "n_cons_bars": 1946,
+    "n_lines": 71
+   }
+  },
+  "HYST": {
+   "support": {
+    "recall": 0.5343803056027164,
+    "precision": 0.7511933174224343,
+    "sign": 0.7315329626687848,
+    "dgrad_med": 54.011408168235285,
+    "dlevel_med": 5.518970081308694,
+    "lag_med": 2.0,
+    "matched": 0.8260869565217391,
+    "overstay": 0.2631578947368421,
+    "n_hand_bars": 2356,
+    "n_cons_bars": 1676,
+    "n_lines": 69
+   },
+   "resistance": {
+    "recall": 0.5232704402515723,
+    "precision": 0.7446300715990454,
+    "sign": 0.7948717948717948,
+    "dgrad_med": 48.311905985196766,
+    "dlevel_med": 5.241390252795201,
+    "lag_med": 1.0,
+    "matched": 0.8450704225352113,
+    "overstay": 0.2711864406779661,
+    "n_hand_bars": 2385,
+    "n_cons_bars": 1676,
+    "n_lines": 71
+   }
+  },
+  "HYST-WIDE": {
+   "support": {
+    "recall": 0.9567062818336163,
+    "precision": 0.7576470588235295,
+    "sign": 0.6827861579414375,
+    "dgrad_med": 64.66031712437675,
+    "dlevel_med": 6.3472678141272585,
+    "lag_med": -5.0,
+    "matched": 0.7681159420289855,
+    "overstay": 0.7192982456140351,
+    "n_hand_bars": 2356,
+    "n_cons_bars": 2975,
+    "n_lines": 69
+   },
+   "resistance": {
+    "recall": 0.9610062893081761,
+    "precision": 0.7704201680672269,
+    "sign": 0.7216404886561955,
+    "dgrad_med": 55.3256972458783,
+    "dlevel_med": 5.970967487857375,
+    "lag_med": -5.0,
+    "matched": 0.8169014084507042,
+    "overstay": 0.6779661016949152,
+    "n_hand_bars": 2385,
+    "n_cons_bars": 2975,
+    "n_lines": 71
+   }
+  }
+ }
+}
