@@ -2,6 +2,22 @@
 
 ---
 
+## D456 — THE 8-K ITEM ATLAS, STAGE 0: 155k CORPORATE EVENTS, DEAD-INCLUSIVE, SAME-DAY, 15 CELLS; THE ATLAS WITH RETURNS IS NEXT, 2026-09-12
+
+The insider line was parked (real per trade, zero net at the crossed line — the third line to end
+at the cost wall). The successor is chosen for *where it lives*: corporate events resolve in days
+and move names by more than their spread. Parsed from D331's cached EDGAR submissions index
+(0 new requests): **154,970 8-Ks 2010–2023 on 82% of the fixture and 81% of the dead** (the 18%
+gap is foreign 6-K filers), median filing lag 0–2 business days, **15 item cells with ≥ 300
+filings** (1.01, 1.02, 2.01, 2.02, 2.03, 2.05, 2.06, 3.01, 3.02, 3.03, 4.01, 5.02, 5.03, 5.07,
+8.01; 4.02 and 2.04 too rare). Every cell sits in the thin half of the universe; **2.06
+impairments are the one distress cell in liquid names**; 3.01 delisting notices are half
+late-filers who survive. **28,492 filings from 2024-01 to 2026-08 are parsed and flagged
+unread — the confirmation slice for the stage-1 atlas** (long and short scored on every cell,
+cap 10, state-matched control per cell, enumerated rotation, both cost lines, reproduction on
+the unread slice as the family's multiplicity control; opened only on the principal's word).
+Records: spec `5f8899e`, RESULT `docs/decisions/D456-RESULT-…md`, events `data/d456_8k_events.csv.gz`.
+
 ## D455 — INSIDER PURCHASES, STAGE 1: REAL PER TRADE, ZERO NET AT THE CROSSED LINE, NOT A CANDIDATE, 2026-09-12
 
 The event book (long, cap 63, every event, 7,478 primary filings → 4,086 trades once the kernel
