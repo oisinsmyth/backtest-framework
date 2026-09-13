@@ -1,0 +1,91 @@
+==============================================================================================
+A  DRIFT vs NOISE -- what does a REAL trend score, at each horizon?
+==============================================================================================
+   A market that moves X% over one 84-bar session, with 5-minute sigma of 0.05%,
+   has per-bar drift mu = X/84.  Simulated, 20,000 blocks a cell.
+
+   mu/sigma  daily move    H=8      H=20     H=42     H=83    <- mean z (0.5 = no signal)
+      0.000      0.0%    0.5010   0.4976   0.4992   0.4965
+      0.119      0.5%    0.5211   0.5420   0.5865   0.6564
+      0.238      1.0%    0.5651   0.6448   0.7575   0.8827
+      0.476      2.0%    0.7075   0.8666   0.9676   0.9973
+      0.952      4.0%    0.9213   0.9952   1.0000   1.0000
+
+   READ THE TOP-LEFT AGAINST THE BOTTOM-RIGHT. That is the defect: a genuine trend is
+   INVISIBLE at the horizons Stage 0 swept, and obvious only at the session scale.
+
+==============================================================================================
+B  THE RETRACEMENT PROBLEM -- eff demands monotonicity; real moves retrace ~50% (D471)
+==============================================================================================
+   path                              net   pathlen    eff      z      verdict
+   straight line, 8 up                 +8         8   1.000  0.995   TRENDING
+   trend, 25% retrace (+3,-1)x4        +8        16   0.500  0.793   ordinary
+   trend, 50% retrace (+2,-1)x4        +4        12   0.333  0.607   ordinary
+   trend, one big leg then chop        +7        13   0.538  0.636   ordinary
+   pure chop (+1,-1)x4                 +0         8   0.000  0.135   REVERTING
+
+   D471 measured adverse/|move| = 0.45-0.50 in EVERY cell: a winning move goes about half
+   its size against you first. THAT path is the '50% retrace' row -- and eff calls it
+   ordinary, because the sign shuffle can rearrange the same magnitudes into a straight line.
+
+==============================================================================================
+C + D  ON THE REAL FIXTURE: the horizon cap, and bounce vs tick coarseness
+==============================================================================================
+
+C  Stage 0b's ladder, EXTENDED past the cap that only Stage 1 needed
+   H     blocks    mean z    exception   b0      excess pp
+    8    790,588   0.4709     2.492%   3.543%     -1.051
+   20    303,276   0.4667     3.135%   4.891%     -1.756
+   42     84,298   0.4832     3.751%   4.969%     -1.218
+   83     65,489   0.4785     3.468%   4.978%     -1.510
+
+D  Bounce: is mean z ordered by TICK COARSENESS? (bounce inflates sum|r|, not |sum r|)
+   per root: median |5-min return| in TICKS, against that root's mean z at H=8
+   root   median |r| in ticks   mean z
+     ZN                 1.00   0.4518
+    SR3                 2.00   0.4062
+    NKD                 2.00   0.4857
+     TN                 2.00   0.4771
+     UB                 2.00   0.4806
+     ZB                 2.00   0.4637
+     ZC                 2.00   0.4661
+     ZF                 2.00   0.4594
+     ZT                 2.00   0.3926
+     ZW                 2.00   0.4761
+     6B                 3.00   0.4689
+     ZS                 3.00   0.4828
+     HG                 3.00   0.4644
+     SI                 3.00   0.4623
+     ZL                 3.00   0.4810
+     ZM                 3.00   0.4843
+     6J                 4.00   0.4688
+     6A                 4.00   0.4683
+     6C                 4.00   0.4718
+     6E                 4.00   0.4693
+     6S                 4.00   0.4685
+     HE                 4.00   0.4799
+     LE                 4.00   0.4797
+     NG                 4.00   0.4783
+     ES                 5.00   0.4898
+     GC                 5.00   0.4701
+     CL                 5.00   0.4831
+     PL                 6.00   0.4717
+     BZ                 6.00   0.4781
+    BTC                 6.00   0.4656
+     YM                10.00   0.4923
+    RTY                11.00   0.4976
+     HO                15.00   0.4895
+     RB                16.00   0.4886
+     NQ                17.00   0.4956
+
+   Spearman( median |r| in ticks , mean z ) = +0.5886   on 35 roots
+   A POSITIVE rank correlation is the bounce signature: the coarser a root's tick relative
+   to its 5-minute move, the further its efficiency falls below the exchangeable value.
+
+   And the roots whose moves are LARGEST in ticks -- where bounce matters least:
+       BTC    6.00 ticks   mean z 0.4656
+        YM   10.00 ticks   mean z 0.4923
+       RTY   11.00 ticks   mean z 0.4976
+        HO   15.00 ticks   mean z 0.4895
+        RB   16.00 ticks   mean z 0.4886
+        NQ   17.00 ticks   mean z 0.4956

@@ -171,3 +171,128 @@ fatal, and nothing here has been costed.
 
 Nothing enters `FINDINGS.md`, `RULES.md`, `COMPONENTS_PROP.md` or either book on this record (R8,
 R15). The 2024+ slice remains unread.
+
+---
+
+# 7. AMENDMENT, same day — **§2's HEADLINE IS RETRACTED. The test had no power, and it was measuring the bid-ask bounce**
+
+**The principal rejected the finding on the ground that trending markets demonstrably exist, so the
+detection must be wrong. That objection is correct and this section is the diagnosis.** Diagnostic
+`working/d523_diagnose_why.py`, log `temp/d523_why.log`. Four candidate defects were tested; **all
+four are real, and two of them are disqualifying.**
+
+## 7.1 DEFECT ONE — a realistic trend is INVISIBLE at the horizons that were swept
+
+Simulated, 20,000 blocks a cell: a session that moves X% with 5-minute σ of 0.05% has per-bar
+drift `mu = X/84`. **Mean `z`, where 0.5 is no signal:**
+
+| drift, as a daily move | H = 8 | H = 20 | H = 42 | H = 83 |
+|---|---:|---:|---:|---:|
+| 0.0% (pure noise) | 0.5010 | 0.4976 | 0.4992 | 0.4965 |
+| **0.5%** | **0.5211** | 0.5420 | 0.5865 | 0.6564 |
+| **1.0%** | **0.5651** | 0.6448 | 0.7575 | **0.8827** |
+| 2.0% | 0.7075 | 0.8666 | 0.9676 | 0.9973 |
+| 4.0% | 0.9213 | 0.9952 | 1.0000 | 1.0000|
+
+**A genuine 1%-per-session trend moves the statistic by +0.064 at H = 8 and by +0.386 at H = 83.**
+A drift accumulates ∝ H while noise accumulates ∝ √H, so detectability rises ∝ √H — and
+**the swept ladder stopped at H = 20, in the regime where drift is swamped.**
+
+**The cap was self-inflicted and unnecessary.** H ≤ 20 comes from needing a non-overlapping
+past/future PAIR inside one session (`2H ≤ 84`) — which constrains **Stage 1**. Gate 0b needs a
+single block and could have run at H = 42 or H = 83 all along. I carried Stage 1's constraint into
+Stage 0 without noticing.
+
+## 7.2 DEFECT TWO — the statistic demands MONOTONICITY, and real trends retrace
+
+| path | net | path length | eff | `z` | reads as |
+|---|---:|---:|---:|---:|---|
+| straight line, 8 up | +8 | 8 | 1.000 | 0.995 | **TRENDING** |
+| trend, 25% retrace `(+3,−1)×4` | +8 | 16 | 0.500 | 0.793 | ordinary |
+| **trend, 50% retrace `(+2,−1)×4`** | **+4** | **12** | **0.333** | **0.607** | **ordinary** |
+| one big leg then chop | +7 | 13 | 0.538 | 0.636 | ordinary |
+| pure chop `(+1,−1)×4` | 0 | 8 | 0.000 | 0.135 | REVERTING |
+
+**A path that nets +8 against a path length of 16 — a textbook trend — is scored "ordinary",**
+because the sign shuffle can rearrange those same magnitudes into a straight line. And **D471
+measured `adverse/|move| = 0.45–0.50 in every cell of every table`**: a winning move goes about
+half its size against you first. That is precisely the 50%-retrace row, which reads 0.607.
+
+**So the 95th-percentile-of-efficiency threshold selects for near-monotone paths, which is not what
+a trend is.** D471's own conclusion — *use the variance ratio, efficiency fails as a conditioner* —
+applies directly, and §1.2 of the pre-registration **declared the variance ratio as a secondary
+label with an explicit tie-break rule. The Stage 0 runner never computed it.** That is a
+pre-registered statistic left uncomputed, the same failure recorded against D506.
+
+## 7.3 DEFECT THREE — the label is biased DOWNWARD by bid-ask bounce, by construction
+
+With `r_t = r*_t + u_t − u_{t−1}` for bounce `u`, **the numerator telescopes** (`Σr` picks up only
+`u_H − u_0`) while **the denominator accumulates** (`Σ|r|` gains a bounce term in every bar). The
+sign shuffle is computed on the *observed* `|r|`, so **the null's spread is inflated by the same
+bounce that is absent from the signal** — and `z` sits below 0.5 at every horizon on every root,
+by an amount set by the half-spread over the per-bar σ.
+
+**Measured, and it orders the roots:**
+
+    Spearman( median |5-minute return| in TICKS , mean z ) = +0.5886 on 35 roots
+
+    coarsest relative to its move        finest relative to its move
+    ZT   2 ticks   z 0.3926              NQ  17 ticks   z 0.4956
+    SR3  2 ticks   z 0.4062              RB  16 ticks   z 0.4886
+    ZF   2 ticks   z 0.4594              HO  15 ticks   z 0.4895
+    ZB   2 ticks   z 0.4637              RTY 11 ticks   z 0.4976
+
+**This retracts §3.1.** I attributed ZT's and SR3's behaviour to *tie structure in the atom set*.
+The mechanism is **bid-ask bounce**, it is quantitative, and it explains the whole cross-root
+ordering rather than two outliers.
+
+## 7.4 And therefore DEFECT FOUR — THE TEST HAD NO POWER, so its negative is not evidence
+
+On the finest-tick roots, where the bounce is smallest, `z` sits at **0.4956 (NQ)** and **0.4976
+(RTY)** against the pure-noise value of **0.5010**. The residual bias is −0.003 to −0.012. Against
+that:
+
+| if this share of sessions trends at 1% | pooled mean `z` would be |
+|---|---:|
+| 5% | 0.5042 |
+| 10% | 0.5074 |
+| 20% | 0.5138 |
+
+**The bounce bias on NQ (−0.0054) is the same size as the signal from 8% of sessions trending at
+1%.** The two are not separable at H = 8. So the measurement is consistent with *no trends* **and**
+with *trends existing and being invisible at this horizon and this price series* — it cannot
+distinguish them.
+
+**A test that cannot distinguish the hypothesis from its negation has not tested it.** §2's
+statement that "a five-minute futures path is straighter than a coin flip less often than a coin
+flip is" describes **the close-price series including its bounce**, not the market. **Withdrawn as a
+claim about market behaviour.**
+
+## 7.5 What survives, and what the corrected design has to be
+
+**SURVIVES.** The arithmetic, the 45 checks, the fixture, the exact enumeration, the `b0`
+degeneracy at H = 3/4, and **§3's finding that a pooled split-half correlation at n = 84,722 is a
+between-root artefact whose null is merely `1.645/√n`** — that is a methodological result and it is
+unaffected.
+
+**DOES NOT SURVIVE.** Any claim that these markets mean-revert intraday, and Gate 0b's verdict as a
+statement about trends. **Gate 0b is void, not failed.**
+
+**THE CORRECTED DESIGN, four changes, none cosmetic:**
+
+1. **Change the statistic from monotonicity to DRIFT.** The variance ratio `Var(r_k)/(k·Var(r_1))`
+   or a drift t-statistic `Σr / (σ√H)` — both of which score the 50%-retrace path as trending, and
+   the variance ratio is what §1.2 already declared and D471 already recommended.
+2. **Remove the bounce rather than conditioning on it.** The variance ratio can be corrected
+   explicitly; failing that, sample the path on a coarser bar (the bounce is additive, so ψ/σ falls
+   as √k) or read a mid-price. The 12-month `bbo-1m` and full-year `tbbo` on disk give a true mid.
+3. **Extend the horizon to where drift beats noise** — the session and beyond. Non-overlapping
+   pairs cap H at 42 for Stage 1, but the label's own properties have no such cap, and a
+   multi-session clock would need the principal's ruling since "intraday" was his specification.
+4. **Stop pooling 13 years and 35 roots.** Trends are regime-clustered (2020 crude, 2022 rates);
+   a pooled mean over 84,776 sessions dilutes a minority state by construction.
+
+**Nothing about this amendment closes or opens anything.** The oracle-label line is **neither
+confirmed nor refuted** — it is untested, and the next record must test it with a statistic that
+can see a trend. The 2024+ slice is still unread, which matters more now than before: **no holdout
+has been spent on a question that was never asked properly.**
