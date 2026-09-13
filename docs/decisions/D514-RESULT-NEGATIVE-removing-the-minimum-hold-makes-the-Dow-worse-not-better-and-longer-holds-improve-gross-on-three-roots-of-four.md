@@ -90,3 +90,49 @@ hold is not the binding constraint on this construction; **the window is.**
 
 Runner · this record · the artefact · D513's addendum (the cost-dead versus signal-dead split) ·
 D491 (which predicted §2) · PICKUP.
+
+---
+
+## ADDENDUM, 2026-09-13 — does this cast doubt on the admitted arm? On the parameter no, on the description yes
+
+**The principal asked whether §1's monotone ladder — NQ's gross rising +10.13, +10.13, +10.65,
++10.90, +11.93, +13.02 as M goes 0 → 5, with the frozen M = 5 the best of the six — means the hold
+was fitted.** Two facts answer it, and the second was verified only after the run.
+
+**(a) M = 5 is the CEILING of the feasible set, not a peak chosen from a hump.**
+`d506_macd_breadth.max_hold_available(first, last) = last − 1 − first`, and the index window is
+`first = 15, last = 21`, so **the largest minimum hold a signal exit can execute inside the window is
+exactly 5.** M = 6 does not exist for this construction. The ladder is monotone and stops at the
+boundary, so "M = 5" is the corner solution *hold as long as the window allows*, not an interior
+optimum. **A corner on a monotone curve is not a fit**, and this is the opposite of the pattern that
+should worry a reader — D491's own warning was about M = 3, an interior value it called *"the lucky
+draw, not a finding"*.
+
+**And the grid was pre-registered.** D495 declared **M ∈ {1, 2, 3, 5}** on the index roots in advance,
+with **37 AGREE cells and 111 across all three arms**, and scored a family null over them. The choice
+was selection from a declared grid with a multiplicity correction, which is the procedure working.
+
+**(b) The arm is, in substance, a fixed day-session hold — and its specification describes machinery
+that is nearly inert.** At the frozen M = 5 on NQ the machine takes **1.04 trips a session**, so the
+conditional exit adds a second round trip on roughly **4% of traded sessions**. D491 measured the
+same thing and said so — *"on 83% of sessions the construction IS a fixed day-session hold"* — and
+this record confirms it at the frozen setting, on gross, and across four roots.
+
+**What the arm actually is:** at 09:00, if the log Impulse MACD and the plain log MACD histogram
+agree in sign, take that direction in one MNQ and hold to the 16:00 flatten. The **conditional exit**
+and the **five-hour minimum** are real parts of the code and almost never bind. That is not a defect
+and it changes no number, but a reader of BOOK_PROP's specification would reasonably expect those two
+clauses to be doing work, and they are not.
+
+**(c) What this record does NOT resolve, and what actually defends the arm.** D513's addendum plus
+this one put NQ's +$12.46 a trade against +5.79, +5.27, +1.84, −0.40, −1.53 and −1.10 on six other
+roots — an outlier in a distribution centred near zero, on the root the arm was found on. **No
+in-sample figure can answer that.** What answers it is D503's forward read on the unread 2024–2026
+slice, where the net Sharpe went **+0.723 → +0.736 with no decay**. Selection predicts decay; there
+was none. **That single read, about 650 sessions, is the load-bearing evidence for the arm**, and the
+breadth of the failure elsewhere is a reason to keep saying so rather than a reason to doubt it.
+
+**(d) One genuinely new caution.** The gross curve is **still rising where the window stops it**. The
+day-session arm is therefore a *truncated* capture of something that wants a longer hold, and the
+truncation is imposed by P2's flatten rather than by the signal. That is not doubt about validity; it
+says the arm takes part of a longer-horizon effect and that the venue caps how much.
