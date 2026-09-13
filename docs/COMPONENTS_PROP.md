@@ -223,3 +223,75 @@ reads a foreign market before the US open and enters at or after it (D494 at ind
 cross-sectionally). The Asian chip channel is real and clears in the gap (+25.65 bp at t +4.25 into
 the gap, −1.65 ± 2.6 bp into the day); a control sector with no mechanism was the family maximum.
 Kept as measurements in FINDINGS §71. Nothing spent on the 15-minute fixtures.
+
+---
+
+## ENTRY #1 RETIRED — K8 is CLOSED, 2026-09-13, on the principal's word
+
+> *"Retire K8 as closed and admit the MACD into the book."*
+
+**K8 is retired as CLOSED**, not parked and not provisional. Its forward read (D503, from K8's own
+guarded command) on 2024-01-02 → 2026-09-09, 308 trades:
+
+    gross -$4.46 a trade (in-sample +$17.87)   hit 50.6% (was 56.9%)   net Sharpe -0.16 (was +0.61)
+    after-down minus after-up  +0.2 bp at z +0.02   (in-sample z +2.89)
+    total -$2,297   by year 2024 -$3,506 / 2025 +$4,658 / 2026 -$3,449
+    its own N1 null: p95 +7.7 bp against +0.9 bp observed -- does NOT clear
+
+**D498 §3's rule returned PROVISIONAL** (REMOVED needed net Sharpe < −0.3 *or* a negative
+difference, and it read −0.16 with +0.2 bp). **The principal has closed it anyway, and the reason
+is sound: a negative GROSS mean is not a cost failure, it is the signal having stopped paying.**
+The rule's letter is recorded above; the principal's judgement overrides it and the record says
+both.
+
+**What K8 leaves behind.** Its provenance was selection (seen as D495's control before D498
+declared it), and the forward read is exactly what that provenance predicted. **ES K8 — dismissed
+in-sample as "the same sign at half the size" — was the arm that worked forward** (+4.4 bp, net
+Sharpe +0.22). That is what noise looks like, and it is the cleanest illustration this ledger has
+of why an in-sample pick needs a forward read. **The 2024+ slice is spent for K8 and may never be
+re-read for it.**
+
+## ENTRY #2 — the MACD day-session arm, ADMITTED, 2026-09-13
+
+**The ledger's first non-provisional entry.** Order of entry: second, after K8, and with K8 now
+retired it is the **only live entry**, so C-b is trivially satisfied for it.
+
+| | |
+|---|---|
+| **instrument, size** | NQ front month by volume, traded as **one MNQ** |
+| **window** | day session only: decide at the close of each hour from **h09**, execute at the next hour's open |
+| **signal** | the **log Impulse MACD (34/9)** and the **plain log MACD histogram (12/26/9)** must **agree in sign**; `md == 0` is a no-trade state |
+| **exit** | when the signal turns, after a **minimum hold of 5 hours**; **forced flat at the close of h15 (16:00 ET)** |
+| **cost** | **$3 commission + 1.009 ticks** crossing = **$3.50** a round trip |
+| **published defaults, never tuned** | both MACDs at their canonical / LazyBear parameters |
+
+### Scored on 2016-01-04 → 2026-09-09, 2,508 sessions, 2,543 trades ([D504](decisions/D504-the-MACD-arm-across-every-year-the-fixture-holds.md))
+
+| | | |
+|---|---:|---|
+| **C-a** net Sharpe > 0.5 | **+0.698** (SE 0.353) | **PASS** |
+| **C-b** ρ < 0.3 | ledger has no other live entry; ρ with the retired K8 was +0.190 | **PASS** |
+| **C-c** skew ≥ −0.5 | **+0.555** | **PASS** |
+| **C-d** daily σ ≤ $500 | **$233** | **PASS** — but **$386 in 2026 alone** |
+| **C-e** provenance | D484 signal · D491 machine · D495 pre-reg · **D503 forward read** · D504 full history | **PASS** |
+
+gross Sharpe +0.941 · mean +$10.25/session · total **+$25,697** · maxDD $7,814 · hit 50.5% ·
+payoff 1.13 · **gross $13.61 a trade = 3.88× the $3.50 cost** · trips 1.01/session ·
+**rotation null: observed +0.698 against p95 +0.272 → +35.3 SE, CLEARS**
+
+**Forward-read provenance, which is what makes this a full entry rather than provisional:** the
+2024-01-02 → 2026-09-09 slice was read once, on the principal's word, under a rule declared before
+the read (D503 §3: FULL if net Sharpe > +0.5 and gross > 0). It returned **net Sharpe +0.736,
+gross +$19.68 a trade → FULL.** **That slice is now spent and may never be re-read.**
+
+### The three qualifications that travel with this entry
+
+1. **It is a REGIME construction.** 2020 + 2022 + 2025 + 2026 carry **96%** of the total; 2016,
+   2017, 2019, 2023 and 2024 are flat to negative (−0.04% to −1.51% of the account each). Quote
+   this wherever the entry is quoted.
+2. **P3a passes pooled and fails in the recent years individually** — 0.50/yr pooled against a bar
+   of 1.0, but **2.14 in 2022, 2.17 in 2025, 1.53 in 2026.** A rate bar calibrated on a pooled
+   window does not survive a price level that doubles.
+3. **C-d passes at $233 pooled and reads $386 in 2026**, against a $500 cap. One MNQ is now
+   **1.10× the account's notional** (0.18× in 2016) — see D504 §4. The margin is thinning, and it
+   is a property of the price level, not of the construction.

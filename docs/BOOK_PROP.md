@@ -1,6 +1,8 @@
 # The Prop Book
 
-**Admitted arms: none.**
+**Admitted arms: ONE — the MACD day-session arm, admitted 2026-09-13.** See the admission at the
+foot of this page. The book is **one arm**, which is not the book this page was designed around:
+the layering target needs four or five low-correlation components and there is one.
 
 This file is the prop track's counterpart to [BOOK.md](BOOK.md). It is empty, and saying so plainly
 is the point — an empty book with stated standards is more useful than a populated one with
@@ -876,4 +878,76 @@ needing pre-market execution and a different cost model; and the vehicle measure
 unconditional MNQ/MES pair's daily σ is **$128 against one MNQ's $282**, the only construction that
 lowers the dollar σ without leaving the micro. **Spent:** nothing on the 15-minute fixtures.
 
-**This page still admits no arm, and the ledger now holds no live entry.**
+---
+
+# THE FIRST ARM IS ADMITTED — the MACD day-session arm, 2026-09-13
+
+> *"Retire K8 as closed and admit the MACD into the book."* — the principal
+
+**This page is no longer empty.** [`COMPONENTS_PROP.md`](COMPONENTS_PROP.md) entry **#1 (K8) is
+retired as CLOSED** and entry **#2, the MACD day-session arm, is admitted** as the book's first
+and only arm.
+
+## The arm, specified exactly
+
+**NQ front month by volume, traded as one MNQ. Day session only.** Decide at the close of each
+hour from **h09**; execute at the next hour's open. **Enter** when the log Impulse MACD (34/9) and
+the plain log MACD histogram (12/26/9) **agree in sign** (`md == 0` is a no-trade state).
+**Exit** when the signal turns, after a **minimum hold of 5 hours**. **Forced flat at the close of
+h15 (16:00 ET).** Cost **$3 + 1.009 ticks = $3.50** a round trip. Both indicators at published
+defaults, never tuned.
+
+## Hurdle P, all six, on 2016-01-04 → 2026-09-09 (2,508 sessions)
+
+| | | |
+|---|---|---|
+| **P1** sizing rule | **+$2,582/yr** post-sizing at one MNQ | **PASS** (a number; cannot fail) |
+| **P2** flat across the flatten | exit 16:00 ET, inside MFFU's 16:10 | **PASS** by construction |
+| **P3a** breaches/yr ≤ 1.0 | **0.50/yr** — 5 breaches, one every 2.0 yr | **PASS** |
+| **P3b** life cost ≤ 33% | **10.0%** — life 137 → 123 sessions | **PASS** |
+| **P3c** worst day, reported | **−$1,761** = −7.6σ = **88% of the $2,000 budget** | reported, not a gate |
+| **P4** E[profit] > fee | **$985** before breach, E[life] 96 d, against a **$209** fee | **PASS** |
+| **P5** 30% single-day haircut | best day **10.3%** of total → haircut **$0** | **PASS** |
+| **P6** automation when funded | **MyFundedFutures** (Topstep's overnight sources conflict) | a venue choice |
+
+**All six clear.** That is the admission gate this page has held since it was written, and this is
+the first construction to pass it.
+
+## What the arm is worth, under the published rules rather than raw P&L
+
+[D505](decisions/D505-your-expectation-is-a-Sharpe-1-34-strategy-and-the-real-problem-is-that-four-accounts-in-five-pay-nothing.md)
+ran D386's lifecycle model at the arm's measured Sharpe and its **forced** size:
+
+| | |
+|---|---:|
+| **V** — expected dollars paid out less fees, per $209 evaluation | **+$600** |
+| P(pass the $3,000 evaluation) | **43.2%** |
+| **P(ever being paid a cent)** | **20.4%** |
+| median funded days | 94 |
+
+**V is positive at ~2.9× the fee and the MODE of the payout distribution is zero.** Four accounts
+in five return nothing. That is the honest shape of the opportunity and it is admitted with that
+stated, not in spite of it.
+
+## The four qualifications this admission carries
+
+1. **The book is ONE ARM.** `S_book = S·√k/√(1+(k−1)ρ)`: at ρ = 0.2 five arms at +0.70 reach only
+   1.16, and **at ρ = 0.3 no number of arms exceeds 1.27.** The layering target is unmet and
+   **ρ matters more than count** — which makes the next four arms a search for *different
+   underlyings*, not more rules on NQ (ρ was 0.70 between K8 and the ungated NQ day session, 0.85
+   between NQ and ES on one construction).
+2. **It is a regime construction.** 2020 + 2022 + 2025 + 2026 carry **96%** of the total.
+   2016, 2017, 2019, 2023 and 2024 are flat to negative. A flat year returns **+$14** of V against
+   a $209 outlay.
+3. **P3a passes pooled and fails in the recent years alone** — 2.14 in 2022, 2.17 in 2025, 1.53 in
+   2026 against a bar of 1.0. **C-d likewise**: $233 pooled, **$386 in 2026** against a $500 cap.
+   One MNQ is now **1.10× the account's notional** against 0.18× in 2016 (D504 §4). Both margins
+   are thinning with the price level, not with the signal.
+4. **Every figure is an upper bound on fills** — open-of-next-segment at the measured half-spread,
+   no queue, no partial fills. The worst day, which P3 reads, is the figure most exposed to that.
+
+**Provenance.** D484 (signal, first PASS against a rotation null) · D491 (state machine) · D495
+(pre-registered, the cell selected) · **D503 (the forward read of 2024-01-02 → 2026-09-09, taken
+once on the principal's word under a rule declared beforehand: FULL at net Sharpe +0.736, gross
++$19.68 a trade)** · D504 (full 2016–2026 history, +35.3 SE over its rotation null) · D505
+(the payout arithmetic). **That slice is spent and may never be re-read for this arm.**
