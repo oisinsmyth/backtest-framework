@@ -183,6 +183,46 @@ flat-map side from **git** rather than `temp/`, so it survives `temp/` being del
 
 ---
 
+## D524 — day5m VERIFIES CLEAN, AND A FLAT ID DICT IS **NON-REPRODUCIBLY** WRONG, 2026-09-13
+
+The last builder to get the D520/D521 rebuild-and-diff treatment. `build_fut_day5m.py` already
+imported the windowed `ids_of`, so there was nothing to port — only to verify. **The fixture is
+correct;** the finding is about the defect it avoids.
+
+**Two routes, both clean.** `--build` re-run into a temp path (a concurrent session was active, so
+the committed parquet was never opened for writing): **byte-identical**, 10,384,830 rows, sha256
+`aa2eb147…` both ways, 1.0 min. And because `--build` reads a **cached decode** — the id mapping is
+applied in `--decode`, 88 min — that alone says nothing about the mapping, so the 5-minute bars were
+folded into hours and compared with `fut_breadth_hourly`, a separate decode pass: **906,905
+root-session-hours, 0 differences in o/h/l/c/v AND trade count, 0 orphan hours either way.**
+
+**THE FLAT DICT IS NOT DETERMINISTIC.** `store.metadata.mappings` iterates in a different order in
+every process (string hash randomisation), so "the last write wins" picks a different winner each
+run. On the 2019 file, **all 8 ambiguous ids get a different surviving label depending on the
+process** (8 observed of 8 over six hash seeds, 0 appearing stable against 0.25 expected by chance) —
+id 73454 reads the Nikkei `NKDU0` five times and then **silver `SIF9`** on the sixth, so a five-read
+probe would have called it stable. Count it with enough draws: an unstable id looks stable with
+probability 2^-(n-1), so a three-seed probe reported "5 of 8" once and "6 of 8" next time with a
+different set of ids. The *count* of
+mislabelled windows is stable; the *identities* are not. **So two flat-dict builds of the same code
+over the same archive produce different fixtures, and a flat-built fixture cannot be reproduced or
+audited after the fact.** D521's twelve bad CL sessions might have been a different twelve on a
+re-run — distrust any pre-D520 flat-built artefact beyond the rows a diff happened to catch.
+
+**The 36-root list is where the mapping actually bites:** **29** mislabelled outright windows and
+**14,139** foreign windows, against **0 and 712** for the four index roots — because it contains CL
+(the decade-slot reuse) and the FX complex. Named: `CLN9`↔`CLN29`, and cross-root ones like
+`NKDU0`↔`SIF9` (Nikkei/silver) and `6BU5`↔`6AQ0` (sterling/Aussie).
+
+**Every futures builder has now been rebuilt and diffed.** Open item, deliberately not done: the
+88-minute decode was not re-run, so day5m's cache is verified by agreement with breadth rather than
+by regeneration. If the cache is ever deleted, that decode is the stronger check — diff it.
+
+Recompute: `scripts/d524_day5m_verification.py --rebuild-diff --aggregate --precheck --determinism --name`
+→ `data/d524_day5m_verification.json`.
+
+---
+
 ## D522 — THE RTY G4 FAILURE WAS ONE HALTED OPEN; ALL FOUR INDEX ROOTS NOW PASS EVERY GATE, 2026-09-13
 
 **2020-03-16 alone carried it.** Dropping that one session takes RTY's open-to-close correlation with

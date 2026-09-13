@@ -160,6 +160,22 @@ the rolls, and a return across that boundary is a roll rather than a move.
    > fixture here with a column that has no volume filter in front of it (`oi_total`), and it
    > was wrong on 12 CL sessions. **The rule of thumb: front-month columns are insulated,
    > totals and strip counts are not.**
+   >
+   > **AND THE FLAT DICT IS NOT DETERMINISTIC — [D524](decisions/D524-the-day5m-fixture-verifies-clean-and-a-flat-id-dict-is-non-reproducibly-wrong.md).**
+   > `store.metadata.mappings` iterates in a different order in every process, so "the last
+   > write wins" picks a different winner each run: on the 2019 file **all 8 ambiguous ids get a
+   > different label depending on the process** (8 of 8 over six hash seeds, 0 appearing stable
+   > against 0.25 expected by chance) — id 73454 reads the Nikkei `NKDU0` five times and then
+   > **silver `SIF9`** on the sixth, so a five-read probe would have called it stable. The
+   > *count* of mislabelled windows is stable; the
+   > *identities* are not. Two flat-dict builds of the same code over the same archive therefore
+   > produce **different fixtures**, and **a flat-built fixture cannot be reproduced or audited
+   > after the fact** — distrust any pre-D520 flat-built artefact beyond the rows a diff happened
+   > to catch. The exposure is far larger on the **36-root** list than on the index roots:
+   > **29 mislabelled outright windows and 14,139 foreign windows**, against **0 and 712** for
+   > ES/NQ/YM/RTY. `fut_day5m` itself verifies clean: rebuilt byte-identical, and its 5-minute
+   > bars fold into the hourly fixture with **0 differences across 906,905 root-session-hours**
+   > in o/h/l/c/v **and trade count**.
 
 6. **THE ENERGY DAY SESSION IS NOT IN THE ARCHIVE BEFORE JUNE 2015** (D520, extending D462's
    index-futures finding). **CL, NG, RB and HO** carry the same pre-2016 gap on hours 21→14 ET

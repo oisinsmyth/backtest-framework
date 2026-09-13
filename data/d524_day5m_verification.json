@@ -1,0 +1,484 @@
+{
+ "rebuild_diff": {
+  "rc": 0,
+  "wall_min": 1.0,
+  "rows": 10384830,
+  "columns": [
+   "root",
+   "contract",
+   "day",
+   "bar",
+   "high",
+   "low",
+   "volume",
+   "n",
+   "open",
+   "close",
+   "same_front",
+   "present"
+  ],
+  "differing_by_column": {
+   "root": 0,
+   "contract": 0,
+   "day": 0,
+   "bar": 0,
+   "high": 0,
+   "low": 0,
+   "volume": 0,
+   "n": 0,
+   "open": 0,
+   "close": 0,
+   "same_front": 0,
+   "present": 0
+  },
+  "total_differing": 0,
+  "sha256_committed": "aa2eb1474d8368e9",
+  "sha256_rebuilt": "aa2eb1474d8368e9",
+  "file_identical": true
+ },
+ "run_utc": "2026-09-13T22:08:59Z",
+ "aggregation_vs_breadth": {
+  "hours_compared": 906905,
+  "hours_only_day5m": 0,
+  "hours_only_breadth": 0,
+  "per_field": {
+   "o": {
+    "differing": 0,
+    "max_abs": 1.4551915228366852e-11
+   },
+   "h": {
+    "differing": 0,
+    "max_abs": 1.4551915228366852e-11
+   },
+   "l": {
+    "differing": 0,
+    "max_abs": 1.4551915228366852e-11
+   },
+   "c": {
+    "differing": 0,
+    "max_abs": 1.4551915228366852e-11
+   },
+   "v": {
+    "differing": 0,
+    "max_abs": 0.0
+   },
+   "n": {
+    "differing": 0,
+    "max_abs": 0.0
+   }
+  },
+  "total_differing": 0
+ },
+ "named_mislabels": {
+  "years": [
+   "2019",
+   "2020"
+  ],
+  "n": 12,
+  "cross_root": 2,
+  "by_root": {
+   "6A": 2,
+   "6B": 1,
+   "6C": 2,
+   "CL": 6,
+   "NKD": 1
+  },
+  "windows": [
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 178362,
+    "root": "CL",
+    "really": "CLN9",
+    "flat_would_say": "CLN29",
+    "valid_from": "2019-06-23",
+    "valid_to": "2020-01-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 628562,
+    "root": "CL",
+    "really": "CLX9",
+    "flat_would_say": "CLX29",
+    "valid_from": "2019-10-27",
+    "valid_to": "2020-01-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 213372,
+    "root": "CL",
+    "really": "CLQ29",
+    "flat_would_say": "CLQ9",
+    "valid_from": "2019-06-09",
+    "valid_to": "2019-07-28",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 436191,
+    "root": "CL",
+    "really": "CLZ9",
+    "flat_would_say": "CLZ29",
+    "valid_from": "2019-11-24",
+    "valid_to": "2020-01-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 178468,
+    "root": "CL",
+    "really": "CLU9",
+    "flat_would_say": "CLU29",
+    "valid_from": "2019-08-25",
+    "valid_to": "2020-01-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 73454,
+    "root": "NKD",
+    "really": "NKDU0",
+    "flat_would_say": "SIF9",
+    "valid_from": "2019-02-14",
+    "valid_to": "2020-01-01",
+    "cross_root": true
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 162,
+    "root": "6C",
+    "really": "6CX9",
+    "flat_would_say": "6CZ4",
+    "valid_from": "2019-07-02",
+    "valid_to": "2019-12-04",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "iid": 405691,
+    "root": "CL",
+    "really": "CLV29",
+    "flat_would_say": "CLV9",
+    "valid_from": "2019-06-09",
+    "valid_to": "2019-09-29",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+    "iid": 6905,
+    "root": "6B",
+    "really": "6BM5",
+    "flat_would_say": "6BK0",
+    "valid_from": "2020-06-01",
+    "valid_to": "2021-01-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+    "iid": 859,
+    "root": "6C",
+    "really": "6CU5",
+    "flat_would_say": "6CQ0",
+    "valid_from": "2020-09-01",
+    "valid_to": "2021-01-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+    "iid": 7084,
+    "root": "6A",
+    "really": "6AK0",
+    "flat_would_say": "6AM5",
+    "valid_from": "2020-01-01",
+    "valid_to": "2020-06-01",
+    "cross_root": false
+   },
+   {
+    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+    "iid": 1318,
+    "root": "6A",
+    "really": "6AQ0",
+    "flat_would_say": "6BU5",
+    "valid_from": "2020-03-30",
+    "valid_to": "2020-08-31",
+    "cross_root": true
+   }
+  ]
+ },
+ "flat_map_counterfactual": {
+  "files": 26,
+  "windows": 27420,
+  "mislabelled": 29,
+  "foreign": 14139,
+  "files_with_mislabels": 12,
+  "files_with_foreign": 26,
+  "per_file": [
+   {
+    "file": "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
+    "ids": 774,
+    "windows": 778,
+    "mislabelled": 4,
+    "foreign": 127
+   },
+   {
+    "file": "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",
+    "ids": 860,
+    "windows": 860,
+    "mislabelled": 0,
+    "foreign": 356
+   },
+   {
+    "file": "glbx-mdp3-20120101-20121231.ohlcv-1m.dbn.zst",
+    "ids": 859,
+    "windows": 859,
+    "mislabelled": 0,
+    "foreign": 332
+   },
+   {
+    "file": "glbx-mdp3-20130101-20131231.ohlcv-1m.dbn.zst",
+    "ids": 954,
+    "windows": 954,
+    "mislabelled": 0,
+    "foreign": 813
+   },
+   {
+    "file": "glbx-mdp3-20140101-20140629.ohlcv-1m.dbn.zst",
+    "ids": 817,
+    "windows": 817,
+    "mislabelled": 0,
+    "foreign": 155
+   },
+   {
+    "file": "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
+    "ids": 1022,
+    "windows": 1022,
+    "mislabelled": 0,
+    "foreign": 417
+   },
+   {
+    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "ids": 1248,
+    "windows": 1256,
+    "mislabelled": 8,
+    "foreign": 1521
+   },
+   {
+    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+    "ids": 1236,
+    "windows": 1240,
+    "mislabelled": 4,
+    "foreign": 1467
+   },
+   {
+    "file": "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
+    "ids": 1248,
+    "windows": 1250,
+    "mislabelled": 2,
+    "foreign": 1475
+   },
+   {
+    "file": "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
+    "ids": 1098,
+    "windows": 1098,
+    "mislabelled": 0,
+    "foreign": 641
+   },
+   {
+    "file": "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
+    "ids": 1107,
+    "windows": 1107,
+    "mislabelled": 0,
+    "foreign": 344
+   },
+   {
+    "file": "glbx-mdp3-20240101-20240828.ohlcv-1m.dbn.zst",
+    "ids": 1116,
+    "windows": 1120,
+    "mislabelled": 4,
+    "foreign": 345
+   },
+   {
+    "file": "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
+    "ids": 1085,
+    "windows": 1086,
+    "mislabelled": 1,
+    "foreign": 427
+   },
+   {
+    "file": "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
+    "ids": 1128,
+    "windows": 1128,
+    "mislabelled": 0,
+    "foreign": 464
+   },
+   {
+    "file": "glbx-mdp3-20240829-20241231.ohlcv-1m.dbn.zst",
+    "ids": 1108,
+    "windows": 1108,
+    "mislabelled": 0,
+    "foreign": 371
+   },
+   {
+    "file": "glbx-mdp3-20250101-20250903.ohlcv-1m.dbn.zst",
+    "ids": 1161,
+    "windows": 1162,
+    "mislabelled": 1,
+    "foreign": 551
+   },
+   {
+    "file": "glbx-mdp3-20140630-20141231.ohlcv-1m.dbn.zst",
+    "ids": 883,
+    "windows": 884,
+    "mislabelled": 1,
+    "foreign": 230
+   },
+   {
+    "file": "glbx-mdp3-20150101-20151231.ohlcv-1m.dbn.zst",
+    "ids": 1042,
+    "windows": 1043,
+    "mislabelled": 1,
+    "foreign": 826
+   },
+   {
+    "file": "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
+    "ids": 1048,
+    "windows": 1049,
+    "mislabelled": 1,
+    "foreign": 799
+   },
+   {
+    "file": "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
+    "ids": 1107,
+    "windows": 1107,
+    "mislabelled": 0,
+    "foreign": 1252
+   },
+   {
+    "file": "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
+    "ids": 998,
+    "windows": 998,
+    "mislabelled": 0,
+    "foreign": 475
+   },
+   {
+    "file": "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
+    "ids": 1110,
+    "windows": 1111,
+    "mislabelled": 1,
+    "foreign": 200
+   },
+   {
+    "file": "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
+    "ids": 1049,
+    "windows": 1049,
+    "mislabelled": 0,
+    "foreign": 10
+   },
+   {
+    "file": "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
+    "ids": 1070,
+    "windows": 1071,
+    "mislabelled": 1,
+    "foreign": 83
+   },
+   {
+    "file": "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
+    "ids": 1121,
+    "windows": 1121,
+    "mislabelled": 0,
+    "foreign": 121
+   },
+   {
+    "file": "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst",
+    "ids": 1142,
+    "windows": 1142,
+    "mislabelled": 0,
+    "foreign": 337
+   }
+  ],
+  "wall_min": 20.2
+ },
+ "flat_label_determinism": {
+  "year": "2019",
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "multi_label_ids": 8,
+  "unstable_ids": 8,
+  "observed_stable": 0,
+  "expected_false_stable": 0.25,
+  "iteration_order_stable": false,
+  "per_id": {
+   "162": [
+    "6CZ4",
+    "6CX9",
+    "6CX9",
+    "6CZ4",
+    "6CZ4",
+    "6CZ4"
+   ],
+   "178362": [
+    "CLN9",
+    "CLN9",
+    "CLN9",
+    "CLN9",
+    "CLN29",
+    "CLN29"
+   ],
+   "178468": [
+    "CLU29",
+    "CLU29",
+    "CLU9",
+    "CLU29",
+    "CLU9",
+    "CLU29"
+   ],
+   "213372": [
+    "CLQ9",
+    "CLQ29",
+    "CLQ9",
+    "CLQ9",
+    "CLQ29",
+    "CLQ29"
+   ],
+   "405691": [
+    "CLV9",
+    "CLV29",
+    "CLV9",
+    "CLV29",
+    "CLV9",
+    "CLV29"
+   ],
+   "436191": [
+    "CLZ9",
+    "CLZ9",
+    "CLZ29",
+    "CLZ9",
+    "CLZ29",
+    "CLZ29"
+   ],
+   "628562": [
+    "CLX9",
+    "CLX29",
+    "CLX9",
+    "CLX29",
+    "CLX29",
+    "CLX29"
+   ],
+   "73454": [
+    "NKDU0",
+    "NKDU0",
+    "NKDU0",
+    "NKDU0",
+    "NKDU0",
+    "SIF9"
+   ]
+  }
+ }
+}
