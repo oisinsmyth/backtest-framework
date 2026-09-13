@@ -530,6 +530,21 @@ not a term, P3 is a prudence rule of ours and P3a/P3b are its entire content.
 what kills the account; strings of moderate losses in one regime are.** A stop is therefore worth
 building to satisfy P3 as a *rule* and is worth nothing for survival.
 
+**And a second finding that travels with it, added 2026-09-13 (D506): there IS one instrument that
+moves P3a, and it is selectivity.** Both prop death mechanisms are counted in **exposure-days**, so a
+filter that removes 90% of the sessions removes 90% of the chances to die — even when each session it
+keeps is individually more dangerous. Trading only the top causal decile of overnight activity cuts
+the breach rate three to five fold: **ZB 14.00 → 2.71 a year, ZN 2.00 → 0.71, the NQ day drift 0.57 →
+0.00.** The filter is a standing module, [`scripts/activity_filter.py`](../scripts/activity_filter.py),
+causal and root-agnostic.
+
+**Reach for it when a construction fails P3a and nothing else; never reach for it to choose
+direction.** D506 closed that use: the same filter costs −2.09 points of directional accuracy against
+the +0.85 points of fee it saves, and conditioning on the day's *realised* range — perfect
+foreknowledge of its size — is worth −0.0018, so there is no version of it that selects a better
+session to trade. **P3a is a property of how often you are exposed, and that is the only handle on it
+this programme has found.**
+
 ## R12. Two tracks, two standards — and a candidate closed on one is screened against the other before it is discarded
 
 **This programme now serves two books with incompatible constraints**, and a single set of hurdles

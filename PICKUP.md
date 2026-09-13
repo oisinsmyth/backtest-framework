@@ -150,6 +150,23 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## THE IN-PLAY CONSTRUCTION CLOSED, THE ACTIVITY FILTER KEPT — the principal, 2026-09-13
+
+**Closed:** conditioning a day-session signal on how active the overnight session was, as a way of
+choosing *when* to trade. **Kept:** the filter itself, as an instrument of the survival layer, now a
+standing module — **`scripts/activity_filter.py`** (`--selftest`, six checks), causal and
+root-agnostic, with both indications and D506's measured properties in its docstring.
+
+**The one indication: reach for it when a construction fails P3a and nothing else.** It cuts the
+breach rate three to five fold (ZB 14.00 → 2.71 a year, ZN 2.00 → 0.71, the NQ day drift 0.57 → 0.00)
+because both prop death mechanisms are counted in exposure-days. **Never use it to choose direction**
+— that is exactly what D506 closed. Recorded in R11's P3 amendment, BOOK_PROP's closure section and
+the ledger.
+
+**The arm admitted today does not need it**: the MACD day-session arm reads P3a 0.50 a year against a
+bar of 1.0 and P3b 10.0% against 33%. The filter is for what comes next, and for the day a live arm's
+breach rate drifts.
+
 ## D506 — STAGE 1, CLOSE: IN-PLAY SELECTION FAILS AS ALPHA AND WORKS AS DRAWDOWN MANAGEMENT, 2026-09-13
 
 From the in-play video (`docs/youtube-lessons.md` §6) and the design in

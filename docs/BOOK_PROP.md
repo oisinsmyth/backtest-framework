@@ -951,3 +951,51 @@ stated, not in spite of it.
 once on the principal's word under a rule declared beforehand: FULL at net Sharpe +0.736, gross
 +$19.68 a trade)** · D504 (full 2016–2026 history, +35.3 SE over its rotation null) · D505
 (the payout arithmetic). **That slice is spent and may never be re-read for this arm.**
+
+---
+
+## THE IN-PLAY CONSTRUCTION CLOSED BY THE PRINCIPAL, 2026-09-13 — AND ITS PREMISE KEPT AS A STANDING INSTRUMENT
+
+**Closed by the principal, in writing, after D506:** conditioning a day-session signal on how active
+the overnight session was, as a way of choosing *when* to trade for a better edge. On eight roots and
+two signals the repo already owns, the filter bought **+0.85 points** of fee dilution (positive in 16
+of 16 cells, about +0.10 of Sharpe, exactly what the premise promised) and cost **−2.09 points** of
+directional accuracy (negative in 11 of 16). The primary cell, the Dow micro with the log MACD, ran
+at **47.98% accuracy in play against 51.05% on the rest**, losing **$10.61 a trade gross** where the
+rest made $2.10. No cell cleared the 16-cell family bar: p95 **+0.2192** against an observed maximum
+of **+0.0620**, which **97.8%** of the 1,978 exact offsets beat.
+
+**What closes the whole family rather than this version of it:** the untradeable bound. Conditioning
+on the day's **realised** range, which nobody can do in advance, is **−0.0018** on the primary. There
+was no prize to win even with perfect foreknowledge of the day's size, so the failure is not in the
+forecast. The mechanism agrees with the two records either side of it (FINDINGS §70, §71, §72):
+**by 09:30 the information is spent, and a night that moved a lot has spent more of it.**
+
+**Stage 2, root selection, was never run** — the design made it conditional on stage 1.
+
+### The premise is KEPT, as an instrument of the survival layer
+
+**The principal's decision, the same day: a general activity filter is worth having even where it is
+not used.** It now exists as a standing, reusable module, [`scripts/activity_filter.py`](../scripts/activity_filter.py)
+(`--selftest` passes six checks), root-agnostic and causal by construction, with D506's measured
+properties and both indications in its docstring.
+
+**Its one indication.** Trading only the in-play decile cuts **P3a** — R11's breaches-per-year of the
+2%-of-account daily limit — by **three to five fold**, because both prop death mechanisms are counted
+in **exposure-days** and a filter that removes 90% of the sessions removes 90% of the chances to die,
+even though each session it keeps is individually more dangerous:
+
+| | P3a, all sessions | P3a, the in-play decile |
+|---|---:|---:|
+| ZB | **14.00 a year** | **2.71** |
+| ZN | 2.00 | 0.71 |
+| NQ, the long day drift | 0.57 | 0.00 |
+
+**Reach for it when a construction fails P3a and nothing else. That is the whole indication**, and it
+is a sizing decision rather than a signal one. **The arm admitted to this page today does not need
+it** — the MACD day-session arm reads P3a **0.50 a year** against a bar of 1.0, and P3b 10.0% against
+33%. The filter is kept for the constructions that come next, and for the day a live arm's breach
+rate drifts.
+
+**What it must never be used for:** choosing direction, or choosing which sessions carry the edge.
+That is what D506 closed.
