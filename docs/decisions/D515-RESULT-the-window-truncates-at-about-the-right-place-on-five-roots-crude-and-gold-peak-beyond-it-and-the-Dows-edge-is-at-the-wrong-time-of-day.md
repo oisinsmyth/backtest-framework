@@ -116,3 +116,39 @@ slow-signal story should not be leaned on.
 
 Runner · this record · the artefact · `working/d515_where_in_the_clock_scratch.py` and its CSV ·
 D513's addendum · D514 · FINDINGS §70 · PICKUP.
+
+---
+
+## ADDENDUM, 2026-09-13 — CL's row is CONFIRMED, not provisional. The breadth fixture does not pool expiries on crude
+
+**§3 flagged CL as provisional pending a check of whether the breadth fixture shares D467's
+expiry-pooling defect. It does not, and neither does D467's own CL front-month table.** Check:
+`working/check_breadth_cl_expiry_pooling.py`.
+
+| test | result |
+|---|---|
+| the two fixtures' CL midday close, 3,629 common days | **identical to 2.15e-16** relative |
+| the two fixtures' CL contract label, same days | **identical on every day** |
+| 2019 alone, where the note measured 16 of 140 CL symbols ambiguous | **zero** disagreement over 258 sessions |
+| year-by-year midday close against WTI's actual history | 2016 low **$26.84**, 2020 low **$12.11**, 2022 high **$122.59**, 2011 high **$113.83** — all correct |
+| the six widest own-session high/low ratios | all **April 2020 on CLM0**, the negative-oil episode, and real |
+
+**Why the defect could not reach the output.** The front-month rule selects by **volume**. A contract
+ten years out has negligible volume and never wins the slot, so the ambiguous mapping was filtered
+out by the selection before it could reach a session row. The defect is real in the id dictionary and
+absent from this table.
+
+**Consequences.** CL's ladder row here stands as measured. The same narrowing applies to D495's CL
+gross Sharpe of +1.09, which the standing note asked be treated as suspect on these grounds — it is
+not suspect on these grounds. **What remains exposed** is any study reading *all* contracts rather
+than the volume-selected front month: term structure, calendar spreads, per-expiry open interest.
+Those still need the windowed mapping.
+
+**A check that could not fire, recorded so nobody rebuilds it.** My first version flagged any contract
+*label* whose rows span more than a year. It flags **34 of 36 roots, including NQ, ES and YM**, which
+the standing note calls clean — because `CLZ5` legitimately denotes December 2015 **and** December
+2025 crude under CME's single-digit-year convention. **A recurring label is expected; the defect is
+bars attributed to the same session.** The discriminating tests compare the two builders against each
+other and the output against an independent reference.
+
+**This does not change any D515 number, verdict or null.** It removes a caveat.
