@@ -91,3 +91,51 @@ as they fell.
 ## 5. Files
 
 Runner · this record · the artefact · D512 (the NQ version) · BOOK_PROP's closure section · PICKUP.
+
+---
+
+## ADDENDUM, 2026-09-13 — this record reported NET only, which hid the answer. GROSS is positive on three of the six
+
+**A correction to my own reporting.** CLAUDE.md's first reporting rule is *performance, NET AND GROSS
+side by side*, because *"gross separates cost failure from signal failure: opposite fixes."* §0 and §1
+of this record quote net figures throughout and never quote gross. The runner computed gross, asserted
+`net == gross − cost × trips`, and then discarded it. Diagnostic:
+`working/d513_why_only_nq_scratch.py`, same window, nothing new read.
+
+| root | GROSS $/trade | gross Sharpe | cost $/RT | cost in ticks | NET $/trade | net Sharpe | E\|move\|/trade | cost ÷ move | gross ÷ cost |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| **NQ** (reference) | **+12.46** | **+1.130** | 3.50 | 7.00 | **+8.96** | **+0.811** | 108.91 | **3.2%** | **3.56** |
+| YM | −0.40 | −0.070 | 3.50 | 7.00 | −3.90 | −0.686 | 55.47 | 6.3% | −0.11 |
+| ZN | **+5.79** | **+0.422** | **18.62** | 1.19 | −12.83 | −0.929 | 142.80 | **13.0%** | 0.31 |
+| ZB | **+5.27** | **+0.161** | **34.25** | 1.10 | −28.98 | −0.880 | 351.70 | 9.7% | 0.15 |
+| GC | **+1.84** | **+0.390** | 4.00 | 4.00 | −2.16 | −0.456 | 47.90 | 8.4% | 0.46 |
+| CL | −1.53 | −0.270 | 4.00 | 4.00 | −5.53 | −0.968 | 60.46 | 6.6% | −0.38 |
+| 6E | −1.10 | −0.268 | 4.25 | 3.40 | −5.35 | −1.294 | 45.05 | 9.4% | −0.26 |
+
+**Gross is positive on four of seven roots and net on one.** §1's sentence *"the arm does not merely
+fail to transplant, it loses on every one of these roots"* is true of **net** and **wrong as a
+statement about the signal**. The correct reading is that the six roots split into two groups with
+**opposite diagnoses**:
+
+- **Cost-dead, not signal-dead: ZN, ZB, GC.** Gross Sharpe +0.42, +0.16, +0.39 and gross of +$5.79,
+  +$5.27, +$1.84 a trade. The signal is present and small. It dies on the **tick**: ZN's tick is
+  $15.62 and ZB's $31.25, so a single crossing costs $18.62 and $34.25 against those edges. ZN would
+  need **3.2×** its gross to break even, ZB **6.5×**, GC **2.2×**. Commission is trivial on the
+  large-tick roots (ZN's $3 is 0.19 of a tick); **the spread is the whole cost**, which is the
+  mirror image of `commission-not-spread-binds-at-micro-size`.
+- **Signal-dead: YM, CL, 6E.** Gross is **negative** — −$0.40, −$1.53, −$1.10 — so there is nothing
+  for a cheaper venue to rescue. Notably **YM is an equity index and pays the same $3.50 as NQ**, so
+  this is not a commodity-versus-index split and not a cost split.
+
+**What this strengthens.** §4's stated limitation — that D513 conditions a construction that bleeds
+everywhere — is now sharper and partly **wrong in the helpful direction**: on ZN, ZB and GC the
+construction is not signal-dead, it is cost-dead, so the conditioner was being asked to sort a
+**real if small** gross edge on three of six roots and still sorted nothing. That is a somewhat
+stronger null for the conditioner than the record claimed, not a weaker one.
+
+**What does not change.** The verdict, the nulls, and every conditioner figure: Δ/σ is computed on
+**net** P&L by design, which is the quantity an account experiences, and none of it is restated.
+
+**And the structural fact the table makes plain:** **NQ pays 3.2% of its per-trade move in cost and
+the next cheapest root pays 6.3%.** That ratio, not the signal, is what the arm's transplant runs
+into first on ZN, ZB and GC.
