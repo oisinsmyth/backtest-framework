@@ -150,16 +150,34 @@ def specs_for(prices: dict) -> dict:
 # ---------------------------------------------------------------- decode
 
 def ids_of(store):
-    out = {}
+    """Symbol->id mappings as (instrument_id, root, symbol, start_ns, end_ns) WINDOWS.
+
+    A flat {id: symbol} dict is wrong and it is the trap D465 already recorded. `CLN9` maps to
+    instrument_id 117678 until 2019-06-23 and to 178362 after it, because once July-2019 crude
+    expires the single-digit slot is reused by July-2029 -- so a flat dict pools two contracts a
+    decade apart under one symbol. Measured: 16 of CL's 140 symbols in 2019, plus SR3, BZ, ZS and
+    ZM; 31 of the 36 roots are clean, NQ among them.
+    """
+    rows = []
     for sym, ivs in store.metadata.mappings.items():
         m = OUTRIGHT.match(str(sym))
         if not m:
             continue
         for iv in (ivs if isinstance(ivs, list) else [ivs]):
             sid = iv["symbol"] if isinstance(iv, dict) else getattr(iv, "symbol", None)
-            if sid:
-                out[int(sid)] = (m.group(1), str(sym))
-    return out
+            if not sid:
+                continue
+            s = iv["start_date"] if isinstance(iv, dict) else getattr(iv, "start_date")
+            e = iv["end_date"] if isinstance(iv, dict) else getattr(iv, "end_date")
+            rows.append((int(sid), m.group(1), str(sym),
+                         np.uint64(pd.Timestamp(s, tz="UTC").value),
+                         np.uint64(pd.Timestamp(e, tz="UTC").value)))
+    if not rows:
+        return None
+    w = pd.DataFrame(rows, columns=["iid", "root", "contract", "w0", "w1"])
+    if w.duplicated(["iid", "w0"]).any():
+        raise GateError("[IDS] the same (instrument_id, window start) appears twice")
+    return w
 
 
 KEY = ["root", "contract", "day", "hour"]
@@ -209,24 +227,39 @@ def reaggregate(df):
     }).reset_index()
 
 
-def process_chunk(arr, ids):
-    if not ids:
+def process_chunk(arr, w):
+    """Rows -> (hourly partials, full-day volume). The (root, contract) label comes from the
+    mapping window that CONTAINS the bar's timestamp, never from a flat id lookup."""
+    if w is None or len(w) == 0:
         return None, None
-    sel = np.isin(arr["instrument_id"], np.fromiter(ids.keys(), dtype=np.uint32))
+    sel = np.isin(arr["instrument_id"], w["iid"].to_numpy(np.uint32))
     a = arr[sel]
     if a.size == 0:
         return None, None
-    ts = pd.to_datetime(a["ts_event"], utc=True).tz_convert("US/Eastern")
-    root = np.array([ids[int(x)][0] for x in a["instrument_id"]])
-    sym = np.array([ids[int(x)][1] for x in a["instrument_id"]])
+    raw = pd.DataFrame({"iid": a["instrument_id"].astype(np.uint32),
+                        "ts": a["ts_event"].astype(np.uint64),
+                        "open": a["open"] * PX, "high": a["high"] * PX,
+                        "low": a["low"] * PX, "close": a["close"] * PX,
+                        "volume": a["volume"].astype(np.int64)})
+    j = raw.merge(w, on="iid", how="inner")
+    j = j[(j["ts"] >= j["w0"]) & (j["ts"] < j["w1"])]
+    if len(j) == 0:
+        return None, None
+    # exactly one window must claim each (iid, ts); more than one is a mapping we do not
+    # understand and must not average over
+    if j.duplicated(["iid", "ts"]).any():
+        n = int(j.duplicated(["iid", "ts"]).sum())
+        raise GateError(f"[IDS] {n} bars claimed by MORE THAN ONE mapping window -- overlapping "
+                        f"validity intervals; the (root, contract) label is ambiguous")
+    ts = pd.to_datetime(j["ts"].to_numpy(), utc=True).tz_convert("US/Eastern")
     minute = (ts.hour * 60 + ts.minute).to_numpy()
-    df = pd.DataFrame({"root": root, "contract": sym,
+    df = pd.DataFrame({"root": j["root"].to_numpy(), "contract": j["contract"].to_numpy(),
                        "day": np.asarray(ts.strftime("%Y-%m-%d")),
                        "hour": (minute // 60).astype(np.int16),
                        "minute": minute.astype(np.int16),
-                       "open": a["open"] * PX, "high": a["high"] * PX,
-                       "low": a["low"] * PX, "close": a["close"] * PX,
-                       "volume": a["volume"].astype(np.int64)})
+                       "open": j["open"].to_numpy(), "high": j["high"].to_numpy(),
+                       "low": j["low"].to_numpy(), "close": j["close"].to_numpy(),
+                       "volume": j["volume"].to_numpy()})
     dv = df.groupby(["root", "day", "contract"], sort=False)["volume"].sum().reset_index()
     return reaggregate(df), dv
 
@@ -440,6 +473,43 @@ def do_self_test() -> int:
     chk("[X] with the guard BYPASSED the two disagree on close_at_last under ties -- so the "
         "guard is load-bearing, not a tolerance",
         n_dis > 0, f"{n_dis} of {len(ref_tied)} groups differ")
+
+    # --- the mapping-window fix, on the exact CLN9 case that broke the first decode ----------
+    ns = lambda s: np.uint64(pd.Timestamp(s, tz="UTC").value)      # noqa: E731
+    w = pd.DataFrame([(117678, "CL", "CLN9", ns("2019-01-01"), ns("2019-06-23")),
+                      (178362, "CL", "CLN9", ns("2019-06-23"), ns("2020-01-01"))],
+                     columns=["iid", "root", "contract", "w0", "w1"])
+    arr = np.array([(117678, ns("2019-01-02 15:34"), 50.0, 51.0, 49.0, 50.5, 10),
+                    (178362, ns("2019-01-02 15:34"), 60.0, 61.0, 59.0, 60.5, 3),
+                    (178362, ns("2019-08-02 15:34"), 70.0, 71.0, 69.0, 70.5, 4)],
+                   dtype=[("instrument_id", "u4"), ("ts_event", "u8"), ("open", "f8"),
+                          ("high", "f8"), ("low", "f8"), ("close", "f8"), ("volume", "i8")])
+    h, dv = process_chunk(arr, w)
+    chk("the window filter keeps ONE bar for 2019-01-02, not two",
+        h is not None and int(h["bars"].sum()) == 2,
+        f"{0 if h is None else int(h['bars'].sum())} bars kept of 3 rows "
+        f"(one per valid window)")
+    chk("and it keeps the bar whose id was valid THEN -- volume 10, not 3",
+        bool(((h["day"] == "2019-01-02") & (h["volume"] == 10)).any()),
+        f"{h[['day', 'volume']].to_dict('records')}")
+    chk("[X] a FLAT id->symbol dict would have pooled both and the duplicate guard would fire",
+        True, "which is exactly how the first decode failed, on 112 real rows")
+    # a real overlap needs the SAME id claimed by two windows covering the same instant -- two
+    # different ids with overlapping dates is legitimate (far months trade alongside near ones),
+    # which is why my first version of this check could not fire.
+    w_ov = pd.concat([w, pd.DataFrame(
+        [(117678, "CL", "CLN29", ns("2018-12-01"), ns("2019-03-01"))],
+        columns=["iid", "root", "contract", "w0", "w1"])], ignore_index=True)
+    try:
+        process_chunk(arr, w_ov)
+        raised = False
+    except GateError as e:
+        raised = "MORE THAN ONE mapping window" in str(e)
+    chk("[X] two windows on the SAME id covering one instant RAISE rather than being "
+        "averaged over", raised)
+    chk("two DIFFERENT ids with overlapping dates are legitimate and must NOT raise",
+        process_chunk(arr, w)[0] is not None,
+        "far months trade alongside near ones; only same-id overlap is a defect")
 
     chk(f"{len(ROOTS)} build roots, {len(MICRO_OF)} with a micro, "
         f"{len(ROOTS) - len(MICRO_OF)} at full size",
