@@ -1,162 +1,2035 @@
 {
  "spec": "59a151d",
- "built_utc": "2026-09-12T15:49:53Z",
+ "built_utc": "2026-09-13T15:53:41Z",
  "files": [
   {
    "file": "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
    "rows_in": 12709200,
    "session_rows_kept": 1584880,
-   "ids": 159
+   "ids": 161,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 433122,
+     "kept": 433122,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 330351,
+     "kept": 330351,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 242589,
+     "kept": 242589,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 207905,
+     "kept": 207905,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 188168,
+     "kept": 188168,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 74301,
+     "kept": 74301,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 58767,
+     "kept": 58767,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 54602,
+     "kept": 54602,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",
    "rows_in": 27280970,
-   "session_rows_kept": 3072712,
-   "ids": 177
+   "session_rows_kept": 3072501,
+   "ids": 177,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLZ0",
+     "windows": [
+      [
+       182010,
+       1293840000000000000,
+       1312243200000000000
+      ],
+      [
+       207193,
+       1320537600000000000,
+       1325376000000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 932430,
+     "kept": 932428,
+     "relabelled": 0,
+     "dropped": 2
+    },
+    "GC": {
+     "old_bars": 650512,
+     "kept": 650505,
+     "relabelled": 0,
+     "dropped": 7
+    },
+    "6E": {
+     "old_bars": 414770,
+     "kept": 414770,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 364196,
+     "kept": 364183,
+     "relabelled": 0,
+     "dropped": 13
+    },
+    "ZB": {
+     "old_bars": 327797,
+     "kept": 327795,
+     "relabelled": 0,
+     "dropped": 2
+    },
+    "ES": {
+     "old_bars": 154017,
+     "kept": 153830,
+     "relabelled": 0,
+     "dropped": 187
+    },
+    "NQ": {
+     "old_bars": 123141,
+     "kept": 123141,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 115077,
+     "kept": 115077,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20120101-20121231.ohlcv-1m.dbn.zst",
    "rows_in": 34215872,
-   "session_rows_kept": 3292401,
-   "ids": 177
+   "session_rows_kept": 3284782,
+   "ids": 177,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLZ1",
+     "windows": [
+      [
+       182020,
+       1325376000000000000,
+       1328400000000000000
+      ],
+      [
+       415463,
+       1351987200000000000,
+       1356998400000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1105686,
+     "kept": 1098276,
+     "relabelled": 0,
+     "dropped": 7410
+    },
+    "GC": {
+     "old_bars": 581122,
+     "kept": 581122,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 401719,
+     "kept": 401719,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 349529,
+     "kept": 349402,
+     "relabelled": 0,
+     "dropped": 127
+    },
+    "ZB": {
+     "old_bars": 328664,
+     "kept": 328663,
+     "relabelled": 0,
+     "dropped": 1
+    },
+    "ES": {
+     "old_bars": 208373,
+     "kept": 208373,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 164609,
+     "kept": 164609,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 160844,
+     "kept": 160763,
+     "relabelled": 0,
+     "dropped": 81
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20130101-20131231.ohlcv-1m.dbn.zst",
    "rows_in": 44528359,
-   "session_rows_kept": 4159103,
-   "ids": 190
+   "session_rows_kept": 4158975,
+   "ids": 190,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLZ2",
+     "windows": [
+      [
+       182032,
+       1356998400000000000,
+       1365292800000000000
+      ],
+      [
+       495655,
+       1383782400000000000,
+       1388534400000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1603730,
+     "kept": 1603699,
+     "relabelled": 0,
+     "dropped": 31
+    },
+    "GC": {
+     "old_bars": 607317,
+     "kept": 607317,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 392142,
+     "kept": 392115,
+     "relabelled": 0,
+     "dropped": 27
+    },
+    "ZN": {
+     "old_bars": 344729,
+     "kept": 344729,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 311154,
+     "kept": 311134,
+     "relabelled": 0,
+     "dropped": 20
+    },
+    "ES": {
+     "old_bars": 359674,
+     "kept": 359674,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 273374,
+     "kept": 273374,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 273792,
+     "kept": 273742,
+     "relabelled": 0,
+     "dropped": 50
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20140101-20140629.ohlcv-1m.dbn.zst",
    "rows_in": 21953487,
    "session_rows_kept": 1952716,
-   "ids": 159
+   "ids": 159,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 738340,
+     "kept": 738340,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 268692,
+     "kept": 268692,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 180880,
+     "kept": 180880,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 169003,
+     "kept": 169003,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 181441,
+     "kept": 181441,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 143721,
+     "kept": 143721,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 136907,
+     "kept": 136907,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 136998,
+     "kept": 136998,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20140630-20141231.ohlcv-1m.dbn.zst",
    "rows_in": 25417746,
-   "session_rows_kept": 2157817,
-   "ids": 165
+   "session_rows_kept": 2157815,
+   "ids": 165,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 849658,
+     "kept": 849656,
+     "relabelled": 0,
+     "dropped": 2
+    },
+    "GC": {
+     "old_bars": 272822,
+     "kept": 272822,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 195512,
+     "kept": 195512,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 198363,
+     "kept": 198363,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 179665,
+     "kept": 179665,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 157777,
+     "kept": 157777,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 159655,
+     "kept": 159655,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 147531,
+     "kept": 147531,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20150101-20151231.ohlcv-1m.dbn.zst",
    "rows_in": 52313387,
-   "session_rows_kept": 4538508,
-   "ids": 189
+   "session_rows_kept": 4533676,
+   "ids": 189,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1880193,
+     "kept": 1879199,
+     "relabelled": 0,
+     "dropped": 994
+    },
+    "GC": {
+     "old_bars": 517112,
+     "kept": 517112,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 355718,
+     "kept": 355718,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 334073,
+     "kept": 333991,
+     "relabelled": 0,
+     "dropped": 82
+    },
+    "6E": {
+     "old_bars": 384505,
+     "kept": 384500,
+     "relabelled": 0,
+     "dropped": 5
+    },
+    "ES": {
+     "old_bars": 427991,
+     "kept": 427512,
+     "relabelled": 0,
+     "dropped": 479
+    },
+    "NQ": {
+     "old_bars": 327700,
+     "kept": 324604,
+     "relabelled": 0,
+     "dropped": 3096
+    },
+    "YM": {
+     "old_bars": 320692,
+     "kept": 320496,
+     "relabelled": 0,
+     "dropped": 196
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
    "rows_in": 50604555,
-   "session_rows_kept": 4468030,
-   "ids": 188
+   "session_rows_kept": 4467873,
+   "ids": 188,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1440616,
+     "kept": 1440612,
+     "relabelled": 0,
+     "dropped": 4
+    },
+    "GC": {
+     "old_bars": 622176,
+     "kept": 622049,
+     "relabelled": 0,
+     "dropped": 127
+    },
+    "ES": {
+     "old_bars": 493946,
+     "kept": 493946,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 408392,
+     "kept": 408386,
+     "relabelled": 0,
+     "dropped": 6
+    },
+    "ZN": {
+     "old_bars": 376801,
+     "kept": 376801,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 354149,
+     "kept": 354146,
+     "relabelled": 0,
+     "dropped": 3
+    },
+    "NQ": {
+     "old_bars": 386408,
+     "kept": 386408,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 385561,
+     "kept": 385544,
+     "relabelled": 0,
+     "dropped": 17
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
    "rows_in": 49989121,
-   "session_rows_kept": 4658442,
-   "ids": 205
+   "session_rows_kept": 4657584,
+   "ids": 205,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLN3",
+     "windows": [
+      [
+       453304,
+       1483228800000000000,
+       1510012800000000000
+      ],
+      [
+       679928,
+       1510012800000000000,
+       1514764800000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1491490,
+     "kept": 1491131,
+     "relabelled": 0,
+     "dropped": 359
+    },
+    "GC": {
+     "old_bars": 607100,
+     "kept": 607020,
+     "relabelled": 0,
+     "dropped": 80
+    },
+    "ES": {
+     "old_bars": 476515,
+     "kept": 476515,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 462131,
+     "kept": 461750,
+     "relabelled": 0,
+     "dropped": 381
+    },
+    "NQ": {
+     "old_bars": 417278,
+     "kept": 417278,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 371304,
+     "kept": 371304,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 385153,
+     "kept": 385116,
+     "relabelled": 0,
+     "dropped": 37
+    },
+    "ZB": {
+     "old_bars": 330346,
+     "kept": 330345,
+     "relabelled": 0,
+     "dropped": 1
+    },
+    "RTY": {
+     "old_bars": 117139,
+     "kept": 117139,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
    "rows_in": 32153793,
-   "session_rows_kept": 2854608,
-   "ids": 209
+   "session_rows_kept": 2832751,
+   "ids": 209,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLF7",
+     "windows": [
+      [
+       784319,
+       1514764800000000000,
+       1516492800000000000
+      ],
+      [
+       493681,
+       1516492800000000000,
+       1532390400000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLG6",
+     "windows": [
+      [
+       490640,
+       1514764800000000000,
+       1516492800000000000
+      ],
+      [
+       383438,
+       1516492800000000000,
+       1532390400000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLK6",
+     "windows": [
+      [
+       354687,
+       1514764800000000000,
+       1516492800000000000
+      ],
+      [
+       169926,
+       1516492800000000000,
+       1532390400000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLN4",
+     "windows": [
+      [
+       856639,
+       1514764800000000000,
+       1516492800000000000
+      ],
+      [
+       200430,
+       1516492800000000000,
+       1532390400000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLV5",
+     "windows": [
+      [
+       550591,
+       1514764800000000000,
+       1516492800000000000
+      ],
+      [
+       655565,
+       1516492800000000000,
+       1532390400000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 905361,
+     "kept": 905360,
+     "relabelled": 0,
+     "dropped": 1
+    },
+    "GC": {
+     "old_bars": 365920,
+     "kept": 344121,
+     "relabelled": 0,
+     "dropped": 21799
+    },
+    "ES": {
+     "old_bars": 281734,
+     "kept": 281734,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 253581,
+     "kept": 253581,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 243901,
+     "kept": 243845,
+     "relabelled": 0,
+     "dropped": 56
+    },
+    "ZN": {
+     "old_bars": 209612,
+     "kept": 209612,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 229384,
+     "kept": 229384,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 189130,
+     "kept": 189130,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 176323,
+     "kept": 176322,
+     "relabelled": 0,
+     "dropped": 1
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
    "rows_in": 24713186,
-   "session_rows_kept": 2211251,
-   "ids": 209
+   "session_rows_kept": 2204064,
+   "ids": 209,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLF8",
+     "windows": [
+      [
+       800225,
+       1532390400000000000,
+       1541462400000000000
+      ],
+      [
+       441553,
+       1541462400000000000,
+       1546300800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLH7",
+     "windows": [
+      [
+       461443,
+       1532390400000000000,
+       1541462400000000000
+      ],
+      [
+       188355,
+       1541462400000000000,
+       1546300800000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 670539,
+     "kept": 663760,
+     "relabelled": 0,
+     "dropped": 6779
+    },
+    "GC": {
+     "old_bars": 252976,
+     "kept": 252976,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 224226,
+     "kept": 224225,
+     "relabelled": 0,
+     "dropped": 1
+    },
+    "NQ": {
+     "old_bars": 204206,
+     "kept": 204206,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 195046,
+     "kept": 195046,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 188238,
+     "kept": 188238,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 168472,
+     "kept": 168075,
+     "relabelled": 0,
+     "dropped": 397
+    },
+    "ZB": {
+     "old_bars": 151159,
+     "kept": 151149,
+     "relabelled": 0,
+     "dropped": 10
+    },
+    "RTY": {
+     "old_bars": 156458,
+     "kept": 156458,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
    "rows_in": 58051976,
-   "session_rows_kept": 5010823,
-   "ids": 269
+   "session_rows_kept": 5005007,
+   "ids": 275,
+   "multi_window_symbols": [
+    {
+     "root": "CL",
+     "contract": "CLF9",
+     "windows": [
+      [
+       110955,
+       1546300800000000000,
+       1546473600000000000
+      ],
+      [
+       708288,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLG9",
+     "windows": [
+      [
+       303281,
+       1546300800000000000,
+       1560038400000000000
+      ],
+      [
+       598062,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLH9",
+     "windows": [
+      [
+       79323,
+       1546300800000000000,
+       1551830400000000000
+      ],
+      [
+       546417,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLJ9",
+     "windows": [
+      [
+       97456,
+       1546300800000000000,
+       1554249600000000000
+      ],
+      [
+       293036,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLK8",
+     "windows": [
+      [
+       545967,
+       1546300800000000000,
+       1560038400000000000
+      ],
+      [
+       454907,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLK9",
+     "windows": [
+      [
+       694785,
+       1546300800000000000,
+       1560038400000000000
+      ],
+      [
+       515909,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLM9",
+     "windows": [
+      [
+       551735,
+       1546300800000000000,
+       1560038400000000000
+      ],
+      [
+       323547,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLN8",
+     "windows": [
+      [
+       353594,
+       1546300800000000000,
+       1559692800000000000
+      ],
+      [
+       262556,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLN9",
+     "windows": [
+      [
+       117678,
+       1546300800000000000,
+       1561248000000000000
+      ],
+      [
+       178362,
+       1561248000000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLQ9",
+     "windows": [
+      [
+       310036,
+       1546300800000000000,
+       1564272000000000000
+      ],
+      [
+       213372,
+       1564272000000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLU8",
+     "windows": [
+      [
+       738344,
+       1546300800000000000,
+       1560038400000000000
+      ],
+      [
+       677784,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLU9",
+     "windows": [
+      [
+       371909,
+       1546300800000000000,
+       1566691200000000000
+      ],
+      [
+       178468,
+       1566691200000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLV8",
+     "windows": [
+      [
+       820474,
+       1546300800000000000,
+       1560038400000000000
+      ],
+      [
+       178139,
+       1560038400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLV9",
+     "windows": [
+      [
+       82818,
+       1546300800000000000,
+       1569715200000000000
+      ],
+      [
+       405691,
+       1569715200000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLX9",
+     "windows": [
+      [
+       405685,
+       1546300800000000000,
+       1572134400000000000
+      ],
+      [
+       628562,
+       1572134400000000000,
+       1577836800000000000
+      ]
+     ]
+    },
+    {
+     "root": "CL",
+     "contract": "CLZ9",
+     "windows": [
+      [
+       327892,
+       1546300800000000000,
+       1574553600000000000
+      ],
+      [
+       436191,
+       1574553600000000000,
+       1577836800000000000
+      ]
+     ]
+    }
+   ],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1507835,
+     "kept": 1506202,
+     "relabelled": 0,
+     "dropped": 1633
+    },
+    "GC": {
+     "old_bars": 648024,
+     "kept": 644025,
+     "relabelled": 0,
+     "dropped": 3999
+    },
+    "ES": {
+     "old_bars": 493279,
+     "kept": 493273,
+     "relabelled": 0,
+     "dropped": 6
+    },
+    "6E": {
+     "old_bars": 422266,
+     "kept": 422169,
+     "relabelled": 0,
+     "dropped": 97
+    },
+    "NQ": {
+     "old_bars": 431916,
+     "kept": 431881,
+     "relabelled": 0,
+     "dropped": 35
+    },
+    "YM": {
+     "old_bars": 409085,
+     "kept": 409085,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 387584,
+     "kept": 387538,
+     "relabelled": 0,
+     "dropped": 46
+    },
+    "RTY": {
+     "old_bars": 358613,
+     "kept": 358613,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 352224,
+     "kept": 352224,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
    "rows_in": 67058153,
-   "session_rows_kept": 5521861,
-   "ids": 263
+   "session_rows_kept": 5516537,
+   "ids": 263,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1870326,
+     "kept": 1870013,
+     "relabelled": 0,
+     "dropped": 313
+    },
+    "GC": {
+     "old_bars": 714924,
+     "kept": 712471,
+     "relabelled": 0,
+     "dropped": 2453
+    },
+    "ES": {
+     "old_bars": 509304,
+     "kept": 509304,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 442987,
+     "kept": 442987,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 383933,
+     "kept": 383926,
+     "relabelled": 0,
+     "dropped": 7
+    },
+    "6E": {
+     "old_bars": 456292,
+     "kept": 456261,
+     "relabelled": 0,
+     "dropped": 31
+    },
+    "YM": {
+     "old_bars": 406206,
+     "kept": 403686,
+     "relabelled": 0,
+     "dropped": 2520
+    },
+    "ZB": {
+     "old_bars": 361673,
+     "kept": 361673,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 376225,
+     "kept": 376225,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
    "rows_in": 68752439,
-   "session_rows_kept": 5314746,
-   "ids": 271
+   "session_rows_kept": 5312285,
+   "ids": 271,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1770343,
+     "kept": 1770269,
+     "relabelled": 0,
+     "dropped": 74
+    },
+    "GC": {
+     "old_bars": 626510,
+     "kept": 626470,
+     "relabelled": 0,
+     "dropped": 40
+    },
+    "ES": {
+     "old_bars": 479277,
+     "kept": 478193,
+     "relabelled": 0,
+     "dropped": 1084
+    },
+    "6E": {
+     "old_bars": 435564,
+     "kept": 434697,
+     "relabelled": 0,
+     "dropped": 867
+    },
+    "NQ": {
+     "old_bars": 454877,
+     "kept": 454877,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 398384,
+     "kept": 398068,
+     "relabelled": 0,
+     "dropped": 316
+    },
+    "ZB": {
+     "old_bars": 364832,
+     "kept": 364816,
+     "relabelled": 0,
+     "dropped": 16
+    },
+    "YM": {
+     "old_bars": 404408,
+     "kept": 404341,
+     "relabelled": 0,
+     "dropped": 67
+    },
+    "RTY": {
+     "old_bars": 380554,
+     "kept": 380554,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
    "rows_in": 55424065,
-   "session_rows_kept": 3569793,
-   "ids": 242
+   "session_rows_kept": 3416086,
+   "ids": 242,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1164921,
+     "kept": 1164921,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 467692,
+     "kept": 406937,
+     "relabelled": 0,
+     "dropped": 60755
+    },
+    "NQ": {
+     "old_bars": 296613,
+     "kept": 286216,
+     "relabelled": 0,
+     "dropped": 10397
+    },
+    "ES": {
+     "old_bars": 314218,
+     "kept": 314218,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 351236,
+     "kept": 269093,
+     "relabelled": 0,
+     "dropped": 82143
+    },
+    "YM": {
+     "old_bars": 250996,
+     "kept": 250923,
+     "relabelled": 0,
+     "dropped": 73
+    },
+    "ZN": {
+     "old_bars": 255825,
+     "kept": 255536,
+     "relabelled": 0,
+     "dropped": 289
+    },
+    "RTY": {
+     "old_bars": 237387,
+     "kept": 237367,
+     "relabelled": 0,
+     "dropped": 20
+    },
+    "ZB": {
+     "old_bars": 230905,
+     "kept": 230875,
+     "relabelled": 0,
+     "dropped": 30
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
    "rows_in": 33062368,
-   "session_rows_kept": 2031132,
-   "ids": 241
+   "session_rows_kept": 2030701,
+   "ids": 241,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 656365,
+     "kept": 656087,
+     "relabelled": 0,
+     "dropped": 278
+    },
+    "GC": {
+     "old_bars": 220849,
+     "kept": 220849,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 193244,
+     "kept": 193244,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 177941,
+     "kept": 177939,
+     "relabelled": 0,
+     "dropped": 2
+    },
+    "NQ": {
+     "old_bars": 175555,
+     "kept": 175404,
+     "relabelled": 0,
+     "dropped": 151
+    },
+    "ZN": {
+     "old_bars": 160050,
+     "kept": 160050,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 158314,
+     "kept": 158314,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 148010,
+     "kept": 148010,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 140804,
+     "kept": 140804,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
    "rows_in": 55951485,
-   "session_rows_kept": 3406306,
-   "ids": 251
+   "session_rows_kept": 3406099,
+   "ids": 251,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1143450,
+     "kept": 1143388,
+     "relabelled": 0,
+     "dropped": 62
+    },
+    "GC": {
+     "old_bars": 421593,
+     "kept": 421593,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 303274,
+     "kept": 303274,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 288294,
+     "kept": 288294,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 275893,
+     "kept": 275756,
+     "relabelled": 0,
+     "dropped": 137
+    },
+    "YM": {
+     "old_bars": 252184,
+     "kept": 252179,
+     "relabelled": 0,
+     "dropped": 5
+    },
+    "ZN": {
+     "old_bars": 256595,
+     "kept": 256595,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 240380,
+     "kept": 240380,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 224643,
+     "kept": 224640,
+     "relabelled": 0,
+     "dropped": 3
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
    "rows_in": 31602486,
-   "session_rows_kept": 1975864,
-   "ids": 251
+   "session_rows_kept": 1975824,
+   "ids": 251,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 667678,
+     "kept": 667658,
+     "relabelled": 0,
+     "dropped": 20
+    },
+    "GC": {
+     "old_bars": 226877,
+     "kept": 226877,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 179191,
+     "kept": 179190,
+     "relabelled": 0,
+     "dropped": 1
+    },
+    "NQ": {
+     "old_bars": 168018,
+     "kept": 168018,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 167751,
+     "kept": 167751,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 146000,
+     "kept": 145981,
+     "relabelled": 0,
+     "dropped": 19
+    },
+    "RTY": {
+     "old_bars": 142547,
+     "kept": 142547,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 146132,
+     "kept": 146132,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 131671,
+     "kept": 131671,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20240101-20240828.ohlcv-1m.dbn.zst",
    "rows_in": 61461670,
-   "session_rows_kept": 3670809,
-   "ids": 251
+   "session_rows_kept": 3668501,
+   "ids": 251,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1288345,
+     "kept": 1288345,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 471192,
+     "kept": 471180,
+     "relabelled": 0,
+     "dropped": 12
+    },
+    "6E": {
+     "old_bars": 291519,
+     "kept": 290665,
+     "relabelled": 0,
+     "dropped": 854
+    },
+    "ES": {
+     "old_bars": 309679,
+     "kept": 309679,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 303837,
+     "kept": 303837,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 265509,
+     "kept": 264095,
+     "relabelled": 0,
+     "dropped": 1414
+    },
+    "RTY": {
+     "old_bars": 250747,
+     "kept": 250747,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 256104,
+     "kept": 256104,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 233877,
+     "kept": 233849,
+     "relabelled": 0,
+     "dropped": 28
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20240829-20241231.ohlcv-1m.dbn.zst",
    "rows_in": 32289655,
-   "session_rows_kept": 1906447,
-   "ids": 250
+   "session_rows_kept": 1906442,
+   "ids": 250,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 659819,
+     "kept": 659819,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 218127,
+     "kept": 218123,
+     "relabelled": 0,
+     "dropped": 4
+    },
+    "ES": {
+     "old_bars": 171586,
+     "kept": 171586,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 162886,
+     "kept": 162886,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 170597,
+     "kept": 170597,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 138258,
+     "kept": 138258,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 135494,
+     "kept": 135494,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 131768,
+     "kept": 131767,
+     "relabelled": 0,
+     "dropped": 1
+    },
+    "ZB": {
+     "old_bars": 117913,
+     "kept": 117913,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20250101-20250903.ohlcv-1m.dbn.zst",
    "rows_in": 68981842,
-   "session_rows_kept": 3753180,
-   "ids": 271
+   "session_rows_kept": 3745950,
+   "ids": 271,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 1268236,
+     "kept": 1268236,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 505401,
+     "kept": 504932,
+     "relabelled": 0,
+     "dropped": 469
+    },
+    "6E": {
+     "old_bars": 319636,
+     "kept": 319634,
+     "relabelled": 0,
+     "dropped": 2
+    },
+    "NQ": {
+     "old_bars": 305120,
+     "kept": 305103,
+     "relabelled": 0,
+     "dropped": 17
+    },
+    "ES": {
+     "old_bars": 325369,
+     "kept": 320591,
+     "relabelled": 0,
+     "dropped": 4778
+    },
+    "RTY": {
+     "old_bars": 256393,
+     "kept": 256393,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 259549,
+     "kept": 259549,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 270374,
+     "kept": 270337,
+     "relabelled": 0,
+     "dropped": 37
+    },
+    "ZB": {
+     "old_bars": 243102,
+     "kept": 241175,
+     "relabelled": 0,
+     "dropped": 1927
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
    "rows_in": 26028907,
    "session_rows_kept": 1389664,
-   "ids": 259
+   "ids": 259,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 454628,
+     "kept": 454628,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 205976,
+     "kept": 205976,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 119029,
+     "kept": 119029,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 117059,
+     "kept": 117059,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 115726,
+     "kept": 115726,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 99331,
+     "kept": 99331,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 97583,
+     "kept": 97583,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 96328,
+     "kept": 96328,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 84005,
+     "kept": 84005,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
    "rows_in": 6690321,
    "session_rows_kept": 385700,
-   "ids": 251
+   "ids": 251,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 119612,
+     "kept": 119612,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 53848,
+     "kept": 53848,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 38873,
+     "kept": 38873,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 36084,
+     "kept": 36084,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 34596,
+     "kept": 34596,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 30542,
+     "kept": 30542,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 30311,
+     "kept": 30311,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 22151,
+     "kept": 22151,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 19683,
+     "kept": 19683,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
    "rows_in": 21406276,
-   "session_rows_kept": 1066268,
-   "ids": 250
+   "session_rows_kept": 1061889,
+   "ids": 250,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 379311,
+     "kept": 379311,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 156050,
+     "kept": 156050,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 84369,
+     "kept": 84369,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 83724,
+     "kept": 79345,
+     "relabelled": 0,
+     "dropped": 4379
+    },
+    "ES": {
+     "old_bars": 81668,
+     "kept": 81668,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 70304,
+     "kept": 70304,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 68161,
+     "kept": 68161,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 77098,
+     "kept": 77098,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 65583,
+     "kept": 65583,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst",
    "rows_in": 31964175,
-   "session_rows_kept": 1607471,
-   "ids": 273
+   "session_rows_kept": 1603131,
+   "ids": 273,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 638973,
+     "kept": 638973,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 198476,
+     "kept": 194257,
+     "relabelled": 0,
+     "dropped": 4219
+    },
+    "ES": {
+     "old_bars": 126035,
+     "kept": 126035,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "NQ": {
+     "old_bars": 122360,
+     "kept": 122360,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "6E": {
+     "old_bars": 119087,
+     "kept": 118966,
+     "relabelled": 0,
+     "dropped": 121
+    },
+    "RTY": {
+     "old_bars": 105033,
+     "kept": 105033,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 105111,
+     "kept": 105111,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZN": {
+     "old_bars": 102070,
+     "kept": 102070,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 90328,
+     "kept": 90328,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   },
   {
    "file": "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
    "rows_in": 28394079,
-   "session_rows_kept": 1545148,
-   "ids": 270
+   "session_rows_kept": 1545064,
+   "ids": 270,
+   "multi_window_symbols": [],
+   "flat_dict_audit": {
+    "CL": {
+     "old_bars": 585873,
+     "kept": 585873,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "GC": {
+     "old_bars": 207392,
+     "kept": 207371,
+     "relabelled": 0,
+     "dropped": 21
+    },
+    "NQ": {
+     "old_bars": 124865,
+     "kept": 124865,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ES": {
+     "old_bars": 122776,
+     "kept": 122764,
+     "relabelled": 0,
+     "dropped": 12
+    },
+    "6E": {
+     "old_bars": 115439,
+     "kept": 115439,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "RTY": {
+     "old_bars": 101239,
+     "kept": 101239,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "YM": {
+     "old_bars": 100987,
+     "kept": 100936,
+     "relabelled": 0,
+     "dropped": 51
+    },
+    "ZN": {
+     "old_bars": 97889,
+     "kept": 97889,
+     "relabelled": 0,
+     "dropped": 0
+    },
+    "ZB": {
+     "old_bars": 88688,
+     "kept": 88688,
+     "relabelled": 0,
+     "dropped": 0
+    }
+   }
   }
  ],
  "roots": [
@@ -201,6 +2074,8 @@
  ],
  "present_rule": "h09..h15 >= 200 bars",
  "front_rule": "highest full-day volume per calendar ET day; row carries day b's front",
+ "id_rule": "D520: each bar is labelled from the symbol mapping window CONTAINING its ts_event, half-open [start_date, end_date). The flat {id: symbol} dict this replaced discarded the dates, and CME both REUSES the single-digit-year slot after expiry (CLN9 is July-2019 then July-2029) and ROTATES a live contract's id (CLK8, May 2028, twice in 2019); `flat_dict_audit` per file is the bar-level size of that defect, attributed to the root the OLD dict would have used, and `dropped` is its largest term -- bars of options, spreads and other instruments that later carried one of our ids",
+ "files_limited_to": null,
  "gates": {
   "ES": {
    "G5": {
@@ -1631,16 +3506,9 @@
     "passes": true
    },
    "G2": {
-    "n_rolls": 43,
+    "n_rolls": 42,
     "reverting": [],
-    "holiday_artefacts": [
-     [
-      "2021-12-24",
-      "6EH2",
-      "6EX1",
-      10
-     ]
-    ],
+    "holiday_artefacts": [],
     "volume_floor": 1723.15,
     "rolls_per_year": {
      "2016": 4,
@@ -1648,7 +3516,7 @@
      "2018": 4,
      "2019": 4,
      "2020": 4,
-     "2021": 5,
+     "2021": 4,
      "2022": 4,
      "2023": 4,
      "2024": 4,

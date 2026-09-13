@@ -1,0 +1,361 @@
+{
+ "old": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\temp\\d520_old",
+ "new": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\fixtures",
+ "n_old": 33387,
+ "n_new": 33387,
+ "columns": 145,
+ "usable_start": {
+  "ES": "2016-01-04",
+  "NQ": "2016-01-04",
+  "YM": "2016-01-04",
+  "ZN": "2016-01-04",
+  "ZB": "2016-01-04",
+  "GC": "2016-01-04",
+  "CL": "2016-01-04",
+  "6E": "2016-01-04",
+  "RTY": "2017-07-10"
+ },
+ "roots": {
+  "6E": {
+   "n_old": 4153,
+   "n_new": 4153,
+   "gained": [],
+   "lost": [],
+   "n_common": 4153,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "CL": {
+   "n_old": 3629,
+   "n_new": 3629,
+   "gained": [],
+   "lost": [],
+   "n_common": 3629,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "ES": {
+   "n_old": 3614,
+   "n_new": 3614,
+   "gained": [],
+   "lost": [],
+   "n_common": 3614,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "GC": {
+   "n_old": 4151,
+   "n_new": 4151,
+   "gained": [],
+   "lost": [],
+   "n_common": 4151,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "NQ": {
+   "n_old": 3614,
+   "n_new": 3614,
+   "gained": [],
+   "lost": [],
+   "n_common": 3614,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "RTY": {
+   "n_old": 2364,
+   "n_new": 2364,
+   "gained": [],
+   "lost": [],
+   "n_common": 2364,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "YM": {
+   "n_old": 3612,
+   "n_new": 3612,
+   "gained": [],
+   "lost": [],
+   "n_common": 3612,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "ZB": {
+   "n_old": 4099,
+   "n_new": 4099,
+   "gained": [],
+   "lost": [],
+   "n_common": 4099,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  },
+  "ZN": {
+   "n_old": 4151,
+   "n_new": 4151,
+   "gained": [],
+   "lost": [],
+   "n_common": 4151,
+   "rows_changed": 0,
+   "rows_changed_in_usable_window": 0,
+   "changed_days": [],
+   "n_changed_days": 0,
+   "price_cells_changed": 0,
+   "price_cells_nan_flip": 0,
+   "price_cols_changed": {},
+   "price_rel_change": {
+    "p50": null,
+    "p95": null,
+    "max": null
+   },
+   "count_cells_changed": 0,
+   "count_cells_nan_flip": 0,
+   "count_cols_changed": {},
+   "count_abs_change": {
+    "p50": null,
+    "max": null
+   },
+   "label_cells_changed": {
+    "contract": 0,
+    "front_prev": 0,
+    "same_front": 0,
+    "prev_day": 0,
+    "bars": 0
+   },
+   "label_rows_changed": 0,
+   "label_changed_days": []
+  }
+ },
+ "rolls": {
+  "n_old": 706,
+  "n_new": 704,
+  "gained": [],
+  "lost": [
+   {
+    "root": "6E",
+    "day": "2021-12-24",
+    "from_contract": "6EH2",
+    "to_contract": "6EX1"
+   },
+   {
+    "root": "6E",
+    "day": "2021-12-26",
+    "from_contract": "6EX1",
+    "to_contract": "6EH2"
+   }
+  ]
+ },
+ "CL": {
+  "n_sessions_common": 3629,
+  "n_sessions_with_any_price_change": 0,
+  "n_in_usable_window": 0,
+  "worst": [],
+  "by_year": {}
+ }
+}
