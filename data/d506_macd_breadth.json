@@ -1,0 +1,1348 @@
+{
+  "generated_utc": "2026-09-13T15:34:32+00:00",
+  "purpose": "D506: the frozen MACD arm on all 36 breadth roots, GROSS primary, one 36-cell family with a family-max rotation null. Nothing admitted.",
+  "window": [
+    "2016-01-04",
+    "2023-12-29"
+  ],
+  "m_hold": 5,
+  "cost": {
+    "commission_usd": 3.0,
+    "cross_ticks_assumed": 1.0,
+    "warning": "crossing is MEASURED ON ES ONLY (1.009 ticks, D471); the net columns rest on an assumed one tick for the other 35 roots and are NOT evidence"
+  },
+  "skipped_roots": [
+    [
+      "SR3",
+      141
+    ]
+  ],
+  "inapplicable_at_M": [
+    [
+      "HE",
+      [
+        9,
+        14
+      ],
+      4
+    ],
+    [
+      "LE",
+      [
+        9,
+        14
+      ],
+      4
+    ],
+    [
+      "ZC",
+      [
+        9,
+        14
+      ],
+      4
+    ],
+    [
+      "ZL",
+      [
+        9,
+        14
+      ],
+      4
+    ],
+    [
+      "ZM",
+      [
+        9,
+        14
+      ],
+      4
+    ],
+    [
+      "ZS",
+      [
+        9,
+        14
+      ],
+      4
+    ],
+    [
+      "ZW",
+      [
+        9,
+        14
+      ],
+      4
+    ]
+  ],
+  "primary": {
+    "6A": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1949,
+      "cost_ticks": 1.6,
+      "tick_usd": 5.0,
+      "sized_as": "6A",
+      "gross": {
+        "n_trades": 1571,
+        "trips_per_session": 0.806054386865059,
+        "mean_ticks_per_trade": 0.530872056015256,
+        "mean_ticks_per_session": 0.4279117496151705,
+        "sigma_ticks_per_session": 41.47415217413194,
+        "sharpe": 0.16378607106578805,
+        "mean_usd_per_trade": 2.65436028007628,
+        "sigma_usd_per_session": 207.3707608706597,
+        "skew": 0.04092698013266786,
+        "kurtosis": 9.455528210324486
+      },
+      "net": {
+        "n_trades": 1571,
+        "trips_per_session": 0.806054386865059,
+        "mean_ticks_per_trade": -1.069127943984743,
+        "mean_ticks_per_session": -0.8617752693689232,
+        "sigma_ticks_per_session": 41.61357582749535,
+        "sharpe": -0.32874507947515186,
+        "mean_usd_per_trade": -5.345639719923715,
+        "sigma_usd_per_session": 208.06787913747678,
+        "skew": -0.0025605751362363376,
+        "kurtosis": 9.413966766163194
+      },
+      "c_d_passes": true
+    },
+    "6B": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1949,
+      "cost_ticks": 1.48,
+      "tick_usd": 6.250000000000001,
+      "sized_as": "6B",
+      "gross": {
+        "n_trades": 1598,
+        "trips_per_session": 0.8199076449461262,
+        "mean_ticks_per_trade": -0.2853566958698168,
+        "mean_ticks_per_session": -0.2339661364802295,
+        "sigma_ticks_per_session": 34.59127223308164,
+        "sharpe": -0.10737093591116022,
+        "mean_usd_per_trade": -1.7834793491863554,
+        "sigma_usd_per_session": 216.19545145676028,
+        "skew": 0.016330925033445805,
+        "kurtosis": 10.701744632255133
+      },
+      "net": {
+        "n_trades": 1598,
+        "trips_per_session": 0.8199076449461262,
+        "mean_ticks_per_trade": -1.7653566958698161,
+        "mean_ticks_per_session": -1.4474294510004957,
+        "sigma_ticks_per_session": 34.74333831247727,
+        "sharpe": -0.6613420391355034,
+        "mean_usd_per_trade": -11.033479349186353,
+        "sigma_usd_per_session": 217.14586445298298,
+        "skew": -0.034901184238440706,
+        "kurtosis": 10.638325883341883
+      },
+      "c_d_passes": true
+    },
+    "6C": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1949,
+      "cost_ticks": 1.6,
+      "tick_usd": 5.0,
+      "sized_as": "6C",
+      "gross": {
+        "n_trades": 1616,
+        "trips_per_session": 0.8291431503335044,
+        "mean_ticks_per_trade": -0.12561881188122864,
+        "mean_ticks_per_session": -0.10415597742435376,
+        "sigma_ticks_per_session": 37.99536511462045,
+        "sharpe": -0.0435164888655842,
+        "mean_usd_per_trade": -0.6280940594061433,
+        "sigma_usd_per_session": 189.97682557310225,
+        "skew": -0.11933484230111274,
+        "kurtosis": 9.735716696710092
+      },
+      "net": {
+        "n_trades": 1616,
+        "trips_per_session": 0.8291431503335044,
+        "mean_ticks_per_trade": -1.7256188118812277,
+        "mean_ticks_per_session": -1.43078501795796,
+        "sigma_ticks_per_session": 38.16225056279997,
+        "sharpe": -0.5951695114339877,
+        "mean_usd_per_trade": -8.628094059406138,
+        "sigma_usd_per_session": 190.81125281399983,
+        "skew": -0.16679840602935286,
+        "kurtosis": 9.69051433109543
+      },
+      "c_d_passes": true
+    },
+    "6E": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1949,
+      "cost_ticks": 3.4,
+      "tick_usd": 1.25,
+      "sized_as": "M6E",
+      "gross": {
+        "n_trades": 1611,
+        "trips_per_session": 0.8265777321703438,
+        "mean_ticks_per_trade": -0.5102420856611591,
+        "mean_ticks_per_session": -0.4217547460236672,
+        "sigma_ticks_per_session": 50.56829666010215,
+        "sharpe": -0.1323981521157581,
+        "mean_usd_per_trade": -0.6378026070764489,
+        "sigma_usd_per_session": 63.21037082512768,
+        "skew": -0.0486050624841213,
+        "kurtosis": 8.09555645514278
+      },
+      "net": {
+        "n_trades": 1611,
+        "trips_per_session": 0.8265777321703438,
+        "mean_ticks_per_trade": -3.91024208566116,
+        "mean_ticks_per_session": -3.2321190354028366,
+        "sigma_ticks_per_session": 50.944621609332515,
+        "sharpe": -1.0071386818035393,
+        "mean_usd_per_trade": -4.88780260707645,
+        "sigma_usd_per_session": 63.68077701166564,
+        "skew": -0.12180686700987282,
+        "kurtosis": 7.99377502722754
+      },
+      "c_d_passes": true
+    },
+    "6J": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1949,
+      "cost_ticks": 1.48,
+      "tick_usd": 6.250000000000001,
+      "sized_as": "6J",
+      "gross": {
+        "n_trades": 1548,
+        "trips_per_session": 0.7942534633145203,
+        "mean_ticks_per_trade": -0.012919896641024282,
+        "mean_ticks_per_session": -0.010261672652799174,
+        "sigma_ticks_per_session": 39.7271610854455,
+        "sharpe": -0.004100444099159008,
+        "mean_usd_per_trade": -0.08074935400640178,
+        "sigma_usd_per_session": 248.29475678403443,
+        "skew": -0.2597572656650982,
+        "kurtosis": 10.623205297027779
+      },
+      "net": {
+        "n_trades": 1548,
+        "trips_per_session": 0.7942534633145203,
+        "mean_ticks_per_trade": -1.4929198966410238,
+        "mean_ticks_per_session": -1.1857567983582886,
+        "sigma_ticks_per_session": 39.85993335890279,
+        "sharpe": -0.4722362542273779,
+        "mean_usd_per_trade": -9.3307493540064,
+        "sigma_usd_per_session": 249.1245834931425,
+        "skew": -0.3000230822976451,
+        "kurtosis": 10.560087024413615
+      },
+      "c_d_passes": true
+    },
+    "6S": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1949,
+      "cost_ticks": 1.48,
+      "tick_usd": 6.250000000000001,
+      "sized_as": "6S",
+      "gross": {
+        "n_trades": 1603,
+        "trips_per_session": 0.8224730631092868,
+        "mean_ticks_per_trade": -1.0380536494074044,
+        "mean_ticks_per_session": -0.8537711646998816,
+        "sigma_ticks_per_session": 47.772547407714825,
+        "sharpe": -0.2837026243221522,
+        "mean_usd_per_trade": -6.487835308796279,
+        "sigma_usd_per_session": 298.5784212982177,
+        "skew": -0.2077174013555542,
+        "kurtosis": 8.688519225861176
+      },
+      "net": {
+        "n_trades": 1603,
+        "trips_per_session": 0.8224730631092868,
+        "mean_ticks_per_trade": -2.5180536494074035,
+        "mean_ticks_per_session": -2.0710312981016252,
+        "sigma_ticks_per_session": 47.94588757690831,
+        "sharpe": -0.6857022425648677,
+        "mean_usd_per_trade": -15.737835308796274,
+        "sigma_usd_per_session": 299.661797355677,
+        "skew": -0.24486961701693233,
+        "kurtosis": 8.65950280718947
+      },
+      "c_d_passes": true
+    },
+    "BTC": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1387,
+      "cost_ticks": 7.0,
+      "tick_usd": 0.5,
+      "sized_as": "MBT",
+      "gross": {
+        "n_trades": 1108,
+        "trips_per_session": 0.798846431146359,
+        "mean_ticks_per_trade": 0.7698555956678319,
+        "mean_ticks_per_session": 0.6149963950973019,
+        "sigma_ticks_per_session": 96.29758023777165,
+        "sharpe": 0.10138120903626574,
+        "mean_usd_per_trade": 0.38492779783391595,
+        "sigma_usd_per_session": 48.14879011888583,
+        "skew": -0.7497864563688438,
+        "kurtosis": 15.928298834209777
+      },
+      "net": {
+        "n_trades": 1108,
+        "trips_per_session": 0.798846431146359,
+        "mean_ticks_per_trade": -6.230144404332168,
+        "mean_ticks_per_session": -4.976928622927211,
+        "sigma_ticks_per_session": 96.82086247089244,
+        "sharpe": -0.8160048419198833,
+        "mean_usd_per_trade": -3.115072202166084,
+        "sigma_usd_per_session": 48.41043123544622,
+        "skew": -0.8283694758737516,
+        "kurtosis": 15.941570609338305
+      },
+      "c_d_passes": true
+    },
+    "BZ": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1732,
+      "cost_ticks": 1.2999999999999998,
+      "tick_usd": 10.000000000000002,
+      "sized_as": "BZ",
+      "gross": {
+        "n_trades": 1402,
+        "trips_per_session": 0.8094688221709007,
+        "mean_ticks_per_trade": 0.612696148359577,
+        "mean_ticks_per_session": 0.49595842956127417,
+        "sigma_ticks_per_session": 87.46568848341015,
+        "sharpe": 0.0900135370564764,
+        "mean_usd_per_trade": 6.126961483595771,
+        "sigma_usd_per_session": 874.6568848341017,
+        "skew": -0.24651052740613716,
+        "kurtosis": 14.8897966857457
+      },
+      "net": {
+        "n_trades": 1402,
+        "trips_per_session": 0.8094688221709007,
+        "mean_ticks_per_trade": -0.6873038516404244,
+        "mean_ticks_per_session": -0.5563510392608979,
+        "sigma_ticks_per_session": 87.6076573002734,
+        "sharpe": -0.10081081062297105,
+        "mean_usd_per_trade": -6.873038516404245,
+        "sigma_usd_per_session": 876.0765730027342,
+        "skew": -0.2647614057337324,
+        "kurtosis": 14.843198195572983
+      },
+      "c_d_passes": false
+    },
+    "CL": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1783,
+      "cost_ticks": 4.0,
+      "tick_usd": 1.0,
+      "sized_as": "MCL",
+      "gross": {
+        "n_trades": 1469,
+        "trips_per_session": 0.8238923163208076,
+        "mean_ticks_per_trade": -0.6487406398910712,
+        "mean_ticks_per_session": -0.5344924284912976,
+        "sigma_ticks_per_session": 85.28583230713511,
+        "sharpe": -0.09948667945285254,
+        "mean_usd_per_trade": -0.6487406398910712,
+        "sigma_usd_per_session": 85.28583230713511,
+        "skew": -0.3097708215239114,
+        "kurtosis": 12.454172826016322
+      },
+      "net": {
+        "n_trades": 1469,
+        "trips_per_session": 0.8238923163208076,
+        "mean_ticks_per_trade": -4.648740639891071,
+        "mean_ticks_per_session": -3.830061693774528,
+        "sigma_ticks_per_session": 85.75859257336565,
+        "sharpe": -0.7089708758286727,
+        "mean_usd_per_trade": -4.648740639891071,
+        "sigma_usd_per_session": 85.75859257336565,
+        "skew": -0.36580289028995294,
+        "kurtosis": 12.364482231432433
+      },
+      "c_d_passes": true
+    },
+    "ES": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1929,
+      "cost_ticks": 3.4,
+      "tick_usd": 1.25,
+      "sized_as": "MES",
+      "gross": {
+        "n_trades": 1617,
+        "trips_per_session": 0.838258164852255,
+        "mean_ticks_per_trade": 1.988249845392505,
+        "mean_ticks_per_session": 1.666666666666501,
+        "sigma_ticks_per_session": 88.50277988304296,
+        "sharpe": 0.2989455601915224,
+        "mean_usd_per_trade": 2.4853123067406315,
+        "sigma_usd_per_session": 110.62847485380371,
+        "skew": -0.09147089973224369,
+        "kurtosis": 14.095135158056886
+      },
+      "net": {
+        "n_trades": 1617,
+        "trips_per_session": 0.838258164852255,
+        "mean_ticks_per_trade": -1.411750154607495,
+        "mean_ticks_per_session": -1.1834110938311662,
+        "sigma_ticks_per_session": 88.7845640401667,
+        "sharpe": -0.21159160853337297,
+        "mean_usd_per_trade": -1.764687693259369,
+        "sigma_usd_per_session": 110.98070505020837,
+        "skew": -0.13144751245740083,
+        "kurtosis": 14.045090414761894
+      },
+      "c_d_passes": true
+    },
+    "GC": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1904,
+      "cost_ticks": 4.0,
+      "tick_usd": 1.0,
+      "sized_as": "MGC",
+      "gross": {
+        "n_trades": 1495,
+        "trips_per_session": 0.7851890756302521,
+        "mean_ticks_per_trade": 0.7946488294313444,
+        "mean_ticks_per_session": 0.6239495798318592,
+        "sigma_ticks_per_session": 67.8861707928656,
+        "sharpe": 0.14590442202863196,
+        "mean_usd_per_trade": 0.7946488294313444,
+        "sigma_usd_per_session": 67.8861707928656,
+        "skew": -0.5860828046166945,
+        "kurtosis": 17.972109571546508
+      },
+      "net": {
+        "n_trades": 1495,
+        "trips_per_session": 0.7851890756302521,
+        "mean_ticks_per_trade": -3.2053511705686555,
+        "mean_ticks_per_session": -2.5168067226891493,
+        "sigma_ticks_per_session": 68.24020764286094,
+        "sharpe": -0.5854769423710233,
+        "mean_usd_per_trade": -3.2053511705686555,
+        "sigma_usd_per_session": 68.24020764286094,
+        "skew": -0.6551176102436004,
+        "kurtosis": 17.931897237031542
+      },
+      "c_d_passes": true
+    },
+    "HG": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1901,
+      "cost_ticks": 1.24,
+      "tick_usd": 12.5,
+      "sized_as": "HG",
+      "gross": {
+        "n_trades": 1502,
+        "trips_per_session": 0.7901104681746449,
+        "mean_ticks_per_trade": 1.4114513981358476,
+        "mean_ticks_per_session": 1.1152025249868718,
+        "sigma_ticks_per_session": 37.7904733932761,
+        "sharpe": 0.4684591026761051,
+        "mean_usd_per_trade": 17.643142476698095,
+        "sigma_usd_per_session": 472.3809174159513,
+        "skew": 0.3814291338146775,
+        "kurtosis": 8.686776489909379
+      },
+      "net": {
+        "n_trades": 1502,
+        "trips_per_session": 0.7901104681746449,
+        "mean_ticks_per_trade": 0.17145139813584684,
+        "mean_ticks_per_session": 0.1354655444503114,
+        "sigma_ticks_per_session": 37.898883958800525,
+        "sharpe": 0.05674174609834606,
+        "mean_usd_per_trade": 2.1431424766980856,
+        "sigma_usd_per_session": 473.73604948500656,
+        "skew": 0.33843853026326226,
+        "kurtosis": 8.652114226205967
+      },
+      "c_d_passes": false
+    },
+    "HO": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1753,
+      "cost_ticks": 1.7142857142857144,
+      "tick_usd": 4.2,
+      "sized_as": "HO",
+      "gross": {
+        "n_trades": 1461,
+        "trips_per_session": 0.8334284084426697,
+        "mean_ticks_per_trade": -7.764544832306522,
+        "mean_ticks_per_session": -6.47119224187098,
+        "sigma_ticks_per_session": 289.8846377330334,
+        "sharpe": -0.3543719769072151,
+        "mean_usd_per_trade": -32.611088295687395,
+        "sigma_usd_per_session": 1217.5154784787403,
+        "skew": 0.03882459858756189,
+        "kurtosis": 26.863781570536165
+      },
+      "net": {
+        "n_trades": 1461,
+        "trips_per_session": 0.8334284084426697,
+        "mean_ticks_per_trade": -9.478830546592244,
+        "mean_ticks_per_session": -7.899926656344135,
+        "sigma_ticks_per_session": 290.1056339318303,
+        "sharpe": -0.43228201448679265,
+        "mean_usd_per_trade": -39.811088295687426,
+        "sigma_usd_per_session": 1218.4436625136873,
+        "skew": 0.03003263423197461,
+        "kurtosis": 26.813948635799754
+      },
+      "c_d_passes": false
+    },
+    "NG": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1782,
+      "cost_ticks": 1.3,
+      "tick_usd": 10.0,
+      "sized_as": "NG",
+      "gross": {
+        "n_trades": 1458,
+        "trips_per_session": 0.8181818181818182,
+        "mean_ticks_per_trade": 2.98971193415637,
+        "mean_ticks_per_session": 2.446127946127939,
+        "sigma_ticks_per_session": 76.71628359483725,
+        "sharpe": 0.5061647345702702,
+        "mean_usd_per_trade": 29.897119341563698,
+        "sigma_usd_per_session": 767.1628359483725,
+        "skew": -0.5113775337798725,
+        "kurtosis": 37.210839293794045
+      },
+      "net": {
+        "n_trades": 1458,
+        "trips_per_session": 0.8181818181818182,
+        "mean_ticks_per_trade": 1.6897119341563698,
+        "mean_ticks_per_session": 1.3824915824915753,
+        "sigma_ticks_per_session": 76.81890695579348,
+        "sharpe": 0.28568973929955066,
+        "mean_usd_per_trade": 16.897119341563698,
+        "sigma_usd_per_session": 768.1890695579348,
+        "skew": -0.531855733925673,
+        "kurtosis": 37.14431717632288
+      },
+      "c_d_passes": false
+    },
+    "NKD": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1918,
+      "cost_ticks": 1.12,
+      "tick_usd": 25.0,
+      "sized_as": "NKD",
+      "gross": {
+        "n_trades": 1494,
+        "trips_per_session": 0.7789363920750783,
+        "mean_ticks_per_trade": -0.4638554216866925,
+        "mean_ticks_per_session": -0.3613138686130962,
+        "sigma_ticks_per_session": 22.09058754669253,
+        "sharpe": -0.2596436078221141,
+        "mean_usd_per_trade": -11.596385542167313,
+        "sigma_usd_per_session": 552.2646886673132,
+        "skew": -0.29868556110600347,
+        "kurtosis": 8.916772234727459
+      },
+      "net": {
+        "n_trades": 1494,
+        "trips_per_session": 0.7789363920750783,
+        "mean_ticks_per_trade": -1.5838554216866936,
+        "mean_ticks_per_session": -1.2337226277371847,
+        "sigma_ticks_per_session": 22.193401074115165,
+        "sharpe": -0.8824577852466481,
+        "mean_usd_per_trade": -39.59638554216734,
+        "sigma_usd_per_session": 554.8350268528791,
+        "skew": -0.3560867096248896,
+        "kurtosis": 8.880894486353556
+      },
+      "c_d_passes": false
+    },
+    "NQ": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1922,
+      "cost_ticks": 7.0,
+      "tick_usd": 0.5,
+      "sized_as": "MNQ",
+      "gross": {
+        "n_trades": 1604,
+        "trips_per_session": 0.8345473465140478,
+        "mean_ticks_per_trade": 19.937032418952363,
+        "mean_ticks_per_session": 16.638397502601244,
+        "sigma_ticks_per_session": 338.1338717035996,
+        "sharpe": 0.7811295884331086,
+        "mean_usd_per_trade": 9.968516209476181,
+        "sigma_usd_per_session": 169.0669358517998,
+        "skew": 0.008154338932861167,
+        "kurtosis": 11.769318474648879
+      },
+      "net": {
+        "n_trades": 1604,
+        "trips_per_session": 0.8345473465140478,
+        "mean_ticks_per_trade": 12.937032418952365,
+        "mean_ticks_per_session": 10.79656607700291,
+        "sigma_ticks_per_session": 338.6598442199917,
+        "sharpe": 0.5060835408877746,
+        "mean_usd_per_trade": 6.468516209476182,
+        "sigma_usd_per_session": 169.32992210999586,
+        "skew": -0.015095161402152306,
+        "kurtosis": 11.757872002010197
+      },
+      "c_d_passes": true
+    },
+    "PA": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1926,
+      "cost_ticks": 1.06,
+      "tick_usd": 50.0,
+      "sized_as": "PA",
+      "gross": {
+        "n_trades": 1498,
+        "trips_per_session": 0.7777777777777778,
+        "mean_ticks_per_trade": -0.28344459279035616,
+        "mean_ticks_per_session": -0.22045690550361036,
+        "sigma_ticks_per_session": 39.565320207421635,
+        "sharpe": -0.08845233306010392,
+        "mean_usd_per_trade": -14.17222963951781,
+        "sigma_usd_per_session": 1978.2660103710818,
+        "skew": -0.7180307605393558,
+        "kurtosis": 53.030106262804786
+      },
+      "net": {
+        "n_trades": 1498,
+        "trips_per_session": 0.7777777777777778,
+        "mean_ticks_per_trade": -1.343444592790357,
+        "mean_ticks_per_session": -1.0449013499480555,
+        "sigma_ticks_per_session": 39.64668559692517,
+        "sharpe": -0.41837784040731546,
+        "mean_usd_per_trade": -67.17222963951785,
+        "sigma_usd_per_session": 1982.3342798462584,
+        "skew": -0.7542220277341463,
+        "kurtosis": 52.88089071921267
+      },
+      "c_d_passes": false
+    },
+    "PL": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1909,
+      "cost_ticks": 1.6,
+      "tick_usd": 5.0,
+      "sized_as": "PL",
+      "gross": {
+        "n_trades": 1532,
+        "trips_per_session": 0.8025144054478784,
+        "mean_ticks_per_trade": 1.975195822454216,
+        "mean_ticks_per_session": 1.5851231010999784,
+        "sigma_ticks_per_session": 70.68219323871946,
+        "sharpe": 0.3560026646685886,
+        "mean_usd_per_trade": 9.87597911227108,
+        "sigma_usd_per_session": 353.41096619359735,
+        "skew": -0.05568890680045766,
+        "kurtosis": 7.989802611405944
+      },
+      "net": {
+        "n_trades": 1532,
+        "trips_per_session": 0.8025144054478784,
+        "mean_ticks_per_trade": 0.3751958224542165,
+        "mean_ticks_per_session": 0.30110005238337334,
+        "sigma_ticks_per_session": 70.84257700577106,
+        "sharpe": 0.0674709384123644,
+        "mean_usd_per_trade": 1.8759791122710825,
+        "sigma_usd_per_session": 354.21288502885534,
+        "skew": -0.08415188131200206,
+        "kurtosis": 7.979882521523491
+      },
+      "c_d_passes": false
+    },
+    "RB": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1726,
+      "cost_ticks": 1.7142857142857144,
+      "tick_usd": 4.2,
+      "sized_as": "RB",
+      "gross": {
+        "n_trades": 1420,
+        "trips_per_session": 0.8227114716106605,
+        "mean_ticks_per_trade": -6.140845070422434,
+        "mean_ticks_per_session": -5.052143684820311,
+        "sigma_ticks_per_session": 257.1031094204479,
+        "sharpe": -0.3119382525072709,
+        "mean_usd_per_trade": -25.791549295774225,
+        "sigma_usd_per_session": 1079.833059565881,
+        "skew": -0.6412761090277881,
+        "kurtosis": 14.235532957790106
+      },
+      "net": {
+        "n_trades": 1420,
+        "trips_per_session": 0.8227114716106605,
+        "mean_ticks_per_trade": -7.855130784708152,
+        "mean_ticks_per_session": -6.462506207581446,
+        "sigma_ticks_per_session": 257.3160861319782,
+        "sharpe": -0.3986890488308288,
+        "mean_usd_per_trade": -32.99154929577424,
+        "sigma_usd_per_session": 1080.7275617543085,
+        "skew": -0.6488640370666134,
+        "kurtosis": 14.218872276186257
+      },
+      "c_d_passes": false
+    },
+    "RTY": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1560,
+      "cost_ticks": 7.0,
+      "tick_usd": 0.5,
+      "sized_as": "M2K",
+      "gross": {
+        "n_trades": 1331,
+        "trips_per_session": 0.8532051282051282,
+        "mean_ticks_per_trade": -5.507137490608662,
+        "mean_ticks_per_session": -4.6987179487180315,
+        "sigma_ticks_per_session": 145.76104584946594,
+        "sharpe": -0.5117268101649947,
+        "mean_usd_per_trade": -2.753568745304331,
+        "sigma_usd_per_session": 72.88052292473297,
+        "skew": 0.05562187682652714,
+        "kurtosis": 6.692494692541199
+      },
+      "net": {
+        "n_trades": 1331,
+        "trips_per_session": 0.8532051282051282,
+        "mean_ticks_per_trade": -12.507137490608663,
+        "mean_ticks_per_session": -10.67115384615393,
+        "sigma_ticks_per_session": 146.60338273494386,
+        "sharpe": -1.1554939082167908,
+        "mean_usd_per_trade": -6.253568745304332,
+        "sigma_usd_per_session": 73.30169136747193,
+        "skew": 0.005900288602319299,
+        "kurtosis": 6.615869214706694
+      },
+      "c_d_passes": true
+    },
+    "SI": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1903,
+      "cost_ticks": 1.12,
+      "tick_usd": 25.0,
+      "sized_as": "SI",
+      "gross": {
+        "n_trades": 1497,
+        "trips_per_session": 0.7866526537046769,
+        "mean_ticks_per_trade": 0.042752171008679174,
+        "mean_ticks_per_session": 0.03363110877561362,
+        "sigma_ticks_per_session": 32.42923094637636,
+        "sharpe": 0.016462841863151525,
+        "mean_usd_per_trade": 1.0688042752169793,
+        "sigma_usd_per_session": 810.7307736594089,
+        "skew": 0.9079648393320867,
+        "kurtosis": 21.601110625025427
+      },
+      "net": {
+        "n_trades": 1497,
+        "trips_per_session": 0.7866526537046769,
+        "mean_ticks_per_trade": -1.0772478289913223,
+        "mean_ticks_per_session": -0.8474198633736256,
+        "sigma_ticks_per_session": 32.52830427144605,
+        "sharpe": -0.41355900925540773,
+        "mean_usd_per_trade": -26.93119572478306,
+        "sigma_usd_per_session": 813.2076067861514,
+        "skew": 0.8588502017473687,
+        "kurtosis": 21.39457068153996
+      },
+      "c_d_passes": false
+    },
+    "TN": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1924,
+      "cost_ticks": 1.192,
+      "tick_usd": 15.625,
+      "sized_as": "TN",
+      "gross": {
+        "n_trades": 1562,
+        "trips_per_session": 0.8118503118503119,
+        "mean_ticks_per_trade": 0.41677336747746996,
+        "mean_ticks_per_session": 0.33835758835748864,
+        "sigma_ticks_per_session": 19.553102877611888,
+        "sharpe": 0.2747011679758977,
+        "mean_usd_per_trade": 6.512083866835468,
+        "sigma_usd_per_session": 305.51723246268574,
+        "skew": 0.5795399695085403,
+        "kurtosis": 14.299544868758895
+      },
+      "net": {
+        "n_trades": 1562,
+        "trips_per_session": 0.8118503118503119,
+        "mean_ticks_per_trade": -0.7752266325225303,
+        "mean_ticks_per_session": -0.6293679833680833,
+        "sigma_ticks_per_session": 19.659960323053525,
+        "sharpe": -0.5081855120080602,
+        "mean_usd_per_trade": -12.112916133164536,
+        "sigma_usd_per_session": 307.1868800477113,
+        "skew": 0.49975902289625046,
+        "kurtosis": 14.099225471026667
+      },
+      "c_d_passes": true
+    },
+    "UB": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1927,
+      "cost_ticks": 1.096,
+      "tick_usd": 31.25,
+      "sized_as": "UB",
+      "gross": {
+        "n_trades": 1577,
+        "trips_per_session": 0.8183705241307733,
+        "mean_ticks_per_trade": 0.08560558021560068,
+        "mean_ticks_per_session": 0.07005708354956008,
+        "sigma_ticks_per_session": 26.9009330412726,
+        "sharpe": 0.04134138106650036,
+        "mean_usd_per_trade": 2.6751743817375213,
+        "sigma_usd_per_session": 840.6541575397688,
+        "skew": 1.3175756763100657,
+        "kurtosis": 27.552202105915292
+      },
+      "net": {
+        "n_trades": 1577,
+        "trips_per_session": 0.8183705241307733,
+        "mean_ticks_per_trade": -1.0103944197844013,
+        "mean_ticks_per_session": -0.8268770108977689,
+        "sigma_ticks_per_session": 26.99732296580089,
+        "sharpe": -0.48620619276435184,
+        "mean_usd_per_trade": -31.57482561826254,
+        "sigma_usd_per_session": 843.6663426812778,
+        "skew": 1.2604988163917499,
+        "kurtosis": 27.192799665357565
+      },
+      "c_d_passes": false
+    },
+    "YM": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1926,
+      "cost_ticks": 7.0,
+      "tick_usd": 0.5,
+      "sized_as": "MYM",
+      "gross": {
+        "n_trades": 1606,
+        "trips_per_session": 0.833852544132918,
+        "mean_ticks_per_trade": -5.02615193026092,
+        "mean_ticks_per_session": -4.191069574246645,
+        "sigma_ticks_per_session": 169.85840350034687,
+        "sharpe": -0.3916860488142996,
+        "mean_usd_per_trade": -2.51307596513046,
+        "sigma_usd_per_session": 84.92920175017343,
+        "skew": -0.7302014227560688,
+        "kurtosis": 16.999775083891905
+      },
+      "net": {
+        "n_trades": 1606,
+        "trips_per_session": 0.833852544132918,
+        "mean_ticks_per_trade": -12.026151930260921,
+        "mean_ticks_per_session": -10.028037383177072,
+        "sigma_ticks_per_session": 170.54454342317413,
+        "sharpe": -0.9334227594058664,
+        "mean_usd_per_trade": -6.013075965130461,
+        "sigma_usd_per_session": 85.27227171158707,
+        "skew": -0.7720909002878628,
+        "kurtosis": 16.962970150075535
+      },
+      "c_d_passes": true
+    },
+    "ZB": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1928,
+      "cost_ticks": 1.096,
+      "tick_usd": 31.25,
+      "sized_as": "ZB",
+      "gross": {
+        "n_trades": 1547,
+        "trips_per_session": 0.8023858921161826,
+        "mean_ticks_per_trade": -1.6461442566025852e-14,
+        "mean_ticks_per_session": -1.3208429278859954e-14,
+        "sigma_ticks_per_session": 15.904619702059906,
+        "sharpe": -1.3183422075960061e-14,
+        "mean_usd_per_trade": -5.144200801883079e-13,
+        "sigma_usd_per_session": 497.019365689372,
+        "skew": 0.5114446731101359,
+        "kurtosis": 19.717131350648373
+      },
+      "net": {
+        "n_trades": 1547,
+        "trips_per_session": 0.8023858921161826,
+        "mean_ticks_per_trade": -1.0960000000000174,
+        "mean_ticks_per_session": -0.8794149377593501,
+        "sigma_ticks_per_session": 16.01118594213149,
+        "sharpe": -0.8719078897550454,
+        "mean_usd_per_trade": -34.25000000000055,
+        "sigma_usd_per_session": 500.3495606916091,
+        "skew": 0.41894006295147496,
+        "kurtosis": 19.312021530899436
+      },
+      "c_d_passes": false
+    },
+    "ZF": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1925,
+      "cost_ticks": 1.384,
+      "tick_usd": 7.8125,
+      "sized_as": "ZF",
+      "gross": {
+        "n_trades": 1548,
+        "trips_per_session": 0.8041558441558442,
+        "mean_ticks_per_trade": 0.20542635658907443,
+        "mean_ticks_per_session": 0.1651948051947466,
+        "sigma_ticks_per_session": 17.0348711091934,
+        "sharpe": 0.15394224105018972,
+        "mean_usd_per_trade": 1.604893410852144,
+        "sigma_usd_per_session": 133.08493054057342,
+        "skew": -0.08443908390355225,
+        "kurtosis": 14.436192031236338
+      },
+      "net": {
+        "n_trades": 1548,
+        "trips_per_session": 0.8041558441558442,
+        "mean_ticks_per_trade": -1.178573643410926,
+        "mean_ticks_per_session": -0.9477568831169421,
+        "sigma_ticks_per_session": 17.157778444387347,
+        "sharpe": -0.8768719181931397,
+        "mean_usd_per_trade": -9.20760658914786,
+        "sigma_usd_per_session": 134.04514409677614,
+        "skew": -0.18045563508063847,
+        "kurtosis": 14.263639738769271
+      },
+      "c_d_passes": true
+    },
+    "ZN": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1927,
+      "cost_ticks": 1.192,
+      "tick_usd": 15.625,
+      "sized_as": "ZN",
+      "gross": {
+        "n_trades": 1544,
+        "trips_per_session": 0.8012454592631033,
+        "mean_ticks_per_trade": 0.3866580310880122,
+        "mean_ticks_per_session": 0.3098079916968816,
+        "sigma_ticks_per_session": 13.383202003308048,
+        "sharpe": 0.36747927738415925,
+        "mean_usd_per_trade": 6.0415317357501905,
+        "sigma_usd_per_session": 209.11253130168825,
+        "skew": -0.018152270798514964,
+        "kurtosis": 13.950261794853004
+      },
+      "net": {
+        "n_trades": 1544,
+        "trips_per_session": 0.8012454592631033,
+        "mean_ticks_per_trade": -0.805341968911988,
+        "mean_ticks_per_session": -0.6452765957447376,
+        "sigma_ticks_per_session": 13.49099636551573,
+        "sharpe": -0.7592803465079008,
+        "mean_usd_per_trade": -12.583468264249811,
+        "sigma_usd_per_session": 210.79681821118328,
+        "skew": -0.1280926358422722,
+        "kurtosis": 13.80910292687787
+      },
+      "c_d_passes": true
+    },
+    "ZT": {
+      "window": [
+        9,
+        15
+      ],
+      "n_sessions": 1925,
+      "cost_ticks": 1.384,
+      "tick_usd": 7.8125,
+      "sized_as": "ZT",
+      "gross": {
+        "n_trades": 1495,
+        "trips_per_session": 0.7766233766233767,
+        "mean_ticks_per_trade": 0.05484949832737228,
+        "mean_ticks_per_session": 0.04259740259710211,
+        "sigma_ticks_per_session": 13.256985508314884,
+        "sharpe": 0.0510080366453783,
+        "mean_usd_per_trade": 0.42851170568259594,
+        "sigma_usd_per_session": 103.57019928371002,
+        "skew": 0.43291608068461546,
+        "kurtosis": 22.30909433469021
+      },
+      "net": {
+        "n_trades": 1495,
+        "trips_per_session": 0.7766233766233767,
+        "mean_ticks_per_trade": -1.3291505016726284,
+        "mean_ticks_per_session": -1.0322493506496515,
+        "sigma_ticks_per_session": 13.380128171735139,
+        "sharpe": -1.224685610379794,
+        "mean_usd_per_trade": -10.38398829431741,
+        "sigma_usd_per_session": 104.53225134168078,
+        "skew": 0.2833233755187186,
+        "kurtosis": 21.871520364964155
+      },
+      "c_d_passes": true
+    }
+  },
+  "nulls": {
+    "6A": {
+      "observed": 0.530872056015256,
+      "p50": -0.11514392991242123,
+      "p95": 1.959053103007054,
+      "p95_se": 0.042969848935236275,
+      "margin_se": -33.236817963785214,
+      "clears": false,
+      "unresolved": false
+    },
+    "6B": {
+      "observed": -0.2853566958698168,
+      "p50": -0.012430548762020323,
+      "p95": 1.4565827191585417,
+      "p95_se": 0.033122536062619695,
+      "margin_se": -52.5907621244684,
+      "clears": false,
+      "unresolved": false
+    },
+    "6C": {
+      "observed": -0.12561881188122864,
+      "p50": 0.016842356056189042,
+      "p95": 1.5423932651834036,
+      "p95_se": 0.047520975523602585,
+      "margin_se": -35.100543679625616,
+      "clears": false,
+      "unresolved": false
+    },
+    "6E": {
+      "observed": -0.5102420856611591,
+      "p50": -0.03618866228318189,
+      "p95": 1.7815402159406069,
+      "p95_se": 0.06470383456091236,
+      "margin_se": -35.419574699924105,
+      "clears": false,
+      "unresolved": false
+    },
+    "6J": {
+      "observed": -0.012919896641024282,
+      "p50": -0.04183006535953063,
+      "p95": 1.9854897218861942,
+      "p95_se": 0.03964097460654367,
+      "margin_se": -50.412726689049016,
+      "clears": false,
+      "unresolved": false
+    },
+    "6S": {
+      "observed": -1.0380536494074044,
+      "p50": -0.04496663631172737,
+      "p95": 1.7722157478282434,
+      "p95_se": 0.05004536917168725,
+      "margin_se": -56.15443434126038,
+      "clears": false,
+      "unresolved": false
+    },
+    "BTC": {
+      "observed": 0.7698555956678319,
+      "p50": 0.5289583190040491,
+      "p95": 5.723048327137684,
+      "p95_se": 0.131710129090008,
+      "margin_se": -37.6067715193335,
+      "clears": false,
+      "unresolved": false
+    },
+    "BZ": {
+      "observed": 0.612696148359577,
+      "p50": -0.12519561815336996,
+      "p95": 3.9257161021685962,
+      "p95_se": 0.11359491692768166,
+      "margin_se": -29.165213051902654,
+      "clears": false,
+      "unresolved": false
+    },
+    "CL": {
+      "observed": -0.6487406398910712,
+      "p50": -0.11983454807216314,
+      "p95": 3.976952695181764,
+      "p95_se": 0.15570556202950475,
+      "margin_se": -29.707951821247782,
+      "clears": false,
+      "unresolved": false
+    },
+    "ES": {
+      "observed": 1.988249845392505,
+      "p50": -0.052037617554882315,
+      "p95": 4.010235611990894,
+      "p95_se": 0.13715657315734425,
+      "margin_se": -14.742171811764305,
+      "clears": false,
+      "unresolved": false
+    },
+    "GC": {
+      "observed": 0.7946488294313444,
+      "p50": 0.04697229566776801,
+      "p95": 3.0840162003710114,
+      "p95_se": 0.09470271307050455,
+      "margin_se": -24.174253268069226,
+      "clears": false,
+      "unresolved": false
+    },
+    "HG": {
+      "observed": 1.4114513981358476,
+      "p50": -0.1216193119798232,
+      "p95": 1.620640569395001,
+      "p95_se": 0.05258331568987007,
+      "margin_se": -3.978242309650563,
+      "clears": false,
+      "unresolved": false
+    },
+    "HO": {
+      "observed": -7.764544832306522,
+      "p50": 0.3578493519197076,
+      "p95": 13.460283260130103,
+      "p95_se": 0.30670386606273115,
+      "margin_se": -69.20300146492265,
+      "clears": false,
+      "unresolved": false
+    },
+    "NG": {
+      "observed": 2.98971193415637,
+      "p50": 0.07222031323276581,
+      "p95": 3.3880819374122915,
+      "p95_se": 0.05878174168436419,
+      "margin_se": -6.777104451838438,
+      "clears": false,
+      "unresolved": false
+    },
+    "NKD": {
+      "observed": -0.4638554216866925,
+      "p50": -0.03363384188627191,
+      "p95": 0.9643097643095848,
+      "p95_se": 0.02985834607814673,
+      "margin_se": -47.83135617285744,
+      "clears": false,
+      "unresolved": false
+    },
+    "NQ": {
+      "observed": 19.937032418952363,
+      "p50": 0.0005787379557388719,
+      "p95": 18.422629969419514,
+      "p95_se": 0.6962968041879121,
+      "margin_se": 2.1749381017181166,
+      "clears": true,
+      "unresolved": false
+    },
+    "PA": {
+      "observed": -0.28344459279035616,
+      "p50": 0.02777070063692459,
+      "p95": 1.846583407906537,
+      "p95_se": 0.04812511074702309,
+      "margin_se": -44.26022023915347,
+      "clears": false,
+      "unresolved": false
+    },
+    "PL": {
+      "observed": 1.975195822454216,
+      "p50": -0.04141498903236174,
+      "p95": 3.178407545222782,
+      "p95_se": 0.10089079280329505,
+      "margin_se": -11.925882326194483,
+      "clears": false,
+      "unresolved": false
+    },
+    "RB": {
+      "observed": -6.140845070422434,
+      "p50": 0.541714928922844,
+      "p95": 12.457674987265927,
+      "p95_se": 0.34889871550600166,
+      "margin_se": -53.30635863968503,
+      "clears": false,
+      "unresolved": false
+    },
+    "RTY": {
+      "observed": -5.507137490608662,
+      "p50": 0.09531502423278462,
+      "p95": 7.50246305418757,
+      "p95_se": 0.1690530737962017,
+      "margin_se": -76.95571723516649,
+      "clears": false,
+      "unresolved": false
+    },
+    "SI": {
+      "observed": 0.042752171008679174,
+      "p50": -0.022302370608743974,
+      "p95": 1.5093176025148844,
+      "p95_se": 0.04679464405386885,
+      "margin_se": -31.340454899452403,
+      "clears": false,
+      "unresolved": false
+    },
+    "TN": {
+      "observed": 0.41677336747746996,
+      "p50": -0.05953905249684905,
+      "p95": 0.7928783382789436,
+      "p95_se": 0.018833972293901755,
+      "margin_se": -19.96949793343662,
+      "clears": false,
+      "unresolved": false
+    },
+    "UB": {
+      "observed": 0.08560558021560068,
+      "p50": -0.026957601222241397,
+      "p95": 1.2442613213105513,
+      "p95_se": 0.037180792110533316,
+      "margin_se": -31.16275031608871,
+      "clears": false,
+      "unresolved": false
+    },
+    "YM": {
+      "observed": -5.02615193026092,
+      "p50": 0.1788149510533947,
+      "p95": 7.594410430168566,
+      "p95_se": 0.1674998565705779,
+      "margin_se": -75.34670547679947,
+      "clears": false,
+      "unresolved": false
+    },
+    "ZB": {
+      "observed": -1.6461442566025852e-14,
+      "p50": -0.0060240963855196445,
+      "p95": 0.6580868722744221,
+      "p95_se": 0.01980031685819663,
+      "margin_se": -33.236178844381165,
+      "clears": false,
+      "unresolved": false
+    },
+    "ZF": {
+      "observed": 0.20542635658907443,
+      "p50": -0.053293086738896586,
+      "p95": 0.7143014260949998,
+      "p95_se": 0.02494909141921402,
+      "margin_se": -20.396537130567648,
+      "clears": false,
+      "unresolved": false
+    },
+    "ZN": {
+      "observed": 0.3866580310880122,
+      "p50": -0.02484939759030871,
+      "p95": 0.5242570000973763,
+      "p95_se": 0.013825515268180441,
+      "margin_se": -9.952538212159764,
+      "clears": false,
+      "unresolved": false
+    },
+    "ZT": {
+      "observed": 0.05484949832737228,
+      "p50": -0.0449046288234765,
+      "p95": 0.5525830056404465,
+      "p95_se": 0.012601435514623753,
+      "margin_se": -39.49815929585664,
+      "clears": false,
+      "unresolved": false
+    }
+  },
+  "family_max": {
+    "best_root": "NQ",
+    "best": 19.937032418952363,
+    "family_null_p95": 20.100692133527684,
+    "clears": false
+  },
+  "clearing_roots": [
+    "NQ"
+  ],
+  "pairwise_rho": {},
+  "n_positive_gross": 15,
+  "positive_gross_roots": [
+    "6A",
+    "BTC",
+    "BZ",
+    "ES",
+    "GC",
+    "HG",
+    "NG",
+    "NQ",
+    "PL",
+    "SI",
+    "TN",
+    "UB",
+    "ZF",
+    "ZN",
+    "ZT"
+  ],
+  "limitations": [
+    "in-sample only; 2024+ unread on 35 roots and SPENT on NQ (D503); 2010-2015 unread and complete for the non-index roots",
+    "a 36-cell search: only the family-max null prices that",
+    "net is not evidence -- crossing measured on one root of 36",
+    "nothing admitted (R15); a clearing root is a candidate for a forward read on its own unspent slice, not a component"
+  ]
+}
