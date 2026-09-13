@@ -109,3 +109,52 @@ have saved the redesign.
 ## 5. Files
 
 Runner · this record · the artefact · D508 and D509 (the stretch versions) · PICKUP.
+
+---
+
+## ADDENDUM, 2026-09-13 — the 23-hour version is NOT better. Its advantage is nine sessions
+
+**The principal asked why the 23-hour cell beat the day-session one. It does not.** Diagnostic:
+`working/d512_why_23h_scratch.py`, a decomposition of this record, no new data read.
+
+**They are the same object.** ρ(V_day, V_full) = **+0.9888**, Spearman **+0.9817**. A night-only cell
+sits between them at Δ +26.15 (95.4th percentile), so there is no "the night carries it" story
+either: day, night and 23-hour are one conditioner measured three ways.
+
+**The gap is inside its own noise.** Rotating BOTH conditioners by the *same* offset preserves their
+correlation and asks how large a gap arises by chance:
+
+| | value |
+|---|---:|
+| observed gap, 23-hour minus day | **+$5.91** a session |
+| null gaps, p05 / p50 / p95 | −8.81 / +0.33 / +7.83 |
+| standard deviation of the null gap | $5.11 |
+| where the observed gap sits | **89.5th percentile** |
+| offsets with \|gap\| at least as large | **23.1%** |
+
+**The gap is 1.2 standard deviations of what rotation alone produces.**
+
+**And it is carried by nine sessions.** The two conditioners assign the same quintile to **83.5%** of
+sessions, and the top quintiles share **366 of 375**:
+
+| | n | mean net | total |
+|---|---:|---:|---:|
+| sessions the 23-hour version ADDS to the top quintile | **9** | **+$120.88** | +$1,088 |
+| sessions it DROPS from the top quintile | **9** | **−$155.39** | −$1,399 |
+
+The top-quintile mean moves from +$16.36 to +$22.99, which is **$2,486** across 375 sessions. The
+eighteen swapped sessions account for **$2,487** of it. **The entire advantage is those nine swaps.**
+The three largest additions are **2022-07-18 (+$470), 2020-02-28 (+$371) and 2016-01-13 (+$220)**.
+
+**What this corrects in this record.** §0 reported that the 23-hour cell "clears its own N1 at the
+98.6th percentile". That remains arithmetically true and is **not evidence of a better conditioner**:
+the cell differs from the declared primary on nine of 375 top-quintile sessions, and the difference
+is ordinary under rotation. **The right reading of §0 is that all four cells are one conditioner, the
+family bar refuses it at 6.0%, and the spread between the cells is noise.** This is the repo's own
+rule about a sparse contaminant dominating an order statistic, arriving from the other direction:
+nine sessions moved a cell from the 93rd percentile to the 98th.
+
+**Nothing changes in the verdict.** CLOSE stands, for a better-understood reason. And the §4
+forward pointer is sharpened: what should be carried to a root with an unread slice is **the
+conditioner**, declared once on whichever window is chosen in advance — not a choice between day,
+night and 23-hour, which this addendum shows is a choice between three names for one thing.
