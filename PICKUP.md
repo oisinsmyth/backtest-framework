@@ -150,6 +150,35 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D506 — STAGE 1, CLOSE: IN-PLAY SELECTION FAILS AS ALPHA AND WORKS AS DRAWDOWN MANAGEMENT, 2026-09-13
+
+From the in-play video (`docs/youtube-lessons.md` §6) and the design in
+`working/DRAFT-in-play-on-the-prop-book.md`. Spec `2bea9d9`, result `45c2c85`. Conditioner: the
+causal overnight range-and-volume score, top decile against the rest; two signals the repo already
+owns (the day drift, and D484's log MACD at d−1); eight roots; 2016–2023; 2024+ not read.
+
+**The fee lever is exactly what the premise promised and it is swallowed.** Across 16 cells the fee
+term is **+0.85 points, positive in 16 of 16**; directional accuracy is **−2.09 points, negative in
+11 of 16**. Primary YM-MACD: in play **−$10.61 gross a trade and net Sharpe −1.32** against +$2.10
+on the rest; Δ −0.0504 with 73% of its exact offsets above it; the 16-cell family p95 is +0.2192
+against an observed maximum of +0.0620, so **97.8% of offsets beat the best real cell.** CLOSE.
+
+**The decisive figure is the untradeable bound: −0.0018.** Conditioning on the day's *realised*
+range, which nobody can do in advance, earns nothing either — so the whole family is disposed of,
+not just its causal version. Mechanism, and it now has three confirmations (FINDINGS §70, §71, §72):
+**by 09:30 the information is spent, and a night that moved a lot has spent more of it.**
+
+**Two things kept, both in FINDINGS §72.** Selectivity **cuts P3a three to five fold** (ZB 14.00 →
+2.71 a year, ZN 2.00 → 0.71, NQ drift 0.57 → 0.00) because both prop death mechanisms are counted in
+exposure-days — it belongs in the sizing and survival layer, not the signal layer, and is worth
+reaching for when a construction fails P3a and nothing else. And **§69's accuracy targets are
+corrected**: they assume symmetric payoffs, and the long drift clears 55.7 / 55.2 / 54.4% on ES / NQ
+/ YM with net Sharpes of +0.02 / +0.11 / −0.31, because `(2p−1)·E|M|` overstates the realised edge by
+2× to 13× on these roots. Quote the payoff ratio beside any accuracy target.
+
+**Stage 2 (root selection) was NOT run** — the design made it conditional on stage 1, and stage 1
+says the state predicts worse direction. Nothing spent.
+
 ## TWO CLOSURES BY THE PRINCIPAL, 2026-09-13 — K8 AND THE CROSS-MARKET-INTO-THE-OPEN LINE
 
 **K8 (ledger entry #1) is CLOSED.** D503's forward read had it at gross −$4.46 a trade against

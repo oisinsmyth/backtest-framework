@@ -218,6 +218,8 @@ transfer (gross −$4.46 a trade, net Sharpe −0.160, difference z +0.02). D498
 PROVISIONAL; the principal closed it on the negative gross mean, which the rule did not name.
 **The ledger holds no live entry.** See BOOK_PROP's closure section of 2026-09-13.
 
+| **D506 stage 1 (2026-09-13): the in-play filter on the day session** — the causal overnight range-and-volume score, top decile against the rest, on two signals the repo already owns (the day drift; D484's log MACD at d−1) across eight roots, one micro, $3 ($6 ZN/ZB); 2016–2023 | D506 | primary YM-MACD **in play −$10.61 gross a trade, net Sharpe −1.32**, against +$2.10 on the rest; Δ of (2p−1) − fee/E\|M\| = **−0.0504**, 73% of its exact offsets above it; 16-cell family p95 +0.2192 against an observed max of +0.0620 | **C-a; CLOSE.** The fee lever is real (+0.85 points, positive 16 of 16) and accuracy falls by **−2.09 points** (negative 11 of 16). The untradeable bound — conditioning on the day's REALISED range — is −0.0018, so there is no prize even with perfect foreknowledge of the day's size. **Kept:** the same filter cuts P3a three to five fold (ZB 14.00 → 2.71 a year), so selectivity is a drawdown instrument, not a selector (FINDINGS §72) |
+
 **Line closed by the principal, 2026-09-13:** **cross-market-into-the-open** — any construction that
 reads a foreign market before the US open and enters at or after it (D494 at index level, D504
 cross-sectionally). The Asian chip channel is real and clears in the gap (+25.65 bp at t +4.25 into

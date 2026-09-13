@@ -4548,3 +4548,58 @@ established that one micro no longer fits a $50k account's $2,000 trailing floor
 micro pair is the only construction that lowers the dollar σ without leaving the micro** — the
 dollar beta of NQ on ES is 1.72, so 1:1 under-hedges and 1:2 over-hedges at $9 a round trip. This
 closes nothing and sizes nothing; it says the vehicle question has at least one unexplored answer.
+
+## 72. Measurement: selectivity is a drawdown instrument, not a selector — and by 09:30 the information is spent
+
+**A MEASUREMENT, not a verdict** ([R15](RULES.md#r15)). From
+[D506](decisions/D506-RESULT-stage-1-CLOSE-in-play-selection-costs-more-accuracy-than-the-fee-it-saves-but-it-cuts-the-breach-rate-3-to-5-fold.md),
+eight roots × two signals, ~1,700 sessions each, 2016–2023; 2024+ not read. The conditioner is
+causal and known before the open: the overnight leg's range and volume, each against its own
+trailing 20-session median.
+
+**(a) The fee lever is real and small, and it is measured.** Selecting the top causal decile raises
+E|M| by ×1.15 to ×1.94 and cuts the fee's share of the move — ES 3.3% → 1.8%, NQ 2.1% → 1.2%, YM
+4.4% → 2.3%, 6E 9.7% → 7.1%. In `(2p − 1)` terms that is **+0.85 points on average, positive in 16
+of 16 cells**, worth about **+0.10 of Sharpe** at `√252/c` with `c = σ/E|M| ≈ 1.4`.
+
+**(b) And directional accuracy falls by more than twice that.** `p(in play) − p(rest)` is **−2.09
+points on average, negative in 11 of 16 cells**, so the primary statistic is negative in 9 of 16 and
+no cell clears the family bar (p95 +0.2192 against an observed maximum of +0.0620; 97.8% of the
+1,978 exact offsets beat the best real cell).
+
+**(c) The reason, and it now has three independent confirmations.** A night that moved a lot has
+already spent the information. [§71](#71) measured the Asian channel clearing entirely in the
+opening gap (+25.65 bp into the gap, −1.65 into the day); [§70](#70) measured the off-hours move
+partly reverting in the following hour; this measures the day session after a big night being
+*harder* to call. **The US open is an auction that prices the night, and conditioning on a big night
+selects the sessions with the least left to give.** The decisive figure is the *untradeable* bound:
+conditioning on the day's **realised** range, which no one can do in advance, is **−0.0018** on the
+primary. There was no prize to win even with perfect foreknowledge of the day's size.
+
+**(d) But the same filter is a drawdown instrument, and a strong one.** R11's P3a bar is 1.0
+breaches a year. Trading only the top decile cuts the rate three to five fold, because both prop
+death mechanisms are counted in **exposure-days** and a filter that removes 90% of the sessions
+removes 90% of the chances to die — even though each session it keeps is individually more
+dangerous:
+
+| | P3a, all sessions | P3a, top decile only |
+|---|---:|---:|
+| ZB | **14.00 a year** | **2.71** |
+| ZN | 2.00 | 0.71 |
+| NQ, the drift | 0.57 | 0.00 |
+
+**Selectivity therefore belongs in the sizing and survival layer, not the signal layer.** It is
+worth reaching for when a construction fails P3a and nothing else, and it is worth nothing as a way
+to find direction.
+
+**(e) A correction to §69's accuracy targets: they assume symmetric payoffs.** The long day-session
+drift reaches **55.7% on ES, 55.2% on NQ, 54.4% on YM** — above §69's "53.6% for a component Sharpe
+of 0.5" — and earns net Sharpes of **+0.02, +0.11 and −0.31**, because it wins often and loses big
+(skew −0.30 to −0.38). `(2p − 1)·E|M|` overstates the realised edge by **2× to 13×** across these
+sixteen cells. **Quote the payoff ratio beside any accuracy target, and never treat accuracy alone
+as sufficient.**
+
+**(f) And one more reason to distrust a pooled risk figure.** The traded day move's σ at one micro,
+within the in-sample window alone: NQ $60 (2017) → $287 (2020) → **$452 (2022)** → $274 (2023); ES
+$42 → $264 → $154; ZB $475 → $929. **A 4× to 7× swing inside one window.** D503 established the
+point forward; this establishes it in sample. Every C-d, P3 and P4 number must be computed per year.
