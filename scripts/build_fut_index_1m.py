@@ -20,7 +20,7 @@ REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"; FIX = REPO / "data" / "fixtures"; META = FIX / "fut_index_1m.meta.json"
 ROOTS = ("ES", "NQ", "YM", "RTY"); OUTRIGHT = re.compile(r"^(ES|NQ|YM|RTY)([FGHJKMNQUVXZ])(\d{1,2})$"); PX = 1e-9; CHUNK = 10_000_000
 RTH_LO, RTH_HI = "09:30", "15:59"; MONTH = {c: i + 1 for i, c in enumerate("FGHJKMNQUVXZ")}; QUARTERLY = "HMUZ"
-G1_THR = {"ES": 0.010, "NQ": 0.010, "YM": 0.010, "RTY": 0.015}; G1_MAX = 40; G3_FULL = 380; G5_PRESENT = 200; G4_OC = {"ES": 0.995, "NQ": 0.995, "YM": 0.995, "RTY": 0.99}; G4_CC = 0.99
+G1_THR = {"ES": 0.010, "NQ": 0.010, "YM": 0.010, "RTY": 0.015}; G1_MAX = 40; G3_FULL = 380; G5_PRESENT = 200; G4_OC = {"ES": 0.995, "NQ": 0.995, "YM": 0.995, "RTY": 0.99}; G4_CC = 0.99; G4_MAX_EXCLUDED = 10
 ETF = {"ES": "SPY", "NQ": "QQQ", "YM": "DIA", "RTY": "IWM"}; EQ_FIX = FIX / "index_extended_15m_raw.csv.gz"
 
 
@@ -216,6 +216,29 @@ def expiry_of(contract, roll_day):
     return third_friday(cands[-1], mon)
 
 
+OPEN_MIN = [f"09:{m:02d}" for m in range(30, 45)]      # the span of the equity fixture's 09:30 bar, G4's open-side reference
+
+
+def discontinuous_open(bars):
+    """Sessions whose minute bars are NOT contiguous over 09:30-09:44 -- the open is not a market-clearing price.
+
+    G4's open-side reference is the ETF's 09:30 FIFTEEN-MINUTE bar, so the futures must have traded
+    through that same span for the two legs to measure the same interval. The window is that bar's
+    own span, not a tuned parameter.
+
+    D522: on 2020-03-16 every index root printed ONCE at 09:30 -- RTY 115 lots at a single price,
+    the limit -- and nothing until 09:45, while the ETFs' 09:30 bars barely traded (QQQ 0.4% of its
+    median opening volume). The futures' 09:30 print was limit-locked and the ETF's was the true
+    gap-down, so the gate was comparing a pinned price against a cleared one. A halt LATER in the
+    session does not do this: both markets still open at 09:30 and close at 16:00.
+
+    Decided from the futures bars ALONE. It never sees the disagreement it is used to judge.
+    """
+    n = bars[bars["hhmm"].isin(OPEN_MIN)].groupby("day")["hhmm"].nunique()
+    n = n.reindex(sorted(set(bars["day"]))).fillna(0)
+    return set(n[n < len(OPEN_MIN)].index)
+
+
 def gates(log=print):
     meta = json.loads(META.read_text()); sess = pd.read_csv(FIX / "fut_index_sessions.csv.gz", dtype={"day": str, "contract": str}); rolls = pd.read_csv(FIX / "fut_index_rolls.csv.gz", dtype={"day": str}) if (FIX / "fut_index_rolls.csv.gz").stat().st_size > 30 else pd.DataFrame()
     eq = pd.read_csv(EQ_FIX, dtype={"timestamp": str, "symbol": str}); eq["day"] = eq["timestamp"].str[:10]; eq["hhmm"] = eq["timestamp"].str[11:16]; out = {}; ok_all = True
@@ -238,8 +261,17 @@ def gates(log=print):
         # G4 cross-check
         e = eq[eq["symbol"] == ETF[root]]; eo = e[e["hhmm"] == "09:30"].groupby("day")["open"].first(); ec = e[e["hhmm"] == "15:45"].groupby("day")["close"].last(); ed = pd.DataFrame({"eo": eo, "ec": ec}).dropna()
         f = s.set_index("day")[["p0930", "p1600", "contract"]].dropna(); j = f.join(ed, how="inner"); oc_f = j["p1600"] / j["p0930"] - 1; oc_e = j["ec"] / j["eo"] - 1; oc = float(np.corrcoef(oc_f, oc_e)[0, 1]) if len(j) > 30 else float("nan")
+        # AMENDED 2026-09-13 (D522). `corr_open_to_close` stays exactly what it was and is now REPORTED, not gated;
+        # the gated statistic excludes sessions whose open was not a continuous market (see discontinuous_open),
+        # and the excluded sessions are NAMED with their disagreement so the exclusion cannot hide a defect.
+        holed = discontinuous_open(b); keep = ~j.index.isin(holed)
+        oc_c = float(np.corrcoef(oc_f[keep], oc_e[keep])[0, 1]) if int(keep.sum()) > 30 else float("nan")
+        exc = [dict(day=d, futures_pct=round(100 * float(oc_f[d]), 3), etf_pct=round(100 * float(oc_e[d]), 3), gap_pct=round(100 * float(oc_f[d] - oc_e[d]), 3)) for d in j.index[~keep]]
         same_c = (j["contract"].shift(1) == j["contract"]); cc_f = (j["p1600"] / j["p1600"].shift(1) - 1)[same_c]; cc_e = (j["ec"] / j["ec"].shift(1) - 1)[same_c]; cc = float(np.corrcoef(cc_f.dropna(), cc_e.dropna())[0, 1]) if same_c.sum() > 30 else float("nan")
-        g["G4"] = dict(etf=ETF[root], matched_days=int(len(j)), corr_open_to_close=oc, corr_close_to_close_same_contract=cc, passes=bool(oc >= G4_OC[root] and cc >= G4_CC))
+        g["G4"] = dict(etf=ETF[root], matched_days=int(len(j)), corr_open_to_close=oc, corr_open_to_close_continuous_open=oc_c,
+                       days_continuous_open=int(keep.sum()), excluded_open_not_continuous=exc,
+                       corr_close_to_close_same_contract=cc,
+                       passes=bool(oc_c >= G4_OC[root] and cc >= G4_CC and len(exc) <= G4_MAX_EXCLUDED))
         # G5 (added 2026-09-12 after the build, see the D462 ADDENDUM): sessions against the equity calendar, per year. The early archive
         # carries the index futures' evening bars but not their day session on most days before 2016 -- G3 counts bars per PRESENT
         # session and could not see a missing session. usable_start = the first year from which every later year has >= 97% of the
@@ -255,7 +287,7 @@ def gates(log=print):
         g["G5"] = dict(coverage_by_year={y: round(v, 3) for y, v in cov.items()}, usable_start=usable_start, passes=bool(usable_start is not None))
         log(f"     G5 coverage vs the equity calendar: " + " ".join(f"{y}:{100*v:.0f}%" for y, v in cov.items()) + f"  -> usable from {usable_start}")
         g["passes"] = all(g[k]["passes"] for k in ("G1", "G2", "G3", "G4", "G5")); ok_all &= g["passes"]; out[root] = g
-        log(f"{root}: G1 {g['G1']['n']} bars > {100*G1_THR[root]:.1f}% on days {g['G1']['days'][:12]}{'...' if len(g['G1']['days']) > 12 else ''} {'PASS' if g['G1']['passes'] else 'FAIL'} | G2 rolls {g['G2']['n_rolls']} fwd {g['G2']['forward']} revert {g['G2']['reverting']} multi-per-quarter {g['G2']['quarters_with_more_than_one']} days-before-expiry p50 {g['G2']['days_before_expiry_p50']} [{g['G2']['days_before_expiry_min']},{g['G2']['days_before_expiry_max']}] {'PASS' if g['G2']['passes'] else 'FAIL'} | G3 p50 {g['G3']['p50_bars']:.0f} short {g['G3']['n_short']} (early-close-like {g['G3']['n_early_close_like']}, other {len(g['G3']['other_short'])}) {'PASS' if g['G3']['passes'] else 'FAIL'} | G4 vs {ETF[root]} n {g['G4']['matched_days']} oc {oc:.4f} cc {cc:.4f} {'PASS' if g['G4']['passes'] else 'FAIL'}")
+        log(f"{root}: G1 {g['G1']['n']} bars > {100*G1_THR[root]:.1f}% on days {g['G1']['days'][:12]}{'...' if len(g['G1']['days']) > 12 else ''} {'PASS' if g['G1']['passes'] else 'FAIL'} | G2 rolls {g['G2']['n_rolls']} fwd {g['G2']['forward']} revert {g['G2']['reverting']} multi-per-quarter {g['G2']['quarters_with_more_than_one']} days-before-expiry p50 {g['G2']['days_before_expiry_p50']} [{g['G2']['days_before_expiry_min']},{g['G2']['days_before_expiry_max']}] {'PASS' if g['G2']['passes'] else 'FAIL'} | G3 p50 {g['G3']['p50_bars']:.0f} short {g['G3']['n_short']} (early-close-like {g['G3']['n_early_close_like']}, other {len(g['G3']['other_short'])}) {'PASS' if g['G3']['passes'] else 'FAIL'} | G4 vs {ETF[root]} n {g['G4']['matched_days']} oc {oc:.4f} (all days, reported) -> {oc_c:.4f} on {g['G4']['days_continuous_open']} with a continuous open, excluding {len(exc)} {[x['day'] for x in exc]} cc {cc:.4f} {'PASS' if g['G4']['passes'] else 'FAIL'}")
     meta["gates"] = out; meta["all_gates_pass"] = bool(ok_all); META.write_text(json.dumps(meta, indent=1)); log(f"\nALL GATES {'PASS' if ok_all else 'FAIL'}; wrote {META.relative_to(REPO)}")
     return ok_all
 
@@ -303,6 +335,22 @@ def cmd_selftest():
     except AssertionError as e:
         assert "MORE THAN ONE" in str(e), e
     print("  ok: id 7 reads ESH5 in February and NQZ5 in October, the gap bar is dropped, the flat dict would have called both NQZ5, and overlapping windows raise")
+    print("== (e) D522: G4's halted-open exclusion fires on a hole in 09:30-09:44, and NOT on a full open, an early close or a later halt")
+    def sess_bars(day, minutes):
+        return pd.DataFrame([dict(day=day, hhmm=m, contract="RTYM0", open=1.0, high=1.0, low=1.0, close=1.0, volume=1) for m in minutes])
+    ALLDAY = [f"{h:02d}:{m:02d}" for h in range(9, 16) for m in range(60) if f"{h:02d}:{m:02d}" >= "09:30" and f"{h:02d}:{m:02d}" <= "15:59"]
+    halt_open = [m for m in ALLDAY if not ("09:31" <= m <= "09:44")]                 # the 2020-03-16 shape: one print at 09:30, then nothing until 09:45
+    halt_late = [m for m in ALLDAY if not ("13:00" <= m <= "13:14")]                 # a halt after the open leaves both legs measuring 09:30->16:00
+    early = [m for m in ALLDAY if m <= "12:59"]                                      # a half session: full open, short tail
+    no_open = [m for m in ALLDAY if m >= "10:00"]                                    # no open at all
+    bb = pd.concat([sess_bars("2020-03-16", halt_open), sess_bars("2020-03-17", ALLDAY),
+                    sess_bars("2020-03-18", halt_late), sess_bars("2019-07-03", early), sess_bars("2019-07-05", no_open)], ignore_index=True)
+    got = discontinuous_open(bb)
+    assert got == {"2020-03-16", "2019-07-05"}, f"halted-open detector wrong: {sorted(got)}"
+    assert "2020-03-17" not in got and "2020-03-18" not in got and "2019-07-03" not in got, "a full open, a LATER halt and an early close must all survive"
+    full_only = discontinuous_open(sess_bars("2020-03-17", ALLDAY)); assert full_only == set(), "[X] the detector fires on a clean session"
+    hole_1min = discontinuous_open(sess_bars("2020-03-17", [m for m in ALLDAY if m != "09:38"])); assert hole_1min == {"2020-03-17"}, "[X] a single missing minute inside the window must be caught"
+    print(f"  ok: flags the 09:30-then-nothing session and a session with no open; passes a full open, a 13:00 halt and an early close; one missing minute is enough")
     print(f"SELFTEST PASSED in {time.time()-t0:.0f}s")
 
 

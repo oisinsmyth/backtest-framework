@@ -181,9 +181,35 @@ SYSTEM `python`, never `uv run`** — databento lives only in the system interpr
 → [`data/d521_flat_vs_windowed_audit.json`](data/d521_flat_vs_windowed_audit.json), reading the
 flat-map side from **git** rather than `temp/`, so it survives `temp/` being deleted.
 
-**Still open, untouched by this:** RTY's G4 gate has failed since it was added (open-to-close
-correlation with IWM 0.98985 against a 0.99 bar), which is why `fut_RTY_rth_1m.csv.gz` is still
-uncommitted. Identical before and after; not in scope here.
+---
+
+## D522 — THE RTY G4 FAILURE WAS ONE HALTED OPEN; ALL FOUR INDEX ROOTS NOW PASS EVERY GATE, 2026-09-13
+
+**2020-03-16 alone carried it.** Dropping that one session takes RTY's open-to-close correlation with
+IWM from **0.989854 to 0.999339**. Both fixtures are right about the day: all four roots printed
+**once at 09:30 and nothing until 09:45** (376 bars, exactly minutes 09:31–09:44 missing; RTY's print
+is 115 lots at a single price, the limit), while the ETFs' 09:30 fifteen-minute bars barely traded —
+QQQ at **0.4%** of its median opening volume, SPY 26%, IWM 37%, DIA 48%. **The gate was comparing a
+limit-locked futures print against a cleared equity price.** The independent hourly builder returns
+the identical −9.897%, so the futures side is not the problem.
+
+**G4 amended:** it now gates on sessions whose minute bars are **contiguous over 09:30–09:44** — the
+span of the ETF 09:30 bar the open leg is measured against, so not a free parameter — decided from
+the futures bars alone, never from the disagreement it judges. It excludes **3 sessions on ES/NQ/YM**
+(2020-03-09, 03-12, 03-16, the Level-1 circuit-breaker days) and **5 on RTY**. `corr_open_to_close`
+keeps its old meaning and value and is still written, now **reported rather than gated**; the gated
+figure is `corr_open_to_close_continuous_open` (ES 0.9997, NQ 0.9991, YM 0.9995, **RTY 0.9996**), and
+the gate fails outright if more than 10 sessions are ever excluded.
+
+**`fut_RTY_rth_1m.csv.gz` is now committed** — all gates pass on all four roots for the first time.
+
+**FOR ANY STUDY: drop 2020-03-09, 2020-03-12 and 2020-03-16 if you read the 09:30 open of an index
+future, or read the open at 09:45 on those sessions.** The prints are real and are not tradeable
+opens. The usable start is still **2016-01-04** for ES/NQ/YM (G5) and 2017-07-10 for RTY.
+
+The threshold was **not** lowered and the statistic was **not** made robust: a rank correlation would
+have passed too, and would also have hidden a handful of badly-wrong days, which is the exact
+signature the D520/D521 id defect produces.
 
 ---
 

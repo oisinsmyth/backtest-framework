@@ -48,7 +48,15 @@ and NQ/MNQ from `tbbo`, exchange aggressor side, front month per session, 259 se
 2025-09-11 → 2026-09-10; gates T1–T5 in its meta; builder `scripts/build_fut_micro_flow.py`,
 3.3 min on 8 processes).** What bites: the ohlcv-1m span ends one session before the tbbo span,
 so session 2026-09-10 cannot be cross-checked; nine holiday sessions are absent by the presence
-rule and listed.
+rule and listed. And **`fut_{ES,NQ,YM,RTY}_rth_1m.csv.gz` + `fut_index_sessions.csv.gz` +
+`fut_index_rolls.csv.gz` (D462: the index day session at ONE MINUTE, 09:30–15:59 ET, front month by
+full-day volume, no stitching and no adjustment; ES/NQ/YM 2010-06-07 →, RTY 2017-07-10 →; builder
+`scripts/build_fut_index_1m.py`, 6.2 min on 6 workers). **ALL GATES PASS as of D522** — RTY joined
+the committed set there, having failed G4 on a single session until the gate was amended.** What
+bites: **usable from 2016-01-04 for ES/NQ/YM** (G5 — the archive carries the evening bars but not
+the day session on most earlier days: 21% coverage in 2010, 89% in 2015), and the **three
+circuit-breaker sessions of March 2020 (09, 12, 16) have no continuous open** — one print at 09:30
+and nothing until 09:45 — so an open-to-close study must drop them or read the open at 09:45.
 
 ### Six things that will bite a study reading this
 

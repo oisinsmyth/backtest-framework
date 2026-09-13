@@ -1,0 +1,377 @@
+{
+ "run_utc": "2026-09-13T19:59:54Z",
+ "concentration": {
+  "corr_all_days": 0.9898535763214892,
+  "matched_days": 2277,
+  "corr_after_dropping": {
+   "1": 0.999339247738269,
+   "2": 0.9995382143043308,
+   "3": 0.9997010667350834,
+   "5": 0.9997414855268099,
+   "10": 0.9997716660940494,
+   "20": 0.9997971610365032,
+   "50": 0.9998279171579998
+  },
+  "worst_five": [
+   {
+    "day": "2020-03-16",
+    "contract": "RTYM0",
+    "futures_pct": -9.897,
+    "etf_pct": -2.057,
+    "gap_pct": -7.84,
+    "bars": 376
+   },
+   {
+    "day": "2020-03-12",
+    "contract": "RTYH0",
+    "futures_pct": -5.48,
+    "etf_pct": -4.325,
+    "gap_pct": -1.155,
+    "bars": 377
+   },
+   {
+    "day": "2020-03-13",
+    "contract": "RTYH0",
+    "futures_pct": 2.194,
+    "etf_pct": 1.175,
+    "gap_pct": 1.019,
+    "bars": 390
+   },
+   {
+    "day": "2020-03-17",
+    "contract": "RTYM0",
+    "futures_pct": 4.133,
+    "etf_pct": 3.706,
+    "gap_pct": 0.427,
+    "bars": 390
+   },
+   {
+    "day": "2020-03-09",
+    "contract": "RTYH0",
+    "futures_pct": -3.135,
+    "etf_pct": -2.803,
+    "gap_pct": -0.332,
+    "bars": 376
+   }
+  ],
+  "ratio_worst_to_second": 6.79
+ },
+ "independent_builder": {
+  "days": 2277,
+  "corr_1m_vs_hourly": 0.985409702046747,
+  "abs_diff_p50": 0.0009281985618985189,
+  "abs_diff_p99": 0.006794924573897695,
+  "close_leg_exact_days": 2277,
+  "shared_days": 2277,
+  "open_leg_abs_diff_p50": 1.7999999999997272,
+  "open_leg_abs_diff_p90": 5.5,
+  "open_leg_exact_days": 43,
+  "on_the_day": {
+   "one_minute": -9.897,
+   "hourly": -9.897,
+   "h09_open": 1109.4,
+   "p0930": 1109.4,
+   "h09_minute_bars": 16,
+   "h09_minute_bars_p50": 60.0
+  }
+ },
+ "equity_suspect_flag": {
+  "days_flagged": 0,
+  "of_days": 2277
+ },
+ "the_session": {
+  "day": "2020-03-16",
+  "futures_morning": {
+   "ES": {
+    "bars": 376,
+    "first": "09:30",
+    "missing_in_open_window": [
+     "09:31",
+     "09:32",
+     "09:33",
+     "09:34",
+     "09:35",
+     "09:36",
+     "09:37",
+     "09:38",
+     "09:39",
+     "09:40",
+     "09:41",
+     "09:42",
+     "09:43",
+     "09:44"
+    ],
+    "first_print": {
+     "hhmm": "09:30",
+     "open": 2501.5,
+     "high": 2501.5,
+     "low": 2501.5,
+     "close": 2501.5,
+     "volume": 831
+    },
+    "reopen": {
+     "hhmm": "09:45",
+     "open": 2445.5,
+     "low": 2350.0,
+     "volume": 31482
+    }
+   },
+   "NQ": {
+    "bars": 376,
+    "first": "09:30",
+    "missing_in_open_window": [
+     "09:31",
+     "09:32",
+     "09:33",
+     "09:34",
+     "09:35",
+     "09:36",
+     "09:37",
+     "09:38",
+     "09:39",
+     "09:40",
+     "09:41",
+     "09:42",
+     "09:43",
+     "09:44"
+    ],
+    "first_print": {
+     "hhmm": "09:30",
+     "open": 7381.25,
+     "high": 7381.25,
+     "low": 7381.25,
+     "close": 7381.25,
+     "volume": 45
+    },
+    "reopen": {
+     "hhmm": "09:45",
+     "open": 7304.75,
+     "low": 7086.0,
+     "volume": 3838
+    }
+   },
+   "YM": {
+    "bars": 376,
+    "first": "09:30",
+    "missing_in_open_window": [
+     "09:31",
+     "09:32",
+     "09:33",
+     "09:34",
+     "09:35",
+     "09:36",
+     "09:37",
+     "09:38",
+     "09:39",
+     "09:40",
+     "09:41",
+     "09:42",
+     "09:43",
+     "09:44"
+    ],
+    "first_print": {
+     "hhmm": "09:30",
+     "open": 21335.0,
+     "high": 21335.0,
+     "low": 21335.0,
+     "close": 21335.0,
+     "volume": 8
+    },
+    "reopen": {
+     "hhmm": "09:45",
+     "open": 20946.0,
+     "low": 20181.0,
+     "volume": 2569
+    }
+   },
+   "RTY": {
+    "bars": 376,
+    "first": "09:30",
+    "missing_in_open_window": [
+     "09:31",
+     "09:32",
+     "09:33",
+     "09:34",
+     "09:35",
+     "09:36",
+     "09:37",
+     "09:38",
+     "09:39",
+     "09:40",
+     "09:41",
+     "09:42",
+     "09:43",
+     "09:44"
+    ],
+    "first_print": {
+     "hhmm": "09:30",
+     "open": 1109.4,
+     "high": 1109.4,
+     "low": 1109.4,
+     "close": 1109.4,
+     "volume": 115
+    },
+    "reopen": {
+     "hhmm": "09:45",
+     "open": 1091.2,
+     "low": 1047.1,
+     "volume": 1034
+    }
+   }
+  },
+  "all_roots": {
+   "ES": {
+    "futures_pct": -4.97,
+    "etf_pct": -0.73,
+    "gap_pct": -4.23
+   },
+   "NQ": {
+    "futures_pct": -6.06,
+    "etf_pct": -2.63,
+    "gap_pct": -3.43
+   },
+   "YM": {
+    "futures_pct": -6.01,
+    "etf_pct": -1.97,
+    "gap_pct": -4.04
+   },
+   "RTY": {
+    "futures_pct": -9.9,
+    "etf_pct": -2.06,
+    "gap_pct": -7.84
+   }
+  },
+  "etf_opening_bar_thinness": {
+   "SPY": {
+    "volume": 950317,
+    "trailing_median": 3646350.5,
+    "ratio": 0.2606
+   },
+   "QQQ": {
+    "volume": 8719,
+    "trailing_median": 2196291.5,
+    "ratio": 0.004
+   },
+   "DIA": {
+    "volume": 146945,
+    "trailing_median": 308125.5,
+    "ratio": 0.4769
+   },
+   "IWM": {
+    "volume": 436782,
+    "trailing_median": 1187517.0,
+    "ratio": 0.3678
+   }
+  }
+ },
+ "amendment": {
+  "open_window": [
+   "09:30",
+   "09:44"
+  ],
+  "max_excluded": 10,
+  "per_root": {
+   "ES": {
+    "sessions": 3626,
+    "flagged": [
+     "2011-05-30",
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "matched_days": 3493,
+    "excluded_from_g4": [
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "corr_all_days": 0.9956669973950606,
+    "corr_continuous_open": 0.9996865545771283,
+    "bar": 0.995,
+    "passes_before": true,
+    "passes_after": true
+   },
+   "NQ": {
+    "sessions": 3627,
+    "flagged": [
+     "2011-07-04",
+     "2013-09-20",
+     "2014-09-01",
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "matched_days": 3493,
+    "excluded_from_g4": [
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "corr_all_days": 0.9974308528782738,
+    "corr_continuous_open": 0.9990590632459367,
+    "bar": 0.995,
+    "passes_before": true,
+    "passes_after": true
+   },
+   "YM": {
+    "sessions": 3627,
+    "flagged": [
+     "2010-07-05",
+     "2010-09-06",
+     "2011-02-21",
+     "2011-05-30",
+     "2012-01-16",
+     "2012-02-20",
+     "2014-05-26",
+     "2014-07-04",
+     "2014-09-01",
+     "2014-11-27",
+     "2020-02-28",
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "matched_days": 3491,
+    "excluded_from_g4": [
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "corr_all_days": 0.9955026298748981,
+    "corr_continuous_open": 0.9994630612448602,
+    "bar": 0.995,
+    "passes_before": true,
+    "passes_after": true
+   },
+   "RTY": {
+    "sessions": 2365,
+    "flagged": [
+     "2017-07-10",
+     "2017-07-31",
+     "2019-07-04",
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "matched_days": 2277,
+    "excluded_from_g4": [
+     "2017-07-10",
+     "2017-07-31",
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16"
+    ],
+    "corr_all_days": 0.9898535763214892,
+    "corr_continuous_open": 0.9995539740813584,
+    "bar": 0.99,
+    "passes_before": false,
+    "passes_after": true
+   }
+  },
+  "flagged_on_all_four": [
+   "2020-03-09",
+   "2020-03-12",
+   "2020-03-16"
+  ]
+ }
+}

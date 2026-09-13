@@ -572,6 +572,28 @@
     "etf": "SPY",
     "matched_days": 3493,
     "corr_open_to_close": 0.9956669973950606,
+    "corr_open_to_close_continuous_open": 0.9996865545771283,
+    "days_continuous_open": 3490,
+    "excluded_open_not_continuous": [
+     {
+      "day": "2020-03-09",
+      "futures_pct": -0.95,
+      "etf_pct": -0.323,
+      "gap_pct": -0.627
+     },
+     {
+      "day": "2020-03-12",
+      "futures_pct": -3.638,
+      "etf_pct": -3.086,
+      "gap_pct": -0.552
+     },
+     {
+      "day": "2020-03-16",
+      "futures_pct": -4.967,
+      "etf_pct": -0.734,
+      "gap_pct": -4.233
+     }
+    ],
     "corr_close_to_close_same_contract": 0.9984558136135171,
     "passes": true
    },
@@ -944,6 +966,28 @@
     "etf": "QQQ",
     "matched_days": 3493,
     "corr_open_to_close": 0.9974308528782738,
+    "corr_open_to_close_continuous_open": 0.9990590632459367,
+    "days_continuous_open": 3490,
+    "excluded_open_not_continuous": [
+     {
+      "day": "2020-03-09",
+      "futures_pct": -0.499,
+      "etf_pct": 0.088,
+      "gap_pct": -0.586
+     },
+     {
+      "day": "2020-03-12",
+      "futures_pct": -3.264,
+      "etf_pct": -2.658,
+      "gap_pct": -0.606
+     },
+     {
+      "day": "2020-03-16",
+      "futures_pct": -6.063,
+      "etf_pct": -2.63,
+      "gap_pct": -3.433
+     }
+    ],
     "corr_close_to_close_same_contract": 0.999652337391276,
     "passes": true
    },
@@ -1335,6 +1379,28 @@
     "etf": "DIA",
     "matched_days": 3491,
     "corr_open_to_close": 0.9955026298748981,
+    "corr_open_to_close_continuous_open": 0.9994630612448602,
+    "days_continuous_open": 3488,
+    "excluded_open_not_continuous": [
+     {
+      "day": "2020-03-09",
+      "futures_pct": -0.929,
+      "etf_pct": -1.217,
+      "gap_pct": 0.289
+     },
+     {
+      "day": "2020-03-12",
+      "futures_pct": -4.176,
+      "etf_pct": -3.819,
+      "gap_pct": -0.358
+     },
+     {
+      "day": "2020-03-16",
+      "futures_pct": -6.014,
+      "etf_pct": -1.971,
+      "gap_pct": -4.043
+     }
+    ],
     "corr_close_to_close_same_contract": 0.9989959940268563,
     "passes": true
    },
@@ -1649,8 +1715,42 @@
     "etf": "IWM",
     "matched_days": 2277,
     "corr_open_to_close": 0.9898535763214892,
+    "corr_open_to_close_continuous_open": 0.9995539740813584,
+    "days_continuous_open": 2272,
+    "excluded_open_not_continuous": [
+     {
+      "day": "2017-07-10",
+      "futures_pct": 0.035,
+      "etf_pct": -0.036,
+      "gap_pct": 0.071
+     },
+     {
+      "day": "2017-07-31",
+      "futures_pct": -0.496,
+      "etf_pct": -0.506,
+      "gap_pct": 0.01
+     },
+     {
+      "day": "2020-03-09",
+      "futures_pct": -3.135,
+      "etf_pct": -2.803,
+      "gap_pct": -0.332
+     },
+     {
+      "day": "2020-03-12",
+      "futures_pct": -5.48,
+      "etf_pct": -4.325,
+      "gap_pct": -1.155
+     },
+     {
+      "day": "2020-03-16",
+      "futures_pct": -9.897,
+      "etf_pct": -2.057,
+      "gap_pct": -7.84
+     }
+    ],
     "corr_close_to_close_same_contract": 0.9981829792239706,
-    "passes": false
+    "passes": true
    },
    "G5": {
     "coverage_by_year": {
@@ -1668,8 +1768,8 @@
     "usable_start": "2017-07-10",
     "passes": true
    },
-   "passes": false
+   "passes": true
   }
  },
- "all_gates_pass": false
+ "all_gates_pass": true
 }
