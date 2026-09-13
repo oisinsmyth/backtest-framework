@@ -1,0 +1,9 @@
+root,day_edge,day_n,night_edge,night_n,all_edge,reading
+ES,0.01766,9378,-0.00143,20111,0.00695,edge is in the DAY
+NQ,0.02747,9644,-0.00082,20342,0.01172,edge is in the DAY
+YM,-0.00038,9445,0.00784,20194,0.00406,edge is in the NIGHT
+ZN,0.02246,9453,-0.00958,19788,0.00308,edge is in the DAY
+ZB,0.00951,9513,0.00006,19929,0.00362,edge is in the DAY
+GC,0.01528,9267,0.00952,19531,0.01157,edge is in the DAY
+CL,0.01066,8330,0.01418,17601,0.01205,even
+6E,-0.01154,9627,-0.00230,19993,-0.00560,edge is in the NIGHT
