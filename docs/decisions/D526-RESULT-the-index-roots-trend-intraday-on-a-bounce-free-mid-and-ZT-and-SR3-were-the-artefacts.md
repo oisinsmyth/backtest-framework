@@ -156,3 +156,82 @@ with time — or a construction pre-registered against a forward window.
 
 Nothing enters `FINDINGS.md`, `RULES.md`, `COMPONENTS_PROP.md` or either book on this record
 (R8, R15).
+
+---
+
+# 8. ADDENDUM, same day — **the ORACLE HAS NO TARGET: the persistence is real but it does not VARY**
+
+The principal asked what D526 does to the oracle. The oracle was never a trade — it is a label
+computed with future information whose only purpose is to define what a **causal** statistic is
+asked to hit. So the question is not whether the state is real (D526 says yes) but whether it
+**moves in a way anything could anticipate**. Diagnostic
+`working/d527_oracle_reliability_vs_window.py`.
+
+## 8.1 A label is capped by its own reliability, and this one has none
+
+For a window of `W` sessions, `corr(estimate on [t−W, t), estimate on [t, t+W))` — adjacent,
+**non-overlapping**, and **within one root**, so no between-root level difference can leak (the
+confound that made D523 §3's pooled split-half an artefact). **The past window is causal by
+construction**, so this curve is simultaneously the label's reliability *and* the ceiling on any
+causal feature, since a feature can correlate with a noisy label at most `√reliability`.
+
+| root | W=1 | W=2 | W=5 | W=10 | W=20 | W=40 | W=60 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| ES | −0.071 | −0.001 | +0.040 | +0.101 | +0.018 | +0.310 | +0.300 |
+| NQ | −0.045 | −0.065 | +0.065 | −0.075 | −0.092 | +0.121 | −0.046 |
+| YM | −0.041 | −0.020 | +0.134 | +0.129 | +0.120 | +0.236 | +0.398 |
+| RTY | +0.002 | −0.085 | −0.006 | +0.093 | +0.170 | +0.290 | +0.462 |
+| GC | +0.021 | −0.019 | +0.007 | −0.115 | +0.009 | +0.072 | −0.029 |
+| ZN | +0.038 | +0.002 | −0.141 | +0.049 | −0.061 | −0.010 | −0.029 |
+| 6E | +0.037 | −0.039 | +0.086 | +0.127 | +0.270 | +0.128 | +0.448 |
+| HO | +0.029 | −0.019 | −0.008 | +0.010 | +0.016 | **−0.394** | **−0.346** |
+| pairs `n` | 1,396 | 698 | 279 | 139 | 69 | 34 | 23 |
+
+**W=1 is zero or NEGATIVE on every index root** — a session's persistence estimate says nothing
+about the next session's, and on ES it is −2.65 SE the *wrong* way. The large-looking W=40 and W=60
+figures rest on **34 and 23 pairs**, where the SE is 0.174 and 0.213: RTY's +0.462 is 2.2 SE and
+**HO's −0.394 is −2.3 SE in the opposite direction.**
+
+**Across the whole 70-cell grid, 8 cells exceed 2 SE where 3.5 are expected by chance, and their
+signs are mixed.** That is noise.
+
+## 8.2 So persistence is a structural CONSTANT, not a regime
+
+ES carries Hu ≈ 0.539 stably (§2, t = +3.78 over 244 sessions) and **that number does not move
+measurably at any horizon from one session to three months.** The oracle's purpose — *"filter out
+the exceptions"* — requires the exceptions to be a time-varying state something can anticipate.
+**They are not. There is nothing for a causal feature to predict, so the oracle line has no target.**
+
+## 8.3 And it does NOT work as a cross-sectional selector either — checked, not assumed
+
+The obvious fallback is to use persistence to choose *which roots* to trade momentum on rather than
+*when*. **Measured against the MACD arm's own per-root gross Sharpe (D506, 25 common roots):**
+
+    Spearman( persistence deviation , MACD GROSS sharpe ) = -0.2062   (t = -1.01)
+    Pearson                                               = -0.0042
+
+    ES  +0.0463 / +0.582     NQ  +0.0354 / +1.130      <- agree
+    RTY +0.0266 / -0.267     HO  +0.0244 / -0.718      <- persistent, arm LOSES
+    ZN  -0.0175 / +0.422     GC  -0.0195 / +0.390
+    TN  -0.0327 / +0.364     ZB  -0.0362 / +0.161      <- anti-persistent, arm WINS
+
+**The ordering is if anything slightly NEGATIVE.** A root being path-persistent at five minutes does
+not imply a particular momentum construction pays there, and four anti-persistent roots carry the
+arm's better gross numbers. **This fallback is refuted**; I had been about to claim it and the
+check killed it, which is the recorded failure mode of filing a mechanism before testing that the
+statistic orders the outcome.
+
+## 8.4 Where that leaves the oracle
+
+**The oracle as designed is finished, and for a cleaner reason than the void D523 gave.** Not
+"trends do not exist" — they do — but **"the trending-ness does not vary predictably, and it does
+not select roots either."** A hindsight label needs a moving target and there is none.
+
+**What D526 leaves is a fact, not an instrument:** ES and NQ carry stable intraday path persistence
+at Hu ≈ 0.53 on a bounce-free mid. **A stable edge needs no timing** — which is an argument for an
+always-on construction rather than a conditioned one. But §8.3 shows the *admitted MACD arm is not
+the thing harvesting it*, so that would be a NEW construction, and **no unread slice remains for
+this line** (§7), so it would have to be pre-registered against a forward window.
+
+**Closing the oracle line is the principal's call, not this record's.** What is established is that
+the specific label — a hindsight path-scaling exponent — has no predictable variation to offer.
