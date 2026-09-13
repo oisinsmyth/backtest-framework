@@ -249,3 +249,137 @@ on screen** ("as Fable points out") for an unmeasured behavioural claim about ca
 Pine Script it describes sizes on a **trailing realised-vol percentile**, not on the GARCH forecast
 it spends the video deriving — so the shipped artifact does not appear to contain the Nobel equation
 at all. Read from the transcript only; the repo was not opened.
+
+---
+
+## 6. "In-play" stocks: two of its three categories are already answered here, and in equities the filter selects the price band where cost is largest
+
+**Source:** `[EXTRACTED] I Only Trade Stocks That Meet This Criteria.txt` (Lance, SMB Capital).
+Read 2026-09-13. A concept video with no rule, no parameter and no backtest. Its thesis: stock
+selection is the first skill, and the only tickers worth trading are **in play**, meaning active for
+one of three reasons — **a news catalyst, a technical catalyst** (breakout or breakdown on surging
+volume), **or volatility and range expansion** (a name whose range is several multiples of its
+normal range). Its supporting claims: about 25 positive-expected-value tickers exist on a given day,
+fewer than five move P&L, and **5 to 10 stocks make 90% of a trading firm's profits**.
+
+### The thesis is not new here. It is what the books already do, unasked
+
+**D339's census: `retrace_leg` takes 61.3% of its P&L from the 12.2% of trades entered below $5** —
++805 bp against +76 — and those are the high-volatility names (FINDINGS §51). The equity books are
+already concentrated in exactly the population this video says to select. **The repo's reading of
+that fact is the opposite of the video's**: not "we found the broken slot machine" but *"the books
+may be harvesting a volatility premium rather than exercising selection skill — a different object,
+priced differently, with different capacity."*
+
+### And in equities the filter selects the price band where cost is largest
+
+This is the parse worth keeping, because it reverses the intuition. **Whether "in play" helps
+depends entirely on the shape of the cost model:**
+
+- **Fixed-dollar cost (futures micros).** Cost is $3 a round trip whatever happens, so selecting a
+  bigger move raises cost coverage. But FINDINGS §69 measured the ratio at **2.4% of the average
+  MNQ day move**, and its own corollary is that *selecting high-volatility days to raise the move
+  against a fixed fee only pays where cost/E|M| is large* — scalping, or the 15-minute bar (D472).
+  At 2.4% there is almost nothing to win.
+- **Proportional, price-inverse cost (equities).** Cost in bp scales inversely with price, which is
+  what **killed D284**; D285 assumed 15 bp a side and the **names actually held measured 33.8**. The
+  in-play population is disproportionately low-priced and wide, so the filter **raises** cost in bp
+  at the same time as it raises the move. Whether cost over E|M| improves is an empirical question
+  with the sign undetermined, and the two studies that met it head-on both died on the cost side.
+
+**So the video's central mechanism is a cost-coverage argument it never makes and never measures,
+and the one regime where this programme found that lever binding is the short-horizon, wide-tick
+one — not the day session it is talking about.**
+
+### Its headline statistic is this programme's disqualifying red flag
+
+"5 to 10 stocks make 90% of the firm's profits" is offered as proof of edge. **Measured in our own
+data, that shape is the failure mode**, and the rules that say so were written before this video was
+read:
+
+| where it was measured | the number |
+|---|---|
+| D285 | the top 1% of trades = **196.9% of P&L** |
+| D446 | GameStop's January-2021 trade = **29% of the long leg** |
+| D503, the MACD component, forward | **3 of 632 sessions carry half the P&L**, and the **mean per trade ex-top-1% is −$0.59** |
+
+CLAUDE.md's reporting rule requires a symmetric 1% trim precisely because of this, and D431 gave the
+rule its predictive form: **predict the book from the TRIMMED mean when the top 1% carries more than
+30% of P&L.** A book whose P&L is 90% from five names has no demonstrable edge, because nothing in
+it says *which* five in advance.
+
+**The reconciliation, which is real and worth stating.** Both readings can be true at once, and the
+difference is not skill against luck — it is **conditional sizing with information the backtest does
+not contain.** A discretionary trader who recognises the setup can press size into the five names and
+hold a small clip in the rest; the concentration is then an *output of sizing*, not evidence about
+the signal. A systematic book sized ex ante cannot do that, so the same concentration is evidence of
+a lottery. **A claim of this shape is a statement about the sizing process, never about the
+selector.**
+
+### Two of the three categories are already tested here
+
+1. **News catalyst — TESTED, and it made an existing signal worse.** FINDINGS §40 (D360) defines the
+   tape-identified news day as exactly this video's first category: **a gap in the bottom 2% of the
+   day on top-decile relative volume**, on the floored universe, 23,332 events. The gapped name
+   bounces against its own baseline (+7.0 bp at 20 bars against −26.0 on random eligible days), the
+   gap *up* on volume reverses (−15 a trade, t −2 to −4), and decisively: **`rev_5`'s own
+   bottom-decile long earns 6.75 bp LESS on entries that arrived by a volume gap.** As a gate on an
+   existing signal, the in-play state **subtracted**. That is the video's claim, run at scale, with
+   the answer already on the record.
+2. **Technical catalyst — TESTED as a level read, and the lines were never the ingredient.** The
+   daily channel line (FINDINGS §68, D399–D483, closed by the principal) found that the level read's
+   one positive cell is a dip, and that **a 4% break of the 30-bar low with NO lines earns the
+   same**. The video's "clean levels" and "breaks a huge multi-month level with real velocity" are
+   that construction, and the repo's version of it is closed with the lines shown to be surplus.
+3. **Volatility and range expansion — the one member with no direct record.** Not as an *entry*
+   (D413's ≥ 1-ATR departure zone, FINDINGS §49, is an entry) but as a **universe filter**: restrict
+   the tradeable set to names whose current range is several multiples of their own trailing range,
+   then run an existing cross-sectional book unchanged inside it. That specific object is unscored.
+
+### What is worthless in it
+
+- **"Over $100 million in verified profits."** Unverifiable, and "verified" is doing no work.
+- **The three examples — Circle, IonQ, Qualcomm.** All 2025 winners, chosen after the fact, with no
+  base rate and no losers shown. The video's own criterion fires on hundreds of names a year;
+  showing three that worked is the selection this programme's nulls exist to price.
+- **"You want stocks everyone is watching."** Our retail-flow reading says the opposite at horizons
+  beyond a day: the *body* of retail flow is **+10 bp with it over a week**, but the **attention
+  extreme is contrarian, −4.7% over 20 days**. An intraday trader and a 20-day horizon are different
+  objects, so this is not a refutation — but "everyone is watching" is precisely the attention
+  extreme, and the sign flips somewhere between the two.
+- **The casino framing.** It argues that edge exists in in-play names; it never measures an edge.
+
+### If the one surviving category is ever run
+
+**The object:** an in-play *universe filter* — top-decile relative volume **and** range at ≥ 2× the
+trailing 20-day average range, both causal — applied to an existing cross-sectional book and scored
+against the same book on the complement. Half an hour on the 1,573-name daily fixture (2010–2026,
+OHLCV, unadjusted, 562 delisted), which supports both terms directly.
+
+**Four controls this repo already knows are compulsory, and which the video has none of:**
+
+1. **Volatility-matched, not count-matched.** Matched-count ≠ matched-turnover (D279) ≠
+   matched-volatility (D284). The filter selects volatility, so the control must hold it fixed or the
+   comparison is circular.
+2. **Price-matched as well.** D339's below-$5 band carries 61.3% of `retrace_leg`'s P&L, so an
+   unmatched in-play basket is a bet on the price band rather than on the state.
+3. **Randomise the partner, not the membership** (D291): a random subset re-drawn each bar churns and
+   is not a control for a persistent selector.
+4. **Estimate the spread of the names actually held** (CLAUDE.md group 1; D285's 33.8 bp), and report
+   the passive line beside the crossed one, because the filter moves the held population into the
+   wide band.
+
+**Status:** framing plus one narrow variant. Nothing scored, no candidate reopened, and the two
+categories that have records are not reopened by a video offering no measurement. The prediction, for
+the file: the filter **subtracts** on an existing signal, as it did in §40, because it selects the
+price band whose cost in bp is largest; if it adds anywhere it will be on a fixed-dollar cost line
+rather than a proportional one.
+
+### The companion transcript is deferred, deliberately
+
+`Stop Trading in No Man's Land If You Want to Be Profitable.txt` (same channel) was read but is left
+without a disposition prefix pending its own pass. Its concept — price inside a contracting range has
+negative expected value, so trade only breaks to fresh intraday extremes — is a range-position
+conditioner, which lands on **closed ground** (FINDINGS §68's channel line; D490's range reversion
+losing gross on both sides), and its remaining content is psychological (paper cuts damaging
+subsequent decisions) and not testable on price data. It is the weaker of the two and was not chosen.
