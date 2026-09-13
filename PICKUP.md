@@ -150,6 +150,31 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## THE CONDITIONER LINE IS CLOSED AND ITS FORWARD POINTER IS ANSWERED — D513, 2026-09-13
+
+**The principal closed the conditioner line on the admitted arm** after D508, D509 and D512
+(BOOK_PROP has the closure) **and directed that the range-expansion conditioner be carried to a root
+with an unread slice.** That is D513: spec `ed2e691`, result `9d38c1c`, declared in advance on
+**YM, ZN, ZB, GC, CL and 6E**, whose 2024+ is unread.
+
+**It does not transfer. D512's effect was NQ's history.** Δ/σ reads +0.036, −0.077, −0.091, +0.062,
+−0.088, +0.068 — **positive on three of six**, a coin flip. The declared primary (YM) sits at the
+**68.2nd percentile** of its own exact rotation; the six-root family p95 is **+0.173** against an
+observed maximum of **+0.068**, beaten by **65.8%** of offsets. Within year the primary keeps its
+sign in exactly four of eight years, and D512's coherence on NQ appears nowhere.
+
+**A second finding, sharper than D506 could state: the arm does not merely fail to transplant, it
+LOSES on every one of these roots** — net Sharpe −0.456 to −1.294, −$2.16 to −$28.98 a trade. On the
+three roots where Δ is negative the *expanded*-range sessions lose more (ZN −$25.51 against −$8.40,
+ZB −$70.01 against −$21.82, CL −$11.18 against −$2.70); on the other three the ordering reverses.
+
+**The limitation to carry:** this tests a conditioner on a construction that bleeds everywhere, which
+cannot rule out that a range conditioner works on a *live* construction elsewhere. Anyone reviving it
+needs an edge to condition.
+
+**NOTHING WAS SPENT.** The 2024+ slice of all six roots is still unread, under a verdict that never
+called for it. That is what declaring the cell off NQ bought.
+
 ## D512 — RANGE EXPANSION: CLOSE, BUT THE CLOSEST A CONDITIONER HAS COME TO THIS ARM, 2026-09-13
 
 The principal's construction: `log(EMA50(range) / SMA200(range))` on daily bars. Spec `711bbe3`,
