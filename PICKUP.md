@@ -150,6 +150,31 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D509 — THE SAME QUESTION ON AN ECONOMIC PRIMARY, SAME ANSWER, 2026-09-13
+
+The principal asked why D508 used a Spearman, then directed a re-score on the statistic I said would
+have been better: **top-minus-bottom quintile in net dollars per session.** Spec `4a138f4`, result
+`fd22b7b`. **Provenance is on the record: the primary was chosen after seeing D508**, so no outcome
+could have been a discovery, and the arm has no unread slice on NQ in any case.
+
+**CLOSE, on all four terms.** Δ = **+$13.82 a session** (top +20.45, bottom +6.63) against an exact
+rotation with **p05 −27.18, p50 +0.13, p95 +26.45** — the 76.9th percentile. **The decisive number is
+the null's width:** rotating the conditioner leaves it a persistent gate of identical duty cycle and
+identical run lengths and merely starts it elsewhere, and that alone swings the quintile difference
+±$27 a session. Family p95 +$33.00 against an observed max of +$13.82, beaten by 40.1% of offsets.
+Within-year Δ is **negative in seven years of eight, mean −$10.71**, with 2022 alone at +$47.00.
+
+**The methodological result is the keeper: an exact rotation of a quintile-difference statistic
+SUBSUMES a hand-built run-length-matched gate**, and the runner proves it (duty 20.0% → 20.0%, 38
+runs → 38, run-length multiset identical). D508 needed the hand-built band because its primary was a
+correlation; this one gets the control for free, and the two agree to within a percentile.
+**Prefer a statistic whose own null contains its control.**
+
+**Two defects in our own instruments, fixed and disclosed:** `spearman` in D508 divides the
+covariance by n and the standard deviations by n−1, so it is short by (n−1)/n — 0.05% at n = 1,876,
+so **no D508 number moves**, but 20% at five points; and its n ≥ 30 guard silently returned NaN for
+the five-row monotonicity check. `rank_corr_small` in D509 fixes both and asserts the difference.
+
 ## D508 — THE 200-DAY STRETCH RANKS YEARS, NOT SESSIONS, 2026-09-13
 
 Asked by the principal: can `|log(P/SMA200)|` or `|log(P/EMA200)|` rank the admitted MACD arm's
