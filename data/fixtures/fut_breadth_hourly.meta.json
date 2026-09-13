@@ -1,0 +1,3438 @@
+{
+  "built_utc": "2026-09-13T03:15:20Z",
+  "builder": "scripts/build_fut_breadth_hourly.py",
+  "session": [
+    "18:00",
+    "16:59"
+  ],
+  "segments": [
+    "h18",
+    "h19",
+    "h20",
+    "h21",
+    "h22",
+    "h23",
+    "h00",
+    "h01",
+    "h02",
+    "h03",
+    "h04",
+    "h05",
+    "h06",
+    "h07",
+    "h08",
+    "h09",
+    "h10",
+    "h11",
+    "h12",
+    "h13",
+    "h14",
+    "h15",
+    "h16"
+  ],
+  "front_rule": "highest full-day volume per calendar ET day; the row carries day b's front and its evening segments come from that contract on day a",
+  "id_rule": "each bar is labelled from the symbol mapping window CONTAINING its timestamp; a flat id->symbol dict pools reused expiry slots (CLN9 is July-2019 then July-2029) and is the defect this builder exists to avoid",
+  "scaling_rule": "tick_usd = mpi*1e-9 * uom_qty*1e-9, /100 where the NOTIONAL test says the quote is percent or cents; ambiguity raises",
+  "roots": [
+    "6A",
+    "6B",
+    "6C",
+    "6E",
+    "6J",
+    "6S",
+    "BTC",
+    "BZ",
+    "CL",
+    "ES",
+    "GC",
+    "HE",
+    "HG",
+    "HO",
+    "LE",
+    "NG",
+    "NKD",
+    "NQ",
+    "PA",
+    "PL",
+    "RB",
+    "RTY",
+    "SI",
+    "SR3",
+    "TN",
+    "UB",
+    "YM",
+    "ZB",
+    "ZC",
+    "ZF",
+    "ZL",
+    "ZM",
+    "ZN",
+    "ZS",
+    "ZT",
+    "ZW"
+  ],
+  "specs": {
+    "ES": {
+      "tick_price_units": 0.25,
+      "unit_of_measure_qty": 50.0,
+      "uom": "IPNT",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $385,900",
+      "tick_usd_full_contract": 12.5,
+      "sized_as": "MES",
+      "tick_usd": 1.25,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 7718.000000000001,
+      "notional_usd": 385900.00000000006,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.6940150614347999,
+      "day_window_sessions": 3502,
+      "hour_presence": {
+        "9": 0.7201743955608403,
+        "10": 0.7185889813713833,
+        "11": 0.7185889813713833,
+        "12": 0.7164090368608799,
+        "13": 0.7007530717399921,
+        "14": 0.6940150614347999,
+        "15": 0.6940150614347999
+      },
+      "day_session_sigma_usd": 157.06285883863933,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "NQ": {
+      "tick_price_units": 0.25,
+      "unit_of_measure_qty": 20.0,
+      "uom": "IPNT",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $595,000",
+      "tick_usd_full_contract": 5.0,
+      "sized_as": "MNQ",
+      "tick_usd": 0.5,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 29750.000000000004,
+      "notional_usd": 595000.0000000001,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.6940150614347999,
+      "day_window_sessions": 3502,
+      "hour_presence": {
+        "9": 0.7203725723345223,
+        "10": 0.7185889813713833,
+        "11": 0.7185889813713833,
+        "12": 0.7164090368608799,
+        "13": 0.70055489496631,
+        "14": 0.6940150614347999,
+        "15": 0.6940150614347999
+      },
+      "day_session_sigma_usd": 278.5605724900462,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "RTY": {
+      "tick_price_units": 0.1,
+      "unit_of_measure_qty": 50.0,
+      "uom": "IPNT",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $147,250",
+      "tick_usd_full_contract": 5.0,
+      "sized_as": "M2K",
+      "tick_usd": 0.5,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 2945.0,
+      "notional_usd": 147250.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8004201680672269,
+      "day_window_sessions": 2286,
+      "hour_presence": {
+        "9": 0.8298319327731093,
+        "10": 0.8280812324929971,
+        "11": 0.8280812324929971,
+        "12": 0.8280812324929971,
+        "13": 0.8077731092436975,
+        "14": 0.8004201680672269,
+        "15": 0.8004201680672269
+      },
+      "day_session_sigma_usd": 113.59779131024226,
+      "c_d_passes": true,
+      "n_sessions": 2856
+    },
+    "YM": {
+      "tick_price_units": 1.0,
+      "unit_of_measure_qty": 5.0,
+      "uom": "IPNT",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $264,460",
+      "tick_usd_full_contract": 5.0,
+      "sized_as": "MYM",
+      "tick_usd": 0.5,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 52892.0,
+      "notional_usd": 264460.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.6929320926549198,
+      "day_window_sessions": 3500,
+      "hour_presence": {
+        "9": 0.7194614927737082,
+        "10": 0.7178776479904969,
+        "11": 0.7176796673925955,
+        "12": 0.7155018808156801,
+        "13": 0.6996634329835676,
+        "14": 0.6929320926549198,
+        "15": 0.6931300732528213
+      },
+      "day_session_sigma_usd": 115.50133243405979,
+      "c_d_passes": true,
+      "n_sessions": 5051
+    },
+    "CL": {
+      "tick_price_units": 0.01,
+      "unit_of_measure_qty": 1000.0000000000001,
+      "uom": "BBL",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $65,910",
+      "tick_usd_full_contract": 10.000000000000002,
+      "sized_as": "MCL",
+      "tick_usd": 1.0,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 65.91000000000001,
+      "notional_usd": 65910.00000000001,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.5561497326203209,
+      "day_window_sessions": 2808,
+      "hour_presence": {
+        "9": 0.7189542483660131,
+        "10": 0.7189542483660131,
+        "11": 0.7187561893444246,
+        "12": 0.7187561893444246,
+        "13": 0.7092493563081799,
+        "14": 0.6955832838185779,
+        "15": 0.5563477916419093
+      },
+      "day_session_sigma_usd": 121.20131648855937,
+      "c_d_passes": true,
+      "n_sessions": 5049
+    },
+    "NG": {
+      "tick_price_units": 0.001,
+      "unit_of_measure_qty": 10000.0,
+      "uom": "MMBTU",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $43,280",
+      "tick_usd_full_contract": 10.0,
+      "sized_as": "NG",
+      "tick_usd": 10.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 4.328,
+      "notional_usd": 43280.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.5561497326203209,
+      "day_window_sessions": 2808,
+      "hour_presence": {
+        "9": 0.7314319667260843,
+        "10": 0.7312339077044959,
+        "11": 0.7312339077044959,
+        "12": 0.7312339077044959,
+        "13": 0.7213309566250743,
+        "14": 0.6997425232719351,
+        "15": 0.5563477916419093
+      },
+      "day_session_sigma_usd": 1011.1902831030113,
+      "c_d_passes": false,
+      "n_sessions": 5049
+    },
+    "GC": {
+      "tick_price_units": 0.1,
+      "unit_of_measure_qty": 100.0,
+      "uom": "TRYOZ",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $464,150",
+      "tick_usd_full_contract": 10.0,
+      "sized_as": "MGC",
+      "tick_usd": 1.0,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 4641.5,
+      "notional_usd": 464150.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7985340729001584,
+      "day_window_sessions": 4031,
+      "hour_presence": {
+        "9": 0.8225039619651348,
+        "10": 0.8225039619651348,
+        "11": 0.8223058637083994,
+        "12": 0.8223058637083994,
+        "13": 0.8125990491283677,
+        "14": 0.8050713153724247,
+        "15": 0.7987321711568938
+      },
+      "day_session_sigma_usd": 161.7336162331292,
+      "c_d_passes": true,
+      "n_sessions": 5048
+    },
+    "SI": {
+      "tick_price_units": 0.005,
+      "unit_of_measure_qty": 5000.0,
+      "uom": "TRYOZ",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $354,900",
+      "tick_usd_full_contract": 25.0,
+      "sized_as": "SI",
+      "tick_usd": 25.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 70.98,
+      "notional_usd": 354900.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7987321711568938,
+      "day_window_sessions": 4032,
+      "hour_presence": {
+        "9": 0.8227020602218701,
+        "10": 0.8227020602218701,
+        "11": 0.8225039619651348,
+        "12": 0.8225039619651348,
+        "13": 0.812797147385103,
+        "14": 0.80526941362916,
+        "15": 0.7989302694136292
+      },
+      "day_session_sigma_usd": 2805.725341349054,
+      "c_d_passes": false,
+      "n_sessions": 5048
+    },
+    "HG": {
+      "tick_price_units": 0.0005,
+      "unit_of_measure_qty": 25000.0,
+      "uom": "LBS",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $171,288",
+      "tick_usd_full_contract": 12.5,
+      "sized_as": "HG",
+      "tick_usd": 12.5,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 6.851500000000001,
+      "notional_usd": 171287.50000000003,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7987321711568938,
+      "day_window_sessions": 4032,
+      "hour_presence": {
+        "9": 0.8227020602218701,
+        "10": 0.8227020602218701,
+        "11": 0.8225039619651348,
+        "12": 0.8225039619651348,
+        "13": 0.8129952456418383,
+        "14": 0.80526941362916,
+        "15": 0.7989302694136292
+      },
+      "day_session_sigma_usd": 942.4893965533633,
+      "c_d_passes": false,
+      "n_sessions": 5048
+    },
+    "ZN": {
+      "tick_price_units": 0.015625,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "USD",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $107,031 (undivided $10,703,125)",
+      "tick_usd_full_contract": 15.625,
+      "sized_as": "ZN",
+      "tick_usd": 15.625,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 107.03125,
+      "notional_usd": 107031.25,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7998416155216789,
+      "day_window_sessions": 4040,
+      "hour_presence": {
+        "9": 0.8251831320530588,
+        "10": 0.8251831320530588,
+        "11": 0.8249851514551574,
+        "12": 0.823797267867749,
+        "13": 0.8053850722629182,
+        "14": 0.7998416155216789,
+        "15": 0.8000395961195803
+      },
+      "day_session_sigma_usd": 290.5616229049273,
+      "c_d_passes": true,
+      "n_sessions": 5051
+    },
+    "ZB": {
+      "tick_price_units": 0.03125,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "USD",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $108,000 (undivided $10,800,000)",
+      "tick_usd_full_contract": 31.25,
+      "sized_as": "ZB",
+      "tick_usd": 31.25,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 108.0,
+      "notional_usd": 108000.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.800831518511186,
+      "day_window_sessions": 4045,
+      "hour_presence": {
+        "9": 0.8263710156404672,
+        "10": 0.8263710156404672,
+        "11": 0.8261730350425658,
+        "12": 0.8249851514551574,
+        "13": 0.8065729558503266,
+        "14": 0.800831518511186,
+        "15": 0.8010294991090873
+      },
+      "day_session_sigma_usd": 655.3757858426569,
+      "c_d_passes": false,
+      "n_sessions": 5051
+    },
+    "ZF": {
+      "tick_price_units": 0.0078125,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "USD",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $105,250 (undivided $10,525,000)",
+      "tick_usd_full_contract": 7.8125,
+      "sized_as": "ZF",
+      "tick_usd": 7.8125,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 105.25,
+      "notional_usd": 105250.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8026133438922985,
+      "day_window_sessions": 4054,
+      "hour_presence": {
+        "9": 0.8281528410215799,
+        "10": 0.8281528410215799,
+        "11": 0.8279548604236785,
+        "12": 0.8267669768362701,
+        "13": 0.8081568006335379,
+        "14": 0.8026133438922985,
+        "15": 0.8028113244902
+      },
+      "day_session_sigma_usd": 177.5015124586375,
+      "c_d_passes": true,
+      "n_sessions": 5051
+    },
+    "SR3": {
+      "tick_price_units": 0.0025,
+      "unit_of_measure_qty": 2500.0,
+      "uom": "USD",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $239,150",
+      "tick_usd_full_contract": 6.25,
+      "sized_as": "SR3",
+      "tick_usd": 6.25,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 95.66000000000001,
+      "notional_usd": 239150.00000000003,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.6893667861409797,
+      "day_window_sessions": 1731,
+      "hour_presence": {
+        "9": 0.7909199522102748,
+        "10": 0.7873357228195937,
+        "11": 0.7793707686180804,
+        "12": 0.7590601354042215,
+        "13": 0.7415372361608921,
+        "14": 0.7419354838709677,
+        "15": 0.7180406212664278
+      },
+      "day_session_sigma_usd": 95.37995378937624,
+      "c_d_passes": true,
+      "n_sessions": 2511
+    },
+    "ZT": {
+      "tick_price_units": 0.00390625,
+      "unit_of_measure_qty": 200000.0,
+      "uom": "USD",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $204,914 (undivided $20,491,406)",
+      "tick_usd_full_contract": 7.8125,
+      "sized_as": "ZT",
+      "tick_usd": 7.8125,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 102.45703125,
+      "notional_usd": 204914.0625,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8034052662839042,
+      "day_window_sessions": 4058,
+      "hour_presence": {
+        "9": 0.8289447634131855,
+        "10": 0.8289447634131855,
+        "11": 0.8287467828152841,
+        "12": 0.8275588992278756,
+        "13": 0.8089487230251435,
+        "14": 0.8034052662839042,
+        "15": 0.8036032468818056
+      },
+      "day_session_sigma_usd": 122.91564543918031,
+      "c_d_passes": true,
+      "n_sessions": 5051
+    },
+    "UB": {
+      "tick_price_units": 0.03125,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "USD",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $109,312 (undivided $10,931,250)",
+      "tick_usd_full_contract": 31.25,
+      "sized_as": "UB",
+      "tick_usd": 31.25,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 109.3125,
+      "notional_usd": 109312.5,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8024201547312041,
+      "day_window_sessions": 4045,
+      "hour_presence": {
+        "9": 0.8274151953977386,
+        "10": 0.8280103154136084,
+        "11": 0.8274151953977386,
+        "12": 0.8262249553659988,
+        "13": 0.8079746082126562,
+        "14": 0.8024201547312041,
+        "15": 0.8026185280698274
+      },
+      "day_session_sigma_usd": 1053.8325241506093,
+      "c_d_passes": false,
+      "n_sessions": 5041
+    },
+    "TN": {
+      "tick_price_units": 0.015625,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "USD",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $108,672 (undivided $10,867,188)",
+      "tick_usd_full_contract": 15.625,
+      "sized_as": "TN",
+      "tick_usd": 15.625,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 108.671875,
+      "notional_usd": 108671.875,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7745535714285714,
+      "day_window_sessions": 2776,
+      "hour_presence": {
+        "9": 0.8150111607142857,
+        "10": 0.8133370535714286,
+        "11": 0.8119419642857143,
+        "12": 0.810546875,
+        "13": 0.7957589285714286,
+        "14": 0.791015625,
+        "15": 0.7885044642857143
+      },
+      "day_session_sigma_usd": 412.11829939466463,
+      "c_d_passes": true,
+      "n_sessions": 3584
+    },
+    "RB": {
+      "tick_price_units": 0.0001,
+      "unit_of_measure_qty": 42000.0,
+      "uom": "GAL",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $99,662",
+      "tick_usd_full_contract": 4.2,
+      "sized_as": "RB",
+      "tick_usd": 4.2,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 2.3729,
+      "notional_usd": 99661.8,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.5563477916419093,
+      "day_window_sessions": 2809,
+      "hour_presence": {
+        "9": 0.7328183798772034,
+        "10": 0.7328183798772034,
+        "11": 0.732620320855615,
+        "12": 0.732620320855615,
+        "13": 0.7229154287977817,
+        "14": 0.7001386413151119,
+        "15": 0.5565458506634977
+      },
+      "day_session_sigma_usd": 1499.230692166705,
+      "c_d_passes": false,
+      "n_sessions": 5049
+    },
+    "HO": {
+      "tick_price_units": 0.0001,
+      "unit_of_measure_qty": 42000.0,
+      "uom": "GAL",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $138,587",
+      "tick_usd_full_contract": 4.2,
+      "sized_as": "HO",
+      "tick_usd": 4.2,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 3.2997,
+      "notional_usd": 138587.4,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.5561497326203209,
+      "day_window_sessions": 2808,
+      "hour_presence": {
+        "9": 0.7300455535749654,
+        "10": 0.7300455535749654,
+        "11": 0.7298474945533769,
+        "12": 0.7298474945533769,
+        "13": 0.7201426024955436,
+        "14": 0.6985541691424044,
+        "15": 0.5563477916419093
+      },
+      "day_session_sigma_usd": 1848.1955089794278,
+      "c_d_passes": false,
+      "n_sessions": 5049
+    },
+    "BZ": {
+      "tick_price_units": 0.01,
+      "unit_of_measure_qty": 1000.0000000000001,
+      "uom": "BBL",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $73,340",
+      "tick_usd_full_contract": 10.000000000000002,
+      "sized_as": "BZ",
+      "tick_usd": 10.000000000000002,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 73.34,
+      "notional_usd": 73340.00000000001,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7956924315619968,
+      "day_window_sessions": 3953,
+      "hour_presence": {
+        "9": 0.840780998389694,
+        "10": 0.840378421900161,
+        "11": 0.840378421900161,
+        "12": 0.8397745571658615,
+        "13": 0.8283011272141707,
+        "14": 0.8226650563607085,
+        "15": 0.7958937198067633
+      },
+      "day_session_sigma_usd": 1159.781010353275,
+      "c_d_passes": false,
+      "n_sessions": 4968
+    },
+    "PL": {
+      "tick_price_units": 0.1,
+      "unit_of_measure_qty": 50.0,
+      "uom": "TRYOZ",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $95,915",
+      "tick_usd_full_contract": 5.0,
+      "sized_as": "PL",
+      "tick_usd": 5.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 1918.3000000000002,
+      "notional_usd": 95915.00000000001,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7989700930877401,
+      "day_window_sessions": 4034,
+      "hour_presence": {
+        "9": 0.8229352346999406,
+        "10": 0.8229352346999406,
+        "11": 0.8227371756783521,
+        "12": 0.8227371756783521,
+        "13": 0.8124381065557537,
+        "14": 0.8055060408001584,
+        "15": 0.7991681521093286
+      },
+      "day_session_sigma_usd": 699.041339635106,
+      "c_d_passes": false,
+      "n_sessions": 5049
+    },
+    "PA": {
+      "tick_price_units": 0.5,
+      "unit_of_measure_qty": 100.0,
+      "uom": "TRYOZ",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $136,750",
+      "tick_usd_full_contract": 50.0,
+      "sized_as": "PA",
+      "tick_usd": 50.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 1367.5,
+      "notional_usd": 136750.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.7991681521093286,
+      "day_window_sessions": 4035,
+      "hour_presence": {
+        "9": 0.823133293721529,
+        "10": 0.823133293721529,
+        "11": 0.8229352346999406,
+        "12": 0.8229352346999406,
+        "13": 0.8122400475341652,
+        "14": 0.80530798177857,
+        "15": 0.799366211130917
+      },
+      "day_session_sigma_usd": 2333.853536557998,
+      "c_d_passes": false,
+      "n_sessions": 5049
+    },
+    "6E": {
+      "tick_price_units": 5e-05,
+      "unit_of_measure_qty": 125000.00000000001,
+      "uom": "EUR",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $148,063",
+      "tick_usd_full_contract": 6.250000000000001,
+      "sized_as": "M6E",
+      "tick_usd": 1.25,
+      "tick_usd_source": "futures_contract_specs.json",
+      "has_micro": true,
+      "last_price": 1.1845,
+      "notional_usd": 148062.50000000003,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8053904082441538,
+      "day_window_sessions": 4064,
+      "hour_presence": {
+        "9": 0.8240190249702735,
+        "10": 0.8240190249702735,
+        "11": 0.8240190249702735,
+        "12": 0.8230281411018628,
+        "13": 0.810543004359889,
+        "14": 0.805786761791518,
+        "15": 0.8053904082441538
+      },
+      "day_session_sigma_usd": 98.02512025294023,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "6J": {
+      "tick_price_units": 5.000000000000001e-07,
+      "unit_of_measure_qty": 12500000.0,
+      "uom": "JPY",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $84,256",
+      "tick_usd_full_contract": 6.250000000000001,
+      "sized_as": "6J",
+      "tick_usd": 6.250000000000001,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 0.006740500000000001,
+      "notional_usd": 84256.25000000001,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8051922314704717,
+      "day_window_sessions": 4063,
+      "hour_presence": {
+        "9": 0.8240190249702735,
+        "10": 0.8238208481965914,
+        "11": 0.8238208481965914,
+        "12": 0.8228299643281808,
+        "13": 0.8103448275862069,
+        "14": 0.8055885850178359,
+        "15": 0.8051922314704717
+      },
+      "day_session_sigma_usd": 368.6886058135111,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "6B": {
+      "tick_price_units": 0.0001,
+      "unit_of_measure_qty": 62500.00000000001,
+      "uom": "GBP",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $84,613",
+      "tick_usd_full_contract": 6.250000000000001,
+      "sized_as": "6B",
+      "tick_usd": 6.250000000000001,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 1.3538000000000001,
+      "notional_usd": 84612.50000000001,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8053904082441538,
+      "day_window_sessions": 4064,
+      "hour_presence": {
+        "9": 0.8240190249702735,
+        "10": 0.8240190249702735,
+        "11": 0.8240190249702735,
+        "12": 0.8230281411018628,
+        "13": 0.810543004359889,
+        "14": 0.805786761791518,
+        "15": 0.8053904082441538
+      },
+      "day_session_sigma_usd": 277.88775578973144,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "6A": {
+      "tick_price_units": 5e-05,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "AUD",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $71,630",
+      "tick_usd_full_contract": 5.0,
+      "sized_as": "6A",
+      "tick_usd": 5.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 0.7163,
+      "notional_usd": 71630.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8053904082441538,
+      "day_window_sessions": 4064,
+      "hour_presence": {
+        "9": 0.8240190249702735,
+        "10": 0.8240190249702735,
+        "11": 0.8240190249702735,
+        "12": 0.8230281411018628,
+        "13": 0.810543004359889,
+        "14": 0.805786761791518,
+        "15": 0.8053904082441538
+      },
+      "day_session_sigma_usd": 317.8442611285495,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "6C": {
+      "tick_price_units": 5e-05,
+      "unit_of_measure_qty": 100000.0,
+      "uom": "CAD",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $72,755",
+      "tick_usd_full_contract": 5.0,
+      "sized_as": "6C",
+      "tick_usd": 5.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 0.72755,
+      "notional_usd": 72755.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8053904082441538,
+      "day_window_sessions": 4064,
+      "hour_presence": {
+        "9": 0.8240190249702735,
+        "10": 0.8240190249702735,
+        "11": 0.8240190249702735,
+        "12": 0.8230281411018628,
+        "13": 0.810543004359889,
+        "14": 0.805786761791518,
+        "15": 0.8053904082441538
+      },
+      "day_session_sigma_usd": 271.29702461277833,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "6S": {
+      "tick_price_units": 5e-05,
+      "unit_of_measure_qty": 125000.00000000001,
+      "uom": "CHF",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $155,956",
+      "tick_usd_full_contract": 6.250000000000001,
+      "sized_as": "6S",
+      "tick_usd": 6.250000000000001,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 1.2476500000000001,
+      "notional_usd": 155956.25000000003,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8053904082441538,
+      "day_window_sessions": 4064,
+      "hour_presence": {
+        "9": 0.8240190249702735,
+        "10": 0.8240190249702735,
+        "11": 0.8240190249702735,
+        "12": 0.8230281411018628,
+        "13": 0.810543004359889,
+        "14": 0.805786761791518,
+        "15": 0.8053904082441538
+      },
+      "day_session_sigma_usd": 470.5206665671055,
+      "c_d_passes": true,
+      "n_sessions": 5046
+    },
+    "ZC": {
+      "tick_price_units": 0.25,
+      "unit_of_measure_qty": 5000.0,
+      "uom": "BU",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $25,300 (undivided $2,530,000)",
+      "tick_usd_full_contract": 12.5,
+      "sized_as": "ZC",
+      "tick_usd": 12.5,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 506.00000000000006,
+      "notional_usd": 25300.000000000004,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.6991688627609973,
+      "day_window_sessions": 3449,
+      "hour_presence": {
+        "9": 0.7062639367524832,
+        "10": 0.737684978714778,
+        "11": 0.7374822623150212,
+        "12": 0.7374822623150212,
+        "13": 0.7352523819176972,
+        "14": 0.7299817555240219,
+        "15": 0.0010135819987837015
+      },
+      "day_session_sigma_usd": 291.12691732414703,
+      "c_d_passes": true,
+      "n_sessions": 4933
+    },
+    "ZS": {
+      "tick_price_units": 0.25,
+      "unit_of_measure_qty": 5000.0,
+      "uom": "BU",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $61,438 (undivided $6,143,750)",
+      "tick_usd_full_contract": 12.5,
+      "sized_as": "ZS",
+      "tick_usd": 12.5,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 1228.75,
+      "notional_usd": 61437.5,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.6995742955605109,
+      "day_window_sessions": 3451,
+      "hour_presence": {
+        "9": 0.70646665315224,
+        "10": 0.7318062031218325,
+        "11": 0.7316034867220759,
+        "12": 0.7316034867220759,
+        "13": 0.7295763227245085,
+        "14": 0.7243056963308332,
+        "15": 0.001216298398540442
+      },
+      "day_session_sigma_usd": 579.6615950341519,
+      "c_d_passes": false,
+      "n_sessions": 4933
+    },
+    "ZW": {
+      "tick_price_units": 0.25,
+      "unit_of_measure_qty": 5000.0,
+      "uom": "BU",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $37,650 (undivided $3,765,000)",
+      "tick_usd_full_contract": 12.5,
+      "sized_as": "ZW",
+      "tick_usd": 12.5,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 753.0,
+      "notional_usd": 37650.0,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.7001824447597811,
+      "day_window_sessions": 3454,
+      "hour_presence": {
+        "9": 0.707277518751267,
+        "10": 0.7370768295155078,
+        "11": 0.736874113115751,
+        "12": 0.736874113115751,
+        "13": 0.7346442327184269,
+        "14": 0.7293736063247517,
+        "15": 0.0010135819987837015
+      },
+      "day_session_sigma_usd": 461.31941721930855,
+      "c_d_passes": true,
+      "n_sessions": 4933
+    },
+    "ZL": {
+      "tick_price_units": 0.01,
+      "unit_of_measure_qty": 60000.00000000001,
+      "uom": "LBS",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $41,070 (undivided $4,107,000)",
+      "tick_usd_full_contract": 6.000000000000001,
+      "sized_as": "ZL",
+      "tick_usd": 6.000000000000001,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 68.45,
+      "notional_usd": 41070.00000000001,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.6997770119602675,
+      "day_window_sessions": 3452,
+      "hour_presence": {
+        "9": 0.7066693695519968,
+        "10": 0.7318062031218325,
+        "11": 0.7316034867220759,
+        "12": 0.7316034867220759,
+        "13": 0.7293736063247517,
+        "14": 0.7243056963308332,
+        "15": 0.000608149199270221
+      },
+      "day_session_sigma_usd": 365.7407218816005,
+      "c_d_passes": true,
+      "n_sessions": 4933
+    },
+    "ZM": {
+      "tick_price_units": 0.1,
+      "unit_of_measure_qty": 100.0,
+      "uom": "TON",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $34,460",
+      "tick_usd_full_contract": 10.0,
+      "sized_as": "ZM",
+      "tick_usd": 10.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 344.6,
+      "notional_usd": 34460.0,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.6999797283600243,
+      "day_window_sessions": 3453,
+      "hour_presence": {
+        "9": 0.7068720859517535,
+        "10": 0.7326170687208595,
+        "11": 0.7324143523211027,
+        "12": 0.7324143523211027,
+        "13": 0.7301844719237787,
+        "14": 0.7251165619298601,
+        "15": 0.00020271639975674033
+      },
+      "day_session_sigma_usd": 458.43658313712086,
+      "c_d_passes": true,
+      "n_sessions": 4933
+    },
+    "LE": {
+      "tick_price_units": 0.025,
+      "unit_of_measure_qty": 40000.0,
+      "uom": "LBS",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $85,010 (undivided $8,501,000)",
+      "tick_usd_full_contract": 10.0,
+      "sized_as": "LE",
+      "tick_usd": 10.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 212.525,
+      "notional_usd": 85010.0,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.8009293225727562,
+      "day_window_sessions": 3275,
+      "hour_presence": {
+        "9": 0.80997798972854,
+        "10": 0.8828564441183664,
+        "11": 0.8828564441183664,
+        "12": 0.8828564441183664,
+        "13": 0.8826118855465884,
+        "14": 0.8735632183908046,
+        "15": 0.1875764245536806
+      },
+      "day_session_sigma_usd": 550.2574689327963,
+      "c_d_passes": false,
+      "n_sessions": 4089
+    },
+    "HE": {
+      "tick_price_units": 0.025,
+      "unit_of_measure_qty": 40000.0,
+      "uom": "LBS",
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $29,770 (undivided $2,977,000)",
+      "tick_usd_full_contract": 10.0,
+      "sized_as": "HE",
+      "tick_usd": 10.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 74.42500000000001,
+      "notional_usd": 29770.000000000004,
+      "day_window": [
+        9,
+        14
+      ],
+      "day_window_coverage": 0.8033749082905356,
+      "day_window_sessions": 3285,
+      "hour_presence": {
+        "9": 0.8114453411592076,
+        "10": 0.8845683541208119,
+        "11": 0.8845683541208119,
+        "12": 0.8845683541208119,
+        "13": 0.8840792369772561,
+        "14": 0.8760088041085841,
+        "15": 0.18733186598190266
+      },
+      "day_session_sigma_usd": 516.6176365100764,
+      "c_d_passes": false,
+      "n_sessions": 4089
+    },
+    "NKD": {
+      "tick_price_units": 5.0,
+      "unit_of_measure_qty": 5.0,
+      "uom": "IPNT",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $322,500",
+      "tick_usd_full_contract": 25.0,
+      "sized_as": "NKD",
+      "tick_usd": 25.0,
+      "tick_usd_source": "full contract",
+      "has_micro": false,
+      "last_price": 64500.00000000001,
+      "notional_usd": 322500.00000000006,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.6956004756242569,
+      "day_window_sessions": 3510,
+      "hour_presence": {
+        "9": 0.7205707491082045,
+        "10": 0.7195798652397939,
+        "11": 0.7195798652397939,
+        "12": 0.7172017439556084,
+        "13": 0.7013476020610384,
+        "14": 0.6956004756242569,
+        "15": 0.6956004756242569
+      },
+      "day_session_sigma_usd": 1139.0539329196913,
+      "c_d_passes": false,
+      "n_sessions": 5046
+    },
+    "BTC": {
+      "tick_price_units": 5.0,
+      "unit_of_measure_qty": 5.0,
+      "uom": "IPNT",
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $397,600",
+      "tick_usd_full_contract": 25.0,
+      "sized_as": "MBT",
+      "tick_usd": 0.5,
+      "tick_usd_source": "fut_specs_from_definition.json (parent BTC's scaling)",
+      "has_micro": true,
+      "last_price": 79520.0,
+      "notional_usd": 397600.0,
+      "day_window": [
+        9,
+        15
+      ],
+      "day_window_coverage": 0.8155872667398463,
+      "day_window_sessions": 2229,
+      "hour_presence": {
+        "9": 0.8320526893523601,
+        "10": 0.8335162824734724,
+        "11": 0.8338821807537504,
+        "12": 0.8338821807537504,
+        "13": 0.8251006220270765,
+        "14": 0.8170508598609586,
+        "15": 0.818514452982071
+      },
+      "day_session_sigma_usd": 107.22524606234023,
+      "c_d_passes": true,
+      "n_sessions": 2733
+    }
+  },
+  "gates": {
+    "ES": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0010289114262748958,
+        "threshold": 0.015433671394123437,
+        "n_segment_returns": 80371,
+        "n_beyond": 123,
+        "share": 0.0015304027572134228,
+        "failures": [
+          "123 of 80371 segment returns beyond 15 sigma (0.153%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1351.5,
+        "n_below_half_median": 1420,
+        "share": 0.2814110186286167,
+        "failures": [
+          "1420 of 5046 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "NQ": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0012877612212913478,
+        "threshold": 0.019316418319370216,
+        "n_segment_returns": 80384,
+        "n_beyond": 93,
+        "share": 0.0011569466560509554,
+        "failures": [
+          "93 of 80384 segment returns beyond 15 sigma (0.116%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1314.0,
+        "n_below_half_median": 1422,
+        "share": 0.28180737217598095,
+        "failures": [
+          "1422 of 5046 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4730,
+        "share": 0.9373761395164487,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4730 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "RTY": {
+      "G1_print_jump": {
+        "robust_sigma": 0.001565895064392724,
+        "threshold": 0.02348842596589086,
+        "n_segment_returns": 51724,
+        "n_beyond": 62,
+        "share": 0.001198669863119635,
+        "failures": [
+          "62 of 51724 segment returns beyond 15 sigma (0.120%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 38,
+        "n_reversions": 2,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1316.0,
+        "n_below_half_median": 517,
+        "share": 0.18102240896358543,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 2623,
+        "share": 0.9184173669467787,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "2623 of 2856 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 2856,
+        "per_year": {
+          "2017": 148,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 312.0,
+        "sparse_years": {
+          "2017": 148
+        },
+        "failures": [],
+        "passes": true
+      }
+    },
+    "YM": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0009717231361470524,
+        "threshold": 0.014575847042205785,
+        "n_segment_returns": 80375,
+        "n_beyond": 143,
+        "share": 0.0017791601866251944,
+        "failures": [
+          "143 of 80375 segment returns beyond 15 sigma (0.178%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1307.0,
+        "n_below_half_median": 1427,
+        "share": 0.2825183132053059,
+        "failures": [
+          "1427 of 5051 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4736,
+        "share": 0.9376361116610572,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4736 of 5051 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5051,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 308,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "CL": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0026340323986713,
+        "threshold": 0.0395104859800695,
+        "n_segment_returns": 78834,
+        "n_beyond": 118,
+        "share": 0.0014968160945784813,
+        "failures": [
+          "118 of 78834 segment returns beyond 15 sigma (0.150%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 195,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1357.0,
+        "n_below_half_median": 1421,
+        "share": 0.2814418696771638,
+        "failures": [
+          "1421 of 5049 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4971,
+        "share": 0.9845513963161022,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4971 of 5049 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5049,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "NG": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0033342060836746767,
+        "threshold": 0.05001309125512015,
+        "n_segment_returns": 79919,
+        "n_beyond": 33,
+        "share": 0.00041291807955555,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 223,
+        "n_reversions": 15,
+        "failures": [
+          "15 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1068.0,
+        "n_below_half_median": 1365,
+        "share": 0.27035056446821154,
+        "failures": [
+          "1365 of 5049 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4970,
+        "share": 0.9843533372945138,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4970 of 5049 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5049,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "GC": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0012620206398497053,
+        "threshold": 0.01893030959774558,
+        "n_segment_returns": 90968,
+        "n_beyond": 41,
+        "share": 0.00045070794125406737,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 81,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1373.0,
+        "n_below_half_median": 898,
+        "share": 0.17789223454833597,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4893,
+        "share": 0.9692947702060222,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4893 of 5048 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5048,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 305,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "SI": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0023595213152799678,
+        "threshold": 0.03539281972919952,
+        "n_segment_returns": 90991,
+        "n_beyond": 71,
+        "share": 0.0007802969524458462,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 82,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1265.0,
+        "n_below_half_median": 897,
+        "share": 0.17769413629160064,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4847,
+        "share": 0.9601822503961965,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4847 of 5048 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5048,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 305,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "HG": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0019803188587172666,
+        "threshold": 0.029704782880759,
+        "n_segment_returns": 90993,
+        "n_beyond": 21,
+        "share": 0.00023078698361412417,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 84,
+        "n_reversions": 2,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1268.0,
+        "n_below_half_median": 897,
+        "share": 0.17769413629160064,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4849,
+        "share": 0.9605784469096672,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4849 of 5048 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5048,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 305,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZN": {
+      "G1_print_jump": {
+        "robust_sigma": 0.00041346770211880693,
+        "threshold": 0.006202015531782104,
+        "n_segment_returns": 91348,
+        "n_beyond": 61,
+        "share": 0.0006677759775802426,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1248.0,
+        "n_below_half_median": 873,
+        "share": 0.17283706196792714,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4743,
+        "share": 0.939021975846367,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4743 of 5051 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5051,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 308,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZB": {
+      "G1_print_jump": {
+        "robust_sigma": 0.000849023077921905,
+        "threshold": 0.012735346168828574,
+        "n_segment_returns": 91429,
+        "n_beyond": 28,
+        "share": 0.0003062485644598541,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1146.0,
+        "n_below_half_median": 877,
+        "share": 0.17362898435953278,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4743,
+        "share": 0.939021975846367,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4743 of 5051 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5051,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 308,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZF": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0002805361730052805,
+        "threshold": 0.004208042595079208,
+        "n_segment_returns": 91525,
+        "n_beyond": 80,
+        "share": 0.0008740781207320404,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1150.0,
+        "n_below_half_median": 880,
+        "share": 0.17422292615323698,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4743,
+        "share": 0.939021975846367,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4743 of 5051 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5051,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 308,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "SR3": {
+      "G1_print_jump": {
+        "robust_sigma": 7.609185296119248e-05,
+        "threshold": 0.0011413777944178872,
+        "n_segment_returns": 33262,
+        "n_beyond": 62,
+        "share": 0.0018639889363237328,
+        "failures": [
+          "62 of 33262 segment returns beyond 15 sigma (0.186%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 1273,
+        "n_reversions": 616,
+        "failures": [
+          "616 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 196.0,
+        "n_below_half_median": 1148,
+        "share": 0.4571883711668658,
+        "failures": [
+          "1148 of 2511 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 2310,
+        "share": 0.9199522102747909,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "2310 of 2511 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 2511,
+        "per_year": {
+          "2018": 165,
+          "2019": 273,
+          "2020": 301,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {
+          "2018": 165,
+          "2019": 273
+        },
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZT": {
+      "G1_print_jump": {
+        "robust_sigma": 0.00010548419541946545,
+        "threshold": 0.0015822629312919818,
+        "n_segment_returns": 91230,
+        "n_beyond": 121,
+        "share": 0.0013263180971171764,
+        "failures": [
+          "121 of 91230 segment returns beyond 15 sigma (0.133%)"
+        ],
+        "passes": false
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 73,
+        "n_reversions": 5,
+        "failures": [
+          "5 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 796.0,
+        "n_below_half_median": 900,
+        "share": 0.1781825381112651,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4743,
+        "share": 0.939021975846367,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4743 of 5051 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5051,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 308,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "UB": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0011855480893968617,
+        "threshold": 0.017783221340952924,
+        "n_segment_returns": 89512,
+        "n_beyond": 31,
+        "share": 0.0003463222808115113,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1003.0,
+        "n_below_half_median": 970,
+        "share": 0.19242213846459036,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4738,
+        "share": 0.9398928783971434,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4738 of 5041 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5041,
+        "per_year": {
+          "2010": 171,
+          "2011": 306,
+          "2012": 311,
+          "2013": 306,
+          "2014": 308,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "TN": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0005993195013751373,
+        "threshold": 0.00898979252062706,
+        "n_segment_returns": 61373,
+        "n_beyond": 23,
+        "share": 0.00037475762957652387,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 52,
+        "n_reversions": 2,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1057.0,
+        "n_below_half_median": 857,
+        "share": 0.23911830357142858,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 3349,
+        "share": 0.9344308035714286,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "3349 of 3584 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 3584,
+        "per_year": {
+          "2010": 49,
+          "2011": 189,
+          "2012": 25,
+          "2016": 304,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 310.5,
+        "sparse_years": {
+          "2011": 189,
+          "2012": 25
+        },
+        "failures": [],
+        "passes": true
+      }
+    },
+    "RB": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0025917212551488235,
+        "threshold": 0.03887581882723235,
+        "n_segment_returns": 79631,
+        "n_beyond": 72,
+        "share": 0.0009041704863683741,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 315,
+        "n_reversions": 61,
+        "failures": [
+          "61 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 840.0,
+        "n_below_half_median": 1361,
+        "share": 0.2695583283818578,
+        "failures": [
+          "1361 of 5049 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4971,
+        "share": 0.9845513963161022,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4971 of 5049 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5049,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "HO": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0024516243796357867,
+        "threshold": 0.0367743656945368,
+        "n_segment_returns": 79662,
+        "n_beyond": 48,
+        "share": 0.0006025457558183324,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 242,
+        "n_reversions": 25,
+        "failures": [
+          "25 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 883.0,
+        "n_below_half_median": 1369,
+        "share": 0.27114280055456524,
+        "failures": [
+          "1369 of 5049 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4971,
+        "share": 0.9845513963161022,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4971 of 5049 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5049,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "BZ": {
+      "G1_print_jump": {
+        "robust_sigma": 0.002717928323810699,
+        "threshold": 0.04076892485716048,
+        "n_segment_returns": 81089,
+        "n_beyond": 58,
+        "share": 0.0007152634759338504,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 802,
+        "n_reversions": 313,
+        "failures": [
+          "313 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 709.0,
+        "n_below_half_median": 1553,
+        "share": 0.31260064412238325,
+        "failures": [
+          "1553 of 4968 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4889,
+        "share": 0.9840982286634461,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4889 of 4968 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4968,
+        "per_year": {
+          "2010": 149,
+          "2011": 280,
+          "2012": 291,
+          "2013": 307,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "PL": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0022504225324670828,
+        "threshold": 0.03375633798700624,
+        "n_segment_returns": 90983,
+        "n_beyond": 35,
+        "share": 0.0003846872492663465,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 957.0,
+        "n_below_half_median": 980,
+        "share": 0.19409784115666467,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4797,
+        "share": 0.9500891265597148,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4797 of 5049 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5049,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "PA": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0029564960061920216,
+        "threshold": 0.04434744009288032,
+        "n_segment_returns": 89651,
+        "n_beyond": 53,
+        "share": 0.0005911813588247761,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 473.0,
+        "n_below_half_median": 976,
+        "share": 0.19330560507031094,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4744,
+        "share": 0.9395919984155279,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4744 of 5049 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5049,
+        "per_year": {
+          "2010": 178,
+          "2011": 310,
+          "2012": 312,
+          "2013": 308,
+          "2014": 306,
+          "2015": 311,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 310,
+          "2022": 310,
+          "2023": 309,
+          "2024": 313,
+          "2025": 312,
+          "2026": 215
+        },
+        "modal_full_year": 310.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "6E": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0006781718169976741,
+        "threshold": 0.010172577254965112,
+        "n_segment_returns": 91056,
+        "n_beyond": 36,
+        "share": 0.00039536109646810753,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1347.0,
+        "n_below_half_median": 896,
+        "share": 0.17756638921918352,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "6J": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0007334890897304795,
+        "threshold": 0.011002336345957191,
+        "n_segment_returns": 91049,
+        "n_beyond": 67,
+        "share": 0.0007358674999176268,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1338.0,
+        "n_below_half_median": 896,
+        "share": 0.17756638921918352,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "6B": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0007250126162430569,
+        "threshold": 0.010875189243645854,
+        "n_segment_returns": 91056,
+        "n_beyond": 31,
+        "share": 0.0003404498330697593,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1251.0,
+        "n_below_half_median": 894,
+        "share": 0.17717003567181927,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "6A": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0009953926731328007,
+        "threshold": 0.01493089009699201,
+        "n_segment_returns": 91056,
+        "n_beyond": 21,
+        "share": 0.00023062730627306272,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1318.0,
+        "n_below_half_median": 896,
+        "share": 0.17756638921918352,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "6C": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0006495619116880525,
+        "threshold": 0.009743428675320787,
+        "n_segment_returns": 91055,
+        "n_beyond": 31,
+        "share": 0.00034045357201691284,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1216.0,
+        "n_below_half_median": 898,
+        "share": 0.17796274276654775,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "6S": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0007200199890170062,
+        "threshold": 0.010800299835255094,
+        "n_segment_returns": 91057,
+        "n_beyond": 39,
+        "share": 0.0004283031507736912,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 1079.0,
+        "n_below_half_median": 899,
+        "share": 0.1781609195402299,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZC": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0018634500842276303,
+        "threshold": 0.027951751263414454,
+        "n_segment_returns": 65558,
+        "n_beyond": 37,
+        "share": 0.000564385734769212,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 179,
+        "n_reversions": 58,
+        "failures": [
+          "58 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 747.0,
+        "n_below_half_median": 1342,
+        "share": 0.2720454084735455,
+        "failures": [
+          "1342 of 4933 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4739,
+        "share": 0.9606730184471923,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4739 of 4933 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4933,
+        "per_year": {
+          "2010": 176,
+          "2011": 304,
+          "2012": 304,
+          "2013": 304,
+          "2014": 302,
+          "2015": 304,
+          "2016": 303,
+          "2017": 302,
+          "2018": 304,
+          "2019": 304,
+          "2020": 305,
+          "2021": 303,
+          "2022": 301,
+          "2023": 300,
+          "2024": 305,
+          "2025": 304,
+          "2026": 208
+        },
+        "modal_full_year": 304.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZS": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0016818723018497913,
+        "threshold": 0.02522808452774687,
+        "n_segment_returns": 65114,
+        "n_beyond": 28,
+        "share": 0.00043001505052676843,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 125,
+        "n_reversions": 23,
+        "failures": [
+          "23 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 873.0,
+        "n_below_half_median": 1371,
+        "share": 0.277924184066491,
+        "failures": [
+          "1371 of 4933 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4791,
+        "share": 0.9712142712345428,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4791 of 4933 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4933,
+        "per_year": {
+          "2010": 176,
+          "2011": 304,
+          "2012": 304,
+          "2013": 304,
+          "2014": 302,
+          "2015": 304,
+          "2016": 303,
+          "2017": 302,
+          "2018": 304,
+          "2019": 304,
+          "2020": 305,
+          "2021": 303,
+          "2022": 301,
+          "2023": 300,
+          "2024": 305,
+          "2025": 304,
+          "2026": 208
+        },
+        "modal_full_year": 304.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZW": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0024595638183986467,
+        "threshold": 0.0368934572759797,
+        "n_segment_returns": 65504,
+        "n_beyond": 23,
+        "share": 0.00035112359550561797,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 102,
+        "n_reversions": 11,
+        "failures": [
+          "11 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 737.0,
+        "n_below_half_median": 1346,
+        "share": 0.27285627407257246,
+        "failures": [
+          "1346 of 4933 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4741,
+        "share": 0.9610784512467059,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4741 of 4933 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4933,
+        "per_year": {
+          "2010": 176,
+          "2011": 304,
+          "2012": 304,
+          "2013": 304,
+          "2014": 302,
+          "2015": 304,
+          "2016": 303,
+          "2017": 302,
+          "2018": 304,
+          "2019": 304,
+          "2020": 305,
+          "2021": 303,
+          "2022": 301,
+          "2023": 300,
+          "2024": 305,
+          "2025": 304,
+          "2026": 208
+        },
+        "modal_full_year": 304.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZL": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0022891509678753994,
+        "threshold": 0.03433726451813099,
+        "n_segment_returns": 65093,
+        "n_beyond": 8,
+        "share": 0.00012290107999324043,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 125,
+        "n_reversions": 23,
+        "failures": [
+          "23 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 803.0,
+        "n_below_half_median": 1371,
+        "share": 0.277924184066491,
+        "failures": [
+          "1371 of 4933 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4813,
+        "share": 0.9756740320291911,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4813 of 4933 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4933,
+        "per_year": {
+          "2010": 176,
+          "2011": 304,
+          "2012": 304,
+          "2013": 304,
+          "2014": 302,
+          "2015": 304,
+          "2016": 303,
+          "2017": 302,
+          "2018": 304,
+          "2019": 304,
+          "2020": 305,
+          "2021": 303,
+          "2022": 301,
+          "2023": 300,
+          "2024": 305,
+          "2025": 304,
+          "2026": 208
+        },
+        "modal_full_year": 304.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "ZM": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0019199953894250398,
+        "threshold": 0.028799930841375596,
+        "n_segment_returns": 65153,
+        "n_beyond": 28,
+        "share": 0.0004297576473838503,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 108,
+        "n_reversions": 14,
+        "failures": [
+          "14 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 732.0,
+        "n_below_half_median": 1367,
+        "share": 0.277113318467464,
+        "failures": [
+          "1367 of 4933 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4817,
+        "share": 0.9764848976282181,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4817 of 4933 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4933,
+        "per_year": {
+          "2010": 176,
+          "2011": 304,
+          "2012": 304,
+          "2013": 304,
+          "2014": 302,
+          "2015": 304,
+          "2016": 303,
+          "2017": 302,
+          "2018": 304,
+          "2019": 304,
+          "2020": 305,
+          "2021": 303,
+          "2022": 301,
+          "2023": 300,
+          "2024": 305,
+          "2025": 304,
+          "2026": 208
+        },
+        "modal_full_year": 304.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "LE": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0015102757504226727,
+        "threshold": 0.02265413625634009,
+        "n_segment_returns": 25578,
+        "n_beyond": 24,
+        "share": 0.0009383063570255688,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 137,
+        "n_reversions": 21,
+        "failures": [
+          "21 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 275.0,
+        "n_below_half_median": 484,
+        "share": 0.11836634874052336,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 3965,
+        "share": 0.9696747370995353,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "3965 of 4089 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4089,
+        "per_year": {
+          "2010": 148,
+          "2011": 255,
+          "2012": 248,
+          "2013": 252,
+          "2014": 246,
+          "2015": 252,
+          "2016": 252,
+          "2017": 251,
+          "2018": 252,
+          "2019": 252,
+          "2020": 253,
+          "2021": 252,
+          "2022": 251,
+          "2023": 250,
+          "2024": 252,
+          "2025": 251,
+          "2026": 172
+        },
+        "modal_full_year": 252.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "HE": {
+      "G1_print_jump": {
+        "robust_sigma": 0.00256352869721181,
+        "threshold": 0.038452930458177145,
+        "n_segment_returns": 25646,
+        "n_beyond": 12,
+        "share": 0.00046790922561023164,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 154,
+        "n_reversions": 21,
+        "failures": [
+          "21 roll reversions"
+        ],
+        "passes": false
+      },
+      "G3_bars": {
+        "median_bars_per_session": 274.0,
+        "n_below_half_median": 479,
+        "share": 0.11714355588163365,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 3964,
+        "share": 0.9694301785277574,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "3964 of 4089 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 4089,
+        "per_year": {
+          "2010": 148,
+          "2011": 255,
+          "2012": 248,
+          "2013": 252,
+          "2014": 246,
+          "2015": 252,
+          "2016": 252,
+          "2017": 251,
+          "2018": 252,
+          "2019": 252,
+          "2020": 253,
+          "2021": 252,
+          "2022": 251,
+          "2023": 250,
+          "2024": 252,
+          "2025": 251,
+          "2026": 172
+        },
+        "modal_full_year": 252.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "NKD": {
+      "G1_print_jump": {
+        "robust_sigma": 0.0017170953247326644,
+        "threshold": 0.025756429870989965,
+        "n_segment_returns": 80091,
+        "n_beyond": 31,
+        "share": 0.00038705971956899026,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 816.0,
+        "n_below_half_median": 1521,
+        "share": 0.3014268727705113,
+        "failures": [
+          "1521 of 5046 sessions below half the median bar count"
+        ],
+        "passes": false
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 4731,
+        "share": 0.9375743162901308,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "4731 of 5046 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 5046,
+        "per_year": {
+          "2010": 178,
+          "2011": 309,
+          "2012": 311,
+          "2013": 306,
+          "2014": 303,
+          "2015": 312,
+          "2016": 310,
+          "2017": 309,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 216
+        },
+        "modal_full_year": 311.0,
+        "sparse_years": {},
+        "failures": [],
+        "passes": true
+      }
+    },
+    "BTC": {
+      "G1_print_jump": {
+        "robust_sigma": 0.004291358157773577,
+        "threshold": 0.06437037236660365,
+        "n_segment_returns": 49684,
+        "n_beyond": 36,
+        "share": 0.0007245793414378874,
+        "failures": [],
+        "passes": true
+      },
+      "G2_roll_monotone": {
+        "n_rolls": 104,
+        "n_reversions": 1,
+        "failures": [],
+        "passes": true
+      },
+      "G3_bars": {
+        "median_bars_per_session": 836.0,
+        "n_below_half_median": 583,
+        "share": 0.2133186974021222,
+        "failures": [],
+        "passes": true
+      },
+      "G4_front_is_near": {
+        "n_not_in_nearest_three": 2655,
+        "share": 0.9714599341383096,
+        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
+        "failures": [
+          "2655 of 2733 sessions whose front is not among the three nearest expiries"
+        ],
+        "passes": false
+      },
+      "G5_coverage": {
+        "sessions": 2733,
+        "per_year": {
+          "2017": 10,
+          "2018": 312,
+          "2019": 312,
+          "2020": 312,
+          "2021": 311,
+          "2022": 310,
+          "2023": 310,
+          "2024": 313,
+          "2025": 312,
+          "2026": 231
+        },
+        "modal_full_year": 312.0,
+        "sparse_years": {
+          "2017": 10
+        },
+        "failures": [],
+        "passes": true
+      }
+    }
+  },
+  "all_gates_pass": false,
+  "files": [
+    "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20120101-20121231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20130101-20131231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20140101-20140629.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20240101-20240828.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20240829-20241231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20250101-20250903.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20140630-20141231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20150101-20151231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
+    "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst"
+  ]
+}

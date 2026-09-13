@@ -126,11 +126,24 @@ def specs_for(prices: dict) -> dict:
         div, why = decide_scaling(r, d["tick_price_units"], d["unit_of_measure_qty"], px)
         tick_usd_full = d["tick_price_units"] * d["unit_of_measure_qty"] / div
         sized = MICRO_OF.get(r, r)
+        tick_src = "full contract"
         if sized != r:
-            if sized not in sr or "tick_usd" not in sr[sized]:
-                raise GateError(f"[SPEC] {r} maps to micro {sized}, absent from "
-                                f"{SPECS_REPO.name}")
-            tick_usd = sr[sized]["tick_usd"]
+            # the committed spec file first (it is the repo's own record), else the definition
+            # table, whose formula was verified on all 17 anchors. Never a typed-in number.
+            if sized in sr and "tick_usd" in sr[sized]:
+                tick_usd, tick_src = sr[sized]["tick_usd"], SPECS_REPO.name
+            elif sized in sd and sd[sized].get("present"):
+                # A MICRO INHERITS ITS PARENT'S QUOTATION CONVENTION by construction -- MBT
+                # quotes the same bitcoin price as BTC -- so reuse the parent's divisor rather
+                # than re-deciding from the micro's own notional. Micro notionals are small
+                # (MBT is 0.1 BTC, about $8,000) and would force the band's floor down far
+                # enough to break the no-ambiguity invariant (HI/LO must stay under 100).
+                m = sd[sized]
+                tick_usd = m["tick_price_units"] * m["unit_of_measure_qty"] / div
+                tick_src = f"{SPECS_DEF.name} (parent {r}'s scaling)"
+            else:
+                raise GateError(f"[SPEC] {r} maps to micro {sized}, which is in neither "
+                                f"{SPECS_REPO.name} nor {SPECS_DEF.name}")
         else:
             tick_usd = tick_usd_full
         out[r] = {"tick_price_units": d["tick_price_units"],
@@ -138,6 +151,7 @@ def specs_for(prices: dict) -> dict:
                   "scaling_divisor": div, "scaling_reason": why,
                   "tick_usd_full_contract": tick_usd_full,
                   "sized_as": sized, "tick_usd": tick_usd,
+                  "tick_usd_source": tick_src,
                   "has_micro": sized != r, "last_price": px,
                   "notional_usd": px * d["unit_of_measure_qty"] / div}
         # cross-check against the repo's committed value where one exists
@@ -314,6 +328,262 @@ def do_decode(limit: int | None) -> int:
         P(f"  [{done}/{len(todo)}] {f.name[:44]:<44} {el / 60:5.1f} min  {nr:>2} roots  "
           f"ETA {rate * (len(todo) - done) / 60:6.1f} min")
     P(f"\n  decode done in {(time.perf_counter() - t0) / 60:.1f} min")
+    return 0
+
+
+def assemble_sessions(H, D, root):
+    """One root's session rows. A session is 18:00 on day a through 16:59 on day b, the row is
+    keyed on day b and carries day b's front month; its EVENING segments come from that same
+    contract's bars on day a. No stitching, no adjustment."""
+    h = H[H["root"] == root]
+    d = D[D["root"] == root]
+    if len(h) == 0 or len(d) == 0:
+        return None
+    # front month per day: highest FULL-DAY volume (D448/D462's rule, unchanged)
+    front = d.sort_values(["day", "volume"], kind="stable").groupby("day").tail(1)
+    front = front.set_index("day")["contract"]
+    days = np.array(sorted(front.index))
+    prev = {days[i]: days[i - 1] for i in range(1, len(days))}
+    # wide hourly tables keyed (contract, day)
+    piv = {}
+    for col, name in (("open_at_first", "o"), ("high", "h"), ("low", "l"),
+                      ("close_at_last", "c"), ("volume", "v"), ("bars", "n")):
+        piv[name] = h.pivot_table(index=["contract", "day"], columns="hour", values=col,
+                                  aggfunc="first")
+    rows = []
+    for db in days[1:]:
+        da = prev[db]
+        cb = front[db]
+        ca = front.get(da)
+        rec = {"root": root, "day": db, "prev_day": da, "contract": cb, "front_prev": ca,
+               "same_front": bool(ca == cb)}
+        tot = 0
+        for hh, nm in zip(SEG_H, SEGN):
+            src_day = da if hh >= 18 else db
+            for name, suf in (("o", "_o"), ("h", "_h"), ("l", "_l"), ("c", "_c"),
+                              ("v", "_v"), ("n", "_n")):
+                t = piv[name]
+                val = np.nan
+                if (cb, src_day) in t.index and hh in t.columns:
+                    val = t.loc[(cb, src_day), hh]
+                rec[nm + suf] = val
+            if np.isfinite(rec[nm + "_n"]):
+                tot += rec[nm + "_n"]
+        rec["bars"] = tot
+        rows.append(rec)
+    return pd.DataFrame(rows)
+
+
+def day_window(df):
+    """Each root's OWN day session, derived from which ET hours actually carry closes.
+
+    The h09..h15 window is INDEX-FUTURES-SHAPED and wrong for most of the universe: grains end
+    at 14:20 ET so h15 is 0.0% populated, and livestock end at 14:05 ET so h15 is 11.5%. Measured
+    on the assembled panel, a sigma over h09_o -> h15_c reads 0.1% coverage on ZC/ZS/ZW/ZL/ZM --
+    about five sessions of 4,933, which is noise presented as a measurement.
+
+    Returns (first_hour, last_hour, presence) over the **h09..h15 US day-session band** -- the
+    longest contiguous run whose presence is at least half the root's own best hour in that band.
+
+    The band matters and I got it wrong once: taking the longest populated run over h00..h16
+    gives h00-h16 for anything that trades 23 hours, so the "day session" sigma silently became
+    an overnight-PLUS-day figure (ES $183 against $157, NQ $323 against $279). h09..h15 is this
+    programme's own day session -- D467's `DAY_SEG`, with h15_c being the 16:00 print and the
+    point at which P2's flatten applies -- so the band is fixed and only its POPULATED extent is
+    derived. Grains then come back h09-h14 and livestock h09-h14, which is correct for both.
+    """
+    day_idx = [i for i, h in enumerate(SEG_H) if 9 <= h <= 15]
+    pres = {SEG_H[i]: float(np.isfinite(df[SEGN[i] + "_c"]).mean()) for i in day_idx}
+    best = max(pres.values()) if pres else 0.0
+    if best <= 0:
+        return None, None, pres
+    keep = [h for h in sorted(pres) if pres[h] >= 0.5 * best]
+    # longest contiguous run
+    runs, cur = [], [keep[0]] if keep else []
+    for h in keep[1:]:
+        if h == cur[-1] + 1:
+            cur.append(h)
+        else:
+            runs.append(cur)
+            cur = [h]
+    if cur:
+        runs.append(cur)
+    run = max(runs, key=len) if runs else []
+    if not run:
+        return None, None, pres
+    return run[0], run[-1], pres
+
+
+def robust_sigma(x):
+    """A sigma from the IQR, so one bad print cannot set the scale that detects bad prints."""
+    x = x[np.isfinite(x)]
+    if len(x) < 100:
+        return np.nan
+    q1, q3 = np.percentile(x, [25, 75])
+    return float((q3 - q1) / 1.349)
+
+
+def gates_for(df, root, spec, expiries):
+    """Five gates, every threshold DERIVED from the root's own distribution. Each carries a
+    `failures` list, and `passes` is False when that list is non-empty."""
+    g = {}
+    seg_c = df[[s + "_c" for s in SEGN]].to_numpy(float)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        lr = np.diff(np.log(seg_c), axis=1).ravel()
+    sig = robust_sigma(lr)
+    # G1 -- a segment return beyond 15 robust sigma is a suspect print, not a market move
+    n_fin = int(np.isfinite(lr).sum())
+    bad1 = int((np.abs(lr) > 15 * sig).sum()) if np.isfinite(sig) else 0
+    g["G1_print_jump"] = {"robust_sigma": sig, "threshold": 15 * sig if np.isfinite(sig) else None,
+                          "n_segment_returns": n_fin, "n_beyond": bad1,
+                          "share": bad1 / n_fin if n_fin else None,
+                          "failures": ([f"{bad1} of {n_fin} segment returns beyond 15 sigma "
+                                        f"({bad1 / n_fin:.3%})"]
+                                       if n_fin and bad1 / n_fin > 0.001 else [])}
+    # G2 -- the volume-chosen front must not REVERT to an earlier expiry
+    exp = df["contract"].map(expiries)
+    rev = int((exp.diff() < 0).sum())
+    g["G2_roll_monotone"] = {"n_rolls": int((~df["same_front"]).sum()), "n_reversions": rev,
+                             "failures": ([f"{rev} roll reversions"] if rev > 2 else [])}
+    # G3 -- bars per session, against the root's OWN modal session length
+    tot = df["bars"].to_numpy(float)
+    med = float(np.nanmedian(tot))
+    thin = int((tot < 0.5 * med).sum())
+    g["G3_bars"] = {"median_bars_per_session": med, "n_below_half_median": thin,
+                    "share": thin / len(df) if len(df) else None,
+                    "failures": ([f"{thin} of {len(df)} sessions below half the median bar "
+                                  f"count"] if len(df) and thin / len(df) > 0.25 else [])}
+    # G4 -- replaces D467's ETF-correlation gate, which does not generalise: the volume front
+    # must be among the two NEAREST unexpired expiries. Uses `definition`, which we own.
+    rank_bad = 0
+    if expiries:
+        ex_sorted = np.array(sorted(expiries.values()))
+        dnum = pd.to_datetime(df["day"]).astype("int64").to_numpy()
+        e = exp.to_numpy(float)
+        for i in range(len(df)):
+            if not np.isfinite(e[i]):
+                continue
+            ahead = ex_sorted[ex_sorted >= dnum[i]]
+            if len(ahead) and e[i] not in ahead[:3]:
+                rank_bad += 1
+    g["G4_front_is_near"] = {"n_not_in_nearest_three": rank_bad,
+                             "share": rank_bad / len(df) if len(df) else None,
+                             "note": "the volume-chosen front must be among the three nearest "
+                                     "unexpired expiries; replaces D467's ETF proxy",
+                             "failures": ([f"{rank_bad} of {len(df)} sessions whose front is not "
+                                           f"among the three nearest expiries"]
+                                          if len(df) and rank_bad / len(df) > 0.05 else [])}
+    # G5 -- coverage: sessions per year against the root's own modal year
+    yr = pd.to_datetime(df["day"]).dt.year
+    per = yr.value_counts().sort_index()
+    full = [y for y, n in per.items() if 2011 <= y <= 2025]
+    modal = float(np.median([per[y] for y in full])) if full else np.nan
+    sparse = {int(y): int(per[y]) for y in full if per[y] < 0.9 * modal}
+    g["G5_coverage"] = {"sessions": int(len(df)), "per_year": {int(k): int(v) for k, v in
+                                                              per.items()},
+                        "modal_full_year": modal, "sparse_years": sparse,
+                        "failures": []}   # reported, never a rejection: thin years are a FACT
+    for k in g:
+        g[k]["passes"] = not g[k]["failures"]
+    return g
+
+
+def do_build() -> int:
+    files = ohlcv_files()
+    hp = sorted(CACHE.glob("*.hourly.parquet"))
+    dp = sorted(CACHE.glob("*.dayvol.parquet"))
+    if len(hp) != len(files):
+        raise GateError(f"[CACHE] {len(hp)} of {len(files)} files decoded -- run --decode first")
+    P(f"  loading {len(hp)} cached slices ...")
+    H = pd.concat([pd.read_parquet(p) for p in hp], ignore_index=True)
+    D = pd.concat([pd.read_parquet(p) for p in dp], ignore_index=True)
+    H = H.groupby(KEY, as_index=False).agg(
+        high=("high", "max"), low=("low", "min"), volume=("volume", "sum"),
+        bars=("bars", "sum"), first_min=("first_min", "min"), last_min=("last_min", "max"),
+        open_at_first=("open_at_first", "first"), close_at_last=("close_at_last", "last"))
+    D = D.groupby(["root", "day", "contract"], as_index=False)["volume"].sum()
+    P(f"  {len(H):,} hourly rows, {len(D):,} (root, day, contract) volume rows, "
+      f"{H['root'].nunique()} roots\n")
+
+    # expiries, from the definition probe's per-root front symbol -- rebuilt here per contract
+    sd = json.loads(SPECS_DEF.read_text(encoding="utf-8"))["specs"]
+
+    P("  root  sessions   window   cov   tick $  sized   sigma$/d  notional$  scale")
+    out, metas, specs = [], {}, {}
+    last_px = {}
+    for r in sorted(set(H["root"])):
+        sub = H[H["root"] == r]
+        lp = sub.sort_values("day").iloc[-1]["close_at_last"]
+        last_px[r] = float(lp)
+    specs = specs_for(last_px)
+    for r in ROOTS:
+        if r not in specs:
+            continue
+        df = assemble_sessions(H, D, r)
+        if df is None or len(df) < 250:
+            P(f"  {r:>4}  SKIPPED -- {0 if df is None else len(df)} sessions")
+            continue
+        # the day-session move in dollars at the traded size, over the root's OWN window
+        sp = specs[r]
+        h0, h1, pres = day_window(df)
+        if h0 is None:
+            P(f"  {r:>4}  SKIPPED -- no populated day-session hours")
+            continue
+        o = df[f"h{h0:02d}_o"].to_numpy(float)
+        c = df[f"h{h1:02d}_c"].to_numpy(float)
+        cov = float(np.isfinite(o * c).mean())
+        with np.errstate(invalid="ignore", divide="ignore"):
+            move_ticks = (c - o) / sp["tick_price_units"]
+        sd_usd = float(np.nanstd(move_ticks * sp["tick_usd"], ddof=1))
+        n_win = int(np.isfinite(o * c).sum())
+        if n_win < 250:
+            raise GateError(f"[WINDOW] {r}: only {n_win} sessions carry both ends of its own "
+                            f"derived window h{h0:02d}->h{h1:02d}; sigma would be noise")
+        expiries = {}
+        for c in df["contract"].dropna().unique():
+            m = OUTRIGHT.match(str(c))
+            if m:
+                y = int(m.group(3))
+                y = 2000 + y if y >= 100 else (2020 + y if y < 10 else 2000 + y)
+                mo = "FGHJKMNQUVXZ".index(m.group(2)) + 1
+                expiries[c] = pd.Timestamp(year=y, month=mo, day=1).value
+        metas[r] = gates_for(df, r, sp, expiries)
+        df["sized_as"] = sp["sized_as"]
+        out.append(df)
+        bad = [k for k, v in metas[r].items() if not v["passes"]]
+        P(f"  {r:>4}{len(df):>9}  h{h0:02d}-h{h1:02d}{cov:>7.0%}{sp['tick_usd']:>9.3f}"
+          f"{sp['sized_as']:>7}{sd_usd:>11.0f}{sp['notional_usd']:>11,.0f}"
+          f"{'  /100' if sp['scaling_divisor'] == 100 else '   x1'}"
+          + ("  C-d PASS" if sd_usd <= 500 else "  C-d FAIL")
+          + (f"  GATES {len(bad)}" if bad else ""))
+        specs[r]["day_window"] = [int(h0), int(h1)]
+        specs[r]["day_window_coverage"] = cov
+        specs[r]["day_window_sessions"] = n_win
+        specs[r]["hour_presence"] = {int(k): v for k, v in pres.items()}
+        specs[r]["day_session_sigma_usd"] = sd_usd
+        specs[r]["c_d_passes"] = bool(sd_usd <= 500.0)
+        specs[r]["n_sessions"] = int(len(df))
+
+    panel = pd.concat(out, ignore_index=True)
+    FIX.mkdir(parents=True, exist_ok=True)
+    panel.to_csv(OUT, index=False, compression="gzip")
+    meta = {"built_utc": pd.Timestamp.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "builder": "scripts/build_fut_breadth_hourly.py",
+            "session": ["18:00", "16:59"], "segments": SEGN,
+            "front_rule": "highest full-day volume per calendar ET day; the row carries day b's "
+                          "front and its evening segments come from that contract on day a",
+            "id_rule": "each bar is labelled from the symbol mapping window CONTAINING its "
+                       "timestamp; a flat id->symbol dict pools reused expiry slots (CLN9 is "
+                       "July-2019 then July-2029) and is the defect this builder exists to avoid",
+            "scaling_rule": "tick_usd = mpi*1e-9 * uom_qty*1e-9, /100 where the NOTIONAL test "
+                            "says the quote is percent or cents; ambiguity raises",
+            "roots": sorted(specs), "specs": specs, "gates": metas,
+            "all_gates_pass": all(v["passes"] for m in metas.values() for v in m.values()),
+            "files": [f.name for f in files]}
+    META.write_text(json.dumps(meta, indent=2, default=float), encoding="utf-8")
+    P(f"\n  wrote {OUT.relative_to(REPO)}  ({OUT.stat().st_size / 2**20:.0f} MiB, "
+      f"{len(panel):,} session rows, {len(specs)} roots)")
+    P(f"  wrote {META.relative_to(REPO)}   all gates pass: {meta['all_gates_pass']}")
     return 0
 
 
@@ -534,8 +804,7 @@ def main() -> int:
     if a.status:
         return do_status()
     if a.build:
-        P("  --build is not implemented yet; --decode first")
-        return 2
+        return do_build()
     ap.print_help()
     return 1
 
