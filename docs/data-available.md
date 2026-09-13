@@ -58,6 +58,43 @@ the day session on most earlier days: 21% coverage in 2010, 89% in 2015), and th
 circuit-breaker sessions of March 2020 (09, 12, 16) have no continuous open** — one print at 09:30
 and nothing until 09:45 — so an open-to-close study must drop them or read the open at 09:45.
 
+And the two **breadth** fixtures, which cover **36 roots** rather than a hand-picked few:
+**`fut_breadth_hourly.csv.gz`** (the hourly day session, 170,643 root-sessions, 2010-06-07 →;
+builder `scripts/build_fut_breadth_hourly.py`; it is the source of the windowed `ids_of` and of
+the front-month election every later futures fixture inherits) and **`fut_day5m.parquet`**
+(the same 36 roots at **FIVE minutes**, 10,384,830 bars over 135,179 root-sessions, 84 bars per
+full session in the 09:00–15:59 ET window, 98 MiB; builder `scripts/build_fut_day5m.py`, decode
+88 min then a 2-minute build). It exists because 7 hourly bars pin a non-overlapping past/future
+pair to H=3 and one observation per session; 84 bars fit the pair at every H in {3,4,6,8,12,16,20}.
+It takes the front month and the `same_front`/`present` flags from the hourly fixture **by inner
+join, not re-derived**, so the two cannot disagree about the front (the join keeps 26.5% of 39.2 M
+raw bars; the rest are back months). Its **135,179** root-sessions are fewer than the hourly
+fixture's **170,643** because the hourly session is 18:00→16:59 and counts sessions that have
+overnight bars but nothing inside the day window; the 5-minute fixture holds only sessions with at
+least one 09:00–15:59 bar. The 35,464-session gap is **front-loaded exactly where the archive gap
+is** — 4,223 in 2011 and 3,665 in 2012 against ~1,600 a year from 2016, heaviest on CL, YM, ES, NQ,
+NKD and HO — and no day5m session lies outside the hourly fixture, the inner join being exact.
+
+**What bites, and the meta carries all of it computed rather than asserted.** *(i)* **A root's
+SPAN IS NOT ITS USABLE SPAN, and it fails in two different ways that one flag cannot tell apart**,
+so `coverage.per_root` reports both: `first_full_bars_year` (the root's own session band ≥90%
+populated) and `first_clean_year` (that **and** ≥240 sessions). **ES, NQ and YM read 2011 / 2016** —
+the early sessions that exist have *complete* bars and there are merely few of them (ES holds 33
+sessions in 2010, 73 in 2011, 113 in 2012, 212 in 2013, 258 from 2016), which is a wholly different
+object from **SR3 in 2020: 257 sessions with no five-minute slot present in more than 38% of them**
+(SR3 is clean only from 2022). Others: the six FX roots, GC HG SI UB ZB ZF ZN ZT **2010/2011**; the
+five grains **2013/2014**; BZ 2015; CL HE HO LE NG NKD PL RB TN **2016**; RTY 2018; BTC 2020; and
+**PA NEVER** — palladium tops out at 0.80 fill and carries intermittent interior slots.
+*(ii)* **The band is per root, measured not assumed:** 84 slots 09:00–16:00 for the 23-hour
+markets, **58 at 09:30–14:20 for the five grains, 55 at 09:30–14:05 for livestock**. A study
+applying the 84-slot window to ZC silently reads 26 empty slots.
+*(iii)* **`present=False` does NOT mean the bar is missing.** All **443,124** such rows carry real
+OHLC and **non-zero volume**; zero have a NaN close. It is the *hourly* fixture's session flag,
+`isfinite(hourly_open × hourly_close)` over the root's h09..h15 window, so it marks holidays,
+half-days and thin sessions — 6A on 2010-07-05 trades 29 contracts in the opening bar. 8,349 of
+135,179 root-sessions (6.2%), heaviest on RB NG HO CL. `same_front=False` marks 4,408 root-sessions,
+the rolls, and a return across that boundary is a roll rather than a move.
+
 ### Six things that will bite a study reading this
 
 1. **NOT COMMITTED, AND CANNOT BE.** CME's terms forbid redistributing archived data, so
