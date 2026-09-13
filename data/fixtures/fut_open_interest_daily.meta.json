@@ -1,125 +1,125 @@
 {
  "spec": "ab8b5df",
- "built_utc": "2026-09-12T22:13:22Z",
+ "built_utc": "2026-09-13T18:57:01Z",
  "files": [
   {
    "file": "glbx-mdp3-20220101-20221231.statistics.dbn.zst",
    "rows_in": 63993510,
    "rows_kept": 89558,
-   "secs": 11.9,
-   "rss_mb": 465.0
+   "secs": 19.4,
+   "rss_mb": 467.0
   },
   {
    "file": "glbx-mdp3-20250101-20251231.statistics.dbn.zst",
    "rows_in": 65852916,
    "rows_kept": 93392,
-   "secs": 18.4,
-   "rss_mb": 221.0
+   "secs": 30.6,
+   "rss_mb": 223.0
   },
   {
    "file": "glbx-mdp3-20230101-20231231.statistics.dbn.zst",
    "rows_in": 59739301,
    "rows_kept": 89458,
-   "secs": 17.1,
-   "rss_mb": 525.0
+   "secs": 28.3,
+   "rss_mb": 527.0
   },
   {
    "file": "glbx-mdp3-20240101-20241231.statistics.dbn.zst",
    "rows_in": 60769150,
-   "rows_kept": 84848,
-   "secs": 17.2,
-   "rss_mb": 213.0
+   "rows_kept": 84814,
+   "secs": 27.9,
+   "rss_mb": 215.0
   },
   {
    "file": "glbx-mdp3-20260101-20260910.statistics.dbn.zst",
    "rows_in": 54580107,
    "rows_kept": 71118,
-   "secs": 15.8,
-   "rss_mb": 509.0
+   "secs": 26.6,
+   "rss_mb": 511.0
   },
   {
    "file": "glbx-mdp3-20210101-20211231.statistics.dbn.zst",
    "rows_in": 56358701,
    "rows_kept": 100122,
-   "secs": 10.3,
-   "rss_mb": 261.0
+   "secs": 17.7,
+   "rss_mb": 260.0
   },
   {
    "file": "glbx-mdp3-20200101-20201231.statistics.dbn.zst",
    "rows_in": 54840862,
    "rows_kept": 109936,
-   "secs": 9.8,
-   "rss_mb": 534.0
+   "secs": 18.1,
+   "rss_mb": 535.0
   },
   {
    "file": "glbx-mdp3-20180101-20181231.statistics.dbn.zst",
    "rows_in": 44500449,
    "rows_kept": 77696,
-   "secs": 8.7,
-   "rss_mb": 502.0
+   "secs": 14.8,
+   "rss_mb": 506.0
   },
   {
    "file": "glbx-mdp3-20190101-20191231.statistics.dbn.zst",
    "rows_in": 46824168,
    "rows_kept": 94880,
-   "secs": 8.1,
-   "rss_mb": 297.0
+   "secs": 13.9,
+   "rss_mb": 300.0
   },
   {
    "file": "glbx-mdp3-20170101-20171231.statistics.dbn.zst",
    "rows_in": 35799069,
    "rows_kept": 112930,
-   "secs": 6.6,
-   "rss_mb": 224.0
+   "secs": 10.8,
+   "rss_mb": 226.0
   },
   {
    "file": "glbx-mdp3-20160101-20161231.statistics.dbn.zst",
    "rows_in": 28233139,
    "rows_kept": 119924,
-   "secs": 5.5,
-   "rss_mb": 409.0
+   "secs": 9.3,
+   "rss_mb": 411.0
   },
   {
    "file": "glbx-mdp3-20150101-20151231.statistics.dbn.zst",
    "rows_in": 27044387,
    "rows_kept": 138142,
-   "secs": 5.1,
-   "rss_mb": 318.0
+   "secs": 9.0,
+   "rss_mb": 322.0
   },
   {
    "file": "glbx-mdp3-20140101-20141231.statistics.dbn.zst",
    "rows_in": 24147098,
    "rows_kept": 119716,
-   "secs": 4.1,
-   "rss_mb": 481.0
+   "secs": 6.3,
+   "rss_mb": 483.0
   },
   {
    "file": "glbx-mdp3-20110101-20111231.statistics.dbn.zst",
    "rows_in": 24252743,
    "rows_kept": 136122,
-   "secs": 3.9,
-   "rss_mb": 493.0
+   "secs": 5.8,
+   "rss_mb": 496.0
   },
   {
    "file": "glbx-mdp3-20130101-20131231.statistics.dbn.zst",
    "rows_in": 23198060,
    "rows_kept": 126548,
-   "secs": 3.8,
-   "rss_mb": 410.0
+   "secs": 5.7,
+   "rss_mb": 408.0
   },
   {
    "file": "glbx-mdp3-20120101-20121231.statistics.dbn.zst",
    "rows_in": 20775466,
    "rows_kept": 141712,
-   "secs": 3.4,
-   "rss_mb": 219.0
+   "secs": 5.3,
+   "rss_mb": 222.0
   },
   {
    "file": "glbx-mdp3-20100606-20101231.statistics.dbn.zst",
    "rows_in": 21257261,
    "rows_kept": 81308,
-   "secs": 3.1,
-   "rss_mb": 251.0
+   "secs": 4.6,
+   "rss_mb": 255.0
   }
  ],
  "roots": [
@@ -151,14 +151,14 @@
   },
   "CL": {
    "sessions": 2808,
-   "contracts": 148
+   "contracts": 147
   },
   "GC": {
    "sessions": 4031,
    "contracts": 120
   }
  },
- "wall_min": 1.8,
+ "wall_min": 3.3,
  "gates": {
   "O1": {
    "rows": 7992,
@@ -266,5 +266,5 @@
    }
   }
  },
- "gated_utc": "2026-09-12T22:18:13Z"
+ "gated_utc": "2026-09-13T19:11:24Z"
 }

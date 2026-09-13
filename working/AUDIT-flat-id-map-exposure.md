@@ -1,5 +1,15 @@
 # Audit — which fixtures still carry the flat instrument-id map, and is anything exposed?
 
+> **ANSWERED AND CLOSED 2026-09-13 by [D521](../docs/decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open-interest-fixture-was-carrying-a-phantom-CL-contract.md).**
+> All three builders are ported; all three fixtures were rebuilt and diffed. §3's conclusion —
+> "no gross contamination reaches CL" — was right, and §4's caveat was the operative half:
+> **the perturbation was real and it was 0.02%.** Instrument 42007396 was `6AF4` until
+> 2024-01-21 and was reissued as `CLG36`; the flat dict counted it as a 61st crude contract on
+> twelve January 2024 sessions. §5's recommendation was correct on both counts — do the rebuild,
+> and do it before any curve work, because `oi_front` was never touched and `oi_total` was.
+> Micro flow and index 1m came back byte-identical; the index build ingested 16,077 foreign bars
+> and the front-by-volume rule dropped all of them. Kept as the reasoning that led there.
+
 **2026-09-13, on the principal's question after D515's CL check.** D520 found the flat
 `{instrument_id: symbol}` dict ingested **229,206 bars (0.297% of 77.2M)** that belonged to other
 instruments entirely, and fixed `build_fut_sessions_hourly.py`. The question here: does any **term

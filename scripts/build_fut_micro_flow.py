@@ -42,16 +42,55 @@ def rss_mb():
 
 
 def ids_of(store):
-    out = {}
+    """Symbol mappings as (iid, root, contract, w0, w1) WINDOWS -- never a flat {id: symbol} dict.
+
+    D520. A flat dict keeps only the LAST mapping written for an id and discards the validity dates,
+    so one id carries one label for all time. The archive breaks that two ways: CME reuses the
+    single-digit-year slot the moment a contract expires, and a live contract can be rotated to a new
+    id mid-year. Across the ohlcv archive that dict ingested 229,206 bars of the WRONG INSTRUMENT.
+
+    **Deliberately not imported from `build_fut_breadth_hourly`**, unlike `build_fut_day5m` and
+    `build_fut_open_interest`, because that builder's ROOTS list has no MES or MNQ: importing its
+    `ids_of` here would silently drop every micro contract, which is half of this fixture's purpose.
+    One definition per root list, not one per repo.
+    """
+    rows = []
     for sym, ivs in store.metadata.mappings.items():
         m = OUTRIGHT.match(str(sym))
         if not m:
             continue
         for iv in (ivs if isinstance(ivs, list) else [ivs]):
             sid = iv["symbol"] if isinstance(iv, dict) else getattr(iv, "symbol", None)
-            if sid:
-                out[int(sid)] = str(sym)
-    return out
+            if not sid:
+                continue
+            s = iv["start_date"] if isinstance(iv, dict) else getattr(iv, "start_date")
+            e = iv["end_date"] if isinstance(iv, dict) else getattr(iv, "end_date")
+            rows.append((int(sid), m.group(1), str(sym),
+                         np.uint64(pd.Timestamp(s, tz="UTC").value), np.uint64(pd.Timestamp(e, tz="UTC").value)))
+    if not rows:
+        return None
+    w = pd.DataFrame(rows, columns=["iid", "root", "contract", "w0", "w1"])
+    if w.duplicated(["iid", "w0"]).any():
+        raise AssertionError("[IDS] the same (instrument_id, window start) appears twice")
+    return w
+
+
+def label_rows(a, w, ts_field="ts_event"):
+    """Attach the contract from the mapping window CONTAINING each record's own timestamp.
+
+    Returns the joined frame carrying `_i`, the positional index back into `a`. The guard is on `_i`
+    rather than on (iid, ts): a tbbo file can legitimately carry several trades for one instrument at
+    one nanosecond, so an (iid, ts) guard would fire on correct data, while a repeated `_i` means one
+    record was claimed by two windows, which is the real ambiguity.
+    """
+    raw = pd.DataFrame({"iid": a["instrument_id"].astype(np.uint32),
+                        "ts": a[ts_field].astype(np.uint64),
+                        "_i": np.arange(len(a), dtype=np.int64)})
+    j = raw.merge(w, on="iid", how="inner")
+    j = j[(j["ts"] >= j["w0"]) & (j["ts"] < j["w1"])]
+    if j["_i"].duplicated().any():
+        raise AssertionError(f"[IDS] {int(j['_i'].duplicated().sum())} records claimed by MORE THAN ONE mapping window")
+    return j
 
 
 # ------------------------------------------------------------------------------------------ the aggregation (pure; self-tested)
@@ -90,13 +129,18 @@ def reaggregate(parts):
 
 def worker_tbbo(path, chunk=CHUNK, max_chunks=None):
     import databento as db
-    t0 = time.time(); store = db.DBNStore.from_file(path); ids = ids_of(store); keys = np.fromiter(ids.keys(), dtype=np.uint32)
+    t0 = time.time(); store = db.DBNStore.from_file(path); w = ids_of(store)
+    if w is None:
+        return dict(file=Path(path).name, rows_in=0, rows_kept=0, secs=round(time.time() - t0, 1), rss_mb=round(rss_mb(), 0), table=None)
+    keys = w["iid"].to_numpy(np.uint32)
     parts = []; n_in = n_kept = 0
     for k, arr in enumerate(store.to_ndarray(count=chunk)):
         n_in += len(arr); sel = np.isin(arr["instrument_id"], keys); a = arr[sel]
         if a.size:
-            n_kept += a.size; contract = np.array([ids[int(x)] for x in a["instrument_id"]])
-            parts.append(bucket_trades(a["ts_event"].astype(np.int64), contract, a["price"].astype(np.int64), a["size"], a["side"], a["bid_px_00"].astype(np.int64), a["ask_px_00"].astype(np.int64)))
+            j = label_rows(a, w)
+            if len(j):
+                i = j["_i"].to_numpy(); n_kept += len(i); contract = j["contract"].to_numpy()
+                parts.append(bucket_trades(a["ts_event"][i].astype(np.int64), contract, a["price"][i].astype(np.int64), a["size"][i], a["side"][i], a["bid_px_00"][i].astype(np.int64), a["ask_px_00"][i].astype(np.int64)))
         if max_chunks and k + 1 >= max_chunks:
             break
     out = reaggregate(parts) if parts else None
@@ -106,13 +150,19 @@ def worker_tbbo(path, chunk=CHUNK, max_chunks=None):
 def worker_ohlcv(path):
     """(contract, ET minute) volume for the four roots -> per (contract, bucket_start) volume, for gate T2."""
     import databento as db
-    t0 = time.time(); store = db.DBNStore.from_file(path); ids = ids_of(store); keys = np.fromiter(ids.keys(), dtype=np.uint32); parts = []; n_in = 0
+    t0 = time.time(); store = db.DBNStore.from_file(path); w = ids_of(store)
+    if w is None:
+        return dict(file=Path(path).name, rows_in=0, secs=round(time.time() - t0, 1), rss_mb=round(rss_mb(), 0), table=None)
+    keys = w["iid"].to_numpy(np.uint32); parts = []; n_in = 0
     for arr in store.to_ndarray(count=10_000_000):
         n_in += len(arr); sel = np.isin(arr["instrument_id"], keys); a = arr[sel]
         if a.size:
-            ts = pd.to_datetime(a["ts_event"].astype(np.int64), utc=True).tz_convert("US/Eastern")
-            df = pd.DataFrame({"contract": [ids[int(x)] for x in a["instrument_id"]], "bucket_start": ts.floor(f"{BUCKET_MIN}min").tz_localize(None), "vol1m": a["volume"].astype(np.int64)})
-            parts.append(df.groupby(["contract", "bucket_start"], sort=False)["vol1m"].sum().reset_index())
+            j = label_rows(a, w)
+            if len(j):
+                i = j["_i"].to_numpy()
+                ts = pd.to_datetime(a["ts_event"][i].astype(np.int64), utc=True).tz_convert("US/Eastern")
+                df = pd.DataFrame({"contract": j["contract"].to_numpy(), "bucket_start": ts.floor(f"{BUCKET_MIN}min").tz_localize(None), "vol1m": a["volume"][i].astype(np.int64)})
+                parts.append(df.groupby(["contract", "bucket_start"], sort=False)["vol1m"].sum().reset_index())
     out = pd.concat(parts).groupby(["contract", "bucket_start"], sort=True)["vol1m"].sum().reset_index() if parts else None
     return dict(file=Path(path).name, rows_in=n_in, secs=round(time.time() - t0, 1), rss_mb=round(rss_mb(), 0), table=out)
 

@@ -1,7 +1,8 @@
 """D462 -- the intraday index-futures fixtures: ES, NQ, YM, RTY at one minute, regular hours (09:30-15:59 ET), front month by
 measured daily volume, from the CME ohlcv-1m archive. Spec committed in de75a63 BEFORE this file. Data layer only: no study.
 
-    python scripts/build_fut_index_1m.py --build       # SYSTEM interpreter (databento lives there, as D448/D449) -> data/fixtures/fut_*.csv.gz
+    python scripts/build_fut_index_1m.py --build [--workers 6]   # SYSTEM interpreter (databento lives there, as D448/D449) -> data/fixtures/fut_*.csv.gz
+    python scripts/build_fut_index_1m.py --verify 3    # the pool is a SPEED change only: serial vs 6 workers, bit-identical, on the three smallest files
     python scripts/build_fut_index_1m.py --gates       # G1-G4 on the written fixtures -> data/fixtures/fut_index_1m.meta.json (either interpreter)
     python scripts/build_fut_index_1m.py --selftest    # synthetic records through the same chunk function; DST; the 15:59 bar; front-by-volume; roll logic
 
@@ -29,27 +30,71 @@ def fixture_path(root):
 
 # ------------------------------------------------------------------------------------------ the chunk function (the whole build is this, repeated)
 def ids_of(store):
-    """instrument_id -> (root, symbol) for the four roots' outrights, from the file's symbology mappings."""
-    out = {}
+    """Symbol mappings as (iid, root, contract, w0, w1) WINDOWS -- never a flat {id: (root, symbol)} dict.
+
+    D520. A flat dict keeps only the LAST mapping written for an id and throws the validity dates
+    away, so one id carries one label for all time. CME reuses the single-digit-year slot the moment
+    a contract expires, and a live contract can be rotated to a new id mid-year; across the ohlcv
+    archive the flat dict ingested 229,206 bars of the WRONG INSTRUMENT (0.297% of 77.2M).
+
+    Kept local rather than imported from `build_fut_breadth_hourly` because this builder's ROOTS
+    include RTY, whose day session the breadth fixture gates differently -- one definition per root
+    list. `build_fut_open_interest` and `build_fut_day5m` import it; this one and the micro-flow
+    builder do not, and each says why.
+    """
+    rows = []
     for sym, ivs in store.metadata.mappings.items():
         m = OUTRIGHT.match(str(sym))
         if not m:
             continue
         for iv in (ivs if isinstance(ivs, list) else [ivs]):
             sid = iv["symbol"] if isinstance(iv, dict) else getattr(iv, "symbol", None)
-            if sid:
-                out[int(sid)] = (m.group(1), str(sym))
-    return out
+            if not sid:
+                continue
+            s = iv["start_date"] if isinstance(iv, dict) else getattr(iv, "start_date")
+            e = iv["end_date"] if isinstance(iv, dict) else getattr(iv, "end_date")
+            rows.append((int(sid), m.group(1), str(sym),
+                         np.uint64(pd.Timestamp(s, tz="UTC").value), np.uint64(pd.Timestamp(e, tz="UTC").value)))
+    if not rows:
+        return None
+    w = pd.DataFrame(rows, columns=["iid", "root", "contract", "w0", "w1"])
+    if w.duplicated(["iid", "w0"]).any():
+        raise AssertionError("[IDS] the same (instrument_id, window start) appears twice")
+    return w
 
 
-def process_chunk(arr, ids):
-    """Rows of the four roots' outrights -> (rth DataFrame, day-volume DataFrame). Times US/Eastern; day = calendar ET date."""
-    if not ids:
+def label_rows(a, w, ts_field="ts_event"):
+    """Attach (root, contract) from the mapping window CONTAINING each bar's own timestamp.
+
+    Returns the joined frame carrying `_i`, the positional index back into `a`. The guard is on `_i`:
+    a repeated `_i` means one bar was claimed by two windows, which is the real ambiguity and cannot
+    happen on correct mappings.
+    """
+    raw = pd.DataFrame({"iid": a["instrument_id"].astype(np.uint32),
+                        "ts": a[ts_field].astype(np.uint64),
+                        "_i": np.arange(len(a), dtype=np.int64)})
+    j = raw.merge(w, on="iid", how="inner")
+    j = j[(j["ts"] >= j["w0"]) & (j["ts"] < j["w1"])]
+    if j["_i"].duplicated().any():
+        raise AssertionError(f"[IDS] {int(j['_i'].duplicated().sum())} bars claimed by MORE THAN ONE mapping window")
+    return j
+
+
+def process_chunk(arr, w):
+    """Rows of the four roots' outrights -> (rth DataFrame, day-volume DataFrame). Times US/Eastern; day = calendar ET date.
+
+    `w` is the WINDOW table from `ids_of`, not a dict: each bar is labelled from the window containing
+    its own ts_event, so an id CME reissued to another contract carries the label it held that day.
+    Rows are put back in archive order (`sort_values("_i")`) before anything downstream sees them --
+    `assemble` de-duplicates (root, day, hhmm) after a non-stable sort, so input order is load-bearing.
+    """
+    if w is None or len(w) == 0:
         return None, None
-    sel = np.isin(arr["instrument_id"], np.fromiter(ids.keys(), dtype=np.uint32)); a = arr[sel]
-    if a.size == 0:
+    j = label_rows(arr, w).sort_values("_i")
+    if len(j) == 0:
         return None, None
-    ts = pd.to_datetime(a["ts_event"], utc=True).tz_convert("US/Eastern"); root = np.array([ids[int(x)][0] for x in a["instrument_id"]]); sym = np.array([ids[int(x)][1] for x in a["instrument_id"]])
+    idx = j["_i"].to_numpy(); a = arr[idx]
+    ts = pd.to_datetime(a["ts_event"], utc=True).tz_convert("US/Eastern"); root = j["root"].to_numpy(); sym = j["contract"].to_numpy()
     day = ts.strftime("%Y-%m-%d"); hhmm = ts.strftime("%H:%M"); vol = a["volume"].astype(np.int64)
     dv = pd.DataFrame({"root": root, "day": day, "contract": sym, "volume": vol}).groupby(["root", "day", "contract"], sort=False)["volume"].sum().reset_index()
     rth = (hhmm >= RTH_LO) & (hhmm <= RTH_HI)
@@ -77,24 +122,83 @@ def assemble(bars, dv):
     return bars, sess, pd.DataFrame(rolls)
 
 
-def cmd_build():
+def worker(path):
+    """One archive file -> its RTH bars and day-volume rows, in archive order. The unit of the pool."""
     import databento as db
+    t0 = time.time(); store = db.DBNStore.from_file(path); w = ids_of(store); B, D = [], []; n_in = n_kept = 0
+    for arr in store.to_ndarray(count=CHUNK):
+        n_in += len(arr); bars, dv = process_chunk(arr, w)
+        if bars is not None:
+            n_kept += len(bars); B.append(bars); D.append(dv)
+    return dict(file=Path(path).name, rows_in=n_in, rth_rows_kept=n_kept,
+                ids=0 if w is None else int(w["iid"].nunique()), mapping_windows=0 if w is None else int(len(w)),
+                secs=round(time.time() - t0, 1),
+                bars=pd.concat(B, ignore_index=True) if B else None, dv=pd.concat(D, ignore_index=True) if D else None)
+
+
+def collect(files, workers):
+    """Per-file results, PUT BACK INTO ARCHIVE ORDER whatever order the pool returned them in.
+
+    Order is load-bearing, not cosmetic: `assemble` drops duplicate (root, day, hhmm) after a
+    non-stable sort, so a reshuffle could silently pick a different bar. The pool is fed
+    largest-file-first for balance and the results are re-sorted by the archive's own file order, so
+    the concatenated frame is bit-identical to the serial loop's. `--verify` proves that on real files.
+    """
+    order = {f.name: i for i, f in enumerate(files)}
+    if workers > 1:
+        from multiprocessing import Pool
+        with Pool(workers) as pool:
+            res = pool.map(worker, [str(f) for f in sorted(files, key=lambda p: -p.stat().st_size)], chunksize=1)
+        res.sort(key=lambda r: order[r["file"]])
+    else:
+        res = [worker(str(f)) for f in files]
+    return res
+
+
+def cmd_build(workers):
     t0 = time.time(); files = sorted(RAW.glob("*/*.ohlcv-1m.dbn.zst"), key=lambda p: p.name); assert files, "no ohlcv-1m files under data/raw/databento/"
-    print(f"D462 build -- {len(files)} ohlcv-1m files, chunks of {CHUNK:,} rows\n"); B, D, prov = [], [], []
-    for i, f in enumerate(files, 1):
-        store = db.DBNStore.from_file(f); ids = ids_of(store); n_in = n_kept = 0
-        for arr in store.to_ndarray(count=CHUNK):
-            n_in += len(arr); bars, dv = process_chunk(arr, ids)
-            if bars is not None:
-                n_kept += len(bars); B.append(bars); D.append(dv)
-        prov.append(dict(file=f.name, rows_in=n_in, rth_rows_kept=n_kept, ids=len(ids))); print(f"  [{i:2d}/{len(files)}] {f.name[:40]:<40} {n_in:>12,} rows -> RTH rows {n_kept:>9,}  ({(time.time()-t0)/60:.1f} min)", flush=True)
-    bars, sess, rolls = assemble(pd.concat(B, ignore_index=True), pd.concat(D, ignore_index=True)); del B, D
+    print(f"D462 build -- {len(files)} ohlcv-1m files ({sum(f.stat().st_size for f in files)/1e9:.1f} GB), chunks of {CHUNK:,} rows, {workers} workers\n")
+    res = collect(files, workers)
+    prov = [{k: v for k, v in r.items() if k not in ("bars", "dv")} for r in res]
+    for i, p in enumerate(prov, 1):
+        print(f"  [{i:2d}/{len(files)}] {p['file'][:40]:<40} {p['rows_in']:>12,} rows -> RTH rows {p['rth_rows_kept']:>9,}  {p['secs']:>6.1f}s", flush=True)
+    sec = sum(p["secs"] for p in prov); wall0 = time.time() - t0
+    print(f"[SPEED] sum(item time)/wall = {sec/wall0:.2f}x on {workers} workers ({100*sec/wall0/max(workers,1):.0f}%)", flush=True)
+    B = [r["bars"] for r in res if r["bars"] is not None]; D = [r["dv"] for r in res if r["dv"] is not None]
+    bars, sess, rolls = assemble(pd.concat(B, ignore_index=True), pd.concat(D, ignore_index=True)); del B, D, res
     FIX.mkdir(parents=True, exist_ok=True)
     for root in ROOTS:
         b = bars[bars["root"] == root].drop(columns="root"); b.to_csv(fixture_path(root), index=False, compression="gzip", float_format="%.2f"); print(f"  {root}: {len(b):,} bars, {b['day'].nunique():,} sessions, {b['day'].min()} .. {b['day'].max()}, contracts {b['contract'].nunique()}")
     sess.to_csv(FIX / "fut_index_sessions.csv.gz", index=False, compression="gzip", float_format="%.2f"); rolls.to_csv(FIX / "fut_index_rolls.csv.gz", index=False, compression="gzip")
     META.write_text(json.dumps(dict(spec="de75a63", built_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), files=prov, roots=list(ROOTS), rth=[RTH_LO, RTH_HI], front_rule="highest full-day volume per calendar ET day", gates=None), indent=1))
     print(f"\nwrote fixtures in {(time.time()-t0)/60:.1f} min; gates not yet run (python scripts/build_fut_index_1m.py --gates)")
+
+
+def cmd_verify(n, workers):
+    """Prove the pool's output is BIT-IDENTICAL to the serial loop's, on the n smallest real files.
+
+    The parallel build is only a speed change if this holds; if it ever stops holding, the fixture
+    diff that justifies a rebuild is confounded by the concurrency and means nothing.
+    """
+    t0 = time.time(); files = sorted(RAW.glob("*/*.ohlcv-1m.dbn.zst"), key=lambda p: p.name)
+    pick = sorted(sorted(files, key=lambda p: p.stat().st_size)[:n], key=lambda p: p.name)
+    print(f"verify on {len(pick)} files ({sum(f.stat().st_size for f in pick)/1e9:.2f} GB): {[f.name[10:18] for f in pick]}")
+    a = collect(pick, 1); b = collect(pick, workers)
+    assert [r["file"] for r in a] == [r["file"] for r in b] == [f.name for f in pick], "file order not restored"
+    for x, y in zip(a, b):
+        assert x["rows_in"] == y["rows_in"] and x["rth_rows_kept"] == y["rth_rows_kept"], x["file"]
+    for name, k in (("bars", "bars"), ("day volume", "dv")):
+        sa = pd.concat([r[k] for r in a if r[k] is not None], ignore_index=True)
+        sb = pd.concat([r[k] for r in b if r[k] is not None], ignore_index=True)
+        pd.testing.assert_frame_equal(sa, sb, check_exact=True)
+        print(f"  {name}: {len(sa):,} rows identical row for row, column for column")
+    ba, _, _ = assemble(pd.concat([r["bars"] for r in a if r["bars"] is not None], ignore_index=True),
+                        pd.concat([r["dv"] for r in a if r["dv"] is not None], ignore_index=True))
+    bb, _, _ = assemble(pd.concat([r["bars"] for r in b if r["bars"] is not None], ignore_index=True),
+                        pd.concat([r["dv"] for r in b if r["dv"] is not None], ignore_index=True))
+    pd.testing.assert_frame_equal(ba, bb, check_exact=True)
+    print(f"  assembled front-month bars: {len(ba):,} rows identical")
+    print(f"VERIFY PASSED in {(time.time()-t0)/60:.1f} min -- serial and {workers}-worker builds agree exactly")
 
 
 # ------------------------------------------------------------------------------------------ the gates
@@ -159,7 +263,11 @@ def gates(log=print):
 # ------------------------------------------------------------------------------------------ selftest
 def cmd_selftest():
     t0 = time.time(); print("== (a) process_chunk: DST, the RTH window, the 15:59 bar in and 16:00 out, only the four roots' outrights")
-    ids = {1: ("ES", "ESH5"), 2: ("ES", "ESM5"), 3: ("NQ", "NQH5")}
+    def wrow(iid, root, contract, s, e):
+        return (iid, root, contract, np.uint64(pd.Timestamp(s, tz="UTC").value), np.uint64(pd.Timestamp(e, tz="UTC").value))
+    WCOLS = ["iid", "root", "contract", "w0", "w1"]
+    ids = pd.DataFrame([wrow(1, "ES", "ESH5", "2015-01-01", "2015-04-01"), wrow(2, "ES", "ESM5", "2015-01-01", "2015-10-01"),
+                        wrow(3, "NQ", "NQH5", "2015-01-01", "2015-10-01")], columns=WCOLS)
     def ts(s):
         return int(pd.Timestamp(s).value)
     rows = [(ts("2015-01-15 14:30:00+00:00"), 1), (ts("2015-01-15 13:30:00+00:00"), 1), (ts("2015-07-15 13:30:00+00:00"), 2), (ts("2015-07-15 19:59:00+00:00"), 2), (ts("2015-07-15 20:00:00+00:00"), 2), (ts("2015-07-15 13:30:00+00:00"), 3), (ts("2015-07-15 13:30:00+00:00"), 9)]
@@ -179,14 +287,33 @@ def cmd_selftest():
     print("== (c) expiry arithmetic: third Fridays; single-digit years resolved by the roll year; ESH5 -> 2015-03-20; ESZ9 rolled in 2019 -> 2019-12-20; NQU0 rolled 2020-09 -> 2020-09-18")
     assert str(third_friday(2015, 3).date()) == "2015-03-20" and str(expiry_of("ESH5", "2015-03-12").date()) == "2015-03-20" and str(expiry_of("ESZ9", "2019-12-13").date()) == "2019-12-20" and str(expiry_of("NQU0", "2020-09-11").date()) == "2020-09-18"
     assert str(expiry_of("ESM0", "2010-06-07").date()) == "2010-06-18" and str(expiry_of("ESH1", "2020-12-11").date()) == "2021-03-19", "year wrap"
+    print("== (d) D520: a REUSED instrument_id is labelled from the window holding each bar's own timestamp, and the ambiguity guard fires")
+    reuse = pd.DataFrame([wrow(7, "ES", "ESH5", "2015-01-01", "2015-04-01"), wrow(7, "NQ", "NQZ5", "2015-09-01", "2016-01-01")], columns=WCOLS)
+    rr = [(ts("2015-02-11 14:30:00+00:00"), 7), (ts("2015-10-14 13:30:00+00:00"), 7), (ts("2015-06-10 13:30:00+00:00"), 7)]   # window A, window B, the gap between them
+    ra = np.array([(t, i, 2000 * 1e9, 2001 * 1e9, 1999 * 1e9, 2000.5 * 1e9, 100) for t, i in rr], dtype=arr.dtype)
+    lab = label_rows(ra, reuse); got = dict(zip(lab["_i"], zip(lab["root"], lab["contract"])))
+    assert got == {0: ("ES", "ESH5"), 1: ("NQ", "NQZ5")}, f"windowed labelling wrong: {got}"
+    flat = {int(r.iid): (r.root, r.contract) for r in reuse.itertuples()}                                                     # what a flat dict keeps: the LAST window only
+    assert flat[7] == ("NQ", "NQZ5") and got[0] != flat[7], "the check cannot fire -- the flat dict must disagree on row 0"
+    b_re, _ = process_chunk(ra, reuse)                                                                                        # both labelled bars are 09:30 ET (EST then EDT); the gap bar is gone
+    assert list(b_re["contract"]) == ["ESH5", "NQZ5"] and list(b_re["root"]) == ["ES", "NQ"] and len(b_re) == 2, f"one id, two labels, archive order: {list(b_re['contract'])}"
+    bad = pd.DataFrame([wrow(7, "ES", "ESH5", "2015-01-01", "2015-12-01"), wrow(7, "NQ", "NQZ5", "2015-09-01", "2016-01-01")], columns=WCOLS)
+    try:
+        label_rows(ra, bad); raise SystemExit("[X] the overlap guard did NOT fire on two windows claiming one bar")
+    except AssertionError as e:
+        assert "MORE THAN ONE" in str(e), e
+    print("  ok: id 7 reads ESH5 in February and NQZ5 in October, the gap bar is dropped, the flat dict would have called both NQZ5, and overlapping windows raise")
     print(f"SELFTEST PASSED in {time.time()-t0:.0f}s")
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); g = ap.add_mutually_exclusive_group(required=True); g.add_argument("--build", action="store_true"); g.add_argument("--gates", action="store_true"); g.add_argument("--selftest", action="store_true")
+    ap = argparse.ArgumentParser(); g = ap.add_mutually_exclusive_group(required=True); g.add_argument("--build", action="store_true"); g.add_argument("--gates", action="store_true"); g.add_argument("--selftest", action="store_true"); g.add_argument("--verify", type=int, metavar="N", help="serial vs pool on the N smallest files, bit-identical")
+    ap.add_argument("--workers", type=int, default=6)
     a = ap.parse_args()
     if a.build:
-        cmd_build()
+        cmd_build(a.workers)
+    elif a.verify:
+        cmd_verify(a.verify, a.workers)
     elif a.gates:
         sys.exit(0 if gates() else 1)
     else:

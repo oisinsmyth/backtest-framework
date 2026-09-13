@@ -150,6 +150,43 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D521 — THE DATA LAYER IS CLEAN: NO BUILDER LABELS A BAR FROM A FLAT ID DICT, AND ONE FIXTURE WAS WRONG, 2026-09-13
+
+On the principal's instruction to port the windowed mapping to the three flat builders, after the
+audit in [`working/AUDIT-flat-id-map-exposure.md`](working/AUDIT-flat-id-map-exposure.md).
+
+**`fut_open_interest_daily.csv.gz` was carrying a phantom contract and is now corrected.**
+Instrument 42007396 was `6AF4` (Australian dollar, January 2024) until 2024-01-21 and was reissued
+as `CLG36` in November; the flat dict keeps only the last label, so an FX contract was counted as a
+**61st crude contract on 2024-01-03 … 2024-01-19**, overstating `oi_total` by 235–401 contracts
+(0.014–0.026%). **`oi_front` was never touched anywhere** and all 63 gate scalars are identical.
+**Re-pull any cached CL total from before this commit.**
+
+**The other two fixtures are byte-identical.** `fut_micro_flow_5m` (one year, ES/MES/NQ/MNQ) and all
+six `fut_index_1m` outputs. The index build had **16,077 foreign RTH bars (0.229%, 18 of 26 files)**
+ingested by the flat map and the front-by-volume rule dropped **every one** — the D520 outcome again.
+
+**The rule this leaves:** *front-month columns are insulated from the id defect; totals and strip
+counts are not.* The open-interest fixture is the only one here with a column that has no volume
+filter in front of it, and it is the only one that moved. A **term-structure study reads exactly
+those columns** — which is why the audit said to do this before any curve work, and it was right.
+
+**Also: `build_fut_index_1m.py` is now parallel** — 1.02 billion rows went from ~20 min
+single-process to **6.2 min on 6 workers (5.67×, 94%)**. `--verify N` proves the pool is a speed
+change only (serial vs pool, `check_exact=True`, per-file frames, concatenated frames and assembled
+bars), and it must keep passing or a fixture diff means nothing. **Run these three builders with the
+SYSTEM `python`, never `uv run`** — databento lives only in the system interpreter.
+
+**Everything is recomputed by** [`scripts/d521_flat_vs_windowed_audit.py`](scripts/d521_flat_vs_windowed_audit.py)
+→ [`data/d521_flat_vs_windowed_audit.json`](data/d521_flat_vs_windowed_audit.json), reading the
+flat-map side from **git** rather than `temp/`, so it survives `temp/` being deleted.
+
+**Still open, untouched by this:** RTY's G4 gate has failed since it was added (open-to-close
+correlation with IWM 0.98985 against a 0.99 bar), which is why `fut_RTY_rth_1m.csv.gz` is still
+uncommitted. Identical before and after; not in scope here.
+
+---
+
 ## D515 — WHY THE ARM WORKS ON ONE ROOT: THE LARGEST DAY EDGE **AND** THE CHEAPEST COST, 2026-09-13
 
 The principal asked whether the signal is real everywhere and just slower on the failing roots. Spec

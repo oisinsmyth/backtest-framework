@@ -1,162 +1,214 @@
 {
  "spec": "de75a63",
- "built_utc": "2026-09-12T13:12:39Z",
+ "built_utc": "2026-09-13T19:36:06Z",
  "files": [
   {
    "file": "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
    "rows_in": 12709200,
    "rth_rows_kept": 50396,
-   "ids": 23
+   "ids": 23,
+   "mapping_windows": 23,
+   "secs": 13.2
   },
   {
    "file": "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",
    "rows_in": 27280970,
-   "rth_rows_kept": 108535,
-   "ids": 26
+   "rth_rows_kept": 108390,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 28.4
   },
   {
    "file": "glbx-mdp3-20120101-20121231.ohlcv-1m.dbn.zst",
    "rows_in": 34215872,
-   "rth_rows_kept": 165559,
-   "ids": 26
+   "rth_rows_kept": 165518,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 36.5
   },
   {
    "file": "glbx-mdp3-20130101-20131231.ohlcv-1m.dbn.zst",
    "rows_in": 44528359,
-   "rth_rows_kept": 321379,
-   "ids": 26
+   "rth_rows_kept": 321338,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 53.5
   },
   {
    "file": "glbx-mdp3-20140101-20140629.ohlcv-1m.dbn.zst",
    "rows_in": 21953487,
    "rth_rows_kept": 165001,
-   "ids": 20
+   "ids": 20,
+   "mapping_windows": 20,
+   "secs": 27.4
   },
   {
    "file": "glbx-mdp3-20140630-20141231.ohlcv-1m.dbn.zst",
    "rows_in": 25417746,
    "rth_rows_kept": 181278,
-   "ids": 20
+   "ids": 20,
+   "mapping_windows": 20,
+   "secs": 33.5
   },
   {
    "file": "glbx-mdp3-20150101-20151231.ohlcv-1m.dbn.zst",
    "rows_in": 52313387,
-   "rth_rows_kept": 368462,
-   "ids": 26
+   "rth_rows_kept": 365928,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 67.5
   },
   {
    "file": "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
    "rows_in": 50604555,
-   "rth_rows_kept": 411265,
-   "ids": 26
+   "rth_rows_kept": 411250,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 79.0
   },
   {
    "file": "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
    "rows_in": 49989121,
-   "rth_rows_kept": 472694,
-   "ids": 33
+   "rth_rows_kept": 472666,
+   "ids": 33,
+   "mapping_windows": 33,
+   "secs": 87.8
   },
   {
    "file": "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
    "rows_in": 32153793,
-   "rth_rows_kept": 310842,
-   "ids": 27
+   "rth_rows_kept": 310809,
+   "ids": 27,
+   "mapping_windows": 27,
+   "secs": 58.8
   },
   {
    "file": "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
    "rows_in": 24713186,
-   "rth_rows_kept": 252436,
-   "ids": 27
+   "rth_rows_kept": 252435,
+   "ids": 27,
+   "mapping_windows": 27,
+   "secs": 45.6
   },
   {
    "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
    "rows_in": 58051976,
-   "rth_rows_kept": 531646,
-   "ids": 35
+   "rth_rows_kept": 531628,
+   "ids": 35,
+   "mapping_windows": 35,
+   "secs": 107.1
   },
   {
    "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
    "rows_in": 67058153,
-   "rth_rows_kept": 542944,
-   "ids": 35
+   "rth_rows_kept": 540906,
+   "ids": 35,
+   "mapping_windows": 35,
+   "secs": 128.1
   },
   {
    "file": "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
    "rows_in": 68752439,
-   "rth_rows_kept": 534102,
-   "ids": 42
+   "rth_rows_kept": 533013,
+   "ids": 42,
+   "mapping_windows": 42,
+   "secs": 136.8
   },
   {
    "file": "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
    "rows_in": 55424065,
-   "rth_rows_kept": 346468,
-   "ids": 38
+   "rth_rows_kept": 341547,
+   "ids": 38,
+   "mapping_windows": 38,
+   "secs": 100.5
   },
   {
    "file": "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
    "rows_in": 33062368,
-   "rth_rows_kept": 210107,
-   "ids": 38
+   "rth_rows_kept": 210040,
+   "ids": 38,
+   "mapping_windows": 38,
+   "secs": 51.5
   },
   {
    "file": "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
    "rows_in": 55951485,
-   "rth_rows_kept": 342862,
-   "ids": 47
+   "rth_rows_kept": 342859,
+   "ids": 47,
+   "mapping_windows": 47,
+   "secs": 100.2
   },
   {
    "file": "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
    "rows_in": 31602486,
-   "rth_rows_kept": 203785,
-   "ids": 48
+   "rth_rows_kept": 203777,
+   "ids": 48,
+   "mapping_windows": 48,
+   "secs": 51.0
   },
   {
    "file": "glbx-mdp3-20240101-20240828.ohlcv-1m.dbn.zst",
    "rows_in": 61461670,
    "rth_rows_kept": 358042,
-   "ids": 48
+   "ids": 48,
+   "mapping_windows": 48,
+   "secs": 107.9
   },
   {
    "file": "glbx-mdp3-20240829-20241231.ohlcv-1m.dbn.zst",
    "rows_in": 32289655,
    "rth_rows_kept": 194203,
-   "ids": 48
+   "ids": 48,
+   "mapping_windows": 48,
+   "secs": 54.1
   },
   {
    "file": "glbx-mdp3-20250101-20250903.ohlcv-1m.dbn.zst",
    "rows_in": 68981842,
-   "rth_rows_kept": 361996,
-   "ids": 54
+   "rth_rows_kept": 360254,
+   "ids": 54,
+   "mapping_windows": 54,
+   "secs": 124.0
   },
   {
    "file": "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
    "rows_in": 26028907,
    "rth_rows_kept": 139284,
-   "ids": 50
+   "ids": 50,
+   "mapping_windows": 50,
+   "secs": 46.0
   },
   {
    "file": "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
    "rows_in": 6690321,
    "rth_rows_kept": 42891,
-   "ids": 50
+   "ids": 50,
+   "mapping_windows": 50,
+   "secs": 15.7
   },
   {
    "file": "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
    "rows_in": 21406276,
-   "rth_rows_kept": 101398,
-   "ids": 48
+   "rth_rows_kept": 98101,
+   "ids": 48,
+   "mapping_windows": 48,
+   "secs": 41.1
   },
   {
    "file": "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst",
    "rows_in": 31964175,
    "rth_rows_kept": 147942,
-   "ids": 55
+   "ids": 55,
+   "mapping_windows": 55,
+   "secs": 61.9
   },
   {
    "file": "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
    "rows_in": 28394079,
-   "rth_rows_kept": 144001,
-   "ids": 55
+   "rth_rows_kept": 143945,
+   "ids": 55,
+   "mapping_windows": 55,
+   "secs": 55.1
   }
  ],
  "roots": [

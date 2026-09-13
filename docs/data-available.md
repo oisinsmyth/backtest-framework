@@ -40,7 +40,7 @@ headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **
 nine roots, 2016 →); **`fut_open_interest_daily.csv.gz` (D497: daily root-total open interest and
 cleared volume for ES, NQ, CL, GC from the `statistics` schema, keyed on the session each figure
 is first USABLE — published strictly before a 10:00 ET entry; 100% coverage, staleness one session,
-builder `scripts/build_fut_open_interest.py`, 1.8 min). **TWO THINGS ADDED 2026-09-13:** it is built with a **FLAT `{instrument_id: symbol}` lookup**, the defect D520 fixed in the sessions builder (229,206 bars of the wrong instrument, 0.297% of 77.2M) — of its four roots only **CL** is on D467's contaminated list, and an empirical check finds **no gross contamination** (0 of 2,808 CL days implausible, totals and strip length correct for WTI) but cannot rule out a sub-1% perturbation; port `ids_of` from the breadth builder and diff before any study reads the CURVE, because the front-month rule filters the contamination out by volume and a term-structure study has no such filter. And **2025-07-28 is a bad session**: ES, GC and NQ simultaneously report 326, 9,158 and 82 contracts of total open interest with truncated strip counts — a one-day source dropout, unrelated to the mapping; drop it or treat it as missing. What bites: `ts_ref` is the session START,
+builder `scripts/build_fut_open_interest.py`, 3.3 min). **CORRECTED 2026-09-13 by [D521](decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open-interest-fixture-was-carrying-a-phantom-CL-contract.md) — re-pull any CL total you cached before that commit.** The builder used a **FLAT `{instrument_id: symbol}` lookup** (the D520 defect) and it did bite here: instrument 42007396 was `6AF4` until 2024-01-21 and was reissued as `CLG36` in November, so the flat dict counted **an Australian-dollar contract as a 61st crude contract on 2024-01-03 … 2024-01-19**, overstating `oi_total` by 235–401 contracts (0.014–0.026%). `oi_front` was never touched — the volume rule protects it — which is exactly why the CURVE, read from `oi_total` and `oi_n_contracts`, was the exposed part. Now windowed; the other three roots and every other session are unchanged and all 63 gate scalars are identical. And **2025-07-28 is a bad session**: ES, GC and NQ simultaneously report 326, 9,158 and 82 contracts of total open interest with truncated strip counts — a one-day source dropout, unrelated to the mapping; drop it or treat it as missing. What bites: `ts_ref` is the session START,
 the evening BEFORE the trade date it describes, so a naive read is off by a day; open interest for
 trade date T is first published ≈ 21:00 ET on T itself; and a per-contract series must drop expired
 months or the root total carries dead open interest forever;** and **`fut_micro_flow_5m.csv.gz` (D485: signed 5-minute order flow of ES/MES
@@ -106,6 +106,15 @@ rule and listed.
    > A front-by-volume rule happens to be insulated (the reused slots are the months nothing
    > trades), **except on a holiday**, where ten spurious contracts elected the euro's front
    > month on 2021-12-24.
+   >
+   > **[D521](decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open-interest-fixture-was-carrying-a-phantom-CL-contract.md) finished the job: NO builder in the repository labels a bar from a flat dict any
+   > more**, and the three it ported were rebuilt and diffed. `fut_micro_flow_5m` and all six
+   > `fut_index_1m` outputs came back **byte-identical** — the index build ingested **16,077
+   > foreign RTH bars (0.229%, 18 of 26 files)** and the front-by-volume rule dropped every
+   > one, insulated exactly as above. **`fut_open_interest_daily` did NOT**: it is the one
+   > fixture here with a column that has no volume filter in front of it (`oi_total`), and it
+   > was wrong on 12 CL sessions. **The rule of thumb: front-month columns are insulated,
+   > totals and strip counts are not.**
 
 6. **THE ENERGY DAY SESSION IS NOT IN THE ARCHIVE BEFORE JUNE 2015** (D520, extending D462's
    index-futures finding). **CL, NG, RB and HO** carry the same pre-2016 gap on hours 21→14 ET

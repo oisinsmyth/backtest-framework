@@ -20,6 +20,9 @@ import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
+from build_fut_breadth_hourly import ids_of as _ids_windows  # noqa: E402  -- one definition of the mapping windows, D520
+
 RAW = REPO / "data" / "raw" / "databento" / "GLBX-20260911-SDNLQ6M99S"
 HOURLY = REPO / "data" / "fixtures" / "fut_sessions_hourly.csv.gz"
 FIX = REPO / "data" / "fixtures"; OUT = FIX / "fut_open_interest_daily.csv.gz"; META = FIX / "fut_open_interest_daily.meta.json"
@@ -43,31 +46,65 @@ def rss_mb():
 
 
 def ids_of(store):
-    out = {}
-    for sym, ivs in store.metadata.mappings.items():
-        m = OUTRIGHT.match(str(sym))
-        if not m:
-            continue
-        for iv in (ivs if isinstance(ivs, list) else [ivs]):
-            sid = iv["symbol"] if isinstance(iv, dict) else getattr(iv, "symbol", None)
-            if sid:
-                out[int(sid)] = (m.group(1), str(sym))
-    return out
+    """Symbol mappings as (iid, root, contract, w0, w1) WINDOWS for this fixture's four roots.
+
+    D520. The flat `{instrument_id: (root, symbol)}` dict this replaced kept only the LAST mapping
+    written for an id and threw the validity dates away, so one id carried one label for all time.
+    The archive breaks that two ways: CME reuses the single-digit-year slot the moment a contract
+    expires (`CLN9` is July-2019 until 2019-06-23 and July-2029 after it), and a live contract can be
+    ROTATED to a new id mid-year. Measured on the 2019 file: 16 of CL's 140 outright symbols carry
+    two windows. Of this fixture's four roots CL is the one affected; ES, NQ and GC are clean.
+
+    The window logic is imported from the breadth builder rather than re-implemented, so there is one
+    definition of "which contract is this bar" in the repo, and it is filtered to ROOTS here.
+    """
+    w = _ids_windows(store)
+    if w is None or len(w) == 0:
+        return None
+    w = w[w["root"].isin(ROOTS)].reset_index(drop=True)
+    return w if len(w) else None
+
+
+def label_rows(a, w, ts_field="ts_event"):
+    """Attach (root, contract) from the mapping window CONTAINING each record's own timestamp.
+
+    Returns the joined frame with `_i`, the index back into `a`, so the caller reads the record's
+    other fields positionally rather than trusting a second lookup.
+
+    THE GUARD IS ON `_i`, NOT ON (iid, ts), and the difference matters for this schema: the
+    statistics feed legitimately publishes several records for one instrument at one timestamp
+    (open interest and cleared volume are different `stat_type`s), so day5m's (iid, ts) duplicate
+    guard would fire on correct data here. A repeated `_i` means ONE input record was claimed by
+    TWO windows, which is the actual ambiguity and cannot happen on correct mappings.
+    """
+    raw = pd.DataFrame({"iid": a["instrument_id"].astype(np.uint32),
+                        "ts": a[ts_field].astype(np.uint64),
+                        "_i": np.arange(len(a), dtype=np.int64)})
+    j = raw.merge(w, on="iid", how="inner")
+    j = j[(j["ts"] >= j["w0"]) & (j["ts"] < j["w1"])]
+    if j["_i"].duplicated().any():
+        n = int(j["_i"].duplicated().sum())
+        raise RuntimeError(f"[IDS] {n} records claimed by MORE THAN ONE mapping window -- overlapping validity makes the label ambiguous")
+    return j
 
 
 def worker(path):
     """One statistics file -> the open-interest and cleared-volume publications of the four roots' outrights."""
     import databento as db
-    t0 = time.time(); store = db.DBNStore.from_file(path); ids = ids_of(store)
-    if not ids:
+    t0 = time.time(); store = db.DBNStore.from_file(path); w = ids_of(store)
+    if w is None:
         return dict(file=Path(path).name, rows_in=0, rows_kept=0, secs=round(time.time() - t0, 1), rss_mb=round(rss_mb(), 0), table=None)
-    keys = np.fromiter(ids.keys(), dtype=np.uint32); parts = []; n_in = 0
+    keys = w["iid"].to_numpy(np.uint32); parts = []; n_in = 0
     for arr in store.to_ndarray(count=5_000_000):
         n_in += len(arr)
         a = arr[np.isin(arr["instrument_id"], keys) & np.isin(arr["stat_type"], (ST_OI, ST_CV))]
         if a.size:
-            parts.append(pd.DataFrame({"root": [ids[int(x)][0] for x in a["instrument_id"]], "contract": [ids[int(x)][1] for x in a["instrument_id"]],
-                                       "stat_type": a["stat_type"].astype(np.int16), "ts_event": a["ts_event"].astype("int64"), "ts_ref": a["ts_ref"].astype("int64"), "value": a["quantity"].astype("int64")}))
+            j = label_rows(a, w)
+            if len(j):
+                k = j["_i"].to_numpy()
+                parts.append(pd.DataFrame({"root": j["root"].to_numpy(), "contract": j["contract"].to_numpy(),
+                                           "stat_type": a["stat_type"][k].astype(np.int16), "ts_event": a["ts_event"][k].astype("int64"),
+                                           "ts_ref": a["ts_ref"][k].astype("int64"), "value": a["quantity"][k].astype("int64")}))
     d = pd.concat(parts, ignore_index=True) if parts else None
     if d is not None:
         d = d[(d["value"] != UNDEF) & (d["value"] >= 0)].drop_duplicates(["contract", "stat_type", "ts_event", "value"])
@@ -176,15 +213,21 @@ def _expiring_declines(root, sessions):
     for f in sorted(RAW.glob("*.statistics.dbn.zst")):
         if not ("2016" <= f.name[10:14] <= "2023"):
             continue
-        store = db.DBNStore.from_file(f); ids = {k: v for k, v in ids_of(store).items() if v[0] == root}
-        if not ids:
+        store = db.DBNStore.from_file(f); w = ids_of(store)
+        if w is None:
             continue
-        keys = np.fromiter(ids.keys(), dtype=np.uint32)
+        w = w[w["root"] == root]
+        if not len(w):
+            continue
+        keys = w["iid"].to_numpy(np.uint32)
         for arr in store.to_ndarray(count=5_000_000):
             a = arr[np.isin(arr["instrument_id"], keys) & (arr["stat_type"] == ST_OI)]
             if a.size:
-                ev = pd.to_datetime(a["ts_event"].astype("int64"), utc=True).tz_convert("US/Eastern")
-                frames.append(pd.DataFrame({"contract": [ids[int(x)][1] for x in a["instrument_id"]], "date": ev.strftime("%Y-%m-%d"), "oi": a["quantity"].astype("int64")}))
+                j = label_rows(a, w)
+                if len(j):
+                    k = j["_i"].to_numpy()
+                    ev = pd.to_datetime(a["ts_event"][k].astype("int64"), utc=True).tz_convert("US/Eastern")
+                    frames.append(pd.DataFrame({"contract": j["contract"].to_numpy(), "date": ev.strftime("%Y-%m-%d"), "oi": a["quantity"][k].astype("int64")}))
     if not frames:
         return out
     d = pd.concat(frames, ignore_index=True); d = d[d["oi"] != UNDEF]
