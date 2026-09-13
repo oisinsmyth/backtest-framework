@@ -999,3 +999,44 @@ rate drifts.
 
 **What it must never be used for:** choosing direction, or choosing which sessions carry the edge.
 That is what D506 closed.
+
+---
+
+## THE CONDITIONER LINE ON THE ADMITTED ARM CLOSED BY THE PRINCIPAL, 2026-09-13
+
+**Closed by the principal, in writing, after D508, D509 and D512:** conditioning the admitted MACD
+day-session arm on a daily-clock state, as a way of ranking which of its sessions to take. Three
+conditioners were declared and scored against the same arm, imported and reproduced exactly
+(1,876 sessions, $15,423, matching D504's published per-year figures):
+
+| conditioner | record | primary | where it sat in its own exact rotation | family |
+|---|---|---:|---|---|
+| \|log(P/SMA200)\|, rank statistic | D508 | Spearman +0.0089 | 43rd percentile | beaten by 58% of offsets |
+| the same, economic statistic | D509 | Δ +$13.82 a session | 76.9th percentile | beaten by 40% |
+| log(EMA50(range)/SMA200(range)) | D512 | Δ +$25.37 a session | 93.4th percentile | **beaten by 6.0%** |
+
+**None clears.** The refusals tighten across the three, and the last is narrow, but a refusal at 6%
+is a refusal.
+
+**What the line established, and it is worth more than the verdict.**
+
+1. **The arm has no unread slice on NQ** (D503), so no conditioner found on it could ever have been
+   confirmed. Every one of these records states that in its §0. **A conditioner for this arm is
+   structurally unavailable, whatever it measures.**
+2. **The 200-day stretch ranks YEARS, not sessions.** Within a year it reverses sign: −$10.71 a
+   session against a pooled +$13.82, negative in seven years of eight. Any conditioner correlated
+   with "which year it is" inherits this arm's concentration in 2020 and 2022.
+3. **Range expansion does NOT reverse** — within-year mean +$27.42 against a pooled +$25.37,
+   positive in six years of eight. It is the only conditioner tested here that survives
+   stratification, and its bottom quintile loses **gross** (−$5.27 a trade, net Sharpe −1.08). The
+   arm bleeds in a compressed-range regime before costs, not through them.
+4. **The apparent superiority of the 23-hour window was nine sessions** (D512's addendum). The day,
+   night and 23-hour versions correlate at +0.99 and are one conditioner measured three ways.
+5. **A rotation of a quintile-difference statistic subsumes a matched-persistence gate**, proven in
+   D509's runner rather than asserted. Prefer a statistic whose own null contains its control.
+
+**Closed for this arm:** any daily-clock conditioner as a ranker of its sessions. **Carried forward
+on the principal's word:** the range-expansion conditioner itself, declared in advance on a root
+whose 2024+ is unread, so that a confirmation exists. That is D513.
+
+**Nothing was spent by any of the three.** 2024+ was never scored on NQ.
