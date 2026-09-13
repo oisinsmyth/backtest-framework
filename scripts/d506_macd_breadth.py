@@ -114,10 +114,33 @@ def max_hold_available(first_decide: int, last_seg: int) -> int:
 
 
 def build_root(d_all, root, window):
-    """Prices and both MACD signs for one root, on its OWN window, in-sample only."""
+    """Prices and both MACD signs for one root, on its OWN window, in-sample only.
+
+    THE TWO FILTERS BELOW ARE D484's `series_for` PIPELINE AND BOTH MUST BE APPLIED BEFORE THE
+    SERIES IS FLATTENED. The first version of this runner applied neither, and the consequence
+    was not a 2.5% session-count difference -- it was a different SIGNAL:
+
+        breadth fixture, absent rows left in   1,890 sessions  1,573 trades  net Sharpe +0.579
+        breadth fixture, absent rows dropped   1,873 sessions  1,957 trades  net Sharpe +0.811
+        D495 published                         1,873 sessions  1,904 trades  net Sharpe +0.723
+
+    **The breadth fixture KEEPS non-present rows and flags them**, where D467's builder drops
+    them from the file. Those rows are mostly NaN, and NaN propagates through the MACD's
+    recursive EMA / ZLEMA / SMMA filters, so every gap suppresses the indicator downstream of
+    itself -- 1,573 trades instead of 1,957, a 20% loss of signal that has nothing to do with
+    the market. A study reading this fixture MUST drop non-present rows before flattening.
+
+    `same_front` is D484's other filter: it excludes roll sessions, whose consecutive closes
+    straddle two contracts. Applying it is what makes the session count reconcile exactly.
+    """
     h0, h1 = window
     first, last = seg_index(h0), seg_index(h1)
-    d = d_all[d_all["root"] == root].sort_values("day", kind="stable")
+    d = d_all[d_all["root"] == root]
+    if "same_front" in d.columns:
+        d = d[d["same_front"]]
+    if "present" in d.columns:
+        d = d[d["present"]]
+    d = d.sort_values("day", kind="stable")
     d = d[d["day"].between(IN_LO, IN_HI)]
     if len(d) == 0:
         return None
@@ -138,8 +161,6 @@ def build_root(d_all, root, window):
     same[:CONTRACT_PURE_BARS] = False
     pure = (same.reshape(-1, nseg)) & pos
     keep = pure[:, first:last + 1].all(axis=1)
-    if "present" in d.columns:
-        keep &= d["present"].to_numpy(bool)
     if keep.sum() < MIN_SESSIONS:
         return {"root": root, "n_sessions": int(keep.sum()), "skipped": True}
     flat_h, flat_l, flat_c = lh.ravel(), ll.ravel(), lc.ravel()
@@ -377,6 +398,10 @@ def do_run(as_json: bool) -> int:
     if ref is not None:
         got = prim["NQ"]["net"]["sharpe"]
         want = ref.get("net", {}).get("sharpe", ref.get("net_sharpe"))
+        # The pre-registration's bar is RELATIVE (within 10%); the first version of this runner
+        # coded an ABSOLUTE 0.25 and so did not fire on a 30% gap. Report both.
+        rel = abs(got - want) / abs(want) if want else float("nan")
+        P(f"        relative gap {rel:.1%} against the pre-registration's 10% bar")
         P(f"\n  [W-d] NQ net Sharpe here {got:+.3f} against D495's {want:+.3f} "
           f"on a DIFFERENT fixture and builder")
         if want and abs(got - want) > 0.25:
@@ -395,9 +420,11 @@ def do_run(as_json: bool) -> int:
     t0 = time.perf_counter()
     scored = {r: built[r] for r in prim}
     nulls = {r: np.empty(N_DRAWS) for r in scored}
+    nulls_sh = {r: np.empty(N_DRAWS) for r in scored}
     fam = np.empty(N_DRAWS)
+    fam_sh = np.empty(N_DRAWS)
     for i in range(N_DRAWS):
-        vals = []
+        vals, vals_sh = [], []
         for r, b in scored.items():
             off = int(rng.integers(1, b["n_sessions"]))
             sg = rotate(b["AGREE"], off)
@@ -405,9 +432,14 @@ def do_run(as_json: bool) -> int:
             pg, tg = simulate_window(b["O"] / tk, b["C"] / tk, sg, b["first"], b["last"],
                                      M_PRIMARY, 0.0)
             v = float(pg.sum() / tg.sum()) if tg.sum() else 0.0
+            sd = pg.std(ddof=1)
+            sh = float(pg.mean() / sd * np.sqrt(TRADING_DAYS)) if sd > 0 else 0.0
             nulls[r][i] = v
+            nulls_sh[r][i] = sh
             vals.append(v)
+            vals_sh.append(sh)
         fam[i] = max(vals)
+        fam_sh[i] = max(vals_sh)
         if i == 0:
             per = time.perf_counter() - t0
             P(f"  profiled: {per * 1000:.0f} ms a draw -> {per * N_DRAWS / 60:.1f} min")
@@ -426,18 +458,32 @@ def do_run(as_json: bool) -> int:
         cl = bool(obs > p95)
         if cl:
             clears.append(r)
+        sh_obs = prim[r]["gross"]["sharpe"]
+        sh95 = float(np.percentile(nulls_sh[r], 95))
         res[r] = {"observed": obs, "p50": p50, "p95": p95, "p95_se": se, "margin_se": marg,
-                  "clears": cl, "unresolved": bool(abs(marg) < 2)}
+                  "clears": cl, "unresolved": bool(abs(marg) < 2),
+                  "gross_sharpe": sh_obs, "gross_sharpe_null_p95": sh95,
+                  "clears_on_sharpe": bool(sh_obs > sh95)}
         P(f"     {r:>4}{obs:>+9.3f}{p50:>+9.3f}{p95:>+9.3f}{se:>9.4f}{marg:>+9.1f}"
           f"{'   YES' if cl else '    no'}"
           + ("  UNRESOLVED" if abs(marg) < 2 else ""))
 
+    # TWO FAMILY-MAX READINGS, AND ONLY THE SECOND IS WELL POSED. Gross ticks per trade is not
+    # comparable across roots: NQ's +24.9 ticks and ZN's +0.37 sit on tick sizes three orders of
+    # magnitude apart, so a family MAXIMUM in ticks is decided by whichever root has the smallest
+    # tick and says nothing about the rest. GROSS SHARPE is scale-free and is the family bar.
     fam_p95 = float(np.percentile(fam, 95))
     best_r = max(prim, key=lambda r: prim[r]["gross"]["mean_ticks_per_trade"])
     best = prim[best_r]["gross"]["mean_ticks_per_trade"]
-    P(f"\n     FAMILY-MAX over {len(built)} roots: best {best:+.3f} ({best_r})   "
-      f"family null p95 {fam_p95:+.3f}   "
-      f"{'CLEARS' if best > fam_p95 else 'DOES NOT CLEAR'}")
+    fam_sh_p95 = float(np.percentile(fam_sh, 95))
+    best_sh_r = max(prim, key=lambda r: prim[r]["gross"]["sharpe"])
+    best_sh = prim[best_sh_r]["gross"]["sharpe"]
+    P(f"\n     FAMILY-MAX on GROSS TICKS/TRADE -- ILL POSED, tick sizes differ 1000x:")
+    P(f"       best {best:+.3f} ({best_r}) vs family p95 {fam_p95:+.3f}, "
+      f"{'clears' if best > fam_p95 else 'does not clear'} -- decided by units, not edge")
+    P(f"     FAMILY-MAX on GROSS SHARPE -- scale-free, THIS is the family bar:")
+    P(f"       best {best_sh:+.3f} ({best_sh_r}) vs family p95 {fam_sh_p95:+.3f}   "
+      f"{'CLEARS' if best_sh > fam_sh_p95 else 'DOES NOT CLEAR'}")
     P(f"     roots clearing their OWN p95: {len(clears)}  {sorted(clears)}")
 
     # ---- W-f: pairwise rho among the clearing roots
@@ -473,8 +519,15 @@ def do_run(as_json: bool) -> int:
            "skipped_roots": skipped,
            "inapplicable_at_M": inapplicable,
            "primary": prim, "nulls": res,
-           "family_max": {"best_root": best_r, "best": best, "family_null_p95": fam_p95,
-                          "clears": bool(best > fam_p95)},
+           "family_max_ticks_ILL_POSED": {"best_root": best_r, "best": best,
+                                          "family_null_p95": fam_p95,
+                                          "clears": bool(best > fam_p95),
+                                          "why": "gross ticks per trade is not comparable "
+                                          "across roots whose ticks differ 1000x; the family "
+                                          "maximum is decided by units, not edge"},
+           "family_max_sharpe": {"best_root": best_sh_r, "best": best_sh,
+                                 "family_null_p95": fam_sh_p95,
+                                 "clears": bool(best_sh > fam_sh_p95)},
            "clearing_roots": sorted(clears), "pairwise_rho": rho,
            "n_positive_gross": len(pos), "positive_gross_roots": sorted(pos),
            "limitations": [

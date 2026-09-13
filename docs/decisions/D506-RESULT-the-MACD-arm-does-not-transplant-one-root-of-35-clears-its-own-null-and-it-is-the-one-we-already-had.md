@@ -1,5 +1,14 @@
 # D506 — RESULT: the MACD arm **does not transplant**. One root of 35 clears its own null, it is the one we already had, and it fails the family bar.
 
+> ## ⚠ AMENDED THE SAME DAY — §9 SUPERSEDES §1–§8
+>
+> **The numbers in §1–§8 were computed on a NaN-poisoned signal series and the family bar was
+> read on a statistic that is not comparable across roots.** Both are fixed in **§9**, which is
+> the record of this study. §1–§8 stand as written because the errors are the finding.
+>
+> **What changed:** two roots clear their own null (not one), the family bar **CLEARS** (not
+> fails), and the decorrelated pair the book needs **exists** — ρ(HG, NQ) = +0.109.
+
 **2026-09-13.** Runner [`scripts/d506_macd_breadth.py`](../../scripts/d506_macd_breadth.py) ·
 artifact [`data/d506_macd_breadth.json`](../../data/d506_macd_breadth.json) ·
 pre-registration [D506 PRE-REG](D506-PRE-REG-the-frozen-MACD-arm-across-all-36-roots-gross-first-as-one-family.md) ·
@@ -149,3 +158,107 @@ seven zero-trade roots; the tick/price unit confusion reproduced as a break at �
 trade; `net = gross − cost × trips` asserted exactly with an identical trip count; the rotation
 proven to preserve the signal's lag-1 autocorrelation (+0.810) where a shuffle destroys it
 (−0.009); and the in-sample boundary proven to exclude both 2015 and 2024.
+
+---
+
+# 9. AMENDMENT, same day — two corrections, and the result changes sign
+
+The principal asked me to explain the 1,922-vs-1,873 session disagreement of §6. Explaining it
+found a defect that invalidated §1–§8, and fixing it exposed a second one in my own family
+statistic. **This section is the record of D506.**
+
+## 9a. The session gap, fully decomposed — and both figures reproduce exactly
+
+| path | rows | kept |
+|---|---:|---:|
+| D467 fixture + `same_front` | 2,037 | **1,873** ← D495's published count, reproduced |
+| D467 fixture, no `same_front` | 2,062 | 1,898 |
+| breadth fixture + `same_front` | 2,453 | 1,890 |
+| breadth fixture, no `same_front` | 2,485 | **1,922** ← §1's count, reproduced |
+
+**+32 from not filtering `same_front`, +17 from the fixture's different row set** interacting with
+the 78-bar contract-purity window. **The two fixtures agree on the underlying data exactly** —
+2,062 sessions with ≥ 200 bars in h09..h15 and 1,997 with all seven closes finite, identical in
+both files. **So this was never a fixture defect. It was my pipeline.**
+
+## 9b. The real defect: keeping absent rows poisons a recursive indicator
+
+`series_for` applies **two** filters before flattening the panel into one hourly series —
+`same_front` and (by construction, since D467's builder drops them) presence. **My runner applied
+neither**, and the consequence was not a 2.5% count difference:
+
+| | sessions | **trades** | gross Sharpe | net Sharpe |
+|---|---:|---:|---:|---:|
+| breadth, absent rows **left in** | 1,890 | **1,573** | +0.855 | +0.579 |
+| breadth, absent rows **dropped** | **1,873** | 1,957 | +1.130 | **+0.811** |
+| D495 published | **1,873** | 1,904 | +1.038 | +0.723 |
+
+**The breadth fixture keeps non-present rows and flags them; D467's builder drops them from the
+file.** Those rows are mostly NaN, and **NaN propagates through the MACD's recursive EMA / ZLEMA /
+SMMA filters**, so every gap suppresses the indicator downstream of itself — **1,573 trades instead
+of 1,957, a 20% loss of signal with no market content whatever.**
+
+**This is a property of the fixture I built and it will bite anything that reads it.** A flagged
+row is not a dropped row, and for a recursive indicator that distinction is the whole ballgame.
+Recorded in the runner's docstring and in the fixture's memory note.
+
+The session count now reconciles **exactly** (1,873 = 1,873). A **0.088 residual** in net Sharpe
+remains (+0.811 against +0.723) with identical session counts but 1,957 trades against 1,904 —
+**two builders producing slightly different hourly bars for the same sessions, cause not
+established.** W-d's relative gap is **12.2%** against the pre-registration's 10% bar: still
+broken, and now narrowly.
+
+## 9c. My family statistic was ill-posed
+
+§3 read the family-max on **gross ticks per trade**. **That is not comparable across roots**: NQ's
++24.9 ticks and ZN's +0.37 sit on tick sizes three orders of magnitude apart, so a family
+*maximum* in ticks is decided by whichever root has the smallest tick and says nothing about the
+others. Both readings are now reported and only the second is used:
+
+| family bar | best | family null p95 | verdict |
+|---|---:|---:|---|
+| gross ticks/trade — **ill posed** | +24.923 (NQ) | +17.088 | clears, *by units* |
+| **gross Sharpe — scale-free** | **+1.130** (NQ) | **+1.083** | **CLEARS** |
+
+## 9d. The corrected result
+
+| root | gross tk/trade | gross Sharpe | own null p95 | margin | net Sharpe |
+|---|---:|---:|---:|---:|---:|
+| **NQ** | **+24.923** | **+1.130** | +15.285 | **+23.5 SE** | **+0.811** |
+| **HG** | **+1.534** | **+0.604** | +1.431 | **+2.9 SE** | +0.115 |
+| ES | +3.335 | +0.582 | +3.792 | −3.2 SE | −0.011 |
+| NG | +3.041 | +0.576 | +3.825 | −8.3 SE | +0.329 |
+| GC | +1.839 | +0.390 | +3.036 | −14.6 SE | −0.456 |
+| …23 others | −14.2 … +1.8 | | | −10 to −110 SE | |
+
+    positive gross:          15 of 28
+    clear their OWN p95:      2 -- NQ and HG
+    FAMILY-MAX (Sharpe):      CLEARS, +1.130 against +1.083
+    rho(HG, NQ):              +0.109   <-- below C-b's 0.3
+
+**W-c is BROKEN — the family clears.** **W-f is HELD — the decorrelated pair exists.** Those were
+my two most important predictions and they both went the other way from §5.
+
+## 9e. What it actually means, stated carefully
+
+**The family clearing is not independent evidence.** It clears by **0.047 on the Sharpe scale**,
+and the cell doing it is **NQ — the incumbent**, already in the book before this search began. A
+search that contains its own answer clearing a best-of-N bar is the incumbent dominating the
+field, not a discovery.
+
+**HG is the genuinely new information**, and it is thin:
+
+- **+2.9 SE over its own rotation null** on gross ticks per trade — a real, if narrow, separation.
+- **ρ = +0.109 with NQ** — genuinely decorrelated, which is the property the book has been unable
+  to find. Copper and the Nasdaq share no mechanism, which is the point.
+- **And it is not a component.** Net Sharpe **+0.115** fails C-a's 0.5 by fourfold, and daily σ
+  **$942** fails C-d's $500 at full contract size with no micro
+  ([breadth fixture](../../data/fixtures/fut_breadth_hourly.meta.json)).
+
+**So the corrected reading of D506 is: the search found one decorrelated root with a separable
+gross edge that the account cannot hold.** That is a better outcome than §1–§8 reported and a
+worse one than the headline "the family clears" suggests. **Nothing is admitted** ([R15](../RULES.md#r15)).
+
+**What would change it:** HG's crossing cost is unmeasured (`bbo-1m` covers it and is not
+decoded), and a micro copper contract exists at CME but was not acquired and has no committed
+tick value here. Either could move HG's net; neither is in this record.
