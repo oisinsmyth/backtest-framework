@@ -4603,3 +4603,42 @@ as sufficient.**
 within the in-sample window alone: NQ $60 (2017) → $287 (2020) → **$452 (2022)** → $274 (2023); ES
 $42 → $264 → $154; ZB $475 → $929. **A 4× to 7× swing inside one window.** D503 established the
 point forward; this establishes it in sample. Every C-d, P3 and P4 number must be computed per year.
+
+## 73. Method: a SLOW conditioner has n_eff in years, not sessions — count the years containing both of its states before designing anything around it
+
+*From [D526](decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the-change-carries-nothing.md),
+which is the third record to hit this, and the first to name it. Closes nothing; it is a constraint
+on how a conditioner may be tested.*
+
+**The trap.** A conditioner is split into terciles over the pooled in-sample window, each cell gets
+several hundred sessions, and the cells' outcomes are compared. If the conditioner is persistent
+enough, **the terciles are calendar periods wearing state labels** and the comparison is between
+eras — confounded with volatility regime, price level and every crisis in the window. The cell
+counts look reassuring and are not independent observations.
+
+**The measurement that exposes it, and it costs one line:** *how many years contain at least twenty
+observations of BOTH extreme states?*
+
+| record | conditioner | autocorr at 1 session | years containing both states |
+|---|---|---|---|
+| D508 | log(price / 200-day MA) | — | it *"ranks YEARS, not sessions"* |
+| D512 | log(EMA50 / SMA200 of the range) | — | the effect was NQ's own history; did not transfer |
+| **D526** | CL front-to-next settlement spread | **+0.943**, sign flips 3.8 % | **0 of 8** |
+| **D526** | GC front-to-next settlement spread | +0.826, sign flips 5.7 % | 5 of 8 |
+
+On CL the year-by-year payoff gap is computable in **no year at all**, and the pooled tercile
+comparison that looked like a result (payoff 1.087 contango against 0.867 backwardation, skew +0.39
+against −0.59) is an artefact of **2020 sitting inside the contango bucket** — that bucket's
+day-session σ is 226 bp against 159 and 179 for the other two.
+
+**The rule.** On a daily clock with an eight-year window, **a conditioner slower than about a month
+cannot be tested cross-sectionally.** Where it fails, the testable object is its **change**, which
+does have within-period variation — D526's `d(curve)` carries both extremes in **8 of 8** years —
+and the change must then be scored **year by year and never pooled**: CL's steepening-minus-
+flattening payoff gap reads −0.038 and is positive in 3 of 8 years, GC's −0.005 and 3 of 8, while
+GC's *pooled* gap of +0.131 looks like something and is not.
+
+**Second-order, and it decided D526's check 2.** A conditioner can look collinear with momentum on
+Pearson and be independent on ranks: CL's curve against the trailing 60-day return reads **pearson
++0.498 against spearman +0.162**, the Pearson being a handful of extreme joint observations. **Report
+both, and let the rank statistic decide** whether a conditioner is a price signal in disguise.

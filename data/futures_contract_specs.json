@@ -17,7 +17,8 @@
    "control": "MNQ was re-fetched as a CONTROL and reproduced the committed values exactly ('0.25 index points = $0.50'), which is what licenses trusting the four new rows.",
    "derived_fields": "usd_per_point is DERIVED as tick_usd / tick_points and cross-checked against the contract unit; every other field is transcribed. MGC and MCL were each verified to be exactly 1/10 of their committed parent (GC 100.0 and CL 1000.0 usd_per_point).",
    "tier_field_omitted": "The existing rows carry a 'tier' field whose meaning is not documented here; it is omitted from the new rows rather than invented."
-  }
+  },
+  "micros_added_2026_09_13": "SIL/MNG/MHG added 2026-09-13 from the same CME contract-specification service, read same-origin from inside the product page in a browser (WebFetch returns ECONNRESET to cmegroup.com on the XHR endpoint, the contractSpecs page and the rulebook PDF alike). Each tick_points was independently CROSS-CHECKED against the smallest positive price increment the root actually prints in the ohlcv-1m archive (working/stage0_micro_liquidity.py) and agrees exactly. The two energy/base-metal micros are FINANCIALLY SETTLED while their parents are DELIVERABLE; see each entry's note."
  },
  "ES": {
   "tier": 1,
@@ -433,5 +434,57 @@
   "termination": "Trading terminates at 9:16 a.m. CT, 2 business day prior to the third Wednesday of the contract month.",
   "listed": "Quarterly contracts (Mar, Jun, Sep, Dec) listed for 20 consecutive quarters and serial contracts listed for 16 months",
   "rulebook": "CME 261"
+ },
+ "SIL": {
+  "product_id": 6955,
+  "name": "Micro Silver Futures",
+  "contract_unit": "1,000 troy ounces",
+  "usd_per_point": 1000.0,
+  "tick_points": 0.005,
+  "tick_usd": 5.0,
+  "min_tick": "0.005 per troy ounce = $5.00",
+  "min_tick_other": "Settlement: 0.001 per troy ounce = $1.00; CALENDAR SPREAD: 0.001 per troy ounce = $1.00",
+  "price_quotation": "U.S. dollars and cents per troy ounce",
+  "settlement": "Deliverable",
+  "termination": "Trading terminates on the third last business day of the contract month.",
+  "listed": "Monthly contracts listed for 3 consecutive months and any Jan, Mar, May, July, Sep and Dec within the nearest 12 months.",
+  "rulebook": "COMEX 121",
+  "parent": "SI",
+  "size_ratio_to_parent": 0.2
+ },
+ "MNG": {
+  "product_id": 10577,
+  "name": "Micro Henry Hub Natural Gas Futures",
+  "contract_unit": "1,000 MMBtu",
+  "usd_per_point": 1000.0,
+  "tick_points": 0.001,
+  "tick_usd": 1.0,
+  "min_tick": "0.001 per MMBtu = $1.00",
+  "min_tick_other": "CME Globex intercommodity spreads: 0.00025 per MMBtu = $0.25",
+  "price_quotation": "U.S. dollars and cents per MMBtu",
+  "settlement": "Financially Settled",
+  "termination": "Trading terminates on the 4th last business day of the month prior to the contract month.",
+  "listed": "Monthly contracts listed for 24 consecutive months",
+  "rulebook": "NYMEX 440",
+  "parent": "NG",
+  "size_ratio_to_parent": 0.1,
+  "note": "PARENT IS DELIVERABLE AND THIS IS NOT. NG settles physical at Henry Hub; MNG is financially settled, so the two are not the same instrument at expiry even though the price series is."
+ },
+ "MHG": {
+  "product_id": 10142,
+  "name": "Micro Copper Futures",
+  "contract_unit": "2500 pounds",
+  "usd_per_point": 2500.0,
+  "tick_points": 0.0005,
+  "tick_usd": 1.25,
+  "min_tick": "0.0005 per pound = $1.25",
+  "price_quotation": "U.S. dollars and cents per pound",
+  "settlement": "Financially Settled",
+  "termination": "Trading terminates at 12:00 Noon CT on the third last business day of the month prior to the contract month.",
+  "listed": "Monthly contracts listed for 23 consecutive months and any Mar, May, Jul, Sep, and Dec in the nearest 63 months.",
+  "rulebook": "COMEX 914",
+  "parent": "HG",
+  "size_ratio_to_parent": 0.1,
+  "note": "PARENT IS DELIVERABLE AND THIS IS NOT. And it is the WIDEST of the three micros measured: median quoted spread 2 ticks, one-tick only 32.5% of day-session trades, p90 four ticks."
  }
 }

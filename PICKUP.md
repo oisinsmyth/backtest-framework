@@ -183,6 +183,59 @@ flat-map side from **git** rather than `temp/`, so it survives `temp/` being del
 
 ---
 
+## THE SEARCH FOR COMPONENT #2 IS OPEN — three Stage 0s run, 2026-09-14
+
+The principal opened it with a framing: **tell a STORY** — a mechanical account of what is happening
+under the numbers — and added a constraint, **"our first strategies must not be venue specific and
+can fit any venue for now."** That constraint is written into `RULES.md` as an amendment: **score
+hurdle P at the INTERSECTION of venues, not per venue** — flat by 3:10pm CT, no overnight, assume a
+2% daily loss limit and the 30% consistency cap. It partly reverses the P2 amendment's 22-hour
+MyFundedFutures route, and it costs nothing live because the principal had already closed overnight
+for prop. **The admitted arm already complies.**
+
+**THE REFRAME THAT SHOULD DRIVE THE SEARCH.** The admitted arm hits **50.5%** with a payoff ratio of
+**1.13**: `0.505 x 1.13 - 0.495 = +0.076`. At a payoff of 1.00 its edge would be **+0.005**. *The one
+thing that works is not paid for being right — it is paid for being right BIGGER.* Every previous
+search hunted ~55% accuracy. **Hunt shape, not accuracy.**
+
+**Stage 0 #1 — taker affordability across every CME-verified root** (`working/stage0_taker_affordability.py`).
+NQ is **not** uniquely cheap: NG ties it at 2.1% cost/move, HG 3.1% and SI 3.4% all beat ES's 4.2%.
+But **a root is cheap BECAUSE it moves and fails C-d for the same reason** — corr(log cost ratio,
+log σ) = **−0.541** — and NG/HG/SI are locked out at σ $1,081/$704/$1,249 against a $500 bar. **The
+micro is what breaks the tie**, and we had verified only seven of them.
+
+**Stage 0 #2 — the micro census.** MNG, MHG and SIL all exist and trade (3,191 / 5,090 / 24,932 lots
+a day-session against our ONE lot). **All three are now CME-verified in `futures_contract_specs.json`**
+with ticks cross-checked against the archive. Re-priced at their own measured spreads: **SIL 4.8%
+(1-tick median), MNG 8.0%, MHG 10.8% (drop it)**. **Two corrections fell out:** the repo's 1.009-tick
+crossing assumption is an INDEX-micro number — **MGC quotes 2 ticks wide, one-tick only 25.7% of the
+time**, so GC's 5.6% was understated; and **MNQ's median spread is 1.00 tick but its mean is 1.55
+with only 56.8% of trades seeing a one-tick market**, which is worth checking at the arm's actual
+entry timestamps. Then the MACD edge on the three new roots: **silver's edge is in the NIGHT**
+(day +0.0028 vs night +0.0193), gas and copper are flat, **none clears its rotation null** — while
+the reference roots reproduce D515 exactly (NQ day **+0.0275**, GC and CL inside). Closes the MACD
+construction on those day sessions, not the roots.
+
+**Stage 0 #3 — the curve story, [D526](docs/decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the-change-carries-nothing.md).**
+Persistence passes, collinearity passes (**pearson +0.498 but spearman +0.162** — not momentum), and
+then **the test turns out to be invalid: 0 of 8 CL years contain both curve states.** The tercile is
+a period, not a state. **This is the third conditioner to fail this way (D508, D512, D526) and it is
+now FINDINGS §73**: on a daily clock with an eight-year window, **a conditioner slower than about a
+month has n_eff in YEARS** — count the years containing both extreme states before designing
+anything. The repair (the CHANGE) has real within-period variation, 8 of 8 years, and carries
+nothing: year gaps −0.038 and −0.005, positive in 3 of 8.
+
+**Kept:** the settlement strip (`data/d526_curve_strip_CL_GC.csv.gz`, 263,983 settlements, CL 188
+contracts) — the first curve data in the repo. **And a second missing-value sentinel: settlements of
+exactly `0.0`, 646 of them, which `UNDEF` filtering does not catch and which must NOT be swept up by
+a "drop non-positive" rule, because CL settled −37.63 on 2020-04-20.**
+
+**Still on the table, not yet told:** the queue rent on ZN (its premise was dented — 9.0%, not
+cost-dead — but its day edge is the second-largest of eight and its failure is purely execution);
+and a day-session signal other than the MACD on the three newly-expressible roots.
+
+---
+
 ## D524 — day5m VERIFIES CLEAN, AND A FLAT ID DICT IS **NON-REPRODUCIBLY** WRONG, 2026-09-13
 
 The last builder to get the D520/D521 rebuild-and-diff treatment. `build_fut_day5m.py` already

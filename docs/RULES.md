@@ -1004,3 +1004,42 @@ reproduces the inherited number before anything new is computed. D397's `[ID]`,
 D373's `[MIR]`, D362's `[ID]` and D377's `[REC]` are the same instrument, and
 **D377 already set the precedent for what to do when it cannot be met exactly —
 correct the record, do not quietly loosen the bar.**
+
+
+### AMENDMENT to hurdle P, 2026-09-13 — **THE FIRST STRATEGIES MUST FIT ANY VENUE. Score hurdle P at the INTERSECTION, not per venue.**
+
+**The principal, 2026-09-13:** *"we want our first strategies to not be venue specific and can fit
+any venue for now."*
+
+This is a deliberate narrowing and it **partly reverses the practical effect of the P2 amendment of
+2026-08-29**, which made the flatten time venue-specific and thereby opened a 22-hour hold at
+MyFundedFutures. That amendment stands as a statement of fact about the venues; what changes is
+which venue a candidate is scored against. **Until the principal lifts this, a candidate is scored
+against the STRICTEST rule among the venues, not the most permissive one that admits it.**
+
+| | per-venue reading (before) | **the intersection (now)** |
+|---|---|---|
+| **P2** flatten | venue-specific: Topstep 3:10pm CT, MyFundedFutures 4:10pm ET, Apex 4:59pm ET | **flat by 3:10pm CT / 4:10pm ET, and NO position held from one session to the next** — Topstep's reading, the strictest |
+| overnight | legal at MyFundedFutures (18:00 ET → 16:10 ET next day) | **not available** |
+| multi-day carry | never legal at any venue | unchanged — **still not available** |
+| **P3** daily loss limit | *"no such limit appears in our own encoding of the two venues P6 permits"* | **assume one exists at 2%**, the tighter end of the 2–3% the industry runs |
+| **P5** consistency | no single day > 40% of trailing-year profit | **> 30%**, the strict end of the 30–50% range venues impose |
+
+**What this costs and what it buys.** It costs the overnight route, which the principal had already
+closed for prop on 2026-09-12 on other grounds, so nothing live is lost. It buys portability: a
+component that clears at the intersection can be deployed at any of the four venues without
+rescoring, and it cannot fail because a venue changed a rule — **and MyFundedFutures' overnight
+permission dates from March 2026 by secondary report, so it is exactly the kind of rule that can
+change back.**
+
+**The admitted arm already complies.** The MACD day-session arm is forced flat at the h15 close
+(15:59 ET), inside every venue's flatten time, and holds nothing overnight.
+
+**A SECOND SENSE OF "VENUE" THAT THIS RULE DOES NOT COVER, and that a maker construction must
+answer separately.** The rule above is about the prop firm's rulebook. A strategy can also be
+*execution*-venue specific: a resting limit order's fill depends on queue position, which depends on
+latency and routing, which a funded retail account does not control. **A maker construction is
+therefore only venue-agnostic if its edge survives a pessimistic fill model — back of queue, no
+queue jumping, no cancel race.** If the edge exists only at favourable queue position, it is
+infrastructure-dependent and is NOT portable, whatever the rulebook says. Under this amendment that
+pessimistic model is a requirement, not a courtesy.
