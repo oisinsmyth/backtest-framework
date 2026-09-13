@@ -1,0 +1,1411 @@
+{
+  "purpose": "D507: the quoted spread on bbo-1m for every acquired root, including the micros the prop arm actually trades, and conditioned on the execution instants. NO RETURN READ. Nothing admitted.",
+  "window": [
+    "2025-09-11",
+    "2026-09-10"
+  ],
+  "exec_hours": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "cost_convention": "cost_ticks = commission/tick_usd + quoted spread in ticks; a round trip crosses once in and once out, which is one full spread, matching D471's 1.009 on ES",
+  "per_root": {
+    "6A": {
+      "all_session": {
+        "minutes": 356988,
+        "P1": 0.6558903940748708,
+        "P2": 0.33633623539166585,
+        "P3plus": 0.00777337053346331,
+        "mean_spread_ticks": 1.409114592087129,
+        "median_spread_ticks": 1.0,
+        "q_orders": 23.595454188936323,
+        "q_lots": 102.51441785158045
+      },
+      "execution_instants": {
+        "minutes": 1537,
+        "P1": 0.7098243331164606,
+        "P2": 0.2719583604424203,
+        "P3plus": 0.018217306441119064,
+        "mean_spread_ticks": 1.3370201691607027,
+        "median_spread_ticks": 1.0,
+        "q_orders": 31.877683799609628,
+        "q_lots": 152.1164606376057
+      },
+      "tick_points": 5e-05,
+      "tick_usd_full": 5.0
+    },
+    "6B": {
+      "all_session": {
+        "minutes": 356534,
+        "P1": 0.7372200126776128,
+        "P2": 0.25578766681438514,
+        "P3plus": 0.006992320508002042,
+        "mean_spread_ticks": 1.3071965086078747,
+        "median_spread_ticks": 1.0,
+        "q_orders": 25.45534226749763,
+        "q_lots": 107.01281504709229
+      },
+      "execution_instants": {
+        "minutes": 1537,
+        "P1": 0.7865972674040338,
+        "P2": 0.20559531554977228,
+        "P3plus": 0.007807417046193884,
+        "mean_spread_ticks": 1.2296681847755369,
+        "median_spread_ticks": 1.0,
+        "q_orders": 32.848405985686405,
+        "q_lots": 151.34938191281717
+      },
+      "tick_points": 0.0001,
+      "tick_usd_full": 6.250000000000001
+    },
+    "6C": {
+      "all_session": {
+        "minutes": 355942,
+        "P1": 0.7645430997184934,
+        "P2": 0.22952615875620186,
+        "P3plus": 0.005930741525304684,
+        "mean_spread_ticks": 1.262820909024504,
+        "median_spread_ticks": 1.0,
+        "q_orders": 26.562428710295496,
+        "q_lots": 134.37235560849803
+      },
+      "execution_instants": {
+        "minutes": 1537,
+        "P1": 0.8165256994144438,
+        "P2": 0.17631750162654522,
+        "P3plus": 0.0071567989590110605,
+        "mean_spread_ticks": 1.1964866623292127,
+        "median_spread_ticks": 1.0,
+        "q_orders": 35.5985686402082,
+        "q_lots": 205.765126870527
+      },
+      "tick_points": 5e-05,
+      "tick_usd_full": 5.0
+    },
+    "6E": {
+      "all_session": {
+        "minutes": 356506,
+        "P1": 0.7321868355651798,
+        "P2": 0.2613869051292264,
+        "P3plus": 0.0064262593055937345,
+        "mean_spread_ticks": 1.3069429406517703,
+        "median_spread_ticks": 1.0,
+        "q_orders": 23.972129501326766,
+        "q_lots": 73.68626334479644
+      },
+      "execution_instants": {
+        "minutes": 1537,
+        "P1": 0.7560182173064411,
+        "P2": 0.23162003903708522,
+        "P3plus": 0.01236174365647365,
+        "mean_spread_ticks": 1.262199089134678,
+        "median_spread_ticks": 1.0,
+        "q_orders": 32.38776837996096,
+        "q_lots": 112.11515940143136
+      },
+      "tick_points": 5e-05,
+      "tick_usd_full": 6.250000000000001
+    },
+    "6J": {
+      "all_session": {
+        "minutes": 356147,
+        "P1": 0.8117968142368179,
+        "P2": 0.18216073699904814,
+        "P3plus": 0.006042448764133911,
+        "mean_spread_ticks": 1.2370678399649584,
+        "median_spread_ticks": 1.0,
+        "q_orders": 33.89102814287359,
+        "q_lots": 123.04647519142377
+      },
+      "execution_instants": {
+        "minutes": 1537,
+        "P1": 0.8158750813272609,
+        "P2": 0.17176317501626545,
+        "P3plus": 0.01236174365647365,
+        "mean_spread_ticks": 1.2114508783344178,
+        "median_spread_ticks": 1.0,
+        "q_orders": 40.41964866623292,
+        "q_lots": 180.1164606376057
+      },
+      "tick_points": 5.000000000000001e-07,
+      "tick_usd_full": 6.250000000000001
+    },
+    "6S": {
+      "all_session": {
+        "minutes": 356186,
+        "P1": 0.14329591842464331,
+        "P2": 0.7521603881118292,
+        "P3plus": 0.10454369346352749,
+        "mean_spread_ticks": 2.112612511440652,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.911700628323404,
+        "q_lots": 9.537438304705969
+      },
+      "execution_instants": {
+        "minutes": 1537,
+        "P1": 0.30513988288874433,
+        "P2": 0.6213402732595966,
+        "P3plus": 0.07351984385165908,
+        "mean_spread_ticks": 1.9167208848405985,
+        "median_spread_ticks": 2.0,
+        "q_orders": 10.797007156798959,
+        "q_lots": 19.633051398828886
+      },
+      "tick_points": 5e-05,
+      "tick_usd_full": 6.250000000000001
+    },
+    "BTC": {
+      "all_session": {
+        "minutes": 392391,
+        "P1": 0.0009174522351430078,
+        "P2": 0.008827929284820499,
+        "P3plus": 0.9902546184800365,
+        "mean_spread_ticks": 9.012569095621458,
+        "median_spread_ticks": 8.0,
+        "q_orders": 3.3869329316931327,
+        "q_lots": 3.535394542688288
+      },
+      "execution_instants": {
+        "minutes": 1712,
+        "P1": 0.0011682242990654205,
+        "P2": 0.018107476635514017,
+        "P3plus": 0.9807242990654206,
+        "mean_spread_ticks": 7.640771028037383,
+        "median_spread_ticks": 7.0,
+        "q_orders": 3.3440420560747666,
+        "q_lots": 3.4643691588785046
+      },
+      "tick_points": 5.0,
+      "tick_usd_full": 25.0
+    },
+    "BZ": {
+      "all_session": {
+        "minutes": 348853,
+        "P1": 0.052202503633335534,
+        "P2": 0.36924721874256494,
+        "P3plus": 0.5785502776240995,
+        "mean_spread_ticks": 4.244160147683981,
+        "median_spread_ticks": 3.0,
+        "q_orders": 4.159236125244731,
+        "q_lots": 4.46194815581348
+      },
+      "execution_instants": {
+        "minutes": 1531,
+        "P1": 0.0790333115610712,
+        "P2": 0.46636185499673416,
+        "P3plus": 0.45460483344219466,
+        "mean_spread_ticks": 2.914435009797518,
+        "median_spread_ticks": 2.0,
+        "q_orders": 4.789679947746571,
+        "q_lots": 5.093403004572175
+      },
+      "tick_points": 0.01,
+      "tick_usd_full": 10.000000000000002
+    },
+    "CL": {
+      "all_session": {
+        "minutes": 353239,
+        "P1": 0.5018924863902344,
+        "P2": 0.39185084319681573,
+        "P3plus": 0.10625667041294987,
+        "mean_spread_ticks": 1.6826313062827152,
+        "median_spread_ticks": 1.0,
+        "q_orders": 9.32320893219605,
+        "q_lots": 11.628922627456198
+      },
+      "execution_instants": {
+        "minutes": 1530,
+        "P1": 0.5745098039215686,
+        "P2": 0.36797385620915035,
+        "P3plus": 0.05751633986928104,
+        "mean_spread_ticks": 1.5006535947712418,
+        "median_spread_ticks": 1.0,
+        "q_orders": 11.494771241830065,
+        "q_lots": 14.890196078431373
+      },
+      "tick_points": 0.01,
+      "tick_usd_full": 10.000000000000002
+    },
+    "ES": {
+      "all_session": {
+        "minutes": 353275,
+        "P1": 0.8814747717783596,
+        "P2": 0.11728257023565211,
+        "P3plus": 0.0012426579859882527,
+        "mean_spread_ticks": 1.1208322128653316,
+        "median_spread_ticks": 1.0,
+        "q_orders": 25.295478027032765,
+        "q_lots": 36.43151086264242
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.9120734908136483,
+        "P2": 0.07480314960629922,
+        "P3plus": 0.013123359580052493,
+        "mean_spread_ticks": 1.1089238845144358,
+        "median_spread_ticks": 1.0,
+        "q_orders": 40.79658792650918,
+        "q_lots": 60.79330708661417
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 12.5
+    },
+    "GC": {
+      "all_session": {
+        "minutes": 353370,
+        "P1": 0.012151569176783542,
+        "P2": 0.1381526445368877,
+        "P3plus": 0.8496957862863288,
+        "mean_spread_ticks": 4.478189999151032,
+        "median_spread_ticks": 4.0,
+        "q_orders": 3.5457678920112063,
+        "q_lots": 3.866177094829782
+      },
+      "execution_instants": {
+        "minutes": 1530,
+        "P1": 0.01241830065359477,
+        "P2": 0.165359477124183,
+        "P3plus": 0.8222222222222222,
+        "mean_spread_ticks": 4.2065359477124185,
+        "median_spread_ticks": 3.0,
+        "q_orders": 3.7973856209150325,
+        "q_lots": 4.1156862745098035
+      },
+      "tick_points": 0.1,
+      "tick_usd_full": 10.0
+    },
+    "HE": {
+      "all_session": {
+        "minutes": 69509,
+        "P1": 0.7016501460242559,
+        "P2": 0.28577594268368123,
+        "P3plus": 0.012573911292062898,
+        "mean_spread_ticks": 1.5250830827662605,
+        "median_spread_ticks": 1.0,
+        "q_orders": 9.699089326562028,
+        "q_lots": 14.349307283948841
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.6987179487179487,
+        "P2": 0.3004807692307692,
+        "P3plus": 0.0008012820512820513,
+        "mean_spread_ticks": 1.3020833333333333,
+        "median_spread_ticks": 1.0,
+        "q_orders": 10.883012820512821,
+        "q_lots": 28.21875
+      },
+      "tick_points": 0.025,
+      "tick_usd_full": 10.0
+    },
+    "HG": {
+      "all_session": {
+        "minutes": 353273,
+        "P1": 0.0727312871348787,
+        "P2": 0.5440155347280998,
+        "P3plus": 0.38325317813702153,
+        "mean_spread_ticks": 2.448477523048747,
+        "median_spread_ticks": 2.0,
+        "q_orders": 5.102442020760149,
+        "q_lots": 5.48181717821628
+      },
+      "execution_instants": {
+        "minutes": 1529,
+        "P1": 0.12884238064094178,
+        "P2": 0.60431654676259,
+        "P3plus": 0.2668410725964683,
+        "mean_spread_ticks": 2.2603008502289077,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.135382603008503,
+        "q_lots": 7.253760627861348
+      },
+      "tick_points": 0.0005,
+      "tick_usd_full": 12.5
+    },
+    "HO": {
+      "all_session": {
+        "minutes": 350773,
+        "P1": 0.0001539457141798257,
+        "P2": 0.0031929481459519403,
+        "P3plus": 0.9966531061398682,
+        "mean_spread_ticks": 21.24826027088744,
+        "median_spread_ticks": 14.0,
+        "q_orders": 2.948721822945324,
+        "q_lots": 3.0442964538319655
+      },
+      "execution_instants": {
+        "minutes": 1530,
+        "P1": 0.0,
+        "P2": 0.00784313725490196,
+        "P3plus": 0.9921568627450981,
+        "mean_spread_ticks": 12.246405228758169,
+        "median_spread_ticks": 10.0,
+        "q_orders": 2.7888888888888888,
+        "q_lots": 2.9026143790849672
+      },
+      "tick_points": 0.0001,
+      "tick_usd_full": 4.2
+    },
+    "LE": {
+      "all_session": {
+        "minutes": 69411,
+        "P1": 0.21799138465084786,
+        "P2": 0.6351298785495094,
+        "P3plus": 0.1468787367996427,
+        "mean_spread_ticks": 2.3970552217948162,
+        "median_spread_ticks": 2.0,
+        "q_orders": 5.060869314661941,
+        "q_lots": 8.35710478166285
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.28926282051282054,
+        "P2": 0.5889423076923077,
+        "P3plus": 0.12179487179487179,
+        "mean_spread_ticks": 1.8549679487179487,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.033653846153846,
+        "q_lots": 11.417467948717949
+      },
+      "tick_points": 0.025,
+      "tick_usd_full": 10.0
+    },
+    "M2K": {
+      "all_session": {
+        "minutes": 354644,
+        "P1": 0.23775673633277314,
+        "P2": 0.6964928209697612,
+        "P3plus": 0.06575044269746563,
+        "mean_spread_ticks": 1.9337927611915047,
+        "median_spread_ticks": 2.0,
+        "q_orders": 5.756730693314986,
+        "q_lots": 7.784747521458138
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.41601049868766404,
+        "P2": 0.5118110236220472,
+        "P3plus": 0.07217847769028872,
+        "mean_spread_ticks": 1.952755905511811,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.379265091863517,
+        "q_lots": 9.215879265091864
+      },
+      "tick_points": 0.1,
+      "tick_usd_full": 0.5
+    },
+    "MBT": {
+      "all_session": {
+        "minutes": 391875,
+        "P1": 0.010873365231259969,
+        "P2": 0.13743668261563,
+        "P3plus": 0.85168995215311,
+        "mean_spread_ticks": 4.016045933014354,
+        "median_spread_ticks": 3.0,
+        "q_orders": 4.214683253588516,
+        "q_lots": 11.352280701754387
+      },
+      "execution_instants": {
+        "minutes": 1707,
+        "P1": 0.015817223198594025,
+        "P2": 0.18746338605741067,
+        "P3plus": 0.7967193907439953,
+        "mean_spread_ticks": 3.676039835969537,
+        "median_spread_ticks": 3.0,
+        "q_orders": 4.1095489162273,
+        "q_lots": 10.84182776801406
+      },
+      "tick_points": 5.0,
+      "tick_usd_full": 0.5
+    },
+    "MES": {
+      "all_session": {
+        "minutes": 353156,
+        "P1": 0.891286003918948,
+        "P2": 0.10730668599712309,
+        "P3plus": 0.0014073100839289152,
+        "mean_spread_ticks": 1.1120326427980836,
+        "median_spread_ticks": 1.0,
+        "q_orders": 21.692753344131205,
+        "q_lots": 57.143035938791925
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.9048556430446194,
+        "P2": 0.07349081364829396,
+        "P3plus": 0.021653543307086614,
+        "mean_spread_ticks": 1.1476377952755905,
+        "median_spread_ticks": 1.0,
+        "q_orders": 26.545931758530184,
+        "q_lots": 83.70538057742782
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 1.25
+    },
+    "MNQ": {
+      "all_session": {
+        "minutes": 353140,
+        "P1": 0.13116044628192786,
+        "P2": 0.569241660531234,
+        "P3plus": 0.2995978931868381,
+        "mean_spread_ticks": 2.270312057540919,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.939613184572691,
+        "q_lots": 8.129985274961772
+      },
+      "execution_instants": {
+        "minutes": 1523,
+        "P1": 0.2974392646093237,
+        "P2": 0.5817465528562049,
+        "P3plus": 0.12081418253447143,
+        "mean_spread_ticks": 2.4517399868680236,
+        "median_spread_ticks": 2.0,
+        "q_orders": 8.612606697307944,
+        "q_lots": 10.233749179251477
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 0.5
+    },
+    "MYM": {
+      "all_session": {
+        "minutes": 354733,
+        "P1": 0.14901912142371868,
+        "P2": 0.631810403881229,
+        "P3plus": 0.21917047469505233,
+        "mean_spread_ticks": 2.268286288560692,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.264249449586027,
+        "q_lots": 6.929152348385969
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.32217847769028873,
+        "P2": 0.5898950131233596,
+        "P3plus": 0.08792650918635171,
+        "mean_spread_ticks": 2.0583989501312336,
+        "median_spread_ticks": 2.0,
+        "q_orders": 7.5065616797900265,
+        "q_lots": 8.368110236220472
+      },
+      "tick_points": 1.0,
+      "tick_usd_full": 0.5
+    },
+    "NG": {
+      "all_session": {
+        "minutes": 347729,
+        "P1": 0.6353999810197021,
+        "P2": 0.33779753773772103,
+        "P3plus": 0.026802481242576833,
+        "mean_spread_ticks": 1.4498388112581924,
+        "median_spread_ticks": 1.0,
+        "q_orders": 8.964147367633991,
+        "q_lots": 11.547938193248191
+      },
+      "execution_instants": {
+        "minutes": 1530,
+        "P1": 0.7483660130718954,
+        "P2": 0.24640522875816995,
+        "P3plus": 0.00522875816993464,
+        "mean_spread_ticks": 1.257516339869281,
+        "median_spread_ticks": 1.0,
+        "q_orders": 11.503921568627451,
+        "q_lots": 15.620915032679738
+      },
+      "tick_points": 0.001,
+      "tick_usd_full": 10.0
+    },
+    "NKD": {
+      "all_session": {
+        "minutes": 354073,
+        "P1": 0.053788343081793866,
+        "P2": 0.3718668184244492,
+        "P3plus": 0.574344838493757,
+        "mean_spread_ticks": 3.8973601488958494,
+        "median_spread_ticks": 3.0,
+        "q_orders": 4.598410497270337,
+        "q_lots": 4.811146289042091
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.08464566929133858,
+        "P2": 0.5137795275590551,
+        "P3plus": 0.4015748031496063,
+        "mean_spread_ticks": 3.066272965879265,
+        "median_spread_ticks": 2.0,
+        "q_orders": 5.2723097112860895,
+        "q_lots": 5.562992125984252
+      },
+      "tick_points": 5.0,
+      "tick_usd_full": 25.0
+    },
+    "NQ": {
+      "all_session": {
+        "minutes": 353550,
+        "P1": 0.012501767783906095,
+        "P2": 0.19248762551265733,
+        "P3plus": 0.7950106067034366,
+        "mean_spread_ticks": 3.8053429500777827,
+        "median_spread_ticks": 3.0,
+        "q_orders": 3.562709659171263,
+        "q_lots": 3.7557177202658747
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.024934383202099737,
+        "P2": 0.42782152230971127,
+        "P3plus": 0.547244094488189,
+        "mean_spread_ticks": 3.504593175853018,
+        "median_spread_ticks": 3.0,
+        "q_orders": 5.131889763779528,
+        "q_lots": 5.328083989501312
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 5.0
+    },
+    "PA": {
+      "all_session": {
+        "minutes": 350326,
+        "P1": 0.02566181214069181,
+        "P2": 0.26121669530665725,
+        "P3plus": 0.713121492552651,
+        "mean_spread_ticks": 3.7644765161592346,
+        "median_spread_ticks": 3.0,
+        "q_orders": 4.5374708128999846,
+        "q_lots": 4.766137825910723
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.061598951507208385,
+        "P2": 0.39711664482306686,
+        "P3plus": 0.5412844036697247,
+        "mean_spread_ticks": 3.008519003931848,
+        "median_spread_ticks": 3.0,
+        "q_orders": 5.0504587155963305,
+        "q_lots": 5.500655307994758
+      },
+      "tick_points": 0.5,
+      "tick_usd_full": 50.0
+    },
+    "PL": {
+      "all_session": {
+        "minutes": 353289,
+        "P1": 0.000257579488747173,
+        "P2": 0.006164924466937833,
+        "P3plus": 0.993577496044315,
+        "mean_spread_ticks": 11.504728423472002,
+        "median_spread_ticks": 8.0,
+        "q_orders": 3.125950708909703,
+        "q_lots": 3.2567190034221274
+      },
+      "execution_instants": {
+        "minutes": 1529,
+        "P1": 0.0006540222367560497,
+        "P2": 0.011772400261608895,
+        "P3plus": 0.9875735775016351,
+        "mean_spread_ticks": 8.74493132766514,
+        "median_spread_ticks": 7.0,
+        "q_orders": 3.025506867233486,
+        "q_lots": 3.1929365598430346
+      },
+      "tick_points": 0.1,
+      "tick_usd_full": 5.0
+    },
+    "RB": {
+      "all_session": {
+        "minutes": 350301,
+        "P1": 0.0010847813737328755,
+        "P2": 0.016848367546766923,
+        "P3plus": 0.9820668510795002,
+        "mean_spread_ticks": 12.111230056437178,
+        "median_spread_ticks": 8.0,
+        "q_orders": 2.8775196188420815,
+        "q_lots": 2.951293316319394
+      },
+      "execution_instants": {
+        "minutes": 1531,
+        "P1": 0.001959503592423253,
+        "P2": 0.031352057478772045,
+        "P3plus": 0.9666884389288047,
+        "mean_spread_ticks": 7.374918354016982,
+        "median_spread_ticks": 6.0,
+        "q_orders": 2.882429784454605,
+        "q_lots": 2.9575440888308293
+      },
+      "tick_points": 0.0001,
+      "tick_usd_full": 4.2
+    },
+    "RTY": {
+      "all_session": {
+        "minutes": 355584,
+        "P1": 0.13091702663786897,
+        "P2": 0.5733806920446364,
+        "P3plus": 0.2957022813174946,
+        "mean_spread_ticks": 2.4267767953563717,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.728562027537797,
+        "q_lots": 8.399005579553636
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.3195538057742782,
+        "P2": 0.5951443569553806,
+        "P3plus": 0.08530183727034121,
+        "mean_spread_ticks": 1.8799212598425197,
+        "median_spread_ticks": 2.0,
+        "q_orders": 9.450787401574804,
+        "q_lots": 12.285433070866143
+      },
+      "tick_points": 0.1,
+      "tick_usd_full": 5.0
+    },
+    "SI": {
+      "all_session": {
+        "minutes": 353224,
+        "P1": 0.06419439222702875,
+        "P2": 0.22949176726383258,
+        "P3plus": 0.7063138405091387,
+        "mean_spread_ticks": 4.656637148098657,
+        "median_spread_ticks": 4.0,
+        "q_orders": 4.086327656104908,
+        "q_lots": 4.438865988721038
+      },
+      "execution_instants": {
+        "minutes": 1529,
+        "P1": 0.07913669064748201,
+        "P2": 0.2459123610202747,
+        "P3plus": 0.6749509483322433,
+        "mean_spread_ticks": 4.300196206671027,
+        "median_spread_ticks": 3.0,
+        "q_orders": 4.5127534336167425,
+        "q_lots": 4.937867887508175
+      },
+      "tick_points": 0.005,
+      "tick_usd_full": 25.0
+    },
+    "SR3": {
+      "all_session": {
+        "minutes": 348024,
+        "P1": 0.16911764705882354,
+        "P2": 0.8221789301887226,
+        "P3plus": 0.008703422752453853,
+        "mean_spread_ticks": 1.8489788060593522,
+        "median_spread_ticks": 2.0,
+        "q_orders": 82.12161517596488,
+        "q_lots": 17886.043198170242
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.17300131061598953,
+        "P2": 0.8152031454783748,
+        "P3plus": 0.011795543905635648,
+        "mean_spread_ticks": 1.853211009174312,
+        "median_spread_ticks": 2.0,
+        "q_orders": 100.61271297509829,
+        "q_lots": 21336.792922673656
+      },
+      "tick_points": 0.0025,
+      "tick_usd_full": 6.25
+    },
+    "TN": {
+      "all_session": {
+        "minutes": 353680,
+        "P1": 0.985809206061977,
+        "P2": 0.013882605745306491,
+        "P3plus": 0.00030818819271658,
+        "mean_spread_ticks": 1.0148128251526805,
+        "median_spread_ticks": 1.0,
+        "q_orders": 145.6862135263515,
+        "q_lots": 1376.2624321420494
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.9809960681520314,
+        "P2": 0.019003931847968544,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.0190039318479684,
+        "median_spread_ticks": 1.0,
+        "q_orders": 177.0910878112713,
+        "q_lots": 1831.7955439056357
+      },
+      "tick_points": 0.015625,
+      "tick_usd_full": 15.625
+    },
+    "UB": {
+      "all_session": {
+        "minutes": 352942,
+        "P1": 0.9893240249106086,
+        "P2": 0.010310475942222801,
+        "P3plus": 0.0003654991471686566,
+        "mean_spread_ticks": 1.0114863065319515,
+        "median_spread_ticks": 1.0,
+        "q_orders": 129.56931450493283,
+        "q_lots": 726.071076834154
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.9934469200524246,
+        "P2": 0.00655307994757536,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.0065530799475753,
+        "median_spread_ticks": 1.0,
+        "q_orders": 158.50065530799475,
+        "q_lots": 1017.6631716906946
+      },
+      "tick_points": 0.03125,
+      "tick_usd_full": 31.25
+    },
+    "YM": {
+      "all_session": {
+        "minutes": 354368,
+        "P1": 0.045540229366082714,
+        "P2": 0.5979490247426404,
+        "P3plus": 0.35651074589127685,
+        "mean_spread_ticks": 2.642879718258985,
+        "median_spread_ticks": 2.0,
+        "q_orders": 5.813501783456745,
+        "q_lots": 6.006103824273072
+      },
+      "execution_instants": {
+        "minutes": 1524,
+        "P1": 0.06167979002624672,
+        "P2": 0.6902887139107612,
+        "P3plus": 0.24803149606299213,
+        "mean_spread_ticks": 2.706692913385827,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.622047244094488,
+        "q_lots": 6.845800524934384
+      },
+      "tick_points": 1.0,
+      "tick_usd_full": 5.0
+    },
+    "ZB": {
+      "all_session": {
+        "minutes": 353060,
+        "P1": 0.9979408599104967,
+        "P2": 0.00197983345606979,
+        "P3plus": 7.930663343341075e-05,
+        "mean_spread_ticks": 1.002246077154025,
+        "median_spread_ticks": 1.0,
+        "q_orders": 204.75101399195603,
+        "q_lots": 1371.0998017334164
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.9908256880733946,
+        "P2": 0.009174311926605505,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.0091743119266054,
+        "median_spread_ticks": 1.0,
+        "q_orders": 258.9692005242464,
+        "q_lots": 1959.5910878112713
+      },
+      "tick_points": 0.03125,
+      "tick_usd_full": 31.25
+    },
+    "ZC": {
+      "all_session": {
+        "minutes": 257286,
+        "P1": 0.9677051996610776,
+        "P2": 0.032255933086137605,
+        "P3plus": 3.886725278483866e-05,
+        "mean_spread_ticks": 1.032364761393935,
+        "median_spread_ticks": 1.0,
+        "q_orders": 48.88061534634609,
+        "q_lots": 522.3830484363705
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.9919871794871795,
+        "P2": 0.007211538461538462,
+        "P3plus": 0.0008012820512820513,
+        "mean_spread_ticks": 1.0088141025641026,
+        "median_spread_ticks": 1.0,
+        "q_orders": 75.6298076923077,
+        "q_lots": 936.8213141025641
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 12.5
+    },
+    "ZF": {
+      "all_session": {
+        "minutes": 353490,
+        "P1": 0.9976152083510141,
+        "P2": 0.0023678180429432235,
+        "P3plus": 1.697360604260375e-05,
+        "mean_spread_ticks": 1.0024130809923901,
+        "median_spread_ticks": 1.0,
+        "q_orders": 260.0370929870718,
+        "q_lots": 2626.969543692891
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.9882044560943644,
+        "P2": 0.010484927916120577,
+        "P3plus": 0.001310615989515072,
+        "mean_spread_ticks": 1.0131061598951507,
+        "median_spread_ticks": 1.0,
+        "q_orders": 317.8086500655308,
+        "q_lots": 3836.935124508519
+      },
+      "tick_points": 0.0078125,
+      "tick_usd_full": 7.8125
+    },
+    "ZL": {
+      "all_session": {
+        "minutes": 263497,
+        "P1": 0.4793109598970766,
+        "P2": 0.4901232272094179,
+        "P3plus": 0.03056581289350543,
+        "mean_spread_ticks": 1.649775898776836,
+        "median_spread_ticks": 2.0,
+        "q_orders": 6.63378710194044,
+        "q_lots": 10.932185186169102
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.6330128205128205,
+        "P2": 0.3573717948717949,
+        "P3plus": 0.009615384615384616,
+        "mean_spread_ticks": 1.3798076923076923,
+        "median_spread_ticks": 1.0,
+        "q_orders": 9.638621794871796,
+        "q_lots": 23.681089743589745
+      },
+      "tick_points": 0.01,
+      "tick_usd_full": 6.000000000000001
+    },
+    "ZM": {
+      "all_session": {
+        "minutes": 257595,
+        "P1": 0.8410683437178517,
+        "P2": 0.15487490052213745,
+        "P3plus": 0.00405675576001087,
+        "mean_spread_ticks": 1.1894834915273977,
+        "median_spread_ticks": 1.0,
+        "q_orders": 15.020322599429337,
+        "q_lots": 36.834049573943595
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.8982371794871795,
+        "P2": 0.10176282051282051,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.1017628205128205,
+        "median_spread_ticks": 1.0,
+        "q_orders": 22.00721153846154,
+        "q_lots": 60.19150641025641
+      },
+      "tick_points": 0.1,
+      "tick_usd_full": 10.0
+    },
+    "ZN": {
+      "all_session": {
+        "minutes": 353538,
+        "P1": 0.9996803738212017,
+        "P2": 0.0003167976285434663,
+        "P3plus": 2.828550254852378e-06,
+        "mean_spread_ticks": 1.0003224547290532,
+        "median_spread_ticks": 1.0,
+        "q_orders": 525.5978452104158,
+        "q_lots": 4845.718177395358
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.9954128440366973,
+        "P2": 0.0045871559633027525,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.0045871559633028,
+        "median_spread_ticks": 1.0,
+        "q_orders": 654.8833551769332,
+        "q_lots": 7890.29750982962
+      },
+      "tick_points": 0.015625,
+      "tick_usd_full": 15.625
+    },
+    "ZS": {
+      "all_session": {
+        "minutes": 260519,
+        "P1": 0.8688694490612969,
+        "P2": 0.13012870462423087,
+        "P3plus": 0.0010018463144722649,
+        "mean_spread_ticks": 1.1348884342408807,
+        "median_spread_ticks": 1.0,
+        "q_orders": 18.48767268414204,
+        "q_lots": 58.91050172924048
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.938301282051282,
+        "P2": 0.060897435897435896,
+        "P3plus": 0.0008012820512820513,
+        "mean_spread_ticks": 1.0625,
+        "median_spread_ticks": 1.0,
+        "q_orders": 28.59455128205128,
+        "q_lots": 119.38942307692308
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 12.5
+    },
+    "ZT": {
+      "all_session": {
+        "minutes": 353001,
+        "P1": 0.9934617748958218,
+        "P2": 0.006507063719366234,
+        "P3plus": 3.116138481194104e-05,
+        "mean_spread_ticks": 1.0065835507548138,
+        "median_spread_ticks": 1.0,
+        "q_orders": 232.34286305137945,
+        "q_lots": 6183.029954589364
+      },
+      "execution_instants": {
+        "minutes": 1526,
+        "P1": 0.9849279161205766,
+        "P2": 0.01507208387942333,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.0150720838794234,
+        "median_spread_ticks": 1.0,
+        "q_orders": 264.72149410222806,
+        "q_lots": 7541.521625163827
+      },
+      "tick_points": 0.00390625,
+      "tick_usd_full": 7.8125
+    },
+    "ZW": {
+      "all_session": {
+        "minutes": 257457,
+        "P1": 0.8480212229615043,
+        "P2": 0.15066982059139972,
+        "P3plus": 0.00130895644709602,
+        "mean_spread_ticks": 1.1558007744982657,
+        "median_spread_ticks": 1.0,
+        "q_orders": 16.615745541974,
+        "q_lots": 57.667214330936815
+      },
+      "execution_instants": {
+        "minutes": 1248,
+        "P1": 0.9286858974358975,
+        "P2": 0.07131410256410256,
+        "P3plus": 0.0,
+        "mean_spread_ticks": 1.0713141025641026,
+        "median_spread_ticks": 1.0,
+        "q_orders": 28.053685897435898,
+        "q_lots": 107.4238782051282
+      },
+      "tick_points": 0.25,
+      "tick_usd_full": 12.5
+    }
+  },
+  "micro_vs_parent": {
+    "MES/ES": {
+      "parent_mean": 1.1208322128653316,
+      "micro_mean": 1.1120326427980836,
+      "ratio": 0.9921490746195164,
+      "parent_exec": 1.1089238845144358,
+      "micro_exec": 1.1476377952755905
+    },
+    "MNQ/NQ": {
+      "parent_mean": 3.8053429500777827,
+      "micro_mean": 2.270312057540919,
+      "ratio": 0.596611681870753,
+      "parent_exec": 3.504593175853018,
+      "micro_exec": 2.4517399868680236
+    },
+    "M2K/RTY": {
+      "parent_mean": 2.4267767953563717,
+      "micro_mean": 1.9337927611915047,
+      "ratio": 0.7968564578711194,
+      "parent_exec": 1.8799212598425197,
+      "micro_exec": 1.952755905511811
+    },
+    "MYM/YM": {
+      "parent_mean": 2.642879718258985,
+      "micro_mean": 2.268286288560692,
+      "ratio": 0.8582631562419122,
+      "parent_exec": 2.706692913385827,
+      "micro_exec": 2.0583989501312336
+    },
+    "MBT/BTC": {
+      "parent_mean": 9.012569095621458,
+      "micro_mean": 4.016045933014354,
+      "ratio": 0.4456050090051963,
+      "parent_exec": 7.640771028037383,
+      "micro_exec": 3.676039835969537
+    }
+  },
+  "d506_recost": {
+    "6A": {
+      "sized_as": "6A",
+      "spread_source": "6A",
+      "measured_spread_ticks": 1.3370201691607027,
+      "assumed_cost_ticks": 1.6,
+      "measured_cost_ticks": 1.9370201691607027,
+      "gross_ticks_per_trade": -0.5685252735800133,
+      "net_assumed": -2.1685252735800122,
+      "net_measured": -2.505545442740716,
+      "tick_usd": 5.0,
+      "net_measured_usd": -12.527727213703578,
+      "sign_flips": false
+    },
+    "6B": {
+      "sized_as": "6B",
+      "spread_source": "6B",
+      "measured_spread_ticks": 1.2296681847755369,
+      "assumed_cost_ticks": 1.48,
+      "measured_cost_ticks": 1.7096681847755368,
+      "gross_ticks_per_trade": -0.12285268089533574,
+      "net_assumed": -1.6028526808953352,
+      "net_measured": -1.8325208656708725,
+      "tick_usd": 6.250000000000001,
+      "net_measured_usd": -11.453255410442955,
+      "sign_flips": false
+    },
+    "6C": {
+      "sized_as": "6C",
+      "spread_source": "6C",
+      "measured_spread_ticks": 1.1964866623292127,
+      "assumed_cost_ticks": 1.6,
+      "measured_cost_ticks": 1.7964866623292128,
+      "gross_ticks_per_trade": -0.39330968068934896,
+      "net_assumed": -1.9933096806893484,
+      "net_measured": -2.189796343018562,
+      "tick_usd": 5.0,
+      "net_measured_usd": -10.94898171509281,
+      "sign_flips": false
+    },
+    "6E": {
+      "sized_as": "M6E",
+      "spread_source": "6E",
+      "measured_spread_ticks": 1.262199089134678,
+      "assumed_cost_ticks": 3.4,
+      "measured_cost_ticks": 3.6621990891346776,
+      "gross_ticks_per_trade": -0.880767236910371,
+      "net_assumed": -4.280767236910371,
+      "net_measured": -4.542966326045049,
+      "tick_usd": 1.25,
+      "net_measured_usd": -5.67870790755631,
+      "sign_flips": false
+    },
+    "6J": {
+      "sized_as": "6J",
+      "spread_source": "6J",
+      "measured_spread_ticks": 1.2114508783344178,
+      "assumed_cost_ticks": 1.48,
+      "measured_cost_ticks": 1.6914508783344178,
+      "gross_ticks_per_trade": 0.8111814345990995,
+      "net_assumed": -0.6688185654009005,
+      "net_measured": -0.8802694437353182,
+      "tick_usd": 6.250000000000001,
+      "net_measured_usd": -5.50168402334574,
+      "sign_flips": false
+    },
+    "6S": {
+      "sized_as": "6S",
+      "spread_source": "6S",
+      "measured_spread_ticks": 1.9167208848405985,
+      "assumed_cost_ticks": 1.48,
+      "measured_cost_ticks": 2.3967208848405983,
+      "gross_ticks_per_trade": -0.816778178075207,
+      "net_assumed": -2.296778178075207,
+      "net_measured": -3.2134990629158056,
+      "tick_usd": 6.250000000000001,
+      "net_measured_usd": -20.08436914322379,
+      "sign_flips": false
+    },
+    "BTC": {
+      "sized_as": "MBT",
+      "spread_source": "MBT",
+      "measured_spread_ticks": 3.676039835969537,
+      "assumed_cost_ticks": 7.0,
+      "measured_cost_ticks": 9.676039835969537,
+      "gross_ticks_per_trade": 1.8166007905138448,
+      "net_assumed": -5.183399209486156,
+      "net_measured": -7.859439045455692,
+      "tick_usd": 0.5,
+      "net_measured_usd": -3.929719522727846,
+      "sign_flips": false
+    },
+    "BZ": {
+      "sized_as": "BZ",
+      "spread_source": "BZ",
+      "measured_spread_ticks": 2.914435009797518,
+      "assumed_cost_ticks": 1.2999999999999998,
+      "measured_cost_ticks": 3.214435009797518,
+      "gross_ticks_per_trade": -1.918549346016558,
+      "net_assumed": -3.2185493460165593,
+      "net_measured": -5.1329843558140755,
+      "tick_usd": 10.000000000000002,
+      "net_measured_usd": -51.329843558140766,
+      "sign_flips": false
+    },
+    "CL": {
+      "sized_as": "MCL",
+      "spread_source": "CL",
+      "measured_spread_ticks": 1.5006535947712418,
+      "assumed_cost_ticks": 4.0,
+      "measured_cost_ticks": 4.500653594771242,
+      "gross_ticks_per_trade": -1.5321739130435033,
+      "net_assumed": -5.532173913043503,
+      "net_measured": -6.032827507814745,
+      "tick_usd": 1.0,
+      "net_measured_usd": -6.032827507814745,
+      "sign_flips": false
+    },
+    "ES": {
+      "sized_as": "MES",
+      "spread_source": "MES",
+      "measured_spread_ticks": 1.1476377952755905,
+      "assumed_cost_ticks": 3.4,
+      "measured_cost_ticks": 3.54763779527559,
+      "gross_ticks_per_trade": 3.335043612108687,
+      "net_assumed": -0.06495638789131197,
+      "net_measured": -0.21259418316690315,
+      "tick_usd": 1.25,
+      "net_measured_usd": -0.26574272895862894,
+      "sign_flips": false
+    },
+    "GC": {
+      "sized_as": "MGC",
+      "spread_source": "GC",
+      "measured_spread_ticks": 4.2065359477124185,
+      "assumed_cost_ticks": 4.0,
+      "measured_cost_ticks": 7.2065359477124185,
+      "gross_ticks_per_trade": 1.8387096774192941,
+      "net_assumed": -2.161290322580706,
+      "net_measured": -5.367826270293124,
+      "tick_usd": 1.0,
+      "net_measured_usd": -5.367826270293124,
+      "sign_flips": false
+    },
+    "HG": {
+      "sized_as": "HG",
+      "spread_source": "HG",
+      "measured_spread_ticks": 2.2603008502289077,
+      "assumed_cost_ticks": 1.24,
+      "measured_cost_ticks": 2.500300850228908,
+      "gross_ticks_per_trade": 1.5341278439870054,
+      "net_assumed": 0.29412784398700464,
+      "net_measured": -0.9661730062419025,
+      "tick_usd": 12.5,
+      "net_measured_usd": -12.077162578023781,
+      "sign_flips": true
+    },
+    "HO": {
+      "sized_as": "HO",
+      "spread_source": "HO",
+      "measured_spread_ticks": 12.246405228758169,
+      "assumed_cost_ticks": 1.7142857142857144,
+      "measured_cost_ticks": 12.960690943043883,
+      "gross_ticks_per_trade": -14.176334106728449,
+      "net_assumed": -15.890619821014166,
+      "net_measured": -27.137025049772333,
+      "tick_usd": 4.2,
+      "net_measured_usd": -113.9755052090438,
+      "sign_flips": false
+    },
+    "NG": {
+      "sized_as": "NG",
+      "spread_source": "NG",
+      "measured_spread_ticks": 1.257516339869281,
+      "assumed_cost_ticks": 1.3,
+      "measured_cost_ticks": 1.557516339869281,
+      "gross_ticks_per_trade": 3.0407560543414096,
+      "net_assumed": 1.740756054341409,
+      "net_measured": 1.4832397144721285,
+      "tick_usd": 10.0,
+      "net_measured_usd": 14.832397144721286,
+      "sign_flips": false
+    },
+    "NKD": {
+      "sized_as": "NKD",
+      "spread_source": "NKD",
+      "measured_spread_ticks": 3.066272965879265,
+      "assumed_cost_ticks": 1.12,
+      "measured_cost_ticks": 3.1862729658792652,
+      "gross_ticks_per_trade": 0.02254428341396238,
+      "net_assumed": -1.0974557165860388,
+      "net_measured": -3.163728682465303,
+      "tick_usd": 25.0,
+      "net_measured_usd": -79.09321706163257,
+      "sign_flips": false
+    },
+    "NQ": {
+      "sized_as": "MNQ",
+      "spread_source": "MNQ",
+      "measured_spread_ticks": 2.4517399868680236,
+      "assumed_cost_ticks": 7.0,
+      "measured_cost_ticks": 8.451739986868024,
+      "gross_ticks_per_trade": 24.92335206949483,
+      "net_assumed": 17.92335206949483,
+      "net_measured": 16.471612082626805,
+      "tick_usd": 0.5,
+      "net_measured_usd": 8.235806041313403,
+      "sign_flips": false
+    },
+    "PA": {
+      "sized_as": "PA",
+      "spread_source": "PA",
+      "measured_spread_ticks": 3.008519003931848,
+      "assumed_cost_ticks": 1.06,
+      "measured_cost_ticks": 3.068519003931848,
+      "gross_ticks_per_trade": -0.20520325203249612,
+      "net_assumed": -1.265203252032497,
+      "net_measured": -3.273722255964344,
+      "tick_usd": 50.0,
+      "net_measured_usd": -163.6861127982172,
+      "sign_flips": false
+    },
+    "PL": {
+      "sized_as": "PL",
+      "spread_source": "PL",
+      "measured_spread_ticks": 8.74493132766514,
+      "assumed_cost_ticks": 1.6,
+      "measured_cost_ticks": 9.34493132766514,
+      "gross_ticks_per_trade": 1.1664921465968263,
+      "net_assumed": -0.43350785340317444,
+      "net_measured": -8.178439181068313,
+      "tick_usd": 5.0,
+      "net_measured_usd": -40.892195905341566,
+      "sign_flips": false
+    },
+    "RB": {
+      "sized_as": "RB",
+      "spread_source": "RB",
+      "measured_spread_ticks": 7.374918354016982,
+      "assumed_cost_ticks": 1.7142857142857144,
+      "measured_cost_ticks": 8.089204068302696,
+      "gross_ticks_per_trade": -0.3442136498515802,
+      "net_assumed": -2.0584993641372984,
+      "net_measured": -8.433417718154276,
+      "tick_usd": 4.2,
+      "net_measured_usd": -35.42035441624796,
+      "sign_flips": false
+    },
+    "RTY": {
+      "sized_as": "M2K",
+      "spread_source": "M2K",
+      "measured_spread_ticks": 1.952755905511811,
+      "assumed_cost_ticks": 7.0,
+      "measured_cost_ticks": 7.952755905511811,
+      "gross_ticks_per_trade": -2.515547263681839,
+      "net_assumed": -9.515547263681839,
+      "net_measured": -10.46830316919365,
+      "tick_usd": 0.5,
+      "net_measured_usd": -5.234151584596825,
+      "sign_flips": false
+    },
+    "SI": {
+      "sized_as": "SI",
+      "spread_source": "SI",
+      "measured_spread_ticks": 4.300196206671027,
+      "assumed_cost_ticks": 1.12,
+      "measured_cost_ticks": 4.420196206671027,
+      "gross_ticks_per_trade": -0.23917748917749682,
+      "net_assumed": -1.3591774891774981,
+      "net_measured": -4.659373695848523,
+      "tick_usd": 25.0,
+      "net_measured_usd": -116.48434239621308,
+      "sign_flips": false
+    },
+    "TN": {
+      "sized_as": "TN",
+      "spread_source": "TN",
+      "measured_spread_ticks": 1.0190039318479684,
+      "assumed_cost_ticks": 1.192,
+      "measured_cost_ticks": 1.2110039318479684,
+      "gross_ticks_per_trade": 0.46230366492136976,
+      "net_assumed": -0.7296963350786307,
+      "net_measured": -0.7487002669265986,
+      "tick_usd": 15.625,
+      "net_measured_usd": -11.698441670728103,
+      "sign_flips": false
+    },
+    "UB": {
+      "sized_as": "UB",
+      "spread_source": "UB",
+      "measured_spread_ticks": 1.0065530799475753,
+      "assumed_cost_ticks": 1.096,
+      "measured_cost_ticks": 1.1025530799475753,
+      "gross_ticks_per_trade": 0.19448777951119298,
+      "net_assumed": -0.9015122204888089,
+      "net_measured": -0.9080653004363823,
+      "tick_usd": 31.25,
+      "net_measured_usd": -28.37704063863695,
+      "sign_flips": false
+    },
+    "YM": {
+      "sized_as": "MYM",
+      "spread_source": "MYM",
+      "measured_spread_ticks": 2.0583989501312336,
+      "assumed_cost_ticks": 7.0,
+      "measured_cost_ticks": 8.058398950131235,
+      "gross_ticks_per_trade": -0.7959710743801174,
+      "net_assumed": -7.795971074380117,
+      "net_measured": -8.854370024511352,
+      "tick_usd": 0.5,
+      "net_measured_usd": -4.427185012255676,
+      "sign_flips": false
+    },
+    "ZB": {
+      "sized_as": "ZB",
+      "spread_source": "ZB",
+      "measured_spread_ticks": 1.0091743119266054,
+      "assumed_cost_ticks": 1.096,
+      "measured_cost_ticks": 1.1051743119266055,
+      "gross_ticks_per_trade": 0.1686810299527158,
+      "net_assumed": -0.9273189700472853,
+      "net_measured": -0.9364932819738897,
+      "tick_usd": 31.25,
+      "net_measured_usd": -29.265415061684052,
+      "sign_flips": false
+    },
+    "ZF": {
+      "sized_as": "ZF",
+      "spread_source": "ZF",
+      "measured_spread_ticks": 1.0131061598951507,
+      "assumed_cost_ticks": 1.384,
+      "measured_cost_ticks": 1.3971061598951506,
+      "gross_ticks_per_trade": 0.20167627029842844,
+      "net_assumed": -1.1823237297015723,
+      "net_measured": -1.1954298895967221,
+      "tick_usd": 7.8125,
+      "net_measured_usd": -9.339296012474392,
+      "sign_flips": false
+    },
+    "ZN": {
+      "sized_as": "ZN",
+      "spread_source": "ZN",
+      "measured_spread_ticks": 1.0045871559633028,
+      "assumed_cost_ticks": 1.192,
+      "measured_cost_ticks": 1.1965871559633028,
+      "gross_ticks_per_trade": 0.37073938122698763,
+      "net_assumed": -0.8212606187730127,
+      "net_measured": -0.8258477747363151,
+      "tick_usd": 15.625,
+      "net_measured_usd": -12.903871480254923,
+      "sign_flips": false
+    },
+    "ZT": {
+      "sized_as": "ZT",
+      "spread_source": "ZT",
+      "measured_spread_ticks": 1.0150720838794234,
+      "assumed_cost_ticks": 1.384,
+      "measured_cost_ticks": 1.3990720838794233,
+      "gross_ticks_per_trade": 0.3086419753083764,
+      "net_assumed": -1.0753580246916237,
+      "net_measured": -1.0904301085710468,
+      "tick_usd": 7.8125,
+      "net_measured_usd": -8.518985223211303,
+      "sign_flips": false
+    }
+  },
+  "limitations": [
+    "the window is 2025-09-11 .. 2026-09-10, ONE YEAR, and every study it re-costs runs on 2016-2023 or 2016-2026; a tick is fixed in price terms so as a contract's price rose the same tick became a smaller share of the move, which makes a recent spread OPTIMISTIC when applied to an older window",
+    "the quoted spread is a FLOOR on the real cost: queue position, partial fills and slippage on a flip sit on top of it",
+    "MGC, MCL and M6E were not acquired, so GC, CL and 6E keep a full-contract proxy and are flagged",
+    "front-month determination is D467/D506's volume rule, reused; the micros inherit their parent's expiry"
+  ]
+}
