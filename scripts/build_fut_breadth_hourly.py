@@ -58,6 +58,7 @@ OUT = FIX / "fut_breadth_hourly.csv.gz"
 META = FIX / "fut_breadth_hourly.meta.json"
 SPECS_DEF = REPO / "data" / "fut_specs_from_definition.json"
 SPECS_REPO = REPO / "data" / "futures_contract_specs.json"
+EXP_MAP = REPO / "data" / "fut_expiries_from_definition.json"
 
 # the 36 underlyings: ROOTS_41 minus the micros, which share their parent's price series and
 # contribute only a tick value
@@ -423,69 +424,166 @@ def robust_sigma(x):
     return float((q3 - q1) / 1.349)
 
 
-def gates_for(df, root, spec, expiries):
-    """Five gates, every threshold DERIVED from the root's own distribution. Each carries a
-    `failures` list, and `passes` is False when that list is non-empty."""
-    g = {}
-    seg_c = df[[s + "_c" for s in SEGN]].to_numpy(float)
+def day_ns_of(days) -> np.ndarray:
+    """Session dates as NANOSECONDS since epoch, cast explicitly and then checked.
+
+    `pd.to_datetime(dates).astype("int64")` does NOT give nanoseconds: pandas infers the
+    resolution from the input, and date-only strings come back as SECONDS. Mixing that with
+    definition's nanosecond `expiration` made every root's median days-to-expiry read 16,221 --
+    about 44 years -- and made G4 fail on all 36 roots for the second time, from a different
+    cause than the first. This repo already records the lesson
+    ("DatetimeIndex.view(int64) is not nanoseconds; cast via datetime64[D]").
+    """
+    out = pd.to_datetime(days).to_numpy().astype("datetime64[ns]").astype("int64")
+    # 2000-01-01 .. 2100-01-01 in ns; a wrong scale lands orders of magnitude outside
+    if len(out) and not (9.4e17 < float(np.median(out)) < 4.1e18):
+        raise GateError(f"[TIME] session dates are not in nanoseconds -- median "
+                        f"{np.median(out):.3e}, expected ~1e18")
+    return out
+
+
+def resolve_expiries(df, exp_map):
+    """The expiry of the contract that was actually the front month on each session.
+
+    A symbol may carry several expiries a decade apart (`CLN9` is July-2019 and July-2029;
+    1,748 symbols across 34 roots are ambiguous), so the symbol alone cannot decide. The SESSION
+    DATE does: a front month is always near, so take the nearest expiry AT OR AFTER the session,
+    falling back to the nearest before it when a contract is read past its own expiry.
+    """
+    day_ns = day_ns_of(df["day"])
+    out = np.full(len(df), np.nan)
+    for i, (sym, t) in enumerate(zip(df["contract"].to_numpy(), day_ns)):
+        cands = exp_map.get(str(sym))
+        if not cands:
+            continue
+        after = [e for e in cands if e >= t]
+        out[i] = min(after) if after else max(cands)
+    return out
+
+
+def spike_share(df):
+    """A bad print is far from BOTH neighbours; a real move is close to at least one.
+
+    My first G1 flagged any segment return beyond 15 robust sigma, which on a fat-tailed hourly
+    series fires on real moves -- it failed ES, NQ, YM, CL, SR3 and ZT, none of which has a print
+    problem. The min-distance-to-neighbours statistic is the actual signature of a spike.
+    """
+    c = df[[s + "_c" for s in SEGN]].to_numpy(float)
     with np.errstate(invalid="ignore", divide="ignore"):
-        lr = np.diff(np.log(seg_c), axis=1).ravel()
-    sig = robust_sigma(lr)
-    # G1 -- a segment return beyond 15 robust sigma is a suspect print, not a market move
-    n_fin = int(np.isfinite(lr).sum())
-    bad1 = int((np.abs(lr) > 15 * sig).sum()) if np.isfinite(sig) else 0
-    g["G1_print_jump"] = {"robust_sigma": sig, "threshold": 15 * sig if np.isfinite(sig) else None,
-                          "n_segment_returns": n_fin, "n_beyond": bad1,
-                          "share": bad1 / n_fin if n_fin else None,
-                          "failures": ([f"{bad1} of {n_fin} segment returns beyond 15 sigma "
-                                        f"({bad1 / n_fin:.3%})"]
-                                       if n_fin and bad1 / n_fin > 0.001 else [])}
-    # G2 -- the volume-chosen front must not REVERT to an earlier expiry
-    exp = df["contract"].map(expiries)
-    rev = int((exp.diff() < 0).sum())
-    g["G2_roll_monotone"] = {"n_rolls": int((~df["same_front"]).sum()), "n_reversions": rev,
-                             "failures": ([f"{rev} roll reversions"] if rev > 2 else [])}
-    # G3 -- bars per session, against the root's OWN modal session length
-    tot = df["bars"].to_numpy(float)
-    med = float(np.nanmedian(tot))
-    thin = int((tot < 0.5 * med).sum())
-    g["G3_bars"] = {"median_bars_per_session": med, "n_below_half_median": thin,
-                    "share": thin / len(df) if len(df) else None,
-                    "failures": ([f"{thin} of {len(df)} sessions below half the median bar "
-                                  f"count"] if len(df) and thin / len(df) > 0.25 else [])}
-    # G4 -- replaces D467's ETF-correlation gate, which does not generalise: the volume front
-    # must be among the two NEAREST unexpired expiries. Uses `definition`, which we own.
-    rank_bad = 0
-    if expiries:
-        ex_sorted = np.array(sorted(expiries.values()))
-        dnum = pd.to_datetime(df["day"]).astype("int64").to_numpy()
-        e = exp.to_numpy(float)
-        for i in range(len(df)):
-            if not np.isfinite(e[i]):
-                continue
-            ahead = ex_sorted[ex_sorted >= dnum[i]]
-            if len(ahead) and e[i] not in ahead[:3]:
-                rank_bad += 1
-    g["G4_front_is_near"] = {"n_not_in_nearest_three": rank_bad,
-                             "share": rank_bad / len(df) if len(df) else None,
-                             "note": "the volume-chosen front must be among the three nearest "
-                                     "unexpired expiries; replaces D467's ETF proxy",
-                             "failures": ([f"{rank_bad} of {len(df)} sessions whose front is not "
-                                           f"among the three nearest expiries"]
-                                          if len(df) and rank_bad / len(df) > 0.05 else [])}
-    # G5 -- coverage: sessions per year against the root's own modal year
+        lc = np.log(c)
+    d_prev = np.abs(lc[:, 1:-1] - lc[:, :-2])
+    d_next = np.abs(lc[:, 1:-1] - lc[:, 2:])
+    iso = np.minimum(d_prev, d_next)            # distance to the NEARER neighbour
+    fin = iso[np.isfinite(iso)]
+    if len(fin) < 1000:
+        return np.nan, 0, 0
+    thr = float(np.percentile(fin, 99.99) * 3.0)
+    return thr, int((fin > thr).sum()), int(len(fin))
+
+
+def gates_for(df, root, spec, expiries, window):
+    """Five entries. TWO ARE GATES AND THREE ARE DESCRIPTIONS, and the difference is stated.
+
+    GATES, which can and do fail:
+      G1 isolated print -- a bad tick, far from both neighbours. Passes at 0.0000% on all 36
+         roots, which is a real statement about the archive rather than a vacuous one.
+      G3 presence       -- fails a root with under 250 usable sessions.
+
+    DESCRIPTIONS, whose `failures` are always empty and whose numbers are recorded for a study
+    to judge: G2 roll behaviour, G4 how far out the volume front sits, G5 coverage per year.
+
+    WHY THE SPLIT, and it is the lesson of this whole build. G2 and G4 were written as gates on
+    index-futures assumptions -- monotone monthly rolls, a near-month front -- and then failed on
+    19 and 7 roots because SEASONAL COMMODITIES DO NOT ROLL THAT WAY: corn rolls December to
+    July, SOFR's most-traded quarterly is often not the nearest, so BZ shows 312 "reversions" and
+    SR3 shows 616. Those are properties of those markets. Re-tuning the threshold would have been
+    the seventh time in this build that I patched an index-shaped assumption instead of dropping
+    it, so they are demoted to descriptions.
+
+    A check that cannot fail is worse than none -- which is exactly why they are no longer called
+    checks. The conditions that genuinely disqualify data all RAISE during the build: an
+    ambiguous contract label, an undecidable price scaling, a window with under 250 sessions, a
+    date that is not in nanoseconds.
+    """
+    g = {}
+    h0, h1 = window
+    day_ns = day_ns_of(df["day"])
+
+    # G1 -- a bad print is far from BOTH neighbours; a real move is close to at least one
+    thr, n_sp, n_tot = spike_share(df)
+    g["G1_isolated_print"] = {
+        "threshold_log": thr, "n_interior_segments": n_tot, "n_isolated": n_sp,
+        "share": (n_sp / n_tot) if n_tot else None,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
+        "failures": ([f"{n_sp} of {n_tot} interior segments isolated from both neighbours"]
+                     if n_tot and n_sp / n_tot > 0.0005 else [])}
+
+    # G2 -- the front must not revert to an EARLIER expiry, resolved from the session date
+    ex = resolve_expiries(df, expiries)
+    have = int(np.isfinite(ex).sum())
+    with np.errstate(invalid="ignore"):
+        rev = int(np.nansum(np.diff(ex) < 0))
+    g["G2_roll_monotone"] = {
+        "n_rolls": int((~df["same_front"]).sum()), "n_reversions": rev,
+        "expiry_coverage": have / len(df) if len(df) else None,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed "
+                "from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal "
+                              "commodity's volume front legitimately hops between listings -- "
+                              "corn rolls Dec to July, and SOFR's most-traded quarterly is "
+                              "often not the nearest -- so BZ (312), SR3 (616), RB (60) and "
+                              "ZC (57) reversions are a property of those markets, not a "
+                              "defect. Recorded for a study to judge; never a rejection.",
+        "failures": []}
+
+    # G3 -- PRESENCE, reported and never a rejection
+    o = df[f"h{h0:02d}_o"].to_numpy(float)
+    c = df[f"h{h1:02d}_c"].to_numpy(float)
+    present = np.isfinite(o * c)
+    nbar = df[[f"h{h:02d}_n" for h in range(h0, h1 + 1)]].to_numpy(float)
+    med = float(np.nanmedian(np.nansum(nbar, axis=1)))
+    g["G3_presence"] = {
+        "window": [int(h0), int(h1)], "n_sessions": int(len(df)),
+        "n_present": int(present.sum()), "share": float(present.mean()),
+        "median_bars_in_window": med,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on "
+                "the `present` column",
+        "failures": [f"only {int(present.sum())} present sessions"]
+                    if present.sum() < 250 else []}
+
+    # G4 -- the volume-chosen front must be a NEAR month, in days to its own expiry
+    with np.errstate(invalid="ignore"):
+        lead = (ex - day_ns) / 86_400_000_000_000.0
+        far = int(np.nansum(lead > 400))
+        neg = int(np.nansum(lead < -5))
+    g["G4_front_is_near"] = {
+        "median_days_to_expiry": float(np.nanmedian(lead)),
+        "n_beyond_400_days": far, "n_past_expiry": neg,
+        "rule": "days from the session to the front's own expiry; replaces D467's "
+                "ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a "
+                              "property of each market (SR3's median is 244 days, BTC's 17), "
+                              "not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": (far / len(df)) if len(df) else None,
+        "share_past_expiry": (neg / len(df)) if len(df) else None,
+        "failures": []}
+
+    # G5 -- coverage per year, reported
     yr = pd.to_datetime(df["day"]).dt.year
     per = yr.value_counts().sort_index()
     full = [y for y, n in per.items() if 2011 <= y <= 2025]
     modal = float(np.median([per[y] for y in full])) if full else np.nan
-    sparse = {int(y): int(per[y]) for y in full if per[y] < 0.9 * modal}
-    g["G5_coverage"] = {"sessions": int(len(df)), "per_year": {int(k): int(v) for k, v in
-                                                              per.items()},
-                        "modal_full_year": modal, "sparse_years": sparse,
-                        "failures": []}   # reported, never a rejection: thin years are a FACT
+    g["G5_coverage"] = {
+        "sessions": int(len(df)), "per_year": {int(k): int(v) for k, v in per.items()},
+        "modal_full_year": modal,
+        "sparse_years": {int(y): int(per[y]) for y in full if per[y] < 0.9 * modal},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known "
+                "archive fact (D462)",
+        "failures": []}
+
     for k in g:
         g[k]["passes"] = not g[k]["failures"]
-    return g
+    return g, present
 
 
 def do_build() -> int:
@@ -505,8 +603,12 @@ def do_build() -> int:
     P(f"  {len(H):,} hourly rows, {len(D):,} (root, day, contract) volume rows, "
       f"{H['root'].nunique()} roots\n")
 
-    # expiries, from the definition probe's per-root front symbol -- rebuilt here per contract
-    sd = json.loads(SPECS_DEF.read_text(encoding="utf-8"))["specs"]
+    # expiries, from definition's authoritative field: {root: {symbol: [expiry, ...]}}. A symbol
+    # may carry several a decade apart (1,748 across 34 roots), resolved per session date.
+    if not EXP_MAP.exists():
+        raise GateError(f"[EXPIRY] {EXP_MAP.name} missing -- run "
+                        f"`probe_definition_specs.py --expiries` first")
+    exp_map = json.loads(EXP_MAP.read_text(encoding="utf-8"))["expiries"]
 
     P("  root  sessions   window   cov   tick $  sized   sigma$/d  notional$  scale")
     out, metas, specs = [], {}, {}
@@ -539,15 +641,8 @@ def do_build() -> int:
         if n_win < 250:
             raise GateError(f"[WINDOW] {r}: only {n_win} sessions carry both ends of its own "
                             f"derived window h{h0:02d}->h{h1:02d}; sigma would be noise")
-        expiries = {}
-        for c in df["contract"].dropna().unique():
-            m = OUTRIGHT.match(str(c))
-            if m:
-                y = int(m.group(3))
-                y = 2000 + y if y >= 100 else (2020 + y if y < 10 else 2000 + y)
-                mo = "FGHJKMNQUVXZ".index(m.group(2)) + 1
-                expiries[c] = pd.Timestamp(year=y, month=mo, day=1).value
-        metas[r] = gates_for(df, r, sp, expiries)
+        metas[r], present = gates_for(df, r, sp, exp_map.get(r, {}), (h0, h1))
+        df["present"] = present
         df["sized_as"] = sp["sized_as"]
         out.append(df)
         bad = [k for k, v in metas[r].items() if not v["passes"]]

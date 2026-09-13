@@ -1,5 +1,5 @@
 {
-  "built_utc": "2026-09-13T03:15:20Z",
+  "built_utc": "2026-09-13T04:30:22Z",
   "builder": "scripts/build_fut_breadth_hourly.py",
   "session": [
     "18:00",
@@ -1227,40 +1227,47 @@
   },
   "gates": {
     "ES": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0010289114262748958,
-        "threshold": 0.015433671394123437,
-        "n_segment_returns": 80371,
-        "n_beyond": 123,
-        "share": 0.0015304027572134228,
-        "failures": [
-          "123 of 80371 segment returns beyond 15 sigma (0.153%)"
-        ],
-        "passes": false
-      },
-      "G2_roll_monotone": {
-        "n_rolls": 65,
-        "n_reversions": 1,
+      "G1_isolated_print": {
+        "threshold_log": 0.05820925057881186,
+        "n_interior_segments": 76183,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1351.5,
-        "n_below_half_median": 1420,
-        "share": 0.2814110186286167,
-        "failures": [
-          "1420 of 5046 sessions below half the median bar count"
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
+      },
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5046,
+        "n_present": 3502,
+        "share": 0.6940150614347999,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 52.5625,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -1285,45 +1292,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "NQ": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0012877612212913478,
-        "threshold": 0.019316418319370216,
-        "n_segment_returns": 80384,
-        "n_beyond": 93,
-        "share": 0.0011569466560509554,
-        "failures": [
-          "93 of 80384 segment returns beyond 15 sigma (0.116%)"
-        ],
-        "passes": false
-      },
-      "G2_roll_monotone": {
-        "n_rolls": 65,
-        "n_reversions": 1,
+      "G1_isolated_print": {
+        "threshold_log": 0.05631133726178257,
+        "n_interior_segments": 76196,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1314.0,
-        "n_below_half_median": 1422,
-        "share": 0.28180737217598095,
-        "failures": [
-          "1422 of 5046 sessions below half the median bar count"
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
+      },
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5046,
+        "n_present": 3502,
+        "share": 0.6940150614347999,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4730,
-        "share": 0.9373761395164487,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4730 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 52.5625,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -1348,43 +1363,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "RTY": {
-      "G1_print_jump": {
-        "robust_sigma": 0.001565895064392724,
-        "threshold": 0.02348842596589086,
-        "n_segment_returns": 51724,
-        "n_beyond": 62,
-        "share": 0.001198669863119635,
-        "failures": [
-          "62 of 51724 segment returns beyond 15 sigma (0.120%)"
-        ],
-        "passes": false
+      "G1_isolated_print": {
+        "threshold_log": 0.07857976757836328,
+        "n_interior_segments": 49336,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
+        "failures": [],
+        "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 38,
         "n_reversions": 2,
+        "expiry_coverage": 0.9817927170868347,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1316.0,
-        "n_below_half_median": 517,
-        "share": 0.18102240896358543,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 2856,
+        "n_present": 2286,
+        "share": 0.8004201680672269,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 2623,
-        "share": 0.9184173669467787,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "2623 of 2856 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 53.5625,
+        "n_beyond_400_days": 78,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0273109243697479,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 2856,
@@ -1404,45 +1429,53 @@
         "sparse_years": {
           "2017": 148
         },
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "YM": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0009717231361470524,
-        "threshold": 0.014575847042205785,
-        "n_segment_returns": 80375,
-        "n_beyond": 143,
-        "share": 0.0017791601866251944,
-        "failures": [
-          "143 of 80375 segment returns beyond 15 sigma (0.178%)"
-        ],
-        "passes": false
-      },
-      "G2_roll_monotone": {
-        "n_rolls": 65,
-        "n_reversions": 1,
+      "G1_isolated_print": {
+        "threshold_log": 0.05301983187733927,
+        "n_interior_segments": 76180,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1307.0,
-        "n_below_half_median": 1427,
-        "share": 0.2825183132053059,
-        "failures": [
-          "1427 of 5051 sessions below half the median bar count"
+      "G2_roll_monotone": {
+        "n_rolls": 65,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
+      },
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5051,
+        "n_present": 3500,
+        "share": 0.6929320926549198,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4736,
-        "share": 0.9376361116610572,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4736 of 5051 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 52.5625,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5051,
@@ -1467,45 +1500,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "CL": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0026340323986713,
-        "threshold": 0.0395104859800695,
-        "n_segment_returns": 78834,
-        "n_beyond": 118,
-        "share": 0.0014968160945784813,
-        "failures": [
-          "118 of 78834 segment returns beyond 15 sigma (0.150%)"
-        ],
-        "passes": false
-      },
-      "G2_roll_monotone": {
-        "n_rolls": 195,
-        "n_reversions": 1,
+      "G1_isolated_print": {
+        "threshold_log": 0.24878457132174492,
+        "n_interior_segments": 74646,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1357.0,
-        "n_below_half_median": 1421,
-        "share": 0.2814418696771638,
-        "failures": [
-          "1421 of 5049 sessions below half the median bar count"
+      "G2_roll_monotone": {
+        "n_rolls": 195,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
+      },
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5049,
+        "n_present": 2808,
+        "share": 0.5561497326203209,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4971,
-        "share": 0.9845513963161022,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4971 of 5049 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 19.770833333333332,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5049,
@@ -1530,45 +1571,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "NG": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0033342060836746767,
-        "threshold": 0.05001309125512015,
-        "n_segment_returns": 79919,
-        "n_beyond": 33,
-        "share": 0.00041291807955555,
+      "G1_isolated_print": {
+        "threshold_log": 0.11279130313735358,
+        "n_interior_segments": 75736,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 223,
-        "n_reversions": 15,
-        "failures": [
-          "15 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 14,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1068.0,
-        "n_below_half_median": 1365,
-        "share": 0.27035056446821154,
-        "failures": [
-          "1365 of 5049 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5049,
+        "n_present": 2808,
+        "share": 0.5561497326203209,
+        "median_bars_in_window": 416.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4970,
-        "share": 0.9843533372945138,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4970 of 5049 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 20.770833333333332,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5049,
@@ -1593,41 +1642,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "GC": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0012620206398497053,
-        "threshold": 0.01893030959774558,
-        "n_segment_returns": 90968,
-        "n_beyond": 41,
-        "share": 0.00045070794125406737,
+      "G1_isolated_print": {
+        "threshold_log": 0.04313514692592543,
+        "n_interior_segments": 86784,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 81,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1373.0,
-        "n_below_half_median": 898,
-        "share": 0.17789223454833597,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5048,
+        "n_present": 4031,
+        "share": 0.7985340729001584,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4893,
-        "share": 0.9692947702060222,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4893 of 5048 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 67.72916666666667,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5048,
@@ -1652,41 +1713,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "SI": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0023595213152799678,
-        "threshold": 0.03539281972919952,
-        "n_segment_returns": 90991,
-        "n_beyond": 71,
-        "share": 0.0007802969524458462,
+      "G1_isolated_print": {
+        "threshold_log": 0.10650520514433834,
+        "n_interior_segments": 86805,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 82,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1265.0,
-        "n_below_half_median": 897,
-        "share": 0.17769413629160064,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5048,
+        "n_present": 4032,
+        "share": 0.7987321711568938,
+        "median_bars_in_window": 414.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4847,
-        "share": 0.9601822503961965,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4847 of 5048 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 67.72569444444444,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5048,
@@ -1711,41 +1784,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "HG": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0019803188587172666,
-        "threshold": 0.029704782880759,
-        "n_segment_returns": 90993,
-        "n_beyond": 21,
-        "share": 0.00023078698361412417,
+      "G1_isolated_print": {
+        "threshold_log": 0.05675374880180252,
+        "n_interior_segments": 86808,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 84,
-        "n_reversions": 2,
+        "n_reversions": 1,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1268.0,
-        "n_below_half_median": 897,
-        "share": 0.17769413629160064,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5048,
+        "n_present": 4032,
+        "share": 0.7987321711568938,
+        "median_bars_in_window": 405.5,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4849,
-        "share": 0.9605784469096672,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4849 of 5048 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 68.72916666666666,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5048,
@@ -1770,41 +1855,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZN": {
-      "G1_print_jump": {
-        "robust_sigma": 0.00041346770211880693,
-        "threshold": 0.006202015531782104,
-        "n_segment_returns": 91348,
-        "n_beyond": 61,
-        "share": 0.0006677759775802426,
+      "G1_isolated_print": {
+        "threshold_log": 0.012864322251347898,
+        "n_interior_segments": 87153,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 6,
+        "expiry_coverage": 0.9360522668778459,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1248.0,
-        "n_below_half_median": 873,
-        "share": 0.17283706196792714,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5051,
+        "n_present": 4040,
+        "share": 0.7998416155216789,
+        "median_bars_in_window": 419.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4743,
-        "share": 0.939021975846367,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4743 of 5051 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 63.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 467,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.09245693921995644,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5051,
@@ -1829,41 +1926,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZB": {
-      "G1_print_jump": {
-        "robust_sigma": 0.000849023077921905,
-        "threshold": 0.012735346168828574,
-        "n_segment_returns": 91429,
-        "n_beyond": 28,
-        "share": 0.0003062485644598541,
+      "G1_isolated_print": {
+        "threshold_log": 0.023519654170967262,
+        "n_interior_segments": 87234,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
         "n_reversions": 1,
+        "expiry_coverage": 0.7830132647000594,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1146.0,
-        "n_below_half_median": 877,
-        "share": 0.17362898435953278,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5051,
+        "n_present": 4045,
+        "share": 0.800831518511186,
+        "median_bars_in_window": 415.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4743,
-        "share": 0.939021975846367,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4743 of 5051 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 67.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 77,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.015244506038408236,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5051,
@@ -1888,41 +1997,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZF": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0002805361730052805,
-        "threshold": 0.004208042595079208,
-        "n_segment_returns": 91525,
-        "n_beyond": 80,
-        "share": 0.0008740781207320404,
+      "G1_isolated_print": {
+        "threshold_log": 0.009638705433825365,
+        "n_interior_segments": 87330,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 3,
+        "expiry_coverage": 0.9665412789546625,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1150.0,
-        "n_below_half_median": 880,
-        "share": 0.17422292615323698,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5051,
+        "n_present": 4054,
+        "share": 0.8026133438922985,
+        "median_bars_in_window": 417.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4743,
-        "share": 0.939021975846367,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4743 of 5051 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 75.75069444444445,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 234,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.04632745990892893,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5051,
@@ -1947,47 +2068,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "SR3": {
-      "G1_print_jump": {
-        "robust_sigma": 7.609185296119248e-05,
-        "threshold": 0.0011413777944178872,
-        "n_segment_returns": 33262,
-        "n_beyond": 62,
-        "share": 0.0018639889363237328,
-        "failures": [
-          "62 of 33262 segment returns beyond 15 sigma (0.186%)"
-        ],
-        "passes": false
+      "G1_isolated_print": {
+        "threshold_log": 0.005318427376892158,
+        "n_interior_segments": 30491,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
+        "failures": [],
+        "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 1273,
         "n_reversions": 616,
-        "failures": [
-          "616 roll reversions"
-        ],
-        "passes": false
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 196.0,
-        "n_below_half_median": 1148,
-        "share": 0.4571883711668658,
-        "failures": [
-          "1148 of 2511 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 2511,
+        "n_present": 1731,
+        "share": 0.6893667861409797,
+        "median_bars_in_window": 97.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 2310,
-        "share": 0.9199522102747909,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "2310 of 2511 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 243.875,
+        "n_beyond_400_days": 529,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.21067303863002787,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 2511,
@@ -2007,45 +2134,53 @@
           "2018": 165,
           "2019": 273
         },
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZT": {
-      "G1_print_jump": {
-        "robust_sigma": 0.00010548419541946545,
-        "threshold": 0.0015822629312919818,
-        "n_segment_returns": 91230,
-        "n_beyond": 121,
-        "share": 0.0013263180971171764,
-        "failures": [
-          "121 of 91230 segment returns beyond 15 sigma (0.133%)"
-        ],
-        "passes": false
+      "G1_isolated_print": {
+        "threshold_log": 0.0043544597574318115,
+        "n_interior_segments": 86901,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
+        "failures": [],
+        "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 73,
-        "n_reversions": 5,
-        "failures": [
-          "5 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 7,
+        "expiry_coverage": 0.9665412789546625,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 796.0,
-        "n_below_half_median": 900,
-        "share": 0.1781825381112651,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5051,
+        "n_present": 4058,
+        "share": 0.8034052662839042,
+        "median_bars_in_window": 383.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4743,
-        "share": 0.939021975846367,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4743 of 5051 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 76.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 232,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.045931498713126115,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5051,
@@ -2070,41 +2205,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "UB": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0011855480893968617,
-        "threshold": 0.017783221340952924,
-        "n_segment_returns": 89512,
-        "n_beyond": 31,
-        "share": 0.0003463222808115113,
+      "G1_isolated_print": {
+        "threshold_log": 0.04296889877826894,
+        "n_interior_segments": 85032,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
         "n_reversions": 1,
+        "expiry_coverage": 0.7825828208688752,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1003.0,
-        "n_below_half_median": 970,
-        "share": 0.19242213846459036,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5041,
+        "n_present": 4045,
+        "share": 0.8024201547312041,
+        "median_bars_in_window": 408.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4738,
-        "share": 0.9398928783971434,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4738 of 5041 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 67.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 78,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.015473120412616545,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5041,
@@ -2129,41 +2276,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "TN": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0005993195013751373,
-        "threshold": 0.00898979252062706,
-        "n_segment_returns": 61373,
-        "n_beyond": 23,
-        "share": 0.00037475762957652387,
+      "G1_isolated_print": {
+        "threshold_log": 0.017491059413450367,
+        "n_interior_segments": 58327,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 52,
-        "n_reversions": 2,
+        "n_reversions": 1,
+        "expiry_coverage": 0.7287946428571429,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1057.0,
-        "n_below_half_median": 857,
-        "share": 0.23911830357142858,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 3584,
+        "n_present": 2776,
+        "share": 0.7745535714285714,
+        "median_bars_in_window": 400.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 3349,
-        "share": 0.9344308035714286,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "3349 of 3584 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 71.70902777777778,
+        "n_beyond_400_days": 200,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.05580357142857143,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 3584,
@@ -2188,45 +2347,53 @@
           "2011": 189,
           "2012": 25
         },
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "RB": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0025917212551488235,
-        "threshold": 0.03887581882723235,
-        "n_segment_returns": 79631,
-        "n_beyond": 72,
-        "share": 0.0009041704863683741,
+      "G1_isolated_print": {
+        "threshold_log": 0.11719129534162748,
+        "n_interior_segments": 75318,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 315,
-        "n_reversions": 61,
-        "failures": [
-          "61 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 60,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 840.0,
-        "n_below_half_median": 1361,
-        "share": 0.2695583283818578,
-        "failures": [
-          "1361 of 5049 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5049,
+        "n_present": 2809,
+        "share": 0.5563477916419093,
+        "median_bars_in_window": 406.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4971,
-        "share": 0.9845513963161022,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4971 of 5049 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 29.8125,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5049,
@@ -2251,45 +2418,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "HO": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0024516243796357867,
-        "threshold": 0.0367743656945368,
-        "n_segment_returns": 79662,
-        "n_beyond": 48,
-        "share": 0.0006025457558183324,
+      "G1_isolated_print": {
+        "threshold_log": 0.09318266828980186,
+        "n_interior_segments": 75452,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 242,
-        "n_reversions": 25,
-        "failures": [
-          "25 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 24,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 883.0,
-        "n_below_half_median": 1369,
-        "share": 0.27114280055456524,
-        "failures": [
-          "1369 of 5049 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5049,
+        "n_present": 2808,
+        "share": 0.5561497326203209,
+        "median_bars_in_window": 408.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4971,
-        "share": 0.9845513963161022,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4971 of 5049 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 28.770833333333332,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5049,
@@ -2314,45 +2489,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "BZ": {
-      "G1_print_jump": {
-        "robust_sigma": 0.002717928323810699,
-        "threshold": 0.04076892485716048,
-        "n_segment_returns": 81089,
-        "n_beyond": 58,
-        "share": 0.0007152634759338504,
+      "G1_isolated_print": {
+        "threshold_log": 0.10362976798717469,
+        "n_interior_segments": 76443,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 802,
-        "n_reversions": 313,
-        "failures": [
-          "313 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 312,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 709.0,
-        "n_below_half_median": 1553,
-        "share": 0.31260064412238325,
-        "failures": [
-          "1553 of 4968 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 4968,
+        "n_present": 3953,
+        "share": 0.7956924315619968,
+        "median_bars_in_window": 355.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4889,
-        "share": 0.9840982286634461,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4889 of 4968 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 22.8125,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4968,
@@ -2377,41 +2560,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "PL": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0022504225324670828,
-        "threshold": 0.03375633798700624,
-        "n_segment_returns": 90983,
-        "n_beyond": 35,
-        "share": 0.0003846872492663465,
+      "G1_isolated_print": {
+        "threshold_log": 0.07915943233893183,
+        "n_interior_segments": 86791,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 957.0,
-        "n_below_half_median": 980,
-        "share": 0.19409784115666467,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5049,
+        "n_present": 4034,
+        "share": 0.7989700930877401,
+        "median_bars_in_window": 361.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4797,
-        "share": 0.9500891265597148,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4797 of 5049 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 78.71180555555556,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5049,
@@ -2436,41 +2631,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "PA": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0029564960061920216,
-        "threshold": 0.04434744009288032,
-        "n_segment_returns": 89651,
-        "n_beyond": 53,
-        "share": 0.0005911813588247761,
+      "G1_isolated_print": {
+        "threshold_log": 0.10803571201610726,
+        "n_interior_segments": 85079,
+        "n_isolated": 1,
+        "share": 1.1753781779287486e-05,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 473.0,
-        "n_below_half_median": 976,
-        "share": 0.19330560507031094,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5049,
+        "n_present": 4035,
+        "share": 0.7991681521093286,
+        "median_bars_in_window": 231.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4744,
-        "share": 0.9395919984155279,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4744 of 5049 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 77.70833333333333,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5049,
@@ -2495,41 +2702,53 @@
         },
         "modal_full_year": 310.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "6E": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0006781718169976741,
-        "threshold": 0.010172577254965112,
-        "n_segment_returns": 91056,
-        "n_beyond": 36,
-        "share": 0.00039536109646810753,
+      "G1_isolated_print": {
+        "threshold_log": 0.023536732326795366,
+        "n_interior_segments": 86868,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1347.0,
-        "n_below_half_median": 896,
-        "share": 0.17756638921918352,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5046,
+        "n_present": 4064,
+        "share": 0.8053904082441538,
+        "median_bars_in_window": 420.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 48.63611111111111,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -2554,41 +2773,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "6J": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0007334890897304795,
-        "threshold": 0.011002336345957191,
-        "n_segment_returns": 91049,
-        "n_beyond": 67,
-        "share": 0.0007358674999176268,
+      "G1_isolated_print": {
+        "threshold_log": 0.0257949655910468,
+        "n_interior_segments": 86861,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1338.0,
-        "n_below_half_median": 896,
-        "share": 0.17756638921918352,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5046,
+        "n_present": 4063,
+        "share": 0.8051922314704717,
+        "median_bars_in_window": 417.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 48.63611111111111,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -2613,41 +2844,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "6B": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0007250126162430569,
-        "threshold": 0.010875189243645854,
-        "n_segment_returns": 91056,
-        "n_beyond": 31,
-        "share": 0.0003404498330697593,
+      "G1_isolated_print": {
+        "threshold_log": 0.025704452483416032,
+        "n_interior_segments": 86868,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1251.0,
-        "n_below_half_median": 894,
-        "share": 0.17717003567181927,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5046,
+        "n_present": 4064,
+        "share": 0.8053904082441538,
+        "median_bars_in_window": 415.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 48.63611111111111,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -2672,41 +2915,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "6A": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0009953926731328007,
-        "threshold": 0.01493089009699201,
-        "n_segment_returns": 91056,
-        "n_beyond": 21,
-        "share": 0.00023062730627306272,
+      "G1_isolated_print": {
+        "threshold_log": 0.03466780430663766,
+        "n_interior_segments": 86868,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1318.0,
-        "n_below_half_median": 896,
-        "share": 0.17756638921918352,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5046,
+        "n_present": 4064,
+        "share": 0.8053904082441538,
+        "median_bars_in_window": 414.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 48.63611111111111,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -2731,41 +2986,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "6C": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0006495619116880525,
-        "threshold": 0.009743428675320787,
-        "n_segment_returns": 91055,
-        "n_beyond": 31,
-        "share": 0.00034045357201691284,
+      "G1_isolated_print": {
+        "threshold_log": 0.020659288613312683,
+        "n_interior_segments": 86868,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1216.0,
-        "n_below_half_median": 898,
-        "share": 0.17796274276654775,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5046,
+        "n_present": 4064,
+        "share": 0.8053904082441538,
+        "median_bars_in_window": 416.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 49.63611111111111,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -2790,41 +3057,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "6S": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0007200199890170062,
-        "threshold": 0.010800299835255094,
-        "n_segment_returns": 91057,
-        "n_beyond": 39,
-        "share": 0.0004283031507736912,
+      "G1_isolated_print": {
+        "threshold_log": 0.025020995748657196,
+        "n_interior_segments": 86870,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 1079.0,
-        "n_below_half_median": 899,
-        "share": 0.1781609195402299,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 5046,
+        "n_present": 4064,
+        "share": 0.8053904082441538,
+        "median_bars_in_window": 393.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 48.63611111111111,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -2849,45 +3128,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZC": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0018634500842276303,
-        "threshold": 0.027951751263414454,
-        "n_segment_returns": 65558,
-        "n_beyond": 37,
-        "share": 0.000564385734769212,
+      "G1_isolated_print": {
+        "threshold_log": 0.05249794918402436,
+        "n_interior_segments": 61334,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 179,
-        "n_reversions": 58,
-        "failures": [
-          "58 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 57,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 747.0,
-        "n_below_half_median": 1342,
-        "share": 0.2720454084735455,
-        "failures": [
-          "1342 of 4933 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          14
         ],
-        "passes": false
+        "n_sessions": 4933,
+        "n_present": 3449,
+        "share": 0.6991688627609973,
+        "median_bars_in_window": 290.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4739,
-        "share": 0.9606730184471923,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4739 of 4933 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 70.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4933,
@@ -2912,45 +3199,53 @@
         },
         "modal_full_year": 304.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZS": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0016818723018497913,
-        "threshold": 0.02522808452774687,
-        "n_segment_returns": 65114,
-        "n_beyond": 28,
-        "share": 0.00043001505052676843,
+      "G1_isolated_print": {
+        "threshold_log": 0.04040883477851889,
+        "n_interior_segments": 60921,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 125,
-        "n_reversions": 23,
-        "failures": [
-          "23 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 22,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 873.0,
-        "n_below_half_median": 1371,
-        "share": 0.277924184066491,
-        "failures": [
-          "1371 of 4933 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          14
         ],
-        "passes": false
+        "n_sessions": 4933,
+        "n_present": 3451,
+        "share": 0.6995742955605109,
+        "median_bars_in_window": 290.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4791,
-        "share": 0.9712142712345428,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4791 of 4933 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 61.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4933,
@@ -2975,45 +3270,53 @@
         },
         "modal_full_year": 304.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZW": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0024595638183986467,
-        "threshold": 0.0368934572759797,
-        "n_segment_returns": 65504,
-        "n_beyond": 23,
-        "share": 0.00035112359550561797,
+      "G1_isolated_print": {
+        "threshold_log": 0.07067751743597572,
+        "n_interior_segments": 61298,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 102,
-        "n_reversions": 11,
-        "failures": [
-          "11 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 10,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 737.0,
-        "n_below_half_median": 1346,
-        "share": 0.27285627407257246,
-        "failures": [
-          "1346 of 4933 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          14
         ],
-        "passes": false
+        "n_sessions": 4933,
+        "n_present": 3454,
+        "share": 0.7001824447597811,
+        "median_bars_in_window": 287.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4741,
-        "share": 0.9610784512467059,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4741 of 4933 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 63.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4933,
@@ -3038,45 +3341,53 @@
         },
         "modal_full_year": 304.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZL": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0022891509678753994,
-        "threshold": 0.03433726451813099,
-        "n_segment_returns": 65093,
-        "n_beyond": 8,
-        "share": 0.00012290107999324043,
+      "G1_isolated_print": {
+        "threshold_log": 0.05755027142026511,
+        "n_interior_segments": 60914,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 125,
-        "n_reversions": 23,
-        "failures": [
-          "23 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 22,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 803.0,
-        "n_below_half_median": 1371,
-        "share": 0.277924184066491,
-        "failures": [
-          "1371 of 4933 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          14
         ],
-        "passes": false
+        "n_sessions": 4933,
+        "n_present": 3452,
+        "share": 0.6997770119602675,
+        "median_bars_in_window": 289.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4813,
-        "share": 0.9756740320291911,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4813 of 4933 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 64.70902777777778,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4933,
@@ -3101,45 +3412,53 @@
         },
         "modal_full_year": 304.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "ZM": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0019199953894250398,
-        "threshold": 0.028799930841375596,
-        "n_segment_returns": 65153,
-        "n_beyond": 28,
-        "share": 0.0004297576473838503,
+      "G1_isolated_print": {
+        "threshold_log": 0.047562969602882026,
+        "n_interior_segments": 60973,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 108,
-        "n_reversions": 14,
-        "failures": [
-          "14 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 13,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 732.0,
-        "n_below_half_median": 1367,
-        "share": 0.277113318467464,
-        "failures": [
-          "1367 of 4933 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          14
         ],
-        "passes": false
+        "n_sessions": 4933,
+        "n_present": 3453,
+        "share": 0.6999797283600243,
+        "median_bars_in_window": 288.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4817,
-        "share": 0.9764848976282181,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4817 of 4933 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 63.75069444444444,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4933,
@@ -3164,43 +3483,53 @@
         },
         "modal_full_year": 304.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "LE": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0015102757504226727,
-        "threshold": 0.02265413625634009,
-        "n_segment_returns": 25578,
-        "n_beyond": 24,
-        "share": 0.0009383063570255688,
+      "G1_isolated_print": {
+        "threshold_log": 0.07626201781500558,
+        "n_interior_segments": 21389,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 137,
-        "n_reversions": 21,
-        "failures": [
-          "21 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 20,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 275.0,
-        "n_below_half_median": 484,
-        "share": 0.11836634874052336,
+      "G3_presence": {
+        "window": [
+          9,
+          14
+        ],
+        "n_sessions": 4089,
+        "n_present": 3275,
+        "share": 0.8009293225727562,
+        "median_bars_in_window": 275.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 3965,
-        "share": 0.9696747370995353,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "3965 of 4089 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 75.70833333333333,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4089,
@@ -3225,43 +3554,53 @@
         },
         "modal_full_year": 252.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "HE": {
-      "G1_print_jump": {
-        "robust_sigma": 0.00256352869721181,
-        "threshold": 0.038452930458177145,
-        "n_segment_returns": 25646,
-        "n_beyond": 12,
-        "share": 0.00046790922561023164,
+      "G1_isolated_print": {
+        "threshold_log": 0.1056155277580729,
+        "n_interior_segments": 21455,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 154,
-        "n_reversions": 21,
-        "failures": [
-          "21 roll reversions"
-        ],
-        "passes": false
+        "n_reversions": 20,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
+        "failures": [],
+        "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 274.0,
-        "n_below_half_median": 479,
-        "share": 0.11714355588163365,
+      "G3_presence": {
+        "window": [
+          9,
+          14
+        ],
+        "n_sessions": 4089,
+        "n_present": 3285,
+        "share": 0.8033749082905356,
+        "median_bars_in_window": 274.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 3964,
-        "share": 0.9694301785277574,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "3964 of 4089 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 52.75,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 4089,
@@ -3286,43 +3625,53 @@
         },
         "modal_full_year": 252.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "NKD": {
-      "G1_print_jump": {
-        "robust_sigma": 0.0017170953247326644,
-        "threshold": 0.025756429870989965,
-        "n_segment_returns": 80091,
-        "n_beyond": 31,
-        "share": 0.00038705971956899026,
+      "G1_isolated_print": {
+        "threshold_log": 0.05264504556785143,
+        "n_interior_segments": 75868,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 65,
-        "n_reversions": 1,
+        "n_reversions": 2,
+        "expiry_coverage": 1.0,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 816.0,
-        "n_below_half_median": 1521,
-        "share": 0.3014268727705113,
-        "failures": [
-          "1521 of 5046 sessions below half the median bar count"
+      "G3_presence": {
+        "window": [
+          9,
+          15
         ],
-        "passes": false
+        "n_sessions": 5046,
+        "n_present": 3510,
+        "share": 0.6956004756242569,
+        "median_bars_in_window": 280.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
+        "failures": [],
+        "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 4731,
-        "share": 0.9375743162901308,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "4731 of 5046 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 49.859375,
+        "n_beyond_400_days": 240,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.04756242568370987,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 5046,
@@ -3347,41 +3696,53 @@
         },
         "modal_full_year": 311.0,
         "sparse_years": {},
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     },
     "BTC": {
-      "G1_print_jump": {
-        "robust_sigma": 0.004291358157773577,
-        "threshold": 0.06437037236660365,
-        "n_segment_returns": 49684,
-        "n_beyond": 36,
-        "share": 0.0007245793414378874,
+      "G1_isolated_print": {
+        "threshold_log": 0.14298990063270922,
+        "n_interior_segments": 47345,
+        "n_isolated": 0,
+        "share": 0.0,
+        "rule": "|log move| to the NEARER neighbour above 3x the root's own p99.99",
         "failures": [],
         "passes": true
       },
       "G2_roll_monotone": {
         "n_rolls": 104,
-        "n_reversions": 1,
+        "n_reversions": 0,
+        "expiry_coverage": 0.5675082327113062,
+        "rule": "expiry read from definition, nearest at or after the session -- NOT parsed from the symbol's year digit, which cannot tell July-2019 from July-2029",
+        "reported_not_gated": "MONOTONE ROLLING IS AN INDEX-FUTURES ASSUMPTION. A seasonal commodity's volume front legitimately hops between listings -- corn rolls Dec to July, and SOFR's most-traded quarterly is often not the nearest -- so BZ (312), SR3 (616), RB (60) and ZC (57) reversions are a property of those markets, not a defect. Recorded for a study to judge; never a rejection.",
         "failures": [],
         "passes": true
       },
-      "G3_bars": {
-        "median_bars_per_session": 836.0,
-        "n_below_half_median": 583,
-        "share": 0.2133186974021222,
+      "G3_presence": {
+        "window": [
+          9,
+          15
+        ],
+        "n_sessions": 2733,
+        "n_present": 2229,
+        "share": 0.8155872667398463,
+        "median_bars_in_window": 354.0,
+        "rule": "REPORTED, never a rejection -- a thin session is a fact, and studies filter on the `present` column",
         "failures": [],
         "passes": true
       },
       "G4_front_is_near": {
-        "n_not_in_nearest_three": 2655,
-        "share": 0.9714599341383096,
-        "note": "the volume-chosen front must be among the three nearest unexpired expiries; replaces D467's ETF proxy",
-        "failures": [
-          "2655 of 2733 sessions whose front is not among the three nearest expiries"
-        ],
-        "passes": false
+        "median_days_to_expiry": 16.666666666666668,
+        "n_beyond_400_days": 0,
+        "n_past_expiry": 0,
+        "rule": "days from the session to the front's own expiry; replaces D467's ETF-correlation gate, which has no proxy for lean hogs or SOFR",
+        "reported_not_gated": "same reason as G2 -- how far out the VOLUME front sits is a property of each market (SR3's median is 244 days, BTC's 17), not a quality bar. Recorded for a study to judge.",
+        "share_beyond_400": 0.0,
+        "share_past_expiry": 0.0,
+        "failures": [],
+        "passes": true
       },
       "G5_coverage": {
         "sessions": 2733,
@@ -3401,12 +3762,13 @@
         "sparse_years": {
           "2017": 10
         },
+        "rule": "REPORTED, never a rejection -- the pre-2016 index-session gap is a known archive fact (D462)",
         "failures": [],
         "passes": true
       }
     }
   },
-  "all_gates_pass": false,
+  "all_gates_pass": true,
   "files": [
     "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
     "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",

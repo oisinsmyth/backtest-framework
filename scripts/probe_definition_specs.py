@@ -229,13 +229,21 @@ def do_expiries() -> int:
                 break
             sym = str(getattr(rec, "raw_symbol", ""))
             rt = root_of(sym)
-            if rt is None or sym in seen:
+            if rt is None:
                 continue
             exp = getattr(rec, "expiration", None)
             if not exp:
                 continue
-            seen.add(sym)
-            out.setdefault(rt, {})[sym] = int(exp)
+            # KEEP EVERY EXPIRY PER SYMBOL, as a list. A symbol->one-expiry map cannot represent
+            # the ambiguous cases, which are the only ones that need it: CLN9 is July-2019 and,
+            # after that expires, July-2029. A consumer resolves it from the SESSION DATE -- the
+            # nearest expiry at or after it -- which is information the symbol string does not
+            # carry and a front month always satisfies.
+            key = (rt, sym, int(exp))
+            if key in seen:
+                continue
+            seen.add(key)
+            out.setdefault(rt, {}).setdefault(sym, []).append(int(exp))
             n += 1
         P(f"  [{i}/{len(files)}] {f.name[:42]:<42} +{n} new outrights "
           f"({sum(len(v) for v in out.values()):,} total)")
@@ -243,15 +251,19 @@ def do_expiries() -> int:
                                    "field": "expiration (ns since epoch, UTC)",
                                    "n_roots": len(out),
                                    "n_symbols": sum(len(v) for v in out.values()),
+                                   "resolve": "a symbol may carry several expiries; pick the "
+                                              "nearest at or after the session date",
                                    "expiries": out}, indent=2), encoding="utf-8")
     P(f"\n  {len(out)} roots, {sum(len(v) for v in out.values()):,} outrights")
     P(f"  wrote {EXP_OUT.relative_to(REPO)}")
     # a sanity read: the ambiguous CLN9 case, both contracts, from the authoritative field
-    cl = out.get("CL", {})
-    for s in ("CLN9", "CLN19", "CLN29"):
-        if s in cl:
-            P(f"    {s}: expires "
-              f"{pd_ts(cl[s])}")
+    amb = {r: {k: v for k, v in d.items() if len(v) > 1} for r, d in out.items()}
+    amb = {r: d for r, d in amb.items() if d}
+    P(f"  symbols carrying MORE THAN ONE expiry (the ambiguous ones): "
+      f"{sum(len(d) for d in amb.values())} across {len(amb)} roots")
+    for r in sorted(amb)[:6]:
+        k = sorted(amb[r])[0]
+        P(f"    {r}: e.g. {k} -> {[pd_ts(x) for x in sorted(amb[r][k])]}")
     return 0
 
 
