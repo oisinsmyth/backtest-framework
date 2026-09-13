@@ -199,3 +199,89 @@ No P&L, no cost, no position, no hurdle P, no component line — there is no con
 enters `FINDINGS.md`, `RULES.md`, `COMPONENTS_PROP.md` or either book on this record's authority
 (R8, R15). **The ten roots spent by the design check are not re-read as evidence, and 2024-01-01
 onward is not read at all.**
+
+---
+
+# 11. RETIRED, 2026-09-14, BEFORE THE RUNNER WAS WRITTEN — **the primary was invalid and one defect biased the test toward its own hypothesis**
+
+**Retired on the principal's instruction after he asked whether there was any point running a
+defective design. There was not.** No compute was spent on it; the runner never existed. Audit
+figures below are measured, not asserted.
+
+## 11.1 The primary was invalid — NKD is not a comparable index root
+
+**NKD's median day-session volume is 3,301 contracts. ES's is 1,205,239** — **365× thinner** —
+because the Japanese cash market is **closed** during 09:00–15:59 ET. NKD in this window is a thin
+offshore proxy trading on US-hours flow.
+
+    ES  1,205,239     NQ 292,397     RTY 129,405     YM 113,748     NKD 3,301
+
+§1's framing — *"an index root with a coarse tick"* — was therefore **wrong**: NKD is a **thin**
+root with a coarse tick, and **thinness, tick coarseness and time zone all move together on it**.
+A positive result would have been consistent with H-TICK; a negative one could not have confirmed
+H-INDEX, because there was no way to attribute it. **A primary of n = 1 root had no attribution.**
+
+## 11.2 A defect that biased the test TOWARD the hypothesis
+
+§2 dropped sessions with `net == 0`. **Those are perfect round trips — the most mean-reverting
+sessions there are.** Measured on fGn rounded to a tick grid:
+
+| grid | sessions dropped | bias in the surviving mean |
+|---|---:|---:|
+| 0.25σ | 1.18% | +0.0014 |
+| 1.0σ | 4.57% | **+0.0047** |
+| 2.0σ | 9.14% | **+0.0073** |
+
+**The in-sample effect this record set out to confirm was −0.0098, so the bias was 48–75% of the
+signal — and largest on the coarse-tick roots, which are precisely the ones §4 contrasts.** ZT
+dropped 9.8% of its sessions in sample. A test cannot be run whose own missing-data rule pushes it
+toward its hypothesis by half the effect size.
+
+## 11.3 The instrument contained the artefact under test, and the fix was already on disk
+
+The design check measured the statistic's bounce sensitivity at **+0.0996** over `ψ/σ` 0→1 with
+`k ≥ 3`. This record proposed to settle *whether the signal is bounce* using a **bounce-contaminated
+instrument**, and deferred the bounce-free replication to §9 — a later record. **That is the wrong
+order**, and the `bbo-1m` and `tbbo` mid prices were already acquired.
+
+## 11.4 And the deeper objection, which retires the STATISTIC and not only this spec
+
+**The scaling exponent cannot label a session, which is the thing it was built to do.**
+
+    per-session sd of the slope                          0.2050
+    Hu = 0.55 (mild trend)   effect 0.0491   ONE-SESSION t = +0.24   sessions for t=2:  70
+    Hu = 0.60 (strong)       effect 0.1025   ONE-SESSION t = +0.50   sessions for t=2:  17
+
+A one-session `t` of **+0.24** means a single session's slope carries almost no information about
+that session. Any usable read needs **~70 sessions pooled**, which is a quarterly average — **the
+opposite of the intraday state the principal asked for.** The statistic therefore fights the
+requirement that motivated it, independent of the bounce. Two further points stand alongside:
+`ρ = 0.51` among the index roots means *"4 of 4 agree"* is ~1.6 independent observations, and an
+implied `Hu` of 0.509–0.512 is economically empty against a fee that is 2.4% of the NQ day move.
+
+## 11.5 What the audit produced that IS kept
+
+**The path-length estimator replaces the efficiency-ratio form outright.** Regress
+`log Σ|r_k|` on `log k`; since `Σ|r_k| ~ N·σ·k^(Hu−1)`, the **slope is `Hu − 1`**. It contains
+**no `net`**, therefore no `log(0)`, no dropped sessions and **no selection whatsoever** — while the
+per-session sd is **identical (0.2043 vs 0.2043)**. Strictly better on bias, neutral on variance.
+
+Also kept: the simulated-benchmark discipline (the finite-window bias is +0.0477 at N = 72, larger
+than the whole effect), and the measured fact that vol-standardisation buys 12× profile-invariance
+for 12% of the signal.
+
+## 11.6 What replaces it
+
+**Measure on the bounce-free mid first** — the principal's instruction, and the right order.
+A paired design on the SAME sessions with two price series (trade close vs quoted mid) measures the
+bounce contribution as a **difference**, which is far more precise than any cross-period comparison
+and answers the H-TICK/H-INDEX question directly.
+
+**And it necessarily spends part of the reserved slice, which is recorded rather than hidden:**
+`bbo-1m` exists only for **2025-09-11 → 2026-09-11**, inside the window §6 reserved. That is
+accepted because §6 itself showed the slice was only **48% powered** for the close-price
+confirmation it was being held for, because this is a **validity check on the instrument** rather
+than a test of an edge, and because the quoted data exists nowhere else.
+
+**Nothing is closed by this retirement.** The question — does intraday path persistence exist, and
+is it an index property — is **untested**, not answered.
