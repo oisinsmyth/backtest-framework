@@ -1,0 +1,120 @@
+{
+  "generated_utc": "2026-09-13T00:05:58+00:00",
+  "purpose": "D505: the principal asked whether one negative year near zero is a reasonable expectation. An analysis of committed numbers plus D386's published-rules lifecycle at the arm's FORCED size. Nothing admitted.",
+  "pooled_sharpe": 0.6975934771741686,
+  "pooled_daily_sigma_usd": 233.1598174096136,
+  "n_years": 11,
+  "negative_years": {
+    "2016": -140.04849999998726,
+    "2017": -316.0710000000554,
+    "2019": -757.0439999998011,
+    "2023": -299.5935000001218,
+    "2024": -20.57550000003812
+  },
+  "positive_years": {
+    "2018": 751.9110000000146,
+    "2020": 8743.933500000552,
+    "2021": 1815.3975000002492,
+    "2022": 5624.928999999922,
+    "2025": 5484.46049999994,
+    "2026": 4809.757500000828
+  },
+  "negative_years_total_usd": -1533.3325000000036,
+  "negative_years_share_of_account": -0.030666650000000073,
+  "worst_year_share_of_account": -0.015140879999996023,
+  "p_year_negative_at_pooled_sharpe": 0.2427157310008652,
+  "expected_negative_years": 2.669873041009517,
+  "observed_negative_years": 5,
+  "p_at_least_observed": 0.10326984136621987,
+  "sharpe_needed_for_expected_negatives": {
+    "1.0": 1.3351777361189365,
+    "0.5": 1.6906216295848977
+  },
+  "plan": {
+    "firm": "MFFU Rapid EOD",
+    "fee": 209.0,
+    "eval_target": 3000.0,
+    "dd_fund": 2000.0,
+    "safety_net": 2000.0,
+    "qual_threshold": 150.0,
+    "qual_days": 5,
+    "min_payout": 500.0
+  },
+  "lifecycle": {
+    "pooled 2016-2026": {
+      "V": 600.4402204097286,
+      "V_se": 18.83653788714586,
+      "paid_mean": 809.4402204097286,
+      "paid_median": 0.0,
+      "p_paid": 0.2036,
+      "p_pass": 0.43193333333333334,
+      "fees_mean": 209.0,
+      "n_payouts_mean": 1.0114666666666667,
+      "fund_days_med": 94.0,
+      "sharpe": 0.6975934771741686,
+      "vol": 233.1598174096136
+    },
+    "in-sample 2016-23": {
+      "V": 859.3747312928936,
+      "V_se": 20.47705563137342,
+      "paid_mean": 1068.3747312928936,
+      "paid_median": 0.0,
+      "p_paid": 0.2528,
+      "p_pass": 0.48146666666666665,
+      "fees_mean": 209.0,
+      "n_payouts_mean": 1.4486,
+      "fund_days_med": 169.0,
+      "sharpe": 0.7229,
+      "vol": 180.5
+    },
+    "2026 alone": {
+      "V": 851.1534312633662,
+      "V_se": 23.580577830286018,
+      "paid_mean": 1060.1534312633662,
+      "paid_median": 0.0,
+      "p_paid": 0.2304,
+      "p_pass": 0.4577333333333333,
+      "fees_mean": 209.0,
+      "n_payouts_mean": 0.9986,
+      "fund_days_med": 41.0,
+      "sharpe": 1.1994728947239888,
+      "vol": 385.7883141080048
+    },
+    "2025 alone": {
+      "V": 575.7814689186193,
+      "V_se": 19.720762178828657,
+      "paid_mean": 784.7814689186193,
+      "paid_median": 0.0,
+      "p_paid": 0.19053333333333333,
+      "p_pass": 0.41426666666666667,
+      "fees_mean": 209.0,
+      "n_payouts_mean": 0.7472,
+      "fund_days_med": 36.0,
+      "sharpe": 0.9587504103891409,
+      "vol": 391.41785767718704
+    },
+    "a flat year (2024)": {
+      "V": 14.357331641765562,
+      "V_se": 8.56405334005927,
+      "paid_mean": 223.35733164176557,
+      "paid_median": 0.0,
+      "p_paid": 0.083,
+      "p_pass": 0.2613333333333333,
+      "fees_mean": 209.0,
+      "n_payouts_mean": 0.2832,
+      "fund_days_med": 59.0,
+      "sharpe": -0.005423750553086423,
+      "vol": 256.26134332182795
+    }
+  },
+  "best_if_size_were_free": {
+    "vol": 150.0,
+    "V": 817.2095766230357
+  },
+  "supersedes": "D503 s9d and D504 s5's '+$21,935 net, 4.4%/yr' -- that summed realised P&L less one fee per breach and ignored the $3,000 eval target, the $2,000 safety net and the qualifying-day gates. V is the figure the rules permit.",
+  "limitations": [
+    "D386 simulates BROWNIAN paths at a given (Sharpe, vol); the real series is fat-tailed and regime-clustered, so a real account breaches SOONER and V is optimistic (D440: clustering, not kurtosis, carried five sixths of that gap)",
+    "every D386 parameter is from its lane files; assumptions are marked there",
+    "the arm's own figures carry D504's limitations: 2024+ spent, fills are upper bounds, a one-year Sharpe carries SE ~1.0"
+  ]
+}
