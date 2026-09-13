@@ -150,6 +150,42 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D515 — WHY THE ARM WORKS ON ONE ROOT: THE LARGEST DAY EDGE **AND** THE CHEAPEST COST, 2026-09-13
+
+The principal asked whether the signal is real everywhere and just slower on the failing roots. Spec
+`78fb1f3`, result `1bfaf85`. A **signal** measurement — no cost, no flatten, no day-session
+constraint — so "is it real" is answered apart from "can this book trade it".
+
+**The ladder has the predicted shape and does not clear.** ES, NQ, YM, ZN and ZB peak at **H = 5**,
+inside the ~7-segment window, and turn **negative by H = 21**; **GC and CL peak at H = 13** and stay
+positive to H = 34. But over 64 cells the rotation gives p95 **+0.0444** against an observed maximum
+of **+0.0416**, so **zero cells clear the family bar** (17 of 64 clear their own). The primary is
++0.0099 against its own p95 of +0.0144.
+
+**The decomposition is the useful part: split the one-bar edge into the day segments the arm trades
+and the overnight segments it never does.**
+
+| | day | night |
+|---|---:|---:|
+| NQ | **+0.0275** | −0.0008 |
+| ZN | **+0.0225** | −0.0096 |
+| YM | **−0.0004** | **+0.0078** |
+
+**The Dow is not slow, it is trading the wrong hours** — its day edge is zero and what it has is
+overnight, which P2 forbids holding. D514 exonerated the exit; this exonerates the horizon and names
+the cause. **ZN has the second-largest day edge of the eight, larger than the S&P, and still loses
+$12.83 a trade** — the cost-dead diagnosis shown at the signal level.
+
+**Why NQ, in one sentence: the largest day-session edge of the eight AND the cheapest cost relative
+to its move (3.2% against 6.3% for the next best).** Both at once. ZN has the edge and a $18.62
+crossing; YM has the cost and no day edge.
+
+**Two flags.** NQ's edge does not merely decay past the session, it **inverts** (−0.024 at H = 21),
+the same overnight reversal that closed the hourly clock. And **CL's row is PROVISIONAL**: an existing
+note records that the D467 fixture pools expiries on CL and calls its gross Sharpe suspect; this reads
+the **breadth** fixture and **nobody has checked whether it shares the defect.** Worth checking before
+the crude half of the slow-signal story is used.
+
 ## D514 — THE HOLD IS NOT WHAT IS WRONG WITH THE DOW, AND THE WINDOW IS THE CEILING, 2026-09-13
 
 Asked by the principal after D513's addendum split the transplant roots into **cost-dead** (ZN, ZB,
