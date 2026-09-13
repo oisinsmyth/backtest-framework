@@ -1,0 +1,75 @@
+==================================================================================================
+1  DOES THE SLOPE RECOVER THE HURST EXPONENT ON ONE INTRADAY WINDOW OF 72 RETURNS?
+==================================================================================================
+   SIMULATED random-walk benchmark at N=72:  k>=1 +0.5305   k>=3 +0.5436
+   (the closed form says 0.5000 -- the finite-window bias is +0.0305, which is why
+    the benchmark is simulated and not assumed)
+
+   true Hu   slope k>=3   vs benchmark   per-session sd   sessions to resolve at 2 SE
+    0.40      +0.6465      +0.1028         0.2076               17
+    0.45      +0.5915      +0.0479         0.2047               74
+    0.50      +0.5456      +0.0019         0.2050            44537
+    0.55      +0.4928      -0.0509         0.2007               63
+    0.60      +0.4432      -0.1005         0.1986               16
+    0.65      +0.3954      -0.1482         0.1967                8
+
+   Hu=0.55 -- a MILD persistent trend -- resolves in a few dozen sessions, i.e. about a
+   MONTH. That is the scale a regime lives on, and it is measured entirely inside the day.
+
+==================================================================================================
+2  IS IT VOLATILITY-INVARIANT, AND DOES STANDARDISING COST THE SIGNAL?
+==================================================================================================
+   profile                        RAW slope   drift from ref    STANDARDISED   drift from ref
+   flat vol (reference)             +0.4927     +0.0000          +0.5026       +0.0000
+   vol x4 overall                   +0.4927     +0.0000          +0.5026       +0.0000
+   U-shaped intraday vol            +0.4667     -0.0260          +0.5004       -0.0022
+   one 10x bar mid-session          +0.4339     -0.0589          +0.4816       -0.0211
+   vol ramp 1 -> 5                  +0.4946     +0.0018          +0.5024       -0.0002
+
+   AND THE SIGNAL SURVIVES STANDARDISATION: Hu=0.55 sits -0.0509 from its benchmark
+   raw and -0.0450 standardised (benchmarks +0.5436 and +0.5477 respectively).
+   So vol-standardising buys profile-invariance; whether it costs sensitivity is the
+   comparison above, and it must be made against the STANDARDISED benchmark, not the raw one.
+
+==================================================================================================
+3  BID-ASK BOUNCE: does dropping k=1,2 actually fix it? (MEASURED, not assumed)
+==================================================================================================
+   Truth is Hu=0.50 throughout. psi/sigma is the half-spread over per-bar sigma.
+
+   psi/sigma   k>=1 slope   vs k>=1 bench   k>=3 slope   vs k>=3 bench   standardised k>=3
+      0.00      +0.5283      -0.0022       +0.5390      -0.0046        -0.0044
+      0.10      +0.5309      +0.0004       +0.5402      -0.0034        -0.0036
+      0.25      +0.5434      +0.0129       +0.5469      +0.0033        +0.0013
+      0.50      +0.5815      +0.0509       +0.5689      +0.0252        +0.0215
+      1.00      +0.6773      +0.1467       +0.6386      +0.0950        +0.0853
+
+   BOUNCE SENSITIVITY over psi/sigma 0 -> 1:  k>=1 +0.1490   k>=3 +0.0996   -> dropping k=1,2 removes 33% of it
+   IT IS A MITIGATION, NOT A FIX. Against the correct benchmark a psi/sigma of 1 still reads
+   as strong false mean reversion. A bounce-free price is required: the mid from the bbo-1m
+   or tbbo already on disk. ZT and SR3 sit at the high-psi end of this table.
+
+==================================================================================================
+4  ON THE REAL FIXTURE: is the PER-SESSION slope a TIME SERIES with structure?
+==================================================================================================
+   (the principal: a mean over all time throws out the useful part)
+
+   Benchmarks at N=72, k>=3:  raw +0.5436   vol-standardised +0.5477
+   A slope BELOW its benchmark means Hu > 0.5, i.e. PERSISTENT / trending.
+
+   root  sessions   raw slope   vs bench   std slope   vs bench   lag-1 ac   yearly-mean sd
+     NQ     1,960   +0.5280   -0.0156    +0.5395   -0.0082   -0.1019     0.0114   (n dropped 7)
+     ES     1,957   +0.5259   -0.0177    +0.5378   -0.0098   -0.0564     0.0208   (n dropped 12)
+     YM     1,958   +0.5261   -0.0176    +0.5382   -0.0095   -0.0121     0.0209   (n dropped 7)
+    RTY     1,467   +0.5265   -0.0171    +0.5365   -0.0112   -0.0232     0.0215   (n dropped 6)
+     CL     1,903   +0.5258   -0.0179    +0.5528   +0.0052   -0.0104     0.0238   (n dropped 14)
+     GC     3,139   +0.5461   +0.0025    +0.5728   +0.0251   -0.0391     0.0116   (n dropped 23)
+     ZN     3,098   +0.5458   +0.0021    +0.5622   +0.0145   -0.0144     0.0080   (n dropped 91)
+     ZT     2,599   +0.5801   +0.0364    +0.5600   +0.0123   +0.0259     0.0417   (n dropped 283)
+     6E     3,154   +0.5539   +0.0103    +0.5739   +0.0263   -0.0145     0.0163   (n dropped 23)
+     NG     1,910   +0.5343   -0.0093    +0.5624   +0.0148   -0.0187     0.0140   (n dropped 10)
+
+   THE LAST TWO COLUMNS ARE THE ANSWER TO 'STOP POOLING': a non-zero lag-1 autocorrelation
+   and a yearly-mean spread say the slope is a PERSISTENT STATE with regimes -- an object a
+   causal feature could predict, and precisely what a pooled mean over 84,776 sessions
+   destroys. Per-session sd from section 1 is about 0.13, so compare the yearly spread to
+   0.13/sqrt(sessions per year) rather than to 0.13.
