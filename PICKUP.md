@@ -150,6 +150,30 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D514 — THE HOLD IS NOT WHAT IS WRONG WITH THE DOW, AND THE WINDOW IS THE CEILING, 2026-09-13
+
+Asked by the principal after D513's addendum split the transplant roots into **cost-dead** (ZN, ZB,
+GC: a real gross edge killed by the tick) and **signal-dead** (YM, CL, 6E: gross itself negative):
+does the Dow's gross turn positive without the five-hour minimum hold? Spec `85c4cc5`, result
+`61e0f1d`.
+
+**No, and it goes the other way.** YM's gross per session by minimum hold: **−1.837** at M ≤ 1,
+−1.868, −1.518, −0.814, **−0.412** at the frozen M = 5. The primary is −$1.837 against its own
+rotation p95 of +3.509 and an 18-cell family p95 of +5.016. **NEGATIVE**; the exit is exonerated and
+D513's reading stands.
+
+**A longer hold gives better gross on three roots of four** — NQ +10.13 → +13.02, YM −1.84 → −0.41,
+6E −1.75 → −1.13, with CL the exception. **NQ's ladder is monotone across all six values and the
+frozen M = 5 is the best of them, still rising where the window stops it.**
+
+**Why nothing moved: the exit has no room, exactly as D491 predicted.** Removing the hold entirely
+shifts trips only 1.03 → 1.13 a session and the mean hold 4.78 → 3.83 segments. **The hold is not the
+binding constraint on this construction; the window is**, and the only way past six decision points
+is to hold overnight, which P2's flatten forbids. **That is a venue constraint, not a signal one.**
+
+Nothing about the admitted arm is re-specified (NQ was a reference row, not a declared cell) and no
+2024+ slice was read.
+
 ## THE CONDITIONER LINE IS CLOSED AND ITS FORWARD POINTER IS ANSWERED — D513, 2026-09-13
 
 **The principal closed the conditioner line on the admitted arm** after D508, D509 and D512
