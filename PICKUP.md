@@ -150,6 +150,35 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D508 — THE 200-DAY STRETCH RANKS YEARS, NOT SESSIONS, 2026-09-13
+
+Asked by the principal: can `|log(P/SMA200)|` or `|log(P/EMA200)|` rank the admitted MACD arm's
+performance? (The **absolute** value: distance from the average, not side. D502 had already tested
+the signed binary gate and found a gate whose mirror beat it.) Spec `c47feae`, result `e4dcaed`.
+
+**The runner imports the frozen arm and reproduces D504's published per-year figures exactly**
+(1,876 sessions, $15,423), so the admitted construction is what was ranked, not a copy.
+
+**CLOSE.** Primary Spearman **+0.0089**, the 43rd percentile of its own exact rotation; the four-cell
+family p95 is +0.0505 against an observed maximum of +0.0089, beaten by 58% of offsets. The signed
+versions are **−0.034** and sit at the 13th percentile of the lower tail, so they fail two-sided too.
+
+**The quintile table looks strong and two controls dispose of it.** The top quintile earns +$20.45
+net a session against +$3.54 to +$6.92 elsewhere, net Sharpe +1.36. But **a random persistent gate
+matched on duty cycle AND run-length distribution has p50 +0.797 at 20% duty, and 23.9% of those
+gates beat the observed +1.364.** And **within a year the relationship is negative in seven years of
+eight (mean −0.042) against a pooled +0.009** — the stretch ranks which year it is, and once the year
+is held fixed it ranks the wrong way.
+
+**Two method lessons worth more than the result.** A conditioner that ranks a regime-concentrated arm
+pooled can rank it **backwards** within each regime, so **stratify by year before believing any
+conditioner on this arm**. And **a matched-random band must be recomputed at the duty cycle in use**:
+D502's ≈ +0.2 was measured at 82% duty, and at 20% duty the same construction gives +0.797 — quoting
+the old figure would have passed this cell.
+
+**Nothing spent**: `simulate` is row-independent (asserted), so sessions were clipped before
+simulating and the arm's 2024+ slice was never scored.
+
 ## THE IN-PLAY CONSTRUCTION CLOSED, THE ACTIVITY FILTER KEPT — the principal, 2026-09-13
 
 **Closed:** conditioning a day-session signal on how active the overnight session was, as a way of
