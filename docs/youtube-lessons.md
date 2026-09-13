@@ -383,3 +383,80 @@ negative expected value, so trade only breaks to fresh intraday extremes — is 
 conditioner, which lands on **closed ground** (FINDINGS §68's channel line; D490's range reversion
 losing gross on both sides), and its remaining content is psychological (paper cuts damaging
 subsequent decisions) and not testable on price data. It is the weaker of the two and was not chosen.
+
+---
+
+## 7. [CLOSED] "No man's land": the measurable half of it is backwards in our data, and the rest is unfalsifiable
+
+**Source:** `[CLOSED] Stop Trading in No Man's Land If You Want to Be Profitable.txt` (Lance, SMB
+Capital). Read 2026-09-13. **Nothing is taken.** This entry exists only so the next session does not
+re-read it; it is not a lead, and the file's convention that an entry means "worth half an hour"
+does not apply here.
+
+**The claim.** "No man's land" is price action that looks tradable and is not: stuck in a range with
+volatility contracting, choppy, negative expected value. Traders bleed there by a thousand paper
+cuts, and — the part the video cares about most — the paper cuts then damage the next decision, so
+the real move gets skipped. Its operational rules: size down mid-range, cap attempts, and take
+continuation trades only on a break to fresh intraday highs or lows.
+
+### Its measurable half is backwards here, on three independent measurements
+
+The claim decomposes into two conditions: **price mid-range** and **volatility contracting**. The
+second is measurable on our own data with the instrument kept from D506, and it says the opposite.
+
+**Directional accuracy of the day session by decile of the prior night's activity** (`activity_filter`,
+eight roots × two signals, 2016–2023, ~190 sessions a cell):
+
+| | quietest decile | busiest decile |
+|---|---:|---:|
+| the long day drift, pooled | **53.6%** | 51.8% |
+| the log MACD, pooled | **53.0%** | 47.2% |
+| both, mean across 16 cells | **53.29%** | **49.50%** |
+
+**The quietest decile beats the busiest on accuracy in 14 of 16 cells**, and the accuracy-versus-
+activity slope is negative in 13 of 16. This is the third time the record has pointed the same way:
+**D487** found the *quiet* volatility tercile trends most, *"which is the opposite of the
+volatility-gated hypothesis both sessions carried"*; **D506** found accuracy falling 2.09 points on
+the busiest decile; and this resolves the whole curve rather than the two ends D506 compared.
+
+**What that does and does not settle.** The video is about minute-scale discretionary entries inside
+a consolidating stock, and this is a whole session on futures — so it is not a refutation on the
+video's own turf. It refutes the **generalisation** the video insists on (*"no matter how good you
+think you are, this concept applies to you"*) at the one clock we can measure, and it does so with
+the sign reversed rather than merely absent.
+
+**And the quiet decile is NOT a finding.** It is a cell chosen after looking at a curve. Declaring it
+now would be exactly the selection that produced K8 — D495's "other side", promoted on an in-sample
+bar, dead forward at −$4.46 a trade. If anyone ever wants it, it needs its own pre-registration, and
+NQ and ES have no forward slice left (spent by D503) though YM, ZN, ZB, GC, CL and 6E do.
+
+### The rest of it is unfalsifiable, or structurally absent from a systematic book
+
+- **The rule cannot be wrong as stated.** Two exceptions are given — fresh breaking news, and "a very
+  clear support or resistance level you can buy or short into within no man's land" — and the second
+  is immediately undercut ("still lower probability than breaking out of the range"). A losing
+  mid-range trade confirms the rule; a winning one was an exception. Nothing in it can fail.
+- **Its central harm does not exist for us.** The mechanism the video actually argues is that a paper
+  cut *damages the next decision*: the trader who lost $2,500 on two early attempts then skipped the
+  trade that worked. That is a real phenomenon and it is **zero by construction in a systematic
+  book** — our rules do not hesitate. So the video is an argument for automation, not for the rule
+  it is selling.
+- **Its level half is closed ground here.** "Clear levels" and "breaks a huge multi-month level" are
+  the daily channel line (FINDINGS §68, D399–D483, closed by the principal), where the level read's
+  one positive cell is a dip and **a 4% break of the 30-bar low with no lines drawn earns the same**.
+- **The evidence offered is one anecdote with invented numbers** ("I don't recall the exact P&L, but
+  let's say"), plus "90% or more" of paper cuts attributed to traders he works with, with nothing
+  shown. Three links to other videos and a course.
+
+### The one idea with any transfer, and why it is not taken
+
+**The attempt cap** — "at max I want to give it two attempts" — is the only rule in the video that is
+not a signal claim. It is an **exposure-count constraint**, the same family of instrument as the
+activity filter kept on 2026-09-13, and by the same arithmetic it would act on P3a rather than on
+edge. It is not taken because **no construction here re-enters**: the book's admitted arm takes at
+most one position a session with a five-hour minimum hold and a forced flat. There is nothing for a
+cap to bind on. Revisit only if a re-entering construction is ever built.
+
+**Status:** closed. Nothing scored, nothing reopened, no candidate proposed. The one thing worth
+carrying forward is the measurement above, which is already the third confirmation of a direction the
+record had twice: **on the clock we can measure, quiet is where direction lives.**
