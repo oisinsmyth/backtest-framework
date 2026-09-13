@@ -150,6 +150,35 @@ volatility-matched control, and the literature on one-month reversal.
 
 ---
 
+## D512 — RANGE EXPANSION: CLOSE, BUT THE CLOSEST A CONDITIONER HAS COME TO THIS ARM, 2026-09-13
+
+The principal's construction: `log(EMA50(range) / SMA200(range))` on daily bars. Spec `711bbe3`,
+result `bee99d7`. Scored with D509's economic primary so the three studies on this arm compare
+directly.
+
+**CLOSE on the declared primary** (day-session log range): Δ **+$25.37 a session** against a rotation
+p95 of **+$27.54**, the 93.4th percentile, missing by $2.17. The **23-hour** version, declared
+secondary, reads **+$31.27 at the 98.6th percentile and clears its own N1** — taking it now would be
+selection, and the family bar refuses the set at **6.0%** (p95 +32.92 against an observed max of
++31.27). **A refusal, and a narrow one: 6% against 40% and 58% for the two stretch records.**
+
+**Three things make it different in kind from the 200-day stretch.** It is **not a year proxy** —
+positive in 6 of 8 years, within-year mean **+$27.42** slightly exceeding the pooled +$25.37, where
+the stretch reversed sign. Its shape is a **threshold, not a ranking**: net $/session by quintile runs
+−9.00, +0.50, +16.01, +17.28, +16.36, so the top three are flat and the work is at the bottom. And
+**the bottom quintile loses gross** (−$5.27 a trade, net Sharpe −1.08), so a compressed range hurts
+this arm before costs, not through them.
+
+**Where to carry it:** not to this arm, which has no unread slice on NQ. To a construction or root
+that still has one, where a 23-hour cell could be **declared** rather than promoted after the fact.
+
+**A method note.** I refused the principal's literal point-range version as primary, expecting a
+price-level contamination. The selftest proves that mechanism is real (a constant percentage range on
+a rising market gives the point version +0.088 while the log version stays at 6e-15) but **in this
+data ρ(V, log price) is +0.01 to +0.02, and the two versions differ by $3.83 on Δ, well inside the
+null.** The construction as written was fine. **Demonstrate a suspected contamination on the data
+before redesigning around it.**
+
 ## D509 — THE SAME QUESTION ON AN ECONOMIC PRIMARY, SAME ANSWER, 2026-09-13
 
 The principal asked why D508 used a Spearman, then directed a re-score on the statistic I said would
