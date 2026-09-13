@@ -194,15 +194,84 @@ def do_specs() -> int:
     return 1 if bad else 0
 
 
+EXP_OUT = REPO / "data" / "fut_expiries_from_definition.json"
+
+
+def do_expiries() -> int:
+    """(root, symbol) -> expiration, for every outright in every year's first snapshot.
+
+    WHY THIS EXISTS. The breadth builder's G2 (roll monotonicity) and G4 (the front must be a
+    near month) both need each contract's expiry, and I first DERIVED it by parsing the symbol's
+    year digit. That is the same ambiguity that caused the CLN9 bug: a single-digit year cannot
+    distinguish July 2019 from July 2029, so `CLN9` was read as 2029 in 2019 data. G2 then fired
+    spuriously on NG/SR3/ZT and G4 failed on ALL 36 ROOTS -- a gate everything fails is a broken
+    gate, R7's corollary in reverse.
+
+    `definition` carries `expiration` per instrument and it is unambiguous. One snapshot per year
+    file covers every contract listed in that year.
+    """
+    import databento as db
+    files = sorted(DEF_JOB.glob("*.definition.dbn.zst"))
+    P(f"  {len(files)} definition files, "
+      f"{sum(f.stat().st_size for f in files) / 2**30:.2f} GiB")
+    out, seen = {}, set()
+    for i, f in enumerate(files, 1):
+        store = db.DBNStore.from_file(f)
+        first, n = None, 0
+        for rec in store:
+            d = getattr(rec, "ts_event", None)
+            if d is None:
+                continue
+            day = int(d) // 86_400_000_000_000
+            if first is None:
+                first = day
+            if day != first:
+                break
+            sym = str(getattr(rec, "raw_symbol", ""))
+            rt = root_of(sym)
+            if rt is None or sym in seen:
+                continue
+            exp = getattr(rec, "expiration", None)
+            if not exp:
+                continue
+            seen.add(sym)
+            out.setdefault(rt, {})[sym] = int(exp)
+            n += 1
+        P(f"  [{i}/{len(files)}] {f.name[:42]:<42} +{n} new outrights "
+          f"({sum(len(v) for v in out.values()):,} total)")
+    EXP_OUT.write_text(json.dumps({"source": str(DEF_JOB.relative_to(REPO)),
+                                   "field": "expiration (ns since epoch, UTC)",
+                                   "n_roots": len(out),
+                                   "n_symbols": sum(len(v) for v in out.values()),
+                                   "expiries": out}, indent=2), encoding="utf-8")
+    P(f"\n  {len(out)} roots, {sum(len(v) for v in out.values()):,} outrights")
+    P(f"  wrote {EXP_OUT.relative_to(REPO)}")
+    # a sanity read: the ambiguous CLN9 case, both contracts, from the authoritative field
+    cl = out.get("CL", {})
+    for s in ("CLN9", "CLN19", "CLN29"):
+        if s in cl:
+            P(f"    {s}: expires "
+              f"{pd_ts(cl[s])}")
+    return 0
+
+
+def pd_ts(ns: int) -> str:
+    import pandas as pd
+    return str(pd.Timestamp(ns, unit="ns", tz="UTC").date())
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fields", action="store_true")
     ap.add_argument("--specs", action="store_true")
+    ap.add_argument("--expiries", action="store_true")
     a = ap.parse_args()
     if a.fields:
         return do_fields()
     if a.specs:
         return do_specs()
+    if a.expiries:
+        return do_expiries()
     ap.print_help()
     return 1
 
