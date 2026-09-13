@@ -1,5 +1,21 @@
 # D507 — the spread census on all 41 roots: **micros quote tighter than their parents**, the 1.009-tick assumption was wrong by up to **twelvefold**, and it kills HG
 
+> ## ⚠ AMENDED — §8 CORRECTS THREE THINGS IN §1–§7
+>
+> [D508](D508-the-crossing-cost-actually-paid-from-tbbo.md) measured the crossing cost from
+> `tbbo` — the book immediately before each trade — for the micros `bbo-1m` never covered.
+> It corrects this record in three places:
+>
+> 1. **§5's 6E row has a UNIT ERROR.** M6E's tick is *double* 6E's, so the crossing in M6E
+>    ticks is half what §5 charged.
+> 2. **§2's headline generalisation is WRONG.** On the cost actually paid, **three of eight
+>    micros are *more* expensive than their parents**, not one of five.
+> 3. **§5's GC, CL and 6E rows overstate the crossing by up to 75%**, because they used the
+>    full contract's spread where the micro's is now measured.
+>
+> **What does NOT change: no verdict in §5 flips.** The admitted arm survives, HG still dies,
+> and GC/CL/6E stay negative. §1–§7 stand as written; §8 is the correction.
+
 **2026-09-13.** Runner [`scripts/d507_spread_all_roots.py`](../../scripts/d507_spread_all_roots.py) ·
 fixture [`data/fixtures/fut_spread_all_1m.csv.gz`](../../data/fixtures/fut_spread_all_1m.csv.gz) ·
 artifact [`data/d507_spread_all_roots.json`](../../data/d507_spread_all_roots.json).
@@ -136,3 +152,97 @@ third time in this session's data work that a check written for one purpose foun
   an MGC measurement could matter.
 - **Front-month determination is D467/D506's volume rule**, reused not re-derived; the micros
   inherit their parent's expiry, which is asserted in the self-test.
+
+---
+
+# 8. AMENDMENT — three corrections from D508's `tbbo` measurement
+
+[D508](D508-the-crossing-cost-actually-paid-from-tbbo.md) measures the crossing cost from `tbbo`,
+which carries the book **immediately before each trade** and therefore gives what the aggressor
+**actually paid** — `2·|price − mid| / tick` — rather than a quoted spread sampled every minute.
+`tbbo` was bought for **every instrument**, so the three micros `bbo-1m` never covered are on disk.
+
+**Provisional window: 2026-09-01 → 09-10, 18,364,637 trades across 16 roots.** The full year is
+decoding; these figures are a 10-day sample whose per-root trade counts run from 25,707 (M6E) to
+6,862,203 (MNQ), so the *means* are precise and only the **time variation** is unmeasured.
+
+## 8a. §5's 6E row has a unit error — M6E's tick is DOUBLE 6E's
+
+    MGC/GC   0.1    vs 0.1      SAME        MES/ES   0.25 vs 0.25   SAME
+    MCL/CL   0.01   vs 0.01     SAME        MNQ/NQ   0.25 vs 0.25   SAME
+    M6E/6E   0.0001 vs 0.00005  **DOUBLE**  MYM/YM   1.0  vs 1.0    SAME
+
+§2 generalised *"a micro has the same tick in index points as its parent"* from five index pairs.
+**M6E breaks it**, so a spread expressed in 6E ticks is **half as many M6E ticks**, and §5 charged
+6E the full 6E-tick figure against an M6E-tick commission:
+
+| | §5 as published | **corrected** |
+|---|---:|---:|
+| 6E measured cost | 3.662 tk | **3.031 tk** |
+| 6E net measured | −4.543 tk | **−3.912 tk** |
+
+**Still negative — the verdict holds.** The self-test computes this discrepancy from D507's own
+artifact so the correction is evidenced rather than asserted.
+
+## 8b. §2's headline is wrong: on the cost actually PAID, three of eight micros are DEARER
+
+| tighter than parent | ratio | | **dearer than parent** | **ratio** |
+|---|---:|---|---|---:|
+| MBT / BTC | 0.63 | | **M2K / RTY** | **1.37** |
+| MNQ / NQ | 0.83 | | **MCL / CL** | **1.29** |
+| MGC / GC | 0.87 | | **MES / ES** | **1.07** |
+| MYM / YM | 0.95 | | M6E / 6E | 1.01 |
+
+**§2's "four of five, and the mechanism is clean" does not survive the better statistic.** The
+mechanism I gave — same tick, a tenth of the notional, so a maker can quote inside — explains the
+index micros on a *time-weighted* spread and fails on the *trade-weighted* cost for rates,
+crude and the S&P. **The honest statement is that it splits by asset class and I generalised from
+five pairs measured the wrong way.**
+
+## 8c. The calibration, which is the most useful thing here
+
+`bbo-1m` is **time-weighted** (a snapshot every minute, traded or not). `tbbo` is
+**trade-weighted** (the book when someone transacted). Trades cluster when the book is tight, so:
+
+| | `bbo-1m`, D507 | `tbbo` effective, D508 | overstatement |
+|---|---:|---:|---:|
+| NQ | 3.505 | **2.324** | +51% |
+| GC | 4.207 | **2.767** | +52% |
+| **MNQ** | **2.452** | **1.936** | **+27%** |
+| ES | 1.109 | **1.029** | +8% |
+
+**A time-weighted spread overstates what a transacting trader pays by 8–52%.** Both are
+legitimate and they answer different questions: for a market order that *must* fire at a fixed
+instant the time-weighted figure is the honest upper bound, and the trade-weighted one is what
+you get if liquidity is there when you arrive.
+
+**So the admitted arm's crossing is BRACKETED, not a point estimate: 1.936 to 2.452 ticks.**
+
+| MNQ crossing | cost, ticks | D504's net Sharpe becomes |
+|---|---:|---:|
+| 1.009 assumed (as published) | 7.009 | +0.698 |
+| **1.936 (trade-weighted)** | 7.936 | **≈ +0.67** |
+| **2.452 (time-weighted)** | 8.452 | **≈ +0.65** |
+
+**The arm clears C-a on both bounds.** That is the substantive outcome: its cost line is no longer
+an assumption, and it is now known to within half a tick.
+
+## 8d. And §5's GC, CL and 6E rows overstate the crossing by up to 75%
+
+§5 flagged those three as re-costed on their full contracts' spreads. Measured:
+
+| | §5 used (parent) | **micro measured** | overstatement | corrected net |
+|---|---:|---:|---:|---:|
+| **GC → MGC** | 4.207 | **2.404** | **+75%** | −3.565 tk (was −5.368) |
+| CL → MCL | 1.501 | 1.560 | −4% | −6.092 tk (was −6.033) |
+| 6E → M6E | 1.262 | 1.057 | +19% | −3.912 tk (was −4.543) |
+
+**No verdict flips.** And MGC at **$2.40 a round trip** is the **most expensive micro to cross** in
+the acquired universe, against a $3 commission — worth knowing before anyone proposes gold.
+
+## 8e. One thing only `tbbo` could show
+
+The **effective** cost exceeds the **quoted** spread on every root — MGC 2.404 against 1.920, MNQ
+1.936 against 1.427 — because a trade that sweeps beyond the touch pays more than the quote.
+**A quoted spread is structurally a floor**, and this is the first measurement in this programme
+that prices the part above it.
