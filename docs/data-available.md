@@ -50,7 +50,7 @@ and NQ/MNQ from `tbbo`, exchange aggressor side, front month per session, 259 se
 so session 2026-09-10 cannot be cross-checked; nine holiday sessions are absent by the presence
 rule and listed.
 
-### Five things that will bite a study reading this
+### Six things that will bite a study reading this
 
 1. **NOT COMMITTED, AND CANNOT BE.** CME's terms forbid redistributing archived data, so
    the bars live in gitignored `data/raw/databento/`. What *is* committed is the re-fetch
@@ -90,6 +90,33 @@ rule and listed.
    - **Clip every id to its own date window, then assert at most one `instrument_id` per
      second**, and drop any pair whose two ends are different contracts. Both scripts now
      carry that gate and prove it fires.
+
+   > **AND IT BITES IN THE OTHER DIRECTION TOO — [D520](decisions/D520-the-sessions-builder-labelled-bars-from-a-flat-id-dict-and-it-was-ingesting-a-quarter-million-foreign-bars-that-never-reached-the-panel.md).**
+   > A `{instrument_id: symbol}` dict built from `store.metadata.mappings` with the
+   > `start_date`/`end_date` discarded is the same defect wearing the opposite hat: an id is
+   > **not** a stable handle on a contract. CME reuses the single-digit-year slot at expiry
+   > (`CLN9` is July-2019 then July-2029) *and* rotates a live contract onto a new id — but the
+   > large term is that an id which is one of your outrights in one window is an **option, a
+   > calendar spread or a different product** in another, for which no window exists at all.
+   > Measured over the whole `ohlcv-1m` archive on nine roots: **229,206 of 77,151,155 bars
+   > (0.297%, and 4.31% on the worst file)**, including 79,479 bars of Micro AUD/USD labelled
+   > `6EF3` and spreads at **negative prices** labelled `NQM3`. **Build the windows, label each
+   > bar from the window containing its timestamp, and raise if one id's windows overlap** —
+   > `scripts/build_fut_breadth_hourly.py` and `scripts/build_fut_sessions_hourly.py` both do.
+   > A front-by-volume rule happens to be insulated (the reused slots are the months nothing
+   > trades), **except on a holiday**, where ten spurious contracts elected the euro's front
+   > month on 2021-12-24.
+
+6. **THE ENERGY DAY SESSION IS NOT IN THE ARCHIVE BEFORE JUNE 2015** (D520, extending D462's
+   index-futures finding). **CL, NG, RB and HO** carry the same pre-2016 gap on hours 21→14 ET
+   that ES/NQ/YM do, **and additionally lose 15:00–16:59 ET entirely until 2015-06**: in 2013
+   the front contract's bars run out at **14:30–15:17 ET** and hour 15 is populated on **0 of
+   308 days**, against 250 for GC, SI, ZN, ZB and 6E, which are complete from 2010. The
+   switch-on is abrupt — 0–7 days a month carry an h15 bar through May 2015, then **22 in June
+   2015**. BZ is unaffected, and GC had a pit and is complete, so "pit-traded products" is not
+   the rule; the mechanism is unknown and the coverage is the fact. Anything computing a
+   day-session statistic on the energy complex must start at 2015-06 or later, and
+   `fut_sessions_hourly`'s G5 already gates CL to 2016-01-04.
 
 ### Compression measured per schema, and it spans 10x
 
