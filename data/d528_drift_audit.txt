@@ -1,0 +1,45 @@
+DOES THE FORECAST SURVIVE THE DRIFT FILTER?
+  wide 5-minute fixture, 36 roots, through 2026-04-10
+
+  4,884,589 scored bars, base P(traverse ahead) = 0.1495
+
+========================================================================================================
+1  THE FUNNEL -- what each filter removes, and what it does to P(traverse ahead)
+
+    stage                              bars      kept    P(traverse)   vs all bars
+    all scored bars                  4,884,589  100.00%        0.1495       +0.0000
+    + sigma > 0                      4,884,589  100.00%        0.1495       +0.0000
+    + slope_ok (stability)             335,157    6.86%        0.1470       -0.0025
+    + a2 (4-tick lattice)              128,032    2.62%        0.1238       -0.0257
+    + |y| >= 2 sigma (excursion)        20,806    0.43%        0.3099       +0.1603
+    + DRIFT ALIGNMENT                    3,468    0.07%        0.1078       -0.0417
+    + feasibility                        3,468    0.07%        0.1078       -0.0417
+
+    A stage that LOWERS P(traverse) is removing the regime the forecast exists to find.
+
+========================================================================================================
+2  DOES THE FORECAST'S LIFT SURVIVE EACH STAGE? Q1 lift on P(traverse ahead).
+
+    population                    n(Q1)   vol_ratio    squeeze    vratio2       ac1
+    all scored bars              978,009   +0.0799*   +0.0682*   +0.0411*   +0.0416*
+    slope_ok only                 67,253   +0.0867*   +0.0705*   +0.0441*   +0.0436*
+    excursion only                 4,162   +0.0897*   +0.0251*   +0.0520*   +0.0633*
+    + ALIGNED (tradeable)            694   +0.0550*   +0.0579*   +0.0348*   +0.0377*
+    ANTI-aligned excursions        3,468   +0.0975*   +0.0425*   +0.0583*   +0.0693*
+    * = |lift| exceeds 2 block-bootstrap SE.
+
+    If the lift collapses at '+ ALIGNED', the t = -155 measured on all bars does NOT
+    transfer to the tradeable population, and every P&L number built on it is
+    unsupported. If it survives, the forecast is intact and the drift filter is
+    costing candidates rather than costing signal.
+
+========================================================================================================
+3  IS THE DRIFT FILTER THROWING AWAY TOO MUCH?
+
+    feasible excursions             20,806
+      drift-ALIGNED                  3,468 (16.7%)   P(traverse) 0.1078
+      ANTI-aligned                  17,338 (83.3%)   P(traverse) 0.3503
+
+    slope_ok alone removes       93.1% of all bars
+      P(traverse | slope_ok)     0.1470
+      P(traverse | NOT slope_ok) 0.1497

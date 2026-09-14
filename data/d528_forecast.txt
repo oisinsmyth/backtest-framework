@@ -1,0 +1,50 @@
+CAN FORWARD MEAN REVERSION BE FORECAST?
+  wide 5-minute fixture, 36 roots, through 2026-04-10; reserved slice NOT read
+  target: traverse of +/-1.5 sigma over [t, t+10), from features strictly before t
+
+  4,884,589 scored bars, base rate P(traverse ahead) = 0.1495
+  out-of-time split at 2020-01-01: 2,601,645 early / 2,282,944 late
+
+================================================================================================================
+1  IS THE TARGET FORECASTABLE? Univariate quintile lift on P(traverse ahead).
+   Quintile edges from the EARLY half only, applied unchanged to the LATE half.
+
+    feature        n(late)   Q1 lift    Q5 lift   |Q5-Q1|  blockSE   t   | early Q5 lift
+    vol_ratio      334,094   +0.0716    -0.0706    0.1422   0.0005 -155.1   |  -0.0718
+    squeeze        384,699   +0.0635    -0.0481    0.1116   0.0005 -94.8   |  -0.0446
+    vratio2        485,796   +0.0443    -0.0462    0.0905   0.0004 -116.0   |  -0.0425
+    ac1            491,022   +0.0451    -0.0442    0.0892   0.0004 -113.9   |  -0.0402
+    vol_chg        422,356   +0.0267    -0.0276    0.0543   0.0005 -57.5   |  -0.0290
+    vol_fast       348,959   +0.0205    -0.0203    0.0408   0.0006 -35.0   |  -0.0221
+    tod            491,201   -0.0188    +0.0063    0.0250   0.0005 +12.2   |  -0.0043
+    elapsed        496,024   -0.0187    +0.0061    0.0249   0.0005 +11.9   |  -0.0041
+    sigma_pct      656,574   +0.0106    +0.0028    0.0078   0.0004  +7.8   |  -0.0050
+    drift_str      499,401   -0.0064    +0.0028    0.0092   0.0005  +5.5   |  +0.0094
+    trav_past      2,282,944   +0.0056    +0.0000    0.0056   0.0000  +nan   |  +0.0000
+
+    'lift' is P(traverse ahead | quintile) minus the base rate on the LATE half.
+    `trav_past` is the known-bad baseline (measured at t = -25 in ADDENDUM 8).
+    A feature whose LATE lift has a different sign from its EARLY lift did not
+    generalise and is noise regardless of its t.
+
+================================================================================================================
+2  DOES LIFT TRANSLATE TO MONEY? Tradeable subset only, top/bottom quintile by feature.
+
+    1,636 tradeable rows (late half). pool gross $-5.41, median $-13.00
+
+    feature         cell     n    P(trav)  gross $   net $  | matched p5    p50    p95  | verdict
+    vol_ratio      Q1 (low)     308   16.9%   -25.84  -37.30 |   -29.81  -5.73 +19.99  | inside
+    vol_ratio      Q5 (high)    243    4.9%    -9.47  -29.60 |   -38.07  -5.12 +25.44  | inside
+    squeeze        Q1 (low)     451   14.9%   -15.84  -28.23 |   -25.48  -5.72 +16.90  | inside
+    squeeze        Q5 (high)    193    4.7%   -17.74  -37.70 |   -37.86  -5.20 +29.49  | inside
+    vratio2        Q1 (low)     312   15.4%    +1.71  -14.58 |   -31.88  -8.45 +21.78  | inside
+    vratio2        Q5 (high)    334    7.2%    -4.51  -20.79 |   -30.27  -6.64 +19.88  | inside
+    ac1            Q1 (low)     282   14.5%   +13.91   -1.64 |   -29.77  -7.61 +21.42  | inside
+    ac1            Q5 (high)    381    6.8%   -11.83  -27.33 |   -27.43  -5.68 +18.70  | inside
+    vol_chg        Q1 (low)     263   12.9%    -7.26  -24.88 |   -33.37  -5.11 +25.41  | inside
+    vol_chg        Q5 (high)    200   10.5%    +6.79  -10.92 |   -36.91  -6.61 +29.23  | inside
+    vol_fast       Q1 (low)     401   13.5%    +0.24  -14.90 |   -28.04  -6.05 +19.19  | inside
+    vol_fast       Q5 (high)    170    8.2%   -17.16  -38.19 |   -35.14  -5.53 +32.50  | inside
+
+  If no feature moves P(traverse ahead) by more than a point or two, the target is not
+  forecastable from anything here and no model over these features can help.

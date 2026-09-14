@@ -1,0 +1,80 @@
+THE WIDE RUN -- 2010-2026 five-minute bars, trade close   ***  NO STOP LOSS  ***
+  36 roots, through 2026-04-10; reserved slice NOT read
+  bars identical to the 1-minute construction: H=10, x=2.0, stop=NONE (target or timeout only), tau=20, target=reflect, frame=drift
+  index roots gated to 2016-01-04; no truncated trades
+
+  pool 2,825 candidates
+  own-quantile cuts: vol_ratio<0.801, frac_last>1.006, jump>2.750
+
+========================================================================================================================
+1  THE WIDE POOL, full span
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            2,825   15.5% 49.2%   -12.68  -28.22 |  -12.68  |   +5.50  |   -4.17  |      4.2%
+    spike (1-min thresholds)      575   15.1% 51.3%   -19.71  -33.02 |  -19.71  |   +8.50  |  -10.53  |     12.7%
+    spike (own quantiles)         332   19.6% 56.3%   -11.85  -25.91 |  -11.85  |  +16.50* |   +1.90  |     17.3%
+    spike-q + LEVEL               195   17.9% 56.9%   -25.89  -39.12 |  -25.89  |  +16.00  |   -2.39  |     13.8%
+    spike-q + CHANGE              101   15.8% 59.4%   +16.18   +4.85 |  +16.18  |  +19.50  |  +25.79  |     22.1%
+    spike-q + LEVEL + CHANGE       95   16.8% 62.1%   +39.86  +28.45 |  +39.86  |  +24.00  |  +46.69  |     22.1%
+    LEVEL alone                 1,725   13.1% 49.9%    -3.73  -19.66 |   -3.73  |   +7.50  |   +3.28  |      4.6%
+    CHANGE alone                  923   11.3% 50.2%   +11.58   -4.27 |  +11.58  |   +8.50  |  +14.11  |      6.7%
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+2  THE SAME RUN RESTRICTED TO 2025-09-11 .. 2026-04-10, 207 candidates
+   (isolates the SPAN effect: same price series, same bars, narrow window)
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)              207   15.9% 47.8%   -16.90  -38.18 |  -16.90  |   +0.00  |  +12.48  |     28.0%
+    spike (1-min thresholds)       43   14.0% 51.2%    -2.79  -21.11 |   -2.79  |   +8.00  |  -36.24  |     68.3%
+    spike (own quantiles)          27  too few
+    spike-q + LEVEL                16  too few
+    spike-q + CHANGE               10  too few
+    spike-q + LEVEL + CHANGE       10  too few
+    LEVEL alone                   126   11.9% 46.8%   -43.05  -62.79 |  -43.05  |   -0.62  |  +10.29  |     23.0%
+    CHANGE alone                   59   11.9% 47.5%   +68.68  +51.08 |  +68.68  |   +5.00  |  +44.42  |     50.7%
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+3  MICRO UNIVERSE ONLY (8 roots), 1,199 candidates
+   (the only roots a $50k account with a $2,000 trailing limit can trade)
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            1,199   16.8% 47.8%    -3.58   -8.24 |   -3.58  |   +2.00  |   -1.08  |      4.7%
+    spike (1-min thresholds)      289   11.8% 48.1%    -2.56   -7.17 |   -2.56  |   +3.00  |   -2.66  |     14.0%
+    spike (own quantiles)         145   17.9% 51.7%    -1.13   -5.76 |   -1.13  |   +8.00  |   +0.54  |     17.6%
+    spike-q + LEVEL                94   17.0% 54.3%    +0.57   -4.12 |   +0.57  |   +8.25  |   +2.94  |     22.6%
+    spike-q + CHANGE               49    6.1% 49.0%    -5.20   -9.80 |   -5.20  |   -1.00  |   -5.07  |     36.8%
+    spike-q + LEVEL + CHANGE       47    6.4% 51.1%    -2.93   -7.55 |   -2.93  |   +5.50  |   -2.70  |     36.8%
+    LEVEL alone                   711   14.8% 48.8%    -2.97   -7.70 |   -2.97  |   +4.00  |   -0.74  |      6.7%
+    CHANGE alone                  400   12.0% 48.8%    -0.92   -5.51 |   -0.92  |   +3.75  |   +1.18  |      8.1%
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+4  TAU = 10 bars (50 minutes), 3,417 candidates
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            3,417    8.7% 46.5%    -7.76  -23.25 |   -7.76  |   +3.00  |   -2.40  |      4.0%
+    spike (1-min thresholds)      694    8.9% 49.1%    +5.58   -7.77 |   +5.58  |   +4.50  |  +14.56* |      7.8%
+    spike (own quantiles)         392   11.7% 50.3%    +1.00  -12.61 |   +1.00  |   +5.75  |  +17.87  |      9.8%
+    spike-q + LEVEL               233   13.3% 51.1%    -5.62  -18.70 |   -5.62  |  +10.00  |  +12.88  |     15.8%
+    spike-q + CHANGE              123   11.4% 50.4%   +17.24   +5.76 |  +17.24  |   +9.50  |  +31.70  |     20.1%
+    spike-q + LEVEL + CHANGE      116   12.1% 50.9%   +24.34  +12.81 |  +24.34  |  +11.00  |  +39.97  |     20.8%
+    LEVEL alone                 2,108    7.6% 46.9%    -6.77  -22.92 |   -6.77  |   +4.20  |   -1.67  |      4.6%
+    CHANGE alone                1,190    6.1% 48.1%    +4.14  -11.93 |   +4.14  |   +6.18  |   +5.26  |      8.3%
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+4  TAU = 40 bars (200 minutes), 1,570 candidates
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            1,570   19.6% 49.4%   -33.10  -49.28 |  -33.10  |   +6.25  |  -14.33  |      3.9%
+    spike (1-min thresholds)      280   17.9% 52.1%   -48.41  -62.00 |  -48.41  |  +10.75  |  -30.35  |     16.6%
+    spike (own quantiles)         190   18.9% 51.1%   -44.10  -57.62 |  -44.10  |  +13.13  |  -18.39  |     21.0%
+    spike-q + LEVEL               112   17.0% 49.1%   -77.73  -90.76 |  -77.73  |   +3.10  |  -39.69  |     36.7%
+    spike-q + CHANGE               58   15.5% 43.1%    -9.68  -21.42 |   -9.68  |   -5.63  |  -12.20  |     50.4%
+    spike-q + LEVEL + CHANGE       55   16.4% 45.5%   +10.05   -1.67 |  +10.05  |   -4.00  |   +8.13  |     50.4%
+    LEVEL alone                   945   18.5% 50.7%   -17.45  -34.00 |  -17.45  |  +10.00  |   -6.64  |      6.2%
+    CHANGE alone                  453   14.3% 49.2%   -13.23  -30.54 |  -13.23  |   +6.25  |   -4.41  |     13.3%
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.

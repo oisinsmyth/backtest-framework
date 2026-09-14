@@ -1,0 +1,43 @@
+(1) DROP slope_ok  AND  (2) IS THE TARGET A LEVEL-CHASING ARTEFACT?
+  wide 5-minute fixture, 36 roots, through 2026-04-10
+
+  4,884,968 scored bars
+    base P(traverse, line ) = 0.0850
+    base P(traverse, flat ) = 0.0827
+    base P(traverse, price) = 0.0649
+
+==============================================================================================================
+2  THE ALIGNED / ANTI-ALIGNED ASYMMETRY UNDER THREE TARGET DEFINITIONS
+   Feasible 2-sigma excursions only. If the gap shrinks as the level is removed, the
+   asymmetry was the LEVEL moving, not price reverting.
+
+    feasible excursions 305,703   aligned 41,126 (13.5%)   anti 264,577
+
+    target      P(trav | ALIGNED)   P(trav | ANTI)     gap    ratio
+    line                 0.1127           0.1750  +0.0624     1.55x
+    flat                 0.1745           0.0931  -0.0815     0.53x
+    price                0.1395           0.0680  -0.0714     0.49x
+
+    PREDICTION WAS: large under `line`, smaller under `flat`, near zero under `price`
+    if the asymmetry is level-chasing.
+
+==============================================================================================================
+1  DROPPING slope_ok -- what it costs and what it buys
+
+    chain                                   bars      kept   P(trav,line)  P(trav,price)
+    all scored bars                      4,884,968 100.000%        0.0850         0.0649
+    WITH slope_ok: +a2+exc+feas             20,806   0.426%        0.1819         0.0856
+    WITH slope_ok: +aligned                  3,468   0.071%        0.1041         0.1361
+    NO slope_ok:   +a2+exc+feas            305,703   6.258%        0.1667         0.0777
+    NO slope_ok:   +aligned                 41,126   0.842%        0.1127         0.1395
+
+    >>> dropping slope_ok multiplies the tradeable candidate count by 11.9x
+
+    and does the FORECAST survive without it? Q1 lift, target = `price` (level-free)
+
+    population                        n(Q1)   vol_ratio    squeeze    vratio2       ac1
+    all scored bars                  978,009   +0.0470*   +0.0725*   +0.0222*   +0.0251*
+    WITH slope_ok, aligned               694   +0.0901*   +0.0901*   +0.0570*   +0.0440*
+    NO slope_ok, aligned               8,226   +0.0752*   +0.0804*   +0.0454*   +0.0500*
+    NO slope_ok, anti-aligned         52,916   +0.0451*   +0.0726*   +0.0250*   +0.0281*
+    * = |lift| beyond 2 block-bootstrap SE, on the LEVEL-FREE target.

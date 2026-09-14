@@ -1,0 +1,80 @@
+THE WIDE RUN -- 2010-2026 five-minute bars, trade close
+  36 roots, through 2026-04-10; reserved slice NOT read
+  bars identical to the 1-minute construction: H=10, x=2.0, G=3.0, tau=20, target=reflect, frame=drift
+  index roots gated to 2016-01-04; no truncated trades
+
+  pool 2,825 candidates
+  own-quantile cuts: vol_ratio<0.801, frac_last>1.006, jump>2.750
+
+========================================================================================================================
+1  THE WIDE POOL, full span
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            2,825    8.3% 23.8%    -2.18  -17.72 |   -2.18  |  -11.50  |   -8.45  |      7.6%
+    spike (1-min thresholds)      575    6.8% 24.5%    -5.36  -18.66 |   -5.36  |   -6.25* |   -3.20  |     12.8%
+    spike (own quantiles)         332   10.8% 25.3%    -6.78  -20.84 |   -6.78  |   -7.50* |   +0.76  |     15.7%
+    spike-q + LEVEL                 4  too few
+    spike-q + CHANGE                3  too few
+    spike-q + LEVEL + CHANGE        3  too few
+    LEVEL alone                    27  too few
+    CHANGE alone                   15  too few
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+2  THE SAME RUN RESTRICTED TO 2025-09-11 .. 2026-04-10, 207 candidates
+   (isolates the SPAN effect: same price series, same bars, narrow window)
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)              207    9.2% 29.0%   +26.49   +5.20 |  +26.49  |  -12.00  |   +2.08  |     43.0%
+    spike (1-min thresholds)       43    2.3% 25.6%   -93.03 -111.35 |  -93.03  |   -9.50  |  -39.65  |     64.8%
+    spike (own quantiles)          27  too few
+    spike-q + LEVEL                 0  too few
+    spike-q + CHANGE                0  too few
+    spike-q + LEVEL + CHANGE        0  too few
+    LEVEL alone                     0  too few
+    CHANGE alone                    0  too few
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+3  MICRO UNIVERSE ONLY (8 roots), 1,199 candidates
+   (the only roots a $50k account with a $2,000 trailing limit can trade)
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            1,199    9.0% 21.5%    -1.73   -6.40 |   -1.73  |   -5.00  |   -2.17  |      7.5%
+    spike (1-min thresholds)      289    6.6% 21.5%    -1.30   -5.92 |   -1.30  |   -4.00* |   -1.71  |     26.6%
+    spike (own quantiles)         145   10.3% 21.4%    +0.48   -4.15 |   +0.48  |   -4.00  |   -1.24  |     39.5%
+    spike-q + LEVEL                 2  too few
+    spike-q + CHANGE                2  too few
+    spike-q + LEVEL + CHANGE        2  too few
+    LEVEL alone                    10  too few
+    CHANGE alone                    7  too few
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+4  TAU = 10 bars (50 minutes), 3,417 candidates
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            3,417    5.9% 26.6%    -2.78  -18.27 |   -2.78  |  -10.00  |   -5.95  |      6.1%
+    spike (1-min thresholds)      694    4.9% 28.0%    -1.04  -14.39 |   -1.04  |   -5.00* |   +2.21  |     10.5%
+    spike (own quantiles)         392    7.1% 27.3%    +0.19  -13.42 |   +0.19  |   -6.00* |   +6.38  |     13.9%
+    spike-q + LEVEL                 5  too few
+    spike-q + CHANGE                4  too few
+    spike-q + LEVEL + CHANGE        4  too few
+    LEVEL alone                    37    8.1% 32.4%    +2.97  -13.97 |   +2.97  |   -5.00  |   -1.47  |     66.2%
+    CHANGE alone                   19  too few
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.
+
+4  TAU = 40 bars (200 minutes), 1,570 candidates
+
+    cell                        n    P(tgt)  win%   gross $   net $  | MEAN vs p95 |  MEDIAN vs p95 | TRIMMED vs p95 | top3 share
+    pool (no filter)            1,570    9.3% 22.7%    -8.49  -24.68 |   -8.49  |  -12.60  |  -13.70  |     10.5%
+    spike (1-min thresholds)      280    6.4% 24.6%   -14.13  -27.73 |  -14.13  |   -6.25* |  -13.56  |     24.6%
+    spike (own quantiles)         190    8.9% 24.7%    -7.99  -21.51 |   -7.99  |   -8.95  |   -5.61  |     25.7%
+    spike-q + LEVEL                 3  too few
+    spike-q + CHANGE                2  too few
+    spike-q + LEVEL + CHANGE        2  too few
+    LEVEL alone                    16  too few
+    CHANGE alone                    7  too few
+    * = above the matched control's p95 on that statistic. A cell that clears the MEAN
+      but not the MEDIAN or TRIMMED mean is carried by its tail.

@@ -1,0 +1,65 @@
+THE JOINT CONSTRUCTION -- forecast x entry-time payoff, BOTH LENSES
+  cache 2,834 rows; EARLY 1,198 (cuts) / LATE 1,636 (evaluated)
+  cuts from the early half only: score <= -0.0181, target/cost >= 12.52
+  reserved slice NOT read; every number below is out-of-time
+
+======================================================================================================================
+ALL ROOTS: 1,636 candidates, 27 roots, 980 sessions, mean cost $15.57
+
+  PATH-INVARIANT (per trade)
+    cell             n   P(trav) P(tgt)  win%   gross$    net$   med$  trim$ | vs p95: mean med trim | top3
+    pool            1636    11.4%   8.9% 23.1%    -5.41  -20.97  -13.0 -13.33 |                | 11.7%
+    forecast only    427    15.9%  11.2% 17.6%    -3.64  -17.09   -6.5  -5.84 |        *       | 24.0%
+    payoff only      524     6.3%   6.1% 24.0%   -19.88  -36.73  -25.0 -33.17 |                | 21.6%
+    JOINT (both)     501    14.0%   9.6% 27.7%    +8.02   -7.68  -17.0  -1.05 |                | 22.1%
+    neither          184     8.2%   9.2% 20.7%    -4.84  -21.29  -11.5  -6.91 |                | 29.1%
+
+  PATH-VARIANT (slot-limited book, ranked by entry-time payoff)
+    cell           slots   trades  expo   $/trade  Sharpe g  Sharpe n   win%   total $   maxDD/$2k
+    pool               1    1,444  8.6%    -22.17     -0.41     -1.50  23.4%    -32006      20.14
+    pool               3    1,627  3.2%    -20.56     -0.37     -1.52  23.1%    -33451      20.64
+    pool              10    1,627  1.0%    -20.56     -0.37     -1.52  23.1%    -33451      20.64
+    payoff only        1      475  3.1%    -38.88     -0.66     -1.21  24.2%    -18468      11.53
+    payoff only        3      524  1.2%    -36.73     -0.67     -1.23  24.0%    -19245      12.02
+    payoff only       10      524  0.3%    -36.73     -0.67     -1.23  24.0%    -19245      12.02
+    JOINT (both)       1      465  2.4%     -9.91     +0.19     -0.30  28.0%     -4607       4.63
+    JOINT (both)       3      500  0.9%     -7.83     +0.25     -0.25  27.6%     -3916       4.24
+    JOINT (both)      10      500  0.3%     -7.83     +0.25     -0.25  27.6%     -3916       4.24
+
+  CONTROL -- within the HIGH-PAYOFF band only, does the forecast add?
+    high forecast  n   501  P(trav) 14.0%  gross $+8.02  net $-7.68
+    low  forecast  n   524  P(trav) 6.3%  gross $-19.88  net $-36.73
+    DIFFERENCE     $+27.90 gross  (SE 21.76, t +1.28)
+    -- both cells share the payoff band, so this isolates the FORECAST from
+       'pick a middling volatility'. sigma: high-f $56 vs low-f $70 median
+
+======================================================================================================================
+MICRO ONLY (tradeable): 782 candidates, 8 roots, 591 sessions, mean cost $4.59
+
+  PATH-INVARIANT (per trade)
+    cell             n   P(trav) P(tgt)  win%   gross$    net$   med$  trim$ | vs p95: mean med trim | top3
+    pool             782    11.1%   9.3% 21.7%    -2.69   -7.28   -6.5  -3.12 |                | 10.2%
+    forecast only    286    15.4%  11.5% 17.5%    -1.60   -6.36   -5.0  -1.95 |        *       | 14.8%
+    payoff only      203     4.9%   7.4% 25.1%    -3.84   -8.29  -13.5  -4.40 |                | 20.1%
+    JOINT (both)     196    13.3%   9.2% 27.0%    -2.49   -6.82   -6.3  -3.12 |                | 24.2%
+    neither           97     7.2%   7.2% 16.5%    -3.88   -8.81   -7.5  -4.05 |                | 38.4%
+
+  PATH-VARIANT (slot-limited book, ranked by entry-time payoff)
+    cell           slots   trades  expo   $/trade  Sharpe g  Sharpe n   win%   total $   maxDD/$2k
+    pool               1      730  6.8%     -7.11     -1.06     -3.00  21.8%     -5193       2.60
+    pool               3      777  2.4%     -7.31     -1.13     -3.02  21.8%     -5678       2.84
+    pool              10      777  0.7%     -7.31     -1.13     -3.02  21.8%     -5678       2.84
+    payoff only        1      187  2.1%     -9.72     -0.78     -1.43  24.6%     -1817       1.04
+    payoff only        3      203  0.8%     -8.29     -0.56     -1.19  25.1%     -1683       1.02
+    payoff only       10      203  0.2%     -8.29     -0.56     -1.19  25.1%     -1683       1.02
+    JOINT (both)       1      181  1.3%     -5.58     -0.23     -1.06  27.6%     -1010       0.76
+    JOINT (both)       3      195  0.5%     -7.19     -0.55     -1.36  26.7%     -1402       0.89
+    JOINT (both)      10      195  0.1%     -7.19     -0.55     -1.36  26.7%     -1402       0.89
+
+  CONTROL -- within the HIGH-PAYOFF band only, does the forecast add?
+    high forecast  n   196  P(trav) 13.3%  gross $-2.49  net $-6.82
+    low  forecast  n   203  P(trav) 4.9%  gross $-3.84  net $-8.29
+    DIFFERENCE     $+1.34 gross  (SE 5.28, t +0.25)
+    -- both cells share the payoff band, so this isolates the FORECAST from
+       'pick a middling volatility'. sigma: high-f $15 vs low-f $18 median
+
