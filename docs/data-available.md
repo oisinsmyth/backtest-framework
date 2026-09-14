@@ -89,6 +89,19 @@ five grains **2013/2014**; BZ 2015; CL HE HO LE NG NKD PL RB TN **2016**; RTY 20
 *(ii)* **The band is per root, measured not assumed:** 84 slots 09:00–16:00 for the 23-hour
 markets, **58 at 09:30–14:20 for the five grains, 55 at 09:30–14:05 for livestock**. A study
 applying the 84-slot window to ZC silently reads 26 empty slots.
+*(ii-b)* **AND THE WORSE CASE IS THE ROOT WITH FULL BARS AND DEAD VOLUME — [D530](decisions/D530-avenue-3-closed-the-leveraged-ETF-reset-flow-is-real-and-carries-no-direction-and-16-of-36-roots-do-not-trade-in-the-day5m-close.md).**
+The grains are obviously empty; **crude is not**. Share of each root's session volume in the
+**15:00–15:59** hour, against the 14.3% an evenly-traded root would show: **RTY 21.1%, ES 20.4%,
+NQ ~18%, YM 15.7%** (the equity closing hump, 1.10–1.48× even) · UB/TN/NKD/BTC/ZF/ZT/SR3 9.8–14.4% ·
+ZN 11.0%, ZB 11.6% · the six FX 6.6–8.3% · **GC 5.4%, SI 4.4%, NG 3.9%, CL 3.1%, HG 2.6%** ·
+PL/HO/PA/RB/BZ 2.7–3.4% · **LE and HE 0.02% on 18–19 sessions** · **ZC ZS ZW ZL ZM 0.00%, zero bars.**
+COMEX metals close 13:30 ET, NYMEX energy 14:30, grains 14:20, livestock 14:05 — so **16 of 36 roots
+have that hour essentially outside their market while still returning bars**. A close measured in an
+illiquid tail bounces on the spread, and **bid-ask bounce is indistinguishable from mean reversion**:
+D530 got a spurious **z = −12.6 "closing reversion"** across 19 such roots before checking this.
+**Any cross-root study on this fixture must use each root's OWN session, not the 09:00–15:59
+template** — and note that every price-action statistic computed over the template on a commodity
+root in this programme, D515's CL and GC rows included, carries the same contamination.
 *(iii)* **`present=False` does NOT mean the bar is missing.** All **443,124** such rows carry real
 OHLC and **non-zero volume**; zero have a NaN close. It is the *hourly* fixture's session flag,
 `isfinite(hourly_open × hourly_close)` over the root's h09..h15 window, so it marks holidays,

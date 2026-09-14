@@ -183,6 +183,37 @@ flat-map side from **git** rather than `temp/`, so it survives `temp/` being del
 
 ---
 
+## AVENUE 3 CLOSED BY THE PRINCIPAL, 2026-09-14 — and 16 of 36 ROOTS DO NOT TRADE IN THE day5m CLOSE
+
+The leveraged-ETF daily reset: a fund must reset exposure to a fixed multiple of THAT DAY'S CLOSING
+NAV, so after a move r the forced trade is A*L*(L-1)*r — positive for L=+3 AND for L=-3, so long and
+inverse funds both BUY after an up day. Forced by prospectus, deterministic size, hedged in index
+futures. It came out of the lead-scan census as a genuine hole: absent from all 43 briefs and all six
+exclusion lists.
+
+**Its tradeable form was already dead** (D463; ledger K2/K3/K4: NQ gross +$0.66, ES +$0.62, YM +$0.08
+against $4.21). **Its two MECHANISM predictions, never tested, now fail too:** dose-response in
+|return of day| reads 47.20% -> 50.63% with Q5 at z ~ 0.49, and concentration in the equity index
+reads **hit 50.03%, z = +0.1 on 7,489 observations**. Per-root the signs disagree. The flow IS real —
+the equity roots trade **15.7-21.1% of session volume in the closing hour against an even 14.3%** —
+it just carries no direction. See
+[D530](docs/decisions/D530-avenue-3-closed-the-leveraged-ETF-reset-flow-is-real-and-carries-no-direction-and-16-of-36-roots-do-not-trade-in-the-day5m-close.md).
+
+**THE DURABLE PART, and it is a trap for any day5m study.** My first run showed a spectacular
+z = -12.6 "closing reversion" across 19 non-index roots. It was my control group measuring dead air:
+**the five grains have ZERO bars in 15:00-15:59** (they close 14:20 ET), livestock 0.02% on 18
+sessions, and **CL 3.1% / HG 2.6% / NG 3.9% / SI 4.4% have full bars and dead volume** because COMEX
+closes 13:30 and NYMEX 14:30. A close measured in an illiquid tail bounces on the spread, and
+**bid-ask bounce is indistinguishable from mean reversion**. **16 of 36 roots** have that hour outside
+their market. Recorded in data-available.md note (ii-b).
+
+**AND IT REACHES BACKWARD:** every price-action statistic computed over the 09:00-15:59 template on a
+COMMODITY root in this programme has included hours that root barely trades — **D515's CL and GC rows
+included**. NQ's day edge is measured on NQ's own session and stands. A session-native re-measurement
+of the commodity roots is the obvious next move.
+
+---
+
 ## D527 — THE ADMITTED ARM FILLS AT THE WORST MINUTE OF THE DAY; ITS COST LINE IS AMENDED, 2026-09-14
 
 The loose end from the micro-spread census, checked on the principal's instruction. **The arm's
