@@ -1,0 +1,88 @@
+THE CONSTRUCTION ON THE CORRECTED CHAIN (slope_ok DROPPED, drift alignment KEPT)
+  cache 34,084 candidates   EARLY 13,982 (cuts) / LATE 20,102 (scored)
+  forecast cut from the early half: score <= -0.0412
+  P(traverse, price-referenced): all 0.1411, late 0.1469, late+forecast 0.1896
+  reserved slice NOT read; out-of-time throughout
+
+==========================================================================================================================
+ALL ROOTS: 20,102 candidates, 29 roots, 1574 sessions, mean cost $14.64
+
+  PATH-INVARIANT (per trade).  * = above the matched control's p95 on that statistic.
+    target   frame   fcst      n   P(tgt)  win%   gross$    net$    med$   trim$ | mean med trim | top3
+    level    frozen  off  20,102   26.5% 31.9%   -10.76  -25.40   -10.0  -10.98 |              |  1.9%
+    level    frozen  ON   11,055   27.2% 32.0%    -8.35  -22.21    -8.0   -8.52 |      *       |  3.9%
+    level    drift   off  20,102   20.8% 29.1%    -8.75  -23.39    -9.0   -9.86 |              |  2.1%
+    level    drift   ON   11,055   22.3% 29.6%    -7.44  -21.30    -7.0   -7.87 |      *       |  4.2%
+    reflect  frozen  off  20,102   13.5% 25.2%    -6.22  -20.86   -13.0  -11.31 |              |  2.3%
+    reflect  frozen  ON   11,055   15.3% 24.5%    -4.53  -18.39   -11.0   -9.63 |      *       |  4.8%
+    reflect  drift   off  20,102    9.4% 24.0%    -4.51  -19.15   -10.5  -10.24 |              |  2.7%
+    reflect  drift   ON   11,055   11.1% 23.5%    -3.21  -17.07    -9.0   -8.69 |      *       |  5.4%
+
+  PATH-VARIANT (slot-limited book)
+    target   frame   fcst  slots  trades  expo   $/trade  Sharpe g  Sharpe n  win%   total$   maxDD/2k
+    level    frozen  off     1  10,104 26.0%    -29.85     -2.00     -4.44 32.0%   -301576    152.30
+    level    frozen  off     3  18,059 15.3%    -26.77     -2.34     -5.21 31.6%   -483391    243.08
+    level    frozen  off    10  19,748  5.0%    -25.72     -2.34     -5.28 31.8%   -507998    256.02
+    level    frozen  ON      1   7,329 15.4%    -24.92     -1.43     -3.63 32.1%   -182638     92.11
+    level    frozen  ON      3  10,651  7.4%    -22.56     -1.56     -4.05 31.9%   -240298    120.95
+    level    frozen  ON     10  10,983  2.3%    -22.21     -1.56     -4.09 32.0%   -243899    122.75
+    level    drift   off     1  10,423 25.2%    -26.56     -1.56     -4.14 29.2%   -276803    140.45
+    level    drift   off     3  18,295 14.6%    -24.63     -1.99     -4.99 29.0%   -450597    227.71
+    level    drift   off    10  19,887  4.7%    -23.67     -2.02     -5.14 29.0%   -470692    238.03
+    level    drift   ON      1   7,475 14.9%    -22.53     -1.04     -3.20 29.7%   -168417     85.29
+    level    drift   ON      3  10,714  7.1%    -21.63     -1.42     -3.98 29.4%   -231762    116.69
+    level    drift   ON     10  11,018  2.2%    -21.23     -1.42     -4.01 29.6%   -233864    117.75
+    reflect  frozen  off     1   8,243 33.0%    -24.51     -1.07     -3.14 25.3%   -202063    102.32
+    reflect  frozen  off     3  16,499 21.8%    -22.77     -1.28     -3.81 25.1%   -375608    187.83
+    reflect  frozen  off    10  19,196  7.6%    -20.93     -1.11     -3.66 25.1%   -401726    200.89
+    reflect  frozen  ON      1   6,329 21.2%    -22.03     -0.80     -2.49 24.0%   -139445     69.96
+    reflect  frozen  ON      3  10,177 11.4%    -19.16     -0.70     -2.64 24.3%   -194966     97.72
+    reflect  frozen  ON     10  10,780  3.6%    -18.58     -0.68     -2.65 24.4%   -200344    100.41
+    reflect  drift   off     1   8,769 30.9%    -21.88     -0.73     -2.95 23.9%   -191872     96.20
+    reflect  drift   off     3  16,990 19.7%    -20.18     -0.85     -3.45 23.9%   -342808    171.80
+    reflect  drift   off    10  19,350  6.7%    -19.38     -0.87     -3.55 23.9%   -374991    188.15
+    reflect  drift   ON      1   6,556 19.8%    -19.18     -0.50     -2.34 23.3%   -125748     62.94
+    reflect  drift   ON      3  10,293 10.3%    -17.23     -0.44     -2.43 23.4%   -177301     89.85
+    reflect  drift   ON     10  10,796  3.2%    -16.74     -0.42     -2.45 23.5%   -180689     90.59
+
+==========================================================================================================================
+MICRO (tradeable): 10,256 candidates, 8 roots, 1562 sessions, mean cost $4.58
+
+  PATH-INVARIANT (per trade).  * = above the matched control's p95 on that statistic.
+    target   frame   fcst      n   P(tgt)  win%   gross$    net$    med$   trim$ | mean med trim | top3
+    level    frozen  off  10,256   26.8% 31.1%    -2.36   -6.94    -6.0   -2.31 |              |  1.1%
+    level    frozen  ON    5,870   26.5% 30.3%    -2.24   -6.83    -5.0   -2.19 |      *       |  1.9%
+    level    drift   off  10,256   21.3% 28.3%    -1.90   -6.49    -5.0   -1.94 |              |  0.9%
+    level    drift   ON    5,870   22.1% 28.0%    -1.79   -6.38    -4.5   -1.82 |      *       |  1.4%
+    reflect  frozen  off  10,256   14.0% 23.8%    -1.80   -6.39    -7.5   -2.41 |              |  1.6%
+    reflect  frozen  ON    5,870   15.7% 22.8%    -1.36   -5.95    -6.2   -2.02 |      *       |  2.8%
+    reflect  drift   off  10,256   10.0% 22.6%    -1.35   -5.93    -6.0   -1.95 |              |  1.3%
+    reflect  drift   ON    5,870   11.7% 21.7%    -0.97   -5.57    -5.0   -1.69 |      *       |  2.3%
+
+  PATH-VARIANT (slot-limited book)
+    target   frame   fcst  slots  trades  expo   $/trade  Sharpe g  Sharpe n  win%   total$   maxDD/2k
+    level    frozen  off     1   6,710 16.8%     -7.25     -2.40     -6.61 31.1%    -48628     24.32
+    level    frozen  off     3   9,832  8.1%     -7.01     -2.49     -7.09 30.9%    -68930     34.47
+    level    frozen  off    10  10,094  2.5%     -6.93     -2.41     -6.98 31.0%    -69985     35.00
+    level    frozen  ON      1   4,476  9.3%     -6.92     -2.15     -6.46 30.3%    -30956     15.53
+    level    frozen  ON      3   5,781  3.9%     -6.91     -2.27     -6.67 30.2%    -39944     20.05
+    level    frozen  ON     10   5,841  1.2%     -6.87     -2.23     -6.62 30.2%    -40136     20.14
+    level    drift   off     1   6,818 16.2%     -6.97     -2.21     -6.53 27.8%    -47514     23.76
+    level    drift   off     3   9,883  7.8%     -6.53     -2.04     -6.75 28.1%    -64523     32.27
+    level    drift   off    10  10,148  2.4%     -6.47     -2.00     -6.72 28.2%    -65691     32.85
+    level    drift   ON      1   4,542  8.9%     -6.63     -1.94     -6.38 27.9%    -30093     15.14
+    level    drift   ON      3   5,800  3.8%     -6.46     -1.85     -6.30 27.9%    -37462     18.87
+    level    drift   ON     10   5,856  1.1%     -6.40     -1.79     -6.24 28.0%    -37477     18.88
+    reflect  frozen  off     1   5,835 22.8%     -6.99     -1.64     -4.84 23.6%    -40811     20.41
+    reflect  frozen  off     3   9,382 12.0%     -6.52     -1.60     -5.33 23.6%    -61151     30.58
+    reflect  frozen  off    10   9,804  3.8%     -6.42     -1.53     -5.27 23.7%    -62987     31.50
+    reflect  frozen  ON      1   4,106 13.5%     -6.45     -1.26     -4.46 22.6%    -26486     13.25
+    reflect  frozen  ON      3   5,638  6.1%     -6.12     -1.17     -4.65 22.7%    -34504     17.40
+    reflect  frozen  ON     10   5,738  1.9%     -6.08     -1.14     -4.60 22.7%    -34911     17.64
+    reflect  drift   off     1   6,083 21.1%     -6.44     -1.31     -4.63 21.8%    -39150     19.62
+    reflect  drift   off     3   9,482 10.8%     -6.02     -1.26     -5.22 22.4%    -57066     28.63
+    reflect  drift   off    10   9,858  3.4%     -6.03     -1.28     -5.24 22.5%    -59420     29.79
+    reflect  drift   ON      1   4,186 12.4%     -5.98     -1.01     -4.46 21.2%    -25022     12.71
+    reflect  drift   ON      3   5,646  5.5%     -5.73     -0.89     -4.48 21.5%    -32340     16.47
+    reflect  drift   ON     10   5,738  1.7%     -5.68     -0.86     -4.43 21.6%    -32590     16.59
+
