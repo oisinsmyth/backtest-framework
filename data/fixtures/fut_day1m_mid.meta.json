@@ -1,0 +1,62 @@
+{
+  "built_utc": "2026-09-14T13:25:09Z",
+  "builder": "scripts/build_fut_day1m_mid.py",
+  "price": "quoted mid (bid+ask)/2 from bbo-1m; nobody trades at it, so it carries no bid-ask bounce -- the contaminant that voided D523 and split D526's result",
+  "bar_minutes": 1,
+  "day_session_et_minutes": [
+    540,
+    959
+  ],
+  "bars_per_full_session": 420,
+  "front_rule": "from fut_breadth_hourly by (root, day, contract) inner join, NOT re-derived",
+  "id_rule": "each record labelled from the symbol-mapping window CONTAINING its timestamp (D520/D521)",
+  "sentinel_rule": "bid/ask == INT64_MAX is Databento's ABSENT price and PASSES a `> 0` test; filtered explicitly (D507)",
+  "flags_carried": [
+    "same_front",
+    "present"
+  ],
+  "roots": [
+    "6A",
+    "6B",
+    "6C",
+    "6E",
+    "6J",
+    "6S",
+    "BTC",
+    "BZ",
+    "CL",
+    "ES",
+    "GC",
+    "HE",
+    "HG",
+    "HO",
+    "LE",
+    "NKD",
+    "NQ",
+    "PA",
+    "PL",
+    "RB",
+    "RTY",
+    "SI",
+    "SR3",
+    "TN",
+    "UB",
+    "YM",
+    "ZB",
+    "ZC",
+    "ZF",
+    "ZL",
+    "ZM",
+    "ZN",
+    "ZS",
+    "ZT",
+    "ZW"
+  ],
+  "rows": 3510679,
+  "sessions": 9297,
+  "span": [
+    "2025-09-11",
+    "2026-09-09"
+  ],
+  "size_mib": 8.5
+}

@@ -52,6 +52,7 @@ DAY_LO, DAY_HI = 540, 959
 IS_END = "2026-04-10"                   # 2026-04-11 onward is RESERVED and NOT READ
 SEED = 528
 PRIMARY = {"s": 5, "x": 2.0, "tau": 20, "phase": 0}
+PRIMARY_K = 2.0
 BIG = 1 << 30
 
 
@@ -216,23 +217,34 @@ def admit(Pm: np.ndarray, tick: float) -> tuple[np.ndarray, dict]:
 
 # ---------------------------------------------------------------------------------------------
 def session_bars(g: pd.DataFrame, s: int) -> list:
-    """Per session, the s-minute PRICE PATH (price sampled every s minutes), contiguous only."""
+    """Per session, the s-minute PRICE PATH sampled inside the session's OWN contiguous run.
+
+    NOT a fixed 420-minute grid.  A root's day session is its own: NQ and ES quote all 420
+    minutes with one unbroken run in 100% of in-sample sessions, but ZW trades roughly
+    09:31-14:21 (291 minutes) -- that is its trading day, not a gap.  Requiring the full 420
+    would have excluded every grain at every scale.  So the path is sampled every s minutes
+    inside the LONGEST contiguous present run, and a root with shorter hours simply yields
+    fewer windows, which is reported."""
     bar = g["bar"].to_numpy()
     mid = g["mid"].to_numpy(np.float64)
     day = g["day"].to_numpy()
     cut = np.flatnonzero(day[1:] != day[:-1]) + 1
     segs = list(zip(np.concatenate(([0], cut)), np.concatenate((cut, [len(g)]))))
     out = []
-    npts = (DAY_HI - DAY_LO + 1) // s
-    want = np.arange(npts, dtype=np.int64) * s
     for a, b in segs:
         bb, mm = bar[a:b], mid[a:b]
-        full = np.full(DAY_HI - DAY_LO + 1, np.nan)
-        full[bb] = mm
-        pth = full[want]
-        if np.isfinite(pth).sum() < npts:      # a gap anywhere disqualifies the session
+        o = np.argsort(bb, kind="stable")
+        bb, mm = bb[o], mm[o]
+        brk = np.flatnonzero(np.diff(bb) != 1)
+        starts = np.concatenate(([0], brk + 1))
+        stops = np.concatenate((brk + 1, [len(bb)]))
+        i = int(np.argmax(stops - starts))          # the longest unbroken run
+        lo, hi = starts[i], stops[i]
+        run = mm[lo:hi]
+        npts = len(run) // s
+        if npts < N + 1:
             continue
-        out.append((day[a], pth))
+        out.append((day[a], run[np.arange(npts, dtype=np.int64) * s]))
     return out
 
 
@@ -296,9 +308,16 @@ def load() -> pd.DataFrame:
     return d.sort_values(["root", "day", "bar"], kind="stable").reset_index(drop=True)
 
 
-def one_cell(Pm, valid, tick, rng, n_shuf):
-    """Observed and null tallies for one (root, scale, phase) window batch."""
+def one_cell(Pm, valid, tick, rng, n_shuf, sid=None):
+    """Observed and null tallies for one (root, scale, phase) window batch.
+
+    `sid` (session index per window) is carried through so the PER-SESSION counts needed for
+    the pre-registered session-level block bootstrap can be accumulated. The binomial SE is
+    NOT usable here: 4 phases and 7 scales are different windows over the SAME price paths, so
+    excursions are clustered and the naive count overstates the precision."""
     keep, adm = admit(Pm, tick)
+    if sid is not None:
+        sid = sid[keep]
     Pm, valid = Pm[:, keep], valid[:, keep]
     M = Pm.shape[1]
     if M == 0:
@@ -310,8 +329,19 @@ def one_cell(Pm, valid, tick, rng, n_shuf):
     for k in K_ENV:
         obs["W"][k] = 2.0 * k * sig / tick                 # range width in TICKS
         obs["trav"][k] = traverses(y, sig, k, tol)
+    obs["per_session"] = {}
     for x in X_EXC:
-        obs["cond"][x] = tally(outcomes(y, sig, valid, x, tol), M)
+        oc = outcomes(y, sig, valid, x, tol)
+        obs["cond"][x] = tally(oc, M)
+        if sid is not None:
+            # per-session (returned, total) at the primary horizon, for the block bootstrap
+            it = TAUS.index(PRIMARY["tau"])
+            ret = oc["d_ret"] <= TAUS[it]
+            sess = sid[oc["col"]] if len(oc["col"]) else np.zeros(0, np.int64)
+            ns = int(sid.max()) + 1 if M else 0
+            obs["per_session"][x] = (
+                np.bincount(sess, weights=ret.astype(np.float64), minlength=ns),
+                np.bincount(sess, minlength=ns))
 
     # ---- the null: sign shuffle of the window's own returns, EXTENDED segment included -------
     r = np.diff(Pm, axis=0)
@@ -382,6 +412,8 @@ def run(only=None) -> int:
             agg = {"admitted": 0, "n_windows": 0, "cross_obs": 0, "cross_null": 0.0,
                    "cond": {str(x): np.zeros((len(TAUS), 3), np.int64) for x in X_EXC},
                    "cond_null": {str(x): np.zeros((len(TAUS), 3), np.int64) for x in X_EXC},
+                   "boot": {str(x): {} for x in X_EXC},
+                   "rev_obs": 0, "rev_n": 0, "W_pairs": {}, "W_ticks": {}, "W_usd": {},
                    "per_root": {}}
             for r in roots:
                 g = d[d["root"] == r]
@@ -394,13 +426,42 @@ def run(only=None) -> int:
                 Pm, valid, sid = windows_of(paths, ph)
                 if Pm.shape[1] == 0:
                     continue
-                cell, adm = one_cell(Pm, valid, tick, rng, N_SHUF)
+                cell, adm = one_cell(Pm, valid, tick, rng, N_SHUF, sid=sid)
                 if cell is None:
                     continue
+                # accumulate PER ROOT-SESSION returned/total, for the block bootstrap
+                for x in X_EXC:
+                    ps = cell["obs"]["per_session"].get(x)
+                    if ps is None:
+                        continue
+                    rr, tt = ps
+                    for j in np.flatnonzero(tt > 0):
+                        kk = f"{r}|{j}"
+                        cur = agg["boot"][str(x)].get(kk, [0.0, 0.0])
+                        agg["boot"][str(x)][kk] = [cur[0] + float(rr[j]),
+                                                   cur[1] + float(tt[j])]
                 agg["admitted"] += adm["admitted"]
                 agg["n_windows"] += adm["n"]
                 agg["cross_obs"] += int(cell["obs"]["cross"].sum())
                 agg["cross_null"] += float(cell["null_cross"].mean())
+                # P6: a window is LABELLED REVERTING when its crossing count exceeds the mean
+                # of its own sign-shuffle draws. Reported obs vs null so the principal's 80%
+                # can be read against a baseline rather than against 50%.
+                nc_mean = float(cell["null_cross"].mean()) / max(cell["M"], 1)
+                agg["rev_obs"] += int((cell["obs"]["cross"] > nc_mean).sum())
+                agg["rev_n"] += int(cell["M"])
+                # ITEM 7 / P5: range predictability -- W in window t+1 against W in window t,
+                # within root, at the primary envelope. A pre-registered OUTPUT that the first
+                # run did not compute at all.
+                Wk = cell["obs"]["W"][PRIMARY_K]
+                if len(Wk) > 3:
+                    agg["W_pairs"].setdefault(r, []).append(Wk)
+                    # ITEM 3: the range in TICKS and DOLLARS, which the decision rule's
+                    # "target exists but is untradeable" branch needs. Computed per window in
+                    # the first run but never aggregated -- so that branch was unevaluable.
+                    agg["W_ticks"].setdefault(r, []).append(float(np.median(Wk)))
+                    agg["W_usd"].setdefault(r, []).append(
+                        float(np.median(Wk)) * float(sp[r].get("tick_usd") or np.nan))
                 pr = {"admitted": adm["admitted"], "n": adm["n"],
                       "median_ticks": adm["median_ticks"]}
                 for x in X_EXC:
@@ -417,6 +478,18 @@ def run(only=None) -> int:
                         pr["excess"] = float(po - pn)
                         pr["n_exc"] = int(o[i].sum())
                 agg["per_root"][r] = pr
+            # ITEM 7 / P5: lag-1 autocorrelation of the range W, within root then pooled.
+            # A pre-registered OUTPUT the first run did not compute at all.
+            acs = []
+            for rr_, lst in agg["W_pairs"].items():
+                v = np.concatenate(lst)
+                if len(v) > 30 and np.std(v) > 0:
+                    acs.append(float(np.corrcoef(v[:-1], v[1:])[0, 1]))
+            agg["W_lag1_median"] = float(np.median(acs)) if acs else None
+            agg["W_lag1_n_roots"] = len(acs)
+            agg["W_ticks_median"] = {k: float(np.median(v)) for k, v in agg["W_ticks"].items()}
+            agg["W_usd_median"] = {k: float(np.median(v)) for k, v in agg["W_usd"].items()}
+            agg.pop("W_pairs"); agg.pop("W_ticks"); agg.pop("W_usd")
             for x in X_EXC:
                 agg["cond"][str(x)] = agg["cond"][str(x)].tolist()
                 agg["cond_null"][str(x)] = agg["cond_null"][str(x)].tolist()
