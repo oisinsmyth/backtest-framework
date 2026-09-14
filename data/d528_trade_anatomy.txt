@@ -1,0 +1,126 @@
+WHY IS IT SO BAD, WHY ISN'T THE WIN RATE HIGHER, AND WHY ARE THE NULLS SO HIGH?
+  micro universe, 8 roots, 147 sessions, s=1
+
+================================================================================================================
+1  WHY A GOOD REWARD:RISK IS NOT AN EDGE -- the hit rate is the price of the payoff
+   Cell B (n=12,865, tight enough to read). NULL gross is what the geometry alone earns.
+
+    target    frame   G    hit rate  payoff  hit x payoff | NULL gross $  real gross $  real - null
+    level     frozen  2.5    21.3%    1.29         0.274 |        -1.36         -0.83        +0.53
+    level     frozen  3.0    26.7%    1.18         0.316 |        -1.69         -1.12        +0.56
+    level     frozen  3.5    32.0%    1.02         0.327 |        -2.05         -1.57        +0.48
+    level     frozen  4.0    36.5%    0.89         0.323 |        -2.37         -2.04        +0.34
+    level     frozen  5.0    44.1%    0.71         0.312 |        -2.94         -2.50        +0.44
+    level     drift   2.5    17.2%    1.40         0.241 |        -1.11         -0.62        +0.49
+    level     drift   3.0    21.4%    1.36         0.291 |        -1.37         -0.87        +0.49
+    level     drift   3.5    25.5%    1.24         0.316 |        -1.64         -1.19        +0.44
+    level     drift   4.0    28.9%    1.12         0.323 |        -1.86         -1.60        +0.26
+    level     drift   5.0    34.9%    0.96         0.333 |        -2.34         -1.97        +0.37
+    opposite  frozen  2.5    14.2%    2.10         0.299 |        -0.97         -0.30        +0.68
+    opposite  frozen  3.0    18.5%    1.95         0.360 |        -1.22         -0.46        +0.76
+    opposite  frozen  3.5    22.3%    1.69         0.378 |        -1.49         -0.87        +0.62
+    opposite  frozen  4.0    25.8%    1.47         0.379 |        -1.75         -1.28        +0.47
+    opposite  frozen  5.0    31.5%    1.13         0.355 |        -2.22         -1.97        +0.24
+    opposite  drift   2.5    10.3%    2.03         0.209 |        -0.74         -0.23        +0.51
+    opposite  drift   3.0    13.1%    2.07         0.271 |        -0.89         -0.44        +0.46
+    opposite  drift   3.5    15.9%    1.95         0.309 |        -1.11         -0.62        +0.49
+    opposite  drift   4.0    18.4%    1.80         0.331 |        -1.24         -0.86        +0.38
+    opposite  drift   5.0    22.9%    1.50         0.343 |        -1.63         -1.20        +0.43
+    reflect   frozen  2.5    13.2%    2.30         0.302 |        -0.89         -0.16        +0.73
+    reflect   frozen  3.0    17.1%    2.15         0.367 |        -1.10         -0.26        +0.84
+    reflect   frozen  3.5    20.6%    1.87         0.385 |        -1.35         -0.65        +0.71
+    reflect   frozen  4.0    23.8%    1.62         0.386 |        -1.59         -1.02        +0.58
+    reflect   frozen  5.0    29.0%    1.25         0.362 |        -2.02         -1.64        +0.38
+    reflect   drift   2.5     9.2%    2.16         0.198 |        -0.66         -0.15        +0.51
+    reflect   drift   3.0    11.7%    2.22         0.259 |        -0.80         -0.33        +0.47
+    reflect   drift   3.5    14.1%    2.11         0.297 |        -1.00         -0.49        +0.51
+    reflect   drift   4.0    16.4%    1.95         0.319 |        -1.12         -0.70        +0.42
+    reflect   drift   5.0    20.2%    1.64         0.330 |        -1.45         -1.01        +0.44
+
+  The hit rate runs from ~5% to ~50% across these rows. NULL gross barely moves -- the
+  geometry earns nothing whatever distances you pick, because the hit rate is exactly the
+  price of the payoff. 'real - null' is the ONLY column that can contain an edge.
+
+================================================================================================================
+2  WHY THE NULLS ARE SO WIDE -- it is n, interacting with a skewed payoff
+
+    cell                      n      per-trade sd   SE of mean   skew   kurt   trades for half the +P&L
+    C traverse                  109          36.54         3.50   +3.71   22.0                      5 of 30 winners
+    B no-classifier          12,865          26.82         0.24   +3.95   50.8                    432 of 3,643 winners
+
+    a 1.645-SE p95 therefore sits this far above the null median:
+      C traverse               +$   5.76 per trade   (109 trades)
+      B no-classifier          +$   0.39 per trade   (12,865 trades)
+
+    The null is not inflated. At n=109 the ESTIMATOR cannot resolve anything smaller
+    than a few dollars a trade, and the real edge is about 30 cents.
+
+================================================================================================================
+3  TRADE-BY-TRADE ANATOMY of the declared primary ('reflect', 'drift', 3.0)
+
+  C traverse   n 109
+    NET $ percentiles: p1=-42.8  p5=-32.6  p10=-25.8  p25=-15.6  p50=-10.0  p75=-3.2  p90=+41.5  p95=+59.5  p99=+136.2
+    mean -1.66   sd 36.54   min -56.6   max +242.6   cost/trade 4.66
+    by outcome:      n     share   mean $    median $      sd     min      max    mean bars
+      TARGET          12   11.0%   +70.56      +50.37   64.98   +11.4   +242.6         8.0
+      STOP            91   83.5%   -13.78      -11.82   10.64   -56.6     +4.1         3.6
+      TIMEOUT          6    5.5%   +37.74      +34.27   21.41    +8.4    +63.4        22.2
+    by side:         n     share   win%    mean $    median $   mean bars
+      LONG            56   51.4%  21.4%    -2.94      -10.48        4.8
+      SHORT           53   48.6%  20.8%    -0.30       -9.32        5.3
+    by root:         n    win%    mean $   total $   hit rate   geometric hit rate
+      BTC             15   6.7%    -9.82      -147       6.7%
+      ES              17  17.6%    -7.42      -126      11.8%
+      GC              16  31.2%    -8.38      -134       6.2%
+      NQ              20  35.0%   +19.60      +392      20.0%
+      RTY             18  16.7%    -4.40       -79       5.6%
+      YM              21  19.0%    -2.58       -54      14.3%
+    holding time (bars): p10=1  p25=1  p50=2  p75=6  p90=10  p99=40
+    concentration: top 1 trade 22.3% of gross +P&L, top 5 55.9%, top 10 80.3%
+    the five biggest WINNERS and LOSERS, named:
+      WIN    +242.61  NQ   2025-11-14  10:13 ET (bar 73)  side LONG   held 15 bars  exit TARGET
+      WIN    +139.07  NQ   2026-02-03  13:09 ET (bar 249)  side SHORT  held  5 bars  exit TARGET
+      WIN    +103.44  NQ   2026-01-15  10:29 ET (bar 89)  side LONG   held  7 bars  exit TARGET
+      WIN     +63.43  NQ   2026-02-19  10:34 ET (bar 94)  side SHORT  held 40 bars  exit TIMEOUT
+      WIN     +60.38  GC   2025-10-27  14:07 ET (bar 307)  side SHORT  held 40 bars  exit TIMEOUT
+      LOSS    -56.62  GC   2026-04-08  09:31 ET (bar 31)  side LONG   held  1 bars  exit STOP
+      LOSS    -43.07  NQ   2025-12-18  14:56 ET (bar 356)  side LONG   held  2 bars  exit STOP
+      LOSS    -39.12  GC   2026-03-03  14:09 ET (bar 309)  side LONG   held  1 bars  exit STOP
+      LOSS    -36.12  GC   2026-01-13  11:05 ET (bar 125)  side LONG   held  2 bars  exit STOP
+      LOSS    -34.07  NQ   2026-03-27  10:24 ET (bar 84)  side LONG   held  6 bars  exit STOP
+
+  B no-classifier   n 12,865
+    NET $ percentiles: p1=-63.1  p5=-33.6  p10=-23.3  p25=-13.1  p50=-7.1  p75=-3.1  p90=+14.9  p95=+33.7  p99=+97.1
+    mean -5.01   sd 26.82   min -210.6   max +534.7   cost/trade 4.68
+    by outcome:      n     share   mean $    median $      sd     min      max    mean bars
+      TARGET        1502   11.7%   +36.83      +23.33   45.05    -1.4   +534.7         8.5
+      STOP         11200   87.1%   -11.04       -8.13   15.70  -210.6   +149.4         3.5
+      TIMEOUT        163    1.3%   +23.73       +8.77   41.09   -14.3   +276.2        18.3
+    by side:         n     share   win%    mean $    median $   mean bars
+      LONG          6538   50.8%  19.2%    -4.81       -7.05        4.3
+      SHORT         6327   49.2%  18.8%    -5.22       -7.25        4.2
+    by root:         n    win%    mean $   total $   hit rate   geometric hit rate
+      6E            1592  13.6%    -4.55     -7244      10.9%
+      BTC           1643  18.3%    -5.43     -8929      12.4%
+      CL            1544  15.4%    -5.40     -8335       9.8%
+      ES            1552  21.3%    -3.87     -6002      13.0%
+      GC            1592  22.3%    -7.53    -11995      11.8%
+      NQ            1593  23.7%    -4.81     -7668      12.1%
+      RTY           1644  17.0%    -4.26     -6997      11.7%
+      YM            1705  20.4%    -4.27     -7273      11.7%
+    holding time (bars): p10=1  p25=1  p50=2  p75=5  p90=11  p99=32
+    concentration: top 1 trade  0.8% of gross +P&L, top 5  3.0%, top 10  5.1%
+    the five biggest WINNERS and LOSERS, named:
+      WIN    +534.73  GC   2026-03-19  10:12 ET (bar 72)  side SHORT  held 16 bars  exit TARGET
+      WIN    +453.63  GC   2026-01-30  12:26 ET (bar 206)  side SHORT  held 14 bars  exit TARGET
+      WIN    +405.78  GC   2026-02-02  10:05 ET (bar 65)  side SHORT  held 24 bars  exit TARGET
+      WIN    +360.94  NQ   2026-04-07  10:34 ET (bar 94)  side SHORT  held 32 bars  exit TARGET
+      WIN    +340.28  GC   2026-02-05  09:33 ET (bar 33)  side LONG   held  7 bars  exit TARGET
+      LOSS   -210.62  GC   2026-02-03  11:13 ET (bar 133)  side SHORT  held  4 bars  exit STOP
+      LOSS   -199.12  GC   2026-01-30  09:54 ET (bar 54)  side LONG   held  1 bars  exit STOP
+      LOSS   -194.12  GC   2026-01-30  11:35 ET (bar 155)  side LONG   held  1 bars  exit STOP
+      LOSS   -181.12  GC   2025-10-29  14:36 ET (bar 336)  side LONG   held  1 bars  exit STOP
+      LOSS   -176.62  GC   2026-04-08  14:18 ET (bar 318)  side LONG   held  1 bars  exit STOP
+
+  'geometric hit rate' is omitted per root: the realised target and stop distances differ
+  per trade, so the pooled figure in section 1 is the honest version of that comparison.
