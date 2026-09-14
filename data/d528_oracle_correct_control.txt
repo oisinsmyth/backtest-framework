@@ -1,0 +1,30 @@
+THE ORACLE, WITH THE CONTROL IT SHOULD HAVE HAD
+  micro universe, 8 roots, 147 sessions, s=1
+  control = a RANDOM subset of the SAME candidate pool, on the REAL path, same count
+  400 draws per arm
+
+  the candidate pool: 717 trades, P(target) 11.2%, gross $-1.21, net $-5.93
+
+================================================================================================================
+1  EACH SELECTOR vs A RANDOM SELECTOR OF THE SAME SIZE, on the same real data
+
+    arm             n    P(tgt)  win%   gross $   net $ | random-matched gross: p5    p50    p95  | verdict
+    causal          109  11.0% 21.1%     +3.00   -1.66 |     -5.39  -1.34  +3.40  | inside
+    oracle_h         98  57.1% 64.3%    +23.92  +19.23 |     -5.86  -1.39  +3.67  | ABOVE p95
+    oracle_tau      220  31.8% 39.5%    +10.85   +6.14 |     -3.90  -1.43  +1.53  | ABOVE p95
+    oracle_after     39  17.9% 20.5%     +0.93   -3.80 |     -8.59  -1.30  +6.77  | inside
+
+  The control keeps the real data and randomises only WHICH candidates are taken, with the
+  count matched. It answers: does knowing which windows traverse beat picking at random?
+
+================================================================================================================
+2  WHAT EACH ORACLE IS ALLOWED TO SEE
+
+    oracle_h      traverse over [t, t+10)        OVERLAPS the trade -- knows part of the outcome
+    oracle_tau    traverse over [t, t+40)       OVERLAPS the trade -- knows part of the outcome
+    oracle_after  traverse over [t+40, t+50)  DISJOINT -- regime knowledge only
+
+  Only `oracle_after` bounds what REGIME knowledge alone is worth. If it clears its
+  random-matched control, a causal detector has something to aim at. If it does not, the
+  regime label carries no tradeable information even when known perfectly -- and THAT is
+  the honest version of ADDENDUM 8's claim.
