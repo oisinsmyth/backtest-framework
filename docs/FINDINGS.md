@@ -4642,3 +4642,44 @@ GC's *pooled* gap of +0.131 looks like something and is not.
 Pearson and be independent on ranks: CL's curve against the trailing 60-day return reads **pearson
 +0.498 against spearman +0.162**, the Pearson being a handful of extreme joint observations. **Report
 both, and let the rank statistic decide** whether a conditioner is a price signal in disguise.
+
+
+## 74. Measurement: the directional base rate is NOT 50 % — it runs to 54.7 % on the equity indices and BELOW 50 % on natural gas, and it is root- and horizon-specific
+
+*From the [D531 addendum](decisions/D531-ADDENDUM-the-breakout-loses-to-the-base-rate-48-of-48-and-the-base-rate-is-not-50-percent.md),
+on the principal's challenge. Closes nothing; it is a constraint on how a directional statistic may
+be referenced.*
+
+**The trap.** A directional hit rate is compared against 50 %, on the reasoning that a coin flip gets
+50 %. It does not. Price drifts, the drift differs by root and it compounds with horizon, so the
+reference for "no information" is the probability of that move **at that moment on a different day** —
+not one half.
+
+`P(up move)`, measured by holding the bar index fixed and rotating the session, which absorbs the
+drift and the intraday shape together. In sample 2016-2023, five-minute bars:
+
+| root | 15 min | 30 min | 60 min | 120 min |
+|---|---:|---:|---:|---:|
+| **ES** | 52.64 | 52.85 | **53.56** | **54.70** |
+| **NQ** | 52.68 | 53.13 | 52.94 | **54.39** |
+| CL | 50.26 | 50.74 | 50.79 | 50.90 |
+| GC | 50.89 | 50.21 | 50.05 | 50.83 |
+| SI | 51.24 | 50.77 | 50.16 | 49.95 |
+| **NG** | **48.88** | **48.88** | **48.77** | **48.55** |
+
+Estimated independently from two disjoint event sets, agreeing to **0.2 points**.
+
+**The size of the error.** Referencing 50 % overstates a long on ES at two hours by **+4.7 points**
+and understates a long on NG by **1.5**. It is always in the direction that flatters a long and
+punishes a short — and this programme's admitted arm is long-biased in a rising sample.
+
+**What it cost.** D531's addendum reported an ES upside-break hit rate of 55.08 % as "+3.2 SE"
+against 50 %. Against its true base rate of 53.56 % the lift is **+1.53 points, with 18.3 % of
+rotated draws reaching it** — inside the null. The finding evaporated on the reference alone. Across
+48 cells the mean lift over base rate was **−1.23 points and nothing cleared**, where against 50 %
+the same numbers had looked like a real asymmetry.
+
+**The rule.** Reference a directional hit rate against the **rotated base rate at the same clock
+position**, never against 50 %. A rotation null on a fixed price path (D529's) already does this
+implicitly, because rotating the signal preserves whatever the price did; a bare hit rate does not.
+Where a study cannot rotate, quote the base rate from this table beside the statistic.
