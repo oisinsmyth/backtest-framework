@@ -1,0 +1,40 @@
+A VOLUME FILTER: LEVEL (thin) and CHANGE (falling), reported separately
+  8 roots, 147 sessions; volume from the 5-minute fixture
+  fast = 20 five-minute bars (100 min), backfilled from the previous
+  session; slow = EMA half-life 2.0 sessions; both normalised by a causal
+  20-session time-of-day profile. DECLARED CUT 1.0 for both, untuned.
+
+  pool 693 eligible candidates (24 dropped: no causal profile)
+  median fast 1.139, median fast/slow 0.942, median spread scale 1.004
+
+====================================================================================================================
+1  BOTH FILTERS, against the matched control. NET(fixed) uses one cost per root;
+   NET(hour) re-charges the crossing at the spread actually prevailing in that hour.
+
+    cell                            n   P(tgt)   win%    gross $  NET fixed  NET hour  spread x | matched p5    p50    p95  | verdict
+    pool (no volume filter)          693   11.3%  19.2%     -0.89      -5.61     -5.88    1.004 |    -0.89  -0.89  -0.89  | inside
+    LEVEL: not thin                  466   11.8%  19.3%     -1.06      -5.83     -6.13    1.011 |    -2.20  -0.84  +0.51  | inside
+    CHANGE: not falling              291   12.7%  19.6%     -0.06      -4.77     -5.06    1.013 |    -3.13  -0.93  +1.35  | inside
+    LEVEL + CHANGE                   285   12.6%  19.3%     -0.22      -4.94     -5.24    1.014 |    -2.86  -0.83  +1.28  | inside
+    -- the inverted sign --
+    LEVEL inverted (thin only)       227   10.1%  18.9%     -0.53      -5.14     -5.37    0.994 |    -3.49  -0.98  +1.62  | inside
+    CHANGE inverted (falling only)   402   10.2%  18.9%     -1.49      -6.21     -6.47    1.001 |    -2.46  -0.88  +0.69  | inside
+    -- on the spike cell --
+    spike                            130    8.5%  20.8%     +3.66      -1.22     -1.50    0.999 |    -4.72  -0.81  +3.42  | ABOVE p95
+    spike + LEVEL                     88   11.4%  21.6%     +5.78      +0.92     +0.79    0.999 |    -5.20  -1.27  +3.50  | ABOVE p95
+    spike + CHANGE                    58   13.8%  22.4%    +10.68      +5.89     +5.74    1.000 |    -6.18  -1.26  +5.78  | ABOVE p95
+    spike + LEVEL + CHANGE            56   14.3%  21.4%    +10.86      +6.03     +5.88    1.008 |    -7.37  -0.84  +4.93  | ABOVE p95
+
+  'spread x' is the median hour-spread relative to that root's own median -- above 1
+  means the cell trades in wider markets than the fixed cost model assumes.
+
+====================================================================================================================
+2  WHAT THE FILTERS ACTUALLY SELECT
+
+    LEVEL: not thin        passes   466 (67.2%)   median spread x  pass 1.011 vs block 0.994
+    CHANGE: not falling    passes   291 (42.0%)   median spread x  pass 1.013 vs block 1.001
+    corr(LEVEL measure, CHANGE measure) = +0.787  -- if near 1 the two filters are one filter
+    corr(price vol_ratio, LEVEL measure) = -0.117  -- near 0 means the filter does not cut the quiet cell
+
+  Exploratory. Two filters at one declared cut, on a window already ~30 looks deep;
+  the reserved slice is untouched and nothing here can be promoted.
