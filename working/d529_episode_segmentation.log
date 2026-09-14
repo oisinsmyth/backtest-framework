@@ -1,0 +1,33 @@
+====================================================================================================
+1  CALIBRATION -- C(L) simulated, and LAMBDA fixed so a RANDOM WALK finds ONE segment
+====================================================================================================
+   C(L)  at L = 8, 12, 24, 36, 72:  1.005  1.009  1.001  1.005  1.003
+   SD(L) at L = 8, 12, 24, 36, 72:  0.700  0.725  0.734  0.746  0.749
+   z = eff*sqrt(L) is ESSENTIALLY L-INDEPENDENT, which is why the score must NOT be
+   weighted by L -- the first version's bug, and it drove LAMBDA to 126.
+   LAMBDA = 16.29  ->  a random walk yields 1.00 segments on average (100% of paths get exactly 1)
+
+====================================================================================================
+2  KNOWN-ANSWER CASE -- chop for 36 bars then a trend for 36. Can it find the boundary?
+====================================================================================================
+   true boundary at bar 36. Found: median 33, mean 32.6, within +/-4 bars on 100% of paths, no split at all on 0%
+   one example segmentation:
+      bars   0..32  L=32  CHOP  z=0.580 vs C=0.986  t=-0.55  gain 0.3
+      bars  32..72  L=40  TREND z=6.304 vs C=0.991  t=+7.24  gain 52.4
+
+====================================================================================================
+3  ON REAL DATA -- and DOES A FIXED 72-BAR WINDOW STRADDLE A BOUNDARY? (the principal's point)
+====================================================================================================
+
+   root   sess   segs/sess   % sessions   median   chop share   trend share   C(72) from
+                              >1 segment   seg len   of bars      of bars       own returns
+     ES    800    1.00          0.1%         72      53.5%        46.5%        0.987
+     NQ    800    1.01          0.8%         72      57.6%        42.4%        1.065
+     GC    800    1.00          0.0%         72      68.4%        31.6%        1.212
+     ZN    800    1.01          0.8%         72      53.8%        46.2%        1.014
+     CL    800    1.02          1.8%         72      57.7%        42.3%        1.179
+
+   READ THE '>1 SEGMENT' COLUMN. That is the fraction of sessions where ONE 72-bar number
+   provably reports a BLEND of two or more regimes -- the principal's objection, measured.
+   And the C(72) column is why the benchmark is re-estimated per root: it is not 1.000, and
+   it is not even the Gaussian value.
