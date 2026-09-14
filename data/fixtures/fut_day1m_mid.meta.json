@@ -1,5 +1,5 @@
 {
-  "built_utc": "2026-09-14T13:25:09Z",
+  "built_utc": "2026-09-14T14:04:12Z",
   "builder": "scripts/build_fut_day1m_mid.py",
   "price": "quoted mid (bid+ask)/2 from bbo-1m; nobody trades at it, so it carries no bid-ask bounce -- the contaminant that voided D523 and split D526's result",
   "bar_minutes": 1,
@@ -15,6 +15,429 @@
     "same_front",
     "present"
   ],
+  "coverage": {
+    "6A": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "6B": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "6C": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "6E": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "6J": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "6S": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "BTC": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 298
+    },
+    "BZ": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 267
+    },
+    "CL": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 267
+    },
+    "ES": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "GC": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "HE": {
+      "band_bars": [
+        31,
+        306
+      ],
+      "band_minutes": 276,
+      "band_et": [
+        "09:31",
+        "14:07"
+      ],
+      "sessions": 250
+    },
+    "HG": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "HO": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 267
+    },
+    "LE": {
+      "band_bars": [
+        31,
+        306
+      ],
+      "band_minutes": 276,
+      "band_et": [
+        "09:31",
+        "14:07"
+      ],
+      "sessions": 250
+    },
+    "NKD": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "NQ": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "PA": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "PL": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "RB": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 267
+    },
+    "RTY": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "SI": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "SR3": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "TN": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "UB": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "YM": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "ZB": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "ZC": {
+      "band_bars": [
+        31,
+        321
+      ],
+      "band_minutes": 292,
+      "band_et": [
+        "09:31",
+        "14:22"
+      ],
+      "sessions": 250
+    },
+    "ZF": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "ZL": {
+      "band_bars": [
+        31,
+        321
+      ],
+      "band_minutes": 294,
+      "band_et": [
+        "09:31",
+        "14:22"
+      ],
+      "sessions": 256
+    },
+    "ZM": {
+      "band_bars": [
+        31,
+        321
+      ],
+      "band_minutes": 293,
+      "band_et": [
+        "09:31",
+        "14:22"
+      ],
+      "sessions": 255
+    },
+    "ZN": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "ZS": {
+      "band_bars": [
+        31,
+        321
+      ],
+      "band_minutes": 292,
+      "band_et": [
+        "09:31",
+        "14:22"
+      ],
+      "sessions": 251
+    },
+    "ZT": {
+      "band_bars": [
+        0,
+        419
+      ],
+      "band_minutes": 420,
+      "band_et": [
+        "09:00",
+        "16:00"
+      ],
+      "sessions": 268
+    },
+    "ZW": {
+      "band_bars": [
+        31,
+        321
+      ],
+      "band_minutes": 292,
+      "band_et": [
+        "09:31",
+        "14:22"
+      ],
+      "sessions": 255
+    }
+  },
+  "why_coverage": "A ROOT'S SESSION BAND IS ITS OWN. Two readers have now assumed a fixed 420-minute grid and silently discarded every root whose session is shorter -- ZW trades ~09:31-14:21 and 291 minutes is its TRADING DAY, not a gap, while NQ and ES carry all 420 with one unbroken run. Take coverage[root]['band_bars'], or sample inside each session's own longest contiguous run; never assume the grid.",
   "roots": [
     "6A",
     "6B",

@@ -55,6 +55,41 @@ PRIMARY = {"s": 5, "x": 2.0, "tau": 20, "phase": 0}
 PRIMARY_K = 2.0
 BIG = 1 << 30
 
+# STRUCTURAL FIX 1 -- EVERY OUTPUT THE PRE-REGISTRATION DECLARED, NAMED HERE AND ASSERTED.
+# Three of D528's declared outputs went uncomputed in the first run (range predictability,
+# the reverting share, and the range in ticks -- which GATES a branch of the decision rule).
+# It was the THIRD occurrence of the same failure: D506 compared a different quantity than its
+# spec declared, D523 never computed a declared secondary. The pattern is that outputs which
+# are not part of the primary never get wired up, and prose in a record does not catch it.
+# So the manifest is code, and `check_outputs` RAISES before anything is reported.
+REQUIRED_OUTPUTS = {
+    "cond": "the conditional return probability, per x -- the PRIMARY",
+    "cond_null": "its sign-shuffle null",
+    "boot": "per-root-session counts, for the pre-registered block bootstrap",
+    "cross_obs": "level crossings observed (item 1)",
+    "cross_null": "level crossings under the null (item 1)",
+    "rev_obs": "windows labelled reverting (P6)",
+    "rev_n": "windows labelled at all (P6)",
+    "W_ticks_median": "the range in TICKS (item 3) -- gates the untradeable branch",
+    "W_usd_median": "the range in DOLLARS (item 3)",
+    "W_lag1_median": "range predictability (item 7 / P5)",
+    "admitted": "A1+A2 admission count (duty cycle)",
+    "n_windows": "windows before admission (duty cycle)",
+    "per_root": "the per-root breakdown",
+}
+
+
+def check_outputs(res: dict) -> None:
+    """Raise unless every pre-registered output is present in at least one populated cell."""
+    missing = []
+    for name, why in REQUIRED_OUTPUTS.items():
+        if not any(name in c and c[name] not in (None, {}, [], 0)
+                   for c in res["cells"].values()):
+            missing.append(f"{name} ({why})")
+    if missing:
+        raise GateError("[OUTPUTS] the pre-registration declared outputs this run never "
+                        "computed:\n    " + "\n    ".join(missing))
+
 
 class GateError(RuntimeError):
     pass
@@ -502,6 +537,29 @@ def run(only=None) -> int:
             P(f"  s={s:<3} phase {ph}  admitted {agg['admitted']:>7,}/{agg['n_windows']:>7,}"
               f"  exc {o.sum():>7,}  P(ret) obs {po:.4f} null {pn:.4f}"
               f"  EXCESS {po-pn:+.4f}   [{time.time()-t_start:.0f}s]")
+    # STRUCTURAL FIX 1: refuse to report unless every declared output exists.
+    check_outputs(res)
+
+    # STRUCTURAL FIX 3: the SCALE breakdown is printed by default. It was computed by the first
+    # run and reported only pooled, which is the same "computed but not surfaced" failure in a
+    # third guise -- and it is the table that answers whether the edge is SELF-SIMILAR.
+    P("\n  BY SCALE at x=2.0 sigma -- flat in s means the edge is SELF-SIMILAR")
+    P("     s (min)  window (min)   excursions   " + "  ".join(f"tau={t}" for t in TAUS))
+    for s in SCALES:
+        sel = [f"s{s}_p{p}" for p in range(N_PHASES) if f"s{s}_p{p}" in res["cells"]]
+        cols, ne = [], 0
+        for ti in range(len(TAUS)):
+            O = sum(np.array(res["cells"][k]["cond"]["2.0"])[ti] for k in sel)
+            NN = sum(np.array(res["cells"][k]["cond_null"]["2.0"])[ti] for k in sel)
+            if O.sum() == 0 or NN.sum() == 0:
+                cols.append("   --  ")
+                continue
+            ne = int(O.sum())
+            cols.append(f"{O[0]/O.sum() - NN[0]/NN.sum():+.4f}")
+        P(f"     {s:>7}  {20*s:>12}   {ne:>10,}   " + "  ".join(cols))
+    P("     tau is in BARS, so the clock time is tau*s minutes -- if the decay tracks BARS")
+    P("     rather than MINUTES, the edge is indexed by bar-time and not by the clock.")
+
     OUT.write_text(json.dumps(res, indent=1, default=str), encoding="utf-8")
     P(f"\n  wrote {OUT.relative_to(REPO)} in {(time.time()-t_start)/60:.1f} min")
     return 0

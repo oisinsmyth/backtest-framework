@@ -159,3 +159,83 @@ reserved slice's question and it remains unread.**
 
 Nothing enters `FINDINGS.md`, `RULES.md`, `COMPONENTS_PROP.md` or either book on this record
 (R8, R15).
+
+---
+
+# 8. ADDENDUM, same day — **THE EDGE IS SELF-SIMILAR, and it is indexed by BARS rather than by the CLOCK**
+
+The scale ladder was computed by the first run and reported only pooled — the same
+"computed but not surfaced" failure as §6.2, in a third guise. It is the table that answers
+whether the market is self-similar in the principal's sense, so it is now printed by default
+(structural fix 3).
+
+## 8.1 The excess is FLAT across six scales spanning 13× in clock time
+
+Excess at x = 2.0σ, τ = 20 bars, pooled over phases, with the session bootstrap:
+
+| s (min) | window (min) | excursions | excess | SE | t |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 20 | 3,882 | **+0.0319** | 0.0036 | +8.99 |
+| 2 | 40 | 2,293 | **+0.0335** | 0.0049 | +6.76 |
+| 3 | 60 | 1,717 | **+0.0394** | 0.0050 | +7.93 |
+| 5 | 100 | 1,002 | **+0.0355** | 0.0074 | +4.83 |
+| 8 | 160 | 558 | **+0.0306** | 0.0103 | +2.98 |
+| 13 | 260 | 261 | **+0.0359** | 0.0130 | +2.76 |
+| 20 | 400 | 53 | +0.0157 | 0.0313 | +0.50 |
+
+**+0.031 to +0.039 with no trend, over windows from 20 minutes to 260 minutes.** The only
+departure is s = 20, which has 53 excursions and t = +0.50 — noise. **Higher timeframes work
+exactly as well as lower ones**, which is self-similarity measured rather than assumed.
+
+## 8.2 The speed edge decays in BARS, not in MINUTES — and that is the sharper finding
+
+| s (min) | τ=5 | τ=10 | τ=20 | τ=40 |
+|---:|---|---|---|---|
+| 1 | +0.0731 (5m) | +0.0392 (10m) | +0.0319 (20m) | +0.0290 (40m) |
+| 2 | +0.0750 (10m) | +0.0426 (20m) | +0.0335 (40m) | +0.0311 (80m) |
+| 3 | +0.0790 (15m) | +0.0423 (30m) | +0.0394 (60m) | +0.0343 (120m) |
+| 5 | +0.0738 (25m) | +0.0372 (50m) | +0.0355 (100m) | +0.0320 (200m) |
+| 8 | +0.0641 (40m) | +0.0303 (80m) | +0.0306 (160m) | +0.0294 (320m) |
+| 13 | +0.0752 (65m) | +0.0363 (130m) | +0.0359 (260m) | +0.0359 (520m) |
+| 20 | +0.0754 (100m) | +0.0169 (200m) | +0.0157 (400m) | +0.0157 (800m) |
+
+**Read the τ=5 column: +0.064 to +0.079 from 5 minutes of clock time to 100 minutes.** The edge is
+the same size whether "five bars" means five minutes or an hour and a half. **And the halving from
+τ=5 to τ=10 happens at every scale** — 5→10 minutes at s=1 and 65→130 minutes at s=13, a 13×
+difference in clock time and the same decay.
+
+**The clock-time overlay makes it decisive.** At 10 minutes elapsed, `s=1, τ=10` gives **+0.0392**
+while `s=2, τ=5` gives **+0.0750** — same clock time, nearly double the excess, because what
+matters is **bars elapsed, not minutes elapsed**. At 40 minutes: +0.0290 (s=1, τ=40), +0.0335
+(s=2, τ=20), +0.0641 (s=8, τ=5).
+
+**So "how fast" has no answer in minutes.** The answer is **within about 5 bars of whatever scale
+you are looking at**, and a construction's time stop must be set in bars, not in clock time.
+
+## 8.3 The rarity gradient holds at 5 of 7 scales
+
+| s | x=1.0 | x=1.5 | x=2.0 | x=2.5 | x=3.0 | monotone |
+|---:|---|---|---|---|---|---|
+| 1 | +0.0188 | +0.0249 | +0.0319 | +0.0471 | +0.0645 | **YES** |
+| 2 | +0.0235 | +0.0296 | +0.0335 | +0.0393 | — | **YES** |
+| 3 | +0.0222 | +0.0293 | +0.0394 | +0.0516 | — | **YES** |
+| 5 | +0.0240 | +0.0313 | +0.0355 | +0.0592 | — | **YES** |
+| 8 | +0.0253 | +0.0273 | +0.0306 | +0.0157 | — | no |
+| 13 | +0.0324 | +0.0321 | +0.0359 | +0.0792 | — | **YES** |
+| 20 | +0.0244 | +0.0519 | +0.0157 | — | — | no |
+
+The two failures are the two thinnest cells. **P3 is therefore not an artefact of pooling** — it
+holds independently at five scales.
+
+## 8.4 Three structural fixes, in code rather than in prose
+
+1. **`REQUIRED_OUTPUTS` is a manifest in the runner and `check_outputs` RAISES** before anything
+   is reported. Verified to fire — it names 10 missing outputs on a stub artefact — and to pass on
+   the real one. This is the answer to §6.2 recurring three times: prose in a record does not
+   catch an unwired output, a guard does.
+2. **The SESSION BAND PER ROOT is now in the fixture metadata**, measured at build time, with the
+   reason attached. The build prints it: **28 roots span all 420 minutes and 7 are shorter** —
+   HE and LE 276 minutes (09:31–14:07), ZC/ZL/ZM/ZS/ZW 292–294 (09:31–14:22). A fixed grid drops
+   all seven silently, which is what §6.1 did.
+3. **The scale breakdown prints by default**, because it was computed, not surfaced, and it carries
+   §8.1 and §8.2 — the whole self-similarity result.

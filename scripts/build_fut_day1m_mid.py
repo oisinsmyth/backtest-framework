@@ -160,6 +160,35 @@ def do_build() -> int:
     for r, row in per.iterrows():
         P(f"     {r:>4}{row['rows']:>11,.0f}{row['sessions']:>10,.0f}"
           f"{row['rows_per_session']:>13.1f}          {row['first']} .. {row['last']}")
+    # STRUCTURAL FIX: the SESSION BAND PER ROOT goes in the metadata.
+    # Twice now a reader has assumed a fixed 420-minute grid and silently discarded every root
+    # whose session is shorter -- ZW trades roughly 09:31-14:21, and 291 minutes is its TRADING
+    # DAY, not a gap. The day5m fixture recorded the same lesson and it was not carried over.
+    # So the band is measured here and any reader can take it rather than rediscover it.
+    cov = {}
+    for r, gg in G.groupby("root"):
+        ns = gg["day"].nunique()
+        occ = gg.groupby("bar").size() / ns
+        band = [int(b) for b in range(N_MIN) if occ.get(b, 0.0) > 0.5]
+        run = []
+        if band:
+            arr = np.array(band)
+            brk = np.flatnonzero(np.diff(arr) != 1)
+            st = np.concatenate(([0], brk + 1))
+            sp = np.concatenate((brk + 1, [len(arr)]))
+            i = int(np.argmax(sp - st))
+            run = [int(arr[st[i]]), int(arr[sp[i] - 1])]
+        cov[r] = {"band_bars": run, "band_minutes": len(band),
+                  "band_et": ([f"{(DAY_LO+run[0])//60:02d}:{(DAY_LO+run[0])%60:02d}",
+                               f"{(DAY_LO+run[1]+1)//60:02d}:{(DAY_LO+run[1]+1)%60:02d}"]
+                              if run else []),
+                  "sessions": int(ns)}
+    short = sorted((r, c["band_minutes"]) for r, c in cov.items() if c["band_minutes"] < 400)
+    P(f"\n  SESSION BANDS: {len(cov) - len(short)} roots span ~all {N_MIN} minutes; "
+      f"{len(short)} are SHORTER and a fixed grid would silently drop them:")
+    for r, n in short:
+        P(f"     {r:>4}  {n:>3} minutes  {'-'.join(cov[r]['band_et'])}")
+
     meta = {"built_utc": pd.Timestamp.now("UTC").strftime("%Y-%m-%dT%H:%M:%SZ"),
             "builder": "scripts/build_fut_day1m_mid.py",
             "price": "quoted mid (bid+ask)/2 from bbo-1m; nobody trades at it, so it carries no "
@@ -173,6 +202,13 @@ def do_build() -> int:
             "sentinel_rule": "bid/ask == INT64_MAX is Databento's ABSENT price and PASSES a `> 0` "
                              "test; filtered explicitly (D507)",
             "flags_carried": ["same_front", "present"],
+            "coverage": cov,
+            "why_coverage": "A ROOT'S SESSION BAND IS ITS OWN. Two readers have now assumed a "
+                            "fixed 420-minute grid and silently discarded every root whose "
+                            "session is shorter -- ZW trades ~09:31-14:21 and 291 minutes is "
+                            "its TRADING DAY, not a gap, while NQ and ES carry all 420 with one "
+                            "unbroken run. Take coverage[root]['band_bars'], or sample inside "
+                            "each session's own longest contiguous run; never assume the grid.",
             "roots": sorted(G["root"].unique()),
             "rows": int(len(G)), "sessions": int(G.groupby(["root", "day"]).ngroups),
             "span": [str(G["day"].min()), str(G["day"].max())],
