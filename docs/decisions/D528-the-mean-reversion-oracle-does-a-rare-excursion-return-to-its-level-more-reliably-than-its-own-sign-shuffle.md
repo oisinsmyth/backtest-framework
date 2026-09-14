@@ -265,3 +265,82 @@ vectorise over the shuffle axis.
 No P&L, no cost, no position, no hurdle P, no component line, no construction. Nothing enters
 `FINDINGS.md`, `RULES.md`, `COMPONENTS_PROP.md` or either book on this record's authority (R8, R15).
 **The reserved slice stays unread whatever the outcome** — it belongs to the causal step.
+
+---
+
+# 16. AMENDMENT, 2026-09-14 — **§3's level saturates the statistic and is replaced. The primary becomes a HELD level.**
+
+**The first run exposed a defect in §3, not in the data.** With the level defined as a
+least-squares line over the **whole** window, the residual sums to zero **by construction** and
+must therefore cross the level. `P(return)` came out at **0.9077 on a Gaussian random walk** —
+**9.2% of headroom for any effect to live in**, and the measured excess of +0.034 was most of what
+was available to find.
+
+## 16.1 The centred SMA was tried and makes it WORSE
+
+The principal proposed a centred SMA as the level. Measured on 8,000 random-walk windows:
+
+| level | P(return) on a random walk | headroom |
+|---|---:|---:|
+| §3's linear, whole window | 0.9077 | 9.2% |
+| **centred SMA w=3** | **0.9988** | **0.1%** |
+| centred SMA w=5 | 0.9964 | 0.4% |
+| centred SMA w=9 | 0.9922 | 0.8% |
+| centred SMA w=15 | 0.9863 | 1.4% |
+| centred SMA w=21 | 0.9798 | 2.0% |
+
+**A centred SMA is a high-pass filter**, so `price − CSMA` *is* the high-frequency component and it
+crosses zero roughly every `w/2` bars. The narrower the window the more certain the return. At
+w = 3 there is **0.1%** of headroom left. Confirmed on NQ and ES at s=5 (0.9976 and 0.9952).
+
+**The saturation was never about smoothing. It is about fitting the level to the same data the
+return is measured on.**
+
+## 16.2 The replacement: a level fitted on the FIRST HALF and HELD
+
+| level | random walk | NQ | ES | headroom |
+|---|---:|---:|---:|---:|
+| **HALF-LINE** — line on bars [0, H), slope carried forward | 0.3712 | 0.3315 | 0.3410 | **63–67%** |
+| **HALF-FLAT** — mean of bars [0, H), held flat | 0.4635 | 0.3563 | 0.3917 | 54–64% |
+| HALF-FLAT (median) | 0.4598 | 0.3688 | 0.4108 | 53–63% |
+| HALF-SMOOTH (last-5 mean, held) | 0.4712 | 0.3630 | 0.3797 | 53–64% |
+
+**A 7× increase in headroom**, because the second half carries no constraint to return — price may
+drift away and never come back.
+
+**THE AMENDED DESIGN, on the principal's ruling:**
+
+- **PRIMARY LEVEL: `HALF-LINE`** — least-squares line on the window's first half `[0, H)` with the
+  slope **carried forward** over `[H, N]`. Chosen because it **adjusts for drift**, which §1's model
+  requires, and it has the most headroom and the most excursions.
+- **`HALF-FLAT` is reported beside it** — the mean of the first half held flat, which is §1's
+  "settled price" stated literally. The drift question is then answered by measurement rather than
+  by choosing now.
+- **`σ` is the residual standard deviation over the ESTIMATION HALF only**, and **excursions are
+  counted only from bar `H` onward.** The first half is the estimation window and nothing is
+  measured in it.
+- The original **whole-window linear level is retained as a third row**, so the amended and the
+  original numbers are directly comparable.
+- Everything else is unchanged: the sign-shuffle null, the x ladder, the τ survival curve, the
+  three-way outcome, A1/A2, the scale ladder, the reserved slice.
+
+## 16.3 What this costs in multiplicity, stated rather than glossed
+
+**The in-sample window has already been read once** — with the §3 level, giving a primary of
++0.0215 at t = +1.47 (UNRESOLVED), which **stands as reported**. Re-reading it with a held level is
+a **second look**, and the amended primary is therefore **exploratory relative to the original
+pre-registration.**
+
+**What limits the damage is how the new level was chosen: on a NULL, not on the outcome.** The four
+candidates were ranked by `P(return)` **headroom on a Gaussian random walk** — a property of the
+construction, not of the data. Real `P(return)` was inspected for NQ and ES to confirm the headroom
+survived on real prices, but **the excess over the sign shuffle — the actual statistic — was not
+computed for any candidate before this amendment.** So the statistic itself is unseen; the level was
+selected on arithmetic.
+
+**And one warning is on the record before the run.** Under a held level the real roots return
+**less** often than a Gaussian walk (NQ 0.356, ES 0.392 against 0.464), which is the *opposite*
+direction from mean reversion and consistent with D526 finding the index roots persistent. A
+Gaussian walk is not the null, so this is not a result — **but the +0.034 excess measured under the
+saturated level may not survive, and possibly not even in sign.** That is recorded now so it cannot
+be presented as a surprise afterwards.
