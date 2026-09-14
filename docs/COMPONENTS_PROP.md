@@ -303,3 +303,65 @@ gross +$19.68 a trade → FULL.** **That slice is now spent and may never be re-
 3. **C-d passes at $233 pooled and reads $386 in 2026**, against a $500 cap. One MNQ is now
    **1.10× the account's notional** (0.18× in 2016) — see D504 §4. The margin is thinning, and it
    is a property of the price level, not of the construction.
+
+---
+
+## AMENDMENT to ENTRY #2, 2026-09-14 — **the crossing assumption is optimistic by 2.4×, because the arm fills at the worst minute of the day. The entry stands.**
+
+*[D527](decisions/D527-the-arm-fills-at-the-worst-minute-of-the-day-and-its-crossing-assumption-is-optimistic-by-two-and-a-half-times.md).
+Nothing about the construction changes and no code was touched; this corrects the COST LINE the row
+is scored under. Raised by the micro-spread census of 2026-09-13, which found MNQ's quoted spread
+has a median of 1.00 tick and a **mean of 1.55**, with only 56.8 % of trades seeing a one-tick market.*
+
+**The arm does not fill at an average moment.** `d491_conditional_hold` fills at the OPEN of an hourly
+segment and is forced flat at the CLOSE of h15, so every fill lands at `hh:00` ET or at 15:59. Traced
+over the in-sample window with a copy of `simulate` asserted **bit-identical** to the committed one
+(1,876 sessions, 1,908 round trips):
+
+| | share of entries | measured spread |
+|---|---:|---:|
+| **10:00** | **66.6 %** | **3.66 ticks** — one-tick only **19.5 %** of the time |
+| 11:00 | 9.2 % | 1.79 |
+| 12:00 | 6.8 % | 1.49 |
+| 13:00 | 3.8 % | 1.52 |
+| 14:00 | 1.9 % | 3.35 |
+| 15:00 | 11.7 % | 1.46 |
+| day-session baseline | — | 1.61 |
+| the forced flat at 15:59 (**75 % of exits**) | — | **1.44** — the day's *best* moment |
+
+**Two-thirds of entries land on the single worst spread minute of the session, and that is
+structural, not luck**: the arm decides at h09's close and fills at h10's open, and two-thirds of the
+time the signal already agrees at 09:59 so it enters immediately. 10:00 and 14:00 are the two
+scheduled-announcement hours — a plausible mechanism, observed rather than tested.
+
+### The corrected cost line
+
+| | ledger | measured |
+|---|---:|---:|
+| round-trip crossing | 1.009 ticks | **2.411 ticks** |
+| round trip | **$3.50** | **$4.21** (+20.3 %) |
+| net per trade | $10.11 | $9.40 (−7.0 %) |
+| in-sample net Sharpe (2016-2023) | **+0.724** | **+0.661** |
+| in-sample total | $15,423 | $14,086 |
+
+**C-a's bar is 0.5 and the entry clears at the corrected cost**, which is why this is an amendment and
+not a retirement. The Sharpes above are the **in-sample window alone** and are therefore not the row's
+headline **+0.698**, which is scored 2016-2026 and includes the spent forward slice; that slice was
+**not re-read** here and the row's headline figure is **not restated**. A full re-score at the
+corrected cost would have to read it, and must wait for a reason better than this.
+
+### What the correction does NOT establish, and the bias runs in the arm's favour
+
+**tbbo spans 2025-09-11 → 2026-09-11; there is no quote data at the arm's historical entries.** This
+prices the arm **today**; it does not reprice the backtest. And the error is one-sided: NQ was ~4,000
+in 2016 and is ~27,000 now against a **fixed $0.50 tick**, so the tick was relatively **~7× coarser**
+then, and a coarser tick locks a market at one tick more often. **The historical spread in ticks was
+probably tighter than measured**, so $4.21 is closer to an upper bound on the in-sample cost than an
+estimate of it. It is the right number for **deployment**, which is the decision it bears on — the
+same mechanism as [one micro has grown into the prop barrier], where the contract's relative
+coarseness moved underneath a fixed assumption.
+
+**An obvious mitigation is NOT taken here:** entering a few minutes after the hour, or skipping h10,
+would avoid the worst quote. That is a **different construction**, and this entry is admitted and
+frozen — it would need its own pre-registration, not a quiet edit to a component already in the
+ledger.

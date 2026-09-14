@@ -183,6 +183,41 @@ flat-map side from **git** rather than `temp/`, so it survives `temp/` being del
 
 ---
 
+## D527 — THE ADMITTED ARM FILLS AT THE WORST MINUTE OF THE DAY; ITS COST LINE IS AMENDED, 2026-09-14
+
+The loose end from the micro-spread census, checked on the principal's instruction. **The arm's
+1.009-tick crossing is a market-wide average and the arm does not trade at an average moment.**
+It decides at h09's close and fills at h10's open, and two thirds of the time the signal already
+agrees at 09:59 — so **66.6% of entries land at 10:00, where MNQ averages 3.66 ticks and is one tick
+only 19.5% of the time**, against a day-session baseline of 1.61. **75% of exits are the forced flat
+at 15:59, the day's BEST quote (1.44).** The arm systematically enters at the worst moment and exits
+at the best, and the concentration is structural, not luck.
+
+    round-trip crossing   1.009 tk assumed -> 2.411 measured
+    round trip            $3.50            -> $4.21   (+20.3%)
+    in-sample net Sharpe  +0.724           -> +0.661    (C-a's bar is 0.5)
+
+**THE ENTRY STANDS** — amended, not retired; see the amendment at the foot of `COMPONENTS_PROP.md`.
+**The row's headline +0.698 is NOT restated**, because a full re-score would have to read the spent
+2024+ slice and that needs a better reason than this. Nothing was touched in the arm's code: the
+instrumented copy of `simulate` is asserted bit-identical (1,876 sessions, 1,908 trips, $15,423 —
+D508's own figure).
+
+**THE BIAS RUNS IN THE ARM'S FAVOUR and the record says so.** tbbo is 2025-26 and the window is
+2016-23; NQ went 4,000 -> 27,000 against a FIXED $0.50 tick, so the tick was ~7x coarser then and a
+coarser tick locks at one tick more often. **$4.21 is nearer an upper bound on the in-sample cost
+than an estimate of it — and it is the right number for DEPLOYMENT.**
+
+**THE GENERALISABLE POINT, and the reason this matters beyond one row:** gross was 3.9x the assumed
+cost so the arm absorbed a 2.4x error. **A construction whose gross is 1.5x its assumed cost would
+have been reported viable and been dead**, and nothing in the prior process would have caught it.
+Measure the spread at the strategy's OWN fill timestamps.
+
+**Not taken:** entering a few minutes after the hour, or skipping h10, would avoid the worst quote —
+but that is a DIFFERENT construction and this entry is frozen. It needs its own pre-registration.
+
+---
+
 ## THE SEARCH FOR COMPONENT #2 IS OPEN — three Stage 0s run, 2026-09-14
 
 The principal opened it with a framing: **tell a STORY** — a mechanical account of what is happening
