@@ -1,0 +1,15 @@
+ONE in-sample read. s=5, phase 0, x=2.0 sigma, tau=20, 35 roots, 50 shuffles
+window 2025-09-11 .. 2026-04-10
+
+  variant                  windows   exc    P(ret)   null    EXCESS   mean P&L (sig)  (ticks)  drift cost
+  V0 no filter              17,472 16,152  0.1679  0.1706  -0.0027     -0.3680       -4.33
+  V1 A2 only (causal)        8,786  8,071  0.1632  0.1679  -0.0047     -0.3587       -7.85
+  V2 A1+A2 (current)           468    377  0.2891  0.1842  +0.1049 *   +0.2612       +8.18
+  V3 A1-slope + A2             610    460  0.2783  0.1715  +0.1068 *   +0.0162       +4.46
+  V4 A1-sigma + A2           6,755  6,356  0.1685  0.1716  -0.0031     -0.2835       -6.68
+  C1 A2 + low drift          4,412  3,814  0.2014  0.1702  +0.0312 *   -0.4442      -10.03
+  C2 A2 + many crossings     5,067  4,755  0.1722  0.1690  +0.0033     -0.4075       -8.42
+  C3 A2 + both causal        2,407  2,149  0.2145  0.1719  +0.0426 *   -0.4938      -10.60
+
+  * marks an excess beyond 2 SE. 'mean P&L' is REALISED and INCLUDES the drift term
+  -slope*d, which the sigma-unit expectancy of +0.5683 ignored.

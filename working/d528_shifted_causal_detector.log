@@ -1,0 +1,24 @@
+THE SHIFTED DETECTOR. s=5, x=2.0 sigma, tau=20, 35 roots, 50 shuffles, trade-correct precedence
+  structure: history [0,20) -> level [10,20) -> trade [20,31) -> track 20
+  window 2025-09-11 .. 2026-04-10
+
+1  THE PREMISE -- does A1-slope-passing PERSIST from one window to the next?
+   root   windows   P(pass)   P(pass | previous passed)   lift
+     6B       713   0.0617          0.1714            +0.1097
+     6A       716   0.0726          0.1429            +0.0702
+    BTC       705   0.0638          0.1316            +0.0677
+     NQ       705   0.0936          0.1538            +0.0602
+    RTY       715   0.0615          0.1111            +0.0496
+     TN       710   0.0606          0.1081            +0.0475
+   ... 25 roots.  MEAN P(pass) 0.0665   MEAN P(pass|prev) 0.0811   MEAN LIFT +0.0146
+   A lift near zero means the filter does not persist and the shift cannot recover it.
+
+2  THE SHIFTED DETECTOR vs its sign-shuffle null, and vs the non-causal original
+   shifted A1-slope + lattice   windows     708  exc    641  P(ret) 0.1794  null 0.1625  EXCESS +0.0169 (SE 0.0153, t +1.1)
+                                mean realised P&L +17.90 ticks, median +6.78
+   no filter                    windows  10,877  exc  9,952  P(ret) 0.1586  null 0.1621  EXCESS -0.0035 (SE 0.0037, t -1.0)
+                                mean realised P&L +19.89 ticks, median +7.66
+
+   BENCHMARKS from the authorised read, same precedence:
+     non-causal A1+A2   P(ret) 0.2891 null 0.1842 excess +0.1049   P&L +8.18 ticks
+     no filter          P(ret) 0.1679 null 0.1706 excess -0.0027   P&L -4.33 ticks
