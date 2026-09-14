@@ -1,0 +1,67 @@
+IS THE DETECTOR FINDING RANGES, OR FINDING VOLATILITY EXPANSION?
+  micro universe, 8 roots, 147 sessions, s=1
+  pool 717 candidates; the causal `traverse` classifier selects 109
+
+==============================================================================================================
+1  WHAT THE DETECTOR IS ACTUALLY SELECTING  (median of each feature)
+
+    feature       meaning                                    pool    traverse-selected
+    vol_ratio     window sd / 60-bar baseline sd; <1 = quiet  0.913              1.161
+    jump          entry bar |r| / window median |r|           2.700              2.190
+    frac_last     share of |y| built by the LAST bar          0.760              0.580
+    sig_ratio     sd(first half) / sd(second half)            0.774              0.768
+
+    share of pool entries where ONE bar built >50% of the excursion: 82.3%
+    ... and >80%: 44.6%
+    share where the entry bar is >3x the window's median bar: 41.0%
+    share where the window is QUIETER than its 60-bar baseline: 63.3%
+
+==============================================================================================================
+2  DO OUTCOMES VARY WITH THEM? Pool split into quartiles of each feature.
+
+    vol_ratio   quartile cuts at 0.722 / 0.913 / 1.101
+      quartile      n    P(tgt)   win%    gross $    net $   mean bars
+      Q1          179   13.4%  21.8%     -0.07    -4.84        3.4
+      Q2          179   12.8%  22.3%     +2.16    -2.56        4.8
+      Q3          179   10.1%  17.9%     -3.69    -8.49        5.5
+      Q4          180    8.3%  15.0%     -3.24    -7.80        4.7
+
+    jump   quartile cuts at 1.778 / 2.700 / 3.769
+      quartile      n    P(tgt)   win%    gross $    net $   mean bars
+      Q1          179   12.8%  17.9%     -3.65    -8.41        6.3
+      Q2          179   11.7%  17.3%     -2.93    -7.62        4.7
+      Q3          178   13.5%  21.3%     +0.91    -3.81        3.9
+      Q4          181    6.6%  20.4%     +0.81    -3.88        3.6
+
+    frac_last   quartile cuts at 0.580 / 0.760 / 0.980
+      quartile      n    P(tgt)   win%    gross $    net $   mean bars
+      Q1          179   12.8%  20.1%     -1.42    -6.12        6.4
+      Q2          179   10.6%  15.6%     -6.19   -10.95        4.2
+      Q3          179   11.2%  21.2%     +0.29    -4.41        4.0
+      Q4          180   10.0%  20.0%     +2.45    -2.25        4.0
+
+    sig_ratio   quartile cuts at 0.542 / 0.774 / 1.103
+      quartile      n    P(tgt)   win%    gross $    net $   mean bars
+      Q1          179   10.1%  22.9%     +1.24    -3.48        4.5
+      Q2          179    8.9%  14.5%     -2.76    -7.48        3.4
+      Q3          179   12.8%  22.3%     +0.46    -4.23        5.3
+      Q4          180   12.8%  17.2%     -3.77    -8.50        5.3
+
+==============================================================================================================
+3  FOUR REPAIRS, each against the RANDOM-MATCHED control (real data, randomised selection)
+
+    repair                  n    P(tgt)   win%    gross $    net $  | matched p5    p50    p95  | verdict
+    baseline (no repair)     717   11.2%  19.2%     -1.21    -5.93 |     +nan   +nan   +nan  | inside
+    traverse only            109   11.0%  21.1%     +3.00    -1.66 |    -5.34  -1.29  +3.12  | inside
+    R1 sigma-agreement       546   10.6%  18.1%     -2.03    -6.75 |    -2.19  -1.14  -0.18  | inside
+    R2 not-quiet             263    8.4%  16.0%     -2.96    -7.54 |    -3.42  -1.16  +1.23  | inside
+    R3 no-jump               423   12.8%  18.9%     -2.72    -7.42 |    -2.60  -1.25  +0.21  | below p5
+    R4 gradual excursion     127   13.4%  19.7%     -2.45    -7.19 |    -4.81  -1.17  +3.02  | inside
+    R2+R3                    171    7.6%  15.8%     -3.56    -8.20 |    -4.00  -1.14  +1.71  | inside
+    R3+R4                    124   13.7%  19.4%     -2.52    -7.29 |    -5.23  -1.44  +2.86  | inside
+    R1+R2+R3+R4               44    6.8%  13.6%     -3.77    -8.32 |    -7.53  -1.38  +6.20  | inside
+    traverse + R3+R4          39   10.3%  20.5%     +2.16    -2.46 |    -8.40  -1.81  +5.68  | inside
+
+  The control is the ADDENDUM 9 one: real data, random count-matched selection from the
+  same pool. Exploratory -- ten filters were tried, so a single p95 crossing here is one
+  look among ten and settles nothing on its own.

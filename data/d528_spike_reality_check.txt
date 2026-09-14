@@ -1,0 +1,28 @@
+ARE THE SPIKE ENTRIES REAL PRICES, OR QUOTE ARTEFACTS?
+  detector runs on the 1-minute quoted MID; this checks it against 5-minute TRADE OHLC
+  8 roots, 147 sessions, in sample only
+
+  pool 717 candidates; 5-minute trade bars loaded 98,163
+
+========================================================================================================
+1  DID A TRADE EVER PRINT THERE? mid vs the [low, high] of its own 5-minute trade bar
+
+    cell                        n   OUTSIDE the trade range   median tk   p90 tk   5m volume   spread tk
+    the whole pool             717                   2.0%        2.25     3.50       1,614        1.78
+    traverse (causal)          109                   0.9%        3.50     3.50       2,608        1.71
+    sudden only                320                   1.9%        2.50     4.75       1,650        1.79
+    quiet + sudden             196                   3.1%        2.50     4.75       1,554        1.86
+    quiet + sudden + jump      130                   3.8%        2.00     3.30       1,608        1.95
+    GRADUAL (the opposite)     127                   3.9%        2.00     3.10       1,419        1.57
+
+========================================================================================================
+2  THE BASE RATE on minutes the detector never chose (same sessions, random bars)
+
+    random minutes           3,848                   2.9%        1.00     4.95       1,068        1.41
+
+    the pool is 2.0% outside against a base rate of 2.9% on unchosen minutes.
+
+  READING IT. A mid can legitimately sit outside a thin 5-minute trade range, so the
+  LEVEL of `outside` means little -- the CONTRASTS do. If the spike cells are outside far
+  more often than the pool and than unchosen minutes, the cell is quote artefact and its
+  apparent edge is unfillable. If they are not, suddenness is buying real prices.
