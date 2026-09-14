@@ -249,8 +249,15 @@ def perf(taken, slot_minutes, n_slots, total_minutes, fill="g_real_tk"):
     ud = np.unique(days)
     dg = np.array([gross[days == u].sum() for u in ud])
     dn = np.array([net[days == u].sum() for u in ud])
-    # every session in the window is a return observation, including the flat ones
-    nsess = max(total_minutes // 420, 1)
+    # Every session in the window is a return observation, including the flat ones -- a book that
+    # trades on 20 of 147 sessions has 127 zero-return days and its Sharpe must carry them.
+    # GUARD THE DOOR: if the window implies fewer sessions than the book actually traded, the
+    # denominator is wrong and every Sharpe below it is wrong. Raise rather than fall back.
+    nsess = total_minutes // 420
+    if nsess < len(ud):
+        raise ValueError(
+            f"total_minutes={total_minutes} implies {nsess} sessions but the book traded on "
+            f"{len(ud)} distinct days -- the Sharpe denominator would be wrong")
     def sharpe(dv):
         full = np.zeros(nsess)
         full[:len(dv)] = dv                      # placement is irrelevant to mean/sd
