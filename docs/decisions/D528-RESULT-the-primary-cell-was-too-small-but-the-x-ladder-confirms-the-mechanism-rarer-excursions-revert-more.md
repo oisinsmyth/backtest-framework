@@ -239,3 +239,89 @@ holds independently at five scales.
    all seven silently, which is what §6.1 did.
 3. **The scale breakdown prints by default**, because it was computed, not surfaced, and it carries
    §8.1 and §8.2 — the whole self-similarity result.
+
+---
+
+# 9. RE-RUN ON THE AMENDED (HELD) LEVEL — **the primary now CLEARS at t = +6.50, and two of §0–§8's conclusions are REVERSED**
+
+Spec amendment `55e7a4e`, run 3.2 min, 16 checks pass. Level = **`half_line`**, fitted on the
+window's first half `[0, H)` with the slope carried forward; excursions counted only from bar `H`;
+σ from the estimation half only. `half_flat` and the original `linear` are computed beside it.
+
+## 9.1 The primary clears
+
+| | |
+|---|---|
+| **s=5, phase 0, x=2.0σ, τ=N=20** | **excess +0.1673**, clustered SE 0.0258, **t = +6.50** |
+| | 637 excursions over 346 root-sessions |
+
+**The same cell that read +0.0215 at t = +1.47 under the saturated level reads +0.1673 at
+t = +6.50 under the held one** — nearly 8× the excess, on twice the excursions, from the same data.
+**My sign warning did not materialise; it went strongly the other way.**
+
+## 9.2 The three levels side by side — and the drift adjustment is worth 4×
+
+| level | P(ret) obs | null | excess | share of available headroom |
+|---|---:|---:|---:|---:|
+| **`half_line`** (primary) | **0.5133** | 0.3461 | **+0.1673** | 25.6% |
+| `half_flat` | 0.4223 | 0.3793 | +0.0430 | 6.9% |
+| `linear` (original §3) | 0.9286 | 0.9070 | +0.0215 | 23.2% |
+
+**`half_line` beats `half_flat` by 3.9×.** The principal chose the drifting level over the flat one
+and the measurement vindicates it: allowing the level to slope is not a refinement, it is most of
+the effect. And note `linear` and `half_line` use a *similar fraction* of their headroom (23% vs
+26%) — the old level was not measuring something different, it simply had almost no room to
+measure it in.
+
+## 9.3 REVERSED — the "speed edge" was an artefact of the saturation
+
+| τ (bars) | P(ret) obs | null | excess |
+|---:|---:|---:|---:|
+| 5 | 0.3134 | 0.1863 | **+0.1272** |
+| 10 | 0.4662 | 0.2814 | +0.1849 |
+| 20 | 0.5953 | 0.3570 | +0.2383 |
+| 40 | 0.6507 | 0.4024 | **+0.2482** |
+
+**The excess GROWS with time**, where §3 reported it largest at τ=5 and decaying. Under a
+saturated level both observed and null were near 1 by τ=10, so the excess had nowhere to go but
+down. **§3's conclusion — "a construction should have a short time stop" — is withdrawn. The
+opposite holds: the advantage accumulates to at least two window lengths.**
+
+## 9.4 REVERSED — the x ladder is now nearly FLAT, and x no longer means rarity
+
+| x (σ) | excursions | excess | SE | t |
+|---:|---:|---:|---:|---:|
+| 1.0 | 29,773 | +0.2233 | 0.0033 | +68.65 |
+| 1.5 | 24,723 | +0.2336 | 0.0040 | +58.08 |
+| 2.0 | 19,793 | +0.2383 | 0.0047 | +50.41 |
+| 2.5 | 15,432 | +0.2401 | 0.0056 | +42.79 |
+| 3.0 | 11,683 | **+0.2379** | 0.0065 | +36.33 |
+
+**It rises to x=2.5 and then flattens** — not the clean monotone of §1. And the reason is
+mechanical: **σ is now estimated on the first half, so the second half routinely exceeds it.**
+There are **11,683 excursions at 3σ against 105 under the whole-window level.** A 3σ move from a
+held level is no longer *rare*; x measures **distance from the level**, not rarity.
+
+**So the answer to §11's split test changes with it.** The excess is close to independent of x
+from 1.5σ upward — **you do not need to wait for an extreme excursion**, which is a more useful
+finding than the original one but a different one.
+
+## 9.5 And the construction is now CAUSAL in its level, which changes what it is
+
+At the moment of an excursion (bar ≥ H), everything used — the level, its slope, and σ — comes from
+bars `[0, H)`, **which are in the past.** The return is then measured forward. **So the label is no
+longer an oracle quantity; it is computable in real time.**
+
+**One element is still not causal: the A1 admission test**, which compares the first and second
+halves of the window and therefore looks ahead. **A causal version needs an admission rule built
+from the estimation half alone** — that is the next design question, and it is exactly the bridge to
+the causal step this record was meant to prepare.
+
+## 9.6 What this costs, stated
+
+**This is a SECOND READ of the in-sample window.** §0–§8's numbers stand as reported under the old
+level; these are the amended ones. Per amendment §16.3 the level was chosen on **null headroom**, a
+property of the construction — but the window has now been read twice and **the amended primary is
+exploratory relative to the original pre-registration.** The reserved slice
+(2026-04-11 → 2026-09-09) remains unread and is now carrying both jobs: confirming this and testing
+whatever causal admission rule replaces A1.

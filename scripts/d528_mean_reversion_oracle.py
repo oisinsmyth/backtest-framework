@@ -122,6 +122,47 @@ def detrend_ext(Pm: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     return y, b, sig
 
 
+H_EST = (N + 1) // 2            # the estimation half: bars [0, H_EST)
+LEVELS = ("half_line", "half_flat", "linear")      # primary first (amendment SS16)
+
+
+def level_ext(Pm: np.ndarray, mode: str) -> tuple[np.ndarray, np.ndarray, int]:
+    """Residual, sigma, and the FIRST BAR at which an excursion may be counted.
+
+    AMENDMENT SS16.  `linear` -- the original spec -- fits a line over the WHOLE window, so the
+    residual sums to zero BY CONSTRUCTION and must cross the level: P(return) is 0.9077 on a
+    random walk, leaving 9.2% of headroom.  A centred SMA is WORSE, not better: it is a
+    high-pass filter, so the residual crosses zero every w/2 bars and w=3 leaves 0.1%.
+
+    The fix is to fit the level on data the return is NOT measured on:
+      half_line   line on bars [0, H_EST), slope CARRIED FORWARD -- the PRIMARY, because it
+                  adjusts for drift, which the model requires. 63-67% headroom.
+      half_flat   mean of bars [0, H_EST) held FLAT -- the "settled price" literally. 54-64%.
+    Sigma is the residual sd over the ESTIMATION HALF only, and nothing is measured inside it."""
+    T = Pm.shape[0]
+    t = np.arange(T, dtype=np.float64)
+    if mode == "linear":
+        tw = t[:N + 1]
+        tc = tw - tw.mean()
+        W = Pm[:N + 1]
+        b = (tc[:, None] * (W - W.mean(0))).sum(0) / (tc * tc).sum()
+        a = W.mean(0) - b * tw.mean()
+        y = Pm - (a[None, :] + b[None, :] * t[:, None])
+        return y, y[:N + 1].std(0, ddof=1), 0
+    W = Pm[:H_EST]
+    if mode == "half_line":
+        tw = t[:H_EST]
+        tc = tw - tw.mean()
+        b = (tc[:, None] * (W - W.mean(0))).sum(0) / (tc * tc).sum()
+        a = W.mean(0) - b * tw.mean()
+        y = Pm - (a[None, :] + b[None, :] * t[:, None])
+    elif mode == "half_flat":
+        y = Pm - W.mean(0)[None, :]
+    else:
+        raise GateError(f"[LEVEL] unknown level mode {mode!r}")
+    return y, y[:H_EST].std(0, ddof=1), H_EST
+
+
 def _next_true(C: np.ndarray) -> np.ndarray:
     """nxt[j, m] = smallest j' >= j with C[j', m], else BIG. One reverse accumulate."""
     T = C.shape[0]
@@ -131,7 +172,7 @@ def _next_true(C: np.ndarray) -> np.ndarray:
 
 
 def outcomes(y: np.ndarray, sig: np.ndarray, valid: np.ndarray, x: float,
-             tol: np.ndarray) -> dict:
+             tol: np.ndarray, lo: int = 0) -> dict:
     """Three-way outcome for every EXCURSION RUN, at every tau. y is (T, M).
 
     An excursion is the FIRST bar of a run beyond +/- x*sigma inside the window. It RETURNS when
@@ -142,8 +183,10 @@ def outcomes(y: np.ndarray, sig: np.ndarray, valid: np.ndarray, x: float,
     thr = (x * sig)[None, :]
     up = (y >= thr) & valid
     dn = (y <= -thr) & valid
+    # `lo` is the first bar at which an excursion may be counted. For a HELD level it is H_EST:
+    # the estimation half supplies the level and sigma, and nothing is measured inside it.
     inwin = np.zeros((T, 1), bool)
-    inwin[:N + 1] = True
+    inwin[lo:N + 1] = True
     up_w, dn_w = up & inwin, dn & inwin
     # first bar of each run
     up_start = up_w & ~np.vstack([np.zeros((1, M), bool), up_w[:-1]])
@@ -357,32 +400,36 @@ def one_cell(Pm, valid, tick, rng, n_shuf, sid=None):
     M = Pm.shape[1]
     if M == 0:
         return None, adm
-    y, b, sig = detrend_ext(Pm)
     tol = np.full(M, tick)
-    obs = {"cross": crossings(y), "sigma": sig, "slope": b,
-           "W": {}, "trav": {}, "cond": {}}
-    for k in K_ENV:
-        obs["W"][k] = 2.0 * k * sig / tick                 # range width in TICKS
-        obs["trav"][k] = traverses(y, sig, k, tol)
-    obs["per_session"] = {}
-    for x in X_EXC:
-        oc = outcomes(y, sig, valid, x, tol)
-        obs["cond"][x] = tally(oc, M)
-        if sid is not None:
-            # per-session (returned, total) at the primary horizon, for the block bootstrap
-            it = TAUS.index(PRIMARY["tau"])
-            ret = oc["d_ret"] <= TAUS[it]
-            sess = sid[oc["col"]] if len(oc["col"]) else np.zeros(0, np.int64)
-            ns = int(sid.max()) + 1 if M else 0
-            obs["per_session"][x] = (
-                np.bincount(sess, weights=ret.astype(np.float64), minlength=ns),
-                np.bincount(sess, minlength=ns))
+    # AMENDMENT SS16: every level is computed, PRIMARY FIRST. The whole-window `linear` level is
+    # retained so the amended and the original numbers are directly comparable.
+    obs = {mode: {"cond": {}, "per_session": {}} for mode in LEVELS}
+    ylv = {}
+    for mode in LEVELS:
+        y, sig, lo = level_ext(Pm, mode)
+        ylv[mode] = (y, sig, lo)
+        o = obs[mode]
+        o["sigma_med"] = float(np.median(sig[sig > 0])) if (sig > 0).any() else 0.0
+        o["cross"] = crossings(y)
+        o["W"] = {k: 2.0 * k * sig / tick for k in K_ENV}
+        o["trav"] = {k: traverses(y, sig, k, tol) for k in K_ENV}
+        for x in X_EXC:
+            oc = outcomes(y, sig, valid, x, tol, lo=lo)
+            o["cond"][x] = tally(oc, M)
+            if sid is not None:
+                it = TAUS.index(PRIMARY["tau"])
+                ret = oc["d_ret"] <= TAUS[it]
+                sess = sid[oc["col"]] if len(oc["col"]) else np.zeros(0, np.int64)
+                ns = int(sid.max()) + 1 if M else 0
+                o["per_session"][x] = (
+                    np.bincount(sess, weights=ret.astype(np.float64), minlength=ns),
+                    np.bincount(sess, minlength=ns))
 
     # ---- the null: sign shuffle of the window's own returns, EXTENDED segment included -------
     r = np.diff(Pm, axis=0)
-    nullc = np.zeros(n_shuf, np.int64)
-    ncond = {x: np.zeros((len(TAUS), 3), np.int64) for x in X_EXC}
-    step = max(1, 4_000_000 // (Pm.shape[0] * max(M, 1)))
+    nullc = {mode: np.zeros(n_shuf, np.int64) for mode in LEVELS}
+    ncond = {mode: {x: np.zeros((len(TAUS), 3), np.int64) for x in X_EXC} for mode in LEVELS}
+    step = max(1, 2_000_000 // (Pm.shape[0] * max(M, 1)))
     done = 0
     while done < n_shuf:
         B = min(step, n_shuf - done)
@@ -392,11 +439,12 @@ def one_cell(Pm, valid, tick, rng, n_shuf, sid=None):
             + Pm[0][None, :, None]
         Pn = Pn.reshape(Pm.shape[0], M * B)
         vv = np.repeat(valid, B, axis=1)
-        yn, bn, sgn2 = detrend_ext(Pn)
-        nullc[done:done + B] = crossings(yn).reshape(M, B).sum(0)
         tn = np.repeat(tol, B)
-        for x in X_EXC:
-            ncond[x] += tally(outcomes(yn, sgn2, vv, x, tn), M * B) // 1
+        for mode in LEVELS:
+            yn, sgn2, lo = level_ext(Pn, mode)
+            nullc[mode][done:done + B] = crossings(yn).reshape(M, B).sum(0)
+            for x in X_EXC:
+                ncond[mode][x] += tally(outcomes(yn, sgn2, vv, x, tn, lo=lo), M * B)
         done += B
     return {"obs": obs, "null_cross": nullc, "null_cond": ncond,
             "M": M, "n_shuf": n_shuf}, adm
@@ -434,7 +482,7 @@ def run(only=None) -> int:
     P(f"  fixture {FIX.name}, {len(d):,} rows, {d['day'].min()} .. {d['day'].max()}")
     P(f"  {len(roots)} roots, scales {SCALES}, N={N}, {N_PHASES} phases, {N_SHUF} shuffles")
     P(f"  RESERVED AND NOT READ: after {IS_END}")
-    res = {"spec": "D528 pre-reg 98bf297", "primary_cell": PRIMARY,
+    res = {"spec": "D528 pre-reg 98bf297, amended 55e7a4e (held level)", "levels": list(LEVELS), "primary_level": LEVELS[0], "primary_cell": PRIMARY,
            "scales": list(SCALES), "N": N, "phases": N_PHASES, "n_shuf": N_SHUF,
            "k_env": list(K_ENV), "x_exc": list(X_EXC), "taus": list(TAUS),
            "window": [str(d["day"].min()), str(d["day"].max())],
@@ -449,6 +497,10 @@ def run(only=None) -> int:
                    "cond_null": {str(x): np.zeros((len(TAUS), 3), np.int64) for x in X_EXC},
                    "boot": {str(x): {} for x in X_EXC},
                    "rev_obs": 0, "rev_n": 0, "W_pairs": {}, "W_ticks": {}, "W_usd": {},
+                   "by_level": {m: {"cond": {str(x): np.zeros((len(TAUS), 3), np.int64)
+                                             for x in X_EXC},
+                                    "cond_null": {str(x): np.zeros((len(TAUS), 3), np.int64)
+                                                  for x in X_EXC}} for m in LEVELS},
                    "per_root": {}}
             for r in roots:
                 g = d[d["root"] == r]
@@ -466,7 +518,7 @@ def run(only=None) -> int:
                     continue
                 # accumulate PER ROOT-SESSION returned/total, for the block bootstrap
                 for x in X_EXC:
-                    ps = cell["obs"]["per_session"].get(x)
+                    ps = cell["obs"][LEVELS[0]]["per_session"].get(x)
                     if ps is None:
                         continue
                     rr, tt = ps
@@ -475,20 +527,24 @@ def run(only=None) -> int:
                         cur = agg["boot"][str(x)].get(kk, [0.0, 0.0])
                         agg["boot"][str(x)][kk] = [cur[0] + float(rr[j]),
                                                    cur[1] + float(tt[j])]
+                for m in LEVELS:
+                    for x in X_EXC:
+                        agg["by_level"][m]["cond"][str(x)] += cell["obs"][m]["cond"][x]
+                        agg["by_level"][m]["cond_null"][str(x)] += cell["null_cond"][m][x]
                 agg["admitted"] += adm["admitted"]
                 agg["n_windows"] += adm["n"]
-                agg["cross_obs"] += int(cell["obs"]["cross"].sum())
-                agg["cross_null"] += float(cell["null_cross"].mean())
+                agg["cross_obs"] += int(cell["obs"][LEVELS[0]]["cross"].sum())
+                agg["cross_null"] += float(cell["null_cross"][LEVELS[0]].mean())
                 # P6: a window is LABELLED REVERTING when its crossing count exceeds the mean
                 # of its own sign-shuffle draws. Reported obs vs null so the principal's 80%
                 # can be read against a baseline rather than against 50%.
-                nc_mean = float(cell["null_cross"].mean()) / max(cell["M"], 1)
-                agg["rev_obs"] += int((cell["obs"]["cross"] > nc_mean).sum())
+                nc_mean = float(cell["null_cross"][LEVELS[0]].mean()) / max(cell["M"], 1)
+                agg["rev_obs"] += int((cell["obs"][LEVELS[0]]["cross"] > nc_mean).sum())
                 agg["rev_n"] += int(cell["M"])
                 # ITEM 7 / P5: range predictability -- W in window t+1 against W in window t,
                 # within root, at the primary envelope. A pre-registered OUTPUT that the first
                 # run did not compute at all.
-                Wk = cell["obs"]["W"][PRIMARY_K]
+                Wk = cell["obs"][LEVELS[0]]["W"][PRIMARY_K]
                 if len(Wk) > 3:
                     agg["W_pairs"].setdefault(r, []).append(Wk)
                     # ITEM 3: the range in TICKS and DOLLARS, which the decision rule's
@@ -500,12 +556,11 @@ def run(only=None) -> int:
                 pr = {"admitted": adm["admitted"], "n": adm["n"],
                       "median_ticks": adm["median_ticks"]}
                 for x in X_EXC:
-                    agg["cond"][str(x)] += cell["obs"]["cond"][x]
-                    agg["cond_null"][str(x)] += cell["null_cond"][x]
-                    tot = cell["obs"]["cond"][x][2, :].sum()
+                    agg["cond"][str(x)] += cell["obs"][LEVELS[0]]["cond"][x]
+                    agg["cond_null"][str(x)] += cell["null_cond"][LEVELS[0]][x]
                     if x == PRIMARY["x"]:
-                        o = cell["obs"]["cond"][x]
-                        nn = cell["null_cond"][x]
+                        o = cell["obs"][LEVELS[0]]["cond"][x]
+                        nn = cell["null_cond"][LEVELS[0]][x]
                         i = TAUS.index(PRIMARY["tau"])
                         po = o[i, 0] / max(o[i].sum(), 1)
                         pn = nn[i, 0] / max(nn[i].sum(), 1)
@@ -525,6 +580,12 @@ def run(only=None) -> int:
             agg["W_ticks_median"] = {k: float(np.median(v)) for k, v in agg["W_ticks"].items()}
             agg["W_usd_median"] = {k: float(np.median(v)) for k, v in agg["W_usd"].items()}
             agg.pop("W_pairs"); agg.pop("W_ticks"); agg.pop("W_usd")
+            for m in LEVELS:
+                for x in X_EXC:
+                    agg["by_level"][m]["cond"][str(x)] = \
+                        agg["by_level"][m]["cond"][str(x)].tolist()
+                    agg["by_level"][m]["cond_null"][str(x)] = \
+                        agg["by_level"][m]["cond_null"][str(x)].tolist()
             for x in X_EXC:
                 agg["cond"][str(x)] = agg["cond"][str(x)].tolist()
                 agg["cond_null"][str(x)] = agg["cond_null"][str(x)].tolist()
@@ -578,9 +639,18 @@ def self_test() -> int:
     # 1 -- detrend: a straight line leaves zero residual
     t = np.arange(T, dtype=np.float64)
     Pm = (3.0 + 0.7 * t)[:, None]
-    y, b, sig = detrend_ext(Pm)
+    y, sig, _lo = level_ext(Pm, "linear")
+    _, bslope, _ = detrend_ext(Pm)
     chk("detrend: a straight line leaves a zero residual and recovers the slope",
-        abs(b[0] - 0.7) < 1e-10 and np.abs(y).max() < 1e-9 and sig[0] < 1e-9)
+        abs(bslope[0] - 0.7) < 1e-10 and np.abs(y).max() < 1e-9 and sig[0] < 1e-9)
+    chk("level_ext('linear') reproduces detrend_ext EXACTLY -- the original spec is retained",
+        np.array_equal(y, detrend_ext(Pm)[0]) and np.array_equal(sig, detrend_ext(Pm)[2]))
+    for mode in ("half_line", "half_flat"):
+        yh, _, _ = level_ext(Pm, mode)
+        chk(f"level_ext('{mode}') also leaves a straight line with zero residual"
+            if mode == "half_line" else
+            f"level_ext('{mode}') leaves a straight line's residual as its own ramp",
+            (np.abs(yh).max() < 1e-9) if mode == "half_line" else (np.abs(yh).max() > 1.0))
     # and it EXTRAPOLATES: the residual past the window is also zero
     chk("[X] the line is EXTRAPOLATED past the window, so the tail residual is zero too",
         np.abs(y[N + 1:]).max() < 1e-9)
@@ -604,7 +674,7 @@ def self_test() -> int:
     p[N + 1:N + 6] = 0.0
     Pm = p[:, None]
     valid = np.ones((T, 1), bool)
-    y, b, sig = detrend_ext(Pm)
+    y, sig, _lo = level_ext(Pm, "linear")
     o = outcomes(y, sig, valid, 1.0, np.full(1, 1e-9))
     past = (len(o["d_ret"]) > 0) and (o["d_ret"].min() > 0)
     chk("an excursion near the window end can still RETURN, using bars past the window",
@@ -697,6 +767,54 @@ def self_test() -> int:
     chk("s=21 is INFEASIBLE at N=20 and the top step is 20 minutes",
         (420 // 21) - 1 < N and (420 // 20) - 1 == N and 21 not in SCALES and 20 in SCALES,
         f"420//21={420//21} points -> {420//21-1} returns")
+
+    # 9b -- AMENDMENT SS16: the HELD levels must unsaturate P(return). This is the amendment's
+    # entire justification, so it is asserted in code rather than only argued in the record.
+    nR2 = 4000
+    rw2 = rng.normal(size=(T - 1, nR2))
+    Pw2 = np.vstack([np.zeros((1, nR2)), rw2.cumsum(0)])
+    head = {}
+    for mode in LEVELS:
+        yz, sz, lo = level_ext(Pw2, mode)
+        ok = sz > 0
+        tt2 = tally(outcomes(yz[:, ok], sz[ok], np.ones((T, int(ok.sum())), bool),
+                             2.0, np.full(int(ok.sum()), 1e-9), lo=lo), int(ok.sum()))
+        j = TAUS.index(20)
+        head[mode] = 1.0 - tt2[j, 0] / max(tt2[j].sum(), 1)
+    P("      headroom on a random walk: " + "  ".join(f"{m} {head[m]:.3f}" for m in LEVELS))
+    chk("the whole-window `linear` level SATURATES -- under 15% headroom",
+        head["linear"] < 0.15, f"{head['linear']:.3f}")
+    chk("[X] and both HELD levels leave over 40%, which is why SS3 was amended",
+        head["half_line"] > 0.40 and head["half_flat"] > 0.40,
+        f"half_line {head['half_line']:.3f}, half_flat {head['half_flat']:.3f}")
+    chk("half_line estimates sigma on the FIRST HALF and measures nothing inside it",
+        level_ext(Pw2, "half_line")[2] == H_EST and H_EST == 10)
+    # y = price - const, so diff(y) == diff(price) EXACTLY. (The first version of this check
+    # compared diff(price - y), which is diff(const) = 0, and failed on correct code.)
+    # NOT bit-exact: (a-c)-(b-c) loses about |c|*eps against a-b, so the bound is DERIVED from
+    # the level's magnitude rather than asserted as equality, which failed on correct code.
+    yf = level_ext(Pw2, "half_flat")[0]
+    bound = 4.0 * float(np.abs(Pw2).max()) * np.finfo(np.float64).eps
+    chk("half_flat is a FLAT level -- the residual differs from the price by one constant",
+        np.abs(np.diff(yf, axis=0) - np.diff(Pw2, axis=0)).max() <= bound,
+        f"max diff {np.abs(np.diff(yf,axis=0)-np.diff(Pw2,axis=0)).max():.2e} "
+        f"vs derived bound {bound:.2e}")
+    chk("[X] and half_line is NOT flat -- its residual has the slope removed",
+        not np.array_equal(np.diff(level_ext(Pw2, "half_line")[0], axis=0),
+                           np.diff(Pw2, axis=0)))
+    # a centred SMA is the thing that was REJECTED; assert it saturates worse than linear
+    W5 = Pw2[:N + 1]
+    ker = np.ones(5) / 5.0
+    pad = np.vstack([W5[:1].repeat(2, 0), W5, W5[-1:].repeat(2, 0)])
+    lvl = np.apply_along_axis(lambda v: np.convolve(v, ker, mode="valid"), 0, pad)
+    yc2 = Pw2 - np.vstack([lvl, lvl[-1:].repeat(T - N - 1, 0)])
+    sc2 = yc2[:N + 1].std(0, ddof=1)
+    okc = sc2 > 0
+    tc2 = tally(outcomes(yc2[:, okc], sc2[okc], np.ones((T, int(okc.sum())), bool),
+                         2.0, np.full(int(okc.sum()), 1e-9), lo=0), int(okc.sum()))
+    hc = 1.0 - tc2[TAUS.index(20), 0] / max(tc2[TAUS.index(20)].sum(), 1)
+    chk("[X] a CENTRED SMA saturates WORSE than linear -- the rejected proposal, asserted",
+        hc < head["linear"], f"CSMA w=5 headroom {hc:.4f} vs linear {head['linear']:.3f}")
 
     # 10 -- the primary is the pre-registered one
     chk("the runner's PRIMARY is s=5, x=2.0 sigma, tau=N=20, phase 0",
