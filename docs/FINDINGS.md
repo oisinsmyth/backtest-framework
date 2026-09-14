@@ -4683,3 +4683,32 @@ the same numbers had looked like a real asymmetry.
 position**, never against 50 %. A rotation null on a fixed price path (D529's) already does this
 implicitly, because rotating the signal preserves whatever the price did; a bare hit rate does not.
 Where a study cannot rotate, quote the base rate from this table beside the statistic.
+
+## 75. Method: an EXIT rule scored on directional accuracy answers a different question from the same exit rule scored in dollars — and D533 got opposite answers from the two
+
+**D533 pre-registered four conditions on one statistic: the directional hit rate against the rotated
+base rate. Three were entry filters and one, C3, was an EXIT rule. On that statistic C3 was the worst
+thing in the study — a lift of −3.95 and −3.03 points against the fixed 60-minute exit, the largest
+single effect measured. In dollars at minimum tradable size the SAME rule raised gross Sharpe on all
+four roots (book +0.80 → +1.03) and produced the only positive net book in the record.**
+
+**Why the two disagree is not subtle, and it is D529 restated:** the exit cut the mean hold from 12.0
+bars to 7.9 while raising gross dollars per trade (SI 2.24 → 3.48) and lowering the hit rate
+(47.1 % → 39.8 %). It cuts losers faster than winners. **A hit rate cannot see that**, because it
+scores the sign of each trade and is blind to the magnitudes the exit is rearranging. The hit rate is
+the edge; the payoff ratio is exit geometry.
+
+**Two corrections fall out, and the second is the one that bites:**
+
+1. **Score an exit rule on the P&L distribution, never on a hit rate.** An entry filter changes which
+   trades happen and a hit rate is a fair instrument for it. An exit rule changes the shape of trades
+   that were happening anyway, which is the one thing a hit rate discards.
+2. **The dollar reading was not pre-registered, so it is a lead and not a result.** The net book
+   Sharpes are −0.11 and +0.09 against an SE of **0.36**, no null has been run against them, and the
+   cell was picked out of a table read after the fact. **And the symmetric trim deflates it further:**
+   C1+C3's advantage over C1 alone is entirely in the tails (trimmed +4.14 against +4.31), so C3 buys
+   a shorter hold rather than a larger edge, and +.31 gross does not cover a .00–.00 round trip.
+
+**The rule.** Declare the statistic that matches the OBJECT: hit rate for what selects trades, the
+P&L distribution for what shapes them. Where a study declares both an entry and an exit — as D533
+did — it needs both statistics pre-registered, or the exit arm of it cannot resolve.
