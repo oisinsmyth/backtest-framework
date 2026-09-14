@@ -21,6 +21,15 @@ a dip forces buying, so the left tail is truncated and the payoff ratio rises.
 that works in this programme is not paid for being right; it is paid for being right bigger.* Every
 prior search hunted accuracy. This one hunted shape.
 
+> **THAT PREMISE IS WRONG, corrected the same day by [D529](D529-the-payoff-ratio-is-exit-geometry-the-hit-rate-is-the-edge-and-my-reframe-was-backwards.md).**
+> A detached signal run through the arm's own exit produces a payoff ratio of **1.041 median / 1.138
+> p95** — the arm's 1.128 is **inside** its own exit's null, while its **hit rate clears it with 0 of
+> 400 draws reaching 50.5 %**. The arm is paid for being RIGHT. **This study was therefore designed
+> around the wrong statistic**: §3's skew-and-payoff split was the wrong thing to measure. It does
+> not change this record's verdict — the curve died on n_eff in §4 before the shape statistic
+> mattered — but a future curve study should ask about ACCURACY, conditioned on the curve, and score
+> it against its own exit's null.
+
 The line was worth opening because the audit in D521 had established there **is** no curve study
 here (*"every hit is incidental"*), and because the open-interest fixture was wrong in precisely
 `oi_total` and `oi_n_contracts` — the columns a curve study reads and a front-month study does not —

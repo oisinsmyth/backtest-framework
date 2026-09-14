@@ -233,6 +233,14 @@ for prop. **The admitted arm already complies.**
 thing that works is not paid for being right — it is paid for being right BIGGER.* Every previous
 search hunted ~55% accuracy. **Hunt shape, not accuracy.**
 
+> **THAT REFRAME IS WRONG AND WAS CORRECTED THE SAME DAY — [D529](docs/decisions/D529-the-payoff-ratio-is-exit-geometry-the-hit-rate-is-the-edge-and-my-reframe-was-backwards.md).**
+> A detached signal run through the arm's OWN exit produces a payoff ratio of **1.041 at the median
+> and 1.138 at p95**; the arm's 1.128 is **inside** that. Its **hit rate of 50.5% is outside it
+> entirely — 0 of 400 draws reach it.** Accuracy alone flips the null's expectation from −0.031 to
+> **+0.031**; asymmetry alone only reaches +0.011. **The arm is paid for being RIGHT, and the payoff
+> ratio is exit geometry.** Hunt accuracy — about three points of hit rate over the candidate's own
+> exit null — not shape. Everything below this line that reasons from "shape" inherits the error.
+
 **Stage 0 #1 — taker affordability across every CME-verified root** (`working/stage0_taker_affordability.py`).
 NQ is **not** uniquely cheap: NG ties it at 2.1% cost/move, HG 3.1% and SI 3.4% all beat ES's 4.2%.
 But **a root is cheap BECAUSE it moves and fails C-d for the same reason** — corr(log cost ratio,
