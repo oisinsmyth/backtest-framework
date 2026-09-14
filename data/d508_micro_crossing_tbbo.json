@@ -1,0 +1,487 @@
+{
+  "purpose": "D508: the crossing cost actually paid, from tbbo, for the micros bbo-1m never covered. NO RETURN READ. Nothing admitted.",
+  "window": [
+    "2025-09-11",
+    "2026-09-11"
+  ],
+  "exec_hours": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "statistics": {
+    "quoted": "(ask - bid)/tick at the instant of a trade",
+    "effective": "2*|price - mid|/tick -- what the aggressor paid, doubled for a round trip; THIS is the crossing cost"
+  },
+  "per_root": {
+    "6E": {
+      "all_session": {
+        "trades": 9316910,
+        "volume": 37979963,
+        "quoted_mean_ticks": 1.0601813262122313,
+        "quoted_P1": 0.9470227790114963,
+        "effective_mean_ticks": 1.0951489281317723,
+        "q_lots": 63.23908860341036
+      },
+      "execution_hours": {
+        "trades": 3687982,
+        "volume": 15609400,
+        "quoted_mean_ticks": 1.0475015875890934,
+        "quoted_P1": 0.956739485171023,
+        "effective_mean_ticks": 1.0824442744026594,
+        "q_lots": 73.16451869884398
+      },
+      "tick_points": 5e-05,
+      "tick_usd": 6.25
+    },
+    "BTC": {
+      "all_session": {
+        "trades": 1687446,
+        "volume": 1931472,
+        "quoted_mean_ticks": 5.22858627772385,
+        "quoted_P1": 0.0702558778177198,
+        "effective_mean_ticks": 5.472873798628223,
+        "q_lots": 3.252469708660307
+      },
+      "execution_hours": {
+        "trades": 822102,
+        "volume": 942849,
+        "quoted_mean_ticks": 4.783726350258241,
+        "quoted_P1": 0.07712424978895563,
+        "effective_mean_ticks": 4.993320780146502,
+        "q_lots": 3.2335890193674266
+      },
+      "tick_points": 5.0,
+      "tick_usd": 25.0
+    },
+    "CL": {
+      "all_session": {
+        "trades": 28116581,
+        "volume": 50510479,
+        "quoted_mean_ticks": 1.5555001868826086,
+        "quoted_P1": 0.6859025640421927,
+        "effective_mean_ticks": 1.682239636462216,
+        "q_lots": 11.777073144135128
+      },
+      "execution_hours": {
+        "trades": 12463094,
+        "volume": 23439437,
+        "quoted_mean_ticks": 1.4490421880794608,
+        "quoted_P1": 0.7179570337831039,
+        "effective_mean_ticks": 1.546198159140919,
+        "q_lots": 13.886837971373721
+      },
+      "tick_points": 0.01,
+      "tick_usd": 10.0
+    },
+    "ES": {
+      "all_session": {
+        "trades": 122819803,
+        "volume": 357883946,
+        "quoted_mean_ticks": 1.0264792315291371,
+        "quoted_P1": 0.9766345171551855,
+        "effective_mean_ticks": 1.086143665284987,
+        "q_lots": 46.88542477958542
+      },
+      "execution_hours": {
+        "trades": 80366084,
+        "volume": 247259966,
+        "quoted_mean_ticks": 1.014452626558238,
+        "quoted_P1": 0.9864678363574365,
+        "effective_mean_ticks": 1.0595784535177801,
+        "q_lots": 55.093785769131166
+      },
+      "tick_points": 0.25,
+      "tick_usd": 12.5
+    },
+    "GC": {
+      "all_session": {
+        "trades": 30554752,
+        "volume": 44137595,
+        "quoted_mean_ticks": 3.7209210534583947,
+        "quoted_P1": 0.13914490289431902,
+        "effective_mean_ticks": 4.47134815559951,
+        "q_lots": 4.454217792374816
+      },
+      "execution_hours": {
+        "trades": 10901879,
+        "volume": 16002705,
+        "quoted_mean_ticks": 3.385017481848771,
+        "quoted_P1": 0.15909147404773066,
+        "effective_mean_ticks": 4.116951857565118,
+        "q_lots": 4.600926133926087
+      },
+      "tick_points": 0.1,
+      "tick_usd": 10.0
+    },
+    "M2K": {
+      "all_session": {
+        "trades": 14969000,
+        "volume": 24977096,
+        "quoted_mean_ticks": 1.4226470038078696,
+        "quoted_P1": 0.6853138486204823,
+        "effective_mean_ticks": 1.6588098737391195,
+        "q_lots": 6.721476518137484
+      },
+      "execution_hours": {
+        "trades": 8594381,
+        "volume": 14503798,
+        "quoted_mean_ticks": 1.2807928808369096,
+        "quoted_P1": 0.7641742901553934,
+        "effective_mean_ticks": 1.5141420888834805,
+        "q_lots": 7.299358732176291
+      },
+      "tick_points": 0.1,
+      "tick_usd": 0.5
+    },
+    "M6E": {
+      "all_session": {
+        "trades": 1888153,
+        "volume": 5553998,
+        "quoted_mean_ticks": 1.0675543772141347,
+        "quoted_P1": 0.9517528505370063,
+        "effective_mean_ticks": 1.1221368183616502,
+        "q_lots": 59.69334423640457
+      },
+      "execution_hours": {
+        "trades": 687808,
+        "volume": 2052010,
+        "quoted_mean_ticks": 1.0548190774169535,
+        "quoted_P1": 0.9600717060575045,
+        "effective_mean_ticks": 1.105885654136043,
+        "q_lots": 63.40627471619987
+      },
+      "tick_points": 0.0001,
+      "tick_usd": 1.25
+    },
+    "MBT": {
+      "all_session": {
+        "trades": 7401785,
+        "volume": 16970856,
+        "quoted_mean_ticks": 2.5834348066040826,
+        "quoted_P1": 0.2599146016805406,
+        "effective_mean_ticks": 2.947046016602752,
+        "q_lots": 8.844465625521412
+      },
+      "execution_hours": {
+        "trades": 3256947,
+        "volume": 7299579,
+        "quoted_mean_ticks": 2.3027227646013277,
+        "quoted_P1": 0.30606362338717824,
+        "effective_mean_ticks": 2.6161168726417716,
+        "q_lots": 8.535592688490173
+      },
+      "tick_points": 5.0,
+      "tick_usd": 0.5
+    },
+    "MCL": {
+      "all_session": {
+        "trades": 22331054,
+        "volume": 41511274,
+        "quoted_mean_ticks": 1.691604570030595,
+        "quoted_P1": 0.5818379195178158,
+        "effective_mean_ticks": 2.225556259010434,
+        "q_lots": 7.292831543016286
+      },
+      "execution_hours": {
+        "trades": 8274526,
+        "volume": 15766792,
+        "quoted_mean_ticks": 1.5613853893262284,
+        "quoted_P1": 0.6057096201039189,
+        "effective_mean_ticks": 2.0311974365661536,
+        "q_lots": 7.866967848067672
+      },
+      "tick_points": 0.01,
+      "tick_usd": 1.0
+    },
+    "MES": {
+      "all_session": {
+        "trades": 104281885,
+        "volume": 317865563,
+        "quoted_mean_ticks": 1.0595196087987861,
+        "quoted_P1": 0.9489094678332675,
+        "effective_mean_ticks": 1.166406687029104,
+        "q_lots": 66.51721001207449
+      },
+      "execution_hours": {
+        "trades": 64203797,
+        "volume": 204391783,
+        "quoted_mean_ticks": 1.0400831900954395,
+        "quoted_P1": 0.9639214484464214,
+        "effective_mean_ticks": 1.1345161408444429,
+        "q_lots": 78.87776543807837
+      },
+      "tick_points": 0.25,
+      "tick_usd": 1.25
+    },
+    "MGC": {
+      "all_session": {
+        "trades": 65592667,
+        "volume": 107334958,
+        "quoted_mean_ticks": 2.577091384315872,
+        "quoted_P1": 0.2528690135438463,
+        "effective_mean_ticks": 3.121113203096321,
+        "q_lots": 5.524376253827276
+      },
+      "execution_hours": {
+        "trades": 21358358,
+        "volume": 35050103,
+        "quoted_mean_ticks": 2.4086445222053117,
+        "quoted_P1": 0.2701432853592959,
+        "effective_mean_ticks": 2.9334505021406643,
+        "q_lots": 5.683007935347839
+      },
+      "tick_points": 0.1,
+      "tick_usd": 1.0
+    },
+    "MNQ": {
+      "all_session": {
+        "trades": 278092290,
+        "volume": 531232734,
+        "quoted_mean_ticks": 1.893696312112788,
+        "quoted_P1": 0.3998217893779076,
+        "effective_mean_ticks": 2.482738115465196,
+        "q_lots": 7.738269723335372
+      },
+      "execution_hours": {
+        "trades": 156825075,
+        "volume": 304126103,
+        "quoted_mean_ticks": 1.6158679152552613,
+        "quoted_P1": 0.5244909718678598,
+        "effective_mean_ticks": 2.1342422122227602,
+        "q_lots": 8.699743985456408
+      },
+      "tick_points": 0.25,
+      "tick_usd": 0.5
+    },
+    "MYM": {
+      "all_session": {
+        "trades": 20385073,
+        "volume": 34253744,
+        "quoted_mean_ticks": 1.5797908106583676,
+        "quoted_P1": 0.5882223723211587,
+        "effective_mean_ticks": 1.8416714524397337,
+        "q_lots": 6.49619621180655
+      },
+      "execution_hours": {
+        "trades": 11556879,
+        "volume": 19566970,
+        "quoted_mean_ticks": 1.3540467975826345,
+        "quoted_P1": 0.6948914148880506,
+        "effective_mean_ticks": 1.5939098263467153,
+        "q_lots": 7.011372793640913
+      },
+      "tick_points": 1.0,
+      "tick_usd": 0.5
+    },
+    "NQ": {
+      "all_session": {
+        "trades": 96825905,
+        "volume": 139115726,
+        "quoted_mean_ticks": 2.864984489429766,
+        "quoted_P1": 0.17304012805250826,
+        "effective_mean_ticks": 3.618202546105821,
+        "q_lots": 4.380542954904475
+      },
+      "execution_hours": {
+        "trades": 58228972,
+        "volume": 85898915,
+        "quoted_mean_ticks": 2.4373711938448785,
+        "quoted_P1": 0.2243177159301387,
+        "effective_mean_ticks": 3.0454132867054593,
+        "q_lots": 4.736778111075016
+      },
+      "tick_points": 0.25,
+      "tick_usd": 5.0
+    },
+    "RTY": {
+      "all_session": {
+        "trades": 26295593,
+        "volume": 46484980,
+        "quoted_mean_ticks": 1.3886593088050914,
+        "quoted_P1": 0.6979464581764708,
+        "effective_mean_ticks": 1.5151739685049352,
+        "q_lots": 9.304453297554462
+      },
+      "execution_hours": {
+        "trades": 16362358,
+        "volume": 29513222,
+        "quoted_mean_ticks": 1.2418298756206165,
+        "quoted_P1": 0.7894904878624462,
+        "effective_mean_ticks": 1.3403114025497078,
+        "q_lots": 10.633203967301046
+      },
+      "tick_points": 0.1,
+      "tick_usd": 5.0
+    },
+    "YM": {
+      "all_session": {
+        "trades": 17519483,
+        "volume": 24513853,
+        "quoted_mean_ticks": 1.7749942735182311,
+        "quoted_P1": 0.43569927263264563,
+        "effective_mean_ticks": 1.9546695527487883,
+        "q_lots": 5.21189432359391
+      },
+      "execution_hours": {
+        "trades": 9731813,
+        "volume": 13751963,
+        "quoted_mean_ticks": 1.613969462832876,
+        "quoted_P1": 0.4999387061794138,
+        "effective_mean_ticks": 1.7673641077977968,
+        "q_lots": 5.544792013574449
+      },
+      "tick_points": 1.0,
+      "tick_usd": 5.0
+    }
+  },
+  "micro_vs_parent": {
+    "M2K/RTY": {
+      "tick_same": true,
+      "parent_eff": 1.3403114025497078,
+      "micro_eff": 1.5141420888834805,
+      "ratio": 1.129694253143777,
+      "micro_cross_usd_per_rt": 0.7570710444417402
+    },
+    "M6E/6E": {
+      "tick_same": false,
+      "parent_eff": 1.0824442744026594,
+      "micro_eff": 1.105885654136043,
+      "ratio": 1.0216559690763938,
+      "micro_cross_usd_per_rt": 1.3823570676700536
+    },
+    "MBT/BTC": {
+      "tick_same": true,
+      "parent_eff": 4.993320780146502,
+      "micro_eff": 2.6161168726417716,
+      "ratio": 0.5239232542486517,
+      "micro_cross_usd_per_rt": 1.3080584363208858
+    },
+    "MCL/CL": {
+      "tick_same": true,
+      "parent_eff": 1.546198159140919,
+      "micro_eff": 2.0311974365661536,
+      "ratio": 1.31367213481531,
+      "micro_cross_usd_per_rt": 2.0311974365661536
+    },
+    "MES/ES": {
+      "tick_same": true,
+      "parent_eff": 1.0595784535177801,
+      "micro_eff": 1.1345161408444429,
+      "ratio": 1.070724057362502,
+      "micro_cross_usd_per_rt": 1.4181451760555537
+    },
+    "MGC/GC": {
+      "tick_same": true,
+      "parent_eff": 4.116951857565118,
+      "micro_eff": 2.9334505021406643,
+      "ratio": 0.7125297073246784,
+      "micro_cross_usd_per_rt": 2.9334505021406643
+    },
+    "MNQ/NQ": {
+      "tick_same": true,
+      "parent_eff": 3.0454132867054593,
+      "micro_eff": 2.1342422122227602,
+      "ratio": 0.7008054445482479,
+      "micro_cross_usd_per_rt": 1.0671211061113801
+    },
+    "MYM/YM": {
+      "tick_same": true,
+      "parent_eff": 1.7673641077977968,
+      "micro_eff": 1.5939098263467153,
+      "ratio": 0.9018570759212643,
+      "micro_cross_usd_per_rt": 0.7969549131733576
+    }
+  },
+  "specs": {
+    "6E": {
+      "tick_points": 5e-05,
+      "tick_usd": 6.25,
+      "src": "futures_contract_specs.json"
+    },
+    "BTC": {
+      "tick_points": 5.0,
+      "tick_usd": 25.0,
+      "src": "fut_specs_from_definition.json"
+    },
+    "CL": {
+      "tick_points": 0.01,
+      "tick_usd": 10.0,
+      "src": "futures_contract_specs.json"
+    },
+    "ES": {
+      "tick_points": 0.25,
+      "tick_usd": 12.5,
+      "src": "futures_contract_specs.json"
+    },
+    "GC": {
+      "tick_points": 0.1,
+      "tick_usd": 10.0,
+      "src": "futures_contract_specs.json"
+    },
+    "M2K": {
+      "tick_points": 0.1,
+      "tick_usd": 0.5,
+      "src": "futures_contract_specs.json"
+    },
+    "M6E": {
+      "tick_points": 0.0001,
+      "tick_usd": 1.25,
+      "src": "futures_contract_specs.json"
+    },
+    "MBT": {
+      "tick_points": 5.0,
+      "tick_usd": 0.5,
+      "src": "fut_specs_from_definition.json"
+    },
+    "MCL": {
+      "tick_points": 0.01,
+      "tick_usd": 1.0,
+      "src": "futures_contract_specs.json"
+    },
+    "MES": {
+      "tick_points": 0.25,
+      "tick_usd": 1.25,
+      "src": "futures_contract_specs.json"
+    },
+    "MGC": {
+      "tick_points": 0.1,
+      "tick_usd": 1.0,
+      "src": "futures_contract_specs.json"
+    },
+    "MNQ": {
+      "tick_points": 0.25,
+      "tick_usd": 0.5,
+      "src": "futures_contract_specs.json"
+    },
+    "MYM": {
+      "tick_points": 1.0,
+      "tick_usd": 0.5,
+      "src": "futures_contract_specs.json"
+    },
+    "NQ": {
+      "tick_points": 0.25,
+      "tick_usd": 5.0,
+      "src": "futures_contract_specs.json"
+    },
+    "RTY": {
+      "tick_points": 0.1,
+      "tick_usd": 5.0,
+      "src": "futures_contract_specs.json"
+    },
+    "YM": {
+      "tick_points": 1.0,
+      "tick_usd": 5.0,
+      "src": "futures_contract_specs.json"
+    }
+  },
+  "limitations": [
+    "the window is one year (2025-09 to 2026-09) and it re-costs studies on 2016-2023; a tick is fixed in price terms so a recent spread applied to an older window is OPTIMISTIC",
+    "tbbo is conditioned on a trade having happened, so it is TRADE-WEIGHTED where bbo-1m is time-weighted; the two are different statistics and the calibration on the five pairs bbo-1m covered is reported for that reason",
+    "the effective cost is measured on the trades that DID happen at whatever size they were; a 1-lot at the touch is the common case but sweeps are included",
+    "a micro's tick is read per instrument: M6E's is DOUBLE 6E's, which is the error this runner corrects in D507"
+  ]
+}

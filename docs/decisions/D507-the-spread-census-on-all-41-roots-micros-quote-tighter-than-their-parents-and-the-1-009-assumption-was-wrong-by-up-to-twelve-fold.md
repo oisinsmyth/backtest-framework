@@ -246,3 +246,76 @@ The **effective** cost exceeds the **quoted** spread on every root — MGC 2.404
 1.936 against 1.427 — because a trade that sweeps beyond the touch pays more than the quote.
 **A quoted spread is structurally a floor**, and this is the first measurement in this programme
 that prices the part above it.
+
+---
+
+# 9. FINAL, 2026-09-14 — the full-year `tbbo` decode lands and **the 10-day window UNDERSTATED the crossing by up to 62%**
+
+§8 was explicit that its figures were **a 10-day sample** (2026-09-01 … 09-10) whose *means* were
+precise but whose *time variation* was unmeasured. The full year has now decoded —
+**848,078,380 trades over 13 months, 16 roots, 726,558 rows, 413 min** —
+`data/fixtures/fut_crossing_tbbo.csv.gz`, artefact `data/d508_micro_crossing_tbbo.json`.
+**§8's numbers are superseded by the table below.**
+
+## 9a. The provisional window was a QUIET ten days, and not uniformly so
+
+| root | §8 provisional | **full year** | change |
+|---|---:|---:|---:|
+| **GC** | 2.767 | **4.471** | **+61.6%** |
+| **NQ** | 2.324 | **3.618** | **+55.7%** |
+| **MGC** | 2.404 | **3.121** | **+29.8%** |
+| **MNQ** | 1.936 | **2.483** | **+28.3%** |
+| RTY | 1.297 | 1.515 | +16.8% |
+| YM | 1.727 | 1.955 | +13.2% |
+| MYM | 1.641 | 1.842 | +12.2% |
+| BTC | 4.900 | 5.473 | +11.7% |
+| MCL | 2.012 | 2.226 | +10.6% |
+| CL | 1.560 | 1.682 | +7.8% |
+| ES | 1.029 | 1.086 | +5.5% |
+| MES | 1.117 | 1.166 | +4.4% |
+| 6E | 1.057 | 1.095 | +3.6% |
+| M6E | 1.113 | 1.122 | +0.8% |
+| MBT | 3.087 | 2.947 | −4.5% |
+| M2K | 1.777 | 1.659 | −6.6% |
+
+**The error is not uniform and it is not small.** It is **largest on the roots whose books are
+thinnest** — gold and the Nasdaq complex — and negligible on ES, 6E and their micros. **A ten-day
+spread sample is safe on the deepest books and misleading by half on the rest.** Two roots came in
+*cheaper*, so this is time variation rather than a one-directional bias, but the tail is on the
+expensive side.
+
+## 9b. What it does to the admitted arm — the bracket holds and the centre moves up
+
+| MNQ crossing | total cost | source |
+|---|---:|---|
+| 1.009 | 7.009 tk | as originally published |
+| 1.936 | 7.936 tk | §8, 10-day trade-weighted |
+| **2.134** | **8.134 tk** | **full year, at execution hours** |
+| 2.483 | 8.483 tk | full year, all hours |
+| 2.452 | 8.452 tk | §8, 10-day time-weighted |
+
+**The full-year execution-hours figure lands inside §8's published 1.94–2.45 bracket**, at 2.134,
+so **no verdict changes and the arm still clears C-a** — net Sharpe ≈ **+0.66** against the +0.698
+published at the 1.009 assumption. **The arm's cost line is now measured over a full year rather
+than bracketed from ten days.**
+
+**One caveat that makes even this an underestimate**, from a finding another session recorded: the
+execution-hours *average* is not the arm's cost, because **the arm enters at 10:00 and that is the
+day's worst quote 66.6% of the time.** The right figure is the spread at the strategy's own fill
+timestamps, which is dearer than any session average. 2.134 is therefore a floor for this
+construction, not its expected cost.
+
+## 9c. What survives from §8 unchanged
+
+The three **corrections** in §8 were structural, not sample-dependent, and all stand: **M6E's tick
+is double 6E's** (still the only broken pair — the full year confirms `tick same? NO -- 2x`);
+**the micros-are-cheaper headline splits by asset class** — on the full year **M2K/RTY 1.13,
+MCL/CL 1.31, MES/ES 1.07 and M6E/6E 1.02 are DEARER than their parents** while MBT/BTC 0.52,
+MNQ/NQ 0.70, MGC/GC 0.71 and MYM/YM 0.90 are tighter, so four of eight are dearer where §8 found
+three; and **the effective cost exceeds the quoted spread on every one of the 16 roots**, which
+remains the one thing only `tbbo` could show.
+
+**MGC is still the dearest micro to cross, and by MORE than §8 said** — **$2.93 a round trip** over
+the full year against the $2.40 measured on ten days, next to MCL's $2.03 and M2K's $0.76. The
+warning about gold is **strengthened, not withdrawn**: at a $3 commission the crossing is very
+nearly as large again as the fee.
