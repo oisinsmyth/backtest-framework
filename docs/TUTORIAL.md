@@ -427,7 +427,9 @@ assert len(study_registry) == study.n_windows * 2      # every run logged
 ## 12. Extending it — the house rules
 
 1. **Record the decision** — anything non-obvious gets a `docs/decisions/D<n>` file
-   ("decision — because rationale", R4). The index tells you the next number.
+   ("decision — because rationale", R4). For the next number ask the directory —
+   `ls docs/decisions | grep -oE '^D[0-9]+' | sort -V | tail -1` — not the index, which
+   stops at D284. [`CONTRIBUTING.md`](../CONTRIBUTING.md) has the record template.
 2. **A step is done when its gate passes** — new components ship with tests; golden
    tests ship with a `.hand.txt` showing the arithmetic (D39/D47).
 3. **No false affordances** — a knob no code reads, or a method returning a wrong

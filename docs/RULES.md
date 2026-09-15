@@ -39,8 +39,11 @@ full multi-currency accounting, live IBKR integration.
 
 ## R5. This doc suite is source of truth; keep it in sync as code lands
 
-New decisions go in `docs/decisions/` (next number: **D283**), shipped changes go in
-[`CHANGELOG.md`](../CHANGELOG.md), current work-in-progress goes in [`AITODO.md`](internal/AITODO.md).
+New decisions go in `docs/decisions/` — for the next number ask the directory,
+`ls docs/decisions | grep -oE '^D[0-9]+' | sort -V | tail -1`, because the index there stops at
+D284 and a hard-coded number in this rule went stale within weeks of being written. Shipped changes
+go in [`CHANGELOG.md`](../CHANGELOG.md), current work-in-progress goes in
+[`AITODO.md`](internal/AITODO.md).
 
 **Because:** the original four docs (`MASTER_PROJECT_DOC.md`, `DESIGN_DECISIONS.md`,
 `VERIFICATION_SCHEME.md`, `DEVELOPMENT_TIMETABLE.md`) were written before implementation

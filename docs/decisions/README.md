@@ -2,7 +2,18 @@
 
 One file per decision (D1–D49), migrated from the original running log in
 [`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
-New decisions are added here going forward — next number is **D280**.
+
+> **This index is a curated table of D1–D284. It is not a complete register.** The directory holds
+> several hundred records beyond it, and the study records (`PRE-REG` / `RESULT` / `ADDENDUM`) that
+> dominate D285 onward were never added. **Do not read the last row here as the last decision, and
+> do not take the next number from it** — ask the directory:
+>
+> ```bash
+> ls docs/decisions | grep -oE '^D[0-9]+' | sort -V | tail -1
+> ```
+>
+> Backfilling the missing rows is a real job and has not been done. Saying so is cheaper than a
+> table that quietly lies about where the programme is.
 
 Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
