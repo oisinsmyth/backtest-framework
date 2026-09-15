@@ -73,13 +73,13 @@ from __future__ import annotations
 import math
 import statistics
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
 
-from ..analytics.metrics import max_drawdown, sharpe
+from ..analytics.metrics import sharpe
 from ..data.bars import TimestampedBar
 from ..registry.trial_registry import TrialRegistry
 from ..simulator.fills import Bar
