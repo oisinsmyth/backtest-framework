@@ -80,3 +80,31 @@ data/d382_scores.npz
 # Claude Code's own worktree state for the signal-hunt-part2 branch. Machine-local tooling,
 # not project content, and it points at paths that exist only on this machine.
 .claude/worktrees/
+
+# ---------------------------------------------------------------------------
+# Bulk data panels: dropped from the index 2026-09-15 (portfolio repack)
+# ---------------------------------------------------------------------------
+# 115 files, 844 MB, in a repository whose source is 21k lines. D70/D24 committed
+# fixtures so that CHANGING one is a visible diff rather than a silent re-fetch --
+# a real property, and it is kept here by other means:
+#
+#   * data/data_manifest.json (tracked) carries the sha256 AND the git blob id of
+#     every file matched below. A changed panel is still a visible diff; the diff
+#     moves to a one-line JSON change, which is more readable than a 46 MB gzip
+#     blob no reviewer opens.
+#   * History is NOT rewritten, so every byte is still reachable:
+#         git cat-file blob <git_blob> > <path>
+#   * `python scripts/build_data_manifest.py --verify` re-hashes what is on disk.
+#
+# Evidence stays tracked: plain .csv (the largest under data/ is 0.6 MB), every
+# .json artifact a decision record quotes, and the .meta.json / _events.json
+# provenance sidecars beside each panel.
+/data/**/*.csv.gz
+/data/**/*.parquet
+/data/**/*.npz
+/data/**/*.zip
+
+# The portfolio repack plan: working scaffolding for the repack above, not part of
+# the record it plans. Anything it decides lands in docs/decisions/ under its own
+# number, in writing, like every other decision here.
+/working/PORTFOLIO_PLAN.md

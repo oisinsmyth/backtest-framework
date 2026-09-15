@@ -1,0 +1,932 @@
+{
+  "built_at": "2026-09-15T21:10:24Z",
+  "note": "Bulk panels dropped from the index on 2026-09-15 and recoverable from history: `git cat-file blob <git_blob> > <path>`. History is not rewritten.",
+  "suffixes": [
+    ".csv.gz",
+    ".parquet",
+    ".npz",
+    ".zip"
+  ],
+  "total_bytes": 1536696184,
+  "count": 118,
+  "files": [
+    {
+      "path": "data/d291_null_surface.npz",
+      "bytes": 384215,
+      "sha256": "d9f2535a048d2250009c38ac95e1da00b749f652fb4b80639b6d2843aa94ce4f",
+      "git_blob": "ec5964f5c9e96211567077355517a4d9648c1e23",
+      "sidecars": []
+    },
+    {
+      "path": "data/D2_sas_vs_py_summ_stats.parquet",
+      "bytes": 67499,
+      "sha256": "54174b55e0ba511ead79f8430095966c2298eeebfdadbe350ff4caf772b7b3e2",
+      "git_blob": "fe40637d27c5b6f9da8c379ddb40abbf76beab71",
+      "sidecars": []
+    },
+    {
+      "path": "data/D2_US_factors_SAS.parquet",
+      "bytes": 1578145,
+      "sha256": "7f8db698889cb7b996121add36866e58d347f802a85e387df20ecd6053d02e56",
+      "git_blob": "53b6444c0d5229cd3f38986b982f5dcd3c04336f",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_hist_L_10.npz",
+      "bytes": 279630,
+      "sha256": "9499db9a94d4061bcc603f91d751b1498da72c90f3586684f46ee669ba451dde",
+      "git_blob": "dde4e9c2cfcbf6cc7d7e06d19794a426858fcd33",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_hist_L_10_inv.npz",
+      "bytes": 279666,
+      "sha256": "b749043c09f6dc38164d61c1f274f396e2b2c334cccac2324595431774a1c8e6",
+      "git_blob": "e95e8a1dbcde5b66889973db0d236b8449eb7059",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_hist_L_2.npz",
+      "bytes": 279630,
+      "sha256": "dc6b40bdddc5b087c326c68f9ef3ce7affae762242b40b2b75e520ccd805941b",
+      "git_blob": "bdbc059367299ad46536ebd187abd047de2fb015",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_hist_L_2_inv.npz",
+      "bytes": 279666,
+      "sha256": "158850579312d83fcce04373c95ee544f40b65a2ae44e4c5917552e603fa94bc",
+      "git_blob": "e3d69b5d5876b9396c71976d39a25f5e7d81a897",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_hist_L_5.npz",
+      "bytes": 279630,
+      "sha256": "b9077f1f28441d663980f484ab8541d2807593fc2cbd77de2dc53c495585ce09",
+      "git_blob": "3b51ad898df7662b48b70c6e63935505b237d8ab",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_hist_L_5_inv.npz",
+      "bytes": 279666,
+      "sha256": "b0dca873e0ae30e453e10e8bbba9a7070d2d25f6d0656b4b3da7eaa232273aaa",
+      "git_blob": "6cb96deead93e3747f0aa546cefe5d82824d8276",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_rev_5_10.npz",
+      "bytes": 279626,
+      "sha256": "eab00019cf35b1e431f5437322c3952cc19514a973266f215f7b1c9eab11106c",
+      "git_blob": "6674d5424d98820244c5a0596096816208e9233f",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_rev_5_10_inv.npz",
+      "bytes": 279662,
+      "sha256": "bccee889d600d4a4b989476168a8901504e743bcde041d7b6ca303f626134aa2",
+      "git_blob": "a4e682ed312b2654535b9756123e0e6c2b129013",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_rev_5_2.npz",
+      "bytes": 279626,
+      "sha256": "d3913fb08e57f4d194aaa5dab51ebdf38b2c826f7a6adc474d26a87a0406f207",
+      "git_blob": "fb8ce819a3129789c1b694d2d9e3e202b446acf7",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_rev_5_2_inv.npz",
+      "bytes": 279662,
+      "sha256": "b8da2da12e25dcdb918b6133cf1bf310e669d1fea4817f5554e63387cbe182ab",
+      "git_blob": "69d9d56d00cf340776e8a9fe1a5fba456dca6fd5",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_rev_5_5.npz",
+      "bytes": 279626,
+      "sha256": "3d09c1015ca179bf263ffdfffcef7713fb0707c7940f6b6abf56f588a68799c4",
+      "git_blob": "112a2c1ec6eeac9d8a412826103bbd0e998ba16a",
+      "sidecars": []
+    },
+    {
+      "path": "data/d358_series_rev_5_5_inv.npz",
+      "bytes": 279662,
+      "sha256": "b3534948fe87a1776f01679ba87f9cf8ddacca3a89205885eb5774341f2fdbd4",
+      "git_blob": "8c18187d79731386a1261c53ccf588b104bd4c6e",
+      "sidecars": []
+    },
+    {
+      "path": "data/d361_trades_gap_up_fade.csv.gz",
+      "bytes": 24124159,
+      "sha256": "d08dda285c62ea1aa2aaf46f50b342c107589e6ce35e04579508b6c2b96836fc",
+      "git_blob": "3be57c3195b97f407a996cc3954cb110efd678bc",
+      "sidecars": []
+    },
+    {
+      "path": "data/d365_trade_paths_95_80.csv.gz",
+      "bytes": 5017463,
+      "sha256": "121cb05abb57b1d533df9e33e33e7bf90eca67f5fb168aa9b9a3b016075a7336",
+      "git_blob": "4d26e7e7acb0b50e1d79b9f035c2a4329e8e4a13",
+      "sidecars": []
+    },
+    {
+      "path": "data/d376_series.npz",
+      "bytes": 34223443,
+      "sha256": "6250561243a6e7adb630be8a5e779ba8ac3dafe76af8bb1cc333c6eb6b14aec3",
+      "git_blob": "efd0d992d614cb1d7da1cad67df0cc0cb2e31022",
+      "sidecars": []
+    },
+    {
+      "path": "data/d377_ensemble.npz",
+      "bytes": 136491425,
+      "sha256": "bd33db9924ddf41954e28b65d25cff0b373418824e07517293ee2fe67fe90153",
+      "git_blob": null,
+      "sidecars": []
+    },
+    {
+      "path": "data/d382_scores.npz",
+      "bytes": 114123234,
+      "sha256": "31a6fd41d49465d1fd28d662d583945b41e0f84f33340d8c77919950947e2980",
+      "git_blob": null,
+      "sidecars": []
+    },
+    {
+      "path": "data/d440_holds.csv.gz",
+      "bytes": 561573,
+      "sha256": "35b5626d9087e26fd0c25a7c02e5483f3ad8f74a81aa2c5124bca0892d11e382",
+      "git_blob": "36fcbd345772c32e97b7f5a404399a3b194c90d5",
+      "sidecars": []
+    },
+    {
+      "path": "data/d443_issuance_panel.csv.gz",
+      "bytes": 2520654,
+      "sha256": "f201e65091000d8fffa6c45be4ad4bbfe07f7ec523ab08d1a5e3700bdfd92601",
+      "git_blob": "18ccc896613be3dac40877cd6a114c1e8be86847",
+      "sidecars": []
+    },
+    {
+      "path": "data/d444_bs_instants.csv.gz",
+      "bytes": 395137,
+      "sha256": "19a5015e6da5511014b0506028b38c4c53b57ac5bc34b0f03fa2e6d36924aff0",
+      "git_blob": "30c2e9cc805909320ce974ae3f61a0a5541f4fb6",
+      "sidecars": []
+    },
+    {
+      "path": "data/d444_issuance_panel.csv.gz",
+      "bytes": 2701948,
+      "sha256": "ce22aa2dbe02dbd20c9c283f84e7274b047dc0c5b0f4514f3e4f5bbcba179628",
+      "git_blob": "ac418b94d236b909018eba4094f49d28b61e9cfa",
+      "sidecars": []
+    },
+    {
+      "path": "data/d449_es_holds.csv.gz",
+      "bytes": 178299,
+      "sha256": "7b1381c58ac70bdabe4afd104aced6842ab9bfcee743c4ce87daeb9ec233e92d",
+      "git_blob": "459baebfa9e620e3a633134add4f6522d7a38859",
+      "sidecars": []
+    },
+    {
+      "path": "data/d454_insider_events.csv.gz",
+      "bytes": 2676851,
+      "sha256": "258fb38860d89ade6119bccdc794e8c474197e3397b3e12e32c4cf5671fb3787",
+      "git_blob": "1b8f6c780effecdfba5315986e8a5fe91c3d145f",
+      "sidecars": []
+    },
+    {
+      "path": "data/d454_insider_owner_rows.csv.gz",
+      "bytes": 2325240,
+      "sha256": "612b300cb7cc5de14c88594315ea8ae7ae163e2ab52f48c1cb180e317c9117ec",
+      "git_blob": "316ef9b2718b56fc91917f20c9a813e86e7b8645",
+      "sidecars": []
+    },
+    {
+      "path": "data/d456_8k_events.csv.gz",
+      "bytes": 2262674,
+      "sha256": "a639a5e8eddcf08e8e9d5e7face27ce3e732e1af1e399e29c061133d61a233d9",
+      "git_blob": "bd4950fc23f6a9af04fdebb362a6bc5383d6d431",
+      "sidecars": []
+    },
+    {
+      "path": "data/d463_trades.csv.gz",
+      "bytes": 624660,
+      "sha256": "a1e39ef6103a2d6235eb5b1fd10397e820941e374d77df35970bec147bf073ca",
+      "git_blob": "d35f574ebc2e3924c7658a21dcbd8c63b9670071",
+      "sidecars": []
+    },
+    {
+      "path": "data/d490_trades_dev_ES.csv.gz",
+      "bytes": 49976,
+      "sha256": "6ed6eae2b1d8ce1d82a5f03a0283d5ef0ba36e5d0da0504ddbfb17c7ec7c8b62",
+      "git_blob": "b87b31c5d8c22f8f35b491459347a10fb4aa03e3",
+      "sidecars": []
+    },
+    {
+      "path": "data/d490_trades_dev_NQ.csv.gz",
+      "bytes": 53633,
+      "sha256": "1647c507a949d9326abb4710a68af530cd8646a2681b54714ee37ec9a2bfba32",
+      "git_blob": "97505522c0f6a4364f89ce7e9589b3b75e599954",
+      "sidecars": []
+    },
+    {
+      "path": "data/d492_trades_dev_ES_A.csv.gz",
+      "bytes": 16352,
+      "sha256": "4b431b494cc1745543844b632e4b677d76b7745bb94b85195f19cca1d6eb375b",
+      "git_blob": "7eaf5a3a196fbc1c8ea769e69b0604f56798d12d",
+      "sidecars": []
+    },
+    {
+      "path": "data/d492_trades_dev_ES_B.csv.gz",
+      "bytes": 16702,
+      "sha256": "e310d6e3913e5f96216909e6c45106e4ef8bce10b00e1cd5db75592011af78bf",
+      "git_blob": "750423992db1912886b44a7c7ab24b47f88cf3cc",
+      "sidecars": []
+    },
+    {
+      "path": "data/d492_trades_dev_NQ_A.csv.gz",
+      "bytes": 19966,
+      "sha256": "ee9536e2b65aa2f1d38cc460bcee391e2ada90a895a46d66ecf878ec6665c64b",
+      "git_blob": "4f0d248cb2d95d39551a6b716e2c8ca422c9733c",
+      "sidecars": []
+    },
+    {
+      "path": "data/d492_trades_dev_NQ_B.csv.gz",
+      "bytes": 20980,
+      "sha256": "3d7a15eab394fea2b571ac0c929cdede6cfa56e7cf07e589a494213630df7266",
+      "git_blob": "eb2c7c4702a8d1655cfb47a4d926180fb737df26",
+      "sidecars": []
+    },
+    {
+      "path": "data/d495_trades_ES_A.csv.gz",
+      "bytes": 8021,
+      "sha256": "c7fada7fa1f38bebbeb0cb90154e526baf25cdda74d265b2949ac0608a3b9286",
+      "git_blob": "394491d20903768654a3e56f54bdcd090ae7c8e1",
+      "sidecars": []
+    },
+    {
+      "path": "data/d495_trades_ES_B.csv.gz",
+      "bytes": 21405,
+      "sha256": "65886caaf70e77d7b0c5bfaad44514b691072e933cc9c3ee2779404ac88e1d0b",
+      "git_blob": "074c0ae1f5ecfd457563daa6053a55dd8402a890",
+      "sidecars": []
+    },
+    {
+      "path": "data/d495_trades_NQ_A.csv.gz",
+      "bytes": 8651,
+      "sha256": "b68fa3c07826f0d7e5b4bb8a62e3e0939fc3fd8d8ed236c19b72e05f272091c3",
+      "git_blob": "1aa34ad8bcdda09ae46677226ec4e029a9a59192",
+      "sidecars": []
+    },
+    {
+      "path": "data/d495_trades_NQ_B.csv.gz",
+      "bytes": 22774,
+      "sha256": "21eb4fcd7af588912407f30238c83aadf4717dca65a44f198a421d2153d43066",
+      "git_blob": "01d363a6ff5272daaf0be4d3bef119f44f11f5f9",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_ES_E1.csv.gz",
+      "bytes": 10148,
+      "sha256": "90ae3b83cee3ffdcba4942dca25092ac73b5bc5a8c3b659054cf67b00a3f67de",
+      "git_blob": "7ac41b8f20b5bf2a15b3fd163cb441b83f47b64c",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_ES_E2.csv.gz",
+      "bytes": 1957,
+      "sha256": "95a7784bf4b41ee86256516ff85b2503411d42bc1e312a7b17227977956aaf31",
+      "git_blob": "2a8ec84f72174abcc36786512ffa56f3dc247d3c",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_ES_E3.csv.gz",
+      "bytes": 45632,
+      "sha256": "e393f7dbc8727325fa68ada1094b40671b232d2f108af43da21d623dad9e3e60",
+      "git_blob": "6902b41424afc7c331f14f073febab388cbea705",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_ES_K8.csv.gz",
+      "bytes": 22879,
+      "sha256": "feaa8481bba3294ccd74cd8b58262b96c9cab3ebc262c141b9c2ce35aaa91822",
+      "git_blob": "971d4ca8154b79e8d4eaddc2a9d415edb2f915e5",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_forward_ES_K8.csv.gz",
+      "bytes": 9011,
+      "sha256": "5a037a9e8ed170ec5b552144f52499a79f4dc1ed223b9aa24e1c6db06389af73",
+      "git_blob": "b10351faf2b3f517f563678ca7ed193f5f528e21",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_forward_NQ_K8.csv.gz",
+      "bytes": 9715,
+      "sha256": "e8f13e1710412989ef3b32a8f99cd3e844cacb51b6fd66dc5e246ed780029d08",
+      "git_blob": "54527da6adf8ae341005fd8d9ae797c7361b06a2",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_NQ_E1.csv.gz",
+      "bytes": 10816,
+      "sha256": "e0c80f73b62af1a3c91255b82d9aecc366746a5df84173ee6713cd547e2f3d0a",
+      "git_blob": "4d6a9a4afc4ef1073207e7c4cc6b1fb2808ab81a",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_NQ_E2.csv.gz",
+      "bytes": 2076,
+      "sha256": "288d06ad582ad135270df4815b947693f5593c122761284858968a7680aa65ca",
+      "git_blob": "72ba360afc2350f69bff14816d65606eef2dbed7",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_NQ_E3.csv.gz",
+      "bytes": 51084,
+      "sha256": "96230e881af68d340a125520a2e3712612c29b4bf7b9235e5e77481a254be5a6",
+      "git_blob": "32bf964a8377166a40ed86252033b933f6d707aa",
+      "sidecars": []
+    },
+    {
+      "path": "data/d498_trades_NQ_K8.csv.gz",
+      "bytes": 25005,
+      "sha256": "157d29eef81fa2112be33ced0b79e5b5b18f109d86c0dcce73a546041c283338",
+      "git_blob": "c866924359f2684007677f53695d6dd5755fd08a",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_6E.csv.gz",
+      "bytes": 147475,
+      "sha256": "ace26b660de59264f634ec40c6f353c6e47db73db32e15e705bf5cf02a32f8d1",
+      "git_blob": "c775bea7604acc13d1e0f961bd7e55273a22f414",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_CL.csv.gz",
+      "bytes": 150359,
+      "sha256": "f324cad253a87989a288c26e7de080a88b4314eec19734db00d764c23d5a8afc",
+      "git_blob": "62d377c8baccbb312cb5f33739b64e34d31ea2e8",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_ES.csv.gz",
+      "bytes": 156243,
+      "sha256": "2da11f642ef3aaad684c8b9596dfdd98d829acdf9638a2debba0186985d6dc2b",
+      "git_blob": "f732eeead903665fbedaf383777fd94434cd8d60",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_GC.csv.gz",
+      "bytes": 145065,
+      "sha256": "eaf9f6faa2bdecf2b384ab5493b04583f3df3cd7da593c2a7057f00567a74b16",
+      "git_blob": "bf780836d40d1b3d52430f2b186a579e20539e32",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_NQ.csv.gz",
+      "bytes": 163991,
+      "sha256": "2b4e094243277ad8c940ce43ffed3d58ff5fd381288b3d990be07116fb922df9",
+      "git_blob": "b4d66d63650be7471b16d9eeefa00f5f50101fd1",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_YM.csv.gz",
+      "bytes": 154031,
+      "sha256": "ec21e3b0af52ce8b2d7322a033e13aaaa8714faf046fda5be707edd0bc861ea3",
+      "git_blob": "3fdb88671ee9fe2e75d1a057253af4f576f975db",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_ZB.csv.gz",
+      "bytes": 146785,
+      "sha256": "a94be3828ce552bbaf898fd81b4fe6efc7279a7023130133e959a07a999361b8",
+      "git_blob": "05c0d0d68d5345c0cd7576d470d6a7f6b0baee83",
+      "sidecars": []
+    },
+    {
+      "path": "data/d499_trades_ZN.csv.gz",
+      "bytes": 154426,
+      "sha256": "e5528eba1379d05270ddd4731276bd3d620ac1b5a86d0757de223028aeecd1c7",
+      "git_blob": "c1be10c6e30296cba396a3c71d2673ac0377a3c0",
+      "sidecars": []
+    },
+    {
+      "path": "data/d504_signal_and_returns.csv.gz",
+      "bytes": 42197,
+      "sha256": "e370a31281aecffd020a048ac22b44e5168a70d3d9aee1877c739f14ee099b3a",
+      "git_blob": "baf1c6e3258def1a87318e744e2df6dfc1103e93",
+      "sidecars": []
+    },
+    {
+      "path": "data/d506_cells.csv.gz",
+      "bytes": 4143,
+      "sha256": "a2109baa22ab9072cf76f4da83b89b7376c2a207ef0b56c455c1407ecdabc698",
+      "git_blob": "a769b397ab12e2cb207e13a383fc4f7b4a3577e6",
+      "sidecars": []
+    },
+    {
+      "path": "data/d508_quintiles.csv.gz",
+      "bytes": 391,
+      "sha256": "85d4bdf5f3ef7ec57fc15af3eac5910679c5b138713d128a0b71b6dd0a18fdfc",
+      "git_blob": "e3bdf50c4637317dea24f3e0486b81cd2518d55b",
+      "sidecars": []
+    },
+    {
+      "path": "data/d526_curve_strip_CL_GC.csv.gz",
+      "bytes": 1275906,
+      "sha256": "fafe05e069cd1d0ee5fe95f933d16b4b4e3cfc5ddba8af5d07bf5df85c936c15",
+      "git_blob": "65a8ea177a6f4578a7177dcb3721ad468f286362",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/cftc_cot_raw.csv.gz",
+      "bytes": 3104239,
+      "sha256": "cb6eeea14df9b5f8b284457d9b463b73bcb2ba5abc4d9880d33a06d0c14f5895",
+      "git_blob": "104d1b3c3c17a5c2f78d96fc3046949319ddbe4c",
+      "sidecars": [
+        "data/fixtures/cftc_cot_raw.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/cohort3_intraday_15m_raw.csv.gz",
+      "bytes": 7276748,
+      "sha256": "02934531d08bbcaf05d74c2f75b059494bad0bab83838479b12153f926802709",
+      "git_blob": "df73dcb6d46f64ee77cdfb35d59f3c262dfa2c7c",
+      "sidecars": [
+        "data/fixtures/cohort3_intraday_15m_raw.meta.json",
+        "data/fixtures/cohort3_intraday_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/cohort4_intraday_15m_raw.csv.gz",
+      "bytes": 21994997,
+      "sha256": "0d28754747ee0254abd1248607db965aea2a764665626d3c04aa0621d0622fef",
+      "git_blob": "2bebe59f3ca706ceb7431426c81c89403140e11b",
+      "sidecars": [
+        "data/fixtures/cohort4_intraday_15m_raw.meta.json",
+        "data/fixtures/cohort4_intraday_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_binance_15m_raw.csv.gz",
+      "bytes": 25244954,
+      "sha256": "ac8d4f52ff79ebff26a467deb5fa2eefe1e5e2133b5f753aed32856ace637964",
+      "git_blob": "a2f9cab4e7c602f009652e39392004c4c24e5e42",
+      "sidecars": [
+        "data/fixtures/crypto_binance_15m_raw.meta.json",
+        "data/fixtures/crypto_binance_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_book_2018_raw.csv.gz",
+      "bytes": 4029144,
+      "sha256": "12eb55c5e300122154bb6cdc481588ffa1a09756e925f86e825b25f470f0e87e",
+      "git_blob": "537d4cd1ec56496c2d9f4324234d97d20c4c449c",
+      "sidecars": [
+        "data/fixtures/crypto_book_2018_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_daily_2015_2025_raw.csv.gz",
+      "bytes": 216422,
+      "sha256": "471dbfd8a43532815046c6dfd3e9aa71e4138a56657bac030d26551b68407267",
+      "git_blob": "f48a2709d877316a2f5f6dc1d25d333d52ecfe91",
+      "sidecars": [
+        "data/fixtures/crypto_daily_2015_2025_raw.meta.json",
+        "data/fixtures/crypto_daily_2015_2025_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_intraday_15m_raw.csv.gz",
+      "bytes": 243365,
+      "sha256": "bba279079902393c3fce0ce8b9f012a91b0b06d7884888fcdc312c7f2e2763a2",
+      "git_blob": "74680be9b883e9608c184475c73a94cb73c7583b",
+      "sidecars": [
+        "data/fixtures/crypto_intraday_15m_raw.meta.json",
+        "data/fixtures/crypto_intraday_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_intraday_1h_raw.csv.gz",
+      "bytes": 842212,
+      "sha256": "82db8ee334714eac19d41ce559fd8294eaf40b333a90c0fc69b8db7484f86776",
+      "git_blob": "ed6ff7199acc733d76a5b174c45d5165bda3da39",
+      "sidecars": [
+        "data/fixtures/crypto_intraday_1h_raw.meta.json",
+        "data/fixtures/crypto_intraday_1h_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_intraday_30m_raw.csv.gz",
+      "bytes": 128509,
+      "sha256": "7d38896b6ff47f3a371eefd5d1cff304aaa96f7ee6a5dabf8492068194368341",
+      "git_blob": "7133d6675c03814e4159284a652d507c00c0e75f",
+      "sidecars": [
+        "data/fixtures/crypto_intraday_30m_raw.meta.json",
+        "data/fixtures/crypto_intraday_30m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/crypto_universe_2015_2025_raw.csv.gz",
+      "bytes": 6654222,
+      "sha256": "e88fb7eb2fcdb7e770e2c558ad6f88b2edb363887a3c5259cee9b95b541a2ffb",
+      "git_blob": "83a0a4aea89436c7352cfba0802376fcf35889e2",
+      "sidecars": [
+        "data/fixtures/crypto_universe_2015_2025_raw.meta.json",
+        "data/fixtures/crypto_universe_2015_2025_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/es_c1_holds.csv.gz",
+      "bytes": 196174,
+      "sha256": "d0cbfc4a5c1b8661a87fa0a3e89947556e4b257b061b344f3e9a147ab7c6915a",
+      "git_blob": "db3f4b8c986929a2bb751e3e6e90898131b4498a",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/es_daily_marks.csv.gz",
+      "bytes": 184979,
+      "sha256": "b5c21a97c0cd788d58444b818bd2f465e0e937ddd1818852369c04df06b63a5b",
+      "git_blob": "8d580d27bbc063defd9ceaf560d5813c0778a248",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/es_front_1m_boundaries.csv.gz",
+      "bytes": 46569,
+      "sha256": "0bd4292c98288ce6725871c30f45ba0aaf271a1fd4cfb3cd82a3032820aa24a1",
+      "git_blob": "7898e7ad3087e398618319f0933ebbcdee9327cb",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/es_hold_ladder.csv.gz",
+      "bytes": 1139490,
+      "sha256": "4620935740198520875e2ae2932686b236cb4ef2eccb7d952fbe4b3e13cb5ec0",
+      "git_blob": "e5a15ac77a0bdb3299f7eb1e62e85b41a6c4f9fc",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/es_minute_bars.parquet",
+      "bytes": 57576534,
+      "sha256": "f548050707ea7a1f7f05ac6766ca52923d6cad7488bce5c76b282b28fd76c4b6",
+      "git_blob": "d61226f452ef0c063209b51fd258164072e37625",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/es_stop_grid.csv.gz",
+      "bytes": 1338307,
+      "sha256": "458b066f03368fcf28251cf7674ba0066747a8191bf37942f8bb64f7971fff03",
+      "git_blob": "3518e4740307d7b033d55b79c25e3849b9a87bfb",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/etf_intraday_15m_panel.csv.gz",
+      "bytes": 48688281,
+      "sha256": "aa517b825cbaa4b61010ab48d9d1adfe6f95ebb8ac33cacd6f5770500f7d4a07",
+      "git_blob": "147b766ae398057a70e63700277ad4ff14977b4f",
+      "sidecars": [
+        "data/fixtures/etf_intraday_15m_panel.meta.json",
+        "data/fixtures/etf_intraday_15m_panel_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/etf_intraday_15m_raw.csv.gz",
+      "bytes": 48948882,
+      "sha256": "69f932bfd4d1af27244f55545e100d225e5f3a84e995be53a3e371cf695f5041",
+      "git_blob": "211884951b7457ce66ddd987d3d94912640d6471",
+      "sidecars": [
+        "data/fixtures/etf_intraday_15m_raw.meta.json",
+        "data/fixtures/etf_intraday_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/etf_wide_daily_raw.csv.gz",
+      "bytes": 34987752,
+      "sha256": "688c36be471d257fa87fb93fcfc8a180d7c781cc5ac4f9bbbfd492e2aa6bad45",
+      "git_blob": "2ddeaaf0768024e4745533fdc8de5f79eaa9820f",
+      "sidecars": [
+        "data/fixtures/etf_wide_daily_raw.meta.json",
+        "data/fixtures/etf_wide_daily_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_breadth_hourly.csv.gz",
+      "bytes": 34842550,
+      "sha256": "c64dfe70211242368772da005e05e11ed2f2e779e6599d0e0a6a2bbabee355de",
+      "git_blob": "98349fda1f415729658a7ad7e3326fd864b66a01",
+      "sidecars": [
+        "data/fixtures/fut_breadth_hourly.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_crossing_tbbo.csv.gz",
+      "bytes": 7598115,
+      "sha256": "3ffa6f09a47b37676749eb8e5a03fd064eaf04a062f00591594eed99b722bb0f",
+      "git_blob": "dcc1dc16a3703e348e4acae4901a421b3bf7c040",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_day1m.parquet",
+      "bytes": 400992632,
+      "sha256": "074977e7ed5c2e693c1e65962fc138ca7c08f2b18b11eb4bc3f566a7ae1fed9c",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fut_day1m.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_day1m_mid.parquet",
+      "bytes": 8929095,
+      "sha256": "54dc9ea273830ba0ec3c516803c897f54d7af9b7ad142de95ed73b4f80d5725a",
+      "git_blob": "473c75367abd5767d7ba1909d3cec0b6c8ee8865",
+      "sidecars": [
+        "data/fixtures/fut_day1m_mid.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_day5m.parquet",
+      "bytes": 102453907,
+      "sha256": "aa2eb1474d8368e94085ca3522c981a6f15d15c46f09dcf2a084e38a37a24b20",
+      "git_blob": "ebff9fb4d60d076eddbe001a8b26c7b0dee50b47",
+      "sidecars": [
+        "data/fixtures/fut_day5m.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_day5m_mid.parquet",
+      "bytes": 2280654,
+      "sha256": "5719bc15c2afab5c1e4095ebf018562b1488b22009e1d04a2408d73138160738",
+      "git_blob": "92e1017b4e87a601e63ca33e7dead4550f21187c",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_ES_rth_1m.csv.gz",
+      "bytes": 14779617,
+      "sha256": "0d21ed3dc5cf2e95471ef2c3d177d6e453dcb0a76061fb147d487a20fcc313c9",
+      "git_blob": "7656b834a499af30b187d7af311a1b25700bc5d2",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_index_rolls.csv.gz",
+      "bytes": 3463,
+      "sha256": "58cb02dbb13c0e551d55eed5c9f97b87717a380f96bfe1f93b89940670b1516d",
+      "git_blob": "14cb617020980714bdaa009f868669c26b48e0d1",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_index_sessions.csv.gz",
+      "bytes": 232049,
+      "sha256": "ee1e8415e35f395ef930f6f112530cbe7384eb09324fcf199513272048fc4299",
+      "git_blob": "5a8c3da5cbc548a93d12d16efc307b0eae59b871",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_micro_flow_5m.csv.gz",
+      "bytes": 12251305,
+      "sha256": "bec9713861b9e6ac8ff2499f6a74563eae286b765d17bc2ce4086f1028df13f4",
+      "git_blob": "b0c16b005c2351ed2678a327112c8caf6dc47179",
+      "sidecars": [
+        "data/fixtures/fut_micro_flow_5m.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_micro_flow_rolls.csv.gz",
+      "bytes": 3947,
+      "sha256": "4f56e290ea8d6592ffad7537506c2e164b5173e5d79626e8f4473616eaec98c4",
+      "git_blob": "83d67da5270c08b1f2566033043b1d3286da5d6f",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_NQ_rth_1m.csv.gz",
+      "bytes": 17040588,
+      "sha256": "1d8ba6c1f9197013533bafd43d7e8ad94794523d591189b365a968aaaf09f81f",
+      "git_blob": "135428d9eae1149f2e9abd704d78b12536f83093",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_open_interest_daily.csv.gz",
+      "bytes": 347338,
+      "sha256": "b92f0068656bd05b70ab50fc8e6f250160d27a46aa8b2c12afb41c6a7842bb36",
+      "git_blob": "1950958f958cc22de19ecfbeeb95505723495805",
+      "sidecars": [
+        "data/fixtures/fut_open_interest_daily.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_RTY_rth_1m.csv.gz",
+      "bytes": 10159374,
+      "sha256": "be5c6d381637ab4e6d212abc3ce0355239776006fc4f976fe842352576928f1d",
+      "git_blob": "9e3e9965cad5b001be4ee6e0d08b8b674ec6c107",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_sessions_hourly.csv.gz",
+      "bytes": 9081460,
+      "sha256": "1e4ec83a21f4d44c3748b22bfb569fbbf12da6ea763880827b300ca4d15b1e31",
+      "git_blob": "0809838e59daa48cd9fe7213bd30c05da84c0418",
+      "sidecars": [
+        "data/fixtures/fut_sessions_hourly.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fut_sessions_rolls.csv.gz",
+      "bytes": 10107,
+      "sha256": "a13801e8474ba03ca0bab5433434f06fe54cf601dfefbdb9fe1eea93f7945ef6",
+      "git_blob": "2e4cabff517c8ad88b6b4fff0e151947b9057f26",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_spread_1m.csv.gz",
+      "bytes": 950200,
+      "sha256": "f4aad780602d3dcff03e222e03ba17d7235298ac0e809d98bbb3aa9a262029e6",
+      "git_blob": "d25169d351d5bf482c2af178298803ef164437e3",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_spread_all_1m.csv.gz",
+      "bytes": 6281155,
+      "sha256": "a1ca3ba244e3ed52da6cff7699a16f49e6c61241402d6a0c75c8b37fe80a1195",
+      "git_blob": "867125a97a04e291ed2a644af664b0941a50f802",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_trade_counts.csv.gz",
+      "bytes": 25433,
+      "sha256": "20ed21d76669b7ec2e92ec017f7349a59fcd9742bb5f71da2eb9509871f39117",
+      "git_blob": "876f7e66680ce72e74da3683ca30327b08920e64",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_YM_rth_1m.csv.gz",
+      "bytes": 15250215,
+      "sha256": "8ed7202751507db1f2c2e76aaf49e57f6eafd61f7cc163b73356f8e9dacc5783",
+      "git_blob": "abcfa2ad0fd1c2bbcda50ba468651ec18c4a36aa",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/holdout_intraday_15m_panel.csv.gz",
+      "bytes": 14245018,
+      "sha256": "fcdf161abf3637ed8fb101a64a54dddde5a7f086e09d46689378fd899b8d47ea",
+      "git_blob": "33f15e7e80740e6b9244afc63725f19982cbb0c1",
+      "sidecars": [
+        "data/fixtures/holdout_intraday_15m_panel_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/holdout_intraday_15m_raw.csv.gz",
+      "bytes": 14264635,
+      "sha256": "fa6e2d628da8e9e5f8a1d7c4a690d3065e55733bed91cf02b8b23c380b74dd50",
+      "git_blob": "01a043078c2549698669b4f024ef121b226a3813",
+      "sidecars": [
+        "data/fixtures/holdout_intraday_15m_raw.meta.json",
+        "data/fixtures/holdout_intraday_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/index_extended_15m_raw.csv.gz",
+      "bytes": 14285038,
+      "sha256": "ae311bae5167afc51fd1225fc03b6674039f3e11e827ac6eb01a117a78a7325b",
+      "git_blob": "04b754787bcedef9e24cd72008a81808c8941968",
+      "sidecars": [
+        "data/fixtures/index_extended_15m_raw.meta.json",
+        "data/fixtures/index_extended_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/micro_minute_volume.csv.gz",
+      "bytes": 2948886,
+      "sha256": "4028b3da07d01e6242816ba7750614fae39d56b4250f35a41d01a63a4a11f1b3",
+      "git_blob": "56103cb462138e314faaa943373718ac855e7d20",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/single_name_intraday_15m_panel.csv.gz",
+      "bytes": 7000063,
+      "sha256": "c1a1a8e0febb7358f932e5a5e0cebd173c2f949e929ec515a437b46ddf470101",
+      "git_blob": "2ed22f61835054035aea9f04ed72deddb7ee7aaa",
+      "sidecars": [
+        "data/fixtures/single_name_intraday_15m_panel_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/single_name_intraday_15m_raw.csv.gz",
+      "bytes": 7127311,
+      "sha256": "891ee24e4481d9db38165f71043a384770f3576f839c86d7e63f8ec9bc763d1b",
+      "git_blob": "d766de5e3235a212efd9e7c9a9b85728a7572113",
+      "sidecars": [
+        "data/fixtures/single_name_intraday_15m_raw.meta.json",
+        "data/fixtures/single_name_intraday_15m_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_daily_2015_2024_raw.csv.gz",
+      "bytes": 2493032,
+      "sha256": "f4e1ae184f91587b81f5c19f0c88444804334c50c8199ed6ac9800573e38f584",
+      "git_blob": "8aad94326256e21805fb3f46c7148fd7f269c57f",
+      "sidecars": [
+        "data/fixtures/universe_daily_2015_2024_raw.meta.json",
+        "data/fixtures/universe_daily_2015_2024_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_daily_extended_raw.csv.gz",
+      "bytes": 4181822,
+      "sha256": "b6978d9a3d641344c8c8dbfdfee492a7e61606ff8e138c454fbb4b504418c708",
+      "git_blob": "2797e39dfc8ba387eab3dab8a0a5ad556c614b48",
+      "sidecars": [
+        "data/fixtures/universe_daily_extended_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_holdout_daily_raw.csv.gz",
+      "bytes": 2539820,
+      "sha256": "37a3fc227a0ef1c40a8c10a0cd951ec6c0d7ec81464ab5bbfbfca9a1a357756a",
+      "git_blob": "4d0cc18833941e35fa4576734e6e9b52bdf8ab73",
+      "sidecars": [
+        "data/fixtures/universe_holdout_daily_raw.meta.json",
+        "data/fixtures/universe_holdout_daily_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_holdout_extended_raw.csv.gz",
+      "bytes": 3004127,
+      "sha256": "4c82632b832db917293e88215159b7cfbbb20bfc50dc965fc70cf226ebbd9ac9",
+      "git_blob": "7f46ce15fef7b9a978eb36a0bace11f83ea59a20",
+      "sidecars": [
+        "data/fixtures/universe_holdout_extended_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_holdout_forward.csv.gz",
+      "bytes": 2971089,
+      "sha256": "fc59a9ffbddace88e2625ae94e06c368abad9d838d051e6f3e9277b0f1b0f582",
+      "git_blob": "20e1c8492061f5f485cfa07e8bc8e59ce660d6a1",
+      "sidecars": []
+    },
+    {
+      "path": "data/fixtures/universe_parent57_forward.csv.gz",
+      "bytes": 2989418,
+      "sha256": "38a9ff8558c280607d18cd192ff09a9b2084e3218961ddc7b549294d17d1a84e",
+      "git_blob": "a33f99536a39e18783b22361c7c4cbe23e05235f",
+      "sidecars": [
+        "data/fixtures/universe_parent57_forward_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_wide_w1_raw.csv.gz",
+      "bytes": 32669350,
+      "sha256": "b50885c71c2b6bca22e029cd7036306afe79bc318f06aa50e7e6b358bc081eb2",
+      "git_blob": "174bbf3153c98b9b90dda0622a924d9cde40b95b",
+      "sidecars": [
+        "data/fixtures/universe_wide_w1_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/universe_wide_w5_raw.csv.gz",
+      "bytes": 17288951,
+      "sha256": "0a4377bd3f1b0d28dfa40c95615747f34d92e22092c4401afe42760ef7604efe",
+      "git_blob": "18b0ba3e3998f5a98577cfd399fdc3bee72ab958",
+      "sidecars": [
+        "data/fixtures/universe_wide_w5_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/us_shorts_daily_holdout.csv.gz",
+      "bytes": 36251638,
+      "sha256": "7d895e13562c8e453e74b684b21f6999ced0eb8dbaa0fbd397703a83939d842c",
+      "git_blob": "a0c1023234cb22523996a04e55330dc15f51aa37",
+      "sidecars": [
+        "data/fixtures/us_shorts_daily_holdout.meta.json",
+        "data/fixtures/us_shorts_daily_holdout_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/us_shorts_daily_holdout2.csv.gz",
+      "bytes": 26022801,
+      "sha256": "7e31c04642fb46a949e230cf536c6e62d9a13bbbe1418552c10b025bfa363364",
+      "git_blob": "9c5f3f988e96da22f5c59fc5c25ad23ff6802529",
+      "sidecars": [
+        "data/fixtures/us_shorts_daily_holdout2.meta.json",
+        "data/fixtures/us_shorts_daily_holdout2_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/us_shorts_daily_raw.csv.gz",
+      "bytes": 69224984,
+      "sha256": "82123e6fffb8b503840290356497bb81f938fe1c6ac0b8190e9cb61e6b993e67",
+      "git_blob": "25c0052cbe7bbe5314709e146815f150157fe344",
+      "sidecars": [
+        "data/fixtures/us_shorts_daily_raw.meta.json",
+        "data/fixtures/us_shorts_daily_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/wide_extended_15m_raw.csv.gz",
+      "bytes": 34253051,
+      "sha256": "7bf352da990d42581016827f0c64607b5c64b9c9c27380d2aa6e26a2f5b4ec26",
+      "git_blob": "c94a2876bdcb09c4fc660524178b4598ad6b6105",
+      "sidecars": [
+        "data/fixtures/wide_extended_15m_raw.meta.json",
+        "data/fixtures/wide_extended_15m_raw_events.json"
+      ]
+    }
+  ]
+}
