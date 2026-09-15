@@ -68,11 +68,12 @@ def test_the_extended_fixture_is_the_same_universe():
     assert SUMMARY["raw_bars"] == 4_222
 
 
-def test_the_split_is_applied_to_returns_not_to_the_signal():
+def test_the_split_is_applied_to_returns_not_to_the_signal(loading_a_panel):
     """A sub-period must be scored from the SAME position matrix as the full span,
     masked afterwards -- never by re-deriving the signal on a truncated series,
     which would give the early window a warm-up it never had."""
-    panel, start, books, ones = R.books_on(*R.FIXTURES["extended"])
+    with loading_a_panel():
+        panel, start, books, ones = R.books_on(*R.FIXTURES["extended"])
     dates = np.array([d[:10] for d in panel.dates[start:]])
     full_mask = np.ones(len(dates), dtype=bool)
     a = R.sub_score(panel, books["S1"], start, full_mask)
@@ -84,8 +85,9 @@ def test_the_split_is_applied_to_returns_not_to_the_signal():
     assert R.sub_score(panel, books["S1"], start, new)["bars"] == int(new.sum())
 
 
-def test_the_combined_book_is_the_union_at_full_capital():
-    panel, start, books, _ = R.books_on(*R.FIXTURES["extended"])
+def test_the_combined_book_is_the_union_at_full_capital(loading_a_panel):
+    with loading_a_panel():
+        panel, start, books, _ = R.books_on(*R.FIXTURES["extended"])
     np.testing.assert_array_equal(books["C"], np.maximum(books["S1"], books["S2"]))
 
 

@@ -200,9 +200,10 @@ def test_the_combination_arithmetic_is_the_closed_form():
         assert SUMMARY["combined"][f"S1_plus_{k}"]["sharpe"] == pytest.approx(want, rel=1e-12)
 
 
-def test_no_look_ahead_in_the_walk():
+def test_no_look_ahead_in_the_walk(loading_a_panel):
     """A close moved from bar t onward may not change any position at index <= t."""
-    panel, cleaned = R.L.load_panel()
+    with loading_a_panel():
+        panel, cleaned = R.L.load_panel()
     start = max(R.M.impulse_warm_up_bars(), R.M.warm_up_bars(),
                 R.M.MATCHED_MOMENTUM_LOOKBACK)
     up, gl, il, atr = R.signals(panel, cleaned, start)

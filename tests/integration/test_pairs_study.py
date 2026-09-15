@@ -284,13 +284,14 @@ def test_beta_one_factory_reproduces_the_default_path_exactly(study, tmp_path):
         assert hedged_result.curves[m].equity == default_result.curves[m].equity
 
 
-def test_bounded_run_on_the_real_universe_fixture(tmp_path):
+def test_bounded_run_on_the_real_universe_fixture(tmp_path, requires_panel):
     # The real data path, bounded to ~2 windows so the suite stays fast: slice the
     # committed fixture's first 500 bars and run one multiplier pair.
     from backtest_framework.data.corporate_actions import load_events_json
     from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
 
     fixture = REPO / "data" / "fixtures" / "universe_daily_2015_2024_raw.csv.gz"
+    requires_panel(fixture)
     bars, volumes = load_fixture_csv_with_volumes(fixture)
     actions = load_events_json(REPO / "data" / "fixtures" / "universe_daily_2015_2024_raw_events.json")
 

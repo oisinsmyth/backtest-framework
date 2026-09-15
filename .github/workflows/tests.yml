@@ -1,0 +1,54 @@
+# The verification gates, run by a machine that has never seen this repository.
+#
+# The project's governing claim is that trust is enforced by structure rather than convention
+# (PHILOSOPHY.md), and a suite that only ever runs on the author's laptop is convention. This
+# workflow is the structure.
+#
+# WHAT A RUNNER DOES NOT HAVE: the bulk data panels. D536 dropped 115 of them (844 MB) from the
+# index, so a clone carries the library, the tests and the small evidence artifacts and nothing
+# else. Roughly 64 tests skip here for want of a panel, named individually by the skip reason and
+# recoverable from data/data_manifest.json. Every golden master, every property test and the
+# vectorbt cross-engine reconciliation run on a clone, because they use synthetic bars or a small
+# tracked .csv.
+#
+# NETWORK: none. The 5 tests marked `live_fetch` are excluded by the `addopts` in pyproject.toml,
+# which is D24's cross-cutting gate ("CI runs offline"), not a decision taken here.
+
+name: tests
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # The reviewer's first command, kept as its own job so a break in the anchored ledgers is
+  # visible in seconds rather than after the full run. 91 tests, 0.58s locally.
+  golden:
+    name: golden masters
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run pytest -q tests/golden
+
+  suite:
+    name: full suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      # -rs so the skipped panel-dependent tests are listed by name in the log. A silent skip
+      # is how a suite quietly stops testing anything; if the count climbs, it should be read.
+      - run: uv run pytest -q -rs

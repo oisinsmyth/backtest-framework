@@ -120,9 +120,10 @@ def test_the_universe_retains_losers_but_not_the_2021_blowups():
         "the benchmark is too benign -- losers were removed somewhere"
 
 
-def test_the_panel_is_rectangular_after_cleaning():
+def test_the_panel_is_rectangular_after_cleaning(loading_a_panel):
     """`clean` drops bars per symbol, so the builder iterates to a fixed point."""
-    panel, start, books, ones = R.books_on_crypto()
+    with loading_a_panel():
+        panel, start, books, ones = R.books_on_crypto()
     assert len(set(len(r) for r in panel.closes)) == 1
     assert panel.closes.shape[0] == SUMMARY["n_symbols"]
     np.testing.assert_array_equal(books["C"], np.maximum(books["S1"], books["S2"]))

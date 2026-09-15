@@ -53,7 +53,8 @@ def _short_series(n: int = 120) -> list[TimestampedBar]:
 
 
 @pytest.fixture(scope="module")
-def cleaned_subset():
+def cleaned_subset(requires_panel):
+    requires_panel(FIXTURE)
     raw_bars, raw_volumes = load_fixture_csv_with_volumes(FIXTURE)
     bars = {s: raw_bars[s] for s in SUBSET}
     volumes = {s: raw_volumes[s] for s in SUBSET}

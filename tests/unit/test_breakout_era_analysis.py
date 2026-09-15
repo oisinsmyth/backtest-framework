@@ -144,14 +144,14 @@ def test_exposure_by_year_uses_timestamps_not_run_relative_indices():
 
 
 @pytest.fixture(scope="module")
-def btc():
+def btc(requires_panel):
     from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
     from pathlib import Path
 
     repo = Path(__file__).resolve().parent.parent.parent
-    bars, _ = load_fixture_csv_with_volumes(
-        repo / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
-    )
+    fixture = repo / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
+    requires_panel(fixture)
+    bars, _ = load_fixture_csv_with_volumes(fixture)
     return bars["BTC-USD"]
 
 

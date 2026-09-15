@@ -101,12 +101,13 @@ _FIXTURE_SNAPSHOT_IDS = {
 
 @pytest.mark.parametrize("name,expected", sorted(_FIXTURE_SNAPSHOT_IDS.items()))
 def test_committed_fixtures_still_freeze_to_their_original_snapshot_id(
-    name, expected, tmp_path
+    name, expected, tmp_path, requires_panel
 ):
     from backtest_framework.data.corporate_actions import load_events_json
     from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
 
     fixtures = Path(__file__).resolve().parents[2] / "data" / "fixtures"
+    requires_panel(fixtures / f"{name}.csv.gz")
     bars, volumes = load_fixture_csv_with_volumes(fixtures / f"{name}.csv.gz")
     actions = load_events_json(fixtures / f"{name}_events.json")
 

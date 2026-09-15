@@ -196,10 +196,12 @@ def test_gzip_writes_are_reproducible_byte_for_byte(tmp_path):
     assert first.read_bytes()[4:8] == b"\x00\x00\x00\x00"  # mtime pinned to zero
 
 
-def test_committed_gzip_fixtures_still_load(tmp_path):
+def test_committed_gzip_fixtures_still_load(tmp_path, requires_panel):
     """Reads are untouched: the header field is metadata the decompressor ignores."""
     from pathlib import Path as _P
 
     fixtures = _P(__file__).resolve().parents[2] / "data" / "fixtures"
-    bars, volumes = load_fixture_csv_with_volumes(fixtures / "crypto_intraday_1h_raw.csv.gz")
+    panel = fixtures / "crypto_intraday_1h_raw.csv.gz"
+    requires_panel(panel)
+    bars, volumes = load_fixture_csv_with_volumes(panel)
     assert bars and volumes and len(bars["BTC-USD"]) == len(volumes["BTC-USD"])

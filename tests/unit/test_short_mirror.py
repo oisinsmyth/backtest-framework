@@ -230,7 +230,7 @@ def test_the_rotation_matches_exposure_and_turnover():
     assert rot.min() < 0.0 and rot.max() <= 0.0  # still a short book
 
 
-def test_the_book_at_bar_t_is_decided_at_t_minus_one():
+def test_the_book_at_bar_t_is_decided_at_t_minus_one(loading_a_panel):
     """The no-look-ahead property for a MEMORYLESS level rule, on the real panel.
 
     `hold_book` promises exactly one thing: `position[t] = mask[t-1]`, and nothing
@@ -238,7 +238,8 @@ def test_the_book_at_bar_t_is_decided_at_t_minus_one():
     and `sma` being causal, which `test_macd_ladder` pins separately -- so the
     property that belongs to THIS study is the shift, and it is asserted on every
     symbol and every bar rather than on a sampled perturbation."""
-    panel, cleaned = R.L.load_panel()
+    with loading_a_panel():
+        panel, cleaned = R.L.load_panel()
     start = max(R.M.impulse_warm_up_bars(), R.M.warm_up_bars(),
                 R.M.MATCHED_MOMENTUM_LOOKBACK)
     md, hs, ok = R.S.base_masks(panel, cleaned, start)

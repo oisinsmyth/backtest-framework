@@ -29,17 +29,19 @@ TOLERANCE = 1e-9
 
 
 @pytest.fixture(scope="module")
-def btc():
+def btc(requires_panel):
+    requires_panel(FIXTURE)
     bars, _volumes = load_fixture_csv_with_volumes(FIXTURE)
     return bars["BTC-USD"]
 
 
 @pytest.fixture(scope="module")
-def btc_volumes():
+def btc_volumes(requires_panel):
     """The volume series that goes with `btc`, for variants carrying the volume filter
     (D168). A filter declaring `requires_volume` refuses to run without it, which is the
     whole point of the three-state design — so any test sweeping `filter_variants()` has
     to supply it."""
+    requires_panel(FIXTURE)
     _bars, volumes = load_fixture_csv_with_volumes(FIXTURE)
     return volumes["BTC-USD"]
 

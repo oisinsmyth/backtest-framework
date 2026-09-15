@@ -28,7 +28,8 @@ TOLERANCE = 1e-9
 
 
 @pytest.fixture(scope="module")
-def bars():
+def bars(requires_panel):
+    requires_panel(FIXTURE)
     loaded, _volumes = load_fixture_csv_with_volumes(FIXTURE)
     return loaded
 

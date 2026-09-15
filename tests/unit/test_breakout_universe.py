@@ -262,7 +262,8 @@ def test_risk_free_return_compounds_at_the_studys_own_rate():
 
 
 @pytest.fixture(scope="module")
-def fixture_data():
+def fixture_data(requires_panel):
+    requires_panel(FIXTURE)
     return load_fixture_csv_with_volumes(FIXTURE)
 
 

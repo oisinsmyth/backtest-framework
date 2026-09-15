@@ -297,11 +297,12 @@ def test_the_measured_family_start_disagrees_with_the_published_one(meta):
 # ------------------------------------------------------------- reproducibility
 
 
-def test_the_fixture_is_byte_reproducible(meta):
+def test_the_fixture_is_byte_reproducible(meta, requires_panel):
     """D252 found `--build` producing 1,580 / 1,573 / 1,574 symbols across three
     runs of unchanged code. Here the content was stable but the FILE was not:
     gzip stamps an mtime into header bytes 4-7, so two identical builds hashed
     differently. Written with mtime=0, which this asserts directly."""
+    requires_panel(FIXTURE)
     header = FIXTURE.read_bytes()[:10]
     assert header[:2] == b"\x1f\x8b", "not a gzip file"
     assert header[4:8] == b"\x00\x00\x00\x00", (
@@ -314,7 +315,9 @@ def test_the_licence_is_recorded_because_it_is_the_reason_this_is_committed(meta
     a work of the US government and therefore public domain, which is the whole
     reason it may live in the repo at all."""
     assert "PUBLIC DOMAIN" in meta["licence"]
-    assert FIXTURE.exists() and MAP.exists()
+    # MAP and the sidecar meta stay tracked; the panel itself left the index in D536 for
+    # size, not for licence. The licence is why it MAY be committed, never why it must be.
+    assert MAP.exists()
 
 
 def test_the_span_reaches_back_to_1986(meta):

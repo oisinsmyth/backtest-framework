@@ -44,10 +44,11 @@ SUMMARY = json.loads((REPO / "data" / "tsmom_arm_summary.json").read_text(encodi
 # --------------------------------------------------------------------------
 
 
-def test_a_subset_book_is_equal_weighted_over_the_subset():
+def test_a_subset_book_is_equal_weighted_over_the_subset(loading_a_panel):
     """Zeroing rows is NOT the same as restricting the universe, and the gap is
     exactly the factor n_subset / n_total."""
-    panel, _ = R.L.load_panel()
+    with loading_a_panel():
+        panel, _ = R.L.load_panel()
     rows = [i for i, s in enumerate(panel.symbols) if s in R.NON_EQUITY]
     start = 1000
 
@@ -68,8 +69,9 @@ def test_a_subset_book_is_equal_weighted_over_the_subset():
     )
 
 
-def test_the_subset_panel_carries_the_right_rows():
-    panel, _ = R.L.load_panel()
+def test_the_subset_panel_carries_the_right_rows(loading_a_panel):
+    with loading_a_panel():
+        panel, _ = R.L.load_panel()
     rows = [3, 7, 11]
     sub = R.subset_panel(panel, rows)
     np.testing.assert_array_equal(sub.closes, panel.closes[rows])

@@ -71,7 +71,7 @@ def test_d220_prices_its_arms_with_the_existing_runners_and_not_its_own():
     assert V.PPY is V.L.PPY
 
 
-def test_reading_volume_does_not_move_the_price_path():
+def test_reading_volume_does_not_move_the_price_path(requires_panel):
     """The pre-registered stop: if plumbing volume changes a published number,
     everything halts. `load_fixture_csv` delegates to the with-volumes loader and
     drops the volumes, so the bars must be identical objects by value."""
@@ -80,6 +80,7 @@ def test_reading_volume_does_not_move_the_price_path():
         load_fixture_csv_with_volumes,
     )
 
+    requires_panel(V.L.FIXTURE)
     bars_only = load_fixture_csv(V.L.FIXTURE)
     bars_with, volumes = load_fixture_csv_with_volumes(V.L.FIXTURE)
     assert set(bars_only) == set(bars_with)
@@ -88,8 +89,9 @@ def test_reading_volume_does_not_move_the_price_path():
         assert len(volumes[sym]) == len(bars_only[sym])
 
 
-def test_the_volume_matrix_is_aligned_to_the_cleaned_grid_by_timestamp():
-    panel, cleaned = V.L.load_panel()
+def test_the_volume_matrix_is_aligned_to_the_cleaned_grid_by_timestamp(loading_a_panel):
+    with loading_a_panel():
+        panel, cleaned = V.L.load_panel()
     vol = V.volume_matrix(panel, cleaned)
     assert vol.shape == panel.closes.shape
     assert np.isfinite(vol).all()

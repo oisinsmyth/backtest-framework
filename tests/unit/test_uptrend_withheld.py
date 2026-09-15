@@ -65,10 +65,13 @@ def test_the_runner_reproduces_the_mined_numbers():
     assert rep["S1"] == pytest.approx(0.746, abs=5e-4)
 
 
-def test_the_two_universes_share_no_tickers():
+def test_the_two_universes_share_no_tickers(requires_panel):
     """The whole point of an instrument holdout."""
     import csv
     import gzip
+
+    requires_panel(R.FIXTURES["mined"][0])
+    requires_panel(R.FIXTURES["holdout"][0])
 
     def syms(path):
         out = set()

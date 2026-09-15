@@ -151,8 +151,9 @@ def test_the_stop_exits_the_bar_after_the_close_that_breached_it():
 # --------------------------------------------------------------------------
 
 
-def test_no_look_ahead_in_the_walk():
+def test_no_look_ahead_in_the_walk(requires_panel):
     R.L.FIXTURE, R.L.EVENTS = R.FIXTURES["57"]
+    requires_panel(R.L.FIXTURE)
     panel, cleaned = R.L.load_panel()
     start = max(R.M.impulse_warm_up_bars(), R.M.warm_up_bars(),
                 R.M.MATCHED_MOMENTUM_LOOKBACK)
