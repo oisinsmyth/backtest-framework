@@ -151,7 +151,7 @@ cannot rot.
 - [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1–D49 migrated + D50 onward as they're made
 - [`docs/RULES.md`](docs/RULES.md) — standing scope/sequencing rules (R1–R5), apply continuously rather than once
 - [`CHANGELOG.md`](CHANGELOG.md) — what shipped and when, Keep a Changelog format. Rationale lives in the decision records, not here.
-- [`AITODO.md`](AITODO.md) — Claude's current working task list for this project. Not a roadmap; reflects the next few steps only.
+- [`AITODO.md`](docs/internal/AITODO.md) — Claude's current working task list for this project. Not a roadmap; reflects the next few steps only.
 
 ## Working conventions
 

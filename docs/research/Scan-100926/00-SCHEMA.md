@@ -15,7 +15,7 @@ decision record without the principal's explicit permission.**
 **Sixteen briefs across four rounds, ~5.12M subagent tokens. Nothing is closed, nothing is admitted,
 both books are unchanged, and NOTHING HAS BEEN PROMOTED OUT OF `docs/research/`.** The principal
 promotes; this campaign does not. **Verified mechanically:** `Scan-100926` appears **0 times** in
-[`FINDINGS.md`](../../FINDINGS.md), [`PICKUP.md`](../../../PICKUP.md), [`BOOK.md`](../../BOOK.md),
+[`FINDINGS.md`](../../FINDINGS.md), [`PICKUP.md`](../../internal/PICKUP.md), [`BOOK.md`](../../BOOK.md),
 [`BOOK_PROP.md`](../../BOOK_PROP.md) and [`RULES.md`](../../RULES.md), and no commit of this campaign
 touched any of them or `docs/decisions/`.
 

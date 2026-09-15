@@ -156,7 +156,7 @@ accounts never touch real money. Topstep publishes this and it is almost never q
 | **D379 §4** | assumed a ladder. **Two of five firms have none**, and the ladder is worth −1.3% where it exists |
 | **D379 §2** | models **one** barrier option. It is **two in sequence** — MFFU's funded account starts at **$0**, not the account size, so the funded phase is a second down-and-out with its barrier below zero, on terms that differ from the one bought |
 | **D379 §5** | Hodder & Jackwerth (2007) splits it: risk-*reduction* near an **exogenous** barrier, risk-*increase* near an **endogenous** one, discriminated by continuation value — and **D379 A1's `fee ÷ P(pass)` IS that continuation value.** Neither section cites the other. Separately the canonical risk-shifting result (Brown–Harlow–Starks 1996) **did not replicate** (Busse 2001, an autocorrelation bias in a monthly vol estimator), so §5 must be argued from truncation, not the convex kink |
-| **[PICKUP](../../../PICKUP.md) §0d item 8** | C1's sweep should extend **an order of magnitude** below 0.48×, not a factor of two: `(1−x)^(2/f−1)` says a 4% floor needs about **1/9 Kelly** for an even chance of surviving |
+| **[PICKUP](../../internal/PICKUP.md) §0d item 8** | C1's sweep should extend **an order of magnitude** below 0.48×, not a factor of two: `(1−x)^(2/f−1)` says a 4% floor needs about **1/9 Kelly** for an even chance of surviving |
 | **[BOOK_PROP](../../BOOK_PROP.md)** | unchanged. **No candidate reopened, no hurdle amended, nothing admitted** |
 
 **Personal book:** [`09-personal-book-carry-forward.md`](09-personal-book-carry-forward.md). No

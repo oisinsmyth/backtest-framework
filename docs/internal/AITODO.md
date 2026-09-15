@@ -1,8 +1,8 @@
 # AI TODO
 
 Claude's current working task list for this project — not a roadmap (that's
-[`DEVELOPMENT_TIMETABLE.md`](DEVELOPMENT_TIMETABLE.md)) and not a decision log (that's
-[`docs/decisions/`](docs/decisions/README.md)). Kept short: only what's immediately in front of
+[`DEVELOPMENT_TIMETABLE.md`](../../DEVELOPMENT_TIMETABLE.md)) and not a decision log (that's
+[`docs/decisions/`](../decisions/README.md)). Kept short: only what's immediately in front of
 us. Update this at the start/end of each working session — stale entries here are worse than
 none.
 
@@ -456,7 +456,7 @@ corroborated by a correlated study on overlapping data.
 
 ## THE BOOK HAS ITS FIRST ENTRY — S1, the recovery rule (2026-08-27)
 
-[`docs/BOOK.md`](docs/BOOK.md). Admitted after [D237](docs/decisions/D237-the-recovery-rule-on-withheld-data.md),
+[`docs/BOOK.md`](../BOOK.md). Admitted after [D237](../decisions/D237-the-recovery-rule-on-withheld-data.md),
 the first pre-registered out-of-sample test anything in this programme has passed.
 
 - **T1 (60 new tickers, zero overlap):** +0.779 excess Sharpe against buy-and-hold's +0.230,
@@ -494,7 +494,7 @@ pre-registration, no runner, no null. **D245's never-seen cohort was not touched
 ## D249 — the inverse wedge breakout, closed (2026-08-28)
 
 Registered **separately and explicitly not as S3**, because it is the inverse of a failed
-construction and [D246](docs/decisions/D246-the-search-protocol-for-s3.md) Constraint 3 forbids
+construction and [D246](../decisions/D246-the-search-protocol-for-s3.md) Constraint 3 forbids
 complement-chasing under that protocol. **D245's reserved never-seen cohort was not spent** — the
 runner refuses to open it and the refusal is pinned by test.
 

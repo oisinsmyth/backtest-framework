@@ -141,7 +141,7 @@ with different arguments. Lane 08's closed forms plug straight into it:
   about 1/9 Kelly** for an even chance of surviving.
 
 That second one has an immediate consequence for the prop track worth recording here because it
-corrects a live queue item: **[PICKUP](../../../PICKUP.md) §0d item 8 says extend C1's size sweep
+corrects a live queue item: **[PICKUP](../../internal/PICKUP.md) §0d item 8 says extend C1's size sweep
 below 0.48×. The closed form says the value peak is an ORDER OF MAGNITUDE below, not a factor of
 two.**
 

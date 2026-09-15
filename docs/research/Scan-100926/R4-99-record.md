@@ -352,5 +352,5 @@ quarterly sort earning **0.377 [NW6 1.98]** in this programme's era is **not a g
 says so itself: marginal post-2010, and **every member of the family except the least computable one falls
 below `t` = 2.** **No backtest was run, no null drawn on our data, no candidate exists, no territory is
 closed, and NO AVENUE IS CLOSED** ([R15](../../RULES.md#r15): only the principal closes an avenue).
-**Both books are unchanged**, [`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../../PICKUP.md) are
+**Both books are unchanged**, [`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../internal/PICKUP.md) are
 untouched, **and nothing in this folder is elevated out of `docs/research/`.**

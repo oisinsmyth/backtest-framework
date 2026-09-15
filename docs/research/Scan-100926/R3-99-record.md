@@ -410,5 +410,5 @@ principal closes an avenue).
 
 **`C3`'s and `C4`'s results point opposite ways and neither is adopted.** The negative reading is not
 a verdict and the positive reading is not a green light. **Both books are unchanged**,
-[`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../../PICKUP.md) are untouched, **and nothing
+[`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../internal/PICKUP.md) are untouched, **and nothing
 in this folder is elevated out of `docs/research/`.**

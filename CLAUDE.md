@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 *How to work here.* Rules: `docs/RULES.md` · truth: `docs/FINDINGS.md` · state:
-`PICKUP.md`.
+`docs/internal/PICKUP.md`.
 
 ## Speed
 

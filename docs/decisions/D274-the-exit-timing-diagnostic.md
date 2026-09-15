@@ -205,7 +205,7 @@ of these cells.** Nothing here is a scored cell.
 ## What D274 closed, and how far the closure reaches
 
 **Time-based exits are CLOSED on this fixture.** It is recorded as such in
-[PICKUP.md §2](../../PICKUP.md) — *"exits, time-based | D274 | a random exit bar beats a fixed
+[PICKUP.md §2](../internal/PICKUP.md) — *"exits, time-based | D274 | a random exit bar beats a fixed
 one"* — and D274's verdict was then **used as a pre-registered input by a study that had not yet
 run**, which is the strongest evidence the finding was believed rather than rationalised:
 

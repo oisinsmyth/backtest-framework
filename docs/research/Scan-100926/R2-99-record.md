@@ -450,7 +450,7 @@ defect.**
 public files, `B2`'s and `B4`'s on the SEC's public endpoints, `B3`'s is transcription plus arithmetic
 on published tables. **No backtest was run, no null drawn, no candidate exists, no territory is
 closed, no avenue is closed** ([R15](../../RULES.md#r15): only the principal closes an avenue).
-**Both books are unchanged**, [`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../../PICKUP.md)
+**Both books are unchanged**, [`FINDINGS.md`](../../FINDINGS.md) and [`PICKUP.md`](../../internal/PICKUP.md)
 are untouched, **and nothing in this folder is elevated out of `docs/research/`.**
 
 **`B4`'s `F1` is a measured error rate on public filings, not a signal.** It says a construction is
