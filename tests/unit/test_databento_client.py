@@ -288,7 +288,8 @@ def test_client_errors_are_NOT_retried(mod, monkeypatch):
     """429 is a throttle and 5xx is the server's problem. Every other 4xx is OUR
     bug -- a wrong parameter name, a bad key -- and retrying it is pointless,
     rude, and hides the error behind a delay."""
-    import urllib.error, io as _io
+    import urllib.error
+    import io as _io
     monkeypatch.setattr(mod, "_CONSECUTIVE_FAILURES", 0)
     calls = []
 
@@ -307,7 +308,6 @@ def test_client_errors_are_NOT_retried(mod, monkeypatch):
 
 
 def test_there_is_a_hard_stop_rather_than_a_retry_loop(mod, monkeypatch):
-    import urllib.error, io as _io
     monkeypatch.setattr(mod, "_LIMITER", mod.RateLimiter(0.0))
     monkeypatch.setattr(mod, "_CONSECUTIVE_FAILURES", mod.MAX_CONSECUTIVE_FAILURES)
 

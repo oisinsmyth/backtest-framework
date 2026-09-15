@@ -39,6 +39,22 @@ jobs:
       - run: uv sync --locked
       - run: uv run pytest -q tests/golden
 
+  # ruff at the rules named in pyproject (E4/E7/E9/F -- errors, not style), and mypy over the
+  # library. Both are pinned in the dev group rather than fetched latest, so the gate cannot
+  # widen or narrow without a lockfile diff; `uv sync --locked` is what makes that true here.
+  lint:
+    name: lint and types
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run ruff check src tests
+      - run: uv run mypy
+
   suite:
     name: full suite
     runs-on: ubuntu-latest

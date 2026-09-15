@@ -1,7 +1,6 @@
 """Step 9 tail-risk gates (D36, D81)."""
 
 import numpy as np
-import pytest
 
 from backtest_framework.analytics.tail_risk import minimum_observations, var_cvar
 

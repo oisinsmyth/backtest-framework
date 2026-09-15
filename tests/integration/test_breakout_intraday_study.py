@@ -14,7 +14,7 @@ the resample-to-daily really does or does not reconcile with the provider's own 
 from __future__ import annotations
 
 import math
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pytest

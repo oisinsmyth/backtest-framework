@@ -36,8 +36,8 @@ PARAMS = FieldParams(k=2, cluster_atr=0.5)
 def _bars(rows) -> list[TimestampedBar]:
     start = datetime(2020, 1, 1)
     return [
-        TimestampedBar(start + timedelta(days=i), Bar(o, h, l, c))
-        for i, (o, h, l, c) in enumerate(rows)
+        TimestampedBar(start + timedelta(days=i), Bar(o, h, lo, c))
+        for i, (o, h, lo, c) in enumerate(rows)
     ]
 
 
@@ -49,8 +49,8 @@ def _walk(n: int, seed: int = 0, start: float = 100.0) -> list[TimestampedBar]:
         o = price
         c = max(1e-6, price + step)
         h = max(o, c) * (1.0 + abs(rng.normal(0.0, 0.005)))
-        l = min(o, c) * (1.0 - abs(rng.normal(0.0, 0.005)))
-        rows.append((o, h, l, c))
+        lo = min(o, c) * (1.0 - abs(rng.normal(0.0, 0.005)))
+        rows.append((o, h, lo, c))
         price = c
     return _bars(rows)
 

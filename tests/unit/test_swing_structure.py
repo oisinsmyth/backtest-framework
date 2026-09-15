@@ -10,11 +10,9 @@ version that computes pivots from visible bars and simply forgets the lag. This 
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
-import pytest
 
-from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.engine.dataview import build_data_view
 from backtest_framework.simulator.fills import Bar
 from backtest_framework.strategies.breakout import (

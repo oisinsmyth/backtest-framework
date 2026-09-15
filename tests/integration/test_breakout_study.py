@@ -12,12 +12,11 @@ the variant rows and not the window rows.
 from __future__ import annotations
 
 import math
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 import pytest
 
-from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.data.csv_fixture import load_fixture_csv_with_volumes
 from backtest_framework.registry.trial_registry import TrialRegistry, compute_trial_hash
 from backtest_framework.research import breakout_study as bs

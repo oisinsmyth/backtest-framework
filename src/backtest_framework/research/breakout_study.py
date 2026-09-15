@@ -57,7 +57,7 @@ from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions
 from ..engine.allocator import ConstantSplitAllocator
-from ..engine.backtest import BacktestResult, run_backtest
+from ..engine.backtest import run_backtest
 from ..engine.dataview import DataView
 from ..engine.strategy import ScheduledWeightStrategy
 from ..instruments.base import Instrument
@@ -541,7 +541,10 @@ class InTrainGridSelector:
         # selecting on pre-impact economics and then trading with impact — is real and is
         # stated in the study's own artifact.
         stack = replace(tier, impact_coefficient=0.0).build()
-        best_score, best_key, best_config = -math.inf, None, None
+        # No `best_score`: the score is already the first element of `best_key`, as `-score`,
+        # which is what the comparison below orders on. Carrying it a second time was a variable
+        # nothing read (ruff F841) rather than a defect -- the selection is unchanged.
+        best_key, best_config = None, None
         for n_entry, n_exit in self.grid:
             config = breakout_config(n_entry=n_entry, n_exit=n_exit, weight_source=self.weight_source)
             strategy = build_breakout_strategy(config, f"select-{self.symbol}", self.symbol)
@@ -566,7 +569,7 @@ class InTrainGridSelector:
             )
             key = (-score, n_entry, n_exit)
             if best_key is None or key < best_key:
-                best_score, best_key, best_config = score, key, config
+                best_key, best_config = key, config
         if best_config is None:
             # No combination produced a scoreable training window (e.g. never traded).
             # Fall back to the a-priori baseline and say so, rather than picking the

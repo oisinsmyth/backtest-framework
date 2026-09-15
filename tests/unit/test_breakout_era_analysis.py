@@ -17,7 +17,7 @@ import pytest
 from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.engine.backtest import BacktestResult
 from backtest_framework.research import breakout_study as bs
-from backtest_framework.research.trade_diagnostics import extract_episodes, summarise
+from backtest_framework.research.trade_diagnostics import extract_episodes
 from backtest_framework.simulator.fills import Bar
 
 EPOCH = datetime(2020, 1, 1)

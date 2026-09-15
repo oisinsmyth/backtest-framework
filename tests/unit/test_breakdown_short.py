@@ -337,7 +337,8 @@ def test_a_leg_that_turns_wild_is_down_weighted_only_afterwards():
 
     weights, _ = ds._inverse_vol_weights(long_r, short_r, ds.ENSEMBLE_MIN_BARS)
     # index i of `weights` is bar i + ENSEMBLE_MIN_BARS; [1] is the SHORT leg's share
-    at = lambda bar: weights[bar - ds.ENSEMBLE_MIN_BARS][1]
+    def at(bar):
+        return weights[bar - ds.ENSEMBLE_MIN_BARS][1]
 
     # Both legs still calm on the last pre-switch bar, so the split is near even.
     assert 0.4 < at(switch - 1) < 0.6

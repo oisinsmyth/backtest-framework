@@ -60,7 +60,6 @@ def test_close_to_close_vol_is_the_incumbent_not_a_lookalike():
     `InverseVolatilityWeight.weight()` takes `vol_window` returns from `vol_window + 1`
     closes and applies `statistics.stdev`. If D195's incumbent were subtly different, the
     whole comparison would be against a strategy nobody runs."""
-    from backtest_framework.engine.dataview import DataView
     from backtest_framework.strategies.breakout import InverseVolatilityWeight
 
     rng = random.Random(3)
