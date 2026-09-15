@@ -1,0 +1,25 @@
+# Line endings, pinned rather than inherited from whoever cloned the repo.
+#
+# WHY THIS FILE CHANGED NOTHING ON THE DAY IT LANDED. `git ls-files --eol` on 2026-09-15 reported
+# the index already uniformly LF -- 1,444 files i/lf w/lf, 1,372 i/lf w/crlf, 13 i/lf w/mixed, 4
+# genuine binaries. Not one file needed `git add --renormalize`. The divergence was entirely on
+# the worktree side, from `core.autocrlf=true` on the author's machine, which is why every commit
+# emitted "LF will be replaced by CRLF" and why nothing downstream had noticed.
+#
+# WHY IT IS WORTH HAVING ANYWAY. The CI added in 02a305f runs on ubuntu-latest and has never run.
+# Several tests hash or byte-compare tracked text -- tests/unit/test_cftc_cot_fixture.py on a gzip
+# header, tests/integration/test_binance_fixture.py:269, tests/unit/test_assembled_strategy.py:236
+# -- and "passes here, fails there" from a line ending is the least interesting way to spend a
+# first CI run. Declaring the convention costs nothing and removes the class.
+
+* text=auto eol=lf
+
+# Binary, so git never tries to translate them. The panels (*.parquet, *.npz, *.csv.gz, *.zip)
+# left the index in D536 and these rules should outlive that: they will be right again the moment
+# anything of those types is committed, and they cost nothing while nothing is.
+*.png     binary
+*.pdf     binary
+*.parquet binary
+*.npz     binary
+*.gz      binary
+*.zip     binary
