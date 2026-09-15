@@ -79,7 +79,8 @@ def P(*a):
     print(*a, flush=True)
 
 
-def resolve_entry(path, c, keep, tick, tick_usd, cost_tk, mode, off, stale, day_idx, b0, root):
+def resolve_entry(path, c, keep, tick, tick_usd, cost_tk, mode, off, stale, day_idx, b0, root,
+                  g=G):
     """One trade per confirmed extreme, under one entry mode.
 
     Target = the MIRROR of the entry residual, drift-carried (the ADDENDUM 12 best cell).
@@ -118,21 +119,21 @@ def resolve_entry(path, c, keep, tick, tick_usd, cost_tk, mode, off, stale, day_
                     t_fill, p_fill = t + k, px           # a stop fills at the realised price
                     break
             if t_fill is None:
-                out.append({"filled": 0.0, "root": root, "day_idx": day_idx})
+                out.append({"filled": 0.0, "root": root, "day_idx": day_idx, "i": float(i)})
                 continue
         # exits, measured from the FILL bar
         kk = np.arange(1, TAU + 1)
         j = t_fill + kk
         valid = j <= (n - 1)
         if not valid.any():
-            out.append({"filled": 0.0, "root": root, "day_idx": day_idx})
+            out.append({"filled": 0.0, "root": root, "day_idx": day_idx, "i": float(i)})
             continue
         F = path[np.minimum(j, n - 1)]
         lv = lvl + slope * (t_fill - t + kk)             # the level carried from the signal bar
         yk = F - lv
         y_fill = p_fill - (lvl + slope * (t_fill - t))
         y_tgt = -y_fill                                  # the mirror of the FILL's residual
-        y_stp = s * G * sd
+        y_stp = s * g * sd
         ht = ((yk - y_tgt) * s <= 0.0) & valid
         hs = ((yk - y_stp) * s >= 0.0) & valid
         i_t = int(np.argmax(ht)) if ht.any() else R.BIG
@@ -149,7 +150,7 @@ def resolve_entry(path, c, keep, tick, tick_usd, cost_tk, mode, off, stale, day_
         # (the exit still crosses) plus the full commission. Market and stop entries pay both.
         cross = cost_tk * tick_usd
         cost = (0.5 * cross if mode == "limit_deeper" else cross) + COMMISSION
-        out.append({"filled": 1.0, "root": root, "day_idx": day_idx,
+        out.append({"filled": 1.0, "root": root, "day_idx": day_idx, "i": float(i),
                     "t_in": float(day_idx * 2000 + b0 + t_fill),
                     "t_out": float(day_idx * 2000 + b0 + t_fill + d_),
                     "kind": float(kind), "bars": float(d_),
