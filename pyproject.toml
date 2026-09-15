@@ -3,6 +3,8 @@ name = "backtest-framework"
 version = "0.1.0"
 description = "Lego-brick-modular quant backtesting framework — see PHILOSOPHY.md"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Oisin Smyth", email = "oisin.smyth132@gmail.com" }
 ]
