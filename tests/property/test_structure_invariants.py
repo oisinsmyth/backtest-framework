@@ -5,8 +5,16 @@ on one seed. That is the right shape for a gate and the wrong shape for a guaran
 detector can read the future on the bars those four indices happen not to exercise. This
 file quantifies over the paths and the index instead.
 
-Conventions (D78): hypothesis with `derandomize=True`, so the suite is byte-deterministic
-in CI and hypothesis owns the seeding.
+Conventions (D78): hypothesis with `derandomize=True`, so hypothesis owns the seeding.
+
+**`derandomize=True` no longer implies the same examples in every run, and this file is where
+that was discovered.** Hypothesis 6.156.6 injects "local constants" scraped from whatever is in
+`sys.modules` when the test executes (`hypothesis/internal/conjecture/providers.py`), so a
+full-suite run -- which has imported dozens more project modules by the time it reaches this
+file -- draws different floats than `pytest tests/property/test_structure_invariants.py` does.
+The gap-midpoint degeneracy below was found by a full run and passed in isolation, which looked
+exactly like a flake and was not. **A failure here must be reproduced with the whole suite, not
+with this file alone.**
 
 Every invariant here is one a correct detector satisfies by construction. That is the
 point — the value is in the ones a *nearly* correct detector does not, and the two that
@@ -24,6 +32,7 @@ from hypothesis import given, settings, strategies as st
 from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.research.structure import (
     Event,
+    Gap,
     Trend,
     fair_value_gaps,
     market_structure,
@@ -185,7 +194,13 @@ def test_retracement_inverts_ratio_price_on_every_real_leg(bars, k, ratio):
 def test_every_gap_is_a_non_empty_band_that_price_left_behind(bars):
     for gap in fair_value_gaps(bars):
         assert gap.hi > gap.lo
-        assert gap.lo < gap.midpoint < gap.hi
+        # NOT a strict inequality, and the weakening is the honest statement rather than a
+        # retreat. The band above carries the non-degeneracy claim; this line only claims the
+        # midpoint lies inside its own band, and `0.5 * (lo + hi)` on a band one ulp wide
+        # rounds ONTO an endpoint. Hypothesis found exactly that -- lo=133.43502175545586,
+        # hi=133.4350217554559, band ~4e-14 against a ulp of ~2.84e-14 at that price -- and the
+        # detector was right both times. See test_a_one_ulp_band_is_still_a_gap below.
+        assert gap.lo <= gap.midpoint <= gap.hi
         assert gap.formed_at >= 2
         if gap.filled_at is not None:
             assert gap.filled_at > gap.formed_at
@@ -194,6 +209,31 @@ def test_every_gap_is_a_non_empty_band_that_price_left_behind(bars):
             assert (gap.lo, gap.hi) == (first.high, third.low)
         else:
             assert (gap.lo, gap.hi) == (third.high, first.low)
+
+
+def test_a_one_ulp_band_is_still_a_gap():
+    """The band that falsified the invariant above, pinned as a fixed example.
+
+    Found by hypothesis on 2026-09-15 in a full-suite run. The band is **exactly one ulp
+    wide** at that price, so `0.5 * (lo + hi)` has nowhere to land but an endpoint — the
+    midpoint IS the low. Two things follow, and the second is the reason this is a test and
+    not a code change:
+
+    * the strict `lo < midpoint < hi` is false, as float arithmetic and not as a defect;
+    * the detector is right. `third.low > first.high` held by one ulp, so a gap is what this
+      is. **Do not add a minimum-width floor to `fair_value_gaps`** — D205 and the detector's
+      own docstring commit it to returning every gap "including the gaps that are obviously
+      noise", and filtering by eye is the discretion this programme exists to remove.
+    """
+    gap = Gap(formed_at=26, lo=133.43502175545586, hi=133.4350217554559, direction=1)
+
+    assert gap.hi > gap.lo
+    assert gap.width == math.ulp(gap.lo)
+    assert gap.lo <= gap.midpoint <= gap.hi
+    assert gap.midpoint == gap.lo, "one ulp leaves the midpoint nowhere else to go"
+    assert not (gap.lo < gap.midpoint < gap.hi), (
+        "if this ever passes, the strict form above can come back"
+    )
 
 
 @SETTINGS
