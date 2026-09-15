@@ -32,7 +32,7 @@ clause applies: the record stops here.**
 **A summation-order artefact is ~1e-16. This is 1.06e-04, twelve orders larger.**
 
 **The cause:** `ragged_panel.load_ragged` gained a **dividend bound** on 2026-09-05 —
-[D333](D333-RESULT-the-relisting-clause-holds-and-the-hole-was-costing-money.md), commit
+[D333](D333-RESULT-thirty-fabricated-days-and-half-the-incumbent.md), commit
 `3849274` — three days *after* D280's artifact was committed, and it defaults to `True`. A
 dividend of ≥10% of the close is now applied only if the price fell at least half of what the
 distribution implies. **D280's published numbers live on the unbounded panel, which no longer

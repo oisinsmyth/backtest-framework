@@ -93,7 +93,7 @@ in **0.4%** of sessions across 2017–2023. **There is no trendiness to gate on.
 premise failure and not a result, and it is the honest answer to the question: the follow-through
 a momentum rule wants is not a state the daily clock visits.
 
-It also does **not** contradict [D471](D471-RESULT-the-spread-barely-widens-and-path-efficiency-is-the-random-walk-value.md),
+It also does **not** contradict [D471](D471-RESULT-the-spread-barely-widens-where-the-moves-are-and-path-efficiency-is-exactly-the-random-walk-value-in-every-bucket.md),
 which read the variance ratio at 0.82 → 1.00 on the **tick** clock at 1 s → 15 s. Different
 clock, same conclusion from the other side: no follow-through above the random-walk value at
 either end.

@@ -21,7 +21,7 @@ It counts independent confirmations instead of grading magnitude, so D267's fail
 over to it.
 
 **But it rests entirely on the families being independent**, and this repo already has the warning:
-[D218](D218-impulse-macd.md) measured Impulse MACD's acceleration rung against classic MACD's on
+[D218](D218-the-impulse-macd-replication.md) measured Impulse MACD's acceleration rung against classic MACD's on
 identical bars and found them agreeing **within 0.04 Sharpe** — *"the whole apparatus buys nothing
 over EMA(12) − EMA(26)."* Two constructions sharing no arithmetic, one signal.
 

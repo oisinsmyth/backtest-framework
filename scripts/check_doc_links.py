@@ -96,17 +96,22 @@ def main(argv: list[str]) -> int:
     docs = [REPO / a for a in argv] if argv else tracked_markdown()
     index = tracked_paths()
 
-    total = 0
+    total, absent = 0, 0
     for doc in sorted(docs):
         if not doc.exists():
-            print(f"{doc}: not found")
-            total += 1
+            # Tracked, but deleted in this worktree -- a normal mid-work state, and NOT a link
+            # problem: a file that is not there has no links to check. Counting it as a failure
+            # made the checker red whenever anyone had an uncommitted deletion, which is exactly
+            # when a doc gate must still be usable. Whether a tracked file should be present is
+            # git's question, and `git status` already answers it.
+            absent += 1
             continue
         for lineno, target in broken_links(doc, index):
             print(f"{doc.relative_to(REPO).as_posix()}:{lineno}: {target}")
             total += 1
 
-    print(f"\n{len(docs)} documents checked, {total} unresolved link(s)")
+    note = f", {absent} tracked but absent from the worktree (skipped)" if absent else ""
+    print(f"\n{len(docs) - absent} documents checked, {total} unresolved link(s){note}")
     return 1 if total else 0
 
 

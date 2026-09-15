@@ -29,7 +29,7 @@ assuming it.
 ## 2. The signal under test — unchanged, not re-tuned
 
 The [D491](D491-RESULT-the-first-component-candidate-and-why-it-is-thinner-than-it-looks.md)
-state machine and the [D484](D484-RESULT-log-MACD-is-a-real-signal-that-fails-only-on-cost.md)
+state machine and the [D484](D484-RESULT-the-log-MACD-is-a-real-signal-that-fails-only-on-cost-and-the-off-diagonal-ordering-is-confirmed.md)
 signal code, imported unchanged. Day session, decide at each hour's close from h09, execute at
 the next hour's open, exit when the signal turns after a minimum hold, forced flat at the close
 of h15 (16:00 ET). **Minimum hold M = 5, the committed candidate's setting.** Cost $3 + 1.009
@@ -48,7 +48,7 @@ from the **previous** session. Nothing reads the session being traded.
 | | conditioner | state | why it might complement momentum |
 |---|---|---|---|
 | **R1** | **200-session SMA regime** — the principal's | daily index above / below its 200-session SMA | the canonical trend filter; the claim is that intraday momentum follows through in the direction of the slow trend |
-| **R2** | **daily trendiness — the variance ratio** | `Var(r_5)/(5·Var(r_1))` over a trailing 252 sessions, above / below 1.0 | **this is the one that actually answers the question.** A momentum rule needs follow-through, and the variance ratio is follow-through measured directly. [D471](D471-RESULT-the-spread-barely-widens-and-path-efficiency-is-the-random-walk-value.md) told us to use the variance ratio rather than path efficiency, and it killed path efficiency **on the tick clock at 10 s – 5 h.** The daily clock is a different axis and is untested |
+| **R2** | **daily trendiness — the variance ratio** | `Var(r_5)/(5·Var(r_1))` over a trailing 252 sessions, above / below 1.0 | **this is the one that actually answers the question.** A momentum rule needs follow-through, and the variance ratio is follow-through measured directly. [D471](D471-RESULT-the-spread-barely-widens-where-the-moves-are-and-path-efficiency-is-exactly-the-random-walk-value-in-every-bucket.md) told us to use the variance ratio rather than path efficiency, and it killed path efficiency **on the tick clock at 10 s – 5 h.** The daily clock is a different axis and is untested |
 | **R3** | **volatility regime** | 20-session realised vol of the daily index, above / below its own trailing 252-session median | **[D501](D501-the-worst-day-is-a-regime-not-a-habit.md) motivates this in-sample**: 13 of the 20 days beyond −$500 and both P3 breaches sit in 2022, and four accounts died there. Declared as in-sample-motivated, so the rotation null carries the whole weight of it |
 
 ### The eight declared cells, and nothing else

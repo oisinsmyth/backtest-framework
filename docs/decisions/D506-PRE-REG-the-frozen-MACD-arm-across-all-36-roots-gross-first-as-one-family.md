@@ -40,7 +40,7 @@ fixture ([`data/fixtures/fut_breadth_hourly.csv.gz`](../../data/fixtures/fut_bre
 
 ## 2. The construction — frozen, not re-tuned
 
-**Imported unchanged** from [D484](D484-RESULT-log-MACD-is-a-real-signal-that-fails-only-on-cost.md)
+**Imported unchanged** from [D484](D484-RESULT-the-log-MACD-is-a-real-signal-that-fails-only-on-cost-and-the-off-diagonal-ordering-is-confirmed.md)
 (signal) and [D491](D491-RESULT-the-first-component-candidate-and-why-it-is-thinner-than-it-looks.md)
 (state machine). Not one parameter is fitted here.
 

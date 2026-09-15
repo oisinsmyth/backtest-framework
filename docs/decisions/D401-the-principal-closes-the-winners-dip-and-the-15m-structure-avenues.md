@@ -34,7 +34,7 @@ Truth: [FINDINGS §52](../FINDINGS.md).
 **Why closure is the right call and not a loss.** The avenue was never failing for want of a further
 test — it was **complete in both directions**. Entry: measured, real, small. Exit: measured, absent.
 What remained was not a question about the avenue but a question about **cost**, and that is
-[D336](D336-the-quoted-spread-pull.md)'s quoted-spread pull, which is blocked on the principal's TWS
+[D336](D336-quoted-spread-validation.md)'s quoted-spread pull, which is blocked on the principal's TWS
 session and is a different item. **Closing the avenue does not close D336, and D336's answer does not
 reopen it** — a cost measurement decides whether a known small effect is deployable, not whether it
 exists.

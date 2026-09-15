@@ -154,7 +154,7 @@ multiplicity count — not the one that won.
 | carried from D265 | 46,167 |
 | **total** | **46,194** |
 
-**The floor this is judged against.** [D218](D218-impulse-macd.md) measured this programme's
+**The floor this is judged against.** [D218](D218-the-impulse-macd-replication.md) measured this programme's
 deflated-Sharpe noise floor at **+1.42 Sharpe at ~45,800 looks**, and concluded that *no arm anyone
 runs on this fixture can clear it.* **That conclusion stands and is not suspended by this record.**
 A score clearing M1–M3 here is evidence about a *property*, cheaply obtained — it is not a Sharpe

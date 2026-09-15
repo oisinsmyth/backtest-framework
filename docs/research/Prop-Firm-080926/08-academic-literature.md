@@ -369,7 +369,7 @@ subjects gamble in a stopping task **even without contest incentives** — so ob
 blow-ups are weak evidence for the mechanism.
 
 > **This is a house-rule point, not just a literature point.** Busse's failure is exactly the class
-> [`assert-code-not-data`](../../../..) and CLAUDE.md's "test the statistic, not just the story"
+> `assert-code-not-data` and CLAUDE.md's "test the statistic, not just the story"
 > warn about: a mechanism filed on a statistic whose estimator was biased by autocorrelation.
 > **If we ever measure near-barrier risk-shifting in our own P&L, measure it at the highest available
 > frequency and from positions, not from a realised-vol estimate on coarse buckets.**

@@ -596,7 +596,7 @@ uncorrelated pair this programme has found.**
 [D253](decisions/D253-the-book-short-sides-on-crypto.md),
 [D254](decisions/D254-the-wedge-breakout-on-crypto.md),
 [D255](decisions/D255-stops-and-targets-on-the-book.md), plus five web-research streams and
-[D252](decisions/D252-the-single-name-short-universe.md)'s fixture build.
+[D252](decisions/D252-the-dead-inclusive-us-single-name-universe.md)'s fixture build.
 
 **The failures are no longer a list. They reduce to two measured facts**, both recorded in
 [FINDINGS.md](FINDINGS.md):

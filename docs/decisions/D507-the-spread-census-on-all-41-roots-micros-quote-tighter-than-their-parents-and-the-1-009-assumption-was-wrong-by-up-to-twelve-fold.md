@@ -2,8 +2,18 @@
 
 > ## ⚠ AMENDED — §8 CORRECTS THREE THINGS IN §1–§7
 >
-> [D508](D508-the-crossing-cost-actually-paid-from-tbbo.md) measured the crossing cost from
-> `tbbo` — the book immediately before each trade — for the micros `bbo-1m` never covered.
+> **A note on the number, added 2026-09-16.** This record previously linked the amendment below to
+> `D508-the-crossing-cost-actually-paid-from-tbbo.md`, **which was never written**: the `tbbo`
+> measurement was folded back into this record instead, and the number D508 was then issued again
+> to a different study (the 200-day stretch ranker). The links are now prose pointing at the runner
+> and the artifact, which is what actually exists. **D508 therefore names two studies in this
+> programme's history**, and nothing here re-issues a number to fix that — a decision number is an
+> identity, and reassigning one is the principal's call, not a link repair.
+>
+> The `tbbo` crossing-cost measurement (`scripts/d508_micro_crossing_tbbo.py`,
+> [`data/d508_micro_crossing_tbbo.json`](../../data/d508_micro_crossing_tbbo.json)) measured the
+> crossing cost from `tbbo` — the book immediately before each trade — for the micros `bbo-1m`
+> never covered.
 > It corrects this record in three places:
 >
 > 1. **§5's 6E row has a UNIT ERROR.** M6E's tick is *double* 6E's, so the crossing in M6E
@@ -157,7 +167,7 @@ third time in this session's data work that a check written for one purpose foun
 
 # 8. AMENDMENT — three corrections from D508's `tbbo` measurement
 
-[D508](D508-the-crossing-cost-actually-paid-from-tbbo.md) measures the crossing cost from `tbbo`,
+The `tbbo` measurement (`scripts/d508_micro_crossing_tbbo.py`) gives the crossing cost from `tbbo`,
 which carries the book **immediately before each trade** and therefore gives what the aggressor
 **actually paid** — `2·|price − mid| / tick` — rather than a quoted spread sampled every minute.
 `tbbo` was bought for **every instrument**, so the three micros `bbo-1m` never covered are on disk.
