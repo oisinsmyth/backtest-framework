@@ -1,9 +1,14 @@
 """Property test for D33: total accrued carry over any window equals
 rate * sum(calendar-day gaps), regardless of how the window is chopped into bars.
 
-Per D34, every stochastic test takes a seed; Hypothesis's own seed/derandomize machinery
-serves that role here (see pyproject.toml / conftest for the fixed database-free profile
-if determinism across CI runs becomes load-bearing later).
+Per D34, every stochastic test takes a seed; Hypothesis's own seeding serves that role here.
+
+**This file's own note used to point at "the fixed database-free profile in pyproject.toml /
+conftest". There is no such profile and there never was** — no `[tool.hypothesis]` section, no
+registered profile anywhere in the repo. It also sets no `settings(...)` of its own, so unlike its
+siblings it runs at hypothesis's defaults: not derandomized, 100 examples. Left that way, now
+stated rather than implied. D537 has the wider point: `derandomize=True` would not buy example
+determinism anyway.
 """
 
 from datetime import datetime, timedelta

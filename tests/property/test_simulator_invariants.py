@@ -1,8 +1,14 @@
 """Property-based simulator invariants (D40, D78): across randomized price paths and
 weight schedules, whole classes of bugs no example-based test anticipates.
 
-Conventions (D78): hypothesis with derandomize=True — the suite is byte-deterministic
-in CI (D34's spirit; hypothesis owns the seeding). Two gate clauses are reinterpreted
+Conventions (D78): hypothesis with derandomize=True, so hypothesis owns the seeding
+rather than a hand-rolled seed parameter. **It does NOT mean the same examples every
+run** — since 6.156.6 hypothesis harvests its constant pool from `sys.modules` at test
+time, so a full-suite run and a single-file run draw differently from the same seed
+(D537). A failure here must be reproduced with the WHOLE suite before it is called a
+flake. D34's requirement — that the ENGINE is reproducible given identical inputs — is
+unaffected, and `test_equity_curve_hash_is_deterministic` below is what asserts it.
+Two gate clauses are reinterpreted
 for the architecture as built, per D77/D78: "broker.reset()" has no broker to reset —
 the equivalent guarantee is that identical runs are identical (fresh state per call);
 "fill within [low, high]" is asserted both at the engine level (fills at close of

@@ -1,9 +1,18 @@
 # D78 — Property-test conventions: derandomized hypothesis, shadow accountant, reset-guarantee reinterpretation
 
-**Status:** Committed
+**Status:** Committed · **AMENDED 2026-09-15 by
+[D537](D537-derandomize-does-not-mean-deterministic.md)**
 **Date:** 2026-07-14
 **Category:** Testing
 **Source:** Implementation session (Step 8)
+
+> **Amendment, 2026-09-15 (D537).** The sentence below — *"the suite is byte-deterministic in
+> CI"* — **is no longer true and is withdrawn.** `derandomize=True` fixes hypothesis's seed but
+> not the examples it draws: since 6.156.6 the constant pool fed into value generation is
+> harvested from `sys.modules` at test time, so a full-suite run and a single-file run draw
+> differently from the same seed. Everything else in this record stands, including the
+> derandomize-over-seed-parameter reasoning, which is still the right call for the reason given.
+> The original text is left unedited below, per the amend-in-writing convention.
 
 ## Decision
 

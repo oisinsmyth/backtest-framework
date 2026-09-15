@@ -7,7 +7,8 @@ segmentations, arbitrary (coherent) price paths. The two load-bearing claims —
 in `docs/results/breakout_monte_carlo.md` rests on, so they get the stronger test.
 
 `derandomize=True` per D78: a property suite that fails only on some seeds trains people
-to re-run until green.
+to re-run until green. **It does not make the examples identical across runs** -- see
+D537, and reproduce any failure here with the whole suite rather than this file alone.
 """
 
 from __future__ import annotations

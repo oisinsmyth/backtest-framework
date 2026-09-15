@@ -6,8 +6,11 @@ change a single target the strategy produced up to and including that bar. That 
 one failure that would silently invalidate every number in BREAKOUT_RESULTS.md, and an
 example-based test cannot cover the shapes that would trigger it.
 
-Conventions (D78): hypothesis with derandomize=True, so the suite is byte-deterministic
-in CI.
+Conventions (D78): hypothesis with `derandomize=True`, so hypothesis owns the seeding
+rather than a hand-rolled seed parameter. **It does NOT mean the same examples every run**
+-- since 6.156.6 hypothesis harvests its constant pool from `sys.modules` at test time, so a
+full-suite run and a single-file run draw differently from the same seed (D537). A failure
+here must be reproduced with the WHOLE suite before it is called a flake.
 """
 
 from __future__ import annotations

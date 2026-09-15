@@ -14,8 +14,11 @@ look-ahead guard, because the guard does not reach analytics.
 
 Nothing stops it. This file is what does.
 
-Conventions (D78): hypothesis with `derandomize=True`, so the suite is
-byte-deterministic in CI and hypothesis owns the seeding.
+Conventions (D78): hypothesis with `derandomize=True`, so hypothesis owns the seeding
+rather than a hand-rolled seed parameter. **It does NOT mean the same examples every run**
+-- since 6.156.6 hypothesis harvests its constant pool from `sys.modules` at test time, so a
+full-suite run and a single-file run draw differently from the same seed (D537). A failure
+here must be reproduced with the WHOLE suite before it is called a flake.
 
 WHY THE WINDOWS ARE QUANTIFIED OVER AND NOT PINNED AT 12/26/9
 --------------------------------------------------------------
