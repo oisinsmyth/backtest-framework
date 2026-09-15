@@ -1,14 +1,44 @@
 # Quant Backtesting Framework
 
-A Lego-brick-modular backtesting framework built to run a market-neutral pairs-trading study
-(starting with XLE/XOP) as a research portfolio piece. Governing principle: trust is enforced
-by structure, not convention — every friction, instrument, and validation check is a swappable,
-individually-tested component. Research output is the product; the framework is the instrument.
+**A backtesting framework where correctness is enforced by structure rather than by care.**
+Every friction, instrument and validation check is a swappable, individually-tested component;
+the simulator is anchored to ledgers computed by hand; every design call is written down before
+it is acted on. The research it has produced is mostly negative — and that is the evidence it
+works. A measuring instrument earns trust by returning negatives when negatives are true.
 
-The framework is complete (all in-scope verification gates passed) and the Phase G
-research program has published five studies from it, plus a second, deliberately
-contrasting strategy (a long-flat crypto breakout) that exists to test the framework's
-own claim that a strategy is a swappable brick.
+| | |
+|---|---|
+| **1,835 tests** | hand-computed golden masters · integration · property · unit |
+| **740 decision records** | one per design call, D1 → D536, append-only and amended in writing |
+| **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
+| **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
+
+The seven are enumerated in the final report linked below, with what each one taught. A later
+catch is worth its own line: D279's lag audit re-derives the held set from `score[:, t-1]` in a
+second implementation that never calls the selection function, and it found that **~93% of that
+study's apparent edge was the bug**.
+
+## Five minutes
+
+```bash
+uv sync
+uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s
+```
+
+That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
+full suite is `uv run pytest -q`, 6m34s here. **On a clone it is 1,699 passed and 136 skipped in
+2m47s** — measured by hiding the panels and running it, not asserted; each of the 136 names the
+file it wanted. The panels left git in
+[D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB;
+[`data/data_manifest.json`](data/data_manifest.json) carries the sha256 and git blob id of every
+one, so a skipped test names data that is still recoverable.
+
+**Three ways in.** What the framework *guarantees* is in [`tests/`](tests/), four tiers that do
+different jobs: `golden/` anchors fills and costs to ledgers worked out by hand, `property/`
+quantifies over generated paths rather than chosen ones, `integration/` runs whole studies, and
+`unit/` pins the parts. What it has been *used for* is the studies below, which exist to show a
+strategy is a swappable brick. Why anything is the way it is, is in
+[`docs/decisions/`](docs/decisions/README.md) and [`PHILOSOPHY.md`](PHILOSOPHY.md).
 
 **The final report is [`docs/results/final_report.html`](docs/results/final_report.html)**
 — the whole project in one document: what was tested, how each idea died, the seven real
@@ -132,13 +162,16 @@ cannot rot.
 
 ## Status
 
-**Framework complete; research program published.** All in-scope verification-scheme steps
-(1–9, 11, 12) passed their gates; the simulator is anchored to hand-computed golden masters
-and reconciled penny-exact against vectorbt. Phase G has produced five one-variable-per-step
-studies (selection → hedging → capacity → gross exposure) on a frozen 57-ETF universe, all
-collected in [`docs/writeup.md`](docs/writeup.md) — draft prose, final numbers. A sixth
-study, the long-flat crypto breakout in [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md)
-(D108–D117), reuses the framework unchanged on a directional strategy — and recorded one
-blocked feature (a volume filter the `Bar` schema cannot support, D111) rather than working
-around it. Next: writeup polish and reviewer outreach. See [`AITODO.md`](AITODO.md) for the
-live task list.
+**The framework is stable; the research programme is still running.** All in-scope
+verification-scheme steps (1–9, 11, 12) passed their gates, and the simulator has not needed to
+change to carry any study since — which is the claim the gates existed to test.
+
+What has changed is the subject. The five ETF pairs studies in [`docs/writeup.md`](docs/writeup.md)
+and the crypto work described above (D108–D217) were the first phase; the programme has since run
+through **D536**, into intraday futures microstructure, execution cost measurement at contract
+minimum size, and a components ledger for a prop account. Those records live in
+[`docs/decisions/`](docs/decisions/README.md) and are not summarised here — this README documents
+the instrument, and the instrument is what has stayed still.
+
+**The study sections above describe the work in the order it was run**, and stop at D218. They
+are a record of what the framework was used for, not a statement of current work.
