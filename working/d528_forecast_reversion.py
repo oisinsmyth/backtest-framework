@@ -92,8 +92,62 @@ def forward_traverse(path, c):
     return out, ok
 
 
+def _sb_rng(path, r, t, w_long):
+    """The two rolling statistics that were Python loops over every bar: the long-baseline
+    return sd, and the long-window high-low range.
+
+    WHY THIS EXISTS. At 84 bars a session those loops cost 0.83 ms of a 1.06 ms session and
+    nobody noticed. At 420 bars (the 1-minute fixture) they cost 3.82 ms of 4.28 ms -- 89% --
+    which is 9.4 minutes a pass over 131,289 sessions, four passes for the two legs. Profiled
+    before rewriting, per CLAUDE.md; every previous guess about where the cost sat was wrong.
+
+    EXACTNESS, NOT TOLERANCE. Both are computed over a window that is CLIPPED near the start of
+    the series and CONSTANT-LENGTH after it, so:
+      * the constant-length region goes through sliding_window_view, whose per-window reduction
+        runs the same two-pass std and the same max/min as the slice did;
+      * the clipped region keeps the original loop, because its windows are all different
+        lengths and there is nothing to vectorise over.
+    max and min are exactly associative so the range is safe unconditionally; the sd is the one
+    that could differ in the last ULP, which is why the self-test asserts bit-equality on a
+    TIE-HEAVY input as well as a smooth one (ties are where a rewrite and its reference
+    disagree).
+    """
+    n = len(path)
+    sb = np.empty(len(t))
+    rng_l = np.empty(len(t))
+    # sb: window r[max(tt-w_long+1, 1) : tt]; unclipped length is w_long - 1
+    # rng: window path[max(tt-w_long, 0) : tt]; unclipped length is w_long
+    lo_sb = w_long                      # first tt whose sb window is unclipped (tt-w_long+1 >= 1)
+    lo_rg = w_long                      # first tt whose range window is unclipped
+    cut = max(int(np.searchsorted(t, lo_sb)), int(np.searchsorted(t, lo_rg)))
+    for k in range(cut):
+        tt = int(t[k])
+        a = max(tt - w_long + 1, 1)
+        sb[k] = r[a:tt].std(ddof=1) if tt - a > 2 else np.nan
+        rng_l[k] = np.ptp(path[max(tt - w_long, 0):tt]) if tt > 6 else np.nan
+    if cut < len(t):
+        tv = t[cut:]
+        Ws = swv(r, w_long - 1)                  # Ws[i] = r[i : i + w_long - 1]
+        sb[cut:] = Ws[tv - w_long + 1].std(axis=1, ddof=1)
+        Wl = swv(path, w_long)                   # Wl[i] = path[i : i + w_long]
+        blk = Wl[tv - w_long]
+        rng_l[cut:] = blk.max(1) - blk.min(1)
+    assert n == len(path)
+    return sb, rng_l
+
+
+def causal_features_ref(path, c, vm, b0):
+    """REFERENCE: the original, with the two per-bar Python loops. Never called by a runner;
+    kept so the fast path has something to be proved equal to."""
+    return _causal(path, c, vm, b0, fast=False)
+
+
 def causal_features(path, c, vm, b0):
     """Everything a forecaster may read at bar t, from bars strictly before t."""
+    return _causal(path, c, vm, b0, fast=True)
+
+
+def _causal(path, c, vm, b0, fast=True):
     n = len(path)
     n_t = n - 2 * H
     r = np.diff(path, prepend=path[0])
@@ -108,8 +162,13 @@ def causal_features(path, c, vm, b0):
 
     with np.errstate(invalid="ignore", divide="ignore"):
         sw = wq.std(axis=1, ddof=1)
-        sb = np.array([r[max(tt - 6 * H + 1, 1):tt].std(ddof=1)
-                       if tt - max(tt - 6 * H + 1, 1) > 2 else np.nan for tt in t])
+        if fast:
+            sb, rng_long = _sb_rng(path, r, t, 6 * H)
+        else:
+            sb = np.array([r[max(tt - 6 * H + 1, 1):tt].std(ddof=1)
+                           if tt - max(tt - 6 * H + 1, 1) > 2 else np.nan for tt in t])
+            rng_long = np.array([np.ptp(path[max(tt - 6 * H, 0):tt]) if tt > 6 else np.nan
+                                 for tt in t])
         vol_ratio = np.where(sb > 0, sw / sb, np.nan)
 
         # lag-1 autocorrelation of the window's returns
@@ -124,7 +183,7 @@ def causal_features(path, c, vm, b0):
 
         # range compression: recent high-low over a longer high-low
         rng_s = Wp[t - H].max(1) - Wp[t - H].min(1)
-        rng_l = np.array([np.ptp(path[max(tt - 6 * H, 0):tt]) if tt > 6 else np.nan for tt in t])
+        rng_l = rng_long
         squeeze = np.where(rng_l > 0, rng_s / rng_l, np.nan)
 
         sigma_pct = c["line_sd"]
@@ -284,6 +343,45 @@ def self_test():
     assert fwd0[i_probe] != fwd1[i_probe] or not np.array_equal(fwd0, fwd1), \
         "the target did not respond to the future -- check [2] is testing anything"
     P("   [3] the TARGET does change when the future changes (so [2] is a real check)    OK")
+
+    # [4] THE FAST PATH MUST BE BIT-IDENTICAL TO THE LOOP IT REPLACED, on tie-heavy and flat
+    #     inputs as well as smooth ones, and at the 1-minute session length as well as the
+    #     5-minute one. Ties are where a vectorised reduction and a per-slice reduction disagree.
+    keys = ("trav_past", "vol_ratio", "sigma_pct", "ac1", "vratio2", "squeeze", "tod",
+            "elapsed", "drift_str", "vol_fast", "vol_chg")
+    rg = np.random.default_rng(17)
+    nbad, ncase = 0, 0
+    for n in (60, 84, 121, 420, 421):
+        for lab, p in (("smooth", np.cumsum(rg.normal(0, 1.0, n)) + 5000.0),
+                       ("tie", 5000.0 + np.cumsum(rg.integers(-1, 2, n)) * 0.25),
+                       ("flat", np.full(n, 5000.0))):
+            cc = Z.classify2(np.asarray(p, float), 0.25)
+            if cc is None:
+                continue
+            ncase += 1
+            a = causal_features(np.asarray(p, float), cc, None, 0)
+            b = causal_features_ref(np.asarray(p, float), cc, None, 0)
+            for k in keys:
+                x, y = np.asarray(a[k], float), np.asarray(b[k], float)
+                if x.shape != y.shape or not ((x == y) | (np.isnan(x) & np.isnan(y))).all():
+                    nbad += 1
+                    P(f"   [4] MISMATCH on {lab} n={n} field {k}")
+    assert nbad == 0, f"{nbad} fast/ref mismatches: the fast path must not be used"
+    P(f"   [4] causal_features == causal_features_ref on all {ncase} cases (smooth, "
+      f"tie-heavy, flat; n=60..421)   OK")
+
+    # [5] AND THE CHECK MUST BE ABLE TO FAIL. Feed the reference a deliberately different
+    #     baseline width and assert [4]'s comparison rejects it -- otherwise [4] only proves
+    #     that two calls to the same code agree.
+    p = np.cumsum(rg.normal(0, 1.0, 200)) + 5000.0
+    cc = Z.classify2(p, 0.25)
+    r_ = np.diff(p, prepend=p[0])
+    tt_ = np.arange(2 * H, len(p))
+    sb_a, rg_a = _sb_rng(p, r_, tt_, 6 * H)
+    sb_b, rg_b = _sb_rng(p, r_, tt_, 6 * H - 1)          # the wrong window
+    diff = not ((sb_a == sb_b) | (np.isnan(sb_a) & np.isnan(sb_b))).all()
+    assert diff, "[5] the comparison cannot distinguish two different baseline widths"
+    P("   [5] [X] the same comparison REJECTS a one-bar-different baseline window       OK")
     P("\n   all self-tests pass\n")
 
 

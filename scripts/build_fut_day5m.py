@@ -64,6 +64,33 @@ META = REPO / "data" / "fixtures" / "fut_day5m.meta.json"
 BAR_MIN = 5
 DAY_LO, DAY_HI = 540, 959          # 09:00:00 .. 15:59:59 ET, inclusive
 N_BARS = (DAY_HI - DAY_LO + 1) // BAR_MIN
+SUFFIX = "5m"                      # the decode cache's filename tag; see set_bar_minutes
+
+
+def set_bar_minutes(n: int) -> None:
+    """Retarget this builder at a different bar width, for a SEPARATE fixture.
+
+    Added for the 1-minute build (scripts/build_fut_day1m.py). Everything that depends on the
+    bar width is rebound HERE, in one place, so a caller cannot set half of it: the width, the
+    bars-per-session count, the decode cache's directory AND filename tag, and both output
+    paths. A caller that set BAR_MIN alone would silently write 1-minute bars into the committed
+    5-minute cache and fixture -- the exact class of bug recorded at fetch_etf_intraday.py:135,
+    where an extended build overwrote a committed regular-hours meta.
+
+    The day session is 420 minutes, so the width must divide it exactly; otherwise the last bar
+    is short and `bar_of` maps two different clock ranges onto one index.
+    """
+    global BAR_MIN, N_BARS, SUFFIX, CACHE, OUT, META
+    if (DAY_HI - DAY_LO + 1) % n:
+        raise GateError(f"[WIDTH] {n} does not divide the {DAY_HI - DAY_LO + 1}-minute session")
+    BAR_MIN = int(n)
+    N_BARS = (DAY_HI - DAY_LO + 1) // BAR_MIN
+    SUFFIX = f"{BAR_MIN}m"
+    CACHE = REPO / "temp" / f"day{SUFFIX}_decode"
+    OUT = REPO / "data" / "fixtures" / f"fut_day{SUFFIX}.parquet"
+    META = REPO / "data" / "fixtures" / f"fut_day{SUFFIX}.meta.json"
+
+
 CHUNK = 10_000_000
 KEY = ["root", "contract", "day", "bar"]
 
@@ -149,7 +176,7 @@ def do_decode(limit) -> int:
     import databento as db
     CACHE.mkdir(parents=True, exist_ok=True)
     files = ohlcv_files()
-    todo = [f for f in files if not (CACHE / f"{f.stem}.5m.parquet").exists()]
+    todo = [f for f in files if not (CACHE / f"{f.stem}.{SUFFIX}.parquet").exists()]
     P(f"  {len(files)} ohlcv-1m files, {len(files) - len(todo)} cached, {len(todo)} to decode")
     if limit:
         todo = todo[:limit]
@@ -167,7 +194,7 @@ def do_decode(limit) -> int:
             G = (pd.concat(parts, ignore_index=True).groupby(KEY, as_index=False)
                  .agg(high=("high", "max"), low=("low", "min"), volume=("volume", "sum"),
                       n=("n", "sum"), open=("open", "first"), close=("close", "last")))
-            G.to_parquet(CACHE / f"{f.stem}.5m.parquet", index=False)
+            G.to_parquet(CACHE / f"{f.stem}.{SUFFIX}.parquet", index=False)
             nr, nrow = G["root"].nunique(), len(G)
         else:
             nr, nrow = 0, 0
@@ -247,7 +274,7 @@ def coverage(G: pd.DataFrame) -> dict:
 
 def do_build() -> int:
     files = ohlcv_files()
-    have = sorted(CACHE.glob("*.5m.parquet"))
+    have = sorted(CACHE.glob(f"*.{SUFFIX}.parquet"))
     if len(have) != len(files):
         raise GateError(f"[CACHE] {len(have)} of {len(files)} decoded -- run --decode first")
     P(f"  loading {len(have)} cached slices ...")
@@ -305,7 +332,7 @@ def do_build() -> int:
           + (f"   intermittent slots {c['band_gaps']}" if c.get("band_gaps") else ""))
 
     meta = {"built_utc": pd.Timestamp.now("UTC").strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "builder": "scripts/build_fut_day5m.py",
+            "builder": f"scripts/build_fut_day{SUFFIX}.py",
             "bar_minutes": BAR_MIN, "day_session_et_minutes": [DAY_LO, DAY_HI],
             "bars_per_full_session": N_BARS,
             "front_rule": "taken from fut_breadth_hourly by (root, day, contract) inner join, "
@@ -353,7 +380,7 @@ def do_build() -> int:
 
 def do_status() -> int:
     files = ohlcv_files()
-    have = sorted(CACHE.glob("*.5m.parquet"))
+    have = sorted(CACHE.glob(f"*.{SUFFIX}.parquet"))
     P(f"  ohlcv-1m files: {len(files)}   cached: {len(have)}")
     if have:
         P(f"  cache: {sum(p.stat().st_size for p in have) / 2**20:.0f} MiB")

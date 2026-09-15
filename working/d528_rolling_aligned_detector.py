@@ -95,6 +95,22 @@ T_BAR = T_LOC.mean()
 STT = float(((T_LOC - T_BAR) ** 2).sum())
 
 
+def set_h(h: int) -> None:
+    """Rebind the window width AND the three constants derived from it.
+
+    `fit_win` reads T_LOC, T_BAR and STT, which are computed from H at import. Setting H alone
+    leaves them at the old width and `fit_win` then raises a broadcast error if you are lucky
+    (shapes (n, h_new) against (h_old,)) or silently fits the wrong design matrix if h_new
+    happens to divide h_old. The 1-minute study's clock-matched leg needs H = 50, so the
+    rebinding is one function and everything derived lives in it.
+    """
+    global H, T_LOC, T_BAR, STT
+    H = int(h)
+    T_LOC = np.arange(H, dtype=np.float64)
+    T_BAR = T_LOC.mean()
+    STT = float(((T_LOC - T_BAR) ** 2).sum())
+
+
 def P(*a):
     print(*a, flush=True)
 

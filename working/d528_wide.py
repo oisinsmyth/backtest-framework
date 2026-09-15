@@ -70,6 +70,24 @@ TAU = 20
 TAU_LADDER = (10, 20, 40)
 TARGET, FRAME = "reflect", "drift"
 BASE_W5 = 20                           # 20 five-minute bars = 100 minutes, the volume window
+SESSION_WIDTH = 84                     # bars in a full day session AT THIS FIXTURE'S WIDTH
+
+
+def set_session(width: int, base_w: int, min_bars: int) -> None:
+    """Retarget the session-shaped constants at a different bar width (the 1-minute fixture).
+
+    THREE constants are derived from the 5-minute session and all three must move together: the
+    volume-profile stack's width (the session length in bars), the volume baseline window (100
+    minutes' worth of bars), and the completeness floor. A caller that moved one would get
+    either a broadcast error -- which is what the 1-minute run actually hit, `(420,) into
+    (84,)` -- or, worse, a profile silently computed over the wrong clock.
+    """
+    global SESSION_WIDTH, BASE_W5, MIN_BARS
+    SESSION_WIDTH = int(width)
+    BASE_W5 = int(base_w)
+    MIN_BARS = int(min_bars)
+
+
 TOD_SESSIONS = 20
 TOD_MIN = 5
 SLOW_HL = 2.0
@@ -180,7 +198,7 @@ def tod_and_vol(sess):
         # len(hist) rows, filled only the last TOD_SESSIONS of them, then read stack[-TOD_SESSIONS:]
         # -- which for any root with more than 20 sessions of history took ALL-NaN rows, leaving
         # the profile NaN and the volume filter admitting 1% of candidates instead of ~50%.
-        width = 84
+        width = SESSION_WIDTH
         recent = hist[-TOD_SESSIONS:]
         stack = np.full((len(recent), width), np.nan)
         for i, (hb0, hv) in enumerate(recent):
