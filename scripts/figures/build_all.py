@@ -31,7 +31,10 @@ sys.path.insert(0, str(HERE))
 
 import svgkit as k  # noqa: E402
 
-BUILDERS = ("build_dsr_hurdle",)
+BUILDERS = (
+    "build_dsr_hurdle",
+    "build_lookahead",
+)
 
 
 def modules() -> list[ModuleType]:
