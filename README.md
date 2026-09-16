@@ -8,8 +8,8 @@ works. A measuring instrument earns trust by returning negatives when negatives 
 
 | | |
 |---|---|
-| **1,835 tests** | hand-computed golden masters · integration · property · unit |
-| **740 decision records** | one per design call, D1 → D536, append-only and amended in writing |
+| **1,839 tests** | hand-computed golden masters · integration · property · unit |
+| **741 decision records** | one per design call, D1 → D537, append-only and amended in writing |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
 
@@ -39,6 +39,26 @@ quantifies over generated paths rather than chosen ones, `integration/` runs who
 `unit/` pins the parts. What it has been *used for* is the studies below, which exist to show a
 strategy is a swappable brick. Why anything is the way it is, is in
 [`docs/decisions/`](docs/decisions/README.md) and [`PHILOSOPHY.md`](PHILOSOPHY.md).
+
+## Where things are
+
+```
+src/backtest_framework/   the instrument — 85 modules, engine · costs · instruments · data · analytics
+tests/                    the exhibit — golden · property · integration · unit
+docs/
+  decisions/              741 records, D1 → D537, one per design call     [index](docs/decisions/README.md)
+  results/                48 studies, five of them featured               [index](docs/results/README.md)
+  internal/               working state: the live queue, the task list, an old self-audit
+  RULES.md  FINDINGS.md  BOOK.md  TUTORIAL.md
+scripts/                  the research runners — 586 files, one-shot by design
+data/                     evidence, committed; the bulk panels are manifested, not committed
+CONTRIBUTING.md           how to change any of it: gate before code
+```
+
+Two boundaries that are load-bearing rather than tidy: **`src/` never imports from `scripts/`** —
+the instrument does not depend on any use of it — and **`data/` holds evidence while
+[`data/data_manifest.json`](data/data_manifest.json) holds the checksums of the 118 bulk panels
+that are deliberately not in git.
 
 **The final report is [`docs/results/final_report.html`](docs/results/final_report.html)**
 — the whole project in one document: what was tested, how each idea died, the seven real
@@ -149,8 +169,9 @@ cannot rot.
 **Live (kept current as implementation proceeds):**
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to change the framework: gate before code, which test tier, adding a brick, recording the decision
 - [`PHILOSOPHY.md`](PHILOSOPHY.md) — the guiding design philosophy; changes rarely and deliberately
-- [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1–D49 migrated + D50 onward as they're made
-- [`docs/RULES.md`](docs/RULES.md) — standing scope/sequencing rules (R1–R5), apply continuously rather than once
+- [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, 741 of them, D1 → D537. The index is a curated table for D1–D284 and a generated register below it.
+- [`docs/results/`](docs/results/README.md) — 48 studies, indexed, with five featured for what each proves about the instrument
+- [`docs/RULES.md`](docs/RULES.md) — standing scope/sequencing rules (R1–R16), apply continuously rather than once
 - [`CHANGELOG.md`](CHANGELOG.md) — what shipped and when, Keep a Changelog format. Rationale lives in the decision records, not here.
 - [`AITODO.md`](docs/internal/AITODO.md) — Claude's current working task list for this project. Not a roadmap; reflects the next few steps only.
 
