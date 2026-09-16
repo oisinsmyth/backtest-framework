@@ -62,10 +62,11 @@ uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
 full suite is `uv run pytest -q`, 3m31s here on a quiet machine and up to 7m26s under load.
-**On a clone it is 1,707 passed and 136 skipped in 2m56s** — measured on 2026-09-16 by cloning this repository into an empty directory and running
-it, not by reasoning about one from inside the working copy. That distinction earned its keep the
-first time: the clone failed three tests the working copy could not, on a line-ending convention
-the working copy predates. Each of the 136 skips names the file it wanted. The panels left git in
+**On a clone it is 1,909 passed and 136 skipped in 1m56s** — measured on 2026-09-16 by cloning
+this repository into an empty directory and running it, not by reasoning about one from inside the
+working copy. That distinction has twice earned its keep: the first clone failed three tests the
+working copy could not, on a line-ending convention the working copy predates, and the second
+found five links that resolve only on the author's disk. Each of the 136 skips names the file it wanted. The panels left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what
 a **checkout** no longer carries; they remain in the history, so a `git clone` is about 1.1 GB, of
 which 967 MB is `.git`. [`data/data_manifest.json`](data/data_manifest.json) carries the sha256
