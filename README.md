@@ -22,12 +22,13 @@ The inventory, measured from the git index rather than typed:
 | **743 decision records** | over **500** decision numbers — a pre-registration and its result share one number |
 | **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
 | **62 studies** | in [`docs/results/`](docs/results/README.md), five of them featured |
-| **136 test files** | golden · property · integration · unit |
-| **588 research runners** | in `scripts/`, one-shot by design |
+| **138 test files** | golden · property · integration · unit |
+| **589 research runners** | in `scripts/`, one-shot by design |
 
 <sub>Generated from the git index by `scripts/build_readme_counts.py`; `tests/unit/test_readme_counts_are_current.py` fails if this block drifts.</sub>
 
 <!-- COUNTS:END -->
+
 
 
 The seven are enumerated in the final report linked below, with what each one taught. A later
@@ -43,7 +44,7 @@ uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s
 ```
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
-full suite is `uv run pytest -q`, 6m34s here. **On a clone it is 1,699 passed and 136 skipped in
+full suite is `uv run pytest -q`, about 6m30s here. **On a clone it is 1,703 passed and 136 skipped in
 2m47s** — measured by hiding the panels and running it, not asserted; each of the 136 names the
 file it wanted. The panels left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB;
@@ -60,18 +61,25 @@ strategy is a swappable brick. Why anything is the way it is, is in
 ## Where things are
 
 ```
-src/backtest_framework/   the instrument — 46 modules, engine · costs · instruments · data · analytics
-                          (+26 research/ study modules, which are not framework surface)
+src/backtest_framework/   the instrument — engine · costs · data · instruments · validation ·
+                          analytics · registry · simulator · pipeline · config · strategies
+                          (research/ sits alongside and is study code, not framework surface)
 tests/                    the exhibit — golden · property · integration · unit
 docs/
-  decisions/              741 records, D1 → D537, one per design call     [index](docs/decisions/README.md)
-  results/                48 studies, five of them featured               [index](docs/results/README.md)
+  ARCHITECTURE.md         what the framework IS: the loop, the seams, the guards
+  decisions/              one record per design call, D1 → D537   [index](docs/decisions/README.md)
+  results/                every study, five featured              [index](docs/results/README.md)
+  specs/                  the models and prompts the studies were built from
+  research/               scoping and literature for work not yet a study
   internal/               working state: the live queue, the task list, an old self-audit
-  RULES.md  FINDINGS.md  BOOK.md  TUTORIAL.md
-scripts/                  the research runners — 586 files, one-shot by design
+  verification/           the cross-engine reconciliation
+  RULES.md  FINDINGS.md  BOOK.md  STACK.md  TUTORIAL.md  writeup.md
+scripts/                  the research runners, one-shot by design
 data/                     evidence, committed; the bulk panels are manifested, not committed
 CONTRIBUTING.md           how to change any of it: gate before code
 ```
+
+The counts for each live in the block above, generated rather than typed.
 
 Two boundaries that are load-bearing rather than tidy: **`src/` never imports from `scripts/`** —
 the instrument does not depend on any use of it — and **`data/` holds evidence while
@@ -93,7 +101,7 @@ measurement of whether ETF pairs trading clears real frictions (draft skeleton; 
 headline number final and cross-checked against its source artifact by the test suite).
 
 **The studies are demonstrations, and they are indexed rather than recited here.**
-[`docs/results/`](docs/results/README.md) holds all 48 with five featured for what each one proves
+[`docs/results/`](docs/results/README.md) holds every study, five of them featured for what each proves
 about the instrument — that a strategy is a swappable brick, that neutrality engineering can work
 while the thesis it serves fails, that a pre-registered stop fires when it should.
 

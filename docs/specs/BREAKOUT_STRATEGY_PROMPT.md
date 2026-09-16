@@ -41,7 +41,7 @@ Keep only filters that improve out-of-sample performance. Each filter is a separ
 - Round-trip cost as % of gross P&L, per trial
 
 ## Report
-Write results to `BREAKOUT_RESULTS.md`: baseline vs each filter increment, maker vs taker cost scenarios, plateau surface (including the sweep-edge gradient note if performance rises at the boundary), the signal-vs-sizing ablation with an explicit attribution verdict, deflated Sharpe, benchmark comparison, and a candid verdict on whether this survives costs at the maker tier. Result-corrupting issues (look-ahead, fill semantics) take priority over performance tuning — if you find any, stop and report before continuing.
+Write results to `docs/results/BREAKOUT_RESULTS.md` (NOT the repository root — `tests/unit/test_results_docs_at_root.py` forbids a results document there): baseline vs each filter increment, maker vs taker cost scenarios, plateau surface (including the sweep-edge gradient note if performance rises at the boundary), the signal-vs-sizing ablation with an explicit attribution verdict, deflated Sharpe, benchmark comparison, and a candid verdict on whether this survives costs at the maker tier. Result-corrupting issues (look-ahead, fill semantics) take priority over performance tuning — if you find any, stop and report before continuing.
 
 ## Explicitly out of scope
 Shorting, intraday bars, crypto perps/derivatives, parameter optimization beyond the stated sweep, and any modification to ground-truth documents.

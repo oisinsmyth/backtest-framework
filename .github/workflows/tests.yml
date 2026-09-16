@@ -6,7 +6,7 @@
 #
 # WHAT A RUNNER DOES NOT HAVE: the bulk data panels. D536 dropped 115 of them (844 MB) from the
 # index, so a clone carries the library, the tests and the small evidence artifacts and nothing
-# else. Roughly 64 tests skip here for want of a panel, named individually by the skip reason and
+# else. 136 tests skip here for want of a panel, named individually by the skip reason and
 # recoverable from data/data_manifest.json. Every golden master, every property test and the
 # vectorbt cross-engine reconciliation run on a clone, because they use synthetic bars or a small
 # tracked .csv.

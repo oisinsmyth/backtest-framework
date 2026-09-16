@@ -137,9 +137,10 @@ uv run ruff check src tests       # E4/E7/E9/F — errors, not style
 uv run mypy                       # the library only; tests are out of scope by config
 ```
 
-All four run in CI on every push ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)),
-offline: the five tests marked `live_fetch` are excluded by default, which is D24's cross-cutting
-gate rather than a convenience.
+All four are wired into CI ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) across
+four jobs, to run on every push — **though the repository has no remote yet, so the workflow has
+never executed.** It runs offline by construction: the five tests marked `live_fetch` are excluded
+by default, which is D24's cross-cutting gate rather than a convenience.
 
 **A skip is not a pass.** 136 tests skip on a clone without the bulk data panels, which left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md). Each names the file it
