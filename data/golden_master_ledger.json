@@ -1,0 +1,136 @@
+{
+  "what": "What BacktestResult publishes for the golden-master scenario, and nothing else.",
+  "generator": "scripts/run_golden_master_ledger.py",
+  "scenario_source": "tests/golden/test_the_golden_master.hand.json (scenario block)",
+  "gate": "tests/unit/test_figure_ledger_diff.py",
+  "not_published": [
+    "commission",
+    "spread",
+    "borrow",
+    "margin_interest",
+    "dividend"
+  ],
+  "not_published_note": "BacktestResult (src/backtest_framework/engine/backtest.py:42-79) records no per-brick attribution. A fill's trade_cost is commission PLUS spread, already summed; carry accruals and event flows are applied to PortfolioState and never recorded. These five rows exist only in the hand ledger.",
+  "bars": [
+    {
+      "timestamp": "2026-01-08T16:00:00",
+      "fill_qty": -1200.0,
+      "fill_price": 100.0,
+      "trade_cost": 66.0,
+      "cash": 219934.0,
+      "nav": 99934.0
+    },
+    {
+      "timestamp": "2026-01-09T16:00:00",
+      "fill_qty": -53.0,
+      "fill_price": 98.0,
+      "trade_cost": 3.597,
+      "cash": 225115.44968493152,
+      "nav": 102321.44968493152
+    },
+    {
+      "timestamp": "2026-01-12T16:00:00",
+      "fill_qty": 90.0,
+      "fill_price": 101.0,
+      "trade_cost": 5.545,
+      "cash": 215358.79789299532,
+      "nav": 97895.79789299532
+    },
+    {
+      "timestamp": "2026-01-13T16:00:00",
+      "fill_qty": 1163.0,
+      "fill_price": 99.0,
+      "trade_cost": 63.3835,
+      "cash": 100149.65370223799,
+      "nav": 100149.65370223799
+    },
+    {
+      "timestamp": "2026-01-14T16:00:00",
+      "fill_qty": 0.0,
+      "fill_price": null,
+      "trade_cost": 0.0,
+      "cash": 100149.65370223799,
+      "nav": 100149.65370223799
+    }
+  ],
+  "fills": [
+    {
+      "timestamp": "2026-01-08T16:00:00",
+      "instrument_id": "TEST",
+      "qty": -1200.0,
+      "price": 100.0,
+      "trade_cost": 66.0
+    },
+    {
+      "timestamp": "2026-01-09T16:00:00",
+      "instrument_id": "TEST",
+      "qty": -53.0,
+      "price": 98.0,
+      "trade_cost": 3.597
+    },
+    {
+      "timestamp": "2026-01-12T16:00:00",
+      "instrument_id": "TEST",
+      "qty": 90.0,
+      "price": 101.0,
+      "trade_cost": 5.545
+    },
+    {
+      "timestamp": "2026-01-13T16:00:00",
+      "instrument_id": "TEST",
+      "qty": 1163.0,
+      "price": 99.0,
+      "trade_cost": 63.3835
+    }
+  ],
+  "cash_curve": [
+    [
+      "2026-01-08T16:00:00",
+      219934.0
+    ],
+    [
+      "2026-01-09T16:00:00",
+      225115.44968493152
+    ],
+    [
+      "2026-01-12T16:00:00",
+      215358.79789299532
+    ],
+    [
+      "2026-01-13T16:00:00",
+      100149.65370223799
+    ],
+    [
+      "2026-01-14T16:00:00",
+      100149.65370223799
+    ]
+  ],
+  "equity_curve": [
+    [
+      "2026-01-08T16:00:00",
+      99934.0
+    ],
+    [
+      "2026-01-09T16:00:00",
+      102321.44968493152
+    ],
+    [
+      "2026-01-12T16:00:00",
+      97895.79789299532
+    ],
+    [
+      "2026-01-13T16:00:00",
+      100149.65370223799
+    ],
+    [
+      "2026-01-14T16:00:00",
+      100149.65370223799
+    ]
+  ],
+  "final_positions": {
+    "TEST": 0.0
+  },
+  "final_cash": 100149.65370223799,
+  "final_nav": 100149.65370223799,
+  "starting_cash": 100000.0
+}
