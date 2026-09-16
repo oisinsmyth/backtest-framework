@@ -1212,7 +1212,7 @@ version (likely at the Phase C "first real number" milestone, see
   because `SetupPopulation`'s drop arithmetic is asserted to add up.
 
 ### Added (the structure detectors, 2026-08-24 — D204/D205)
-- `New Docs/STRUCTURE_MODEL.md` + `STRUCTURE_RESULTS.md` — a new programme and a new
+- `docs/specs/STRUCTURE_MODEL.md` + `STRUCTURE_RESULTS.md` — a new programme and a new
   ledger, opened at 0 looks, on a genuinely new construction: the five components of a
   discretionary retail price-action strategy. Terrain's 259 looks disclosed adjacent.
   Pre-registered before any code existed (D204).
@@ -1462,7 +1462,7 @@ version (likely at the Phase C "first real number" milestone, see
   `-0.9*gap` pushes price TOWARD the level, building a magnet rather than a wall; the
   harness correctly reported the planted level as worse than chance. Flipping to `+1.2*gap`
   built a wall price never returned to — one touch in 1,500 bars. The harness caught both.
-- `New Docs/` is now complete: every phase either delivered or closed by its own criterion.
+- `docs/specs/` is now complete: every phase either delivered or closed by its own criterion.
 
 
 ### Added (the ETF cross-section, pre-registered, 2026-08-22 — D188)

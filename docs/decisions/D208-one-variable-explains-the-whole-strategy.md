@@ -3,7 +3,7 @@
 **Status:** Committed (H1 partly confirmed, H2 confirmed, H3 confirmed, H4 confirmed, H6 confirmed)
 **Date:** 2026-08-24
 **Category:** Signals & strategy interface
-**Source:** WP3 of `New Docs/STRUCTURE_MODEL.md` (D204), primary cell, no costs
+**Source:** WP3 of `docs/specs/STRUCTURE_MODEL.md` (D204), primary cell, no costs
 
 ## The result
 

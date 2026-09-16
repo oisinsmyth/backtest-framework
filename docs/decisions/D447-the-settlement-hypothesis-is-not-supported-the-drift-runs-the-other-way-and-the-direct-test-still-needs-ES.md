@@ -112,7 +112,7 @@ raw DBN under `temp/`, with no continuous series built**, and the manifest says 
 *"Acquisition only — no fixture was built and no study was run."*
 
 **Building a continuous ES series from it is the roll problem** that
-[`docs/prop firm leads/02`](../prop%20firm%20leads/02-data-acquisition-prompt.md) §3 flagged as the
+[`docs/research/prop-firm-leads/02`](../research/prop-firm-leads/02-data-acquisition-prompt.md) §3 flagged as the
 gate that matters most — *a synthetic roll gap scored as an adverse excursion that never happened* —
 and **`temp/` is deletable any time, unasked, while a live job is still writing into it.** **That
 work belongs to the acquisition, not to this record.**

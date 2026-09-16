@@ -1,6 +1,6 @@
 """Terrain sensors: where resting supply and demand sit relative to price (D189).
 
-Phase 3 of `New Docs/TERRAIN_MODEL.md`. The strategies detect impulse; the terrain maps the
+Phase 3 of `docs/specs/TERRAIN_MODEL.md`. The strategies detect impulse; the terrain maps the
 medium. **The strategy logic does not change** — this module produces a density over price
 buckets and nothing else. Fusion, per-trigger features and gates all come later, and each
 depends on a sensor that has passed the null test in `terrain_nulls.py` first.

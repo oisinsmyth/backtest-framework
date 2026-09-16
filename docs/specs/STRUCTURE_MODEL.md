@@ -98,7 +98,7 @@ reading the same swing structure and it would be dishonest to price only one of 
 ### D2 — none of C1, C3, C4 exists anywhere in the repo
 
 `grep -rniE "fair.?value.?gap|fibonacci|retracement|change of character|choch|break of
-structure|golden ratio|\bfvg\b"` over `src`, `scripts`, `docs`, `tests` and `New Docs`
+structure|golden ratio|\bfvg\b"` over `src`, `scripts`, `docs`, `tests` and `docs/specs`
 returns zero hits. This is a new construction, which is the condition
 `TERRAIN_RESULTS.md` sets for opening a new document and a new ledger.
 

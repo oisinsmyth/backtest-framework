@@ -2,7 +2,7 @@
 
 **MEASUREMENT record. No hurdle is claimed and no candidate is admitted.** The last open item on
 the prop track: the hold-length curve named in
-[`docs/prop firm leads/01`](../prop%20firm%20leads/01-prop-lead.md) §4 and
+[`docs/research/prop-firm-leads/01`](../research/prop-firm-leads/01-prop-lead.md) §4 and
 [D452](D452-RESULT-D440-on-the-instrument-same-verdict-and-clustering-explains-94-percent-not-83.md)
 §7. **Runner:** `scripts/d458_hold_length_curve.py`. **Fixtures built:**
 `data/fixtures/es_minute_bars.parquet` (6,844,532 rows), `data/fixtures/es_hold_ladder.csv.gz`

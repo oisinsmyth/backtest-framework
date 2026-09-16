@@ -3,7 +3,7 @@
 **Status:** Committed — an amendment, written before the runs it governs
 **Date:** 2026-08-24
 **Category:** Validation & research integrity
-**Source:** WP4/WP5 design, against `New Docs/STRUCTURE_MODEL.md` (D204) and D206's census
+**Source:** WP4/WP5 design, against `docs/specs/STRUCTURE_MODEL.md` (D204) and D206's census
 
 `STRUCTURE_MODEL.md` states that it "does not change once code starts — an amendment gets
 its own dated section here and its own decision record, in the form D144 and D198 used."

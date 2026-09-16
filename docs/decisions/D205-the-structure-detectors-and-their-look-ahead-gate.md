@@ -3,7 +3,7 @@
 **Status:** Committed
 **Date:** 2026-08-24
 **Category:** Signals & strategy interface
-**Source:** WP1 of `New Docs/STRUCTURE_MODEL.md` (D204)
+**Source:** WP1 of `docs/specs/STRUCTURE_MODEL.md` (D204)
 
 ## The decision
 

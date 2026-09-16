@@ -4,12 +4,12 @@
 > Left struck rather than rewritten, because the heading is what a reader indexes on and a silently
 > corrected one hides that the record was wrong. **See the amendment block below.**
 
-**Recorded 2026-09-10.** Produced by reading [`BOOK_PROP.md`](../BOOK_PROP.md), the D258–D379 chain
+**Recorded 2026-09-10.** Produced by reading [`BOOK_PROP.md`](../../BOOK_PROP.md), the D258–D379 chain
 and the consolidated research tree against each other. **This is a LEADS record.**
 
 > **It closes nothing, admits nothing, and elevates nothing.** No measurement was made for it.
-> Under [R8](../RULES.md#r8) every item below needs a pre-registration committed **before** its
-> runner exists, and under [R15](../RULES.md#r15) only the principal opens or closes an avenue.
+> Under [R8](../../RULES.md#r8) every item below needs a pre-registration committed **before** its
+> runner exists, and under [R15](../../RULES.md#r15) only the principal opens or closes an avenue.
 > Where it cites the research tree it cites it as **`[EXT]` evidence about the outside world**,
 > never as a measurement on any fixture here.
 
@@ -20,10 +20,10 @@ and the consolidated research tree against each other. **This is a LEADS record.
 **§1 and §2 below are WITHDRAWN.** They are struck through in place rather than deleted, because a
 record that quietly loses its wrong half is not a record.
 
-**What I did.** I built §1 on one line in [`BOOK_PROP.md`](../BOOK_PROP.md) — *"No record here holds
+**What I did.** I built §1 on one line in [`BOOK_PROP.md`](../../BOOK_PROP.md) — *"No record here holds
 MyFundedFutures' ladder terms, and §4 of D379 is not computable without them"* — and reported it as
 a live blocker that the research folder unblocked. **That line is from the D379 amendment of
-2026-09-08, and [D386](../decisions/D386-the-prop-account-is-worth-its-buffer.md) discharged it the
+2026-09-08, and [D386](../../decisions/D386-the-prop-account-is-worth-its-buffer.md) discharged it the
 same day.** I read the page that stated the gap and not the record that had already closed it.
 **That is this programme's own recorded failure mode — tying a claim to a record without reading the
 object it points at — and I repeated it.**
@@ -32,8 +32,8 @@ object it points at — and I repeated it.**
 
 | | |
 |---|---|
-| **MFFU's terms, in code** | [`scripts/d386_full_lifecycle.py`](../../scripts/d386_full_lifecycle.py) lines 248–271 — **five MFFU plans**, with drawdown type and lock level, qualifying-day counters, consistency, cap schedule, payout count, minimum withdrawal, safety net, post-payout floor change, and monthly billing |
-| **`P(pass)`** | computed — [`scripts/d386_pass_rate.py`](../../scripts/d386_pass_rate.py); MFFU Rapid 50K **26.3%**, 100K **19.2%** |
+| **MFFU's terms, in code** | [`scripts/d386_full_lifecycle.py`](../../../scripts/d386_full_lifecycle.py) lines 248–271 — **five MFFU plans**, with drawdown type and lock level, qualifying-day counters, consistency, cap schedule, payout count, minimum withdrawal, safety net, post-payout floor change, and monthly billing |
+| **`P(pass)`** | computed — [`scripts/d386_pass_rate.py`](../../../scripts/d386_pass_rate.py); MFFU Rapid 50K **26.3%**, 100K **19.2%** |
 | **`V` per evaluation purchased** | D386's results table, 8,000 paths × 600 days, **maximised over a risk grid**, with break-even Sharpe well-defined |
 | **the verdict** | **MFFU Rapid EOD is the vehicle** — break-even Sharpe **≈ 0.00**, `$209` one-time, **`$0` activation**, no payout cap, a `$150` qualifying threshold, and **no funded consistency rule.** `V` at Sharpe 1.5 is **`$3,015`** on the 50K against Topstep's **`$916`**, because MFFU averages **4.03 payouts per evaluation against Topstep's 0.52** |
 
@@ -48,14 +48,14 @@ verdict is therefore a σ-based lower bound on severity, not a measurement"* —
 **drawdown is 17× more persistent out-of-sample than Sharpe** (R² 0.34 against 0.02). **So D386
 parameterises on the unstable statistic and approximates the persistent one with a Gaussian.**
 
-**We hold what the literature does not.** [D259](../decisions/D259-the-extended-session-and-the-overnight-interior.md)
+**We hold what the literature does not.** [D259](../../decisions/D259-the-extended-session-and-the-overnight-interior.md)
 measured C1's actual path — median MAE **0.55%**, **p99 3.98% sitting exactly on the 4% floor**,
 worst **13.85%**, 2020's p99 at **7.05%** — fat-tailed and regime-dependent, which a Gaussian at
 matched vol cannot produce. That is why vol-targeting cut 2020's breach rate **87-fold**; a Gaussian
 model would show almost no such gain.
 
 > **THE NEXT STUDY IS THE JOIN: replace D386's Gaussian increments with D259's measured path.**
-> Pre-registered as **[D440](../decisions/D440-the-measured-path-through-the-lifecycle-model.md)**.
+> Pre-registered as **[D440](../../decisions/D440-the-measured-path-through-the-lifecycle-model.md)**.
 > It needs no futures data, and it **supersedes §3** — C1's size sweep stops being *"unsearched
 > below 0.48×"* and becomes an **argmax of `V`** on the risk grid D386 already sweeps.
 
@@ -66,7 +66,7 @@ block.
 
 | | |
 |---|---|
-| **1** | **the measured-path join — [D440](../decisions/D440-the-measured-path-through-the-lifecycle-model.md)**, on the equity proxy, now |
+| **1** | **the measured-path join — [D440](../../decisions/D440-the-measured-path-through-the-lifecycle-model.md)**, on the equity proxy, now |
 | **2** | **D386's own open item 4** — *settle whether MFFU's Rapid floor lock is automatic or purchased; its own pages contradict.* One primary-source read, and everything post-lock rests on it |
 | **3** | **the settlement check (§5.1)**, when the futures bars land — **and note it is a KILL-CHECK ON D440's INPUT**, not a refinement of it |
 | **4** | **re-run D440 on ES** rather than the proxy |
@@ -78,9 +78,9 @@ block.
 
 ## AMENDMENT 2, 2026-09-11 (later) — **BOTH RUNNABLE ITEMS RAN. NEITHER SURVIVED, AND THE LEDGER IS NOW EMPTY.**
 
-**Item 1 ran as [D440](../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md).
-The remedy it pointed at ran as [D442](../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md).
-Both are recorded; neither is closed, because [R15](../RULES.md#r15).**
+**Item 1 ran as [D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md).
+The remedy it pointed at ran as [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md).
+Both are recorded; neither is closed, because [R15](../../RULES.md#r15).**
 
 ### `D440` — the measured-path join · `T1` UNRESOLVED, `T2` FAIL, `T3` UNRESOLVED
 
@@ -93,8 +93,8 @@ explains 14–18% of the gap; SERIAL STRUCTURE explains 82–86%.**
 
 **It also forced a ruling.** `T2` exposed that D259's 6.40 years and D440's 0.14 years are **both
 correct and are different objects.** The principal ruled on 2026-09-11 that **P4 means the ACCOUNT'S
-LIFE** ([R11](../RULES.md#r11)), so **C1 does not clear P4** — nothing on the grid reaches three
-years, the best cell anywhere is 1.01 and its `V` is negative. **[`BOOK_PROP.md`](../BOOK_PROP.md) is
+LIFE** ([R11](../../RULES.md#r11)), so **C1 does not clear P4** — nothing on the grid reaches three
+years, the best cell anywhere is 1.01 and its `V` is negative. **[`BOOK_PROP.md`](../../BOOK_PROP.md) is
 amended.**
 
 ### `O1` — the abstention rule · `G1` PASS, `G2` **FAIL on all four symbols**, `G3` pass
@@ -123,7 +123,7 @@ stays inside the rule.**
    and DIA cleared a null scored at one fixed risk fraction while the treatment was an **argmax over
    four**. Given the same four, the null's p95 rose by **~+245 on both — larger than the effects of
    +49 and +79 it was hiding** — and both passes vanished.
-   [ADDENDUM](../decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk-fractions.md).
+   [ADDENDUM](../../decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk-fractions.md).
    **Count the choices the treatment was allowed, and give the null every one.**
 2. **ANY GATE THAT CAN GO FLAT MUST REPORT ITS MAXIMUM RUN beside its returns.** The inactivity rules
    have been unmodelled in every prop record because no prior candidate could trip them. **An
@@ -133,8 +133,8 @@ stays inside the rule.**
 
 | | |
 |---|---|
-| ~~1 · the measured-path join~~ | **RAN — [D440](../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)**, not a candidate |
-| ~~`O1`, the abstention rule~~ | **RAN — [D442](../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md)**, two independent kills |
+| ~~1 · the measured-path join~~ | **RAN — [D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)**, not a candidate |
+| ~~`O1`, the abstention rule~~ | **RAN — [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md)**, two independent kills |
 | **1 · the floor-lock check** | **still the cheapest open item.** D386's own open item 4 — *whether MFFU's Rapid floor lock is automatic or purchased; its own pages contradict.* One primary-source read, and everything post-lock rests on it |
 | **2 · the settlement check (§5.1)** | when the bars land. **Now load-bearing rather than a side-check** — if the drift is a T+1 artefact, D440's whole input series has no counterpart in the instrument |
 | **3 · re-run D440 on ES** | the proxy's untraded window is unobserved, so `$78` is an **upper** bound. The instrument version should be **worse**, not better |
@@ -147,7 +147,7 @@ stays inside the rule.**
 
 ## 0. The state of the track, stated first
 
-**[D258](../decisions/D258-the-prop-track-candidates.md) fixed four candidates in advance and all
+**[D258](../../decisions/D258-the-prop-track-candidates.md) fixed four candidates in advance and all
 four are resolved.**
 
 | | state |
@@ -157,7 +157,7 @@ four are resolved.**
 | **C3** — opening range | **closed on SHAPE** — hit rate above 50% with **skew −0.51 to −0.80**, the worse of the two shapes for P1 |
 | **C4** — sizing wrapper | never a candidate. **The vol-targeting method is the track's one durable output** |
 
-**C1 as it now stands** ([D259](../decisions/D259-the-extended-session-and-the-overnight-interior.md),
+**C1 as it now stands** ([D259](../../decisions/D259-the-extended-session-and-the-overnight-interior.md),
 vol-targeted at a 0.4% target, cap 4×):
 
 | | |
@@ -180,13 +180,13 @@ three constructions on **shape** rather than on return.
 > anything was blocked on them.** Kept in full because the field-21 geometry is still the right way
 > to read the instrument.
 
-[`BOOK_PROP.md`](../BOOK_PROP.md) states the blocker plainly:
+[`BOOK_PROP.md`](../../BOOK_PROP.md) states the blocker plainly:
 
 > *"**No record here holds MyFundedFutures' ladder terms**, and §4 of
-> [D379](../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+> [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
 > is not computable without them."*
 
-**[`docs/research/Prop-Firm-080926/01-myfundedfutures.md`](../research/Prop-Firm-080926/01-myfundedfutures.md)
+**[`docs/research/Prop-Firm-080926/01-myfundedfutures.md`](../Prop-Firm-080926/01-myfundedfutures.md)
 holds them in full, fields 16–21** — and they are **not the Apex-shaped ladder the prop synthesis
 costed:**
 
@@ -201,7 +201,7 @@ costed:**
 
 > **After the first payout the barrier stops ratcheting.** Distance to breach becomes
 > `balance − $100`, permanently. **P1's trailing floor — the thing that killed C1 standalone, and
-> the quantity the whole of [hurdle P](../RULES.md#r11) is built around — applies only until the
+> the quantity the whole of [hurdle P](../../RULES.md#r11) is built around — applies only until the
 > first payout.**
 
 **`BOOK_PROP`'s own D379 amendment already prices that difference**: at zero edge on a
@@ -225,7 +225,7 @@ adopted.**
 ## ~~2. `P(pass)` is computable from machinery that already exists~~
 
 > **WITHDRAWN 2026-09-11 — it was not merely computable, it was COMPUTED.**
-> [`scripts/d386_pass_rate.py`](../../scripts/d386_pass_rate.py), and the rates are in D386's own
+> [`scripts/d386_pass_rate.py`](../../../scripts/d386_pass_rate.py), and the rates are in D386's own
 > table. **The sentence below is true and useless.**
 
 `BOOK_PROP` says so directly: the same **MAE-against-a-ratcheting-floor simulation D259 already
@@ -242,7 +242,7 @@ fee / P(pass)  =  the acquisition cost of ONE funded account
 **This is where `BOOK_PROP`'s "20 accounts needed for $50k" line actually lives**, and it has never
 been computed with a real ladder.
 
-## 3. C1's value-maximising size was never searched — **superseded by [D440](../decisions/D440-the-measured-path-through-the-lifecycle-model.md)**
+## 3. C1's value-maximising size was never searched — **superseded by [D440](../../decisions/D440-the-measured-path-through-the-lifecycle-model.md)**
 
 > **AMENDED 2026-09-11.** The observation stands: the sweep stopped where P4 cleared and the value
 > maximum is at or below its boundary. **What changes is that it is no longer its own study** —
@@ -268,7 +268,7 @@ firm's own costs**; and **2020 is one event** carrying an 87× improvement.
 
 ## 4. Where a FIFTH candidate would come from — the hold-length interior optimum
 
-> **AMENDED 2026-09-11 by [D442](../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md):
+> **AMENDED 2026-09-11 by [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md):
 > there is now a THIRD bound on this curve and it is not economic.** MFFU's **7-day inactivity
 > rule** binds any construction that can go flat, and `O1` breached it by **12×**. **The curve below
 > is drawn against two 4% bounds; it must be drawn against three.**
@@ -320,7 +320,7 @@ adopted** — the A/H same-company design behind it was not read here.
 > un-modelled discrepancy. Whether P5 stays as a house standard stricter than the venue remains the
 > principal's call — but **nothing is waiting on it.**
 
-[R11](../RULES.md#r11) justifies **P5** with *"consistency rules cap a single day at 30–50%."*
+[R11](../../RULES.md#r11) justifies **P5** with *"consistency rules cap a single day at 30–50%."*
 
 `[EXT]` field 16: **MFF's funded-stage consistency rule is NONE** on Rapid, Rapid EOD and Pro — it
 binds in the **evaluation** only (50% / 30%), and Builder's 50% applies at the **payout stage**
@@ -332,7 +332,7 @@ both **P2** (a ~22-hour hold from the 18:00 ET Globex open to the 16:10 ET close
 
 > **Same shape as the `$5`-floor case in the research consolidation: the hurdle may well stand, but
 > the reason written under it does not describe the venue it is being applied to.**
-> **[D375](../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+> **[D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
 > already records P3, P4 and P5 as never computed on anything.** **Whether P5 is recalibrated,
 > kept as a house standard stricter than the venue, or dropped is the principal's call and nothing
 > here decides it.**
@@ -346,7 +346,7 @@ construction exploiting it would **clear P1 and P4 and be killed by P5.**
 ### 6.1 We hold no futures data
 
 **Everything on this page is measured on an extended-hours equity proxy covering 16 of 23 futures
-hours.** `[EXT]` [`futures-data/`](../research/consolidated/data/05-futures-data-sources.md):
+hours.** `[EXT]` [`futures-data/`](../consolidated/data/05-futures-data-sources.md):
 
 | | |
 |---|---|
@@ -370,7 +370,7 @@ the E-mini Russell moved to CME in 2017.
 
 **A futures-complex book has 2.6× the breadth of an equity-index book — worth `√2.6 ≈ 1.6×` on IR
 for any candidate with a positive edge**, before a second arm is even found. **And 55 symbols give
-LESS breadth than 12**, the same saturation [FINDINGS §4](../FINDINGS.md) measured on ETFs.
+LESS breadth than 12**, the same saturation [FINDINGS §4](../../FINDINGS.md) measured on ETFs.
 
 ---
 
@@ -381,13 +381,13 @@ LESS breadth than 12**, the same saturation [FINDINGS §4](../FINDINGS.md) measu
   have been blocked on a number already in this repo.~~ **AMENDED 2026-09-11: the valuation half was
   already built by D386. What is actionable is the INPUT to it** — see the amendment block.
 - **It does not elevate anything.** Every `[EXT]` line is evidence about the outside world, was
-  never measured on this fixture, and stays in [`docs/research/`](../research/README.md) under the
+  never measured on this fixture, and stays in [`docs/research/`](../README.md) under the
   standing ruling of 2026-09-09.
 - **It does not amend a hurdle or loosen a threshold.** ~~§5.2 reports that a rationale and a venue
   term disagree. **It does not resolve that.**~~ **AMENDED: D386 had already priced it.**
 - **It does not reopen C2 or C3.** Both are closed on measurements, not on assumptions.
 - ~~**The `[EXT]` prop figures are `E[extracted] = b` arithmetic on Apex/Topstep geometry**
-  ([D386](../decisions/D386-the-prop-account-is-worth-its-buffer.md) is the repo's own version).
+  ([D386](../../decisions/D386-the-prop-account-is-worth-its-buffer.md) is the repo's own version).
   **MFF's field-21 geometry is different and nothing has recomputed it.**~~
   **WITHDRAWN 2026-09-11 — D386 recomputed it, across five MFFU plans, and MFFU wins its table.**
 - **AND ONE THING THIS RECORD GOT WRONG, KEPT AT THE END SO IT IS NOT LOST:** its headline lead was
@@ -397,14 +397,14 @@ LESS breadth than 12**, the same saturation [FINDINGS §4](../FINDINGS.md) measu
 
 ## 8. Order of work — **REISSUED 2026-09-11, see the amendment block at the top**
 
-**Each needs its own pre-registration under [R8](../RULES.md#r8), committed before the runner
+**Each needs its own pre-registration under [R8](../../RULES.md#r8), committed before the runner
 exists.**
 
 | | why it goes here |
 |---|---|
 | ~~**1 · `P(pass)` + the ladder (§1, §2)**~~ | ~~cheapest, uses machinery that exists~~ — **STRUCK: done by D386, 2026-09-08** |
 | ~~**2 · P5 (§5.2)**~~ | ~~D379 §5's argument~~ — **STRUCK: priced by D386 as a reason MFFU wins** |
-| **1 · the measured-path join** — [D440](../decisions/D440-the-measured-path-through-the-lifecycle-model.md) | D386 values a **Gaussian** trader; D259 measured a **real** path. Nobody has run one through the other, **and it needs no futures data** |
+| **1 · the measured-path join** — [D440](../../decisions/D440-the-measured-path-through-the-lifecycle-model.md) | D386 values a **Gaussian** trader; D259 measured a **real** path. Nobody has run one through the other, **and it needs no futures data** |
 | **2 · the floor-lock check** | D386's own open item 4 — *its own pages contradict*, and everything post-lock rests on it |
 | **3 · the settlement check (§5.1)** | when the bars land. **A kill-check on D440's INPUT**, not a refinement of it |
 | **4 · re-run D440 on ES** | the proxy covers 16 of 23 hours; the instrument is the object |

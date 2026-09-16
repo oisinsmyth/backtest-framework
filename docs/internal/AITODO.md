@@ -328,7 +328,7 @@ none.
 ## Now — the STRUCTURE programme (opened 2026-08-24, D204)
 
 Mechanising a discretionary retail price-action strategy so its five components can be
-measured separately and together. Spec `New Docs/STRUCTURE_MODEL.md`, ledger
+measured separately and together. Spec `docs/specs/STRUCTURE_MODEL.md`, ledger
 `STRUCTURE_RESULTS.md`. Prior stated as bad up front: three of the five are pullback-fade
 entries and fading lost in every form terrain measured.
 

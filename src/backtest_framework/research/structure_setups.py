@@ -1,6 +1,6 @@
 """Composing the five detectors into setups — the object every later work package counts.
 
-WP2 of `New Docs/STRUCTURE_MODEL.md` (D204). `structure.py` produces the components; this
+WP2 of `docs/specs/STRUCTURE_MODEL.md` (D204). `structure.py` produces the components; this
 turns them into the thing the course actually trades: *after a change of character, wait
 for the pullback, and enter where the filters agree.*
 

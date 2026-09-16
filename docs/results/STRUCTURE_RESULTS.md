@@ -5,7 +5,7 @@ descriptive addendum restating every arm in Sharpe and PnL follows it (D212), ta
 the ledger to **102 looks**. WP5 never ran — D210 triggered the pre-registered stop.
 
 **Append-only.** Every work package adds a dated section; nothing above is rewritten. This
-is the single results ledger `New Docs/STRUCTURE_MODEL.md` requires, and it carries the
+is the single results ledger `docs/specs/STRUCTURE_MODEL.md` requires, and it carries the
 multiplicity count that feeds the deflated Sharpe if the programme reaches WP5.
 
 **What this programme tests:** whether the five components of a discretionary retail
@@ -14,7 +14,7 @@ retracement, the fair value gap, and RSI — carry information about forward pri
 on BTC and ETH 15m bars, separately and in combination, once each is mechanised precisely
 enough that a machine can find it without a human drawing the lines.
 
-**Spec and pre-registration:** `New Docs/STRUCTURE_MODEL.md` (D204), committed before any
+**Spec and pre-registration:** `docs/specs/STRUCTURE_MODEL.md` (D204), committed before any
 detector existed.
 
 ---
@@ -79,7 +79,7 @@ the deflated Sharpe.
 
 **Produced:** 2026-08-24 · **Reproduce:** n/a — no runs.
 
-`New Docs/STRUCTURE_MODEL.md` written and committed, recorded as D204. It fixes, before
+`docs/specs/STRUCTURE_MODEL.md` written and committed, recorded as D204. It fixes, before
 any code exists: the five mechanical definitions; the confirmation-lag requirement; the
 pre-registered parameter sets and the named primary cell; the three hurdles with the
 percentile-beside-the-delta requirement from D202; the per-WP stop conditions; seven

@@ -3,7 +3,7 @@
 **Recorded 2026-09-10.** A ready-to-paste prompt for a fresh session, plus the reasoning behind each
 constraint in it. **The prompt itself is §2; everything else is why it says what it says.**
 
-> **This is infrastructure, not a study.** [R8](../RULES.md#r8) pre-registration is owed by the
+> **This is infrastructure, not a study.** [R8](../../RULES.md#r8) pre-registration is owed by the
 > measurements in [`01-prop-lead.md`](01-prop-lead.md) §8, **not** by the fetch. Acquiring the data
 > does not open, close or admit anything.
 
@@ -37,7 +37,7 @@ Paste everything between the rules into a fresh session in this repo.
 > any study on it.**
 >
 > **Read first, and do not re-derive what they already establish:**
-> `docs/prop firm leads/01-prop-lead.md` (§6.1 the data gate, §6.2 the breadth correction, §8 the
+> `docs/research/prop-firm-leads/01-prop-lead.md` (§6.1 the data gate, §6.2 the breadth correction, §8 the
 > order of work) · `docs/research/consolidated/data/05-futures-data-sources.md` (the vendor answer
 > and its three traps) · `docs/research/futures-data/00-SYNTHESIS.md` §1 and §6 (the rate
 > derivation, and the roll warning) · `docs/BOOK_PROP.md` (what the fixture is for) ·
@@ -168,7 +168,7 @@ key; the agent verifies pricing, dry-runs the cost, waits for approval, then fet
 against a ratcheting floor.** An adjusted continuous series contains **synthetic** bar-to-bar moves at
 each roll. **Scored naively, a roll gap is an adverse excursion that never happened** — and on a 4%
 floor that is the difference between a candidate clearing P4 and breaching. This is the same class as
-the thirty fabricated return days of [FINDINGS §18](../FINDINGS.md) and the 15m-versus-daily
+the thirty fabricated return days of [FINDINGS §18](../../FINDINGS.md) and the 15m-versus-daily
 adjustment split, and it is the first time it would bite the prop track.
 
 **Why the micros are in scope.** C1's vol-targeted sizing lands at **0.48× average size**, and

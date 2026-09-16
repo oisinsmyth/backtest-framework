@@ -3,7 +3,7 @@
 **Status:** Committed (H1 confirmed — S1 fails its null on all 16 configurations; the terrain programme stops at WP2)
 **Date:** 2026-08-22
 **Category:** Signals & strategy interface
-**Source:** `New Docs/TERRAIN_MODEL.md` WP1 + WP2 — the last unstarted work in the roadmap
+**Source:** `docs/specs/TERRAIN_MODEL.md` WP1 + WP2 — the last unstarted work in the roadmap
 
 > Written and committed **before** the null test runs, as D173, D178, D180, D182, D183,
 > D185, D186 and D188 were. A result section will be appended and nothing above it edited.
@@ -210,7 +210,7 @@ work, and it was expected to pass. S2 is marginal and expected to fail. S3 has, 
 spec's words, **zero independent validation in the literature**. A programme whose lead
 sensor cannot beat random placement does not get rescued by its weaker ones.
 
-**WP3, WP4, WP5, WP6, WP7 and WP8 do not run.** `New Docs/` is now complete — every phase
+**WP3, WP4, WP5, WP6, WP7 and WP8 do not run.** `docs/specs/` is now complete — every phase
 either delivered or closed by its own stated criterion.
 
 ## What it does not close

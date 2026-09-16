@@ -3,7 +3,7 @@
 **Status:** Committed
 **Date:** 2026-08-24
 **Category:** Validation & research integrity
-**Source:** WP2 of `New Docs/STRUCTURE_MODEL.md` (D204), counts only
+**Source:** WP2 of `docs/specs/STRUCTURE_MODEL.md` (D204), counts only
 
 ## The result
 

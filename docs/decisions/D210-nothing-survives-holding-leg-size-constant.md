@@ -3,7 +3,7 @@
 **Status:** Committed (H1–H4 and H6 confirmed; no component promoted)
 **Date:** 2026-08-24
 **Category:** Signals & strategy interface
-**Source:** WP4 of `New Docs/STRUCTURE_MODEL.md` (D204), after D209's correction
+**Source:** WP4 of `docs/specs/STRUCTURE_MODEL.md` (D204), after D209's correction
 
 ## The result
 

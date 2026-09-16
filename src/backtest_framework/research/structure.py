@@ -1,6 +1,6 @@
 """The five components of a discretionary price-action strategy, made mechanical (D204).
 
-WP1 of `New Docs/STRUCTURE_MODEL.md`. This module is **detectors only** — no strategy, no
+WP1 of `docs/specs/STRUCTURE_MODEL.md`. This module is **detectors only** — no strategy, no
 costs, no verdict. Each component is a separate function so that WP3 can test it alone and
 WP4 can measure what it adds on top of the others. A module that fused them would make the
 question the programme exists to answer unanswerable.

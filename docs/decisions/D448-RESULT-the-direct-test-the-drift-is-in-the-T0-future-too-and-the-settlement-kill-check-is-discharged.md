@@ -1,7 +1,7 @@
 # D448 RESULT — the direct test: the overnight drift is in the T+0 future too, at 0.9944 correlation, and the settlement kill-check is DISCHARGED
 
 **MEASUREMENT record. No hurdle is claimed and no candidate is admitted.** The falsifier named in
-[`docs/prop firm leads/01`](../prop%20firm%20leads/01-prop-lead.md) §5.1 — *"computable on any
+[`docs/research/prop-firm-leads/01`](../research/prop-firm-leads/01-prop-lead.md) §5.1 — *"computable on any
 fixture holding both SPX and ES"* — is now run. **Runner:** `scripts/d448_es_front_month.py`.
 **Fixture built:** `data/fixtures/es_front_1m_boundaries.csv.gz`. **Evidence:**
 `data/d448_direct_settlement_test.json`, `data/d448_es_spy_pairs.json`.

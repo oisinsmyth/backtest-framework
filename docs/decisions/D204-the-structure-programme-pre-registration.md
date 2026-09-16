@@ -14,7 +14,7 @@ conditions: mechanise the five components of a discretionary retail price-action
 change of character, the flipped level, the 61.8% Fibonacci retracement, the fair value gap,
 and RSI — and measure each separately and in combination on BTC/ETH 15m bars.**
 
-Spec: `New Docs/STRUCTURE_MODEL.md`. Ledger: `STRUCTURE_RESULTS.md`.
+Spec: `docs/specs/STRUCTURE_MODEL.md`. Ledger: `STRUCTURE_RESULTS.md`.
 
 ## Why this is a new programme and not a terrain refinement
 
@@ -24,7 +24,7 @@ Spec: `New Docs/STRUCTURE_MODEL.md`. Ledger: `STRUCTURE_RESULTS.md`.
 > document and a new ledger, with this one disclosed.
 
 `grep -rniE "fair.?value.?gap|fibonacci|retracement|change of character|choch|break of
-structure|golden ratio|\bfvg\b"` over `src`, `scripts`, `docs`, `tests` and `New Docs`
+structure|golden ratio|\bfvg\b"` over `src`, `scripts`, `docs`, `tests` and `docs/specs`
 returns **zero hits**. Three of the five components do not exist here in any form.
 
 The overlap that does exist is disclosed rather than argued away. The flipped-level
