@@ -10,14 +10,24 @@ directions at once: ~11 inbound links pointing at the old root paths, and 78 out
 the moved files that were written relative to the root. Both classes are invisible until someone
 clicks, and a portfolio repository is exactly the place where someone clicks.
 
-The repo has no link checker. This is it, and it is deliberately small: no network, no anchor
-resolution, no HTML. It answers one question -- does the file on the other end of this link exist
--- because that is the question the move could get wrong.
+The repo has no link checker. This is it, and it is deliberately small: no network and no anchor
+resolution. It answers one question -- does the file on the other end of this link exist --
+because that is the question the move could get wrong.
+
+IT READS HTML `src`/`srcset` AS WELL AS MARKDOWN LINKS, AND THAT WAS A REAL HOLE
+--------------------------------------------------------------------------------
+It used to be Markdown-only, and said so. Then `docs/figures/` arrived and README.md began
+selecting between a light and a dark SVG with `<picture><source srcset=...><img src=...></picture>`
+-- which is the only way to theme an image on GitHub. Not one of those paths was checked by
+anything. A whole class of link, in the most-read document in the repository, invisible to the
+gate that exists to catch exactly this. Markdown syntax is not the boundary that matters; a path
+in a tracked document is.
 
 WHAT IT DELIBERATELY IGNORES
 ----------------------------
   * **Absolute URLs** (http, https, mailto) -- a network check is a different tool with different
     failure modes, and it would make the suite depend on the internet.
+  * **`data:` URIs**, which resolve to nothing on disk by construction.
   * **Pure anchors** (`#section`) -- nothing to resolve on disk.
   * **The anchor half** of `path.md#section` -- the path is checked, the anchor is not. Checking
     anchors means parsing every heading and normalising GitHub's slug rules; worth doing later,
@@ -52,7 +62,22 @@ REPO = Path(__file__).resolve().parent.parent
 # affordance (D48).
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 
-SKIP_SCHEMES = ("http://", "https://", "mailto:", "ftp://")
+# `<img src="...">` and `<source srcset="...">`. A srcset may carry several candidates with
+# descriptors (`a.svg 1x, b.svg 2x`), so the value is split on commas and the descriptor dropped.
+HTML_SRC = re.compile(r'\b(?:src|srcset)="([^"]+)"')
+
+SKIP_SCHEMES = ("http://", "https://", "mailto:", "ftp://", "data:")
+
+
+def targets_in(line: str) -> list[str]:
+    """Every path this line points at, from either syntax."""
+    found = list(LINK.findall(line))
+    for value in HTML_SRC.findall(line):
+        for candidate in value.split(","):
+            head = candidate.strip().split()[0] if candidate.strip() else ""
+            if head:
+                found.append(head)
+    return found
 
 
 def tracked_markdown() -> list[Path]:
@@ -72,7 +97,7 @@ def tracked_paths() -> set[str]:
 def broken_links(doc: Path, index: set[str]) -> list[tuple[int, str]]:
     bad = []
     for lineno, line in enumerate(doc.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
-        for target in LINK.findall(line):
+        for target in targets_in(line):
             if target.startswith(SKIP_SCHEMES) or target.startswith("#"):
                 continue
             path_part = unquote(target.split("#", 1)[0])
