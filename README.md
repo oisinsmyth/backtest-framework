@@ -9,9 +9,26 @@ works. A measuring instrument earns trust by returning negatives when negatives 
 | | |
 |---|---|
 | **1,839 tests** | hand-computed golden masters · integration · property · unit |
-| **741 decision records** | one per design call, D1 → D537, append-only and amended in writing |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
+| **MIT licensed** | [`LICENSE`](LICENSE) |
+
+The inventory, measured from the git index rather than typed:
+
+<!-- COUNTS:START -->
+
+| | |
+|---|---|
+| **743 decision records** | over **500** decision numbers — a pre-registration and its result share one number |
+| **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
+| **62 studies** | in [`docs/results/`](docs/results/README.md), five of them featured |
+| **136 test files** | golden · property · integration · unit |
+| **588 research runners** | in `scripts/`, one-shot by design |
+
+<sub>Generated from the git index by `scripts/build_readme_counts.py`; `tests/unit/test_readme_counts_are_current.py` fails if this block drifts.</sub>
+
+<!-- COUNTS:END -->
+
 
 The seven are enumerated in the final report linked below, with what each one taught. A later
 catch is worth its own line: D279's lag audit re-derives the held set from `score[:, t-1]` in a
