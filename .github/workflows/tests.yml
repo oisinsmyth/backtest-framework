@@ -74,6 +74,10 @@ jobs:
       # tests/unit/test_readme_counts_are_current.py in the suite job; it is here too because a
       # stale count should redden in seconds, not after the full run.
       - run: uv run python scripts/build_readme_counts.py --check
+      # The twelve SVGs in docs/figures/, regenerated from their artifacts and compared byte for
+      # byte. A figure is the one artifact here that gets quoted and never re-derived, so it is
+      # also the one most worth catching stale.
+      - run: uv run python scripts/figures/build_all.py --check
       # A clone has no panels, so every entry is "missing" and only a CHANGED file is an error --
       # which is exactly the condition worth failing on.
       - run: uv run python scripts/build_data_manifest.py --verify

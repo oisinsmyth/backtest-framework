@@ -6,9 +6,22 @@ the simulator is anchored to ledgers computed by hand; every design call is writ
 it is acted on. The research it has produced is mostly negative — and that is the evidence it
 works. A measuring instrument earns trust by returning negatives when negatives are true.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/figures/dsr-hurdle-vs-look-count.dark.svg">
+  <img src="docs/figures/dsr-hurdle-vs-look-count.svg" width="880"
+       alt="A log-scaled chart of trial count against annualised Sharpe. The MACD ladder's best cell sits at a flat 0.4957 while the deflated-Sharpe hurdle rises from below it to 0.6377 at 45,783 looks, crossing the result at 1,086 looks.">
+</picture>
+
+**The same result, publishable and not publishable.** The MACD ladder's best cell earns 0.4957 and
+clears six of seven hurdles. The seventh is the noise floor a *selected* best result must beat, and
+it rises with the number of looks taken: 0.3340 at the 42 this study spent, 0.6377 at the 45,783
+the trial registry actually carries. It stops clearing at **1,086** — a fact nobody in this project
+knew until the curve was drawn. [Five more figures](docs/figures/README.md), each about the
+instrument rather than a strategy.
+
 | | |
 |---|---|
-| **1,843 tests** | hand-computed golden masters · integration · property · unit |
+| **2,045 tests** | hand-computed golden masters · integration · property · unit |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
 | **MIT licensed** | [`LICENSE`](LICENSE) |
@@ -22,13 +35,15 @@ The inventory, measured from the git index rather than typed:
 | **743 decision records** | over **500** decision numbers — a pre-registration and its result share one number |
 | **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
 | **62 studies** | in [`docs/results/`](docs/results/README.md), five of them featured |
-| **140 test files** | golden · property · integration · unit |
-| **589 research runners** | in `scripts/`, one-shot by design |
-| **3 figure builders** | in `scripts/figures/`, regenerated and checked in CI |
+| **146 test files** | golden · property · integration · unit |
+| **591 research runners** | in `scripts/`, one-shot by design |
+| **8 figure builders** | in `scripts/figures/`, regenerated and checked in CI |
 
 <sub>Generated from the git index by `scripts/build_readme_counts.py`; `tests/unit/test_readme_counts_are_current.py` fails if this block drifts.</sub>
 
 <!-- COUNTS:END -->
+
+
 
 
 
@@ -46,7 +61,7 @@ uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s
 ```
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
-full suite is `uv run pytest -q`, 6m16s to 7m26s here depending on what else is running.
+full suite is `uv run pytest -q`, 3m31s here on a quiet machine and up to 7m26s under load.
 **On a clone it is 1,707 passed and 136 skipped in 2m56s** — measured on 2026-09-16 by cloning this repository into an empty directory and running
 it, not by reasoning about one from inside the working copy. That distinction earned its keep the
 first time: the clone failed three tests the working copy could not, on a line-ending convention
@@ -72,6 +87,7 @@ src/backtest_framework/   the instrument — engine · costs · data · instrume
 tests/                    the exhibit — golden · property · integration · unit
 docs/
   ARCHITECTURE.md         what the framework IS: the loop, the seams, the guards
+  figures/                six generated SVGs, one per property   [index](docs/figures/README.md)
   decisions/              one record per design call, D1 → D537   [index](docs/decisions/README.md)
   results/                every study, five featured              [index](docs/results/README.md)
   specs/                  the models and prompts the studies were built from
@@ -85,6 +101,9 @@ CONTRIBUTING.md           how to change any of it: gate before code
 ```
 
 The counts for each live in the block above, generated rather than typed.
+`docs/figures/` holds the six generated figures; they are indexed in
+[`docs/figures/README.md`](docs/figures/README.md) and every number on them is pinned to its
+source artifact by a test.
 
 Two boundaries that are load-bearing rather than tidy: **`src/` never imports from `scripts/`** —
 the instrument does not depend on any use of it — and **`data/` holds evidence while
