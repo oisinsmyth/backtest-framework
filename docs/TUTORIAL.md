@@ -18,7 +18,9 @@ the same doc-rot discipline as everything else here (D91).
 ```bash
 git clone <this repo> && cd "Backtest Framework"
 uv sync                 # installs everything incl. dev deps (pytest, vectorbt, quantstats)
-uv run pytest           # 270+ tests, all offline, should be green in ~20s
+uv run pytest -q tests/golden   # 91 ledger-anchored tests, no market data, ~0.6s
+uv run pytest                   # the whole suite, ~6m30s here; 136 tests skip
+                                # without the bulk panels, each naming the file it wanted
 ```
 
 The one-line philosophy ([PHILOSOPHY.md](../PHILOSOPHY.md)): **build something you

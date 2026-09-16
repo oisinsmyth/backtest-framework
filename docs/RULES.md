@@ -25,7 +25,8 @@ earns its existence at the cost-multiplier sweep, not before.
 
 ## R3. The deferred list is explicit and written
 
-Options wing ([`docs/options_extension.md`](options_extension.md) — not yet written, see D16),
+Options wing ([`docs/options_extension.md`](options_extension.md) — the scoping document is
+written; the wing is not built, see D16),
 full multi-currency accounting, live IBKR integration.
 
 **Because:** a reasoned scoping decision is a portfolio asset; silent sprawl is a liability.
@@ -613,7 +614,7 @@ never having to accept a result.
 
 **The terrain programme's 259 — NOT carried into
 [D272](decisions/D272-the-volume-profile-as-a-positional-input.md).**
-`TERRAIN_RESULTS.md` says *"anything that reuses these sensors inherits the count"*, and I applied
+[`TERRAIN_RESULTS.md`](results/TERRAIN_RESULTS.md) says *"anything that reuses these sensors inherits the count"*, and I applied
 it. **The principal pushed back and the document supports them:** that row is labelled **"Total on
 one hypothesis"**, and the same file closes with *"a different data source, a different claim, or a
 genuinely new construction starts a new document and a new ledger, with this one disclosed."* D272

@@ -3,8 +3,9 @@
 This is the generative layer above [`docs/RULES.md`](docs/RULES.md) and
 [`docs/decisions/`](docs/decisions/README.md). Rules are specific, binding constraints;
 decisions are specific, dated choices. This document is neither — it's the small set of
-values that, applied consistently, produced 49 decisions and counting, and that should
-produce the next 49. When a new situation isn't covered by an existing rule or decision,
+values that, applied consistently, produced the first 49 decisions — and, unchanged, the
+500 numbered decisions the directory now holds (D1 through D537; a pre-registration and
+its result share a number). When a new situation isn't covered by an existing rule or decision,
 this is what to reason from.
 
 Extracted from the actual pattern across `DESIGN_DECISIONS.md`, not written from a
@@ -87,7 +88,8 @@ Internal consistency isn't evidence. A framework that only checks itself against
 can be wrong in a stable, self-confirming way forever.
 
 - **Anchor every load-bearing result to a reference you didn't write.** Cross-engine
-  reconciliation against `backtesting.py`/`vectorbt`, commission math against published
+  reconciliation against `vectorbt`, an engine written by someone else (D41 named
+  *"backtesting.py or vectorbt"*; only the second was used), commission math against published
   IBKR schedules, risk metrics against `quantstats`, DSR against the original paper's
   worked example
   ([D41](docs/decisions/D41-cross-engine-validation-run-one-identical.md), the X-tests
@@ -125,9 +127,11 @@ not as one entangled blob.
   scattering bare `/252` or `/365` constants
   ([D17](docs/decisions/D17-instruments-own-their-trading-calendar-instrument.md)).
 - **Commit the shape before the cleverness, when the cleverness isn't ready.** The
-  options module and the multi-strategy allocator are both real, well-formed stubs with
-  honest `NotImplementedError`s pointing at a scoping doc, rather than either being
-  skipped entirely or half-built with hidden gaps
+  options module is a real, well-formed stub with an honest `NotImplementedError` pointing
+  at a scoping doc, rather than being skipped entirely or half-built with hidden gaps. The
+  allocator socket was committed on the same principle and has since been filled:
+  `ConstantSplitAllocator` (`engine/allocator.py:21`) is a working implementation behind
+  the protocol, which is what the socket was for
   ([D16](docs/decisions/D16-options-implemented-as-a-well-formed.md),
   [D31](docs/decisions/D31-allocator-is-a-bare-bones-stand.md)).
 

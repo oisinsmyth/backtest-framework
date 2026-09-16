@@ -1,7 +1,8 @@
 # HANDOFF — 2026-09-07, the session that spent the programme's first holdout read
 
-**D365 → D371.** This is a session handoff, not the programme's state file — `PICKUP.md` (last updated
-2026-09-02, D264–D284) is untouched and still describes the short-side work.
+**D365 → D371.** This is a session handoff, not the programme's state file — at the time of writing,
+[`PICKUP.md`](internal/PICKUP.md) (last updated 2026-09-02, D264–D284) was untouched and still
+described the short-side work. It has since been brought current and now runs to 2026-09-14.
 
 ---
 

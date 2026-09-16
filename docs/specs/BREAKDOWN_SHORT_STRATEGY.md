@@ -1,7 +1,7 @@
 # BREAKDOWN_SHORT_STRATEGY.md — Addon to BREAKOUT_STRATEGY_PROMPT.md
 
 ## Purpose and status
-Specifies the short side of the breakout family: a regime-gated breakdown trend-following strategy ("crisis alpha" sleeve). This is a **Phase 2 addon** — do NOT implement until the long-side baseline from BREAKOUT_STRATEGY_PROMPT.md has been run, validated, and its accepted parameters recorded in BREAKOUT_RESULTS.md. This doc exists so the design intent is preserved and so the long-side session can make forward-compatible choices (see "Forward-compatibility requirements" below, which DO apply immediately).
+Specifies the short side of the breakout family: a regime-gated breakdown trend-following strategy ("crisis alpha" sleeve). This is a **Phase 2 addon** — do NOT implement until the long-side baseline from BREAKOUT_STRATEGY_PROMPT.md has been run, validated, and its accepted parameters recorded in `docs/results/BREAKOUT_RESULTS.md` (NOT the repository root — `tests/unit/test_results_docs_at_root.py` forbids a results document there). This doc exists so the design intent is preserved and so the long-side session can make forward-compatible choices (see "Forward-compatibility requirements" below, which DO apply immediately).
 
 Read first: BREAKOUT_STRATEGY_PROMPT.md, BREAKOUT_REVERSAL_FEATURES.md, DESIGN_DECISIONS.md, VERIFICATION_SCHEME.md.
 
@@ -36,7 +36,7 @@ Crypto short expression is backtest + shadow-signals only (FCA retail crypto-der
 2. Entry/exit channel logic must be sign-parameterizable (direction as config), not duplicated code.
 3. The higher-timeframe gate must be a standalone, direction-aware brick (above-SMA gates longs; its inverse will gate shorts).
 4. The random-entry null generator must accept a direction parameter.
-5. Data layer: confirm the sample can extend to cover 2018; if yfinance coverage is insufficient for that range, flag it in BREAKOUT_RESULTS.md as a Phase 2 blocker.
+5. Data layer: confirm the sample can extend to cover 2018; if yfinance coverage is insufficient for that range, flag it in `docs/results/BREAKOUT_RESULTS.md` as a Phase 2 blocker.
 
 ## Out of scope
 Live short execution in any venue; funding-carry (delta-neutral) strategies; attention-fade and token-unlock short families (separate SetupRegistry entries, separate future specs); any parameter tuning beyond the stated sweeps.

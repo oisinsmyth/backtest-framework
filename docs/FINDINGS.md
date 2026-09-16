@@ -258,7 +258,7 @@ the effect is concentrated at the high-volatility end.
 **Two consequences.** First, **any construction justified by "the overnight carries the drift" must
 name which instruments it means** — the claim is false for defensive mega-caps. Second, the queued
 wide extended-hours study (`c25218d`), which asks where untraded-window drift accrues across 11
-instruments, **should carry a volatility split**; PICKUP.md already records SPY and QQQ disagreeing
+instruments, **should carry a volatility split**; [`PICKUP.md`](internal/PICKUP.md) already records SPY and QQQ disagreeing
 (33% against 91%), and this says that disagreement has a measurable axis.
 
 ---

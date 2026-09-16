@@ -3,9 +3,10 @@
 **Status:** Pre-registration, and the programme it governs is **CLOSED (D211, 2026-08-24,
 86 looks)**. Written and committed BEFORE any detector existed and before any run,
 recorded as D204, amended once by D207. Retained as written; the results are in
-`STRUCTURE_RESULTS.md`.
+[`STRUCTURE_RESULTS.md`](../results/STRUCTURE_RESULTS.md).
 
-Companion documents: `STRUCTURE_RESULTS.md` is the append-only results ledger and carries
+Companion documents: [`STRUCTURE_RESULTS.md`](../results/STRUCTURE_RESULTS.md) is the
+append-only results ledger and carries
 the multiplicity count. This document is the spec and does not change once code starts —
 an amendment gets its own dated section here and its own decision record, in the form
 D144 and D198 used.
@@ -100,7 +101,14 @@ reading the same swing structure and it would be dishonest to price only one of 
 `grep -rniE "fair.?value.?gap|fibonacci|retracement|change of character|choch|break of
 structure|golden ratio|\bfvg\b"` over `src`, `scripts`, `docs`, `tests` and `docs/specs`
 returns zero hits. This is a new construction, which is the condition
-`TERRAIN_RESULTS.md` sets for opening a new document and a new ledger.
+[`TERRAIN_RESULTS.md`](../results/TERRAIN_RESULTS.md) sets for opening a new document and a
+new ledger.
+
+> **Amendment, 2026-09-16.** That grep returns 569 hits today. The zero was true on
+> 2026-08-14, when it was the evidence for opening the programme; the hits are the
+> programme itself, written afterwards. The original text stands because a
+> pre-registration's value is that it was true *when written* — re-running its checks
+> against today's repository tests nothing.
 
 ### D3 — nothing has been seen
 

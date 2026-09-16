@@ -2,7 +2,7 @@
 
 ## Status and prerequisites
 
-**PROGRAMME CLOSED, 2026-08-24.** WP3-WP8 never ran and will not. S1 was closed at any resolution by D194, the S6 reversal line by D200, and the S6 map entirely by D203. The final report and the cumulative 259-look ledger are the last section of `TERRAIN_RESULTS.md`. What follows is the plan as written and is retained for the record, not as live work.
+**PROGRAMME CLOSED, 2026-08-24.** WP3-WP8 never ran and will not. S1 was closed at any resolution by D194, the S6 reversal line by D200, and the S6 map entirely by D203. The final report and the cumulative 259-look ledger are the last section of [`TERRAIN_RESULTS.md`](../results/TERRAIN_RESULTS.md) (every bare `TERRAIN_RESULTS.md` below predates the move to `docs/results/`, and is left as written). What follows is the plan as written and is retained for the record, not as live work.
 
 Companion to TERRAIN_MODEL.md (the spec); this doc is the build plan. Phase 3 gating still applies: WP2 onward must not start until the Phase 1 long baseline is accepted. **Exception: WP0 (intraday data brick) is independently justified by execution modelling and may be built any time after the Phase 1 session.** Each work package (WP) is sized for one focused Claude Code session, ends with an acceptance gate, and must leave the repo green (all tests passing) — no WP starts while a previous WP's gate is unmet. Ground rules from DESIGN_DECISIONS.md, VERIFICATION_SCHEME.md, and the multiplicity restrictions in TERRAIN_MODEL.md apply throughout and override anything here if in conflict.
 

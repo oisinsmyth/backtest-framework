@@ -6,7 +6,10 @@ the next study goes.** Rewritten 2026-09-05 after D322–D330; §0, §3, §6 and
 
 Companion to [FINDINGS.md](FINDINGS.md) (substantive results) and
 [decisions/](decisions/README.md) (one call each).
-**[PICKUP.md](internal/PICKUP.md) is stale** — last updated 2026-09-02.
+**[PICKUP.md](internal/PICKUP.md) is current** — it carries sections through 2026-09-14 and
+was last committed 2026-09-15. (This line read *"stale — last updated 2026-09-02"* until
+2026-09-16; it was true when written and had gone on telling readers to disregard the
+programme's state file.)
 
 **§7 records what earlier versions of this document got wrong.** It has grown.
 
