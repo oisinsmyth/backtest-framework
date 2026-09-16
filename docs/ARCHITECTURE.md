@@ -1,17 +1,18 @@
 # Architecture
 
 **What the framework is, structurally.** [`CONTRIBUTING.md`](../CONTRIBUTING.md) covers how to
-change it and [`TUTORIAL.md`](TUTORIAL.md) covers how to use it — `TUTORIAL.md` §2 has a
+change it and [`TUTORIAL.md`](TUTORIAL.md) covers how to use it — `TUTORIAL.md` §1 has a
 five-bullet version of this page for anyone who wants thirty seconds instead of ten minutes.
 
 > **`STACK.md` is not this document.** Despite the name it is a *research* ledger — what each
 > signal layer earns once costed honestly. Its "layers" are signal, construction, width, exit,
 > overlay. No overlap with anything below.
 
-The instrument is **46 modules across 11 packages**. `src/` holds 85 `.py` files, but 13 are
-`__init__.py` and 26 are `research/`, which [`research/__init__.py`](../src/backtest_framework/research/__init__.py)
-calls explicitly *not framework surface* — study code, versioned per study. Quoting 85 overstates
-the thing being claimed.
+The instrument is **46 modules across 11 packages** (`research/` is a twelfth, excluded).
+`src/` holds 85 `.py` files, but 13 are `__init__.py` and 26 are
+[`research/`](../src/backtest_framework/research/__init__.py), which that package calls explicitly
+*not framework surface* — study code, versioned per study. Quoting 85 overstates the thing being
+claimed.
 
 ---
 
@@ -19,8 +20,11 @@ the thing being claimed.
 
 There is no engine object, no event bus, no callbacks. `run_backtest`
 ([`engine/backtest.py:110`](../src/backtest_framework/engine/backtest.py)) is a single function
-around one `for` loop over aligned bars, and the numbered comments in its body are the canonical
-statement of the sequence.
+around one `for` loop over aligned bars.
+
+The source numbers its own steps in comments — `0, 1, 1b, 1c, 2, 3, 4, 4b, 5, 5, 6`. Note there is
+no 7 (the equity append is uncommented) and **`5` appears twice**, once per fill mode. The table
+below follows that numbering and adds the two steps the comments skip.
 
 **Before the loop:** `align_bars` inner-joins the instruments, so a timestamp survives only if
 every instrument has a bar there. Zero common bars **raises** rather than returning a run whose
@@ -32,15 +36,21 @@ final NAV would equal its starting cash.
 |---|---|---|
 | 0 | Splits scale broker positions, every virtual book, and pending orders | before anything reads a position |
 | 1 | Per-leg carry on a start-of-bar snapshot → dividends and other event flows → portfolio-level carry on `max(gross − NAV, 0)` | carry is owed on what was held *overnight*, not on what this bar does |
-| 1b | `next_open` only: yesterday's decisions fill at today's **open** | |
+| 1b | **`next_open` mode only**: yesterday's decisions fill at today's **open** | |
 | 1c | Intrabar stops evaluated against this bar's OHLC | **after 1b**, so a position opened this bar can be stopped this bar |
 | 2 | One `DataView` per instrument, sliced to `i` → `strategy.generate_targets(views)` | the signal sees only what exists |
+| 2b | *(uncommented)* Stop registry rebuilt from this bar's targets | **raises** on a stop for a split-bearing instrument — see §5 |
 | 3 | `allocator.allocate(nav, strategy_ids)` from **current** NAV | D61: the book compounds into its own size |
 | 4 | `sizer.size_targets(...)` → per-strategy virtual orders → `net_orders(...)` → broker orders | |
 | 4b | Optional pre-trade gate rejects an order *before* it fills | off by default — see §5 |
-| 5 | Each netted order charged `cost_stack.trade_cost` and applied | |
+| 5 | **`close` mode**: each netted order charged `cost_stack.trade_cost` and applied. **`next_open` mode**: the orders become `pending_virtual` and fill at 1b of the *next* bar | the two arms of one `if/else` — see below |
 | 6 | Per-bar risk check, whether or not anything traded | catches exposure drifting over a limit on price alone |
-| 7 | Equity and cash points appended | |
+| 7 | *(uncommented)* Equity and cash points appended | |
+
+**Steps 1b and the close-fill half of 5 never both happen on a bar.** They are the arms of
+`if fill_timing == "next_open": … else: …` (`backtest.py:466-471`), which is why the source numbers
+both `5`. Read the table as one sequence with a mode switch at 5, not as eleven things that all
+occur.
 
 `BacktestResult` keeps `fills` (broker-facing, netted, costed) and `virtual_fills` (per-strategy,
 un-netted) separately, and **`stop_fills` as its own stream** — "this exit was a stop" is not
@@ -75,13 +85,20 @@ class Allocator(Protocol):
 class TradeCostBrick(Protocol):
     def cost(self, instrument: Instrument, quantity: float, price: float) -> float: ...
 class CarryCostBrick(Protocol):
-    def cost(self, base_amount: float, prev: datetime, curr: datetime) -> float: ...
+    def cost(
+        self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime
+    ) -> float: ...
 class EventFlowBrick(Protocol):
-    def flow(self, instrument: Instrument, quantity: float, prev: datetime, curr: datetime) -> float: ...
+    def flow(
+        self, instrument: Instrument, quantity: float,
+        prev_timestamp: datetime, curr_timestamp: datetime,
+    ) -> float: ...
 
 # data/source.py:16
 class DataSource(Protocol):
-    def get_bars(self, instrument, start, end, timeframe) -> list[TimestampedBar]: ...
+    def get_bars(
+        self, instrument: Instrument, start: date, end: date, timeframe: str
+    ) -> list[TimestampedBar]: ...
 ```
 
 Three details that are decisions rather than accidents:
@@ -103,8 +120,11 @@ Three details that are decisions rather than accidents:
 `CostStack` is a frozen dataclass with four tuple slots — `trade_bricks`, `carry_bricks`,
 `portfolio_carry_bricks`, `event_flow_bricks` — and every method is a `sum(...)` over its slot.
 
-No brick ever reads another brick's output, so **ordering within a slot provably cannot matter**,
-and a test asserts it. What *is* ordered is the slots, and the engine loop fixes that: carry and
+No brick ever reads another brick's output, so **ordering within a slot does not change the
+total**, and `tests/unit/test_cost_stack.py` asserts it for the trade and carry slots. Two
+caveats, because "provably" would be too strong: the test uses two bricks per slot, and IEEE-754
+addition is commutative but **not associative** — three bricks summed in a different order can
+differ in the last bit. What *is* ordered is the slots, and the engine loop fixes that: carry and
 flows at step 1, trade costs at step 5. An empty stack is the zero-cost model; there is no separate
 class for it.
 
@@ -170,8 +190,10 @@ number.
 
 ### Merely recorded — and the name overpromises
 
-**`RiskMonitor.evaluate` appends violations to a list and halts nothing.** No corrective orders, no
-unwind. A caller inspecting `BacktestResult.violations` is the only enforcement that exists.
+**`RiskMonitor.evaluate` returns a violation and halts nothing.** It is
+`evaluate(...) -> RiskViolation | None` (`engine/risk.py:61`) — at most one per bar, since there is
+one rule — and the *caller* appends it to `BacktestResult.violations` (`backtest.py:490-492`). No
+corrective orders, no unwind. A caller inspecting that list is the only enforcement that exists.
 `pretrade_check` *is* enforcement, but only under `enforce_pretrade=True`, which is **off by
 default**.
 
@@ -229,7 +251,7 @@ Three things the picture carries that prose does not:
 | `costs/` | 5 | `stack.py` composes, `bricks.py` declares, `equity_bricks.py` implements the real ones, `scaling.py` is the sweep, `calibration.py` estimates σ/ADV |
 | `data/` | 11 | fetch → clean → validate → freeze. `alignment.py`, `validator.py`, `snapshot_store.py`, `corporate_actions.py` are the load-bearing four |
 | `validation/` | 4 | research integrity: `walk_forward.py`, `dsr.py` (deflated Sharpe — counts trials *against* you), `pair_selection.py`, `synthetic.py` (zero-edge nulls that must earn nothing) |
-| `data`/`config` | 6 | validate a dict → live objects. The dict a study **logs** is the dict that **builds** the stack |
+| `config/` | 6 | validate a dict → live objects. The dict a study **logs** is the dict that **builds** the stack |
 | `instruments/` | 3 | the protocol, `Equity`, and a stub that raises |
 | `pipeline/` | 1 | `sizing.py` — the entire weight → order → netting seam |
 | `simulator/` | 2 | `fills.py` (`Bar`, `stop_fill_price`), `carry.py` (ACT/365) |
@@ -244,7 +266,10 @@ type in the system, and worth knowing before you go looking for it.
 ---
 
 **Verification of each of these claims is in [`../CONTRIBUTING.md`](../CONTRIBUTING.md)'s gate
-model**: the guards in §5 are asserted by `tests/property/` and `tests/integration/`, the cost
+model**: the guards in §5 are asserted across all four tiers — `tests/integration/` for the
+look-ahead guard and the risk monitor, `tests/property/` for the invariants, and `tests/unit/` for
+most of the raise-sites (`test_alignment.py`, `test_snapshot_store.py`, `test_instruments.py`,
+`test_sqrt_impact.py`) — the cost
 composition in §3 by `tests/golden/` against hand-computed ledgers, and the whole simulator by a
 penny-exact reconciliation against an independently written engine
 ([`verification/cross_engine_reconciliation.md`](verification/cross_engine_reconciliation.md)).
