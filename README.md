@@ -21,7 +21,7 @@ instrument rather than a strategy.
 
 | | |
 |---|---|
-| **2,045 tests** | hand-computed golden masters · integration · property · unit |
+| **2,047 tests** | hand-computed golden masters · integration · property · unit |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
 | **MIT licensed** | [`LICENSE`](LICENSE) |
@@ -63,14 +63,17 @@ uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
 full suite is `uv run pytest -q`, 3m31s here on a quiet machine and up to 7m26s under load.
-**On a clone it is 1,909 passed and 136 skipped in 1m56s** — measured on 2026-09-16 by cloning
+**On a clone it is 1,998 passed and 49 skipped in 3m38s** — measured on 2026-09-16 by cloning
 this repository into an empty directory and running it, not by reasoning about one from inside the
 working copy. That distinction has twice earned its keep: the first clone failed three tests the
 working copy could not, on a line-ending convention the working copy predates, and the second
-found five links that resolve only on the author's disk. Each of the 136 skips names the file it wanted. The panels left git in
+found five links that resolve only on the author's disk. Each of the 49 skips names the file it
+wanted. The panels left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what
 a **checkout** no longer carries; they remain in the history, so a `git clone` is about 1.1 GB, of
-which 967 MB is `.git`. [`data/data_manifest.json`](data/data_manifest.json) carries the sha256
+which 969 MB is `.git`. Two of the smallest came back into the index in
+[D538](docs/decisions/D538-two-small-panels-return-to-the-index.md) for 6.9 MB and, because their
+blobs were already in history, no extra bytes at all — which is what took the skips from 136 to 49. [`data/data_manifest.json`](data/data_manifest.json) carries the sha256
 and git blob id of every one, so a skipped test names data that is still recoverable.
 
 **Three ways in.** What the framework *guarantees* is in [`tests/`](tests/), four tiers that do

@@ -4,9 +4,9 @@
 # (PHILOSOPHY.md), and a suite that only ever runs on the author's laptop is convention. This
 # workflow is the structure.
 #
-# WHAT A RUNNER DOES NOT HAVE: the bulk data panels. D536 dropped 115 of them (844 MB) from the
-# index, so a clone carries the library, the tests and the small evidence artifacts and nothing
-# else. 136 tests skip here for want of a panel, named individually by the skip reason and
+# WHAT A RUNNER DOES NOT HAVE: most of the bulk data panels. D536 dropped 115 of them (844 MB)
+# from the index; D538 brought the two smallest back (6.9 MB, already in history, so no extra
+# clone bytes), which is what took the skips from 136 to 49. 49 tests skip here for want of a panel, named individually by the skip reason and
 # recoverable from data/data_manifest.json. Every golden master, every property test and the
 # vectorbt cross-engine reconciliation run on a clone, because they use synthetic bars or a small
 # tracked .csv.
@@ -78,8 +78,9 @@ jobs:
       # byte. A figure is the one artifact here that gets quoted and never re-derived, so it is
       # also the one most worth catching stale.
       - run: uv run python scripts/figures/build_all.py --check
-      # A clone has no panels, so every entry is "missing" and only a CHANGED file is an error --
-      # which is exactly the condition worth failing on.
+      # A clone has only the two panels D538 re-tracked, so almost every entry is "missing" and only
+      # a CHANGED file is an error -- which is exactly the condition worth failing on. The two that
+      # ARE present get hashed, which is a stronger check than the absent ones get.
       - run: uv run python scripts/build_data_manifest.py --verify
 
   suite:
