@@ -1,21 +1,28 @@
 # Design Decision Records
 
-One file per decision (D1–D49), migrated from the original running log in
-[`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot).
+One record per design call. D1–D49 were migrated from the original running log in
+[`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot); everything
+since was written here.
 
-> **This index is a curated table of D1–D284. It is not a complete register.** The directory holds
-> several hundred records beyond it, and the study records (`PRE-REG` / `RESULT` / `ADDENDUM`) that
-> dominate D285 onward were never added. **Do not read the last row here as the last decision, and
-> do not take the next number from it** — ask the directory:
+> **This index is complete, and a test says so.** It has two halves, because they do different
+> jobs. The **curated table** below covers D1–D284 with a written one-line summary each. The
+> **generated register** beneath it covers every remaining number, machine-made from the filenames
+> and H1s — thinner rows, but nothing missing.
+> [`tests/unit/test_decision_index_is_complete.py`](../../tests/unit/test_decision_index_is_complete.py)
+> fails the build if any number on disk is absent from either half, or if a row names a number
+> with no record.
+>
+> It was not always so: the curated table stopped growing at D284 and stayed that way for **251
+> numbers**, while three documents went on telling contributors to take the next number from it.
+> For the next number, ask the directory rather than this page:
 >
 > ```bash
 > ls docs/decisions | grep -oE '^D[0-9]+' | sort -V | tail -1
 > ```
 >
-> Backfilling the missing rows is a real job and has not been done. Saying so is cheaper than a
-> table that quietly lies about where the programme is.
+> Regenerate the register with `python scripts/build_decision_register.py --write`.
 
-Standing scope/sequencing rules (R1–R4) live separately in [`docs/RULES.md`](../RULES.md);
+Standing scope/sequencing rules (R1–R16) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
 
 Format: **Status** — Committed / Deferred / Rule-adjacent. Deferred items have a
@@ -324,7 +331,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 274 of these records carry neither field —
+**No Status or Category column, deliberately.** 275 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 

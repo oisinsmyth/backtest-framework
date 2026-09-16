@@ -113,10 +113,11 @@ Anything non-obvious gets a record in [`docs/decisions/`](docs/decisions/README.
 ls docs/decisions | grep -oE '^D[0-9]+' | sort -V | tail -1
 ```
 
-[`docs/decisions/README.md`](docs/decisions/README.md) is a curated index of D1–D284 and is **not**
-a complete register — the directory runs several hundred records further. Study records (`PRE-REG`
-/ `RESULT` / `ADDENDUM`) follow a different shape and are governed by R8 and R14 in
-[`docs/RULES.md`](docs/RULES.md), not by the template above.
+[`docs/decisions/README.md`](docs/decisions/README.md) is complete and gated — a curated table with
+written summaries for D1–D284, and a generated register covering every number after it. Study
+records (`PRE-REG` / `RESULT` / `ADDENDUM`) follow a different shape and are governed by R8 and R14
+in [`docs/RULES.md`](docs/RULES.md), not by the template above. **Take the next number from the
+directory, not from the index** — the command above is the reliable one.
 
 **Records are amended in writing, never silently edited.** When a record stops being true, it
 keeps its original text and gains a dated amendment pointing at the record that supersedes it —
