@@ -39,7 +39,7 @@ script applies that rate anyway and flags it ASSUMED on the line where it does;
 ## 3. The size, in symbol-days
 
 The job is built from D362's **A2 row-drop arm** — `taken_G2 == 1` in
-[`data/d361_trades_gap_up_fade.csv`](../../data/d361_trades_gap_up_fade.csv) less the S1 and S2 hits
+`data/d361_trades_gap_up_fade.csv` less the S1 and S2 hits
 at `run_d362_sink_filter.SINKS`' thresholds: **3,028 trades** (asserted against
 `data/d362_sink_filter.json`'s committed `RD.A2.trades`), 993 names, **2011-08-03 to 2026-03-31**.
 

@@ -42,9 +42,23 @@ WHAT IT DELIBERATELY IGNORES
 Percent-encoding is decoded before resolving, because `docs/prop firm leads/` has spaces in its
 name and three decision records link into it as `../prop%20firm%20leads/…`.
 
-A link into a path that is tracked but absent from the working tree still counts as resolving:
-existence is checked against the index as well as the disk, so a clone that has not fetched the
-bulk panels (D536) does not fail this check.
+THE INDEX IS THE AUTHORITY, NOT THE DISK
+----------------------------------------
+A link resolves if its target is in `git ls-files`. Both halves of that matter:
+
+  * **Tracked but absent from the worktree still resolves.** A clone that has not fetched the bulk
+    panels (D536), or a record staged for deletion, must not redden a doc gate.
+  * **Present on the disk but ABSENT FROM THE INDEX does NOT resolve**, and this is the half that
+    was missing. Five links pointed at gitignored panels and at `temp/` -- `fut_breadth_hourly.csv.gz`,
+    `fut_spread_all_1m.csv.gz`, `d526_curve_strip_CL_GC.csv.gz`, `d361_trades_gap_up_fade.csv`,
+    `index1m_map_precheck.py`. Every one of them is on the author's disk, so the checker was green
+    for years, and every one of them is a dead link for every other reader on earth. A clone found
+    all five in one run.
+
+    This is the same error, in the gate itself, that round five found in the README: measuring the
+    author's worktree and publishing the answer as what a reader receives. A link to a file the
+    repository deliberately does not distribute is a false affordance (D48) -- the path belongs in
+    backticks, saying where the file lives, not in brackets, promising a click that cannot work.
 """
 
 from __future__ import annotations
@@ -94,7 +108,23 @@ def tracked_paths() -> set[str]:
     return {line for line in out.splitlines() if line}
 
 
-def broken_links(doc: Path, index: set[str]) -> list[tuple[int, str]]:
+def tracked_dirs(index: set[str]) -> set[str]:
+    """Every directory that contains a tracked file, at any depth.
+
+    `git ls-files` lists files, but plenty of links point at a directory -- `docs/decisions/`,
+    `tests/golden` -- and those resolve for a reader. Precomputed rather than tested per link:
+    there are ~5,000 links and ~1,700 tracked paths, and the nested scan is the one part of this
+    script that would be felt.
+    """
+    dirs: set[str] = set()
+    for path in index:
+        parts = path.split("/")[:-1]
+        for i in range(len(parts)):
+            dirs.add("/".join(parts[: i + 1]))
+    return dirs
+
+
+def broken_links(doc: Path, index: set[str], dirs: set[str]) -> list[tuple[int, str]]:
     bad = []
     for lineno, line in enumerate(doc.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
         for target in targets_in(line):
@@ -111,8 +141,12 @@ def broken_links(doc: Path, index: set[str]) -> list[tuple[int, str]]:
             except ValueError:
                 bad.append((lineno, f"{target} -> outside the repository"))
                 continue
-            # Tracked-but-not-on-disk still counts: a clone without the D536 panels is fine.
-            if not resolved.exists() and rel not in index:
+            if rel in index or rel in dirs:
+                continue  # tracked -- a clone without the D536 panels still resolves it
+            if resolved.exists():
+                # The half that used to pass. On this machine only.
+                bad.append((lineno, f"{target} -> on disk but NOT in git; a reader gets nothing"))
+            else:
                 bad.append((lineno, target))
     return bad
 
@@ -120,6 +154,7 @@ def broken_links(doc: Path, index: set[str]) -> list[tuple[int, str]]:
 def main(argv: list[str]) -> int:
     docs = [REPO / a for a in argv] if argv else tracked_markdown()
     index = tracked_paths()
+    dirs = tracked_dirs(index)
 
     total, absent = 0, 0
     for doc in sorted(docs):
@@ -131,7 +166,7 @@ def main(argv: list[str]) -> int:
             # git's question, and `git status` already answers it.
             absent += 1
             continue
-        for lineno, target in broken_links(doc, index):
+        for lineno, target in broken_links(doc, index, dirs):
             print(f"{doc.relative_to(REPO).as_posix()}:{lineno}: {target}")
             total += 1
 

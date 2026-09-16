@@ -109,7 +109,7 @@ That check costs one line and would have saved this study, D508 and D512.
 
 ## 5. Two by-products that outlive the story
 
-**The settlement strip now exists.** [`data/d526_curve_strip_CL_GC.csv.gz`](../../data/d526_curve_strip_CL_GC.csv.gz)
+**The settlement strip now exists.** `data/d526_curve_strip_CL_GC.csv.gz`
 — 263,983 settlements, CL **188 contracts** (p50 **124 a session**) and GC 110 (p50 21), 2,013
 sessions each, 2016-2023, CL priced −37.63 … 123.70 and GC 1,073.60 … 2,456.20. It is the first
 curve data in the repository and it is reusable by anything that wants the strip rather than the

@@ -35,7 +35,7 @@ NQ will not deliver it: ρ was 0.70 between K8 and the ungated NQ day session, a
 and ES on one construction. **Different underlyings is the only route.**
 
 We own `ohlcv-1m` for every CME instrument over 16 years and had scored eight roots. The breadth
-fixture ([`data/fixtures/fut_breadth_hourly.csv.gz`](../../data/fixtures/fut_breadth_hourly.csv.gz),
+fixture (`data/fixtures/fut_breadth_hourly.csv.gz`,
 36 roots, 170,643 sessions, `all_gates_pass: True`) is what makes this askable.
 
 ## 2. The construction — frozen, not re-tuned

@@ -100,7 +100,7 @@ half its rows.
 This is the D520 outcome again, and it took a full rebuild to earn it.
 
 **The metadata could not settle it.** A pre-check over all 26 ohlcv-1m files
-([`temp/index1m_map_precheck.py`](../../temp/index1m_map_precheck.py), 20 min) found **0 index ids
+(`temp/index1m_map_precheck.py`, 20 min) found **0 index ids
 ever reused for a different INDEX contract** — the flat dict never confused `ESH5` with `ESM5` — but
 **712 non-index mapping windows whose id also holds an index window in the same file**, in 25 of 26
 files, peaking at 106 in 2021. Those rows would be ingested wearing an index label. Whether any

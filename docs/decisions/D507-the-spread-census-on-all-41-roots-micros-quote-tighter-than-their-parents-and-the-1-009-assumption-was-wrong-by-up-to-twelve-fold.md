@@ -27,7 +27,7 @@
 > and GC/CL/6E stay negative. §1–§7 stand as written; §8 is the correction.
 
 **2026-09-13.** Runner [`scripts/d507_spread_all_roots.py`](../../scripts/d507_spread_all_roots.py) ·
-fixture [`data/fixtures/fut_spread_all_1m.csv.gz`](../../data/fixtures/fut_spread_all_1m.csv.gz) ·
+fixture `data/fixtures/fut_spread_all_1m.csv.gz` ·
 artifact [`data/d507_spread_all_roots.json`](../../data/d507_spread_all_roots.json).
 
 **41 roots, 13,526,478 front-contract quoted minutes, 2025-09-11 → 2026-09-10, 24.8 min.**
