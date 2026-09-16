@@ -43,7 +43,8 @@ strategy is a swappable brick. Why anything is the way it is, is in
 ## Where things are
 
 ```
-src/backtest_framework/   the instrument — 85 modules, engine · costs · instruments · data · analytics
+src/backtest_framework/   the instrument — 46 modules, engine · costs · instruments · data · analytics
+                          (+26 research/ study modules, which are not framework surface)
 tests/                    the exhibit — golden · property · integration · unit
 docs/
   decisions/              741 records, D1 → D537, one per design call     [index](docs/decisions/README.md)
@@ -106,6 +107,7 @@ cannot rot.
 - [`DEVELOPMENT_TIMETABLE.md`](DEVELOPMENT_TIMETABLE.md) — phased schedule (weeks 1–24) and pre-committed kill criteria.
 
 **Live (kept current as implementation proceeds):**
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — what the framework *is*: the per-bar loop, the five seams with their signatures, the two-book model, and which guards are structural versus merely recorded
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to change the framework: gate before code, which test tier, adding a brick, recording the decision
 - [`PHILOSOPHY.md`](PHILOSOPHY.md) — the guiding design philosophy; changes rarely and deliberately
 - [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, 741 of them, D1 → D537. The index is a curated table for D1–D284 and a generated register below it.

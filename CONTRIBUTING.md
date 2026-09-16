@@ -75,7 +75,7 @@ editing a blob.
 
 | You want | Implement | Lives in | Gate |
 |---|---|---|---|
-| a new cost | a cost brick — one `charge` per brick, one concern each | `src/backtest_framework/costs/bricks.py` | G, with its scenario in `tests/golden/test_cost_bricks_golden.hand.txt` |
+| a new cost | a cost brick — `cost()` for trade and carry bricks, `flow()` for event bricks, one concern each | `src/backtest_framework/costs/bricks.py` | G, with its scenario in `tests/golden/test_cost_bricks_golden.hand.txt` |
 | a new asset class | the `Instrument` protocol | `src/backtest_framework/instruments/` | U for the quantity rules, G for anything that costs money |
 | new capital allocation | the allocator protocol | `src/backtest_framework/engine/allocator.py` | U, plus an I test if it changes what the engine holds |
 | a new strategy | the `Strategy` protocol | `src/backtest_framework/strategies/` | see [`docs/TUTORIAL.md`](docs/TUTORIAL.md) §4 — it covers this fully |
