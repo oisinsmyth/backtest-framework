@@ -44,7 +44,7 @@ def _load_ladder():
 L = _load_ladder()
 
 SUMMARY = REPO / "data" / "jerk_rung_summary.json"
-RESULTS = REPO / "JERK_RUNG_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "JERK_RUNG_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

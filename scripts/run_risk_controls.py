@@ -49,7 +49,7 @@ E = _load("d231_dial", "run_exposure_dial.py")
 S = _load("d235_stops", "run_stops_targets.py")
 
 SUMMARY = REPO / "data" / "risk_controls_summary.json"
-RESULTS = REPO / "RISK_CONTROLS_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "RISK_CONTROLS_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

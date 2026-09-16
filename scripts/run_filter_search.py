@@ -47,7 +47,7 @@ def _load_ladder():
 L = _load_ladder()
 
 SUMMARY = REPO / "data" / "filter_search_summary.json"
-RESULTS = REPO / "FILTER_SEARCH_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "FILTER_SEARCH_RESULTS.md"
 
 PPY = L.PPY  # 252
 SEED = 0

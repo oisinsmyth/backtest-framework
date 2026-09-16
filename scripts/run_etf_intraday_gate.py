@@ -161,7 +161,7 @@ assert "run_sampling_invariance" in sys.modules
 FIXTURE = REPO / "data" / "fixtures" / "etf_intraday_15m_raw.csv.gz"
 EVENTS = REPO / "data" / "fixtures" / "etf_intraday_15m_raw_events.json"
 SUMMARY = REPO / "data" / "etf_intraday_gate_summary.json"
-RESULTS = REPO / "ETF_INTRADAY_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "ETF_INTRADAY_RESULTS.md"
 
 # A smoke run must be incapable of being mistaken for the study, so it writes to its
 # own artifact and its own page. Same code path, different filenames — a `--smoke`

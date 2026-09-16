@@ -170,7 +170,7 @@ hundred lines later inside `max_drawdown_of`.
 ## RESULT
 
 **Produced:** 2026-08-28 · `build_wide_universe.py` then `run_book_wide.py` · Page:
-[`BOOK_WIDE_RESULTS.md`](../../BOOK_WIDE_RESULTS.md)
+[`BOOK_WIDE_RESULTS.md`](../results/BOOK_WIDE_RESULTS.md)
 
 ### The one-sentence version
 

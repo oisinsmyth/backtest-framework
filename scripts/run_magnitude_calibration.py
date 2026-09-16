@@ -51,7 +51,7 @@ D, M, U = R.D, R.M, R.U
 pivots = R.pivots
 
 OUT = REPO / "data" / "d267_calibration_summary.json"
-RESULTS = REPO / "MAGNITUDE_CALIBRATION_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "MAGNITUDE_CALIBRATION_RESULTS.md"
 
 H = 8                 # bars; D265's measured horizon, fixed and not swept
 N_Q = 5               # quintiles

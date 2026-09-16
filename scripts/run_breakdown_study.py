@@ -28,7 +28,7 @@ REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
 EVENTS = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw_events.json"
 REGISTRY_PATH = REPO / "data" / "breakdown_study_registry.sqlite"
-RESULTS = REPO / "BREAKDOWN_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BREAKDOWN_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "breakdown_study_summary.json"
 
 COMBINED_E1_K = 3

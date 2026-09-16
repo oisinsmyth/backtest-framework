@@ -42,7 +42,7 @@ I = _load("d218_impulse", "run_impulse_macd.py")
 J = _load("d229_jerk", "run_jerk_rung.py")
 
 SUMMARY = REPO / "data" / "bootstrap_sweep_summary.json"
-RESULTS = REPO / "BOOTSTRAP_SWEEP_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BOOTSTRAP_SWEEP_RESULTS.md"
 
 DELTA_HURDLE = L.DELTA_HURDLE  # +0.10
 REPRO_TOL = 1e-9

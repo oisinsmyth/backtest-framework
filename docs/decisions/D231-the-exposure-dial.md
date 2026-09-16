@@ -260,7 +260,7 @@ section stays empty until stage 2 runs on the holdout.*
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_exposure_dial.py --stage screen`
 (mined 57, 1,515 live bars, 1,000 rotations, seed 0) · Page:
-[`EXPOSURE_DIAL_RESULTS.md`](../../EXPOSURE_DIAL_RESULTS.md)
+[`EXPOSURE_DIAL_RESULTS.md`](../results/EXPOSURE_DIAL_RESULTS.md)
 
 ### The machinery works — which was the point
 

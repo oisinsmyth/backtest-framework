@@ -272,7 +272,7 @@ counting only the three cells would understate it.
 ## RESULT — closed, and for a better reason than losing money
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_intraday_filtered.py` · Page:
-[`INTRADAY_FILTERED_RESULTS.md`](../../INTRADAY_FILTERED_RESULTS.md)
+[`INTRADAY_FILTERED_RESULTS.md`](../results/INTRADAY_FILTERED_RESULTS.md)
 
 ### The one-sentence version
 

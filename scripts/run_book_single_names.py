@@ -53,7 +53,7 @@ FIX = REPO / "data" / "fixtures"
 FIXTURE = FIX / "us_shorts_daily_raw.csv.gz"
 EVENTS = FIX / "us_shorts_daily_raw_events.json"
 SUMMARY = REPO / "data" / "book_single_names_summary.json"
-RESULTS = REPO / "BOOK_SINGLE_NAMES_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BOOK_SINGLE_NAMES_RESULTS.md"
 
 SEED = 0
 PPY = 252.0

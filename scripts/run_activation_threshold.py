@@ -46,7 +46,7 @@ S = _load("d232_scale", "run_scale_corrected.py")
 E = _load("d231_dial", "run_exposure_dial.py")
 
 SUMMARY = REPO / "data" / "activation_threshold_summary.json"
-RESULTS = REPO / "ACTIVATION_THRESHOLD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "ACTIVATION_THRESHOLD_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

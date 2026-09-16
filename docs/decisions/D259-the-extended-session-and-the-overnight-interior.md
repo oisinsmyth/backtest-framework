@@ -406,7 +406,7 @@ sits above all three rows, because the untraded window is dark in every one of t
 | fetcher | `scripts/fetch_index_extended.py` |
 | runner | `scripts/run_overnight_decomposition.py` |
 | fixture | `data/fixtures/index_extended_15m_raw.csv.gz` + `.meta.json` + `_events.json` |
-| results | [`OVERNIGHT_DECOMPOSITION_RESULTS.md`](../../OVERNIGHT_DECOMPOSITION_RESULTS.md) |
+| results | [`OVERNIGHT_DECOMPOSITION_RESULTS.md`](../results/OVERNIGHT_DECOMPOSITION_RESULTS.md) |
 | tests | `tests/unit/test_index_extended_fixture.py` |
 | raw cache | `data/raw/alphavantage/15min/` — **not committed** (D191) |
 

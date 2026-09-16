@@ -79,7 +79,7 @@ from backtest_framework.research.terrain_strategies import PositionResult  # noq
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "structure_components_summary.json"
-RESULTS = REPO / "STRUCTURE_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "STRUCTURE_RESULTS.md"
 
 SYMBOLS = ("BTCUSDT", "ETHUSDT")
 PRIMARY_K, PRIMARY_TOUCH = 2, 0.5

@@ -68,7 +68,7 @@ fees *and* zero carry the strategy still loses 88.7%, because the pair's log spr
 stationary in only 14% of training windows. Realised beta is ≈ 0 on all three benchmarks,
 so the neutrality engineering works — the thesis is what fails (D122–D127).
 
-**The seventh study is [`STRUCTURE_RESULTS.md`](STRUCTURE_RESULTS.md)** — a five-part
+**The seventh study is [`STRUCTURE_RESULTS.md`](docs/results/STRUCTURE_RESULTS.md)** — a five-part
 discretionary retail price-action strategy (change of character, the flipped level, the
 61.8% Fibonacci retracement, the fair value gap, RSI), mechanised so each part could be
 measured separately and together on BTC/ETH 15m bars. Closed after 86 looks (D204–D211).

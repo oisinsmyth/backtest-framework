@@ -205,7 +205,7 @@ the wrong direction.
 ## RESULT
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_intraday_shorts.py` · Page:
-[`INTRADAY_SHORTS_RESULTS.md`](../../INTRADAY_SHORTS_RESULTS.md)
+[`INTRADAY_SHORTS_RESULTS.md`](../results/INTRADAY_SHORTS_RESULTS.md)
 
 **57 ETFs × 55,726 bars, PPY 6,513, live 8.40 years.**
 

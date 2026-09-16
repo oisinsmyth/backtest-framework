@@ -170,7 +170,7 @@ study.
 window are untouched.*
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_risk_controls.py` · Page:
-[`RISK_CONTROLS_RESULTS.md`](../../RISK_CONTROLS_RESULTS.md)
+[`RISK_CONTROLS_RESULTS.md`](../results/RISK_CONTROLS_RESULTS.md)
 
 ### The one-sentence version
 

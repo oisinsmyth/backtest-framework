@@ -89,7 +89,7 @@ BW = _load("d245_wide", "run_book_wide.py")
 L, S = X.L, X.S
 
 SUMMARY = REPO / "data" / "cross_sectional_prescreen_summary.json"
-RESULTS = REPO / "CROSS_SECTIONAL_PRESCREEN_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "CROSS_SECTIONAL_PRESCREEN_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 
 PPY, SEED, LAG = X.PPY, X.SEED, X.LAG

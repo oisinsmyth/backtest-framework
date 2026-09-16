@@ -1,6 +1,6 @@
 # D264 — the intraday short on single names
 
-**A SCREEN, NOT A VERDICT.** Cross-screen under R12 of [D247](docs/decisions/D247-the-short-side-at-fifteen-minutes.md)'s construction onto eight single names. Pre-registered in [`docs/decisions/D264-the-intraday-short-on-single-names.md`](docs/decisions/D264-the-intraday-short-on-single-names.md) **before this ran**.
+**A SCREEN, NOT A VERDICT.** Cross-screen under R12 of [D247](../decisions/D247-the-short-side-at-fifteen-minutes.md)'s construction onto eight single names. Pre-registered in [`docs/decisions/D264-the-intraday-short-on-single-names.md`](../decisions/D264-the-intraday-short-on-single-names.md) **before this ran**.
 
 *seed 0, 1,000 rotations, 338.3s. 8 names x 55,004 bars over 2,117 sessions (25.98/session, PPY 6547); warm-up 1,000 bars, live 8.25 years. 2018-01-02 .. 2026-08-31.*
 

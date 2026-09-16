@@ -157,7 +157,7 @@ writing, the delta being audited is not the delta that was reported.
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_bootstrap_sweep.py`
 (offline, deterministic, seed 0, 8.9 s) · Page:
-[`BOOTSTRAP_SWEEP_RESULTS.md`](../../BOOTSTRAP_SWEEP_RESULTS.md) · Artifact:
+[`BOOTSTRAP_SWEEP_RESULTS.md`](../results/BOOTSTRAP_SWEEP_RESULTS.md) · Artifact:
 `data/bootstrap_sweep_summary.json`
 
 ### The one-sentence version

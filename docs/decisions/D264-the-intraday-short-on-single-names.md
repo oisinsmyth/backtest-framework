@@ -332,7 +332,7 @@ that protection for free and must be written to it.
 ## RESULT — CLOSED on this sample. Zero of twelve, and the arithmetic is the whole story.
 
 `uv run python scripts/run_single_name_intraday.py` · `data/single_name_intraday_summary.json` ·
-[`SINGLE_NAME_INTRADAY_RESULTS.md`](../../SINGLE_NAME_INTRADAY_RESULTS.md) · seed 0, 1,000
+[`SINGLE_NAME_INTRADAY_RESULTS.md`](../results/SINGLE_NAME_INTRADAY_RESULTS.md) · seed 0, 1,000
 rotations, 8 × 55,004 bars, 2,117 sessions, live 8.25 years.
 
 **Zero of the 12 short cells clear all six hurdles.** The stop fires.

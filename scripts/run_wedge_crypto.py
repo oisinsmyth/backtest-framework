@@ -48,7 +48,7 @@ D = _load("d253_shorts", "run_book_shorts_crypto.py")  # pooled scoring, ruin, n
 C, L = D.C, D.L
 
 SUMMARY = REPO / "data" / "wedge_crypto_summary.json"
-RESULTS = REPO / "WEDGE_CRYPTO_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "WEDGE_CRYPTO_RESULTS.md"
 
 SEED, N_SIMS = D.SEED, D.N_SIMS
 PPY = D.PPY_CRYPTO

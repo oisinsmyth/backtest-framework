@@ -68,7 +68,7 @@ from backtest_framework.research.terrain_swing import SWING_K  # noqa: E402
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "structure_census_summary.json"
-RESULTS = REPO / "STRUCTURE_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "STRUCTURE_RESULTS.md"
 
 SYMBOLS = ("BTCUSDT", "ETHUSDT")
 PRIMARY_K, PRIMARY_TOUCH = 2, 0.5

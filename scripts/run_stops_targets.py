@@ -49,7 +49,7 @@ E = _load("d231_dial", "run_exposure_dial.py")
 F = _load("d228_filter", "run_filter_search.py")
 
 SUMMARY = REPO / "data" / "stops_targets_summary.json"
-RESULTS = REPO / "STOPS_TARGETS_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "STOPS_TARGETS_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

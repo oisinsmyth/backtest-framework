@@ -59,7 +59,7 @@ F = _load("d228_filter", "run_filter_search.py")
 X, L, S, J = D.X, D.L, D.S, D.J
 
 SUMMARY = REPO / "data" / "intraday_filtered_summary.json"
-RESULTS = REPO / "INTRADAY_FILTERED_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "INTRADAY_FILTERED_RESULTS.md"
 
 SEED, N_SIMS = X.SEED, X.N_SIMS
 RF_ANNUAL = X.RF_ANNUAL

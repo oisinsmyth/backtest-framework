@@ -40,7 +40,7 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 FIX = REPO / "data" / "fixtures" / "index_extended_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "index_spread_summary.json"
-RESULTS = REPO / "INDEX_SPREAD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "INDEX_SPREAD_RESULTS.md"
 
 SYMBOLS = ("SPY", "QQQ", "IWM", "DIA")
 LOOKBACK = 60          # prior holds, for beta and for the z-score

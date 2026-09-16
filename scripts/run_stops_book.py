@@ -55,7 +55,7 @@ B, U, X, L, S = E.B, E.U, E.X, E.L, E.S
 F = _load("d228_filter", "run_filter_search.py")
 
 SUMMARY = REPO / "data" / "stops_book_summary.json"
-RESULTS = REPO / "STOPS_BOOK_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "STOPS_BOOK_RESULTS.md"
 
 SEED = X.SEED
 N_SIMS = 1000

@@ -58,7 +58,7 @@ C = _load("d244_crypto", "run_book_crypto.py")
 U, X, L, S, J = C.U, C.X, C.L, C.S, C.J
 
 SUMMARY = REPO / "data" / "intraday_shorts_summary.json"
-RESULTS = REPO / "INTRADAY_SHORTS_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "INTRADAY_SHORTS_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 FIXTURE = FIX / "etf_intraday_15m_panel.csv.gz"
 EVENTS = FIX / "etf_intraday_15m_panel_events.json"
@@ -432,7 +432,7 @@ def render(p: dict) -> str:
     o.append(f"> **{p['reading']}**\n")
     o.append(
         "\n*The auto-generated line above is too crude and is corrected in "
-        "[D247](docs/decisions/D247-the-short-side-at-fifteen-minutes.md): it counts a long "
+        "[D247](../decisions/D247-the-short-side-at-fifteen-minutes.md): it counts a long "
         "control as \"holding\" if it merely beats its rotation null, and S1's longs do that at "
         "**−0.279** and **−0.586** excess Sharpe. **Seven of eight cells lose money.** The "
         "honest reading is that 15-minute sampling breaks both estimators in both directions.*\n"

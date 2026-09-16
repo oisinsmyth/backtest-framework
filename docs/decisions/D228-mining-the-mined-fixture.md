@@ -310,7 +310,7 @@ this study might find.
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_filter_search.py`
 (offline, deterministic, seed 0, **73.5 s**) · Page:
-[`FILTER_SEARCH_RESULTS.md`](../../FILTER_SEARCH_RESULTS.md) · Artifact:
+[`FILTER_SEARCH_RESULTS.md`](../results/FILTER_SEARCH_RESULTS.md) · Artifact:
 `data/filter_search_summary.json`
 
 ### The one-sentence version

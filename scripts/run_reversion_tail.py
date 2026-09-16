@@ -64,7 +64,7 @@ from backtest_framework.research.terrain_strategies import (  # noqa: E402
 )
 
 SUMMARY = REPO / "data" / "reversion_tail_summary.json"
-RESULTS = REPO / "STRUCTURE_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "STRUCTURE_RESULTS.md"
 
 FREQUENCIES = (
     {

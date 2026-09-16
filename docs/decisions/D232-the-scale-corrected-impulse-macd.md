@@ -181,7 +181,7 @@ thing future work would mine against — not to produce a verdict.
 *Appended after the run. **A screen, not a verdict.***
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_scale_corrected.py` · Page:
-[`SCALE_CORRECTED_RESULTS.md`](../../SCALE_CORRECTED_RESULTS.md)
+[`SCALE_CORRECTED_RESULTS.md`](../results/SCALE_CORRECTED_RESULTS.md)
 
 ### The one-sentence version
 

@@ -52,7 +52,7 @@ J = _load("d229_jerk", "run_jerk_rung.py")
 F = _load("d228_filter", "run_filter_search.py")
 
 SUMMARY = REPO / "data" / "exposure_dial_{stage}.json"
-RESULTS = REPO / "EXPOSURE_DIAL_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "EXPOSURE_DIAL_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

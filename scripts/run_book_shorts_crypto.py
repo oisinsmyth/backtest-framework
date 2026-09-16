@@ -61,7 +61,7 @@ C = _load("d244_crypto", "run_book_crypto.py")
 B, U, X, L, S, E = C.B, C.U, C.X, C.L, C.S, C.E
 
 SUMMARY = REPO / "data" / "book_shorts_crypto_summary.json"
-RESULTS = REPO / "BOOK_SHORTS_CRYPTO_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BOOK_SHORTS_CRYPTO_RESULTS.md"
 
 SEED, N_SIMS = X.SEED, X.N_SIMS
 RF_ANNUAL = X.RF_ANNUAL

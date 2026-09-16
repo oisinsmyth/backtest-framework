@@ -44,7 +44,7 @@ L = _load("d217_ladder", "run_macd_ladder.py")
 J = _load("d229_jerk", "run_jerk_rung.py")
 
 SUMMARY = REPO / "data" / "scale_corrected_summary.json"
-RESULTS = REPO / "SCALE_CORRECTED_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "SCALE_CORRECTED_RESULTS.md"
 
 PPY = L.PPY
 LAG = 1

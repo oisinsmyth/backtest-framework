@@ -169,7 +169,7 @@ the look-ahead test is not optional.
 window are untouched.*
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_stops_targets.py` · Page:
-[`STOPS_TARGETS_RESULTS.md`](../../STOPS_TARGETS_RESULTS.md)
+[`STOPS_TARGETS_RESULTS.md`](../results/STOPS_TARGETS_RESULTS.md)
 
 ### The one-sentence version
 

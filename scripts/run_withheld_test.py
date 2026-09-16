@@ -52,7 +52,7 @@ J = _load("d229_jerk", "run_jerk_rung.py")
 H = _load("holdout_fetch", "fetch_etf_holdout.py")
 
 SUMMARY = REPO / "data" / "withheld_test_summary.json"
-RESULTS = REPO / "WITHHELD_TEST_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "WITHHELD_TEST_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 
 SEED = 0

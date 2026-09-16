@@ -171,7 +171,7 @@ Nothing in this programme has ever done that.
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_etf_intraday_gate.py`
 (offline, deterministic, seed 0, 9.4 min) · Page:
-[`ETF_INTRADAY_RESULTS.md`](../../ETF_INTRADAY_RESULTS.md) · Artifact:
+[`ETF_INTRADAY_RESULTS.md`](../results/ETF_INTRADAY_RESULTS.md) · Artifact:
 `data/etf_intraday_gate_summary.json`
 
 ### The one-sentence version

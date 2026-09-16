@@ -63,7 +63,7 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "data" / "fixtures" / "index_extended_15m_raw.csv.gz"
 META = REPO / "data" / "fixtures" / "index_extended_15m_raw.meta.json"
-PAGE = REPO / "OVERNIGHT_DECOMPOSITION_RESULTS.md"
+PAGE = REPO / "docs" / "results" / "OVERNIGHT_DECOMPOSITION_RESULTS.md"
 
 SYMBOLS = ("SPY", "QQQ", "IWM", "DIA")
 ERAS = ("2010-2019", "2020", "2021-2026")

@@ -51,7 +51,7 @@ def _load(name: str, filename: str):
 D = _load("d259", "run_overnight_decomposition.py")
 
 SUMMARY = REPO / "data" / "vol_targeted_hold_summary.json"
-RESULTS = REPO / "VOL_TARGETED_HOLD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "VOL_TARGETED_HOLD_RESULTS.md"
 
 FLOOR = 0.04                 # P1: 4% trailing drawdown on OPEN equity
 CAP = 4.0                    # fixed in D260, not swept

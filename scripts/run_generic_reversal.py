@@ -78,7 +78,7 @@ from backtest_framework.research.terrain_nulls import HORIZON  # noqa: E402
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "generic_reversal_summary.json"
 LADDER_ARTIFACT = REPO / "data" / "structure_components_summary.json"
-RESULTS = REPO / "STRUCTURE_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "STRUCTURE_RESULTS.md"
 
 SYMBOLS = ("BTCUSDT", "ETHUSDT")
 PRIMARY_K, PRIMARY_TOUCH = 2, 0.5

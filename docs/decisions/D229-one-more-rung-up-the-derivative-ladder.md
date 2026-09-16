@@ -209,7 +209,7 @@ assumed.
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_jerk_rung.py`
 (offline, deterministic, seed 0, **6.8 s**) · Page:
-[`JERK_RUNG_RESULTS.md`](../../JERK_RUNG_RESULTS.md) · Artifact: `data/jerk_rung_summary.json`
+[`JERK_RUNG_RESULTS.md`](../results/JERK_RUNG_RESULTS.md) · Artifact: `data/jerk_rung_summary.json`
 
 ### The one-sentence version
 

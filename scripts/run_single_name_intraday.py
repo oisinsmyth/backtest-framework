@@ -78,7 +78,7 @@ U, X, L, S, J, M = D.U, D.X, D.L, D.S, D.J, D.M
 pivots = D.pivots
 
 SUMMARY = REPO / "data" / "single_name_intraday_summary.json"
-RESULTS = REPO / "SINGLE_NAME_INTRADAY_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "SINGLE_NAME_INTRADAY_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 FIXTURE = FIX / "single_name_intraday_15m_panel.csv.gz"
 EVENTS = FIX / "single_name_intraday_15m_panel_events.json"
@@ -598,7 +598,7 @@ def render(p: dict) -> str:
     A = o.append
     A("# D264 — the intraday short on single names\n")
     A(f"**A SCREEN, NOT A VERDICT.** Cross-screen under R12 of "
-      f"[D247](docs/decisions/D247-the-short-side-at-fifteen-minutes.md)'s construction "
+      f"[D247](../decisions/D247-the-short-side-at-fifteen-minutes.md)'s construction "
       f"onto eight single names. Pre-registered in "
       f"[`{p['preregistration']}`]({p['preregistration']}) **before this ran**.\n")
     A(f"*seed {p['seed']}, {p['n_sims']:,} rotations, {p['elapsed_seconds']}s. "

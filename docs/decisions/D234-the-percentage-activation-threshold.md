@@ -181,7 +181,7 @@ cannot detect a subtle success.
 *Appended after the run. **A screen, not a verdict.** The holdout is untouched.*
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_activation_threshold.py` · Page:
-[`ACTIVATION_THRESHOLD_RESULTS.md`](../../ACTIVATION_THRESHOLD_RESULTS.md)
+[`ACTIVATION_THRESHOLD_RESULTS.md`](../results/ACTIVATION_THRESHOLD_RESULTS.md)
 
 ### The one-sentence version
 

@@ -165,7 +165,7 @@ the single thing this record exists to guarantee.
 *Appended after the run. Nothing above this line was edited.*
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_withheld_test.py` · Page:
-[`WITHHELD_TEST_RESULTS.md`](../../WITHHELD_TEST_RESULTS.md)
+[`WITHHELD_TEST_RESULTS.md`](../results/WITHHELD_TEST_RESULTS.md)
 
 ### The one-sentence version
 

@@ -41,7 +41,7 @@ RP, U = D.RP, D.U
 
 FIX = REPO / "data" / "fixtures"
 SUMMARY = REPO / "data" / "xsec_trend_arm_summary.json"
-RESULTS = REPO / "XSEC_TREND_ARM_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "XSEC_TREND_ARM_RESULTS.md"
 
 SPLIT_SEED = 20260829          # pinned in D257 BEFORE this file existed
 SEED, N_SIMS = 0, 400
