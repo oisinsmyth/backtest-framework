@@ -58,11 +58,6 @@ def _load(name: str, filename: str):
 
 F = _load("fetch_short_universe", "fetch_short_universe.py")
 
-needs_fixture = pytest.mark.skipif(
-    not FIXTURE.exists(), reason="fixture not built on this machine (D191: raw cache is local)"
-)
-
-
 @pytest.fixture(scope="module")
 def meta() -> dict:
     if not META.exists():
@@ -72,9 +67,23 @@ def meta() -> dict:
 
 @pytest.fixture(scope="module")
 def closes_by_symbol() -> dict[str, list[tuple[str, float, float]]]:
-    """(date, adjusted close, adjusted volume) per symbol, in file order. One pass."""
+    """(date, adjusted close, adjusted volume) per symbol, in file order. One pass.
+
+    THE PANEL GUARD LIVES HERE, not on the tests. A module-level
+    `@needs_fixture = pytest.mark.skipif(not FIXTURE.exists(), ...)` used to decorate
+    20 tests, and 14 of them never opened the panel at all — they read only META and
+    EVENTS, which are TRACKED and present on every clone. So a clone without the
+    69 MB gzip (D191: the raw cache is local and gitignored) silently skipped its
+    sidecar, meta, screen and exclusion gates: they were never run, and a regression
+    in any of them would have been invisible outside this machine. The starkest was
+    `test_load_panel_really_does_refuse_this_fixture`, whose whole body is a source
+    grep of scripts/run_macd_ladder.py. Gating the READER rather than the tests is
+    the pattern the sibling fixtures already use —
+    tests/unit/test_etf_intraday_fixture.py:135 and
+    tests/unit/test_index_extended_fixture.py:69 — and it keeps the skip attached to
+    the thing that actually needs the file."""
     if not FIXTURE.exists():
-        pytest.skip("fixture not built on this machine")
+        pytest.skip("fixture not built on this machine (D191: raw cache is local)")
     out: dict[str, list[tuple[str, float, float]]] = defaultdict(list)
     with gzip.open(FIXTURE, "rt", newline="") as f:
         for row in csv.DictReader(f):
@@ -88,7 +97,6 @@ def closes_by_symbol() -> dict[str, list[tuple[str, float, float]]]:
 # 1. THE SPLIT-ADJUSTMENT GATE
 # ===========================================================================
 
-@needs_fixture
 def test_every_recorded_split_leaves_no_discontinuity_in_the_adjusted_prices(closes_by_symbol):
     """GATE A, recomputed from the data rather than read out of the meta.
 
@@ -134,7 +142,6 @@ def test_every_recorded_split_leaves_no_discontinuity_in_the_adjusted_prices(clo
     )
 
 
-@needs_fixture
 def test_no_adjusted_bar_multiplies_the_price_outside_the_documented_events(closes_by_symbol):
     """GATE B, and it reads the DATA, not the sidecar.
 
@@ -209,7 +216,6 @@ def test_build_never_reads_the_sidecar_it_writes():
     assert "EVENTS.write_text" not in actions, "--actions must write the cache, not the sidecar"
 
 
-@needs_fixture
 def test_the_committed_sidecar_is_exactly_the_fixtures_symbols(meta):
     """The committed sidecar and the fixture must name the same symbols. A sidecar
     listing events for absent symbols invites a loader to build a longer index than the
@@ -225,7 +231,6 @@ def test_the_committed_sidecar_is_exactly_the_fixtures_symbols(meta):
             assert events["splits"][sym] == cached["splits"][sym], sym
 
 
-@needs_fixture
 def test_the_symbols_excluded_for_data_quality_really_are_absent(meta):
     """An exclusion that did not take is worse than no exclusion, because the meta then
     describes a fixture that is not the one on disk."""
@@ -244,7 +249,6 @@ def test_the_symbols_excluded_for_data_quality_really_are_absent(meta):
     assert sum(ex["cohorts"].values()) == ex["count"]
 
 
-@needs_fixture
 def test_every_hand_verified_large_move_is_classified_corroborated(meta):
     """`DOCUMENTED_LARGE_MOVES` is a CROSS-CHECK on the classifier, not an exemption
     from it — and it earned its keep. KODK's 2020-07-29 loan bar was hand-verified as
@@ -259,7 +263,6 @@ def test_every_hand_verified_large_move_is_classified_corroborated(meta):
         assert c["klass"] == "corroborated", (sym, d, c["klass"])
 
 
-@needs_fixture
 def test_no_split_coefficient_the_price_series_contradicts_was_applied(meta):
     """The provider's `8. split coefficient` is unreliable in at least three ways, and
     each would put a fabricated jump into the prices: final-bar artefacts on ZERO
@@ -279,7 +282,6 @@ def test_no_split_coefficient_the_price_series_contradicts_was_applied(meta):
         assert not (1 / F.CONFIRMATION_MIN_RATIO < u["ratio"] < F.CONFIRMATION_MIN_RATIO), u
 
 
-@needs_fixture
 def test_the_meta_records_its_own_gates_as_clean(meta):
     """The build writes its gate failures into the meta. An empty list there and a
     passing test above should agree; if they ever disagree, the fixture on disk was
@@ -290,7 +292,6 @@ def test_the_meta_records_its_own_gates_as_clean(meta):
     assert meta["split_adjusted_bars"] > 0, "no bar was split-adjusted — implausible at this size"
 
 
-@needs_fixture
 def test_every_documented_large_move_is_actually_in_the_fixture(closes_by_symbol):
     """A hand-verified entry that no longer corresponds to a bar has stopped doing its
     job as a cross-check, and would go on silently agreeing with nothing."""
@@ -310,7 +311,6 @@ def test_every_documented_large_move_is_actually_in_the_fixture(closes_by_symbol
     assert not stale, f"stale DOCUMENTED_LARGE_MOVES entries: {stale}"
 
 
-@needs_fixture
 def test_moves_across_a_trading_halt_are_reported_rather_than_excused_silently(meta):
     """Halt crossings are exempt from GATE B because a return across a months-long
     suspension is not a one-day return. Exempt is not the same as invisible: each one
@@ -325,7 +325,6 @@ def test_moves_across_a_trading_halt_are_reported_rather_than_excused_silently(m
     assert all("max_gap_days" in m for m in meta["symbols"].values())
 
 
-@needs_fixture
 def test_the_events_sidecar_is_populated_for_both_actions(meta):
     """An EMPTY sidecar is a lie (D48), and a silently empty one is worse: a total
     return computed against zero dividends degenerates to price return without
@@ -412,7 +411,6 @@ def test_the_price_floor_sits_on_the_screen_window_so_the_wrecks_survive_it():
     assert verdict["screen_median_close"] >= F.MIN_SCREEN_PRICE_USD
 
 
-@needs_fixture
 def test_every_symbols_recorded_live_window_starts_after_its_screen_window(meta, closes_by_symbol):
     """The per-symbol claim, checked against the fixture's own bars rather than
     against the selection file that made it."""
@@ -431,7 +429,6 @@ def test_every_symbols_recorded_live_window_starts_after_its_screen_window(meta,
 # 3. THE DEAD COHORT
 # ===========================================================================
 
-@needs_fixture
 def test_the_delisted_cohort_is_non_empty_and_above_the_stated_floor(meta):
     """The refusal condition, asserted here as well as enforced in `--build`.
 
@@ -451,7 +448,6 @@ def test_the_delisted_cohort_is_non_empty_and_above_the_stated_floor(meta):
     assert all(m["delistingDate"] for m in meta["symbols"].values() if m["cohort"] == "dead")
 
 
-@needs_fixture
 def test_the_dead_names_actually_stop_trading_inside_the_span(meta):
     """A 'delisted' symbol whose bars run to the span end is a mislabel, and a
     mislabel here would silently reintroduce survivorship into the cohort split."""
@@ -461,7 +457,6 @@ def test_the_dead_names_actually_stop_trading_inside_the_span(meta):
     assert not bad, f"{len(bad)} 'dead' symbols still trading at the span end: {bad[:10]}"
 
 
-@needs_fixture
 def test_the_roster_refresh_artefact_is_handled_and_not_smoothed_over(meta):
     """`delistingDate` is not always a delisting date.
 
@@ -496,7 +491,6 @@ def test_the_roster_refresh_artefact_is_handled_and_not_smoothed_over(meta):
         assert m["last_bar"] <= cutoff, (sym, m["delistingDate"], m["last_bar"])
 
 
-@needs_fixture
 def test_the_dead_cohort_is_spread_across_the_span_not_bunched_at_one_end(meta):
     """A dead cohort that all died in 2024 tests one regime, not a span. This does not
     assert the spread is uniform — the provider's pre-2013 coverage is thin and the
@@ -506,7 +500,6 @@ def test_the_dead_cohort_is_spread_across_the_span_not_bunched_at_one_end(meta):
     assert min(years) <= "2015" and max(years) >= "2022", years
 
 
-@needs_fixture
 def test_the_meta_carries_an_explicit_survivorship_bias_statement(meta):
     """Not a style check. The statement names three residual biases that the
     construction does NOT repair, and a reader who takes a base rate off this fixture
@@ -523,7 +516,6 @@ def test_the_meta_carries_an_explicit_survivorship_bias_statement(meta):
 # 4. THE PANEL IS RAGGED, AND SAYS SO
 # ===========================================================================
 
-@needs_fixture
 def test_the_panel_is_ragged_and_the_meta_says_a_loader_is_required(meta, closes_by_symbol):
     """Raggedness is the DESIGN, not a defect: a rectangular panel needs every symbol
     on every date, which is exactly what deletes the delisted names (D245 AMENDMENT 1).
@@ -538,7 +530,6 @@ def test_the_panel_is_ragged_and_the_meta_says_a_loader_is_required(meta, closes
         assert phrase in note, phrase
 
 
-@needs_fixture
 def test_load_panel_really_does_refuse_this_fixture():
     """The meta's claim about `run_macd_ladder.load_panel`, verified against the
     source rather than asserted. A comment that drifts out of date is a comment that
@@ -565,7 +556,6 @@ def test_common_stock_tickers_including_bankrupt_ones_are_kept(sym):
     assert F._is_common_stock_ticker(sym)
 
 
-@needs_fixture
 def test_no_excluded_ticker_reached_the_fixture(meta):
     bad = [s for s in meta["symbols"] if not F._is_common_stock_ticker(s)]
     assert not bad, bad
@@ -614,12 +604,15 @@ def test_the_fetcher_never_puts_a_url_into_an_exception_or_a_log():
     assert "apikey=" not in src.replace('"apikey": key', "")
 
 
-@needs_fixture
 def test_the_gzip_header_carries_no_timestamp_so_a_rebuild_is_a_content_diff():
     """`gzip` stamps the current time into bytes 4-7 of its header, so an otherwise
     identical rebuild would show as a whole-file diff — and a diff that always appears
     is a diff that stops being read. The point of committing a fixture is that changing
     it is VISIBLE (D70/D24). Same pin `csv_fixture` carries."""
+    # The only test in this file that touches the panel WITHOUT going through
+    # `closes_by_symbol`, so it is the only one that still carries its own guard.
+    if not FIXTURE.exists():
+        pytest.skip("fixture not built on this machine (D191: raw cache is local)")
     with open(FIXTURE, "rb") as f:
         header = f.read(10)
     assert header[:2] == b"\x1f\x8b", "not a gzip file"
