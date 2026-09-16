@@ -37,9 +37,18 @@ accounting.
 | Trades | **1,370** | **1,370** |
 | Final value | **$159,233.023491** | **$159,233.023491** |
 
-- **Max absolute divergence across the full 10-year equity curve: $0.0000002186**
-  (1.30e-12 relative) — floating-point noise, orders of magnitude inside D47's 1e-6
-  tolerance.
+- **Max absolute divergence across the full 10-year equity curve: $0.0000002186**, at bar
+  2,400 — floating-point noise, orders of magnitude inside D47's 1e-6 tolerance.
+- **Max *relative* divergence: 1.30e-12, at bar 2,494**, where the absolute divergence is
+  $0.0000002138.
+
+  > **Corrected 2026-09-16.** This read *"$0.0000002186 (1.30e-12 relative)"*, which presents
+  > one measurement expressed two ways. They are the maxima of two different series and they
+  > fall on two different bars: at bar 2,400 the relative divergence is 1.262e-12, and at bar
+  > 2,494 the absolute is $0.0000002138. Both published figures were individually correct; only
+  > the parenthesis joining them was not. Found by building
+  > [`docs/figures/cross-engine-agreement.svg`](../figures/README.md) from the residual series,
+  > which is the first time either series was looked at rather than summarised.
 - **Divergence table: empty.** Identical trade counts on every one of 1,370 re-size
   decisions; no penny required itemized reconciliation.
 

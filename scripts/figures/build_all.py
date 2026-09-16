@@ -35,6 +35,7 @@ BUILDERS = (
     "build_dsr_hurdle",
     "build_lookahead",
     "build_two_nulls",
+    "build_cross_engine",
 )
 
 

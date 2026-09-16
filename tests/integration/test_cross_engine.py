@@ -11,6 +11,8 @@ This test runs in the normal offline suite, so D41's "re-run on every
 simulator-touching change" is automatic rather than a policy anyone must remember.
 """
 
+import importlib.util
+import sys
 import warnings
 from pathlib import Path
 
@@ -27,21 +29,25 @@ from backtest_framework.instruments.equity import Equity
 TOLERANCE = 1e-6  # D47
 REPO = Path(__file__).resolve().parent.parent.parent
 FIXTURE = REPO / "data" / "fixtures" / "xle_xop_daily_2015_2024.csv"
+RUNNER = REPO / "scripts" / "run_cross_engine_residuals.py"
 
 
-def _ma_cross_weights(closes: list[float], fast: int = 10, slow: int = 30, weight: float = 0.6) -> list[float]:
-    """Computed ONCE; consumed by both engines. Weight 0.6 (not 1.0) deliberately:
-    at ~full investment vectorbt reserves fees from the purchase while we pay fees
-    from cash — below that boundary the sizing conventions are identical (D79)."""
-    weights = []
-    for i in range(len(closes)):
-        if i + 1 < slow:
-            weights.append(0.0)
-        else:
-            f = sum(closes[i - fast + 1 : i + 1]) / fast
-            s = sum(closes[i - slow + 1 : i + 1]) / slow
-            weights.append(weight if f > s else 0.0)
-    return weights
+def _ma_cross_weights(closes: list[float]) -> list[float]:
+    """The schedule both engines consume, loaded from the extractor that writes the artifact
+    `docs/figures/cross-engine-agreement.svg` is drawn from.
+
+    It used to be defined here. Two copies of the schedule would mean that the day one drifted,
+    this test and that figure would describe different reconciliations and both would still pass
+    — so the definition lives in `scripts/run_cross_engine_residuals.py` and this loads it, using
+    the `tests/unit/test_readme_counts_are_current.py:32` idiom (a script is not an importable
+    package).
+    """
+    spec = importlib.util.spec_from_file_location("run_cross_engine_residuals", RUNNER)
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module._ma_cross_weights(closes)
 
 
 def test_equity_curves_reconcile_with_vectorbt():
