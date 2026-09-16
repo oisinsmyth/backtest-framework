@@ -139,7 +139,7 @@ and the resample reports.
 *Appended after the run. Nothing above this line was edited.*
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_scaling_ladder.py`
-(offline, deterministic) · Page: [`SCALING_RESULTS.md`](../../SCALING_RESULTS.md) ·
+(offline, deterministic) · Page: [`SCALING_RESULTS.md`](../results/SCALING_RESULTS.md) ·
 Artifact: `data/scaling_ladder_summary.json`
 
 ### The one-sentence version

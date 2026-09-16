@@ -318,7 +318,7 @@ all 57 symbols.** The causal window is `i ∈ [t−252, t−k]`, expressed exact
 window are untouched.*
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_uptrend_onset.py` · Page:
-[`UPTREND_ONSET_RESULTS.md`](../../UPTREND_ONSET_RESULTS.md)
+[`UPTREND_ONSET_RESULTS.md`](../results/UPTREND_ONSET_RESULTS.md)
 
 ### The one-sentence version
 

@@ -66,7 +66,7 @@ from backtest_framework.research.terrain_nulls import (  # noqa: E402
 )
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
-RESULTS = REPO / "TERRAIN_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "TERRAIN_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "terrain_s1_15m_summary.json"
 
 BARS_PER_DAY = 96

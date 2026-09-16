@@ -407,7 +407,7 @@ the house pattern and it is used here.**
 ## RESULT — closed, and it is a market timer wearing a per-instrument signal
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_wedge_inverse.py` · Page:
-[`WEDGE_INVERSE_RESULTS.md`](../../WEDGE_INVERSE_RESULTS.md)
+[`WEDGE_INVERSE_RESULTS.md`](../results/WEDGE_INVERSE_RESULTS.md)
 
 ### The one-sentence version
 

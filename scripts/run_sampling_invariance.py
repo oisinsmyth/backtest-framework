@@ -65,7 +65,7 @@ from backtest_framework.research.breakout_study import DEFAULT_TIERS  # noqa: E4
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "sampling_invariance_summary.json"
-RESULTS = REPO / "SAMPLING_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "SAMPLING_RESULTS.md"
 
 SOURCE_MINUTES = 15
 SYMBOLS = ("BTCUSDT", "ETHUSDT", "XEMUSDT", "BTGUSDT")
@@ -300,7 +300,7 @@ def render(p: dict) -> str:
     w("")
     w(f"**Produced:** {p['produced']} · **Reproduce:** "
       "`uv run python scripts/run_sampling_invariance.py` (offline, deterministic) ·")
-    w("Record: [`D221`](docs/decisions/D221-does-the-indicator-care-about-sampling-rate.md) ·")
+    w("Record: [`D221`](../decisions/D221-does-the-indicator-care-about-sampling-rate.md) ·")
     w("Artifact: `data/sampling_invariance_summary.json`")
     w("")
     w("Two estimators covering the **same wall-clock window** on the same asset over the")

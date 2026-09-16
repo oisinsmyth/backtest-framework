@@ -18,13 +18,13 @@ market. The market findings are mostly "no".
 | Study | What it proves about the instrument | Verdict on the market |
 |---|---|---|
 | [`first_real_number.md`](first_real_number.md) → [`v2`](first_real_number_v2.md), [`pairs_study_v1`](pairs_study_v1.md) / [`v2`](pairs_study_v2.md) / [`v3`](pairs_study_v3.md), [`gross_exposure_study.md`](gross_exposure_study.md) | **The walk-forward harness and cost stack produce a defensible number**, one variable moved per step: selection → cointegration filter → β-hedge → capacity → gross exposure | A real gross edge exists; no configuration of size or gross clears the full cost of capital |
-| [`../../BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md) | **A strategy is a swappable brick.** Different asset class, different direction, same engine, cost stack, walk-forward harness and trial registry — unchanged | Fees are not the binding constraint, which is the least interesting true thing about it |
+| [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md) | **A strategy is a swappable brick.** Different asset class, different direction, same engine, cost stack, walk-forward harness and trial registry — unchanged | Fees are not the binding constraint, which is the least interesting true thing about it |
 | [`crypto_pairs_btc_eth.md`](crypto_pairs_btc_eth.md) | **An honest negative separates the engineering from the thesis.** Realised β ≈ 0 on all three benchmarks — the neutrality machinery works | At zero fees *and* zero carry it still loses 88.7%: the log spread is stationary in 14% of windows |
-| [`../../MACD_RESULTS.md`](../../MACD_RESULTS.md) | **Pre-registration and the trial registry, including the stop firing.** The best cell clears six of seven hurdles and fails only the deflated-Sharpe floor — publishable as a first study, not as the 45,783rd look. 0 of 12 cells cleared, so Stage 2 never ran | The signal line adds something; the level rung is dead |
+| [`MACD_RESULTS.md`](MACD_RESULTS.md) | **Pre-registration and the trial registry, including the stop firing.** The best cell clears six of seven hurdles and fails only the deflated-Sharpe floor — publishable as a first study, not as the 45,783rd look. 0 of 12 cells cleared, so Stage 2 never ran | The signal line adds something; the level rung is dead |
 | [`STRUCTURE_RESULTS.md`](STRUCTURE_RESULTS.md) | **A measurement that collapses a story.** Five components mechanised so each could be scored separately — three that cleared the promotion bar turned out to be one quantity under three names | Nothing predicts once leg size relative to ATR is held constant |
 
-Two of the five still live at the repository root (`BREAKOUT_RESULTS.md`, `MACD_RESULTS.md`)
-because tests pin those paths; they move here when their tests do.
+All 48 now live here. The last 14 — the ones whose paths were pinned by tests — arrived with their
+17 writer scripts and 14 test path expressions repointed in the same commit.
 
 The best single document in the project is not a study at all — it is
 [`final_report.html`](final_report.html), *"Nothing Worked"*: what was tested, how each idea died,
@@ -122,6 +122,8 @@ are cited by, in prose, across hundreds of references in the decision records.
 [`archive/breakout_v1/BREAKOUT_RESULTS.md`](archive/breakout_v1/BREAKOUT_RESULTS.md) — the
 superseded first breakout run, kept under `archive/<study>_v<N>/` with its original filename.
 
-> **Note for when the remaining root documents move here:** this archived file is already called
-> `BREAKOUT_RESULTS.md`. Once the live one arrives, the repository will hold two files of that
-> exact name two directories apart, and any search by basename will find both.
+> **Two files now share the name `BREAKOUT_RESULTS.md`** — the live study in this directory and
+> the superseded v1 run in `archive/breakout_v1/`, two directories apart. Nothing in the repository
+> resolves a results document by basename (checked: the only two `rglob` call sites touch `data/`
+> and `.git`, and every glob over this directory is non-recursive), so this is a reading hazard
+> rather than a tooling one. Link to the full path, not the name.

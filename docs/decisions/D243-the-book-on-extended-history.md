@@ -145,7 +145,7 @@ fresh: the sub-period split, and nothing else.**
 ## VERDICT
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_book_extended.py` · Page:
-[`BOOK_EXTENDED_RESULTS.md`](../../BOOK_EXTENDED_RESULTS.md)
+[`BOOK_EXTENDED_RESULTS.md`](../results/BOOK_EXTENDED_RESULTS.md)
 
 **3,222 live bars from 2013-11-01.** NEW 1,293 · TRAIN 1,516 · FORWARD 413.
 

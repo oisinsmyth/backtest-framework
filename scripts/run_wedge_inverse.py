@@ -65,7 +65,7 @@ W = _load("d245_wide", "run_book_wide.py")
 E, B, U, X, L, S, J = W.E, W.B, W.U, W.X, W.L, W.S, W.J
 
 SUMMARY = REPO / "data" / "wedge_inverse_summary.json"
-RESULTS = REPO / "WEDGE_INVERSE_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "WEDGE_INVERSE_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 
 PPY, SEED = X.PPY, X.SEED

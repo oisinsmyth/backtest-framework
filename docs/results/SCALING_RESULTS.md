@@ -1,7 +1,7 @@
 # The scaling ladder — D222
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_scaling_ladder.py` (offline, deterministic) ·
-Record: [`D222`](docs/decisions/D222-does-the-fine-bar-advantage-grow-with-the-window.md) ·
+Record: [`D222`](../decisions/D222-does-the-fine-bar-advantage-grow-with-the-window.md) ·
 Artifact: `data/scaling_ladder_summary.json`
 
 Is the fine-bar residual **structure or noise**? A residual that is noise has no

@@ -56,7 +56,7 @@ X = _load("d238_mirror", "run_short_mirror.py")
 L, S, J = X.L, X.S, X.J
 
 SUMMARY = REPO / "data" / "tsmom_arm_summary.json"
-RESULTS = REPO / "TSMOM_ARM_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "TSMOM_ARM_RESULTS.md"
 
 PPY = X.PPY
 SEED = X.SEED

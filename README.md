@@ -74,7 +74,7 @@ project's own history (D176, D183, D186).
 measurement of whether ETF pairs trading clears real frictions (draft skeleton; every
 headline number final and cross-checked against its source artifact by the test suite).
 
-**The second study is [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md)** — a long-flat
+**The second study is [`BREAKOUT_RESULTS.md`](docs/results/BREAKOUT_RESULTS.md)** — a long-flat
 Donchian breakout on BTC/ETH, run through the same engine, cost stack, walk-forward
 harness and trial registry as the pairs work. It is **directional and beta-loaded**, and
 explicitly labelled as outside the market-neutral thesis (D38/D117); its verdict is that
@@ -105,7 +105,7 @@ published at <https://claude.ai/code/artifact/7b93befb-9689-4efa-bf95-378a0fafd9
 examples are chosen by a rule fixed before any outcome was read, and every number on the
 page is pinned against its source artifact by the test suite.
 
-**The eighth study is [`MACD_RESULTS.md`](MACD_RESULTS.md)** — the MACD crossover, the
+**The eighth study is [`MACD_RESULTS.md`](docs/results/MACD_RESULTS.md)** — the MACD crossover, the
 most widely taught technical strategy there is, framed so it could not confirm itself. The
 claim under test was never whether MACD makes money but whether the **signal line adds
 anything over the zero-line cross** — which is identically a 12/26 EMA crossover — and

@@ -61,7 +61,7 @@ U = _load("d240_onset", "run_uptrend_onset.py")
 X, L, S, J = U.X, U.L, U.S, U.J
 
 SUMMARY = REPO / "data" / "combined_book_summary.json"
-RESULTS = REPO / "COMBINED_BOOK_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "COMBINED_BOOK_RESULTS.md"
 
 PPY, SEED = X.PPY, X.SEED
 RF_ANNUAL = X.RF_ANNUAL

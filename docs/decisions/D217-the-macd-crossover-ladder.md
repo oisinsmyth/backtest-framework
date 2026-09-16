@@ -380,7 +380,7 @@ to be one, and that finding is reported instead of the performance numbers, not 
 *Appended after the run. Nothing above this line was edited.*
 
 **Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_macd_ladder.py`
-(offline, deterministic, seed 0) · Ledger: [`MACD_RESULTS.md`](../../MACD_RESULTS.md) ·
+(offline, deterministic, seed 0) · Ledger: [`MACD_RESULTS.md`](../results/MACD_RESULTS.md) ·
 Artifact: `data/macd_ladder_summary.json`
 
 ### The one-sentence version

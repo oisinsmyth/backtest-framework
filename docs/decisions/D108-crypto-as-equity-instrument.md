@@ -3,7 +3,7 @@
 **Status:** Committed
 **Date:** 2026-08-18
 **Category:** Instruments
-**Source:** Breakout study session ([`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md))
+**Source:** Breakout study session ([`BREAKOUT_RESULTS.md`](../results/BREAKOUT_RESULTS.md))
 
 ## Decision
 

@@ -178,5 +178,5 @@ def test_every_hurdle_leg_is_present():
 
 
 def test_the_page_round_trips_byte_for_byte():
-    on_disk = (REPO / "BOOK_EXTENDED_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "BOOK_EXTENDED_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

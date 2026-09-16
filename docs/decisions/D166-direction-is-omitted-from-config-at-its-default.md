@@ -60,4 +60,4 @@ defaulting on a typo.
   that exists is a block-bootstrap synthetic-bar null (D130), not the exposure-matched
   random-entry null the addon presumes. Its `direction` field is a metric tail, not a
   trade side. Building a random-entry null is Phase 2 work; see
-  [`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md).
+  [`BREAKOUT_RESULTS.md`](../results/BREAKOUT_RESULTS.md).

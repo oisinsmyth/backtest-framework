@@ -24,23 +24,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 
-# The 14 whose numbers are pinned by tests, so they stay at root until those tests move with them.
-PINNED_AT_ROOT = {
-    "ASSEMBLED_RESULTS.md",
-    "BOOK_CRYPTO_RESULTS.md",
-    "BOOK_EXTENDED_RESULTS.md",
-    "BREAKOUT_RESULTS.md",
-    "COMBINED_BOOK_RESULTS.md",
-    "MACD_RESULTS.md",
-    "SAMPLING_RESULTS.md",
-    "SCALING_RESULTS.md",
-    "SHORT_MIRROR_RESULTS.md",
-    "TERRAIN_RESULTS.md",
-    "TSMOM_ARM_RESULTS.md",
-    "UPTREND_ONSET_RESULTS.md",
-    "UPTREND_WITHHELD_RESULTS.md",
-    "WEDGE_INVERSE_RESULTS.md",
-}
+# **Empty, and that is the point.** This set held the 14 documents whose paths tests pinned, which
+# is why they stayed at root for a round after the other 25 moved. They are now in docs/results/
+# with their 17 writers and 14 test path expressions, so the assertion below has become the
+# strongest form it can take: NO results document belongs at the repository root, ever. The set
+# stays rather than being deleted because an exception, if one is ever justified, belongs here
+# where the reason can be written next to it.
+PINNED_AT_ROOT: set[str] = set()
 
 
 def test_no_unexpected_results_document_at_the_repository_root():
@@ -63,12 +53,19 @@ def test_no_unexpected_results_document_at_the_repository_root():
 
 
 def test_the_moved_documents_are_where_they_were_moved_to():
-    """The other half: the 25 are present in docs/results/ under their original names.
+    """The other half: all 39 are present in docs/results/ under their original names.
 
     Named individually rather than counted, because a count passes while the wrong file sits
-    there.
+    there. 25 arrived in the first move, the 14 test-pinned ones in the second.
     """
     moved = {
+        # the 14 whose paths tests pinned
+        "ASSEMBLED_RESULTS.md", "BOOK_CRYPTO_RESULTS.md", "BOOK_EXTENDED_RESULTS.md",
+        "BREAKOUT_RESULTS.md", "COMBINED_BOOK_RESULTS.md", "MACD_RESULTS.md",
+        "SAMPLING_RESULTS.md", "SCALING_RESULTS.md", "SHORT_MIRROR_RESULTS.md",
+        "TERRAIN_RESULTS.md", "TSMOM_ARM_RESULTS.md", "UPTREND_ONSET_RESULTS.md",
+        "UPTREND_WITHHELD_RESULTS.md", "WEDGE_INVERSE_RESULTS.md",
+        # the 25 that moved first
         "ACTIVATION_THRESHOLD_RESULTS.md", "BOOK_SHORTS_CRYPTO_RESULTS.md",
         "BOOK_SINGLE_NAMES_RESULTS.md", "BOOK_WIDE_RESULTS.md", "BOOTSTRAP_SWEEP_RESULTS.md",
         "BREAKDOWN_RESULTS.md", "CROSS_SECTIONAL_PRESCREEN_RESULTS.md", "ETF_INTRADAY_RESULTS.md",

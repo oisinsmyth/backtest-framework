@@ -62,7 +62,7 @@ def _load_d217_runner():
 L = _load_d217_runner()
 
 SUMMARY = REPO / "data" / "impulse_macd_summary.json"
-RESULTS = REPO / "MACD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "MACD_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

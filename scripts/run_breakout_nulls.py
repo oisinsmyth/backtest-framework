@@ -324,7 +324,7 @@ def render_report(
 **Arithmetic-null simulations:** {args.arith_sims:,} (D36) ·
 **Configuration under test:** `{BASELINE}` — N_entry {bs.BASELINE_N_ENTRY}, N_exit
 {bs.BASELINE_N_EXIT}, inverse-vol sizing fixed at entry, exactly as in
-[`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md).
+[`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md).
 
 Pipeline provenance: cleaning made {gate['cleaning_changes']} change(s); validation
 passed with {gate['hard_violations']} hard violation(s) and {gate['warnings']}

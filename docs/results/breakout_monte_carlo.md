@@ -8,7 +8,7 @@
 **Arithmetic-null simulations:** 10,000 (D36) ·
 **Configuration under test:** `plateau_40_10` — N_entry 40, N_exit
 10, inverse-vol sizing fixed at entry, exactly as in
-[`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md).
+[`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md).
 
 Pipeline provenance: cleaning made 0 change(s); validation
 passed with 0 hard violation(s) and 7

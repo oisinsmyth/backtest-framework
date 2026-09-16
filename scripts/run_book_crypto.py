@@ -62,7 +62,7 @@ E = _load("d243_extended", "run_book_extended.py")
 B, U, X, L, S, J = E.B, E.U, E.X, E.L, E.S, E.J
 
 SUMMARY = REPO / "data" / "book_crypto_summary.json"
-RESULTS = REPO / "BOOK_CRYPTO_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BOOK_CRYPTO_RESULTS.md"
 SRC = REPO / "data" / "fixtures" / "crypto_universe_2015_2025_raw.csv.gz"
 FIXTURE = REPO / "data" / "fixtures" / "crypto_book_2018_raw.csv.gz"
 EVENTS = REPO / "data" / "fixtures" / "crypto_book_2018_raw_events.json"

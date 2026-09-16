@@ -60,7 +60,7 @@ X = _load("d238_mirror", "run_short_mirror.py")
 L, S, J = X.L, X.S, X.J
 
 SUMMARY = REPO / "data" / "uptrend_onset_summary.json"
-RESULTS = REPO / "UPTREND_ONSET_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "UPTREND_ONSET_RESULTS.md"
 
 PPY, SEED, LAG = X.PPY, X.SEED, X.LAG
 RF_ANNUAL, RF_PER_BAR = X.RF_ANNUAL, X.RF_PER_BAR

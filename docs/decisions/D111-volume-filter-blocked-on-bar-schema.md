@@ -23,7 +23,7 @@
 The breakout study's specified volume-confirmation filter — "trigger bar volume > 1.5× the
 20-day average volume" — is **not implemented**, and no `VolumeConfirmationFilter` class
 exists to imply otherwise. The gap is recorded here and in
-[`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md) rather than worked around. The study's
+[`BREAKOUT_RESULTS.md`](../results/BREAKOUT_RESULTS.md) rather than worked around. The study's
 other three filters are implemented and measured in full.
 
 ## Rationale

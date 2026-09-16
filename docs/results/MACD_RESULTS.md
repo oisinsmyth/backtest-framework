@@ -7,7 +7,7 @@ that feeds the deflated Sharpe.
 ## Inherited disclosure
 
 This study opens a **fresh ledger**, on the argument written into
-[`D217`](docs/decisions/D217-the-macd-crossover-ladder.md): a different fixture (ETF
+[`D217`](../decisions/D217-the-macd-crossover-ladder.md): a different fixture (ETF
 daily, not crypto 15m), a different claim family (directional single-name momentum,
 not structure or terrain), and a sensor that did not exist in this repo. The
 structure and terrain programmes' combined 395-look bar and the prior ETF-fixture
@@ -343,7 +343,7 @@ D218's pre-registered stop applies and the study closes here as a reportable neg
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_volume_filter.py`
 (offline, deterministic, seed 0) · Decision record:
-[`D220`](docs/decisions/D220-the-volume-filter-on-impulse-macd.md) · Artifact:
+[`D220`](../decisions/D220-the-volume-filter-on-impulse-macd.md) · Artifact:
 `data/volume_filter_summary.json`
 
 ### The parent, and the space a filter has to work in

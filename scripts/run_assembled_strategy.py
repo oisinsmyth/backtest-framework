@@ -64,7 +64,7 @@ S = _load("run_sampling_invariance", "run_sampling_invariance.py")  # ppy, sharp
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "assembled_strategy_summary.json"
-RESULTS = REPO / "ASSEMBLED_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "ASSEMBLED_RESULTS.md"
 
 SYMBOLS = ("BTCUSDT", "ETHUSDT")
 BAR_MINUTES = 15
@@ -453,7 +453,7 @@ def render(p: dict) -> str:
     w("")
     w(f"**Produced:** {p['produced']} · **Reproduce:** "
       "`uv run python scripts/run_assembled_strategy.py` (offline, deterministic, seed 0) ·")
-    w("Record: [`D224`](docs/decisions/D224-the-assembled-strategy.md) ·")
+    w("Record: [`D224`](../decisions/D224-the-assembled-strategy.md) ·")
     w("Artifact: `data/assembled_strategy_summary.json`")
     w("")
     w(f"15m bars, Impulse acceleration `({c['length']}, {c['signal']})` (k={c['k']}, a "

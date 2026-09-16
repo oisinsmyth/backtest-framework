@@ -74,7 +74,7 @@ S = _load_d221()
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "scaling_ladder_summary.json"
-RESULTS = REPO / "SCALING_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "SCALING_RESULTS.md"
 
 SOURCE_MINUTES = 15
 SYMBOLS = ("BTCUSDT", "ETHUSDT")
@@ -317,7 +317,7 @@ def render(p: dict) -> str:
     w("")
     w(f"**Produced:** {p['produced']} · **Reproduce:** "
       "`uv run python scripts/run_scaling_ladder.py` (offline, deterministic) ·")
-    w("Record: [`D222`](docs/decisions/D222-does-the-fine-bar-advantage-grow-with-the-window.md) ·")
+    w("Record: [`D222`](../decisions/D222-does-the-fine-bar-advantage-grow-with-the-window.md) ·")
     w("Artifact: `data/scaling_ladder_summary.json`")
     w("")
     w("Is the fine-bar residual **structure or noise**? A residual that is noise has no")

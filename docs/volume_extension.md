@@ -10,7 +10,7 @@ rather than the hand file — bar index t is calendar day t+1, and the first cut
 calendar days, which made one assertion pass vacuously.
 
 Originally written 2026-08-18, prompted by
-[`BREAKOUT_RESULTS.md`](../BREAKOUT_RESULTS.md)'s blocked volume-confirmation filter
+[`BREAKOUT_RESULTS.md`](results/BREAKOUT_RESULTS.md)'s blocked volume-confirmation filter
 ([D111](decisions/D111-volume-filter-blocked-on-bar-schema.md)). Unlike
 [`options_extension.md`](options_extension.md), which is a deferral, this is a **design for
 imminent work**: the change is small, the verification is not, and this document exists so

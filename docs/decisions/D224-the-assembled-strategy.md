@@ -160,7 +160,7 @@ unfiltered parent, and the ATR itself (a sensor is not a hypothesis).
 *Appended after the run. Nothing above this line was edited.*
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_assembled_strategy.py`
-(offline, deterministic, seed 0) · Page: [`ASSEMBLED_RESULTS.md`](../../ASSEMBLED_RESULTS.md)
+(offline, deterministic, seed 0) · Page: [`ASSEMBLED_RESULTS.md`](../results/ASSEMBLED_RESULTS.md)
 · Artifact: `data/assembled_strategy_summary.json`
 
 ### The one-sentence version

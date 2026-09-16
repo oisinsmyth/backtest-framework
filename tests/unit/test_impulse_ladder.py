@@ -22,7 +22,7 @@ from backtest_framework.research import macd as M
 REPO = Path(__file__).resolve().parents[2]
 SUMMARY = REPO / "data" / "impulse_macd_summary.json"
 D217_SUMMARY = REPO / "data" / "macd_ladder_summary.json"
-RESULTS = REPO / "MACD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "MACD_RESULTS.md"
 
 
 def _load(name: str, filename: str):

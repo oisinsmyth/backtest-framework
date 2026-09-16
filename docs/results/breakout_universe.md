@@ -8,7 +8,7 @@
 (fetched once by `scripts/fetch_crypto_universe.py`, the only step that touches the network)
 
 > **Thesis label (D38/D82/D117).** Same label as
-> [`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md): this is a **directional,
+> [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md): this is a **directional,
 > beta-loaded** strategy, long or flat on one high-beta instrument, never short. It is
 > **not** part of this project's market-neutral thesis and is not evidence about it. Its
 > honest benchmark is buy-and-hold, not the risk-free rate.

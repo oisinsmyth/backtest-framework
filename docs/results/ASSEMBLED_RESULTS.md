@@ -1,7 +1,7 @@
 # The assembled strategy — D224
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_assembled_strategy.py` (offline, deterministic, seed 0) ·
-Record: [`D224`](docs/decisions/D224-the-assembled-strategy.md) ·
+Record: [`D224`](../decisions/D224-the-assembled-strategy.md) ·
 Artifact: `data/assembled_strategy_summary.json`
 
 15m bars, Impulse acceleration `(136, 36)` (k=4, a 33-hour channel) · volume gate `EMA(200) > SMA(200)` on entry only · trailing ratchet at 2×ATR(56) · net of 10 bp per side.

@@ -337,5 +337,5 @@ def test_effective_sample_is_reported_beside_the_trade_count():
 
 
 def test_the_page_round_trips_byte_for_byte():
-    on_disk = (REPO / "WEDGE_INVERSE_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "WEDGE_INVERSE_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

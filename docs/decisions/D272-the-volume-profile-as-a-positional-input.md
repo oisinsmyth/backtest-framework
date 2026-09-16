@@ -30,7 +30,7 @@ is trading; `dist_to_HVN` says *what the current price is standing on*.
 `VolumeProfileSensor` was built and tested by the terrain programme:
 [D189](D189-the-s1-terrain-sensor-and-its-null.md) on daily crypto bars,
 [D194](D194-the-s1-sensor-re-tested-at-15m.md) on exchange-native 15-minute Binance volume.
-[`TERRAIN_RESULTS.md`](../../TERRAIN_RESULTS.md) closes it:
+[`TERRAIN_RESULTS.md`](../results/TERRAIN_RESULTS.md) closes it:
 
 > **Closed:** price-derived terrain as a source of directional or reversal signal on this data.
 > **S1 at any resolution (D194).**

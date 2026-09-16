@@ -166,7 +166,7 @@ cost override and the `PPY = 365` override — and nothing else.**
 ## VERDICT
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_book_crypto.py` · Page:
-[`BOOK_CRYPTO_RESULTS.md`](../../BOOK_CRYPTO_RESULTS.md)
+[`BOOK_CRYPTO_RESULTS.md`](../results/BOOK_CRYPTO_RESULTS.md)
 
 **35 coins × 1,899 live bars (5.2 years at PPY 365), 2020-10-15 → 2025-12-30, 10 bp/side.**
 

@@ -55,7 +55,7 @@ W = _load("d242_withheld", "run_uptrend_withheld.py")
 B, U, X, L, S, J = W.B, W.U, W.X, W.L, W.S, W.J
 
 SUMMARY = REPO / "data" / "book_extended_summary.json"
-RESULTS = REPO / "BOOK_EXTENDED_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BOOK_EXTENDED_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 
 SEED, PPY, N_SIMS = X.SEED, X.PPY, X.N_SIMS

@@ -187,7 +187,7 @@ test that needed new code would be a holdout test whose code had never been chec
 ## STAGE 2 — THE VERDICT
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_uptrend_withheld.py` · Page:
-[`UPTREND_WITHHELD_RESULTS.md`](../../UPTREND_WITHHELD_RESULTS.md)
+[`UPTREND_WITHHELD_RESULTS.md`](../results/UPTREND_WITHHELD_RESULTS.md)
 
 *The runner reproduced the mined numbers before touching the holdout — A0 +0.610, A2 +0.822,
 S1 +0.746 — so it is measuring the same rules.*

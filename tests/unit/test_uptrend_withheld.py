@@ -167,5 +167,5 @@ def test_the_declared_reading_matches_the_outcome():
 
 
 def test_the_page_round_trips_byte_for_byte():
-    on_disk = (REPO / "UPTREND_WITHHELD_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "UPTREND_WITHHELD_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

@@ -25,7 +25,7 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[2]
 SUMMARY = REPO / "data" / "sampling_invariance_summary.json"
-PAGE = REPO / "SAMPLING_RESULTS.md"
+PAGE = REPO / "docs" / "results" / "SAMPLING_RESULTS.md"
 
 
 def _load(name: str, filename: str):

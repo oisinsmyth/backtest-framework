@@ -221,5 +221,5 @@ def test_no_look_ahead_in_the_walk(loading_a_panel):
 
 
 def test_the_page_round_trips_byte_for_byte():
-    on_disk = (REPO / "UPTREND_ONSET_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "UPTREND_ONSET_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

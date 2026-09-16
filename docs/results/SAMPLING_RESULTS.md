@@ -1,7 +1,7 @@
 # Sampling invariance — D221
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_sampling_invariance.py` (offline, deterministic) ·
-Record: [`D221`](docs/decisions/D221-does-the-indicator-care-about-sampling-rate.md) ·
+Record: [`D221`](../decisions/D221-does-the-indicator-care-about-sampling-rate.md) ·
 Artifact: `data/sampling_invariance_summary.json`
 
 Two estimators covering the **same wall-clock window** on the same asset over the

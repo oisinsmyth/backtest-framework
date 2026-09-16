@@ -153,7 +153,7 @@ report, and the four gross Sharpes already screened for config D.
 *Appended after the run. Nothing above this line was edited.*
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_sampling_invariance.py`
-(offline, deterministic) · Page: [`SAMPLING_RESULTS.md`](../../SAMPLING_RESULTS.md) ·
+(offline, deterministic) · Page: [`SAMPLING_RESULTS.md`](../results/SAMPLING_RESULTS.md) ·
 Artifact: `data/sampling_invariance_summary.json`
 
 ### The one-sentence version

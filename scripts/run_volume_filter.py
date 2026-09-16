@@ -68,7 +68,7 @@ L = _load("run_macd_ladder", "run_macd_ladder.py")
 I = _load("run_impulse_macd", "run_impulse_macd.py")  # noqa: E741
 
 SUMMARY = REPO / "data" / "volume_filter_summary.json"
-RESULTS = REPO / "MACD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "MACD_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0
@@ -493,7 +493,7 @@ def render(p: dict) -> str:
     w("")
     w(f"**Produced:** {p['produced']} · **Reproduce:** `uv run python scripts/run_volume_filter.py`")
     w("(offline, deterministic, seed 0) · Decision record:")
-    w("[`D220`](docs/decisions/D220-the-volume-filter-on-impulse-macd.md) · Artifact:")
+    w("[`D220`](../decisions/D220-the-volume-filter-on-impulse-macd.md) · Artifact:")
     w("`data/volume_filter_summary.json`")
     w("")
     w("### The parent, and the space a filter has to work in")

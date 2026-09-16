@@ -54,7 +54,7 @@ B = _load("d241_combined", "run_combined_book.py")
 U, X, L, S, J = B.U, B.X, B.L, B.S, B.J
 
 SUMMARY = REPO / "data" / "uptrend_withheld_summary.json"
-RESULTS = REPO / "UPTREND_WITHHELD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "UPTREND_WITHHELD_RESULTS.md"
 FIX = REPO / "data" / "fixtures"
 
 SEED, PPY = X.SEED, X.PPY

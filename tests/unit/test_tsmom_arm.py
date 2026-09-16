@@ -183,5 +183,5 @@ def test_the_blend_weight_was_declared_not_optimised():
 
 def test_the_page_round_trips_byte_for_byte():
     """The idempotency defect appeared in D220, D222 and D229."""
-    on_disk = (REPO / "TSMOM_ARM_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "TSMOM_ARM_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

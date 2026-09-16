@@ -243,7 +243,7 @@ backward-compatible rather than asserted.
 window are untouched.*
 
 **Produced:** 2026-08-27 · `uv run python scripts/run_short_mirror.py` · Page:
-[`SHORT_MIRROR_RESULTS.md`](../../SHORT_MIRROR_RESULTS.md)
+[`SHORT_MIRROR_RESULTS.md`](../results/SHORT_MIRROR_RESULTS.md)
 
 ### The one-sentence version
 

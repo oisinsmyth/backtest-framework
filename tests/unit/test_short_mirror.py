@@ -253,5 +253,5 @@ def test_the_book_at_bar_t_is_decided_at_t_minus_one(loading_a_panel):
 def test_the_page_round_trips_byte_for_byte():
     """The idempotency defect appeared in D220, D222 and D229. CELL_ORDER exists
     so a `sort_keys` round trip cannot reorder the rows."""
-    on_disk = (REPO / "SHORT_MIRROR_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "SHORT_MIRROR_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

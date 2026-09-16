@@ -213,7 +213,7 @@ book**, applied globally after the per-arm budgets are computed.
 window are untouched.*
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_combined_book.py` · Page:
-[`COMBINED_BOOK_RESULTS.md`](../../COMBINED_BOOK_RESULTS.md)
+[`COMBINED_BOOK_RESULTS.md`](../results/COMBINED_BOOK_RESULTS.md)
 
 ### The one-sentence version
 

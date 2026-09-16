@@ -176,7 +176,7 @@ rescaling of numbers already counted).
 *Appended after the run. Nothing above this line was edited.*
 
 **Produced:** 2026-08-27 · **Reproduce:** `uv run python scripts/run_volume_filter.py`
-(offline, deterministic, seed 0) · Ledger: [`MACD_RESULTS.md`](../../MACD_RESULTS.md) ·
+(offline, deterministic, seed 0) · Ledger: [`MACD_RESULTS.md`](../results/MACD_RESULTS.md) ·
 Artifact: `data/volume_filter_summary.json`
 
 ### The one-sentence version

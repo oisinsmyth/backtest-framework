@@ -10,7 +10,7 @@
 `strategies/breakout.py` carries an explicit thesis label in its module docstring: it is a
 **directional, beta-loaded** strategy, **not** part of this project's market-neutral
 thesis, and its honest benchmark is buy-and-hold rather than the risk-free rate. The same
-label opens [`BREAKOUT_RESULTS.md`](../../BREAKOUT_RESULTS.md).
+label opens [`BREAKOUT_RESULTS.md`](../results/BREAKOUT_RESULTS.md).
 
 `tests/unit/test_strategy_labels.py` gains a grep test asserting each of those three
 claims is present, and its registered-module list is extended from `{zscore_pairs}` to

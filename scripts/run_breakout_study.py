@@ -29,7 +29,7 @@ REPO = Path(__file__).resolve().parent.parent
 FIXTURE = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
 EVENTS = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw_events.json"
 REGISTRY_PATH = REPO / "data" / "breakout_study_registry.sqlite"
-RESULTS = REPO / "BREAKOUT_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "BREAKOUT_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "breakout_study_summary.json"
 
 BASELINE = f"plateau_{bs.BASELINE_N_ENTRY}_{bs.BASELINE_N_EXIT}"

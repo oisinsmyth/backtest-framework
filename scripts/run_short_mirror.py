@@ -62,7 +62,7 @@ S = _load("d235_stops", "run_stops_targets.py")
 J = _load("d229_jerk", "run_jerk_rung.py")
 
 SUMMARY = REPO / "data" / "short_mirror_summary.json"
-RESULTS = REPO / "SHORT_MIRROR_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "SHORT_MIRROR_RESULTS.md"
 
 PPY = L.PPY
 SEED = 0

@@ -22,7 +22,7 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[2]
 SUMMARY = REPO / "data" / "scaling_ladder_summary.json"
-PAGE = REPO / "SCALING_RESULTS.md"
+PAGE = REPO / "docs" / "results" / "SCALING_RESULTS.md"
 D221_SUMMARY = REPO / "data" / "sampling_invariance_summary.json"
 
 

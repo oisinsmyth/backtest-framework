@@ -182,7 +182,7 @@ blend. Nothing else — D238's scorer was built to be the general one and this i
 window are untouched.*
 
 **Produced:** 2026-08-28 · `uv run python scripts/run_tsmom_arm.py` · Page:
-[`TSMOM_ARM_RESULTS.md`](../../TSMOM_ARM_RESULTS.md)
+[`TSMOM_ARM_RESULTS.md`](../results/TSMOM_ARM_RESULTS.md)
 
 ### The one-sentence version
 

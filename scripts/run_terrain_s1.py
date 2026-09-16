@@ -51,7 +51,7 @@ from backtest_framework.research.terrain_nulls import (
 
 REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "data" / "fixtures" / "crypto_daily_2015_2025_raw.csv.gz"
-RESULTS = REPO / "TERRAIN_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "TERRAIN_RESULTS.md"
 SUMMARY_JSON = REPO / "data" / "terrain_s1_summary.json"
 
 NL = "\n"

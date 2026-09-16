@@ -64,7 +64,7 @@ from backtest_framework.validation.dsr import expected_max_sharpe  # noqa: E402
 FIXTURE = REPO / "data" / "fixtures" / "universe_daily_2015_2024_raw.csv.gz"
 EVENTS = REPO / "data" / "fixtures" / "universe_daily_2015_2024_raw_events.json"
 SUMMARY = REPO / "data" / "macd_ladder_summary.json"
-RESULTS = REPO / "MACD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "MACD_RESULTS.md"
 
 PPY = 252.0
 SEED = 0
@@ -1181,7 +1181,7 @@ def _scaffold() -> str:
         "that feeds the deflated Sharpe.\n\n"
         "## Inherited disclosure\n\n"
         "This study opens a **fresh ledger**, on the argument written into\n"
-        "[`D217`](docs/decisions/D217-the-macd-crossover-ladder.md): a different fixture (ETF\n"
+        "[`D217`](../decisions/D217-the-macd-crossover-ladder.md): a different fixture (ETF\n"
         "daily, not crypto 15m), a different claim family (directional single-name momentum,\n"
         "not structure or terrain), and a sensor that did not exist in this repo. The\n"
         "structure and terrain programmes' combined 395-look bar and the prior ETF-fixture\n"

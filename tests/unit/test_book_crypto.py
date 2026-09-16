@@ -187,5 +187,5 @@ def test_zero_fresh_looks_were_spent():
 
 
 def test_the_page_round_trips_byte_for_byte():
-    on_disk = (REPO / "BOOK_CRYPTO_RESULTS.md").read_text(encoding="utf-8")
+    on_disk = (REPO / "docs" / "results" / "BOOK_CRYPTO_RESULTS.md").read_text(encoding="utf-8")
     assert R.render(SUMMARY) == on_disk

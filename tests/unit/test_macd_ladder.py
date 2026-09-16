@@ -35,7 +35,7 @@ from backtest_framework.simulator.fills import Bar
 
 REPO = Path(__file__).resolve().parents[2]
 SUMMARY = REPO / "data" / "macd_ladder_summary.json"
-RESULTS = REPO / "MACD_RESULTS.md"
+RESULTS = REPO / "docs" / "results" / "MACD_RESULTS.md"
 
 
 def _load_runner():
