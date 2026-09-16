@@ -83,7 +83,12 @@ def counts() -> dict[str, int]:
     return {
         "decision_files": len(decisions),
         "decision_numbers": len(numbers),
-        "scripts": len(tracked("scripts/*.py")),
+        # `scripts/figures/` is excluded and counted separately. The caption on this row says
+        # "one-shot by design", which is true of the dNNN_* runners and false of a figure builder
+        # that CI re-runs on every push -- and a generated count whose caption is wrong is worse
+        # than a typed one, because it looks checked.
+        "scripts": len([p for p in tracked("scripts/*.py") if "/figures/" not in p]),
+        "figure_builders": len(tracked("scripts/figures/*.py")),
         "library_modules": len(library),
         "research_modules": len(research),
         "results_documents": len(results),
@@ -112,6 +117,8 @@ def render() -> str:
             " five of them featured |",
             f"| **{c['test_files']} test files** | golden · property · integration · unit |",
             f"| **{c['scripts']} research runners** | in `scripts/`, one-shot by design |",
+            f"| **{c['figure_builders']} figure builders** | in `scripts/figures/`, regenerated "
+            "and checked in CI |",
             "",
             "<sub>Generated from the git index by `scripts/build_readme_counts.py`; "
             "`tests/unit/test_readme_counts_are_current.py` fails if this block drifts.</sub>",
