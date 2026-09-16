@@ -28,7 +28,10 @@ worktree with six uncommitted deletions in it and not what a clone receives. The
 
 WHAT CANNOT BE GENERATED, AND IS THEREFORE NOT CLAIMED
 -----------------------------------------------------
-**Status and Category.** 276 records carry neither (index, 2026-09-16); `**Category:**` appears on 209, all of them the
+**Status and Category.** Most records carry neither — the count is computed by
+`without_status_or_category()` and rendered into the preamble rather than typed, because it was
+typed as 274 here, corrected by hand to 275 in `b0292cc`, and is 276. `**Category:**` appears on
+209, all of them the
 old design-decision format. Study records carry their state in the filename token (`PRE-REG`,
 `RESULT`, `CLOSE`, `ADDENDUM`) and that token is the only honest source, so the register reports
 the tokens present and nothing else. A synthesised Status column would look like data.
@@ -38,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -66,13 +70,26 @@ def number_of(path: Path) -> int:
     return int(re.match(r"D(\d+)", path.name).group(1))
 
 
+def contents_of(path: Path) -> str:
+    """The record as the INDEX holds it, not as the worktree does.
+
+    See `by_number` for why. A file staged for deletion is still in the index and still has
+    contents there; reading it off disk would raise FileNotFoundError mid-generation.
+    """
+    rel = path.relative_to(REPO).as_posix()
+    out = subprocess.run(["git", "show", f":{rel}"], cwd=REPO, capture_output=True)
+    if out.returncode == 0:
+        return out.stdout.decode("utf-8", "replace")
+    return path.read_text(encoding="utf-8", errors="replace")  # untracked: the worktree is all
+
+
 def title_of(path: Path) -> str:
     """The H1's title, falling back to the filename slug.
 
     The fallback is not cosmetic: `D483-CLOSE-the-daily-channel-line-D399-to-D483.md` has no
     number in its H1 at all, and a handful of records put a parenthetical after the token.
     """
-    first = path.read_text(encoding="utf-8", errors="replace").split("\n", 1)[0]
+    first = contents_of(path).split("\n", 1)[0]
     m = H1.match(first)
     if m:
         title = m.group("title")
@@ -89,11 +106,44 @@ def tokens_of(name: str) -> list[str]:
 
 
 def by_number() -> dict[int, list[Path]]:
+    """Every tracked record, grouped by number, read from `git ls-files` and not from the disk.
+
+    THE GLOB HERE USED TO BE `DECISIONS.glob("D*.md")`, and that was a live hazard rather than a
+    style point. A record staged-but-not-yet-deleted, or deleted in the worktree with the deletion
+    not yet committed, is absent from the glob and present in the index — so regenerating while
+    two such records sat in the tree would have silently dropped their rows from a committed
+    index, which is the opposite of what a generated completeness artifact is for. It is also the
+    same error this file's docstring had (741 for 743) and the one `e3ba885` removed from the
+    README: measuring the author's worktree and publishing it as what a clone receives.
+    """
+    out = subprocess.run(
+        ["git", "ls-files", "docs/decisions/D*.md"], cwd=REPO, capture_output=True, text=True
+    )
+    names = [Path(p).name for p in out.stdout.split("\n") if p] if out.returncode == 0 else []
+    if not names:  # pragma: no cover - a tarball with no git; the worktree is then all there is
+        names = [p.name for p in DECISIONS.glob("D*.md")]
     grouped: dict[int, list[Path]] = defaultdict(list)
-    for path in sorted(DECISIONS.glob("D*.md")):
-        if re.match(r"D\d+", path.name):
-            grouped[number_of(path)].append(path)
+    # Case-insensitively, because the previous implementation sorted `Path` objects and
+    # `PureWindowsPath` compares casefolded -- so `D291-confluence` sorts before `D291-RESULT`.
+    # Plain string order would reverse every such pair and produce a diff that is pure churn.
+    for name in sorted(set(names), key=str.lower):
+        if re.match(r"D\d+", name):
+            grouped[number_of(DECISIONS / name)].append(DECISIONS / name)
     return dict(sorted(grouped.items()))
+
+
+def without_status_or_category() -> int:
+    """How many records carry neither field — computed, because it was typed and wrong twice.
+
+    It read 274 here and in the preamble this renders; `b0292cc` corrected the index by hand to
+    275; the index says 276. A number stated in a generated block has no excuse to be typed.
+    """
+    return sum(
+        1
+        for paths in by_number().values()
+        for p in paths
+        if not any(f"**{f}:**" in contents_of(p) for f in ("Category", "Status"))
+    )
 
 
 def curated_numbers() -> set[int]:
@@ -136,7 +186,7 @@ def render(first: int) -> str:
         "",
         f"Mostly D{first} onward, plus the numbers below it the curated table never picked up.",
         "",
-        "**No Status or Category column, deliberately.** 274 of these records carry neither field —",
+        f"**No Status or Category column, deliberately.** {without_status_or_category()} of these records carry neither field —",
         "study records state their position in the filename token instead — and a synthesised column",
         "would look like data. The tokens are what is shown.",
         "",

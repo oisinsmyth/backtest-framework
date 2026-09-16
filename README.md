@@ -8,7 +8,7 @@ works. A measuring instrument earns trust by returning negatives when negatives 
 
 | | |
 |---|---|
-| **1,839 tests** | hand-computed golden masters · integration · property · unit |
+| **1,843 tests** | hand-computed golden masters · integration · property · unit |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
 | **MIT licensed** | [`LICENSE`](LICENSE) |
@@ -44,12 +44,15 @@ uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s
 ```
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
-full suite is `uv run pytest -q`, about 6m30s here. **On a clone it is 1,703 passed and 136 skipped in
-2m47s** — measured by hiding the panels and running it, not asserted; each of the 136 names the
-file it wanted. The panels left git in
-[D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB;
-[`data/data_manifest.json`](data/data_manifest.json) carries the sha256 and git blob id of every
-one, so a skipped test names data that is still recoverable.
+full suite is `uv run pytest -q`, 6m16s to 7m26s here depending on what else is running.
+**On a clone it is 1,707 passed and 136 skipped in 2m56s** — measured on 2026-09-16 by cloning this repository into an empty directory and running
+it, not by reasoning about one from inside the working copy. That distinction earned its keep the
+first time: the clone failed three tests the working copy could not, on a line-ending convention
+the working copy predates. Each of the 136 skips names the file it wanted. The panels left git in
+[D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what
+a **checkout** no longer carries; they remain in the history, so a `git clone` is about 1.1 GB, of
+which 967 MB is `.git`. [`data/data_manifest.json`](data/data_manifest.json) carries the sha256
+and git blob id of every one, so a skipped test names data that is still recoverable.
 
 **Three ways in.** What the framework *guarantees* is in [`tests/`](tests/), four tiers that do
 different jobs: `golden/` anchors fills and costs to ledgers worked out by hand, `property/`
@@ -135,8 +138,8 @@ cannot rot.
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — what the framework *is*: the per-bar loop, the five seams with their signatures, the two-book model, and which guards are structural versus merely recorded
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to change the framework: gate before code, which test tier, adding a brick, recording the decision
 - [`PHILOSOPHY.md`](PHILOSOPHY.md) — the guiding design philosophy; changes rarely and deliberately
-- [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, 741 of them, D1 → D537. The index is a curated table for D1–D284 and a generated register below it.
-- [`docs/results/`](docs/results/README.md) — 48 studies, indexed, with five featured for what each proves about the instrument
+- [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1 → D537; the file and number counts are in the generated block at the top of this page. The index is a curated table for D1–D284 and a generated register below it, and a test fails if any record is in neither half.
+- [`docs/results/`](docs/results/README.md) — every study, indexed, with five featured for what each proves about the instrument; the count is in the block at the top, and a test fails if a document in that directory is listed nowhere
 - [`docs/RULES.md`](docs/RULES.md) — standing scope/sequencing rules (R1–R16), apply continuously rather than once
 - [`CHANGELOG.md`](CHANGELOG.md) — what shipped and when, Keep a Changelog format. Rationale lives in the decision records, not here.
 - [`AITODO.md`](docs/internal/AITODO.md) — Claude's current working task list for this project. Not a roadmap; reflects the next few steps only.

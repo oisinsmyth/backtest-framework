@@ -132,7 +132,7 @@ append-only.
 ```bash
 uv sync
 uv run pytest -q tests/golden     # 91 ledger-anchored tests, 0.58s, no data needed
-uv run pytest -q                  # everything, ~6m30s
+uv run pytest -q                  # everything, 6-7.5 min here; 2m56s on a clone
 uv run ruff check src tests       # E4/E7/E9/F — errors, not style
 uv run mypy                       # the library only; tests are out of scope by config
 ```

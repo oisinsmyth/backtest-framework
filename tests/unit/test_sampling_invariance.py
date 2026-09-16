@@ -180,10 +180,17 @@ def test_the_unusable_native_fixture_is_recorded(page):
     assert "50.4%" in page and "zero-volume" in page
 
 
-def test_report_only_reproduces_the_page_byte_for_byte(payload):
-    before = PAGE.read_bytes()
-    try:
-        PAGE.write_text(S.render(payload), encoding="utf-8")
-        assert PAGE.read_bytes() == before
-    finally:
-        PAGE.write_bytes(before)
+def test_report_only_reproduces_the_page_exactly(payload):
+    """`--report-only` re-renders the committed page, character for character.
+
+    NOT byte for byte, and the difference is the point. `.gitattributes` (09855a0) pins tracked
+    text to LF, so a clone checks this page out with LF while the author's worktree — which
+    predates that file — still holds CRLF. `read_text` normalises both to `\\n`, which is what
+    `render` emits, so the assertion tests the RENDERER and not the checkout. Measured on a real
+    clone on 2026-09-16: the previous byte comparison, which wrote the page out and restored it,
+    failed here on all three of these pages for that reason alone.
+
+    Reading instead of writing also means an interrupted run can no longer leave a tracked
+    document rewritten on disk.
+    """
+    assert S.render(payload) == PAGE.read_text(encoding="utf-8")
