@@ -17,13 +17,18 @@ record said. Different jobs, different tables, said out loud in the preamble.
 
 ONE ROW PER NUMBER, NOT PER FILE
 --------------------------------
-741 files share 500 numbers. 187 numbers have two or more files — a PRE-REG and a RESULT, usually
-— and **D528 alone has 18** (a RESULT plus sixteen addenda). Per-file would be a 741-row table in
-which one study occupies eighteen lines.
+Most numbers are one file; a good many are not. Per-file would be a table in which a single study
+occupies eighteen lines — D528 has a RESULT plus sixteen addenda. Measured from the git index on
+2026-09-16: 743 files, 500 numbers, 187 of them with two or more files. The counts are dated
+because they are not generated: this docstring said **741** until 2026-09-16, which was the
+worktree with six uncommitted deletions in it and not what a clone receives. The live numbers are
+
+    git ls-files 'docs/decisions/D*.md' | wc -l
+    git ls-files 'docs/decisions/D*.md' | xargs -n1 basename | grep -oE '^D[0-9]+' | sort -u | wc -l
 
 WHAT CANNOT BE GENERATED, AND IS THEREFORE NOT CLAIMED
 -----------------------------------------------------
-**Status and Category.** 274 records carry neither; `**Category:**` appears on 209, all of them the
+**Status and Category.** 276 records carry neither (index, 2026-09-16); `**Category:**` appears on 209, all of them the
 old design-decision format. Study records carry their state in the filename token (`PRE-REG`,
 `RESULT`, `CLOSE`, `ADDENDUM`) and that token is the only honest source, so the register reports
 the tokens present and nothing else. A synthesised Status column would look like data.
