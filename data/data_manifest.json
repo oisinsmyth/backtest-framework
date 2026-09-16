@@ -1,6 +1,6 @@
 {
-  "built_at": "2026-09-15T21:10:24Z",
-  "note": "Bulk panels dropped from the index on 2026-09-15 and recoverable from history: `git cat-file blob <git_blob> > <path>`. History is not rewritten.",
+  "built_at": "2026-09-16T21:08:01Z",
+  "note": "Every bulk panel under data/, listed by suffix and regardless of whether git tracks it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) and are simply present in a clone. --verify re-hashes what is on disk either way.",
   "suffixes": [
     ".csv.gz",
     ".parquet",

@@ -104,6 +104,20 @@ data/d382_scores.npz
 /data/**/*.npz
 /data/**/*.zip
 
+# D538: two exceptions, because the suffix above was a proxy for SIZE and it misfired on its
+# smallest members. These two panels are 0.2 MB and 6.7 MB -- 6.9 MB together, under 5% of the
+# 147.7 MB index -- and between them they are what 73 of a fresh clone's 136 skips are waiting
+# for (47 and 26). A 0.2 MB file is not a bulk panel by any reading of that word, and the cost
+# D536 accepted ("a fresh clone no longer runs the whole suite") is bought back here for less
+# than the largest single tracked JSON. The exception lives beside the rule on purpose: `git
+# add -f` would put the same decision somewhere no reader of this file can see it.
+# They STAY in data/data_manifest.json -- `--verify` hashes what is on disk and never consults
+# git, so a tracked panel gets a stronger check than an absent one, not a weaker one.
+# The suffix rules are written as path-suffix patterns rather than directory excludes, so these
+# negations are effective; a `!` cannot re-include a file under an excluded DIRECTORY.
+!/data/fixtures/crypto_daily_2015_2025_raw.csv.gz
+!/data/fixtures/crypto_universe_2015_2025_raw.csv.gz
+
 # The portfolio repack plan: working scaffolding for the repack above, not part of
 # the record it plans. Anything it decides lands in docs/decisions/ under its own
 # number, in writing, like every other decision here.

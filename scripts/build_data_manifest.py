@@ -127,9 +127,24 @@ def scan(previous: dict) -> dict:
 
     return {
         "built_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        # The note is read by a human opening the manifest, so it has to be true of EVERY entry
+        # below it, not of most of them. Until 2026-09-16 it said flatly that these panels were
+        # "dropped from the index", which D538 made false for two of the 118: the two smallest
+        # crypto panels (0.2 MB and 6.7 MB) are tracked again by an explicit `.gitignore`
+        # negation, because between them they unblock 73 of a clone's skips for under 5% of the
+        # index. They stay listed here deliberately -- `scan()` selects by SUFFIX and has no
+        # tracked/untracked filter, `cmd_verify()` below hashes the disk and never consults git,
+        # and `git_blobs()` records the LIVE blob id for a tracked file rather than a stale
+        # historical one. So a tracked panel gets a stronger check here, not a redundant one.
+        # (tests/conftest.py builds its panel-skip allowlist from these basenames; a tracked
+        # panel in that set is inert while the file is present, and is the right behaviour if it
+        # ever is not.)
         "note": (
-            "Bulk panels dropped from the index on 2026-09-15 and recoverable from history: "
-            "`git cat-file blob <git_blob> > <path>`. History is not rewritten."
+            "Every bulk panel under data/, listed by suffix and regardless of whether git tracks "
+            "it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from "
+            "history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few "
+            "small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) "
+            "and are simply present in a clone. --verify re-hashes what is on disk either way."
         ),
         "suffixes": list(BULK_SUFFIXES),
         "total_bytes": sum(f["bytes"] for f in files),

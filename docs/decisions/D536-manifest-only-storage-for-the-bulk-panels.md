@@ -1,11 +1,38 @@
 # D536 — The bulk panels leave the index; the committed artifact is a manifest carrying sha256 **and the git blob id**
 
-**Status:** Committed
+**Status:** Committed · **AMENDED 2026-09-16 by
+[D538](D538-two-small-panels-return-to-the-index.md)**
 **Date:** 2026-09-15
 **Category:** Data layer
 **Source:** Portfolio repack session. Extends [D191](D191-manifest-only-storage-for-large-archives.md);
 amends the *implementation* of [D24](D24-immutable-data-snapshots-fetch-once-freeze.md) and
 [D70](D70-committed-csv-fixture-as-frozen-snapshot.md), not their requirement.
+
+> **Amendment, 2026-09-16 (D538).** The sentence below — *"Every bulk panel under `data/` —
+> `*.csv.gz`, `*.parquet`, `*.npz`, `*.zip` — is **gitignored and dropped from the index**"* — **is
+> narrowed: it is now true of 116 of the 118, not of all of them.** Two are tracked again by an
+> explicit `!` negation inside this record's own `.gitignore` block:
+> `data/fixtures/crypto_daily_2015_2025_raw.csv.gz` (0.2 MB) and
+> `data/fixtures/crypto_universe_2015_2025_raw.csv.gz` (6.7 MB). 6.9 MB, under 5% of the index,
+> and between them they unblock 73 of a fresh clone's 136 skips. The reasoning is that this
+> record's rule is **by suffix while every number it argues from is a size**, so the suffix was a
+> proxy that misfired at the bottom of the distribution; D538 has the full argument, including why
+> the three large panels (`us_shorts_daily_raw`, `etf_intraday_15m_raw`, `index_extended_15m_raw`)
+> are deliberately left untracked and must not be re-proposed as slices.
+>
+> **Everything else here stands**, including the manifest as the committed artifact, the
+> `git_blob` field as its load-bearing half, history not being rewritten, and the rule's
+> application to the other 116. Both re-tracked panels **stay listed in
+> `data/data_manifest.json`**: `--verify` hashes the disk and never consults git, so a tracked
+> panel gets a stronger check than an absent one, not a redundant one. The builder's `note` field,
+> which asserted the "dropped from the index" claim of every entry, was corrected accordingly.
+>
+> **Two test counts below are also stale** — *"~64 of their tests ERROR rather than skip"* at `:68`
+> and *"a clone runs 1,768 of 1,832 tests"* at `:72`. Both predate the guard work that was named
+> there as the immediate follow-up. The measured figure today is **1,909 passed and 136 skipped**;
+> the post-D538 figure is being re-measured on a fresh clone and is deliberately not stated here.
+>
+> The original text is left unedited below, per the amend-in-writing convention.
 
 ## Decision
 
