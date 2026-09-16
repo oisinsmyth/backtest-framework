@@ -5,10 +5,14 @@
 
 WHY THIS EXISTS
 ---------------
-`docs/internal/` (D538) moved three documents down one directory level, which broke links in two
-directions at once: ~11 inbound links pointing at the old root paths, and 78 outbound links inside
-the moved files that were written relative to the root. Both classes are invisible until someone
-clicks, and a portfolio repository is exactly the place where someone clicks.
+Commit `77d8bab` moved AITODO.md, AUDIT_REPORT.md and PICKUP.md into `docs/internal/`, one
+directory level down, which broke links in two directions at once: ~11 inbound links pointing at
+the old root paths, and 78 outbound links inside the moved files that were written relative to the
+root. Both classes are invisible until someone clicks, and a portfolio repository is exactly the
+place where someone clicks. (The move has no decision record. This line used to cite one -- `D538`,
+a number that had never been taken by anything -- and nothing in the repository could tell, because
+a dead `D<n>` in prose reads exactly like a live one. That is the hole
+`tests/unit/test_cited_decisions_exist.py` now gates.)
 
 The repo has no link checker. This is it, and it is deliberately small: no network and no anchor
 resolution. It answers one question -- does the file on the other end of this link exist --
