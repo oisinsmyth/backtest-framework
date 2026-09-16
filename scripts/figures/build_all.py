@@ -36,6 +36,8 @@ BUILDERS = (
     "build_lookahead",
     "build_two_nulls",
     "build_cross_engine",
+    "build_cost_waterfall",
+    "build_ledger_diff",
 )
 
 
