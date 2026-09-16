@@ -1,6 +1,6 @@
 # Results
 
-Every study this framework has been used for, 48 documents. **The framework is the artifact; these
+Every study this framework has been used for, 62 documents. **The framework is the artifact; these
 are what it was pointed at.** Most of them are negatives, and that is the point — an instrument
 earns trust by returning negatives when negatives are true.
 
@@ -23,7 +23,7 @@ market. The market findings are mostly "no".
 | [`MACD_RESULTS.md`](MACD_RESULTS.md) | **Pre-registration and the trial registry, including the stop firing.** The best cell clears six of seven hurdles and fails only the deflated-Sharpe floor — publishable as a first study, not as the 45,783rd look. 0 of 12 cells cleared, so Stage 2 never ran | The signal line adds something; the level rung is dead |
 | [`STRUCTURE_RESULTS.md`](STRUCTURE_RESULTS.md) | **A measurement that collapses a story.** Five components mechanised so each could be scored separately — three that cleared the promotion bar turned out to be one quantity under three names | Nothing predicts once leg size relative to ATR is held constant |
 
-All 48 now live here. The last 14 — the ones whose paths were pinned by tests — arrived with their
+All 62 now live here. The last 14 — the ones whose paths were pinned by tests — arrived with their
 17 writer scripts and 14 test path expressions repointed in the same commit.
 
 The best single document in the project is not a study at all — it is
@@ -39,7 +39,7 @@ and the seven defects the guards caught.
   study rewrites the document, which is why the numbers in them cannot drift from the artifacts.
 
 Both live here. The names are not being unified: the ALL_CAPS name is the identity these documents
-are cited by, in prose, across hundreds of references in the decision records.
+are cited by, in prose, across 102 references in 62 decision records.
 
 ---
 
@@ -106,6 +106,28 @@ are cited by, in prose, across hundreds of references in the decision records.
 | [`OVERNIGHT_DECOMPOSITION_RESULTS.md`](OVERNIGHT_DECOMPOSITION_RESULTS.md) | D259 — where the overnight drift accrues |
 | [`VOL_TARGETED_HOLD_RESULTS.md`](VOL_TARGETED_HOLD_RESULTS.md) | D260 — the vol-targeted overnight hold, time holdout |
 | [`INDEX_SPREAD_RESULTS.md`](INDEX_SPREAD_RESULTS.md) | D261 — the index spread as a prop-track candidate |
+
+### The book's arms and the ladders — the test-pinned ledgers
+
+These fourteen are the documents whose paths the test suite pins, which is why they lived at the
+repository root a round longer than the rest.
+
+| | |
+|---|---|
+| [`MACD_RESULTS.md`](MACD_RESULTS.md) | D217 — the crossover ladder, and the deflated-Sharpe floor that killed it |
+| [`BREAKOUT_RESULTS.md`](BREAKOUT_RESULTS.md) | does trend following on BTC/ETH survive exchange fees? |
+| [`TERRAIN_RESULTS.md`](TERRAIN_RESULTS.md) | the terrain programme's ledger |
+| [`SAMPLING_RESULTS.md`](SAMPLING_RESULTS.md) | D221 — does the indicator care about sampling rate? |
+| [`SCALING_RESULTS.md`](SCALING_RESULTS.md) | D222 — does the fine-bar advantage grow with the window? |
+| [`ASSEMBLED_RESULTS.md`](ASSEMBLED_RESULTS.md) | D224 — the assembled strategy |
+| [`SHORT_MIRROR_RESULTS.md`](SHORT_MIRROR_RESULTS.md) | D238 — the short-side mirror of the recovery rule |
+| [`TSMOM_ARM_RESULTS.md`](TSMOM_ARM_RESULTS.md) | D239 — time-series momentum as arm two |
+| [`UPTREND_ONSET_RESULTS.md`](UPTREND_ONSET_RESULTS.md) | D240 — the uptrend-onset arm, with stops and targets |
+| [`COMBINED_BOOK_RESULTS.md`](COMBINED_BOOK_RESULTS.md) | D241 — the combined book, and first-come-first-served capital |
+| [`UPTREND_WITHHELD_RESULTS.md`](UPTREND_WITHHELD_RESULTS.md) | D242 — the uptrend arm and the combined book on withheld data |
+| [`BOOK_EXTENDED_RESULTS.md`](BOOK_EXTENDED_RESULTS.md) | D243 — the book on extended history |
+| [`BOOK_CRYPTO_RESULTS.md`](BOOK_CRYPTO_RESULTS.md) | D244 — the book on crypto |
+| [`WEDGE_INVERSE_RESULTS.md`](WEDGE_INVERSE_RESULTS.md) | D249 — the inverse wedge breakout |
 
 ### Price action, and the data underneath
 
