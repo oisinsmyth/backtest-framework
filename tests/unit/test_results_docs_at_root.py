@@ -44,7 +44,10 @@ PINNED_AT_ROOT = {
 
 
 def test_no_unexpected_results_document_at_the_repository_root():
-    found = {p.name for p in REPO.glob("*_RESULTS.md")}
+    # `*_RESULTS*.md` rather than `*_RESULTS.md`: the smoke variant is called
+    # ETF_INTRADAY_RESULTS.smoke.md, it is gitignored so it never shows in a diff, and the
+    # narrower glob missed it. A guard that only catches the tracked case catches the easy case.
+    found = {p.name for p in REPO.glob("*_RESULTS*.md")}
 
     strays = sorted(found - PINNED_AT_ROOT)
     assert not strays, (

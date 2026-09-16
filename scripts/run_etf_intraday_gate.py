@@ -167,7 +167,7 @@ RESULTS = REPO / "docs" / "results" / "ETF_INTRADAY_RESULTS.md"
 # own artifact and its own page. Same code path, different filenames — a `--smoke`
 # result that silently overwrote the real one would be the worst possible bug here.
 SMOKE_SUMMARY = REPO / "data" / "etf_intraday_gate_summary.smoke.json"
-SMOKE_RESULTS = REPO / "ETF_INTRADAY_RESULTS.smoke.md"
+SMOKE_RESULTS = REPO / "docs" / "results" / "ETF_INTRADAY_RESULTS.smoke.md"
 
 # ---- The calendar. Established by prior investigation; violating it is silent. ----
 BAR_MINUTES = 15
