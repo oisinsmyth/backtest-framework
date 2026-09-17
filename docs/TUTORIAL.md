@@ -19,7 +19,7 @@ the same doc-rot discipline as everything else here (D91).
 git clone <this repo> && cd "Backtest Framework"
 uv sync                 # installs everything incl. dev deps (pytest, vectorbt, quantstats)
 uv run pytest -q tests/golden   # 101 ledger-anchored tests, no market data, ~0.6s
-uv run pytest                   # the whole suite, ~4m here; 49 tests skip (2026-09-16)
+uv run pytest                   # the whole suite, ~4m here; 53 tests skip (2026-09-17)
                                 # without the bulk panels, each naming the file it wanted
 ```
 

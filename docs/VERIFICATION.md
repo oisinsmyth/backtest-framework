@@ -157,11 +157,18 @@ is 1–2.
 tests pin. `scripts/` is 592 one-shot runners, tested only where a study's headline numbers are
 pinned to its artifact.
 
-**On a clone, 49 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
-[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,013 passed,
-49 skipped**. This page said 50 for a day, and the extra one was `test_public_cut.py`'s own test
-skipping itself in a clean tree — a test that could not fail, which is why it was rewritten into one
-that can. The split is deliberately not gated: it is a function of what a checkout happens to
+**On a clone, 53 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
+[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,016 passed,
+53 skipped**.
+
+That figure moved twice in one day and both moves are worth knowing, because they are what a skip
+count is *for*. It read 50 while `test_public_cut.py` contained a test that skipped itself in a
+clean tree — a test that could not fail, so it was rewritten into one that can, and the count fell
+to 49. Then a clone run found **seven failures**, four of them because `--build` cannot author a
+commit in a repository with no `user.name` (it is set per-repository here, and `git clone` does not
+copy local config). Those four are now honest skips rather than reds, and the count rose to 53.
+**A skip count that rises because failures became skips is the suite getting more truthful, not
+less.** The split is deliberately not gated: it is a function of what a checkout happens to
 carry rather than of the commit, so it stays a dated measurement. Each skip names the file it
 wanted and
 [`data/data_manifest.json`](../data/data_manifest.json) carries its sha256 and git blob id. **A
