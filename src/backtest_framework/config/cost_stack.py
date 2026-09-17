@@ -77,6 +77,65 @@ def _optional_numeric(config: dict, key: str, default: float, kind: str) -> floa
     return float(value)
 
 
+#: Every key each brick type reads, `type` included. The slot level has rejected unknown
+#: keys since D102 and the brick level did not, so `{"type": "sqrt_impact", "coeficient": 3.0}`
+#: built a brick at the DEFAULT coefficient and raised nothing -- after which the TrialRegistry
+#: stored the dict verbatim, and the logged config said 3.0 while the object that produced the
+#: numbers used 1.0. That is precisely the drift this module's docstring says it exists to
+#: close: "the dict a study LOGS is the dict its stack is BUILT from".
+#:
+#: Only OPTIONAL parameters were ever exposed -- a typo on a required key already raised
+#: through `_required_numeric` -- which is why this was invisible: the silent surface is
+#: exactly `ibkr_commission`'s three, `sqrt_impact`'s three and `dividend_flow`'s one.
+#:
+#: MAINTENANCE, and it matters more than it looks. A key missing from a row here turns a
+#: working config into a raise, and four of these keys are exercised by nothing anywhere in
+#: the repository -- `flat_commission` and `flat_rate_carry` appear in no source literal and
+#: in none of the 176,592 configs stored across the trial registries, and `ibkr_commission`
+#: is stored 4,393 times always as the bare `{"type": "ibkr_commission"}`. No test and no
+#: replay would catch a typo in those rows. Add a key here in the same commit that adds it
+#: to the factory.
+BRICK_KEYS: dict[str, frozenset[str]] = {
+    "flat_commission": frozenset({"type", "amount"}),
+    "percent_spread": frozenset({"type", "bps"}),
+    "ibkr_commission": frozenset({"type", "per_share", "min_per_order", "max_pct_of_trade_value"}),
+    "borrow_fee": frozenset({"type", "annual_rate"}),
+    "margin_interest": frozenset({"type", "annual_rate"}),
+    "flat_rate_carry": frozenset({"type", "annual_rate"}),
+    # `volume_units` is OPTIONAL and must stay so: 2,170 trials stored before D187 carry
+    # `sqrt_impact` without it, and rejecting them would retroactively invalidate a
+    # published pool.
+    "sqrt_impact": frozenset({"type", "coefficient", "calibration", "volume_units"}),
+    "dividend_flow": frozenset({"type", "source"}),
+}
+
+
+def _validate_brick_keys(brick: Any, slot: str) -> None:
+    """Reject a key no factory reads, naming it and listing what the type accepts.
+
+    Deliberately here rather than on `FactoryRegistry`, which is shared with the
+    `carry_model` and `fill_model` registries -- `act365` takes an optional `day_count`
+    that has nothing to do with cost bricks, and a generic check would have to learn about
+    it. The cost-brick dialect validates its own dialect.
+    """
+    if not isinstance(brick, dict):
+        raise ConfigError(f"cost_stack slot {slot!r} contains a {type(brick).__name__}, not a dict")
+    type_name = brick.get("type")
+    # A missing or unknown `type` is FactoryRegistry.build's error to raise, with its own
+    # message listing the known types. Saying nothing here leaves that message intact.
+    if not isinstance(type_name, str) or type_name not in BRICK_KEYS:
+        return
+    unknown = sorted(k for k in brick if k not in BRICK_KEYS[type_name])
+    if unknown:
+        allowed = ", ".join(sorted(BRICK_KEYS[type_name] - {"type"})) or "(no parameters)"
+        raise ConfigError(
+            f"cost_stack slot {slot!r}: {type_name} brick has unknown key(s): "
+            f"{', '.join(unknown)} — {type_name} accepts: {allowed}. An unrecognised key is "
+            "silently ignored by the factory, so the logged config and the object built from "
+            "it would disagree."
+        )
+
+
 def _brick_registry(context: StackDataContext) -> FactoryRegistry:
     """One type-keyed registry (D52's mechanism, not a new dialect) whose
     data-dependent factories close over the snapshot context."""
@@ -161,6 +220,8 @@ def validate_stack_config(config: dict[str, Any]) -> None:
     for slot in STACK_SLOTS:
         if not isinstance(config[slot], (list, tuple)):
             raise ConfigError(f"cost_stack slot {slot!r} must be a list of brick configs")
+        for brick in config[slot]:
+            _validate_brick_keys(brick, slot)
 
 
 def build_cost_stack(config: dict[str, Any], context: StackDataContext) -> CostStack:
