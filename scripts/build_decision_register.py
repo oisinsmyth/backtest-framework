@@ -193,7 +193,22 @@ def render(first: int) -> str:
         "| # | Title | Records |",
         "|---|-------|---------|",
     ]
-    return "\n".join(head + rows(first) + ["", END, ""])
+    # No trailing "" after END. The splice in `main` is `before + block + after`, and `after`
+    # already begins with whatever followed END in the file -- so a newline emitted here is a
+    # newline ADDED on every run, and `--write` grows the file it is meant to regenerate. That is
+    # the same defect `splice()` in `scripts/build_readme_counts.py` carried until 26013a2, where
+    # it put eleven blank lines under the README's counts table before anyone noticed. One
+    # generator was fixed; this one was not checked. Idempotence is asserted in `main`.
+    return "\n".join(head + rows(first) + ["", END])
+
+
+def splice(text: str, block: str) -> str:
+    """Replace the marked region with `block`, or append it if the markers are absent."""
+    if START in text and END in text:
+        before, rest = text.split(START, 1)
+        _, after = rest.split(END, 1)
+        return before + block + after
+    return text.rstrip() + "\n\n" + block
 
 
 def main() -> int:
@@ -209,13 +224,17 @@ def main() -> int:
         return 0
     if args.write:
         text = INDEX.read_text(encoding="utf-8")
-        if START in text and END in text:
-            before, rest = text.split(START, 1)
-            _, after = rest.split(END, 1)
-            text = before + block + after
-        else:
-            text = text.rstrip() + "\n\n" + block
-        INDEX.write_text(text, encoding="utf-8")
+        spliced = splice(text, block)
+        # Writing the generated block must be a fixed point: splicing the result again has to
+        # return it unchanged. Checked here rather than trusted, because the way this fails is
+        # silent accumulation -- one newline per run, visible only as drifting whitespace weeks
+        # later. Cheap: one more string split over a 600-line file.
+        if splice(spliced, block) != spliced:
+            raise SystemExit(
+                "splice is not idempotent: regenerating would grow the file on every run. "
+                "The block almost certainly emits a newline that `after` already carries."
+            )
+        INDEX.write_text(spliced, encoding="utf-8")
         print(f"register written: {len(rows(args.first))} numbers from D{args.first}")
         return 0
     ap.print_help()
