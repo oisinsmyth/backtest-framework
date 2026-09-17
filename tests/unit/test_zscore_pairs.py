@@ -94,6 +94,31 @@ def test_zero_std_window_stands_aside():
     assert _weights(strategy.generate_targets(views)) == {"A": 0.0, "B": 0.0}
 
 
+def test_standing_aside_on_a_degenerate_window_clears_the_side_it_stood_aside_from():
+    """Emitting flat targets is a state change and must be recorded as one.
+
+    The test above cannot catch this: it uses a FRESH strategy, whose `_side` is already 0,
+    so it passes whether or not the branch clears state. The failure needs a strategy that
+    is already in a trade.
+
+    The sequence that bites: a degenerate bar emits flat targets, the engine closes the
+    position and pays a round trip, but `_side` still says ±1. On the next bar `std > 0`
+    again and `|z|` lands in the hysteresis band, so no branch fires, the stale side is
+    re-emitted, and the book re-enters — a second round trip, on a bar that produced no
+    entry crossing at all.
+    """
+    strategy = _strategy(lookback=3, entry_z=2.0, exit_z=0.5)
+    strategy._side = -1  # the state a live entry leaves behind
+
+    flat = _weights(strategy.generate_targets(_views([100.0] * 12, [100.0] * 12)))
+
+    assert flat == {"A": 0.0, "B": 0.0}, "a degenerate window must stand aside"
+    assert strategy._side == 0, (
+        "the strategy emitted flat targets but still believes it holds a side — the next "
+        "in-band bar will re-emit it and re-enter with no entry crossing"
+    )
+
+
 def test_invalid_thresholds_rejected_at_construction():
     with pytest.raises(ValueError, match="exit_z"):
         _strategy(entry_z=1.0, exit_z=1.0)

@@ -68,12 +68,24 @@ class ZScorePairsStrategy:
 
         # Warm-up self-guard: need `lookback` spreads ending at the PREVIOUS bar.
         if n < self.lookback + 1:
+            # `_side` is necessarily 0 here — this branch can only be taken before any bar
+            # has set it — so asserting costs nothing and stops the reader wondering whether
+            # this is the same omission as the one below.
+            assert self._side == 0, "warm-up reached with a live side"
             return self._targets_for_side(0)
 
         window = [self._spread(view_a, view_b, i) for i in range(n - 1 - self.lookback, n - 1)]
         mean = statistics.fmean(window)
         std = statistics.stdev(window)
         if std == 0.0:
+            # STANDING ASIDE IS A STATE CHANGE, so it is recorded as one. Emitting flat
+            # targets without clearing `_side` leaves the strategy's own state disagreeing
+            # with the book the engine is holding: the engine closes the position and pays a
+            # round trip, while `_side` still says +-1. On the next bar with std > 0, if |z|
+            # lands in the hysteresis band no branch fires, the stale side is re-emitted, and
+            # the book RE-ENTERS the same side having produced no entry crossing at all --
+            # a second round trip, and a position nothing justified.
+            self._side = 0
             return self._targets_for_side(0)  # degenerate window — stand aside
 
         z = (self._spread(view_a, view_b, n - 1) - mean) / std

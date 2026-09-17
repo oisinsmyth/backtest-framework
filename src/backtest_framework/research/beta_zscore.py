@@ -73,12 +73,19 @@ class BetaHedgedZScoreStrategy:
         n = len(view_a)
 
         if n < self.lookback + 1:
+            assert self._side == 0, "warm-up reached with a live side"
             return self._targets_for_side(0)
 
         window = [self._spread(view_a, view_b, i) for i in range(n - 1 - self.lookback, n - 1)]
         mean = statistics.fmean(window)
         std = statistics.stdev(window)
         if std == 0.0:
+            # Clearing `_side` here, for the reason set out in
+            # `strategies/zscore_pairs.py`: standing aside is a state change, and emitting
+            # flat targets without recording it lets the next in-band bar re-emit a stale
+            # side and re-enter with no entry crossing. This class is the D94 beta-hedged
+            # variant of that one and carried the identical omission.
+            self._side = 0
             return self._targets_for_side(0)
 
         z = (self._spread(view_a, view_b, n - 1) - mean) / std
