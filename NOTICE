@@ -1,0 +1,139 @@
+# NOTICE — third-party material in this repository
+
+This repository is a backtesting framework and the research record kept while using it. The
+framework is original code. The research record is not entirely original prose: a large part of its
+job is to **evaluate outside sources**, and it does that by quoting them and then arguing with them.
+Prop-firm rulebooks, finance papers, federal regulation and public forum posts all appear here
+verbatim, in passages long enough that a reader can check the reading against the text.
+
+The MIT grant in [`LICENSE`](LICENSE) covers the code and the author's own prose. **It does not
+cover the quoted material, and it was never the author's to give.** This file says what that
+material is, where it sits, and on what basis it is here.
+
+---
+
+## How much, and where
+
+Measured at `8cfdfa3` on 2026-09-17. The measure is stated so it can be re-run: **text inside
+quotation marks, forty characters or longer, not crossing a paragraph break or a table-cell
+boundary, with fenced code and URLs excluded.**
+
+| | files | passages | characters |
+|---|---:|---:|---:|
+| `docs/research/` | 107 | 2,581 | 353,858 |
+| `working/leads/` … `working/leads6/` | 41 | 1,480 | 240,844 |
+| **total** | **148** | **4,061** | **594,702** |
+
+That is an upper bound. The measure cannot tell a quotation from a pair of scare quotes, and a
+hand sample of twenty passages found two or three that are the author's own words caught between
+unbalanced quote marks. The true figure is somewhere below 594,702 and well above the 120,924
+characters that sit inside quotation marks *inside blockquotes*, which is the strictest reading and
+misses every quotation set inline in a sentence — a form this record uses constantly.
+
+**Nothing outside the research prose is affected.** `src/` (0.90 MiB tracked), `tests/` (1.38 MiB)
+and `scripts/` (10.71 MiB) contain no third-party text at all. The whole exposure is 148 Markdown
+files under two directories.
+
+---
+
+## The four classes
+
+### 1. Vendor contractual text
+
+[`docs/research/Prop-Firm-080926/`](docs/research/Prop-Firm-080926) — 26 files, 1.03 MiB, a review
+of five proprietary-trading firms' published rules; the source ledger is
+[`SOURCES.md`](docs/research/Prop-Firm-080926/SOURCES.md). Terms of service, trading rules and
+help-centre articles are quoted clause by clause, because the lane's question is what the text
+*says* and a paraphrase cannot answer it.
+
+The firms whose terms are quoted:
+
+- **MyFundedFutures** — [`01-myfundedfutures.md`](docs/research/Prop-Firm-080926/01-myfundedfutures.md), 94 passages
+- **Topstep** — [`02-topstep.md`](docs/research/Prop-Firm-080926/02-topstep.md), 60 passages
+- **Apex Trader Funding** — [`03-apex.md`](docs/research/Prop-Firm-080926/03-apex.md), 74 passages, and [`10-apex-conduct-rules.md`](docs/research/Prop-Firm-080926/10-apex-conduct-rules.md), 44 — the Legacy PA Compliance text at `:458`
+- **Take Profit Trader** — [`04-take-profit-trader.md`](docs/research/Prop-Firm-080926/04-take-profit-trader.md), 103 passages
+- **FTMO** — [`05-ftmo-fx-control.md`](docs/research/Prop-Firm-080926/05-ftmo-fx-control.md), 95 passages; the longest single quotation is 792 characters of the rulebook at `:372`
+
+The densest file is
+[`11-cross-firm-policy.md`](docs/research/Prop-Firm-080926/11-cross-firm-policy.md) — **137 quoted
+passages, 21,217 characters**, drawing on all five firms at once. The two longest are at `:158`
+(554 characters) and `:227` (540). Every clause carries its section number and the date it was read.
+
+### 2. Copyrighted academic text
+
+[`docs/research/Scan-100926/`](docs/research/Scan-100926) and
+[`working/leads5/`](working/leads5), among others. Peer-reviewed journal articles and
+working papers are quoted where the exact wording decides something — most often a variable
+definition, where two papers claiming to follow each other differ on one word.
+
+The worst case is
+[`R2-02-profitability-deep.md`](docs/research/Scan-100926/R2-02-profitability-deep.md) at
+`:263-294`: **1,708 characters**, the variable-definition appendix of Ball, Gerakos, Linnainmaa &
+Nikolaev (2016), *Journal of Financial Economics* 121(1). It is section-headed `QUOTED` and it is
+there because three papers restate that formula and one of them disagrees about the deflator. The
+densest file is [`working/leads5/J4-the-floor-level.md`](working/leads5/J4-the-floor-level.md) — 64
+passages, 13,648 characters.
+
+### 3. US federal regulation — public domain, and named separately for that reason
+
+[`working/leads6/K4-corporate-actions-source-and-conventions.md`](working/leads6/K4-corporate-actions-source-and-conventions.md)
+at `:269-292` reproduces **1,782 characters**: the complete enumeration of 17 CFR
+§ 240.10b-17(b)(1), read from the eCFR. US federal regulation is **not subject to copyright**, and
+that passage is here in full for the same reason it could be: the argument is that the rule lists
+declaration, record and payment dates and never mentions an ex-date, and a partial quotation would
+not establish it.
+
+This is worth separating from class 2 rather than lumping in with it, and the same file shows why:
+the FINRA UPC FAQ quoted twenty lines further down is **not** public domain. FINRA is a private
+self-regulatory organisation. Adjacency in a document is not shared status.
+
+### 4. Public forum posts
+
+[`15-reddit-mined.md`](docs/research/Prop-Firm-080926/15-reddit-mined.md) — 28 Reddit permalinks,
+and [`16-quant-forums.md`](docs/research/Prop-Firm-080926/16-quant-forums.md) — 29 source URLs, 25
+of them to Quantitative Finance Stack Exchange, QuantConnect, Elite Trader, Hacker News, Wilmott
+and Portfolio123. Claims, numbers and occasional sentences are quoted from posts their authors
+published publicly, each with its permalink and access date.
+
+---
+
+## The basis
+
+**Quotation for commentary and criticism, cited in place, with a link to the source.** This is a
+repository whose subject *is* the evaluation of these sources. Every quoted passage sits next to a
+reading of it, usually a disagreement; several exist specifically so that a later reader can check
+that the reading was fair. Removing the quotations would not shorten the record, it would make it
+unauditable — which is the one thing this repository is built not to be.
+
+Nothing quoted is redistributed as a standalone copy. There is no vendored rulebook, no mirrored
+PDF and no scraped archive in the tree. The quotations live inside the analysis that cites them.
+
+---
+
+## Pseudonymous authors
+
+[`15-reddit-mined.md`](docs/research/Prop-Firm-080926/15-reddit-mined.md) attributes specific claims
+to **27 pseudonymous handles**, and several of those attributions are evaluative — a claim is named,
+and then refuted. The file's own header says what it is (`:16-19`): *nothing there is evidence*,
+every row is a hypothesis with a falsification criterion.
+
+Three things follow, stated here rather than left to be inferred:
+
+- Forum authors are cited by **public handle and permalink only**, for claims they chose to publish
+  publicly. **No real name, email address, employer or location is attached to any of them**, and
+  none was sought.
+- The evaluation is **of the claim, not of the person**. Where a post is called overfitted or
+  arithmetically wrong, that is a statement about the numbers in the post. Where a post is good it
+  is said so, at the same length.
+- **A request from a cited author to remove an attribution will be honoured.** Open an issue or
+  contact the author of this repository; the handle and the link come out and the claim stays or
+  goes with them.
+
+---
+
+## Removal and correction
+
+Any rights holder — a firm whose terms are quoted, a publisher, a forum author — who wants a
+passage shortened or removed should say so, and it will be. Corrections to what a source is said to
+have written are treated the same way as any other error in this repository: fixed, and recorded in
+writing rather than quietly edited.

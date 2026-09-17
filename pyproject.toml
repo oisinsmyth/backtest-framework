@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Lego-brick-modular quant backtesting framework — see PHILOSOPHY.md"
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE"]
+# NOTICE ships with the wheel too: LICENSE points at it for the scope of the grant, and a
+# distribution carrying the pointer without the file would be worse than carrying neither.
+license-files = ["LICENSE", "NOTICE"]
 authors = [
     { name = "Oisin Smyth", email = "oisin.smyth132@gmail.com" }
 ]

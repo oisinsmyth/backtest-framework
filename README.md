@@ -24,7 +24,7 @@ instrument rather than a strategy.
 | **2,047 tests** | hand-computed golden masters · integration · property · unit |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
-| **MIT licensed** | [`LICENSE`](LICENSE) |
+| **MIT licensed** | [`LICENSE`](LICENSE) — the code and the prose here; quoted third-party material is scoped out in [`NOTICE`](NOTICE) |
 
 The inventory, measured from the git index rather than typed:
 
@@ -42,6 +42,7 @@ The inventory, measured from the git index rather than typed:
 <sub>Generated from the git index by `scripts/build_readme_counts.py`; `tests/unit/test_readme_counts_are_current.py` fails if this block drifts.</sub>
 
 <!-- COUNTS:END -->
+
 
 
 
