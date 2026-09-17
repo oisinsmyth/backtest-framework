@@ -4,7 +4,7 @@ This is the generative layer above [`docs/RULES.md`](docs/RULES.md) and
 [`docs/decisions/`](docs/decisions/README.md). Rules are specific, binding constraints;
 decisions are specific, dated choices. This document is neither — it's the small set of
 values that, applied consistently, produced the first 49 decisions — and, unchanged, the
-500 numbered decisions the directory now holds (D1 through D537; a pre-registration and
+502 numbered decisions the directory now holds (D1 through D539; a pre-registration and
 its result share a number). When a new situation isn't covered by an existing rule or decision,
 this is what to reason from.
 
@@ -127,8 +127,8 @@ not as one entangled blob.
   scattering bare `/252` or `/365` constants
   ([D17](docs/decisions/D17-instruments-own-their-trading-calendar-instrument.md)).
 - **Commit the shape before the cleverness, when the cleverness isn't ready.** The
-  options module is a real, well-formed stub with an honest `NotImplementedError` pointing
-  at a scoping doc, rather than being skipped entirely or half-built with hidden gaps. The
+  options module is a real, well-formed stub — correct contract-multiplier arithmetic, and
+  the genuinely hard parts scoped out in writing rather than half-built with hidden gaps. The
   allocator socket was committed on the same principle and has since been filled:
   `ConstantSplitAllocator` (`engine/allocator.py:21`) is a working implementation behind
   the protocol, which is what the socket was for

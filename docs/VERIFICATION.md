@@ -1,7 +1,8 @@
 # What this suite guarantees, and what it does not
 
-**2,053 tests pass and one skips. This page is about what follows from that, which is less than
-it sounds and more specific.**
+**2,057 tests are collected here, and one of them skips on the machine this was written on, for
+want of a data panel. This page is about what follows from that, which is less than it sounds and
+more specific.**
 
 A test count is not a guarantee. Four tiers do four different jobs here, and the useful question
 about any of them is not "does it pass" but "what would have to be broken for it to fail". This
@@ -16,7 +17,11 @@ Three neighbours, so you can tell them apart:
 | **this page** | what the suite, as it stands, actually establishes. For a reader deciding whether to believe it. |
 
 Counts are measured with `uv run pytest -q --collect-only tests/<tier>` and are current at
-2026-09-17.
+2026-09-17. They are not left to prose discipline:
+`tests/unit/test_quoted_counts_are_current.py` re-collects and fails, naming the file and line, if
+any document quotes a tier count that has moved. That gate exists because this page was written
+with fresh numbers on 2026-09-16 and immediately contradicted four older documents still saying
+**91** golden tests when there were 101.
 
 ---
 
@@ -66,7 +71,7 @@ full-suite run and a single-file run draw differently from the same seed
 ([D537](decisions/D537-derandomize-does-not-mean-deterministic.md)). A property failure that does
 not reproduce when you run its file alone is **not** thereby a flake.
 
-### `tests/integration/` — 149 tests. *The whole path composes, and one thing is checked against an engine we did not write.*
+### `tests/integration/` — 152 tests. *The whole path composes, and one thing is checked against an engine we did not write.*
 
 Whole studies run end to end: the pairs walk-forward, the breakout studies, the capacity and gross
 sweeps, the cost sweep, the risk monitor's drift behaviour.
@@ -88,8 +93,16 @@ Two carry more weight than the rest:
 ### `tests/unit/` — 1,737 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
-most of the **structural guard** assertions are proved to fire — `src/` carries **273 `raise` statements**, spread
-across 46 of its 85 files, and a guard nobody has proved will raise is a guard nobody has checked.
+most of the **structural guard** assertions are proved to fire — `src/` carries **272 `raise`
+statements**, spread across 45 of its 85 tracked `.py` files, and a guard nobody has proved will
+raise is a guard nobody has checked.
+
+**The counting rule, because a reviewer who checks will otherwise get a different number.** That
+figure counts `raise <Exception>` forms only — AST `Raise` nodes with a non-`None` `exc`. A plain
+AST walk over the same 85 files finds **two more**: bare `raise` inside an `except`, which re-raise
+what they caught. Those are flow control rather than guards, and there is no message for a test to
+assert. Both readings are correct arithmetic; only one of them is the thing this paragraph is
+about, and `tests/unit/test_quoted_counts_are_current.py` pins the reading as well as the number.
 
 ---
 
@@ -105,14 +118,18 @@ them, because the third category exists.
 so look-ahead is not prevented by a test but by the absence of the data. The test proves the
 absence is real.
 
-## Seven gates that are not the test suite
+## Six gates that are not the test suite
 
-CI runs four jobs and eight commands. Three of the eight are `pytest`; the rest check committed
-state:
+CI runs four jobs and eight commands ([`tests.yml`](../.github/workflows/tests.yml), counting the
+`run:` steps and not `uv sync`). **Two** of the eight are `pytest` — `tests/golden` in the `golden`
+job and the whole suite in the `suite` job. The other six check committed state, and each has its
+own row below rather than sharing one, so that the rows and the commands can be counted against
+each other:
 
 | gate | what it establishes |
 |---|---|
-| `ruff check src tests` + `mypy` | errors, not style (E4/E7/E9/F); types over the library |
+| `ruff check src tests` | errors, not style (E4/E7/E9/F) |
+| `mypy` | types over the library; tests are out of scope by config |
 | `check_doc_links.py` | every relative path in every tracked document resolves **in the git index** — 1,031 documents, 0 unresolved |
 | `build_readme_counts.py --check` | the README's inventory matches the repository |
 | `figures/build_all.py --check` | all twelve SVGs regenerate byte-identically from their artifacts |
@@ -140,9 +157,12 @@ is 1–2.
 tests pin. `scripts/` is 592 one-shot runners, tested only where a study's headline numbers are
 pinned to its artifact.
 
-**On a clone, 50 tests do not run.** The bulk data panels left the index in
+**On a clone, 50 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
 [D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,004 passed,
-50 skipped**. Each skip names the file it wanted and
+50 skipped**. Four other documents record 49 from a 2026-09-16 clone; the split is deliberately
+not gated, because it is a function of what a checkout happens to carry rather than of the commit,
+so both numbers stay as dated measurements until one clone settles it. Each skip names the file it
+wanted and
 [`data/data_manifest.json`](../data/data_manifest.json) carries its sha256 and git blob id. **A
 skip is not a pass** — if the count climbs, something stopped being tested.
 

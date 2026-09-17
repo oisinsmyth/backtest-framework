@@ -2,7 +2,7 @@
 
 This walks the whole pipeline: setup → data → costs → a strategy → a backtest → the
 cost sweep → trial logging → analytics → validation science → a full study. It
-assumes you can read Python; it does not assume you've read the 90 decision records
+assumes you can read Python; it does not assume you've read the 745 decision records
 (they're linked where they matter — [`decisions/`](decisions/README.md)).
 
 **Every code block below whose first line is `# runnable` is executed verbatim, in
@@ -18,8 +18,8 @@ the same doc-rot discipline as everything else here (D91).
 ```bash
 git clone <this repo> && cd "Backtest Framework"
 uv sync                 # installs everything incl. dev deps (pytest, vectorbt, quantstats)
-uv run pytest -q tests/golden   # 91 ledger-anchored tests, no market data, ~0.6s
-uv run pytest                   # the whole suite, ~4m here; 49 tests skip
+uv run pytest -q tests/golden   # 101 ledger-anchored tests, no market data, ~0.6s
+uv run pytest                   # the whole suite, ~4m here; 49 tests skip (2026-09-16)
                                 # without the bulk panels, each naming the file it wanted
 ```
 

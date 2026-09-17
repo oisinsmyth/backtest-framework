@@ -6,11 +6,17 @@ README said 741 decision records and 586 scripts, because they had been counted 
 tree while six deletions sat uncommitted. A clone gets 743 and 588 — and the README is a document
 about what a clone gets.
 
-Everything gated here is deterministic and cheap, derived from `git ls-files` by
-`scripts/build_readme_counts.py`. Runtimes and the clone pass/skip split are **not** gated: they
-are machine-dependent (the same suite measured 6m21s and 7m00s on one laptop within a day), so the
-README carries those as prose with a measurement date. A gate that reddens on a slower machine
-teaches people to ignore gates.
+Everything gated here is deterministic, derived from `git ls-files` by
+`scripts/build_readme_counts.py` — plus one `pytest --collect-only` pass for the tier counts,
+which executes nothing and so returns the same numbers on any machine at a given commit. Runtimes
+and the clone pass/skip split are **not** gated: those are machine-dependent (the same suite
+measured 6m21s and 7m00s on one laptop within a day, and the skip count depends on which bulk
+panels a checkout carries), so the README carries them as prose with a measurement date. A gate
+that reddens on a slower machine teaches people to ignore gates.
+
+Counts quoted in prose *outside* the block are gated by
+`tests/unit/test_quoted_counts_are_current.py`, which is where every stale number in the
+2026-09-17 audit turned out to live.
 
 Like `test_decision_index_is_complete.py`, this asserts **currency, not format** — it compares the
 generated block against the committed one and names the command that fixes a mismatch.

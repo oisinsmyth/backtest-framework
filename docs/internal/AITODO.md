@@ -1,12 +1,22 @@
 # AI TODO
 
-Claude's current working task list for this project — not a roadmap (that's
+> **FROZEN at the 2026-09-01 session handoff (D262). This is not the current task list.**
+> The live working state is [`PICKUP.md`](PICKUP.md); the programme has since run to D539 and
+> none of that is reflected below. This file is kept as the build phase's record and as the
+> provenance of the "Done" log, which is the half of it that does not go stale.
+>
+> It is frozen rather than updated because the rule three lines down — *stale entries here are
+> worse than none* — was being broken by the file that states it, for sixteen days, under a
+> README caption that called it "current". A dated freeze is honest; a present-tense heading over
+> a stopped file is the same defect as a stale count, and harder to notice.
+
+Claude's working task list for the build phase — not a roadmap (that's
 [`DEVELOPMENT_TIMETABLE.md`](../../DEVELOPMENT_TIMETABLE.md)) and not a decision log (that's
-[`docs/decisions/`](../decisions/README.md)). Kept short: only what's immediately in front of
+[`docs/decisions/`](../decisions/README.md)). Kept short: only what was immediately in front of
 us. Update this at the start/end of each working session — stale entries here are worse than
 none.
 
-## Now
+## Now, as of 2026-09-01
 
 > **SESSION HANDOFF 2026-09-01 — read [`PICKUP.md`](PICKUP.md) first.** The free half of the
 > futures data layer is built and committed (D262). The one blocker is a Databento API key,
