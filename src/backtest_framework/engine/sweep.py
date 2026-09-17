@@ -15,11 +15,24 @@ render_sweep_table produces the minimal markdown table the Step 6 gate calls a
 "tearsheet" — multiplier, final NAV, net P&L, return, max drawdown. The real
 tearsheet (Sharpe with explicit rf per D49, beta per D37, sample-size-gated tails per
 D36) is Step 9's job and is deliberately not imitated here.
+
+`run_cost_sweep` forwards EVERY run_backtest keyword that shapes the run. It used to
+forward only nine of thirteen, silently dropping `volumes_by_instrument`,
+`fill_timing`, `risk_limits` and `enforce_pretrade` — which meant a caller could hand
+it a BreakoutStrategy carrying a VolumeConfirmationFilter and get MissingVolumeError,
+or hand it fill_timing="next_open" and get close fills with no complaint. A sweep
+argument that a caller sets and the sweep discards is worse than one that does not
+exist (D48). `test_cost_sweep.py` now sweeps exactly that strategy, and asserts the
+sweep raises when the volumes are withheld, so the forwarding cannot rot back.
+
+NOT superseded by research/gross_sweep.py, which sweeps LEG WEIGHT through the D95
+capacity study, not the cost multiplier, and answers a different question (D96).
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Callable, Mapping, Sequence
 
 from ..analytics.metrics import max_drawdown
@@ -30,9 +43,13 @@ from ..instruments.base import Instrument
 from ..registry.trial_registry import TrialRegistry
 from .allocator import Allocator
 from .backtest import BacktestResult, run_backtest
+from .risk import RiskLimits
 from .strategy import Strategy
 
-__all__ = ["run_cost_sweep", "render_sweep_table", "max_drawdown", "SweepResult", "SweepRun"]
+# `max_drawdown` is imported for render_sweep_table's own use and is deliberately NOT
+# re-exported: D80 moved it to analytics/metrics.py, and a second public name for it
+# here is the kind of duplicate import path that keeps a moved function half-moved.
+__all__ = ["run_cost_sweep", "render_sweep_table", "SweepResult", "SweepRun"]
 
 DEFAULT_MULTIPLIERS = (0.0, 0.5, 1.0, 2.0, 4.0)
 
@@ -70,9 +87,17 @@ def run_cost_sweep(
     config: dict | None = None,
     snapshot_id: str = "unspecified",
     seed: int = 0,
-    splits_by_instrument=None,
-    view_bars_by_instrument=None,
+    splits_by_instrument: Mapping[str, Sequence[tuple[datetime, float]]] | None = None,
+    view_bars_by_instrument: Mapping[str, Sequence[TimestampedBar]] | None = None,
+    volumes_by_instrument: Mapping[str, Sequence[float | None]] | None = None,
+    fill_timing: str = "close",
+    risk_limits: RiskLimits | None = None,
+    enforce_pretrade: bool = False,
 ) -> SweepResult:
+    """Every keyword here except `multipliers` and `make_strategies` has the same
+    meaning and default as the run_backtest parameter it forwards to; the sweep adds
+    no semantics of its own. Keep it that way — the defect this signature fixes was
+    four run_backtest parameters with no way to reach them from a sweep."""
     runs: list[SweepRun] = []
     for multiplier in multipliers:
         result = run_backtest(
@@ -89,6 +114,10 @@ def run_cost_sweep(
             seed=seed,
             splits_by_instrument=splits_by_instrument,
             view_bars_by_instrument=view_bars_by_instrument,
+            volumes_by_instrument=volumes_by_instrument,
+            fill_timing=fill_timing,
+            risk_limits=risk_limits,
+            enforce_pretrade=enforce_pretrade,
         )
         runs.append(SweepRun(multiplier=multiplier, result=result))
     return SweepResult(starting_cash=starting_cash, runs=tuple(runs))

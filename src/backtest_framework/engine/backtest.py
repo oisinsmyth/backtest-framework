@@ -30,7 +30,7 @@ from ..data.bars import TimestampedBar
 from ..instruments.base import Instrument
 from ..pipeline.sizing import Order, Sizer, TargetWeight, apply_virtual_orders, net_orders
 from ..registry.trial_registry import TrialRegistry
-from ..simulator.fills import StopSide, stop_fill_price
+from ..simulator.fills import Bar, StopSide, stop_fill_price
 from .allocator import Allocator
 from .dataview import DataView, build_data_view, normalise_volumes
 from .portfolio import PortfolioState
@@ -178,52 +178,12 @@ def run_backtest(
         instrument_id: tuple(ab.bars[instrument_id] for ab in aligned) for instrument_id in bars_by_instrument
     }
 
-    # Strategy views come from the view series when given (split-adjusted signals),
-    # aligned 1:1 with execution timestamps — a missing timestamp is a loud error,
-    # never a silently substituted raw bar (D75).
-    if view_bars_by_instrument is not None:
-        view_lookup = {
-            instrument_id: {tb.timestamp: tb.bar for tb in series}
-            for instrument_id, series in view_bars_by_instrument.items()
-        }
-        try:
-            view_bar_series = {
-                instrument_id: tuple(view_lookup[instrument_id][ab.timestamp] for ab in aligned)
-                for instrument_id in bars_by_instrument
-            }
-        except KeyError as exc:
-            raise ValueError(
-                f"view_bars_by_instrument is missing a bar for an aligned execution timestamp: {exc}"
-            ) from exc
-    else:
-        view_bar_series = aligned_bar_series
-
-    # Volume rides the same timestamp-matching path as the view bars, and fails the
-    # same way. align_bars is deliberately NOT changed: volume is looked up against the
-    # already-aligned series rather than participating in the inner join itself, so the
-    # set of tradeable timestamps cannot shift because a volume column had a hole.
-    volume_series: dict[str, tuple[float | None, ...] | None] = {}
-    if volumes_by_instrument is not None:
-        for instrument_id in bars_by_instrument:
-            supplied = volumes_by_instrument.get(instrument_id)
-            if supplied is None:
-                volume_series[instrument_id] = None
-                continue
-            source = view_bars_by_instrument or bars_by_instrument
-            series = source[instrument_id]
-            if len(supplied) != len(series):
-                raise ValueError(
-                    f"volumes_by_instrument[{instrument_id!r}] has {len(supplied)} entries but "
-                    f"its bar series has {len(series)} — the two must align exactly"
-                )
-            by_timestamp = {tb.timestamp: v for tb, v in zip(series, normalise_volumes(supplied))}
-            try:
-                volume_series[instrument_id] = tuple(by_timestamp[ab.timestamp] for ab in aligned)
-            except KeyError as exc:
-                raise ValueError(
-                    "volumes_by_instrument is missing a volume for an aligned execution "
-                    f"timestamp on {instrument_id!r}: {exc}"
-                ) from exc
+    # Both marshalling steps below are pure: they read the caller's mappings and the
+    # aligned timestamps and return series, touching no portfolio state. They are the
+    # only two places a caller-supplied series is matched to the aligned clock, and
+    # they fail the same way — loudly, on a missing timestamp (D75, D168).
+    view_bar_series = _align_view_bars(aligned, bars_by_instrument, view_bars_by_instrument, aligned_bar_series)
+    volume_series = _align_volumes(aligned, bars_by_instrument, view_bars_by_instrument, volumes_by_instrument)
 
     splits_by_instrument = splits_by_instrument or {}
 
@@ -243,6 +203,20 @@ def run_backtest(
     for i, ab in enumerate(aligned):
         prices = {instrument_id: bar.close for instrument_id, bar in ab.bars.items()}
 
+        # STEP 0 PRODUCES TWO VALUES THAT STEP 1 CONSUMES, AND THE TWO STEPS GUARD
+        # THEMSELVES SEPARATELY. They are bound unconditionally here, before the
+        # guard, on purpose: both blocks used to open with their own independently
+        # written `if prev_timestamp is not None:`, so `pre_split_positions` and
+        # `splits_in_gap` were bound inside the first and read inside the second, and
+        # the ONLY thing making that safe was that the two conditions happened to be
+        # spelled identically. Weakening either guard turned a visible contradiction
+        # into an UnboundLocalError sixty lines away, at the point of USE. Binding
+        # them here makes the dependency a fact of the loop body rather than an
+        # accident of two matching conditions, and an empty dict is the correct
+        # first-bar value for both: step 1 does not run on the first bar either.
+        pre_split_positions: dict[str, float] = {}
+        splits_in_gap: dict[str, list[tuple[datetime, float]]] = {}
+
         # 0. Splits with an ex-date in the gap scale positions FIRST (D75): this
         #    bar's raw price is post-split, so the share count must be too before
         #    anything marks NAV — broker book and every strategy's virtual book alike.
@@ -252,25 +226,9 @@ def run_backtest(
         #    on/after it pays post-split shares.
         if prev_timestamp is not None:
             pre_split_positions = dict(portfolio.positions)
-            splits_in_gap: dict[str, list[tuple[datetime, float]]] = {}
-            for instrument_id, splits in splits_by_instrument.items():
-                in_gap = sorted(
-                    (ex_date, ratio)
-                    for ex_date, ratio in splits
-                    if prev_timestamp < ex_date <= ab.timestamp
-                )
-                if in_gap:
-                    splits_in_gap[instrument_id] = in_gap
-                for ex_date, ratio in in_gap:
-                    portfolio.apply_split(instrument_id, ratio)
-                    for key in list(virtual_positions):
-                        if key[1] == instrument_id:
-                            virtual_positions[key] *= ratio
-                    # Pending next_open orders were sized in pre-split share terms;
-                    # they scale with everything else (D103).
-                    for key, pending_order in list(pending_virtual.items()):
-                        if key[1] == instrument_id:
-                            pending_virtual[key] = Order(instrument_id, pending_order.quantity * ratio)
+            splits_in_gap = _apply_gap_splits(
+                portfolio, virtual_positions, pending_virtual, splits_by_instrument, prev_timestamp, ab.timestamp
+            )
 
         # 1. Carry accrues on every currently-held instrument (D33), on the calendar-
         #    day gap since the previous ALIGNED bar — this correctly spans any bar
@@ -281,37 +239,10 @@ def run_backtest(
         #    depend on application order. Event flows (dividends, D6/D75) land in the
         #    same snapshot step, on post-split quantities.
         if prev_timestamp is not None:
-            snapshot_positions = dict(portfolio.positions)
-            snapshot_nav = portfolio.nav(prices, instruments)
-            for instrument_id, quantity in snapshot_positions.items():
-                if quantity != 0:
-                    # Carry base is split-invariant (qty x price is the same notional in
-                    # either frame), so the post-split snapshot is correct here.
-                    base_amount = quantity * prices[instrument_id]
-                    carry = cost_stack.carry_cost(
-                        base_amount,
-                        prev_timestamp,
-                        ab.timestamp,
-                        components=instruments[instrument_id].carry_components(),  # D100
-                    )
-                    portfolio.accrue_carry(carry)
-                    flow = _event_flow_with_splits(
-                        cost_stack,
-                        instruments[instrument_id],
-                        pre_split_positions.get(instrument_id, 0.0),
-                        splits_in_gap.get(instrument_id, []),
-                        prev_timestamp,
-                        ab.timestamp,
-                    )
-                    if flow != 0:
-                        portfolio.apply_cash_flow(flow)
-            # Portfolio-level carry (D5, D67): margin interest accrues only on the
-            # borrowed portion of the book — gross exposure beyond the equity backing it.
-            margin_base = max(gross_exposure(snapshot_positions, prices, instruments) - snapshot_nav, 0.0)
-            if margin_base > 0:
-                portfolio.accrue_carry(
-                    cost_stack.portfolio_carry_cost(margin_base, prev_timestamp, ab.timestamp)
-                )
+            _accrue_gap_carry(
+                portfolio, cost_stack, instruments, prices,
+                pre_split_positions, splits_in_gap, prev_timestamp, ab.timestamp,
+            )
 
         # 1b. next_open fill timing (D103): orders decided at the PREVIOUS bar's
         #     close fill now, at THIS bar's open — the strategy never trades at the
@@ -351,40 +282,10 @@ def run_backtest(
         #     through it rather than assuming the stop price — filling at the stop when
         #     the market never traded there is free money and fantasy risk numbers.
         if live_stops:
-            for (strategy_id, instrument_id), stop_price in list(live_stops.items()):
-                held = virtual_positions.get((strategy_id, instrument_id), 0.0)
-                if held == 0.0:
-                    del live_stops[(strategy_id, instrument_id)]
-                    continue
-                side = StopSide.SELL_STOP if held > 0 else StopSide.BUY_STOP
-                fill_price = stop_fill_price(side, stop_price, ab.bars[instrument_id])
-                if fill_price is None:
-                    continue
-
-                quantity = -held
-                trade_cost = cost_stack.trade_cost(instruments[instrument_id], quantity, fill_price)
-                portfolio.apply_fill(instrument_id, quantity, fill_price, trade_cost)
-                result.fills.append((ab.timestamp, instrument_id, quantity, fill_price, trade_cost))
-                virtual_positions[(strategy_id, instrument_id)] = 0.0
-                result.virtual_fills.append(
-                    (ab.timestamp, strategy_id, instrument_id, quantity, fill_price)
-                )
-                result.stop_fills.append(
-                    (ab.timestamp, strategy_id, instrument_id, quantity, fill_price, stop_price)
-                )
-                del live_stops[(strategy_id, instrument_id)]
-
-                # A stateful strategy does not otherwise learn it was stopped out: it
-                # would keep emitting the same target and re-enter on the next bar,
-                # turning a bounded loss into a repeated one. Optional by design so
-                # every pre-D170 strategy still conforms to the protocol.
-                on_stop_filled = getattr(strategies_by_id.get(strategy_id), "on_stop_filled", None)
-                if on_stop_filled is not None:
-                    on_stop_filled(instrument_id)
-
-                # A pending next_open order for this key is now stale — it was sized
-                # against a position the stop has just closed.
-                pending_virtual.pop((strategy_id, instrument_id), None)
+            _sweep_intrabar_stops(
+                ab, live_stops, virtual_positions, pending_virtual,
+                portfolio, result, cost_stack, instruments, strategies_by_id,
+            )
 
         # 2. Build this bar's DataView per instrument (D32, D56) from each
         #    instrument's own ALIGNED series — the VIEW series when one was supplied
@@ -406,21 +307,7 @@ def run_backtest(
         # Refresh the stop registry from this bar's targets (D170). Re-declared every
         # bar, so a trailing stop simply moves; a target that stops declaring one drops
         # its entry rather than leaving a stale level armed.
-        for target in targets:
-            key = (target.strategy_id, target.instrument_id)
-            if target.stop is None:
-                live_stops.pop(key, None)
-                continue
-            if splits_by_instrument.get(target.instrument_id):
-                # The stop was computed in the VIEW frame and is enforced against
-                # EXECUTION prices. Those are the same series only when the instrument
-                # has no splits (D75). Rather than silently compare two frames, refuse.
-                raise ValueError(
-                    f"instrument {target.instrument_id!r} carries splits and cannot use an "
-                    "intrabar stop: the stop is declared in the view frame and enforced "
-                    "against execution prices, which diverge across a split (D75/D170)"
-                )
-            live_stops[key] = target.stop
+        _refresh_stop_registry(targets, live_stops, splits_by_instrument)
 
         # 3. Capital is reallocated from current NAV every bar (D61).
         current_nav = portfolio.nav(prices, instruments)
@@ -441,28 +328,10 @@ def run_backtest(
         #     orders are dropped too, so virtual books stay reconciled with the
         #     broker book and the strategies simply re-attempt next bar.
         if enforce_pretrade and risk_monitor is not None and external_orders:
-            simulated = dict(portfolio.positions)
-            approved: dict[str, Order] = {}
-            for instrument_id, order in external_orders.items():
-                violation = risk_monitor.pretrade_check(
-                    simulated, prices, instruments, instrument_id, order.quantity
-                )
-                if violation is None:
-                    approved[instrument_id] = order
-                    simulated[instrument_id] = simulated.get(instrument_id, 0.0) + order.quantity
-                else:
-                    result.violations.append(
-                        RiskViolation(
-                            rule=violation.rule,
-                            limit=violation.limit,
-                            observed=violation.observed,
-                            bar_index=i,
-                        )
-                    )
-                    virtual_orders = {
-                        key: vo for key, vo in virtual_orders.items() if key[1] != instrument_id
-                    }
-            external_orders = approved
+            external_orders, virtual_orders = _apply_pretrade_gate(
+                external_orders, virtual_orders, risk_monitor,
+                portfolio, prices, instruments, result, i,
+            )
 
         if fill_timing == "next_open":
             # 5. (D103) Decisions become pending orders; they fill at the NEXT
@@ -500,20 +369,334 @@ def run_backtest(
     result.final_virtual_positions = dict(virtual_positions)
 
     if trial_registry is not None:
-        metrics = {
-            "final_nav": result.final_nav,
-            "total_return": result.final_nav - starting_cash,
-            "num_bars": len(aligned),
-            "num_instruments": len(bars_by_instrument),
-            "num_violations": len(result.violations),
-        }
-        trial_registry.add_trial(
-            trial_id=trial_id,  # type: ignore[arg-type]
-            config=config,  # type: ignore[arg-type]
-            params={},
-            metrics=metrics,
-            snapshot_id=snapshot_id,
-            seed=seed,
+        _log_trial(
+            trial_registry, result, starting_cash, len(aligned), len(bars_by_instrument),
+            trial_id, config, snapshot_id, seed,
         )
 
     return result
+
+
+# ---------------------------------------------------------------------------------
+# Lift-outs from run_backtest's loop. All five are EXTRACTIONS, not redesigns: each
+# body is the code that stood inline, in the same order, with the same float
+# arithmetic. Nothing here hoists a sum out of a loop or reorders an accumulation —
+# the golden masters reconcile to the cent and the cross-engine test to 1e-12, and a
+# refactor that moves either is a failed refactor rather than a finding.
+#
+# They are defined BELOW run_backtest so that its `def` keeps the line number
+# docs/ARCHITECTURE.md cites.
+#
+# Four of the five mutate caller state in place (portfolio, result, and the three
+# per-run dicts) and return None; only the _align_* pair and _apply_gap_splits return
+# values. That is deliberate — `virtual_positions` and `pending_virtual` are REBOUND
+# inside the loop, so a helper may only item-assign, pop or scale them, never rebind
+# them.
+# ---------------------------------------------------------------------------------
+
+
+def _align_view_bars(
+    aligned: Sequence,
+    bars_by_instrument: Mapping[str, Sequence[TimestampedBar]],
+    view_bars_by_instrument: Mapping[str, Sequence[TimestampedBar]] | None,
+    aligned_bar_series: Mapping[str, tuple[Bar, ...]],
+) -> dict[str, tuple[Bar, ...]]:
+    """Strategy views come from the view series when given (split-adjusted signals),
+    aligned 1:1 with execution timestamps — a missing timestamp is a loud error, never
+    a silently substituted raw bar (D75). With no view series the execution bars ARE
+    the view."""
+    if view_bars_by_instrument is None:
+        return dict(aligned_bar_series)
+    view_lookup = {
+        instrument_id: {tb.timestamp: tb.bar for tb in series}
+        for instrument_id, series in view_bars_by_instrument.items()
+    }
+    try:
+        return {
+            instrument_id: tuple(view_lookup[instrument_id][ab.timestamp] for ab in aligned)
+            for instrument_id in bars_by_instrument
+        }
+    except KeyError as exc:
+        raise ValueError(
+            f"view_bars_by_instrument is missing a bar for an aligned execution timestamp: {exc}"
+        ) from exc
+
+
+def _align_volumes(
+    aligned: Sequence,
+    bars_by_instrument: Mapping[str, Sequence[TimestampedBar]],
+    view_bars_by_instrument: Mapping[str, Sequence[TimestampedBar]] | None,
+    volumes_by_instrument: Mapping[str, Sequence[float | None]] | None,
+) -> dict[str, tuple[float | None, ...] | None]:
+    """Volume rides the same timestamp-matching path as the view bars, and fails the
+    same way. align_bars is deliberately NOT changed: volume is looked up against the
+    already-aligned series rather than participating in the inner join itself, so the
+    set of tradeable timestamps cannot shift because a volume column had a hole.
+
+    An instrument mapped to None gets an explicit None entry rather than being absent —
+    `volume_series.get(id)` returns None either way, but the distinction is what lets a
+    reader see that "no volume for this leg" was asked for, not merely not asked
+    about."""
+    volume_series: dict[str, tuple[float | None, ...] | None] = {}
+    if volumes_by_instrument is None:
+        return volume_series
+    for instrument_id in bars_by_instrument:
+        supplied = volumes_by_instrument.get(instrument_id)
+        if supplied is None:
+            volume_series[instrument_id] = None
+            continue
+        source = view_bars_by_instrument or bars_by_instrument
+        series = source[instrument_id]
+        if len(supplied) != len(series):
+            raise ValueError(
+                f"volumes_by_instrument[{instrument_id!r}] has {len(supplied)} entries but "
+                f"its bar series has {len(series)} — the two must align exactly"
+            )
+        by_timestamp = {tb.timestamp: v for tb, v in zip(series, normalise_volumes(supplied))}
+        try:
+            volume_series[instrument_id] = tuple(by_timestamp[ab.timestamp] for ab in aligned)
+        except KeyError as exc:
+            raise ValueError(
+                "volumes_by_instrument is missing a volume for an aligned execution "
+                f"timestamp on {instrument_id!r}: {exc}"
+            ) from exc
+    return volume_series
+
+
+def _apply_gap_splits(
+    portfolio: PortfolioState,
+    virtual_positions: dict[tuple[str, str], float],
+    pending_virtual: dict[tuple[str, str], Order],
+    splits_by_instrument: Mapping[str, Sequence[tuple[datetime, float]]],
+    prev_timestamp: datetime,
+    curr_timestamp: datetime,
+) -> dict[str, list[tuple[datetime, float]]]:
+    """Step 0's body. Scales the broker book, every strategy's virtual book and any
+    pending next_open order (D103) by each split whose ex-date falls in the gap, and
+    RETURNS the splits it applied, per instrument, sorted by ex-date.
+
+    The return value is not a courtesy: step 1 needs it to segment the gap so a
+    dividend pays on the share count actually held on its ex-date (D99). Caller-side,
+    `pre_split_positions` must be captured BEFORE this runs — this function has already
+    scaled the book by the time it returns."""
+    splits_in_gap: dict[str, list[tuple[datetime, float]]] = {}
+    for instrument_id, splits in splits_by_instrument.items():
+        in_gap = sorted(
+            (ex_date, ratio)
+            for ex_date, ratio in splits
+            if prev_timestamp < ex_date <= curr_timestamp
+        )
+        if in_gap:
+            splits_in_gap[instrument_id] = in_gap
+        for ex_date, ratio in in_gap:
+            portfolio.apply_split(instrument_id, ratio)
+            for key in list(virtual_positions):
+                if key[1] == instrument_id:
+                    virtual_positions[key] *= ratio
+            # Pending next_open orders were sized in pre-split share terms;
+            # they scale with everything else (D103).
+            for key, pending_order in list(pending_virtual.items()):
+                if key[1] == instrument_id:
+                    pending_virtual[key] = Order(instrument_id, pending_order.quantity * ratio)
+    return splits_in_gap
+
+
+def _accrue_gap_carry(
+    portfolio: PortfolioState,
+    cost_stack: CostStack,
+    instruments: Mapping[str, Instrument],
+    prices: Mapping[str, float],
+    pre_split_positions: Mapping[str, float],
+    splits_in_gap: Mapping[str, list[tuple[datetime, float]]],
+    prev_timestamp: datetime,
+    curr_timestamp: datetime,
+) -> None:
+    """Step 1's body: per-leg carry and event flows, then portfolio-level carry.
+
+    The snapshot is the whole point and must not be inlined away: per-leg carry is
+    deducted from cash inside the loop, so reading live positions and NAV for the
+    portfolio-level margin base would make it depend on the order the legs were
+    charged in (D67)."""
+    snapshot_positions = dict(portfolio.positions)
+    snapshot_nav = portfolio.nav(prices, instruments)
+    for instrument_id, quantity in snapshot_positions.items():
+        if quantity != 0:
+            # Carry base is split-invariant (qty x price is the same notional in
+            # either frame), so the post-split snapshot is correct here.
+            base_amount = quantity * prices[instrument_id]
+            carry = cost_stack.carry_cost(
+                base_amount,
+                prev_timestamp,
+                curr_timestamp,
+                components=instruments[instrument_id].carry_components(),  # D100
+            )
+            portfolio.accrue_carry(carry)
+            flow = _event_flow_with_splits(
+                cost_stack,
+                instruments[instrument_id],
+                pre_split_positions.get(instrument_id, 0.0),
+                splits_in_gap.get(instrument_id, []),
+                prev_timestamp,
+                curr_timestamp,
+            )
+            if flow != 0:
+                portfolio.apply_cash_flow(flow)
+    # Portfolio-level carry (D5, D67): margin interest accrues only on the
+    # borrowed portion of the book — gross exposure beyond the equity backing it.
+    margin_base = max(gross_exposure(snapshot_positions, prices, instruments) - snapshot_nav, 0.0)
+    if margin_base > 0:
+        portfolio.accrue_carry(
+            cost_stack.portfolio_carry_cost(margin_base, prev_timestamp, curr_timestamp)
+        )
+
+
+def _sweep_intrabar_stops(
+    ab: object,
+    live_stops: dict[tuple[str, str], float],
+    virtual_positions: dict[tuple[str, str], float],
+    pending_virtual: dict[tuple[str, str], Order],
+    portfolio: PortfolioState,
+    result: BacktestResult,
+    cost_stack: CostStack,
+    instruments: Mapping[str, Instrument],
+    strategies_by_id: Mapping[str, Strategy],
+) -> None:
+    """Step 1c's body (D170): every armed stop, evaluated against this bar's OHLC.
+
+    Iterates a LIST copy of live_stops because it deletes from it in both exit paths —
+    the already-flat sweep and the filled sweep. Every mutation here is in place:
+    `virtual_positions` and `pending_virtual` are rebound by the caller later in the
+    same bar, so rebinding them here would silently discard this sweep's work."""
+    for (strategy_id, instrument_id), stop_price in list(live_stops.items()):
+        held = virtual_positions.get((strategy_id, instrument_id), 0.0)
+        if held == 0.0:
+            del live_stops[(strategy_id, instrument_id)]
+            continue
+        side = StopSide.SELL_STOP if held > 0 else StopSide.BUY_STOP
+        fill_price = stop_fill_price(side, stop_price, ab.bars[instrument_id])  # type: ignore[attr-defined]
+        if fill_price is None:
+            continue
+
+        quantity = -held
+        trade_cost = cost_stack.trade_cost(instruments[instrument_id], quantity, fill_price)
+        portfolio.apply_fill(instrument_id, quantity, fill_price, trade_cost)
+        result.fills.append((ab.timestamp, instrument_id, quantity, fill_price, trade_cost))  # type: ignore[attr-defined]
+        virtual_positions[(strategy_id, instrument_id)] = 0.0
+        result.virtual_fills.append(
+            (ab.timestamp, strategy_id, instrument_id, quantity, fill_price)  # type: ignore[attr-defined]
+        )
+        result.stop_fills.append(
+            (ab.timestamp, strategy_id, instrument_id, quantity, fill_price, stop_price)  # type: ignore[attr-defined]
+        )
+        del live_stops[(strategy_id, instrument_id)]
+
+        # A stateful strategy does not otherwise learn it was stopped out: it
+        # would keep emitting the same target and re-enter on the next bar,
+        # turning a bounded loss into a repeated one. Optional by design so
+        # every pre-D170 strategy still conforms to the protocol.
+        on_stop_filled = getattr(strategies_by_id.get(strategy_id), "on_stop_filled", None)
+        if on_stop_filled is not None:
+            on_stop_filled(instrument_id)
+
+        # A pending next_open order for this key is now stale — it was sized
+        # against a position the stop has just closed.
+        pending_virtual.pop((strategy_id, instrument_id), None)
+
+
+def _refresh_stop_registry(
+    targets: Sequence[TargetWeight],
+    live_stops: dict[tuple[str, str], float],
+    splits_by_instrument: Mapping[str, Sequence[tuple[datetime, float]]],
+) -> None:
+    """Step 2b's body (uncommented in the source's own numbering, but real): rebuild
+    the armed-stop registry from this bar's targets (D170)."""
+    for target in targets:
+        key = (target.strategy_id, target.instrument_id)
+        if target.stop is None:
+            live_stops.pop(key, None)
+            continue
+        if splits_by_instrument.get(target.instrument_id):
+            # The stop was computed in the VIEW frame and is enforced against
+            # EXECUTION prices. Those are the same series only when the instrument
+            # has no splits (D75). Rather than silently compare two frames, refuse.
+            raise ValueError(
+                f"instrument {target.instrument_id!r} carries splits and cannot use an "
+                "intrabar stop: the stop is declared in the view frame and enforced "
+                "against execution prices, which diverge across a split (D75/D170)"
+            )
+        live_stops[key] = target.stop
+
+
+def _apply_pretrade_gate(
+    external_orders: dict[str, Order],
+    virtual_orders: dict[tuple[str, str], Order],
+    risk_monitor: RiskMonitor,
+    portfolio: PortfolioState,
+    prices: Mapping[str, float],
+    instruments: Mapping[str, Instrument],
+    result: BacktestResult,
+    bar_index: int,
+) -> tuple[dict[str, Order], dict[tuple[str, str], Order]]:
+    """Step 4b's body (D101, audit F12). Returns the approved broker orders and the
+    surviving virtual orders, and appends a violation per rejection.
+
+    BOTH dicts come back because a rejection has to reach both books: dropping only the
+    broker order would leave the rejecting strategy believing it holds a position the
+    broker never took, and the virtual books would stop reconciling to `final_positions`
+    from that bar onward. `simulated` accumulates the approved orders as it goes, so
+    each order is checked against the book the earlier approvals in this same bar would
+    have produced — not against the bar's opening book."""
+    simulated = dict(portfolio.positions)
+    approved: dict[str, Order] = {}
+    for instrument_id, order in external_orders.items():
+        violation = risk_monitor.pretrade_check(
+            simulated, prices, instruments, instrument_id, order.quantity
+        )
+        if violation is None:
+            approved[instrument_id] = order
+            simulated[instrument_id] = simulated.get(instrument_id, 0.0) + order.quantity
+        else:
+            result.violations.append(
+                RiskViolation(
+                    rule=violation.rule,
+                    limit=violation.limit,
+                    observed=violation.observed,
+                    bar_index=bar_index,
+                )
+            )
+            virtual_orders = {
+                key: vo for key, vo in virtual_orders.items() if key[1] != instrument_id
+            }
+    return approved, virtual_orders
+
+
+def _log_trial(
+    trial_registry: TrialRegistry,
+    result: BacktestResult,
+    starting_cash: float,
+    num_bars: int,
+    num_instruments: int,
+    trial_id: str | None,
+    config: dict | None,
+    snapshot_id: str,
+    seed: int,
+) -> None:
+    """The registry write (D20, D102). `trial_id` and `config` are Optional in the
+    signature only because run_backtest's are — the guard at the top of run_backtest
+    has already refused the run if either is None alongside a registry, which is why
+    the ignores below are safe and stay narrow."""
+    metrics = {
+        "final_nav": result.final_nav,
+        "total_return": result.final_nav - starting_cash,
+        "num_bars": num_bars,
+        "num_instruments": num_instruments,
+        "num_violations": len(result.violations),
+    }
+    trial_registry.add_trial(
+        trial_id=trial_id,  # type: ignore[arg-type]
+        config=config,  # type: ignore[arg-type]
+        params={},
+        metrics=metrics,
+        snapshot_id=snapshot_id,
+        seed=seed,
+    )

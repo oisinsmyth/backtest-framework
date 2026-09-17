@@ -87,9 +87,6 @@ def test_carry_and_flow_bricks_respect_instrument_carry_components():
         def notional(self, quantity: float, price: float) -> float:
             return quantity * price
 
-        def margin_requirement(self, quantity: float, price: float) -> float:
-            return abs(quantity * price)
-
         def carry_components(self) -> tuple[str, ...]:
             return ()  # declares: no carry applies to me
 

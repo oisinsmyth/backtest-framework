@@ -3,15 +3,19 @@
 A well-formed stub, not a working options module: real dataclass fields and correct
 contract-multiplier arithmetic, but margin (and everything else genuinely hard —
 pricing, Greeks, assignment) is out of scope until the options wing gets built. See
-docs/options_extension.md. This raises NotImplementedError rather than returning a
-fabricated number (D48) — a wrong margin figure is worse than an honest crash.
+docs/options_extension.md.
+
+`margin_requirement` used to live here as a loud NotImplementedError. It went with the
+Protocol member it implemented (see instruments/base.py, D48): once nothing in src/
+declares or calls the method, a class-level raise is an affordance for a call that
+cannot be made, not a guard against a fabricated number. The scoping claim it carried
+is unchanged and still lives in docs/options_extension.md — option margin is the
+hardest item in the options wing and is not attempted here.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-
-_OPTIONS_DOC = "docs/options_extension.md"
 
 
 @dataclass(frozen=True)
@@ -35,8 +39,3 @@ class OptionStub:
         # Theta decay is priced into the option's mark, not a carry cost brick in this
         # framework's model — correctly empty, not an unimplemented placeholder.
         return ()
-
-    def margin_requirement(self, quantity: float, price: float) -> float:
-        raise NotImplementedError(
-            f"OptionStub.margin_requirement is not implemented — see {_OPTIONS_DOC} (D16)."
-        )

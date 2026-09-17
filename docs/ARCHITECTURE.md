@@ -48,7 +48,7 @@ final NAV would equal its starting cash.
 | 7 | *(uncommented)* Equity and cash points appended | |
 
 **Steps 1b and the close-fill half of 5 never both happen on a bar.** They are the arms of
-`if fill_timing == "next_open": … else: …` (`backtest.py:466-471`), which is why the source numbers
+`if fill_timing == "next_open": … else: …` (`backtest.py:336`), which is why the source numbers
 both `5`. Read the table as one sequence with a mode switch at 5, not as eleven things that all
 occur.
 
@@ -73,7 +73,6 @@ class Instrument(Protocol):
     @property
     def quote_currency(self) -> str: ...
     def notional(self, quantity: float, price: float) -> float: ...        # SIGNED
-    def margin_requirement(self, quantity: float, price: float) -> float: ...
     def carry_components(self) -> tuple[str, ...]: ...
     def tradeable_quantity(self, raw_quantity: float) -> float: ...
 
@@ -185,8 +184,16 @@ views only. `SnapshotStore` is content-addressed and re-hashes on load, and a qu
 Duplicate timestamps in alignment (a duplicate would silently drop a bar, last-wins, through a
 dict). Zero aligned bars. A missing view bar or volume for an aligned timestamp. A stop on a
 split-bearing instrument. Missing ADV or σ for the impact model — *"a loud error, not a silent zero
-cost"*. `OptionStub.margin_requirement` raising `NotImplementedError` rather than fabricating a
-number.
+cost"*.
+
+> **The example here used to be `OptionStub.margin_requirement`, and on 2026-09-17 it was
+> deleted by D48 itself rather than in spite of it.** The member was required by the
+> `Instrument` protocol, implemented by every instrument, and **called by nothing in
+> `src/`** — while `Equity`'s implementation returned full notional where Reg T is 50%: a
+> wrong number nothing could notice. A stub that raises is D48 kept. A required member
+> nobody reads is D48 broken. It was both at once, and the second beat the first.
+> `src/` now contains **no** `NotImplementedError` at all; the scoping claim it carried
+> still stands in [`options_extension.md`](options_extension.md).
 
 ### Merely recorded — and the name overpromises
 

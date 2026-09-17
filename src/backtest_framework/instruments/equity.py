@@ -19,12 +19,17 @@ class Equity:
     def notional(self, quantity: float, price: float) -> float:
         return quantity * price
 
-    def margin_requirement(self, quantity: float, price: float) -> float:
-        # Full-notional stand-in; real margin schedules are Step 5+ territory.
-        return abs(self.notional(quantity, price))
-
     def carry_components(self) -> tuple[str, ...]:
-        return ("margin_interest", "borrow", "dividend")
+        # "margin_interest" was the first entry here and was DELETED under D48: no
+        # filter could ever match it. `costs/stack.py:_applies` is consulted only from
+        # carry_cost and event_flow; MarginInterest (costs/equity_bricks.py:171) lives
+        # in the PORTFOLIO slot (D5, D67), declares no `component`, and reaches the book
+        # through portfolio_carry_cost, which applies no filter at all. So the entry
+        # named a component that was neither honoured nor honourable — margin interest
+        # is charged per BOOK, on max(gross - NAV, 0), not per leg. Removing it changes
+        # no cost: _applies already admitted MarginInterest unconditionally, and still
+        # does. "borrow" (BorrowFee) and "dividend" (DividendFlow) are the live pair.
+        return ("borrow", "dividend")
 
     def tradeable_quantity(self, raw_quantity: float) -> float:
         if self.quantity_precision is None:

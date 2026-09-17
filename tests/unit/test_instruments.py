@@ -1,7 +1,5 @@
 """Unit tests for the Instrument abstraction (D12, D16), per VERIFICATION_SCHEME.md Step 3."""
 
-import pytest
-
 from backtest_framework.instruments.equity import Equity
 from backtest_framework.instruments.option_stub import OptionStub
 
@@ -30,14 +28,46 @@ def test_equity_tradeable_quantity_eight_decimal_crypto_precision_stub():
     assert equity.tradeable_quantity(0.123456789) == 0.12345679
 
 
-def test_equity_carry_components_lists_applicable_types():
+def test_equity_carry_components_lists_only_components_a_filter_can_match():
     equity = Equity(symbol="AAPL")
-    assert equity.carry_components() == ("margin_interest", "borrow", "dividend")
+    assert equity.carry_components() == ("borrow", "dividend")
 
 
-def test_equity_margin_requirement_is_full_notional_stand_in():
-    equity = Equity(symbol="AAPL")
-    assert equity.margin_requirement(quantity=100, price=150.0) == 15_000.0
+def test_no_instrument_declares_a_carry_component_no_brick_models():
+    """The D48 defect this pins: Equity declared "margin_interest", and
+    `costs/stack.py:_applies` — the only consumer of these names — could never match
+    it, because MarginInterest is a PORTFOLIO brick reached through
+    portfolio_carry_cost, which applies no filter. A name here that no brick declares
+    is decoration. Written against the brick classes rather than a literal list so it
+    still fires when a future instrument invents a component and forgets the brick."""
+    from backtest_framework.costs import equity_bricks
+
+    declared_by_bricks = {
+        getattr(obj, "component")
+        for obj in vars(equity_bricks).values()
+        if isinstance(obj, type) and getattr(obj, "component", None) is not None
+    }
+    assert declared_by_bricks, "no brick declares a component — this test can no longer fire"
+
+    for instrument in (Equity(symbol="AAPL"), _sample_option()):
+        unmatched = set(instrument.carry_components()) - declared_by_bricks
+        assert not unmatched, (
+            f"{type(instrument).__name__}.carry_components() declares {sorted(unmatched)}, "
+            "which no cost brick models — D48 false affordance"
+        )
+
+
+def test_margin_requirement_is_gone_from_the_instrument_interface():
+    """D48: the member had zero call sites in src/ and Equity answered it with full
+    notional, not a Reg T 50% requirement — a wrong number nothing could notice. It was
+    deleted rather than wired; the buying-power lock stays deferred on D107 §1's terms.
+    If it comes back, it comes back with a RiskLimits rule that reads it, and this test
+    is the reminder to delete this test rather than to quietly re-add the method."""
+    from backtest_framework.instruments.base import Instrument
+
+    assert not hasattr(Equity(symbol="AAPL"), "margin_requirement")
+    assert not hasattr(_sample_option(), "margin_requirement")
+    assert "margin_requirement" not in Instrument.__protocol_attrs__  # type: ignore[attr-defined]
 
 
 # --- Option stub (D16, D48) -------------------------------------------------------
@@ -61,12 +91,6 @@ def test_option_stub_tradeable_quantity_whole_contracts_only():
 def test_option_stub_carry_components_is_correctly_empty_not_unimplemented():
     option = _sample_option()
     assert option.carry_components() == ()
-
-
-def test_option_stub_margin_requirement_raises_pointing_at_design_doc():
-    option = _sample_option()
-    with pytest.raises(NotImplementedError, match="docs/options_extension.md"):
-        option.margin_requirement(quantity=2, price=3.50)
 
 
 def test_options_extension_doc_is_the_real_scoping_decision_not_a_stub():

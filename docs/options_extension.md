@@ -15,7 +15,7 @@ strikes, Reg-T margin math, and expiry/assignment lifecycle mechanics. That is
 months of work and recurring data cost, none of which serves the pairs-trading
 research this framework exists to produce (R1). What exists instead is a
 **well-formed stub** — the correct dataclass shape with honest multiplier arithmetic,
-and a loud `NotImplementedError` where a fabricated number would be dangerous —
+and the genuinely hard parts left out in writing rather than fabricated —
 plus this document, which records what "done" would actually take so the deferral is
 a decision rather than an omission.
 
