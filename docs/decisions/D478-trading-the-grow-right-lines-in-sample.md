@@ -1,8 +1,8 @@
 # D478 — trading the grow-right lines, in-sample: does the construction rebuilt from the oracle change what the channel's direction is worth?
 
 *Pre-registration. Written before the runner exists (R8). Sequel to
-[D477](D477-RESULT-the-ceiling-perfect-lines-pay-only-because-they-know-the-future-and-the-causal-lines-pay-nothing.md)
-and [D476](D476-RESULT-the-channel-traded-is-worse-than-re-timing-its-own-trades.md). In-sample
+[D477](D477-RESULT-the-ceiling-perfect-lines-pay-only-because-they-know.md)
+and [D476](D476-RESULT-the-channel-traded-is-worse-than-re-timing-its-own.md). In-sample
 only, by the principal's instruction: the mining panel, the same 1,573 names D476 and D477 used;
 no holdout is read.*
 

@@ -17,7 +17,7 @@ was measured**:
 **That criterion is inherited, not invented here**, and it is `G1` below unchanged.
 
 **What is new is the reason to run it.**
-[D440](D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)
+[D440](D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md)
 measured that **82–86% of the damage a real path does to a funded account is SERIAL STRUCTURE, not
 kurtosis** — a Gaussian at matched moments is worth `$770`, the same holds i.i.d. `$654`, the
 historical sequence `$78`. **A rule that removes exposure during clustered adverse periods is the

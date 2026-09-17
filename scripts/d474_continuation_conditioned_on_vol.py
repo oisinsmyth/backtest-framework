@@ -5,7 +5,7 @@ clears the micro cost?
     uv run python scripts/d474_continuation_conditioned_on_vol.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D474-PRE-REG-does-continuation-conditioned-on-volatility-state-carry-a-signed-edge-that-clears-the-micro-cost.md`,
+`docs/decisions/D474-PRE-REG-does-continuation-conditioned-on-volatility-state.md`,
 committed before this file existed. **Every threshold, horizon, bucket count, null and
 prediction below is copied from that record and none is chosen here.**
 

@@ -30,13 +30,13 @@ Five candidates died on 2026-09-07/08 and **not one of them died on cost:**
 | C1 breadth | G1 restated (ρ 0.658) |
 | C2 the fade's gate | a random gate of the same shape, to within **+0.52 bp** |
 | [D397](D397-RESULT-zr-is-the-whole-tilt-and-its-tail-goes-the-wrong-way.md) `zr` | the whole cross-section — a negative rank IC with **both tails rising** |
-| [D391](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge-was-the-event-bar.md) undercut-reclaim | the pool and the hold — the long paid **+43.02** and its own **mirror paid +43.73** |
+| [D391](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge.md) undercut-reclaim | the pool and the hold — the long paid **+43.02** and its own **mirror paid +43.73** |
 
 **Each rediscovered a base rate at the price of a full pre-registration.** D391's mirror is the
 cleanest statement of the problem: two opposite constructions on opposite signals earned the same
 thing, and nothing in the programme said in advance what "the same thing" was.
 
-**[D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md) is
+**[D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two.md) is
 the template.** It measured the structural correlation floor once — **+0.48** for unrelated books,
 **+0.92** for cohort books — and every correlation claim since is readable against it. **There is
 no equivalent for the per-trade mean, which is the statistic R15 gates on.**

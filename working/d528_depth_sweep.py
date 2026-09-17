@@ -62,12 +62,19 @@ import d528_forecast_reversion as FR            # noqa: E402
 import d528_target_and_stability as TS          # noqa: E402
 import d528_confirmation_entry as CE            # noqa: E402
 
-CACHE = Path("temp/d528_depth_cache.parquet")
+CACHE = Path("temp/d528_depth_cache3.parquet")
 H = Z.H
-G, TAU = 3.0, 20
-XS = (2.0, 2.5, 3.0, 3.5)
-COMBOS = (("market", 0.0), ("stop_retrace", 0.25), ("stop_retrace", 0.50),
-          ("limit_deeper", 0.50))
+TAU = 20
+# THE STOP MUST SCALE WITH THE ENTRY DEPTH, or the sweep measures a different trade at each X.
+# Holding G at 3.0 sigma while X rose put the stop AT the entry at X=3.0 and 0.5 sigma INSIDE it
+# at X=3.5 -- where price moving into the "stop" is moving FAVOURABLY, so it became a
+# take-profit. That produced a win rate climbing to 46.0% while P(target) fell to 3.6%, which
+# looked exactly like the hit/payoff decoupling under test and was purely broken geometry.
+# G = X + STOP_BEYOND keeps the stop exactly STOP_BEYOND sigma past the entry at every depth,
+# reproducing the baseline (X=2.0 -> G=3.0) and isolating DEPTH as the only thing that varies.
+STOP_BEYOND = 1.0
+XS = (2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0)
+COMBOS = (("market", 0.0), ("stop_retrace", 0.25), ("stop_retrace", 0.50))
 STALE = 10
 SPLIT = FR.SPLIT
 FEATS4 = TS.FEATS4
@@ -117,9 +124,10 @@ def build():
                     continue
                 sel = np.flatnonzero(base)
                 feat = {k: ft[k][sel] for k in FEATS4}
+                g_x = xv + STOP_BEYOND        # the stop stays 1 sigma beyond the entry at every X
                 for (mode, off) in COMBOS:
                     tr = CE.resolve_entry(px, c, base, tick, tick_usd, cost_tk,
-                                          mode, off, STALE, di[day], b0, r)
+                                          mode, off, STALE, di[day], b0, r, g=g_x)
                     if not tr:
                         continue
                     k = len(tr)
@@ -156,7 +164,7 @@ def run():
     te["hi_f"] = np.nanmean(np.vstack(ze), axis=0) <= cut
 
     P("DEPTH x CONFIRMATION SWEEP -- does a deeper extreme decouple hit rate from payoff?")
-    P("  corrected chain; LATE half only, out of time; stale 10 bars; forecast OFF unless shown")
+    P(f"  corrected chain; LATE half; out of time; stale 10 bars; STOP = X + {STOP_BEYOND} sigma")
     P("")
     P("  PREDICTION ON RECORD: hit x payoff on GROSS stays flat (conservation intact) while")
     P("  cost/payoff FALLS with depth, so net improves by cost amortisation rather than by")

@@ -8,7 +8,7 @@ market-level gate computed on the floored market's own return series, with the g
     --out-dir DIR   (every stage; default data/ -- the smoke runs pass temp/... so that nothing under data/ is touched)
     --draws N       the A'-within-gate and B draws; --draws-rot R the gate-rotation draws (default: N). The pre-registration is 200 / 100 / 100.
 
-Pre-registration: docs/decisions/D361-the-regime-gated-short-the-triggers-the-record-has-behind-a-market-level-gate.md
+Pre-registration: docs/decisions/D361-the-regime-gated-short-the-triggers-the-record-has-behind-a.md
 
 The gate, on m_f (P["m_f"]: the floored market's per-bar equal-weight SIMPLE return -- r1T is a simple total return, d340_fill compounds it
 with log1p; m_f = V47.floored_market's mean of r1T over the floored priced names), lagged one bar (the value at t uses m_f to t-1):

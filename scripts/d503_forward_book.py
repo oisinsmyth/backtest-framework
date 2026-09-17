@@ -4,7 +4,7 @@
     uv run python scripts/d503_forward_book.py --run --principals-word [--json]
 
 Pre-registered in
-`docs/decisions/D503-PRE-REG-the-one-pass-forward-read-K8-the-MACD-component-and-the-assembled-two-arm-book-on-the-sealed-2024-slice.md`.
+`docs/decisions/D503-PRE-REG-the-one-pass-forward-read-K8-the-MACD-component-and.md`.
 
 **THIS SPENDS THE HOLDOUT.** 2024-01-02 .. 2026-09-09 on the NQ day session is spent for both
 components and for the book the moment this runs. It refuses without `--principals-word`, the

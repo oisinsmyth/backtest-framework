@@ -3,7 +3,7 @@
 **Status:** REVIEW. **Nothing here is a result under [R15](../RULES.md#r15).** No cell was scored, no
 strategy tested, no avenue closed, **no looks added to any multiplicity ledger** — the category
 [D374](D374-is-the-breadth-hurdle-reachable.md) and
-[D375](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+[D375](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md)
 established.
 **Date:** 2026-09-08
 **Area:** the instrument · **prop track**
@@ -19,7 +19,7 @@ ends: [`SOURCES.md`](../research/Prop-Firm-080926/SOURCES.md).
 
 ## 0. The question, and it is the principal's
 
-[D379](D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md) named
+[D379](D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md) named
 the objective — `V = N × [P(pass) × E[payout|funded] − fee]` — and could not evaluate it. Its §6 says
 why, in writing:
 
@@ -152,7 +152,7 @@ funded account **$14,180**.
   the best of the three; the observed 16.8% is still far below the zero-edge baseline.
 
 **And the scale that matters:** an annual Sharpe of 1.60 sustained on a single futures account is not
-a number this programme has ever produced. [D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md)
+a number this programme has ever produced. [D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md)
 put its entry-timing increment at **0.19–0.47× a round trip**, and both admitted arms of
 [BOOK.md](../BOOK.md) are not at capital.
 

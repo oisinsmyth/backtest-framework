@@ -1,5 +1,5 @@
 """D438 -- where the shock's increment sits against cost: spread terciles and the cap axis, on A and B.
-Spec docs/decisions/D438-where-the-shock-increment-sits-against-cost-the-spread-tercile-and-the-cap-axis.md (committed BEFORE this file).
+Spec docs/decisions/D438-where-the-shock-increment-sits-against-cost-the-spread-tercile.md (committed BEFORE this file).
 A MEASUREMENT; in-sample; no holdout.
 
     uv run python -u scripts/run_d438_cost_axes.py --run

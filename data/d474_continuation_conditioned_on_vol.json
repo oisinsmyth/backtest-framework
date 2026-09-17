@@ -1,6 +1,6 @@
 {
  "generated_utc": "2026-09-12T16:58:12+00:00",
- "pre_registration": "docs/decisions/D474-PRE-REG-does-continuation-conditioned-on-volatility-state-carry-a-signed-edge-that-clears-the-micro-cost.md",
+ "pre_registration": "docs/decisions/D474-PRE-REG-does-continuation-conditioned-on-volatility-state.md",
  "purpose": "D474: is there a signed continuation edge conditioned on volatility state that clears the micro cost? Pre-registered; no book or ledger entry may follow from this runner.",
  "source": "data/fixtures/fut_ES_rth_1m.csv.gz, ES, 2016-01-04..2023-12-29, RTH, non-overlapping single-contract in-session windows",
  "cost_ticks": 3.409,

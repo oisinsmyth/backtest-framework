@@ -5,7 +5,7 @@
     uv run python scripts/run_d351_control_a_on_the_floor.py --rerun d349:on_share --draws 100
     uv run python scripts/run_d351_control_a_on_the_floor.py --report
 
-Pre-registration: docs/decisions/D351-control-A-must-rotate-within-the-floored-universe-an-erratum-study-on-D347-and-D349.md
+Pre-registration: docs/decisions/D351-control-A-must-rotate-within-the-floored-universe-an-erratum.md
 
 D347's and D349's control A rolled each name's EVENTS within finT -- every priced bar -- while the observed events are
 confined to elig = finT & keep_v2 (after the hedge is defined). A rotated event can therefore land on a bar the strategy is

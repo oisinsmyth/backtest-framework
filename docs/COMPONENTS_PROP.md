@@ -308,7 +308,7 @@ gross +$19.68 a trade → FULL.** **That slice is now spent and may never be re-
 
 ## AMENDMENT to ENTRY #2, 2026-09-14 — **the crossing assumption is optimistic by 2.4×, because the arm fills at the worst minute of the day. The entry stands.**
 
-*[D527](decisions/D527-the-arm-fills-at-the-worst-minute-of-the-day-and-its-crossing-assumption-is-optimistic-by-two-and-a-half-times.md).
+*[D527](decisions/D527-the-arm-fills-at-the-worst-minute-of-the-day-and-its-crossing.md).
 Nothing about the construction changes and no code was touched; this corrects the COST LINE the row
 is scored under. Raised by the micro-spread census of 2026-09-13, which found MNQ's quoted spread
 has a median of 1.00 tick and a **mean of 1.55**, with only 56.8 % of trades seeing a one-tick market.*

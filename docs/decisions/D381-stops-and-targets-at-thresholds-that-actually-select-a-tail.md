@@ -3,7 +3,7 @@
 **Date:** 2026-09-08
 **Kind:** **SIGNAL TEST (R15) on an OVERLAY**, governed by [R7](../RULES.md#r7). Admits nothing, reads no holdout.
 **Pre-registered under R8 — committed before the runner exists. Result committed separately.**
-**Corrects:** [D380 §6a](D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md),
+**Corrects:** [D380 §6a](D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control.md),
 where my ±200 bp thresholds fired on ~80% of trades and tested something other than a stop or a target.
 
 ---

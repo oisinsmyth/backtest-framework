@@ -97,8 +97,8 @@ the same tell that surfaced D224's look-ahead defect.
 
 ### ADDITION, 2026-09-08 — the control is a NULL, not a POLICY, and the verdict depends on the objective
 
-*Three things [D380](decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
-and [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
+*Three things [D380](decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control.md)
+and [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md)
 found by running R7's control properly. They bind future overlay studies; they do not reopen anything.*
 
 **1. Report the overlay against the UN-OVERLAID BASELINE as well as the control.** R7's control
@@ -120,7 +120,7 @@ not be quoted as an achievable alternative.
 on **mean per trade** is being judged for an unconstrained book. Under a hard drawdown limit the
 criterion is **return per unit of drawdown**, because the drawdown caps size ([R11](#r11)'s P1 is the
 sharpest case, restated as a sizing rule in
-[D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) §5).
+[D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md) §5).
 **An overlay that cuts drawdown by more than it cuts mean wins on that criterion and loses on the
 other.** Which objective applies is **a property of the individual strategy and book, assessed at its
 own test stage** — not something a methodology record settles in advance. **What binds here is only
@@ -235,7 +235,7 @@ what a funded account is actually judged on.
 
 ### RESTATEMENT, 2026-09-08 — **P1 is a sizing rule and cannot fail. It was listed as a filter and it is not one.**
 
-*From [D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) §5,
+*From [D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md) §5,
 which audited every absolute threshold in the programme for whether anything had ever cleared or
 failed it. P1 is the one that can do neither.*
 
@@ -282,7 +282,7 @@ futures.**
 ### RULING, 2026-09-11 — **P4 IS THE ACCOUNT'S LIFE. A PER-HOLD BREACH RATE MAY NOT BE INVERTED INTO IT.**
 
 **The principal's ruling, 2026-09-11**, on a question
-[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)
+[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md)
 raised and did not adjudicate.
 
 > **"Expected time-to-breach" means the expected life of the FUNDED ACCOUNT** — a running balance
@@ -295,7 +295,7 @@ sizing rule, and they are not close:
 | | statistic | C1 at the `V`-maximising size |
 |---|---|---|
 | [D259](decisions/D259-the-extended-session-and-the-overnight-interior.md) | `1 / P(a single hold breaches 4%)` | **6.40 years** |
-| [D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md) | the account's life, full lifecycle | **0.14 years** |
+| [D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md) | the account's life, full lifecycle | **0.14 years** |
 
 **Both were computed correctly. They are different objects, and P4 did not say which.** It does now.
 
@@ -323,7 +323,7 @@ sizing rule, and they are not close:
 
 **What this does NOT change.** **P1 remains a sizing rule that cannot fail** (the 2026-09-08
 restatement). **P2 and P6 remain structural facts about a venue.** **P3 and P5 remain uncomputed**
-([D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)).
+([D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md)).
 The **account-not-strategy** clarification immediately below stands and this ruling sharpens it: P4
 was already declared a constraint on the account, and what was still open was **which statistic
 measures it.** And a closure on P4 still closes a candidate **as a standalone book, not as a
@@ -718,10 +718,10 @@ never swept at all:
 
 | | |
 |---|---|
-| [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md) | stops hurt **monotonically in fire rate** — 5% → 10% → 20% gave +142.79, +126.06, +109.86. **The monotonicity was the finding**: it said the damage was mechanical, not a bad threshold. A parameter-free stop could not have said that |
-| [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md) | the horizon profile, 7.82 → 3.94 bp/bar across caps 5→60, **carried the front-loading result** — a shape, not a point |
+| [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md) | stops hurt **monotonically in fire rate** — 5% → 10% → 20% gave +142.79, +126.06, +109.86. **The monotonicity was the finding**: it said the damage was mechanical, not a bad threshold. A parameter-free stop could not have said that |
+| [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md) | the horizon profile, 7.82 → 3.94 bp/bar across caps 5→60, **carried the front-loading result** — a shape, not a point |
 | [D368](decisions/D368-RESULT-the-relaxation-sweep.md) | asked the shape question directly and answered "**neither knife-edge nor curve**" — only reachable by sweeping |
-| **against** | [D374](decisions/D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md) and [D376](decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md) retired H4's 10% bar and gate 1d's 0.50 — **both fixed in advance and NEVER swept.** The defect was un-calibration, not parameterisation |
+| **against** | [D374](decisions/D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most.md) and [D376](decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two.md) retired H4's 10% bar and gate 1d's 0.50 — **both fixed in advance and NEVER swept.** The defect was un-calibration, not parameterisation |
 
 **So the rule is not "prefer fewer parameters". It is:**
 
@@ -736,7 +736,7 @@ never swept at all:
 **The multiplicity cost of a dense sweep is much smaller than the cell count implies**, and this is
 what makes the rule affordable. Neighbouring grid points are near-duplicates, so the max over them
 grows far more slowly than the max over the same number of independent tests. Measured here:
-[D382](decisions/D382-RESULT-nothing-clears-on-the-stable-statistic-and-the-books-are-the-market.md)'s
+[D382](decisions/D382-RESULT-nothing-clears-on-the-stable-statistic-and-the-books.md)'s
 best-of-38 rotation floor at hold 20 ran **p50 +185.02, p95 +190.01, max +192.32** over 50 draws —
 **a 4% spread from median to maximum across 38 correlated cells.** Adding grid points to a continuous
 parameter is cheap; adding independent hypotheses is not.

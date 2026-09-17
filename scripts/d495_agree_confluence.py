@@ -5,7 +5,7 @@ just fewer trades?
     uv run python scripts/d495_agree_confluence.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D495-PRE-REG-does-requiring-the-two-MACD-variants-to-AGREE-help-and-is-any-help-direction-or-just-fewer-trades.md`.
+`docs/decisions/D495-PRE-REG-does-requiring-the-two-MACD-variants-to-AGREE-help-and.md`.
 **State machine and signal code imported from D491 and D484 unchanged.**
 
 THE DECOMPOSITION IS THE WHOLE POINT

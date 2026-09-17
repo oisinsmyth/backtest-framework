@@ -1316,7 +1316,7 @@ with the target-form exclusion from the first study, not after.**
 
 ## 17. The spread estimator has a published convention, and the programme was not using it
 
-**From [D332](decisions/D332-RESULT-under-the-published-convention-the-incumbent-is-negative.md),
+**From [D332](decisions/D332-RESULT-under-the-published-convention-the-incumbent-is.md),
 2026-09-05.**
 
 The single two-day Corwin-Schultz estimate is **clamped to exactly zero on
@@ -1432,8 +1432,8 @@ old file (D337 §9-10).
 
 ## 19. The short side of this programme is a cost failure, and neither sizing nor borrow changes the verdict
 
-**From [D335](decisions/D335-RESULT-one-short-leg-pays-and-no-pairing-beats-the-symmetric-book.md)
-and [D337](decisions/D337-RESULT-constant-shares-is-worth-46-bp-and-does-not-rescue-the-short-leg.md),
+**From [D335](decisions/D335-RESULT-one-short-leg-pays-and-no-pairing-beats-the-symmetric.md)
+and [D337](decisions/D337-RESULT-constant-shares-is-worth-46-bp-and-does-not-rescue-the.md),
 2026-09-05.** Both pre-registered.
 
 **Every one of the 46 dimensionless signals, symmetric at depth 2 and k=20, F0
@@ -1593,7 +1593,7 @@ gross bp/bar and inside it on Sharpe.
 
 ## 22. The illiquid tail was every book's top trade and none of their edge; the universe now has a floor
 
-**From the D339 census and [D339](decisions/D339-RESULT-the-ordering-survives-the-floor-and-the-book-is-three-basis-points.md),
+**From the D339 census and [D339](decisions/D339-RESULT-the-ordering-survives-the-floor-and-the-book-is-three.md),
 2026-09-05.** Census: stage 0, no predictions. Study: pre-registered, six of nine.
 
 **The census** cut every trade of 46 symmetric F0 books and the incumbent on an
@@ -1700,7 +1700,7 @@ next candidate record.
 
 ## 24. The programme has a declared candidate, and it is three and a half basis points a bar whose every trade loses money uncapped
 
-**From [D342](decisions/D342-RESULT-rsi-is-the-declared-candidate-at-three-and-a-half-basis-points.md),
+**From [D342](decisions/D342-RESULT-rsi-is-the-declared-candidate-at-three-and-a-half-basis.md),
 2026-09-05.** Pre-registered; six of eight; the two that decide held.
 
 `rsi` symmetric at k=20 -- under the deal filter, the dividend bound, the
@@ -1757,7 +1757,7 @@ default is an assertion that cannot fail.** Raise on a missing key.
 
 ## 25. The hold is a cost lever, and under a target exit k is a cap, not a hold
 
-**From [D344](decisions/D344-RESULT-the-hold-is-a-cost-lever-k40-nets-5-and-turnover-is-not-1-over-k.md),
+**From [D344](decisions/D344-RESULT-the-hold-is-a-cost-lever-k40-nets-5-and-turnover-is-not.md),
 2026-09-05.** Pre-registered; four of eight; the load-bearing one held.
 
 The candidate pays 11.3 of its 14.4 gross in cost at k=20. At **k=40 it pays
@@ -1809,7 +1809,7 @@ fixture has.
 
 ## 26. The event book failed as calibrated, and taught three things the slot book could not
 
-**From [D345](decisions/D345-RESULT-the-event-book-fails-as-calibrated-and-the-target-exit-was-the-wrong-exit.md),
+**From [D345](decisions/D345-RESULT-the-event-book-fails-as-calibrated-and-the-target-exit.md),
 2026-09-06.** Pre-registered; five of ten; the load-bearing prediction failed.
 Axis C reopened at the principal's decision and closed again.
 
@@ -1868,7 +1868,7 @@ trade count, hedged series, invalidation exit.
 
 ## 27. The corrections compressed the signal table rather than shifting it, and the incumbent's primary is the best book under honest scoring
 
-**From [D346](decisions/D346-RESULT-two-long-legs-pay-uncapped-and-hist-L-at-k40-is-the-best-book.md),
+**From [D346](decisions/D346-RESULT-two-long-legs-pay-uncapped-and-hist-L-at-k40-is-the.md),
 2026-09-06.** Pre-registered; five of seven. Multiplicity 46 per leg per hold,
 92 books; every number below is one of 92.
 
@@ -3215,17 +3215,17 @@ won.
 ## 52. The cohort was the strategy: three independent methods agree that ~80% of the winners'-dip edge is momentum-decile exposure, and the avenue is retired
 
 **From [D373](decisions/D373-RESULT-the-winners-dip-is-the-retired-book-and-one-GME-trade.md),
-[D376](decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)
-and [D377](decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md),
+[D376](decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two.md)
+and [D377](decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of.md),
 2026-09-07. AVENUE RETIRED BY THE PRINCIPAL, 2026-09-08 (R15).**
 
 > **CLOSED DEFINITIVELY BY THE PRINCIPAL, 2026-09-09 —
-> [D401](decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md).** The
+> [D401](decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure.md).** The
 > avenue was retired on 2026-09-08, **reopened narrowly** for
-> [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md),
+> [D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md),
 > and its exit half was then closed by
-> [D380](decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
-> and [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md).
+> [D380](decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control.md)
+> and [D381](decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md).
 > **It is now shut in both directions and will not be reopened again.**
 >
 > **The entry-timing finding is NOT withdrawn and stands as truth**: D378's T1 passed at **+26.9 SE**
@@ -3291,7 +3291,7 @@ books are**, which is the same finding by a fourth route.
 
 #### AMENDMENT to the rule, 2026-09-08 — the original wording said *"the selector is a rounding error on a factor exposure."* **That was too strong and is withdrawn.**
 
-**[D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md)
+**[D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md)
 measured the selector directly** with the cohort-conditioned rotation §52a specified, and it is not a
 rounding error:
 
@@ -3371,7 +3371,7 @@ missing measurement is the same profile for B_c**: if a random cohort name on th
   must say which moved.
 
 **Status — ANSWERED 2026-09-08 by
-[D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md).**
+[D378](decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md).**
 A′_c was built as specified above, run over 2,000 draws, and **the entry day does matter.**
 
 | | |
@@ -3499,7 +3499,7 @@ want of power and "no shape" is not established. **The family is NOT closed.** W
 
 **D385**, stage 0, 60 ETFs × 2,516 daily bars × 4 event types × 4 sharpening powers × 3 event
 half-lives × 25 draws. Pre-registration `63bf19a`, amendment `1fdd865`, runner `787fb24`, result
-`docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the-close-condition-is-met.md`.
+`docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the.md`.
 
 **THE RESULT: 1 of 2,592 name-cells clears the pre-registered bar** (observed TV > N2 p95 by >2 SE).
 188/2,592 = 7.3% exceed p95 alone against a 5.0% chance rate; 4.6% against the loose null N1.
@@ -3593,7 +3593,7 @@ null TV licenses NO conclusion about the signal. What survives is the narrow cla
 the properly-matched swing types with adequate n_eff, the density's SHAPE is not unusual -- and every
 measured design fault, which is mine. **The family needs a direct signal test (condition on the
 density, measure forward returns, score per R15), not another premise check.** See the amendment in
-`docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the-close-condition-is-met.md`.
+`docs/decisions/D385-RESULT-the-event-density-carries-no-excess-structure-and-the.md`.
 
 **AMENDED AGAIN 2026-09-08 — THE OBJECT WAS BUILT CORRECTLY AND FED THE WRONG INPUT.** Neither D384
 nor D385 ever LOOKED at the density; both reported only TV against a null. Looking: the per-bar `f`
@@ -3615,7 +3615,7 @@ is UNTESTED, not refuted.**
 **D387**, signal test under R15, path-invariant lens. 600 US single names, 2010-01-04 → 2026-08-26,
 2 rare event types × 3 λ × 3 holds, N2 20 draws + A′ 40 rotations, 20,062 cells.
 Pre-registration `b83ad16`, runner `b92d554`, result
-`docs/decisions/D387-RESULT-no-signal-the-edge-is-reversion-from-x-alone-and-cost-buries-it.md`.
+`docs/decisions/D387-RESULT-no-signal-the-edge-is-reversion-from-x-alone-and-cost.md`.
 
 **0 of 18 cells clear. Best margin −1.18 SE.** Gross is positive at long holds (up to **88.1 bp**) but
 **net is negative in all 18 cells**, −54 to −148 bp, against a **Corwin–Schultz spread of 127.9–142.1
@@ -3704,7 +3704,7 @@ volatility units. **Third time in this line the event definition was not matched
 
 **D388**, signal test under R15, 600 US single names, 2 event types × 2 σ-multiples × 3 λ × 3 holds,
 N2 20 draws + A′ 40 rotations, 17,511 cells. Pre-registration `1c168f3`, runner `8f1dced`/`85e9171`,
-result `docs/decisions/D388-RESULT-the-density-finally-had-shape-and-the-conditioner-still-adds-nothing.md`.
+result `docs/decisions/D388-RESULT-the-density-finally-had-shape-and-the-conditioner-still.md`.
 
 **This is the first clean test in the density line.** D384 measured the wrong statistic, D385 measured
 a flat object, D387 measured a flat object on half its universe with mismatched gates. D388 fixes all
@@ -3837,7 +3837,7 @@ closed on both.**
 
 **D389**, mechanism decomposition on the committed `data/d376_series.npz` (500 A′ + 250 B + 500 B_c
 books × 4,187 bars). Pre-registration `5bd7d97`, result
-`docs/decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md`.
+`docs/decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates.md`.
 No cell scored, nothing admitted, no holdout read, nothing fetched.
 
 ### 57.1 It is ONE factor, and that makes the search well-posed
@@ -3914,7 +3914,7 @@ median gap (9.87e-04), reports the worst pair, and demands exactness only where 
 
 **D402**, measurement record, reusing D280's own module for fixture, signal, split and `ic_series`.
 Pre-registration `6843a39`, result
-`docs/decisions/D402-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md`.
+`docs/decisions/D402-RESULT-the-overnight-gap-survives-and-the-contamination-is.md`.
 Prompted by the prop-firm research folder's own prerequisite for its C19-2 row — *"run the
 stale-price / closing-auction contamination test first"* — which had never been required of ours.
 
@@ -4393,9 +4393,9 @@ what the event *is* — the dip control had to break the ingredient.
 in the units the venues use, the specification any future prop candidate faces. Computed on
 committed fixtures (D467's
 hourly session tables and `data/futures_contract_specs.json`) plus
-[D493](decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the-barrier-a-full-contract-dies-in-weeks-at-every-plan-and-nothing-the-programme-holds-is-carryable.md).
+[D493](decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the.md).
 The D467 fixture record is
-`docs/decisions/D467-RESULT-eight-roots-of-hourly-session-tables-pass-five-gates-from-2016-after-two-gate-amendments-on-holiday-prints-and-the-partial-pre-2016-sessions.md`.
+`docs/decisions/D467-RESULT-eight-roots-of-hourly-session-tables-pass-five-gates.md`.
 
 **(a) At day-session scale, cost is not the binding constraint.** Average 10:00→16:00 ET move
 against the $3.00 + 1.009-tick round trip, 2016–2023:
@@ -4411,12 +4411,12 @@ against the $3.00 + 1.009-tick round trip, 2016–2023:
 
 **The Nasdaq micro is the best hunting ground for any day-session rule, not crude.** Break-even
 there is **51.2% directional accuracy**, and a component Sharpe of 0.5 at one micro needs
-**53.6%** — about $10.40 of gross a session. The log MACD ([D484](decisions/D484-RESULT-the-log-MACD-is-a-real-signal-that-fails-only-on-cost-and-the-off-diagonal-ordering-is-confirmed.md))
+**53.6%** — about $10.40 of gross a session. The log MACD ([D484](decisions/D484-RESULT-the-log-MACD-is-a-real-signal-that-fails-only-on-cost.md))
 reaches ≈ 50.7%. **The gap is three points of accuracy, not cost.**
 
 **A corollary that kills a plausible lever.** Selecting high-volatility days to raise the move
 against a fixed fee only pays where cost/E|M| is large — scalping, or the 15-minute bar
-([D472](decisions/D472-RESULT-the-volume-clock-exit-replicates-8-of-8-years-but-the-15-minute-horizon-does-not-survive-its-own-scoring-window.md)).
+([D472](decisions/D472-RESULT-the-volume-clock-exit-replicates-8-of-8-years-but-the.md)).
 At 2.4% there is almost nothing to win.
 
 **(b) The fee and the trailing barrier are one constraint, seen from two sides.** D493 ran every
@@ -4430,11 +4430,11 @@ in ticks.** Positive-value cells are lottery tickets: a fast pass, one payout, t
 
 **(c) What has been measured against this specification, and come up short.** Direction from
 outside the instrument's own price path, at session resolution, is worth **at most one tick a
-day**: eighteen declared cells in [D494](decisions/D494-RESULT-outside-the-price-path-on-the-day-session-eighteen-cells-no-pick-the-largest-is-the-euro-at-one-tick-and-the-release-day-MACD-is-worse-not-better.md)
+day**: eighteen declared cells in [D494](decisions/D494-RESULT-outside-the-price-path-on-the-day-session-eighteen.md)
 — five cross-instrument overnight moves, index-level retail sentiment, and CPI / payroll / FOMC
 gates — produced no pick, the largest being the euro into ES; and the scheduled prints make the
 one real signal on the table earn *less*, because the day leg starts ninety minutes after 08:30.
-The four-quadrant open-interest read ([D497](decisions/D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing-the-open-interest-term-flips-sign-between-index-and-commodity-roots-and-the-textbook-reading-is-backwards-on-gold.md))
+The four-quadrant open-interest read ([D497](decisions/D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing.md))
 carries nothing on four roots, and on gold the quadrant the textbook says to fade is the most
 positive one.
 
@@ -4449,7 +4449,7 @@ worse than none"* applies to gates and controls, not only to the deliberate `[X]
 ## 70. Measurement: the hourly clock on eight CME roots — the off-hours reversal is real on the US clock, worth a tick, and the fee is 7–24% of the hourly move
 
 **A MEASUREMENT, not a verdict** ([R15](RULES.md#r15)). From
-[D499](decisions/D499-RESULT-stage-0-CLOSE-the-hour-after-a-large-move-reverts-in-the-US-off-hours-on-the-index-roots-and-is-worth-less-than-a-tick-no-cell-of-16-clears-the-family-bar-or-the-fee.md)
+[D499](decisions/D499-RESULT-stage-0-CLOSE-the-hour-after-a-large-move-reverts-in.md)
 (stage 0 on D467's hourly session tables, eight roots, 2016–2023, 2024+ unread).
 
 **(a) The reversal exists on the US clock and not on the volume partition.** Pooled β of the next
@@ -4508,7 +4508,7 @@ is not thin-book impact** — the one partition built to test that is the one th
 ## 71. Measurement: the Asian chip channel into US semiconductors is real, semis-specific, and clears ENTIRELY in the opening gap
 
 **A MEASUREMENT, not a verdict** ([R15](RULES.md#r15)). From
-[D504](decisions/D504-RESULT-stage-0-CLOSE-the-Asian-chip-channel-is-real-and-clears-entirely-in-the-gap-25-6-bp-into-the-gap-and-nothing-into-the-day-and-transports-beat-semis.md)
+[D504](decisions/D504-RESULT-stage-0-CLOSE-the-Asian-chip-channel-is-real-and-clears.md)
 (1,324 sessions on the 15-minute ETF fixture, 2018-01-02 → 2023-12-29; 2024+ reserved and unread).
 
 **(a) The channel is there and it is sector-specific.** The overnight gap of SMH relative to QQQ
@@ -4552,7 +4552,7 @@ closes nothing and sizes nothing; it says the vehicle question has at least one 
 ## 72. Measurement: selectivity is a drawdown instrument, not a selector — and by 09:30 the information is spent
 
 **A MEASUREMENT, not a verdict** ([R15](RULES.md#r15)). From
-[D506](decisions/D506-RESULT-stage-1-CLOSE-in-play-selection-costs-more-accuracy-than-the-fee-it-saves-but-it-cuts-the-breach-rate-3-to-5-fold.md),
+[D506](decisions/D506-RESULT-stage-1-CLOSE-in-play-selection-costs-more-accuracy.md),
 eight roots × two signals, ~1,700 sessions each, 2016–2023; 2024+ not read. The conditioner is
 causal and known before the open: the overnight leg's range and volume, each against its own
 trailing 20-session median.
@@ -4606,7 +4606,7 @@ point forward; this establishes it in sample. Every C-d, P3 and P4 number must b
 
 ## 73. Method: a SLOW conditioner has n_eff in years, not sessions — count the years containing both of its states before designing anything around it
 
-*From [D526](decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the-change-carries-nothing.md),
+*From [D526](decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the.md),
 which is the third record to hit this, and the first to name it. Closes nothing; it is a constraint
 on how a conditioner may be tested.*
 
@@ -4646,7 +4646,7 @@ both, and let the rank statistic decide** whether a conditioner is a price signa
 
 ## 74. Measurement: the directional base rate is NOT 50 % — it runs to 54.7 % on the equity indices and BELOW 50 % on natural gas, and it is root- and horizon-specific
 
-*From the [D531 addendum](decisions/D531-ADDENDUM-the-breakout-loses-to-the-base-rate-48-of-48-and-the-base-rate-is-not-50-percent.md),
+*From the [D531 addendum](decisions/D531-ADDENDUM-the-breakout-loses-to-the-base-rate-48-of-48-and-the.md),
 on the principal's challenge. Closes nothing; it is a constraint on how a directional statistic may
 be referenced.*
 

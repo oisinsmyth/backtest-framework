@@ -27,7 +27,7 @@ not trade** forecast the equity universe's forward drift, at a strength comparab
 states this programme already measured?
 
 **Q_B — and it is worth more than Q_A.** Is that state **the unidentified factor of
-[D389](D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md)**?
+[D389](D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates.md)**?
 
 **This study is DESCRIPTIVE and it is Stage 0.** It reads forward returns — a premise check must —
 but it reads them as **cohort drift, never as a strategy's P&L**, exactly as D361's and C1's Stage 0

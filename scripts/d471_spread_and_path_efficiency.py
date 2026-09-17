@@ -9,7 +9,7 @@ construction. Nothing opened, closed or admitted (R15).
 
 WHY
 ---
-[D469](../docs/decisions/D469-RESULT-the-scalping-re-cost-the-spread-is-not-what-kills-it-a-fixed-commission-against-a-tenth-sized-tick-is.md)
+[D469](../docs/decisions/D469-RESULT-the-scalping-re-cost-the-spread-is-not-what-kills-it-a.md)
 put the MES breakeven accuracy at a 15-minute hold at **55.0%** by trading only the top
 quintile of trailing volatility -- and flagged its own weakness in writing: *"the top
 volatility quintile is exactly where fills are worst ... the conditioned rows are the most

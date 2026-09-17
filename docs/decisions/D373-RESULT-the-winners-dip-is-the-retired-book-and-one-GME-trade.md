@@ -173,7 +173,7 @@ whichever reading suits the candidate.
 ### AMENDMENT, 2026-09-07 — **H4 is corrected from FAIL to PASS. It was the bar.**
 
 The doubt above was settled the same day by
-**[D374](D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md)**,
+**[D374](D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most.md)**,
 which computed the concentration family **per null draw** on this exact ledger.
 
 - Across **4,952 defined draws in three arms**, the most diversified random book reached **2.98%**.
@@ -311,8 +311,8 @@ above this line has moved.
 | | lens | measurement |
 |---|---|---|
 | **this record** | return per trade | `B_c` centres at **+126.54** of the observed **+160.55** |
-| **[D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)** | covariance | two books sharing only cohort membership correlate at **+0.923** |
-| **[D377](D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md)** | hedge | removing the cohort takes the gross mean to **+34.08** and the median to **−30.74** |
+| **[D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two.md)** | covariance | two books sharing only cohort membership correlate at **+0.923** |
+| **[D377](D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of.md)** | hedge | removing the cohort takes the gross mean to **+34.08** and the median to **−30.74** |
 
 **Roughly 80% of the edge was exposure to the momentum decile.** And D376 showed the excess over the
 cohort baseline was **+0.011**, not the +0.43 that H7's 0.935 against a 0.50 bar implied — D373 was

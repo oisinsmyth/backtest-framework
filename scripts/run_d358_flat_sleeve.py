@@ -4,7 +4,7 @@
     uv run python scripts/run_d358_flat_sleeve.py --cell rev_5:2 --draws 100 --part 1      A' and B for one cell (one process per cell)
     uv run python scripts/run_d358_flat_sleeve.py --report
 
-Pre-registration: docs/decisions/D358-the-flat-by-default-sleeve-a-trigger-a-market-hedge-and-the-deployed-base.md
+Pre-registration: docs/decisions/D358-the-flat-by-default-sleeve-a-trigger-a-market-hedge-and-the.md
 
 The family: two scores (rev_5, hist_L) x three rarities (p in 2, 5, 10) = six cells. The event is a FRESH entry into the
 bottom p% of the lagged floored cross-sectional percentile (pct[t] <= p and pct[t-1] > p) on eligible bars; the 10% cells

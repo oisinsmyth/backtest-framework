@@ -1,6 +1,6 @@
 # Audit — which fixtures still carry the flat instrument-id map, and is anything exposed?
 
-> **ANSWERED AND CLOSED 2026-09-13 by [D521](../docs/decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open-interest-fixture-was-carrying-a-phantom-CL-contract.md).**
+> **ANSWERED AND CLOSED 2026-09-13 by [D521](../docs/decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open.md).**
 > All three builders are ported; all three fixtures were rebuilt and diffed. §3's conclusion —
 > "no gross contamination reaches CL" — was right, and §4's caveat was the operative half:
 > **the perturbation was real and it was 0.02%.** Instrument 42007396 was `6AF4` until

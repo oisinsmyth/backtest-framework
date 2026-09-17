@@ -17,7 +17,7 @@ next-open fill, `EB.simulate_event` via `run_d359`. Same fixture, same seed base
 
 ## 1. The gaps, named with the exact numbers that need them
 
-[D391 RESULT](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge-was-the-event-bar.md)
+[D391 RESULT](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge.md)
 §"The corrected ledger against every atlas floor" states:
 
 > *"**Three cells have no floor** — cap 5 either side, and cap 1 short at 167,179 trades — because

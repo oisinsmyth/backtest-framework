@@ -90,7 +90,7 @@ trade alone (GME, 2021-01-28) is **8.38%** of the ledger.
 ### 2a′. AMENDMENT, 2026-09-08, BEFORE THE RUNNER EXISTS — D380 already built this, and it changes the fill and the null
 
 **Found while looking for the kernel's exit hooks: `scripts/run_d380_exit_rules.py` and
-[D380 RESULT](D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
+[D380 RESULT](D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control.md)
 already exist**, on master, dated the same day. Three consequences, all adopted here.
 
 **1. The kernel is not touched at all.** D380 established that per-trade P&L is the sum of a trade's

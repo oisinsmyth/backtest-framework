@@ -1,5 +1,5 @@
 """D437 stage 1 -- shock-with-state: the in-sample event study and the weighted book, against the atlas's own floors.
-Spec docs/decisions/D437-shock-with-state-stage-1-the-in-sample-event-study-and-the-weighted-book.md (committed BEFORE this file, R8).
+Spec docs/decisions/D437-shock-with-state-stage-1-the-in-sample-event-study-and-the.md (committed BEFORE this file, R8).
 In-sample on the mining fixture; no holdout is read.
 
     uv run python -u scripts/run_d437_stage1.py --run

@@ -4,7 +4,7 @@
     uv run python scripts/d491_conditional_hold.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D491-PRE-REG-the-conditional-hold-exit-when-the-signal-flips-with-a-minimum-hold-time.md`
+`docs/decisions/D491-PRE-REG-the-conditional-hold-exit-when-the-signal-flips-with-a.md`
 (amended before this file existed to make B2 co-primary). **Signal code imported from D484
 unchanged.**
 

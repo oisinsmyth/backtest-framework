@@ -172,7 +172,7 @@ to 75,340.**
 > ### THE ATLAS FOUND A LOOK-AHEAD — corrected 2026-09-08, and this is the record's first real use
 >
 > **A 6.7× margin is not something this programme produces, and it was not one.**
-> [D391 §9](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge-was-the-event-bar.md)
+> [D391 §9](D391-RESULT-the-reclaim-is-worth-less-than-no-reclaim-and-the-edge.md)
 > traced it: the ledger booked **the signal bar's own open-to-close**, the bar whose close defines
 > the event. The kernel treats its mask as the bar the position *opens on*, and D391's mask was
 > passed unlagged.

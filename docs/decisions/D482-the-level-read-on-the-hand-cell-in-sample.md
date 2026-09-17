@@ -2,7 +2,7 @@
 
 *Pre-registration, written before the runner change (R8). Runner: D478's
 `scripts/run_d478_grow_trades.py --source hand --rule level`, output `data/d482_hand_level.json`.
-Sequel to [D481](D481-RESULT-the-hand-cell-trades-like-every-other-causal-channel-plus-12-bp-gross-below-its-own-rotation-null.md).
+Sequel to [D481](D481-RESULT-the-hand-cell-trades-like-every-other-causal-channel.md).
 In-sample, the mining panel, 1,573 names; no holdout is read. The principal asked for this run
 and for the daily channel line to be closed in writing after it, either way.*
 

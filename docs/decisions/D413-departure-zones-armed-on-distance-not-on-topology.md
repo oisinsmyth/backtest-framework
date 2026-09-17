@@ -14,7 +14,7 @@ Master takes D413. **D407 is not consumed.**
 
 ## 1. WHY THIS IS NOT THE D197–D203 LADDER, WHICH IS THE FIRST THING TO ESTABLISH
 
-[D412](D412-RESULT-the-state-was-not-a-state-and-the-matched-level-ate-the-result.md) failed and this
+[D412](D412-RESULT-the-state-was-not-a-state-and-the-matched-level-ate-the.md) failed and this
 changes its construction. That is the shape of the refinement ladder D197–D203 ran five times, each
 version beating its predecessor and none moving the null gap. **Three things separate this from
 that, and if a reader disagrees with all three then this study should not be run:**

@@ -1,6 +1,6 @@
 {
  "generated_utc": "2026-09-12T17:49:00+00:00",
- "pre_registration": "docs/decisions/D475-PRE-REG-does-the-volatility-conditioned-continuation-gradient-TRANSFER-to-seven-instruments-it-was-never-seen-on.md",
+ "pre_registration": "docs/decisions/D475-PRE-REG-does-the-volatility-conditioned-continuation-gradient.md",
  "momentum_definition": "sign(close[last segment of window t] - open[first segment of window t]); traded through window t+1 at its open and close. No magnitude, no moving average, no breakout, no trend fit, no second lag. Lookback is LOCKED EQUAL to the holding period -- only the diagonal of a 2-D space is tested, which is a stated gap, not an oversight.",
  "source": "data\\fixtures\\fut_sessions_hourly.csv.gz",
  "roots_primary": [

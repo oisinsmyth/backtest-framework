@@ -417,7 +417,7 @@ four break-tests alone.
 5. **One era does most of the work.** Every cell is 2.7–15× weaker after 2021; the fast cells are
    flat-to-negative there. A rule whose edge halves each era is not obviously a rule.
 6. **Nothing about hurdle P was computed.** No P1 sizing, no P3/P4/P5 — all three of which
-   [D375](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) §5
+   [D375](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md) §5
    records as never having been computed on anything.
 7. **Fees only, plus a measured-but-unreliable spread estimate.** No slippage, no impact, no funding,
    no borrow. The 0.1 bp/side figure is a **commission**, and a real 15m book paying 697 sides a year

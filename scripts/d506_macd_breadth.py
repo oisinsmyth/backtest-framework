@@ -4,7 +4,7 @@
     uv run python scripts/d506_macd_breadth.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D506-PRE-REG-the-frozen-MACD-arm-across-all-36-roots-gross-first-as-one-family.md`.
+`docs/decisions/D506-PRE-REG-the-frozen-MACD-arm-across-all-36-roots-gross-first-as.md`.
 Signal from D484 and the state machine from D491, imported unchanged -- not one parameter is
 fitted here.
 

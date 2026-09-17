@@ -6,10 +6,10 @@ artifact [`data/d504_arm_full_history.json`](../../data/d504_arm_full_history.js
 **A description, not a study.** One frozen construction, every year on disk. No search, no grid,
 no threshold, no selection — so nothing is pre-registered, because nothing is being decided.
 Nothing admitted ([R15](../RULES.md#r15)). The 2024+ slice was already spent by
-[D503](D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has-grown-into-the-barrier-and-the-book-is-worse-than-its-best-arm.md);
+[D503](D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has.md);
 describing it is not a re-read, and nothing here sharpens any cell.
 
-Requested by the principal after [D503 §9](D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has-grown-into-the-barrier-and-the-book-is-worse-than-its-best-arm.md)'s
+Requested by the principal after [D503 §9](D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has.md)'s
 correction: *"do a full study of the arm across the full range of dates we have available."*
 
 ---

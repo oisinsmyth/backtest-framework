@@ -15,7 +15,7 @@ top trade has never been named.
 
 Two things, and the second is the point.
 
-**First, an owed test.** [D359 §6](D359-RESULT-the-loser-cohort-does-not-drift-down-on-the-floored-universe.md)
+**First, an owed test.** [D359 §6](D359-RESULT-the-loser-cohort-does-not-drift-down-on-the-floored.md)
 reported the **mirror** of its failed short — a fresh `rev_5` dip on a name in the **top** decile
 of 12-month momentum, entered **long** — as a mechanism check, counted it in no multiplicity, and
 closed with *"it becomes a finding only under its own pre-registration with A′, B, B_c and C, the

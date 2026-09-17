@@ -1,6 +1,6 @@
 {
  "generated_utc": "2026-09-12T21:29:35+00:00",
- "pre_registration": "docs/decisions/D491-PRE-REG-the-conditional-hold-exit-when-the-signal-flips-with-a-minimum-hold-time.md",
+ "pre_registration": "docs/decisions/D491-PRE-REG-the-conditional-hold-exit-when-the-signal-flips-with-a.md",
  "purpose": "D491: conditional exit on a MACD sign flip with a minimum hold. Produces a real P&L series, so C-a/C-c/C-d are computed directly.",
  "cost": {
   "commission_rt": 3.0,

@@ -1,6 +1,6 @@
 {
  "generated_utc": "2026-09-12T20:59:09+00:00",
- "pre_registration": "docs/decisions/D488-PRE-REG-does-the-MACD-edge-keep-growing-with-the-holding-period-and-does-it-cross-its-cost.md",
+ "pre_registration": "docs/decisions/D488-PRE-REG-does-the-MACD-edge-keep-growing-with-the-holding.md",
  "purpose": "D488: does the D484 MACD edge keep growing with the hold, and does it cross its cost? Signal code imported from D484 unchanged.",
  "constraints_enforced": {
   "P2_last_exit_segment_index": 21,

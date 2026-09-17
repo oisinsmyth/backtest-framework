@@ -162,7 +162,7 @@ fails — reversal entry T = +0.86 on N = 289, continuation entry T = −0.44 on
 
 **Why it survives here when the strategies built on it do not.** Every other item in this review asks
 a classifier to *earn*. This one is worth keeping because it can be asked only to *abstain*.
-[D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+[D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 frames the prop account as a down-and-out call: the objective is `E[payouts │ survival] × P(survival)`,
 and **the second term is bought, not earned**. A rule that identifies 4.4% of days on which the
 intraday path is unusually violent — 77.6% of them reverse from their peak before the close, which is

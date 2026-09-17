@@ -12,7 +12,7 @@ is not that.
 
 WHY
 ---
-[D471 AMENDMENT 2](../docs/decisions/D471-RESULT-the-spread-barely-widens-where-the-moves-are-and-path-efficiency-is-exactly-the-random-walk-value-in-every-bucket.md)
+[D471 AMENDMENT 2](../docs/decisions/D471-RESULT-the-spread-barely-widens-where-the-moves-are-and-path.md)
 found that at matched bar count and matched mean holding time a volume bar captured **15% more
 move** than a 15-minute bar (E|M| 27.1 against 23.5 ticks), taking the MES breakeven accuracy
 from **57.3% to 56.3%** -- about 1 pp, worth roughly 1.0 of Sharpe by D469's sensitivity. That

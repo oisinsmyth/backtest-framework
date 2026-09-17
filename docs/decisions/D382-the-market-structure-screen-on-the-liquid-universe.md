@@ -135,7 +135,7 @@ nothing at this stage.**
    **−1.77** and **115% of the effect overnight**. **A feature that fires on the close and moves in
    the gap is not tradeable**, and that is a property of the family, not of the universe.
 4. **The overnight/intraday decomposition per feature**, so 3's cause is visible rather than inferred.
-5. **Gate 1d′ against S1 and S2** ([D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)):
+5. **Gate 1d′ against S1 and S2** ([D376](D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two.md)):
    correlation compared to the p95 of the pair distribution among books from this universe, **with the
    pool named**. A raw correlation quoted without its pool is uninterpretable.
 

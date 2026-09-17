@@ -33,7 +33,7 @@ time-series gate before it is a proposal at all."*
 
 ## 2. The programme already assigns flatness to the allocator, in two independent places
 
-**[D358](../docs/decisions/D358-RESULT-the-sleeve-is-never-flat-name-level-rarity-does-not-make-time-level-flatness.md)
+**[D358](../docs/decisions/D358-RESULT-the-sleeve-is-never-flat-name-level-rarity-does-not.md)
 §2**, in its own words:
 
 > *"Flatness has to come from a time-series condition — a market-level state, an era signal — which

@@ -3,7 +3,7 @@
 **Date:** 2026-09-07
 **Kind:** **METHODOLOGY.** Adjudicates a gate, not a strategy. Admits nothing, reads no holdout.
 **Pre-registered under R8 — committed before the runner exists. Result committed separately.**
-**Follows:** [D375](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) §4,
+**Follows:** [D375](D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md) §4,
 which found gate 1d the one stage-1 gate that is under-evidenced.
 
 ---

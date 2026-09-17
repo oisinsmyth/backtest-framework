@@ -21,7 +21,7 @@ delivered. Saying otherwise would inflate it.
 | # | item | bears on | strength |
 |---|---|---|---|
 | 1 | Grossman–Zhou sizing is a **fifth challenger** D372 does not list | [D372](../../decisions/D372-equal-weight-is-the-incumbent-sizing-and-the-hurdle.md) | **strong** — named gap in a live pre-registration |
-| 2 | Broadie–Glasserman–Kou puts a **number** on D381's "a stop is a late trigger" | [D381](../../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md), [D169](../../decisions/D169-the-short-book-and-its-close-based-stop.md) | **strong** — quantifies a result committed yesterday |
+| 2 | Broadie–Glasserman–Kou puts a **number** on D381's "a stop is a late trigger" | [D381](../../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md), [D169](../../decisions/D169-the-short-book-and-its-close-based-stop.md) | **strong** — quantifies a result committed yesterday |
 | 3 | The vol-managed literature's headline was a **look-ahead artefact in the vol estimator** | D372 `IV`/`IVT`, [youtube-lessons §5](../../youtube-lessons.md) | **strong, and it is a warning about our own C1** |
 | 4 | Bold-vs-timid play is a **theorem**, and it flips on the sign of the edge | D372 incumbent `EW` | moderate |
 | 5 | `d386_pass_rate.py` is **reusable infrastructure** for any drawdown question | anything with a path constraint | infrastructure, not a finding |
@@ -55,7 +55,7 @@ adds a *parameter* (`α`) and a *state* (the running max), so it is more exposed
 
 ## 2. Broadie–Glasserman–Kou puts a number on D381's "a stop is a late trigger"
 
-[D381](../../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
+[D381](../../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md)
 concluded yesterday that **a stop is a late trigger by construction** — the threshold is only reached
 *after* the adverse move, and cutting the worst 5% at a **random** bar (+226.52) beat cutting them at
 −3,229 (+142.79). That is a statement about *ordering*. It carries no magnitude.

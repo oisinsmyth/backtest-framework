@@ -53,7 +53,7 @@ yesterday's range plus a volume spike (D490, D492), volatility-conditioned conti
 D475), opening-range breakouts, path shape (D471), channels (D476–D483), contract size as a
 participant proxy (D485). **Held by the other session:** MACD confluence and the daily-state fades.
 
-**[D497 RESULT](../decisions/D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing-the-open-interest-term-flips-sign-between-index-and-commodity-roots-and-the-textbook-reading-is-backwards-on-gold.md)
+**[D497 RESULT](../decisions/D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing.md)
 — the four-quadrant open-interest read carries nothing.** The `statistics` schema had never been
 read here; it is now a gated fixture (`fut_open_interest_daily.csv.gz`, four roots, 2010→2026,
 100% coverage, causality asserted: open interest for trade date T is first published ≈ 21:00 ET on
@@ -80,13 +80,13 @@ taken at commit time against `docs/decisions/` (D485 → D486 → D492 were take
 inside one hour). The retail line's single-name herding test and the micro proxy are **dropped
 for the prop book**; Robintrack stays on disk for the personal book.
 
-**Both reported the same evening.** [D493 RESULT](../decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the-barrier-a-full-contract-dies-in-weeks-at-every-plan-and-nothing-the-programme-holds-is-carryable.md):
+**Both reported the same evening.** [D493 RESULT](../decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the.md):
 the size lever fixes the fee (NQ last-30 net Sharpe −0.13 at one micro → +0.48 at one full contract)
 and runs into the barrier — a full contract's daily σ is 3–6× the plan's trailing drawdown, funded
 life 0.03–0.16 years on all 14 plans, **0 of 448 cells carry**; the MACD at one round trip a session
 is +0.16, not D486's +0.35 (that lane owns the reconciliation). **A prop signal needs a daily Sharpe
 near 0.1 at the size that makes the fee small; size cannot supply it.**
-[D494 RESULT](../decisions/D494-RESULT-outside-the-price-path-on-the-day-session-eighteen-cells-no-pick-the-largest-is-the-euro-at-one-tick-and-the-release-day-MACD-is-worse-not-better.md):
+[D494 RESULT](../decisions/D494-RESULT-outside-the-price-path-on-the-day-session-eighteen.md):
 eighteen day-session cells from outside the price path — five cross-instrument overnight
 predictors, index-level Robintrack sentiment, three release-day gates on the MACD — **no pick**; the
 largest is the euro at one ES tick a session; the MACD earns *less* on CPI and payroll days. The
@@ -197,7 +197,7 @@ against $4.21). **Its two MECHANISM predictions, never tested, now fail too:** d
 reads **hit 50.03%, z = +0.1 on 7,489 observations**. Per-root the signs disagree. The flow IS real —
 the equity roots trade **15.7-21.1% of session volume in the closing hour against an even 14.3%** —
 it just carries no direction. See
-[D530](../decisions/D530-avenue-3-closed-the-leveraged-ETF-reset-flow-is-real-and-carries-no-direction-and-16-of-36-roots-do-not-trade-in-the-day5m-close.md).
+[D530](../decisions/D530-avenue-3-closed-the-leveraged-ETF-reset-flow-is-real-and.md).
 
 **THE DURABLE PART, and it is a trap for any day5m study.** My first run showed a spectacular
 z = -12.6 "closing reversion" across 19 non-index roots. It was my control group measuring dead air:
@@ -264,7 +264,7 @@ for prop. **The admitted arm already complies.**
 thing that works is not paid for being right — it is paid for being right BIGGER.* Every previous
 search hunted ~55% accuracy. **Hunt shape, not accuracy.**
 
-> **THAT REFRAME IS WRONG AND WAS CORRECTED THE SAME DAY — [D529](../decisions/D529-the-payoff-ratio-is-exit-geometry-the-hit-rate-is-the-edge-and-my-reframe-was-backwards.md).**
+> **THAT REFRAME IS WRONG AND WAS CORRECTED THE SAME DAY — [D529](../decisions/D529-the-payoff-ratio-is-exit-geometry-the-hit-rate-is-the-edge-and.md).**
 > A detached signal run through the arm's OWN exit produces a payoff ratio of **1.041 at the median
 > and 1.138 at p95**; the arm's 1.128 is **inside** that. Its **hit rate of 50.5% is outside it
 > entirely — 0 of 400 draws reach it.** Accuracy alone flips the null's expectation from −0.031 to
@@ -290,7 +290,7 @@ entry timestamps. Then the MACD edge on the three new roots: **silver's edge is 
 the reference roots reproduce D515 exactly (NQ day **+0.0275**, GC and CL inside). Closes the MACD
 construction on those day sessions, not the roots.
 
-**Stage 0 #3 — the curve story, [D526](../decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the-change-carries-nothing.md).**
+**Stage 0 #3 — the curve story, [D526](../decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the.md).**
 Persistence passes, collinearity passes (**pearson +0.498 but spearman +0.162** — not momentum), and
 then **the test turns out to be invalid: 0 of 8 CL years contain both curve states.** The tercile is
 a period, not a state. **This is the third conditioner to fail this way (D508, D512, D526) and it is
@@ -1399,7 +1399,7 @@ entered long, 40-bar cap. 3,932 trades, 796 names.
 ## 0c2. D374 — the breadth hurdle was unreachable, and H4 is retired
 
 **[D374](../decisions/D374-is-the-breadth-hurdle-reachable.md)** pre-registered (`4c0816c`),
-runner (`c2f7887`), **[RESULT](../decisions/D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most-diversified-book-in-the-null.md)**
+runner (`c2f7887`), **[RESULT](../decisions/D374-RESULT-the-breadth-bar-was-unreachable-and-it-failed-the-most.md)**
 (`520dd40`). A METHODOLOGY study: it adjudicates a hurdle, not a strategy, and adds no looks to any
 multiplicity ledger.
 
@@ -1433,7 +1433,7 @@ fat-tailed return distribution does to any ~800-name book here; selection has no
 
 ## 0c3. D375 → D377 — the hurdle audit and what it turned up
 
-**[D375](../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+**[D375](../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md)
 (`1732fd0`), a REVIEW.** I predicted H4's disease would be widespread. **It is not**, and the reason
 is structural: most stage-1 gates are built on **t-statistics, whose null centre is zero by
 construction**, so `t ≥ 2` means the same thing in every universe and cannot be unreachable. **H4 was
@@ -1448,7 +1448,7 @@ the only threshold nothing had ever cleared.** What the audit did find:
 - **P5 is the only surviving threshold with H4's disease** — a ratio whose denominator
   (trailing-year profit) **can cross zero**.
 
-**[D376](../decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two-cohort-books-at-0.92.md)
+**[D376](../decisions/D376-RESULT-two-unrelated-books-here-correlate-at-0.48-and-two.md)
 (`ca8a89c`) — the correlation floor.** 500 draws, 280,625 pairs.
 
 | | p50 | p95 |
@@ -1465,7 +1465,7 @@ the only threshold nothing had ever cleared.** What the audit did find:
   without it is uninterpretable.
 - **[CLU]** — cluster the bootstrap on **books**, not pairs. 280,625 pairs came from 1,250 books.
 
-**[D377](../decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of-the-problem.md)
+**[D377](../decisions/D377-RESULT-the-beta-hedge-is-adopted-and-it-fixes-seven-percent-of.md)
 (`cd97e4f`) — the hedge.** The incumbent assumed **beta exactly 1 for every name**; a lagged
 `roll_beta(63, 21)` existed unused.
 
@@ -1488,7 +1488,7 @@ the only threshold nothing had ever cleared.** What the audit did find:
 
 ## 0c4. D378 — the entry day DOES matter, and D379 — the prop account is a barrier option
 
-**[D378](../decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md)
+**[D378](../decisions/D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md)
 (`7117478`).** The one test the narrow reopening authorised. **A′_c**: for each observed entry, a
 replacement bar drawn from the days **that same name** was eligible **and** in the top decile — name,
 cohort and per-name count fixed, **only the day moves**. 2,000 draws.
@@ -1511,7 +1511,7 @@ cohort and per-name count fixed, **only the day moves**. 2,000 draws.
 - **FINDINGS §52's corollary was amended** — it called the selector "a rounding error on a factor
   exposure" and that is withdrawn. **A real effect small relative to cost is a small real effect.**
 
-**[D379](../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+**[D379](../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 (`861ec8f`, amended `7b4e58f`) — FRAMING, from a session other than the one that ran D373–D378.** No
 measurement on any fixture; one toy Monte Carlo, labelled as illustration and deliberately not
 committed to `data/`.
@@ -1725,7 +1725,7 @@ EMPTY: nothing is pre-registered and unrun.** What follows is candidates, not co
 > flag, not a confirmation.**
 
 **TWO AVENUES WERE CLOSED BY THE PRINCIPAL ON 2026-09-09 —
-[D401](../decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure-avenues.md):
+[D401](../decisions/D401-the-principal-closes-the-winners-dip-and-the-15m-structure.md):
 the WINNERS' DIP and the 15-MINUTE TIME-SERIES STRUCTURE SCREEN.** Both are shut and neither will be
 reopened. **What outlives them and must not be closed with them:** D378's entry-timing finding stands
 as truth (T1 at **+26.9 SE**, largest-trade-removed gate at **+9.8 SE**); D383's **`n_eff` instruments
@@ -1738,7 +1738,7 @@ license mining them without a fresh pre-registration.
 **ONE decision remains the principal's and blocks nothing else:** whether to **re-base past records**
 onto D377's H1 hedge (D377 §4 argues not — the benefit is 0.032 on a 0.47 floor).
 
-1. ~~D383 is a debt~~ — **SETTLED. [D383 RESULT](../decisions/D383-RESULT-the-time-series-screen-clears-nothing-and-its-ten-passes-are-buy-and-hold.md)
+1. ~~D383 is a debt~~ — **SETTLED. [D383 RESULT](../decisions/D383-RESULT-the-time-series-screen-clears-nothing-and-its-ten.md)
    (`c5dc05a`). 0 OF 572 CELLS CLEAR**, and the best cell at every hold sits **−0.06 to −0.95 SE of
    the floor's own CENTRE** — on the median, not near the bar. **§8's abandon condition is met; the
    close is the principal's.**
@@ -1794,7 +1794,7 @@ onto D377's H1 hedge (D377 §4 argues not — the benefit is 0.032 on a 0.47 flo
    whether the incumbent book is positive at all** (D332: PUB post-D333 is −12.68 bp/bar). Nothing
    else on this list changes as many conclusions.
 3. ~~Where does the remaining 0.44 correlation floor come from?~~ — **ANSWERED, and the answer is a
-   sharp negative. [D389](../decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md).**
+   sharp negative. [D389](../decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates.md).**
    **It is ONE factor** — PC1 reproduces the pairwise rho to three decimals (0.449 vs 0.449), PC2 is
    0.006, all 500 books load the same sign. **And it is none of the four candidates**: slot mechanics
    0.029, equal-weighting 0.031, eligibility floor 0.052, shared hedge term likewise. **Unattributed:
@@ -1806,8 +1806,8 @@ onto D377's H1 hedge (D377 §4 argues not — the benefit is 0.032 on a 0.47 flo
    - **Where a successor should look:** the factor lives in **which days get traded**, not in the
      market on them — i.e. the **entry-condition distribution**, which no driver here could reach.
 
-4. ~~Exit timing~~ — **DONE. [D380](../decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control-inherits-the-rule.md)
-   (`43db0df`) and [D381](../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)
+4. ~~Exit timing~~ — **DONE. [D380](../decisions/D380-RESULT-no-exit-overlay-beats-not-cutting-and-R7s-control.md)
+   (`43db0df`) and [D381](../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md)
    (`eac6650`). NINE ARMS, NONE BEATS HOLDING TO THE CAP** — on **gross mean per trade**, which is the
    unconstrained objective. D380's first pair were mis-scaled (±200 bp fired on ~80% of trades, caught
    by the principal); D381 re-ran them at declared **fire rates** of 5/10/20% and every arm still lost.
@@ -2096,7 +2096,7 @@ construction:**
 
 ## 1a. THE EDGE IS ENTIRELY OVERNIGHT - [D280](../decisions/D280-the-forecast-precheck.md)
 
-**TESTED FOR STALE OPENING PRINTS 2026-09-09 AND IT SURVIVED — [D402](../decisions/D402-RESULT-the-overnight-gap-survives-and-the-contamination-is-real-but-elsewhere.md).**
+**TESTED FOR STALE OPENING PRINTS 2026-09-09 AND IT SURVIVED — [D402](../decisions/D402-RESULT-the-overnight-gap-survives-and-the-contamination-is.md).**
 The gap is formed entirely from the vendor open and that had never been checked. **17.6% of
 out-of-sample bars DO carry a detectable print artefact** — `open == prior close` exactly on
 5.84% — with a **-0.1564** gap-to-intraday reversal confined to them and **+0.0082** on the rest.

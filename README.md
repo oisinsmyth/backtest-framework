@@ -21,7 +21,7 @@ instrument rather than a strategy.
 
 | | |
 |---|---|
-| **2,069 tests** | hand-computed golden masters · integration · property · unit |
+| **2,070 tests** | hand-computed golden masters · integration · property · unit |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
 | **MIT licensed** | [`LICENSE`](LICENSE) — the code and the prose here; quoted third-party material is scoped out in [`NOTICE`](NOTICE) |
@@ -35,7 +35,7 @@ The inventory, measured from the git index rather than typed:
 | **746 decision records** | D1 → D540, over **503** decision numbers — a pre-registration and its result share one number |
 | **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
 | **62 documents** | in [`docs/results/`](docs/results/README.md), five of them featured |
-| **2,069 tests** | 101 golden · 67 property · 152 integration · 1,749 unit, across 149 files |
+| **2,070 tests** | 101 golden · 67 property · 152 integration · 1,750 unit, across 149 files |
 | **592 research runners** | in `scripts/`, one-shot by design |
 | **6 figure builders** | registered in `scripts/figures/build_all.py`, regenerated and checked in CI |
 
@@ -59,10 +59,23 @@ That runs on a bare clone — the golden masters use synthetic bars and need no 
 full suite is `uv run pytest -q`, 3m31s here on a quiet machine and up to 7m26s under load.
 **On a clone it is 2,016 passed and 53 skipped in 3m39s** — measured on 2026-09-17 by cloning
 this repository into an empty directory and running it, not by reasoning about one from inside the
-working copy. That distinction has twice earned its keep: the first clone failed three tests the
-working copy could not, on a line-ending convention the working copy predates, and the second
-found five links that resolve only on the author's disk. Each of the 53 skips (2026-09-17) names
-the file it wanted. The panels left git in
+working copy. That distinction has **three** times earned its keep: the first clone failed three
+tests the working copy could not, on a line-ending convention the working copy predates; the
+second found five links that resolve only on the author's disk; and the third would not check out
+at all. Every tracked path is now 85 characters or shorter and a test says so
+([D540](docs/decisions/D540-local-config-a-clone-never-receives.md)) — before that the longest was
+209, and on Windows a default `git clone` aborted the checkout, **reported exit code 0**, and left
+an empty index. If you are on an older git and want the belt and braces:
+
+```bash
+git clone -c core.longpaths=true <url>
+```
+
+That flag is set in *this* repository's `.git/config`, which is why the failure was invisible here
+for 539 decisions: **`git clone` does not copy local config.** Three separate defects have now had
+that same cause.
+
+Each of the 53 skips (2026-09-17) names the file it wanted. The panels left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what
 a **checkout** no longer carries; they remain in the history, so a `git clone` is about 1.1 GB, of
 which 969 MB is `.git`. Two of the smallest came back into the index in

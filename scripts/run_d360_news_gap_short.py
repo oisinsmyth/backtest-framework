@@ -6,7 +6,7 @@
     uv run python scripts/run_d360_news_gap_short.py --report
     --out-dir DIR   (every stage; default data/ -- the smoke runs pass temp/... so that nothing under data/ is touched)
 
-Pre-registration: docs/decisions/D360-the-news-gap-short-a-down-gap-on-abnormal-volume-in-an-ordinary-name.md
+Pre-registration: docs/decisions/D360-the-news-gap-short-a-down-gap-on-abnormal-volume-in-an.md
 
 The signal, on day g for every name with elig[g+1] (eligible AFTER the gap), from the panel's own split-adjusted bars:
     gap[g] = OPEN[g] / CLOSE[g-1] - 1          (the price gap; the fixture is split-adjusted and dividends sit in the same frame, meta D75)

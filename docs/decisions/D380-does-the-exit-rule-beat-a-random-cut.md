@@ -3,7 +3,7 @@
 **Date:** 2026-09-08
 **Kind:** **SIGNAL TEST (R15), on an OVERLAY.** Governed by [R7](../RULES.md#r7). Admits nothing, reads no holdout.
 **Pre-registered under R8 — committed before the runner exists. Result committed separately.**
-**Completes:** [D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md) §7,
+**Completes:** [D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md) §7,
 which excluded exits by design and said why.
 
 ---
@@ -11,7 +11,7 @@ which excluded exits by design and said why.
 ## 0. Why this record exists, and why it is a separate study
 
 The principal asked whether **entry and exit** timing could raise per-trade return.
-[D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its-best-trade.md) answered the
+[D378](D378-RESULT-the-entry-day-does-matter-and-it-survives-losing-its.md) answered the
 entry half: **yes** — +15.98 bp per trade at +26.9 SE, surviving leave-one-out at +9.8 SE — and it
 deliberately did not touch exits, because **[R7](../RULES.md#r7) requires a different control and
 bundling the two would repeat a known error.**

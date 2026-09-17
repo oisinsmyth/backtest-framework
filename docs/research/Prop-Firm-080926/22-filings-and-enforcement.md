@@ -93,7 +93,7 @@ is marked on **OPEN equity, continuously.** The two facts do not compose:
 > strategy is made of.
 
 This is not a strategy result. It is a **correction term for the valuation in
-[D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)**:
+[D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)**:
 the barrier is not merely continuously monitored, it is continuously monitored *with a non-zero
 probability that the hedge is unavailable*. In option terms the account is not a down-and-out call
 on a freely tradeable underlying; it is a down-and-out call whose holder faces **random trading

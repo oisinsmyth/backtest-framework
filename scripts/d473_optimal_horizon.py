@@ -11,7 +11,7 @@ admitted (R15). **No rule may be scored off this without a pre-registration (R8)
 
 WHY THIS IS THE QUESTION
 ------------------------
-[D472](../docs/decisions/D472-RESULT-the-volume-clock-exit-replicates-8-of-8-years-but-the-15-minute-horizon-does-not-survive-its-own-scoring-window.md)
+[D472](../docs/decisions/D472-RESULT-the-volume-clock-exit-replicates-8-of-8-years-but-the.md)
 put the 15-minute in-sample breakeven at **61.4%**. That invites "so find a 62%-accurate
 signal", which is the wrong response, because **the horizon is a free parameter and it trades
 off against itself**:

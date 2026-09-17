@@ -26,7 +26,7 @@ ALL zones & 15m names & >= 2018                4,528   gross -11.48 +-10.31 bp
 ```
 
 Thirty-two names, **survivor-only and not by choice** (the fixtures' own metadata: the intraday
-endpoint refuses delisted tickers), 2018 onward. [ADDENDUM 1](D413-ADDENDUM-the-distribution-the-confounds-resolved-and-the-cost-arithmetic.md)
+endpoint refuses delisted tickers), 2018 onward. [ADDENDUM 1](D413-ADDENDUM-the-distribution-the-confounds-resolved-and-the-cost.md)
 found the daily edge concentrated in cheap names and in 2010–2013; these are large caps from 2018.
 **On the only data where 15-minute bars exist, the daily signal is not visible, and at ±17 bp it
 cannot be refuted either.**
@@ -111,7 +111,7 @@ per session, forward-filled, units not information. The zone `[L_u, H_u]` is car
 | **G1** | `[ALIGN]`, `[BASIS]`, `[SAME-DAY]` all hold; at least **500** paired events survive |
 | **T1** | mean `delta` (market arm) **> 0 by more than 2 paired SE** |
 | **T2** | mean `delta` (limit arm) **> 0 by more than 2 paired SE** |
-| **N** | both arms **net of cost**, reported beside gross: market pays a half-spread at entry; limit pays none. The spread is the **neutral** Corwin–Schultz of [ADDENDUM 2](D413-ADDENDUM-2-the-cost-estimate-was-wrong-and-path-efficiency-splits-the-effect.md), not the event-bar one |
+| **N** | both arms **net of cost**, reported beside gross: market pays a half-spread at entry; limit pays none. The spread is the **neutral** Corwin–Schultz of [ADDENDUM 2](D413-ADDENDUM-2-the-cost-estimate-was-wrong-and-path-efficiency.md), not the event-bar one |
 
 **T1 is the honest bound and T2 the optimistic one.** A resting limit at the edge assumes the fill
 with no queue; a market order at the touch bar's close assumes the worst of the bar. Reality sits

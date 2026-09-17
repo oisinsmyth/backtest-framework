@@ -78,8 +78,8 @@ block.
 
 ## AMENDMENT 2, 2026-09-11 (later) — **BOTH RUNNABLE ITEMS RAN. NEITHER SURVIVED, AND THE LEDGER IS NOW EMPTY.**
 
-**Item 1 ran as [D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md).
-The remedy it pointed at ran as [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md).
+**Item 1 ran as [D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md).
+The remedy it pointed at ran as [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the.md).
 Both are recorded; neither is closed, because [R15](../../RULES.md#r15).**
 
 ### `D440` — the measured-path join · `T1` UNRESOLVED, `T2` FAIL, `T3` UNRESOLVED
@@ -123,7 +123,7 @@ stays inside the rule.**
    and DIA cleared a null scored at one fixed risk fraction while the treatment was an **argmax over
    four**. Given the same four, the null's p95 rose by **~+245 on both — larger than the effects of
    +49 and +79 it was hiding** — and both passes vanished.
-   [ADDENDUM](../../decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk-fractions.md).
+   [ADDENDUM](../../decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk.md).
    **Count the choices the treatment was allowed, and give the null every one.**
 2. **ANY GATE THAT CAN GO FLAT MUST REPORT ITS MAXIMUM RUN beside its returns.** The inactivity rules
    have been unmodelled in every prop record because no prior candidate could trip them. **An
@@ -133,8 +133,8 @@ stays inside the rule.**
 
 | | |
 |---|---|
-| ~~1 · the measured-path join~~ | **RAN — [D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)**, not a candidate |
-| ~~`O1`, the abstention rule~~ | **RAN — [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md)**, two independent kills |
+| ~~1 · the measured-path join~~ | **RAN — [D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md)**, not a candidate |
+| ~~`O1`, the abstention rule~~ | **RAN — [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the.md)**, two independent kills |
 | **1 · the floor-lock check** | **still the cheapest open item.** D386's own open item 4 — *whether MFFU's Rapid floor lock is automatic or purchased; its own pages contradict.* One primary-source read, and everything post-lock rests on it |
 | **2 · the settlement check (§5.1)** | when the bars land. **Now load-bearing rather than a side-check** — if the drift is a T+1 artefact, D440's whole input series has no counterpart in the instrument |
 | **3 · re-run D440 on ES** | the proxy's untraded window is unobserved, so `$78` is an **upper** bound. The instrument version should be **worse**, not better |
@@ -183,7 +183,7 @@ three constructions on **shape** rather than on return.
 [`BOOK_PROP.md`](../../BOOK_PROP.md) states the blocker plainly:
 
 > *"**No record here holds MyFundedFutures' ladder terms**, and §4 of
-> [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+> [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 > is not computable without them."*
 
 **[`docs/research/Prop-Firm-080926/01-myfundedfutures.md`](../Prop-Firm-080926/01-myfundedfutures.md)
@@ -268,7 +268,7 @@ firm's own costs**; and **2020 is one event** carrying an 87× improvement.
 
 ## 4. Where a FIFTH candidate would come from — the hold-length interior optimum
 
-> **AMENDED 2026-09-11 by [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md):
+> **AMENDED 2026-09-11 by [D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the.md):
 > there is now a THIRD bound on this curve and it is not economic.** MFFU's **7-day inactivity
 > rule** binds any construction that can go flat, and `O1` breached it by **12×**. **The curve below
 > is drawn against two 4% bounds; it must be drawn against three.**
@@ -332,7 +332,7 @@ both **P2** (a ~22-hour hold from the 18:00 ET Globex open to the 16:10 ET close
 
 > **Same shape as the `$5`-floor case in the research consolidation: the hurdle may well stand, but
 > the reason written under it does not describe the venue it is being applied to.**
-> **[D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+> **[D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md)
 > already records P3, P4 and P5 as never computed on anything.** **Whether P5 is recalibrated,
 > kept as a house standard stricter than the venue, or dropped is the principal's call and nothing
 > here decides it.**

@@ -5,7 +5,7 @@ was never seen on?
     uv run python scripts/d475_continuation_transfer.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D475-PRE-REG-does-the-volatility-conditioned-continuation-gradient-TRANSFER-to-seven-instruments-it-was-never-seen-on.md`,
+`docs/decisions/D475-PRE-REG-does-the-volatility-conditioned-continuation-gradient.md`,
 committed before this file existed. **Every root, horizon, bucket count, statistic, null,
 threshold and prediction below is copied from that record. None is chosen here.**
 

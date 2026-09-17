@@ -131,7 +131,7 @@ SCALAR the assertion compares, not the name of the thing it reads.**
   the 2020 event.
 
 **T1 ∧ T2 ∧ T3 makes C1 a valued candidate rather than a surviving one** — the first quantity in
-this track that **orders** rather than gates, which is [D379](D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)'s
+this track that **orders** rather than gates, which is [D379](D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)'s
 stated complaint. **It is not admission. §1.**
 
 ## 7. Predictions (MODERATE — the direction is near-certain, the magnitude is not)

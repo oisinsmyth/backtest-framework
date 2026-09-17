@@ -4,7 +4,7 @@
     uv run python scripts/d484_offdiagonal_and_macd.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D484-PRE-REG-the-off-diagonal-lookback-and-the-log-impulse-MACD-as-momentum-signals.md`,
+`docs/decisions/D484-PRE-REG-the-off-diagonal-lookback-and-the-log-impulse-MACD-as.md`,
 committed before this file existed. **Every root, grid value, parameter, statistic, null and
 threshold below is copied from that record. None is chosen here.**
 

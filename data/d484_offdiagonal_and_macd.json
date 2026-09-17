@@ -1,6 +1,6 @@
 {
  "generated_utc": "2026-09-12T19:06:48+00:00",
- "pre_registration": "docs/decisions/D484-PRE-REG-the-off-diagonal-lookback-and-the-log-impulse-MACD-as-momentum-signals.md",
+ "pre_registration": "docs/decisions/D484-PRE-REG-the-off-diagonal-lookback-and-the-log-impulse-MACD-as.md",
  "source": "data\\fixtures\\fut_sessions_hourly.csv.gz",
  "roots": [
   "ES",

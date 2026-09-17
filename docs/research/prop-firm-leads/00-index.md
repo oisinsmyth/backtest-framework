@@ -45,10 +45,10 @@ parameter**.
 
 | | outcome |
 |---|---|
-| **[D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)** — the measured-path join | **`T1` unresolved, `T2` FAIL, `T3` unresolved — not a candidate.** The Gaussian was carrying **88%** of the account's value, and **82–86% of the damage is CLUSTERING, not kurtosis** |
+| **[D440](../../decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md)** — the measured-path join | **`T1` unresolved, `T2` FAIL, `T3` unresolved — not a candidate.** The Gaussian was carrying **88%** of the account's value, and **82–86% of the damage is CLUSTERING, not kurtosis** |
 | **[R11 RULING](../../RULES.md#r11)** — P4 means the **account's life** | **C1 does not clear P4.** D259's 6.40 years is a per-hold statistic; the account's is **0.14**. [`BOOK_PROP.md`](../../BOOK_PROP.md) amended |
-| **[D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md)** — `O1`, the abstention rule | **`G1` PASS, `G2` FAIL on all four symbols, `G3` pass.** An exposure cut with a story — **the ledger's own sentence.** Plus an independent kill: **88 consecutive flat sessions against a 7-day inactivity rule** |
-| **[D442 ADDENDUM](../../decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk-fractions.md)** | two apparent wins were **selection across four risk fractions**; the premium the null was denied (**~+245**) was **larger than the effects it hid** |
+| **[D442](../../decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the.md)** — `O1`, the abstention rule | **`G1` PASS, `G2` FAIL on all four symbols, `G3` pass.** An exposure cut with a story — **the ledger's own sentence.** Plus an independent kill: **88 consecutive flat sessions against a 7-day inactivity rule** |
+| **[D442 ADDENDUM](../../decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk.md)** | two apparent wins were **selection across four risk fractions**; the premium the null was denied (**~+245**) was **larger than the effects it hid** |
 
 **The prop candidate ledger is now empty of unscreened entries.** `O1` was the last one.
 
@@ -81,7 +81,7 @@ the hold-length curve wait on the futures data.**
 |---|---|
 | the consolidated research view | [`research/consolidated/venues/`](../consolidated/venues/00-index.md) |
 | the prop firm campaign, 24 lanes | [`research/Prop-Firm-080926/`](../Prop-Firm-080926/00-SYNTHESIS.md) |
-| the account as a down-and-out call | [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md) |
+| the account as a down-and-out call | [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md) |
 | the account is worth its buffer | [D386](../../decisions/D386-the-prop-account-is-worth-its-buffer.md) |
-| the hurdle audit — **P3, P4, P5 never computed** | [D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md) |
+| the hurdle audit — **P3, P4, P5 never computed** | [D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md) |
 | C1's path measurement | [D259](../../decisions/D259-the-extended-session-and-the-overnight-interior.md) |

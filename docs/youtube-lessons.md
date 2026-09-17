@@ -106,7 +106,7 @@ payout ladder caps the payoff, and consistency rules constrain its path. So valu
 capital has no second factor and is linear.
 
 **Written up properly as
-[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md).**
+[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md).**
 It survives the bar for this file for one reason: **it checks out against our own committed
 artifacts, not the video's.** [BOOK_PROP.md](BOOK_PROP.md)'s C1 table already carries `E[payout]`
 under the name **"profit before breach"**, falling monotonically (28.20% → 1.75%) while annual return
@@ -144,7 +144,7 @@ that fail, and it makes the object a **portfolio** — `V = N × [P(pass) × E[p
 with `N` purchasable.
 
 **Written up as the 2026-09-08 amendment to
-[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md).**
+[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md).**
 It survives the bar here for the same reason §3 did: **`P(pass)` is computable from machinery
 [D259](decisions/D259-the-extended-session-and-the-overnight-interior.md) already built** — the same
 ratcheting-floor simulation, stopped at a target. The amendment also measures what the **trailing**
@@ -166,7 +166,7 @@ new recommendation owes a pre-registration like the rest.
 **Source:** `[EXTRACTED] I Re-Created A Quant Trading Strategy With Claude Code (Nobel Prize Method).txt`.
 **The method in it is entirely recycled here, and its own headline numbers do not survive being
 recomputed** — see the four checks below. **One inference is not recycled, and it is not in the video:**
-volatility clustering is exactly the property [D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+volatility clustering is exactly the property [D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 names in its closing caveat as the reason its valuation is optimistic, and it is a reason to make
 prop-account size **state-dependent** rather than constant.
 
@@ -209,7 +209,7 @@ pre-registered and answered:
 
 ### The one thing that is not recycled
 
-[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 §2 prices a prop account at **constant** size: rows indexed by annualised vol at fixed Sharpe 1.0,
 `E[payout]` peaking at 0.05 and collapsing **82%** by 0.10, where `P(survive)` has fallen 0.532 → 0.030.
 D379's closing caveat states that its toy assumes iid normal returns and that real P&L is

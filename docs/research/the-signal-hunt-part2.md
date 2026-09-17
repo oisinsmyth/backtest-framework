@@ -44,7 +44,7 @@ Recorded before any design, because two of them reorder the list.
 **P1 asks for a sleeve that is out of the market most of the time. The programme has already
 measured that a cross-sectional trigger cannot deliver that, however rare the trigger is.**
 
-[FINDINGS §38](../FINDINGS.md) / [D358](../decisions/D358-RESULT-the-sleeve-is-never-flat-name-level-rarity-does-not-make-time-level-flatness.md), on six cells of `rev_5` and `hist_L` entering the
+[FINDINGS §38](../FINDINGS.md) / [D358](../decisions/D358-RESULT-the-sleeve-is-never-flat-name-level-rarity-does-not.md), on six cells of `rev_5` and `hist_L` entering the
 bottom 2%, 5% and 10%:
 
 ```
@@ -781,7 +781,7 @@ sleeve needs does not yet exist, and it was not found where it was most likely t
 
 **Computed after the block table was read, and disclosed as such** — without it a decisive
 DISPERSION cannot be told from G1 restated, which is §3a's defect and the question
-[D362](../decisions/D362-RESULT-the-two-sink-filter-beats-a-random-and-a-name-matched-removal-and-the-gate-explains-less-once-it-is-on.md)
+[D362](../decisions/D362-RESULT-the-two-sink-filter-beats-a-random-and-a-name-matched.md)
 left unrun. Spearman of the levels over the 3,924 bars where all four are defined; Jaccard of the
 gated bars beside it.
 
@@ -928,7 +928,7 @@ known bill.**
 ## 7f. C2 — D362's unrun cell, answered: the gate is the state variable, and its margin is **+0.52 bp**, not the published +6.3
 
 **Run 2026-09-07, `scripts/c2_calm_vs_gate.py`, artifact `data/c2_calm_vs_gate.json`.** The cell
-[D362](../decisions/D362-RESULT-the-two-sink-filter-beats-a-random-and-a-name-matched-removal-and-the-gate-explains-less-once-it-is-on.md)
+[D362](../decisions/D362-RESULT-the-two-sink-filter-beats-a-random-and-a-name-matched.md)
 named in writing and did not run: *the trigger with the calm-market condition alone and no gate.*
 D362's calm-market sink is **S2 = `mkt_vol_20 <= 99.03`** — the floored market's own 20-bar
 volatility — which is why §7e made this the successor question rather than bookkeeping.

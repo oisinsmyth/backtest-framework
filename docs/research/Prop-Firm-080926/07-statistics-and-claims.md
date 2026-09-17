@@ -36,7 +36,7 @@ a page carrying Topstep affiliate links, while Topstep's own front page says 16.
 
 | | rate | object |
 |---|---|---|
-| [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md) §A2, zero edge, **trailing** floor, $250/trade | **26.5%** | per attempt, simulated |
+| [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md) §A2, zero edge, **trailing** floor, $250/trade | **26.5%** | per attempt, simulated |
 | D379 §A2, zero edge, trailing, across the whole risk sweep $250→$1,000 | 26.5% – 29.4% | per attempt, simulated |
 | D379 §A2, zero edge, **static** floor / all-in (`2000/5000`) | 40.0% | per attempt, simulated |
 | D379 §A2, all-in **with a $10 round turn** | 25.5% | per attempt, simulated |

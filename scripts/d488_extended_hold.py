@@ -4,7 +4,7 @@
     uv run python scripts/d488_extended_hold.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D488-PRE-REG-does-the-MACD-edge-keep-growing-with-the-holding-period-and-does-it-cross-its-cost.md`,
+`docs/decisions/D488-PRE-REG-does-the-MACD-edge-keep-growing-with-the-holding.md`,
 committed before this file existed.
 
 **THE SIGNAL CODE IS IMPORTED FROM D484, NOT REIMPLEMENTED.** `impulse_macd`, `macd_hist`,

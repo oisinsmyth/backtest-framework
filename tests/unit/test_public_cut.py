@@ -131,6 +131,36 @@ def test_the_builders_file_list_is_exactly_the_git_index(builder):
     assert len(listed) == len(index), "the builder's list has duplicate entries"
 
 
+#: Windows MAX_PATH is 260. A cloner's budget is 260 - len(clone root) - 1, so a bound of 85
+#: leaves room for a ~174-character root; the author's own is 45. The number is not invented --
+#: D1 through D299 already observe it (their longest path is 82, median slug 6 words). The habit
+#: lapsed from D400, where the median slug is 18 words and the longest path reached 209, and a
+#: default `git clone` onto Windows then aborted the checkout with exit code 0 and an empty
+#: index. See docs/decisions/D540-local-config-a-clone-never-receives.md.
+MAX_TRACKED_PATH = 85
+
+
+def test_no_tracked_path_is_too_long_for_a_windows_clone(builder):
+    """The cut is what a reviewer receives, and it copies tracked filenames unchanged.
+
+    This is the gate for a defect no test could previously see: CI runs on ubuntu-latest, where
+    MAX_PATH does not exist, and this worktree checks out only because `core.longpaths` is set in
+    its own `.git/config` -- which `git clone` does not copy. The failure is silent (exit 0, a
+    populated-looking tree, 163 records missing), so it has to be caught here rather than by
+    anyone noticing.
+    """
+    listed = builder.tracked()
+    over = sorted(((len(p), p) for p in listed if len(p) > MAX_TRACKED_PATH), reverse=True)
+    assert not over, (
+        f"{len(over)} tracked path(s) exceed {MAX_TRACKED_PATH} characters and would break a "
+        f"default `git clone` on Windows at any root longer than {260 - over[0][0] - 1} "
+        f"characters:\n"
+        + "\n".join(f"  {n:3d}  {p}" for n, p in over[:10])
+        + "\n\nShorten the name. For a decision record the H1 carries the full title, so the "
+        "path is the only thing lost -- see D540 and the 272 records shortened under it."
+    )
+
+
 def test_the_cut_carries_no_gitignored_path(builder):
     ignored = _ignored(builder.tracked())
     assert not ignored, (

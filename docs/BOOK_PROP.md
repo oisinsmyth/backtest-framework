@@ -205,7 +205,7 @@ return", which is exactly what a drawdown constraint wants.
 > **The answer below is a PER-HOLD statistic and P4 was ruled on 2026-09-11 to mean the ACCOUNT'S
 > LIFE** ([R11](RULES.md#r11)). **The 6.40 years is `1 / (per-hold breach rate)`. The account's life
 > at the same arm and the same sizing rule is 0.14 years** —
-> [D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md).
+> [D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md).
 > **Both numbers are correctly computed; only one of them is P4.** The table below is left exactly
 > as it was written.
 
@@ -432,7 +432,7 @@ clear a bar that has now rejected three constructions on **shape** rather than o
 
 ## The hurdles admit; nothing here has ever ranked — D379, 2026-09-08
 
-**[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+**[D379](decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 is a FRAMING note, not a measurement, and it reopens no candidate.** It records that a funded account
 is a **down-and-out call** — component for component, with P1 as the knock-out barrier and P5 as a
 constraint on the payoff path — so its value is `E[payouts | survival] × P(survival)`, **non-linear
@@ -457,7 +457,7 @@ track has ever ordered two eligible candidates.**
    firm's defence against a risk-shifting incentive the instrument creates.** A construction
    exploiting it would **clear P1 and P4 and be killed by P5**, which is an argument for computing
    P5 ahead of the other legs
-   [D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+   [D375](decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md)
    lists as never computed.
 
 **This amends no hurdle and loosens no threshold.** Under [R8](RULES.md#r8) each of the three needs a
@@ -501,7 +501,7 @@ ruling it does not.** Nothing above is deleted; the §"Does it clear P4?" headin
 to here.
 
 **The operative numbers**, from
-[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md),
+[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md),
 MFFU Rapid EOD 50K, SPY, D259's own vol-targeting rule, measured path:
 
 | daily vol, fraction of account | 0.2% | 0.4% | **0.7%** | 1.1% |
@@ -564,7 +564,7 @@ fixture failed the cross-check gate on the 2020-03-16 limit-down open and is not
 
 **The candidate** (lane 13's only near-miss): the sign of the day's return to 15:30 predicts the
 last thirty minutes; long or short at 15:30, flat at the close. Pre-registered as
-[D463](decisions/D463-market-intraday-momentum-the-last-30-minutes-on-ES-NQ-YM-RTY-the-lane-13-falsification-criteria-and-hurdle-P-computed-for-the-first-time.md)
+[D463](decisions/D463-market-intraday-momentum-the-last-30-minutes-on-ES-NQ-YM-RTY.md)
 with the lane's five criteria, the enumerated sign-rotation and sign-randomisation nulls, futures
 cost as a quote, and **hurdle P's P3, P4 and P5 computed for the first time on anything.**
 
@@ -594,7 +594,7 @@ construction at this per-trade σ fails P3/P4 on this account size regardless of
 The principal asked whether S1 and S2 could be tried on the futures data for this book. **They
 cannot be ported as they are** (15-day and 63-day holds across the flatten); the one form the
 venue allows is C1's 18:00 → 16:00 hold taken only on the nights the arm's state is on, the state
-computed on SPY with the book's own functions. [D464](decisions/D464-the-personal-arms-as-gates-on-the-session-hold-S1-and-S2-computed-on-the-index-ETFs-select-which-nights-C1-holds-ES-hurdle-P-at-ES-and-micro-granularity.md),
+computed on SPY with the book's own functions. [D464](decisions/D464-the-personal-arms-as-gates-on-the-session-hold-S1-and-S2.md),
 2,043 ES holds 2016–2023:
 
 | nights | share | mean bp | MAE p99 bp | exact rotation p95 |
@@ -632,12 +632,12 @@ the extended-hours equity proxy, once the Databento acquisition completed
 
 | | |
 |---|---|
-| **[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it-is-clustering-not-kurtosis.md)** | D386 valued a **Gaussian** trader at `$770`/evaluation; the measured path is worth **`$78`**. **82–86% of the damage is CLUSTERING, not kurtosis.** `T1` unresolved, `T2` FAIL, `T3` unresolved. *(Already amended into this page 2026-09-11, with the R11 ruling it forced.)* |
-| **[D442](decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the-rotation-null-and-the-mask-breaks-the-inactivity-rule.md)** | **`O1`, the last unscreened ledger entry, is resolved.** It clears the ledger's own inherited criterion (`G1`: floor-touch −59.4% against P&L −28.6%) and **dies inside an enumerated rotation null** — 70 against a rotation median of 72. **Plus an independent kill: 88 consecutive flat sessions against MFFU's 7-day inactivity rule.** Its [addendum](decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk-fractions.md) found two apparent wins were **selection across four risk fractions**, the premium larger than the effect |
-| **[D451](decisions/D451-RESULT-the-complete-acquisition-T1-is-testable-and-the-cash-futures-gap-tracks-the-RATE-cycle-not-the-settlement-rule.md)** | **The settlement kill-check is closed on all three regimes.** T+1 testable at last (432 pairs); the cash-futures gap **tracks the rate cycle, not the settlement rule** |
-| **[D452](decisions/D452-RESULT-D440-on-the-instrument-same-verdict-and-clustering-explains-94-percent-not-83.md)** | **D440's full study, on ES.** Same verdict. **Clustering explains 94.1%** against the proxy's 82.9% — and ES's kurtosis is *higher* (18.82 vs 14.96), so **more fat tail and less damage from it** |
-| **[D458](decisions/D458-RESULT-the-hold-length-curve-has-no-identifiable-optimum-and-the-observed-argmax-is-below-its-own-nulls-MEDIAN.md)** | **The hold-length curve, 30 min to 22 h.** The PATH bound is real and monotone; the VALUE curve has **no identifiable optimum** — observed argmax 507 against a null median of **917**, `p` = 0.760 |
-| **[D459](decisions/D459-RESULT-beyond-22-hours-the-shape-constraints-lever-does-not-exist-at-the-frequency-the-rules-operate-on.md)** | **Beyond 22 h, to 20 days.** A twentyfold change in hold length moves daily sd **1.042% → 1.065%.** `p` = 0.883 on the argmax |
+| **[D440](decisions/D440-RESULT-the-gaussian-was-worth-five-sixths-of-the-value-and-it.md)** | D386 valued a **Gaussian** trader at `$770`/evaluation; the measured path is worth **`$78`**. **82–86% of the damage is CLUSTERING, not kurtosis.** `T1` unresolved, `T2` FAIL, `T3` unresolved. *(Already amended into this page 2026-09-11, with the R11 ruling it forced.)* |
+| **[D442](decisions/D442-RESULT-O1-clears-the-ledgers-own-criterion-and-dies-inside-the.md)** | **`O1`, the last unscreened ledger entry, is resolved.** It clears the ledger's own inherited criterion (`G1`: floor-touch −59.4% against P&L −28.6%) and **dies inside an enumerated rotation null** — 70 against a rotation median of 72. **Plus an independent kill: 88 consecutive flat sessions against MFFU's 7-day inactivity rule.** Its [addendum](decisions/D442-ADDENDUM-the-two-apparent-wins-were-selection-across-four-risk.md) found two apparent wins were **selection across four risk fractions**, the premium larger than the effect |
+| **[D451](decisions/D451-RESULT-the-complete-acquisition-T1-is-testable-and-the-cash.md)** | **The settlement kill-check is closed on all three regimes.** T+1 testable at last (432 pairs); the cash-futures gap **tracks the rate cycle, not the settlement rule** |
+| **[D452](decisions/D452-RESULT-D440-on-the-instrument-same-verdict-and-clustering.md)** | **D440's full study, on ES.** Same verdict. **Clustering explains 94.1%** against the proxy's 82.9% — and ES's kurtosis is *higher* (18.82 vs 14.96), so **more fat tail and less damage from it** |
+| **[D458](decisions/D458-RESULT-the-hold-length-curve-has-no-identifiable-optimum-and.md)** | **The hold-length curve, 30 min to 22 h.** The PATH bound is real and monotone; the VALUE curve has **no identifiable optimum** — observed argmax 507 against a null median of **917**, `p` = 0.760 |
+| **[D459](decisions/D459-RESULT-beyond-22-hours-the-shape-constraints-lever-does-not.md)** | **Beyond 22 h, to 20 days.** A twentyfold change in hold length moves daily sd **1.042% → 1.065%.** `p` = 0.883 on the argmax |
 
 ## The one structural finding, because it retires a standing claim
 
@@ -654,7 +654,7 @@ candidate. It has now been tested on its own range and is NOT SUPPORTED.**
 account is judged at.**
 
 **It is NOT refuted as an observation about the SEARCH** — every prop rejection in that review
-really was a size rejection, and **[D463](decisions/D463-market-intraday-momentum-the-last-30-minutes-on-ES-NQ-YM-RTY-the-lane-13-falsification-criteria-and-hurdle-P-computed-for-the-first-time.md)
+really was a size rejection, and **[D463](decisions/D463-market-intraday-momentum-the-last-30-minutes-on-ES-NQ-YM-RTY.md)
 measured exactly that from the other side**, at a 30-minute σ of ~`$650`/contract putting the floor
 three σ away per trade. **What fails is the inference that widening the window fixes it.**
 
@@ -826,7 +826,7 @@ closure does not name and whose fee is 4–7% of the move rather than 14%. Not s
 **2024-01-02 → 2026-09-09** for K8, the MACD component and the assembled two-arm book together.
 **That slice is now SPENT for all three.** Full numbers in
 [`COMPONENTS_PROP.md`](COMPONENTS_PROP.md) and
-[D503](decisions/D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has-grown-into-the-barrier-and-the-book-is-worse-than-its-best-arm.md).
+[D503](decisions/D503-RESULT-the-Sharpe-transferred-and-nothing-else-did-one-MNQ-has.md).
 
 **The book was assembled and it fails hurdle P.** Net Sharpe **+0.364** — *worse than its best
 arm alone at +0.736* — with **P3a at 6.96 breaches a year against a bar of 1.0**, **C-d's σ at
@@ -838,7 +838,7 @@ is hurdle P all six, and it fails on P3a. **No arm is admitted.**
 on an unchanged strategy, $180 → $340, because **MNQ pays $2 an index point and NQ's level
 roughly doubled** between the in-sample window and 2026. **At 2026 price levels one MNQ is too
 large for a $50,000 account with a $2,000 trailing floor** — the single-arm worst day is 88% of
-the whole loss budget — and **there is nothing smaller than one micro.** [D493](decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the-barrier-a-full-contract-dies-in-weeks-at-every-plan-and-nothing-the-programme-holds-is-carryable.md)
+the whole loss budget — and **there is nothing smaller than one micro.** [D493](decisions/D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the.md)
 found the full contract too big for this floor; the micro is now too big as well.
 
 **So the binding constraint on this page has changed.** It was "find an edge that survives the
@@ -915,7 +915,7 @@ the first construction to pass it.
 
 ## What the arm is worth, under the published rules rather than raw P&L
 
-[D505](decisions/D505-your-expectation-is-a-Sharpe-1-34-strategy-and-the-real-problem-is-that-four-accounts-in-five-pay-nothing.md)
+[D505](decisions/D505-your-expectation-is-a-Sharpe-1-34-strategy-and-the-real.md)
 ran D386's lifecycle model at the arm's measured Sharpe and its **forced** size:
 
 | | |

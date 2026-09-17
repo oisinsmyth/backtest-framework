@@ -16,7 +16,7 @@ Master takes D420.
 
 *"Sharpen the trade conditions so that it fires once, and if it exits it doesn't re-enter."*
 
-[D419](D419-RESULT-the-target-recycles-capital-and-the-round-trip-prices-it-out.md) found the
+[D419](D419-RESULT-the-target-recycles-capital-and-the-round-trip-prices.md) found the
 book net-negative at every rule because a 20%-a-day turnover pays ~6.4 bp/bar against ~3 gross,
 and closed with *"turnover, not exits, is where this line's cost lives."* A no-re-entry rule is the
 natural response. **Its effect has to be stated precisely before it is measured, because it is not

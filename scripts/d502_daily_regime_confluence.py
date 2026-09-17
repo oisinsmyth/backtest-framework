@@ -4,7 +4,7 @@
     uv run python scripts/d502_daily_regime_confluence.py --run [--json]
 
 Pre-registered in
-`docs/decisions/D502-PRE-REG-an-orthogonal-daily-clock-confluence-on-the-hourly-MACD-the-200-day-SMA-regime-daily-trendiness-and-the-volatility-regime.md`.
+`docs/decisions/D502-PRE-REG-an-orthogonal-daily-clock-confluence-on-the-hourly.md`.
 **State machine from D491, signal code from D484, panel from D495 -- all imported unchanged.**
 
 WHAT 'COMPLEMENTS MOMENTUM' MEANS

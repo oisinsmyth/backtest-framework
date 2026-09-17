@@ -7,7 +7,7 @@ re-COSTS it (four spread lines from the record's own Corwin-Schultz estimator, t
     uv run python scripts/run_d363_cost_lines.py --report
     --out-dir DIR    (every stage; default data/ -- the smoke runs pass temp/... so that nothing under data/ is touched)
 
-Pre-registration: docs/decisions/D363-the-cost-lines-on-the-two-sink-fade-entry-window-spread-execution-bounds-and-cost-aware-sizing.md (44292b4)
+Pre-registration: docs/decisions/D363-the-cost-lines-on-the-two-sink-fade-entry-window-spread.md (44292b4)
 
 THE LEDGER: run_d362's A2 arm, built by run_d362's own functions (base -> features -> hit_grids -> arm_signal('A2') -> run_short at cap 10) and
 asserted [ID] against data/d362_sink_filter.json: 3,079 trades, mean +61.71, and D362's ledger-median 2c PUB / PB (88.77 / 38.70) to 1e-9.

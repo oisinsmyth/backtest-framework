@@ -173,7 +173,7 @@ a short arm gated on risk-off — is a mechanism check only, per FINDINGS §33's
 this programme's short side has failed in every universe it has been measured in.
 
 **THIS IS ALSO THE FIRST TESTABLE DRIVER OF THE PROGRAMME'S LARGEST OPEN NEGATIVE, and that
-is the strongest argument for it.** [D389](../decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates-explains-it.md)
+is the strongest argument for it.** [D389](../decisions/D389-RESULT-the-floor-is-ONE-factor-and-none-of-the-four-candidates.md)
 found that two unrelated books here co-move at **0.476**, that **it is ONE factor** (PC1
 reproduces the pairwise rho to three decimals, 0.449 vs 0.449; PC2 is 0.006), and that **none
 of the four candidates explains it** — slot mechanics 0.029, equal-weighting 0.031,

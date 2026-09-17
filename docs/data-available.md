@@ -40,8 +40,8 @@ headers state the requested dataset and schema, and the ten `ohlcv-1m` slices **
 nine roots, 2016 →); **`fut_open_interest_daily.csv.gz` (D497: daily root-total open interest and
 cleared volume for ES, NQ, CL, GC from the `statistics` schema, keyed on the session each figure
 is first USABLE — published strictly before a 10:00 ET entry; 100% coverage, staleness one session,
-builder `scripts/build_fut_open_interest.py`, 3.3 min). **CORRECTED 2026-09-13 by [D521](decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open-interest-fixture-was-carrying-a-phantom-CL-contract.md) — re-pull any CL total you cached before that commit.** The builder used a **FLAT `{instrument_id: symbol}` lookup** (the D520 defect) and it did bite here: instrument 42007396 was `6AF4` until 2024-01-21 and was reissued as `CLG36` in November, so the flat dict counted **an Australian-dollar contract as a 61st crude contract on 2024-01-03 … 2024-01-19**, overstating `oi_total` by 235–401 contracts (0.014–0.026%). `oi_front` was never touched — the volume rule protects it — which is exactly why the CURVE, read from `oi_total` and `oi_n_contracts`, was the exposed part. Now windowed; the other three roots and every other session are unchanged and all 63 gate scalars are identical. And **2025-07-28 is a bad session**: ES, GC and NQ simultaneously report 326, 9,158 and 82 contracts of total open interest with truncated strip counts — a one-day source dropout, unrelated to the mapping; drop it or treat it as missing. What bites: `ts_ref` is the session START,
-**AND THE `statistics` SCHEMA CARRIES A SECOND MISSING-VALUE SENTINEL THAT NOTHING FILTERS — [D526](decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the-change-carries-nothing.md).** `UNDEF` is `INT64_MAX` and every builder here filters it. **Zero is a second marker**: a settlement price of exactly `0.0` appears on **646 occasions** across CL and GC in 2016-2023 alone (CL 344, GC 302, every year, concentrated in deferred months like `CLF30`…`CLF35`). It is positive-adjacent, so no existing guard catches it — and **the fix cannot be "drop non-positive", because CL legitimately settled −37.63 on 2020-04-20.** Drop exact zeros, keep genuine negatives. The same caution applies to any `stat_type` read from this schema, not just settlements. What bites: `ts_ref` is the session START,
+builder `scripts/build_fut_open_interest.py`, 3.3 min). **CORRECTED 2026-09-13 by [D521](decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open.md) — re-pull any CL total you cached before that commit.** The builder used a **FLAT `{instrument_id: symbol}` lookup** (the D520 defect) and it did bite here: instrument 42007396 was `6AF4` until 2024-01-21 and was reissued as `CLG36` in November, so the flat dict counted **an Australian-dollar contract as a 61st crude contract on 2024-01-03 … 2024-01-19**, overstating `oi_total` by 235–401 contracts (0.014–0.026%). `oi_front` was never touched — the volume rule protects it — which is exactly why the CURVE, read from `oi_total` and `oi_n_contracts`, was the exposed part. Now windowed; the other three roots and every other session are unchanged and all 63 gate scalars are identical. And **2025-07-28 is a bad session**: ES, GC and NQ simultaneously report 326, 9,158 and 82 contracts of total open interest with truncated strip counts — a one-day source dropout, unrelated to the mapping; drop it or treat it as missing. What bites: `ts_ref` is the session START,
+**AND THE `statistics` SCHEMA CARRIES A SECOND MISSING-VALUE SENTINEL THAT NOTHING FILTERS — [D526](decisions/D526-the-curve-story-fails-stage-0-the-level-is-a-regime-and-the.md).** `UNDEF` is `INT64_MAX` and every builder here filters it. **Zero is a second marker**: a settlement price of exactly `0.0` appears on **646 occasions** across CL and GC in 2016-2023 alone (CL 344, GC 302, every year, concentrated in deferred months like `CLF30`…`CLF35`). It is positive-adjacent, so no existing guard catches it — and **the fix cannot be "drop non-positive", because CL legitimately settled −37.63 on 2020-04-20.** Drop exact zeros, keep genuine negatives. The same caution applies to any `stat_type` read from this schema, not just settlements. What bites: `ts_ref` is the session START,
 the evening BEFORE the trade date it describes, so a naive read is off by a day; open interest for
 trade date T is first published ≈ 21:00 ET on T itself; and a per-contract series must drop expired
 months or the root total carries dead open interest forever;** and **`fut_micro_flow_5m.csv.gz` (D485: signed 5-minute order flow of ES/MES
@@ -89,7 +89,7 @@ five grains **2013/2014**; BZ 2015; CL HE HO LE NG NKD PL RB TN **2016**; RTY 20
 *(ii)* **The band is per root, measured not assumed:** 84 slots 09:00–16:00 for the 23-hour
 markets, **58 at 09:30–14:20 for the five grains, 55 at 09:30–14:05 for livestock**. A study
 applying the 84-slot window to ZC silently reads 26 empty slots.
-*(ii-b)* **AND THE WORSE CASE IS THE ROOT WITH FULL BARS AND DEAD VOLUME — [D530](decisions/D530-avenue-3-closed-the-leveraged-ETF-reset-flow-is-real-and-carries-no-direction-and-16-of-36-roots-do-not-trade-in-the-day5m-close.md).**
+*(ii-b)* **AND THE WORSE CASE IS THE ROOT WITH FULL BARS AND DEAD VOLUME — [D530](decisions/D530-avenue-3-closed-the-leveraged-ETF-reset-flow-is-real-and.md).**
 The grains are obviously empty; **crude is not**. Share of each root's session volume in the
 **15:00–15:59** hour, against the 14.3% an evenly-traded root would show: **RTY 21.1%, ES 20.4%,
 NQ ~18%, YM 15.7%** (the equity closing hump, 1.10–1.48× even) · UB/TN/NKD/BTC/ZF/ZT/SR3 9.8–14.4% ·
@@ -150,7 +150,7 @@ the rolls, and a return across that boundary is a roll rather than a move.
      second**, and drop any pair whose two ends are different contracts. Both scripts now
      carry that gate and prove it fires.
 
-   > **AND IT BITES IN THE OTHER DIRECTION TOO — [D520](decisions/D520-the-sessions-builder-labelled-bars-from-a-flat-id-dict-and-it-was-ingesting-a-quarter-million-foreign-bars-that-never-reached-the-panel.md).**
+   > **AND IT BITES IN THE OTHER DIRECTION TOO — [D520](decisions/D520-the-sessions-builder-labelled-bars-from-a-flat-id-dict-and-it.md).**
    > A `{instrument_id: symbol}` dict built from `store.metadata.mappings` with the
    > `start_date`/`end_date` discarded is the same defect wearing the opposite hat: an id is
    > **not** a stable handle on a contract. CME reuses the single-digit-year slot at expiry
@@ -166,7 +166,7 @@ the rolls, and a return across that boundary is a roll rather than a move.
    > trades), **except on a holiday**, where ten spurious contracts elected the euro's front
    > month on 2021-12-24.
    >
-   > **[D521](decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open-interest-fixture-was-carrying-a-phantom-CL-contract.md) finished the job: NO builder in the repository labels a bar from a flat dict any
+   > **[D521](decisions/D521-the-three-remaining-flat-id-builders-are-ported-and-the-open.md) finished the job: NO builder in the repository labels a bar from a flat dict any
    > more**, and the three it ported were rebuilt and diffed. `fut_micro_flow_5m` and all six
    > `fut_index_1m` outputs came back **byte-identical** — the index build ingested **16,077
    > foreign RTH bars (0.229%, 18 of 26 files)** and the front-by-volume rule dropped every
@@ -175,7 +175,7 @@ the rolls, and a return across that boundary is a roll rather than a move.
    > was wrong on 12 CL sessions. **The rule of thumb: front-month columns are insulated,
    > totals and strip counts are not.**
    >
-   > **AND THE FLAT DICT IS NOT DETERMINISTIC — [D524](decisions/D524-the-day5m-fixture-verifies-clean-and-a-flat-id-dict-is-non-reproducibly-wrong.md).**
+   > **AND THE FLAT DICT IS NOT DETERMINISTIC — [D524](decisions/D524-the-day5m-fixture-verifies-clean-and-a-flat-id-dict-is-non.md).**
    > `store.metadata.mappings` iterates in a different order in every process, so "the last
    > write wins" picks a different winner each run: on the 2019 file **all 8 ambiguous ids get a
    > different label depending on the process** (8 of 8 over six hash seeds, 0 appearing stable

@@ -9,7 +9,7 @@
 
 ## 0. Why this is not a rerun of D382
 
-[D382](D382-RESULT-nothing-clears-on-the-stable-statistic-and-the-books-are-the-market.md) screened
+[D382](D382-RESULT-nothing-clears-on-the-stable-statistic-and-the-books.md) screened
 these same 19 features and closed: nothing cleared on the segmentation-stable statistic, and **the
 permutation floor sat above the rotation floor at every hold** — randomising *which names* occupy the
 extreme decile produced a **better** per-bar book than the real feature.

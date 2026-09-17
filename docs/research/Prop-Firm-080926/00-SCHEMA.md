@@ -11,7 +11,7 @@ quietly shrink to whatever happened to be findable. A field left unfilled at the
 
 ## The goal, and it is binary
 
-**Done = [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md)
+**Done = [D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md)
 §4 becomes computable.** D379 §6 states the gap in writing:
 
 > **Record the payout ladder terms** for MyFundedFutures. §4 is not computable without them, and no
@@ -24,7 +24,7 @@ machinery. D379 already has one point on that curve — a Topstep-like eval give
 
 **This is a REVIEW.** It adjudicates no strategy, scores no cell, and **adds no looks to any
 multiplicity ledger** — the category [D374](../../decisions/D374-is-the-breadth-hurdle-reachable.md)
-and [D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is-half-untested.md)
+and [D375](../../decisions/D375-the-hurdle-audit-the-stage-one-gates-are-sound-and-hurdle-P-is.md)
 established. It will be filed as **D386**.
 
 ---

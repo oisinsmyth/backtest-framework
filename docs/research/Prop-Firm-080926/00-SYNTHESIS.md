@@ -152,7 +152,7 @@ accounts never touch real money. Topstep publishes this and it is almost never q
 
 | record | change |
 |---|---|
-| **[D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no-objective-function.md) §6 item 2** | **CLOSED.** The payout terms are recorded. §4 is computable, and computing it gives `E[payout] = b` |
+| **[D379](../../decisions/D379-the-prop-account-is-a-down-and-out-call-and-hurdle-P-has-no.md) §6 item 2** | **CLOSED.** The payout terms are recorded. §4 is computable, and computing it gives `E[payout] = b` |
 | **D379 §4** | assumed a ladder. **Two of five firms have none**, and the ladder is worth −1.3% where it exists |
 | **D379 §2** | models **one** barrier option. It is **two in sequence** — MFFU's funded account starts at **$0**, not the account size, so the funded phase is a second down-and-out with its barrier below zero, on terms that differ from the one bought |
 | **D379 §5** | Hodder & Jackwerth (2007) splits it: risk-*reduction* near an **exogenous** barrier, risk-*increase* near an **endogenous** one, discriminated by continuation value — and **D379 A1's `fee ÷ P(pass)` IS that continuation value.** Neither section cites the other. Separately the canonical risk-shifting result (Brown–Harlow–Starks 1996) **did not replicate** (Busse 2001, an autocorrelation bias in a monthly vol estimator), so §5 must be argued from truncation, not the convex kink |
@@ -164,7 +164,7 @@ strategy surfaced and none was prop-rejected, so that list is empty of strategie
 items carry, all sizing theory or modelling correction — the strongest being that **Grossman–Zhou is a
 fifth challenger [D372](../../decisions/D372-equal-weight-is-the-incumbent-sizing-and-the-hurdle.md)
 does not list**, and that **Broadie–Glasserman–Kou puts a number (0.5826 daily sigmas) on
-[D381](../../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange-rate-is-fixed.md)'s
+[D381](../../decisions/D381-RESULT-a-stop-is-a-late-trigger-and-the-median-mean-exchange.md)'s
 "a stop is a late trigger"**.
 
 ---

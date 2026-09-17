@@ -2,7 +2,7 @@
 
 *Pre-registration. Written before the run (R8); the runner is D478's, `scripts/run_d478_grow_trades.py`,
 given this line and its own output file. Sequel to
-[D478](D478-RESULT-the-grow-right-lines-trade-exactly-like-the-pivot-lines-and-both-time-their-own-trades-worse-than-chance.md).
+[D478](D478-RESULT-the-grow-right-lines-trade-exactly-like-the-pivot-lines.md).
 In-sample only, by the principal's instruction: the mining panel, the same 1,573 names; no
 holdout is read.*
 

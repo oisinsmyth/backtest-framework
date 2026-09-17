@@ -2,7 +2,7 @@
 
 *Pre-registration, written before the runner change (R8). Runner: D478's
 `scripts/run_d478_grow_trades.py` with `--source hand`, output `data/d481_hand_trades.json`.
-Sequel to [D480](D480-RESULT-the-hand-cell-the-pivot-construction-re-dialled-reaches-the-eye-on-gradient-and-the-swing-envelope-loses.md).
+Sequel to [D480](D480-RESULT-the-hand-cell-the-pivot-construction-re-dialled-reaches.md).
 In-sample only, the mining panel, 1,573 names; no holdout is read.*
 
 ## 1. What is traded
