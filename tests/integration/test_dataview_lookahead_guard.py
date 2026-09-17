@@ -5,8 +5,9 @@ system — every attack vector here is something a strategy author coming from p
 habits, or actively trying to cheat, would plausibly reach for.
 """
 
-import math
+from decimal import Decimal
 
+import numpy as np
 import pytest
 
 from backtest_framework.engine.dataview import (
@@ -125,12 +126,40 @@ def test_the_three_volume_states_are_distinguishable():
     assert gap_view.require_volume(2) == 30.0
 
 
-def test_nan_never_reaches_a_view():
+@pytest.mark.parametrize(
+    "nan",
+    [
+        pytest.param(float("nan"), id="builtin_float"),
+        pytest.param(np.float64("nan"), id="np_float64"),
+        pytest.param(np.float32("nan"), id="np_float32"),
+        pytest.param(np.float16("nan"), id="np_float16"),
+        pytest.param(Decimal("NaN"), id="decimal"),
+    ],
+)
+def test_nan_never_reaches_a_view(nan):
     """Every comparison against NaN is False, so a NaN that survived into a view would
-    make a volume filter reject every entry and return a plausible, wrong result."""
-    view = build_data_view(_bars(4), up_to_index=3, volumes=[10.0, float("nan"), 30.0, 40.0])
+    make a volume filter reject every entry and return a plausible, wrong result.
+
+    PARAMETRISED OVER THE NaN TYPE, AND THE INPUT IS WHAT MATTERS. This test passed one
+    builtin `float("nan")`, which took the one branch the old `isinstance(v, float)` gate
+    handled correctly. A `np.float32` NaN took the other branch and reached the view.
+
+    Worth stating precisely, because the obvious diagnosis is wrong: the old assertion
+    (`isinstance(v, float) and math.isnan(v)`) WOULD have caught it. The old conversion
+    called `float(v)` on the non-float branch, so what landed in the view was a *builtin*
+    float NaN that the assertion could see. The test was blind because of the values it
+    chose, not because it borrowed the implementation's predicate. One input per NaN type
+    is therefore the fix, and the assertion below is written as `v != v` only because that
+    identifies a NaN of any type without depending on `float()` having normalised it.
+
+    `np.float64` is included deliberately even though it always worked: it subclasses
+    `float`, so it is the reason the old gate LOOKED correct when spot-checked with numpy.
+    """
+    view = build_data_view(_bars(4), up_to_index=3, volumes=[10.0, nan, 30.0, 40.0])
     assert view.volume(1) is None
-    assert not any(isinstance(v, float) and math.isnan(v) for v in view._visible_volumes)
+    # `v != v` rather than isinstance+isnan: identifies a NaN of ANY type, and does not
+    # borrow the predicate the code under test uses.
+    assert not any(v is not None and v != v for v in view._visible_volumes)
 
 
 def test_a_length_mismatch_fails_loudly_naming_both_lengths():

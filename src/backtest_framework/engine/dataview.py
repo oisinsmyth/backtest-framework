@@ -62,6 +62,20 @@ class DataView:
                 f"DataView volume series has {len(self._visible_volumes)} entries but there "
                 f"are {len(self._visible_bars)} visible bar(s) — the two must align exactly"
             )
+        if self._visible_volumes is not None:
+            # A NaN here is the D168 failure in its finished form: every comparison against
+            # it is False, so a volume filter rejects every entry and the run returns a
+            # plausible wrong answer with no error anywhere. `normalise_volumes` is meant to
+            # have converted it to None already; this refuses to hold one either way, so the
+            # conversion is CHECKED at the boundary rather than assumed to have happened.
+            # It exists because the conversion silently did not happen for np.float32.
+            nan_at = [i for i, v in enumerate(self._visible_volumes) if v is not None and v != v]
+            if nan_at:
+                raise ValueError(
+                    f"DataView was given NaN volume at index/indices {nan_at[:5]} — a gap must "
+                    "be None, not NaN (D168). Pass the series through "
+                    "`normalise_volumes` rather than constructing the view from raw values."
+                )
 
     @property
     def current_index(self) -> int:
@@ -148,10 +162,18 @@ def normalise_volumes(volumes: Sequence[float | None]) -> tuple[float | None, ..
     per bar where it had been a C-level tuple slice. Measured on the breakout study that
     was a 2x whole-run slowdown (109s -> 227s) for work whose answer never changes. Engine
     callers own the full series, so they normalise once here and pass
-    `volumes_already_normalised=True`."""
-    return tuple(
-        None if v is None or (isinstance(v, float) and v != v) else float(v) for v in volumes
-    )
+    `volumes_already_normalised=True`.
+
+    NOT gated on `isinstance(v, float)`, and that is the whole point. `v != v` is true for
+    every NaN of every type; the `isinstance` check that used to guard it admitted
+    `np.float64` (which subclasses `float`) and silently let through `np.float32`,
+    `np.float16`, `np.longdouble` and `Decimal("NaN")` — the types a parquet read or a
+    vendor load produces by default, and the ones `list(series.values)` preserves where
+    `.tolist()` would not. For those the NaN reached the view and made a volume filter
+    reject every entry: the exact failure this function exists to prevent, arriving through
+    the function itself. `DataView.__post_init__` now refuses a NaN as well, so the
+    conversion is checked at the boundary rather than trusted here."""
+    return tuple(None if v is None or v != v else float(v) for v in volumes)
 
 
 def build_data_view(
