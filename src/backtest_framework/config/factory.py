@@ -47,9 +47,22 @@ class FactoryRegistry:
             raise ConfigError(
                 f"{self._kind} config key 'type' names an unknown type {type_name!r} — known types: {known}"
             )
-        try:
-            return self._factories[type_name](config)
-        except ConfigError:
-            raise
-        except (KeyError, TypeError, ValueError) as exc:
-            raise ConfigError(f"invalid {self._kind} config for type {type_name!r}: {exc}") from exc
+        # NOT wrapped in `except (KeyError, TypeError, ValueError)`. Every factory in this
+        # repository validates its own arguments and raises ConfigError itself -- through
+        # `_required_numeric` / `_optional_numeric`, through an inline enum check, or now
+        # through the brick-level unknown-key check. So a KeyError, TypeError or ValueError
+        # escaping a factory does not mean the config was bad; it means something inside the
+        # factory went wrong, and relabelling it "invalid config" sends the reader to the
+        # wrong file.
+        #
+        # The concrete case is `sqrt_impact`, whose factory calls `calibrate_impact_params`.
+        # That function raises bare ValueError in seven places and SIX of them are data
+        # faults, not config faults: too few bars, zero return volatility, a missing volume
+        # series, no usable volume observations, non-positive mean volume, and -- the one
+        # that gives the game away -- "{symbol} has N volumes against M bars", which is a
+        # panel misalignment being reported as a typo in a dict. A zero close reaches
+        # math.log and surfaces as "invalid cost_brick config: math domain error".
+        #
+        # Those now propagate as themselves. The only thing lost is a uniform exception
+        # type, which nothing catches: no caller anywhere recovers from ConfigError.
+        return self._factories[type_name](config)
