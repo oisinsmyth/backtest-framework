@@ -18,7 +18,6 @@ Second-source cross-checking stays deferred, per D26's own scoping.
 
 from __future__ import annotations
 
-import math
 import statistics
 from collections import Counter
 from dataclasses import dataclass
@@ -86,6 +85,22 @@ class ValidationResult:
                 for v in self.violations
             ],
         }
+
+
+def _is_present(volume: float | None) -> bool:
+    """True when this bar has a usable volume, for either spelling of "it does not".
+
+    The data layer writes a gap as NaN (`csv_fixture._to_float`) and the engine layer writes
+    it as None (`engine/dataview.normalise_volumes`, which converts NaN INTO None and whose
+    docstring calls None the canonical gap). Both are correct in their own half; the bug was
+    that these call sites used `math.isnan`, which does not raise on a gap it understands and
+    DOES raise `TypeError: must be real number, not NoneType` on the other spelling. So a
+    caller who normalised first -- the documented engine path -- crashed the validator.
+
+    Cheaper than making one half convert: neither half has to win, and the declared types
+    (`Sequence[float]`) that hid the contradiction from mypy stop mattering.
+    """
+    return volume is not None and volume == volume
 
 
 def _split_ratio_on(symbol: str, timestamp: datetime, actions: CorporateActions) -> float | None:
@@ -172,13 +187,13 @@ def validate(
                         )
                     )
 
-            if volumes is not None and i < len(volumes) and not math.isnan(volumes[i]):
+            if volumes is not None and i < len(volumes) and _is_present(volumes[i]):
                 if volumes[i] == 0:
                     violations.append(
                         Violation(symbol, tb.timestamp, "zero_volume", "volume=0", hard=False)
                     )
                 elif i >= VOLUME_MEDIAN_WINDOW:
-                    window = [v for v in volumes[i - VOLUME_MEDIAN_WINDOW : i] if not math.isnan(v)]
+                    window = [v for v in volumes[i - VOLUME_MEDIAN_WINDOW : i] if _is_present(v)]
                     if window:
                         median = statistics.median(window)
                         if median > 0 and volumes[i] > VOLUME_SPIKE_MULTIPLE * median:

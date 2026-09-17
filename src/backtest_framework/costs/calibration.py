@@ -38,6 +38,22 @@ field meaning shares makes the ratio off by a factor of price — impact underst
 a $96k coin and overstated ~126x on a $0.00006 one, in the same run."""
 
 
+def _is_present(volume: float | None) -> bool:
+    """True when this bar has a usable volume, for either spelling of "it does not".
+
+    The data layer writes a gap as NaN (`csv_fixture._to_float`) and the engine layer writes
+    it as None (`engine/dataview.normalise_volumes`, which converts NaN INTO None and whose
+    docstring calls None the canonical gap). Both are correct in their own half; the bug was
+    that these call sites used `math.isnan`, which does not raise on a gap it understands and
+    DOES raise `TypeError: must be real number, not NoneType` on the other spelling. So a
+    caller who normalised first -- the documented engine path -- crashed the validator.
+
+    Cheaper than making one half convert: neither half has to win, and the declared types
+    (`Sequence[float]`) that hid the contradiction from mypy stop mattering.
+    """
+    return volume is not None and volume == volume
+
+
 def calibrate_impact_params(
     bars_by_symbol: Mapping[str, Sequence[TimestampedBar]],
     volumes_by_symbol: Mapping[str, Sequence[float]],
@@ -63,7 +79,7 @@ def calibrate_impact_params(
             raise ValueError(f"no volume series for {symbol!r} — ADV must be calibrated, not defaulted (D48)")
         raw_volumes = volumes_by_symbol[symbol]
         if volume_units == "shares":
-            volumes = [v for v in raw_volumes if not math.isnan(v)]
+            volumes = [v for v in raw_volumes if _is_present(v)]
         else:
             # Quote-currency notional -> units, bar by bar. Dividing the MEAN notional by
             # a mean price would be a different (and wrong) statistic on a series whose
@@ -76,7 +92,7 @@ def calibrate_impact_params(
             volumes = [
                 v / tb.bar.close
                 for v, tb in zip(raw_volumes, series)
-                if not math.isnan(v) and tb.bar.close > 0
+                if _is_present(v) and tb.bar.close > 0
             ]
         if not volumes:
             raise ValueError(f"{symbol!r} has no usable volume observations")
