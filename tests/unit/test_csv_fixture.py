@@ -2,6 +2,8 @@
 
 from datetime import datetime
 
+import pytest
+
 from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.data.csv_fixture import (
     load_fixture_csv,
@@ -62,6 +64,27 @@ def test_gzipped_fixture_roundtrip(tmp_path):
     ).load_fixture_csv_with_volumes(path)
     assert loaded_bars == bars
     assert loaded_volumes == {"XLE": [1e6]}
+
+
+def test_a_volume_series_longer_than_its_bars_is_refused_not_truncated(tmp_path):
+    """The writer used to cut the series to the bar count and keep the first N.
+
+    That is worse than dropping data: it preserves exactly the wrong alignment and then
+    makes the lengths agree, so every downstream length check passes. `clean()` drops bars
+    and returns no re-indexed volumes, so a caller who passes the raw list on is misaligned
+    from the first drop — and `run_breakout_study.py` carries a guard for precisely that
+    case, comparing supplied and series lengths, whose comment claims a misalignment "would
+    be a loud failure rather than a quietly shifted volume history". It could never fire,
+    because this function had already equalised the lengths before the guard ran (D541).
+    """
+    bars = {"A": [TimestampedBar(datetime(2026, 1, 1 + i), Bar(open=1.0, high=1.0, low=1.0, close=1.0)) for i in range(3)]}
+
+    with pytest.raises(ValueError, match="4 volumes against 3 bars"):
+        save_fixture_csv(tmp_path / "f.csv", bars, volumes_by_symbol={"A": [1.0, 2.0, 3.0, 4.0]})
+
+    # Shorter is refused too: it used to raise IndexError from deep inside the row loop.
+    with pytest.raises(ValueError, match="2 volumes against 3 bars"):
+        save_fixture_csv(tmp_path / "g.csv", bars, volumes_by_symbol={"A": [1.0, 2.0]})
 
 
 def test_wrong_columns_fail_loudly(tmp_path):

@@ -591,6 +591,7 @@ would look like data. The tokens are what is shown.
 | D538 | Two panels come back into the index: D536's suffix rule was a proxy for size, and on its two smallest members the proxy… | [record](D538-two-small-panels-return-to-the-index.md) |
 | D539 | The public repository is a generated cut of this tree with fresh history, and nothing in it is redacted | [record](D539-the-public-repository-is-a-generated-cut-with-fresh-history.md) |
 | D540 | three times now, the repository has worked because of config a clone never receives | [record](D540-local-config-a-clone-never-receives.md) |
+| D541 | clean() drops bars and hands back no volumes, and the guard against that could never fire | [record](D541-clean-returns-bars-without-their-volumes.md) |
 
 <!-- REGISTER:END -->
 

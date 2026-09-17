@@ -4,6 +4,8 @@ clean input -> empty report. Ruleset clean-v1 (D73): drop-and-report, never rewr
 
 from datetime import datetime, timedelta
 
+import pytest
+
 from backtest_framework.data.bars import TimestampedBar
 from backtest_framework.data.cleaner import RULESET_VERSION, clean
 from backtest_framework.simulator.fills import Bar
@@ -59,6 +61,38 @@ def test_epsilon_low_high_artifact_passes_untouched():
 
     assert len(cleaned["A"]) == 1
     assert report.changes == ()
+
+
+def test_the_report_names_which_input_bars_survived():
+    """`clean()` decides with volumes and returns only bars, so the caller is left holding a
+    volume series that is now misaligned from the first drop onward.
+
+    `kept_indices` is what lets a caller realign exactly. Without it the only options were
+    to re-match on timestamps (which `research/breakout_universe.align_volumes` does, and
+    whose docstring says it exists only because this interface did not offer this) or to
+    pass the stale series on, which roughly half the runners in `scripts/` do (D541).
+    """
+    bars = _series([100.0, 100.0, 100.0, 100.0])
+    volumes = {"A": [10.0, 0.0, 30.0, 40.0]}  # bar 1 dropped for non-positive volume
+
+    cleaned, report = clean({"A": bars}, volumes)
+
+    assert len(cleaned["A"]) == 3
+    assert report.kept_indices["A"] == (0, 2, 3)
+    assert report.realign("A", volumes["A"]) == [10.0, 30.0, 40.0]
+    # The timestamps line up, which is the property the caller actually needs.
+    assert [tb.timestamp for tb in cleaned["A"]] == [bars[i].timestamp for i in (0, 2, 3)]
+
+
+def test_realign_refuses_a_series_that_is_not_the_one_that_was_cleaned():
+    """Truncating a mismatched series is how the original defect stayed invisible."""
+    bars = _series([100.0, 100.0, 100.0])
+    _, report = clean({"A": bars})
+
+    with pytest.raises(ValueError, match="not the one that was cleaned"):
+        report.realign("A", [1.0, 2.0])
+    with pytest.raises(KeyError, match="no cleaning record"):
+        report.realign("NOPE", [1.0, 2.0, 3.0])
 
 
 def test_zero_volume_day_dropped_and_reported():

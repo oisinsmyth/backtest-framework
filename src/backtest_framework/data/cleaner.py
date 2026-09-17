@@ -16,9 +16,9 @@ splits table rather than either of us "fixing" it).
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Mapping, Sequence
+from typing import Any, Mapping, Sequence
 
 from .bars import TimestampedBar
 
@@ -45,6 +45,25 @@ class CleaningChange:
 class CleaningReport:
     ruleset: str = RULESET_VERSION
     changes: tuple[CleaningChange, ...] = ()
+    kept_indices: Mapping[str, tuple[int, ...]] = field(default_factory=dict)
+    """Per symbol, the indices of the INPUT series that survived cleaning.
+
+    `clean()` takes a volume series, uses it to decide what to drop, and returns only bars.
+    The caller is left holding a volume list that is now longer than the bars it belongs to
+    and misaligned from the first drop onward — every subsequent volume attributed to the
+    wrong bar. That is not hypothetical: roughly half the runners in `scripts/` pass the raw
+    list straight on to `validate()` and `calibrate_impact_params()`, and the misalignment
+    reaches ADV, therefore `SqrtImpact` charges, therefore P&L (D541).
+
+    This is the additive half of the fix: a caller can realign exactly, with
+
+        volumes = [volumes[i] for i in report.kept_indices[symbol]]
+
+    without `clean()`'s signature changing and without any existing caller breaking.
+    `research/breakout_universe.align_volumes` solves the same problem by re-matching on
+    timestamps, and its docstring records that it exists only because this interface did not
+    offer the information. Now it does.
+    """
 
     def to_meta(self) -> dict:
         return {
@@ -54,6 +73,23 @@ class CleaningReport:
                 for c in self.changes
             ],
         }
+
+    def realign(self, symbol: str, values: Sequence[Any]) -> list[Any]:
+        """Take a per-bar series indexed against the INPUT bars and drop what the bars did.
+
+        Raises rather than truncating when the series does not match the input length: a
+        series of the wrong length is not a series that can be realigned, and quietly
+        returning a shorter one is how this defect stayed invisible in the first place.
+        """
+        kept = self.kept_indices.get(symbol)
+        if kept is None:
+            raise KeyError(f"no cleaning record for {symbol!r} — realign needs the report that dropped its bars")
+        if kept and max(kept) >= len(values):
+            raise ValueError(
+                f"{symbol!r}: series has {len(values)} entries but cleaning kept index "
+                f"{max(kept)} of a longer input — this series is not the one that was cleaned"
+            )
+        return [values[i] for i in kept]
 
 
 def _is_present(volume: float | None) -> bool:
@@ -84,10 +120,12 @@ def clean(
 ) -> tuple[dict[str, list[TimestampedBar]], CleaningReport]:
     cleaned: dict[str, list[TimestampedBar]] = {}
     changes: list[CleaningChange] = []
+    kept_indices: dict[str, tuple[int, ...]] = {}
 
     for symbol, series in bars_by_symbol.items():
         volumes = volumes_by_symbol.get(symbol) if volumes_by_symbol else None
         kept: list[TimestampedBar] = []
+        kept_at: list[int] = []
         for i, tb in enumerate(series):
             bar = tb.bar
             values = (bar.open, bar.high, bar.low, bar.close)
@@ -122,6 +160,8 @@ def clean(
                     continue
 
             kept.append(tb)
+            kept_at.append(i)
         cleaned[symbol] = kept
+        kept_indices[symbol] = tuple(kept_at)
 
-    return cleaned, CleaningReport(changes=tuple(changes))
+    return cleaned, CleaningReport(changes=tuple(changes), kept_indices=kept_indices)

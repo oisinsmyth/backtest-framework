@@ -81,6 +81,27 @@ def save_fixture_csv(
         for symbol in sorted(bars_by_symbol):
             series = bars_by_symbol[symbol]
             volumes = volumes_by_symbol.get(symbol) if volumes_by_symbol else None
+            if volumes is not None and len(volumes) != len(series):
+                # REFUSING RATHER THAN TRUNCATING, and the difference is the whole point.
+                # This loop is `for i, tb in enumerate(series)` reading `volumes[i]`, so a
+                # longer volume series was silently cut to len(series) with its first N
+                # entries kept — which preserves exactly the wrong alignment when the extra
+                # entries are at the front or middle, and then makes the lengths agree.
+                #
+                # That is how a real defect stayed invisible: `clean()` drops bars and
+                # returns no re-indexed volumes (D541), so a caller who passes the raw list
+                # onward is misaligned from the first drop. `run_breakout_study.py` has a
+                # guard for precisely this, comparing len(supplied) to len(series) and
+                # claiming a mismatch "would be a loud failure rather than a quietly shifted
+                # volume history" — and it could never fire, because this function had
+                # already equalised the lengths before the guard ever ran.
+                raise ValueError(
+                    f"{symbol!r} has {len(volumes)} volumes against {len(series)} bars. This "
+                    "writer used to truncate to the bar count, which hides a misalignment "
+                    "instead of reporting one. If the bars were cleaned, realign with "
+                    "`CleaningReport.realign(symbol, volumes)` rather than passing the "
+                    "original series (see D541)."
+                )
             extras = [
                 (extra_columns or {}).get(name, {}).get(symbol) for name in extra_names
             ]
