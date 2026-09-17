@@ -292,10 +292,18 @@ def cmd_build(dest: Path, into_non_empty: bool) -> int:
     # in the cut normalises exactly as it does here -- 3,000 of 3,016 ids matched on the first run
     # of this check, and the 16 that did not were all worktree modifications in flight.
     #
-    # Which is the one difference that is legitimate: a file edited and not yet staged is content
-    # the cut SHOULD carry (it projects the tree as it stands, not as it was committed). Those
-    # paths are named by `git diff`, so they are explained rather than excused. Anything differing
-    # OUTSIDE that set is a copy defect and fails the build.
+    # Which is the one difference that is legitimate, and it is NOT the one this block originally
+    # named. The cut's bytes come from HEAD; `source` below is the INDEX. So a path can differ for
+    # exactly one innocent reason -- it is staged and not yet committed -- and `git diff`, which
+    # compares the worktree against the index, cannot name a single one of those. The first version
+    # of this check used it anyway, which meant every staged change would have been reported as
+    # differing "for no reason git can name" and failed the build: the identical failure class the
+    # module docstring claims to have removed, reintroduced twenty lines from the claim. It has
+    # never fired only because nothing was staged on the runs that exercised it.
+    #
+    # `git diff --cached` is the one that names index-vs-HEAD. An UNSTAGED edit is now correctly
+    # invisible here: it leaves the index equal to HEAD, so the path never enters `differing` at
+    # all, which is right -- a HEAD-sourced cut does not carry it and should not be asked to.
     def index_blobs(root: Path) -> dict[str, str]:
         out = git("ls-files", "-s", "-z", cwd=root)
         blobs = {}
@@ -307,10 +315,10 @@ def cmd_build(dest: Path, into_non_empty: bool) -> int:
         return blobs
 
     source, cut = index_blobs(REPO), index_blobs(dest)
-    dirty = {p for p in git("diff", "--name-only", "-z").split("\0") if p}
+    staged = {p for p in git("diff", "--cached", "--name-only", "-z").split("\0") if p}
     differing = sorted(p for p in cut if source.get(p) != cut[p])
-    explained = [p for p in differing if p in dirty]
-    unexplained = [p for p in differing if p not in dirty]
+    explained = [p for p in differing if p in staged]
+    unexplained = [p for p in differing if p not in staged]
     # Files this build meant to carry that the cut's index does not hold. `git add --force` above
     # is what makes this normally empty; it stays as the check that the force actually took.
     only_here = sorted(set(paths) - set(cut))
@@ -319,7 +327,7 @@ def cmd_build(dest: Path, into_non_empty: bool) -> int:
     print(f"  index    {len(cut):,} files staged, one commit on `main`")
     print(f"  blobs    {len(cut) - len(differing):,} of {len(cut):,} identical to this index")
     if explained:
-        print(f"  ahead    {len(explained)} carry unstaged worktree edits: {explained[:5]}")
+        print(f"  ahead    {len(explained)} are staged but not committed: {explained[:5]}")
     if unexplained:
         print(f"  DIFFER   {len(unexplained)} differ for no reason git can name: {unexplained[:10]}")
     if only_here:
