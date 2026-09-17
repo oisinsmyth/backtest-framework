@@ -57,7 +57,7 @@ uv run pytest -q tests/golden     # 101 ledger-anchored tests, 0.58s
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
 full suite is `uv run pytest -q`, 3m31s here on a quiet machine and up to 7m26s under load.
-**On a clone it is 2,016 passed and 53 skipped in 3m39s** — measured on 2026-09-17 by cloning
+**On a clone it is 2,017 passed and 53 skipped in 5m45s** — measured on 2026-09-17 by cloning
 this repository into an empty directory and running it, not by reasoning about one from inside the
 working copy. That distinction has **three** times earned its keep: the first clone failed three
 tests the working copy could not, on a line-ending convention the working copy predates; the
@@ -75,7 +75,11 @@ That flag is set in *this* repository's `.git/config`, which is why the failure 
 for 539 decisions: **`git clone` does not copy local config.** Three separate defects have now had
 that same cause.
 
-Each of the 53 skips (2026-09-17) names the file it wanted. The panels left git in
+**Every skip that wants a file names it — 49 of the 53 (2026-09-17).** The other four want a git
+identity rather than a file, and say so; no clone has one, which is the same defect class as
+[D540](docs/decisions/D540-local-config-a-clone-never-receives.md). This sentence used to say all
+53 named a file and 16 did — the 33 that did not were saying "fixture not built", or in four cases
+nothing at all, about panels that are fully recoverable. The panels left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what
 a **checkout** no longer carries; they remain in the history, so a `git clone` is about 1.1 GB, of
 which 969 MB is `.git`. Two of the smallest came back into the index in

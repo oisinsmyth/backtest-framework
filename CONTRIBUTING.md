@@ -146,9 +146,13 @@ never executed.** It runs offline by construction: the five tests marked `live_f
 by default, which is D24's cross-cutting gate rather than a convenience.
 
 **A skip is not a pass.** 53 tests skip on a clone without the bulk data panels (2026-09-17), which left git in
-[D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md). Each names the file it
-wanted, and [`data/data_manifest.json`](data/data_manifest.json) carries its sha256 and the git
-blob id it had when it was tracked. If a skip count rises, something stopped being tested — read
+[D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md). **Every skip that wants a
+file names it — 49 of the 53** — and [`data/data_manifest.json`](data/data_manifest.json) carries
+its sha256 and the git blob id it had when it was tracked. The other four want a git identity
+rather than a file ([D540](docs/decisions/D540-local-config-a-clone-never-receives.md)). **Use
+`requires_panel` from `tests/conftest.py` rather than writing your own `pytest.skip`**: it names
+the file, and it raises rather than skipping when the manifest does not list it, so a typo'd path
+cannot masquerade as absent data. If a skip count rises, something stopped being tested — read
 the reasons, do not just read the colour.
 
 ---

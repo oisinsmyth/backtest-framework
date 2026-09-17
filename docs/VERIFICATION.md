@@ -158,7 +158,7 @@ tests pin. `scripts/` is 592 one-shot runners, tested only where a study's headl
 pinned to its artifact.
 
 **On a clone, 53 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
-[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,016 passed,
+[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,017 passed,
 53 skipped**.
 
 That figure moved twice in one day and both moves are worth knowing, because they are what a skip
@@ -169,10 +169,20 @@ commit in a repository with no `user.name` (it is set per-repository here, and `
 copy local config). Those four are now honest skips rather than reds, and the count rose to 53.
 **A skip count that rises because failures became skips is the suite getting more truthful, not
 less.** The split is deliberately not gated: it is a function of what a checkout happens to
-carry rather than of the commit, so it stays a dated measurement. Each skip names the file it
-wanted and
-[`data/data_manifest.json`](../data/data_manifest.json) carries its sha256 and git blob id. **A
-skip is not a pass** — if the count climbs, something stopped being tested.
+carry rather than of the commit, so it stays a dated measurement.
+
+**Every skip that wants a file names it — 49 of the 53 — and
+[`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 and git blob id of each.
+The other four want a git identity rather than a file** and say so
+([D540](decisions/D540-local-config-a-clone-never-receives.md)).
+
+That sentence used to read "each skip names the file it wanted", and **sixteen did**. The other 33
+said `fixture not built`, or named a rebuild script instead of the file, or — in four cases — said
+nothing at all, while `tests/conftest.py` named that same fixture correctly elsewhere in the same
+run. The received explanation was that those 33 wanted data that would have to be re-fetched from a
+paid vendor; measured, every one of them is in the manifest with a checksum and a blob, so all 33
+were recoverable and simply declined to say so. Six call sites produced all 33 and now route through
+`requires_panel`. **A skip is not a pass** — if the count climbs, something stopped being tested.
 
 **It has never run on a machine that is not this one.** Four CI jobs are wired to run on every
 push and the repository has no remote, so the workflow has never executed. What *has* been done,
