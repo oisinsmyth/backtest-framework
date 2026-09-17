@@ -35,13 +35,14 @@ The inventory, measured from the git index rather than typed:
 | **744 decision records** | over **501** decision numbers — a pre-registration and its result share one number |
 | **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
 | **62 studies** | in [`docs/results/`](docs/results/README.md), five of them featured |
-| **147 test files** | golden · property · integration · unit |
-| **591 research runners** | in `scripts/`, one-shot by design |
+| **148 test files** | golden · property · integration · unit |
+| **592 research runners** | in `scripts/`, one-shot by design |
 | **8 figure builders** | in `scripts/figures/`, regenerated and checked in CI |
 
 <sub>Generated from the git index by `scripts/build_readme_counts.py`; `tests/unit/test_readme_counts_are_current.py` fails if this block drifts.</sub>
 
 <!-- COUNTS:END -->
+
 
 
 
