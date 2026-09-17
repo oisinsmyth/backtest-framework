@@ -752,7 +752,11 @@ def run_variant(
     if variant.fixed_config is not None:
         schedule.append((0, variant.fixed_config))
     else:
-        assert variant.fit is not None
+        if variant.fit is None:
+            raise ValueError(
+                f"variant {variant.name!r} has neither a fixed_config nor a fit function — "
+                "a walk-forward variant needs one of the two to produce a schedule"
+            )
         for _, train_start, test_start, _ in spans:
             train_bars = bars[train_start:test_start]
             config = variant.fit(train_bars, tier, study)

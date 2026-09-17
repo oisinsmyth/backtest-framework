@@ -331,7 +331,11 @@ def run_pairs_study(
                 ),
             )
         else:
-            assert base_stack is not None  # built above whenever not per-window
+            if base_stack is None:
+                raise ValueError(
+                    "no base cost stack was built, but this run is not per-window — the "
+                    "two branches that build it have both been skipped"
+                )
             window_stack = base_stack
 
         for m in config.multipliers:

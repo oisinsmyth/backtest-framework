@@ -336,7 +336,12 @@ def positions(
         if not long_short and side < 0.0:
             side = 0.0
         if side != 0.0 and gate is not None:
-            assert closes is not None
+            if closes is None:
+                raise ValueError(
+                    "a gate series was supplied without the closes it gates: `gate` and "
+                    "`closes` travel together, and only `closes` can say which side of it "
+                    "the price is on"
+                )
             g = gate[t]
             if g != g or (side > 0.0 and closes[t] <= g) or (side < 0.0 and closes[t] >= g):
                 side = 0.0

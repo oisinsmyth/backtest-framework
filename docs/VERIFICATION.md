@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,077 tests are collected here, and one of them skips on the machine this was written on, for
+**2,103 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -71,7 +71,7 @@ full-suite run and a single-file run draw differently from the same seed
 ([D537](decisions/D537-derandomize-does-not-mean-deterministic.md)). A property failure that does
 not reproduce when you run its file alone is **not** thereby a flake.
 
-### `tests/integration/` — 152 tests. *The whole path composes, and one thing is checked against an engine we did not write.*
+### `tests/integration/` — 157 tests. *The whole path composes, and one thing is checked against an engine we did not write.*
 
 Whole studies run end to end: the pairs walk-forward, the breakout studies, the capacity and gross
 sweeps, the cost sweep, the risk monitor's drift behaviour.
@@ -90,16 +90,16 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,757 tests. *Each part does its own job.*
+### `tests/unit/` — 1,778 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
-most of the **structural guard** assertions are proved to fire — `src/` carries **272 `raise`
-statements**, spread across 45 of its 85 tracked `.py` files, and a guard nobody has proved will
+most of the **structural guard** assertions are proved to fire — `src/` carries **284 `raise`
+statements**, spread across 46 of its 85 tracked `.py` files, and a guard nobody has proved will
 raise is a guard nobody has checked.
 
 **The counting rule, because a reviewer who checks will otherwise get a different number.** That
 figure counts `raise <Exception>` forms only — AST `Raise` nodes with a non-`None` `exc`. A plain
-AST walk over the same 85 files finds **two more**: bare `raise` inside an `except`, which re-raise
+AST walk over the same 85 files finds **two more** (286): bare `raise` inside an `except`, which re-raise
 what they caught. Those are flow control rather than guards, and there is no message for a test to
 assert. Both readings are correct arithmetic; only one of them is the thing this paragraph is
 about, and `tests/unit/test_quoted_counts_are_current.py` pins the reading as well as the number.

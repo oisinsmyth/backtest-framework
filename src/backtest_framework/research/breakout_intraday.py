@@ -428,7 +428,11 @@ def assert_periods_per_year_agree(variant: Variant, study: BreakoutStudyConfig) 
     study annualises on one calendar and sizes on another — silently, since neither
     layer can see the other's copy."""
     config = variant.fixed_config
-    assert config is not None, "frequency variants are always fixed-config"
+    if config is None:
+        raise ValueError(
+            "a frequency variant must be fixed-config: this one has no fixed_config, so "
+            "there is no periods_per_year to agree with the study's"
+        )
     sizing = config["weight_source"].get("periods_per_year")
     if sizing != study.periods_per_year:
         raise ValueError(

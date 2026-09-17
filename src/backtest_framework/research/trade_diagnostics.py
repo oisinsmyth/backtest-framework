@@ -189,7 +189,11 @@ def extract_episodes(
                 "cash": 0.0,
                 "fills": [],
             }
-        assert open_state is not None  # a fill on a flat book always opens an episode
+        if open_state is None:
+            raise ValueError(
+                "a fill arrived with no open episode — a fill on a flat book is supposed to "
+                "have opened one, so the episode bookkeeping and the fill stream disagree"
+            )
         open_state["cash"] -= quantity * price
         open_state["fills"].append((quantity, price, cost))
         position += quantity

@@ -249,7 +249,11 @@ def find_setups(
             dropped_no_atr += 1
             continue
         leg = states[ready].leg
-        assert leg is not None  # _first_leg_bar returns only bars where it is set
+        if leg is None:
+            raise ValueError(
+                "a ready state carries no leg — `_first_leg_bar` is supposed to return only "
+                "bars where the leg is set, so this state did not come from it"
+            )
         target_price = ratio_price(leg, fib_ratio)
         in_leg = [
             (g.formed_at, g.lo, g.hi, g.filled_at)
