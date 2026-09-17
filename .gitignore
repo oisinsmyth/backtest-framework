@@ -126,3 +126,4 @@ data/d382_scores.npz
 # the record it plans. Anything it decides lands in docs/decisions/ under its own
 # number, in writing, like every other decision here.
 /working/PORTFOLIO_PLAN.md
+/working/REVIEW_REMEDIATION_PLAN.md
