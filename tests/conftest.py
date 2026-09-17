@@ -62,8 +62,21 @@ def requires_panel() -> Callable[[Path], None]:
     """
 
     def _requires(path: Path) -> None:
-        if not path.exists():
-            pytest.skip(_reason(Path(path).name))
+        if path.exists():
+            return
+        # The manifest check is what makes the skip honest, and it is the same distinction
+        # `loading_a_panel` draws below. Without it this helper answers EVERY missing file with
+        # "the bulk panels left the index in D536 -- see data_manifest.json for its sha256 and
+        # git blob id", which for a typo'd path, a renamed artifact or a fixture nobody built is
+        # a false explanation attached to a green run. A panel the manifest lists is a skip; a
+        # file it does not list is a bug, and a bug must not be reported as absent data.
+        if Path(path).name not in _panel_names():
+            raise FileNotFoundError(
+                f"{path} does not exist and `data/data_manifest.json` does not list it, so it is "
+                "not a bulk panel D536 untracked -- it is a wrong path, a renamed artifact or a "
+                "fixture nobody built. Skipping here would report a bug as absent data."
+            )
+        pytest.skip(_reason(Path(path).name))
 
     return _requires
 
