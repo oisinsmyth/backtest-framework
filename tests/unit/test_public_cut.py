@@ -38,6 +38,27 @@ import pytest
 REPO = Path(__file__).resolve().parents[2]
 BUILDER = REPO / "scripts" / "build_public_cut.py"
 
+
+def needs_git_identity() -> None:
+    """Skip when git has no author identity to give the cut's one commit.
+
+    `--build` commits, so it needs `user.name`/`user.email`, and it carries them across from this
+    repository rather than assuming a global default. On the author's machine that identity is set
+    **per-repository** -- `git config --show-origin user.name` reports `file:.git/config`, and
+    there is no global one at all. `git clone` does not copy local config, so a clone of this
+    repository has no identity and `--build` correctly refuses.
+
+    That is an environment fact, not a defect in the script, and it is worth a skip rather than a
+    failure: measured on a clone 2026-09-17, these four tests were four of seven reds, and the
+    other three were a stale counts block. Publishing is done from a checkout that can commit.
+    """
+    for key in ("user.name", "user.email"):
+        probe = subprocess.run(
+            ["git", "config", "--get", key], cwd=REPO, capture_output=True, text=True
+        )
+        if not probe.stdout.strip():
+            pytest.skip(f"git has no {key} here, so the cut's commit cannot be authored")
+
 # Things a reader would notice missing from the published repository: the manifest that makes the
 # data claim checkable, the figures the README puts above the fold, the front door, the licence,
 # and the CI workflow that backs the "five gates" claim.
@@ -141,6 +162,7 @@ def test_a_worktree_deletion_does_not_block_the_build(builder, tmp_path, monkeyp
     The break here is the real condition, not a name: a tracked path is deleted from the copied
     worktree and the build must still produce it, because HEAD still has it.
     """
+    needs_git_identity()
     sample = [".gitattributes", "README.md", "LICENSE"]
     monkeypatch.setattr(builder, "tracked", lambda: sample)
 
@@ -177,6 +199,7 @@ def test_the_bytes_are_heads_bytes_and_not_the_worktrees(builder, tmp_path, monk
     bytes are made to differ from HEAD's, built into a real cut, with the cut's bytes asserted
     against HEAD and asserted NOT to be the worktree's.
     """
+    needs_git_identity()
     rel = "LICENSE"
     in_head = builder.head_blobs([rel])[rel]
     victim = builder.REPO / rel
@@ -210,6 +233,7 @@ def test_a_real_build_is_byte_faithful(builder, tmp_path, monkeypatch):
     (`core.autocrlf=true`) while the index is LF, so a copy that went through text mode, or an
     `add` that ignored the copied `.gitattributes`, would leave the bytes right and the blob wrong.
     """
+    needs_git_identity()
     sample = [".gitattributes", "README.md", "LICENSE", "src/backtest_framework/__init__.py"]
     monkeypatch.setattr(builder, "tracked", lambda: sample)
 
@@ -254,6 +278,7 @@ def test_it_refuses_a_non_empty_destination_and_its_own_repository(builder, tmp_
     destination inside this repository would nest a cut in its own source, where the next cut would
     copy it.
     """
+    needs_git_identity()
     monkeypatch.setattr(builder, "tracked", lambda: [".gitattributes", "README.md"])
 
     occupied = tmp_path / "occupied"

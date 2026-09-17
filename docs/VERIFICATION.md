@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,057 tests are collected here, and one of them skips on the machine this was written on, for
+**2,069 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -90,7 +90,7 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,737 tests. *Each part does its own job.*
+### `tests/unit/` — 1,749 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
 most of the **structural guard** assertions are proved to fire — `src/` carries **272 `raise`
@@ -157,11 +157,12 @@ is 1–2.
 tests pin. `scripts/` is 592 one-shot runners, tested only where a study's headline numbers are
 pinned to its artifact.
 
-**On a clone, 50 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
-[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,004 passed,
-50 skipped**. Four other documents record 49 from a 2026-09-16 clone; the split is deliberately
-not gated, because it is a function of what a checkout happens to carry rather than of the commit,
-so both numbers stay as dated measurements until one clone settles it. Each skip names the file it
+**On a clone, 49 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
+[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,013 passed,
+49 skipped**. This page said 50 for a day, and the extra one was `test_public_cut.py`'s own test
+skipping itself in a clean tree — a test that could not fail, which is why it was rewritten into one
+that can. The split is deliberately not gated: it is a function of what a checkout happens to
+carry rather than of the commit, so it stays a dated measurement. Each skip names the file it
 wanted and
 [`data/data_manifest.json`](../data/data_manifest.json) carries its sha256 and git blob id. **A
 skip is not a pass** — if the count climbs, something stopped being tested.

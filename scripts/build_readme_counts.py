@@ -23,6 +23,14 @@ THE INDEX, NOT THE FILESYSTEM -- AND NOT `HEAD` EITHER
   * the **index** reflects staged state, so `git add` is the point at which the gate agrees with
     you -- which is the moment the work is real.
 
+**Which means: `--build` is the LAST step, after `git add`, not the first.** Regenerate before
+staging and the block records a repository that does not include the files you are about to commit.
+That has now happened twice -- once in round eight when two files were added after the block was
+written, and once in round nine when THIS script's own gate, being a unit test, changed the unit
+count it measures the moment it was tracked. Neither was caught locally: the suite had already run,
+and the gate reads the index, which agreed with itself at the moment it was asked. Both were caught
+afterwards, by a clone and by the gate's own next run.
+
 `tests/unit/test_results_docs_at_root.py` deliberately globs the filesystem instead, and that is
 not an inconsistency: it hunts files a runner regenerated and left untracked, which are invisible
 to the index. Different question, different instrument.
