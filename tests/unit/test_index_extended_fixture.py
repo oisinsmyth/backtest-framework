@@ -63,11 +63,11 @@ MOVE_LIMIT = 0.15
 
 
 @pytest.fixture(scope="module")
-def frame():
+def frame(requires_panel):
     """The whole 958k-row fixture, read ONCE and shared."""
+    # importorskip FIRST: a missing pandas and a missing panel are different absences.
     pd = pytest.importorskip("pandas")
-    if not FIXTURE.exists():  # pragma: no cover - the artifact is committed
-        pytest.skip("run scripts/fetch_index_extended.py --build first")
+    requires_panel(FIXTURE)
     df = pd.read_csv(FIXTURE)
     df["day"] = df["timestamp"].str.slice(0, 10)
     df["hhmm"] = df["timestamp"].str.slice(11, 16)

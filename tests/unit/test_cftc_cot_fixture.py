@@ -59,9 +59,8 @@ def mapping():
 
 
 @pytest.fixture(scope="module")
-def rows():
-    if not FIXTURE.exists():  # pragma: no cover
-        pytest.skip("fixture not built")
+def rows(requires_panel):
+    requires_panel(FIXTURE)
     with gzip.open(FIXTURE, "rt", encoding="utf-8", newline="") as fh:
         return list(csv.DictReader(fh))
 

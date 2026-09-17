@@ -128,12 +128,13 @@ KNOWN_REAL_MOVES = {
 
 
 @pytest.fixture(scope="module")
-def frame():
+def frame(requires_panel):
     """The whole 3.19M-row fixture, read ONCE and shared. It is a few seconds of
     gzip either way; paying it per-test would make this file unrunnable."""
+    # importorskip FIRST: a missing pandas and a missing panel are different absences and
+    # must stay distinguishable in the -rs log.
     pd = pytest.importorskip("pandas")
-    if not FIXTURE.exists():  # pragma: no cover - the artifact is committed
-        pytest.skip("run scripts/fetch_etf_intraday.py --build first")
+    requires_panel(FIXTURE)
     df = pd.read_csv(FIXTURE)
     return df.sort_values(["symbol", "timestamp"], kind="stable").reset_index(drop=True)
 

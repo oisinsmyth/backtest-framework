@@ -273,9 +273,8 @@ def test_snapshot_round_trip_preserves_the_resampled_ladder(tmp_path):
 
 
 @pytest.fixture(scope="module")
-def committed_hourly():
-    if not HOURLY_FIXTURE.exists():
-        pytest.skip("intraday fixture absent — fetch it with scripts/fetch_crypto_intraday.py")
+def committed_hourly(requires_panel):
+    requires_panel(HOURLY_FIXTURE)
     return load_fixture_csv_with_volumes(HOURLY_FIXTURE)
 
 

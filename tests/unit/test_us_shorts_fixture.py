@@ -66,7 +66,7 @@ def meta() -> dict:
 
 
 @pytest.fixture(scope="module")
-def closes_by_symbol() -> dict[str, list[tuple[str, float, float]]]:
+def closes_by_symbol(requires_panel) -> dict[str, list[tuple[str, float, float]]]:
     """(date, adjusted close, adjusted volume) per symbol, in file order. One pass.
 
     THE PANEL GUARD LIVES HERE, not on the tests. A module-level
@@ -79,11 +79,10 @@ def closes_by_symbol() -> dict[str, list[tuple[str, float, float]]]:
     `test_load_panel_really_does_refuse_this_fixture`, whose whole body is a source
     grep of scripts/run_macd_ladder.py. Gating the READER rather than the tests is
     the pattern the sibling fixtures already use —
-    tests/unit/test_etf_intraday_fixture.py:135 and
-    tests/unit/test_index_extended_fixture.py:69 — and it keeps the skip attached to
+    tests/unit/test_etf_intraday_fixture.py:137 and
+    tests/unit/test_index_extended_fixture.py:70 — and it keeps the skip attached to
     the thing that actually needs the file."""
-    if not FIXTURE.exists():
-        pytest.skip("fixture not built on this machine (D191: raw cache is local)")
+    requires_panel(FIXTURE)
     out: dict[str, list[tuple[str, float, float]]] = defaultdict(list)
     with gzip.open(FIXTURE, "rt", newline="") as f:
         for row in csv.DictReader(f):
@@ -604,15 +603,14 @@ def test_the_fetcher_never_puts_a_url_into_an_exception_or_a_log():
     assert "apikey=" not in src.replace('"apikey": key', "")
 
 
-def test_the_gzip_header_carries_no_timestamp_so_a_rebuild_is_a_content_diff():
+def test_the_gzip_header_carries_no_timestamp_so_a_rebuild_is_a_content_diff(requires_panel):
     """`gzip` stamps the current time into bytes 4-7 of its header, so an otherwise
     identical rebuild would show as a whole-file diff — and a diff that always appears
     is a diff that stops being read. The point of committing a fixture is that changing
     it is VISIBLE (D70/D24). Same pin `csv_fixture` carries."""
     # The only test in this file that touches the panel WITHOUT going through
     # `closes_by_symbol`, so it is the only one that still carries its own guard.
-    if not FIXTURE.exists():
-        pytest.skip("fixture not built on this machine (D191: raw cache is local)")
+    requires_panel(FIXTURE)
     with open(FIXTURE, "rb") as f:
         header = f.read(10)
     assert header[:2] == b"\x1f\x8b", "not a gzip file"
