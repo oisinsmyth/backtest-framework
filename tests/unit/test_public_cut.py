@@ -158,30 +158,48 @@ def test_a_worktree_deletion_does_not_block_the_build(builder, tmp_path, monkeyp
     )
 
 
-def test_the_bytes_are_heads_bytes_and_not_the_worktrees(builder):
+def test_the_bytes_are_heads_bytes_and_not_the_worktrees(builder, tmp_path, monkeypatch):
     """Where a tracked file differs on disk from HEAD, the cut must publish HEAD's version.
 
-    This is the second half of the same argument. A public repository is a statement about a
-    committed state; publishing whatever is half-edited on disk at build time is how an unreviewed
-    edit reaches a reader.
-    """
-    import subprocess
+    THIS TEST WAS A TAUTOLOGY FOR ONE DAY and is kept, rewritten, as the record of it. It read:
 
-    changed = subprocess.run(
-        ["git", "diff", "--name-only"], cwd=builder.REPO, capture_output=True, text=True
-    ).stdout.split()
-    tracked_changed = [p for p in changed if p in set(builder.tracked())]
-    if not tracked_changed:
-        import pytest
-
-        pytest.skip("no tracked file currently differs from HEAD, so there is nothing to compare")
-
-    for rel in tracked_changed[:3]:
-        on_disk = (builder.REPO / rel).read_bytes()
         in_head = builder.head_blobs([rel])[rel]
         if on_disk != in_head:
             assert builder.head_blobs([rel])[rel] == in_head
-            return
+
+    -- `x == x`, asserting nothing, in the test file for the publishing mechanism, in a session
+    whose refrain was that a test which cannot fail is worse than none. It also seeded from
+    `git diff --name-only`, which lists DELETIONS, and so crashed on `read_bytes()` the moment the
+    principal had a deleted-but-uncommitted record in flight -- which is the ordinary state here
+    and the exact condition `build_public_cut.py` exists to tolerate.
+
+    The rewrite takes the comparison somewhere it can actually fail: a real file whose worktree
+    bytes are made to differ from HEAD's, built into a real cut, with the cut's bytes asserted
+    against HEAD and asserted NOT to be the worktree's.
+    """
+    rel = "LICENSE"
+    in_head = builder.head_blobs([rel])[rel]
+    victim = builder.REPO / rel
+    original = victim.read_bytes()
+    assert original == in_head, "fixture needs LICENSE clean before it dirties it"
+
+    try:
+        victim.write_bytes(original + b"\n# worktree-only edit, never committed\n")
+        assert victim.read_bytes() != in_head, "the fixture failed to make the worktree differ"
+
+        monkeypatch.setattr(builder, "tracked", lambda: [".gitattributes", rel])
+        dest = tmp_path / "cut"
+        assert builder.cmd_build(dest, into_non_empty=False) == 0
+
+        published = (dest / rel).read_bytes()
+        assert published == in_head, "the cut must publish HEAD's bytes"
+        assert published != victim.read_bytes(), (
+            "the cut published the worktree's uncommitted edit -- an unreviewed change reaching a "
+            "reader is the failure this whole design exists to prevent"
+        )
+    finally:
+        victim.write_bytes(original)
+    assert victim.read_bytes() == original, "the fixture must leave LICENSE as it found it"
 
 
 def test_a_real_build_is_byte_faithful(builder, tmp_path, monkeypatch):
