@@ -523,7 +523,17 @@ def _accrue_gap_carry(
         if quantity != 0:
             # Carry base is split-invariant (qty x price is the same notional in
             # either frame), so the post-split snapshot is correct here.
-            base_amount = quantity * prices[instrument_id]
+            #
+            # Through `notional()` rather than open-coded, and the two lines either side of
+            # this loop are why: `portfolio.nav` above and `gross_exposure` below both ask
+            # the instrument. This line asked arithmetic. For `Equity` they agree exactly --
+            # `Equity.notional` IS `quantity * price` -- but `OptionStub` carries a x100
+            # contract multiplier, so a book holding one would have had NAV and gross
+            # exposure counting $5,000 while the carry base counted $50, with nothing
+            # anywhere comparing the two. Latent rather than live (no shipped instrument
+            # has a multiplier and OptionStub never reaches run_backtest), and one token to
+            # close before futures arrive and make it live.
+            base_amount = instruments[instrument_id].notional(quantity, prices[instrument_id])
             carry = cost_stack.carry_cost(
                 base_amount,
                 prev_timestamp,
