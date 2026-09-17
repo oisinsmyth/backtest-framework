@@ -52,6 +52,7 @@ The inventory, measured from the git index rather than typed:
 
 
 
+
 The seven are enumerated in the final report linked below, with what each one taught. A later
 catch is worth its own line: D279's lag audit re-derives the held set from `score[:, t-1]` in a
 second implementation that never calls the selection function, and it found that **~93% of that
@@ -80,7 +81,8 @@ blobs were already in history, no extra bytes at all — which is what took the 
 and git blob id of every one, so a skipped test names data that is still recoverable.
 
 **Three ways in.** What the framework *guarantees* is in [`tests/`](tests/), four tiers that do
-different jobs: `golden/` anchors fills and costs to ledgers worked out by hand, `property/`
+different jobs — [`docs/VERIFICATION.md`](docs/VERIFICATION.md) says what each one actually
+establishes and what none of them can: `golden/` anchors fills and costs to ledgers worked out by hand, `property/`
 quantifies over generated paths rather than chosen ones, `integration/` runs whole studies, and
 `unit/` pins the parts. What it has been *used for* is the studies below, which exist to show a
 strategy is a swappable brick. Why anything is the way it is, is in
@@ -95,6 +97,7 @@ src/backtest_framework/   the instrument — engine · costs · data · instrume
 tests/                    the exhibit — golden · property · integration · unit
 docs/
   ARCHITECTURE.md         what the framework IS: the loop, the seams, the guards
+  VERIFICATION.md         what the suite GUARANTEES, and what it does not
   figures/                six generated SVGs, one per property   [index](docs/figures/README.md)
   decisions/              one record per design call, D1 → D537   [index](docs/decisions/README.md)
   results/                every study, five featured              [index](docs/results/README.md)
@@ -165,6 +168,7 @@ cannot rot.
 
 **Live (kept current as implementation proceeds):**
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — what the framework *is*: the per-bar loop, the five seams with their signatures, the two-book model, and which guards are structural versus merely recorded
+- [`docs/VERIFICATION.md`](docs/VERIFICATION.md) — what the four test tiers each establish, the seven gates that are not tests, and the section that matters most: what the suite does **not** guarantee
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to change the framework: gate before code, which test tier, adding a brick, recording the decision
 - [`PHILOSOPHY.md`](PHILOSOPHY.md) — the guiding design philosophy; changes rarely and deliberately
 - [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1 → D537; the file and number counts are in the generated block at the top of this page. The index is a curated table for D1–D284 and a generated register below it, and a test fails if any record is in neither half.

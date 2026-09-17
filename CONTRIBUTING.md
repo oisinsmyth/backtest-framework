@@ -9,6 +9,9 @@ including its author: the order of work is not "write the code, then test it."
 
 [`docs/TUTORIAL.md`](docs/TUTORIAL.md) is how to *use* the framework — writing a strategy (§4),
 composing a cost stack (§3), and the gotchas that bite (§11). This file is how to *change* it.
+[`docs/VERIFICATION.md`](docs/VERIFICATION.md) is the other side of this page: where this one
+says which tier a new test belongs in, that one says what each tier already establishes — and
+what the suite cannot see. Worth reading before adding to a tier.
 
 ---
 
