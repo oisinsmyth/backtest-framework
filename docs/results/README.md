@@ -26,9 +26,10 @@ market. The market findings are mostly "no".
 All 62 now live here. The last 14 — the ones whose paths were pinned by tests — arrived with their
 17 writer scripts and 14 test path expressions repointed in the same commit.
 
-The best single document in the project is not a study at all — it is
+The best single document of the **first phase** is not a study at all — it is
 [`final_report.html`](final_report.html), *"Nothing Worked"*: what was tested, how each idea died,
-and the seven defects the guards caught.
+and the seven defects the guards caught. It is dated 22 August 2026 and covers D169–D189; it has
+not been revised, and it carries a banner saying what it does not include.
 
 ---
 
