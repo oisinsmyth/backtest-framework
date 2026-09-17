@@ -589,7 +589,9 @@ would look like data. The tokens are what is shown.
 | D536 | The bulk panels leave the index; the committed artifact is a manifest carrying sha256 and the git blob id | [record](D536-manifest-only-storage-for-the-bulk-panels.md) |
 | D537 | derandomize=True does not mean the same examples twice, and six files said it did | [record](D537-derandomize-does-not-mean-deterministic.md) |
 | D538 | Two panels come back into the index: D536's suffix rule was a proxy for size, and on its two smallest members the proxy… | [record](D538-two-small-panels-return-to-the-index.md) |
+| D539 | The public repository is a generated cut of this tree with fresh history, and nothing in it is redacted | [record](D539-the-public-repository-is-a-generated-cut-with-fresh-history.md) |
 
 <!-- REGISTER:END -->
+
 
 
