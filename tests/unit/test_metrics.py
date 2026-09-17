@@ -72,3 +72,25 @@ def test_beta_length_mismatch_fails_loudly():
 def test_max_drawdown_relocated_intact():
     curve = [(None, 100.0), (None, 110.0), (None, 99.0), (None, 105.0)]
     assert max_drawdown(curve) == pytest.approx(0.1, rel=TOLERANCE)
+
+
+def test_max_drawdown_refuses_a_curve_that_was_never_above_water():
+    """A drawdown is a fraction OF a peak, and there is no peak to take a fraction of.
+
+    The `peak > 0` gate is right to avoid the division; it used to fall through and return
+    0.0, which both renderers format as `{dd:.2%}` — so the undefined case printed as a
+    flat, entirely plausible `0.00%`, indistinguishable from a genuinely drawdown-free run.
+
+    Unreachable through `run_backtest`, where every equity curve starts at a positive
+    `starting_cash`, which is why changing it moves no published number.
+    """
+    with pytest.raises(ValueError, match="never positive"):
+        max_drawdown([(None, -10.0), (None, -100.0)])
+
+    # The first point being non-positive is fine as long as the curve recovers: the gate is
+    # about the RUNNING peak, not the opening value.
+    assert max_drawdown([(None, -10.0), (None, 100.0), (None, 50.0)]) == pytest.approx(0.5, rel=TOLERANCE)
+
+    # An empty curve keeps its old answer -- there is nothing to be undefined about, and
+    # tests/integration/test_cost_sweep.py pins a monotone curve at 0.0.
+    assert max_drawdown([]) == 0.0

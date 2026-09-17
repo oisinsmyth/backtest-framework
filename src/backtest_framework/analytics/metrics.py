@@ -76,8 +76,24 @@ def max_drawdown(equity_curve: Sequence[tuple[object, float]]) -> float:
     arithmetic on the equity curve. (Relocated from engine/sweep.py, D80.)"""
     peak = float("-inf")
     worst = 0.0
+    saw_positive_peak = False
     for _, nav in equity_curve:
         peak = max(peak, nav)
         if peak > 0:
+            saw_positive_peak = True
             worst = max(worst, (peak - nav) / peak)
+    if equity_curve and not saw_positive_peak:
+        # Refusing rather than answering. The `peak > 0` gate avoids dividing by a
+        # non-positive peak, which is right, but it used to fall through to `worst = 0.0`
+        # and hand back "no drawdown" for a book that was never once above water. Both
+        # renderers format this as `{dd:.2%}`, so the wrong answer printed as `0.00%` --
+        # indistinguishable from a genuinely drawdown-free run, which is the worst way for a
+        # number to be wrong. Unreachable through `run_backtest` (every equity curve starts
+        # at a positive `starting_cash`), so this costs nothing today and stops the silent
+        # `0.00%` if a curve of P&L rather than NAV is ever passed in.
+        raise ValueError(
+            "max_drawdown is undefined for a curve whose running peak is never positive: "
+            f"{len(equity_curve)} point(s), highest {max(nav for _, nav in equity_curve)}. "
+            "A drawdown is a fraction OF a peak, and there is no peak to take a fraction of."
+        )
     return worst
