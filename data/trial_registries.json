@@ -1,0 +1,245 @@
+{
+  "measured_at": "2026-09-17",
+  "note": "The trial registries: 295 MB of live-captured multiplicity evidence, gitignored, on one disk, and listed in no other manifest. PHILOSOPHY Pillar 3 and D20 rest on a trial count being captured live because it cannot be reconstructed afterwards -- so this file is the derived record of what the databases held when it was written. It is provenance, not a recovery path: unlike data/data_manifest.json there is no blob id, because these were never tracked. If a registry is lost, the counts below are what survives of it.",
+  "read_access": "Every sha256 here is taken under sqlite3 mode=ro. TrialRegistry.__init__ opens a registry READ-WRITE and runs CREATE TABLE IF NOT EXISTS, and every scripts/run_*.py constructs one at import, so a hash can move without a trial being logged. A hash mismatch at an UNCHANGED row count means the file was opened for writing.",
+  "etf_pool": {
+    "members": [
+      "e1_universe",
+      "combined_universe",
+      "portfolio_universe",
+      "swing_universe",
+      "capacity_portfolio",
+      "etf_universe",
+      "gross_sweep",
+      "capacity_study",
+      "convention_sensitivity",
+      "pairs_study_v1",
+      "pairs_study_v2",
+      "pairs_study_v3"
+    ],
+    "why_these": "The pool run_macd_ladder.prior_etf_trials() counts (:729-742). Membership is by programme -- these twelve are the ETF-fixture line; breakout_study, breakdown_study, breakout_universe, breakout_intraday and crypto_pairs are the crypto/breakout line and are a different body of work, not an omission. The enumeration there carries no comment saying so, which is why it is said here.",
+    "predicate": "distinct logged config payload, de-duplicated across registries (D98/D116/D126/D142)",
+    "raw_rows": 129286,
+    "distinct_configs_deduplicated": 45346,
+    "sum_of_per_registry_distinct_configs": 97966,
+    "collapsed_by_cross_registry_dedup": 52620,
+    "why_the_column_does_not_sum": "The per-registry distinct-config column sums to 97966, and the pool is 45346. The difference, 52620, is config payloads that are byte-identical in more than one registry: the same cohort and cost-stack payload is logged by several studies. Summing the column overstates the pool by about 2.2x, which would understate every deflated-Sharpe hurdle computed from it."
+  },
+  "totals": {
+    "registries": 19,
+    "live": 17,
+    "live_rows": 167014,
+    "bytes": 294883328
+  },
+  "registries": [
+    {
+      "path": "data/archive/breakout_v1/breakout_study_registry.sqlite",
+      "registry": "breakout_study",
+      "status": "superseded",
+      "in_etf_pool": false,
+      "rows": 9568,
+      "distinct_trial_id": 9568,
+      "distinct_config_json": 9568,
+      "bytes": 18640896,
+      "sha256": "f3ba23c1ba8fbe392c76fcb2c5157cedebf577d7b73929a360043585ef4e357f"
+    },
+    {
+      "path": "data/breakdown_study_registry.sqlite",
+      "registry": "breakdown_study",
+      "status": "live",
+      "in_etf_pool": false,
+      "rows": 11232,
+      "distinct_trial_id": 11232,
+      "distinct_config_json": 11232,
+      "bytes": 24403968,
+      "sha256": "c8fc239589d98fb7e299d052d7aa341887136afec293853eccd2e627c3f747c1"
+    },
+    {
+      "path": "data/breakout_intraday_registry.sqlite",
+      "registry": "breakout_intraday",
+      "status": "live",
+      "in_etf_pool": false,
+      "rows": 112,
+      "distinct_trial_id": 112,
+      "distinct_config_json": 112,
+      "bytes": 335872,
+      "sha256": "9a6cdc0f6c601eb0ccc56f91650dd6378f5282d32158e056c6ecd9a7f350bd4a"
+    },
+    {
+      "path": "data/breakout_study_registry.sqlite",
+      "registry": "breakout_study",
+      "status": "live",
+      "in_etf_pool": false,
+      "rows": 12480,
+      "distinct_trial_id": 12480,
+      "distinct_config_json": 12480,
+      "bytes": 24817664,
+      "sha256": "f228f17679096d02196bd7e0d170046cdf24ea07a05a453f07df70d2a91b317b"
+    },
+    {
+      "path": "data/breakout_universe_registry.sqlite",
+      "registry": "breakout_universe",
+      "status": "live",
+      "in_etf_pool": false,
+      "rows": 10560,
+      "distinct_trial_id": 10560,
+      "distinct_config_json": 10560,
+      "bytes": 15556608,
+      "sha256": "27325f2ffddf9ee94b68bc3697bc4ec115c9a5ac5ff3c09c563f88802fe1012e"
+    },
+    {
+      "path": "data/capacity_portfolio_registry.sqlite",
+      "registry": "capacity_portfolio",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 18270,
+      "distinct_trial_id": 18270,
+      "distinct_config_json": 18270,
+      "bytes": 39276544,
+      "sha256": "30d9c67d200be3b575184164943f88333e64645f1d061c93b981e76b2b973a9b"
+    },
+    {
+      "path": "data/capacity_study_registry.sqlite",
+      "registry": "capacity_study",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 385,
+      "distinct_trial_id": 385,
+      "distinct_config_json": 385,
+      "bytes": 815104,
+      "sha256": "9e0d160fb10d6169c7b284d64cf4310fe9de2e222536914e1f6b6e31965cfe03"
+    },
+    {
+      "path": "data/combined_universe_registry.sqlite",
+      "registry": "combined_universe",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 20880,
+      "distinct_trial_id": 20880,
+      "distinct_config_json": 20880,
+      "bytes": 31121408,
+      "sha256": "369f82dbca3e9bda1437b0b1d65d3e73f7e4d15e6f6c854d6b697f28208b75da"
+    },
+    {
+      "path": "data/convention_sensitivity_registry.sqlite",
+      "registry": "convention_sensitivity",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 280,
+      "distinct_trial_id": 280,
+      "distinct_config_json": 280,
+      "bytes": 593920,
+      "sha256": "988c4b0427810f5305a28d5cbbc7464dc05fded0fdffeb7e4ec3d7fb00c63528"
+    },
+    {
+      "path": "data/crypto_pairs_registry.sqlite",
+      "registry": "crypto_pairs",
+      "status": "live",
+      "in_etf_pool": false,
+      "rows": 3344,
+      "distinct_trial_id": 3344,
+      "distinct_config_json": 3344,
+      "bytes": 4911104,
+      "sha256": "8447dc00a2a0ecdaa8fbc617ba7aaa497e4bd239550085ac40102b58377baa4f"
+    },
+    {
+      "path": "data/e1_universe_registry.sqlite",
+      "registry": "e1_universe",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 41760,
+      "distinct_trial_id": 41760,
+      "distinct_config_json": 20880,
+      "bytes": 61992960,
+      "sha256": "31c25433c2a063f275f24a06795340058966009c6f71304328a2554d9cea0611"
+    },
+    {
+      "path": "data/etf_universe_registry.sqlite",
+      "registry": "etf_universe",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 4446,
+      "distinct_trial_id": 4446,
+      "distinct_config_json": 4446,
+      "bytes": 6709248,
+      "sha256": "19370699a0792625cc015c16ce30c89d0e4b1b428f25d72279ef45e047ae2f6d"
+    },
+    {
+      "path": "data/gross_sweep_registry.sqlite",
+      "registry": "gross_sweep",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 980,
+      "distinct_trial_id": 980,
+      "distinct_config_json": 980,
+      "bytes": 2056192,
+      "sha256": "fa976668ec37a4c74e09d56e88942b9f5b5cc64cc0aaf6b6415710a03a46c2fa"
+    },
+    {
+      "path": "data/pairs_study_v1_registry.sqlite",
+      "registry": "pairs_study_v1",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 175,
+      "distinct_trial_id": 175,
+      "distinct_config_json": 175,
+      "bytes": 262144,
+      "sha256": "1242718add4d2b0ce21ae383fa9f318353d21474e3905b8c55398058151b4524"
+    },
+    {
+      "path": "data/pairs_study_v2_registry.sqlite",
+      "registry": "pairs_study_v2",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 175,
+      "distinct_trial_id": 175,
+      "distinct_config_json": 175,
+      "bytes": 380928,
+      "sha256": "bd1457157517adea92d5e70cb086d923ecafc1085d248b19eab145967eec4633"
+    },
+    {
+      "path": "data/pairs_study_v3_registry.sqlite",
+      "registry": "pairs_study_v3",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 175,
+      "distinct_trial_id": 175,
+      "distinct_config_json": 175,
+      "bytes": 380928,
+      "sha256": "b4e6b093bed1eb888b114ddeaa61ba181ee62da68bcb46fcc307a473e40a0cf0"
+    },
+    {
+      "path": "data/portfolio_universe_registry.sqlite",
+      "registry": "portfolio_universe",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 20880,
+      "distinct_trial_id": 20880,
+      "distinct_config_json": 20880,
+      "bytes": 31158272,
+      "sha256": "74b5b9362d5d795b3230c6a9af721e5abec08814030dff316b499a8af50771e2"
+    },
+    {
+      "path": "data/swing_universe_registry.sqlite",
+      "registry": "swing_universe",
+      "status": "live",
+      "in_etf_pool": true,
+      "rows": 20880,
+      "distinct_trial_id": 20880,
+      "distinct_config_json": 10440,
+      "bytes": 31444992,
+      "sha256": "22c3980f8367e46116ec7cb4a90d5859aa770c0f523eea9a474bc461a5eae029"
+    },
+    {
+      "path": "trial_registry.sqlite",
+      "registry": "trial",
+      "status": "demo",
+      "in_etf_pool": false,
+      "rows": 10,
+      "distinct_trial_id": 10,
+      "distinct_config_json": 10,
+      "bytes": 24576,
+      "sha256": "de32adb9443b7fbc9fa6ffb73792ca6c5967bc08575716150798449a591de245"
+    }
+  ]
+}

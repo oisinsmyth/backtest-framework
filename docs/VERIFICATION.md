@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,070 tests are collected here, and one of them skips on the machine this was written on, for
+**2,077 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -90,7 +90,7 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,750 tests. *Each part does its own job.*
+### `tests/unit/` — 1,757 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
 most of the **structural guard** assertions are proved to fire — `src/` carries **272 `raise`
@@ -156,6 +156,18 @@ is 1–2.
 **It does not cover the research code.** `src/backtest_framework/` is 46 modules and is what the
 tests pin. `scripts/` is 592 one-shot runners, tested only where a study's headline numbers are
 pinned to its artifact.
+
+**It cannot re-count the trials, and a trial count is the one thing that cannot be recomputed
+later.** Every deflated-Sharpe hurdle in this repository is a function of how many looks were
+taken, and that number comes from nineteen SQLite registries which are 295 MB, gitignored, and on
+one disk. [`data/trial_registries.json`](../data/trial_registries.json) records what each held —
+rows, distinct configs, a checksum — and `tests/unit/test_trial_registries.py` checks it against
+`data/macd_ladder_summary.json`, which three published studies compute from. **That is two derived
+records agreeing, not an audit of the databases**: a reader can confirm the published 45,783 is
+consistent with both, and cannot confirm the registries themselves were never edited. Unlike the
+panels there is no blob to recover from, because these were never tracked. Five of them —
+`breakout_study`, `breakdown_study`, `breakout_universe`, `crypto_pairs`, `breakout_intraday` —
+had no committed count anywhere until 2026-09-17.
 
 **On a clone, 53 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
 [D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,017 passed,
