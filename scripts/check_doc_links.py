@@ -67,6 +67,7 @@ A link resolves if its target is in `git ls-files`. Both halves of that matter:
 
 from __future__ import annotations
 
+import posixpath
 import re
 import subprocess
 import sys
@@ -152,15 +153,24 @@ def broken_links(doc: Path, index: set[str], dirs: set[str]) -> list[tuple[int, 
                 continue
             if "/" not in path_part and "." not in path_part:
                 continue  # prose notation, e.g. D340's `[ID](a)` -- see the docstring
-            resolved = (doc.parent / path_part).resolve()
-            try:
-                rel = resolved.relative_to(REPO).as_posix()
-            except ValueError:
+            # Resolved with posixpath against the index, NOT with Path.resolve() against the
+            # disk. `.resolve()` consults the filesystem, and on Windows that means it
+            # canonicalises case: a link written `docs/rules.MD` resolved to `docs/RULES.md` and
+            # matched the index here, while 404-ing for every reader on Linux and on GitHub. That
+            # is the same passes-here-fails-there class `.gitattributes` was added to remove, in
+            # the gate whose own docstring says THE INDEX IS THE AUTHORITY, NOT THE DISK -- and
+            # `.resolve()` was the one line that consulted the disk.
+            # `REPO / doc` is a no-op when doc is already absolute, so this accepts either form.
+            # The old `.resolve()` tolerated a relative path and this must not be more brittle
+            # than what it replaces.
+            doc_dir = (REPO / doc).parent.relative_to(REPO).as_posix()
+            rel = posixpath.normpath(posixpath.join("" if doc_dir == "." else doc_dir, path_part))
+            if rel == ".." or rel.startswith("../"):
                 bad.append((lineno, f"{target} -> outside the repository"))
                 continue
             if rel in index or rel in dirs:
                 continue  # tracked -- a clone without the D536 panels still resolves it
-            if resolved.exists():
+            if (REPO / rel).exists():
                 # The half that used to pass. On this machine only.
                 bad.append((lineno, f"{target} -> on disk but NOT in git; a reader gets nothing"))
             else:
@@ -172,6 +182,23 @@ def main(argv: list[str]) -> int:
     docs = [REPO / a for a in argv] if argv else tracked_markdown()
     index = tracked_paths()
     dirs = tracked_dirs(index)
+
+    # A check that cannot fire is worse than no check, and this one could not. Cloning this
+    # repository onto Windows aborts the checkout (D540) and leaves the index unwritten, so
+    # `git ls-files` returns nothing -- and this script printed "0 documents checked, 0 unresolved
+    # link(s)" and exited 0. A vacuous green, produced by doing the thing the README recommends.
+    # `build_readme_counts.py` already guards its own empty case; this is the same guard.
+    if not index:
+        raise SystemExit(
+            "git ls-files returned an empty index -- this is not a repository with no files, it is "
+            "a broken or partial checkout (see docs/decisions/D540). Refusing to report zero "
+            "unresolved links from zero documents."
+        )
+    if not docs:
+        raise SystemExit(
+            "git ls-files matched no documents -- the pathspec is wrong or the checkout is partial. "
+            "Refusing to pass by checking nothing."
+        )
 
     total, absent = 0, 0
     for doc in sorted(docs):
