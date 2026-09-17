@@ -50,6 +50,38 @@ def test_non_positive_price_is_hard():
     assert result.hard_violations[0].check == "non_positive_price"
 
 
+def test_a_zero_close_is_quarantined_rather_than_raising():
+    """The data this module exists to quarantine must not crash it.
+
+    A 0.0 close is an ordinary scraper failure. It is flagged hard and `continue`d, but the
+    `continue` only skips that bar's own checks -- the NEXT bar used it as `prev_close` and
+    divided by it, so `validate()` raised ZeroDivisionError instead of returning a
+    quarantining result. A caller wrapping `validate()` to keep going would then record
+    "the validator errored" rather than "this data is bad", which is the wrong conclusion
+    about the wrong thing.
+    """
+    result = validate({"A": _series([10.0, 0.0, 10.0])})
+
+    assert not result.passed
+    assert [v.check for v in result.hard_violations] == ["non_positive_price"]
+    # And specifically NOT an unexplained_move fabricated from the poisoned predecessor.
+    assert not any(v.check == "unexplained_move" for v in result.violations)
+
+
+def test_a_negative_close_does_not_fabricate_a_move_on_the_next_bar():
+    """The same defect one step along: -5.0 divides without raising, and invents a -21%.
+
+    `docs/TUTORIAL.md` has been carrying this since it was written -- its `[100, -5, 100]`
+    garbage series produced a second, spurious `unexplained_move` hard violation off the
+    poisoned close. It never showed because the tutorial only asserts `not passed`, which
+    was true for the right reason and the wrong one at the same time.
+    """
+    result = validate({"A": _series([100.0, -5.0, 100.0])})
+
+    assert not result.passed
+    assert [v.check for v in result.hard_violations] == ["non_positive_price"]
+
+
 def test_genuine_crash_day_is_a_warning_not_quarantine():
     # Calibration anchor (D74): XOP 2020-03-09 was a REAL -37% simple move. 25-60%
     # unexplained => warning; the dataset must not be quarantined for a real crash.

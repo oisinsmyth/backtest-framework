@@ -137,7 +137,17 @@ def validate(
                     )
                 )
 
-            if i > 0:
+            # `prev_close > 0` is not belt-and-braces. A bar with a non-positive close is
+            # flagged above and `continue`d, but the `continue` only skips that bar's own
+            # checks -- it does nothing about the bar being the NEXT one's predecessor, and
+            # this line then divides by it. A single 0.0 close, which is an ordinary scraper
+            # failure and precisely the thing this module exists to quarantine, made
+            # validate() raise ZeroDivisionError instead of returning a result. A caller
+            # that wraps validate() to keep going then records "the validator errored"
+            # where the truth is "quarantine this data" -- the worst of the two outcomes.
+            # A move measured against a quarantined close is meaningless in any case, so it
+            # is not computed rather than computed and discarded.
+            if i > 0 and series[i - 1].bar.close > 0:
                 prev_close = series[i - 1].bar.close
                 move = bar.close / prev_close - 1.0
                 ratio = _split_ratio_on(symbol, tb.timestamp, actions)
