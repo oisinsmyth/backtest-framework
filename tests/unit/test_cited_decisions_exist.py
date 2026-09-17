@@ -106,6 +106,17 @@ UNWRITTEN_RECORDS: dict[int, str] = {
     407: "(b) reserved in 044f839 for an absorption study; D412 records it as NOT consumed",
     410: "(b) the far end of the D407-D410 block reserved in 044f839; never consumed",
     496: "(a) scripts/d496_book_sharpe_bar.py + data/d496_book_sharpe_bar.json (1bd7803), no record",
+    # (c) A THIRD SHAPE, and it arrived the day CHANGELOG.md caught up on D285-D539. The catch-up
+    # inventories the gaps -- it names every number in the range with no record file, which is the
+    # honest thing for a changelog to do and is exactly what makes these five newly cited. Four of
+    # them had been cited NOWHERE in the tree until then. A gate that fires because a document
+    # started telling the truth about a gap is working; the remedy is to record the gap here, not
+    # to make the changelog quieter.
+    287: "(c) no record and no runner; named in CHANGELOG.md's D285-D539 gap inventory",
+    516: "(c) no record and no runner; named in CHANGELOG.md's D285-D539 gap inventory",
+    517: "(c) no record and no runner; named in CHANGELOG.md's D285-D539 gap inventory",
+    518: "(c) no record and no runner; named in CHANGELOG.md's D285-D539 gap inventory",
+    519: "(c) no record and no runner; named in CHANGELOG.md's D285-D539 gap inventory",
 }
 
 
