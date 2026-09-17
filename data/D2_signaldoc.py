@@ -5,9 +5,13 @@ seasonally adjusted or trailing-four-quarter?
 File: data/D3_SignalDoc.csv (fetched by lane D3 of this same round; shared evidence)
 Upstream: https://github.com/OpenSourceAP/CrossSection
 """
+from pathlib import Path
+
 import pandas as pd
 
-P = r"C:\Users\O\Desktop\Projects\Backtest Framework\data\D3_SignalDoc.csv"
+# The CSV is this script's SIBLING, so address it as one. The absolute path that stood
+# here named the author's own checkout and made the script unrunnable anywhere else.
+P = Path(__file__).resolve().parent / "D3_SignalDoc.csv"
 d = pd.read_csv(P, encoding="utf-8", engine="python", on_bad_lines="skip")
 print(f"rows {len(d)}  cols {len(d.columns)}")
 print("columns:", list(d.columns))

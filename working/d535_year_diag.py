@@ -9,7 +9,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-REPO = Path(r"C:\Users\O\Desktop\Projects\Backtest Framework")
+# Resolved from this file, not hardcoded: the literal absolute path this line used to
+# hold was the author's own checkout, so the script could not run on any other machine.
+# `working/` sits directly under the repo root, so parents[1] -- same as scripts/.
+REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 s = importlib.util.spec_from_file_location("d535", REPO / "scripts" / "run_d535_illiq_ranked.py")
 M = importlib.util.module_from_spec(s); sys.modules["d535"] = M; s.loader.exec_module(M)

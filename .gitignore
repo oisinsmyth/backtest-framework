@@ -31,6 +31,10 @@ Thumbs.db
 
 # Claude Code local settings (machine-specific)
 .claude/settings.local.json
+# launch.json names a dev command and a port for THIS checkout and is rewritten by the app.
+# It was excluded via .git/info/exclude, which is NOT published -- so a cloner had no rule
+# keeping their own copy out of a commit. The rule belongs here, where a clone receives it.
+.claude/launch.json
 
 # Env / secrets
 .env

@@ -21,7 +21,9 @@ from pathlib import Path
 import numpy as np
 import zstandard as zstd
 
-REPO = Path(r"C:\Users\O\Desktop\Projects\Backtest Framework")
+# Resolved from this file, not hardcoded: the literal absolute path this line used to
+# hold was the author's own checkout, so the script could not run on any other machine.
+REPO = Path(__file__).resolve().parents[1]
 BARS = REPO / "data" / "fixtures" / "index_extended_15m_raw.csv.gz"
 SCRATCH = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 

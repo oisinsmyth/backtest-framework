@@ -2668,7 +2668,7 @@ the same reason. **Use the Edit/Write tools for anything containing escapes.**
 
 ## 7. Standing constraints — these do not lapse
 
-**Alpha Vantage key** at `C:\Users\O\.config\alphavantage\key`, read via `ALPHAVANTAGE_API_KEY`
+**Alpha Vantage key** at `~/.config/alphavantage/key`, read via `ALPHAVANTAGE_API_KEY`
 first. **Never inlined, never printed, never logged, redacted from any displayed URL.** Pace at
 **66 req/min** against the 75 ceiling. Cache every response; hard stop after 5 consecutive failures.
 **The ToS requires this repo stay private.**

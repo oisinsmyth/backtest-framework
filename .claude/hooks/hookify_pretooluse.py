@@ -32,18 +32,50 @@ import runpy
 import sys
 from pathlib import Path
 
-ROOT = Path(r"C:\Users\O\.claude\hookify-src\plugins\hookify")
+# Resolved, never hardcoded. Until this change `ROOT` was an absolute path under the
+# AUTHOR'S home directory, and the miss branch in `main()` PRINTED it -- so every cloner
+# who enabled this hook got a stranger's home directory echoed into their own session.
+# The candidates below are in precedence order; the first whose `hooks/pretooluse.py`
+# exists wins. `HOOKIFY_ROOT` is the explicit override, `CLAUDE_PROJECT_DIR` covers a
+# checkout vendored beside the project, and `Path.home()` covers a per-user install.
+_REL = Path("hookify-src") / "plugins" / "hookify"
+
+
+def _candidates() -> list[Path]:
+    out: list[Path] = []
+    env = os.environ.get("HOOKIFY_ROOT")
+    if env:
+        out.append(Path(env))
+    proj = os.environ.get("CLAUDE_PROJECT_DIR")
+    if proj:
+        out.append(Path(proj) / ".claude" / _REL)
+    out.append(Path.home() / ".claude" / _REL)
+    return out
+
+
+def _find_root() -> Path | None:
+    for c in _candidates():
+        if (c / "hooks" / "pretooluse.py").exists():
+            return c
+    return None
 
 
 def main() -> int:
-    if not (ROOT / "hooks" / "pretooluse.py").exists():
+    root = _find_root()
+    if root is None:
         # Fail OPEN, loudly. A missing checkout must not wedge every tool call.
+        # The message names the ENV VARS and the relative shape, never an absolute
+        # path: this branch runs on a stranger's machine and has no business
+        # reciting a directory from the machine the hook was written on.
         print(json.dumps({"systemMessage":
-                          f"hookify not found at {ROOT}; rules are NOT enforced"}))
+                          "hookify checkout not found (looked at $HOOKIFY_ROOT, "
+                          "$CLAUDE_PROJECT_DIR/.claude/hookify-src/plugins/hookify, "
+                          "and ~/.claude/hookify-src/plugins/hookify); "
+                          "rules are NOT enforced"}))
         return 0
 
-    os.environ["CLAUDE_PLUGIN_ROOT"] = str(ROOT)
-    runpy.run_path(str(ROOT / "hooks" / "pretooluse.py"), run_name="__main__")
+    os.environ["CLAUDE_PLUGIN_ROOT"] = str(root)
+    runpy.run_path(str(root / "hooks" / "pretooluse.py"), run_name="__main__")
     return 0
 
 

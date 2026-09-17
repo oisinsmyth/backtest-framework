@@ -6,7 +6,14 @@ from pathlib import Path
 
 import numpy as np
 
-REPO = Path(r"C:\Users\O\Desktop\Projects\Backtest Framework\.claude\worktrees\signal-hunt-part2")
+# This was written against a throwaway git worktree, `.claude/worktrees/signal-hunt-part2`,
+# which is gitignored and exists in NO clone. Everything it reads, though, is in the repo
+# proper today -- scripts/d399_alt_segment.py, scripts/d399_draw_construction.py,
+# scripts/run_uptrend_onset.py, scripts/ragged_panel.py, src/, and
+# data/d399_live_ground_truth.json -- so it is REPOINTED at the repo root rather than
+# retired. The worktree path was never a different version of those files, only a
+# different checkout of them.
+REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "scripts"))
 

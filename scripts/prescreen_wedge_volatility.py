@@ -20,7 +20,9 @@ import importlib.util, math, sys
 from pathlib import Path
 import numpy as np
 
-REPO = Path(r"C:/Users/O/Desktop/Projects/Backtest Framework")
+# Resolved from this file, not hardcoded: the literal absolute path this line used to
+# hold was the author's own checkout, so the script could not run on any other machine.
+REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 def _load(nm, fn):
     sp = importlib.util.spec_from_file_location(nm, REPO / "scripts" / fn)

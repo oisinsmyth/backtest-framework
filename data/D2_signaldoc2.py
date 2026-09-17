@@ -2,9 +2,13 @@
 for the gross-profitability family. All figures are OSAP's transcription of the
 ORIGINAL PAPER's headline test (`Test in OP`), not OSAP's own replication.
 """
+from pathlib import Path
+
 import pandas as pd
 
-P = r"C:\Users\O\Desktop\Projects\Backtest Framework\data\D3_SignalDoc.csv"
+# The CSV is this script's SIBLING, so address it as one. The absolute path that stood
+# here named the author's own checkout and made the script unrunnable anywhere else.
+P = Path(__file__).resolve().parent / "D3_SignalDoc.csv"
 d = pd.read_csv(P, encoding="utf-8", engine="python", on_bad_lines="skip")
 want = ["GP", "GPlag", "GPlag_q", "roaq", "RoE", "ChangeRoA", "ChangeRoE",
         "OperProf", "OperProfLagAT_q", "OperProfRD", "CBOperProf",
