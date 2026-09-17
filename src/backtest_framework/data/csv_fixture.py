@@ -27,6 +27,25 @@ from .bars import TimestampedBar
 _COLUMNS = ["timestamp", "symbol", "open", "high", "low", "close", "volume"]
 
 
+class _ClosingTextIOWrapper(io.TextIOWrapper):
+    """A TextIOWrapper that also closes a file object it did not open.
+
+    The gzip write path is a three-layer stack — raw file, GzipFile, text wrapper — and only
+    the middle layer is owned by the one above it. Without this, `with _open_text(...)`
+    closed two of the three and left the raw handle to the garbage collector.
+    """
+
+    def __init__(self, buffer, raw, **kwargs):
+        super().__init__(buffer, **kwargs)
+        self._raw_file = raw
+
+    def close(self) -> None:
+        try:
+            super().close()
+        finally:
+            self._raw_file.close()
+
+
 def _open_text(path: Path, mode: str):
     """Transparent gzip (D88): a '.gz' suffix means the fixture is compressed —
     the 57-ETF universe fixture is ~17MB raw, ~2.5MB gzipped, and the repo commits
@@ -46,8 +65,20 @@ def _open_text(path: Path, mode: str):
     if path.suffix == ".gz":
         if "w" in mode:
             raw = open(path, mode + "b")
-            binary = gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0)
-            return io.TextIOWrapper(binary, encoding="utf-8", newline="")
+            # `GzipFile` closes the underlying file only when it opened it itself. It did
+            # not here — `fileobj=raw` is the whole point, because an explicit fileobj is
+            # what lets `mtime=0` be pinned — so closing the returned wrapper closed the
+            # GzipFile and left `raw` open. The bytes then reached disk whenever CPython's
+            # refcount happened to collect it. Correct in practice and only in practice:
+            # not under an interpreter without refcounting, not under
+            # `-W error::ResourceWarning`, and not obviously on Windows, where the handle's
+            # lifetime stopped matching the `with` block the caller wrote.
+            try:
+                binary = gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0)
+                return _ClosingTextIOWrapper(binary, raw, encoding="utf-8", newline="")
+            except Exception:
+                raw.close()
+                raise
         return gzip.open(path, mode + "t", encoding="utf-8", newline="")
     return open(path, mode, encoding="utf-8", newline="")
 
