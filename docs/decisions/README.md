@@ -592,6 +592,7 @@ would look like data. The tokens are what is shown.
 | D539 | The public repository is a generated cut of this tree with fresh history, and nothing in it is redacted | [record](D539-the-public-repository-is-a-generated-cut-with-fresh-history.md) |
 | D540 | three times now, the repository has worked because of config a clone never receives | [record](D540-local-config-a-clone-never-receives.md) |
 | D541 | clean() drops bars and hands back no volumes, and the guard against that could never fire | [record](D541-clean-returns-bars-without-their-volumes.md) |
+| D542 | One quantity, one definition: collapsing max_drawdown, Sharpe and percentile | [record](D542-one-quantity-one-definition.md) |
 
 <!-- REGISTER:END -->
 
