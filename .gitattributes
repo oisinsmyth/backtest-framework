@@ -23,3 +23,36 @@
 *.npz     binary
 *.gz      binary
 *.zip     binary
+
+# SIX TRACKED FILES ARE NOT UTF-8, AND `* text=auto eol=lf` ABOVE ASSERTS THAT THEY ARE (D543).
+#
+# `text=auto` is content detection, not a declaration, and git's heuristic is "does it contain
+# NUL". None of the first five does, so all five are classified text and line-ending-normalised
+# by a tool that cannot read their bytes. The sixth escapes only by accident -- it has 386 NULs,
+# because it is a PDF.
+#
+# Naming them `binary` does not change the bytes. It stops git claiming to understand them, and
+# it stops `git add --renormalize` or a fresh checkout from round-tripping a cp1252 file through
+# a text filter. THE COST IS REAL AND IS THE POINT OF WRITING IT DOWN: git will no longer diff
+# these files, so a future change to one becomes invisible in review. For frozen evidence that
+# is the right trade -- three of the six are captured console output and none of the six is
+# parsed by any `.py` in the tree.
+#
+# Encodings identified by byte inspection, not guessed: the first four carry only 0x92/0x93/0x94
+# (smart quotes) or 0x97 (em dash), which are cp1252 -- in latin-1 those are C1 control codes.
+data/D3_french_variable_definitions.html          binary
+data/d279_run.log                                 binary
+data/d279_run_corrected.log                       binary
+data/d285_run.log                                 binary
+
+# cp1252/latin-1 family (0xe1 0xe9 0xed -- a, e, i with acute; identical in both, so this one is
+# genuinely indeterminate). LOAD-BEARING: cited by D386 and by three documents under
+# docs/research/Prop-Firm-080926/. It is lossy `pdftotext` output that has already dropped the
+# Czech diacritics it could not carry, which is exactly why its remaining bytes should not be
+# put through another lossy step.
+data/ftmo_challenge_terms_2026-08-04.txt          binary
+
+# NOT HTML. The first eight bytes are `%PDF-1.5`; the extension is wrong, not the encoding. Git
+# already infers binary from its NULs, so this line changes nothing today and states the fact
+# rather than leaving it to a heuristic. Renaming it is the principal's call, not this file's.
+data/k4_sec_34-81446_2017_ex_date_transition.html binary
