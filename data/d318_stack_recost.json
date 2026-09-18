@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "note": "RE-COSTING of D306's published cells. Per-cell round trip across widths, common within a width (D307), plus IBKR per-share commission estimated from D300's held median price. No new book.",
  "per_share": 0.005,
  "crossings": 4.0,

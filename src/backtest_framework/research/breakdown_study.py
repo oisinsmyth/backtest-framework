@@ -40,7 +40,7 @@ from typing import Any, Sequence
 
 import numpy as np
 
-from ..analytics.metrics import sharpe
+from ..analytics.metrics import max_drawdown_from_returns, sharpe
 from ..data.bars import TimestampedBar
 from . import breakout_study as bs
 
@@ -390,12 +390,16 @@ class EnsembleResult:
 
 
 def _max_drawdown(returns: Sequence[float]) -> float:
-    peak, nav, worst = 1.0, 1.0, 0.0
-    for r in returns:
-        nav *= 1.0 + r
-        peak = max(peak, nav)
-        worst = max(worst, 1.0 - nav / peak)
-    return worst
+    """Delegated to `analytics.metrics` (D542). Positive fraction, unchanged.
+
+    This body used to be `worst = max(worst, 1.0 - nav / peak)`, which is the same
+    quantity as the canonical `(peak - nav) / peak` and NOT the same float: measured on
+    605 curves, 322 disagree at one ULP (worst 1.11e-16). Every number in
+    `data/breakdown_study_summary.json` therefore moves in its last bit and no further —
+    recorded in D542 rather than absorbed quietly, because a moved published number with
+    no written reason is indistinguishable from a typo.
+    """
+    return max_drawdown_from_returns(returns)
 
 
 class _RunningVol:

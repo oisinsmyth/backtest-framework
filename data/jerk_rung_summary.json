@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "negative",
+    "note": "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive fraction; research/terrain_strategies negates it once at the emit boundary (D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "block": 21,
  "buy_and_hold": {
   "cagr_price_only": 0.06079639229320888,

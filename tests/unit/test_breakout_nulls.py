@@ -326,7 +326,36 @@ def test_drawdown_from_returns_matches_the_analytics_max_drawdown():
     curve = [(START, 100_000.0)] + [
         (START + timedelta(days=i + 1), float(v)) for i, v in enumerate(navs)
     ]
+    # Scaled by 100,000, so this one stays a tolerance -- the multiplication is a real
+    # float operation the unscaled form does not perform.
     assert bn.returns_max_drawdown(returns) == pytest.approx(max_drawdown(curve), abs=1e-12)
+
+
+def test_the_vectorised_drawdown_is_bit_identical_to_the_scalar_one():
+    """D542: the hot path keeps its own loop, so something has to prove it is the same
+    number and not merely a close one.
+
+    `approx` would let a second arithmetic live here indefinitely, which is the defect
+    D542 removes everywhere else. Probed on TIE-HEAVY inputs as well as random ones --
+    repeated equal moves and runs of zeros are where a rewrite disagrees, and a drawdown
+    is a running maximum, so ties are exactly what decides which bar wins.
+    """
+    rng = np.random.default_rng(11)
+    cases = [
+        [0.1, -0.1] * 40,
+        [0.0] * 20 + [-0.3] + [0.0] * 20,
+        [0.2, -0.25, 0.3333333333333333, -0.25] * 10,
+        list(np.full(50, 0.01)),
+        list(-np.full(50, 0.01)),
+    ]
+    cases += [list(rng.normal(0.0, 0.03, 200)) for _ in range(40)]
+    cases += [list(rng.choice([-0.02, -0.01, 0.0, 0.01, 0.02], 200)) for _ in range(40)]
+
+    for returns in cases:
+        vectorised = float(
+            bn._max_drawdown_from_returns(np.asarray(returns, dtype=float)[None, :])[0]
+        )
+        assert bn.returns_max_drawdown(returns) == vectorised
 
 
 def test_paired_drawdown_bootstrap_against_itself_is_degenerate_at_zero():

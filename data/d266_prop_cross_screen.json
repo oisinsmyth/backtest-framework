@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
   "cost_etf_per_side": 1.6,
   "cost_fut_per_side": 0.1,
   "cells": [

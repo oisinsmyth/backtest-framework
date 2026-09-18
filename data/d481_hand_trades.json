@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "negative",
+    "note": "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive fraction; research/terrain_strategies negates it once at the emit boundary (D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "what": "D481: trading the grow-right lines in-sample -- in while a trend, out when not",
  "grow_line": "k=1 mp=2 maxp=0 carry=7 dh=20 dg=0 mw=0 body=on bdepth=3 bbars=1 bkeep=1 syn=on anchor=quantile aq=0.2 dmode=rank decay=0.76 height=anchored ttl=on walk=on btol=-1 chain=body_only reach=130 stalew=25 staled=12 stalestat=mean fittol=16 pairbreak=off pairdraw=off fit=ols ttol=0.37 mt=1 margin=4",
  "gmin_pct": [

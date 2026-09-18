@@ -64,6 +64,7 @@ from typing import Sequence
 
 import numpy as np
 
+from ..analytics.metrics import max_drawdown as _positive_max_drawdown
 from ..data.bars import TimestampedBar
 from .terrain import rolling_mean_true_range
 from .terrain_nulls import HORIZON, pseudo_levels
@@ -99,6 +100,28 @@ class FillAssumption(Enum):
 
 
 TRADE_THROUGH_EPS = 1e-9
+
+
+def _negated_max_drawdown(curve: Sequence[float]) -> float:
+    """`analytics.metrics.max_drawdown`, negated once, here (D542).
+
+    THIS MODULE PUBLISHES DRAWDOWN NEGATIVE AND THE FRAMEWORK COMPUTES IT POSITIVE.
+    Before D542 that was three separate loops — two methods and one inlined in
+    `buy_and_hold` — which disagreed with each other on the peak seed and with the
+    framework on the sign. Now it is one arithmetic and one negation, and the sign is a
+    DISPLAY decision made at the boundary rather than a second definition.
+
+    The negation is not free and the number it moved is recorded rather than absorbed.
+    The old bodies computed `x / peak - 1.0`; the canonical form negated is
+    `-((peak - x) / peak)`. Measured on 407 curves including tie-heavy ones, **232
+    disagree at one ULP** (worst 1.11e-16). Every drawdown this module has published
+    therefore moves in its last bit and no further.
+
+    Artifacts already on disk are NOT rewritten (D542). Each carries a
+    `max_drawdown_convention` field written by its own generator, so a reader of the JSON
+    alone is told which sign the file holds.
+    """
+    return -_positive_max_drawdown(list(enumerate(curve)))
 
 
 @dataclass(frozen=True)
@@ -193,13 +216,12 @@ class StrategyResult:
         return self.equity_curve(bars)[-1] - 1.0
 
     def max_drawdown(self, bars: Sequence[TimestampedBar]) -> float:
-        curve = self.equity_curve(bars)
-        peak, worst = curve[0], 0.0
-        for x in curve:
-            peak = max(peak, x)
-            if peak > 0.0:
-                worst = min(worst, x / peak - 1.0)
-        return worst
+        """NEGATIVE fraction of peak — the display convention this module publishes.
+
+        The arithmetic is `analytics.metrics.max_drawdown` and the sign is applied here,
+        once, at the boundary (D542). See `_negated_max_drawdown` for why the negation is
+        not free and what it moved."""
+        return _negated_max_drawdown(self.equity_curve(bars))
 
     def sharpe(self, bars_held_total: int) -> float:
         """Per-trade Sharpe annualised by realised trade frequency.
@@ -461,10 +483,10 @@ def buy_and_hold(
         if a.bar.close > 0.0 and b.bar.close > 0.0
     ]
     sd = statistics.stdev(rets) if len(rets) > 2 else 0.0
-    peak, worst = window[0].bar.close, 0.0
-    for x in window:
-        peak = max(peak, x.bar.close)
-        worst = min(worst, x.bar.close / peak - 1.0)
+    # The seventh implementation of max_drawdown in this repository, inlined, on raw
+    # prices, and the only one that had no `peak > 0` guard at all. It writes the
+    # `**buy and hold**` row of STRUCTURE_RESULTS.md. Delegated with the rest (D542).
+    worst = _negated_max_drawdown([b.bar.close for b in window])
     return {
         "total_return": window[-1].bar.close / window[0].bar.close - 1.0,
         "sharpe": (statistics.fmean(rets) / sd) * math.sqrt(periods_per_year) if sd > 0 else 0.0,
@@ -785,12 +807,22 @@ class PositionResult:
         return self.equity_curve()[-1] - 1.0
 
     def max_drawdown(self, bars: Sequence[TimestampedBar] | None = None) -> float:
-        peak, worst = 1.0, 0.0
-        for x in self.equity_curve():
-            peak = max(peak, x)
-            if peak > 0.0:
-                worst = min(worst, x / peak - 1.0)
-        return worst
+        """NEGATIVE fraction of peak, via `analytics.metrics` (D542).
+
+        This body seeded `peak = 1.0` — a peak the curve may never have reached, because
+        `equity_curve` charges cost on bar 0 before any return, so `curve[0]` is
+        `1.0 - charge*|position[0]|`. On the REAL book that is a no-op and no published
+        number moves: `position[0]` is structurally always 0.0 (both constructors write
+        `[0.0] * n` and then only ever `position[t + 1]`).
+
+        On a NULL draw it was live. `terrain_field_nulls.rotation_null` rotates the
+        position tuple, so `rotated[0]` is non-zero whenever the book held at the rotation
+        offset — and each such draw carried a spurious extra drawdown of `cost_bps/1e4`
+        from a peak it never reached. Nothing reads those drawdowns today (the field null
+        scores Sharpe, return and trade count), which is why this is a correction and not
+        a retraction.
+        """
+        return _negated_max_drawdown(self.equity_curve())
 
     @property
     def hit_rate(self) -> float:

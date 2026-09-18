@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "negative",
+    "note": "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive fraction; research/terrain_strategies negates it once at the emit boundary (D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "what": "D477: the ceiling -- in while a trend, out when not, on perfect vs causal lines",
  "oracle_settings": "split=greedy seed=5 slack=0 pk=1 tol=1.75 mt=3 basis=wick minlen=20 maxlen=1000 mw=0 maxw=24 maxoff=-1 mintd=35 tau=0.4 shade=on",
  "gmin_pct": [

@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
   "snapshot_id": "318edab51866d81986f1426abf9ab275908b27f2c6b0b8330a6529263c89b957",
   "generated_utc": "2026-08-22T12:10:35.373292+00:00",
   "reference_tier": "taker_40bp",

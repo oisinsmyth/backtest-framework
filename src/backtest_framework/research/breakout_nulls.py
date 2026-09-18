@@ -79,6 +79,7 @@ from typing import Any, Sequence
 
 import numpy as np
 
+from ..analytics.metrics import max_drawdown_from_returns
 from ..data.bars import TimestampedBar
 from ..simulator.fills import Bar
 from .breakout_study import (
@@ -796,7 +797,12 @@ def real_result(
 
 
 def returns_max_drawdown(returns: Sequence[float]) -> float:
-    """Max drawdown implied by a return series, as a positive fraction — the scalar
-    form of `_max_drawdown_from_returns`, exposed so tests can tie it to
-    `analytics.metrics.max_drawdown` on the corresponding equity curve."""
-    return float(_max_drawdown_from_returns(np.asarray(returns, dtype=float)[None, :])[0])
+    """Max drawdown implied by a return series, as a positive fraction.
+
+    Now `analytics.metrics.max_drawdown_from_returns` (D542) rather than a second name for
+    the vectorised path. The two are BIT-IDENTICAL on 603 probed curves including
+    tie-heavy ones — pinned below in `tests/unit/test_breakout_nulls.py`, exactly, not to a
+    tolerance — so the vectorised form keeps the hot path (10,000 sims x 2 series) and
+    this keeps the definition.
+    """
+    return max_drawdown_from_returns(returns)

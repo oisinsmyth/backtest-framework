@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
   "generated_utc": "2026-08-18T23:08:12.625638+00:00",
   "crossover_rule": "The crossover frequency is the COARSEST (slowest) bar at which the cost curve has risen above the trend edge, read three ways because the three fail differently. (1) IN-SAMPLE SHARPE: net annualised Sharpe at `taker_40bp` <= 0. (2) IN-SAMPLE COST SHARE: costs >= 100% of gross P&L. (3) SPLICED: cost drag in Sharpe units (annual fee drag / annual volatility, measured HERE) >= the gross annualised Sharpe measured over 2015-2025 daily data in BREAKOUT_RESULTS.md at `maker_0bp`. Readings (1) and (2) are contaminated whenever the window's own gross edge is near zero or negative; reading (3) is not, because neither of its terms has this window's P&L in it. All three are read off the ladder ordered slow -> fast, and 'no rung on the ladder' is a legitimate answer. Fixed before the numbers were looked at.",
   "sanity_gate": {

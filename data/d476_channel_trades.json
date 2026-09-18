@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "negative",
+    "note": "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive fraction; research/terrain_strategies negates it once at the emit boundary (D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "what": "D432: the final channel traded -- enter on agreement, exit on target/trail",
  "settings_line": "k=2 mp=2 maxp=0 carry=7 dh=20 dg=0 mw=10 body=on bdepth=2 bbars=2 syn=on anchor=quantile aq=0.2 dmode=rank decay=0.76 height=anchored ttl=on walk=on btol=-1 chain=body_only reach=130 stalew=35 staled=18 stalestat=mean fittol=16 pairbreak=on pairdraw=on fit=ols ttol=0.37 mt=1",
  "tau_grid": [
