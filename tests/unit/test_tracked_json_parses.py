@@ -16,18 +16,27 @@ text so that an encoding failure counts as a parse failure too — a `data/*.jso
 valid UTF-8 is as unusable as one that is not valid JSON, and reading it as text first would
 raise a different exception from a different line.
 
-WHY THE ALLOW-LIST IS RE-DERIVED AND NOT TRUSTED
-------------------------------------------------
-`data/D3_wb_2018.json` and `data/D3_wb_2019.json` are 117 bytes each of
-`<html><body><h1>429 Too Many Requests</h1>`. Nothing in the tree reads them. D542 handed them
-to the principal rather than deleting them, because `data/` is evidence and retirement is
-written, not quiet — so they are exempted here rather than fixed.
+WHY THE ALLOW-LIST IS RE-DERIVED AND NOT TRUSTED, AND WHY IT IS NOW EMPTY
+-------------------------------------------------------------------------
+`ALLOWED` exists and is empty, which is the state it should be in. Two files were on it:
+`data/D3_wb_2018.json` and `data/D3_wb_2019.json`, 117 bytes each of
+`<html><body><h1>429 Too Many Requests</h1>`, read by nothing. D542 handed them to the principal
+rather than deleting them, because `data/` is evidence and retirement is written, not quiet;
+D547 is that writing and they are gone.
 
-An exemption that outlives its subject is worse than no exemption: it grants amnesty to a path
-that no longer needs it, and nothing ever says so. So each allowed path must still EXIST and
-still FAIL to parse. Refetch the data, or delete the files, and this gate reddens and asks for
-the list to be edited. That is the `--check` discipline from Lane 6's drawdown labeller: derive
-the marker from the values rather than believing the marker.
+The list stays, with its re-derivation, because an exemption that outlives its subject is worse
+than no exemption: it grants amnesty to a path that no longer needs it, and nothing ever says
+so. Every entry must still EXIST and still FAIL to parse. **That is what removed these two** —
+deleting the files reddened `test_the_allow_list_is_still_earned`, naming both as *"no longer
+present"*, and the list was edited because the gate asked. Derive the marker from the values
+rather than believing the marker.
+
+WHAT THIS STILL CANNOT SEE
+--------------------------
+An error body that happens to be valid JSON. The two that prompted this gate were HTML and so
+could not parse; a 200-byte `{"error": "rate limited"}` from an API would sail through. The
+mechanism that produced both is `data/D3_fetch.py:31`, which writes the response body under the
+requested filename whatever the status code was, and it is still there (D547).
 """
 
 import json
@@ -37,16 +46,9 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 
 # Tracked, unparseable, and deliberately kept. Path -> why it is here and who owns removing it.
-ALLOWED = {
-    "data/D3_wb_2018.json": (
-        "saved HTTP 429 error page, 117 bytes, read by nothing (D542 RESULT). Retirement is the "
-        "principal's call; data/ is evidence."
-    ),
-    "data/D3_wb_2019.json": (
-        "saved HTTP 429 error page, 117 bytes, read by nothing (D542 RESULT). Retirement is the "
-        "principal's call; data/ is evidence."
-    ),
-}
+# Empty since D547 retired the two saved 429 pages. Adding an entry is a decision, not a fix:
+# say what the file is, why it cannot parse, and whose call its removal is.
+ALLOWED: dict[str, str] = {}
 
 # A floor, because a scan that has lost its input reports zero failures and looks like a pass.
 MINIMUM_FILES = 700
@@ -111,7 +113,7 @@ def test_the_allow_list_is_still_earned():
     problem it fixed years ago.
     """
     stale = {}
-    for rel, reason in ALLOWED.items():
+    for rel in ALLOWED:
         path = REPO / rel
         if not path.exists():
             stale[rel] = "no longer present, so remove it from ALLOWED"
