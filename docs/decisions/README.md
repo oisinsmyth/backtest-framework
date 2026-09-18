@@ -22,6 +22,34 @@ since was written here.
 >
 > Regenerate the register with `python scripts/build_decision_register.py --write`.
 
+### What a number here does and does not mean (D544)
+
+**Complete is not the same as unambiguous, and three things a reader would otherwise trip on are
+stated here rather than left in a 4,000-line changelog.**
+
+**Nine numbers name two unrelated studies each** — **D440, D472, D473, D495, D497, D498, D504,
+D506, D508** — because three interactive sessions were taking numbers against this directory at
+commit time. D497 and D498 are half-resolved: the hurdle-P pair was renumbered to D500 and D501,
+and **both copies are still in the git index** until the deletions are committed, so the index and
+the working tree currently disagree about how many collisions there are (nine against seven).
+
+**Nothing here re-issues a number to fix that.** D507's amendment is the ruling:
+
+> a decision number is an identity, and reassigning one is the principal's call, not a link repair.
+
+**Thirty-seven numbers between D1 and the highest have no record.** Fifteen carry a written reason
+in [`tests/unit/test_cited_decisions_exist.py`](../../tests/unit/test_cited_decisions_exist.py)'s
+`UNWRITTEN_RECORDS` — forward references, reservations, renumberings. The remaining **twenty-three**
+(128, 129, 134–139, 145–159) were **never allocated**: verified absent from every commit in the
+repository's history, not deleted. Exactly one number in the whole set, **D390**, was ever committed
+— taken three times and renumbered to D397, D400 and D402.
+
+**One tracked record here carries no number at all.**
+[`DRAFT-capturing-the-deeper-zone.md`](DRAFT-capturing-the-deeper-zone.md) is a proposal written at
+the principal's request after D420 and made a pre-registration by
+[D421](D421-the-three-depth-conditions-both-lenses.md). It is honest about its own status and it
+appears in neither half above, because both the gate and the generator key on a leading `D<digits>`.
+
 Standing scope/sequencing rules (R1–R16) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
 

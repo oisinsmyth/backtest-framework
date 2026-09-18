@@ -11,7 +11,7 @@ B21–B25, B27, B28). Predictions below are committed before any code is changed
 The repository publishes **two answers to the same question** for three quantities, and the
 duplication reaches committed `data/*.json` artifacts and the documents rendered from them.
 
-- **`max_drawdown` has seven implementations.** `analytics/metrics.py:74` returns a **positive**
+- **`max_drawdown` has seven implementations.** `max_drawdown` (`analytics/metrics.py:207`) returns a **positive**
   fraction of peak; `research/terrain_strategies.py:195`, `:787`, and an undeclared seventh inside
   `buy_and_hold()` at `:464` return **negative**. Census over tracked `data/*.json`: **~1,800
   negative values in 55 files** against **~1,200 positive in 15**. The two negative *methods* also

@@ -68,7 +68,7 @@ class Strategy(Protocol):
     strategy_id: str
     def generate_targets(self, views: Mapping[str, DataView]) -> list[TargetWeight]: ...
 
-# instruments/base.py:16          (@runtime_checkable)
+# instruments/base.py:33          (`@runtime_checkable`)
 class Instrument(Protocol):
     @property
     def quote_currency(self) -> str: ...
@@ -199,7 +199,7 @@ cost"*.
 
 **`RiskMonitor.evaluate` returns a violation and halts nothing.** It is
 `evaluate(...) -> RiskViolation | None` (`engine/risk.py:61`) — at most one per bar, since there is
-one rule — and the *caller* appends it to `BacktestResult.violations` (`backtest.py:490-492`). No
+one rule — and the *caller* appends it to `BacktestResult.violations` (`result.violations.append`, `engine/backtest.py:359-361`). No
 corrective orders, no unwind. A caller inspecting that list is the only enforcement that exists.
 `pretrade_check` *is* enforcement, but only under `enforce_pretrade=True`, which is **off by
 default**.

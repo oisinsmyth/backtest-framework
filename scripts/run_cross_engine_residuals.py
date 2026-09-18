@@ -183,7 +183,7 @@ def reconcile() -> dict:
         "starting_cash": STARTING_CASH,
         "scope": SCOPE,
         "tolerance": TOLERANCE,
-        "tolerance_source": "D47; tests/integration/test_cross_engine.py:27",
+        "tolerance_source": "D47; `TOLERANCE`, tests/integration/test_cross_engine.py:29",
         "bars": len(our_curve),
         "fills_ours": len(fill_bars_ours),
         "fills_theirs": len(fill_bars_theirs),

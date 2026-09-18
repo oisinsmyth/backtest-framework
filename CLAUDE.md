@@ -115,7 +115,8 @@ names, not on its own signal reverting.
 ## The books
 
 `docs/BOOK.md` (personal: S1, S2; not at capital) and `docs/BOOK_PROP.md` (prop:
-**none**). Append-only — amended or retired in writing, never quietly edited.
+**one** — the MACD day-session arm, admitted 2026-09-13). Append-only — amended
+or retired in writing, never quietly edited.
 
 **Clearing a study's hurdles does not admit a strategy.** R8 needs a separate
 pre-registered out-of-sample test on a fixture it has never seen; the prop book

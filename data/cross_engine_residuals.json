@@ -16,7 +16,7 @@
   "starting_cash": 100000.0,
   "scope": "One instrument (XLE daily closes), long-flat only, fractional shares, proportional fees only, and no carry, dividends, splits, margin or multi-leg netting \u2014 the shared subset of both engines' capabilities. Everything outside that subset is ours alone and is anchored by the golden master, not by this reconciliation.",
   "tolerance": 1e-06,
-  "tolerance_source": "D47; tests/integration/test_cross_engine.py:27",
+  "tolerance_source": "D47; `TOLERANCE`, tests/integration/test_cross_engine.py:29",
   "bars": 2515,
   "fills_ours": 1370,
   "fills_theirs": 1370,

@@ -18,19 +18,40 @@ summaries nobody asked for.
 
 from __future__ import annotations
 
+import functools
+import importlib.util
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 DECISIONS = REPO / "docs" / "decisions"
+
+
+@functools.lru_cache(maxsize=1)
+def _register():
+    """The generator this gate checks, imported so the two cannot drift apart again (D544)."""
+    spec = importlib.util.spec_from_file_location(
+        "build_decision_register", REPO / "scripts" / "build_decision_register.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["build_decision_register"] = module
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    return module
 INDEX = DECISIONS / "README.md"
 
-#: `D<n>-` or `D<n>.` at the START of the basename, zero-padding tolerated. The anchor matters:
-#: unanchored, `D\d+` finds `D304` inside `D300-AMENDMENT-cost-basis-and-what-D304-and-D305-
-#: changed.md` and invents a record. The convention is recorded in
-#: `scripts/build_readme_counts.py:38-43` and `tests/unit/test_cited_decisions_exist.py`.
-RECORD = re.compile(r"^D0*(\d+)[-.]")
+#: `D<n>-` or `D<n>.` at the START of the basename, an optional single-letter variant suffix
+#: (`D315a-RESULT-...`), zero-padding tolerated. The anchor matters: unanchored, `D\d+` finds
+#: `D304` inside `D300-AMENDMENT-cost-basis-and-what-D304-and-D305-changed.md` and invents a
+#: record. The convention is recorded in `ANCHOR THE PATTERN`
+#: (`scripts/build_readme_counts.py:38-43`) and `tests/unit/test_cited_decisions_exist.py`.
+#:
+#: IMPORTED, NOT RESTATED (D544). This file and its own generator carried two different patterns
+#: while the docstring below claimed they had been put back on one universe -- see
+#: `RECORD` in `scripts/build_decision_register.py` for what that cost.
+RECORD = _register().RECORD
 
 
 def _numbers_in_the_index_of_record() -> set[int]:
@@ -92,3 +113,43 @@ def test_the_index_does_not_list_numbers_that_do_not_exist():
     """
     phantom = sorted(_numbers_in_index() - _numbers_in_the_index_of_record())
     assert not phantom, f"index lists decision numbers with no record on disk: {phantom}"
+
+
+def test_this_gate_and_its_generator_are_on_one_universe():
+    """The docstring above claims it; until D544 it was not true.
+
+    This file matched `^D0*(\\d+)[-.]` and `scripts/build_decision_register.py` matched an
+    unanchored `D\\d+`. `D315a-RESULT-the-corner-is-real-the-formula-is-not.md` therefore satisfied
+    the generator and not the gate: it is **rendered into the index** at `docs/decisions/README.md`
+    and was **invisible here**. Harmless only by luck — a plain `D315-` sibling independently put
+    315 in the record set. A `D<n>a-` record with no sibling would have been generated into the
+    register and then flagged as a phantom by the test directly above this one, i.e. the gate would
+    have failed on its own generator's correct output.
+
+    So the pattern is now imported rather than restated, and this asserts the property the prose
+    asserts: both classify every tracked basename identically, and the variant form is a record.
+    """
+    listed = subprocess.run(
+        ["git", "ls-files", "docs/decisions/*.md"],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.split()
+    basenames = [Path(p).name for p in listed]
+    assert len(basenames) > 700, "the scan lost its input rather than the repo losing records"
+
+    assert RECORD is _register().RECORD, "the gate restated the pattern instead of importing it"
+
+    # The variant form is a record to both, and the unanchored trap is a record to neither.
+    assert RECORD.match("D315a-RESULT-the-corner-is-real-the-formula-is-not.md")
+    assert RECORD.match("D315-below-the-corner-and-the-derived-rule.md")
+    assert not RECORD.match("DRAFT-capturing-the-deeper-zone.md")
+    assert not RECORD.match("README.md")
+    # Anchored: the embedded D304 must not invent a record.
+    embedded = "D300-AMENDMENT-cost-basis-and-what-D304-and-D305-changed.md"
+    assert RECORD.match(embedded).group(1) == "300"
+
+    # And the variant really is present in the tracked set, so the case above is not hypothetical.
+    variants = [n for n in basenames if re.match(r"^D0*\d+[a-z][-.]", n)]
+    assert variants, "no variant-suffixed record is tracked; this gate is testing a shape that is not here"

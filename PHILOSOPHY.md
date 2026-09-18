@@ -172,7 +172,9 @@ it's finite time. Protect the second thing from the first.
 ## Using this document
 
 - When making a new design decision, check it against these pillars before writing it up
-  as `D50`, `D51`, ... If it fights a pillar, that's worth noticing before it's committed,
+  as the next free number — ask the directory, not this page (this line named `D50` and `D51`
+  until D544: it was written at D49 and the directory has run to D544 since, which is exactly
+  why it now names no number at all) If it fights a pillar, that's worth noticing before it's committed,
   not after.
 - When a decision *does* fight a pillar deliberately (a real tradeoff, not an oversight),
   say so explicitly in that decision's rationale — a philosophy that never bends is

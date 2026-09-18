@@ -125,8 +125,8 @@ directory, not from the index** — the command above is the reliable one.
 **Records are amended in writing, never silently edited.** When a record stops being true, it
 keeps its original text and gains a dated amendment pointing at the record that supersedes it —
 see [D78](docs/decisions/D78-property-test-conventions.md) for the pattern. The same rule governs
-[`docs/BOOK.md`](docs/BOOK.md) and [`docs/COMPONENTS_PROP.md`](docs/COMPONENTS_PROP.md), which are
-append-only.
+[`docs/BOOK.md`](docs/BOOK.md), [`docs/BOOK_PROP.md`](docs/BOOK_PROP.md) and
+[`docs/COMPONENTS_PROP.md`](docs/COMPONENTS_PROP.md), which are append-only.
 
 ---
 
@@ -135,7 +135,7 @@ append-only.
 ```bash
 uv sync
 uv run pytest -q tests/golden     # 101 ledger-anchored tests, 0.58s, no data needed
-uv run pytest -q                  # everything, 6-7.5 min here; 2m56s on a clone
+uv run pytest -q                  # everything; for runtimes see README's "Five minutes"
 uv run ruff check src tests scripts  # E4/E7/E9/F; scripts/ narrower (D543) — errors, not style
 uv run mypy                          # the library only; tests and scripts are out of scope
 ```

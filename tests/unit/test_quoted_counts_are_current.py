@@ -95,11 +95,39 @@ TOTAL_TESTS = re.compile(r"\*\*([\d,]+)\s+tests\b")
 #: repository uses for "everything there is", and they are the only ones gated.
 DECISION_RANGE = re.compile(r"\bD1\s*(?:→|->|through)\s*D(\d+)\b")
 
-#: ``**273 `raise` statements**`` — the guard count in VERIFICATION.md.
+#: ``**288 `raise` statements**`` — the guard count in VERIFICATION.md.
 RAISE_TOTAL = re.compile(r"\*{0,2}([\d,]+)\*{0,2}\s+`raise`\s*\n?\s*statements")
 
-#: `spread across 46 of its 85 tracked .py files`
+#: `spread across 47 of its 85 tracked .py files`
 RAISE_FILES = re.compile(r"spread\s+across\s+(\d+)\s+of\s+its\s+(\d+)\s+tracked")
+
+# --- self-counts `counts()` already computes, gated from D544 -------------------------------
+#
+# These three were measured by `scripts/build_readme_counts.py` all along and quoted by hand
+# anyway, so each was one regex away from a gate and none had one. `docs/TUTORIAL.md` said
+# **745** decision records when there were 752 -- seven stale, and the number sits in the first
+# sentence a reader of the tutorial meets.
+#
+# THE AUDIT THAT FOUND THEM NAMED THREE AND GOT ONE RIGHT. It reported 745 records (stale, true),
+# "46/11 modules" (correct today, not a defect) and "502 numbers" -- which appears NOWHERE in
+# this repository. Meanwhile it missed `docs/VERIFICATION.md` saying 592 runners on one line and
+# 603 on another, and `README.md` saying the programme had run to D539 at D544. Gating beats
+# auditing for exactly this reason: a gate does not have an opinion about which numbers it
+# checked.
+
+#: `the 752 decision records`, `745 decision records` — a bare count of records in prose.
+#: `(\d[\d,]*)`, NOT `([\d,]+)`, and the difference is not cosmetic: the latter matches a BARE
+#: COMMA, so a sentence ending "..., decision records" fed `int(',')` and the gate died with a
+#: ValueError instead of a verdict. Every pattern above shares the loose form and has been lucky.
+DECISION_RECORDS = re.compile(r"\b(?:the\s+)?(\d[\d,]*)\s+decision\s+records\b")
+
+#: `**46 modules across 11 packages**` — the library shape, in ARCHITECTURE and VERIFICATION.
+MODULES_PACKAGES = re.compile(r"\*{0,2}(\d+)\s+modules\s+across\s+(\d+)\s+packages")
+
+#: `over **507** decision numbers`, `507 numbered decisions` — the distinct-number count.
+DECISION_NUMBERS = re.compile(
+    r"(?:over\s+\*{0,2}(\d[\d,]*)\*{0,2}\s+decision\s+numbers|\*{0,2}(\d[\d,]*)\*{0,2}\s+numbered\s+decisions)"
+)
 
 
 # --------------------------------------------------------------------------------------------
@@ -301,9 +329,9 @@ def test_every_decision_range_ends_at_the_highest_record(measured):
 
 
 def test_the_quoted_raise_count_is_the_non_bare_one(raises):
-    """273, not 275 — and the difference is stated rather than left to be rediscovered.
+    """288, not 290 — and the difference is stated rather than left to be rediscovered.
 
-    A reviewer running a plain AST count over `src/` gets 275: two of them are bare `raise` inside
+    A reviewer running a plain AST count over `src/` gets 290: two of them are bare `raise` inside
     an `except`. `docs/VERIFICATION.md` says which reading it means, and this pins the reading as
     well as the number.
     """
@@ -316,7 +344,7 @@ def test_the_quoted_raise_count_is_the_non_bare_one(raises):
 
 
 def test_the_quoted_guard_file_split_is_current(raises):
-    """`spread across 46 of its 85 tracked .py files`.
+    """`spread across 47 of its 85 tracked .py files`.
 
     One site, one line, one file — and until the floor below existed this test had no other
     assertion, so a reworded sentence in `docs/VERIFICATION.md` reduced its whole body to
@@ -378,3 +406,54 @@ def test_no_single_document_is_the_only_source_for_a_gate():
     for label, pattern in single_sourced.items():
         files = {name for name, _, _ in _sites(pattern)}
         assert files, f"{label} is quoted nowhere at all; its gate is watching an empty set"
+
+
+# ------------------------------------------------------------------ D544: the self-counts
+
+
+def test_the_quoted_decision_record_count_is_current(measured):
+    """`docs/TUTORIAL.md` said **745** when there were 752, in its first sentence.
+
+    `counts()` had computed this number all along; nothing compared it to the prose."""
+    _assert_all(DECISION_RECORDS, measured["decision_files"], "the decision-record count")
+
+
+def test_the_quoted_decision_number_count_is_current(measured):
+    """`over **507** decision numbers` / `507 numbered decisions`, in two documents.
+
+    Two capture groups, one per phrasing, so a single pattern covers both spellings and neither
+    can drift alone."""
+    expected = measured["decision_numbers"]
+    wrong = []
+    found = 0
+    for name, line, m in _sites(DECISION_NUMBERS):
+        found += 1
+        stated = _int(m.group(1) or m.group(2))
+        if stated != expected:
+            wrong.append(f"  {name}:{line} says {stated}, the decision-number count is {expected}")
+    assert not wrong, "stale decision-number counts:\n" + "\n".join(wrong)
+    assert found >= 2, (
+        f"DECISION_NUMBERS matched {found} site(s); it is stated in README.md and PHILOSOPHY.md, "
+        "so fewer than two means one was reworded past the pattern rather than removed"
+    )
+
+
+def test_the_quoted_module_and_package_shape_is_current(measured):
+    """`**46 modules across 11 packages**`.
+
+    Correct when D544 measured it — which is the point. A gate is not only for numbers that are
+    currently wrong; an audit found this one right and therefore filed nothing, and it would have
+    gone stale the next time a package was added with nobody the wiser."""
+    expected_modules = measured["library_modules"]
+    expected_packages = measured["packages"]
+    wrong = []
+    found = 0
+    for name, line, m in _sites(MODULES_PACKAGES):
+        found += 1
+        if (_int(m.group(1)), _int(m.group(2))) != (expected_modules, expected_packages):
+            wrong.append(
+                f"  {name}:{line} says {m.group(1)} modules across {m.group(2)} packages, "
+                f"measured {expected_modules} across {expected_packages}"
+            )
+    assert not wrong, "stale module/package shape:\n" + "\n".join(wrong)
+    assert found >= 1, "MODULES_PACKAGES matched nothing; its gate is watching an empty set"

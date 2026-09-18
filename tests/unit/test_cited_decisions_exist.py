@@ -1,6 +1,6 @@
 """Every decision number cited in tracked prose or source has a record in `docs/decisions/`.
 
-**This test exists because `scripts/check_doc_links.py:8` cited `D538` and there is no D538.**
+**This test exists because `scripts/check_doc_links.py:12` cited `D538` and there is no D538.**
 The move that docstring describes was commit `77d8bab` and it never got a decision record at all;
 the number was invented and then read as fact for as long as anyone looked at the file. A citation
 to a record that does not exist is a dead reference that reads exactly like a live one, and this
@@ -42,7 +42,7 @@ by shape rather than by an entry in the allowlist below:
 
 * **`n == 0` is never a citation.** Records start at `D01`. `[D0]` is a pre-registered assertion
   label -- 16 occurrences across D398/D399 and their runners, alongside `[S2] [R] [L] [X]` -- and
-  `scripts/build_decision_register.py:60` carries the literal regex `D0*(?P<num>\\d+)`, whose `D0`
+  `scripts/build_decision_register.py:76` carries the literal regex `D0*(?P<num>\\d+)`, whose `D0`
   is not a citation either. Requiring `n >= 1` removes both without an exclusion entry.
 * **A trailing letter is not gated at all.** `D506B`, `D315a`, `D308c` are record variants;
   `D1b`, `D1c`, `D2c` are cell labels in a study grid. The two classes are indistinguishable by
@@ -141,7 +141,7 @@ def _cited_numbers() -> dict[int, list[str]]:
 
     Scope is tracked Markdown and tracked Python. Markdown because that is where the prose lives;
     Python because the defect that prompted this file was in a module docstring
-    (`scripts/check_doc_links.py:8`), and `scripts/` alone carries ~600 files whose docstrings cite
+    (`scripts/check_doc_links.py:12`), and `scripts/` alone carries ~600 files whose docstrings cite
     records constantly.
     """
     sites: dict[int, list[str]] = {}

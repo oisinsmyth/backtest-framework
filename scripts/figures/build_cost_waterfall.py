@@ -7,9 +7,21 @@ WHAT IT SHOWS
 -------------
 The 5-bar golden-master scenario is a 120% short that ends +149.65 on 100,000. That single
 number is the least interesting thing about it. Underneath: the price moved 967.00 in the
-position's favour, and five frictions took 817.35 of it back. The largest by a distance is
+position's favour, and five charges took 817.35 of it back. The largest by a distance is
 the DIVIDEND the short owes its lender — 626.50, which is 4.5x the commission and the spread
 put together. A reader who only ever sees the net figure would guess the opposite.
+
+"CHARGES", NOT "FRICTIONS" — THE FRAMEWORK'S OWN TAXONOMY SAYS SO (D544)
+-----------------------------------------------------------------------
+`costs/bricks.py:33-40` draws a line this figure used to cross in its caption: "Unlike carry
+(time-accrued, always a cost), an event flow is SIGNED CASH TO THE PORTFOLIO on specific dates
+... **flows are economic transfers, not frictions**." The dividend is an event flow. Four of the
+five bars here are frictions; the largest is not, and calling all five frictions in the
+repository's own thesis picture contradicted the module that defines the word.
+
+**The arithmetic does not move.** 817.3463 is the sum of five charges either way; only the noun
+changes. The `frictions` key in the payload keeps its name so no consumer breaks — what changed
+is what the reader is told it means.
 
 THE DECOMPOSITION EXISTS ONLY IN THE HAND LEDGER, AND THE FIGURE SAYS SO
 ------------------------------------------------------------------------
@@ -125,7 +137,7 @@ def render(theme: k.Theme) -> str:
         k.text(
             frame.x0 - 2,
             39,
-            f"5 bars, 120% short. Price P&L {signed(f['steps'][0][1])}; frictions "
+            f"5 bars, 120% short. Price P&L {signed(f['steps'][0][1])}; frictions and flows "
             f"{money(f['frictions'])}; net {signed(f['net'])} to a final NAV of "
             f"{f['final']:,.10f}",
             size=8.5,
@@ -256,7 +268,7 @@ def render(theme: k.Theme) -> str:
     # 150-character line into 740 points, and this figure has 900 to spend.
     notes = (
         f"Only {money(f['published_as_one_number'])} of the {money(f['frictions'])} in "
-        "frictions is reported by the engine at all, and only as ONE number:",
+        "frictions and flows is reported by the engine at all, and only as ONE number:",
         f"a fill's cost is commission plus spread, already summed. The remaining "
         f"{money(f['unpublished'])} — borrow, margin interest and the dividend —",
         "is recorded nowhere: engine/backtest.py:42-79. This split exists only in the hand "

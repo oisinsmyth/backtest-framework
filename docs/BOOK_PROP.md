@@ -4,6 +4,21 @@
 foot of this page. The book is **one arm**, which is not the book this page was designed around:
 the layering target needs four or five low-correlation components and there is one.
 
+> **AMENDED 2026-09-18 ([D544](decisions/D544-the-front-page-is-the-least-honest-document.md)).**
+> The paragraph immediately below says "It is empty" and the heading four lines above says
+> "Admitted arms: ONE". **Both were written in good faith and they have contradicted each other
+> since 2026-09-13**, when the MACD day-session arm was admitted and the heading was added without
+> the body being amended.
+>
+> **The heading is the current state. The paragraph is kept, not deleted**, because this file is
+> append-only and its authority rests on that: *amended in writing, never quietly edited.* Deleting
+> the sentence would have removed the only evidence that the book was ever empty, and the fact that
+> it was empty for the whole of its stated-standards period is the thing the paragraph was making
+> a point about.
+>
+> Read it as: **this book was designed around being empty, and now holds one arm — which is not
+> the book it was designed around.**
+
 This file is the prop track's counterpart to [BOOK.md](BOOK.md). It is empty, and saying so plainly
 is the point — an empty book with stated standards is more useful than a populated one with
 borrowed ones.

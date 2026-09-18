@@ -53,6 +53,22 @@ INDEX = DECISIONS / "README.md"
 START = "<!-- REGISTER:START -->"
 END = "<!-- REGISTER:END -->"
 
+#: WHAT COUNTS AS A DECISION RECORD. `D<n>-` or `D<n>.` at the START of the basename, with an
+#: optional single letter suffix for a variant (`D315a-RESULT-...`), zero-padding tolerated.
+#:
+#: THE ANCHOR MATTERS in one direction and the SUFFIX in the other. Unanchored, `D\d+` finds
+#: `D304` inside `D300-AMENDMENT-cost-basis-and-what-D304-and-D305-changed.md` and invents a
+#: record. Without `[a-z]?`, `D315a-RESULT-...` is not a record at all.
+#:
+#: THIS FILE AND `tests/unit/test_decision_index_is_complete.py` USED TO DISAGREE (D544). The
+#: generator matched unanchored, the gate matched anchored-without-suffix, so `D315a-RESULT` was
+#: RENDERED INTO THE INDEX and INVISIBLE TO THE GATE -- while the gate's own docstring said the
+#: two had been put back on one universe. It was harmless only because a plain `D315-` sibling
+#: independently put 315 in the record set; a `D<n>a-` with no sibling would have been generated
+#: and then flagged as a phantom by the gate's own companion test. They are one pattern now, and
+#: `test_decision_index_is_complete.py` asserts they classify every tracked basename identically.
+RECORD = re.compile(r"^D0*(\d+)[a-z]?[-.]")
+
 # `D<n>` optionally wrapped by a leading and/or trailing uppercase token, then a dash, then the
 # title. Covers `# D537 — …`, `# D288 RESULT — …`, `# RESULT D476 — …` and
 # `# D473 RESULT (forward) — …`.
@@ -127,7 +143,7 @@ def by_number() -> dict[int, list[Path]]:
     # `PureWindowsPath` compares casefolded -- so `D291-confluence` sorts before `D291-RESULT`.
     # Plain string order would reverse every such pair and produce a diff that is pure churn.
     for name in sorted(set(names), key=str.lower):
-        if re.match(r"D\d+", name):
+        if RECORD.match(name):
             grouped[number_of(DECISIONS / name)].append(DECISIONS / name)
     return dict(sorted(grouped.items()))
 

@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,172 tests are collected here, and one of them skips on the machine this was written on, for
+**2,181 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -46,7 +46,7 @@ one about *coverage*: 15 scenarios, chosen.
 
 **Recently strengthened, and the gap is worth knowing about.** Until 2026-09-16 the golden master
 asserted only the *sum* of commission and spread, and asserted borrow, margin interest and the
-dividend **nowhere** — 678.82 of the 817.35 this scenario pays in frictions was unchecked. It now
+dividend **nowhere** — 678.82 of the 817.35 this scenario pays in frictions and flows was unchecked. It now
 carries a closed-book recomputation of all 19 fields on all 5 bars, and an AST gate forbids that
 calculator from importing the package. The engine still publishes no per-brick cost attribution,
 so borrow and margin interest remain inseparable from outside it; that residual gap is drawn
@@ -90,7 +90,7 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,847 tests. *Each part does its own job.*
+### `tests/unit/` — 1,856 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
 most of the **structural guard** assertions are proved to fire — `src/` carries **288 `raise`
@@ -130,7 +130,7 @@ each other:
 |---|---|
 | `ruff check src tests scripts` | errors, not style (E4/E7/E9/F). `scripts/` runs **narrower** — E4, E7, F401, F541 and F841 are ignored there, which takes 7,423 findings to 4 (D543) |
 | `mypy` | types over the library; **`tests/` and `scripts/` are out of scope by config** |
-| `check_doc_links.py` | every relative path in every tracked document resolves **in the git index** — 1,031 documents, 0 unresolved |
+| `check_doc_links.py` | every relative path in every tracked document resolves **in the git index** — 1,038 documents, 0 unresolved |
 | `build_readme_counts.py --check` | the README's inventory matches the repository |
 | `figures/build_all.py --check` | all twelve SVGs regenerate byte-identically from their artifacts |
 | `build_data_manifest.py --verify` | no bulk panel has changed under a published result |
@@ -147,7 +147,7 @@ a deliberate house style in a research runner). The two ignores that cost someth
 (163 unused locals across 120 files) and `F401` (80 unused imports across 76); they are ignored
 rather than fixed because **those files are evidence**, and editing a frozen runner that produced
 a published number for tidiness is the worse trade. **`mypy` deliberately stops at `src/`**:
-`scripts/` reports 1,048 errors in 262 of 601 files.
+`scripts/` reports 1,048 errors in 262 of the 601 files that existed when D543 measured it.
 
 Two encoding gaps are guarded by the suite rather than by a linter, because ruff's rule for the
 first is preview-only and sees about a ninth of the surface: `tests/unit/test_encoding_is_declared.py`
@@ -170,8 +170,9 @@ is a modelling question the suite cannot reach. Corwin-Schultz reads 17–55 bp/
 is 1–2.
 
 **It does not cover the research code.** `src/backtest_framework/` is 46 modules and is what the
-tests pin. `scripts/` is 592 one-shot runners, tested only where a study's headline numbers are
-pinned to its artifact.
+tests pin. `scripts/` is 603 one-shot runners — the same 603 counted above, and this line said **592**
+until D544, so the page contradicted itself about the same number — tested only where a study's
+headline numbers are pinned to its artifact.
 
 **It cannot re-count the trials, and a trial count is the one thing that cannot be recomputed
 later.** Every deflated-Sharpe hurdle in this repository is a function of how many looks were
