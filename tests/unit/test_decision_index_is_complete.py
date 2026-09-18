@@ -19,19 +19,55 @@ summaries nobody asked for.
 from __future__ import annotations
 
 import re
+import subprocess
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 DECISIONS = REPO / "docs" / "decisions"
 INDEX = DECISIONS / "README.md"
 
+#: `D<n>-` or `D<n>.` at the START of the basename, zero-padding tolerated. The anchor matters:
+#: unanchored, `D\d+` finds `D304` inside `D300-AMENDMENT-cost-basis-and-what-D304-and-D305-
+#: changed.md` and invents a record. The convention is recorded in
+#: `scripts/build_readme_counts.py:38-43` and `tests/unit/test_cited_decisions_exist.py`.
+RECORD = re.compile(r"^D0*(\d+)[-.]")
 
-def _numbers_on_disk() -> set[int]:
-    return {
-        int(re.match(r"D(\d+)", path.name).group(1))
-        for path in DECISIONS.glob("D*.md")
-        if re.match(r"D\d+", path.name)
-    }
+
+def _numbers_in_the_index_of_record() -> set[int]:
+    """The records `git ls-files` knows about — not the ones this worktree happens to hold.
+
+    THE INDEX, NOT THE FILESYSTEM. This globbed the disk, alone among the decision gates, while
+    `scripts/build_readme_counts.py`, `scripts/check_doc_links.py` and
+    `tests/unit/test_cited_decisions_exist.py` all argue the opposite boundary at length and for
+    the same reason: the filesystem counts scratch files nobody else has and misses records
+    everyone else has but this worktree deleted.
+
+    Both directions were live here. An untracked `D999-notes.md` reddened the suite on a state no
+    clone shares — and worse, a record staged for deletion mid-renumbering was absent from the
+    glob and present in the index, so this gate reported a phantom row for a record a clone
+    resolves fine. That is the ordinary state of this repository: two such records are in flight
+    right now. It also put this test and `scripts/build_decision_register.py`, which generates the
+    half of the index being checked, on different universes — so the gate could disagree with its
+    own generator and neither would be wrong.
+
+    `build_readme_counts.py:34-36` records the one deliberate filesystem exception, for
+    `test_results_docs_at_root.py`, with its reason: that test hunts files a runner regenerated
+    and left untracked, which are invisible to the index. Decision records are authored and
+    committed, never regenerated, so the exception does not transfer.
+    """
+    out = subprocess.run(
+        ["git", "ls-files", "docs/decisions/D*.md"],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    names = [Path(line).name for line in out.splitlines() if line]
+    assert names, (
+        "git ls-files matched no decision records — the index is empty or the pathspec is wrong. "
+        "Refusing to report a complete index from zero records."
+    )
+    return {int(m.group(1)) for name in names if (m := RECORD.match(name))}
 
 
 def _numbers_in_index() -> set[int]:
@@ -40,7 +76,7 @@ def _numbers_in_index() -> set[int]:
 
 
 def test_every_decision_number_is_listed_in_the_index():
-    missing = sorted(_numbers_on_disk() - _numbers_in_index())
+    missing = sorted(_numbers_in_the_index_of_record() - _numbers_in_index())
     shown = f"{missing[:20]}{' …' if len(missing) > 20 else ''}"
     assert not missing, (
         f"{len(missing)} decision number(s) are not in docs/decisions/README.md: {shown}. "
@@ -54,5 +90,5 @@ def test_the_index_does_not_list_numbers_that_do_not_exist():
     `scripts/check_doc_links.py` catches a broken *link*; this catches a row whose number has no
     file at all, which is the shape a renumbering would leave behind.
     """
-    phantom = sorted(_numbers_in_index() - _numbers_on_disk())
+    phantom = sorted(_numbers_in_index() - _numbers_in_the_index_of_record())
     assert not phantom, f"index lists decision numbers with no record on disk: {phantom}"
