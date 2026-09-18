@@ -173,7 +173,21 @@ def _sites(pattern: re.Pattern[str], group: int = 1):
             yield name, line, m
 
 
-def _assert_all(pattern: re.Pattern[str], expected: int, what: str, group: int = 1) -> int:
+def _assert_all(
+    pattern: re.Pattern[str], expected: int, what: str, group: int = 1, minimum: int = 1
+) -> int:
+    """Check every site the pattern finds, and check that it found enough of them.
+
+    THE FLOOR IS PART OF THE HELPER, not a decision each caller remembers to make. Four of the
+    seven gates in this file had no floor, and two of those watched a SINGLE site apiece: the
+    `raise` count and the guard-file split, both on one line of `docs/VERIFICATION.md`. Reword
+    that line -- drop the backticks, reflow the paragraph so a word lands between the number and
+    the word `raise` -- and the regex matches nothing, `wrong` stays empty, and the test passes
+    while the number it exists to pin is unguarded. `test_the_quoted_guard_file_split_is_current`
+    had no other assertion at all, so with zero sites its whole body reduced to `assert not []`.
+
+    A floor set to the measured count rather than to 1 is what makes losing ANY site fail.
+    """
     wrong = []
     found = 0
     for name, line, m in _sites(pattern):
@@ -185,6 +199,13 @@ def _assert_all(pattern: re.Pattern[str], expected: int, what: str, group: int =
         + "\n".join(wrong)
         + f"\n\nEdit each line above to {expected}. This is prose outside the generated COUNTS "
         "block, so `build_readme_counts.py --build` will not fix it."
+    )
+    assert found >= minimum, (
+        f"{pattern.pattern!r} matched {found} site(s) and at least {minimum} were expected, so "
+        f"this gate is watching an emptier set than it was written for. Either a document that "
+        f"quoted {what} was reworded past the pattern -- in which case reword it back or widen "
+        "the pattern -- or the number is no longer stated anywhere and the gate should be "
+        "retired on purpose rather than by attrition."
     )
     return found
 
@@ -234,27 +255,40 @@ def test_the_golden_tier_count_is_current_everywhere_it_is_quoted(measured):
 
 def test_a_golden_command_comment_quotes_the_golden_count(measured):
     """`uv run pytest -q tests/golden   # N ...` — the number a reader checks against by running."""
-    _assert_all(GOLDEN_COMMAND, measured["tests_golden"], "the golden tier")
+    _assert_all(GOLDEN_COMMAND, measured["tests_golden"], "the golden tier", minimum=4)
 
 
 @pytest.mark.parametrize("tier", TIERS)
 def test_every_quoted_tier_count_is_current(measured, tier):
-    """`tests/<tier>/ — N tests`, wherever a living document writes it."""
+    """`tests/<tier>/ — N tests`, wherever a living document writes it.
+
+    This one cannot use `_assert_all` because it filters by tier inside the loop, so it counts
+    its own sites. Each tier is quoted exactly once, in `docs/VERIFICATION.md`'s heading for it,
+    which is the thinnest coverage of any gate here: lose that heading and the tier stops being
+    pinned anywhere.
+    """
     expected = measured[f"tests_{tier}"]
     wrong = []
+    found = 0
     for name, line, m in _sites(TIER_HEADING):
         if m.group(1) != tier:
             continue
+        found += 1
         if _int(m.group(2)) != expected:
             wrong.append(f"  {name}:{line} says {m.group(2)}, tests/{tier}/ holds {expected}")
     assert not wrong, (
         f"{len(wrong)} document(s) quote a stale count for tests/{tier}/:\n" + "\n".join(wrong)
     )
+    assert found >= 1, (
+        f"no living document states a test count for tests/{tier}/ any more. The tier headings in "
+        "docs/VERIFICATION.md are the only place this is written down, so a reworded heading "
+        "silently retires this gate."
+    )
 
 
 def test_every_quoted_total_is_current(measured):
     """A bolded `**N tests**` is the whole suite, and the header table had drifted by 10."""
-    _assert_all(TOTAL_TESTS, measured["tests"], "the total collected")
+    _assert_all(TOTAL_TESTS, measured["tests"], "the total collected", minimum=3)
 
 
 def test_every_decision_range_ends_at_the_highest_record(measured):
@@ -278,16 +312,69 @@ def test_the_quoted_raise_count_is_the_non_bare_one(raises):
         f"{bare} bare `raise` statements in src/, not 2 — docs/VERIFICATION.md says a plain AST "
         "walk finds 'two more' than the number it quotes, and that sentence is now wrong"
     )
-    _assert_all(RAISE_TOTAL, raises["with_exception"], "the non-bare `raise` count")
+    _assert_all(RAISE_TOTAL, raises["with_exception"], "the non-bare `raise` count", minimum=1)
 
 
 def test_the_quoted_guard_file_split_is_current(raises):
-    """`spread across 46 of its 85 tracked .py files`."""
+    """`spread across 46 of its 85 tracked .py files`.
+
+    One site, one line, one file — and until the floor below existed this test had no other
+    assertion, so a reworded sentence in `docs/VERIFICATION.md` reduced its whole body to
+    `assert not []`. It was the weakest check in the suite and it guarded a number the same page
+    uses to describe the size of the guard surface.
+    """
     wrong = []
+    found = 0
     for name, line, m in _sites(RAISE_FILES):
+        found += 1
         if (_int(m.group(1)), _int(m.group(2))) != (raises["files_with_raise"], raises["files"]):
             wrong.append(
                 f"  {name}:{line} says {m.group(1)} of {m.group(2)}, "
                 f"measured {raises['files_with_raise']} of {raises['files']}"
             )
     assert not wrong, "stale guard-file split:\n" + "\n".join(wrong)
+    assert found >= 1, (
+        "nothing states the guard-file split any more, so this test asserts nothing. It is "
+        "written in docs/VERIFICATION.md as 'spread across N of its M tracked .py files'."
+    )
+
+
+def test_no_single_document_is_the_only_source_for_a_gate():
+    """Concentration is a way for many gates to fail at once, and it was not being watched.
+
+    Measured when the floors were added: 22 sites across the seven patterns, of which
+    `docs/VERIFICATION.md` carried 11 — and was the SOLE source for six of the seven. Renaming or
+    restructuring that one page would have disarmed six gates simultaneously, and only the two
+    that had floors would have said anything.
+
+    A floor counts sites, not coverage, so a floor alone does not catch this: three of
+    `DECISION_RANGE`'s four sites are in `README.md`, so its `>= 3` could be met by `README.md`
+    alone and deleting `PHILOSOPHY.md`'s range would pass.
+
+    This does not forbid concentration — some numbers are genuinely written down once, and the
+    tier headings are one of them. It records which gates are single-sourced, so that becoming
+    single-sourced is a visible change rather than a silent one.
+    """
+    single_sourced = {
+        "RAISE_TOTAL": RAISE_TOTAL,
+        "RAISE_FILES": RAISE_FILES,
+    }
+    multi_sourced = {
+        "LEDGER_ANCHORED": LEDGER_ANCHORED,
+        "GOLDEN_COMMAND": GOLDEN_COMMAND,
+        "TOTAL_TESTS": TOTAL_TESTS,
+        "DECISION_RANGE": DECISION_RANGE,
+    }
+
+    for label, pattern in multi_sourced.items():
+        files = {name for name, _, _ in _sites(pattern)}
+        assert len(files) >= 2, (
+            f"{label} is now quoted in only {sorted(files)}. It used to be stated in at least two "
+            "documents, so it has become single-sourced — one edit to that file now disarms this "
+            "gate. Either restore the second statement or move the pattern to the "
+            "single_sourced set above, deliberately."
+        )
+
+    for label, pattern in single_sourced.items():
+        files = {name for name, _, _ in _sites(pattern)}
+        assert files, f"{label} is quoted nowhere at all; its gate is watching an empty set"
