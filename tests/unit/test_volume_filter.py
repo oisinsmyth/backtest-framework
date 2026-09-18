@@ -246,18 +246,34 @@ def test_the_published_tables_are_the_artifact(payload, page):
         assert f"{f['n_trials']:,}" in page, name
 
 
-def test_report_only_reproduces_the_page_byte_for_byte(payload, tmp_path):
+def test_report_only_reproduces_the_page_byte_for_byte(payload, tmp_path, monkeypatch):
     """D217's defect, and the one this runner reintroduced and had to fix: the
-    insert path and the replace path must emit identical bytes."""
-    before = RESULTS.read_bytes()
-    try:
-        V.append_section(V.render(payload))
-        once = RESULTS.read_bytes()
-        V.append_section(V.render(payload))
-        assert RESULTS.read_bytes() == once, "re-rendering is not idempotent"
-        assert once.decode("utf-8").count("## D220 —") == 1
-    finally:
-        RESULTS.write_bytes(before)
+    insert path and the replace path must emit identical bytes.
+
+    AGAINST A COPY. This test used to call `append_section` twice against the real
+    `docs/results/MACD_RESULTS.md` -- a published result, which `CLAUDE.md` treats as evidence --
+    and restore it in a `finally`. The `finally` covers an assertion failure and nothing else: not
+    a kill, not an OOM, not a closed terminal. Worse, two overlapping pytest runs race on it, and
+    the race is silent: the second run reads the dirtied page as its "before", the first restores
+    the clean bytes, the second then restores the first's dirt, and both runs are green.
+
+    Its three siblings -- `test_assembled_strategy`, `test_sampling_invariance`,
+    `test_scaling_ladder` -- solved the same problem by reading instead of writing, asserting
+    `render(payload) == PAGE.read_text(...)`. That is not available here, because the property
+    under test IS the writing: `append_section` strips any existing section before inserting, so
+    the insert path and the replace path run the same insertion, and only two real writes can show
+    that they agree.
+    """
+    page = tmp_path / "MACD_RESULTS.md"
+    page.write_bytes(RESULTS.read_bytes())
+    monkeypatch.setattr(V, "RESULTS", page)
+
+    V.append_section(V.render(payload))
+    once = page.read_bytes()
+    V.append_section(V.render(payload))
+
+    assert page.read_bytes() == once, "re-rendering is not idempotent"
+    assert once.decode("utf-8").count("## D220 —") == 1
 
 
 def test_the_weak_instrument_disclosure_sits_beside_the_verdict(page):

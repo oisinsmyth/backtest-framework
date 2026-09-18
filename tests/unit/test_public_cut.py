@@ -210,6 +210,35 @@ def test_a_worktree_deletion_does_not_block_the_build(builder, tmp_path, monkeyp
     )
 
 
+def _sandbox_repo(root: Path) -> Path:
+    """A throwaway git repository with one commit, for tests that must dirty a tracked file.
+
+    The builder reads HEAD, so this property cannot be tested without a real repository and a real
+    commit. It used to be tested against THIS one, by editing the actual `LICENSE` and restoring it
+    in a `finally` -- which is fine until the process is killed, and is a silent corruption when two
+    pytest runs overlap: the second reads the dirtied bytes as its "original" while the first
+    restores the clean ones, and then restores the dirt. Both runs pass.
+
+    `core.autocrlf false` and a `.gitattributes` carrying `* text=auto eol=lf` reproduce the real
+    repository's line-ending contract, so the LF precondition below holds on Windows too.
+    """
+    root.mkdir(parents=True, exist_ok=True)
+
+    def run(*args: str) -> None:
+        subprocess.run(args, cwd=root, capture_output=True, text=True, check=True)
+
+    run("git", "init", "-q", "-b", "main")
+    run("git", "config", "user.name", "Sandbox")
+    run("git", "config", "user.email", "sandbox@example.invalid")
+    run("git", "config", "core.autocrlf", "false")
+    (root / ".gitattributes").write_bytes(b"* text=auto eol=lf\n")
+    (root / "LICENSE").write_bytes(b"MIT, more or less.\n")
+    (root / "README.md").write_bytes(b"# sandbox\n")
+    run("git", "add", "--", ".gitattributes", "LICENSE", "README.md")
+    run("git", "commit", "-q", "-m", "seed")
+    return root
+
+
 def test_the_bytes_are_heads_bytes_and_not_the_worktrees(builder, tmp_path, monkeypatch):
     """Where a tracked file differs on disk from HEAD, the cut must publish HEAD's version.
 
@@ -225,34 +254,37 @@ def test_the_bytes_are_heads_bytes_and_not_the_worktrees(builder, tmp_path, monk
     principal had a deleted-but-uncommitted record in flight -- which is the ordinary state here
     and the exact condition `build_public_cut.py` exists to tolerate.
 
-    The rewrite takes the comparison somewhere it can actually fail: a real file whose worktree
-    bytes are made to differ from HEAD's, built into a real cut, with the cut's bytes asserted
-    against HEAD and asserted NOT to be the worktree's.
+    The rewrite took the comparison somewhere it can actually fail. It then spent a while making
+    that comparison by editing the repository's own `LICENSE`, which is a second defect wearing the
+    fix's clothes: a `finally` restores the file after an assertion, and does not after a kill, an
+    OOM or a closed terminal -- and under two overlapping pytest runs it restores the WRONG bytes
+    with both runs green. A test asserting that unreviewed changes must not reach a reader should
+    not be making unreviewed changes to the reader's tree.
+
+    It now builds its own repository. The property is identical and the blast radius is `tmp_path`.
     """
-    needs_git_identity()
+    sandbox = _sandbox_repo(tmp_path / "repo")
+    monkeypatch.setattr(builder, "REPO", sandbox)
+
     rel = "LICENSE"
     in_head = builder.head_blobs([rel])[rel]
-    victim = builder.REPO / rel
+    victim = sandbox / rel
     original = victim.read_bytes()
-    assert original == in_head, "fixture needs LICENSE clean before it dirties it"
+    assert original == in_head, "the sandbox's worktree and HEAD must start in agreement"
 
-    try:
-        victim.write_bytes(original + b"\n# worktree-only edit, never committed\n")
-        assert victim.read_bytes() != in_head, "the fixture failed to make the worktree differ"
+    victim.write_bytes(original + b"\n# worktree-only edit, never committed\n")
+    assert victim.read_bytes() != in_head, "the fixture failed to make the worktree differ"
 
-        monkeypatch.setattr(builder, "tracked", lambda: [".gitattributes", rel])
-        dest = tmp_path / "cut"
-        assert builder.cmd_build(dest, into_non_empty=False) == 0
+    monkeypatch.setattr(builder, "tracked", lambda: [".gitattributes", rel])
+    dest = tmp_path / "cut"
+    assert builder.cmd_build(dest, into_non_empty=False) == 0
 
-        published = (dest / rel).read_bytes()
-        assert published == in_head, "the cut must publish HEAD's bytes"
-        assert published != victim.read_bytes(), (
-            "the cut published the worktree's uncommitted edit -- an unreviewed change reaching a "
-            "reader is the failure this whole design exists to prevent"
-        )
-    finally:
-        victim.write_bytes(original)
-    assert victim.read_bytes() == original, "the fixture must leave LICENSE as it found it"
+    published = (dest / rel).read_bytes()
+    assert published == in_head, "the cut must publish HEAD's bytes"
+    assert published != victim.read_bytes(), (
+        "the cut published the worktree's uncommitted edit -- an unreviewed change reaching a "
+        "reader is the failure this whole design exists to prevent"
+    )
 
 
 def test_a_real_build_is_byte_faithful(builder, tmp_path, monkeypatch):
