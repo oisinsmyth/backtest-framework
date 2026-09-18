@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from backtest_framework.analytics.metrics import (
+    curve_sharpe_zero_rf,
     excess_sharpe,
     max_drawdown,
     max_drawdown_from_returns,
@@ -220,6 +221,84 @@ def test_excess_sharpe_reproduces_the_scripts_copy_bit_for_bit():
 def test_excess_sharpe_length_mismatch_fails_loudly():
     with pytest.raises(ValueError, match="length mismatch"):
         excess_sharpe([0.01, -0.01], [1.0], 0.04, 252.0, basis="log")
+
+
+def test_curve_sharpe_zero_rf_reproduces_the_body_it_replaced_bit_for_bit():
+    """Three inline copies became one function, and not one published Sharpe may move.
+
+    The body, restated: `(fmean(rets) / stdev(rets)) * sqrt(ppy)`, with `len < 3 -> 0.0`
+    and `sd <= 0 -> 0.0`. Exact equality, because this is the estimator behind every
+    number in TERRAIN_RESULTS, STRUCTURE_RESULTS and eight committed summaries.
+    """
+    import statistics
+
+    rng = np.random.default_rng(9)
+    cases = [
+        [0.01, -0.01] * 40,
+        [0.0] * 20 + [0.3] + [0.0] * 20,
+        [0.002] * 3 + [-0.002] * 3,
+        [0.01, 0.01],  # len < 3
+        [0.01] * 10,  # sd == 0
+        [],
+    ]
+    cases += [list(rng.normal(0.0, 0.02, 500)) for _ in range(60)]
+    for rets in cases:
+        if len(rets) < 3:
+            want = 0.0
+        else:
+            sd = statistics.stdev(rets)
+            want = 0.0 if sd <= 0.0 else (statistics.fmean(rets) / sd) * math.sqrt(365.0)
+        assert curve_sharpe_zero_rf(rets, 365.0) == want
+
+
+def test_the_two_zero_rf_kernels_are_not_the_same_float():
+    """The measured reason `curve_sharpe_zero_rf` exists instead of `sharpe(r, 0.0, ppy)`.
+
+    `statistics.fmean` sums exactly (`math.fsum`); numpy sums pairwise. Same definition,
+    different rounding. Repointing the research call sites at `sharpe` would move every
+    published terrain and structure Sharpe for no gain, and CLAUDE.md's rule is that a
+    rewrite may hoist or skip but never reorder a float sum.
+
+    The anti-tautology: if the two ever agree everywhere, this fails and D542's recorded
+    reason for keeping two kernels no longer holds.
+    """
+    rng = np.random.default_rng(2)
+    series = [list(rng.normal(0.0, 0.02, 500)) for _ in range(200)]
+    gaps = [
+        abs(curve_sharpe_zero_rf(s, 365.0) - sharpe(s, 0.0, 365.0))
+        for s in series
+    ]
+    disagreements = sum(1 for g in gaps if g > 0.0)
+    assert disagreements > 0, (
+        "the exact-summation and pairwise kernels no longer differ; D542's reason for "
+        "keeping both no longer holds and the record needs amending"
+    )
+    # But they are the same DEFINITION, so the gap must stay at rounding scale.
+    assert max(gaps) < 1e-12, f"the two kernels differ by {max(gaps):.3e}, which is not rounding"
+
+
+def test_builtin_sum_is_compensated_and_a_manual_loop_is_not():
+    """Why two ATR implementations that read as identical were not the same number (D542).
+
+    `research/trade_diagnostics._atr` used `sum(...)`; `research/breakdown_study._atr_at`
+    accumulated with `total += ...`. Same terms, same order, different float — because
+    **CPython 3.12 gave `sum()` Neumaier compensated summation for floats** and a manual
+    loop gets plain accumulation. Neither docstring mentioned it, because neither author
+    could have: the difference arrived with the interpreter.
+
+    Pinned here because it is a REPOSITORY-WIDE class, not one function's quirk. Any
+    optimisation that replaces `sum(xs)` with a loop — or the reverse — moves numbers, and
+    CLAUDE.md's rule against reordering a float sum now has a second edge nobody wrote
+    down. The classic 1e16 case makes it visible without depending on a random draw.
+    """
+    terms = [1e16, 1.0, -1e16, 1.0]
+    total = 0.0
+    for t in terms:
+        total += t
+    # Plain accumulation loses the first 1.0 when 1e16 absorbs it, and keeps the second.
+    assert total == 1.0
+    assert sum(terms) == 2.0, "builtin sum is no longer compensated; D542's ATR note is stale"
+    assert sum(terms) != total
 
 
 def test_mid_rank_percentile_splits_ties_in_half():

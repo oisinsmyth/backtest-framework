@@ -4,7 +4,7 @@
     "note": "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive fraction; research/terrain_strategies negates it once at the emit boundary (D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
     "record": "D542"
   },
-  "produced": "2026-08-24",
+  "produced": "2026-09-18",
   "fixture": "crypto_binance_15m_raw.csv.gz",
   "symbols": [
     "BTCUSDT",
@@ -32,33 +32,43 @@
           "net_exposure": -0.00105661556860187,
           "costed": {
             "sharpe": -7.976238433582038,
+            "excess_sharpe": -8.011055627760024,
+            "rf_annual": 0.04,
             "total_return": -0.9999999999783795,
-            "max_drawdown": -0.9999999999792838,
+            "max_drawdown": -0.9999999999792837,
             "pnl": -9999.999999783795
           },
           "zero_cost": {
             "sharpe": -0.10461819828446332,
+            "excess_sharpe": -0.14096636416961783,
+            "rf_annual": 0.04,
             "total_return": -0.26570763817847665,
-            "max_drawdown": -0.712279866308992,
+            "max_drawdown": -0.7122798663089919,
             "pnl": -2657.0763817847665
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.10461819828446332,
+              "excess_sharpe": -0.14096636416961783,
+              "rf_annual": 0.04,
               "total_return": -0.26570763817847665,
-              "max_drawdown": -0.712279866308992,
+              "max_drawdown": -0.7122798663089919,
               "pnl": -2657.0763817847665
             },
             "10 bps/side": {
               "sharpe": -2.149959115858325,
+              "excess_sharpe": -2.1862192209466,
+              "rf_annual": 0.04,
               "total_return": -0.998273872872699,
               "max_drawdown": -0.9984619796495352,
               "pnl": -9982.73872872699
             },
             "40 bps/side": {
               "sharpe": -7.976238433582038,
+              "excess_sharpe": -8.011055627760024,
+              "rf_annual": 0.04,
               "total_return": -0.9999999999783795,
-              "max_drawdown": -0.9999999999792838,
+              "max_drawdown": -0.9999999999792837,
               "pnl": -9999.999999783795
             }
           },
@@ -73,12 +83,16 @@
           "net_exposure": 0.002069063926940639,
           "costed": {
             "sharpe": -4.947822097197938,
+            "excess_sharpe": -4.967080630872108,
+            "rf_annual": 0.04,
             "total_return": -0.9990521994618153,
-            "max_drawdown": -0.9990844526422212,
+            "max_drawdown": -0.9990844526422213,
             "pnl": -9990.521994618153
           },
           "zero_cost": {
             "sharpe": -0.3453500607671389,
+            "excess_sharpe": -0.3657544484032171,
+            "rf_annual": 0.04,
             "total_return": -0.36894090872554175,
             "max_drawdown": -0.6124376734390986,
             "pnl": -3689.4090872554175
@@ -86,20 +100,26 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.3453500607671389,
+              "excess_sharpe": -0.3657544484032171,
+              "rf_annual": 0.04,
               "total_return": -0.36894090872554175,
               "max_drawdown": -0.6124376734390986,
               "pnl": -3689.4090872554175
             },
             "10 bps/side": {
               "sharpe": -1.5584590021676792,
+              "excess_sharpe": -1.5787989345339726,
+              "rf_annual": 0.04,
               "total_return": -0.8754648551386721,
               "max_drawdown": -0.8901103851294236,
               "pnl": -8754.648551386721
             },
             "40 bps/side": {
               "sharpe": -4.947822097197938,
+              "excess_sharpe": -4.967080630872108,
+              "rf_annual": 0.04,
               "total_return": -0.9990521994618153,
-              "max_drawdown": -0.9990844526422212,
+              "max_drawdown": -0.9990844526422213,
               "pnl": -9990.521994618153
             }
           },
@@ -114,12 +134,16 @@
           "net_exposure": -0.011177701674277016,
           "costed": {
             "sharpe": -8.793942579444264,
+            "excess_sharpe": -8.820218072355303,
+            "rf_annual": 0.04,
             "total_return": -0.9999999868649835,
-            "max_drawdown": -0.9999999872795212,
+            "max_drawdown": -0.9999999872795211,
             "pnl": -9999.999868649835
           },
           "zero_cost": {
             "sharpe": 0.2714064945717028,
+            "excess_sharpe": 0.24305785009241357,
+            "rf_annual": 0.04,
             "total_return": 0.684349635559278,
             "max_drawdown": -0.387657288305043,
             "pnl": 6843.49635559278
@@ -127,20 +151,26 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.2714064945717028,
+              "excess_sharpe": 0.24305785009241357,
+              "rf_annual": 0.04,
               "total_return": 0.684349635559278,
               "max_drawdown": -0.387657288305043,
               "pnl": 6843.49635559278
             },
             "10 bps/side": {
               "sharpe": -2.146990326453156,
+              "excess_sharpe": -2.175233445598912,
+              "rf_annual": 0.04,
               "total_return": -0.9840604372581105,
-              "max_drawdown": -0.9849003475995515,
+              "max_drawdown": -0.9849003475995514,
               "pnl": -9840.604372581105
             },
             "40 bps/side": {
               "sharpe": -8.793942579444264,
+              "excess_sharpe": -8.820218072355303,
+              "rf_annual": 0.04,
               "total_return": -0.9999999868649835,
-              "max_drawdown": -0.9999999872795212,
+              "max_drawdown": -0.9999999872795211,
               "pnl": -9999.999868649835
             }
           },
@@ -155,12 +185,16 @@
           "net_exposure": -0.0023068873668188735,
           "costed": {
             "sharpe": -4.310191052022394,
+            "excess_sharpe": -4.330703393379715,
+            "rf_annual": 0.04,
             "total_return": -0.9995010768966317,
-            "max_drawdown": -0.9995175991662578,
+            "max_drawdown": -0.9995175991662579,
             "pnl": -9995.010768966316
           },
           "zero_cost": {
             "sharpe": 0.27234990376682344,
+            "excess_sharpe": 0.2509401151824655,
+            "rf_annual": 0.04,
             "total_return": 0.5857864643634256,
             "max_drawdown": -0.5181406043894696,
             "pnl": 5857.864643634256
@@ -168,20 +202,26 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.27234990376682344,
+              "excess_sharpe": 0.2509401151824655,
+              "rf_annual": 0.04,
               "total_return": 0.5857864643634256,
               "max_drawdown": -0.5181406043894696,
               "pnl": 5857.864643634256
             },
             "10 bps/side": {
               "sharpe": -0.9149717360442047,
+              "excess_sharpe": -0.9363405677552445,
+              "rf_annual": 0.04,
               "total_return": -0.7881604636415174,
               "max_drawdown": -0.8217151720315132,
               "pnl": -7881.604636415173
             },
             "40 bps/side": {
               "sharpe": -4.310191052022394,
+              "excess_sharpe": -4.330703393379715,
+              "rf_annual": 0.04,
               "total_return": -0.9995010768966317,
-              "max_drawdown": -0.9995175991662578,
+              "max_drawdown": -0.9995175991662579,
               "pnl": -9995.010768966316
             }
           },
@@ -196,12 +236,16 @@
           "net_exposure": -0.004980702326592737,
           "costed": {
             "sharpe": -4.5852526223473795,
+            "excess_sharpe": -4.597299552579977,
+            "rf_annual": 0.04,
             "total_return": -0.9658237010347409,
             "max_drawdown": -0.9664982873206693,
             "pnl": -9658.23701034741
           },
           "zero_cost": {
             "sharpe": -0.6343966141274165,
+            "excess_sharpe": -0.6477492806629875,
+            "rf_annual": 0.04,
             "total_return": -0.3470920597028101,
             "max_drawdown": -0.46685870504368854,
             "pnl": -3470.920597028101
@@ -209,18 +253,24 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.6343966141274165,
+              "excess_sharpe": -0.6477492806629875,
+              "rf_annual": 0.04,
               "total_return": -0.3470920597028101,
               "max_drawdown": -0.46685870504368854,
               "pnl": -3470.920597028101
             },
             "10 bps/side": {
               "sharpe": -1.7224574895452787,
+              "excess_sharpe": -1.735728776631287,
+              "rf_annual": 0.04,
               "total_return": -0.6873551461233989,
-              "max_drawdown": -0.7053972966988029,
+              "max_drawdown": -0.705397296698803,
               "pnl": -6873.551461233988
             },
             "40 bps/side": {
               "sharpe": -4.5852526223473795,
+              "excess_sharpe": -4.597299552579977,
+              "rf_annual": 0.04,
               "total_return": -0.9658237010347409,
               "max_drawdown": -0.9664982873206693,
               "pnl": -9658.23701034741
@@ -237,12 +287,16 @@
           "net_exposure": 0.0008119971732985431,
           "costed": {
             "sharpe": -2.9684873629838737,
+            "excess_sharpe": -2.9786355987826036,
+            "rf_annual": 0.04,
             "total_return": -0.9006430928886654,
             "max_drawdown": -0.9071473138675977,
             "pnl": -9006.430928886653
           },
           "zero_cost": {
             "sharpe": -0.4352326629285018,
+            "excess_sharpe": -0.4459928655616127,
+            "rf_annual": 0.04,
             "total_return": -0.2746189501567712,
             "max_drawdown": -0.4621421947853779,
             "pnl": -2746.189501567712
@@ -250,18 +304,24 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.4352326629285018,
+              "excess_sharpe": -0.4459928655616127,
+              "rf_annual": 0.04,
               "total_return": -0.2746189501567712,
               "max_drawdown": -0.4621421947853779,
               "pnl": -2746.189501567712
             },
             "10 bps/side": {
               "sharpe": -1.1052332515314869,
+              "excess_sharpe": -1.1159588297869019,
+              "rf_annual": 0.04,
               "total_return": -0.5583803738207664,
-              "max_drawdown": -0.6010922917186765,
+              "max_drawdown": -0.6010922917186766,
               "pnl": -5583.8037382076645
             },
             "40 bps/side": {
               "sharpe": -2.9684873629838737,
+              "excess_sharpe": -2.9786355987826036,
+              "rf_annual": 0.04,
               "total_return": -0.9006430928886654,
               "max_drawdown": -0.9071473138675977,
               "pnl": -9006.430928886653
@@ -278,31 +338,41 @@
           "net_exposure": -0.004552620134811915,
           "costed": {
             "sharpe": -3.7893724134747715,
+            "excess_sharpe": -3.8034013651117298,
+            "rf_annual": 0.04,
             "total_return": -0.9817255747390645,
             "max_drawdown": -0.9826062110224882,
             "pnl": -9817.255747390645
           },
           "zero_cost": {
             "sharpe": 0.5983334105387341,
+            "excess_sharpe": 0.5832815600601956,
+            "rf_annual": 0.04,
             "total_return": 0.8056845974969624,
-            "max_drawdown": -0.18419720211329782,
+            "max_drawdown": -0.18419720211329785,
             "pnl": 8056.845974969624
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.5983334105387341,
+              "excess_sharpe": 0.5832815600601956,
+              "rf_annual": 0.04,
               "total_return": 0.8056845974969624,
-              "max_drawdown": -0.18419720211329782,
+              "max_drawdown": -0.18419720211329785,
               "pnl": 8056.845974969624
             },
             "10 bps/side": {
               "sharpe": -0.5608309891933531,
+              "excess_sharpe": -0.575839218552609,
+              "rf_annual": 0.04,
               "total_return": -0.4262913466132746,
               "max_drawdown": -0.560578193264226,
               "pnl": -4262.913466132746
             },
             "40 bps/side": {
               "sharpe": -3.7893724134747715,
+              "excess_sharpe": -3.8034013651117298,
+              "rf_annual": 0.04,
               "total_return": -0.9817255747390645,
               "max_drawdown": -0.9826062110224882,
               "pnl": -9817.255747390645
@@ -319,31 +389,41 @@
           "net_exposure": -0.0018142530984996737,
           "costed": {
             "sharpe": -2.5607564463689245,
+            "excess_sharpe": -2.567472273434643,
+            "rf_annual": 0.04,
             "total_return": -0.6648105607251628,
             "max_drawdown": -0.6779110052317698,
             "pnl": -6648.105607251628
           },
           "zero_cost": {
             "sharpe": -0.3773799015287871,
+            "excess_sharpe": -0.3848161167321061,
+            "rf_annual": 0.04,
             "total_return": -0.1368496340891573,
-            "max_drawdown": -0.21727475462160217,
+            "max_drawdown": -0.21727475462160223,
             "pnl": -1368.4963408915728
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.3773799015287871,
+              "excess_sharpe": -0.3848161167321061,
+              "rf_annual": 0.04,
               "total_return": -0.1368496340891573,
-              "max_drawdown": -0.21727475462160217,
+              "max_drawdown": -0.21727475462160223,
               "pnl": -1368.4963408915728
             },
             "10 bps/side": {
               "sharpe": -0.9778575439361338,
+              "excess_sharpe": -0.9852435276034774,
+              "rf_annual": 0.04,
               "total_return": -0.31838101175909883,
-              "max_drawdown": -0.35219377866049206,
+              "max_drawdown": -0.3521937786604921,
               "pnl": -3183.8101175909883
             },
             "40 bps/side": {
               "sharpe": -2.5607564463689245,
+              "excess_sharpe": -2.567472273434643,
+              "rf_annual": 0.04,
               "total_return": -0.6648105607251628,
               "max_drawdown": -0.6779110052317698,
               "pnl": -6648.105607251628
@@ -353,9 +433,11 @@
         }
       },
       "buy_and_hold": {
-        "total_return": 4.599989314336598,
         "sharpe": 0.3150096667404039,
-        "max_drawdown": -0.7722676003253836,
+        "excess_sharpe": 0.25517015274062715,
+        "rf_annual": 0.04,
+        "total_return": 4.599989314336598,
+        "max_drawdown": -0.7722676003253834,
         "bars": 292375,
         "pnl": 45999.89314336598
       }
@@ -374,12 +456,16 @@
           "net_exposure": -0.009512937595129375,
           "costed": {
             "sharpe": -5.362238910076534,
+            "excess_sharpe": -5.389168418493842,
+            "rf_annual": 0.04,
             "total_return": -0.9999999993152782,
             "max_drawdown": -0.9999999993728779,
             "pnl": -9999.999993152782
           },
           "zero_cost": {
             "sharpe": 0.7653386514688313,
+            "excess_sharpe": 0.7377264589769429,
+            "rf_annual": 0.04,
             "total_return": 17.880014305753765,
             "max_drawdown": -0.5323282521473578,
             "pnl": 178800.14305753764
@@ -387,18 +473,24 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.7653386514688313,
+              "excess_sharpe": 0.7377264589769429,
+              "rf_annual": 0.04,
               "total_return": 17.880014305753765,
               "max_drawdown": -0.5323282521473578,
               "pnl": 178800.14305753764
             },
             "10 bps/side": {
               "sharpe": -0.7968070844527186,
+              "excess_sharpe": -0.8243847178803166,
+              "rf_annual": 0.04,
               "total_return": -0.9532479457201063,
               "max_drawdown": -0.9622564883413242,
               "pnl": -9532.479457201063
             },
             "40 bps/side": {
               "sharpe": -5.362238910076534,
+              "excess_sharpe": -5.389168418493842,
+              "rf_annual": 0.04,
               "total_return": -0.9999999993152782,
               "max_drawdown": -0.9999999993728779,
               "pnl": -9999.999993152782
@@ -415,12 +507,16 @@
           "net_exposure": 0.0033838878016960207,
           "costed": {
             "sharpe": -4.180817147460673,
+            "excess_sharpe": -4.196652154203156,
+            "rf_annual": 0.04,
             "total_return": -0.999501141313075,
             "max_drawdown": -0.9995320335873311,
             "pnl": -9995.01141313075
           },
           "zero_cost": {
             "sharpe": -0.3079600164372083,
+            "excess_sharpe": -0.32439277889687684,
+            "rf_annual": 0.04,
             "total_return": -0.4178656362759967,
             "max_drawdown": -0.582484359141538,
             "pnl": -4178.656362759967
@@ -428,18 +524,24 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.3079600164372083,
+              "excess_sharpe": -0.32439277889687684,
+              "rf_annual": 0.04,
               "total_return": -0.4178656362759967,
               "max_drawdown": -0.582484359141538,
               "pnl": -4178.656362759967
             },
             "10 bps/side": {
               "sharpe": -1.309079835980469,
+              "excess_sharpe": -1.3254794811432713,
+              "rf_annual": 0.04,
               "total_return": -0.9001349575673596,
-              "max_drawdown": -0.9077173863513784,
+              "max_drawdown": -0.9077173863513786,
               "pnl": -9001.349575673596
             },
             "40 bps/side": {
               "sharpe": -4.180817147460673,
+              "excess_sharpe": -4.196652154203156,
+              "rf_annual": 0.04,
               "total_return": -0.999501141313075,
               "max_drawdown": -0.9995320335873311,
               "pnl": -9995.01141313075
@@ -456,31 +558,41 @@
           "net_exposure": -0.001933164818438791,
           "costed": {
             "sharpe": -6.6974932822537845,
+            "excess_sharpe": -6.7178368632053695,
+            "rf_annual": 0.04,
             "total_return": -0.9999999702394884,
             "max_drawdown": -0.9999999717548679,
             "pnl": -9999.999702394884
           },
           "zero_cost": {
             "sharpe": 0.4720552139998512,
+            "excess_sharpe": 0.4507821311569661,
+            "rf_annual": 0.04,
             "total_return": 2.2250334931920386,
-            "max_drawdown": -0.33429322056747346,
+            "max_drawdown": -0.3342932205674734,
             "pnl": 22250.334931920384
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.4720552139998512,
+              "excess_sharpe": 0.4507821311569661,
+              "rf_annual": 0.04,
               "total_return": 2.2250334931920386,
-              "max_drawdown": -0.33429322056747346,
+              "max_drawdown": -0.3342932205674734,
               "pnl": 22250.334931920384
             },
             "10 bps/side": {
               "sharpe": -1.387458769885434,
+              "excess_sharpe": -1.4086957623374494,
+              "rf_annual": 0.04,
               "total_return": -0.9681706418917498,
               "max_drawdown": -0.9733560226878921,
               "pnl": -9681.706418917498
             },
             "40 bps/side": {
               "sharpe": -6.6974932822537845,
+              "excess_sharpe": -6.7178368632053695,
+              "rf_annual": 0.04,
               "total_return": -0.9999999702394884,
               "max_drawdown": -0.9999999717548679,
               "pnl": -9999.999702394884
@@ -497,31 +609,41 @@
           "net_exposure": -0.0012095020656664492,
           "costed": {
             "sharpe": -3.276333364674941,
+            "excess_sharpe": -3.2927044523968547,
+            "rf_annual": 0.04,
             "total_return": -0.9992747523540757,
             "max_drawdown": -0.9993079865300537,
             "pnl": -9992.747523540756
           },
           "zero_cost": {
             "sharpe": 0.5078793518474656,
+            "excess_sharpe": 0.4910601887886334,
+            "rf_annual": 0.04,
             "total_return": 1.9792006921879484,
-            "max_drawdown": -0.4167604840423268,
+            "max_drawdown": -0.41676048404232674,
             "pnl": 19792.006921879485
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.5078793518474656,
+              "excess_sharpe": 0.4910601887886334,
+              "rf_annual": 0.04,
               "total_return": 1.9792006921879484,
-              "max_drawdown": -0.4167604840423268,
+              "max_drawdown": -0.41676048404232674,
               "pnl": 19792.006921879485
             },
             "10 bps/side": {
               "sharpe": -0.457949162543239,
+              "excess_sharpe": -0.47475149002878025,
+              "rf_annual": 0.04,
               "total_return": -0.6267040163194458,
-              "max_drawdown": -0.709502307895896,
+              "max_drawdown": -0.7095023078958961,
               "pnl": -6267.040163194459
             },
             "40 bps/side": {
               "sharpe": -3.276333364674941,
+              "excess_sharpe": -3.2927044523968547,
+              "rf_annual": 0.04,
               "total_return": -0.9992747523540757,
               "max_drawdown": -0.9993079865300537,
               "pnl": -9992.747523540756
@@ -538,31 +660,41 @@
           "net_exposure": -0.0016987388562731028,
           "costed": {
             "sharpe": -3.2633511729672886,
+            "excess_sharpe": -3.2731821274206063,
+            "rf_annual": 0.04,
             "total_return": -0.9507709099376899,
             "max_drawdown": -0.9515694360228906,
             "pnl": -9507.709099376898
           },
           "zero_cost": {
             "sharpe": -0.07026956093196521,
+            "excess_sharpe": -0.08071275566101312,
+            "rf_annual": 0.04,
             "total_return": -0.05952180989636635,
-            "max_drawdown": -0.24625619038044266,
+            "max_drawdown": -0.24625619038044264,
             "pnl": -595.2180989636635
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.07026956093196521,
+              "excess_sharpe": -0.08071275566101312,
+              "rf_annual": 0.04,
               "total_return": -0.05952180989636635,
-              "max_drawdown": -0.24625619038044266,
+              "max_drawdown": -0.24625619038044264,
               "pnl": -595.2180989636635
             },
             "10 bps/side": {
               "sharpe": -0.9113096882558477,
+              "excess_sharpe": -0.9217236382210592,
+              "rf_annual": 0.04,
               "total_return": -0.5496521819213285,
               "max_drawdown": -0.5854946838541606,
               "pnl": -5496.521819213285
             },
             "40 bps/side": {
               "sharpe": -3.2633511729672886,
+              "excess_sharpe": -3.2731821274206063,
+              "rf_annual": 0.04,
               "total_return": -0.9507709099376899,
               "max_drawdown": -0.9515694360228906,
               "pnl": -9507.709099376898
@@ -579,12 +711,16 @@
           "net_exposure": -0.0011007827788649706,
           "costed": {
             "sharpe": -2.214347707071222,
+            "excess_sharpe": -2.2231132586338376,
+            "rf_annual": 0.04,
             "total_return": -0.8780560066574788,
             "max_drawdown": -0.8780928047316192,
             "pnl": -8780.560066574788
           },
           "zero_cost": {
             "sharpe": -0.07438227143187473,
+            "excess_sharpe": -0.083502539289117,
+            "rf_annual": 0.04,
             "total_return": -0.06585026771907687,
             "max_drawdown": -0.28931113842892897,
             "pnl": -658.5026771907687
@@ -592,18 +728,24 @@
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.07438227143187473,
+              "excess_sharpe": -0.083502539289117,
+              "rf_annual": 0.04,
               "total_return": -0.06585026771907687,
               "max_drawdown": -0.28931113842892897,
               "pnl": -658.5026771907687
             },
             "10 bps/side": {
               "sharpe": -0.6281614753852072,
+              "excess_sharpe": -0.6372620470121619,
+              "rf_annual": 0.04,
               "total_return": -0.4380670319462565,
-              "max_drawdown": -0.44410300907877165,
+              "max_drawdown": -0.4441030090787716,
               "pnl": -4380.670319462565
             },
             "40 bps/side": {
               "sharpe": -2.214347707071222,
+              "excess_sharpe": -2.2231132586338376,
+              "rf_annual": 0.04,
               "total_return": -0.8780560066574788,
               "max_drawdown": -0.8780928047316192,
               "pnl": -8780.560066574788
@@ -620,31 +762,41 @@
           "net_exposure": -0.0041245379430310935,
           "costed": {
             "sharpe": -2.954387342261859,
+            "excess_sharpe": -2.9660329957495435,
+            "rf_annual": 0.04,
             "total_return": -0.9739058358229418,
             "max_drawdown": -0.9758444622258287,
             "pnl": -9739.058358229418
           },
           "zero_cost": {
             "sharpe": 0.6514234084518187,
+            "excess_sharpe": 0.6392557510518541,
+            "rf_annual": 0.04,
             "total_return": 1.1614861028079364,
-            "max_drawdown": -0.1533375180157831,
+            "max_drawdown": -0.15333751801578316,
             "pnl": 11614.861028079364
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": 0.6514234084518187,
+              "excess_sharpe": 0.6392557510518541,
+              "rf_annual": 0.04,
               "total_return": 1.1614861028079364,
-              "max_drawdown": -0.1533375180157831,
+              "max_drawdown": -0.15333751801578316,
               "pnl": 11614.861028079364
             },
             "10 bps/side": {
               "sharpe": -0.2800825002047865,
+              "excess_sharpe": -0.29224096763940577,
+              "rf_annual": 0.04,
               "total_return": -0.28233713813257344,
-              "max_drawdown": -0.4748892329647443,
+              "max_drawdown": -0.4748892329647442,
               "pnl": -2823.3713813257345
             },
             "40 bps/side": {
               "sharpe": -2.954387342261859,
+              "excess_sharpe": -2.9660329957495435,
+              "rf_annual": 0.04,
               "total_return": -0.9739058358229418,
               "max_drawdown": -0.9758444622258287,
               "pnl": -9739.058358229418
@@ -661,31 +813,41 @@
           "net_exposure": -0.0007304577081974342,
           "costed": {
             "sharpe": -1.8511184115704609,
+            "excess_sharpe": -1.8570608878647958,
+            "rf_annual": 0.04,
             "total_return": -0.5679166348893179,
             "max_drawdown": -0.6000189338257521,
             "pnl": -5679.166348893179
           },
           "zero_cost": {
             "sharpe": -0.012903672110502806,
+            "excess_sharpe": -0.01929819256249351,
+            "rf_annual": 0.04,
             "total_return": -0.005453360024693543,
-            "max_drawdown": -0.15950835552804699,
+            "max_drawdown": -0.159508355528047,
             "pnl": -54.533600246935436
           },
           "tiers": {
             "zero (diagnostic)": {
               "sharpe": -0.012903672110502806,
+              "excess_sharpe": -0.01929819256249351,
+              "rf_annual": 0.04,
               "total_return": -0.005453360024693543,
-              "max_drawdown": -0.15950835552804699,
+              "max_drawdown": -0.159508355528047,
               "pnl": -54.533600246935436
             },
             "10 bps/side": {
               "sharpe": -0.502279509272841,
+              "excess_sharpe": -0.5086496626711484,
+              "rf_annual": 0.04,
               "total_return": -0.19230628123671634,
               "max_drawdown": -0.26800959380868694,
               "pnl": -1923.0628123671634
             },
             "40 bps/side": {
               "sharpe": -1.8511184115704609,
+              "excess_sharpe": -1.8570608878647958,
+              "rf_annual": 0.04,
               "total_return": -0.5679166348893179,
               "max_drawdown": -0.6000189338257521,
               "pnl": -5679.166348893179
@@ -695,13 +857,15 @@
         }
       },
       "buy_and_hold": {
-        "total_return": 1.1520757027810835,
         "sharpe": 0.10934432450416277,
+        "excess_sharpe": 0.06266467202176826,
+        "rf_annual": 0.04,
+        "total_return": 1.1520757027810835,
         "max_drawdown": -0.9055528097378192,
         "bars": 292318,
         "pnl": 11520.757027810836
       }
     }
   },
-  "elapsed_seconds": 66.7
+  "elapsed_seconds": 145.3
 }

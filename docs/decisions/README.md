@@ -331,7 +331,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 276 of these records carry neither field —
+**No Status or Category column, deliberately.** 277 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -592,7 +592,7 @@ would look like data. The tokens are what is shown.
 | D539 | The public repository is a generated cut of this tree with fresh history, and nothing in it is redacted | [record](D539-the-public-repository-is-a-generated-cut-with-fresh-history.md) |
 | D540 | three times now, the repository has worked because of config a clone never receives | [record](D540-local-config-a-clone-never-receives.md) |
 | D541 | clean() drops bars and hands back no volumes, and the guard against that could never fire | [record](D541-clean-returns-bars-without-their-volumes.md) |
-| D542 | One quantity, one definition: collapsing max_drawdown, Sharpe and percentile | [record](D542-one-quantity-one-definition.md) |
+| D542 | two of six predictions falsified, one collapse that nearly published the opposite verdict, and a float defect that arri… | [record](D542-one-quantity-one-definition.md) · [RESULT](D542-RESULT-two-predictions-falsified-and-a-verdict-that-flipped.md) |
 
 <!-- REGISTER:END -->
 

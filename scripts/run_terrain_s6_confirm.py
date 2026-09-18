@@ -68,7 +68,7 @@ def leg(result: StrategyResult, direction: int, bars) -> dict:
     )
     return {
         "n_trades": only.n_trades,
-        "sharpe": only.curve_sharpe(bars, PPY) if only.n_trades >= 3 else 0.0,
+        "sharpe": only.curve_sharpe_zero_rf(bars, PPY) if only.n_trades >= 3 else 0.0,
         "total_return": only.curve_total_return(bars) if only.n_trades else 0.0,
         "hit_rate": only.hit_rate,
     }
@@ -77,7 +77,7 @@ def leg(result: StrategyResult, direction: int, bars) -> dict:
 def book(result: StrategyResult, bars) -> dict:
     return {
         "n_trades": result.n_trades,
-        "sharpe": result.curve_sharpe(bars, PPY),
+        "sharpe": result.curve_sharpe_zero_rf(bars, PPY),
         "total_return": result.curve_total_return(bars),
         "max_drawdown": result.max_drawdown(bars),
         "hit_rate": result.hit_rate,

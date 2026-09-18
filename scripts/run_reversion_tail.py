@@ -51,6 +51,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "scripts"))  # results_document, a sibling helper
 
 from backtest_framework.data.cleaner import clean  # noqa: E402
 from backtest_framework.data.csv_fixture import (  # noqa: E402
@@ -62,6 +63,7 @@ from backtest_framework.research.terrain_nulls import HORIZON  # noqa: E402
 from backtest_framework.research.terrain_strategies import (  # noqa: E402
     TRADE_THROUGH_EPS,
 )
+from results_document import splice_section  # noqa: E402
 
 SUMMARY = REPO / "data" / "reversion_tail_summary.json"
 RESULTS = REPO / "docs" / "results" / "STRUCTURE_RESULTS.md"
@@ -620,18 +622,10 @@ def _reading(payload: dict[str, Any]) -> str:
 
 
 def append_section(payload: dict[str, Any]) -> None:
-    text = RESULTS.read_text(encoding="utf-8")
-    marker = "## D216 - the tail, the frequency, and the fill"
-    anchor = "---\n\n### Parking lot"
-    body = render(payload)
-    if marker in text:
-        head, _, rest = text.partition(marker)
-        _, sep, tail = rest.partition(anchor)
-        text = head + body + "\n" + anchor + tail if sep else head + body
-    else:
-        head, _, rest = text.partition(anchor)
-        text = head + body + "\n" + anchor + rest
-    RESULTS.write_text(text, encoding="utf-8")
+    # Bounded by the next heading, not by the parking lot at the bottom of the file.
+    # The marker-to-anchor form this replaced destroyed every section written below
+    # it; scripts/results_document.py carries the measurement, per runner (D542).
+    splice_section(RESULTS, "## D216 - the tail, the frequency, and the fill", render(payload))
 
 
 if __name__ == "__main__":

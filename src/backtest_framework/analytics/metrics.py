@@ -36,6 +36,7 @@ JSON alone is told which sign the file holds.
 from __future__ import annotations
 
 import math
+import statistics
 from typing import Sequence
 
 import numpy as np
@@ -55,6 +56,39 @@ def sharpe(returns: Sequence[float], rf_annual: float, periods_per_year: float) 
     if sd == 0.0:
         return math.inf * mu if mu != 0 else 0.0  # sign(mu) * inf
     return mu / sd * math.sqrt(periods_per_year)
+
+
+def curve_sharpe_zero_rf(returns: Sequence[float], periods_per_year: float) -> float:
+    """Annualised Sharpe at rf = 0, by EXACT summation. The TERRAIN/STRUCTURE estimator.
+
+    THE NAME IS THE DISCLOSURE. `sharpe` above makes `rf_annual` required because D49
+    holds that a silent rf=0 flatters a book whose honest hurdle is the risk-free rate.
+    The research programmes nonetheless publish at rf=0 — deliberately, for comparability
+    across a decade of studies (`scripts/run_macd_ladder.sharpe_of`: "switching estimator
+    mid-programme would make this study's numbers incomparable with the ones it sits
+    beside"). D542's answer is not to hide that in a body but to put it in the name, and
+    to emit `excess_sharpe` beside it so the reader always has both (D219).
+
+    WHY THIS IS NOT `sharpe(returns, 0.0, ppy)`. Same definition, different summation.
+    This uses `statistics.fmean` / `statistics.stdev`, which sum exactly (`math.fsum`);
+    `sharpe` uses numpy's pairwise summation. Measured on 303 series including tie-heavy
+    ones, **200 disagree**, worst 8.9e-16 absolute and 3.7e-13 relative. Repointing the
+    research call sites at `sharpe` would therefore move every Sharpe in TERRAIN_RESULTS,
+    STRUCTURE_RESULTS and their eight committed summaries, for no gain — CLAUDE.md's rule
+    is that a rewrite may hoist or skip but never reorder a float sum.
+
+    So the collapse here is one FUNCTION, not one kernel: three inline copies
+    (`StrategyResult.curve_sharpe`, `PositionResult.curve_sharpe`, and the body inlined in
+    `buy_and_hold`) become this, bit-for-bit, and the two kernels are named, measured and
+    pinned against each other rather than left to be discovered.
+    """
+    r = list(returns)
+    if len(r) < 3:
+        return 0.0
+    sd = statistics.stdev(r)
+    if sd <= 0.0:
+        return 0.0
+    return (statistics.fmean(r) / sd) * math.sqrt(periods_per_year)
 
 
 def _rf_period_log(rf_annual: float, periods_per_year: float) -> float:

@@ -751,8 +751,8 @@ def test_the_position_curve_agrees_with_the_trade_list_curve():
     assert series.curve_total_return() == pytest.approx(
         trades.curve_total_return(bars), rel=1e-9
     )
-    assert series.curve_sharpe(bars, 365.0) == pytest.approx(
-        trades.curve_sharpe(bars, 365.0), rel=1e-6
+    assert series.curve_sharpe_zero_rf(bars, 365.0) == pytest.approx(
+        trades.curve_sharpe_zero_rf(bars, 365.0), rel=1e-6
     )
 
 
@@ -948,5 +948,5 @@ def test_the_rotation_null_preserves_the_book_and_moves_only_its_timing():
         assert d.net_exposure == pytest.approx(real.net_exposure)
     # turnover is preserved up to the single wrap-around seam
     assert all(abs(d.turnover - real.turnover) <= 2.0 for d in draws)
-    curves = {round(d.curve_sharpe(bars, 365.0), 6) for d in draws}
+    curves = {round(d.curve_sharpe_zero_rf(bars, 365.0), 6) for d in draws}
     assert len(curves) > 20, "rotation did not change the equity curve — control is vacuous"

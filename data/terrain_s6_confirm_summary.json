@@ -26,7 +26,7 @@
         "n_trades": 67,
         "sharpe": -0.28785667027770145,
         "total_return": -0.6914706755122333,
-        "max_drawdown": -0.8945885269297095,
+        "max_drawdown": -0.8945885269297094,
         "hit_rate": 0.2835820895522388,
         "long": {
           "n_trades": 20,
@@ -132,8 +132,11 @@
         "n_trades_real": 67,
         "n_trades_null_mean": 33.588,
         "real_sharpe": -0.28785667027770145,
+        "real_excess_sharpe": -0.32958258778718996,
+        "rf_annual": 0.04,
+        "sharpe_convention": "real_sharpe and every null_sharpe_* are rf=0 log-return Sharpe (analytics.metrics.curve_sharpe_zero_rf). real_excess_sharpe charges rf_annual on the exposed fraction (D219/D228). D542.",
         "real_total_return": -0.6914706755122333,
-        "real_max_drawdown": -0.8945885269297095,
+        "real_max_drawdown": -0.8945885269297094,
         "real_hit_rate": 0.2835820895522388,
         "null_sharpe_mean": -0.13154998071267857,
         "null_sharpe_p05": -0.46370544971591626,
@@ -196,7 +199,7 @@
         "n_trades": 30,
         "sharpe": 0.3098555209835767,
         "total_return": 1.648289058061862,
-        "max_drawdown": -0.7709712851508197,
+        "max_drawdown": -0.7709712851508198,
         "hit_rate": 0.43333333333333335,
         "long": {
           "n_trades": 14,
@@ -256,6 +259,9 @@
         "n_trades_real": 54,
         "n_trades_null_mean": 29.406,
         "real_sharpe": -0.18296334760357863,
+        "real_excess_sharpe": -0.21690922750879946,
+        "rf_annual": 0.04,
+        "sharpe_convention": "real_sharpe and every null_sharpe_* are rf=0 log-return Sharpe (analytics.metrics.curve_sharpe_zero_rf). real_excess_sharpe charges rf_annual on the exposed fraction (D219/D228). D542.",
         "real_total_return": -0.5148290518278154,
         "real_max_drawdown": -0.7493286074002257,
         "real_hit_rate": 0.2962962962962963,
@@ -274,5 +280,5 @@
       "clears_all_three": false
     }
   },
-  "elapsed_seconds": 38.7583749294281
+  "elapsed_seconds": 74.8577823638916
 }

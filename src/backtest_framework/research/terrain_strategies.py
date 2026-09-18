@@ -64,6 +64,7 @@ from typing import Sequence
 
 import numpy as np
 
+from ..analytics.metrics import curve_sharpe_zero_rf, excess_sharpe
 from ..analytics.metrics import max_drawdown as _positive_max_drawdown
 from ..analytics.metrics import mid_rank_percentile
 from ..data.bars import TimestampedBar
@@ -101,6 +102,15 @@ class FillAssumption(Enum):
 
 
 TRADE_THROUGH_EPS = 1e-9
+
+BENCHMARK_RF_ANNUAL = 0.04
+"""The rate the `excess_sharpe` column charges (D219, D542).
+
+4%, matching `breakout_study.rf_annual` and `pairs_study` — so the two halves of the
+repository now quote a comparable second column rather than one half quoting none. It is
+a CONSTANT, not a default argument, because D49's objection is to rf arriving silently,
+not to it having a value: a named module constant is visible in a way `rf_annual=0.04`
+buried in a signature is not."""
 
 
 def _negated_max_drawdown(curve: Sequence[float]) -> float:
@@ -200,18 +210,53 @@ class StrategyResult:
                 equity[i] = current
         return equity
 
-    def curve_sharpe(self, bars: Sequence[TimestampedBar], periods_per_year: float) -> float:
-        """Annualised Sharpe of the per-bar equity curve. Comparable to buy-and-hold."""
+    def curve_log_returns(self, bars: Sequence[TimestampedBar]) -> list[float]:
+        """Per-bar log returns of the equity curve. The input both Sharpe columns read."""
         curve = self.equity_curve(bars)
-        rets = [
-            math.log(b / a) for a, b in zip(curve, curve[1:]) if a > 0.0 and b > 0.0
+        return [math.log(b / a) for a, b in zip(curve, curve[1:]) if a > 0.0 and b > 0.0]
+
+    def curve_sharpe_zero_rf(
+        self, bars: Sequence[TimestampedBar], periods_per_year: float
+    ) -> float:
+        """Annualised Sharpe of the per-bar equity curve, AT rf = 0. Named, not implied.
+
+        Was `curve_sharpe`, which said nothing about rf while `analytics.metrics.sharpe`
+        refuses to default it (D49). Same arithmetic, bit-for-bit — the disclosure moved
+        from the body to the call site (D542). `excess_sharpe` is emitted beside it."""
+        return curve_sharpe_zero_rf(self.curve_log_returns(bars), periods_per_year)
+
+    def curve_excess_sharpe(
+        self,
+        bars: Sequence[TimestampedBar],
+        periods_per_year: float,
+        rf_annual: float,
+    ) -> float:
+        """The second column D219 ruled for and nobody implemented (D542).
+
+        rf is charged on the EXPOSED fraction: this book is long-flat, and a bar with no
+        position is a bar holding cash, which earns rf. Exposure is per bar and aligned to
+        `curve_log_returns` — return `i` spans curve points `i` and `i+1`, so it is earned
+        while holding whatever bar `i + 1` held."""
+        return excess_sharpe(
+            self.curve_log_returns(bars),
+            self.exposure_per_bar(bars),
+            rf_annual,
+            periods_per_year,
+            basis="log",
+        )
+
+    def exposure_per_bar(self, bars: Sequence[TimestampedBar]) -> list[float]:
+        """1.0 on a bar a trade is open, 0.0 otherwise, aligned to `curve_log_returns`."""
+        held = [0.0] * len(bars)
+        for t in self.trades:
+            for i in range(t.entry_index, min(t.exit_index + 1, len(bars))):
+                held[i] = 1.0
+        curve = self.equity_curve(bars)
+        return [
+            held[i + 1]
+            for i, (a, b) in enumerate(zip(curve, curve[1:]))
+            if a > 0.0 and b > 0.0
         ]
-        if len(rets) < 3:
-            return 0.0
-        sd = statistics.stdev(rets)
-        if sd <= 0.0:
-            return 0.0
-        return (statistics.fmean(rets) / sd) * math.sqrt(periods_per_year)
 
     def curve_total_return(self, bars: Sequence[TimestampedBar]) -> float:
         return self.equity_curve(bars)[-1] - 1.0
@@ -418,8 +463,14 @@ class NullComparison:
         copies of a claim is not a check; one function is."""
         return mid_rank_percentile(values, observed)
 
-    def to_dict(self, bars, periods_per_year: float) -> dict:
-        real_sharpe = self.real.curve_sharpe(bars, periods_per_year)
+    def to_dict(
+        self, bars: Sequence[TimestampedBar], periods_per_year: float
+    ) -> dict:
+        # `bars` was bare where its twin `terrain_field_nulls.FieldNullComparison.to_dict`
+        # annotates it, so mypy treated it as `Any` and stopped checking this whole
+        # method's use of it — an omission that reads as an oversight, not a decision
+        # (D542).
+        real_sharpe = self.real.curve_sharpe_zero_rf(bars, periods_per_year)
         null_mean = statistics.fmean(self.null_sharpes) if self.null_sharpes else 0.0
         return {
             "n_trades_real": self.real.n_trades,
@@ -433,6 +484,21 @@ class NullComparison:
                 statistics.fmean(self.real.net_returns) if self.real.n_trades else 0.0
             ),
             "real_sharpe": real_sharpe,
+            # D219's second column, implemented at last (D542). `real_sharpe` is at
+            # rf = 0 and keeps every value it has ever published; this one charges rf on
+            # the EXPOSED fraction, which is the economically correct reading for a
+            # long-flat book that holds cash when flat. Both are emitted, always, because
+            # D219 forbids switching conventions silently -- and `sharpe_convention` says
+            # which is which to a reader who has only the JSON.
+            "real_excess_sharpe": self.real.curve_excess_sharpe(
+                bars, periods_per_year, BENCHMARK_RF_ANNUAL
+            ),
+            "rf_annual": BENCHMARK_RF_ANNUAL,
+            "sharpe_convention": (
+                "real_sharpe and every null_sharpe_* are rf=0 log-return Sharpe "
+                "(analytics.metrics.curve_sharpe_zero_rf). real_excess_sharpe charges "
+                "rf_annual on the exposed fraction (D219/D228). D542."
+            ),
             "null_sharpe_mean": null_mean,
             "null_sharpe_p05": (
                 float(np.percentile(self.null_sharpes, 5)) if self.null_sharpes else 0.0
@@ -464,7 +530,7 @@ def compare_to_null(
     for _ in range(n_sims):
         result = run(pseudo_levels(levels_by_index, rng))
         comparison.null_returns.append(result.curve_total_return(bars))
-        comparison.null_sharpes.append(result.curve_sharpe(bars, periods_per_year))
+        comparison.null_sharpes.append(result.curve_sharpe_zero_rf(bars, periods_per_year))
         comparison.null_trades.append(result.n_trades)
     return comparison
 
@@ -483,14 +549,26 @@ def buy_and_hold(
         for a, b in zip(window, window[1:])
         if a.bar.close > 0.0 and b.bar.close > 0.0
     ]
-    sd = statistics.stdev(rets) if len(rets) > 2 else 0.0
     # The seventh implementation of max_drawdown in this repository, inlined, on raw
     # prices, and the only one that had no `peak > 0` guard at all. It writes the
     # `**buy and hold**` row of STRUCTURE_RESULTS.md. Delegated with the rest (D542).
     worst = _negated_max_drawdown([b.bar.close for b in window])
     return {
+        # The eighth copy of the zero-rf Sharpe formula, inlined, and the number behind
+        # "buy and hold returns +460.0% at Sharpe +0.32" in STRUCTURE_RESULTS.md.
+        # Delegated (D542), bit-for-bit — `curve_sharpe_zero_rf` carries the same
+        # `len < 3 -> 0.0` and `sd <= 0 -> 0.0` guards this body had.
+        "sharpe": curve_sharpe_zero_rf(rets, periods_per_year),
+        # D219's arithmetic: buy-and-hold is exposed on EVERY bar, so it is charged the
+        # full 1 x rf where a 50%-exposure arm is charged ~0.5 x. That asymmetry is the
+        # whole reason the correction cannot be applied by scaling a published number.
+        "excess_sharpe": excess_sharpe(
+            rets, [1.0] * len(rets), BENCHMARK_RF_ANNUAL, periods_per_year, basis="log"
+        )
+        if len(rets) >= 2
+        else 0.0,
+        "rf_annual": BENCHMARK_RF_ANNUAL,
         "total_return": window[-1].bar.close / window[0].bar.close - 1.0,
-        "sharpe": (statistics.fmean(rets) / sd) * math.sqrt(periods_per_year) if sd > 0 else 0.0,
         "max_drawdown": worst,
         "bars": len(window),
     }
@@ -792,19 +870,65 @@ class PositionResult:
             equity.append(current)
         return equity
 
-    def curve_sharpe(
-        self, bars: Sequence[TimestampedBar], periods_per_year: float
-    ) -> float:
+    def _check_bars(self, bars: Sequence[TimestampedBar] | None) -> None:
+        """`bars` IS ACCEPTED AND NOT READ — so it is checked instead of ignored (D48/D542).
+
+        This class carries its own returns, so the four methods below take `bars` only to
+        stay drop-in for `StrategyResult`, which genuinely needs it (the pin is
+        `tests/unit/test_terrain_field.py`, and it is why the parameter cannot simply be
+        deleted). Accepting an argument and discarding it is the false affordance D48
+        exists to refuse: `run_terrain_s7_local.py` calls `curve_sharpe_zero_rf(bars, PPY)`
+        one line above `max_drawdown()` on the same object, and both were right.
+
+        A parameter that is checked is not a false affordance. Passing bars of the wrong
+        length now fails loudly where it used to be absorbed in silence, which is a guard
+        this class did not have before rather than a cost of keeping the signature.
+        """
+        if bars is not None and len(bars) != len(self.position):
+            raise ValueError(
+                f"{len(bars)} bars against {len(self.position)} positions. This class "
+                f"scores its own returns and does not read `bars`, but it will not accept "
+                f"bars that could not describe its own book."
+            )
+
+    def curve_log_returns(self) -> list[float]:
         curve = self.equity_curve()
-        rets = [math.log(b / a) for a, b in zip(curve, curve[1:]) if a > 0.0 and b > 0.0]
-        if len(rets) < 3:
-            return 0.0
-        sd = statistics.stdev(rets)
-        if sd <= 0.0:
-            return 0.0
-        return (statistics.fmean(rets) / sd) * math.sqrt(periods_per_year)
+        return [math.log(b / a) for a, b in zip(curve, curve[1:]) if a > 0.0 and b > 0.0]
+
+    def curve_sharpe_zero_rf(
+        self, bars: Sequence[TimestampedBar] | None = None, periods_per_year: float = 365.0
+    ) -> float:
+        """Annualised Sharpe at rf = 0, named rather than implied (D542). Bit-for-bit the
+        same as the `curve_sharpe` it replaces; `bars` is accepted, CHECKED and not read
+        (see `_check_bars`), because both classes must stay drop-in for each other."""
+        self._check_bars(bars)
+        return curve_sharpe_zero_rf(self.curve_log_returns(), periods_per_year)
+
+    def curve_excess_sharpe(
+        self,
+        bars: Sequence[TimestampedBar] | None = None,
+        periods_per_year: float = 365.0,
+        rf_annual: float = 0.04,
+    ) -> float:
+        """rf charged on the exposed fraction — D219's second column (D542).
+
+        Exposure here is `|position|`, which is the fraction of capital at risk, and it is
+        aligned the same way as the returns: return `i` spans curve points `i` and `i+1`
+        and is earned at the position held on bar `i + 1`, which is the alignment
+        `equity_curve` itself uses (`current *= exp(pos * returns[i])`)."""
+        self._check_bars(bars)
+        curve = self.equity_curve()
+        exposure = [
+            abs(self.position[i + 1])
+            for i, (a, b) in enumerate(zip(curve, curve[1:]))
+            if a > 0.0 and b > 0.0
+        ]
+        return excess_sharpe(
+            self.curve_log_returns(), exposure, rf_annual, periods_per_year, basis="log"
+        )
 
     def curve_total_return(self, bars: Sequence[TimestampedBar] | None = None) -> float:
+        self._check_bars(bars)
         return self.equity_curve()[-1] - 1.0
 
     def max_drawdown(self, bars: Sequence[TimestampedBar] | None = None) -> float:
@@ -822,7 +946,10 @@ class PositionResult:
         from a peak it never reached. Nothing reads those drawdowns today (the field null
         scores Sharpe, return and trade count), which is why this is a correction and not
         a retraction.
+
+        `bars` is accepted, CHECKED and not read — see `_check_bars`.
         """
+        self._check_bars(bars)
         return _negated_max_drawdown(self.equity_curve())
 
     @property

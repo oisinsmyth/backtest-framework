@@ -40,6 +40,7 @@ from backtest_framework.research.terrain_field_nulls import (  # noqa: E402
     compare_field_to_null,
 )
 from backtest_framework.research.terrain_strategies import (  # noqa: E402
+    BENCHMARK_RF_ANNUAL as RF_ANNUAL,
     STOP_ATR,
     buy_and_hold,
     run_field_imbalance,
@@ -81,15 +82,17 @@ def book(result, bars) -> dict:
     return {
         "n_position_changes": result.n_trades,
         "turnover": result.turnover,
-        "sharpe": result.curve_sharpe(bars, PPY),
+        "sharpe": result.curve_sharpe_zero_rf(bars, PPY),
+        "excess_sharpe": result.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+        "rf_annual": RF_ANNUAL,
         "total_return": result.curve_total_return(),
         "max_drawdown": result.max_drawdown(),
         "hit_rate": result.hit_rate,
         "share_long": sum(1 for p in result.position if p > 0) / n,
         "share_short": sum(1 for p in result.position if p < 0) / n,
         "share_flat": sum(1 for p in result.position if p == 0) / n,
-        "long_leg_sharpe": result.leg(1).curve_sharpe(bars, PPY),
-        "short_leg_sharpe": result.leg(-1).curve_sharpe(bars, PPY),
+        "long_leg_sharpe": result.leg(1).curve_sharpe_zero_rf(bars, PPY),
+        "short_leg_sharpe": result.leg(-1).curve_sharpe_zero_rf(bars, PPY),
         "long_leg_return": result.leg(1).curve_total_return(),
         "short_leg_return": result.leg(-1).curve_total_return(),
     }

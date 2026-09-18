@@ -52,6 +52,7 @@ from typing import Any, Sequence
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "scripts"))  # results_document, a sibling helper
 
 from backtest_framework.data.cleaner import clean  # noqa: E402
 from backtest_framework.data.csv_fixture import (  # noqa: E402
@@ -65,9 +66,11 @@ from backtest_framework.research.structure_strategies import (  # noqa: E402
     run_arm,
 )
 from backtest_framework.research.terrain_strategies import (  # noqa: E402
+    BENCHMARK_RF_ANNUAL as RF_ANNUAL,
     PositionResult,
     buy_and_hold,
 )
+from results_document import splice_section  # noqa: E402
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "structure_pnl_summary.json"
@@ -150,20 +153,26 @@ def run_symbol(symbol: str, bars: Sequence[Any]) -> dict[str, Any]:
                 "exposure": sum(1 for p in costed.position if p != 0.0) / len(bars),
                 "net_exposure": costed.net_exposure,
                 "costed": {
-                    "sharpe": costed.curve_sharpe(bars, PPY),
+                    "sharpe": costed.curve_sharpe_zero_rf(bars, PPY),
+                    "excess_sharpe": costed.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+                    "rf_annual": RF_ANNUAL,
                     "total_return": costed.curve_total_return(bars),
                     "max_drawdown": costed.max_drawdown(bars),
                     "pnl": START_CAPITAL * costed.curve_total_return(bars),
                 },
                 "zero_cost": {
-                    "sharpe": free.curve_sharpe(bars, PPY),
+                    "sharpe": free.curve_sharpe_zero_rf(bars, PPY),
+                    "excess_sharpe": free.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+                    "rf_annual": RF_ANNUAL,
                     "total_return": free.curve_total_return(bars),
                     "max_drawdown": free.max_drawdown(bars),
                     "pnl": START_CAPITAL * free.curve_total_return(bars),
                 },
                 "tiers": {
                     label: {
-                        "sharpe": r.curve_sharpe(bars, PPY),
+                        "sharpe": r.curve_sharpe_zero_rf(bars, PPY),
+                        "excess_sharpe": r.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+                        "rf_annual": RF_ANNUAL,
                         "total_return": r.curve_total_return(bars),
                         "max_drawdown": r.max_drawdown(bars),
                         "pnl": START_CAPITAL * r.curve_total_return(bars),
@@ -365,18 +374,16 @@ def _reading(payload: dict[str, Any]) -> str:
 
 
 def append_section(payload: dict[str, Any]) -> None:
-    text = RESULTS.read_text(encoding="utf-8")
-    marker = "## ADDENDUM (post-close) - every arm in Sharpe and PnL, against baselines"
-    anchor = "---\n\n### Parking lot"
-    body = render(payload)
-    if marker in text:
-        head, _, rest = text.partition(marker)
-        _, sep, tail = rest.partition(anchor)
-        text = head + body + "\n" + anchor + tail if sep else head + body
-    else:
-        head, _, rest = text.partition(anchor)
-        text = head + body + "\n" + anchor + rest
-    RESULTS.write_text(text, encoding="utf-8")
+    # Bounded by the next heading, not by the parking lot at the bottom of the file.
+    # The marker-to-anchor form this replaced deleted `## D213` through `## D216` --
+    # 426 lines of published results written by four other runners -- every time this
+    # script ran, with no error and no warning. Seven sibling runners carried the same
+    # body; scripts/results_document.py carries the measurement, per runner (D542).
+    splice_section(
+        RESULTS,
+        "## ADDENDUM (post-close) - every arm in Sharpe and PnL, against baselines",
+        render(payload),
+    )
 
 
 def main() -> int:

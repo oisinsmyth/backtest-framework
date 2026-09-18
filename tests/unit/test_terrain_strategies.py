@@ -254,3 +254,54 @@ def test_costs_reduce_every_trade():
     assert free.n_trades == paid.n_trades > 0
     for a, b in zip(free.net_returns, paid.net_returns):
         assert b == pytest.approx(a - 0.008)
+
+
+# ------------------------------------------------- D542: the accepted-and-unread `bars`
+
+
+def _position_result(n: int = 40):
+    from backtest_framework.research.terrain_strategies import PositionResult
+
+    position = tuple([0.0] + [1.0] * (n - 1))
+    returns = tuple([0.0] + [0.001 * (-1) ** i for i in range(n - 1)])
+    return PositionResult(position, returns, 40.0, 365.0)
+
+
+def test_position_result_checks_the_bars_it_does_not_read():
+    """D48's false affordance, turned into a guard rather than deleted.
+
+    `PositionResult` carries its own returns and never reads `bars`, but the parameter
+    cannot go: `tests/unit/test_terrain_field.py` pins the two result classes as drop-in
+    substitutes and `StrategyResult` genuinely needs it. So the argument is CHECKED. A
+    parameter that is checked is not a false affordance, and this is a guard the class did
+    not have — passing the wrong book's bars used to be absorbed in silence.
+    """
+    result = _position_result(40)
+    wrong = mk(flat(100.0, 7))
+    for call in (
+        lambda b: result.curve_sharpe_zero_rf(b, 365.0),
+        lambda b: result.curve_excess_sharpe(b, 365.0, 0.04),
+        lambda b: result.curve_total_return(b),
+        lambda b: result.max_drawdown(b),
+    ):
+        with pytest.raises(ValueError, match="7 bars against 40 positions"):
+            call(wrong)
+
+
+def test_the_bars_check_is_silent_when_the_lengths_agree_and_when_omitted():
+    """It must not become a reason the two classes stop being substitutable."""
+    result = _position_result(40)
+    right = mk(flat(100.0, 40))
+    assert result.curve_total_return(right) == result.curve_total_return()
+    assert result.max_drawdown(right) == result.max_drawdown()
+    assert result.curve_sharpe_zero_rf(right, 365.0) == result.curve_sharpe_zero_rf(None, 365.0)
+
+
+def test_the_second_sharpe_column_is_lower_than_the_first_on_an_exposed_book():
+    """D219's arithmetic, at the class boundary: charging rf on the exposed fraction can
+    only lower the number, and a book exposed on nearly every bar is charged nearly all
+    of it. The two columns must both be emitted and must not be equal here."""
+    result = _position_result(60)
+    zero_rf = result.curve_sharpe_zero_rf(None, 365.0)
+    charged = result.curve_excess_sharpe(None, 365.0, 0.04)
+    assert charged < zero_rf

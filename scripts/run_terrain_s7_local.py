@@ -48,6 +48,7 @@ from backtest_framework.research.terrain_field_nulls import (  # noqa: E402
     rotation_null,
 )
 from backtest_framework.research.terrain_strategies import (  # noqa: E402
+    BENCHMARK_RF_ANNUAL as RF_ANNUAL,
     buy_and_hold,
     run_field_position,
 )
@@ -84,7 +85,9 @@ def book(result, bars) -> dict:
     n = len(result.position)
     years = n / PPY
     return {
-        "sharpe": result.curve_sharpe(bars, PPY),
+        "sharpe": result.curve_sharpe_zero_rf(bars, PPY),
+        "excess_sharpe": result.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+        "rf_annual": RF_ANNUAL,
         "total_return": result.curve_total_return(),
         "max_drawdown": result.max_drawdown(),
         "hit_rate": result.hit_rate,
@@ -96,8 +99,8 @@ def book(result, bars) -> dict:
         "share_long": sum(1 for p in result.position if p > 0) / n,
         "share_short": sum(1 for p in result.position if p < 0) / n,
         "share_flat": sum(1 for p in result.position if p == 0) / n,
-        "long_leg_sharpe": result.leg(1).curve_sharpe(bars, PPY),
-        "short_leg_sharpe": result.leg(-1).curve_sharpe(bars, PPY),
+        "long_leg_sharpe": result.leg(1).curve_sharpe_zero_rf(bars, PPY),
+        "short_leg_sharpe": result.leg(-1).curve_sharpe_zero_rf(bars, PPY),
     }
 
 
@@ -138,9 +141,9 @@ def run_symbol(symbol, bars, vols, n_sims, only_primary=False):
             bars, swings, PARAMS, run, ShuffleBand.LOCAL, n_sims, SEED, PPY
         )
         rot = rotation_null(real, n_sims, np.random.default_rng(SEED))
-        rot_sharpes = [r.curve_sharpe(bars, PPY) for r in rot]
+        rot_sharpes = [r.curve_sharpe_zero_rf(bars, PPY) for r in rot]
         rot_mean = statistics.fmean(rot_sharpes)
-        real_sharpe = real.curve_sharpe(bars, PPY)
+        real_sharpe = real.curve_sharpe_zero_rf(bars, PPY)
 
         key = f"{symbol}|{name}"
         cells[key] = {

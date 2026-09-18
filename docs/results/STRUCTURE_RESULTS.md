@@ -645,7 +645,7 @@ document and a new ledger, with this one disclosed.
 
 ## ADDENDUM (post-close) - every arm in Sharpe and PnL, against baselines
 
-**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_pnl.py` (offline, deterministic)
+**Produced:** 2026-09-18 · **Reproduce:** `uv run python scripts/run_structure_pnl.py` (offline, deterministic)
 
 **The programme is closed (D211). This is not a new test and it cannot rescue anything.** It restates arms that have already been run in two units the study never reported — annualised Sharpe and money — because *mean R per trade* is not what most people mean when they ask how a strategy did. Every look is counted in the ledger, and the rule is stated in advance: **a positive here would be a new hypothesis requiring its own pre-registration, not a result.**
 

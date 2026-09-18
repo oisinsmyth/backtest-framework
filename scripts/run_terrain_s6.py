@@ -43,6 +43,7 @@ from backtest_framework.research.terrain_field_nulls import (  # noqa: E402
     compare_field_to_null,
 )
 from backtest_framework.research.terrain_strategies import (  # noqa: E402
+    BENCHMARK_RF_ANNUAL as RF_ANNUAL,
     FIELD_TARGET_R,
     MAX_HOLD,
     STOP_ATR,
@@ -78,7 +79,9 @@ def leg(result: StrategyResult, direction: int, bars, cost_bps: float) -> dict:
     )
     return {
         "n_trades": only.n_trades,
-        "sharpe": only.curve_sharpe(bars, PPY) if only.n_trades >= 3 else 0.0,
+        "sharpe": only.curve_sharpe_zero_rf(bars, PPY) if only.n_trades >= 3 else 0.0,
+        "excess_sharpe": only.curve_excess_sharpe(bars, PPY, RF_ANNUAL) if only.n_trades >= 3 else 0.0,
+        "rf_annual": RF_ANNUAL,
         "total_return": only.curve_total_return(bars) if only.n_trades else 0.0,
         "hit_rate": only.hit_rate,
     }
@@ -147,7 +150,7 @@ def run_symbol(symbol, bars, vols, n_sims, only_primary=False):
     start = base[0].index if base else 0
     bh = buy_and_hold(bars, start, PPY)
     control = run_field_reversal(bars, base, atr, COST_BPS, PPY, filtered=False)
-    control_sharpe = control.curve_sharpe(bars, PPY)
+    control_sharpe = control.curve_sharpe_zero_rf(bars, PPY)
     control_row = {
         "n_trades": control.n_trades,
         "sharpe": control_sharpe,
@@ -171,7 +174,9 @@ def run_symbol(symbol, bars, vols, n_sims, only_primary=False):
         row = {
             "symbol": symbol, "k": k, "cluster_atr": ca, "threshold": x,
             "n_trades": real.n_trades,
-            "sharpe": real.curve_sharpe(bars, PPY),
+            "sharpe": real.curve_sharpe_zero_rf(bars, PPY),
+            "excess_sharpe": real.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+            "rf_annual": RF_ANNUAL,
             "total_return": real.curve_total_return(bars),
             "max_drawdown": real.max_drawdown(bars),
             "hit_rate": real.hit_rate,
@@ -180,7 +185,7 @@ def run_symbol(symbol, bars, vols, n_sims, only_primary=False):
             "four_cells": four_cells(sigs),
             "n_fires": len(sigs),
             "control_sharpe": control_sharpe,
-            "control_delta": real.curve_sharpe(bars, PPY) - control_sharpe,
+            "control_delta": real.curve_sharpe_zero_rf(bars, PPY) - control_sharpe,
             "bh_sharpe": bh["sharpe"],
             "bh_total_return": bh["total_return"],
             "decile_response": decile_response(bars, sigs),

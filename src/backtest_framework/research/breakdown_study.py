@@ -43,6 +43,7 @@ import numpy as np
 from ..analytics.metrics import max_drawdown_from_returns, mid_rank_percentile, sharpe
 from ..data.bars import TimestampedBar
 from . import breakout_study as bs
+from .trade_diagnostics import _atr
 
 # --------------------------------------------------------------------------- variants
 
@@ -820,15 +821,27 @@ def squeeze_events(
 
 def _atr_at(bars: Sequence[TimestampedBar], index: int, window: int) -> float | None:
     """Mean true range over the `window` bars ENDING AT index-1 (D44), so the entry bar's
-    own range does not set the yardstick its excursion is measured against."""
-    start = index - window
-    if start < 1 or index > len(bars):
+    own range does not set the yardstick its excursion is measured against.
+
+    Delegated to `trade_diagnostics._atr` (D542), which is the same estimator with the
+    same D44 window convention and the same plain (not Wilder) mean. The bounds guard
+    stays here: `_atr` raises `IndexError` past the end of the series where this returns
+    `None`, and `squeeze_report` relies on the `None`.
+
+    IT WAS NOT THE SAME NUMBER, AND THE REASON IS NOT IN EITHER BODY. This accumulated
+    with `total += ...` in a loop; `_atr` uses `sum(...)`, and **CPython 3.12 gives
+    `sum()` Neumaier compensated summation for floats** while a manual loop gets plain
+    accumulation. Measured across 13,760 (bars, window, index) combinations including
+    tie-heavy ones: **380 disagree**. Two functions that read as identical, differing
+    because of an interpreter change neither one mentions — which is the whole argument
+    for there being one of them. The compensated form is the more accurate, so this
+    delegation moves `worst_atr_multiples` and `median_atr_multiples` in
+    `data/breakdown_study_summary.json` toward the true value, and D542 records by how
+    much rather than absorbing it.
+    """
+    if index - window < 1 or index > len(bars):
         return None
-    total = 0.0
-    for j in range(start, index):
-        bar, prev_close = bars[j].bar, bars[j - 1].bar.close
-        total += max(bar.high - bar.low, abs(bar.high - prev_close), abs(bar.low - prev_close))
-    return total / window
+    return _atr(bars, index, window)
 
 
 def correlation_by_window(

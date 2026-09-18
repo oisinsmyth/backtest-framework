@@ -40,6 +40,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "scripts"))  # results_document, a sibling helper
 
 from backtest_framework.data.cleaner import clean  # noqa: E402
 from backtest_framework.data.csv_fixture import (  # noqa: E402
@@ -76,6 +77,7 @@ from backtest_framework.research.terrain import rolling_mean_true_range  # noqa:
 from backtest_framework.research.terrain_field_nulls import rotation_null  # noqa: E402
 from backtest_framework.research.terrain_nulls import HORIZON  # noqa: E402
 from backtest_framework.research.terrain_strategies import PositionResult  # noqa: E402
+from results_document import splice_section  # noqa: E402
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "structure_components_summary.json"
@@ -124,8 +126,8 @@ def run_c1(bars: Sequence[Any], setups: Sequence[Any]) -> dict[str, Any]:
     real = choch_position(bars, setups)
     rng = np.random.default_rng(SEED)
     nulls = rotation_null(real, N_SIMS, rng)
-    real_sharpe = real.curve_sharpe(bars, PPY)
-    values = [n.curve_sharpe(bars, PPY) for n in nulls]
+    real_sharpe = real.curve_sharpe_zero_rf(bars, PPY)
+    values = [n.curve_sharpe_zero_rf(bars, PPY) for n in nulls]
     spec = CONTINUATION.__class__("sharpe", "high", "Sharpe (ann.)", "at least the real Sharpe")
     dist = summarise_null(values, real_sharpe, spec)
     return {
@@ -608,18 +610,10 @@ def render(payload: dict[str, Any]) -> str:
 
 
 def append_section(payload: dict[str, Any]) -> None:
-    text = RESULTS.read_text(encoding="utf-8")
-    marker = "## WP3 — each component alone, against its own matched placebo"
-    anchor = "---\n\n### Parking lot"
-    body = render(payload)
-    if marker in text:
-        head, _, rest = text.partition(marker)
-        _, sep, tail = rest.partition(anchor)
-        text = head + body + "\n" + anchor + tail if sep else head + body
-    else:
-        head, _, rest = text.partition(anchor)
-        text = head + body + "\n" + anchor + rest
-    RESULTS.write_text(text, encoding="utf-8")
+    # Bounded by the next heading, not by the parking lot at the bottom of the file.
+    # The marker-to-anchor form this replaced destroyed every section written below
+    # it; scripts/results_document.py carries the measurement, per runner (D542).
+    splice_section(RESULTS, "## WP3 — each component alone, against its own matched placebo", render(payload))
 
 
 def main() -> int:

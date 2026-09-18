@@ -44,6 +44,7 @@ from typing import Callable, Sequence
 import numpy as np
 
 from ..analytics.metrics import mid_rank_percentile
+from .terrain_strategies import BENCHMARK_RF_ANNUAL
 from ..data.bars import TimestampedBar
 from .terrain_field import FieldParams, Swing
 from .terrain_strategies import PositionResult, StrategyResult
@@ -132,7 +133,7 @@ class FieldNullComparison:
         return mid_rank_percentile(values, observed)
 
     def to_dict(self, bars: Sequence[TimestampedBar], periods_per_year: float) -> dict:
-        real_sharpe = self.real.curve_sharpe(bars, periods_per_year)
+        real_sharpe = self.real.curve_sharpe_zero_rf(bars, periods_per_year)
         null_mean = statistics.fmean(self.null_sharpes) if self.null_sharpes else 0.0
         return {
             "band": self.band.value,
@@ -141,6 +142,21 @@ class FieldNullComparison:
                 statistics.fmean(self.null_trades) if self.null_trades else 0.0
             ),
             "real_sharpe": real_sharpe,
+            # D219's second column, implemented at last (D542). `real_sharpe` is at
+            # rf = 0 and keeps every value it has ever published; this one charges rf on
+            # the EXPOSED fraction, which is the economically correct reading for a
+            # long-flat book that holds cash when flat. Both are emitted, always, because
+            # D219 forbids switching conventions silently -- and `sharpe_convention` says
+            # which is which to a reader who has only the JSON.
+            "real_excess_sharpe": self.real.curve_excess_sharpe(
+                bars, periods_per_year, BENCHMARK_RF_ANNUAL
+            ),
+            "rf_annual": BENCHMARK_RF_ANNUAL,
+            "sharpe_convention": (
+                "real_sharpe and every null_sharpe_* are rf=0 log-return Sharpe "
+                "(analytics.metrics.curve_sharpe_zero_rf). real_excess_sharpe charges "
+                "rf_annual on the exposed fraction (D219/D228). D542."
+            ),
             "real_total_return": self.real.curve_total_return(bars),
             "real_max_drawdown": self.real.max_drawdown(bars),
             "real_hit_rate": self.real.hit_rate,
@@ -181,7 +197,7 @@ def compare_field_to_null(
     rng = np.random.default_rng(seed)
     for _ in range(n_sims):
         result = run(shuffled_swings(swings, band, rng, local_lo, local_hi))
-        comparison.null_sharpes.append(result.curve_sharpe(bars, periods_per_year))
+        comparison.null_sharpes.append(result.curve_sharpe_zero_rf(bars, periods_per_year))
         comparison.null_returns.append(result.curve_total_return(bars))
         comparison.null_trades.append(result.n_trades)
     return comparison

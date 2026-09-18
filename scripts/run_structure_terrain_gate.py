@@ -46,6 +46,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "scripts"))  # results_document, a sibling helper
 
 from backtest_framework.data.cleaner import clean  # noqa: E402
 from backtest_framework.data.csv_fixture import (  # noqa: E402
@@ -72,6 +73,7 @@ from backtest_framework.research.terrain_field import (  # noqa: E402
 )
 from backtest_framework.research.terrain_field_nulls import rotation_null  # noqa: E402
 from backtest_framework.research.terrain_strategies import (  # noqa: E402
+    BENCHMARK_RF_ANNUAL as RF_ANNUAL,
     PositionResult,
     buy_and_hold,
 )
@@ -79,6 +81,7 @@ from backtest_framework.validation.dsr import (  # noqa: E402
     deflated_sharpe_ratio,
     expected_max_sharpe,
 )
+from results_document import splice_section  # noqa: E402
 
 FIXTURE = REPO / "data" / "fixtures" / "crypto_binance_15m_raw.csv.gz"
 SUMMARY = REPO / "data" / "structure_terrain_gate_summary.json"
@@ -195,7 +198,9 @@ def evaluate(
                 "median_net_r": stats["median_r"],
                 "hit_rate": stats["hit_rate"],
                 "share_untradeable": stats["share_untradeable"],
-                "sharpe": result.curve_sharpe(bars, PPY),
+                "sharpe": result.curve_sharpe_zero_rf(bars, PPY),
+                "excess_sharpe": result.curve_excess_sharpe(bars, PPY, RF_ANNUAL),
+                "rf_annual": RF_ANNUAL,
                 "total_return": result.curve_total_return(bars),
                 "pnl": START_CAPITAL * result.curve_total_return(bars),
                 "max_drawdown": result.max_drawdown(bars),
@@ -372,8 +377,8 @@ def run_symbol(symbol: str, bars: Sequence[Any], volumes: Sequence[float]) -> di
                 result = position_of(bars, kept_trades, 40.0)
                 rng = np.random.default_rng(SEED)
                 nulls = rotation_null(result, N_ROTATIONS, rng)
-                real_sharpe = result.curve_sharpe(bars, PPY)
-                values = [n.curve_sharpe(bars, PPY) for n in nulls]
+                real_sharpe = result.curve_sharpe_zero_rf(bars, PPY)
+                values = [n.curve_sharpe_zero_rf(bars, PPY) for n in nulls]
                 arr = np.asarray(values, dtype=float)
                 got["rotation"] = {
                     "real_sharpe": real_sharpe,
@@ -726,18 +731,10 @@ def _reading(payload: dict[str, Any]) -> str:
 
 
 def append_section(payload: dict[str, Any]) -> None:
-    text = RESULTS.read_text(encoding="utf-8")
-    marker = "## D214 - the terrain map as a confluence gate"
-    anchor = "---\n\n### Parking lot"
-    body = render(payload)
-    if marker in text:
-        head, _, rest = text.partition(marker)
-        _, sep, tail = rest.partition(anchor)
-        text = head + body + "\n" + anchor + tail if sep else head + body
-    else:
-        head, _, rest = text.partition(anchor)
-        text = head + body + "\n" + anchor + rest
-    RESULTS.write_text(text, encoding="utf-8")
+    # Bounded by the next heading, not by the parking lot at the bottom of the file.
+    # The marker-to-anchor form this replaced destroyed every section written below
+    # it; scripts/results_document.py carries the measurement, per runner (D542).
+    splice_section(RESULTS, "## D214 - the terrain map as a confluence gate", render(payload))
 
 
 if __name__ == "__main__":
