@@ -83,6 +83,21 @@ def test_writeup_has_every_required_section(writeup):
         assert section in writeup, f"writeup.md lost its '{section}' section"
 
 
+#: THE FLOOR, ADDED IN D545. A `parametrize` over an empty list collects nothing and fails
+#: nothing. Measured: emptying `ANCHORS` took this file from **29 passed to "3 passed, 1 skipped",
+#: exit code 0** — all twenty-six anchor checks vanished silently, in the gate whose entire job is
+#: keeping a document honest. It is the same empty-scan defect this repository has now closed in
+#: five other places, and it was here the whole time.
+MINIMUM_ANCHORS = 20
+
+
+def test_the_anchor_list_has_not_been_emptied():
+    assert len(ANCHORS) >= MINIMUM_ANCHORS, (
+        f"{len(ANCHORS)} anchors, below the floor of {MINIMUM_ANCHORS}. The parametrized test "
+        f"below cannot tell you this: with no anchors it collects nothing and reports success."
+    )
+
+
 @pytest.mark.parametrize("anchor,source", ANCHORS, ids=[f"{a[:24]}" for a, _ in ANCHORS])
 def test_headline_number_matches_its_source_artifact(writeup, anchor, source):
     assert anchor in writeup, f"writeup.md no longer quotes {anchor!r}"

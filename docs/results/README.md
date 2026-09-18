@@ -1,6 +1,6 @@
 # Results
 
-Every study this framework has been used for, 62 documents. **The framework is the artifact; these
+Every study this framework has been used for, 63 documents. **The framework is the artifact; these
 are what it was pointed at.** Most of them are negatives, and that is the point — an instrument
 earns trust by returning negatives when negatives are true.
 
@@ -23,7 +23,7 @@ market. The market findings are mostly "no".
 | [`MACD_RESULTS.md`](MACD_RESULTS.md) | **Pre-registration and the trial registry, including the stop firing.** The best cell clears six of seven hurdles and fails only the deflated-Sharpe floor — publishable as a first study, not as the 45,783rd look. 0 of 12 cells cleared, so Stage 2 never ran | The signal line adds something; the level rung is dead |
 | [`STRUCTURE_RESULTS.md`](STRUCTURE_RESULTS.md) | **A measurement that collapses a story.** Five components mechanised so each could be scored separately — three that cleared the promotion bar turned out to be one quantity under three names | Nothing predicts once leg size relative to ATR is held constant |
 
-All 62 now live here. The last 14 — the ones whose paths were pinned by tests — arrived with their
+All 63 now live here. The last 14 — the ones whose paths were pinned by tests — arrived with their
 17 writer scripts and 14 test path expressions repointed in the same commit.
 
 The best single document of the **first phase** is not a study at all — it is
@@ -31,16 +31,33 @@ The best single document of the **first phase** is not a study at all — it is
 and the seven defects the guards caught. It is dated 22 August 2026 and covers D169–D189; it has
 not been revised, and it carries a banner saying what it does not include.
 
+**Its successor is [`D190-D544.md`](D190-D544.md)**, which does the same job for the 355 decisions
+after it — six findings, three about trading and three about whether to believe them, each with the
+null it was measured against. Also dated on its face, for the reason below.
+
 ---
 
-## Two naming conventions, and the difference is real
+## Two naming conventions — and a third thing, which the first two used to hide
 
-- **`lower_snake_case.md`** — hand-written analysis pages. A human decided what to say.
 - **`UPPER_SNAKE_RESULTS.md`** — study ledgers emitted by a runner in `scripts/`. Regenerating the
   study rewrites the document, which is why the numbers in them cannot drift from the artifacts.
+- **`lower_snake_case.md`** — single-study pages. This line used to say "hand-written analysis
+  pages. A human decided what to say", and **that was not true of the files on disk** (D544). A
+  human decided what to say and said it *in the runner*: `scripts/run_vol_estimator_gate.py:111`
+  writes the H1 of `vol_estimator_gate.md`. Every `.md` in this directory is a script's output, and
+  editing one in place is undone by the next run.
 
 Both live here. The names are not being unified: the ALL_CAPS name is the identity these documents
 are cited by, in prose, across 102 references in 62 decision records.
+
+**Two documents are genuinely hand-written, and they are the exception that needs stating.**
+`final_report.html` and [`D190-D544.md`](D190-D544.md) have no runner. That matters because
+`tests/unit/test_quoted_counts_are_current.py` exempts this whole directory from its number sweep,
+with the reason *"study ledgers emitted by a runner; regenerating the study rewrites them"* — an
+exemption written for files a runner owns. A hand-written page inheriting it would have **no gate
+and no regeneration**, so `D190-D544.md` brings its own:
+`tests/unit/test_narrative_D190_D544.py` pins each of its twenty quoted figures to the
+`data/*.json` key it came from.
 
 ---
 

@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 279 of these records carry neither field —
+**No Status or Category column, deliberately.** 280 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -623,7 +623,7 @@ would look like data. The tokens are what is shown.
 | D542 | two of six predictions falsified, one collapse that nearly published the opposite verdict, and a float defect that arri… | [record](D542-one-quantity-one-definition.md) · [RESULT](D542-RESULT-two-predictions-falsified-and-a-verdict-that-flipped.md) |
 | D543 | the gate closes, six files were not three, and the third count prediction missed for the second time in the same way | [RESULT](D543-RESULT-the-third-count-prediction-and-the-third-miss.md) · [record](D543-the-lint-gate-stops-at-the-library-door.md) |
 | D544 | the citation gate flagged its own docstring, and its coverage is a quarter of what the audit implied | [RESULT](D544-RESULT-the-gate-flagged-its-own-docstring.md) · [record](D544-the-front-page-is-the-least-honest-document.md) |
-| D545 | The narrative layer the README has been conceding for 355 decisions, and the directory that would not have gated it | [record](D545-the-narrative-layer-over-D190-D544.md) |
+| D545 | the page exists, and three of the numbers it was built to quote turned out to have no artifact | [RESULT](D545-RESULT-the-page-exists-and-three-of-its-numbers-do-not.md) · [record](D545-the-narrative-layer-over-D190-D544.md) |
 
 <!-- REGISTER:END -->
 

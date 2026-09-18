@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,181 tests are collected here, and one of them skips on the machine this was written on, for
+**2,209 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -71,7 +71,7 @@ full-suite run and a single-file run draw differently from the same seed
 ([D537](decisions/D537-derandomize-does-not-mean-deterministic.md)). A property failure that does
 not reproduce when you run its file alone is **not** thereby a flake.
 
-### `tests/integration/` — 157 tests. *The whole path composes, and one thing is checked against an engine we did not write.*
+### `tests/integration/` — 159 tests. *The whole path composes, and one thing is checked against an engine we did not write.*
 
 Whole studies run end to end: the pairs walk-forward, the breakout studies, the capacity and gross
 sweeps, the cost sweep, the risk monitor's drift behaviour.
@@ -90,7 +90,7 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,856 tests. *Each part does its own job.*
+### `tests/unit/` — 1,882 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
 most of the **structural guard** assertions are proved to fire — `src/` carries **288 `raise`
