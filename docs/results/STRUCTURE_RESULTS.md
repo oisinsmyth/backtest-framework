@@ -188,7 +188,7 @@ Frictionless, a 5R target breaks even at **16.7%** — the course's "two out of 
 
 ## WP3 — each component alone, against its own matched placebo
 
-**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_components.py` (offline, deterministic, seed 0)
+**Produced:** 2026-09-18 · **Reproduce:** `uv run python scripts/run_structure_components.py` (offline, deterministic, seed 0)
 
 Primary cell only: `k=2`, touch band 0.5 ATR, 500 draws. **No costs anywhere in this section** — WP3 asks whether the components carry information, and WP2 already priced the toll at 0.4-1.0R. Mixing the two would let a real signal be reported as absent because it is expensive, which D202's zero-cost diagnostic exists to prevent.
 
@@ -822,7 +822,7 @@ The structure programme's 102 looks are disclosed adjacent and separately counte
 
 ## D214 - the terrain map as a confluence gate
 
-**Produced:** 2026-08-24 · **Reproduce:** `uv run python scripts/run_structure_terrain_gate.py` (offline, deterministic)
+**Produced:** 2026-09-18 · **Reproduce:** `uv run python scripts/run_structure_terrain_gate.py` (offline, deterministic)
 
 **This study overrides D203's stop**, deliberately and for one bounded question. The record and the reasoning are in `docs/decisions/D214-the-terrain-gate.md`, committed before this runner existed. `inverted` is the pre-registered primary because D202 measured this exact reading anti-predictive at the 2.6th percentile - the prior comes from a published result here, not from peeking at this run.
 

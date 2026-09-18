@@ -148,6 +148,52 @@ reverse, moves numbers. CLAUDE.md's rule against reordering a float sum now has 
 nobody had written down. Pinned in `tests/unit/test_metrics.py` against the interpreter, not against
 the ATR functions, so it fails if the property ever goes away.
 
+### Eight runners could delete the results document they write into, and seven would
+
+The largest thing this lane found, and it is not a convention at all. Re-running
+`run_structure_pnl.py` to regenerate its artifact left `docs/results/STRUCTURE_RESULTS.md`
+**426 lines shorter**: `## D213`, `## D214`, `## D215` and `## D216` were gone — four
+sections written by four other runners.
+
+`append_section` replaced everything from its own `## ` marker down to the parking-lot
+anchor at the **bottom of the file**. That was correct on the day it was written, when its
+section was the last one. It stopped being correct the moment the next runner appended
+below it, and nothing said so; the document simply got shorter.
+
+Seven siblings carried the same eleven-line body. Measured per runner against the live
+document, before the fix:
+
+| runner | would delete | sections |
+|---|---:|---:|
+| `run_structure_components` | 61,508 chars | 8, including the **FINAL REPORT** |
+| `run_structure_marginal` | 48,420 | 7 |
+| `run_structure_audit` | 45,069 | 6 |
+| `run_structure_pnl` | 31,676 | 4 |
+| `run_structure_selection` | 24,820 | 3 |
+| `run_structure_terrain_gate` | 15,916 | 2 |
+| `run_generic_reversal` | 9,353 | 1 |
+| `run_reversion_tail` | 0 | still the last section |
+
+**Each of those sections prints `Reproduce: uv run python scripts/<its own runner>` directly
+beneath its heading.** A reader following the document's own instructions was the mechanism,
+and `run_structure_components` — the worst of the eight — was running in the background when
+this was found and was stopped before it wrote.
+
+One splice now (`scripts/results_document.py`), bounded by the **next heading** rather than
+by a distant anchor, refusing rather than truncating when it has no boundary, with eight
+callers. Six consecutive re-renders leave the document byte-identical.
+
+**The tell was `else head + body`** — a fallback whose behaviour is "keep the start and
+discard the rest". It read as a graceful degradation and it was a truncation.
+
+Two of this repository's own gates caught me while I was writing the gates for this:
+D540's path-length check refused this record's filename at 89 characters, and the class
+scan flagged `results_document.py` itself — matching its own docstring, which quotes the
+defective line in order to explain it. `tests/unit/test_import_boundaries.py` had already
+recorded that trap ("the six textual mentions of `scripts/` in `src/` are all prose inside
+docstrings"); the fix is the same one, strip docstrings with the AST rather than special-case
+the prose.
+
 ### Two tracked `data/*.json` files are saved HTTP 429 error pages
 
 `data/D3_wb_2018.json` and `data/D3_wb_2019.json` are 117 bytes each and contain

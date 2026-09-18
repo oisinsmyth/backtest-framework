@@ -1,5 +1,5 @@
 {
-  "produced": "2026-08-24",
+  "produced": "2026-09-18",
   "fixture": "crypto_binance_15m_raw.csv.gz",
   "symbols": [
     "BTCUSDT",
@@ -500,5 +500,5 @@
       }
     }
   },
-  "elapsed_seconds": 231.0
+  "elapsed_seconds": 315.6
 }
