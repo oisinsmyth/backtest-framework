@@ -65,6 +65,7 @@ from typing import Sequence
 import numpy as np
 
 from ..analytics.metrics import max_drawdown as _positive_max_drawdown
+from ..analytics.metrics import mid_rank_percentile
 from ..data.bars import TimestampedBar
 from .terrain import rolling_mean_true_range
 from .terrain_nulls import HORIZON, pseudo_levels
@@ -410,12 +411,12 @@ class NullComparison:
     null_trades: list[int] = field(default_factory=list)
 
     def percentile(self, values: Sequence[float], observed: float) -> float:
-        """Mid-rank percentile, matching `breakout_nulls.summarise_null`."""
-        if not values:
-            return 0.0
-        below = sum(1 for v in values if v < observed)
-        equal = sum(1 for v in values if v == observed)
-        return 100.0 * (below + 0.5 * equal) / len(values)
+        """Mid-rank percentile — now `analytics.metrics.mid_rank_percentile` (D542).
+
+        This body and `terrain_field_nulls.FieldNullComparison.percentile` were
+        byte-identical, and both claimed in a docstring to match `summarise_null`. Three
+        copies of a claim is not a check; one function is."""
+        return mid_rank_percentile(values, observed)
 
     def to_dict(self, bars, periods_per_year: float) -> dict:
         real_sharpe = self.real.curve_sharpe(bars, periods_per_year)

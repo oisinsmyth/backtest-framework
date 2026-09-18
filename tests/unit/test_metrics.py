@@ -9,6 +9,7 @@ from backtest_framework.analytics.metrics import (
     excess_sharpe,
     max_drawdown,
     max_drawdown_from_returns,
+    mid_rank_percentile,
     realised_beta,
     sharpe,
     sortino,
@@ -219,3 +220,49 @@ def test_excess_sharpe_reproduces_the_scripts_copy_bit_for_bit():
 def test_excess_sharpe_length_mismatch_fails_loudly():
     with pytest.raises(ValueError, match="length mismatch"):
         excess_sharpe([0.01, -0.01], [1.0], 0.04, 252.0, basis="log")
+
+
+def test_mid_rank_percentile_splits_ties_in_half():
+    """The stated reason the convention exists, from `breakout_nulls.summarise_null`: on a
+    discrete statistic, counting ties as strictly-below flatters whichever side happens to
+    be integer-equal."""
+    assert mid_rank_percentile([1.0, 2.0, 3.0, 4.0], 2.5) == 50.0
+    # Four draws equal to the observation: strictly-below would say 0, this says 50.
+    assert mid_rank_percentile([7.0, 7.0, 7.0, 7.0], 7.0) == 50.0
+    assert mid_rank_percentile([1.0, 7.0, 7.0, 9.0], 7.0) == 50.0
+    assert mid_rank_percentile([], 0.0) == 0.0
+    assert mid_rank_percentile([1.0, 2.0], 99.0) == 100.0
+
+
+def test_mid_rank_and_strictly_below_are_the_same_number_when_nothing_ties():
+    """D542's P3, in the small: the two conventions differ ONLY by the tie term and by a
+    factor of 100. That is what makes the `breakdown_study` re-derivation checkable — a
+    departure from 100x means the draws tie, which is itself a finding about a statistic
+    assumed continuous."""
+    rng = np.random.default_rng(3)
+    for _ in range(50):
+        draws = list(rng.normal(0.0, 1.0, 400))
+        observed = float(rng.normal())
+        strictly_below = float(np.mean(np.asarray(draws) < observed))
+        assert mid_rank_percentile(draws, observed) == pytest.approx(
+            100.0 * strictly_below, abs=1e-9
+        )
+
+
+def test_the_three_collapsed_percentile_copies_still_agree():
+    """`terrain_strategies.NullComparison`, `terrain_field_nulls.FieldNullComparison` and
+    the inline form in `breakout_nulls.summarise_null` all claimed in a docstring to match
+    each other. Now they call one function, and this is the claim as a check."""
+    from backtest_framework.research.terrain_field_nulls import FieldNullComparison
+    from backtest_framework.research.terrain_strategies import NullComparison
+
+    rng = np.random.default_rng(4)
+    draws = list(rng.normal(0.0, 1.0, 200)) + [0.5, 0.5, 0.5]  # deliberate ties
+    for observed in (0.5, -2.0, 0.0, 99.0):
+        want = mid_rank_percentile(draws, observed)
+        assert NullComparison.percentile(None, draws, observed) == want  # type: ignore[arg-type]
+        assert FieldNullComparison.percentile(None, draws, observed) == want  # type: ignore[arg-type]
+        # the inline form summarise_null uses, restated
+        v = np.asarray(draws)
+        inline = 100.0 * (float(np.sum(v < observed)) + 0.5 * float(np.sum(v == observed))) / v.size
+        assert inline == want

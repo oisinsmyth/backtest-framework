@@ -677,7 +677,7 @@ def _detail_block(symbol: str, d: dict) -> str:
     null, ens, gaps = d["null"], d["ensemble"], d["stop_gaps"]
     test = d["ensemble_test"]
     verdict = (
-        "**beats** the null" if null["percentile"] >= 0.95
+        "**beats** the null" if null["percentile"] >= 95.0
         else "**does not beat** the null"
     )
     return f"""## The primary verdict: exposure-matched random SHORT entries
@@ -694,7 +694,7 @@ same count and the same holding-period distribution. {null["n_draws"]:,} draws, 
 | Random-entry null, median | {null["null_p50"]:.3f} |
 | Random-entry null, 5th pct | {null["null_p05"]:.3f} |
 
-**Percentile vs the null: {null["percentile"]:.0%}.** At the conventional 95% bar the
+**Percentile vs the null: {null["percentile"]:.0f}%.** At the conventional 95% bar the
 strategy {verdict}.
 
 ## Does it diversify the long book?
@@ -1225,7 +1225,7 @@ def _verdict(p: dict) -> str:
     for symbol, d in detail.items():
         null, ens = d["null"], d["ensemble"]
         lines.append(
-            f"- **{symbol}**: null percentile {null['percentile']:.0%}, "
+            f"- **{symbol}**: null percentile {null['percentile']:.0f}%, "
             f"long/short correlation {ens['correlation']:+.2f}, "
             f"combined Sharpe {ens['combined_sharpe']:.2f} against "
             f"{ens['long_sharpe']:.2f} long-only "
@@ -1233,8 +1233,8 @@ def _verdict(p: dict) -> str:
             f"{ens['long_max_drawdown'] * 100:.0f}%)."
         )
 
-    beat = [s for s, d in detail.items() if d["null"]["percentile"] >= 0.95]
-    missed = [s for s, d in detail.items() if d["null"]["percentile"] < 0.95]
+    beat = [s for s, d in detail.items() if d["null"]["percentile"] >= 95.0]
+    missed = [s for s, d in detail.items() if d["null"]["percentile"] < 95.0]
     hurts = [
         s for s, d in detail.items()
         if d["ensemble"]["combined_sharpe"] < d["ensemble"]["long_sharpe"]

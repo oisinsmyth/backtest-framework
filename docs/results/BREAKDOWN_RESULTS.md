@@ -1,6 +1,6 @@
 # The breakdown short book: does crisis alpha survive borrow?
 
-**Produced:** 2026-08-21 ·
+**Produced:** 2026-09-18 ·
 **Snapshot:** `a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032` ·
 **Reproduce:** `uv run python scripts/run_breakdown_study.py` (offline, deterministic)
 

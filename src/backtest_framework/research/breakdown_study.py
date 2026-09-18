@@ -40,7 +40,7 @@ from typing import Any, Sequence
 
 import numpy as np
 
-from ..analytics.metrics import max_drawdown_from_returns, sharpe
+from ..analytics.metrics import max_drawdown_from_returns, mid_rank_percentile, sharpe
 from ..data.bars import TimestampedBar
 from . import breakout_study as bs
 
@@ -659,7 +659,19 @@ def random_entry_null(
         null_p05=float(np.percentile(draws, 5)),
         null_p50=float(np.percentile(draws, 50)),
         null_p95=float(np.percentile(draws, 95)),
-        percentile=float((draws < observed_sharpe).mean()),
+        # D542. This was `float((draws < observed_sharpe).mean())` — strictly-below, on a
+        # 0-1 scale — while `breakout_nulls.summarise_null` and both terrain comparisons
+        # published the same key mid-rank on a 0-100 scale. Two statistics and two units
+        # under one name, in two committed artifacts, with nothing saying which was which:
+        # a reader diffing this file against `terrain_strategy_summary.json` could not tell
+        # that 0.955 and 95.5 are not the same number expressed differently.
+        #
+        # Mid-rank wins because it is the one with a stated reason (ties at half weight, so
+        # a discrete statistic does not flatter whichever side is integer-equal), and
+        # because three of the four sites already used it. This MOVES the published values
+        # in `data/breakdown_study_summary.json`, which is the point — the two answers
+        # already disagreed, so one of them was already wrong.
+        percentile=mid_rank_percentile(draws.tolist(), observed_sharpe),
     )
 
 

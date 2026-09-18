@@ -157,7 +157,24 @@ class NullContext:
         ex = r - lf * rf - sf * bor
         sd = float(np.std(ex, ddof=1))
         eq = np.cumprod(1.0 + r)
-        return ((float(np.mean(ex)) / sd * math.sqrt(ppy)) if sd > 0 else 0.0,
+        mu = float(np.mean(ex))
+        # ZERO VARIANCE IS sign(mu) * inf, NOT 0.0 -- `analytics.metrics.sharpe`'s
+        # convention and D49's argument (D542). A book with zero excess variance and a
+        # NEGATIVE mean is infinitely bad risk-adjusted; calling it 0.0 ranks it above
+        # every losing draw in the distribution.
+        #
+        # What is and is not reachable, measured rather than assumed. The two conventions
+        # agree whenever mu == 0, so the all-flat rotation -- the case this looked like it
+        # mis-scored -- is NOT affected: a flat book has r == 0, lf == sf == 0, so ex == 0
+        # and both say 0.0. The divergence needs a CONSTANT NON-ZERO excess, which needs a
+        # book that HOLDS while every held bar returns exactly zero (padded or halted
+        # bars, which these fixtures do carry). Then ex == -lf*rf - sf*bor, a constant
+        # negative, and the old branch scored that draw 0.0 where the truth is -inf.
+        #
+        # So the old behaviour scored such a null draw TOO HIGH, which DEFLATES the real
+        # book's percentile. It was conservative, not flattering -- the opposite of what
+        # the audit that found it claimed.
+        return ((mu / sd * math.sqrt(ppy)) if sd > 0 else (math.inf * mu if mu != 0 else 0.0),
                 float(eq[-1] - 1.0))
 
     def assert_matches_scorer(self, pos, scorer, start=0, *, rf_annual, borrow_annual,
@@ -237,6 +254,22 @@ def parallel_map(fn, items, workers=None, progress=None):
             return fn(k, v)
         finally:
             spent.append(time.time() - s)          # list.append is atomic under the GIL
+
+    # A DUPLICATE KEY WOULD VANISH SILENTLY, AND THE PROGRESS LINE WOULD NOT SAY SO.
+    # `out` is keyed by `k`, so two items sharing a key collapse to one while `done` still
+    # counts to `len(items)` -- the run reports N results and returns fewer. The one
+    # in-repo caller passes `books.items()`, where keys are unique by construction, but
+    # the docstring above advertises this for ANY per-item work, and a caller passing a
+    # list of pairs gets silent loss. Refusing costs one pass (D542).
+    seen = [k for k, _ in items]
+    if len(set(seen)) != len(seen):
+        duplicates = sorted({k for k in seen if seen.count(k) > 1})
+        raise ValueError(
+            f"parallel_map keys its results by item key and {len(duplicates)} key(s) "
+            f"repeat: {duplicates[:5]}. The later result would overwrite the earlier one "
+            f"and the returned dict would be shorter than the {len(items)} the progress "
+            f"line reports. Pass distinct keys."
+        )
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
         futs = {ex.submit(_timed, k, v): k for k, v in items}

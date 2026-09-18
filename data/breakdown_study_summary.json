@@ -5,7 +5,7 @@
     "record": "D542"
   },
   "snapshot_id": "a2dfbc34c975895a1a2a133e00cdc36978a14f38bea5b83e568cd64b28f28032",
-  "generated_utc": "2026-08-21T20:45:23.675603+00:00",
+  "generated_utc": "2026-09-18T15:28:03.836512+00:00",
   "config": {
     "study": "breakout_long_flat_v1",
     "train_size": 252,
@@ -10461,7 +10461,7 @@
         "null_p05": -1.0944168982547045,
         "null_p50": -0.624049421042792,
         "null_p95": -0.10829451727855545,
-        "percentile": 0.507
+        "percentile": 50.7
       },
       "ensemble": {
         "correlation": 0.0011361816346805438,
@@ -10472,9 +10472,9 @@
         "long_sharpe": 1.2231111675163968,
         "short_sharpe": -0.6288841639400914,
         "combined_sharpe": 0.462380849962966,
-        "long_max_drawdown": 0.43010607965284897,
-        "short_max_drawdown": 0.7241911276665034,
-        "combined_max_drawdown": 0.3495089418696187
+        "long_max_drawdown": 0.430106079652849,
+        "short_max_drawdown": 0.7241911276665035,
+        "combined_max_drawdown": 0.34950894186961873
       },
       "stop_gaps": {
         "n_stop_exits": 1,
@@ -10496,7 +10496,7 @@
           "long_sharpe": 1.3393152377454665,
           "short_sharpe": -0.5655155810711078,
           "combined_sharpe": 0.5799272087853984,
-          "long_max_drawdown": 0.29242351887458984,
+          "long_max_drawdown": 0.2924235188745898,
           "short_max_drawdown": 0.6654615128448979,
           "combined_max_drawdown": 0.35101884770951985
         },
@@ -10800,7 +10800,7 @@
         "null_p05": -1.0470252982243704,
         "null_p50": -0.4262337071742546,
         "null_p95": 0.1323729621252828,
-        "percentile": 0.955
+        "percentile": 95.5
       },
       "ensemble": {
         "correlation": 0.0002370047349081797,
@@ -10811,9 +10811,9 @@
         "long_sharpe": 0.8696657345565634,
         "short_sharpe": -0.2278042880592796,
         "combined_sharpe": 0.570291638421611,
-        "long_max_drawdown": 0.35175809662590063,
-        "short_max_drawdown": 0.5412144637636367,
-        "combined_max_drawdown": 0.27949393380161247
+        "long_max_drawdown": 0.3517580966259007,
+        "short_max_drawdown": 0.5412144637636368,
+        "combined_max_drawdown": 0.2794939338016124
       },
       "stop_gaps": {
         "n_stop_exits": 0,
@@ -10836,7 +10836,7 @@
           "short_sharpe": -0.11418671273406159,
           "combined_sharpe": 0.8380687844547745,
           "long_max_drawdown": 0.34651635679927195,
-          "short_max_drawdown": 0.44044246533090126,
+          "short_max_drawdown": 0.4404424653309012,
           "combined_max_drawdown": 0.24378529781248426
         },
         "long_e1_sharpe": 0.9522820726804373,

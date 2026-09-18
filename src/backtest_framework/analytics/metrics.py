@@ -130,6 +130,32 @@ def sortino(returns: Sequence[float], rf_annual: float, periods_per_year: float)
     return mu / downside * math.sqrt(periods_per_year)
 
 
+def mid_rank_percentile(values: Sequence[float], observed: float) -> float:
+    """Where `observed` sits inside `values`, 0–100, TIES AT HALF WEIGHT (D542).
+
+    The repository's canonical null percentile. It was written four times: identically in
+    `research/terrain_strategies.NullComparison`, `research/terrain_field_nulls.
+    FieldNullComparison` and inline in `research/breakout_nulls.summarise_null` — and
+    DIFFERENTLY in `research/breakdown_study`, as `(draws < observed).mean()`, which is
+    strictly-below on a 0–1 scale. Two statistics and two units under one key, in two
+    committed artifacts, with nothing saying so.
+
+    Mid-rank is canonical because it is the one with a stated reason, quoted from
+    `summarise_null`: "on a discrete statistic like the closed-trade count, counting ties
+    as strictly-below would flatter whichever side of the comparison happened to be
+    integer-equal."
+
+    Note what this is NOT. It answers `value -> rank`. The repository's `p05`/`p50`/`p95`
+    null BOUNDS answer `rank -> value` and go through `np.percentile` (linear), uniformly
+    and separately; nothing here touches them.
+    """
+    if not values:
+        return 0.0
+    below = sum(1 for v in values if v < observed)
+    equal = sum(1 for v in values if v == observed)
+    return 100.0 * (below + 0.5 * equal) / len(values)
+
+
 def realised_beta(returns: Sequence[float], benchmark_returns: Sequence[float]) -> float:
     r = np.asarray(returns, dtype=float)
     b = np.asarray(benchmark_returns, dtype=float)
