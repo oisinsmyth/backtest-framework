@@ -42,7 +42,7 @@ def _numbers_in_the_index_of_record() -> set[int]:
     the same reason: the filesystem counts scratch files nobody else has and misses records
     everyone else has but this worktree deleted.
 
-    Both directions were live here. An untracked `D999-notes.md` reddened the suite on a state no
+    Both directions were live here. An untracked scratch record reddened the suite on a state no
     clone shares — and worse, a record staged for deletion mid-renumbering was absent from the
     glob and present in the index, so this gate reported a phantom row for a record a clone
     resolves fine. That is the ordinary state of this repository: two such records are in flight

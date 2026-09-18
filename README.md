@@ -21,7 +21,7 @@ instrument rather than a strategy.
 
 | | |
 |---|---|
-| **2,103 tests** | hand-computed golden masters · integration · property · unit |
+| **2,108 tests** | hand-computed golden masters · integration · property · unit |
 | **penny-exact** | the simulator reconciled against vectorbt, an independently written engine |
 | **7 defects caught** | by a guard, an assertion or an implausible number — never by inspection |
 | **MIT licensed** | [`LICENSE`](LICENSE) — the code and the prose here; quoted third-party material is scoped out in [`NOTICE`](NOTICE) |
@@ -35,7 +35,7 @@ The inventory, measured from the git index rather than typed:
 | **747 decision records** | D1 → D541, over **504** decision numbers — a pre-registration and its result share one number |
 | **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
 | **62 documents** | in [`docs/results/`](docs/results/README.md), five of them featured |
-| **2,103 tests** | 101 golden · 67 property · 157 integration · 1,778 unit, across 150 files |
+| **2,108 tests** | 101 golden · 67 property · 157 integration · 1,783 unit, across 151 files |
 | **593 research runners** | in `scripts/`, one-shot by design |
 | **6 figure builders** | registered in `scripts/figures/build_all.py`, regenerated and checked in CI |
 
