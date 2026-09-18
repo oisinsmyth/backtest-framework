@@ -593,6 +593,7 @@ would look like data. The tokens are what is shown.
 | D540 | three times now, the repository has worked because of config a clone never receives | [record](D540-local-config-a-clone-never-receives.md) |
 | D541 | clean() drops bars and hands back no volumes, and the guard against that could never fire | [record](D541-clean-returns-bars-without-their-volumes.md) |
 | D542 | two of six predictions falsified, one collapse that nearly published the opposite verdict, and a float defect that arri… | [record](D542-one-quantity-one-definition.md) · [RESULT](D542-RESULT-two-predictions-falsified-and-a-verdict-that-flipped.md) |
+| D543 | The lint gate stops at the library door, and two of the review's prescriptions do not work | [record](D543-the-lint-gate-stops-at-the-library-door.md) |
 
 <!-- REGISTER:END -->
 
