@@ -80,20 +80,6 @@ def test_cash_never_negative_absent_margin(scenario):
 
 
 @SETTINGS
-@given(scenarios())
-def test_fill_prices_within_their_bars_range(scenario):
-    prices, weights = scenario
-    result = _run(prices, weights, CostStack())
-    bars_by_ts = {}
-    start = datetime(2026, 1, 5, 16)
-    for i, p in enumerate(prices):
-        bars_by_ts[start + timedelta(days=i)] = p
-    for ts, _instrument, _qty, fill_price, _cost in result.fills:
-        p = bars_by_ts[ts]
-        assert p == fill_price  # engine fills at close; close is the bar here
-
-
-@SETTINGS
 @given(
     side=st.sampled_from([StopSide.SELL_STOP, StopSide.BUY_STOP]),
     stop=st.floats(1.0, 200.0, allow_nan=False),
@@ -226,6 +212,37 @@ def _run_bars(bars, weights, cost_stack, fill_timing="close"):
         starting_cash=100_000.0,
         fill_timing=fill_timing,
     )
+
+
+@SETTINGS
+@given(ohlc_scenarios())
+def test_fill_prices_within_their_bars_range(scenario):
+    """Every engine fill lands inside the bar it was filled on.
+
+    ON `ohlc_scenarios()`, AND THAT IS THE WHOLE TEST. This ran on `scenarios()`, whose bars are
+    `Bar(open=p, high=p, low=p, close=p)` — a range that is a single point, so "within
+    [low, high]" was true by construction and could not fail. What it actually asserted was the
+    narrower `fill == close`, under a name promising an interval it never exercised.
+
+    `ohlc_scenarios()` was added when an earlier audit found "the original scenarios were
+    long-only flat bars, leaving shorts and opens uncovered" — and this test, the one whose name
+    is about the bar's range, was left behind on the flat generator. It now uses the bars with a
+    real range, which also picks up short coverage for free since that generator signs its
+    weights.
+
+    The close-specific claim is kept as a second assertion rather than dropped: in `close` fill
+    timing the fill IS the close, and that is a stronger statement than the interval where it
+    holds.
+    """
+    bars, weights = scenario
+    result = _run_bars(bars, weights, CostStack())
+    bars_by_ts = {START + timedelta(days=i): b for i, b in enumerate(bars)}
+    for ts, _instrument, _qty, fill_price, _cost in result.fills:
+        bar = bars_by_ts[ts]
+        assert bar.low <= fill_price <= bar.high, (
+            f"fill at {fill_price} is outside its bar [{bar.low}, {bar.high}]"
+        )
+        assert fill_price == bar.close, "close fill timing must fill at the close"
 
 
 @SETTINGS
