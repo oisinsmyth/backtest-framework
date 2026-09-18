@@ -32,7 +32,7 @@ The inventory, measured from the git index rather than typed:
 
 | | |
 |---|---|
-| **753 decision records** | D1 → D544, over **507** decision numbers — a pre-registration and its result share one number |
+| **754 decision records** | D1 → D545, over **508** decision numbers — a pre-registration and its result share one number |
 | **46 library modules** | across 11 packages, plus 26 in `research/`, which is study code rather than framework |
 | **62 documents** | in [`docs/results/`](docs/results/README.md), five of them featured |
 | **2,181 tests** | 101 golden · 67 property · 157 integration · 1,856 unit, across 157 files |
@@ -120,7 +120,7 @@ docs/
   ARCHITECTURE.md         what the framework IS: the loop, the seams, the guards
   VERIFICATION.md         what the suite GUARANTEES, and what it does not
   figures/                six figures, twelve SVGs (light + dark)  [index](docs/figures/README.md)
-  decisions/              one record per design call, D1 → D544   [index](docs/decisions/README.md)
+  decisions/              one record per design call, D1 → D545   [index](docs/decisions/README.md)
   results/                every study document, five featured     [index](docs/results/README.md)
   specs/                  the models and prompts the studies were built from
   research/               scoping and literature for work not yet a study
@@ -217,7 +217,7 @@ cannot rot.
 - [`docs/VERIFICATION.md`](docs/VERIFICATION.md) — what the four test tiers each establish, the six gates that are not tests, and the section that matters most: what the suite does **not** guarantee
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to change the framework: gate before code, which test tier, adding a brick, recording the decision
 - [`PHILOSOPHY.md`](PHILOSOPHY.md) — the guiding design philosophy; changes rarely and deliberately
-- [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1 → D544; the file and number counts are in the generated block at the top of this page. The index is a curated table for D1–D284 and a generated register below it, and a test fails if any record is in neither half.
+- [`docs/decisions/`](docs/decisions/README.md) — one file per design decision, D1 → D545; the file and number counts are in the generated block at the top of this page. The index is a curated table for D1–D284 and a generated register below it, and a test fails if any record is in neither half.
 - [`docs/results/`](docs/results/README.md) — every study, indexed, with five featured for what each proves about the instrument; the count is in the block at the top, and a test fails if a document in that directory is listed nowhere
 - [`docs/RULES.md`](docs/RULES.md) — standing scope/sequencing rules (R1–R16), apply continuously rather than once
 - [`CHANGELOG.md`](CHANGELOG.md) — what shipped and when, Keep a Changelog format. Rationale lives in the decision records, not here.
