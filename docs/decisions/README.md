@@ -625,6 +625,7 @@ would look like data. The tokens are what is shown.
 | D544 | the citation gate flagged its own docstring, and its coverage is a quarter of what the audit implied | [RESULT](D544-RESULT-the-gate-flagged-its-own-docstring.md) · [record](D544-the-front-page-is-the-least-honest-document.md) |
 | D545 | the page exists, and three of the numbers it was built to quote turned out to have no artifact | [RESULT](D545-RESULT-the-page-exists-and-three-of-its-numbers-do-not.md) · [record](D545-the-narrative-layer-over-D190-D544.md) |
 | D546 | both gates are in and prove they fire, and the config fix does not cover the invocation that found the problem | [record](D546-a-collectable-script-and-a-json-that-never-parsed.md) · [RESULT](D546-RESULT-the-fix-does-not-cover-the-path-that-found-it.md) |
+| D547 | Retiring S5b, 987 lines of apparatus for a question nobody ever asked, and two saved HTTP 429 bodies | [record](D547-retiring-S5b-and-two-saved-error-pages.md) |
 
 <!-- REGISTER:END -->
 
