@@ -78,10 +78,22 @@ def cmd_build() -> int:
 
 
 def cmd_check() -> int:
+    # BYTES, not text. `--build` writes with `newline="\n"` -- a property it deliberately
+    # controls, because these files are compared byte for byte and the module docstring says so.
+    # Reading with `read_text(encoding="utf-8")` applies universal-newline translation, so a
+    # figure rewritten with CRLF by an editor, a zip download or a checkout that bypassed
+    # `.gitattributes` decoded back to `\n` and compared EQUAL. The check was blind to exactly
+    # the thing the build controls, and would have reported "12 figure files are current" over
+    # twelve files none of which matched what `--build` produces.
+    #
+    # `render_all()` is bound once: it re-imports and re-executes all six builder modules on
+    # every call, and the success path used to do that twice -- once to compare, once for a
+    # count it was already holding.
+    rendered = render_all()
     stale = [
         path
-        for path, want in render_all().items()
-        if not path.exists() or path.read_text(encoding="utf-8") != want
+        for path, want in rendered.items()
+        if not path.exists() or path.read_bytes() != want.encode("utf-8")
     ]
     for path in stale:
         state = "MISSING" if not path.exists() else "STALE"
@@ -90,7 +102,7 @@ def cmd_check() -> int:
             "run `python scripts/figures/build_all.py --build`"
         )
     if not stale:
-        print(f"{len(render_all())} figure files are current")
+        print(f"{len(rendered)} figure files are current")
     return 1 if stale else 0
 
 

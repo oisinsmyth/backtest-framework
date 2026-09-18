@@ -102,10 +102,18 @@ def test_at_least_one_figure_exists():
 
 
 def test_every_committed_figure_is_current(rendered):
+    """Byte-for-byte, because `--build` pins the newline and text mode would hide it.
+
+    This carried the same defect as `build_all.py --check` and for the same reason — a
+    `read_text` comparison applies universal-newline translation, so a CRLF figure decodes to
+    `\\n` and matches the LF string the builder produced. Fixing only the script would have left
+    the CI gate equally blind, which is the more consequential half: the script is run by hand,
+    this runs on every push.
+    """
     stale = sorted(
         p.name
         for p, want in rendered.items()
-        if not p.exists() or p.read_text(encoding="utf-8") != want
+        if not p.exists() or p.read_bytes() != want.encode("utf-8")
     )
     assert not stale, (
         f"{len(stale)} figure file(s) no longer match their builder: {stale}. "
