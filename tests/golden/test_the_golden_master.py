@@ -325,22 +325,50 @@ def test_the_closed_book_calculator_never_reaches_for_the_engine():
     if ast.get_docstring(function) is not None:
         function.body = function.body[1:]
     source = ast.unparse(function)
+    # KEPT, and not as belt-and-braces. The resolved-globals check below cannot see a dynamic
+    # escape -- `sys.modules["backtest_framework"]`, `importlib.import_module(...)` -- because
+    # those resolve at call time and bind nothing at module scope. This substring check cannot
+    # see an alias. They fail in opposite directions, so both are kept.
     assert "backtest_framework" not in source
-    for name in (
-        "IBKRCommission",
-        "PercentOfNotionalSpread",
-        "BorrowFee",
-        "MarginInterest",
-        "DividendFlow",
-        "CostStack",
-        "run_backtest",
-        "Equity",
-        "Sizer",
-    ):
-        assert name not in source, (
-            f"the closed-book calculator names {name!r}. It must reproduce the arithmetic, "
-            "not call the implementation it exists to check."
+
+    # WHAT THE FUNCTION RESOLVES, NOT WHAT IT SPELLS.
+    #
+    # This test used to be a substring blacklist of nine symbol names over the unparsed source,
+    # and one `as` defeated it: `from backtest_framework.costs.equity_bricks import
+    # IBKRCommission as _c` at module scope, then `_c(...)` in the body, contains neither
+    # "backtest_framework" nor any forbidden name. After that the calculator agrees with the
+    # implementation by construction and the golden master checks nothing -- which is the precise
+    # failure this test exists to prevent, reached through the test itself.
+    #
+    # The blacklist had also drifted from the imports it shadows: `Sizer` was forbidden and is
+    # imported nowhere in this file, while `Bar`, `TimestampedBar`, `ScheduledWeightStrategy`,
+    # `ConstantSplitAllocator` and `BacktestResult` are all in scope here and were all permitted.
+    # A hand-maintained list of names is a second copy of the import block, kept in sync by hope.
+    #
+    # `getclosurevars` binds OBJECTS, so an alias still reports its defining module. A
+    # module-level import check is not available -- this module legitimately imports the engine
+    # at the top, because the other tests in it run the backtest.
+    _assert_resolves_to_no_engine_object(recompute, seen=set())
+
+
+def _assert_resolves_to_no_engine_object(func, seen: set) -> None:
+    """No global this function reaches — directly or through a helper — comes from the package.
+
+    Recursive, because `getclosurevars` is not: a module-level helper that calls the engine on
+    `recompute`'s behalf would otherwise be invisible, exactly as it was to the substring check.
+    """
+    if func in seen:
+        return
+    seen.add(func)
+    for name, value in inspect.getclosurevars(func).globals.items():
+        module = getattr(inspect.getmodule(value), "__name__", "") or getattr(value, "__module__", "") or ""
+        assert not module.startswith("backtest_framework"), (
+            f"the closed-book calculator reaches {name!r}, which resolves to {module}. It must "
+            "reproduce the arithmetic, not call the implementation it exists to check — and the "
+            "name it is bound to here does not matter, which is the point of checking the object."
         )
+        if inspect.isfunction(value) and inspect.getmodule(value) is inspect.getmodule(func):
+            _assert_resolves_to_no_engine_object(value, seen)
 
 
 def test_every_hand_value_appears_in_the_hand_file():
