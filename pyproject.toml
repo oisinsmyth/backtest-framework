@@ -45,6 +45,12 @@ markers = [
     "live_fetch: hits a real network data source; excluded from default runs (D24 cross-cutting gate: CI runs offline). Run explicitly with `pytest -m live_fetch`.",
 ]
 addopts = "-m \"not live_fetch\""
+# pytest's default is ["test_*.py", "*_test.py"]. Every one of the 158 tracked tests uses
+# test_*.py; the second pattern matches no test here and seven tracked .py files that are NOT
+# tests, one of which fetches from SEC and writes a relative path AT IMPORT (D546). Narrowed
+# so pytest cannot import them. tests/unit/test_nothing_outside_tests_is_collectable.py reads
+# this value back and fails if it is widened or removed.
+python_files = ["test_*.py"]
 
 [tool.ruff]
 target-version = "py312"
