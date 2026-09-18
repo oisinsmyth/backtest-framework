@@ -358,7 +358,10 @@ def load_panel(n_symbols: int | None = None) -> tuple[object, dict, np.ndarray, 
         # subset instead, which both makes the join drop bars and (on this fixture)
         # happens to pull in the one ETF carrying a 4-for-1 split, so the split guard
         # is exercised too.
-        shortest = min(raw, key=lambda s: (len(raw[s]), s))
+        # Keyed on the ITEMS, so the lambda closes over nothing. Identical result; it stops
+        # ruff reading `raw` against the `del` 100 lines below, which was a false positive
+        # (this lambda is consumed synchronously by `min`) but an unreadable one (D543).
+        shortest = min(raw.items(), key=lambda kv: (len(kv[1]), kv[0]))[0]
         others = [s for s in sorted(raw) if s != shortest][: n_symbols - 1]
         keep = sorted([shortest, *others])
         raw = {s: raw[s] for s in keep}

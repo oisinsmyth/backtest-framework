@@ -369,7 +369,11 @@ def build(P, out_dir, t0):
     op = np.array([bars[(symbols[r], dates[g])][0] for g, r in zip(gs, rows)])
     cl = np.array([bars[(symbols[r], dates[g])][3] for g, r in zip(gs, rows)])
     vo = np.array([bars[(symbols[r], dates[g])][4] for g, r in zip(gs, rows)])
-    at_bar = lambda g, r, j: bars[(symbols[r], dates[g])][j] if (symbols[r], dates[g]) in bars else np.nan
+    # `_b=bars` BINDS THE DICT AT DEFINITION rather than closing over the name, which is
+    # `del`eted at the end of this block. Behaviour is identical today -- both calls are two
+    # lines below and the object is the same -- but a call added after the `del` would have
+    # raised `NameError: cannot access free variable 'bars'` rather than working (D543).
+    at_bar = lambda g, r, j, _b=bars: _b[(symbols[r], dates[g])][j] if (symbols[r], dates[g]) in _b else np.nan
     cl_prev = np.array([at_bar(g - 1, r, 3) for g, r in zip(gs, rows)])
     op_e = np.array([at_bar(g + 1, r, 0) for g, r in zip(gs, rows)])
     assert np.array_equal(op, OPEN_g) and np.array_equal(cl, np.asarray(CLOSE)[gs, rows]) and np.array_equal(vo, C["vol_g"]), "[FIX] the fixture's open/close/volume on day g != the grids"

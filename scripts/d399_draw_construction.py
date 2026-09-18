@@ -475,7 +475,12 @@ def main() -> int:
     # names chosen to SHOW the mechanic, not to flatter it: a clean trender, a violent one,
     # a mean-reverter and a decliner. All are in the 48 that have 15-minute bars.
     WANT = ["MSFT", "GME", "INTC", "F", "WYNN", "DVN"]
-    out = {"delta": DELTA, "h": H, "respect": "close" if a.on_close else "wick",
+    # `"h"` appeared TWICE here. The first was `H`, and `H = DELTA` -- the same value this
+    # literal already emits as `"delta"` -- so the discarded datum was a duplicate and the
+    # survivor `a.h` is the value the default `branch=E` actually uses. The committed
+    # `data/d399_chart_data.json` therefore carries the correct number and is NOT re-run;
+    # what was wrong was a literal with two dials under one name (D543).
+    out = {"delta": DELTA, "respect": "close" if a.on_close else "wick",
            "min_piv": a.min_piv, "min_run": MIN_RUN, "branch": a.branch,
            "h": a.h, "h_annual_pct": a.h_annual,
            "note": "DIAGNOSTIC ONLY -- no score, no hurdle, no null. D399's corrected ratchet.",

@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,164 tests are collected here, and one of them skips on the machine this was written on, for
+**2,172 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -90,7 +90,7 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,839 tests. *Each part does its own job.*
+### `tests/unit/` — 1,847 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
 most of the **structural guard** assertions are proved to fire — `src/` carries **288 `raise`
@@ -128,8 +128,8 @@ each other:
 
 | gate | what it establishes |
 |---|---|
-| `ruff check src tests` | errors, not style (E4/E7/E9/F) |
-| `mypy` | types over the library; tests are out of scope by config |
+| `ruff check src tests scripts` | errors, not style (E4/E7/E9/F). `scripts/` runs **narrower** — E4, E7, F401, F541 and F841 are ignored there, which takes 7,423 findings to 4 (D543) |
+| `mypy` | types over the library; **`tests/` and `scripts/` are out of scope by config** |
 | `check_doc_links.py` | every relative path in every tracked document resolves **in the git index** — 1,031 documents, 0 unresolved |
 | `build_readme_counts.py --check` | the README's inventory matches the repository |
 | `figures/build_all.py --check` | all twelve SVGs regenerate byte-identically from their artifacts |
@@ -138,6 +138,22 @@ each other:
 Plus four completeness guards inside the suite, each written after the failure it now prevents:
 every decision number appears in its index; every results document is linked from its index; every
 *cited* decision number has a record; every figure is registered, indexed and described.
+
+**What the lint gate does and does not reach, stated rather than left to a passing run (D543).**
+`scripts/` — 603 runners, the bulk of the Python here and the source of every published number —
+was checked by nothing until D543. It now runs at a correctness-only rule set: **7,423 findings at
+the library's rules, 4 at these**, and the difference is almost entirely `E702` (5,763 semicolons,
+a deliberate house style in a research runner). The two ignores that cost something are `F841`
+(163 unused locals across 120 files) and `F401` (80 unused imports across 76); they are ignored
+rather than fixed because **those files are evidence**, and editing a frozen runner that produced
+a published number for tidiness is the worse trade. **`mypy` deliberately stops at `src/`**:
+`scripts/` reports 1,048 errors in 262 of 601 files.
+
+Two encoding gaps are guarded by the suite rather than by a linter, because ruff's rule for the
+first is preview-only and sees about a ninth of the surface: `tests/unit/test_encoding_is_declared.py`
+holds the **1,126** text-IO calls in `scripts/` that pass no `encoding=` to a ceiling that may
+fall and never rise, and asserts that every tracked file which is not valid UTF-8 is declared
+`binary` in `.gitattributes` — six are.
 
 ---
 

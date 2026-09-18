@@ -61,6 +61,26 @@ target-version = "py312"
 # real errors rather than style opinions. Widening it is a separate decision with its own diff.
 select = ["E4", "E7", "E9", "F"]
 
+# `scripts/` JOINS THE GATE AT A NARROWER RULE SET, AND THE NARROWING IS MEASURED (D543).
+#
+# 603 runners -- the bulk of the Python here and the source of every published number -- were
+# linted by nothing. At the rules above they report 7,423, of which E702 (statements separated
+# by semicolons) is 5,763: 78%, and a deliberate house style in a research runner. The rest:
+# F541 773, E741 276, E731 220, F841 163, E401 84, F401 80, E701 47, E402 10, F821 3, E712 3,
+# F601 1. Ignoring the five below leaves EXACTLY 4, and all four were real enough to read:
+# one latent closure over a `del`eted name, one ruff false positive, one duplicate dict key.
+#
+# F841 and F401 are the only two ignores that cost anything, and they are ignored rather than
+# fixed BECAUSE THESE FILES ARE EVIDENCE. 163 unused locals across 120 files and 80 unused
+# imports across 76: editing a frozen runner that produced a published number, for tidiness, is
+# a worse trade than the finding is worth. Two F841s were read before deciding -- a
+# comprehension used for its side effects, and an abandoned diagnostic -- and both were
+# vestigial rather than a dropped computation. Two of 163 is not a survey, and D543 says so.
+#
+# `mypy` deliberately does NOT follow: 1,048 errors in 262 of 601 files.
+[tool.ruff.lint.per-file-ignores]
+"scripts/**" = ["E4", "E7", "F401", "F541", "F841"]
+
 [tool.mypy]
 # `src` only. The library is what the project claims; `tests` carries 42 findings (mostly untyped
 # helper bodies) and cleaning them is not this gate's job. Stated here rather than left to be

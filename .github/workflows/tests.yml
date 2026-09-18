@@ -25,6 +25,26 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# ONE DEFAULT ENCODING, SO THE RUNNER AND THE AUTHOR'S MACHINE AGREE (D543).
+#
+# 313 tracked runners do text IO without ever passing `encoding=`, so their default comes from
+# the platform: UTF-8 on ubuntu-latest, cp1252 on the Windows machine this repository is written
+# on. Same code, different bytes, and nothing declared which was intended.
+#
+# It has not bitten, and that was measured rather than assumed: of 1,180 no-`encoding=` call
+# sites, ZERO were found to touch a non-ASCII byte, because 716 of them read or write
+# `json.dumps` output and `ensure_ascii` is never set to False anywhere in the repository. The
+# variable is set for the divergence, not for a known corruption.
+#
+# Setting it changes nothing here either, and that was measured too: with PYTHONUTF8=1 the full
+# suite is identical (2,163 passed, 1 skipped) and all four state gates report current. A
+# variable that changes nothing today is exactly the kind worth pinning before it does.
+#
+# At workflow level rather than per job, so a job added later inherits it instead of being
+# remembered.
+env:
+  PYTHONUTF8: "1"
+
 jobs:
   # The reviewer's first command, kept as its own job so a break in the anchored ledgers is
   # visible in seconds rather than after the full run. 101 ledger-anchored tests, 0.58s locally.
@@ -46,6 +66,12 @@ jobs:
   # ruff at the rules named in pyproject (E4/E7/E9/F -- errors, not style), and mypy over the
   # library. Both are pinned in the dev group rather than fetched latest, so the gate cannot
   # widen or narrow without a lockfile diff; `uv sync --locked` is what makes that true here.
+  #
+  # `scripts` joined this step in D543 rather than gaining a step of its own, because
+  # docs/VERIFICATION.md counts "four jobs and eight commands" and "six gates that are not the
+  # test suite" in prose that NOTHING gates. Extending the command keeps both counts true; a
+  # ninth `run:` would have made them quietly wrong. It runs at a narrower rule set via
+  # per-file-ignores -- 7,423 findings at the library's rules, 4 at the correctness ones.
   lint:
     name: lint and types
     runs-on: ubuntu-latest
@@ -56,7 +82,7 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --locked
-      - run: uv run ruff check src tests
+      - run: uv run ruff check src tests scripts
       - run: uv run mypy
 
   # The two checks that read committed state rather than behaviour, and answer in seconds: every
