@@ -200,7 +200,12 @@ def cmd_check() -> int:
         print(f"MISSING  {LEDGER.relative_to(REPO).as_posix()} — run --build")
         return 1
     want = json.dumps(build(), indent=2) + "\n"
-    if LEDGER.read_text(encoding="utf-8") != want:
+    # Bytes, not text — `--build` above pins `newline="\n"`, and `read_text` applies
+    # universal-newline translation, so a CRLF ledger would decode back to `\n` and compare
+    # equal to what the build produces. The check would be blind to exactly the thing the build
+    # controls. Same defect as `scripts/figures/build_all.py --check` carried, found by applying
+    # that finding to the rest of the repository rather than stopping at the instance.
+    if LEDGER.read_bytes() != want.encode("utf-8"):
         print(f"STALE    {LEDGER.relative_to(REPO).as_posix()} — run --build")
         return 1
     print(f"{LEDGER.relative_to(REPO).as_posix()} is current")
