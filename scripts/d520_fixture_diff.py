@@ -34,6 +34,14 @@ import numpy as np
 import pandas as pd
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def _rel(path: Path) -> str:
+    """A path as the repository sees it, so provenance survives leaving this machine."""
+    try:
+        return path.resolve().relative_to(REPO).as_posix()
+    except ValueError:
+        return path.as_posix()
 SEG = [18, 19, 20, 21, 22, 23] + list(range(0, 17))
 SEGN = [f"h{h:02d}" for h in SEG]
 PRICE = [f"{s}_{f}" for s in SEGN for f in ("o", "h", "l", "c")]
@@ -95,7 +103,13 @@ def main() -> int:
     assert list(O.columns) == list(N.columns), "the two builds must share a schema or the diff is meaningless"
     print(f"OLD {len(O):,} rows   NEW {len(N):,} rows   ({len(N) - len(O):+,})")
 
-    rep = {"old": str(old_dir), "new": str(new_dir), "n_old": len(O), "n_new": len(N),
+    # RELATIVE TO THE REPO ROOT, NOT ABSOLUTE (D544). The committed
+    # `data/d520_fixture_diff.json` records `C:\Users\O\...\temp\d520_old` -- a path
+    # inside `temp/`, which this repository declares deletable unasked, on one machine. Nobody
+    # can re-resolve it, including its author. That artifact is left as it is because the
+    # unresolvable path IS the record of the provenance being unresolvable; what is fixed here
+    # is that the next run does not produce another one.
+    rep = {"old": _rel(old_dir), "new": _rel(new_dir), "n_old": len(O), "n_new": len(N),
            "columns": len(O.columns), "usable_start": USABLE, "roots": {}}
     print(f"\n{'root':>5} {'old':>6} {'new':>6} {'gain':>5} {'lost':>5} {'rows chg':>9} "
           f"{'price cells':>12} {'count cells':>12} {'label rows':>11} {'p50 |dP|':>10} {'max |dP|':>10}")

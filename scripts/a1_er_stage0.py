@@ -83,6 +83,14 @@ from pathlib import Path
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
+
+
+def _repo_relative(path) -> str:
+    """A path as the repository sees it, so provenance survives leaving this machine."""
+    try:
+        return Path(path).resolve().relative_to(REPO).as_posix()
+    except ValueError:
+        return Path(path).as_posix()
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "scripts"))
 
@@ -396,7 +404,12 @@ def main() -> int:
                    "reads no forward return. Gates a candidate, records none.",
         "bar_committed_in": "docs/research/the-signal-hunt-part2.md section 7, commit ed967bd, "
                             "before this runner existed (R8)",
-        "fixture": str(PREP.M.B.FIXTURE), "n": n, "T": T, "windows": list(WINDOWS),
+        # REPO-RELATIVE (D544). The committed `data/a1_er_stage0.json` records this fixture
+        # inside `.claude/worktrees/signal-hunt-part2/`, a git worktree that exists on no clone
+        # and no longer on this machine -- provenance nobody can re-resolve, including its
+        # author. That artifact is not rewritten: the unresolvable path is the only evidence
+        # that the provenance is unresolvable. This stops the next run adding another.
+        "fixture": _repo_relative(PREP.M.B.FIXTURE), "n": n, "T": T, "windows": list(WINDOWS),
         "min_travel_floor": MIN_TRAVEL, "min_names_per_bar": MIN_NAMES,
         "eligible_name_bars": int(elig.sum()),
         "er_guard": guard_rep, "eligibility": e_rep, "extreme_tail_named": tail,
