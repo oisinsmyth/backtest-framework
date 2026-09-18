@@ -331,7 +331,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 277 of these records carry neither field —
+**No Status or Category column, deliberately.** 278 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -593,7 +593,7 @@ would look like data. The tokens are what is shown.
 | D540 | three times now, the repository has worked because of config a clone never receives | [record](D540-local-config-a-clone-never-receives.md) |
 | D541 | clean() drops bars and hands back no volumes, and the guard against that could never fire | [record](D541-clean-returns-bars-without-their-volumes.md) |
 | D542 | two of six predictions falsified, one collapse that nearly published the opposite verdict, and a float defect that arri… | [record](D542-one-quantity-one-definition.md) · [RESULT](D542-RESULT-two-predictions-falsified-and-a-verdict-that-flipped.md) |
-| D543 | The lint gate stops at the library door, and two of the review's prescriptions do not work | [record](D543-the-lint-gate-stops-at-the-library-door.md) |
+| D543 | the gate closes, six files were not three, and the third count prediction missed for the second time in the same way | [RESULT](D543-RESULT-the-third-count-prediction-and-the-third-miss.md) · [record](D543-the-lint-gate-stops-at-the-library-door.md) |
 
 <!-- REGISTER:END -->
 
