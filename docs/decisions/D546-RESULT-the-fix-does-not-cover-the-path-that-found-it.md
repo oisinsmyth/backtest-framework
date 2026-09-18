@@ -147,3 +147,69 @@ P5 mis-read pytest's initial-path rule. The count-prediction lesson from D543 wa
 a count until the artifact that moves it exists*. The sibling, earned here: **do not predict what a
 tool does under a setting you have not run it under.** P5 was checkable in ninety seconds with a
 temporary directory and no network, and it was wrong.
+
+---
+
+## ADDENDUM, same day — the disposition was made, so the hazard is closed and gated
+
+**The principal asked for the guard.** Everything above stands as written; this section records
+what changed after it, because the body says two things that are no longer true and a record is
+amended in writing rather than edited quietly.
+
+### What the body says, and what is now the case
+
+| the body says | now |
+|---|---|
+| *"the explicit-path hazard … stays open"* | **closed.** `data/A4-filing-text/A4_header_test.py` is `__main__`-guarded. |
+| *"`test_nothing_outside_tests_is_collectable.py` — six tests"* | **eight.** Two were added for the invariant below. |
+| *"a gate \[for import-safety\] … waits on the disposition"* | **written.** `test_nothing_collectable_fetches_or_writes_at_import`. |
+
+### The guard
+
+Everything from the `PART 1` banner to the end is now indented under
+`if __name__ == "__main__":`. **No line's content changed** — `git diff -w` on the file is
+eleven insertions and two deletions, and nothing else. `BASE` and `sample()` remain module
+globals, because an `if` at module level does not create a scope.
+
+Two substantive changes beside it: the output path is now
+`pathlib.Path(__file__).resolve().parent / "A4_header_rows.json"` — absolute, so a deliberate run
+writes beside the script instead of into whatever directory the process started in — and the
+handle is closed by a `with` rather than leaked.
+
+**Proved, with the network amputated so a fetch would raise rather than succeed quietly:**
+importing the module writes nothing and touches nothing; `pytest <the file>` from a scratch
+directory exits 5, collects nothing, and leaves the directory empty and the committed
+`A4_header_rows.json` byte-identical.
+
+*The first probe broke itself* — it replaced `socket.socket` with a function, which breaks
+`ssl`'s own class definition, so the import failed for a reason with nothing to do with the
+guard. Patching `urllib.request.urlopen` is the call that matters. Second time in two records
+that a probe failed before the thing it was probing.
+
+### The gate, and what it can and cannot see
+
+`test_nothing_collectable_fetches_or_writes_at_import` asserts that no tracked `.py` outside
+`tests/` matching pytest's **default** patterns writes or fetches at import. Proved by restoring
+the unguarded original: **1 failed**, naming the file and quoting both hazards at `:97`.
+
+**A read at import is deliberately allowed.** Two of the seven — `d290_entry_test.py:73` and
+`run_holdout_test.py:48` — read a committed `data/*.json` at import, and five of them `exec_module`
+another runner. Those are survivable; writing and fetching are not, and they are what actually
+happened.
+
+**And the scan cannot see a fetch behind a local helper.** `A4_header_test.py` called `get(url)`
+at module level, and `get` wraps `urlopen` *inside a function* — invisible to a syntactic scan.
+What caught that file was its module-level **write**. The limitation is in the helper's docstring
+rather than left to be discovered: this is a tripwire on the two shapes that have bitten, not a
+proof of import-purity.
+
+**One measurement error on the way, caught by reading the output.** The first version of the scan
+walked into `FunctionDef` bodies and reported **84–139 "module-level calls"** per file — nearly all
+of them inside functions. A number that large is not a finding, it is a broken instrument, and the
+tell was that every file looked equally bad. Skipping the defs takes the same seven files to 2–12
+calls, and the difference between them is legible.
+
+### What is still open
+
+Nothing of this one. The three dispositions D546 handed over are now two: the two 429 pages and
+`terrain_swing_decay.py`. Both remain the principal's, and the plan's §14 carries them.
