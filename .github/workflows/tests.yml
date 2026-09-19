@@ -20,6 +20,11 @@ name: tests
 on:
   push:
   pull_request:
+  # So the suite can be started by hand. The first push to this repository created no run
+  # at all -- the workflow was on the default branch and GitHub simply did not schedule it
+  # -- and the alternative to a manual trigger is manufacturing a commit to provoke one,
+  # which is a commit that says nothing (D549).
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
