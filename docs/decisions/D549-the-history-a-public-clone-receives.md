@@ -161,3 +161,17 @@ it must never be pushed anywhere.
 **Whether `refs/heads/worktree-signal-hunt-part2` should be published.** It is a research branch
 from a prior session, rewritten along with everything else. It will be pushed only if branches are
 pushed explicitly; `git push -u origin main` sends `main` alone.
+
+---
+
+## ADDENDUM 2026-09-19 — two figures in the CI section above are wrong
+
+The section *"The CI workflow was carrying stale numbers"* gives **399 of 601** tracked runners
+and says the ratchet counts **1,126**. Both were read off the author's worktree, which is missing
+two scripts the principal has deleted without staging. The index holds **401 of 603** and
+**1,128**.
+
+Corrected in the workflow and in `docs/VERIFICATION.md`; the cause, the fix and the full scoring
+are in [D550](D550-what-CI-found-in-its-first-run.md). That this record's own numbers came from a
+worktree, in a record whose subject is *the history a clone receives*, is the joke the first CI
+run made at its author's expense.

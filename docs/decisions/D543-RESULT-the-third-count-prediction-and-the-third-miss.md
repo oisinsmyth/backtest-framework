@@ -160,3 +160,20 @@ is executable**; the other two are prose that nothing checks. Same for VERIFICAT
 and eight commands"* and *"Six gates that are not the test suite"* — the lint step was extended
 rather than duplicated precisely so those counts stayed true, which is a workaround for an
 ungated self-count, not a fix. That is A24's class and belongs to Lane 8.
+
+---
+
+## ADDENDUM 2026-09-19 — the 1,126 in this record is a measurement of one worktree
+
+**Every figure above stands as what was measured; the number was measured wrongly and this says
+so rather than editing it.**
+
+`1,126` was counted by a scan that listed the index and then filtered to files present on disk.
+The principal had two script deletions in flight, unstaged, each carrying exactly one undeclared
+call site. **The index holds 1,128.** The author's machine could not see them and neither could
+this record.
+
+It was found by the first ever CI run, against a clone, and it is written up in
+[D550](D550-what-CI-found-in-its-first-run.md). The gate now reads the index directly, so the
+count is the same on any machine at a given commit. No call site was added and no runner was
+edited.

@@ -151,7 +151,7 @@ a published number for tidiness is the worse trade. **`mypy` deliberately stops 
 
 Two encoding gaps are guarded by the suite rather than by a linter, because ruff's rule for the
 first is preview-only and sees about a ninth of the surface: `tests/unit/test_encoding_is_declared.py`
-holds the **1,126** text-IO calls in `scripts/` that pass no `encoding=` to a ceiling that may
+holds the **1,128** text-IO calls in `scripts/` that pass no `encoding=` to a ceiling that may
 fall and never rise, and asserts that every tracked file which is not valid UTF-8 is declared
 `binary` in `.gitattributes` — six are.
 

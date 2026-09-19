@@ -41,9 +41,13 @@ PATH_OPENERS = {"open"}
 # Method calls that read or write a path's text.
 TEXT_METHODS = {"read_text", "write_text", "open", "read_csv", "to_csv"}
 
-# The ceiling, recorded on 2026-09-18. IT MAY FALL AND NEVER RISE. Not a target: the sites are
-# in frozen runners and D543 declines to edit evidence for tidiness.
-CEILING = 1126
+# The ceiling. IT MAY FALL AND NEVER RISE. Not a target: the sites are in frozen runners and
+# D543 declines to edit evidence for tidiness.
+#
+# 1126 -> 1128 on 2026-09-19, and that is a CORRECTED MEASUREMENT rather than a concession.
+# 1126 was what this repository looked like through one worktree with two deletions in
+# flight; 1128 is what the index holds and what a clone receives. No site was added.
+CEILING = 1128
 
 # A floor, because this scans a DISCOVERED set and an empty scan satisfies a ceiling silently.
 # Four of seven count gates in this repository once passed on an empty match, and the failure
@@ -54,17 +58,44 @@ FLOOR = 900
 MINIMUM_RUNNERS = 500
 
 
-def _tracked_runners() -> list[Path]:
-    """Tracked `scripts/*.py`, filtered to what is on disk.
-
-    `git ls-files` reports the INDEX. A path staged for deletion but not yet committed is in
-    the index and absent from the worktree, and reading it raises — the principal routinely has
-    several in flight, and the first version of D542's class scan crashed on exactly that.
-    """
-    listed = subprocess.run(
+def _tracked_runners() -> list[str]:
+    """Tracked `scripts/*.py`, as index paths. NOT filtered by what is on disk."""
+    return subprocess.run(
         ["git", "ls-files", "scripts/*.py"], cwd=REPO, capture_output=True, text=True, check=True
     ).stdout.split()
-    return [REPO / rel for rel in listed if (REPO / rel).exists()]
+
+
+def _index_sources() -> dict[str, str]:
+    """Each tracked runner's content AS THE INDEX HOLDS IT, in one batched call.
+
+    NOT read from the worktree, and that distinction set this ceiling wrong for a week. An
+    earlier version listed the index and then filtered to files present on disk, because D542's
+    class scan had crashed reading a path the principal had deleted in the worktree without
+    staging it. Skipping the file fixes the crash and silently drops it from the COUNT: the
+    author's machine measured 1,126 sites where a clone measures 1,128, and CI's first run is
+    what said so.
+
+    `git cat-file --batch` over `:<path>` specs reads the index directly, so the number is the
+    same on any machine at a given commit. A file whose deletion is actually STAGED leaves the
+    index, and the count falls -- which is a ratchet moving in its permitted direction.
+    """
+    paths = _tracked_runners()
+    proc = subprocess.run(
+        ["git", "cat-file", "--batch"],
+        cwd=REPO,
+        input="".join(f":{rel}\n" for rel in paths).encode("utf-8"),
+        capture_output=True,
+        check=True,
+    )
+    out, pos, sources = proc.stdout, 0, {}
+    for rel in paths:
+        nl = out.index(b"\n", pos)
+        header = out[pos:nl].decode("utf-8")
+        size = int(header.split()[2])
+        body = out[nl + 1:nl + 1 + size]
+        sources[rel] = body.decode("utf-8")
+        pos = nl + 1 + size + 1  # trailing newline after the body
+    return sources
 
 
 def _is_binary_mode(call: ast.Call) -> bool:
@@ -126,8 +157,8 @@ def _count() -> tuple[int, int]:
     """(call sites, files carrying at least one) across the tracked runners."""
     sites = 0
     files = 0
-    for path in _tracked_runners():
-        hits = _undeclared_sites(path.read_text(encoding="utf-8"))
+    for source in _index_sources().values():
+        hits = _undeclared_sites(source)
         sites += len(hits)
         files += 1 if hits else 0
     return sites, files
@@ -292,9 +323,9 @@ def test_json_is_why_this_has_never_bitten():
     latent one — so the absence is asserted rather than remembered.
     """
     offenders = []
-    for path in _tracked_runners():
-        if "ensure_ascii" in path.read_text(encoding="utf-8"):
-            offenders.append(path.relative_to(REPO).as_posix())
+    for rel, source in _index_sources().items():
+        if "ensure_ascii" in source:
+            offenders.append(rel)
     assert not offenders, (
         f"these runners set ensure_ascii, so their JSON output may carry non-ASCII bytes "
         f"through an undeclared encoding: {offenders}"
