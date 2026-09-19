@@ -1,0 +1,1078 @@
+{
+ "spec": "D556",
+ "built_utc": "2026-09-19T18:00:36Z",
+ "builder": "scripts/build_fut_settle_strip.py",
+ "source": "GLBX.MDP3 statistics schema, stat_type 3 (settlement), windowed ids (D520/D521)",
+ "session_label": "ts_ref + 1 day in US/Eastern, as D526's strip",
+ "rows": 3319301,
+ "rows_raw": 13671923,
+ "dropped_exact_zero": 18349,
+ "dropped_exact_zero_by_root": {
+  "6A": 445,
+  "6B": 447,
+  "6C": 450,
+  "6E": 445,
+  "6J": 444,
+  "6S": 292,
+  "BTC": 191,
+  "BZ": 780,
+  "CL": 1004,
+  "ES": 326,
+  "GC": 961,
+  "HE": 643,
+  "HG": 948,
+  "HO": 762,
+  "LE": 402,
+  "NG": 456,
+  "NKD": 239,
+  "NQ": 290,
+  "PA": 925,
+  "PL": 925,
+  "RB": 952,
+  "RTY": 68,
+  "SI": 961,
+  "SR3": 154,
+  "TN": 121,
+  "UB": 326,
+  "YM": 292,
+  "ZB": 327,
+  "ZC": 366,
+  "ZF": 295,
+  "ZL": 705,
+  "ZM": 699,
+  "ZN": 315,
+  "ZS": 567,
+  "ZT": 296,
+  "ZW": 530
+ },
+ "dropped_weekend_refs": [
+  {
+   "root": "GC",
+   "ref": "2011-08-07"
+  },
+  {
+   "root": "YM",
+   "ref": "2012-09-02"
+  },
+  {
+   "root": "CL",
+   "ref": "2014-02-23"
+  },
+  {
+   "root": "ES",
+   "ref": "2023-07-15"
+  },
+  {
+   "root": "ES",
+   "ref": "2024-12-07"
+  }
+ ],
+ "dropped_negative_non_CL": [
+  {
+   "root": "ZM",
+   "contract": "ZMN9",
+   "ref": "2016-03-07",
+   "settle": -1.1
+  },
+  {
+   "root": "ZM",
+   "contract": "ZMV9",
+   "ref": "2016-03-07",
+   "settle": -1.1
+  },
+  {
+   "root": "ZM",
+   "contract": "ZMZ9",
+   "ref": "2016-03-07",
+   "settle": -1.1
+  },
+  {
+   "root": "TN",
+   "contract": "TNZ0",
+   "ref": "2020-03-17",
+   "settle": -0.875
+  },
+  {
+   "root": "6A",
+   "contract": "6AN5",
+   "ref": "2025-01-24",
+   "settle": -0.005200000000000001
+  },
+  {
+   "root": "6E",
+   "contract": "6EN5",
+   "ref": "2025-01-24",
+   "settle": -0.0023
+  },
+  {
+   "root": "6J",
+   "contract": "6JN5",
+   "ref": "2025-01-24",
+   "settle": -7.5e-06
+  },
+  {
+   "root": "6B",
+   "contract": "6BN5",
+   "ref": "2025-01-28",
+   "settle": -0.0126
+  },
+  {
+   "root": "UB",
+   "contract": "UBZ5",
+   "ref": "2025-02-27",
+   "settle": -117.00000000000001
+  }
+ ],
+ "roots": [
+  "6A",
+  "6B",
+  "6C",
+  "6E",
+  "6J",
+  "6S",
+  "BTC",
+  "BZ",
+  "CL",
+  "ES",
+  "GC",
+  "HE",
+  "HG",
+  "HO",
+  "LE",
+  "NG",
+  "NKD",
+  "NQ",
+  "PA",
+  "PL",
+  "RB",
+  "RTY",
+  "SI",
+  "SR3",
+  "TN",
+  "UB",
+  "YM",
+  "ZB",
+  "ZC",
+  "ZF",
+  "ZL",
+  "ZM",
+  "ZN",
+  "ZS",
+  "ZT",
+  "ZW"
+ ],
+ "per_root": {
+  "6A": {
+   "rows": 79673,
+   "sessions": 4102,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.5681,
+   "settle_max": 1.0937000000000001
+  },
+  "6B": {
+   "rows": 79654,
+   "sessions": 4102,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 1.0235,
+   "settle_max": 1.7153
+  },
+  "6C": {
+   "rows": 79684,
+   "sessions": 4102,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.6801,
+   "settle_max": 1.0591000000000002
+  },
+  "6E": {
+   "rows": 79679,
+   "sessions": 4102,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.96135,
+   "settle_max": 1.4833
+  },
+  "6J": {
+   "rows": 79675,
+   "sessions": 4102,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.006112500000000001,
+   "settle_max": 0.013341
+  },
+  "6S": {
+   "rows": 70986,
+   "sessions": 4102,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.8610000000000001,
+   "settle_max": 1.5454
+  },
+  "BTC": {
+   "rows": 18077,
+   "sessions": 2206,
+   "contracts": 114,
+   "first": "2017-11-17",
+   "last": "2026-09-10",
+   "settle_min": 3110.0,
+   "settle_max": 137425.0
+  },
+  "BZ": {
+   "rows": 352600,
+   "sessions": 4099,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 19.330000000000002,
+   "settle_max": 127.98
+  },
+  "CL": {
+   "rows": 410454,
+   "sessions": 4100,
+   "contracts": 212,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": -37.63,
+   "settle_max": 123.7
+  },
+  "ES": {
+   "rows": 36856,
+   "sessions": 4100,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 1002.0000000000001,
+   "settle_max": 9444.75
+  },
+  "GC": {
+   "rows": 91617,
+   "sessions": 4100,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 1049.6000000000001,
+   "settle_max": 6339.3
+  },
+  "HE": {
+   "rows": 47613,
+   "sessions": 4097,
+   "contracts": 80,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.09200000000000001,
+   "settle_max": 134.01000000000002
+  },
+  "HG": {
+   "rows": 161764,
+   "sessions": 4101,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 1.9395000000000002,
+   "settle_max": 8.207
+  },
+  "HO": {
+   "rows": 167498,
+   "sessions": 4100,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.43610000000000004,
+   "settle_max": 5.135400000000001
+  },
+  "LE": {
+   "rows": 36676,
+   "sessions": 4097,
+   "contracts": 60,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 80.30000000000001,
+   "settle_max": 258.475
+  },
+  "NG": {
+   "rows": 561197,
+   "sessions": 4100,
+   "contracts": 282,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 1.482,
+   "settle_max": 9.862
+  },
+  "NKD": {
+   "rows": 36716,
+   "sessions": 4102,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 985.0000000000001,
+   "settle_max": 73245.0
+  },
+  "NQ": {
+   "rows": 25919,
+   "sessions": 4100,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 37.260000000000005,
+   "settle_max": 35123.75
+  },
+  "PA": {
+   "rows": 34502,
+   "sessions": 4101,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 426.90000000000003,
+   "settle_max": 2986.2000000000003
+  },
+  "PL": {
+   "rows": 34502,
+   "sessions": 4101,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 595.9000000000001,
+   "settle_max": 2986.2000000000003
+  },
+  "RB": {
+   "rows": 168676,
+   "sessions": 4100,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.3109,
+   "settle_max": 4.2762
+  },
+  "RTY": {
+   "rows": 13687,
+   "sessions": 2316,
+   "contracts": 40,
+   "first": "2017-06-02",
+   "last": "2026-09-10",
+   "settle_min": 980.6,
+   "settle_max": 3540.7000000000003
+  },
+  "SI": {
+   "rows": 83521,
+   "sessions": 4100,
+   "contracts": 120,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 11.735000000000001,
+   "settle_max": 125.742
+  },
+  "SR3": {
+   "rows": 82058,
+   "sessions": 2106,
+   "contracts": 83,
+   "first": "2018-04-20",
+   "last": "2026-09-10",
+   "settle_min": 70.14,
+   "settle_max": 779.13
+  },
+  "TN": {
+   "rows": 8566,
+   "sessions": 3080,
+   "contracts": 47,
+   "first": "2010-10-04",
+   "last": "2026-09-10",
+   "settle_min": 2.90625,
+   "settle_max": 10137.0
+  },
+  "UB": {
+   "rows": 12418,
+   "sessions": 4104,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 10.75,
+   "settle_max": 234.59375000000003
+  },
+  "YM": {
+   "rows": 16543,
+   "sessions": 4102,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 9425.0,
+   "settle_max": 88650.0
+  },
+  "ZB": {
+   "rows": 12418,
+   "sessions": 4104,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 4.40625,
+   "settle_max": 186.9375
+  },
+  "ZC": {
+   "rows": 61175,
+   "sessions": 4103,
+   "contracts": 50,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 301.5,
+   "settle_max": 838.75
+  },
+  "ZF": {
+   "rows": 15202,
+   "sessions": 4104,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 103.921875,
+   "settle_max": 126.48437500000001
+  },
+  "ZL": {
+   "rows": 96708,
+   "sessions": 4103,
+   "contracts": 80,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 24.990000000000002,
+   "settle_max": 90.60000000000001
+  },
+  "ZM": {
+   "rows": 96063,
+   "sessions": 4103,
+   "contracts": 80,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 0.9,
+   "settle_max": 548.1
+  },
+  "ZN": {
+   "rows": 15166,
+   "sessions": 4104,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 1.6875,
+   "settle_max": 4950.0
+  },
+  "ZS": {
+   "rows": 82919,
+   "sessions": 4103,
+   "contracts": 70,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 791.0,
+   "settle_max": 1771.0
+  },
+  "ZT": {
+   "rows": 15199,
+   "sessions": 4104,
+   "contracts": 40,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 101.015625,
+   "settle_max": 110.52734375
+  },
+  "ZW": {
+   "rows": 53640,
+   "sessions": 4103,
+   "contracts": 50,
+   "first": "2010-06-04",
+   "last": "2026-09-10",
+   "settle_min": 361.0,
+   "settle_max": 1425.25
+  }
+ },
+ "files": [
+  {
+   "file": "glbx-mdp3-20100606-20101231.statistics.dbn.zst",
+   "rows_in": 21257261,
+   "rows_kept": 397484,
+   "secs": 7.1,
+   "rss_mb": 273
+  },
+  {
+   "file": "glbx-mdp3-20110101-20111231.statistics.dbn.zst",
+   "rows_in": 24252743,
+   "rows_kept": 677421,
+   "secs": 10.1,
+   "rss_mb": 538
+  },
+  {
+   "file": "glbx-mdp3-20120101-20121231.statistics.dbn.zst",
+   "rows_in": 20775466,
+   "rows_kept": 688364,
+   "secs": 10.5,
+   "rss_mb": 253
+  },
+  {
+   "file": "glbx-mdp3-20130101-20131231.statistics.dbn.zst",
+   "rows_in": 23198060,
+   "rows_kept": 708964,
+   "secs": 10.8,
+   "rss_mb": 454
+  },
+  {
+   "file": "glbx-mdp3-20140101-20141231.statistics.dbn.zst",
+   "rows_in": 24147098,
+   "rows_kept": 1022696,
+   "secs": 13.2,
+   "rss_mb": 561
+  },
+  {
+   "file": "glbx-mdp3-20150101-20151231.statistics.dbn.zst",
+   "rows_in": 27044387,
+   "rows_kept": 1266832,
+   "secs": 16.2,
+   "rss_mb": 397
+  },
+  {
+   "file": "glbx-mdp3-20160101-20161231.statistics.dbn.zst",
+   "rows_in": 28233139,
+   "rows_kept": 1367645,
+   "secs": 17.1,
+   "rss_mb": 509
+  },
+  {
+   "file": "glbx-mdp3-20170101-20171231.statistics.dbn.zst",
+   "rows_in": 35799069,
+   "rows_kept": 998499,
+   "secs": 14.8,
+   "rss_mb": 274
+  },
+  {
+   "file": "glbx-mdp3-20180101-20181231.statistics.dbn.zst",
+   "rows_in": 44500449,
+   "rows_kept": 693736,
+   "secs": 12.2,
+   "rss_mb": 554
+  },
+  {
+   "file": "glbx-mdp3-20190101-20191231.statistics.dbn.zst",
+   "rows_in": 46824168,
+   "rows_kept": 724180,
+   "secs": 12.3,
+   "rss_mb": 339
+  },
+  {
+   "file": "glbx-mdp3-20200101-20201231.statistics.dbn.zst",
+   "rows_in": 54840862,
+   "rows_kept": 740017,
+   "secs": 13.6,
+   "rss_mb": 584
+  },
+  {
+   "file": "glbx-mdp3-20210101-20211231.statistics.dbn.zst",
+   "rows_in": 56358701,
+   "rows_kept": 739718,
+   "secs": 13.8,
+   "rss_mb": 305
+  },
+  {
+   "file": "glbx-mdp3-20220101-20221231.statistics.dbn.zst",
+   "rows_in": 63993510,
+   "rows_kept": 743483,
+   "secs": 15.8,
+   "rss_mb": 522
+  },
+  {
+   "file": "glbx-mdp3-20230101-20231231.statistics.dbn.zst",
+   "rows_in": 59739301,
+   "rows_kept": 757384,
+   "secs": 20.8,
+   "rss_mb": 577
+  },
+  {
+   "file": "glbx-mdp3-20240101-20241231.statistics.dbn.zst",
+   "rows_in": 60769150,
+   "rows_kept": 772952,
+   "secs": 21.6,
+   "rss_mb": 262
+  },
+  {
+   "file": "glbx-mdp3-20250101-20251231.statistics.dbn.zst",
+   "rows_in": 65852916,
+   "rows_kept": 793866,
+   "secs": 24.5,
+   "rss_mb": 271
+  },
+  {
+   "file": "glbx-mdp3-20260101-20260910.statistics.dbn.zst",
+   "rows_in": 54580107,
+   "rows_kept": 578682,
+   "secs": 18.8,
+   "rss_mb": 550
+  }
+ ],
+ "workers": 8,
+ "wall_min": 0.73,
+ "speed_ratio": 5.81,
+ "probe_rss_mb": 275,
+ "sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346",
+ "gates": {
+  "G1": {
+   "d526_rows": 263983,
+   "mine_rows": 263983,
+   "same_rows": true,
+   "same_settlements": true,
+   "window": [
+    "2016-01-04",
+    "2023-12-29"
+   ]
+  },
+  "G2": {
+   "6A": {
+    "sessions": 3342,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "6B": {
+    "sessions": 3342,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "6C": {
+    "sessions": 3342,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "6E": {
+    "sessions": 3342,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "6J": {
+    "sessions": 3342,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "6S": {
+    "sessions": 3342,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "BTC": {
+    "sessions": 1550,
+    "no_settlement_sessions": 38,
+    "no_settlement_per_year": 6.3,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "BZ": {
+    "sessions": 3340,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "CL": {
+    "sessions": 3344,
+    "no_settlement_sessions": 77,
+    "no_settlement_per_year": 5.9,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ES": {
+    "sessions": 3347,
+    "no_settlement_sessions": 75,
+    "no_settlement_per_year": 5.8,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "GC": {
+    "sessions": 3338,
+    "no_settlement_sessions": 73,
+    "no_settlement_per_year": 5.6,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "HE": {
+    "sessions": 3262,
+    "no_settlement_sessions": 1,
+    "no_settlement_per_year": 0.1,
+    "front": 0.9996933455995094,
+    "next": 0.9996933455995094
+   },
+   "HG": {
+    "sessions": 3339,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "HO": {
+    "sessions": 3343,
+    "no_settlement_sessions": 76,
+    "no_settlement_per_year": 5.8,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "LE": {
+    "sessions": 3262,
+    "no_settlement_sessions": 1,
+    "no_settlement_per_year": 0.1,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "NG": {
+    "sessions": 3343,
+    "no_settlement_sessions": 76,
+    "no_settlement_per_year": 5.8,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "NKD": {
+    "sessions": 3342,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "NQ": {
+    "sessions": 3347,
+    "no_settlement_sessions": 75,
+    "no_settlement_per_year": 5.8,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "PA": {
+    "sessions": 3339,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "PL": {
+    "sessions": 3339,
+    "no_settlement_sessions": 71,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "RB": {
+    "sessions": 3343,
+    "no_settlement_sessions": 76,
+    "no_settlement_per_year": 5.8,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "RTY": {
+    "sessions": 1550,
+    "no_settlement_sessions": 38,
+    "no_settlement_per_year": 6.3,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "SI": {
+    "sessions": 3339,
+    "no_settlement_sessions": 73,
+    "no_settlement_per_year": 5.6,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "SR3": {
+    "sessions": 1287,
+    "no_settlement_sessions": 28,
+    "no_settlement_per_year": 5.6,
+    "front": 1.0,
+    "next": 0.9872915011914217
+   },
+   "TN": {
+    "sessions": 2059,
+    "no_settlement_sessions": 52,
+    "no_settlement_per_year": 6.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "UB": {
+    "sessions": 3346,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "YM": {
+    "sessions": 3352,
+    "no_settlement_sessions": 77,
+    "no_settlement_per_year": 5.9,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZB": {
+    "sessions": 3346,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZC": {
+    "sessions": 3272,
+    "no_settlement_sessions": 3,
+    "no_settlement_per_year": 0.2,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZF": {
+    "sessions": 3346,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZL": {
+    "sessions": 3272,
+    "no_settlement_sessions": 3,
+    "no_settlement_per_year": 0.2,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZM": {
+    "sessions": 3272,
+    "no_settlement_sessions": 3,
+    "no_settlement_per_year": 0.2,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZN": {
+    "sessions": 3347,
+    "no_settlement_sessions": 73,
+    "no_settlement_per_year": 5.6,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZS": {
+    "sessions": 3272,
+    "no_settlement_sessions": 3,
+    "no_settlement_per_year": 0.2,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZT": {
+    "sessions": 3346,
+    "no_settlement_sessions": 72,
+    "no_settlement_per_year": 5.5,
+    "front": 1.0,
+    "next": 1.0
+   },
+   "ZW": {
+    "sessions": 3272,
+    "no_settlement_sessions": 3,
+    "no_settlement_per_year": 0.2,
+    "front": 1.0,
+    "next": 1.0
+   }
+  },
+  "G3": {
+   "6A": {
+    "n": 3271,
+    "median": 0.0006655574288942606,
+    "p99": 0.008347590895389176
+   },
+   "6B": {
+    "n": 3271,
+    "median": 0.0004712905593477448,
+    "p99": 0.0059170594218449606
+   },
+   "6C": {
+    "n": 3271,
+    "median": 0.0006090340232240586,
+    "p99": 0.007250507975061924
+   },
+   "6E": {
+    "n": 3271,
+    "median": 0.0004627059123827588,
+    "p99": 0.006932065865660203
+   },
+   "6J": {
+    "n": 3271,
+    "median": 0.0005143298110354617,
+    "p99": 0.007221889031779735
+   },
+   "6S": {
+    "n": 3271,
+    "median": 0.0004886869080299217,
+    "p99": 0.00700664255165179
+   },
+   "BTC": {
+    "n": 1512,
+    "median": 0.0031163078220798716,
+    "p99": 0.03166995760216353
+   },
+   "BZ": {
+    "n": 3268,
+    "median": 0.0019672782522516166,
+    "p99": 0.01681515277182865
+   },
+   "CL": {
+    "n": 3267,
+    "median": 0.0021691982475453135,
+    "p99": 0.036905641148712885
+   },
+   "ES": {
+    "n": 3272,
+    "median": 0.0005339313734689921,
+    "p99": 0.020873139072004835
+   },
+   "GC": {
+    "n": 3265,
+    "median": 0.0012029747732450699,
+    "p99": 0.013069913523183374
+   },
+   "HE": {
+    "n": 3260,
+    "median": 0.00156045399310256,
+    "p99": 0.018570353497085686
+   },
+   "HG": {
+    "n": 3267,
+    "median": 0.00149142458667012,
+    "p99": 0.013435864267512023
+   },
+   "HO": {
+    "n": 3267,
+    "median": 0.0018211335648027499,
+    "p99": 0.02648642106325714
+   },
+   "LE": {
+    "n": 3261,
+    "median": 0.0009623713571166657,
+    "p99": 0.01336018894787454
+   },
+   "NG": {
+    "n": 3267,
+    "median": 0.002733486895660419,
+    "p99": 0.04425793787022006
+   },
+   "NKD": {
+    "n": 3270,
+    "median": 0.0006697177609464589,
+    "p99": 0.02029074214162132
+   },
+   "NQ": {
+    "n": 3272,
+    "median": 0.0006591447510057205,
+    "p99": 0.022005710428723953
+   },
+   "PA": {
+    "n": 3268,
+    "median": 0.0022454612549047265,
+    "p99": 0.020677714587598924
+   },
+   "PL": {
+    "n": 3268,
+    "median": 0.0017670144957819863,
+    "p99": 0.014510857600024716
+   },
+   "RB": {
+    "n": 3267,
+    "median": 0.0021269061545072633,
+    "p99": 0.03342473361292911
+   },
+   "RTY": {
+    "n": 1512,
+    "median": 0.0007356100041337679,
+    "p99": 0.008429891485331043
+   },
+   "SI": {
+    "n": 3266,
+    "median": 0.0022415340007159697,
+    "p99": 0.02270860976783021
+   },
+   "SR3": {
+    "n": 1259,
+    "median": 5.01089870572727e-05,
+    "p99": 0.0005909919508967846
+   },
+   "TN": {
+    "n": 2007,
+    "median": 0.0005852516749180121,
+    "p99": 0.004832342137132452
+   },
+   "UB": {
+    "n": 3274,
+    "median": 0.0012582511990793005,
+    "p99": 0.008742404034156515
+   },
+   "YM": {
+    "n": 3275,
+    "median": 0.0005431619920153837,
+    "p99": 0.01782463887450664
+   },
+   "ZB": {
+    "n": 3274,
+    "median": 0.0008229608649275903,
+    "p99": 0.005984144493818624
+   },
+   "ZC": {
+    "n": 3269,
+    "median": 0.0009519277253821558,
+    "p99": 0.03098343033678563
+   },
+   "ZF": {
+    "n": 3274,
+    "median": 0.00024853210876076026,
+    "p99": 0.0020764095049436646
+   },
+   "ZL": {
+    "n": 3269,
+    "median": 0.0009948599726202875,
+    "p99": 0.021471216772034684
+   },
+   "ZM": {
+    "n": 3269,
+    "median": 0.0009770396478263905,
+    "p99": 0.02488000327526794
+   },
+   "ZN": {
+    "n": 3274,
+    "median": 0.000375798589656116,
+    "p99": 0.0032770253928332007
+   },
+   "ZS": {
+    "n": 3269,
+    "median": 0.0007275373183769279,
+    "p99": 0.0210199269950498
+   },
+   "ZT": {
+    "n": 3274,
+    "median": 7.136994614603627e-05,
+    "p99": 0.0008414837358231141
+   },
+   "ZW": {
+    "n": 3269,
+    "median": 0.0011702751481902445,
+    "p99": 0.033878436263549715
+   }
+  },
+  "G4": {
+   "months_min": 1,
+   "months_max": 3,
+   "exact_zeros": 0,
+   "weekend_rows": 0,
+   "negatives": {
+    "CL": {
+     "min": "2020-04-17",
+     "max": "2020-04-20",
+     "size": 2
+    }
+   }
+  }
+ },
+ "all_gates_pass": true
+}

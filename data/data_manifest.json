@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T21:08:01Z",
+  "built_at": "2026-09-19T18:06:00Z",
   "note": "Every bulk panel under data/, listed by suffix and regardless of whether git tracks it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) and are simply present in a clone. --verify re-hashes what is on disk either way.",
   "suffixes": [
     ".csv.gz",
@@ -7,8 +7,8 @@
     ".npz",
     ".zip"
   ],
-  "total_bytes": 1536696184,
-  "count": 118,
+  "total_bytes": 1555997569,
+  "count": 120,
   "files": [
     {
       "path": "data/d291_null_surface.npz",
@@ -624,6 +624,15 @@
       "sidecars": []
     },
     {
+      "path": "data/fixtures/fut_curve_front_next.csv.gz",
+      "bytes": 3095497,
+      "sha256": "889bd744a9684957fddd81e355d48224c4a45b8994dc9eda313e9837257e251c",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fut_curve_front_next.meta.json"
+      ]
+    },
+    {
       "path": "data/fixtures/fut_day1m.parquet",
       "bytes": 400992632,
       "sha256": "074977e7ed5c2e693c1e65962fc138ca7c08f2b18b11eb4bc3f566a7ae1fed9c",
@@ -732,6 +741,15 @@
       "sha256": "a13801e8474ba03ca0bab5433434f06fe54cf601dfefbdb9fe1eea93f7945ef6",
       "git_blob": "2e4cabff517c8ad88b6b4fff0e151947b9057f26",
       "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_settle_strip.csv.gz",
+      "bytes": 16205888,
+      "sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fut_settle_strip.meta.json"
+      ]
     },
     {
       "path": "data/fixtures/fut_spread_1m.csv.gz",

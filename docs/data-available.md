@@ -66,6 +66,27 @@ the day session on most earlier days: 21% coverage in 2010, 89% in 2015), and th
 circuit-breaker sessions of March 2020 (09, 12, 16) have no continuous open** — one print at 09:30
 and nothing until 09:45 — so an open-to-close study must drop them or read the open at 09:45.
 
+**The settlement strip and the curve table (D556, 2026-09-19).** **`fut_settle_strip.csv.gz`**: every
+settlement of every listed month for the 36 breadth roots, 2010-06-07 → 2026-09-10, **3,319,301 rows**
+from the `statistics` schema (`stat_type` 3) on the windowed ids; builder
+`scripts/build_fut_settle_strip.py --extract` (system python, 0.7 min on 8 processes); gitignored by
+suffix and in the data manifest, sidecar tracked. **`fut_curve_front_next.csv.gz`** (`--derive`,
+143,113 root-sessions): the breadth fixture's own front, its settlement, the nearest later delivery
+month with a settlement that session, `months_between` and the annualised carry
+`(F_front − F_next)/F_next × 12/months`. **Gates in both metas:** the CL and GC rows reproduce
+`data/d526_curve_strip_CL_GC.csv.gz` **exactly** (263,983 rows, settlements identical); coverage among
+settling sessions ≥ 99.97% front / 98.7% next; the front settlement sits within a median 0.31% (BTC,
+the worst) of the breadth session close. **What bites:** *(i)* **a session on which a root publishes
+no settlement is that root's exchange holiday** — the breadth fixture carries the holiday's
+abbreviated Globex session, CME books it into the next trade date, and the calendar differs by
+exchange group (5–6 a year on CME/NYMEX/COMEX roots, ~0.2 on the CBOT grains and livestock); the
+column `root_settles` marks it, and a carry read on such a session must take the last settlement
+within a few sessions. *(ii)* Exact-zero settlements (18,349) are the second missing marker and are
+dropped (D526); **negative settlements are kept only for CL in April 2020** — nine other negatives,
+each a single print on a far-deferred month with the magnitude of a daily change, are dropped and
+listed in the meta. *(iii)* Two settlements carried a weekend `ref` and are dropped. *(iv)* The
+derive step is a 4–5 minute Python loop; the extract is the fast part.
+
 And the two **breadth** fixtures, which cover **36 roots** rather than a hand-picked few:
 **`fut_breadth_hourly.csv.gz`** (the hourly day session, 170,643 root-sessions, 2010-06-07 →;
 builder `scripts/build_fut_breadth_hourly.py`; it is the source of the windowed `ids_of` and of

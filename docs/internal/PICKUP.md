@@ -23,8 +23,18 @@ on one side and stale momentum on the other, and were purged in the record (the 
 +2.3 at a −252…−21 shift and **−0.76 at +252…+504**, the long-horizon reversal); (ii) the breadth
 fixture carries a **placeholder Sunday row every week** (0 bars, no close) and 69 one-bar weekend
 stubs — chain returns across kept rows only, or a fifth of every root's returns vanish.
-**Next on the deposit's list:** carry timing needs a second-nearby series, which no fixture holds;
-the null on the 2011–2023 window is a two-minute read the record did not take.
+**[D556](../decisions/D556-RESULT-does-not-pass-carry-timing-is-negative-on-2016-2023.md) — carry
+timing as published, DOES NOT PASS.** The settlement strip now exists (`fut_settle_strip.csv.gz`,
+3.3 M settlements, 36 roots, every listed month, 2010 → 2026; and `fut_curve_front_next.csv.gz`, the
+front/next basis per root-session), gated: it reproduces D526's CL/GC strip **exactly**. On it the KMPV
+rule is **−0.20 gross on 2016–2023** (38th percentile of its purged null) after **+1.61 on 2011–2015**;
+ρ with trend is **0.18** as the deposit said, and folding carry into the trend book at equal weight
+takes the Sharpe from +0.30 to +0.20 while cutting max drawdown from −36% to −29%. **The dollar book
+at minimum size reads +0.20 and it is one contract of palladium** (+$276k of a +$216k total) —
+a 34-root one-contract book is a bet on whichever full-size contracts carry the largest dollar σ,
+and it can disagree in sign with the equal-risk book. **Still on the deposit's list:** the
+cross-sectional sorts (strategies 3–5) need only the curve table; a seasonal-adjusted carry for NG and
+the grains is a declared-construction away; neither long-window null has been enumerated.
 
 ---
 
