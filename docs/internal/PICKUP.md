@@ -2,6 +2,32 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## THE DEPOSIT FOLDER, AND ITS FIRST STUDY (D555), 2026-09-19
+
+The principal dropped fourteen documents into `docs/internal/User-Doc-Deposit/` — a mechanism-first
+research programme written outside this repository (framework: `ALPHA_PROGRAMME`, `FEATURE_RESEARCH`,
+`DATA_EXPANSION_PLAN`, `READING_LIST`; slow-book derivations: `HEDGING_FLOW_DERIVATION`,
+`BASIS_MOMENTUM`, `PUBLISHED_STRATEGIES`; seven intraday event studies indexed by `EVENT_PORTFOLIO`,
+one of them killed at premise). **Its conflicts with this record are set aside on the principal's
+instruction** (micro flow as a retail proxy, the spent overnight holdouts, the micro cost floor);
+the instruction is to examine the programme, starting with its published strategies.
+
+**[D555](../decisions/D555-RESULT-does-not-pass-and-the-harness-reproduces-AQR-at-0-815.md) —
+TSMOM as published, 36 roots, DOES NOT PASS; HARNESS OK.** The replication correlates **0.815** with
+AQR's own monthly factor over 2011–2023 and out-earns it (0.44 vs 0.30), so the futures data layer
+is calibrated against a free published benchmark for the first time. On 2016–2023 the 12-month book
+scores **+0.30 gross** at the 78th percentile of an enumerated sign-rotation null (p95 +0.95), and
+AQR's factor reads **−0.02** on the same window. **Two things to carry:** (i) the pre-registered
+rotation null was contaminated — offsets within a lookback of either end of the cycle are look-ahead
+on one side and stale momentum on the other, and were purged in the record (the offset profile shows
++2.3 at a −252…−21 shift and **−0.76 at +252…+504**, the long-horizon reversal); (ii) the breadth
+fixture carries a **placeholder Sunday row every week** (0 bars, no close) and 69 one-bar weekend
+stubs — chain returns across kept rows only, or a fifth of every root's returns vanish.
+**Next on the deposit's list:** carry timing needs a second-nearby series, which no fixture holds;
+the null on the 2011–2023 window is a two-minute read the record did not take.
+
+---
+
 ## CME FUTURES ARE NOW ON DISK — 111.0 GB, verified, 2026-09-12
 
 Databento `GLBX.MDP3` under a one-month CME Standard subscription. Every job quoted **$0.00**
