@@ -627,6 +627,7 @@ would look like data. The tokens are what is shown.
 | D546 | both gates are in and prove they fire, and the config fix does not cover the invocation that found the problem | [record](D546-a-collectable-script-and-a-json-that-never-parsed.md) · [RESULT](D546-RESULT-the-fix-does-not-cover-the-path-that-found-it.md) |
 | D547 | all four predictions held, and deleting a research module moved a number in the verification document | [RESULT](D547-RESULT-all-four-held-and-the-raise-count-moved.md) · [record](D547-retiring-S5b-and-two-saved-error-pages.md) |
 | D548 | the page moved, and measuring it found that none of the figures on it had a gate | [RESULT](D548-RESULT-none-of-the-figures-had-a-gate.md) · [record](D548-the-front-page-stops-explaining-the-checkout.md) |
+| D549 | The history a public clone receives, and the seam that rewriting it leaves in 760 records | [record](D549-the-history-a-public-clone-receives.md) |
 
 <!-- REGISTER:END -->
 
