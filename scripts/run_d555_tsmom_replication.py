@@ -535,7 +535,7 @@ def run(log=print):
     for r, d, a, b in g["nonpositive"]:
         log(f"    {r} {d}: {a} -> {b} (log return undefined; return-space contribution 0, dollar P&L kept)")
 
-    meta = json.load(open(META)); specs = json.load(open(SPECS))
+    meta = json.loads(META.read_text(encoding="utf-8")); specs = json.loads(SPECS.read_text(encoding="utf-8"))
     upp = np.zeros(n); tick_usd = np.zeros(n); comm_rt = np.zeros(n); size_name = []
     for i, r in enumerate(roots):
         sp = meta["specs"][r]
