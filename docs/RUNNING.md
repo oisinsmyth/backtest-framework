@@ -1,0 +1,82 @@
+# Running it
+
+*What happens when you actually run this suite, on this machine and on a fresh clone.*
+
+Everything here is operational: how long it takes, what a `git clone` does on Windows, and what
+the tests that skip are waiting for. It lives on its own page because none of it is about the
+framework, and forty-two consecutive lines of it used to sit between the front page's two
+commands and its first real explanation ([D548](decisions/D548-the-front-page-stops-explaining-the-checkout.md)).
+
+Start here:
+
+```bash
+uv sync
+uv run pytest -q tests/golden     # 101 ledger-anchored tests, 0.58s
+```
+
+That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
+full suite is `uv run pytest -q`.
+
+## How long it takes
+
+**Wall-clock runtimes live on this page and nowhere else (D544).** A test count is the same on
+any machine at a given commit; a runtime is a property of the machine and the moment, so it has
+one home and a date on it.
+
+**The reason D544 gave for that rule was too generous, and moving this page measured it.** The
+claim was that runtimes are *the only* numbers no gate can hold. Seven figures from this page were
+perturbed one at a time — the clone's pass and skip counts, the 85-character path limit, "49 of
+the 53", the manifest's panel and blob-id counts, D536's 844 MB — and the suite stayed green on
+**all seven**. The counts sweep checks quantities it can compute from the git index, and none of
+these was one of them.
+
+Three of the seven are computable and are now pinned by
+[`tests/unit/test_running_page_figures.py`](../tests/unit/test_running_page_figures.py), which
+also names the three panels that have no blob id rather than only counting them. The rest are
+properties of a machine, of a clone, or of history, and nothing but this page's date stands behind
+them. [`docs/VERIFICATION.md`](VERIFICATION.md) carries the same clone figures for its own
+argument, and **nothing stops those two drifting apart** — which is worth knowing when you read
+either. **Measured 2026-09-18, eight runs on this machine: 3m48s
+to 5m52s**, the spread being how loaded the laptop was rather than anything about the suite. Two
+documents used to quote this and they disagreed in both directions — one said 3m31s here and 5m45s
+on a clone, the other 6–7.5 min here and 2m56s on a clone, which cannot both be true about which is
+faster. [`CONTRIBUTING.md`](../CONTRIBUTING.md) and [`README.md`](../README.md) both point here.
+
+## Cloning it
+
+**On a clone it was 2,017 passed and 53 skipped in 5m45s** — measured on 2026-09-17 by cloning
+this repository into an empty directory and running it, not by reasoning about one from inside the
+working copy. That distinction has **three** times earned its keep: the first clone failed three
+tests the working copy could not, on a line-ending convention the working copy predates; the
+second found five links that resolve only on the author's disk; and the third would not check out
+at all. Every tracked path is now 85 characters or shorter and a test says so
+([D540](decisions/D540-local-config-a-clone-never-receives.md)) — before that the longest was
+209, and on Windows a default `git clone` aborted the checkout, **reported exit code 0**, and left
+an empty index. If you are on an older git and want the belt and braces:
+
+```bash
+git clone -c core.longpaths=true <url>
+```
+
+That flag is set in *this* repository's `.git/config`, which is why the failure was invisible here
+for 539 decisions: **`git clone` does not copy local config.** Three separate defects have now had
+that same cause.
+
+## What the skips want
+
+**Every skip that wants a file names it — 49 of the 53 (2026-09-17).** The other four want a git
+identity rather than a file, and say so; no clone has one, which is the same defect class as
+[D540](decisions/D540-local-config-a-clone-never-receives.md). This sentence used to say all
+53 named a file and 16 did — the 33 that did not were saying "fixture not built", or in four cases
+nothing at all, about panels that are fully recoverable. The panels left git in
+[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what
+a **checkout** no longer carries; they remain in the history, so a `git clone` is about 1.1 GB, of
+which 969 MB is `.git`. Two of the smallest came back into the index in
+[D538](decisions/D538-two-small-panels-return-to-the-index.md) for 6.9 MB and, because their
+blobs were already in history, no extra bytes at all — which is what took the skips from 136 to 49
+(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 118
+panels and the git blob id of **115** of them. The three without one —
+`data/d377_ensemble.npz`, `data/d382_scores.npz` and `data/fixtures/fut_day1m.parquet` — were
+never tracked in the first place, so there is no blob to recover them from and the checksum is all
+the manifest can offer. Every panel a *skipped test* names does have a blob id, which is what
+makes the skip recoverable rather than merely explained.

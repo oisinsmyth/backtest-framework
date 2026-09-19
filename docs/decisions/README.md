@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 282 of these records carry neither field —
+**No Status or Category column, deliberately.** 283 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -626,7 +626,7 @@ would look like data. The tokens are what is shown.
 | D545 | the page exists, and three of the numbers it was built to quote turned out to have no artifact | [RESULT](D545-RESULT-the-page-exists-and-three-of-its-numbers-do-not.md) · [record](D545-the-narrative-layer-over-D190-D544.md) |
 | D546 | both gates are in and prove they fire, and the config fix does not cover the invocation that found the problem | [record](D546-a-collectable-script-and-a-json-that-never-parsed.md) · [RESULT](D546-RESULT-the-fix-does-not-cover-the-path-that-found-it.md) |
 | D547 | all four predictions held, and deleting a research module moved a number in the verification document | [RESULT](D547-RESULT-all-four-held-and-the-raise-count-moved.md) · [record](D547-retiring-S5b-and-two-saved-error-pages.md) |
-| D548 | Forty-two consecutive lines of the front page are about a checkout bug, and none of them is about the framework | [record](D548-the-front-page-stops-explaining-the-checkout.md) |
+| D548 | the page moved, and measuring it found that none of the figures on it had a gate | [RESULT](D548-RESULT-none-of-the-figures-had-a-gate.md) · [record](D548-the-front-page-stops-explaining-the-checkout.md) |
 
 <!-- REGISTER:END -->
 
