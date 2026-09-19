@@ -175,3 +175,16 @@ Corrected in the workflow and in `docs/VERIFICATION.md`; the cause, the fix and 
 are in [D550](D550-what-CI-found-in-its-first-run.md). That this record's own numbers came from a
 worktree, in a record whose subject is *the history a clone receives*, is the joke the first CI
 run made at its author's expense.
+
+---
+
+## ADDENDUM 2026-09-19 (second) — what else pointed at the objects this purge removed
+
+This record verified the tree hash, the commit count, the clone size and the absence of every
+purged path. **It did not ask what else referenced the blobs it was deleting.**
+`data/data_manifest.json` carries a git blob id for 115 panels, and three documents described
+those ids as what makes a skipped test recoverable. After the purge, 113 of them dangle.
+
+The purge was right — those blobs are the vendor data — and the recovery path could not have
+survived it. Both facts were settled by this record, which noticed neither.
+[D552](D552-the-recovery-path-the-purge-removed.md) has the measurement and the corrections.

@@ -80,6 +80,14 @@ blobs were already in history, no extra bytes at all — which is what took the 
 (2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 118
 panels and the git blob id of **115** of them. The three without one —
 `data/d377_ensemble.npz`, `data/d382_scores.npz` and `data/fixtures/fut_day1m.parquet` — were
-never tracked in the first place, so there is no blob to recover them from and the checksum is all
-the manifest can offer. Every panel a *skipped test* names does have a blob id, which is what
-makes the skip recoverable rather than merely explained.
+never tracked in the first place, so the checksum is all the manifest can offer for them.
+
+**The blob ids no longer resolve, and cannot be made to.** They record what each panel's blob was
+in the pre-publication history, and
+[D549](decisions/D549-the-history-a-public-clone-receives.md) purged those objects — they are the
+CME- and Alpha-Vantage-derived panels this repository may not redistribute. **113 of the 115 are
+dangling in any clone**; the two that resolve are the Binance panels still tracked. Restoring them
+would undo the licence fix, so the recovery path and the purge are mutually exclusive and the
+purge won. What the manifest still offers is the **sha256**: obtain a panel elsewhere and it tells
+you whether you have the right bytes
+([D552](decisions/D552-the-recovery-path-the-purge-removed.md)).

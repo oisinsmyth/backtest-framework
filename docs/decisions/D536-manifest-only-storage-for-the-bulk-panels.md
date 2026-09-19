@@ -128,3 +128,19 @@ this decision's to solve.
 - The two `.gitignore` entries D191's successors added by hand (`d377_ensemble.npz`,
   `d382_scores.npz`, each with its own justification comment) are now covered by the general rule.
   Their comments are left in place: they record why those two were caught first.
+
+---
+
+## ADDENDUM 2026-09-19 — the load-bearing field no longer bears load
+
+This record makes the git blob id *"the load-bearing field"*, and against the repository it was
+written for it was. **In the published repository it is not.**
+[D549](D549-the-history-a-public-clone-receives.md) purged the panel blobs before the first push,
+because they are the vendor-derived data this repository may not redistribute, so **113 of the 115
+ids dangle in any clone**. The two that resolve are the panels
+[D538](D538-two-small-panels-return-to-the-index.md) returned to the index.
+
+Nothing here was wrong when written and nothing in it is edited. The trade and its consequence are
+in [D552](D552-the-recovery-path-the-purge-removed.md): a public clone cannot recover a
+vendor-derived panel from this repository's objects, by design, and the sha256 is the field that
+still does work.

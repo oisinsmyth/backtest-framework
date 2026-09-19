@@ -7,7 +7,9 @@ without checking.
 **This is an inventory of THIS MACHINE, not of the repository.** The largest entry below is
 111.0 GB under `data/raw/`, which is gitignored: **a clone receives none of it.** What a clone
 does receive is [`data/data_manifest.json`](../data/data_manifest.json), which carries the sha256
-of every bulk panel and the git blob id of the ones recoverable from history.
+of every bulk panel, and the git blob id each one carried *before publication*. Those objects
+were purged with the vendor data (D549), so 113 of the 115 do not resolve in a clone — **the
+sha256 is the usable field** (D552).
 
 > **This is an index, not a licence.** Several fixtures carry holdout status, adjustment
 > quirks or licence restrictions that decide whether a given study may read them at all.
