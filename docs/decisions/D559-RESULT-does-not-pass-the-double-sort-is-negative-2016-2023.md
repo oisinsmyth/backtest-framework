@@ -223,3 +223,8 @@ would already have been the wrong bar.
 - **Nothing closed.** Three of the deposit's five commodity constructions have now been scored on this
   fixture and none is positive on 2016–2023; the deposit's own recommendation — a combined continuous
   forecast (§8) rather than a filter — is the construction that has not been built.
+
+
+---
+
+*Addendum, 2026-09-19, under [R17](../RULES.md#r17) (every reported Sharpe carries a Sortino).* Re-run with the Sortino beside every Sharpe; no previously written number changed. **Primary EW/published, 2016–2023: Sharpe −0.112, Sortino −0.155**; purged null Sortino p50 +0.12, p95 +0.95 (Sharpe p50 +0.08, p95 +0.65). Verdict unchanged; every cell and both single sorts carry both ratios in `data/d559_double_sort.json`.

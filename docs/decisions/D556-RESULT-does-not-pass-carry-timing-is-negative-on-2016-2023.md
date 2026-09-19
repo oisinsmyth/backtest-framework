@@ -114,3 +114,8 @@ to, at the price it names.
   differentials), as the deposit specifies; on the rates legs its sign is close to a constant (long
   share 72–85%), so "carry timing" on ZN/ZB/UB/TN is mostly a long bond position through 2022.
 - The 2011–2023 null was not enumerated, as in D555; it is a two-minute read.
+
+
+---
+
+*Addendum, 2026-09-19, under [R17](../RULES.md#r17) (every reported Sharpe carries a Sortino).* Re-run with the Sortino beside every Sharpe; no previously written number changed. **Cell A published, 2016–2023: Sharpe −0.204, Sortino −0.280**; purged null Sortino p50 −0.12, p95 +0.75 (Sharpe p50 −0.08, p95 +0.51). The Sortino is below the Sharpe: the carry book loses in its large days, which is the negative skew §1 P-4 predicted, now in the ratio. Verdict unchanged; every cell carries both ratios in `data/d556_carry_timing.json`.

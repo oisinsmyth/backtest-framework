@@ -46,7 +46,8 @@ machine and iteration loop.
 **All four groups, always.** A number without what makes it interpretable is not
 a result.
 
-1. **Performance, NET AND GROSS side by side** — plus exposure, vol, maxDD, mean
+1. **Performance, NET AND GROSS side by side** — **Sharpe AND Sortino, always together
+   (R17, the principal's mandate of 2026-09-19)** — plus exposure, vol, maxDD, mean
    move per trade vs `2c`, and **breakeven cost** (bp/side or borrow). Gross
    separates cost failure from signal failure: opposite fixes. CAGR without
    exposure says nothing (D279, D284). **Estimate the spread of the names HELD

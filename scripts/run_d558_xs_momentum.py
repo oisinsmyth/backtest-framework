@@ -378,7 +378,7 @@ def run(log=print):
     for i, r in enumerate(roots):
         xi = wgt[i] * rsimple[i]; held = pos[i] != 0
         per_root[r] = {"total_primary": float(xi[wP].sum()), "total_long_window": float(xi[wL].sum()),
-                       "sharpe_primary_when_held": R55.sharpe((pos[i] * rsimple[i])[wP & held]) if (wP & held).sum() > 60 else None,
+                       "sharpe_primary_when_held": R55.sharpe((pos[i] * rsimple[i])[wP & held]) if (wP & held).sum() > 60 else None, "sortino_primary_when_held": R55.sortino((pos[i] * rsimple[i])[wP & held]) if (wP & held).sum() > 60 else None,
                        "months_long_primary": int(sum(1 for k in kP_hold if sign_me[i, k] > 0)), "months_short_primary": int(sum(1 for k in kP_hold if sign_me[i, k] < 0)),
                        "months_ineligible_primary": elig["per_root_ineligible_primary"][r],
                        "sigma_usd_min_size": root_sigma[r], "min_size": size_name[i],
@@ -395,11 +395,11 @@ def run(log=print):
                 "top10_share": sum(vals[:10]) / tot, "roots_to_half": int(np.searchsorted(-cum, -0.5 * tot) + 1), "ranked": [(r, v["total_primary"]) for r, v in srt_l]}
     n_pos_primary = int(sum(1 for v in per_root.values() if v["total_primary"] > 0))
     conc["roots_positive_primary"] = n_pos_primary
-    per_era = {f"{a}..{b}": {"sharpe": _f(R55.sharpe(x[R55.window_mask(days, a, b)])), "n_days": int(R55.window_mask(days, a, b).sum())} for a, b in ERAS}
+    per_era = {f"{a}..{b}": {"sharpe": _f(R55.sharpe(x[R55.window_mask(days, a, b)])), "sortino": _f(R55.sortino(x[R55.window_mask(days, a, b)])), "n_days": int(R55.window_mask(days, a, b).sum())} for a, b in ERAS}
     yrs = sorted(set(d[:4] for d in days[wL]))
     per_year = {}
     for y in yrs:
-        my = np.array([d[:4] == y for d in days]); per_year[y] = {"sharpe": _f(R55.sharpe(x[my])), "total": float(x[my].sum())}
+        my = np.array([d[:4] == y for d in days]); per_year[y] = {"sharpe": _f(R55.sharpe(x[my])), "sortino": _f(R55.sortino(x[my])), "total": float(x[my].sum())}
     log(f"  root-months: combined mean {root_month['combined']['mean']:+.2e} median {root_month['combined']['median']:+.2e} trimmed {root_month['combined']['trimmed_1pct_both']:+.2e}; "
         f"long-leg mean {root_month['long_leg']['mean']:+.2e}, short-leg mean {root_month['short_leg']['mean']:+.2e}")
 
@@ -410,7 +410,7 @@ def run(log=print):
     d555 = json.loads(D555_JSON.read_text(encoding="utf-8"))
     worst = mP.idxmin()
     comparability = {"rho_daily_2016_2023": float(np.corrcoef(x[wP], x12[wP])[0, 1]), "rho_monthly_2016_2023": float(np.corrcoef(mP.values, m12.values)[0, 1]),
-                     "cm_tsmom_sharpe_primary": R55.sharpe(x12[wP]), "cm_tsmom_sharpe_long": R55.sharpe(x12[wL]),
+                     "cm_tsmom_sharpe_primary": R55.sharpe(x12[wP]), "cm_tsmom_sortino_primary": R55.sortino(x12[wP]), "cm_tsmom_sharpe_long": R55.sharpe(x12[wL]), "cm_tsmom_sortino_long": R55.sortino(x12[wL]),
                      "d555_per_sector_cm_sharpe_primary": d555["per_sector"]["CM"]["sharpe_primary"], "d555_sessions_primary": d555["windows"]["sessions_primary"],
                      "sessions_primary_here": int(wP.sum()), "sessions_absent_here": absent,
                      "worst_month_primary": str(worst), "worst_month_return_primary": float(mP.loc[worst]), "cm_tsmom_return_that_month": float(m12.loc[worst]),
@@ -477,17 +477,18 @@ def run(log=print):
     log(f"  timing: {per_off * 1000:.0f} ms per offset x {Tw - 1} offsets -> projected {projected:.0f} s wall")
     if projected > 900:
         raise AssertionError(f"projected null wall {projected:.0f}s exceeds the 15-minute stop declared in the pre-registration")
-    null_all, keys = R55.enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log)
+    null_all, keys, null_s = R55.enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log, with_sortino=True)
     names = [CELL_NAMES[k] for k in keys]
     obs = np.array([results_cells[nm]["gross"]["sharpe"] if b == "published" else results_cells[nm]["net"]["sharpe"] for nm, (a, b) in zip(names, keys)])
     ks = np.arange(1, null_all.shape[0] + 1); keep = (ks >= R55.NULL_PURGE) & (ks <= Tw - R55.NULL_PURGE); null = null_all[keep]
     jP = keys.index(PRIMARY_CELL)
     n1 = {"offsets_enumerated": int(null_all.shape[0]), "purge_sessions": int(R55.NULL_PURGE), "offsets_after_purge": int(null.shape[0]), "per_cell": {},
-          "per_cell_unpurged": {}, "offset_profile_primary": {"k": ks.tolist(), "sharpe": null_all[:, jP].tolist()}}
+          "per_cell_unpurged": {}, "offset_profile_primary": {"k": ks.tolist(), "sharpe": null_all[:, jP].tolist(), "sortino": null_s[:, jP].tolist()}}
     for j, nm in enumerate(names):
         col = null[:, j]; raw = null_all[:, j]
         n1["per_cell"][nm] = {"observed": float(obs[j]), "p05": float(np.percentile(col, 5)), "p50": float(np.percentile(col, 50)),
-                              "p95": float(np.percentile(col, 95)), "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95))}
+                              "p95": float(np.percentile(col, 95)), "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95)),
+                              "sortino": R55.sortino_null_block(scored[keys[j]]["gross" if keys[j][1] == "published" else "net"][wP], null_s[:, j], keep)}
         n1["per_cell_unpurged"][nm] = {"p05": float(np.percentile(raw, 5)), "p50": float(np.percentile(raw, 50)), "p95": float(np.percentile(raw, 95)),
                                        "pct_rank": float((raw < obs[j]).mean()), "max": float(raw.max()), "argmax_k": int(ks[int(raw.argmax())])}
     fam = null.max(1)

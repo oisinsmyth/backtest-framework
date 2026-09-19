@@ -156,3 +156,8 @@ harness reproduces AQR.**
 - The three audits ran and each was proven to raise (json `audits`); the first run of this script
   chained returns across the fixture's Sunday placeholder rows and lost 18% of them, which the
   runner now refuses (`rows_dropped`: 22,531 placeholders, 69 one-bar weekend stubs).
+
+
+---
+
+*Addendum, 2026-09-19, under [R17](../RULES.md#r17) (every reported Sharpe carries a Sortino).* The runner was re-run with the Sortino beside every Sharpe; no previously written number changed. **Primary 12m published book, 2016–2023: Sharpe +0.304, Sortino +0.426**; purged rotation null Sortino p50 −0.09, p95 +1.42 (Sharpe p50 −0.07, p95 +0.95). The Sortino sits above the Sharpe, as a book whose large days are the 2020 and 2022 trend years would suggest; the verdict is unchanged and every cell carries both ratios in `data/d555_tsmom_replication.json`.

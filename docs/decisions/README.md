@@ -50,7 +50,7 @@ the principal's request after D420 and made a pre-registration by
 [D421](D421-the-three-depth-conditions-both-lenses.md). It is honest about its own status and it
 appears in neither half above, because both the gate and the generator key on a leading `D<digits>`.
 
-Standing scope/sequencing rules (R1–R16) live separately in [`docs/RULES.md`](../RULES.md);
+Standing scope/sequencing rules (R1–R17) live separately in [`docs/RULES.md`](../RULES.md);
 they aren't chronological decisions, they're constraints that apply throughout.
 
 Format: **Status** — Committed / Deferred / Rule-adjacent. Deferred items have a
@@ -638,6 +638,7 @@ would look like data. The tokens are what is shown.
 | D557 | DOES NOT PASS: the cross-sectional term-structure sort as published is −0.21 gross on 2016–2023, at the 14th percentile… | [PRE-REG](D557-PRE-REG-cross-sectional-term-structure-on-17-commodities.md) · [RESULT](D557-RESULT-does-not-pass-the-term-structure-sort-is-negative.md) |
 | D558 | DOES NOT PASS: cross-sectional 12-1 momentum as published is −0.26 gross on the 17 commodities over 2016–2023, at the 3… | [PRE-REG](D558-PRE-REG-cross-sectional-12-1-momentum-on-17-commodities.md) · [RESULT](D558-RESULT-does-not-pass-xs-12-1-momentum-negative-on-commodities.md) |
 | D559 | DOES NOT PASS: the momentum × term-structure double sort as published is −0.11 gross on 2016–2023 on the 17 commodity r… | [PRE-REG](D559-PRE-REG-momentum-x-term-structure-double-sort-on-commodities.md) · [RESULT](D559-RESULT-does-not-pass-the-double-sort-is-negative-2016-2023.md) |
+| D560 | Every reported Sharpe carries a Sortino beside it (R17), and the five runners of 2026-09-19 are re-run under it | [record](D560-every-reported-sharpe-carries-a-sortino-R17.md) |
 
 <!-- REGISTER:END -->
 

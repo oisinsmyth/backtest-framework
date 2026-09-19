@@ -530,6 +530,11 @@ class FrontierRow:
         return self.result.sharpe_annual(self.study)
 
     @property
+    def sortino_annual(self) -> float:
+        """R17 (2026-09-19): a Sortino beside every Sharpe."""
+        return self.result.sortino_annual(self.study)
+
+    @property
     def sharpe_daily(self) -> float:
         """Per-CALENDAR-DAY Sharpe, computed from the day-collapsed curve — the unit the
         cross-frequency DSR pool lives in (D164)."""

@@ -1047,3 +1047,19 @@ therefore only venue-agnostic if its edge survives a pessimistic fill model — 
 queue jumping, no cancel race.** If the edge exists only at favourable queue position, it is
 infrastructure-dependent and is NOT portable, whatever the rulebook says. Under this amendment that
 pessimistic model is a requirement, not a courtesy.
+
+---
+
+## R17. Every reported Sharpe carries a Sortino beside it
+
+*Added 2026-09-19 at the principal's mandate: "all runs, simulations etc. will provide a Sortino ratio along with the Sharpe ratio."*
+
+**Wherever a run, a simulation, a null, a bootstrap or a record reports a Sharpe ratio, it reports the Sortino ratio of the same series beside it, under the same convention** — same return series, same risk-free rate (zero for a futures book, the declared rf elsewhere), same periods per year. The Sortino is `analytics.metrics.sortino`: mean excess return over the downside deviation, where the downside deviation is the root mean of the squared negative excess returns **over all observations** (not only the losing ones), annualised by the square root of the periods per year. A series with no downside is +inf when its mean is positive and 0.0 otherwise, and a JSON artifact serialises the infinity as null.
+
+**Where it lives so it cannot be forgotten:** `stats_block` in `scripts/run_d555_tsmom_replication.py` (which D556–D559 and every later futures runner import), the null enumeration's optional Sortino column and `sortino_null_block`, the terrain summary dict, and `sortino_annual` beside `sharpe_annual` on the breakout and crypto-pairs study results. `tests/unit/test_sortino_beside_sharpe.py` holds the shape.
+
+**What it does not change:** the pre-registered PASS statistics of D555–D559 remain the Sharpe; the ledger's C-a bar remains a Sharpe bar. The Sortino is reported, not substituted, until a record declares otherwise.
+
+**Because:** a two-sided fat-tailed book and a negatively-skewed one can share a Sharpe and differ in what a trailing-drawdown account experiences (D556's carry book: skew −0.20, March 2020 −4.1%). Sharpe is blind to the sign of the tail; Sortino is not, and the prop hurdles (P1, P3) are about the left tail.
+
+**Scope:** binding on every run from 2026-09-19. The five runners of that date were re-run under it and their artifacts carry the Sortino; the frozen runners before it do not, and D543 declines to edit them.

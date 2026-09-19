@@ -64,7 +64,7 @@ from typing import Sequence
 
 import numpy as np
 
-from ..analytics.metrics import curve_sharpe_zero_rf, excess_sharpe
+from ..analytics.metrics import curve_sharpe_zero_rf, excess_sharpe, sortino
 from ..analytics.metrics import max_drawdown as _positive_max_drawdown
 from ..analytics.metrics import mid_rank_percentile
 from ..data.bars import TimestampedBar
@@ -559,6 +559,8 @@ def buy_and_hold(
         # Delegated (D542), bit-for-bit — `curve_sharpe_zero_rf` carries the same
         # `len < 3 -> 0.0` and `sd <= 0 -> 0.0` guards this body had.
         "sharpe": curve_sharpe_zero_rf(rets, periods_per_year),
+        # R17 (2026-09-19): a Sortino beside every Sharpe, same zero-rf convention.
+        "sortino": sortino(rets, 0.0, periods_per_year) if len(rets) >= 2 else 0.0,
         # D219's arithmetic: buy-and-hold is exposed on EVERY bar, so it is charged the
         # full 1 x rf where a 50%-exposure arm is charged ~0.5 x. That asymmetry is the
         # whole reason the correction cannot be applied by scaling a published number.

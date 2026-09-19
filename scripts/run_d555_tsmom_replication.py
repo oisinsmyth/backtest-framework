@@ -338,6 +338,21 @@ def book_return_loop(pos, rsimple):
     return out
 
 
+def sortino(x: np.ndarray, ppy: float = 252.0) -> float:
+    """R17 (2026-09-19): every reported Sharpe carries a Sortino beside it. Same convention as
+    analytics.metrics.sortino at rf = 0: mean over the downside deviation, where the downside
+    deviation is sqrt(mean(min(x, 0)^2)) over ALL observations, annualised by sqrt(ppy). No
+    downside at all is +inf when the mean is positive (serialised as null) and 0.0 otherwise."""
+    x = np.asarray(x, dtype=float)
+    if x.size < 2:
+        return float("nan")
+    mu = float(x.mean())
+    dd = float(np.sqrt(np.mean(np.minimum(x, 0.0) ** 2)))
+    if dd == 0.0:
+        return math.inf if mu > 0 else 0.0
+    return mu / dd * math.sqrt(ppy)
+
+
 def sharpe(x: np.ndarray, ppy: float = 252.0) -> float:
     sd = x.std(ddof=1)
     return float(x.mean() / sd * math.sqrt(ppy)) if sd > 0 else float("nan")
@@ -391,7 +406,7 @@ def dollar_book(sign_dollar, g, upp, comm_rt, tick_usd, roots_in):
 
 
 def stats_block(x, days, label):
-    return {"label": label, "n_days": int(len(x)), "sharpe": sharpe(x), "mean_daily": float(x.mean()),
+    return {"label": label, "n_days": int(len(x)), "sharpe": sharpe(x), "sortino": sortino(x), "mean_daily": float(x.mean()),
             "sd_daily": float(x.std(ddof=1)), "ann_vol": float(x.std(ddof=1) * math.sqrt(252)),
             "total": float(x.sum()), "hit": float((x > 0).mean()),
             "skew": float(pd.Series(x).skew()), "kurt": float(pd.Series(x).kurt()),
@@ -490,11 +505,13 @@ def rotate_signs(sign_held, live_idx, k):
     return out
 
 
-def enumerate_null(cells, g, live_idx, w, rsimple, upp, comm_rt, tick_usd, dollar_roots, log):
-    """For every offset k in 1..L-1: each cell's Sharpe on the window. Returns (L-1) x n_cells."""
+def enumerate_null(cells, g, live_idx, w, rsimple, upp, comm_rt, tick_usd, dollar_roots, log, with_sortino=False):
+    """For every offset k in 1..L-1: each cell's Sharpe on the window. Returns (L-1) x n_cells, and
+    with `with_sortino=True` a third element holding the Sortino of the same rotated books (R17)."""
     T_w = int(w.sum())
     keys = list(cells.keys())
     out = np.full((T_w - 1, len(keys)), np.nan)
+    out_s = np.full((T_w - 1, len(keys)), np.nan)
     t0 = time.time()
     for k in range(1, T_w):
         for j, key in enumerate(keys):
@@ -508,9 +525,20 @@ def enumerate_null(cells, g, live_idx, w, rsimple, upp, comm_rt, tick_usd, dolla
                 gross, cost, _ = dollar_book(sd, g, upp, comm_rt, tick_usd, dollar_roots)
                 x = (gross - cost).sum(0)[w]
             out[k - 1, j] = sharpe(x)
+            if with_sortino:
+                out_s[k - 1, j] = sortino(x)
         if k % 500 == 0:
             log(f"    null offset {k}/{T_w - 1}  {time.time() - t0:.0f}s")
-    return out, keys
+    return (out, keys, out_s) if with_sortino else (out, keys)
+
+
+def sortino_null_block(obs_x, null_s_col, keep):
+    """R17: the observed Sortino beside the null's Sortino percentiles, on the purged offsets."""
+    col = null_s_col[keep]
+    col = col[np.isfinite(col)]
+    return {"observed": sortino(obs_x), "p05": float(np.percentile(col, 5)) if col.size else None,
+            "p50": float(np.percentile(col, 50)) if col.size else None,
+            "p95": float(np.percentile(col, 95)) if col.size else None, "n_finite": int(col.size)}
 
 
 # --------------------------------------------------------------------------------------------
@@ -680,9 +708,9 @@ def run(log=print):
     for i, r in enumerate(roots):
         xi = pos[i] * rsimple[i]
         live_i = (pos[i] != 0)
-        per_root[r] = {"sharpe_long": sharpe(xi[wL & live_i]) if (wL & live_i).sum() > 60 else None,
+        per_root[r] = {"sharpe_long": sharpe(xi[wL & live_i]) if (wL & live_i).sum() > 60 else None, "sortino_long": sortino(xi[wL & live_i]) if (wL & live_i).sum() > 60 else None,
                        "total_long": float(xi[wL].sum()), "total_primary": float(xi[wP].sum()),
-                       "sharpe_primary": sharpe(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None,
+                       "sharpe_primary": sharpe(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None, "sortino_primary": sortino(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None,
                        "live_start": live_start[r], "sessions_positioned_long": int((wL & live_i).sum()),
                        "rolls_2011_2023": int(g["roll"][i][wL].sum()), "sigma_usd_min_size": root_sigma[r],
                        "min_size": size_name[i]}
@@ -692,10 +720,10 @@ def run(log=print):
     for sec, lst in SECTOR.items():
         ix = [roots.index(r) for r in lst if r in roots]
         xs = book_return(pos[ix], rsimple[ix])
-        per_sector[sec] = {"roots": [roots[j] for j in ix], "sharpe_primary": sharpe(xs[wP]), "sharpe_long": sharpe(xs[wL])}
-    per_era = {f"{a}..{b}": {"sharpe": sharpe(x[window_mask(days, a, b)]), "n_days": int(window_mask(days, a, b).sum())} for a, b in ERAS}
+        per_sector[sec] = {"roots": [roots[j] for j in ix], "sharpe_primary": sharpe(xs[wP]), "sortino_primary": sortino(xs[wP]), "sharpe_long": sharpe(xs[wL]), "sortino_long": sortino(xs[wL])}
+    per_era = {f"{a}..{b}": {"sharpe": sharpe(x[window_mask(days, a, b)]), "sortino": sortino(x[window_mask(days, a, b)]), "n_days": int(window_mask(days, a, b).sum())} for a, b in ERAS}
     yrs = sorted(set(d[:4] for d in days[wL]))
-    per_year = {y: {"sharpe": sharpe(x[np.array([d[:4] == y for d in days])]), "total": float(x[np.array([d[:4] == y for d in days])].sum())} for y in yrs}
+    per_year = {y: {"sharpe": sharpe(x[np.array([d[:4] == y for d in days])]), "sortino": sortino(x[np.array([d[:4] == y for d in days])]), "total": float(x[np.array([d[:4] == y for d in days])].sum())} for y in yrs}
 
     # AQR check, monthly, 2011-01..2023-12 only
     aqr = pd.read_excel(AQR, sheet_name="TSMOM Factors", header=None)
@@ -711,7 +739,9 @@ def run(log=print):
     aqr_out = {"file_sha256": sha256(AQR), "months": len(ov), "first": str(ov[0]), "last": str(ov[-1]),
                "corr_all": float(np.corrcoef(m.values, a["TSMOM"].values)[0, 1]),
                "aqr_sharpe_2011_2023": float(a["TSMOM"].mean() / a["TSMOM"].std(ddof=1) * math.sqrt(12)),
+               "aqr_sortino_2011_2023": sortino(a["TSMOM"].to_numpy(dtype=float), ppy=12.0),
                "mine_monthly_sharpe_2011_2023": float(m.mean() / m.std(ddof=1) * math.sqrt(12)),
+               "mine_monthly_sortino_2011_2023": sortino(m.to_numpy(dtype=float), ppy=12.0),
                "aqr_sharpe_2016_2023": float(a.loc[[p for p in ov if p >= pd.Period("2016-01", "M")], "TSMOM"].pipe(lambda s: s.mean() / s.std(ddof=1) * math.sqrt(12))),
                "sector": {}}
     for sec, col in [("CM", "TSMOM^CM"), ("EQ", "TSMOM^EQ"), ("FI", "TSMOM^FI"), ("FX", "TSMOM^FX")]:
@@ -734,7 +764,7 @@ def run(log=print):
         if not np.array_equal(a1, a2):
             raise AssertionError(f"enumeration is not bit-identical to the loop at offset {k}")
     log("  exactness guard: 20 offsets bit-identical against the plain loop")
-    null_all, keys = enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log)
+    null_all, keys, null_s = enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log, with_sortino=True)
     names = [f"{a}/{b}" for a, b in keys]
     obs = np.array([results_cells[nm]["gross"]["sharpe"] if b == "published" else results_cells[nm]["net"]["sharpe"]
                     for nm, (a, b) in zip(names, keys)])
@@ -753,12 +783,13 @@ def run(log=print):
     null = null_all[keep]
     n1 = {"offsets_enumerated": int(null_all.shape[0]), "purge_sessions": NULL_PURGE,
           "offsets_after_purge": int(null.shape[0]), "per_cell": {}, "per_cell_unpurged": {},
-          "offset_profile_primary": {"k": ks_all.tolist(), "sharpe": null_all[:, jP].tolist()}}
+          "offset_profile_primary": {"k": ks_all.tolist(), "sharpe": null_all[:, jP].tolist(), "sortino": null_s[:, jP].tolist()}}
     for j, nm in enumerate(names):
         col = null[:, j]; raw = null_all[:, j]
         n1["per_cell"][nm] = {"observed": float(obs[j]), "p50": float(np.percentile(col, 50)),
                               "p95": float(np.percentile(col, 95)), "p05": float(np.percentile(col, 5)),
-                              "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95))}
+                              "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95)),
+                              "sortino": sortino_null_block(scored[keys[j]]["gross" if keys[j][1] == "published" else "net"][wP], null_s[:, j], keep)}
         n1["per_cell_unpurged"][nm] = {"p50": float(np.percentile(raw, 50)), "p95": float(np.percentile(raw, 95)),
                                        "p05": float(np.percentile(raw, 5)), "pct_rank": float((raw < obs[j]).mean()),
                                        "max": float(raw.max()), "argmax_k": int(ks_all[int(raw.argmax())])}

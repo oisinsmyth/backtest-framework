@@ -51,7 +51,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 import numpy as np
 
-from ..analytics.metrics import max_drawdown, sharpe
+from ..analytics.metrics import max_drawdown, sharpe, sortino
 from ..config.cost_stack import StackDataContext, build_cost_stack
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
@@ -612,6 +612,10 @@ class VariantResult:
     def sharpe_annual(self, study: BreakoutStudyConfig) -> float:
         return sharpe(self.oos_returns, study.rf_annual, study.periods_per_year)
 
+    def sortino_annual(self, study: BreakoutStudyConfig) -> float:
+        """R17 (2026-09-19): a Sortino beside every Sharpe, same rf and periods."""
+        return sortino(self.oos_returns, study.rf_annual, study.periods_per_year)
+
     def sharpe_daily(self, study: BreakoutStudyConfig) -> float:
         return self.sharpe_annual(study) / math.sqrt(study.periods_per_year)
 
@@ -637,6 +641,9 @@ class BenchmarkResult:
 
     def sharpe_annual(self, study: BreakoutStudyConfig) -> float:
         return sharpe(self.oos_returns, study.rf_annual, study.periods_per_year)
+
+    def sortino_annual(self, study: BreakoutStudyConfig) -> float:
+        return sortino(self.oos_returns, study.rf_annual, study.periods_per_year)
 
 
 @dataclass

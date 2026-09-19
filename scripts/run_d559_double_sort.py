@@ -276,7 +276,7 @@ def concentration(contrib, roots, w):
 
 def per_year_sharpe(x, days, w):
     yrs = sorted(set(d[:4] for d in days[w]))
-    return {y: {"sharpe": R55.sharpe(x[np.array([d[:4] == y for d in days])]), "total": float(x[np.array([d[:4] == y for d in days])].sum())} for y in yrs}
+    return {y: {"sharpe": R55.sharpe(x[np.array([d[:4] == y for d in days])]), "sortino": R55.sortino(x[np.array([d[:4] == y for d in days])]), "total": float(x[np.array([d[:4] == y for d in days])].sum())} for y in yrs}
 
 
 # --------------------------------------------------------------------------------------------
@@ -475,12 +475,12 @@ def run(log=print):
     for i, r in enumerate(roots):
         xi = contrib[i]; live_i = pos[i] != 0
         per_root[r] = {"total_primary": float(xi[wP].sum()), "total_long_window": float(xi[wL].sum()),
-                       "sharpe_primary_when_positioned": R55.sharpe(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None,
+                       "sharpe_primary_when_positioned": R55.sharpe(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None, "sortino_primary_when_positioned": R55.sortino(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None,
                        "months_long_primary": int(sum(1 for i2, _, _, s in rm if i2 == i and s > 0)), "months_short_primary": int(sum(1 for i2, _, _, s in rm if i2 == i and s < 0)),
                        "mean_carry_me": float(np.nanmean(carry_me[i])) if np.isfinite(carry_me[i]).any() else None,
                        "min_size": size_name[i], "sigma_usd_min_size": root_sigma[r]}
     per_year = per_year_sharpe(x, days, wL)
-    per_era = {f"{a}..{b}": {"sharpe": R55.sharpe(x[R55.window_mask(days, a, b)]), "n_days": int(R55.window_mask(days, a, b).sum())} for a, b in ERAS}
+    per_era = {f"{a}..{b}": {"sharpe": R55.sharpe(x[R55.window_mask(days, a, b)]), "sortino": R55.sortino(x[R55.window_mask(days, a, b)]), "n_days": int(R55.window_mask(days, a, b).sum())} for a, b in ERAS}
     log(f"  root-months: combined mean {root_month['combined']['mean']:+.2e} median {root_month['combined']['median']:+.2e} trimmed {root_month['combined']['mean_trimmed_1pct_both']:+.2e}; "
         f"top-1 root {conc['top1_abs_root']} abs share {conc['top1_abs_share']:.3f}; roots to half {conc['roots_to_half_pnl']}")
     log("  per year: " + ", ".join(f"{y} {v['sharpe']:+.2f}" for y, v in per_year.items()))
@@ -491,8 +491,8 @@ def run(log=print):
         m1 = single_sort(sig_me, elig, roots)
         held = R55.hold_from_month_ends(m1.astype(float), me, T, g["span"])
         xs = R55.book_return(held, rsimple)
-        ss[nm] = {"sharpe_primary": R55.sharpe(xs[wP]), "ann_mean_return": float(xs[wP].mean() * 252), "ann_vol": float(xs[wP].std(ddof=1) * math.sqrt(252)),
-                  "max_dd": R55.max_drawdown(xs[wP]), "sharpe_long_window": R55.sharpe(xs[wL]),
+        ss[nm] = {"sharpe_primary": R55.sharpe(xs[wP]), "sortino_primary": R55.sortino(xs[wP]), "ann_mean_return": float(xs[wP].mean() * 252), "ann_vol": float(xs[wP].std(ddof=1) * math.sqrt(252)),
+                  "max_dd": R55.max_drawdown(xs[wP]), "sharpe_long_window": R55.sharpe(xs[wL]), "sortino_long_window": R55.sortino(xs[wL]),
                   "rho_daily_with_primary": float(np.corrcoef(xs[wP], x[wP])[0, 1]), "per_year": per_year_sharpe(xs, days, wL),
                   "legs": "long the top ceil(n/3), short the bottom ceil(n/3), same eligibility, ties by root symbol",
                   "months_positioned_primary": int(sum(1 for k in me_in_P if (m1[:, k] != 0).any()))}
@@ -531,17 +531,18 @@ def run(log=print):
     if projected > 15 * 60:
         raise AssertionError(f"projected null wall {projected:.0f}s exceeds 15 minutes; stopping as pre-registered")
     log(f"  enumerating N1/N2 over {Tw - 1} offsets x {len(cells)} cells, purge {R55.NULL_PURGE} ...")
-    null_all, keys = R55.enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log)
+    null_all, keys, null_s = R55.enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log, with_sortino=True)
     names = [f"{a}/{b}" for a, b in keys]
     obs = np.array([results_cells[nm]["gross"]["sharpe"] if b == "published" else results_cells[nm]["net"]["sharpe"] for nm, (a, b) in zip(names, keys)])
     ks = np.arange(1, null_all.shape[0] + 1); keep = (ks >= R55.NULL_PURGE) & (ks <= Tw - R55.NULL_PURGE); null = null_all[keep]
     jP = keys.index(PRIMARY_CELL)
     n1 = {"offsets_enumerated": int(null_all.shape[0]), "purge_sessions": R55.NULL_PURGE, "offsets_after_purge": int(null.shape[0]), "per_cell": {},
-          "offset_profile_primary": {"k": ks.tolist(), "sharpe": null_all[:, jP].tolist()}}
+          "offset_profile_primary": {"k": ks.tolist(), "sharpe": null_all[:, jP].tolist(), "sortino": null_s[:, jP].tolist()}}
     for j, nm in enumerate(names):
         col = null[:, j]
         n1["per_cell"][nm] = {"observed": float(obs[j]), "p05": float(np.percentile(col, 5)), "p50": float(np.percentile(col, 50)),
-                              "p95": float(np.percentile(col, 95)), "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95))}
+                              "p95": float(np.percentile(col, 95)), "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95)),
+                              "sortino": R55.sortino_null_block(scored[keys[j]]["gross" if keys[j][1] == "published" else "net"][wP], null_s[:, j], keep)}
     fam = null.max(1)
     n2 = {"observed_best": float(obs.max()), "observed_best_cell": names[int(obs.argmax())], "p50": float(np.percentile(fam, 50)),
           "p95": float(np.percentile(fam, 95)), "pct_rank": float((fam < obs.max()).mean()), "clears_p95": bool(obs.max() > np.percentile(fam, 95))}
@@ -579,8 +580,8 @@ def run(log=print):
             sPA = np.where(wP[None, :] & keep16[:, None], c["sign_held"], 0.0).astype(int)
             gr, co, _ = R55.dollar_book(sPA, g, upp, comm_rt, tick_usd, dollar_roots); xg, xn = gr.sum(0), (gr - co).sum(0)
         xA[key] = xg
-        amend["cells"][nm] = {"gross_sharpe": R55.sharpe(xg[wP]), "net_sharpe": R55.sharpe(xn[wP]), "gross_se": R55.block_boot_se(xg[wP], dP_days),
-                              "ann_vol": float(xg[wP].std(ddof=1) * math.sqrt(252)), "gross_sharpe_long_window": R55.sharpe(xg[wL])}
+        amend["cells"][nm] = {"gross_sharpe": R55.sharpe(xg[wP]), "gross_sortino": R55.sortino(xg[wP]), "net_sharpe": R55.sharpe(xn[wP]), "net_sortino": R55.sortino(xn[wP]), "gross_se": R55.block_boot_se(xg[wP], dP_days),
+                              "ann_vol": float(xg[wP].std(ddof=1) * math.sqrt(252)), "gross_sharpe_long_window": R55.sharpe(xg[wL]), "gross_sortino_long_window": R55.sortino(xg[wL])}
     inA = [row for row in diagA if row["k"] in me_in_P]
     amend["month_end_summary"] = {"flat_months_primary": int(sum(r["flat"] for r in inA)), "n_eligible_min": int(min(r["n_eligible"] for r in inA)),
                                   "n_eligible_median": float(np.median([r["n_eligible"] for r in inA])), "n_eligible_max": int(max(r["n_eligible"] for r in inA)),
@@ -589,7 +590,7 @@ def run(log=print):
                                   "membership_cells_changed_vs_preregistered": int((memA[:, me_in_P] != mem[:, me_in_P]).sum())}
     for nm, sig_me in (("term_structure", carry_me), ("momentum", momA)):
         held = R55.hold_from_month_ends(single_sort(sig_me, eligA, roots).astype(float), me, T, g["span"]); xs = R55.book_return(held, rsimple)
-        amend["single_sort_check"][nm] = {"sharpe_primary": R55.sharpe(xs[wP]), "ann_vol": float(xs[wP].std(ddof=1) * math.sqrt(252)),
+        amend["single_sort_check"][nm] = {"sharpe_primary": R55.sharpe(xs[wP]), "sortino_primary": R55.sortino(xs[wP]), "ann_vol": float(xs[wP].std(ddof=1) * math.sqrt(252)),
                                           "rho_daily_with_amended_primary": float(np.corrcoef(xs[wP], xA[PRIMARY_CELL][wP])[0, 1])}
     nullA_cells = {k: dict(v, sign_held=np.where(wP[None, :], v["sign_held"], 0.0)) for k, v in cellsA.items()}
     nullA, keysA = R55.enumerate_null(nullA_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, lambda *_: None)

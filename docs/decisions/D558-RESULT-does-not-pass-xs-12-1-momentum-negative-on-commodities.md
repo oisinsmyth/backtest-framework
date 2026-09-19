@@ -192,3 +192,8 @@ evidence, the right instinct. Its magnitude did not, for the third study running
   book, the sign audit on the negated and on the mis-lagged grid, the right-quantity audit on a daily
   grid, the new leg-membership audit on a swapped long/short pair; 1,702 membership cells checked
   against the independent pandas path).
+
+
+---
+
+*Addendum, 2026-09-19, under [R17](../RULES.md#r17) (every reported Sharpe carries a Sortino).* Re-run with the Sortino beside every Sharpe; no previously written number changed. **Primary EW/published, 2016–2023: Sharpe −0.259, Sortino −0.352**; purged null Sortino p50 −0.14, p95 +1.03 (Sharpe p50 −0.10, p95 +0.71). The Sortino is a third worse than the Sharpe: the momentum crash of May 2020 is a left-tail event and the ratio sees it. Verdict unchanged; every cell carries both ratios in `data/d558_xs_momentum.json`.

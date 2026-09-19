@@ -300,7 +300,7 @@ def run(log=print):
     per_root = {}
     for i, r in enumerate(roots):
         xi = pos[i] * rsimple[i]; live_i = pos[i] != 0
-        per_root[r] = {"sharpe_primary": R55.sharpe(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None,
+        per_root[r] = {"sharpe_primary": R55.sharpe(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None, "sortino_primary": R55.sortino(xi[wP & live_i]) if (wP & live_i).sum() > 60 else None,
                        "total_long": float(xi[wL].sum()), "total_primary": float(xi[wP].sum()),
                        "share_long_months": float((signs["A"][i][signs["A"][i] != 0] > 0).mean()) if (signs["A"][i] != 0).any() else None,
                        "mean_carry_me": float(np.nanmean(carry_me[i])) if np.isfinite(carry_me[i]).any() else None,
@@ -310,10 +310,10 @@ def run(log=print):
     for sec, lst in R55.SECTOR.items():
         ix = [roots.index(r) for r in lst if r in roots]
         xs = R55.book_return(pos[ix], rsimple[ix])
-        per_sector[sec] = {"roots": [roots[j] for j in ix], "sharpe_primary": R55.sharpe(xs[wP]), "sharpe_long": R55.sharpe(xs[wL])}
-    per_era = {f"{a}..{b}": {"sharpe": R55.sharpe(x[R55.window_mask(days, a, b)])} for a, b in ERAS}
+        per_sector[sec] = {"roots": [roots[j] for j in ix], "sharpe_primary": R55.sharpe(xs[wP]), "sortino_primary": R55.sortino(xs[wP]), "sharpe_long": R55.sharpe(xs[wL]), "sortino_long": R55.sortino(xs[wL])}
+    per_era = {f"{a}..{b}": {"sharpe": R55.sharpe(x[R55.window_mask(days, a, b)]), "sortino": R55.sortino(x[R55.window_mask(days, a, b)])} for a, b in ERAS}
     yrs = sorted(set(d[:4] for d in days[wL]))
-    per_year = {y: {"sharpe": R55.sharpe(x[np.array([d[:4] == y for d in days])]), "total": float(x[np.array([d[:4] == y for d in days])].sum())} for y in yrs}
+    per_year = {y: {"sharpe": R55.sharpe(x[np.array([d[:4] == y for d in days])]), "sortino": R55.sortino(x[np.array([d[:4] == y for d in days])]), "total": float(x[np.array([d[:4] == y for d in days])].sum())} for y in yrs}
     # carry state: persistence and the share of months positive
     pers = [per_root[r]["sign_persistence"] for r in roots if per_root[r]["sign_persistence"] is not None]
     carry_state = {"median_sign_persistence": float(np.median(pers)), "share_root_months_positive": float((signs["A"][signs["A"] != 0] > 0).mean()),
@@ -325,7 +325,7 @@ def run(log=print):
     mon = lambda s: (1 + s).groupby(s.index.to_period("M")).prod() - 1
     mA, m12 = mon(xm[wP]), mon(xm12[wP])
     trend_relation = {"rho_daily_2016_2023": float(np.corrcoef(x[wP], x12[wP])[0, 1]), "rho_monthly_2016_2023": float(np.corrcoef(mA.values, m12.values)[0, 1]),
-                      "trend12_sharpe_here": R55.sharpe(x12[wP]), "combo_C_sharpe": results_cells["C/published"]["gross"]["sharpe"],
+                      "trend12_sharpe_here": R55.sharpe(x12[wP]), "trend12_sortino_here": R55.sortino(x12[wP]), "combo_C_sharpe": results_cells["C/published"]["gross"]["sharpe"],
                       "carry_march_2020": float(mA.loc[pd.Period("2020-03", "M")]), "trend_march_2020": float(m12.loc[pd.Period("2020-03", "M")]),
                       "worst_5pct_days_overlap": float(np.mean(np.isin(np.argsort(x[wP])[:int(0.05 * wP.sum())], np.argsort(x12[wP])[:int(0.05 * wP.sum())])))}
     log(f"  rho(carry, trend) daily {trend_relation['rho_daily_2016_2023']:+.3f}; combo C {trend_relation['combo_C_sharpe']:+.3f}; carry Mar-2020 {trend_relation['carry_march_2020']:+.3%}")
@@ -340,17 +340,18 @@ def run(log=print):
         if not np.array_equal(R55.book_return(p, rsimple)[wP], R55.book_return_loop(p[:, wP], rsimple[:, wP])):
             raise AssertionError(f"enumeration not bit-identical at offset {k}")
     log(f"  enumerating N1/N2 over {Tw - 1} offsets x {len(cells)} cells, purge {R55.NULL_PURGE} ...")
-    null_all, keys = R55.enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log)
+    null_all, keys, null_s = R55.enumerate_null(null_cells, g, live_idx, wP, rsimple, upp, comm_rt, tick_usd, dollar_roots, log, with_sortino=True)
     names = [f"{a}/{b}" for a, b in keys]
     obs = np.array([results_cells[nm]["gross"]["sharpe"] if b == "published" else results_cells[nm]["net"]["sharpe"] for nm, (a, b) in zip(names, keys)])
     ks = np.arange(1, null_all.shape[0] + 1); keep = (ks >= R55.NULL_PURGE) & (ks <= Tw - R55.NULL_PURGE); null = null_all[keep]
     jP = keys.index(PRIMARY_CELL)
     n1 = {"offsets_enumerated": int(null_all.shape[0]), "purge_sessions": R55.NULL_PURGE, "offsets_after_purge": int(null.shape[0]), "per_cell": {},
-          "offset_profile_primary": {"k": ks.tolist(), "sharpe": null_all[:, jP].tolist()}}
+          "offset_profile_primary": {"k": ks.tolist(), "sharpe": null_all[:, jP].tolist(), "sortino": null_s[:, jP].tolist()}}
     for j, nm in enumerate(names):
         col = null[:, j]
         n1["per_cell"][nm] = {"observed": float(obs[j]), "p05": float(np.percentile(col, 5)), "p50": float(np.percentile(col, 50)),
-                              "p95": float(np.percentile(col, 95)), "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95))}
+                              "p95": float(np.percentile(col, 95)), "pct_rank": float((col < obs[j]).mean()), "clears_p95": bool(obs[j] > np.percentile(col, 95)),
+                              "sortino": R55.sortino_null_block(scored[keys[j]]["gross" if keys[j][1] == "published" else "net"][wP], null_s[:, j], keep)}
     fam = null.max(1)
     n2 = {"observed_best": float(obs.max()), "observed_best_cell": names[int(obs.argmax())], "p50": float(np.percentile(fam, 50)),
           "p95": float(np.percentile(fam, 95)), "pct_rank": float((fam < obs.max()).mean()), "clears_p95": bool(obs.max() > np.percentile(fam, 95))}

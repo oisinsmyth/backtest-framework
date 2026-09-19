@@ -160,3 +160,8 @@ changes sign, and differ on the ten middle-ranked names timing holds and the sor
   cross-section where one name's vol matters less); at 17 names the choice moves the Sharpe by 0.23.
 - **The long-window null was not enumerated**, as in D555 and D556; it is a 40-second read.
 - Two sibling studies — the cross-sectional momentum sort and the double sort — are separate records.
+
+
+---
+
+*Addendum, 2026-09-19, under [R17](../RULES.md#r17) (every reported Sharpe carries a Sortino).* Re-run with the Sortino beside every Sharpe; no previously written number changed. **Primary EW/published, 2016–2023: Sharpe −0.207, Sortino −0.280**; purged null Sortino p50 +0.22, p95 +1.10 (Sharpe p50 +0.16, p95 +0.76). Verdict unchanged; every cell carries both ratios in `data/d557_xs_term_structure.json`.
