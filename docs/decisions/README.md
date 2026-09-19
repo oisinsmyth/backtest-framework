@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 283 of these records carry neither field —
+**No Status or Category column, deliberately.** 284 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -634,6 +634,7 @@ would look like data. The tokens are what is shown.
 | D553 | The two panels stay, and the guarantee that rested on one of them no longer does | [record](D553-the-two-panels-that-stay.md) |
 | D554 | The Binance price panels leave the index and the history, at a cost of 73 tests on every clone | [record](D554-the-binance-panels-leave-too.md) |
 | D555 | DOES NOT PASS, and the harness reproduces AQR's own series at ρ = 0.815: on 2016–2023 the published 12-month trend book… | [PRE-REG](D555-PRE-REG-time-series-momentum-as-published-on-36-CME-roots.md) · [RESULT](D555-RESULT-does-not-pass-and-the-harness-reproduces-AQR-at-0-815.md) |
+| D556 | PRE-REGISTRATION: carry timing as published (Koijen–Moskowitz–Pedersen–Vrugt 2018) on the 36-root breadth fixture, the… | [PRE-REG](D556-PRE-REG-carry-timing-as-published-on-36-CME-roots-and-the.md) |
 
 <!-- REGISTER:END -->
 
