@@ -129,3 +129,49 @@ def test_extra_columns_change_the_snapshot_id_and_survive_the_roundtrip(tmp_path
     assert plain != with_extras
     assert store.load(plain).extras == {}
     assert store.load(with_extras).extras == {"base_volume": {"X": [3.0]}}
+
+
+# A snapshot id frozen from a payload built in code. It owes nothing to any data file, so it
+# survives a fixture being removed for a licence reason -- which matters because
+# `crypto_universe_2015_2025_raw` is the ONLY entry in `_FIXTURE_SNAPSHOT_IDS` that a clone
+# receives; the other two are manifested out and skip. Until this existed, the absolute value of
+# a snapshot id was verified on CI by exactly one file, and that file's presence is a standing
+# decision that could be revisited (D553).
+SYNTHETIC_SNAPSHOT_ID = "e77fe8e910a5521a5f63fa74f90209dfe7c660b2c89b08da3709ed58e9360a71"
+
+
+def test_a_snapshot_id_built_from_code_is_frozen(tmp_path):
+    """The identity, pinned without a fixture.
+
+    Every other test in this file checks a RELATIONSHIP -- idempotence, uniqueness after a
+    restatement, refusal after tampering -- and each of those would pass unchanged if the id
+    algorithm were replaced wholesale. D551 is the proof: the writer's newline handling made the
+    same payload freeze to two different ids depending on the operating system, and nothing here
+    caught it except the fixture pin.
+
+    This payload exercises what carried the risk: dividends and splits, which go through the
+    `events.json` writer D551 fixed, volumes, and two symbols so ordering matters.
+    """
+    bars = {
+        "AAA": [
+            TimestampedBar(datetime(2021, 1, 4), Bar(10.0, 11.5, 9.75, 11.0)),
+            TimestampedBar(datetime(2021, 1, 5), Bar(11.0, 12.25, 10.5, 12.0)),
+        ],
+        "BBB": [
+            TimestampedBar(datetime(2021, 1, 4), Bar(100.0, 101.0, 99.0, 100.5)),
+            TimestampedBar(datetime(2021, 1, 5), Bar(100.5, 103.0, 100.0, 102.75)),
+        ],
+    }
+    volumes = {"AAA": [1500.0, 2250.0], "BBB": [88000.0, 91500.0]}
+    actions = CorporateActions(
+        dividends_by_symbol={"BBB": [(datetime(2021, 1, 5), 0.375)]},
+        splits_by_symbol={"AAA": [(datetime(2021, 1, 5), 0.5)]},
+    )
+
+    store = SnapshotStore(tmp_path / "snapshots")
+    assert store.create(bars, actions, volumes_by_symbol=volumes) == SYNTHETIC_SNAPSHOT_ID, (
+        "the snapshot id of a fixed payload has moved. Every id this project has logged with a "
+        "trial or printed in a results document was computed by the old rule. Find what changed "
+        "in save_fixture_csv or save_events_json before touching this constant."
+    )
+
