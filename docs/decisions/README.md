@@ -27,11 +27,11 @@ since was written here.
 **Complete is not the same as unambiguous, and three things a reader would otherwise trip on are
 stated here rather than left in a 4,000-line changelog.**
 
-**Nine numbers name two unrelated studies each** — **D440, D472, D473, D495, D497, D498, D504,
-D506, D508** — because three interactive sessions were taking numbers against this directory at
-commit time. D497 and D498 are half-resolved: the hurdle-P pair was renumbered to D500 and D501,
-and **both copies are still in the git index** until the deletions are committed, so the index and
-the working tree currently disagree about how many collisions there are (nine against seven).
+**Seven numbers name two unrelated studies each** — **D440, D472, D473, D495, D504, D506, D508** —
+because three interactive sessions were taking numbers against this directory at commit time.
+D497 and D498 were a further two until 2026-09-19: the hurdle-P pair was renumbered to D500 and
+D501, and the duplicate copies (two records, two scripts, two artifacts) were deleted from the
+index on that date, so the index and the working tree agree again.
 
 **Nothing here re-issues a number to fix that.** D507's amendment is the ruling:
 
@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 285 of these records carry neither field —
+**No Status or Category column, deliberately.** 283 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -579,8 +579,8 @@ would look like data. The tokens are what is shown.
 | D493 | RESULT: the account-size lever fixes the fee and runs into the barrier — a full contract dies in weeks at every plan, a… | [PRE-REG](D493-PRE-REG-the-account-size-lever-through-the-lifecycle-which.md) · [RESULT](D493-RESULT-the-account-size-lever-fixes-the-fee-and-runs-into-the.md) |
 | D494 | RESULT: outside the price path on the day session — eighteen cells, no pick; the largest is the euro at one tick, and t… | [PRE-REG](D494-PRE-REG-direction-from-outside-the-price-path-on-the-day.md) · [RESULT](D494-RESULT-outside-the-price-path-on-the-day-session-eighteen.md) |
 | D495 | RESULT: the confluence fails decisively, and produces the best cell anyway | [PRE-REG](D495-PRE-REG-does-requiring-the-two-MACD-variants-to-AGREE-help-and.md) · [RESULT](D495-RESULT-the-confluence-fails-decisively-and-produces-the-best.md) · [RESULT](D495-RESULT-the-fade-after-a-big-day-pays-its-cost-on-NQ-and-is-a.md) · [record](D495-stage-0-the-day-session-after-a-daily-state-fade-the-next-day.md) |
-| D497 | RESULT: the four-quadrant open-interest read carries nothing, the open-interest term flips sign between index and commo… | [record](D497-hurdle-P-on-the-D495-candidate-P3-fails.md) · [PRE-REG](D497-PRE-REG-open-interest-against-price-does-the-four-quadrant.md) · [RESULT](D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing.md) |
-| D498 | K8 is the ledger's first entry, PROVISIONAL: long the NQ day session after a down day, net Sharpe +0.61 at one micro, c… | [record](D498-K8-long-the-NQ-day-session-after-a-down-day-as-a-declared.md) · [RESULT](D498-RESULT-K8-is-the-ledgers-first-entry-PROVISIONAL-long-the-NQ.md) · [record](D498-the-worst-day-is-a-regime-not-a-habit.md) |
+| D497 | RESULT: the four-quadrant open-interest read carries nothing, the open-interest term flips sign between index and commo… | [PRE-REG](D497-PRE-REG-open-interest-against-price-does-the-four-quadrant.md) · [RESULT](D497-RESULT-the-four-quadrant-open-interest-read-carries-nothing.md) |
+| D498 | K8 is the ledger's first entry, PROVISIONAL: long the NQ day session after a down day, net Sharpe +0.61 at one micro, c… | [record](D498-K8-long-the-NQ-day-session-after-a-down-day-as-a-declared.md) · [RESULT](D498-RESULT-K8-is-the-ledgers-first-entry-PROVISIONAL-long-the-NQ.md) |
 | D499 | stage 0, CLOSE: the hour after a large move reverts in the US off-hours on the index roots, and the reversal is worth l… | [RESULT·CLOSE](D499-RESULT-stage-0-CLOSE-the-hour-after-a-large-move-reverts-in.md) · [record](D499-stage-0-hourly-reversal-around-the-23-hour-session-on-eight.md) |
 | D500 | hurdle P on the D495 candidate: P3 fails | [record](D500-hurdle-P-on-the-D495-candidate-P3-fails.md) |
 | D501 | ADDENDUM to D500: the bad days are a regime, not a habit | [record](D501-the-worst-day-is-a-regime-not-a-habit.md) |
