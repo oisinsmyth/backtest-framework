@@ -145,9 +145,9 @@ four jobs, to run on every push — **though the repository has no remote yet, s
 never executed.** It runs offline by construction: the five tests marked `live_fetch` are excluded
 by default, which is D24's cross-cutting gate rather than a convenience.
 
-**A skip is not a pass.** 53 tests skip on a clone without the bulk data panels (2026-09-17), which left git in
+**A skip is not a pass.** 126 tests skip on a clone without the bulk data panels (2026-09-19), which left git in
 [D536](docs/decisions/D536-manifest-only-storage-for-the-bulk-panels.md). **Every skip that wants a
-file names it — 49 of the 53** — and [`data/data_manifest.json`](data/data_manifest.json) carries
+file names it — 122 of the 126** — and [`data/data_manifest.json`](data/data_manifest.json) carries
 its sha256 and the git blob id it carried before publication. **That id no longer resolves**
 (D552); the sha256 is what verifies a panel obtained elsewhere. The other four want a git identity
 rather than a file ([D540](docs/decisions/D540-local-config-a-clone-never-receives.md)). **Use

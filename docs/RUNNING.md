@@ -44,10 +44,15 @@ faster. [`CONTRIBUTING.md`](../CONTRIBUTING.md) and [`README.md`](../README.md) 
 
 ## Cloning it
 
-**On a clone it was 2,017 passed and 53 skipped in 5m45s** — measured on 2026-09-17, on a
-**Windows** clone. The platform is part of that figure: the Linux CI runner skips **54**, one
-more, because it has no API key for `tests/unit/test_us_shorts_fixture.py:583` to scan for
-([D551](decisions/D551-a-snapshot-id-that-depended-on-the-os.md)). Measured by cloning this
+**On a clone it was 2,055 passed and 126 skipped in 4m46s** — measured on 2026-09-19, on a
+**Windows** clone. The platform is part of that figure: the Linux CI runner skips one more,
+because it has no API key for `tests/unit/test_us_shorts_fixture.py:583` to scan for
+([D551](decisions/D551-a-snapshot-id-that-depended-on-the-os.md)).
+
+**73 of those 126 are the Binance purge** — tests that passed on a clone until the two crypto
+price panels left the index and the history
+([D554](decisions/D554-the-binance-panels-leave-too.md)). That is the cost of not redistributing
+them, stated rather than absorbed. Measured by cloning this
 repository into an empty directory and running it, not by reasoning about one from inside the
 working copy. That distinction has **three** times earned its keep: the first clone failed three
 tests the working copy could not, on a line-ending convention the working copy predates; the
@@ -67,9 +72,11 @@ that same cause.
 
 ## What the skips want
 
-**Every skip that wants a file names it — 49 of the 53 (2026-09-17).** The other four want a git
-identity rather than a file, and say so; no clone has one, which is the same defect class as
-[D540](decisions/D540-local-config-a-clone-never-receives.md). This sentence used to say all
+**Every skip that wants a file names it — 122 of the 126 (2026-09-19).** The other four name no
+file and say why: **three** want a git identity, which no clone has and which is the same defect
+class as [D540](decisions/D540-local-config-a-clone-never-receives.md), and **one** wants a trial
+registry, which is gitignored and local. Until this measurement that sentence said all four were
+the git identity, which was wrong by one. This sentence used to say all
 53 named a file and 16 did — the 33 that did not were saying "fixture not built", or in four cases
 nothing at all, about panels that are fully recoverable. The panels left git in
 [D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md) at 844 MB — which is what

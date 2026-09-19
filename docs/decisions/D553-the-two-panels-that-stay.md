@@ -79,3 +79,14 @@ nothing else. The snapshot gate keeps working.
 `data/fixtures/xle_xop_daily_2015_2024*.csv` (1.1 MB) are ETF daily bars, and the `*_events.json`
 and `*_deals.json` files are derived event lists rather than price series. D549 named them; nothing
 since has examined them, and this record does not either.
+
+---
+
+## ADDENDUM 2026-09-19 — SUPERSEDED the same day
+
+The principal reversed this. The two panels were purged from the index and the history in
+[D554](D554-the-binance-panels-leave-too.md), at a cost of 73 tests on every clone.
+
+Nothing above is edited. The measurement that made the case for keeping them is the same
+measurement that made removing them affordable: this record pinned a snapshot id from a payload
+built in code, so the guarantee D551 fixed no longer depended on the file that has now gone.

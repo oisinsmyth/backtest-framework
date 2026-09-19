@@ -632,6 +632,7 @@ would look like data. The tokens are what is shown.
 | D551 | The snapshot id, which is this project's provenance identifier, was a function of the operating system that computed it | [record](D551-a-snapshot-id-that-depended-on-the-os.md) |
 | D552 | The purge and the recovery path were mutually exclusive, and three documents kept promising the one the purge removed | [record](D552-the-recovery-path-the-purge-removed.md) |
 | D553 | The two panels stay, and the guarantee that rested on one of them no longer does | [record](D553-the-two-panels-that-stay.md) |
+| D554 | The Binance price panels leave the index and the history, at a cost of 73 tests on every clone | [record](D554-the-binance-panels-leave-too.md) |
 
 <!-- REGISTER:END -->
 

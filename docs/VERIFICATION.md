@@ -186,9 +186,11 @@ panels there is no blob to recover from, because these were never tracked. Five 
 `breakout_study`, `breakdown_study`, `breakout_universe`, `crypto_pairs`, `breakout_intraday` —
 had no committed count anywhere until 2026-09-17.
 
-**On a clone, 53 tests do not run (measured 2026-09-17).** The bulk data panels left the index in
-[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md); a clone runs **2,017 passed,
-53 skipped**.
+**On a clone, 126 tests do not run (measured 2026-09-19).** The bulk data panels left the index in
+[D536](decisions/D536-manifest-only-storage-for-the-bulk-panels.md) and the two Binance price
+panels left both the index and the history in
+[D554](decisions/D554-the-binance-panels-leave-too.md); a clone runs **2,055 passed, 126
+skipped**, of which **73** are D554's doing.
 
 That figure moved twice in one day and both moves are worth knowing, because they are what a skip
 count is *for*. It read 50 while `test_public_cut.py` contained a test that skipped itself in a
@@ -200,10 +202,13 @@ copy local config). Those four are now honest skips rather than reds, and the co
 less.** The split is deliberately not gated: it is a function of what a checkout happens to
 carry rather than of the commit, so it stays a dated measurement.
 
-**Every skip that wants a file names it — 49 of the 53 — and
-[`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 and git blob id of each.
-The other four want a git identity rather than a file** and say so
-([D540](decisions/D540-local-config-a-clone-never-receives.md)).
+**Every skip that wants a file names it — 122 of the 126 — and
+[`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of each.** The blob id
+it also carries no longer resolves: those objects were purged before publication, so the sha256 is
+the field that verifies a panel obtained elsewhere
+([D552](decisions/D552-the-recovery-path-the-purge-removed.md)). **The other four name no file** —
+three want a git identity ([D540](decisions/D540-local-config-a-clone-never-receives.md)), one
+wants a gitignored trial registry.
 
 That sentence used to read "each skip names the file it wanted", and **sixteen did**. The other 33
 said `fixture not built`, or named a rebuild script instead of the file, or — in four cases — said
