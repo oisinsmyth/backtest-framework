@@ -189,3 +189,8 @@ Twenty-second look by object on price levels. No new data spent.
 control) and `data/d422_extras.json` (the ANY control, post-hoc). Runners
 `scripts/run_d422_second_zone.py` and `scripts/run_d422_extras.py`; flags
 `scripts/d422_stack_flags.py`, committed with the pre-registration.
+
+
+---
+
+*Provenance note, 2026-09-19.* `data/d422_any_trades.json` is the per-trade anatomy of the STACK2-ANY cell (63,297 trades, gross +19.36 bp, the figure in §4): mean, median, both one-tail trims and the symmetric trim, breakeven, era, side and price splits, and the concentration table that names the top trade — MTW short on 2016-03-02 at +13,899 bp, the spinoff that D428 cites as "D422: MTW". It was written at 12:20 on 2026-09-10 by an ad hoc probe run after this result was committed at 11:38; no tracked script produces it, and it was tracked on 2026-09-19 because D428 relies on what it found.
