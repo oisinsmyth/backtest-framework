@@ -44,8 +44,11 @@ faster. [`CONTRIBUTING.md`](../CONTRIBUTING.md) and [`README.md`](../README.md) 
 
 ## Cloning it
 
-**On a clone it was 2,017 passed and 53 skipped in 5m45s** — measured on 2026-09-17 by cloning
-this repository into an empty directory and running it, not by reasoning about one from inside the
+**On a clone it was 2,017 passed and 53 skipped in 5m45s** — measured on 2026-09-17, on a
+**Windows** clone. The platform is part of that figure: the Linux CI runner skips **54**, one
+more, because it has no API key for `tests/unit/test_us_shorts_fixture.py:583` to scan for
+([D551](decisions/D551-a-snapshot-id-that-depended-on-the-os.md)). Measured by cloning this
+repository into an empty directory and running it, not by reasoning about one from inside the
 working copy. That distinction has **three** times earned its keep: the first clone failed three
 tests the working copy could not, on a line-ending convention the working copy predates; the
 second found five links that resolve only on the author's disk; and the third would not check out

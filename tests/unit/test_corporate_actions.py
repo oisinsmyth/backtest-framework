@@ -89,3 +89,40 @@ def test_events_json_roundtrip(tmp_path):
 
     assert loaded.dividends_by_symbol == {"XLE": [(datetime(2015, 3, 20), 0.2575)]}
     assert loaded.splits_by_symbol == {"XOP": [(datetime(2020, 3, 30), 0.25)]}
+
+
+def test_the_events_file_is_byte_identical_on_every_platform(tmp_path):
+    """`save_events_json`'s BYTES are an identity, not a formatting preference (D551).
+
+    `SnapshotStore.create` writes this file into the payload and hashes it, so these bytes are
+    part of the snapshot id -- and a snapshot id is logged with every trial and printed in
+    results docs. The writer used `Path.write_text`, which applies text-mode newline
+    translation, so the same fixture froze to `51756f0d...` on Windows and `1bb6fe9c...` on
+    Linux. The first ever CI run is what said so; the author's machine could not.
+
+    **This test cannot fail on Windows**, and that is worth stating rather than hiding. Before
+    the fix, Windows already produced CRLF by translation, so the assertion below passed for the
+    wrong reason. Its failing case is a Linux runner, which is the only place the defect was ever
+    visible -- a gate whose value is entirely in CI, on a repository whose README says a suite
+    that only runs on the author's laptop is convention.
+
+    CRLF rather than LF because these are the bytes every published snapshot id was frozen
+    under. Choosing LF would be tidier and would renumber all of them.
+    """
+    actions = CorporateActions(
+        dividends_by_symbol={"XLE": [(datetime(2015, 3, 20), 0.2575)]},
+        splits_by_symbol={"XOP": [(datetime(2020, 3, 30), 0.25)]},
+    )
+    path = tmp_path / "events.json"
+    save_events_json(path, actions)
+    raw = path.read_bytes()
+
+    assert b"\r\n" in raw, "the events payload must be CRLF; a snapshot id is a hash of it"
+    assert raw.count(b"\n") == raw.count(b"\r\n"), (
+        f"{raw.count(b'\n') - raw.count(b'\r\n')} bare LF byte(s) in the events payload. On a "
+        f"platform where these come out as LF, every snapshot id this project has published "
+        f"stops reproducing."
+    )
+    # And the round trip still reads them, whichever way the file was written.
+    assert load_events_json(path).splits_by_symbol == {"XOP": [(datetime(2020, 3, 30), 0.25)]}
+

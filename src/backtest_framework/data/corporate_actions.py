@@ -129,7 +129,17 @@ def save_events_json(path: str | Path, actions: CorporateActions) -> None:
             for symbol, events in actions.splits_by_symbol.items()
         },
     }
-    Path(path).write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    # newline="\r\n", explicitly, on every platform. `Path.write_text` applies text-mode
+    # translation, so this file was CRLF on Windows and LF on Linux -- and `SnapshotStore`
+    # hashes these bytes, so the same fixture froze to two different snapshot ids depending on
+    # who ran it (D551). CI's first week is what found it; the author's machine could not.
+    #
+    # CRLF rather than LF is not an aesthetic choice and is not an accident. A snapshot id is
+    # logged with every trial and printed in results docs. These bytes are the ones every
+    # published id was frozen under, so pinning them keeps those ids true AND makes the identity
+    # reproducible anywhere. Choosing LF would be tidier and would renumber the lot.
+    with open(path, "w", encoding="utf-8", newline="\r\n") as f:
+        f.write(json.dumps(payload, indent=2, sort_keys=True))
 
 
 def load_events_json(path: str | Path) -> CorporateActions:

@@ -629,6 +629,7 @@ would look like data. The tokens are what is shown.
 | D548 | the page moved, and measuring it found that none of the figures on it had a gate | [RESULT](D548-RESULT-none-of-the-figures-had-a-gate.md) · [record](D548-the-front-page-stops-explaining-the-checkout.md) |
 | D549 | The history a public clone receives, and the seam that rewriting it leaves in 760 records | [record](D549-the-history-a-public-clone-receives.md) |
 | D550 | The first thing a machine that had never seen this repository said was that one of its gates was measuring the author's… | [record](D550-what-CI-found-in-its-first-run.md) |
+| D551 | The snapshot id, which is this project's provenance identifier, was a function of the operating system that computed it | [record](D551-a-snapshot-id-that-depended-on-the-os.md) |
 
 <!-- REGISTER:END -->
 
