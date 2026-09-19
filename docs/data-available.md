@@ -95,7 +95,12 @@ carries a placeholder row for every Sunday and a few holidays with no close, whi
 before chaining returns or a fifth of every root's returns vanish (D555), and **from 2026-05-30 BTC
 has genuine weekend-dated sessions** — CME's weekend crypto trading, up to 22 hourly closes on a
 Saturday or Sunday — which D555's loader refuses and D562's drops so the Monday return spans the
-weekend as every other root's does) and **`fut_day5m.parquet`**
+weekend as every other root's does; and **two sessions in its calendar are not settlement days**:
+**2021-05-31**, Memorial Day, present on a Globex evening bar with no closes and no settlements,
+and **2020-06-30**, a truncated archive day with 12 of 36 closes and a third of the settlement
+strip's rows — a month-end signal formed on either session alone is empty, and a twelve-month
+lookback then voids twelve month-ends for every root; read the last settlement within a window
+of sessions, as D556 and D564 do) and **`fut_day5m.parquet`**
 (the same 36 roots at **FIVE minutes**, 10,384,830 bars over 135,179 root-sessions, 84 bars per
 full session in the 09:00–15:59 ET window, 98 MiB; builder `scripts/build_fut_day5m.py`, decode
 88 min then a 2-minute build). It exists because 7 hourly bars pin a non-overlapping past/future
