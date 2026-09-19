@@ -1,0 +1,25 @@
+{
+  "symbols": [
+    "BTC-USD",
+    "ETH-USD"
+  ],
+  "start": "2015-01-01",
+  "end": "2025-12-31",
+  "interval": "1d",
+  "bar_boundary": "00:00 UTC, fixed (D108) \u2014 timestamps stored naive, meaning UTC midnight",
+  "first_bar": {
+    "BTC-USD": "2015-01-01T00:00:00",
+    "ETH-USD": "2017-11-09T00:00:00"
+  },
+  "last_bar": {
+    "BTC-USD": "2025-12-30T00:00:00",
+    "ETH-USD": "2025-12-30T00:00:00"
+  },
+  "bar_count": {
+    "BTC-USD": 4017,
+    "ETH-USD": 2974
+  },
+  "fetched_at_utc": "2026-08-18T20:06:10.332584+00:00",
+  "source": "yfinance Ticker.history(auto_adjust=False, actions=True); spot crypto has no dividends or splits, so the events sidecar is empty by construction (D108)",
+  "alignment_note": "NOT inner-joined across symbols \u2014 the study runs one single-instrument backtest per symbol so BTC keeps its pre-2017 history (D45 would otherwise truncate it to ETH's inception)"
+}
