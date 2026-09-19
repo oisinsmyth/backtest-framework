@@ -90,7 +90,12 @@ derive step is a 4–5 minute Python loop; the extract is the fast part.
 And the two **breadth** fixtures, which cover **36 roots** rather than a hand-picked few:
 **`fut_breadth_hourly.csv.gz`** (the hourly day session, 170,643 root-sessions, 2010-06-07 →;
 builder `scripts/build_fut_breadth_hourly.py`; it is the source of the windowed `ids_of` and of
-the front-month election every later futures fixture inherits) and **`fut_day5m.parquet`**
+the front-month election every later futures fixture inherits; **two things bite a reader**: it
+carries a placeholder row for every Sunday and a few holidays with no close, which must be dropped
+before chaining returns or a fifth of every root's returns vanish (D555), and **from 2026-05-30 BTC
+has genuine weekend-dated sessions** — CME's weekend crypto trading, up to 22 hourly closes on a
+Saturday or Sunday — which D555's loader refuses and D562's drops so the Monday return spans the
+weekend as every other root's does) and **`fut_day5m.parquet`**
 (the same 36 roots at **FIVE minutes**, 10,384,830 bars over 135,179 root-sessions, 84 bars per
 full session in the 09:00–15:59 ET window, 98 MiB; builder `scripts/build_fut_day5m.py`, decode
 88 min then a 2-minute build). It exists because 7 hourly bars pin a non-overlapping past/future

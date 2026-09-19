@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 293 of these records carry neither field —
+**No Status or Category column, deliberately.** 295 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -640,6 +640,7 @@ would look like data. The tokens are what is shown.
 | D559 | DOES NOT PASS: the momentum × term-structure double sort as published is −0.11 gross on 2016–2023 on the 17 commodity r… | [PRE-REG](D559-PRE-REG-momentum-x-term-structure-double-sort-on-commodities.md) · [RESULT](D559-RESULT-does-not-pass-the-double-sort-is-negative-2016-2023.md) |
 | D560 | Every reported Sharpe carries a Sortino beside it (R17), and the five runners of 2026-09-19 are re-run under it | [record](D560-every-reported-sharpe-carries-a-sortino-R17.md) |
 | D561 | none of the three sharpens it at the declared standard: the 13-year null is as wide as the 8-year one and its centre mo… | [PRE-REG](D561-PRE-REG-three-sharpenings-of-the-trend-book-power-sizing-role.md) · [RESULT](D561-RESULT-none-sharpens-trend-is-carry-s-tail-not-its-hedge.md) |
+| D562 | the forward slice is read and spent: the published trend book earned +0.51 gross / +0.50 net on 2024-01 → 2026-09, insi… | [PRE-REG](D562-PRE-REG-the-forward-read-of-the-trend-book-on-2024-onward.md) · [RESULT](D562-RESULT-forward-slice-plus-0-51-inside-null-not-a-hedge.md) |
 
 <!-- REGISTER:END -->
 
