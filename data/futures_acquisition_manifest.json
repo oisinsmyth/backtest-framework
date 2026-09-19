@@ -1,0 +1,442 @@
+{
+ "written_utc": "2026-09-12T03:45:22+00:00",
+ "purpose": "what was acquired, what was not, and why. Acquisition only -- no fixture was built and no study was run.",
+ "dataset": "GLBX.MDP3",
+ "windows": {
+  "end": "2026-09-11",
+  "l1_start": "2025-09-11",
+  "l3": [
+   "2026-08-11",
+   "2026-09-10"
+  ]
+ },
+ "measured_compression_ratio_per_schema": {
+  "status": 27.986146057852434,
+  "statistics": 5.240285604843521,
+  "definition": 29.392977783045705,
+  "mbo": 2.8882356204504234,
+  "bbo-1m": 4.0527007282161005,
+  "tbbo": 3.0893336336432533,
+  "ohlcv-1m#1": 4.8926796476735115,
+  "ohlcv-1m#3": 4.716172462109293,
+  "ohlcv-1m#2": 4.9152285691731725,
+  "ohlcv-1m#4#1": 4.601255125634177,
+  "ohlcv-1m#4#2": 4.615990547802893,
+  "ohlcv-1m#4#3": 4.540401980589385,
+  "ohlcv-1m#4#4@2026-09-10#1": 4.4220748026175505,
+  "ohlcv-1m#4#4@2026-09-10#2": 4.213413711238483,
+  "ohlcv-1m#4#4@2026-09-10#3": 4.215066661027406,
+  "ohlcv-1m#4#4@2026-09-10#4": 4.306646269787
+ },
+ "compression_note": "measured per schema and never shared between them. status compressed 28.0x on 40-byte repetitive records; bars measure 2.6x. Unmeasured items are estimated at 1.5x, pessimistic.",
+ "free_gb_now": 361.839988736,
+ "floor_gb": 64.0,
+ "items": [
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "split_duration": "year",
+   "state": "superseded",
+   "job_id": "GLBX-20260911-83UAPMRLCC",
+   "quote_usd": 0.0,
+   "billed_size": null,
+   "bytes_on_disk": 0,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2010-06-06",
+    "2014-06-30"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-9HWUUEP58U",
+   "quote_usd": 0.0,
+   "billed_size": 7878521728,
+   "bytes_on_disk": 1610267235,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 1/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2014-06-30",
+    "2018-07-24"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-VLQEMCFLUB",
+   "quote_usd": 0.0,
+   "billed_size": 11786801712,
+   "bytes_on_disk": 2398017009,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 2/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2018-07-24",
+    "2022-08-17"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-BLBKYJ9XSK",
+   "quote_usd": 0.0,
+   "billed_size": 15343989864,
+   "bytes_on_disk": 3253483622,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 3/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2022-08-17",
+    "2026-09-11"
+   ],
+   "split_duration": "year",
+   "state": "superseded",
+   "job_id": "GLBX-20260911-JCPQUHM68F",
+   "quote_usd": 0.0,
+   "billed_size": null,
+   "bytes_on_disk": 0,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2022-08-17",
+    "2023-08-23"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-NF533R6P5T",
+   "quote_usd": 0.0,
+   "billed_size": 4984775768,
+   "bytes_on_disk": 1083351310,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 1/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2023-08-23",
+    "2024-08-29"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-H8W497MS6J",
+   "quote_usd": 0.0,
+   "billed_size": 5211592736,
+   "bytes_on_disk": 1129030201,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 2/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2024-08-29",
+    "2025-09-04"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-QK63AMNYC5",
+   "quote_usd": 0.0,
+   "billed_size": 5671203832,
+   "bytes_on_disk": 1249053246,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 3/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2025-09-04",
+    "2026-09-11"
+   ],
+   "split_duration": "year",
+   "state": "superseded",
+   "job_id": "GLBX-20260911-R7MDBPUQU6",
+   "quote_usd": 0.0,
+   "billed_size": null,
+   "bytes_on_disk": 0,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2025-09-04",
+    "2026-09-10"
+   ],
+   "split_duration": "year",
+   "state": "superseded",
+   "job_id": "GLBX-20260912-EPMTA84LLP",
+   "quote_usd": 0.0,
+   "billed_size": null,
+   "bytes_on_disk": 0,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [resubmitted with end 2026-09-10: the original ended at the dataset edge and stalled, as did every other ohlcv-1m job that did, while 6 with interior ends succeeded]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2025-09-04",
+    "2025-12-05"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260912-4RLBBNY39K",
+   "quote_usd": 0.0,
+   "billed_size": 1457618792,
+   "bytes_on_disk": 329623278,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [resubmitted with end 2026-09-10: the original ended at the dataset edge and stalled, as did every other ohlcv-1m job that did, while 6 with interior ends succeeded] [slice 1/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2025-12-05",
+    "2026-03-08"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260912-9CK98MDQGF",
+   "quote_usd": 0.0,
+   "billed_size": 1573409432,
+   "bytes_on_disk": 373428659,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [resubmitted with end 2026-09-10: the original ended at the dataset edge and stalled, as did every other ohlcv-1m job that did, while 6 with interior ends succeeded] [slice 2/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2026-03-08",
+    "2026-06-09"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260912-HHFJ99RPK9",
+   "quote_usd": 0.0,
+   "billed_size": 1789993800,
+   "bytes_on_disk": 424665597,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [resubmitted with end 2026-09-10: the original ended at the dataset edge and stalled, as did every other ohlcv-1m job that did, while 6 with interior ends succeeded] [slice 3/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 1,
+   "schema": "ohlcv-1m",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2026-06-09",
+    "2026-09-10"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260912-FTF3X6U8RP",
+   "quote_usd": 0.0,
+   "billed_size": 1590068424,
+   "bytes_on_disk": 369212683,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "the core panel: every instrument, every contract month, 16 years [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h] [resubmitted with end 2026-09-10: the original ended at the dataset edge and stalled, as did every other ohlcv-1m job that did, while 6 with interior ends succeeded] [slice 4/4 of a split; the single job reset twice at ~74% after 18.3 h]"
+  },
+  {
+   "rank": 2,
+   "schema": "definition",
+   "scope": "41 roots",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-LEFUEVLPSR",
+   "quote_usd": 0.0,
+   "billed_size": 78346670480,
+   "bytes_on_disk": 2665489392,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "roll calendar, expiries, tick sizes -- the bars are unusable without it"
+  },
+  {
+   "rank": 3,
+   "schema": "statistics",
+   "scope": "41 roots",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-SDNLQ6M99S",
+   "quote_usd": 0.0,
+   "billed_size": 56973310960,
+   "bytes_on_disk": 10872176682,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "open interest and settlements, the only positioning series in the plan"
+  },
+  {
+   "rank": 4,
+   "schema": "status",
+   "scope": "41 roots",
+   "window": [
+    "2010-06-06",
+    "2026-09-11"
+   ],
+   "split_duration": "year",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-HSEKYEBHQ4",
+   "quote_usd": 0.0,
+   "billed_size": 15750904720,
+   "bytes_on_disk": 562810781,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "halts and auctions -- what a breach looks like when you cannot exit"
+  },
+  {
+   "rank": 5,
+   "schema": "tbbo",
+   "scope": "ALL_SYMBOLS",
+   "window": [
+    "2025-09-11",
+    "2026-09-11"
+   ],
+   "split_duration": "month",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-6DA3JPNQE3",
+   "quote_usd": 0.0,
+   "billed_size": 115240127200,
+   "bytes_on_disk": 37302583944,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "with 1s bars excluded this is the ONLY intrabar path, plus the spread"
+  },
+  {
+   "rank": 6,
+   "schema": "bbo-1m",
+   "scope": "41 roots",
+   "window": [
+    "2025-09-11",
+    "2026-09-11"
+   ],
+   "split_duration": "month",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-V8JK3FM76H",
+   "quote_usd": 0.0,
+   "billed_size": 32424471920,
+   "bytes_on_disk": 8000707206,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "quoted spread incl. overnight, where no trade prints. SCOPED: at ALL_SYMBOLS this measured 3,190 GiB, 12.5 GiB/day, because it snapshots every option strike every minute"
+  },
+  {
+   "rank": 7,
+   "schema": "mbo",
+   "scope": "8 roots",
+   "window": [
+    "2026-08-11",
+    "2026-09-10"
+   ],
+   "split_duration": "day",
+   "state": "downloaded",
+   "job_id": "GLBX-20260911-NKFKU4AMHN",
+   "quote_usd": 0.0,
+   "billed_size": 113778577416,
+   "bytes_on_disk": 39393800357,
+   "deferred_reason": null,
+   "error": null,
+   "file_failures": null,
+   "why_in_plan": "full order book. Unrepeatable window, but no engine reads it yet, so the principal chose it as first to cut under a squeeze"
+  }
+ ],
+ "events": [
+  {
+   "utc": "2026-09-11T19:23:43+00:00",
+   "item": "ohlcv-1m",
+   "kind": "superseded",
+   "detail": "reset twice at ~74% (73->29, 75->0) over 18.3 h of processing with ts_process_start unchanged; split into 4 narrower jobs. Job left running -- no cancel exists and its files stay free for 30 days if it ever completes."
+  },
+  {
+   "utc": "2026-09-11T22:16:56+00:00",
+   "item": "ohlcv-1m#4",
+   "kind": "superseded",
+   "detail": "reset twice at ~74% (73->29, 75->0) over 18.3 h of processing with ts_process_start unchanged; split into 4 narrower jobs. Job left running -- no cancel exists and its files stay free for 30 days if it ever completes."
+  },
+  {
+   "utc": "2026-09-12T02:07:24+00:00",
+   "item": "ohlcv-1m#4#4",
+   "kind": "superseded",
+   "detail": "stalled at 35% for hours with end=2026-09-11, the dataset edge. Every ohlcv-1m job ending at the edge stalled (3 of 3) and every one with an interior end succeeded (6 of 6), while 5 other schemas ending at the same edge were fine. Resubmitted as ohlcv-1m#4#4@2026-09-10 with end 2026-09-10. Left running; no cancel exists."
+  },
+  {
+   "utc": "2026-09-12T03:04:43+00:00",
+   "item": "ohlcv-1m#4#4@2026-09-10",
+   "kind": "superseded",
+   "detail": "progress reset to 35% after 0.9 h of processing with ts_process_start unchanged, so Databento never restarted it -- the pipeline retries internally and loses the work. Split into 4 narrower jobs. The job is LEFT RUNNING: there is no cancel in the client, so it proceeds regardless, and its files stay free to fetch for 30 days if it ever completes."
+  }
+ ]
+}
