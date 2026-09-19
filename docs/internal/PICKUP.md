@@ -32,9 +32,30 @@ rule is **−0.20 gross on 2016–2023** (38th percentile of its purged null) af
 takes the Sharpe from +0.30 to +0.20 while cutting max drawdown from −36% to −29%. **The dollar book
 at minimum size reads +0.20 and it is one contract of palladium** (+$276k of a +$216k total) —
 a 34-root one-contract book is a bet on whichever full-size contracts carry the largest dollar σ,
-and it can disagree in sign with the equal-risk book. **Still on the deposit's list:** the
-cross-sectional sorts (strategies 3–5) need only the curve table; a seasonal-adjusted carry for NG and
-the grains is a declared-construction away; neither long-window null has been enumerated.
+and it can disagree in sign with the equal-risk book.
+
+**D557–D559, the three cross-sectional sorts, ran in parallel as three agents in three worktrees
+(2026-09-19), each committing its pre-registration first on its own branch; merged with `--no-ff`
+so the cited spec hashes (`e3a5785`, `60aa4fc`, `000eda0`) resolve on main.** All three DO NOT PASS,
+all three dollar books at minimum size are one contract of palladium, and all three rotation nulls
+have a positive median because a persistent cross-sectional membership is mostly a fixed per-root
+tilt that a common-offset rotation keeps. **One cross-agent check did not agree and is explained,
+not resolved:** D559's in-process single sorts read −0.065 / −0.105 against D557's −0.207 and
+D558's −0.259 because D559 drops a name missing EITHER signal from BOTH sorts (declared), so its
+single sorts are on a different eligibility. **Two defects the agents found in the shared machinery:**
+(i) D555's `signal_at_month_ends` floor (240 returns per 12 months) scales to 20 returns for a
+1-month read and voids every 19-session month — livestock and grains routinely, and April 2017
+and April 2023 for every root; D559's unfloored amendment moved its primary from −0.11 to −0.44;
+(ii) the term-structure/momentum sorts leave a 0.55 correlation between each other and 0.72/0.80
+with the double sort, so the deposit's "two mechanisms" is what the data shows.
+
+**[D557](../decisions/D557-RESULT-does-not-pass-the-term-structure-sort-is-negative.md) — cross-sectional term structure as published, DOES NOT PASS.** Rank the 17 commodities by the front–next basis, long the six most backwardated, short the six most contangoed, equal weight, hold a month: **−0.21 gross on 2016–2023**, at the **14th percentile** of its purged rotation null — whose **median is +0.16**, because the membership is mostly a fixed per-root tilt (NG short 66 of 96 months, PA long 60) that a common-offset rotation keeps and re-times; the sort's own timing is among the worst phases. The long leg earns and the short leg loses on every statistic (the contango leg was short gas, wheat, corn and hogs, which rallied); March and May 2020 are −12% and −11% on the same three energy names, long then short. Vol-scaling the identical membership gives +0.02: at 17 names the weighting choice is worth 0.23 of Sharpe and neither form carries the sort. The dollar book at minimum size is +0.28 net and, as in D556, **it is palladium** (113% of the total). ρ with CM carry timing is 0.49 daily — half the variance shared, not one mechanism.
+
+**[D558](../decisions/D558-RESULT-does-not-pass-xs-12-1-momentum-negative-on-commodities.md) — cross-sectional 12-1 momentum as published, 17 commodities, DOES NOT PASS.** Rank on the 11 months ending the month before, long the top third, short the bottom third, equal weight, held a month: **−0.26 gross on 2016–2023** (SE 0.31), at the **35th percentile** of its purged rotation null (p95 +0.71), −0.20 over 2011–2023; ρ 0.62 with D555's time-series book on the same roots (which is −0.06). The loss is the **short leg** (−0.77 bp a root-month against +0.29 for the long leg) and the **energy block** — the five energy roots contributed −0.39 of a −0.27 total, sit in one leg on 56 of 96 month-ends, and ex-energy the book is +0.12; a sector-capped sort is a different construction, not an amendment. The worst month is May 2020, short CL/RB/BZ/HO on the April crash — the momentum crash, and TSMOM lost it too. The dollar book at minimum size is +0.05 and it is palladium (+$133k) against RB (−$84k).
+
+**[D559](../decisions/D559-RESULT-does-not-pass-the-double-sort-is-negative-2016-2023.md) — the momentum × term-structure double sort as published (FMR 2010), DOES NOT PASS.** Terciles on 12-1 momentum, then the most-backwardated third of the top tercile long and the most-contangoed third of the bottom tercile short, two names a side: **−0.11 gross on 2016–2023** at the **25th percentile** of a purged rotation null whose median is **+0.08**; −0.44 with the calendar artefact removed. It is the two single sorts intersected (ρ 0.72 / 0.80, both negative under the same rule), at 1.5× their vol and a −55% drawdown; the loss lives in the **short corner** (NG, ZW, livestock — the seasonally-contangoed names, D556's un-deseasonalised carry). The dollar book is palladium a third time (+$85k of +$82k).
+
+**Still on the deposit's list:** the combined continuous trend + carry forecast (§8) at equal weights was cell C of D556 (+0.20, drawdown −29%); a seasonal-adjusted carry for NG and the grains is a declared construction away; a name-randomised null (keep the leg counts, randomise who fills them) would separate tilt from timing and none of D557–D559 pre-registered one; none of the five long-window nulls has been enumerated.
 
 ---
 

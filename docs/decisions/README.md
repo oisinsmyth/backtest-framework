@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 285 of these records carry neither field —
+**No Status or Category column, deliberately.** 291 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -635,6 +635,9 @@ would look like data. The tokens are what is shown.
 | D554 | The Binance price panels leave the index and the history, at a cost of 73 tests on every clone | [record](D554-the-binance-panels-leave-too.md) |
 | D555 | DOES NOT PASS, and the harness reproduces AQR's own series at ρ = 0.815: on 2016–2023 the published 12-month trend book… | [PRE-REG](D555-PRE-REG-time-series-momentum-as-published-on-36-CME-roots.md) · [RESULT](D555-RESULT-does-not-pass-and-the-harness-reproduces-AQR-at-0-815.md) |
 | D556 | DOES NOT PASS: carry timing as published is −0.20 gross on 2016–2023, below its own null's median, after +1.61 on 2011–… | [PRE-REG](D556-PRE-REG-carry-timing-as-published-on-36-CME-roots-and-the.md) · [RESULT](D556-RESULT-does-not-pass-carry-timing-is-negative-on-2016-2023.md) |
+| D557 | DOES NOT PASS: the cross-sectional term-structure sort as published is −0.21 gross on 2016–2023, at the 14th percentile… | [PRE-REG](D557-PRE-REG-cross-sectional-term-structure-on-17-commodities.md) · [RESULT](D557-RESULT-does-not-pass-the-term-structure-sort-is-negative.md) |
+| D558 | DOES NOT PASS: cross-sectional 12-1 momentum as published is −0.26 gross on the 17 commodities over 2016–2023, at the 3… | [PRE-REG](D558-PRE-REG-cross-sectional-12-1-momentum-on-17-commodities.md) · [RESULT](D558-RESULT-does-not-pass-xs-12-1-momentum-negative-on-commodities.md) |
+| D559 | DOES NOT PASS: the momentum × term-structure double sort as published is −0.11 gross on 2016–2023 on the 17 commodity r… | [PRE-REG](D559-PRE-REG-momentum-x-term-structure-double-sort-on-commodities.md) · [RESULT](D559-RESULT-does-not-pass-the-double-sort-is-negative-2016-2023.md) |
 
 <!-- REGISTER:END -->
 

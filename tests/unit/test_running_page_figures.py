@@ -58,7 +58,7 @@ def _longest_tracked_path() -> int:
 
 # (label, the literal as the prose spells it, what recomputes it)
 ANCHORS: list[tuple[str, str, Callable[[], int]]] = [
-    ("panels in the manifest", "118", _panels),
+    ("panels in the manifest", "120", _panels),
     ("panels carrying a git blob id", "115", _panels_with_a_blob),
     ("longest tracked path", "85", _longest_tracked_path),
 ]
@@ -99,11 +99,11 @@ def test_every_checkable_figure_matches_its_source(label, literal, recompute):
     )
 
 
-def test_the_three_panels_without_a_blob_are_the_ones_named():
-    """A count can hold while the identities drift; the page names all three, so check the set.
+def test_the_five_panels_without_a_blob_are_the_ones_named():
+    """A count can hold while the identities drift; the page names all five, so check the set.
 
     This is the stronger half: `115` would still pass if a different panel lost its blob and
-    another gained one, and the page's three filenames would then be wrong while its number was
+    another gained one, and the page's five filenames would then be wrong while its number was
     right.
     """
     prose = PAGE.read_text(encoding="utf-8")
@@ -113,7 +113,7 @@ def test_the_three_panels_without_a_blob_are_the_ones_named():
         f"these panels have no git blob id and docs/RUNNING.md does not name them: {missing}. "
         f"The page tells a reader which artifacts are unrecoverable; that list is the point."
     )
-    assert len(without) == 3, (
-        f"{len(without)} panels now have no blob id, and the page's prose says three. The count "
+    assert len(without) == 5, (
+        f"{len(without)} panels now have no blob id, and the page's prose says five. The count "
         f"and the names have to move together."
     )
