@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 315 of these records carry neither field —
+**No Status or Category column, deliberately.** 317 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -652,6 +652,7 @@ would look like data. The tokens are what is shown.
 | D571 | D571 STAGE 0 RESULT — the mechanism is not supported: the soybean placement profile predicted the best month on corn an… | [record](D571-STAGE-0-DESIGN-cross-root-placement-profiles-from-soybeans.md) · [RESULT](D571-STAGE-0-RESULT-not-supported-profiles-are-root-specific.md) |
 | D572 | FIXTURE: the CFTC Commitments of Traders fixture extended to the six commodity roots the first fetch did not request —… | [record](D572-FIXTURE-COT-extended-to-the-six-missing-commodity-roots.md) |
 | D573 | DOES NOT PASS: hedging pressure as published earns −0.20 gross / −0.28 Sortino on 2016–2023, below its time-rotation me… | [PRE-REG](D573-PRE-REG-hedging-pressure-as-published-on-16-commodities.md) · [RESULT](D573-RESULT-does-not-pass-the-sort-is-the-tilt-and-the-tilt-lost.md) |
+| D574 | INSIDE: basis-momentum's forward slice reads +0.48 gross / +0.69 Sortino on 2024-01-02 → 2026-09-09 (696 sessions, 33 m… | [PRE-REG](D574-PRE-REG-the-forward-read-of-basis-momentum-on-2024-onward.md) · [RESULT](D574-RESULT-inside-the-total-transfers-the-composition-inverts.md) |
 
 <!-- REGISTER:END -->
 
