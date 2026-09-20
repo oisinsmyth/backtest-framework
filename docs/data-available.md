@@ -315,6 +315,20 @@ adjusted, daily is not. That has already put one name at 5x its own prices, and
 `crypto_universe_2015_2025_raw` (63 coins, daily) · `crypto_binance_15m_raw` (25 MB, 15m,
 2017 → 2026) · 30m and 1h slices · `crypto_book_2018_raw`.
 
+**`fut_btc_1m.csv.gz` + `fut_btc_1m.meta.json` ([D580](decisions/D580-STAGE-0-RESULT-not-supported-a-five-minute-unsigned-burst.md), 2026-09-20; panel gitignored by pattern, in the manifest by hash):**
+BTC and MBT outright bars at one minute, **every session, keyed in UTC** (bar start), front month
+per (root, CME trade date) by full-date volume through D462's windowed id labelling; BTC
+1,936,567 bars over 2,286 sessions 2017-12-18 → 2026-09-10, MBT 1,386,977 bars from 2021-05-03.
+Trade date = US/Eastern date of ts + 7 h (the 18:00 ET open belongs to the next date, the breadth
+fixture's own convention). Builder `scripts/build_fut_btc_1m.py` (`--verify`, `--build` on the
+system interpreter, 3 min on six workers, `--gates`, `--selftest`). **What bites:** *(i)* **a bar
+prints only when the contract trades** — BTC has bars on 59 % of open minutes, MBT 53 %, so a
+"bars present" rule is a liquidity filter, not a session test; define presence as the minutes
+between a trade date's first and last bar and treat an untraded open minute as volume 0; *(ii)*
+the schema has no trade count; *(iii)* from 2026-05-30 Saturday and Sunday trade dates exist
+(CME weekend crypto sessions); *(iv)* the daily halt (21:00–22:00 or 22:00–23:00 UTC by DST) sits
+inside any window that spans the US evening.
+
 **`perp_funding.csv` + `perp_open_interest_daily.csv` + `perp_funding.meta.json` ([D579](decisions/D579-FIXTURE-perpetual-funding-rates-and-open-interest-three-venues.md), 2026-09-20):**
 perpetual-swap funding rates, tidy, one row per (venue, symbol, settlement UTC): Binance USDT-M
 BTC/ETH from 2019-09-10 / 2019-11-27, Bybit linear from 2020-03-25, **Bybit inverse BTCUSD from

@@ -1,0 +1,714 @@
+{
+ "spec": "382ef54",
+ "built_utc": "2026-09-20T21:00:31Z",
+ "files": [
+  {
+   "file": "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
+   "rows_in": 12709200,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 4.9
+  },
+  {
+   "file": "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",
+   "rows_in": 27280970,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 9.7
+  },
+  {
+   "file": "glbx-mdp3-20120101-20121231.ohlcv-1m.dbn.zst",
+   "rows_in": 34215872,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 11.9
+  },
+  {
+   "file": "glbx-mdp3-20130101-20131231.ohlcv-1m.dbn.zst",
+   "rows_in": 44528359,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 14.4
+  },
+  {
+   "file": "glbx-mdp3-20140101-20140629.ohlcv-1m.dbn.zst",
+   "rows_in": 21953487,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 9.1
+  },
+  {
+   "file": "glbx-mdp3-20140630-20141231.ohlcv-1m.dbn.zst",
+   "rows_in": 25417746,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 10.3
+  },
+  {
+   "file": "glbx-mdp3-20150101-20151231.ohlcv-1m.dbn.zst",
+   "rows_in": 52313387,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 19.7
+  },
+  {
+   "file": "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
+   "rows_in": 50604555,
+   "rows_kept": 0,
+   "ids": 0,
+   "mapping_windows": 0,
+   "secs": 22.8
+  },
+  {
+   "file": "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
+   "rows_in": 49989121,
+   "rows_kept": 4327,
+   "ids": 5,
+   "mapping_windows": 5,
+   "secs": 27.7
+  },
+  {
+   "file": "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
+   "rows_in": 32153793,
+   "rows_kept": 95996,
+   "ids": 11,
+   "mapping_windows": 11,
+   "secs": 20.9
+  },
+  {
+   "file": "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
+   "rows_in": 24713186,
+   "rows_kept": 82397,
+   "ids": 10,
+   "mapping_windows": 10,
+   "secs": 17.4
+  },
+  {
+   "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+   "rows_in": 58051976,
+   "rows_kept": 222037,
+   "ids": 20,
+   "mapping_windows": 20,
+   "secs": 40.3
+  },
+  {
+   "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+   "rows_in": 67058153,
+   "rows_kept": 305077,
+   "ids": 20,
+   "mapping_windows": 20,
+   "secs": 50.2
+  },
+  {
+   "file": "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
+   "rows_in": 68752439,
+   "rows_kept": 568346,
+   "ids": 36,
+   "mapping_windows": 36,
+   "secs": 62.7
+  },
+  {
+   "file": "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
+   "rows_in": 55424065,
+   "rows_kept": 362538,
+   "ids": 38,
+   "mapping_windows": 38,
+   "secs": 47.4
+  },
+  {
+   "file": "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
+   "rows_in": 33062368,
+   "rows_kept": 187966,
+   "ids": 32,
+   "mapping_windows": 32,
+   "secs": 26.2
+  },
+  {
+   "file": "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
+   "rows_in": 55951485,
+   "rows_kept": 316040,
+   "ids": 38,
+   "mapping_windows": 38,
+   "secs": 47.3
+  },
+  {
+   "file": "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
+   "rows_in": 31602486,
+   "rows_kept": 185207,
+   "ids": 32,
+   "mapping_windows": 32,
+   "secs": 26.5
+  },
+  {
+   "file": "glbx-mdp3-20240101-20240828.ohlcv-1m.dbn.zst",
+   "rows_in": 61461670,
+   "rows_kept": 470440,
+   "ids": 36,
+   "mapping_windows": 36,
+   "secs": 56.2
+  },
+  {
+   "file": "glbx-mdp3-20240829-20241231.ohlcv-1m.dbn.zst",
+   "rows_in": 32289655,
+   "rows_kept": 270452,
+   "ids": 32,
+   "mapping_windows": 32,
+   "secs": 32.0
+  },
+  {
+   "file": "glbx-mdp3-20250101-20250903.ohlcv-1m.dbn.zst",
+   "rows_in": 68981842,
+   "rows_kept": 546238,
+   "ids": 36,
+   "mapping_windows": 36,
+   "secs": 72.7
+  },
+  {
+   "file": "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
+   "rows_in": 26028907,
+   "rows_kept": 218023,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 29.4
+  },
+  {
+   "file": "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
+   "rows_in": 6690321,
+   "rows_kept": 55682,
+   "ids": 24,
+   "mapping_windows": 24,
+   "secs": 10.8
+  },
+  {
+   "file": "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
+   "rows_in": 21406276,
+   "rows_kept": 151882,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 30.1
+  },
+  {
+   "file": "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst",
+   "rows_in": 31964175,
+   "rows_kept": 203418,
+   "ids": 28,
+   "mapping_windows": 28,
+   "secs": 41.4
+  },
+  {
+   "file": "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
+   "rows_in": 28394079,
+   "rows_kept": 209230,
+   "ids": 26,
+   "mapping_windows": 26,
+   "secs": 35.9
+  }
+ ],
+ "roots": [
+  "BTC",
+  "MBT"
+ ],
+ "sessions": "every session; ts_utc = bar start to the minute, UTC",
+ "trade_date": "US/Eastern calendar date of ts_event + 7 h (the 18:00 ET open belongs to the next date, as the breadth fixture's day does)",
+ "front_rule": "highest full-trade-date volume per (root, trade date)",
+ "schema_note": "ohlcv-1m carries no trade count; the fixture has volume only",
+ "gates": {
+  "G2": {
+   "bars_with_zero_or_undef_price": 0,
+   "passes": true
+  },
+  "G1": {
+   "common_sessions": 2285,
+   "agreement": 0.9908096280087527,
+   "disagreements": [
+    [
+     "2019-04-25",
+     "BTCJ9",
+     "BTCK9"
+    ],
+    [
+     "2020-11-26",
+     "BTCX0",
+     "BTCZ0"
+    ],
+    [
+     "2020-12-23",
+     "BTCZ0",
+     "BTCF1"
+    ],
+    [
+     "2021-02-25",
+     "BTCG1",
+     "BTCH1"
+    ],
+    [
+     "2022-05-26",
+     "BTCK2",
+     "BTCM2"
+    ],
+    [
+     "2022-09-29",
+     "BTCU2",
+     "BTCV2"
+    ],
+    [
+     "2022-11-24",
+     "BTCX2",
+     "BTCZ2"
+    ],
+    [
+     "2023-07-27",
+     "BTCN3",
+     "BTCQ3"
+    ],
+    [
+     "2023-10-26",
+     "BTCV3",
+     "BTCX3"
+    ],
+    [
+     "2024-03-27",
+     "BTCH4",
+     "BTCJ4"
+    ],
+    [
+     "2024-05-30",
+     "BTCK4",
+     "BTCM4"
+    ],
+    [
+     "2024-06-27",
+     "BTCM4",
+     "BTCN4"
+    ],
+    [
+     "2024-07-25",
+     "BTCN4",
+     "BTCQ4"
+    ],
+    [
+     "2025-04-24",
+     "BTCJ5",
+     "BTCK5"
+    ],
+    [
+     "2025-07-24",
+     "BTCN5",
+     "BTCQ5"
+    ],
+    [
+     "2025-09-25",
+     "BTCU5",
+     "BTCV5"
+    ],
+    [
+     "2025-10-30",
+     "BTCV5",
+     "BTCX5"
+    ],
+    [
+     "2025-12-24",
+     "BTCZ5",
+     "BTCF6"
+    ],
+    [
+     "2026-04-23",
+     "BTCJ6",
+     "BTCK6"
+    ],
+    [
+     "2026-06-21",
+     "BTCN6",
+     "BTCM6"
+    ],
+    [
+     "2026-06-25",
+     "BTCM6",
+     "BTCN6"
+    ]
+   ],
+   "n_disagreements": 21,
+   "passes": true
+  },
+  "G3_BTC": {
+   "n_sessions": 2286,
+   "p50_bars": 891.0,
+   "share_full": 0.03237095363079615,
+   "p50_by_weekday": {
+    "0": 929.0,
+    "1": 900.0,
+    "2": 890.0,
+    "3": 875.0,
+    "4": 889.0,
+    "5": 30.0,
+    "6": 62.0
+   },
+   "first": "2017-12-18",
+   "last": "2026-09-10",
+   "sessions_under_600": [
+    [
+     "2017-12-18",
+     471
+    ],
+    [
+     "2017-12-19",
+     330
+    ],
+    [
+     "2017-12-20",
+     420
+    ],
+    [
+     "2017-12-21",
+     417
+    ],
+    [
+     "2017-12-26",
+     225
+    ],
+    [
+     "2017-12-27",
+     276
+    ],
+    [
+     "2017-12-28",
+     342
+    ],
+    [
+     "2017-12-29",
+     433
+    ],
+    [
+     "2018-01-02",
+     339
+    ],
+    [
+     "2018-01-03",
+     350
+    ],
+    [
+     "2018-01-04",
+     346
+    ],
+    [
+     "2018-01-05",
+     348
+    ],
+    [
+     "2018-01-08",
+     325
+    ],
+    [
+     "2018-01-09",
+     336
+    ],
+    [
+     "2018-01-10",
+     381
+    ],
+    [
+     "2018-01-11",
+     489
+    ],
+    [
+     "2018-01-12",
+     339
+    ],
+    [
+     "2018-01-15",
+     174
+    ],
+    [
+     "2018-01-18",
+     588
+    ],
+    [
+     "2018-01-19",
+     378
+    ],
+    [
+     "2018-01-22",
+     425
+    ],
+    [
+     "2018-01-23",
+     451
+    ],
+    [
+     "2018-01-24",
+     343
+    ],
+    [
+     "2018-01-25",
+     263
+    ],
+    [
+     "2018-01-26",
+     247
+    ],
+    [
+     "2018-01-29",
+     246
+    ],
+    [
+     "2018-01-30",
+     329
+    ],
+    [
+     "2018-01-31",
+     367
+    ],
+    [
+     "2018-02-01",
+     437
+    ],
+    [
+     "2018-02-05",
+     594
+    ],
+    [
+     "2018-02-07",
+     517
+    ],
+    [
+     "2018-02-08",
+     378
+    ],
+    [
+     "2018-02-09",
+     291
+    ],
+    [
+     "2018-02-12",
+     259
+    ],
+    [
+     "2018-02-13",
+     225
+    ],
+    [
+     "2018-02-14",
+     322
+    ],
+    [
+     "2018-02-15",
+     551
+    ],
+    [
+     "2018-02-16",
+     474
+    ],
+    [
+     "2018-02-19",
+     245
+    ],
+    [
+     "2018-02-20",
+     476
+    ]
+   ]
+  },
+  "G3_MBT": {
+   "n_sessions": 1417,
+   "p50_bars": 1021.0,
+   "share_full": 0.38108680310515175,
+   "p50_by_weekday": {
+    "0": 1068.0,
+    "1": 1062.5,
+    "2": 1032.0,
+    "3": 1015.5,
+    "4": 1021.0,
+    "5": 293.0,
+    "6": 459.0
+   },
+   "first": "2021-05-03",
+   "last": "2026-09-10",
+   "sessions_under_600": [
+    [
+     "2021-05-03",
+     582
+    ],
+    [
+     "2021-05-05",
+     585
+    ],
+    [
+     "2021-07-05",
+     558
+    ],
+    [
+     "2021-07-23",
+     555
+    ],
+    [
+     "2021-09-06",
+     407
+    ],
+    [
+     "2021-09-14",
+     589
+    ],
+    [
+     "2021-09-17",
+     596
+    ],
+    [
+     "2021-11-25",
+     508
+    ],
+    [
+     "2022-01-17",
+     592
+    ],
+    [
+     "2022-06-03",
+     589
+    ],
+    [
+     "2022-06-09",
+     524
+    ],
+    [
+     "2022-07-04",
+     355
+    ],
+    [
+     "2022-07-13",
+     592
+    ],
+    [
+     "2022-07-15",
+     594
+    ],
+    [
+     "2022-07-22",
+     572
+    ],
+    [
+     "2022-07-26",
+     551
+    ],
+    [
+     "2022-07-27",
+     511
+    ],
+    [
+     "2022-07-28",
+     574
+    ],
+    [
+     "2022-08-01",
+     595
+    ],
+    [
+     "2022-08-02",
+     548
+    ],
+    [
+     "2022-08-03",
+     575
+    ],
+    [
+     "2022-08-04",
+     539
+    ],
+    [
+     "2022-08-05",
+     584
+    ],
+    [
+     "2022-08-09",
+     559
+    ],
+    [
+     "2022-08-10",
+     579
+    ],
+    [
+     "2022-08-16",
+     545
+    ],
+    [
+     "2022-08-17",
+     561
+    ],
+    [
+     "2022-08-18",
+     538
+    ],
+    [
+     "2022-08-24",
+     518
+    ],
+    [
+     "2022-08-25",
+     363
+    ],
+    [
+     "2022-08-26",
+     566
+    ],
+    [
+     "2022-08-29",
+     587
+    ],
+    [
+     "2022-08-30",
+     552
+    ],
+    [
+     "2022-08-31",
+     571
+    ],
+    [
+     "2022-09-01",
+     586
+    ],
+    [
+     "2022-09-02",
+     549
+    ],
+    [
+     "2022-09-05",
+     218
+    ],
+    [
+     "2022-09-06",
+     596
+    ],
+    [
+     "2022-09-08",
+     532
+    ],
+    [
+     "2022-09-16",
+     532
+    ]
+   ]
+  },
+  "G4": {
+   "common_minutes": 1046163,
+   "median_abs_rel_diff": 0.0002258525935405764,
+   "p99_abs_rel_diff": 0.004856120196703396,
+   "passes": true
+  },
+  "G5": {
+   "breadth_sessions_with_bars_absent_here": [],
+   "n_absent": 0,
+   "sessions_here_not_in_breadth": [
+    "2026-09-10"
+   ],
+   "n_extra": 1,
+   "breadth_rows_with_zero_bars": 448,
+   "passes": true
+  }
+ },
+ "all_gates_pass": true
+}

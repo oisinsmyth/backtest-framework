@@ -11,6 +11,10 @@ version (likely at the Phase C "first real number" milestone, see
 ## [Unreleased]
 
 ### Added (2026-09-20)
+- `data/fixtures/fut_btc_1m.csv.gz` + meta (D580): BTC and MBT one-minute bars, every session,
+  UTC-keyed, front by trade-date volume, 2017-12-18 to 2026-09-10; builder
+  `scripts/build_fut_btc_1m.py` (verify / build / gates / selftest). Stage 0 runner
+  `scripts/stage0_d580_funding_clock.py` (the funding clock on CME bitcoin: NOT SUPPORTED).
 - `data/fixtures/perp_funding.csv`, `perp_open_interest_daily.csv`, `perp_funding.meta.json` (D579):
   perpetual-swap funding rates from Binance, Bybit and OKX for BTC and ETH, USDT- and
   coin-margined, **46,892 settlements 2018-11-15 to 2026-09-20**, and Bybit daily open interest
