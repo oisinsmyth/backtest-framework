@@ -1,0 +1,208 @@
+{
+ "built_utc": "2026-09-20T20:34:56Z",
+ "fetcher": "scripts/fetch_perp_funding.py",
+ "sources": {
+  "binance": "https://fapi.binance.com/fapi/v1/fundingRate (USDT-margined perpetuals; fundingTime is the settlement)",
+  "bybit": "https://api.bybit.com/v5/market/funding/history (linear = USDT-margined, inverse = coin-margined) and /v5/market/open-interest intervalTime=1d",
+  "okx": "https://www.okx.com/api/v5/public/funding-rate-history (realizedRate; history is shallow, see per-series first/last)"
+ },
+ "shape": "TIDY -- one row per (venue, symbol, settlement_utc); funding_rate is the fraction paid per period (0.0001 = 0.01 %); mark_price only where the venue returns it (Binance, later rows)",
+ "key": "settlement_utc is the venue's settlement timestamp in UTC; the 00/08/16 UTC grid is the published schedule on every venue here, and off-grid rows are the venue's own interval changes, kept as they were published",
+ "rows": 46892,
+ "oi_rows": 8876,
+ "series": {
+  "binance:BTCUSDT": {
+   "rows": 7703,
+   "first": "2019-09-10T08:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 7703,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.3524600804881215,
+   "abs_rate_max": 0.003,
+   "rate_mean": 0.00010563485395300534,
+   "rate_p05": -5.407799999999999e-05,
+   "rate_p95": 0.000458184999999999,
+   "share_negative": 0.14202258860184344
+  },
+  "binance:ETHUSDT": {
+   "rows": 7469,
+   "first": "2019-11-27T08:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 7469,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.344892221180881,
+   "abs_rate_max": 0.00375,
+   "rate_mean": 0.00012600833311018878,
+   "rate_p05": -5.1541999999999995e-05,
+   "rate_p95": 0.0005552599999999994,
+   "share_negative": 0.13696612665684832
+  },
+  "bybit_linear:BTCUSDT": {
+   "rows": 7111,
+   "first": "2020-03-25T16:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 7111,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.4076782449725777,
+   "abs_rate_max": 0.00375,
+   "rate_mean": 0.00011697610462663479,
+   "rate_p05": -7.8105e-05,
+   "rate_p95": 0.00050013,
+   "share_negative": 0.16087751371115175
+  },
+  "bybit_linear:ETHUSDT": {
+   "rows": 6482,
+   "first": "2020-10-21T08:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 6482,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.3875347115087936,
+   "abs_rate_max": 0.00375,
+   "rate_mean": 0.00012788688676334465,
+   "rate_p05": -6.5738e-05,
+   "rate_p95": 0.0005609569999999998,
+   "share_negative": 0.17016352977476087
+  },
+  "bybit_inverse:BTCUSD": {
+   "rows": 8598,
+   "first": "2018-11-15T00:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 8601,
+   "coverage_of_8h_slots": 0.9996512033484478,
+   "share_exactly_default_0.0001": 0.4724354501046755,
+   "abs_rate_max": 0.00375,
+   "rate_mean": 0.00010080305303558968,
+   "rate_p05": -0.00015496049999999997,
+   "rate_p95": 0.0004977409999999998,
+   "share_negative": 0.19213770644335892
+  },
+  "bybit_inverse:ETHUSD": {
+   "rows": 8384,
+   "first": "2019-01-25T16:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 8386,
+   "coverage_of_8h_slots": 0.9997615072740281,
+   "share_exactly_default_0.0001": 0.4830629770992366,
+   "abs_rate_max": 0.00383319,
+   "rate_mean": 0.00013522028983778625,
+   "rate_p05": -0.0001358785,
+   "rate_p95": 0.0007080874999999999,
+   "share_negative": 0.1766459923664122
+  },
+  "okx:BTC-USDT-SWAP": {
+   "rows": 286,
+   "first": "2026-06-17T16:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 286,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.11888111888111888,
+   "abs_rate_max": 0.0001,
+   "rate_mean": 4.958773907816119e-05,
+   "rate_p05": -1.3312409555925e-05,
+   "rate_p95": 0.0001,
+   "share_negative": 0.08741258741258741
+  },
+  "okx:ETH-USDT-SWAP": {
+   "rows": 286,
+   "first": "2026-06-17T16:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 286,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.0944055944055944,
+   "abs_rate_max": 0.0001,
+   "rate_mean": 3.582443942135944e-05,
+   "rate_p05": -2.84154111974e-05,
+   "rate_p95": 0.0001,
+   "share_negative": 0.2062937062937063
+  },
+  "okx:BTC-USD-SWAP": {
+   "rows": 286,
+   "first": "2026-06-17T16:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 286,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.19230769230769232,
+   "abs_rate_max": 0.0001,
+   "rate_mean": 5.3759498204922024e-05,
+   "rate_p05": -1.60096075779e-05,
+   "rate_p95": 0.0001,
+   "share_negative": 0.1048951048951049
+  },
+  "okx:ETH-USD-SWAP": {
+   "rows": 287,
+   "first": "2026-06-17T08:00:00Z",
+   "last": "2026-09-20T16:00:00Z",
+   "share_on_8h_grid": 1.0,
+   "expected_8h_slots": 287,
+   "coverage_of_8h_slots": 1.0,
+   "share_exactly_default_0.0001": 0.13588850174216027,
+   "abs_rate_max": 0.0001,
+   "rate_mean": 4.617164558969024e-05,
+   "rate_p05": -2.473760450011e-05,
+   "rate_p95": 0.0001,
+   "share_negative": 0.13588850174216027
+  },
+  "G3_binance_vs_bybit_linear_BTC": {
+   "common_settlements": 7111,
+   "pearson": 0.6702792790104233,
+   "sign_agreement": 0.8164815075235551
+  },
+  "OI bybit_linear:BTCUSDT": {
+   "rows": 2238,
+   "first": "2020-08-05T00:00:00Z",
+   "last": "2026-09-20T00:00:00Z",
+   "days_spanned": 2238,
+   "oi_median": 52195.565,
+   "oi_last": 56677.825
+  },
+  "OI bybit_linear:ETHUSDT": {
+   "rows": 2160,
+   "first": "2020-10-22T00:00:00Z",
+   "last": "2026-09-20T00:00:00Z",
+   "days_spanned": 2160,
+   "oi_median": 504562.255,
+   "oi_last": 886854.62
+  },
+  "OI bybit_inverse:BTCUSD": {
+   "rows": 2239,
+   "first": "2020-08-04T00:00:00Z",
+   "last": "2026-09-20T00:00:00Z",
+   "days_spanned": 2239,
+   "oi_median": 732954273.0,
+   "oi_last": 471312620.0
+  },
+  "OI bybit_inverse:ETHUSD": {
+   "rows": 2239,
+   "first": "2020-08-04T00:00:00Z",
+   "last": "2026-09-20T00:00:00Z",
+   "days_spanned": 2239,
+   "oi_median": 268635302.0,
+   "oi_last": 180955206.0
+  },
+  "wire_timestamps_off_the_minute_floored": {
+   "binance": 6640
+  }
+ },
+ "gates": {
+  "G1": "no duplicate (venue, symbol, settlement)",
+  "G2": "binance BTCUSDT settlements on the 00/08/16 UTC grid >= 95 %",
+  "G3": "binance vs bybit-linear BTC funding on common settlements: Pearson > 0.3",
+  "G4": "no |rate| above 5 % a period",
+  "G5": "no duplicate open-interest rows",
+  "G6": "no negative open interest"
+ },
+ "not_fetched": {
+  "binance_openInterestHist": "serves the last 30 days only",
+  "okx_open_interest_history": "Illegal time range beyond the recent window"
+ },
+ "licence": "venue public market-data endpoints, no key, no terms restricting redistribution of historical funding rates were presented at fetch; committed as a small derived fixture (D191)"
+}

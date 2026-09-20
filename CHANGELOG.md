@@ -11,6 +11,12 @@ version (likely at the Phase C "first real number" milestone, see
 ## [Unreleased]
 
 ### Added (2026-09-20)
+- `data/fixtures/perp_funding.csv`, `perp_open_interest_daily.csv`, `perp_funding.meta.json` (D579):
+  perpetual-swap funding rates from Binance, Bybit and OKX for BTC and ETH, USDT- and
+  coin-margined, **46,892 settlements 2018-11-15 to 2026-09-20**, and Bybit daily open interest
+  from 2020-08-04 (8,876 rows). New fetcher `scripts/fetch_perp_funding.py` (stdlib; probe /
+  fetch / build / selftest; six gates proven to raise). Binance's +1 ms wire offsets are floored
+  to the minute; the share at the +0.01 % default is recorded per series.
 - `data/fixtures/cftc_cot_raw.csv.gz` extended (D572): **34 symbols, 274,473 rows, 1986-01-15
   to 2026-09-15** - ZL ZM HO RB PL PA added so every one of the breadth fixture's 17 commodity
   roots has its positioning series. Two more resolution traps pinned in `fetch_cftc_cot.py`:

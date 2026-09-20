@@ -315,6 +315,20 @@ adjusted, daily is not. That has already put one name at 5x its own prices, and
 `crypto_universe_2015_2025_raw` (63 coins, daily) · `crypto_binance_15m_raw` (25 MB, 15m,
 2017 → 2026) · 30m and 1h slices · `crypto_book_2018_raw`.
 
+**`perp_funding.csv` + `perp_open_interest_daily.csv` + `perp_funding.meta.json` ([D579](decisions/D579-FIXTURE-perpetual-funding-rates-and-open-interest-three-venues.md), 2026-09-20):**
+perpetual-swap funding rates, tidy, one row per (venue, symbol, settlement UTC): Binance USDT-M
+BTC/ETH from 2019-09-10 / 2019-11-27, Bybit linear from 2020-03-25, **Bybit inverse BTCUSD from
+2018-11-15 (deepest)**, OKX three months only; 46,892 rows to 2026-09-20, every series 100 % of
+its 8-hour slots; Bybit daily open interest for the four swaps from 2020-08-04 (8,876 rows).
+Fetcher `scripts/fetch_perp_funding.py`, stdlib, free, raw cache `data/raw/perp_funding/`.
+**What bites:** *(i)* Binance's settlement timestamps carry a **+1 ms offset on the wire** on
+6,640 rows — the build floors keys to the minute, or a cross-venue join loses half its rows;
+*(ii)* **a third to a half of every series is exactly +0.0001**, the venues' clamp at zero
+premium, so a signed mean over all events is biased positive by construction — exclude defaults
+in any signed test; *(iii)* the rate settled at S is the period's average premium, known only
+to within the last minutes, so the strictly-in-advance rate is the one settled at S−8h; *(iv)*
+open-interest history is Bybit's alone (Binance serves 30 days, OKX refuses old ranges).
+
 ### Positioning — the one price-free, fully committable series
 
 `cftc_cot_raw`: **34 symbols, 274,473 rows, 1986-01-15 → 2026-09-15** (28 symbols to

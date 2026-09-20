@@ -2,7 +2,7 @@
 
 This walks the whole pipeline: setup → data → costs → a strategy → a backtest → the
 cost sweep → trial logging → analytics → validation science → a full study. It
-assumes you can read Python; it does not assume you've read the 809 decision records
+assumes you can read Python; it does not assume you've read the 810 decision records
 (they're linked where they matter — [`decisions/`](decisions/README.md)).
 
 **Every code block below whose first line is `# runnable` is executed verbatim, in
