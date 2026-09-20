@@ -1,0 +1,262 @@
+{
+ "spec": "D578",
+ "commit": "5f0cfcd",
+ "instruction": "the principal, 2026-09-20: 'Pre-register the corrected mapping on the 2024+ reports and run it'",
+ "windows": {
+  "forward_reports": [
+   "2024-01-02",
+   "2026-08-25"
+  ],
+  "n_forward": 139,
+  "in_sample_harness": [
+   "2010-06-08",
+   "2023-12-26"
+  ],
+  "strip_last_session": "2026-09-09"
+ },
+ "construction": {
+  "instrument": "swap-dealer net short (short - long), contracts",
+  "regressor": "mean log settlement of delivery months m+12..m+24",
+  "h_primary": 8,
+  "h_second": 4,
+  "nw_lag": 8,
+  "shift_min": 8,
+  "no_return_computed": true
+ },
+ "harness": {
+  "in_sample_reports": 708,
+  "beta_sd_net_8_rebuilt": 70909.63551187374,
+  "d577_artifact_8": 70909.63551187374,
+  "beta_sd_net_4_rebuilt": 44057.472014632345,
+  "d577_artifact_4": 44057.472014632345,
+  "tolerance": 1e-06
+ },
+ "audits": {
+  "tenor_reports_checked": 139,
+  "tenor_audit_raises_on_shift": true,
+  "synthetic_flow_beta": 1089.8909264854938,
+  "synthetic_flow_negated_beta": -1089.8909264854938,
+  "ols_audit_raises_on_negated_regressor": true
+ },
+ "C1_sd_net_8": {
+  "beta": -32188.716609705873,
+  "t_nw": -1.0621055812804046,
+  "n": 131,
+  "null": {
+   "observed": -32188.716609705873,
+   "p05": -50017.814011992115,
+   "p50": -4947.647896205417,
+   "p95": 54934.73056286764,
+   "n_offsets": 116,
+   "pct_rank": 0.11206896551724138,
+   "above_p95": false,
+   "inside": true
+  },
+  "nonoverlap_beta": -109838.78786032235,
+  "nonoverlap_n": 17,
+  "per_usd": -487.21477469956284
+ },
+ "C2_sd_net_4": {
+  "beta": -8581.548825288617,
+  "t_nw": -0.2897162512443008,
+  "n": 135,
+  "null": {
+   "observed": -8581.548825288617,
+   "p05": -42985.34159341007,
+   "p50": 6129.488037664052,
+   "p95": 38904.24027145464,
+   "n_offsets": 120,
+   "pct_rank": 0.325,
+   "above_p95": false,
+   "inside": true
+  },
+  "nonoverlap_beta": -20586.97750082452,
+  "nonoverlap_n": 34
+ },
+ "C3_pm_net_8": {
+  "beta": -275131.44206255465,
+  "t_nw": -1.9344920691381264,
+  "n": 131,
+  "null": {
+   "observed": -275131.44206255465,
+   "p05": -97950.8665647919,
+   "p50": 7602.814897225766,
+   "p95": 198356.21435215705,
+   "n_offsets": 116,
+   "pct_rank": 0.0,
+   "above_p95": false,
+   "inside": false
+  },
+  "nonoverlap_beta": -315384.2462618787,
+  "nonoverlap_n": 17
+ },
+ "C4_ratchet": {
+  "beta_rallies": 74440.132666264,
+  "n_rallies": 60,
+  "beta_declines": 20153.25540872035,
+  "n_declines": 71,
+  "asymmetric": true,
+  "null_rallies": {
+   "observed": 74440.132666264,
+   "p05": -149424.47483347944,
+   "p50": 15611.68491848063,
+   "p95": 105551.63342664576,
+   "n_offsets": 116,
+   "pct_rank": 0.8275862068965517,
+   "above_p95": false,
+   "inside": true
+  },
+  "null_declines": {
+   "observed": 20153.25540872035,
+   "p05": -137803.5223086594,
+   "p50": 13077.420567732628,
+   "p95": 89868.65774511982,
+   "n_offsets": 116,
+   "pct_rank": 0.5086206896551724,
+   "above_p95": false,
+   "inside": true
+  },
+  "mean_dns_on_rallies": -1228.2166666666667,
+  "mean_dns_on_declines": 7188.647887323944
+ },
+ "C5_calendar": {
+  "mean_pre": 680.3478260869565,
+  "mean_other": 190.2826086956522,
+  "difference": 490.0652173913043,
+  "n_pre": 46,
+  "null": {
+   "observed": 490.0652173913043,
+   "p05": -810.141304347826,
+   "p50": -67.93478260869568,
+   "p95": 795.3736909770921,
+   "n_offsets": 51,
+   "pct_rank": 0.7843137254901961,
+   "above_p95": false,
+   "inside": true
+  }
+ },
+ "C6_scale": {
+  "per_usd_forward": -487.21477469956284,
+  "in_sample_per_usd": 1060.0,
+  "within_3x": false,
+  "prior_per_usd": [
+   18000,
+   37000
+  ],
+  "prior_over_measured": null,
+  "gap_persists_10x": true
+ },
+ "C7_sd_gross_8": {
+  "beta": -8544.444677331281,
+  "t_nw": -0.26714798649860805,
+  "n": 131,
+  "null": {
+   "observed": -8544.444677331281,
+   "p05": -42379.08549540234,
+   "p50": -1348.1668504053803,
+   "p95": 53035.51521958271,
+   "n_offsets": 116,
+   "pct_rank": 0.46551724137931033,
+   "above_p95": false,
+   "inside": true
+  },
+  "nonoverlap_beta": -54166.07325238434,
+  "nonoverlap_n": 17
+ },
+ "C8_episodes": {
+  "episodes": {
+   "june_2025_rally": {
+    "start_report": "2025-06-17",
+    "end_report": "2025-08-12",
+    "change_8": 677.0,
+    "q75_of_all_8w_changes": 11901.5,
+    "positive": true,
+    "top_quartile": false,
+    "strip_change_8": -0.07280595469737694
+   },
+   "march_2026_spike": {
+    "start_report": "2026-03-03",
+    "end_report": "2026-04-28",
+    "change_8": 5302.0,
+    "q75_of_all_8w_changes": 11901.5,
+    "positive": true,
+    "top_quartile": false,
+    "strip_change_8": 0.1333307610954746
+   }
+  },
+  "holds": false
+ },
+ "levels_by_year": {
+  "2024": {
+   "ns_sd_mean": 29032.962264150945,
+   "ns_pm_mean": -17222.43396226415,
+   "strip_mean_usd": 69.41826313836302
+  },
+  "2025": {
+   "ns_sd_mean": 57326.86538461538,
+   "ns_pm_mean": -37260.403846153844,
+   "strip_mean_usd": 61.90860458333144
+  },
+  "2026": {
+   "ns_sd_mean": 86687.23529411765,
+   "ns_pm_mean": -80418.05882352941,
+   "strip_mean_usd": 67.55568758648002
+  }
+ },
+ "predictions": {
+  "C-1": {
+   "beta": -32188.716609705873,
+   "t": -1.0621055812804046,
+   "rank": 0.11206896551724138,
+   "holds": false,
+   "in_point_range": false
+  },
+  "C-2": {
+   "beta": -8581.548825288617,
+   "holds": false
+  },
+  "C-3": {
+   "beta": -275131.44206255465,
+   "t": -1.9344920691381264,
+   "holds": true
+  },
+  "C-4": {
+   "holds": true,
+   "asymmetric": true,
+   "declines_inside_null": true
+  },
+  "C-5": {
+   "holds": true,
+   "difference": 490.0652173913043
+  },
+  "C-6": {
+   "holds": false,
+   "per_usd": -487.21477469956284,
+   "within_3x": false,
+   "gap_persists_10x": true
+  },
+  "C-7": {
+   "holds": false,
+   "gross_beta": -8544.444677331281,
+   "net_beta": -32188.716609705873
+  },
+  "C-8": {
+   "holds": false,
+   "june_2025_rally": false,
+   "march_2026_spike": false
+  },
+  "C-9": {
+   "does_not_transfer": true,
+   "netting_fails": false,
+   "symmetric_response": false
+  }
+ },
+ "verdict": {
+  "forward": "DOES NOT TRANSFER"
+ },
+ "spent": {
+  "reports": "CL disaggregated 2024-01-02..2026-08-25 for the hedging-flow line",
+  "seen": "the CL 12-24m settlement path to 2026-09-09"
+ },
+ "timing": 11.7
+}
