@@ -1055,3 +1055,24 @@ on the principal's word:** the range-expansion conditioner itself, declared in a
 whose 2024+ is unread, so that a confirmation exists. That is D513.
 
 **Nothing was spent by any of the three.** 2024+ was never scored on NQ.
+
+---
+
+## THE SECOND JOINT READ, AND THE BOOK IS STILL ONE ARM — D566, 2026-09-20
+
+**On the principal's word**, the ledger's PROVISIONAL entry #3 — the NG winter-premium calendar
+spread, flat by default (D565) — was read forward on **2024-01-02 → 2026-09-09** together with the
+assembled book of this page's one arm plus that spread. **The NG slice is spent for that
+construction.** Full numbers in [D566](decisions/D566-RESULT-the-NG-spread-did-not-transfer-REMOVED-book-unchanged.md).
+
+**The spread did not transfer** — −1.07 gross over thirteen positioned months, five positive,
+below its placement null's median — and **entry #3 is REMOVED** under its own pre-registered rule.
+**The assembled book is the MACD arm minus 0.06 at one pair and −0.33 at twenty pairs**, ρ +0.01;
+hurdle P fails on **P2 structurally** — a calendar spread held through the month is exposure
+across every permitted venue's flatten time, so no book that holds one is a prop book at Topstep
+or MyFundedFutures — and on P3a (1.09 breaches a year at one pair, against the arm's own 1.16).
+
+**This page admits nothing and removes nothing.** The book remains the MACD day-session arm, and
+the binding constraint remains the vehicle (D503). What the read adds is a structural fact for
+the avatar programme: **any flat-by-default construction that holds a position overnight, however
+good its ledger line, is a vault or personal-book candidate, not a prop component.**

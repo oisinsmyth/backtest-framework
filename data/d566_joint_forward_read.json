@@ -1,0 +1,833 @@
+{
+ "max_drawdown_convention": {
+  "sign": "negative",
+  "note": "Drawdown LEVELS are NEGATIVE: minimum of (cumulative daily P&L - running peak), in simple-return units for the return-space spread cells and in dollars for the dollar series; the hurdle_p block follows D503's conventions. Not a fraction of a compounded peak (D542).",
+  "record": "D542"
+ },
+ "reserved_slice_read": {
+  "record": "D566",
+  "instruction": "the principal, 2026-09-20: 'do the forward slice with nulls, find the combined nulls and combined return and ratios'",
+  "spent_for": [
+   "the NG withdrawal-season spread and every variant",
+   "any assembled book containing it"
+  ],
+  "macd_arm": "its slice was spent in D503; regenerated here as a fixed input"
+ },
+ "spec": "D566",
+ "commit": "6bf82c3",
+ "strip_sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346",
+ "d503_sha256": "5d519a180b75efdb9674fa27f5e0dcedaa235d317243709f7e0ea6b027313472",
+ "windows": {
+  "forward": [
+   "2024-01-02",
+   "2026-09-09"
+  ],
+  "sessions_forward_ng": 696,
+  "in_sample_reference": [
+   "2016-01-04",
+   "2023-12-29"
+  ]
+ },
+ "harness": {
+  "spread_in_sample_reproduced": 0.691672125419536,
+  "macd_regenerated_equals_d503": true,
+  "macd_mean_usd_d503_calendar": 15.757120398774127,
+  "macd_sigma_usd_d503_calendar": 340.04226451759223,
+  "macd_sharpe_d503_convention": 0.7356042404811552,
+  "macd_n_trades": 635,
+  "macd_sessions_own": 632,
+  "d503_union_sessions": 652
+ },
+ "audits": {
+  "pairs_checked": 196,
+  "pair_audit_raises_on_shifted_formation": true,
+  "held_contract_share": 1.0,
+  "lag_mask_sessions": 1692,
+  "lag_raises_on_formation_session_mask": true,
+  "sign_in_money_session_forward": "2024-12-30",
+  "sign_raises_on_negated_grid": true,
+  "sign_raises_on_mislagged_grid": true,
+  "right_quantity_changes": 32,
+  "right_quantity_raises_on_daily_grid": true,
+  "exactness_guard_offsets": 20
+ },
+ "spread": {
+  "gross": {
+   "label": "spread forward",
+   "n_days": 696,
+   "sharpe": -1.0688375032275383,
+   "sortino": -1.2914446318092623,
+   "mean_daily": -0.0003288751461863726,
+   "sd_daily": 0.004884494677095472,
+   "ann_vol": 0.07753894917488016,
+   "total": -0.22889710174571531,
+   "hit": 0.16810344827586207,
+   "skew": -3.132340921460408,
+   "kurt": 42.18244283399602,
+   "max_dd": -0.3118032333286418,
+   "se": 0.5455476927093755
+  },
+  "net": {
+   "label": "spread forward net",
+   "n_days": 696,
+   "sharpe": -1.223523273871943,
+   "sortino": -1.4659612005574338,
+   "mean_daily": -0.00037857170209945753,
+   "sd_daily": 0.004911749201101461,
+   "ann_vol": 0.07797160133060788,
+   "total": -0.26348590466122246,
+   "hit": 0.16666666666666666,
+   "skew": -3.1431730251175134,
+   "kurt": 41.17594221588201,
+   "max_dd": -0.33580188893719815,
+   "se": 0.5198229455253119
+  },
+  "positioned_sessions": 273,
+  "sharpe_positioned_days_only": -1.7107368769164844,
+  "sortino_positioned_days_only": -2.0620495058880555,
+  "months": {
+   "n": 13,
+   "mean": -0.017607469365055025,
+   "median": -0.01845768355981492,
+   "hit": 0.38461538461538464,
+   "worst": -0.09717489958203307,
+   "best": 0.034922779322732134,
+   "list": [
+    [
+     "2024-01",
+     0.017101758693270575,
+     35.999999999999595
+    ],
+    [
+     "2024-02",
+     0.034922779322732134,
+     51.99999999999983
+    ],
+    [
+     "2024-03",
+     0.009026226981146857,
+     -14.999999999999893
+    ],
+    [
+     "2024-11",
+     -0.022562230381118376,
+     -87.00000000000018
+    ],
+    [
+     "2024-12",
+     -0.08644902223741546,
+     -281.99999999999955
+    ],
+    [
+     "2025-01",
+     0.014611204148775703,
+     46.00000000000027
+    ],
+    [
+     "2025-02",
+     -0.01845768355981492,
+     -47.00000000000014
+    ],
+    [
+     "2025-03",
+     -0.005988756017353047,
+     -18.000000000000675
+    ],
+    [
+     "2025-11",
+     -0.038516673895264586,
+     -200.9999999999996
+    ],
+    [
+     "2025-12",
+     -0.022223636462796015,
+     31.000000000000583
+    ],
+    [
+     "2026-01",
+     -0.09717489958203307,
+     -357.99999999999966
+    ],
+    [
+     "2026-02",
+     0.009232789935781804,
+     32.99999999999993
+    ],
+    [
+     "2026-03",
+     -0.02241895869162691,
+     -68.00000000000094
+    ]
+   ]
+  },
+  "usd": {
+   "gross": {
+    "label": "MNG pair forward",
+    "n_days": 696,
+    "sharpe": -0.9148281581851,
+    "sortino": -1.1323149337534624,
+    "mean_daily": -1.1120689655172418,
+    "sd_daily": 19.29711868083647,
+    "ann_vol": 306.3322622975526,
+    "total": -774.0000000000002,
+    "hit": 0.17097701149425287,
+    "skew": -2.873972016363419,
+    "kurt": 52.274519168935825,
+    "max_dd": -912.9999999999991,
+    "se": 0.4895185889883864
+   },
+   "net": {
+    "label": "MNG pair forward net",
+    "n_days": 696,
+    "sharpe": -1.0356059125550878,
+    "sortino": -1.2712991887070277,
+    "mean_daily": -1.2614942528735635,
+    "sd_daily": 19.33708585270251,
+    "ann_vol": 306.9667214817373,
+    "total": -878.0000000000002,
+    "hit": 0.16954022988505746,
+    "skew": -2.943399771618695,
+    "kurt": 51.656197899181684,
+    "max_dd": -992.999999999999,
+    "se": 0.4776075242465942
+   },
+   "total_usd": -878.0000000000002,
+   "cost_usd": 104.0,
+   "sigma_positioned": 30.80776789723236,
+   "max_dd_usd": -992.999999999999
+  },
+  "pairs": [
+   {
+    "formation": "2023-12-29",
+    "hold_month": "2024-01",
+    "t1": "2024-03",
+    "t2": "2024-04",
+    "basis": -0.009883970777825435,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2024-01-31",
+    "hold_month": "2024-02",
+    "t1": "2024-04",
+    "t2": "2024-05",
+    "basis": 0.041489863272041516,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2024-02-29",
+    "hold_month": "2024-03",
+    "t1": "2024-05",
+    "t2": "2024-06",
+    "basis": 0.1200199203187251,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2024-10-31",
+    "hold_month": "2024-11",
+    "t1": "2025-01",
+    "t2": "2025-02",
+    "basis": -0.02695417789757404,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2024-11-29",
+    "hold_month": "2024-12",
+    "t1": "2025-02",
+    "t2": "2025-03",
+    "basis": -0.0814606741573034,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2024-12-31",
+    "hold_month": "2025-01",
+    "t1": "2025-03",
+    "t2": "2025-04",
+    "basis": -0.009038089089735357,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2025-01-31",
+    "hold_month": "2025-02",
+    "t1": "2025-04",
+    "t2": "2025-05",
+    "basis": 0.03289902280130286,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2025-02-28",
+    "hold_month": "2025-03",
+    "t1": "2025-05",
+    "t2": "2025-06",
+    "basis": 0.037987679671458,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2025-10-31",
+    "hold_month": "2025-11",
+    "t1": "2026-01",
+    "t2": "2026-02",
+    "basis": -0.05470359349965681,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2025-11-28",
+    "hold_month": "2025-12",
+    "t1": "2026-02",
+    "t2": "2026-03",
+    "basis": -0.134676324128565,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2025-12-31",
+    "hold_month": "2026-01",
+    "t1": "2026-03",
+    "t2": "2026-04",
+    "basis": 0.007348242811501482,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2026-01-30",
+    "hold_month": "2026-02",
+    "t1": "2026-04",
+    "t2": "2026-05",
+    "basis": -0.004718152470821968,
+    "both_settle_at_end": true
+   },
+   {
+    "formation": "2026-02-27",
+    "hold_month": "2026-03",
+    "t1": "2026-05",
+    "t2": "2026-06",
+    "basis": 0.06317250954529685,
+    "both_settle_at_end": true
+   }
+  ],
+  "in_sample_reference": {
+   "gross_sharpe": 0.691672125419536,
+   "net_sharpe": 0.6176880157775905,
+   "months_hit": 0.75
+  }
+ },
+ "macd": {
+  "net": {
+   "label": "MACD arm forward (D503, spent)",
+   "n_days": 632,
+   "sharpe": 0.7471601585937757,
+   "sortino": 1.1433894671885176,
+   "mean_daily": 16.255763449368246,
+   "sd_daily": 345.3774157829955,
+   "ann_vol": 5482.696503719764,
+   "total": 10273.642500000731,
+   "hit": 0.4620253164556962,
+   "skew": 0.6655222945963047,
+   "kurt": 8.796839616121318,
+   "max_dd": -7297.738500000023,
+   "se": 0.6266513643089339
+  },
+  "verdict_d503": "FULL",
+  "hurdle_p_d503": {
+   "label": "macd",
+   "P1_post_sizing_usd_per_year": 3970.79434049108,
+   "P2_pass": true,
+   "P2_note": "both arms exit by 16:00 ET, inside a 16:10 flatten",
+   "P3a_breaches_per_year": 1.159509202453988,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 3,
+   "P3a_recurrence_years": 0.8624338624338624,
+   "P3b_life_cost": 0.0,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -1761.004499999949,
+   "P3c_worst_day_in_sigma": -5.178781239144591,
+   "P3c_share_of_loss_budget": 0.8805022499999745,
+   "life_dd_only_sessions": 55.0,
+   "life_with_P3_sessions": 55.0,
+   "deaths_dd_only": 11,
+   "deaths_with_P3": 11,
+   "P4_expected_profit_usd": 659.2489606223131,
+   "P4_expected_life_days": 41.83816229985787,
+   "P5_best_day_share": 0.2586712064391778,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.687198037416225
+  },
+  "null_d503": {
+   "observed": 0.7356042404811552,
+   "p50": -0.2835540335875156,
+   "p95": 0.7575402768553366,
+   "p95_se": 0.026822786925810825,
+   "margin_se": -0.8178134671409912,
+   "clears": false,
+   "unresolved": true
+  }
+ },
+ "book": {
+  "union_sessions": 696,
+  "macd_absent": 64,
+  "ng_absent": 0,
+  "rho_daily_union": 0.012338004493262715,
+  "rho_daily_ng_positioned": 0.017563696942152134,
+  "spread_c5_on_macd_worst_days": -0.17947834858524103,
+  "spread_c5_hit": 0.20588235294117646,
+  "dd_ratio_volmatched": 1.0981545513835205,
+  "B1": {
+   "label": "B1: one MNQ MACD + one MNG pair",
+   "n_days": 696,
+   "sharpe": 0.6495240090128988,
+   "sortino": 0.9905482384815428,
+   "mean_daily": 13.499486350575761,
+   "sd_daily": 329.9303786939006,
+   "ann_vol": 5237.482391936546,
+   "total": 9395.64250000073,
+   "hit": 0.4410919540229885,
+   "skew": 0.7053968322612673,
+   "kurt": 9.884589368569932,
+   "max_dd": -7768.738500000029,
+   "se": 0.6116417981639264
+  },
+  "B2": {
+   "label": "B2: one MNQ MACD + 20 MNG pairs",
+   "n_days": 696,
+   "sharpe": -0.3252772331956733,
+   "sortino": -0.4228628086635572,
+   "mean_daily": -10.468904454021954,
+   "sd_daily": 510.9140423850656,
+   "ann_vol": 8110.508984889583,
+   "total": -7286.35749999928,
+   "hit": 0.4267241379310345,
+   "skew": -1.8001827239732253,
+   "kurt": 22.97603170247694,
+   "max_dd": -17601.32400000022,
+   "se": 0.6805421728239486
+  },
+  "macd_alone": {
+   "label": "MACD alone on the union calendar",
+   "n_days": 696,
+   "sharpe": 0.7119589728340141,
+   "sortino": 1.0895523620557697,
+   "mean_daily": 14.760980603449324,
+   "sd_daily": 329.12472719081853,
+   "ann_vol": 5224.693070813303,
+   "total": 10273.64250000073,
+   "hit": 0.41954022988505746,
+   "skew": 0.7116938912165441,
+   "kurt": 9.992315485077153,
+   "max_dd": -7297.738500000023,
+   "se": 0.5983182674742115
+  },
+  "ng_alone_x1": {
+   "label": "spread alone, one pair",
+   "n_days": 696,
+   "sharpe": -1.0356059125550878,
+   "sortino": -1.2712991887070277,
+   "mean_daily": -1.2614942528735635,
+   "sd_daily": 19.33708585270251,
+   "ann_vol": 306.9667214817373,
+   "total": -878.0000000000002,
+   "hit": 0.16954022988505746,
+   "skew": -2.943399771618695,
+   "kurt": 51.656197899181684,
+   "max_dd": -992.999999999999,
+   "se": 0.4776075242465942
+  },
+  "ng_alone_x20": {
+   "label": "spread alone, 20 pairs",
+   "n_days": 696,
+   "sharpe": -1.0356059125550885,
+   "sortino": -1.2712991887070286,
+   "mean_daily": -25.229885057471286,
+   "sd_daily": 386.74171705405024,
+   "ann_vol": 6139.334429634747,
+   "total": -17560.000000000015,
+   "hit": 0.16954022988505746,
+   "skew": -2.9433997716186973,
+   "kurt": 51.656197899181734,
+   "max_dd": -19859.999999999978,
+   "se": 0.4776075242465942
+  },
+  "B1_minus_macd_sharpe": -0.06243496382111535,
+  "B2_minus_macd_sharpe": -1.0372362060296874
+ },
+ "nulls": {
+  "n1_full_spread": {
+   "observed": -1.0688375032275383,
+   "p05": -1.3897130324299816,
+   "p50": -0.7277675800615766,
+   "p95": 0.17498172602065865,
+   "p95_se": 0.007936896313886888,
+   "margin_se": -156.71355402135387,
+   "pct_rank": 0.2766497461928934,
+   "clears": false,
+   "unresolved": false,
+   "n": 3546,
+   "sortino": {
+    "observed": -1.2914446318092623,
+    "p50": -0.9224837421915615,
+    "p95": 0.2483198312102612
+   },
+   "offsets_enumerated": 4048,
+   "purge_sessions": 252,
+   "offsets_after_purge": 3546
+  },
+  "book_placement_B1": {
+   "observed": 0.6495240090128988,
+   "p05": 0.6424734672121301,
+   "p50": 0.6729997449095316,
+   "p95": 0.7042487798061631,
+   "p95_se": 0.00014045565890956317,
+   "margin_se": -389.6231110809184,
+   "pct_rank": 0.22842639593908629,
+   "clears": false,
+   "unresolved": false,
+   "n": 3546
+  },
+  "book_placement_B2": {
+   "observed": -0.3252772331956733,
+   "p05": -0.4204421556937851,
+   "p50": -0.030652073729818978,
+   "p95": 0.5188755470487688,
+   "p95_se": 0.0025473905700257463,
+   "margin_se": -331.37940847284773,
+   "pct_rank": 0.23857868020304568,
+   "clears": false,
+   "unresolved": false,
+   "n": 3546
+  },
+  "joint_B1": {
+   "observed": 0.6495240090128988,
+   "p05": -1.2060759901113407,
+   "p50": -0.3256129186421779,
+   "p95": 0.6816478778298788,
+   "p95_se": 0.026683651603394892,
+   "margin_se": -1.203878288265951,
+   "pct_rank": 0.943,
+   "clears": false,
+   "unresolved": true,
+   "n": 2000
+  },
+  "joint_B2": {
+   "observed": -0.3252772331956733,
+   "p05": -1.551978045046255,
+   "p50": -0.8144283028136594,
+   "p95": 0.16251578913246678,
+   "p95_se": 0.02150864388932241,
+   "margin_se": -22.678929682326295,
+   "pct_rank": 0.794,
+   "clears": false,
+   "unresolved": false,
+   "n": 2000
+  },
+  "joint_macd_alone": {
+   "observed": 0.7119589728340141,
+   "p05": -1.1622810321205397,
+   "p50": -0.27954198099634925,
+   "p95": 0.7144984545133062,
+   "p95_se": 0.031221725314977803,
+   "margin_se": -0.08133700664113612,
+   "pct_rank": 0.948,
+   "clears": false,
+   "unresolved": true,
+   "n": 2000
+  },
+  "alignment_B1": {
+   "observed": 0.6495240090128988,
+   "p05": 0.6476558156749385,
+   "p50": 0.6499193249344302,
+   "p95": 0.6524858074155137,
+   "p95_se": 6.367012660411965e-05,
+   "margin_se": -46.51786576506138,
+   "pct_rank": 0.363,
+   "clears": false,
+   "unresolved": false,
+   "n": 2000
+  },
+  "alignment_B2": {
+   "observed": -0.3252772331956733,
+   "p05": -0.33830686658262965,
+   "p50": -0.3269395146475672,
+   "p95": -0.31771278109887024,
+   "p95_se": 0.00022826429642455962,
+   "margin_se": -33.13900691124108,
+   "pct_rank": 0.637,
+   "clears": false,
+   "unresolved": false,
+   "n": 2000
+  },
+  "meta": {
+   "joint_draws": 2000,
+   "seed": 566,
+   "purge_sessions": 252,
+   "sharpe_convention": "R55.sharpe, 252 periods"
+  }
+ },
+ "hurdle_p": {
+  "macd_alone_d503": {
+   "label": "macd",
+   "P1_post_sizing_usd_per_year": 3970.79434049108,
+   "P2_pass": true,
+   "P2_note": "both arms exit by 16:00 ET, inside a 16:10 flatten",
+   "P3a_breaches_per_year": 1.159509202453988,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 3,
+   "P3a_recurrence_years": 0.8624338624338624,
+   "P3b_life_cost": 0.0,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -1761.004499999949,
+   "P3c_worst_day_in_sigma": -5.178781239144591,
+   "P3c_share_of_loss_budget": 0.8805022499999745,
+   "life_dd_only_sessions": 55.0,
+   "life_with_P3_sessions": 55.0,
+   "deaths_dd_only": 11,
+   "deaths_with_P3": 11,
+   "P4_expected_profit_usd": 659.2489606223131,
+   "P4_expected_life_days": 41.83816229985787,
+   "P5_best_day_share": 0.2586712064391778,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.687198037416225
+  },
+  "spread_x1": {
+   "label": "spread, one pair",
+   "P1_post_sizing_usd_per_year": -317.896551724138,
+   "P2_pass": false,
+   "P2_note": "a calendar spread held through the month is exposure across every permitted venue's flatten time (Topstep 3:10pm CT, MFFU 4:10pm ET): structural FAIL for any book that holds it",
+   "P3a_breaches_per_year": 0.0,
+   "P3a_bar": 1.0,
+   "P3a_pass": true,
+   "P3a_breaches": 0,
+   "P3a_recurrence_years": null,
+   "P3b_life_cost": null,
+   "P3b_bar": 0.33,
+   "P3b_pass": false,
+   "P3c_worst_day_usd": -246.9999999999999,
+   "P3c_worst_day_in_sigma": -12.773382808634512,
+   "P3c_share_of_loss_budget": 0.12349999999999994,
+   "life_dd_only_sessions": 0.0,
+   "life_with_P3_sessions": 0.0,
+   "deaths_dd_only": 0,
+   "deaths_with_P3": 0,
+   "P4_expected_profit_usd": null,
+   "P4_expected_life_days": null,
+   "P5_best_day_share": null,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.0,
+   "all_six": false
+  },
+  "spread_x20": {
+   "label": "spread, 20 pairs",
+   "P1_post_sizing_usd_per_year": -6357.931034482764,
+   "P2_pass": false,
+   "P2_note": "a calendar spread held through the month is exposure across every permitted venue's flatten time (Topstep 3:10pm CT, MFFU 4:10pm ET): structural FAIL for any book that holds it",
+   "P3a_breaches_per_year": 4.706896551724138,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 13,
+   "P3a_recurrence_years": 0.21245421245421245,
+   "P3b_life_cost": 0.25,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -4939.999999999998,
+   "P3c_worst_day_in_sigma": -12.773382808634512,
+   "P3c_share_of_loss_budget": 2.4699999999999993,
+   "life_dd_only_sessions": 44.833333333333336,
+   "life_with_P3_sessions": 33.625,
+   "deaths_dd_only": 12,
+   "deaths_with_P3": 16,
+   "P4_expected_profit_usd": null,
+   "P4_expected_life_days": null,
+   "P5_best_day_share": null,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.9913604932976768,
+   "all_six": false
+  },
+  "B1": {
+   "label": "B1",
+   "P1_post_sizing_usd_per_year": 3401.8705603450917,
+   "P2_pass": false,
+   "P2_note": "a calendar spread held through the month is exposure across every permitted venue's flatten time (Topstep 3:10pm CT, MFFU 4:10pm ET): structural FAIL for any book that holds it",
+   "P3a_breaches_per_year": 1.0862068965517242,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 3,
+   "P3a_recurrence_years": 0.9206349206349206,
+   "P3b_life_cost": 0.08333333333333337,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -1750.0044999999498,
+   "P3c_worst_day_in_sigma": -5.304162978043167,
+   "P3c_share_of_loss_budget": 0.8750022499999749,
+   "life_dd_only_sessions": 58.81818181818182,
+   "life_with_P3_sessions": 53.916666666666664,
+   "deaths_dd_only": 11,
+   "deaths_with_P3": 12,
+   "P4_expected_profit_usd": 589.3539495290933,
+   "P4_expected_life_days": 43.657509198781995,
+   "P5_best_day_share": 0.2828434032052405,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.6632971904298159,
+   "all_six": false
+  },
+  "B2": {
+   "label": "B2",
+   "P1_post_sizing_usd_per_year": -2638.1639224135324,
+   "P2_pass": false,
+   "P2_note": "a calendar spread held through the month is exposure across every permitted venue's flatten time (Topstep 3:10pm CT, MFFU 4:10pm ET): structural FAIL for any book that holds it",
+   "P3a_breaches_per_year": 6.155172413793104,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 17,
+   "P3a_recurrence_years": 0.16246498599439774,
+   "P3b_life_cost": 0.20833333333333337,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -5425.004500000042,
+   "P3c_worst_day_in_sigma": -10.618233303345624,
+   "P3c_share_of_loss_budget": 2.712502250000021,
+   "life_dd_only_sessions": 34.05263157894737,
+   "life_with_P3_sessions": 26.958333333333332,
+   "deaths_dd_only": 19,
+   "deaths_with_P3": 24,
+   "P4_expected_profit_usd": null,
+   "P4_expected_life_days": null,
+   "P5_best_day_share": null,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.9980336775539352,
+   "all_six": false
+  },
+  "B1_if_flattenable": {
+   "label": "B1 with P2 waived",
+   "P1_post_sizing_usd_per_year": 3401.8705603450917,
+   "P2_pass": true,
+   "P2_note": "hypothetical: a venue that permits holding the spread",
+   "P3a_breaches_per_year": 1.0862068965517242,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 3,
+   "P3a_recurrence_years": 0.9206349206349206,
+   "P3b_life_cost": 0.08333333333333337,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -1750.0044999999498,
+   "P3c_worst_day_in_sigma": -5.304162978043167,
+   "P3c_share_of_loss_budget": 0.8750022499999749,
+   "life_dd_only_sessions": 58.81818181818182,
+   "life_with_P3_sessions": 53.916666666666664,
+   "deaths_dd_only": 11,
+   "deaths_with_P3": 12,
+   "P4_expected_profit_usd": 589.3539495290933,
+   "P4_expected_life_days": 43.657509198781995,
+   "P5_best_day_share": 0.2828434032052405,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.6632971904298159,
+   "all_six": false
+  },
+  "B2_if_flattenable": {
+   "label": "B2 with P2 waived",
+   "P1_post_sizing_usd_per_year": -2638.1639224135324,
+   "P2_pass": true,
+   "P2_note": "hypothetical: a venue that permits holding the spread",
+   "P3a_breaches_per_year": 6.155172413793104,
+   "P3a_bar": 1.0,
+   "P3a_pass": false,
+   "P3a_breaches": 17,
+   "P3a_recurrence_years": 0.16246498599439774,
+   "P3b_life_cost": 0.20833333333333337,
+   "P3b_bar": 0.33,
+   "P3b_pass": true,
+   "P3c_worst_day_usd": -5425.004500000042,
+   "P3c_worst_day_in_sigma": -10.618233303345624,
+   "P3c_share_of_loss_budget": 2.712502250000021,
+   "life_dd_only_sessions": 34.05263157894737,
+   "life_with_P3_sessions": 26.958333333333332,
+   "deaths_dd_only": 19,
+   "deaths_with_P3": 24,
+   "P4_expected_profit_usd": null,
+   "P4_expected_life_days": null,
+   "P5_best_day_share": null,
+   "P5_haircut_usd": 0.0,
+   "P5_pass": true,
+   "P6": "Topstep or MyFundedFutures -- a venue choice, not a measurement",
+   "p_breach_in_252": 0.9980336775539352,
+   "all_six": false
+  }
+ },
+ "predictions": {
+  "P-1": {
+   "claim": "spread forward gross Sharpe > 0 (point 0.3-1.0); positioned-month hit >= 0.60",
+   "sharpe": -1.0688375032275383,
+   "hit": 0.38461538461538464,
+   "holds": false,
+   "in_point_range": false
+  },
+  "P-2": {
+   "claim": "N1-full rank >= 0.80",
+   "value": 0.2766497461928934,
+   "holds": false
+  },
+  "P-3": {
+   "claim": "worst forward month > -5%",
+   "value": -0.09717489958203307,
+   "holds": false
+  },
+  "P-4": {
+   "claim": "rho(MACD, spread) daily on the union calendar in [-0.20, +0.20]",
+   "value": 0.012338004493262715,
+   "holds": true
+  },
+  "P-5": {
+   "claim": "B1 net Sharpe within 0.05 of the MACD alone",
+   "value": -0.06243496382111535,
+   "holds": false
+  },
+  "P-6": {
+   "claim": "if both positive: B2 > max(MACD alone, spread x20 alone); point 0.9-1.2",
+   "B2": -0.3252772331956733,
+   "macd": 0.7119589728340141,
+   "spread_x20": -1.0356059125550885,
+   "applicable": false,
+   "holds": null,
+   "in_point_range": false
+  },
+  "P-7": {
+   "claim": "P2 fails structurally for B1/B2; P3a fails for B2; P5 passes",
+   "P2_B1": false,
+   "P3a_B2": false,
+   "P5_B2": true,
+   "holds": true
+  },
+  "P-8": {
+   "claim": "promotion rule: FULL if gross > 0, net > 0, rank >= 0.80; REMOVED if net < -0.3 or month mean < 0; else PROVISIONAL"
+  },
+  "P-9": {
+   "claim": "falsifiers",
+   "spread_below_n1_p50": true,
+   "cotiming_hurts": false
+  }
+ },
+ "promotion": "REMOVED",
+ "verdict": {
+  "spread_forward": "NON-POSITIVE",
+  "spread_promotion": "REMOVED",
+  "book_B1_all_six": false,
+  "book_B2_all_six": false,
+  "P2_structural": "FAIL for any book holding the spread"
+ },
+ "timing": {
+  "wall_s": 38.2
+ }
+}

@@ -55,6 +55,18 @@ and hurdle P on the assembled book, when a second entry exists. K8 is not sharpe
 re-scored in-sample while parked. ES K8 (+0.18, inside its null, ρ ≈ 0.85) is the same construction
 on another root and is not a second entry. Noted in `BOOK_PROP.md` (last section).
 
+**Entry #3 REMOVED, 2026-09-20 (D566, the forward read on the principal's word).** The NG
+winter-premium spread did not transfer: **−1.07 gross / −1.22 net** over the thirteen forward
+positioned months (5 of 13 positive, mean −1.76 %, worst −9.72 %, −$878 at one pair), at the
+**27.7th percentile** of its placement null; the pre-registered rule (REMOVED if net < −0.3 or the
+positioned-month mean < 0) fires on both clauses. The two forward seasons were formed with the
+front **8 and 13 % below** the second, the opposite curve state to the in-sample seasons, and the
+short lost into two cold snaps. The assembled book with the admitted MACD arm (#2) read **+0.650**
+at one pair against +0.712 for the arm alone on the same calendar, and −0.325 at twenty pairs;
+ρ +0.01; hurdle P fails on P2 structurally (the spread is held across every permitted venue's
+flatten time) and on P3a (1.09 a year at one pair, 6.16 at twenty). **The prop book is unchanged.**
+The row above stays as scored; NG's 2024+ slice is spent for this construction.
+
 ## Scored and NOT entered
 
 | construction | record | net Sharpe | why not |
