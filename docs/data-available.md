@@ -321,6 +321,17 @@ adjusted, daily is not. That has already put one name at 5x its own prices, and
 domain, so unlike every CME product here it may live in the repo. Commercial /
 non-commercial / non-reportable open interest per contract. See [`cftc_cot.md`](cftc_cot.md).
 
+`wasde_grains_su.csv`: **USDA WASDE supply and use for corn, soybeans and wheat — 1,170
+(release, commodity, marketing-year) rows over 195 monthly releases, 2010-04-09 → 2026-09-11**,
+ending stocks, total use, production (million bushels) and stocks-to-use, keyed by the report's
+own release date so a study can read it point in time (D567). Public domain. Built by
+`scripts/stage0_d567_grains_harvest.py` from the raw monthly CSVs in `data/raw/usda/wasde/`
+(2010-04 → 2015-12 archive, 2016–2020 filtered in a browser session, monthly files from 2021;
+**the 2025-10 report is absent**). **What bites:** the file holds releases past 2024-01-01 —
+a study on the reserved slice's rules filters it by `ReleaseDate` before anything else and
+asserts the count (D568: 978 rows, 163 releases); some monthly source files write the release
+date month/day/year and the builder normalises and checks it against the report month.
+
 ---
 
 ## 3. Raw caches — gitignored, re-fetchable

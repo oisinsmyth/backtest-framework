@@ -107,3 +107,12 @@ with ZS's 2024+ slice as the only clean test. (2) is recorded and not built for 
 **Not licensed:** any window not in the design; any gate threshold read from these tables (the
 terciles are the only cut and were declared); any netting of the harvest and post-harvest
 windows. **The spent-slice ledger is unchanged:** nothing past 2023 was read for ZC, ZS or ZW.
+
+**Correction, 2026-09-20, recorded in D568.** The fixture description in the preamble — 978 rows
+over 163 releases ending 2023-12-08 — is the in-memory table this Stage 0 scored on. The file
+`data/fixtures/wasde_grains_su.csv` as committed holds every release in the raw cache: **1,170
+rows over 195 releases, 2010-04-09 → 2026-09-11**, because the builder wrote the file before
+applying its own date filter. The 2024+ rows are a state variable and nothing here read them;
+any runner that reads the fixture filters it to releases before 2024-01-01 first and asserts
+the count (D568 does, and scored 978 rows / 163 reports). The 2025-10 report is absent from the
+raw cache and therefore from the file.
