@@ -60,7 +60,9 @@ audit_pairs, audit_mask, audit_right_quantity, monthly_returns = R65.audit_pairs
 
 
 def ymlabel(c):
-    return f"{c//12}-{c%12 if c%12 else 12:02d}"
+    """Delivery index year*12+month (month 1..12) -> 'YYYY-MM'. A December index is divisible by 12, so the year is
+    (c-1)//12, not c//12 -- the earlier form printed December contracts one year late (label only; D571 erratum)."""
+    return f"{(c - 1)//12}-{(c - 1)%12 + 1:02d}"
 
 
 # --------------------------------------------------------------------------------------------
