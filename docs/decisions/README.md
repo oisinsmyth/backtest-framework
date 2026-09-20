@@ -646,7 +646,7 @@ would look like data. The tokens are what is shown.
 | D565 | DOES NOT PASS by 0.007: the NG withdrawal-season spread earns +0.69 gross / +1.03 Sortino at the 94.2nd percentile of i… | [PRE-REG](D565-PRE-REG-NG-winter-premium-calendar-spread-flat-by-default.md) · [RESULT](D565-RESULT-NG-spread-rank-0-94-provisional-avatar-unsupported.md) |
 | D566 | the NG spread did not transfer: −1.07 gross over thirteen forward months, five of them positive, below its placement nu… | [PRE-REG](D566-PRE-REG-the-joint-forward-read-NG-spread-and-the-MACD-book.md) · [RESULT](D566-RESULT-the-NG-spread-did-not-transfer-REMOVED-book-unchanged.md) |
 | D567 | D567 STAGE 0 RESULT — the merchant-at-harvest avatar fails on corn and inverts on soybeans: the corn harvest spread nar… | [record](D567-STAGE-0-DESIGN-the-grains-at-harvest-the-merchant-avatar.md) · [RESULT](D567-STAGE-0-RESULT-avatar-fails-on-corn-inverts-on-soybeans.md) |
-| D568 | DOES NOT PASS: the corn post-harvest spread earns +0.60 gross / +1.00 Sortino at the 85th percentile of its placement n… | [PRE-REG](D568-PRE-REG-the-corn-post-harvest-carry-narrowing-long-H-short-K-flat-by-default.md) · [RESULT](D568-RESULT-does-not-pass-the-always-on-spread-earns-more-per-day-than-the-window.md) |
+| D568 | DOES NOT PASS: the corn post-harvest spread earns +0.60 gross / +1.00 Sortino at the 85th percentile of its placement n… | [PRE-REG](D568-PRE-REG-corn-post-harvest-carry-narrowing-flat-by-default.md) · [RESULT](D568-RESULT-does-not-pass-the-always-on-spread-beats-the-window.md) |
 
 <!-- REGISTER:END -->
 
