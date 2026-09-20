@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 306 of these records carry neither field —
+**No Status or Category column, deliberately.** 308 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -647,6 +647,7 @@ would look like data. The tokens are what is shown.
 | D566 | the NG spread did not transfer: −1.07 gross over thirteen forward months, five of them positive, below its placement nu… | [PRE-REG](D566-PRE-REG-the-joint-forward-read-NG-spread-and-the-MACD-book.md) · [RESULT](D566-RESULT-the-NG-spread-did-not-transfer-REMOVED-book-unchanged.md) |
 | D567 | D567 STAGE 0 RESULT — the merchant-at-harvest avatar fails on corn and inverts on soybeans: the corn harvest spread nar… | [record](D567-STAGE-0-DESIGN-the-grains-at-harvest-the-merchant-avatar.md) · [RESULT](D567-STAGE-0-RESULT-avatar-fails-on-corn-inverts-on-soybeans.md) |
 | D568 | DOES NOT PASS: the corn post-harvest spread earns +0.60 gross / +1.00 Sortino at the 85th percentile of its placement n… | [PRE-REG](D568-PRE-REG-corn-post-harvest-carry-narrowing-flat-by-default.md) · [RESULT](D568-RESULT-does-not-pass-the-always-on-spread-beats-the-window.md) |
+| D569 | D569 STAGE 0 RESULT — the soybean harvest schedule holds where corn's failed: the short spread earns +0.42 bp a positio… | [record](D569-STAGE-0-DESIGN-the-soybean-harvest-addendum-control-and-gate.md) · [RESULT](D569-STAGE-0-RESULT-schedule-holds-avatar-does-not-october-reverses.md) |
 
 <!-- REGISTER:END -->
 
