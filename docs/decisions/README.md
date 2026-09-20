@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 320 of these records carry neither field —
+**No Status or Category column, deliberately.** 322 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -655,6 +655,7 @@ would look like data. The tokens are what is shown.
 | D574 | INSIDE: basis-momentum's forward slice reads +0.48 gross / +0.69 Sortino on 2024-01-02 → 2026-09-09 (696 sessions, 33 m… | [PRE-REG](D574-PRE-REG-the-forward-read-of-basis-momentum-on-2024-onward.md) · [RESULT](D574-RESULT-inside-the-total-transfers-the-composition-inverts.md) |
 | D575 | D575 STAGE 0 RESULT — the livestock avatars are not supported: hogs' supply-calendar prediction is falsified (the three… | [record](D575-STAGE-0-DESIGN-livestock-placement-profiles-two-avatars.md) · [RESULT](D575-STAGE-0-RESULT-not-supported-no-open-construction-on-the-curve.md) |
 | D576 | the seasonal calendar-spread line on the commodity curve is CLOSED by the principal, 2026-09-20; and the synthesis of t… | [record](D576-CLOSED-the-seasonal-line-and-the-futures-curve-synthesis.md) |
+| D577 | D577 STAGE 0 RESULT — P9 on the declared statistic: NEITHER CATEGORY RESPONDS — the gross short of swap dealers (+18k c… | [record](D577-STAGE-0-DESIGN-P9-CL-hedging-flow-swap-dealers-or-producers.md) · [RESULT](D577-STAGE-0-RESULT-P9-neither-declared-net-swap-dealer-responds.md) |
 
 <!-- REGISTER:END -->
 
