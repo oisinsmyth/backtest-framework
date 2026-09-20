@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 325 of these records carry neither field —
+**No Status or Category column, deliberately.** 326 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -658,6 +658,7 @@ would look like data. The tokens are what is shown.
 | D577 | D577 STAGE 0 RESULT — P9 on the declared statistic: NEITHER CATEGORY RESPONDS — the gross short of swap dealers (+18k c… | [record](D577-STAGE-0-DESIGN-P9-CL-hedging-flow-swap-dealers-or-producers.md) · [RESULT](D577-STAGE-0-RESULT-P9-neither-declared-net-swap-dealer-responds.md) |
 | D578 | DOES NOT TRANSFER: on the 139 unread reports of 2024-01 → 2026-08 the swap-dealer net short's eight-week response to th… | [PRE-REG](D578-PRE-REG-SD-net-short-vs-the-strip-on-the-2024-plus-reports.md) · [RESULT](D578-RESULT-does-not-transfer-no-weekly-instrument-in-the-COT.md) |
 | D579 | FIXTURE: perpetual-swap funding rates from three venues (Binance, Bybit, OKX) and Bybit daily open interest, BTC and ET… | [record](D579-FIXTURE-perpetual-funding-rates-and-open-interest-three-venues.md) |
+| D580 | D580 STAGE 0 DESIGN — the funding-cycle premise on CME bitcoin: does the perpetual funding clock show in CME bitcoin ac… | [record](D580-STAGE-0-DESIGN-the-funding-clock-on-CME-bitcoin-premise-check.md) |
 
 <!-- REGISTER:END -->
 
