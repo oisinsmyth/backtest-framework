@@ -4712,3 +4712,56 @@ the edge; the payoff ratio is exit geometry.
 **The rule.** Declare the statistic that matches the OBJECT: hit rate for what selects trades, the
 P&L distribution for what shapes them. Where a study declares both an entry and an exit — as D533
 did — it needs both statistics pre-registered, or the exit arm of it cannot resolve.
+
+## 76. The futures curve, D555–D575: no published commodity premium is a component at this account's size, and every seasonal calendar spread that looked real at Stage 0 failed its control, its own placement null, a prediction made before the read, or the forward slice
+
+**Nineteen studies on the 36-root breadth fixture and the settlement strip, 2016–2023 in sample
+with 2024+ reserved, asked the deposit's question and then the avatar programme's. Both are
+answered, and the answers are the same shape.**
+
+**The published premia (D555–D559, D564, D573).** Time-series trend is real, small and rare:
++0.30 / +0.43 in sample at the 78th percentile of a purged rotation null, +0.51 / +0.71 forward
+at the 69th, two events a window, no vehicle at minimum size (σ $8,762 a day). Carry timing is
+negative on both windows (−0.20, −0.56). The three cross-sectional sorts on 17 commodities are
+negative in equal weight (−0.21, −0.26, −0.11) and their dollar books were one palladium
+contract. Hedging pressure on 16 roots is a static tilt — the metals long and natural gas and
+wheat short at 71–98 % of month-ends, predicted before the run — and the tilt lost (−0.20, below
+its rotation median, 26th percentile of the name-randomised null). Basis-momentum is the one
+in-sample pass (+0.69 / +0.99, ranks 0.972 / 0.971 / 0.975) and it needed an amendment made after
+the read, was carried by two seasonal roots with natural gas short 81 of 83 months, and forward
+read +0.48 INSIDE with its composition inverted: the seasonal roots −0.47, the non-seasonal
++0.84, heating oil 86 % of the profit, March 2026 alone 13 %. **A transferred total with reversed
+carriers is not a transfer.** Trend and carry were closed by the principal (D563).
+
+**The seasonal spreads (D565–D571, D575).** The NG withdrawal-season spread cleared C-a at one
+micro (+0.62 net, σ $24) at the 94th percentile of its placement null and read −1.07 on thirteen
+forward months, formed in backwardation both seasons (REMOVED, D566). The corn post-harvest
+narrowing (+0.60) lost to its own always-on control per positioned day — the corn front gains on
+its deferred all year, April and June most, and December itself loses 10 of 13. The soybean
+harvest spread (+0.40) was third of its own twelve placements; the same rule formed in July
+earns +1.24. Predicting other roots' placements from the soybean profile held on two of four,
+chance level, and was falsified on wheat and oil. Predicting livestock placements from the
+supply calendar was falsified on hogs and supported neither cattle avatar. **What every
+agricultural root shares is a sign, not a schedule: the always-on short nearby spread loses
+(corn −0.70, soybeans −1.15, oil −0.80, meal −1.61, hogs −2.72 bp a day; cattle flat), which is
+carry.** The line was closed by the principal (D576). Five seen cells remain parked, each with
+two forward windows as its only test.
+
+**The size problem is the signal problem's equal.** C-d removes eleven of seventeen commodity
+roots from any one-contract book; every C-d sub-book read −0.06 to +0.49 net; the two
+constructions that cleared C-a in sample were one micro (NG) and four windows (the gated
+soybean cell). Nothing on the commodity curve has both a signal and a size.
+
+**The methods that outlive it** (each in a runner, each proven to raise): the purged enumerated
+rotation with its offset profile stored (D555); the name-randomised null with the p95's
+bootstrap SE, which separates tilt from timing (D564, D573); the always-on control per
+positioned day (D568); the construction's own placement null over every calendar month (D570);
+the mechanism-derived placement prediction with a named competing avatar (D571, D575); the
+survival rule for a windowed pair (D567); the release-date keying audit on positioning (141 of
+300 cells change under report-date keying, D573); the per-root dollar decomposition before any
+component line (D556); and the composition prediction before any forward read (D574).
+
+**Where the ledger stands.** One admitted arm (the MACD day session on NQ, its slice spent); no
+entry from the futures curve. The search for a second component moves off the commodity curve,
+to clocks and instruments where the sample is sessions rather than years and the slice is
+unspent for the line in question (D576 §7).
