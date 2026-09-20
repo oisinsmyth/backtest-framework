@@ -1,0 +1,35 @@
+{
+ "dataset": "GLBX.MDP3",
+ "symbols": [
+  "ES.OPT"
+ ],
+ "stype_in": "parent",
+ "start": "2016-01-01",
+ "end": "2026-09-11",
+ "quoted_utc": "2026-09-20T21:33:17Z",
+ "schemas": {
+  "statistics": {
+   "billable_bytes": 37409401120,
+   "billable_gb": 37.41,
+   "usd": 0.0
+  },
+  "definition": {
+   "billable_bytes": 10281175320,
+   "billable_gb": 10.28,
+   "usd": 0.0
+  }
+ },
+ "last_12_months": {
+  "statistics": {
+   "billable_gb": 4.13,
+   "usd": 0.0
+  },
+  "definition": {
+   "billable_gb": 1.2,
+   "usd": 0.0
+  }
+ },
+ "total_usd": 0.0,
+ "total_gb": 47.69,
+ "timing_s": 7.2
+}
