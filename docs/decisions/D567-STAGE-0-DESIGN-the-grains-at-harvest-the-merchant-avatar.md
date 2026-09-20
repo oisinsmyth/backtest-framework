@@ -44,10 +44,13 @@ showed a scheduled premium has two ends:
 | **September 1 stocks** (old-crop carryout) | WASDE's September report carries it as the marketing-year `Ending Stocks` `Est.`; the NASS *Grain Stocks* report itself needs a Quick Stats key the agent cannot register | the bins' state on the eve of harvest | the September WASDE release |
 | **storage capacity** | **not available keylessly** (NASS off-farm capacity). S/U stands in for stocks-against-capacity, and the record says so | | |
 
-**The gap in the state variable.** The 2016–2020 WASDE archive has not landed (the file host
-refuses curl and the browser download has not appeared); without it S/U is missing for five of
-the thirteen harvests. The design is written for thirteen; if the archive is still absent when
-Stage 0 runs, S/U is tested on the eight harvests it covers and the record says which.
+**The gap in the state variable, closed the same day.** The 2016–2020 WASDE archive refused
+curl and the principal's own browser rejected the zip on a scanner check. It was unpacked inside
+the built-in browser's page session with the browser's native inflater and filtered there to the
+corn, soybean and wheat US supply-and-use rows (`data/raw/usda/wasde/wasde_2016_2020_grains_su.csv`,
+6,330 rows, 59 reports, 2016-01-12 → 2020-12-10, each with its release date). Together with the
+2010–2015 archive and the 2021 → 2026 monthly files, S/U is point-in-time for all thirteen
+harvests. The gitignored raw cache holds it; the derived fixture is built by Stage 0's runner.
 
 ## 3. The outcomes
 
