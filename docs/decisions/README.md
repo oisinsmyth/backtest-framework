@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 298 of these records carry neither field —
+**No Status or Category column, deliberately.** 300 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -643,6 +643,7 @@ would look like data. The tokens are what is shown.
 | D562 | the forward slice is read and spent: the published trend book earned +0.51 gross / +0.50 net on 2024-01 → 2026-09, insi… | [PRE-REG](D562-PRE-REG-the-forward-read-of-the-trend-book-on-2024-onward.md) · [RESULT](D562-RESULT-forward-slice-plus-0-51-inside-null-not-a-hedge.md) |
 | D563 | the time-series trend line and the carry-timing line on the futures fixtures are CLOSED by the principal, 2026-09-19 | [record](D563-CLOSED-the-trend-and-carry-lines-on-the-futures-fixtures.md) |
 | D564 | as pre-registered, DOES NOT PASS (+0.42 gross, rank 0.80); under a formation-rule amendment that repairs two calendar d… | [PRE-REG](D564-PRE-REG-basis-momentum-as-published-on-17-commodities.md) · [RESULT](D564-RESULT-passes-only-under-the-formation-amendment.md) |
+| D565 | DOES NOT PASS by 0.007: the NG withdrawal-season spread earns +0.69 gross / +1.03 Sortino at the 94.2nd percentile of i… | [PRE-REG](D565-PRE-REG-NG-winter-premium-calendar-spread-flat-by-default.md) · [RESULT](D565-RESULT-NG-spread-rank-0-94-provisional-avatar-unsupported.md) |
 
 <!-- REGISTER:END -->
 
