@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 302 of these records carry neither field —
+**No Status or Category column, deliberately.** 303 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -645,6 +645,7 @@ would look like data. The tokens are what is shown.
 | D564 | as pre-registered, DOES NOT PASS (+0.42 gross, rank 0.80); under a formation-rule amendment that repairs two calendar d… | [PRE-REG](D564-PRE-REG-basis-momentum-as-published-on-17-commodities.md) · [RESULT](D564-RESULT-passes-only-under-the-formation-amendment.md) |
 | D565 | DOES NOT PASS by 0.007: the NG withdrawal-season spread earns +0.69 gross / +1.03 Sortino at the 94.2nd percentile of i… | [PRE-REG](D565-PRE-REG-NG-winter-premium-calendar-spread-flat-by-default.md) · [RESULT](D565-RESULT-NG-spread-rank-0-94-provisional-avatar-unsupported.md) |
 | D566 | the NG spread did not transfer: −1.07 gross over thirteen forward months, five of them positive, below its placement nu… | [PRE-REG](D566-PRE-REG-the-joint-forward-read-NG-spread-and-the-MACD-book.md) · [RESULT](D566-RESULT-the-NG-spread-did-not-transfer-REMOVED-book-unchanged.md) |
+| D567 | STAGE 0 DESIGN (not yet run): the grains at harvest — the elevator and merchant as the constrained party, on corn, soyb… | [record](D567-STAGE-0-DESIGN-the-grains-at-harvest-the-merchant-avatar.md) |
 
 <!-- REGISTER:END -->
 
