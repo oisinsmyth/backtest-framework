@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 308 of these records carry neither field —
+**No Status or Category column, deliberately.** 310 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -648,6 +648,7 @@ would look like data. The tokens are what is shown.
 | D567 | D567 STAGE 0 RESULT — the merchant-at-harvest avatar fails on corn and inverts on soybeans: the corn harvest spread nar… | [record](D567-STAGE-0-DESIGN-the-grains-at-harvest-the-merchant-avatar.md) · [RESULT](D567-STAGE-0-RESULT-avatar-fails-on-corn-inverts-on-soybeans.md) |
 | D568 | DOES NOT PASS: the corn post-harvest spread earns +0.60 gross / +1.00 Sortino at the 85th percentile of its placement n… | [PRE-REG](D568-PRE-REG-corn-post-harvest-carry-narrowing-flat-by-default.md) · [RESULT](D568-RESULT-does-not-pass-the-always-on-spread-beats-the-window.md) |
 | D569 | D569 STAGE 0 RESULT — the soybean harvest schedule holds where corn's failed: the short spread earns +0.42 bp a positio… | [record](D569-STAGE-0-DESIGN-the-soybean-harvest-addendum-control-and-gate.md) · [RESULT](D569-STAGE-0-RESULT-schedule-holds-avatar-does-not-october-reverses.md) |
+| D570 | DOES NOT PASS: the F/H harvest spread earns +0.40 gross / +0.54 Sortino on 2016–2023, the schedule is real (the always-… | [PRE-REG](D570-PRE-REG-soybean-harvest-spread-F-H-flat-by-default.md) · [RESULT](D570-RESULT-does-not-pass-best-placement-is-july-september-on-X-F.md) |
 
 <!-- REGISTER:END -->
 
