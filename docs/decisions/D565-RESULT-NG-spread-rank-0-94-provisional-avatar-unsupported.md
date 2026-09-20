@@ -98,12 +98,14 @@ season on average, and the account could carry twenty pairs inside C-d (σ $480 
 gross-to-net gap is a third, so the component's Sharpe is a function of the $3 round trip more
 than any other here.
 
-**What the second entry triggers is the principal's.** Entry #1 was parked on 2026-09-12 with the
-note that its forward read runs once, together with the second component's promotion and hurdle P
-on the assembled book, when a second entry exists. It now exists. The futures 2024+ slice is unread
-for NG and for K8; for the assembled book of these two it is intact. Reading it is the decision
-this record hands back, and it offers two withdrawal seasons for the spread and about 680 day
-sessions for K8.
+**Correction, same day.** The first draft of this section said entry #1 (K8) was parked awaiting
+a second entry. That was stale: K8 was taken forward in D503 on 2026-09-13, did not transfer, and
+was closed by the principal that day; the MACD day-session arm was admitted as the ledger's entry
+#2 and the prop book's first arm. **This spread is therefore entry #3**, and the assembled book it
+joins is the MACD arm plus this spread. The NQ day-session 2024+ slice is spent for the MACD arm
+(D503); the NG 2024+ slice is unread and offers thirteen positioned months (January–March 2024
+and two full seasons). The joint read of the spread forward and of the assembled book, with
+hurdle P, is the principal's call and is pre-registered separately as D566 when taken.
 
 ## 4. The avatar — the premium is there; the buyer is not in the data
 
