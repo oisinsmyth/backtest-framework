@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 313 of these records carry neither field —
+**No Status or Category column, deliberately.** 314 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -651,6 +651,7 @@ would look like data. The tokens are what is shown.
 | D570 | DOES NOT PASS: the F/H harvest spread earns +0.40 gross / +0.54 Sortino on 2016–2023, the schedule is real (the always-… | [PRE-REG](D570-PRE-REG-soybean-harvest-spread-F-H-flat-by-default.md) · [RESULT](D570-RESULT-does-not-pass-best-placement-is-july-september-on-X-F.md) |
 | D571 | D571 STAGE 0 RESULT — the mechanism is not supported: the soybean placement profile predicted the best month on corn an… | [record](D571-STAGE-0-DESIGN-cross-root-placement-profiles-from-soybeans.md) · [RESULT](D571-STAGE-0-RESULT-not-supported-profiles-are-root-specific.md) |
 | D572 | FIXTURE: the CFTC Commitments of Traders fixture extended to the six commodity roots the first fetch did not request —… | [record](D572-FIXTURE-COT-extended-to-the-six-missing-commodity-roots.md) |
+| D573 | PRE-REGISTRATION: hedging pressure as published (Basu & Miffre 2013), a cross-sectional sort of 16 commodity roots on h… | [PRE-REG](D573-PRE-REG-hedging-pressure-as-published-on-16-commodities.md) |
 
 <!-- REGISTER:END -->
 
