@@ -10,6 +10,14 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-20)
+- `data/fixtures/cftc_cot_raw.csv.gz` extended (D572): **34 symbols, 274,473 rows, 1986-01-15
+  to 2026-09-15** - ZL ZM HO RB PL PA added so every one of the breadth fixture's 17 commodity
+  roots has its positioning series. Two more resolution traps pinned in `fetch_cftc_cot.py`:
+  `%HEATING OIL%` matches only two spread contracts (the outright is `NY HARBOR ULSD`) and
+  `%RBOB%` matches ten (the outright is `GASOLINE RBOB`). The 28 original series are not
+  re-fetched and end at 2026-08-25; the six new ones end at 2026-09-15.
+
 ### Notes (this catch-up, 2026-09-17)
 - **The last substantive entry below is dated 2026-09-02 and stops at D284.** Everything above it
   covers **D285 to D539** - 241 decision numbers over 1,077 commits in sixteen days - written from

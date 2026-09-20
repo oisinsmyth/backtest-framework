@@ -9,6 +9,7 @@
   "GC",
   "HE",
   "HG",
+  "HO",
   "LE",
   "M2K",
   "MES",
@@ -19,12 +20,17 @@
   "MYM",
   "NG",
   "NQ",
+  "PA",
+  "PL",
+  "RB",
   "RTY",
   "SI",
   "YM",
   "ZB",
   "ZC",
   "ZF",
+  "ZL",
+  "ZM",
   "ZN",
   "ZS",
   "ZW"
@@ -39,6 +45,7 @@
   "GC",
   "HE",
   "HG",
+  "HO",
   "LE",
   "M2K",
   "MES",
@@ -49,20 +56,25 @@
   "MYM",
   "NG",
   "NQ",
+  "PA",
+  "PL",
+  "RB",
   "RTY",
   "SI",
   "YM",
   "ZB",
   "ZC",
   "ZF",
+  "ZL",
+  "ZM",
   "ZN",
   "ZS",
   "ZW"
  ],
- "rows": 210717,
+ "rows": 274473,
  "rows_per_family": {
-  "disaggregated": 52775,
-  "legacy": 101382,
+  "disaggregated": 84515,
+  "legacy": 133398,
   "tff": 56560
  },
  "reports_per_symbol": {
@@ -75,6 +87,7 @@
   "GC": 11068,
   "HE": 10024,
   "HG": 10813,
+  "HO": 11089,
   "LE": 11071,
   "M2K": 1088,
   "MES": 2176,
@@ -85,19 +98,24 @@
   "MYM": 624,
   "NG": 10759,
   "NQ": 9532,
+  "PA": 10870,
+  "PL": 11092,
+  "RB": 8515,
   "RTY": 5307,
   "SI": 11068,
   "YM": 9061,
   "ZB": 11071,
   "ZC": 9760,
   "ZF": 10900,
+  "ZL": 11095,
+  "ZM": 11095,
   "ZN": 11071,
   "ZS": 9760,
   "ZW": 9760
  },
  "span": {
   "first": "1986-01-15",
-  "last": "2026-08-25"
+  "last": "2026-09-15"
  },
  "shape": "TIDY -- one row per (report_date, symbol, family, category). The three report families use DIFFERENT trader taxonomies and a study must not pool them; `family` is on every row so it cannot be lost.",
  "source": "CFTC Socrata open data, https://publicreporting.cftc.gov/resource/{dataset}.json, futures-only variants: disaggregated=72hh-3qpy, legacy=6dca-aqww, tff=gpe5-46if. Combined futures-and-options datasets exist and are deliberately NOT used -- an options-inclusive position is not a futures position.",
@@ -106,7 +124,7 @@
  "release_convention_measured": {
   "tuesday_schedule_from": "1993-01-01",
   "before_that": "There was NO weekly Tuesday schedule. 1986 report dates are 46.8% Friday, 16.2% Monday, 16.2% Wednesday, 12.3% Tuesday. release_date_nominal is therefore EMPTY before 1993-01-01 -- a fabricated release date would be worse than an admitted gap, because it would look usable.",
-  "rows_without_a_release_date": 4383
+  "rows_without_a_release_date": 7008
  },
  "release_convention_fails_here": [
   {
@@ -120,7 +138,7 @@
    "why": "16-day federal government shutdown"
   }
  ],
- "rows_inside_a_suspension": 450,
+ "rows_inside_a_suspension": 582,
  "provider_typos_preserved_verbatim": [
   "swap__positions_short_all",
   "swap__positions_spread_all",
@@ -134,8 +152,8 @@
   "no_duplicate_report_rows": true,
   "duplicate_rows_dropped": 0,
   "open_interest_identity": {
-   "checked": 55661,
-   "passed": 55661,
+   "checked": 72681,
+   "passed": 72681,
    "rate": 1.0,
    "note": "sum of per-category LONG positions must equal open interest, within 0.5% or 1 contract. This is the cheapest available proof that columns landed in the right slots.",
    "failures": []
@@ -383,7 +401,7 @@
      "weeks": 10.0
     }
    ],
-   "count": 102
+   "count": 106
   },
   "series_with_no_rows": {
    "failures": [],
@@ -397,6 +415,7 @@
     "GC/tff",
     "HE/tff",
     "HG/tff",
+    "HO/tff",
     "LE/tff",
     "M2K/disaggregated",
     "MES/disaggregated",
@@ -407,12 +426,17 @@
     "MYM/disaggregated",
     "NG/tff",
     "NQ/disaggregated",
+    "PA/tff",
+    "PL/tff",
+    "RB/tff",
     "RTY/disaggregated",
     "SI/tff",
     "YM/disaggregated",
     "ZB/disaggregated",
     "ZC/tff",
     "ZF/disaggregated",
+    "ZL/tff",
+    "ZM/tff",
     "ZN/disaggregated",
     "ZS/tff",
     "ZW/tff"
@@ -450,6 +474,8 @@
   "HE|legacy": "1996-04-02",
   "HG|disaggregated": "2006-06-13",
   "HG|legacy": "1989-07-31",
+  "HO|disaggregated": "2006-06-13",
+  "HO|legacy": "1986-01-15",
   "LE|disaggregated": "2006-06-13",
   "LE|legacy": "1986-01-15",
   "M2K|legacy": "2021-11-30",
@@ -470,6 +496,12 @@
   "NG|legacy": "1990-04-12",
   "NQ|legacy": "1999-06-22",
   "NQ|tff": "2006-06-13",
+  "PA|disaggregated": "2006-06-13",
+  "PA|legacy": "1986-01-15",
+  "PL|disaggregated": "2006-06-13",
+  "PL|legacy": "1986-01-15",
+  "RB|disaggregated": "2006-06-13",
+  "RB|legacy": "2006-02-14",
   "RTY|legacy": "2002-08-13",
   "RTY|tff": "2006-06-13",
   "SI|disaggregated": "2006-06-13",
@@ -482,6 +514,10 @@
   "ZC|legacy": "1998-01-06",
   "ZF|legacy": "1988-05-31",
   "ZF|tff": "2006-06-13",
+  "ZL|disaggregated": "2006-06-13",
+  "ZL|legacy": "1986-01-15",
+  "ZM|disaggregated": "2006-06-13",
+  "ZM|legacy": "1986-01-15",
   "ZN|legacy": "1986-01-15",
   "ZN|tff": "2006-06-13",
   "ZS|disaggregated": "2006-06-13",
@@ -503,5 +539,5 @@
   "MHG": "2026-01-27"
  },
  "micro_cot_inception_note": "A contract enters COT only once it has enough REPORTABLE traders, which is much later than its listing date -- the micros launched 2019-05-06 but MES first reports 2020-07-28 and MYM not until 2022-07-26. MSI and MHG have under a year of history. This BOUNDS the free weekly form of the proposal's rung 2: ES/MES and NQ/MNQ carry ~6 years, M2K ~4.7, MYM ~4, and the metal micros are unusable. Any micro/mini study must be scoped to the pairs that have history.",
- "built_utc": "2026-09-01T12:09:04+00:00"
+ "built_utc": "2026-09-20T10:52:29+00:00"
 }

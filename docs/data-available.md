@@ -317,9 +317,12 @@ adjusted, daily is not. That has already put one name at 5x its own prices, and
 
 ### Positioning — the one price-free, fully committable series
 
-`cftc_cot_raw`: **28 symbols, 210,717 rows, 1986-01-15 → 2026-08-25.** US government public
-domain, so unlike every CME product here it may live in the repo. Commercial /
-non-commercial / non-reportable open interest per contract. See [`cftc_cot.md`](cftc_cot.md).
+`cftc_cot_raw`: **34 symbols, 274,473 rows, 1986-01-15 → 2026-09-15** (28 symbols to
+2026-08-25; ZL ZM HO RB PL PA added in D572 to 2026-09-15, so every one of the 17 commodity
+roots has its series). US government public domain, so unlike every CME product here it may
+live in the repo (the panel is gitignored for size since D536 and carried by hash in the
+manifest; the map and meta are tracked). Commercial / non-commercial / non-reportable open
+interest per contract. See [`cftc_cot.md`](cftc_cot.md).
 
 `wasde_grains_su.csv`: **USDA WASDE supply and use for corn, soybeans and wheat — 1,170
 (release, commodity, marketing-year) rows over 195 monthly releases, 2010-04-09 → 2026-09-11**,

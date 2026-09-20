@@ -285,6 +285,20 @@ SYMBOLS: dict[str, tuple[str, str, str | None]] = {
     "ZW":  ("disaggregated", "%WHEAT-SRW%", "WHEAT-SRW"),
     "LE":  ("disaggregated", "%LIVE CATTLE%", "LIVE CATTLE"),
     "HE":  ("disaggregated", "%LEAN HOGS%", "LEAN HOGS"),
+    # --- the six commodity roots of the breadth fixture's 17 that the first fetch
+    # (D262) did not request; added 2026-09-20 for the hedging-pressure sort
+    # (D572). Patterns declared, exact names to be promoted from --map's print.
+    "ZL":  ("disaggregated", "%SOYBEAN OIL%", "SOYBEAN OIL"),
+    "ZM":  ("disaggregated", "%SOYBEAN MEAL%", "SOYBEAN MEAL"),
+    # HO is a THIRD trap: '%HEATING OIL%' matches only two SPREAD contracts (ULSD
+    # vs heating oil, heating oil vs Rotterdam gasoil); the outright is named
+    # 'NY HARBOR ULSD' since the 2013 spec change. Pinned.
+    "HO":  ("disaggregated", "%ULSD%", "NY HARBOR ULSD"),
+    # RB: '%RBOB%' matches TEN contracts (cracks, calendars, 1st-line, financial,
+    # regional blendstock spreads); the outright is 'GASOLINE RBOB'. Pinned.
+    "RB":  ("disaggregated", "%RBOB%", "GASOLINE RBOB"),
+    "PL":  ("disaggregated", "%PLATINUM%", "PLATINUM"),
+    "PA":  ("disaggregated", "%PALLADIUM%", "PALLADIUM"),
 }
 
 REQUESTS_PER_MIN = 30
