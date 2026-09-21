@@ -1,0 +1,280 @@
+Golden-master hand ledger for the futures cost bricks and the cost table (D591).
+Companion to test_futures_costs_ledger.py — every number below has a matching assertion there.
+
+Per CONTRIBUTING.md the arithmetic here was worked BEFORE the assertions were written, by a
+calculator that never imports `backtest_framework`. The inputs are two kinds of thing and the
+distinction is the whole point of the table this file gates:
+
+  (a) MEASURED numbers, copied out of a committed JSON artefact by key path. They are quoted
+      here to their full repr, never retyped to fewer digits, because R16 asks for a published
+      number to reproduce EXACTLY on the build that produced it.
+  (b) DECLARED numbers — commission — which nothing here measured. They are brokerage
+      assumptions carried in a runner's source literal, and they are labelled as such.
+
+Reading a committed artefact is not importing the codebase: the artefact is the published
+number. What this file never does is take a figure from the module under test.
+
+
+0. THE TWO BRICK RULES
+================================================================================
+Both charge PER FILL, and a round trip is two fills of one contract.
+
+    FuturesCommission(per_round_trip_usd = C)
+        cost(instrument, quantity, price) = 0.5 * C * |quantity|          [price ignored]
+
+    TickCrossing(ticks_per_round_trip = T)
+        cost(instrument, quantity, price) = 0.5 * T * tick_usd * |quantity|   [price ignored]
+
+    round trip, one contract  =  cost(+1) + cost(-1)  =  C  +  T * tick_usd
+
+0.5 is a power of two, so halving and re-doubling is exact in binary: the round trip is
+`C + T*tick_usd` to the bit, not to a tolerance. That is asserted, not assumed.
+
+Commission is charged PER CONTRACT (that is why it dominates at micro size — D469: $3 on a
+$1.25 tick is 2.4 ticks, on a $12.50 tick it is 0.32). Crossing is charged per contract too,
+because tick_usd is a one-contract quantity.
+
+
+1. INSTRUMENT CONSTANTS
+================================================================================
+From data/futures_contract_specs.json (CME's own contract-specification service; the file's
+_provenance records the read of 2026-09-10). tick_usd = usd_per_point * tick_points in every
+row below, which is the consistency `Future.__post_init__` re-checks.
+
+    symbol   tick_points   usd_per_point   tick_usd
+    ES         0.25            50.0          12.50
+    MES        0.25             5.0           1.25
+    NQ         0.25            20.0           5.00
+    MNQ        0.25             2.0           0.50
+    MCL        0.01           100.0           1.00
+    MGC        0.1             10.0           1.00
+    MNG        0.001         1000.0           1.00
+    SIL        0.005         1000.0           5.00
+    ZN         0.015625      1000.0          15.625
+    ZB         0.03125       1000.0          31.25
+    ZF         0.0078125     1000.0           7.8125
+
+Every tick_usd here is a dyadic rational (1.25 = 5/4, 15.625 = 125/8, 7.8125 = 125/16), so
+every product below is exact in binary and nothing in this file turns on a rounding mode —
+except the two places that are explicitly about rounding, §2 and §4, which say so.
+
+
+2. MNQ ON THE D527 LINE — the number D531 charges as 4.21
+================================================================================
+MEASURED, from data/d527_arm_crossing_cost.json:
+
+    reprice.round_trip_crossing_ticks      = 2.4110232735988832
+    reprice.assumed_crossing_ticks         = 1.009
+    reprice.scored.measured.rt_usd         = 4.205511636799441       <- the target
+    reprice.scored.assumed.rt_usd          = 3.5045
+    window  reprice.window = 2016-01-04 .. 2023-12-29  (the trip dates; the spread census
+            behind the tick count is 44 sessions of 2025-09 / 2026-03 / 2026-09 tbbo)
+
+DECLARED: commission $3.00 per round trip, one MNQ (D468's micro convention).
+
+    crossing, per fill   0.5 * 2.4110232735988832 * 0.50   = 0.6027558183997208
+    commission, per fill 0.5 * 3.00                        = 1.50
+    per fill                                               = 2.1027558183997208
+    ROUND TRIP           = 2 * 2.1027558183997208          = 4.205511636799441   [MATCH]
+
+    the same sum written flat: 3.00 + 2.4110232735988832 * 0.50 = 4.205511636799441
+    the two routes agree BIT FOR BIT (0x4010d271a47c010e), which is what §0's halving
+    argument predicts and is checked rather than asserted in prose.
+
+  THE ARTEFACT CARRIES THE TICK COUNT TWICE AND THE TWO DIFFER BY ONE ULP:
+      reprice.round_trip_crossing_ticks      2.4110232735988832
+      reprice.scored.measured.cross_ticks    2.4110232735988824
+  Both give 4.205511636799441 exactly, because $0.50 a tick is a halving and the $3.00
+  commission is four binary orders larger. The mismatch is real and immaterial HERE; it would
+  not be on a $31.25 tick. The table records the first, which is the artefact's own headline.
+
+  The same artefact's `scored.assumed.cross_ticks` is 1.0090000000000003, not the 1.009 that
+  `assumed_crossing_ticks` declares — 1.009 is not representable in binary and the scored
+  field carries the result of a round trip through the arithmetic. Both give 3.5045 exactly.
+
+  THE ROUNDED FORM. run_d531_orb_session_native.py:41 charges COST_USD = 4.21 flat, on all six
+  of its roots, and its comment names this number: "D527-corrected round trip at one micro".
+      round(4.205511636799441, 2) = 4.21        (no tie; the third decimal is 5511... > 5)
+  4.21 is 0.0044883632005590 ABOVE the measured figure, i.e. the runner is 0.107% pessimistic.
+
+
+3. THE D556 RULE — cost per side = comm/2 + 0.5 tick, so a round trip is comm + one tick
+================================================================================
+The rule is `dollar_book` in run_d555_tsmom_replication.py:395-405, which D556 reuses:
+
+    cost = sides * (comm_rt/2 + 0.5 * tick_usd)
+
+so one round trip (two sides) is exactly `comm_rt + tick_usd`. In the vocabulary of §0 that is
+TickCrossing(1.0): one full tick a round trip, half a tick a side. Commission is
+COMMISSION_RT = {"micro": 3.0, "full": 6.0} (run_d555:56, "D468's convention"), and the size
+charged is `min_size` from data/d556_carry_timing.json::dollar_book.min_size.
+
+    root  min_size  comm    tick_usd   ROUND TRIP = comm + tick_usd     as the record prints it
+    NQ      MNQ     3.00      0.50      3.50                            3.50   exact
+    ES      MES     3.00      1.25      4.25                            4.25   exact
+    CL      MCL     3.00      1.00      4.00                            4.00   exact
+    SI      SIL     3.00      5.00      8.00                            8.00   exact
+    ZN      ZN      6.00     15.625    21.625                           21.63  ROUNDED
+    ZB      ZB      6.00     31.25     37.25                            37.25  exact
+    ZF      ZF      6.00      7.8125   13.8125                          13.81  ROUNDED
+
+  EXACT vs ROUNDED, and ZN is a genuine tie. 21.625 is exactly representable (173/8), so
+  rounding it to two decimals is a tie at the third digit:
+      half-up   -> 21.63     (the form the ledger and the brief print)
+      half-even -> 21.62     (what Python's round(21.625, 2) returns)
+  The test asserts the EXACT 21.625 and records both roundings. A record that quotes 21.63 is
+  not reproducible by `round()` and that is worth knowing before someone "fixes" it.
+      13.8125 -> 13.81 under both rules (the third digit is 2, no tie).
+
+  MNQ TWO WAYS, and they disagree by design, not by error:
+      D527 line   3.00 + 2.4110232735988832 * 0.50 = 4.205511636799441   (measured crossing)
+      D556 rule   3.00 + 1.0                * 0.50 = 3.50                (one tick a round trip)
+  The D556 rule is 0.7055116367994 cheaper. It is the seen ledger's convention, not a
+  measurement, and the difference IS the measurement D527 made on that arm's own fills.
+
+
+4. D469's BREAKEVEN BARS — ES 1.329 ticks, MES 3.409 ticks
+================================================================================
+MEASURED, from data/d465_es_spread_and_mae_bias.json via data/d469_scalping_feasibility.json:
+
+    d465  spread.half_spread_bp_per_side.mean  = 0.18219682151764224   bp per side
+    d469  crossing_bp_round_trip_measured      = 0.3643936430352845  = 2 * the above
+    d469  median_price                         = 6919.5
+    window 2025-09-11 .. 2026-09-11, ES front month, tbbo
+
+    d469 cost_bars.ES.crossing_ticks   = 1.0085687251930604
+    d469 cost_bars.MES.crossing_ticks  = 1.0085687251930602
+
+  ONE ULP APART, AND THE TABLE KEEPS BOTH. The bp figure is one number; the tick figure is
+  that number divided by a different tick_usd on each contract (12.5 and 1.25), and the two
+  divisions do not land on the same double. Collapsing them to "1.009 ticks" would make the
+  table's own arithmetic un-reproducible against d469 on one of the two rows, so each size
+  entry carries the tick count of ITS OWN contract. This is the same shape as the D527 note
+  in §2 and it is why the table copies rather than derives.
+
+DECLARED: commission ES $4.00 / RT (D258 "~$4-5", low end), MES $3.00 / RT (D466's line).
+  Note this is NOT run_d555's full-size $6.00 — see §6.
+
+  ES, at price 6919.5:
+    crossing, per fill    0.5 * 1.0085687251930604 * 12.50 = 6.3035545324566275
+    commission, per fill  0.5 * 4.00                       = 2.00
+    ROUND TRIP            2 * 8.303554532456627            = 16.607109064913253   [MATCH]
+    breakeven ticks       16.607109064913253 / 12.50       =  1.3285687251930602  [MATCH]
+        of which crossing 1.0085687251930604 and commission 4.00/12.50 = 0.32
+
+  MES, at price 6919.5:
+    crossing, per fill    0.5 * 1.0085687251930602 * 1.25  = 0.6303554532456626
+    commission, per fill  0.5 * 3.00                       = 1.50
+    ROUND TRIP            2 * 2.1303554532456626           =  4.260710906491325    [MATCH]
+    breakeven ticks        4.260710906491325 / 1.25        =  3.40856872519306     [MATCH]
+        of which crossing 1.0085687251930602 and commission 3.00/1.25 = 2.40
+
+  THE ONE MISMATCH IN THIS WHOLE FILE, and it is a component, not a bar:
+    MES crossing dollars a round trip
+        this file   1.0085687251930602 * 1.25   = 1.2607109064913251
+        d469        0.3643936430352845/1e4 * (6919.5 * 5.0) = 1.2607109064913253
+    ONE ULP, 2.2e-16, and it does NOT propagate: the $3.00 commission is 2.4 binary orders
+    larger, so total_usd and breakeven_ticks both match d469 to the bit. The ES row has no
+    such gap — (x/12.5)*12.5 round-trips exactly there and (x/1.25)*1.25 does not.
+    The test asserts the bars exactly and asserts this component to within 1 ULP, naming it.
+
+  WHAT THE BAR MEANS (D469's own reading, not a new claim): the micro's breakeven is 2.6x the
+  e-mini's on the same instrument, and 2.40 of its 3.409 ticks is commission. Commission, not
+  spread, binds at micro size.
+
+
+5. D533's DICT — recorded, and derived only where a measured line reaches it
+================================================================================
+run_d533:36 (identical to run_d532:37) charges
+
+    COST = {"CL": 4.00, "GC": 5.00, "SI": 8.00, "NG": 5.00, "ES": 4.25, "NQ": 4.21}
+
+at MINSIZE = {"CL": MCL, "GC": MGC, "SI": SIL, "NG": MNG} (run_d533:39) — and ES/NQ are the
+calibration roots, charged at MES/MNQ. D532's pre-registration line 97 says these come "from
+the measured median spreads, not a flat assumption". Against the lines this table carries:
+
+    root  charged   D556 rule (comm + tick)      verdict
+    CL     4.00     3.00 + 1.00 (MCL) = 4.00     DERIVED — equals the one-tick rule exactly
+    SI     8.00     3.00 + 5.00 (SIL) = 8.00     DERIVED — equals the one-tick rule exactly
+    ES     4.25     3.00 + 1.25 (MES) = 4.25     DERIVED — equals the one-tick rule exactly
+    NQ     4.21     3.00 + 0.50 (MNQ) = 3.50     DERIVED from D527 instead: round(4.2055…, 2)
+    GC     5.00     3.00 + 1.00 (MGC) = 4.00     CHARGED, NOT DERIVED HERE
+    NG     5.00     3.00 + 1.00 (MNG) = 4.00     CHARGED, NOT DERIVED HERE
+
+  GC and NG are $1.00 above the one-tick rule and no line in this table produces either. The
+  nearest measured figure for GC is D508's execution-hours effective crossing on MGC,
+  2.9334505021406643 ticks at $1.00 a tick, which with $3.00 commission is $5.933450502140664
+  — nearer 5.00 than 4.00 but not equal to it, so it is not the derivation either. MNG is in
+  no crossing census on disk at all: D507 covers NG and not MNG, and D508 covers neither.
+  The table records 5.00 for both with `derived: false` and says what it is not.
+
+  A NUMBER THAT IS CHARGED AND NOT DERIVED IS NOT THEREBY WRONG. Both are conservative
+  against the one-tick rule. What is recorded is that the arithmetic joining them to a
+  measurement does not exist on disk, which is the only honest thing to write down.
+
+
+6. THE DISAGREEMENTS THE TABLE CARRIES, BECAUSE TWO LITERALS DIFFER
+================================================================================
+  (i) FULL-SIZE COMMISSION HAS TWO DECLARED VALUES.
+        $4.00 / RT on ES   — scripts/d469_scalping_feasibility.py:83, from D258's "~$4-5"
+        $6.00 / RT full    — scripts/run_d555_tsmom_replication.py:56, "D468's convention"
+      The table's `full` entries carry 6.00 (the later, broader convention, and the one the
+      seen ledger charges) and D469's 4.00 survives verbatim in ES's runner_lines.d469, which
+      is what §4 reproduces against. Neither is measured. Picking one silently would make one
+      of the two published bars un-reproducible.
+
+  (ii) MICRO COMMISSION IS 3.00 EVERYWHERE — d469's MES, run_d555's "micro", D466's declared
+       index-micro line. No disagreement to record; stated so that the agreement is on record.
+
+  (iii) THE DEFINITION FILE'S tick_usd IS NOT IN DOLLARS FOR EVERY ROOT.
+       data/fut_specs_from_definition.json computes tick_usd = tick_price_units *
+       unit_of_measure_qty, which is dollars only where the price is quoted in dollars per
+       unit. For the grains and livestock it is CENTS:
+           ZC / ZS / ZW   1250.0   =  1250 cents  =  $12.50
+           HE / LE        1000.0   =  1000 cents  =  $10.00
+           ZL              600.0   =   600 cents  =   $6.00
+       so those roots' D556 round-trip line reads 1256.0 / 1006.0 / 606.0 rather than $18.50 /
+       $16.00 / $12.00. Within a root it is self-consistent — run_d555's gross uses the same
+       price units — so it is a unit, not an error, and the table writes the artefact's number
+       and FLAGS it rather than inventing a corrected one.
+       SR3 is the opposite sign: 0.0625 where CME's tick is $6.25, a factor of 100 small; the
+       percent-of-par divisor is applied to a uom_qty that is already dollars per index point.
+       D555/D556 exclude SR3 from the dollar book (DOLLAR_EXCLUDED), so nothing published
+       rests on it. Flagged, not corrected.
+
+
+7. BRICK_KEYS AS IT STOOD BEFORE D591 TOUCHED IT
+================================================================================
+Transcribed from src/backtest_framework/config/cost_stack.py BEFORE the row for
+`futures_round_trip` was added. Its own comment says a key missing from a row "turns a
+working config into a raise", and that 176,592 stored trial configs must keep validating —
+so the thing to gate is not that the new row is right, it is that the eight old ones did not
+move while it was added.
+
+    flat_commission   type, amount
+    percent_spread    type, bps
+    ibkr_commission   type, per_share, min_per_order, max_pct_of_trade_value
+    borrow_fee        type, annual_rate
+    margin_interest   type, annual_rate
+    flat_rate_carry   type, annual_rate
+    sqrt_impact       type, coefficient, calibration, volume_units
+    dividend_flow     type, source
+
+  Eight types, and `sqrt_impact`'s `volume_units` is OPTIONAL and must stay in the row: 2,170
+  trials stored before D187 carry sqrt_impact without it.
+
+  The row D591 adds, for completeness — it is NOT part of the snapshot the test compares:
+    futures_round_trip   type, commission_rt_usd, crossing_ticks_rt, root, line
+
+8. WHAT THIS FILE DOES NOT ESTABLISH
+================================================================================
+- No strategy return, and nothing here reads a bar. Every input is a committed JSON artefact
+  or a source literal.
+- Commission is DECLARED. Nothing in this repository has measured a fill's commission, and
+  the table says `"measured": false` on every commission row.
+- The crossing censuses are all measured on 2025-09 .. 2026-09 and are applied by runners to
+  2016-2023. D507 and D508 both say so in their own `limitations`: a tick is fixed in price
+  terms, so a recent spread on an older, cheaper window is OPTIMISTIC. The table carries each
+  line's window for exactly this reason and the default line is not a claim about 2016.
+- The quoted spread (D507, D510) and the effective crossing (D508, D465) are DIFFERENT
+  STATISTICS — a floor versus what an aggressor paid — and the table never averages them.

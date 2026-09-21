@@ -21,6 +21,22 @@ Shape (D52's `{"type": ..., ...params}` convention, one list per CostStack slot)
         "event_flow_bricks": [{"type": "dividend_flow", "source": "snapshot_declared"}],
     }
 
+The futures line (D591) is one brick with two halves, and it is declared EITHER by naming a
+contract in the cost table or by writing both numbers out — never half of each:
+
+    {"type": "futures_round_trip", "root": "MES"}                    # the table's default line
+    {"type": "futures_round_trip", "root": "ES", "line": "d465"}     # a named crossing census
+    {"type": "futures_round_trip", "commission_rt_usd": 3.0,
+                                   "crossing_ticks_rt": 1.0}         # explicit, no table
+
+`root` takes a parent root ("ES", which resolves to its MINIMUM TRADABLE SIZE — the size
+`COMPONENTS_PROP.md` scores a component at) or a traded symbol ("MES", "ZN"). `line` names
+which crossing measurement is charged and is only meaningful with `root`; both default and
+every failure are `data/futures_costs.json`'s to raise, so a config naming a root nothing
+measured fails at factory time rather than charging a neighbouring root's spread. Mixing the
+two forms raises: a config that carried both would hash as one thing and build as another,
+which is the drift this module exists to close.
+
 Data-dependent bricks (sqrt_impact, dividend_flow) are built against a
 `StackDataContext` derived from the snapshot, so config + snapshot data fully
 determine the stack. The sqrt_impact `calibration` key records WHOSE data the
@@ -39,6 +55,12 @@ from typing import Any, Mapping, Sequence
 from ..costs.bricks import FlatCommission, FlatRateCarry, PercentOfNotionalSpread
 from ..costs.calibration import calibrate_impact_params
 from ..costs.equity_bricks import BorrowFee, DividendFlow, IBKRCommission, MarginInterest, SqrtImpact
+from ..costs.futures_bricks import (
+    FuturesCommission,
+    FuturesCostError,
+    FuturesRoundTrip,
+    TickCrossing,
+)
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions, as_declared_dividends
@@ -107,6 +129,13 @@ BRICK_KEYS: dict[str, frozenset[str]] = {
     # published pool.
     "sqrt_impact": frozenset({"type", "coefficient", "calibration", "volume_units"}),
     "dividend_flow": frozenset({"type", "source"}),
+    # D591. Two declaration forms share one row because they build one brick: `root` (+ the
+    # optional `line`) resolves from data/futures_costs.json, or `commission_rt_usd` and
+    # `crossing_ticks_rt` are both given outright. The factory rejects a mixture; the row
+    # cannot, since an allowed-key table only knows which keys a type reads.
+    "futures_round_trip": frozenset(
+        {"type", "commission_rt_usd", "crossing_ticks_rt", "root", "line"}
+    ),
 }
 
 
@@ -204,6 +233,55 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
         return DividendFlow(dividends_by_symbol=declared)
 
     registry.register("dividend_flow", _build_dividend_flow)
+
+    def _build_futures_round_trip(c: dict) -> FuturesRoundTrip:
+        """D591's futures line. Table-resolved or explicit, never both.
+
+        Note this factory ignores `context`: a futures cost line is declared, not calibrated
+        from the snapshot, so `config + data/futures_costs.json` fully determine it. The
+        table's digest is not part of the config hash — that is what the artefact's own
+        `_provenance` is for, and what `tests/golden/test_futures_costs_ledger.py` gates.
+        """
+        by_root = "root" in c
+        explicit = "commission_rt_usd" in c or "crossing_ticks_rt" in c
+        if by_root and explicit:
+            raise ConfigError(
+                "futures_round_trip config gives both 'root' and explicit cost numbers. It "
+                "must give one or the other: a logged config that carried both would say one "
+                "cost and build another as soon as the table moved."
+            )
+        if by_root:
+            if not isinstance(c["root"], str):
+                raise ConfigError(
+                    f"futures_round_trip config key 'root' must be a string, got "
+                    f"{type(c['root']).__name__}"
+                )
+            line = c.get("line")
+            if line is not None and not isinstance(line, str):
+                raise ConfigError(
+                    f"futures_round_trip config key 'line' must be a string, got "
+                    f"{type(line).__name__}"
+                )
+            try:
+                return FuturesRoundTrip.from_table(c["root"], line=line)
+            except FuturesCostError as exc:
+                raise ConfigError(f"futures_round_trip: {exc}") from exc
+        if "line" in c:
+            raise ConfigError(
+                "futures_round_trip config key 'line' names a crossing measurement in "
+                "data/futures_costs.json and is meaningless without 'root'. With explicit "
+                "numbers, the crossing IS crossing_ticks_rt."
+            )
+        return FuturesRoundTrip(
+            commission=FuturesCommission(
+                _required_numeric(c, "commission_rt_usd", "futures_round_trip")
+            ),
+            crossing=TickCrossing(
+                _required_numeric(c, "crossing_ticks_rt", "futures_round_trip")
+            ),
+        )
+
+    registry.register("futures_round_trip", _build_futures_round_trip)
     return registry
 
 

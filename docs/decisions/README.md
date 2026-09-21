@@ -668,7 +668,7 @@ would look like data. The tokens are what is shown.
 | D587 | Futures fills are one library module with pessimism as the default, not five per-script literals that disagree | [record](D587-shared-futures-fill-model.md) |
 | D588 | The deposit documents' power arithmetic is one library module with a self-testing renderer, not five copies of a formul… | [record](D588-power-analysis-module.md) |
 | D589 | FIXTURE: the CME session calendar and event flags for the 36 breadth roots — 205,428 (root, ET calendar day) rows 2010-… | [record](D589-FIXTURE-cme-session-calendar-and-event-flags-36-roots.md) |
-| D590 | D590 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D590-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
+| D600 | D600 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
 
 <!-- REGISTER:END -->
 
