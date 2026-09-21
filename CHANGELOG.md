@@ -10,6 +10,17 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-21, the ES option volume panel in ET clock buckets)
+- `scripts/build_fut_es_0dte_volume_cutoffs.py` (D613): decodes the ohlcv-1m archive already on disk
+  into per-(option, session) volume in five ET clock buckets, so a ladder conditioner can be fixed at
+  a cutoff earlier than the window it predicts. System interpreter only (`databento`). Six gates,
+  each proven to raise; the write pins the gzip mtime so two builds hash identically.
+- `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz` + meta (D613): 5,313,336 rows over 2,485 sessions
+  2016-01-04 → 2023-12-29, 416,627 options, 30 MB; gitignored, manifest-hashed. The 15:30 sum
+  reproduces D581's committed `vol_to_1530` exactly on all 140,361 rows it covers, and every
+  uncovered row is proven to be a genuine zero. The eight source files reaching 2024 were never
+  opened.
+
 ### Added (2026-09-21, macro fixtures for the basis-momentum closure programme)
 - `data/fixtures/hkm_factors.csv.gz` + meta (D601): the He–Kelly–Manela intermediary capital ratio
   and risk factor, 664 months 1970-01 → 2025-05 and 220 quarters, from zhiguohe.net's 2025-06-27

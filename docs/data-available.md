@@ -377,6 +377,32 @@ session — drop rows whose expiry is before the session, or 1.49M contracts of 
 options sit in 2022-06-21; *(v)* the quarterly expires at 09:30 ET (AM settlement), every other
 family at 16:00; *(vi)* `settle` is missing on 0.5 % of rows (no settlement published).
 
+**`fut_es_0dte_volume_cutoffs.csv.gz` + `.meta.json` ([D613](decisions/D613-FIXTURE-the-ES-option-volume-panel-in-ET-clock-buckets.md), 2026-09-21; panel gitignored by pattern, in the manifest by hash):**
+one row per (ES-family option, session) that **traded**, with volume split into five ET clock
+buckets — `v_0000_1200`, `v_1200_1530`, `v_1530_1600`, `v_1600_1800`, `v_1800_2400` — so a
+conditioner can be fixed at any cutoff rather than only at 15:30; **5,313,336 rows over 2,485
+sessions 2016-01-04 → 2023-12-29**, 416,627 distinct options, 30 MB. Built by
+`scripts/build_fut_es_0dte_volume_cutoffs.py` (`--selftest`, `--bars`, `--build`) **under the system
+interpreter**, `databento` being installed only there, from the ohlcv-1m archive already on disk
+(11 files, 6,224 MB, 4.0 min on six processes at 85 %); the write pins the gzip mtime, so two builds
+hash identically. `v_0000_1200 + v_1200_1530` **reproduces D581's `vol_to_1530` exactly** on all
+140,361 rows it covers (gate G4), and every committed row it does not cover is proven to be a
+genuine zero. **What bites:** *(i)* **`session` is the ET calendar date, not the trading session** —
+the 18:00–24:00 Globex hours belonging to the next session sit under the previous date, which is why
+they are their own bucket; the session-aligned accumulation adds the prior date's evening bucket and
+D581's convention does not, so D581's `vol_to_1530` is really **midnight to 15:29**; *(ii)* **a
+missing row means zero, not unknown** — the panel is sparse, so reindex against the option universe
+and fill zero or a ladder statistic silently loses the strikes that did not trade; *(iii)* **strike,
+right and expiry are not here** — they join from `fut_es_options_eod.csv.gz` on
+(`session`, `raw_symbol`), and a row with no match has no known strike; *(iv)* coverage is **every
+traded expiry**, not only same-day, which is what makes a horizon-matched control possible;
+*(v)* volume is **contracts traded, not position, and carries no side** — 0DTE volume is largely
+intraday round trips and no aggressor flag exists before 2025-09, which is reserved; *(vi)* the
+quarterly ES family is AM-settled, so a same-day filter must also require `expiry_hhmm >= "15:30"`
+or it includes an option that has already expired, and the mistake is silent on ~97 % of sessions;
+*(vii)* nothing at or after 2024-01-01 is in the panel, enforced by never opening the eight source
+files whose spans reach it.
+
 **`fut_btc_1m.csv.gz` + `fut_btc_1m.meta.json` ([D580](decisions/D580-STAGE-0-RESULT-not-supported-a-five-minute-unsigned-burst.md), 2026-09-20; panel gitignored by pattern, in the manifest by hash):**
 BTC and MBT outright bars at one minute, **every session, keyed in UTC** (bar start), front month
 per (root, CME trade date) by full-date volume through D462's windowed id labelling; BTC

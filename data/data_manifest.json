@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T20:19:58Z",
+  "built_at": "2026-09-21T23:02:05Z",
   "note": "Every bulk panel under data/, listed by suffix and regardless of whether git tracks it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) and are simply present in a clone. --verify re-hashes what is on disk either way.",
   "suffixes": [
     ".csv.gz",
@@ -7,8 +7,8 @@
     ".npz",
     ".zip"
   ],
-  "total_bytes": 1791864053,
-  "count": 125,
+  "total_bytes": 1821824396,
+  "count": 126,
   "files": [
     {
       "path": "data/d291_null_surface.npz",
@@ -692,6 +692,15 @@
       "sha256": "5719bc15c2afab5c1e4095ebf018562b1488b22009e1d04a2408d73138160738",
       "git_blob": "92e1017b4e87a601e63ca33e7dead4550f21187c",
       "sidecars": []
+    },
+    {
+      "path": "data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz",
+      "bytes": 29960343,
+      "sha256": "34001e2620de974dfcb2136ba7200e5f3e6dfbccbf8d0ed04b21dd13efb11974",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fut_es_0dte_volume_cutoffs.meta.json"
+      ]
     },
     {
       "path": "data/fixtures/fut_es_options_eod.csv.gz",
