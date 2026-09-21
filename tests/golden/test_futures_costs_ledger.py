@@ -367,7 +367,10 @@ def test_no_pre_existing_brick_key_row_moved():
     for type_name, keys in BRICK_KEYS_BEFORE_D591.items():
         assert type_name in BRICK_KEYS, f"{type_name} disappeared from BRICK_KEYS"
         assert set(BRICK_KEYS[type_name]) == keys, f"{type_name}'s allowed keys moved"
-    assert set(BRICK_KEYS) - set(BRICK_KEYS_BEFORE_D591) == {"futures_round_trip"}
+    # Additive rows after D591 are allowed (D604 added `futures_sqrt_impact` on 2026-09-21); what
+    # is gated is that D591's row is present and no pre-existing row lost a key. An equality on
+    # the whole difference would turn every later additive brick into a red golden.
+    assert "futures_round_trip" in set(BRICK_KEYS) - set(BRICK_KEYS_BEFORE_D591)
 
 
 def test_the_new_row_is_the_one_d591_declares():

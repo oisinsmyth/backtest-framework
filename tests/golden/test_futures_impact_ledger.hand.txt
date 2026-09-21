@@ -1,0 +1,249 @@
+Golden-master hand ledger for the futures square-root impact brick (D604).
+Companion to test_futures_impact_ledger.py -- every number below has a matching assertion there.
+
+Per CONTRIBUTING.md the arithmetic here was worked BEFORE the assertions were written, by a
+calculator that never imports `backtest_framework`. The inputs are of two kinds:
+
+  (a) MEASURED numbers, read out of the committed artefact `data/futures_impact_params.json` by
+      key path. They are quoted to their FULL repr, never retyped shorter: R16 asks for a
+      published number to reproduce EXACTLY on the build that produced it, and a sigma rounded
+      to six digits reproduces nothing.
+  (b) DECLARED numbers -- Y = 0.7 and the depth exponent 0.5 -- which nothing here measured.
+      They are the ledger's own decisions (5.3, decision D6; 8A.4) and are labelled as such.
+
+Reading a committed artefact is not importing the codebase: the artefact IS the published
+number. What this file never does is take a figure from the module under test.
+
+
+0. THE TWO FORMULAS, AS THE LEDGER WRITES THEM
+================================================================================
+SETTLEMENT_FLOW_LEDGER_PREREG.md, Section 5.3 "Predicted move":
+
+    V_d   = 20-day trailing mean daily volume of the traded contract (days t-20 ... t-1)
+    sigma_d = 20-day trailing daily return std
+    I     = Y * sigma_d * sqrt(|Q_rem| / V_d) * P * sign(Q_rem)        (price units)
+    SNR   = |Q_rem| / sigma_rem
+
+    Y = 0.7, fixed (decision D6).
+
+Section 8A.4 "Depth-based impact (Stage H)":
+
+    I_D = Y * sigma_d * sqrt(|Q_rem| / V_d) * P * sqrt(D_bar / D(t0)) * sign(Q_rem)
+          (Y = 0.7 fixed; exponent 0.5 fixed)
+
+So, in this repository's names:
+
+    impact_fraction(f, Q)      = Y * sigma_fraction * sqrt(|Q| / adv_contracts)   [dimensionless]
+    impact_for_flow(f, Q, P)   = sign(Q) * impact_fraction * P                    [price points]
+    impact_usd(f, Q, P)        = impact_fraction * |Q * P * usd_per_point|        [dollars]
+    depth_scaled(I, D, D_bar)  = I * sqrt(D_bar / D)                              [same units]
+
+The association matters and is written out because Section 2 asserts equality with `==`:
+`coefficient * sigma * sqrt(|Q| / adv)`, left to right, the divide inside the sqrt.
+
+
+1. THE MEASURED LINE
+================================================================================
+data/futures_impact_params.json # roots.ES.lines.day1m_2016_2023
+
+    window            2016-01-04 .. 2023-12-29        (IN SAMPLE: before the 2024-01-01 holdout)
+    sessions          1975
+    adv_contracts     1253830.165063291
+    sigma_fraction    0.00932119101946498
+    sigma_usd_per_contract   1519.9726384933488
+    notional_usd      163066.35443037972
+    usd_per_point     50.0
+
+The division that defines sigma_fraction, checked by hand:
+
+    1519.9726384933488 / 163066.35443037972 = 0.00932119101946498
+
+and that is the stored value to the bit, not to six places. It is asserted with `==`.
+
+The ES contract itself (data/futures_contract_specs.json; written out rather than read, because
+a golden test that reads its inputs from the same place as the code gates nothing):
+
+    ES   tick_points 0.25   usd_per_point 50.0   tick_usd 12.5
+
+DECLARED: Y = 0.7 (5.3, decision D6). Note this is NOT `costs/equity_bricks.py:SqrtImpact`'s
+default of 1.0. A futures brick silently using 1.0 would charge 1/0.7 = 1.428... times the
+document it implements.
+
+
+2. IMPACT FRACTION, HAND-WORKED
+================================================================================
+Q = 1,000 ES contracts.
+
+    ratio = 1000.0 / 1253830.165063291
+          = 0.0007975561825389021
+
+    sqrt(ratio)
+          = 0.02824103720720792
+
+    fraction = 0.7 * 0.00932119101946498 * 0.02824103720720792
+             = 0.00018426807167734195
+
+    in basis points of the price:  1.8426807167734196 bp
+
+Two more, to pin the shape rather than one point:
+
+    Q = 1 contract          ratio 7.975561825389021e-07
+                            sqrt  0.000893060010603376
+                            fraction 5.827068065475641e-06
+
+    Q = 4,000 contracts     ratio 0.0031902247301556085
+                            sqrt  0.05648207441441584
+                            fraction 0.0003685361433546839
+
+Quadrupling Q doubles the fraction, and here it does so EXACTLY in binary:
+
+    2 * 0.00018426807167734195 = 0.0003685361433546839
+
+(That exactness is a property of these particular doubles, not of the law. The test asserts the
+sqrt-scaling relation with `==` only on this pair, and the general shape by ratio elsewhere.)
+
+
+3. DOLLARS AND SIGNED POINTS
+================================================================================
+At P = 4,000.00 index points, Q = 1,000 ES:
+
+    notional = 1000.0 * 4000.0 * 50.0 = 200000000.0          ($200,000,000)
+
+    impact_usd       = 0.00018426807167734195 * 200000000.0
+                     = 36853.61433546839                      ($36,853.61)
+
+    impact_for_flow  = +0.00018426807167734195 * 4000.0
+                     = 0.7370722867093678                     (+0.737 index points on a BUY)
+
+    and for Q_rem = -1,000:
+                     = -0.7370722867093678                    (the same magnitude, negated)
+
+LEDGER REQUIRED UNIT TEST 7, both halves:
+    (a) sign follows Q_rem                -> the pair above, equal and opposite;
+    (b) zero Q_rem gives zero I           -> impact_for_flow(f, 0.0, P) = 0.0 exactly,
+                                             and for -0.0 as well.
+
+One ES is $200,000 of index at 4,000 and one MES is $20,000: the FRACTION is the same number at
+either size, and what changes is the notional it is charged on. That is why
+`data/futures_impact_params.json` stores each root's `size` block --
+roots.ES.size.size_ratio_full_over_sized = 10.0, usd_per_point_sized = 5.0 -- and why a quantity
+in micros must be converted before it is divided by a full-size ADV.
+
+
+4. THE DEPTH SCALING (8A.4), AND THE IDENTITY
+================================================================================
+    depth_scaled(I, D, D_bar) = I * sqrt(D_bar / D)
+
+LEDGER REQUIRED UNIT TEST 46, and INDEX_REWEIGHT_FLOW_PREREG.md REQUIRED UNIT TEST 18:
+
+    D(t0) = D_bar  =>  D_bar / D = 1.0 exactly (any finite positive double over itself)
+                   =>  sqrt(1.0) = 1.0 exactly
+                   =>  I * 1.0   = I exactly, for every finite I including 0.0 and negatives.
+
+So the assertion is `==`, not `approx`. Checked by hand on all three of Section 3's quantities
+at D = 54927.0 (an ES-sized book), at D = 1.0 and at D = 1e12:
+
+    0.00018426807167734195  ->  0.00018426807167734195
+    0.7370722867093678      ->  0.7370722867093678
+    36853.61433546839       ->  36853.61433546839
+
+DIRECTION, because a ratio is the easy thing to invert. A book THINNER than usual costs MORE:
+
+    D = 25, D_bar = 100   ->  sqrt(4)    = 2.0    ->  I doubles
+    D = 400, D_bar = 100  ->  sqrt(0.25) = 0.5    ->  I halves
+    I = -10, D = 25, D_bar = 100          ->  -20.0     (the sign rides through unchanged)
+
+Applied to Section 2's Q = 1,000 fraction in a book at a quarter of its usual depth:
+
+    0.00018426807167734195 * 2.0 = 0.0003685361433546839
+
+which is the same double as the Q = 4,000 fraction in Section 2 -- a coincidence of these
+numbers, noted so that a reader does not mistake it for an identity.
+
+
+5. THE SECOND ROOT, SO THE TABLE IS NOT GATED AT ONE POINT
+================================================================================
+data/futures_impact_params.json # roots.CL.lines.day1m_2016_2023
+
+    adv_contracts     265938.80699008866
+    sigma_fraction    0.019012768995616155
+
+    Q = 500:  ratio = 500.0 / 265938.80699008866 = 0.0018801317703836832
+              sqrt  = 0.043360486279372876
+              fraction = 0.7 * 0.019012768995616155 * 0.043360486279372876
+                       = 0.0005770820364171101
+
+
+6. THE SAME LAW AS THE EQUITY BRICK
+================================================================================
+`costs/equity_bricks.py:SqrtImpact.impact_fraction` computes
+
+    self.coefficient * params.sigma_daily * math.sqrt(abs(quantity) / params.adv_shares)
+
+which is the identical expression with `sigma_daily` for `sigma_fraction` and `adv_shares` for
+`adv_contracts`. Given the same two doubles and the same coefficient the two MUST return the
+same double, and the golden test asserts that on Section 2's numbers with `==`.
+
+The reason a separate class exists at all is not the arithmetic: `SqrtImpact._params_for` reads
+`instrument.symbol`, and `instruments/future.py:Future` carries `root` and has no `symbol`, so
+`SqrtImpact` applied to a Future RAISES. That raise is asserted too -- it is the gap D604 closes,
+and a test suite that did not pin it could not tell the gap had been closed from the gap never
+having existed.
+
+
+7. BRICK_KEYS ROW
+================================================================================
+`config/cost_stack.py:BRICK_KEYS` gained exactly one row (D604):
+
+    "futures_sqrt_impact": frozenset({"type", "root", "coefficient", "line"})
+
+and the nine rows that existed before it -- the eight legacy rows plus D591's
+`futures_round_trip` -- are unchanged. Transcribed from cost_stack.py before the edit:
+
+    flat_commission     {type, amount}
+    percent_spread      {type, bps}
+    ibkr_commission     {type, per_share, min_per_order, max_pct_of_trade_value}
+    borrow_fee          {type, annual_rate}
+    margin_interest     {type, annual_rate}
+    flat_rate_carry     {type, annual_rate}
+    sqrt_impact         {type, coefficient, calibration, volume_units}
+    dividend_flow       {type, source}
+    futures_round_trip  {type, commission_rt_usd, crossing_ticks_rt, root, line}
+
+176,592 stored trial configs validate against the legacy eight. What the assertion gates is that
+adding a tenth row took no key off any of the nine -- which would turn a stored, published config
+into a raise, and which nothing else in the suite would notice for four of them.
+
+There is NO explicit form for `futures_sqrt_impact` (no `adv_contracts` / `sigma_fraction` keys),
+deliberately: an ADV and a sigma written into a config would be two numbers with no measurement
+window and no provenance, which is exactly what data/futures_impact_params.json exists to carry.
+
+A KNOWN CONSEQUENCE, recorded rather than worked around: D591's
+`tests/golden/test_futures_costs_ledger.py` closes with
+
+    assert set(BRICK_KEYS) - set(BRICK_KEYS_BEFORE_D591) == {"futures_round_trip"}
+
+which is an equality over the whole difference, so ANY tenth row fails it. D604 may not edit that
+file. The one-line widening it needs is named in D604's record and in the report to the
+integrator; the arithmetic above is unaffected either way.
+
+
+8. THE ARTEFACT'S OWN SHAPE
+================================================================================
+data/futures_impact_params.json, top level:
+
+    default_line      "day1m_2016_2023"
+    coefficient_Y     0.7
+    roots             36 (the breadth roots)
+    lines             d511 (9 roots), breadth_meta (36, NO volume), day1m_2016_2023 (36)
+    complete_lines    ["d511", "day1m_2016_2023"]
+
+`breadth_meta` carries a sigma and a notional and NO `adv_contracts`, because its source
+(data/fixtures/fut_breadth_hourly.meta.json) has no volume field at all. The brick refuses that
+line at construction. Storing a real measurement with a hole in it, and refusing at the point of
+use, is the D48 shape: the alternative is either dropping a measured sigma or filling the ADV
+from another window and letting the join vanish into a float.
+
+The default is the in-sample line because the other two are measured on 2025-09..2026-09, which
+is inside the deposit's sealed vault window (2025-03-01 -> 2026-09-18) and after this
+repository's 2024-01-01 holdout.

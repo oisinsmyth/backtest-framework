@@ -2,7 +2,62 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
-## SHARED INFRASTRUCTURE, ROUND 2 — D590–D594 BUILT AND VERIFIED, STAGED, NOT COMMITTED, 2026-09-21
+## SHARED INFRASTRUCTURE, ROUND 3 — D608–D607 BUILT AND VERIFIED, STAGED, NOT COMMITTED, 2026-09-21
+
+The tracker for the whole programme is now `docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md` (the
+principal's research-vs-infrastructure split verbatim, with a status table on top). Round 3 took the
+remaining shared items except the loader chokepoint (item 2's second half), which is deferred and
+stated there. Five parallel Opus agents on disjoint files, each verified here by running its tests
+and selftest and reproducing one claim independently. **Do not rebuild any of the following.**
+
+| record | component | files | reproduced here |
+|---|---|---|---|
+| **D608** | forward data recorder (ledger §13A.3): never-overwrite raw cache, sha256 per file, `fetched_at` = availability, gap log, health line, 16-job schedule; **no host installed (Q17)** | `data/recorder.py`, `scripts/recorder.py`, `data/recorder/{jobs.json,GAPS.md}`, `data/raw/README.md` (re-included in `.gitignore`), 3 test files | second record → new file, first bytes intact; closed window → one gap line, no duplicate on rerun; no `fill_gap` |
+| **D604** | futures √-impact brick (Y = 0.7) keyed on `Future.root`, `depth_scaled`, params on 36 roots in three lines, and the **first MBO reader**: `fut_book_depth_1m` (65,688 minute rows, 8 roots, 21 days of 2026-08/09) | `costs/futures_impact.py`, `config/cost_stack.py` (+1 row), `data/futures_impact_params.json`, 2 scripts, fixture meta, 3 test files | `impact_fraction` == equity `SqrtImpact` on the same numbers; `depth_scaled(I, D, D) == I`; fixture bytes sha `df64af13…` |
+| **D605** | Track 3 log (`TradeRow`/`TradeLog`), shortfall in ticks signed against the trade, latency and share beyond t0+5, 50-trade cost review as a FLAG, `TrialCounter` with futility looks; **no automation (O-Q3 open), no trade exists** | `validation/track3.py`, `scripts/track3_report.py`, `data/track3/SCHEMA.md`, 3 test files | long +2 / short −2 ticks; futility at N=100 only with both conditions; index-28 counter never reports efficacy |
+| **D606** | `fit.py` (OLS bit-identical to D365, `rolling_ols`, log loss, 11-feature budget, retention check) and `error_budget.py` (leave-one-term-out, `StageOrder`); **no `ERROR_BUDGET.md` committed, no study has run** | `validation/fit.py`, `validation/error_budget.py`, 4 test files | zero-contribution term Δ == 0.0 exactly; 12 features refused; reorder refused without a log entry, accepted with one |
+| **D607** | the 146-test crosswalk: `data/deposit_test_map.json` (truth) → `docs/results/DEPOSIT_TEST_MAP.md`; `--scan/--check/--render` | `validation/crosswalk.py`, `scripts/deposit_test_map.py`, 2 test files | 146 rows, per-doc counts equal the parsed sections, 622 claimed node ids collected; **43 of 146 claimed after round 3 (28 before), LETF 0 of 9** |
+
+**Integration DONE (2026-09-21, staged, NOT committed):** four data-available §4 paragraphs, five CHANGELOG
+bullets plus one fix line, the results-index row, manifest rebuilt (126 panels, 11 blob-less, named on the
+running page with the anchor test moved to 126/11), register and README counts, the ten living documents'
+quoted counts (golden 248→331, property 145→181 across 17 files, unit 2,455→2,882, total 3,007→3,553,
+non-bare raises 580→829 across 63 of 101, bare raises 2→4 with the gate and the sentence moved together,
+modules 57→63, records 830→835, numbers 558→563, highest D600→D608 after the merge with the closure branch, which took D603 — the recorder is D608), the encoding ratchet (five `to_csv`
+sites in the depth builder declared; `ensure_ascii=True` dropped from the impact table, the default is the
+same bytes), three citation anchors reworded, and the D604 record renamed to 83 characters (its first
+filename was 102 and the tracked-path ceiling is 85, D540). **Two defects fixed in committed code:** the
+D590 property "enforcing P3 never lengthens the account" was false on the MEAN (`[-2000, 0, -1000]`
+adds a second, longer episode: life 1.0 → 1.5, `p3b_life_cost` −0.5) and now asserts the true invariant
+with the counterexample pinned; the D591 golden's brick-row guard was an equality over the whole set
+difference, so D604's additive row turned it red — widened to membership. **Full suite on the staged tree, and again on the tree merged with the closure branch (D600–D603):
+3,552 passed, 1 skipped, 6 deselected (5:29)** against round 2's 2,995/1/6; the skip count is unchanged
+and the concurrent session's untracked files were gone by the time it ran, so nothing is red. **Only the
+commit is owed, on the principal's word.**
+
+**Findings the agents surfaced that a later study must carry:** `Future.from_specs` returns
+`usd_per_point` **100× wrong on seven roots** (ZC, ZS, ZW, ZL, LE, HE high; SR3 low — the definition
+file's cents), and D591's `TickCrossing` inherits it: nothing on disk charges those roots today, the next
+thing that does will be wrong, and the fix belongs in the specs loader with a golden; ZN's 2025–26 ADV is
+2.23× its 2016–23 ADV, so the impact default line is `day1m_2016_2023`; a ±5-tick depth band is 14.34 bp
+on ZB and 0.42 bp on NQ — not comparable across roots; Labor Day 2026-09-07 holds every crossed or locked
+minute of the whole MBO month and is excluded; the deposit's "CME settlement" job is settlement PRICES
+where D586's pages are TIMES, and `cmegroup.com` 403s from this machine; the spec asks for a Parquet copy
+and this venv has no `pyarrow` (CSV written instead); the deposit never defines "the CostStack slippage
+assumption" or a model EXIT price (D605 takes half the crossing plus one adverse tick, and the exit
+shortfall is not computable from the log alone); `t ≥ 2` at exactly 2.0 is one ULP from a fail and a
+forward test finishing there is on the bar, not a pass; `np.linalg.lstsq` is not bit-identical to D365's
+normal-equations OLS (4.4e-16), so `fit.ols` uses the normal equations and `lstsq` only as the rank
+oracle; importing a runner whose module body installs `sys.addaudithook` poisons the collectability gate
+for the whole process — compile only the needed function (D593's import-by-path pattern is unsafe for
+such runners); a numbered deposit test is claimed by its number in the test FUNCTION NAME from now on,
+and a test discharging two documents' items carries the second in its docstring; the D604 depth month
+and two of the three impact lines lie inside the deposit's sealed vault window, still unreconciled with
+this record's 2024-01-01 holdout — **that reconciliation is the principal's decision and gates every
+deposit study**. The MBO replay projected 3.1 min and took 10.2 min on 6 workers at 91%: the probe day
+was the second-smallest file.
+
+## SHARED INFRASTRUCTURE, ROUND 2 — D590–D594 COMMITTED `c192908`, 2026-09-21
 
 The principal chose the next five shared components from the same infrastructure list; five parallel
 Opus agents built them on disjoint file sets and each was verified here by running its tests and

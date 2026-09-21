@@ -1,0 +1,756 @@
+{
+ "built_utc": "2026-09-21T21:49:43Z",
+ "builder": "scripts/build_fut_book_depth.py",
+ "record": "D604",
+ "source": "data\\raw\\databento\\GLBX-20260911-NKFKU4AMHN",
+ "schema": "mbo",
+ "shape": "TIDY -- one row per (root, day, minute_et): the front contract's book state AT that ET instant, i.e. after every message with ts_recv strictly before it",
+ "roots": [
+  "ES",
+  "NQ",
+  "RTY",
+  "YM",
+  "CL",
+  "GC",
+  "ZN",
+  "ZB"
+ ],
+ "band_ticks": 5,
+ "minutes_per_day": 391,
+ "minute_grid": [
+  "09:30",
+  "16:00"
+ ],
+ "grid_rule": {
+  "settlement_window_end_et": {
+   "ES": "16:00",
+   "NQ": "16:00",
+   "CL": "14:30"
+  },
+  "no_effective_window": {
+   "RTY": "no_row",
+   "YM": "no_row",
+   "GC": "not_effective",
+   "ZN": "no_row",
+   "ZB": "no_row"
+  },
+  "grid_end_et": "16:00"
+ },
+ "fill_convention": "A adds, C removes its own size, M reprices, R clears; T, F and N do not change resting depth. Gate G2 is the test of it.",
+ "clock": "ts_recv (the feed's own order); ts_event is not monotonic across instruments",
+ "front_rule": "the root's outright with the most TRADE records in that file",
+ "front_by_day": {
+  "2026-08-11": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "CL": "CLU6",
+   "GC": "GCZ6",
+   "ZN": "ZNU6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBU6"
+  },
+  "2026-08-12": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "ZN": "ZNU6",
+   "GC": "GCZ6",
+   "CL": "CLU6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-13": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "ZN": "ZNU6",
+   "GC": "GCZ6",
+   "CL": "CLU6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-14": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "ZN": "ZNU6",
+   "GC": "GCZ6",
+   "CL": "CLU6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-17": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "ZN": "ZNU6",
+   "GC": "GCZ6",
+   "CL": "CLU6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBU6"
+  },
+  "2026-08-18": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "ZN": "ZNU6",
+   "GC": "GCZ6",
+   "RTY": "RTYU6",
+   "CL": "CLV6",
+   "YM": "YMU6",
+   "ZB": "ZBU6"
+  },
+  "2026-08-19": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "ZN": "ZNU6",
+   "CL": "CLV6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-20": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "ZN": "ZNU6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-21": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "GC": "GCZ6",
+   "ZN": "ZNU6",
+   "CL": "CLV6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBU6"
+  },
+  "2026-08-24": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "ZN": "ZNU6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-25": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "CL": "CLV6",
+   "GC": "GCZ6",
+   "ZN": "ZNU6",
+   "RTY": "RTYU6",
+   "ZB": "ZBU6",
+   "YM": "YMU6"
+  },
+  "2026-08-26": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "CL": "CLV6",
+   "GC": "GCZ6",
+   "ZN": "ZNU6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBU6"
+  },
+  "2026-08-27": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "RTY": "RTYU6",
+   "ZN": "ZNZ6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-08-28": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "CL": "CLV6",
+   "ZB": "ZBZ6",
+   "YM": "YMU6"
+  },
+  "2026-08-31": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "ZN": "ZNZ6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "RTY": "RTYU6",
+   "ZB": "ZBZ6",
+   "YM": "YMU6"
+  },
+  "2026-09-01": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-09-02": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-09-03": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-09-04": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "GC": "GCZ6",
+   "CL": "CLV6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-09-07": {
+   "NQ": "NQU6",
+   "ES": "ESU6",
+   "CL": "CLV6",
+   "GC": "GCZ6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-09-08": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "CL": "CLV6",
+   "GC": "GCZ6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  },
+  "2026-09-09": {
+   "ES": "ESU6",
+   "NQ": "NQU6",
+   "CL": "CLV6",
+   "GC": "GCZ6",
+   "ZN": "ZNZ6",
+   "RTY": "RTYU6",
+   "YM": "YMU6",
+   "ZB": "ZBZ6"
+  }
+ },
+ "session_rule": "a day is kept only when every front contract printed at least one message in every emitted minute (gate G7). A day that fails is dropped for ALL roots, so the trailing same-time window (8A.4's D_bar) is never ragged across roots. The criterion is liveness and does NOT look at the spread or the depth.",
+ "excluded_days": {
+  "2026-09-07": {
+   "minutes_with_no_message": 917,
+   "rows": 3128,
+   "crossed_or_locked_minutes": 538,
+   "minutes_wider_than_the_band": 69,
+   "roots_affected": [
+    "CL",
+    "ES",
+    "GC",
+    "NQ",
+    "RTY",
+    "YM",
+    "ZB",
+    "ZN"
+   ]
+  }
+ },
+ "files": [
+  "glbx-mdp3-20260811.mbo.dbn.zst",
+  "glbx-mdp3-20260812.mbo.dbn.zst",
+  "glbx-mdp3-20260813.mbo.dbn.zst",
+  "glbx-mdp3-20260814.mbo.dbn.zst",
+  "glbx-mdp3-20260817.mbo.dbn.zst",
+  "glbx-mdp3-20260818.mbo.dbn.zst",
+  "glbx-mdp3-20260819.mbo.dbn.zst",
+  "glbx-mdp3-20260820.mbo.dbn.zst",
+  "glbx-mdp3-20260821.mbo.dbn.zst",
+  "glbx-mdp3-20260824.mbo.dbn.zst",
+  "glbx-mdp3-20260825.mbo.dbn.zst",
+  "glbx-mdp3-20260826.mbo.dbn.zst",
+  "glbx-mdp3-20260827.mbo.dbn.zst",
+  "glbx-mdp3-20260828.mbo.dbn.zst",
+  "glbx-mdp3-20260831.mbo.dbn.zst",
+  "glbx-mdp3-20260901.mbo.dbn.zst",
+  "glbx-mdp3-20260902.mbo.dbn.zst",
+  "glbx-mdp3-20260903.mbo.dbn.zst",
+  "glbx-mdp3-20260904.mbo.dbn.zst",
+  "glbx-mdp3-20260907.mbo.dbn.zst",
+  "glbx-mdp3-20260908.mbo.dbn.zst",
+  "glbx-mdp3-20260909.mbo.dbn.zst"
+ ],
+ "per_file": [
+  {
+   "file": "glbx-mdp3-20260811.mbo.dbn.zst",
+   "day": "2026-08-11",
+   "n_in": 82491392,
+   "n_kept": 45434525,
+   "n_snapshot": 56352,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 153.9,
+   "rss_mb": 335.0
+  },
+  {
+   "file": "glbx-mdp3-20260812.mbo.dbn.zst",
+   "day": "2026-08-12",
+   "n_in": 79285181,
+   "n_kept": 44611969,
+   "n_snapshot": 58801,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 149.9,
+   "rss_mb": 345.0
+  },
+  {
+   "file": "glbx-mdp3-20260813.mbo.dbn.zst",
+   "day": "2026-08-13",
+   "n_in": 77512351,
+   "n_kept": 42487874,
+   "n_snapshot": 52737,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 143.7,
+   "rss_mb": 323.0
+  },
+  {
+   "file": "glbx-mdp3-20260814.mbo.dbn.zst",
+   "day": "2026-08-14",
+   "n_in": 67384291,
+   "n_kept": 37918857,
+   "n_snapshot": 56372,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 127.1,
+   "rss_mb": 329.0
+  },
+  {
+   "file": "glbx-mdp3-20260817.mbo.dbn.zst",
+   "day": "2026-08-17",
+   "n_in": 77618967,
+   "n_kept": 38473118,
+   "n_snapshot": 58647,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 131.7,
+   "rss_mb": 333.0
+  },
+  {
+   "file": "glbx-mdp3-20260818.mbo.dbn.zst",
+   "day": "2026-08-18",
+   "n_in": 84982574,
+   "n_kept": 51074828,
+   "n_snapshot": 58918,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 170.2,
+   "rss_mb": 336.0
+  },
+  {
+   "file": "glbx-mdp3-20260819.mbo.dbn.zst",
+   "day": "2026-08-19",
+   "n_in": 103425461,
+   "n_kept": 64370423,
+   "n_snapshot": 51324,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 216.2,
+   "rss_mb": 356.0
+  },
+  {
+   "file": "glbx-mdp3-20260820.mbo.dbn.zst",
+   "day": "2026-08-20",
+   "n_in": 103238478,
+   "n_kept": 63994101,
+   "n_snapshot": 53766,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 214.3,
+   "rss_mb": 350.0
+  },
+  {
+   "file": "glbx-mdp3-20260821.mbo.dbn.zst",
+   "day": "2026-08-21",
+   "n_in": 85143097,
+   "n_kept": 48278884,
+   "n_snapshot": 48815,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 169.3,
+   "rss_mb": 328.0
+  },
+  {
+   "file": "glbx-mdp3-20260824.mbo.dbn.zst",
+   "day": "2026-08-24",
+   "n_in": 95702436,
+   "n_kept": 56258495,
+   "n_snapshot": 53103,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 190.6,
+   "rss_mb": 343.0
+  },
+  {
+   "file": "glbx-mdp3-20260825.mbo.dbn.zst",
+   "day": "2026-08-25",
+   "n_in": 94915748,
+   "n_kept": 51527651,
+   "n_snapshot": 53537,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 176.5,
+   "rss_mb": 347.0
+  },
+  {
+   "file": "glbx-mdp3-20260826.mbo.dbn.zst",
+   "day": "2026-08-26",
+   "n_in": 86005599,
+   "n_kept": 46423323,
+   "n_snapshot": 51744,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 157.0,
+   "rss_mb": 335.0
+  },
+  {
+   "file": "glbx-mdp3-20260827.mbo.dbn.zst",
+   "day": "2026-08-27",
+   "n_in": 92961043,
+   "n_kept": 54521805,
+   "n_snapshot": 57098,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 148.7,
+   "rss_mb": 346.0
+  },
+  {
+   "file": "glbx-mdp3-20260828.mbo.dbn.zst",
+   "day": "2026-08-28",
+   "n_in": 107164700,
+   "n_kept": 70757069,
+   "n_snapshot": 62541,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 184.6,
+   "rss_mb": 348.0
+  },
+  {
+   "file": "glbx-mdp3-20260831.mbo.dbn.zst",
+   "day": "2026-08-31",
+   "n_in": 92453574,
+   "n_kept": 53308637,
+   "n_snapshot": 69246,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 142.6,
+   "rss_mb": 344.0
+  },
+  {
+   "file": "glbx-mdp3-20260901.mbo.dbn.zst",
+   "day": "2026-09-01",
+   "n_in": 108405052,
+   "n_kept": 62013397,
+   "n_snapshot": 70106,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 165.6,
+   "rss_mb": 346.0
+  },
+  {
+   "file": "glbx-mdp3-20260902.mbo.dbn.zst",
+   "day": "2026-09-02",
+   "n_in": 107509255,
+   "n_kept": 55418934,
+   "n_snapshot": 71251,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 152.3,
+   "rss_mb": 335.0
+  },
+  {
+   "file": "glbx-mdp3-20260903.mbo.dbn.zst",
+   "day": "2026-09-03",
+   "n_in": 115493074,
+   "n_kept": 59867273,
+   "n_snapshot": 68376,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 165.3,
+   "rss_mb": 328.0
+  },
+  {
+   "file": "glbx-mdp3-20260904.mbo.dbn.zst",
+   "day": "2026-09-04",
+   "n_in": 98176955,
+   "n_kept": 51711104,
+   "n_snapshot": 68840,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 110.0,
+   "rss_mb": 324.0
+  },
+  {
+   "file": "glbx-mdp3-20260907.mbo.dbn.zst",
+   "day": "2026-09-07",
+   "n_in": 42339323,
+   "n_kept": 14846079,
+   "n_snapshot": 66798,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 42.9,
+   "rss_mb": 280.0
+  },
+  {
+   "file": "glbx-mdp3-20260908.mbo.dbn.zst",
+   "day": "2026-09-08",
+   "n_in": 107350957,
+   "n_kept": 57688555,
+   "n_snapshot": 69329,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 103.4,
+   "rss_mb": 335.0
+  },
+  {
+   "file": "glbx-mdp3-20260909.mbo.dbn.zst",
+   "day": "2026-09-09",
+   "n_in": 112605242,
+   "n_kept": 58619346,
+   "n_snapshot": 70805,
+   "unknown_ref": 0,
+   "undef_px": 0,
+   "secs": 101.2,
+   "rss_mb": 326.0
+  }
+ ],
+ "probe": {
+  "file": "glbx-mdp3-20260814.mbo.dbn.zst",
+  "day": "2026-08-14",
+  "size_mb": 1291.4,
+  "schema": "mbo",
+  "dataset": "GLBX.MDP3",
+  "span_utc": [
+   "2026-08-14 00:00:00+00:00",
+   "2026-08-15 00:00:00+00:00"
+  ],
+  "parent_symbols": [
+   "ES.FUT",
+   "NQ.FUT",
+   "RTY.FUT",
+   "YM.FUT",
+   "CL.FUT",
+   "GC.FUT",
+   "ZN.FUT",
+   "ZB.FUT"
+  ],
+  "symbol_mappings": 2697,
+  "outright_windows": 215,
+  "messages": 67384291,
+  "actions": {
+   "A": 22209131,
+   "C": 22119988,
+   "F": 1951980,
+   "M": 13985438,
+   "N": 6043209,
+   "R": 707,
+   "T": 1073838
+  },
+  "snapshot_records": 114379,
+  "schema_fields": [
+   "length",
+   "rtype",
+   "publisher_id",
+   "instrument_id",
+   "ts_event",
+   "order_id",
+   "price",
+   "size",
+   "flags",
+   "channel_id",
+   "action",
+   "side",
+   "ts_recv",
+   "ts_in_delta",
+   "sequence"
+  ],
+  "decode_secs": 9.4,
+  "session_files": 22,
+  "total_files": 26
+ },
+ "rows": 65688,
+ "sha256": "df64af132b1449115ad995708101063d86a4a24e51c9fc909ff6e66f4da89559",
+ "sha256_uncompressed_csv": "ec8c7cb815bcf5931adcf7f9acce88a66a4095fa208cb24788f139c4627c4c2c",
+ "encoding": "utf-8, LF, deterministic gzip (mtime=0, no stored filename), so the digest is a function of the rows and a rebuild reproduces it byte for byte (D550)",
+ "coverage": {
+  "CL": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "ES": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "GC": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "NQ": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "RTY": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "YM": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "ZB": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  },
+  "ZN": {
+   "rows": 8211,
+   "days": 21,
+   "first": "2026-08-11",
+   "last": "2026-09-09"
+  }
+ },
+ "gates": {
+  "G7": "every emitted minute is LIVE -- the front contract printed at least one message in it. This is the rule that excludes an early-close day, and it is checked before the book gates so that a stale book is never read as a wide one.",
+  "G1": "every emitted minute has a finite mid",
+  "G2": "every emitted minute has a strictly positive spread (65,688 rows) -- this is what tests the T/F fill convention, see the module docstring",
+  "G3": "a minute whose spread exceeds 10 ticks -- both best quotes outside the band -- reports EXACTLY zero depth on both sides, because nothing rests between the best bid and the best ask. 7 of 65688 rows are in that state, and they are enumerated in band_empty_minutes.",
+  "G4": "depth within +/-5 ticks >= the best quote's own size on both sides, on every minute whose best quotes are inside the band",
+  "band_empty_minutes": [
+   {
+    "root": "GC",
+    "day": "2026-08-28",
+    "minute_et": "10:00",
+    "mid": 4656.450000000001,
+    "spread_ticks": 21.0
+   },
+   {
+    "root": "GC",
+    "day": "2026-09-01",
+    "minute_et": "10:00",
+    "mid": 4413.700000000001,
+    "spread_ticks": 12.0
+   },
+   {
+    "root": "NQ",
+    "day": "2026-08-21",
+    "minute_et": "09:45",
+    "mid": 29321.750000000004,
+    "spread_ticks": 12.0
+   },
+   {
+    "root": "NQ",
+    "day": "2026-08-28",
+    "minute_et": "10:00",
+    "mid": 29630.625000000004,
+    "spread_ticks": 11.0
+   },
+   {
+    "root": "YM",
+    "day": "2026-08-14",
+    "minute_et": "10:00",
+    "mid": 53928.0,
+    "spread_ticks": 12.0
+   },
+   {
+    "root": "YM",
+    "day": "2026-08-19",
+    "minute_et": "14:00",
+    "mid": 53519.5,
+    "spread_ticks": 11.0
+   },
+   {
+    "root": "YM",
+    "day": "2026-09-01",
+    "minute_et": "10:00",
+    "mid": 52990.0,
+    "spread_ticks": 12.0
+   }
+  ],
+  "G5": "every root has exactly 8211 rows (391 minutes x 21 days)",
+  "G6": "ES is the deepest EQUITY-INDEX root within +/-5 ticks, in dollars. NOT the deepest of the eight: ZN and ZB are far deeper on both lots and notional, because a +/-5-tick band is a different economic width on every root (see band_bp).",
+  "median_two_sided_lots_by_root": {
+   "ZN": 74717.0,
+   "ZB": 19581.0,
+   "ES": 701.0,
+   "RTY": 169.0,
+   "NQ": 42.0,
+   "YM": 48.0,
+   "GC": 26.0,
+   "CL": 92.0
+  },
+  "median_two_sided_usd_by_root": {
+   "ZN": 8071441523.4375,
+   "ZB": 2135690296.875,
+   "ES": 270252400.00000006,
+   "RTY": 25459985.000000004,
+   "NQ": 24691380.000000004,
+   "YM": 12791040.0,
+   "GC": 11673350.0,
+   "CL": 7953030.000000001
+  },
+  "band_half_width_bp_by_root": {
+   "CL": 5.9,
+   "ES": 1.62,
+   "GC": 1.12,
+   "NQ": 0.42,
+   "RTY": 1.66,
+   "YM": 0.93,
+   "ZB": 14.34,
+   "ZN": 7.2
+  },
+  "rows": 65688,
+  "days": 21,
+  "minutes_per_day": 391
+ },
+ "all_gates_pass": true,
+ "workers": 6,
+ "wall_s": 610.6,
+ "holdout": "BOOK STATE ONLY -- no return, no signal, no trade. The pull spans 2026-08-11..2026-09-09, inside the deposit's sealed vault window (2025-03-01..2026-09-18), which the principal has NOT reconciled with this repository's 2024-01-01 holdout. Nothing here may score anything until that reconciliation is in writing (D604)."
+}

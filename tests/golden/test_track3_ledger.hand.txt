@@ -1,0 +1,265 @@
+Golden-master hand ledger for the Track 3 logging layer (D605).
+Companion to test_track3_ledger.py -- every number below has a matching assertion there.
+
+Per CONTRIBUTING.md the arithmetic here was worked BEFORE the assertions were written and
+without importing backtest_framework. EVERY FILL, PRICE, QUANTITY AND TIMESTAMP BELOW IS
+SYNTHETIC. No order has ever been sent from this repository, no broker adapter exists, and
+no real fill has ever been recorded -- the numbers are chosen to be exact in binary so the
+golden can assert `==`, not to resemble a market.
+
+The instrument is MES (tick 0.25 = 2^-2, usd_per_point 5.00, tick_usd 1.25). Every price is
+an integer number of ticks above 4000, so nothing here depends on a rounding convention in
+the reader's calculator.
+
+
+THE SIGN CONVENTION, WHICH IS THE WHOLE THING
+================================================================================
+Inherited verbatim from scripts/d364_slippage.py, the only fill-log schema this repository
+had before today:
+
+    POSITIVE = THE FILL WAS WORSE FOR THE STRATEGY.
+
+ENTRY.  A long buys: a HIGHER buy is worse.   shortfall = +(fill - model) / tick
+        A short sells: a LOWER sell is worse. shortfall = -(fill - model) / tick
+        i.e.  shortfall_ticks = side_sign * (fill_px - model_fill_px) / tick_points
+              with side_sign = +1 for a long and -1 for a short.
+
+EXIT.   An exit is the OPPOSITE trade, so the sign inverts:
+              exit_shortfall_ticks = -side_sign * (exit_fill_px - model_exit_px) / tick_points
+        A long's exit SELLS -- filled lower than modelled is worse (positive).
+        A short's exit BUYS -- filled higher than modelled is worse (positive).
+
+        d364_slippage's SIDE_SIGN = {"short_entry": -1.0, "cover_exit": +1.0} is exactly
+        these two rules for the one direction that file trades. The generalisation above
+        agrees with it on both of its cases.
+
+Ledger unit test 35 -- "a long filled 2 ticks above the model price records +2 ticks of
+shortfall; a short filled 2 ticks below records +2" -- is trades T2 and T4 below.
+
+
+THE HAND LOG: SIX TRADES, THREE LONG, THREE SHORT, ONE SIMULATED
+================================================================================
+model "mhand", stage "A", frozen_sha256 "0"*64, root MES, size_label "micro",
+venue "SYNTHETIC". Date 2026-10-01 throughout; timestamps are naive (the aware case is a
+unit test, not a golden one). qty is whole contracts.
+
+ id  side   qty  signal_ts  order_sent  fill_ts    model_fill_px  fill_px   simulated
+ T1  long    1   14:30:00   14:30:10    14:31:00       5000.00    5000.25   False
+ T2  long    2   14:40:00   14:40:30    14:42:00       5010.00    5010.50   False
+ T3  long    1   14:50:00   14:50:05    14:50:30       4990.00    4989.75   False
+ T4  short   1   15:00:00   15:00:10    15:06:00       5020.00    5019.50   False
+ T5  short   3   15:10:00   15:10:15    15:17:00       5030.00    5029.25   False
+ T6  short   1   15:20:00   15:20:20    15:28:00       5040.00    5040.25   True
+
+Every row satisfies  signal_ts <= order_sent_ts <= fill_ts,  which is what `append` checks.
+
+EXITS.  T1 and T4 carry exits; T3, T5, T6 are still open and their exit fields are blank.
+T2 carries an exit too, so that two longs and one short are closed.
+
+ id  exit_signal_ts  exit_fill_ts  exit_fill_px   model_exit_px (supplied by the caller)
+ T1  14:45:00        14:46:00      5005.00        5005.25
+ T2  14:55:00        14:56:00      5014.00        5014.00
+ T4  15:20:00        15:21:00      5016.25        5016.00
+
+THE SCHEMA CARRIES NO MODEL EXIT PRICE. The deposit's log list is "signal time,
+model-intended fill price (per Section 7.3), order sent time, fill time, actual fill price,
+exit details" -- one model price, for the ENTRY. So `model_exit_px` is an ARGUMENT to the
+exit-shortfall function, not a column, and the exit shortfall cannot be computed from the
+log alone. That is a gap in the deposit, recorded rather than papered over.
+
+
+1. IMPLEMENTATION SHORTFALL, PER ROW
+================================================================================
+shortfall_ticks = side_sign * (fill_px - model_fill_px) / 0.25
+shortfall_usd   = shortfall_ticks * tick_usd * qty = shortfall_ticks * 1.25 * qty
+
+ T1  long   +(5000.25 - 5000.00) / 0.25 = +0.25/0.25 = +1     usd = +1 * 1.25 * 1 =  +1.25
+ T2  long   +(5010.50 - 5010.00) / 0.25 = +0.50/0.25 = +2     usd = +2 * 1.25 * 2 =  +5.00
+ T3  long   +(4989.75 - 4990.00) / 0.25 = -0.25/0.25 = -1     usd = -1 * 1.25 * 1 =  -1.25
+ T4  short  -(5019.50 - 5020.00) / 0.25 = -(-2)      = +2     usd = +2 * 1.25 * 1 =  +2.50
+ T5  short  -(5029.25 - 5030.00) / 0.25 = -(-3)      = +3     usd = +3 * 1.25 * 3 = +11.25
+ T6  short  -(5040.25 - 5040.00) / 0.25 = -(+1)      = -1     usd = -1 * 1.25 * 1 =  -1.25
+
+T2 is ledger 35's long: filled 2 ticks above the model price, +2 ticks of shortfall.
+T4 is ledger 35's short: filled 2 ticks below the model price, +2 ticks of shortfall.
+T3 and T6 are the favourable fills, one on each side, and they are NEGATIVE -- a shortfall
+that can only be positive is a sign convention nobody has tested.
+
+    sum of ticks = 1 + 2 - 1 + 2 + 3 - 1 = 6        mean over 6 trades = 1.0
+    sum of usd   = 1.25 + 5.00 - 1.25 + 2.50 + 11.25 - 1.25 = 17.50
+
+The usd total is NOT six times the mean tick times 1.25, because qty differs per row: the
+mean is a mean of TICKS (the unit the deposit states) and the dollars carry the size.
+
+
+2. EXIT SHORTFALL
+================================================================================
+exit_shortfall_ticks = -side_sign * (exit_fill_px - model_exit_px) / 0.25
+
+ T1  long   side_sign = +1:  -(+1) * (5005.00 - 5005.25) / 0.25 = -(-1) = +1
+            sold a tick BELOW model: worse.   usd = +1 * 1.25 * 1 = +1.25
+ T2  long   -(+1) * (5014.00 - 5014.00) / 0.25 = 0       exactly at the model price
+            usd = 0.0
+ T4  short  side_sign = -1, so the leading minus becomes a PLUS:
+            -(-1) * (5016.25 - 5016.00) / 0.25 = +1   bought a tick ABOVE model: worse
+            usd = +1 * 1.25 * 1 = +1.25
+     and against a model exit of 5016.50 instead:
+            -(-1) * (5016.25 - 5016.50) / 0.25 = -1   bought a tick BELOW model: BETTER
+            usd = -1 * 1.25 * 1 = -1.25
+
+T5 is open, so asking for its exit shortfall RAISES. An exit shortfall computed from a
+missing exit price is the D48 failure: a number that is wrong rather than absent.
+
+
+3. LATENCY, IN BARS OF 60 SECONDS
+================================================================================
+latency_bars = (fill_ts - signal_ts) / 60 s
+
+ T1  14:31:00 - 14:30:00 =  60 s = 1.0 bars
+ T2  14:42:00 - 14:40:00 = 120 s = 2.0
+ T3  14:50:30 - 14:50:00 =  30 s = 0.5
+ T4  15:06:00 - 15:00:00 = 360 s = 6.0      beyond t0+5
+ T5  15:17:00 - 15:10:00 = 420 s = 7.0      beyond t0+5
+ T6  15:28:00 - 15:20:00 = 480 s = 8.0      beyond t0+5
+
+sorted: 0.5, 1.0, 2.0, 6.0, 7.0, 8.0          (indices 0..5)
+
+    min = 0.5
+    max = 8.0
+
+QUANTILE CONVENTION: NEAREST RANK, computed in INTEGER arithmetic.
+    rank(num, den, n) = ceil(num * n / den) = (num * n + den - 1) // den,  index = rank - 1
+    p50 = (1, 2):   (1*6 + 1) // 2    =   7 // 2  = 3  -> index 2 -> 2.0
+    p95 = (19, 20): (19*6 + 19) // 20 = 133 // 20 = 6  -> index 5 -> 8.0
+
+Nearest rank rather than a linear-interpolation quantile ON PURPOSE: 0.95 is not a binary
+fraction, so `0.95 * (n - 1)` is 4.750000000000001 rather than 4.75 at n = 6 and an
+interpolated p95 would depend on the last bit of a constant. The integer form has no such
+dependence, and every reported quantile is a value that actually occurred. At n = 6 the p95
+IS the maximum by construction; that is a property of six observations, not of the code.
+
+    share_beyond_t0_plus_5 = 3 / 6 = 0.5        (strictly greater than 5.0: T4, T5, T6)
+    n_beyond = 3
+
+Three of six fills arriving after t0+5 is not a plausible live log. It is chosen so the
+share is exactly representable; 1/6 is not.
+
+
+4. THE 50-TRADE COST REVIEW
+================================================================================
+mean shortfall over the first n rows, against the CostStack slippage assumption per fill,
+both in TICKS. ratio = mean / assumption; the deposit's trigger is "exceeds ... by more
+than 50%", i.e. ratio > 1.5 strictly.
+
+mean_shortfall_ticks over all six rows = 6 / 6 = 1.0  (section 1)
+
+ case  assumption  ratio = 1.0 / assumption  ratio > 1.5   action
+   A      0.5              2.0                  True       update CostStack via doc edit
+                                                           and re-run all Track 1 results
+   B      2.0              0.5                  False      none
+   C   n required = 50, only 6 rows logged -> INSUFFICIENT: no mean, no ratio, no verdict
+
+Case C is the one that matters. A review that returns "within budget" on six trades is a
+verdict manufactured out of an empty sample, so `cost_review` with the deposit's n = 50 and
+6 rows returns sufficient=False with mean, ratio and the flag all absent.
+
+THE ACTION IS A FLAG, NEVER AN EDIT. Nothing in this layer writes futures_costs.json, a
+CostStack, or a doc. The deposit says "update CostStack via doc edit", and a doc edit is a
+human act.
+
+WHAT "THE CostStack SLIPPAGE ASSUMPTION" IS TAKEN TO MEAN. The deposit never defines it.
+Here it is, per fill and in ticks:
+    assumption = crossing_ticks_per_round_trip / 2 + 1
+the first term being TickCrossing's charge for one fill (D591 charges half a round trip per
+fill) and the second being Section 7.3's one adverse tick on the primary entry fill. For
+MNQ on the d508_exec line that is 2.1342422122227602 / 2 + 1 = 2.0671211061113803, and for
+NQ full size 3.0454132867054593 / 2 + 1 = 2.5227066433527296. Halving a double is lossless,
+so the only rounding is the addition of 1.
+
+
+5. THE TRIAL COUNTER: FUTILITY AT N = 100 (LEDGER UNIT TEST 36)
+================================================================================
+Rule (13A.4): target N = 300; futility looks at N = 100 and N = 200 -- stop if the mean net
+return per trade < 0 AND t < -1. Efficacy only at N = 300: mean net > 0 with t >= 2.
+
+t = mean / (sd / sqrt(n)), sd with ddof = 1.
+
+A SERIES WHOSE t IS EXACT IN BINARY. Take n values: ONE outlier at m - (n-1)d and (n-1)
+values at m + d.
+    sum          = (m - (n-1)d) + (n-1)(m + d) = n*m           -> mean = m
+    deviations   = -(n-1)d once, +d (n-1) times
+    SS           = (n-1)^2 d^2 + (n-1) d^2 = (n-1) n d^2
+    sd^2         = SS / (n - 1) = n d^2      -> sd = d * sqrt(n)
+    t            = m * sqrt(n) / (d * sqrt(n)) = m / d
+At n = 100, sqrt(n) = 10 exactly, so sd = 10d is exact and so is t.
+
+CASE A -- mean < 0 AND t < -1 -> STOP.
+    m = -0.125, d = 0.0625.  One value -0.125 - 99*0.0625 = -0.125 - 6.1875 = -6.3125,
+    then 99 values of -0.125 + 0.0625 = -0.0625.  The outlier is added FIRST.
+    sum   = -6.3125 + 99 * (-0.0625) = -6.3125 - 6.1875 = -12.5
+    mean  = -12.5 / 100 = -0.125
+    SS    = (-6.1875)^2 + 99 * (0.0625)^2 = 38.28515625 + 0.38671875 = 38.671875
+    sd^2  = 38.671875 / 99 = 0.390625      sd = 0.625 = 10 * 0.0625
+    t     = -0.125 / (0.625 / 10) = -0.125 / 0.0625 = -2.0
+    n = 100 is a look, mean < 0, t = -2.0 < -1   ->  futility() is True
+
+    AT n = 99, WITH THE SAME SERIES ONE VALUE SHORT (the outlier plus 98 of -0.0625):
+    sum = -6.3125 - 6.125 = -12.4375, mean = -12.4375 / 99 = -199/1584 = -0.1256313131... < 0
+    SS  = (-6.1868686868...)^2 + 98 * (0.0631313131...)^2
+        = 38.27734... + 0.39058... = 38.66792929...
+    sd^2 = 38.66792929... / 98 = 0.394570707...,  sd = 0.628148634...
+    t    = -0.1256313131 * sqrt(99) / 0.628148634 = -1.99      (sqrt(99) = 9.94987437..., NOT 10)
+    mean < 0 and t < -1 and STILL  futility() is False, because 99 is not a look.
+    (Only the verdict is pinned in the golden; -199/1584 and -1.99 are not binary fractions
+    and are quoted to show the two conditions genuinely hold there.)
+
+CASE B -- mean < 0 but t > -1 -> DO NOT STOP.
+    m = -0.0625, d = 0.25.  One value -0.0625 - 24.75 = -24.8125, then 99 of 0.1875.
+    sum   = -24.8125 + 18.5625 = -6.25        mean = -0.0625
+    SS    = 24.75^2 + 99 * 0.0625 = 612.5625 + 6.1875 = 618.75
+    sd^2  = 618.75 / 99 = 6.25                sd = 2.5 = 10 * 0.25
+    t     = -0.0625 / (2.5 / 10) = -0.0625 / 0.25 = -0.25
+    -0.25 > -1  ->  futility() is False
+
+CASE C -- mean > 0 -> DO NOT STOP, whatever t is.
+    m = +0.125, d = 0.0625.  One value 0.125 - 6.1875 = -6.0625, then 99 of 0.1875.
+    sum   = -6.0625 + 18.5625 = 12.5          mean = +0.125
+    SS    = 6.1875^2 + 99 * 0.0625^2 = 38.28515625 + 0.38671875 = 38.671875
+    sd    = 0.625                             t = +0.125 / 0.0625 = +2.0
+    mean > 0  ->  futility() is False   (the AND is what makes this case negative)
+
+    Case C is ALSO the shape of the trap in ledger 36: t = +2.0 is |t| > 1, and a rule
+    written as "|t| > 1" would stop a winning book. The rule is t < -1, signed.
+
+
+6. THE TRIAL COUNTER: EFFICACY AT N = 300
+================================================================================
+Same construction at n = 300: m = 0.15625 (= 5/32), d = 0.0625.
+    one value 0.15625 - 299 * 0.0625 = 0.15625 - 18.6875 = -18.53125
+    then 299 values of 0.15625 + 0.0625 = 0.21875
+    sum  = -18.53125 + 299 * 0.21875 = -18.53125 + 65.40625 = 46.875
+    mean = 46.875 / 300 = 0.15625                                    exact
+    sd   = d * sqrt(300) = 0.0625 * 17.32050807568877... = 1.0825317547305483...
+    t    = m / d = 0.15625 / 0.0625 = 2.5                            exact in ALGEBRA only
+
+    sqrt(300) is irrational, so the COMPUTED sd and t each carry a rounding; the golden
+    pins mean and every verdict with `==` and t to 1e-12 relative. 2.5 >= 2 and the mean is
+    positive, so efficacy() is True at n = 300 -- and False at n = 299 and at n = 301,
+    because the ledger's efficacy decision exists at exactly one sample size.
+
+    THE SAME SERIES WITH counts_as_efficacy=False GIVES efficacy() = False.
+    That is INDEX_REWEIGHT_FLOW_PREREG.md unit test 28: "Track 3 January trades are never
+    counted as independent efficacy evidence." The index model's five execution days a year
+    cannot reach N = 300 in any useful time, so its counter is constructed with the flag
+    off and carries the reason string; the futility look is unaffected, because a January
+    book can still be shown to be losing.
+
+
+7. WHAT IS NOT IN THIS FILE
+================================================================================
+No broker adapter, no scheduler, no order router, and no real fill. Every price above was
+typed by hand. The ONE thing a future automated executor must supply that a backtest never
+produces is the four timestamps -- signal, order sent, fill, and the exit pair -- together
+with the model-intended price AS AT THE SIGNAL, not recomputed afterwards. A model fill
+price recomputed after the fact makes the shortfall in section 1 a measurement of the
+recomputation.

@@ -37,6 +37,21 @@ measured fails at factory time rather than charging a neighbouring root's spread
 two forms raises: a config that carried both would hash as one thing and build as another,
 which is the drift this module exists to close.
 
+The futures IMPACT line (D604) is the size-dependent term the round trip does not model, and it
+is table-resolved only — there is no explicit form:
+
+    {"type": "futures_sqrt_impact", "root": "ES"}                       # the default line
+    {"type": "futures_sqrt_impact", "root": "ES", "line": "d511",
+                                    "coefficient": 0.7}                 # a named measurement
+
+`root` is a parent root as `data/futures_impact_params.json` keys them (the 36 breadth roots);
+`line` names WHICH measurement of (ADV, σ) is charged — `day1m_2016_2023` by default, because it
+is the only one measured in sample. `coefficient` defaults to the ledger's fixed **Y = 0.7**
+(SETTLEMENT_FLOW_LEDGER_PREREG.md 5.3, decision D6), which is where this brick and `sqrt_impact`
+(Y ≈ 1) deliberately differ. Writing an ADV and a σ into the config itself is refused on purpose:
+they would be two numbers with no measurement window and no provenance, which is exactly what the
+artefact exists to carry.
+
 Data-dependent bricks (sqrt_impact, dividend_flow) are built against a
 `StackDataContext` derived from the snapshot, so config + snapshot data fully
 determine the stack. The sqrt_impact `calibration` key records WHOSE data the
@@ -61,6 +76,7 @@ from ..costs.futures_bricks import (
     FuturesRoundTrip,
     TickCrossing,
 )
+from ..costs.futures_impact import LEDGER_Y, FuturesImpactError, FuturesSqrtImpact
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions, as_declared_dividends
@@ -136,6 +152,13 @@ BRICK_KEYS: dict[str, frozenset[str]] = {
     "futures_round_trip": frozenset(
         {"type", "commission_rt_usd", "crossing_ticks_rt", "root", "line"}
     ),
+    # D604. The futures square-root impact term (SETTLEMENT_FLOW_LEDGER_PREREG.md 5.3). Always
+    # table-resolved: `root` picks the instrument and the optional `line` picks WHICH measurement
+    # of (ADV, sigma) is charged, exactly as `futures_round_trip`'s `line` picks a crossing census.
+    # There is no explicit form -- an ADV and a sigma written into a config would be two numbers
+    # with no window and no provenance attached, which is the thing data/futures_impact_params.json
+    # exists to stop.
+    "futures_sqrt_impact": frozenset({"type", "root", "coefficient", "line"}),
 }
 
 
@@ -282,6 +305,41 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
         )
 
     registry.register("futures_round_trip", _build_futures_round_trip)
+
+    def _build_futures_sqrt_impact(c: dict) -> FuturesSqrtImpact:
+        """D604's futures impact term. Table-resolved, and only table-resolved.
+
+        Like `futures_round_trip` this factory ignores `context`: an impact parameter is a
+        MEASUREMENT with a window and a provenance, not something calibrated from the study's own
+        snapshot the way `sqrt_impact` is. That difference is why there is no `calibration` key
+        here -- the line name IS the calibration, and it is recorded in
+        `data/futures_impact_params.json` rather than reconstructed from whatever slice the
+        caller happened to pass.
+
+        `coefficient` defaults to the ledger's fixed Y = 0.7 (5.3, decision D6), not to
+        `sqrt_impact`'s 1.0.
+        """
+        root = c.get("root")
+        if not isinstance(root, str):
+            raise ConfigError(
+                "futures_sqrt_impact config needs a string 'root'; the impact parameters are "
+                f"table-resolved and there is no explicit form, got {type(root).__name__}"
+            )
+        line = c.get("line")
+        if line is not None and not isinstance(line, str):
+            raise ConfigError(
+                f"futures_sqrt_impact config key 'line' must be a string, got {type(line).__name__}"
+            )
+        try:
+            return FuturesSqrtImpact.from_table(
+                root,
+                line=line,
+                coefficient=_optional_numeric(c, "coefficient", LEDGER_Y, "futures_sqrt_impact"),
+            )
+        except FuturesImpactError as exc:
+            raise ConfigError(f"futures_sqrt_impact: {exc}") from exc
+
+    registry.register("futures_sqrt_impact", _build_futures_sqrt_impact)
     return registry
 
 

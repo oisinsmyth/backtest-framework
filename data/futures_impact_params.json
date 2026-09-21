@@ -1,0 +1,2460 @@
+{
+ "record": "D604",
+ "builder": "scripts/futures_impact_table.py",
+ "purpose": "parameters for costs/futures_impact.py:FuturesSqrtImpact -- V_d and sigma_d of SETTLEMENT_FLOW_LEDGER_PREREG.md 5.3",
+ "formula": "I = Y * sigma_d * sqrt(|Q_rem| / V_d) * P * sign(Q_rem)   (price units, 5.3)",
+ "coefficient_Y": 0.7,
+ "default_line": "day1m_2016_2023",
+ "why_default": "day1m_2016_2023 is the only line measured IN SAMPLE. d511 and breadth_meta are measured on 2025-09..2026-09, inside the deposit's sealed vault window (2025-03-01..2026-09-18) and after this repository's 2024-01-01 holdout; a study reaching for one is making a claim this table cannot make for it.",
+ "lines": {
+  "d511": "ADV in contracts and a session sigma in dollars per FULL contract, 9 roots, 2025-09-11..2026-09-10, from data/d511_trade_count.json; price level from the breadth meta's last bar",
+  "breadth_meta": "day-session sigma and notional, 36 roots, from data/fixtures/fut_breadth_hourly.meta.json. NO VOLUME: the line carries no adv_contracts and cannot build a brick",
+  "day1m_2016_2023": "ADV and sigma computed from data/fixtures/fut_day1m.parquet over front-contract sessions 2016-01-04..2023-12-29, 36 roots"
+ },
+ "complete_lines": [
+  "d511",
+  "day1m_2016_2023"
+ ],
+ "multiplier_source": "data/fixtures/fut_breadth_hourly.meta.json: tick_usd_full_contract / tick_price_units",
+ "multiplier_disagreements": [
+  {
+   "root": "HE",
+   "breadth_meta_usd_per_point": 400.0,
+   "future_from_specs_usd_per_point": 40000.0,
+   "ratio": 100.0,
+   "scaling_divisor": 100.0,
+   "scaling_reason": "percent/cents quote, notional $29,770 (undivided $2,977,000)"
+  },
+  {
+   "root": "LE",
+   "breadth_meta_usd_per_point": 400.0,
+   "future_from_specs_usd_per_point": 40000.0,
+   "ratio": 100.0,
+   "scaling_divisor": 100.0,
+   "scaling_reason": "percent/cents quote, notional $85,010 (undivided $8,501,000)"
+  },
+  {
+   "root": "SR3",
+   "breadth_meta_usd_per_point": 2500.0,
+   "future_from_specs_usd_per_point": 25.0,
+   "ratio": 0.01,
+   "scaling_divisor": 1.0,
+   "scaling_reason": "native units, notional $239,150"
+  },
+  {
+   "root": "ZC",
+   "breadth_meta_usd_per_point": 50.0,
+   "future_from_specs_usd_per_point": 5000.0,
+   "ratio": 100.0,
+   "scaling_divisor": 100.0,
+   "scaling_reason": "percent/cents quote, notional $25,300 (undivided $2,530,000)"
+  },
+  {
+   "root": "ZL",
+   "breadth_meta_usd_per_point": 600.0000000000001,
+   "future_from_specs_usd_per_point": 60000.00000000001,
+   "ratio": 100.0,
+   "scaling_divisor": 100.0,
+   "scaling_reason": "percent/cents quote, notional $41,070 (undivided $4,107,000)"
+  },
+  {
+   "root": "ZS",
+   "breadth_meta_usd_per_point": 50.0,
+   "future_from_specs_usd_per_point": 5000.0,
+   "ratio": 100.0,
+   "scaling_divisor": 100.0,
+   "scaling_reason": "percent/cents quote, notional $61,438 (undivided $6,143,750)"
+  },
+  {
+   "root": "ZW",
+   "breadth_meta_usd_per_point": 50.0,
+   "future_from_specs_usd_per_point": 5000.0,
+   "ratio": 100.0,
+   "scaling_divisor": 100.0,
+   "scaling_reason": "percent/cents quote, notional $37,650 (undivided $3,765,000)"
+  }
+ ],
+ "why_multiplier_disagreements": "instruments/future.py:Future.from_specs falls back to data/fut_specs_from_definition.json, whose tick_usd is the raw mpi*display_factor*uom_qty with no allowance for a cents or percent-of-par quote. All seven have known_tick_usd: null. RECORDED, NOT RESOLVED -- the fix belongs in the spec file.",
+ "adv_ratio_d511_over_day1m": {
+  "6E": 1.7151154744815469,
+  "CL": 0.7392746888614175,
+  "ES": 1.1105067362035363,
+  "GC": 1.618691247940556,
+  "NQ": 1.4471646792712447,
+  "RTY": 1.358596172653718,
+  "YM": 0.7208925384019521,
+  "ZB": 2.2262460549238,
+  "ZN": 2.110419726687844
+ },
+ "roots": {
+  "6A": {
+   "size": {
+    "sized_as": "6A",
+    "has_micro": false,
+    "tick_usd_full_contract": 5.0,
+    "tick_usd_sized": 5.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 100000.0,
+    "usd_per_point_sized": 100000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 317.8442611285495,
+     "sigma_usd_at_sized_size": 317.8442611285495,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 71630.0,
+     "sigma_fraction": 0.004437306451606163,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 38246.018649193546,
+     "sigma_usd_per_contract": 283.83808125054105,
+     "notional_usd": 71935.94002016129,
+     "sigma_fraction": 0.003945706154267124,
+     "sessions": 1984,
+     "mean_move_usd": 3.833165322580581,
+     "usd_per_point": 100000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6A.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "6B": {
+   "size": {
+    "sized_as": "6B",
+    "has_micro": false,
+    "tick_usd_full_contract": 6.250000000000001,
+    "tick_usd_sized": 6.250000000000001,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 62500.00000000001,
+    "usd_per_point_sized": 62500.00000000001,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 277.88775578973144,
+     "sigma_usd_at_sized_size": 277.88775578973144,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 84612.50000000001,
+     "sigma_fraction": 0.003284239985696338,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 45682.988911290326,
+     "sigma_usd_per_contract": 290.57851393592784,
+     "notional_usd": 81272.57119455647,
+     "sigma_fraction": 0.003575357708818131,
+     "sessions": 1984,
+     "mean_move_usd": 8.467741935484016,
+     "usd_per_point": 62500.00000000001,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6B.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "6C": {
+   "size": {
+    "sized_as": "6C",
+    "has_micro": false,
+    "tick_usd_full_contract": 5.0,
+    "tick_usd_sized": 5.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 100000.0,
+    "usd_per_point_sized": 100000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 271.29702461277833,
+     "sigma_usd_at_sized_size": 271.29702461277833,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 72755.0,
+     "sigma_fraction": 0.003728912440557739,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 39951.09173387097,
+     "sigma_usd_per_contract": 250.77834481792704,
+     "notional_usd": 76363.1779233871,
+     "sigma_fraction": 0.0032840218497654124,
+     "sessions": 1984,
+     "mean_move_usd": 8.10231854838715,
+     "usd_per_point": 100000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6C.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "6E": {
+   "size": {
+    "sized_as": "M6E",
+    "has_micro": true,
+    "tick_usd_full_contract": 6.250000000000001,
+    "tick_usd_sized": 1.25,
+    "size_ratio_full_over_sized": 5.000000000000001,
+    "usd_per_point_full": 125000.00000000001,
+    "usd_per_point_sized": 25000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 147666.25291828794,
+     "sigma_usd_per_contract": 511.88894774002114,
+     "notional_usd": 148062.50000000003,
+     "sigma_fraction": 0.0034572491193922907,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=6E].v_bar",
+      "data/d511_trade_count.json#table[root=6E].sigma_sess",
+      "data/d511_trade_count.json#table[root=6E].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 490.12560126470123,
+     "sigma_usd_at_sized_size": 98.02512025294023,
+     "size_ratio_full_over_sized": 5.000000000000001,
+     "notional_usd": 148062.50000000003,
+     "sigma_fraction": 0.0033102615534973483,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 86096.97429435483,
+     "sigma_usd_per_contract": 430.9592116498301,
+     "notional_usd": 140869.9565272178,
+     "sigma_fraction": 0.0030592698562135466,
+     "sessions": 1984,
+     "mean_move_usd": 6.587071572580592,
+     "usd_per_point": 125000.00000000001,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6E.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "6J": {
+   "size": {
+    "sized_as": "6J",
+    "has_micro": false,
+    "tick_usd_full_contract": 6.250000000000001,
+    "tick_usd_sized": 6.250000000000001,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 12500000.0,
+    "usd_per_point_sized": 12500000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 368.6886058135111,
+     "sigma_usd_at_sized_size": 368.6886058135111,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 84256.25000000001,
+     "sigma_fraction": 0.004375801270689249,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 53511.785786290326,
+     "sigma_usd_per_contract": 351.94923803319483,
+     "notional_usd": 109011.67149697582,
+     "sigma_fraction": 0.0032285463859065638,
+     "sessions": 1984,
+     "mean_move_usd": -5.188382056451812,
+     "usd_per_point": 12500000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6J.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "6S": {
+   "size": {
+    "sized_as": "6S",
+    "has_micro": false,
+    "tick_usd_full_contract": 6.250000000000001,
+    "tick_usd_sized": 6.250000000000001,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 125000.00000000001,
+    "usd_per_point_sized": 125000.00000000001,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 470.5206665671055,
+     "sigma_usd_at_sized_size": 470.5206665671055,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 155956.25000000003,
+     "sigma_fraction": 0.0030170042339893745,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 11026.447076612903,
+     "sigma_usd_per_contract": 392.2468213011605,
+     "notional_usd": 131397.37273185485,
+     "sigma_fraction": 0.002985195313620358,
+     "sessions": 1984,
+     "mean_move_usd": 10.08064516129043,
+     "usd_per_point": 125000.00000000001,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.6S.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "BTC": {
+   "size": {
+    "sized_as": "MBT",
+    "has_micro": true,
+    "tick_usd_full_contract": 25.0,
+    "tick_usd_sized": 0.5,
+    "size_ratio_full_over_sized": 50.0,
+    "usd_per_point_full": 5.0,
+    "usd_per_point_sized": 0.1,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 5361.2623031170115,
+     "sigma_usd_at_sized_size": 107.22524606234023,
+     "size_ratio_full_over_sized": 50.0,
+     "notional_usd": 397600.0,
+     "sigma_fraction": 0.01348406011850355,
+     "n_sessions": 2733,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2017-12-18",
+      "2023-12-29"
+     ],
+     "adv_contracts": 3245.3840330351,
+     "sigma_usd_per_contract": 3427.04087054384,
+     "notional_usd": 109251.08396421198,
+     "sigma_fraction": 0.03136848391972436,
+     "sessions": 1453,
+     "mean_move_usd": -67.63592567102553,
+     "usd_per_point": 5.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BTC.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "BZ": {
+   "size": {
+    "sized_as": "BZ",
+    "has_micro": false,
+    "tick_usd_full_contract": 10.000000000000002,
+    "tick_usd_sized": 10.000000000000002,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 1000.0000000000001,
+    "usd_per_point_sized": 1000.0000000000001,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1159.781010353275,
+     "sigma_usd_at_sized_size": 1159.781010353275,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 73340.00000000001,
+     "sigma_fraction": 0.015813757981364533,
+     "n_sessions": 4968,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 8482.552631578947,
+     "sigma_usd_per_contract": 1160.1523222515407,
+     "notional_usd": 66322.14210526318,
+     "sigma_fraction": 0.01749268472677202,
+     "sessions": 1900,
+     "mean_move_usd": -39.6210526315789,
+     "usd_per_point": 1000.0000000000001,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.BZ.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "CL": {
+   "size": {
+    "sized_as": "MCL",
+    "has_micro": true,
+    "tick_usd_full_contract": 10.000000000000002,
+    "tick_usd_sized": 1.0,
+    "size_ratio_full_over_sized": 10.000000000000002,
+    "usd_per_point_full": 1000.0000000000001,
+    "usd_per_point_sized": 100.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 196601.82879377433,
+     "sigma_usd_per_contract": 2903.806396530643,
+     "notional_usd": 65910.00000000001,
+     "sigma_fraction": 0.04405714453847128,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=CL].v_bar",
+      "data/d511_trade_count.json#table[root=CL].sigma_sess",
+      "data/d511_trade_count.json#table[root=CL].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1212.0131648855938,
+     "sigma_usd_at_sized_size": 121.20131648855937,
+     "size_ratio_full_over_sized": 10.000000000000002,
+     "notional_usd": 65910.00000000001,
+     "sigma_fraction": 0.018388911620172865,
+     "n_sessions": 5049,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 265938.80699008866,
+     "sigma_usd_per_contract": 1179.55665157934,
+     "notional_usd": 62040.23474178405,
+     "sigma_fraction": 0.019012768995616155,
+     "sessions": 1917,
+     "mean_move_usd": -23.281168492435988,
+     "usd_per_point": 1000.0000000000001,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.CL.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ES": {
+   "size": {
+    "sized_as": "MES",
+    "has_micro": true,
+    "tick_usd_full_contract": 12.5,
+    "tick_usd_sized": 1.25,
+    "size_ratio_full_over_sized": 10.0,
+    "usd_per_point_full": 50.0,
+    "usd_per_point_sized": 5.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 1392386.8443579767,
+     "sigma_usd_per_contract": 2934.0345701986816,
+     "notional_usd": 385900.00000000006,
+     "sigma_fraction": 0.00760309554340161,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=ES].v_bar",
+      "data/d511_trade_count.json#table[root=ES].sigma_sess",
+      "data/d511_trade_count.json#table[root=ES].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1570.6285883863934,
+     "sigma_usd_at_sized_size": 157.06285883863933,
+     "size_ratio_full_over_sized": 10.0,
+     "notional_usd": 385900.00000000006,
+     "sigma_fraction": 0.004070040394885704,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 1253830.165063291,
+     "sigma_usd_per_contract": 1519.9726384933488,
+     "notional_usd": 163066.35443037972,
+     "sigma_fraction": 0.00932119101946498,
+     "sessions": 1975,
+     "mean_move_usd": 33.99367088607592,
+     "usd_per_point": 50.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ES.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "GC": {
+   "size": {
+    "sized_as": "MGC",
+    "has_micro": true,
+    "tick_usd_full_contract": 10.0,
+    "tick_usd_sized": 1.0,
+    "size_ratio_full_over_sized": 10.0,
+    "usd_per_point_full": 100.0,
+    "usd_per_point_sized": 10.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 171781.08560311285,
+     "sigma_usd_per_contract": 8157.739722863254,
+     "notional_usd": 464150.0,
+     "sigma_fraction": 0.01757565382497739,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=GC].v_bar",
+      "data/d511_trade_count.json#table[root=GC].sigma_sess",
+      "data/d511_trade_count.json#table[root=GC].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1617.336162331292,
+     "sigma_usd_at_sized_size": 161.7336162331292,
+     "size_ratio_full_over_sized": 10.0,
+     "notional_usd": 464150.0,
+     "sigma_fraction": 0.003484511822323154,
+     "n_sessions": 5048,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 106123.44128113879,
+     "sigma_usd_per_contract": 1023.0775599331828,
+     "notional_usd": 156494.4941535333,
+     "sigma_fraction": 0.006537466800138438,
+     "sessions": 1967,
+     "mean_move_usd": -11.494661921707626,
+     "usd_per_point": 100.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.GC.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "HE": {
+   "size": {
+    "sized_as": "HE",
+    "has_micro": false,
+    "tick_usd_full_contract": 10.0,
+    "tick_usd_sized": 10.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 400.0,
+    "usd_per_point_sized": 400.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 516.6176365100764,
+     "sigma_usd_at_sized_size": 516.6176365100764,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 29770.000000000004,
+     "sigma_fraction": 0.017353632398726112,
+     "n_sessions": 4089,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-05",
+      "2023-12-29"
+     ],
+     "adv_contracts": 13931.60890052356,
+     "sigma_usd_per_contract": 562.1355621484871,
+     "notional_usd": 30352.42931937173,
+     "sigma_fraction": 0.018520282387733532,
+     "sessions": 1910,
+     "mean_move_usd": -19.146596858638667,
+     "usd_per_point": 400.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HE.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "HG": {
+   "size": {
+    "sized_as": "HG",
+    "has_micro": false,
+    "tick_usd_full_contract": 12.5,
+    "tick_usd_sized": 12.5,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 25000.0,
+    "usd_per_point_sized": 25000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 942.4893965533633,
+     "sigma_usd_at_sized_size": 942.4893965533633,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 171287.50000000003,
+     "sigma_fraction": 0.0055023828157534154,
+     "n_sessions": 5048,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 29946.37264870361,
+     "sigma_usd_per_contract": 704.2391376843484,
+     "notional_usd": 79937.8368073208,
+     "sigma_fraction": 0.008809834814292265,
+     "sessions": 1967,
+     "mean_move_usd": -0.3940010167767347,
+     "usd_per_point": 25000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HG.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "HO": {
+   "size": {
+    "sized_as": "HO",
+    "has_micro": false,
+    "tick_usd_full_contract": 4.2,
+    "tick_usd_sized": 4.2,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 42000.0,
+    "usd_per_point_sized": 42000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1848.1955089794278,
+     "sigma_usd_at_sized_size": 1848.1955089794278,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 138587.4,
+     "sigma_fraction": 0.013335956291693386,
+     "n_sessions": 5049,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 21831.733263598326,
+     "sigma_usd_per_contract": 1706.5484615670482,
+     "notional_usd": 87302.53336820085,
+     "sigma_fraction": 0.019547525091507173,
+     "sessions": 1912,
+     "mean_move_usd": -7.925523012552158,
+     "usd_per_point": 42000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.HO.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "LE": {
+   "size": {
+    "sized_as": "LE",
+    "has_micro": false,
+    "tick_usd_full_contract": 10.0,
+    "tick_usd_sized": 10.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 400.0,
+    "usd_per_point_sized": 400.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 550.2574689327963,
+     "sigma_usd_at_sized_size": 550.2574689327963,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 85010.0,
+     "sigma_fraction": 0.006472855769118884,
+     "n_sessions": 4089,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-05",
+      "2023-12-29"
+     ],
+     "adv_contracts": 17159.167621030712,
+     "sigma_usd_per_contract": 468.72189105379465,
+     "notional_usd": 50451.92087454451,
+     "sigma_fraction": 0.009290466704317062,
+     "sessions": 1921,
+     "mean_move_usd": -7.043206663196172,
+     "usd_per_point": 400.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.LE.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "NG": {
+   "size": {
+    "sized_as": "NG",
+    "has_micro": false,
+    "tick_usd_full_contract": 10.0,
+    "tick_usd_sized": 10.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 10000.0,
+    "usd_per_point_sized": 10000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1011.1902831030113,
+     "sigma_usd_at_sized_size": 1011.1902831030113,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 43280.0,
+     "sigma_fraction": 0.02336391596818418,
+     "n_sessions": 5049,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 77754.25260416667,
+     "sigma_usd_per_contract": 1081.410489617459,
+     "notional_usd": 32894.473958333336,
+     "sigma_fraction": 0.03287514161154413,
+     "sessions": 1920,
+     "mean_move_usd": -18.942708333333346,
+     "usd_per_point": 10000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NG.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "NKD": {
+   "size": {
+    "sized_as": "NKD",
+    "has_micro": false,
+    "tick_usd_full_contract": 25.0,
+    "tick_usd_sized": 25.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 5.0,
+    "usd_per_point_sized": 5.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1139.0539329196913,
+     "sigma_usd_at_sized_size": 1139.0539329196913,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 322500.00000000006,
+     "sigma_fraction": 0.0035319501795959413,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 3436.801220132181,
+     "sigma_usd_per_contract": 777.1384149135074,
+     "notional_usd": 119074.26283680732,
+     "sigma_fraction": 0.006526502003028016,
+     "sessions": 1967,
+     "mean_move_usd": 32.42247076766651,
+     "usd_per_point": 5.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NKD.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "NQ": {
+   "size": {
+    "sized_as": "MNQ",
+    "has_micro": true,
+    "tick_usd_full_contract": 5.0,
+    "tick_usd_sized": 0.5,
+    "size_ratio_full_over_sized": 10.0,
+    "usd_per_point_full": 20.0,
+    "usd_per_point_sized": 2.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 541188.0505836576,
+     "sigma_usd_per_contract": 6889.53540035806,
+     "notional_usd": 595000.0000000001,
+     "sigma_fraction": 0.011579051093038754,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=NQ].v_bar",
+      "data/d511_trade_count.json#table[root=NQ].sigma_sess",
+      "data/d511_trade_count.json#table[root=NQ].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 2785.6057249004616,
+     "sigma_usd_at_sized_size": 278.5605724900462,
+     "size_ratio_full_over_sized": 10.0,
+     "notional_usd": 595000.0000000001,
+     "sigma_fraction": 0.004681690293950355,
+     "n_sessions": 5046,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 373964.3859026369,
+     "sigma_usd_per_contract": 2476.552221351507,
+     "notional_usd": 192108.38488843813,
+     "sigma_fraction": 0.012891432213069196,
+     "sessions": 1972,
+     "mean_move_usd": 45.59837728194733,
+     "usd_per_point": 20.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.NQ.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "PA": {
+   "size": {
+    "sized_as": "PA",
+    "has_micro": false,
+    "tick_usd_full_contract": 50.0,
+    "tick_usd_sized": 50.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 100.0,
+    "usd_per_point_sized": 100.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 2333.853536557998,
+     "sigma_usd_at_sized_size": 2333.853536557998,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 136750.0,
+     "sigma_fraction": 0.017066570651246785,
+     "n_sessions": 5049,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 1732.7738336713996,
+     "sigma_usd_per_contract": 2889.4935084209656,
+     "notional_usd": 150222.7129817444,
+     "sigma_fraction": 0.019234731227175395,
+     "sessions": 1972,
+     "mean_move_usd": -14.231744421906523,
+     "usd_per_point": 100.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PA.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "PL": {
+   "size": {
+    "sized_as": "PL",
+    "has_micro": false,
+    "tick_usd_full_contract": 5.0,
+    "tick_usd_sized": 5.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 50.0,
+    "usd_per_point_sized": 50.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 699.041339635106,
+     "sigma_usd_at_sized_size": 699.041339635106,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 95915.00000000001,
+     "sigma_fraction": 0.00728813365620712,
+     "n_sessions": 5049,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 8603.284627092846,
+     "sigma_usd_per_contract": 526.3812675557957,
+     "notional_usd": 47579.21106037545,
+     "sigma_fraction": 0.011063261786494239,
+     "sessions": 1971,
+     "mean_move_usd": -8.120243531202496,
+     "usd_per_point": 50.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.PL.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "RB": {
+   "size": {
+    "sized_as": "RB",
+    "has_micro": false,
+    "tick_usd_full_contract": 4.2,
+    "tick_usd_sized": 4.2,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 42000.0,
+    "usd_per_point_sized": 42000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1499.230692166705,
+     "sigma_usd_at_sized_size": 1499.230692166705,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 99661.8,
+     "sigma_fraction": 0.015043182966459616,
+     "n_sessions": 5049,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 21747.955789473683,
+     "sigma_usd_per_contract": 1519.044802981073,
+     "notional_usd": 80540.78494736842,
+     "sigma_fraction": 0.018860566158794386,
+     "sessions": 1900,
+     "mean_move_usd": -9.127263157894562,
+     "usd_per_point": 42000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RB.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "RTY": {
+   "size": {
+    "sized_as": "M2K",
+    "has_micro": true,
+    "tick_usd_full_contract": 5.0,
+    "tick_usd_sized": 0.5,
+    "size_ratio_full_over_sized": 10.0,
+    "usd_per_point_full": 50.0,
+    "usd_per_point_sized": 5.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 180835.29571984435,
+     "sigma_usd_per_contract": 1632.223889226415,
+     "notional_usd": 147250.0,
+     "sigma_fraction": 0.011084712320722683,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=RTY].v_bar",
+      "data/d511_trade_count.json#table[root=RTY].sigma_sess",
+      "data/d511_trade_count.json#table[root=RTY].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1135.9779131024225,
+     "sigma_usd_at_sized_size": 113.59779131024226,
+     "size_ratio_full_over_sized": 10.0,
+     "notional_usd": 147250.0,
+     "sigma_fraction": 0.007714620802053803,
+     "n_sessions": 2856,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2017-07-10",
+      "2023-12-29"
+     ],
+     "adv_contracts": 133104.52315394243,
+     "sigma_usd_per_contract": 1072.4943354229265,
+     "notional_usd": 87526.22340425532,
+     "sigma_fraction": 0.012253405821812077,
+     "sessions": 1598,
+     "mean_move_usd": -27.581351689611928,
+     "usd_per_point": 50.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.RTY.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "SI": {
+   "size": {
+    "sized_as": "SI",
+    "has_micro": false,
+    "tick_usd_full_contract": 25.0,
+    "tick_usd_sized": 25.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 5000.0,
+    "usd_per_point_sized": 5000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 2805.725341349054,
+     "sigma_usd_at_sized_size": 2805.725341349054,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 354900.0,
+     "sigma_fraction": 0.007905678617495221,
+     "n_sessions": 5048,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 34989.49364514489,
+     "sigma_usd_per_contract": 1248.8132210076399,
+     "notional_usd": 98366.14133197765,
+     "sigma_fraction": 0.012695559712899563,
+     "sessions": 1967,
+     "mean_move_usd": -19.077275038128935,
+     "usd_per_point": 5000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SI.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "SR3": {
+   "size": {
+    "sized_as": "SR3",
+    "has_micro": false,
+    "tick_usd_full_contract": 6.25,
+    "tick_usd_sized": 6.25,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 2500.0,
+    "usd_per_point_sized": 2500.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 95.37995378937624,
+     "sigma_usd_at_sized_size": 95.37995378937624,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 239150.00000000003,
+     "sigma_fraction": 0.00039882899347428905,
+     "n_sessions": 2511,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2018-05-07",
+      "2023-12-28"
+     ],
+     "adv_contracts": 84336.9510638298,
+     "sigma_usd_per_contract": 110.33371206978791,
+     "notional_usd": 242862.42021276595,
+     "sigma_fraction": 0.0004543054128058478,
+     "sessions": 470,
+     "mean_move_usd": 0.5585106382979689,
+     "usd_per_point": 2500.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.SR3.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "TN": {
+   "size": {
+    "sized_as": "TN",
+    "has_micro": false,
+    "tick_usd_full_contract": 15.625,
+    "tick_usd_sized": 15.625,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 1000.0,
+    "usd_per_point_sized": 1000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 412.11829939466463,
+     "sigma_usd_at_sized_size": 412.11829939466463,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 108671.875,
+     "sigma_fraction": 0.0037923179239767848,
+     "n_sessions": 3584,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-11",
+      "2023-12-29"
+     ],
+     "adv_contracts": 123861.42965972575,
+     "sigma_usd_per_contract": 438.09465125012747,
+     "notional_usd": 136020.88623666836,
+     "sigma_fraction": 0.0032207895667424814,
+     "sessions": 1969,
+     "mean_move_usd": -1.214131538852144,
+     "usd_per_point": 1000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.TN.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "UB": {
+   "size": {
+    "sized_as": "UB",
+    "has_micro": false,
+    "tick_usd_full_contract": 31.25,
+    "tick_usd_sized": 31.25,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 1000.0,
+    "usd_per_point_sized": 1000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1053.8325241506093,
+     "sigma_usd_at_sized_size": 1053.8325241506093,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 109312.5,
+     "sigma_fraction": 0.009640549106009004,
+     "n_sessions": 5041,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 89983.48101265823,
+     "sigma_usd_per_contract": 1193.5697213179972,
+     "notional_usd": 171108.0221518987,
+     "sigma_fraction": 0.006975533387081189,
+     "sessions": 1975,
+     "mean_move_usd": -1.044303797468297,
+     "usd_per_point": 1000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.UB.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "YM": {
+   "size": {
+    "sized_as": "MYM",
+    "has_micro": true,
+    "tick_usd_full_contract": 5.0,
+    "tick_usd_sized": 0.5,
+    "size_ratio_full_over_sized": 10.0,
+    "usd_per_point_full": 5.0,
+    "usd_per_point_sized": 0.5,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 95359.63424124513,
+     "sigma_usd_per_contract": 2053.126424410125,
+     "notional_usd": 264460.0,
+     "sigma_fraction": 0.007763466779135313,
+     "sessions": 257,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=YM].v_bar",
+      "data/d511_trade_count.json#table[root=YM].sigma_sess",
+      "data/d511_trade_count.json#table[root=YM].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 1155.0133243405978,
+     "sigma_usd_at_sized_size": 115.50133243405979,
+     "size_ratio_full_over_sized": 10.0,
+     "notional_usd": 264460.0,
+     "sigma_fraction": 0.004367440536718588,
+     "n_sessions": 5051,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 132279.9573604061,
+     "sigma_usd_per_contract": 1176.3207913715614,
+     "notional_usd": 136870.2005076142,
+     "sigma_fraction": 0.00859442586486254,
+     "sessions": 1970,
+     "mean_move_usd": 10.89847715736041,
+     "usd_per_point": 5.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.YM.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZB": {
+   "size": {
+    "sized_as": "ZB",
+    "has_micro": false,
+    "tick_usd_full_contract": 31.25,
+    "tick_usd_sized": 31.25,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 1000.0,
+    "usd_per_point_sized": 1000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 419437.9123505976,
+     "sigma_usd_per_contract": 562.0974806367161,
+     "notional_usd": 108000.0,
+     "sigma_fraction": 0.0052046063021918155,
+     "sessions": 251,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=ZB].v_bar",
+      "data/d511_trade_count.json#table[root=ZB].sigma_sess",
+      "data/d511_trade_count.json#table[root=ZB].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 655.3757858426569,
+     "sigma_usd_at_sized_size": 655.3757858426569,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 108000.0,
+     "sigma_fraction": 0.006068294313357934,
+     "n_sessions": 5051,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 188405.90932117528,
+     "sigma_usd_per_contract": 696.9814453074823,
+     "notional_usd": 151631.42730496454,
+     "sigma_fraction": 0.004596550053609253,
+     "sessions": 1974,
+     "mean_move_usd": 2.2321428571428354,
+     "usd_per_point": 1000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZB.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZC": {
+   "size": {
+    "sized_as": "ZC",
+    "has_micro": false,
+    "tick_usd_full_contract": 12.5,
+    "tick_usd_sized": 12.5,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 50.0,
+    "usd_per_point_sized": 50.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 291.12691732414703,
+     "sigma_usd_at_sized_size": 291.12691732414703,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 25300.000000000004,
+     "sigma_fraction": 0.011506992779610552,
+     "n_sessions": 4933,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 95583.0438370294,
+     "sigma_usd_per_contract": 303.18587597253315,
+     "notional_usd": 22828.11371841155,
+     "sigma_fraction": 0.013281249590412053,
+     "sessions": 1939,
+     "mean_move_usd": -6.633574007220211,
+     "usd_per_point": 50.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZC.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZF": {
+   "size": {
+    "sized_as": "ZF",
+    "has_micro": false,
+    "tick_usd_full_contract": 7.8125,
+    "tick_usd_sized": 7.8125,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 1000.0,
+    "usd_per_point_sized": 1000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 177.5015124586375,
+     "sigma_usd_at_sized_size": 177.5015124586375,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 105250.0,
+     "sigma_fraction": 0.0016864751777542757,
+     "n_sessions": 5051,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 494049.65754812566,
+     "sigma_usd_per_contract": 185.39343556928816,
+     "notional_usd": 117141.64608662615,
+     "sigma_fraction": 0.0015826432508229385,
+     "sessions": 1974,
+     "mean_move_usd": -0.5145010131712691,
+     "usd_per_point": 1000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZF.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZL": {
+   "size": {
+    "sized_as": "ZL",
+    "has_micro": false,
+    "tick_usd_full_contract": 6.000000000000001,
+    "tick_usd_sized": 6.000000000000001,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 600.0000000000001,
+    "usd_per_point_sized": 600.0000000000001,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 365.7407218816005,
+     "sigma_usd_at_sized_size": 365.7407218816005,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 41070.00000000001,
+     "sigma_fraction": 0.008905301238899451,
+     "n_sessions": 4933,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 31192.30454777721,
+     "sigma_usd_per_contract": 398.51202455280685,
+     "notional_usd": 25521.173224322953,
+     "sigma_fraction": 0.015614957080930941,
+     "sessions": 1957,
+     "mean_move_usd": -11.273377618804304,
+     "usd_per_point": 600.0000000000001,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZL.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZM": {
+   "size": {
+    "sized_as": "ZM",
+    "has_micro": false,
+    "tick_usd_full_contract": 10.0,
+    "tick_usd_sized": 10.0,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 100.0,
+    "usd_per_point_sized": 100.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 458.43658313712086,
+     "sigma_usd_at_sized_size": 458.43658313712086,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 34460.0,
+     "sigma_fraction": 0.013303441182156728,
+     "n_sessions": 4933,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 28855.590909090908,
+     "sigma_usd_per_contract": 458.903301478851,
+     "notional_usd": 35484.37180796731,
+     "sigma_fraction": 0.01293254686774005,
+     "sessions": 1958,
+     "mean_move_usd": -32.39019407558704,
+     "usd_per_point": 100.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZM.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZN": {
+   "size": {
+    "sized_as": "ZN",
+    "has_micro": false,
+    "tick_usd_full_contract": 15.625,
+    "tick_usd_sized": 15.625,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 1000.0,
+    "usd_per_point_sized": 1000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.tick_usd"
+    ]
+   },
+   "lines": {
+    "d511": {
+     "window": [
+      "2025-09-11",
+      "2026-09-10"
+     ],
+     "adv_contracts": 1729724.4140625,
+     "sigma_usd_per_contract": 296.1718618880304,
+     "notional_usd": 107031.25,
+     "sigma_fraction": 0.0027671531621655393,
+     "sessions": 256,
+     "provenance": [
+      "data/d511_trade_count.json#table[root=ZN].v_bar",
+      "data/d511_trade_count.json#table[root=ZN].sigma_sess",
+      "data/d511_trade_count.json#table[root=ZN].sessions",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.notional_usd"
+     ],
+     "notes": "sigma_sess is per FULL contract; notional_usd is the breadth fixture's last price (2026-09-09), inside d511's own window but an END-of-window level. This window is inside the deposit's sealed vault period."
+    },
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 290.5616229049273,
+     "sigma_usd_at_sized_size": 290.5616229049273,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 107031.25,
+     "sigma_fraction": 0.0027147363307905613,
+     "n_sessions": 5051,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 819611.564556962,
+     "sigma_usd_per_contract": 295.5499224946768,
+     "notional_usd": 125319.86550632911,
+     "sigma_fraction": 0.002358364504307184,
+     "sessions": 1975,
+     "mean_move_usd": -0.7199367088607811,
+     "usd_per_point": 1000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZN.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZS": {
+   "size": {
+    "sized_as": "ZS",
+    "has_micro": false,
+    "tick_usd_full_contract": 12.5,
+    "tick_usd_sized": 12.5,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 50.0,
+    "usd_per_point_sized": 50.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 579.6615950341519,
+     "sigma_usd_at_sized_size": 579.6615950341519,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 61437.5,
+     "sigma_fraction": 0.0094349801836688,
+     "n_sessions": 4933,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 61532.685903983656,
+     "sigma_usd_per_contract": 601.8675691851427,
+     "notional_usd": 56388.949182839635,
+     "sigma_fraction": 0.010673502129532568,
+     "sessions": 1958,
+     "mean_move_usd": -26.940755873340166,
+     "usd_per_point": 50.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZS.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZT": {
+   "size": {
+    "sized_as": "ZT",
+    "has_micro": false,
+    "tick_usd_full_contract": 7.8125,
+    "tick_usd_sized": 7.8125,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 2000.0,
+    "usd_per_point_sized": 2000.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 122.91564543918031,
+     "sigma_usd_at_sized_size": 122.91564543918031,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 204914.0625,
+     "sigma_fraction": 0.0005998399716426505,
+     "n_sessions": 5051,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 227928.86663286004,
+     "sigma_usd_per_contract": 141.3646074914898,
+     "notional_usd": 214359.59685598378,
+     "sigma_fraction": 0.0006594741246246361,
+     "sessions": 1972,
+     "mean_move_usd": -0.9943902129817445,
+     "usd_per_point": 2000.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZT.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  },
+  "ZW": {
+   "size": {
+    "sized_as": "ZW",
+    "has_micro": false,
+    "tick_usd_full_contract": 12.5,
+    "tick_usd_sized": 12.5,
+    "size_ratio_full_over_sized": 1.0,
+    "usd_per_point_full": 50.0,
+    "usd_per_point_sized": 50.0,
+    "provenance": [
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.sized_as",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.tick_usd_full_contract",
+     "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.tick_usd"
+    ]
+   },
+   "lines": {
+    "breadth_meta": {
+     "window": [
+      "2010-06-06",
+      "2026-09-09"
+     ],
+     "sigma_usd_per_contract": 461.31941721930855,
+     "sigma_usd_at_sized_size": 461.31941721930855,
+     "size_ratio_full_over_sized": 1.0,
+     "notional_usd": 37650.0,
+     "sigma_fraction": 0.012252839766781104,
+     "n_sessions": 4933,
+     "provenance": [
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.day_session_sigma_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.tick_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.notional_usd",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.n_sessions"
+     ],
+     "notes": "NO VOLUME in this source, so adv_contracts is absent and this line cannot build an impact brick. The sigma is a DAY-SESSION move, measured at the sized_as size and converted here to full-contract dollars."
+    },
+    "day1m_2016_2023": {
+     "window": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "realised_span": [
+      "2016-01-04",
+      "2023-12-29"
+     ],
+     "adv_contracts": 36925.80246280144,
+     "sigma_usd_per_contract": 499.0908990379361,
+     "notional_usd": 29261.537968188815,
+     "sigma_fraction": 0.017056208719463558,
+     "sessions": 1949,
+     "mean_move_usd": -19.766546947152385,
+     "usd_per_point": 50.0,
+     "provenance": [
+      "scripts/futures_impact_table.py:day1m_line over data/fixtures/fut_day1m.parquet (columns root, day, bar, open, close, volume, same_front, present)",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.tick_usd_full_contract",
+      "data/fixtures/fut_breadth_hourly.meta.json#specs.ZW.tick_price_units"
+     ],
+     "notes": "sessions with present AND same_front true on every bar; ADV is the mean of the session's summed volume; sigma is the ddof=1 std of (last close - first open) x usd_per_point; sigma_fraction divides it by the mean last close's notional. IN SAMPLE: ends 2023-12-29, before the 2024-01-01 holdout."
+    }
+   }
+  }
+ },
+ "gates": {
+  "T1": "all 36 breadth roots present",
+  "T2": "the d511 line covers exactly its 9 roots",
+  "T3": "every line of every root carries provenance",
+  "T4": "sigma_fraction, notional_usd and sigma_usd_per_contract are finite and positive",
+  "T5": "adv_contracts present and positive on d511 and day1m, ABSENT on breadth_meta",
+  "T6": "every sigma_fraction lies in (1e-5, 0.5)",
+  "T7": "the default line day1m_2016_2023 is complete",
+  "roots": 36,
+  "d511_roots": 9
+ }
+}

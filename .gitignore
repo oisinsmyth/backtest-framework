@@ -18,7 +18,10 @@ htmlcov/
 
 # Data — snapshots and trial registry are local artifacts, not source (D24, D20)
 /data/snapshots/
-/data/raw/
+# D608: everything under data/raw/ is a gitignored cache except its README, which states the
+# cache contract. `/data/raw/*` + a negation, because a directory rule cannot be re-included.
+/data/raw/*
+!/data/raw/README.md
 *.sqlite
 *.sqlite3
 trial_registry.csv

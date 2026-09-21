@@ -162,6 +162,7 @@ repository root a round longer than the rest.
 | | |
 |---|---|
 | [`PROGRAMME_REGISTRY.md`](PROGRAMME_REGISTRY.md) | D592 — the deposit's α registry (0.05 in ten slots of 0.005), rendered from `data/programme_registry.json`; the JSON is the source of truth, this page never is |
+| [`DEPOSIT_TEST_MAP.md`](DEPOSIT_TEST_MAP.md) | D607 — the five deposit pre-registrations' 146 numbered unit tests crosswalked to the repository tests that claim them, rendered from `data/deposit_test_map.json`; a coverage count, not a verdict |
 
 ### Archive
 

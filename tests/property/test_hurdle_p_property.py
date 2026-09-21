@@ -165,13 +165,35 @@ def test_p3a_counts_exactly_the_days_beyond_two_percent(xs):
 @SETTINGS
 @given(SERIES)
 def test_enforcing_p3_never_lengthens_the_account(xs):
-    """P3b is a COST: a second way to die cannot make the account live longer."""
+    """P3 is a second way to die: it adds deaths and brings the FIRST death forward or not at all.
+
+    The MEAN life is not monotone in it, and the first version of this test said it was. The
+    harvested falsifying input (2026-09-21, found once by a parallel agent's full-suite run,
+    D537) is `[-2000, 0, -1000]` on a $50,000 account: the trailing-drawdown walker dies once
+    at session 1 (life 1.0); with P3 the account also dies at session 3 on the -$1,000 day,
+    a SECOND episode of length 2, so the mean life rises to 1.5 and `p3b_life_cost` is -0.5.
+    Every death still came no later than before -- the mean moved because a new, longer
+    episode joined the average. So the invariant is on the death TIMES, not the mean, and a
+    negative `p3b_life_cost` is a legitimate reported value, pinned below.
+    """
     x = np.asarray(xs, dtype=float)
     g = HP.p3(x, 50_000.0)
-    if g["deaths_dd_only"] > 0 and g["deaths_with_p3"] > 0:
-        assert g["life_with_p3_sessions"] <= g["life_dd_only_sessions"] + 1e-9
-        assert g["deaths_with_p3"] >= g["deaths_dd_only"]
-        assert g["p3b_life_cost"] >= -1e-12
+    trail_dd = 50_000.0 * HP.DD_FRACTION
+    _, _, episodes_dd = HP.max_drawdown_life(x, trail_dd)
+    lives_p3 = HP._life_with_p3(x, trail_dd, g["p3_cap_usd"])
+    assert g["deaths_with_p3"] >= g["deaths_dd_only"]
+    if episodes_dd and lives_p3:
+        # `max_drawdown_life` episodes are `(start, end, length)`; `_life_with_p3` returns lengths.
+        assert lives_p3[0] <= episodes_dd[0][2], "the first death with P3 on came LATER"
+    assert sum(lives_p3) <= len(x)
+
+
+def test_the_harvested_p3_counterexample_is_pinned():
+    """The exact input from the docstring above, so the behaviour is a fact and not a memory."""
+    g = HP.p3(np.array([-2000.0, 0.0, -1000.0]), 50_000.0)
+    assert (g["deaths_dd_only"], g["deaths_with_p3"]) == (1, 2)
+    assert (g["life_dd_only_sessions"], g["life_with_p3_sessions"]) == (1.0, 1.5)
+    assert g["p3b_life_cost"] == -0.5
 
 
 @SETTINGS

@@ -677,6 +677,11 @@ would look like data. The tokens are what is shown.
 | D601 | FIXTURE: the four macro fixtures for the basis-momentum closure programme — the He–Kelly–Manela intermediary factors (m… | [record](D601-FIXTURE-macro-series-for-the-basis-momentum-closure-programme.md) |
 | D602 | VOID on its own harness. The covered-parity correction built from monthly-average 3-month rates does not remove the rat… | [PRE-REG](D602-PRE-REG-basis-momentum-on-FX-in-covered-parity-space.md) · [RESULT](D602-RESULT-VOID-the-parity-correction-over-shoots-on-monthly-rates.md) |
 | D603 | BASIS_MOMENTUM.md is CLOSED by the principal, and the synthesis of the basis-momentum programme D564–D602: ten free tes… | [record](D603-CLOSED-basis-momentum-every-free-test-run-none-supported.md) |
+| D604 | A futures square-root impact brick, its depth-scaled variant, and the first order-book depth fixture: the repository co… | [record](D604-futures-sqrt-impact-depth-scaling-and-the-book-depth-fixture.md) |
+| D605 | Track 3 logging: the per-trade fill log, implementation shortfall, latency and the trial counter, with the two things t… | [record](D605-track-3-logging-shortfall-latency-and-the-trial-counter.md) |
+| D606 | The error budget becomes code, and the zero-contribution term's delta is exactly zero because the column is DROPPED, no… | [record](D606-the-error-budget-the-fitting-helpers-and-the-parameter-budget.md) |
+| D607 | The crosswalk from the deposit's 146 numbered unit tests to the repository tests that claim them: 28 claimed in three s… | [record](D607-the-deposit-test-crosswalk.md) |
+| D608 | The forward data recorder: raw bytes under a fetched_at name, a gap log nothing fills, and a host the record does not c… | [record](D608-the-forward-data-recorder.md) |
 | D613 | the ES-family option volume panel in ET clock buckets, so an option-ladder conditioner can be fixed at a cutoff of the… | [record](D613-FIXTURE-the-ES-option-volume-panel-in-ET-clock-buckets.md) |
 | D614 | D614 STAGE 0 RESULT — the verdict the pre-registration's own bars return is REAL BUT NOT TRADEABLE, and the line closes… | [PRE-REG](D614-PRE-REG-expiry-pinning-on-ES-from-the-noon-0DTE-volume-ladder.md) · [RESULT](D614-STAGE-0-RESULT-not-pinning-ten-sessions-carry-the-whole-pull.md) |
 
