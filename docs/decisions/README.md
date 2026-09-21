@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 333 of these records carry neither field —
+**No Status or Category column, deliberately.** 334 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -662,7 +662,7 @@ would look like data. The tokens are what is shown.
 | D581 | D581 STAGE 0 RESULT — NOT SUPPORTED. The sign of carried dealer net gamma does not decide whether the last half-hour co… | [record](D581-STAGE-0-DESIGN-gamma-conditioned-close-on-ES-the-discriminator.md) · [RESULT](D581-STAGE-0-RESULT-not-supported-gamma-sign-orders-nothing.md) |
 | D582 | The deposit's list is CLOSED by the principal, and the synthesis of the mechanism programme D577–D581: every one of the… | [record](D582-CLOSED-the-deposit-and-the-mechanism-programme-synthesis.md) |
 | D583 | D583 STAGE 0 RESULT — NOT SUPPORTED. The reporting calendar does not order the basis-momentum book: the ten sessions in… | [record](D583-STAGE-0-DESIGN-basis-momentum-M7-quarter-end-calendar.md) · [RESULT](D583-STAGE-0-RESULT-not-supported-quarter-ends-order-nothing.md) |
-| D584 | D584 STAGE 0 DESIGN — basis momentum's M1, M2 and the negative control: is the D564 book stronger in the less liquid ro… | [record](D584-STAGE-0-DESIGN-basis-momentum-M1-M2-and-the-negative-control.md) |
+| D584 | D584 STAGE 0 RESULT — M1 NOT SUPPORTED, M2 NOT SUPPORTED, the negative control UNRESOLVED on its letter. The 8 least li… | [record](D584-STAGE-0-DESIGN-basis-momentum-M1-M2-and-the-negative-control.md) · [RESULT](D584-STAGE-0-RESULT-M1-M2-not-supported-the-control-unresolved.md) |
 
 <!-- REGISTER:END -->
 
