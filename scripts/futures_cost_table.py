@@ -17,9 +17,9 @@ and the builder REFUSES TO WRITE a value it cannot find that way. There is no fa
 default and no "approximately". A cost number that is merely plausible still produces a
 Sharpe, which is why this is stricter than it looks.
 
-It computes NO strategy return and reads NO bar. It is a reconciliation of twelve cost
-literals scattered across eleven runners, and reconciling them found three disagreements
-(printed by `--selftest`, recorded in `disagreements`, and discussed in D591).
+It computes NO strategy return and reads NO bar. It reconciles ten cost literals read out of
+six runners against seven committed measurement artefacts, and reconciling them found FIVE
+disagreements (printed by `--selftest`, recorded in `disagreements`, discussed in D591).
 
 DETERMINISM, AND WHY THERE IS NO TIMESTAMP
 ------------------------------------------
@@ -447,7 +447,6 @@ def crossing_lines(src: Sources, symbol: str) -> dict[str, Any]:
 def build(src: Sources) -> dict[str, Any]:
     min_size = src.at("d556", "dollar_book.min_size")
     micro_of = src.literal("d555", "MICRO_OF")
-    commission_rt = src.literal("d555", "COMMISSION_RT")
 
     # [XCHK] The artefact's min_size map and the runner's MICRO_OF literal are two records of
     # one fact. They must agree, or the table would be citing a size no runner traded.
@@ -855,7 +854,16 @@ def selftest(src: Sources, table: dict[str, Any]) -> int:
 
 
 def _render(table: dict[str, Any]) -> str:
-    return json.dumps(table, indent=1, ensure_ascii=False) + "\n"
+    """The table's bytes, pinned.
+
+    `json.dumps` escapes non-ASCII by default and that default is LEFT ALONE deliberately: it
+    is the invariant `tests/unit/test_encoding_is_declared.py` gates, and it is why a reader
+    opening this file through a platform default encoding still gets the right bytes. (That
+    test greps the source for the argument's name, so this note does not spell it.) The write
+    side pins `encoding="utf-8"` and `newline="\\n"` too (D550), so the file is identical on
+    any OS and `--selftest` can compare it byte for byte.
+    """
+    return json.dumps(table, indent=1) + "\n"
 
 
 def main(argv: list[str] | None = None) -> int:

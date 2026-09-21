@@ -1,0 +1,328 @@
+Golden-master hand-worked cases for validation/episodes.py (D592). Companion to
+test_episodes_ledger.py.
+
+The ledger of record is the deposit's programme-level false-positive control 5, written
+identically in SETTLEMENT_FLOW_LEDGER_PREREG.md 13A.8(5) and
+OPENING_AGENT_STATE_PREREG.md 12A(5), and its unit test 69:
+
+    69. Episode checks: removing the best year and the best 1% of days are computed
+        correctly on synthetic P&L.
+
+Every number below is worked out by hand, in integers wherever the arithmetic allows,
+BEFORE the module was run. Units: dollars of daily P&L throughout, except the Sharpes
+(annualised, dimensionless) and the shares (dimensionless).
+
+================================================================================
+PART 0 -- THE ANCHOR TO D504, AND WHY IT IS NOT A FULL RECOMPUTATION
+================================================================================
+
+`symmetric_trim` is a port of the `concentration_usable` block of
+`scripts/d504_arm_full_history.py:345-366`, published in
+`data/d504_arm_full_history.json::concentration_usable`:
+
+    sessions_to_half_pnl    10
+    top1                     0.10341633875459022
+    top5                     0.32326572111477586
+    top10                    0.5262258344647075
+    top1pct                  0.9822092853319135
+    bottom1pct              -0.8991954195220087
+    pnl_ex_both_1pct_usd 23563.84450000082
+    share_ex_both_1pct       0.9169861341900946
+    pnl_ex_both_top10_usd 23662.67800000118
+    n_trimmed_each_side     25
+
+R16 asks for the published numbers reproduced EXACTLY on the build they were computed on.
+THE DAILY SERIES THEY WERE COMPUTED FROM IS NOT STORED ANYWHERE. `d504_arm_full_history.
+json` holds the block and the per-year table; it does not hold `d_live`. The only route to
+the series is D504's own input path, and THAT ROUTE IS CLOSED HERE, for a reason worth
+writing down rather than assuming:
+
+  * `spec.usable_start` is 2016-01-04 and `spec.span` ends 2026-09-09;
+    `usable_years` is ['2016' ... '2026'] and `overall_usable.n_sessions` is 2,508.
+  * So D504's `_usable` window is NOT an in-sample window. It runs through the 2024+
+    slice, which D503 already spent and which this work may not re-read.
+
+Re-deriving the block would therefore mean reading 2024+ fixture rows. It is not done.
+What IS done, and what the golden asserts:
+
+  (a) CODE IDENTITY. The block's source text is extracted from
+      `scripts/d504_arm_full_history.py` by its own marker comment and exec'd on a
+      synthetic series, and `symmetric_trim` must return the identical dict, KEY FOR KEY
+      AND BIT FOR BIT. This is the strong check: if either implementation moves, the test
+      fails, and it fails without reading a single bar.
+
+      The port has ONE documented divergence, and the golden pins it. On a NEGATIVE total,
+      D504's loop returns sessions_to_half_pnl = 1, because a running sum clears a
+      negative threshold at the first session; `symmetric_trim` returns None. D504 ran on
+      a total of +$25,697.0565, so the published block is unaffected.
+
+  (b) ARITHMETIC IDENTITIES ON THE PUBLISHED BLOCK, exact in IEEE double. These are the
+      three relations the port guarantees, checked against the published numbers with
+      `==` and no tolerance:
+
+        share_ex_both_1pct == pnl_ex_both_1pct_usd / total_usd
+            23563.84450000082 / 25697.056500001505 = 0.9169861341900946   [exact]
+
+        top1 == best_day_usd / total_usd
+            2657.4955 / 25697.056500001505 = 0.10341633875459022          [exact]
+
+        n_trimmed_each_side == max(1, n_sessions // 100)
+            max(1, 2508 // 100) = max(1, 25) = 25                         [exact]
+
+      (`total_usd`, `best_day_usd` and `n_sessions` are read from
+      `overall_usable`, the block's own window.)
+
+      A FOURTH RELATION IS *NOT* EXACT, and the golden says so rather than widening a
+      tolerance: 1 - top1pct - bottom1pct = 0.9169861341900951 against the published
+      0.9169861341900946 -- 5 ulp, because the published value is one division of one
+      summed slice and the reconstruction is three roundings. It is float noise at 1e-16,
+      not a discrepancy, and it is recorded here so nobody quotes it as an identity.
+
+  (c) CONSISTENCY OF sessions_to_half_pnl WITH THE PUBLISHED SHARES. Published
+      top5 = 0.3233 and top10 = 0.5262, so the 50% threshold is first crossed somewhere in
+      sessions 6..10, and the published sessions_to_half_pnl = 10 lies in that interval.
+      Weak, but it is derivable from the artifact and it would catch a port that counted
+      from the wrong end.
+
+  k = max(1, int(n * frac)) vs D504's max(1, len(srt) // 100). At frac = 0.01 the two are
+  EQUAL for every n from 1 to 200,000 (checked exhaustively in tests/unit/test_episodes.py;
+  n = 2508 gives int(25.080000000000002) = 25 = 2508 // 100).
+
+================================================================================
+PART 1 -- THE SYNTHETIC SERIES
+================================================================================
+
+24 sessions, two calendar years, two sessions in each of six months per year, so both the
+calendar-YEAR grouping and the calendar-MONTH grouping have something to bite on.
+
+  dates  2020-01-05, 2020-01-20, 2020-02-05, 2020-02-20, 2020-03-05, 2020-03-20,
+         2020-04-05, 2020-04-20, 2020-05-05, 2020-05-20, 2020-06-05, 2020-06-20,
+         2021-01-05, 2021-01-20, 2021-02-05, 2021-02-20, 2021-03-05, 2021-03-20,
+         2021-04-05, 2021-04-20, 2021-05-05, 2021-05-20, 2021-06-05, 2021-06-20
+
+  A ($) -20   2   4   6   8  10  12  14  16  18  20  100
+          1   3   5   7   9  11  13  15  17  19  21  -60
+
+  B ($) -10   1   2   3   4   5   6   7   8   9  10   50
+         11  12  13  14  15  16  17  18  19  20  21  -40
+
+  C ($)  A, with the last session changed from -60 to -130.
+
+EVERY VALUE IN A IS DISTINCT, and every value in B is distinct. That is deliberate: the
+top-10 sets below are then unambiguous, and `np.argsort` is not a stable sort, so a golden
+built on ties would be pinning an implementation detail of numpy.
+
+A's 2020 half is one even run: -20 and then 2, 4, ..., 20, then 100.
+A's 2021 half is one odd run: 1, 3, ..., 21, then -60.
+So the SORTED A is exactly  -60, -20, 1, 2, 3, ..., 21, 100  (24 values).
+
+  sum A 2020 = -20 + (2+4+...+20) + 100 = -20 + 110 + 100 =  190
+  sum A 2021 = (1+3+...+21) - 60       = 121 - 60        =   61
+  sum A      =                                              251
+
+  sum of squares of A:
+      2020: 400 + 4x(1+4+9+...+100) + 10000 = 400 + 4x385 + 10000 = 400 + 1540 + 10000
+                                            = 11940
+      2021: (1+9+25+49+81+121+169+225+289+361+441) + 3600 = 1771 + 3600 = 5371
+      total = 11940 + 5371 = 17311
+
+  sum B 2020 = -10 + (1+2+...+10) + 50 = -10 + 55 + 50 =  95
+  sum B 2021 = (11+12+...+21) - 40     = 176 - 40      = 136
+  sum B      =                                            231
+
+  sum of squares of B:
+      2020: 100 + 385 + 2500 = 2985
+      2021: (3311 - 385) + 1600 = 2926 + 1600 = 4526
+      total = 2985 + 4526 = 7511
+
+================================================================================
+PART 2 -- symmetric_trim(A), frac = 0.01
+================================================================================
+
+  n = 24, so k = max(1, int(24 x 0.01)) = max(1, int(0.24)) = max(1, 0) = 1.
+  THE CLAMP IS THE POINT OF n = 24: one percent of 24 days is zero days, and a trim of
+  zero sessions would report the untrimmed series as trimmed.
+
+  sorted A = [-60, -20, 1, 2, 3, ..., 21, 100],  total = 251
+
+  top1                  = 100 / 251                            = 0.398406374501992
+  top5   = (18+19+20+21+100) / 251 = 178 / 251                  = 0.7091633466135459
+  top10  = (13+14+...+21+100) / 251 = (153+100)/251 = 253 / 251 = 1.0079681274900398
+  top1pct               = 100 / 251                             = 0.398406374501992
+  bottom1pct            = -60 / 251                             = -0.23904382470119523
+  pnl_ex_both_1pct_usd  = 251 - 100 - (-60)                     = 211
+  share_ex_both_1pct    = 211 / 251                             = 0.8406374501992032
+  pnl_ex_both_top10_usd = sorted[10:-10] = 9 + 10 + 11 + 12     = 42
+  n_trimmed_each_side                                           = 1
+
+  top10 > 1. THAT IS NOT A BUG AND IT IS WHY BOTH TAILS ARE ALWAYS REPORTED. The ten best
+  sessions carry 253 of a 251 total because the worst two sessions carry -80. A one-sided
+  concentration share above 100% is the ordinary arithmetic of a two-sided book, and
+  CLAUDE.md 2 calls quoting it alone a flag rather than a verdict -- D504's own published
+  top1pct is 0.982 against a bottom1pct of -0.899 for exactly this reason.
+
+  sessions_to_half_pnl: half of 251 is 125.5. Taking sessions best-first,
+      100                     ->  run 100   < 125.5
+      100 + 21 = 121          ->  run 121   < 125.5
+      121 + 20 = 141          ->  run 141  >= 125.5   STOP
+  = 3 sessions.
+
+================================================================================
+PART 3 -- drop_best_year(A, dates)
+================================================================================
+
+  Year totals in DOLLARS (not Sharpe, not mean -- an episode is measured in money):
+      2020: 190      2021: 61        ->  the best year is 2020.
+
+  total_before = 251
+  total_after  = 61
+
+  sharpe_before: mean = 251 / 24 = 10.458333333333334
+      var(ddof=1) = (17311 - 251^2/24) / 23 = (17311 - 63001/24) / 23
+                  = (17311 - 2625.0416666666665) / 23 = 14685.958333333334 / 23
+                  = 638.5199275362319
+      sd          = sqrt(638.5199275362319) = 25.268951848785335
+      sqrt(252)   = 15.874507866387544
+      Sharpe      = 10.458333333333334 / 25.268951848785335 x 15.874507866387544
+                  = 6.5701535925513115
+
+  sharpe_after (the 12 sessions of 2021): mean = 61 / 12 = 5.083333333333333
+      var(ddof=1) = (5371 - 61^2/12) / 11 = (5371 - 3721/12) / 11
+                  = (5371 - 310.0833333333333) / 11 = 5060.916666666667 / 11
+                  = 460.08333333333337
+      sd          = sqrt(460.08333333333337) = 21.449553219900256
+      Sharpe      = 5.083333333333333 / 21.449553219900256 x 15.874507866387544
+                  = 3.7621023692280557
+
+  THE SHARPE FALLS AND THE TOTAL STAYS POSITIVE. That is the whole shape of control 5: the
+  edge survives losing its best year, at a cost that is stated instead of hidden.
+
+================================================================================
+PART 4 -- drop_best_days(A, frac = 0.01)
+================================================================================
+
+  n_dropped = max(1, int(24 x 0.01)) = 1 -- the SAME count symmetric_trim used, so the
+  one-sided control and the symmetric trim beside it cut the same number of sessions.
+
+  total_before = 251,  total_after  = 251 - 100 = 151
+  mean_before  = 251 / 24 = 10.458333333333334
+  mean_after   = 151 / 23 =  6.565217391304348
+
+  sharpe_after over the 23 kept sessions:
+      sum of squares kept = 17311 - 10000 = 7311
+      var(ddof=1) = (7311 - 151^2/23) / 22 = (7311 - 22801/23) / 22
+                  = (7311 - 991.3478260869565) / 22 = 6319.652173913043 / 22
+                  = 287.25691699604744
+      sd          = sqrt(287.25691699604744) = 16.948655315276415
+      Sharpe      = 6.565217391304348 / 16.948655315276415 x 15.874507866387544
+                  = 6.149136505765647
+
+  Dropping the best DAY costs 0.42 of Sharpe; dropping the best YEAR costs 2.81. The two
+  removals are not interchangeable, which is why the deposit asks for both "and,
+  separately".
+
+================================================================================
+PART 5 -- episode_checks(A) and episode_checks(C)
+================================================================================
+
+  A:  drop_best_year total_after = 61 > 0   AND  drop_best_days total_after = 151 > 0
+      ->  edge_positive_after_both = True
+
+  C is A with the last session at -130 instead of -60:
+      sum C 2020 = 190  (unchanged)
+      sum C 2021 = 121 - 130 = -9
+      sum C      = 181
+      best year is still 2020 (190 > -9), so
+      drop_best_year  total_before = 181, total_after = -9   ->  NOT positive
+      drop_best_days  total_after  = 181 - 100 = 81          ->  positive
+      ->  edge_positive_after_both = False
+
+  ONE SERIES PASSES AND ONE FAILS, on a difference of $70 in one session. A boolean that
+  cannot come back False is not a check, and C is what proves this one can.
+
+================================================================================
+PART 6 -- shared_period(A, B, dates)
+================================================================================
+
+  rho, by the integer formula
+      r = (n*Sxy - Sx*Sy) / sqrt( (n*Sxx - Sx^2) * (n*Syy - Sy^2) )
+
+  Sx = 251, Sy = 231, Sxx = 17311, Syy = 7511, n = 24.
+
+  Sxy, session by session:
+      2020  (-20)(-10)=200,  2x1=2,  4x2=8,  6x3=18,  8x4=32,  10x5=50,  12x6=72,
+            14x7=98,  16x8=128,  18x9=162,  20x10=200,  100x50=5000
+            subtotal = 5970
+      2021  1x11=11,  3x12=36,  5x13=65,  7x14=98,  9x15=135,  11x16=176,  13x17=221,
+            15x18=270,  17x19=323,  19x20=380,  21x21=441,  (-60)(-40)=2400
+            subtotal = 4556
+      Sxy = 5970 + 4556 = 10526
+
+      numerator   = 24 x 10526 - 251 x 231 = 252624 - 57981 = 194643
+      first term  = 24 x 17311 - 251^2     = 415464 - 63001 = 352463
+      second term = 24 x  7511 - 231^2     = 180264 - 53361 = 126903
+      product     = 352463 x 126903                         = 44728612089
+      sqrt(44728612089)                                     = 211491.39959...
+      r = 194643 / 211491.39959... = 0.9203352968604872
+
+  The module uses `np.corrcoef`, which is the same quantity by a different route, and
+  returns 0.920335296860487 -- the two differ in the LAST BIT. The golden asserts the
+  integer formula to 1e-15 relative and says so here rather than pinning numpy's
+  rounding as though it were the definition.
+
+  top10_overlap. A's ten best sessions, in descending value:
+      100 -> 2020-06-20,  21 -> 2021-06-05,  20 -> 2020-06-05,  19 -> 2021-05-20,
+       18 -> 2020-05-20,  17 -> 2021-05-05,  16 -> 2020-05-05,  15 -> 2021-04-20,
+       14 -> 2020-04-20,  13 -> 2021-04-05
+  B's ten best sessions:
+       50 -> 2020-06-20,  21 -> 2021-06-05,  20 -> 2021-05-20,  19 -> 2021-05-05,
+       18 -> 2021-04-20,  17 -> 2021-04-05,  16 -> 2021-03-20,  15 -> 2021-03-05,
+       14 -> 2021-02-20,  13 -> 2021-02-05
+  Intersection:
+       2020-06-20, 2021-06-05, 2021-05-20, 2021-05-05, 2021-04-20, 2021-04-05
+  = 6 shared days. (A keeps four 2020 sessions B does not; B keeps four early-2021
+  sessions A does not.)
+
+  Monthly P&L:
+      month     A      B
+      2020-01  -18     -9
+      2020-02   10      5
+      2020-03   18      9
+      2020-04   26     13
+      2020-05   34     17
+      2020-06  120     60
+      2021-01    4     23
+      2021-02   12     27
+      2021-03   20     31
+      2021-04   28     35
+      2021-05   36     39
+      2021-06  -39    -19
+      sums     251    231
+
+  Episode months = the fewest months, best-first, reaching half the total:
+      A: half = 125.5.  2020-06 -> 120 (short);  + 2021-05 (36) -> 156 >= 125.5.  STOP.
+         A's episode months = {2020-06, 2021-05}
+      B: half = 115.5.  2020-06 -> 60;  + 2021-05 (39) -> 99;  + 2021-04 (35) -> 134
+         >= 115.5.  STOP.
+         B's episode months = {2020-06, 2021-05, 2021-04}
+      Shared = {2020-06, 2021-05}
+
+      same_month_share_a = (120 + 36) / 251 = 156 / 251 = 0.6215139442231076
+      same_month_share_b = ( 60 + 39) / 231 =  99 / 231 = 0.42857142857142855
+
+  flag: rho 0.9203 > 0.5  AND  0.6215 > 0.40  AND  0.42857 > 0.40   ->  True.
+
+  B's share is 0.4286 -- ABOVE the 0.40 bar, but only just, on a pair whose daily
+  correlation is 0.92. That is the honest shape of this control: the correlation is the
+  loud term and the month shares are the quiet ones, and the flag needs all three.
+
+================================================================================
+PART 7 -- WHAT IS DELIBERATELY NOT ASSERTED
+================================================================================
+
+  * No verdict. `episode_checks` returns numbers and one boolean, and the boolean is the
+    deposit's stated condition, not a promotion.
+  * No tolerance on the trim, the totals or the counts: they are exact in IEEE double and
+    the test uses `==`.
+  * The annualised Sharpes are compared at 1e-12, because they route through one sqrt and
+    one division; the hand values above are the full-precision repr of that arithmetic.

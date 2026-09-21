@@ -668,6 +668,11 @@ would look like data. The tokens are what is shown.
 | D587 | Futures fills are one library module with pessimism as the default, not five per-script literals that disagree | [record](D587-shared-futures-fill-model.md) |
 | D588 | The deposit documents' power arithmetic is one library module with a self-testing renderer, not five copies of a formul… | [record](D588-power-analysis-module.md) |
 | D589 | FIXTURE: the CME session calendar and event flags for the 36 breadth roots — 205,428 (root, ET calendar day) rows 2010-… | [record](D589-FIXTURE-cme-session-calendar-and-event-flags-36-roots.md) |
+| D590 | Hurdle P and the component daily series become library code, held to every published number they inherit | [record](D590-hurdle-p-and-the-component-series-become-library-code.md) |
+| D591 | A futures round trip is two bricks, commission and tick crossing, built from one reconciled table whose every number is… | [record](D591-futures-cost-bricks-and-the-reconciled-cost-table.md) |
+| D592 | The programme's α registry, trial counter and episode checks are library code with one state file, and the deposit's re… | [record](D592-programme-alpha-registry-trial-counter-and-episode-checks.md) |
+| D593 | The deposit's look-ahead controls become code: the runners' lag, a one-bar-delay rerun, a syntactic leak scan, and year… | [record](D593-look-ahead-defences-and-year-folds.md) |
+| D594 | The frozen-protocol layer: a model's parameters, code and dates get the same structural guard the DATA already has, and… | [record](D594-the-frozen-protocol-layer.md) |
 | D600 | D600 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
 
 <!-- REGISTER:END -->

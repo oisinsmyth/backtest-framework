@@ -59,10 +59,11 @@ build as another, which is the drift D102 exists to close.
 
 ## Rationale
 
-**The literals had already forked, and nothing could see it.** Twelve futures cost numbers
-were scattered across eleven runners — `COST_USD = 4.21`, `COST = {"CL": 4.00, …}`,
-`COMMISSION_RT` twice with different values, and the `comm_rt/2 + 0.5*tick` rule written
-inline. Reconciling them found **five disagreements**, recorded in the table's own
+**The literals had already forked, and nothing could see it.** Ten futures cost literals were
+scattered across six runners — `COST_USD = 4.21`, `COST = {"CL": 4.00, …}`, `COMMISSION_RT`
+twice with different values, `MICRO_OF`, `MINSIZE`, and the `comm_rt/2 + 0.5*tick` rule
+written inline. Reconciling them against the seven committed measurement artefacts found
+**five disagreements**, recorded in the table's own
 `disagreements` block and reproduced in the golden ledger:
 
 | what | the two values | resolution |

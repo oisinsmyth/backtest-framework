@@ -11,7 +11,7 @@ Start here:
 
 ```bash
 uv sync
-uv run pytest -q tests/golden     # 133 ledger-anchored tests, under a second
+uv run pytest -q tests/golden     # 248 ledger-anchored tests, under a second
 ```
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The

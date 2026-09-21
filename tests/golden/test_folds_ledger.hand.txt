@@ -1,0 +1,209 @@
+Golden-master hand-worked cases for validation/folds.py (D593). Companion to
+test_folds_ledger.py.
+
+Worked with a calendar and a pen. Nothing in this file was produced by importing
+this codebase (CONTRIBUTING.md: "the ground truth is produced by a calculator that
+never imports this codebase" -- a .hand.txt derived from the implementation
+launders the implementation's assumptions into the thing meant to check them).
+
+The ledger of record is `INDEX_REWEIGHT_FLOW_PREREG.md` §10 ("Fit on all other
+years, test on the held-out year, and repeat for every year") and unit test 9 ("a
+model evaluated on year y was not fitted using year y data"), plus
+`OPENING_AGENT_STATE_PREREG.md` §11. The era case is D555's three eras, copied
+from `scripts/run_d555_tsmom_replication.py:44`:
+
+    ERAS = [("2011-01-03", "2015-12-31"),
+            ("2016-01-04", "2019-12-31"),
+            ("2020-01-02", "2023-12-29")]
+
+No fixture is read and no return is computed. Dates in, positions out.
+
+================================================================================
+THE CALENDAR
+================================================================================
+Twelve dates, chosen so that every era boundary is straddled and both purge
+boundaries -- the date exactly `embargo_days` away and the one a day further --
+appear at least once.
+
+    pos   date          year    note
+    ---   -----------   ----    --------------------------------------------
+      0   2010-12-31    2010    one day before era 1 opens
+      1   2011-01-03    2011    era 1 first session
+      2   2011-06-15    2011
+      3   2015-12-31    2015    era 1 last session
+      4   2016-01-04    2016    era 2 first session
+      5   2016-07-01    2016
+      6   2019-12-31    2019    era 2 last session
+      7   2020-01-02    2020    era 3 first session
+      8   2020-06-30    2020
+      9   2023-12-29    2023    era 3 last session
+     10   2024-01-02    2024    the reserved forward slice: in NO era
+     11   2024-06-28    2024
+
+n = 12.
+
+================================================================================
+Case 1 -- year_blocks
+================================================================================
+Read the year off each date and collect the positions. Eight distinct years:
+
+    2010 -> [0]
+    2011 -> [1, 2]
+    2015 -> [3]
+    2016 -> [4, 5]
+    2019 -> [6]
+    2020 -> [7, 8]
+    2023 -> [9]
+    2024 -> [10, 11]
+
+Total positions 1+2+1+2+1+2+1+2 = 12, which is n. Ascending year order.
+
+================================================================================
+Case 2 -- leave_one_year_out(min_days=1)
+================================================================================
+Eight folds, one per year. Test = that year's block; train = the other twelve
+minus that block, so |train| = 12 - |test|.
+
+    label        test          |train|   train
+    ----------   -----------   -------   ------------------------------------
+    LOYO 2010    [0]              11     [1,2,3,4,5,6,7,8,9,10,11]
+    LOYO 2011    [1, 2]           10     [0,3,4,5,6,7,8,9,10,11]
+    LOYO 2015    [3]              11     [0,1,2,4,5,6,7,8,9,10,11]
+    LOYO 2016    [4, 5]           10     [0,1,2,3,6,7,8,9,10,11]
+    LOYO 2019    [6]              11     [0,1,2,3,4,5,7,8,9,10,11]
+    LOYO 2020    [7, 8]           10     [0,1,2,3,4,5,6,9,10,11]
+    LOYO 2023    [9]              11     [0,1,2,3,4,5,6,7,8,10,11]
+    LOYO 2024    [10, 11]         10     [0,1,2,3,4,5,6,7,8,9]
+
+Unit test 9, checked by hand on LOYO 2011: the train list contains 0 and 3 but
+neither 1 nor 2, so no 2011 session is in the fit.
+
+The test sets cover each of 0..11 exactly once, so assert_partition(folds, 12)
+passes.
+
+min_days = 200 REFUSES this calendar. Every year here holds 1 or 2 positions, so
+the thinnest is 1 and the guard fires on all eight. That is the point of the
+guard: a silently dropped partial year shortens the per-year table without making
+it look wrong, and the yearly sign tests in the deposit docs count exactly these
+folds.
+
+================================================================================
+Case 3 -- era_folds with D555's three eras
+================================================================================
+Bounds are inclusive at both ends.
+
+  era 1, 2011-01-03 .. 2015-12-31
+      pos 0 is 2010-12-31, which is BEFORE 2011-01-03          -> out
+      pos 1,2,3 are 2011-01-03, 2011-06-15, 2015-12-31         -> in
+      pos 4 is 2016-01-04, which is AFTER 2015-12-31           -> out
+      test [1,2,3]    train [0,4,5,6,7,8,9,10,11]   |train| = 9
+
+  era 2, 2016-01-04 .. 2019-12-31
+      test [4,5,6]    train [0,1,2,3,7,8,9,10,11]   |train| = 9
+
+  era 3, 2020-01-02 .. 2023-12-29
+      test [7,8,9]    train [0,1,2,3,4,5,6,10,11]   |train| = 9
+
+Three test sets of three: nine of the twelve positions. Positions 0, 10 and 11
+are in NO era -- 2010-12-31 predates the first and 2024 is the reserved forward
+slice -- so assert_partition(folds, 12) must FAIL, naming 3 of 12 missing with
+the first at 0. An era list is not a partition and the golden says so.
+
+================================================================================
+Case 4 -- purged(era_folds, dates, embargo_days=3)
+================================================================================
+The window removed from TRAIN around a contiguous test block lo..hi is the closed
+calendar interval [lo - 3 days, hi + 3 days]. Test positions are never touched.
+
+  era 1: block 2011-01-03 .. 2015-12-31
+      lower  2011-01-03 minus 3 days = 2010-12-31   (Jan 2, Jan 1, Dec 31)
+      upper  2015-12-31 plus  3 days = 2016-01-03   (Jan 1, Jan 2, Jan 3)
+      window [2010-12-31, 2016-01-03]
+      train  0  2010-12-31  == the lower bound, inclusive     -> DROP
+             4  2016-01-04  one day past the upper bound      -> keep
+             5..11                                            -> keep
+      train after purge [4,5,6,7,8,9,10,11]        |train| = 8   (was 9)
+
+  era 2: block 2016-01-04 .. 2019-12-31
+      lower  2016-01-04 minus 3 days = 2016-01-01
+      upper  2019-12-31 plus  3 days = 2020-01-03
+      window [2016-01-01, 2020-01-03]
+      train  0,1,2  (2010-2011)                                -> keep
+             3  2015-12-31, one day before the lower bound     -> keep
+             7  2020-01-02, inside (<= 2020-01-03)             -> DROP
+             8,9,10,11                                          -> keep
+      train after purge [0,1,2,3,8,9,10,11]        |train| = 8   (was 9)
+
+  era 3: block 2020-01-02 .. 2023-12-29
+      lower  2020-01-02 minus 3 days = 2019-12-30
+      upper  2023-12-29 plus  3 days = 2024-01-01
+      window [2019-12-30, 2024-01-01]
+      train  6  2019-12-31, inside (>= 2019-12-30)             -> DROP
+            10  2024-01-02, one day past the upper bound       -> keep
+             0..5, 11                                           -> keep
+      train after purge [0,1,2,3,4,5,10,11]        |train| = 8   (was 9)
+
+Each era loses exactly one training session, and in each case the session one day
+further out survives. Both ends of every block are purged: era 2 loses a session
+AFTER its block and era 3 loses one BEFORE its block.
+
+Test sets are unchanged: [1,2,3], [4,5,6], [7,8,9].
+
+================================================================================
+Case 5 -- purged(LOYO 2011, dates, embargo_days=3)
+================================================================================
+  block 2011-01-03 .. 2011-06-15  (positions 1 and 2, contiguous)
+      lower  2011-01-03 minus 3 = 2010-12-31
+      upper  2011-06-15 plus  3 = 2011-06-18
+      window [2010-12-31, 2011-06-18]
+      train  0  2010-12-31, == the lower bound                 -> DROP
+             3..11  all 2015 or later                          -> keep
+      train after purge [3,4,5,6,7,8,9,10,11]      |train| = 9   (was 10)
+
+================================================================================
+Case 6 -- a TWO-BLOCK test set, purged per run rather than per fold
+================================================================================
+A hand-made fold, test = [1, 9]: 2011-01-03 and 2023-12-29, thirteen years apart
+and NOT contiguous. Train = the other ten, [0,2,3,4,5,6,7,8,10,11].
+embargo_days = 1.
+
+  Per contiguous run, which is what purged() does:
+      run A, block 2011-01-03 .. 2011-01-03
+          window [2011-01-02, 2011-01-04]
+          train  0 is 2010-12-31  -> outside, keep
+                 2 is 2011-06-15  -> outside, keep
+      run B, block 2023-12-29 .. 2023-12-29
+          window [2023-12-28, 2023-12-30]
+          train  8 is 2020-06-30  -> outside, keep
+                10 is 2024-01-02  -> outside, keep
+      NOTHING is dropped.  |train| = 10, unchanged.
+
+  The alternative -- one window around the fold's global min and max -- would be
+      window [2011-01-02, 2023-12-30]
+      train  0  2010-12-31  outside  -> keep
+             2,3,4,5,6,7,8           -> ALL DROPPED
+            10  2024-01-02  outside  -> keep
+            11  2024-06-28  outside  -> keep
+      |train| = 3.
+
+  10 against 3. Purging per run is an embargo; purging the global span deletes
+  the middle of the sample, which is a different experiment.
+
+================================================================================
+Case 7 -- guards
+================================================================================
+  Unsorted:   ["2011-01-03", "2010-12-31"]  -- position 0 is after position 1.
+              Raises, and the message says "not sorted".
+  Duplicate:  ["2011-01-03", "2011-01-03"]  -- the same session twice, which a
+              fold index cannot tell apart. Raises, and the message names the
+              repeated date, NOT "not sorted": two defects, two fixes.
+  One year:   ["2011-01-03", "2011-06-15"]  -- leave-one-year-out on a single
+              year leaves an empty training set. Raises.
+  Overlap:    eras [("2011-01-01","2016-12-31"), ("2016-01-01","2019-12-31")]
+              share 2016-01-04 and 2016-07-01. Raises: a position in two test
+              sets is scored twice.
+  Empty era:  ("2012-01-01","2012-12-31") matches none of the twelve dates.
+              Raises: an empty era makes a fold that cannot fire.
+  Overlapping fit and evaluation: Fold(train=[0,1], test=[1]) -- position 1 is
+              in both. Refused at construction, which is unit test 9 made
+              structural.

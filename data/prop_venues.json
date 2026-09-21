@@ -1,0 +1,1694 @@
+{
+ "schema": "D590 prop venue terms: one record per Plan in scripts/d386_full_lifecycle.py PLANS, every field carrying its own provenance.",
+ "generated_by": "D590",
+ "plan_fields_order": [
+  "firm",
+  "size",
+  "fee_eval",
+  "monthly",
+  "fee_activation",
+  "target",
+  "dd_eval",
+  "kind_eval",
+  "lock_eval",
+  "dd_fund",
+  "kind_fund",
+  "lock_fund",
+  "qual_threshold",
+  "qual_days",
+  "min_total",
+  "caps",
+  "max_payouts",
+  "min_payout",
+  "safety_net",
+  "consistency",
+  "fund_start",
+  "post_payout_floor",
+  "start_funded",
+  "notes"
+ ],
+ "model_assumptions_not_attached_to_any_field": [
+  "D386 ASSUMPTIONS #4: daily P&L is Gaussian in scripts/d386_full_lifecycle.simulate. Real P&L is fat-tailed, which RAISES the chance of clearing a high daily-profit threshold at small size and LOWERS survival. Both effects are unmodelled; hurdle_p.p4_life's measured provider is the route that does not assume it (D440).",
+  "D386 ASSUMPTIONS #5: the 7-day (MFFU) and 30-day (Apex) inactivity rules are NOT modelled; at every risk level D386 tested they are cleared comfortably."
+ ],
+ "venues": {
+  "apex_25k": {
+   "key": "apex_25k",
+   "firm": "Apex",
+   "size": 25000,
+   "plan": {
+    "firm": {
+     "value": "Apex",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 25000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 450.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 119.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 1000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "dd_fund": {
+     "value": 1000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 1100.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "qual_threshold": {
+     "value": 100.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #3): Apex states no minimum NET profit since last payout beyond its per-day threshold"
+    },
+    "caps": {
+     "value": [
+      1000.0,
+      1000.0,
+      1000.0,
+      1000.0,
+      1000.0,
+      1000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 6,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 1000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": 0.5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee; 6 payouts then the PA is closed; floor locks at start+$100",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:59",
+    "provenance": "RULES.md R11 P2 ('Apex 4:59pm ET'), 2026-08-29"
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6, quoting Apex's own terms: 'No Automation or Algorithm Usage allowed' on Performance Accounts, penalty 'forfeiture of all funds and balances'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "apex_50k": {
+   "key": "apex_50k",
+   "firm": "Apex",
+   "size": 50000,
+   "plan": {
+    "firm": {
+     "value": "Apex",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 50000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 550.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 139.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "dd_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 2100.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "qual_threshold": {
+     "value": 250.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #3): Apex states no minimum NET profit since last payout beyond its per-day threshold"
+    },
+    "caps": {
+     "value": [
+      1500.0,
+      1500.0,
+      2000.0,
+      2500.0,
+      2500.0,
+      3000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 6,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": 0.5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee; 6 payouts then the PA is closed; floor locks at start+$100",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:59",
+    "provenance": "RULES.md R11 P2 ('Apex 4:59pm ET'), 2026-08-29"
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6, quoting Apex's own terms: 'No Automation or Algorithm Usage allowed' on Performance Accounts, penalty 'forfeiture of all funds and balances'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "apex_100k": {
+   "key": "apex_100k",
+   "firm": "Apex",
+   "size": 100000,
+   "plan": {
+    "firm": {
+     "value": "Apex",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 100000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 990.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 149.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 6000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 6000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "dd_fund": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 3100.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "qual_threshold": {
+     "value": 300.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #3): Apex states no minimum NET profit since last payout beyond its per-day threshold"
+    },
+    "caps": {
+     "value": [
+      2000.0,
+      2500.0,
+      2500.0,
+      3000.0,
+      4000.0,
+      4000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 6,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": 0.5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee; 6 payouts then the PA is closed; floor locks at start+$100",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:59",
+    "provenance": "RULES.md R11 P2 ('Apex 4:59pm ET'), 2026-08-29"
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6, quoting Apex's own terms: 'No Automation or Algorithm Usage allowed' on Performance Accounts, penalty 'forfeiture of all funds and balances'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "apex_150k": {
+   "key": "apex_150k",
+   "firm": "Apex",
+   "size": 150000,
+   "plan": {
+    "firm": {
+     "value": "Apex",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 150000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 1890.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 159.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 9000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 4005.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 9000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "dd_fund": {
+     "value": 4005.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 4105.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); D386 note: 'floor locks at start+$100'"
+    },
+    "qual_threshold": {
+     "value": 350.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #3): Apex states no minimum NET profit since last payout beyond its per-day threshold"
+    },
+    "caps": {
+     "value": [
+      2500.0,
+      3000.0,
+      3000.0,
+      3000.0,
+      4000.0,
+      5000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 6,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 4005.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": 0.5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee; 6 payouts then the PA is closed; floor locks at start+$100",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:59",
+    "provenance": "RULES.md R11 P2 ('Apex 4:59pm ET'), 2026-08-29"
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6, quoting Apex's own terms: 'No Automation or Algorithm Usage allowed' on Performance Accounts, penalty 'forfeiture of all funds and balances'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "mffu_rapid_eod_25k": {
+   "key": "mffu_rapid_eod_25k",
+   "firm": "MFFU Rapid EOD",
+   "size": 25000,
+   "plan": {
+    "firm": {
+     "value": "MFFU Rapid EOD",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 25000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 145.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 1000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 1100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "dd_fund": {
+     "value": 1000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 1100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "qual_threshold": {
+     "value": 100.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 1000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee, $0 activation, NO payout cap, no funded consistency rule",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:10",
+    "provenance": "RULES.md R11 P2 amendment 2026-08-29, quoting MyFundedFutures' own help centre: trades 'remain open until the New York session closes at 4:10 PM EST'; the same literal is scripts/d500_candidate_hurdle_p.py FLATTEN_ET"
+   },
+   "automation_permitted_funded": {
+    "value": true,
+    "provenance": "RULES.md R11 P6: 'Only Topstep and MyFundedFutures permit it.' Third-party comparison tables contradict both firms' own terms and must not be relied on"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "mffu_rapid_eod_50k": {
+   "key": "mffu_rapid_eod_50k",
+   "firm": "MFFU Rapid EOD",
+   "size": 50000,
+   "plan": {
+    "firm": {
+     "value": "MFFU Rapid EOD",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 50000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 209.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 2100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "dd_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 2100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "qual_threshold": {
+     "value": 150.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee, $0 activation, NO payout cap, no funded consistency rule",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:10",
+    "provenance": "RULES.md R11 P2 amendment 2026-08-29, quoting MyFundedFutures' own help centre: trades 'remain open until the New York session closes at 4:10 PM EST'; the same literal is scripts/d500_candidate_hurdle_p.py FLATTEN_ET"
+   },
+   "automation_permitted_funded": {
+    "value": true,
+    "provenance": "RULES.md R11 P6: 'Only Topstep and MyFundedFutures permit it.' Third-party comparison tables contradict both firms' own terms and must not be relied on"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "mffu_rapid_50k": {
+   "key": "mffu_rapid_50k",
+   "firm": "MFFU Rapid",
+   "size": 50000,
+   "plan": {
+    "firm": {
+     "value": "MFFU Rapid",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 50000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 209.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 2100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "dd_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 2100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "qual_threshold": {
+     "value": 150.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee, $0 activation, NO payout cap, no funded consistency rule",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:10",
+    "provenance": "RULES.md R11 P2 amendment 2026-08-29, quoting MyFundedFutures' own help centre: trades 'remain open until the New York session closes at 4:10 PM EST'; the same literal is scripts/d500_candidate_hurdle_p.py FLATTEN_ET"
+   },
+   "automation_permitted_funded": {
+    "value": true,
+    "provenance": "RULES.md R11 P6: 'Only Topstep and MyFundedFutures permit it.' Third-party comparison tables contradict both firms' own terms and must not be relied on"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "mffu_rapid_100k": {
+   "key": "mffu_rapid_100k",
+   "firm": "MFFU Rapid",
+   "size": 100000,
+   "plan": {
+    "firm": {
+     "value": "MFFU Rapid",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 100000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 356.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 6000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 3100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "dd_fund": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 3100.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "qual_threshold": {
+     "value": 150.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee, $0 activation, NO payout cap, no funded consistency rule",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:10",
+    "provenance": "RULES.md R11 P2 amendment 2026-08-29, quoting MyFundedFutures' own help centre: trades 'remain open until the New York session closes at 4:10 PM EST'; the same literal is scripts/d500_candidate_hurdle_p.py FLATTEN_ET"
+   },
+   "automation_permitted_funded": {
+    "value": true,
+    "provenance": "RULES.md R11 P6: 'Only Topstep and MyFundedFutures permit it.' Third-party comparison tables contradict both firms' own terms and must not be relied on"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "mffu_rapid_150k": {
+   "key": "mffu_rapid_150k",
+   "firm": "MFFU Rapid",
+   "size": 150000,
+   "plan": {
+    "firm": {
+     "value": "MFFU Rapid",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 150000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 463.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 9000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 4600.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "dd_fund": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 4600.0,
+     "provenance": "help.myfundedfutures.com/en/articles/13134709-rapid-plan-50k-a-comprehensive-look and /14116402-rapid-plan-25k-a-comprehensive-look, quoted verbatim in data/d445_floor_lock_sources.md: 'Max Loss Lock at $100. Once your trailing Max Loss reaches $100, it locks there.' (D445, fetched 2026-09-11, HTTP 200, bytes recorded)"
+    },
+    "qual_threshold": {
+     "value": 150.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "one-time fee, $0 activation, NO payout cap, no funded consistency rule",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:10",
+    "provenance": "RULES.md R11 P2 amendment 2026-08-29, quoting MyFundedFutures' own help centre: trades 'remain open until the New York session closes at 4:10 PM EST'; the same literal is scripts/d500_candidate_hurdle_p.py FLATTEN_ET"
+   },
+   "automation_permitted_funded": {
+    "value": true,
+    "provenance": "RULES.md R11 P6: 'Only Topstep and MyFundedFutures permit it.' Third-party comparison tables contradict both firms' own terms and must not be relied on"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "topstep_50k": {
+   "key": "topstep_50k",
+   "firm": "Topstep",
+   "size": 50000,
+   "plan": {
+    "firm": {
+     "value": "Topstep",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 50000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 49.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": true,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 149.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_threshold": {
+     "value": 150.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.01,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      2000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 125.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 0.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #2): Topstep's payout rule is '50% of balance up to the cap'; the cap is modelled and the 50%-of-balance clause is APPROXIMATED by allowing withdrawal down to the start level"
+    },
+    "consistency": {
+     "value": 0.5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "MONTHLY $49; a payout sets the MLL to $0, so the floor moves to the start level",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": "16:10",
+    "provenance": "RULES.md R11 P2 amendment 2026-08-29, quoting Topstep's funded-account rules: 'All positions MUST be closed prior to 3:10 PM CT or prior to the market close of that product, whichever is sooner'; 15:10 CT = 16:10 ET"
+   },
+   "automation_permitted_funded": {
+    "value": true,
+    "provenance": "RULES.md R11 P6: 'Only Topstep and MyFundedFutures permit it.' Third-party comparison tables contradict both firms' own terms and must not be relied on"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "take_profit_trader_25k": {
+   "key": "take_profit_trader_25k",
+   "firm": "Take Profit Trader",
+   "size": 25000,
+   "plan": {
+    "firm": {
+     "value": "Take Profit Trader",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 25000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 150.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": true,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 130.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_fund": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_threshold": {
+     "value": 250.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 1500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "MONTHLY billing; eval is EOD-trailed, funded is INTRADAY-trailed",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": null,
+    "provenance": "UNVERIFIED (D590): no flatten time for Take Profit Trader appears in RULES.md R11, in scripts/d386_full_lifecycle.py, or in any script literal in this repository. p2_flatten RAISES on this venue."
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6: 'Take Profit Trader bans EAs throughout.'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "take_profit_trader_50k": {
+   "key": "take_profit_trader_50k",
+   "firm": "Take Profit Trader",
+   "size": 50000,
+   "plan": {
+    "firm": {
+     "value": "Take Profit Trader",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 50000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 170.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": true,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 130.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_threshold": {
+     "value": 500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 2000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "MONTHLY billing; eval is EOD-trailed, funded is INTRADAY-trailed",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": null,
+    "provenance": "UNVERIFIED (D590): no flatten time for Take Profit Trader appears in RULES.md R11, in scripts/d386_full_lifecycle.py, or in any script literal in this repository. p2_flatten RAISES on this venue."
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6: 'Take Profit Trader bans EAs throughout.'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "take_profit_trader_100k": {
+   "key": "take_profit_trader_100k",
+   "firm": "Take Profit Trader",
+   "size": 100000,
+   "plan": {
+    "firm": {
+     "value": "Take Profit Trader",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 100000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 330.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": true,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 130.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 6000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_fund": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_threshold": {
+     "value": 500.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #1): Take Profit Trader publishes the qualifying-day threshold for 25K ($250) and 50K ($500) only; lane 04 field 18 has no larger-size row"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 3000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "MONTHLY billing; eval is EOD-trailed, funded is INTRADAY-trailed ; qualifying threshold ASSUMED",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": null,
+    "provenance": "UNVERIFIED (D590): no flatten time for Take Profit Trader appears in RULES.md R11, in scripts/d386_full_lifecycle.py, or in any script literal in this repository. p2_flatten RAISES on this venue."
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6: 'Take Profit Trader bans EAs throughout.'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  },
+  "take_profit_trader_150k": {
+   "key": "take_profit_trader_150k",
+   "firm": "Take Profit Trader",
+   "size": 150000,
+   "plan": {
+    "firm": {
+     "value": "Take Profit Trader",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "size": {
+     "value": 150000,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_eval": {
+     "value": 360.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "monthly": {
+     "value": true,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fee_activation": {
+     "value": 130.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "target": {
+     "value": 9000.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_eval": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_eval": {
+     "value": "eod",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_eval": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "dd_fund": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "kind_fund": {
+     "value": "intra",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "lock_fund": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "qual_threshold": {
+     "value": 500.0,
+     "provenance": "assumed (D386 ASSUMPTIONS #1): Take Profit Trader publishes the qualifying-day threshold for 25K ($250) and 50K ($500) only; lane 04 field 18 has no larger-size row"
+    },
+    "qual_days": {
+     "value": 5,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_total": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "caps": {
+     "value": [
+      10000000.0
+     ],
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "max_payouts": {
+     "value": 20,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "min_payout": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "safety_net": {
+     "value": 4500.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "consistency": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "fund_start": {
+     "value": 0.0,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "post_payout_floor": {
+     "value": null,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    },
+    "start_funded": {
+     "value": false,
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08); test fixture only (skip the evaluation), False for every real plan"
+    },
+    "notes": {
+     "value": "MONTHLY billing; eval is EOD-trailed, funded is INTRADAY-trailed ; qualifying threshold ASSUMED",
+     "provenance": "D386 lane file (scripts/d386_full_lifecycle.py PLANS, 2026-09-08)"
+    }
+   },
+   "flatten_time_et": {
+    "value": null,
+    "provenance": "UNVERIFIED (D590): no flatten time for Take Profit Trader appears in RULES.md R11, in scripts/d386_full_lifecycle.py, or in any script literal in this repository. p2_flatten RAISES on this venue."
+   },
+   "automation_permitted_funded": {
+    "value": false,
+    "provenance": "RULES.md R11 P6: 'Take Profit Trader bans EAs throughout.'"
+   },
+   "daily_loss_limit": {
+    "value": null,
+    "provenance": "unverified, R11 2026-09-13 -- R11 justifies P3 with 'daily loss limits run 2-3%', but the five MFFU plans and Topstep as encoded in D386 carry NO daily-loss-limit field, only a trailing drawdown. Whether a daily limit is a real term at either of the two venues P6 permits has not been checked against the terms pages."
+   }
+  }
+ }
+}

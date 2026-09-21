@@ -1,0 +1,301 @@
+Golden-master hand-worked cases for validation/hurdle_p.py (D590). Companion to
+test_hurdle_p_ledger.py.
+
+NOTHING BELOW IMPORTS THIS CODEBASE. Every number was worked here, by hand, from
+RULES.md R11's own definitions, before the module was run against it (CONTRIBUTING.md
+step 2). Square roots are worked by Newton iteration and the working is shown, so a
+reader can check the digit the test asserts on.
+
+The ledger of record is RULES.md R11 as it stands after all six amendments:
+
+    P1  size so the trailing drawdown reaches the cap; report the NUMBER, never a verdict
+        (restatement 2026-09-08)
+    P2  no exposure across the VENUE'S flatten time (amendment 2026-08-29)
+    P3a breaches per year, a day beyond 2% of the account, annualised      bar <= 1.0
+    P3b 1 - E[life | drawdown OR P3 breach] / E[life | drawdown alone]     bar <= 0.33
+    P3c the worst day, in dollars, in daily sigma, and as a share of the account's
+        whole 4% loss budget. REPORTED, no longer a gate  (amendment 2026-09-13)
+    P4  expected profit before breach vs the account's cost (binding); the account's
+        LIFE, never 1/(per-hold breach rate)   (ruling 2026-09-11, restatement 2026-09-12)
+    P5  recognised = total - max(0, best_day - 0.30 * total)   (restatement 2026-09-12;
+        the R11 header table still says 40% and is stale)
+    P6  the venue permits automation when funded: a fact, not a measurement
+
+THE FLOOR IS DOLLAR-NATIVE (D542). Equity is a cumulative SUM of daily dollars, the
+peak ratchets up and never down, and death is an absolute dollar distance:
+
+    eq += x ;  peak = max(peak, eq) ;  dead when peak - eq >= cap
+
+It is NOT a fraction of a compounded peak. Every drawdown below is worked that way.
+
+================================================================================
+THE SERIES
+================================================================================
+Fourteen sessions of daily P&L in US dollars, at one micro contract. Account
+$50,000, so the trailing drawdown budget is 4% = $2,000 and the P3 daily cap is
+2% = $1,000.
+
+  i   :   0     1      2    3     4      5      6     7    8    9    10    11    12    13
+  x_i : 800 -1200    600  400  -300   1500  -1050   700  250  900  -700  -600  -900  1100
+
+  n         = 14
+  sum x     = 800 - 1200 + 600 + 400 - 300 + 1500 - 1050 + 700 + 250 + 900
+              - 700 - 600 - 900 + 1100
+            = 1500          (running: 800, -400, 200, 600, 300, 1800, 750, 1450,
+                             1700, 2600, 1900, 1300, 400, 1500)
+  mean      = 1500 / 14 = 750 / 7 = 107.142857142857142857...
+
+  sum x^2   = 640000 + 1440000 + 360000 + 160000 + 90000 + 2250000 + 1102500
+            + 490000 + 62500 + 810000 + 490000 + 360000 + 810000 + 1210000
+            = 10,275,000
+
+  sum (x - mean)^2 = sum x^2 - n * mean^2          (exact, since sum x = n * mean)
+                   = 10,275,000 - 14 * (750/7)^2
+                   = 10,275,000 - 14 * 562500/49
+                   = 10,275,000 - 7,875,000/49
+                   = (503,475,000 - 7,875,000)/49
+                   = 495,600,000/49
+
+  var (ddof = 1)   = (495,600,000/49)/13 = 495,600,000/637
+                   = 778,021.978021978021978...
+     long division: 637 x 778,000 = 495,586,000, remainder 14,000;
+                    14,000/637 = 21.978021978...  ->  778,021.978021978
+
+  sd = sqrt(778,021.978021978)
+     882^2       = 777,924                      (low by 97.978021978)
+     882.0555^2  = 882 x 882.0555 + 0.0555 x 882.0555
+                 = 777,972.951 + 48.954 = 778,021.905     (low by 0.073)
+     Newton step : 0.073 / (2 x 882.0555) = 0.073/1764.111 = 0.0000414
+     sd          = 882.0555414        (asserted to 1e-6)
+
+  sqrt(252) = 15.87450786638754
+
+  Sharpe  = mean / sd * sqrt(252)
+          = 107.142857142857 / 882.0555414 * 15.87450786638754
+          = 0.1214695135 * 15.87450786638754
+          = 1.928268741                 (asserted to 1e-6)
+
+  R17: a Sharpe is never reported without its Sortino.
+  downside deviation at MAR = 0, ddof = 1 (the SAME divisor as the Sharpe's sd, so the
+  pair differ only in which deviations are counted):
+     negatives: -1200, -300, -1050, -700, -600, -900
+     squares  : 1,440,000 + 90,000 + 1,102,500 + 490,000 + 360,000 + 810,000
+              = 4,292,500
+     /13      = 330,192.307692307692
+     sqrt     : 574^2 = 329,476 (low by 716.3077);  716.3077/1148 = 0.62396
+                574.6236^2 = 574 x 574.6236 + 0.6236 x 574.6236
+                           = 329,833.9464 + 358.3355 = 330,192.2819  (low by 0.0258)
+                Newton     : 0.0258/1149.247 = 0.0000224
+                downside   = 574.6236224      (asserted to 1e-5)
+     Sortino = 107.142857142857 / 574.6236224 * 15.87450786638754
+             = 0.1864610 * 15.87450786638754
+             = 2.959920                       (asserted to 1e-5)
+
+================================================================================
+Case 1 - P1, the SIZING RULE. A number, never PASS/FAIL.
+================================================================================
+The trailing drawdown on the cumulative SUM, peak starting at 0 and ratcheting:
+
+   i    x_i     eq      peak    peak - eq
+   0    800     800      800        0
+   1  -1200    -400      800     1200
+   2    600     200      800      600
+   3    400     600      800      200
+   4   -300     300      800      500
+   5   1500    1800     1800        0
+   6  -1050     750     1800     1050
+   7    700    1450     1800      350
+   8    250    1700     1800      100
+   9    900    2600     2600        0
+  10   -700    1900     2600      700
+  11   -600    1300     2600     1300
+  12   -900     400     2600     2200   <- the maximum
+  13   1100    1500     2600     1100
+
+  max trailing drawdown = $2,200
+
+Trading k times the size multiplies every daily dollar, and therefore the drawdown,
+by k. So the size that puts the drawdown exactly on the $2,000 budget is
+
+  size multiplier = 2000 / 2200 = 10/11 = 0.909090909090909...
+
+  at the traded size : mean x 252 = (1500/14) x 252 = 1500 x 18 = $27,000 / yr   EXACT
+  after P1 sizing    : 27,000 x 10/11 = 270,000/11 = $24,545.454545454... / yr
+
+  NO PASS/FAIL KEY EXISTS. R11's restatement of 2026-09-08: "P1 is never reported as
+  PASS or FAIL." The test asserts the absence of any such key.
+
+  BASIS. R11 P1 measures the trailing drawdown on OPEN equity. A daily-close series
+  has no intraday excursion, so $2,200 is the CLOSED-equity drawdown, a lower bound on
+  the open-equity one; the multiplier and the post-sizing return are therefore upper
+  bounds, and the returned dict says so.
+
+================================================================================
+Case 2 - max_drawdown_life: the death, and the restart
+================================================================================
+From the table in Case 1, the first bar at which peak - eq >= 2000 is i = 12
+(2200 >= 2000). The account is bought at i = 0, so its life is 12 - 0 + 1 = 13
+sessions. It restarts FLAT (eq = 0, peak = 0) at i = 13, which is the last bar, and
+never dies again.
+
+  n_deaths = 1
+  mean life = 13.0 sessions          (UNROUNDED: lives of 1 and 2 average 1.5, and
+                                      truncating that to 1 understates every mean)
+  episodes  = [(0, 12, 13)]          (start index, death index, length)
+
+A second, smaller case pins the RESTART, which a single-death series cannot:
+
+  y = [-250, +100, -250, +100],  cap = 250
+   i=0: eq = -250, peak = 0, dd = 250 >= 250   -> death, life 1, reset
+   i=1: eq = +100, peak = 100, dd = 0
+   i=2: eq = -150, peak = 100, dd = 250 >= 250 -> death, life (2 - 1 + 1) = 2, reset
+   i=3: eq = +100, peak = 100, dd = 0
+  n_deaths = 2, mean life = (1 + 2)/2 = 1.5, episodes = [(0,0,1), (1,2,2)]
+
+And the guard: a cap of 0 or below is not a dollar distance. It RAISES.
+
+================================================================================
+Case 3 - P3, the RATE (amendment 2026-09-13)
+================================================================================
+P3 cap = 2% of $50,000 = $1,000. Days at or beyond -$1,000:
+
+  i = 1  (-1200)  and  i = 6  (-1050)          ->  2 breaches in 14 sessions
+
+  P3a = 2/14 x 252 = 36.0 breaches a year        EXACT (252/14 = 18; 2 x 18 = 36)
+        bar 1.0  ->  FAIL, and by a factor of 36
+
+  recurrence = (14/2)/252 = 7/252 = 0.0277777777... years between breaches
+
+  P(>=1 breach in 252 sessions) = 1 - (1 - 2/14)^252 = 1 - (6/7)^252
+        ln(6/7) = -0.1541506798;  x 252 = -38.84597;  e^-38.84597 = 1.5e-17
+        = 1 - 1.5e-17, which is 1.0 in float64.
+
+P3b - the life cost of enforcing P3. A second walker, dying on EITHER the trailing
+drawdown OR a single day at or beyond -$1,000:
+
+   i    x_i     eq     peak   peak-eq   x <= -1000 ?   verdict
+   0    800     800     800       0         no
+   1  -1200    -400     800    1200        YES         death, life 1-0+1 = 2, reset
+   2    600     600     600       0         no
+   3    400    1000    1000       0         no
+   4   -300     700    1000     300         no
+   5   1500    2200    2200       0         no
+   6  -1050    1150    2200    1050        YES         death, life 6-2+1 = 5, reset
+   7    700     700     700       0         no
+   8    250     950     950       0         no
+   9    900    1850    1850       0         no
+  10   -700    1150    1850     700         no
+  11   -600     550    1850    1300         no
+  12   -900    -350    1850    2200         no (but 2200 >= 2000)
+                                                       death, life 12-7+1 = 6, reset
+  13   1100    1100    1100       0         no
+
+  lives with P3 = [2, 5, 6],  mean = 13/3 = 4.333333333...,  3 deaths
+  life on the drawdown alone   = 13.0 sessions, 1 death       (Case 2)
+
+  P3b = 1 - (13/3)/13 = 1 - 1/3 = 2/3 = 0.666666666...
+        bar 0.33  ->  FAIL
+
+P3c - REPORTED, no longer a gate:
+  worst day             = -$1,200
+  in daily sigma        = -1200 / 882.0555414 = -1.360458547
+  share of the $2,000   = 1200/2000 = 0.6   EXACT
+  loss budget
+
+================================================================================
+Case 4 - P3a exactly AT its bar, which is the boundary the amendment names
+================================================================================
+A 252-session series, all zeros except one day of -$1,200 and ten days of +$100:
+
+  breaches = 1 in 252 sessions  ->  P3a = 1/252 x 252 = 1.0 exactly
+  the bar is "<= 1.0 a year", so this PASSES at the boundary.
+
+  Add a second -$1,200 day and P3a = 2.0  ->  FAILS. The pair is the check that the
+  bar can fire at all.
+
+================================================================================
+Case 5 - P5, the 30% haircut. A convention, never a screen.
+================================================================================
+  total    = sum x = $1,500
+  best day = $1,500                       (i = 5)
+  cap      = 0.30 x 1,500 = $450
+  excess   = max(0, 1500 - 450) = $1,050
+  recognised = 1500 - 1050 = $450
+  best day share = 1500/1500 = 1.0 exactly
+
+  Two things this case is chosen to show, both of them stated in R11's own
+  restatement: the haircut is deliberately simple and does NOT reproduce any firm's
+  payout arithmetic (after the cut the best day is 1050/450 of what remains), and
+  NOTHING IS REJECTED for it. `P5_pass` is True whatever the haircut.
+
+  The cap is 30%, not the 40% the R11 header table still shows. The 2026-09-12
+  restatement supersedes the table, and `scripts/d495_agree_confluence.py` has used
+  0.30 since that day. RULES.md is append-only and is not edited by D590.
+
+================================================================================
+Case 6 - P4's Brownian barrier, and the UNIT boundary
+================================================================================
+D496's closed form works in ACCOUNT FRACTIONS. Feeding it dollars crashed D503's
+first run, so the dollar wrapper converts and asserts.
+
+  sigma_frac = 882.0555414 / 50,000 = 0.01764111083
+  D          = 2,000 / 50,000 = 0.04
+  mu         = sigma_frac x Sharpe / sqrt(252)
+             = mean / account                         (identically: the sd cancels)
+             = (1500/14)/50,000 = 3/1400 = 0.002142857142857143   EXACT
+
+  sigma_frac^2 = var / account^2 = 778,021.978021978 / 2.5e9
+               = 0.000311208791208791
+
+  theta = 2 mu / sigma_frac^2 = 0.004285714285714 / 0.000311208791208791
+        = 13.7711866
+            check: 0.000311208791 x 13.77 = 0.0042853452 (low by 3.6928e-7);
+                   3.6928e-7/3.11208791e-4 = 0.0011866
+
+  theta x D = 13.7711866 x 0.04 = 0.5508474640
+  expm1(0.5508474640) = e^0.5508474640 - 1
+       e^0.55       = 1.733253018
+       e^0.00084746 = 1.000847819
+       product      = 1.733253018 x 1.000847819 = 1.734722506
+       expm1        = 0.734722506
+
+  E[max] = (sigma_frac^2 / (2 mu)) x expm1(theta D) = (1/theta) x 0.734722506
+         = 0.0726153864 x 0.734722506 = 0.0533521677
+  profit (fraction) = 0.0533521677 - 0.04 = 0.0133521677
+  profit (dollars)  = 0.0133521677 x 50,000 = $667.608        (asserted to 1e-2)
+  life (days)       = 0.0133521677 / 0.002142857142857 = 6.23101   (asserted to 1e-4)
+
+  THE GUARD. A daily sigma passed as a FRACTION (0.01764 instead of 882.06) makes
+  sigma/account = 3.5e-7, far below the module's 1e-5 floor -- $0.50 a day on a
+  $50,000 account, under one tick of every instrument these venues offer. It RAISES.
+  So does a sigma at or above the whole account, a non-positive account, and a
+  drawdown budget above the account.
+
+================================================================================
+Case 7 - P2 and P6, which are facts about a venue and not statistics
+================================================================================
+  P2. MyFundedFutures' flatten time is 16:10 ET, quoted in R11's amendment of
+  2026-08-29 from the firm's own help centre. An exit at 15:59 clears it; an exit at
+  16:11 does not. Take Profit Trader's flatten time appears in NO source this
+  repository holds, so `p2_flatten` RAISES on it rather than assuming one -- R11:
+  "a fact about the venue, to be quoted from its own documentation, never assumed."
+
+  P6. R11 quotes Apex's own terms -- "No Automation or Algorithm Usage allowed" on
+  Performance Accounts, penalty "forfeiture of all funds and balances" -- and Take
+  Profit Trader bans EAs throughout. Only Topstep and MyFundedFutures permit it.
+
+    apex_50k             P6 FAIL
+    take_profit_trader_50k P6 FAIL
+    topstep_50k          P6 PASS
+    mffu_rapid_eod_50k   P6 PASS
+
+================================================================================
+What this golden does NOT cover, and why
+================================================================================
+P4's LIFECYCLE arm (`p4_life`) is a 15,000-path Monte Carlo through D386's venue
+mechanics. It has no hand-computable value, so it is held to the PUBLISHED one
+instead: `tests/unit/test_hurdle_p.py` reproduces `data/d440_lifecycle.json`'s
+MFFU Rapid EOD 50K / SPY / voltgt cell at f* = 0.007 -- V = $77.7357587481,
+funded life 0.1350875596 years -- to the ten decimal places that artefact was
+written with, and reproduces `scripts/d386_full_lifecycle.simulate` bit-identically
+through the injected Gaussian provider on 12 cells x 5 fields (D440's own [P1] gate).

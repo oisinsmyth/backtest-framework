@@ -134,7 +134,7 @@ see [D78](docs/decisions/D78-property-test-conventions.md) for the pattern. The 
 
 ```bash
 uv sync
-uv run pytest -q tests/golden     # 133 ledger-anchored tests, no data needed
+uv run pytest -q tests/golden     # 248 ledger-anchored tests, no data needed
 uv run pytest -q                  # everything; for runtimes see docs/RUNNING.md
 uv run ruff check src tests scripts  # E4/E7/E9/F; scripts/ narrower (D543) — errors, not style
 uv run mypy                          # the library only; tests and scripts are out of scope
