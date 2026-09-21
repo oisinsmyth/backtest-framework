@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 342 of these records carry neither field —
+**No Status or Category column, deliberately.** 343 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -676,6 +676,7 @@ would look like data. The tokens are what is shown.
 | D600 | D600 STAGE 0 RESULT — M3 NOT SUPPORTED; the de-seasonalised signal SURVIVES its rotation null and no other; T3 clears t… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) · [RESULT](D600-STAGE-0-RESULT-M3-M4-not-supported-M5-unresolved-on-storage.md) |
 | D601 | FIXTURE: the four macro fixtures for the basis-momentum closure programme — the He–Kelly–Manela intermediary factors (m… | [record](D601-FIXTURE-macro-series-for-the-basis-momentum-closure-programme.md) |
 | D602 | VOID on its own harness. The covered-parity correction built from monthly-average 3-month rates does not remove the rat… | [PRE-REG](D602-PRE-REG-basis-momentum-on-FX-in-covered-parity-space.md) · [RESULT](D602-RESULT-VOID-the-parity-correction-over-shoots-on-monthly-rates.md) |
+| D603 | BASIS_MOMENTUM.md is CLOSED by the principal, and the synthesis of the basis-momentum programme D564–D602: ten free tes… | [record](D603-CLOSED-basis-momentum-every-free-test-run-none-supported.md) |
 
 <!-- REGISTER:END -->
 
