@@ -523,6 +523,65 @@ built on those nine wrong dates; *(iv)* **the 2019-07-04 week shows a schedule r
 before June 2019 put the gas report on Friday 07-05, every later capture on Wednesday 07-03 at
 12:00, and the later statement wins, with the conflict recorded.
 
+**The prop-firm venue terms ([D590](decisions/D590-hurdle-p-and-the-component-series-become-library-code.md), 2026-09-21).** [`prop_venues.json`](../data/prop_venues.json) — the 14 plans
+`scripts/d386_full_lifecycle.py` carried as a Python literal (Apex 25/50/100/150K, MyFundedFutures
+Rapid and Rapid EOD 25–150K, Topstep 50K, Take Profit Trader 25–150K), keyed `apex_50k`,
+`mffu_rapid_eod_50k`, `topstep_50k` and so on. **Every one of the 24 plan fields carries `{"value",
+"provenance"}`**: the four assumed values name the D386 ASSUMPTION they come from, the MFFU lock
+levels quote the two `help.myfundedfutures.com` pages from `data/d445_floor_lock_sources.md`. Each
+venue also carries `flatten_time_et` (R11 P2 — Apex 16:59, MFFU and Topstep 16:10),
+`automation_permitted_funded` (R11 P6 — Topstep and MFFU only) and `daily_loss_limit`. **Two
+things in it are `null`, and the `null` is the finding:** Take Profit Trader's flatten time appears
+in no source this repository holds, and **no venue carries a daily loss limit at all**, which leaves
+R11's P3 justification ("daily loss limits run 2–3%") unverified, as its own 2026-09-13 amendment
+flagged. Read it through `validation.hurdle_p.load_venue(key)`; `p2_flatten` and `load_venue`
+**raise** on a `null` or an unknown key. **Beside it, a convention: `data/components/`** is where a
+component's **daily P&L in dollars** lives — `<name>_daily_usd.csv` (`date,usd`, zero on a flat
+day, LF newlines, floats written with `repr`) plus `<name>_daily_usd.meta.json` (size, cost line in
+dollars per round trip, window, producing record, sha256 of the source and of the CSV).
+`validation.component_series.read` **refuses a CSV whose bytes no longer match the recorded hash.**
+Three rows of `docs/COMPONENTS_PROP.md` read "ρ not computable — the arm's daily P&L is not on
+disk" because `run_d466_components.py` writes summaries only; this is the artefact they were
+missing. **The directory is empty at the time of writing** — write a series from the runner that
+computed it, never by re-deriving it elsewhere (the D466 error).
+
+**The reconciled futures cost table ([D591](decisions/D591-futures-cost-bricks-and-the-reconciled-cost-table.md), 2026-09-21).** [`futures_costs.json`](../data/futures_costs.json) — the 36 breadth roots, a `micro` and a
+`full` entry where CME lists a micro (47 traded symbols), **289 cited values**. Per entry: tick
+geometry from the specification files, a **declared** `commission_rt_usd` ($3.00 micro / $6.00
+full, D468's convention), every **measured** `crossing_ticks_rt` line the contract appears in
+(`d465`, `d508_exec`, `d508_all`, `d510`, `d507_all`, `d507_exec`, and the `d556_one_tick`
+convention), the `default_line` the bricks serve, and the round-trip dollars each runner actually
+charged (`d469`, `d527`, `d531`, `d533`, `d535`, `d556_min_size`). Every number is copied from a
+committed artefact at a named key path or from a runner literal read through `ast`, with its
+decision and measurement window; the builder (`scripts/futures_cost_table.py --build`, no
+timestamp, `--selftest` compares the committed bytes by sha256) refuses a value it cannot find.
+Read it through `costs/futures_bricks.FuturesRoundTrip.from_table(root, size, line)`, which
+**raises** on a line the contract was never measured on rather than serving another root's number.
+**What bites:** *(i)* **every crossing census was measured on 2025-09..2026-09** and most studies
+run 2016–2023 — a tick is fixed in price, so a recent spread on an older, cheaper window is
+optimistic; *(ii)* `d507_*`/`d510` are **quoted** spreads (a floor) and `d465`/`d508_*` are
+**effective** crossing — different statistics, never averaged or substituted, which is why the
+default falls back to one tick and not to D507; *(iii)* commission is declared, never measured;
+*(iv)* `tick_usd` for **ZC/ZS/ZW (1250), HE/LE (1000) and ZL (600) is in CENTS** and SR3's 0.0625
+is CME's $6.25 a hundredfold small — inherited from the definition snapshot, listed under
+`spec_flags`, written unchanged; *(v)* the measured default is **4–48% dearer per round trip than
+the one-tick line D555/D556 charged** on the eight micros where both exist (MGC +48%, MCL +26%,
+MBT +23%, MNQ +16%) — check which line a number was computed on before comparing two studies;
+*(vi)* five disagreements between runners are recorded, not resolved: full-size commission $4
+(D469) against $6 (D468/D555), D533's GC and NG $5.00 that no line derives, and two 1-ULP splits
+in D527's and D465's tick counts. ZN's published `21.63` is a rounding tie on 21.625.
+
+**The programme α registry ([D592](decisions/D592-programme-alpha-registry-trial-counter-and-episode-checks.md), 2026-09-21).** [`programme_registry.json`](../data/programme_registry.json) is the
+state and [`docs/results/PROGRAMME_REGISTRY.md`](results/PROGRAMME_REGISTRY.md) is rendered from
+it — the deposit's `results/` root does not exist here, so its `results/PROGRAMME_REGISTRY.md`
+maps to `docs/results/`. α = 0.05 in **ten slots of 0.005**; seven families seeded in slots 1–7
+(dated 2026-09-21), slots 8–10 reserved, 0.035 allocated. `validation.programme.Registry.register`
+**refuses an eleventh family without an amendment flag**; a markdown table cannot, which is why the
+page is never the source of truth. The programme trial count the DSR reads is **83,074** under a
+two-clause rule (distinct de-duplicated sqlite configs from `data/trial_registries.json`, plus rows
+of every `trials.csv` under `data/`); **no `trials.csv` exists yet**, so the futures line starts
+at zero logged trials, and a test asserts that zero so it stops being true out loud.
+
 ---
 
 ## 5. What is still missing

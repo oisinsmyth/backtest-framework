@@ -157,6 +157,12 @@ repository root a round longer than the rest.
 | [`binance_provider_probe.md`](binance_provider_probe.md) | the archive measured before anything was built on it |
 | [`vol_estimator_gate.md`](vol_estimator_gate.md) | does finer data give a better estimate? |
 
+### The programme's controls — rendered state, not a study
+
+| | |
+|---|---|
+| [`PROGRAMME_REGISTRY.md`](PROGRAMME_REGISTRY.md) | D592 — the deposit's α registry (0.05 in ten slots of 0.005), rendered from `data/programme_registry.json`; the JSON is the source of truth, this page never is |
+
 ### Archive
 
 [`archive/breakout_v1/BREAKOUT_RESULTS.md`](archive/breakout_v1/BREAKOUT_RESULTS.md) — the

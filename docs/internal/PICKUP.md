@@ -2,7 +2,52 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
-## SHARED INFRASTRUCTURE FOR THE SIX NEW DEPOSIT PRE-REGISTRATIONS — four of five BUILT AND VERIFIED, one pending, NOTHING COMMITTED, 2026-09-21
+## SHARED INFRASTRUCTURE, ROUND 2 — D590–D594 BUILT AND VERIFIED, STAGED, NOT COMMITTED, 2026-09-21
+
+The principal chose the next five shared components from the same infrastructure list; five parallel
+Opus agents built them on disjoint file sets and each was verified here by running its tests and
+selftest and reproducing one published number independently. **Do not rebuild any of the following.**
+
+| record | component | files | reproduced here |
+|---|---|---|---|
+| **D590** | hurdle P (R11) dollar-native, 14 venue plans with per-field provenance, the persisted component daily-P&L series | `validation/hurdle_p.py`, `validation/component_series.py`, `data/prop_venues.json`, `scripts/hurdle_p_report.py`, 4 test files | D440's SPY/voltgt/f* 0.007 cell (life 0.1350875596, V 77.7357587481) exact at 10 dp; a series round-trips through disk and a moved byte is refused |
+| **D591** | futures cost layer: `FuturesCommission`, `TickCrossing`, `FuturesRoundTrip.from_table`, the `futures_round_trip` config brick, the reconciled cost table | `costs/futures_bricks.py`, `config/cost_stack.py` (additive), `data/futures_costs.json`, `scripts/futures_cost_table.py`, 4 test files | D527 $4.205511636799441, D556 MNQ 3.50 / MES 4.25 / ZN 21.625 / ZB 37.25, D469 MES 3.40856872519306 ticks — all `==` |
+| **D592** | programme α registry (10 slots), `TrialsCsv`, programme trial count, programme DSR, haircut, episode checks | `validation/programme.py`, `validation/episodes.py`, `scripts/programme_registry.py`, `data/programme_registry.json`, `docs/results/PROGRAMME_REGISTRY.md`, 4 test files | D504 `share_ex_both_1pct` 0.9169861341900946 exact from the published totals; the eleventh family refused |
+| **D593** | `lag1`/`delayed`/both `audit_lag` generations, `retained_edge`, the AST forward-index scan, leave-one-year-out and purged folds | `validation/lookahead.py`, `validation/folds.py`, `tests/unit/_leaky_canary_module.py`, 4 test files | `lag1` bit-identical to the runner on a tie-heavy NaN/−0.0 grid; canary caught at 4 sites; 8 LOYO folds partition 2016–2023 |
+| **D594** | `freeze`/`assert_frozen`, `SealedWindow` with no default dates, the `RESERVED_FROM` helpers, `open_once`, `refuse_without_word` | `validation/frozen.py`, `scripts/freeze.py`, 3 test files | a one-byte drift named; CRLF-only rewrite not drift; second open raises; refusal returns 2 |
+
+**Integration DONE (2026-09-21):** §4 paragraphs in `data-available.md` for `prop_venues.json` + the
+`data/components/` convention, `futures_costs.json` and `programme_registry.json`; CHANGELOG bullets
+for all five under the round-1 heading; one defect fixed on integration — `component_series.write`
+used `repr` on each value and a numpy-backed series wrote `np.float64(…)` that `read` refused; the
+writer casts through `float` and a regression test pins it. **One process fault to know about:** the
+D591 agent staged its files mid-build to clear `test_cited_decisions_exist`, and the concurrent
+basis-momentum session's commit `a3a3ff0` (D600) swept that intermediate state into history — its
+record, `futures_costs.json`, the bricks, the builder, `cost_stack.py` and four test files. The final
+D591 state is a small staged diff on top; nothing is lost, but D591's first appearance in `git log` is
+under D600's message. The other session's own untracked files (`data/fixtures/eia_weekly_stocks.*`,
+`hkm_factors.meta.json`, `oecd_ir3tib_monthly.*`, `scripts/build_fut_cleared_volume_cm.py`,
+`fetch_macro_series.py`, `stage0_d600_bm_closure.py`) are theirs and were not staged here.
+
+**Findings the agents surfaced that a later study must carry:** D503's `P1_post_sizing_usd_per_year`
+is mean × 252 at traded size, not post-sizing (macd sized: $1,088/yr, published $3,971), and its
+`P2_pass: True` is hard-coded; no venue file records a daily loss limit, so R11's P3 justification
+stays unverified, and Take Profit Trader's flatten time exists in no source here; R11's header still
+says P5 ≤ 40% where 30% is operative (RULES.md untouched); the measured `d508_exec` crossing line is
+4–48% dearer per round trip than the one-tick line D555/D556 charged on all eight micros where both
+exist (MGC +48%, MCL +26%, MBT +23%, MNQ +16%); full-size commission is $4 in D469 and $6 in
+D468/D555; D533 charged GC and NG $5.00 that no line derives; `tick_usd` for ZC/ZS/ZW/HE/LE/ZL is in
+cents in the definition snapshot and SR3's is a hundredfold small; D504's `concentration_usable`
+window runs to 2026-09-09 (not in-sample) and its daily series is not persisted, so its block is
+reproduced as a code identity, not recomputed; D504's loop returns `sessions_to_half_pnl = 1` on a
+negative total where the port returns `None`; the deposit's "same months" in the shared-period check
+is unspecified and was operationalised as the intersection of each model's fewest best-first months
+carrying half its P&L; the runners' `np.full_like(a, np.nan)` casts to the grid dtype (int → minimum
+int64, bool → `True`, which ranks bar 0 first); the forward-index scan is a tripwire — it cannot see
+aliasing, helper indirection, negative strides or a name holding a negative shift; the sealed-window
+date is still the principal's open decision and the module refuses to default it.
+
+## SHARED INFRASTRUCTURE FOR THE SIX NEW DEPOSIT PRE-REGISTRATIONS, ROUND 1 — D585–D589 COMMITTED `89feba9`, 2026-09-21
 
 Six more documents landed in `docs/internal/User-Doc-Deposit/` on 2026-09-21: `SETTLEMENT_FLOW_LEDGER_PREREG`
 (v1.9, the parent design), `INDEX_REWEIGHT_FLOW_PREREG`, `LETF_CLOSE_FLOW_PREREG`, `SHOCK_CLASSIFIER_PREREG`,

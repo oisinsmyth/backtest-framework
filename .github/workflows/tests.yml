@@ -54,7 +54,7 @@ env:
 
 jobs:
   # The reviewer's first command, kept as its own job so a break in the anchored ledgers is
-  # visible in seconds rather than after the full run. 133 ledger-anchored tests, under a second locally.
+  # visible in seconds rather than after the full run. 248 ledger-anchored tests, under a second locally.
   # The phrasing matters: `tests/unit/test_quoted_counts_are_current.py` scans for exactly
   # "N ledger-anchored tests" and pins N to the live collection count, so this comment cannot
   # drift the way it did between 91 and 101.

@@ -57,6 +57,59 @@ version (likely at the Phase C "first real number" milestone, see
   cluster ICC, effective n, SE, MDE at t = 2 and at 80% power, the forward-evaluation-length and
   Track 3 route rules of the ledger doc's §13A.7, a `POWER.md` renderer and a `TRACK_MAP` validator.
   The six named ledger unit tests (51, 52, 53, 59, 62, 63) pass; 78 tests.
+- `src/backtest_framework/validation/hurdle_p.py`, `validation/component_series.py`,
+  `data/prop_venues.json`, `scripts/hurdle_p_report.py` (D590): hurdle P (R11) as dollar-native
+  library code — `p1_size` (sizing and post-sizing return, never pass/fail), `p2_flatten`, `p3`
+  (breaches/yr, life cost, worst day in dollars, σ and loss-budget share), `p4_life` (D440's
+  provider lifecycle, Gaussian and measured), `p5_recognised` at the 30% cap, `p6`, `hurdle_p`
+  in D503's dict shape, `per_year`; the 14 prop venue plans with per-field provenance; and the
+  persisted component daily-P&L series (`data/components/<name>_daily_usd.csv` + meta, hash-checked
+  on read) that `COMPONENTS_PROP.md`'s ρ column has been missing. D386's simulator reproduced
+  bit-identically on 12 cells; D440's published SPY / voltgt / f* 0.007 cell exact at 10 dp; D501's
+  7 deaths / 255.57-session life exact; D503's dict function-against-function on 12 series;
+  `component_line` returns D503's `IS["macd"]["sharpe"]` to the bit. 116 tests. Two disagreements
+  recorded: D503's `P1_post_sizing_usd_per_year` is not post-sizing, and its `P2_pass` is
+  hard-coded. Integration fix: the CSV writer now casts through `float` before `repr` (numpy 2
+  would have written `np.float64(…)` that `read` refused).
+- `src/backtest_framework/costs/futures_bricks.py`, `data/futures_costs.json`,
+  `scripts/futures_cost_table.py`, and the additive `futures_round_trip` brick in
+  `config/cost_stack.py` (D591): `FuturesCommission` (declared, dollars per round trip, half per
+  fill) and `TickCrossing` (measured ticks, priced off the instrument's own `tick_usd`), both
+  raising on a non-`Future`; `FuturesRoundTrip.from_table(root, size, line)` raising on an
+  unmeasured line. The table: 36 roots, 47 symbols, 7 crossing lines, 289 cited values, every one
+  copied from an artefact key path or a runner literal read through `ast`. D527's $4.205511636799441,
+  D556's per-root round trips (ZN 21.625 exact) and D469's breakeven ticks (MES 3.40856872519306)
+  reproduced exactly; one named ULP on MES's crossing component (bp×notional vs ticks×tick_usd).
+  The eight legacy `BRICK_KEYS` rows snapshotted and asserted unchanged. 119 tests; 5 of 5
+  mutations caught.
+- `src/backtest_framework/validation/programme.py`, `validation/episodes.py`,
+  `scripts/programme_registry.py`, `data/programme_registry.json`,
+  `docs/results/PROGRAMME_REGISTRY.md` (D592): the programme α registry (0.05 in ten 0.005 slots,
+  an eleventh refused), `TrialsCsv` for the deposit's schema, `programme_trial_count` (83,074 under
+  a two-clause rule; zero `trials.csv` rows, asserted), `programme_dsr` (both DSRs via
+  `validation/dsr.py`, per-period units guarded), `haircut`; and the dollar-native episode checks —
+  `symmetric_trim` (D504's block, code identity by `exec` at three sizes, and
+  `share_ex_both_1pct` 0.9169861341900946 exact from the published totals), `drop_best_year`,
+  `drop_best_days`, `sessions_to_half_pnl`, `shared_period` with the ρ > 0.5 / > 40% same-months
+  flag. 93 tests; the 30-check selftest proves every raise.
+- `src/backtest_framework/validation/lookahead.py`, `validation/folds.py`,
+  `tests/unit/_leaky_canary_module.py` (D593): `lag1` bit-identical to `run_concentrated_short.py`
+  (via `tobytes`, on grids with NaN, ±inf and −0.0), `delayed` equal to D290's skip-bar rerun,
+  both generations of `audit_lag` equal to their runners, `retained_edge`, `expect_raise`, and the
+  AST scan `forward_index_sites` / `assert_no_forward_index` / `labels_never_features` — a
+  tripwire, not a proof: the record enumerates what it cannot see (aliasing, helper indirection,
+  negative strides). `leave_one_year_out`, `year_blocks`, `purged` (both ends), `era_folds`
+  (D555's eras read from the runner), `assert_partition`. 123 tests; 3 of 3 mutations caught.
+  Finding: the runners' `np.full_like(a, np.nan)` casts to the grid dtype, so an int grid's column
+  0 becomes the minimum int64 and a bool grid's becomes `True`; the library raises instead.
+- `src/backtest_framework/validation/frozen.py`, `scripts/freeze.py` (D594): `freeze` /
+  `load_frozen` / `assert_frozen` (drift named in the order params → code → fixtures; a CRLF-only
+  rewrite is not drift, D550), `assert_evaluation_length`, `SealedWindow` **with no default dates**
+  (the deposit's 2025-03-01 → 2026-09-18 and this record's 2024-01-01 are left unreconciled, in
+  writing), `filter_before` / `assert_none_at_or_after` / `window_record` consolidating the
+  three-layer `RESERVED_FROM` idiom, `open_once` (a second open of the same model raises),
+  `refuse_without_word` returning 2 in D574's shape. Golden digests hand-computed by two independent
+  calculators. 66 tests; the 9-raise selftest.
 
 ### Added (2026-09-21)
 - `data/fixtures/fut_es_options_eod.csv.gz` + meta (D581): every ES-family option's prior-close

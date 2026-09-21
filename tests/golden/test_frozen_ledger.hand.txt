@@ -1,0 +1,169 @@
+Golden-master hand-worked cases for validation/frozen.py (D594). Companion to
+test_frozen_ledger.py.
+
+WHAT IS BEING PINNED, AND WHY IT IS A GOLDEN AND NOT A UNIT TEST
+---------------------------------------------------------------
+A frozen-protocol record is a CONTENT-ADDRESSED IDENTITY. Its whole value is that
+two machines, at two times, agree on one hexadecimal string. D551 is the record of
+what happens when they do not: `save_events_json` used `Path.write_text`, so the
+same fixture froze to snapshot id 51756f0d on Windows and 1bb6fe9c on Linux, and a
+snapshot id is the provenance identifier logged with every trial. A digest is
+therefore as much "money" as a fill price is, and belongs in this tier.
+
+The ground truth below is produced by calculators that NEVER IMPORT THIS CODEBASE
+(CONTRIBUTING, "the order of work", step 2). Two independent SHA-256
+implementations were used and agreed on every line:
+
+  (a) GNU coreutils `sha256sum` (Git Bash), fed by `printf` so the exact bytes are
+      visible in the command;
+  (b) .NET `System.Security.Cryptography.SHA256` driven from PowerShell over a
+      literal `[byte[]]` array, so the input is written as hex octets and no text
+      encoding or newline translation can intervene.
+
+Anchor, to prove (a) and (b) are standard SHA-256 before anything else is trusted:
+
+    $ printf '' | sha256sum
+    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+which is the published SHA-256 of the empty string. Case 0 asserts it.
+
+================================================================================
+Case 0 — the empty string, and one byte of text
+================================================================================
+  bytes    : (none)                       -> hex: (empty)
+  sha256   : e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  verified : printf '' | sha256sum
+
+  bytes    : b"a\n"                       -> hex: 61 0A
+  sha256   : 87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7
+  verified : printf 'a\n' | sha256sum
+             .NET SHA256 over [byte[]](0x61,0x0A)      -> same
+
+================================================================================
+Case 1 — THE NEWLINE PIN (D550/D551). The same file on disk, two digests.
+================================================================================
+The file `beta.py` is written with the EXACT bytes
+
+    b"b\r\n"                              -> hex: 62 0D 0A
+
+and nothing else. It is written with `Path.write_bytes`, not `write_text`, so the
+test states the bytes rather than inheriting the runner's platform (the whole point
+of D551: `write_text` and a bare `open(p, "w")` translate; `newline=""` does not).
+
+  HASHED AS TEXT (text_normalise=True): CRLF is normalised to LF BEFORE hashing, so
+  the bytes fed to SHA-256 are
+
+    b"b\n"                                -> hex: 62 0A
+    sha256   : 0263829989b6fd954f72baaf2fc64bc2e2f01d692d4de72986ea808f6e99813f
+    verified : printf 'b\n' | sha256sum
+               .NET SHA256 over [byte[]](0x62,0x0A)    -> same
+
+  HASHED AS BINARY (text_normalise=False): the bytes on disk are hashed unchanged,
+
+    b"b\r\n"                              -> hex: 62 0D 0A
+    sha256   : 679e273f78fc8f8ba114db23c2dce80cc77c91083939825ca830152f2f080d08
+    verified : printf 'b\r\n' | sha256sum
+               .NET SHA256 over [byte[]](0x62,0x0D,0x0A) -> same
+
+  0263... != 679e... on the same file is the defect D551 found, made into an
+  assertion. The rule the module fixes it with, and which this case is the evidence
+  for: **CODE IS TEXT AND IS LF-PINNED BEFORE HASHING; A FIXTURE IS HASHED AS THE
+  BYTES ON DISK.** A fixture is `.csv.gz` — compressed bytes, where "normalising a
+  newline" would be corruption — and hashing it raw is also what
+  `scripts/run_d555_tsmom_replication.py:79` already does for `fixture_sha256`, so
+  this convention reproduces every `fixture_sha256` already published rather than
+  renumbering them. test_frozen_ledger.py asserts that equality directly against a
+  re-implementation of D555's chunked loop.
+
+================================================================================
+Case 2 — canonical params, and their exact JSON text
+================================================================================
+  params object (as a Python dict, in INSERTION order deliberately not sorted):
+
+      {"tau": "15:00", "k": 3}
+
+  Canonical JSON is `registry/trial_registry.py:canonical_json` — sorted keys,
+  separators (",", ":"), no spaces. Sorting "k" before "tau" and emitting the int
+  unquoted gives, as an exact 21-byte string:
+
+      {"k":3,"tau":"15:00"}
+
+      hex: 7B 22 6B 22 3A 33 2C 22 74 61 75 22 3A 22 31 35 3A 30 30 22 7D
+      len: 21 bytes
+
+  params_sha256 = sha256 of those 21 bytes, UTF-8:
+
+      e3d5888fb02d109fed7f6f35db88b55e2612d0030de70dd0833f6d607abd2585
+
+      verified : printf '{"k":3,"tau":"15:00"}' | sha256sum
+                 .NET SHA256 over UTF8.GetBytes(...), length reported 21 -> same
+
+  The insertion order in the test is `tau` first precisely so that a change from
+  canonical_json to a plain `json.dumps` would move the digest and fail here.
+
+================================================================================
+Case 3 — THE FROZEN RECORD'S IDENTITY (content_sha256)
+================================================================================
+The record frozen in the golden is:
+
+  name             demo
+  params           {"tau": "15:00", "k": 3}          (Case 2)
+  code             alpha.py = b"a\n"                 (Case 0)
+                   beta.py  = b"b\r\n"               (Case 1, hashed AS TEXT)
+  fixtures         gamma.bin = b"b\r\n"              (Case 1, hashed AS BINARY)
+  evaluation_days  200
+  spec             (none)
+  instruction      (none)
+
+WHAT IS IN THE IDENTITY AND WHAT IS NOT. `content_sha256` covers exactly what was
+frozen: the schema, the name, the params, each file's BASENAME and digest, the
+evaluation length, the declared spec commit and the instruction. It does NOT cover
+`frozen_utc` (the record would then have no stable identity at all), nor the
+derived `params_sha256` and `content_sha256` themselves, nor `git_head` (live, and
+machine-dependent), nor each file's `path` — a path is where this machine kept the
+file, and D551's whole lesson is that an identity must not be a fact about one
+machine. Basenames collide loudly instead: `freeze` raises on two files sharing one.
+
+Code and fixture entries are sorted by name ("alpha.py" < "beta.py"), so the
+identity does not depend on the order the caller listed them in.
+
+The identity payload is `canonical_json` of that object. Written out in full, and
+this is the exact byte string that was hashed:
+
+{"code":[{"name":"alpha.py","sha256":"87428fc522803d31065e7bce3cf03fe475096631e5e07bbd7a0fde60c4cf25c7"},{"name":"beta.py","sha256":"0263829989b6fd954f72baaf2fc64bc2e2f01d692d4de72986ea808f6e99813f"}],"evaluation_days":200,"fixtures":[{"name":"gamma.bin","sha256":"679e273f78fc8f8ba114db23c2dce80cc77c91083939825ca830152f2f080d08"}],"instruction":null,"name":"demo","params":{"k":3,"tau":"15:00"},"schema":"frozen/1","spec":null}
+
+  length   : 429 bytes (both calculators reported 429 independently)
+  sha256   : 4cddcb766de70ff1c8a33cbcd1c89af7dc3d939af163dcc446b50dbfeef9ee8a
+
+  verified : the string above was written to a scratch file with LF endings, then
+                 tr -d '\r\n' < payload.txt | wc -c        -> 429
+                 tr -d '\r\n' < payload.txt | sha256sum    -> 4cddcb76...
+             and, independently, .NET SHA256 over the same file's bytes with every
+             0x0A and 0x0D removed -> len 429, 4cddcb76... (identical).
+
+  Note the top-level key order in the payload: code, evaluation_days, fixtures,
+  instruction, name, params, schema, spec. That is `sorted()`, not the order a
+  reader would write them in, and it is what makes the digest reproducible.
+
+================================================================================
+Case 4 — what a drifted record must say
+================================================================================
+Not arithmetic, but pinned here because it is the ledger doc's unit test 34
+("evaluation code refuses to run if the parameters differ from FROZEN_<stage>.json")
+and the message is the deliverable, not the exception type.
+
+  Change `alpha.py` from b"a\n" to b"A\n":
+
+      bytes    : b"A\n"                   -> hex: 41 0A
+      sha256   : 06f961b802bc46ee168555f066d28f4f0e9afdf3f88174c1ee6f9de004fc30a0
+      verified : printf 'A\n' | sha256sum
+                 .NET SHA256 over [byte[]](0x41,0x0A)    -> same
+
+  `assert_frozen` must then raise FrozenDriftError naming "alpha.py" FIRST (code is
+  checked in sorted order, so alpha.py before beta.py), and carrying both
+  87428fc5... (expected) and 06f961b8... (found). One changed byte in one of two
+  code files, and the message says which file.
+
+  Change the params from {"k": 3} to {"k": 4}: the first drifted item is the param
+  key "k", expected 3, found 4 — params are checked BEFORE code, so a run that has
+  drifted in both is reported on the parameter, which is the thing a human tuned.

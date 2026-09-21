@@ -1,0 +1,73 @@
+{
+ "spec": "D592",
+ "source": "SETTLEMENT_FLOW_LEDGER_PREREG.md 13A.8(2) and OPENING_AGENT_STATE_PREREG.md 12A(2)",
+ "programme_alpha": 0.05,
+ "n_slots": 10,
+ "slot_alpha": 0.005,
+ "sealed": "2026-09-21",
+ "families": [
+  {
+   "name": "LETF close flow H1",
+   "doc": "LETF_CLOSE_FLOW_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 1,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Primary effect: on active days the mean signed return tau -> close is positive (\u00a74 H1; Holm across the 6 primary cells)"
+  },
+  {
+   "name": "shock classifier H1",
+   "doc": "SHOCK_CLASSIFIER_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 2,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Class divergence: INFO and LIQ returns differ in the shock direction (\u00a76 H1; Holm across the 4 instruments)"
+  },
+  {
+   "name": "ledger H2",
+   "doc": "SETTLEMENT_FLOW_LEDGER_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 3,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Price effect: signed return from the t0+1 fill to the W_end close on traded days (\u00a79 H2; Holm across the 2 instruments)"
+  },
+  {
+   "name": "index H-R1",
+   "doc": "INDEX_REWEIGHT_FLOW_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 4,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Execution-day effect: signed entry -> W_end close return pooled across commodities, days and years (\u00a76 H-R1; Holm across constructions A and B)"
+  },
+  {
+   "name": "index H-R2",
+   "doc": "INDEX_REWEIGHT_FLOW_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 5,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Reversal: signed return in the reversal direction over 1/3/5 days (\u00a76 H-R2; Holm across 3 holds x 2 constructions)"
+  },
+  {
+   "name": "index H-R3(b)",
+   "doc": "INDEX_REWEIGHT_FLOW_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 6,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (\u00a76 H-R3(b); H-R3(a) is descriptive and is not a decision family)"
+  },
+  {
+   "name": "opening H-O2",
+   "doc": "OPENING_AGENT_STATE_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 7,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (\u00a77 H-O2; Holm across t0 in {09:45, 10:00})"
+  }
+ ]
+}

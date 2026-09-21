@@ -13,8 +13,9 @@ law, a borrow rate. A futures round trip has neither shape. It is two numbers:
 and both are charged per fill on a whole number of contracts. Nothing in this package could
 express that: every futures study here carried the answer as a scalar literal instead —
 `COST_USD = 4.21` in one runner, `COST = {"CL": 4.00, ...}` in the next, `comm_rt/2 +
-0.5*tick_usd` written inline in a third. Twelve such literals are reconciled in
-`data/futures_costs.json`, and three of them turned out to disagree with each other.
+0.5*tick_usd` written inline in a third. `data/futures_costs.json` reconciles ten such
+literals, from six runners, against seven committed measurements — and five of the numbers
+turned out to disagree with each other. D591 lists all five.
 
 THE DIVISION OF LABOUR, AND IT IS THE POINT
 -------------------------------------------
