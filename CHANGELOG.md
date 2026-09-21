@@ -93,6 +93,68 @@ version (likely at the Phase C "first real number" milestone, see
   three-layer `RESERVED_FROM` idiom, `open_once` (a second open of the same model raises),
   `refuse_without_word` returning 2 in D574's shape. Golden digests hand-computed by two independent
   calculators. 66 tests; the 9-raise selftest.
+- `src/backtest_framework/data/recorder.py`, `scripts/recorder.py`, `data/recorder/jobs.json`,
+  `data/recorder/GAPS.md`, `data/raw/README.md` (D608): the forward data recorder — raw responses
+  kept byte-for-byte under a `fetched_at` name that is never overwritten (a second fetch is a new
+  file), a sha256 per file verified loudly on read, `availability_time` returning `fetched_at`
+  unconditionally (deposit D23), DST-correct window gap detection appending to `GAPS.md` and filling
+  nothing (no `fill_gap` exists and the namespace is asserted), a per-run health line, and a 16-job
+  schedule seeding the ledger's §13A.3 table with seven keyless URLs copied from this repository and
+  nine jobs marked `needs_source` or `needs_key`. One live smoke fetch of the BLS CPI schedule.
+  No scheduler is installed: hosting is deposit Q17. 133 tests; ledger unit tests 31–33 named.
+  `.gitignore` now re-includes `data/raw/README.md` alone.
+- `src/backtest_framework/costs/futures_impact.py`, `data/futures_impact_params.json`,
+  `scripts/futures_impact_table.py`, `scripts/build_fut_book_depth.py`,
+  `data/fixtures/fut_book_depth_1m.csv.gz` + meta, and the additive `futures_sqrt_impact` brick in
+  `config/cost_stack.py` (D604): `FuturesSqrtImpact` keyed on `Future.root` at the ledger's fixed
+  Y = 0.7, bit-identical to the equity `SqrtImpact` on the same numbers (that brick raises on a
+  `Future`, so no futures study here had ever charged impact); `impact_for_flow` signed with zero at
+  zero; `depth_scaled` (§8A.4) with `I_D == I` at `D = D̄` exact; `depth_bar` over prior days only.
+  Parameters on 36 roots in three lines with provenance (default `day1m_2016_2023`). The first MBO
+  reader: 2.02 billion messages over 26 daily files replayed order by order into 65,688 minute rows
+  of ±5-tick depth for eight roots, projected 3.1 min and measured 10.2 min on 6 workers at 91%,
+  serial == pool bit-identically. Findings: `Future.from_specs` is 100× wrong on seven roots (the
+  definition file's cents), ZN's 2025–26 ADV is 2.23× in-sample, Labor Day excluded whole. 150
+  tests; ledger 7, 45, 46 and index 18 named. D591's golden brick-row guard widened from an
+  equality on the whole difference to membership, so later additive bricks do not redden it.
+- `src/backtest_framework/validation/track3.py`, `scripts/track3_report.py`, `data/track3/SCHEMA.md`
+  (D605): the Track 3 per-trade fill log (`TradeRow`/`TradeLog`, strict typed reader, duplicate and
+  ordering refusals), implementation shortfall in ticks and dollars on D364's sign convention with
+  the exit sign inverted, signal-to-fill latency with the share beyond t0+5, the 50-trade cost
+  review as a FLAG that never edits a cost table and never returns a verdict below 50 trades, and
+  §13A.4's `TrialCounter` with futility looks at N = 100/200, efficacy at exactly N = 300, the
+  `counts_as_efficacy` switch (index 28) and a frozen-drift restart through D594's `assert_frozen`.
+  Two deposit gaps declared: the "CostStack slippage assumption" (taken as half the crossing plus
+  one adverse tick) and a model exit price. `t >= 2` at exactly 2.0 is one ULP from a fail and the
+  record says a forward test finishing there is on the bar, not a pass. 103 tests; ledger 35, 36
+  named. No order is sent, no automation is built (O-Q3 open), no real fill exists.
+- `src/backtest_framework/validation/fit.py`, `validation/error_budget.py` (D606): `ols` bit-identical
+  to `run_d365_momentum_buffer.py:762` across 5 seeds × 4 Newey-West lags (the solve is D365's
+  normal equations — `np.linalg.lstsq` differs by up to 4.4e-16 and is kept as the rank oracle),
+  `rolling_ols` bit-identical to `prescreen_cross_sectional.py:147`, `multiclass_log_loss` refusing
+  to clip, `FeatureBudget` giving 11 features from §7.3's `3 × (features + 1) ≤ 36`,
+  `retention_check` reporting both clauses; `Term`, `ols_fitter`, `oos_error` on D593's folds,
+  `leave_one_term_out` with a zero-contribution term's delta **exactly 0.0** because the column is
+  dropped rather than fitted at zero, `write_error_budget_md` validating first, and `StageOrder`
+  refusing a reordered stage without a dated decision-log entry and an unregistered stage always.
+  No `ERROR_BUDGET.md` is committed because no study has run. Importing a runner whose module body
+  installs an audit hook poisoned the collectability gate; the pins now compile only the needed
+  function. 98 tests; ledger 48, 49, index 19, 20, opening 13 named.
+- `src/backtest_framework/validation/crosswalk.py`, `scripts/deposit_test_map.py`,
+  `data/deposit_test_map.json`, `docs/results/DEPOSIT_TEST_MAP.md` (D607): every numbered unit test
+  in the five deposit pre-registrations (146: ledger 71, index 28, opening 25, shock 13, LETF 9)
+  crosswalked to the repository test that claims it — 28 claimed before round 3 (ledger 19/71,
+  opening 5/25, index 2/28, shock 2/13, LETF 0/9) and 43 after it (ledger 29, index 6, opening 6,
+  shock 2, LETF 0; the 15 new claims are round 3's own tests), 4 covered via another document, 5
+  declined in D588, the remaining 94 listed with a class and a paraphrase. The 28 use three spellings and a grep for
+  the function-name one finds six; going forward a test that discharges a numbered item names the
+  number in its function name. `--scan` re-parses the sections and reports every disagreement
+  without rewriting the JSON; `--check` collects the claimed files; the current-map test holds the
+  scan at zero disagreements. 59 tests.
+- Fix (D590, found by a round-3 agent's suite run): the hurdle-P property "enforcing P3 never
+  lengthens the account" was false on the mean — `[-2000, 0, -1000]` adds a second, longer episode
+  and lifts the mean life from 1.0 to 1.5 with `p3b_life_cost` −0.5. The property now asserts the
+  true invariant (more deaths, first death no later) and pins that counterexample.
 
 ### Added (2026-09-21)
 - `data/fixtures/fut_es_options_eod.csv.gz` + meta (D581): every ES-family option's prior-close

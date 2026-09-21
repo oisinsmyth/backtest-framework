@@ -674,6 +674,11 @@ would look like data. The tokens are what is shown.
 | D593 | The deposit's look-ahead controls become code: the runners' lag, a one-bar-delay rerun, a syntactic leak scan, and year… | [record](D593-look-ahead-defences-and-year-folds.md) |
 | D594 | The frozen-protocol layer: a model's parameters, code and dates get the same structural guard the DATA already has, and… | [record](D594-the-frozen-protocol-layer.md) |
 | D600 | D600 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
+| D603 | The forward data recorder: raw bytes under a fetched_at name, a gap log nothing fills, and a host the record does not c… | [record](D603-the-forward-data-recorder.md) |
+| D604 | A futures square-root impact brick, its depth-scaled variant, and the first order-book depth fixture: the repository co… | [record](D604-futures-sqrt-impact-depth-scaling-and-the-book-depth-fixture.md) |
+| D605 | Track 3 logging: the per-trade fill log, implementation shortfall, latency and the trial counter, with the two things t… | [record](D605-track-3-logging-shortfall-latency-and-the-trial-counter.md) |
+| D606 | The error budget becomes code, and the zero-contribution term's delta is exactly zero because the column is DROPPED, no… | [record](D606-the-error-budget-the-fitting-helpers-and-the-parameter-budget.md) |
+| D607 | The crosswalk from the deposit's 146 numbered unit tests to the repository tests that claim them: 28 claimed in three s… | [record](D607-the-deposit-test-crosswalk.md) |
 
 <!-- REGISTER:END -->
 

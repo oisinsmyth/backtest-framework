@@ -1,0 +1,461 @@
+Golden-master hand-worked cases for validation/error_budget.py and validation/fit.py
+(D606). Companion to test_error_budget_ledger.py.
+
+Worked with a pen and a pocket calculator. Nothing in this file was produced by
+importing this codebase (CONTRIBUTING.md: "the ground truth is produced by a
+calculator that never imports this codebase" -- a .hand.txt derived from the
+implementation launders the implementation's assumptions into the thing meant to
+check them). This file was written and committed to the working tree BEFORE
+error_budget.py and fit.py existed.
+
+The ledgers of record:
+
+  SETTLEMENT_FLOW_LEDGER_PREREG.md 8A.1 "Error budget"
+    "After each stage is evaluated, decompose the out-of-sample window-flow
+     forecast error e = S_win,realised - Q_rem,predicted:
+     1. Leave-one-term-out: the change in OOS mean squared error when each active
+        participant term is removed.
+     2. Term-level checks where a measurable counterpart exists [...]
+     Output: results/settlement_flow/ERROR_BUDGET.md, ranking terms by
+     attributable error."
+    unit test 48 -- "Error budget: removing a term with zero forecast contribution
+     changes OOS MSE by zero on synthetic data."
+    unit test 49 -- "Stage reordering: the code refuses to run a reordered stage
+     unless a matching decision-log entry exists."
+
+  INDEX_REWEIGHT_FLOW_PREREG.md 5A.1, unit tests 19 and 20 -- the same, with
+  components (a) flow forecast and (b) impact.
+
+  OPENING_AGENT_STATE_PREREG.md 7.3 "Parameter budget"
+    "Ceiling: 3 non-base classes x (features + 1) <= 36, so at most 11 features in
+     any stage."
+    lines 176-178, the retention rule; unit test 13 -- "Parameter budget: the
+     pipeline refuses to fit a stage exceeding 11 features."
+
+No fixture is read and no return is computed. Synthetic integers in, exact
+dyadic rationals out.
+
+
+================================================================================
+WHY THESE PARTICULAR NUMBERS: EVERY QUANTITY BELOW IS EXACTLY REPRESENTABLE
+================================================================================
+The design was chosen so that the fitted coefficients, the residuals, the per-fold
+sums of squares and the pooled mean squared errors are all exact in IEEE-754
+binary64, so the golden can assert `==` and never a tolerance.
+
+Two properties do the work.
+
+  (1) THE TWO FITTED COLUMNS ARE ORTHOGONAL AND THEIR GRAM MATRIX IS DIAGONAL WITH
+      POWER-OF-TWO ENTRIES. Within each six-row block, A.A = 4, B.B = 4, A.B = 0,
+      so (X'X) = [[4, 0], [0, 4]], its inverse is [[0.25, 0], [0, 0.25]] EXACTLY
+      (0.25 is a binary fraction; 1/6 or 1/3 would not be), and every coefficient
+      is a quarter of an integer.
+
+  (2) THE POOLED DENOMINATOR IS 12 AND EVERY SUM OF SQUARES BELOW IS DIVISIBLE BY
+      3. s/12 is an exact binary64 value if and only if s/3 is an integer, because
+      12 = 4 x 3 and division by 4 is exact. The three sums of squares are 66, 114
+      and 138; 66/3 = 22, 114/3 = 38, 138/3 = 46.
+
+TWO quantities in this file are NOT exactly representable, and both are named
+where they appear. The PER-FOLD mean squared errors, 28/6 = 14/3 and 38/6 = 19/3
+(Case 2): the golden asserts the per-fold sums of squares and counts, which are
+integers, and does NOT assert the per-fold means. And the multiclass log loss of
+Case 7, which is 4 ln(2) / 3 and irrational: asserted to 12 decimal places.
+Everything else below is asserted with `==`.
+
+
+================================================================================
+THE DESIGN
+================================================================================
+Twelve observations, two folds of six, three terms. Fold 1 tests rows 0..5 and
+trains on rows 6..11; fold 2 tests rows 6..11 and trains on rows 0..5. (These are
+the two folds `validation.folds.Fold` builds from a two-block index; the fold
+object refuses train/test overlap at construction, so the "the test index never
+enters the fit" property is structural and not re-argued here.)
+
+Three terms, whose design columns are:
+
+    alpha  A = group indicator, the first four rows of each block
+    beta   B = a signed contrast on the last four rows of each block
+    gamma  C = exactly zero everywhere -- the zero-contribution term of
+               ledger unit test 48 / index unit test 19
+
+    row  block  A   B   C       y
+    ---  -----  --  --  --   -----
+      0    1     1   0   0       5
+      1    1     1   0   0       5
+      2    1     1   1   0       6
+      3    1     1  -1   0       0
+      4    1     0   1   0       5
+      5    1     0  -1   0      -1
+      6    2     1   0   0       3
+      7    2     1   0   0       3
+      8    2     1   1   0       4
+      9    2     1  -1   0      -2
+     10    2     0   1   0       6
+     11    2     0  -1   0       0
+
+Per block: A.A = 1+1+1+1+0+0 = 4
+           B.B = 0+0+1+1+1+1 = 4
+           A.B = 0 + 0 + (1)(1) + (1)(-1) + 0 + 0 = 1 - 1 = 0    [orthogonal]
+
+y was built as y = alpha_k * A + beta_k * B + e_k with
+    block 1: alpha_1 = 4, beta_1 = 3, e_1 = ( 1,  1, -1, -1,  2,  2)
+    block 2: alpha_2 = 2, beta_2 = 3, e_2 = ( 1,  1, -1, -1,  3,  3)
+and both residual vectors are orthogonal to both columns, so OLS returns those
+coefficients exactly rather than approximately:
+    A.e_1 = 1 + 1 - 1 - 1 = 0        B.e_1 = -1 - (-1) + 2 - 2 = 0
+    A.e_2 = 1 + 1 - 1 - 1 = 0        B.e_2 = -1 - (-1) + 3 - 3 = 0
+    |e_1|^2 = 1 + 1 + 1 + 1 + 4 + 4 = 12
+    |e_2|^2 = 1 + 1 + 1 + 1 + 9 + 9 = 22
+
+Check, block 1:  4*(1,1,1,1,0,0) + 3*(0,0,1,-1,1,-1) + (1,1,-1,-1,2,2)
+                 = (4,4,4,4,0,0) + (0,0,3,-3,3,-3) + (1,1,-1,-1,2,2)
+                 = (5, 5, 6, 0, 5, -1)                             [matches y]
+Check, block 2:  2*(1,1,1,1,0,0) + 3*(0,0,1,-1,1,-1) + (1,1,-1,-1,3,3)
+                 = (2,2,2,2,0,0) + (0,0,3,-3,3,-3) + (1,1,-1,-1,3,3)
+                 = (3, 3, 4, -2, 6, 0)                             [matches y]
+
+
+================================================================================
+Case 1 -- the two full-model fits, by the normal equations
+================================================================================
+    b = (X'X)^-1 X'y,   X = [A | B],   (X'X) = [[4, 0], [0, 4]]
+
+BLOCK 1 (rows 0..5), y = (5, 5, 6, 0, 5, -1):
+
+    A'y = (1)(5) + (1)(5) + (1)(6) + (1)(0) + (0)(5) + (0)(-1) = 16
+    B'y = (0)(5) + (0)(5) + (1)(6) + (-1)(0) + (1)(5) + (-1)(-1) = 6 + 0 + 5 + 1 = 12
+
+    (X'X)^-1 = [[0.25, 0], [0, 0.25]]
+    b_1 = (0.25 * 16, 0.25 * 12) = (4, 3)          EXACT
+
+BLOCK 2 (rows 6..11), y = (3, 3, 4, -2, 6, 0):
+
+    A'y = 3 + 3 + 4 + (-2) + 0 + 0 = 8
+    B'y = 4 - (-2) + 6 - 0 = 4 + 2 + 6 = 12
+    b_2 = (0.25 * 8, 0.25 * 12) = (2, 3)           EXACT
+
+The gamma column is all zeros. IT IS DROPPED FROM THE DESIGN RATHER THAN FITTED AT
+ZERO. A zero column makes X rank deficient, and the minimum-norm solution of a
+rank-deficient least-squares problem is not a bitwise function of which zero
+columns are present: the surviving coefficients move in the last places. Dropping
+the column makes the two designs -- "all three terms" and "all terms but gamma" --
+the same matrix, byte for byte, so the two fits are the same computation and the
+delta below is exactly 0 rather than approximately 0.
+
+
+================================================================================
+Case 2 -- the full model's out-of-sample error, two folds
+================================================================================
+FOLD 1: fit on block 2 -> (2, 3); predict rows 0..5.
+
+    pred = 2*A + 3*B on block 1's columns
+         = (2, 2, 2, 2, 0, 0) + (0, 0, 3, -3, 3, -3)
+         = (2, 2, 5, -1, 3, -3)
+    y    = (5, 5, 6,  0, 5, -1)
+    e    = (3, 3, 1,  1, 2,  2)
+    SSE_1 = 9 + 9 + 1 + 1 + 4 + 4 = 28        n_1 = 6
+
+FOLD 2: fit on block 1 -> (4, 3); predict rows 6..11.
+
+    pred = 4*A + 3*B = (4, 4, 4, 4, 0, 0) + (0, 0, 3, -3, 3, -3)
+         = (4, 4, 7, 1, 3, -3)
+    y    = (3, 3, 4, -2, 6,  0)
+    e    = (-1, -1, -3, -3, 3, 3)
+    SSE_2 = 1 + 1 + 9 + 9 + 9 + 9 = 38        n_2 = 6
+
+    POOLED  MSE_full = (28 + 38) / (6 + 6) = 66 / 12 = 5.5       EXACT
+
+    The per-fold means 28/6 = 14/3 = 4.6666... and 38/6 = 19/3 = 6.3333... are NOT
+    exactly representable in binary64 and are NOT asserted by the golden.
+
+Cross-check by the orthogonal decomposition (the residual of a fold is
+(alpha_own - alpha_other)*A + (beta_own - beta_other)*B + e_own, and the three
+pieces are mutually orthogonal, so the squares add):
+    fold 1: (4-2)^2 * 4 + (3-3)^2 * 4 + |e_1|^2 = 4*4 + 0 + 12 = 28   [agrees]
+    fold 2: (2-4)^2 * 4 + (3-3)^2 * 4 + |e_2|^2 = 16 + 0 + 22 = 38   [agrees]
+
+
+================================================================================
+Case 3 -- leave-one-term-out
+================================================================================
+WITHOUT ALPHA (fit on B alone; X'X = [[4]], inverse [[0.25]]):
+
+    block 1 beta = 0.25 * 12 = 3        block 2 beta = 0.25 * 12 = 3
+
+    fold 1: pred = 3*B = (0, 0, 3, -3, 3, -3);  y = (5, 5, 6, 0, 5, -1)
+            e = (5, 5, 3, 3, 2, 2)
+            SSE = 25 + 25 + 9 + 9 + 4 + 4 = 76
+    fold 2: pred = 3*B = (0, 0, 3, -3, 3, -3);  y = (3, 3, 4, -2, 6, 0)
+            e = (3, 3, 1, 1, 3, 3)
+            SSE = 9 + 9 + 1 + 1 + 9 + 9 = 38
+
+    MSE_without_alpha = (76 + 38) / 12 = 114 / 12 = 9.5           EXACT
+    delta_alpha = 9.5 - 5.5 = 4.0                                 EXACT
+
+    (decomposition check: alpha_1^2 * 4 + |e_1|^2 = 16*4 + 12 = 76;
+                          alpha_2^2 * 4 + |e_2|^2 = 4*4 + 22 = 38)
+
+WITHOUT BETA (fit on A alone):
+
+    block 1 alpha = 0.25 * 16 = 4       block 2 alpha = 0.25 * 8 = 2
+
+    fold 1: pred = 2*A = (2, 2, 2, 2, 0, 0);  y = (5, 5, 6, 0, 5, -1)
+            e = (3, 3, 4, -2, 5, -1)
+            SSE = 9 + 9 + 16 + 4 + 25 + 1 = 64
+    fold 2: pred = 4*A = (4, 4, 4, 4, 0, 0);  y = (3, 3, 4, -2, 6, 0)
+            e = (-1, -1, 0, -6, 6, 0)
+            SSE = 1 + 1 + 0 + 36 + 36 + 0 = 74
+
+    MSE_without_beta = (64 + 74) / 12 = 138 / 12 = 11.5           EXACT
+    delta_beta = 11.5 - 5.5 = 6.0                                 EXACT
+
+    (decomposition check: (4-2)^2*4 + 3^2*4 + |e_1|^2 = 16 + 36 + 12 = 64;
+                          (2-4)^2*4 + 3^2*4 + |e_2|^2 = 16 + 36 + 22 = 74)
+
+WITHOUT GAMMA (the zero column):
+
+    Gamma is not in either design -- it is dropped from the full design as an
+    exactly-zero column, and it is absent from the reduced design because it was
+    removed. The two designs are the same matrix. Every downstream number is
+    therefore the same double:
+
+    MSE_without_gamma = 5.5,  delta_gamma = 5.5 - 5.5 = 0.0   EXACTLY ZERO.
+
+    This is ledger unit test 48 and index unit test 19. The assertion is
+    `delta == 0.0`, not `abs(delta) < eps`.
+
+THE TABLE, ranked by delta descending:
+
+    rank  term   mse_full  mse_without  delta_mse  share of positive delta
+    ----  -----  --------  -----------  ---------  -----------------------
+       1  beta        5.5         11.5        6.0   6.0 / 10.0 = 60.00%
+       2  alpha       5.5          9.5        4.0   4.0 / 10.0 = 40.00%
+       3  gamma       5.5          5.5        0.0   0.0 / 10.0 =  0.00%
+
+    Sum of positive deltas = 6.0 + 4.0 = 10.0. 6/10 and 4/10 are not binary
+    fractions, but 0.6 and 0.4 are the correctly-rounded doubles for them and the
+    page prints them to two decimal places, so the rendered text is exact.
+
+    NOTE ON THE SIGN CONVENTION, because 8A.1 does not fix it. delta_mse is
+    mse_without - mse_full: POSITIVE means removing the term made the forecast
+    worse, i.e. the term was carrying error the model would otherwise have. "Rank
+    by attributable error" is read as this quantity, descending.
+
+
+================================================================================
+Case 4 -- the rendered page, byte for byte
+================================================================================
+Deposit path `results/settlement_flow/ERROR_BUDGET.md` maps to
+`docs/results/SETTLEMENT_FLOW_ERROR_BUDGET.md` in this repository, by the same
+reasoning validation/programme.py:21-26 recorded for PROGRAMME_REGISTRY.md: there
+is no root `results/` tree here. No page is committed, because no study has run;
+the golden renders to a temporary directory.
+
+The page is ASCII-only and LF-terminated. Between the two markers below is the
+EXACT expected file content, including the final newline after the last line.
+
+--- BEGIN ERROR_BUDGET.md ---
+# SETTLEMENT_FLOW - ERROR BUDGET
+
+**Generated:** 2026-09-21 | `backtest_framework.validation.error_budget` (D606)
+
+**Study:** settlement_flow | **Stage:** S-A | **Folds:** 2 | **OOS observations:** 12
+
+Terms ranked by attributable error. `delta_mse = mse_without - mse_full` is the change
+in out-of-sample mean squared error when the term is removed from the design
+(SETTLEMENT_FLOW_LEDGER_PREREG.md 8A.1 item 1). A term whose column is exactly zero on
+every training block is dropped from the design rather than fitted at zero, so its delta
+is exactly 0.
+
+| Rank | Term | MSE full | MSE without | Delta MSE | Share of positive delta | Counterpart check |
+|---|---|---|---|---|---|---|
+| 1 | beta | 5.500000 | 11.500000 | +6.000000 | 60.00% | COT swap-dealer ratio 0.81 |
+| 2 | alpha | 5.500000 | 9.500000 | +4.000000 | 40.00% | - |
+| 3 | gamma | 5.500000 | 5.500000 | +0.000000 | 0.00% | - |
+
+Use: among NOT-YET-RUN stages the order may be changed to target the largest attributable
+error first, and the reordering is logged in the doc's decision log BEFORE the next stage
+runs. No new, unregistered stage can be added this way (deposit decision D28).
+--- END ERROR_BUDGET.md ---
+
+
+================================================================================
+Case 5 -- the parameter budget (OPENING_AGENT_STATE_PREREG.md 7.3)
+================================================================================
+The ceiling is written as a product, not as a feature count:
+
+    3 non-base classes x (features + 1) <= 36
+
+The "+1" is the per-class intercept: a multinomial logit with F features and one
+intercept per non-base class has F + 1 parameters per non-base class.
+
+    max_features = floor(36 / 3) - 1 = 12 - 1 = 11
+
+Verify both sides of the boundary by substitution, which is the only check that
+catches an off-by-one:
+
+    F = 11  ->  3 x (11 + 1) = 3 x 12 = 36   <= 36   ALLOWED  (with equality)
+    F = 12  ->  3 x (12 + 1) = 3 x 13 = 39   >  36   REFUSED  (by 3 parameters)
+
+Unit test 13 is the second line: 11 passes, 12 raises. The doc's line 21 says
+"Exceeding it requires a doc amendment", so the code refuses rather than warning.
+
+Stage table cross-check (7.3 / section 8): S-G adds A6 and reaches 11 features,
+which is the ceiling with equality; S-H must "replace one feature or use S-I to
+stay <= 11"; S-I lands at 8. So the largest registered stage sits exactly ON the
+bar, and an off-by-one in either direction changes the pre-registration.
+
+
+================================================================================
+Case 6 -- the retention rule (OPENING_AGENT_STATE_PREREG.md lines 176-178)
+================================================================================
+    "stage k is kept only if, versus the last retained stage, out of sample it
+     1. reduces multiclass log loss by >= 2% relative, AND
+     2. does not reduce the decision-value test statistic (H-O2)."
+
+rel_reduction = (logloss_prev - logloss_new) / logloss_prev
+dv_not_reduced = (dv_new >= dv_prev)
+kept = (rel_reduction >= 0.02) AND dv_not_reduced
+
+All three cases use binary fractions so the arithmetic is exact:
+
+  (a) KEPT. logloss_prev = 1.0, logloss_new = 0.875 (= 7/8), dv 2.0 -> 2.125
+      rel_reduction = (1.0 - 0.875) / 1.0 = 0.125           EXACT
+      0.125 >= 0.02  -> clause 1 passes
+      2.125 >= 2.0   -> clause 2 passes
+      kept = True
+
+  (b) REFUSED on clause 1. logloss_prev = 1.0, logloss_new = 0.9921875 (= 127/128),
+      dv 2.0 -> 2.125
+      rel_reduction = 1.0 - 0.9921875 = 0.0078125           EXACT
+      0.0078125 < 0.02 -> clause 1 fails
+      clause 2 passes
+      kept = False
+
+  (c) REFUSED on clause 2. logloss_prev = 1.0, logloss_new = 0.875, dv 2.0 -> 1.9375
+      rel_reduction = 0.125, clause 1 passes
+      1.9375 < 2.0 -> clause 2 fails
+      kept = False
+
+BOTH CLAUSES ARE REPORTED IN EVERY CASE, not only the failing one. Case (c) is why:
+a verdict that said only "not kept" would read as a log-loss failure, and the
+log loss improved by six times the bar. The two clauses have opposite fixes.
+
+
+================================================================================
+Case 7 -- multiclass log loss
+================================================================================
+Three observations, three classes, probabilities chosen as binary fractions that
+sum to exactly 1 per row:
+
+    row  p(class 0)  p(class 1)  p(class 2)   realised class   p[y]
+    ---  ----------  ----------  ----------   --------------   -----
+      0       0.5        0.25        0.25            0           0.5
+      1      0.25         0.5        0.25            2          0.25
+      2      0.25        0.25         0.5            2           0.5
+
+    loss = -(ln 0.5 + ln 0.25 + ln 0.5) / 3
+         = -(ln(0.5 * 0.25 * 0.5)) / 3
+         = -(ln(0.0625)) / 3
+         = -(ln(1/16)) / 3
+         = (ln 16) / 3
+         = (4 ln 2) / 3
+         = 4 * 0.69314718055994530941723... / 3
+         = 2.77258872223978123766894... / 3
+         = 0.92419624074659374588964...
+
+    ln 2 to 21 places is 0.693147180559945309417, from a log table, not from this
+    codebase. THE VALUE IS IRRATIONAL and therefore not exactly representable, and
+    the order in which three logarithms are summed is not fixed by the maths, so
+    `==` is not available here and the golden says so: it asserts the decimal above
+    to 12 places and nothing tighter. This is the second of the two non-exact
+    quantities in this file; everything in Cases 1-6 and 8 is asserted with `==`.
+
+    A ZERO PROBABILITY ON THE REALISED CLASS RAISES. It is not clipped. -log(0) is
+    +inf, and a finite clipped loss reports a model that assigned the outcome
+    impossibility as merely a bad model; the two need different fixes and only the
+    raise distinguishes them. An `eps` argument exists so a caller who means to
+    clip must say so at the call site.
+
+
+================================================================================
+Case 8 -- stage order and the decision log (ledger 49 / index 20)
+================================================================================
+Registered order (the pre-registration's own order, which needs no log entry):
+
+    ("S-A", "S-B", "S-C", "S-D")
+
+  (a) planned = the registered order, nothing run yet -> next stage is "S-A".
+      No decision-log entry is required, because nothing was reordered.
+
+  (b) planned = ("S-A", "S-C", "S-B", "S-D") with "S-A" already run, and an EMPTY
+      decision log -> REFUSED. The next stage would be "S-C" and no logged
+      reordering produces this order. The error names the stage ("S-C") and says
+      what is missing.
+
+  (c) the same planned order with one log entry
+
+        {"date": "2026-09-20",
+         "from_order": ["S-A", "S-B", "S-C", "S-D"],
+         "to_order":   ["S-A", "S-C", "S-B", "S-D"],
+         "reason":     "S-C carries the largest attributable error",
+         "before_stage": "S-C"}
+
+      and a run date of 2026-09-21 -> ALLOWED, next stage "S-C". The entry is
+      dated 2026-09-20, which is BEFORE the stage runs, as 8A.1 requires.
+
+  (d) planned = ("S-A", "S-B", "S-C", "S-D", "S-E") -> REFUSED whatever the log
+      says, because "S-E" is not in the registered set. Deposit decision D28: "No
+      new, unregistered stage can be added this way."
+
+  (e) planned = ("S-B", "S-A", "S-C", "S-D") with "S-A" ALREADY RUN -> REFUSED.
+      The reordering moves a stage that has already run. 8A.1 permits reordering
+      "among NOT-YET-RUN stages" only.
+
+  (f) an entry dated 2026-09-22 with a run date of 2026-09-21 -> REFUSED. "Logged
+      before the next stage runs" is a fact about the dates, and an entry written
+      after the fact is the thing the clause exists to prevent.
+
+
+================================================================================
+Case 9 -- the reuse pin against the existing fitters, and what it measured
+================================================================================
+scripts/run_d365_momentum_buffer.py:762 `ols(y, Xr, nw_lag=5)` computes
+
+    XtX_inv = inv(Xr' Xr);  b = XtX_inv (Xr' y);  e = y - Xr b
+    s2 = e'e / (n - k);     se = sqrt(diag(s2 XtX_inv))
+    S  = sum_t x_t x_t' e_t^2
+         + sum_{L=1..nw_lag} (1 - L/(nw_lag+1)) (G_L + G_L')
+    se_nw = sqrt(diag(XtX_inv S XtX_inv))
+
+with G_L = sum_t x_{t+L} e_{t+L} x_t' e_t. Newey-West with a Bartlett kernel and
+no small-sample correction on S.
+
+MEASURED, on this machine, before fit.py was written: `np.linalg.lstsq(X, y)` and
+the normal-equation solve above are NOT bit-identical. On a 60x3 Gaussian design
+with an intercept column the coefficients differ by up to 4.4e-16 (a few units in
+the last place); on the six-row block-1 design of Case 1 above, whose answer is
+the exact integer pair (4, 3), lstsq returns
+
+    0x1.0000000000000p+2 = 4.0                  (exact)
+    0x1.7ffffffffffffp+1 = 2.9999999999999996   (one ulp low)
+
+That is why fit.ols SOLVES BY THE NORMAL EQUATIONS, exactly as d365 does, and uses
+np.linalg.lstsq only as the RANK ORACLE -- lstsq returns the rank and the singular
+values, which is what naming a linearly dependent column requires and which
+np.linalg.inv cannot supply. The reuse pin is then an exact `==` on any synthetic
+design rather than an approximate one on a lucky design, and Case 1's coefficients
+come out as the integers written above.
+
+
+================================================================================
+WHAT THIS FILE DOES NOT COVER
+================================================================================
+- The deposit's actual terms. Nothing here knows what a "participant term" is; the
+  fitter is abstract and an OLS fitter is supplied as the reference implementation
+  so a Kalman-style update can replace it without touching the budget.
+- Term-level counterpart checks (8A.1 item 2). The row carries the string and the
+  renderer prints it; computing dSD against dSX needs COT data and a study.
+- Whether any of this is worth running. That is the pre-registration's question.

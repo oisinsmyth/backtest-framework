@@ -559,6 +559,76 @@ two-clause rule (distinct de-duplicated sqlite configs from `data/trial_registri
 of every `trials.csv` under `data/`); **no `trials.csv` exists yet**, so the futures line starts
 at zero logged trials, and a test asserts that zero so it stops being true out loud.
 
+**The forward data recorder's schedule and gap log ([D608](decisions/D608-the-forward-data-recorder.md), 2026-09-21).** [`recorder/jobs.json`](../data/recorder/jobs.json)
+declares 16 jobs for the settlement-flow ledger's Track 2 (§13A.3): **7 `ready`** — the BLS CPI and
+Employment Situation schedule pages, the Fed FOMC calendar, the EIA petroleum and gas schedule
+pages, CME's "Daily Settlement Time Details" page and the CFTC disaggregated COT resource, every URL
+copied from `scripts/fetch_release_calendar.py`, `scripts/fetch_cftc_cot.py` or a cached response's
+own `_links.self` — and **9 not**, being the deposit's own ten-job table minus COT: seven
+`needs_source` (no URL exists in this repository and none is invented) and two `needs_key`
+(Databento TAS and CME MBO, both paid, both gated on an open deposit question). Each job carries
+its ET window, a **`window_basis`** saying whether that clock was sourced or declared here, and the
+deposit's own frequency and content cells verbatim. [`recorder/GAPS.md`](../data/recorder/GAPS.md)
+is the append-only log of windows that closed without a record; **gaps are never filled with
+estimates and the module has no `fill_gap`.** The raw responses live under `data/raw/recorder/<job>/`
+(gitignored cache, byte-for-byte, `{key}__{fetched_at}.{ext}`, one `_manifest.json` per job with a
+sha256 per file, `health.jsonl` per run; the cache contract is in `data/raw/README.md`). `fetched_at`
+— the filename stamp — is the **availability time** for any forward test (deposit D23), never
+`published_at`. One pass: `uv run python scripts/recorder.py --run`; gap check only: `--check`.
+**Nothing schedules it: hosting is deposit Q17 and the principal's decision**, and a recorder that
+is not being invoked writes nothing at all, which only the host can notice. What bites: the
+deposit's "CME settlement" job is settlement PRICES, D586's pages are settlement TIMES — two jobs,
+one `ready`, one `needs_source`; and `www.cmegroup.com` returns 403 from this machine.
+
+**The order-book depth fixture and the impact parameters ([D604](decisions/D604-futures-sqrt-impact-depth-scaling-and-the-book-depth-fixture.md), 2026-09-21).**
+**`fut_book_depth_1m.csv.gz`** + [`meta`](../data/fixtures/fut_book_depth_1m.meta.json) — the first
+order-book depth fixture, and the first thing in this repository to read the MBO schema. **65,688
+rows = 391 ET minutes (09:30–16:00) × 21 days × 8 roots**, one per (root, day, minute) for the front
+contract of ES, NQ, RTY, YM, CL, GC, ZN, ZB, from the only MBO pull on disk
+(`GLBX-20260911-NKFKU4AMHN`, 26 files, 39.4 GB, 2026-08-11 → 2026-09-09; 2.02 billion messages
+decoded). Each row carries the mid, the spread in ticks, the best size on each side, and the
+**resting size and order count within ±5 ticks of the mid** (ledger §8A.4's own band) plus
+`n_events`. The book is replayed order by order; trades and fills do not move resting depth, and the
+no-crossed-book gate is what tests that. The four Sunday files hold no day session and **2026-09-07
+(Labor Day) is excluded whole** — 917 of its minutes print no message and it holds every crossed or
+locked minute in the replay. Gitignored by suffix, hashed in the manifest (sha256 `df64af13…`).
+**What bites:** *(i)* this is **book state, not a return series**, and its month lies inside the
+deposit's sealed vault window, unreconciled with this repository's 2024-01-01 holdout — nothing here
+may be joined to a price move until that reconciliation is in writing; *(ii)* a ±5-tick band is
+**not comparable across roots** — 14.34 bp wide on ZB, 0.42 bp on NQ, so ZN's 74,717 median lots
+and NQ's 42 answer different questions (`band_half_width_bp_by_root` in the meta); *(iii)* seven
+minutes have a spread wider than the band and zero in-band depth, five of them at exactly 10:00 ET.
+[`futures_impact_params.json`](../data/futures_impact_params.json) — ADV and σ for
+`costs/futures_impact.py:FuturesSqrtImpact` on the 36 breadth roots in **three lines**:
+`day1m_2016_2023` (the default, front-contract day sessions 2016-01-04..2023-12-29 from
+`fut_day1m.parquet`), `d511` (9 roots, 2025-09..2026-09) and `breadth_meta` (σ and notional only —
+its source has no volume column, so the brick refuses it by name). **What bites:** two of the three
+lines are measured inside the vault window, and the recent ADV is up to **2.23× the in-sample one
+on ZN**; use the default line unless you mean otherwise in writing. The file also records
+**seven roots where `Future.from_specs` returns dollars-per-point 100× wrong** (ZC, ZS, ZW, ZL, LE,
+HE high; SR3 low — the definition file's cents), which D591's `TickCrossing` inherits: nothing on
+disk charges those roots today, and the next thing that does will be wrong.
+
+**The Track 3 fill-log schema ([D605](decisions/D605-track-3-logging-shortfall-latency-and-the-trial-counter.md), 2026-09-21).** [`track3/SCHEMA.md`](../data/track3/SCHEMA.md)
+alone: the 19 columns of `data/track3/<model>_trades.csv` with their units, the sign convention
+(POSITIVE = the fill was worse for the strategy, inherited from `scripts/d364_slippage.py`) and the
+file rules (append-only, header once, LF, floats through `repr`, a strict typed reader). **No trade
+file exists and none is created**: no order has ever been sent from this repository, there is no
+broker adapter and no real fill has been recorded. The reader and the four statistics §13A.5 asks
+for live in `validation/track3.py`.
+
+**The deposit test crosswalk ([D607](decisions/D607-the-deposit-test-crosswalk.md), 2026-09-21).** [`deposit_test_map.json`](../data/deposit_test_map.json) —
+the five pre-registrations' **146 numbered unit tests** (settlement ledger 71, index reweight 28,
+opening agent state 25, shock classifier 13, LETF close flow 9), one row each with the item's
+**verbatim text**, a ≤ 15-word paraphrase, a class (arithmetic 40, leak 31, statistical 31,
+data_guard 25, execution 16, rendering 3) and a status: **43 claimed (ledger 29/71, index 6/28,
+opening 6/25, shock 2/13, LETF 0/9), 4 covered via another document's claimed test, 5 declined on
+the record in D588, 94 with nothing** — 28 before round 3, 15 more from round 3's own tests. **What bites:** the five deposit documents are untracked, so a clone
+has none of them — the verbatim text lives in this file for exactly that reason, and nothing should
+link to them by relative path. [`docs/results/DEPOSIT_TEST_MAP.md`](results/DEPOSIT_TEST_MAP.md) is
+rendered from this file and is never the source of truth; `scripts/deposit_test_map.py --scan`
+verifies it against the tree and never rewrites it.
+
 ---
 
 ## 5. What is still missing
