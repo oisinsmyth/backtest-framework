@@ -315,6 +315,29 @@ adjusted, daily is not. That has already put one name at 5x its own prices, and
 `crypto_universe_2015_2025_raw` (63 coins, daily) · `crypto_binance_15m_raw` (25 MB, 15m,
 2017 → 2026) · 30m and 1h slices · `crypto_book_2018_raw`.
 
+**`fut_es_options_eod.csv.gz` + `fut_es_options_eod.meta.json` ([D581](decisions/D581-STAGE-0-DESIGN-gamma-conditioned-close-on-ES-the-discriminator.md), 2026-09-21; panel gitignored by pattern, in the manifest by hash):**
+one row per (usable ES session, ES-family option): family, right, strike, expiry date and time,
+underlying future, **open interest as of the prior close**, the prior settlement, the OI's
+publication time, and for the same-day-expiring option its minute-bar volume to 15:30 ET;
+**19,225,749 rows over 2,658 sessions 2016-01-04 → 2026-09-09**, 25 families (ES quarterly, EW
+end-of-month, EW1–EW4 Fridays, E1A–E4A Mondays from 2017-04, E1C–E4C Wednesdays from 2016-10,
+E1B–E5B Tuesdays and E1D–E4D Thursdays from 2022-05). Built by `scripts/build_fut_es_options_eod.py`
+(`--defs`, `--stats`, `--bars`, `--build`, `--gates`, `--selftest`) over two Databento batch pulls
+recorded in `data/es_options_pull_jobs*.json` (`statistics` + `definition`, quoted at 47.7 GB and
+336.2 GB billable, **USD 0.00 each** under the subscription; ~67 GB compressed under
+`data/raw/databento/GLBX-20260920-*`). Keyed on the session a publication is first USABLE
+(D497/D521: the OI published ~21:00 ET on T−1 is session T's). **What bites:** *(i)* **the
+`ES.OPT` parent is the quarterly family alone** — the weeklies and dailies are their own parents
+(`EW.OPT`, `EW1.OPT` … `E4D.OPT`; `E5A` does not resolve); *(ii)* **single-digit year codes
+recycle** — `ESZ6 C2200` is December 2016 and December 2026 — so an option's strike and expiry
+must come from the definition of its instrument id in force at the publication (D520's windowed
+rule), never from the raw symbol; *(iii)* a definition record is republished every session, so
+the first record per (id, symbol) is the window start and the last is the expiry-day record;
+*(iv)* an expired option's final OI is published on its last evening and is usable the next
+session — drop rows whose expiry is before the session, or 1.49M contracts of expired ESM2
+options sit in 2022-06-21; *(v)* the quarterly expires at 09:30 ET (AM settlement), every other
+family at 16:00; *(vi)* `settle` is missing on 0.5 % of rows (no settlement published).
+
 **`fut_btc_1m.csv.gz` + `fut_btc_1m.meta.json` ([D580](decisions/D580-STAGE-0-RESULT-not-supported-a-five-minute-unsigned-burst.md), 2026-09-20; panel gitignored by pattern, in the manifest by hash):**
 BTC and MBT outright bars at one minute, **every session, keyed in UTC** (bar start), front month
 per (root, CME trade date) by full-date volume through D462's windowed id labelling; BTC

@@ -1,0 +1,151 @@
+{
+ "spec": "D581",
+ "built_utc": "2026-09-21T07:10:10Z",
+ "rows": 19225749,
+ "sessions": 2658,
+ "first": "2016-01-04",
+ "last": "2026-09-09",
+ "families": {
+  "EW": 4193676,
+  "EW3": 3621108,
+  "ES": 3437497,
+  "EW1": 968962,
+  "EW2": 964750,
+  "EW4": 948398,
+  "E2A": 425948,
+  "E3C": 411255,
+  "E2C": 410895,
+  "E4C": 404703,
+  "E1C": 395391,
+  "E4A": 383634,
+  "E1A": 381055,
+  "E3A": 366539,
+  "E3D": 284431,
+  "E3B": 217681,
+  "E1B": 216294,
+  "E2D": 215530,
+  "E1D": 214949,
+  "E2B": 211761,
+  "E4B": 198714,
+  "E4D": 185971,
+  "E5C": 86025,
+  "E5D": 45722,
+  "E5B": 34860
+ },
+ "usable_rule": "a publication is usable on the first ES session whose 10:00 ET entry is strictly after its ts_event (D497/D521)",
+ "stat_types": {
+  "open_interest": 9,
+  "settlement": 3
+ },
+ "sentinels": "UNDEF on both; settlement == 0.0 dropped (D526)",
+ "vol_to_1530": "minute-bar volume before 15:30 ET on the option's expiry session only, from the archive on disk",
+ "gates": {
+  "G1": {
+   "negative_oi": 0,
+   "zero_or_negative_settle": 0,
+   "settle_missing": 94884,
+   "passes": true
+  },
+  "G2": {
+   "rows": 19225749,
+   "published_before_entry": 1.0,
+   "passes": true
+  },
+  "G3": {
+   "first_expiry_by_family": {
+    "E1A": "2017-05-01",
+    "E1B": "2022-05-03",
+    "E1C": "2016-10-05",
+    "E1D": "2022-05-05",
+    "E2A": "2017-05-08",
+    "E2B": "2022-05-10",
+    "E2C": "2016-10-12",
+    "E2D": "2022-05-12",
+    "E3A": "2017-04-17",
+    "E3B": "2022-05-17",
+    "E3C": "2016-10-19",
+    "E3D": "2022-05-19",
+    "E4A": "2017-04-24",
+    "E4B": "2022-04-26",
+    "E4C": "2016-10-26",
+    "E4D": "2022-04-28",
+    "E5B": "2022-08-30",
+    "E5C": "2017-03-29",
+    "E5D": "2022-09-29",
+    "ES": "2016-01-15",
+    "EW": "2016-01-29",
+    "EW1": "2016-02-05",
+    "EW2": "2016-01-08",
+    "EW3": "2016-07-15",
+    "EW4": "2016-01-22"
+   },
+   "share_sessions_with_0dte_by_weekday": {
+    "0": 0.8397565922920892,
+    "1": 0.47186932849364793,
+    "2": 0.9305301645338209,
+    "3": 0.44423791821561337,
+    "4": 1.0
+   },
+   "share_with_0dte_since_2022_05": 0.9898523985239852,
+   "share_fridays_with_0dte": 1.0,
+   "passes": true
+  },
+  "G4": {
+   "median_strikes_with_oi": 348.0,
+   "sessions_under_20": [],
+   "n_under_20": 0,
+   "passes": true
+  },
+  "G5": {
+   "sessions": [
+    {
+     "session": "2016-05-17",
+     "agree": true
+    },
+    {
+     "session": "2016-10-24",
+     "agree": true
+    },
+    {
+     "session": "2017-09-07",
+     "agree": true
+    },
+    {
+     "session": "2017-12-01",
+     "agree": true
+    },
+    {
+     "session": "2019-04-15",
+     "agree": true
+    },
+    {
+     "session": "2021-05-19",
+     "agree": true
+    },
+    {
+     "session": "2021-12-31",
+     "agree": true
+    },
+    {
+     "session": "2022-06-21",
+     "agree": true
+    },
+    {
+     "session": "2023-02-24",
+     "agree": true
+    },
+    {
+     "session": "2023-05-24",
+     "agree": true
+    }
+   ],
+   "passes": true
+  },
+  "G6": {
+   "near_money_rows_tried": 6818,
+   "share_inverting": 1.0,
+   "passes": true
+  }
+ },
+ "all_gates_pass": true
+}

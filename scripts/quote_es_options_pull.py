@@ -12,11 +12,15 @@ import json, os, sys, time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "es_options_pull_quote.json"
 KEY_FILE = Path.home() / ".config" / "databento" / "key"
-DATASET = "GLBX.MDP3"; SYMBOLS = ["ES.OPT"]; STYPE_IN = "parent"
+DATASET = "GLBX.MDP3"; STYPE_IN = "parent"
 START = "2016-01-01"; END = "2026-09-11"
 SCHEMAS = ("statistics", "definition")
+# `ES.OPT` resolves to the QUARTERLY family only (found on 2026-09-21: 54,250 options over 2016-2026, none of them weeklies).
+# The end-of-month, Friday-weekly and Monday-Thursday daily families are their own parents. E5A does not resolve; E5D is empty.
+WEEKLY_FAMILIES = ["EW", "EW1", "EW2", "EW3", "EW4"] + [f"E{i}{l}" for l in "ABCD" for i in range(1, 6) if f"E{i}{l}" != "E5A"]
+SETS = {"quarterly": (["ES.OPT"], REPO / "data" / "es_options_pull_quote.json"), "weeklies": ([f"{f}.OPT" for f in WEEKLY_FAMILIES], REPO / "data" / "es_options_pull_quote_weeklies.json")}
+SYMBOLS, OUT = SETS["weeklies" if "--weeklies" in sys.argv else "quarterly"]
 
 
 def api_key():

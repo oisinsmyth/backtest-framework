@@ -1,0 +1,122 @@
+{
+ "quote": {
+  "dataset": "GLBX.MDP3",
+  "symbols": [
+   "ES.OPT"
+  ],
+  "stype_in": "parent",
+  "start": "2016-01-01",
+  "end": "2026-09-11",
+  "quoted_utc": "2026-09-20T21:33:17Z",
+  "schemas": {
+   "statistics": {
+    "billable_bytes": 37409401120,
+    "billable_gb": 37.41,
+    "usd": 0.0
+   },
+   "definition": {
+    "billable_bytes": 10281175320,
+    "billable_gb": 10.28,
+    "usd": 0.0
+   }
+  },
+  "last_12_months": {
+   "statistics": {
+    "billable_gb": 4.13,
+    "usd": 0.0
+   },
+   "definition": {
+    "billable_gb": 1.2,
+    "usd": 0.0
+   }
+  },
+  "total_usd": 0.0,
+  "total_gb": 47.69,
+  "timing_s": 7.2
+ },
+ "submitted_utc": "2026-09-20T21:39:33Z",
+ "jobs": [
+  {
+   "schema": "statistics",
+   "job": {
+    "id": "GLBX-20260920-XYXX48RXNB",
+    "user_id": "QWGCG4GQ",
+    "bill_id": null,
+    "cost_usd": 0.0,
+    "dataset": "GLBX.MDP3",
+    "symbols": "ES.OPT",
+    "stype_in": "parent",
+    "stype_out": "instrument_id",
+    "schema": "statistics",
+    "start": "2016-01-01T00:00:00.000000000Z",
+    "end": "2026-09-11T00:00:00.000000000Z",
+    "limit": null,
+    "encoding": "dbn",
+    "compression": "zstd",
+    "pretty_px": false,
+    "pretty_ts": false,
+    "map_symbols": false,
+    "split_symbols": false,
+    "split_duration": "year",
+    "split_size": null,
+    "packaging": null,
+    "delivery": "download",
+    "record_count": null,
+    "billed_size": null,
+    "actual_size": null,
+    "package_size": null,
+    "state": "done",
+    "ts_received": "2026-09-20T21:39:33.012717000Z",
+    "ts_queued": null,
+    "ts_process_start": null,
+    "ts_process_done": null,
+    "ts_expiration": null
+   },
+   "accepted_usd": 0.0,
+   "downloaded_utc": "2026-09-20T23:35:08Z",
+   "files": 14,
+   "bytes": 8545433945
+  },
+  {
+   "schema": "definition",
+   "job": {
+    "id": "GLBX-20260920-DKX4EQFR7K",
+    "user_id": "QWGCG4GQ",
+    "bill_id": null,
+    "cost_usd": 0.0,
+    "dataset": "GLBX.MDP3",
+    "symbols": "ES.OPT",
+    "stype_in": "parent",
+    "stype_out": "instrument_id",
+    "schema": "definition",
+    "start": "2016-01-01T00:00:00.000000000Z",
+    "end": "2026-09-11T00:00:00.000000000Z",
+    "limit": null,
+    "encoding": "dbn",
+    "compression": "zstd",
+    "pretty_px": false,
+    "pretty_ts": false,
+    "map_symbols": false,
+    "split_symbols": false,
+    "split_duration": "year",
+    "split_size": null,
+    "packaging": null,
+    "delivery": "download",
+    "record_count": null,
+    "billed_size": null,
+    "actual_size": null,
+    "package_size": null,
+    "state": "done",
+    "ts_received": "2026-09-20T21:39:44.527458000Z",
+    "ts_queued": null,
+    "ts_process_start": null,
+    "ts_process_done": null,
+    "ts_expiration": null
+   },
+   "accepted_usd": 0.0,
+   "downloaded_utc": "2026-09-20T23:40:04Z",
+   "files": 14,
+   "bytes": 586807463
+  }
+ ]
+}

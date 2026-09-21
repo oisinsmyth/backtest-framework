@@ -10,6 +10,15 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-21)
+- `data/fixtures/fut_es_options_eod.csv.gz` + meta (D581): every ES-family option's prior-close
+  open interest, settlement, strike, expiry and 0DTE volume to 15:30 ET per usable session,
+  19,225,749 rows over 2,658 sessions 2016-01-04 to 2026-09-09, 25 families. Builder
+  `scripts/build_fut_es_options_eod.py` (six gates, self-test). Fetched by
+  `scripts/fetch_es_options.py` from two zero-cost Databento batch pulls quoted by
+  `scripts/quote_es_options_pull.py` (`ES.OPT` is the quarterly family alone; the weeklies and
+  dailies are their own parents). Stage 0 runner `scripts/stage0_d581_gamma_close.py`.
+
 ### Added (2026-09-20)
 - `data/fixtures/fut_btc_1m.csv.gz` + meta (D580): BTC and MBT one-minute bars, every session,
   UTC-keyed, front by trade-date volume, 2017-12-18 to 2026-09-10; builder

@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 328 of these records carry neither field —
+**No Status or Category column, deliberately.** 329 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -659,7 +659,7 @@ would look like data. The tokens are what is shown.
 | D578 | DOES NOT TRANSFER: on the 139 unread reports of 2024-01 → 2026-08 the swap-dealer net short's eight-week response to th… | [PRE-REG](D578-PRE-REG-SD-net-short-vs-the-strip-on-the-2024-plus-reports.md) · [RESULT](D578-RESULT-does-not-transfer-no-weekly-instrument-in-the-COT.md) |
 | D579 | FIXTURE: perpetual-swap funding rates from three venues (Binance, Bybit, OKX) and Bybit daily open interest, BTC and ET… | [record](D579-FIXTURE-perpetual-funding-rates-and-open-interest-three-venues.md) |
 | D580 | D580 STAGE 0 RESULT — NOT SUPPORTED. The funding clock is on CME bitcoin, but as a five-minute unsigned burst, not the… | [record](D580-STAGE-0-DESIGN-the-funding-clock-on-CME-bitcoin-premise-check.md) · [RESULT](D580-STAGE-0-RESULT-not-supported-a-five-minute-unsigned-burst.md) |
-| D581 | D581 STAGE 0 DESIGN — the gamma-conditioned close on ES: does the sign of dealer net gamma, computed from public option… | [record](D581-STAGE-0-DESIGN-gamma-conditioned-close-on-ES-the-discriminator.md) |
+| D581 | D581 STAGE 0 RESULT — NOT SUPPORTED. The sign of carried dealer net gamma does not decide whether the last half-hour co… | [record](D581-STAGE-0-DESIGN-gamma-conditioned-close-on-ES-the-discriminator.md) · [RESULT](D581-STAGE-0-RESULT-not-supported-gamma-sign-orders-nothing.md) |
 
 <!-- REGISTER:END -->
 
