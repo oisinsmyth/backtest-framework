@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 345 of these records carry neither field —
+**No Status or Category column, deliberately.** 346 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -678,7 +678,7 @@ would look like data. The tokens are what is shown.
 | D602 | VOID on its own harness. The covered-parity correction built from monthly-average 3-month rates does not remove the rat… | [PRE-REG](D602-PRE-REG-basis-momentum-on-FX-in-covered-parity-space.md) · [RESULT](D602-RESULT-VOID-the-parity-correction-over-shoots-on-monthly-rates.md) |
 | D603 | BASIS_MOMENTUM.md is CLOSED by the principal, and the synthesis of the basis-momentum programme D564–D602: ten free tes… | [record](D603-CLOSED-basis-momentum-every-free-test-run-none-supported.md) |
 | D613 | the ES-family option volume panel in ET clock buckets, so an option-ladder conditioner can be fixed at a cutoff of the… | [record](D613-FIXTURE-the-ES-option-volume-panel-in-ET-clock-buckets.md) |
-| D614 | REGISTRATION — does the noon 0DTE strike ladder order the last half hour of the ES day session? The volume-weighted cen… | [PRE-REG](D614-PRE-REG-expiry-pinning-on-ES-from-the-noon-0DTE-volume-ladder.md) |
+| D614 | D614 STAGE 0 RESULT — the verdict the pre-registration's own bars return is REAL BUT NOT TRADEABLE, and the line closes… | [PRE-REG](D614-PRE-REG-expiry-pinning-on-ES-from-the-noon-0DTE-volume-ladder.md) · [RESULT](D614-STAGE-0-RESULT-not-pinning-ten-sessions-carry-the-whole-pull.md) |
 
 <!-- REGISTER:END -->
 
