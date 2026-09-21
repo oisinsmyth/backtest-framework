@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**2,186 tests are collected here, and one of them skips on the machine this was written on, for
+**2,490 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -27,7 +27,7 @@ with fresh numbers on 2026-09-16 and immediately contradicted four older documen
 
 ## The four tiers
 
-### `tests/golden/` — 101 tests. *The arithmetic is right.*
+### `tests/golden/` — 133 tests. *The arithmetic is right.*
 
 Every file has a companion `.hand.txt` — 15 of them — containing the arithmetic worked out by
 hand, and **the convention is that the ground truth is produced by a calculator that never imports
@@ -52,7 +52,7 @@ calculator from importing the package. The engine still publishes no per-brick c
 so borrow and margin interest remain inseparable from outside it; that residual gap is drawn
 rather than hidden in [`docs/figures/`](figures/README.md).
 
-### `tests/property/` — 67 tests across 8 files. *The invariants hold on paths nobody chose.*
+### `tests/property/` — 96 tests across 10 files. *The invariants hold on paths nobody chose.*
 
 Hypothesis generates the inputs. The tier exists for failures with a *shape* you cannot enumerate,
 and look-ahead is the archetype: perturbing bars after the decision bar must change nothing
@@ -90,11 +90,11 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 1,859 tests. *Each part does its own job.*
+### `tests/unit/` — 2,102 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
-most of the **structural guard** assertions are proved to fire — `src/` carries **280 `raise`
-statements**, spread across 46 of its 84 tracked `.py` files, and a guard nobody has proved will
+most of the **structural guard** assertions are proved to fire — `src/` carries **359 `raise`
+statements**, spread across 49 of its 87 tracked `.py` files, and a guard nobody has proved will
 raise is a guard nobody has checked.
 
 **The counting rule, because a reviewer who checks will otherwise get a different number.** That
@@ -250,7 +250,7 @@ than a coincidence. It is drawn in
 
 ```bash
 uv sync
-uv run pytest -q tests/golden     # 101 ledger-anchored tests, no market data
+uv run pytest -q tests/golden     # 133 ledger-anchored tests, no market data
 uv run pytest -q                  # everything
 uv run pytest -q -rs              # everything, with every skip named
 ```

@@ -1,0 +1,2136 @@
+{
+ "built_utc": "2026-09-21T19:00:53Z",
+ "fetcher": "scripts/fetch_release_calendar.py",
+ "record": "D585",
+ "span": {
+  "from": "2016-01-01",
+  "to": "2026-12-31",
+  "per_event": {
+   "CPI": {
+    "first": "2016-01-20",
+    "last": "2026-12-10",
+    "rows": 131
+   },
+   "EIA_NGSR": {
+    "first": "2016-01-07",
+    "last": "2026-12-31",
+    "rows": 574
+   },
+   "EIA_WPSR": {
+    "first": "2016-01-06",
+    "last": "2026-12-30",
+    "rows": 573
+   },
+   "EMPSIT": {
+    "first": "2016-01-08",
+    "last": "2026-12-04",
+    "rows": 131
+   },
+   "FOMC": {
+    "first": "2016-01-27",
+    "last": "2026-09-16",
+    "rows": 85
+   },
+   "FOMC_UNSCHEDULED": {
+    "first": "2019-10-11",
+    "last": "2025-08-22",
+    "rows": 7
+   }
+  }
+ },
+ "conventions": {
+  "datetime_et": "ISO 8601 with the America/New_York offset; the clock is the source's own",
+  "datetime_utc": "the same instant in UTC",
+  "release_date_nominal": "the date the release WOULD fall on under the source's own standard rule: EMPSIT the first Friday of the month, EIA the standard weekday, FOMC the meeting's last day. A DESCRIPTOR computed from the sourced date, never a source of one. Empty for CPI, which has no day rule.",
+  "holiday_shift": "the sourced date differs from release_date_nominal. For EIA it is exactly the page's own holiday exception table; for EMPSIT it also covers the 2019 and 2025 funding lapses, which are named in partial_or_disrupted_years.",
+  "method": "fetched = off the live official page; archived = off a Wayback capture of that same official URL, which is the source_url. 'inferred' is REFUSED by the builder.",
+  "eia_rows_without_an_exception": "EIA publishes a standard sentence plus an exception table, not a list of weeks. A normal week's date and time come from the standard sentence parsed off the governing page for that year and that page's table not listing the week. Unannounced delays are not visible to any published schedule."
+ },
+ "sources": {
+  "bls_forward_cpi": {
+   "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:49Z",
+   "bytes": 55572,
+   "sha256": "36b83ba3723ac4e1d96431214b22f22bb4240718dab1ec2b6289fef9e7829580"
+  },
+  "bls_forward_empsit": {
+   "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:50Z",
+   "bytes": 55578,
+   "sha256": "8a61955edcbf086a560c43004ed0613fec2ae25e646e04e512472e2175cb3c47"
+  },
+  "bls_schedule_2016": {
+   "url": "https://www.bls.gov/schedule/2016/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:32Z",
+   "bytes": 96677,
+   "sha256": "da838eb21650da1f7aa3ae3355bdb9b5e1cd190a467232e74ae28621453a6c0a"
+  },
+  "bls_schedule_2017": {
+   "url": "https://www.bls.gov/schedule/2017/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:33Z",
+   "bytes": 95284,
+   "sha256": "cefc78608ffdf1cf295ca6ce29b60a34171b2be679aa4ff003defa56eb5dd781"
+  },
+  "bls_schedule_2018": {
+   "url": "https://www.bls.gov/schedule/2018/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:35Z",
+   "bytes": 98266,
+   "sha256": "0508017239cb944b6a865537e86706e89579347cd5703cfac73abc4116f70655"
+  },
+  "bls_schedule_2019": {
+   "url": "https://www.bls.gov/schedule/2019/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:36Z",
+   "bytes": 99273,
+   "sha256": "79d544badfec76a4e3687076a831e8ba4fb69c211898828f5edd173ba8e401fd"
+  },
+  "bls_schedule_2020": {
+   "url": "https://www.bls.gov/schedule/2020/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:38Z",
+   "bytes": 93767,
+   "sha256": "0ee7b9af2cdef3b326eb3924154d916f89b917a0f91ffc8b0046157dbf5c9e9e"
+  },
+  "bls_schedule_2021": {
+   "url": "https://www.bls.gov/schedule/2021/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:40Z",
+   "bytes": 98369,
+   "sha256": "f1c527292a25d8f8989abbe476fcf4f89a2cce1a1d8d4dcb17a172da5e547b0c"
+  },
+  "bls_schedule_2022": {
+   "url": "https://www.bls.gov/schedule/2022/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:41Z",
+   "bytes": 100703,
+   "sha256": "8a65fcdee01b1c42db14a2413b6b60a3d1f4e389159cbcbba68d5743d94358c1"
+  },
+  "bls_schedule_2023": {
+   "url": "https://www.bls.gov/schedule/2023/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:43Z",
+   "bytes": 100158,
+   "sha256": "dde426274a3f593a352e7b2b9d978799307ace879e032caf0b1e3dd184259412"
+  },
+  "bls_schedule_2024": {
+   "url": "https://www.bls.gov/schedule/2024/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:44Z",
+   "bytes": 101431,
+   "sha256": "989023c355a3a4d179e2a250da476468f3a63ad3e310b6a029b6814a6307f878"
+  },
+  "bls_schedule_2025": {
+   "url": "https://www.bls.gov/schedule/2025/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:46Z",
+   "bytes": 96700,
+   "sha256": "3ef4c8dee4db6a88a1ccc9a7f67715adac973a46ff6288483367e46895aa9607"
+  },
+  "bls_schedule_2026": {
+   "url": "https://www.bls.gov/schedule/2026/home.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:47Z",
+   "bytes": 100849,
+   "sha256": "a20196cb3a45088e38f1fc12c0e459a40f2bb6568018429b1a1f589176702504"
+  },
+  "eia_ngsr_live": {
+   "url": "https://ir.eia.gov/ngs/schedule.html",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:54Z",
+   "bytes": 8105,
+   "sha256": "b54595ec6784c11c95ab448fa21d3f115b03a2bcc02960cab589fb0ad4cc1e04"
+  },
+  "eia_ngsr_wb_20140116182405": {
+   "url": "https://web.archive.org/web/20140116182405/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:55Z",
+   "bytes": 6443,
+   "sha256": "45cb48888412f5860aca72007d7a66f0ac901124a2c237fec091984ac586112d"
+  },
+  "eia_ngsr_wb_20140719102335": {
+   "url": "https://web.archive.org/web/20140719102335/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:59Z",
+   "bytes": 6445,
+   "sha256": "9eb15c15901f810733f313cd52793c5e9f42f8d7a696253e258b60370c47f5aa"
+  },
+  "eia_ngsr_wb_20141231141037": {
+   "url": "https://web.archive.org/web/20141231141037/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:02Z",
+   "bytes": 6745,
+   "sha256": "050216c6287a858e298ca15b07a55704fc09b58ae3e0e7d4e3add6bf4d0af168"
+  },
+  "eia_ngsr_wb_20150208035202": {
+   "url": "https://web.archive.org/web/20150208035202/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:07Z",
+   "bytes": 6485,
+   "sha256": "7244f74e17b7760d9a480cfb3dc2b42c8a4625584427de9f09ee837b8fc065e7"
+  },
+  "eia_ngsr_wb_20151121123504": {
+   "url": "https://web.archive.org/web/20151121123504/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:12Z",
+   "bytes": 6074,
+   "sha256": "1d8e1b30e4ca912f56e142171e448f4f1b9ec7c9117e5daad5bc58f15c2818e1"
+  },
+  "eia_ngsr_wb_20151222163214": {
+   "url": "https://web.archive.org/web/20151222163214/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:16Z",
+   "bytes": 6094,
+   "sha256": "bc2ffe146ded08e48b54e5a3f8d484c7c7f85d418518313f53e68a2cad6b5c11"
+  },
+  "eia_ngsr_wb_20161224191027": {
+   "url": "https://web.archive.org/web/20161224191027/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:20Z",
+   "bytes": 5933,
+   "sha256": "b8f0212e0847a10f43428cc0f058ef7b6026dba80e591d2a8268d7cd7b5d2128"
+  },
+  "eia_ngsr_wb_20170905221245": {
+   "url": "https://web.archive.org/web/20170905221245/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:23Z",
+   "bytes": 5953,
+   "sha256": "65ae6de9f792d54aba5efc5b79176bfc148a906bd2e3b599ccc8eaca83b73a38"
+  },
+  "eia_ngsr_wb_20171007180413": {
+   "url": "https://web.archive.org/web/20171007180413/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:27Z",
+   "bytes": 6422,
+   "sha256": "6abeab0244533519782f68d5c8e8318551921b47f7c5380c297f9c561b17bdea"
+  },
+  "eia_ngsr_wb_20180110070828": {
+   "url": "https://web.archive.org/web/20180110070828/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:30Z",
+   "bytes": 6442,
+   "sha256": "413aa2c6eaabb6f59f48bfae086f01b2e7750c011a8bb0a2d7cf180316042a43"
+  },
+  "eia_ngsr_wb_20180901210601": {
+   "url": "https://web.archive.org/web/20180901210601/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:34Z",
+   "bytes": 6462,
+   "sha256": "b93da577f31afb67045671fa074614ee669b724094f6d22156b8c7931fc08a27"
+  },
+  "eia_ngsr_wb_20181203202828": {
+   "url": "https://web.archive.org/web/20181203202828/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:37Z",
+   "bytes": 6948,
+   "sha256": "fccf3155624628b82a2d0bbec19c27c6a839767971e6d86cd807f056b42550c9"
+  },
+  "eia_ngsr_wb_20181211202447": {
+   "url": "https://web.archive.org/web/20181211202447/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:41Z",
+   "bytes": 7095,
+   "sha256": "b42842318fc5c34accd666f4635a166fa669755c6cb464256f585d79ef30cdea"
+  },
+  "eia_ngsr_wb_20190111124957": {
+   "url": "https://web.archive.org/web/20190111124957/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:44Z",
+   "bytes": 7135,
+   "sha256": "6fb7df903f22cfd5f404f214ada3951bc27638698e9058e1d65d7b3b655f6ad4"
+  },
+  "eia_ngsr_wb_20190613010741": {
+   "url": "https://web.archive.org/web/20190613010741/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:48Z",
+   "bytes": 7138,
+   "sha256": "65cf14da530f63cfdb3afa16b9f4e41fa96b8b2e3e3437e6f3b6fc840eba201d"
+  },
+  "eia_ngsr_wb_20190714105626": {
+   "url": "https://web.archive.org/web/20190714105626/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:52Z",
+   "bytes": 7212,
+   "sha256": "5374a0503234f76b656aecc5c68fbe38f63f7acf75db29b4a5388976ce859dba"
+  },
+  "eia_ngsr_wb_20191129075548": {
+   "url": "https://web.archive.org/web/20191129075548/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:55Z",
+   "bytes": 6492,
+   "sha256": "ab1933e84183cc1b906577d52c8f4ff51e063e8abcb4912b38054ca90e5758dd"
+  },
+  "eia_ngsr_wb_20191229152905": {
+   "url": "https://web.archive.org/web/20191229152905/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:54:59Z",
+   "bytes": 6512,
+   "sha256": "2355c13bb9de4d0a463dea0ea03a115d8653ca2d1139e9948e45d17e25d31887"
+  },
+  "eia_ngsr_wb_20200128214849": {
+   "url": "https://web.archive.org/web/20200128214849/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:03Z",
+   "bytes": 6532,
+   "sha256": "10b1771c90826a6041472430557cfa571d432292dd7337a872bc2bc26eaab580"
+  },
+  "eia_ngsr_wb_20201121084027": {
+   "url": "https://web.archive.org/web/20201121084027/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:07Z",
+   "bytes": 6364,
+   "sha256": "697b563141069af3fe0011d1027ae337afc5c6905640b6b710e7002e35d924e6"
+  },
+  "eia_ngsr_wb_20201217153516": {
+   "url": "https://web.archive.org/web/20201217153516/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:11Z",
+   "bytes": 6509,
+   "sha256": "44bcd6a6d6068de07c8581a6dba981f06e92a8854b2891553e1001daf4e28ef7"
+  },
+  "eia_ngsr_wb_20201224001827": {
+   "url": "https://web.archive.org/web/20201224001827/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:15Z",
+   "bytes": 6529,
+   "sha256": "13afd611a15d762261d642b453d52ac5dce049218d6b19c8d2f9bc1366d35760"
+  },
+  "eia_ngsr_wb_20210319031602": {
+   "url": "https://web.archive.org/web/20210319031602/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:19Z",
+   "bytes": 6549,
+   "sha256": "608500862529d97811d9472d2ef09c71e1d95d250975fc04e9d5265caa4ddaa3"
+  },
+  "eia_ngsr_wb_20211102183454": {
+   "url": "https://web.archive.org/web/20211102183454/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:22Z",
+   "bytes": 6115,
+   "sha256": "d75ea5237f6280c179154885cfa386e76b0531ca3de3bac6e20ec99ed6a3e217"
+  },
+  "eia_ngsr_wb_20211111015940": {
+   "url": "https://web.archive.org/web/20211111015940/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:26Z",
+   "bytes": 6135,
+   "sha256": "deff568bf626cc190a8bab29508ba687bad935d1f6d0d6642951784003c54cd7"
+  },
+  "eia_ngsr_wb_20211216230557": {
+   "url": "https://web.archive.org/web/20211216230557/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:29Z",
+   "bytes": 6155,
+   "sha256": "6cdbfc282605c9f9ec411dd0a8b383ddbfc19c1e75f2cb029a1860ffe7617592"
+  },
+  "eia_ngsr_wb_20221106051100": {
+   "url": "https://web.archive.org/web/20221106051100/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:33Z",
+   "bytes": 6393,
+   "sha256": "c34bffe6791b90c997998936a7a707b0076bd8c2f853175d28ad338960c87bcd"
+  },
+  "eia_ngsr_wb_20230210074654": {
+   "url": "https://web.archive.org/web/20230210074654/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:36Z",
+   "bytes": 6413,
+   "sha256": "098894ef6d5df56e39bbce12f6d5076642ce12f0726346344fd20c47bae36f3f"
+  },
+  "eia_ngsr_wb_20230708153227": {
+   "url": "https://web.archive.org/web/20230708153227/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:40Z",
+   "bytes": 6433,
+   "sha256": "2626036a0d680daa900969be487047823b2980d7034b576b0c0f8c77362710f0"
+  },
+  "eia_ngsr_wb_20231208131519": {
+   "url": "https://web.archive.org/web/20231208131519/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:43Z",
+   "bytes": 7073,
+   "sha256": "14a9c73a9739e722489923bc44e761f3d79dab99e06441f271efe352b2b35390"
+  },
+  "eia_ngsr_wb_20240720000603": {
+   "url": "https://web.archive.org/web/20240720000603/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:47Z",
+   "bytes": 7113,
+   "sha256": "8c4f938b4d2e8230a45993f374ae6728c4cfe7719212447620ad9a60e848da9b"
+  },
+  "eia_ngsr_wb_20241109225253": {
+   "url": "https://web.archive.org/web/20241109225253/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:50Z",
+   "bytes": 7164,
+   "sha256": "6a4ef42b05cbfbb47fe3871ebe8c2cc2826515d27f325c1e2673f1f132180aa4"
+  },
+  "eia_ngsr_wb_20241231182006": {
+   "url": "https://web.archive.org/web/20241231182006/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:54Z",
+   "bytes": 7204,
+   "sha256": "433ae924f159336efe760b06944a6657ef48085e7d3cd833cb7dd3a441a049f2"
+  },
+  "eia_ngsr_wb_20250117233342": {
+   "url": "https://web.archive.org/web/20250117233342/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:55:57Z",
+   "bytes": 7332,
+   "sha256": "e34616f75c35645654329f6e5c2a580203f0f0e1bba73acdf66c08b4e3df00ee"
+  },
+  "eia_ngsr_wb_20250704121649": {
+   "url": "https://web.archive.org/web/20250704121649/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:00Z",
+   "bytes": 7352,
+   "sha256": "825168770b060adb7989d0fd82319f7f99c319508170b9ae1b2bc7033ec67401"
+  },
+  "eia_ngsr_wb_20251128165312": {
+   "url": "https://web.archive.org/web/20251128165312/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:04Z",
+   "bytes": 7372,
+   "sha256": "9f4f05ee603839371f7999377a953b344499ed4f506d5fbfffaedff026e01e06"
+  },
+  "eia_ngsr_wb_20260126101407": {
+   "url": "https://web.archive.org/web/20260126101407/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:07Z",
+   "bytes": 2208,
+   "sha256": "42d2c9551d2160bf0081c53e571902eaf3cc1ae47060dac414c8329835277afd"
+  },
+  "eia_ngsr_wb_20260227181129": {
+   "url": "https://web.archive.org/web/20260227181129/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:10Z",
+   "bytes": 2208,
+   "sha256": "1464fe0a253d235e3f088247069d1e958b44ab7e4c34de7f1b6cf4a0be960c0a"
+  },
+  "eia_ngsr_wb_20260325214829": {
+   "url": "https://web.archive.org/web/20260325214829/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:16Z",
+   "bytes": 2214,
+   "sha256": "9c970372cfb0dcbe898531b246e78f81cb3dc598b1e01972fb76ccfadb8796a5"
+  },
+  "eia_ngsr_wb_20260504230441": {
+   "url": "https://web.archive.org/web/20260504230441/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:19Z",
+   "bytes": 8105,
+   "sha256": "b54595ec6784c11c95ab448fa21d3f115b03a2bcc02960cab589fb0ad4cc1e04"
+  },
+  "eia_ngsr_wb_20260607230910": {
+   "url": "https://web.archive.org/web/20260607230910/https://ir.eia.gov/ngs/schedule.html",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:56:23Z",
+   "bytes": 2223,
+   "sha256": "50b5d8b3a04b617c12294b7a4b203f4071b97e59a3689ce011f11be29d331e0d"
+  },
+  "eia_wpsr_live": {
+   "url": "https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:50Z",
+   "bytes": 52338,
+   "sha256": "8e9da9482a110845964e5dd0ac3c5adb03ba9be958b920aca46675d03a614d09"
+  },
+  "eia_wpsr_wb_20170430081104": {
+   "url": "https://web.archive.org/web/20170430081104/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:01Z",
+   "bytes": 30270,
+   "sha256": "ae6fad6581930b5ccfca7dfc8fd58f28a1ca890fb07cc27ee420afb872e94a2d"
+  },
+  "eia_wpsr_wb_20170609003315": {
+   "url": "https://web.archive.org/web/20170609003315/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:10Z",
+   "bytes": 30557,
+   "sha256": "cb091fe4a14323f4cc7df5636f57961f1af9c566c122d1694b866aad000712f8"
+  },
+  "eia_wpsr_wb_20190110082341": {
+   "url": "https://web.archive.org/web/20190110082341/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:15Z",
+   "bytes": 52869,
+   "sha256": "9f97ede4a033dd8856dc0cf32e9d2bd94ed54eeac3e360c45fabb4b5215476b4"
+  },
+  "eia_wpsr_wb_20190510163156": {
+   "url": "https://web.archive.org/web/20190510163156/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:25Z",
+   "bytes": 53468,
+   "sha256": "7a04afa17d95483bfc8d31eb483315520efaa2d77d9d7b97ca4d0e4c8b5cef15"
+  },
+  "eia_wpsr_wb_20190717161957": {
+   "url": "https://web.archive.org/web/20190717161957/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:32Z",
+   "bytes": 56778,
+   "sha256": "cc7c9ba8fadf8aa0af84d7e9de06a515dc4dfda4a770976d70ed821149d3ddcb"
+  },
+  "eia_wpsr_wb_20191115070318": {
+   "url": "https://web.archive.org/web/20191115070318/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:39Z",
+   "bytes": 56575,
+   "sha256": "5e878b82e03b7d6626adb43f65bac30d321bc70fde95cb0b90a16c0c43993c15"
+  },
+  "eia_wpsr_wb_20191226075432": {
+   "url": "https://web.archive.org/web/20191226075432/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:44Z",
+   "bytes": 56515,
+   "sha256": "9aed5fdc7f5d9b227f8eb9e10c60f81ceb42722be141ab3c4f9b25f7724085e9"
+  },
+  "eia_wpsr_wb_20200207151454": {
+   "url": "https://web.archive.org/web/20200207151454/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:49Z",
+   "bytes": 14972,
+   "sha256": "ec1ed38dd93a2a3a9acc6e6455cc815e9c78ba23709feb98067febed7fe17a88"
+  },
+  "eia_wpsr_wb_20200601102419": {
+   "url": "https://web.archive.org/web/20200601102419/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:50:59Z",
+   "bytes": 57165,
+   "sha256": "0ecdf23220debc254e7ac46d994dc02c0f5275dff7608b66ee2f5b5bc45aaa2a"
+  },
+  "eia_wpsr_wb_20200818202312": {
+   "url": "https://web.archive.org/web/20200818202312/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:11Z",
+   "bytes": 57104,
+   "sha256": "74fbb6fd302f377d46c6d94cf0290ca5dc82a89731442276a1a6ce06f5682c4c"
+  },
+  "eia_wpsr_wb_20201016183622": {
+   "url": "https://web.archive.org/web/20201016183622/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:17Z",
+   "bytes": 58396,
+   "sha256": "25b8ba6ee7cff332e76a7b60f86f805bbcc7422918d76d922454dacda6c48099"
+  },
+  "eia_wpsr_wb_20201125193255": {
+   "url": "https://web.archive.org/web/20201125193255/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:22Z",
+   "bytes": 57308,
+   "sha256": "06a94a69ed19fb00afc421b515dd8db9cab54bfaa6fb2dcd6e944fcbbaf8de7a"
+  },
+  "eia_wpsr_wb_20210120153010": {
+   "url": "https://web.archive.org/web/20210120153010/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:29Z",
+   "bytes": 57041,
+   "sha256": "2ee0ee4e00ce1d155bde37c4f98be722e3141229cae7b3d555de880a9efb7185"
+  },
+  "eia_wpsr_wb_20210418203701": {
+   "url": "https://web.archive.org/web/20210418203701/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:35Z",
+   "bytes": 57113,
+   "sha256": "56c20a1ab0927cd2ff00f989f7a476468b652dacdb5ba4b311681724a17b1a71"
+  },
+  "eia_wpsr_wb_20210602143147": {
+   "url": "https://web.archive.org/web/20210602143147/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:39Z",
+   "bytes": 57101,
+   "sha256": "b87766b80e76a4b3994d1ffb6f7130ada9eb288eeae95d392e32ad6ad3e99992"
+  },
+  "eia_wpsr_wb_20211022094108": {
+   "url": "https://web.archive.org/web/20211022094108/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:45Z",
+   "bytes": 57739,
+   "sha256": "aec276145922b6eb291fa918eb5d857c3bf00bfdac482ad232fb8ee65c97c99f"
+  },
+  "eia_wpsr_wb_20211214072908": {
+   "url": "https://web.archive.org/web/20211214072908/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:49Z",
+   "bytes": 14851,
+   "sha256": "6aa79efea39ec91e1e1658fdfb9ef7696ae2f7e4816c45487cf0d4a17db10f4c"
+  },
+  "eia_wpsr_wb_20220114004832": {
+   "url": "https://web.archive.org/web/20220114004832/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:51:55Z",
+   "bytes": 57843,
+   "sha256": "b793465af0f7790371193ade1b2f429120662021494cefaf2f8f22be229e99d8"
+  },
+  "eia_wpsr_wb_20220223153048": {
+   "url": "https://web.archive.org/web/20220223153048/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:01Z",
+   "bytes": 57807,
+   "sha256": "50526f6a6542ad43ad0c4a99b83f14b689663070250e4c33b8fc241b85e3e5d4"
+  },
+  "eia_wpsr_wb_20220525125117": {
+   "url": "https://web.archive.org/web/20220525125117/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:07Z",
+   "bytes": 57702,
+   "sha256": "de588c84a83f62b1dacaaa320a9a6f075b95dc85b60135146d6d954324f31648"
+  },
+  "eia_wpsr_wb_20220616093100": {
+   "url": "https://web.archive.org/web/20220616093100/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:13Z",
+   "bytes": 58076,
+   "sha256": "5b0cc39f83b683ffe1f6806c5192f293b97447fb929965ee64383a6edfc840da"
+  },
+  "eia_wpsr_wb_20221207030328": {
+   "url": "https://web.archive.org/web/20221207030328/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:17Z",
+   "bytes": 68475,
+   "sha256": "d6b884657deeb3dbe7a8a7981900fb8647952c9bdea24a2dd7a5f0c818febdf4"
+  },
+  "eia_wpsr_wb_20230113222513": {
+   "url": "https://web.archive.org/web/20230113222513/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:22Z",
+   "bytes": 15492,
+   "sha256": "013e27a1a95559fc7cdda5dc4df1d9269a1b5648cd8b9e1380ab7110c7d85e75"
+  },
+  "eia_wpsr_wb_20230531135113": {
+   "url": "https://web.archive.org/web/20230531135113/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:26Z",
+   "bytes": 68584,
+   "sha256": "7771a0b1cdb3ecc8029d1b7615c569a0f1f75480c1d44226b35177e3034ad3a0"
+  },
+  "eia_wpsr_wb_20230724213602": {
+   "url": "https://web.archive.org/web/20230724213602/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:33Z",
+   "bytes": 14764,
+   "sha256": "6fb3eddbf38d10d4726252c0745c65a61e58fd2a917af140d72708cd934e1683"
+  },
+  "eia_wpsr_wb_20230926153749": {
+   "url": "https://web.archive.org/web/20230926153749/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:38Z",
+   "bytes": 68774,
+   "sha256": "99a5e0ae7d818583ae7921632831e9e5746d3c53d80172a5753433f7562c1e2e"
+  },
+  "eia_wpsr_wb_20231123012702": {
+   "url": "https://web.archive.org/web/20231123012702/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:41Z",
+   "bytes": 69152,
+   "sha256": "0cddbc1aa43363e1fa79526edbcaa37cec68684513454209210d520ad773ff49"
+  },
+  "eia_wpsr_wb_20240118235307": {
+   "url": "https://web.archive.org/web/20240118235307/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:47Z",
+   "bytes": 14554,
+   "sha256": "b5c441d0a0a31baf08b40f76127718f8d52bf45ce54083c62ead4237f89c473d"
+  },
+  "eia_wpsr_wb_20240718041937": {
+   "url": "https://web.archive.org/web/20240718041937/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:52Z",
+   "bytes": 67367,
+   "sha256": "271c8e334c5e3cd7e2b52a5f68754822ff3973a5137bb841df092016dd4f3c27"
+  },
+  "eia_wpsr_wb_20240728034157": {
+   "url": "https://web.archive.org/web/20240728034157/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:55Z",
+   "bytes": 14495,
+   "sha256": "c646208adfeb904d8aff687baeba7d4281e3c1dc03c4585fd7d2cfb6a26b978e"
+  },
+  "eia_wpsr_wb_20241127183214": {
+   "url": "https://web.archive.org/web/20241127183214/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:52:59Z",
+   "bytes": 66934,
+   "sha256": "f176a2b514b4a7427f0f4402447b00287397e5c1335906a89b999a2a0d5974d3"
+  },
+  "eia_wpsr_wb_20241225065927": {
+   "url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:07Z",
+   "bytes": 67249,
+   "sha256": "a5fba4a84c3c12b745a7ef5045cf35b8287c776726e82a8673e05ddd2f21832a"
+  },
+  "eia_wpsr_wb_20250110211433": {
+   "url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:13Z",
+   "bytes": 14381,
+   "sha256": "470989ab9465121538eeb8efedf4eac52ecfe82f28220fd3e15fffc0760157d8"
+  },
+  "eia_wpsr_wb_20250418192854": {
+   "url": "https://web.archive.org/web/20250418192854/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:17Z",
+   "bytes": 64691,
+   "sha256": "2a2619c44b5dfb2cc348204bbfe5994d5aa604495b837f5936831b8b8b96ee28"
+  },
+  "eia_wpsr_wb_20250829150315": {
+   "url": "https://web.archive.org/web/20250829150315/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:21Z",
+   "bytes": 64661,
+   "sha256": "789840ab3af9b6620680a208b0c7d4595682529d0ec605a15c1333b8c2e22850"
+  },
+  "eia_wpsr_wb_20251030091732": {
+   "url": "https://web.archive.org/web/20251030091732/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:24Z",
+   "bytes": 14220,
+   "sha256": "9855e66efb791a0434673b0cc48a45f46e641f031a89c6aa30fd31ada1bf6ccb"
+  },
+  "eia_wpsr_wb_20251228152631": {
+   "url": "https://web.archive.org/web/20251228152631/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:28Z",
+   "bytes": 14306,
+   "sha256": "3a6f6bb48a29653d0d96e15e5f401f5c0a0416d39528d6e4a9ffc9f8c43fb4b1"
+  },
+  "eia_wpsr_wb_20260118223951": {
+   "url": "https://web.archive.org/web/20260118223951/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:32Z",
+   "bytes": 66688,
+   "sha256": "d6e2f6756b14938ffd8a5d0ff38dd371865ee4c021eb10d377e1590b82095cff"
+  },
+  "eia_wpsr_wb_20260410050542": {
+   "url": "https://web.archive.org/web/20260410050542/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:36Z",
+   "bytes": 13601,
+   "sha256": "9e7b2770da44705e73abb62b9f4abc26e4cbbd53a61037eefd6461fe6e2ae7ce"
+  },
+  "eia_wpsr_wb_20260702192812": {
+   "url": "https://web.archive.org/web/20260702192812/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:39Z",
+   "bytes": 13627,
+   "sha256": "9074bc08baf2626f3b937147793dca19175d549ebc5a1665bb66ea02508ce1e6"
+  },
+  "eia_wpsr_wb_20260804054438": {
+   "url": "https://web.archive.org/web/20260804054438/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:43Z",
+   "bytes": 13628,
+   "sha256": "f0c7af2221b239c3239cc2d58780843be004ad69e0d02567e903685bc0ad6aff"
+  },
+  "eia_wpsr_wb_20260913072241": {
+   "url": "https://web.archive.org/web/20260913072241/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+   "method": "archived",
+   "accessed_utc": "2026-09-21T18:53:47Z",
+   "bytes": 13384,
+   "sha256": "39118c5d741170ce98ddf1402d4882da6e3e0878ff487200670859b12564c461"
+  },
+  "fomc_calendars": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:59Z",
+   "bytes": 167493,
+   "sha256": "2efd5aedd1cfa0a8510e04a179f5486dc4688095128092525953e6141c7650c8"
+  },
+  "fomc_hist_2016": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2016.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:51Z",
+   "bytes": 97862,
+   "sha256": "c433e309954b86a70a63e01b258c3bb99cc6f7b8ac59f89799f804bef2f19532"
+  },
+  "fomc_hist_2017": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:53Z",
+   "bytes": 97233,
+   "sha256": "87133c2bd59451aa31f37c0447b30df78bca4b06a4f77ced527211e203d5a606"
+  },
+  "fomc_hist_2018": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2018.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:54Z",
+   "bytes": 97738,
+   "sha256": "7cdde1c0703d2f315faed0508c5cd455e82a2d62f1fa50acc5054026bfc53ee0"
+  },
+  "fomc_hist_2019": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2019.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:56Z",
+   "bytes": 99377,
+   "sha256": "629ee73dc4f9c5f924c494659806a7defe1bfe91b1b42af12dbf5cb751902235"
+  },
+  "fomc_hist_2020": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2020.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:45:57Z",
+   "bytes": 100588,
+   "sha256": "690077b223893870cdd3f8a874e340301f83a822dc1c242c6456c47d686d6188"
+  },
+  "fomc_pr_20160127": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20160127a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:19Z",
+   "bytes": 85513,
+   "sha256": "af0b58c0787796e6b1fa7f241a293e960fbafc54dac27fe548a969ddf6c48a00"
+  },
+  "fomc_pr_20160316": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20160316a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:21Z",
+   "bytes": 85571,
+   "sha256": "16466b0616f539c34467b99bf5198ffc6084917e7a5120d4a58e33680f673d27"
+  },
+  "fomc_pr_20160427": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20160427a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:22Z",
+   "bytes": 85597,
+   "sha256": "102127cf73f856ec4525c4a3db88284edf1e8f2422f776ed34c93a188b7d36ac"
+  },
+  "fomc_pr_20160615": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20160615a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:24Z",
+   "bytes": 85367,
+   "sha256": "1ef2de78ee87d5a1f3463bbc726a2ea48d8753a32d0f7fab61fd88482f1aafe2"
+  },
+  "fomc_pr_20160727": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20160727a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:25Z",
+   "bytes": 85511,
+   "sha256": "5b44ce095ede3b1cbf2eb36d495a540bb1653b9f556e83c6f86680c9b38e10f1"
+  },
+  "fomc_pr_20160921": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20160921a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:26Z",
+   "bytes": 85727,
+   "sha256": "caac0479f743a98df3a61926e7a53a452fd504674d7048ac4b68fdc47191dec9"
+  },
+  "fomc_pr_20161102": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20161102a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:28Z",
+   "bytes": 85699,
+   "sha256": "3624e2a95eb31f485a732cc61a6995bc647b8cc9a5f73f1c14e7e214bfe46b76"
+  },
+  "fomc_pr_20161214": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20161214a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:30Z",
+   "bytes": 85358,
+   "sha256": "ac82bee4c1339afb5dc2a71f927365b12f0c1eb4813a21c414083dcb0f9c4acd"
+  },
+  "fomc_pr_20170201": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20170201a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:31Z",
+   "bytes": 85806,
+   "sha256": "2d880c227c3b0e0f1b0ad448f67dfdfe2b9e305121226e36eb5b3a50e7f87b60"
+  },
+  "fomc_pr_20170315": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20170315a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:33Z",
+   "bytes": 85541,
+   "sha256": "34449e90686d8c3de33bc07b38b72807a3ef30f960ec44105c7b609a5bbae03c"
+  },
+  "fomc_pr_20170503": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20170503a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:36Z",
+   "bytes": 85522,
+   "sha256": "8e477f62d5457299225e5e07bdb8d42e0d5ac1302a065ca7caf83c6241080cbf"
+  },
+  "fomc_pr_20170614": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20170614a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:38Z",
+   "bytes": 85718,
+   "sha256": "0fc62bb92f87fdf75141da5350ccecc6b306c8201da2858a51171606a087cdb6"
+  },
+  "fomc_pr_20170726": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20170726a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:40Z",
+   "bytes": 85406,
+   "sha256": "c7e2d07a82e038b0f503cbfaf5ecdb37ad5794b1f50049c6632e6446885bcddd"
+  },
+  "fomc_pr_20170920": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20170920a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:41Z",
+   "bytes": 85582,
+   "sha256": "619921469f442d3f476d016b13abdb2d420aba51bad0e7926f927e3c4d54fbd0"
+  },
+  "fomc_pr_20171101": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20171101a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:43Z",
+   "bytes": 85462,
+   "sha256": "1e5e7b35591148359c40cd60dd643532598eca177b74cb9f54ba97e2a02b7739"
+  },
+  "fomc_pr_20171213": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20171213a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:44Z",
+   "bytes": 85241,
+   "sha256": "dc7e20b617505bf1a858e1b2abe4ef96f0377989a08f24997b27a8ed89952d95"
+  },
+  "fomc_pr_20180131": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20180131a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:46Z",
+   "bytes": 84782,
+   "sha256": "9f4f0cfcffec0235bc81fbf8d4913b4356928ab51ccd59d193409bdd6613457e"
+  },
+  "fomc_pr_20180321": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20180321a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:47Z",
+   "bytes": 84943,
+   "sha256": "a0bb61e3dbe67434e8de80a4a3b1e1b20fc3753836531c51c7883069d97ce082"
+  },
+  "fomc_pr_20180502": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20180502a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:49Z",
+   "bytes": 84759,
+   "sha256": "2c1bdcc2074a8e4b57223f3593699d634edf8d301a6146a489999bc77579af7f"
+  },
+  "fomc_pr_20180613": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20180613a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:50Z",
+   "bytes": 84121,
+   "sha256": "0ea0c3533c590067ee226ee3044d1ce461dbe61daff13918afe91c2270367645"
+  },
+  "fomc_pr_20180801": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20180801a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:52Z",
+   "bytes": 84062,
+   "sha256": "b164d4ecf26675ac5614960f08c4c7768b20672679d3d66dbacd10c1008723e1"
+  },
+  "fomc_pr_20180926": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20180926a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:54Z",
+   "bytes": 83941,
+   "sha256": "12247e60ac79c32d256d7b9d820720092fc4b63761064d0c9201d198f0c56c04"
+  },
+  "fomc_pr_20181108": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20181108a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:56Z",
+   "bytes": 84015,
+   "sha256": "53e2c5045485fcd86390eb4286313b93a4dd11cc5c2bcf0074ba5f2be41597fb"
+  },
+  "fomc_pr_20181219": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20181219a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:57Z",
+   "bytes": 84202,
+   "sha256": "92efa788314e8d900b3c8fb4e7d61f36465e236a368dca924abcafde5cb617cf"
+  },
+  "fomc_pr_20190130": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20190130a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:47:58Z",
+   "bytes": 84188,
+   "sha256": "3b0f05d771e5e4a6b51d8e26489073546e41f182cdb9a60522d34edc52bc48ad"
+  },
+  "fomc_pr_20190320": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20190320a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:00Z",
+   "bytes": 84281,
+   "sha256": "ae21e454463c8d63b88c6ac844ac0a99193ba01417c075476f43922f7c3f7731"
+  },
+  "fomc_pr_20190501": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20190501a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:02Z",
+   "bytes": 84111,
+   "sha256": "89432a09ebfe97cf4c1a3dacc431b0bb97c5882749df237ef0ffd36506f83725"
+  },
+  "fomc_pr_20190619": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20190619a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:03Z",
+   "bytes": 84353,
+   "sha256": "dd45bd509e8a97abf120ca394229f04da8a5d089aa7a17071122374bbf962135"
+  },
+  "fomc_pr_20190731": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20190731a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:05Z",
+   "bytes": 84641,
+   "sha256": "fa215490650bc1f13a33d2e409ce3be28cc309490c11e759baca559e9d721503"
+  },
+  "fomc_pr_20190918": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20190918a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:07Z",
+   "bytes": 84537,
+   "sha256": "3f7719510f4b7d8eda5409a5635cb711dd9f9770c99d046e6240476514c27ccc"
+  },
+  "fomc_pr_20191011": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20191011a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:10Z",
+   "bytes": 87805,
+   "sha256": "82b544f0b61b691f1bf023c99653ccba4f12a1287465179b40c43abd1b33e1f1"
+  },
+  "fomc_pr_20191030": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20191030a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:12Z",
+   "bytes": 84308,
+   "sha256": "79b794fc8c3fd1d443d6674749c195610af54368cabbb4cd31922f568bcc5497"
+  },
+  "fomc_pr_20191211": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20191211a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:13Z",
+   "bytes": 84106,
+   "sha256": "95c49a4ae7479df4cec94b68285feafa69286bc9b497603038d4d8c7c4cc4c4e"
+  },
+  "fomc_pr_20200129": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200129a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:15Z",
+   "bytes": 84112,
+   "sha256": "c7bfc0366854f0e2f65527932bf74c2955e78498874ee7435433ce39ea0b0e94"
+  },
+  "fomc_pr_20200303": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200303a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:16Z",
+   "bytes": 82811,
+   "sha256": "105a7799f223e6874e64aa65176a56824ee97035073ef53fec29d62e782b1582"
+  },
+  "fomc_pr_20200315": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200315a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:18Z",
+   "bytes": 87187,
+   "sha256": "368cbc753515a071d50d40d70d56e3b5b16b08a711de845608e853e9174eda99"
+  },
+  "fomc_pr_20200323": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200323a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:19Z",
+   "bytes": 87060,
+   "sha256": "64cde5222665c4322f3e38b5f92870d45ae499da7c7d4111f7f17777f5fcf882"
+  },
+  "fomc_pr_20200331": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200331a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:21Z",
+   "bytes": 84602,
+   "sha256": "840bbd59af2ad178bf3f3c2c7be7d18c4674c4085e8ffab778affa01d2f71a6f"
+  },
+  "fomc_pr_20200429": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200429a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:22Z",
+   "bytes": 84833,
+   "sha256": "cd29f26623e2c22be0dc6022fe49fd9c45b865a6b434318993f6cb582cc74e13"
+  },
+  "fomc_pr_20200610": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200610a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:24Z",
+   "bytes": 84829,
+   "sha256": "3e386d00d8d2da8c257ccb8a64ab55799086944c639025320b4a3910c5f010db"
+  },
+  "fomc_pr_20200729": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200729a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:25Z",
+   "bytes": 84969,
+   "sha256": "2c4f7c7c42fac82804013a5e42cdd9b36278047b83955789cddc763408b2f92d"
+  },
+  "fomc_pr_20200827": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200827a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:26Z",
+   "bytes": 87963,
+   "sha256": "56dfb6a5ebde595f63ab3f8bfc779e693665dc45718c784e3f0465c563b82629"
+  },
+  "fomc_pr_20200916": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200916a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:28Z",
+   "bytes": 85587,
+   "sha256": "99aefe00511dc9651271bf9523c0e97ddbd7e4eaa53a58dc39dd666399ba036e"
+  },
+  "fomc_pr_20201105": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20201105a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:29Z",
+   "bytes": 85046,
+   "sha256": "4d32be2631893023dc81bb41bd30c6a2523d7227a70b28ad2b10e97d2efb660a"
+  },
+  "fomc_pr_20201216": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20201216a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:31Z",
+   "bytes": 85157,
+   "sha256": "af662fe6c558d25650149fdb3893d54db5a4be5b525d1fb391691cd9fee645c6"
+  },
+  "fomc_pr_20210127": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210127a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:33Z",
+   "bytes": 85228,
+   "sha256": "6194d1141f7c1994e48663371d2ef7fa7d22dbc15219a9b493c71ae5feeffe79"
+  },
+  "fomc_pr_20210317": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210317a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:34Z",
+   "bytes": 85190,
+   "sha256": "efd7a7731969ba6fdd065cd3959ce5e36b8d7261110904b1138f0bf57f9b530d"
+  },
+  "fomc_pr_20210428": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210428a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:36Z",
+   "bytes": 85178,
+   "sha256": "9835e3a210b36152a5be1f982e47d6be1f3f65a58cf6201b3f52dd1d6de310f1"
+  },
+  "fomc_pr_20210616": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210616a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:38Z",
+   "bytes": 85138,
+   "sha256": "8e2b5f6b008bf2e546b7ee7f2df81d54a2b705968ec6ce26e74f68f12f23e18b"
+  },
+  "fomc_pr_20210728": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210728a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:39Z",
+   "bytes": 85221,
+   "sha256": "a0bd6080f8f37dbea455cebdd24fe8d10995345e34cd562468c49fc4721366c2"
+  },
+  "fomc_pr_20210922": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210922a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:41Z",
+   "bytes": 85340,
+   "sha256": "66eb0d206124ec4e7d9060fefdc7e6d3ea3c59b893c48bb03b43dbce4c6cbe1d"
+  },
+  "fomc_pr_20211103": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20211103a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:42Z",
+   "bytes": 86019,
+   "sha256": "b9394977a217fe0f261e823b76da8f5ad406af117fcdbadfa0330b9312145cef"
+  },
+  "fomc_pr_20211215": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20211215a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:44Z",
+   "bytes": 85415,
+   "sha256": "37c3c12cf0dbbff7b06259d349683ea684a178a30b81105ce28ce4fa167996bc"
+  },
+  "fomc_pr_20220126": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220126a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:45Z",
+   "bytes": 84780,
+   "sha256": "19e49441c6845cc09d2d3be5e33fc4bf64000f7827197e1bef97b89740f50617"
+  },
+  "fomc_pr_20220316": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220316a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:46Z",
+   "bytes": 84273,
+   "sha256": "9835696842c3bd5a626858784440c98e7708229d84d2ef4bd4108d949f73edb2"
+  },
+  "fomc_pr_20220504": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220504a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:48Z",
+   "bytes": 84788,
+   "sha256": "24c9f32a9e255fad15713e264925def17f42fc6dc47b33bee17bf595690c86ea"
+  },
+  "fomc_pr_20220615": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220615a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:50Z",
+   "bytes": 84418,
+   "sha256": "44bbd9c349493ef40a492a8f5c3e8486927e64257d51b88cb18696408f0db0be"
+  },
+  "fomc_pr_20220727": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220727a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:51Z",
+   "bytes": 84079,
+   "sha256": "ef79dc226ac7838b3bb30b503325cf49315db033349bbd9e31f93bab9be080ba"
+  },
+  "fomc_pr_20220921": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220921a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:53Z",
+   "bytes": 84086,
+   "sha256": "eff06cf247711da4e489166b9300b2280c522741c5e5633bfc78e3f6a640f841"
+  },
+  "fomc_pr_20221102": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20221102a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:54Z",
+   "bytes": 84720,
+   "sha256": "fd68315edbf506c539caec543e1786293d053d90e0abb83ff7d9c067da5b29d9"
+  },
+  "fomc_pr_20221214": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20221214a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:55Z",
+   "bytes": 84721,
+   "sha256": "7cac96ee4137263b668a3bcb337d6911a47dd475dd51afc1e9191d4dfb7dd43b"
+  },
+  "fomc_pr_20230201": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230201a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:57Z",
+   "bytes": 84467,
+   "sha256": "c6d01225106bf95077fda9a9bc7bdc22dbed4a4f3a81c27d358448c439c47738"
+  },
+  "fomc_pr_20230322": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230322a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:48:59Z",
+   "bytes": 84663,
+   "sha256": "580d8fbe029dff7c8fcd91014fc147a0cfe9b608e42a3530ce1f19a787ed492a"
+  },
+  "fomc_pr_20230503": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230503a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:00Z",
+   "bytes": 84446,
+   "sha256": "574c1addf7f24cdd40301b7a290855126a912491c4e8c0f6e131e6e3fd937492"
+  },
+  "fomc_pr_20230614": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230614a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:02Z",
+   "bytes": 84516,
+   "sha256": "d3168236b89975c735f119a590345dcc85ce5206bfede112a52ac787c1cceabc"
+  },
+  "fomc_pr_20230726": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230726a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:03Z",
+   "bytes": 84473,
+   "sha256": "7a5d99bcb145fb574209aa57c1e109dcb05ea544e4cfd71c9f7c588ea9a67f95"
+  },
+  "fomc_pr_20230920": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20230920a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:05Z",
+   "bytes": 84520,
+   "sha256": "c1157e5352c6bd60421b03a04b35ee00730c41557629de0293cf4d295c1d50a1"
+  },
+  "fomc_pr_20231101": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20231101a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:06Z",
+   "bytes": 84554,
+   "sha256": "93e52744010fca8f0664410fa0f531cbbb7b718d6416182d282d33c658e04281"
+  },
+  "fomc_pr_20231213": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20231213a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:08Z",
+   "bytes": 84608,
+   "sha256": "e95db9ff845da506070bd2c2fdeddbbf8bcf48a1fac3f090440925f7ad849f51"
+  },
+  "fomc_pr_20240131": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240131a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:10Z",
+   "bytes": 84420,
+   "sha256": "825b9296069857c12c365330a8a37606f365ba9edf22c3724c68eab5d95e5811"
+  },
+  "fomc_pr_20240320": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240320a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:11Z",
+   "bytes": 84380,
+   "sha256": "1428457c23618a5541e41f81d4a9a32bdcaf1965471fbcfe3d34a301f3c6e730"
+  },
+  "fomc_pr_20240501": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240501a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:13Z",
+   "bytes": 84866,
+   "sha256": "c9a1a7bc8f8d10605d1748ad93ccae416db5809a7214f5004025d4ec2abe9aa1"
+  },
+  "fomc_pr_20240612": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240612a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:14Z",
+   "bytes": 84468,
+   "sha256": "1f15fcec8be4f0b4d7fe57a8dc6fb662bd84b2696ecc42f369327acd4553317f"
+  },
+  "fomc_pr_20240731": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240731a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:16Z",
+   "bytes": 84548,
+   "sha256": "bbb25fef978c703ee2a1409c1d359e7ad826e46f744d06e07e893d0b89608666"
+  },
+  "fomc_pr_20240918": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20240918a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:17Z",
+   "bytes": 84547,
+   "sha256": "2a7677ed95fceffc3e4768375a013f141cdeae3db7b3f2e291863f75e2e9b629"
+  },
+  "fomc_pr_20241107": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20241107a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:19Z",
+   "bytes": 84322,
+   "sha256": "d3cf31e45de227f1581a242917c9a7d9de4f906af891c30b32d107ca201eb818"
+  },
+  "fomc_pr_20241218": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20241218a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:21Z",
+   "bytes": 84475,
+   "sha256": "501560ed3c1946432d4adc819d48b77f97ced59a06d2f675e0d6809a6ae23ad1"
+  },
+  "fomc_pr_20250129": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250129a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:22Z",
+   "bytes": 84251,
+   "sha256": "a99ef65ddbc8dd501efc01bc1efcd475ef52a0938710cd35eda64249b030d9b4"
+  },
+  "fomc_pr_20250319": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250319a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:24Z",
+   "bytes": 84630,
+   "sha256": "f1dfc5038d4e1ac3900a8c69423e48101f17a73436e0c57427f91311664d39eb"
+  },
+  "fomc_pr_20250507": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250507a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:26Z",
+   "bytes": 84345,
+   "sha256": "c774f00b211794fb26a9ef07bc3deae8e932ea54a86b0f777b07fb8be82235a6"
+  },
+  "fomc_pr_20250618": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250618a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:27Z",
+   "bytes": 84191,
+   "sha256": "a2c0bcc9b335f9b08fb6fe13c99eb31e52e487a66f1d9b0ff7cf324c6571f76d"
+  },
+  "fomc_pr_20250730": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250730a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:29Z",
+   "bytes": 84356,
+   "sha256": "3122f9a8da8c13f0fbec32869b15d726660ae1032d119b0fabef803c0da3db09"
+  },
+  "fomc_pr_20250822": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250822a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:32Z",
+   "bytes": 84870,
+   "sha256": "ab2750270e410ae33c491070ad0b6258737d323fe4359262df4d0d44ec1250d1"
+  },
+  "fomc_pr_20250917": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20250917a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:34Z",
+   "bytes": 84399,
+   "sha256": "633d105a41de4665344796f0d7076ebe4bce0bfaddf32c0c37fa550309384bdb"
+  },
+  "fomc_pr_20251029": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20251029a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:35Z",
+   "bytes": 84571,
+   "sha256": "13fc350625d6fb492ac73a223d45ed769e3dc9618132c9b7adbe0863d1fcc920"
+  },
+  "fomc_pr_20251210": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20251210a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:37Z",
+   "bytes": 84712,
+   "sha256": "9a191349f513d412df74d96556bc691a0f7a0c9a3609633a300d0e462dc7595d"
+  },
+  "fomc_pr_20260128": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260128a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:41Z",
+   "bytes": 84142,
+   "sha256": "9d8e23ad70b111eb293c5d4316b262f4ea3fb13369a0c1336d8d67bfcce9f41b"
+  },
+  "fomc_pr_20260318": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:43Z",
+   "bytes": 84223,
+   "sha256": "edc2f8297951ce88175e8303c1d9c0e78a5de4b464d4af232b2598e9501de864"
+  },
+  "fomc_pr_20260429": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260429a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:44Z",
+   "bytes": 84447,
+   "sha256": "5dbade9d48b3634901a104f7c87cbf8ae64b74166e156d01ec86e1f7dc648f6c"
+  },
+  "fomc_pr_20260617": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260617a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:45Z",
+   "bytes": 83116,
+   "sha256": "6e4d07a5ae3bf0c4eab9aa96d6e9d2dcdafb65cfbe1042fa34d50d5e13e542eb"
+  },
+  "fomc_pr_20260729": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:47Z",
+   "bytes": 83246,
+   "sha256": "623345d065c8e30d68b8fc5d85159b3e34d978f3687121d7453d803db59184ad"
+  },
+  "fomc_pr_20260916": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-21T18:49:48Z",
+   "bytes": 84669,
+   "sha256": "b4265a480cc3609fc92552ef40f5adea7db00d50ccc49dad1c36605eeaed64f8"
+  }
+ },
+ "rows": 1501,
+ "rows_per_event_per_year": {
+  "CPI": {
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 11,
+   "2026": 12
+  },
+  "EIA_NGSR": {
+   "2016": 52,
+   "2017": 52,
+   "2018": 52,
+   "2019": 52,
+   "2020": 53,
+   "2021": 52,
+   "2022": 52,
+   "2023": 52,
+   "2024": 52,
+   "2025": 53,
+   "2026": 52
+  },
+  "EIA_WPSR": {
+   "2016": 52,
+   "2017": 52,
+   "2018": 52,
+   "2019": 52,
+   "2020": 53,
+   "2021": 52,
+   "2022": 51,
+   "2023": 52,
+   "2024": 52,
+   "2025": 53,
+   "2026": 52
+  },
+  "EMPSIT": {
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 11,
+   "2026": 12
+  },
+  "FOMC": {
+   "2016": 8,
+   "2017": 8,
+   "2018": 8,
+   "2019": 8,
+   "2020": 7,
+   "2021": 8,
+   "2022": 8,
+   "2023": 8,
+   "2024": 8,
+   "2025": 8,
+   "2026": 6
+  },
+  "FOMC_UNSCHEDULED": {
+   "2019": 1,
+   "2020": 5,
+   "2025": 1
+  }
+ },
+ "gates": {
+  "G1": {
+   "rule": "every row carries a source_url and a method in {fetched, archived}",
+   "rows": 1501,
+   "by_method": {
+    "fetched": 473,
+    "archived": 1028
+   }
+  },
+  "G6": {
+   "rule": "no duplicate (event, datetime_et)",
+   "duplicates": 0
+  },
+  "G2": {
+   "rule": {
+    "CPI": [
+     12,
+     12
+    ],
+    "EMPSIT": [
+     12,
+     12
+    ],
+    "FOMC": [
+     8,
+     8
+    ],
+    "EIA_WPSR": [
+     50,
+     53
+    ],
+    "EIA_NGSR": [
+     50,
+     53
+    ]
+   },
+   "years_outside_the_declared_range": [
+    {
+     "event": "CPI",
+     "year": "2025",
+     "count": 11,
+     "declared": [
+      12,
+      12
+     ]
+    },
+    {
+     "event": "EMPSIT",
+     "year": "2025",
+     "count": 11,
+     "declared": [
+      12,
+      12
+     ]
+    },
+    {
+     "event": "FOMC",
+     "year": "2020",
+     "count": 7,
+     "declared": [
+      8,
+      8
+     ]
+    },
+    {
+     "event": "FOMC",
+     "year": "2026",
+     "count": 6,
+     "declared": [
+      8,
+      8
+     ]
+    }
+   ]
+  },
+  "G3": {
+   "rule": "CPI/EMPSIT on weekdays; EMPSIT on a Friday unless holiday_shift; FOMC statement on the meeting's last day",
+   "cpi_or_empsit_on_a_weekend": [],
+   "empsit_not_on_a_friday_and_not_flagged": [],
+   "cpi_or_empsit_not_at_0830": [],
+   "empsit_rows_flagged_holiday_shift": 23
+  },
+  "G4": {
+   "rule": "for 2016-2024 the CPI, EMPSIT and FOMC date sets equal data/macro_release_calendar.json, or every difference is listed",
+   "differences": 23
+  },
+  "G5": {
+   "rule": "08:30 ET -> 13:30 UTC in January, 12:30 UTC in July",
+   "january_0830_rows": 22,
+   "july_0830_rows": 22
+  }
+ },
+ "not_fetched": [],
+ "fomc_panels_excluded": [
+  {
+   "panel": "March 17-18 (cancelled) Meeting - 2020",
+   "reason": "cancelled, no statement"
+  }
+ ],
+ "fomc_unscheduled_meetings_without_a_same_day_statement": [
+  {
+   "panel": "October 4 (unscheduled) - 2019",
+   "meeting_last_day": "2019-10-04",
+   "statement_the_fed_attaches": "2019-10-11",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2019.htm",
+   "consequence": "the CSV row is the statement, not the meeting; no clock was ever published for the meeting day, so no row is written for it"
+  }
+ ],
+ "schedule_pages_unparsed": [],
+ "eia_schedule_pages": {
+  "EIA_WPSR": {
+   "standard": "10:30 ET on Wednesdays, read from the page's own sentence",
+   "pages_used": 43,
+   "exceptions_found": 86,
+   "exceptions_per_year": {
+    "2016": 7,
+    "2017": 8,
+    "2018": 10,
+    "2019": 8,
+    "2020": 7,
+    "2021": 6,
+    "2022": 8,
+    "2023": 9,
+    "2024": 9,
+    "2025": 8,
+    "2026": 6
+   },
+   "governing_page_per_year": {
+    "2016": "https://web.archive.org/web/20170430081104/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2017": "https://web.archive.org/web/20170430081104/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2018": "https://web.archive.org/web/20190110082341/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2019": "https://web.archive.org/web/20190110082341/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2020": "https://web.archive.org/web/20191115070318/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2021": "https://web.archive.org/web/20210120153010/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2022": "https://web.archive.org/web/20211022094108/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2023": "https://web.archive.org/web/20221207030328/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2024": "https://web.archive.org/web/20240118235307/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2025": "https://web.archive.org/web/20251228152631/https://www.eia.gov/petroleum/supply/weekly/schedule.php",
+    "2026": "https://web.archive.org/web/20251228152631/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+   },
+   "last_exception_listed": "2026-11-11",
+   "conflicts_between_captures": [
+    {
+     "nominal": "2022-06-22",
+     "kept": {
+      "alt": "2022-06-29",
+      "time": "10:30",
+      "source_url": "https://web.archive.org/web/20221207030328/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2022-06-23",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20220616093100/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2024-12-25",
+     "kept": {
+      "alt": "2024-12-27",
+      "time": "13:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2024-12-26",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241127183214/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-01-22",
+     "kept": {
+      "alt": "2025-01-23",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-01-23",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-02-19",
+     "kept": {
+      "alt": "2025-02-20",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-02-20",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-05-28",
+     "kept": {
+      "alt": "2025-05-29",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-05-29",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-09-03",
+     "kept": {
+      "alt": "2025-09-04",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-09-04",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-10-15",
+     "kept": {
+      "alt": "2025-10-16",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-10-16",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-11-12",
+     "kept": {
+      "alt": "2025-11-13",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-11-13",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2026-01-21",
+     "kept": {
+      "alt": "2026-01-22",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250110211433/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2026-01-22",
+      "time": "11:00",
+      "source_url": "https://web.archive.org/web/20241225065927/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-12-24",
+     "kept": {
+      "alt": "2025-12-29",
+      "time": "17:00",
+      "source_url": "https://web.archive.org/web/20260118223951/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "dropped": {
+      "alt": "2025-12-29",
+      "time": "10:30",
+      "source_url": "https://web.archive.org/web/20251228152631/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+     },
+     "rule": "the later statement of the schedule wins"
+    }
+   ]
+  },
+  "EIA_NGSR": {
+   "standard": "10:30 ET on Thursdays, read from the page's own sentence",
+   "pages_used": 42,
+   "exceptions_found": 43,
+   "exceptions_per_year": {
+    "2013": 2,
+    "2014": 4,
+    "2015": 3,
+    "2016": 1,
+    "2017": 2,
+    "2018": 4,
+    "2019": 4,
+    "2020": 4,
+    "2021": 3,
+    "2022": 1,
+    "2023": 2,
+    "2024": 4,
+    "2025": 6,
+    "2026": 3
+   },
+   "governing_page_per_year": {
+    "2013": "https://web.archive.org/web/20140116182405/https://ir.eia.gov/ngs/schedule.html",
+    "2014": "https://web.archive.org/web/20140116182405/https://ir.eia.gov/ngs/schedule.html",
+    "2015": "https://web.archive.org/web/20141231141037/https://ir.eia.gov/ngs/schedule.html",
+    "2016": "https://web.archive.org/web/20151121123504/https://ir.eia.gov/ngs/schedule.html",
+    "2017": "https://web.archive.org/web/20161224191027/https://ir.eia.gov/ngs/schedule.html",
+    "2018": "https://web.archive.org/web/20181211202447/https://ir.eia.gov/ngs/schedule.html",
+    "2019": "https://web.archive.org/web/20181203202828/https://ir.eia.gov/ngs/schedule.html",
+    "2020": "https://web.archive.org/web/20201217153516/https://ir.eia.gov/ngs/schedule.html",
+    "2021": "https://web.archive.org/web/20201121084027/https://ir.eia.gov/ngs/schedule.html",
+    "2022": "https://web.archive.org/web/20211102183454/https://ir.eia.gov/ngs/schedule.html",
+    "2023": "https://web.archive.org/web/20221106051100/https://ir.eia.gov/ngs/schedule.html",
+    "2024": "https://web.archive.org/web/20231208131519/https://ir.eia.gov/ngs/schedule.html",
+    "2025": "https://ir.eia.gov/ngs/schedule.html",
+    "2026": "https://ir.eia.gov/ngs/schedule.html"
+   },
+   "last_exception_listed": "2026-11-26",
+   "conflicts_between_captures": [
+    {
+     "nominal": "2019-07-04",
+     "kept": {
+      "alt": "2019-07-03",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20190613010741/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "dropped": {
+      "alt": "2019-07-05",
+      "time": "10:30",
+      "source_url": "https://web.archive.org/web/20190111124957/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-12-25",
+     "kept": {
+      "alt": "2025-12-29",
+      "time": "12:00",
+      "source_url": "https://ir.eia.gov/ngs/schedule.html"
+     },
+     "dropped": {
+      "alt": "2025-12-24",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20241109225253/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-12-25",
+     "kept": {
+      "alt": "2025-12-29",
+      "time": "12:00",
+      "source_url": "https://ir.eia.gov/ngs/schedule.html"
+     },
+     "dropped": {
+      "alt": "2025-12-24",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20241231182006/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-12-25",
+     "kept": {
+      "alt": "2025-12-29",
+      "time": "12:00",
+      "source_url": "https://ir.eia.gov/ngs/schedule.html"
+     },
+     "dropped": {
+      "alt": "2025-12-24",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250117233342/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-12-25",
+     "kept": {
+      "alt": "2025-12-29",
+      "time": "12:00",
+      "source_url": "https://ir.eia.gov/ngs/schedule.html"
+     },
+     "dropped": {
+      "alt": "2025-12-24",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20250704121649/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "rule": "the later statement of the schedule wins"
+    },
+    {
+     "nominal": "2025-12-25",
+     "kept": {
+      "alt": "2025-12-29",
+      "time": "12:00",
+      "source_url": "https://ir.eia.gov/ngs/schedule.html"
+     },
+     "dropped": {
+      "alt": "2025-12-24",
+      "time": "12:00",
+      "source_url": "https://web.archive.org/web/20251128165312/https://ir.eia.gov/ngs/schedule.html"
+     },
+     "rule": "the later statement of the schedule wins"
+    }
+   ]
+  }
+ },
+ "eia_years_governed_by_a_neighbouring_pages_table": [],
+ "eia_release_instants_covering_more_than_one_data_week": [
+  {
+   "event": "EIA_WPSR",
+   "datetime_et": "2022-06-29T10:30:00-04:00",
+   "nominal_dates_collapsed": [
+    "2022-06-22",
+    "2022-06-29"
+   ],
+   "kept_nominal": "2022-06-22",
+   "source_url": "https://web.archive.org/web/20231123012702/https://www.eia.gov/petroleum/supply/weekly/schedule.php"
+  }
+ ],
+ "disagreements_with_macro_release_calendar_json": [
+  {
+   "event": "CPI",
+   "date": "2016-01-18",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2017-01-12",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2017-03-14",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2017-09-13",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2020-01-13",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2020-03-10",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2021-01-12",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2023-01-11",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "CPI",
+   "date": "2016-01-20",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2017-01-18",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2017-03-15",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2017-09-14",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2020-01-14",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2020-03-11",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2021-01-13",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "CPI",
+   "date": "2023-01-12",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "EMPSIT",
+   "date": "2023-01-27",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "EMPSIT",
+   "date": "2023-01-06",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "FOMC_UNSCHEDULED",
+   "date": "2019-10-04",
+   "in": "macro_release_calendar.json only"
+  },
+  {
+   "event": "FOMC_UNSCHEDULED",
+   "date": "2019-10-11",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "FOMC_UNSCHEDULED",
+   "date": "2020-03-23",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "FOMC_UNSCHEDULED",
+   "date": "2020-03-31",
+   "in": "data/calendar/events.csv only"
+  },
+  {
+   "event": "FOMC_UNSCHEDULED",
+   "date": "2020-08-27",
+   "in": "data/calendar/events.csv only"
+  }
+ ],
+ "partial_or_disrupted_years": [
+  {
+   "event": "CPI",
+   "year": "2025",
+   "count": 11,
+   "reason": "the federal funding lapse of 2025-10-01..2025-11-12: BLS's own 2025 schedule carries no October CPI and no October Employment Situation"
+  },
+  {
+   "event": "EMPSIT",
+   "year": "2025",
+   "count": 11,
+   "reason": "the federal funding lapse of 2025-10-01..2025-11-12: BLS's own 2025 schedule carries no October CPI and no October Employment Situation"
+  },
+  {
+   "event": "FOMC",
+   "year": "2020",
+   "count": 7,
+   "reason": "the Fed's own 2020 page lists seven scheduled meetings; March 17-18 was cancelled"
+  },
+  {
+   "event": "FOMC",
+   "year": "2026",
+   "count": 6,
+   "reason": "meetings scheduled but not yet held: no statement press release exists, so no release clock has been published -- see fomc_meetings_with_no_published_release_clock"
+  }
+ ],
+ "bls_year_page_vs_forward_page": {
+  "agree": 26,
+  "only_on_the_forward_page": [],
+  "disagree": []
+ },
+ "fomc_panel_tags": {
+  "scheduled": 95,
+  "unscheduled": 3,
+  "cancelled": 1,
+  "notation vote": 5
+ },
+ "fomc_statement_day_not_the_meetings_last_day": [],
+ "fomc_meetings_with_no_published_release_clock": [
+  {
+   "meeting_last_day": "2020-03-19",
+   "panel": "March 19 (notation vote) - 2020",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2020.htm"
+  },
+  {
+   "meeting_last_day": "2026-10-28",
+   "panel": "October 27-28 - 2026",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2026-12-09",
+   "panel": "December 8-9* - 2026",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-01-27",
+   "panel": "January 26-27 - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-03-17",
+   "panel": "March 16-17* - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-04-28",
+   "panel": "April 27-28 - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-06-09",
+   "panel": "June 8-9* - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-07-28",
+   "panel": "July 27-28 - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-09-15",
+   "panel": "September 14-15* - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-10-27",
+   "panel": "October 26-27 - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "meeting_last_day": "2027-12-08",
+   "panel": "December 7-8* - 2027",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  }
+ ],
+ "macro_release_calendar_json_span": {
+  "CPI": "2016..2023",
+  "EMPSIT": "2016..2023",
+  "FOMC": "2016..2024",
+  "FOMC_UNSCHEDULED": "2019..2020"
+ }
+}

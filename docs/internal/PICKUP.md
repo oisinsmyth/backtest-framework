@@ -2,6 +2,68 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## SHARED INFRASTRUCTURE FOR THE SIX NEW DEPOSIT PRE-REGISTRATIONS — four of five BUILT AND VERIFIED, one pending, NOTHING COMMITTED, 2026-09-21
+
+Six more documents landed in `docs/internal/User-Doc-Deposit/` on 2026-09-21: `SETTLEMENT_FLOW_LEDGER_PREREG`
+(v1.9, the parent design), `INDEX_REWEIGHT_FLOW_PREREG`, `LETF_CLOSE_FLOW_PREREG`, `SHOCK_CLASSIFIER_PREREG`,
+`OPENING_AGENT_STATE_PREREG`, `ARCHITECTURE_OVERVIEW`. They were reviewed against this record and split
+into research items and infrastructure items; the principal chose **five shared infrastructure components**
+and had them built by five parallel agents (Opus; the `.claude/agents/opus-high.md` definition written for
+the effort pin was not visible to the launching session, so effort was not pinned). **Do not rebuild any
+of the following.** Each is on disk, untracked, with its tests passing and its record written:
+
+| record | component | files | verified |
+|---|---|---|---|
+| **D586** FIXTURE | CME settlement-window table, 17 products, CT+ET, effective dates | `data/settlement_windows.csv` + meta, `data/settlement_flow/SOURCES.md`, `scripts/settlement_windows.py`, `tests/unit/test_settlement_windows.py` | 48 tests; `window_for("NG", 2023-06-01)` = 14:28–14:30 ET (SER-4867, 2009); ES 15:59:30–16:00 ET (SER-8591, 2020-10-26); XX and GC-2023 raise; in-window volume 2.5–16.9× the flanks on 128/128 root-years |
+| **D587** design | shared futures fill model + `Future` instrument | `src/backtest_framework/instruments/future.py`, `simulator/futures_fills.py`, 4 test files under `tests/{unit,golden,property}/` | 129 tests; bit-identical to `run_d490_range_reversion.py:simulate` (44 trades) and `d465` pessimistic MAE (50 sessions); 20/20 mutations caught. The ONE tracked edit: `instruments/__init__.py` (+21 lines, deliberately does not cite D587 until the record is committed) |
+| **D588** design | power module (design effect, ICC, n_eff, SE, MDE, forward-length and Track-3 routes, POWER.md renderer) | `src/backtest_framework/validation/power.py`, `scripts/power_table.py`, 3 test files | 78 tests; ledger unit tests 51/52/53/59/62/63 exact; `n_eff_cross_series` == `scripts/ragged_panel.py:effective_instruments` |
+| **D589** FIXTURE (was to be D584; D584 was taken by the concurrent basis-momentum session) | CME session calendar + event flags, 36 roots, 205,428 rows 2010-06-07 → 2026-09-09 | `data/fixtures/cme_session_calendar.csv.gz` + meta (gitignored by suffix → **needs a manifest entry**), `scripts/build_cme_session_calendar.py`, `tests/unit/test_cme_session_calendar.py` | 24 tests; ES early closes 2019-11-29 / 2019-12-24 (225 bars), 390 on 2019-11-27; `roll_day` == `fut_sessions_rolls` on all 9 roots; per-root closes measured (SI 13:25, HG 13:00, GC 13:30 ET). G6 (CME holiday page) `not_fetched`: cmegroup.com blocks this machine |
+| **D585** FIXTURE | sourced release calendar with times (CPI, EMPSIT, FOMC scheduled + unscheduled at each statement's printed clock, EIA WPSR, EIA NGSR), 1,501 rows 2016-01-06 → 2026-12-31 | `data/calendar/events.csv` + meta + `SOURCES.md`, `scripts/fetch_release_calendar.py`, `tests/unit/test_release_calendar.py`; 196 raw pages in `data/raw/calendar/` (gitignored) | 25 tests; CPI 12/yr except **11 in 2025** (the 2025-10 funding lapse, sourced); FOMC_UNSCHEDULED 2020-03-15 17:00 ET present; 0 `inferred` rows; **nine 2016-2023 dates in `data/macro_release_calendar.json` are wrong** (enumerated in the meta; that file untouched, `run_d494_outside_path.py` still reads it) |
+
+**Integration DONE (2026-09-21, all staged, NOT committed):** session calendar rebuilt with `--events
+data/calendar/events.csv` (flags now span 2016-01 → 2026-09-09; fixture sha256 `1164a241…`; amendment
+block at the top of D589); D585/D586/D589 paragraphs in `data-available.md` (§1 for the calendar, §4 for
+the two reference tables); CHANGELOG entries for all five under "Added (2026-09-21, shared
+infrastructure…)"; `data/data_manifest.json` rebuilt (123 entries, the calendar fixture added, nothing
+else changed); every new file staged by explicit path (the six untracked deposit docs and
+`working/arm_spread_at_entries.csv.gz` deliberately NOT staged — they are the principal's); register
+regenerated (`build_decision_register.py --write`, 303 numbers) and README counts regenerated
+(`build_readme_counts.py --build` — run it under `uv run`, the system python has no pytest). **Full suite
+on the staged tree: 2489 passed, 1 skipped, 6 deselected (4:57)** against the pre-build baseline of 2185
+passed, 1 skipped, 5 deselected — the skip count is unchanged, the 304 new tests all pass. The first run
+showed 16 red, all repo gates reacting to new files, none a defect in the components: the quoted-count
+gates (nine living documents updated by hand: golden 101→133, property 67→96 across 10 files, unit
+1,859→2,102, total 2,186→2,490, decisions D584→D589 / 819 files / 552 numbers, raises 280→359 across
+49 of 87, modules 46→49); the running-page figure gates (`docs/RUNNING.md` now says 123 panels and names
+the calendar fixture as the eighth without a blob; the anchor in `tests/unit/test_running_page_figures.py`
+moved with it); the encoding ratchet (`test_encoding_is_declared` reads the INDEX, so a fix is invisible
+until re-staged; ten `read_text`/`write_text`/`read_csv`/`to_csv` sites in the calendar builder now pass
+`encoding="utf-8"`); and one agent test that had pinned the old flag source's end date, rewritten to
+assert against the meta's recorded source. **Only the commit is owed, on the principal's word.** 47 files
+staged, 18,406 insertions.
+
+**Findings the agents surfaced that a later study must carry:** CME publishes windows in CT for CME/CBOT
+products and ET for NYMEX/COMEX (the deposit's "Chicago time" is half wrong); the energy expiring month's
+last day settles on 14:00–14:30 ET, a different object; the livestock and equity-index windows are 30 s
+long and unresolvable on a 1-minute bar; the three COMEX metals settle three hours apart from grains and
+equity, so the index doc's basket has staggered `W_end`s; "COMEX metals close 13:30" is gold only; the
+D490 runner's `MULT={"ES":5.0,"NQ":2.0}` are the MICRO point values (its numbers are right, its labels are
+not); a fourth incomplete March-2020 ES session (2020-03-18) and a second archive dropout (2020-02-27) exist
+beyond those recorded; D588 found the ledger doc's §13A.7(2) cap ambiguous (it capped evaluation days) and
+the LETF §6A H1 cell straddling its own adoption rule; two pre-existing ruff F601 errors sit in
+`scripts/stage0_d575_livestock_placements.py`. One stray: the D586 agent fetched SER-8591 through the browser
+pane, which left a byte-identical copy in `C:\Users\O\Downloads\`; the cited copy is in `data/raw/cme_settlement/`.
+
+**The review itself, not yet recorded anywhere else:** the six docs' sealed vault (2025-03-01 → 2026-09-18)
+has to be reconciled with this record's 2024-01 futures holdout and the spent NQ/overnight/trend/carry slices
+before any of them runs; every signed-flow feature they specify (ledger update step, TAS, large-lot, opening
+A7, shock flow-flip exit, index C0 calibration) lives only inside that vault period (tbbo 2025-09-11 →
+2026-09-11; mbo one month), and the historical pull is free only until ~2026-10-11; the opening doc's H-O2
+subtracts "the best of B1–B3 per day", an ex-post oracle that must mean the best baseline overall; the LETF
+doc's k = 3 activation gate is on for almost every day at micro cost. None of the six constructions has been
+built here — the record holds baselines and single-ingredient tests in the same windows (D463/D530/D581 at the
+close, D499/D528 after large moves, D531–D535 at the open), not the combining layer.
+
 ## THE DEPOSIT FOLDER, AND ITS FIRST STUDY (D555), 2026-09-19
 
 The principal dropped fourteen documents into `docs/internal/User-Doc-Deposit/` — a mechanism-first

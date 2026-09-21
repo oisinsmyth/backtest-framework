@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 334 of these records carry neither field —
+**No Status or Category column, deliberately.** 337 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -663,6 +663,11 @@ would look like data. The tokens are what is shown.
 | D582 | The deposit's list is CLOSED by the principal, and the synthesis of the mechanism programme D577–D581: every one of the… | [record](D582-CLOSED-the-deposit-and-the-mechanism-programme-synthesis.md) |
 | D583 | D583 STAGE 0 RESULT — NOT SUPPORTED. The reporting calendar does not order the basis-momentum book: the ten sessions in… | [record](D583-STAGE-0-DESIGN-basis-momentum-M7-quarter-end-calendar.md) · [RESULT](D583-STAGE-0-RESULT-not-supported-quarter-ends-order-nothing.md) |
 | D584 | D584 STAGE 0 RESULT — M1 NOT SUPPORTED, M2 NOT SUPPORTED, the negative control UNRESOLVED on its letter. The 8 least li… | [record](D584-STAGE-0-DESIGN-basis-momentum-M1-M2-and-the-negative-control.md) · [RESULT](D584-STAGE-0-RESULT-M1-M2-not-supported-the-control-unresolved.md) |
+| D585 | FIXTURE: the sourced US economic release calendar, with times — 1,501 releases 2016-01-06 → 2026-12-31 (CPI, Employment… | [record](D585-FIXTURE-sourced-us-economic-release-calendar-with-times.md) |
+| D586 | FIXTURE: the CME settlement-window table with effective dates, 17 products across four exchanges, sourced sentence by s… | [record](D586-FIXTURE-cme-settlement-windows-with-effective-dates.md) |
+| D587 | Futures fills are one library module with pessimism as the default, not five per-script literals that disagree | [record](D587-shared-futures-fill-model.md) |
+| D588 | The deposit documents' power arithmetic is one library module with a self-testing renderer, not five copies of a formul… | [record](D588-power-analysis-module.md) |
+| D589 | FIXTURE: the CME session calendar and event flags for the 36 breadth roots — 205,428 (root, ET calendar day) rows 2010-… | [record](D589-FIXTURE-cme-session-calendar-and-event-flags-36-roots.md) |
 
 <!-- REGISTER:END -->
 

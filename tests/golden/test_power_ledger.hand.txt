@@ -1,0 +1,132 @@
+Golden-master hand-worked cases for validation/power.py (D588). Companion to
+test_power_ledger.py.
+
+The ledger of record is the power table of `LETF_CLOSE_FLOW_PREREG.md` §6A and §6B,
+with one clustered row carried over from `SETTLEMENT_FLOW_LEDGER_PREREG.md` §9A.1 so
+the design effect is exercised on a case the docs actually quote.
+
+The pre-registered formulas, identical in all five deposit documents:
+
+    SE (correlation) = 1 / sqrt(n_eff)
+    SE (price)       = sigma_trade / sqrt(n_eff)
+    MDE_t2           = 2   x SE
+    MDE_80           = 2.8 x SE
+    n_eff            = n / (1 + (m - 1) x rho)
+
+Units below: rows 1-2 and 4 are in MULTIPLES OF SIGMA (sigma_trade = 1 is passed, so
+the number reads directly as "0.09 sigma"); row 3 is in dimensionless correlation.
+
+--------------------------------------------------------------------------------
+Case 1 — LETF §6A, H1 primary cell at the LOW end of its planned range
+--------------------------------------------------------------------------------
+  Doc row: "H1 primary cell (active days at k = 3, per instrument) | ~500-1,500 |
+            ~0.026 sigma-0.045 sigma | ~0.05 sigma-0.09 sigma"
+
+  n = 500, m = 1 (no clustering: one observation per active day, per instrument)
+  rho = 0 (vacuous at m = 1)
+
+  design effect = 1 + (1 - 1) x 0 = 1
+  n_eff         = 500 / 1 = 500
+
+  sqrt(500) = 22.360679774997896
+  SE     = 1 / 22.360679774997896 = 0.044721359549995794    -> the doc's "~0.045 sigma"
+  MDE_t2 = 2   x 0.044721359549995794 = 0.08944271909999159 -> the doc's "~0.09 sigma"
+  MDE_80 = 2.8 x 0.044721359549995794 = 0.12521980673998823
+
+  Plausible effect, declared per §6A's default ("MDE at or below round-trip cost"):
+  0.06 sigma.
+      MDE_t2 = 0.0894 > 0.06  ->  UNDERPOWERED
+      adoption_by_significance_blocked = True
+
+--------------------------------------------------------------------------------
+Case 2 — the SAME cell at the HIGH end of the same planned range
+--------------------------------------------------------------------------------
+  n = 1,500, m = 1, rho = 0  ->  n_eff = 1,500
+
+  sqrt(1500) = 38.72983346207417
+  SE     = 1 / 38.72983346207417   = 0.025819888974716113   -> the doc's "~0.026 sigma"
+  MDE_t2 = 2   x 0.025819888974716113 = 0.051639777949432225 -> the doc's "~0.05 sigma"
+  MDE_80 = 2.8 x 0.025819888974716113 = 0.07229568912920512
+
+  Same plausible effect, 0.06 sigma:
+      MDE_t2 = 0.0516 <= 0.06  ->  INDIVIDUALLY TESTABLE
+      adoption_by_significance_blocked = False
+
+  THE POINT OF PAIRING THESE TWO. The doc quotes one cell as "~500-1,500". Against a
+  0.06 sigma round-trip cost the two ends of that single range land on OPPOSITE sides
+  of §9A.2 rule 3. The planning range is not a detail: it decides whether the cell may
+  be adopted on its own significance test at all.
+
+--------------------------------------------------------------------------------
+Case 3 — a CLUSTERED row: ledger §9A.1, C3 attention, day-clustered
+--------------------------------------------------------------------------------
+  Doc row: "C3: attention (continuous, H11a) | Attention vs ETF signed volume,
+            day-clustered | ~2,500 per fund | 0.020 | 0.040 corr"
+
+  This is ledger unit tests 51 and 52 joined into one row. Take m = 10 observations
+  per day-cluster and rho = 0.1 (test 51's numbers), and the raw count that lands on
+  the doc's planned n_eff:
+
+  design effect = 1 + (10 - 1) x 0.1 = 1 + 0.9 = 1.9           (test 51)
+  n = 4,750
+  n_eff = 4,750 / 1.9 = 2,500                                   (test 51)
+
+  sqrt(2500) = 50
+  SE     = 1 / 50 = 0.02                                        (test 52)
+  MDE_t2 = 2   x 0.02 = 0.04                                    (test 52)
+  MDE_80 = 2.8 x 0.02 = 0.056                                   (test 52)
+
+  In IEEE-754 doubles 2.8 x 0.02 is 0.055999999999999994, not 0.056: 0.02 is not
+  representable and neither is 2.8. The stored value is the correctly-rounded product
+  of the two stored operands, so the test compares at 1e-12 rather than asserting
+  equality with the decimal literal.
+
+  Plausible effect 0.04 (correlation): MDE_t2 = 0.04, and §9A.2 rule 3 says
+  "if MDE_t2 > the plausible effect", strictly. Equal is not greater:
+      -> INDIVIDUALLY TESTABLE, on the boundary.
+
+--------------------------------------------------------------------------------
+Case 4 — LETF §6B, the Track 3 trading-target power check (ledger §13A.7(4))
+--------------------------------------------------------------------------------
+  Doc: "at N = 300 trades, SE ~= 0.058 sigma and the MDE (t = 2) ~= 0.115 sigma"
+
+  n = 300, m = 1, rho = 0  ->  n_eff = 300
+  sqrt(300) = 17.320508075688775
+  SE     = 1 / 17.320508075688775   = 0.05773502691896257   -> the doc's "~0.058 sigma"
+  MDE_t2 = 2   x 0.05773502691896257 = 0.11547005383792514  -> the doc's "~0.115 sigma"
+  MDE_80 = 2.8 x 0.05773502691896257 = 0.16165807537309518
+
+  Routing, §13A.7(4):
+      Track 1 edge 0.08 sigma  < 0.11547...  ->  combined_evidence
+      Track 1 edge 0.15 sigma >= 0.11547...  ->  efficacy_n300
+      Track 1 edge 0.11547005383792514 (exactly the MDE) -> efficacy_n300
+        ("at or above" — the boundary belongs to the efficacy route)
+
+--------------------------------------------------------------------------------
+Case 5 — ledger §13A.7(2), forward evaluation length (unit test 59)
+--------------------------------------------------------------------------------
+      n_needed        = (2 / plausible_effect)^2
+      evaluation_days = max(120, n_needed / instruments), capped at 500
+
+  plausible 0.1, 2 instruments:
+      n_needed = (2 / 0.1)^2 = 20^2 = 400
+      days     = max(120, 400 / 2) = max(120, 200) = 200
+      200 <= 500  ->  route "forward", evaluation_days 200
+
+  plausible 0.05, 2 instruments:
+      n_needed = (2 / 0.05)^2 = 40^2 = 1,600
+      days     = max(120, 1,600 / 2) = max(120, 800) = 800
+      800 > 500   ->  route "9B", evaluation_days None
+                      (the stage "skips individual forward testing")
+
+--------------------------------------------------------------------------------
+What the rendered table must say
+--------------------------------------------------------------------------------
+Every file `write_power_md` produces carries, before any row:
+
+  * "**Generated:** <date>" with the module's name and D588; and
+  * §9A.1's own sentence that these are estimates "recomputed on real data before
+    each stage runs".
+
+Both are asserted, because a power table without its provenance line is a set of
+numbers that looks measured and is not. Line endings are pinned to LF (D550).

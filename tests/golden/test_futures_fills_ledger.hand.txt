@@ -1,0 +1,212 @@
+Golden-master hand ledger for the shared futures fill model (D587).
+Companion to test_futures_fills_ledger.py — every case here has a matching assertion there.
+
+Per CONTRIBUTING.md, the arithmetic below was worked BEFORE the assertions were written and
+without importing backtest_framework. Every number is exact in binary: the instrument is MES,
+whose tick is 0.25 = 2^-2, and every price below is an integer number of ticks, so no figure
+here depends on a rounding convention in the reader's calculator.
+
+INSTRUMENT
+================================================================================
+MES — Micro E-mini S&P 500, from data/futures_contract_specs.json:
+    tick_points     0.25   (index points per tick)
+    usd_per_point   5.00   ($ per index point per contract)
+    tick_usd        1.25   = 5.00 x 0.25                                      [consistency]
+
+MES rather than ES on purpose. `run_d490_range_reversion.py` carries
+MULT = {"ES": 5.0, "NQ": 2.0} — those are the MICRO multipliers (MES $5/pt, MNQ $2/pt),
+not ES ($50/pt) and NQ ($20/pt). The literal is right about the contract it means and wrong
+about the name it gives it. `Future.from_specs("ES").usd_per_point` is 50.0.
+
+    notional(3, 5000.25)  = 3 x 5000.25 x 5.00     = 75,003.75
+    ticks(1.75)           = 1.75 / 0.25            = 7
+    usd(1.75, 2)          = 1.75 x 5.00 x 2        = 17.50
+    usd(-1.75, 2)                                  = -17.50        [signed, not absolute]
+    tradeable_quantity(2.4) = 2 ;  (0.4) = 0 ;  (-2.6) = -3        [whole contracts]
+
+ROUNDING (MES, tick 0.25)
+--------------------------------------------------------------------------------
+    5000.30 -> down 5000.25 | nearest 5000.25 | up 5000.50
+    5000.20 -> down 5000.00 | nearest 5000.25 | up 5000.25
+    5000.125 is exactly half a tick above 5000.00: nearest ties UP -> 5000.25
+    5000.25 is on the grid: all three directions return 5000.25   [no tick is added]
+    ordering, always:  down <= nearest <= up
+
+ZN (tick 0.015625 = 1/64, usd_per_point 1000, tick_usd 15.625) is carried as the case where
+the grid is not decimal:  110 + 3/64 = 110.046875 is on the grid; 110.05 is not.
+
+THE SESSION — five 1-minute bars, "session A"
+================================================================================
+bar   open       high       low        close
+ 0    5000.00    5001.00    4999.00    5000.50
+ 1    5000.50    5002.00    5000.50    5001.75
+ 2    5001.75    5003.00    5000.00    5002.25
+ 3    5000.25    5000.50    4997.00    4997.50
+ 4    4997.50    4999.00    4996.50    4998.75
+
+Every bar satisfies low <= open <= high and low <= close <= high.
+Bar 3 opens 2.00 below bar 2's close: the session's one GAP, and it is what makes the
+gap-through case below different from the touch case.
+
+1. ENTRY FILL — bar t0+1, plus 1 tick against the side          [ledger 7.3, shock 5.1, opening 6.3]
+================================================================================
+t0 = 0, so the fill bar is bar 1.
+
+  at="close" (the DEFAULT, and the deposit documents' convention): anchor = close[1] = 5001.75
+      LONG   5001.75 + 0.25 = 5002.00       (a buyer pays up)
+      SHORT  5001.75 - 0.25 = 5001.50       (a seller sells down)
+
+  at="open" (run_d490_range_reversion.py's convention): anchor = open[1] = 5000.50
+      LONG   5000.50 + 0.25 = 5000.75
+      SHORT  5000.50 - 0.25 = 5000.25
+
+  ticks_adverse = 0 is the no-concession case, and it must return the anchor untouched:
+      LONG at="close"  -> 5001.75
+  ticks_adverse = 2, LONG at="close" -> 5001.75 + 0.50 = 5002.25
+
+  t0 = 4 asks for bar 5, which does not exist in a five-bar session -> REJECTED.
+
+2. STRESS FILL — the worst close among t0+1 .. t0+k                    [shock 5.1, shock unit test 10]
+================================================================================
+closes after bar 0:   bar1 5001.75   bar2 5002.25   bar3 4997.50   bar4 4998.75
+
+  LONG,  k=4: worst = HIGHEST close = 5002.25 at bar 2 -> 5002.25 + 0.25 = 5002.50
+  SHORT, k=4: worst = LOWEST  close = 4997.50 at bar 3 -> 4997.50 - 0.25 = 4997.25
+  LONG,  k=2: window is bars 1..2 -> still bar 2 -> 5002.50
+  LONG,  k=1: window is bar 1 alone -> 5002.00, EXACTLY the primary fill.
+
+  Compare with §1: 5002.50 >= 5002.00 for the long and 4997.25 <= 5001.50 for the short.
+  The stress fill is never better than the primary fill, which is only true because the
+  1-tick concession carries over into it — see the module docstring for stress_fill.
+
+  t0 = 1 with k = 4 asks for bar 5 -> REJECTED. The window is NOT truncated to bar 4:
+  a stress window quietly shortened near the close stops being a stress window on exactly
+  the bars that matter.
+
+3. EXIT RESOLUTION — the stop wins whenever both are in the bar   [ledger 11, shock 9, opening 6.3]
+================================================================================
+3a. BOTH INSIDE, LONG.  Bar 3 = (5000.25, 5000.50, 4997.00, 4997.50), stop 4998.00, target 5000.50.
+    stop reached?    low 4997.00 <= 4998.00                            yes
+    target reached?  high 5000.50 >= 5000.50                           yes
+    The bar does not say which came first, so the rule decides: STOP.
+    Gap? open 5000.25 <= 4998.00 is FALSE, so no gap; fill at the stop.
+    -> kind STOP, price 4998.00, gapped False.
+
+3b. BOTH INSIDE, SHORT. Same bar 3, stop 5000.50 (above), target 4997.00 (below).
+    stop reached?    high 5000.50 >= 5000.50                           yes
+    target reached?  low  4997.00 <= 4997.00                           yes
+    -> kind STOP, price 5000.50, gapped False.
+
+3c. TARGET ONLY, LONG.  Bar 3, stop 4990.00, target 5000.50.
+    stop: low 4997.00 <= 4990.00 is FALSE.
+    target: high 5000.50 >= 5000.50; fill at max(target, open) = max(5000.50, 5000.25) = 5000.50.
+    -> kind TARGET, price 5000.50, gapped False.
+
+3d. STOP GAPPED THROUGH, LONG (D10).  Bar 3, stop 5000.75, target 5010.00.
+    Bar 2 closed at 5002.25 and bar 3 OPENED at 5000.25, below the stop.
+    Filling at 5000.75 would be free money, so the fill is the open.
+    -> kind STOP, price 5000.25, gapped True.
+
+3e. TARGET GAPPED PAST IN OUR FAVOUR, LONG.  Bar 1 = (5000.50, 5002.00, 5000.50, 5001.75),
+    stop 4990.00, target 5000.25.
+    The bar opened at 5000.50, already 1 tick BEYOND the sell limit at 5000.25.
+    A resting limit fills at its price or better: max(5000.25, 5000.50) = 5000.50.
+    -> kind TARGET, price 5000.50, gapped True.
+
+3f. NEITHER.  Bar 0 = (5000.00, 5001.00, 4999.00, 5000.50), stop 4990.00, target 5010.00.
+    -> kind NONE, price None, gapped False.
+
+3g. D490's TRAILING STOP, reproduced by the knobs.
+    stop_rule = TRADE_THROUGH, stop_slippage_ticks = 1, gap_through = False.
+    Its loop reads `if Ll[j] < stop: px = stop - TICK`.
+    On a tick grid, low < stop is exactly low <= stop - 1 tick, which is trade-through.
+
+    Bar 3, LONG stop 4997.25:  low 4997.00 <= 4997.25 - 0.25 = 4997.00  -> triggered.
+                               fill = 4997.25 - 0.25 = 4997.00.
+    Bar 3, LONG stop 4997.00:  low 4997.00 <= 4996.75  -> FALSE. Merely touching the
+                               trailing stop is not enough. -> kind NONE.
+
+3h. A bar with high < low is not a bar: (5000.00, 4999.00, 5001.00, 5000.00) -> REJECTED.
+    So is an open outside the range: (5010.00, 5001.00, 4999.00, 5000.00) -> REJECTED.
+
+4. PASSIVE LIMIT — resting at the t0 close, cancelled after k bars      [shock 5.1, diagnostic]
+================================================================================
+t0 = 0, so the limit is close[0] = 5000.50 and it works bars 1 .. 1+cancel_after-1.
+Lows after bar 0:   bar1 5000.50   bar2 5000.00   bar3 4997.00   bar4 4996.50
+
+  LONG, TOUCH, cancel_after = 1:
+      bar 1 low 5000.50 <= 5000.50 -> reached. FILLED at bar 1, price 5000.50.
+  LONG, TRADE_THROUGH, cancel_after = 1:
+      needs low <= 5000.50 - 0.25 = 5000.25. Bar 1's low is 5000.50. NOT filled -> cancelled.
+      The two conventions disagree on this bar, which is the whole point of carrying both.
+  LONG, TRADE_THROUGH, cancel_after = 4:
+      bar 1 no; bar 2 low 5000.00 <= 5000.25 -> FILLED at bar 2, price 5000.50.
+      The price is the LIMIT, not bar 2's open (5001.75) and not its low. A passive order
+      is not credited with price improvement.
+  SHORT, TRADE_THROUGH, cancel_after = 1:
+      needs high >= 5000.50 + 0.25 = 5000.75. Bar 1's high is 5002.00 -> FILLED at bar 1, 5000.50.
+
+  cancel_after = 5 from t0 = 0 wants bar 5 -> REJECTED.
+
+5. PASSIVE DIAGNOSTIC — adverse selection, in TICKS                            [shock 5.1]
+================================================================================
+Session B, built so the same limit is never traded through:
+
+bar   open       high       low        close
+ 0    5000.00    5000.25    4999.75    5000.00
+ 1    5000.00    5000.25    5000.00    5000.25
+ 2    5000.25    5000.50    5000.00    5000.25
+ 3    5000.25    5000.50    5000.00    5000.50
+ 4    5000.50    5000.75    5000.25    5000.75
+
+  Session B, LONG, t0 = 0: limit 5000.00, trade-through needs low <= 4999.75.
+  Lows in bars 1..4 are 5000.00, 5000.00, 5000.00, 5000.25 — none of them. UNFILLED.
+
+  Outcome is the close-to-close move over the horizon, in the position's direction, in ticks.
+  horizon = 4, so close[4] - close[0]:
+      A (filled):    (4998.75 - 5000.50) / 0.25 = -1.75 / 0.25 = -7
+      B (unfilled):  (5000.75 - 5000.00) / 0.25 =  0.75 / 0.25 = +3
+
+  Over the pair [A LONG, B LONG], horizon 4, cancel_after 4, TRADE_THROUGH:
+      n                       2
+      n_filled                1
+      n_unfilled              1
+      unfilled_rate           1 / 2 = 0.5
+      mean_outcome_filled     -7
+      mean_outcome_unfilled   +3
+
+  The filled trade is the worse one, which is what adverse selection looks like: the limit
+  is filled when price keeps coming. Two sessions is an illustration of the arithmetic, not
+  a measurement of anything.
+
+6. RUNNING-PEAK DRAWDOWN — the pessimistic intra-bar path             [d465, hurdle P1]
+================================================================================
+Session A. Pessimistic means the running peak includes bar j's OWN high and the trough is
+bar j's own low: high-then-low inside every bar. It OVERSTATES, by construction.
+
+  LONG — drawdown from the running peak of the highs:
+      high            5001.00  5002.00  5003.00  5000.50  4999.00
+      running max     5001.00  5002.00  5003.00  5003.00  5003.00
+      low             4999.00  5000.50  5000.00  4997.00  4996.50
+      max - low          2.00     1.50     3.00     6.00     6.50
+      -> 6.50 points  ( = 26 ticks = $32.50 on one MES )
+
+  SHORT — run-up from the running trough of the lows (the mirror):
+      running min     4999.00  4999.00  4999.00  4997.00  4996.50
+      high            5001.00  5002.00  5003.00  5000.50  4999.00
+      high - min         2.00     3.00     4.00     3.50     2.50
+      -> 4.00 points
+
+7. ENTRY TIMING CONSTRAINT                                       [ledger 7.3, ledger unit test 10]
+================================================================================
+"The entry must be complete at least 3 minutes before W_start. If not, no trade."
+bar_ts is the moment the entry is COMPLETE — the close of the fill bar.
+
+  W_start = 2019-06-03 14:28.
+      entry complete 14:25     lead 3.0 min  >= 3   -> accepted (the boundary is inclusive)
+      entry complete 14:25:30  lead 2.5 min  <  3   -> REJECTED
+      entry complete 14:26     lead 2.0 min  <  3   -> REJECTED
+      entry complete 14:29     lead -1.0 min        -> REJECTED (after the window opened)
+      entry complete 13:50     lead 38 min          -> accepted
+
+  min_minutes = 0 accepts 14:28 exactly and rejects 14:29.

@@ -1,0 +1,2215 @@
+{
+ "spec": "D586",
+ "written_utc": "2026-09-21T18:48:06Z",
+ "table": "data/settlement_windows.csv",
+ "products": {
+  "requested": [
+   "NG",
+   "CL",
+   "HO",
+   "RB",
+   "GC",
+   "SI",
+   "HG",
+   "ZC",
+   "ZS",
+   "ZW",
+   "KE",
+   "ZL",
+   "ZM",
+   "LE",
+   "HE",
+   "ES",
+   "NQ"
+  ],
+  "mapped": [
+   "CL",
+   "ES",
+   "GC",
+   "HE",
+   "HG",
+   "HO",
+   "KE",
+   "LE",
+   "NG",
+   "NQ",
+   "RB",
+   "SI",
+   "ZC",
+   "ZL",
+   "ZM",
+   "ZS",
+   "ZW"
+  ],
+  "rows": 24,
+  "served_rows": 17,
+  "record_only_rows": 7
+ },
+ "unmapped": [],
+ "micro_parent": {
+  "MNG": "NG",
+  "MCL": "CL",
+  "MGC": "GC",
+  "SIL": "SI",
+  "MHG": "HG",
+  "MES": "ES",
+  "MNQ": "NQ"
+ },
+ "history": {
+  "dated_notice": [
+   "CL",
+   "ES",
+   "HO",
+   "NG",
+   "NQ",
+   "RB"
+  ],
+  "current_only": [
+   "GC",
+   "HE",
+   "HG",
+   "KE",
+   "LE",
+   "SI",
+   "ZC",
+   "ZL",
+   "ZM",
+   "ZS",
+   "ZW"
+  ],
+  "record_only": [
+   "ES",
+   "NQ",
+   "ZC",
+   "ZL",
+   "ZM",
+   "ZS",
+   "ZW"
+  ],
+  "earliest_sourced": {
+   "CL": "2009-06-01",
+   "ES": "2020-10-26",
+   "GC": "2026-09-21",
+   "HE": "2026-09-21",
+   "HG": "2026-09-21",
+   "HO": "2009-06-01",
+   "KE": "2026-09-21",
+   "LE": "2026-09-21",
+   "NG": "2009-06-01",
+   "NQ": "2020-10-26",
+   "RB": "2009-06-01",
+   "SI": "2026-09-21",
+   "ZC": "2026-09-21",
+   "ZL": "2026-09-21",
+   "ZM": "2026-09-21",
+   "ZS": "2026-09-21",
+   "ZW": "2026-09-21"
+  }
+ },
+ "not_fetched": {
+  "GC SI HG": "no dated notice establishing the COMEX metals windows was found; history before 2026-09-21 is UNKNOWN and window_for raises for it",
+  "ZC ZS ZW KE ZL ZM": "no dated notice for the move to 13:14:00-13:15:00 CT was found; the 2012 predecessor is carried as record_only",
+  "LE HE": "no dated notice for the 12:59:30-13:00:00 CT livestock window was found; the December 2014 transition off pit-only settlement is referenced in the literature but no CME notice stating the window was located",
+  "ES NQ pre-2020": "SER-8591 dates the END of the 15:14:30-15:15:00 CT window but not its start; carried as record_only and never served",
+  "KE volume": "KE is not among the 36 roots of data/fixtures/fut_day1m.parquet, so it carries no volume measurement"
+ },
+ "gates": {
+  "G1": {
+   "what": "every mapped row has a URL, an access time and a basis",
+   "passed": true,
+   "raises_on_break": true
+  },
+  "G2": {
+   "what": "window_for on an unmapped product raises",
+   "passed": true,
+   "raises_on_break": true
+  },
+  "G3": {
+   "what": "window_for before the earliest sourced effective date raises",
+   "passed": true,
+   "raises_on_break": true
+  },
+  "G4": {
+   "what": "CT->ET is exactly +1 hour on every row",
+   "passed": true,
+   "raises_on_break": true
+  },
+  "G5": {
+   "what": "no overlapping effective periods within a root",
+   "passed": true,
+   "raises_on_break": true
+  },
+  "G6": {
+   "what": "every micro maps to a mapped parent",
+   "passed": true,
+   "raises_on_break": true
+  }
+ },
+ "dst_check": {
+  "days": [
+   "2020-03-05",
+   "2020-03-06",
+   "2020-03-07",
+   "2020-03-08",
+   "2020-03-09",
+   "2020-03-10",
+   "2020-03-11",
+   "2020-10-29",
+   "2020-10-30",
+   "2020-10-31",
+   "2020-11-01",
+   "2020-11-02",
+   "2020-11-03",
+   "2020-11-04",
+   "2021-03-11",
+   "2021-03-12",
+   "2021-03-13",
+   "2021-03-14",
+   "2021-03-15",
+   "2021-03-16",
+   "2021-03-17",
+   "2021-11-04",
+   "2021-11-05",
+   "2021-11-06",
+   "2021-11-07",
+   "2021-11-08",
+   "2021-11-09",
+   "2021-11-10",
+   "2022-03-10",
+   "2022-03-11",
+   "2022-03-12",
+   "2022-03-13",
+   "2022-03-14",
+   "2022-03-15",
+   "2022-03-16",
+   "2022-11-03",
+   "2022-11-04",
+   "2022-11-05",
+   "2022-11-06",
+   "2022-11-07",
+   "2022-11-08",
+   "2022-11-09",
+   "2023-03-09",
+   "2023-03-10",
+   "2023-03-11",
+   "2023-03-12",
+   "2023-03-13",
+   "2023-03-14",
+   "2023-03-15",
+   "2023-11-02",
+   "2023-11-03",
+   "2023-11-04",
+   "2023-11-05",
+   "2023-11-06",
+   "2023-11-07",
+   "2023-11-08"
+  ],
+  "pairs_checked": 2688,
+  "years": [
+   2020,
+   2021,
+   2022,
+   2023
+  ],
+  "tz": [
+   "America/Chicago",
+   "America/New_York"
+  ]
+ },
+ "measurement": {
+  "status": "ok",
+  "years": [
+   2016,
+   2017,
+   2018,
+   2019,
+   2020,
+   2021,
+   2022,
+   2023
+  ],
+  "flank_minutes": 5,
+  "band": {
+   "fixture_band_et": "09:00-15:59, bar 0..419",
+   "windows_inside_band": [
+    "CL",
+    "ES",
+    "GC",
+    "HE",
+    "HG",
+    "HO",
+    "LE",
+    "NG",
+    "NQ",
+    "RB",
+    "SI",
+    "ZC",
+    "ZL",
+    "ZM",
+    "ZS",
+    "ZW"
+   ],
+   "windows_outside_band": [
+    "KE"
+   ],
+   "d530_session_ends_et": {
+    "grains": "14:20",
+    "livestock": "14:05",
+    "metals": "13:30",
+    "energy": "14:30",
+    "equity index": "16:00"
+   },
+   "verdict": "every mapped window falls INSIDE the band, because each one sits at or just before its own market's close, which is itself inside 09:00-15:59 ET; what falls outside is the POST-window flank of ES and NQ"
+  },
+  "fixture": "data/fixtures/fut_day1m.parquet",
+  "fixture_mtime": 1789441566.0011156,
+  "per_root": {
+   "CL": {
+    "window_et": "14:28:00-14:30:00",
+    "bars": [
+     328,
+     329
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     323,
+     324,
+     325,
+     326,
+     327
+    ],
+    "post5_bars": [
+     330,
+     331,
+     332,
+     333,
+     334
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 3.6052,
+      "share_pre5_pct": 2.5014,
+      "share_post5_pct": 1.289,
+      "vol_per_min_in": 5633.3,
+      "vol_per_min_pre5": 1563.4,
+      "vol_per_min_post5": 805.6,
+      "in_vs_pre5": 3.603,
+      "in_vs_post5": 6.992,
+      "in_vs_session_mean": 7.571
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 2.6728,
+      "share_pre5_pct": 2.2695,
+      "share_post5_pct": 1.2856,
+      "vol_per_min_in": 4648.1,
+      "vol_per_min_pre5": 1578.7,
+      "vol_per_min_post5": 894.3,
+      "in_vs_pre5": 2.944,
+      "in_vs_post5": 5.198,
+      "in_vs_session_mean": 5.613
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 2.3257,
+      "share_pre5_pct": 2.0354,
+      "share_post5_pct": 1.224,
+      "vol_per_min_in": 4166.6,
+      "vol_per_min_pre5": 1458.6,
+      "vol_per_min_post5": 877.2,
+      "in_vs_pre5": 2.857,
+      "in_vs_post5": 4.75,
+      "in_vs_session_mean": 4.884
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 2.1526,
+      "share_pre5_pct": 2.1295,
+      "share_post5_pct": 1.1826,
+      "vol_per_min_in": 3812.9,
+      "vol_per_min_pre5": 1508.9,
+      "vol_per_min_post5": 837.9,
+      "in_vs_pre5": 2.527,
+      "in_vs_post5": 4.55,
+      "in_vs_session_mean": 4.52
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 3.1643,
+      "share_pre5_pct": 2.6264,
+      "share_post5_pct": 1.5252,
+      "vol_per_min_in": 3688.0,
+      "vol_per_min_pre5": 1224.4,
+      "vol_per_min_post5": 711.0,
+      "in_vs_pre5": 3.012,
+      "in_vs_post5": 5.187,
+      "in_vs_session_mean": 6.645
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 2.9822,
+      "share_pre5_pct": 2.1177,
+      "share_post5_pct": 1.462,
+      "vol_per_min_in": 2941.2,
+      "vol_per_min_pre5": 835.4,
+      "vol_per_min_post5": 576.8,
+      "in_vs_pre5": 3.521,
+      "in_vs_post5": 5.1,
+      "in_vs_session_mean": 6.263
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 3.2532,
+      "share_pre5_pct": 2.0983,
+      "share_post5_pct": 1.4601,
+      "vol_per_min_in": 2432.8,
+      "vol_per_min_pre5": 627.7,
+      "vol_per_min_post5": 436.7,
+      "in_vs_pre5": 3.876,
+      "in_vs_post5": 5.57,
+      "in_vs_session_mean": 6.832
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 3.184,
+      "share_pre5_pct": 2.1908,
+      "share_post5_pct": 1.5737,
+      "vol_per_min_in": 2456.1,
+      "vol_per_min_pre5": 676.0,
+      "vol_per_min_post5": 485.6,
+      "in_vs_pre5": 3.633,
+      "in_vs_post5": 5.058,
+      "in_vs_session_mean": 6.686
+     }
+    }
+   },
+   "ES": {
+    "window_et": "15:59:30-16:00:00",
+    "bars": [
+     419,
+     419
+    ],
+    "window_in_band": true,
+    "sub_minute": true,
+    "pre5_bars": [
+     414,
+     415,
+     416,
+     417,
+     418
+    ],
+    "post5_bars": [],
+    "flank_truncated": "post5 is EMPTY: the window sits on the fixture's last bar (15:59 ET) and the five minutes after it are outside the 09:00-15:59 band",
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 3.225,
+      "share_pre5_pct": 2.2635,
+      "share_post5_pct": null,
+      "vol_per_min_in": 44244.8,
+      "vol_per_min_pre5": 6210.7,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 7.124,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 13.545
+     },
+     "2017": {
+      "sessions": 249,
+      "share_in_window_pct": 5.1972,
+      "share_pre5_pct": 3.1504,
+      "share_post5_pct": null,
+      "vol_per_min_in": 53657.0,
+      "vol_per_min_pre5": 6505.0,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 8.249,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 21.828
+     },
+     "2018": {
+      "sessions": 248,
+      "share_in_window_pct": 3.8087,
+      "share_pre5_pct": 2.7886,
+      "share_post5_pct": null,
+      "vol_per_min_in": 48267.2,
+      "vol_per_min_pre5": 7067.9,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 6.829,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 15.997
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 3.9781,
+      "share_pre5_pct": 3.0891,
+      "share_post5_pct": null,
+      "vol_per_min_in": 42908.5,
+      "vol_per_min_pre5": 6664.0,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 6.439,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 16.708
+     },
+     "2020": {
+      "sessions": 251,
+      "share_in_window_pct": 3.7573,
+      "share_pre5_pct": 3.1385,
+      "share_post5_pct": null,
+      "vol_per_min_in": 50420.3,
+      "vol_per_min_pre5": 8423.4,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 5.986,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 15.78
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 4.1945,
+      "share_pre5_pct": 3.2522,
+      "share_post5_pct": null,
+      "vol_per_min_in": 47729.4,
+      "vol_per_min_pre5": 7401.3,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 6.449,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 17.617
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 3.7166,
+      "share_pre5_pct": 3.0465,
+      "share_post5_pct": null,
+      "vol_per_min_in": 54255.5,
+      "vol_per_min_pre5": 8894.5,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 6.1,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 15.61
+     },
+     "2023": {
+      "sessions": 248,
+      "share_in_window_pct": 3.9569,
+      "share_pre5_pct": 2.7662,
+      "share_post5_pct": null,
+      "vol_per_min_in": 51843.6,
+      "vol_per_min_pre5": 7248.7,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 7.152,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 16.619
+     }
+    }
+   },
+   "GC": {
+    "window_et": "13:29:00-13:30:00",
+    "bars": [
+     269,
+     269
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     264,
+     265,
+     266,
+     267,
+     268
+    ],
+    "post5_bars": [
+     270,
+     271,
+     272,
+     273,
+     274
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 1.077,
+      "share_pre5_pct": 1.3398,
+      "share_post5_pct": 1.0705,
+      "vol_per_min_in": 913.9,
+      "vol_per_min_pre5": 227.4,
+      "vol_per_min_post5": 181.7,
+      "in_vs_pre5": 4.019,
+      "in_vs_post5": 5.031,
+      "in_vs_session_mean": 4.523
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 1.013,
+      "share_pre5_pct": 1.343,
+      "share_post5_pct": 1.0779,
+      "vol_per_min_in": 1231.4,
+      "vol_per_min_pre5": 326.5,
+      "vol_per_min_post5": 262.0,
+      "in_vs_pre5": 3.772,
+      "in_vs_post5": 4.699,
+      "in_vs_session_mean": 4.255
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 1.2648,
+      "share_pre5_pct": 1.3704,
+      "share_post5_pct": 1.2426,
+      "vol_per_min_in": 1522.1,
+      "vol_per_min_pre5": 329.8,
+      "vol_per_min_post5": 299.1,
+      "in_vs_pre5": 4.615,
+      "in_vs_post5": 5.089,
+      "in_vs_session_mean": 5.312
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 0.8917,
+      "share_pre5_pct": 1.2105,
+      "share_post5_pct": 1.0892,
+      "vol_per_min_in": 1267.6,
+      "vol_per_min_pre5": 344.2,
+      "vol_per_min_post5": 309.7,
+      "in_vs_pre5": 3.683,
+      "in_vs_post5": 4.093,
+      "in_vs_session_mean": 3.745
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 0.8265,
+      "share_pre5_pct": 1.1125,
+      "share_post5_pct": 0.9954,
+      "vol_per_min_in": 985.9,
+      "vol_per_min_pre5": 265.4,
+      "vol_per_min_post5": 237.5,
+      "in_vs_pre5": 3.714,
+      "in_vs_post5": 4.151,
+      "in_vs_session_mean": 3.471
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 1.1478,
+      "share_pre5_pct": 0.9874,
+      "share_post5_pct": 0.9735,
+      "vol_per_min_in": 1020.6,
+      "vol_per_min_pre5": 175.6,
+      "vol_per_min_post5": 173.1,
+      "in_vs_pre5": 5.812,
+      "in_vs_post5": 5.895,
+      "in_vs_session_mean": 4.821
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 1.6102,
+      "share_pre5_pct": 1.2228,
+      "share_post5_pct": 1.2379,
+      "vol_per_min_in": 1273.7,
+      "vol_per_min_pre5": 193.4,
+      "vol_per_min_post5": 195.8,
+      "in_vs_pre5": 6.584,
+      "in_vs_post5": 6.504,
+      "in_vs_session_mean": 6.763
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 1.3412,
+      "share_pre5_pct": 1.2005,
+      "share_post5_pct": 1.1381,
+      "vol_per_min_in": 1198.4,
+      "vol_per_min_pre5": 214.5,
+      "vol_per_min_post5": 203.4,
+      "in_vs_pre5": 5.586,
+      "in_vs_post5": 5.892,
+      "in_vs_session_mean": 5.633
+     }
+    }
+   },
+   "HE": {
+    "window_et": "13:59:30-14:00:00",
+    "bars": [
+     299,
+     299
+    ],
+    "window_in_band": true,
+    "sub_minute": true,
+    "pre5_bars": [
+     294,
+     295,
+     296,
+     297,
+     298
+    ],
+    "post5_bars": [
+     300,
+     301,
+     302,
+     303,
+     304
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 242,
+      "share_in_window_pct": 8.1713,
+      "share_pre5_pct": 3.0277,
+      "share_post5_pct": 2.8185,
+      "vol_per_min_in": 938.5,
+      "vol_per_min_pre5": 69.6,
+      "vol_per_min_post5": 64.7,
+      "in_vs_pre5": 13.494,
+      "in_vs_post5": 14.496,
+      "in_vs_session_mean": 34.319
+     },
+     "2017": {
+      "sessions": 248,
+      "share_in_window_pct": 8.9925,
+      "share_pre5_pct": 3.0292,
+      "share_post5_pct": 3.1864,
+      "vol_per_min_in": 1154.9,
+      "vol_per_min_pre5": 77.8,
+      "vol_per_min_post5": 81.8,
+      "in_vs_pre5": 14.843,
+      "in_vs_post5": 14.111,
+      "in_vs_session_mean": 37.769
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 9.6896,
+      "share_pre5_pct": 2.8743,
+      "share_post5_pct": 3.2258,
+      "vol_per_min_in": 1451.4,
+      "vol_per_min_pre5": 86.1,
+      "vol_per_min_post5": 96.6,
+      "in_vs_pre5": 16.856,
+      "in_vs_post5": 15.019,
+      "in_vs_session_mean": 40.696
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 7.6789,
+      "share_pre5_pct": 2.4814,
+      "share_post5_pct": 3.119,
+      "vol_per_min_in": 1247.5,
+      "vol_per_min_pre5": 80.6,
+      "vol_per_min_post5": 101.3,
+      "in_vs_pre5": 15.473,
+      "in_vs_post5": 12.31,
+      "in_vs_session_mean": 32.252
+     },
+     "2020": {
+      "sessions": 250,
+      "share_in_window_pct": 7.2285,
+      "share_pre5_pct": 2.5147,
+      "share_post5_pct": 3.3347,
+      "vol_per_min_in": 924.0,
+      "vol_per_min_pre5": 64.3,
+      "vol_per_min_post5": 85.3,
+      "in_vs_pre5": 14.372,
+      "in_vs_post5": 10.838,
+      "in_vs_session_mean": 30.36
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 7.6561,
+      "share_pre5_pct": 2.8008,
+      "share_post5_pct": 3.3438,
+      "vol_per_min_in": 963.1,
+      "vol_per_min_pre5": 70.5,
+      "vol_per_min_post5": 84.1,
+      "in_vs_pre5": 13.668,
+      "in_vs_post5": 11.448,
+      "in_vs_session_mean": 32.156
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 7.3141,
+      "share_pre5_pct": 2.5321,
+      "share_post5_pct": 3.3836,
+      "vol_per_min_in": 1016.0,
+      "vol_per_min_pre5": 70.3,
+      "vol_per_min_post5": 94.0,
+      "in_vs_pre5": 14.443,
+      "in_vs_post5": 10.808,
+      "in_vs_session_mean": 30.719
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 7.0775,
+      "share_pre5_pct": 2.6056,
+      "share_post5_pct": 3.4315,
+      "vol_per_min_in": 1127.8,
+      "vol_per_min_pre5": 83.0,
+      "vol_per_min_post5": 109.4,
+      "in_vs_pre5": 13.581,
+      "in_vs_post5": 10.313,
+      "in_vs_session_mean": 29.725
+     }
+    }
+   },
+   "HG": {
+    "window_et": "12:59:00-13:00:00",
+    "bars": [
+     239,
+     239
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     234,
+     235,
+     236,
+     237,
+     238
+    ],
+    "post5_bars": [
+     240,
+     241,
+     242,
+     243,
+     244
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 2.1045,
+      "share_pre5_pct": 1.7146,
+      "share_post5_pct": 1.126,
+      "vol_per_min_in": 584.3,
+      "vol_per_min_pre5": 95.2,
+      "vol_per_min_post5": 62.5,
+      "in_vs_pre5": 6.137,
+      "in_vs_post5": 9.345,
+      "in_vs_session_mean": 8.839
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 2.349,
+      "share_pre5_pct": 1.7938,
+      "share_post5_pct": 1.0888,
+      "vol_per_min_in": 792.2,
+      "vol_per_min_pre5": 121.0,
+      "vol_per_min_post5": 73.4,
+      "in_vs_pre5": 6.547,
+      "in_vs_post5": 10.787,
+      "in_vs_session_mean": 9.866
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 2.2196,
+      "share_pre5_pct": 1.8857,
+      "share_post5_pct": 1.2936,
+      "vol_per_min_in": 845.6,
+      "vol_per_min_pre5": 143.7,
+      "vol_per_min_post5": 98.6,
+      "in_vs_pre5": 5.885,
+      "in_vs_post5": 8.579,
+      "in_vs_session_mean": 9.322
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 2.6084,
+      "share_pre5_pct": 2.0878,
+      "share_post5_pct": 1.4928,
+      "vol_per_min_in": 693.8,
+      "vol_per_min_pre5": 111.1,
+      "vol_per_min_post5": 79.4,
+      "in_vs_pre5": 6.247,
+      "in_vs_post5": 8.736,
+      "in_vs_session_mean": 10.955
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 2.2292,
+      "share_pre5_pct": 1.7129,
+      "share_post5_pct": 1.3948,
+      "vol_per_min_in": 636.7,
+      "vol_per_min_pre5": 97.8,
+      "vol_per_min_post5": 79.7,
+      "in_vs_pre5": 6.507,
+      "in_vs_post5": 7.991,
+      "in_vs_session_mean": 9.363
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 2.305,
+      "share_pre5_pct": 1.566,
+      "share_post5_pct": 1.4388,
+      "vol_per_min_in": 674.2,
+      "vol_per_min_pre5": 91.6,
+      "vol_per_min_post5": 84.2,
+      "in_vs_pre5": 7.36,
+      "in_vs_post5": 8.01,
+      "in_vs_session_mean": 9.681
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 2.9293,
+      "share_pre5_pct": 1.7801,
+      "share_post5_pct": 1.6126,
+      "vol_per_min_in": 714.5,
+      "vol_per_min_pre5": 86.8,
+      "vol_per_min_post5": 78.7,
+      "in_vs_pre5": 8.228,
+      "in_vs_post5": 9.083,
+      "in_vs_session_mean": 12.303
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 3.1614,
+      "share_pre5_pct": 1.9113,
+      "share_post5_pct": 1.751,
+      "vol_per_min_in": 946.3,
+      "vol_per_min_pre5": 114.4,
+      "vol_per_min_post5": 104.8,
+      "in_vs_pre5": 8.27,
+      "in_vs_post5": 9.027,
+      "in_vs_session_mean": 13.278
+     }
+    }
+   },
+   "HO": {
+    "window_et": "14:28:00-14:30:00",
+    "bars": [
+     328,
+     329
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     323,
+     324,
+     325,
+     326,
+     327
+    ],
+    "post5_bars": [
+     330,
+     331,
+     332,
+     333,
+     334
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 6.0101,
+      "share_pre5_pct": 4.3405,
+      "share_post5_pct": 1.48,
+      "vol_per_min_in": 718.4,
+      "vol_per_min_pre5": 207.5,
+      "vol_per_min_post5": 70.8,
+      "in_vs_pre5": 3.462,
+      "in_vs_post5": 10.153,
+      "in_vs_session_mean": 12.621
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 5.4479,
+      "share_pre5_pct": 3.5598,
+      "share_post5_pct": 1.5311,
+      "vol_per_min_in": 621.5,
+      "vol_per_min_pre5": 162.4,
+      "vol_per_min_post5": 69.9,
+      "in_vs_pre5": 3.826,
+      "in_vs_post5": 8.895,
+      "in_vs_session_mean": 11.44
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 5.7355,
+      "share_pre5_pct": 3.6908,
+      "share_post5_pct": 1.5564,
+      "vol_per_min_in": 718.9,
+      "vol_per_min_pre5": 185.1,
+      "vol_per_min_post5": 78.0,
+      "in_vs_pre5": 3.885,
+      "in_vs_post5": 9.213,
+      "in_vs_session_mean": 12.045
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 4.7562,
+      "share_pre5_pct": 3.1925,
+      "share_post5_pct": 1.4783,
+      "vol_per_min_in": 540.6,
+      "vol_per_min_pre5": 145.1,
+      "vol_per_min_post5": 67.2,
+      "in_vs_pre5": 3.725,
+      "in_vs_post5": 8.043,
+      "in_vs_session_mean": 9.988
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 4.9188,
+      "share_pre5_pct": 3.0298,
+      "share_post5_pct": 1.5682,
+      "vol_per_min_in": 575.5,
+      "vol_per_min_pre5": 141.8,
+      "vol_per_min_post5": 73.4,
+      "in_vs_pre5": 4.059,
+      "in_vs_post5": 7.841,
+      "in_vs_session_mean": 10.33
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 6.3564,
+      "share_pre5_pct": 3.6819,
+      "share_post5_pct": 1.7893,
+      "vol_per_min_in": 674.6,
+      "vol_per_min_pre5": 156.3,
+      "vol_per_min_post5": 76.0,
+      "in_vs_pre5": 4.316,
+      "in_vs_post5": 8.881,
+      "in_vs_session_mean": 13.349
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 6.5254,
+      "share_pre5_pct": 3.4859,
+      "share_post5_pct": 1.7443,
+      "vol_per_min_in": 502.1,
+      "vol_per_min_pre5": 107.3,
+      "vol_per_min_post5": 53.7,
+      "in_vs_pre5": 4.68,
+      "in_vs_post5": 9.352,
+      "in_vs_session_mean": 13.703
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 7.1103,
+      "share_pre5_pct": 3.0357,
+      "share_post5_pct": 1.5527,
+      "vol_per_min_in": 647.6,
+      "vol_per_min_pre5": 110.6,
+      "vol_per_min_post5": 56.6,
+      "in_vs_pre5": 5.856,
+      "in_vs_post5": 11.449,
+      "in_vs_session_mean": 14.932
+     }
+    }
+   },
+   "LE": {
+    "window_et": "13:59:30-14:00:00",
+    "bars": [
+     299,
+     299
+    ],
+    "window_in_band": true,
+    "sub_minute": true,
+    "pre5_bars": [
+     294,
+     295,
+     296,
+     297,
+     298
+    ],
+    "post5_bars": [
+     300,
+     301,
+     302,
+     303,
+     304
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 242,
+      "share_in_window_pct": 5.47,
+      "share_pre5_pct": 2.2269,
+      "share_post5_pct": 2.392,
+      "vol_per_min_in": 907.3,
+      "vol_per_min_pre5": 73.9,
+      "vol_per_min_post5": 79.3,
+      "in_vs_pre5": 12.282,
+      "in_vs_post5": 11.434,
+      "in_vs_session_mean": 22.974
+     },
+     "2017": {
+      "sessions": 247,
+      "share_in_window_pct": 5.9905,
+      "share_pre5_pct": 2.3141,
+      "share_post5_pct": 3.3783,
+      "vol_per_min_in": 1067.2,
+      "vol_per_min_pre5": 82.5,
+      "vol_per_min_post5": 120.4,
+      "in_vs_pre5": 12.944,
+      "in_vs_post5": 8.866,
+      "in_vs_session_mean": 25.16
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 7.5191,
+      "share_pre5_pct": 2.5836,
+      "share_post5_pct": 4.7791,
+      "vol_per_min_in": 1398.3,
+      "vol_per_min_pre5": 96.1,
+      "vol_per_min_post5": 177.8,
+      "in_vs_pre5": 14.552,
+      "in_vs_post5": 7.867,
+      "in_vs_session_mean": 31.58
+     },
+     "2019": {
+      "sessions": 248,
+      "share_in_window_pct": 6.9865,
+      "share_pre5_pct": 2.7999,
+      "share_post5_pct": 4.4125,
+      "vol_per_min_in": 1152.1,
+      "vol_per_min_pre5": 92.3,
+      "vol_per_min_post5": 145.5,
+      "in_vs_pre5": 12.476,
+      "in_vs_post5": 7.917,
+      "in_vs_session_mean": 29.343
+     },
+     "2020": {
+      "sessions": 250,
+      "share_in_window_pct": 6.1146,
+      "share_pre5_pct": 2.2636,
+      "share_post5_pct": 7.2132,
+      "vol_per_min_in": 1011.7,
+      "vol_per_min_pre5": 74.9,
+      "vol_per_min_post5": 238.7,
+      "in_vs_pre5": 13.506,
+      "in_vs_post5": 4.238,
+      "in_vs_session_mean": 25.681
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 6.0364,
+      "share_pre5_pct": 2.4131,
+      "share_post5_pct": 2.9425,
+      "vol_per_min_in": 926.2,
+      "vol_per_min_pre5": 74.0,
+      "vol_per_min_post5": 90.3,
+      "in_vs_pre5": 12.508,
+      "in_vs_post5": 10.257,
+      "in_vs_session_mean": 25.353
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 6.4875,
+      "share_pre5_pct": 2.4501,
+      "share_post5_pct": 2.6276,
+      "vol_per_min_in": 1080.1,
+      "vol_per_min_pre5": 81.6,
+      "vol_per_min_post5": 87.5,
+      "in_vs_pre5": 13.239,
+      "in_vs_post5": 12.345,
+      "in_vs_session_mean": 27.248
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 5.591,
+      "share_pre5_pct": 2.4965,
+      "share_post5_pct": 2.862,
+      "vol_per_min_in": 1033.4,
+      "vol_per_min_pre5": 92.3,
+      "vol_per_min_post5": 105.8,
+      "in_vs_pre5": 11.198,
+      "in_vs_post5": 9.767,
+      "in_vs_session_mean": 23.482
+     }
+    }
+   },
+   "NG": {
+    "window_et": "14:28:00-14:30:00",
+    "bars": [
+     328,
+     329
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     323,
+     324,
+     325,
+     326,
+     327
+    ],
+    "post5_bars": [
+     330,
+     331,
+     332,
+     333,
+     334
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 4.7845,
+      "share_pre5_pct": 2.0278,
+      "share_post5_pct": 1.6188,
+      "vol_per_min_in": 1888.1,
+      "vol_per_min_pre5": 320.1,
+      "vol_per_min_post5": 255.5,
+      "in_vs_pre5": 5.898,
+      "in_vs_post5": 7.389,
+      "in_vs_session_mean": 10.047
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 5.6061,
+      "share_pre5_pct": 2.1852,
+      "share_post5_pct": 1.8657,
+      "vol_per_min_in": 2429.7,
+      "vol_per_min_pre5": 378.8,
+      "vol_per_min_post5": 323.4,
+      "in_vs_pre5": 6.414,
+      "in_vs_post5": 7.512,
+      "in_vs_session_mean": 11.773
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 5.362,
+      "share_pre5_pct": 2.6623,
+      "share_post5_pct": 1.8837,
+      "vol_per_min_in": 2345.9,
+      "vol_per_min_pre5": 465.9,
+      "vol_per_min_post5": 329.6,
+      "in_vs_pre5": 5.035,
+      "in_vs_post5": 7.116,
+      "in_vs_session_mean": 11.26
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 5.8174,
+      "share_pre5_pct": 2.7822,
+      "share_post5_pct": 2.1036,
+      "vol_per_min_in": 2239.1,
+      "vol_per_min_pre5": 428.4,
+      "vol_per_min_post5": 323.9,
+      "in_vs_pre5": 5.227,
+      "in_vs_post5": 6.914,
+      "in_vs_session_mean": 12.217
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 5.1341,
+      "share_pre5_pct": 2.5305,
+      "share_post5_pct": 2.1348,
+      "vol_per_min_in": 2214.7,
+      "vol_per_min_pre5": 436.6,
+      "vol_per_min_post5": 368.4,
+      "in_vs_pre5": 5.072,
+      "in_vs_post5": 6.012,
+      "in_vs_session_mean": 10.782
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 4.1172,
+      "share_pre5_pct": 2.4685,
+      "share_post5_pct": 1.9881,
+      "vol_per_min_in": 1445.7,
+      "vol_per_min_pre5": 346.7,
+      "vol_per_min_post5": 279.2,
+      "in_vs_pre5": 4.17,
+      "in_vs_post5": 5.177,
+      "in_vs_session_mean": 8.646
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 4.6674,
+      "share_pre5_pct": 2.4962,
+      "share_post5_pct": 1.8766,
+      "vol_per_min_in": 1362.7,
+      "vol_per_min_pre5": 291.5,
+      "vol_per_min_post5": 219.2,
+      "in_vs_pre5": 4.675,
+      "in_vs_post5": 6.218,
+      "in_vs_session_mean": 9.801
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 5.2035,
+      "share_pre5_pct": 2.7034,
+      "share_post5_pct": 1.9171,
+      "vol_per_min_in": 1819.5,
+      "vol_per_min_pre5": 378.1,
+      "vol_per_min_post5": 268.1,
+      "in_vs_pre5": 4.812,
+      "in_vs_post5": 6.786,
+      "in_vs_session_mean": 10.927
+     }
+    }
+   },
+   "NQ": {
+    "window_et": "15:59:30-16:00:00",
+    "bars": [
+     419,
+     419
+    ],
+    "window_in_band": true,
+    "sub_minute": true,
+    "pre5_bars": [
+     414,
+     415,
+     416,
+     417,
+     418
+    ],
+    "post5_bars": [],
+    "flank_truncated": "post5 is EMPTY: the window sits on the fixture's last bar (15:59 ET) and the five minutes after it are outside the 09:00-15:59 band",
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 1.5553,
+      "share_pre5_pct": 1.9992,
+      "share_post5_pct": null,
+      "vol_per_min_in": 3116.7,
+      "vol_per_min_pre5": 801.3,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 3.89,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 6.532
+     },
+     "2017": {
+      "sessions": 249,
+      "share_in_window_pct": 1.6617,
+      "share_pre5_pct": 2.1388,
+      "share_post5_pct": null,
+      "vol_per_min_in": 3590.6,
+      "vol_per_min_pre5": 924.3,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 3.885,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 6.979
+     },
+     "2018": {
+      "sessions": 248,
+      "share_in_window_pct": 1.2515,
+      "share_pre5_pct": 1.7977,
+      "share_post5_pct": null,
+      "vol_per_min_in": 4787.7,
+      "vol_per_min_pre5": 1375.5,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 3.481,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 5.256
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 1.4376,
+      "share_pre5_pct": 2.2621,
+      "share_post5_pct": null,
+      "vol_per_min_in": 4806.9,
+      "vol_per_min_pre5": 1512.8,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 3.178,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 6.038
+     },
+     "2020": {
+      "sessions": 251,
+      "share_in_window_pct": 1.1681,
+      "share_pre5_pct": 1.937,
+      "share_post5_pct": null,
+      "vol_per_min_in": 4801.1,
+      "vol_per_min_pre5": 1592.3,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 3.015,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 4.906
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 1.2483,
+      "share_pre5_pct": 2.2341,
+      "share_post5_pct": null,
+      "vol_per_min_in": 5186.9,
+      "vol_per_min_pre5": 1856.6,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 2.794,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 5.243
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 1.5563,
+      "share_pre5_pct": 2.1562,
+      "share_post5_pct": null,
+      "vol_per_min_in": 8004.7,
+      "vol_per_min_pre5": 2218.1,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 3.609,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 6.536
+     },
+     "2023": {
+      "sessions": 248,
+      "share_in_window_pct": 1.7544,
+      "share_pre5_pct": 1.9756,
+      "share_post5_pct": null,
+      "vol_per_min_in": 8894.4,
+      "vol_per_min_pre5": 2003.2,
+      "vol_per_min_post5": 0.0,
+      "in_vs_pre5": 4.44,
+      "in_vs_post5": null,
+      "in_vs_session_mean": 7.369
+     }
+    }
+   },
+   "RB": {
+    "window_et": "14:28:00-14:30:00",
+    "bars": [
+     328,
+     329
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     323,
+     324,
+     325,
+     326,
+     327
+    ],
+    "post5_bars": [
+     330,
+     331,
+     332,
+     333,
+     334
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 6.5747,
+      "share_pre5_pct": 4.4065,
+      "share_post5_pct": 1.5375,
+      "vol_per_min_in": 722.7,
+      "vol_per_min_pre5": 193.7,
+      "vol_per_min_post5": 67.6,
+      "in_vs_pre5": 3.73,
+      "in_vs_post5": 10.691,
+      "in_vs_session_mean": 13.807
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 6.4594,
+      "share_pre5_pct": 3.8887,
+      "share_post5_pct": 1.624,
+      "vol_per_min_in": 763.3,
+      "vol_per_min_pre5": 183.8,
+      "vol_per_min_post5": 76.8,
+      "in_vs_pre5": 4.153,
+      "in_vs_post5": 9.944,
+      "in_vs_session_mean": 13.565
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 6.1616,
+      "share_pre5_pct": 3.8899,
+      "share_post5_pct": 1.6042,
+      "vol_per_min_in": 770.5,
+      "vol_per_min_pre5": 194.6,
+      "vol_per_min_post5": 80.2,
+      "in_vs_pre5": 3.96,
+      "in_vs_post5": 9.603,
+      "in_vs_session_mean": 12.939
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 5.2022,
+      "share_pre5_pct": 3.6884,
+      "share_post5_pct": 1.5948,
+      "vol_per_min_in": 640.3,
+      "vol_per_min_pre5": 181.6,
+      "vol_per_min_post5": 78.5,
+      "in_vs_pre5": 3.526,
+      "in_vs_post5": 8.155,
+      "in_vs_session_mean": 10.925
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 5.285,
+      "share_pre5_pct": 3.4481,
+      "share_post5_pct": 1.5327,
+      "vol_per_min_in": 567.0,
+      "vol_per_min_pre5": 148.0,
+      "vol_per_min_post5": 65.8,
+      "in_vs_pre5": 3.832,
+      "in_vs_post5": 8.62,
+      "in_vs_session_mean": 11.099
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 7.0136,
+      "share_pre5_pct": 3.8053,
+      "share_post5_pct": 1.8537,
+      "vol_per_min_in": 722.3,
+      "vol_per_min_pre5": 156.8,
+      "vol_per_min_post5": 76.4,
+      "in_vs_pre5": 4.608,
+      "in_vs_post5": 9.459,
+      "in_vs_session_mean": 14.729
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 6.7818,
+      "share_pre5_pct": 3.5249,
+      "share_post5_pct": 1.7623,
+      "vol_per_min_in": 542.6,
+      "vol_per_min_pre5": 112.8,
+      "vol_per_min_post5": 56.4,
+      "in_vs_pre5": 4.81,
+      "in_vs_post5": 9.621,
+      "in_vs_session_mean": 14.242
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 7.362,
+      "share_pre5_pct": 3.1512,
+      "share_post5_pct": 1.6386,
+      "vol_per_min_in": 679.3,
+      "vol_per_min_pre5": 116.3,
+      "vol_per_min_post5": 60.5,
+      "in_vs_pre5": 5.841,
+      "in_vs_post5": 11.233,
+      "in_vs_session_mean": 15.46
+     }
+    }
+   },
+   "SI": {
+    "window_et": "13:24:00-13:25:00",
+    "bars": [
+     264,
+     264
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     259,
+     260,
+     261,
+     262,
+     263
+    ],
+    "post5_bars": [
+     265,
+     266,
+     267,
+     268,
+     269
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share_in_window_pct": 1.8697,
+      "share_pre5_pct": 1.5326,
+      "share_post5_pct": 1.4171,
+      "vol_per_min_in": 506.7,
+      "vol_per_min_pre5": 83.1,
+      "vol_per_min_post5": 76.8,
+      "in_vs_pre5": 6.1,
+      "in_vs_post5": 6.597,
+      "in_vs_session_mean": 7.853
+     },
+     "2017": {
+      "sessions": 250,
+      "share_in_window_pct": 1.7535,
+      "share_pre5_pct": 1.4708,
+      "share_post5_pct": 1.601,
+      "vol_per_min_in": 682.2,
+      "vol_per_min_pre5": 114.4,
+      "vol_per_min_post5": 124.6,
+      "in_vs_pre5": 5.961,
+      "in_vs_post5": 5.476,
+      "in_vs_session_mean": 7.365
+     },
+     "2018": {
+      "sessions": 250,
+      "share_in_window_pct": 1.8837,
+      "share_pre5_pct": 1.5196,
+      "share_post5_pct": 1.4956,
+      "vol_per_min_in": 712.2,
+      "vol_per_min_pre5": 114.9,
+      "vol_per_min_post5": 113.1,
+      "in_vs_pre5": 6.198,
+      "in_vs_post5": 6.297,
+      "in_vs_session_mean": 7.911
+     },
+     "2019": {
+      "sessions": 250,
+      "share_in_window_pct": 1.4612,
+      "share_pre5_pct": 1.4659,
+      "share_post5_pct": 1.6521,
+      "vol_per_min_in": 589.7,
+      "vol_per_min_pre5": 118.3,
+      "vol_per_min_post5": 133.4,
+      "in_vs_pre5": 4.984,
+      "in_vs_post5": 4.422,
+      "in_vs_session_mean": 6.137
+     },
+     "2020": {
+      "sessions": 248,
+      "share_in_window_pct": 1.71,
+      "share_pre5_pct": 1.4894,
+      "share_post5_pct": 1.5235,
+      "vol_per_min_in": 733.5,
+      "vol_per_min_pre5": 127.8,
+      "vol_per_min_post5": 130.7,
+      "in_vs_pre5": 5.741,
+      "in_vs_post5": 5.612,
+      "in_vs_session_mean": 7.182
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 1.6448,
+      "share_pre5_pct": 1.2428,
+      "share_post5_pct": 1.4068,
+      "vol_per_min_in": 542.0,
+      "vol_per_min_pre5": 81.9,
+      "vol_per_min_post5": 92.7,
+      "in_vs_pre5": 6.617,
+      "in_vs_post5": 5.846,
+      "in_vs_session_mean": 6.908
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 2.2015,
+      "share_pre5_pct": 1.472,
+      "share_post5_pct": 1.5341,
+      "vol_per_min_in": 610.7,
+      "vol_per_min_pre5": 81.7,
+      "vol_per_min_post5": 85.1,
+      "in_vs_pre5": 7.478,
+      "in_vs_post5": 7.175,
+      "in_vs_session_mean": 9.246
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 1.6873,
+      "share_pre5_pct": 1.3533,
+      "share_post5_pct": 1.2412,
+      "vol_per_min_in": 527.2,
+      "vol_per_min_pre5": 84.6,
+      "vol_per_min_post5": 77.6,
+      "in_vs_pre5": 6.234,
+      "in_vs_post5": 6.797,
+      "in_vs_session_mean": 7.087
+     }
+    }
+   },
+   "ZC": {
+    "window_et": "14:14:00-14:15:00",
+    "bars": [
+     314,
+     314
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     309,
+     310,
+     311,
+     312,
+     313
+    ],
+    "post5_bars": [
+     315,
+     316,
+     317,
+     318,
+     319
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 250,
+      "share_in_window_pct": 4.4421,
+      "share_pre5_pct": 3.0511,
+      "share_post5_pct": 2.4025,
+      "vol_per_min_in": 4772.3,
+      "vol_per_min_pre5": 655.6,
+      "vol_per_min_post5": 516.2,
+      "in_vs_pre5": 7.279,
+      "in_vs_post5": 9.245,
+      "in_vs_session_mean": 18.657
+     },
+     "2017": {
+      "sessions": 248,
+      "share_in_window_pct": 5.2633,
+      "share_pre5_pct": 3.0487,
+      "share_post5_pct": 3.1813,
+      "vol_per_min_in": 5622.3,
+      "vol_per_min_pre5": 651.3,
+      "vol_per_min_post5": 679.7,
+      "in_vs_pre5": 8.632,
+      "in_vs_post5": 8.272,
+      "in_vs_session_mean": 22.106
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 3.9462,
+      "share_pre5_pct": 3.1556,
+      "share_post5_pct": 3.403,
+      "vol_per_min_in": 4153.7,
+      "vol_per_min_pre5": 664.3,
+      "vol_per_min_post5": 716.4,
+      "in_vs_pre5": 6.253,
+      "in_vs_post5": 5.798,
+      "in_vs_session_mean": 16.574
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 3.2815,
+      "share_pre5_pct": 3.1308,
+      "share_post5_pct": 3.298,
+      "vol_per_min_in": 3427.6,
+      "vol_per_min_pre5": 654.0,
+      "vol_per_min_post5": 689.0,
+      "in_vs_pre5": 5.241,
+      "in_vs_post5": 4.975,
+      "in_vs_session_mean": 13.782
+     },
+     "2020": {
+      "sessions": 247,
+      "share_in_window_pct": 3.776,
+      "share_pre5_pct": 3.1467,
+      "share_post5_pct": 3.3356,
+      "vol_per_min_in": 3386.2,
+      "vol_per_min_pre5": 564.4,
+      "vol_per_min_post5": 598.3,
+      "in_vs_pre5": 6.0,
+      "in_vs_post5": 5.66,
+      "in_vs_session_mean": 15.859
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 3.4841,
+      "share_pre5_pct": 2.4676,
+      "share_post5_pct": 2.4133,
+      "vol_per_min_in": 3051.4,
+      "vol_per_min_pre5": 432.2,
+      "vol_per_min_post5": 422.7,
+      "in_vs_pre5": 7.06,
+      "in_vs_post5": 7.219,
+      "in_vs_session_mean": 14.633
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 3.4095,
+      "share_pre5_pct": 2.5987,
+      "share_post5_pct": 2.4403,
+      "vol_per_min_in": 2524.9,
+      "vol_per_min_pre5": 384.9,
+      "vol_per_min_post5": 361.4,
+      "in_vs_pre5": 6.56,
+      "in_vs_post5": 6.986,
+      "in_vs_session_mean": 14.32
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 3.8813,
+      "share_pre5_pct": 2.7919,
+      "share_post5_pct": 3.2406,
+      "vol_per_min_in": 3306.9,
+      "vol_per_min_pre5": 475.7,
+      "vol_per_min_post5": 552.2,
+      "in_vs_pre5": 6.951,
+      "in_vs_post5": 5.989,
+      "in_vs_session_mean": 16.301
+     }
+    }
+   },
+   "ZL": {
+    "window_et": "14:14:00-14:15:00",
+    "bars": [
+     314,
+     314
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     309,
+     310,
+     311,
+     312,
+     313
+    ],
+    "post5_bars": [
+     315,
+     316,
+     317,
+     318,
+     319
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 250,
+      "share_in_window_pct": 3.2919,
+      "share_pre5_pct": 2.9641,
+      "share_post5_pct": 1.8298,
+      "vol_per_min_in": 1057.0,
+      "vol_per_min_pre5": 190.3,
+      "vol_per_min_post5": 117.5,
+      "in_vs_pre5": 5.553,
+      "in_vs_post5": 8.995,
+      "in_vs_session_mean": 13.826
+     },
+     "2017": {
+      "sessions": 248,
+      "share_in_window_pct": 4.0494,
+      "share_pre5_pct": 3.2475,
+      "share_post5_pct": 2.3076,
+      "vol_per_min_in": 1310.9,
+      "vol_per_min_pre5": 210.3,
+      "vol_per_min_post5": 149.4,
+      "in_vs_pre5": 6.235,
+      "in_vs_post5": 8.774,
+      "in_vs_session_mean": 17.008
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 3.6087,
+      "share_pre5_pct": 3.0501,
+      "share_post5_pct": 2.3647,
+      "vol_per_min_in": 1073.6,
+      "vol_per_min_pre5": 181.5,
+      "vol_per_min_post5": 140.7,
+      "in_vs_pre5": 5.916,
+      "in_vs_post5": 7.63,
+      "in_vs_session_mean": 15.156
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 3.5396,
+      "share_pre5_pct": 3.2685,
+      "share_post5_pct": 2.6201,
+      "vol_per_min_in": 1085.4,
+      "vol_per_min_pre5": 200.5,
+      "vol_per_min_post5": 160.7,
+      "in_vs_pre5": 5.415,
+      "in_vs_post5": 6.755,
+      "in_vs_session_mean": 14.866
+     },
+     "2020": {
+      "sessions": 247,
+      "share_in_window_pct": 3.6174,
+      "share_pre5_pct": 3.1887,
+      "share_post5_pct": 2.4528,
+      "vol_per_min_in": 1115.6,
+      "vol_per_min_pre5": 196.7,
+      "vol_per_min_post5": 151.3,
+      "in_vs_pre5": 5.672,
+      "in_vs_post5": 7.374,
+      "in_vs_session_mean": 15.193
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 3.2458,
+      "share_pre5_pct": 2.6935,
+      "share_post5_pct": 2.0577,
+      "vol_per_min_in": 948.1,
+      "vol_per_min_pre5": 157.4,
+      "vol_per_min_post5": 120.2,
+      "in_vs_pre5": 6.025,
+      "in_vs_post5": 7.887,
+      "in_vs_session_mean": 13.632
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 3.2431,
+      "share_pre5_pct": 2.7066,
+      "share_post5_pct": 2.235,
+      "vol_per_min_in": 890.4,
+      "vol_per_min_pre5": 148.6,
+      "vol_per_min_post5": 122.7,
+      "in_vs_pre5": 5.991,
+      "in_vs_post5": 7.255,
+      "in_vs_session_mean": 13.621
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 3.289,
+      "share_pre5_pct": 2.6925,
+      "share_post5_pct": 2.2466,
+      "vol_per_min_in": 1176.7,
+      "vol_per_min_pre5": 192.7,
+      "vol_per_min_post5": 160.7,
+      "in_vs_pre5": 6.108,
+      "in_vs_post5": 7.32,
+      "in_vs_session_mean": 13.814
+     }
+    }
+   },
+   "ZM": {
+    "window_et": "14:14:00-14:15:00",
+    "bars": [
+     314,
+     314
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     309,
+     310,
+     311,
+     312,
+     313
+    ],
+    "post5_bars": [
+     315,
+     316,
+     317,
+     318,
+     319
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 250,
+      "share_in_window_pct": 2.7733,
+      "share_pre5_pct": 2.7354,
+      "share_post5_pct": 1.6543,
+      "vol_per_min_in": 826.9,
+      "vol_per_min_pre5": 163.1,
+      "vol_per_min_post5": 98.6,
+      "in_vs_pre5": 5.069,
+      "in_vs_post5": 8.382,
+      "in_vs_session_mean": 11.648
+     },
+     "2017": {
+      "sessions": 248,
+      "share_in_window_pct": 3.649,
+      "share_pre5_pct": 2.9379,
+      "share_post5_pct": 2.1392,
+      "vol_per_min_in": 1054.0,
+      "vol_per_min_pre5": 169.7,
+      "vol_per_min_post5": 123.6,
+      "in_vs_pre5": 6.21,
+      "in_vs_post5": 8.529,
+      "in_vs_session_mean": 15.326
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 3.1904,
+      "share_pre5_pct": 2.736,
+      "share_post5_pct": 2.1093,
+      "vol_per_min_in": 932.9,
+      "vol_per_min_pre5": 160.0,
+      "vol_per_min_post5": 123.4,
+      "in_vs_pre5": 5.83,
+      "in_vs_post5": 7.563,
+      "in_vs_session_mean": 13.4
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 3.243,
+      "share_pre5_pct": 3.3079,
+      "share_post5_pct": 2.4156,
+      "vol_per_min_in": 907.7,
+      "vol_per_min_pre5": 185.2,
+      "vol_per_min_post5": 135.2,
+      "in_vs_pre5": 4.902,
+      "in_vs_post5": 6.713,
+      "in_vs_session_mean": 13.621
+     },
+     "2020": {
+      "sessions": 247,
+      "share_in_window_pct": 4.0971,
+      "share_pre5_pct": 3.5126,
+      "share_post5_pct": 2.2921,
+      "vol_per_min_in": 1220.1,
+      "vol_per_min_pre5": 209.2,
+      "vol_per_min_post5": 136.5,
+      "in_vs_pre5": 5.832,
+      "in_vs_post5": 8.938,
+      "in_vs_session_mean": 17.208
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 4.1348,
+      "share_pre5_pct": 3.1698,
+      "share_post5_pct": 2.3099,
+      "vol_per_min_in": 1046.9,
+      "vol_per_min_pre5": 160.5,
+      "vol_per_min_post5": 117.0,
+      "in_vs_pre5": 6.522,
+      "in_vs_post5": 8.95,
+      "in_vs_session_mean": 17.366
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 3.6573,
+      "share_pre5_pct": 2.6075,
+      "share_post5_pct": 2.2571,
+      "vol_per_min_in": 936.5,
+      "vol_per_min_pre5": 133.5,
+      "vol_per_min_post5": 115.6,
+      "in_vs_pre5": 7.013,
+      "in_vs_post5": 8.102,
+      "in_vs_session_mean": 15.36
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 3.2899,
+      "share_pre5_pct": 2.7953,
+      "share_post5_pct": 2.2574,
+      "vol_per_min_in": 1088.8,
+      "vol_per_min_pre5": 185.0,
+      "vol_per_min_post5": 149.4,
+      "in_vs_pre5": 5.885,
+      "in_vs_post5": 7.287,
+      "in_vs_session_mean": 13.817
+     }
+    }
+   },
+   "ZS": {
+    "window_et": "14:14:00-14:15:00",
+    "bars": [
+     314,
+     314
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     309,
+     310,
+     311,
+     312,
+     313
+    ],
+    "post5_bars": [
+     315,
+     316,
+     317,
+     318,
+     319
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 250,
+      "share_in_window_pct": 2.7579,
+      "share_pre5_pct": 2.6125,
+      "share_post5_pct": 1.8135,
+      "vol_per_min_in": 2074.3,
+      "vol_per_min_pre5": 393.0,
+      "vol_per_min_post5": 272.8,
+      "in_vs_pre5": 5.278,
+      "in_vs_post5": 7.604,
+      "in_vs_session_mean": 11.583
+     },
+     "2017": {
+      "sessions": 248,
+      "share_in_window_pct": 3.2493,
+      "share_pre5_pct": 2.8294,
+      "share_post5_pct": 2.2884,
+      "vol_per_min_in": 2104.5,
+      "vol_per_min_pre5": 366.5,
+      "vol_per_min_post5": 296.4,
+      "in_vs_pre5": 5.742,
+      "in_vs_post5": 7.1,
+      "in_vs_session_mean": 13.647
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 3.0498,
+      "share_pre5_pct": 2.7284,
+      "share_post5_pct": 2.4975,
+      "vol_per_min_in": 1823.5,
+      "vol_per_min_pre5": 326.3,
+      "vol_per_min_post5": 298.6,
+      "in_vs_pre5": 5.589,
+      "in_vs_post5": 6.106,
+      "in_vs_session_mean": 12.809
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 2.8067,
+      "share_pre5_pct": 2.8673,
+      "share_post5_pct": 2.3875,
+      "vol_per_min_in": 1597.6,
+      "vol_per_min_pre5": 326.4,
+      "vol_per_min_post5": 271.8,
+      "in_vs_pre5": 4.894,
+      "in_vs_post5": 5.878,
+      "in_vs_session_mean": 11.788
+     },
+     "2020": {
+      "sessions": 247,
+      "share_in_window_pct": 2.9437,
+      "share_pre5_pct": 3.0997,
+      "share_post5_pct": 2.442,
+      "vol_per_min_in": 1801.6,
+      "vol_per_min_pre5": 379.4,
+      "vol_per_min_post5": 298.9,
+      "in_vs_pre5": 4.748,
+      "in_vs_post5": 6.027,
+      "in_vs_session_mean": 12.364
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 2.4886,
+      "share_pre5_pct": 2.3908,
+      "share_post5_pct": 1.9747,
+      "vol_per_min_in": 1376.7,
+      "vol_per_min_pre5": 264.5,
+      "vol_per_min_post5": 218.5,
+      "in_vs_pre5": 5.204,
+      "in_vs_post5": 6.301,
+      "in_vs_session_mean": 10.452
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 2.4631,
+      "share_pre5_pct": 2.0624,
+      "share_post5_pct": 1.9543,
+      "vol_per_min_in": 1293.4,
+      "vol_per_min_pre5": 216.6,
+      "vol_per_min_post5": 205.2,
+      "in_vs_pre5": 5.971,
+      "in_vs_post5": 6.302,
+      "in_vs_session_mean": 10.345
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 2.588,
+      "share_pre5_pct": 2.3404,
+      "share_post5_pct": 2.1721,
+      "vol_per_min_in": 1673.5,
+      "vol_per_min_pre5": 302.7,
+      "vol_per_min_post5": 280.9,
+      "in_vs_pre5": 5.529,
+      "in_vs_post5": 5.957,
+      "in_vs_session_mean": 10.869
+     }
+    }
+   },
+   "ZW": {
+    "window_et": "14:14:00-14:15:00",
+    "bars": [
+     314,
+     314
+    ],
+    "window_in_band": true,
+    "sub_minute": false,
+    "pre5_bars": [
+     309,
+     310,
+     311,
+     312,
+     313
+    ],
+    "post5_bars": [
+     315,
+     316,
+     317,
+     318,
+     319
+    ],
+    "flank_truncated": null,
+    "per_year": {
+     "2016": {
+      "sessions": 250,
+      "share_in_window_pct": 4.3739,
+      "share_pre5_pct": 2.9698,
+      "share_post5_pct": 1.839,
+      "vol_per_min_in": 1884.9,
+      "vol_per_min_pre5": 256.0,
+      "vol_per_min_post5": 158.5,
+      "in_vs_pre5": 7.364,
+      "in_vs_post5": 11.892,
+      "in_vs_session_mean": 18.37
+     },
+     "2017": {
+      "sessions": 248,
+      "share_in_window_pct": 5.2192,
+      "share_pre5_pct": 3.2755,
+      "share_post5_pct": 2.7671,
+      "vol_per_min_in": 2228.5,
+      "vol_per_min_pre5": 279.7,
+      "vol_per_min_post5": 236.3,
+      "in_vs_pre5": 7.967,
+      "in_vs_post5": 9.431,
+      "in_vs_session_mean": 21.921
+     },
+     "2018": {
+      "sessions": 249,
+      "share_in_window_pct": 3.6431,
+      "share_pre5_pct": 2.7548,
+      "share_post5_pct": 2.3088,
+      "vol_per_min_in": 1584.1,
+      "vol_per_min_pre5": 239.6,
+      "vol_per_min_post5": 200.8,
+      "in_vs_pre5": 6.612,
+      "in_vs_post5": 7.889,
+      "in_vs_session_mean": 15.301
+     },
+     "2019": {
+      "sessions": 249,
+      "share_in_window_pct": 3.8857,
+      "share_pre5_pct": 3.1882,
+      "share_post5_pct": 2.4883,
+      "vol_per_min_in": 1336.6,
+      "vol_per_min_pre5": 219.3,
+      "vol_per_min_post5": 171.2,
+      "in_vs_pre5": 6.094,
+      "in_vs_post5": 7.808,
+      "in_vs_session_mean": 16.32
+     },
+     "2020": {
+      "sessions": 247,
+      "share_in_window_pct": 4.2063,
+      "share_pre5_pct": 3.3536,
+      "share_post5_pct": 2.3445,
+      "vol_per_min_in": 1529.8,
+      "vol_per_min_pre5": 243.9,
+      "vol_per_min_post5": 170.5,
+      "in_vs_pre5": 6.271,
+      "in_vs_post5": 8.971,
+      "in_vs_session_mean": 17.666
+     },
+     "2021": {
+      "sessions": 251,
+      "share_in_window_pct": 4.4457,
+      "share_pre5_pct": 2.6733,
+      "share_post5_pct": 2.0443,
+      "vol_per_min_in": 1445.0,
+      "vol_per_min_pre5": 173.8,
+      "vol_per_min_post5": 132.9,
+      "in_vs_pre5": 8.315,
+      "in_vs_post5": 10.874,
+      "in_vs_session_mean": 18.672
+     },
+     "2022": {
+      "sessions": 250,
+      "share_in_window_pct": 3.914,
+      "share_pre5_pct": 2.4188,
+      "share_post5_pct": 2.2026,
+      "vol_per_min_in": 1040.4,
+      "vol_per_min_pre5": 128.6,
+      "vol_per_min_post5": 117.1,
+      "in_vs_pre5": 8.091,
+      "in_vs_post5": 8.885,
+      "in_vs_session_mean": 16.439
+     },
+     "2023": {
+      "sessions": 249,
+      "share_in_window_pct": 3.9065,
+      "share_pre5_pct": 2.7302,
+      "share_post5_pct": 2.3222,
+      "vol_per_min_in": 1345.8,
+      "vol_per_min_pre5": 188.1,
+      "vol_per_min_post5": 160.0,
+      "in_vs_pre5": 7.154,
+      "in_vs_post5": 8.411,
+      "in_vs_session_mean": 16.407
+     }
+    }
+   }
+  },
+  "not_measured": {
+   "KE": "root absent from data/fixtures/fut_day1m.parquet"
+  },
+  "note": "volume-weighted shares over present=True bars only; a sub-minute window is scored on the ONE minute containing it, which OVERSTATES the window and is the conservative direction for a spike claim",
+  "wall_s": 11.5
+ },
+ "timing_s": 0.0
+}

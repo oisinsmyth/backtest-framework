@@ -147,6 +147,45 @@ half-days and thin sessions — 6A on 2010-07-05 trades 29 contracts in the open
 135,179 root-sessions (6.2%), heaviest on RB NG HO CL. `same_front=False` marks 4,408 root-sessions,
 the rolls, and a return across that boundary is a roll rather than a move.
 
+**The session calendar ([D589](decisions/D589-FIXTURE-cme-session-calendar-and-event-flags-36-roots.md), 2026-09-21).** **`cme_session_calendar.csv.gz`**: one row per (root,
+ET calendar day) for the 36 breadth roots, 2010-06-07 → 2026-09-09, **205,428 rows** of which
+135,179 are trading sessions; `is_trading`, `session_open_et`, `session_close_et`, `rth_bars`,
+`is_early_close`, `front_contract`, `roll_day`, `expiry_day`, `days_to_expiry`, `quad_witching`,
+`month_end`, `quarter_end`, `fomc`, `cpi`, `empsit`, `dst_transition_week`. Builder
+`scripts/build_cme_session_calendar.py` (system python, 0.3 min; the committed build used
+`--events data/calendar/events.csv`, the D585 release calendar). The front month, the roll days
+and the index `rth_bars` are **joined from `fut_breadth_hourly` and `fut_index_sessions`, never
+re-elected**, so the calendar cannot disagree with them: `roll_day` reproduces
+`fut_sessions_rolls.csv.gz` exactly on all nine roots it covers and totals the same 4,408 roll
+sessions `fut_day1m.meta.json` records. **What bites:** *(i)* **`session_close_et` is each root's
+own settlement minute, measured from its volume cliff, and the nine bands are not the four
+`day5m` reports** — **SI closes 13:25, PL 13:05, HG and PA 13:00**, only GC 13:30, and the
+livestock cliff is 14:00 with the last trade at 14:04; for the twelve FX and rate roots the value
+is the 15:00 ET *settlement*, after which Globex runs to 17:00 (ZN keeps 11.0 % of its session
+volume in that hour), and for the seven index-and-crypto roots it is the 15:59 *window edge*, not
+a close. *(ii)* **`is_trading=False` is the archive, not the exchange**, before a root's clean
+year: eleven of the 65 quad-witching days have no ES day session and all eleven are 2010–2014.
+*(iii)* **Two archive dropouts are shaped exactly like market-wide early closes and are rejected
+by name** — 2020-06-30 (22 roots stop at 10:10) and, **newly found here and not previously
+recorded, 2020-02-27** (17 roots stop at ~13:20 on a Covid-selloff session) — together with 31
+Mondays in 2010-06 → 2011-01 on which CL HO NG RB stop at 13:30. What separates them from a
+holiday is not a count: an exchange session ends on a five-minute boundary and a feed dropout does
+not. All 34 rejected days are listed in the meta, as are the two the rule accepts and probably
+should not. *(iii-b)* **There is a fourth incomplete March-2020 ES session: 2020-03-18** (377 of
+390 bars), alongside the documented 09, 12 and 16; those four are the only ordinary ES sessions
+below 390 bars in the whole 2016+ span. *(iv)* **`fomc`, `cpi` and `empsit` are null, not False,
+before 2016**, where the D585 events file has no rows; from 2016-01 to 2026-09-09 they are the
+sourced release days (ES: 91, 127 and 128 flagged trading days). *(v)* **`expiry_day` is the
+root's expiry calendar and `days_to_expiry` is the front contract's**, so `expiry_day` is *not*
+`days_to_expiry == 0` — the volume-elected front rolls one to two weeks early and never reaches
+expiry. *(vi)* **`quad_witching` comes from the ES expiry file, not the third-Friday rule:
+2026-06-18 is a Thursday** because the third Friday of June 2026 is Juneteenth. *(vii)*
+**Thanksgiving Day is a trading day** (ES 09:00–13:00 ET); the full closures are Good Friday,
+Christmas and New Year's, and the observance rule is asymmetric — Christmas on a Saturday moves to
+the Friday, New Year's Day does not. *(viii)* **Gate G6, the cross-check against CME's own holiday
+page, did not run**: cmegroup.com returns 403 to this machine and the fetch attempts are logged in
+the meta; the holiday set is the one derived from the bars.
+
 ### Six things that will bite a study reading this
 
 1. **NOT COMMITTED, AND CANNOT BE.** CME's terms forbid redistributing archived data, so
@@ -412,6 +451,54 @@ products by open interest. **1,069 carry zero open interest**; only 246 carry 1,
 contracts or more; the 41-root buy list is 92.3% of all CME futures open interest.
 
 Plus ~622 committed JSON artifacts in `data/` holding the numbers decision records quote.
+
+**The CME settlement-window table ([D586](decisions/D586-FIXTURE-cme-settlement-windows-with-effective-dates.md), 2026-09-21).** [`settlement_windows.csv`](../data/settlement_windows.csv) — 24 rows,
+one per (root, effective period), for 17 products across NYMEX, COMEX, CBOT and CME: window start
+and end in **both** CT and ET, the basis quoted from CME's own procedure page, `effective_from` /
+`effective_to`, `history_status`, `source_url` and `accessed_utc`. Read it through
+`scripts/settlement_windows.py:window_for(root, date)`, which **RAISES** for an unmapped product
+and for any date before that product's earliest *sourced* effective date; micros inherit their
+parent's row through `MICRO_PARENT`, never a duplicate row. **What bites:** *(i)* **CME publishes
+only half of these in Chicago time** — CME and CBOT products (livestock, grains, equity index) in
+CT, NYMEX and COMEX products (energy, metals) in ET, and silver appears in both zones on two CME
+pages; read the wrong one and you are an hour out. *(ii)* **Only energy (2009-06-01, SER-4867) and
+equity index (2020-10-26, SER-8591) have a sourced history**; the eleven metals, grain and
+livestock rows are `current_only`, so `window_for("GC", "2023-06-01")` **raises** by design —
+source the history before a study reads it, do not assume it. *(iii)* **Two windows are thirty
+seconds long** (livestock 12:59:30–13:00:00 CT, equity index 14:59:30–15:00:00 CT) and cannot be
+resolved on a one-minute bar. *(iv)* The energy window is the **active month's**; the expiring
+month on its last day uses 14:00:00–14:30:00 ET instead. *(v)* **KE is in the table but not in
+`fut_day1m.parquet`**, so it carries no volume measurement. The measurement that is there, in the
+meta: **in-window volume per minute is 2.53×–16.9× the five minutes before it on all 16 measurable
+roots in all 8 years 2016–2023, 128 of 128** (HE 13.5–16.9×, LE 11.2–14.6×, ES 6.0–8.2×, CL
+2.5–3.9× the weakest), and 3.5×–40.7× each root's own session mean minute — the window carries
+0.83% (GC) to 9.7% (HE) of the whole session's volume in one or two minutes. Every window sits inside the fixture's
+09:00–15:59 ET band; **the ES and NQ post-window flank does not exist** (their window is bar 419).
+Sources sentence by sentence in `data/settlement_flow/SOURCES.md`; raw pages cached, gitignored,
+under `data/raw/cme_settlement/`. The three COMEX metals do **not** settle together (HG 13:00, SI
+13:25, GC 13:30 ET), so a basket across metals, grains, livestock, energy and equity has window
+ends three hours apart.
+
+**The sourced US economic release calendar, with times ([D585](decisions/D585-FIXTURE-sourced-us-economic-release-calendar-with-times.md), 2026-09-21).** [`calendar/events.csv`](../data/calendar/events.csv): **1,501
+releases, 2016-01-06 → 2026-12-31**, one row per release: CPI (131) and the Employment Situation
+(131) at 08:30 ET from the BLS year schedules; the FOMC statement (85 scheduled, 7 unscheduled)
+at the clock printed on that meeting's own press release; and the EIA weekly petroleum (573) and
+natural-gas storage (574) reports at 10:30 ET with every published holiday shift. US government
+public domain. Built by `scripts/fetch_release_calendar.py` from `data/raw/calendar/` (196 raw
+pages, gitignored); provenance per row (`source_url`, `method` ∈ {fetched, archived},
+`accessed_utc`) and six gates in `events.meta.json`; `SOURCES.md` beside it. **What
+bites:** *(i)* **the file is a schedule, not a log** — EIA's rows are what EIA published, so an
+unannounced delay is invisible, and the last exception either EIA page lists is 2026-11-11
+(petroleum) / 2026-11-26 (gas); *(ii)* **2025 has 11 CPI and 11 EMPSIT rows**, not 12 — the
+2025-10-01 funding lapse — and **2026 has 6 FOMC rows**, because the October and December 2026
+meetings have no published release clock yet (their dates are in the meta, not the CSV, and all
+eight 2027 meetings likewise); *(iii)* it **disagrees with `data/macro_release_calendar.json` on
+nine 2016-2023 CPI/EMPSIT dates**, which that older file gets wrong (it puts the January 2016 CPI
+on MLK Day) — the differences are enumerated in the meta and neither file is derived from the
+other; `scripts/run_d494_outside_path.py` still reads the older file, and D494's event gates were
+built on those nine wrong dates; *(iv)* **the 2019-07-04 week shows a schedule revision**: captures
+before June 2019 put the gas report on Friday 07-05, every later capture on Wednesday 07-03 at
+12:00, and the later statement wins, with the conflict recorded.
 
 ---
 

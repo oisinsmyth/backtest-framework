@@ -1,0 +1,2711 @@
+{
+ "spec": "D584",
+ "built_utc": "2026-09-21T19:05:01Z",
+ "builder": "scripts/build_cme_session_calendar.py",
+ "rows": 205428,
+ "roots": [
+  "6A",
+  "6B",
+  "6C",
+  "6E",
+  "6J",
+  "6S",
+  "BTC",
+  "BZ",
+  "CL",
+  "ES",
+  "GC",
+  "HE",
+  "HG",
+  "HO",
+  "LE",
+  "NG",
+  "NKD",
+  "NQ",
+  "PA",
+  "PL",
+  "RB",
+  "RTY",
+  "SI",
+  "SR3",
+  "TN",
+  "UB",
+  "YM",
+  "ZB",
+  "ZC",
+  "ZF",
+  "ZL",
+  "ZM",
+  "ZN",
+  "ZS",
+  "ZT",
+  "ZW"
+ ],
+ "span": [
+  "2010-06-07",
+  "2026-09-09"
+ ],
+ "row_grid": "one row per (root, ET calendar day) from the root's first day in fut_breadth_hourly to the last day in the panel, weekends and holidays included. A calendar is a fact, so it is not windowed to any study's in-sample slice.",
+ "columns": {
+  "is_trading": "the root has at least one 09:00-15:59 ET minute bar with volume > 0 in fut_day1m.parquet",
+  "session_open_et": "that day's first traded minute, floored at the root's band open (HH:MM ET)",
+  "session_close_et": "that day's last traded minute, capped at the root's regular-session close (HH:MM ET)",
+  "rth_bars": "ES/NQ/YM/RTY: fut_index_sessions.bars, the 09:30-15:59 count, 390 on a full session. The other 32 roots: traded minutes inside the root's OWN band, so the scale differs by root",
+  "is_early_close": "the root stopped >= 30 min before its band close ON A DAY THE COMPLEX WAS SHORT",
+  "front_contract": "fut_breadth_hourly.contract, joined, never re-elected",
+  "roll_day": "fut_breadth_hourly.same_front == False; the front changed at or during the session",
+  "expiry_day": "SOME listed contract of this root expires this ET day (the root's expiry calendar)",
+  "days_to_expiry": "calendar days (not sessions) from this day to the FRONT contract's expiry -- a different object from expiry_day, see flag_notes",
+  "quad_witching": "an ES expiry falling in March, June, September or December",
+  "month_end": "the root's OWN last trading day of that ET month",
+  "quarter_end": "the root's OWN last trading day of that ET quarter",
+  "fomc": "scheduled FOMC statement day",
+  "cpi": "CPI release day",
+  "empsit": "employment situation release day",
+  "dst_transition_week": "the ET Mon-Sun week containing a US DST transition"
+ },
+ "sources": {
+  "day1m": "data\\fixtures\\fut_day1m.parquet",
+  "breadth": "data\\fixtures\\fut_breadth_hourly.csv.gz",
+  "index_sessions": "data\\fixtures\\fut_index_sessions.csv.gz",
+  "rolls": "data\\fixtures\\fut_sessions_rolls.csv.gz",
+  "expiries": {
+   "path": "data\\fut_expiries_from_definition.json",
+   "source": "data\\raw\\databento\\GLBX-20260911-LEFUEVLPSR",
+   "resolve": "the nearest expiry at or after the session date; single-digit year codes are recycled, so a symbol carries several (D581)"
+  },
+  "events": {
+   "kind": "events csv",
+   "path": "data\\calendar\\events.csv",
+   "rows": 1501,
+   "accessed_utc": "2026-09-21T19:04:54Z",
+   "match": {
+    "fomc": "FOMC",
+    "cpi": "CPI",
+    "empsit": "PAYROLL|EMPLOYMENT SITUATION|NFP|EMPSIT"
+   },
+   "covers": {
+    "fomc": [
+     "2016-01-27",
+     "2026-09-16"
+    ],
+    "cpi": [
+     "2016-01-20",
+     "2026-12-10"
+    ],
+    "empsit": [
+     "2016-01-08",
+     "2026-12-04"
+    ]
+   }
+  },
+  "cme_holiday_page": {
+   "status": "not_fetched",
+   "attempts": [
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar.html",
+     "accessed_utc": "2026-09-21T19:29:00Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/files/good-friday.pdf",
+     "accessed_utc": "2026-09-21T19:29:40Z",
+     "via": "WebFetch",
+     "result": "ECONNRESET"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/trading-hours.html",
+     "accessed_utc": "2026-09-21T19:29:40Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar/files/2025-new-years-advisory.pdf",
+     "accessed_utc": "2026-09-21T19:30:10Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar/files/2025/2025-christmas-clearing-advisory.pdf",
+     "accessed_utc": "2026-09-21T19:31:30Z",
+     "via": "WebFetch",
+     "result": "ECONNRESET"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/files/good-friday.pdf",
+     "accessed_utc": "2026-09-21T19:30:30Z",
+     "via": "curl",
+     "result": "HTTP 403 (602-byte WAF page)"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar.html",
+     "accessed_utc": "2026-09-21T19:30:30Z",
+     "via": "curl",
+     "result": "HTTP 403 (602-byte WAF page)"
+    },
+    {
+     "source_url": "https://investor.cmegroup.com/static-files/1047cbcc-7569-40ab-bb6b-6973eea07ea3",
+     "accessed_utc": "2026-09-21T19:32:20Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    }
+   ]
+  }
+ },
+ "bands": {
+  "rule": "open = the modal first traded minute; close = the settlement volume cliff (v[m] >= 4.0x the mean of the next 30 minutes and >= 0.1 of the root's busiest minute, profile measured from 2016-01-04), or the 15:59 window edge where no minute qualifies",
+  "per_root": {
+   "6A": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 12.07,
+    "close_from": "settlement volume cliff",
+    "sessions": 4158
+   },
+   "6B": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 12.42,
+    "close_from": "settlement volume cliff",
+    "sessions": 4158
+   },
+   "6C": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 13.14,
+    "close_from": "settlement volume cliff",
+    "sessions": 4158
+   },
+   "6E": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 8.1,
+    "close_from": "settlement volume cliff",
+    "sessions": 4158
+   },
+   "6J": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 10.03,
+    "close_from": "settlement volume cliff",
+    "sessions": 4158
+   },
+   "6S": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 19.03,
+    "close_from": "settlement volume cliff",
+    "sessions": 4158
+   },
+   "BTC": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 2285
+   },
+   "BZ": {
+    "open_bar": 0,
+    "close_bar": 329,
+    "open_et": "09:00",
+    "close_et": "14:29",
+    "cliff_ratio": 8.62,
+    "close_from": "settlement volume cliff",
+    "sessions": 4182
+   },
+   "CL": {
+    "open_bar": 0,
+    "close_bar": 329,
+    "open_et": "09:00",
+    "close_et": "14:29",
+    "cliff_ratio": 11.9,
+    "close_from": "settlement volume cliff",
+    "sessions": 3631
+   },
+   "ES": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 3634
+   },
+   "GC": {
+    "open_bar": 0,
+    "close_bar": 269,
+    "open_et": "09:00",
+    "close_et": "13:29",
+    "cliff_ratio": 8.07,
+    "close_from": "settlement volume cliff",
+    "sessions": 4153
+   },
+   "HE": {
+    "open_bar": 30,
+    "close_bar": 299,
+    "open_et": "09:30",
+    "close_et": "13:59",
+    "cliff_ratio": 46.14,
+    "close_from": "settlement volume cliff",
+    "sessions": 3617
+   },
+   "HG": {
+    "open_bar": 0,
+    "close_bar": 239,
+    "open_et": "09:00",
+    "close_et": "12:59",
+    "cliff_ratio": 18.54,
+    "close_from": "settlement volume cliff",
+    "sessions": 4154
+   },
+   "HO": {
+    "open_bar": 0,
+    "close_bar": 329,
+    "open_et": "09:00",
+    "close_et": "14:29",
+    "cliff_ratio": 23.82,
+    "close_from": "settlement volume cliff",
+    "sessions": 3687
+   },
+   "LE": {
+    "open_bar": 30,
+    "close_bar": 299,
+    "open_et": "09:30",
+    "close_et": "13:59",
+    "cliff_ratio": 31.54,
+    "close_from": "settlement volume cliff",
+    "sessions": 3611
+   },
+   "NG": {
+    "open_bar": 0,
+    "close_bar": 329,
+    "open_et": "09:00",
+    "close_et": "14:29",
+    "cliff_ratio": 15.41,
+    "close_from": "settlement volume cliff",
+    "sessions": 3694
+   },
+   "NKD": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 3636
+   },
+   "NQ": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 3635
+   },
+   "PA": {
+    "open_bar": 0,
+    "close_bar": 239,
+    "open_et": "09:00",
+    "close_et": "12:59",
+    "cliff_ratio": 11.84,
+    "close_from": "settlement volume cliff",
+    "sessions": 4157
+   },
+   "PL": {
+    "open_bar": 0,
+    "close_bar": 244,
+    "open_et": "09:00",
+    "close_et": "13:04",
+    "cliff_ratio": 12.73,
+    "close_from": "settlement volume cliff",
+    "sessions": 4156
+   },
+   "RB": {
+    "open_bar": 0,
+    "close_bar": 329,
+    "open_et": "09:00",
+    "close_et": "14:29",
+    "cliff_ratio": 26.4,
+    "close_from": "settlement volume cliff",
+    "sessions": 3701
+   },
+   "RTY": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 2370
+   },
+   "SI": {
+    "open_bar": 0,
+    "close_bar": 264,
+    "open_et": "09:00",
+    "close_et": "13:24",
+    "cliff_ratio": 11.38,
+    "close_from": "settlement volume cliff",
+    "sessions": 4154
+   },
+   "SR3": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 2139
+   },
+   "TN": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 5.59,
+    "close_from": "settlement volume cliff",
+    "sessions": 2998
+   },
+   "UB": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 7.86,
+    "close_from": "settlement volume cliff",
+    "sessions": 4175
+   },
+   "YM": {
+    "open_bar": 0,
+    "close_bar": 419,
+    "open_et": "09:00",
+    "close_et": "15:59",
+    "cliff_ratio": null,
+    "close_from": "window edge 15:59 -- no decisive cliff",
+    "sessions": 3635
+   },
+   "ZB": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 7.36,
+    "close_from": "settlement volume cliff",
+    "sessions": 4175
+   },
+   "ZC": {
+    "open_bar": 30,
+    "close_bar": 319,
+    "open_et": "09:30",
+    "close_et": "14:19",
+    "cliff_ratio": 608.34,
+    "close_from": "settlement volume cliff",
+    "sessions": 3639
+   },
+   "ZF": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 7.55,
+    "close_from": "settlement volume cliff",
+    "sessions": 4184
+   },
+   "ZL": {
+    "open_bar": 30,
+    "close_bar": 319,
+    "open_et": "09:30",
+    "close_et": "14:19",
+    "cliff_ratio": 798.56,
+    "close_from": "settlement volume cliff",
+    "sessions": 3611
+   },
+   "ZM": {
+    "open_bar": 30,
+    "close_bar": 319,
+    "open_et": "09:30",
+    "close_et": "14:19",
+    "cliff_ratio": 662.81,
+    "close_from": "settlement volume cliff",
+    "sessions": 3614
+   },
+   "ZN": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 9.98,
+    "close_from": "settlement volume cliff",
+    "sessions": 4169
+   },
+   "ZS": {
+    "open_bar": 30,
+    "close_bar": 319,
+    "open_et": "09:30",
+    "close_et": "14:19",
+    "cliff_ratio": 1055.66,
+    "close_from": "settlement volume cliff",
+    "sessions": 3610
+   },
+   "ZT": {
+    "open_bar": 0,
+    "close_bar": 359,
+    "open_et": "09:00",
+    "close_et": "14:59",
+    "cliff_ratio": 7.16,
+    "close_from": "settlement volume cliff",
+    "sessions": 4188
+   },
+   "ZW": {
+    "open_bar": 30,
+    "close_bar": 319,
+    "open_et": "09:30",
+    "close_et": "14:19",
+    "cliff_ratio": 653.84,
+    "close_from": "settlement volume cliff",
+    "sessions": 3637
+   }
+  }
+ },
+ "early_close_rule": {
+  "short": "the day's last traded minute is >= 30 min before the band close",
+  "market_wide": ">= 10 roots trading, >= 4 of them short, >= 0.4 of the short stops within 5 min of their mode, and that mode is the minute before a 5-minute boundary",
+  "n_days": 142,
+  "known_false_positives": "2010-07-26 and 2010-08-23 are accepted with four short roots -- CL HO NG RB, stopping at 13:29/13:30. They belong to the same early-archive pattern as the 31 NYMEX Mondays the boundary rule rejects (2010-06-07 to 2011-01-18) and are almost certainly archive, not calendar; they pass only because the modal stop landed one minute earlier. The rule is NOT tuned to exclude them -- that would be a threshold chosen after seeing the answer -- so they are named here.",
+  "days": {
+   "2010-07-05": {
+    "n_trading": 24,
+    "n_short": 19,
+    "modal_close_et": "12:59",
+    "concentration": 0.526
+   },
+   "2010-07-26": {
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_close_et": "13:29",
+    "concentration": 1.0
+   },
+   "2010-08-23": {
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_close_et": "13:29",
+    "concentration": 1.0
+   },
+   "2010-09-06": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2010-11-25": {
+    "n_trading": 17,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 0.917
+   },
+   "2010-11-26": {
+    "n_trading": 33,
+    "n_short": 28,
+    "modal_close_et": "13:14",
+    "concentration": 0.536
+   },
+   "2010-12-31": {
+    "n_trading": 19,
+    "n_short": 13,
+    "modal_close_et": "13:14",
+    "concentration": 0.846
+   },
+   "2011-01-17": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2011-02-21": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2011-05-30": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2011-07-04": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2011-09-05": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2011-11-24": {
+    "n_trading": 17,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2011-11-25": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.63
+   },
+   "2012-01-16": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2012-02-20": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.6
+   },
+   "2012-04-06": {
+    "n_trading": 12,
+    "n_short": 12,
+    "modal_close_et": "11:14",
+    "concentration": 0.917
+   },
+   "2012-05-28": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.55
+   },
+   "2012-07-04": {
+    "n_trading": 17,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 0.917
+   },
+   "2012-09-03": {
+    "n_trading": 25,
+    "n_short": 20,
+    "modal_close_et": "12:59",
+    "concentration": 0.6
+   },
+   "2012-10-29": {
+    "n_trading": 32,
+    "n_short": 8,
+    "modal_close_et": "11:59",
+    "concentration": 0.625
+   },
+   "2012-11-23": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.519
+   },
+   "2012-12-24": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.519
+   },
+   "2013-07-03": {
+    "n_trading": 32,
+    "n_short": 11,
+    "modal_close_et": "12:59",
+    "concentration": 0.727
+   },
+   "2013-11-29": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.519
+   },
+   "2013-12-24": {
+    "n_trading": 24,
+    "n_short": 19,
+    "modal_close_et": "13:14",
+    "concentration": 0.579
+   },
+   "2014-05-26": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 0.952
+   },
+   "2014-07-03": {
+    "n_trading": 32,
+    "n_short": 11,
+    "modal_close_et": "12:59",
+    "concentration": 0.727
+   },
+   "2014-07-04": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2014-09-01": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2014-11-27": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2014-11-28": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.519
+   },
+   "2014-12-24": {
+    "n_trading": 31,
+    "n_short": 26,
+    "modal_close_et": "13:14",
+    "concentration": 0.5
+   },
+   "2015-01-19": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2015-02-16": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2015-04-03": {
+    "n_trading": 15,
+    "n_short": 15,
+    "modal_close_et": "11:14",
+    "concentration": 0.733
+   },
+   "2015-05-25": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2015-07-02": {
+    "n_trading": 32,
+    "n_short": 7,
+    "modal_close_et": "12:59",
+    "concentration": 0.714
+   },
+   "2015-07-03": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2015-09-07": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2015-11-26": {
+    "n_trading": 25,
+    "n_short": 21,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2015-11-27": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.63
+   },
+   "2015-12-24": {
+    "n_trading": 32,
+    "n_short": 27,
+    "modal_close_et": "13:14",
+    "concentration": 0.63
+   },
+   "2016-01-18": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2016-02-15": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2016-05-30": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2016-07-04": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2016-09-05": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2016-11-24": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2016-11-25": {
+    "n_trading": 33,
+    "n_short": 28,
+    "modal_close_et": "13:14",
+    "concentration": 0.643
+   },
+   "2016-12-23": {
+    "n_trading": 33,
+    "n_short": 7,
+    "modal_close_et": "13:04",
+    "concentration": 0.714
+   },
+   "2017-01-16": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2017-02-20": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2017-05-29": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2017-07-03": {
+    "n_trading": 33,
+    "n_short": 11,
+    "modal_close_et": "13:14",
+    "concentration": 0.545
+   },
+   "2017-07-04": {
+    "n_trading": 26,
+    "n_short": 22,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2017-09-04": {
+    "n_trading": 27,
+    "n_short": 23,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2017-11-23": {
+    "n_trading": 27,
+    "n_short": 23,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2017-11-24": {
+    "n_trading": 34,
+    "n_short": 29,
+    "modal_close_et": "13:14",
+    "concentration": 0.655
+   },
+   "2017-12-22": {
+    "n_trading": 35,
+    "n_short": 7,
+    "modal_close_et": "13:04",
+    "concentration": 0.714
+   },
+   "2018-01-15": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2018-02-19": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2018-05-28": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 0.958
+   },
+   "2018-07-03": {
+    "n_trading": 36,
+    "n_short": 14,
+    "modal_close_et": "13:14",
+    "concentration": 0.643
+   },
+   "2018-07-04": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 0.958
+   },
+   "2018-09-03": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 0.958
+   },
+   "2018-11-22": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2018-11-23": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.645
+   },
+   "2018-12-05": {
+    "n_trading": 29,
+    "n_short": 4,
+    "modal_close_et": "09:29",
+    "concentration": 1.0
+   },
+   "2018-12-24": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.645
+   },
+   "2019-01-21": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2019-02-18": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2019-05-27": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2019-07-03": {
+    "n_trading": 36,
+    "n_short": 14,
+    "modal_close_et": "13:14",
+    "concentration": 0.571
+   },
+   "2019-07-04": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2019-09-02": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.92
+   },
+   "2019-11-28": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2019-11-29": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.645
+   },
+   "2019-12-24": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.645
+   },
+   "2020-01-20": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 0.958
+   },
+   "2020-02-17": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2020-05-25": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2020-07-02": {
+    "n_trading": 36,
+    "n_short": 8,
+    "modal_close_et": "13:04",
+    "concentration": 0.625
+   },
+   "2020-07-03": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2020-09-07": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2020-11-26": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2020-11-27": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.613
+   },
+   "2020-12-24": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.613
+   },
+   "2021-01-18": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2021-02-15": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2021-04-02": {
+    "n_trading": 19,
+    "n_short": 19,
+    "modal_close_et": "11:14",
+    "concentration": 0.684
+   },
+   "2021-05-31": {
+    "n_trading": 28,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2021-07-05": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2021-09-06": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2021-11-25": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 0.96
+   },
+   "2021-11-26": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.581
+   },
+   "2022-01-17": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 0.917
+   },
+   "2022-02-21": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2022-05-30": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2022-06-20": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2022-07-04": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2022-09-05": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2022-11-24": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2022-11-25": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.581
+   },
+   "2023-01-16": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-02-20": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-04-07": {
+    "n_trading": 19,
+    "n_short": 19,
+    "modal_close_et": "11:14",
+    "concentration": 0.737
+   },
+   "2023-05-29": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-06-19": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-07-03": {
+    "n_trading": 36,
+    "n_short": 4,
+    "modal_close_et": "13:14",
+    "concentration": 1.0
+   },
+   "2023-07-04": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-09-04": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-11-23": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2023-11-24": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.581
+   },
+   "2024-01-15": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2024-02-19": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2024-05-27": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2024-06-19": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2024-07-03": {
+    "n_trading": 36,
+    "n_short": 4,
+    "modal_close_et": "13:14",
+    "concentration": 1.0
+   },
+   "2024-07-04": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2024-09-02": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2024-11-28": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 0.917
+   },
+   "2024-11-29": {
+    "n_trading": 36,
+    "n_short": 20,
+    "modal_close_et": "13:14",
+    "concentration": 0.6
+   },
+   "2024-12-24": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.452
+   },
+   "2025-01-09": {
+    "n_trading": 36,
+    "n_short": 18,
+    "modal_close_et": "13:14",
+    "concentration": 0.778
+   },
+   "2025-01-20": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-02-17": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-05-26": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-06-19": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-07-03": {
+    "n_trading": 36,
+    "n_short": 4,
+    "modal_close_et": "13:14",
+    "concentration": 1.0
+   },
+   "2025-07-04": {
+    "n_trading": 29,
+    "n_short": 25,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-09-01": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-11-27": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2025-11-28": {
+    "n_trading": 36,
+    "n_short": 20,
+    "modal_close_et": "13:14",
+    "concentration": 0.6
+   },
+   "2025-12-24": {
+    "n_trading": 36,
+    "n_short": 31,
+    "modal_close_et": "13:14",
+    "concentration": 0.452
+   },
+   "2026-01-19": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2026-02-16": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2026-04-03": {
+    "n_trading": 19,
+    "n_short": 19,
+    "modal_close_et": "11:14",
+    "concentration": 0.737
+   },
+   "2026-05-25": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2026-06-19": {
+    "n_trading": 29,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   },
+   "2026-07-03": {
+    "n_trading": 29,
+    "n_short": 24,
+    "modal_close_et": "12:59",
+    "concentration": 0.958
+   },
+   "2026-09-07": {
+    "n_trading": 29,
+    "n_short": 12,
+    "modal_close_et": "12:59",
+    "concentration": 1.0
+   }
+  }
+ },
+ "flag_notes": {
+  "is_trading": "is_trading=False does NOT mean the exchange was shut. It means this archive holds no 09:00-15:59 ET minute bar with volume for that root that day, and before a root's clean start the archive is the binding constraint, not the calendar: the day session is missing on most days before 2016 for ES/NQ/YM (21% coverage in 2010, 89% in 2015 -- D462 G5), SR3 is clean only from 2022 and PA never reaches a full fill. Read is_trading as a calendar fact only from the root's own first clean year in fut_day5m.meta.json.",
+  "session_close_et": "NOT the last minute the root can be traded. For the six FX and six Treasury roots the derived close is the 15:00 ET SETTLEMENT, after which Globex runs to 17:00 and the fixture still carries bars to 15:59 -- D530 measured 11.0% of ZN's session volume and 11.6% of ZB's in the 15:00-16:00 hour. For the index roots it is the 15:59 window edge, not a close at all: their session ends at 16:00, outside this fixture. It IS the regular-session close for the metals (13:00-13:30), energy (14:30), grains (14:20) and livestock (14:00, which trade five more minutes to 14:05).",
+  "rth_bars": "NOT comparable across roots. On ES/NQ/YM/RTY it is the committed 09:30-15:59 count from fut_index_sessions (390 full). On the other 32 it is traded minutes inside that root's own band, so a full CL session is ~330 and a full ZC session ~290. Compare a root with itself.",
+  "is_early_close": "NOT 'this root had a short day'. A root that simply did not trade late is short but not flagged; the flag needs the complex to have been short on a boundary-aligned minute. That is deliberate -- the two causes need opposite treatment (the fetch_etf_intraday _half_days pattern) -- and every short day the rule rejects is listed below.",
+  "month_end / quarter_end": "the root's own last OBSERVED trading day, so inside the archive gap it can name the last day the archive holds rather than the last day the market traded. And a month-end here is not a settlement day: 2021-05-31 and 2020-06-30 are in this calendar and neither settles (D556, D564).",
+  "fomc / cpi / empsit": "EMPTY, not False, outside the sourced span. The JSON covers FOMC 2016-01-27 to 2024-12-18 and CPI/employment 2016 to 2023-12; every row outside that window carries a null so a reader cannot mistake absent sourcing for an absent release. fomc is the SCHEDULED statement day only; the three unscheduled meetings (2019-10-04, 2020-03-03, 2020-03-15) are not folded in.",
+  "quad_witching": "taken from the ES expiry list, not from the third-Friday rule, because the two differ: 2026-06-18 is a THURSDAY expiry because the third Friday of June 2026 is Juneteenth. It is a day-level flag, True on every root's row, including roots that did not trade.",
+  "expiry_day / days_to_expiry": "NOT the same object, and expiry_day is NOT days_to_expiry == 0. expiry_day is the ROOT's expiry calendar -- any listed contract expiring that ET day, which for CL or the grains is most months and for ES is quarterly. days_to_expiry is the FRONT contract's, in CALENDAR days not sessions, and the front is elected by volume and rolls one to two weeks early, so it essentially never reaches zero: the minimum reached per root is recorded in days_to_expiry_min_per_root below. On a roll day it jumps to the new front's expiry rather than counting down to the old one's."
+ },
+ "dropped_buckets": {
+  "breadth_root_days_with_no_day_session": 35464,
+  "note": "fut_breadth_hourly carries 170,643 root-days on an 18:00-16:59 session, including a placeholder row for every Sunday; fut_day1m holds only the 135,179 with a 09:00-15:59 bar. The difference is is_trading=False here and is front-loaded exactly where the archive gap is.",
+  "short_days_rejected_by_the_boundary_rule": [
+   {
+    "day": "2010-06-07",
+    "n_trading": 29,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-06-14",
+    "n_trading": 32,
+    "n_short": 5,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "BZ",
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-06-21",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-06-28",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-07-06",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-07-12",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-07-19",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-08-02",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-08-09",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-08-16",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-08-30",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-09-07",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-09-13",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-09-20",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-09-27",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-10-04",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-10-11",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-10-12",
+    "n_trading": 21,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-10-18",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-10-25",
+    "n_trading": 32,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-11-01",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-11-08",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-11-15",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-11-22",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-11-29",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-12-06",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-12-13",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-12-20",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2010-12-27",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2011-01-03",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2011-01-10",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2011-01-18",
+    "n_trading": 33,
+    "n_short": 4,
+    "modal_stop_et": "13:30",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "CL",
+     "HO",
+     "NG",
+     "RB"
+    ]
+   },
+   {
+    "day": "2020-02-27",
+    "n_trading": 36,
+    "n_short": 17,
+    "modal_stop_et": "13:20",
+    "concentration": 0.647,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "BZ",
+     "CL",
+     "HO",
+     "NG",
+     "RB",
+     "TN",
+     "UB",
+     "YM",
+     "ZB",
+     "ZC",
+     "ZF",
+     "ZL",
+     "ZM",
+     "ZN",
+     "ZS",
+     "ZT",
+     "ZW"
+    ]
+   },
+   {
+    "day": "2020-06-30",
+    "n_trading": 36,
+    "n_short": 22,
+    "modal_stop_et": "10:10",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "BZ",
+     "CL",
+     "GC",
+     "HG",
+     "HO",
+     "NG",
+     "PA",
+     "PL",
+     "RB",
+     "SI",
+     "TN",
+     "UB",
+     "YM",
+     "ZB",
+     "ZC",
+     "ZF",
+     "ZL",
+     "ZM",
+     "ZN",
+     "ZS",
+     "ZT",
+     "ZW"
+    ]
+   }
+  ]
+ },
+ "special_sessions": {
+  "march_2020_circuit_breakers": {
+   "2020-03-09": {
+    "is_trading": true,
+    "is_early_close": false,
+    "rth_bars": 377,
+    "close_et": "15:59"
+   },
+   "2020-03-12": {
+    "is_trading": true,
+    "is_early_close": false,
+    "rth_bars": 377,
+    "close_et": "15:59"
+   },
+   "2020-03-16": {
+    "is_trading": true,
+    "is_early_close": false,
+    "rth_bars": 376,
+    "close_et": "15:59"
+   },
+   "2020-03-18": {
+    "is_trading": true,
+    "is_early_close": false,
+    "rth_bars": 377,
+    "close_et": "15:59"
+   }
+  },
+  "march_2020_note": "docs/data-available.md names 2020-03-09, 12 and 16. 2020-03-18 is a fourth ES session of the same shape -- 377 of 390 bars, a full 09:00-15:59 band with an interior hole -- and it is gated here with the other three.",
+  "2021-05-31_memorial_day": {
+   "is_trading": true,
+   "is_early_close": true,
+   "close_et": "12:59",
+   "note": "a real abbreviated 09:00-13:00 ET session in the minute bars; the HOURLY breadth fixture cannot form a row for it and no root settles"
+  },
+  "archive_truncations_rejected": [
+   {
+    "day": "2020-06-30",
+    "n_trading": 36,
+    "n_short": 22,
+    "modal_stop_et": "10:10",
+    "concentration": 1.0,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "BZ",
+     "CL",
+     "GC",
+     "HG",
+     "HO",
+     "NG",
+     "PA",
+     "PL",
+     "RB",
+     "SI",
+     "TN",
+     "UB",
+     "YM",
+     "ZB",
+     "ZC",
+     "ZF",
+     "ZL",
+     "ZM",
+     "ZN",
+     "ZS",
+     "ZT",
+     "ZW"
+    ]
+   },
+   {
+    "day": "2020-02-27",
+    "n_trading": 36,
+    "n_short": 17,
+    "modal_stop_et": "13:20",
+    "concentration": 0.647,
+    "on_five_minute_boundary": false,
+    "short_roots": [
+     "BZ",
+     "CL",
+     "HO",
+     "NG",
+     "RB",
+     "TN",
+     "UB",
+     "YM",
+     "ZB",
+     "ZC",
+     "ZF",
+     "ZL",
+     "ZM",
+     "ZN",
+     "ZS",
+     "ZT",
+     "ZW"
+    ]
+   }
+  ],
+  "n_short_days_rejected": 34,
+  "btc_weekend_sessions": {
+   "n": 30,
+   "first": "2026-05-30",
+   "last": "2026-09-06",
+   "n_early_close": 0,
+   "other_roots_with_weekend_sessions": 0
+  }
+ },
+ "holiday_disagreements": "not_fetched -- G6 did not run",
+ "gates": {
+  "G1": {
+   "rule": "full_closure_days(): Good Friday, Christmas Day (Sat->Fri, Sun->Mon), New Year's Day (Sun->Mon)",
+   "threshold": "set equality against the observed non-trading weekdays from 2016-01-04",
+   "measured": {
+    "ES": {
+     "n_holiday_weekdays": 30,
+     "n_non_trading": 27,
+     "good_friday_partial_sessions": [
+      "2021-04-02",
+      "2023-04-07",
+      "2026-04-03"
+     ],
+     "holidays_that_traded": [],
+     "non_trading_days_not_in_the_rule": [],
+     "passes": true
+    },
+    "NQ": {
+     "n_holiday_weekdays": 30,
+     "n_non_trading": 27,
+     "good_friday_partial_sessions": [
+      "2021-04-02",
+      "2023-04-07",
+      "2026-04-03"
+     ],
+     "holidays_that_traded": [],
+     "non_trading_days_not_in_the_rule": [],
+     "passes": true
+    },
+    "YM": {
+     "n_holiday_weekdays": 30,
+     "n_non_trading": 27,
+     "good_friday_partial_sessions": [
+      "2021-04-02",
+      "2023-04-07",
+      "2026-04-03"
+     ],
+     "holidays_that_traded": [],
+     "non_trading_days_not_in_the_rule": [],
+     "passes": true
+    },
+    "RTY": {
+     "n_holiday_weekdays": 26,
+     "n_non_trading": 23,
+     "good_friday_partial_sessions": [
+      "2021-04-02",
+      "2023-04-07",
+      "2026-04-03"
+     ],
+     "holidays_that_traded": [],
+     "non_trading_days_not_in_the_rule": [],
+     "passes": true
+    }
+   },
+   "passes": true
+  },
+  "G2": {
+   "rule": "ES is_early_close on the day after Thanksgiving and on Christmas Eve, in every year 2016+ in which that date is a weekday ES traded",
+   "threshold": "required=True implies is_early_close=True",
+   "measured": [
+    {
+     "year": 2016,
+     "what": "day after Thanksgiving",
+     "day": "2016-11-25",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2016,
+     "what": "Christmas Eve",
+     "day": "2016-12-24",
+     "weekday": false,
+     "traded": false,
+     "is_early_close": false,
+     "close_et": NaN,
+     "required": false
+    },
+    {
+     "year": 2017,
+     "what": "day after Thanksgiving",
+     "day": "2017-11-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2017,
+     "what": "Christmas Eve",
+     "day": "2017-12-24",
+     "weekday": false,
+     "traded": false,
+     "is_early_close": false,
+     "close_et": NaN,
+     "required": false
+    },
+    {
+     "year": 2018,
+     "what": "day after Thanksgiving",
+     "day": "2018-11-23",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2018,
+     "what": "Christmas Eve",
+     "day": "2018-12-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2019,
+     "what": "day after Thanksgiving",
+     "day": "2019-11-29",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2019,
+     "what": "Christmas Eve",
+     "day": "2019-12-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2020,
+     "what": "day after Thanksgiving",
+     "day": "2020-11-27",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2020,
+     "what": "Christmas Eve",
+     "day": "2020-12-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2021,
+     "what": "day after Thanksgiving",
+     "day": "2021-11-26",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2021,
+     "what": "Christmas Eve",
+     "day": "2021-12-24",
+     "weekday": true,
+     "traded": false,
+     "is_early_close": false,
+     "close_et": NaN,
+     "required": false
+    },
+    {
+     "year": 2022,
+     "what": "day after Thanksgiving",
+     "day": "2022-11-25",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2022,
+     "what": "Christmas Eve",
+     "day": "2022-12-24",
+     "weekday": false,
+     "traded": false,
+     "is_early_close": false,
+     "close_et": NaN,
+     "required": false
+    },
+    {
+     "year": 2023,
+     "what": "day after Thanksgiving",
+     "day": "2023-11-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2023,
+     "what": "Christmas Eve",
+     "day": "2023-12-24",
+     "weekday": false,
+     "traded": false,
+     "is_early_close": false,
+     "close_et": NaN,
+     "required": false
+    },
+    {
+     "year": 2024,
+     "what": "day after Thanksgiving",
+     "day": "2024-11-29",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2024,
+     "what": "Christmas Eve",
+     "day": "2024-12-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2025,
+     "what": "day after Thanksgiving",
+     "day": "2025-11-28",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    },
+    {
+     "year": 2025,
+     "what": "Christmas Eve",
+     "day": "2025-12-24",
+     "weekday": true,
+     "traded": true,
+     "is_early_close": true,
+     "close_et": "13:14",
+     "required": true
+    }
+   ],
+   "passes": true
+  },
+  "G3": {
+   "rule": "ES rth_bars == 390 on an ordinary session",
+   "threshold": "modal count == 390 and share >= 0.97",
+   "measured": {
+    "modal_rth_bars": 390,
+    "share_at_390": 0.9985,
+    "n_sessions": 2665,
+    "n_below": 4,
+    "below": [
+     [
+      "2020-03-09",
+      377
+     ],
+     [
+      "2020-03-12",
+      377
+     ],
+     [
+      "2020-03-16",
+      376
+     ],
+     [
+      "2020-03-18",
+      377
+     ]
+    ]
+   },
+   "passes": true
+  },
+  "G4": {
+   "rule": "the roll_day column equals fut_sessions_rolls.csv.gz, per root",
+   "threshold": "set equality on all 9 roots the rolls fixture covers",
+   "measured": {
+    "6E": {
+     "n_rolls_fixture": 65,
+     "n_roll_day": 65,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "CL": {
+     "n_rolls_fixture": 195,
+     "n_roll_day": 195,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "ES": {
+     "n_rolls_fixture": 65,
+     "n_roll_day": 65,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "GC": {
+     "n_rolls_fixture": 81,
+     "n_roll_day": 81,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "NQ": {
+     "n_rolls_fixture": 65,
+     "n_roll_day": 65,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "RTY": {
+     "n_rolls_fixture": 38,
+     "n_roll_day": 38,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "YM": {
+     "n_rolls_fixture": 65,
+     "n_roll_day": 65,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "ZB": {
+     "n_rolls_fixture": 65,
+     "n_roll_day": 65,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    },
+    "ZN": {
+     "n_rolls_fixture": 65,
+     "n_roll_day": 65,
+     "in_fixture_not_flagged": [],
+     "flagged_not_in_fixture": [],
+     "passes": true
+    }
+   },
+   "passes": true
+  },
+  "G5": {
+   "rule": "the five documented special cases are classified as described and counted",
+   "threshold": "circuit breakers trade and are not early closes with rth_bars < 390; 2021-05-31 is a trading early close; both archive truncations are rejected short days; BTC weekend sessions exist from 2026 and are not early closes, and no other root has one",
+   "measured": {
+    "march_2020_circuit_breakers": {
+     "2020-03-09": {
+      "is_trading": true,
+      "is_early_close": false,
+      "rth_bars": 377,
+      "close_et": "15:59"
+     },
+     "2020-03-12": {
+      "is_trading": true,
+      "is_early_close": false,
+      "rth_bars": 377,
+      "close_et": "15:59"
+     },
+     "2020-03-16": {
+      "is_trading": true,
+      "is_early_close": false,
+      "rth_bars": 376,
+      "close_et": "15:59"
+     },
+     "2020-03-18": {
+      "is_trading": true,
+      "is_early_close": false,
+      "rth_bars": 377,
+      "close_et": "15:59"
+     }
+    },
+    "march_2020_note": "docs/data-available.md names 2020-03-09, 12 and 16. 2020-03-18 is a fourth ES session of the same shape -- 377 of 390 bars, a full 09:00-15:59 band with an interior hole -- and it is gated here with the other three.",
+    "2021-05-31_memorial_day": {
+     "is_trading": true,
+     "is_early_close": true,
+     "close_et": "12:59",
+     "note": "a real abbreviated 09:00-13:00 ET session in the minute bars; the HOURLY breadth fixture cannot form a row for it and no root settles"
+    },
+    "archive_truncations_rejected": [
+     {
+      "day": "2020-06-30",
+      "n_trading": 36,
+      "n_short": 22,
+      "modal_stop_et": "10:10",
+      "concentration": 1.0,
+      "on_five_minute_boundary": false,
+      "short_roots": [
+       "BZ",
+       "CL",
+       "GC",
+       "HG",
+       "HO",
+       "NG",
+       "PA",
+       "PL",
+       "RB",
+       "SI",
+       "TN",
+       "UB",
+       "YM",
+       "ZB",
+       "ZC",
+       "ZF",
+       "ZL",
+       "ZM",
+       "ZN",
+       "ZS",
+       "ZT",
+       "ZW"
+      ]
+     },
+     {
+      "day": "2020-02-27",
+      "n_trading": 36,
+      "n_short": 17,
+      "modal_stop_et": "13:20",
+      "concentration": 0.647,
+      "on_five_minute_boundary": false,
+      "short_roots": [
+       "BZ",
+       "CL",
+       "HO",
+       "NG",
+       "RB",
+       "TN",
+       "UB",
+       "YM",
+       "ZB",
+       "ZC",
+       "ZF",
+       "ZL",
+       "ZM",
+       "ZN",
+       "ZS",
+       "ZT",
+       "ZW"
+      ]
+     }
+    ],
+    "n_short_days_rejected": 34,
+    "btc_weekend_sessions": {
+     "n": 30,
+     "first": "2026-05-30",
+     "last": "2026-09-06",
+     "n_early_close": 0,
+     "other_roots_with_weekend_sessions": 0
+    }
+   },
+   "passes": true
+  },
+  "G6": {
+   "rule": "every derived market-wide early close from 2016 on appears on the CME holiday calendar, and every CME modified-schedule day from 2016 on is derived",
+   "threshold": "no disagreement in either direction",
+   "status": "not_fetched",
+   "attempts": [
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar.html",
+     "accessed_utc": "2026-09-21T19:29:00Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/files/good-friday.pdf",
+     "accessed_utc": "2026-09-21T19:29:40Z",
+     "via": "WebFetch",
+     "result": "ECONNRESET"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/trading-hours.html",
+     "accessed_utc": "2026-09-21T19:29:40Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar/files/2025-new-years-advisory.pdf",
+     "accessed_utc": "2026-09-21T19:30:10Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar/files/2025/2025-christmas-clearing-advisory.pdf",
+     "accessed_utc": "2026-09-21T19:31:30Z",
+     "via": "WebFetch",
+     "result": "ECONNRESET"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/files/good-friday.pdf",
+     "accessed_utc": "2026-09-21T19:30:30Z",
+     "via": "curl",
+     "result": "HTTP 403 (602-byte WAF page)"
+    },
+    {
+     "source_url": "https://www.cmegroup.com/tools-information/holiday-calendar.html",
+     "accessed_utc": "2026-09-21T19:30:30Z",
+     "via": "curl",
+     "result": "HTTP 403 (602-byte WAF page)"
+    },
+    {
+     "source_url": "https://investor.cmegroup.com/static-files/1047cbcc-7569-40ab-bb6b-6973eea07ea3",
+     "accessed_utc": "2026-09-21T19:32:20Z",
+     "via": "WebFetch",
+     "result": "timeout after 60 s"
+    }
+   ],
+   "measured": null,
+   "passes": null
+  }
+ },
+ "all_gates_pass": true,
+ "gates_not_run": [
+  "G6"
+ ],
+ "files": {
+  "fixture": "data\\fixtures\\cme_session_calendar.csv.gz",
+  "meta": "data\\fixtures\\cme_session_calendar.meta.json"
+ },
+ "quad_witching_days": [
+  "2010-06-18",
+  "2010-09-17",
+  "2010-12-17",
+  "2011-03-18",
+  "2011-06-17",
+  "2011-09-16",
+  "2011-12-16",
+  "2012-03-16",
+  "2012-06-15",
+  "2012-09-21",
+  "2012-12-21",
+  "2013-03-15",
+  "2013-06-21",
+  "2013-09-20",
+  "2013-12-20",
+  "2014-03-21",
+  "2014-06-20",
+  "2014-09-19",
+  "2014-12-19",
+  "2015-03-20",
+  "2015-06-19",
+  "2015-09-18",
+  "2015-12-18",
+  "2016-03-18",
+  "2016-06-17",
+  "2016-09-16",
+  "2016-12-16",
+  "2017-03-17",
+  "2017-06-16",
+  "2017-09-15",
+  "2017-12-15",
+  "2018-03-16",
+  "2018-06-15",
+  "2018-09-21",
+  "2018-12-21",
+  "2019-03-15",
+  "2019-06-21",
+  "2019-09-20",
+  "2019-12-20",
+  "2020-03-20",
+  "2020-06-19",
+  "2020-09-18",
+  "2020-12-18",
+  "2021-03-19",
+  "2021-06-18",
+  "2021-09-17",
+  "2021-12-17",
+  "2022-03-18",
+  "2022-06-17",
+  "2022-09-16",
+  "2022-12-16",
+  "2023-03-17",
+  "2023-06-16",
+  "2023-09-15",
+  "2023-12-15",
+  "2024-03-15",
+  "2024-06-21",
+  "2024-09-20",
+  "2024-12-20",
+  "2025-03-21",
+  "2025-06-20",
+  "2025-09-19",
+  "2025-12-19",
+  "2026-03-20",
+  "2026-06-18"
+ ],
+ "quad_witching_days_outside_the_span": [
+  "2026-09-18",
+  "2026-12-18",
+  "2027-03-19",
+  "2027-06-17",
+  "2027-09-17",
+  "2027-12-17",
+  "2028-03-17",
+  "2028-06-16",
+  "2028-09-15",
+  "2028-12-15",
+  "2029-03-16",
+  "2029-06-15",
+  "2029-09-21",
+  "2029-12-21",
+  "2030-03-15",
+  "2030-06-21",
+  "2030-09-20",
+  "2030-12-20",
+  "2031-03-21"
+ ],
+ "quad_witching_days_with_no_ES_day_session": [
+  "2010-06-18",
+  "2010-09-17",
+  "2010-12-17",
+  "2011-03-18",
+  "2011-06-17",
+  "2011-09-16",
+  "2011-12-16",
+  "2012-03-16",
+  "2012-06-15",
+  "2013-12-20",
+  "2014-12-19"
+ ],
+ "sessions_per_root": {
+  "6A": 4158,
+  "6B": 4158,
+  "6C": 4158,
+  "6E": 4158,
+  "6J": 4158,
+  "6S": 4158,
+  "BTC": 2285,
+  "BZ": 4182,
+  "CL": 3631,
+  "ES": 3634,
+  "GC": 4153,
+  "HE": 3617,
+  "HG": 4154,
+  "HO": 3687,
+  "LE": 3611,
+  "NG": 3694,
+  "NKD": 3636,
+  "NQ": 3635,
+  "PA": 4157,
+  "PL": 4156,
+  "RB": 3701,
+  "RTY": 2370,
+  "SI": 4154,
+  "SR3": 2139,
+  "TN": 2998,
+  "UB": 4175,
+  "YM": 3635,
+  "ZB": 4175,
+  "ZC": 3639,
+  "ZF": 4184,
+  "ZL": 3611,
+  "ZM": 3614,
+  "ZN": 4169,
+  "ZS": 3610,
+  "ZT": 4188,
+  "ZW": 3637
+ },
+ "days_to_expiry_min_per_root": {
+  "6A": 2,
+  "6B": 2,
+  "6C": 5,
+  "6E": 2,
+  "6J": 2,
+  "6S": 2,
+  "BTC": 1,
+  "BZ": 2,
+  "CL": 2,
+  "ES": 6,
+  "GC": 28,
+  "HE": 12,
+  "HG": 28,
+  "HO": 9,
+  "LE": 21,
+  "NG": 1,
+  "NKD": 1,
+  "NQ": 4,
+  "PA": 29,
+  "PL": 29,
+  "RB": 11,
+  "RTY": 6,
+  "SI": 28,
+  "SR3": 8,
+  "TN": 1,
+  "UB": 20,
+  "YM": 7,
+  "ZB": 20,
+  "ZC": 16,
+  "ZF": 29,
+  "ZL": 17,
+  "ZM": 16,
+  "ZN": 20,
+  "ZS": 18,
+  "ZT": 29,
+  "ZW": 21
+ },
+ "flag_counts": {
+  "is_early_close": 2699,
+  "roll_day": 4408,
+  "expiry_day": 3430,
+  "quad_witching": 2088,
+  "month_end": 6737,
+  "quarter_end": 2269,
+  "dst_transition_week": 5091,
+  "is_trading": 135179,
+  "non_trading_rows": 70249,
+  "fomc": {
+   "true": 3229,
+   "null_unsourced": 67836
+  },
+  "cpi": {
+   "true": 4502,
+   "null_unsourced": 67605
+  },
+  "empsit": {
+   "true": 4536,
+   "null_unsourced": 67209
+  }
+ }
+}

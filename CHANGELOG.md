@@ -10,6 +10,37 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-21, shared infrastructure for the deposit pre-registrations)
+- `data/settlement_windows.csv` + meta, `data/settlement_flow/SOURCES.md`,
+  `scripts/settlement_windows.py` (D586): the CME settlement-window table with effective dates for
+  17 products across NYMEX, COMEX, CBOT and CME, CT and ET both, basis quoted from CME's procedure
+  pages; `window_for(root, date)` raises on an unmapped product or an unsourced date. Only energy
+  (SER-4867, 2009) and equity index (SER-8591, 2020-10-26) carry a dated history. 48 tests.
+- `src/backtest_framework/instruments/future.py` and `simulator/futures_fills.py` (D587): a
+  `Future` instrument loaded from `futures_contract_specs.json` (tick grid asserted), and the
+  shared fill model the deposit docs specify — entry at t0+1 plus one adverse tick, stress fill at
+  the worst of t0+1..t0+k, stop-first intra-bar resolution, passive limit with cancel, adverse-
+  selection diagnostic. Bit-identical to `run_d490_range_reversion.py:simulate` on 44 trades and to
+  `d465`'s pessimistic drawdown on 50 sessions. 129 tests; 20 of 20 mutations caught.
+- `data/fixtures/cme_session_calendar.csv.gz` + meta, `scripts/build_cme_session_calendar.py` (D589):
+  the CME session calendar and event flags for the 36 breadth roots, 205,428 (root, ET day) rows
+  2010-06-07 to 2026-09-09 — trading flag, each root's own session open and close measured from its
+  volume cliff, RTH bar count, derived early closes (feed dropouts rejected by name), front contract
+  and roll day joined from the existing fixtures, expiry and quad witching from the definition file,
+  month and quarter ends, DST transition weeks, and FOMC/CPI/EMPSIT flags joined from the D585
+  events file. Gitignored by suffix; hashed in the manifest. The CME holiday page could not be
+  fetched from this machine (403), so gate G6 is recorded as not run.
+- `data/calendar/events.csv` + meta + `SOURCES.md`, `scripts/fetch_release_calendar.py` (D585): the
+  sourced US economic release calendar with times — 1,501 releases 2016-01-06 to 2026-12-31 (CPI,
+  Employment Situation, FOMC scheduled and unscheduled at each statement's own printed clock, EIA
+  petroleum and gas storage with every published holiday shift), every row carrying its official
+  page or Wayback capture; the builder refuses an inferred row. Nine 2016-2023 dates in the older
+  `data/macro_release_calendar.json` are wrong (enumerated in the meta; that file is untouched).
+- `src/backtest_framework/validation/power.py` and `scripts/power_table.py` (D588): design effect,
+  cluster ICC, effective n, SE, MDE at t = 2 and at 80% power, the forward-evaluation-length and
+  Track 3 route rules of the ledger doc's §13A.7, a `POWER.md` renderer and a `TRACK_MAP` validator.
+  The six named ledger unit tests (51, 52, 53, 59, 62, 63) pass; 78 tests.
+
 ### Added (2026-09-21)
 - `data/fixtures/fut_es_options_eod.csv.gz` + meta (D581): every ES-family option's prior-close
   open interest, settlement, strike, expiry and 0DTE volume to 15:30 ET per usable session,
