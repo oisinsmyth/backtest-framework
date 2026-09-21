@@ -10,6 +10,23 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-21, macro fixtures for the basis-momentum closure programme)
+- `data/fixtures/hkm_factors.csv.gz` + meta (D601): the He–Kelly–Manela intermediary capital ratio
+  and risk factor, 664 months 1970-01 → 2025-05 and 220 quarters, from zhiguohe.net's 2025-06-27
+  file; gitignored (non-commercial terms), manifest-hashed; two mislabelled 2025 rows dropped and
+  recorded.
+- `data/fixtures/eia_weekly_stocks.csv` + meta (D601): EIA weekly crude ex-SPR, gasoline,
+  distillate and Lower-48 working gas, 7,375 weeks to 2026-09-11, from the keyless bulk archives;
+  current vintage, nominal release dates carried.
+- `data/fixtures/oecd_ir3tib_monthly.csv` + meta (D601): OECD monthly 3-month interbank rates for
+  seven currencies, 2,206 months 2000-01 → 2026-08; USD 2020-04 filled from its neighbours and
+  flagged.
+- `data/fixtures/fut_cleared_volume_cm_daily.csv.gz` + meta, `scripts/build_fut_cleared_volume_cm.py`
+  (D601): per-contract daily cleared volume of the 17 commodity roots from the `statistics`
+  archive, 852,938 rows 2015-11-19 → 2023-12-29; gitignored, manifest-hashed.
+- `scripts/fetch_macro_series.py` (D601): the fetcher for the four sources above plus USDA NASS
+  (keyed; built once the key is in place).
+
 ### Added (2026-09-21, shared infrastructure for the deposit pre-registrations)
 - `data/settlement_windows.csv` + meta, `data/settlement_flow/SOURCES.md`,
   `scripts/settlement_windows.py` (D586): the CME settlement-window table with effective dates for

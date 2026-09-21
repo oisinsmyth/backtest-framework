@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T19:05:41Z",
+  "built_at": "2026-09-21T20:19:58Z",
   "note": "Every bulk panel under data/, listed by suffix and regardless of whether git tracks it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) and are simply present in a clone. --verify re-hashes what is on disk either way.",
   "suffixes": [
     ".csv.gz",
@@ -7,8 +7,8 @@
     ".npz",
     ".zip"
   ],
-  "total_bytes": 1787682710,
-  "count": 123,
+  "total_bytes": 1791864053,
+  "count": 125,
   "files": [
     {
       "path": "data/d291_null_surface.npz",
@@ -635,6 +635,15 @@
       ]
     },
     {
+      "path": "data/fixtures/fut_cleared_volume_cm_daily.csv.gz",
+      "bytes": 4163798,
+      "sha256": "1e954c94daf0e072ed6e72cd356eafca9a47547eba32aa84f4cbe0133eb61b4a",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fut_cleared_volume_cm_daily.meta.json"
+      ]
+    },
+    {
       "path": "data/fixtures/fut_crossing_tbbo.csv.gz",
       "bytes": 7598115,
       "sha256": "3ffa6f09a47b37676749eb8e5a03fd064eaf04a062f00591594eed99b722bb0f",
@@ -805,6 +814,15 @@
       "sha256": "8ed7202751507db1f2c2e76aaf49e57f6eafd61f7cc163b73356f8e9dacc5783",
       "git_blob": "abcfa2ad0fd1c2bbcda50ba468651ec18c4a36aa",
       "sidecars": []
+    },
+    {
+      "path": "data/fixtures/hkm_factors.csv.gz",
+      "bytes": 17545,
+      "sha256": "ec8951a376c988cb005a9062f5de952c88d7f78c8f1c35387475b92a9c12ba5a",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/hkm_factors.meta.json"
+      ]
     },
     {
       "path": "data/fixtures/holdout_intraday_15m_panel.csv.gz",

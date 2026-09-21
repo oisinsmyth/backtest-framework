@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 338 of these records carry neither field —
+**No Status or Category column, deliberately.** 339 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -668,7 +668,9 @@ would look like data. The tokens are what is shown.
 | D587 | Futures fills are one library module with pessimism as the default, not five per-script literals that disagree | [record](D587-shared-futures-fill-model.md) |
 | D588 | The deposit documents' power arithmetic is one library module with a self-testing renderer, not five copies of a formul… | [record](D588-power-analysis-module.md) |
 | D589 | FIXTURE: the CME session calendar and event flags for the 36 breadth roots — 205,428 (root, ET calendar day) rows 2010-… | [record](D589-FIXTURE-cme-session-calendar-and-event-flags-36-roots.md) |
+| D591 | A futures round trip is two bricks, commission and tick crossing, built from one reconciled table whose every number is… | [record](D591-futures-cost-bricks-and-the-reconciled-cost-table.md) |
 | D600 | D600 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
+| D601 | FIXTURE: the four macro fixtures for the basis-momentum closure programme — the He–Kelly–Manela intermediary factors (m… | [record](D601-FIXTURE-macro-series-for-the-basis-momentum-closure-programme.md) |
 
 <!-- REGISTER:END -->
 
