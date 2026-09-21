@@ -1,0 +1,64 @@
+{
+ "built_utc": "2026-09-21T20:14:04Z",
+ "fetcher": "scripts/fetch_macro_series.py",
+ "rows": 884,
+ "sha256": "ec8951a376c988cb005a9062f5de952c88d7f78c8f1c35387475b92a9c12ba5a",
+ "gates": {
+  "G1": "no duplicate (freq, period)",
+  "G2": "capital ratio in (0, 1) on every row",
+  "G3": "monthly rows 664 >= 600, quarterly 220 >= 200",
+  "G4": "quarter-end monthly vs quarterly capital ratio corr 1.0000 > 0.9",
+  "G5": "monthly rows equal the raw file's 664",
+  "monthly_span": [
+   197001,
+   202505
+  ],
+  "quarterly_span": [
+   19701,
+   20244
+  ],
+  "source_defect_rows_dropped": [
+   {
+    "freq": "M",
+    "period": 202501,
+    "intermediary_capital_ratio": 0.0845485581662186,
+    "intermediary_capital_risk_factor": 0.0933936553844704,
+    "intermediary_value_weighted_investment_return": 0.0995179394721563,
+    "intermediary_leverage_ratio_squared": 139.8902957473306
+   },
+   {
+    "freq": "M",
+    "period": 202501,
+    "intermediary_capital_ratio": 0.0826352911421934,
+    "intermediary_capital_risk_factor": 0.0038054709045613,
+    "intermediary_value_weighted_investment_return": -0.0030708159840897,
+    "intermediary_leverage_ratio_squared": 146.4430875847966
+   },
+   {
+    "freq": "Q",
+    "period": 20251,
+    "intermediary_capital_ratio": 0.0845485581662186,
+    "intermediary_capital_risk_factor": 0.1029581017999493,
+    "intermediary_value_weighted_investment_return": 0.0995179394721563,
+    "intermediary_leverage_ratio_squared": 139.8902957473306
+   },
+   {
+    "freq": "Q",
+    "period": 20251,
+    "intermediary_capital_ratio": 0.0744767407916151,
+    "intermediary_capital_risk_factor": -0.0850371619782872,
+    "intermediary_value_weighted_investment_return": -0.0677146768293891,
+    "intermediary_leverage_ratio_squared": 180.28461795681864
+   }
+  ]
+ },
+ "all_gates_pass": true,
+ "source": "https://zhiguohe.net/wp-content/uploads/2025/07/He_Kelly_Manela_Factors_{monthly,quarterly}_250627.csv",
+ "licence": "He, Kelly & Manela: non-commercial use free of charge, as is; NOT committed (gitignored, manifest-registered); cite He, Kelly & Manela (2017, JFE 126(1))",
+ "shape": "TIDY -- freq M or Q; period yyyymm or yyyyq; the four published columns",
+ "vintage": "one file, 2025-06-27; the monthly capital ratio interpolates quarterly balance-sheet data; no vintage history exists",
+ "raw_sha256": {
+  "monthly": "b52b9d086baa0c61241a1a6349788b41ea01a8de3fec7ad75980396d10d5d151",
+  "quarterly": "d86bcce6ff52670010ddd1e2ebf36706129de8e99654e8b059df512ace1b87eb"
+ }
+}

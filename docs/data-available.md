@@ -391,6 +391,29 @@ the schema has no trade count; *(iii)* from 2026-05-30 Saturday and Sunday trade
 (CME weekend crypto sessions); *(iv)* the daily halt (21:00–22:00 or 22:00–23:00 UTC by DST) sits
 inside any window that spans the US evening.
 
+**The four macro fixtures for the basis-momentum closure programme ([D601](decisions/D601-FIXTURE-macro-series-for-the-basis-momentum-closure-programme.md), 2026-09-21)**, fetcher `scripts/fetch_macro_series.py` (keyless except NASS), builder `scripts/build_fut_cleared_volume_cm.py`:
+*(a)* **`hkm_factors.csv.gz`** + meta — He–Kelly–Manela intermediary capital ratio, risk factor,
+value-weighted investment return and leverage-ratio-squared, 664 months 1970-01 → 2025-05 and 220
+quarters to 2024Q4; **gitignored (non-commercial terms), manifest-hashed**. What bites: one
+vintage (2025-06-27), the monthly ratio interpolates quarterly balance sheets, and the source file
+carries two rows labelled 202501 / 20251 — dropped and recorded in the meta.
+*(b)* **`eia_weekly_stocks.csv`** + meta — crude ex-SPR, total gasoline, distillate (thousand
+barrels) and Lower-48 working gas (Bcf), 7,375 Friday weeks (crude from 1982, gas from 2010) to
+2026-09-11, with a nominal release date. What bites: **current vintage only** (EIA revises); a
+study conditions on a week only when `week_ending + 7 days ≤ the session`.
+*(c)* **`oecd_ir3tib_monthly.csv`** + meta — monthly-average 3-month interbank rates for USD, EUR,
+GBP, JPY, AUD, CAD, CHF, 2000-01 → 2026-08 (JPY from 2002-04), the series FRED republishes as
+`IR3TIB01xxM156N`; FRED itself resets connections from this machine. What bites: **USD 2020-04 is
+missing at source** — filled with its neighbours' mean and flagged `filled = True`; the value
+dated *t−1* is the last one published by month-end *t*.
+*(d)* **`fut_cleared_volume_cm_daily.csv.gz`** + meta — per-contract daily cleared volume of the
+17 commodity roots from the `statistics` archive (stat_type 6, windowed ids), 852,938 rows,
+**2015-11-19 → 2023-12-29 only: the archive publishes cleared volume from late 2015**, so nothing
+before 2016 can be sized from it. Gitignored (CME-licensed), manifest-hashed.
+*(e)* **`nass_stocks.csv`** (USDA quarterly Grain Stocks, monthly Cattle on Feed, quarterly Hogs and
+Pigs, with ESMIS release datetimes) is built by the same fetcher **once `NASS_API_KEY` or
+`~/.config/nass/key` exists**; absent the key the fetcher skips it and says so.
+
 **`perp_funding.csv` + `perp_open_interest_daily.csv` + `perp_funding.meta.json` ([D579](decisions/D579-FIXTURE-perpetual-funding-rates-and-open-interest-three-venues.md), 2026-09-20):**
 perpetual-swap funding rates, tidy, one row per (venue, symbol, settlement UTC): Binance USDT-M
 BTC/ETH from 2019-09-10 / 2019-11-27, Bybit linear from 2020-03-25, **Bybit inverse BTCUSD from

@@ -1,0 +1,57 @@
+{
+ "built_utc": "2026-09-21T20:14:06Z",
+ "fetcher": "scripts/fetch_macro_series.py",
+ "rows": 2206,
+ "sha256": "d7ce017d2228cb3c168b3abce0442d51742ffac9e27564542c9be32e9aee19f5",
+ "gates": {
+  "G1": "no duplicate (currency, period)",
+  "G2": "seven currencies, every month 2009-01..2023-12 present",
+  "G3": "rates in (-2, 25) %",
+  "G4": "5 FRED-published values reproduced to 0.01",
+  "spans": {
+   "AUD": [
+    "2000-01",
+    "2026-08"
+   ],
+   "CAD": [
+    "2000-01",
+    "2026-08"
+   ],
+   "CHF": [
+    "2000-01",
+    "2026-08"
+   ],
+   "EUR": [
+    "2000-01",
+    "2026-08"
+   ],
+   "GBP": [
+    "2000-01",
+    "2026-02"
+   ],
+   "JPY": [
+    "2002-04",
+    "2026-07"
+   ],
+   "USD": [
+    "2000-01",
+    "2026-08"
+   ]
+  },
+  "source_gaps_filled": [
+   {
+    "currency": "USD",
+    "area": "USA",
+    "period": "2020-04",
+    "rate_pct": 0.76,
+    "filled": true
+   }
+  ]
+ },
+ "all_gates_pass": true,
+ "source": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES@DF_FINMARK,4.0/USA+EA20+GBR+JPN+AUS+CAN+CHE.M.IR3TIB.PA.....?startPeriod=2000-01&format=csvfile",
+ "licence": "OECD data, CC BY 4.0; committed",
+ "shape": "TIDY -- one row per (currency, period YYYY-MM); rate_pct the monthly average 3-month interbank rate, percent per annum",
+ "use": "at month-end t the value dated t-1 is the last one published (OECD MEI publishes month m in the first half of m+1)",
+ "raw_sha256": "aadd634463799f1ed990f919942740c8c1a408d65bd70ff559df6a2aa5390faf"
+}

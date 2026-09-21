@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 338 of these records carry neither field —
+**No Status or Category column, deliberately.** 343 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -673,12 +673,15 @@ would look like data. The tokens are what is shown.
 | D592 | The programme's α registry, trial counter and episode checks are library code with one state file, and the deposit's re… | [record](D592-programme-alpha-registry-trial-counter-and-episode-checks.md) |
 | D593 | The deposit's look-ahead controls become code: the runners' lag, a one-bar-delay rerun, a syntactic leak scan, and year… | [record](D593-look-ahead-defences-and-year-folds.md) |
 | D594 | The frozen-protocol layer: a model's parameters, code and dates get the same structural guard the DATA already has, and… | [record](D594-the-frozen-protocol-layer.md) |
-| D600 | D600 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
-| D603 | The forward data recorder: raw bytes under a fetched_at name, a gap log nothing fills, and a host the record does not c… | [record](D603-the-forward-data-recorder.md) |
+| D600 | D600 STAGE 0 RESULT — M3 NOT SUPPORTED; the de-seasonalised signal SURVIVES its rotation null and no other; T3 clears t… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) · [RESULT](D600-STAGE-0-RESULT-M3-M4-not-supported-M5-unresolved-on-storage.md) |
+| D601 | FIXTURE: the four macro fixtures for the basis-momentum closure programme — the He–Kelly–Manela intermediary factors (m… | [record](D601-FIXTURE-macro-series-for-the-basis-momentum-closure-programme.md) |
+| D602 | VOID on its own harness. The covered-parity correction built from monthly-average 3-month rates does not remove the rat… | [PRE-REG](D602-PRE-REG-basis-momentum-on-FX-in-covered-parity-space.md) · [RESULT](D602-RESULT-VOID-the-parity-correction-over-shoots-on-monthly-rates.md) |
+| D603 | BASIS_MOMENTUM.md is CLOSED by the principal, and the synthesis of the basis-momentum programme D564–D602: ten free tes… | [record](D603-CLOSED-basis-momentum-every-free-test-run-none-supported.md) |
 | D604 | A futures square-root impact brick, its depth-scaled variant, and the first order-book depth fixture: the repository co… | [record](D604-futures-sqrt-impact-depth-scaling-and-the-book-depth-fixture.md) |
 | D605 | Track 3 logging: the per-trade fill log, implementation shortfall, latency and the trial counter, with the two things t… | [record](D605-track-3-logging-shortfall-latency-and-the-trial-counter.md) |
 | D606 | The error budget becomes code, and the zero-contribution term's delta is exactly zero because the column is DROPPED, no… | [record](D606-the-error-budget-the-fitting-helpers-and-the-parameter-budget.md) |
 | D607 | The crosswalk from the deposit's 146 numbered unit tests to the repository tests that claim them: 28 claimed in three s… | [record](D607-the-deposit-test-crosswalk.md) |
+| D608 | The forward data recorder: raw bytes under a fetched_at name, a gap log nothing fills, and a host the record does not c… | [record](D608-the-forward-data-recorder.md) |
 
 <!-- REGISTER:END -->
 

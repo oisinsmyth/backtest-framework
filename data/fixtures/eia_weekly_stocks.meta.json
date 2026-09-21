@@ -1,0 +1,44 @@
+{
+ "built_utc": "2026-09-21T20:14:06Z",
+ "fetcher": "scripts/fetch_macro_series.py",
+ "rows": 7375,
+ "sha256": "6ce3cc658b091e4c99023ae7f1f793b4de6dd18ea021cd9f7a025006944a7104",
+ "gates": {
+  "G1": "no duplicate (series, week_ending)",
+  "G2": "every stock > 0",
+  "G3": "week-ending is a Friday on 100.00%",
+  "G4": "nominal release date after the week-ending on every row",
+  "G5": "every series weekly without gaps over 2010-2023 (>= 700 weeks)",
+  "series": {
+   "crude_ex_spr": {
+    "n": 2294,
+    "first": "1982-08-20",
+    "last": "2026-09-11"
+   },
+   "distillate": {
+    "n": 2294,
+    "first": "1982-08-20",
+    "last": "2026-09-11"
+   },
+   "gasoline_total": {
+    "n": 1915,
+    "first": "1990-01-05",
+    "last": "2026-09-11"
+   },
+   "natgas_working_l48": {
+    "n": 872,
+    "first": "2010-01-01",
+    "last": "2026-09-11"
+   }
+  }
+ },
+ "all_gates_pass": true,
+ "source": "https://www.eia.gov/opendata/bulk/{PET,NG}.zip (keyless bulk, current vintage, public domain)",
+ "shape": "TIDY -- one row per (series, week_ending); value in kbbl or bcf; release_date_nominal is w+5 (WPSR) / w+6 (WNGSR)",
+ "known_at_rule": "the runner conditions on a week only when week_ending + 7 calendar days <= the month-end session (covers holiday shifts and the June 2022 outage)",
+ "vintage": "current revised values; EIA revises weekly stocks; no vintage archive",
+ "raw_sha256": {
+  "PET": "a0ce3005bee89cf074f13531e7c524062b585637bd5fd62aa22fdd79d271495d",
+  "NG": "e57e2cf7c4426a4a05067dd7580ce61c56d74ed901de3514c63195f433784551"
+ }
+}
