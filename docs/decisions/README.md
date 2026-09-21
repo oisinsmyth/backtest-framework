@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 339 of these records carry neither field —
+**No Status or Category column, deliberately.** 340 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -671,6 +671,7 @@ would look like data. The tokens are what is shown.
 | D591 | A futures round trip is two bricks, commission and tick crossing, built from one reconciled table whose every number is… | [record](D591-futures-cost-bricks-and-the-reconciled-cost-table.md) |
 | D600 | D600 STAGE 0 DESIGN — the basis-momentum closure programme on the 17 commodity roots: every remaining test in BASIS_MOM… | [record](D600-STAGE-0-DESIGN-basis-momentum-closure-programme-M3-M4-M5-T3.md) |
 | D601 | FIXTURE: the four macro fixtures for the basis-momentum closure programme — the He–Kelly–Manela intermediary factors (m… | [record](D601-FIXTURE-macro-series-for-the-basis-momentum-closure-programme.md) |
+| D602 | REG — basis momentum on the six CME FX roots, measured in covered-parity space — the deposit's T2 with its open questio… | [PRE-REG](D602-PRE-REG-basis-momentum-on-FX-in-covered-parity-space.md) |
 
 <!-- REGISTER:END -->
 
