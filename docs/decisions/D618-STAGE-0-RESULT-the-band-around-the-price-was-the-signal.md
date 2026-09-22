@@ -190,6 +190,36 @@ agreeing between −0.82 and −0.95.
 an INCREMENTAL knowable return.** The only gross that clears is a re-expression of a return already known
 and already in the ledger — and that return does not clear cost on its own either ($3.20 against $4.25).
 
+### 3c. Looks taken at the `F5` continuation while answering that question — DISCLOSED, not a test
+
+Identifying what the gross-clearing cell was eating meant measuring the plain 14:30 → 15:30 continuation
+itself, on the spent in-sample window. Those looks are recorded here because an undisclosed look is what
+rots a ledger, and because the numbers are interesting enough that someone will want to act on them.
+
+On 1,960 sessions the sign of the prior hour, traded 15:30 → 16:00: **+0.6795 points a trade**, hit
+**0.4929**, median exactly zero — so the edge is magnitude asymmetry, not direction, which is what D463
+found when it said the sign does not tilt the last half-hour. Against an **enumerated** rotation null over
+1,941 offsets it sits at **rank 0.9990** (observed $3.40 at MES against a p95 of $1.67). It survives
+symmetric 1 % trimming ($2.86 against a raw $3.40; the ex-top-only $0.90 is the flag CLAUDE.md says always
+frightens on a two-sided fat-tailed book). **It is not stable across eras**, in the same shape D463 found
+for the day version: **2016–17 −$0.26 (t −0.39)**, then +$3.24, +$5.20, +$5.41 (t 1.7–2.0).
+
+And the constraint, which is the point: at **1 MES** the fee is **1.25× the whole gross** (net −$0.85). At
+**1 ES** the fee stops binding and net annualised Sharpe is **+0.582** — but the maximum drawdown is
+**$9,694**, which is **4.8×** a $50,000 account's $2,000 trailing allowance, and the worst single trade is
+**−$3,888**, or **1.9×** that allowance. One afternoon ends the account. That is
+[D463](D463-RESULT-market-intraday-momentum-is-a-third-of-its-published.md)'s own verdict reached from a
+different direction — *hurdle P fails on size at every f* — and it is the ledger's standing result that the
+fee demands size while the barrier forbids it.
+
+**Nothing follows from this paragraph.** It is Baltussen's published market intraday momentum, already
+pre-registered and rejected for the prop account in D463, and already noted as prior-hour continuation at
+t 2.9 in D581; this section measures a *refinement* of it (the last hour rather than the whole day — whose
+own book earns **+$0.68 at t 0.42** here, reproducing D463) chosen **after** seeing which cell it explained,
+which is selection. If it is ever pursued it belongs in a fresh pre-registration aimed at the **personal**
+book, which carries no trailing-drawdown barrier, with the 2016–17 era failure declared in advance and a
+slice reserved for confirmation — not as a tail of this study.
+
 **The ceiling, which is the number worth keeping.** A *perfect* sign-predictor on the same clock earns
 **$30.65** gross per trade on 15:30 → 16:00 (median $17.50) and **$21.41** on 15:50 → 16:00. So breaking
 even at one MES requires capturing **13.9 %** of the available absolute move on the half-hour and
