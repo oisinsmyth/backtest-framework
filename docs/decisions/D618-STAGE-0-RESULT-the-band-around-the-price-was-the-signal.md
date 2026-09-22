@@ -238,6 +238,39 @@ annualised Sharpe is **≈0.46**, and the honest statistic is the **net t of +1.
 two years. 2016–17 is **net −$3.75** at t 0.47. Selectivity did what D506 said it does (cut the drawdown by
 16×) and did not make the edge significant.
 
+**Stripping the volatility leg does not rescue it, and shows the leg was load-bearing.** MACD confirmation
+alone doubles the sample to 697 trades (87 a year) and genuinely improves the *distribution* — hit rate
+**0.4929 → 0.5466**, median trade **0.000 → +0.500 points**, and a symmetric trim equal to the mean exactly
+($4.95 / $4.95), so no tail dependence at all. But the economics get worse where it matters: MES net
+**+$0.70** at **t +0.38**, because the fee is a fixed $4.25 a trade and halving the per-trade gross while
+doubling the count means paying it twice as often for half the return. Over eight years that is
+697 × $0.70 = **$488** against the two-leg cell's 337 × $3.09 = **$1,041** — half the trades, twice the
+money. Drawdown also worsens (0.71× of allowance at MES, and **5.68×** at ES, worse than unfiltered), and
+**2022–23 turns negative** at −$0.96 where the two-leg version was +$1.01. At micro size, sharpening beats
+broadening.
+
+### 3e. CLOSED by the principal, 2026-09-22 — and the closing argument is a power calculation
+
+The line is closed on the principal's word, and the reason is not that the result looks marginal. **The
+question is unanswerable at the rate the construction trades.** Taking the measured cell entirely at face
+value — net $3.09 a trade against a per-trade dispersion of **$43.3** — a holdout read would give:
+
+| holdout | trades | expected t **if the effect is entirely real** |
+|---|---:|---:|
+| two years at the full 42/yr rate | 84 | **+0.65** |
+| two years at the *recent* firing rate | 29 | **+0.38** |
+| what t = 2.0 would require | **786** | **19 years** at 42/yr, 54 at the recent rate |
+
+The confirmation-only version needs **19,308 trades, 222 years**. Spending the unread ES day-session 2024+
+slice would therefore buy nothing: the read comes back near zero whether or not the effect is real, and the
+holdout is gone. The in-sample $3.09 is selection-inflated on top of that, so the true power is worse than
+the table.
+
+**And size cannot substitute for evidence.** At one ES the same cell earns $57.87 a trade rather than
+$3.09, and `t` is *identical* — scaling multiplies the mean and the standard error alike. There is no
+contract count at which this becomes knowable. What would reopen it is a construction firing **150+ times a
+year**, or a mechanism argument strong enough to carry the prior without the statistics. Neither is in hand.
+
 **Nothing follows from this either.** The chain is 126 cells → pick `F5` → five filters → pick the best
 two-way combination, and the best-of-five null prices only the last step: not the choice of `F5`, not the
 median as the volatility threshold, not the MACD parameterisation. What it is, honestly, is the first
