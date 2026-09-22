@@ -10,6 +10,157 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-22, the last shared item and the settlement ledger's own infrastructure — round 4)
+- **D609 — the panel loader chokepoint, and seven roots that were 100x wrong.** *Part A:*
+  `data/panels.py` and `data/panel_catalogue.py` — one door onto every bulk panel, with
+  `reserved_from` as a keyword argument that **has no default**, D594's three layers in order,
+  the manifest sha256 re-derived on every read, and a catalogue declaring the date column for
+  **all 126 manifest panels** plus the 17 columns that must never receive the cut
+  (`fut_micro_flow_5m.bucket_start` and `fut_btc_1m.ts_utc` are the prior EVENING of their
+  session; `fut_es_options_eod.expiry_date` is in the future; `prev_day` is one session early on
+  eight panels). Opening on the principal's word re-runs the blocked read and compares the whole
+  frame, making `run_d574:106-108` free and generic. The honest-skip rule moved out of
+  `tests/conftest.py` into `panel_status` and the two places that had retyped it by hand now call
+  it; **the skip count did not change** (113 passed / 0 skipped either side). **No runner is
+  migrated** — the 26 `RESERVED_FROM` scripts and the seven `--principals-word` runners are
+  listed as the migration set — and **no seal date is picked**: D604's `fut_book_depth_1m` spans
+  2026-08-11..09-09, inside the deposit's vault window AND after this repo's seal, and reads as
+  zero rows rather than as a default. Found on the first real read:
+  **`hkm_factors.csv.gz` is two panels stacked**, 664 monthly `YYYYMM` rows beside 220 quarterly
+  `YYYYQ` ones, so it is cut on the year the two share. *Part B:* the definition snapshot's
+  `unit_of_measure == "USD"` divide is wrong on seven roots — ZC/ZS/ZW/ZL/LE/HE 100x high,
+  SR3 100x low, all seven with `known_tick_usd: null`, and `__post_init__`'s product identity
+  cannot catch it because `usd_per_point` is derived from `tick_usd`. `tick_usd_full_contract`
+  added per root by the breadth builder's own NOTIONAL test (17 known answers reproduced, 36
+  roots agreeing with the breadth meta); `Future.from_specs` reads it and raises without it;
+  `futures_costs.json` and `futures_impact_params.json` rebuilt — **seven roots' multipliers moved
+  and `multiplier_disagreements` went to `[]`; no measured number and no study result moved**, and
+  `d555_tsmom_replication.json`'s bytes are asserted unchanged. 179 tests (unit 161, golden 10,
+  property 7). No strategy return computed; no fixture row from 2024-01-01 read for any return.
+- **D610 — the settlement flow ledger's algebra, built before any data, checked by hand.**
+  A new `src/backtest_framework/ledger/` package (`__init__.py` empty): `flows.py` (§4's P1
+  and P2 with the `f_fut`/`n` routing, §5.1's `fsum` aggregation, line 718's held-month
+  mapping that **has no front-month default**, and §8A.5's nearest-rank `L_min` refusing a
+  same-day trade in D604 `depth_bar`'s shape), `update.py` (§5.2's five lines,
+  `S_norm`'s trailing window refusing day t, and §7.1's earliest-pass rule under §7.3's
+  three-minute constraint, taking `W_start` as an argument because `src/` may not import
+  `scripts/`), `rolls.py` (P8a's two legs on `sign(L)`, UNG's four-day 25% schedule carrying
+  line 327 verbatim with **`for_fund` raising for every other fund — line 328, "Do not
+  assume"**, line 340's holdings validation with its P8b fallback as a FIELD, and P8b
+  returning **exactly 0.0** for a fund already in P8a) and `netting.py` (§8A.2's slope
+  through the origin via D606's pinned `ols`, **projected onto [0, 1] because for one
+  parameter with no intercept the projection IS the constrained argmin**, line 499's
+  consistency flag, line 495's predictor **raising on any futures-held term**, and the COT
+  and swap-dissemination clocks). Measured and recorded: line 156 is exact in binary64 only
+  in the document's own left-to-right order (`1e9*6*0.05` is 3e8; `1e9*(6*0.05)` is
+  `300000000.00000006`); required unit test 6 is exact on four of its five outputs and
+  `K == 0.0` exactly at `R = inf`; **the P1/P2 routing identity is exact only at the two
+  endpoints line 709 names and one ulp wide inside** (51 of 99 interior points in the
+  module's spelling, 26 in the hand file's); `cot_usable_from` agrees with
+  `fetch_cftc_cot.py:397` on 12,418 consecutive dates. Two interpretation choices are stated
+  as choices with their alternatives: "two weeks" as 14 calendar days, and the COT Friday
+  rule. 42 tests (golden 8 with hand arithmetic written before the package existed, unit 25,
+  property 9) plus `scripts/ledger_selftest.py --selftest`, 27 checks proving 12 guards fire
+  and 4 boundary equalities hold. Ledger required unit tests 1, 2, 3, 5, 6, 8, 9, 12, 37, 38,
+  39, 40, 41, 42, 43, 44, 47. No strategy return computed; no fixture read; nothing written
+  under `data/`.
+- **D611 — the deposit's fund model: iNAV, the premium, creations, the hedged fraction, P9 and
+  the restrike.** Four library modules under `ledger/` — `funds.py` (the six US funds of Section
+  3.1 with the NG/CL contract multipliers from `data/futures_contract_specs.json`, `inav` on line
+  184's two day counts, `gate_0b` on line 191's 5 bp / 95%), `premium.py` (`Quote` refusing a
+  crossed NBBO, the valid-minute rule of line 200, `prem_twa`/`prem_frac`/`vol_x`/`sv_etf`, and
+  `stress` refusing a trailing entry that is not prior), `creations.py` (`delta_create`, the
+  `lag_c` branch, the logistic hedged fraction with line 472's `h1 >= 0` and `g1 >= 0` enforced,
+  `create_flow` and the window split) and `non_us.py` (the eight Section 3.1b products carrying
+  line 74's "indicative" warning, `effective_leverage` with decision D19's flag, `delta_h`, `q9`,
+  prior-settlement FX, the index month, and the 20% restrike) — plus
+  `scripts/fund_model_selftest.py`. **Every fact the deposit marks "to source" is `None` and
+  every function that needs one RAISES**: all six funds carry `er=None`, 3OIL and 3OIS carry no
+  index month rule, three WisdomTree lines carry no restrike threshold, and `vol_x` is `None`
+  without a trailing mean. Measured: required unit test 26's `+$12m` and `+$24m` are EXACT
+  doubles and the `-3x` rebalance is exactly twice the `+3x` one; -6.7% fires a restrike at
+  `79.89999999999999` and -6.5% does not; line 184's accrual is 1.7% larger than the same
+  formula written on one day count. 76 tests (golden 17 hand-worked, unit 48, property 11), 13
+  numbered ledger claims (4, 14-20, 26-30). No fixture read, nothing written under `data/`, no
+  strategy return computed.
+- **D612 — the attention layer (ledger §3.3c, §P3.7).** `data/attention/QUERIES.md` written
+  before any feature code and hashed (`QUERIES.sha256`, LF-pinned; `load_queries` raises
+  `QueriesTampered`), `data/attention.py` with the Wikimedia dump and GDELT GKG parsers and the
+  four point-in-time guards — the 14:15 publication boundary, the publication-not-event key, the
+  `t−60 … t−1` matched z-score that *refuses* a same-day observation rather than filtering it,
+  and an `att_accel` that is exactly 0.0 on a constant — plus `scripts/fetch_attention.py`
+  routing every fetch through D608's `Recorder`. A **two-day** sample fixture (2019-11-04…05,
+  projected 37.7 min): the three-day build was abandoned mid-run when `dumps.wikimedia.org`
+  throttled two sustained connections from 2.23 MB/s to **0.09 MB/s** and then measured slower
+  on two than on one, and when the GDELT half read `3.98x, 100% efficiency` while taking 17 min
+  against 9 — **busy is not fast, and a parallel-efficiency ratio is not throughput.**
+  **Erratum recorded, deposit not edited:** its line 112's "Wikimedia hourly pageviews" has no
+  REST route — hourly exists only in the dumps, at ~2.5 TB for 2016–2023 against GDELT GKG's
+  ~1.64 TB, and no backfill is launched. Three of the four ProShares ticker pages resolve to
+  disambiguation pages and are excluded by name. The recorder's `attention` job is `ready`
+  (8 of 16). Ledger unit tests 21–25 claimed; 54 tests.
+- **D619 — the fund panel, the fund-facts SOURCES and the CME-side census.**
+  `data/fixtures/fund_nav_daily.csv.gz` (16,402 rows, four ProShares funds, 2008–2026, five
+  gates, deterministic gzip) plus `data/fund_facts/{SOURCES.md,fund_facts.json}` (30 facts
+  sourced from three 10-Ks, 10 unknown and never inferred, a validator that raises, `lag_c = 0`
+  on all six funds, USO's roll **changed from ten days to five on 2026-01-01**, UCO **0.249
+  futures / 0.751 swap** on 2026-09-18 across three non-front months). Census: **TAS is present
+  on GLBX.MDP3** under `CLT.FUT`/`NGT.FUT` (deposit Q3 answered), **CL/NG options OI is not on
+  disk at all** (both pulls used `.FUT` parents — the tracker's "statistics schema held" line was
+  wrong), fifteen option parents resolve and `CL.OPT`/`NG.OPT` do not exist. Quoted at 178.91 GB
+  / **USD 3.17**, all of it the TAS `trades` schema; **nothing submitted, nothing downloaded**
+  (the principal's decision of 2026-09-22). The recorder's `fund_snapshot` job is split into
+  `proshares_nav` and `proshares_holdings` (ready) and `uscf_fund_snapshot` and `p9_snapshot`
+  (needs_source). Deposit ledger test 50 claimed. 50 tests.
+- **D620 — the quarterly fund holdings from EDGAR, and the between-filing projection.** All
+  **231** 10-Qs and 10-Ks of the six funds' registrants recorded (573 MB, 240 requests, SEC-paced
+  through D608's recorder) and parsed into `data/fixtures/fund_holdings_quarterly.csv.gz`: **415
+  fund-quarters** of futures and swap lines with signed contracts, notional, contract months and
+  counterparties back to 2006, six gates, and **every unparsed period written down with a reason**
+  rather than skipped. `data/fixtures/fund_panel_projected.csv.gz` answers the principal's
+  question — *"Can we project this backwards / in between the filings?"* — **backwards yes, in
+  between no**: the point-in-time projection is wrong by a **median 36–44% on shares and 18–33% on
+  AUM**, and its creation flow is **uncorrelated with the truth** (−0.05 to −0.001, moving on 46
+  of 2,979 days where the truth moves on 934). Along the way: `fund_nav_daily` put on an
+  as-published basis using Alpha Vantage split coefficients (D619 recorded none were available),
+  verified against the filings' own NAV per share to **1e-4**; **26 restated share counts, every
+  ratio exactly a split ratio**; the close-versus-NAV premium measured at **37–52 bp median,
+  162–234 bp p95**; and creations shown to be **contrarian** (Δlog-shares against Δlog-NAV,
+  −0.40 to −0.76), which is why stale shares × today's close is worse than stale shares × stale
+  NAV. `companyfacts` gives per-fund anchors for USO and UNG and **registrant totals only** for
+  ProShares Trust II. `data/fund_facts/FILINGS.md` is the sources list. 84 tests.
+- **D621 — retail attention from creations and Robinhood holders (ledger §3.3c line 112,
+  amended).** The deposit's hourly-Wikipedia row is replaced rather than backfilled: D612
+  measured that route at ~2.5 TB for 2016–2023 on a host sustaining 1.79 MB/s, and **a creation
+  is not a proxy for retail demand, it is the quantity `ΔCreate` the deposit's own C3 model
+  predicts.** `data/retail_attention.py` (`creations` differencing against the previous day *in
+  the source*, a daily `creation_z` whose `same_weekday` mode delegates to D612's
+  `zscore_matched` and agrees with it to the last bit on a shared input, a `creation_accel` that
+  *is* `att_accel` on a six-hour axis, a Robinhood reader whose outages are `None` and never
+  `0`, and Spearman + Pearson with a stated tie rule); `robintrack_energy_funds.csv.gz`
+  (115,290 rows, six funds, both site outages named and unfilled, BOIL's early stop recorded);
+  `gdelt_hourly_sample.csv.gz` (672 rows, file-derived). **Measured, over 2018-05-02 → 2020-08-13
+  on the steps where a creation happened: Spearman of Δholders against Δshares is positive at
+  lag 0 on all four ProShares funds (+0.09 to +0.56) and lower at lag +1 than at lag 0 on all
+  four** — holders do not follow creations. **And the two statistics disagree by half on two of
+  them**: UCO reads Spearman +0.556 against Pearson −0.077, carried by 2020-04-20/21 alone.
+  A data-quality measurement, not a signal test: no return, no null, nothing scored. The GDELT
+  DOC API answered **429 and then dropped the connection**; `--api` is built and not run, and
+  the block is logged with its tool and URL. The amendment to the deposit is drafted in the
+  record (§7d) for the principal, who approved the plan on 2026-09-22; the deposit is not edited.
+  108 tests.
+- **The free Databento pull (2026-09-22, the principal's word: "delay the paid data, do the
+  other free download now").** `scripts/fetch_energy_options.py` submitted six batch jobs at
+  USD 0.00 — the fifteen CL/NG option parents' `definition` and `statistics` (2016→2026-09, in
+  three family jobs) and the TAS roots' free `definition` and `statistics` — with the ES script's
+  spend guard and no flag that could send the paid TAS `trades` schema (USD 3.17, deferred). The
+  job record is `data/energy_options_pull_jobs.json`; raw lands under `data/raw/databento/`.
+- **Integration (round 4).** The crosswalk moves from 43 to 79 of 146 claimed (ledger 65/71);
+  the tracker's shared list is complete but for the seal-date reconciliation, the recorder host
+  and the 14:30 execution automation, which are the principal's or the deposit's; two tracker
+  lines were wrong and are corrected (TAS symbology, options OI); the item-8 calendar carries no
+  `eia` or `index_rebalance` flag though the split names both — recorded, not built.
+
 ### Added (2026-09-21, macro fixtures for the basis-momentum closure programme)
 - `data/fixtures/hkm_factors.csv.gz` + meta (D601): the He–Kelly–Manela intermediary capital ratio
   and risk factor, 664 months 1970-01 → 2025-05 and 220 quarters, from zhiguohe.net's 2025-06-27

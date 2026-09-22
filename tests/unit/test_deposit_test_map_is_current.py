@@ -107,11 +107,14 @@ def test_every_row_carries_its_verbatim_text_so_the_page_renders_without_the_dep
 
 
 #: The per-document claimed counts D607 quotes, as amended 2026-09-21 when round 3's tests
-#: (D608-D606) were staged and recorded: 28 -> 43. **Editing these numbers is the point.**
-#: They are pinned so that a claim added without amending the record turns this red; the fix
-#: is to update both together, never to loosen the assertion into `>=`.
-CLAIMED_PER_DOC = {"ledger": 29, "index": 6, "opening": 6, "shock": 2, "letf": 0}
-CLAIMED_TOTAL = 43
+#: (D608-D606) were staged and recorded: 28 -> 43, and again 2026-09-22 when round 4's ledger
+#: tests (D610 seventeen, D611 thirteen, D612 five, D619 one) were staged: 43 -> 79, ledger
+#: 29 -> 65. The tracker (`docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md`) carries the
+#: running figure. **Editing these numbers is the point.** They are pinned so that a claim
+#: added without amending the record turns this red; the fix is to update both together, never
+#: to loosen the assertion into `>=`.
+CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 6, "shock": 2, "letf": 0}
+CLAIMED_TOTAL = 79
 
 
 def test_the_claimed_counts_are_the_ones_the_record_quotes_and_letf_is_at_zero():

@@ -1,0 +1,294 @@
+{
+ "spec": "D619; SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.1 line 67 (the panel schema)",
+ "record": "D619",
+ "builder": "scripts/build_fund_panel.py",
+ "built_utc": "2026-09-21T23:45:36Z",
+ "columns": [
+  "date",
+  "fund",
+  "nav",
+  "shares_out",
+  "aum",
+  "source",
+  "fetched_at"
+ ],
+ "column_units": {
+  "nav": "USD per share, as published (the series is back-adjusted for reverse splits)",
+  "shares_out": "SHARES. The source column is 'Shares Outstanding (000)', published to two decimals of thousands; multiplied by 1000 here, so every value is an exact multiple of 10 shares and that 10 is the rounding unit.",
+  "aum": "USD, as published, NOT split-adjusted",
+  "source": "the URL the row's CSV was fetched from",
+  "fetched_at": "the recorder's fetched_at for that CSV -- the availability time (deposit decision D23); this source states no published_at"
+ },
+ "deposit_columns_absent": {
+  "columns": [
+   "futures_notional_by_contract_month",
+   "swap_notional",
+   "published_at"
+  ],
+  "why": "ProShares' historical NAV CSV carries none of them. They are ABSENT rather than null-filled: a column of nulls reads as data missing on those days, an absent column says the source never had it. Holdings (the futures/swap split by contract month) are FORWARD ONLY from this issuer -- see D619 and scripts/fetch_fund_holdings.py; the free historical route is the Schedule of Investments in the quarterly 10-Q and annual 10-K, at a 40-90 day lag."
+ },
+ "sources": {
+  "BOIL": "https://accounts.profunds.com/etfdata/ByFund/BOIL-historical_nav.csv",
+  "KOLD": "https://accounts.profunds.com/etfdata/ByFund/KOLD-historical_nav.csv",
+  "SCO": "https://accounts.profunds.com/etfdata/ByFund/SCO-historical_nav.csv",
+  "UCO": "https://accounts.profunds.com/etfdata/ByFund/UCO-historical_nav.csv"
+ },
+ "per_fund": {
+  "BOIL": {
+   "record_path": "BOIL__20260921T231414Z.csv",
+   "sha256": "6643b060db19a623d1cbf6f2ec5e8fb324057591261a08e447717406edb5ca42",
+   "bytes": 425793,
+   "source_url": "https://accounts.profunds.com/etfdata/ByFund/BOIL-historical_nav.csv",
+   "fetched_at": "2026-09-21T23:14:14Z",
+   "rows_in_source": 3761,
+   "rows_kept": 3679,
+   "seed_rows_excluded": 82,
+   "seed_row_dates": [
+    "2011-10-04",
+    "2012-01-31"
+   ],
+   "span": [
+    "2012-02-01",
+    "2026-09-18"
+   ],
+   "splits_found": [],
+   "carry_check": {
+    "max_carry_dev": 3.215847697446428e-05,
+    "max_pct_dev": 4.999195613031304e-08
+   }
+  },
+  "KOLD": {
+   "record_path": "KOLD__20260921T231415Z.csv",
+   "sha256": "ae085d67ea2615f23a139633ab89ac49be66596680d5689a470b1dea54bd6860",
+   "bytes": 462992,
+   "source_url": "https://accounts.profunds.com/etfdata/ByFund/KOLD-historical_nav.csv",
+   "fetched_at": "2026-09-21T23:14:15Z",
+   "rows_in_source": 3761,
+   "rows_kept": 3761,
+   "seed_rows_excluded": 0,
+   "seed_row_dates": [],
+   "span": [
+    "2011-10-04",
+    "2026-09-18"
+   ],
+   "splits_found": [],
+   "carry_check": {
+    "max_carry_dev": 7.455097561681612e-05,
+    "max_pct_dev": 4.998983604842522e-08
+   }
+  },
+  "SCO": {
+   "record_path": "SCO__20260921T231419Z.csv",
+   "sha256": "8c73c09bd0fde89119822da67e20a824f9daef6628c2387cff8e7829e2d053a0",
+   "bytes": 520295,
+   "source_url": "https://accounts.profunds.com/etfdata/ByFund/SCO-historical_nav.csv",
+   "fetched_at": "2026-09-21T23:14:19Z",
+   "rows_in_source": 4481,
+   "rows_kept": 4481,
+   "seed_rows_excluded": 0,
+   "seed_row_dates": [],
+   "span": [
+    "2008-11-24",
+    "2026-09-18"
+   ],
+   "splits_found": [],
+   "carry_check": {
+    "max_carry_dev": 0.01510072922988459,
+    "max_pct_dev": 4.999598335331257e-08
+   }
+  },
+  "UCO": {
+   "record_path": "UCO__20260921T231417Z.csv",
+   "sha256": "70faf9ecf2c0998b92a5980b40c75665a88181a8ed56ca83a6ae1cb0dcb6fd4d",
+   "bytes": 514534,
+   "source_url": "https://accounts.profunds.com/etfdata/ByFund/UCO-historical_nav.csv",
+   "fetched_at": "2026-09-21T23:14:17Z",
+   "rows_in_source": 4481,
+   "rows_kept": 4481,
+   "seed_rows_excluded": 0,
+   "seed_row_dates": [],
+   "span": [
+    "2008-11-24",
+    "2026-09-18"
+   ],
+   "splits_found": [],
+   "carry_check": {
+    "max_carry_dev": 0.005933507863405296,
+    "max_pct_dev": 4.999174851860744e-08
+   }
+  }
+ },
+ "seed_row_rule": {
+  "rule": "shares_out == 0",
+  "why": "the published share count rounds to zero beside a multi-million-dollar AUM, so no per-share or creation-flow arithmetic is possible on those rows. NOTHING IS RESCALED; the rows are dropped and named.",
+  "rejected_alternative": "nav > 1e4 -- refused by the data: 2,327 of BOIL's rows and 7 of SCO's carry NAV above 10,000 and are ordinary rows of a back-adjusted series.",
+  "excluded": {
+   "BOIL": 82,
+   "KOLD": 0,
+   "SCO": 0,
+   "UCO": 0
+  },
+  "dates": {
+   "BOIL": [
+    "2011-10-04",
+    "2012-01-31"
+   ],
+   "KOLD": [],
+   "SCO": [],
+   "UCO": []
+  }
+ },
+ "splits": {
+  "found": {
+   "BOIL": [],
+   "KOLD": [],
+   "SCO": [],
+   "UCO": []
+  },
+  "detector": "a NAV discontinuity of more than 15% against the series' own Prior NAV column, with the shares_out jump beside it",
+  "why_empty": "the published series is FULLY BACK-ADJUSTED for reverse splits, so it carries no discontinuity to find: NAV[t]/PriorNAV[t] equals 1 + the stated NAV Change (%) on every row, and the carry deviation is at most 1.5e-2. BOIL's first row implies 0.50005 shares outstanding, which is the adjustment showing itself.",
+  "no_independent_source": "No split source other than the series itself was available. data/raw/alphavantage/daily_adjusted_etf/ holds UNG and USO only -- neither is one of these four -- and carries prices, not corporate actions.",
+  "carry_check": {
+   "BOIL": {
+    "max_carry_dev": 3.215847697446428e-05,
+    "max_pct_dev": 4.999195613031304e-08
+   },
+   "KOLD": {
+    "max_carry_dev": 7.455097561681612e-05,
+    "max_pct_dev": 4.998983604842522e-08
+   },
+   "SCO": {
+    "max_carry_dev": 0.01510072922988459,
+    "max_pct_dev": 4.999598335331257e-08
+   },
+   "UCO": {
+    "max_carry_dev": 0.005933507863405296,
+    "max_pct_dev": 4.999174851860744e-08
+   }
+  }
+ },
+ "gates": {
+  "G1_aum_identity": {
+   "BOIL": {
+    "n": 3679,
+    "share_within_rounding": 1.0,
+    "share_within_1bp": 0.29872247893449305,
+    "worst_tolerance_use": 0.9997900419916015,
+    "median_tolerance_use": 0.4729054189613415,
+    "rows_using_over_half_the_tolerance": 1833,
+    "worst_relative_bp": 9999.800001999978,
+    "worst_row": {
+     "date": "2012-02-01",
+     "nav": 2439840.0,
+     "shares_out": 10.0,
+     "aum": 12199321.992,
+     "implied_shares": 5.00005
+    }
+   },
+   "KOLD": {
+    "n": 3761,
+    "share_within_rounding": 1.0,
+    "share_within_1bp": 0.7141717628290348,
+    "worst_tolerance_use": 0.9398120375945019,
+    "median_tolerance_use": 0.639872025594455,
+    "rows_using_over_half_the_tolerance": 2168,
+    "worst_relative_bp": 12.886597938145313,
+    "worst_row": {
+     "date": "2017-12-07",
+     "nav": 457.225,
+     "shares_out": 2480.0,
+     "aum": 1135381.12,
+     "implied_shares": 2483.2000000000003
+    }
+   },
+   "SCO": {
+    "n": 4481,
+    "share_within_rounding": 1.0,
+    "share_within_1bp": 0.9919660790002232,
+    "worst_tolerance_use": 0.9998000416563035,
+    "median_tolerance_use": 0.28994201159693667,
+    "rows_using_over_half_the_tolerance": 1529,
+    "worst_relative_bp": 1.399804027437477,
+    "worst_row": {
+     "date": "2008-12-05",
+     "nav": 8217.88,
+     "shares_out": 500.0,
+     "aum": 4109515.2516,
+     "implied_shares": 500.07000000000005
+    }
+   },
+   "UCO": {
+    "n": 4481,
+    "share_within_rounding": 1.0,
+    "share_within_1bp": 0.9988841776389199,
+    "worst_tolerance_use": 0.7998400391937726,
+    "median_tolerance_use": 0.6558688262344711,
+    "rows_using_over_half_the_tolerance": 2673,
+    "worst_relative_bp": 1.399804027436869,
+    "worst_row": {
+     "date": "2008-11-28",
+     "nav": 6163.625,
+     "shares_out": 400.0,
+     "aum": 2465795.163,
+     "implied_shares": 400.05600000000004
+    }
+   }
+  },
+  "G2_dates_increasing": {
+   "strictly_increasing": true
+  },
+  "G3_no_duplicates": {
+   "duplicate_rows": 0
+  },
+  "G4_four_funds": {
+   "funds": [
+    "BOIL",
+    "KOLD",
+    "SCO",
+    "UCO"
+   ],
+   "rows": {
+    "BOIL": 3679,
+    "KOLD": 3761,
+    "SCO": 4481,
+    "UCO": 4481
+   }
+  },
+  "G5_spans": {
+   "BOIL": {
+    "first": "2012-02-01",
+    "last": "2026-09-18",
+    "rows": 3679
+   },
+   "KOLD": {
+    "first": "2011-10-04",
+    "last": "2026-09-18",
+    "rows": 3761
+   },
+   "SCO": {
+    "first": "2008-11-24",
+    "last": "2026-09-18",
+    "rows": 4481
+   },
+   "UCO": {
+    "first": "2008-11-24",
+    "last": "2026-09-18",
+    "rows": 4481
+   }
+  }
+ },
+ "gate_definitions": {
+  "G1_aum_identity": "|nav*shares_out - aum| <= |nav|*(10.0/2 + 1e-3) on >= 0.99 of rows per fund. The naive 1 bp share is REPORTED beside it and is not the bar: the source rounds shares to 10, which the early low-share era cannot carry.",
+  "G2_dates_increasing": "dates strictly increase within each fund",
+  "G3_no_duplicates": "no (date, fund) twice",
+  "G4_four_funds": "exactly BOIL, KOLD, SCO, UCO, each non-empty",
+  "G5_spans": "each fund's first and last date, reported"
+ },
+ "rows": 16402,
+ "sha256": "54c2ee9f0bf2a0470d0036bc5f0727fa62ed4bbecf5bd0b3cc538e46532a3ce2",
+ "sha256_uncompressed_csv": "e3a2f9d347fb34b0c4fc77394fea8dd530b91b035bab638cd9d9282bec85e744",
+ "bytes": 323613,
+ "encoding": "utf-8, LF, deterministic gzip (mtime=0, no stored filename), so the digest is a fact about the rows and not about when the build ran",
+ "date_col": "date",
+ "holdout": "NAV, SHARES AND AUM ONLY -- no return, no signal, no trade. The series spans 2008-11-24..2026-09-18, which runs through the deposit's sealed vault window (2025-03-01..2026-09-18) and past this repository's 2024-01-01 holdout, neither of which the principal has reconciled with the other. Nothing here may score anything until that reconciliation is in writing (D604, D619)."
+}

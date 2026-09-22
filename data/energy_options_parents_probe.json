@@ -1,0 +1,800 @@
+{
+ "dataset": "GLBX.MDP3",
+ "windows": [
+  [
+   "2016-01-04",
+   "2016-01-08"
+  ],
+  [
+   "2026-09-01",
+   "2026-09-10"
+  ]
+ ],
+ "probed_utc": "2026-09-21T23:30:13Z",
+ "record": "D619",
+ "calls": "symbology.resolve only; no batch job, nothing downloaded",
+ "note": "D581: ES.OPT resolved to the quarterlies alone. Each parent is probed, never assumed.",
+ "CL": {
+  "LO.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 29378,
+     "n_instruments": 29378,
+     "n_partial": 1573,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LOF7 C10000",
+      "LOF7 C10050",
+      "LOF7 C10100",
+      "LOF7 C10150",
+      "LOF7 C10200"
+     ],
+     "sample_instrument_ids": [
+      "100129",
+      "100135",
+      "100423",
+      "100570",
+      "100592"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 30546,
+     "n_instruments": 30467,
+     "n_partial": 4432,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LOF28 C1000",
+      "LOF28 C10000",
+      "LOF28 C10050",
+      "LOF28 C10100",
+      "LOF28 C10150"
+     ],
+     "sample_instrument_ids": [
+      "100018",
+      "100191",
+      "101934",
+      "102403",
+      "102770"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "59845 instrument id(s) across 2 window(s) that answered"
+  },
+  "LO1.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: LO1.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1214,
+     "n_instruments": 1214,
+     "n_partial": 640,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO1U6 C10000",
+      "LO1U6 C10050",
+      "LO1U6 C10100",
+      "LO1U6 C10250",
+      "LO1U6 C10500"
+     ],
+     "sample_instrument_ids": [
+      "2500672",
+      "2500901",
+      "2500986",
+      "2501118",
+      "2501694"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "1214 instrument id(s) across 1 window(s) that answered"
+  },
+  "LO2.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 130,
+     "n_instruments": 130,
+     "n_partial": 12,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO2F6 C2550",
+      "LO2F6 C2600",
+      "LO2F6 C2650",
+      "LO2F6 C2700",
+      "LO2F6 C2750"
+     ],
+     "sample_instrument_ids": [
+      "156856",
+      "192582",
+      "248020",
+      "248043",
+      "248072"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 797,
+     "n_instruments": 796,
+     "n_partial": 427,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO2U6 C10000",
+      "LO2U6 C10025",
+      "LO2U6 C10050",
+      "LO2U6 C10075",
+      "LO2U6 C10100"
+     ],
+     "sample_instrument_ids": [
+      "2500131",
+      "2500729",
+      "2500784",
+      "2500864",
+      "2500866"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "926 instrument id(s) across 2 window(s) that answered"
+  },
+  "LO3.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 145,
+     "n_instruments": 145,
+     "n_partial": 27,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO3F6 C2550",
+      "LO3F6 C2600",
+      "LO3F6 C2650",
+      "LO3F6 C2700",
+      "LO3F6 C2750"
+     ],
+     "sample_instrument_ids": [
+      "106341",
+      "113036",
+      "119757",
+      "126556",
+      "147875"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 363,
+     "n_instruments": 363,
+     "n_partial": 98,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO3U6 C10000",
+      "LO3U6 C10050",
+      "LO3U6 C10100",
+      "LO3U6 C10150",
+      "LO3U6 C10200"
+     ],
+     "sample_instrument_ids": [
+      "2502785",
+      "2503523",
+      "2505023",
+      "2505773",
+      "2514055"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "508 instrument id(s) across 2 window(s) that answered"
+  },
+  "LO4.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 119,
+     "n_instruments": 119,
+     "n_partial": 11,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO4F6 C2550",
+      "LO4F6 C2600",
+      "LO4F6 C2650",
+      "LO4F6 C2700",
+      "LO4F6 C2750"
+     ],
+     "sample_instrument_ids": [
+      "147348",
+      "156850",
+      "159731",
+      "228139",
+      "229984"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 305,
+     "n_instruments": 305,
+     "n_partial": 53,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO4U6 C10000",
+      "LO4U6 C10050",
+      "LO4U6 C10100",
+      "LO4U6 C10150",
+      "LO4U6 C10200"
+     ],
+     "sample_instrument_ids": [
+      "2502926",
+      "2510140",
+      "2510151",
+      "2514008",
+      "2534935"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "424 instrument id(s) across 2 window(s) that answered"
+  },
+  "LO5.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 112,
+     "n_instruments": 112,
+     "n_partial": 8,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LO5F6 C2550",
+      "LO5F6 C2600",
+      "LO5F6 C2650",
+      "LO5F6 C2700",
+      "LO5F6 C2750"
+     ],
+     "sample_instrument_ids": [
+      "126206",
+      "126210",
+      "126262",
+      "126265",
+      "126269"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: LO5.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "present",
+   "reason": "112 instrument id(s) across 1 window(s) that answered"
+  },
+  "WA.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: WA.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: WA.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_request']: no such family in this symbology"
+  },
+  "CL.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: CL.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: CL.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_request']: no such family in this symbology"
+  }
+ },
+ "NG": {
+  "LN.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: LN.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: LN.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_request']: no such family in this symbology"
+  },
+  "ON.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 9006,
+     "n_instruments": 9006,
+     "n_partial": 249,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ONF7 C1000",
+      "ONF7 C10000",
+      "ONF7 C10050",
+      "ONF7 C10250",
+      "ONF7 C10500"
+     ],
+     "sample_instrument_ids": [
+      "100115",
+      "100194",
+      "100219",
+      "100351",
+      "100354"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 2936,
+     "n_instruments": 2936,
+     "n_partial": 107,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ONF28 C3950",
+      "ONF28 P3950",
+      "ONF29 C4750",
+      "ONF29 P4750",
+      "ONF36 C4550"
+     ],
+     "sample_instrument_ids": [
+      "2500478",
+      "2500581",
+      "2501117",
+      "2501270",
+      "2501271"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "11942 instrument id(s) across 2 window(s) that answered"
+  },
+  "ON1.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: ON1.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 246,
+     "n_instruments": 247,
+     "n_partial": 121,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON1U6 C1000",
+      "ON1U6 C1250",
+      "ON1U6 C1500",
+      "ON1U6 C1700",
+      "ON1U6 C1750"
+     ],
+     "sample_instrument_ids": [
+      "42007310",
+      "42007312",
+      "42007344",
+      "42007356",
+      "42007357"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "247 instrument id(s) across 1 window(s) that answered"
+  },
+  "ON2.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 126,
+     "n_instruments": 126,
+     "n_partial": 2,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON2F6 C1000",
+      "ON2F6 C1050",
+      "ON2F6 C1100",
+      "ON2F6 C1150",
+      "ON2F6 C1200"
+     ],
+     "sample_instrument_ids": [
+      "151818",
+      "155686",
+      "248287",
+      "248288",
+      "248291"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 122,
+     "n_instruments": 122,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON2U6 C1000",
+      "ON2U6 C1250",
+      "ON2U6 C1500",
+      "ON2U6 C1750",
+      "ON2U6 C1800"
+     ],
+     "sample_instrument_ids": [
+      "42283688",
+      "42283689",
+      "42283711",
+      "42283748",
+      "42283769"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "248 instrument id(s) across 2 window(s) that answered"
+  },
+  "ON3.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 126,
+     "n_instruments": 126,
+     "n_partial": 2,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON3F6 C1000",
+      "ON3F6 C1050",
+      "ON3F6 C1100",
+      "ON3F6 C1150",
+      "ON3F6 C1200"
+     ],
+     "sample_instrument_ids": [
+      "108416",
+      "115220",
+      "118025",
+      "121924",
+      "124785"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 122,
+     "n_instruments": 122,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON3U6 C1000",
+      "ON3U6 C1250",
+      "ON3U6 C1500",
+      "ON3U6 C1750",
+      "ON3U6 C1800"
+     ],
+     "sample_instrument_ids": [
+      "42082075",
+      "42082076",
+      "42082077",
+      "42082078",
+      "42082079"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "248 instrument id(s) across 2 window(s) that answered"
+  },
+  "ON4.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 118,
+     "n_instruments": 118,
+     "n_partial": 2,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON4F6 C1000",
+      "ON4F6 C1100",
+      "ON4F6 C1150",
+      "ON4F6 C1200",
+      "ON4F6 C1250"
+     ],
+     "sample_instrument_ids": [
+      "187036",
+      "213258",
+      "302981",
+      "302982",
+      "302983"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 122,
+     "n_instruments": 122,
+     "n_partial": 4,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON4U6 C1000",
+      "ON4U6 C1250",
+      "ON4U6 C1500",
+      "ON4U6 C1750",
+      "ON4U6 C1950"
+     ],
+     "sample_instrument_ids": [
+      "42050264",
+      "42050294",
+      "42050295",
+      "42050299",
+      "42050322"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "240 instrument id(s) across 2 window(s) that answered"
+  },
+  "ON5.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 112,
+     "n_instruments": 112,
+     "n_partial": 4,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "ON5F6 C1000",
+      "ON5F6 C1250",
+      "ON5F6 C1300",
+      "ON5F6 C1350",
+      "ON5F6 C1400"
+     ],
+     "sample_instrument_ids": [
+      "134603",
+      "134629",
+      "134906",
+      "134913",
+      "134969"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: ON5.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "present",
+   "reason": "112 instrument id(s) across 1 window(s) that answered"
+  },
+  "LN1.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: LN1.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 254,
+     "n_instruments": 254,
+     "n_partial": 129,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LN1U6 C1000",
+      "LN1U6 C1250",
+      "LN1U6 C1500",
+      "LN1U6 C1700",
+      "LN1U6 C1750"
+     ],
+     "sample_instrument_ids": [
+      "2528424",
+      "2598117",
+      "2601094",
+      "2603334",
+      "2610222"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "254 instrument id(s) across 1 window(s) that answered"
+  },
+  "LN2.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 126,
+     "n_instruments": 126,
+     "n_partial": 2,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LN2F6 C1000",
+      "LN2F6 C1050",
+      "LN2F6 C1100",
+      "LN2F6 C1150",
+      "LN2F6 C1200"
+     ],
+     "sample_instrument_ids": [
+      "160184",
+      "166672",
+      "182581",
+      "198785",
+      "204002"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 136,
+     "n_instruments": 136,
+     "n_partial": 14,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LN2U6 C1000",
+      "LN2U6 C1250",
+      "LN2U6 C1500",
+      "LN2U6 C1750",
+      "LN2U6 C1800"
+     ],
+     "sample_instrument_ids": [
+      "2511922",
+      "2524836",
+      "2546496",
+      "2549876",
+      "2561556"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "262 instrument id(s) across 2 window(s) that answered"
+  },
+  "LN3.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 126,
+     "n_instruments": 126,
+     "n_partial": 2,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LN3F6 C1000",
+      "LN3F6 C1050",
+      "LN3F6 C1100",
+      "LN3F6 C1150",
+      "LN3F6 C1200"
+     ],
+     "sample_instrument_ids": [
+      "105240",
+      "111212",
+      "111935",
+      "118714",
+      "125434"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 123,
+     "n_instruments": 123,
+     "n_partial": 1,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "LN3U6 C1000",
+      "LN3U6 C1250",
+      "LN3U6 C1500",
+      "LN3U6 C1750",
+      "LN3U6 C1800"
+     ],
+     "sample_instrument_ids": [
+      "2525160",
+      "42105667",
+      "42105683",
+      "42105855",
+      "42105864"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "249 instrument id(s) across 2 window(s) that answered"
+  },
+  "NG.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: NG.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: NG.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_request']: no such family in this symbology"
+  }
+ },
+ "resolved_parents": [
+  "LN1.OPT",
+  "LN2.OPT",
+  "LN3.OPT",
+  "LO.OPT",
+  "LO1.OPT",
+  "LO2.OPT",
+  "LO3.OPT",
+  "LO4.OPT",
+  "LO5.OPT",
+  "ON.OPT",
+  "ON1.OPT",
+  "ON2.OPT",
+  "ON3.OPT",
+  "ON4.OPT",
+  "ON5.OPT"
+ ]
+}

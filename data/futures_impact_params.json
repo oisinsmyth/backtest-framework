@@ -16,65 +16,8 @@
   "day1m_2016_2023"
  ],
  "multiplier_source": "data/fixtures/fut_breadth_hourly.meta.json: tick_usd_full_contract / tick_price_units",
- "multiplier_disagreements": [
-  {
-   "root": "HE",
-   "breadth_meta_usd_per_point": 400.0,
-   "future_from_specs_usd_per_point": 40000.0,
-   "ratio": 100.0,
-   "scaling_divisor": 100.0,
-   "scaling_reason": "percent/cents quote, notional $29,770 (undivided $2,977,000)"
-  },
-  {
-   "root": "LE",
-   "breadth_meta_usd_per_point": 400.0,
-   "future_from_specs_usd_per_point": 40000.0,
-   "ratio": 100.0,
-   "scaling_divisor": 100.0,
-   "scaling_reason": "percent/cents quote, notional $85,010 (undivided $8,501,000)"
-  },
-  {
-   "root": "SR3",
-   "breadth_meta_usd_per_point": 2500.0,
-   "future_from_specs_usd_per_point": 25.0,
-   "ratio": 0.01,
-   "scaling_divisor": 1.0,
-   "scaling_reason": "native units, notional $239,150"
-  },
-  {
-   "root": "ZC",
-   "breadth_meta_usd_per_point": 50.0,
-   "future_from_specs_usd_per_point": 5000.0,
-   "ratio": 100.0,
-   "scaling_divisor": 100.0,
-   "scaling_reason": "percent/cents quote, notional $25,300 (undivided $2,530,000)"
-  },
-  {
-   "root": "ZL",
-   "breadth_meta_usd_per_point": 600.0000000000001,
-   "future_from_specs_usd_per_point": 60000.00000000001,
-   "ratio": 100.0,
-   "scaling_divisor": 100.0,
-   "scaling_reason": "percent/cents quote, notional $41,070 (undivided $4,107,000)"
-  },
-  {
-   "root": "ZS",
-   "breadth_meta_usd_per_point": 50.0,
-   "future_from_specs_usd_per_point": 5000.0,
-   "ratio": 100.0,
-   "scaling_divisor": 100.0,
-   "scaling_reason": "percent/cents quote, notional $61,438 (undivided $6,143,750)"
-  },
-  {
-   "root": "ZW",
-   "breadth_meta_usd_per_point": 50.0,
-   "future_from_specs_usd_per_point": 5000.0,
-   "ratio": 100.0,
-   "scaling_divisor": 100.0,
-   "scaling_reason": "percent/cents quote, notional $37,650 (undivided $3,765,000)"
-  }
- ],
- "why_multiplier_disagreements": "instruments/future.py:Future.from_specs falls back to data/fut_specs_from_definition.json, whose tick_usd is the raw mpi*display_factor*uom_qty with no allowance for a cents or percent-of-par quote. All seven have known_tick_usd: null. RECORDED, NOT RESOLVED -- the fix belongs in the spec file.",
+ "multiplier_disagreements": [],
+ "why_multiplier_disagreements": "EMPTY SINCE D609, AND IT WAS SEVEN ROOTS LONG. instruments/future.py:Future.from_specs fell back to data/fut_specs_from_definition.json's tick_usd, the raw mpi*display_factor*uom_qty with a /100 applied on unit_of_measure == 'USD' alone -- 100x HIGH on ZC, ZS, ZW, ZL, LE, HE and 100x LOW on SR3, every one of them with known_tick_usd: null. D604 recorded the seven here and resolved none; D609 added tick_usd_full_contract to the spec file, decided by the same NOTIONAL test the breadth builder uses, and from_specs reads that. This list being empty is the fix, and the seven corrected usd_per_point values are pinned in tests/unit/test_futures_impact.py so it cannot empty itself by the table losing its roots.",
  "adv_ratio_d511_over_day1m": {
   "6E": 1.7151154744815469,
   "CL": 0.7392746888614175,

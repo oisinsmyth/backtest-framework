@@ -338,9 +338,9 @@ def test_the_quoted_raise_count_is_the_non_bare_one(raises):
     bare = raises["total"] - raises["with_exception"]
     # Two until 2026-09-21; D608's `data/recorder.py:988` and D605's `validation/track3.py:536`
     # each re-raise inside an `except`, so four. The sentence in docs/VERIFICATION.md moved with it.
-    assert bare == 4, (
+    assert bare == 5, (
         f"{bare} bare `raise` statements in src/, not 4 — docs/VERIFICATION.md says a plain AST "
-        "walk finds 'four more' than the number it quotes, and that sentence is now wrong"
+        "walk finds 'five more' than the number it quotes, and that sentence is now wrong"
     )
     _assert_all(RAISE_TOTAL, raises["with_exception"], "the non-bare `raise` count", minimum=1)
 

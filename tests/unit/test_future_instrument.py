@@ -84,6 +84,87 @@ def test_every_root_in_both_files_builds_and_is_self_consistent():
         assert f.tick_points > 0 and f.usd_per_point > 0
 
 
+# ------------------------------------------------------- D609: the scaling in the fallback
+
+
+def test_the_seven_corrected_roots_carry_cmes_own_tick_value():
+    """Until D609 the fallback read `tick_usd`, which is the definition snapshot's RAW formula
+    with a `/100` applied on `unit_of_measure == "USD"` alone. Six roots came out 100x high and
+    SR3 100x low, and `__post_init__` could not notice because `usd_per_point` is derived FROM
+    `tick_usd`: its product identity holds by construction whatever the scale."""
+    for root, tick_usd, usd_per_point in [
+        ("ZC", 12.5, 50.0), ("ZS", 12.5, 50.0), ("ZW", 12.5, 50.0),
+        ("ZL", 6.000000000000001, 600.0000000000001),
+        ("LE", 10.0, 400.0), ("HE", 10.0, 400.0), ("SR3", 6.25, 2500.0),
+    ]:
+        f = Future.from_specs(root)
+        assert f.tick_usd == tick_usd, root
+        assert f.usd_per_point == usd_per_point, root
+
+
+def test_the_product_identity_cannot_catch_a_scale_error_which_is_why_the_new_check_exists():
+    """The measurement behind the paragraph above. A `Future` built the way `from_specs` builds
+    one out of a 100x-wrong tick value passes `__post_init__` without complaint."""
+    wrong_tick = 1250.0
+    f = Future(root="ZC", tick_points=0.25, usd_per_point=wrong_tick / 0.25, tick_usd=wrong_tick)
+    assert f.tick_usd == 1250.0 and f.usd_per_point == 5000.0
+
+
+def test_a_definition_entry_without_the_corrected_field_raises(tmp_path: Path):
+    primary = tmp_path / "primary.json"
+    primary.write_text(json.dumps({}), encoding="utf-8")
+    fallback = tmp_path / "fallback.json"
+    fallback.write_text(json.dumps({"specs": {"XX": {
+        "present": True, "tick_price_units": 0.25, "tick_usd": 1250.0,
+    }}}), encoding="utf-8")
+    with pytest.raises(KeyError, match="tick_usd_full_contract"):
+        Future.from_specs("XX", specs_path=primary, fallback_path=fallback)
+
+
+def test_a_corrected_field_that_disagrees_with_cmes_own_value_raises(tmp_path: Path):
+    """The check that CANNOT be satisfied by construction: it compares the one number that
+    matters against a value from a different source for the same root."""
+    primary = tmp_path / "primary.json"
+    primary.write_text(json.dumps({}), encoding="utf-8")
+
+    def written(name: str, full: float) -> Path:
+        # A DIFFERENT FILE per case, because `_load_json` is `lru_cache`d on the path: rewriting
+        # one file would hand the second call the first file's contents and the break would not
+        # reach the check at all.
+        path = tmp_path / name
+        path.write_text(json.dumps({"specs": {"XX": {
+            "present": True, "tick_price_units": 0.25,
+            "tick_usd": 1250.0, "tick_usd_full_contract": full, "known_tick_usd": 12.5,
+        }}}), encoding="utf-8")
+        return path
+
+    good = written("good.json", 12.5)  # the good case first
+    assert Future.from_specs("XX", specs_path=primary, fallback_path=good).tick_usd == 12.5
+    bad = written("bad.json", 12.5 * (1 + 1e-6))
+    with pytest.raises(ValueError, match="known_tick_usd"):
+        Future.from_specs("XX", specs_path=primary, fallback_path=bad)
+
+
+def test_the_committed_definition_table_carries_the_scaling_for_every_present_root():
+    definition = json.loads(FALLBACK_SPECS_PATH.read_text(encoding="utf-8"))
+    present = {r: v for r, v in definition["specs"].items() if v.get("present")}
+    assert len(present) == 41
+    for root, entry in present.items():
+        raw = entry["tick_usd_raw_formula"]
+        divisor = entry["scaling_divisor"]
+        assert divisor in (1.0, 100.0), root
+        assert entry["tick_usd_full_contract"] == raw / divisor, root
+        assert entry["tick_usd_raw_formula"] == (
+            entry["tick_price_units"] * entry["unit_of_measure_qty"]
+        ), root
+        if entry.get("known_tick_usd") is not None:
+            assert entry["tick_usd_full_contract"] == pytest.approx(
+                entry["known_tick_usd"], rel=1e-9
+            ), root
+    assert definition["scaling_corrections"] == ["HE", "LE", "SR3", "ZC", "ZL", "ZS", "ZW"]
+    assert sum(1 for v in present.values() if v.get("known_tick_usd") is not None) == 17
+
+
 # ------------------------------------------------------------------- construction
 
 

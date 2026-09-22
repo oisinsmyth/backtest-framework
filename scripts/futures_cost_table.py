@@ -344,19 +344,30 @@ def spec_for(src: Sources, symbol: str) -> dict[str, Any]:
                 f"{src.rel['cme_specs']} or {src.rel['definition_specs']}"
             )
         tick_points = float(src.at("definition_specs", f"specs.{symbol}.tick_price_units"))
-        tick_usd = float(src.at("definition_specs", f"specs.{symbol}.tick_usd"))
+        # `tick_usd_full_contract`, NOT `tick_usd` -- D609. The snapshot's own `tick_usd`
+        # divides by 100 on `unit_of_measure == "USD"` alone; the corrected field is decided by
+        # the NOTIONAL test and reproduces CME on all 17 roots where CME's value is on file.
+        tick_usd = float(src.at("definition_specs", f"specs.{symbol}.tick_usd_full_contract"))
         out = {
             "tick_points": tick_points,
             "usd_per_point": tick_usd / tick_points,
             "tick_usd": tick_usd,
             "specs_provenance": {
                 "artefact": src.rel["definition_specs"],
-                "key": f"specs.{symbol}.(tick_price_units, tick_usd)",
-                "source": "Databento GLBX definition snapshot; usd_per_point = tick_usd / tick",
+                "key": f"specs.{symbol}.(tick_price_units, tick_usd_full_contract)",
+                "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); "
+                "usd_per_point = tick_usd_full_contract / tick",
             },
             "tick_usd_verified": entry.get("known_tick_usd") is not None,
             "quote_uom": entry.get("uom"),
             "percent_of_par": bool(entry.get("percent_of_par")),
+            "scaling_divisor": float(
+                src.at("definition_specs", f"specs.{symbol}.scaling_divisor")
+            ),
+            "scaling_reason": src.at("definition_specs", f"specs.{symbol}.scaling_reason"),
+            "tick_usd_raw_formula": float(
+                src.at("definition_specs", f"specs.{symbol}.tick_usd_raw_formula")
+            ),
         }
     implied = out["usd_per_point"] * out["tick_points"]
     if abs(implied - out["tick_usd"]) > 1e-9 * out["tick_usd"]:
@@ -366,11 +377,18 @@ def spec_for(src: Sources, symbol: str) -> dict[str, Any]:
     return out
 
 
-#: Price units that are CENTS at CME, so the definition file's
-#: `tick_usd = tick_price_units * unit_of_measure_qty` is a hundredfold of the dollar value.
-#: This is a quoting convention, not a number: the table FLAGS the affected rows and writes
-#: the artefact's own figure unchanged. Inventing a corrected number would be typing a value
-#: no source carries, which is the one thing this builder must not do.
+#: Price units that are CENTS at CME, so the definition file's raw formula
+#: `tick_price_units * unit_of_measure_qty` is a hundredfold of the dollar value.
+#:
+#: **D609 CORRECTED THIS AND THE COMMENT THAT USED TO SIT HERE WAS THE DEFECT.** It said the
+#: table "FLAGS the affected rows and writes the artefact's own figure unchanged", because
+#: "inventing a corrected number would be typing a value no source carries". That was right
+#: about the rule and wrong about the facts: a source DID carry the corrected number --
+#: `fut_breadth_hourly.meta.json` has decided the scaling by the notional test since D519 --
+#: and the builder was reading the wrong field of the wrong file. The definition table now
+#: carries `tick_usd_full_contract` beside its raw formula, so nothing here is typed and
+#: nothing here is written unchanged that is known to be wrong. `HG` is the root that proves
+#: the divide is not inferable from `unit_of_measure`: it is "LBS" like ZL and is NOT divided.
 CENT_QUOTED_UOM = {"BU", "LBS"}
 
 
@@ -549,19 +567,27 @@ def build(src: Sources) -> dict[str, Any]:
                     "why": "tick_usd comes from the definition snapshot's formula and CME's own "
                     "value is not on file for this symbol (known_tick_usd is null)",
                 }
-                if spec.get("quote_uom") in CENT_QUOTED_UOM:
+                divisor = spec.get("scaling_divisor")
+                if divisor is not None:
+                    flag["scaling_divisor"] = divisor
+                    flag["scaling_reason"] = spec.get("scaling_reason")
+                    flag["tick_usd_raw_formula"] = spec.get("tick_usd_raw_formula")
+                if spec.get("quote_uom") in CENT_QUOTED_UOM and divisor == 100.0:
                     flag["unit"] = (
-                        "CENTS, not dollars: this root is quoted in cents per unit, so the "
-                        f"figure is {spec['tick_usd']} cents = ${spec['tick_usd'] / 100:.2f}. "
-                        "run_d555's gross uses the same units, so the dollar book is "
-                        "self-consistent WITHIN the root and 100x in it across roots."
+                        "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, "
+                        f"so the definition snapshot's raw formula gives "
+                        f"{spec['tick_usd_raw_formula']} cents and the dollar tick is "
+                        f"${spec['tick_usd']:.2f}. The divisor is the NOTIONAL test's, not a "
+                        "unit_of_measure rule: HG is 'LBS' too and is NOT divided."
                     )
                 if spec.get("percent_of_par"):
                     flag["percent_of_par_note"] = (
-                        "the definition formula divides by 100 for percent-of-par products; "
-                        "that is right where unit_of_measure_qty is the par notional (ZN, ZB, "
-                        "ZF all reproduce CME) and wrong where it is already dollars per index "
-                        "point (SR3: 0.0625 against CME's $6.25)"
+                        "the definition snapshot's own `tick_usd` divides by 100 for "
+                        "percent-of-par products; that is right where unit_of_measure_qty is "
+                        "the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is "
+                        "already dollars per index point (SR3: 0.0625 against CME's $6.25). "
+                        f"D609 reads tick_usd_full_contract instead, so this table charges "
+                        f"${spec['tick_usd']} at divisor {divisor:g}."
                     )
                 flags.append(flag)
 

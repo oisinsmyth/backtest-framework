@@ -41,6 +41,7 @@ price and RAISE on anything outside a plausible band rather than scale silently.
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import sys
 from pathlib import Path
@@ -50,6 +51,8 @@ RAW = REPO / "data" / "raw" / "databento"
 DEF_JOB = RAW / "GLBX-20260911-LEFUEVLPSR"
 DEF_FILE = DEF_JOB / "glbx-mdp3-20260101-20260910.definition.dbn.zst"
 OUT = REPO / "data" / "fut_specs_from_definition.json"
+BREADTH_BUILDER = REPO / "scripts" / "build_fut_breadth_hourly.py"
+BREADTH_META = REPO / "data" / "fixtures" / "fut_breadth_hourly.meta.json"
 
 # every root the acquisition bought, from run_futures_acquisition.ROOTS_41
 ROOTS = ["ES", "NQ", "RTY", "YM", "MES", "MNQ", "M2K", "MYM",
@@ -67,6 +70,190 @@ MONTHS = set("FGHJKMNQUVXZ")
 
 def P(*a, **k):
     print(*a, **k, flush=True)
+
+
+# --------------------------------------------------------------------------------------------
+# D609 -- THE SCALING, DECIDED BY THE NOTIONAL AND NOT BY `unit_of_measure`
+#
+# `do_specs` below divides by 100 when `unit_of_measure == "USD"` and never otherwise. Its own
+# docstring says that rule is not the rule -- "`HG` and `ZL` share `UOM == "LBS"` and differ by a
+# factor of 100 ... the decidable test is the NOTIONAL" -- and the code never caught up. The
+# committed table is therefore 100x wrong on ZC, ZS, ZW (BU), ZL, LE, HE (LBS) and 100x LOW on
+# SR3, where the percent-of-par divide fires on a `uom_qty` that is ALREADY dollars per point.
+# Seven roots, every one of them with `known_tick_usd: null`: nothing had ever verified them.
+#
+# The fix does not retype a number. `decide_scaling` is compiled out of
+# `scripts/build_fut_breadth_hourly.py`, which has decided this correctly for 36 roots since
+# D519, and its answers are asserted equal to the breadth meta's committed `scaling_divisor`,
+# `scaling_reason` and `tick_usd_full_contract` on every shared root.
+#
+# WHAT IS ADDED, AND WHAT IS NOT TOUCHED. `tick_usd` stays exactly as it was written: D591's and
+# D604's records quote it, and a record's evidence is not edited under it. The corrected value
+# is a NEW key, `tick_usd_full_contract`, and `Future.from_specs` reads that one and raises if
+# it is absent.
+# --------------------------------------------------------------------------------------------
+
+def _from_breadth_builder():
+    """`decide_scaling`, `NOTIONAL_LO/HI` and `MICRO_OF`, compiled out of the breadth builder.
+
+    Compiled rather than imported: `scripts/` is not a package, and importing a runner runs its
+    module body (D606's lesson -- `run_d365` installs an audit hook CPython cannot remove). This
+    reuses the builder's own committed bytes, so an edit to `decide_scaling` moves this table.
+    """
+    source = BREADTH_BUILDER.read_bytes().replace(b"\r\n", b"\n").decode("utf-8")
+    tree = ast.parse(source, filename=str(BREADTH_BUILDER))
+    ns = {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                name = getattr(target, "id", "")
+                if name in ("NOTIONAL_LO", "NOTIONAL_HI", "MICRO_OF"):
+                    ns[name] = ast.literal_eval(node.value)
+        elif isinstance(node, ast.AnnAssign) and getattr(node.target, "id", "") == "":
+            continue
+    # NOTIONAL_LO, NOTIONAL_HI are assigned on one line as a tuple target
+    if "NOTIONAL_LO" not in ns:
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Tuple):
+                names = [getattr(e, "id", "") for e in node.targets[0].elts]
+                if names == ["NOTIONAL_LO", "NOTIONAL_HI"]:
+                    lo, hi = ast.literal_eval(node.value)
+                    ns["NOTIONAL_LO"], ns["NOTIONAL_HI"] = lo, hi
+    found = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "decide_scaling"]
+    gate = [n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == "GateError"]
+    if len(found) != 1 or len(gate) != 1:
+        raise SystemExit(f"[SCALE] {BREADTH_BUILDER.name} no longer defines decide_scaling/GateError alone")
+    for key in ("NOTIONAL_LO", "NOTIONAL_HI", "MICRO_OF"):
+        if key not in ns:
+            raise SystemExit(f"[SCALE] {BREADTH_BUILDER.name} no longer defines {key}")
+    exec(compile(ast.Module(body=gate + found, type_ignores=[]), str(BREADTH_BUILDER), "exec"), ns)
+    return ns
+
+
+def rescale(table: dict) -> tuple[dict, list[str]]:
+    """Add `tick_usd_raw_formula`, `scaling_divisor`, `scaling_reason`, `tick_usd_full_contract`.
+
+    The NOTIONAL test needs an observed PRICE, which the `definition` schema does not carry, so
+    the prices are the breadth fixture's own last bar per root (`fut_breadth_hourly.meta.json`,
+    `specs.<ROOT>.last_price`) -- the same numbers the breadth builder decided on. A micro
+    INHERITS ITS PARENT'S divisor, exactly as `build_fut_breadth_hourly.specs_for` does, because
+    a micro quotes the same price as its parent and its own notional is too small for the band.
+
+    Returns the table and the list of roots whose corrected value differs from `tick_usd`.
+    """
+    ns = _from_breadth_builder()
+    decide = ns["decide_scaling"]
+    parent_of = {micro: parent for parent, micro in ns["MICRO_OF"].items()}
+    meta = json.loads(BREADTH_META.read_text(encoding="utf-8"))["specs"]
+
+    corrected = []
+    divisors = {}
+    for root in ROOTS:
+        entry = table["specs"].get(root)
+        if not entry or not entry.get("present"):
+            continue
+        tick_px = float(entry["tick_price_units"])
+        uomq = float(entry["unit_of_measure_qty"])
+        raw = tick_px * uomq
+        if root in meta:
+            div, why = decide(root, tick_px, uomq, float(meta[root]["last_price"]))
+            source = "NOTIONAL test on fut_breadth_hourly.meta.json#specs.%s.last_price" % root
+        else:
+            parent = parent_of.get(root)
+            if parent is None or parent not in divisors:
+                raise SystemExit(
+                    f"[SCALE] {root} is in neither the breadth fixture nor the micro map, so "
+                    "its quotation convention is undecided. A guessed divisor is a 100x error "
+                    "in every dollar figure and it does not look like a failure."
+                )
+            div, why = divisors[parent], f"inherits {parent}'s scaling (a micro quotes its parent's price)"
+            source = f"parent {parent}"
+        divisors[root] = div
+        full = raw / div
+        entry["tick_usd_raw_formula"] = raw
+        entry["scaling_divisor"] = div
+        entry["scaling_reason"] = why
+        entry["scaling_source"] = source
+        entry["tick_usd_full_contract"] = full
+        if abs(full - float(entry["tick_usd"])) > 1e-12 * max(full, 1.0):
+            entry["tick_usd_superseded"] = True
+            corrected.append(root)
+
+    table["scaling_rule"] = (
+        "tick_usd_full_contract = tick_price_units * unit_of_measure_qty / scaling_divisor, "
+        "where the divisor is decided by the NOTIONAL test in "
+        "scripts/build_fut_breadth_hourly.py:decide_scaling (/100 where the notional says the "
+        "quote is percent or cents; ambiguity raises). `tick_usd` is the ORIGINAL field and is "
+        "left unchanged because D591 and D604 quote it; it applies /100 on "
+        "unit_of_measure == 'USD' alone, which is wrong for the roots listed in "
+        "scaling_corrections. Read tick_usd_full_contract."
+    )
+    table["scaling_corrections"] = sorted(corrected)
+    table["scaling_decided_by"] = "D609"
+    return table, sorted(corrected)
+
+
+def check_rescaled(table: dict) -> list[str]:
+    """Known-answer first, then the seven. Returns the list of failures."""
+    meta = json.loads(BREADTH_META.read_text(encoding="utf-8"))["specs"]
+    bad = []
+    n_known = 0
+    for root, entry in table["specs"].items():
+        if not entry.get("present"):
+            continue
+        known = entry.get("known_tick_usd")
+        if known is not None:
+            n_known += 1
+            if abs(entry["tick_usd_full_contract"] - float(known)) > 1e-9 * float(known):
+                bad.append(f"{root}: full {entry['tick_usd_full_contract']} != known {known}")
+        if root in meta:
+            for key in ("scaling_divisor", "scaling_reason", "tick_usd_full_contract"):
+                if entry[key] != meta[root][key]:
+                    bad.append(f"{root}.{key}: {entry[key]!r} != breadth meta {meta[root][key]!r}")
+    P(f"  known-answer: {n_known} roots carry a CME tick value; every one must reproduce")
+    want = {"ZC": 100.0, "ZS": 100.0, "ZW": 100.0, "ZL": 100.0, "LE": 100.0, "HE": 100.0,
+            "SR3": 1.0}
+    got = {r: table["specs"][r]["scaling_divisor"] for r in want}
+    if got != want:
+        bad.append(f"the seven corrected divisors are {got}, expected {want}")
+    if table["scaling_corrections"] != sorted(want):
+        bad.append(f"corrections {table['scaling_corrections']} != {sorted(want)}")
+    return bad
+
+
+def do_rescale() -> int:
+    """Transform the COMMITTED table in place. Deterministic; no archive read.
+
+    The NOTIONAL test needs a price and the `definition` archive carries none, so a full
+    regeneration (`--specs`, which re-reads 166 MB of DBN under the system python) would still
+    have to reach for the breadth meta for exactly these numbers. Everything this adds is a
+    function of the committed table and the committed breadth meta, so it is done here, without
+    the archive, and the record says so.
+    """
+    table = json.loads(OUT.read_text(encoding="utf-8"))
+    table, corrected = rescale(table)
+    bad = check_rescaled(table)
+    P("   root   tick_usd(old)   raw formula   divisor   tick_usd_full   known   corrected")
+    for root in ROOTS:
+        e = table["specs"].get(root)
+        if not e or not e.get("present"):
+            continue
+        known = e.get("known_tick_usd")
+        P(f"   {root:>4}{e['tick_usd']:>15.6f}{e['tick_usd_raw_formula']:>14.4f}"
+          f"{e['scaling_divisor']:>10.0f}{e['tick_usd_full_contract']:>16.6f}"
+          + (f"{known:>8.4f}" if known is not None else " " * 8)
+          + ("   ***" if root in corrected else ""))
+    P("")
+    if bad:
+        for b in bad:
+            P(f"  *** {b}")
+        P(f"  {len(bad)} CHECK(S) FAILED -- nothing written")
+        return 1
+    P(f"  corrected: {corrected}")
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(table, indent=2))
+    P(f"  wrote {OUT.relative_to(REPO)}")
+    return 0
 
 
 def root_of(sym: str) -> str | None:
@@ -184,12 +371,22 @@ def do_specs() -> int:
     else:
         n_ck = sum(1 for r in ROOTS if table[r].get("known_tick_usd") is not None)
         P(f"  formula VERIFIED on all {n_ck} roots whose tick value this repo already holds")
-    OUT.write_text(json.dumps({"source": str(DEF_FILE.relative_to(REPO)),
-                               "snapshot_day_index": day, "formula":
-                               "tick_usd = mpi*1e-9*display_factor * uom_qty*1e-9",
-                               "verified_against": repo,
-                               "formula_mismatches": bad, "specs": table}, indent=2),
-                  encoding="utf-8")
+    out = {"source": str(DEF_FILE.relative_to(REPO)),
+           "snapshot_day_index": day, "formula":
+           "tick_usd = mpi*1e-9*display_factor * uom_qty*1e-9",
+           "verified_against": repo,
+           "formula_mismatches": bad, "specs": table}
+    # D609: the scaling is added HERE too, so a regeneration from the archive produces the same
+    # keys a `--rescale` of the committed table does, rather than silently dropping them.
+    out, corrected = rescale(out)
+    failures = check_rescaled(out)
+    if failures:
+        for f in failures:
+            P(f"  *** {f}")
+        raise SystemExit("[SCALE] the rescaled table failed its own checks -- nothing written")
+    P(f"  scaling corrections (D609): {corrected}")
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(out, indent=2))
     P(f"\n  wrote {OUT.relative_to(REPO)}")
     return 1 if bad else 0
 
@@ -277,6 +474,8 @@ def main() -> int:
     ap.add_argument("--fields", action="store_true")
     ap.add_argument("--specs", action="store_true")
     ap.add_argument("--expiries", action="store_true")
+    ap.add_argument("--rescale", action="store_true",
+                    help="D609: add the NOTIONAL-decided scaling to the COMMITTED table")
     a = ap.parse_args()
     if a.fields:
         return do_fields()
@@ -284,6 +483,8 @@ def main() -> int:
         return do_specs()
     if a.expiries:
         return do_expiries()
+    if a.rescale:
+        return do_rescale()
     ap.print_help()
     return 1
 

@@ -1,0 +1,407 @@
+{
+ "spec": "D620; SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.1 lines 56-70 (the fund universe, the panel schema and the point-in-time rule) and section 3.2 (the futures/swap split)",
+ "record": "D620",
+ "builder": "scripts/build_fund_holdings_quarterly.py",
+ "built_utc": "2026-09-22T08:31:49Z",
+ "columns": [
+  "period_end",
+  "fund",
+  "kind",
+  "contract_month",
+  "month_basis",
+  "contracts",
+  "notional_usd",
+  "month_weight",
+  "description",
+  "counterparty",
+  "shares_out",
+  "net_assets",
+  "nav_per_share",
+  "f_fut",
+  "n_fut_lines",
+  "n_swap_lines",
+  "n_months_held",
+  "futures_notional_total",
+  "swap_notional_total",
+  "source_accession",
+  "filed_date",
+  "form",
+  "issuer",
+  "sign_basis",
+  "reason"
+ ],
+ "kinds": [
+  "futures",
+  "swap",
+  "cash",
+  "other",
+  "unparsed"
+ ],
+ "column_units": {
+  "contracts": "SIGNED contract count: positive long, negative short",
+  "notional_usd": "the document's own notional column, signed the same way; NULL in the pre-notional USCF era, which published contracts and unrealized gain and no notional at all",
+  "month_weight": "|notional| / total futures |notional| for the (accession, fund, period)",
+  "shares_out": "shares as the filing states them AT THAT FILING -- a later filing may restate them through a reverse split, and both are kept",
+  "net_assets": "USD; shareholders' equity (ProShares) or total partners' capital (USCF)",
+  "f_fut": "futures notional / (futures + swap notional); NULL when any line's notional is",
+  "filed_date": "THE KNOWN-AT DATE. Deposit section 3.1 line 70 forbids back-filling today's composition across history, so a point-in-time read of this fixture filters on filed_date <= t and never on period_end alone.",
+  "period_end": "the as-of date of the holdings, 40-90 days before filed_date"
+ },
+ "conventions": {
+  "month_basis": {
+   "stated_contract": "the line named the delivery month explicitly ('NG August 2026 contracts, expiring July 2026'), so contract_month is exact",
+   "expires_label": "the line said only 'expires March 2025'. Read as the DELIVERY month: UCO's three legs read March, June and December, and the Bloomberg Commodity Balanced index's deferred legs are the June and December CONTRACTS, which expire in May and November. The reading is an inference from that pattern and is flagged so a study can filter on it."
+  },
+  "sign_basis": {
+   "block_header": "'Futures Contracts Purchased/Sold' or 'Open Commodity Futures Contracts - Long/Short' stated the side",
+   "fund_leverage_sign": "the table gave no side and the sign is the fund's leverage sign from deposit section 3.1 (UNG and USO are +1)",
+   "printed_sign": "the value's own sign as printed (parentheses are negative)"
+  },
+  "restatements": "All publications of a period are kept, one row set per accession. UNG's FY2023 10-K restates 2023 share counts for a 1-for-4 reverse split of 2024-01-23; the point-in-time anchor is the FIRST filing to publish a period, which scripts/project_fund_panel.py takes."
+ },
+ "rows": 2139,
+ "funds": [
+  "BOIL",
+  "KOLD",
+  "SCO",
+  "UCO",
+  "UNG",
+  "USO"
+ ],
+ "filings_read": 231,
+ "series_names_seen": [
+  "PROSHARES MANAGED FUTURES STRATEGY",
+  "PROSHARES SHORT EURO",
+  "PROSHARES SHORT VIX SHORT-TERM FUTURES ETF",
+  "PROSHARES ULTR ASHORT BLOOMBERG CRUDE OIL",
+  "PROSHARES ULTRA AUSTRALIAN DOLLAR",
+  "PROSHARES ULTRA BLOOMBERG COMMODITY",
+  "PROSHARES ULTRA BLOOMBERG CRUDE OIL",
+  "PROSHARES ULTRA BLOOMBERG NATURAL GAS",
+  "PROSHARES ULTRA DJ-AIG COMMODITY",
+  "PROSHARES ULTRA DJ-AIG CRUDE OIL",
+  "PROSHARES ULTRA DJ-UBS COMMODITY",
+  "PROSHARES ULTRA DJ-UBS CRUDE OIL",
+  "PROSHARES ULTRA DJ-UBS NATURAL GAS",
+  "PROSHARES ULTRA EURO",
+  "PROSHARES ULTRA GOLD",
+  "PROSHARES ULTRA SILVER",
+  "PROSHARES ULTRA VIX SHORT-TERM FUTURES ETF",
+  "PROSHARES ULTRA YEN",
+  "PROSHARES ULTRAPRO 3X CRUDE OIL ETF",
+  "PROSHARES ULTRAPRO 3X SHORT CRUDE OIL ETF",
+  "PROSHARES ULTRASHORT AUSTRALIAN DOLLAR",
+  "PROSHARES ULTRASHORT BLOOMBERG COMMODITY",
+  "PROSHARES ULTRASHORT BLOOMBERG CRUDE OIL",
+  "PROSHARES ULTRASHORT BLOOMBERG NATURAL GAS",
+  "PROSHARES ULTRASHORT DJ-AIG COMMODITY",
+  "PROSHARES ULTRASHORT DJ-AIG CRUDE OIL",
+  "PROSHARES ULTRASHORT DJ-UBS COMMODITY",
+  "PROSHARES ULTRASHORT DJ-UBS CRUDE OIL",
+  "PROSHARES ULTRASHORT DJ-UBS NATURAL GAS",
+  "PROSHARES ULTRASHORT EURO",
+  "PROSHARES ULTRASHORT GOLD",
+  "PROSHARES ULTRASHORT SILVER",
+  "PROSHARES ULTRASHORT YEN",
+  "PROSHARES VIX MID-TERM FUTURES ETF",
+  "PROSHARES VIX SHORT-TERM FUTURES ETF"
+ ],
+ "unmapped_series": [
+  "PROSHARES MANAGED FUTURES STRATEGY",
+  "PROSHARES SHORT EURO",
+  "PROSHARES SHORT VIX SHORT-TERM FUTURES ETF",
+  "PROSHARES ULTRA AUSTRALIAN DOLLAR",
+  "PROSHARES ULTRA BLOOMBERG COMMODITY",
+  "PROSHARES ULTRA DJ-AIG COMMODITY",
+  "PROSHARES ULTRA DJ-UBS COMMODITY",
+  "PROSHARES ULTRA EURO",
+  "PROSHARES ULTRA GOLD",
+  "PROSHARES ULTRA SILVER",
+  "PROSHARES ULTRA VIX SHORT-TERM FUTURES ETF",
+  "PROSHARES ULTRA YEN",
+  "PROSHARES ULTRAPRO 3X CRUDE OIL ETF",
+  "PROSHARES ULTRAPRO 3X SHORT CRUDE OIL ETF",
+  "PROSHARES ULTRASHORT AUSTRALIAN DOLLAR",
+  "PROSHARES ULTRASHORT BLOOMBERG COMMODITY",
+  "PROSHARES ULTRASHORT DJ-AIG COMMODITY",
+  "PROSHARES ULTRASHORT DJ-UBS COMMODITY",
+  "PROSHARES ULTRASHORT EURO",
+  "PROSHARES ULTRASHORT GOLD",
+  "PROSHARES ULTRASHORT SILVER",
+  "PROSHARES ULTRASHORT YEN",
+  "PROSHARES VIX MID-TERM FUTURES ETF",
+  "PROSHARES VIX SHORT-TERM FUTURES ETF"
+ ],
+ "coverage": {
+  "BOIL": {
+   "rows": 174,
+   "parsed_rows": 118,
+   "unparsed_rows": 56,
+   "periods_with_holdings": 59,
+   "first_period": "2011-12-31",
+   "last_period": "2026-06-30",
+   "periods_with_an_anchor": 59,
+   "periods_with_futures_notional": 59
+  },
+  "KOLD": {
+   "rows": 160,
+   "parsed_rows": 104,
+   "unparsed_rows": 56,
+   "periods_with_holdings": 59,
+   "first_period": "2011-12-31",
+   "last_period": "2026-06-30",
+   "periods_with_an_anchor": 59,
+   "periods_with_futures_notional": 59
+  },
+  "SCO": {
+   "rows": 432,
+   "parsed_rows": 378,
+   "unparsed_rows": 54,
+   "periods_with_holdings": 71,
+   "first_period": "2008-12-31",
+   "last_period": "2026-06-30",
+   "periods_with_an_anchor": 70,
+   "periods_with_futures_notional": 71
+  },
+  "UCO": {
+   "rows": 580,
+   "parsed_rows": 527,
+   "unparsed_rows": 53,
+   "periods_with_holdings": 71,
+   "first_period": "2008-12-31",
+   "last_period": "2026-06-30",
+   "periods_with_an_anchor": 69,
+   "periods_with_futures_notional": 71
+  },
+  "UNG": {
+   "rows": 345,
+   "parsed_rows": 293,
+   "unparsed_rows": 52,
+   "periods_with_holdings": 77,
+   "first_period": "2007-06-30",
+   "last_period": "2026-06-30",
+   "periods_with_an_anchor": 77,
+   "periods_with_futures_notional": 37
+  },
+  "USO": {
+   "rows": 448,
+   "parsed_rows": 393,
+   "unparsed_rows": 55,
+   "periods_with_holdings": 78,
+   "first_period": "2006-12-31",
+   "last_period": "2026-06-30",
+   "periods_with_an_anchor": 78,
+   "periods_with_futures_notional": 37
+  }
+ },
+ "unparsed": {
+  "rows": 326,
+  "per_fund": {
+   "BOIL": 56,
+   "KOLD": 56,
+   "SCO": 54,
+   "UCO": 53,
+   "UNG": 52,
+   "USO": 55
+  },
+  "reasons": {
+   "anchors only: this filing's Statements of Financial Condition carries this period (it is the comparative column, or the notes) and no Schedule of Investments section for it": 297,
+   "no section for BOIL anywhere in this filing (...)": 12,
+   "no section for KOLD anywhere in this filing (...)": 12,
+   "no section for USO anywhere in this filing (...)": 4,
+   "no section for UNG anywhere in this filing (...)": 1
+  },
+  "periods": [
+   "BOIL 2008-12-31",
+   "BOIL 2009-03-31",
+   "BOIL 2009-06-30",
+   "BOIL 2009-09-30",
+   "BOIL 2009-12-31",
+   "BOIL 2010-03-31",
+   "BOIL 2010-06-30",
+   "BOIL 2010-09-30",
+   "BOIL 2010-12-31",
+   "BOIL 2011-03-31",
+   "BOIL 2011-06-30",
+   "BOIL 2011-09-30",
+   "BOIL 2011-12-31",
+   "BOIL 2012-12-31",
+   "BOIL 2013-12-31",
+   "BOIL 2014-12-31",
+   "BOIL 2015-12-31",
+   "BOIL 2016-12-31",
+   "BOIL 2017-12-31",
+   "BOIL 2018-12-31",
+   "BOIL 2019-12-31",
+   "BOIL 2020-12-31",
+   "BOIL 2021-12-31",
+   "BOIL 2022-12-31",
+   "BOIL 2023-12-31",
+   "BOIL 2024-12-31",
+   "BOIL 2025-12-31",
+   "KOLD 2008-12-31",
+   "KOLD 2009-03-31",
+   "KOLD 2009-06-30",
+   "KOLD 2009-09-30",
+   "KOLD 2009-12-31",
+   "KOLD 2010-03-31",
+   "KOLD 2010-06-30",
+   "KOLD 2010-09-30",
+   "KOLD 2010-12-31",
+   "KOLD 2011-03-31",
+   "KOLD 2011-06-30",
+   "KOLD 2011-09-30",
+   "KOLD 2011-12-31",
+   "KOLD 2012-12-31",
+   "KOLD 2013-12-31",
+   "KOLD 2014-12-31",
+   "KOLD 2015-12-31",
+   "KOLD 2016-12-31",
+   "KOLD 2017-12-31",
+   "KOLD 2018-12-31",
+   "KOLD 2019-12-31",
+   "KOLD 2020-12-31",
+   "KOLD 2021-12-31",
+   "KOLD 2022-12-31",
+   "KOLD 2023-12-31",
+   "KOLD 2024-12-31",
+   "KOLD 2025-12-31",
+   "SCO 2008-12-31",
+   "SCO 2009-12-31",
+   "SCO 2010-12-31",
+   "SCO 2011-12-31",
+   "SCO 2012-12-31",
+   "SCO 2013-12-31",
+   "SCO 2014-12-31",
+   "SCO 2015-12-31",
+   "SCO 2016-12-31",
+   "SCO 2017-12-31",
+   "SCO 2018-12-31",
+   "SCO 2019-12-31",
+   "SCO 2020-12-31",
+   "SCO 2021-12-31",
+   "SCO 2022-12-31",
+   "SCO 2023-12-31",
+   "SCO 2024-12-31",
+   "SCO 2025-12-31",
+   "UCO 2008-12-31",
+   "UCO 2009-12-31",
+   "UCO 2010-12-31",
+   "UCO 2011-12-31",
+   "UCO 2012-12-31",
+   "UCO 2013-12-31",
+   "UCO 2014-12-31",
+   "UCO 2015-12-31"
+  ]
+ },
+ "gates": {
+  "G0_kinds_and_reasons": {
+   "futures": 835,
+   "swap": 650,
+   "cash": 328,
+   "other": 0,
+   "unparsed": 326
+  },
+  "G1_f_fut_in_unit_interval": {
+   "rows_with_f_fut": 1545,
+   "min": 0.054329287222407985,
+   "max": 1.0,
+   "rows_null": 594
+  },
+  "G2_contract_months_forward": {
+   "futures_rows_checked": 835,
+   "backward_rows": 1,
+   "backward_share": 0.001198,
+   "backward": [
+    {
+     "fund": "USO",
+     "period_end": "2013-09-30",
+     "contract_month": "2013-08",
+     "source_accession": "0001144204-13-060424"
+    }
+   ]
+  },
+  "G3_no_duplicate_lines": {
+   "duplicate_rows": 0
+  },
+  "G4_year_coverage": {
+   "BOIL": {
+    "first_year": 2011,
+    "last_year": 2026,
+    "years": 16,
+    "parsed_rows": 118
+   },
+   "KOLD": {
+    "first_year": 2011,
+    "last_year": 2026,
+    "years": 16,
+    "parsed_rows": 104
+   },
+   "SCO": {
+    "first_year": 2008,
+    "last_year": 2026,
+    "years": 19,
+    "parsed_rows": 378
+   },
+   "UCO": {
+    "first_year": 2008,
+    "last_year": 2026,
+    "years": 19,
+    "parsed_rows": 527
+   },
+   "UNG": {
+    "first_year": 2007,
+    "last_year": 2026,
+    "years": 20,
+    "parsed_rows": 293
+   },
+   "USO": {
+    "first_year": 2006,
+    "last_year": 2026,
+    "years": 21,
+    "parsed_rows": 393
+   }
+  },
+  "G5_known_answer_live_page": {
+   "UCO": {
+    "period_end": "2026-06-30",
+    "swap_lines": 4,
+    "futures_lines": 3,
+    "f_fut": 0.18280166631447836,
+    "months": [
+     "2026-09",
+     "2026-12",
+     "2027-06"
+    ]
+   },
+   "SCO": {
+    "period_end": "2026-06-30",
+    "swap_lines": 0,
+    "futures_lines": 3,
+    "f_fut": 1.0,
+    "months": [
+     "2026-09",
+     "2026-12",
+     "2027-06"
+    ]
+   }
+  }
+ },
+ "gate_definitions": {
+  "G0_kinds_and_reasons": "every kind in ('futures', 'swap', 'cash', 'other', 'unparsed'); every unparsed row states a reason",
+  "G1_f_fut_in_unit_interval": "f_fut in [0,1] wherever non-null",
+  "G2_contract_months_forward": "a held contract month is never before its period end",
+  "G3_no_duplicate_lines": "one line per (accession, fund, period, kind, month, counterparty, description)",
+  "G4_year_coverage": "every fund has a parsed row in every calendar year of its own span",
+  "G5_known_answer_live_page": "the latest 10-Q's kind split agrees with D619's live 2026-09-18 holdings page: UCO holds swaps, SCO does not"
+ },
+ "sha256": "491dd40199f3481601c1d262dc3f219b5bfaea7fd338ca915d20abef1785f210",
+ "sha256_uncompressed_csv": "14cffb64c00e5ec577120adcbc48111415a8090f689d79254a9bbc9c4a5072c4",
+ "bytes": 44674,
+ "encoding": "utf-8, LF, deterministic gzip (mtime=0, no stored filename)",
+ "date_col": "filed_date",
+ "wrong_cuts": [
+  "period_end"
+ ],
+ "holdout": "HOLDINGS, SHARES AND NET ASSETS ONLY -- no return, no signal, no trade. Periods run 2006-03-31..2026-06-30, which runs through the deposit's sealed vault window (2025-03-01..2026-09-18) and past this repository's 2024-01-01 holdout, neither of which the principal has reconciled with the other. Nothing here may score anything until that reconciliation is in writing (D604, D619, D620)."
+}

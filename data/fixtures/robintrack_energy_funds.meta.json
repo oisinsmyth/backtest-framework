@@ -1,0 +1,347 @@
+{
+ "archive_span_declared": [
+  "2018-05-02",
+  "2020-08-13"
+ ],
+ "boil_note": "BOIL's series ends 2020-04-21, not 2020-08-13 like the other five. The archive stops carrying it; nothing is padded and the per-ticker span is the fund's own.",
+ "builder": "scripts/build_robintrack_funds.py",
+ "built_utc": "2026-09-22T07:58:50Z",
+ "bytes": 433420,
+ "column_units": {
+  "holders": "COUNT OF ROBINHOOD ACCOUNTS holding the ticker at that poll. Not shares, not dollars, not a position size.",
+  "ticker": "the US listing symbol, uppercase",
+  "ts_utc": "the archive's own poll instant, treated as UTC -- see the builder's docstring: every fund's hour-of-day histogram is flat across all 24 hours, which a US-local series could not be"
+ },
+ "columns": [
+  "ticker",
+  "ts_utc",
+  "holders"
+ ],
+ "date_col": "ts_utc",
+ "encoding": "utf-8, LF, deterministic gzip (mtime=0, no stored filename), so the digest is a fact about the rows and not about when the build ran",
+ "holdout": "HOLDER COUNTS ONLY -- no price, no return, no signal, no trade. The archive ends 2020-08-13, five and a half years before this repository's 2024-01-01 reserved slice, so no reserved row exists to read.",
+ "outage_note": "Two site outages, the same two in every one of the six files: 152.5 h ending 2019-01-30 and 238.0 h ending 2020-01-16. They are NAMED AND NOT FILLED; retail_attention.robinhood_holders returns None inside them and never 0.",
+ "outages_declared": [
+  [
+   "2019-01-23T23:45:00Z",
+   "2019-01-30T08:15:00Z"
+  ],
+  [
+   "2020-01-06T08:49:00Z",
+   "2020-01-16T06:46:00Z"
+  ]
+ ],
+ "p9_not_on_robinhood": [
+  "HNU",
+  "HOU"
+ ],
+ "p9_note": "HNU and HOU, the ledger's P9 Canadian leveraged natural-gas ETPs, have NO file in the 8,597-ticker export. They are TSX-listed and outside a US retail broker's universe. Asserted in --build and --gates so nobody re-searches.",
+ "per_ticker": {
+  "BOIL": {
+   "holders_max": 405,
+   "holders_min": 62,
+   "hour_histogram_utc": [
+    690,
+    692,
+    691,
+    681,
+    689,
+    677,
+    693,
+    690,
+    685,
+    689,
+    687,
+    686,
+    568,
+    718,
+    725,
+    694,
+    681,
+    680,
+    676,
+    674,
+    686,
+    688,
+    689,
+    690
+   ],
+   "outage_gaps": [
+    {
+     "from": "2019-01-23T23:44:21Z",
+     "hours": 152.53,
+     "to": "2019-01-30T08:16:24Z"
+    },
+    {
+     "from": "2020-01-06T08:48:40Z",
+     "hours": 237.99,
+     "to": "2020-01-16T06:48:21Z"
+    }
+   ],
+   "rows": 16419,
+   "span_utc": [
+    "2018-05-02T04:54:15Z",
+    "2020-04-21T03:50:05Z"
+   ]
+  },
+  "KOLD": {
+   "holders_max": 380,
+   "holders_min": 4,
+   "hour_histogram_utc": [
+    826,
+    828,
+    830,
+    824,
+    835,
+    818,
+    838,
+    823,
+    821,
+    837,
+    821,
+    841,
+    693,
+    889,
+    869,
+    824,
+    809,
+    818,
+    821,
+    815,
+    830,
+    825,
+    830,
+    829
+   ],
+   "outage_gaps": [
+    {
+     "from": "2019-01-23T23:43:43Z",
+     "hours": 152.53,
+     "to": "2019-01-30T08:15:46Z"
+    },
+    {
+     "from": "2020-01-06T08:47:43Z",
+     "hours": 237.99,
+     "to": "2020-01-16T06:47:22Z"
+    }
+   ],
+   "rows": 19794,
+   "span_utc": [
+    "2018-05-02T04:53:35Z",
+    "2020-08-13T22:55:00Z"
+   ]
+  },
+  "SCO": {
+   "holders_max": 3817,
+   "holders_min": 199,
+   "hour_histogram_utc": [
+    826,
+    828,
+    830,
+    823,
+    835,
+    818,
+    838,
+    823,
+    821,
+    837,
+    821,
+    841,
+    693,
+    889,
+    869,
+    824,
+    808,
+    819,
+    821,
+    815,
+    829,
+    825,
+    830,
+    829
+   ],
+   "outage_gaps": [
+    {
+     "from": "2019-01-23T23:43:49Z",
+     "hours": 152.53,
+     "to": "2019-01-30T08:15:52Z"
+    },
+    {
+     "from": "2020-01-06T08:47:53Z",
+     "hours": 237.99,
+     "to": "2020-01-16T06:47:29Z"
+    }
+   ],
+   "rows": 19792,
+   "span_utc": [
+    "2018-05-02T04:53:42Z",
+    "2020-08-13T22:55:06Z"
+   ]
+  },
+  "UCO": {
+   "holders_max": 166850,
+   "holders_min": 878,
+   "hour_histogram_utc": [
+    829,
+    829,
+    834,
+    822,
+    849,
+    812,
+    830,
+    822,
+    828,
+    821,
+    813,
+    838,
+    688,
+    886,
+    867,
+    824,
+    810,
+    820,
+    821,
+    820,
+    828,
+    827,
+    833,
+    826
+   ],
+   "outage_gaps": [
+    {
+     "from": "2019-01-23T23:43:28Z",
+     "hours": 152.53,
+     "to": "2019-01-30T08:15:30Z"
+    },
+    {
+     "from": "2020-01-06T08:47:17Z",
+     "hours": 237.99,
+     "to": "2020-01-16T06:46:58Z"
+    }
+   ],
+   "rows": 19777,
+   "span_utc": [
+    "2018-05-02T04:53:19Z",
+    "2020-08-13T22:40:59Z"
+   ]
+  },
+  "UNG": {
+   "holders_max": 3214,
+   "holders_min": 707,
+   "hour_histogram_utc": [
+    823,
+    831,
+    827,
+    822,
+    829,
+    817,
+    837,
+    822,
+    815,
+    821,
+    835,
+    842,
+    694,
+    887,
+    868,
+    823,
+    806,
+    817,
+    816,
+    812,
+    828,
+    827,
+    825,
+    828
+   ],
+   "outage_gaps": [
+    {
+     "from": "2019-01-23T23:45:58Z",
+     "hours": 152.64,
+     "to": "2019-01-30T08:24:06Z"
+    },
+    {
+     "from": "2020-01-06T08:51:13Z",
+     "hours": 238.0,
+     "to": "2020-01-16T06:50:57Z"
+    }
+   ],
+   "rows": 19752,
+   "span_utc": [
+    "2018-05-02T04:55:58Z",
+    "2020-08-13T22:58:07Z"
+   ]
+  },
+  "USO": {
+   "holders_max": 220905,
+   "holders_min": 5103,
+   "hour_histogram_utc": [
+    827,
+    829,
+    833,
+    821,
+    848,
+    812,
+    830,
+    822,
+    823,
+    820,
+    814,
+    836,
+    688,
+    885,
+    868,
+    823,
+    810,
+    820,
+    819,
+    819,
+    826,
+    828,
+    830,
+    825
+   ],
+   "outage_gaps": [
+    {
+     "from": "2019-01-23T23:44:27Z",
+     "hours": 152.53,
+     "to": "2019-01-30T08:16:32Z"
+    },
+    {
+     "from": "2020-01-06T08:48:53Z",
+     "hours": 237.99,
+     "to": "2020-01-16T06:48:31Z"
+    }
+   ],
+   "rows": 19756,
+   "span_utc": [
+    "2018-05-02T04:54:23Z",
+    "2020-08-13T22:40:57Z"
+   ]
+  }
+ },
+ "proshares_with_creation_truth": [
+  "BOIL",
+  "KOLD",
+  "UCO",
+  "SCO"
+ ],
+ "record": "D621",
+ "rows": 115290,
+ "sha256": "36864d6feadebd36e8e4a1e7f188cb7b9349213cd7a219590dfc7b94c2b90d5d",
+ "source": {
+  "archive": "data/raw/robintrack/robintrack-popularity-history.tar.gz (504 MB)",
+  "fetched": "NOTHING. This build reads the local cache only.",
+  "path": "data/raw/robintrack/popularity_export/{TICKER}.csv",
+  "provenance": "robintrack-data.ameo.design; the Barber-Huang-Odean-Schwarz Robinhood holder-count archive, 8,597 tickers, already on disk before D621"
+ },
+ "spec": "D621; SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.3c line 112, as amended",
+ "tickers": [
+  "BOIL",
+  "KOLD",
+  "UCO",
+  "SCO",
+  "UNG",
+  "USO"
+ ]
+}

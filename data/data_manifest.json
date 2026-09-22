@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T22:27:12Z",
+  "built_at": "2026-09-22T08:39:01Z",
   "note": "Every bulk panel under data/, listed by suffix and regardless of whether git tracks it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) and are simply present in a clone. --verify re-hashes what is on disk either way.",
   "suffixes": [
     ".csv.gz",
@@ -7,8 +7,8 @@
     ".npz",
     ".zip"
   ],
-  "total_bytes": 1792926834,
-  "count": 126,
+  "total_bytes": 1793789246,
+  "count": 132,
   "files": [
     {
       "path": "data/d291_null_surface.npz",
@@ -438,6 +438,15 @@
       "sidecars": []
     },
     {
+      "path": "data/fixtures/attention_sample.csv.gz",
+      "bytes": 24498,
+      "sha256": "30455a2b7c98cc93f4f6b9f6f0ef25db847932c7d3cbf65083161170143afa46",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/attention_sample.meta.json"
+      ]
+    },
+    {
       "path": "data/fixtures/cftc_cot_raw.csv.gz",
       "bytes": 3987643,
       "sha256": "0601cad8273f66deb5cc04e8319b8b1dc00998e2d8c0761e508c830125337ca9",
@@ -614,6 +623,33 @@
       "sidecars": [
         "data/fixtures/etf_wide_daily_raw.meta.json",
         "data/fixtures/etf_wide_daily_raw_events.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fund_holdings_quarterly.csv.gz",
+      "bytes": 44674,
+      "sha256": "491dd40199f3481601c1d262dc3f219b5bfaea7fd338ca915d20abef1785f210",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fund_holdings_quarterly.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fund_nav_daily.csv.gz",
+      "bytes": 323613,
+      "sha256": "54c2ee9f0bf2a0470d0036bc5f0727fa62ed4bbecf5bd0b3cc538e46532a3ce2",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fund_nav_daily.meta.json"
+      ]
+    },
+    {
+      "path": "data/fixtures/fund_panel_projected.csv.gz",
+      "bytes": 29022,
+      "sha256": "5c78e88cf1a52cdf3309ac97e5eb9c45f3ef8aadeae48172e5fa08c3c004a643",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fund_panel_projected.meta.json"
       ]
     },
     {
@@ -825,6 +861,15 @@
       "sidecars": []
     },
     {
+      "path": "data/fixtures/gdelt_hourly_sample.csv.gz",
+      "bytes": 7185,
+      "sha256": "bbfd7cf41d49999fdc8cded3145664686c4436cf83f8db02e5da96a7878094aa",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/gdelt_hourly_sample.meta.json"
+      ]
+    },
+    {
       "path": "data/fixtures/hkm_factors.csv.gz",
       "bytes": 17545,
       "sha256": "ec8951a376c988cb005a9062f5de952c88d7f78c8f1c35387475b92a9c12ba5a",
@@ -868,6 +913,15 @@
       "sha256": "4028b3da07d01e6242816ba7750614fae39d56b4250f35a41d01a63a4a11f1b3",
       "git_blob": "56103cb462138e314faaa943373718ac855e7d20",
       "sidecars": []
+    },
+    {
+      "path": "data/fixtures/robintrack_energy_funds.csv.gz",
+      "bytes": 433420,
+      "sha256": "36864d6feadebd36e8e4a1e7f188cb7b9349213cd7a219590dfc7b94c2b90d5d",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/robintrack_energy_funds.meta.json"
+      ]
     },
     {
       "path": "data/fixtures/single_name_intraday_15m_panel.csv.gz",

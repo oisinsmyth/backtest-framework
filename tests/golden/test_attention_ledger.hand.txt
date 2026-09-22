@@ -1,0 +1,247 @@
+Golden-master hand-worked cases for data/attention.py (D612). Companion to
+test_attention_ledger.py.
+
+WHAT IS PINNED HERE, AND WHY IT IS A GOLDEN AND NOT A UNIT TEST
+---------------------------------------------------------------
+Three of the four cases below are POINT-IN-TIME BOUNDARIES, and a point-in-time
+boundary is money in exactly the sense a fill price is: a feature that reads one
+minute too early is not a slightly optimistic feature, it is a look-ahead, and the
+number it produces is unfalsifiable afterwards. R9 is this repository's record of
+what an off-by-one-bar conditioner costs -- an effect spanning 465 percentage
+points that vanished entirely when the variable was lagged by one bar. The fourth
+case is a digest, which belongs in this tier for the reason D551 gives: the same
+bytes hashed two ways on two machines is the whole value of a content-addressed
+identity.
+
+The ground truth below was produced by calculators that NEVER IMPORT THIS CODEBASE
+(CONTRIBUTING, "the order of work", step 2). Two independent calculators were used
+for every number and they agreed on every line:
+
+  (a) GNU coreutils in Git Bash -- `awk` with `%.17g` for the arithmetic, and
+      `sha256sum` fed by `printf` for the digests, so the exact bytes are visible
+      in the command;
+  (b) .NET from PowerShell -- `[Math]::Sqrt` and double division for the
+      arithmetic, and `System.Security.Cryptography.SHA256` over a literal
+      `[byte[]]` array for the digests, so the input is written as hex octets and
+      no text encoding or newline translation can intervene.
+
+Anchor, so that (a) and (b) are shown to be standard SHA-256 before anything else
+is trusted:
+
+    $ printf '' | sha256sum
+    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+which is the published SHA-256 of the empty string.
+
+================================================================================
+Case 1 -- THE PAGEVIEW PUBLICATION BOUNDARY (ledger unit test 22, line 728)
+================================================================================
+The deposit, `SETTLEMENT_FLOW_LEDGER_PREREG.md:267`, verbatim:
+
+    Hourly pageviews enter only after the hour completes plus a 15-min
+    publication buffer.
+
+and unit test 22, `:728`, verbatim:
+
+    Publication-time guard: an hourly pageview for 13:00-14:00 is unavailable at
+    tau = 14:10 and available at tau = 14:15 or later.
+
+  the hour            : 13:00:00Z .. 14:00:00Z  (the hour STARTING at 13:00)
+  hour completes at   : 13:00 + 1h            = 14:00:00Z
+  publication buffer  :                       +   0h15m
+  AVAILABLE AT        : 13:00 + 1h + 15m      = 14:15:00Z
+
+Four probe instants, and the third is the one that matters -- a boundary asserted
+only at 14:10 and 14:15 is satisfied by an implementation that rounds to the
+nearest five minutes:
+
+  tau = 14:09:59Z   ->  UNAVAILABLE   (14:09:59 <  14:15:00)
+  tau = 14:10:00Z   ->  UNAVAILABLE   (14:10:00 <  14:15:00)   <- test 22, first half
+  tau = 14:14:59Z   ->  UNAVAILABLE   (14:14:59 <  14:15:00)   <- one second short
+  tau = 14:15:00Z   ->  AVAILABLE     (14:15:00 >= 14:15:00)   <- test 22, second half
+  tau = 14:15:01Z   ->  AVAILABLE
+
+  arithmetic verified: 13*3600 + 3600 + 900 = 46800 + 4500 = 51300 s past midnight
+                       51300 / 3600 = 14.25 h = 14:15:00
+    $ awk 'BEGIN{print 13*3600 + 3600 + 900}'
+      51300
+
+The comparison is `tau >= available_at`, not `>`: the buffer is stated as a
+duration to WAIT, so the instant the wait ends the datum is usable.
+
+================================================================================
+Case 2 -- THE MATCHED Z-SCORE (ledger unit test 21, line 727)
+================================================================================
+The deposit, `:255`, verbatim:
+
+    each series is converted to a z-score against the same hour-of-day and
+    day-of-week over the trailing 60 days (prior data only)
+
+and unit test 21, `:727`, verbatim:
+
+    Attention z-scores on day t use only data from days t-60 ... t-1 for the same
+    hour-of-day and day-of-week.
+
+Five matched observations. The scored instant is MONDAY 2019-11-04 at hour 14
+(UTC). Matched means: same hour-of-day (14) AND same weekday (Monday), on a day
+in [t-60, t-1]. The five Mondays before it, all inside 60 days:
+
+    2019-09-30  hour 14  value 10      (t-35)
+    2019-10-07  hour 14  value 12      (t-28)
+    2019-10-14  hour 14  value 14      (t-21)
+    2019-10-21  hour 14  value 16      (t-14)
+    2019-10-28  hour 14  value 18      (t- 7)
+
+  n        = 5
+  sum      = 10 + 12 + 14 + 16 + 18 = 70
+  mean     = 70 / 5 = 14
+  deviations                : -4, -2,  0, +2, +4
+  squared                   : 16,  4,  0,  4, 16
+  sum of squares            : 40
+  sample variance (ddof=1)  : 40 / (5-1) = 10
+  sample sd                 : sqrt(10)   = 3.1622776601683795
+
+  the value being scored    : 20   (Monday 2019-11-04, hour 14)
+  z = (20 - 14) / sqrt(10)  = 6 / 3.1622776601683795
+                            = 1.8973665961010275
+
+  closed form: 6/sqrt(10) = 6*sqrt(10)/10 = 3*sqrt(10)/5
+
+  verified (a): $ awk 'BEGIN{m=14; ss=40; sd=sqrt(ss/4);
+                            printf "%.17g %.17g\n", sd, (20-m)/sd}'
+                  3.1622776601683795 1.8973665961010275
+  verified (b): PS> $s=[Math]::Sqrt(10); (6.0/$s).ToString("R")
+                  1.8973665961010275
+                PS> $s.ToString("R")
+                  3.1622776601683795
+
+DDOF IS 1 AND THAT IS A CHOICE, SO IT IS WRITTEN DOWN. The deposit says "z-score"
+and does not say which denominator. With ddof=0 the same five numbers give
+sd = sqrt(8) = 2.8284271247461903 and z = 2.1213203435596424 -- a 12% larger
+score on the same data, which would move a `z > 2` breadth count and a `z > 3`
+burst flag. The sample sd is used because the five observations ARE a sample of
+the matched-hour distribution and not the population of it, and because at the
+n this window can supply (60 days of one weekday-hour is at most 9 observations)
+the difference is not negligible. The alternative is recorded here so that a
+future reader can see it was decided rather than defaulted.
+
+THE LEAK CASE, which is the half of test 21 that can actually fail:
+
+    2019-11-04  hour 14  value 20      <- the day being scored, t-0
+
+An observation dated on or after t must RAISE, not be filtered. Filtering a
+same-day observation is indistinguishable, from the outside, from a window that
+never had one -- and this is precisely the shape R9 records: the defect lived in
+a script that selected on the bar it then measured.
+
+Two more that must RAISE rather than be quietly dropped:
+  2019-08-26 hour 14 (t-70)  -- OUTSIDE the 60-day window, so it is DROPPED, not
+                                an error: it is not a leak, it is just old.
+  four observations only     -- below the stated minimum of 5, so InsufficientHistory.
+
+================================================================================
+Case 3 -- att_accel ON A SYNTHETIC STEP (ledger unit test 24, line 730)
+================================================================================
+The deposit, `:262`, verbatim:
+
+    | `att_accel` | Change in `att_level` over the last 3 hours vs the prior 3 hours |
+
+so at hour h,  accel(h) = mean(level[h-2], level[h-1], level[h])
+                        - mean(level[h-5], level[h-4], level[h-3])
+
+Six consecutive hours of `att_level`, a flat stretch then a ramp:
+
+    hour   09    10    11    12    13    14
+    level  0.5   0.5   0.5   1.5   2.5   3.5
+
+  accel(14) = (1.5 + 2.5 + 3.5)/3  -  (0.5 + 0.5 + 0.5)/3
+            =        7.5/3         -         1.5/3
+            =        2.5           -         0.5
+            =        2.0                                      POSITIVE, the ramp
+
+  verified (a): $ awk 'BEGIN{printf "%.17g\n", ((1.5+2.5+3.5)/3)-((0.5+0.5+0.5)/3)}'
+                  2
+
+And the same statistic once the level has been flat for six hours:
+
+    hour   15    16    17    18    19    20
+    level  3.5   3.5   3.5   3.5   3.5   3.5
+
+  accel(20) = (3.5+3.5+3.5)/3 - (3.5+3.5+3.5)/3 = 3.5 - 3.5 = 0.0   EXACTLY
+
+  verified (a): $ awk 'BEGIN{printf "%.17g\n", ((3.0+3.0+3.0)/3)-((3.0+3.0+3.0)/3)}'
+                  0
+
+  EXACTLY zero, not "about zero". The two means are computed from the same six
+  IEEE-754 doubles in the same order, so the subtraction is of a double from
+  itself and the result is +0.0 with no rounding to forgive. The deposit's own
+  word at `:730` is "returns to about zero"; the constant case is stronger than
+  the deposit asks and is asserted at its strength, because a tolerance here
+  would hide a reordered sum.
+
+  The ramp case is NOT exact -- 7.5/3 and 1.5/3 are each rounded -- so it is
+  asserted to 1e-15 and the exact-zero assertion is reserved for the flat case.
+  (As it happens 7.5/3 = 2.5 and 1.5/3 = 0.5 are both representable, so this one
+  is exact too; the tolerance is kept because the NEXT ramp anybody writes will
+  not be.)
+
+  A gap in the six hours is NOT interpolated. If any of the six hours is absent,
+  accel raises: the deposit's series is hourly and a missing hour is a hole, and
+  D608's `data/recorder/GAPS.md` exists precisely so that holes stay holes.
+
+================================================================================
+Case 4 -- queries_hash: THE NEWLINE PIN ON THE QUERY FILE (test 25, line 731)
+================================================================================
+Unit test 25, `:731`, verbatim:
+
+    Query lists are loaded from `QUERIES.md` and hashed. The hash is stored with
+    every trial in `trials.csv`.
+
+A synthetic two-line query file, written with `write_bytes` from an explicit
+literal so the test states the bytes rather than inheriting the runner's platform
+(D551: a bare `open(p, "w")` translates; `write_bytes` does not):
+
+  bytes as written (CRLF, i.e. what a Windows checkout with autocrlf=true holds):
+
+      b"# Q\r\n- Natural_gas\r\n"
+      hex: 23 20 51 0D 0A 2D 20 4E 61 74 75 72 61 6C 5F 67 61 73 0D 0A      (20 bytes)
+
+  HASHED RAW (text_normalise=False) -- a fact about this checkout, not the file:
+
+      sha256 : df3f65a3f31eecfeaa4a220bda2864ef4fe773bd8aac28a2a43afb5bad89180a
+      (a): $ printf '# Q\r\n- Natural_gas\r\n' | sha256sum
+      (b): PS> SHA256 over [byte[]](0x23,0x20,0x51,0x0D,0x0A,0x2D,0x20,0x4E,0x61,
+                                    0x74,0x75,0x72,0x61,0x6C,0x5F,0x67,0x61,0x73,
+                                    0x0D,0x0A)                     -> same
+
+  HASHED LF-PINNED (text_normalise=True) -- WHAT queries_hash() USES. CRLF becomes
+  LF before hashing, so the bytes fed to SHA-256 are
+
+      b"# Q\n- Natural_gas\n"
+      hex: 23 20 51 0A 2D 20 4E 61 74 75 72 61 6C 5F 67 61 73 0A            (18 bytes)
+
+      sha256 : 0c592012e55d5c2b9276e20810ac978c14250f0c01bd207b5e58b94446475222
+      (a): $ printf '# Q\n- Natural_gas\n' | sha256sum
+      (b): PS> SHA256 over [byte[]](0x23,0x20,0x51,0x0A,0x2D,0x20,0x4E,0x61,0x74,
+                                    0x75,0x72,0x61,0x6C,0x5F,0x67,0x61,0x73,0x0A)
+                                                                   -> same
+
+  The two digests differ, and QUERIES.md is TEXT, so the LF-pinned one is the
+  identity. D550/D551 is the record of the alternative: one writer that did not
+  pin the newline gave the same fixture two snapshot ids on two operating systems,
+  and a snapshot id is the provenance identifier logged with every trial.
+
+  TAMPERING. Appending one byte to the file changes the digest, so a QUERIES.md
+  edited after QUERIES.sha256 was written fails `load_queries` with
+  `QueriesTampered`. That is the enforcement of `:116` -- "not changed afterwards
+  without a doc edit" -- and a doc edit is exactly an edit that also rewrites the
+  companion digest.
+
+================================================================================
+WHAT IS NOT PINNED HERE
+================================================================================
+No number computed from fetched data. Every value above is a literal written into
+this file by hand; `data/fixtures/attention_sample.csv.gz` is not read by any test
+in this repository, because a golden that reads a fixture pins the fixture and not
+the arithmetic. No market bar is read at all, and no row dated 2024-01-01 or later
+is touched by anything in D612.

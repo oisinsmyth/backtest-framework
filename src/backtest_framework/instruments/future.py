@@ -18,8 +18,16 @@ because its `usd_per_point` and `tick_points` are parsed from CME's own wording.
 
 `data/fut_specs_from_definition.json` is the Databento GLBX definition snapshot (41 roots,
 including MBT, which the CME file does not carry). It states tick size as
-`tick_price_units` and `tick_usd`; `usd_per_point` is their quotient. The fallback path is
-the one `scripts/run_d555_tsmom_replication.py` already takes by hand for MBT.
+`tick_price_units` and, since D609, the tick VALUE as **`tick_usd_full_contract`**;
+`usd_per_point` is their quotient. The fallback path is the one
+`scripts/run_d555_tsmom_replication.py` already takes by hand for MBT.
+
+**Do not read that file's `tick_usd`.** It is the snapshot's raw formula with a `/100` applied
+on `unit_of_measure == "USD"` alone, and it is 100x HIGH on ZC, ZS, ZW, ZL, LE, HE and 100x LOW
+on SR3 — seven roots, every one with `known_tick_usd: null`, so nothing here had ever charged
+them a verified number. The field is kept unchanged because D591 and D604 quote it; the
+corrected value is `tick_usd_full_contract`, decided by the notional test in
+`scripts/build_fut_breadth_hourly.py`, and an entry without it raises here.
 
 **An unknown root raises `KeyError`.** A default multiplier is the D48 failure — a number
 that is wrong rather than absent, with no test able to notice, exactly as
@@ -151,7 +159,38 @@ class Future:
         definition = fallback.get(root) if isinstance(fallback, dict) else None
         if isinstance(definition, dict) and definition.get("present"):
             tick_points = float(definition["tick_price_units"])
-            tick_usd = float(definition["tick_usd"])
+            # `tick_usd_full_contract`, NOT `tick_usd` -- D609. `tick_usd` is the definition
+            # snapshot's raw formula with a `/100` applied on `unit_of_measure == "USD"` alone,
+            # and that rule is wrong for seven roots: ZC, ZS, ZW (cents per bushel), ZL, LE, HE
+            # (cents per pound) came out 100x HIGH, and SR3 100x LOW because the percent-of-par
+            # divide fires on a `unit_of_measure_qty` that is already dollars per point. Every
+            # one of the seven has `known_tick_usd: null`, so `__post_init__`'s product identity
+            # could not catch it: it holds by construction, because `usd_per_point` is DERIVED
+            # from `tick_usd`. `tick_usd_full_contract` is decided by the notional test in
+            # `scripts/build_fut_breadth_hourly.py:decide_scaling` and agrees with CME on all 17
+            # roots where CME's own value is on file.
+            if "tick_usd_full_contract" not in definition:
+                raise KeyError(
+                    f"{root!r} in {FALLBACK_SPECS_PATH.name} carries no "
+                    "'tick_usd_full_contract'. That field is the NOTIONAL-decided tick value "
+                    "(D609); the file's own 'tick_usd' is 100x wrong on seven roots and is kept "
+                    "only because D591 and D604 quote it. Re-run "
+                    "`python scripts/probe_definition_specs.py --rescale`. A missing multiplier "
+                    "must be a loud error, not a guessed one (D48)."
+                )
+            tick_usd = float(definition["tick_usd_full_contract"])
+            known = definition.get("known_tick_usd")
+            if known is not None and abs(tick_usd - float(known)) > 1e-9 * abs(float(known)):
+                # NOT satisfiable by construction, which is the point. `__post_init__` compares
+                # three numbers two of which are derived from the third; this compares the one
+                # number that matters against CME's own published value for the same root, from
+                # a different file, and it is the only check in this class that an arithmetic
+                # error in the definition table cannot pass.
+                raise ValueError(
+                    f"{root}: tick_usd_full_contract = {tick_usd!r} but "
+                    f"{FALLBACK_SPECS_PATH.name} records known_tick_usd = {known!r} from CME. "
+                    "The definition snapshot's scaling disagrees with the exchange."
+                )
             return cls(
                 root=root,
                 tick_points=tick_points,

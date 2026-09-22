@@ -1,0 +1,78 @@
+{
+ "api_span": null,
+ "api_state": {
+  "attempts": [
+   {
+    "body": "Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries. All high-traffic users should switch to our ngrams dataset ... For trend analysis, please see our daily newsletter briefings ...",
+    "outcome": "HTTP 429",
+    "when_utc": "2026-09-22"
+   },
+   {
+    "body": "urllib.error.URLError: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time>. No status line, so no bytes; nothing was written into data/raw/.",
+    "outcome": "NO RESPONSE - TCP connect timed out",
+    "when_utc": "2026-09-22, about twelve minutes later"
+   }
+  ],
+  "reading": "The host escalates: a refusal BODY first, then a dropped connection. D612 never got a 200 from it all day either. The raw 15-minute files remain the historical route (D612) and this API is the forward route only; --api is built, its parser is proved on a payload of the documented response shape, and it has not been run.",
+  "state": "DEFERRED - the live hourly series has NOT been fetched",
+  "tool": "urllib.request.urlopen, GET, User-Agent 'BacktestFramework research script research@backtest-framework.org'",
+  "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%22natural+gas%22&mode=timelinevolraw&startdatetime=20191104000000&enddatetime=20191106000000&format=json"
+ },
+ "builder": "scripts/fetch_gdelt_hourly.py --from-files",
+ "built_utc": "2026-09-22T08:15:33Z",
+ "bytes": 7185,
+ "column_units": {
+  "available_at_utc": "the first instant the hour's count may be used",
+  "hour_utc": "the START of the hour the count covers",
+  "n_articles": "COUNT OF DOCUMENTS matching the query in that hour",
+  "qid": "a QUERIES.md section 2b id",
+  "source": "files_15m_summed | doc_api_hourly -- WHICH CORPUS. Never summed across.",
+  "tone": "count-weighted mean document tone, or NaN when no document matched"
+ },
+ "columns": [
+  "source",
+  "qid",
+  "hour_utc",
+  "available_at_utc",
+  "n_articles",
+  "tone"
+ ],
+ "corpus_note": "files_15m_summed counts GKG rows matching QUERIES.md section 2b's title/url/theme rules. doc_api_hourly counts documents in GDELT's DOC index matching a DOC-query grammar. DIFFERENT CORPORA AND DIFFERENT MATCHERS: they are expected to move together and are not expected to be equal. The source column keeps them apart.",
+ "date_col": "hour_utc",
+ "encoding": "utf-8, LF, deterministic gzip (mtime=0, no stored filename)",
+ "holdout": "NEWS COUNTS ONLY -- no price, no return, no signal. The window is 2019, four years before this repository's 2024-01-01 reserved slice.",
+ "low_precision_keys": [
+  "tk_boil",
+  "tk_kold",
+  "tk_uco",
+  "tk_sco",
+  "tk_ung",
+  "tk_uso"
+ ],
+ "queries": [
+  "natural_gas",
+  "crude_oil",
+  "henry_hub",
+  "wti",
+  "theme_env_naturalgas",
+  "theme_env_oil",
+  "theme_econ_oilprice",
+  "theme_econ_natgasprice",
+  "tk_boil",
+  "tk_kold",
+  "tk_uco",
+  "tk_sco",
+  "tk_ung",
+  "tk_uso"
+ ],
+ "queries_sha256": "c153ed567adebb9cf1bffa7f7813a58d46cf74040fdbb5a677b9b77b897d7963",
+ "record": "D621",
+ "resolution_note": "This series is HOURLY and the deposit's news_n is a 60-minute count over 15-MINUTE blocks (its lines 251, 265). The forward recorder job stays 15-minute. An hourly bucket is admitted only through retail_attention.news_n_hourly(accept_hourly=True), which calls attention.refuse_coarse_resolution first; 'day' and 'month' still raise.",
+ "rows": 672,
+ "rows_by_source": {
+  "doc_api_hourly": 0,
+  "files_15m_summed": 672
+ },
+ "sha256": "bbfd7cf41d49999fdc8cded3145664686c4436cf83f8db02e5da96a7878094aa",
+ "spec": "D621; SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.3c and P3.7 lines 251, 265"
+}

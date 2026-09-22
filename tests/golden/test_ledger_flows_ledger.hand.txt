@@ -1,0 +1,517 @@
+Golden-master hand-worked cases for the settlement flow ledger (D610):
+backtest_framework/ledger/{flows,update,rolls,netting}.py.
+Companion to test_ledger_flows_ledger.py.
+
+Worked with a pen and a pocket calculator. Nothing in this file was produced by
+importing this codebase (CONTRIBUTING.md: "the ground truth is produced by a
+calculator that never imports this codebase" -- a .hand.txt derived from the
+implementation launders the implementation's assumptions into the thing meant to
+check them). THIS FILE WAS WRITTEN AND SAVED TO THE WORKING TREE BEFORE
+src/backtest_framework/ledger/ EXISTED AS A DIRECTORY.
+
+No fixture is read, no strategy return is computed, and every input below is
+either synthetic or typed straight out of the deposit's own worked examples.
+
+
+================================================================================
+THE LEDGER OF RECORD
+================================================================================
+docs/internal/User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md, v1.9, an
+untracked read-only source. Quoted verbatim, ASCII-transliterated (the document
+writes the Greek letters, the multiplication sign and the minus sign as such;
+this file is committed source and the repository pins its encodings).
+
+  Section 4, line 143:
+    "All flows are in **contracts of the traded contract month**, signed
+     (+ = buy). For day t and evaluation time tau:"
+
+  Section 4, line 146:
+    "r[t, tau] = P_held(t, tau) / Settle_held(t-1) - 1"
+
+  Section 4, line 151:
+    "The ledger uses **r[t, tau] as the forecast of the settlement-to-settlement
+     return** (a martingale assumption, decision D3)."
+
+  P1, line 156:
+    "Q1 = Sum_funds AUM[t-1] x L x (L - 1) x r[t, tau] x f_fut[t-1]
+          / (multiplier x P_held)"
+
+  P1, line 160:
+    "Variance term `var_Q1` comes from uncertainty in the final return between
+     tau and settlement: `(AUM x L(L-1) x f_fut)^2 x sigma^2_remaining(tau)`,
+     where sigma_remaining is the return volatility from tau to settlement,
+     estimated from prior days."
+
+  P2, line 165:
+    "Q2 = Sum_funds AUM x L(L-1) x r x (1 - f_fut) x (1 - n)
+          / (multiplier x P_held)"
+
+  Section 5.1, lines 361-362:
+    "mu_total = Sum active Q_i"
+    "sigma^2_total = Sum var_Q_i      (independence assumed; decision D5)"
+
+  Section 5.2, lines 380-384:
+    "K     = p sigma^2_total / (p^2 sigma^2_total + R)"
+    "Q_hat = mu_total + K (z - p mu_total)"
+    "sigma^2_post = (1 - K p) sigma^2_total"
+    "Q_rem = (1 - p) x Q_hat"
+    "sigma_rem = (1 - p) x sqrt(sigma^2_post)"
+
+  P8a, lines 332-335:
+    "phi_f,d        = fraction of the position rolled on day d (from the
+                      schedule; Sum_d phi = 1)"
+    "N_old,f        = contracts held in the expiring month at the start of the
+                      roll period (from holdings)"
+    "Sell_old     = - phi_f,d x N_old,f x sign(L_f)
+                      (contracts, expiring month)"
+    "Buy_new      = + phi_f,d x N_old,f x sign(L_f) x (P_old / P_new)
+                      (contracts, next month, notional-matched)"
+
+  Section 8A.2, lines 493-496:
+    "DeltaSD_w  = change in CFTC swap-dealer net position, week w"
+    "DeltaSX_w  = predicted change in swap-routed client exposure in the same
+                  week
+                = Sum US funds' (1 - f_fut) exposure changes
+                  + Sum P9 exposure changes"
+    "Fit:  DeltaSD_w = lambda x DeltaSX_w + eps_w,
+           lambda in [0, 1] approx 1 - (netting fraction)"
+
+  Section 8A.2, line 499:
+    "**Consistency check:** if the flow-fitted n differs from 1 - lambda-hat by
+     more than 2 combined standard errors, flag it in the report."
+
+  Section 8A.5, line 518:
+    "Large-lot threshold `L_min` = the 90th percentile trade size of that
+     contract over the trailing 20 days (prior days only)."
+
+  Required unit tests (Section 12):
+    1  (line 707) "`Q1` for L = +2, AUM = 1e9, r = 0.05, f_fut = 1 gives +1e8
+        notional before contract conversion. L = -2 gives +3e8 (the same sign as
+        the move)."
+    6  (line 712) "Update step: a known synthetic case (mu = 100, sigma^2 = 400,
+        p = 0.5, R = 100, z = 60) matches hand-calculated K, Q_hat, Q_rem."
+   38  (line 744) "Roll sign: a long fund's roll sells the expiring month and
+        buys the next; an inverse fund does the reverse. New-month contracts are
+        scaled by P_old / P_new."
+   42  (line 748) "The swap-dealer fit constrains lambda to [0, 1]; the
+        consistency flag triggers when |n_flow - (1 - lambda-hat)| > 2 combined
+        SE."
+   47  (line 753) "Large-lot threshold uses the trailing 20 prior days only;
+        trades exactly at L_min count as large."
+
+
+================================================================================
+CASE 1 -- REQUIRED UNIT TEST 1. Q1's NOTIONAL AT L = +2 AND L = -2
+================================================================================
+Line 156 is a quotient. Its NUMERATOR is what line 707 calls "notional before
+contract conversion":
+
+    notional = AUM[t-1] x L x (L - 1) x r[t, tau] x f_fut[t-1]
+
+Inputs, typed from line 707: AUM = 1e9 USD, r = 0.05, f_fut = 1.
+
+  L = +2:  L x (L - 1) = 2 x 1 = 2
+           notional = 1,000,000,000 x 2 x 0.05 x 1
+                    = 2,000,000,000 x 0.05
+                    = 100,000,000                       = +1e8    <-- the doc
+
+  L = -2:  L x (L - 1) = (-2) x (-3) = 6
+           notional = 1,000,000,000 x 6 x 0.05 x 1
+                    = 6,000,000,000 x 0.05
+                    = 300,000,000                       = +3e8    <-- the doc
+
+BOTH ARE POSITIVE ON A POSITIVE r. That is line 707's parenthesis -- "(the same
+sign as the move)" -- and it is the whole mechanical point of the hypothesis: a
+2x long fund and a 2x inverse fund BOTH buy on an up day, because L(L-1) is
+positive for every L outside the open interval (0, 1). The inverse fund's
+coefficient is three times the long fund's, which is why line 297 says the small
+-3x products "punch above [their] weight on big-move days".
+
+THE ARITHMETIC IS EXACT IN BINARY64 ONLY IN THE DOCUMENT'S OWN LEFT-TO-RIGHT
+ORDER, AND THAT IS A MEASUREMENT, NOT A HOPE. 0.05 is not a binary fraction: the
+nearest double is 0.05000000000000000277555756156289135105907917022705078125. So
+the product has to be looked at, not assumed.
+
+  Left to right, as line 156 is written, AUM x L(L-1) first:
+      1e9 x 6           = 6e9          (exact: an integer under 2^53)
+      6e9 x fl(0.05)    = 300000000.0000000166...   and the spacing of doubles
+                          at 3e8 is 2^(28-52) = 2^-24 = 5.96e-8, so that value is
+                          0.28 ulp above 3e8 and ROUNDS TO EXACTLY 300000000.0
+  Grouping the two small factors first, (L(L-1) x r):
+      6 x fl(0.05)      = 0.30000000000000004
+      1e9 x that        = 300000000.00000006          NOT the document's 3e8
+
+So the implementation must associate left to right. The L = +2 case is exact
+under both groupings, so a golden that tested only L = +2 would not have found
+this. Both are asserted with `==`.
+
+Required unit test 2 (line 708), "L = +1 funds contribute zero rebalance flow",
+is the same coefficient read at L = 1: 1 x 0 = 0, so the notional is 0 for any
+AUM, any r and any f_fut. L = 0 gives 0 x (-1) = 0 as well. UNG and USO are the
+L = +1 funds of table 3.1 and they are there for creations only.
+
+Required unit test 3 (line 709), "f_fut = 0 routes all rebalance to P2; f_fut = 1
+routes all to P1", is an identity at the two ENDPOINTS and those two are exact:
+multiplying a finite double by 1.0 is lossless and by 0.0 gives a zero. Taking
+the full quotient with multiplier = 10,000 and P_held = 3.00 (an NG-shaped pair;
+10,000 MMBtu a contract):
+
+      total contracts = 100,000,000 / (10,000 x 3.00) = 100,000,000 / 30,000
+                      = 3,333.3333...        (NOT exact; 1/3 is not a binary
+                                              fraction. This number is asserted
+                                              only in the identities below,
+                                              never against a decimal literal.)
+      f_fut = 1, n = 0:  Q1 = total,   Q2 = 0
+      f_fut = 0, n = 0:  Q1 = 0,       Q2 = total
+
+IN THE INTERIOR THE ROUTING IS NOT EXACT, AND THE GOLDEN SAYS SO RATHER THAN
+HIDING IT. Q1 + Q2 at n = 0 is total x f + total x (1 - f), and that is not
+total x 1 for every f: with the numbers above, 26 of the 99 values f = 0.01 ...
+0.99 come out exactly one ulp (4.547473508864641e-13) away from the total, the
+first at f = 0.05. Nothing can be done about it inside the document's own two
+formulas -- it is the price of writing P1 and P2 as two independent products
+rather than as a split of one -- so the test asserts EXACTNESS at the endpoints
+(which is all line 709 claims) and a ONE-ULP bound in the interior.
+
+
+================================================================================
+CASE 2 -- REQUIRED UNIT TEST 6. THE UPDATE STEP ON THE DOCUMENT'S OWN NUMBERS
+================================================================================
+Inputs, typed from line 712: mu_total = 100, sigma^2_total = 400, p = 0.5,
+R = 100, z = 60.
+
+  K        = p sigma^2 / (p^2 sigma^2 + R)
+           = 0.5 x 400 / (0.25 x 400 + 100)
+           = 200 / (100 + 100)
+           = 200 / 200
+           = 1.0
+
+  Q_hat    = mu + K (z - p mu)
+           = 100 + 1.0 x (60 - 0.5 x 100)
+           = 100 + (60 - 50)
+           = 100 + 10
+           = 110.0
+
+  sig2post = (1 - K p) sigma^2
+           = (1 - 1.0 x 0.5) x 400
+           = 0.5 x 400
+           = 200.0
+
+  Q_rem    = (1 - p) x Q_hat
+           = 0.5 x 110
+           = 55.0
+
+  sigma_rem = (1 - p) x sqrt(sig2post)
+           = 0.5 x sqrt(200)
+           = 0.5 x 14.142135623730951...
+           = 7.071067811865475...
+
+FOUR OF THE FIVE ARE EXACT IN BINARY64 AND ARE ASSERTED WITH `==`. Every operand
+on the path to them is a binary fraction or a small integer: 0.5 is 2^-1 exactly,
+0.5 x 0.5 = 0.25 exactly, 0.25 x 400 = 100 exactly, 200/200 = 1.0 exactly (a
+quotient of equal finite doubles is 1.0 by IEEE-754, not by luck), 0.5 x 100 = 50,
+60 - 50 = 10, 1.0 x 10 = 10, 100 + 10 = 110, 1 - 0.5 = 0.5, 0.5 x 400 = 200,
+0.5 x 110 = 55.
+
+THE FIFTH IS IRRATIONAL. sqrt(200) = 10 sqrt(2) = 14.1421356237309504880...,
+so sigma_rem = 5 sqrt(2) = 7.07106781186547524400844362104849... That one is
+asserted with math.isclose and to 12 decimal places, never with `==`.
+
+K = 1 EXACTLY IS A PROPERTY OF THIS PARTICULAR CASE AND THE DOCUMENT CHOSE IT.
+p sigma^2 = 200 and p^2 sigma^2 + R = 100 + 100 = 200: the measurement is exactly
+as informative as the prior, so the posterior is the measurement implied by the
+observation and the prior's own weight is spent. It also means sigma^2_post is
+halved and Q_hat moves the full 10 contracts from 100 to 110. A test that only
+checked K would not notice an implementation that had (1 - K p) the wrong way up,
+so all five are checked.
+
+Required unit test 5 (line 711) is the two degenerate limits of the same five
+lines and both are exact:
+
+  p = 0:        K = 0 x sigma^2 / (0 + R) = 0 / R = 0.0
+                Q_hat = mu + 0.0 x (z - 0) = mu            (posterior = prior)
+                sig2post = (1 - 0) sigma^2 = sigma^2       (posterior = prior)
+                Q_rem = (1 - 0) x mu = mu = mu_total       <-- line 711's claim
+
+  R -> infinity: K = p sigma^2 / (p^2 sigma^2 + inf)
+                   = (a finite double) / inf
+                   = 0.0 EXACTLY, by IEEE-754 division, not in a limit.
+                 So float('inf') is an ACCEPTED value of R and gives K == 0.0
+                 with `==`. R = 0 is not accepted: it asserts a measurement with
+                 no noise at all, which at p = 0 also makes K = 0/0 = nan.
+
+
+================================================================================
+CASE 3 -- REQUIRED UNIT TEST 38. ONE ROLL DAY'S TWO LEGS
+================================================================================
+Inputs, synthetic: phi = 0.25 (UNG's daily fraction, line 327), N_old = 400
+contracts in the expiring month at the start of the roll period, P_old = 3.00 and
+P_new = 4.00. The two prices are chosen so that P_old / P_new = 0.75, a binary
+fraction, and the whole case is exact; a realistic 3.00 / 3.20 would not be.
+
+  L = +1 (a long fund; sign(L) = +1):
+      Sell_old = - 0.25 x 400 x (+1)            = -100.0 contracts, old month
+      Buy_new  = + 0.25 x 400 x (+1) x 0.75     =  +75.0 contracts, new month
+
+      It SELLS the expiring month and BUYS the next, which is line 744's first
+      clause.
+
+  L = -2 (an inverse fund; sign(L) = -1):
+      Sell_old = - 0.25 x 400 x (-1)            = +100.0 contracts, old month
+      Buy_new  = + 0.25 x 400 x (-1) x 0.75     =  -75.0 contracts, new month
+
+      It BUYS the expiring month and SELLS the next -- line 338: "Inverse funds
+      (L < 0) are short, so their roll **buys** the expiring month and **sells**
+      the next. The sign(L) term handles this." Line 744's second clause.
+
+NOTE WHAT sign(L) DOES AND DOES NOT DO. Only the sign of L enters; the MAGNITUDE
+does not. An L = -2 fund and an L = -3 fund roll the same N_old the same way,
+because N_old is already the contract count the fund holds and the leverage is
+inside it. A leg that scaled by L rather than by sign(L) would double this case
+and a test asserting only the SIGNS would pass on it, so the magnitudes are
+asserted too.
+
+THE NOTIONAL MATCH (line 335, "notional-matched"):
+      |Buy_new| x P_new  = 75 x 4.00 = 300
+      |Sell_old| x P_old = 100 x 3.00 = 300
+The two legs are equal in notional and opposite in direction, which is why line
+339 says roll flow is "roughly net-zero in notional across months but strongly
+directional per month, so it mainly moves the **calendar spread**". In this case
+the equality is EXACT because 0.75 is a binary fraction; in general
+(phi N sign(L) (P_old/P_new)) x P_new is not bit-identical to phi N sign(L) P_old,
+so the property test asserts the notional match with a relative tolerance and
+this golden asserts it with `==`.
+
+Required unit test 37 (line 743) reads the same schedule the other way:
+"four days at 25% each; cumulative 100%; day 1 starts two weeks before near-month
+expiration per the rule". 0.25 x 4 = 1.0 exactly (a sum of four binary fractions
+with the same exponent), so the cumulative fractions are 0.25, 0.5, 0.75, 1.0 and
+the benchmark weights line 327 gives -- 75/25, 50/50, 25/75, then 100% -- are the
+complements.
+
+"TWO WEEKS" IS AN AMBIGUITY AND THE IMPLEMENTATION CHOOSES. See the record; the
+choice taken is 14 CALENDAR DAYS, so the four roll days are
+    near_expiry - 14, - 13, - 12, - 11
+as calendar dates with no exchange calendar consulted. The synthetic case below
+picks an expiry whose four days are weekdays, purely so the case is legible:
+
+      near_expiry  = 2026-03-30 (a Monday; SYNTHETIC, not sourced as any real
+                                 contract's expiry -- this module reads no
+                                 expiry calendar)
+      roll day 1   = 2026-03-16  Mon   phi = 0.25   cumulative 0.25
+      roll day 2   = 2026-03-17  Tue   phi = 0.25   cumulative 0.50
+      roll day 3   = 2026-03-18  Wed   phi = 0.25   cumulative 0.75
+      roll day 4   = 2026-03-19  Thu   phi = 0.25   cumulative 1.00
+
+Required unit test 39 (line 745) validates a reconstruction against holdings:
+observed per-day fractions (0.25, 0.25, 0.25, 0.25) pass; (1.0, 0.0, 0.0, 0.0)
+-- everything moved on one day -- fails, and line 340 says what happens then:
+"Any fund whose reconstruction fails validation falls back to P8b treatment."
+
+Required unit test 40 (line 746) is one line of arithmetic and the whole of
+line 352, "P8b must exclude any fund already counted in P8a": for a fund in the
+P8a set, Q8b = 0.0 EXACTLY, whatever roll_flag, roll_fraction and beta8 are. Not
+"approximately zero" and not "a small number": the term is not computed at all.
+
+
+================================================================================
+CASE 4 -- REQUIRED UNIT TEST 42. THE PROJECTED LAMBDA AND THE CONSISTENCY FLAG
+================================================================================
+8A.2 fits DeltaSD_w = lambda x DeltaSX_w + eps_w with lambda constrained to
+[0, 1]. There is no intercept in the document's formula, so this is least squares
+THROUGH THE ORIGIN in one variable.
+
+Synthetic week data, five weeks, in futures-equivalent contracts:
+
+      w     DeltaSX (x)     DeltaSD (y)
+      1          1              2
+      2          1              3
+      3          1              1
+      4          1              2
+      5          2              4
+
+  Sum x^2 = 1 + 1 + 1 + 1 + 4 = 8
+  Sum x y = 2 + 3 + 1 + 2 + 8 = 16
+
+  lambda_unconstrained = Sum xy / Sum x^2 = 16 / 8 = 2.0        EXACT
+
+2.0 IS OUTSIDE [0, 1], SO THE CONSTRAINT BINDS AND THE FIT IS CLIPPED:
+
+  lambda = 1.0,  clipped = True,  lambda_unconstrained = 2.0
+
+WHY CLIPPING IS THE EXACT CONSTRAINED MINIMISER AND NOT AN APPROXIMATION.
+SSE(lambda) = Sum (y - lambda x)^2 is a quadratic in ONE variable with positive
+leading coefficient Sum x^2 > 0, so it is strictly convex, has the unique
+stationary point lambda_unconstrained, and is strictly decreasing to its left and
+strictly increasing to its right. On a closed interval a strictly convex
+function's minimiser is therefore the projection of the unconstrained minimiser
+onto that interval. clip(lambda_hat, 0, 1) IS the argmin of SSE over [0, 1]; it
+is not a repair applied afterwards. This is only true because there is one
+parameter and no intercept -- with two or more, projection is not the constrained
+solution and a box-constrained solver would be needed.
+
+Residuals and the standard error, at the UNCONSTRAINED slope:
+
+      e = y - 2x = (2-2, 3-2, 1-2, 2-2, 4-4) = (0, +1, -1, 0, 0)
+      SSE = 0 + 1 + 1 + 0 + 0 = 2
+      n = 5, k = 1, so s^2 = SSE / (n - k) = 2 / 4 = 0.5          EXACT
+      SE(lambda_hat) = sqrt(s^2 / Sum x^2) = sqrt(0.5 / 8)
+                     = sqrt(0.0625) = 0.25                        EXACT
+
+0.0625 = 2^-4, so its square root is 2^-2 = 0.25 and there is nothing to round.
+
+THE SE REPORTED IS THE UNCONSTRAINED SLOPE'S SE, AND THAT IS A STATED CHOICE.
+At a binding boundary the constrained estimator's sampling distribution is not
+the unconstrained one -- it has an atom at 1.0 -- so no ordinary standard error
+describes it. 8A.2 asks for "lambda-hat and its standard error" as "an
+INFORMATIVE PRIOR" and line 499 uses it inside a 2-SE band; reporting the
+unconstrained SE keeps that band honest about how much the data actually pins the
+slope, and reporting 0 (the exact variance of a point mass) would make the
+consistency check fire on everything. The flag carries `clipped` beside the SE so
+a reader can see which case they are in.
+
+THE CONSISTENCY FLAG, line 499:
+      flag  <=>  |n_flow - (1 - lambda_hat)| > 2 x sqrt(SE_n^2 + SE_lambda^2)
+
+  (a) FIRES. n_flow = 1.0, SE_n = 0.25, lambda_hat = 0.75, SE_lambda = 0.25:
+        1 - lambda_hat = 0.25                           (exact; 0.75 is 3 x 2^-2)
+        |1.0 - 0.25|   = 0.75
+        2 sqrt(0.0625 + 0.0625) = 2 sqrt(0.125)
+                                = 2 x 0.35355339059327376...
+                                = 0.70710678118654752...
+        0.75 > 0.7071...  -->  TRUE, flag raised.
+
+  (b) DOES NOT FIRE. n_flow = 0.9, same SEs and lambda_hat:
+        |0.9 - 0.25| = 0.65  (0.9 is not a binary fraction; the difference is
+                              0.6500000000000000222... and the comparison is
+                              nowhere near the threshold, so the rounding is
+                              immaterial here and the test says so)
+        0.65 > 0.7071...  -->  FALSE, no flag.
+
+The threshold 2 sqrt(0.125) is irrational, so (a) and (b) are asserted as the
+BOOLEAN outcomes and the threshold itself only to 12 places. Line 499's last
+sentence is carried in the docstring and not in code: "Neither estimate overrides
+the other automatically." The function returns a bool and changes nothing.
+
+
+================================================================================
+CASE 5 -- REQUIRED UNIT TEST 47. THE LARGE-LOT THRESHOLD
+================================================================================
+8A.5 line 518: L_min is "the 90th percentile trade size of that contract over the
+trailing 20 days (prior days only)".
+
+THE DOCUMENT DOES NOT SAY WHICH OF THE SEVEN PERCENTILE DEFINITIONS IT MEANS, AND
+THEY DISAGREE. The implementation uses NEAREST RANK on the pooled trade sizes of
+the 20 prior days: sort ascending, take the element at 1-based rank
+ceil(0.90 x N). The alternative -- numpy's default linear interpolation between
+order statistics -- returns a number that NO TRADE HAD, and line 753's second
+clause ("trades exactly at L_min count as large") is a statement about a real
+trade size, so nearest rank is the reading that makes the clause mean something.
+
+Synthetic case: 20 prior days, each with the ten trade sizes 1, 2, ..., 10 lots.
+
+      N = 20 x 10 = 200 pooled trades
+      rank = ceil(0.90 x 200) = ceil(180) = 180
+      The sorted pool has exactly 20 copies of each size, so ranks 1..20 are the
+      1s, 21..40 the 2s, ..., 161..180 the 9s, 181..200 the 10s.
+      Rank 180 is the LAST of the 9s.
+
+      L_min = 9.0
+
+  is_large(9.0, L_min) = True       <-- ">= counts", line 753's second clause
+  is_large(8.99, L_min) = False
+  is_large(10.0, L_min) = True
+
+Sanity on the count: at L_min = 9 the pool holds 40 trades at or above it
+(the twenty 9s and the twenty 10s), which is 20% of 200 rather than 10%. That is
+correct and not a bug -- a 90th percentile of a distribution with a fat atom at
+the threshold cuts more than a tenth of the mass, and it is exactly why line
+753's tie clause exists. A test whose synthetic sizes were all distinct would
+never have exercised it.
+
+THE TWO REFUSALS (line 518's "prior days only", and the window length):
+  * any trade dated on or after the evaluation day RAISES. It is not filtered
+    away quietly -- a same-day trade reaching a trailing window is the look-ahead
+    the clause forbids, and a silent filter leaves the caller believing a guard
+    ran. This is the shape costs/futures_impact.py:361 `depth_bar` already uses
+    for D_bar, and D610 follows it deliberately so that the two trailing windows
+    in this deposit refuse identically.
+  * fewer than 20 prior days RAISES for the same reason `depth_bar` does: "A
+    short window silently averaged is how a warm-up period becomes a result".
+
+Required unit test 8 (line 714) is the same guard on the OTHER trailing window,
+S_norm: "the trailing 20-day mean for the same interval" (line 371). Same rule,
+same refusal, separate function.
+
+
+================================================================================
+CASE 6 -- REQUIRED UNIT TEST 12. WHICH CONTRACT MONTH THE FLOW LANDS IN
+================================================================================
+Line 718: "Contract mapping: flow is attributed to the held contract months per
+holdings, not the front month by default." Line 69 is the reason: "Funds hold the
+months specified by their index or methodology, which may **not** be the front
+month."
+
+Synthetic holdings for one fund mid-roll, in contracts:
+
+      2026-04 (expiring): 300
+      2026-05 (next):     100
+      total:              400
+
+  weight(2026-04) = 300 / 400 = 0.75         EXACT (3 x 2^-2)
+  weight(2026-05) = 100 / 400 = 0.25         EXACT (2^-2)
+  sum             = 1.0                      EXACT
+
+A predicted flow of 400 contracts therefore lands as +300 in 2026-04 and +100 in
+2026-05, not as +400 in whichever month is front.
+
+An inverse fund is SHORT both months, so its holdings are (-300, -100); the
+weights are taken on |contracts| and come out identically 0.75 and 0.25. The
+DIRECTION of the flow is carried by L(L-1) and by r, not by the sign of the
+holdings, so mixing the two would double-count the sign. Holdings of MIXED sign
+in one fund are refused: that is a calendar spread rather than a held strip, and
+the share of a flow it should receive is not defined by anything in Section 4.
+
+Asking for the front month as a DEFAULT raises. There is no fallback path: line
+718 says "not the front month by default" and line 70 says "Never back-fill
+today's composition across history", so a function that quietly returned the
+front month on empty holdings would be the exact defect both lines name.
+
+
+================================================================================
+CASE 7 -- REQUIRED UNIT TEST 9. THE EARLIEST-PASS RULE
+================================================================================
+Section 7.1 line 428: "Candidate t0 in {13:50, 14:00, 14:10} ET (for a 14:28
+window start; shift if the verified window differs)."
+Line 430: "**Earliest-pass rule (primary):** evaluate at 13:50. If the trade
+criteria pass, signal. If not, re-evaluate at 14:00, then 14:10. At most one
+entry per instrument per day."
+Section 7.3 line 445: "**Hard constraint:** the entry must be complete at least
+3 minutes before `W_start`. If not, no trade."
+
+W_start for NG and CL is 14:28:00 ET, from data/settlement_windows.csv via
+scripts/settlement_windows.py:147 `window_for` (SER-4867, effective 2009-06-01).
+Nothing here hardcodes it; the TEST pulls it from `window_for`, because `src/`
+may never import `scripts/` (tests/unit/test_import_boundaries.py).
+
+  deadline = W_start - 3 min = 14:28 - 0:03 = 14:25
+
+  With entry_minutes = 2 (Section 7.3's primary fill: the close of bar t0+1, so
+  the entry is complete two minutes after t0):
+      13:50 + 2 = 13:52 <= 14:25   admissible
+      14:00 + 2 = 14:02 <= 14:25   admissible
+      14:10 + 2 = 14:12 <= 14:25   admissible
+    passes = (False, False, True)  --> 14:10
+    passes = (True,  True,  True)  --> 13:50   (the EARLIEST, not the best)
+    passes = (False, False, False) --> None
+
+  With entry_minutes = 16 (a deliberately slow entry, to make the constraint
+  bind):
+      14:10 + 16 = 14:26 >  14:25  REFUSED even if its criteria pass
+      14:00 + 16 = 14:16 <= 14:25  admissible
+    passes = (False, False, True)  --> None, and the reason names 14:10's
+                                       completion time against the deadline.
+
+"At most one entry per instrument per day" is carried by the function returning
+ONE t0 or None and having no state to re-enter from. A ledger that could return
+two would be a different function.

@@ -1,0 +1,404 @@
+{
+ "dataset": "GLBX.MDP3",
+ "windows": [
+  [
+   "2016-01-04",
+   "2016-01-08"
+  ],
+  [
+   "2026-09-01",
+   "2026-09-10"
+  ]
+ ],
+ "probed_utc": "2026-09-21T23:30:13Z",
+ "record": "D619",
+ "calls": "symbology.resolve only; no batch job, nothing downloaded",
+ "question": "Deposit Q3: Databento TAS symbology and history coverage for NG and CL",
+ "cme_product_codes": {
+  "WTI crude TAS": "CLT",
+  "Henry Hub natural gas TAS": "NGT",
+  "source": "https://www.cmegroup.com/tools-information/lookups/advisories/market-regulation/NYMEX_COMEX_RA0909-4.html",
+  "read_utc": "2026-09-21T23:30:13Z"
+ },
+ "definition_archive_on_disk": {
+  "scanned": "the 2026 and 2020 GLBX definition files, 20.0 M records",
+  "raw_symbol contains TAS": 0,
+  "raw_symbol starts CLT or NGT": 0,
+  "asset in {CLT, NGT}": 0
+ },
+ "candidates": {
+  "CLT.FUT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 14,
+     "n_instruments": 14,
+     "n_partial": 4,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "CLTG6",
+      "CLTG6-CLTH6",
+      "CLTG6-CLTJ6",
+      "CLTG6-CLTK6",
+      "CLTH6"
+     ],
+     "sample_instrument_ids": [
+      "145717",
+      "216844",
+      "221305",
+      "26625",
+      "37776"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 60,
+     "n_instruments": 60,
+     "n_partial": 7,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "CLTF7",
+      "CLTF7-CLTG7",
+      "CLTF7-CLTH7",
+      "CLTF7-CLTJ7",
+      "CLTG7"
+     ],
+     "sample_instrument_ids": [
+      "42000547",
+      "42000929",
+      "42001891",
+      "42001926",
+      "42002497"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "74 instrument id(s) across 2 window(s) that answered"
+  },
+  "NGT.FUT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 10,
+     "n_instruments": 10,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "NGTG6",
+      "NGTG6-NGTH6",
+      "NGTG6-NGTJ6",
+      "NGTG6-NGTK6",
+      "NGTH6"
+     ],
+     "sample_instrument_ids": [
+      "16399",
+      "16400",
+      "16401",
+      "2848",
+      "40439"
+     ]
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 78,
+     "n_instruments": 78,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "NGTF7",
+      "NGTF7-NGTG7",
+      "NGTF7-NGTH7",
+      "NGTF7-NGTJ7",
+      "NGTF7-NGTK7"
+     ],
+     "sample_instrument_ids": [
+      "42000286",
+      "42000571",
+      "42001076",
+      "42001554",
+      "42002593"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "88 instrument id(s) across 2 window(s) that answered"
+  },
+  "CLT.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: CLT.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: CLT.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_request']: no such family in this symbology"
+  },
+  "NGT.OPT": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: NGT.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "422 symbology_invalid_request\nCould not resolve smart symbols: NGT.OPT\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_request']: no such family in this symbology"
+  },
+  "CL.TAS": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "400 symbology_invalid_symbol\nInvalid format for `parent` symbol 'CL.TAS', expected format: '[ROOT].OPT', '[ROOT].SPOT', or '[ROOT].FUT'\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "400 symbology_invalid_symbol\nInvalid format for `parent` symbol 'CL.TAS', expected format: '[ROOT].SPOT', '[ROOT].OPT', or '[ROOT].FUT'\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_symbol']: no such family in this symbology"
+  },
+  "NG.TAS": {
+   "stype_in": "parent",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "400 symbology_invalid_symbol\nInvalid format for `parent` symbol 'NG.TAS', expected format: '[ROOT].SPOT', '[ROOT].FUT', or '[ROOT].OPT'\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": false,
+     "error": "BentoClientError",
+     "detail": "400 symbology_invalid_symbol\nInvalid format for `parent` symbol 'NG.TAS', expected format: '[ROOT].SPOT', '[ROOT].OPT', or '[ROOT].FUT'\ndocumentation: https://databento.com/docs/api-reference-historical/basics/symbology",
+     "n_resolved": 0,
+     "n_partial": 0,
+     "n_not_found": 0
+    }
+   },
+   "conclusion": "invalid_symbol",
+   "reason": "every window refused with ['symbology_invalid_symbol']: no such family in this symbology"
+  },
+  "CLT": {
+   "stype_in": "raw_symbol",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "CLT"
+     ],
+     "sample_instrument_ids": []
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "CLT"
+     ],
+     "sample_instrument_ids": []
+    }
+   },
+   "conclusion": "absent",
+   "reason": "2 window(s) answered and resolved 0 instruments"
+  },
+  "NGT": {
+   "stype_in": "raw_symbol",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "NGT"
+     ],
+     "sample_instrument_ids": []
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "NGT"
+     ],
+     "sample_instrument_ids": []
+    }
+   },
+   "conclusion": "absent",
+   "reason": "2 window(s) answered and resolved 0 instruments"
+  },
+  "CLTV6": {
+   "stype_in": "raw_symbol",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "CLTV6"
+     ],
+     "sample_instrument_ids": []
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 1,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "CLTV6"
+     ],
+     "sample_instrument_ids": [
+      "42001891"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "1 instrument id(s) across 2 window(s) that answered"
+  },
+  "NGTX6": {
+   "stype_in": "raw_symbol",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "NGTX6"
+     ],
+     "sample_instrument_ids": []
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 1,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "NGTX6"
+     ],
+     "sample_instrument_ids": [
+      "42005929"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "1 instrument id(s) across 2 window(s) that answered"
+  },
+  "CLTF7": {
+   "stype_in": "raw_symbol",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "CLTF7"
+     ],
+     "sample_instrument_ids": []
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 1,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "CLTF7"
+     ],
+     "sample_instrument_ids": [
+      "42770591"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "1 instrument id(s) across 2 window(s) that answered"
+  },
+  "NGTF7": {
+   "stype_in": "raw_symbol",
+   "windows": {
+    "2016-01-04..2016-01-08": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 0,
+     "n_partial": 0,
+     "n_not_found": 1,
+     "sample_raw_symbols": [
+      "NGTF7"
+     ],
+     "sample_instrument_ids": []
+    },
+    "2026-09-01..2026-09-10": {
+     "ok": true,
+     "n_resolved": 1,
+     "n_instruments": 1,
+     "n_partial": 0,
+     "n_not_found": 0,
+     "sample_raw_symbols": [
+      "NGTF7"
+     ],
+     "sample_instrument_ids": [
+      "42013125"
+     ]
+    }
+   },
+   "conclusion": "present",
+   "reason": "1 instrument id(s) across 2 window(s) that answered"
+  }
+ },
+ "conclusion": "present"
+}

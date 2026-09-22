@@ -455,15 +455,43 @@ def test_a_missing_table_raises_rather_than_defaulting():
         load_impact_table(REPO / "data" / "no_such_impact_table.json")
 
 
-def test_the_multiplier_disagreements_are_recorded_in_the_artefact():
-    """Seven of the 36 roots have two answers for dollars-per-point in this repository, and the
-    table records all seven rather than resolving one away."""
+#: The seven roots that had two answers for dollars-per-point until D609, with the corrected
+#: value — CME's own quotation convention, decided by the NOTIONAL test in
+#: `scripts/build_fut_breadth_hourly.py` and reproduced in `data/d555_tsmom_replication.json`'s
+#: `dollar_book.usd_per_point`, which was right all along because D555 read the breadth meta.
+CORRECTED_USD_PER_POINT = {
+    "ZC": 50.0, "ZS": 50.0, "ZW": 50.0, "ZL": 600.0000000000001,
+    "LE": 400.0, "HE": 400.0, "SR3": 2500.0,
+}
+
+
+def test_the_multiplier_disagreements_are_empty_and_the_seven_values_are_pinned():
+    """D604 recorded seven disagreements; D609 corrected the spec file and the list is empty.
+
+    **An empty list is not on its own a pass.** The list is built by iterating the 36 breadth
+    roots, so a table that had lost ZC, ZS, ZW, ZL, LE, HE and SR3 would also report `[]`. The
+    seven corrected `usd_per_point` values are therefore pinned beside it, on both the size
+    block and the default line, so the assertion cannot be satisfied by absence.
+    """
     t = load_impact_table()
-    clashes = {c["root"]: c for c in t["multiplier_disagreements"]}
-    assert set(clashes) == {"SR3", "ZC", "ZS", "ZW", "ZL", "LE", "HE"}
-    for root, c in clashes.items():
-        expected = 0.01 if root == "SR3" else 100.0
-        assert c["ratio"] == pytest.approx(expected, rel=1e-12), root
+    assert t["multiplier_disagreements"] == []
+    for root, want in CORRECTED_USD_PER_POINT.items():
+        entry = t["roots"][root]
+        assert entry["size"]["usd_per_point_full"] == want, root
+        assert entry["lines"]["day1m_2016_2023"]["usd_per_point"] == want, root
+
+
+def test_the_instrument_and_the_impact_table_no_longer_fork_on_the_seven():
+    """The equality the empty list stands for, asserted directly against `Future.from_specs`."""
+    from backtest_framework.instruments.future import Future
+
+    t = load_impact_table()
+    for root, want in CORRECTED_USD_PER_POINT.items():
+        spec = Future.from_specs(root)
+        assert spec.usd_per_point == want, root
+        assert spec.usd_per_point == t["roots"][root]["size"]["usd_per_point_full"], root
+    assert Future.from_specs("SR3").tick_usd == 6.25
+    assert Future.from_specs("ZC").tick_usd == 12.5
 
 
 # ------------------------------------------------------------------ the config dialect

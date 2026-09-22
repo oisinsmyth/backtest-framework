@@ -1,0 +1,287 @@
+Golden-master hand-worked cases for data/retail_attention.py (D621). Companion to
+test_retail_attention_ledger.py.
+
+WHAT IS PINNED HERE, AND WHY IT IS A GOLDEN AND NOT A UNIT TEST
+---------------------------------------------------------------
+D621 replaces the deposit's hourly-Wikipedia row with three series: CREATIONS
+(daily changes in shares outstanding), ROBINHOOD HOLDER COUNTS, and GDELT news
+counts through the DOC API. The first two are new arithmetic, and the whole claim
+of the record rests on TWO ASSOCIATION STATISTICS computed between them -- a
+Spearman and a Pearson correlation of daily change in holders against daily
+creations. A correlation is exactly the kind of number that is impossible to
+check by eye and easy to get wrong by one convention: which rank a tie gets,
+which denominator the sd uses, whether the percentile interpolates.
+
+So the four cases below are:
+
+  1. the two correlations, hand-worked on ten synthetic rows chosen so that
+     Spearman and Pearson DISAGREE -- 0.9394 against 0.4777 -- because a case
+     where they agree cannot tell the two functions apart, and because the
+     disagreement is the shape the real measurement is expected to have (a fat
+     right tail in one series);
+  2. the creation-day threshold, a 90th percentile whose interpolation rule is
+     a choice this repository must state rather than inherit;
+  3. the daily z-score, pinned on numbers CHOSEN TO COINCIDE with D612's own
+     hand ledger (five observations 10, 12, 14, 16, 18 scoring a 20), so that
+     the same input can be pushed through BOTH `creation_z(match="all_days")`
+     and D612's `zscore_matched` and the two must return the SAME DOUBLE. That
+     equality is what stops this module's z from drifting away from the attention
+     layer's z;
+  4. `creation_accel` on a ramp and on a constant, where the constant must be
+     EXACTLY 0.0 -- an exactness claim about summation order, and the reason
+     `creation_accel` delegates to D612's `att_accel` rather than re-adding the
+     six numbers itself.
+
+The ground truth below was produced by calculators that NEVER IMPORT THIS
+CODEBASE (CONTRIBUTING, "the order of work", step 2). Two independent calculators
+were used for every number and they agreed on every line:
+
+  (a) GNU coreutils in Git Bash -- `awk` with `%.17g` for the arithmetic and
+      `sha256sum` fed by `printf` for the digest, so the exact bytes are visible
+      in the command;
+  (b) .NET from PowerShell -- `[Math]::Sqrt` and double division, printed with
+      the round-trip format `"R"`, so no decimal formatting can hide a
+      disagreement in the last place.
+
+Anchor, so that (a) is shown to be standard SHA-256 before anything else is
+trusted:
+
+    $ printf '' | sha256sum
+    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+which is the published SHA-256 of the empty string.
+
+================================================================================
+Case 1 -- THE TWO CORRELATIONS, ON TEN ROWS WHERE THEY DISAGREE
+================================================================================
+The ten synthetic rows. `x` stands for the daily creation (a change in shares
+outstanding) and `y` for the daily change in Robinhood holders. Nothing here is
+market data; the numbers were chosen for their arithmetic.
+
+    i :  1   2   3   4   5   6   7   8    9  10
+    x :  1   2   3   4   5   6   7   8    9  10
+    y :  2   1   4   3   6   5   8   7  100   9
+
+`y` is a permutation of 1..10 with ONE value replaced by 100. That is the whole
+design: the ORDERING of `y` is almost perfectly monotone in `x`, so a rank
+statistic reads it as a strong association, while the single outlier moves the
+mean of `y` from 5.5 to 14.5 and drags the product-moment statistic down by half.
+
+--- Pearson -------------------------------------------------------------------
+
+    n       = 10
+    mean x  = 5.5
+    mean y  = 14.5              (sum y = 2+1+4+3+6+5+8+7+100+9 = 145)
+
+    Sxx = sum (x_i - 5.5)^2
+        = 20.25+12.25+6.25+2.25+0.25+0.25+2.25+6.25+12.25+20.25
+        = 82.5
+
+    Syy = sum (y_i - 14.5)^2
+        = 156.25+182.25+110.25+132.25+72.25+90.25+42.25+56.25+7310.25+30.25
+        = 8182.5
+
+    Sxy = sum (x_i - 5.5)(y_i - 14.5)
+        = 56.25+47.25+26.25+17.25+4.25-4.75-9.75-18.75+299.25-24.75
+        = 392.5
+
+    r = Sxy / sqrt(Sxx * Syy)
+      = 392.5 / sqrt(82.5 * 8182.5)
+      = 392.5 / sqrt(675056.25)
+
+    PEARSON = 0.47771588185465091
+
+Note that the ninth row alone contributes +299.25 of the 392.5 numerator and
+7310.25 of the 8182.5 denominator: one row carries 76% of the covariance and 89%
+of the variance of `y`. That is the arithmetic behind this record's caution about
+reading a Pearson on a holder series with a meme-era spike in it.
+
+--- Spearman ------------------------------------------------------------------
+
+Spearman is the Pearson of the RANKS, with ties taking the average of the ranks
+they span (the "fractional rank" convention; there are no ties in this case, and
+the tie rule is exercised in the unit tests instead).
+
+    rank(x) = 1  2  3  4  5  6  7  8   9  10      (x is already sorted)
+    rank(y) = 2  1  4  3  6  5  8  7  10   9      (100 is the largest, so rank 10)
+
+    mean rank = 5.5 for both
+    Rxx = 82.5
+    Ryy = 82.5                    (rank(y) is a permutation of 1..10)
+    Rxy = 15.75+15.75+3.75+3.75-0.25-0.25+3.75+3.75+15.75+15.75
+        = 77.5
+
+    rho = 77.5 / sqrt(82.5 * 82.5) = 77.5 / 82.5 = 31/33
+
+    SPEARMAN = 0.93939393939393945
+
+    cross-check, same double from a different expression:
+        31 / 33 = 0.93939393939393945
+
+--- the two calculators --------------------------------------------------------
+
+    $ awk 'BEGIN{ ... printf "%.17g\n", sxy/sqrt(sxx*syy) }'
+      pearson  = 0.47771588185465091
+      spearman = 0.93939393939393945
+      31/33    = 0.93939393939393945
+
+    PS> (392.5/[Math]::Sqrt(82.5*8182.5)).ToString("R")
+      0.47771588185465091
+    PS> (31.0/33.0).ToString("R")
+      0.93939393939393945
+
+================================================================================
+Case 2 -- THE CREATION-DAY THRESHOLD (the 90th percentile of |creation|)
+================================================================================
+A "creation day" in D621's validation is a day whose absolute creation exceeds
+the 90th percentile of |creation| over the fund's own overlap window. A
+percentile is not one number: the nearest-rank rule, the six Hyndman-Fan
+definitions and numpy's default all differ, and on ten points they differ by a
+whole rank.
+
+THE RULE THIS REPOSITORY STATES, and it is numpy's default (linear interpolation
+between order statistics, Hyndman-Fan type 7):
+
+    given the sorted values v[0] <= ... <= v[n-1],
+    h        = (n - 1) * p                        with p = 0.90
+    lo       = floor(h),  hi = ceil(h)
+    quantile = v[lo] + (h - lo) * (v[hi] - v[lo])
+
+On the |x| of Case 1 -- the values 1..10, already sorted, n = 10:
+
+    h  = 9 * 0.90 = 8.1
+    lo = 8, hi = 9
+    q  = v[8] + 0.1 * (v[9] - v[8]) = 9 + 0.1 * (10 - 9) = 9.1
+
+    P90 = 9.1           (the double 9.0999999999999996)
+
+    $ awk 'BEGIN{printf "%.17g\n", 1+0.9*(10-1)}'   ->  9.0999999999999996
+    PS> (1.0+0.9*9.0).ToString("R")                 ->  9.1
+
+`9.1` and `9.0999999999999996` are THE SAME DOUBLE printed by two formatters;
+awk's `%.17g` shows all seventeen significant digits and .NET's `"R"` shows the
+shortest string that round-trips. Neither is more correct and the test pins the
+double, not the string.
+
+THE COMPARISON IS STRICT: a day counts when |creation| > P90, not >=. On these
+ten rows exactly one day qualifies, row 10, whose y is 9 and therefore positive:
+
+    creation days   = 1 of 10
+    of which Δholders > 0 : 1
+    SHARE           = 1.0
+
+n = 1 is a degenerate statistic and this case pins the THRESHOLD arithmetic, not
+the share. The share is only worth reading at the real overlap's ~560 rows per
+fund, where the top decile is ~56 days.
+
+================================================================================
+Case 3 -- THE DAILY Z, AND ITS BIT-IDENTITY WITH D612's HOURLY Z
+================================================================================
+`creation_z` scores one day's creation against the same fund's PRIOR days inside
+a trailing 60-calendar-day window. D612's `zscore_matched` scores one hour
+against the same HOUR-OF-DAY AND WEEKDAY in the trailing 60 days. The two windows
+differ on purpose -- a daily creation series has no hour-of-day cycle, and 60
+days of one weekday is at most ceil(60/7) = 9 observations -- but THE ARITHMETIC
+MUST NOT DIFFER, and that is what this case pins.
+
+The five reference observations and the scored value are D612's own hand-ledger
+numbers (`test_attention_ledger.hand.txt`, Case 2), placed on FIVE CONSECUTIVE
+MONDAYS so that the same input satisfies both windows at once:
+
+    2019-09-30 (Mon)  10
+    2019-10-07 (Mon)  12
+    2019-10-14 (Mon)  14
+    2019-10-21 (Mon)  16
+    2019-10-28 (Mon)  18
+    ------------------------------------------------- scored:
+    2019-11-04 (Mon)  20
+
+    n     = 5
+    mean  = (10+12+14+16+18)/5 = 70/5 = 14
+    dev   = -4, -2, 0, 2, 4
+    SS    = 16+4+0+4+16 = 40
+    var   = SS / (n - 1) = 40 / 4 = 10          <- SAMPLE sd, ddof = 1
+    sd    = sqrt(10)     = 3.1622776601683795
+    z     = (20 - 14) / sd = 6 / sqrt(10) = 1.8973665961010275
+
+    Z = 1.8973665961010275
+
+    PS> [Math]::Sqrt(10.0).ToString("R")  ->  3.1622776601683795
+    PS> (6.0/[Math]::Sqrt(10.0)).ToString("R") -> 1.8973665961010275
+
+    THE EQUALITY THAT IS THE POINT OF THE CASE:
+
+        creation_z(..., match="all_days")     == 1.8973665961010275
+        creation_z(..., match="same_weekday") == 1.8973665961010275
+        attention.zscore_matched(...)         == 1.8973665961010275
+
+    all three EXACTLY, as doubles, on this one input -- because every prior
+    observation here is a Monday, so the two windows select the same five
+    numbers. A rewrite of either module that changes a summation order breaks
+    this case.
+
+THE CONTRAST, which is why the default is `all_days`: move the same five values
+onto five consecutive BUSINESS days (2019-10-28 Mon .. 2019-11-01 Fri, scored
+2019-11-04 Mon) and
+
+    match="all_days"     -> 1.8973665961010275, the same z
+    match="same_weekday" -> RAISES InsufficientHistory: the matched window holds
+                            one observation (2019-10-28), against D612's stated
+                            floor of five.
+
+A daily series scored on the weekday rule would spend four fifths of its history
+to score one day. The record states the choice; the code carries both and
+neither is a default nobody declared.
+
+================================================================================
+Case 4 -- creation_accel ON A RAMP AND ON A CONSTANT
+================================================================================
+`creation_accel` is the daily analogue of the deposit's `att_accel`
+(SETTLEMENT_FLOW_LEDGER_PREREG.md:262, "Change in att_level over the last 3 hours
+vs the prior 3 hours"): the mean of the last three OBSERVATIONS minus the mean of
+the three before them. It does not re-implement that subtraction -- it maps six
+consecutive daily levels onto a six-hour axis and calls `attention.att_accel` --
+so the numbers below are D612's numbers and are pinned here as the evidence that
+the delegation is real.
+
+THE RAMP
+
+    day   d0   d1   d2   d3   d4   d5
+    level 0.5  0.5  0.5  1.5  2.5  3.5
+
+    last three  = (1.5 + 2.5 + 3.5) / 3 = 7.5 / 3 = 2.5
+    prior three = (0.5 + 0.5 + 0.5) / 3 = 1.5 / 3 = 0.5
+    accel       = 2.5 - 0.5 = 2.0
+
+    ACCEL(ramp) = 2.0
+
+THE CONSTANT
+
+    level 3.5 on all six days
+
+    last three  = 10.5 / 3
+    prior three = 10.5 / 3
+    accel       = EXACTLY 0.0
+
+The exactness is not a tolerance and not a rounding: both means are computed from
+THE SAME THREE DOUBLES SUMMED IN THE SAME ORDER and divided by the same integer,
+so the two results are the identical double and their difference is +0.0. The
+test asserts `== 0.0` with no `abs(...) < eps`, which is what makes it a
+regression test on summation order rather than on magnitude.
+
+A HOLE RAISES. Six consecutive observations are required. If one of the six days
+is missing -- a market holiday inside the window, an outage in the source -- the
+function raises `InsufficientHistory` rather than carrying the last value
+forward. D612's reason applies unchanged: the recorder's `data/recorder/GAPS.md`
+exists so that holes stay holes.
+
+================================================================================
+WHAT IS NOT IN THIS FILE
+================================================================================
+No fixture is read by the golden tests and no number here comes from market data.
+`data/fixtures/robintrack_energy_funds.csv.gz`, `fund_nav_daily.csv.gz` and
+`data/retail_attention_validation.json` are pinned by the unit tests instead: a
+golden that reads a fixture pins the fixture and not the arithmetic.
+
+No return is computed anywhere in D621, and every date written above lies in
+2019, five years before this repository's 2024-01-01 reserved slice.

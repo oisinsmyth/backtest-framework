@@ -1,0 +1,167 @@
+D609 -- the panel loader chokepoint. Hand-computed ledger.
+==========================================================
+
+Written before `tests/golden/test_panels_ledger.py`. Every number below is derived from a
+source that existed before `src/backtest_framework/data/panels.py` did -- the committed
+artefact `data/d555_tsmom_replication.json`, the committed manifest `data/data_manifest.json`,
+and `scripts/run_d555_tsmom_replication.py`'s own `load_fixture()` compiled out of its source
+and run. The golden asserts that the loader reproduces them; it does not define them.
+
+
+SS1. THE FIXTURE DIGEST, REPRODUCED ON D555'S OWN PUBLISHED NUMBER  (R16)
+-------------------------------------------------------------------------
+`frozen.sha256_file(path, text_normalise=False)` is documented as bit-identical to
+`build_data_manifest.py:63 sha256_of` and to `run_d555_tsmom_replication.py:79 sha256`. Three
+routes, one number, and it is published:
+
+  data/d555_tsmom_replication.json   "fixture_sha256"
+      c64dfe70211242368772da005e05e11ed2f2e779e6599d0e0a6a2bbabee355de
+
+  data/data_manifest.json            files[path == "data/fixtures/fut_breadth_hourly.csv.gz"].sha256
+      c64dfe70211242368772da005e05e11ed2f2e779e6599d0e0a6a2bbabee355de
+
+  LoadedPanel.sha256 for load_panel("fut_breadth_hourly", reserved_from="2024-01-01")
+      c64dfe70211242368772da005e05e11ed2f2e779e6599d0e0a6a2bbabee355de
+
+Three equalities, not one: the loader agrees with the manifest (which is what it asserts on
+every read) AND with a number D555 published on 2026-09-19, so the panel under the loader is
+the panel that study scored.
+
+
+SS2. THE ROW COUNT, AGAINST run_d555.load_fixture()
+----------------------------------------------------
+`load_fixture` (`run_d555_tsmom_replication.py:87-120`) does three things: it reads five
+columns plus the 23 hourly closes, it cuts the reserved slice at line 98
+(`df = df[df["day"] < RESERVED_FROM]`), and it then DROPS two classes of row that are not
+sessions -- placeholder rows with no finite close, and weekend-dated stubs. It records both
+counts in `df.attrs`.
+
+`load_panel` does the cut and nothing else, which is correct: dropping a non-session is a
+study's judgement about its own fixture, not a property of the file. So the two row counts are
+not equal and must not be asserted equal. The identity that holds is the runner's own
+arithmetic, and it holds EXACTLY:
+
+    load_panel rows                       140,814
+  - attrs["rows_dropped_no_close"]         22,531
+  - attrs["rows_dropped_weekend_stub"]          69
+  ------------------------------------------------
+  = run_d555.load_fixture() rows          118,214      (118,214 == 118,214)
+
+  frame["day"].max()   load_panel  '2023-12-29'
+                       run_d555    '2023-12-29'        equal, as strings
+
+  frame["day"].min()   load_panel  '2010-06-07'
+                       run_d555    '2010-06-07'        equal, as strings
+
+The `max` agreeing is not implied by the counts: it says the LAST session survives both of
+D555's drops, so the cut is the binding constraint at the right-hand end in both routes.
+
+
+SS3. THE WINDOW RECORD
+-----------------------
+`frozen.window_record`'s six keys, for the same call:
+
+  first_session_read        '2010-06-07'
+  last_session_read         '2023-12-29'
+  reserved_from             '2024-01-01'
+  sessions_read             140814        (rows, one per (root, day))
+  distinct_sessions_read      4217        (distinct days)
+  reserved_rows_read             0         asserted 0 by layer 2 as well
+
+4,217 distinct days against D555's own `windows` block -- 3,353 sessions on the long window
+(2011-01-03..2023-12-29) and 2,065 on the primary (2016-01-04..2023-12-29). 4,217 is larger
+than both and must be: it counts every day in the file from 2010-06-07, including the Sundays
+and holidays `load_fixture` drops and the pre-2011 days neither window covers.
+
+
+SS4. THE MERGE, NOT THE REPLACEMENT
+------------------------------------
+`data/d555_tsmom_replication.json`'s `"windows"` block carries six keys:
+
+  primary, long, reserved_from, sessions_primary, sessions_long, month_ends
+
+and `window_record`'s six are
+
+  first_session_read, last_session_read, reserved_from, sessions_read,
+  distinct_sessions_read, reserved_rows_read
+
+The intersection is exactly {reserved_from}, and both say '2024-01-01'. So
+`LoadedPanel.windows_update` on D555's committed block yields 6 + 6 - 1 = 11 keys, with
+`primary`, `long`, `sessions_primary`, `sessions_long` and `month_ends` untouched. A loader
+that REPLACED the block would delete five keys D555's pre-registration names.
+
+A second read whose `reserved_from` differs raises rather than overwriting.
+
+
+SS5. THE PANEL THAT IS ENTIRELY RESERVED
+-----------------------------------------
+`data/fixtures/fut_book_depth_1m.csv.gz` (D604) spans 2026-08-11..2026-09-09. Under
+`reserved_from="2024-01-01"` and no word:
+
+  rows                          0
+  first_session_read         None
+  last_session_read          None
+  sessions_read                 0
+  distinct_sessions_read        0
+  reserved_rows_read            0
+
+Zero rows is the correct answer and it is the case that proves `reserved_from` must have no
+default: the same file is INSIDE the deposit's sealed vault window (2025-03-01..2026-09-18)
+and AFTER this repository's seal, and `costs/futures_impact.py:361 depth_bar` reads it by
+passing `reserved_from = day`, which asserts nothing. Reconciling the two windows is the
+principal's decision and this loader does not make it.
+
+
+SS6. THE CATALOGUE'S OWN COUNTS
+--------------------------------
+Counted over the 132 rows of `panel_catalogue.SPECS`, which were authored one per manifest
+path from a read of every one of those files' own headers. 126 rows at D609; the integrator
+added two on 2026-09-22 when round 4's two panels entered the manifest:
+  attention_sample   data/fixtures/attention_sample.csv.gz   observed_at_utc  iso_ts
+                     wrong cut: available_at_utc (the publication time, never the cut)  (D612)
+  fund_nav_daily     data/fixtures/fund_nav_daily.csv.gz     date             iso_day
+                     wrong cut: fetched_at (the recorder's clock, never the cut)        (D619)
+and four more the same day when round 4b's panels entered the manifest (128 -> 132):
+  fund_holdings_quarterly  data/fixtures/fund_holdings_quarterly.csv.gz  filed_date  iso_day
+                     wrong cut: period_end (the as-of; every 2023-12-31 row was published in 2024) (D620)
+  fund_panel_projected     data/fixtures/fund_panel_projected.csv.gz     date        iso_day
+                     wrong cuts: anchor_filed_date, anchor_period_end                  (D620)
+  gdelt_hourly_sample      data/fixtures/gdelt_hourly_sample.csv.gz      hour_utc    iso_ts
+                     wrong cut: available_at_utc                                       (D621)
+  robintrack_energy_funds  data/fixtures/robintrack_energy_funds.csv.gz  ts_utc      iso_ts
+                     no wrong cut: one instant per row                                 (D621)
+
+  manifest panels                                    132
+  catalogue rows                                     132     one per manifest path, no extras
+
+  date format   iso_day        79
+                iso_ts         32
+                date32          1     D2_US_factors_SAS.parquet, arrow date32[day]
+                year_prefix     1     hkm_factors.csv.gz, monthly and quarterly stacked
+                none           19
+                                ---
+                              132
+
+  reader        csv           109
+                npz            16
+                parquet         7
+                                ---
+                              132
+
+  with a date column                                 113     = 132 - 19
+  with NO date column                                 19     16 .npz + d506_cells
+                                                             + d508_quintiles
+                                                             + D2_sas_vs_py_summ_stats.parquet
+
+  date column   day 59, timestamp 29, session 5, filing 3, ref 3, date 4, avail_date 2,
+                report_date 1, date_entry 1, filed 1, period 1, observed_at_utc 1,
+                filed_date 1, hour_utc 1, ts_utc 1                                  = 113
+
+  panels carrying at least one wrong cut              25
+  distinct wrong-cut column names                     22
+      anchor_filed_date, anchor_period_end, available_at_utc, bucket_start, date_g, delist_date, expiry_date, fetched_at,
+      fiscal_date, last_live_date, oi_pub_et, prev_day, published_at_et, published_et,
+      period_end, ref_session, release_date_nominal, report, trans, trans_max, trans_min, ts_utc
+
+Eleven distinct spellings of "the session" across 107 panels is the measurement that says a
+convention would not have worked. Four of the eleven are on ONE panel each.

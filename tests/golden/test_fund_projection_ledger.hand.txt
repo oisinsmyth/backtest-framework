@@ -1,0 +1,160 @@
+# D620 — hand file: one quarter-end per fund, typed out of the filing document itself
+#
+# Every number below was read by eye out of the RECORDED bytes under
+# data/raw/recorder/sec_fund_filings/, in the Schedule of Investments and the Statements of
+# Financial Condition of the accession named on each block — not out of the parser's output, and
+# not out of any summary. The parser in scripts/build_fund_holdings_quarterly.py has to reproduce
+# them. Written before that parser existed.
+#
+# Three accessions cover the six funds, because the four ProShares funds are series of ONE
+# registrant and one 10-K carries all four:
+#
+#   0001193125-25-039791  ProShares Trust II   10-K  filed 2025-02-28  period 2024-12-31
+#                         The PRIOR-year column and the PRIOR-year Schedule of Investments are
+#                         used here (2023-12-31), which is deliberate: it is one side of the
+#                         "a 10-K carries two period ends" behaviour, and it is before the
+#                         repository's 2024-01-01 seal.
+#   0001410578-22-002075  United States Oil Fund, LP          10-Q  filed 2022-08-05  2022-06-30
+#   0001410578-24-000105  United States Natural Gas Fund, LP  10-K  filed 2024-02-29  2023-12-31
+#
+# CONVENTIONS
+#   contracts        SIGNED. "Futures Contracts Purchased" and "Open Commodity Futures
+#                    Contracts - Long" are positive; "Futures Contracts Sold" is negative.
+#   contract_month   the month the document names on the line, as YYYY-MM.
+#   notional_usd     the "Notional Amount at Value" column (ProShares) or the "Notional Amount"
+#                    column (USCF), TYPED AS THE DOCUMENT PRINTS IT — the filings print this
+#                    column unsigned even in a "Futures Contracts Sold" block. It is NOT the
+#                    unrealized appreciation column beside it.
+#
+#                    ADDENDUM, written after the parser ran and recorded here rather than by
+#                    editing a number: the FIXTURE signs `notional_usd` the same way it signs
+#                    `contracts`, so on KOLD and SCO its value is the NEGATIVE of what is typed
+#                    below. That is a convention and not a disagreement about a quantity, so the
+#                    numbers above stay as the documents print them and the golden compares
+#                    magnitudes, asserting separately that the fixture's sign matches the sign of
+#                    the contract count.
+#   net_assets       "Shareholders' equity" (ProShares) / "Total Partners' Capital" (USCF).
+#   f_fut            futures notional / (futures notional + swap notional), over the whole fund
+#                    section. Stated to six decimals with its two ingredients, so the division
+#                    is checkable by hand.
+
+## BOIL — PROSHARES ULTRA BLOOMBERG NATURAL GAS
+accession   0001193125-25-039791
+form        10-K
+filed       2025-02-28
+period_end  2023-12-31
+futures     2024-03   contracts      62768   notional_usd   1460611360
+shares_out      5113709
+net_assets      729892808
+nav_per_share   142.73
+n_fut_lines     1
+n_swap_lines    0
+n_months_held   1
+f_fut           1.0
+
+## KOLD — PROSHARES ULTRASHORT BLOOMBERG NATURAL GAS
+accession   0001193125-25-039791
+form        10-K
+filed       2025-02-28
+period_end  2023-12-31
+futures     2024-03   contracts     -12109   notional_usd    281776430
+shares_out      2933712
+net_assets      140963092
+nav_per_share   48.05
+n_fut_lines     1
+n_swap_lines    0
+n_months_held   1
+f_fut           1.0
+
+## UCO — PROSHARES ULTRA BLOOMBERG CRUDE OIL  (the one fund that is not all futures)
+accession   0001193125-25-039791
+form        10-K
+filed       2025-02-28
+period_end  2023-12-31
+futures     2024-03   contracts       2085   notional_usd    149786400
+futures     2024-06   contracts       2185   notional_usd    157582200
+futures     2024-12   contracts       2270   notional_usd    159581000
+swap        Citibank, N.A.                           notional_usd    184008385
+swap        Goldman Sachs International              notional_usd    228781478
+swap        Morgan Stanley & Co. International PLC   notional_usd    114458740
+swap        Societe Generale                         notional_usd    173660597
+swap        UBS AG                                   notional_usd    137354031
+shares_out      24843096
+net_assets      652793437
+nav_per_share   26.28
+n_fut_lines     3
+n_swap_lines    5
+n_months_held   3
+futures_notional_total   466949600
+swap_notional_total      838263231
+f_fut           0.357757
+
+## SCO — PROSHARES ULTRASHORT BLOOMBERG CRUDE OIL
+accession   0001193125-25-039791
+form        10-K
+filed       2025-02-28
+period_end  2023-12-31
+futures     2024-03   contracts      -1688   notional_usd    121265920
+futures     2024-06   contracts      -1769   notional_usd    127580280
+futures     2024-12   contracts      -1836   notional_usd    129070800
+shares_out      9105220
+net_assets      188963592
+nav_per_share   20.75
+n_fut_lines     3
+n_swap_lines    0
+n_months_held   3
+futures_notional_total   377917000
+f_fut           1.0
+
+## USO — UNITED STATES OIL FUND, LP
+accession   0001410578-22-002075
+form        10-Q
+filed       2022-08-05
+period_end  2022-06-30
+futures     2022-08   contracts       4366   notional_usd    431110215
+futures     2022-09   contracts       4479   notional_usd    453958450
+futures     2022-10   contracts       3454   notional_usd    337169270
+futures     2022-11   contracts       3543   notional_usd    375667448
+futures     2022-12   contracts       3624   notional_usd    301452859
+futures     2023-01   contracts       1232   notional_usd    129759563
+futures     2023-06   contracts       2635   notional_usd    234707135
+swap        Macquarie Bank Ltd.     notional_usd    196315798
+swap        Societe Generale        notional_usd    143660116
+shares_out      33023603
+net_assets      2648854954
+nav_per_share   80.21
+n_fut_lines     7
+n_swap_lines    2
+n_months_held   7
+futures_notional_total   2263824940
+swap_notional_total      339975914
+f_fut           0.869431
+# CROSS-CHECK read off the same page, not computed here: the document's own
+# "Total Open Futures Contracts * $ 2,263,824,940   23,333" line agrees with the sum of the
+# seven notionals above and with 4366+4479+3454+3543+3624+1232+2635 = 23,333 contracts, and its
+# "Total Open OTC Commodity Swap Contracts ... 339,975,914" agrees with the two swap lines.
+
+## UNG — UNITED STATES NATURAL GAS FUND, LP
+accession   0001410578-24-000105
+form        10-K
+filed       2024-02-29
+period_end  2023-12-31
+futures     2024-02   contracts      29248   notional_usd    695222259
+swap        Macquarie Bank Ltd   notional_usd    129306126
+swap        Societe Generale     notional_usd     94559204
+shares_out      47821147
+net_assets      973854332
+nav_per_share   20.36
+n_fut_lines     1
+n_swap_lines    2
+n_months_held   1
+futures_notional_total   695222259
+swap_notional_total      223865330
+f_fut           0.756427
+# THE RESTATEMENT THAT MATTERS, footnoted on this very page and typed out here because it is the
+# reason the projection uses FIRST-PUBLISHED anchors: "On January 23, 2024 there was a 1-for-4
+# reverse share split. Historical shares outstanding, net asset value per share, and market value
+# per share have been adjusted ... on a retroactive basis." So 47,821,147 is the SPLIT-ADJUSTED
+# share count for 2023-12-31; the count a reader had on 2023-12-31 itself was four times it. A
+# panel built from the latest filing would carry a 4x error over the whole of 2023 and show no
+# discontinuity at all.

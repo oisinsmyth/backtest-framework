@@ -1,0 +1,154 @@
+D619 — the fund panel and the holdings parse, worked by hand.
+Written BEFORE tests/golden/test_fund_panel_ledger.py. Every number below was computed from the
+recorded bytes with a pocket calculation, not read out of the builder's own output; the test
+asserts the builder reproduces them.
+
+Sources, all under data/raw/recorder/ (gitignored cache, never overwritten, sha256 per file):
+  proshares_nav/BOIL__20260921T231414Z.csv        425,793 bytes  sha256 6643b060db19...
+  proshares_holdings/BOIL__20260921T231715Z.html  269,919 bytes  sha256 f9c3a3606612...
+
+
+================================================================================
+1. THE AUM IDENTITY ON ONE RECENT BOIL ROW  (gate G1, a known-answer check on the parse)
+================================================================================
+
+The last line of the recorded CSV's data region, as the file spells it:
+
+    09/18/2026,ProShares Ultra Bloomberg Natural Gas,BOIL,20.16589992,20.1104023,
+    0.27596,0.05549762,19511.14,393459777.22870848
+
+The three columns the panel keeps, with the unit conversion the builder applies:
+
+    nav        =        20.16589992   USD per share          (column "NAV")
+    shares_out =    19,511,140        shares                 ("Shares Outstanding (000)" x 1000)
+    aum        =   393,459,777.22870848 USD                  ("Assets Under Management")
+
+Hand product, exactly (20.16589992 x 19,511,140):
+
+        20.16589992 x 19,511,140
+      = 20.16589992 x (19,000,000 + 500,000 + 11,140)
+      = 383,152,098.48 + 10,082,949.96 + 224,648.1255  ... to full precision:
+      = 393,459,696.5651088
+
+    residual = |393,459,696.5651088 - 393,459,777.22870848|
+             =              80.6635996800
+
+Is that a pass? The source publishes "Shares Outstanding (000)" to TWO DECIMALS OF THOUSANDS,
+i.e. to the nearest 10 shares, so the identity can only hold to half that unit:
+
+    tolerance = nav x (10 / 2 + 0.001)
+              = 20.16589992 x 5.001
+              =            100.84966549992
+
+    80.6636 <= 100.8497   ->  G1 PASSES on this row.
+
+And the residual is exactly four shares' worth, which is the sense of the test:
+
+    implied shares = 393,459,777.22870848 / 20.16589992 = 19,511,144.0
+    published      =                                      19,511,140
+    difference     =                                               4 shares  (< 5, the half unit)
+
+The naive 1-basis-point form of the same test, which the builder REPORTS and does not gate on:
+
+    80.6636 / 393,459,777.2287 = 2.0501e-7 = 0.00205 bp   ->  well inside 1 bp on this row.
+
+
+================================================================================
+2. THE ROW WHERE THE TOLERANCE IS NEARLY ALL USED  (why 1 bp is not the gate)
+================================================================================
+
+The first row that survives the seed-row rule, BOIL 2012-02-01:
+
+    nav        =     2,439,840.0
+    shares_out =            10       shares   (published "0.01" thousands)
+    aum        =    12,199,321.992
+
+    nav x shares_out   = 24,398,400.0
+    residual           = |24,398,400.0 - 12,199,321.992| = 12,199,078.008
+    tolerance          = 2,439,840.0 x 5.001              = 12,201,681.84
+    12,199,078.008 <= 12,201,681.84   ->  PASSES, using 0.99979 of the tolerance.
+
+    implied shares = 12,199,321.992 / 2,439,840.0 = 5.00005
+
+THE FUND HELD FIVE SHARES AND THE PUBLISHED FIGURE ROUNDS TO TEN. Half a rounding unit is
+therefore the whole quantity, and on this row the identity is nearly vacuous. That is why the
+builder reports `worst_tolerance_use` beside the pass rate: a 100% pass rate says the parse is
+consistent, and only the tolerance-use number says how much that cost. The naive 1 bp test
+scores this row at 9,999.8 bp, which is not a parse defect - it is five shares against ten.
+
+
+================================================================================
+3. THE SEED-ROW EXCLUSION  (BOIL only; 82 rows; NOTHING IS RESCALED)
+================================================================================
+
+The oldest line of the same CSV:
+
+    10/04/2011,ProShares Ultra Bloomberg Natural Gas,BOIL,8000000,8000000,
+    0.00000,0,0,4000400
+
+    nav        =   8,000,000       USD per share
+    shares_out =           0       shares   (published "0.00" thousands)
+    aum        =   4,000,400       USD
+
+    implied shares = 4,000,400 / 8,000,000 = 0.50005
+
+HALF A SHARE. No fund holds half a share, so both NAV and the share count carry the cumulative
+reverse-split factor and AUM, which is in dollars, does not: the published series is fully
+BACK-ADJUSTED. Nothing here is rescaled to undo that. The rule is `shares_out == 0`, it selects
+82 rows, all of them BOIL's, all contiguous at the head of the series:
+
+    first excluded = 2011-10-04
+    last excluded  = 2012-01-31
+    count          = 82
+    first kept     = 2012-02-01   (section 2 above)
+    KOLD, UCO and SCO lose ZERO rows to this rule.
+
+The rejected alternative, `nav > 1e4`, would have dropped 2,327 of BOIL's 3,761 rows and 7 of
+SCO's - ordinary rows of a back-adjusted series - which is why the rule is the share count.
+
+
+================================================================================
+4. THE HOLDINGS PARSE ON THE LIVE BOIL PAGE  (as of 9/18/2026)
+================================================================================
+
+The three <tr> rows inside the `fund-detail-table-holdings` block, flattened:
+
+    199.97% | -- | NATURAL GAS FUTR NOV26        | 786,828,510 | --              | 25,857      | --
+    --      | -- | PROSHARES GENIUS MNY MKT ETF  | 140,154,000 | --              | 1,400,000   | --
+    --      | -- | NET OTHER ASSETS / CASH       | --          | $393,480,034.95 | 393,480,035 | --
+
+Contract month, by hand: the description ends NOV26; NOV is month 11 and 26 is read as 2026, so
+
+    contract_month("NATURAL GAS FUTR NOV26") = "2026-11"
+
+Kinds, by hand: "FUTR" and no "SWAP" -> futures; "MNY MKT" -> mmf; "CASH" -> cash.
+
+Row exposure is |exposure value| where the page prints one, else |market value|:
+
+    futures =   786,828,510
+    mmf     =   140,154,000
+    cash    =   393,480,034.95
+    total   = 1,320,462,544.95
+
+    f_fut = 786,828,510 / 1,320,462,544.95 = 0.5958734028535384
+
+    f_fut_derivatives = 786,828,510 / (786,828,510 + 0) = 1.0
+        BOIL held no swap line on this date, so the section 3.2 split is 100% futures.
+        (UCO, the same day, is 0.249 futures and 0.751 swap across four counterparty lines.)
+
+A swap row is not exercised by this live page, so the "swap" branch is proved on a SYNTHETIC row
+in the parser's own self-test instead, and both facts are stated rather than one being implied.
+
+
+================================================================================
+5. FIXTURE TOTALS
+================================================================================
+
+    rows written        = 16,402      (3,679 BOIL + 3,761 KOLD + 4,481 SCO + 4,481 UCO)
+    rows in the sources = 16,484      (3,761 + 3,761 + 4,481 + 4,481)
+    difference          =     82      = the seed rows of section 3. 16,484 - 82 = 16,402.
+
+    columns  = date, fund, nav, shares_out, aum, source, fetched_at
+    ABSENT   = futures_notional_by_contract_month, swap_notional, published_at
+               (deposit 3.1 line 67 asks for them; this source carries none of them, and they
+                are absent rather than null-filled)

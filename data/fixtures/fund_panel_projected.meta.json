@@ -1,0 +1,638 @@
+{
+ "spec": "D620; SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.1 lines 56-70 (the fund universe and the point-in-time rule). Answers the principal's question of 2026-09-22: 'Can we project this backwards / in between the filings based on current AUM and shares?'",
+ "record": "D620",
+ "builder": "scripts/project_fund_panel.py",
+ "built_utc": "2026-09-22T08:29:44Z",
+ "columns": [
+  "date",
+  "fund",
+  "shares_out_est",
+  "aum_est",
+  "nav_proxy",
+  "method",
+  "clock",
+  "anchor_period_end",
+  "anchor_filed_date",
+  "est_flag"
+ ],
+ "method": "step",
+ "clock": "filed",
+ "method_definition": {
+  "step": "shares = the last anchor published on or before the date, held flat; aum = shares x that anchor's NAV per share",
+  "price_implied": "shares = the last anchor published on or before the date, held flat; aum = shares x the day's raw market close",
+  "linear": "HINDSIGHT, never written: shares interpolated towards the NEXT anchor, which is published 40-90 days after the period it closes"
+ },
+ "rows": 9598,
+ "funds": [
+  "UNG",
+  "USO"
+ ],
+ "per_fund": {
+  "UNG": {
+   "anchors": 78,
+   "first_anchor_period_end": "2006-12-31",
+   "first_anchor_filed": "2007-08-09",
+   "rows": 4799,
+   "span": [
+    "2007-08-09",
+    "2026-09-04"
+   ],
+   "price_source": "data\\raw\\alphavantage\\daily_adjusted_etf\\UNG.json.gz"
+  },
+  "USO": {
+   "anchors": 79,
+   "first_anchor_period_end": "2006-09-30",
+   "first_anchor_filed": "2006-11-13",
+   "rows": 4799,
+   "span": [
+    "2007-08-09",
+    "2026-09-04"
+   ],
+   "price_source": "data\\raw\\alphavantage\\daily_adjusted_etf\\USO.json.gz"
+  }
+ },
+ "measured_uncertainty": {
+  "how": "Every number here is the error of THIS method on the four funds that have a daily truth series (BOIL, KOLD, UCO, SCO; fund_nav_daily, D619), measured on rows dated 2023-12-29 or earlier through load_panel(reserved_from='2024-01-01'). It is carried to UNG and USO as the stated uncertainty because those two have no daily truth to measure against.",
+  "per_fund": {
+   "BOIL": {
+    "days": 2979,
+    "first": "2012-02-29",
+    "last": "2023-12-29",
+    "shares_out": {
+     "n": 2979,
+     "median_rel": 0.3625368749999998,
+     "p95_rel": 2.835672142857144,
+     "max_rel": 19.111756319744934
+    },
+    "aum": {
+     "n": 2916,
+     "median_rel": 0.27261094546819675,
+     "p95_rel": 1.0054235862824097,
+     "max_rel": 3.1683608904742875
+    },
+    "creation_flow_delta_shares": {
+     "n": 2978,
+     "corr": -0.006184891304217652,
+     "days_truth_moves": 934,
+     "days_est_moves": 46,
+     "days_both_move": 20,
+     "sign_agreement_when_both_move": 0.5,
+     "median_abs_error_over_median_abs_truth_move": 0.0
+    }
+   },
+   "KOLD": {
+    "days": 2979,
+    "first": "2012-02-29",
+    "last": "2023-12-29",
+    "shares_out": {
+     "n": 2979,
+     "median_rel": 0.40089743589743587,
+     "p95_rel": 2.288512585812357,
+     "max_rel": 9.218242608030845
+    },
+    "aum": {
+     "n": 2916,
+     "median_rel": 0.32545451807175996,
+     "p95_rel": 1.0953080454547521,
+     "max_rel": 5.909892042664633
+    },
+    "creation_flow_delta_shares": {
+     "n": 2978,
+     "corr": -0.05026346688595372,
+     "days_truth_moves": 840,
+     "days_est_moves": 44,
+     "days_both_move": 13,
+     "sign_agreement_when_both_move": 0.5384615384615384,
+     "median_abs_error_over_median_abs_truth_move": 0.0
+    }
+   },
+   "SCO": {
+    "days": 3714,
+    "first": "2009-03-31",
+    "last": "2023-12-29",
+    "shares_out": {
+     "n": 3714,
+     "median_rel": 0.4442965190450155,
+     "p95_rel": 2.3372108418312525,
+     "max_rel": 4.304063917525773
+    },
+    "aum": {
+     "n": 3714,
+     "median_rel": 0.2961086510794638,
+     "p95_rel": 1.047219257746969,
+     "max_rel": 2.492994560762251
+    },
+    "creation_flow_delta_shares": {
+     "n": 3713,
+     "corr": -0.009827386739635884,
+     "days_truth_moves": 1700,
+     "days_est_moves": 56,
+     "days_both_move": 19,
+     "sign_agreement_when_both_move": 0.5263157894736842,
+     "median_abs_error_over_median_abs_truth_move": 0.0
+    }
+   },
+   "UCO": {
+    "days": 3714,
+    "first": "2009-03-31",
+    "last": "2023-12-29",
+    "shares_out": {
+     "n": 3714,
+     "median_rel": 0.3685479093512241,
+     "p95_rel": 1.1969359188896544,
+     "max_rel": 11.325070054446462
+    },
+    "aum": {
+     "n": 3714,
+     "median_rel": 0.17957057777589108,
+     "p95_rel": 0.7005066487851282,
+     "max_rel": 1.4575484341024334
+    },
+    "creation_flow_delta_shares": {
+     "n": 3713,
+     "corr": -0.001086721362756672,
+     "days_truth_moves": 2037,
+     "days_est_moves": 56,
+     "days_both_move": 23,
+     "sign_agreement_when_both_move": 0.5217391304347826,
+     "median_abs_error_over_median_abs_truth_move": 0.2222222222222222
+    }
+   }
+  },
+  "premium_close_vs_nav_bp": [
+   {
+    "fund": "BOIL",
+    "days": 2998,
+    "median_bp": 52.44563549130036,
+    "p95_bp": 232.03231932652622,
+    "max_bp": 700.8652698356132,
+    "median_signed_bp": 6.356640369172112,
+    "first": "2012-02-01",
+    "last": "2023-12-29"
+   },
+   {
+    "fund": "KOLD",
+    "days": 3078,
+    "median_bp": 51.330647138445,
+    "p95_bp": 233.55862536259045,
+    "max_bp": 717.4889532147048,
+    "median_signed_bp": -7.177995459342468,
+    "first": "2011-10-06",
+    "last": "2023-12-29"
+   },
+   {
+    "fund": "SCO",
+    "days": 3799,
+    "median_bp": 37.0817429506633,
+    "p95_bp": 161.7015495629513,
+    "max_bp": 1730.9084308087322,
+    "median_signed_bp": 4.300914411802038,
+    "first": "2008-11-25",
+    "last": "2023-12-29"
+   },
+   {
+    "fund": "UCO",
+    "days": 3799,
+    "median_bp": 37.292593726917886,
+    "p95_bp": 166.92696222053337,
+    "max_bp": 2222.4900243699954,
+    "median_signed_bp": -6.239928055710842,
+    "first": "2008-11-25",
+    "last": "2023-12-29"
+   }
+  ],
+  "restatements_found": [
+   {
+    "fund": "BOIL",
+    "period_end": "2011-12-31",
+    "field": "shares_out",
+    "first_published": 200010.0,
+    "latest": 40002.0,
+    "ratio": 0.2
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2011-12-31",
+    "field": "nav_per_share",
+    "first_published": 20.4,
+    "latest": 101.98,
+    "ratio": 4.999019607843138
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2014-12-31",
+    "field": "shares_out",
+    "first_published": 4569941.0,
+    "latest": 1142485.0,
+    "ratio": 0.24999994529469854
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2014-12-31",
+    "field": "nav_per_share",
+    "first_published": 15.41,
+    "latest": 61.65,
+    "ratio": 4.00064892926671
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2017-12-31",
+    "field": "shares_out",
+    "first_published": 9692169.0,
+    "latest": 1938434.0,
+    "ratio": 0.2000000206352159
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2017-12-31",
+    "field": "nav_per_share",
+    "first_published": 6.53,
+    "latest": 32.64,
+    "ratio": 4.998468606431853
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2019-12-31",
+    "field": "shares_out",
+    "first_published": 5378150.0,
+    "latest": 537815.0,
+    "ratio": 0.1
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2019-12-31",
+    "field": "nav_per_share",
+    "first_published": 8.4,
+    "latest": 83.97,
+    "ratio": 9.99642857142857
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2022-12-31",
+    "field": "shares_out",
+    "first_published": 32287527.0,
+    "latest": 1614376.0,
+    "ratio": 0.049999989159900664
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2022-12-31",
+    "field": "nav_per_share",
+    "first_published": 18.15,
+    "latest": 363.08,
+    "ratio": 20.004407713498622
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2023-12-31",
+    "field": "shares_out",
+    "first_published": 25568544.0,
+    "latest": 5113709.0,
+    "ratio": 0.20000000782211141
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2023-12-31",
+    "field": "nav_per_share",
+    "first_published": 28.55,
+    "latest": 142.73,
+    "ratio": 4.999299474605954
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2025-12-31",
+    "field": "shares_out",
+    "first_published": 23723047.0,
+    "latest": 11861524.0,
+    "ratio": 0.5000000210765506
+   },
+   {
+    "fund": "BOIL",
+    "period_end": "2025-12-31",
+    "field": "nav_per_share",
+    "first_published": 22.55,
+    "latest": 45.1,
+    "ratio": 2.0
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2011-12-31",
+    "field": "shares_out",
+    "first_published": 100010.0,
+    "latest": 300030.0,
+    "ratio": 3.0
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2011-12-31",
+    "field": "nav_per_share",
+    "first_published": 71.42,
+    "latest": 23.81,
+    "ratio": 0.33338000560067205
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2012-12-31",
+    "field": "shares_out",
+    "first_published": 500030.0,
+    "latest": 125008.0,
+    "ratio": 0.2500009999400036
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2012-12-31",
+    "field": "nav_per_share",
+    "first_published": 25.54,
+    "latest": 102.14,
+    "ratio": 3.9992169146436964
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2015-12-31",
+    "field": "shares_out",
+    "first_published": 74952.0,
+    "latest": 224856.0,
+    "ratio": 3.0
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2015-12-31",
+    "field": "nav_per_share",
+    "first_published": 139.59,
+    "latest": 46.53,
+    "ratio": 0.3333333333333333
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2020-12-31",
+    "field": "shares_out",
+    "first_published": 524832.0,
+    "latest": 104966.0,
+    "ratio": 0.19999923785135051
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2020-12-31",
+    "field": "nav_per_share",
+    "first_published": 47.59,
+    "latest": 237.96,
+    "ratio": 5.000210128178188
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2021-12-31",
+    "field": "shares_out",
+    "first_published": 3914966.0,
+    "latest": 978742.0,
+    "ratio": 0.25000012771502994
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2021-12-31",
+    "field": "nav_per_share",
+    "first_published": 61.85,
+    "latest": 247.4,
+    "ratio": 4.0
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2023-12-31",
+    "field": "shares_out",
+    "first_published": 1466856.0,
+    "latest": 2933712.0,
+    "ratio": 2.0
+   },
+   {
+    "fund": "KOLD",
+    "period_end": "2023-12-31",
+    "field": "nav_per_share",
+    "first_published": 96.1,
+    "latest": 48.05,
+    "ratio": 0.5
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2015-12-31",
+    "field": "shares_out",
+    "first_published": 719944.0,
+    "latest": 1439888.0,
+    "ratio": 2.0
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2015-12-31",
+    "field": "nav_per_share",
+    "first_published": 133.2,
+    "latest": 66.6,
+    "ratio": 0.5
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2020-12-31",
+    "field": "shares_out",
+    "first_published": 8339884.0,
+    "latest": 2084971.0,
+    "ratio": 0.25
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2020-12-31",
+    "field": "nav_per_share",
+    "first_published": 11.61,
+    "latest": 46.45,
+    "ratio": 4.000861326442722
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2021-12-31",
+    "field": "shares_out",
+    "first_published": 8883799.0,
+    "latest": 1776760.0,
+    "ratio": 0.20000002251289117
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2021-12-31",
+    "field": "nav_per_share",
+    "first_published": 12.85,
+    "latest": 64.26,
+    "ratio": 5.000778210116732
+   },
+   {
+    "fund": "SCO",
+    "period_end": "2025-12-31",
+    "field": "shares_out",
+    "first_published": 4555220.0,
+    "latest": 1138805.0,
+    "ratio": 0.25
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2010-12-31",
+    "field": "shares_out",
+    "first_published": 4749170.0,
+    "latest": 4562504.0,
+    "ratio": 0.9606950267099303
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2010-12-31",
+    "field": "net_assets",
+    "first_published": 271225000.0,
+    "latest": 228133077.0,
+    "ratio": 0.8411211245276062
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2010-12-31",
+    "field": "nav_per_share",
+    "first_published": 57.11,
+    "latest": 50.0,
+    "ratio": 0.8755034144633164
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2014-12-31",
+    "field": "shares_out",
+    "first_published": 44399170.0,
+    "latest": 8879834.0,
+    "ratio": 0.2
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2014-12-31",
+    "field": "nav_per_share",
+    "first_published": 10.15,
+    "latest": 50.74,
+    "ratio": 4.999014778325123
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2015-12-31",
+    "field": "shares_out",
+    "first_published": 62327867.0,
+    "latest": 31163934.0,
+    "ratio": 0.5000000080220939
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2015-12-31",
+    "field": "nav_per_share",
+    "first_published": 12.58,
+    "latest": 25.15,
+    "ratio": 1.9992050874403815
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2019-12-31",
+    "field": "shares_out",
+    "first_published": 15211317.0,
+    "latest": 608453.0,
+    "ratio": 0.04000002103696872
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2019-12-31",
+    "field": "nav_per_share",
+    "first_published": 20.37,
+    "latest": 509.23,
+    "ratio": 24.999018163966618
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2021-12-31",
+    "field": "shares_out",
+    "first_published": 12810774.0,
+    "latest": 51243096.0,
+    "ratio": 4.0
+   },
+   {
+    "fund": "UCO",
+    "period_end": "2021-12-31",
+    "field": "nav_per_share",
+    "first_published": 86.16,
+    "latest": 21.54,
+    "ratio": 0.25
+   },
+   {
+    "fund": "UNG",
+    "period_end": "2010-12-31",
+    "field": "shares_out",
+    "first_published": 444600000.0,
+    "latest": 222300000.0,
+    "ratio": 0.5
+   },
+   {
+    "fund": "UNG",
+    "period_end": "2010-12-31",
+    "field": "nav_per_share",
+    "first_published": 6.0,
+    "latest": 12.0,
+    "ratio": 2.0
+   },
+   {
+    "fund": "UNG",
+    "period_end": "2011-12-31",
+    "field": "shares_out",
+    "first_published": 165597828.0,
+    "latest": 41399457.0,
+    "ratio": 0.25
+   },
+   {
+    "fund": "UNG",
+    "period_end": "2011-12-31",
+    "field": "nav_per_share",
+    "first_published": 6.47,
+    "latest": 25.88,
+    "ratio": 4.0
+   },
+   {
+    "fund": "UNG",
+    "period_end": "2022-12-31",
+    "field": "shares_out",
+    "first_published": 30184588.0,
+    "latest": 7546147.0,
+    "ratio": 0.25
+   },
+   {
+    "fund": "UNG",
+    "period_end": "2022-12-31",
+    "field": "nav_per_share",
+    "first_published": 14.22,
+    "latest": 56.9,
+    "ratio": 4.0014064697609
+   },
+   {
+    "fund": "USO",
+    "period_end": "2019-12-31",
+    "field": "shares_out",
+    "first_published": 91600000.0,
+    "latest": 11450000.0,
+    "ratio": 0.125
+   },
+   {
+    "fund": "USO",
+    "period_end": "2019-12-31",
+    "field": "nav_per_share",
+    "first_published": 12.78,
+    "latest": 102.27,
+    "ratio": 8.002347417840376
+   }
+  ]
+ },
+ "what_this_is_not": [
+  "NOT a truth series. Every row carries est_flag = 1 and nothing here is written back into fund_nav_daily.",
+  "NOT a creation-flow series. Differencing a piecewise-constant share estimate gives zero on almost every day and a whole quarter's creations on one; the measured flow errors are in `measured_uncertainty.per_fund.*.creation_flow_delta_shares` and they are the reason this panel must not be differenced for P3.",
+  "NOT NAV. `nav_proxy` is the raw market CLOSE for price_implied and the last anchor's published NAV per share for step. The close-versus-NAV premium measured on the four funds that have both is in `measured_uncertainty.premium_close_vs_nav_bp`."
+ ],
+ "sha256": "5c78e88cf1a52cdf3309ac97e5eb9c45f3ef8aadeae48172e5fa08c3c004a643",
+ "sha256_uncompressed_csv": "c432efe04f1de8525d58acd259f2ee0ceb2bc81caec2fb0dfc970d31d7947eed",
+ "bytes": 29022,
+ "encoding": "utf-8, LF, deterministic gzip (mtime=0, no stored filename)",
+ "date_col": "date",
+ "wrong_cuts": [
+  "anchor_filed_date",
+  "anchor_period_end"
+ ],
+ "holdout": "ESTIMATED SHARES AND AUM ONLY -- no return, no signal, no trade, and every row carries est_flag = 1. The span runs through the deposit's sealed vault window (2025-03-01..2026-09-18) and past this repository's 2024-01-01 holdout, neither of which the principal has reconciled with the other. Nothing here may score anything until that reconciliation is in writing (D604, D619, D620). The ERRORS quoted in this meta were measured on rows dated 2023-12-29 or earlier, read through load_panel(reserved_from='2024-01-01')."
+}
