@@ -212,6 +212,40 @@ And the constraint, which is the point: at **1 MES** the fee is **1.25× the who
 different direction — *hurdle P fails on size at every f* — and it is the ledger's standing result that the
 fee demands size while the barrier forbids it.
 
+### 3d. A log-MACD filter on that continuation — more disclosed looks, and the one number that was an artefact
+
+Asked whether a momentum filter could rescue the continuation book, since its failure at ES size was the
+**barrier** and [D506](D506-RESULT-stage-1-CLOSE-in-play-selection-costs-more-accuracy.md) recorded that
+selectivity is a drawdown instrument rather than a selector. Five filters were declared before running, from D484's log MACD on ES
+day-session dailies (impulse MACD and MACD histogram agreeing, lagged one session) and a median trailing-σ
+split. The best was **MACD confirmation AND low volatility**: 337 trades, gross **+$7.34** a trade at MES
+against $4.25 of cost.
+
+**Three checks it passed, including one most sweeps never run.** A **best-of-five enumerated rotation null**
+— the signal side rotated *jointly* so each filter's own structure survives and only its pairing with the
+outcome is destroyed, taking the max over the five filters at every one of 1,941 offsets — puts the observed
++$7.34 at **rank 0.9974** against a best-of-five p95 of **+$4.20**. The barrier is fixed: maximum drawdown
+**$580, 0.29×** a $50,000 account's allowance, against 4.8× unfiltered. And ρ with the admitted MACD arm is
+**−0.094**, so it is not that arm on a new clock.
+
+**One number in the first pass was an artefact, and it is the one that looked best.** The reported
+"annualised Sharpe +1.130" came from `_ratio`, which annualises with `sqrt(252)` — correct for a book that
+trades every session, wrong for one that trades **42 times a year**. Corrected with `sqrt(42)` the
+annualised Sharpe is **≈0.46**, and the honest statistic is the **net t of +1.31**.
+
+**And it fails on sample.** 337 trades over eight years, net t **+1.31**, with the edge concentrated in
+2018–21 and the trade count decaying **154 → 110 → 44 → 29** across the four eras — 29 firings in the last
+two years. 2016–17 is **net −$3.75** at t 0.47. Selectivity did what D506 said it does (cut the drawdown by
+16×) and did not make the edge significant.
+
+**Nothing follows from this either.** The chain is 126 cells → pick `F5` → five filters → pick the best
+two-way combination, and the best-of-five null prices only the last step: not the choice of `F5`, not the
+median as the volatility threshold, not the MACD parameterisation. What it is, honestly, is the first
+construction in this programme with the right *shape* for a component — net Sharpe ≈0.46 at minimum size,
+ρ −0.09 with the admitted arm, drawdown inside the barrier, which is the `COMPONENTS_PROP.md` standard's own
+range. Whether it is real is unknowable in sample at t 1.31 and would need a pre-registered read on a slice
+it has never seen, on the principal's word.
+
 **Nothing follows from this paragraph.** It is Baltussen's published market intraday momentum, already
 pre-registered and rejected for the prop account in D463, and already noted as prior-hour continuation at
 t 2.9 in D581; this section measures a *refinement* of it (the last hour rather than the whole day — whose
